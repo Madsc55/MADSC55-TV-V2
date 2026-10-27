@@ -26,6 +26,9 @@ on:
       - '.github/workflows/v2-turkish-stream-review.yml'
   schedule:
     - cron: '10 6 * * 2,5'
+concurrency:
+  group: v2-turkish-stream-review-main
+  cancel-in-progress: false
 permissions:
   contents: write
 jobs:
@@ -66,6 +69,8 @@ jobs:
           git add MADSC55_TV_IBO_CALISANLAR_TEST.m3u8
           if ! git diff --cached --quiet; then
             git commit -m "playlist: add user-approved NewlistTR streams to YEDEKLER"
+            git fetch origin main
+            git rebase origin/main
             git push origin HEAD:main
           fi
       - name: Measure current playlist stream resolutions in batches
