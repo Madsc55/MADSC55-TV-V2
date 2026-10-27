@@ -16,13 +16,19 @@ def main():
     data = json.loads(DIRECTORY.read_text(encoding="utf-8"))
     current = list(entries(LIVE.read_text(encoding="utf-8-sig")))
     ids = {norm(e["tvg_id"]) for e in current if e["tvg_id"]}
-    names = {norm(e["name"]) for e in current}\n    # Fuzzy/substring matches are intentionally not counted as verified matches.\n    # Report these as possible aliases for human review, not as absent channels.
+    names = {norm(e["name"]) for e in current}
+    # Fuzzy/substring matches are intentionally not counted as verified matches.
+    # Report these as possible aliases for human review, not as absent channels.
     missing, present = [], []
     for item in data["channels"]:
         channel_id = norm(item["channel_id"])
         channel_name = norm(item["name"])
         found = bool((channel_id and channel_id in ids) or (channel_name and channel_name in names))
-        alias_candidates = []\n        if not found and len(channel_name) >= 5:\n            alias_candidates = [e["name"] for e in current if (channel_name in norm(e["name"]) or norm(e["name"]) in channel_name) and len(norm(e["name"])) >= 5][:5]\n        record = {**item, "playlist_match": "MATCHED_BY_ID_OR_NAME" if found else "NO_EXACT_MATCH_REVIEW_REQUIRED",\n                  "possible_aliases_not_verified": alias_candidates}
+        alias_candidates = []
+        if not found and len(channel_name) >= 5:
+            alias_candidates = [e["name"] for e in current if (channel_name in norm(e["name"]) or norm(e["name"]) in channel_name) and len(norm(e["name"])) >= 5][:5]
+        record = {**item, "playlist_match": "MATCHED_BY_ID_OR_NAME" if found else "NO_EXACT_MATCH_REVIEW_REQUIRED",
+                  "possible_aliases_not_verified": alias_candidates}
         (present if found else missing).append(record)
     report = {"source": "official-tv-sites.json", "playlist_entries": len(current),
               "directory_entries": len(data["channels"]), "matched": len(present),
