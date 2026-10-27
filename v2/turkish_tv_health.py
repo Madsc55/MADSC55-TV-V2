@@ -8,6 +8,8 @@ import pathlib
 import re
 import urllib.request
 import urllib.error
+import shutil
+import subprocess
 from collections import Counter
 from discover import ROOT, LIVE, SOURCES, fetch, entries
 
@@ -29,7 +31,19 @@ def check(e):
     if not url.startswith(("http://", "https://")):
         return result
     if "youtube.com" in url or "youtu.be" in url:
-        result["status"] = "YOUTUBE_REQUIRES_PLAYBACK_CHECK"
+        if not shutil.which("yt-dlp"):
+            result["status"] = "YOUTUBE_TOOL_UNAVAILABLE"
+            return result
+        try:
+            proc = subprocess.run(["yt-dlp", "--no-playlist", "--skip-download", "--dump-single-json", "--no-warnings", "--socket-timeout", "8", url], capture_output=True, text=True, timeout=18)
+            if proc.returncode == 0:
+                meta = json.loads(proc.stdout)
+                result["status"] = "YOUTUBE_METADATA_AVAILABLE_PLAYBACK_UNCONFIRMED" if meta.get("is_live") or meta.get("live_status") == "is_live" else "YOUTUBE_NOT_LIVE_OR_UNVERIFIED"
+                result["resolution"] = str(meta.get("height") or "UNKNOWN")
+            else:
+                result["status"] = "YOUTUBE_UNVERIFIED"
+        except (OSError, subprocess.TimeoutExpired, ValueError, json.JSONDecodeError):
+            result["status"] = "YOUTUBE_UNVERIFIED"
         return result
     try:
         req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 MADSC55-TV-V2", "Range": "bytes=0-32767"})
@@ -65,7 +79,7 @@ def main():
                 if RADIO.search(e["name"] + " " + e["group"]) or LOCKED.search(e["name"] + " " + e["group"]):
                     continue
                 is_tr = source.get("scope") == "TR" or e["tvg_id"].lower().endswith(".tr") or bool(TURKISH.search(e["name"] + " " + e["group"]))
-                if not is_tr or identity(e) in unique:
+                if not is_tr or identity(e) in unique or e["url"] in {x["url"] for x in live}:
                     continue
                 discovered.setdefault((identity(e), digest(e["url"])), e)
         except Exception as exc:
@@ -79,7 +93,7 @@ def main():
     candidates = []
     for e, c in zip(candidate_items, candidate_checks):
         if c["status"] == "STREAM_RESPONDS_PLAYBACK_UNCONFIRMED":
-            candidates.append({**c, "logo_source": e["logo"], "epg_id": e["tvg_id"], "category_suggestion": (e["group"] or "YENİ GELEN").upper()})
+            candidates.append({**c, "logo_url_sha256": digest(e["logo"]) if e["logo"] else "", "epg_id": e["tvg_id"], "category_suggestion": (e["group"] or "YENİ GELEN").upper()})
     report = {"schema": 1, "created_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
               "policy": "READ_ONLY; no playlist writes; network response is not playback confirmation",
               "playlist_entries": len(live), "unique_channel_identities": len(unique),
