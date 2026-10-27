@@ -22,6 +22,8 @@ def main():
     epg = data.get("epg", {})
     assets = data.get("assets", {})
     logos = data.get("logos", {})
+    verified_decodable = channels.get("decoder_status_counts", {}).get("DECODABLE_VIDEO", 0)
+    total = channels.get("playlist_entries") or 0
     report = {
         "generated_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
         "mode": "READ_ONLY",
@@ -31,9 +33,14 @@ def main():
         "stream_status_counts": channels.get("live_status_counts"),
         "decoder_status_counts": channels.get("decoder_status_counts"),
         "decoder_sample_size": channels.get("decoder_sample_size", 0),
+        "video_decodable_count": verified_decodable,
+        "video_decodable_playlist_fraction": round(verified_decodable / total, 4) if total else None,
+        "decoder_coverage_note": "Unsampled, inaccessible and YouTube entries are not confirmed playable",
         "candidate_count": len(channels.get("candidates", [])),
         "youtube_metadata_only": True,
         "epg_xmltv_status_counts": epg.get("status_counts", {}),
+        "epg_playlist_id_matches_by_source": [x.get("playlist_id_matches") for x in epg.get("sources", [])],
+        "epg_playlist_id_match_rates_by_source": [x.get("playlist_id_match_rate") for x in epg.get("sources", [])],
         "asset_reachability_status_counts": assets.get("status_counts", {}),
         "logos_with_official_ownership_verified": 0,
         "logos_requiring_authoritative_verification": logos.get("unique_logos"),
