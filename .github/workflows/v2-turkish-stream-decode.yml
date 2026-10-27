@@ -1,0 +1,37 @@
+name: V2 Turkish Stream Short Decode
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'v2/turkish_stream_decode.py'
+      - '.github/workflows/v2-turkish-stream-decode.yml'
+  schedule:
+    - cron: '55 5 * * 2,5'
+permissions:
+  contents: read
+jobs:
+  decode:
+    runs-on: ubuntu-latest
+    timeout-minutes: 14
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install ffprobe
+        run: sudo apt-get update -qq && sudo apt-get install -y ffmpeg
+      - name: Syntax validation
+        run: python -m py_compile v2/turkish_stream_catalog.py v2/turkish_stream_probe.py v2/turkish_stream_decode.py
+      - name: Refresh candidates
+        run: python v2/turkish_stream_catalog.py
+      - name: Check short media decode
+        run: python v2/turkish_stream_decode.py
+      - name: Upload verification reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: turkish-stream-decode
+          path: |
+            v2/reports/turkish-stream-candidates.json
+            v2/reports/turkish-stream-decode.json
+          if-no-files-found: ignore
