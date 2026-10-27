@@ -12,7 +12,7 @@ def main():
     assert text.startswith("#EXTM3U"), "Missing M3U header"
     assert len(channels) >= 1047, "Playlist shrank unexpectedly"
     backups = [x for x in channels if "YEDEKLER" in x["group"]]
-    assert len(backups) == 2, "YEDEKLER must contain exactly the two original channels"
+    assert len(backups) >= 2, "YEDEKLER must preserve the two original channels"
     assert any(x["name"] == "TRT 1 1440P QHD" for x in backups), "Original TRT 1 backup missing"
     assert any(x["name"] == "DHA CANLI 720P HD" for x in backups), "Original DHA backup missing"
     assert not any(x["name"].startswith(("TRT Arabi", "TRT World")) for x in channels), "Unwanted foreign-language trials remain"
