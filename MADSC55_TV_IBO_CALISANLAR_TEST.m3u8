@@ -1527,9 +1527,9 @@ https://cdn-haber61tv.yayin.com.tr/haber61tv/smil:haber61tv.smil/index.m3u8
 http://canli.tvden.com.tr/hls/live.m3u8
 #EXTINF:-1 tvg-id="YOLTV.de@SD" tvg-logo="https://i.imgur.com/rTBX6lS.png" group-title="📍 YEREL (75)",YOL TV
 https://live.yoltv.com/hls/stream.m3u8
-#EXTINF:-1 tvg-name="TRT 1" tvg-logo="https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/turkey/trt-1-tr.png" group-title="🗂️ YEDEKLER (29)",TRT 1 1440P QHD
+#EXTINF:-1 tvg-name="TRT 1" tvg-logo="https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/turkey/trt-1-tr.png" group-title="🗂️ YEDEKLER (2)",TRT 1 1440P QHD
 https://trt.daioncdn.net/trt-1/master.m3u8?app=web
-#EXTINF:-1 tvg-id="" tvg-name="DHA CANLI" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/9/9a/DHA_logo.png" group-title="🗂️ YEDEKLER (29)",DHA CANLI 720P HD
+#EXTINF:-1 tvg-id="" tvg-name="DHA CANLI" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/9/9a/DHA_logo.png" group-title="🗂️ YEDEKLER (2)",DHA CANLI 720P HD
 https://603c568fccdf5.streamlock.net/live/dhaweb1_C5efC/playlist.m3u8
 #EXTINF:-1 tvg-id="2591" tvg-logo="http://epg.one/img/2591.png" group-title="🧸 ÇOCUK (29)",MİNİKA GO HD TR
 http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/2266/index.m3u8
@@ -1679,57 +1679,3 @@ https://live.euromediacenter.com/brukselturk/tracks-v1a1/mono.m3u8
 http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6780/index.m3u8
 #EXTINF:-1 tvg-id="3839" tvg-logo="http://epg.one/img/3839.png" group-title="🇹🇷 ULUSAL-HEPSİ (415)",AKİT TV TR
 http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6780/index.m3u8
-#EXTINF:-1 tvg-id="" tvg-logo="" group-title="🗂️ YEDEKLER (29)",24
-https://turkmedya-live.ercdn.net/tv24/tv24_720p.m3u8
-#EXTINF:-1 tvg-id="2613" tvg-logo="http://epg.one/img/2613.png" group-title="🗂️ YEDEKLER (29)",Bloomberg HT TR
-http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/2317/index.m3u8
-#EXTINF:-1 tvg-id="3964" tvg-logo="http://epg.one/img/3964.png" group-title="🗂️ YEDEKLER (29)",360 TV HD TR
-http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/2320/index.m3u8
-#EXTINF:-1 tvg-id="3818" tvg-logo="http://epg.one/img/3818.png" group-title="🗂️ YEDEKLER (29)",TV 41 TR
-http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6752/index.m3u8
-#EXTINF:-1 tvg-id="3822" tvg-logo="http://epg.one/img/3822.png" group-title="🗂️ YEDEKLER (29)",Line TV Bursa TR
-http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6759/index.m3u8
-#EXTINF:-1 tvg-id="3825" tvg-logo="http://epg.one/img/3825.png" group-title="🗂️ YEDEKLER (29)",Kardelen TV TR
-http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6763/index.m3u8
-#EXTINF:-1 tvg-id="3828" tvg-logo="http://epg.one/img/3828.png" group-title="🗂️ YEDEKLER (29)",Kanal Avrupa TR
-http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6766/index.m3u8
-#EXTINF:-1 tvg-id="3829" tvg-logo="http://epg.one/img/3829.png" group-title="🗂️ YEDEKLER (29)",ER TV TR
-http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6768/index.m3u8
-#EXTINF:-1 tvg-id="3835" tvg-logo="http://epg.one/img/3835.png" group-title="🗂️ YEDEKLER (29)",BRTV TR
-http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6776/index.m3u8
-#EXTINF:-1 tvg-id="3836" tvg-logo="http://epg.one/img/3836.png" group-title="🗂️ YEDEKLER (29)",AS TV Bursa TR
-http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6777/index.m3u8
-#EXTINF:-1 tvg-id="3845" tvg-logo="http://epg.one/img/3845.png" group-title="🗂️ YEDEKLER (29)",TV Kayseri TR
-http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6786/index.m3u8
-#EXTINF:-1 tvg-id="3848" tvg-logo="http://epg.one/img/3848.png" group-title="🗂️ YEDEKLER (29)",FM TV TR
-http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6789/index.m3u8
-#EXTINF:-1 tvg-id="3849" tvg-logo="http://epg.one/img/3849.png" group-title="🗂️ YEDEKLER (29)",Lalegul TV TR
-http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6790/index.m3u8
-#EXTINF:-1 tvg-id="3850" tvg-logo="http://epg.one/img/3850.png" group-title="🗂️ YEDEKLER (29)",TV 2000 TR
-http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6791/index.m3u8
-#EXTINF:-1 tvg-id="3851" tvg-logo="http://epg.one/img/3851.png" group-title="🗂️ YEDEKLER (29)",Meltem TV TR
-http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6792/index.m3u8
-#EXTINF:-1 tvg-id="3852" tvg-logo="http://epg.one/img/3852.png" group-title="🗂️ YEDEKLER (29)",Dost TV TR
-http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6793/index.m3u8
-#EXTINF:-1 tvg-id="2951" tvg-logo="http://epg.one/img/2951.png" group-title="🗂️ YEDEKLER (29)",TRT Turk TR
-http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6798/index.m3u8
-#EXTINF:-1 tvg-id="3885" tvg-logo="http://epg.one/img/3885.png" group-title="🗂️ YEDEKLER (29)",Eurosport 1 HD TR
-http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6829/index.m3u8
-#EXTINF:-1 tvg-id="3912" tvg-logo="http://epg.one/img/3912.png" group-title="🗂️ YEDEKLER (29)",Da Vinci HD TR
-http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6857/index.m3u8
-#EXTINF:-1 tvg-id="88056" tvg-logo="http://epg.one/img/88056.png" group-title="🗂️ YEDEKLER (29)",Uzman Filmcilik HD TR
-http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6872/index.m3u8
-#EXTINF:-1 tvg-id="3934" tvg-logo="http://epg.one/img/3934.png" group-title="🗂️ YEDEKLER (29)",beIN Movies Premiere 2 HD TR
-http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6879/index.m3u8
-#EXTINF:-1 tvg-id="3937" tvg-logo="http://epg.one/img/3937.png" group-title="🗂️ YEDEKLER (29)",beIN Series Drama HD TR
-http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6882/index.m3u8
-#EXTINF:-1 tvg-id="3943" tvg-logo="http://epg.one/img/3943.png" group-title="🗂️ YEDEKLER (29)",Show Max TR
-http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6890/index.m3u8
-#EXTINF:-1 tvg-id="3947" tvg-logo="http://epg.one/img/3947.png" group-title="🗂️ YEDEKLER (29)",Eurostar TR
-http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6894/index.m3u8
-#EXTINF:-1 tvg-id="3958" tvg-logo="http://epg.one/img/3958.png" group-title="🗂️ YEDEKLER (29)",Kanal 7 Avrupa HD TR
-http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6905/index.m3u8
-#EXTINF:-1 tvg-id="3988" tvg-logo="http://epg.one/img/3988.png" group-title="🗂️ YEDEKLER (29)",A News HD TR
-http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6937/index.m3u8
-#EXTINF:-1 tvg-id="2266" tvg-logo="http://epg.one/img/2266.png" group-title="🗂️ YEDEKLER (29)",Euronews Russian TR
-http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/32069/index.m3u8
