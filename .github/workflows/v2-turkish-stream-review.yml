@@ -7,6 +7,9 @@ on:
       - 'v2/turkish_stream_catalog.py'
       - 'v2/turkish_stream_probe.py'
       - 'v2/turkish_stream_decode.py'
+      - 'v2/epg_integrity.py'
+      - 'v2/assets_health.py'
+      - 'v2/logo_attribution.py'
       - '.github/workflows/v2-turkish-stream-review.yml'
   schedule:
     - cron: '10 6 * * 2,5'
@@ -33,6 +36,12 @@ jobs:
         run: python v2/turkish_stream_decode.py
       - name: Build manual review queue
         run: python v2/turkish_stream_review.py
+      - name: Validate playlist EPG XMLTV sources
+        run: python v2/epg_integrity.py
+      - name: Check playlist logos and EPG URLs
+        run: python v2/assets_health.py
+      - name: Audit logo formats and attribution
+        run: python v2/logo_attribution.py
       - name: Save review report
         if: always()
         uses: actions/upload-artifact@v4
@@ -43,4 +52,7 @@ jobs:
             v2/reports/turkish-stream-probe.json
             v2/reports/turkish-stream-decode.json
             v2/reports/turkish-stream-review-queue.json
+            v2/reports/epg-integrity.json
+            v2/reports/assets-health.json
+            v2/reports/logo-attribution.json
           if-no-files-found: ignore
