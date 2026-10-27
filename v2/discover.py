@@ -11,6 +11,7 @@ ROOT = pathlib.Path(__file__).resolve().parents[1]
 LIVE = ROOT / "MADSC55_TV_IBO_CALISANLAR_TEST.m3u8"
 SOURCES = pathlib.Path(__file__).parent / "config" / "sources.json"
 OUTPUT = ROOT / "v2" / "reports" / "candidates.json"
+DYNAMIC = ROOT / "v2" / "reports" / "github-source-discovery.json"
 MAX_BYTES = 25_000_000
 
 def fetch(url):
@@ -62,6 +63,15 @@ def main():
     args = p.parse_args()
     live = LIVE.read_text(encoding="utf-8-sig")
     sources = json.loads(SOURCES.read_text(encoding="utf-8"))["sources"]
+    if DYNAMIC.exists():
+        try:
+            dynamic = json.loads(DYNAMIC.read_text(encoding="utf-8"))
+            for index, item in enumerate(dynamic.get("sources", [])[:80]):
+                url = item.get("url", "")
+                if url.startswith("https://") and not any(s["url"] == url for s in sources):
+                    sources.append({"id": "github-auto-" + str(index), "url": url, "scope": "candidate"})
+        except (OSError, ValueError, TypeError):
+            pass
     loaded, errors = [], []
     for source in sources:
         if args.offline:
@@ -70,7 +80,7 @@ def main():
             loaded.append((source["id"], fetch(source["url"])))
         except Exception as exc:
             errors.append({"source": source["id"], "error": type(exc).__name__})
-    result = {"schema": 1, "mode": "read-only", "source_count": len(loaded), "errors": errors, "candidates": discover(loaded, live)}
+    result = {"schema": 1, "mode": "read-only", "configured_and_discovered_sources": len(sources), "source_count": len(loaded), "errors": errors, "candidates": discover(loaded, live)}
     result["candidates"] = result["candidates"][:max(0, args.limit)]
     OUTPUT.parent.mkdir(parents=True, exist_ok=True)
     OUTPUT.write_text(json.dumps(result, ensure_ascii=False, indent=2) + chr(10), encoding="utf-8")
