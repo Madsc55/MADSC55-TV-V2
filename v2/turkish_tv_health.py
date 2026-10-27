@@ -146,6 +146,18 @@ def main():
     for e, c in zip(candidate_items, candidate_checks):
         if c["status"] == "STREAM_RESPONDS_PLAYBACK_UNCONFIRMED":
             candidates.append({**c, "logo_url_sha256": digest(e["logo"]) if e["logo"] else "", "epg_id": e["tvg_id"], "category_suggestion": (e["group"] or "YENİ GELEN").upper()})
+    # Verify short video decoding for responsive new candidates, without changing the playlist.
+    responsive_candidate_indexes = [i for i, item in enumerate(candidate_checks)
+                                    if item["status"] == "STREAM_RESPONDS_PLAYBACK_UNCONFIRMED"]
+    with concurrent.futures.ThreadPoolExecutor(max_workers=4) as pool:
+        candidate_decoders = list(pool.map(lambda i: playback_probe(candidate_items[i]["url"]), responsive_candidate_indexes))
+    for i, decoder_status in zip(responsive_candidate_indexes, candidate_decoders):
+        candidate_checks[i]["decoder_status"] = decoder_status
+    candidates = []
+    for e, check_result in zip(candidate_items, candidate_checks):
+        if check_result["status"] == "STREAM_RESPONDS_PLAYBACK_UNCONFIRMED":
+            candidates.append({**check_result, "logo_url_sha256": digest(e["logo"]) if e["logo"] else "",
+                               "epg_id": e["tvg_id"], "category_suggestion": (e["group"] or "YENİ GELEN").upper()})
     directory, directory_error = satellite_directory()
     report = {"schema": 1, "created_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
               "policy": "READ_ONLY; no playlist writes; network response is not playback confirmation",
@@ -153,12 +165,14 @@ def main():
               "category_counts": dict(sorted(categories.items())), "live_status_counts": dict(Counter(x["status"] for x in live_checks)),
               "live_checks": live_checks, "decoder_sample_size": len(eligible),
               "decoder_status_counts": dict(Counter(x.get("decoder_status", "NOT_SAMPLED") for x in live_checks)), "candidate_status": "NETWORK_RESPONSIVE_ONLY_NOT_APPROVED",
-              "candidate_checked": len(candidate_items), "candidates": candidates, "source_errors": errors,
+              "candidate_checked": len(candidate_items), "candidates": candidates,
+              "candidate_decoder_status_counts": dict(Counter(x.get("decoder_status", "NOT_TESTED") for x in candidates)), "source_errors": errors,
               "turkish_channel_directory": directory, "directory_error": directory_error,
               "directory_note": "Public metadata catalog, not satellite reception verification"}
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(report, ensure_ascii=False, indent=2) + chr(10), encoding="utf-8")
     print("Live entries:", len(live), "Unique IDs:", len(unique), "Candidate probes:", len(candidate_items), "Responsive candidates:", len(candidates))
+    print("New candidate names and decoder evidence:", [(x["name"], x.get("decoder_status", "NOT_TESTED")) for x in candidates])
 
 if __name__ == "__main__":
     main()
