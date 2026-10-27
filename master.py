@@ -23,7 +23,7 @@ def main():
         print("ERROR: Protected playlist not found", file=sys.stderr)
         return 2
     before = sha256(PLAYLIST)
-    scripts = ["v2/turkish_tv_health.py", "v2/assets_health.py"]
+    scripts = ["v2/turkish_tv_health.py", "v2/assets_health.py", "v2/logo_attribution.py"]
     code = 0
     for script in scripts:
         print(f"RUN: {script}", flush=True)
