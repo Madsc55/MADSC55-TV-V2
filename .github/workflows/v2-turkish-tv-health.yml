@@ -44,5 +44,6 @@ jobs:
             v2/reports/logo-attribution.json
             v2/reports/epg-integrity.json
             v2/reports/master-summary.json
+            v2/reports/YEDEKLER_TEST.m3u8
           if-no-files-found: warn
           retention-days: 30
