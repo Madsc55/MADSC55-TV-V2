@@ -9,7 +9,6 @@ from discover import ROOT, LIVE, entries
 
 OUT = ROOT / "v2/reports/current-stream-resolution.json"
 LIMIT = 120
-BATCH_SIZE = 120
 
 def measure(item):
     url = item["url"]
@@ -41,7 +40,9 @@ def main():
         data = json.loads(candidate_path.read_text(encoding="utf-8"))
         candidate_ids = {x["channel_id"].split("@")[0].casefold() for x in data.get("candidates", [])}
     prioritized = [item for key, item in distinct.items() if key in candidate_ids]
-    selected = prioritized[:LIMIT]
+    # Cover alternate-stream identities first; use remaining budget for other channels.
+    remaining = [item for key, item in distinct.items() if key not in candidate_ids]
+    selected = (prioritized + remaining)[:LIMIT]
     with concurrent.futures.ThreadPoolExecutor(max_workers=4) as pool:
         results = list(pool.map(measure, selected))
     report = {"created_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
