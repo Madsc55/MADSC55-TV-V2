@@ -1,0 +1,35 @@
+name: V2 Turkish Stream Candidate Probe
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'v2/turkish_stream_probe.py'
+      - '.github/workflows/v2-turkish-stream-probe.yml'
+  schedule:
+    - cron: '45 5 * * 2,5'
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate scripts
+        run: python -m py_compile v2/turkish_stream_catalog.py v2/turkish_stream_probe.py
+      - name: Refresh Turkish stream candidates
+        run: python v2/turkish_stream_catalog.py
+      - name: Probe candidate HTTP endpoints
+        run: python v2/turkish_stream_probe.py
+      - name: Upload candidate reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: turkish-stream-probe
+          path: |
+            v2/reports/turkish-stream-candidates.json
+            v2/reports/turkish-stream-probe.json
+          if-no-files-found: ignore
