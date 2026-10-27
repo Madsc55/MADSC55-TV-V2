@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Bounded read-only baseline video resolution checks for existing playlist channels."""
+import argparse
 import concurrent.futures
 import datetime
 import hashlib
@@ -29,6 +30,10 @@ def measure(item):
     return result
 
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--batch", type=int, default=0)
+    parser.add_argument("--batch-size", type=int, default=120)
+    args = parser.parse_args()
     channels = list(entries(LIVE.read_text(encoding="utf-8-sig")))
     distinct = {}
     for channel in channels:
@@ -42,12 +47,15 @@ def main():
     prioritized = [item for key, item in distinct.items() if key in candidate_ids]
     # Cover alternate-stream identities first; use remaining budget for other channels.
     remaining = [item for key, item in distinct.items() if key not in candidate_ids]
-    selected = (prioritized + remaining)[:LIMIT]
+    ordered = prioritized + remaining
+    size = max(1, min(120, args.batch_size))
+    selected = ordered[max(0, args.batch) * size:(max(0, args.batch) + 1) * size]
     with concurrent.futures.ThreadPoolExecutor(max_workers=4) as pool:
         results = list(pool.map(measure, selected))
     report = {"created_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
               "policy": "READ_ONLY_BOUNDED_SAMPLE_NO_AUTOMATIC_REPLACEMENT",
-              "playlist_entries": len(channels), "selected": len(selected),
+              "playlist_entries": len(channels), "distinct_channel_ids": len(distinct),
+              "batch": args.batch, "batch_size": size, "selected": len(selected),
               "measured": sum(x["status"] == "MEASURED" for x in results), "results": results}
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
