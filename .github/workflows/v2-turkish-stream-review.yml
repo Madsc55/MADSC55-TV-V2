@@ -57,15 +57,15 @@ jobs:
         run: python v2/turkish_stream_decode.py
       - name: Extract verified NewlistTR channels separately
         run: python v2/newlisttr_extract.py
-      - name: Build separate IBO YEDEKLER test playlist
+      - name: Import user-approved NewlistTR streams into main IBO YEDEKLER
         run: python v2/build_newlisttr_ibo_test.py
-      - name: Publish separate IBO test playlist
+      - name: Publish main IBO playlist backup-category additions
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add MADSC55_IBO_NEWLISTTR_YEDEKLER_TEST.m3u8
+          git add MADSC55_TV_IBO_CALISANLAR_TEST.m3u8
           if ! git diff --cached --quiet; then
-            git commit -m "test: refresh isolated IBO NewlistTR YEDEKLER playlist"
+            git commit -m "playlist: add user-approved NewlistTR streams to YEDEKLER"
             git push origin HEAD:main
           fi
       - name: Measure current playlist stream resolutions in batches
@@ -134,7 +134,7 @@ jobs:
             v2/reports/final-validation-summary.json
             v2/reports/newlisttr-check.json
             v2/reports/newlisttr-decoded-only.m3u8
-            MADSC55_IBO_NEWLISTTR_YEDEKLER_TEST.m3u8
+            MADSC55_TV_IBO_CALISANLAR_TEST.m3u8
             v2/reports/turkish-stream-candidates.json
             v2/reports/turkish-stream-probe.json
             v2/reports/turkish-stream-decode.json
