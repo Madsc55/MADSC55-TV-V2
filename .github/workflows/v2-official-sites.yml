@@ -3,7 +3,8 @@ on:
   workflow_dispatch:
   push:
     paths:
-      - 'v2/official_sites_discovery.py'\n      - 'v2/official_site_gap.py'
+      - 'v2/official_sites_discovery.py'
+      - 'v2/official_site_gap.py'
       - '.github/workflows/v2-official-sites.yml'
   schedule:
     - cron: '12 6 * * 1'
@@ -22,10 +23,14 @@ jobs:
         run: python -m py_compile v2/official_sites_discovery.py
       - name: Discover broadcaster websites
         run: python v2/official_sites_discovery.py
-      - name: Compare official sites with existing playlist\n        run: python v2/official_site_gap.py\n      - name: Save review-only report
+      - name: Compare official sites with existing playlist
+        run: python v2/official_site_gap.py
+      - name: Save review-only report
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: official-tv-sites
-          path: |\n            v2/reports/official-tv-sites.json\n            v2/reports/official-tv-gap.json
+          path: |
+            v2/reports/official-tv-sites.json
+            v2/reports/official-tv-gap.json
           if-no-files-found: ignore
