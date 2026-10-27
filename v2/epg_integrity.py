@@ -37,9 +37,27 @@ def inspect(url, playlist_ids):
             result["status"] = "NOT_XMLTV"
             return result
         channels = {node.get("id") for node in root.iter("channel") if node.get("id")}
-        programmes = sum(1 for node in root.iter("programme"))
+        now = datetime.datetime.now(datetime.timezone.utc)
+        programmes = 0
+        current_programmes = 0
+        matched_programme_ids = set()
+        for node in root.iter("programme"):
+            programmes += 1
+            channel_id = node.get("channel")
+            if channel_id in playlist_ids:
+                matched_programme_ids.add(channel_id)
+            start, stop = node.get("start", ""), node.get("stop", "")
+            try:
+                start_at = datetime.datetime.strptime(start[:14], "%Y%m%d%H%M%S").replace(tzinfo=datetime.timezone.utc)
+                stop_at = datetime.datetime.strptime(stop[:14], "%Y%m%d%H%M%S").replace(tzinfo=datetime.timezone.utc)
+                if start_at <= now <= stop_at:
+                    current_programmes += 1
+            except ValueError:
+                pass
         result.update(status="XMLTV_VALID", channels=len(channels), programmes=programmes,
                       playlist_id_matches=len(channels & playlist_ids),
+                      matched_programme_channel_ids=len(matched_programme_ids),
+                      current_programme_intervals_approx_utc=current_programmes,
                       playlist_id_match_rate=round(len(channels & playlist_ids) / len(playlist_ids), 4) if playlist_ids else None)
     except (OSError, ValueError, ET.ParseError, EOFError, gzip.BadGzipFile, MemoryError) as exc:
         result.update(status="EPG_UNVERIFIED", error_type=type(exc).__name__)
@@ -51,7 +69,7 @@ def main():
     with concurrent.futures.ThreadPoolExecutor(max_workers=3) as pool:
         checks = list(pool.map(lambda url: inspect(url, playlist_ids), sources))
     report = {"created_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
-              "policy": "READ_ONLY; XMLTV structure validated, channel mapping not guaranteed",
+              "policy": "READ_ONLY; programme times are approximate UTC when XMLTV timezone offsets exist; matching IDs do not prove accurate schedules",
               "status_counts": dict(Counter(x["status"] for x in checks)),
               "playlist_distinct_tvg_ids": len(playlist_ids), "sources": checks}
     OUT.parent.mkdir(parents=True, exist_ok=True)
