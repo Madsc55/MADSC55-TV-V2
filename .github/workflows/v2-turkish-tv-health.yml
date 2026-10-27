@@ -1,0 +1,32 @@
+name: V2 Turkish TV Health and Discovery
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'v2/turkish_tv_health.py'
+      - '.github/workflows/v2-turkish-tv-health.yml'
+  schedule:
+    - cron: '23 4,16 * * *'
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Syntax validation
+        run: python -m py_compile v2/discover.py v2/turkish_tv_health.py
+      - name: Audit live channels and discover Turkish TV (read only)
+        run: python v2/turkish_tv_health.py
+      - name: Upload private run artifact (not committed to playlist)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v2-turkish-tv-health
+          path: v2/reports/turkish-tv-health.json
+          if-no-files-found: warn
+          retention-days: 30
