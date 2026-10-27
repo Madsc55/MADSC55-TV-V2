@@ -10,6 +10,7 @@ import urllib.request
 import urllib.error
 import shutil
 import subprocess
+import urllib.parse
 from collections import Counter
 from discover import ROOT, LIVE, SOURCES, fetch, entries
 
@@ -23,6 +24,27 @@ def identity(e):
 
 def digest(url):
     return hashlib.sha256(url.encode()).hexdigest()
+
+def satellite_directory():
+    """Public channel metadata directory: suggestions only, not verified streams."""
+    endpoint = "https://iptv-org.github.io/api/channels.json"
+    try:
+        req = urllib.request.Request(endpoint, headers={"User-Agent": "MADSC55-V2-Audit/1.0"})
+        with urllib.request.urlopen(req, timeout=20) as res:
+            data = res.read(12_000_001)
+        if len(data) > 12_000_000:
+            return [], "DIRECTORY_TOO_LARGE"
+        catalog = json.loads(data)
+        found = []
+        for item in catalog:
+            if item.get("country") != "TR" or item.get("is_nsfw"):
+                continue
+            found.append({"name": str(item.get("name", "")).upper(), "channel_id": item.get("id", ""),
+                          "website_host": urllib.parse.urlsplit(item.get("website") or "").hostname or "",
+                          "status": "DIRECTORY_ONLY_NO_STREAM_VERIFICATION"})
+        return found[:500], None
+    except (OSError, ValueError, TypeError, json.JSONDecodeError) as exc:
+        return [], type(exc).__name__
 
 def check(e):
     url = e["url"]
@@ -95,12 +117,15 @@ def main():
     for e, c in zip(candidate_items, candidate_checks):
         if c["status"] == "STREAM_RESPONDS_PLAYBACK_UNCONFIRMED":
             candidates.append({**c, "logo_url_sha256": digest(e["logo"]) if e["logo"] else "", "epg_id": e["tvg_id"], "category_suggestion": (e["group"] or "YENİ GELEN").upper()})
+    directory, directory_error = satellite_directory()
     report = {"schema": 1, "created_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
               "policy": "READ_ONLY; no playlist writes; network response is not playback confirmation",
               "playlist_entries": len(live), "unique_channel_identities": len(unique),
               "category_counts": dict(sorted(categories.items())), "live_status_counts": dict(Counter(x["status"] for x in live_checks)),
               "live_checks": live_checks, "candidate_status": "NETWORK_RESPONSIVE_ONLY_NOT_APPROVED",
-              "candidate_checked": len(candidate_items), "candidates": candidates, "source_errors": errors}
+              "candidate_checked": len(candidate_items), "candidates": candidates, "source_errors": errors,
+              "turkish_channel_directory": directory, "directory_error": directory_error,
+              "directory_note": "Public metadata catalog, not satellite reception verification"}
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(report, ensure_ascii=False, indent=2) + chr(10), encoding="utf-8")
     print("Live entries:", len(live), "Unique IDs:", len(unique), "Candidate probes:", len(candidate_items), "Responsive candidates:", len(candidates))
