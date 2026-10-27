@@ -5,7 +5,7 @@ from pathlib import Path
 from discover import ROOT, LIVE, entries
 
 SOURCE = ROOT / "v2/reports/newlisttr-decoded-only.m3u8"
-DEST = ROOT / "MADSC55_IBO_NEWLISTTR_YEDEKLER_TEST.m3u8"
+DEST = LIVE
 
 def main():
     original = LIVE.read_text(encoding="utf-8-sig").rstrip() + "\n"
@@ -13,8 +13,11 @@ def main():
     existing_urls = {item["url"] for item in entries(original)}
     added = [item for item in decoded if item["url"] not in existing_urls]
     original_backups = sum("YEDEKLER" in item["group"] for item in entries(original))
+    if original_backups > 2:
+        print("Main playlist already has test backups; refusing duplicate import")
+        return
     backup_group = f"🗂️ YEDEKLER ({original_backups + len(added)})"
-    # Only change category count in the *separate* test playlist.
+    # User-authorized import into main playlist YEDEKLER, preserving original entries.
     original = re.sub(r'group-title="([^"]*YEDEKLER) \(\d+\)"',
                       lambda m: 'group-title="' + backup_group + '"', original)
     lines = [original.rstrip()]
