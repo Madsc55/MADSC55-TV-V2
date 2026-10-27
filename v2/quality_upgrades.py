@@ -28,6 +28,9 @@ def main():
         if e["tvg_id"]:
             by_id.setdefault(e["tvg_id"].split("@")[0].casefold(), []).append(e)
     catalog = json.loads(SOURCE.read_text(encoding="utf-8"))
+    decoded_path = ROOT / "v2/reports/turkish-stream-decode.json"
+    decoded = json.loads(decoded_path.read_text(encoding="utf-8")) if decoded_path.exists() else {"results": []}
+    measurements = {(x.get("channel_id"), x.get("url")): max((v.get("height") or 0 for v in x.get("video_streams", [])), default=0) for x in decoded.get("results", []) if x.get("status") == "SHORT_DECODE_VERIFIED"}
     items = []
     for c in catalog["candidates"]:
         channel = c["channel_id"]
@@ -41,7 +44,9 @@ def main():
                       else "QUALITY_COMPARISON_NEEDED")
         else:
             status = "NEW_CHANNEL_CANDIDATE"
+        measured = measurements.get((channel, c["url"]))
         items.append({"channel_id": channel, "url": c["url"],
+                      "candidate_measured_height": measured,
                       "existing_playlist_entries": len(present),
                       "existing_label_height": best_known,
                       "candidate_declared_height": claimed,
@@ -51,6 +56,7 @@ def main():
               "policy": "READ_ONLY; never replace a stream based on name or declared quality",
               "candidates": items,
               "potential_label_upgrades": sum(x["status"] == "POTENTIAL_QUALITY_UPGRADE" for x in items),
+              "measured_candidate_count": sum(x["candidate_measured_height"] is not None for x in items),
               "existing_channel_alternatives": sum(x["existing_playlist_entries"] > 0 for x in items)}
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
