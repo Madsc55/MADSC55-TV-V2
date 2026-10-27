@@ -1,6 +1,9 @@
 name: V2 Full Decoder Verification (manual, read-only)
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/v2-full-decoder.yml'
   schedule:
     - cron: '15 2 * * 0'
 permissions:
