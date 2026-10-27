@@ -40,7 +40,7 @@ def main():
             break
         try:
             tree = api("https://api.github.com/repos/" + name + "/git/trees/" + urllib.parse.quote(branch, safe="") + "?recursive=1")
-            paths = [x["path"] for x in tree.get("tree", []) if x.get("type") == "blob" and re.search(r"(?i)\\.(m3u8?|txt)$", x.get("path", ""))]
+            paths = [x["path"] for x in tree.get("tree", []) if x.get("type") == "blob" and re.search(r"(?i)\.(m3u8?|txt)$", x.get("path", ""))]
             for path in paths[:4]:
                 if len(found) >= MAX_FILES:
                     break
@@ -53,7 +53,7 @@ def main():
                     if not sample:
                         continue
                     found.append({"repository": name, "path": path, "url": raw, "entries": len(sample),
-                                  "tr_name_hints": sum(bool(re.search(r"(?i)\\b(trt|türk|turk|kanal|haber)\\b", x["name"])) for x in sample),
+                                  "tr_name_hints": sum(bool(re.search(r"(?i)\b(trt|türk|turk|kanal|haber)\b", x["name"])) for x in sample),
                                   "status": "SOURCE_PARSED_STREAMS_NOT_PLAYBACK_VERIFIED"})
                 except Exception as exc:
                     errors.append({"repository": name, "path": path, "error": type(exc).__name__})
