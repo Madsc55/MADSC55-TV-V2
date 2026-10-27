@@ -1,0 +1,23 @@
+name: V2 Playlist Safety Invariants
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'MADSC55_TV_IBO_CALISANLAR_TEST.m3u8'
+      - 'v2/test_playlist_invariants.py'
+      - '.github/workflows/v2-playlist-safety.yml'
+permissions:
+  contents: read
+jobs:
+  protect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compile tests
+        run: python -m py_compile v2/test_playlist_invariants.py
+      - name: Verify channel counts and original backups
+        run: python v2/test_playlist_invariants.py
