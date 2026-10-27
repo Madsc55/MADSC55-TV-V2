@@ -27,7 +27,7 @@ permissions:
 jobs:
   review:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 65
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -51,8 +51,27 @@ jobs:
         run: python v2/turkish_stream_probe.py
       - name: Short decoder verification
         run: python v2/turkish_stream_decode.py
-      - name: Measure current playlist stream resolutions
-        run: python v2/current_stream_resolution.py
+      - name: Measure current playlist stream resolutions in batches
+        run: |
+          for batch in $(seq 0 9); do
+            python v2/current_stream_resolution.py --batch "$batch" --batch-size 120
+            cp v2/reports/current-stream-resolution.json "v2/reports/current-stream-resolution-batch-${batch}.json"
+          done
+      - name: Merge baseline batches
+        run: |
+          python - <<'PY'
+          import glob, json
+          from pathlib import Path
+          files = sorted(glob.glob('v2/reports/current-stream-resolution-batch-*.json'))
+          batches = [json.loads(Path(p).read_text()) for p in files]
+          merged = dict(batches[0])
+          merged['results'] = [x for batch in batches for x in batch['results']]
+          merged['selected'] = len(merged['results'])
+          merged['measured'] = sum(x['status'] == 'MEASURED' for x in merged['results'])
+          merged['batches'] = len(batches)
+          Path('v2/reports/current-stream-resolution.json').write_text(json.dumps(merged, ensure_ascii=False, indent=2) + '\\n')
+          print('Baseline coverage:', merged['selected'], 'of', merged['distinct_channel_ids'])
+          PY
       - name: Attach measured quality to upgrade report
         run: python v2/quality_upgrades.py
       - name: Build manual review queue
@@ -85,6 +104,7 @@ jobs:
             v2/reports/stream-url-collisions.json
             v2/reports/quality-upgrades.json
             v2/reports/current-stream-resolution.json
+            v2/reports/current-stream-resolution-batch-*.json
             v2/reports/candidate-assets.json
             v2/reports/frame-collisions.json
             v2/reports/turkish-stream-candidates.json
