@@ -1,0 +1,36 @@
+name: V2 GitHub Turkish M3U Source Discovery
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '25 5 * * 1,4'
+  push:
+    paths:
+      - 'v2/github_source_discovery.py'
+      - '.github/workflows/v2-github-source-discovery.yml'
+permissions:
+  contents: read
+concurrency:
+  group: v2-github-source-discovery
+  cancel-in-progress: false
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check syntax
+        run: python -m py_compile v2/github_source_discovery.py
+      - name: Search GitHub repositories and inspect M3U files
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python v2/github_source_discovery.py
+      - name: Save discovered sources for review
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: github-turkish-m3u-source-discovery
+          path: v2/reports/github-source-discovery.json
+          if-no-files-found: warn
