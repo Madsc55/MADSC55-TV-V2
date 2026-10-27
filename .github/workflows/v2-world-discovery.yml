@@ -1,0 +1,26 @@
+name: V2 Worldwide Channel Discovery (read-only)
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 4,16 * * *'
+permissions:
+  contents: read
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Discover without changing playlist
+        run: python v2/discover.py
+      - name: Upload candidate report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v2-channel-candidates
+          path: v2/reports/candidates.json
+          if-no-files-found: warn
+          retention-days: 14
