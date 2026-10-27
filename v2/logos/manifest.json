@@ -44,7 +44,7 @@
   {
     "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Dmax%20tv-channel.png",
     "status": "failed",
-    "reason": "HTTPError"
+    "reason": "HTTPError: HTTP Error 429: Too Many Requests (015d12c)"
   },
   {
     "url": "https://d3ckc0u56niq67.cloudfront.net/conf/images/a2_tv_e5s.png",
@@ -115,7 +115,7 @@
   {
     "url": "https://goncatv.com.tr/img/logo.jpg",
     "status": "failed",
-    "reason": "URLError"
+    "reason": "URLError: <urlopen error [Errno -2] Name or service not known>"
   },
   {
     "url": "https://i.ibb.co/0j6pWsPt/Liderhaber.png",
@@ -930,7 +930,7 @@
   {
     "url": "https://upload.wikimedia.org/wikipedia/commons/9/92/Tlc_logo_discovery.jpg",
     "status": "failed",
-    "reason": "HTTPError"
+    "reason": "HTTPError: HTTP Error 429: Too Many Requests (015d12c)"
   },
   {
     "url": "https://upload.wikimedia.org/wikipedia/commons/9/9a/DHA_logo.png",
@@ -947,27 +947,33 @@
   {
     "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/TRT_EBA_TV_Ortaokul_logo.svg/500px-TRT_EBA_TV_Ortaokul_logo.svg.png",
     "status": "failed",
-    "reason": "HTTPError"
+    "reason": "HTTPError: HTTP Error 404: Not Found"
   },
   {
     "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/TRT_Kurd%C3%AE_logo.svg/960px-TRT_Kurd%C3%AE_logo.svg.png",
-    "status": "failed",
-    "reason": "HTTPError"
+    "file": "v2/logos/bff6c94dc21226bc2387.webp",
+    "sha256": "a165313ada791c062c2f2be36b781025dbc1f848cac8f46cec6adc1966c33289",
+    "status": "saved",
+    "downloaded_from": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/TRT_Kurd%C3%AE_logo.svg/960px-TRT_Kurd%C3%AE_logo.svg.png"
   },
   {
     "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/TRT_EBA_TV_logo.svg/960px-TRT_EBA_TV_logo.svg.png",
-    "status": "failed",
-    "reason": "HTTPError"
+    "file": "v2/logos/f8c6b54b37eea633136e.webp",
+    "sha256": "77551ee597ff9f699a19445a52c9ab7eba74673208ff5053ba1fe2c9269995df",
+    "status": "saved",
+    "downloaded_from": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/TRT_EBA_TV_logo.svg/960px-TRT_EBA_TV_logo.svg.png"
   },
   {
     "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/TBMM_TV_logo.svg/960px-TBMM_TV_logo.svg.png",
     "status": "failed",
-    "reason": "HTTPError"
+    "reason": "HTTPError: HTTP Error 404: Not Found"
   },
   {
     "url": "https://upload.wikimedia.org/wikipedia/tr/2/2b/Spacetoon_logo.png",
-    "status": "failed",
-    "reason": "HTTPError"
+    "file": "v2/logos/e3f1fc3029537c30c059.png",
+    "sha256": "5b18ee69422d0b50ff406577f8e6abbadeb1ba92dcf0b54f0c8e8d25effb2704",
+    "status": "saved",
+    "downloaded_from": "https://upload.wikimedia.org/wikipedia/tr/2/2b/Spacetoon_logo.png"
   },
   {
     "url": "https://wsrv.nl/?url=raw.githubusercontent.com%2FMadsc55%2Fmadsc-tv%2Fmain%2Flogos%2Fetv-kayseri.svg&output=png",
@@ -1008,7 +1014,7 @@
   {
     "url": "https://www.dsmart.com.tr/api/v1/public/images/kanallar/tay_tv.png",
     "status": "failed",
-    "reason": "HTTPError"
+    "reason": "HTTPError: HTTP Error 403: Forbidden"
   },
   {
     "url": "https://www.google.com/s2/favicons?domain=lovenature.com&sz=256",
