@@ -8,7 +8,7 @@ import subprocess
 from discover import ROOT, LIVE, entries
 
 OUT = ROOT / "v2/reports/current-stream-resolution.json"
-LIMIT = 24
+LIMIT = 120
 
 def measure(item):
     url = item["url"]
@@ -34,7 +34,12 @@ def main():
     for channel in channels:
         if channel["tvg_id"] and channel["url"].startswith(("http://", "https://")):
             distinct.setdefault(channel["tvg_id"].split("@")[0].casefold(), channel)
-    selected = list(distinct.values())[:LIMIT]
+    candidate_path = ROOT / "v2/reports/turkish-stream-candidates.json"
+    candidate_ids = set()
+    if candidate_path.exists():
+        data = json.loads(candidate_path.read_text(encoding="utf-8"))
+        candidate_ids = {x["channel_id"].split("@")[0].casefold() for x in data.get("candidates", [])}
+    selected = [item for key, item in distinct.items() if key in candidate_ids][:LIMIT]
     with concurrent.futures.ThreadPoolExecutor(max_workers=4) as pool:
         results = list(pool.map(measure, selected))
     report = {"created_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
