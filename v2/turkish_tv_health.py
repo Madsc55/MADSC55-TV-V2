@@ -158,6 +158,21 @@ def main():
         if check_result["status"] == "STREAM_RESPONDS_PLAYBACK_UNCONFIRMED":
             candidates.append({**check_result, "logo_url_sha256": digest(e["logo"]) if e["logo"] else "",
                                "epg_id": e["tvg_id"], "category_suggestion": (e["group"] or "YENİ GELEN").upper()})
+    # Export a standalone IBO-compatible YEDEKLER trial list; never overwrite existing backups.
+    def m3u_attr(value):
+        return str(value or "").replace("\\r", " ").replace("\\n", " ").replace('"', "'")
+    trial = ["#EXTM3U"]
+    for e, check_result in zip(candidate_items, candidate_checks):
+        if check_result.get("decoder_status") != "DECODABLE_VIDEO":
+            continue
+        if not e["url"].startswith(("https://", "http://")):
+            continue
+        trial.append(f'#EXTINF:-1 tvg-id="{m3u_attr(e["tvg_id"])}" tvg-logo="{m3u_attr(e["logo"])}" group-title="YEDEKLER TEST", {m3u_attr(e["name"])}')
+        trial.append(e["url"])
+    trial_path = ROOT / "v2" / "reports" / "YEDEKLER_TEST.m3u8"
+    trial_path.parent.mkdir(parents=True, exist_ok=True)
+    trial_path.write_text("\\n".join(trial) + "\\n", encoding="utf-8")
+    print("YEDEKLER trial playlist decoded-video entries:", (len(trial) - 1) // 2)
     directory, directory_error = satellite_directory()
     report = {"schema": 1, "created_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
               "policy": "READ_ONLY; no playlist writes; network response is not playback confirmation",
