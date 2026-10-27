@@ -31,8 +31,8 @@ def satellite_directory():
     try:
         req = urllib.request.Request(endpoint, headers={"User-Agent": "MADSC55-V2-Audit/1.0"})
         with urllib.request.urlopen(req, timeout=20) as res:
-            data = res.read(12_000_001)
-        if len(data) > 12_000_000:
+            data = res.read(30_000_001)
+        if len(data) > 30_000_000:
             return [], "DIRECTORY_TOO_LARGE"
         catalog = json.loads(data)
         found = []
