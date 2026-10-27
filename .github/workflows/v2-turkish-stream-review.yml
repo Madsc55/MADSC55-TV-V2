@@ -1,9 +1,12 @@
-name: V2 Turkish Stream Review Queue
+name: V2 Turkish Stream End-to-End Discovery
 on:
   workflow_dispatch:
   push:
     paths:
       - 'v2/turkish_stream_review.py'
+      - 'v2/turkish_stream_catalog.py'
+      - 'v2/turkish_stream_probe.py'
+      - 'v2/turkish_stream_decode.py'
       - '.github/workflows/v2-turkish-stream-review.yml'
   schedule:
     - cron: '10 6 * * 2,5'
@@ -24,6 +27,8 @@ jobs:
         run: python -m py_compile v2/turkish_stream_catalog.py v2/turkish_stream_probe.py v2/turkish_stream_decode.py v2/turkish_stream_review.py
       - name: Refresh candidates
         run: python v2/turkish_stream_catalog.py
+      - name: HTTP candidate probe
+        run: python v2/turkish_stream_probe.py
       - name: Short decoder verification
         run: python v2/turkish_stream_decode.py
       - name: Build manual review queue
@@ -35,6 +40,7 @@ jobs:
           name: turkish-stream-review
           path: |
             v2/reports/turkish-stream-candidates.json
+            v2/reports/turkish-stream-probe.json
             v2/reports/turkish-stream-decode.json
             v2/reports/turkish-stream-review-queue.json
           if-no-files-found: ignore
