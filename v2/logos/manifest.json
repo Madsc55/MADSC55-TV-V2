@@ -43,9 +43,8 @@
   },
   {
     "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Dmax%20tv-channel.png",
-    "file": "v2/logos/f4d15677daca3b715390.png",
-    "sha256": "f5cf476f6aca2b65b3fb9004bff87199768e7bb0762e65eeadfb8897e1409fe9",
-    "status": "saved"
+    "status": "failed",
+    "reason": "HTTPError"
   },
   {
     "url": "https://d3ckc0u56niq67.cloudfront.net/conf/images/a2_tv_e5s.png",
@@ -918,20 +917,20 @@
   },
   {
     "url": "https://tvplus.com.tr/_next/image?url=https%3A%2F%2Fgbzottvsc20.tvplus.com.tr%3A33207%2FCPS%2Fimages%2Funiversal%2Ffilm%2Flogo%2F202506%2F20250623%2F94%2F1009257324535eb9542c_op_0_XL.webp&w=128&q=75",
-    "file": "v2/logos/bfebb1c2a43ef76b5684.jpg",
-    "sha256": "aeafd0ebd71e59cd7e36eda2a43b933c055cc9cca571e516bb330b6ee126596a",
+    "file": "v2/logos/bfebb1c2a43ef76b5684.webp",
+    "sha256": "6911dd10afda11a23a349ac2445cac6a61ec9d8adca30e953d4e7f8fc0992d02",
     "status": "saved"
   },
   {
     "url": "https://upload.wikimedia.org/wikipedia/commons/2/23/TRT_çocuk_logo.png",
-    "status": "failed",
-    "reason": "UnicodeEncodeError"
+    "file": "v2/logos/fad81074f931f9daef10.png",
+    "sha256": "408b3be62513ec3cbc33cc23ddaaa5da63bd531e75ddd027f81c53b08d28d637",
+    "status": "saved"
   },
   {
     "url": "https://upload.wikimedia.org/wikipedia/commons/9/92/Tlc_logo_discovery.jpg",
-    "file": "v2/logos/2786b1c55e97a86fa5bc.jpg",
-    "sha256": "91f666f2d8cfba75f12cb2c1bb4d2af8a186fe27c8aa452b8295aa563d8e4602",
-    "status": "saved"
+    "status": "failed",
+    "reason": "HTTPError"
   },
   {
     "url": "https://upload.wikimedia.org/wikipedia/commons/9/9a/DHA_logo.png",
@@ -941,27 +940,24 @@
   },
   {
     "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Radio_m2o_-_Logo_2019.svg/500px-Radio_m2o_-_Logo_2019.svg.png",
-    "file": "v2/logos/16470920384721fb88f7.png",
-    "sha256": "b7f4f35984b84b013a659ea5bdb6b1b8ca2e144193df1ffa658fef9a6d911ad6",
+    "file": "v2/logos/16470920384721fb88f7.webp",
+    "sha256": "5a4ce1d5c33053615bb7ca8bbd959a846f0b43eae18f16037459196f5506f499",
     "status": "saved"
   },
   {
     "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/TRT_EBA_TV_Ortaokul_logo.svg/500px-TRT_EBA_TV_Ortaokul_logo.svg.png",
-    "file": "v2/logos/dc17969087015b85e3d0.png",
-    "sha256": "f4b2926cb98267bc6a89860f12bdbd6a2cf7b8992b63d5e751645419310b1301",
-    "status": "saved"
+    "status": "failed",
+    "reason": "HTTPError"
   },
   {
     "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/TRT_Kurd%C3%AE_logo.svg/960px-TRT_Kurd%C3%AE_logo.svg.png",
-    "file": "v2/logos/bff6c94dc21226bc2387.png",
-    "sha256": "482761bf33141cec89af2ea647fc699e764cb119171ce8c9ae32c32c6dc40b53",
-    "status": "saved"
+    "status": "failed",
+    "reason": "HTTPError"
   },
   {
     "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/TRT_EBA_TV_logo.svg/960px-TRT_EBA_TV_logo.svg.png",
-    "file": "v2/logos/f8c6b54b37eea633136e.png",
-    "sha256": "6e9820f13893616a3a5b8ae11471cecbfb3d57e80d370ad286db1d358ae18e46",
-    "status": "saved"
+    "status": "failed",
+    "reason": "HTTPError"
   },
   {
     "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/TBMM_TV_logo.svg/960px-TBMM_TV_logo.svg.png",
