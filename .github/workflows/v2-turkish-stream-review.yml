@@ -29,8 +29,9 @@ on:
 concurrency:
   group: v2-turkish-stream-review-main
   cancel-in-progress: false
+  queue: max
 permissions:
-  contents: write
+  contents: read
 jobs:
   review:
     runs-on: ubuntu-latest
