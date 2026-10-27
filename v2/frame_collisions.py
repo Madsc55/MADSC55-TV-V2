@@ -31,10 +31,12 @@ def main():
     candidates = [x for x in decoded["results"] if x["status"] == "SHORT_DECODE_VERIFIED" and x.get("url")][:32]
     with concurrent.futures.ThreadPoolExecutor(max_workers=4) as pool:
         results = list(pool.map(fingerprint, candidates))
-    groups = {}\n    channel_ids = {}
+    groups = {}
+    channel_ids = {}
     for item in results:
         if item.get("frame_sha256"):
-            groups.setdefault(item["frame_sha256"], []).append(item["url_sha256"])\n            channel_ids.setdefault(item["frame_sha256"], set()).add(item["channel_id"])
+            groups.setdefault(item["frame_sha256"], []).append(item["url_sha256"])
+            channel_ids.setdefault(item["frame_sha256"], set()).add(item["channel_id"])
     report = {"created_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
               "policy": "READ_ONLY_THREE_FRAME_HASH; matching samples are only possible duplicate evidence, not identity proof",
               "sampled": len(results),
