@@ -31,6 +31,13 @@ def main():
     decoded_path = ROOT / "v2/reports/turkish-stream-decode.json"
     decoded = json.loads(decoded_path.read_text(encoding="utf-8")) if decoded_path.exists() else {"results": []}
     measurements = {(x.get("channel_id"), x.get("url")): max((v.get("height") or 0 for v in x.get("video_streams", [])), default=0) for x in decoded.get("results", []) if x.get("status") == "SHORT_DECODE_VERIFIED"}
+    baseline_path = ROOT / "v2/reports/current-stream-resolution.json"
+    baseline = json.loads(baseline_path.read_text(encoding="utf-8")) if baseline_path.exists() else {"results": []}
+    measured_current = {}
+    for sample in baseline.get("results", []):
+        if sample.get("status") == "MEASURED" and sample.get("tvg_id"):
+            k = sample["tvg_id"].split("@")[0].casefold()
+            measured_current[k] = max(measured_current.get(k, 0), sample["height"])
     items = []
     for c in catalog["candidates"]:
         channel = c["channel_id"]
@@ -45,8 +52,12 @@ def main():
         else:
             status = "NEW_CHANNEL_CANDIDATE"
         measured = measurements.get((channel, c["url"]))
+        current_measured = measured_current.get(channel.split("@")[0].casefold())
+        measured_comparison = ("MEASURED_CANDIDATE_HIGHER" if measured and current_measured and measured > current_measured else "MEASURED_NO_UPGRADE" if measured and current_measured else "INSUFFICIENT_MEASUREMENTS")
         items.append({"channel_id": channel, "url": c["url"],
                       "candidate_measured_height": measured,
+                      "current_measured_height": current_measured,
+                      "measured_comparison": measured_comparison,
                       "existing_playlist_entries": len(present),
                       "existing_label_height": best_known,
                       "candidate_declared_height": claimed,
