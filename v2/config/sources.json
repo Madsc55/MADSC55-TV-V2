@@ -19,6 +19,18 @@
       "kind": "m3u",
       "url": "https://iptv-org.github.io/iptv/countries/se.m3u",
       "scope": "SE"
+    },
+    {
+      "id": "free-tv-independent",
+      "kind": "m3u",
+      "url": "https://raw.githubusercontent.com/Free-TV/IPTV/master/playlist.m3u8",
+      "scope": "world"
+    },
+    {
+      "id": "turkiye-community-independent",
+      "kind": "m3u",
+      "url": "https://raw.githubusercontent.com/omerdenizhan/IPTV-M3U/refs/heads/main/m3u/turkiye.m3u",
+      "scope": "TR"
     }
   ]
 }
