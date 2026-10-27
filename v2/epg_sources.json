@@ -1,0 +1,9 @@
+{
+  "sources": [
+    "https://raw.githubusercontent.com/trology85/iptv-epg-turkey/main/epg/turksat_epg.xml.gz",
+    "https://epgshare01.online/epgshare01/epg_ripper_TR1.xml.gz",
+    "https://epgshare01.online/epgshare01/epg_ripper_TR3.xml.gz",
+    "https://www.open-epg.com/files/turkey1.xml.gz",
+    "https://www.open-epg.com/files/turkey2.xml.gz"
+  ]
+}
