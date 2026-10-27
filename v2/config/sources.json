@@ -43,6 +43,12 @@
       "kind": "m3u",
       "url": "https://raw.githubusercontent.com/ilyswch/IPTV-TR/main/box.m3u",
       "scope": "TR"
+    },
+    {
+      "id": "akan1970-newlisttr",
+      "kind": "m3u",
+      "url": "https://gist.githubusercontent.com/akan1970/040f6a07995df715c74ef1268b57c92d/raw/4f491cf9bd165340f4008c64dea263d119542eeb/NewlistTR.m3u",
+      "scope": "TR"
     }
   ]
 }
