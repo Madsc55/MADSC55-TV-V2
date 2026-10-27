@@ -1,5 +1,9 @@
 name: V2 Logo Backup (non-destructive)
 on:
+  push:
+    paths:
+      - '.github/workflows/v2-logo-backup.yml'
+      - 'v2/mirror_logos.py'
   workflow_dispatch:
   schedule:
     - cron: '29 2 * * 0'
