@@ -31,7 +31,7 @@ def entries(data):
         if line.startswith("#EXTINF:"):
             name = line.rsplit(",", 1)[-1].strip()
             def field(label):
-                m = re.search(r'\\b' + re.escape(label) + r'="([^"]*)"', line)
+                m = re.search(r'\b' + re.escape(label) + r'="([^"]*)"', line)
                 return m.group(1).strip() if m else ""
             pending = {"name": name, "tvg_id": field("tvg-id"), "logo": field("tvg-logo"), "group": field("group-title")}
         elif line and not line.startswith("#"):
