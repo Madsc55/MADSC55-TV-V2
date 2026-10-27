@@ -24,30 +24,31 @@ def fetch(url):
     return data.decode("utf-8-sig", errors="replace")
 
 def entries(data):
-    lines = data.splitlines()
-    for i, line in enumerate(lines):
-        if not line.startswith("#EXTINF:"):
-            continue
-        name = line.rsplit(",", 1)[-1].strip()
-        match = re.search(r'tvg-id="([^"]*)"', line)
-        tvg_id = match.group(1).strip() if match else ""
-        logo = re.search(r'tvg-logo="([^"]*)"', line)
-        group = re.search(r'group-title="([^"]*)"', line)
-        url = next((s.strip() for s in lines[i+1:] if s.strip() and not s.startswith("#")), "")
-        if not url or not url.startswith(("https://", "http://")):
-            continue
-        yield {"name": name, "tvg_id": tvg_id, "logo": logo.group(1) if logo else "", "group": group.group(1) if group else "", "url": url}
+    """Parse adjacent EXTINF/stream pairs in linear time."""
+    pending = None
+    for raw in data.splitlines():
+        line = raw.strip()
+        if line.startswith("#EXTINF:"):
+            name = line.rsplit(",", 1)[-1].strip()
+            def field(label):
+                m = re.search(r'\\b' + re.escape(label) + r'="([^"]*)"', line)
+                return m.group(1).strip() if m else ""
+            pending = {"name": name, "tvg_id": field("tvg-id"), "logo": field("tvg-logo"), "group": field("group-title")}
+        elif line and not line.startswith("#"):
+            if pending is not None and line.startswith(("https://", "http://")):
+                yield {**pending, "url": line}
+            pending = None
 
 def key(entry):
     return (entry["tvg_id"].casefold(), entry["name"].casefold())
 
 def discover(source_texts, live_text):
     existing_urls = {e["url"] for e in entries(live_text)}
-    existing_keys = {key(e) for e in entries(live_text)}
+    existing_keys = {key(e) for e in entries(live_text) if e["tvg_id"]}
     candidates, seen = [], set()
     for source_id, content in source_texts:
         for e in entries(content):
-            if e["url"] in existing_urls or key(e) in existing_keys or e["url"] in seen:
+            if e["url"] in existing_urls or (e["tvg_id"] and key(e) in existing_keys) or e["url"] in seen:
                 continue
             seen.add(e["url"])
             # Do not persist stream URLs/tokens in public reports.
@@ -56,7 +57,7 @@ def discover(source_texts, live_text):
 
 def main():
     p = argparse.ArgumentParser()
-    p.add_argument("--offline", action="store_true", help="Do not access external sources")
+    p.add_argument("--offline", action="store_true", help="Do not access external sources")\n    p.add_argument("--limit", type=int, default=10000, help="Maximum candidate count")
     args = p.parse_args()
     live = LIVE.read_text(encoding="utf-8-sig")
     sources = json.loads(SOURCES.read_text(encoding="utf-8"))["sources"]
@@ -69,7 +70,7 @@ def main():
         except Exception as exc:
             errors.append({"source": source["id"], "error": type(exc).__name__})
     result = {"schema": 1, "mode": "read-only", "source_count": len(loaded), "errors": errors, "candidates": discover(loaded, live)}
-    OUTPUT.parent.mkdir(parents=True, exist_ok=True)
+    result["candidates"] = result["candidates"][:max(0, args.limit)]\n    OUTPUT.parent.mkdir(parents=True, exist_ok=True)
     OUTPUT.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"Sources: {len(loaded)} | Candidates: {len(result['candidates'])} | Errors: {len(errors)}")
     if not args.offline and not loaded:
