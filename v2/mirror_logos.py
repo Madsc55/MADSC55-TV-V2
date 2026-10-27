@@ -5,6 +5,8 @@ import json
 import pathlib
 import re
 import urllib.request
+import urllib.parse
+import time
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 playlist = (ROOT / "MADSC55_TV_IBO_CALISANLAR_TEST.m3u8").read_text(encoding="utf-8-sig")
 urls = sorted(set(re.findall(r'tvg-logo="(https?://[^"]+)"', playlist)))
@@ -14,8 +16,9 @@ manifest = []
 for url in urls:
     key = hashlib.sha256(url.encode()).hexdigest()[:20]
     try:
-        req = urllib.request.Request(url, headers={"User-Agent":"Mozilla/5.0 MADSC55-TV-V2"})
-        with urllib.request.urlopen(req, timeout=15) as response:
+        safe_url = urllib.parse.quote(url, safe=":/?&=%#@+;,")
+        req = urllib.request.Request(safe_url, headers={"User-Agent":"Mozilla/5.0 (compatible; MADSC55-TV-V2/1.0)", "Accept":"image/avif,image/webp,image/png,image/jpeg,image/svg+xml,image/*;q=0.8,*/*;q=0.5"})
+        with urllib.request.urlopen(req, timeout=30) as response:
             mime = response.headers.get("Content-Type", "").split(";")[0].lower()
             if mime not in {"image/png","image/jpeg","image/webp","image/gif","image/svg+xml"}:
                 raise ValueError("unexpected MIME")
