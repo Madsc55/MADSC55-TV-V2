@@ -12,9 +12,9 @@ from collections import Counter
 from discover import ROOT, LIVE, SOURCES, fetch, entries
 
 OUT = ROOT / "v2" / "reports" / "turkish-tv-health.json"
-RADIO = re.compile(r"\\b(radio|radyo|fm|audio only)\\b", re.I)
-LOCKED = re.compile(r"\\b(drm|widevine|playready|encrypted|şifreli|sifreli)\\b", re.I)
-TURKISH = re.compile(r"\\b(turk|türk|turkiye|türkiye|trt|atv|show tv|kanal d|star tv|now tv|haber|ulusal)\\b", re.I)
+RADIO = re.compile(r"\b(radio|radyo|fm|audio only)\b", re.I)
+LOCKED = re.compile(r"\b(drm|widevine|playready|encrypted|şifreli|sifreli)\b", re.I)
+TURKISH = re.compile(r"\b(turk|türk|turkiye|türkiye|trt|atv|show tv|kanal d|star tv|now tv|haber|ulusal)\b", re.I)
 
 def identity(e):
     return (e["tvg_id"] or e["name"]).strip().casefold()
@@ -43,7 +43,7 @@ def check(e):
         if status in (200, 206) and (manifest or transport):
             result["status"] = "STREAM_RESPONDS_PLAYBACK_UNCONFIRMED"
             if "#EXT-X-STREAM-INF" in txt:
-                resolutions = re.findall(r"RESOLUTION=(\\d+x\\d+)", txt)
+                resolutions = re.findall(r"RESOLUTION=(\d+x\d+)", txt)
                 if resolutions:
                     result["resolution"] = ",".join(sorted(set(resolutions)))
         else:
