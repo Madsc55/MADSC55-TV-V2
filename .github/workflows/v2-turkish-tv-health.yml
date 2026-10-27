@@ -27,6 +27,8 @@ jobs:
           python-version: '3.12'
       - name: Install YouTube metadata verifier
         run: python -m pip install "yt-dlp>=2026.1"
+      - name: Install video decoder
+        run: sudo apt-get update -qq && sudo apt-get install -y ffmpeg
       - name: Syntax validation
         run: python -m py_compile master.py v2/discover.py v2/turkish_tv_health.py v2/assets_health.py v2/logo_attribution.py v2/epg_integrity.py v2/master_summary.py v2/test_offline.py
       - name: Offline regression tests
