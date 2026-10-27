@@ -30,9 +30,9 @@ def main():
             continue
         if stream.get("is_nsfw"):
             continue
-        if stream.get("http_referrer") or stream.get("user_agent"):
+        if stream.get("referrer") or stream.get("http_referrer") or stream.get("user_agent"):
             header_required.append({"channel_id": channel, "url": url,
-                "requires_referrer": bool(stream.get("http_referrer")),
+                "requires_referrer": bool(stream.get("referrer") or stream.get("http_referrer")),
                 "requires_user_agent": bool(stream.get("user_agent")),
                 "status": "SEPARATE_REVIEW_NOT_AUTO_IMPORTABLE"})
             seen.add(url)
@@ -41,6 +41,7 @@ def main():
         candidates.append({"channel_id": channel, "url": url,
                            "already_present_by_id": channel.split("@")[0].casefold() in known_ids,
                            "review_priority": "EXISTING_CHANNEL_ALTERNATE_STREAM" if channel.split("@")[0].casefold() in known_ids else "NEW_CHANNEL_CANDIDATE",
+                           "declared_quality": stream.get("quality"),
                            "status": "CANDIDATE_NOT_PLAYBACK_VERIFIED"})
     report = {"created_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
               "source": API, "policy": "REVIEW_ONLY_NO_PLAYLIST_WRITES",
