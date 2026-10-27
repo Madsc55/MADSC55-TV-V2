@@ -70,6 +70,7 @@ def main():
     live = list(entries(LIVE.read_text(encoding="utf-8-sig")))
     categories = Counter(e["group"] or "KATEGORİSİZ" for e in live)
     unique = {identity(e) for e in live}
+    live_urls = {e["url"] for e in live}
     sources = json.loads(SOURCES.read_text(encoding="utf-8"))["sources"]
     discovered = {}
     errors = []
@@ -79,7 +80,7 @@ def main():
                 if RADIO.search(e["name"] + " " + e["group"]) or LOCKED.search(e["name"] + " " + e["group"]):
                     continue
                 is_tr = source.get("scope") == "TR" or e["tvg_id"].lower().endswith(".tr") or bool(TURKISH.search(e["name"] + " " + e["group"]))
-                if not is_tr or identity(e) in unique or e["url"] in {x["url"] for x in live}:
+                if not is_tr or identity(e) in unique or e["url"] in live_urls:
                     continue
                 discovered.setdefault((identity(e), digest(e["url"])), e)
         except Exception as exc:
