@@ -41,6 +41,8 @@ def main():
         "epg_xmltv_status_counts": epg.get("status_counts", {}),
         "epg_playlist_id_matches_by_source": [x.get("playlist_id_matches") for x in epg.get("sources", [])],
         "epg_playlist_id_match_rates_by_source": [x.get("playlist_id_match_rate") for x in epg.get("sources", [])],
+        "epg_programme_channel_coverage_by_source": [x.get("matched_programme_channel_ids") for x in epg.get("sources", [])],
+        "epg_current_programme_intervals_by_source": [x.get("current_programme_intervals") for x in epg.get("sources", [])],
         "asset_reachability_status_counts": assets.get("status_counts", {}),
         "logo_reachability_counts": logos.get("reachability_counts", {}),
         "logo_format_counts": logos.get("format_counts", {}),
