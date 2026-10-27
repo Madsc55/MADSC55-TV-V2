@@ -1,0 +1,40 @@
+name: V2 Turkish Stream Review Queue
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'v2/turkish_stream_review.py'
+      - '.github/workflows/v2-turkish-stream-review.yml'
+  schedule:
+    - cron: '10 6 * * 2,5'
+permissions:
+  contents: read
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install ffprobe
+        run: sudo apt-get update -qq && sudo apt-get install -y ffmpeg
+      - name: Validate scripts
+        run: python -m py_compile v2/turkish_stream_catalog.py v2/turkish_stream_probe.py v2/turkish_stream_decode.py v2/turkish_stream_review.py
+      - name: Refresh candidates
+        run: python v2/turkish_stream_catalog.py
+      - name: Short decoder verification
+        run: python v2/turkish_stream_decode.py
+      - name: Build manual review queue
+        run: python v2/turkish_stream_review.py
+      - name: Save review report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: turkish-stream-review
+          path: |
+            v2/reports/turkish-stream-candidates.json
+            v2/reports/turkish-stream-decode.json
+            v2/reports/turkish-stream-review-queue.json
+          if-no-files-found: ignore
