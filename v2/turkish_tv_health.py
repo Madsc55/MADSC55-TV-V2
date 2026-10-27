@@ -11,6 +11,7 @@ import urllib.error
 import shutil
 import subprocess
 import urllib.parse
+import shutil
 from collections import Counter
 from discover import ROOT, LIVE, SOURCES, fetch, entries
 
@@ -45,6 +46,22 @@ def satellite_directory():
         return found[:500], None
     except (OSError, ValueError, TypeError, json.JSONDecodeError) as exc:
         return [], type(exc).__name__
+
+def playback_probe(url):
+    """Decode a short media sample with ffprobe; no downloads or recording."""
+    if not shutil.which("ffprobe"):
+        return "DECODER_UNAVAILABLE"
+    try:
+        p = subprocess.run(["ffprobe", "-v", "error", "-rw_timeout", "6000000",
+                            "-analyzeduration", "1500000", "-probesize", "1000000",
+                            "-show_entries", "stream=codec_type,codec_name,width,height",
+                            "-of", "json", url], capture_output=True, text=True, timeout=12)
+        if p.returncode != 0:
+            return "PLAYBACK_UNVERIFIED"
+        streams = json.loads(p.stdout).get("streams", [])
+        return "DECODABLE_VIDEO" if any(s.get("codec_type") == "video" for s in streams) else ("AUDIO_ONLY" if streams else "PLAYBACK_UNVERIFIED")
+    except (OSError, subprocess.TimeoutExpired, ValueError):
+        return "PLAYBACK_UNVERIFIED"
 
 def check(e):
     url = e["url"]
@@ -112,6 +129,13 @@ def main():
     with concurrent.futures.ThreadPoolExecutor(max_workers=12) as pool:
         live_checks = list(pool.map(check, live))
         candidate_checks = list(pool.map(check, candidate_items))
+    # Limit decoder work to a bounded sample; metadata probes are not a continuous playback guarantee.
+    eligible = [(i, e) for i, (e, check_result) in enumerate(zip(live, live_checks))
+                if check_result["status"] == "STREAM_RESPONDS_PLAYBACK_UNCONFIRMED"][:30]
+    with concurrent.futures.ThreadPoolExecutor(max_workers=4) as pool:
+        decoded = list(pool.map(lambda pair: playback_probe(pair[1]["url"]), eligible))
+    for (idx, _), status in zip(eligible, decoded):
+        live_checks[idx]["decoder_status"] = status
     # Only responsive candidates are presented; never claim confirmed playback.
     candidates = []
     for e, c in zip(candidate_items, candidate_checks):
@@ -122,7 +146,8 @@ def main():
               "policy": "READ_ONLY; no playlist writes; network response is not playback confirmation",
               "playlist_entries": len(live), "unique_channel_identities": len(unique),
               "category_counts": dict(sorted(categories.items())), "live_status_counts": dict(Counter(x["status"] for x in live_checks)),
-              "live_checks": live_checks, "candidate_status": "NETWORK_RESPONSIVE_ONLY_NOT_APPROVED",
+              "live_checks": live_checks, "decoder_sample_size": len(eligible),
+              "decoder_status_counts": dict(Counter(x.get("decoder_status", "NOT_SAMPLED") for x in live_checks)), "candidate_status": "NETWORK_RESPONSIVE_ONLY_NOT_APPROVED",
               "candidate_checked": len(candidate_items), "candidates": candidates, "source_errors": errors,
               "turkish_channel_directory": directory, "directory_error": directory_error,
               "directory_note": "Public metadata catalog, not satellite reception verification"}
