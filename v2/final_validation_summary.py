@@ -26,7 +26,9 @@ def main():
     assets = load("candidate-assets.json")
     probe = load("turkish-stream-probe.json")
     decoder = load("turkish-stream-decode.json")
+    newlisttr = load("newlisttr-check.json")
     required = {
+        "newlisttr": newlisttr,
         "baseline": baseline, "stability": stability, "quality": quality,
         "frames": frames, "candidate_assets": assets, "http_probe": probe,
         "decoder": decoder, "epg": load("epg-integrity.json"),
@@ -38,6 +40,10 @@ def main():
         "playlist_entries": len(channels), "category_count": len(groups),
         "backup_names": sorted(x["name"] for x in backups),
         "reports_present": {k: v is not None for k, v in required.items()},
+        "newlisttr_source_entries": newlisttr.get("source_entries", 0) if newlisttr else 0,
+        "newlisttr_tested": newlisttr.get("tested", 0) if newlisttr else 0,
+        "newlisttr_short_video_decoded": newlisttr.get("short_video_decoded", 0) if newlisttr else 0,
+        "newlisttr_remaining_untested": newlisttr.get("remaining_untested", 0) if newlisttr else 0,
         "baseline_selected": baseline.get("selected", 0) if baseline else 0,
         "baseline_measured": baseline.get("measured", 0) if baseline else 0,
         "stability_streams_sampled": stability.get("checked", 0) if stability else 0,
