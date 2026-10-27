@@ -1,6 +1,8 @@
 name: V2 Full Decoder Verification (manual, read-only)
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '15 2 * * 0'
 permissions:
   contents: read
 concurrency:
