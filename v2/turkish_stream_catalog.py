@@ -19,7 +19,7 @@ def main():
     current = list(entries(LIVE.read_text(encoding="utf-8-sig")))
     known_urls = {item["url"] for item in current}
     known_ids = {item["tvg_id"].split("@")[0].casefold() for item in current if item["tvg_id"]}
-    candidates, seen = [], set()
+    candidates, seen, header_required = [], set(), []
     excluded_language_ids = {"TRTArabi.tr", "TRTWorld.tr"}
     for stream in catalog:
         channel = str(stream.get("channel") or "")
@@ -28,7 +28,14 @@ def main():
             continue
         if not url.startswith(("http://", "https://")) or url in known_urls or url in seen:
             continue
-        if stream.get("is_nsfw") or stream.get("http_referrer") or stream.get("user_agent"):
+        if stream.get("is_nsfw"):
+            continue
+        if stream.get("http_referrer") or stream.get("user_agent"):
+            header_required.append({"channel_id": channel, "url": url,
+                "requires_referrer": bool(stream.get("http_referrer")),
+                "requires_user_agent": bool(stream.get("user_agent")),
+                "status": "SEPARATE_REVIEW_NOT_AUTO_IMPORTABLE"})
+            seen.add(url)
             continue
         seen.add(url)
         candidates.append({"channel_id": channel, "url": url,
@@ -38,9 +45,11 @@ def main():
     report = {"created_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
               "source": API, "policy": "REVIEW_ONLY_NO_PLAYLIST_WRITES",
               "v2_entries": len(current), "candidates": candidates,
-              "candidate_count": len(candidates)}
+              "candidate_count": len(candidates),
+              "header_required_review": header_required,
+              "header_required_count": len(header_required)}
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print("Turkish stream candidates:", len(candidates), "current playlist entries:", len(current))
+    print("Turkish stream candidates:", len(candidates), "header-dependent review:", len(header_required), "current playlist entries:", len(current))
 if __name__ == "__main__":
     main()
