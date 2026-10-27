@@ -4,6 +4,8 @@ on:
   push:
     paths:
       - 'v2/turkish_stream_review.py'
+      - 'v2/stream_url_collisions.py'
+      - 'v2/config/sources.json'
       - 'v2/turkish_stream_catalog.py'
       - 'v2/turkish_stream_probe.py'
       - 'v2/turkish_stream_decode.py'
@@ -28,6 +30,10 @@ jobs:
         run: sudo apt-get update -qq && sudo apt-get install -y ffmpeg
       - name: Validate scripts
         run: python -m py_compile v2/turkish_stream_catalog.py v2/turkish_stream_probe.py v2/turkish_stream_decode.py v2/turkish_stream_review.py
+      - name: Search all configured M3U sources
+        run: python v2/discover.py
+      - name: Audit same URL across different channels
+        run: python v2/stream_url_collisions.py
       - name: Refresh candidates
         run: python v2/turkish_stream_catalog.py
       - name: HTTP candidate probe
@@ -48,6 +54,8 @@ jobs:
         with:
           name: turkish-stream-review
           path: |
+            v2/reports/candidates.json
+            v2/reports/stream-url-collisions.json
             v2/reports/turkish-stream-candidates.json
             v2/reports/turkish-stream-probe.json
             v2/reports/turkish-stream-decode.json
