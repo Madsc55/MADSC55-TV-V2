@@ -1,5 +1,10 @@
 name: V2 Independent EPG
 on:
+  push:
+    paths:
+      - '.github/workflows/v2-epg.yml'
+      - 'v2/build_epg.py'
+      - 'v2/epg_sources.json'
   workflow_dispatch:
   schedule:
     - cron: '43 3 * * *'
