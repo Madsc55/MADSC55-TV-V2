@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "policy": "discovery-only; never modify live playlist",
+  "sources": [
+    {
+      "id": "iptv-org",
+      "kind": "m3u",
+      "url": "https://iptv-org.github.io/iptv/index.m3u",
+      "scope": "world"
+    },
+    {
+      "id": "iptv-org-tr",
+      "kind": "m3u",
+      "url": "https://iptv-org.github.io/iptv/countries/tr.m3u",
+      "scope": "TR"
+    },
+    {
+      "id": "iptv-org-se",
+      "kind": "m3u",
+      "url": "https://iptv-org.github.io/iptv/countries/se.m3u",
+      "scope": "SE"
+    }
+  ]
+}
