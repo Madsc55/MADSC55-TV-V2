@@ -72,15 +72,22 @@ def main():
                     sources.append({"id": "github-auto-" + str(index), "url": url, "scope": "candidate"})
         except (OSError, ValueError, TypeError):
             pass
-    loaded, errors = [], []
+    loaded, errors, source_audit = [], [], []
     for source in sources:
         if args.offline:
             continue
         try:
-            loaded.append((source["id"], fetch(source["url"])))
+            content = fetch(source["url"])
+            parsed = list(entries(content))
+            loaded.append((source["id"], content))
+            source_audit.append({"source": source["id"], "entries": len(parsed),
+                                 "distinct_stream_urls": len({e["url"] for e in parsed}),
+                                 "status": "PARSED_NOT_PLAYBACK_VERIFIED"})
         except Exception as exc:
             errors.append({"source": source["id"], "error": type(exc).__name__})
-    result = {"schema": 1, "mode": "read-only", "configured_and_discovered_sources": len(sources), "source_count": len(loaded), "errors": errors, "candidates": discover(loaded, live)}
+            source_audit.append({"source": source["id"], "status": "FETCH_FAILED",
+                                 "error": type(exc).__name__})
+    result = {"schema": 1, "mode": "read-only", "configured_and_discovered_sources": len(sources), "source_count": len(loaded), "errors": errors, "source_audit": source_audit, "candidates": discover(loaded, live)}
     result["candidates"] = result["candidates"][:max(0, args.limit)]
     OUTPUT.parent.mkdir(parents=True, exist_ok=True)
     OUTPUT.write_text(json.dumps(result, ensure_ascii=False, indent=2) + chr(10), encoding="utf-8")
