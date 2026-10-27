@@ -28,17 +28,17 @@ def main():
     if not shutil.which("ffmpeg"):
         raise SystemExit("ffmpeg required")
     decoded = json.loads((ROOT / "v2/reports/turkish-stream-decode.json").read_text(encoding="utf-8"))
-    candidates = [x for x in decoded["results"] if x["status"] == "SHORT_DECODE_VERIFIED" and x.get("url")][:16]
+    candidates = [x for x in decoded["results"] if x["status"] == "SHORT_DECODE_VERIFIED" and x.get("url")][:32]
     with concurrent.futures.ThreadPoolExecutor(max_workers=4) as pool:
         results = list(pool.map(fingerprint, candidates))
-    groups = {}
+    groups = {}\n    channel_ids = {}
     for item in results:
         if item.get("frame_sha256"):
-            groups.setdefault(item["frame_sha256"], []).append(item["url_sha256"])
+            groups.setdefault(item["frame_sha256"], []).append(item["url_sha256"])\n            channel_ids.setdefault(item["frame_sha256"], set()).add(item["channel_id"])
     report = {"created_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
               "policy": "READ_ONLY_THREE_FRAME_HASH; matching samples are only possible duplicate evidence, not identity proof",
               "sampled": len(results),
-              "possible_duplicate_groups": [urls for urls in groups.values() if len(urls) > 1],
+              "possible_duplicate_groups": [{"url_hashes": urls, "channel_ids": sorted(channel_ids[digest]), "cross_channel_identity_risk": len(channel_ids[digest]) > 1} for digest, urls in groups.items() if len(urls) > 1],
               "results": results}
     path = ROOT / "v2/reports/frame-collisions.json"
     path.parent.mkdir(parents=True, exist_ok=True)
