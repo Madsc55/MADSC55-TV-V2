@@ -20,18 +20,20 @@ def main():
     known_urls = {item["url"] for item in current}
     known_ids = {item["tvg_id"].split("@")[0].casefold() for item in current if item["tvg_id"]}
     candidates, seen = [], set()
+    excluded_language_ids = {"TRTArabi.tr", "TRTWorld.tr"}
     for stream in catalog:
         channel = str(stream.get("channel") or "")
         url = str(stream.get("url") or "")
-        if not channel or not (channel.casefold().endswith(".tr") or ".tr@" in channel.casefold()):
+        if not channel or not channel.casefold().endswith(".tr") or channel in excluded_language_ids:
             continue
         if not url.startswith(("http://", "https://")) or url in known_urls or url in seen:
             continue
-        if stream.get("is_nsfw"):
+        if stream.get("is_nsfw") or stream.get("http_referrer") or stream.get("user_agent"):
             continue
         seen.add(url)
         candidates.append({"channel_id": channel, "url": url,
                            "already_present_by_id": channel.split("@")[0].casefold() in known_ids,
+                           "review_priority": "EXISTING_CHANNEL_ALTERNATE_STREAM" if channel.split("@")[0].casefold() in known_ids else "NEW_CHANNEL_CANDIDATE",
                            "status": "CANDIDATE_NOT_PLAYBACK_VERIFIED"})
     report = {"created_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
               "source": API, "policy": "REVIEW_ONLY_NO_PLAYLIST_WRITES",
