@@ -1,0 +1,31 @@
+name: V2 Turkish Stream Catalog Discovery
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'v2/turkish_stream_catalog.py'
+      - '.github/workflows/v2-turkish-stream-catalog.yml'
+  schedule:
+    - cron: '27 5 * * 2,5'
+permissions:
+  contents: read
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate source syntax
+        run: python -m py_compile v2/turkish_stream_catalog.py
+      - name: Discover unlisted Turkish stream URLs
+        run: python v2/turkish_stream_catalog.py
+      - name: Save review-only candidates
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: turkish-stream-candidates
+          path: v2/reports/turkish-stream-candidates.json
+          if-no-files-found: ignore
