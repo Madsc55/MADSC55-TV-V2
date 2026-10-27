@@ -18,6 +18,7 @@ on:
       - 'v2/turkish_stream_catalog.py'
       - 'v2/turkish_stream_probe.py'
       - 'v2/newlisttr_extract.py'
+      - 'v2/build_newlisttr_ibo_test.py'
       - 'v2/turkish_stream_decode.py'
       - 'v2/epg_integrity.py'
       - 'v2/assets_health.py'
@@ -26,7 +27,7 @@ on:
   schedule:
     - cron: '10 6 * * 2,5'
 permissions:
-  contents: read
+  contents: write
 jobs:
   review:
     runs-on: ubuntu-latest
@@ -41,7 +42,7 @@ jobs:
       - name: Install YouTube discovery dependency
         run: python -m pip install --disable-pip-version-check yt-dlp
       - name: Validate scripts
-        run: python -m py_compile v2/discover.py v2/stream_url_collisions.py v2/quality_upgrades.py v2/turkish_stream_catalog.py v2/turkish_stream_probe.py v2/turkish_stream_decode.py v2/turkish_stream_review.py v2/candidate_assets.py v2/frame_collisions.py v2/current_stream_resolution.py v2/stream_stability.py v2/test_playlist_invariants.py v2/final_validation_summary.py v2/newlisttr_extract.py
+        run: python -m py_compile v2/discover.py v2/stream_url_collisions.py v2/quality_upgrades.py v2/turkish_stream_catalog.py v2/turkish_stream_probe.py v2/turkish_stream_decode.py v2/turkish_stream_review.py v2/candidate_assets.py v2/frame_collisions.py v2/current_stream_resolution.py v2/stream_stability.py v2/test_playlist_invariants.py v2/final_validation_summary.py v2/newlisttr_extract.py v2/build_newlisttr_ibo_test.py
       - name: Search all configured M3U sources
         run: python v2/discover.py
       - name: Audit same URL across different channels
@@ -56,6 +57,17 @@ jobs:
         run: python v2/turkish_stream_decode.py
       - name: Extract verified NewlistTR channels separately
         run: python v2/newlisttr_extract.py
+      - name: Build separate IBO YEDEKLER test playlist
+        run: python v2/build_newlisttr_ibo_test.py
+      - name: Publish separate IBO test playlist
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add MADSC55_IBO_NEWLISTTR_YEDEKLER_TEST.m3u8
+          if ! git diff --cached --quiet; then
+            git commit -m "test: refresh isolated IBO NewlistTR YEDEKLER playlist"
+            git push origin HEAD:main
+          fi
       - name: Measure current playlist stream resolutions in batches
         run: |
           for batch in $(seq 0 9); do
@@ -122,6 +134,7 @@ jobs:
             v2/reports/final-validation-summary.json
             v2/reports/newlisttr-check.json
             v2/reports/newlisttr-decoded-only.m3u8
+            MADSC55_IBO_NEWLISTTR_YEDEKLER_TEST.m3u8
             v2/reports/turkish-stream-candidates.json
             v2/reports/turkish-stream-probe.json
             v2/reports/turkish-stream-decode.json
