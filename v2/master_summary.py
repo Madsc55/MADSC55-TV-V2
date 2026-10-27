@@ -42,15 +42,17 @@ def main():
         "epg_playlist_id_matches_by_source": [x.get("playlist_id_matches") for x in epg.get("sources", [])],
         "epg_playlist_id_match_rates_by_source": [x.get("playlist_id_match_rate") for x in epg.get("sources", [])],
         "asset_reachability_status_counts": assets.get("status_counts", {}),
+        "logo_reachability_counts": logos.get("reachability_counts", {}),
+        "logo_format_counts": logos.get("format_counts", {}),
         "logos_with_official_ownership_verified": 0,
         "logos_requiring_authoritative_verification": logos.get("unique_logos"),
         "all_streams_playback_verified": False,
         "all_logos_officially_verified": False,
         "warnings": [
             "A successful workflow does not mean every stream plays.",
-            "ffprobe tests a rotating subset; audio/video continuity remains unverified.",
+            "The decoder sample is configurable; even a full responsive-stream sample does not prove continuous playback.",
             "Reachable logo URLs do not establish official logo ownership.",
-            "XMLTV-valid feeds do not guarantee channel-to-programme matching."
+            "XMLTV channel ID overlap does not prove programme accuracy or freshness."
         ]
     }
     REPORTS.mkdir(parents=True, exist_ok=True)
