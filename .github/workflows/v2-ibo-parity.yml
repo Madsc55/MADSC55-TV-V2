@@ -1,0 +1,31 @@
+name: V2 Canonical IBO Playlist Parity
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'v2/ibo_parity.py'
+      - '.github/workflows/v2-ibo-parity.yml'
+  schedule:
+    - cron: '18 7 * * *'
+permissions:
+  contents: read
+jobs:
+  parity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate syntax
+        run: python -m py_compile v2/ibo_parity.py
+      - name: Compare canonical IBO URL with V2
+        run: python v2/ibo_parity.py
+      - name: Store read-only comparison
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ibo-playlist-parity
+          path: v2/reports/ibo-parity.json
+          if-no-files-found: ignore
