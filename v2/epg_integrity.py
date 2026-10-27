@@ -9,12 +9,12 @@ import json
 import urllib.request
 import xml.etree.ElementTree as ET
 from collections import Counter
-from discover import ROOT
+from discover import ROOT, LIVE, entries
 
 OUT = ROOT / "v2" / "reports" / "epg-integrity.json"
 MAX_BYTES = 20_000_000
 
-def inspect(url):
+def inspect(url, playlist_ids):
     result = {"url_sha256": hashlib.sha256(url.encode()).hexdigest(), "status": "UNVERIFIED"}
     if not url.startswith("https://"):
         result["status"] = "NON_HTTPS"
@@ -38,18 +38,22 @@ def inspect(url):
             return result
         channels = {node.get("id") for node in root.iter("channel") if node.get("id")}
         programmes = sum(1 for node in root.iter("programme"))
-        result.update(status="XMLTV_VALID", channels=len(channels), programmes=programmes)
+        result.update(status="XMLTV_VALID", channels=len(channels), programmes=programmes,
+                      playlist_id_matches=len(channels & playlist_ids),
+                      playlist_id_match_rate=round(len(channels & playlist_ids) / len(playlist_ids), 4) if playlist_ids else None)
     except (OSError, ValueError, ET.ParseError, EOFError, gzip.BadGzipFile, MemoryError) as exc:
         result.update(status="EPG_UNVERIFIED", error_type=type(exc).__name__)
     return result
 
 def main():
     sources = json.loads((ROOT / "v2" / "epg_sources.json").read_text(encoding="utf-8"))["sources"]
+    playlist_ids = {e["tvg_id"] for e in entries(LIVE.read_text(encoding="utf-8-sig")) if e["tvg_id"]}
     with concurrent.futures.ThreadPoolExecutor(max_workers=3) as pool:
-        checks = list(pool.map(inspect, sources))
+        checks = list(pool.map(lambda url: inspect(url, playlist_ids), sources))
     report = {"created_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
               "policy": "READ_ONLY; XMLTV structure validated, channel mapping not guaranteed",
-              "status_counts": dict(Counter(x["status"] for x in checks)), "sources": checks}
+              "status_counts": dict(Counter(x["status"] for x in checks)),
+              "playlist_distinct_tvg_ids": len(playlist_ids), "sources": checks}
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print("EPG XMLTV validation:", report["status_counts"])
