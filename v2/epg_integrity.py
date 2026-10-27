@@ -6,6 +6,7 @@ import gzip
 import io
 import hashlib
 import json
+import re
 import urllib.request
 import xml.etree.ElementTree as ET
 from collections import Counter
@@ -13,6 +14,21 @@ from discover import ROOT, LIVE, entries
 
 OUT = ROOT / "v2" / "reports" / "epg-integrity.json"
 MAX_BYTES = 20_000_000
+
+def parse_xmltv_time(value):
+    """Parse XMLTV YYYYMMDDHHMMSS with optional numeric UTC offset."""
+    match = re.fullmatch(r"(\d{14})(?:\s*([+-])(\d{2})(\d{2}))?", value.strip())
+    if not match:
+        raise ValueError("Invalid XMLTV timestamp")
+    base = datetime.datetime.strptime(match.group(1), "%Y%m%d%H%M%S")
+    if match.group(2):
+        minutes = int(match.group(3)) * 60 + int(match.group(4))
+        if minutes >= 24 * 60:
+            raise ValueError("Invalid UTC offset")
+        if match.group(2) == "-":
+            minutes = -minutes
+        return base.replace(tzinfo=datetime.timezone(datetime.timedelta(minutes=minutes)))
+    return base.replace(tzinfo=datetime.timezone.utc)
 
 def inspect(url, playlist_ids):
     result = {"url_sha256": hashlib.sha256(url.encode()).hexdigest(), "status": "UNVERIFIED"}
@@ -48,8 +64,8 @@ def inspect(url, playlist_ids):
                 matched_programme_ids.add(channel_id)
             start, stop = node.get("start", ""), node.get("stop", "")
             try:
-                start_at = datetime.datetime.strptime(start[:14], "%Y%m%d%H%M%S").replace(tzinfo=datetime.timezone.utc)
-                stop_at = datetime.datetime.strptime(stop[:14], "%Y%m%d%H%M%S").replace(tzinfo=datetime.timezone.utc)
+                start_at = parse_xmltv_time(start)
+                stop_at = parse_xmltv_time(stop)
                 if start_at <= now <= stop_at:
                     current_programmes += 1
             except ValueError:
@@ -57,7 +73,7 @@ def inspect(url, playlist_ids):
         result.update(status="XMLTV_VALID", channels=len(channels), programmes=programmes,
                       playlist_id_matches=len(channels & playlist_ids),
                       matched_programme_channel_ids=len(matched_programme_ids),
-                      current_programme_intervals_approx_utc=current_programmes,
+                      current_programme_intervals=current_programmes,
                       playlist_id_match_rate=round(len(channels & playlist_ids) / len(playlist_ids), 4) if playlist_ids else None)
     except (OSError, ValueError, ET.ParseError, EOFError, gzip.BadGzipFile, MemoryError) as exc:
         result.update(status="EPG_UNVERIFIED", error_type=type(exc).__name__)
@@ -69,7 +85,7 @@ def main():
     with concurrent.futures.ThreadPoolExecutor(max_workers=3) as pool:
         checks = list(pool.map(lambda url: inspect(url, playlist_ids), sources))
     report = {"created_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
-              "policy": "READ_ONLY; programme times are approximate UTC when XMLTV timezone offsets exist; matching IDs do not prove accurate schedules",
+              "policy": "READ_ONLY; XMLTV numeric UTC offsets are respected; missing offsets assume UTC; matching IDs do not prove accurate schedules",
               "status_counts": dict(Counter(x["status"] for x in checks)),
               "playlist_distinct_tvg_ids": len(playlist_ids), "sources": checks}
     OUT.parent.mkdir(parents=True, exist_ok=True)
