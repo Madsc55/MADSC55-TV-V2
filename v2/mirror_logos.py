@@ -48,8 +48,8 @@ def download(url):
     if not data or len(data)>2_000_000:
         raise ValueError("invalid image size")
     if mime not in EXT:
-        if data.startswith(b"\\x89PNG\\r\\n\\x1a\\n"): mime="image/png"
-        elif data.startswith(b"\\xff\\xd8\\xff"): mime="image/jpeg"
+        if data.startswith(b"\x89PNG\r\n\x1a\n"): mime="image/png"
+        elif data.startswith(b"\xff\xd8\xff"): mime="image/jpeg"
         elif data.startswith(b"GIF8"): mime="image/gif"
         elif data.startswith(b"RIFF") and data[8:12]==b"WEBP": mime="image/webp"
         elif data.lstrip().startswith((b"<svg",b"<?xml")) and b"<svg" in data[:1024]: mime="image/svg+xml"
@@ -81,7 +81,7 @@ for url in urls:
         if saved: break
     if not saved:
         manifest.append({"url":url,"status":"failed","reason":last_error})
-MANIFEST.write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+"\\n",encoding="utf-8")
+MANIFEST.write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
 count=sum(item["status"]=="saved" for item in manifest)
 print(f"Logo sources: {len(urls)} | saved: {count} | failed: {len(urls)-count}")
 if count == 0: raise SystemExit("No logos saved")
