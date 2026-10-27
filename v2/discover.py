@@ -73,8 +73,7 @@ def main():
     result = {"schema": 1, "mode": "read-only", "source_count": len(loaded), "errors": errors, "candidates": discover(loaded, live)}
     result["candidates"] = result["candidates"][:max(0, args.limit)]
     OUTPUT.parent.mkdir(parents=True, exist_ok=True)
-    OUTPUT.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "
-", encoding="utf-8")
+    OUTPUT.write_text(json.dumps(result, ensure_ascii=False, indent=2) + chr(10), encoding="utf-8")
     print(f"Sources: {len(loaded)} | Candidates: {len(result['candidates'])} | Errors: {len(errors)}")
     if not args.offline and not loaded:
         raise SystemExit("No sources accessible")
