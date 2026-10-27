@@ -8,6 +8,7 @@ from discover import ROOT, LIVE, entries
 
 IBO = "https://raw.githubusercontent.com/Madsc55/Madsc55-Tv/main/MADSC55_TV_IBO_CALISANLAR_TEST.m3u8"
 OUT = ROOT / "v2/reports/ibo-parity.json"
+LEGACY_REFERENCE = "https://raw.githubusercontent.com/Madsc55/madsc-tv/main/CALISANLAR.m3u"
 
 def main():
     v2 = LIVE.read_bytes()
@@ -31,6 +32,19 @@ def main():
                            "status": "IDENTICAL" if ibo == v2 else "DIFFERENT_REVIEW_REQUIRED"})
     except (urllib.error.URLError, TimeoutError, OSError, UnicodeError) as exc:
         result.update({"status": "IBO_URL_UNREACHABLE", "error_type": type(exc).__name__})
+    # Diagnostic reference only; never treat the legacy file as the confirmed IBO source.
+    if result["status"] == "IBO_URL_UNREACHABLE":
+        try:
+            req = urllib.request.Request(LEGACY_REFERENCE, headers={"User-Agent": "MADSC55-TV-V2-Parity/1.0"})
+            with urllib.request.urlopen(req, timeout=20) as response:
+                legacy = response.read(8_000_001)
+            if len(legacy) <= 8_000_000:
+                old = list(entries(legacy.decode("utf-8-sig")))
+                result["legacy_reference_only"] = {"url": LEGACY_REFERENCE,
+                    "entries": len(old), "sha256": hashlib.sha256(legacy).hexdigest(),
+                    "not_confirmed_as_ibo_source": True}
+        except (urllib.error.URLError, TimeoutError, OSError, UnicodeError):
+            result["legacy_reference_only"] = {"status": "UNAVAILABLE", "not_confirmed_as_ibo_source": True}
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print("IBO parity:", result["status"], "V2:", result["v2_entries"],
