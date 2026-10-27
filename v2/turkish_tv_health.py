@@ -10,6 +10,7 @@ import urllib.request
 import urllib.error
 import shutil
 import subprocess
+import os
 import urllib.parse
 from collections import Counter
 from discover import ROOT, LIVE, SOURCES, fetch, entries
@@ -132,8 +133,9 @@ def main():
     responsive = [(i, e) for i, (e, check_result) in enumerate(zip(live, live_checks))
                   if check_result["status"] == "STREAM_RESPONDS_PLAYBACK_UNCONFIRMED"]
     # Rotate the bounded decoder sample daily to cover more of the playlist over time.
-    offset = datetime.datetime.now(datetime.timezone.utc).date().toordinal() * 30
-    eligible = ([responsive[(offset + j) % len(responsive)] for j in range(min(30, len(responsive)))]
+    sample_limit = max(0, min(1039, int(os.environ.get("MADSC55_DECODER_SAMPLE", "30"))))
+    offset = datetime.datetime.now(datetime.timezone.utc).date().toordinal() * sample_limit
+    eligible = ([responsive[(offset + j) % len(responsive)] for j in range(min(sample_limit, len(responsive)))]
                 if responsive else [])
     with concurrent.futures.ThreadPoolExecutor(max_workers=4) as pool:
         decoded = list(pool.map(lambda pair: playback_probe(pair[1]["url"]), eligible))
