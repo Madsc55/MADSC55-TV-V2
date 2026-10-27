@@ -15,7 +15,12 @@ def main():
     assert len(backups) == 2, "YEDEKLER must contain exactly the two original channels"
     assert any(x["name"] == "TRT 1 1440P QHD" for x in backups), "Original TRT 1 backup missing"
     assert any(x["name"] == "DHA CANLI 720P HD" for x in backups), "Original DHA backup missing"
-    assert not any(x["name"].startswith(("TRT Arabi", "TRT World")) for x in channels), "Unwanted foreign-language trials remain"\n    for name in ("Aras TV (576p) [Not 24/7]", "Haber61 TV (720p) [Not 24/7]", "TV Den (576p) [Not 24/7]", "YOL TV"):\n        assert any(x["name"] == name and x["group"].startswith("📍 YEREL (") for x in channels), f"{name} missing from YEREL"\n        assert any(x["name"] == name and x["group"].startswith("📺 HEPSİ (") for x in channels), f"{name} missing from HEPSİ"\n    for x in channels:\n        assert x["url"].startswith(("https://", "http://")), "Invalid stream scheme"
+    assert not any(x["name"].startswith(("TRT Arabi", "TRT World")) for x in channels), "Unwanted foreign-language trials remain"
+    for name in ("Aras TV (576p) [Not 24/7]", "Haber61 TV (720p) [Not 24/7]", "TV Den (576p) [Not 24/7]", "YOL TV"):
+        assert any(x["name"] == name and x["group"].startswith("📍 YEREL (") for x in channels), f"{name} missing from YEREL"
+        assert any(x["name"] == name and x["group"].startswith("📺 HEPSİ (") for x in channels), f"{name} missing from HEPSİ"
+    for x in channels:
+        assert x["url"].startswith(("https://", "http://")), "Invalid stream scheme"
     category_counts = Counter(x["group"] for x in channels)
     for group, count in category_counts.items():
         if group.startswith("📦 YEDEKLER ("):
