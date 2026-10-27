@@ -3,6 +3,7 @@
 import concurrent.futures
 import datetime
 import gzip
+import io
 import hashlib
 import json
 import urllib.request
@@ -26,7 +27,8 @@ def inspect(url):
             result["status"] = "TOO_LARGE_FOR_AUDIT"
             return result
         if data.startswith(b"\x1f\x8b"):
-            data = gzip.decompress(data)
+            with gzip.GzipFile(fileobj=io.BytesIO(data)) as gz:
+                data = gz.read(120_000_001)
         if len(data) > 120_000_000:
             result["status"] = "DECOMPRESSED_TOO_LARGE"
             return result
