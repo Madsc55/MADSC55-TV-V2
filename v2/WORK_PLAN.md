@@ -22,3 +22,10 @@
 - Adaylar raporda; otomatik playlist yazımı yok.
 - Eksik testler başarı gibi raporlanmaz.
 - Her yayın için kaynak ve test kanıtı saklanır; token/özel URL'ler kamuya açık JSON raporlarında paylaşılmaz.
+
+## 28 Ekim 2026 — birleşik keşif zinciri devir notu
+- Yeni GitHub depo/M3U kaynak keşfi ana `V2 Turkish Stream End-to-End Discovery` workflow'unun ilk aşamasına bağlandı.
+- `v2/github_source_discovery.py` raporu `v2/reports/github-source-discovery.json` üretir; `v2/discover.py` bu rapordaki en fazla 80 yeni HTTPS kaynağı yapılandırılmış 17 kaynakla birleştirir, M3U içindeki kanal kayıtlarını ayıklar ve canlı IBO'yu değiştirmeden aday raporuna alır.
+- Ardından mevcut IPTV-org TR aday taraması, HTTP, ffprobe kısa decoder, çözünürlük, kararlılık, kalite karşılaştırması, resmî TV sitesi, YouTube canlı yayın, EPG, logo ve güvenlik testleri aynı workflow'da devam eder.
+- Sınır: YouTube canlı yayın sayfaları henüz kalıcı IBO uyumlu akışa dönüştürülmez; kaynaklardan keşfedilen tüm kanallar henüz tek tek ffprobe doğrulamasına alınmaz. Bunlar sonraki entegrasyon işidir. Başarılı workflow bütün adayların çalıştığı anlamına gelmez.
+- Canlı playlist, FAVORİLER ve özgün iki YEDEKLER korunur. Otomatik yayın ekleme kesinlikle yoktur.
