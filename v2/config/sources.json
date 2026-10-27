@@ -31,6 +31,18 @@
       "kind": "m3u",
       "url": "https://raw.githubusercontent.com/omerdenizhan/IPTV-M3U/refs/heads/main/m3u/turkiye.m3u",
       "scope": "TR"
+    },
+    {
+      "id": "hayatiptv-tr",
+      "kind": "m3u",
+      "url": "https://raw.githubusercontent.com/discevisita/hayatiptv/master/TRDECesitlikanallar.m3u",
+      "scope": "TR"
+    },
+    {
+      "id": "ilyswch-iptv-tr",
+      "kind": "m3u",
+      "url": "https://raw.githubusercontent.com/ilyswch/IPTV-TR/main/box.m3u",
+      "scope": "TR"
     }
   ]
 }
