@@ -1,0 +1,39 @@
+name: Bruksel Turk PNG Logo
+on:
+  push:
+    paths:
+      - '.github/workflows/v2-bruksel-logo-png.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Convert logo to PNG and link in playlist
+        run: |
+          python -m pip install --quiet cairosvg
+          python - <<'PY'
+          import cairosvg
+          from pathlib import Path
+          svg=Path('assets/logos/bruksel-turk-tv.svg')
+          png=Path('assets/logos/bruksel-turk-tv.png')
+          cairosvg.svg2png(url=str(svg),write_to=str(png),output_width=512,output_height=256)
+          playlist=Path('MADSC55_TV_IBO_CALISANLAR_TEST.m3u8')
+          text=playlist.read_text(encoding='utf-8')
+          old='https://raw.githubusercontent.com/Madsc55/MADSC55-TV-V2/main/assets/logos/bruksel-turk-tv.svg'
+          new='https://raw.githubusercontent.com/Madsc55/MADSC55-TV-V2/main/assets/logos/bruksel-turk-tv.png'
+          assert text.count(old)==2, f'Expected two Bruksel logo references, got {text.count(old)}'
+          playlist.write_text(text.replace(old,new),encoding='utf-8')
+          assert png.stat().st_size>1000
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/logos/bruksel-turk-tv.png MADSC55_TV_IBO_CALISANLAR_TEST.m3u8
+          git commit -m "logo: publish Bruksel Turk PNG and update both playlist entries"
+          git fetch origin main
+          git rebase origin/main
+          git push origin HEAD:main
