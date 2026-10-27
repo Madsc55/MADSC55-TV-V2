@@ -6,6 +6,7 @@ on:
       - 'v2/turkish_tv_health.py'
       - 'master.py'
       - 'v2/test_offline.py'
+      - 'v2/discover.py'
       - '.github/workflows/v2-turkish-tv-health.yml'
   schedule:
     - cron: '23 4,16 * * *'
