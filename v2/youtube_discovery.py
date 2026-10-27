@@ -17,10 +17,16 @@ QUERIES = [
     "yerel televizyon canlı yayın Türkiye",
     "TRT canlı yayın resmi",
     "Türk spor televizyonu canlı yayın",
+    "Türk müzik televizyonu canlı yayın resmi",
+    "Türk belgesel televizyonu canlı yayın resmi",
+    "Türk dini televizyon kanalı canlı yayın resmi",
+    "Türk çocuk televizyonu canlı yayın resmi",
+    "Türkiye bölgesel yerel TV canlı yayın",
+    "Türkçe Avrupa televizyonu canlı yayın resmi",
 ]
 def search(query):
     command = ["yt-dlp", "--flat-playlist", "--dump-single-json", "--no-warnings",
-               "--socket-timeout", "10", f"ytsearch8:{query}"]
+               "--socket-timeout", "10", f"ytsearch15:{query}"]
     try:
         p = subprocess.run(command, capture_output=True, text=True, timeout=65)
         if p.returncode != 0:
@@ -67,12 +73,13 @@ def main():
             seen.add(item["video_id"])
             results.append(item)
     # Keep network work bounded. Never promote YouTube URLs as direct IBO streams.
-    for item in results[:12]:
+    for item in results[:40]:
         item["status"] = verify(item)
     report = {"created_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
               "policy": "ADVISORY_ONLY_NO_PLAYLIST_WRITES_NO_AUTOMATIC_IBO_IMPORT",
               "queries": QUERIES, "errors": errors, "results": results,
-              "live_verified": sum(x["status"] == "LIVE_METADATA_VERIFIED" for x in results)}
+              "live_verified": sum(x["status"] == "LIVE_METADATA_VERIFIED" for x in results),
+              "verified_live_pages": [x for x in results if x["status"] == "LIVE_METADATA_VERIFIED"]}
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print("YouTube discovered:", len(results), "live metadata verified:", report["live_verified"], "query errors:", len(errors))
