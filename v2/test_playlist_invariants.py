@@ -23,8 +23,10 @@ def main():
         assert x["url"].startswith(("https://", "http://")), "Invalid stream scheme"
     category_counts = Counter(x["group"] for x in channels)
     for group, count in category_counts.items():
-        if group.startswith("📦 YEDEKLER ("):
-            assert group == f"📦 YEDEKLER ({count})", "YEDEKLER label count mismatch"
+        import re
+        match = re.search(r"\((\d+)\)$", group)
+        assert match, f"Missing category counter: {group}"
+        assert int(match.group(1)) == count, f"Category count mismatch: {group}, actual {count}"
     sources = json.loads(SOURCES.read_text(encoding="utf-8"))["sources"]
     assert len(sources) >= 3, "Discovery sources missing"
     note = ROOT / "DEVAM_NOTU.md"
