@@ -1,0 +1,36 @@
+name: V2 Full Decoder Verification (manual, read-only)
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: v2-full-decoder
+  cancel-in-progress: false
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    env:
+      MADSC55_DECODER_SAMPLE: "1039"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install metadata verifier
+        run: python -m pip install yt-dlp
+      - name: Verify protected playlist fingerprint and run full decoder sample
+        run: python3 master.py --run
+      - name: Upload full audit evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v2-full-decoder-evidence
+          path: |
+            v2/reports/turkish-tv-health.json
+            v2/reports/assets-health.json
+            v2/reports/logo-attribution.json
+            v2/reports/epg-integrity.json
+            v2/reports/master-summary.json
+          retention-days: 30
+          if-no-files-found: warn
