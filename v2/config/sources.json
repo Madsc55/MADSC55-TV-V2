@@ -49,6 +49,60 @@
       "kind": "m3u",
       "url": "https://gist.githubusercontent.com/akan1970/040f6a07995df715c74ef1268b57c92d/raw/4f491cf9bd165340f4008c64dea263d119542eeb/NewlistTR.m3u",
       "scope": "TR"
+    },
+    {
+      "id": "dearbulut-tr",
+      "kind": "m3u",
+      "url": "https://dearbulut.github.io/iptv/playlists/country/tr.m3u",
+      "scope": "TR"
+    },
+    {
+      "id": "dearbulut-online",
+      "kind": "m3u",
+      "url": "https://dearbulut.github.io/iptv/playlists/online.m3u",
+      "scope": "TR"
+    },
+    {
+      "id": "omerdenizhan-iptv-org-tr",
+      "kind": "m3u",
+      "url": "https://raw.githubusercontent.com/omerdenizhan/IPTV-M3U/main/m3u/turkiye-iptv-org.m3u",
+      "scope": "TR"
+    },
+    {
+      "id": "hayatiptv-tr-master",
+      "kind": "m3u",
+      "url": "https://raw.githubusercontent.com/hayatiptv/iptv/master/TRDECesitlikanallar.m3u",
+      "scope": "TR"
+    },
+    {
+      "id": "sayatsirinoglu-tr",
+      "kind": "m3u",
+      "url": "https://raw.githubusercontent.com/sayatsirinoglu/IPTV-List/main/tr.m3u",
+      "scope": "TR"
+    },
+    {
+      "id": "iptv-turk-tr",
+      "kind": "m3u",
+      "url": "https://raw.githubusercontent.com/iptv-turk-tr/iptv/main/list.m3u",
+      "scope": "TR"
+    },
+    {
+      "id": "discevisita-tr",
+      "kind": "m3u",
+      "url": "https://raw.githubusercontent.com/discevisita/iptv/main/tr.m3u",
+      "scope": "TR"
+    },
+    {
+      "id": "qazim-turk",
+      "kind": "m3u",
+      "url": "https://qazim.github.io/IPTV/TurkAzeri.m3u",
+      "scope": "TR"
+    },
+    {
+      "id": "iptv-org-tr-streams",
+      "kind": "m3u",
+      "url": "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/tr.m3u",
+      "scope": "TR"
     }
   ]
 }
