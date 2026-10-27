@@ -69,7 +69,7 @@ jobs:
           merged['selected'] = len(merged['results'])
           merged['measured'] = sum(x['status'] == 'MEASURED' for x in merged['results'])
           merged['batches'] = len(batches)
-          Path('v2/reports/current-stream-resolution.json').write_text(json.dumps(merged, ensure_ascii=False, indent=2) + '\\n')
+          Path('v2/reports/current-stream-resolution.json').write_text(json.dumps(merged, ensure_ascii=False, indent=2) + chr(10))
           print('Baseline coverage:', merged['selected'], 'of', merged['distinct_channel_ids'])
           PY
       - name: Attach measured quality to upgrade report
