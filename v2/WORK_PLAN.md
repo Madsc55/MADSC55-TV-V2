@@ -116,3 +116,8 @@ Mevcut ana workflow bu sözleşmeyi henüz tam uygulamıyor: 4x2 sınırlı örn
 - `6f98ef8`: playback aggregator tam olarak `(page 0..1, shard 0..3)` sekiz kanıtı görmeden başarılı sonuç üretmez; eksik/fazla batch açık hata. Bu, örneklemenin bütün adayları kapsadığı iddiası değildir.
 - Kullanıcının mevcut kategori adları, sıralaması, FAVORİLER, iki özgün YEDEKLER ve canlı IBO korunacak. Yeni adaylar yalnızca ayrı test listesinde.
 - Sıradaki işler: tek kaynak snapshot, tam kapsama, üç otomatik retry, aday bazında kimlik/ses/video/EPG/logo/kategori kabul durumu ve tek final raporu.
+
+## 28 Ekim — birleşik yayın yeniden deneme
+- `9d247f7`: `v2/all_source_playback.py` içinde ffprobe başarısızlığı için ilk denemeden sonra **en fazla 3 yeniden deneme** eklendi; sonuçta `attempts` sayısı saklanır. Bu yalnızca playback ffprobe kapsamındadır, tüm EPG/kimlik kontrollerinin tamamlandığı anlamına gelmez.
+- `40683960121` birleşik run kontrol anında in_progress; yeni commit'in sonucunu henüz kanıtlamaz.
+- Kalan: ortak kaynak snapshot, eksik kaynak tekrar taraması, tüm adaylara eksiksiz kapsam, tek nihai kanal bazlı approved/rejected/pending_review sınıflaması ve katı başarı koşulu.
