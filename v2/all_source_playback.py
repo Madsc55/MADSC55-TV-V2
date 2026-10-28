@@ -17,6 +17,7 @@ SHARD_COUNT = max(1, int(os.getenv("PLAYBACK_SHARD_COUNT", "1")))
 SHARD_INDEX = int(os.getenv("PLAYBACK_SHARD_INDEX", "0"))
 if not 0 <= SHARD_INDEX < SHARD_COUNT:
     raise ValueError("PLAYBACK_SHARD_INDEX must be within shard count")
+PAGE = max(0, int(os.getenv("PLAYBACK_PAGE", "0")))
 WORKERS = 6
 
 def probe(item):
@@ -66,7 +67,8 @@ def main():
                           "shard_candidates": len(shard_items), "sampled": 0, "status": "PARSED"})
         except Exception as exc:
             audit.append({"source": source["id"], "status": "FETCH_FAILED", "error": type(exc).__name__})
-    for round_index in range(PER_SOURCE):
+    # Each page skips already selected positions so later runs expand coverage.
+    for round_index in range(PAGE * PER_SOURCE, (PAGE + 1) * PER_SOURCE):
         for source_id, items in pools:
             if len(selected) >= LIMIT:
                 break
@@ -79,7 +81,7 @@ def main():
         results = list(pool.map(probe, selected))
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps({"policy": "READ_ONLY_SAMPLED_NOT_EXHAUSTIVE",
-       "total_sources": len(sources), "shard_index": SHARD_INDEX, "shard_count": SHARD_COUNT, "sampled": len(results),
+       "total_sources": len(sources), "shard_index": SHARD_INDEX, "shard_count": SHARD_COUNT, "page": PAGE, "sampled": len(results),
        "video_decoded": sum(x["status"] == "VIDEO_DECODED" for x in results),
        "sources": audit, "results": results}, ensure_ascii=False, indent=2)+"\n")
     print("Sources", len(sources), "sampled", len(results), "decoded", sum(x["status"] == "VIDEO_DECODED" for x in results))
