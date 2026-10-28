@@ -85,11 +85,24 @@ jobs:
       - name: Verify candidate playback in bounded batch
         env:
           PLAYBACK_PER_SOURCE: '250'
-          PLAYBACK_MAX_SECONDS: '2700'
+          PLAYBACK_MAX_SECONDS: '1200'
           PLAYBACK_PAGE: ${{ matrix.page }}
           PLAYBACK_SHARD_COUNT: '16'
           PLAYBACK_SHARD_INDEX: ${{ matrix.shard }}
-        run: python v2/all_source_playback.py
+        run: |
+          set -o pipefail
+          for pass in 1 2; do
+            echo "Playback continuation pass $pass of 2"
+            if python v2/all_source_playback.py; then
+              echo "All assigned candidates verified"
+              exit 0
+            fi
+            if [ "$pass" -eq 2 ]; then
+              echo "Playback remains incomplete; preserving checkpoint and failing closed"
+              exit 1
+            fi
+            echo "Continuing remaining candidates from checkpoint"
+          done
       - name: Save checkpoint even when playback fails
         if: always()
         uses: actions/cache/save@v4
