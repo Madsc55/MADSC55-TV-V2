@@ -120,6 +120,12 @@ def main():
     if len(previous) < len(selected):
         deadline_reached = True
     results = [previous[digest] for item in selected if (digest := hashlib.sha256(item[1]["url"].encode()).hexdigest()) in previous]
+    # Report actual completed probes, not the originally assigned workload.
+    completed_by_source = {}
+    for result in results:
+        completed_by_source[result["source"]] = completed_by_source.get(result["source"], 0) + 1
+    for source_audit in audit:
+        source_audit["sampled"] = completed_by_source.get(source_audit["source"], 0)
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps({"policy": "READ_ONLY_FULL_ASSIGNED_PARTITION_OR_EXPLICIT_INCOMPLETE",
        "deadline_reached": deadline_reached, "assigned": len(selected), "total_sources": len(sources), "shard_index": SHARD_INDEX, "shard_count": SHARD_COUNT, "page": PAGE, "sampled": len(results),
