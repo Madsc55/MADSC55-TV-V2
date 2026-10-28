@@ -111,3 +111,8 @@
 ## 28 Ekim — kesin tek birleşik görev kabul sözleşmesi
 Kullanıcı talebi: tek tetikleme, tüm kaynakları tara, tüm adayları listele; aday başına kimlik, oynatma, ses, video, EPG, logo, kategori kontrolü; başarısızları 3 kez yeniden dene; eksik kaynakları yeniden tara; ara rapor yayımlama; yalnızca finalde `approved`, `rejected`, `pending_review` ayrımlı tek rapor; tüm işler tamamlanmadan workflow success verme.
 Mevcut ana workflow bu sözleşmeyi henüz tam uygulamıyor: 4x2 sınırlı örnekleme, kaynak snapshot farkları, yalnızca sınırlı kararlılık örneği ve kimlik kanıtı eksik. Kısmi örneklem başarı değildir. Sonraki kod değişiklikleri mevcut `.github/workflows/v2-turkish-stream-review.yml` içinde yapılmalı; bağımsız test workflow'u oluşturulmamalı. Canlı IBO, FAVORİLER ve iki özgün YEDEKLER salt okunur.
+
+## 28 Ekim — birleşik kanıt eksiksizliği
+- `6f98ef8`: playback aggregator tam olarak `(page 0..1, shard 0..3)` sekiz kanıtı görmeden başarılı sonuç üretmez; eksik/fazla batch açık hata. Bu, örneklemenin bütün adayları kapsadığı iddiası değildir.
+- Kullanıcının mevcut kategori adları, sıralaması, FAVORİLER, iki özgün YEDEKLER ve canlı IBO korunacak. Yeni adaylar yalnızca ayrı test listesinde.
+- Sıradaki işler: tek kaynak snapshot, tam kapsama, üç otomatik retry, aday bazında kimlik/ses/video/EPG/logo/kategori kabul durumu ve tek final raporu.
