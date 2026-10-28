@@ -80,8 +80,9 @@ def main():
             # Shards are disjoint and deterministic for the same source snapshot.
             shard_items = [e for e in unique if int(hashlib.sha256(e["url"].encode()).hexdigest(), 16) % SHARD_COUNT == SHARD_INDEX]
             pools.append((source["id"], shard_items))
+            shard_fingerprint = hashlib.sha256("\n".join(sorted(hashlib.sha256(e["url"].encode()).hexdigest() for e in shard_items)).encode()).hexdigest()
             audit.append({"source": source["id"], "entries": len(parsed), "new_unique": len(unique),
-                          "shard_candidates": len(shard_items), "sampled": 0, "status": "PARSED"})
+                          "shard_candidates": len(shard_items), "shard_fingerprint": shard_fingerprint, "sampled": 0, "status": "PARSED"})
         except Exception as exc:
             audit.append({"source": source["id"], "status": "FETCH_FAILED", "error": type(exc).__name__})
     # Partition every source into disjoint pages; do not silently truncate candidate coverage.
