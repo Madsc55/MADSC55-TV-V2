@@ -17,7 +17,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           gh run download 40758418496 -n unified-private-playback-snapshot -D v2/reports
-          gh run download 40758418496 -n turkish-stream-review -D .
+          gh run download 40758418496 -n turkish-stream-review -D /tmp/scan61\n          cp /tmp/scan61/v2/reports/all-source-playback-aggregate.json v2/reports/
       - name: Prepare backup candidates
         run: python v2/add_scan61_to_backups.py
       - name: Save playlist
