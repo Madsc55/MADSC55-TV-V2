@@ -170,6 +170,8 @@ jobs:
         run: python v2/postscan_identity_consistency.py
       - name: Audit same URL across different channels
         run: python v2/stream_url_collisions.py
+      - name: Generate unified postscan action queue without rescanning
+        run: python v2/postscan_unified_action_queue.py
       - name: Refresh candidates
         run: python v2/turkish_stream_catalog.py
       - name: Find quality upgrades for existing channels
