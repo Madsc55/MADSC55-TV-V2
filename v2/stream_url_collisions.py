@@ -20,21 +20,30 @@ def main():
     for item in channels:
         by_url[normalize(item["url"])].append(item)
     collisions = []
+    identity_metadata_conflicts = []
     repeated_category_entries = 0
     for url, items in by_url.items():
         identities = {(x["tvg_id"] or x["name"]).casefold().strip() for x in items}
         if len(identities) <= 1:
             repeated_category_entries += max(0, len(items) - 1)
             continue
-        collisions.append({"url_sha256": hashlib.sha256(url.encode()).hexdigest(),
-                           "distinct_channel_identities": len(identities),
-                           "channels": sorted({x["name"] for x in items}),
-                           "tvg_ids": sorted({x["tvg_id"] for x in items if x["tvg_id"]}),
-                           "groups": sorted({x["group"] for x in items})})
+        record = {"url_sha256": hashlib.sha256(url.encode()).hexdigest(),
+                  "distinct_channel_identities": len(identities),
+                  "channels": sorted({x["name"] for x in items}),
+                  "tvg_ids": sorted({x["tvg_id"] for x in items if x["tvg_id"]}),
+                  "groups": sorted({x["group"] for x in items})}
+        if len({x["name"].casefold().strip() for x in items}) == 1:
+            record["reason"] = "SAME_NAME_CONFLICTING_TVG_IDS"
+            identity_metadata_conflicts.append(record)
+        else:
+            record["reason"] = "SAME_URL_DIFFERENT_DISPLAY_NAMES"
+            collisions.append(record)
     report = {"created_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
               "policy": "READ_ONLY; exact normalized URL collisions are strong evidence, but shared CDN hosts alone are not collisions",
               "playlist_entries": len(channels), "distinct_urls": len(by_url),
               "same_identity_repeated_category_entries": repeated_category_entries,
+              "identity_metadata_conflict_count": len(identity_metadata_conflicts),
+              "identity_metadata_conflicts": identity_metadata_conflicts,
               "cross_channel_url_collision_count": len(collisions),
               "cross_channel_url_collisions": collisions}
     OUT.parent.mkdir(parents=True, exist_ok=True)
