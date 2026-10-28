@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
-"""Bounded, read-only playback verification across ALL discovered M3U sources."""
+"""Read-only playback verification across a shared immutable M3U snapshot."""
 import concurrent.futures
 import hashlib
 import json
 import os
 import pathlib
 import subprocess
+import time
 import urllib.request
 from discover import ROOT, SOURCES, LIVE, entries, fetch
 
@@ -19,6 +20,8 @@ if not 0 <= SHARD_INDEX < SHARD_COUNT:
     raise ValueError("PLAYBACK_SHARD_INDEX must be within shard count")
 PAGE = max(0, int(os.getenv("PLAYBACK_PAGE", "0")))
 WORKERS = 6
+BATCH_SIZE = 24
+MAX_SECONDS = int(os.getenv("PLAYBACK_MAX_SECONDS", "2700"))
 RETRIES = 3
 
 def probe(item):
@@ -90,17 +93,28 @@ def main():
             "inventory": [a["shard_fingerprint"] for a in audit],
             "results": list(previous.values())}, ensure_ascii=False), encoding="utf-8")
     pending = [item for item in selected if hashlib.sha256(item[1]["url"].encode()).hexdigest() not in previous]
-    with concurrent.futures.ThreadPoolExecutor(max_workers=WORKERS) as pool:
-        for result in pool.map(probe, pending):
-            previous[result["url_sha256"]] = result
-            save_checkpoint()
-    results = [previous[hashlib.sha256(item[1]["url"].encode()).hexdigest()] for item in selected]
+    started = time.monotonic()
+    deadline_reached = False
+    for offset in range(0, len(pending), BATCH_SIZE):
+        if time.monotonic() - started >= MAX_SECONDS:
+            deadline_reached = True
+            break
+        batch = pending[offset:offset + BATCH_SIZE]
+        with concurrent.futures.ThreadPoolExecutor(max_workers=WORKERS) as pool:
+            for result in pool.map(probe, batch):
+                previous[result["url_sha256"]] = result
+        save_checkpoint()
+    if len(previous) < len(selected):
+        deadline_reached = True
+    results = [previous[digest] for item in selected if (digest := hashlib.sha256(item[1]["url"].encode()).hexdigest()) in previous]
     OUT.parent.mkdir(parents=True, exist_ok=True)
-    OUT.write_text(json.dumps({"policy": "READ_ONLY_SAMPLED_NOT_EXHAUSTIVE",
-       "total_sources": len(sources), "shard_index": SHARD_INDEX, "shard_count": SHARD_COUNT, "page": PAGE, "sampled": len(results),
+    OUT.write_text(json.dumps({"policy": "READ_ONLY_FULL_ASSIGNED_PARTITION_OR_EXPLICIT_INCOMPLETE",
+       "deadline_reached": deadline_reached, "assigned": len(selected), "total_sources": len(sources), "shard_index": SHARD_INDEX, "shard_count": SHARD_COUNT, "page": PAGE, "sampled": len(results),
        "video_decoded": sum(x["status"] == "VIDEO_DECODED" for x in results),
        "sources": audit, "results": results}, ensure_ascii=False, indent=2)+"\n")
-    print("Sources", len(sources), "sampled", len(results), "decoded", sum(x["status"] == "VIDEO_DECODED" for x in results))
+    print("Sources", len(sources), "assigned", len(selected), "tested", len(results), "deadline_reached", deadline_reached)
+    if deadline_reached:
+        raise SystemExit("Playback time budget reached: partial evidence checkpointed; retry required")
 
 if __name__ == "__main__":
     main()
