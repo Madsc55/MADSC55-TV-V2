@@ -10,7 +10,7 @@ permissions:
 jobs:
   sources:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 55
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -20,6 +20,21 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: python v2/github_source_discovery.py
+      - name: Fetch and deduplicate all M3U candidates once
+        run: python v2/discover.py --snapshot-output
+      - name: Share safe candidate report
+        uses: actions/upload-artifact@v4
+        with:
+          name: unified-source-candidates
+          path: v2/reports/candidates.json
+          if-no-files-found: error
+      - name: Share private playback snapshot
+        uses: actions/upload-artifact@v4
+        with:
+          name: unified-private-playback-snapshot
+          path: v2/reports/private-playback-snapshot.json
+          retention-days: 1
+          if-no-files-found: error
       - name: Share immutable discovery result
         uses: actions/upload-artifact@v4
         with:
@@ -49,6 +64,11 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: unified-source-snapshot
+          path: v2/reports
+      - name: Download private candidate snapshot
+        uses: actions/download-artifact@v4
+        with:
+          name: unified-private-playback-snapshot
           path: v2/reports
       - name: Verify candidate playback in bounded batch
         env:
@@ -86,8 +106,11 @@ jobs:
         with:
           name: unified-source-snapshot
           path: v2/reports
-      - name: Search configured and discovered M3U sources
-        run: python v2/discover.py
+      - name: Download shared candidate report
+        uses: actions/download-artifact@v4
+        with:
+          name: unified-source-candidates
+          path: v2/reports
       - name: Download all playback batch evidence
         uses: actions/download-artifact@v4
         with:
