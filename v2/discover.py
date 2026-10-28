@@ -109,6 +109,9 @@ def main():
         private = ROOT / "v2/reports/private-playback-snapshot.json"
         private.parent.mkdir(parents=True, exist_ok=True)
         private.write_text(json.dumps({"schema": 1, "sources": source_audit, "candidates": snapshot}, ensure_ascii=False), encoding="utf-8")
+        private.chmod(0o600)
+        if errors:
+            raise SystemExit("Snapshot incomplete: " + str(len(errors)) + " source(s) failed; no playback permitted")
     result = {"schema": 1, "mode": "read-only", "configured_and_discovered_sources": len(sources), "source_count": len(loaded), "errors": errors, "source_audit": source_audit, "candidates": discover(loaded, live)}
     result["total_unique_candidates"] = len(result["candidates"])
     result["candidate_limit"] = args.limit
