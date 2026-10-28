@@ -55,7 +55,11 @@ def main():
             pass
     existing = {e["url"] for e in entries(LIVE.read_text(encoding="utf-8-sig"))}
     seen, selected, audit, pools = set(), [], [], []
+    source_urls = set()
     for source in sources:
+        if source["url"] in source_urls:
+            continue
+        source_urls.add(source["url"])
         try:
             last_error = None
             for fetch_attempt in range(1, RETRIES + 2):
@@ -88,8 +92,11 @@ def main():
                 selected.append((source_id, items[round_index]))
                 next(a for a in audit if a["source"] == source_id)["sampled"] += 1
     # No fixed candidate cap: each disjoint shard/page processes all assigned entries.
+    # Bound concurrent work without truncating the source coverage.
+    results = []
     with concurrent.futures.ThreadPoolExecutor(max_workers=WORKERS) as pool:
-        results = list(pool.map(probe, selected))
+        for result in pool.map(probe, selected):
+            results.append(result)
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps({"policy": "READ_ONLY_SAMPLED_NOT_EXHAUSTIVE",
        "total_sources": len(sources), "shard_index": SHARD_INDEX, "shard_count": SHARD_COUNT, "page": PAGE, "sampled": len(results),
