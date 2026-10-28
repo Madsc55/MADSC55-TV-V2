@@ -33,7 +33,7 @@ def main():
                        "metadata_present": {"name": bool(name), "epg_id": bool(tvg_id),
                                             "category": bool(group), "logo": bool(logo)},
                        "playback": tested.get("playback") if tested else "NOT_TESTED",
-                       "classification": "PENDING_REVIEW", "issues": issues})
+                       "classification": ("REJECTED_PLAYBACK" if tested and tested.get("playback") != "VIDEO_DECODED" else "PENDING_REVIEW"), "issues": issues})
     counts = Counter(issue for item in output for issue in item["issues"])
     report = {"policy": "READ_ONLY_METADATA_AUDIT_NOT_IDENTITY_APPROVAL",
               "total_candidates": len(candidates), "total_audited": len(output),
