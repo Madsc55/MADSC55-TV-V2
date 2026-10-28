@@ -77,8 +77,17 @@ def main():
         if args.offline:
             continue
         try:
-            content = fetch(source["url"])
-            parsed = list(entries(content))
+            last_error = None
+            for attempt in range(4):
+                try:
+                    content = fetch(source["url"])
+                    parsed = list(entries(content))
+                    last_error = None
+                    break
+                except Exception as exc:
+                    last_error = exc
+            if last_error is not None:
+                raise last_error
             loaded.append((source["id"], content))
             source_audit.append({"source": source["id"], "entries": len(parsed),
                                  "distinct_stream_urls": len({e["url"] for e in parsed}),
