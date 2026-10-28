@@ -107,3 +107,7 @@
 - `final_validation_summary.py` sekiz shard'ın `all-source-playback-aggregate.json` sonucunu öncelikli okuyor; toplam farklı test, decoded, not decoded ve batch bilgilerini raporluyor (commit `36b2546`). Önceki tek `all-source-playback.json` dosyasını zorunlu sanma hatası giderildi.
 - Son kontrol: birleşik run `40666379703` pending; `40665873146` pending; `40665323555` in_progress. Başarı teyidi yok.
 - Sıradaki eksikler: tek kaynak snapshot'ı, bütçeli başarısız retry, tüm aday kapsama ve aday başına metadata/kimlik/kararlılık doğrulaması. Canlı playlist'e dokunma.
+
+## 28 Ekim — kesin tek birleşik görev kabul sözleşmesi
+Kullanıcı talebi: tek tetikleme, tüm kaynakları tara, tüm adayları listele; aday başına kimlik, oynatma, ses, video, EPG, logo, kategori kontrolü; başarısızları 3 kez yeniden dene; eksik kaynakları yeniden tara; ara rapor yayımlama; yalnızca finalde `approved`, `rejected`, `pending_review` ayrımlı tek rapor; tüm işler tamamlanmadan workflow success verme.
+Mevcut ana workflow bu sözleşmeyi henüz tam uygulamıyor: 4x2 sınırlı örnekleme, kaynak snapshot farkları, yalnızca sınırlı kararlılık örneği ve kimlik kanıtı eksik. Kısmi örneklem başarı değildir. Sonraki kod değişiklikleri mevcut `.github/workflows/v2-turkish-stream-review.yml` içinde yapılmalı; bağımsız test workflow'u oluşturulmamalı. Canlı IBO, FAVORİLER ve iki özgün YEDEKLER salt okunur.
