@@ -1,36 +1,6 @@
 name: Kanalları ara — Tek Birleşik Görev
 on:
   workflow_dispatch:
-  push:
-    paths:
-      - 'v2/turkish_stream_review.py'
-      - 'v2/candidate_assets.py'
-      - 'v2/frame_collisions.py'
-      - 'v2/current_stream_resolution.py'
-      - 'v2/stream_stability.py'
-      - 'v2/final_validation_summary.py'
-      - 'v2/official_sites_discovery.py'
-      - 'v2/official_site_gap.py'
-      - 'v2/youtube_discovery.py'
-      - 'v2/stream_url_collisions.py'
-      - 'v2/quality_upgrades.py'
-      - 'v2/config/sources.json'
-      - 'v2/github_source_discovery.py'
-      - 'v2/discover.py'
-      - 'v2/all_source_playback.py'
-      - 'v2/aggregate_playback_shards.py'
-      - 'v2/build_verified_test_playlist.py'
-      - 'v2/turkish_stream_catalog.py'
-      - 'v2/turkish_stream_probe.py'
-      - 'v2/newlisttr_extract.py'
-      - 'v2/build_newlisttr_ibo_test.py'
-      - 'v2/turkish_stream_decode.py'
-      - 'v2/epg_integrity.py'
-      - 'v2/assets_health.py'
-      - 'v2/logo_attribution.py'
-      - '.github/workflows/v2-turkish-stream-review.yml'
-  schedule:
-    - cron: '10 6 * * 2,5'
 concurrency:
   group: v2-turkish-stream-review-main
   cancel-in-progress: false
