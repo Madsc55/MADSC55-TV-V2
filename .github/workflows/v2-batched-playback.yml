@@ -1,13 +1,6 @@
 name: V2 Batched All-Source Playback Verification
 on:
   workflow_dispatch:
-  push:
-    paths:
-      - 'v2/all_source_playback.py'
-      - 'v2/aggregate_playback_shards.py'
-      - '.github/workflows/v2-batched-playback.yml'
-  schedule:
-    - cron: '30 4 * * 3'
 permissions:
   contents: read
 jobs:
