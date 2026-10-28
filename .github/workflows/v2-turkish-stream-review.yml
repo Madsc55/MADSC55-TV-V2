@@ -17,6 +17,7 @@ on:
       - 'v2/config/sources.json'
       - 'v2/github_source_discovery.py'
       - 'v2/discover.py'
+      - 'v2/all_source_playback.py'
       - 'v2/turkish_stream_catalog.py'
       - 'v2/turkish_stream_probe.py'
       - 'v2/newlisttr_extract.py'
@@ -55,6 +56,11 @@ jobs:
         run: python v2/github_source_discovery.py
       - name: Search configured and discovered M3U sources
         run: python v2/discover.py
+      - name: Sample real video and audio across all M3U sources
+        env:
+          PLAYBACK_LIMIT: '100'
+          PLAYBACK_PER_SOURCE: '4'
+        run: python v2/all_source_playback.py
       - name: Audit same URL across different channels
         run: python v2/stream_url_collisions.py
       - name: Refresh candidates
@@ -124,6 +130,7 @@ jobs:
           path: |
             v2/reports/github-source-discovery.json
             v2/reports/candidates.json
+            v2/reports/all-source-playback.json
             v2/reports/stream-url-collisions.json
             v2/reports/quality-upgrades.json
             v2/reports/current-stream-resolution.json
