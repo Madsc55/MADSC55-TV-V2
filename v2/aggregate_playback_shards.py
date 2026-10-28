@@ -12,6 +12,7 @@ def main():
     per_source_shard = {}
     per_source_fingerprint = {}
     total_sampled = 0
+    page_source_sets = {}
     for path in files:
         doc = json.loads(Path(path).read_text(encoding="utf-8"))
         idx = (int(doc.get("page", 0)), int(doc.get("shard_index", -1)))
@@ -21,6 +22,9 @@ def main():
             raise SystemExit("Duplicate shard index: "+str(idx))
         shard_ids.add(idx)
         total_sampled += doc.get("sampled", 0)
+        page_source_sets[idx] = {item["source"] for item in doc.get("sources", [])}
+        if len(page_source_sets[idx]) != len(doc.get("sources", [])):
+            raise SystemExit("Duplicate source IDs in batch: " + str(idx))
         for item in doc.get("results", []):
             key = item.get("url_sha256")
             if key:
@@ -50,6 +54,9 @@ def main():
     unexpected = shard_ids - expected
     if missing or unexpected:
         raise SystemExit("Incomplete playback evidence; missing="+str(sorted(missing))+" unexpected="+str(sorted(unexpected)))
+    for shard in range(4):
+        if page_source_sets[(0, shard)] != page_source_sets[(1, shard)]:
+            raise SystemExit("Source set changed between pages for shard " + str(shard))
     incomplete_sources = [x["source"] for x in source_stats.values() if x["fetch_failures"] or x["sampled"] != x["shard_candidates"]]
     # Each sampled stream must have exactly one distinct URL hash and a probe result.
     if total_sampled != len(results):
