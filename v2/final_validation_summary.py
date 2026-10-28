@@ -48,6 +48,8 @@ def main():
         "sources_accessible": discovery.get("source_count", 0) if discovery else 0,
         "sources_failed": len(discovery.get("errors", [])) if discovery else 0,
         "m3u_candidates": len(discovery.get("candidates", [])) if discovery else 0,
+        "m3u_total_unique_candidates": discovery.get("total_unique_candidates", 0) if discovery else 0,
+        "m3u_candidates_truncated": discovery.get("candidates_truncated", False) if discovery else False,
         "all_source_playback_sampled": all_sources.get("unique_tested", all_sources.get("sampled", 0)) if all_sources else 0,
         "all_source_video_decoded": all_sources.get("video_decoded", 0) if all_sources else 0,
         "playback_batches_present": all_sources.get("batches_present", []) if all_sources else [],
@@ -75,6 +77,8 @@ def main():
     missing = [key for key, value in required.items() if value is None]
     if missing:
         raise SystemExit("Missing required reports: " + ", ".join(missing))
+    if report["m3u_candidates_truncated"]:
+        raise SystemExit("Discovery candidate inventory truncated; cannot mark complete")
     if report["sources_failed"]:
         raise SystemExit("Some candidate sources failed discovery after retries; cannot mark complete")
     if not report["all_source_playback_sampled"]:
