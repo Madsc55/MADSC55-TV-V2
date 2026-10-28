@@ -59,7 +59,7 @@ def discover(source_texts, live_text):
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("--offline", action="store_true", help="Do not access external sources")
-    p.add_argument("--limit", type=int, default=10000, help="Maximum candidate count")
+    p.add_argument("--limit", type=int, default=0, help="Maximum candidate count; 0 means no limit")
     args = p.parse_args()
     live = LIVE.read_text(encoding="utf-8-sig")
     sources = json.loads(SOURCES.read_text(encoding="utf-8"))["sources"]
@@ -99,8 +99,9 @@ def main():
     result = {"schema": 1, "mode": "read-only", "configured_and_discovered_sources": len(sources), "source_count": len(loaded), "errors": errors, "source_audit": source_audit, "candidates": discover(loaded, live)}
     result["total_unique_candidates"] = len(result["candidates"])
     result["candidate_limit"] = args.limit
-    result["candidates_truncated"] = len(result["candidates"]) > max(0, args.limit)
-    result["candidates"] = result["candidates"][:max(0, args.limit)]
+    result["candidates_truncated"] = args.limit > 0 and len(result["candidates"]) > args.limit
+    if args.limit > 0:
+        result["candidates"] = result["candidates"][:args.limit]
     OUTPUT.parent.mkdir(parents=True, exist_ok=True)
     OUTPUT.write_text(json.dumps(result, ensure_ascii=False, indent=2) + chr(10), encoding="utf-8")
     print(f"Sources: {len(loaded)} | Candidates: {len(result['candidates'])} | Errors: {len(errors)}")
