@@ -163,6 +163,10 @@ jobs:
       - name: Audit metadata for every discovered candidate
         continue-on-error: true
         run: python v2/candidate_metadata_audit.py
+      - name: Classify every candidate from this run without rescanning
+        run: python v2/postscan_triage.py
+      - name: Audit identity metadata conflicts in the same run
+        run: python v2/postscan_identity_consistency.py
       - name: Audit same URL across different channels
         run: python v2/stream_url_collisions.py
       - name: Refresh candidates
@@ -236,6 +240,7 @@ jobs:
             v2/reports/github-source-discovery.json
             v2/reports/candidates.json
             v2/reports/candidate-metadata-audit.json
+            v2/reports/postscan-*.json
             v2/reports/all-source-playback-aggregate.json
             v2/reports/stream-url-collisions.json
             v2/reports/quality-upgrades.json
