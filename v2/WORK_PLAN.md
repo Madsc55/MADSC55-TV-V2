@@ -130,3 +130,8 @@ Mevcut ana workflow bu sözleşmeyi henüz tam uygulamıyor: 4x2 sınırlı örn
 - **Öncelik 3:** aday bazlı kimlik, yayın, ses, video, EPG, logo, kategori ve kararlılık delili.
 - **Öncelik 4:** `approved/rejected/pending_review` tek final rapor ve eksik iş varsa başarısız job; ara rapor yayınlamama.
 - **Öncelik 5:** Actions uçtan uca doğrulama. Canlı IBO/kategoriler/FAVORİLER/iki YEDEKLER salt okunur.
+
+## 28 Ekim 14:45 — testler doğrulandı, final rapor bağlandı
+- Actions `40688516292`, `40689745489`, `40689918425` SUCCESS. Bu üç çalışma, sırasıyla kapsam göstergesi, kaynak retry ve kanal bazlı playback raporunun CI içinde tamamlandığını gösterir.
+- `98f37a6`: `final-validation-summary.json` içine `playback_coverage_complete`, `playback_incomplete_sources`, `channel_review_counts` aktarıldı. `approved=0` tutuluyor çünkü kanal kimliği/EPG/logo/kategori henüz kanıtlanmadı. Bu commit'in CI sonucu bekleniyor.
+- Sonraki iş: ortak immutable kaynak snapshot, tüm adayların dinamik sayfalama ile kapsanması, tek final kabul raporu ve eksik kontrollerde fail-closed. Canlı listeye müdahale yok.
