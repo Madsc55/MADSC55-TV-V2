@@ -53,6 +53,16 @@ def main():
     if not SNAPSHOT.exists():
         raise SystemExit("Shared private candidate snapshot missing; refusing inconsistent per-shard fetch")
     snap = json.loads(SNAPSHOT.read_text(encoding="utf-8"))
+    if any(x.get("status") == "FETCH_FAILED" for x in snap["sources"]):
+        raise SystemExit("Source snapshot contains failed fetches")
+    digests = [hashlib.sha256(x["url"].encode()).hexdigest() for x in snap["candidates"]]
+    if len(digests) != len(set(digests)):
+        raise SystemExit("Shared candidate snapshot contains duplicate stream URLs")
+    safe_report = ROOT / "v2/reports/candidates.json"
+    if safe_report.exists():
+        report = json.loads(safe_report.read_text(encoding="utf-8"))
+        if set(digests) != {x["url_sha256"] for x in report["candidates"]}:
+            raise SystemExit("Private candidate snapshot differs from public-safe discovery report")
     grouped = {}
     for item in snap["candidates"]:
         grouped.setdefault(item["source"], []).append(item)
