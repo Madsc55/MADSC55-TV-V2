@@ -9,6 +9,7 @@ def main():
     if not files:
         raise SystemExit("No shard evidence found")
     results, source_stats, shard_ids = {}, {}, set()
+    per_source_shard = {}
     total_sampled = 0
     for path in files:
         doc = json.loads(Path(path).read_text(encoding="utf-8"))
@@ -26,7 +27,15 @@ def main():
         for source in doc.get("sources", []):
             sid = source["source"]
             stat = source_stats.setdefault(sid, {"source":sid, "shard_candidates":0, "sampled":0, "fetch_failures":0})
-            stat["shard_candidates"] += source.get("shard_candidates", 0)
+            # Every page repeats the same shard candidate count; count it only once.
+            shard_key = (sid, idx[1])
+            previous = per_source_shard.get(shard_key)
+            count = source.get("shard_candidates", 0)
+            if previous is not None and previous != count:
+                raise SystemExit("Source snapshot drift between pages: " + sid + " shard " + str(idx[1]))
+            if previous is None:
+                per_source_shard[shard_key] = count
+                stat["shard_candidates"] += count
             stat["sampled"] += source.get("sampled", 0)
             stat["fetch_failures"] += int(source.get("status") == "FETCH_FAILED")
     expected = {(page, shard) for page in range(2) for shard in range(4)}
