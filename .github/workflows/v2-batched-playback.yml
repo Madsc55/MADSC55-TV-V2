@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - 'v2/all_source_playback.py'
+      - 'v2/aggregate_playback_shards.py'
       - '.github/workflows/v2-batched-playback.yml'
   schedule:
     - cron: '30 4 * * 3'
@@ -44,3 +45,25 @@ jobs:
           name: all-source-playback-shard-${{ matrix.shard }}
           path: v2/reports/all-source-playback.json
           if-no-files-found: ignore
+
+  aggregate:
+    needs: playback
+    if: always()
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download all shard evidence
+        uses: actions/download-artifact@v4
+        with:
+          pattern: all-source-playback-shard-*
+          path: v2/reports/shards
+      - name: Merge and validate shard evidence
+        run: python v2/aggregate_playback_shards.py
+      - name: Upload single acceptance summary
+        uses: actions/upload-artifact@v4
+        with:
+          name: all-source-playback-aggregate
+          path: v2/reports/all-source-playback-aggregate.json
