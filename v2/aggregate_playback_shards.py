@@ -43,7 +43,12 @@ def main():
     unexpected = shard_ids - expected
     if missing or unexpected:
         raise SystemExit("Incomplete playback evidence; missing="+str(sorted(missing))+" unexpected="+str(sorted(unexpected)))
-    incomplete_sources = [x["source"] for x in source_stats.values() if x["fetch_failures"] or x["sampled"] < x["shard_candidates"]]
+    incomplete_sources = [x["source"] for x in source_stats.values() if x["fetch_failures"] or x["sampled"] != x["shard_candidates"]]
+    # Each sampled stream must have exactly one distinct URL hash and a probe result.
+    if total_sampled != len(results):
+        raise SystemExit("Duplicate or missing playback evidence: sampled=" + str(total_sampled) + " unique=" + str(len(results)))
+    if any(not item.get("status") or not item.get("attempts") for item in results.values()):
+        raise SystemExit("Playback result missing status or attempt evidence")
     verified = sum(x.get("status") == "VIDEO_DECODED" for x in results.values())
     report = {"policy":"READ_ONLY_SHARDED_EVIDENCE_NOT_COMPLETE_VALIDATION",
         "batches_present":[{"page":p,"shard":s} for p,s in sorted(shard_ids)], "unique_tested":len(results),
