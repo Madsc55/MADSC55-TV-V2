@@ -13,6 +13,10 @@ OUT = ROOT / "v2/reports/all-source-playback.json"
 DISCOVERED = ROOT / "v2/reports/github-source-discovery.json"
 LIMIT = int(os.getenv("PLAYBACK_LIMIT", "100"))
 PER_SOURCE = int(os.getenv("PLAYBACK_PER_SOURCE", "4"))
+SHARD_COUNT = max(1, int(os.getenv("PLAYBACK_SHARD_COUNT", "1")))
+SHARD_INDEX = int(os.getenv("PLAYBACK_SHARD_INDEX", "0"))
+if not 0 <= SHARD_INDEX < SHARD_COUNT:
+    raise ValueError("PLAYBACK_SHARD_INDEX must be within shard count")
 WORKERS = 6
 
 def probe(item):
@@ -45,10 +49,8 @@ def main():
         except (ValueError, KeyError, OSError):
             pass
     existing = {e["url"] for e in entries(LIVE.read_text(encoding="utf-8-sig"))}
-    seen, selected, audit = set(), [], []
+    seen, selected, audit, pools = set(), [], [], []
     for source in sources:
-        if len(selected) >= LIMIT:
-            break
         try:
             parsed = list(entries(fetch(source["url"])))
             unique = []
@@ -56,17 +58,28 @@ def main():
                 if e["url"] not in existing and e["url"] not in seen:
                     seen.add(e["url"])
                     unique.append(e)
-            batch = unique[:min(PER_SOURCE, LIMIT-len(selected))]
-            selected.extend((source["id"], e) for e in batch)
+            # Stable per-source ordering, then round-robin across sources.
+            # Shards are disjoint and deterministic for the same source snapshot.
+            shard_items = [e for e in unique if int(hashlib.sha256(e["url"].encode()).hexdigest(), 16) % SHARD_COUNT == SHARD_INDEX]
+            pools.append((source["id"], shard_items))
             audit.append({"source": source["id"], "entries": len(parsed), "new_unique": len(unique),
-                          "sampled": len(batch), "status": "PARSED"})
+                          "shard_candidates": len(shard_items), "sampled": 0, "status": "PARSED"})
         except Exception as exc:
             audit.append({"source": source["id"], "status": "FETCH_FAILED", "error": type(exc).__name__})
+    for round_index in range(PER_SOURCE):
+        for source_id, items in pools:
+            if len(selected) >= LIMIT:
+                break
+            if round_index < len(items):
+                selected.append((source_id, items[round_index]))
+                next(a for a in audit if a["source"] == source_id)["sampled"] += 1
+        if len(selected) >= LIMIT:
+            break
     with concurrent.futures.ThreadPoolExecutor(max_workers=WORKERS) as pool:
         results = list(pool.map(probe, selected))
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps({"policy": "READ_ONLY_SAMPLED_NOT_EXHAUSTIVE",
-       "total_sources": len(sources), "sampled": len(results),
+       "total_sources": len(sources), "shard_index": SHARD_INDEX, "shard_count": SHARD_COUNT, "sampled": len(results),
        "video_decoded": sum(x["status"] == "VIDEO_DECODED" for x in results),
        "sources": audit, "results": results}, ensure_ascii=False, indent=2)+"\n")
     print("Sources", len(sources), "sampled", len(results), "decoded", sum(x["status"] == "VIDEO_DECODED" for x in results))
