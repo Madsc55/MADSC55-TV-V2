@@ -12,7 +12,7 @@ def main():
     total_sampled = 0
     for path in files:
         doc = json.loads(Path(path).read_text(encoding="utf-8"))
-        idx = doc.get("shard_index")
+        idx = (doc.get("page", 0), doc.get("shard_index"))
         if idx in shard_ids:
             raise SystemExit("Duplicate shard index: "+str(idx))
         shard_ids.add(idx)
@@ -29,7 +29,7 @@ def main():
             stat["fetch_failures"] += int(source.get("status") == "FETCH_FAILED")
     verified = sum(x.get("status") == "VIDEO_DECODED" for x in results.values())
     report = {"policy":"READ_ONLY_SHARDED_EVIDENCE_NOT_COMPLETE_VALIDATION",
-        "shards_present":sorted(shard_ids), "unique_tested":len(results),
+        "batches_present":[{"page":p,"shard":s} for p,s in sorted(shard_ids)], "unique_tested":len(results),
         "video_decoded":verified, "not_video_decoded":len(results)-verified,
         "reported_sampled":total_sampled,
         "source_coverage":sorted(source_stats.values(),key=lambda x:x["source"]),
