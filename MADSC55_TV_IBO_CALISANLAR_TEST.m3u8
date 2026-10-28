@@ -1681,11 +1681,11 @@ http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ
 http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6780/index.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="4UTV" tvg-logo="https://i.imgur.com/PexhKwp.png" group-title="🗂️ YEDEKLER (14)",🧪 TEST 4UTV 720P
 https://hls.4utv.live/hls/stream.m3u8
-#EXTINF:-1 tvg-id="" tvg-name="Almahriah TV" tvg-logo="" group-title="🗂️ YEDEKLER (14)",🧪 TEST ALMAHRİAH TV 576P
+#EXTINF:-1 tvg-id="" tvg-name="Almahriah TV" tvg-logo="https://i.imgur.com/GgEeTNr.png" group-title="🗂️ YEDEKLER (14)",🧪 TEST ALMAHRİAH TV 576P
 https://starmenajo.com/hls/almahriah/index.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="Elsharq TV" tvg-logo="https://i.imgur.com/8vmfZb5.png" group-title="🗂️ YEDEKLER (14)",🧪 TEST ELSHARQ TV 720P
 https://mn-nl.mncdn.com/elsharq_live/live/playlist.m3u8
-#EXTINF:-1 tvg-id="" tvg-name="Grand Cinema" tvg-logo="" group-title="🗂️ YEDEKLER (14)",🧪 TEST GRAND CİNEMA 720P
+#EXTINF:-1 tvg-id="" tvg-name="Grand Cinema" tvg-logo="https://raw.githubusercontent.com/Madsc55/MADSC55-TV-V2/main/assets/logos/grand-cinema-review.svg" group-title="🗂️ YEDEKLER (14)",🧪 TEST GRAND CİNEMA 720P
 https://gcinemahls.wns.live/hls/stream.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="Haber61 TV" tvg-logo="https://i.imgur.com/2a2XUKl.png" group-title="🗂️ YEDEKLER (14)",🧪 TEST HABER61 TV 720P
 https://win8.yayin.com.tr/haber61tv/smil:haber61tv.smil/playlist.m3u8
@@ -1697,9 +1697,9 @@ https://cdn-uw2-prod.tsv2.amagi.tv/linear/amg01602-themahqfrance-vivekanald-sams
 https://b01c02nl.mediatriple.net/videoonlylive/mtpayqrfkgirxelive/broadcast_5e91c5ac96898.smil/playlist.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="Mekameleen TV" tvg-logo="https://i.imgur.com/q7iVchl.png" group-title="🗂️ YEDEKLER (14)",🧪 TEST MEKAMELEEN TV 1080P
 https://mn-nl.mncdn.com/mekameleen/smil:mekameleentv.smil/playlist.m3u8
-#EXTINF:-1 tvg-id="" tvg-name="Minika Çocuk" tvg-logo="" group-title="🗂️ YEDEKLER (14)",🧪 TEST MİNİKA ÇOCUK 720P
+#EXTINF:-1 tvg-id="" tvg-name="Minika Çocuk" tvg-logo="https://i.imgur.com/VCywMTv.png" group-title="🗂️ YEDEKLER (14)",🧪 TEST MİNİKA ÇOCUK 720P
 http://rnttwmjcin.turknet.ercdn.net/lcpmvefbyo/minikago_cocuk/minikago_cocuk.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="TRT Çocuk" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/TRT_%C3%87ocuk_logo_%282021%29.svg/960px-TRT_%C3%87ocuk_logo_%282021%29.svg.png" group-title="🗂️ YEDEKLER (14)",🧪 TEST TRT ÇOCUK 720P
 https://tv-trtcocuk.medya.trt.com.tr/master.m3u8
-#EXTINF:-1 tvg-id="" tvg-name="TRT Müzik" tvg-logo="" group-title="🗂️ YEDEKLER (14)",🧪 TEST TRT MÜZİK 576P
+#EXTINF:-1 tvg-id="" tvg-name="TRT Müzik" tvg-logo="https://i.imgur.com/JgUzRH8.png" group-title="🗂️ YEDEKLER (14)",🧪 TEST TRT MÜZİK 576P
 https://stream8.cinerama.uz/1208/tracks-v1a1/mono.m3u8
