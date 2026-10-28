@@ -121,3 +121,12 @@ Mevcut ana workflow bu sözleşmeyi henüz tam uygulamıyor: 4x2 sınırlı örn
 - `9d247f7`: `v2/all_source_playback.py` içinde ffprobe başarısızlığı için ilk denemeden sonra **en fazla 3 yeniden deneme** eklendi; sonuçta `attempts` sayısı saklanır. Bu yalnızca playback ffprobe kapsamındadır, tüm EPG/kimlik kontrollerinin tamamlandığı anlamına gelmez.
 - `40683960121` birleşik run kontrol anında in_progress; yeni commit'in sonucunu henüz kanıtlamaz.
 - Kalan: ortak kaynak snapshot, eksik kaynak tekrar taraması, tüm adaylara eksiksiz kapsam, tek nihai kanal bazlı approved/rejected/pending_review sınıflaması ve katı başarı koşulu.
+
+## 28 Ekim 13:31 — doğrulanmış sonuç ve kalan sıra
+- Actions `40683960121` (commit `6f98ef87`) SUCCESS; Actions `40684089681` (commit `9d247f74`, 3 yeniden deneme) SUCCESS. Bu, sınırlı örneklemenin başarı durumudur; tüm adayları doğrulamaz.
+- `523eb9dd`: toplu kanıtta `coverage_complete` ve `incomplete_sources` alanları; kaynak fetch hatası veya shard adaylarının örneklenmemesi görünür hale getirildi.
+- **Öncelik 1:** kaynakların tek immutable snapshot'ı ve eksik fetch'lerin 3 yeniden denenmesi.
+- **Öncelik 2:** 250×8 sınırlı örneklemeden bütün adaylara tam kapsam, otomatik genişleyen batch.
+- **Öncelik 3:** aday bazlı kimlik, yayın, ses, video, EPG, logo, kategori ve kararlılık delili.
+- **Öncelik 4:** `approved/rejected/pending_review` tek final rapor ve eksik iş varsa başarısız job; ara rapor yayınlamama.
+- **Öncelik 5:** Actions uçtan uca doğrulama. Canlı IBO/kategoriler/FAVORİLER/iki YEDEKLER salt okunur.
