@@ -75,6 +75,10 @@ def main():
     missing = [key for key, value in required.items() if value is None]
     if missing:
         raise SystemExit("Missing required reports: " + ", ".join(missing))
+    if not report["playback_coverage_complete"]:
+        raise SystemExit("Full source playback coverage NOT achieved; incomplete sources: " + ", ".join(report["playback_incomplete_sources"]))
+    if report["channel_review_counts"]["pending_review"]:
+        raise SystemExit("Channel identity/EPG/logo/category verification still pending; cannot mark complete")
 
 if __name__ == "__main__":
     main()
