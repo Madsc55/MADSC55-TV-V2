@@ -1679,3 +1679,27 @@ https://live.euromediacenter.com/brukselturk/tracks-v1a1/mono.m3u8
 http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6780/index.m3u8
 #EXTINF:-1 tvg-id="3839" tvg-logo="http://epg.one/img/3839.png" group-title="🇹🇷 ULUSAL-HEPSİ (415)",AKİT TV TR
 http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6780/index.m3u8
+#EXTINF:-1 tvg-id="" tvg-name="4UTV" tvg-logo="" group-title="🗂️ YEDEKLER (2)",🧪 TEST 4UTV 720P
+https://hls.4utv.live/hls/stream.m3u8
+#EXTINF:-1 tvg-id="" tvg-name="Almahriah TV" tvg-logo="" group-title="🗂️ YEDEKLER (2)",🧪 TEST Almahriah TV 576P
+https://starmenajo.com/hls/almahriah/index.m3u8
+#EXTINF:-1 tvg-id="" tvg-name="Elsharq TV" tvg-logo="" group-title="🗂️ YEDEKLER (2)",🧪 TEST Elsharq TV 720P
+https://mn-nl.mncdn.com/elsharq_live/live/playlist.m3u8
+#EXTINF:-1 tvg-id="" tvg-name="Grand Cinema" tvg-logo="" group-title="🗂️ YEDEKLER (2)",🧪 TEST Grand Cinema 720P
+https://gcinemahls.wns.live/hls/stream.m3u8
+#EXTINF:-1 tvg-id="" tvg-name="Haber61 TV" tvg-logo="" group-title="🗂️ YEDEKLER (2)",🧪 TEST Haber61 TV 720P
+https://win8.yayin.com.tr/haber61tv/smil:haber61tv.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="" tvg-name="Kanal D Drama" tvg-logo="" group-title="🗂️ YEDEKLER (2)",🧪 TEST Kanal D Drama 480P
+http://190.93.224.42/KANAL-D-DRAMA/index.m3u8
+#EXTINF:-1 tvg-id="" tvg-name="Kanal D Drama" tvg-logo="" group-title="🗂️ YEDEKLER (2)",🧪 TEST Kanal D Drama 720P
+https://cdn-uw2-prod.tsv2.amagi.tv/linear/amg01602-themahqfrance-vivekanald-samsungspain/playlist.m3u8
+#EXTINF:-1 tvg-id="" tvg-name="Luys TV" tvg-logo="" group-title="🗂️ YEDEKLER (2)",🧪 TEST Luys TV 0P
+https://b01c02nl.mediatriple.net/videoonlylive/mtpayqrfkgirxelive/broadcast_5e91c5ac96898.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="" tvg-name="Mekameleen TV" tvg-logo="" group-title="🗂️ YEDEKLER (2)",🧪 TEST Mekameleen TV 1080P
+https://mn-nl.mncdn.com/mekameleen/smil:mekameleentv.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="" tvg-name="Minika Çocuk" tvg-logo="" group-title="🗂️ YEDEKLER (2)",🧪 TEST Minika Çocuk 720P
+http://rnttwmjcin.turknet.ercdn.net/lcpmvefbyo/minikago_cocuk/minikago_cocuk.m3u8
+#EXTINF:-1 tvg-id="" tvg-name="TRT Çocuk" tvg-logo="" group-title="🗂️ YEDEKLER (2)",🧪 TEST TRT Çocuk 720P
+https://tv-trtcocuk.medya.trt.com.tr/master.m3u8
+#EXTINF:-1 tvg-id="" tvg-name="TRT Müzik" tvg-logo="" group-title="🗂️ YEDEKLER (2)",🧪 TEST TRT Müzik 576P
+https://stream8.cinerama.uz/1208/tracks-v1a1/mono.m3u8
