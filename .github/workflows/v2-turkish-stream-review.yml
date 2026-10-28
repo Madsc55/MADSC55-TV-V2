@@ -77,7 +77,7 @@ jobs:
 
   review:
     needs: playback
-    if: always()
+    if: ${{ needs.playback.result == 'success' }}
     runs-on: ubuntu-latest
     timeout-minutes: 65
     steps:
