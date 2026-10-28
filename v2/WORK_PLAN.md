@@ -65,3 +65,8 @@
 - Run 40660910249: son kontrol sırasında **in_progress**; sonuç bekleniyor.
 - Sonraki öncelik: dört shard raporunu tek kabul özetine birleştirmek, kapsam dışı aday sayısını hesaplamak, eksik kanalları sonraki partilere almak, YouTube IBO kalıcılığı ve kimlik/EPG/logo eşleştirmelerini kanıtlamak.
 - Canlı IBO, FAVORİLER ve YEDEKLER'e otomatik yazma yok.
+
+## 28 Ekim — ölçülmüş toplu doğrulama sonucu
+- Run 40662300708 dört playback shard ve aggregate işleri **success**. Aggregate job logu: **1.000 farklı URL hash'i test edildi, 414'ünde video doğrulandı, 586'sında video doğrulanamadı**. Bunlar kanal kimliği veya kalıcı yayın garantisi değildir.
+- Run 40660910249 birleşik kanal arama **success**; 40660159911 ayrı inceleme playlisti dahil **success**.
+- Sıradaki iş sırası: (1) test edilmemiş adayların kapsama hesabı ve sonraki partiler; (2) 586 başarısızın kontrollü tekrar denemesi; (3) 414 görüntülü adayın ses, kimlik, çözünürlük, EPG/logo ve kararlılık doğrulaması; (4) resmî YouTube IBO uyumluluğu; (5) yalnızca kanıtlı adayların ayrı onay listesi. Canlı IBO'ya otomatik aktarım yok.
