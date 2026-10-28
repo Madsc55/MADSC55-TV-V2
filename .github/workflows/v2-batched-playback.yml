@@ -1,0 +1,42 @@
+name: V2 Batched All-Source Playback Verification
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '30 4 * * 3'
+permissions:
+  contents: read
+jobs:
+  playback:
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2, 3]
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install ffprobe
+        run: sudo apt-get update -qq && sudo apt-get install -y ffmpeg
+      - name: Validate playlist protection
+        run: python v2/test_playlist_invariants.py
+      - name: Discover GitHub M3U sources
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python v2/github_source_discovery.py
+      - name: Probe bounded shard with source coverage
+        env:
+          PLAYBACK_LIMIT: '250'
+          PLAYBACK_PER_SOURCE: '100'
+          PLAYBACK_SHARD_COUNT: '4'
+          PLAYBACK_SHARD_INDEX: ${{ matrix.shard }}
+        run: python v2/all_source_playback.py
+      - name: Upload hashed evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: all-source-playback-shard-${{ matrix.shard }}
+          path: v2/reports/all-source-playback.json
+          if-no-files-found: ignore
