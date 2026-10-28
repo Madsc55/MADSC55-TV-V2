@@ -27,7 +27,11 @@ def main():
     probe = load("turkish-stream-probe.json")
     decoder = load("turkish-stream-decode.json")
     newlisttr = load("newlisttr-check.json")
+    all_sources = load("all-source-playback.json")
+    discovery = load("candidates.json")
+    github = load("github-source-discovery.json")
     required = {
+        "all_sources": all_sources, "discovery": discovery, "github_sources": github,
         "newlisttr": newlisttr,
         "baseline": baseline, "stability": stability, "quality": quality,
         "frames": frames, "candidate_assets": assets, "http_probe": probe,
@@ -40,6 +44,13 @@ def main():
         "playlist_entries": len(channels), "category_count": len(groups),
         "backup_names": sorted(x["name"] for x in backups),
         "reports_present": {k: v is not None for k, v in required.items()},
+        "configured_and_discovered_sources": discovery.get("configured_and_discovered_sources", 0) if discovery else 0,
+        "sources_accessible": discovery.get("source_count", 0) if discovery else 0,
+        "sources_failed": len(discovery.get("errors", [])) if discovery else 0,
+        "m3u_candidates": len(discovery.get("candidates", [])) if discovery else 0,
+        "all_source_playback_sampled": all_sources.get("sampled", 0) if all_sources else 0,
+        "all_source_video_decoded": all_sources.get("video_decoded", 0) if all_sources else 0,
+        "github_new_source_files": github.get("sources_found", 0) if github else 0,
         "newlisttr_source_entries": newlisttr.get("source_entries", 0) if newlisttr else 0,
         "newlisttr_tested": newlisttr.get("tested", 0) if newlisttr else 0,
         "newlisttr_short_video_decoded": newlisttr.get("short_video_decoded", 0) if newlisttr else 0,
@@ -51,7 +62,7 @@ def main():
         "candidate_asset_hints": assets.get("matched", 0) if assets else 0,
         "possible_video_duplicate_groups": len(frames.get("possible_duplicate_groups", [])) if frames else 0,
         "not_proven": ["24h uptime", "correct live channel identity for all URLs",
-                       "EPG/logo correctness for new candidates", "every playlist entry decoded"],
+                       "EPG/logo correctness for new candidates", "every playlist entry decoded", "every discovered source candidate decoded", "permanent IBO-compatible YouTube live URL"],
     }
     out = REPORTS / "final-validation-summary.json"
     out.write_text(json.dumps(report, ensure_ascii=False, indent=2) + chr(10), encoding="utf-8")
