@@ -20,3 +20,5 @@ jobs:
           git add MADSC55_TV_IBO_CALISANLAR_TEST.m3u8
           git commit -m 'Move more Turkish channels to YENI TURK'
           git push
+
+# retry after category merge fix
