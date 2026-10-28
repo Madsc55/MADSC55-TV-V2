@@ -85,13 +85,10 @@ def main():
     max_items = max((len(items) for _, items in pools), default=0)
     for round_index in (i for block in range(PAGE * PER_SOURCE, max_items, PER_SOURCE * 2) for i in range(block, min(block + PER_SOURCE, max_items))):
         for source_id, items in pools:
-            if len(selected) >= LIMIT:
-                break
             if round_index < len(items):
                 selected.append((source_id, items[round_index]))
                 next(a for a in audit if a["source"] == source_id)["sampled"] += 1
-        if len(selected) >= LIMIT:
-            break
+    # No fixed candidate cap: each disjoint shard/page processes all assigned entries.
     with concurrent.futures.ThreadPoolExecutor(max_workers=WORKERS) as pool:
         results = list(pool.map(probe, selected))
     OUT.parent.mkdir(parents=True, exist_ok=True)
