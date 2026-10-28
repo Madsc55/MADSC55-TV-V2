@@ -70,6 +70,11 @@ jobs:
         with:
           name: unified-private-playback-snapshot
           path: v2/reports
+      - name: Restore checkpoint for same run and exact candidate snapshot
+        uses: actions/cache/restore@v4
+        with:
+          path: v2/reports/all-source-playback.checkpoint.json
+          key: playback-${{ github.run_id }}-${{ matrix.page }}-${{ matrix.shard }}-${{ hashFiles('v2/reports/private-playback-snapshot.json') }}
       - name: Verify candidate playback in bounded batch
         env:
           PLAYBACK_PER_SOURCE: '250'
@@ -77,6 +82,12 @@ jobs:
           PLAYBACK_SHARD_COUNT: '16'
           PLAYBACK_SHARD_INDEX: ${{ matrix.shard }}
         run: python v2/all_source_playback.py
+      - name: Save checkpoint even when playback fails
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: v2/reports/all-source-playback.checkpoint.json
+          key: playback-${{ github.run_id }}-${{ matrix.page }}-${{ matrix.shard }}-${{ hashFiles('v2/reports/private-playback-snapshot.json') }}
       - name: Upload batch evidence
         if: always()
         uses: actions/upload-artifact@v4
