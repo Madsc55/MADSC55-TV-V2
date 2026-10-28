@@ -8,7 +8,27 @@ concurrency:
 permissions:
   contents: read
 jobs:
+  sources:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Discover GitHub sources once
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python v2/github_source_discovery.py
+      - name: Share immutable discovery result
+        uses: actions/upload-artifact@v4
+        with:
+          name: unified-source-snapshot
+          path: v2/reports/github-source-discovery.json
+          if-no-files-found: error
+
   playback:
+    needs: sources
     strategy:
       fail-fast: false
       matrix:
@@ -25,10 +45,11 @@ jobs:
         run: sudo apt-get update -qq && sudo apt-get install -y ffmpeg
       - name: Protect live playlist
         run: python v2/test_playlist_invariants.py
-      - name: Discover GitHub M3U sources
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: python v2/github_source_discovery.py
+      - name: Download shared source discovery
+        uses: actions/download-artifact@v4
+        with:
+          name: unified-source-snapshot
+          path: v2/reports
       - name: Verify candidate playback in bounded batch
         env:
           PLAYBACK_PER_SOURCE: '500'
@@ -45,8 +66,8 @@ jobs:
           if-no-files-found: ignore
 
   review:
-    needs: playback
-    if: ${{ needs.playback.result == 'success' }}
+    needs: [sources, playback]
+    if: ${{ needs.sources.result == 'success' && needs.playback.result == 'success' }}
     runs-on: ubuntu-latest
     timeout-minutes: 65
     steps:
@@ -60,10 +81,11 @@ jobs:
         run: python -m pip install --disable-pip-version-check yt-dlp
       - name: Validate scripts
         run: python -m py_compile v2/discover.py v2/stream_url_collisions.py v2/quality_upgrades.py v2/turkish_stream_catalog.py v2/turkish_stream_probe.py v2/turkish_stream_decode.py v2/turkish_stream_review.py v2/candidate_assets.py v2/frame_collisions.py v2/current_stream_resolution.py v2/stream_stability.py v2/test_playlist_invariants.py v2/final_validation_summary.py v2/newlisttr_extract.py v2/build_newlisttr_ibo_test.py
-      - name: Discover additional GitHub M3U sources
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: python v2/github_source_discovery.py
+      - name: Download shared source discovery
+        uses: actions/download-artifact@v4
+        with:
+          name: unified-source-snapshot
+          path: v2/reports
       - name: Search configured and discovered M3U sources
         run: python v2/discover.py
       - name: Download all playback batch evidence
