@@ -35,6 +35,10 @@ jobs:
         run: |
           python -m py_compile v2/postscan_triage.py
           python v2/postscan_triage.py
+      - name: Cross-check identity candidates across sources and EPG identifiers
+        run: |
+          python -m py_compile v2/postscan_identity_consistency.py
+          python v2/postscan_identity_consistency.py
       - name: Publish hash-only triage (never raw stream URLs)
         if: always()
         uses: actions/upload-artifact@v4
