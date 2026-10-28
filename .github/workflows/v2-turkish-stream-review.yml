@@ -70,6 +70,11 @@ jobs:
         with:
           name: unified-private-playback-snapshot
           path: v2/reports
+      - name: Download public-safe candidate inventory for hash parity
+        uses: actions/download-artifact@v4
+        with:
+          name: unified-source-candidates
+          path: v2/reports
       - name: Restore checkpoint for same run and exact candidate snapshot
         uses: actions/cache/restore@v4
         with:
@@ -78,6 +83,7 @@ jobs:
       - name: Verify candidate playback in bounded batch
         env:
           PLAYBACK_PER_SOURCE: '250'
+          PLAYBACK_MAX_SECONDS: '2700'
           PLAYBACK_PAGE: ${{ matrix.page }}
           PLAYBACK_SHARD_COUNT: '16'
           PLAYBACK_SHARD_INDEX: ${{ matrix.shard }}
