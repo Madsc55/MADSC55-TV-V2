@@ -81,8 +81,9 @@ def main():
                           "shard_candidates": len(shard_items), "sampled": 0, "status": "PARSED"})
         except Exception as exc:
             audit.append({"source": source["id"], "status": "FETCH_FAILED", "error": type(exc).__name__})
-    # Each page skips already selected positions so later runs expand coverage.
-    for round_index in range(PAGE * PER_SOURCE, (PAGE + 1) * PER_SOURCE):
+    # Partition every source into disjoint pages; do not silently truncate candidate coverage.
+    max_items = max((len(items) for _, items in pools), default=0)
+    for round_index in range(PAGE * PER_SOURCE, max_items, PER_SOURCE * 2):
         for source_id, items in pools:
             if len(selected) >= LIMIT:
                 break
