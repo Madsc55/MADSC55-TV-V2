@@ -11,7 +11,6 @@ from discover import ROOT, SOURCES, LIVE, entries, fetch
 
 OUT = ROOT / "v2/reports/all-source-playback.json"
 DISCOVERED = ROOT / "v2/reports/github-source-discovery.json"
-LIMIT = int(os.getenv("PLAYBACK_LIMIT", "100"))
 PER_SOURCE = int(os.getenv("PLAYBACK_PER_SOURCE", "4"))
 SHARD_COUNT = max(1, int(os.getenv("PLAYBACK_SHARD_COUNT", "1")))
 SHARD_INDEX = int(os.getenv("PLAYBACK_SHARD_INDEX", "0"))
