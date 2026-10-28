@@ -16,6 +16,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Compile and validate all V2 Python modules before scanning
+        run: python -m compileall -q v2
       - name: Discover GitHub sources once
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
