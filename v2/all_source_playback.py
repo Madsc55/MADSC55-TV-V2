@@ -71,7 +71,7 @@ def main():
             if round_index < len(items):
                 selected.append((source_id, items[round_index]))
                 next(a for a in audit if a["source"] == source_id)["sampled"] += 1
-    # No fixed candidate cap: each disjoint shard/page processes all assigned entries.
+    # Every shard processes its full assigned partition. No arbitrary candidate cap.
     # Bound concurrent work without truncating the source coverage.
     results = []
     with concurrent.futures.ThreadPoolExecutor(max_workers=WORKERS) as pool:
