@@ -73,10 +73,28 @@ def main():
                 next(a for a in audit if a["source"] == source_id)["sampled"] += 1
     # Every shard processes its full assigned partition. No arbitrary candidate cap.
     # Bound concurrent work without truncating the source coverage.
-    results = []
+    # Keep bounded memory and persist progress after each completed probe.
+    # A rerun of the same shard resumes only from its own local checkpoint.
+    checkpoint = OUT.with_suffix(".checkpoint.json")
+    previous = {}
+    if checkpoint.exists():
+        try:
+            doc = json.loads(checkpoint.read_text(encoding="utf-8"))
+            if doc.get("shard_index") == SHARD_INDEX and doc.get("page") == PAGE and doc.get("inventory") == [a["shard_fingerprint"] for a in audit]:
+                previous = {x["url_sha256"]: x for x in doc.get("results", [])}
+        except (ValueError, OSError, KeyError):
+            previous = {}
+    def save_checkpoint():
+        checkpoint.parent.mkdir(parents=True, exist_ok=True)
+        checkpoint.write_text(json.dumps({"shard_index": SHARD_INDEX, "page": PAGE,
+            "inventory": [a["shard_fingerprint"] for a in audit],
+            "results": list(previous.values())}, ensure_ascii=False), encoding="utf-8")
+    pending = [item for item in selected if hashlib.sha256(item[1]["url"].encode()).hexdigest() not in previous]
     with concurrent.futures.ThreadPoolExecutor(max_workers=WORKERS) as pool:
-        for result in pool.map(probe, selected):
-            results.append(result)
+        for result in pool.map(probe, pending):
+            previous[result["url_sha256"]] = result
+            save_checkpoint()
+    results = [previous[hashlib.sha256(item[1]["url"].encode()).hexdigest()] for item in selected]
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps({"policy": "READ_ONLY_SAMPLED_NOT_EXHAUSTIVE",
        "total_sources": len(sources), "shard_index": SHARD_INDEX, "shard_count": SHARD_COUNT, "page": PAGE, "sampled": len(results),
