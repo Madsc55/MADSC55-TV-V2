@@ -12,7 +12,9 @@ def main():
     total_sampled = 0
     for path in files:
         doc = json.loads(Path(path).read_text(encoding="utf-8"))
-        idx = (doc.get("page", 0), doc.get("shard_index"))
+        idx = (int(doc.get("page", 0)), int(doc.get("shard_index", -1)))
+        if idx[1] < 0:
+            raise SystemExit("Missing shard_index in "+path)
         if idx in shard_ids:
             raise SystemExit("Duplicate shard index: "+str(idx))
         shard_ids.add(idx)
