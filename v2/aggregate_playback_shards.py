@@ -34,17 +34,20 @@ def main():
     unexpected = shard_ids - expected
     if missing or unexpected:
         raise SystemExit("Incomplete playback evidence; missing="+str(sorted(missing))+" unexpected="+str(sorted(unexpected)))
+    incomplete_sources = [x["source"] for x in source_stats.values() if x["fetch_failures"] or x["sampled"] < x["shard_candidates"]]
     verified = sum(x.get("status") == "VIDEO_DECODED" for x in results.values())
     report = {"policy":"READ_ONLY_SHARDED_EVIDENCE_NOT_COMPLETE_VALIDATION",
         "batches_present":[{"page":p,"shard":s} for p,s in sorted(shard_ids)], "unique_tested":len(results),
         "video_decoded":verified, "not_video_decoded":len(results)-verified,
         "reported_sampled":total_sampled,
+        "coverage_complete":not incomplete_sources,
+        "incomplete_sources":sorted(incomplete_sources),
         "source_coverage":sorted(source_stats.values(),key=lambda x:x["source"]),
         "notes":"A decoded video is not proof of correct channel identity, audio, stability, EPG or logo."}
     out = Path("v2/reports/all-source-playback-aggregate.json")
     out.parent.mkdir(parents=True,exist_ok=True)
     out.write_text(json.dumps(report,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
-    print("Shards:",len(shard_ids),"unique tested:",len(results),"video decoded:",verified)
+    print("Shards:",len(shard_ids),"unique tested:",len(results),"video decoded:",verified,"incomplete sources:",len(incomplete_sources))
 
 if __name__ == "__main__":
     main()
