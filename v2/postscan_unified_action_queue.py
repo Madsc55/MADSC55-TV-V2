@@ -30,15 +30,17 @@ def main():
     priorities = [
         {"priority": 1, "kind": "CROSS_CHANNEL_URL_COLLISION", "count": collisions["cross_channel_url_collision_count"],
          "items": collisions["cross_channel_url_collisions"], "action": "MANUAL_IDENTITY_REVIEW"},
-        {"priority": 2, "kind": "IDENTITY_CONFLICT", "count": len(identity_conflicts),
+        {"priority": 2, "kind": "SAME_NAME_TVG_METADATA_CONFLICT", "count": collisions["identity_metadata_conflict_count"],
+         "items": collisions["identity_metadata_conflicts"], "action": "VERIFY_TVG_ID_WITHOUT_EDITING_LIVE"},
+        {"priority": 3, "kind": "IDENTITY_CONFLICT", "count": len(identity_conflicts),
          "items": identity_conflicts, "action": "MANUAL_BROADCASTER_VERIFICATION"},
-        {"priority": 3, "kind": "VIDEO_NO_AUDIO", "count": triage["queues"]["VIDEO_NO_AUDIO"],
+        {"priority": 4, "kind": "VIDEO_NO_AUDIO", "count": triage["queues"]["VIDEO_NO_AUDIO"],
          "report": "postscan-video_no_audio.json", "action": "RECHECK_AUDIO_EVIDENCE"},
-        {"priority": 4, "kind": "VIDEO_METADATA_GAPS", "count": triage["queues"]["VIDEO_METADATA_GAPS"],
+        {"priority": 5, "kind": "VIDEO_METADATA_GAPS", "count": triage["queues"]["VIDEO_METADATA_GAPS"],
          "report": "postscan-video_metadata_gaps.json", "action": "VERIFY_MISSING_METADATA_WITH_SOURCE"},
-        {"priority": 5, "kind": "VIDEO_IDENTITY_REVIEW", "count": triage["queues"]["VIDEO_IDENTITY_REVIEW"],
+        {"priority": 6, "kind": "VIDEO_IDENTITY_REVIEW", "count": triage["queues"]["VIDEO_IDENTITY_REVIEW"],
          "report": "postscan-video_identity_review.json", "action": "MANUAL_BROADCASTER_VERIFICATION"},
-        {"priority": 6, "kind": "PLAYBACK_REJECTED", "count": triage["queues"]["PLAYBACK_REJECTED"],
+        {"priority": 7, "kind": "PLAYBACK_REJECTED", "count": triage["queues"]["PLAYBACK_REJECTED"],
          "report": "postscan-playback_rejected.json", "action": "QUARANTINE_FROM_PROMOTION"}
     ]
     output = {"policy": "READ_ONLY_NO_AUTO_PROMOTION_NO_LIVE_EDITS", "scan_candidates": triage["total"],
