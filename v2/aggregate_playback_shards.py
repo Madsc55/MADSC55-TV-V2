@@ -29,6 +29,11 @@ def main():
             stat["shard_candidates"] += source.get("shard_candidates", 0)
             stat["sampled"] += source.get("sampled", 0)
             stat["fetch_failures"] += int(source.get("status") == "FETCH_FAILED")
+    expected = {(page, shard) for page in range(2) for shard in range(4)}
+    missing = expected - shard_ids
+    unexpected = shard_ids - expected
+    if missing or unexpected:
+        raise SystemExit("Incomplete playback evidence; missing="+str(sorted(missing))+" unexpected="+str(sorted(unexpected)))
     verified = sum(x.get("status") == "VIDEO_DECODED" for x in results.values())
     report = {"policy":"READ_ONLY_SHARDED_EVIDENCE_NOT_COMPLETE_VALIDATION",
         "batches_present":[{"page":p,"shard":s} for p,s in sorted(shard_ids)], "unique_tested":len(results),
