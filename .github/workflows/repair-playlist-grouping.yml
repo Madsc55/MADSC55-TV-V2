@@ -1,0 +1,22 @@
+name: Repair playlist grouping and counts
+on:
+  push:
+    paths:
+      - '.github/workflows/repair-playlist-grouping.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Repair contiguous categories and category counts
+        run: python v2/repair_playlist_group_order.py
+      - name: Commit repaired playlist
+        run: |
+          git config user.name github-actions
+          git config user.email actions@users.noreply.github.com
+          git add MADSC55_TV_IBO_CALISANLAR_TEST.m3u8
+          git commit -m 'Fix playlist category order and Turkish station placement'
+          git push
