@@ -58,7 +58,16 @@ def main():
     seen, selected, audit, pools = set(), [], [], []
     for source in sources:
         try:
-            parsed = list(entries(fetch(source["url"])))
+            last_error = None
+            for fetch_attempt in range(1, RETRIES + 2):
+                try:
+                    parsed = list(entries(fetch(source["url"])))
+                    last_error = None
+                    break
+                except Exception as exc:
+                    last_error = exc
+            if last_error is not None:
+                raise last_error
             unique = []
             for e in parsed:
                 if e["url"] not in existing and e["url"] not in seen:
