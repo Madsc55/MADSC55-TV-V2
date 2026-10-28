@@ -96,3 +96,8 @@
 - Eski toplu run `40665346855` **failure**: sekiz playback işi success, `aggregate` işinin `Merge and validate shard evidence` adımı failure. `40665377633` sonraki toplu run **success**. Eski hatanın kök sebebi log olmadan kesinleştirilemez.
 - Ana workflow hâlâ her shard içinde GitHub kaynak keşfini yeniden çalıştırıyor; aynı aday snapshot'ı garanti edilmiyor. Ayrıca `review` job'u `if: always()` ile eksik/başarısız shard sonrasında da başlayabiliyor. Öncelik: tek keşif artifact'ı paylaşımı, başarısız shard'ı açık raporlama, bütçeli tekrar denemesi, gerçek kapsama ve metadata doğrulaması.
 - Canlı IBO, FAVORİLER ve iki özgün YEDEKLER'e yazma yapılmadı.
+
+## 28 Ekim — kullanıcı ekran görüntüsü ve hata düzeltmesi
+- Run `40665346855` aggregate logu kesin hata: `Duplicate shard index: 0`; 8 playback job success. Sonraki run `40665377633` success.
+- `v2/aggregate_playback_shards.py` artık shard anahtarını `(page, shard_index)` olarak sayısal normalleştiriyor ve eksik shard indeksini açık hata olarak raporluyor (commit `09a9eb0`).
+- Ana workflow 8 playback matrix ve review aggregate zincirini zaten içeriyor. Tek komutun tüm kabul koşulları henüz tamamlanmadı: aynı keşif snapshot'ı, başarısızların retry, tam kapsam ve aday metadata kanıtı eksik. Ayrı workflow'ları tetikleyerek çözüm üretme.
