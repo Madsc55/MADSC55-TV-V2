@@ -58,3 +58,10 @@
 - `v2/build_verified_test_playlist.py` eklendi: kısa decoder ile video kanıtı olan, canlı IBO'da aynı URL ile bulunmayan adaylardan ayrı `v2/reports/short-decoded-review-only.m3u8` üretir. Bu liste **geçici inceleme listesidir**, kanal kimliği ve uzun süreli çalışma henüz kesin değildir.
 - Ana birleşik workflow bu listeyi otomatik üretir ve artifact olarak sunar; kullanıcıya yedi ayrı komut gerekmez.
 - Öncelik: yeni workflow'un sonucunu kontrol et, ardından tam kapsamlı parçalı yayın doğrulaması ve YouTube kalıcı uyumunu tamamla. Korunan canlı listeye otomatik ekleme yoktur.
+
+## 28 Ekim — dört parçalı test sonuçları
+- Run 40660958068: **success**, dört shard'ın artifact'ı da mevcut (0,1,2,3). Bu başarı adayı doğrulanan kanal sayısına eşit değildir; raporların içindeki `sampled` ve `video_decoded` sayıları ayrıca okunmalıdır.
+- Run 40660159911: **success**; ayrı `short-decoded-review-only.m3u8` üretimi dahil birleşik zincir başarıyla bitti, artifact mevcut.
+- Run 40660910249: son kontrol sırasında **in_progress**; sonuç bekleniyor.
+- Sonraki öncelik: dört shard raporunu tek kabul özetine birleştirmek, kapsam dışı aday sayısını hesaplamak, eksik kanalları sonraki partilere almak, YouTube IBO kalıcılığı ve kimlik/EPG/logo eşleştirmelerini kanıtlamak.
+- Canlı IBO, FAVORİLER ve YEDEKLER'e otomatik yazma yok.
