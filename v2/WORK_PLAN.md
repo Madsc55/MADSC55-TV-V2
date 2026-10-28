@@ -89,3 +89,10 @@
 5. Tek komut çalıştır, bitişini kontrol et, gerçek sayı ve güvenlik sonucunu kullanıcıya kısa bildir; WORK_PLAN.md'yi güncel tut.
 
 **Önemli:** Son kullanıcı bu sohbetin dolduğunu, yeni sohbete geçip hiçbir şeyi unutmadan devam etmek istediğini söyledi. Yukarıdaki hedef ve eksikler devir notudur.
+
+## 28 Ekim 2026 — yeni sohbet Actions kontrolü
+- `49cc5a9` commit'i ana `.github/workflows/v2-turkish-stream-review.yml` dosyasına 4 shard × 2 page playback matrix, artifact indirme ve aggregate adımını **eklemiş**. Önceki devir notundaki 'henüz bağlanmadı' ifadesi artık güncel değil.
+- Run `40665873146` son kontrolde **pending**; run `40665323555` **in_progress**. Bunlar tamamlandı veya başarılı diye sunulamaz.
+- Eski toplu run `40665346855` **failure**: sekiz playback işi success, `aggregate` işinin `Merge and validate shard evidence` adımı failure. `40665377633` sonraki toplu run **success**. Eski hatanın kök sebebi log olmadan kesinleştirilemez.
+- Ana workflow hâlâ her shard içinde GitHub kaynak keşfini yeniden çalıştırıyor; aynı aday snapshot'ı garanti edilmiyor. Ayrıca `review` job'u `if: always()` ile eksik/başarısız shard sonrasında da başlayabiliyor. Öncelik: tek keşif artifact'ı paylaşımı, başarısız shard'ı açık raporlama, bütçeli tekrar denemesi, gerçek kapsama ve metadata doğrulaması.
+- Canlı IBO, FAVORİLER ve iki özgün YEDEKLER'e yazma yapılmadı.
