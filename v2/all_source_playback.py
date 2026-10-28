@@ -114,6 +114,9 @@ def main():
             for result in pool.map(probe, batch):
                 previous[result["url_sha256"]] = result
         save_checkpoint()
+    selected_hashes = {hashlib.sha256(item[1]["url"].encode()).hexdigest() for item in selected}
+    # Old checkpoints may contain stale results from another candidate partition.
+    previous = {digest: result for digest, result in previous.items() if digest in selected_hashes}
     if len(previous) < len(selected):
         deadline_reached = True
     results = [previous[digest] for item in selected if (digest := hashlib.sha256(item[1]["url"].encode()).hexdigest()) in previous]
