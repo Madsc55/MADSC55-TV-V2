@@ -101,3 +101,9 @@
 - Run `40665346855` aggregate logu kesin hata: `Duplicate shard index: 0`; 8 playback job success. Sonraki run `40665377633` success.
 - `v2/aggregate_playback_shards.py` artık shard anahtarını `(page, shard_index)` olarak sayısal normalleştiriyor ve eksik shard indeksini açık hata olarak raporluyor (commit `09a9eb0`).
 - Ana workflow 8 playback matrix ve review aggregate zincirini zaten içeriyor. Tek komutun tüm kabul koşulları henüz tamamlanmadı: aynı keşif snapshot'ı, başarısızların retry, tam kapsam ve aday metadata kanıtı eksik. Ayrı workflow'ları tetikleyerek çözüm üretme.
+
+## 28 Ekim — toplu zincir sağlamlaştırma
+- Ana birleşik workflow'da sekiz playback shard başarısızsa review artık `if: always()` ile devam etmiyor; yanlış başarılı rapor önleniyor (commit `5182c4c`).
+- `final_validation_summary.py` sekiz shard'ın `all-source-playback-aggregate.json` sonucunu öncelikli okuyor; toplam farklı test, decoded, not decoded ve batch bilgilerini raporluyor (commit `36b2546`). Önceki tek `all-source-playback.json` dosyasını zorunlu sanma hatası giderildi.
+- Son kontrol: birleşik run `40666379703` pending; `40665873146` pending; `40665323555` in_progress. Başarı teyidi yok.
+- Sıradaki eksikler: tek kaynak snapshot'ı, bütçeli başarısız retry, tüm aday kapsama ve aday başına metadata/kimlik/kararlılık doğrulaması. Canlı playlist'e dokunma.
