@@ -30,8 +30,10 @@ def main():
     all_sources = load("all-source-playback-aggregate.json") or load("all-source-playback.json")
     discovery = load("candidates.json")
     github = load("github-source-discovery.json")
+    metadata_audit = load("candidate-metadata-audit.json")
     required = {
         "all_sources": all_sources, "discovery": discovery, "github_sources": github,
+        "metadata_audit": metadata_audit,
         "newlisttr": newlisttr,
         "baseline": baseline, "stability": stability, "quality": quality,
         "frames": frames, "candidate_assets": assets, "http_probe": probe,
@@ -48,6 +50,8 @@ def main():
         "sources_accessible": discovery.get("source_count", 0) if discovery else 0,
         "sources_failed": len(discovery.get("errors", [])) if discovery else 0,
         "m3u_candidates": len(discovery.get("candidates", [])) if discovery else 0,
+        "metadata_audited": metadata_audit.get("total_audited", 0) if metadata_audit else 0,
+        "metadata_playback_matched": metadata_audit.get("playback_matched", 0) if metadata_audit else 0,
         "m3u_total_unique_candidates": discovery.get("total_unique_candidates", 0) if discovery else 0,
         "m3u_candidates_truncated": discovery.get("candidates_truncated", False) if discovery else False,
         "all_source_playback_sampled": all_sources.get("unique_tested", all_sources.get("sampled", 0)) if all_sources else 0,
@@ -77,6 +81,8 @@ def main():
     missing = [key for key, value in required.items() if value is None]
     if missing:
         raise SystemExit("Missing required reports: " + ", ".join(missing))
+    if report["metadata_audited"] != report["m3u_candidates"] or report["metadata_playback_matched"] != report["m3u_candidates"]:
+        raise SystemExit("Metadata and playback audit does not cover every discovered candidate")
     if report["m3u_candidates_truncated"]:
         raise SystemExit("Discovery candidate inventory truncated; cannot mark complete")
     if report["sources_failed"]:
