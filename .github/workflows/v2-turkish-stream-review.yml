@@ -18,6 +18,7 @@ on:
       - 'v2/github_source_discovery.py'
       - 'v2/discover.py'
       - 'v2/all_source_playback.py'
+      - 'v2/aggregate_playback_shards.py'
       - 'v2/build_verified_test_playlist.py'
       - 'v2/turkish_stream_catalog.py'
       - 'v2/turkish_stream_probe.py'
@@ -37,7 +38,46 @@ concurrency:
 permissions:
   contents: read
 jobs:
+  playback:
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2, 3]
+        page: [0, 1]
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install ffprobe
+        run: sudo apt-get update -qq && sudo apt-get install -y ffmpeg
+      - name: Protect live playlist
+        run: python v2/test_playlist_invariants.py
+      - name: Discover GitHub M3U sources
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python v2/github_source_discovery.py
+      - name: Verify candidate playback in bounded batch
+        env:
+          PLAYBACK_LIMIT: '250'
+          PLAYBACK_PER_SOURCE: '100'
+          PLAYBACK_PAGE: ${{ matrix.page }}
+          PLAYBACK_SHARD_COUNT: '4'
+          PLAYBACK_SHARD_INDEX: ${{ matrix.shard }}
+        run: python v2/all_source_playback.py
+      - name: Upload batch evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: unified-playback-page-${{ matrix.page }}-shard-${{ matrix.shard }}
+          path: v2/reports/all-source-playback.json
+          if-no-files-found: ignore
+
   review:
+    needs: playback
+    if: always()
     runs-on: ubuntu-latest
     timeout-minutes: 65
     steps:
@@ -57,11 +97,13 @@ jobs:
         run: python v2/github_source_discovery.py
       - name: Search configured and discovered M3U sources
         run: python v2/discover.py
-      - name: Sample real video and audio across all M3U sources
-        env:
-          PLAYBACK_LIMIT: '100'
-          PLAYBACK_PER_SOURCE: '4'
-        run: python v2/all_source_playback.py
+      - name: Download all playback batch evidence
+        uses: actions/download-artifact@v4
+        with:
+          pattern: unified-playback-page-*-shard-*
+          path: v2/reports/shards
+      - name: Merge all playback evidence
+        run: python v2/aggregate_playback_shards.py
       - name: Audit same URL across different channels
         run: python v2/stream_url_collisions.py
       - name: Refresh candidates
@@ -133,7 +175,7 @@ jobs:
           path: |
             v2/reports/github-source-discovery.json
             v2/reports/candidates.json
-            v2/reports/all-source-playback.json
+            v2/reports/all-source-playback-aggregate.json
             v2/reports/stream-url-collisions.json
             v2/reports/quality-upgrades.json
             v2/reports/current-stream-resolution.json
