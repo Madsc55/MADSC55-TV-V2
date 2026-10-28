@@ -43,3 +43,13 @@
 4. **Eksik:** Örneklemeyi kademeli tam kapsama yükseltmek (maliyet/süre/kota kontrolü); bütün adaylar için kimlik, içerik, kararlılık ve tekrar doğrulaması.
 5. **Eksik:** YouTube için resmî canlı yayın ve yenilenebilir/kalıcı IBO uyumlu kaynak bulma; watch URL veya geçici imzalı HLS kalıcı yayın diye eklenmeyecek.
 6. **Kabul:** Tek özet, başarısızlıkların ayrı listesi, manuel onaydan önce canlı playlistte sıfır değişiklik.
+
+## 28 Ekim 2026 — test sonuçları ve kalan öncelikler
+- Run 40606347272: V2 Turkish Stream End-to-End Discovery **success**; 40605519678: Health and Discovery **success**; 40605519505: Worldwide Channel Discovery **success**; 40604652483: GitHub source discovery **success**. Workflow başarısı tüm stream'lerin canlı olduğu anlamına gelmez.
+- `v2/all_source_playback.py` ana workflow'da mevcut: yapılandırılmış + GitHub'da bulunan kaynaklardan kaynak başına en fazla 4, toplam en fazla 100 yeni stream'i ffprobe ile örnekler; **bütün kanalların testi değildir**.
+- `v2/final_validation_summary.py` artık kaynak erişimi, GitHub yeni M3U dosyaları, aday sayısı, örneklenen stream ve video doğrulama sayılarını tek raporda toplar. Değişiklik yeni Actions koşusunda doğrulanacak.
+- Öncelik 1: En yeni Actions run'ın sonucunu ve `final-validation-summary.json` içeriğini doğrula; hata varsa düzelt.
+- Öncelik 2: Kaynakların tüm adayları için bütçeli, parçalara bölünmüş HTTP/ffprobe taraması ve tekrar denemeleri; kaynak bazlı tam kapsam sayacı. 100 örneklemi tüm yayın testi diye sunma.
+- Öncelik 3: Resmî YouTube canlı yayınları için sürdürülebilir, yetkili IBO-uyumlu akış çözümü; imzalı geçici URL'yi kalıcı playlist'e ekleme.
+- Öncelik 4: Kimlik, içerik, ses/video, gerçek çözünürlük, EPG, logo, kararlılık ve kategori kanıtlarıyla ayrı test listesi oluştur.
+- Öncelik 5: Kullanıcı onayından sonra canlı listeye güvenli ekleme; 840 giriş, 13 kategori, FAVORİLER ve özgün iki YEDEKLER başlangıç bütünlüğünü koru.
