@@ -22,7 +22,15 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           SOURCE_RUN: ${{ inputs.source_run }}
-        run: gh run download "$SOURCE_RUN" -R "${{ github.repository }}" -n turkish-stream-review -D .
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/postscan-evidence" v2/reports
+          gh run download "$SOURCE_RUN" -R "${{ github.repository }}" -n turkish-stream-review -D "$RUNNER_TEMP/postscan-evidence"
+          for report in candidates.json all-source-playback-aggregate.json candidate-metadata-audit.json; do
+            test -s "$RUNNER_TEMP/postscan-evidence/v2/reports/$report"
+            cp "$RUNNER_TEMP/postscan-evidence/v2/reports/$report" "v2/reports/$report"
+          done
+          echo "Verified required immutable scan reports; original playlist untouched"
       - name: Audit all scanned channels and prepare separated review queues
         run: |
           python -m py_compile v2/postscan_triage.py
