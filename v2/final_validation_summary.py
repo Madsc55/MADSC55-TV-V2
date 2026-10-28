@@ -75,6 +75,10 @@ def main():
     missing = [key for key, value in required.items() if value is None]
     if missing:
         raise SystemExit("Missing required reports: " + ", ".join(missing))
+    if report["sources_failed"]:
+        raise SystemExit("Some candidate sources failed discovery after retries; cannot mark complete")
+    if not report["all_source_playback_sampled"]:
+        raise SystemExit("No candidate playback evidence; cannot mark complete")
     if not report["playback_coverage_complete"]:
         raise SystemExit("Full source playback coverage NOT achieved; incomplete sources: " + ", ".join(report["playback_incomplete_sources"]))
     if report["channel_review_counts"]["pending_review"]:
