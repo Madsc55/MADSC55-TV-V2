@@ -49,7 +49,7 @@ def main():
                 stat["shard_candidates"] += count
             stat["sampled"] += source.get("sampled", 0)
             stat["fetch_failures"] += int(source.get("status") == "FETCH_FAILED")
-    expected = {(page, shard) for page in range(2) for shard in range(4)}
+    expected = {(page, shard) for page in range(2) for shard in range(16)}
     missing = expected - shard_ids
     unexpected = shard_ids - expected
     if missing or unexpected:
