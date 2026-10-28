@@ -1,0 +1,36 @@
+name: V2 Postscan Triage — Reuse #60 Evidence
+on:
+  workflow_dispatch:
+    inputs:
+      source_run:
+        description: "Successful unified scan run ID"
+        required: true
+        default: "40743765437"
+permissions:
+  contents: read
+  actions: read
+jobs:
+  postscan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Download immutable completed scan report (no new network stream probing)
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_RUN: ${{ inputs.source_run }}
+        run: gh run download "$SOURCE_RUN" -R "${{ github.repository }}" -n turkish-stream-review -D .
+      - name: Audit all scanned channels and prepare separated review queues
+        run: |
+          python -m py_compile v2/postscan_triage.py
+          python v2/postscan_triage.py
+      - name: Publish hash-only triage (never raw stream URLs)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: postscan-triage
+          path: v2/reports/postscan-*.json
+          if-no-files-found: error
