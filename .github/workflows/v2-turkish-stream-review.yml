@@ -47,7 +47,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        shard: [0, 1, 2, 3]
+        shard: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
         page: [0, 1]
     runs-on: ubuntu-latest
     timeout-minutes: 55
@@ -72,9 +72,9 @@ jobs:
           path: v2/reports
       - name: Verify candidate playback in bounded batch
         env:
-          PLAYBACK_PER_SOURCE: '500'
+          PLAYBACK_PER_SOURCE: '250'
           PLAYBACK_PAGE: ${{ matrix.page }}
-          PLAYBACK_SHARD_COUNT: '4'
+          PLAYBACK_SHARD_COUNT: '16'
           PLAYBACK_SHARD_INDEX: ${{ matrix.shard }}
         run: python v2/all_source_playback.py
       - name: Upload batch evidence
