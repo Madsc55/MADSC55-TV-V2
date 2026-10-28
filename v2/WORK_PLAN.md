@@ -53,3 +53,8 @@
 - Öncelik 3: Resmî YouTube canlı yayınları için sürdürülebilir, yetkili IBO-uyumlu akış çözümü; imzalı geçici URL'yi kalıcı playlist'e ekleme.
 - Öncelik 4: Kimlik, içerik, ses/video, gerçek çözünürlük, EPG, logo, kararlılık ve kategori kanıtlarıyla ayrı test listesi oluştur.
 - Öncelik 5: Kullanıcı onayından sonra canlı listeye güvenli ekleme; 840 giriş, 13 kategori, FAVORİLER ve özgün iki YEDEKLER başlangıç bütünlüğünü koru.
+
+## 28 Ekim — tek komut test listesi entegrasyonu
+- `v2/build_verified_test_playlist.py` eklendi: kısa decoder ile video kanıtı olan, canlı IBO'da aynı URL ile bulunmayan adaylardan ayrı `v2/reports/short-decoded-review-only.m3u8` üretir. Bu liste **geçici inceleme listesidir**, kanal kimliği ve uzun süreli çalışma henüz kesin değildir.
+- Ana birleşik workflow bu listeyi otomatik üretir ve artifact olarak sunar; kullanıcıya yedi ayrı komut gerekmez.
+- Öncelik: yeni workflow'un sonucunu kontrol et, ardından tam kapsamlı parçalı yayın doğrulaması ve YouTube kalıcı uyumunu tamamla. Korunan canlı listeye otomatik ekleme yoktur.
