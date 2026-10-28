@@ -161,10 +161,11 @@ jobs:
       - name: Merge all playback evidence
         run: python v2/aggregate_playback_shards.py
       - name: Audit metadata for every discovered candidate
-        continue-on-error: true
         run: python v2/candidate_metadata_audit.py
       - name: Classify every candidate from this run without rescanning
-        run: python v2/postscan_triage.py
+        run: |
+          python -m py_compile v2/postscan_triage.py v2/postscan_identity_consistency.py
+          python v2/postscan_triage.py
       - name: Audit identity metadata conflicts in the same run
         run: python v2/postscan_identity_consistency.py
       - name: Audit same URL across different channels
