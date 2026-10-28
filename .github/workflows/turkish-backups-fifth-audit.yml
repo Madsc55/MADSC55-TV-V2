@@ -1,0 +1,22 @@
+name: Turkish backups fifth audit
+on:
+  push:
+    paths:
+      - '.github/workflows/turkish-backups-fifth-audit.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Move overlooked Turkish local stations
+        run: python v2/turkish_backups_fifth_pass.py
+      - name: Commit corrected category totals
+        run: |
+          git config user.name github-actions
+          git config user.email actions@users.noreply.github.com
+          git add MADSC55_TV_IBO_CALISANLAR_TEST.m3u8
+          git commit -m 'Move additional Turkish local stations into YENI TURK'
+          git push
