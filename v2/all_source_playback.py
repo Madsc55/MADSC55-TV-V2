@@ -11,6 +11,7 @@ from discover import ROOT, SOURCES, LIVE, entries, fetch
 
 OUT = ROOT / "v2/reports/all-source-playback.json"
 DISCOVERED = ROOT / "v2/reports/github-source-discovery.json"
+SNAPSHOT = ROOT / "v2/reports/private-playback-snapshot.json"
 PER_SOURCE = int(os.getenv("PLAYBACK_PER_SOURCE", "4"))
 SHARD_COUNT = max(1, int(os.getenv("PLAYBACK_SHARD_COUNT", "1")))
 SHARD_INDEX = int(os.getenv("PLAYBACK_SHARD_INDEX", "0"))
@@ -46,45 +47,23 @@ def probe(item):
     return result
 
 def main():
-    sources = json.loads(SOURCES.read_text())["sources"]
-    if DISCOVERED.exists():
-        try:
-            sources += [{"id": "github-auto-" + str(i), "url": s["url"]}
-                        for i, s in enumerate(json.loads(DISCOVERED.read_text()).get("sources", [])[:80])]
-        except (ValueError, KeyError, OSError):
-            pass
-    existing = {e["url"] for e in entries(LIVE.read_text(encoding="utf-8-sig"))}
-    seen, selected, audit, pools = set(), [], [], []
-    source_urls = set()
-    for source in sources:
-        if source["url"] in source_urls:
-            continue
-        source_urls.add(source["url"])
-        try:
-            last_error = None
-            for fetch_attempt in range(1, RETRIES + 2):
-                try:
-                    parsed = list(entries(fetch(source["url"])))
-                    last_error = None
-                    break
-                except Exception as exc:
-                    last_error = exc
-            if last_error is not None:
-                raise last_error
-            unique = []
-            for e in parsed:
-                if e["url"] not in existing and e["url"] not in seen:
-                    seen.add(e["url"])
-                    unique.append(e)
-            # Stable per-source ordering, then round-robin across sources.
-            # Shards are disjoint and deterministic for the same source snapshot.
-            shard_items = [e for e in unique if int(hashlib.sha256(e["url"].encode()).hexdigest(), 16) % SHARD_COUNT == SHARD_INDEX]
-            pools.append((source["id"], shard_items))
-            shard_fingerprint = hashlib.sha256("\n".join(sorted(hashlib.sha256(e["url"].encode()).hexdigest() for e in shard_items)).encode()).hexdigest()
-            audit.append({"source": source["id"], "entries": len(parsed), "new_unique": len(unique),
-                          "shard_candidates": len(shard_items), "shard_fingerprint": shard_fingerprint, "sampled": 0, "status": "PARSED"})
-        except Exception as exc:
-            audit.append({"source": source["id"], "status": "FETCH_FAILED", "error": type(exc).__name__})
+    if not SNAPSHOT.exists():
+        raise SystemExit("Shared private candidate snapshot missing; refusing inconsistent per-shard fetch")
+    snap = json.loads(SNAPSHOT.read_text(encoding="utf-8"))
+    grouped = {}
+    for item in snap["candidates"]:
+        grouped.setdefault(item["source"], []).append(item)
+    selected, audit, pools = [], [], []
+    for source in snap["sources"]:
+        source_id = source["source"]
+        items = grouped.get(source_id, [])
+        shard_items = [e for e in items if int(hashlib.sha256(e["url"].encode()).hexdigest(), 16) % SHARD_COUNT == SHARD_INDEX]
+        pools.append((source_id, shard_items))
+        fingerprint = hashlib.sha256("\n".join(sorted(hashlib.sha256(e["url"].encode()).hexdigest() for e in shard_items)).encode()).hexdigest()
+        audit.append({"source": source_id, "entries": source.get("entries", 0),
+                      "shard_candidates": len(shard_items), "shard_fingerprint": fingerprint,
+                      "sampled": 0, "status": "FETCH_FAILED" if source["status"] == "FETCH_FAILED" else "PARSED"})
+    sources = snap["sources"]
     # Partition every source into disjoint pages; do not silently truncate candidate coverage.
     max_items = max((len(items) for _, items in pools), default=0)
     for round_index in (i for block in range(PAGE * PER_SOURCE, max_items, PER_SOURCE * 2) for i in range(block, min(block + PER_SOURCE, max_items))):
