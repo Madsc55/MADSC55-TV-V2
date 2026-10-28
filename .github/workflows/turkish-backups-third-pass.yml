@@ -1,0 +1,22 @@
+name: Turkish backups third pass
+on:
+  push:
+    paths:
+      - '.github/workflows/turkish-backups-third-pass.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Move curated Turkish channels
+        run: python v2/turkish_backups_third_pass.py
+      - name: Commit changes
+        run: |
+          git config user.name github-actions
+          git config user.email actions@users.noreply.github.com
+          git add MADSC55_TV_IBO_CALISANLAR_TEST.m3u8
+          git commit -m 'Move overlooked Turkish stations to YENI TURK'
+          git push
