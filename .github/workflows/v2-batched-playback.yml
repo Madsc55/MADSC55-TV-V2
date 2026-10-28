@@ -16,6 +16,7 @@ jobs:
       fail-fast: false
       matrix:
         shard: [0, 1, 2, 3]
+        page: [0, 1]
     runs-on: ubuntu-latest
     timeout-minutes: 55
     steps:
@@ -35,6 +36,7 @@ jobs:
         env:
           PLAYBACK_LIMIT: '250'
           PLAYBACK_PER_SOURCE: '100'
+          PLAYBACK_PAGE: ${{ matrix.page }}
           PLAYBACK_SHARD_COUNT: '4'
           PLAYBACK_SHARD_INDEX: ${{ matrix.shard }}
         run: python v2/all_source_playback.py
@@ -42,7 +44,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: all-source-playback-shard-${{ matrix.shard }}
+          name: all-source-playback-page-${{ matrix.page }}-shard-${{ matrix.shard }}
           path: v2/reports/all-source-playback.json
           if-no-files-found: ignore
 
@@ -58,7 +60,7 @@ jobs:
       - name: Download all shard evidence
         uses: actions/download-artifact@v4
         with:
-          pattern: all-source-playback-shard-*
+          pattern: all-source-playback-page-*-shard-*
           path: v2/reports/shards
       - name: Merge and validate shard evidence
         run: python v2/aggregate_playback_shards.py
