@@ -70,3 +70,22 @@
 - Run 40662300708 dört playback shard ve aggregate işleri **success**. Aggregate job logu: **1.000 farklı URL hash'i test edildi, 414'ünde video doğrulandı, 586'sında video doğrulanamadı**. Bunlar kanal kimliği veya kalıcı yayın garantisi değildir.
 - Run 40660910249 birleşik kanal arama **success**; 40660159911 ayrı inceleme playlisti dahil **success**.
 - Sıradaki iş sırası: (1) test edilmemiş adayların kapsama hesabı ve sonraki partiler; (2) 586 başarısızın kontrollü tekrar denemesi; (3) 414 görüntülü adayın ses, kimlik, çözünürlük, EPG/logo ve kararlılık doğrulaması; (4) resmî YouTube IBO uyumluluğu; (5) yalnızca kanıtlı adayların ayrı onay listesi. Canlı IBO'ya otomatik aktarım yok.
+
+## 28 Ekim 2026 — YENİ SOHBETE DEVİR / TEK KOMUT ÖNCELİĞİ
+**Kullanıcının kesin talebi:** Yalnızca **"Kanalları ara"** demesi yeterli olacak. Ayrı "ara", "test et", "EPG kontrol et", "liste oluştur" komutları istemiyor. Tek tetikleme altında keşif → tüm yeni adayların bütçeli/parçalı doğrulaması → başarısız tekrar denemesi → ses/görüntü/çözünürlük/kimlik/kararlılık → EPG/logo/kategori/tekrar kontrolü → ayrı IBO inceleme listesi → tek sonuç raporu **otomatik ve sıralı** tamamlanmalı. Ayrı test workflow'larını sürekli tetiklemek çözüm değildir. **Sonraki asistan önce bunu ana birleşik workflow'a bağlamalı; yeni bağımsız test workflow'u açmamalı.** Kullanıcı kısa ve net Türkçe ilerleme istiyor; gereksiz aşama anlatılmasın.
+
+**Güvenlik:** Ana repo `Madsc55/MADSC55-TV-V2`, main. Canlı `MADSC55_TV_IBO_CALISANLAR_TEST.m3u8`, FAVORİLER, YEDEKLER'deki iki özgün TRT 1 1440P QHD ve DHA CANLI 720P HD korunacak; otomatik canlı playlist değişikliği veya yeni kanal importu yok. Ayrı test listesi salt okunur keşif çıktısı. YouTube watch URL/geçici imzalı HLS'yi kalıcı IBO yayını diye ekleme.
+
+**Mevcut kod:** Ana workflow `.github/workflows/v2-turkish-stream-review.yml` kaynak/GitHub/YouTube/resmî site/EPG/logo keşfini ve 100 örnek ffprobe testini, TR kısa decoder, inceleme listesini, güvenlik testlerini çalıştırıyor. `v2/build_verified_test_playlist.py` geçici `v2/reports/short-decoded-review-only.m3u8` oluşturuyor (tam doğrulanmış sayılmamalı). Ayrı `.github/workflows/v2-batched-playback.yml` 4 shard × 2 page, shard başına 250 örnek kapasitesi; `v2/all_source_playback.py` shard ve `PLAYBACK_PAGE` destekliyor; `v2/aggregate_playback_shards.py` kanıtları birleştiriyor. **Ancak bu sekizli toplu kontrol henüz ana tek komutlu workflow'a bağlanmadı.** Ana eksik budur.
+
+**Doğrulanmış sonuç:** run 40662300708 success, 1.000 farklı URL test, 414 VIDEO_DECODED, 586 video doğrulanamadı. Bu sonuç bütün adayları veya 414 tam onaylı kanalı ifade etmez. run 40660159911 ve 40660910249 birleşik workflow success. 
+**28 Ekim son kontrol:** 40665346855 batched playback **failure**; 40665323600 **success**; 40665377633 **in_progress**; 40665323555 birleşik **in_progress**; 40665873146 birleşik **pending**. Bunların sonuçlarını yeniden kontrol et, başarısız işin logunu inceleyip düzelt; başarı varsayma.
+
+**Yeni sohbette kesin iş sırası:**
+1. Son Actions run'larını ve 40665346855 hatasını incele; hatayı düzelt.
+2. Ana `V2 Turkish Stream End-to-End Discovery` workflow'unda tek tetiklemeyle toplu sayfalı/shard yayın testlerini başlat, bağımlılıkla bekle, tek aggregate raporu üret; kaynak keşfi ile toplu testin aynı aday anlık görüntüsünü kullanmasını sağla. Yinelenen pahalı işlerden kaçın.
+3. 414 görüntülü adayın ses, kimlik, kararlılık, EPG/logo/kategori kontrollerini ve 586 başarısızın sınırlı tekrar denemesini otomatik zincire ekle. Tüm adayların kapsanmadığı durumlarda eksik sayısını açıkça raporla.
+4. Ayrı geçici IBO test listesi ve tek nihai kanıt raporu üret; YouTube kalıcı uyumluluğunu ancak yetkili sürdürülebilir akış varsa onayla.
+5. Tek komut çalıştır, bitişini kontrol et, gerçek sayı ve güvenlik sonucunu kullanıcıya kısa bildir; WORK_PLAN.md'yi güncel tut.
+
+**Önemli:** Son kullanıcı bu sohbetin dolduğunu, yeni sohbete geçip hiçbir şeyi unutmadan devam etmek istediğini söyledi. Yukarıdaki hedef ve eksikler devir notudur.
