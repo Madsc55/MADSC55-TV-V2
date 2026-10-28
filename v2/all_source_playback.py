@@ -19,13 +19,16 @@ if not 0 <= SHARD_INDEX < SHARD_COUNT:
     raise ValueError("PLAYBACK_SHARD_INDEX must be within shard count")
 PAGE = max(0, int(os.getenv("PLAYBACK_PAGE", "0")))
 WORKERS = 6
+RETRIES = 3
 
 def probe(item):
     source, e = item
     url = e["url"]
     digest = hashlib.sha256(url.encode()).hexdigest()
     result = {"source": source, "name": e["name"], "url_sha256": digest, "status": "UNVERIFIED"}
-    try:
+    for attempt in range(1, RETRIES + 2):
+      result["attempts"] = attempt
+      try:
         proc = subprocess.run(["ffprobe", "-v", "error", "-show_entries",
             "stream=codec_type,codec_name,width,height", "-of", "json",
             "-analyzeduration", "1500000", "-probesize", "1000000", url],
@@ -37,8 +40,10 @@ def probe(item):
             result.update(status="VIDEO_DECODED", width=video.get("width"), height=video.get("height"), audio=audio)
         else:
             result["status"] = "NO_VIDEO_DECODED"
-    except (OSError, ValueError, subprocess.TimeoutExpired) as exc:
+      except (OSError, ValueError, subprocess.TimeoutExpired) as exc:
         result["status"] = type(exc).__name__
+      if result["status"] == "VIDEO_DECODED":
+        break
     return result
 
 def main():
