@@ -13,7 +13,7 @@ for i,line in enumerate(lines):
  name=line.rsplit(",",1)[-1].strip()
  if vod.search(name):continue
  if rx.search(name):
-  lines[i]=re.sub(r'group-title="[^"]*YEDEKLER \(\d+\)"','group-title="🇹🇷 YENİ TÜRK"',line,count=1)
+  lines[i]=re.sub(r'group-title="[^"]*YEDEKLER \(\d+\)"','group-title="🇹🇷 YENİ TÜRK (269)"',line,count=1)
   moved+=1
   if len(sample)<15:sample.append(name)
 if moved<20:raise SystemExit(f"Unexpectedly few: {moved}")
