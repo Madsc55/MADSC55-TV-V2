@@ -35,3 +35,11 @@
 - Kaynak bazında M3U kayıt sayısı, farklı stream URL sayısı ve kaynak erişim hatası `v2/reports/candidates.json` içindeki `source_audit` alanına eklendi. Bu geliştirme sonraki workflow çalışmasında doğrulanmalı.
 - Kalan kritik işler: GitHub'dan keşfedilen her yeni kaynak için kanalların ayrı playback testlerine girmesi; YouTube resmî canlı yayınları için IBO'da sürdürülebilir adres yöntemi; tüm raporların birleştirilmiş kabul özeti.
 - Arama işlemleri canlı IBO ve özgün YEDEKLER'e otomatik yazamaz.
+
+## 28 Ekim — hızlandırılmış kabul sırası
+1. **Tamamlandı (kod):** GitHub kaynak keşfi + 17 kayıtlı kaynağı birleşik aday havuzuna alma; kaynak bazında sayım ve hata raporu.
+2. **Tamamlandı (kod; Actions sonucu bekleniyor):** `v2/all_source_playback.py` her erişilebilir M3U kaynağından en fazla dört yeni URL seçer, toplam 100 akışı ffprobe ile kısa video/ses/çözünürlük kontrolüne sokar. Kaynak başına ve URL hash'i bazında rapor üretir; bu **örnekleme**, tüm yayınların doğrulanması değildir.
+3. **Devam eden:** Birleşik workflow'un bütün aşamalarının tamamlanması, artifact raporları ve canlı playlist güvenlik testlerinin kontrolü.
+4. **Eksik:** Örneklemeyi kademeli tam kapsama yükseltmek (maliyet/süre/kota kontrolü); bütün adaylar için kimlik, içerik, kararlılık ve tekrar doğrulaması.
+5. **Eksik:** YouTube için resmî canlı yayın ve yenilenebilir/kalıcı IBO uyumlu kaynak bulma; watch URL veya geçici imzalı HLS kalıcı yayın diye eklenmeyecek.
+6. **Kabul:** Tek özet, başarısızlıkların ayrı listesi, manuel onaydan önce canlı playlistte sıfır değişiklik.
