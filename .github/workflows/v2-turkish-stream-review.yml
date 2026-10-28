@@ -96,6 +96,14 @@ jobs:
         with:
           path: v2/reports/all-source-playback.checkpoint.json
           key: playback-${{ github.run_id }}-${{ matrix.page }}-${{ matrix.shard }}-${{ hashFiles('v2/reports/private-playback-snapshot.json') }}-attempt-${{ github.run_attempt }}
+      - name: Persist resumable checkpoint as restricted diagnostic artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playback-checkpoint-page-${{ matrix.page }}-shard-${{ matrix.shard }}
+          path: v2/reports/all-source-playback.checkpoint.json
+          retention-days: 1
+          if-no-files-found: ignore
       - name: Upload batch evidence
         if: always()
         uses: actions/upload-artifact@v4
