@@ -59,6 +59,7 @@ def discover(source_texts, live_text):
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("--offline", action="store_true", help="Do not access external sources")
+    p.add_argument("--snapshot-output", action="store_true", help="Write private ephemeral playback snapshot")
     p.add_argument("--limit", type=int, default=0, help="Maximum candidate count; 0 means no limit")
     args = p.parse_args()
     live = LIVE.read_text(encoding="utf-8-sig")
@@ -96,6 +97,18 @@ def main():
             errors.append({"source": source["id"], "error": type(exc).__name__})
             source_audit.append({"source": source["id"], "status": "FETCH_FAILED",
                                  "error": type(exc).__name__})
+    if args.snapshot_output:
+        existing = {e["url"] for e in entries(live)}
+        seen_urls = set()
+        snapshot = []
+        for source_id, content in loaded:
+            for item in entries(content):
+                if item["url"] not in existing and item["url"] not in seen_urls:
+                    seen_urls.add(item["url"])
+                    snapshot.append({"source": source_id, **item})
+        private = ROOT / "v2/reports/private-playback-snapshot.json"
+        private.parent.mkdir(parents=True, exist_ok=True)
+        private.write_text(json.dumps({"schema": 1, "sources": source_audit, "candidates": snapshot}, ensure_ascii=False), encoding="utf-8")
     result = {"schema": 1, "mode": "read-only", "configured_and_discovered_sources": len(sources), "source_count": len(loaded), "errors": errors, "source_audit": source_audit, "candidates": discover(loaded, live)}
     result["total_unique_candidates"] = len(result["candidates"])
     result["candidate_limit"] = args.limit
