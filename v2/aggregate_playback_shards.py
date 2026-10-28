@@ -54,7 +54,7 @@ def main():
     unexpected = shard_ids - expected
     if missing or unexpected:
         raise SystemExit("Incomplete playback evidence; missing="+str(sorted(missing))+" unexpected="+str(sorted(unexpected)))
-    for shard in range(4):
+    for shard in range(16):
         if page_source_sets[(0, shard)] != page_source_sets[(1, shard)]:
             raise SystemExit("Source set changed between pages for shard " + str(shard))
     incomplete_sources = [x["source"] for x in source_stats.values() if x["fetch_failures"] or x["sampled"] != x["shard_candidates"]]
