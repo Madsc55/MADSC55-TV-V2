@@ -1,4 +1,4 @@
-name: V2 Turkish Stream End-to-End Discovery
+name: Kanalları ara — Tek Birleşik Görev
 on:
   workflow_dispatch:
   push:
@@ -168,7 +168,7 @@ jobs:
       - name: Generate final evidence summary
         run: python v2/final_validation_summary.py
       - name: Save review report
-        if: always()
+        if: success()
         uses: actions/upload-artifact@v4
         with:
           name: turkish-stream-review
