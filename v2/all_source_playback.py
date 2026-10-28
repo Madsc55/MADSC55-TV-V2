@@ -83,7 +83,7 @@ def main():
             audit.append({"source": source["id"], "status": "FETCH_FAILED", "error": type(exc).__name__})
     # Partition every source into disjoint pages; do not silently truncate candidate coverage.
     max_items = max((len(items) for _, items in pools), default=0)
-    for round_index in range(PAGE * PER_SOURCE, max_items, PER_SOURCE * 2):
+    for round_index in (i for block in range(PAGE * PER_SOURCE, max_items, PER_SOURCE * 2) for i in range(block, min(block + PER_SOURCE, max_items))):
         for source_id, items in pools:
             if len(selected) >= LIMIT:
                 break
