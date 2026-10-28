@@ -180,6 +180,7 @@ jobs:
       - name: Final playlist and backup safety invariants
         run: python v2/test_playlist_invariants.py
       - name: Generate final evidence summary
+        if: always()
         run: python v2/final_validation_summary.py
       - name: Save final diagnostic evidence even when validation rejects incomplete coverage
         if: always()
