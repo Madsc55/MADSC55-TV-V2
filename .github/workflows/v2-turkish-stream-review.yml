@@ -18,6 +18,7 @@ on:
       - 'v2/github_source_discovery.py'
       - 'v2/discover.py'
       - 'v2/all_source_playback.py'
+      - 'v2/build_verified_test_playlist.py'
       - 'v2/turkish_stream_catalog.py'
       - 'v2/turkish_stream_probe.py'
       - 'v2/newlisttr_extract.py'
@@ -98,6 +99,8 @@ jobs:
         run: python v2/quality_upgrades.py
       - name: Build manual review queue
         run: python v2/turkish_stream_review.py
+      - name: Build isolated provisional IBO review playlist
+        run: python v2/build_verified_test_playlist.py
       - name: Map candidate EPG and logo metadata
         run: python v2/candidate_assets.py
       - name: Compare short video frames for possible duplicates
@@ -146,6 +149,8 @@ jobs:
             v2/reports/turkish-stream-probe.json
             v2/reports/turkish-stream-decode.json
             v2/reports/turkish-stream-review-queue.json
+            v2/reports/short-decoded-review-only.m3u8
+            v2/reports/short-decoded-playlist-summary.json
             v2/reports/epg-integrity.json
             v2/reports/assets-health.json
             v2/reports/logo-attribution.json
