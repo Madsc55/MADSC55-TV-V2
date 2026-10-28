@@ -42,6 +42,7 @@ def main():
         "reported_sampled":total_sampled,
         "coverage_complete":not incomplete_sources,
         "incomplete_sources":sorted(incomplete_sources),
+        "channel_results":[{"name":item.get("name"),"source":item.get("source"),"url_sha256":item.get("url_sha256"),"playback":item.get("status"),"audio":item.get("audio"),"video_width":item.get("width"),"video_height":item.get("height"),"attempts":item.get("attempts"),"classification":"PENDING_REVIEW" if item.get("status") == "VIDEO_DECODED" else "REJECTED_PLAYBACK"} for item in sorted(results.values(),key=lambda item:(item.get("source",""),item.get("name",""),item.get("url_sha256","")))],
         "source_coverage":sorted(source_stats.values(),key=lambda x:x["source"]),
         "notes":"A decoded video is not proof of correct channel identity, audio, stability, EPG or logo."}
     out = Path("v2/reports/all-source-playback-aggregate.json")
