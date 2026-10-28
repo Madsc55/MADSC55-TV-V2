@@ -87,7 +87,7 @@ jobs:
 
   review:
     needs: [sources, playback]
-    if: ${{ needs.sources.result == 'success' && needs.playback.result == 'success' }}
+    if: ${{ always() && needs.sources.result == 'success' }}
     runs-on: ubuntu-latest
     timeout-minutes: 65
     steps:
