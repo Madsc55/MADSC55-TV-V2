@@ -10,6 +10,7 @@ def main():
         raise SystemExit("No shard evidence found")
     results, source_stats, shard_ids = {}, {}, set()
     per_source_shard = {}
+    per_source_fingerprint = {}
     total_sampled = 0
     for path in files:
         doc = json.loads(Path(path).read_text(encoding="utf-8"))
@@ -31,6 +32,12 @@ def main():
             shard_key = (sid, idx[1])
             previous = per_source_shard.get(shard_key)
             count = source.get("shard_candidates", 0)
+            fingerprint = source.get("shard_fingerprint")
+            if not fingerprint and source.get("status") != "FETCH_FAILED":
+                raise SystemExit("Missing source inventory fingerprint: " + sid)
+            if shard_key in per_source_fingerprint and per_source_fingerprint[shard_key] != fingerprint:
+                raise SystemExit("Source content drift between pages: " + sid + " shard " + str(idx[1]))
+            per_source_fingerprint[shard_key] = fingerprint
             if previous is not None and previous != count:
                 raise SystemExit("Source snapshot drift between pages: " + sid + " shard " + str(idx[1]))
             if previous is None:
