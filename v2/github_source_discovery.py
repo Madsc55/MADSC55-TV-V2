@@ -11,9 +11,9 @@ from discover import ROOT, entries, fetch
 
 CONFIG = ROOT / "v2/config/sources.json"
 OUT = ROOT / "v2/reports/github-source-discovery.json"
-QUERIES = ["turkish iptv m3u", "turkiye m3u", "tr iptv playlist", "turkish tv playlist"]
-MAX_REPOS = 50
-MAX_FILES = 80
+QUERIES = ["turkish iptv m3u", "turkiye m3u", "tr iptv playlist", "turkish tv playlist", "türkçe canlı tv m3u", "turk kanallari m3u", "turkish channels iptv", "iptv tr m3u8", "türk televizyon m3u", "turkish live tv playlist"]
+MAX_REPOS = 150
+MAX_FILES = 240
 MAX_BYTES = 2_000_000
 
 def api(url):
@@ -29,7 +29,7 @@ def main():
     repos, errors, found = {}, [], []
     for query in QUERIES:
         try:
-            url = "https://api.github.com/search/repositories?" + urllib.parse.urlencode({"q": query, "per_page": 20, "sort": "updated"})
+            url = "https://api.github.com/search/repositories?" + urllib.parse.urlencode({"q": query, "per_page": 50, "sort": "updated"})
             for item in api(url).get("items", []):
                 if not item.get("fork") and not item.get("archived"):
                     repos[item["full_name"]] = item.get("default_branch", "main")
@@ -41,7 +41,7 @@ def main():
         try:
             tree = api("https://api.github.com/repos/" + name + "/git/trees/" + urllib.parse.quote(branch, safe="") + "?recursive=1")
             paths = [x["path"] for x in tree.get("tree", []) if x.get("type") == "blob" and re.search(r"(?i)\.(m3u8?|txt)$", x.get("path", ""))]
-            for path in paths[:4]:
+            for path in paths[:8]:
                 if len(found) >= MAX_FILES:
                     break
                 raw = "https://raw.githubusercontent.com/" + name + "/" + urllib.parse.quote(branch, safe="") + "/" + urllib.parse.quote(path, safe="/")
