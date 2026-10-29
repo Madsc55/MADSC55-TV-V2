@@ -81,7 +81,8 @@ def main():
         "not_proven": ["24h uptime", "correct live channel identity for all URLs",
                        "EPG/logo correctness for new candidates", "every playlist entry decoded", "every discovered source candidate decoded", "permanent IBO-compatible YouTube live URL"],
     }
-    report["scan_status"] = ("COMPLETE_REVIEW_PENDING" if report["playback_coverage_complete"] and report["channel_review_counts"]["pending_review"] else ("COMPLETE_NO_PENDING" if report["playback_coverage_complete"] else "INCOMPLETE"))
+    review_pending = bool(report["channel_review_counts"]["pending_review"] or report["spoken_turkish_unverified"])
+    report["scan_status"] = ("COMPLETE_REVIEW_PENDING" if report["playback_coverage_complete"] and review_pending else ("COMPLETE_NO_PENDING" if report["playback_coverage_complete"] else "INCOMPLETE"))
     out = REPORTS / "final-validation-summary.json"
     out.write_text(json.dumps(report, ensure_ascii=False, indent=2) + chr(10), encoding="utf-8")
     print("Final evidence:", json.dumps({k:v for k,v in report.items() if k not in ("not_proven", "backup_names", "reports_present")}, ensure_ascii=False))
@@ -90,6 +91,8 @@ def main():
         raise SystemExit("Missing required reports: " + ", ".join(missing))
     if report["metadata_audited"] != report["m3u_candidates"] or report["metadata_playback_matched"] != report["m3u_candidates"]:
         raise SystemExit("Metadata and playback audit does not cover every discovered candidate")
+    if language.get("approved") != 0 or language.get("spoken_turkish_verified", 0) > language.get("candidate_count", 0):
+        raise SystemExit("Unsafe or inconsistent Turkish language approvals")
     if report["turkish_language_reviewed"] != report["m3u_candidates"]:
         raise SystemExit("Turkish language review does not cover every candidate")
     if action_queue.get("tested") != report["m3u_candidates"] or action_queue.get("approved") != 0 or action_queue.get("spoken_turkish_verified") != report["spoken_turkish_verified"]:
