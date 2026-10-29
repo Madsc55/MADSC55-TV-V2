@@ -175,7 +175,9 @@ jobs:
           python -m py_compile v2/postscan_triage.py v2/postscan_identity_consistency.py
           python v2/postscan_triage.py
       - name: Audit Turkish spoken-language evidence for every candidate
-        run: python v2/turkish_language_evidence.py
+        run: |
+          python -m py_compile v2/turkish_language_evidence.py
+          python v2/turkish_language_evidence.py
       - name: Audit identity metadata conflicts in the same run
         run: python v2/postscan_identity_consistency.py
       - name: Audit same URL across different channels
