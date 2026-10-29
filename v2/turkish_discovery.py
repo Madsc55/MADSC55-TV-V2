@@ -44,7 +44,7 @@ for b in list(groups[backup]):
   move(b,groups[backup],groups[tr],tr);moved.append(n)
 for b in list(groups[tr]):
  n=name(b);key=norm(n);tid=attr(b[0],'tvg-id')
- if tid in foreign and tid not in valid and not re.search(r'\\bTR\\b|TURK|TURKIYE|TURKEY',n,re.I):
+ if tid in foreign and tid not in valid and not re.search(r'\bTR\b|TURK|TURKIYE|TURKEY',n,re.I):
   move(b,groups[tr],groups[backup],backup);returned.append(n)
  elif tid not in valid and key not in aliases:ambiguous.append(n)
 for g in (tr,backup):groups[g].sort(key=lambda b:norm(name(b)))
