@@ -32,6 +32,13 @@ jobs:
             --old /tmp/madsc-60/v2/reports/all-source-playback-aggregate.json \
             --new /tmp/madsc-72/v2/reports/all-source-playback-aggregate.json \
             --output v2/reports/historical-recovery
+      - name: Rediscover historical decoded identities from current configured sources without full playback scan
+        run: |
+          python v2/rediscover_historical_candidates.py \
+            --old /tmp/madsc-60/v2/reports/all-source-playback-aggregate.json \
+            --new /tmp/madsc-72/v2/reports/all-source-playback-aggregate.json \
+            --sources v2/config/sources.json \
+            --output v2/reports/historical-recovery/rediscovered-current-sources.json
       - name: Publish anonymous recovery evidence only
         uses: actions/upload-artifact@v4
         with:
