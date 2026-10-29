@@ -23,7 +23,7 @@ def main():
         tvg = candidate.get("tvg_id", "")
         group = candidate.get("group", "")
         combined = " ".join((name, tvg, group))
-        turkish_marker = bool(re.search(r"(?i)(türkçe|turkish|türkiye|turkiye|\\.tr(?:\\b|$)|\\bTR\\b)", combined))
+        turkish_marker = bool(re.search(r"(?i)(türkçe|turkish|türkiye|turkiye|\.tr(?:\b|$)|\bTR\b)", combined))
         playback_row = tested[candidate["url_sha256"]]
         video = playback_row.get("playback") == "VIDEO_DECODED"
         # Metadata only supports prioritizing review; never auto-approve a language.
