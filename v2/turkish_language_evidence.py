@@ -31,12 +31,18 @@ def main():
         playback_row = tested[candidate["url_sha256"]]
         video = playback_row.get("playback") == "VIDEO_DECODED"
         audio = playback_row.get("audio")
+        # A decoded video stream is not proof that an audio track exists.
+        # Keep the distinction visible in the language-review queue.
+        audio_status = str(audio or "").upper()
+        audio_confirmed = audio_status in ("AUDIO_DECODED", "AUDIO_PRESENT", "PRESENT", "YES", "TRUE")
         # Metadata only supports prioritizing review; never auto-approve a language.
         category = "LANGUAGE_REVIEW_WITH_METADATA_HINT" if turkish_marker else "LANGUAGE_REVIEW_SOURCE_ONLY"
         if not video:
             category = "PLAYBACK_UNAVAILABLE_LANGUAGE_UNVERIFIED"
+        elif not audio_confirmed:
+            category = "AUDIO_EVIDENCE_UNCONFIRMED_LANGUAGE_UNVERIFIED"
         rows.append({"url_sha256": candidate["url_sha256"], "name": name, "source": candidate.get("source"),
-                     "category": category, "video_decoded": video, "audio_evidence": audio,
+                     "category": category, "video_decoded": video, "audio_evidence": audio, "audio_confirmed": audio_confirmed,
                      "spoken_turkish_verified": False, "approved": False,
                      "action": "VERIFY_SPOKEN_LANGUAGE_AND_BROADCASTER_IDENTITY"})
     counts = dict(Counter(x["category"] for x in rows))
