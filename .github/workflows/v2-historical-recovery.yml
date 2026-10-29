@@ -1,0 +1,41 @@
+name: MADSC TV — Eski ve Yeni Tarama Kurtarma Kontrolü
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/v2-historical-recovery.yml'
+permissions:
+  contents: read
+jobs:
+  compare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Protect IBO and permanent backups
+        run: |
+          test "$(git hash-object MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)" = "4b1c3cea4b5107a425abab60f62d41f9f81e05a7"
+          python v2/test_playlist_invariants.py
+      - name: Download existing #60 and #72 evidence without rescanning
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p /tmp/madsc-60 /tmp/madsc-72
+          gh run download 40743765437 -n turkish-stream-review -D /tmp/madsc-60
+          gh run download 40948768782 -n turkish-stream-review -D /tmp/madsc-72
+      - name: Compare historical candidates and preserve missing decoded identities
+        run: |
+          python v2/compare_historical_playback.py \
+            --old /tmp/madsc-60/v2/reports/all-source-playback-aggregate.json \
+            --new /tmp/madsc-72/v2/reports/all-source-playback-aggregate.json \
+            --output v2/reports/historical-recovery
+      - name: Publish anonymous recovery evidence only
+        uses: actions/upload-artifact@v4
+        with:
+          name: historical-60-vs-72-recovery
+          path: v2/reports/historical-recovery/
+          if-no-files-found: error
+          retention-days: 30
