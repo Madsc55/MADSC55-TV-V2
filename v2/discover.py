@@ -40,15 +40,28 @@ def entries(data):
                 yield {**pending, "url": line}
             pending = None
 
+def turkish_candidate(entry, scope):
+    """Conservative Turkish candidate gate; not spoken-language proof."""
+    if scope == "TR":
+        return True
+    fields = " ".join((entry.get("group", ""), entry.get("tvg_id", ""), entry.get("name", "")))
+    if re.search(r"(?i)(?:^|[^a-z])(?:turkish|türkçe|türkiye|turkiye|türkiye tv)(?:$|[^a-z])", fields):
+        return True
+    if re.search(r"(?i)(?:^|[. _-])(?:tr)(?:[. _-]|$)", entry.get("tvg_id", "")):
+        return True
+    return False
+
 def key(entry):
     return (entry["tvg_id"].casefold(), entry["name"].casefold())
 
-def discover(source_texts, live_text):
+def discover(source_texts, live_text, scopes):
     existing_urls = {e["url"] for e in entries(live_text)}
     existing_keys = {key(e) for e in entries(live_text) if e["tvg_id"]}
     candidates, seen = [], set()
     for source_id, content in source_texts:
         for e in entries(content):
+            if not turkish_candidate(e, scopes.get(source_id, 'candidate')):
+                continue
             if e["url"] in existing_urls or e["url"] in seen:
                 continue
             seen.add(e["url"])
@@ -74,6 +87,7 @@ def main():
         except (OSError, ValueError, TypeError):
             pass
     loaded, errors, source_audit = [], [], []
+    scopes = {source['id']: source.get('scope', 'candidate') for source in sources}
     for source in sources:
         if args.offline:
             continue
@@ -103,6 +117,8 @@ def main():
         snapshot = []
         for source_id, content in loaded:
             for item in entries(content):
+                if not turkish_candidate(item, scopes.get(source_id, 'candidate')):
+                    continue
                 if item["url"] not in existing and item["url"] not in seen_urls:
                     seen_urls.add(item["url"])
                     snapshot.append({"source": source_id, **item})
@@ -112,7 +128,7 @@ def main():
         private.chmod(0o600)
         if errors:
             raise SystemExit("Snapshot incomplete: " + str(len(errors)) + " source(s) failed; no playback permitted")
-    result = {"schema": 1, "mode": "read-only", "configured_and_discovered_sources": len(sources), "source_count": len(loaded), "errors": errors, "source_audit": source_audit, "candidates": discover(loaded, live)}
+    result = {"schema": 1, "mode": "read-only", "configured_and_discovered_sources": len(sources), "source_count": len(loaded), "errors": errors, "source_audit": source_audit, "candidates": discover(loaded, live, scopes)}
     result["total_unique_candidates"] = len(result["candidates"])
     result["candidate_limit"] = args.limit
     result["candidates_truncated"] = args.limit > 0 and len(result["candidates"]) > args.limit
