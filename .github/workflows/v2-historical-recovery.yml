@@ -39,6 +39,33 @@ jobs:
             --new /tmp/madsc-72/v2/reports/all-source-playback-aggregate.json \
             --sources v2/config/sources.json \
             --output v2/reports/historical-recovery/rediscovered-current-sources.json
+      - name: Show recovery counts in GitHub Actions summary
+        run: |
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          report = json.loads(Path('v2/reports/historical-recovery/rediscovered-current-sources.json').read_text())
+          lines = [
+              '## Historical #60–#72 source rediscovery',
+              '',
+              '| Metric | Count |',
+              '|---|---:|',
+              f"| Previously decoded, absent from #72 | {report['old_decoded_missing_from_new']} |",
+              f"| URL identities rediscovered | {report['rediscovered_count']} |",
+              f"| Still unmatched | {report['still_unmatched']} |",
+              '',
+              '**Rediscovered is not playback-tested or Turkish-speech verified.**',
+              '',
+              '### Source audit',
+              '| Source | Parsed | Matched | Status |',
+              '|---|---:|---:|---|',
+          ]
+          for s in report['sources']:
+              lines.append(f"| {s['source']} | {s.get('parsed', 0)} | {s.get('matched', 0)} | {s['status']} |")
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as out:
+              out.write('\\n'.join(lines) + '\\n')
+          print('Rediscovered:', report['rediscovered_count'], 'Still unmatched:', report['still_unmatched'])
+          PY
       - name: Publish anonymous recovery evidence only
         uses: actions/upload-artifact@v4
         with:
