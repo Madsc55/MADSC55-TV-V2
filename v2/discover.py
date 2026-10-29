@@ -80,7 +80,7 @@ def main():
     if DYNAMIC.exists():
         try:
             dynamic = json.loads(DYNAMIC.read_text(encoding="utf-8"))
-            for index, item in enumerate(dynamic.get("sources", [])[:80]):
+            for index, item in enumerate(dynamic.get("sources", [])[:240]):
                 url = item.get("url", "")
                 if url.startswith("https://") and not any(s["url"] == url for s in sources):
                     sources.append({"id": "github-auto-" + str(index), "url": url, "scope": "candidate"})
