@@ -17,7 +17,7 @@ def main():
     assert parsed[0]["tvg_id"] == "test.tr", parsed
     assert parsed[0]["group"] == "HABER", parsed
     assert parsed[0]["logo"] == "https://example.org/a.png", parsed
-    assert not discover([("test", fixture)], fixture), "Existing streams must not become candidates"
+    assert not discover([("test", fixture)], fixture, {"test": "TR"}), "Existing streams must not become candidates"
     playlist = ROOT / "MADSC55_TV_IBO_CALISANLAR_TEST.m3u8"
     assert playlist.exists(), "Protected playlist missing"
     before = hashlib.sha256(playlist.read_bytes()).hexdigest()
