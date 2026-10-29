@@ -31,15 +31,19 @@ def run():
     tested = {x["url_sha256"]: x for x in playback["channel_results"]}
     if len(tested) != len(playback["channel_results"]):
         raise SystemExit("Duplicate playback hashes")
+    if len(snapshot.get("candidates", [])) != len(tested):
+        raise SystemExit("Snapshot and playback candidate count mismatch")
     selected = []
     for item in snapshot["candidates"]:
         url = item.get("url", "")
         digest = hashlib.sha256(url.encode()).hexdigest()
         match = tested.get(digest)
-        if match and match.get("playback") == "VIDEO_DECODED" and match.get("audio") and url.startswith(("https://", "http://")):
+        if match and match.get("playback") == "VIDEO_DECODED" and match.get("audio") is True and url.startswith(("https://", "http://")):
             selected.append((digest, url))
         if len(selected) >= args.limit:
             break
+    if not selected:
+        raise SystemExit("No eligible video+audio streams for speech sampling")
     model = WhisperModel("tiny", device="cpu", compute_type="int8")
     results = []
     for digest, url in selected:
