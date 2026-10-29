@@ -1,34 +1,34 @@
 {
   "playlist_entries": 840,
   "matched_entries": 299,
-  "channels": 153,
-  "programmes": 18792,
-  "epg_bytes": 9240129,
+  "channels": 152,
+  "programmes": 17987,
+  "epg_bytes": 8775070,
   "sources": [
     {
       "source": "https://raw.githubusercontent.com/trology85/iptv-epg-turkey/main/epg/turksat_epg.xml.gz",
       "status": "ok",
-      "programmes": 7141
+      "programmes": 7206
     },
     {
       "source": "https://epgshare01.online/epgshare01/epg_ripper_TR1.xml.gz",
       "status": "ok",
-      "programmes": 15138
+      "programmes": 15173
     },
     {
       "source": "https://epgshare01.online/epgshare01/epg_ripper_TR3.xml.gz",
       "status": "ok",
-      "programmes": 32027
+      "programmes": 30557
     },
     {
       "source": "https://www.open-epg.com/files/turkey1.xml.gz",
       "status": "ok",
-      "programmes": 6557
+      "programmes": 7792
     },
     {
       "source": "https://www.open-epg.com/files/turkey2.xml.gz",
       "status": "ok",
-      "programmes": 7389
+      "programmes": 7405
     }
   ]
 }
