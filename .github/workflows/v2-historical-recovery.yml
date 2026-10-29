@@ -32,12 +32,24 @@ jobs:
             --old /tmp/madsc-60/v2/reports/all-source-playback-aggregate.json \
             --new /tmp/madsc-72/v2/reports/all-source-playback-aggregate.json \
             --output v2/reports/historical-recovery
+      - name: Recover latest GitHub-discovered M3U source catalog when available
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p /tmp/madsc-dynamic
+          RUN_ID="$(gh run list --workflow v2-github-source-discovery.yml --status success --limit 1 --json databaseId --jq '.[0].databaseId // empty')"
+          if [ -n "$RUN_ID" ]; then
+            gh run download "$RUN_ID" -n github-turkish-m3u-source-discovery -D /tmp/madsc-dynamic || echo "Dynamic catalog artifact unavailable; report will show incomplete coverage"
+          else
+            echo "No successful dynamic source discovery run found"
+          fi
       - name: Rediscover historical decoded identities from current configured sources without full playback scan
         run: |
           python v2/rediscover_historical_candidates.py \
             --old /tmp/madsc-60/v2/reports/all-source-playback-aggregate.json \
             --new /tmp/madsc-72/v2/reports/all-source-playback-aggregate.json \
             --sources v2/config/sources.json \
+            --dynamic-sources /tmp/madsc-dynamic/v2/reports/github-source-discovery.json \
             --output v2/reports/historical-recovery/rediscovered-current-sources.json
       - name: Show recovery counts in GitHub Actions summary
         run: |
