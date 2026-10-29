@@ -1,6 +1,9 @@
 name: MADSC TV — Mevcut Tarama Üzerinden Toplu Ses İncelemesi
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/v2-spoken-language-existing-snapshot.yml'
 permissions:
   contents: read
 concurrency:
