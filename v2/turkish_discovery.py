@@ -40,7 +40,7 @@ for b in list(groups[backup]):
  n=name(b);key=norm(n);tid=attr(b[0],'tvg-id')
  if re.search(r'\bS\d{2}\b|\bS\d{2}E\d{2}\b|EPISODE|\.(?:MP4|MKV)',n,re.I):continue
  ids={tid} if tid in valid else aliases[key]
- if tid in valid and len(ids)==1:
+ if (tid in valid and len(ids)==1) or (not tid and len(ids)==1 and not other[key] and re.search(r'\b(?:TR|TURK|TURKIYE|TURKEY)\b',n,re.I)):
   move(b,groups[backup],groups[tr],tr);moved.append(n)
 for b in list(groups[tr]):
  n=name(b);key=norm(n);tid=attr(b[0],'tvg-id')
