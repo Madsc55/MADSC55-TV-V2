@@ -13,10 +13,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Python syntax check
+        run: python -m py_compile v2/audit_turkish_categories.py v2/turkish_discovery.py
       - name: Audit and classify
-        run: python v2/audit_turkish_categories.py
+        run: python -u v2/audit_turkish_categories.py
       - name: Worldwide Turkish discovery and catalog validation
-        run: python v2/turkish_discovery.py
+        run: python -u v2/turkish_discovery.py
       - name: Commit verified playlist and report
         run: |
           git config user.name github-actions
