@@ -38,6 +38,15 @@ jobs:
         run: python v2/github_source_discovery.py
       - name: Fetch and deduplicate all M3U candidates once
         run: python v2/discover.py --snapshot-output
+      - name: Report newly scanned candidate and source counts
+        run: |
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          data=json.loads(Path('v2/reports/candidates.json').read_text())
+          lines=['## Fresh source scan', '', '| Metric | Count |', '|---|---:|', f"| Unique candidate stream URLs | {data['total_unique_candidates']} |", f"| Sources fetched | {data['source_count']} |", f"| Source errors | {len(data['errors'])} |", '', 'Candidates are not verified unique channels or confirmed Turkish speech.']
+          with open(os.environ['GITHUB_STEP_SUMMARY'],'a') as out: out.write(chr(10).join(lines)+chr(10))
+          PY
       - name: Share safe candidate report
         uses: actions/upload-artifact@v4
         with:
