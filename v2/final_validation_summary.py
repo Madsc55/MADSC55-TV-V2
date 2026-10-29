@@ -32,9 +32,10 @@ def main():
     github = load("github-source-discovery.json")
     metadata_audit = load("candidate-metadata-audit.json")
     language = load("turkish-language-evidence.json")
+    action_queue = load("postscan-unified-action-queue.json")
     required = {
         "all_sources": all_sources, "discovery": discovery, "github_sources": github,
-        "metadata_audit": metadata_audit, "turkish_language": language,
+        "metadata_audit": metadata_audit, "turkish_language": language, "action_queue": action_queue,
         "newlisttr": newlisttr,
         "baseline": baseline, "stability": stability, "quality": quality,
         "frames": frames, "candidate_assets": assets, "http_probe": probe,
@@ -54,6 +55,7 @@ def main():
         "metadata_audited": metadata_audit.get("total_audited", 0) if metadata_audit else 0,
         "turkish_language_reviewed": language.get("candidate_count", 0) if language else 0,
         "spoken_turkish_verified": language.get("spoken_turkish_verified", 0) if language else 0,
+        "spoken_turkish_unverified": (language.get("candidate_count", 0) - language.get("spoken_turkish_verified", 0)) if language else 0,
         "turkish_language_review_counts": language.get("counts", {}) if language else {},
         "metadata_playback_matched": metadata_audit.get("playback_matched", 0) if metadata_audit else 0,
         "m3u_total_unique_candidates": discovery.get("total_unique_candidates", 0) if discovery else 0,
@@ -90,6 +92,8 @@ def main():
         raise SystemExit("Metadata and playback audit does not cover every discovered candidate")
     if report["turkish_language_reviewed"] != report["m3u_candidates"]:
         raise SystemExit("Turkish language review does not cover every candidate")
+    if action_queue.get("tested") != report["m3u_candidates"] or action_queue.get("approved") != 0 or action_queue.get("spoken_turkish_verified") != report["spoken_turkish_verified"]:
+        raise SystemExit("Unified action queue and language evidence mismatch")
     if report["m3u_candidates_truncated"]:
         raise SystemExit("Discovery candidate inventory truncated; cannot mark complete")
     if report["sources_failed"]:
