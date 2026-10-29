@@ -20,3 +20,9 @@ YEDEKLER (11.316) ve YENİ TÜRK (494) kanallarını alfabetik sıraya diz; eksi
 - Sıradaki iş: 1881 eksik logoyu daha kapsamlı kaynaklardan (iptv-org channels.json + logos.json kanal id ve ad ilişkisi, Wikimedia/official channel branding) yüksek güvenle eşleştir, doğrula, logo URL'lerini uygula; çözülemeyenleri raporla. Yanlış marka logosu atama. Gerekiyorsa kullanıcıdan olmayanlar için jenerik logo tercihini sor ama önce gerçek logoları araştır.
 - Ek olarak YEDEKLER'de hâlâ Türk kanalı olabileceği biliniyor; 'başka yok' deme.
 - Kullanıcı kısa Türkçe sonuç ve yeni sohbet için devir notu istiyor.
+
+## 29 Ekim — kesin Türk kanal keşif kapsamı
+- Türkiye içindeki Türk kanalları, yurtdışında Türk izleyiciye yönelik Türkçe kanallar ve YouTube üzerinde gerçekten canlı yayın yapan Türk kanalları DAHİL.
+- YouTube video/kanal sayfası URL'sini doğrudan oynatılabilir M3U akışı sanma; IBO Player ile uyumlu, izinli, kararlı canlı yayın adresi doğrulanmadan playlist'e ekleme.
+- Yalnızca Türkçe ses seçeneği olan yabancı kanallar otomatik Türk kanalı değildir. Yabancı benzer isimli kanalları, VOD/dizi bölümlerini YENİ TÜRK'e alma.
+- Kanal ve kategori sayısını koruyarak, yanlış taşımaları geri al; YEDEKLER'deki Türk kanallarını güvenilir kaynakla tespit et; belirsizleri raporla. Test yeşil ve gerçek playlist doğrulanmadan tamamlandı deme.
