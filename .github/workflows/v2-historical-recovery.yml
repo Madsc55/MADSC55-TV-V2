@@ -43,6 +43,9 @@ jobs:
           else
             echo "No successful dynamic source discovery run found"
           fi
+      - name: Verify dynamic source CLI is supported before rediscovery
+        run: |
+          python v2/rediscover_historical_candidates.py --help | grep -F -- --dynamic-sources
       - name: Rediscover historical decoded identities from current configured sources without full playback scan
         run: |
           python v2/rediscover_historical_candidates.py \
@@ -75,7 +78,7 @@ jobs:
           for s in report['sources']:
               lines.append(f"| {s['source']} | {s.get('parsed', 0)} | {s.get('matched', 0)} | {s['status']} |")
           with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as out:
-              out.write('\\n'.join(lines) + '\\n')
+              out.write(chr(10).join(lines) + chr(10))
           print('Rediscovered:', report['rediscovered_count'], 'Still unmatched:', report['still_unmatched'])
           PY
       - name: Publish anonymous recovery evidence only
