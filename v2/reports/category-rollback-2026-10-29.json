@@ -1,0 +1,12 @@
+{
+  "timestamp_utc": "2026-10-29T10:14:14.643238+00:00",
+  "original_entries": 12648,
+  "removed_to_archive": 11810,
+  "remaining_entries": 840,
+  "archived_backups": 11317,
+  "archived_new_turk": 493,
+  "permanent_backups_remaining": 2,
+  "original_sha256": "c5d21b864d6ff0dac91f953c3029c51bffc907b2f51e7449bcdc26b3fea95e65",
+  "archive_path": "v2/archives/category-rollback-2026-10-29.m3u8",
+  "discovery_artifacts": "untouched"
+}
