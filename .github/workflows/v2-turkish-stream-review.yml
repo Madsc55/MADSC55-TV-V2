@@ -6,6 +6,7 @@ on:
       - 'v2/discover.py'
       - 'v2/turkish_language_evidence.py'
       - 'v2/final_validation_summary.py'
+      - 'v2/postscan_unified_action_queue.py'
       - '.github/workflows/v2-turkish-stream-review.yml'
 concurrency:
   group: v2-turkish-stream-review-main
