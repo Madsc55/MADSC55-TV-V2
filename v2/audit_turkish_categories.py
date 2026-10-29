@@ -14,20 +14,20 @@ while i<len(lines):
  while j<len(lines) and not lines[j].startswith('#EXTINF:'): j+=1
  blocks.append(lines[i:j]);i=j
 def attr(b,k):
- m=re.search(r'(?<!\\w)'+re.escape(k)+r'="([^"]*)"',b[0])
+ m=re.search(r'(?<!\w)'+re.escape(k)+r'="([^"]*)"',b[0])
  return m.group(1) if m else ''
 def name(b):return attr(b,'tvg-name') or b[0].rstrip().split(',')[-1]
 def group(b):return attr(b,'group-title')
 def normalized(s):
  return ''.join(c for c in unicodedata.normalize('NFKD',s.upper().replace('İ','I').replace('ı','I')) if not unicodedata.combining(c))
 def is_vod(s):
- return bool(re.search(r'\\bS\\d{1,2}E\\d{1,3}\\b|\\bS\\d{2}\\b.*\\bS\\d{2}E|\\bWEB[- .]?DL\\b|\\b(EPISODE|SEASON)\\b|\\.(MP4|MKV)\\b',s,re.I))
+ return bool(re.search(r'\bS\d{1,2}E\d{1,3}\b|\bS\d{2}\b.*\bS\d{2}E|\bWEB[- .]?DL\b|\b(EPISODE|SEASON)\b|\.(MP4|MKV)\b',s,re.I))
 # Explicit Turkish broadcasting markers only; avoid assuming that a Turkish word means Turkish TV.
-known=re.compile(r'\\b(TRT|ATV|KANAL D|SHOW TV|STAR TV|HABERTURK|HABER TURK|CNN TURK|NTV|TV8|TV 8|TV100|TGRT|BEYAZ TV|ULKE TV|KRT|TELE ?1|TEVE2|DMAX|MINIKA|A HABER|A PARA|A SPOR|ACUN ILICALI|FLASH HABER|HALK TV|SOZCU TV|360 TV|TVNET|TV NET|YABAN TV|DREAM TURK|POWER TURK|KRAL POP|KRAL TV|CINE5|KANAL 7|EURO D|EUROSTAR|TRT TURK)\\b',re.I)
+known=re.compile(r'\b(TRT|ATV|KANAL D|SHOW TV|STAR TV|HABERTURK|HABER TURK|CNN TURK|NTV|TV8|TV 8|TV100|TGRT|BEYAZ TV|ULKE TV|KRT|TELE ?1|TEVE2|DMAX|MINIKA|A HABER|A PARA|A SPOR|ACUN ILICALI|FLASH HABER|HALK TV|SOZCU TV|360 TV|TVNET|TV NET|YABAN TV|DREAM TURK|POWER TURK|KRAL POP|KRAL TV|CINE5|KANAL 7|EURO D|EUROSTAR|TRT TURK)\b',re.I)
 def candidate(b):
  n=normalized(name(b)); tid=attr(b,'tvg-id')
  if is_vod(n):return False
- if re.search(r'(^|[ ._-])(TR|TURKEY|TURKIYE)([ ._-]|$)',n) or re.search(r'\\.tr(?:@|$)',tid,re.I):return True
+ if re.search(r'(^|[ ._-])(TR|TURKEY|TURKIYE)([ ._-]|$)',n) or re.search(r'\.tr(?:@|$)',tid,re.I):return True
  return bool(known.search(n))
 groups=collections.OrderedDict()
 for b in blocks:groups.setdefault(group(b),[]).append(b)
@@ -61,5 +61,5 @@ assert sorted(l for b in blocks for l in b[1:] if l.strip() and not l.startswith
 p.write_text(out,encoding='utf-8')
 report={'total':len(blocks),'categories':len(groups),'before':{tr:before[tr],backup:before[backup]},'after':{tr:len(groups[tr]),backup:len(groups[backup])},'moved_to_turkish':len(move),'moved_names':[name(b) for b in move],'ambiguous_in_turkish_needs_review':review,'test_marked_entries_cleaned':cleaned,'policy':'Conservative automated moves; ambiguous Turkish entries remain for review.'}
 dest=root/'v2/reports/turkish-category-audit.json';dest.parent.mkdir(parents=True,exist_ok=True)
-dest.write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\\n',encoding='utf-8')
+dest.write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
 print(json.dumps({k:v for k,v in report.items() if k not in ('moved_names','ambiguous_in_turkish_needs_review')},ensure_ascii=False))
