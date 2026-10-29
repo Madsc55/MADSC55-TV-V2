@@ -1,6 +1,10 @@
 name: Kanalları ara — Tek Birleşik Görev
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - 'v2/discover.py'
+      - '.github/workflows/v2-turkish-stream-review.yml'
 concurrency:
   group: v2-turkish-stream-review-main
   cancel-in-progress: false
