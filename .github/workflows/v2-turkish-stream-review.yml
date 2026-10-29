@@ -20,6 +20,10 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Enforce frozen IBO playlist and permanent backups before all tests
+        run: |
+          test "$(git hash-object MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)" = "4b1c3cea4b5107a425abab60f62d41f9f81e05a7"
+          python v2/test_playlist_invariants.py
       - name: Compile and validate all V2 Python modules before scanning
         run: python -m compileall -q v2
       - name: Discover GitHub sources once
@@ -234,7 +238,9 @@ jobs:
         continue-on-error: true
         run: python v2/youtube_discovery.py
       - name: Final playlist and backup safety invariants
-        run: python v2/test_playlist_invariants.py
+        run: |
+          test "$(git hash-object MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)" = "4b1c3cea4b5107a425abab60f62d41f9f81e05a7"
+          python v2/test_playlist_invariants.py
       - name: Generate final evidence summary
         if: always()
         run: python v2/final_validation_summary.py
