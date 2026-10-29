@@ -1,0 +1,47 @@
+name: MADSC TV — Mevcut Tarama Üzerinden Toplu Ses İncelemesi
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: madsc-existing-snapshot-language-review
+  cancel-in-progress: false
+jobs:
+  sample:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Protect original playlist and backups
+        run: |
+          test "$(git hash-object MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)" = "4b1c3cea4b5107a425abab60f62d41f9f81e05a7"
+          python v2/test_playlist_invariants.py
+          python v2/test_unified_safety_contract.py
+          python v2/test_language_evidence_functional.py
+      - name: Download previously completed run evidence (not a new scan)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p v2/reports
+          gh run download 40948768782 -n turkish-stream-review -D .
+          gh run download 40948768782 -n unified-private-playback-snapshot -D v2/reports
+          test -s v2/reports/private-playback-snapshot.json
+          test -s v2/reports/all-source-playback-aggregate.json
+      - name: Install bounded speech recognition
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y ffmpeg
+          python -m pip install --disable-pip-version-check faster-whisper==1.2.1
+      - name: Sample existing playable audio and generate review-only language hints
+        run: python v2/spoken_language_sample_review.py --limit 16 --seconds 15
+      - name: Publish only anonymized read-only evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: existing-snapshot-spoken-language-evidence
+          path: v2/reports/spoken-language-samples.json
+          if-no-files-found: ignore
+          retention-days: 7
