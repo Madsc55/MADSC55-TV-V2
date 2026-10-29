@@ -7,6 +7,7 @@ on:
       - 'v2/turkish_language_evidence.py'
       - 'v2/final_validation_summary.py'
       - 'v2/postscan_unified_action_queue.py'
+      - 'v2/test_unified_safety_contract.py'
       - '.github/workflows/v2-turkish-stream-review.yml'
 concurrency:
   group: v2-turkish-stream-review-main
@@ -29,6 +30,8 @@ jobs:
           python v2/test_playlist_invariants.py
       - name: Compile and validate all V2 Python modules before scanning
         run: python -m compileall -q v2
+      - name: Run offline consolidated safety contracts before network scans
+        run: python v2/test_unified_safety_contract.py
       - name: Discover GitHub sources once
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
