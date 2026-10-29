@@ -26,9 +26,9 @@ def is_vod(s):
 known=re.compile(r'\b(TRT|ATV|KANAL D|SHOW TV|STAR TV|HABERTURK|HABER TURK|CNN TURK|NTV|TV8|TV 8|TV100|TGRT|BEYAZ TV|ULKE TV|KRT|TELE ?1|TEVE2|DMAX|MINIKA|A HABER|A PARA|A SPOR|ACUN ILICALI|FLASH HABER|HALK TV|SOZCU TV|360 TV|TVNET|TV NET|YABAN TV|DREAM TURK|POWER TURK|KRAL POP|KRAL TV|CINE5|KANAL 7|EURO D|EUROSTAR|TRT TURK)\b',re.I)
 def candidate(b):
  n=normalized(name(b)); tid=attr(b,'tvg-id')
- if is_vod(n):return False
+ if is_vod(n) or re.search(r'\\bS\\d{2}\\s+E\\d{2}\\b|\\bS\\d{2}\\s+.*\\bE\\d{2}\\b|[- ]TR S\\d{2}\\b',n):return False
  if re.search(r'(^|[ ._-])(TR|TURKEY|TURKIYE)([ ._-]|$)',n) or re.search(r'\.tr(?:@|$)',tid,re.I):return True
- return bool(known.search(n))
+ return bool(re.search(r'^(?:TRT(?:\\s|$)|CNN TURK\\b|HABER TURK\\b|HABERTURK\\b|BEYAZ TV\\b|TGRT\\b|KANAL 7\\b|SHOW TV\\b|STAR TV\\b|A HABER\\b|A PARA\\b|A SPOR\\b|DREAM TURK\\b|TV100\\b)',n))
 groups=collections.OrderedDict()
 for b in blocks:groups.setdefault(group(b),[]).append(b)
 tr=next((g for g in groups if 'YENİ TÜRK' in g),None)
@@ -36,7 +36,7 @@ backup=next((g for g in groups if 'YEDEKLER' in g),None)
 if not tr or not backup or len(groups)!=14:raise ValueError('Missing expected categories')
 before=collections.Counter({g:len(v) for g,v in groups.items()})
 # Never remove Turkish-category channels automatically: flag ambiguous cases for human review.
-move=[]; review=[]
+move=[]; review=[]\n# Undo the prior overly broad automatic batch before applying strict country evidence.\nprior=root/'v2/reports/turkish-category-audit.json'\nif prior.exists():\n old=json.loads(prior.read_text(encoding='utf-8'))\n counts=collections.Counter(old.get('moved_names',[]))\n for b in list(groups[tr]):\n  n=name(b)\n  if counts[n]>0:\n   counts[n]-=1;groups[tr].remove(b)\n   b[0]=re.sub(r'group-title="[^"]*"',lambda _: 'group-title="'+backup+'"',b[0],count=1)\n   groups[backup].append(b)\n if any(counts.values()):raise ValueError('Could not fully reverse previous unsafe batch')
 for b in list(groups[backup]):
  if candidate(b):move.append(b)
 for b in groups[tr]:
