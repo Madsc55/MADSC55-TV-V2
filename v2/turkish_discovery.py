@@ -7,7 +7,7 @@ p=root/'MADSC55_TV_IBO_CALISANLAR_TEST.m3u8'
 def fetch(x):
  with urllib.request.urlopen('https://iptv-org.github.io/api/'+x,timeout=45) as r:return json.load(r)
 def attr(s,k):
- m=re.search(r'(?<!\\w)'+re.escape(k)+r'="([^"]*)"',s)
+ m=re.search(r'(?<!\w)'+re.escape(k)+r'="([^"]*)"',s)
  return m.group(1) if m else ''
 def norm(s):return re.sub(r'[^a-z0-9]+',' ',s.casefold()).strip()
 lines=p.read_text(encoding='utf-8-sig').splitlines(keepends=True)
@@ -38,7 +38,7 @@ def move(b,source,dest,g):
 moved=[];returned=[];ambiguous=[]
 for b in list(groups[backup]):
  n=name(b);key=norm(n);tid=attr(b[0],'tvg-id')
- if re.search(r'\\bS\\d{2}\\b|\\bS\\d{2}E\\d{2}\\b|EPISODE|\\.(?:MP4|MKV)',n,re.I):continue
+ if re.search(r'\bS\d{2}\b|\bS\d{2}E\d{2}\b|EPISODE|\.(?:MP4|MKV)',n,re.I):continue
  ids={tid} if tid in valid else aliases[key]
  if len(ids)==1 and (tid in valid or not other[key]):
   move(b,groups[backup],groups[tr],tr);moved.append(n)
@@ -56,5 +56,5 @@ urls={l.strip() for b in blocks for l in b[1:] if l.strip() and not l.startswith
 ids={attr(b[0],'tvg-id') for b in blocks}
 pending=[{'name':valid[s['channel']]['name'],'id':s['channel'],'url':s['url']} for s in streams if s.get('channel') in valid and s.get('url','').startswith('http') and s['url'] not in urls and s['channel'] not in ids and not s.get('referrer') and not s.get('user_agent') and not s.get('labels')]
 report={'total':len(blocks),'categories':len(groups),'turkish':len(groups[tr]),'backups':len(groups[backup]),'moved':moved,'returned':returned,'ambiguous':ambiguous,'new_streams_pending_live_probe':pending[:200],'pending_count':len(pending),'youtube':'Only verified direct live HLS streams; YouTube watch links excluded'}
-dest=root/'v2/reports/turkish-discovery.json';dest.parent.mkdir(exist_ok=True,parents=True);dest.write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\\n',encoding='utf-8')
+dest=root/'v2/reports/turkish-discovery.json';dest.parent.mkdir(exist_ok=True,parents=True);dest.write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
 print(json.dumps({k:v for k,v in report.items() if not isinstance(v,list)},ensure_ascii=False))
