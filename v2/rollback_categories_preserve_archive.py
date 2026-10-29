@@ -32,7 +32,14 @@ archive.mkdir(parents=True,exist_ok=True)
 removed=[b for b in blocks if ('YEDEKLER' in group(b) and not permanent(b)) or 'YENİ TÜRK' in group(b)]
 keep=[b for b in blocks if b not in removed]
 assert len(keep)+len(removed)==len(blocks)
-assert sum(permanent(b) for b in backup)>=2,'Two permanent backup channels not found: refusing rollback'
+import copy
+for label in ('TRT 1','DHA CANLI'):
+ candidates=[b for b in blocks if label in name(b) and permanent(b)]
+ if not candidates: raise RuntimeError('Missing permanent channel: '+label)
+ clone=copy.deepcopy(candidates[0])
+ clone[0]=re.sub(r'group-title="[^"]+"','group-title="🗂️ YEDEKLER (2)"',clone[0],count=1)
+ keep.append(clone)
+assert sum('YEDEKLER' in group(b) for b in keep)==2
 archive_file=archive/'category-rollback-2026-10-29.m3u8'
 archive_file.write_text(''.join(header)+''.join(''.join(b) for b in removed),encoding='utf-8')
 # Update group-title count only for the remaining backup category; keep all other categories unchanged.
