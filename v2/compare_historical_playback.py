@@ -22,7 +22,7 @@ def load(path):
     return data, by_hash
 
 def decoded(item):
-    return item.get("status") == "VIDEO_DECODED" or item.get("video_decoded") is True
+    return item.get("playback") == "VIDEO_DECODED"
 
 def main():
     p = argparse.ArgumentParser()
@@ -36,7 +36,7 @@ def main():
     recovered = [x for x in missing if decoded(x)]
     output = Path(args.output)
     output.mkdir(parents=True, exist_ok=True)
-    fields = ["url_sha256", "source", "name", "status", "width", "height"]
+    fields = ["url_sha256", "source", "name", "playback", "video_width", "video_height"]
     with (output / "historical-decoded-not-retested.csv").open("w", encoding="utf-8", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=fields, extrasaction="ignore")
         writer.writeheader()
