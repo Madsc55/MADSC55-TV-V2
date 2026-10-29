@@ -18,6 +18,9 @@ def main():
     metadata = load("candidate-metadata-audit.json")
     collisions = load("stream-url-collisions.json")
     playback = load("all-source-playback-aggregate.json")
+    language = load("turkish-language-evidence.json")
+    if language.get("candidate_count") != playback.get("unique_tested") or language.get("approved") != 0:
+        raise SystemExit("Language review coverage or approval safety mismatch")
     if not playback.get("coverage_complete") or triage["total"] != playback["unique_tested"] or metadata["total_audited"] != triage["total"]:
         raise SystemExit("Refusing partial or inconsistent scan evidence")
     if len(identity) != triage["queues"]["VIDEO_IDENTITY_REVIEW"]:
@@ -28,6 +31,10 @@ def main():
     if len(identity_conflicts) != sum(x["review_priority"] == "CONFLICT_REVIEW" for x in identity):
         raise SystemExit("Identity conflict count mismatch")
     priorities = [
+        {"priority": 0, "kind": "SPOKEN_TURKISH_UNVERIFIED",
+         "count": language["candidate_count"] - language["spoken_turkish_verified"],
+         "report": "turkish-language-evidence.json",
+         "action": "REVIEW_SPOKEN_LANGUAGE_BEFORE_ANY_APPROVAL"},
         {"priority": 1, "kind": "CROSS_CHANNEL_URL_COLLISION", "count": collisions["cross_channel_url_collision_count"],
          "items": collisions["cross_channel_url_collisions"], "action": "MANUAL_IDENTITY_REVIEW"},
         {"priority": 2, "kind": "SAME_NAME_TVG_METADATA_CONFLICT", "count": collisions["identity_metadata_conflict_count"],
@@ -45,7 +52,7 @@ def main():
     ]
     output = {"policy": "READ_ONLY_NO_AUTO_PROMOTION_NO_LIVE_EDITS", "scan_candidates": triage["total"],
               "tested": playback["unique_tested"], "video_decoded": playback["video_decoded"],
-              "approved": 0, "priorities": priorities,
+              "approved": 0, "spoken_turkish_verified": language["spoken_turkish_verified"], "priorities": priorities,
               "protected": ["LIVE_IBO", "FAVORITES", "13_CATEGORIES", "TWO_ORIGINAL_BACKUPS"],
               "note": "Counts overlap; verified decoding is not broadcaster identity or publishing permission."}
     write("postscan-unified-action-queue.json", output)
