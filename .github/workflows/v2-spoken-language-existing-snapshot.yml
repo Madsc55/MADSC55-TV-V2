@@ -29,7 +29,9 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           mkdir -p v2/reports
-          gh run download 40948768782 -n turkish-stream-review -D .
+          mkdir -p /tmp/madsc-existing-review
+          gh run download 40948768782 -n turkish-stream-review -D /tmp/madsc-existing-review
+          cp /tmp/madsc-existing-review/v2/reports/all-source-playback-aggregate.json v2/reports/all-source-playback-aggregate.json
           gh run download 40948768782 -n unified-private-playback-snapshot -D v2/reports
           test -s v2/reports/private-playback-snapshot.json
           test -s v2/reports/all-source-playback-aggregate.json
