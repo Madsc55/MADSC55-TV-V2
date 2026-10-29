@@ -40,11 +40,11 @@ for b in list(groups[backup]):
  n=name(b);key=norm(n);tid=attr(b[0],'tvg-id')
  if re.search(r'\bS\d{2}\b|\bS\d{2}E\d{2}\b|EPISODE|\.(?:MP4|MKV)',n,re.I):continue
  ids={tid} if tid in valid else aliases[key]
- if len(ids)==1 and (tid in valid or not other[key]):
+ if tid in valid and len(ids)==1:
   move(b,groups[backup],groups[tr],tr);moved.append(n)
 for b in list(groups[tr]):
  n=name(b);key=norm(n);tid=attr(b[0],'tvg-id')
- if (tid in foreign and tid not in valid) or (tid not in valid and key in other and key not in aliases):
+ if tid in foreign and tid not in valid and not re.search(r'\\bTR\\b|TURK|TURKIYE|TURKEY',n,re.I):
   move(b,groups[tr],groups[backup],backup);returned.append(n)
  elif tid not in valid and key not in aliases:ambiguous.append(n)
 for g in (tr,backup):groups[g].sort(key=lambda b:norm(name(b)))
