@@ -1,0 +1,29 @@
+name: Fresh Turkish-only channel search
+on:
+  push:
+    paths:
+      - 'v2/turkish_only_fresh_scan.py'
+      - '.github/workflows/turkish-only-fresh-scan.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  turkish-scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Turkish-only audiovisual discovery
+        run: python -u v2/turkish_only_fresh_scan.py
+      - name: Save fresh discovery report
+        run: |
+          git config user.name github-actions
+          git config user.email actions@users.noreply.github.com
+          git add v2/reports/turkish-only-fresh-scan.json
+          git diff --cached --quiet || (git commit -m 'Save fresh Turkish-only discovery results' && git push)
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: turkish-only-fresh-scan
+          path: v2/reports/turkish-only-fresh-scan.json
+          if-no-files-found: warn
