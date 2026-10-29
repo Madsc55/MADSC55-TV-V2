@@ -1,0 +1,22 @@
+name: Audit Turkish channels and remove test symbols
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'v2/audit_turkish_categories.py'
+      - '.github/workflows/turkish-category-audit.yml'
+permissions:
+  contents: write
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Audit and classify
+        run: python v2/audit_turkish_categories.py
+      - name: Commit verified playlist and report
+        run: |
+          git config user.name github-actions
+          git config user.email actions@users.noreply.github.com
+          git add MADSC55_TV_IBO_CALISANLAR_TEST.m3u8 v2/reports/turkish-category-audit.json
+          git diff --cached --quiet || (git commit -m 'Audit Turkish channels and clean test markers' && git push)
