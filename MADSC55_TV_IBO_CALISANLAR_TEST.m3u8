@@ -1813,8 +1813,6 @@ https://livestream.telvue.com/billerica1/f7b44cfafd5c52223d5498196c8a2e7b.sdp/pl
 http://064jvrr7.ottclub.xyz/iptv/Q4Q36GY6SNSL77/6854/index.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="BBC EARTH TR" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", BBC EARTH TR 1080P [SES KONTROL]
 http://064jvrr7.ottclub.xyz/iptv/Q4Q36GY6SNSL77/6855/index.m3u8
-#EXTINF:-1 tvg-id="BBCWorldNews.tr" tvg-name="BBC NEWS" tvg-logo="https://i.ibb.co/dPmZMqq/bbcn.png" group-title="🇹🇷 YENİ TÜRK (494)", BBC NEWS 288P
-https://vs-hls-push-ww-live.akamaized.net/x=4/i=urn:bbc:pips:service:bbc_news_channel_hd/pc_hd_abr_v2.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="BEGEN TV" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", BEGEN TV 1080P
 https://ip44.radyotelekomtv.com:3958/stream/play.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="BEIN BOX OFFICE 1 HD TR" tvg-logo="http://epg.one/img/3811.png" group-title="🇹🇷 YENİ TÜRK (494)", BEIN BOX OFFICE 1 HD TR 1080P [SES KONTROL]
@@ -1873,26 +1871,6 @@ https://ciner.daioncdn.net/bloomberght/bloomberght_720p.m3u8
 http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/2317/index.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="BOOMERANG HD TR" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", BOOMERANG HD TR 1080P [SES KONTROL]
 http://064jvrr7.ottclub.xyz/iptv/Q4Q36GY6SNSL77/6850/index.m3u8
-#EXTINF:-1 tvg-id="" tvg-name="BOZKIR-TR S01 BOZKIR.2018.S1B01" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", BOZKIR-TR S01 BOZKIR.2018.S1B01 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/652475.mp4
-#EXTINF:-1 tvg-id="" tvg-name="BOZKIR-TR S01 BOZKIR.2018.S1B02" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", BOZKIR-TR S01 BOZKIR.2018.S1B02 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/652476.mp4
-#EXTINF:-1 tvg-id="" tvg-name="BOZKIR-TR S01 BOZKIR.2018.S1B03" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", BOZKIR-TR S01 BOZKIR.2018.S1B03 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/652477.mp4
-#EXTINF:-1 tvg-id="" tvg-name="BOZKIR-TR S01 BOZKIR.2018.S1B04" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", BOZKIR-TR S01 BOZKIR.2018.S1B04 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/652478.mp4
-#EXTINF:-1 tvg-id="" tvg-name="BOZKIR-TR S01 BOZKIR.2018.S1B05" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", BOZKIR-TR S01 BOZKIR.2018.S1B05 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/652479.mp4
-#EXTINF:-1 tvg-id="" tvg-name="BOZKIR-TR S01 BOZKIR.2018.S1B06" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", BOZKIR-TR S01 BOZKIR.2018.S1B06 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/652480.mp4
-#EXTINF:-1 tvg-id="" tvg-name="BOZKIR-TR S01 BOZKIR.2018.S1B07" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", BOZKIR-TR S01 BOZKIR.2018.S1B07 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/652481.mp4
-#EXTINF:-1 tvg-id="" tvg-name="BOZKIR-TR S01 BOZKIR.2018.S1B08" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", BOZKIR-TR S01 BOZKIR.2018.S1B08 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/652482.mp4
-#EXTINF:-1 tvg-id="" tvg-name="BOZKIR-TR S01 BOZKIR.2018.S1B09" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", BOZKIR-TR S01 BOZKIR.2018.S1B09 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/652483.mp4
-#EXTINF:-1 tvg-id="" tvg-name="BOZKIR-TR S01 BOZKIR.2018.S1B10" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", BOZKIR-TR S01 BOZKIR.2018.S1B10 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/652484.mp4
 #EXTINF:-1 tvg-id="" tvg-name="BRTV" tvg-logo="https://i.imgur.com/U3qlEAp.png" group-title="🇹🇷 YENİ TÜRK (494)", BRTV 720P
 https://live.artidijitalmedya.com/artidijital_brtv/brtv/playlist.m3u8#all
 #EXTINF:-1 tvg-id="BRTV.id@SD" tvg-name="BRTV (INDONESIA) (720P)" tvg-logo="https://upload.wikimedia.org/wikipedia/id/1/1f/Logo_BRTV.png" group-title="🇹🇷 YENİ TÜRK (494)", BRTV (INDONESIA) (720P) 720P
@@ -1973,14 +1951,6 @@ http://064jvrr7.ottclub.xyz/iptv/Q4Q36GY6SNSL77/6844/index.m3u8
 https://eustr73.mediatriple.net/videoonlylive/mtikoimxnztxlive/broadcast_5e3bf95a47e07.smil/playlist.m3u8#all
 #EXTINF:-1 tvg-id="" tvg-name="DIYAR TV" tvg-logo="https://i.imgur.com/qWkHjRA.png" group-title="🇹🇷 YENİ TÜRK (494)", DIYAR TV 720P
 https://live.artidijitalmedya.com/artidijital_diyartv/diyartv/playlist.m3u8#all
-#EXTINF:-1 tvg-id="DMAX.tr" tvg-name="DMAX" tvg-logo="https://i.ibb.co/WvCvVrrz/Ekran-g-r-nt-s-2026-07-25-103937.jpg" group-title="🇹🇷 YENİ TÜRK (494)", DMAX 360P
-http://dygvideo.dygdigital.com/live/hls/dmaxdai?m3u8
-#EXTINF:-1 tvg-id="" tvg-name="DMAX" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", DMAX 1080P [SES KONTROL]
-http://064jvrr7.ottclub.xyz/iptv/Q4Q36GY6SNSL77/2290/index.m3u8
-#EXTINF:-1 tvg-id="DMAX.de@SD" tvg-name="DMAX (GERMANY) (576P)" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/DMAX_BLACK.svg/960px-DMAX_BLACK.svg.png" group-title="🇹🇷 YENİ TÜRK (494)", DMAX (GERMANY) (576P) 576P
-http://5.180.164.197:8080/DMAX/index.m3u8
-#EXTINF:-1 tvg-id="DMAX.it@SD" tvg-name="DMAX (ITALY) (1080P)" tvg-logo="https://i.imgur.com/uGd9fnn.png" group-title="🇹🇷 YENİ TÜRK (494)", DMAX (ITALY) (1080P) 1080P
-https://streaming.aurora.enhanced.live/live/mpc/enl0eG1mLmVncmVzcy5mZDJ2eHI=/out/v1/IT_SIMULCAST/DMAX/CMAF/index.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="DMAX FHD TR" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", DMAX FHD TR 1080P [SES KONTROL]
 http://064jvrr7.ottclub.xyz/iptv/Q4Q36GY6SNSL77/6912/index.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="DMAX TR" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", DMAX TR 1080P [SES KONTROL]
@@ -2033,8 +2003,6 @@ https://live.artidijitalmedya.com/artidijital_etv/etv/supersatforum_chunks.m3u8
 https://live.artidijitalmedya.com/artidijital_etv/etv/playlist.m3u8#all
 #EXTINF:-1 tvg-id="" tvg-name="EURO D TR" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", EURO D TR 1080P [SES KONTROL]
 http://064jvrr7.ottclub.xyz/iptv/Q4Q36GY6SNSL77/6892/index.m3u8
-#EXTINF:-1 tvg-id="EURONEWS.tr" tvg-name="EURONEWS EN" tvg-logo="https://i.ibb.co/R4xVMYc/enews.png" group-title="🇹🇷 YENİ TÜRK (494)", EURONEWS EN 240P
-https://cdn-euronews.akamaized.net/live/eds/euronews-en/25080/euronews-en.m3u8
 #EXTINF:-1 tvg-id="2266" tvg-name="EURONEWS RUSSIAN TR" tvg-logo="http://epg.one/img/2266.png" group-title="🇹🇷 YENİ TÜRK (494)", EURONEWS RUSSIAN TR 576P
 http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/32069/index.m3u8
 #EXTINF:-1 tvg-id="3885" tvg-name="EUROSPORT 1 HD TR" tvg-logo="http://epg.one/img/3885.png" group-title="🇹🇷 YENİ TÜRK (494)", EUROSPORT 1 HD TR 1080P
@@ -2047,8 +2015,6 @@ http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ
 https://avr.host247.net/live/FarmodaTV/playlist.m3u8
 #EXTINF:-1 tvg-id="FENERBAHÇE.TV.tr" tvg-name="FB TV" tvg-logo="https://i.imgur.com/qBVqtYd.png" group-title="🇹🇷 YENİ TÜRK (494)", FB TV 720P
 http://1hskrdto.rocketcdn.com/fenerbahcetv.smil/playlist.m3u8#all
-#EXTINF:-1 tvg-id="FILM.SCREEN.tr" tvg-name="FILM SCREEN HD" tvg-logo="https://feo.kablowebtv.com/resize/168A635D265A4328C2883FB4CD8FF/0/0/Vod/HLS/7d58e86c-d38e-4ef5-8ee0-fda0a7e65914.png" group-title="🇹🇷 YENİ TÜRK (494)", FILM SCREEN HD 1080P
-https://edge-e3.evrideo.tv/f2dcbecf-5af0-47db-a82e-032112050a23_1000027346_HLS/manifest.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="FINANS TURK TV" tvg-logo="https://i.ibb.co/wBwmB1T/iY0osc7.png" group-title="🇹🇷 YENİ TÜRK (494)", FINANS TURK TV 720P
 https://yayin30.haber100.com/live/finansturk/playlist.m3u8#all
 #EXTINF:-1 tvg-id="" tvg-name="FLASH HABER TV" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Flash_Haber_logosu.png/512px-Flash_Haber_logosu.png" group-title="🇹🇷 YENİ TÜRK (494)", FLASH HABER TV 1080P
@@ -2085,10 +2051,6 @@ https://cdn-haber61tv.yayin.com.tr/haber61tv/smil:haber61tv.smil/index.m3u8#all
 https://win8.yayin.com.tr/haber61tv/smil:haber61tv.smil/playlist.m3u8
 #EXTINF:-1 tvg-id="HABERTÜRK.tr" tvg-name="HABERTÜRK TV" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Habert%C3%BCrk_TV_logo.svg/512px-Habert%C3%BCrk_TV_logo.svg.png" group-title="🇹🇷 YENİ TÜRK (494)", HABERTÜRK TV 1080P
 https://tv.ensonhaber.com/haberturk/haberturk.m3u8#all
-#EXTINF:-1 tvg-id="" tvg-name="HERCAI-TR S01 HERCAI S01 E01" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", HERCAI-TR S01 HERCAI S01 E01 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/646938.mp4
-#EXTINF:-1 tvg-id="" tvg-name="HERCAI-TR S01 HERCAI S01 E02" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", HERCAI-TR S01 HERCAI S01 E02 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/646939.mp4
 #EXTINF:-1 tvg-id="" tvg-name="HISTORY CHANNEL HD TR" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", HISTORY CHANNEL HD TR 1080P [SES KONTROL]
 http://064jvrr7.ottclub.xyz/iptv/Q4Q36GY6SNSL77/6856/index.m3u8
 #EXTINF:-1 tvg-id="HmongStarTV.us@SD" tvg-name="HMONG STAR TV (720P) [NOT 24/7]" tvg-logo="https://i.imgur.com/dRsacao.png" group-title="🇹🇷 YENİ TÜRK (494)", HMONG STAR TV (720P) [NOT 24/7] 720P
@@ -2285,16 +2247,16 @@ https://live.artidijitalmedya.com/artidijital_mercantv/mercantv/playlist.m3u8#al
 https://live.artidijitalmedya.com/artidijital_mercantv/mercantv/chunks.m3u8
 #EXTINF:-1 tvg-id="43" tvg-name="MERCAN TV  ADIYAMAN" tvg-logo="https://m.yilmaztv.cc/logo/mercan-tv.jpg?t=1696665170" group-title="🇹🇷 YENİ TÜRK (494)", MERCAN TV  ADIYAMAN 576P
 https://live.artidijitalmedya.com/artidijital_mercantv/mercantv/supersatforum_chunks.m3u8
-#EXTINF:-1 tvg-id="MİNİKA.ÇOCUK.tr" tvg-name="MINIKA ÇOCUK" tvg-logo="https://upload.wikimedia.org/wikipedia/tr/thumb/8/87/Minika_%C3%87ocuk_logosu.png/512px-Minika_%C3%87ocuk_logosu.png" group-title="🇹🇷 YENİ TÜRK (494)", MINIKA ÇOCUK 720P
-https://rnttwmjcin.turknet.ercdn.net/lcpmvefbyo/minikago_cocuk/minikago_cocuk.m3u8#all
-#EXTINF:-1 tvg-id="" tvg-name="Minika Çocuk" tvg-logo="https://i.imgur.com/VCywMTv.png" group-title="🇹🇷 YENİ TÜRK (494)", TEST MİNİKA ÇOCUK 720P
-http://rnttwmjcin.turknet.ercdn.net/lcpmvefbyo/minikago_cocuk/minikago_cocuk.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="MINIKA COCUK TR" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", MINIKA COCUK TR 1080P [SES KONTROL]
 http://064jvrr7.ottclub.xyz/iptv/Q4Q36GY6SNSL77/6849/index.m3u8
 #EXTINF:-1 tvg-id="MİNİKA.GO.tr" tvg-name="MINIKA GO" tvg-logo="https://upload.wikimedia.org/wikipedia/tr/thumb/9/91/Minika_GO_logosu.png/512px-Minika_GO_logosu.png" group-title="🇹🇷 YENİ TÜRK (494)", MINIKA GO 720P
 https://rnttwmjcin.turknet.ercdn.net/lcpmvefbyo/minikago/minikago.m3u8#all
 #EXTINF:-1 tvg-id="" tvg-name="MINIKA GO TR" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", MINIKA GO TR 1080P [SES KONTROL]
 http://064jvrr7.ottclub.xyz/iptv/Q4Q36GY6SNSL77/6851/index.m3u8
+#EXTINF:-1 tvg-id="MİNİKA.ÇOCUK.tr" tvg-name="MINIKA ÇOCUK" tvg-logo="https://upload.wikimedia.org/wikipedia/tr/thumb/8/87/Minika_%C3%87ocuk_logosu.png/512px-Minika_%C3%87ocuk_logosu.png" group-title="🇹🇷 YENİ TÜRK (494)", MINIKA ÇOCUK 720P
+https://rnttwmjcin.turknet.ercdn.net/lcpmvefbyo/minikago_cocuk/minikago_cocuk.m3u8#all
+#EXTINF:-1 tvg-id="" tvg-name="Minika Çocuk" tvg-logo="https://i.imgur.com/VCywMTv.png" group-title="🇹🇷 YENİ TÜRK (494)", TEST MİNİKA ÇOCUK 720P
+http://rnttwmjcin.turknet.ercdn.net/lcpmvefbyo/minikago_cocuk/minikago_cocuk.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="MINIKAGO" tvg-logo="https://upload.wikimedia.org/wikipedia/tr/thumb/9/91/Minika_GO_logosu.png/512px-Minika_GO_logosu.png" group-title="🇹🇷 YENİ TÜRK (494)", MINIKAGO 1080P [SES KONTROL]
 http://064jvrr7.ottclub.xyz/iptv/Q4Q36GY6SNSL77/2266/index.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="MOVIE SMART CLASSIC HD TR" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", MOVIE SMART CLASSIC HD TR 1080P [SES KONTROL]
@@ -2371,8 +2333,6 @@ http://ipflix.click:80/series/sq1x0qr86b/7777/665179.mkv
 http://064jvrr7.ottclub.xyz/iptv/Q4Q36GY6SNSL77/6867/index.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="NATGEO WILD HD TR" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", NATGEO WILD HD TR 1080P [SES KONTROL]
 http://064jvrr7.ottclub.xyz/iptv/Q4Q36GY6SNSL77/6866/index.m3u8
-#EXTINF:-1 tvg-id="NaturalTV.tr" tvg-name="NATURAL TV (1080P)" tvg-logo="https://i.imgur.com/rfcJ674.png" group-title="🇹🇷 YENİ TÜRK (494)", NATURAL TV (1080P) 1080P
-https://edge1.socialsmart.tv/naturaltv/bant1/playlist.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="NICK JR TR" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", NICK JR TR 1080P [SES KONTROL]
 http://064jvrr7.ottclub.xyz/iptv/Q4Q36GY6SNSL77/6847/index.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="NICKELODEON TR" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", NICKELODEON TR 1080P [SES KONTROL]
@@ -2393,18 +2353,6 @@ https://dogus.daioncdn.net/ntv/ntv_720p.m3u8#all
 http://dygvideo.dygdigital.com/live/hls/ntv4puhu?m3u8
 #EXTINF:-1 tvg-id="39" tvg-name="NTV  HABER" tvg-logo="https://m.yilmaztv.cc/logo/ntv.jpg?t=1696715174" group-title="🇹🇷 YENİ TÜRK (494)", NTV  HABER 1080P
 https://dogus.daioncdn.net/ntv/ntv.m3u8?ce=3
-#EXTINF:-1 tvg-id="NTV.ru" tvg-name="NTV (1080P)" tvg-logo="https://i.imgur.com/9r1BKzK.png" group-title="🇹🇷 YENİ TÜRK (494)", NTV (1080P) 1080P
-http://flussonic.linkintel.ru/ntv/index.m3u8
-#EXTINF:-1 tvg-id="ntv.al@SD" tvg-name="NTV (720P)" tvg-logo="https://i.imgur.com/gtZLzxq.png" group-title="🇹🇷 YENİ TÜRK (494)", NTV (720P) 720P
-https://protokolldns.xyz/ntv.l.i.v.e5547892023/index.m3u8
-#EXTINF:-1 tvg-id="NTV.bd@SD" tvg-name="NTV (BANGLADESH) (720P)" tvg-logo="https://i.imgur.com/l75bDTx.png" group-title="🇹🇷 YENİ TÜRK (494)", NTV (BANGLADESH) (720P) 720P
-https://tvsen5.aynaott.com/xV4jEKf3D9zc/index.m3u8
-#EXTINF:-1 tvg-id="NTV.br@SD" tvg-name="NTV (BRAZIL) (720P)" tvg-logo="https://i.imgur.com/n79nkVC.png" group-title="🇹🇷 YENİ TÜRK (494)", NTV (BRAZIL) (720P) 720P
-https://cdn.livespanel.com/nossatv/nossatv/playlist.m3u8
-#EXTINF:-1 tvg-id="NTV.ca@CJONDT" tvg-name="NTV (CANADA) CJON-DT (480P)" tvg-logo="https://i.imgur.com/KQtQg5y.png" group-title="🇹🇷 YENİ TÜRK (494)", NTV (CANADA) CJON-DT (480P) 480P
-https://2-fss-1.streamhoster.com/pl_122/201748-1431018-1/playlist.m3u8
-#EXTINF:-1 tvg-id="NTV.mv@SD" tvg-name="NTV (MALDIVES)" tvg-logo="https://i.imgur.com/jnXpcwV.png" group-title="🇹🇷 YENİ TÜRK (494)", NTV (MALDIVES) 1080P
-https://sunplay-cdn.bitratelabs.com/live/local-channel/ntv-e3d4300b49c8c901e9339174215d7580/index.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="NTV FHD TR" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", NTV FHD TR 1080P [SES KONTROL]
 http://064jvrr7.ottclub.xyz/iptv/Q4Q36GY6SNSL77/6924/index.m3u8
 #EXTINF:-1 tvg-id="NTVMir.ru@SD" tvg-name="NTV MIR (576P)" tvg-logo="https://i.imgur.com/pUcV46F.png" group-title="🇹🇷 YENİ TÜRK (494)", NTV MIR (576P) 576P
@@ -2417,16 +2365,10 @@ https://cdn-dvr.ntv.ru/th_svoya_igra/index.m3u8
 https://mumbai-edge.smartplaytv.in/NTVTelugu/index.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="NTV TR" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", NTV TR 1080P [SES KONTROL]
 http://064jvrr7.ottclub.xyz/iptv/Q4Q36GY6SNSL77/6925/index.m3u8
-#EXTINF:-1 tvg-id="NTVPlus.ca@SD" tvg-name="NTV+" tvg-logo="https://i.imgur.com/YEUhPBv.png" group-title="🇹🇷 YENİ TÜRK (494)", NTV+ 480P
-https://2-fss-1.streamhoster.com/pl_122/201748-1431018-1/chunklist.m3u8
-#EXTINF:-1 tvg-id="NTVHit.ru@SD" tvg-name="NTV-HIT (576P)" tvg-logo="https://i.imgur.com/FfKBvz5.png" group-title="🇹🇷 YENİ TÜRK (494)", NTV-HIT (576P) 576P
-http://178.134.1.158:8081/ntvhit/index.m3u8
 #EXTINF:-1 tvg-id="44" tvg-name="OLAY TÜRK KAYSERİ TV  KAYSERİ" tvg-logo="https://m.yilmaztv.cc/logo/olay-turk-kayseri-tv.jpg?t=1696665170" group-title="🇹🇷 YENİ TÜRK (494)", OLAY TÜRK KAYSERİ TV  KAYSERİ 1080P
 https://live.artidijitalmedya.com/artidijital_olayturk/olayturk/supersatforum_chunks.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="OLAYTURK TV" tvg-logo="https://i.imgur.com/e9ca6gc.png" group-title="🇹🇷 YENİ TÜRK (494)", OLAYTURK TV 1080P
 https://live.artidijitalmedya.com/artidijital_olayturk/olayturk/playlist.m3u8#all
-#EXTINF:-1 tvg-id="" tvg-name="PAVYON-TR S01 PAVYON.S01B01" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", PAVYON-TR S01 PAVYON.S01B01 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/663022.mp4
 #EXTINF:-1 tvg-id="PiuraTV.pe@SD" tvg-name="PIURATV (720P)" tvg-logo="https://i.imgur.com/KnJAqbd.png" group-title="🇹🇷 YENİ TÜRK (494)", PIURATV (720P) 720P
 https://live-evg7.tv360.bitel.com.pe/bitel/piuratvSRT/playlist.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="POWER DANCE" tvg-logo="https://i.imgur.com/QpPteBO.png" group-title="🇹🇷 YENİ TÜRK (494)", POWER DANCE 1080P
@@ -2463,10 +2405,10 @@ https://live.ro24tv.ro/hls/stream.m3u8
 https://radioitaliatv.akamaized.net/hls/live/2093117/RadioitaliaTV/master.m3u8
 #EXTINF:-1 tvg-id="RBATV.br@SD" tvg-name="RBATV (720P)" tvg-logo="https://i.imgur.com/ZWFxlU1.png" group-title="🇹🇷 YENİ TÜRK (494)", RBATV (720P) 720P
 https://cdn.live.br1.jmvstream.com/w/LVW-15748/LVW15748_Yed7yzLuRC/playlist.m3u8
-#EXTINF:-1 tvg-id="28" tvg-name="RIZE TÜRK  EKSTRA" tvg-logo="https://m.yilmaztv.cc/logo/rize-turk.jpg?t=1696693881" group-title="🇹🇷 YENİ TÜRK (494)", RIZE TÜRK  EKSTRA 720P
-https://yayin.rizeturk.com:3777/multi_web/play.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="RIZE TURK HD" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", RIZE TURK HD 720P
 https://yayin.rizeturk.com:3777/hybrid/play.m3u8
+#EXTINF:-1 tvg-id="28" tvg-name="RIZE TÜRK  EKSTRA" tvg-logo="https://m.yilmaztv.cc/logo/rize-turk.jpg?t=1696693881" group-title="🇹🇷 YENİ TÜRK (494)", RIZE TÜRK  EKSTRA 720P
+https://yayin.rizeturk.com:3777/multi_web/play.m3u8
 #EXTINF:-1 tvg-id="RSelvaTV.pe" tvg-name="RSELVATV (720P)" tvg-logo="https://i.imgur.com/DAK5ZnD.png" group-title="🇹🇷 YENİ TÜRK (494)", RSELVATV (720P) 720P
 https://live.obslivestream.com/selvatv/index.m3u8
 #EXTINF:-1 tvg-id="RSelvaTV.pe@SD" tvg-name="RSELVATV (720P)" tvg-logo="https://i.imgur.com/DAK5ZnD.png" group-title="🇹🇷 YENİ TÜRK (494)", RSELVATV (720P) 720P
@@ -2479,144 +2421,6 @@ https://ruhatv.radyotelekom.com.tr:3515/live/ruhatvlive.m3u8
 https://ruhatv.radyotelekom.com.tr:3515/live/ruhatvlive.m3u8#all
 #EXTINF:-1 tvg-id="" tvg-name="RUMELI TV TR" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", RUMELI TV TR 1080P [SES KONTROL]
 http://064jvrr7.ottclub.xyz/iptv/Q4Q36GY6SNSL77/15256/index.m3u8
-#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E01" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", SAVASCI-TR S01 SAVASCI S01 E01 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/647447.mp4
-#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E02" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", SAVASCI-TR S01 SAVASCI S01 E02 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/647448.mp4
-#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E03" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", SAVASCI-TR S01 SAVASCI S01 E03 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/647449.mp4
-#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E04" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", SAVASCI-TR S01 SAVASCI S01 E04 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/647450.mp4
-#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E05" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", SAVASCI-TR S01 SAVASCI S01 E05 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/647451.mp4
-#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E06" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", SAVASCI-TR S01 SAVASCI S01 E06 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/647452.mp4
-#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E07" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", SAVASCI-TR S01 SAVASCI S01 E07 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/647453.mp4
-#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E08" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", SAVASCI-TR S01 SAVASCI S01 E08 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/647454.mp4
-#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E09" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", SAVASCI-TR S01 SAVASCI S01 E09 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/647455.mp4
-#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E10" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", SAVASCI-TR S01 SAVASCI S01 E10 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/647456.mp4
-#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E11" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", SAVASCI-TR S01 SAVASCI S01 E11 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/647457.mp4
-#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E12" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", SAVASCI-TR S01 SAVASCI S01 E12 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/647458.mp4
-#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E13" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", SAVASCI-TR S01 SAVASCI S01 E13 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/647459.mp4
-#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E14" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", SAVASCI-TR S01 SAVASCI S01 E14 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/647460.mp4
-#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E15" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", SAVASCI-TR S01 SAVASCI S01 E15 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/647461.mp4
-#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E16" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", SAVASCI-TR S01 SAVASCI S01 E16 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/647462.mp4
-#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E17" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", SAVASCI-TR S01 SAVASCI S01 E17 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/647463.mp4
-#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E18" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", SAVASCI-TR S01 SAVASCI S01 E18 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/647464.mp4
-#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E19" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", SAVASCI-TR S01 SAVASCI S01 E19 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/647465.mp4
-#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E20" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", SAVASCI-TR S01 SAVASCI S01 E20 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/647466.mp4
-#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E21" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", SAVASCI-TR S01 SAVASCI S01 E21 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/647467.mp4
-#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E22" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", SAVASCI-TR S01 SAVASCI S01 E22 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/647468.mp4
-#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E23" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", SAVASCI-TR S01 SAVASCI S01 E23 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/647469.mp4
-#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E24" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", SAVASCI-TR S01 SAVASCI S01 E24 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/647470.mp4
-#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E25" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", SAVASCI-TR S01 SAVASCI S01 E25 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/647471.mp4
-#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E26" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", SAVASCI-TR S01 SAVASCI S01 E26 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/647472.mp4
-#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E27" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", SAVASCI-TR S01 SAVASCI S01 E27 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/647473.mp4
-#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E28" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", SAVASCI-TR S01 SAVASCI S01 E28 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/647474.mp4
-#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E29" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", SAVASCI-TR S01 SAVASCI S01 E29 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/647475.mp4
-#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E30" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", SAVASCI-TR S01 SAVASCI S01 E30 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/647476.mp4
-#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E31" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", SAVASCI-TR S01 SAVASCI S01 E31 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/647477.mp4
-#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E32" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", SAVASCI-TR S01 SAVASCI S01 E32 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/647478.mp4
-#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E33" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", SAVASCI-TR S01 SAVASCI S01 E33 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/647479.mp4
-#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E34" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", SAVASCI-TR S01 SAVASCI S01 E34 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/647480.mp4
-#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E35" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", SAVASCI-TR S01 SAVASCI S01 E35 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/647481.mp4
-#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E36" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", SAVASCI-TR S01 SAVASCI S01 E36 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/647482.mp4
-#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E37" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", SAVASCI-TR S01 SAVASCI S01 E37 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/647483.mp4
-#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E38" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", SAVASCI-TR S01 SAVASCI S01 E38 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/647484.mp4
-#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E39" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", SAVASCI-TR S01 SAVASCI S01 E39 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/647485.mp4
-#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E40" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", SAVASCI-TR S01 SAVASCI S01 E40 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/647486.mp4
-#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E41" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", SAVASCI-TR S01 SAVASCI S01 E41 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/647487.mp4
-#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E42" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", SAVASCI-TR S01 SAVASCI S01 E42 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/647488.mp4
-#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E43" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", SAVASCI-TR S01 SAVASCI S01 E43 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/647489.mp4
-#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E44" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", SAVASCI-TR S01 SAVASCI S01 E44 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/647490.mp4
-#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E45" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", SAVASCI-TR S01 SAVASCI S01 E45 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/647491.mp4
-#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E46" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", SAVASCI-TR S01 SAVASCI S01 E46 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/647492.mp4
-#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E47" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", SAVASCI-TR S01 SAVASCI S01 E47 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/647493.mp4
-#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E48" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", SAVASCI-TR S01 SAVASCI S01 E48 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/647494.mp4
-#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S02 SAVASCI S02 E01" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", SAVASCI-TR S02 SAVASCI S02 E01 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/647495.mp4
-#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S02 SAVASCI S02 E02" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", SAVASCI-TR S02 SAVASCI S02 E02 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/647496.mp4
-#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S02 SAVASCI S02 E03" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", SAVASCI-TR S02 SAVASCI S02 E03 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/647497.mp4
-#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S02 SAVASCI S02 E04" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", SAVASCI-TR S02 SAVASCI S02 E04 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/647498.mp4
-#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S02 SAVASCI S02 E05" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", SAVASCI-TR S02 SAVASCI S02 E05 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/647499.mp4
-#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S02 SAVASCI S02 E06" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", SAVASCI-TR S02 SAVASCI S02 E06 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/647500.mp4
-#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S02 SAVASCI S02 E07" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", SAVASCI-TR S02 SAVASCI S02 E07 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/647501.mkv
-#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S02 SAVASCI S02 E08" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", SAVASCI-TR S02 SAVASCI S02 E08 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/647502.mp4
-#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S02 SAVASCI S02 E09" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", SAVASCI-TR S02 SAVASCI S02 E09 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/647503.mp4
-#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S02 SAVASCI S02 E10" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", SAVASCI-TR S02 SAVASCI S02 E10 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/647504.mp4
-#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S02 SAVASCI S02 E11" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", SAVASCI-TR S02 SAVASCI S02 E11 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/647505.mp4
-#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S02 SAVASCI S02 E12" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", SAVASCI-TR S02 SAVASCI S02 E12 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/647506.mp4
-#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S02 SAVASCI S02 E13" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", SAVASCI-TR S02 SAVASCI S02 E13 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/647507.mp4
-#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S02 SAVASCI S02 E14" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", SAVASCI-TR S02 SAVASCI S02 E14 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/647508.mp4
-#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S02 SAVASCI S02 E15" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", SAVASCI-TR S02 SAVASCI S02 E15 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/647509.mp4
-#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S02 SAVASCI S02 E16" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", SAVASCI-TR S02 SAVASCI S02 E16 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/647510.mp4
-#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S02 SAVASCI S02 E17" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", SAVASCI-TR S02 SAVASCI S02 E17 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/647511.mp4
-#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S02 SAVASCI S02 E18" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", SAVASCI-TR S02 SAVASCI S02 E18 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/647512.mp4
-#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S02 SAVASCI S02 E19" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", SAVASCI-TR S02 SAVASCI S02 E19 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/647513.mp4
-#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S02 SAVASCI S02 E20" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", SAVASCI-TR S02 SAVASCI S02 E20 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/647514.mp4
-#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S02 SAVASCI S02 E21" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", SAVASCI-TR S02 SAVASCI S02 E21 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/647515.mp4
 #EXTINF:-1 tvg-id="" tvg-name="SDM TV" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", SDM TV 576P
 https://host.onlineradyotv.net:8081/sdmtv/tracks-v1a1/mono.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="SERCEM TV" tvg-logo="https://sercemtv.com.tr/sercemlogo.jpg" group-title="🇹🇷 YENİ TÜRK (494)", SERCEM TV 1080P
@@ -2641,8 +2445,6 @@ http://064jvrr7.ottclub.xyz/iptv/Q4Q36GY6SNSL77/6889/index.m3u8
 https://5f22d76e220e1.streamlock.net/sicilia24/sicilia24/playlist.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="SIENATV" tvg-logo="https://i.imgur.com/gcysky4.png" group-title="🇹🇷 YENİ TÜRK (494)", SIENATV 1080P
 https://router.xdevel.com/video0s976727-1441/stream/playlist.m3u8
-#EXTINF:-1 tvg-id="SIPSETV81.mx@SD" tvg-name="SIPSE TV 8.1 (1080P) [NOT 24/7]" tvg-logo="https://i.imgur.com/123P7dV.png" group-title="🇹🇷 YENİ TÜRK (494)", SIPSE TV 8.1 (1080P) [NOT 24/7] 720P
-https://webprod.sipse.com.mx:8080/show/merida.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="SONMEZ TV" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", SONMEZ TV 720P
 https://sonmeztv.ozelip.com.tr:3826/live/sonmeztvlive.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="SONMEZ TV" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", SONMEZ TV 720P
@@ -2695,8 +2497,6 @@ https://edge1.socialsmart.tv/turkhaber/bant1/chunks.m3u8
 https://amg01220-amg01220c1-firetv-us-5111.playouts.now.amagi.tv/playlist.m3u8
 #EXTINF:-1 tvg-id="TheYoungTurks.us@SD" tvg-name="THE YOUNG TURKS (720P)" tvg-logo="https://i.imgur.com/XDNXJCl.png" group-title="🇹🇷 YENİ TÜRK (494)", THE YOUNG TURKS (720P) 240P
 https://tyt-samsungus.amagi.tv/playlist.m3u8
-#EXTINF:-1 tvg-id="TLC.tr" tvg-name="TLC" tvg-logo="https://i.ibb.co/KpCxxsXd/Ekran-g-r-nt-s-2026-07-25-103937.jpg" group-title="🇹🇷 YENİ TÜRK (494)", TLC 360P
-http://dygvideo.dygdigital.com/live/hls/tlctvdai?m3u8
 #EXTINF:-1 tvg-id="" tvg-name="TLC HD TR" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", TLC HD TR 1080P [SES KONTROL]
 http://064jvrr7.ottclub.xyz/iptv/Q4Q36GY6SNSL77/6914/index.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="TLC TR" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", TLC TR 1080P [SES KONTROL]
@@ -2729,10 +2529,6 @@ https://tv-trtarabi.medya.trt.com.tr/master.m3u8
 https://tv-trtavaz.medya.trt.com.tr/master.m3u8#all
 #EXTINF:-1 tvg-id="" tvg-name="TRT BELGESEL TR" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", TRT BELGESEL TR 1080P [SES KONTROL]
 http://064jvrr7.ottclub.xyz/iptv/Q4Q36GY6SNSL77/6852/index.m3u8
-#EXTINF:-1 tvg-id="TRT.ÇOCUK.HD.tr" tvg-name="TRT ÇOCUK" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/TRT_%C3%87ocuk_logo_2021.svg/512px-TRT_%C3%87ocuk_logo_2021.svg.png" group-title="🇹🇷 YENİ TÜRK (494)", TRT ÇOCUK 720P
-https://tv-trtcocuk.medya.trt.com.tr/master.m3u8#all
-#EXTINF:-1 tvg-id="" tvg-name="TRT Çocuk" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/TRT_%C3%87ocuk_logo_%282021%29.svg/960px-TRT_%C3%87ocuk_logo_%282021%29.svg.png" group-title="🇹🇷 YENİ TÜRK (494)", TEST TRT ÇOCUK 720P
-https://tv-trtcocuk.medya.trt.com.tr/master.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="TRT DIYANET ÇOCUK" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/TRT_%C3%87ocuk_logo_%282021%29.svg/512px-TRT_%C3%87ocuk_logo_%282021%29.svg.png" group-title="🇹🇷 YENİ TÜRK (494)", TRT DIYANET ÇOCUK 720P
 https://tv-trtdiyanetcocuk.medya.trt.com.tr/master.m3u8#all
 #EXTINF:-1 tvg-id="" tvg-name="TRT EBA ORTAOKUL" tvg-logo="https://i.imgur.com/CRBfZi4.png" group-title="🇹🇷 YENİ TÜRK (494)", TRT EBA ORTAOKUL 720P
@@ -2759,24 +2555,28 @@ http://064jvrr7.ottclub.xyz/iptv/Q4Q36GY6SNSL77/9032/index.m3u8
 https://tv-trtkurdi.medya.trt.com.tr/master_720.m3u8
 #EXTINF:-1 tvg-id="TRT.KURDİ.tr" tvg-name="TRT KURDÎ" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/TRT_Kurd%C3%AE_logo_2021.svg/512px-TRT_Kurd%C3%AE_logo_2021.svg.png" group-title="🇹🇷 YENİ TÜRK (494)", TRT KURDÎ 360P
 https://tv-trtkurdi.medya.trt.com.tr/master.m3u8#all
+#EXTINF:-1 tvg-id="" tvg-name="TRT MUZIK HD TR" tvg-logo="http://epg.one/img/3924.png" group-title="🇹🇷 YENİ TÜRK (494)", TRT MUZIK HD TR 1080P [SES KONTROL]
+http://064jvrr7.ottclub.xyz/iptv/Q4Q36GY6SNSL77/6869/index.m3u8
+#EXTINF:-1 tvg-id="" tvg-name="TRT MUZIK TR" tvg-logo="http://epg.one/img/3924.png" group-title="🇹🇷 YENİ TÜRK (494)", TRT MUZIK TR 1080P [SES KONTROL]
+http://064jvrr7.ottclub.xyz/iptv/Q4Q36GY6SNSL77/6870/index.m3u8
 #EXTINF:-1 tvg-id="TRT.MÜZİK.tr" tvg-name="TRT MÜZIK" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/TRT_M%C3%BCzik_logo_2021.svg/512px-TRT_M%C3%BCzik_logo_2021.svg.png" group-title="🇹🇷 YENİ TÜRK (494)", TRT MÜZIK 360P
 https://tv-trtmuzik.medya.trt.com.tr/master.m3u8#kultur
 #EXTINF:-1 tvg-id="TRT.MÜZİK.tr" tvg-name="TRT MÜZIK" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/TRT_M%C3%BCzik_logo_2021.svg/512px-TRT_M%C3%BCzik_logo_2021.svg.png" group-title="🇹🇷 YENİ TÜRK (494)", TRT MÜZIK 720P
 https://tv-trtmuzik.medya.trt.com.tr/master.m3u8#all
 #EXTINF:-1 tvg-id="" tvg-name="TRT Müzik" tvg-logo="https://i.imgur.com/JgUzRH8.png" group-title="🇹🇷 YENİ TÜRK (494)", TEST TRT MÜZİK 576P
 https://stream8.cinerama.uz/1208/tracks-v1a1/mono.m3u8
-#EXTINF:-1 tvg-id="" tvg-name="TRT MUZIK HD TR" tvg-logo="http://epg.one/img/3924.png" group-title="🇹🇷 YENİ TÜRK (494)", TRT MUZIK HD TR 1080P [SES KONTROL]
-http://064jvrr7.ottclub.xyz/iptv/Q4Q36GY6SNSL77/6869/index.m3u8
-#EXTINF:-1 tvg-id="" tvg-name="TRT MUZIK TR" tvg-logo="http://epg.one/img/3924.png" group-title="🇹🇷 YENİ TÜRK (494)", TRT MUZIK TR 1080P [SES KONTROL]
-http://064jvrr7.ottclub.xyz/iptv/Q4Q36GY6SNSL77/6870/index.m3u8
-#EXTINF:-1 tvg-id="TRT.TÜRK.tr" tvg-name="TRT TÜRK" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/TRT_T%C3%BCrk_logo_2021.svg/512px-TRT_T%C3%BCrk_logo_2021.svg.png" group-title="🇹🇷 YENİ TÜRK (494)", TRT TÜRK 360P
-https://tv-trtturk.medya.trt.com.tr/master.m3u8#all
 #EXTINF:-1 tvg-id="" tvg-name="TRT TURK EUROPA" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", TRT TURK EUROPA 1080P [SES KONTROL]
 http://064jvrr7.ottclub.xyz/iptv/Q4Q36GY6SNSL77/2281/index.m3u8
 #EXTINF:-1 tvg-id="2951" tvg-name="TRT TURK TR" tvg-logo="http://epg.one/img/2951.png" group-title="🇹🇷 YENİ TÜRK (494)", TRT TURK TR 720P
 http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6798/index.m3u8
+#EXTINF:-1 tvg-id="TRT.TÜRK.tr" tvg-name="TRT TÜRK" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/TRT_T%C3%BCrk_logo_2021.svg/512px-TRT_T%C3%BCrk_logo_2021.svg.png" group-title="🇹🇷 YENİ TÜRK (494)", TRT TÜRK 360P
+https://tv-trtturk.medya.trt.com.tr/master.m3u8#all
 #EXTINF:-1 tvg-id="TRTWorld.tr@HD" tvg-name="TRT WORLD HD" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/TRT_World.svg/960px-TRT_World.svg.png" group-title="🇹🇷 YENİ TÜRK (494)", TRT WORLD HD 1080P
 https://dash2.antik.sk/live/test_trt_world_atktv/playlist.m3u8
+#EXTINF:-1 tvg-id="TRT.ÇOCUK.HD.tr" tvg-name="TRT ÇOCUK" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/TRT_%C3%87ocuk_logo_2021.svg/512px-TRT_%C3%87ocuk_logo_2021.svg.png" group-title="🇹🇷 YENİ TÜRK (494)", TRT ÇOCUK 720P
+https://tv-trtcocuk.medya.trt.com.tr/master.m3u8#all
+#EXTINF:-1 tvg-id="" tvg-name="TRT Çocuk" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/TRT_%C3%87ocuk_logo_%282021%29.svg/960px-TRT_%C3%87ocuk_logo_%282021%29.svg.png" group-title="🇹🇷 YENİ TÜRK (494)", TEST TRT ÇOCUK 720P
+https://tv-trtcocuk.medya.trt.com.tr/master.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="TURKHABER TV" tvg-logo="https://i.imgur.com/2AcRKdL.png" group-title="🇹🇷 YENİ TÜRK (494)", TURKHABER TV 1080P
 https://edge2.taksimbilisim.com/turkhaber/bant1/playlist.m3u8#all
 #EXTINF:-1 tvg-id="" tvg-name="TURKHABER TV" tvg-logo="https://i.imgur.com/2AcRKdL.png" group-title="🇹🇷 YENİ TÜRK (494)", TURKHABER TV 1080P
@@ -2815,10 +2615,6 @@ https://canli.tvden.com.tr/hls/live.m3u8
 http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6786/index.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="TV NET TR" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", TV NET TR 1080P [SES KONTROL]
 http://064jvrr7.ottclub.xyz/iptv/Q4Q36GY6SNSL77/6936/index.m3u8
-#EXTINF:-1 tvg-id="" tvg-name="TV100" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/TV100_logosu.svg/512px-TV100_logosu.svg.png" group-title="🇹🇷 YENİ TÜRK (494)", TV100 1080P
-https://tv.ensonhaber.com/tv100/tv100.m3u8#all
-#EXTINF:-1 tvg-id="" tvg-name="TV100" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/TV100_logosu.svg/512px-TV100_logosu.svg.png" group-title="🇹🇷 YENİ TÜRK (494)", TV100 1080P
-https://tv.ensonhaber.com/tv100/tv100.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="TV100 TR" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", TV100 TR 1080P [SES KONTROL]
 http://064jvrr7.ottclub.xyz/iptv/Q4Q36GY6SNSL77/6929/index.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="TV4" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", TV4 720P
@@ -2863,8 +2659,6 @@ https://stream9.xdevel.com/video0s976556-1321/stream/playlist.m3u8
 https://jmp2.uk/plu-639751f81a36b400072b8f5a.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="VIYANA TV HD" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", VIYANA TV HD 720P
 http://nrttn172.kesintisizyayin.com:29010/nrttn/nrttn/playlist.m3u8
-#EXTINF:-1 tvg-id="XinjiangTV8.cn@SD" tvg-name="XINJIANG TV 8" tvg-logo="https://i.imgur.com/JJw1Ndc.png" group-title="🇹🇷 YENİ TÜRK (494)", XINJIANG TV 8 1080P
-http://120.70.60.179:9901/tsfile/live/1002_1.m3u8?authid=0&key=txiptv&playlive=1
 #EXTINF:-1 tvg-id="" tvg-name="YABAN TV TR" tvg-logo="" group-title="🇹🇷 YENİ TÜRK (494)", YABAN TV TR 1080P [SES KONTROL]
 http://064jvrr7.ottclub.xyz/iptv/Q4Q36GY6SNSL77/6868/index.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="ZAROK TV" tvg-logo="https://upload.wikimedia.org/wikipedia/tr/thumb/8/87/Zarok_TV_logosu.png/512px-Zarok_TV_logosu.png" group-title="🇹🇷 YENİ TÜRK (494)", ZAROK TV 1080P
@@ -3693,8 +3487,6 @@ http://45.162.64.114/AGROMAIS/index.m3u8
 https://5fc584f3f19c9.streamlock.net/agrotendencia/videoagrotendencia_hls1/playlist.m3u8
 #EXTINF:-1 tvg-id="AguacateTV.ve@SD" tvg-name="AGUACATE TV (1080P)" tvg-logo="https://i.ibb.co/wpWBsgf/IMG-20230705-154622.jpg" group-title="🗂️ YEDEKLER (11316)", AGUACATE TV (1080P) 720P
 https://stream.aguacatetv.com:3949/hybrid/play.m3u8
-#EXTINF:-1 tvg-id="" tvg-name="ÁGUILA ROJA" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ES500005BP_20250610T010520SQUARE.png" group-title="🗂️ YEDEKLER (11316)", ÁGUILA ROJA 720P
-https://jmp2.uk/stvp-ES500005BP
 #EXTINF:-1 tvg-id="AguilaTV.do@HD" tvg-name="AGUILA TV (1080P) [NOT 24/7]" tvg-logo="https://www.vivalivetv.com/public/files/shows/0/1/3770-294x165-FFFFFF.jpg" group-title="🗂️ YEDEKLER (11316)", AGUILA TV (1080P) [NOT 24/7] 1080P
 https://fox.hostlagarto.com:8081/aguilatv/playlist.m3u8
 #EXTINF:-1 tvg-id="AhasaTV.lk@SD" tvg-name="AHASA TV (1080P)" tvg-logo="https://ahasatv.lk/_next/image?url=%2Flogo.png&w=256&q=75" group-title="🗂️ YEDEKLER (11316)", AHASA TV (1080P) 1080P
@@ -4057,8 +3849,6 @@ http://23.239.31.26:8989/amc/index.m3u8
 https://jmp2.uk/stvp-GB29000089Y
 #EXTINF:-1 tvg-id="AMCenEspanol.us" tvg-name="AMC EN ESPANOL (720P)" tvg-logo="https://i.imgur.com/L1h6W5Q.png" group-title="🗂️ YEDEKLER (11316)", AMC EN ESPANOL (720P) 360P
 https://pb-fmbyorn1d0n1n.akamaized.net/v1/amc_amcespanol_3/samsungheadend_us/latest/main/hls/playlist.m3u8
-#EXTINF:-1 tvg-id="AMC.hu" tvg-name="AMC Ⓖ" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", AMC Ⓖ 1080P
-http://141.94.193.53:80/AMC_HD/index.m3u8
 #EXTINF:-1 tvg-id="AMCLatinAmerica.us" tvg-name="AMC LATIN AMERICA (1080P)" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/AMC_logo_2019.svg/960px-AMC_logo_2019.svg.png" group-title="🗂️ YEDEKLER (11316)", AMC LATIN AMERICA (1080P) 1080P
 http://138.121.15.230:9002/AMC/index.m3u8
 #EXTINF:-1 tvg-id="AMCLatinAmerica.us@Panregional" tvg-name="AMC LATIN AMERICA (1080P)" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/AMC_logo_2019.svg/960px-AMC_logo_2019.svg.png" group-title="🗂️ YEDEKLER (11316)", AMC LATIN AMERICA (1080P) 1080P
@@ -4069,6 +3859,8 @@ http://170.83.49.66:8083/AMCHD/index.m3u8
 https://jmp2.uk/stvp-GB2900009S9
 #EXTINF:-1 tvg-id="AMCSeriesLatinAmerica.us" tvg-name="AMC SERIES LATIN AMERICA (1080P)" tvg-logo="https://amc-series.s3.amazonaws.com/menu/hbfen1Gom0_k1cyqi7rw4-amc-series-train-w.png" group-title="🗂️ YEDEKLER (11316)", AMC SERIES LATIN AMERICA (1080P) 1080P
 https://streaming.onnethn.com/AMC/playlist.m3u8
+#EXTINF:-1 tvg-id="AMC.hu" tvg-name="AMC Ⓖ" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", AMC Ⓖ 1080P
+http://141.94.193.53:80/AMC_HD/index.m3u8
 #EXTINF:-1 tvg-id="Ame47.do@SD" tvg-name="AME 47 (576P)" tvg-logo="https://i.imgur.com/MUEbjeP.png" group-title="🗂️ YEDEKLER (11316)", AME 47 (576P) 480P
 https://ss2.tvrdomi.com:1936/ame47/ame47/playlist.m3u8
 #EXTINF:-1 tvg-id="AmediaHit.ru@SD" tvg-name="AMEDIA HIT (1080P)" tvg-logo="https://i.imgur.com/a8ZBGBw.png" group-title="🗂️ YEDEKLER (11316)", AMEDIA HIT (1080P) 1080P
@@ -4981,8 +4773,6 @@ https://fs.uplink.kz/baby_time/mono.m3u8?token=onlinetv
 http://178.134.1.158:8081/babytime/index.m3u8
 #EXTINF:-1 tvg-id="BabyFirst.us@Spanish" tvg-name="BABYFIRST SPANISH (1080P)" tvg-logo="https://i.imgur.com/WxLHBwu.png" group-title="🗂️ YEDEKLER (11316)", BABYFIRST SPANISH (1080P) 480P
 http://168.196.127.137:6001/play/a06j/index.m3u8
-#EXTINF:-1 tvg-id="bacgiang" tvg-name="BẮC GIANG HD" tvg-logo="https://bacgiangtv.vn/templates/frontend/bgtv/Assets/img/logo.png" group-title="🗂️ YEDEKLER (11316)", BẮC GIANG HD 1080P
-https://live.mediatech.vn/live/285f5f227e988ab4445a2138091d3d62e8d/chunklist.m3u8
 #EXTINF:-1 tvg-id="BacanTeVeo.ec@SD" tvg-name="BACAN TE VEO (360P)" tvg-logo="https://i.imgur.com/m1LK6rY.png" group-title="🗂️ YEDEKLER (11316)", BACAN TE VEO (360P)
 https://stmv6.voxtvhd.com.br/vacantveo2/vacantveo2/playlist.m3u8
 #EXTINF:-1 tvg-id="Backstage.us" tvg-name="BACKSTAGE (1080P)" tvg-logo="https://i.imgur.com/qcTNvNU.png" group-title="🗂️ YEDEKLER (11316)", BACKSTAGE (1080P) 240P
@@ -5103,6 +4893,8 @@ https://d11r33s5i066xh.cloudfront.net/playlist.m3u8
 https://jmp2.uk/stvp-ES18000040D
 #EXTINF:-1 tvg-id="BBCNews.uk" tvg-name="BBC NEWS" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/BBC_News_2022_%28Alt%29.svg/500px-BBC_News_2022_%28Alt%29.svg.png" group-title="🗂️ YEDEKLER (11316)", BBC NEWS 720P
 https://vs-hls-push-ww-live.akamaized.net/x=4/i=urn:bbc:pips:service:bbc_news_channel_hd/t=3840/v=pv14/b=5070016/main.m3u8
+#EXTINF:-1 tvg-id="BBCWorldNews.tr" tvg-name="BBC NEWS" tvg-logo="https://i.ibb.co/dPmZMqq/bbcn.png" group-title="🗂️ YEDEKLER (11316)", BBC NEWS 288P
+https://vs-hls-push-ww-live.akamaized.net/x=4/i=urn:bbc:pips:service:bbc_news_channel_hd/pc_hd_abr_v2.m3u8
 #EXTINF:-1 tvg-id="BBCNews.uk@NorthAmerica" tvg-name="BBC NEWS NORTH AMERICA (1080P)" tvg-logo="https://xstreamcp-assets-msp.streamready.in/assets/LIVETV/LIVECHANNEL/LIVETV_LIVETVCHANNEL_BBC_NEWS/images/LOGO_HD/image.png" group-title="🗂️ YEDEKLER (11316)", BBC NEWS NORTH AMERICA (1080P) 1080P
 http://23.237.104.106:8080/USA_BBC_NEWS/index.m3u8
 #EXTINF:-1 tvg-id="BBCNewsPashto.uk@HD" tvg-name="BBC NEWS PASHTO (720P)" tvg-logo="https://static.files.bbci.co.uk/ws/simorgh-assets/public/pashto/images/metadata/poster-1024x576.png" group-title="🗂️ YEDEKLER (11316)", BBC NEWS PASHTO (720P) 288P
@@ -5399,8 +5191,6 @@ https://jireh-7-hls-video-us-isp.dps.live/hls-video/339f69c6122f6d8f4574732c235f
 https://redirector.rudo.video/hls-video/339f69c6122f6d8f4574732c235f09b7683e31a5/bbtv/bbtv.smil/playlist.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="BIR TV" tvg-logo="https://birtv.tv/assets/upload/637f83951df60.png" group-title="🗂️ YEDEKLER (11316)", BIR TV 720P
 https://edge.taksimbilisim.com/birtv/bant1/playlist.m3u8#all
-#EXTINF:-1 tvg-id="" tvg-name="BİR TV" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", BİR TV 720P
-https://edge1.socialsmart.tv/birtv/bant1/chunks.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="BIR ZAMANLAR CUKUROVA-TR S01 BIR.ZAMANLAR.CUKUROVA.S01E01" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", BIR ZAMANLAR CUKUROVA-TR S01 BIR.ZAMANLAR.CUKUROVA.S01E01 480P [SES KONTROL]
 http://ipflix.click:80/series/sq1x0qr86b/7777/624496.mkv
 #EXTINF:-1 tvg-id="" tvg-name="BIR ZAMANLAR CUKUROVA-TR S01 BIR.ZAMANLAR.CUKUROVA.S01E02" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", BIR ZAMANLAR CUKUROVA-TR S01 BIR.ZAMANLAR.CUKUROVA.S01E02 480P [SES KONTROL]
@@ -5493,6 +5283,8 @@ https://epg.provider.plex.tv/library/parts/64305451fc3be5947773c339-689e1f0dd84b
 https://epg.provider.plex.tv/library/parts/608049aefa2b8ae93c2c3a63-689e1f0dd84bfb3d54b6756f/?X-Plex-Token=cTnhNqxLknrr2dCnuZab
 #EXTINF:-1 tvg-id="BizzTV.tt@SD" tvg-name="BIZZ TV (1080P)" tvg-logo="https://i.imgur.com/UxHaJNR.png" group-title="🗂️ YEDEKLER (11316)", BIZZ TV (1080P) 1080P
 https://stream.bizzmedia.biz/bizz_tv/index.m3u8
+#EXTINF:-1 tvg-id="" tvg-name="BİR TV" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", BİR TV 720P
+https://edge1.socialsmart.tv/birtv/bant1/chunks.m3u8
 #EXTINF:-1 tvg-id="Black.ua@SD" tvg-name="BLACK (1080P)" tvg-logo="https://i.imgur.com/iSzAO32.png" group-title="🗂️ YEDEKLER (11316)", BLACK (1080P) 1080P
 http://stream.mcquack.net/283/index.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="BLACK CINEMA" tvg-logo="https://i.imgur.com/Zh1QGW9.png" group-title="🗂️ YEDEKLER (11316)", BLACK CINEMA 360P
@@ -5677,6 +5469,26 @@ https://epg.provider.plex.tv/library/parts/643054b1fc3be59477853717-6970fdabbde5
 https://epg.provider.plex.tv/library/parts/64305451fc3be5947773c339-6970fdabbde579fb71262401/?X-Plex-Token=YJfpNbznTNgZeFsjtUL6
 #EXTINF:-1 tvg-id="BoxKidsTV.br@SD" tvg-name="BOX KIDS TV (720P)" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/1/18/Boxkidstv.png" group-title="🗂️ YEDEKLER (11316)", BOX KIDS TV (720P) 720P
 http://170.83.49.66:8083/BOXKIDSHD/index.m3u8
+#EXTINF:-1 tvg-id="" tvg-name="BOZKIR-TR S01 BOZKIR.2018.S1B01" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", BOZKIR-TR S01 BOZKIR.2018.S1B01 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/652475.mp4
+#EXTINF:-1 tvg-id="" tvg-name="BOZKIR-TR S01 BOZKIR.2018.S1B02" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", BOZKIR-TR S01 BOZKIR.2018.S1B02 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/652476.mp4
+#EXTINF:-1 tvg-id="" tvg-name="BOZKIR-TR S01 BOZKIR.2018.S1B03" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", BOZKIR-TR S01 BOZKIR.2018.S1B03 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/652477.mp4
+#EXTINF:-1 tvg-id="" tvg-name="BOZKIR-TR S01 BOZKIR.2018.S1B04" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", BOZKIR-TR S01 BOZKIR.2018.S1B04 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/652478.mp4
+#EXTINF:-1 tvg-id="" tvg-name="BOZKIR-TR S01 BOZKIR.2018.S1B05" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", BOZKIR-TR S01 BOZKIR.2018.S1B05 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/652479.mp4
+#EXTINF:-1 tvg-id="" tvg-name="BOZKIR-TR S01 BOZKIR.2018.S1B06" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", BOZKIR-TR S01 BOZKIR.2018.S1B06 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/652480.mp4
+#EXTINF:-1 tvg-id="" tvg-name="BOZKIR-TR S01 BOZKIR.2018.S1B07" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", BOZKIR-TR S01 BOZKIR.2018.S1B07 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/652481.mp4
+#EXTINF:-1 tvg-id="" tvg-name="BOZKIR-TR S01 BOZKIR.2018.S1B08" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", BOZKIR-TR S01 BOZKIR.2018.S1B08 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/652482.mp4
+#EXTINF:-1 tvg-id="" tvg-name="BOZKIR-TR S01 BOZKIR.2018.S1B09" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", BOZKIR-TR S01 BOZKIR.2018.S1B09 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/652483.mp4
+#EXTINF:-1 tvg-id="" tvg-name="BOZKIR-TR S01 BOZKIR.2018.S1B10" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", BOZKIR-TR S01 BOZKIR.2018.S1B10 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/652484.mp4
 #EXTINF:-1 tvg-id="BPXTVRadio.us@SD" tvg-name="BPX TV RADIO" tvg-logo="https://i.imgur.com/86VXni8.jpeg" group-title="🗂️ YEDEKLER (11316)", BPX TV RADIO 720P
 https://video1.getstreamhosting.com:1936/8212/8212/playlist.m3u8
 #EXTINF:-1 tvg-id="BRFernsehen.de@Nord" tvg-name="BR FERNSEHEN (720P)" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Logo_Bayerischer_Rundfunk_2024.svg/960px-Logo_Bayerischer_Rundfunk_2024.svg.png" group-title="🗂️ YEDEKLER (11316)", BR FERNSEHEN (720P) 360P
@@ -5807,6 +5619,8 @@ https://59959724487e3.streamlock.net/stream/live/playlist.m3u8
 https://amg02604-byutv-amg02604c2-firetv-us-4981.playouts.now.amagi.tv/playlist.m3u8
 #EXTINF:-1 tvg-id="BYUTV.us@SD" tvg-name="BYU TV (1080P)" tvg-logo="https://i.imgur.com/mruGyuu.png" group-title="🗂️ YEDEKLER (11316)", BYU TV (1080P) 240P
 https://d13j8jpstr8iqz.cloudfront.net/BYUtv.m3u8
+#EXTINF:-1 tvg-id="bacgiang" tvg-name="BẮC GIANG HD" tvg-logo="https://bacgiangtv.vn/templates/frontend/bgtv/Assets/img/logo.png" group-title="🗂️ YEDEKLER (11316)", BẮC GIANG HD 1080P
+https://live.mediatech.vn/live/285f5f227e988ab4445a2138091d3d62e8d/chunklist.m3u8
 #EXTINF:-1 tvg-id="CMalayalamTV.ca@SD" tvg-name="C MALAYALAM TV (1080P)" tvg-logo="https://i.imgur.com/rpg0bQA.png" group-title="🗂️ YEDEKLER (11316)", C MALAYALAM TV (1080P) 720P
 https://2-fss-2.streamhoster.com/pl_120/206508-3261972-1/playlist.m3u8
 #EXTINF:-1 tvg-id="C31Melbourne.au@SD" tvg-name="C31 MELBOURNE (240P)" tvg-logo="https://i.imgur.com/Ge1EutY.png" group-title="🗂️ YEDEKLER (11316)", C31 MELBOURNE (240P) 480P
@@ -6233,10 +6047,10 @@ https://livestream.lumpentv.com.ar/hls/lumpen.m3u8
 https://s.emisoras.tv:8081/sierradecadiz/index.m3u8
 #EXTINF:-1 tvg-id="CanalSur2.es@SD" tvg-name="CANAL SUR 2 (720P)" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Canal_Sur_2_-_2017_logo.png/500px-Canal_Sur_2_-_2017_logo.png" group-title="🗂️ YEDEKLER (11316)", CANAL SUR 2 (720P) 720P
 https://cdnlive.codev8.net/rtvalive/smil:channel22.smil/playlist.m3u8
-#EXTINF:-1 tvg-id="" tvg-name="CANAL SUR ANDALUCÍA" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ESBD3000002GP_20260528T055720SQUARE.png" group-title="🗂️ YEDEKLER (11316)", CANAL SUR ANDALUCÍA 1080P
-https://jmp2.uk/stvp-ESBD3000002GP
 #EXTINF:-1 tvg-id="CanalSurAndalucia.es@SD" tvg-name="CANAL SUR ANDALUCIA (1080P)" tvg-logo="https://i.imgur.com/lznnA4v.png" group-title="🗂️ YEDEKLER (11316)", CANAL SUR ANDALUCIA (1080P) 1080P
 https://dfk2a268yviz9.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-ddiii1m6jt6of/CanalSurAndaluciaES.m3u8
+#EXTINF:-1 tvg-id="" tvg-name="CANAL SUR ANDALUCÍA" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ESBD3000002GP_20260528T055720SQUARE.png" group-title="🗂️ YEDEKLER (11316)", CANAL SUR ANDALUCÍA 1080P
+https://jmp2.uk/stvp-ESBD3000002GP
 #EXTINF:-1 tvg-id="CanalSurNoticias.es@SD" tvg-name="CANAL SUR NOTICIAS" tvg-logo="https://i.imgur.com/A3JscwS.png" group-title="🗂️ YEDEKLER (11316)", CANAL SUR NOTICIAS 720P
 https://cdnlive.codev8.net/rtvalive/smil:channel42.smil/playlist.m3u8
 #EXTINF:-1 tvg-id="CanalSurvisionAlerce.cl@SD" tvg-name="CANAL SURVISION ALERCE (720P)" tvg-logo="https://i.imgur.com/FknQYSp.png" group-title="🗂️ YEDEKLER (11316)", CANAL SURVISION ALERCE (720P) 720P
@@ -6315,10 +6129,10 @@ https://d3cx6yargdnl7q.cloudfront.net/canelatv.m3u8
 https://stmv4.voxtvhd.com.br/canicatv/canicatv/playlist.m3u8
 #EXTINF:-1 tvg-id="CannesLerinsTV.fr@SD" tvg-name="CANNES LERINS TV (1080P)" tvg-logo="https://i.imgur.com/atlgnum.png" group-title="🗂️ YEDEKLER (11316)", CANNES LERINS TV (1080P) 1080P
 https://vdo2.pro-fhi.net:3628/live/uppodsfqlive.m3u8
-#EXTINF:-1 tvg-id="caobang" tvg-name="CAO BẰNG HD" tvg-logo="https://static.wikia.nocookie.net/logos/images/7/79/CRTV_logo_1997.png/revision/latest/scale-to-width-down/1200?cb=20220427114001&path-prefix=vi" group-title="🗂️ YEDEKLER (11316)", CAO BẰNG HD 360P
-http://118.107.85.4:1935/live/smil:CRTV.smil/playlist.m3u8
 #EXTINF:-1 tvg-id="CaoBangTV.vn@SD" tvg-name="CAO BANG TV (720P)" tvg-logo="https://i.imgur.com/dGonewm.png" group-title="🗂️ YEDEKLER (11316)", CAO BANG TV (720P) 360P
 https://stream.thingnet.vn/live/smil:CRTV.smil/chunklist.m3u8
+#EXTINF:-1 tvg-id="caobang" tvg-name="CAO BẰNG HD" tvg-logo="https://static.wikia.nocookie.net/logos/images/7/79/CRTV_logo_1997.png/revision/latest/scale-to-width-down/1200?cb=20220427114001&path-prefix=vi" group-title="🗂️ YEDEKLER (11316)", CAO BẰNG HD 360P
+http://118.107.85.4:1935/live/smil:CRTV.smil/playlist.m3u8
 #EXTINF:-1 tvg-id="CaobaTVRadio.do@HD" tvg-name="CAOBA TV RADIO (720P) [NOT 24/7]" tvg-logo="https://www.vivalivetv.com/public/files/shows/0/1/3906-294x165-FFFFFF.jpg" group-title="🗂️ YEDEKLER (11316)", CAOBA TV RADIO (720P) [NOT 24/7] 720P
 https://host.streamingnation.live:3940/live/caobatvlive.m3u8
 #EXTINF:-1 tvg-id="CapeTownTV.za@SD" tvg-name="CAPE TOWN TV (576P)" tvg-logo="https://i.imgur.com/Y8FK1Kk.png" group-title="🗂️ YEDEKLER (11316)", CAPE TOWN TV (576P) 240P
@@ -7021,8 +6835,6 @@ http://23.237.104.106:8080/USA_5STARMAX/index.m3u8
 http://23.237.104.106:8080/USA_MOREMAX/index.m3u8
 #EXTINF:-1 tvg-id="CinemaxLatinAmerica.us@SD" tvg-name="CINEMAX LATIN AMERICA (720P)" tvg-logo="https://i.imgur.com/cZWoJWD.png" group-title="🗂️ YEDEKLER (11316)", CINEMAX LATIN AMERICA (720P) 720P
 https://streaming.onnethn.com/CINEMAX/playlist.m3u8
-#EXTINF:-1 tvg-id="" tvg-name="CINÉPOLIS CHANNEL" tvg-logo="https://images.pluto.tv/channels/699f405a0c8827936bd287bf/colorLogoPNG_1774560648913.png" group-title="🗂️ YEDEKLER (11316)", CINÉPOLIS CHANNEL 360P
-https://jmp2.uk/plu-699f405a0c8827936bd287bf.m3u8
 #EXTINF:-1 tvg-id="CinePride.us@SD" tvg-name="CINEPRIDE (720P)" tvg-logo="https://i.imgur.com/Y4Wgq8I.png" group-title="🗂️ YEDEKLER (11316)", CINEPRIDE (720P) 540P
 https://stream-us-east-1.getpublica.com/playlist.m3u8?network_id=2223
 #EXTINF:-1 tvg-id="" tvg-name="CINES VERDI TV" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ESBC2700011AZ_20241022T050514SQUARE.png" group-title="🗂️ YEDEKLER (11316)", CINES VERDI TV 720P
@@ -7035,6 +6847,8 @@ https://gsn-cinevault-westerns-2-us.roku.wurl.tv/playlist.m3u8
 https://5790d294af2dc.streamlock.net/tvhdlive/tvhdlive/playlist.m3u8
 #EXTINF:-1 tvg-id="CineWow.ro@SD" tvg-name="CINEWOW (576I)" tvg-logo="https://cdn.gamma.app/tfnglu66dwji8hw/d36b2d5c45a544749b3739d46fb119cc/original/CineWow.png" group-title="🗂️ YEDEKLER (11316)", CINEWOW (576I) 576P
 https://hls01ns.antenaplay.ro/hls/cinewow-sd/index.m3u8
+#EXTINF:-1 tvg-id="" tvg-name="CINÉPOLIS CHANNEL" tvg-logo="https://images.pluto.tv/channels/699f405a0c8827936bd287bf/colorLogoPNG_1774560648913.png" group-title="🗂️ YEDEKLER (11316)", CINÉPOLIS CHANNEL 360P
+https://jmp2.uk/plu-699f405a0c8827936bd287bf.m3u8
 #EXTINF:-1 tvg-id="CiraTV.de@SD" tvg-name="CIRA TV (1080P)" tvg-logo="https://i.imgur.com/YFnmSLW.png" group-title="🗂️ YEDEKLER (11316)", CIRA TV (1080P) 576P
 https://hlspackager.akamaized.net/live/DB/CIRA_TV/HLS/CIRA_TV.m3u8
 #EXTINF:-1 tvg-id="CiracuTV.ec@SD" tvg-name="CIRACU TV (720P) [NOT 24/7]" tvg-logo="https://i.imgur.com/mkf2TJ6.png" group-title="🗂️ YEDEKLER (11316)", CIRACU TV (720P) [NOT 24/7] 720P
@@ -7229,12 +7043,12 @@ https://jmp2.uk/stvp-GBBD8000016N
 https://tvsen6.aynaott.com/cnn/index.m3u8
 #EXTINF:-1 tvg-id="CNNBrasil.br@SD" tvg-name="CNN BRASIL (1080P)" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/CNN_Brasil.svg/960px-CNN_Brasil.svg.png" group-title="🗂️ YEDEKLER (11316)", CNN BRASIL (1080P) 1080P
 https://d25usgadhphvwi.cloudfront.net/hls/main.m3u8
-#EXTINF:-1 tvg-id="" tvg-name="CNN EN ESPAÑOL" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ES34000039I_20260622T063630SQUARE.png" group-title="🗂️ YEDEKLER (11316)", CNN EN ESPAÑOL 360P
-https://jmp2.uk/stvp-ES34000039I
 #EXTINF:-1 tvg-id="CNNenEspanol.us" tvg-name="CNN EN ESPANOL (1080P)" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Logo_de_CNN_en_Espa%C3%B1ol_%282010-2015%29.svg/960px-Logo_de_CNN_en_Espa%C3%B1ol_%282010-2015%29.svg.png" group-title="🗂️ YEDEKLER (11316)", CNN EN ESPANOL (1080P) 360P
 https://amg00803-cnnfast-amg00803c3-lg-es-5477.playouts.now.amagi.tv/playlist.m3u8
 #EXTINF:-1 tvg-id="CNNenEspanol.us@SD" tvg-name="CNN EN ESPANOL (1080P)" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Logo_de_CNN_en_Espa%C3%B1ol_%282010-2015%29.svg/960px-Logo_de_CNN_en_Espa%C3%B1ol_%282010-2015%29.svg.png" group-title="🗂️ YEDEKLER (11316)", CNN EN ESPANOL (1080P) 720P
 https://streaming.onnethn.com/CNN_ESPANOL/playlist.m3u8
+#EXTINF:-1 tvg-id="" tvg-name="CNN EN ESPAÑOL" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ES34000039I_20260622T063630SQUARE.png" group-title="🗂️ YEDEKLER (11316)", CNN EN ESPAÑOL 360P
+https://jmp2.uk/stvp-ES34000039I
 #EXTINF:-1 tvg-id="CNN.us@HD" tvg-name="CNN HD (720P) [GEO-BLOCKED]" tvg-logo="https://jiotvimages.cdn.jio.com/dare_images/images/CNN.png" group-title="🗂️ YEDEKLER (11316)", CNN HD (720P) [GEO-BLOCKED] 1080P
 http://212.5.144.156:8080/cnn/index.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="CNN HEADLINES INTERNATIONAL" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ESBD190000137_20260331T032325SQUARE.png" group-title="🗂️ YEDEKLER (11316)", CNN HEADLINES INTERNATIONAL 360P
@@ -7429,10 +7243,10 @@ https://ctv.icopts.app/CTV/index.fmp4.m3u8
 https://hls.tvabierta.net/hls/039.m3u8
 #EXTINF:-1 tvg-id="CoralTV.bo@SD" tvg-name="CORAL TV (720P)" tvg-logo="https://i.ibb.co/xDrc5MD/CORALTv.png" group-title="🗂️ YEDEKLER (11316)", CORAL TV (720P) 288P
 https://tv.mediacp.eu:8081/coraltv/index.m3u8
-#EXTINF:-1 tvg-id="" tvg-name="CORAZÓN" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ESBD1300003VN_20241022T050520SQUARE.png" group-title="🗂️ YEDEKLER (11316)", CORAZÓN 720P
-https://jmp2.uk/stvp-ESBD1300003VN
 #EXTINF:-1 tvg-id="CorazonTV.pa@SD" tvg-name="CORAZON TV" tvg-logo="https://i.imgur.com/HVdbXku.png" group-title="🗂️ YEDEKLER (11316)", CORAZON TV 720P
 https://sistemastr.tropicalmoonmedia.com/live/7FFCFEC3978B68D1A2ED0A38DE96AF76/12.m3u8
+#EXTINF:-1 tvg-id="" tvg-name="CORAZÓN" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ESBD1300003VN_20241022T050520SQUARE.png" group-title="🗂️ YEDEKLER (11316)", CORAZÓN 720P
+https://jmp2.uk/stvp-ESBD1300003VN
 #EXTINF:-1 tvg-id="CorfuChannel.gr@SD" tvg-name="CORFU CHANNEL (720P)" tvg-logo="https://i.imgur.com/EFL1Tjg.png" group-title="🗂️ YEDEKLER (11316)", CORFU CHANNEL (720P) 720P
 https://itv.streams.ovh:1936/corfuchannel/corfuchannel/playlist.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="CORNER GAS" tvg-logo="https://provider-static.plex.tv/epg/cms/production/e6696e27-0079-499b-b4c9-b31300a4b511/FilmRise_CornerGas_Logo_FullColor.png" group-title="🗂️ YEDEKLER (11316)", CORNER GAS 432P
@@ -7601,8 +7415,6 @@ https://live.legitpro.co.in/ctvnakdplus/index.m3u8
 https://jmp2.uk/plu-699769fa19ac123965833fd3.m3u8
 #EXTINF:-1 tvg-id="PlutoTVCucinaItaly.it" tvg-name="CUCINA – PLUTO TV" tvg-logo="https://i.imgur.com/KsOhaOn.png" group-title="🗂️ YEDEKLER (11316)", CUCINA – PLUTO TV 360P
 https://service-stitcher.clusters.pluto.tv/v1/stitch/embed/hls/channel/608aa718a8ec810007d87fee/master.m3u8?deviceId=channel&deviceModel=web&deviceVersion=1.0&appVersion=1.0&deviceType=rokuChannel&deviceMake=rokuChannel&deviceDNT=1&advertisingId=channel&embedPartner=rokuChannel&appName=rokuchannel&is_lat=1&bmodel=bm1&content=channel&platform=web&tags=ROKU_CONTENT_TAGS&coppa=false&content_type=livefeed&rdid=channel&genre=ROKU_ADS_CONTENT_GENRE&content_rating=ROKU_ADS_CONTENT_RATING&studio_id=viacom&channel_id=channel
-#EXTINF:-1 tvg-id="" tvg-name="CUÉNTAME CÓMO PASÓ" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ES400002P5_20260707T050933SQUARE.png" group-title="🗂️ YEDEKLER (11316)", CUÉNTAME CÓMO PASÓ 360P
-https://jmp2.uk/stvp-ES400002P5
 #EXTINF:-1 tvg-id="" tvg-name="CUKUR-TR S01 CUKUR.S01E01" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", CUKUR-TR S01 CUKUR.S01E01 480P [SES KONTROL]
 http://ipflix.click:80/series/sq1x0qr86b/7777/43269.mp4
 #EXTINF:-1 tvg-id="" tvg-name="CUKUR-TR S01 CUKUR.S01E02" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", CUKUR-TR S01 CUKUR.S01E02 480P [SES KONTROL]
@@ -7759,6 +7571,8 @@ https://jmp2.uk/plu-5f1acd36779de70007a680d1.m3u8
 https://jmp2.uk/plu-68b5a7b69ac85c428f54c441.m3u8
 #EXTINF:-1 tvg-id="CusanoItaliaTV.it@SD" tvg-name="CUSANO ITALIA TV (720P)" tvg-logo="https://i.imgur.com/fOluzuE.png" group-title="🗂️ YEDEKLER (11316)", CUSANO ITALIA TV (720P) 1080P
 https://router.xdevel.com/video0s975363-69/stream/playlist.m3u8
+#EXTINF:-1 tvg-id="" tvg-name="CUÉNTAME CÓMO PASÓ" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ES400002P5_20260707T050933SQUARE.png" group-title="🗂️ YEDEKLER (11316)", CUÉNTAME CÓMO PASÓ 360P
+https://jmp2.uk/stvp-ES400002P5
 #EXTINF:-1 tvg-id="CVVisionTV.do@SD" tvg-name="CV VISION TV (288P) [GEO-BLOCKED]" tvg-logo="https://dominicanchannels.com/wp-content/uploads/ccviison-1.png" group-title="🗂️ YEDEKLER (11316)", CV VISION TV (288P) [GEO-BLOCKED] 720P
 https://eu1.servers10.com:8081/8128/index.m3u8
 #EXTINF:-1 tvg-id="CVCEducation.us@SD" tvg-name="CVC EDUCATION (480P)" tvg-logo="https://i.imgur.com/tUgEAUJ.png" group-title="🗂️ YEDEKLER (11316)", CVC EDUCATION (480P) 720P
@@ -8503,14 +8317,14 @@ http://ipflix.click:80/series/sq1x0qr86b/7777/648007.mkv
 http://ipflix.click:80/series/sq1x0qr86b/7777/648653.mkv
 #EXTINF:-1 tvg-id="" tvg-name="DIRILIS: ERTUGRUL-TR S05 DIRILIS.ERTUGRUL.S05E25.MKV" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", DIRILIS: ERTUGRUL-TR S05 DIRILIS.ERTUGRUL.S05E25.MKV 480P [SES KONTROL]
 http://ipflix.click:80/series/sq1x0qr86b/7777/649087.mkv
+#EXTINF:-1 tvg-id="" tvg-name="DIRILIS: ERTUGRUL-TR S05 DIRILIS.ERTUGRUL.S05E29.SEASON.FINAL.MP4" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", DIRILIS: ERTUGRUL-TR S05 DIRILIS.ERTUGRUL.S05E29.SEASON.FINAL.MP4 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/651993.mp4
 #EXTINF:-1 tvg-id="" tvg-name="DIRILIS: ERTUGRUL-TR S05 DIRILIS.ERTUĞRUL.S05E26.MP4" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", DIRILIS: ERTUGRUL-TR S05 DIRILIS.ERTUĞRUL.S05E26.MP4 480P [SES KONTROL]
 http://ipflix.click:80/series/sq1x0qr86b/7777/649418.mp4
 #EXTINF:-1 tvg-id="" tvg-name="DIRILIS: ERTUGRUL-TR S05 DIRILIS.ERTUĞRUL.S05E27.MP4" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", DIRILIS: ERTUGRUL-TR S05 DIRILIS.ERTUĞRUL.S05E27.MP4 480P [SES KONTROL]
 http://ipflix.click:80/series/sq1x0qr86b/7777/649581.mp4
 #EXTINF:-1 tvg-id="" tvg-name="DIRILIS: ERTUGRUL-TR S05 DIRILIS.ERTUĞRUL.S05E28.MP4" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", DIRILIS: ERTUGRUL-TR S05 DIRILIS.ERTUĞRUL.S05E28.MP4 480P [SES KONTROL]
 http://ipflix.click:80/series/sq1x0qr86b/7777/650731.mp4
-#EXTINF:-1 tvg-id="" tvg-name="DIRILIS: ERTUGRUL-TR S05 DIRILIS.ERTUGRUL.S05E29.SEASON.FINAL.MP4" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", DIRILIS: ERTUGRUL-TR S05 DIRILIS.ERTUGRUL.S05E29.SEASON.FINAL.MP4 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/651993.mp4
 #EXTINF:-1 tvg-id="DiscoPoloMusic.pl@SD" tvg-name="DISCO POLO MUSIC (1080P)" tvg-logo="https://i.imgur.com/ZZbuTv7.png" group-title="🗂️ YEDEKLER (11316)", DISCO POLO MUSIC (1080P) 576P
 http://185.227.34.179:8080/disco-polo-music/index.m3u8
 #EXTINF:-1 tvg-id="DiscoverPakistan.pk@SD" tvg-name="DISCOVER PAKISTAN (1080P)" tvg-logo="https://i.imgur.com/IJH47fJ.png" group-title="🗂️ YEDEKLER (11316)", DISCOVER PAKISTAN (1080P) 1080P
@@ -8659,6 +8473,14 @@ https://cdn-live.dltv.ac.th/dltv09.m3u8
 http://85.14.32.26:8800/udp/239.100.10.40:5000
 #EXTINF:-1 tvg-id="DMSat.rs@SD" tvg-name="DM SAT (576P)" tvg-logo="https://i.imgur.com/LdeA1Cn.png" group-title="🗂️ YEDEKLER (11316)", DM SAT (576P) 576P
 https://shift03.isp.bg/DMSat/index.m3u8
+#EXTINF:-1 tvg-id="DMAX.tr" tvg-name="DMAX" tvg-logo="https://i.ibb.co/WvCvVrrz/Ekran-g-r-nt-s-2026-07-25-103937.jpg" group-title="🗂️ YEDEKLER (11316)", DMAX 360P
+http://dygvideo.dygdigital.com/live/hls/dmaxdai?m3u8
+#EXTINF:-1 tvg-id="" tvg-name="DMAX" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", DMAX 1080P [SES KONTROL]
+http://064jvrr7.ottclub.xyz/iptv/Q4Q36GY6SNSL77/2290/index.m3u8
+#EXTINF:-1 tvg-id="DMAX.de@SD" tvg-name="DMAX (GERMANY) (576P)" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/DMAX_BLACK.svg/960px-DMAX_BLACK.svg.png" group-title="🗂️ YEDEKLER (11316)", DMAX (GERMANY) (576P) 576P
+http://5.180.164.197:8080/DMAX/index.m3u8
+#EXTINF:-1 tvg-id="DMAX.it@SD" tvg-name="DMAX (ITALY) (1080P)" tvg-logo="https://i.imgur.com/uGd9fnn.png" group-title="🗂️ YEDEKLER (11316)", DMAX (ITALY) (1080P) 1080P
+https://streaming.aurora.enhanced.live/live/mpc/enl0eG1mLmVncmVzcy5mZDJ2eHI=/out/v1/IT_SIMULCAST/DMAX/CMAF/index.m3u8
 #EXTINF:-1 tvg-id="DMF.de@SD" tvg-name="DMF (1080P) [NOT 24/7]" tvg-logo="https://i.imgur.com/sJaBU7X.jpeg" group-title="🗂️ YEDEKLER (11316)", DMF (1080P) [NOT 24/7] 1080P
 https://d-m-f.iptv-playoutcenter.de/dmf/dmf1/playlist.m3u8
 #EXTINF:-1 tvg-id="DMITV.id@SD" tvg-name="DMI TV (576I)" tvg-logo="https://static.promediateknologi.id/promedia/network/1167/desktop/images/logo.png" group-title="🗂️ YEDEKLER (11316)", DMI TV (576I) 720P
@@ -8811,12 +8633,12 @@ http://46.249.95.140:8081/hls/data.m3u8
 https://live-evg7.tv360.bitel.com.pe/bitel/sabormixtvSRT/playlist.m3u8
 #EXTINF:-1 tvg-id="DTVDenBosch.nl@SD" tvg-name="DTV DEN BOSCH (1080P)" tvg-logo="https://i.imgur.com/aFBNbsy.png" group-title="🗂️ YEDEKLER (11316)", DTV DEN BOSCH (1080P) 1080P [SES KONTROL]
 https://rrr.sz.xlcdn.com/?account=dtvmaasland&file=dtv2&output=playlist.m3u8&protocol=https&service=wowza&type=live
-#EXTINF:-1 tvg-id="DTV.hu" tvg-name="DTV Ⓖ" tvg-logo="https://i.imgur.com/YSpqmSO.png" group-title="🗂️ YEDEKLER (11316)", DTV Ⓖ 720P
-https://cloudfront44.lexanetwork.com:1344/relay44_1/livestream002.sdp/playlist.m3u8
 #EXTINF:-1 tvg-id="DTVMaashorst.nl@SD" tvg-name="DTV MAASHORST (1080P)" tvg-logo="https://i.imgur.com/5WaCCAC.png" group-title="🗂️ YEDEKLER (11316)", DTV MAASHORST (1080P) 1080P [SES KONTROL]
 https://rrr.sz.xlcdn.com/?account=dtvmaasland&file=dtv3&output=playlist.m3u8&protocol=https&service=wowza&type=live
 #EXTINF:-1 tvg-id="DTVOssBernheze.nl@SD" tvg-name="DTV OSS & BERNHEZE (1080P)" tvg-logo="https://i.imgur.com/JL1f9Tx.png" group-title="🗂️ YEDEKLER (11316)", DTV OSS & BERNHEZE (1080P) 1080P [SES KONTROL]
 https://rrr.sz.xlcdn.com/?account=dtvmaasland&file=dtv1&output=playlist.m3u8&protocol=https&service=wowza&type=live
+#EXTINF:-1 tvg-id="DTV.hu" tvg-name="DTV Ⓖ" tvg-logo="https://i.imgur.com/YSpqmSO.png" group-title="🗂️ YEDEKLER (11316)", DTV Ⓖ 720P
+https://cloudfront44.lexanetwork.com:1344/relay44_1/livestream002.sdp/playlist.m3u8
 #EXTINF:-1 tvg-id="DubaiTVInternational.ae@SD" tvg-name="DUBAI TV INTERNATIONAL (1080P)" tvg-logo="https://i.imgur.com/UMmbyHv.png" group-title="🗂️ YEDEKLER (11316)", DUBAI TV INTERNATIONAL (1080P) 1080P
 http://185.9.2.18/chid_139/index.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="DUCK DYNASTY" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/GB2700004BC_20251125T100004SQUARE.png" group-title="🗂️ YEDEKLER (11316)", DUCK DYNASTY 240P
@@ -9089,10 +8911,10 @@ http://15.204.246.24:8080/elnueveHD/index.m3u8
 https://nuevodiario01.streamprolive.com/hls/live.m3u8
 #EXTINF:-1 tvg-id="ElPaisTV.es" tvg-name="EL PAÍS" tvg-logo="https://graph.facebook.com/elpais/picture?width=200&height=200" group-title="🗂️ YEDEKLER (11316)", EL PAÍS 1080P
 https://d2epgk1fomaa1g.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-9n8y4tw0bk3an/live/fast-channel-el-pais/fast-channel-el-pais.m3u8
-#EXTINF:-1 tvg-id="ElPinguinoTV.cl" tvg-name="EL PINGÜINO TV" tvg-logo="https://i.imgur.com/ohXs2NV.png" group-title="🗂️ YEDEKLER (11316)", EL PINGÜINO TV
-https://redirector.rudo.video/hls-video/339f69c6122f6d8f4574732c235f09b7683e31a5/pinguinotv/pinguinotv.smil/playlist.m3u8
 #EXTINF:-1 tvg-id="ElPinguinoTV.cl@SD" tvg-name="EL PINGUINO TV (720P)" tvg-logo="https://i.imgur.com/ikEs9b8.png" group-title="🗂️ YEDEKLER (11316)", EL PINGUINO TV (720P)
 https://redirector.dps.live/hls/pinguinotv/playlist.m3u8
+#EXTINF:-1 tvg-id="ElPinguinoTV.cl" tvg-name="EL PINGÜINO TV" tvg-logo="https://i.imgur.com/ohXs2NV.png" group-title="🗂️ YEDEKLER (11316)", EL PINGÜINO TV
+https://redirector.rudo.video/hls-video/339f69c6122f6d8f4574732c235f09b7683e31a5/pinguinotv/pinguinotv.smil/playlist.m3u8
 #EXTINF:-1 tvg-id="ElPuertoTV.do@SD" tvg-name="EL PUERTO TV (720P)" tvg-logo="https://i.imgur.com/FnshExB.jpg" group-title="🗂️ YEDEKLER (11316)", EL PUERTO TV (720P) 720P
 https://5bf8041cb3fed.streamlock.net/PuertoTV/PuertoTV/playlist.m3u8
 #EXTINF:-1 tvg-id="ElRadar.cl@SD" tvg-name="EL RADAR (720P)" tvg-logo="https://cdn.m3u.cl/logo/1743_El_Radar.png" group-title="🗂️ YEDEKLER (11316)", EL RADAR (720P) 1080P
@@ -9265,8 +9087,6 @@ https://neon.streams.gr:8081/epsilontv/index.m3u8
 http://stream.mcquack.net/485/index.m3u8
 #EXTINF:-1 tvg-id="Equidia.fr@SD" tvg-name="EQUIDIA (1080P)" tvg-logo="https://i.imgur.com/QPpbRcZ.png" group-title="🗂️ YEDEKLER (11316)", EQUIDIA (1080P) 1080P
 https://raw.githubusercontent.com/Paradise-91/ParaTV/main/streams/equidia/live2.m3u8
-#EXTINF:-1 tvg-id="" tvg-name="ÉRASE UNA VEZ..." tvg-logo="https://images.pluto.tv/channels/63c69c87808b740007599fe1/colorLogoPNG.png" group-title="🗂️ YEDEKLER (11316)", ÉRASE UNA VEZ... 360P
-https://jmp2.uk/plu-63c69c87808b740007599fe1.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="ERCIYES TV" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", ERCIYES TV 720P
 https://live.artidijitalmedya.com/artidijital_erciyestv/erciyestv/playlist.m3u8#all
 #EXTINF:-1 tvg-id="" tvg-name="ERCİYES TV" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", ERCİYES TV 720P
@@ -9543,8 +9363,6 @@ https://jmp2.uk/stvp-IN4900002RV
 https://yupplivegcpusa.yuppcdn.net/100823/smil:etvcinema.smil/playlist.m3u8?hdnts=st=1735898689~exp=1835898688~acl=*~hmac=f5fe24724fe05481e3841f9eb5ab8efdee0a3dd83645ae9dcf45703f525bab7b
 #EXTINF:-1 tvg-id="ETVComedy.in@HD" tvg-name="ETV COMEDY (1080P)" tvg-logo="https://jiotvimages.cdn.jio.com/dare_images/images/ETV_Comedy.png" group-title="🗂️ YEDEKLER (11316)", ETV COMEDY (1080P) 360P
 https://cc-wie8j8y69d2uy.akamaized.net/WWBI/Amagi/ETV_Comedy_IN/playlist.m3u8
-#EXTINF:-1 tvg-id="ETV.ee" tvg-name="ETV Ⓖ" tvg-logo="https://i.imgur.com/5URjPgG.png" group-title="🗂️ YEDEKLER (11316)", ETV Ⓖ 396P
-http://sb.err.ee/live/etv.m3u8
 #EXTINF:-1 tvg-id="ETVJosh.in@HD" tvg-name="ETV JOSH (1080P)" tvg-logo="https://jiotvimages.cdn.jio.com/dare_images/images/ETV_Josh.png" group-title="🗂️ YEDEKLER (11316)", ETV JOSH (1080P) 360P
 https://cc-uyh1ow5zouoio.akamaized.net/WWBI/Amagi/ETV_Josh_IN/playlist.m3u8
 #EXTINF:-1 tvg-id="ETVMusic.in" tvg-name="ETV MUSIC (1080P)" tvg-logo="https://jiotvimages.cdn.jio.com/dare_images/images/ETVMusic12.png" group-title="🗂️ YEDEKLER (11316)", ETV MUSIC (1080P) 360P
@@ -9553,6 +9371,8 @@ https://cc-szivnms4rlah6.akamaized.net/WWBI/Amagi/ETV_Music_IN/playlist.m3u8
 https://cc-3448kp65yhc5w.akamaized.net/WWBI/Amagi/ETV_News_IN/playlist.m3u8
 #EXTINF:-1 tvg-id="ETVPlus.in@SD" tvg-name="ETV PLUS (396P)" tvg-logo="https://xstreamcp-assets-msp.streamready.in/assets/LIVETV/LIVECHANNEL/LIVETV_LIVETVCHANNEL_ETV_PLUS/images/LOGO_HD/image.png" group-title="🗂️ YEDEKLER (11316)", ETV PLUS (396P) 288P
 https://yupplivegcpusa.yuppcdn.net/100823/smil:etvplus.smil/playlist.m3u8?hdnts=st=1735898689~exp=1835898688~acl=*~hmac=f5fe24724fe05481e3841f9eb5ab8efdee0a3dd83645ae9dcf45703f525bab7b
+#EXTINF:-1 tvg-id="ETV.ee" tvg-name="ETV Ⓖ" tvg-logo="https://i.imgur.com/5URjPgG.png" group-title="🗂️ YEDEKLER (11316)", ETV Ⓖ 396P
+http://sb.err.ee/live/etv.m3u8
 #EXTINF:-1 tvg-id="ETVPlus.ee@SD" tvg-name="ETV+ (720P)" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/a/a2/ETV%2B_logo.png" group-title="🗂️ YEDEKLER (11316)", ETV+ (720P) 720P
 https://sb.err.ee/live/etvpluss.m3u8
 #EXTINF:-1 tvg-id="ETVPlus.ee" tvg-name="ETV+ Ⓖ" tvg-logo="https://i.imgur.com/YAubPlU.png" group-title="🗂️ YEDEKLER (11316)", ETV+ Ⓖ 720P
@@ -9583,6 +9403,8 @@ https://epg.provider.plex.tv/library/parts/64305451fc3be5947773c339-60089d90f682
 https://cdn-euronews.akamaized.net/live/eds/euronews-pl/26382/index.m3u8
 #EXTINF:-1 tvg-id="Euronews Deutsch.de" tvg-name="EURONEWS DEUTSCH" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Euronews_2022.svg/640px-Euronews_2022.svg.png" group-title="🗂️ YEDEKLER (11316)", EURONEWS DEUTSCH 240P
 https://575b7833.wurl.com/master/f36d25e7e52f1ba8d7e56eb859c636563214f541/UmxheHhUVi1ldV9FdXJvbmV3c0RldXRzY2hfSExT/playlist.m3u8
+#EXTINF:-1 tvg-id="EURONEWS.tr" tvg-name="EURONEWS EN" tvg-logo="https://i.ibb.co/R4xVMYc/enews.png" group-title="🗂️ YEDEKLER (11316)", EURONEWS EN 240P
+https://cdn-euronews.akamaized.net/live/eds/euronews-en/25080/euronews-en.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="EURONEWS EN DIRECTO" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ES260000968_20260707T050947SQUARE.png" group-title="🗂️ YEDEKLER (11316)", EURONEWS EN DIRECTO 240P
 https://jmp2.uk/stvp-ES260000968
 #EXTINF:-1 tvg-id="EuronewsEnglish.fr@SD" tvg-name="EURONEWS ENGLISH (720P)" tvg-logo="https://jiotvimages.cdn.jio.com/dare_images/images/Euro_News.png" group-title="🗂️ YEDEKLER (11316)", EURONEWS ENGLISH (720P) 360P
@@ -9997,6 +9819,8 @@ https://service-stitcher.clusters.pluto.tv/v1/stitch/embed/hls/channel/608aa512d
 https://service-stitcher.clusters.pluto.tv/v1/stitch/embed/hls/channel/608aa42b5c2b8f0007197529/master.m3u8?deviceId=channel&deviceModel=web&deviceVersion=1.0&appVersion=1.0&deviceType=rokuChannel&deviceMake=rokuChannel&deviceDNT=1&advertisingId=channel&embedPartner=rokuChannel&appName=rokuchannel&is_lat=1&bmodel=bm1&content=channel&platform=web&tags=ROKU_CONTENT_TAGS&coppa=false&content_type=livefeed&rdid=channel&genre=ROKU_ADS_CONTENT_GENRE&content_rating=ROKU_ADS_CONTENT_RATING&studio_id=viacom&channel_id=channel
 #EXTINF:-1 tvg-id="PlutoTVFilmRomanticiItaly.it" tvg-name="FILM ROMANTICI – PLUTO TV" tvg-logo="https://i.imgur.com/KxPsLG3.png" group-title="🗂️ YEDEKLER (11316)", FILM ROMANTICI – PLUTO TV 360P
 https://service-stitcher.clusters.pluto.tv/v1/stitch/embed/hls/channel/608aa4a4cc92820007b663af/master.m3u8?deviceId=channel&deviceModel=web&deviceVersion=1.0&appVersion=1.0&deviceType=rokuChannel&deviceMake=rokuChannel&deviceDNT=1&advertisingId=channel&embedPartner=rokuChannel&appName=rokuchannel&is_lat=1&bmodel=bm1&content=channel&platform=web&tags=ROKU_CONTENT_TAGS&coppa=false&content_type=livefeed&rdid=channel&genre=ROKU_ADS_CONTENT_GENRE&content_rating=ROKU_ADS_CONTENT_RATING&studio_id=viacom&channel_id=channel
+#EXTINF:-1 tvg-id="FILM.SCREEN.tr" tvg-name="FILM SCREEN HD" tvg-logo="https://feo.kablowebtv.com/resize/168A635D265A4328C2883FB4CD8FF/0/0/Vod/HLS/7d58e86c-d38e-4ef5-8ee0-fda0a7e65914.png" group-title="🗂️ YEDEKLER (11316)", FILM SCREEN HD 1080P
+https://edge-e3.evrideo.tv/f2dcbecf-5af0-47db-a82e-032112050a23_1000027346_HLS/manifest.m3u8
 #EXTINF:-1 tvg-id="PlutoTVFilmThrillerItaly.it" tvg-name="FILM THRILLER – PLUTO TV" tvg-logo="https://i.imgur.com/hIWMGRW.png" group-title="🗂️ YEDEKLER (11316)", FILM THRILLER – PLUTO TV 360P
 https://service-stitcher.clusters.pluto.tv/v1/stitch/embed/hls/channel/608aa5e995132a00075f7005/master.m3u8?deviceId=channel&deviceModel=web&deviceVersion=1.0&appVersion=1.0&deviceType=rokuChannel&deviceMake=rokuChannel&deviceDNT=1&advertisingId=channel&embedPartner=rokuChannel&appName=rokuchannel&is_lat=1&bmodel=bm1&content=channel&platform=web&tags=ROKU_CONTENT_TAGS&coppa=false&content_type=livefeed&rdid=channel&genre=ROKU_ADS_CONTENT_GENRE&content_rating=ROKU_ADS_CONTENT_RATING&studio_id=viacom&channel_id=channel
 #EXTINF:-1 tvg-id="PlutoTVFilmItaly.it" tvg-name="FILM – PLUTO TV" tvg-logo="https://i.imgur.com/QeFc7F3.png" group-title="🗂️ YEDEKLER (11316)", FILM – PLUTO TV 360P
@@ -11033,10 +10857,6 @@ https://d2qm50imcbcfqx.cloudfront.net/nlpo/clr-nlpo/haarlem105/index.m3u8
 https://ncdn.telewebion.ir/habib/live/playlist.m3u8
 #EXTINF:-1 tvg-id="HAHATV.sk@SD" tvg-name="HAHA TV" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", HAHA TV 1080P
 https://dash3.antik.sk/live/test_haha_tv/playlist.m3u8
-#EXTINF:-1 tvg-id="haiphong" tvg-name="HẢI PHÒNG HD" tvg-logo="https://media.thhp.vn/upload/files/avatar/NewFolder/Logo_THP.png" group-title="🗂️ YEDEKLER (11316)", HẢI PHÒNG HD 1080P
-https://live.mediatech.vn/live/285a4c99665fdf84e94956c66bc7dc7eb5d/playlist.m3u8
-#EXTINF:-1 tvg-id="haiphongplus" tvg-name="HẢI PHÒNG PLUS HD" tvg-logo="https://thp.org.vn/wp-content/uploads/2019/12/THP-Logo.png" group-title="🗂️ YEDEKLER (11316)", HẢI PHÒNG PLUS HD 720P
-https://live.mediatech.vn/live/28548ca35823d41426d8b3da7ed82bdab13/playlist.m3u8
 #EXTINF:-1 tvg-id="HainaVision.do@SD" tvg-name="HAINA VISION (720P)" tvg-logo="https://i.imgur.com/eoodUNJ.png" group-title="🗂️ YEDEKLER (11316)", HAINA VISION (720P) 1080P
 https://cdn.streamingcpanel.com:3447/live/hainavisionlive.m3u8
 #EXTINF:-1 tvg-id="HaitiNewsChannel.ht@SD" tvg-name="HAITI NEWS CHANNEL (1080P) [NOT 24/7]" tvg-logo="https://m.media-amazon.com/images/I/51bJg+c7vRL.png" group-title="🗂️ YEDEKLER (11316)", HAITI NEWS CHANNEL (1080P) [NOT 24/7] 720P
@@ -11219,6 +11039,10 @@ https://l5.cloudskep.com/hellenictv/htv/playlist.m3u8
 https://live77cdn2.antenaplay.ro/live2_fast/ch5/stream.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="HELLS KITCHEN" tvg-logo="https://images.pluto.tv/channels/6095ad97351eb0000754c1e6/colorLogoPNG.png" group-title="🗂️ YEDEKLER (11316)", HELLS KITCHEN 360P
 https://jmp2.uk/plu-6095ad97351eb0000754c1e6.m3u8
+#EXTINF:-1 tvg-id="" tvg-name="HERCAI-TR S01 HERCAI S01 E01" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", HERCAI-TR S01 HERCAI S01 E01 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/646938.mp4
+#EXTINF:-1 tvg-id="" tvg-name="HERCAI-TR S01 HERCAI S01 E02" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", HERCAI-TR S01 HERCAI S01 E02 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/646939.mp4
 #EXTINF:-1 tvg-id="" tvg-name="HERCAI-TR S01 HERCAI S01 E3.MP4" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", HERCAI-TR S01 HERCAI S01 E3.MP4 480P [SES KONTROL]
 http://ipflix.click:80/series/sq1x0qr86b/7777/646498.mp4
 #EXTINF:-1 tvg-id="" tvg-name="HERCAI-TR S01 HERCAI.S01E04.MKV" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", HERCAI-TR S01 HERCAI.S01E04.MKV 480P [SES KONTROL]
@@ -11305,8 +11129,6 @@ https://stream.ottlive.co.in/hindikhabar/index.m3u8
 https://mumt01.tangotv.in/O5aw8Zn3HINDUDHARMAM/index.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="HIP-HOP/R&B" tvg-logo="https://provider-static.plex.tv/epg/cms/production/2693c8ce-05be-463b-894e-62e3a1f3b834/hip_hop_r_n_b_rdx.png" group-title="🗂️ YEDEKLER (11316)", HIP-HOP/R&B 432P
 https://epg.provider.plex.tv/library/parts/643054b1fc3be59477853717-62ee7ae2271f393d2d9f709e/?X-Plex-Token=JxvdjQaYsT8th2yysxpp
-#EXTINF:-1 tvg-id="HirTV.hu" tvg-name="HÍR TV" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Hirtvujlogo05.jpg/250px-Hirtvujlogo05.jpg" group-title="🗂️ YEDEKLER (11316)", HÍR TV 1080P
-https://video11.videa.hu/static/live/8.3754346.2530409.1.0.1.1/index.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="HIRSHABELLE TV" tvg-logo="https://www.lyngsat.com/logo/tv/hh/hirshabelle-tvjpg-so.png" group-title="🗂️ YEDEKLER (11316)", HIRSHABELLE TV 576P
 https://cd198.anystream.uk:9092/iqapp/h1rshbe1iptv/playlist.m3u8
 #EXTINF:-1 tvg-id="HiruTV.lk@SD" tvg-name="HIRU TV (360P) [NOT 24/7]" tvg-logo="https://i.imgur.com/M66UqPB.png" group-title="🗂️ YEDEKLER (11316)", HIRU TV (360P) [NOT 24/7] 360P
@@ -11533,16 +11355,12 @@ https://cdn4.mjunoon.tv:8087/streamtest/82M/chunks.m3u8
 https://p8.vzan.com/slowlive/415983998730568937/live.m3u8
 #EXTINF:-1 tvg-id="HunanTV.cn@SD" tvg-name="HUNAN TV (2160P)" tvg-logo="https://parco-zh.github.io/demo/HNWS.png" group-title="🗂️ YEDEKLER (11316)", HUNAN TV (2160P) 2160P
 http://hlsal-ldvt.qing.mgtv.com/nn_live/nn_x64/dWlwPTEyNy4wLjAuMSZ1aWQ9cWluZy1jbXMmbm5fdGltZXpvbmU9OCZjZG5leF9pZD1hbF9obHNfbGR2dCZ1dWlkPTliODY4NmU5ZTM2YzYwMmMmZT02OTE0NjA0JnY9MSZpZD1ITldTWkdTVCZzPTcwN2RiYTc2YzJjNmJmMTQ4MmUyZGYzOWU2NWM3YWFi/HNWSZGST.m3u8
-#EXTINF:-1 tvg-id="hungyen" tvg-name="HƯNG YÊN HD" tvg-logo="https://static.wikia.nocookie.net/logos/images/e/eb/HY_logo_2023%2C_2024.png/revision/latest/scale-to-width-down/1000?cb=20240210021358&path-prefix=vi" group-title="🗂️ YEDEKLER (11316)", HƯNG YÊN HD 1080P
-https://live.mediatech.vn/live/285f5449d7d7d2946e0bd2d54b7e60f25a4/playlist.m3u8
 #EXTINF:-1 tvg-id="Hungry.us@SD" tvg-name="HUNGRY (720P)" tvg-logo="https://i.imgur.com/MIUDYh0.png" group-title="🗂️ YEDEKLER (11316)", HUNGRY (720P) 360P
 https://dos35knl8v49a.cloudfront.net/v1/food/samsungheadend_us/latest/main/hls/playlist.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="HUNTER" tvg-logo="https://provider-static.plex.tv/epg/cms/production/2e34b413-32fc-4600-8b29-94562670814c/Hunter_Logo_Dark.png" group-title="🗂️ YEDEKLER (11316)", HUNTER 1080P
 https://epg.provider.plex.tv/library/parts/643054b1fc3be59477853717-66f6b6baac1a1890ef197a4b/?X-Plex-Token=JxvdjQaYsT8th2yysxpp
 #EXTINF:-1 tvg-id="" tvg-name="HUNTER X HUNTER" tvg-logo="https://images.pluto.tv/channels/65d916a2f7f0af0008b6540d/colorLogoPNG.png" group-title="🗂️ YEDEKLER (11316)", HUNTER X HUNTER 360P
 https://jmp2.uk/plu-65d916a2f7f0af0008b6540d.m3u8
-#EXTINF:-1 tvg-id="" tvg-name="HÜR TV" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", HÜR TV 720P
-https://live.euromediacenter.com/hurtv/tracks-v1a1/mono.m3u8
 #EXTINF:-1 tvg-id="HuzurTV.ru@SD" tvg-name="HUZUR TV (1080P) [NOT 24/7]" tvg-logo="https://i.imgur.com/Abg1fct.png" group-title="🗂️ YEDEKLER (11316)", HUZUR TV (1080P) [NOT 24/7] 1080P
 https://hls-mycdn08724960135.cdnvideo.ru/mycdn08724960135/stream1/playlist.m3u8
 #EXTINF:-1 tvg-id="HyderTV.ca@SD" tvg-name="HYDER TV (720P)" tvg-logo="https://i.imgur.com/reHjjRZ.png" group-title="🗂️ YEDEKLER (11316)", HYDER TV (720P) 720P
@@ -11553,6 +11371,16 @@ https://streammix.alsolnet.com/hyperadio/live/playlist.m3u8
 https://livejj.hyundaihmall.com:8443/live/ngrp:hmall.stream_pc/playlist.m3u8
 #EXTINF:-1 tvg-id="HyundaiHomeShoppingPlusShop.kr@SD" tvg-name="HYUNDAI HOME SHOPPING + SHOP (720P)" tvg-logo="https://i.imgur.com/DoNOuZE.png" group-title="🗂️ YEDEKLER (11316)", HYUNDAI HOME SHOPPING + SHOP (720P) 720P
 https://dtvstreaming.hyundaihmall.com/newcjp3/_definst_/newcjpstream.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="HirTV.hu" tvg-name="HÍR TV" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Hirtvujlogo05.jpg/250px-Hirtvujlogo05.jpg" group-title="🗂️ YEDEKLER (11316)", HÍR TV 1080P
+https://video11.videa.hu/static/live/8.3754346.2530409.1.0.1.1/index.m3u8
+#EXTINF:-1 tvg-id="" tvg-name="HÜR TV" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", HÜR TV 720P
+https://live.euromediacenter.com/hurtv/tracks-v1a1/mono.m3u8
+#EXTINF:-1 tvg-id="hungyen" tvg-name="HƯNG YÊN HD" tvg-logo="https://static.wikia.nocookie.net/logos/images/e/eb/HY_logo_2023%2C_2024.png/revision/latest/scale-to-width-down/1000?cb=20240210021358&path-prefix=vi" group-title="🗂️ YEDEKLER (11316)", HƯNG YÊN HD 1080P
+https://live.mediatech.vn/live/285f5449d7d7d2946e0bd2d54b7e60f25a4/playlist.m3u8
+#EXTINF:-1 tvg-id="haiphong" tvg-name="HẢI PHÒNG HD" tvg-logo="https://media.thhp.vn/upload/files/avatar/NewFolder/Logo_THP.png" group-title="🗂️ YEDEKLER (11316)", HẢI PHÒNG HD 1080P
+https://live.mediatech.vn/live/285a4c99665fdf84e94956c66bc7dc7eb5d/playlist.m3u8
+#EXTINF:-1 tvg-id="haiphongplus" tvg-name="HẢI PHÒNG PLUS HD" tvg-logo="https://thp.org.vn/wp-content/uploads/2019/12/THP-Logo.png" group-title="🗂️ YEDEKLER (11316)", HẢI PHÒNG PLUS HD 720P
+https://live.mediatech.vn/live/28548ca35823d41426d8b3da7ed82bdab13/playlist.m3u8
 #EXTINF:-1 tvg-id="IAmChannel.id@SD" tvg-name="I AM CHANNEL (576P)" tvg-logo="https://i.imgur.com/Gg6OcGT.png" group-title="🗂️ YEDEKLER (11316)", I AM CHANNEL (576P) 1080P
 https://61146e7ab7a66.streamlock.net:8089/tes/1/chunklist.m3u8
 #EXTINF:-1 tvg-id="ILoveLucy.us@SD" tvg-name="I LOVE LUCY" tvg-logo="https://images.pluto.tv/channels/63a2f1dda0d69700078b7cba/colorLogoPNG.png" group-title="🗂️ YEDEKLER (11316)", I LOVE LUCY 240P
@@ -11675,8 +11503,6 @@ https://rpn.bozztv.com/ignitelive/ignitetv/ignitetv/tracks-v1a1/mono.m3u8
 https://f-tx-edge-87.christianworldmedia.com/313watkins/mp4:313watkins/playlist.m3u8
 #EXTINF:-1 tvg-id="IIPCTV.ca@SD" tvg-name="IIPC TV (720P)" tvg-logo="https://i.imgur.com/mIih39Y.png" group-title="🗂️ YEDEKLER (11316)", IIPC TV (720P) 720P
 https://rpn.bozztv.com/dvrfl03/iipctv/index.m3u8
-#EXTINF:-1 tvg-id="" tvg-name="İKRA TV" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", İKRA TV 720P
-https://live.artidijitalmedya.com/artidijital_diyartv/diyartv/chunks.m3u8
 #EXTINF:-1 tvg-id="IlBancodeiPugni.us@Italy" tvg-name="IL BANCO DEI PUGNI" tvg-logo="https://i.imgur.com/NZDUlME.png" group-title="🗂️ YEDEKLER (11316)", IL BANCO DEI PUGNI 360P
 https://jmp2.uk/plu-60e4507a06171800072339a3.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="IL BANCO DEI PUGNI – PLUTO TV" tvg-logo="https://i.imgur.com/2Lj1sdf.png" group-title="🗂️ YEDEKLER (11316)", IL BANCO DEI PUGNI – PLUTO TV 360P
@@ -12159,8 +11985,6 @@ https://video08.logicahost.com.br/istvnacional/srt.stream/istvnacional.m3u8
 https://stmv1.srvstm.com/sistema7933/sistema7933/playlist.m3u8
 #EXTINF:-1 tvg-id="ISTV.la@SD" tvg-name="ISTV (LAOS) (480P)" tvg-logo="https://i.imgur.com/TGAKFcV.jpg" group-title="🗂️ YEDEKLER (11316)", ISTV (LAOS) (480P) 720P
 https://livefta.malimarcdn.com/ftaedge00/ichannel.sdp/playlist.m3u8
-#EXTINF:-1 tvg-id="" tvg-name="İSVİÇRE TV" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", İSVİÇRE TV 720P
-https://i41.ozelip.com:3269/hybrid/play.m3u8
 #EXTINF:-1 tvg-id="ItIsWrittenTV.us@SD" tvg-name="IT IS WRITTEN TV (1080P)" tvg-logo="https://i.imgur.com/0jgzoSF.png" group-title="🗂️ YEDEKLER (11316)", IT IS WRITTEN TV (1080P) 234P
 https://itiswrittentv.akamaized.net/xR8gyATuHMVx69u9G79DXnpNRL/playlist.m3u8
 #EXTINF:-1 tvg-id="ItsSupernaturalNetwork.us@SD" tvg-name="IT'S SUPERNATURAL! NETWORK (1080P)" tvg-logo="https://i.imgur.com/JWrdL9a.png" group-title="🗂️ YEDEKLER (11316)", IT'S SUPERNATURAL! NETWORK (1080P) 540P
@@ -12203,6 +12027,10 @@ http://141.94.193.53:80/Izaura_TV_HD/index.m3u8
 https://cdn10.live-tv.cloud/izod/izod-abr-lq/playlist.m3u8
 #EXTINF:-1 tvg-id="Izvestia.ru@SD" tvg-name="IZVESTIA (1080P)" tvg-logo="https://i.imgur.com/r5HzA6J.png" group-title="🗂️ YEDEKLER (11316)", IZVESTIA (1080P) 1080P
 http://igi-hls.cdnvideo.ru/igi/igi_tcode/playlist.m3u8
+#EXTINF:-1 tvg-id="" tvg-name="İKRA TV" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", İKRA TV 720P
+https://live.artidijitalmedya.com/artidijital_diyartv/diyartv/chunks.m3u8
+#EXTINF:-1 tvg-id="" tvg-name="İSVİÇRE TV" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", İSVİÇRE TV 720P
+https://i41.ozelip.com:3269/hybrid/play.m3u8
 #EXTINF:-1 tvg-id="J3NEWSTV.br@SD" tvg-name="J3NEWS TV" tvg-logo="https://i.imgur.com/lezIQyL.png" group-title="🗂️ YEDEKLER (11316)", J3NEWS TV 720P
 https://video01.brascast.com/d92ebb4f/d92ebb4f/playlist.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="JACK HANNA" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/GBBD50000084W_20250107T030710SQUARE.png" group-title="🗂️ YEDEKLER (11316)", JACK HANNA 360P
@@ -12773,10 +12601,10 @@ http://livestream.usatv.com/hls/master-iUSATVLIVENET.m3u8
 https://streamer1.connectto.com/AABC_WEB_1201/index.m3u8
 #EXTINF:-1 tvg-id="KiKA.de@SD" tvg-name="KIKA (1080P) [NOT 24/7]" tvg-logo="https://i.imgur.com/vZdNp5S.png" group-title="🗂️ YEDEKLER (11316)", KIKA (1080P) [NOT 24/7] 360P
 https://kikahls.akamaized.net/hls/live/2022690/livetvkika_ww/master.m3u8
-#EXTINF:-1 tvg-id="KIKA.de" tvg-name="KIKA Ⓖ" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Kika_2012.svg/500px-Kika_2012.svg.png" group-title="🗂️ YEDEKLER (11316)", KIKA Ⓖ 360P
-https://kikageohls.akamaized.net/hls/live/2022693/livetvkika_de/master.m3u8
 #EXTINF:-1 tvg-id="KiKA.de@HD" tvg-name="KIKA HD" tvg-logo="https://i.imgur.com/vZdNp5S.png" group-title="🗂️ YEDEKLER (11316)", KIKA HD 720P
 https://dash4.antik.sk/live/test_kika_tizen/playlist.m3u8
+#EXTINF:-1 tvg-id="KIKA.de" tvg-name="KIKA Ⓖ" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Kika_2012.svg/500px-Kika_2012.svg.png" group-title="🗂️ YEDEKLER (11316)", KIKA Ⓖ 360P
+https://kikageohls.akamaized.net/hls/live/2022693/livetvkika_de/master.m3u8
 #EXTINF:-1 tvg-id="KilisuciTV.id@SD" tvg-name="KILISUCI TV" tvg-logo="https://upload.wikimedia.org/wikipedia/id/e/e4/Kilisuci_TV_NEW_LOGO_2016.png" group-title="🗂️ YEDEKLER (11316)", KILISUCI TV 360P
 https://5bf7b725107e5.streamlock.net/kstv/kstv/playlist.m3u8
 #EXTINF:-1 tvg-id="KingTV.pk@SD" tvg-name="KING TV (720P) [NOT 24/7]" tvg-logo="https://i.imgur.com/dujrwRE.png" group-title="🗂️ YEDEKLER (11316)", KING TV (720P) [NOT 24/7] 720P
@@ -13407,8 +13235,6 @@ https://cdn.streamlane.tv/hls/ltv/master.m3u8
 https://5c0956165db0b.streamlock.net:8090/directo/_definst_/lancelot.television/master.m3u8
 #EXTINF:-1 tvg-id="LandleTV.at@SD" tvg-name="LANDLE TV (1080P) [NOT 24/7]" tvg-logo="https://i.imgur.com/omLVQ4r.png" group-title="🗂️ YEDEKLER (11316)", LANDLE TV (1080P) [NOT 24/7] 1080P
 https://streaming13.huberwebmedia.at/LiveApp/streams/985585225397790082777809.m3u8
-#EXTINF:-1 tvg-id="langson" tvg-name="LẠNG SƠN HD" tvg-logo="https://img.hplus.com.vn/728x409/banner/2018/06/05/554116-Lang-Son.png" group-title="🗂️ YEDEKLER (11316)", LẠNG SƠN HD 1080P
-https://stream.langsontv.vn/live/285c78da0c246524c90917842f8de03bd21/chunklist.m3u8
 #EXTINF:-1 tvg-id="LangSonTV.vn@SD" tvg-name="LANG SON TV (720P) [GEO-BLOCKED]" tvg-logo="https://i.imgur.com/Sj7EjYT.png" group-title="🗂️ YEDEKLER (11316)", LANG SON TV (720P) [GEO-BLOCKED] 1080P
 https://stream.langsontv.vn/live/285c78da0c246524c90917842f8de03bd21/playlist.m3u8
 #EXTINF:-1 tvg-id="LangstraatTV.nl@SD" tvg-name="LANGSTRAAT TV (720P)" tvg-logo="https://i.imgur.com/xchUfks.png" group-title="🗂️ YEDEKLER (11316)", LANGSTRAAT TV (720P) 270P
@@ -13515,8 +13341,6 @@ https://5790d294af2dc.streamlock.net/lenaratv/lenaratv/playlist.m3u8
 https://lencatelevision.com/hls/stream.m3u8
 #EXTINF:-1 tvg-id="LenTV24.ru" tvg-name="LENTV24 (540P)" tvg-logo="https://i.imgur.com/d02uxkB.png" group-title="🗂️ YEDEKLER (11316)", LENTV24 (540P) 1920P
 https://rt-nw-spb-htlive.cdn.ngenix.net/hls/CH_R02_LENTVSD/variant.m3u8
-#EXTINF:-1 tvg-id="" tvg-name="LÉO MATTÉÏ: BRIGADA DE PROTECCIÓN" tvg-logo="https://images.pluto.tv/channels/6964d2179ba4ac18051a18ce/colorLogoPNG_1777976845815.png" group-title="🗂️ YEDEKLER (11316)", LÉO MATTÉÏ: BRIGADA DE PROTECCIÓN 360P
-https://jmp2.uk/plu-6964d2179ba4ac18051a18ce.m3u8
 #EXTINF:-1 tvg-id="LEOMiddelseTV.nl@SD" tvg-name="LEO MIDDELSE TV (480P)" tvg-logo="https://i.imgur.com/wF3FFZv.png" group-title="🗂️ YEDEKLER (11316)", LEO MIDDELSE TV (480P) 720P
 https://ms7.mx-cd.net/tv/238-2061506/Omroep_LEO_TV.smil/playlist.m3u8
 #EXTINF:-1 tvg-id="Leomax24.ru@SD" tvg-name="LEOMAX 24 (1080P)" tvg-logo="https://i.imgur.com/qU9ohQu.png" group-title="🗂️ YEDEKLER (11316)", LEOMAX 24 (1080P) 1080P
@@ -13553,8 +13377,6 @@ https://chankillo.agenciastreaming.com/lidertv/index.m3u8
 https://live.lietuvosryto.tv/live/hls/eteris.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="LIFE TV" tvg-logo="https://i.imgur.com/jO8kAY2.png" group-title="🗂️ YEDEKLER (11316)", LIFE TV 1080P
 https://live.artidijitalmedya.com/artidijital_lifetv/lifetv/playlist.m3u8#all
-#EXTINF:-1 tvg-id="" tvg-name="LİFE TV" tvg-logo="https://i.imgur.com/jO8kAY2.png" group-title="🗂️ YEDEKLER (11316)", LİFE TV 1080P
-https://live.artidijitalmedya.com/artidijital_lifetv/lifetv/chunks.m3u8
 #EXTINF:-1 tvg-id="LifeTV.ee@SD" tvg-name="LIFE TV (ESTONIA) (432P) [NOT 24/7]" tvg-logo="https://i.imgur.com/JhrTB82.png" group-title="🗂️ YEDEKLER (11316)", LIFE TV (ESTONIA) (432P) [NOT 24/7] 432P
 http://lifetv.bitflip.ee/live/stream1_1/index.m3u8
 #EXTINF:-1 tvg-id="LifeTV.ee" tvg-name="LIFE TV ESTONIA" tvg-logo="https://i.imgur.com/JhrTB82.png" group-title="🗂️ YEDEKLER (11316)", LIFE TV ESTONIA 432P
@@ -13621,6 +13443,8 @@ https://livestream.liveone.com/lc1/p1.m3u8
 https://cdn.vegasplus.us/vegas/lac/playlist.m3u8
 #EXTINF:-1 tvg-id="LivingFaithTV.us@SD" tvg-name="LIVING FAITH TV (540P)" tvg-logo="https://i.imgur.com/FuNpesJ.png" group-title="🗂️ YEDEKLER (11316)", LIVING FAITH TV (540P) 720P
 https://cdn-unified-hls.streamspot.com/ingest1/0b5c0f18e9/playlist.m3u8?origin=1
+#EXTINF:-1 tvg-id="" tvg-name="LİFE TV" tvg-logo="https://i.imgur.com/jO8kAY2.png" group-title="🗂️ YEDEKLER (11316)", LİFE TV 1080P
+https://live.artidijitalmedya.com/artidijital_lifetv/lifetv/chunks.m3u8
 #EXTINF:-1 tvg-id="LLBNHisLight.us@SD" tvg-name="LLBN HIS LIGHT (720P)" tvg-logo="https://i.imgur.com/YkLZjRw.png" group-title="🗂️ YEDEKLER (11316)", LLBN HIS LIGHT (720P) 360P
 https://brightstar-hislight-pull-secure.akamaized.net/brightstarhislight/stream.m3u8
 #EXTINF:-1 tvg-id="LLBNHisWord.us@SD" tvg-name="LLBN HIS WORD (720P)" tvg-logo="https://i.imgur.com/GbyHlS2.png" group-title="🗂️ YEDEKLER (11316)", LLBN HIS WORD (720P) 360P
@@ -13809,6 +13633,10 @@ https://jmp2.uk/plu-61c18f62f5acaf0007f83135.m3u8
 https://jmp2.uk/plu-61c19165decece0007e9b2f3.m3u8
 #EXTINF:-1 tvg-id="LyxfallanNorge.se@SE" tvg-name="LYXFALLAN NORGE" tvg-logo="https://images.pluto.tv/channels/67f7d328efc5473b6b4ac5f4/colorLogoPNG_1745915912635.png" group-title="🗂️ YEDEKLER (11316)", LYXFALLAN NORGE 360P
 https://jmp2.uk/plu-67f7d328efc5473b6b4ac5f4.m3u8
+#EXTINF:-1 tvg-id="" tvg-name="LÉO MATTÉÏ: BRIGADA DE PROTECCIÓN" tvg-logo="https://images.pluto.tv/channels/6964d2179ba4ac18051a18ce/colorLogoPNG_1777976845815.png" group-title="🗂️ YEDEKLER (11316)", LÉO MATTÉÏ: BRIGADA DE PROTECCIÓN 360P
+https://jmp2.uk/plu-6964d2179ba4ac18051a18ce.m3u8
+#EXTINF:-1 tvg-id="langson" tvg-name="LẠNG SƠN HD" tvg-logo="https://img.hplus.com.vn/728x409/banner/2018/06/05/554116-Lang-Son.png" group-title="🗂️ YEDEKLER (11316)", LẠNG SƠN HD 1080P
+https://stream.langsontv.vn/live/285c78da0c246524c90917842f8de03bd21/chunklist.m3u8
 #EXTINF:-1 tvg-id="MNaduTV.in@SD" tvg-name="M NADU TV (576P)" tvg-logo="https://jiotvimages.cdn.jio.com/dare_images/images/M_Nadu.png" group-title="🗂️ YEDEKLER (11316)", M NADU TV (576P) 720P
 https://cloudcdnplayer.mslivestream.net/mslivecdn/mnadu/index.m3u8
 #EXTINF:-1 tvg-id="MNews.pk@SD" tvg-name="M NEWS (1080P)" tvg-logo="https://mnews.pk/wp-content/uploads/2025/10/mnews-logo-news.png" group-title="🗂️ YEDEKLER (11316)", M NEWS (1080P) 1080P
@@ -14379,8 +14207,6 @@ https://eu1.servers10.com:8081/8214/index.m3u8
 https://video1.earthcam.com/myearthcam/075ff02f78c35af55564cf3af3b3f750.flv/playlist.m3u8
 #EXTINF:-1 tvg-id="meWATCHLIVE1.sg@SD" tvg-name="MEWATCH LIVE 1 (1080P)" tvg-logo="https://i.imgur.com/ppxUDxB.png" group-title="🗂️ YEDEKLER (11316)", MEWATCH LIVE 1 (1080P) 360P
 https://tglmp04.akamaized.net/out/v1/898b1cbac7c747e3b1f3deb460e9b67e/manifest.mpd
-#EXTINF:-1 tvg-id="MexicoTravelTV.mx" tvg-name="MÉXICO TRAVEL TV" tvg-logo="https://graph.facebook.com/MexicoTravelChannelTV/picture?width=200&height=200" group-title="🗂️ YEDEKLER (11316)", MÉXICO TRAVEL TV 720P
-https://5ca9af4645e15.streamlock.net/mexicotravel/videomexicotravel/playlist.m3u8
 #EXTINF:-1 tvg-id="MexiquenseTV.mx@SD" tvg-name="MEXIQUENSE TV (720P)" tvg-logo="https://i.imgur.com/iVfzakA.png" group-title="🗂️ YEDEKLER (11316)", MEXIQUENSE TV (720P) 1080P
 https://5e50264bd6766.streamlock.net/mexiquense/videomexiquense/playlist.m3u8
 #EXTINF:-1 tvg-id="MezzoLive.fr@SD" tvg-name="MEZZO LIVE (1080P)" tvg-logo="https://i.imgur.com/H9ytKPN.png" group-title="🗂️ YEDEKLER (11316)", MEZZO LIVE (1080P) 1080P
@@ -15063,6 +14889,8 @@ https://appletree-mytimespain-rakuten.amagi.tv/playlist.m3u8
 https://appletree-mytimeuk-rakuten.amagi.tv/playlist.m3u8
 #EXTINF:-1 tvg-id="MyTimeMovieNetworkEast.us@SD" tvg-name="MYTIME MOVIE NETWORK EAST (1080P)" tvg-logo="https://i.imgur.com/HYgxPVQ.png" group-title="🗂️ YEDEKLER (11316)", MYTIME MOVIE NETWORK EAST (1080P) 360P
 https://appletree-mytimeau-samsung.amagi.tv/playlist.m3u8
+#EXTINF:-1 tvg-id="MexicoTravelTV.mx" tvg-name="MÉXICO TRAVEL TV" tvg-logo="https://graph.facebook.com/MexicoTravelChannelTV/picture?width=200&height=200" group-title="🗂️ YEDEKLER (11316)", MÉXICO TRAVEL TV 720P
+https://5ca9af4645e15.streamlock.net/mexicotravel/videomexicotravel/playlist.m3u8
 #EXTINF:-1 tvg-id="ntv.de@SD" tvg-name="N-TV" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/N-tv_logo-september2017.svg/960px-N-tv_logo-september2017.svg.png" group-title="🗂️ YEDEKLER (11316)", N-TV 576P
 https://dash4.antik.sk/live/test_ntv_tizen/playlist.m3u8
 #EXTINF:-1 tvg-id="N1BosniaHerzegovina.ba" tvg-name="N1 BOSNA I HERCEGOVINA" tvg-logo="https://i.imgur.com/72oMSWz.png" group-title="🗂️ YEDEKLER (11316)", N1 BOSNA I HERCEGOVINA 576P
@@ -15189,6 +15017,8 @@ http://187.102.210.46/NATIVATV/index.m3u8
 https://live-evg7.tv360.bitel.com.pe/bitel/nativachanchamayoSRT/playlist.m3u8
 #EXTINF:-1 tvg-id="PlutoTVNaturaItaly.it" tvg-name="NATURA – PLUTO TV" tvg-logo="https://i.imgur.com/Pc4gx12.png" group-title="🗂️ YEDEKLER (11316)", NATURA – PLUTO TV 360P
 https://service-stitcher.clusters.pluto.tv/v1/stitch/embed/hls/channel/60802b37709d6b0007b0c549/master.m3u8?deviceId=channel&deviceModel=web&deviceVersion=1.0&appVersion=1.0&deviceType=rokuChannel&deviceMake=rokuChannel&deviceDNT=1&advertisingId=channel&embedPartner=rokuChannel&appName=rokuchannel&is_lat=1&bmodel=bm1&content=channel&platform=web&tags=ROKU_CONTENT_TAGS&coppa=false&content_type=livefeed&rdid=channel&genre=ROKU_ADS_CONTENT_GENRE&content_rating=ROKU_ADS_CONTENT_RATING&studio_id=viacom&channel_id=channel
+#EXTINF:-1 tvg-id="NaturalTV.tr" tvg-name="NATURAL TV (1080P)" tvg-logo="https://i.imgur.com/rfcJ674.png" group-title="🗂️ YEDEKLER (11316)", NATURAL TV (1080P) 1080P
+https://edge1.socialsmart.tv/naturaltv/bant1/playlist.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="NATURE TIME" tvg-logo="https://images.pluto.tv/channels/60dd6b1da79e4d0007309455/colorLogoPNG.png" group-title="🗂️ YEDEKLER (11316)", NATURE TIME 576P
 https://jmp2.uk/plu-60dd6b1da79e4d0007309455.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="NATURESCAPE – PLUTO TV" tvg-logo="https://i.imgur.com/CGB6qiV.png" group-title="🗂️ YEDEKLER (11316)", NATURESCAPE – PLUTO TV 360P
@@ -15581,10 +15411,10 @@ http://198.58.104.90:8989/nfl/index.m3u8
 https://617c5175c970b.streamlock.net:4444/tvlink/live/playlist.m3u8
 #EXTINF:-1 tvg-id="NGFederal.ar@SD" tvg-name="NG FEDERAL (720P)" tvg-logo="https://i.imgur.com/lJCIqYn.png" group-title="🗂️ YEDEKLER (11316)", NG FEDERAL (720P) 720P
 http://www.coninfo.net:1935/tvlink/live/playlist.m3u8
-#EXTINF:-1 tvg-id="" tvg-name="NGHỆ AN HD" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/9/9b/Logo_NTV_Ngh%E1%BB%87_An_2013.png" group-title="🗂️ YEDEKLER (11316)", NGHỆ AN HD 1080P
-https://live.truyenhinhnghean.vn/hls/na1/index.m3u8
 #EXTINF:-1 tvg-id="NgheAnTV.vn@SD" tvg-name="NGHE AN TV (720P)" tvg-logo="https://i.imgur.com/d9YEEwC.png" group-title="🗂️ YEDEKLER (11316)", NGHE AN TV (720P) 720P
 https://67tz1gnwrvxic.cmccdn.net/hls/NGHEANTV/03.m3u8
+#EXTINF:-1 tvg-id="" tvg-name="NGHỆ AN HD" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/9/9b/Logo_NTV_Ngh%E1%BB%87_An_2013.png" group-title="🗂️ YEDEKLER (11316)", NGHỆ AN HD 1080P
+https://live.truyenhinhnghean.vn/hls/na1/index.m3u8
 #EXTINF:-1 tvg-id="NH.nl@SD" tvg-name="NH (1080P)" tvg-logo="https://i.imgur.com/SPkK4md.png" group-title="🗂️ YEDEKLER (11316)", NH (1080P) 1080P
 https://takeoff.jetstre.am/?account=nhnieuws&file=live&output=playlist.m3u8&protocol=https&service=wowza&type=live
 #EXTINF:-1 tvg-id="NHBollyFlix.in@HD" tvg-name="NH BOLLYFLIX (1080P)" tvg-logo="https://i.ibb.co/yF9MPTDK/blyflx.png" group-title="🗂️ YEDEKLER (11316)", NH BOLLYFLIX (1080P) 1080P
@@ -15947,6 +15777,22 @@ https://cdn15.live-tv.cloud/ua_infinitas_tv/ntn-abr/playlist.m3u8
 https://stream1.bitred.cl/ntn24/index.m3u8
 #EXTINF:-1 tvg-id="NTS.ru@SD" tvg-name="NTS (1080P) [NOT 24/7]" tvg-logo="https://i.imgur.com/skkDR7q.png" group-title="🗂️ YEDEKLER (11316)", NTS (1080P) [NOT 24/7] 1080P
 https://peqk71plnjy.a.trbcdn.net/livemaster/w4kz7pki62_nts_tv/playlist.m3u8
+#EXTINF:-1 tvg-id="NTV.ru" tvg-name="NTV (1080P)" tvg-logo="https://i.imgur.com/9r1BKzK.png" group-title="🗂️ YEDEKLER (11316)", NTV (1080P) 1080P
+http://flussonic.linkintel.ru/ntv/index.m3u8
+#EXTINF:-1 tvg-id="ntv.al@SD" tvg-name="NTV (720P)" tvg-logo="https://i.imgur.com/gtZLzxq.png" group-title="🗂️ YEDEKLER (11316)", NTV (720P) 720P
+https://protokolldns.xyz/ntv.l.i.v.e5547892023/index.m3u8
+#EXTINF:-1 tvg-id="NTV.bd@SD" tvg-name="NTV (BANGLADESH) (720P)" tvg-logo="https://i.imgur.com/l75bDTx.png" group-title="🗂️ YEDEKLER (11316)", NTV (BANGLADESH) (720P) 720P
+https://tvsen5.aynaott.com/xV4jEKf3D9zc/index.m3u8
+#EXTINF:-1 tvg-id="NTV.br@SD" tvg-name="NTV (BRAZIL) (720P)" tvg-logo="https://i.imgur.com/n79nkVC.png" group-title="🗂️ YEDEKLER (11316)", NTV (BRAZIL) (720P) 720P
+https://cdn.livespanel.com/nossatv/nossatv/playlist.m3u8
+#EXTINF:-1 tvg-id="NTV.ca@CJONDT" tvg-name="NTV (CANADA) CJON-DT (480P)" tvg-logo="https://i.imgur.com/KQtQg5y.png" group-title="🗂️ YEDEKLER (11316)", NTV (CANADA) CJON-DT (480P) 480P
+https://2-fss-1.streamhoster.com/pl_122/201748-1431018-1/playlist.m3u8
+#EXTINF:-1 tvg-id="NTV.mv@SD" tvg-name="NTV (MALDIVES)" tvg-logo="https://i.imgur.com/jnXpcwV.png" group-title="🗂️ YEDEKLER (11316)", NTV (MALDIVES) 1080P
+https://sunplay-cdn.bitratelabs.com/live/local-channel/ntv-e3d4300b49c8c901e9339174215d7580/index.m3u8
+#EXTINF:-1 tvg-id="NTVPlus.ca@SD" tvg-name="NTV+" tvg-logo="https://i.imgur.com/YEUhPBv.png" group-title="🗂️ YEDEKLER (11316)", NTV+ 480P
+https://2-fss-1.streamhoster.com/pl_122/201748-1431018-1/chunklist.m3u8
+#EXTINF:-1 tvg-id="NTVHit.ru@SD" tvg-name="NTV-HIT (576P)" tvg-logo="https://i.imgur.com/FfKBvz5.png" group-title="🗂️ YEDEKLER (11316)", NTV-HIT (576P) 576P
+http://178.134.1.158:8081/ntvhit/index.m3u8
 #EXTINF:-1 tvg-id="NuestraImagenTV.gt@SD" tvg-name="NUESTRA IMAGEN TV" tvg-logo="https://i.imgur.com/sknLXZI.jpeg" group-title="🗂️ YEDEKLER (11316)", NUESTRA IMAGEN TV 720P
 https://live.tvcontrolcp.com:1936/tvnitelevision/tvnitelevision/playlist.m3u8
 #EXTINF:-1 tvg-id="NuestraTeleInternacional.co@SD" tvg-name="NUESTRA TELE INTERNACIONAL (1080P)" tvg-logo="https://i.imgur.com/JoGQqmP.png" group-title="🗂️ YEDEKLER (11316)", NUESTRA TELE INTERNACIONAL (1080P) 480P
@@ -16039,8 +15885,6 @@ https://dash2.antik.sk/live/test_ocko_black/playlist.m3u8
 https://ocko-live.ssl.cdn.cra.cz/channels/ocko_expres/playlist.m3u8
 #EXTINF:-1 tvg-id="OckoGold.cz@SD" tvg-name="OCKO GOLD (540P)" tvg-logo="https://i.imgur.com/nrWNyLc.jpg" group-title="🗂️ YEDEKLER (11316)", OCKO GOLD (540P) 400P
 https://ocko-live.ssl.cdn.cra.cz/channels/ocko_gold/playlist.m3u8
-#EXTINF:-1 tvg-id="Ocko.cz" tvg-name="ÓČKO Ⓢ" tvg-logo="https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/czech-republic/ocko-cz.png" group-title="🗂️ YEDEKLER (11316)", ÓČKO Ⓢ 400P
-https://ocko-live.ssl.cdn.cra.cz/channels/ocko/playlist.m3u8
 #EXTINF:-1 tvg-id="OckoStar.cz@SD" tvg-name="OCKO STAR" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/%C3%93%C4%8Dko_Star_logo.png/960px-%C3%93%C4%8Dko_Star_logo.png" group-title="🗂️ YEDEKLER (11316)", OCKO STAR 1080P
 https://dash4.antik.sk/live/test_ocko_star/playlist.m3u8
 #EXTINF:-1 tvg-id="OCNTV.us@SD" tvg-name="OCN TV" tvg-logo="https://i.imgur.com/iSB5Obl.png" group-title="🗂️ YEDEKLER (11316)", OCN TV 1080P
@@ -16151,10 +15995,10 @@ https://d1axml5ozykh3g.cloudfront.net/live/omroepwest/tv/index.m3u8
 http://d3isaxd2t6q8zm.cloudfront.net/live/omroepzeeland/tv/index.m3u8
 #EXTINF:-1 tvg-id="OmroepZeeland.nl@SD" tvg-name="OMROEP ZEELAND (1080P)" tvg-logo="https://i.imgur.com/3c3QUSn.png" group-title="🗂️ YEDEKLER (11316)", OMROEP ZEELAND (1080P) 1080P
 https://d3isaxd2t6q8zm.cloudfront.net/live/omroepzeeland/tv/index.m3u8
-#EXTINF:-1 tvg-id="OmropFryslanTV.nl" tvg-name="OMROP FRYSLÂN" tvg-logo="https://i.imgur.com/0VKJLAK.png" group-title="🗂️ YEDEKLER (11316)", OMROP FRYSLÂN 1080P
-https://d3pvma9xb2775h.cloudfront.net/live/omropfryslan/f8f68bd5/playlist.m3u8
 #EXTINF:-1 tvg-id="OmropFryslan.nl@SD" tvg-name="OMROP FRYSLAN (1080P) [NOT 24/7]" tvg-logo="https://i.imgur.com/khacDTU.png" group-title="🗂️ YEDEKLER (11316)", OMROP FRYSLAN (1080P) [NOT 24/7]
 https://s-d15f8b0b.b.cdn.bluebillywig.com/live/omropfryslan/f8f68bd5/index.m3u8
+#EXTINF:-1 tvg-id="OmropFryslanTV.nl" tvg-name="OMROP FRYSLÂN" tvg-logo="https://i.imgur.com/0VKJLAK.png" group-title="🗂️ YEDEKLER (11316)", OMROP FRYSLÂN 1080P
+https://d3pvma9xb2775h.cloudfront.net/live/omropfryslan/f8f68bd5/playlist.m3u8
 #EXTINF:-1 tvg-id="ONFM.pt@SD" tvg-name="ON FM (720P)" tvg-logo="https://onfmwordpressfiles.ams3.digitaloceanspaces.com/wp-content/uploads/2023/03/17130121/logo-on-fm.png" group-title="🗂️ YEDEKLER (11316)", ON FM (720P) 720P
 https://5ce9406b73c33.streamlock.net/ONFM/livestream/playlist.m3u8
 #EXTINF:-1 tvg-id="ONO2TV.vn@SD" tvg-name="ON O2TV (1080P)" tvg-logo="https://raw.githubusercontent.com/HaNoiIPTV/HaNoiIPTV.m3u/refs/heads/master/VTVCab7%20-%20ON%20O2TV.png" group-title="🗂️ YEDEKLER (11316)", ON O2TV (1080P) 480P
@@ -16453,6 +16297,8 @@ https://video01.logicahost.com.br/grupomedia/grupomedia/playlist.m3u8
 https://redirector.rudo.video/hls-video/ey6283je82983je9823je8jowowiekldk9838274/pautatv/pautatv.smil/playlist.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="PAVYON-TR S01 PAVYON S01E03.MP4" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", PAVYON-TR S01 PAVYON S01E03.MP4 480P [SES KONTROL]
 http://ipflix.click:80/series/sq1x0qr86b/7777/660358.mp4
+#EXTINF:-1 tvg-id="" tvg-name="PAVYON-TR S01 PAVYON.S01B01" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", PAVYON-TR S01 PAVYON.S01B01 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/663022.mp4
 #EXTINF:-1 tvg-id="" tvg-name="PAVYON-TR S01 PAVYON.S01E02.1080P.MP4" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", PAVYON-TR S01 PAVYON.S01E02.1080P.MP4 480P [SES KONTROL]
 http://ipflix.click:80/series/sq1x0qr86b/7777/658935.mp4
 #EXTINF:-1 tvg-id="" tvg-name="PAVYON-TR S01 PAVYON.S01E04.MP4" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", PAVYON-TR S01 PAVYON.S01E04.MP4 480P [SES KONTROL]
@@ -16471,14 +16317,26 @@ https://hls.keshishhamid.live/hls/stream.m3u8
 http://ipflix.click:80/series/sq1x0qr86b/7777/624733.mkv
 #EXTINF:-1 tvg-id="" tvg-name="PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDLHAMID.S03E22.MKV" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDLHAMID.S03E22.MKV 480P [SES KONTROL]
 http://ipflix.click:80/series/sq1x0qr86b/7777/644293.mkv
+#EXTINF:-1 tvg-id="" tvg-name="PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDULHAMID.S03E05.MKV" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDULHAMID.S03E05.MKV 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/635032.mkv
+#EXTINF:-1 tvg-id="" tvg-name="PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDULHAMID.S03E12.MKV" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDULHAMID.S03E12.MKV 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/634418.mkv
+#EXTINF:-1 tvg-id="" tvg-name="PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDULHAMID.S03E31.MKV" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDULHAMID.S03E31.MKV 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/649131.mkv
+#EXTINF:-1 tvg-id="" tvg-name="PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDULHAMID.S03E32.MP4" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDULHAMID.S03E32.MP4 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/649484.mp4
+#EXTINF:-1 tvg-id="" tvg-name="PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDULHAMID.S03E33.MP4" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDULHAMID.S03E33.MP4 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/649724.mp4
+#EXTINF:-1 tvg-id="" tvg-name="PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDULHAMID.S03E34.MP4" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDULHAMID.S03E34.MP4 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/651203.mp4
+#EXTINF:-1 tvg-id="" tvg-name="PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDULHAMID.S03E35.SEASON.FINAL.MP4" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDULHAMID.S03E35.SEASON.FINAL.MP4 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/652024.mp4
 #EXTINF:-1 tvg-id="" tvg-name="PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDÜLHAMID.S03E02.MKV" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDÜLHAMID.S03E02.MKV 480P [SES KONTROL]
 http://ipflix.click:80/series/sq1x0qr86b/7777/625350.mkv
 #EXTINF:-1 tvg-id="" tvg-name="PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDÜLHAMID.S03E03.MKV" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDÜLHAMID.S03E03.MKV 480P [SES KONTROL]
 http://ipflix.click:80/series/sq1x0qr86b/7777/625904.mkv
 #EXTINF:-1 tvg-id="" tvg-name="PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDÜLHAMID.S03E04.MKV" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDÜLHAMID.S03E04.MKV 480P [SES KONTROL]
 http://ipflix.click:80/series/sq1x0qr86b/7777/627874.mkv
-#EXTINF:-1 tvg-id="" tvg-name="PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDULHAMID.S03E05.MKV" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDULHAMID.S03E05.MKV 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/635032.mkv
 #EXTINF:-1 tvg-id="" tvg-name="PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDÜLHAMID.S03E06.MKV" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDÜLHAMID.S03E06.MKV 480P [SES KONTROL]
 http://ipflix.click:80/series/sq1x0qr86b/7777/628794.mkv
 #EXTINF:-1 tvg-id="" tvg-name="PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDÜLHAMID.S03E07.MKV" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDÜLHAMID.S03E07.MKV 480P [SES KONTROL]
@@ -16491,8 +16349,6 @@ http://ipflix.click:80/series/sq1x0qr86b/7777/631362.mkv
 http://ipflix.click:80/series/sq1x0qr86b/7777/632797.mkv
 #EXTINF:-1 tvg-id="" tvg-name="PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDÜLHAMID.S03E11.MKV" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDÜLHAMID.S03E11.MKV 480P [SES KONTROL]
 http://ipflix.click:80/series/sq1x0qr86b/7777/633367.mkv
-#EXTINF:-1 tvg-id="" tvg-name="PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDULHAMID.S03E12.MKV" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDULHAMID.S03E12.MKV 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/634418.mkv
 #EXTINF:-1 tvg-id="" tvg-name="PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDÜLHAMID.S03E13.MKV" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDÜLHAMID.S03E13.MKV 480P [SES KONTROL]
 http://ipflix.click:80/series/sq1x0qr86b/7777/635031.mkv
 #EXTINF:-1 tvg-id="" tvg-name="PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDÜLHAMID.S03E14.MKV" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDÜLHAMID.S03E14.MKV 480P [SES KONTROL]
@@ -16527,16 +16383,6 @@ http://ipflix.click:80/series/sq1x0qr86b/7777/647638.mkv
 http://ipflix.click:80/series/sq1x0qr86b/7777/648048.mkv
 #EXTINF:-1 tvg-id="" tvg-name="PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDÜLHAMID.S03E30.MKV" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDÜLHAMID.S03E30.MKV 480P [SES KONTROL]
 http://ipflix.click:80/series/sq1x0qr86b/7777/648768.mkv
-#EXTINF:-1 tvg-id="" tvg-name="PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDULHAMID.S03E31.MKV" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDULHAMID.S03E31.MKV 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/649131.mkv
-#EXTINF:-1 tvg-id="" tvg-name="PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDULHAMID.S03E32.MP4" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDULHAMID.S03E32.MP4 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/649484.mp4
-#EXTINF:-1 tvg-id="" tvg-name="PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDULHAMID.S03E33.MP4" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDULHAMID.S03E33.MP4 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/649724.mp4
-#EXTINF:-1 tvg-id="" tvg-name="PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDULHAMID.S03E34.MP4" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDULHAMID.S03E34.MP4 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/651203.mp4
-#EXTINF:-1 tvg-id="" tvg-name="PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDULHAMID.S03E35.SEASON.FINAL.MP4" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDULHAMID.S03E35.SEASON.FINAL.MP4 480P [SES KONTROL]
-http://ipflix.click:80/series/sq1x0qr86b/7777/652024.mp4
 #EXTINF:-1 tvg-id="" tvg-name="PAYITAHT ABDULHAMID-TR S04 PAYITAHT ABDULHAMID S04E02" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", PAYITAHT ABDULHAMID-TR S04 PAYITAHT ABDULHAMID S04E02 480P [SES KONTROL]
 http://ipflix.click:80/series/sq1x0qr86b/7777/664145.mkv
 #EXTINF:-1 tvg-id="" tvg-name="PAYITAHT ABDULHAMID-TR S04 PAYITAHT ABDULHAMID S04E04" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", PAYITAHT ABDULHAMID-TR S04 PAYITAHT ABDULHAMID S04E04 480P [SES KONTROL]
@@ -16611,12 +16457,12 @@ https://iptv.peer.biz/live/peertv-it.m3u8
 https://iptv.peer.biz/live/peertv-en.m3u8
 #EXTINF:-1 tvg-id="PeerTVSudtirol.it@SD" tvg-name="PEER TV SUDTIROL (1080P)" tvg-logo="https://www.peer.biz/peertv-iptv/peer-tv-suedtirol.png" group-title="🗂️ YEDEKLER (11316)", PEER TV SUDTIROL (1080P) 1080P
 https://iptv.peer.biz/live/peertv.m3u8
-#EXTINF:-1 tvg-id="" tvg-name="PELÍCULAS ROMÁNTICAS - RAKUTEN TV" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ES2600012C9_20241022T050603SQUARE.png" group-title="🗂️ YEDEKLER (11316)", PELÍCULAS ROMÁNTICAS - RAKUTEN TV 252P
-https://jmp2.uk/stvp-ES2600012C9
 #EXTINF:-1 tvg-id="pellatv.gr" tvg-name="PELLA" tvg-logo="https://i.imgur.com/pwUkkGL.jpeg" group-title="🗂️ YEDEKLER (11316)", PELLA 720P
 https://video.streams.ovh:1936/pellatv/pellatv/playlist.m3u8
 #EXTINF:-1 tvg-id="PellaTV.gr@SD" tvg-name="PELLA TV (576P) [NOT 24/7]" tvg-logo="https://i.imgur.com/JnDXKZo.png" group-title="🗂️ YEDEKLER (11316)", PELLA TV (576P) [NOT 24/7] 720P
 https://video.streams.ovh:1936/pellatv/pellatv/master.m3u8
+#EXTINF:-1 tvg-id="" tvg-name="PELÍCULAS ROMÁNTICAS - RAKUTEN TV" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ES2600012C9_20241022T050603SQUARE.png" group-title="🗂️ YEDEKLER (11316)", PELÍCULAS ROMÁNTICAS - RAKUTEN TV 252P
+https://jmp2.uk/stvp-ES2600012C9
 #EXTINF:-1 tvg-id="PenielKY.gt@SD" tvg-name="PENIEL K&Y (480P)" tvg-logo="https://i.imgur.com/YtPRKmS.png" group-title="🗂️ YEDEKLER (11316)", PENIEL K&Y (480P) 480P
 https://s.emisoras.tv:8081/penielkids/index.m3u8
 #EXTINF:-1 tvg-id="PenielMusical.gt@SD" tvg-name="PENIEL MUSICAL (480P)" tvg-logo="https://i.imgur.com/IFQbGEf.png" group-title="🗂️ YEDEKLER (11316)", PENIEL MUSICAL (480P) 480P
@@ -16895,10 +16741,10 @@ https://jmp2.uk/plu-5dcb62e63d4d8f0009f36881.m3u8
 https://jmp2.uk/plu-5f1ac2591dd8880007bb7d6d.m3u8
 #EXTINF:-1 tvg-id="PlutoTVCineClasico.us@LatAm" tvg-name="PLUTO TV CINE CLASICO" tvg-logo="https://images.pluto.tv/channels/609059dc63be6e0007b4eca6/colorLogoPNG.png" group-title="🗂️ YEDEKLER (11316)", PLUTO TV CINE CLASICO 360P
 https://jmp2.uk/plu-609059dc63be6e0007b4eca6.m3u8
-#EXTINF:-1 tvg-id="" tvg-name="PLUTO TV CINE CLÁSICO" tvg-logo="https://images.pluto.tv/channels/61373bb45168fe000773eecd/colorLogoPNG.png" group-title="🗂️ YEDEKLER (11316)", PLUTO TV CINE CLÁSICO 360P
-https://jmp2.uk/plu-61373bb45168fe000773eecd.m3u8
 #EXTINF:-1 tvg-id="PlutoTVCineClassicos.us@BR" tvg-name="PLUTO TV CINE CLASSICOS" tvg-logo="https://images.pluto.tv/channels/5fa1612a669ba0000702017b/colorLogoPNG_1733440556804.png" group-title="🗂️ YEDEKLER (11316)", PLUTO TV CINE CLASSICOS 360P
 https://jmp2.uk/plu-5fa1612a669ba0000702017b.m3u8
+#EXTINF:-1 tvg-id="" tvg-name="PLUTO TV CINE CLÁSICO" tvg-logo="https://images.pluto.tv/channels/61373bb45168fe000773eecd/colorLogoPNG.png" group-title="🗂️ YEDEKLER (11316)", PLUTO TV CINE CLÁSICO 360P
+https://jmp2.uk/plu-61373bb45168fe000773eecd.m3u8
 #EXTINF:-1 tvg-id="PlutoTVCineComedia.de@ES" tvg-name="PLUTO TV CINE COMEDIA (GERMANY)" tvg-logo="https://images.pluto.tv/channels/5f1ac8099c49f600076579b2/colorLogoPNG_1769092378955.png" group-title="🗂️ YEDEKLER (11316)", PLUTO TV CINE COMEDIA (GERMANY) 360P
 https://jmp2.uk/plu-5f1ac8099c49f600076579b2.m3u8
 #EXTINF:-1 tvg-id="PlutoTVCineComedia.us@US" tvg-name="PLUTO TV CINE COMEDIA (UNITED STATES)" tvg-logo="https://images.pluto.tv/channels/5f12101f0b12f00007844c7c/colorLogoPNG_1732662798298.png" group-title="🗂️ YEDEKLER (11316)", PLUTO TV CINE COMEDIA (UNITED STATES) 240P
@@ -17627,12 +17473,12 @@ https://tv.pointville.ag/hls/mystream.m3u8
 https://jmp2.uk/stvp-GBBD2500002QC
 #EXTINF:-1 tvg-id="" tvg-name="POIROT & MISS MARPLE" tvg-logo="https://images.pluto.tv/channels/6304f530440dc90007f514d3/colorLogoPNG.png" group-title="🗂️ YEDEKLER (11316)", POIROT & MISS MARPLE 360P
 https://jmp2.uk/plu-6304f530440dc90007f514d3.m3u8
+#EXTINF:-1 tvg-id="PokerGo.us@US" tvg-name="POKERGO" tvg-logo="https://i.imgur.com/1603HED.png" group-title="🗂️ YEDEKLER (11316)", POKERGO
+https://jmp2.uk/plu-5fc54366b04b2300072e31af.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="POKÉMON" tvg-logo="https://images.pluto.tv/channels/6870072ca9d5c45c3e9466f1/colorLogoPNG_1752173270400.png" group-title="🗂️ YEDEKLER (11316)", POKÉMON 360P
 https://jmp2.uk/plu-6870072ca9d5c45c3e9466f1.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="POKÉMON" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/GB4200002K6_20251209T004616SQUARE.png" group-title="🗂️ YEDEKLER (11316)", POKÉMON 360P
 https://jmp2.uk/stvp-GB4200002K6
-#EXTINF:-1 tvg-id="PokerGo.us@US" tvg-name="POKERGO" tvg-logo="https://i.imgur.com/1603HED.png" group-title="🗂️ YEDEKLER (11316)", POKERGO
-https://jmp2.uk/plu-5fc54366b04b2300072e31af.m3u8
 #EXTINF:-1 tvg-id="PolarTV.cl@SD" tvg-name="POLAR TV (CHILE)" tvg-logo="https://i.imgur.com/4exfvPt.png" group-title="🗂️ YEDEKLER (11316)", POLAR TV (CHILE) 1080P
 https://polartv.webredirect.org/memfs/319ac83c-e602-4e91-8104-2b5501380b5e.m3u8
 #EXTINF:-1 tvg-id="PolarTV.cz@SD" tvg-name="POLAR TV (CZECH REPUBLIC) (1080P)" tvg-logo="https://i.imgur.com/pTJHIX1.png" group-title="🗂️ YEDEKLER (11316)", POLAR TV (CZECH REPUBLIC) (1080P) 1080P
@@ -17975,8 +17821,6 @@ https://live-evg5.tv360.bitel.com.pe/bitel/qollasuyotv/playlist.m3u8
 https://live-evg5.tv360.bitel.com.pe/bitel/qosqo/playlist.m3u8
 #EXTINF:-1 tvg-id="QuangNgaiTV.vn" tvg-name="QUANG NGAI TV (1080P)" tvg-logo="https://i.imgur.com/QckiN3H.png" group-title="🗂️ YEDEKLER (11316)", QUANG NGAI TV (1080P) 1080P
 https://live.mediatech.vn/live/285aaa79b4b265a457d81bb72bc32e2c114/chunklist.m3u8
-#EXTINF:-1 tvg-id="quangninh3" tvg-name="QUẢNG NINH 3 HD" tvg-logo="https://webapi.mytv.vn/static/channel/457.png?ver=9" group-title="🗂️ YEDEKLER (11316)", QUẢNG NINH 3 HD 1080P
-http://103.90.220.236/qtvlive/tv3live.m3u8
 #EXTINF:-1 tvg-id="QuanticaTV.ar@SD" tvg-name="QUANTICA TV" tvg-logo="https://i.imgur.com/6f8EYC2.jpeg" group-title="🗂️ YEDEKLER (11316)", QUANTICA TV 1080P
 https://videostream.shockmedia.com.ar:19360/quanticatv/quanticatv.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="QUANTUM MAKERS" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ES120000498_20260707T051019SQUARE.png" group-title="🗂️ YEDEKLER (11316)", QUANTUM MAKERS 240P
@@ -18001,6 +17845,8 @@ http://stream.mcquack.net/397/index.m3u8
 https://tgn.bozztv.com/qvtv/qvtv-web/playlist.m3u8
 #EXTINF:-1 tvg-id="QuranTV.ir@SD" tvg-name="QURAN TV (IRAN)" tvg-logo="https://upload.wikimedia.org/wikipedia/fa/d/df/Quarntvlogo.png" group-title="🗂️ YEDEKLER (11316)", QURAN TV (IRAN) 240P
 https://ncdn.telewebion.ir/quran/live/playlist.m3u8
+#EXTINF:-1 tvg-id="quangninh3" tvg-name="QUẢNG NINH 3 HD" tvg-logo="https://webapi.mytv.vn/static/channel/457.png?ver=9" group-title="🗂️ YEDEKLER (11316)", QUẢNG NINH 3 HD 1080P
+http://103.90.220.236/qtvlive/tv3live.m3u8
 #EXTINF:-1 tvg-id="QVC.de@SD" tvg-name="QVC (GERMANY) (720P)" tvg-logo="https://i.imgur.com/EybRtsI.png" group-title="🗂️ YEDEKLER (11316)", QVC (GERMANY) (720P) 540P
 https://qvcde-live.akamaized.net/hls/live/2097104/qvc/master.m3u8
 #EXTINF:-1 tvg-id="QVC.it@SD" tvg-name="QVC (ITALY) (540P)" tvg-logo="https://i.imgur.com/6TWUVrh.png" group-title="🗂️ YEDEKLER (11316)", QVC (ITALY) (540P) 480P
@@ -18557,12 +18403,12 @@ https://copacoradios.desdeparaguay.net/rcctv/rcctv/playlist.m3u8?admin=nacion
 https://video1.getstreamhosting.com:1936/8172/8172/playlist.m3u8
 #EXTINF:-1 tvg-id="RCNHD2.co@SD" tvg-name="RCN HD2 (1080P)" tvg-logo="https://i.imgur.com/SrMPTfc.png" group-title="🗂️ YEDEKLER (11316)", RCN HD2 (1080P) 1080P
 http://181.78.14.26:4000/play/a07m/index.m3u8
-#EXTINF:-1 tvg-id="" tvg-name="RCN MÁS" tvg-logo="https://images.pluto.tv/channels/69de4ad924a6d521f8b0a348/colorLogoPNG_1776884271790.png" group-title="🗂️ YEDEKLER (11316)", RCN MÁS 360P
-https://jmp2.uk/plu-69de4ad924a6d521f8b0a348.m3u8
 #EXTINF:-1 tvg-id="RCNMas.co" tvg-name="RCN MAS (1080P)" tvg-logo="https://i.imgur.com/MJzuRAN.png" group-title="🗂️ YEDEKLER (11316)", RCN MAS (1080P) 540P
 http://45.224.96.220:18000/play/a098/index.m3u8
 #EXTINF:-1 tvg-id="RCNMas.co@SD" tvg-name="RCN MAS (1080P)" tvg-logo="https://i.imgur.com/MJzuRAN.png" group-title="🗂️ YEDEKLER (11316)", RCN MAS (1080P) 1080P
 http://45.226.205.96:48000/play/a0af/index.m3u8
+#EXTINF:-1 tvg-id="" tvg-name="RCN MÁS" tvg-logo="https://images.pluto.tv/channels/69de4ad924a6d521f8b0a348/colorLogoPNG_1776884271790.png" group-title="🗂️ YEDEKLER (11316)", RCN MÁS 360P
+https://jmp2.uk/plu-69de4ad924a6d521f8b0a348.m3u8
 #EXTINF:-1 tvg-id="RCNNovelas.co" tvg-name="RCN NOVELAS (1080P)" tvg-logo="https://i.imgur.com/9wxdWNQ.png" group-title="🗂️ YEDEKLER (11316)", RCN NOVELAS (1080P) 1080P
 http://170.238.200.199/rcn-novelas/index.m3u8
 #EXTINF:-1 tvg-id="RCNNovelas.co@SD" tvg-name="RCN NOVELAS (1080P)" tvg-logo="https://i.imgur.com/9wxdWNQ.png" group-title="🗂️ YEDEKLER (11316)", RCN NOVELAS (1080P) 1080P
@@ -19591,6 +19437,144 @@ https://shd-gcp-live.edgenextcdn.net/live/bitmovin-thaqafeyyah/28c0d2a20dbf1dc04
 https://live.kwikmotion.com/sbrksasaudiaradiolive/srpksasaudiaradio/playlist.m3u8
 #EXTINF:-1 tvg-id="SavaneTV.bf@SD" tvg-name="SAVANE TV" tvg-logo="https://i.imgur.com/mv3S1Zc.png" group-title="🗂️ YEDEKLER (11316)", SAVANE TV
 https://savane24.tv:5443/LiveApp/streams/Y4fyif69Q0ll6MeH2190896734859843.m3u8
+#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E01" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", SAVASCI-TR S01 SAVASCI S01 E01 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/647447.mp4
+#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E02" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", SAVASCI-TR S01 SAVASCI S01 E02 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/647448.mp4
+#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E03" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", SAVASCI-TR S01 SAVASCI S01 E03 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/647449.mp4
+#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E04" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", SAVASCI-TR S01 SAVASCI S01 E04 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/647450.mp4
+#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E05" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", SAVASCI-TR S01 SAVASCI S01 E05 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/647451.mp4
+#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E06" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", SAVASCI-TR S01 SAVASCI S01 E06 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/647452.mp4
+#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E07" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", SAVASCI-TR S01 SAVASCI S01 E07 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/647453.mp4
+#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E08" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", SAVASCI-TR S01 SAVASCI S01 E08 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/647454.mp4
+#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E09" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", SAVASCI-TR S01 SAVASCI S01 E09 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/647455.mp4
+#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E10" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", SAVASCI-TR S01 SAVASCI S01 E10 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/647456.mp4
+#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E11" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", SAVASCI-TR S01 SAVASCI S01 E11 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/647457.mp4
+#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E12" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", SAVASCI-TR S01 SAVASCI S01 E12 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/647458.mp4
+#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E13" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", SAVASCI-TR S01 SAVASCI S01 E13 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/647459.mp4
+#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E14" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", SAVASCI-TR S01 SAVASCI S01 E14 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/647460.mp4
+#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E15" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", SAVASCI-TR S01 SAVASCI S01 E15 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/647461.mp4
+#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E16" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", SAVASCI-TR S01 SAVASCI S01 E16 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/647462.mp4
+#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E17" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", SAVASCI-TR S01 SAVASCI S01 E17 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/647463.mp4
+#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E18" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", SAVASCI-TR S01 SAVASCI S01 E18 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/647464.mp4
+#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E19" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", SAVASCI-TR S01 SAVASCI S01 E19 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/647465.mp4
+#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E20" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", SAVASCI-TR S01 SAVASCI S01 E20 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/647466.mp4
+#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E21" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", SAVASCI-TR S01 SAVASCI S01 E21 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/647467.mp4
+#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E22" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", SAVASCI-TR S01 SAVASCI S01 E22 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/647468.mp4
+#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E23" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", SAVASCI-TR S01 SAVASCI S01 E23 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/647469.mp4
+#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E24" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", SAVASCI-TR S01 SAVASCI S01 E24 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/647470.mp4
+#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E25" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", SAVASCI-TR S01 SAVASCI S01 E25 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/647471.mp4
+#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E26" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", SAVASCI-TR S01 SAVASCI S01 E26 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/647472.mp4
+#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E27" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", SAVASCI-TR S01 SAVASCI S01 E27 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/647473.mp4
+#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E28" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", SAVASCI-TR S01 SAVASCI S01 E28 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/647474.mp4
+#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E29" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", SAVASCI-TR S01 SAVASCI S01 E29 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/647475.mp4
+#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E30" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", SAVASCI-TR S01 SAVASCI S01 E30 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/647476.mp4
+#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E31" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", SAVASCI-TR S01 SAVASCI S01 E31 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/647477.mp4
+#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E32" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", SAVASCI-TR S01 SAVASCI S01 E32 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/647478.mp4
+#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E33" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", SAVASCI-TR S01 SAVASCI S01 E33 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/647479.mp4
+#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E34" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", SAVASCI-TR S01 SAVASCI S01 E34 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/647480.mp4
+#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E35" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", SAVASCI-TR S01 SAVASCI S01 E35 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/647481.mp4
+#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E36" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", SAVASCI-TR S01 SAVASCI S01 E36 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/647482.mp4
+#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E37" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", SAVASCI-TR S01 SAVASCI S01 E37 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/647483.mp4
+#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E38" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", SAVASCI-TR S01 SAVASCI S01 E38 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/647484.mp4
+#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E39" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", SAVASCI-TR S01 SAVASCI S01 E39 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/647485.mp4
+#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E40" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", SAVASCI-TR S01 SAVASCI S01 E40 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/647486.mp4
+#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E41" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", SAVASCI-TR S01 SAVASCI S01 E41 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/647487.mp4
+#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E42" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", SAVASCI-TR S01 SAVASCI S01 E42 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/647488.mp4
+#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E43" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", SAVASCI-TR S01 SAVASCI S01 E43 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/647489.mp4
+#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E44" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", SAVASCI-TR S01 SAVASCI S01 E44 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/647490.mp4
+#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E45" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", SAVASCI-TR S01 SAVASCI S01 E45 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/647491.mp4
+#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E46" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", SAVASCI-TR S01 SAVASCI S01 E46 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/647492.mp4
+#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E47" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", SAVASCI-TR S01 SAVASCI S01 E47 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/647493.mp4
+#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S01 SAVASCI S01 E48" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", SAVASCI-TR S01 SAVASCI S01 E48 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/647494.mp4
+#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S02 SAVASCI S02 E01" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", SAVASCI-TR S02 SAVASCI S02 E01 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/647495.mp4
+#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S02 SAVASCI S02 E02" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", SAVASCI-TR S02 SAVASCI S02 E02 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/647496.mp4
+#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S02 SAVASCI S02 E03" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", SAVASCI-TR S02 SAVASCI S02 E03 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/647497.mp4
+#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S02 SAVASCI S02 E04" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", SAVASCI-TR S02 SAVASCI S02 E04 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/647498.mp4
+#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S02 SAVASCI S02 E05" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", SAVASCI-TR S02 SAVASCI S02 E05 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/647499.mp4
+#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S02 SAVASCI S02 E06" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", SAVASCI-TR S02 SAVASCI S02 E06 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/647500.mp4
+#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S02 SAVASCI S02 E07" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", SAVASCI-TR S02 SAVASCI S02 E07 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/647501.mkv
+#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S02 SAVASCI S02 E08" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", SAVASCI-TR S02 SAVASCI S02 E08 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/647502.mp4
+#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S02 SAVASCI S02 E09" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", SAVASCI-TR S02 SAVASCI S02 E09 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/647503.mp4
+#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S02 SAVASCI S02 E10" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", SAVASCI-TR S02 SAVASCI S02 E10 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/647504.mp4
+#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S02 SAVASCI S02 E11" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", SAVASCI-TR S02 SAVASCI S02 E11 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/647505.mp4
+#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S02 SAVASCI S02 E12" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", SAVASCI-TR S02 SAVASCI S02 E12 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/647506.mp4
+#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S02 SAVASCI S02 E13" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", SAVASCI-TR S02 SAVASCI S02 E13 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/647507.mp4
+#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S02 SAVASCI S02 E14" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", SAVASCI-TR S02 SAVASCI S02 E14 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/647508.mp4
+#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S02 SAVASCI S02 E15" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", SAVASCI-TR S02 SAVASCI S02 E15 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/647509.mp4
+#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S02 SAVASCI S02 E16" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", SAVASCI-TR S02 SAVASCI S02 E16 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/647510.mp4
+#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S02 SAVASCI S02 E17" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", SAVASCI-TR S02 SAVASCI S02 E17 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/647511.mp4
+#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S02 SAVASCI S02 E18" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", SAVASCI-TR S02 SAVASCI S02 E18 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/647512.mp4
+#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S02 SAVASCI S02 E19" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", SAVASCI-TR S02 SAVASCI S02 E19 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/647513.mp4
+#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S02 SAVASCI S02 E20" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", SAVASCI-TR S02 SAVASCI S02 E20 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/647514.mp4
+#EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S02 SAVASCI S02 E21" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", SAVASCI-TR S02 SAVASCI S02 E21 480P [SES KONTROL]
+http://ipflix.click:80/series/sq1x0qr86b/7777/647515.mp4
 #EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S02 SAVASCI.E02E24.MKV" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", SAVASCI-TR S02 SAVASCI.E02E24.MKV 480P [SES KONTROL]
 http://ipflix.click:80/series/sq1x0qr86b/7777/648891.mkv
 #EXTINF:-1 tvg-id="" tvg-name="SAVASCI-TR S02 SAVASCI.E02E25.MKV" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", SAVASCI-TR S02 SAVASCI.E02E25.MKV 480P [SES KONTROL]
@@ -19989,8 +19973,6 @@ https://d393sxaxig6bax.cloudfront.net/out/v1/589cf2cf44bf42bb941e817a2240d62e/in
 https://d2g1vdc6ozl2o8.cloudfront.net/out/v1/0a0dc7d7911b4fddbb4dfc963fdd4b9e/index.m3u8
 #EXTINF:-1 tvg-id="ShubhsandeshTV.in@SD" tvg-name="SHUBHSANDESH TV (576P)" tvg-logo="https://xstreamcp-assets-msp.streamready.in/assets/LIVETV/LIVECHANNEL/LIVETV_LIVETVCHANNEL_SHUBHSANDESH_TV/images/LOGO_HD/image.png" group-title="🗂️ YEDEKLER (11316)", SHUBHSANDESH TV (576P) 720P
 https://mumt03.tangotv.in/Dsly5z3HSHUBHSANDESH/index.m3u8
-#EXTINF:-1 tvg-id="" tvg-name="SÍ QUIERO ESE VESTIDO" tvg-logo="https://images.pluto.tv/channels/6578836cdfed030008ce5bdb/colorLogoPNG.png" group-title="🗂️ YEDEKLER (11316)", SÍ QUIERO ESE VESTIDO 360P
-https://jmp2.uk/plu-6578836cdfed030008ce5bdb.m3u8
 #EXTINF:-1 tvg-id="SICAltaDefinicao.pt@SD" tvg-name="SIC ALTA DEFINICAO (1080P)" tvg-logo="https://i.imgur.com/VdPwyQv.png" group-title="🗂️ YEDEKLER (11316)", SIC ALTA DEFINICAO (1080P) 1080P
 https://production-fast-sic.content.okast.tv/fa2e8c4385712f9aa54bbe52b1bd9b6b/channels/d9070446-8448-455e-8075-773b1ba12562/fc831b20-f252-4e7d-8cc5-2d05f4d43c1c/media_.m3u8
 #EXTINF:-1 tvg-id="SICReplay.pt@SD" tvg-name="SIC REPLAY (1080P)" tvg-logo="https://i.imgur.com/fj84mXz.png" group-title="🗂️ YEDEKLER (11316)", SIC REPLAY (1080P) 1080P
@@ -20113,6 +20095,8 @@ https://jmp2.uk/plu-604bdf4e6d0abc0007ba77ad.m3u8
 https://samitaorigin.tangotv.in/SINDHTV/SAMITAORIGIN/index.m3u8
 #EXTINF:-1 tvg-id="SipingTV.cn@SD" tvg-name="SIPING TV" tvg-logo="https://www.tvchinese.net/uploads/tv/sptv1.jpg" group-title="🗂️ YEDEKLER (11316)", SIPING TV 576P
 http://stream2.jlntv.cn/sptv/sd/live.m3u8?_upt=f27750421743154598
+#EXTINF:-1 tvg-id="SIPSETV81.mx@SD" tvg-name="SIPSE TV 8.1 (1080P) [NOT 24/7]" tvg-logo="https://i.imgur.com/123P7dV.png" group-title="🗂️ YEDEKLER (11316)", SIPSE TV 8.1 (1080P) [NOT 24/7] 720P
+https://webprod.sipse.com.mx:8080/show/merida.m3u8
 #EXTINF:-1 tvg-id="SIPSETVCUN81.mx@SD" tvg-name="SIPSE TVCUN 8.1 (1080P) [NOT 24/7]" tvg-logo="https://i.imgur.com/uiTgClU.png" group-title="🗂️ YEDEKLER (11316)", SIPSE TVCUN 8.1 (1080P) [NOT 24/7] 720P
 https://webprod.sipse.com.mx:8080/show/tvcun.m3u8
 #EXTINF:-1 tvg-id="SiriKannada.in@SD" tvg-name="SIRI KANNADA (576P)" tvg-logo="https://dtil.tmsimg.com/assets/s143790_ld_h9_aa.png?lock=720x540" group-title="🗂️ YEDEKLER (11316)", SIRI KANNADA (576P) 720P
@@ -20363,8 +20347,6 @@ https://d4whmvwm0rdvi.cloudfront.net/10007/99993017/hls/master.m3u8?ads.xumo_cha
 https://cd198.anystream.uk:9092/iqapp/s2tve/playlist.m3u8
 #EXTINF:-1 tvg-id="SoReal.us@UK" tvg-name="SO... REAL UK (720P)" tvg-logo="https://i.imgur.com/wZ2uj9d.png" group-title="🗂️ YEDEKLER (11316)", SO... REAL UK (720P) 360P
 https://all3media-soreal-1-gb.samsung.wurl.tv/playlist.m3u8
-#EXTINF:-1 tvg-id="" tvg-name="SO…REAL" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/GBBD1100009M9_20260317T034230SQUARE.png" group-title="🗂️ YEDEKLER (11316)", SO…REAL 360P
-https://jmp2.uk/stvp-GBBD1100009M9
 #EXTINF:-1 tvg-id="SochiLive.ru@HD" tvg-name="SOCHI LIVE (720P) [NOT 24/7]" tvg-logo="https://www.cableman.ru/sites/default/files/sochi_live.png" group-title="🗂️ YEDEKLER (11316)", SOCHI LIVE (720P) [NOT 24/7] 720P
 http://serv30.vintera.tv:8081/sochi/sochi_stream/playlist.m3u8
 #EXTINF:-1 tvg-id="Sochi24.ru@SD" tvg-name="SOCHI24 (720P)" tvg-logo="https://i.imgur.com/iwWxkl6.png" group-title="🗂️ YEDEKLER (11316)", SOCHI24 (720P) 720P
@@ -20373,10 +20355,10 @@ http://serv30.vintera.tv:8081/sochi/sochi24_tv/playlist.m3u8
 https://iptv.sohailtv.com/sohail/playlist/index.m3u8
 #EXTINF:-1 tvg-id="SohamTV.in@SD" tvg-name="SOHAM TV (576P)" tvg-logo="https://i.imgur.com/cpedJ0L.png" group-title="🗂️ YEDEKLER (11316)", SOHAM TV (576P) 720P
 https://mumt03.tangotv.in/Dsly5z3HSOHAMTV/index.m3u8
-#EXTINF:-1 tvg-id="" tvg-name="SOL MÚSICA" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ESBD2300004Y7_20241022T051039SQUARE.png" group-title="🗂️ YEDEKLER (11316)", SOL MÚSICA 720P
-https://jmp2.uk/stvp-ESBD2300004Y7
 #EXTINF:-1 tvg-id="SolMusica.es@SD" tvg-name="SOL MUSICA (720P)" tvg-logo="https://i.imgur.com/rbJrmPw.png" group-title="🗂️ YEDEKLER (11316)", SOL MUSICA (720P) 720P
 https://d2glyu450vvghm.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-21u4g5cjglv02/sm.m3u8
+#EXTINF:-1 tvg-id="" tvg-name="SOL MÚSICA" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ESBD2300004Y7_20241022T051039SQUARE.png" group-title="🗂️ YEDEKLER (11316)", SOL MÚSICA 720P
+https://jmp2.uk/stvp-ESBD2300004Y7
 #EXTINF:-1 tvg-id="SolTV.gt@SD" tvg-name="SOL TV (GUATEMALA) (720P)" tvg-logo="https://i.ibb.co/YXYv8sf/logo-soltv2.png" group-title="🗂️ YEDEKLER (11316)", SOL TV (GUATEMALA) (720P) 720P
 https://cdn.streamhispanatv.net:3409/live/soltvlive.m3u8
 #EXTINF:-1 tvg-id="SolarTelevision.pe" tvg-name="SOLAR TELEVISION" tvg-logo="https://i.imgur.com/ufnWpUf.png" group-title="🗂️ YEDEKLER (11316)", SOLAR TELEVISION 360P
@@ -20401,8 +20383,6 @@ https://videostream.shockmedia.com.ar/hls/canalsoltv/canalsoltv.m3u8
 https://5790d294af2dc.streamlock.net:443/streamtv/streamtv/playlist.m3u8
 #EXTINF:-1 tvg-id="SomaliNationalTV.so" tvg-name="SOMALI NATIONAL TV Ⓢ" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/d/d6/SNTV_REBRANDED_LOGO.png" group-title="🗂️ YEDEKLER (11316)", SOMALI NATIONAL TV Ⓢ 576P
 https://cd198.anystream.uk:9092/iqapp/s4ne/playlist.m3u8
-#EXTINF:-1 tvg-id="sonla" tvg-name="SƠN LA HD" tvg-logo="https://media.sonlatv.vn/upload/files/logo/logo_footer.png" group-title="🗂️ YEDEKLER (11316)", SƠN LA HD 1080P
-https://cdn.sonlatv.vn/live/28595222e707a364251b8724717894baa46/chunklist.m3u8
 #EXTINF:-1 tvg-id="SonarBangla.in@SD" tvg-name="SONAR BANGLA (360P)" tvg-logo="https://papaji.freetvindia.com/media/1518_FreeTV_Sonar_Bangla.png" group-title="🗂️ YEDEKLER (11316)", SONAR BANGLA (360P) 720P
 https://samitaorigin.tangotv.in/SONARBANGLA/SAMITAORIGIN/index.m3u8
 #EXTINF:-1 tvg-id="SoncePlus.ua@SD" tvg-name="SONCE+" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/3/3c/Sonce%2B_%28logo%29_2024.png" group-title="🗂️ YEDEKLER (11316)", SONCE+ 1080P
@@ -20439,8 +20419,6 @@ http://15.204.246.24:8080/SonyMoviesHD/index.m3u8
 https://06cb85ad6ccb4a6b97f561e62d16ad3f.mediatailor.us-west-2.amazonaws.com/v1/master/ba62fe743df0fe93366eba3a257d792884136c7f/LINEAR-822-FR-SONYONETHEBLACKLIST-LG_FR/playlist.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="SONY ONE ESCAPE PERFECTO" tvg-logo="https://images.pluto.tv/channels/662bf39756fc840008f25cb9/colorLogoPNG_1772461215418.png" group-title="🗂️ YEDEKLER (11316)", SONY ONE ESCAPE PERFECTO 360P
 https://jmp2.uk/plu-662bf39756fc840008f25cb9.m3u8
-#EXTINF:-1 tvg-id="" tvg-name="SONY ONE ÉXITOS" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ES300003D4_20260421T123722SQUARE.png" group-title="🗂️ YEDEKLER (11316)", SONY ONE ÉXITOS 1080P
-https://jmp2.uk/stvp-ES300003D4
 #EXTINF:-1 tvg-id="SonyOneFavoris.fr" tvg-name="SONY ONE FAVORIS (1080P)" tvg-logo="https://i.imgur.com/RO4AM4b.png" group-title="🗂️ YEDEKLER (11316)", SONY ONE FAVORIS (1080P) 1080P
 https://d21fkiqbljd83t.cloudfront.net/playlist.m3u8
 #EXTINF:-1 tvg-id="SonyOneFavoris.fr@HD" tvg-name="SONY ONE FAVORIS (1080P)" tvg-logo="https://i.imgur.com/RO4AM4b.png" group-title="🗂️ YEDEKLER (11316)", SONY ONE FAVORIS (1080P) 1080P
@@ -20453,6 +20431,8 @@ https://5098a8b860504a3690fd2e7c0a18d68f.mediatailor.us-west-2.amazonaws.com/v1/
 https://7aa9671895264ec9a384dfed1b992171.mediatailor.us-west-2.amazonaws.com/v1/master/ba62fe743df0fe93366eba3a257d792884136c7f/LINEAR-818-FR-SONYONEHITSCOMDIE-LG_FR/playlist.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="SONY ONE SHARK TANK MÉXICO" tvg-logo="https://images.pluto.tv/channels/6647c02422494d000804b13a/colorLogoPNG_1772461055527.png" group-title="🗂️ YEDEKLER (11316)", SONY ONE SHARK TANK MÉXICO 576P
 https://jmp2.uk/plu-6647c02422494d000804b13a.m3u8
+#EXTINF:-1 tvg-id="" tvg-name="SONY ONE ÉXITOS" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ES300003D4_20260421T123722SQUARE.png" group-title="🗂️ YEDEKLER (11316)", SONY ONE ÉXITOS 1080P
+https://jmp2.uk/stvp-ES300003D4
 #EXTINF:-1 tvg-id="SonySAB.in@SD" tvg-name="SONY SAB (720P)" tvg-logo="https://dtil.tmsimg.com/assets/s159099_ld_h15_ab.png?lock=720x540" group-title="🗂️ YEDEKLER (11316)", SONY SAB (720P) 720P
 https://drk6xq0vhn.gpcdn.net/live/sub_hd_abr/index.m3u8
 #EXTINF:-1 tvg-id="SonyWah.in@SD" tvg-name="SONY WAH (1080P) [GEO-BLOCKED]" tvg-logo="https://dtil.tmsimg.com/assets/s157974_ld_h15_aa.png?lock=720x540" group-title="🗂️ YEDEKLER (11316)", SONY WAH (1080P) [GEO-BLOCKED] 720P
@@ -20737,6 +20717,8 @@ http://ipflix.click:80/series/sq1x0qr86b/7777/648408.mkv
 http://ipflix.click:80/series/sq1x0qr86b/7777/648892.mkv
 #EXTINF:-1 tvg-id="" tvg-name="SOZ-TR S03 SOZ.S03E31.MP4" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", SOZ-TR S03 SOZ.S03E31.MP4 480P [SES KONTROL]
 http://ipflix.click:80/series/sq1x0qr86b/7777/649297.mp4
+#EXTINF:-1 tvg-id="" tvg-name="SO…REAL" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/GBBD1100009M9_20260317T034230SQUARE.png" group-title="🗂️ YEDEKLER (11316)", SO…REAL 360P
+https://jmp2.uk/stvp-GBBD1100009M9
 #EXTINF:-1 tvg-id="" tvg-name="SPACE LIVE" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ES7000088K_20260901T054146SQUARE.png" group-title="🗂️ YEDEKLER (11316)", SPACE LIVE 1080P
 https://jmp2.uk/stvp-ES7000088K
 #EXTINF:-1 tvg-id="" tvg-name="SPACE LIVE" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/GB3800007C5_20260901T102539SQUARE.png" group-title="🗂️ YEDEKLER (11316)", SPACE LIVE 1080P
@@ -20759,12 +20741,12 @@ https://tvspas.mediacdn.ru/cdn/spas/playlist.m3u8
 https://tv.centaurychile.com/magicatv/streams/22AdscM3Y6Un17Zo4747081346569358.m3u8
 #EXTINF:-1 tvg-id="Spektrum.cz@SD" tvg-name="SPEKTRUM (CZECH REPUBLIC)" tvg-logo="https://i.imgur.com/F5Uosum.png" group-title="🗂️ YEDEKLER (11316)", SPEKTRUM (CZECH REPUBLIC) 1080P
 http://88.212.15.50/live/test_spektrum/playlist.m3u8
-#EXTINF:-1 tvg-id="Spektrum.hu" tvg-name="SPEKTRUM Ⓖ" tvg-logo="https://i.imgur.com/GmFRQ82.png" group-title="🗂️ YEDEKLER (11316)", SPEKTRUM Ⓖ 1080P
-http://141.94.193.53:80/Spektrum_HD/index.m3u8
 #EXTINF:-1 tvg-id="SpektrumHome.cz@SD" tvg-name="SPEKTRUM HOME (CZECH REPUBLIC)" tvg-logo="https://i.imgur.com/VaVi65F.png" group-title="🗂️ YEDEKLER (11316)", SPEKTRUM HOME (CZECH REPUBLIC) 1080P
 http://88.212.15.50/live/test_home_hevc/playlist.m3u8
 #EXTINF:-1 tvg-id="SpektrumHome.hu" tvg-name="SPEKTRUM HOME Ⓖ" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/2/2d/Spektrum-home.png" group-title="🗂️ YEDEKLER (11316)", SPEKTRUM HOME Ⓖ 1080P
 http://141.94.193.53:80/Spektrum_Home_HD/index.m3u8
+#EXTINF:-1 tvg-id="Spektrum.hu" tvg-name="SPEKTRUM Ⓖ" tvg-logo="https://i.imgur.com/GmFRQ82.png" group-title="🗂️ YEDEKLER (11316)", SPEKTRUM Ⓖ 1080P
+http://141.94.193.53:80/Spektrum_HD/index.m3u8
 #EXTINF:-1 tvg-id="SpikeOutdoors.us@SD" tvg-name="SPIKE OUTDOORS" tvg-logo="https://i.imgur.com/cdCD2A2.png" group-title="🗂️ YEDEKLER (11316)", SPIKE OUTDOORS 240P
 https://jmp2.uk/plu-5c393cad2de254456f7ef8c2.m3u8
 #EXTINF:-1 tvg-id="SpikePlutoTV.us@SD" tvg-name="SPIKE PLUTO TV" tvg-logo="https://i.imgur.com/woY8Ecb.png" group-title="🗂️ YEDEKLER (11316)", SPIKE PLUTO TV 240P
@@ -20775,8 +20757,6 @@ https://cdnlive.myspirit.tv/LS-ATL-43240-2/index.m3u8
 https://nktv.smartstream.video/smartstream-us/spondon/spondon/playlist.m3u8
 #EXTINF:-1 tvg-id="SpongeBobSchwammkopf.de@DACH" tvg-name="SPONGEBOB SCHWAMMKOPF (720P)" tvg-logo="https://images.pluto.tv/channels/5d00e8adaab96b5635b2a005/colorLogoPNG.png" group-title="🗂️ YEDEKLER (11316)", SPONGEBOB SCHWAMMKOPF (720P) 360P
 https://jmp2.uk/plu-5d00e8adaab96b5635b2a005.m3u8
-#EXTINF:-1 tvg-id="RTVSSport.sk" tvg-name="ŠPORT" tvg-logo="https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/slovakia/rtvs-sport-sk.png" group-title="🗂️ YEDEKLER (11316)", ŠPORT 480P
-https://sktv.mxnticek.eu/new/stream.php?ch=%C5%A0port
 #EXTINF:-1 tvg-id="Sport.sk@SD" tvg-name="SPORT (SLOVAKIA) (1080P)" tvg-logo="https://i.imgur.com/oAtcxNZ.png" group-title="🗂️ YEDEKLER (11316)", SPORT (SLOVAKIA) (1080P) 1080P
 http://88.212.15.50/live/test_rtvs_sport_hevc/playlist.m3u8
 #EXTINF:-1 tvg-id="Sport.uz@SD" tvg-name="SPORT (UZBEKISTAN)" tvg-logo="https://i.imgur.com/2WJE9CM.png" group-title="🗂️ YEDEKLER (11316)", SPORT (UZBEKISTAN) 1080P
@@ -20959,12 +20939,8 @@ https://aka-live1050.delivery.roku.com/372c813e-1fb9-41d4-a4d0-5fbd803659c5/t2-o
 https://lotus.stingray.com/manifest/djazz-djaads-montreal/samsungtvplus/master.m3u8
 #EXTINF:-1 tvg-id="StingrayEasyListening.ca@SD" tvg-name="STINGRAY EASY LISTENING (1080P)" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Stingray_Music_logo.svg/960px-Stingray_Music_logo.svg.png" group-title="🗂️ YEDEKLER (11316)", STINGRAY EASY LISTENING (1080P) 432P
 https://lotus.stingray.com/manifest/ose-137ads-montreal/samsungtvplus/master.m3u8
-#EXTINF:-1 tvg-id="" tvg-name="STINGRAY ÉPOCA DORADA DEL CINE MEXICANO" tvg-logo="https://images.pluto.tv/channels/6a739fb3c1842722eaf5eb1f/colorLogoPNG_1788376112882.png" group-title="🗂️ YEDEKLER (11316)", STINGRAY ÉPOCA DORADA DEL CINE MEXICANO 360P
-https://jmp2.uk/plu-6a739fb3c1842722eaf5eb1f.m3u8
 #EXTINF:-1 tvg-id="StingrayEverything80s.ca@SD" tvg-name="STINGRAY EVERYTHING '80S (1080P)" tvg-logo="https://i.imgur.com/6E3wYrb.png" group-title="🗂️ YEDEKLER (11316)", STINGRAY EVERYTHING '80S (1080P) 432P
 https://lotus.stingray.com/manifest/ose-128ads-montreal/samsungtvplus/master.m3u8
-#EXTINF:-1 tvg-id="" tvg-name="STINGRAY ÉXITOS REGIONAL MEXICANO" tvg-logo="https://images.pluto.tv/channels/6a73b8f1744143378ce88eae/colorLogoPNG_1788376177458.png" group-title="🗂️ YEDEKLER (11316)", STINGRAY ÉXITOS REGIONAL MEXICANO 360P
-https://jmp2.uk/plu-6a73b8f1744143378ce88eae.m3u8
 #EXTINF:-1 tvg-id="StingrayFlashback70s.ca@SD" tvg-name="STINGRAY FLASHBACK 70'S (1080P)" tvg-logo="https://i.imgur.com/jf5C9QF.png" group-title="🗂️ YEDEKLER (11316)", STINGRAY FLASHBACK 70'S (1080P) 432P
 https://lotus.stingray.com/manifest/ose-115ads-montreal/samsungtvplus/master.m3u8
 #EXTINF:-1 tvg-id="StingrayGreatestHits.ca" tvg-name="STINGRAY GREATEST HITS (1080P)" tvg-logo="" group-title="🗂️ YEDEKLER (11316)", STINGRAY GREATEST HITS (1080P) 432P
@@ -21017,6 +20993,10 @@ https://d3f4oii5n0oeqi.cloudfront.net/11701/88814594/hls/master.m3u8?ads.xumo_ch
 https://lotus.stingray.com/manifest/ose-317ads-montreal/samsungtvplus/master.m3u8
 #EXTINF:-1 tvg-id="StingrayTodaysLatinPop.ca@SD" tvg-name="STINGRAY TODAY'S LATIN POP (1080P)" tvg-logo="https://i.imgur.com/Os3kRRP.png" group-title="🗂️ YEDEKLER (11316)", STINGRAY TODAY'S LATIN POP (1080P) 432P
 https://lotus.stingray.com/manifest/ose-190ads-montreal/samsungtvplus/master.m3u8
+#EXTINF:-1 tvg-id="" tvg-name="STINGRAY ÉPOCA DORADA DEL CINE MEXICANO" tvg-logo="https://images.pluto.tv/channels/6a739fb3c1842722eaf5eb1f/colorLogoPNG_1788376112882.png" group-title="🗂️ YEDEKLER (11316)", STINGRAY ÉPOCA DORADA DEL CINE MEXICANO 360P
+https://jmp2.uk/plu-6a739fb3c1842722eaf5eb1f.m3u8
+#EXTINF:-1 tvg-id="" tvg-name="STINGRAY ÉXITOS REGIONAL MEXICANO" tvg-logo="https://images.pluto.tv/channels/6a73b8f1744143378ce88eae/colorLogoPNG_1788376177458.png" group-title="🗂️ YEDEKLER (11316)", STINGRAY ÉXITOS REGIONAL MEXICANO 360P
+https://jmp2.uk/plu-6a73b8f1744143378ce88eae.m3u8
 #EXTINF:-1 tvg-id="StopklatkaTV.pl@SD" tvg-name="STOPKLATKA TV" tvg-logo="https://i.imgur.com/qqNsIkx.png" group-title="🗂️ YEDEKLER (11316)", STOPKLATKA TV
 http://92.114.85.87:8018/play/a004/index.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="STORIA – PLUTO TV" tvg-logo="https://i.imgur.com/w5BYvsz.png" group-title="🗂️ YEDEKLER (11316)", STORIA – PLUTO TV 360P
@@ -21345,6 +21325,10 @@ https://eco.streams.ovh:1936/syrostv1/syrostv1/playlist.m3u8
 http://92.114.85.87:8010/play/a00l/index.m3u8
 #EXTINF:-1 tvg-id="SzolnokTV.hu@SD" tvg-name="SZOLNOK TV (1080P)" tvg-logo="https://i.imgur.com/Eiab9MP.png" group-title="🗂️ YEDEKLER (11316)", SZOLNOK TV (1080P) 720P
 https://cloudfront44.lexanetwork.com:1344/relay01/livestream004.sdp/playlist.m3u8
+#EXTINF:-1 tvg-id="" tvg-name="SÍ QUIERO ESE VESTIDO" tvg-logo="https://images.pluto.tv/channels/6578836cdfed030008ce5bdb/colorLogoPNG.png" group-title="🗂️ YEDEKLER (11316)", SÍ QUIERO ESE VESTIDO 360P
+https://jmp2.uk/plu-6578836cdfed030008ce5bdb.m3u8
+#EXTINF:-1 tvg-id="sonla" tvg-name="SƠN LA HD" tvg-logo="https://media.sonlatv.vn/upload/files/logo/logo_footer.png" group-title="🗂️ YEDEKLER (11316)", SƠN LA HD 1080P
+https://cdn.sonlatv.vn/live/28595222e707a364251b8724717894baa46/chunklist.m3u8
 #EXTINF:-1 tvg-id="TNews.in@SD" tvg-name="T NEWS (720P)" tvg-logo="https://dtil.tmsimg.com/assets/s143919_ld_h15_aa.png?lock=720x540" group-title="🗂️ YEDEKLER (11316)", T NEWS (720P) 576P
 https://cdn.pishow.tv/ott/live/385/master.m3u8
 #EXTINF:-1 tvg-id="TSports7.th@SD" tvg-name="T SPORTS 7" tvg-logo="https://i.imgur.com/KyI0s5n.png" group-title="🗂️ YEDEKLER (11316)", T SPORTS 7 240P
@@ -22375,6 +22359,8 @@ http://live.tkr.cdnvideo.ru/tkr/tkr.sdp/playlist.m3u8
 https://59d39900ebfb8.streamlock.net/teleestrella/teleestrella/playlist.m3u8
 #EXTINF:-1 tvg-id="TlaxcalaTV.mx@SD" tvg-name="TLAXCALA TV (360P) [NOT 24/7]" tvg-logo="https://i.imgur.com/5vaEhfy.png" group-title="🗂️ YEDEKLER (11316)", TLAXCALA TV (360P) [NOT 24/7] 720P
 https://vid26.mega00.com:5443/live/streams/qNmc7nulmq8zPYZE1582752735050.m3u8
+#EXTINF:-1 tvg-id="TLC.tr" tvg-name="TLC" tvg-logo="https://i.ibb.co/KpCxxsXd/Ekran-g-r-nt-s-2026-07-25-103937.jpg" group-title="🗂️ YEDEKLER (11316)", TLC 360P
+http://dygvideo.dygdigital.com/live/hls/tlctvdai?m3u8
 #EXTINF:-1 tvg-id="TLC.cz@SD" tvg-name="TLC (CZECH REPUBLIC)" tvg-logo="https://static.wikia.nocookie.net/logopedia/images/b/b1/TLC_%282021%29.svg/revision/latest?cb=20220703193228" group-title="🗂️ YEDEKLER (11316)", TLC (CZECH REPUBLIC) 1080P
 http://88.212.15.50/live/test_tlc_1200_atk/playlist.m3u8
 #EXTINF:-1 tvg-id="TLC.de@SD" tvg-name="TLC (GERMANY) (576P)" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/TLC_Logo.svg/960px-TLC_Logo.svg.png" group-title="🗂️ YEDEKLER (11316)", TLC (GERMANY) (576P) 576P
@@ -22561,14 +22547,14 @@ http://45.134.141.161:2200/ARG/Tooncast/index.m3u8
 http://190.61.42.218:9000/play/a06i/index.m3u8
 #EXTINF:-1 tvg-id="ToonGoggles.us@SD" tvg-name="TOONGOGGLES (720P)" tvg-logo="https://i.imgur.com/JMnxswq.png" group-title="🗂️ YEDEKLER (11316)", TOONGOGGLES (720P) 720P
 https://amg01329-otterainc-toongoggles-samsungau-ad-4c.amagi.tv/playlist/amg01329-otterainc-toongoggles-samsungau/playlist.m3u8
+#EXTINF:-1 tvg-id="TOPBarca.pl@SD" tvg-name="TOP BARCA (1080P)" tvg-logo="https://images-2.rakuten.tv/storage/global-live-channel/translation/artwork/7c59e962-086b-4d64-afb3-7f83ca8c3377-width200-quality90.jpeg" group-title="🗂️ YEDEKLER (11316)", TOP BARCA (1080P) 480P
+https://amg17560-fcb-amg17560c1-rakuten-uk-4891.playouts.now.amagi.tv/playlist/amg17560-fcbarcelona-topbarcaenglish-rakutenuk/playlist.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="TOP BARÇA" tvg-logo="https://images.pluto.tv/channels/67a52c8397782f00081879aa/colorLogoPNG.png" group-title="🗂️ YEDEKLER (11316)", TOP BARÇA 360P
 https://jmp2.uk/plu-67a52c8397782f00081879aa.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="TOP BARÇA" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ES1100001MT_20260929T041008SQUARE.png" group-title="🗂️ YEDEKLER (11316)", TOP BARÇA 480P
 https://jmp2.uk/stvp-ES1100001MT
 #EXTINF:-1 tvg-id="" tvg-name="TOP BARÇA" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/GB1100002OE_20260224T031228SQUARE.png" group-title="🗂️ YEDEKLER (11316)", TOP BARÇA 1080P
 https://jmp2.uk/stvp-GB1100002OE
-#EXTINF:-1 tvg-id="TOPBarca.pl@SD" tvg-name="TOP BARCA (1080P)" tvg-logo="https://images-2.rakuten.tv/storage/global-live-channel/translation/artwork/7c59e962-086b-4d64-afb3-7f83ca8c3377-width200-quality90.jpeg" group-title="🗂️ YEDEKLER (11316)", TOP BARCA (1080P) 480P
-https://amg17560-fcb-amg17560c1-rakuten-uk-4891.playouts.now.amagi.tv/playlist/amg17560-fcbarcelona-topbarcaenglish-rakutenuk/playlist.m3u8
 #EXTINF:-1 tvg-id="TopChannel.gr@SD" tvg-name="TOP CHANNEL (720P)" tvg-logo="https://i.imgur.com/SfV2gJg.png" group-title="🗂️ YEDEKLER (11316)", TOP CHANNEL (720P) 720P
 https://fr.crystalweb.net:1936/topchannel/topchannel/playlist.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="TOP CHEF" tvg-logo="https://images.pluto.tv/channels/677fb137a5d8215f99b9cc06/colorLogoPNG_1761664673466.png" group-title="🗂️ YEDEKLER (11316)", TOP CHEF 360P
@@ -23317,6 +23303,10 @@ https://lnk5511.bstrm.net/live/687e3fa8679c8d4d68fab5dd/hd/manifest.mpd
 https://live.tv1.rw/index.m3u8
 #EXTINF:-1 tvg-id="TV10.rw@SD" tvg-name="TV10 (720P)" tvg-logo="https://i.imgur.com/DeaWC1N.png" group-title="🗂️ YEDEKLER (11316)", TV10 (720P) 720P
 https://5c46fa289c89f.streamlock.net/pub1live/mystream/playlist.m3u8
+#EXTINF:-1 tvg-id="" tvg-name="TV100" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/TV100_logosu.svg/512px-TV100_logosu.svg.png" group-title="🗂️ YEDEKLER (11316)", TV100 1080P
+https://tv.ensonhaber.com/tv100/tv100.m3u8#all
+#EXTINF:-1 tvg-id="" tvg-name="TV100" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/TV100_logosu.svg/512px-TV100_logosu.svg.png" group-title="🗂️ YEDEKLER (11316)", TV100 1080P
+https://tv.ensonhaber.com/tv100/tv100.m3u8
 #EXTINF:-1 tvg-id="TV1000.bg" tvg-name="TV1000" tvg-logo="https://i.imgur.com/GHNsctR.png" group-title="🗂️ YEDEKLER (11316)", TV1000 1080P
 http://stream.mcquack.net/100/tracks-v1a1/mono.ts.m3u8?ads=1&filter.tracks=v1a1
 #EXTINF:-1 tvg-id="TV1000.bg@SD" tvg-name="TV1000" tvg-logo="https://i.imgur.com/GHNsctR.png" group-title="🗂️ YEDEKLER (11316)", TV1000 576P
@@ -24785,6 +24775,8 @@ http://120.70.60.179:9901/tsfile/live/1006_1.m3u8?key=txiptv&playlive=1&authid=0
 http://110.153.180.106:55555/out_2/index.m3u8
 #EXTINF:-1 tvg-id="XinjiangTV5.cn@SD" tvg-name="XINJIANG TV 5" tvg-logo="https://i.imgur.com/PARupWK.png" group-title="🗂️ YEDEKLER (11316)", XINJIANG TV 5 1080P
 http://120.70.60.179:9901/tsfile/live/1002_1.m3u8?key=txiptv&playlive=1&authid=0
+#EXTINF:-1 tvg-id="XinjiangTV8.cn@SD" tvg-name="XINJIANG TV 8" tvg-logo="https://i.imgur.com/JJw1Ndc.png" group-title="🗂️ YEDEKLER (11316)", XINJIANG TV 8 1080P
+http://120.70.60.179:9901/tsfile/live/1002_1.m3u8?authid=0&key=txiptv&playlive=1
 #EXTINF:-1 tvg-id="XITE.nl@SD" tvg-name="XITE (720P)" tvg-logo="https://i.imgur.com/jxuwGRi.png" group-title="🗂️ YEDEKLER (11316)", XITE (720P) 360P
 https://xite-rakuten.amagi.tv/playlist.m3u8
 #EXTINF:-1 tvg-id="XITE90sThrowback.us@SD" tvg-name="XITE 90'S THROWBACK (1080P)" tvg-logo="https://i.imgur.com/vwpOzuz.png" group-title="🗂️ YEDEKLER (11316)", XITE 90'S THROWBACK (1080P) 360P
@@ -25237,8 +25229,16 @@ https://5fc584f3f19c9.streamlock.net/genteopa/videogenteopa/playlist.m3u8
 https://5f1af61612fb5.streamlock.net/genteopa/videogenteopa_720p/playlist.m3u8
 #EXTINF:-1 tvg-id="VivaLatino.ua@SD" tvg-name="¡VIVA LATINO! (1080P)" tvg-logo="https://i.imgur.com/KRakHAq.png" group-title="🗂️ YEDEKLER (11316)", ¡VIVA LATINO! (1080P) 1080P
 http://stream.mcquack.net/285/index.m3u8
+#EXTINF:-1 tvg-id="" tvg-name="ÁGUILA ROJA" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ES500005BP_20250610T010520SQUARE.png" group-title="🗂️ YEDEKLER (11316)", ÁGUILA ROJA 720P
+https://jmp2.uk/stvp-ES500005BP
+#EXTINF:-1 tvg-id="" tvg-name="ÉRASE UNA VEZ..." tvg-logo="https://images.pluto.tv/channels/63c69c87808b740007599fe1/colorLogoPNG.png" group-title="🗂️ YEDEKLER (11316)", ÉRASE UNA VEZ... 360P
+https://jmp2.uk/plu-63c69c87808b740007599fe1.m3u8
+#EXTINF:-1 tvg-id="Ocko.cz" tvg-name="ÓČKO Ⓢ" tvg-logo="https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/czech-republic/ocko-cz.png" group-title="🗂️ YEDEKLER (11316)", ÓČKO Ⓢ 400P
+https://ocko-live.ssl.cdn.cra.cz/channels/ocko/playlist.m3u8
 #EXTINF:-1 tvg-id="dongnai1" tvg-name="ĐỒNG NAI 1 HD" tvg-logo="https://img.hplus.com.vn/728x409/banner/2022/08/23/343651-DN1-LOGO.png" group-title="🗂️ YEDEKLER (11316)", ĐỒNG NAI 1 HD 360P
 http://118.107.85.4:1935/live/smil:DNTV1.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="RTVSSport.sk" tvg-name="ŠPORT" tvg-logo="https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/slovakia/rtvs-sport-sk.png" group-title="🗂️ YEDEKLER (11316)", ŠPORT 480P
+https://sktv.mxnticek.eu/new/stream.php?ch=%C5%A0port
 #EXTINF:-1 tvg-id="Arkhyz24.ru" tvg-name="АРХЫЗ 24" tvg-logo="https://i.imgur.com/mve0sSS.png" group-title="🗂️ YEDEKLER (11316)", АРХЫЗ 24 1080P
 https://live.mediacdn.ru/sr1/arhis24/playlist_hdhigh.m3u8
 #EXTINF:-1 tvg-id="Belarus24.by" tvg-name="БЕЛАРУСЬ 24" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Belarus_24_logo.svg/960px-Belarus_24_logo.svg.png" group-title="🗂️ YEDEKLER (11316)", БЕЛАРУСЬ 24 1080P
