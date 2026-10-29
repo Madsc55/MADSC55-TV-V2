@@ -17,6 +17,8 @@ def main():
     if len(tested) != len(playback["channel_results"]):
         raise SystemExit("Duplicate playback hashes in Turkish language evidence")
     hashes = {r["url_sha256"] for r in candidates}
+    if len(hashes) != len(candidates):
+        raise SystemExit("Duplicate candidate hashes in Turkish language evidence")
     if not playback.get("coverage_complete") or len(tested) != len(candidates) or hashes != set(tested):
         raise SystemExit("Turkish language audit refuses incomplete or mismatched playback evidence")
     rows = []
