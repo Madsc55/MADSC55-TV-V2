@@ -1,0 +1,39 @@
+name: MADSC TV — Tek Toplu Güvenlik ve Bitiş Kontrolü
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'v2/test_language_evidence_functional.py'
+      - 'v2/spoken_language_sample_review.py'
+      - '.github/workflows/v2-one-shot-final-contract.yml'
+permissions:
+  contents: read
+concurrency:
+  group: madsc-one-shot-offline-contract
+  cancel-in-progress: false
+jobs:
+  consolidated:
+    name: Tek toplu çevrimdışı kontrol
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compile all modules
+        run: python -m compileall -q v2
+      - name: Protect IBO, favorites, categories and original backups
+        run: |
+          test "$(git hash-object MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)" = "4b1c3cea4b5107a425abab60f62d41f9f81e05a7"
+          python v2/test_playlist_invariants.py
+      - name: Enforce unified read-only contracts
+        run: python v2/test_unified_safety_contract.py
+      - name: Exercise language behavior with fixtures
+        run: python v2/test_language_evidence_functional.py
+      - name: Check bounded speech sampler command
+        run: python v2/spoken_language_sample_review.py --help
+      - name: Final one-shot safety verdict
+        run: |
+          echo "PASS: offline contract, language fixtures, playlist protection and ASR command."
+          echo "NOT VERIFIED: spoken Turkish identity or full stream quality; no new scan performed."
