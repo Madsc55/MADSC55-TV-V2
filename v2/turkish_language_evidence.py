@@ -14,6 +14,8 @@ def main():
     playback = load("all-source-playback-aggregate.json")
     candidates = discovery["candidates"]
     tested = {r["url_sha256"]: r for r in playback["channel_results"]}
+    if len(tested) != len(playback["channel_results"]):
+        raise SystemExit("Duplicate playback hashes in Turkish language evidence")
     hashes = {r["url_sha256"] for r in candidates}
     if not playback.get("coverage_complete") or len(tested) != len(candidates) or hashes != set(tested):
         raise SystemExit("Turkish language audit refuses incomplete or mismatched playback evidence")
@@ -26,12 +28,13 @@ def main():
         turkish_marker = bool(re.search(r"(?i)(türkçe|turkish|türkiye|turkiye|\.tr(?:\b|$)|\bTR\b)", combined))
         playback_row = tested[candidate["url_sha256"]]
         video = playback_row.get("playback") == "VIDEO_DECODED"
+        audio = playback_row.get("audio")
         # Metadata only supports prioritizing review; never auto-approve a language.
         category = "LANGUAGE_REVIEW_WITH_METADATA_HINT" if turkish_marker else "LANGUAGE_REVIEW_SOURCE_ONLY"
         if not video:
             category = "PLAYBACK_UNAVAILABLE_LANGUAGE_UNVERIFIED"
         rows.append({"url_sha256": candidate["url_sha256"], "name": name, "source": candidate.get("source"),
-                     "category": category, "video_decoded": video,
+                     "category": category, "video_decoded": video, "audio_evidence": audio,
                      "spoken_turkish_verified": False, "approved": False,
                      "action": "VERIFY_SPOKEN_LANGUAGE_AND_BROADCASTER_IDENTITY"})
     counts = dict(Counter(x["category"] for x in rows))
