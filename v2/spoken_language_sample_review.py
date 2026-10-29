@@ -63,7 +63,7 @@ def run():
                                 "detected_language": info.language, "language_probability": round(info.language_probability, 4),
                                 "speech_detected": bool(transcript), "approved": False,
                                 "spoken_turkish_verified": False})
-            except (subprocess.TimeoutExpired, OSError, ValueError, RuntimeError) as exc:
+            except (subprocess.TimeoutExpired, OSError, ValueError, RuntimeError, TypeError) as exc:
                 results.append({"url_sha256": digest, "status": "SAMPLE_ERROR", "error_type": type(exc).__name__, "approved": False})
     output = {"policy": "READ_ONLY_SAMPLED_ASR_HINTS_REQUIRE_REVIEW", "sampled": len(results),
               "model": "faster-whisper tiny", "seconds_per_stream": args.seconds,
