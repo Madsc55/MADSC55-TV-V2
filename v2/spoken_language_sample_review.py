@@ -38,7 +38,7 @@ def run():
         url = item.get("url", "")
         digest = hashlib.sha256(url.encode()).hexdigest()
         match = tested.get(digest)
-        if match and match.get("playback") == "VIDEO_DECODED" and match.get("audio") is True and url.startswith(("https://", "http://")):
+        if match and match.get("playback") == "VIDEO_DECODED" and str(match.get("audio", "")).upper() in ("TRUE", "YES", "PRESENT", "AUDIO_PRESENT", "AUDIO_DECODED") and url.startswith(("https://", "http://")):
             selected.append((digest, url))
         if len(selected) >= args.limit:
             break
