@@ -5,6 +5,7 @@ on:
     paths:
       - 'v2/audit_turkish_categories.py'
       - 'v2/turkish_discovery.py'
+      - 'v2/turkish_live_probe.py'
       - '.github/workflows/turkish-category-audit.yml'
 permissions:
   contents: write
@@ -17,9 +18,11 @@ jobs:
         run: python -m py_compile v2/audit_turkish_categories.py v2/turkish_discovery.py
       - name: Worldwide Turkish discovery and catalog validation
         run: python -u v2/turkish_discovery.py
+      - name: Probe pending live HLS streams
+        run: python -u v2/turkish_live_probe.py
       - name: Commit verified playlist and report
         run: |
           git config user.name github-actions
           git config user.email actions@users.noreply.github.com
-          git add MADSC55_TV_IBO_CALISANLAR_TEST.m3u8 v2/reports/turkish-discovery.json
+          git add MADSC55_TV_IBO_CALISANLAR_TEST.m3u8 v2/reports/turkish-discovery.json v2/reports/turkish-live-probe.json
           git diff --cached --quiet || (git commit -m 'Audit Turkish channels and clean test markers' && git push)
