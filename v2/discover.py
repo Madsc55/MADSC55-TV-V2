@@ -68,7 +68,8 @@ def discover(source_texts, live_text, scopes):
                 continue
             digest = hashlib.sha256(e["url"].encode()).hexdigest()
             if e["url"] in seen:
-                provenance[digest].append(source_id)
+                if source_id not in provenance[digest]:
+                    provenance[digest].append(source_id)
                 continue
             seen.add(e["url"])
             provenance[digest] = [source_id]
@@ -122,13 +123,22 @@ def main():
         existing = {e["url"] for e in entries(live)}
         seen_urls = set()
         snapshot = []
+        snapshot_by_url = {}
         for source_id, content in loaded:
             for item in entries(content):
                 if not turkish_candidate(item, scopes.get(source_id, 'candidate')):
                     continue
-                if item["url"] not in existing and item["url"] not in seen_urls:
-                    seen_urls.add(item["url"])
-                    snapshot.append({"source": source_id, **item})
+                if item["url"] in existing:
+                    continue
+                if item["url"] in seen_urls:
+                    prior = snapshot_by_url[item["url"]]
+                    if source_id not in prior["source_ids"]:
+                        prior["source_ids"].append(source_id)
+                    continue
+                seen_urls.add(item["url"])
+                record = {"source": source_id, "source_ids": [source_id], **item}
+                snapshot.append(record)
+                snapshot_by_url[item["url"]] = record
         private = ROOT / "v2/reports/private-playback-snapshot.json"
         private.parent.mkdir(parents=True, exist_ok=True)
         private.write_text(json.dumps({"schema": 1, "sources": source_audit, "candidates": snapshot}, ensure_ascii=False), encoding="utf-8")
