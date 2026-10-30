@@ -119,6 +119,8 @@ def main():
             errors.append({"source": source["id"], "error": type(exc).__name__})
             source_audit.append({"source": source["id"], "status": "FETCH_FAILED",
                                  "error": type(exc).__name__})
+    if args.snapshot_output and errors:
+        raise SystemExit("Snapshot incomplete: " + str(len(errors)) + " source(s) failed; refusing private snapshot output")
     if args.snapshot_output:
         existing = {e["url"] for e in entries(live)}
         seen_urls = set()
