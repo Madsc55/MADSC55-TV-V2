@@ -139,6 +139,30 @@
       "kind": "m3u",
       "url": "https://iptv-org.github.io/iptv/regions/eur.m3u",
       "scope": "world"
+    },
+    {
+      "id": "turktv-itasli-archive",
+      "kind": "m3u",
+      "url": "https://itasli.github.io/TURKTV/index.m3u",
+      "scope": "TR"
+    },
+    {
+      "id": "iptv-org-gitlab-tur",
+      "kind": "m3u",
+      "url": "https://iptv-org.gitlab.io/iptv/languages/tur.m3u",
+      "scope": "TR"
+    },
+    {
+      "id": "iptv-org-gitlab-tr",
+      "kind": "m3u",
+      "url": "https://iptv-org.gitlab.io/iptv/countries/tr.m3u",
+      "scope": "TR"
+    },
+    {
+      "id": "dearbulut-all-candidates",
+      "kind": "m3u",
+      "url": "https://dearbulut.github.io/iptv/playlists/index.m3u",
+      "scope": "world"
     }
   ]
 }
