@@ -42,7 +42,8 @@ def entries(data):
 
 def turkish_candidate(entry, scope):
     """Conservative Turkish candidate gate; not spoken-language proof."""
-    if scope == "TR":
+    if scope in ("TR", "AZ"):
+        # Geographic candidate inclusion only; never proof of Turkish speech.
         return True
     fields = " ".join((entry.get("group", ""), entry.get("tvg_id", ""), entry.get("name", "")))
     if re.search(r"(?i)(?:^|[^a-z])(?:turkish|türkçe|türkiye|turkiye|türkiye tv)(?:$|[^a-z])", fields):
