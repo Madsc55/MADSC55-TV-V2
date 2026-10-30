@@ -46,7 +46,7 @@ def turkish_candidate(entry, scope):
         # Geographic candidate inclusion only; never proof of Turkish speech.
         return True
     fields = " ".join((entry.get("group", ""), entry.get("tvg_id", ""), entry.get("name", "")))
-    if re.search(r"(?i)(?:^|[^a-z])(?:trt|türk|turk|turkish|türkçe|türkiye|turkiye|türkiye tv|azerbaijan|azerbaycan|azərbaycan|azerbaijani|azeri|azərbaycan dili)(?:$|[^a-z])", fields):
+    if re.search(r"(?i)(?:^|[^a-z])(?:trt|türk|turk|turkish|türkçe|türkiye|turkiye|turkey|türkiye tv|azerbaijan|azerbaycan|azərbaycan|azerbaijani|azeri|azərbaycan dili)(?:$|[^a-z])", fields):
         return True
     if re.search(r"(?i)(?:^|[. _-])(?:tr)(?:[. _-]|$)", entry.get("tvg_id", "")):
         return True
@@ -92,8 +92,8 @@ def main():
                 url = item.get("url", "")
                 if url.startswith("https://") and not any(s["url"] == url for s in sources):
                     sources.append({"id": "github-auto-" + hashlib.sha256(url.encode("utf-8")).hexdigest()[:20], "url": url, "scope": "candidate"})
-        except (OSError, ValueError, TypeError):
-            pass
+        except (OSError, ValueError, TypeError) as exc:
+            raise SystemExit('Dynamic discovery inventory unreadable: ' + type(exc).__name__) from exc
     loaded, errors, source_audit = [], [], []
     scopes = {source['id']: source.get('scope', 'candidate') for source in sources}
     for source in sources:
