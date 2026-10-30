@@ -127,6 +127,18 @@
       "kind": "m3u",
       "url": "https://iptv-org.github.io/iptv/languages/tur.m3u",
       "scope": "TR"
+    },
+    {
+      "id": "iptv-org-region-asia",
+      "kind": "m3u",
+      "url": "https://iptv-org.github.io/iptv/regions/asia.m3u",
+      "scope": "world"
+    },
+    {
+      "id": "iptv-org-region-europe",
+      "kind": "m3u",
+      "url": "https://iptv-org.github.io/iptv/regions/eur.m3u",
+      "scope": "world"
     }
   ]
 }
