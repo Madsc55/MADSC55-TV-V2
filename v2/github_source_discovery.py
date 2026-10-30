@@ -35,13 +35,13 @@ def main():
                     repos[item["full_name"]] = item.get("default_branch", "main")
         except Exception as exc:
             errors.append({"query": query, "error": type(exc).__name__})
-    for name, branch in list(repos.items())[:MAX_REPOS]:
+    for name, branch in sorted(repos.items(), key=lambda item: item[0].casefold())[:MAX_REPOS]:
         if len(found) >= MAX_FILES:
             break
         try:
             tree = api("https://api.github.com/repos/" + name + "/git/trees/" + urllib.parse.quote(branch, safe="") + "?recursive=1")
             paths = [x["path"] for x in tree.get("tree", []) if x.get("type") == "blob" and re.search(r"(?i)\.(m3u8?|txt)$", x.get("path", ""))]
-            for path in paths[:8]:
+            for path in sorted(paths, key=str.casefold)[:8]:
                 if len(found) >= MAX_FILES:
                     break
                 raw = "https://raw.githubusercontent.com/" + name + "/" + urllib.parse.quote(branch, safe="") + "/" + urllib.parse.quote(path, safe="/")
@@ -59,6 +59,7 @@ def main():
                     errors.append({"repository": name, "path": path, "error": type(exc).__name__})
         except Exception as exc:
             errors.append({"repository": name, "error": type(exc).__name__})
+    found.sort(key=lambda item: (item["repository"].casefold(), item["path"].casefold()))
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps({"created_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
        "policy": "READ_ONLY_NO_AUTOMATIC_SOURCE_OR_PLAYLIST_IMPORT", "repositories_discovered": len(repos),
