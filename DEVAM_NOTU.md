@@ -491,3 +491,15 @@ Bu bolum onceki tum devir notlariyla birlikte uygulanacak; tamamlandi isaretleri
 7. Tum cevrimdisi testler ve Actions CI: hata varsa duzelt, tekrar test et, yesil kanitlari not et. Hazirlik CI ile gercek taramayi ayir.
 8. SADECE tum kapilar gecildikten sonra kullanici onayiyla manuel tek kapsamli tarama, sonra IBO YEDEKLER 2000+2000.
 Calisma kurali: bir asama kanitli yesil olmadan sonraki agir isi baslatma; tamamlanan commit/run/test kimliklerini buraya ekle. Ana IBO playlistine ve YEDEKLER'e tarama oncesi dokunma.
+
+
+## 2026-10-31 GITHUB ISSUE SIRALI IS KUYRUGU
+- #1 Actions tetikleyici ve run envanteri
+- #2 Ana IBO playlist ve YEDEKLER koruma
+- #3 K2/K5 besli sistem ve eski workflow davranis esdegerligi
+- #4 TR/AZ dunya kesif adaptorleri
+- #5 #60/#74 kaynak kaybi regresyonu
+- #6 Sifreli kalici URL arsivi ve restore
+- #7 Offline testler ve Actions kabul kapisi
+- #8 En son manuel kapsamli tarama ve 2000'lik IBO partileri
+Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub issue olusturmak Actions testi baslatmaz; otomatik gece calismasi taahhudu yoktur. Ana IBO playlistine dokunma.
