@@ -59,15 +59,21 @@ def discover(source_texts, live_text, scopes):
     existing_urls = {e["url"] for e in entries(live_text)}
     existing_keys = {key(e) for e in entries(live_text) if e["tvg_id"]}
     candidates, seen = [], set()
+    provenance = {}
     for source_id, content in source_texts:
         for e in entries(content):
             if not turkish_candidate(e, scopes.get(source_id, 'candidate')):
                 continue
-            if e["url"] in existing_urls or e["url"] in seen:
+            if e["url"] in existing_urls:
+                continue
+            digest = hashlib.sha256(e["url"].encode()).hexdigest()
+            if e["url"] in seen:
+                provenance[digest].append(source_id)
                 continue
             seen.add(e["url"])
+            provenance[digest] = [source_id]
             # Do not persist stream URLs/tokens in public reports.
-            candidates.append({"name": e["name"], "tvg_id": e["tvg_id"], "group": e["group"], "source": source_id, "existing_channel_alternative": bool(e["tvg_id"] and key(e) in existing_keys), "url_sha256": hashlib.sha256(e["url"].encode()).hexdigest(), "logo": e["logo"]})
+            candidates.append({"name": e["name"], "tvg_id": e["tvg_id"], "group": e["group"], "source": source_id, "source_ids": provenance[digest], "existing_channel_alternative": bool(e["tvg_id"] and key(e) in existing_keys), "url_sha256": hashlib.sha256(e["url"].encode()).hexdigest(), "logo": e["logo"]})
     return candidates
 
 def main():
