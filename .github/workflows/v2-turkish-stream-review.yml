@@ -91,10 +91,22 @@ jobs:
       - name: Protect live playlist
         run: python v2/test_playlist_invariants.py
       - name: Download shared source discovery
+        id: download_source_snapshot
+        continue-on-error: true
         uses: actions/download-artifact@v4
         with:
           name: unified-source-snapshot
           path: v2/reports
+      - name: Retry shared source discovery download after transient transfer failure
+        if: steps.download_source_snapshot.outcome == 'failure'
+        uses: actions/download-artifact@v4
+        with:
+          name: unified-source-snapshot
+          path: v2/reports
+      - name: Require downloaded source discovery snapshot
+        run: |
+          test -s v2/reports/github-source-discovery.json
+          python -c "import json; from pathlib import Path; d=json.loads(Path('v2/reports/github-source-discovery.json').read_text()); assert isinstance(d.get('sources'), list)"
       - name: Download private candidate snapshot
         uses: actions/download-artifact@v4
         with:
