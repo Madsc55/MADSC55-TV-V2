@@ -169,6 +169,30 @@
       "kind": "m3u",
       "url": "https://dearbulut.github.io/iptv/playlists/best.m3u",
       "scope": "world"
+    },
+    {
+      "id": "onureroz-turk-index",
+      "kind": "m3u",
+      "url": "https://onureroz.com/indirmeler/turk/index.m3u",
+      "scope": "TR"
+    },
+    {
+      "id": "onureroz-turk-all",
+      "kind": "m3u",
+      "url": "https://onureroz.com/indirmeler/turk/all.m3u",
+      "scope": "TR"
+    },
+    {
+      "id": "onureroz-turk-karma",
+      "kind": "m3u",
+      "url": "https://onureroz.com/indirmeler/turk/karma-index.m3u",
+      "scope": "TR"
+    },
+    {
+      "id": "onureroz-world-index",
+      "kind": "m3u",
+      "url": "https://onureroz.com/indirmeler/dunya/index.m3u",
+      "scope": "world"
     }
   ]
 }
