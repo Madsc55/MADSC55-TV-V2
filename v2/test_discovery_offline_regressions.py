@@ -34,6 +34,19 @@ class DiscoveryOfflineRegression(unittest.TestCase):
         data=playlist(("tr.example","TR","TRT Haber",u))
         self.assertEqual(discover([("first",data)],data,{"first":"TR"}),[])
 
+    def test_turkish_url_not_language_proof(self):
+        self.assertFalse(turkish_candidate({"name":"English News","group":"World","tvg_id":""},"world"))
+
+    def test_multiple_urls_same_name_retained(self):
+        a=playlist(("same.id","TR","Same","https://example.invalid/a.m3u8"))
+        b=playlist(("same.id","TR","Same","https://example.invalid/b.m3u8"))
+        result=discover([("a",a),("b",b)],"#EXTM3U\\n",{"a":"TR","b":"TR"})
+        self.assertEqual(len(result),2)
+
+    def test_non_http_stream_ignored(self):
+        data='#EXTM3U\\n#EXTINF:-1,TRT Haber\\nfile:///tmp/stream\\n'
+        self.assertEqual(list(entries(data)),[])
+
     def test_malformed_and_non_stream_lines(self):
         data='#EXTM3U\n#EXTINF:-1,TRT Haber\n#EXTVLCOPT:http-user-agent=Foo\nhttps://example.invalid/a.m3u8\n'
         self.assertEqual(len(list(entries(data))),1)
