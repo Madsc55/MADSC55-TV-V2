@@ -197,11 +197,27 @@ jobs:
       - name: Validate scripts
         run: python -m py_compile v2/discover.py v2/stream_url_collisions.py v2/quality_upgrades.py v2/turkish_stream_catalog.py v2/turkish_stream_probe.py v2/turkish_stream_decode.py v2/turkish_stream_review.py v2/candidate_assets.py v2/frame_collisions.py v2/current_stream_resolution.py v2/stream_stability.py v2/test_playlist_invariants.py v2/final_validation_summary.py v2/newlisttr_extract.py v2/build_newlisttr_ibo_test.py v2/candidate_metadata_audit.py
       - name: Download shared source discovery
+        id: review_source_download
+        continue-on-error: true
+        uses: actions/download-artifact@v4
+        with:
+          name: unified-source-snapshot
+          path: v2/reports
+      - name: Retry download shared source discovery after transfer failure
+        if: steps.review_source_download.outcome == 'failure'
         uses: actions/download-artifact@v4
         with:
           name: unified-source-snapshot
           path: v2/reports
       - name: Download shared candidate report
+        id: review_candidates_download
+        continue-on-error: true
+        uses: actions/download-artifact@v4
+        with:
+          name: unified-source-candidates
+          path: v2/reports
+      - name: Retry download shared candidate report after transfer failure
+        if: steps.review_candidates_download.outcome == 'failure'
         uses: actions/download-artifact@v4
         with:
           name: unified-source-candidates
