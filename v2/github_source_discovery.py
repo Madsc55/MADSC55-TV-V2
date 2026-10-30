@@ -11,8 +11,8 @@ from discover import ROOT, entries, fetch
 
 CONFIG = ROOT / "v2/config/sources.json"
 OUT = ROOT / "v2/reports/github-source-discovery.json"
-QUERIES = ["turkish iptv m3u", "turkiye m3u", "tr iptv playlist", "turkish tv playlist", "türkçe canlı tv m3u", "turk kanallari m3u", "turkish channels iptv", "iptv tr m3u8", "türk televizyon m3u", "turkish live tv playlist"]
-MAX_REPOS = 150
+QUERIES = ["turkish iptv m3u", "turkiye m3u", "tr iptv playlist", "turkish tv playlist", "türkçe canlı tv m3u", "turk kanallari m3u", "turkish channels iptv", "iptv tr m3u8", "türk televizyon m3u", "turkish live tv playlist", "azerbaijan iptv m3u", "azerbaycan tv m3u", "azeri iptv playlist", "turk azeri iptv", "free turkish tv m3u", "turkish live channels m3u8", "türk iptv ücretsiz", "canlı tv izle m3u", "turkish diaspora iptv", "tr az channels playlist"]
+MAX_REPOS = 240
 MAX_FILES = 240
 MAX_BYTES = 2_000_000
 
