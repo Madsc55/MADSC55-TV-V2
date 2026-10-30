@@ -103,6 +103,30 @@
       "kind": "m3u",
       "url": "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/tr.m3u",
       "scope": "TR"
+    },
+    {
+      "id": "iptv-org-az",
+      "kind": "m3u",
+      "url": "https://iptv-org.github.io/iptv/countries/az.m3u",
+      "scope": "AZ"
+    },
+    {
+      "id": "iptv-org-aze-language",
+      "kind": "m3u",
+      "url": "https://iptv-org.github.io/iptv/languages/aze.m3u",
+      "scope": "AZ"
+    },
+    {
+      "id": "iptv-org-az-streams",
+      "kind": "m3u",
+      "url": "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/az.m3u",
+      "scope": "AZ"
+    },
+    {
+      "id": "iptv-org-tur-language",
+      "kind": "m3u",
+      "url": "https://iptv-org.github.io/iptv/languages/tur.m3u",
+      "scope": "TR"
     }
   ]
 }
