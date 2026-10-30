@@ -163,6 +163,12 @@
       "kind": "m3u",
       "url": "https://dearbulut.github.io/iptv/playlists/index.m3u",
       "scope": "world"
+    },
+    {
+      "id": "dearbulut-best-ranked",
+      "kind": "m3u",
+      "url": "https://dearbulut.github.io/iptv/playlists/best.m3u",
+      "scope": "world"
     }
   ]
 }
