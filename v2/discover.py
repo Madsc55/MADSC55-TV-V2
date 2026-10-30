@@ -87,10 +87,10 @@ def main():
     if DYNAMIC.exists():
         try:
             dynamic = json.loads(DYNAMIC.read_text(encoding="utf-8"))
-            for index, item in enumerate(dynamic.get("sources", [])[:240]):
+            for item in dynamic.get("sources", [])[:240]:
                 url = item.get("url", "")
                 if url.startswith("https://") and not any(s["url"] == url for s in sources):
-                    sources.append({"id": "github-auto-" + str(index), "url": url, "scope": "candidate"})
+                    sources.append({"id": "github-auto-" + hashlib.sha256(url.encode("utf-8")).hexdigest()[:20], "url": url, "scope": "candidate"})
         except (OSError, ValueError, TypeError):
             pass
     loaded, errors, source_audit = [], [], []
