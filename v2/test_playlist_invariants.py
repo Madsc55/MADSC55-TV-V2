@@ -1,12 +1,15 @@
 #!/usr/bin/env python3
 """Offline invariants for MADSC55 TV V2 playlist and source configuration."""
 import json
+import subprocess
 import pathlib
 import sys
 from collections import Counter
 from discover import ROOT, LIVE, SOURCES, entries
 
 def main():
+    actual_blob = subprocess.check_output(["git", "hash-object", str(LIVE)], text=True).strip()
+    assert actual_blob == "4b1c3cea4b5107a425abab60f62d41f9f81e05a7", "Protected IBO playlist content changed"
     text = LIVE.read_text(encoding="utf-8-sig")
     channels = list(entries(text))
     assert text.startswith("#EXTM3U"), "Missing M3U header"
