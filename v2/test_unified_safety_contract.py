@@ -40,4 +40,8 @@ assert all(url.startswith('https://') for url in urls)
 assert all(item.get('scope') in ('TR', 'AZ', 'SE', 'world', 'candidate') for item in sources)
 for required in ('turktv-itasli-archive', 'onureroz-turk-index', 'onureroz-turk-all', 'onureroz-turk-karma', 'onureroz-world-index', 'dearbulut-best-ranked'):
     assert required in ids, required
+# Execute network-free discovery behavior fixtures before allowing an expensive scan.
+import subprocess
+import sys
+subprocess.run([sys.executable, str(ROOT / "test_discovery_offline_regressions.py")], check=True)
 print("Offline unified safety contract: PASS")
