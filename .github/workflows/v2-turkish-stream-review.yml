@@ -4,6 +4,8 @@ on:
   push:
     paths:
       - 'v2/discover.py'
+      - 'v2/config/sources.json'
+      - 'v2/github_source_discovery.py'
       - 'v2/turkish_language_evidence.py'
       - 'v2/final_validation_summary.py'
       - 'v2/postscan_unified_action_queue.py'
