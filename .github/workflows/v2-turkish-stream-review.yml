@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - 'v2/discover.py'
+      - 'v2/test_source_provenance.py'
       - 'v2/config/sources.json'
       - 'v2/github_source_discovery.py'
       - 'v2/turkish_language_evidence.py'
@@ -34,6 +35,8 @@ jobs:
         run: python -m compileall -q v2
       - name: Run offline consolidated safety contracts before network scans
         run: python v2/test_unified_safety_contract.py
+      - name: Check multi-source provenance before scanning
+        run: python v2/test_source_provenance.py
       - name: Discover GitHub sources once
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
