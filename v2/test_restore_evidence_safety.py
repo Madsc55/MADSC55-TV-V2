@@ -25,6 +25,7 @@ class EvidenceSafetyTests(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError, "owner-only"):
                 check(env)
             restored.chmod(0o600)
+            evidence.chmod(0o600)
             self.assertTrue(check(env))
     def test_reject_symlink_evidence(self):
         with tempfile.TemporaryDirectory() as d:
