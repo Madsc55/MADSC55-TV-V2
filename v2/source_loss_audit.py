@@ -18,6 +18,13 @@ def compare(previous, current, threshold=0.5):
         raise ValueError("threshold must be between 0 and 1")
     old, new = index(previous), index(current)
     findings = []
+    for source_map in (old, new):
+        for item in source_map.values():
+            if item.get("status") == "FETCH_FAILED":
+                continue
+            count = item.get("distinct_stream_urls", item.get("entries", 0))
+            if type(count) is not int or count < 0:
+                raise ValueError("Invalid source count")
     if not old or not new:
         return {"previous_sources": len(old), "current_sources": len(new),
                 "findings": [{"reason": "MISSING_SOURCE_AUDIT", "previous": len(old), "current": len(new)}],
