@@ -40,6 +40,14 @@ class SourceLossTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             compare(report(("a", "ok", 10)), report(("a", "ok", True)))
 
+    def test_missing_previous_audit_is_not_success(self):
+        result = compare(report(), report(("new", "ok", 20)))
+        self.assertEqual(result["status"], "REVIEW_REQUIRED")
+        self.assertEqual(result["findings"][0]["reason"], "MISSING_SOURCE_AUDIT")
+    def test_missing_current_audit_is_not_success(self):
+        result = compare(report(("old", "ok", 20)), report())
+        self.assertEqual(result["status"], "REVIEW_REQUIRED")
+        self.assertEqual(result["findings"][0]["reason"], "MISSING_SOURCE_AUDIT")
     def test_threshold_rejected(self):
         with self.assertRaises(ValueError):
             compare(report(), report(), 1.2)

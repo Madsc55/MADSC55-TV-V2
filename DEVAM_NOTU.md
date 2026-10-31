@@ -575,3 +575,319 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - `v2/test_discovery_offline_regressions.py` (`f0bf096`): üç geçersiz CLI kombinasyonu için çevrimdışı fail-closed testleri. Zaten ordered-preflight discovery-tests aşamasına bağlı.
 - Bu ortamda GitHub Actions run sonuçlarını doğrulayacak listeleme/dispatch aracı bulunamadı; container üzerinden GitHub erişimi de DNS nedeniyle başarısız. Testlerin gerçekten geçtiği iddia edilmiyor.
 - Eksik adaptörler, şifreli kalıcı URL arşivi, gerçek restore testi ve kapsamlı tarama hâlâ tamamlanmadı. Ana playlist, YEDEKLER ve eski depo değiştirilmedi.
+
+
+## 31 Ekim 2026 — Toplu kaynak keşfi geliştirme dalı / PR #9
+- Güvenli çalışma dalı: `madsc/v2-discovery-bulk-20261031`; **draft PR #9**, merge YOK. Ana playlist/YEDEKLER/YENİLER/FAVORİLER/cihaz favorileri ve eski repo değiştirilmedi.
+- `v2/webpage_source_discovery.py`: herkese açık HTTPS HTML sayfalardan sadece `.m3u`/`.m3u8` linklerini ayrıştıran bağımsız adaptör; URL kimlik bilgisi, HTTP ve özel portlar reddedilir. `v2/test_webpage_source_discovery.py`: çevrimdışı güvenlik testleri.
+- `v2/discover.py`: `kind=html` kaynakları için sayfadaki en fazla 30 playlist linkini keşfeder, ayrı kaynak kimliği ve kaynak audit kaydı üretir; HTML asla oynatılabilir kanal sayılmaz. Henüz kaynak konfigürasyonuna doğrulanmamış HTML URL eklenmedi; gerçek uçtan uca tarama yapılmadı.
+- `.github/workflows/v2-ordered-preflight.yml`: yeni HTML testi sıralı discovery-tests aşamasına eklendi; `pull_request` tetikleyicisi de eklendi. PR #9 açıldı; commit üzerinden yapılan ilk workflow sorgusunda henüz run dönmedi. CI başarısı doğrulanmadı.
+- Kalan: gerçek kaynak URL'lerinin doğrulanması ve adaptör envanteri, şifreli kalıcı URL arşivi + gerçek restore kanıtı, Actions sonuçlarının incelenmesi, tam kaynak taraması. Merge yapma; güvenli arşiv olmadan gerçek kanal taraması yapma.
+
+
+## 31 Ekim 2026 — M3U EXTINF ayrıştırma düzeltmesi
+- `v2/discover.py` (`c170c43`): kanal adında virgül olduğunda `rsplit` ile adın kaybolmasını önler; tırnak içindeki grup virgüllerini atlayıp ilk tırnak-dışı virgülü kanal adı ayıracı kabul eder.
+- `v2/test_discovery_offline_regressions.py` (`ba7bbbf`): `group-title="News, Turkey"` ve `Channel, Extra` örneği ile çevrimdışı regresyon testi. Ordered-preflight discovery-tests aşamasında çalışacak.
+- Çalıştırma sonucu henüz doğrulanmadı. Draft PR #9 açık; merge yapılmadı. Ana playlist ve YEDEKLER değiştirilmedi.
+
+
+## 31 Ekim 2026 — Kaynak kaybı ve güvenli snapshot düzeltmeleri
+- `cf417943`: TR/AZ kaynaklarındaki dolu `tvg-id` değerleriyle dünya kaynaklarındaki aynı kanal kimliğini eşleştirerek yalnızca adında Türkçe anahtar kelime olmayan dünya varyantlarının elenmesini azaltır. Sadece TVG ID eşleştirilir; genel kanal adları üzerinden kör kabul yapılmaz.
+- `8ec7a155`: dünya eşleşmesi ve genel ad yanlış pozitifleri için iki çevrimdışı regresyon testi.
+- `68521ae8`: şifrelenmemiş token içeren `--snapshot-output` üretimini güvenli arşiv/restore tamamlanana kadar fail-closed kapatır. Bu seçenek şimdi açıkça CLI hata koduyla durur.
+- Bu çalışma gerçek tarama veya eski #60 sayısına geri dönüş kanıtı değildir. Testlerin yeni commit üzerinde başarı durumu ayrıca doğrulanmalı; PR #9 merge edilmedi. Eski depo ve ana playlist korunuyor.
+
+
+## 31 Ekim 2026 — IPTV-org kaynak genişletmesi
+- `0fcad824`: IPTV-org resmî PLAYLISTS.md dokümanında belirtilen `raw/tr`, `raw/az`, `sources/tr`, `sources/az`, Central Asia, West Asia, International ve Worldwide olmak üzere 8 ek keşif girdisi; toplam statik kaynak 40. URL yapıları belgelenmiştir; her uç noktanın canlı HTTP erişimi bu commit ile doğrulanmamıştır.
+- `e3d8a093`: yalnızca public HTTPS M3U kaynakları veya konfigürasyonda `kind=html` olarak açıkça belirtilmiş public HTTPS sayfalar kabul edilir. `localhost`/private IP kaynağı engeli.
+- `--snapshot-output` şifreli arşiv kurulana dek kapalıdır. Canlı kaynak taraması ve playback testi yapılmadı. Ana İBO playlist, YEDEKLER ve eski repo korunur. PR #9 merge edilmedi.
+
+
+## 31 Ekim 2026 — GitLab/Codeberg genel keşif
+- `v2/forge_source_discovery.py`: kamuya açık GitLab ve Codeberg proje sonuçları ile açıkça listelenmiş M3U/M3U8 dosya yollarını ayrıştıran, sınırlı ve salt-okunur adaptörler.
+- `v2/run_forge_source_discovery.py --scan-public-forges`: API aramalarını çalıştıran isteğe bağlı komut; `v2/reports/forge-source-discovery.json` içine yalnızca kaynak referanslarını, hata ve proje sayısını kaydeder. Otomatik playlist aktarımı yoktur; GitLab API raw URL'leri mevcut M3U fetch izin listesine otomatik dahil değildir.
+- `v2/test_forge_source_discovery.py`: beş çevrimdışı test, sıralı CI'a eklendi.
+- Önceki GitHub Actions #41189996226 dört aşamada PASS; bu yeni modüller için Actions sonucu ayrıca bekleniyor. Gerçek forge taraması henüz çalıştırılmadı. Ana İBO playlist ve YEDEKLER korunur; PR #9 merge edilmedi.
+
+
+## 31 Ekim 2026 — Şifreli arşiv altyapısı
+- `v2/encrypted_archive.py`: AES-256-GCM ile her kayıt için rastgele nonce, doğrulamalı şifreleme, append-only JSONL, 0600 dosya yetkisi, fsync ve doğrulamalı restore.
+- `v2/test_encrypted_archive.py`: şifreli roundtrip, ekleme, URL token gizliliği, bozulma ve yanlış anahtar testleri. CI discovery-tests aşamasına `cryptography` kurulumu ve test eklendi.
+- `v2/discover.py --encrypted-archive PATH`: eski şifresiz `--snapshot-output` kapalı kalır; şifreli arşiv seçeneği eklenmiştir. Tarama öncesi `V2_ARCHIVE_KEY_HEX` ve `archive_acceptance_gate.check()` ile bağımsız kalıcı yedek/restore kanıtı zorunlu; başarısız kaynak setinde arşiv reddedilir. Gerçek arşiv restore onayı ve canlı tarama henüz yapılmadı.
+- PR #9 merge edilmedi; ana IBO playlist, YEDEKLER, YENİLER, FAVORİLER korunur.
+
+
+## 31 Ekim 2026 — YouTube ve resmî web canlı yayın referansları
+- `v2/live_page_discovery.py`: HTML'deki YouTube canlı kanal/video sayfalarını ve canlı yayın sayfası bağlantılarını salt-okunur olarak ayıklar. Sonuçlar yalnızca referanstır; oynatılabilir IPTV URL veya yayın çalışıyor kanıtı değildir.
+- `v2/test_live_page_discovery.py`: çevrimdışı YouTube, resmî sayfa, tekrar, private IP, credential ve HTTP güvenlik testleri; CI'a eklendi.
+- Henüz canlı site tarayıcısına bağlanmadı, resmî kanal sahipliği doğrulanmadı, gerçek YouTube canlı durum kontrolü yapılmadı. Bu adımlar açık kalır.
+
+
+## 31 Ekim 2026 — Kritik keşif veri kalitesi ve arşiv düzeltmeleri
+- `dearbulut-online` dünya listesi `scope=TR` yerine `scope=world`: yabancı kanalların topluca Türk kanalı sayılması engellendi. Kaynak sözleşmesine regresyon testi eklendi.
+- `discover.py` içinde devre dışı bırakılmış olsa da kalan şifresiz `private-playback-snapshot.json` yazma kodu tamamen kaldırıldı.
+- Şifreli arşive symlink üzerinden yazma reddedildi; regresyon testi eklendi.
+- Önceki YouTube/web keşif değişiklikleri GitHub Actions #41190479762: SUCCESS. Yeni düzeltmelerin CI doğrulaması ayrıca bekleniyor.
+- Canlı tarama, şifreli yedek restore kanıtı ve oynatma testi henüz yapılmadı. Ana İBO playlist, YEDEKLER, YENİLER ve FAVORİLER korunuyor; PR #9 merge edilmedi.
+
+
+## 31 Ekim 2026 — GitLab/Codeberg keşif sonuçlarını kontrollü bağlama
+- `v2/forge_source_review.py`: kamuya açık GitLab raw API ve Codeberg M3U URL'lerini güvenli biçimde doğrulama, tekilleştirme ve sadece SHA256 onayı olan kaynakları seçme.
+- `v2/discover.py`: `v2/reports/forge-source-discovery.json` raporunu okuyabilir; yalnızca `v2/config/approved-forge-source-sha256.json` içindeki tam URL SHA256 onayı olan girdileri aday kaynak listesine ekler. Varsayılan onay listesi boş, otomatik aktarım yok.
+- `v2/test_forge_source_review.py` beş çevrimdışı test CI'a eklendi. Önceki CI #41190601977 SUCCESS; bu değişikliklerin sonucu henüz ayrıca doğrulanmadı.
+- GitLab/Codeberg canlı taraması henüz yapılmadı; kanal oynatma doğrulaması yapılmadı; PR #9 merge edilmedi. Ana playlist ve YEDEKLER korunur.
+
+
+## 31 Ekim 2026 — Kaynak erişilebilirliği ön kontrolü
+- `v2/source_availability_audit.py --audit-public-sources`: kaynak dosyalarının HTTPS/HTTP durumunu ve ilk 1024 bayttaki M3U başlığını kontrol eder; stream URL'lerine bağlantı kurmaz, kaynak URL/token değerlerini rapora yazmaz.
+- Redirect güvenlik kontrolü, HTTP hata ayrımı ve `v2/test_source_availability_audit.py` testleri CI'a eklendi.
+- Bu araç gerçek yayın testi değildir. Kaynak denetimi henüz çalıştırılmadı; şifreli arşiv onayı, toplu kanal taraması ve IBO testleri açık kalır.
+- Önceki CI #41190756178 SUCCESS; yeni kod için CI henüz doğrulanmadı. Ana playlist/YEDEKLER korunur; PR #9 merge edilmedi.
+
+
+## 31 Ekim 2026 — Manuel gerçek kaynak denetimi hazırlığı
+- `.github/workflows/v2-manual-source-audit.yml`: yalnızca elle başlatılan, ayrı `source availability` ve `GitLab/Codeberg` genel kaynak referansı taramaları; 20 dk iş süresi, read-only izinler, 14 günlük rapor artifact'ları. Otomatik kanal yayın testi veya playlist değişikliği yok.
+- `discover.fetch` açıkça incelenmiş GitLab raw M3U API uç noktalarını kabul eder; özel ağ/HTTP kaynaklarını reddeden `v2/test_fetch_source_gate.py` CI'a eklendi.
+- Önceki CI #41191157932 SUCCESS. Bu yeni değişiklikler için CI henüz doğrulanmadı; manuel workflow henüz çalıştırılmadı.
+- Önemli: gerçek source-audit ve forge taraması için GitHub Actions arayüzünden manuel dispatch gerekir; mevcut araçlarla dispatch yapılmadı. Ana İBO playlist ve YEDEKLER korunur; PR #9 merge edilmedi.
+
+
+## 31 Ekim 2026 — API/HTML keşif giriş güvenliği
+- Önceki CI #41191731166 dört aşamada başarılı.
+- `v2/run_forge_source_discovery.py`: GitLab/Codeberg API çağrıları sadece güvenilir HTTPS hostlarına yapılır; farklı hosta/HTTP'ye yönlendirmeler reddedilir. `v2/test_forge_api_safety.py` testleri CI'a eklendi.
+- `v2/webpage_source_discovery.py`: HTML index sayfasının kendisi de public HTTPS, portsuz/443, credential'sız ve fragment'sız olmalı; regresyon testi eklendi.
+- Bu güvenlik düzeltmeleri henüz gerçek dış ağ taraması değildir. Manuel Actions workflow henüz başlatılmadı; sonuçlar ve şifreli arşiv restore kanıtı bekleniyor. Ana İBO playlist ve YEDEKLER değişmedi; PR #9 merge edilmedi.
+
+
+## 31 Ekim 2026 — Şifreli arşiv geri yükleme dosya güvenliği
+- Önceki CI #41191926265 SUCCESS.
+- `v2/encrypted_archive.py`: geri yüklemede symlink reddi, `O_NOFOLLOW`, sadece normal dosya ve sahibine özel izinler (0600) şartı; yazmada da normal dosya kontrolü.
+- `v2/test_encrypted_archive.py`: symlink restore ve 0644 izinli restore reddi testleri eklendi.
+- Bu değişikliklerin CI sonucu henüz kontrol edilmedi. Bağımsız dayanıklı yedek/restore kanıtı hâlâ gerekli; gerçek tarama başlamadı. Ana İBO playlist ve YEDEKLER değişmedi; PR #9 merge edilmedi.
+
+
+## 31 Ekim 2026 — Tek komutla kaynak keşfi koordinatörü
+- Önceki CI #41192434838 SUCCESS.
+- `v2/run_all_discovery.py --run-all --encrypted-archive <private-path>` eklendi. Sıra: 1) kayıtlı kaynak erişilebilirliği, 2) GitLab/Codeberg kamuya açık kaynak referans keşfi, 3) şifreli arşiv zorunlu M3U aday taraması; isteğe bağlı `--previous-report` ile kayıp denetimi.
+- Ağdan önce bağımsız restore kanıtı `archive_acceptance_gate.check()` ve AES anahtarı doğrulanır. Aşama başarısızsa devam edilmez. Varsayılan forge onay listesi boş olduğundan yeni keşfedilen forge URL'leri otomatik oynatılabilir sayılmaz.
+- `v2/test_run_all_discovery.py` sıralama, fail-closed, onay önkoşulu ve başarı akışı testleri CI'a eklendi.
+- ÖNEMLİ EKSİK: YouTube/resmî canlı sayfa keşfi, GitHub/Gist yeni keşfi, oynatma testi, cihaz test grupları bu tek komut akışına henüz dahil değildir. Tam kapsamlı arama olarak tanıtılmamalıdır. Gerçek çalıştırma yapılmadı; CI sonucu yeni commit için bekleniyor.
+- Ana İBO playlist, YEDEKLER, YENİLER, FAVORİLER değişmedi; PR #9 merge edilmedi.
+
+
+## 31 Ekim 2026 — Dünya kaynaklarındaki TR/AZ alternatiflerini koruma
+- Önceki tek-komut CI #41192597596 SUCCESS.
+- `v2/discover.py`: TR/AZ kaynaklarından bilinen tvg-id kimlikleri tek fonksiyonda toplanıyor; dünya listelerinde aynı tvg-id'ye ait alternatif yayın adresleri artık yalnızca rapora değil, şifreli arşive de yazılıyor. Genel isimli, kimliği eşleşmeyen dünya kanalları kabul edilmiyor.
+- `v2/test_cross_source_archive_parity.py` ve sıralı CI testi eklendi.
+- `v2/encrypted_archive.py` restore tüm şifreli dosyayı `readlines()` ile belleğe yüklemek yerine satır satır doğruluyor.
+- Son commit CI henüz doğrulanmadı. Gerçek tam tarama ve bağımsız yedek/restore kanıtı bekliyor. Ana İBO playlist, YEDEKLER, YENİLER, FAVORİLER değişmedi; PR #9 merge edilmedi.
+
+
+## 31 Ekim 2026 — Canlı sayfa/YouTube referans keşfi tek komuta bağlandı
+- Önceki düzeltme CI #41193528343 SUCCESS; #98 test hatası düzeltildi.
+- `v2/run_live_page_discovery.py` ve boş, onay gerektiren `v2/config/live-pages.json` eklendi. Açıkça onaylı public HTTPS sayfalardaki YouTube ve canlı sayfa bağlantıları sadece SHA256/kind olarak raporlanır; URL tokenları rapora yazılmaz, oynatılabilir kanal sayılmaz.
+- `v2/run_all_discovery.py` sırası artık: kaynak erişim kontrolü, GitLab/Codeberg keşfi, onaylı canlı sayfa referans keşfi, şifreli M3U aday taraması. Offline testleri CI'a eklendi.
+- KAPSAM SINIRI: `live-pages.json` şu anda boş; dolayısıyla gerçek resmî site/YouTube kapsamı henüz oluşmadı. GitHub/Gist yeni kaynak keşfi ve otomatik stream playback testi hâlâ eksik. Arşiv restore kanıtı olmadan gerçek tarama başlamaz. Yeni CI sonucu henüz doğrulanmadı.
+- Ana İBO playlist, YEDEKLER, YENİLER, FAVORİLER değişmedi; PR #9 merge edilmedi.
+
+
+## 31 Ekim 2026 — Kapsamı yanlış tamamlandı göstermeme
+- CI #41193892945 kontrol sırasında compile/protect/discovery-tests SUCCESS; safety henüz çalışıyordu.
+- `v2/run_live_page_discovery.py`: boş resmî canlı sayfa onay listesi raporda `NO_APPROVED_PAGES` olarak görünür. 100 sayfa üstü sessizce kesilmez, tarama reddedilir.
+- `v2/run_all_discovery.py`: şifreli arşiv hedefinin normal dosya olması da zorunlu; dizin hedefi reddedilir.
+- İki regresyon testi eklendi. Yeni CI sonucu henüz doğrulanmadı. Gerçek kaynak taraması yapılmadı; onaylı canlı sayfa listesi boş, bağımsız yedek/restore kanıtı bekliyor.
+- Ana İBO playlist ve YEDEKLER değişmedi, PR #9 merge edilmedi.
+
+
+## 31 Ekim 2026 — GitHub kaynak keşfi tek komuta bağlandı
+- Önceki CI #41193990362 SUCCESS.
+- Mevcut `v2/github_source_discovery.py` GitHub M3U kaynak tarayıcısı `v2/run_all_discovery.py` akışına ikinci aşama olarak bağlandı. Artık sıra: erişilebilirlik, GitHub, GitLab/Codeberg, onaylı canlı sayfa referansları, şifreli M3U aday keşfi.
+- GitHub API çağrılarında HTTPS api.github.com hostu, güvenli yönlendirme ve 2MB yanıt sınırı eklendi. `v2/test_github_source_safety.py` ve koordinatör sıra testleri CI'a eklendi.
+- SINIR: GitHub/Gist tam kapsamı garanti edilmez; GitHub mevcut repo arama tarayıcısı Gist API aramasını ayrı yapmıyor. GitHub arama sonuçlarında 320 repo/320 dosya sınırı var. Onaylı canlı sayfa listesi hâlâ boş; restore kanıtı ve gerçek tarama henüz yok. Son CI sonucu doğrulanmadı.
+- Ana IBO playlist ve YEDEKLER değişmedi, PR #9 merge edilmedi.
+
+
+## 31 Ekim 2026 — GitHub Gist kaynak keşfi
+- Önceki CI #41199407417 SUCCESS.
+- `v2/github_source_discovery.py`: ilgili GitHub depo sahiplerinin herkese açık Gist metadata uç noktasından `.m3u/.m3u8/.txt` kaynaklarını aday olarak keşfetme eklendi. En fazla 30 sahibi ve mevcut 320 dosya üst sınırını kullanır. Adaylar doğrudan IBO listesine eklenmez.
+- KAPSAM: Gist genel arama API'si olmadığı için yalnızca ilgili repo sahiplerinin public Gist'leri taranır; tüm Gist'ler taranmış sayılmaz. Son değişikliğin CI sonucu henüz doğrulanmadı; gerçek dış ağ taraması henüz çalıştırılmadı.
+- Ana IBO playlist ve YEDEKLER değişmedi; PR #9 merge edilmedi.
+
+
+## 31 Ekim 2026 — Eksik kaynak taramasını başarı saymama
+- Önceki CI #41199619053 SUCCESS.
+- GitHub/Gist ve GitLab/Codeberg tarayıcıları, kaynak/API hataları rapora kaydedildikten sonra artık başarısız çıkış koduyla durur; birleşik koordinatör sonraki aşamaya geçmez. Önceden kısmi kaynak taraması başarılıymış gibi devam edebiliyordu.
+- `v2/test_partial_scan_fail_closed.py` CI'a eklendi. Yeni CI sonucu henüz doğrulanmadı.
+- KAPSAM: Ağ geçici hataları birleşik taramayı durdurabilir; güvenli tekrar deneme/işaretleme ve kalıcı keşif rapor arşivi henüz eksik. Gerçek tarama ve bağımsız restore kanıtı yok.
+- Ana IBO playlist, YEDEKLER, YENİLER, FAVORİLER değişmedi; PR #9 merge edilmedi.
+
+
+## 31 Ekim 2026 — Şifreli restore kanıtı güvenliği
+- Önceki CI #41200181346 SUCCESS.
+- `v2/archive_acceptance_gate.py` artık kanıt JSON'u için sembolik bağlantıyı reddeder; geri yüklenen şifreli arşiv için de sembolik bağlantıyı ve owner-only olmayan dosya izinlerini reddeder.
+- `v2/test_restore_evidence_safety.py` CI'a eklendi; yeni CI sonucu henüz doğrulanmadı.
+- Kalan kritik işler: kanıt dosyası bayrakları kendi başına bağımsız yedek varlığını kanıtlamaz; gerçek harici depolama/restore denemesi ve onay gereklidir. Gerçek toplu tarama yapılmadı. Onaylı canlı site listesi boş, playback testi eksik.
+- Ana IBO playlist, YEDEKLER, YENİLER, FAVORİLER değişmedi; PR #9 merge edilmedi.
+
+
+## 31 Ekim 2026 — CI #41201107681 hata düzeltmesi
+- `discovery-tests` FAILURE: `test_archive_acceptance_gate.py` test fikstürü geri yükleme dosyasını varsayılan 0644 izinleriyle oluşturuyordu; yeni güvenlik kapısı 0600 istiyor. Eksik dosya hata mesajı da değişmişti.
+- Fikstür 0600 yapıldı ve eksik dosya beklentisi güncellendi; güvenlik kapısı gevşetilmedi. Düzeltme commit: a3d634065dd8f2e36f7ddd0b53d9fa439c35b7de.
+- Yeni CI sonucu henüz doğrulanmadı. Gerçek tarama çalıştırılmadı; IBO ve YEDEKLER korunuyor.
+
+
+## 31 Ekim 2026 — Önceki şifreli arşiv kayıtlarıyla tekilleştirme
+- CI #41201354786: compile/protect/discovery-tests SUCCESS; safety kontrol anında in_progress.
+- `v2/discover.py`: şifreli arşiv mevcutsa önce restore edilerek önceki URL kayıtları okunur; yeni taramada aynı URL tekrar append edilmez. Restore hata verirse tarama fail-closed kalır.
+- `v2/test_archive_incremental_dedup.py` eklendi ve CI'a bağlandı. Yeni CI sonucu henüz doğrulanmadı.
+- Kalan: gerçek bağımsız backup/restore kanıtı, canlı site onaylı envanteri, playback testi, gerçek ağ taraması ve önceki taramalara karşı regresyon incelemesi.
+- Ana IBO playlist, YEDEKLER, YENİLER, FAVORİLER değişmedi; PR #9 merge edilmedi.
+
+
+## 31 Ekim 2026 — CI #41201539996 düzeltmesi
+- `discovery-tests` FAILED: `test_archive_incremental_dedup.py` cryptography paketi kurulmadan çalıştırılmış; `ModuleNotFoundError: cryptography`. Paket yükleme aşaması testin önüne taşındı (commit d373bae349268bf55b27aa97769a59c5517a2f24).
+- Bu hata arşiv tekilleştirme algoritmasının başarısız olduğunu göstermez; CI bağımlılık sırası hatasıdır. Yeni CI sonucu henüz doğrulanmadı.
+- Ana IBO, YEDEKLER, YENİLER, FAVORİLER korunuyor; PR #9 merge edilmedi.
+
+
+## 31 Ekim 2026 — GitHub/Gist kaynak onay kapısı
+- CI #41202989680 SUCCESS.
+- `v2/discover.py`: GitHub/Gist raporunda keşfedilen kaynaklar artık doğrudan gerçek taramaya alınmaz; güvenli HTTPS playlist URL'si ve tam URL SHA256'sının `v2/config/approved-github-source-sha256.json` onay listesinde bulunması gerekir. Varsayılan onay listesi boştur. GitLab/Codeberg'deki ayrı onay modeliyle eşdeğer güvenlik uygulanır.
+- `v2/test_github_source_approval.py` CI'a bağlandı. Yeni CI henüz doğrulanmadı.
+- Onaylanmamış yeni kaynaklar kaybolmaz: kaynak referans raporunda aday olarak kalır; ancak yayın URL'leri taranmış sayılmaz. Gerçek tarama ve bağımsız yedek/restore kanıtı hâlâ yok.
+- Ana IBO playlist, YEDEKLER, YENİLER, FAVORİLER değişmedi; PR #9 merge edilmedi.
+
+
+## 31 Ekim 2026 — Kapsam raporlarının dürüst durum etiketleri
+- Önceki CI #41205709023 SUCCESS.
+- `v2/source_availability_audit.py`: erişilebilen/erişilemeyen kaynak sayıları ve `COMPLETE` / `PARTIAL_SOURCE_AVAILABILITY` etiketi eklendi. Bir kaynak HTTP hatası verirken bütün kaynaklar sağlıklıymış gibi raporlanmaz.
+- `v2/run_live_page_discovery.py`: onaylı canlı sayfa hatalarında `PARTIAL_APPROVED_PAGES` etiketi eklendi.
+- İki ilgili offline test güncellendi. Yeni CI henüz doğrulanmadı.
+- Gerçek bağımsız yedek ve restore onayı olmadan gerçek şifreli kanal taraması başlatılmadı. Ana IBO, YEDEKLER, YENİLER, FAVORİLER değiştirilmedi; PR #9 merge edilmedi.
+
+
+## 31 Ekim 2026 — Genel rapor metadata sızıntısı önleme
+- Önceki CI #41205904839 SUCCESS.
+- `v2/discover.py`: public candidate JSON'a yazılan name/tvg_id/group/logo alanlarında tam HTTPS URL'leri ve token/apikey/password/secret/auth/signature/sig/key biçimli değerler maskelenir, alanlar 512 karakterle sınırlandırılır. Şifreli özel arşivde orijinal kaynak metadata'sı korunur.
+- `v2/test_public_metadata_redaction.py` CI'a eklendi; yeni CI henüz doğrulanmadı.
+- Eksik gerçek kaynak taraması, bağımsız backup/restore onayı, canlı sayfa kaynak onayları ve playback doğrulaması devam eden işlerdir. Ana IBO playlist, YEDEKLER, YENİLER, FAVORİLER değiştirilmedi; PR #9 merge edilmedi.
+
+
+## 31 Ekim 2026 — CI #153 / run 41206103747
+- `discovery-tests` FAILED: `test_public_metadata_redaction.py` iki hata; Python raw regex içinde `\\S` ve `\\s` kullanıldığı için URL ve token maskelenmedi. `v2/discover.py` içindeki desenler `\S` ve `\s` olarak düzeltildi (commit cc504a3f79cca0235941df6324e07c9baa27d55c). Derleme ve playlist koruma testleri başarılıydı, safety önceki hatadan dolayı atlandı.
+- Son commitin CI sonucu henüz doğrulanmadı. Ana IBO playlist, YEDEKLER, YENİLER, FAVORİLER değişmedi; PR #9 merge edilmedi.
+
+
+## 31 Ekim 2026 — Şifreli arşiv yedekleme/geri yükleme aracı
+- Önceki CI #41206405986 SUCCESS.
+- `v2/archive_backup_restore_drill.py`: mevcut AES-GCM arşivini ayrı dizine özel izinlerle kopyalayıp SHA256 ve kayıt bazında restore eşitliğini doğrulayan açıkça çalıştırılan yardımcı eklendi. Token taşıyan plaintext rapor yazmaz, mevcut dosyaları üzerine yazmaz, hedef symlink'leri reddeder.
+- `v2/test_archive_backup_restore_drill.py` CI'a eklendi. Yeni CI henüz doğrulanmadı.
+- ÖNEMLİ: ayrı dizin yedeği bağımsız/uzak dayanıklı depolama kanıtı değildir; gerçek bağımsız yedek onayı ayrıca gerekir. Gerçek tarama başlatılmadı. Ana IBO, YEDEKLER, YENİLER, FAVORİLER korunuyor, PR #9 merge edilmedi.
+
+
+## 31 Ekim 2026 — Yerel yedek kanıtı güvenlik kapısı
+- CI #41206705403 SUCCESS.
+- `archive_acceptance_gate.py`: yerel ayrı dizin yedekleme aracının ürettiği `backup_scope=local_separate_directory_not_independent_storage` kanıtı, bağımsız dayanıklı yedek olarak kabul edilmez; gerçek ağ taraması için fail-closed kalır.
+- `test_archive_acceptance_gate.py` regresyonu eklendi; yeni CI henüz doğrulanmadı.
+- Ana IBO, YEDEKLER, YENİLER, FAVORİLER korunuyor; PR #9 merge edilmedi.
+
+
+## 31 Ekim 2026 — Genel kaynak envanteri ve kapsam doğruluğu
+- Önceki CI #41209148660 SUCCESS.
+- `v2/discover.py`: offline / hiç kaynak yok / eksik / tam kaynak çekme için açık `coverage_status`, ayrıca `failed_source_count` raporlanır. Şifreli arşiv modunda eksik kaynak fail-closed kalır.
+- `v2/run_public_inventory.py`: şifreli arşiv onayı gerektirmeden yalnızca mevcut 40 M3U kaynağının erişilebilirlik metadata'sını kontrol eden ayrı komut; eksik kaynak varsa nonzero exit ve rapor. Stream playback testi değildir.
+- `v2/test_run_public_inventory.py` eklendi ve CI'a bağlandı. Yeni CI sonucu henüz doğrulanmadı.
+- Gerçek ağ taraması ve bağımsız backup/restore onayı bekliyor. Ana IBO, YEDEKLER, YENİLER, FAVORİLER korunuyor; PR #9 merge edilmedi.
+
+
+## 31 Ekim 2026 — HTML M3U kaynak indeksi keşfi
+- Önceki CI #41209805958 SUCCESS.
+- `v2/run_webpage_playlist_discovery.py`: yalnızca açıkça onaylı genel HTTPS HTML indekslerinde M3U/M3U8 referansları bulur; public rapora yalnız SHA256 ve kaynak ID yazar; token içeren tam URL yazmaz, otomatik taramaya veya İBO'ya eklemez.
+- `v2/config/playlist-index-pages.json` varsayılan boş onay listesi, `v2/test_run_webpage_playlist_discovery.py` offline regresyonu ve `v2/run_all_discovery.py` entegrasyonu eklendi. Yeni CI sonucu henüz doğrulanmadı.
+- Onaylı HTML kaynak listesi henüz boş; gerçek kaynak taraması, bağımsız arşiv yedeği ve playback doğrulaması tamamlanmadı. Ana IBO/YEDEKLER/YENİLER/FAVORİLER korunuyor, PR #9 merge edilmedi.
+
+
+## 31 Ekim 2026 — Koordinatör testindeki altıncı aşama
+- CI #41210006846 ilk kontrolde in_progress (compile/protect success, discovery-tests queued).
+- HTML M3U indeks keşfi altıncı aşama olarak `run_all_discovery.py` içine eklendiğinden `test_run_all_discovery.py` içindeki eski 5-aşama beklentisi 6'ya, arşiv keşif aşaması indeksi 5'e düzeltildi (commit 47043c2785cae3131a8e4cd69e1b40b598d3d761).
+- Son CI henüz doğrulanmadı. Ana IBO, YEDEKLER, YENİLER, FAVORİLER değişmedi; PR #9 merge edilmedi.
+
+
+## 31 Ekim 2026 — Kaynak erişilebilirlik durumunun doğruluğu
+- 6 aşamalı koordinatör düzeltme commit'i 47043c2785cae3131a8e4cd69e1b40b598d3d761 için Actions #41210098077 SUCCESS.
+- `source_availability_audit.py`: hiç kaynak tanımlı değilse `NO_CONFIGURED_SOURCES`, hiçbir kaynak erişilebilir değilse `NO_SOURCES_REACHABLE`, karışık sonuçta `PARTIAL_SOURCE_AVAILABILITY`, tüm kaynaklar başarılıysa `COMPLETE`.
+- `run_public_inventory.py` boş kaynak listesiyle yanlışlıkla başarılı tamamlanamaz. İlgili offline regresyon testleri güncellendi.
+- Son commit CI henüz doğrulanmadı. Bu kontroller stream playback değildir; gerçek tam tarama ve bağımsız şifreli yedek kanıtı hâlâ gerekli. Korunan listelere dokunulmadı, PR #9 merge edilmedi.
+
+
+## 31 Ekim 2026 — Yerel backup dayanıklılık düzeltmesi
+- Önceki Actions #41211016352 SUCCESS.
+- `v2/archive_backup_restore_drill.py` yerel farklı dizindeki kopya için `durable=false` raporlar; bağımsız kalıcı yedek iddiası kaldırıldı. `v2/test_archive_backup_restore_drill.py` bu durumu doğrular. Kabul kapısı ayrıca `backup_scope` yerel ise reddeder.
+- Gerçek tarama için bağımsız yedek ve restore kanıtı hâlâ gereklidir. Son CI sonucu bekliyor. Korunan IBO/YEDEKLER/YENİLER/FAVORİLER değiştirilmedi; PR #9 merge edilmedi.
+
+
+## 31 Ekim 2026 — Gist M3U keşif regex düzeltmesi
+- Önceki Actions #41211136199 SUCCESS.
+- `v2/github_source_discovery.py` Gist dosya adı eşleşmesindeki çift ters eğik çizgi (`\\\\.`) düzeltildi; `.m3u`, `.m3u8`, `.txt` uzantıları artık doğru eşleşebilir. Bu hata Gist keşfini sessizce kaçırıyordu.
+- `v2/test_gist_filename_discovery.py` ve CI adımı eklendi. Yeni CI henüz doğrulanmadı.
+- Ana IBO, YEDEKLER, YENİLER, FAVORİLER değiştirilmedi. Gerçek kaynak taraması ve bağımsız şifreli yedek doğrulaması bekliyor. PR #9 merge edilmedi.
+
+
+## 31 Ekim 2026 — GitHub kaynak keşfi API hata toleransı ve testleri toplama
+- Kullanıcı GitHub M3U Source Discovery #11 başarısız ekranını bildirdi; tam job loguna erişilmediğinden spesifik HTTP hatası kesinleştirilmedi.
+- `v2-github-source-discovery.yml`: her push ile maliyetli GitHub API keşif taraması başlatan tetik kaldırıldı; schedule/manual kaldı. Toplu CI `v2-ordered-preflight.yml` çalışır.
+- `github_source_discovery.py`: API/kaynak erişim hatalarında başarılı bulgular korunur, `coverage_status=PARTIAL_API_ERRORS`, `errors`, `playback_verified=false` raporlanır; kısmi tarama asla tam kapsama diye sunulmaz.
+- `test_github_partial_discovery.py` eklendi ve toplu CI'ya bağlandı. Bu davranış veri taraması için kısmi rapor, güvenlik onayları için fail-closed politikasını değiştirmez.
+- Ana IBO/YEDEKLER/YENİLER/FAVORİLER korunuyor; PR #9 merge edilmedi. Son CI henüz doğrulanmadı.
+
+
+## 31 Ekim 2026 — Toplu kısmi kaynak dayanıklılığı
+- Önceki toplu CI #41212171051 SUCCESS.
+- GitLab/Codeberg API hataları başarılı kaynak referanslarını artık düşürmez; `coverage_status=PARTIAL_API_ERRORS` raporlanır.
+- Kaynak erişim denetimi hata verdiğinde koordinatör sonraki bağımsız aşamaları çalıştırır; şifreli arşiv güvenlik preflight kontrolü zorunludur.
+- En az bir kaynak başarıyla yüklendiğinde şifreli arşiv, başarısız diğer kaynaklar yüzünden tüm başarılı adayları kaybetmez; `archive_source_set_partial=true` ile eksik kapsamı açıkça bildirir. Hiç kaynak erişilebilir değilse arşivleme reddedilir.
+- Toplu CI testleri: `test_run_all_discovery.py` ve yeni `test_partial_source_coverage.py`; yeni CI sonucu henüz doğrulanmadı.
+- Ana İBO, YEDEKLER, YENİLER, FAVORİLER korunuyor; PR #9 merge edilmedi. Bağımsız yedek onayı ve gerçek tarama henüz tamamlanmadı.
+
+
+## 31 Ekim 2026 — CI #203 hata düzeltmesi ve toplu testlerin birleştirilmesi
+- CI #41212322181 başarısızlık logu: `test_partial_scan_fail_closed.py::test_forge_main_fails_on_partial_result` eski `SystemExit` beklentisi nedeniyle FAIL; GitLab/Codeberg artık kısmi taramayı raporlayıp korur.
+- Eski test yeni kısmi rapor davranışına uyarlandı; API hata bilgisi raporda açıkça kalır, tam kapsama iddiası yoktur.
+- `v2-ordered-preflight.yml` PR bazlı concurrency ve `cancel-in-progress: true` ile eskimiş eşzamanlı testleri iptal ederek tek güncel toplu çalışmayı tercih eder.
+- Son CI henüz doğrulanmadı; ana IBO, YEDEKLER, YENİLER, FAVORİLER korunuyor, PR #9 merge edilmedi.
+
+
+## 31 Ekim 2026 — Resmî yayın sayfaları ve HTML kaynak indeksleri kısmi tarama dayanıklılığı
+- CI #41212487179: compile/protect/discovery-tests/safety SUCCESS.
+- `run_live_page_discovery.py` ve `run_webpage_playlist_discovery.py` kısmi sayfa erişim hatasında başarılı referansları saklar ve `PARTIAL_APPROVED_PAGES` raporlar; otomatik oynatılabilir kanal ithalatı yoktur.
+- İki modülün testlerine başarı+başarısız sayfa kombinasyonu eklendi. Kaynak URL'leri, gizli tokenlar veya canlı IBO listesi rapora taşınmaz.
+- `live-pages.json` ve `playlist-index-pages.json` henüz boş: doğrulanmış resmî HTTPS sayfaları eklenmeden bu kategoriler taranmış sayılamaz.
+- Son CI henüz doğrulanmadı; ana IBO, YEDEKLER, YENİLER, FAVORİLER korunuyor; PR #9 merge edilmedi.
+
+
+## 31 Ekim 2026 — İlk doğrulanmış resmî canlı sayfa kaynakları
+- Toplu CI #41212797762 SUCCESS.
+- `v2/config/live-pages.json` boş olmaktan çıkarıldı: AzTV `https://www.aztv.az/` (kurumun resmî FAQ'sı canlı yayınları doğruluyor) ve TRT1 `https://www.trt1.com.tr/` (resmî yayın akışında canlı izle bulunuyor). Bunlar HTML referans keşfi içindir, M3U veya doğrulanmış oynatılabilir yayın değildir.
+- `test_run_live_page_discovery.py` kaynak envanteri benzersiz ID ve güvenli HTTPS kontrolünü toplu CI içinde yapar.
+- HTML playlist-index sayfa envanteri hâlâ boş; doğrulanmamış URL eklenmedi. Gerçek ağ taraması ve şifreli bağımsız arşiv kabulü bekliyor. Ana IBO, YEDEKLER, YENİLER, FAVORİLER korunuyor; PR #9 merge edilmedi.
+
+
+## 31 Ekim 2026 — GitHub keşif kapsamı dürüstlüğü
+- Son doğrulanmış toplu CI #41212925415 SUCCESS.
+- `github_source_discovery.py`: `MAX_REPOS`, `MAX_FILES`, GitHub API `tree.truncated` durumları artık `limits_hit` ve `coverage_status=PARTIAL_LIMITS` olarak raporlanıyor. Limitler nedeniyle eksik taramaya `COMPLETE_QUERIES` denmeyecek.
+- `test_github_partial_discovery.py` içinde repo limiti ve kısaltılmış tree testleri eklendi; mevcut toplu CI içinde çalışır.
+- Henüz gerçek tam ağ taraması, bağımsız şifreli yedek, oynatma testleri yapılmadı. Ana IBO, YEDEKLER, YENİLER, FAVORİLER değişmedi; PR #9 merge edilmedi.
+
+
+## 31 Ekim 2026 — Kaynak kaybı raporu eksikliği kontrolü
+- `source_loss_audit.py` eski veya yeni `source_audit` boşken `NO_LARGE_REGRESSION` döndürmez; `MISSING_SOURCE_AUDIT` / `REVIEW_REQUIRED` üretir.
+- Eski ve yeni sayıların tip ve negatif değer doğrulaması eksik audit koşulunda da çalışır.
+- `test_source_loss_audit.py` iki yeni regresyon vakası ile güncellendi; tek toplu CI içinde çalışır.
+- Gerçek kaynak ağ taraması ve bağımsız arşiv yedeklemesi tamamlanmış değildir. Ana IBO, YEDEKLER, YENİLER, FAVORİLER korunuyor, PR #9 merge edilmedi.
+
+
+## 31 Ekim 2026 — Şifreli arşiv kabul kanıtı dosya izinleri
+- `archive_acceptance_gate.py` bağımsız yedekleme/geri yükleme kanıtı JSON dosyasını da 0600 (owner-only) zorunlu kılar; herkesçe okunabilir dosyayı reddeder. `backup_location` tipi doğrulanır.
+- `test_archive_acceptance_gate.py` mevcut başarılı kanıt testlerini özel dosya izniyle güncelledi ve 0644 reddi testini ekledi.
+- Bu kod bağımsız yedeklemeyi oluşturmaz; bağımsız kalıcı depolama ve gerçek restore kanıtı hâlâ gerekir. Son CI sonucunu kontrol et. Ana IBO, YEDEKLER, YENİLER, FAVORİLER korunuyor, PR #9 merge edilmedi.

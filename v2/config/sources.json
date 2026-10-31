@@ -60,7 +60,7 @@
       "id": "dearbulut-online",
       "kind": "m3u",
       "url": "https://dearbulut.github.io/iptv/playlists/online.m3u",
-      "scope": "TR"
+      "scope": "world"
     },
     {
       "id": "omerdenizhan-iptv-org-tr",
@@ -192,6 +192,54 @@
       "id": "onureroz-world-index",
       "kind": "m3u",
       "url": "https://onureroz.com/indirmeler/dunya/index.m3u",
+      "scope": "world"
+    },
+    {
+      "id": "iptv-org-raw-tr",
+      "kind": "m3u",
+      "url": "https://iptv-org.github.io/iptv/raw/tr.m3u",
+      "scope": "TR"
+    },
+    {
+      "id": "iptv-org-raw-az",
+      "kind": "m3u",
+      "url": "https://iptv-org.github.io/iptv/raw/az.m3u",
+      "scope": "AZ"
+    },
+    {
+      "id": "iptv-org-sources-tr",
+      "kind": "m3u",
+      "url": "https://iptv-org.github.io/iptv/sources/tr.m3u",
+      "scope": "TR"
+    },
+    {
+      "id": "iptv-org-sources-az",
+      "kind": "m3u",
+      "url": "https://iptv-org.github.io/iptv/sources/az.m3u",
+      "scope": "AZ"
+    },
+    {
+      "id": "iptv-org-central-asia",
+      "kind": "m3u",
+      "url": "https://iptv-org.github.io/iptv/regions/cas.m3u",
+      "scope": "world"
+    },
+    {
+      "id": "iptv-org-west-asia",
+      "kind": "m3u",
+      "url": "https://iptv-org.github.io/iptv/regions/was.m3u",
+      "scope": "world"
+    },
+    {
+      "id": "iptv-org-international",
+      "kind": "m3u",
+      "url": "https://iptv-org.github.io/iptv/countries/int.m3u",
+      "scope": "world"
+    },
+    {
+      "id": "iptv-org-worldwide",
+      "kind": "m3u",
+      "url": "https://iptv-org.github.io/iptv/regions/ww.m3u",
       "scope": "world"
     }
   ]

@@ -1,0 +1,54 @@
+name: V2 manual source discovery audit
+on:
+  workflow_dispatch:
+    inputs:
+      check_sources:
+        description: "Check public M3U source availability (not stream playback)"
+        type: boolean
+        default: true
+      search_forges:
+        description: "Search public GitLab and Codeberg repositories (references only)"
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+concurrency:
+  group: v2-manual-source-audit-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  public-source-audit:
+    if: github.event.inputs.check_sources == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Audit source URLs only
+        run: python v2/source_availability_audit.py --audit-public-sources
+      - uses: actions/upload-artifact@v4
+        with:
+          name: v2-source-availability
+          path: v2/reports/source-availability-audit.json
+          retention-days: 14
+
+  public-forge-discovery:
+    if: github.event.inputs.search_forges == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Discover public forge playlist references
+        run: python v2/run_forge_source_discovery.py --scan-public-forges
+      - uses: actions/upload-artifact@v4
+        with:
+          name: v2-forge-source-references
+          path: v2/reports/forge-source-discovery.json
+          retention-days: 14
