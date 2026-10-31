@@ -82,6 +82,7 @@ def main():
     p.add_argument("--offline", action="store_true", help="Do not access external sources")
     p.add_argument("--snapshot-output", action="store_true", help="Write private ephemeral playback snapshot")
     p.add_argument("--limit", type=int, default=0, help="Maximum candidate count; 0 means no limit")
+    p.add_argument("--previous-report", type=pathlib.Path, help="Previous discovery JSON for source-loss audit")
     args = p.parse_args()
     live = LIVE.read_text(encoding="utf-8-sig")
     sources = json.loads(SOURCES.read_text(encoding="utf-8"))["sources"]
@@ -149,6 +150,12 @@ def main():
             raise SystemExit("Snapshot incomplete: " + str(len(errors)) + " source(s) failed; no playback permitted")
     result = {"schema": 1, "mode": "read-only", "configured_and_discovered_sources": len(sources), "source_count": len(loaded), "errors": errors, "source_audit": source_audit, "candidates": discover(loaded, live, scopes)}
     result["total_unique_candidates"] = len(result["candidates"])
+    if args.previous_report:
+        from source_loss_audit import compare
+        previous = json.loads(args.previous_report.read_text(encoding="utf-8"))
+        result["source_loss_audit"] = compare(previous, result)
+        if result["source_loss_audit"]["findings"]:
+            print("WARNING: source loss requires review; see source_loss_audit in report")
     result["candidate_limit"] = args.limit
     result["candidates_truncated"] = args.limit > 0 and len(result["candidates"]) > args.limit
     if args.limit > 0:
