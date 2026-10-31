@@ -152,7 +152,7 @@ def main():
                         original.decode('utf-8-sig', 'replace').splitlines()
                         if line.strip().startswith(('https://', 'http://'))}
         additions = []
-        for item in good:
+        for item in good[:args.limit]:
             if item['url'] in current_urls:
                 continue
             current_urls.add(item['url'])
