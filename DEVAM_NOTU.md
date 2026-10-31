@@ -616,3 +616,9 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - `v2/test_encrypted_archive.py`: şifreli roundtrip, ekleme, URL token gizliliği, bozulma ve yanlış anahtar testleri. CI discovery-tests aşamasına `cryptography` kurulumu ve test eklendi.
 - `v2/discover.py --encrypted-archive PATH`: eski şifresiz `--snapshot-output` kapalı kalır; şifreli arşiv seçeneği eklenmiştir. Tarama öncesi `V2_ARCHIVE_KEY_HEX` ve `archive_acceptance_gate.check()` ile bağımsız kalıcı yedek/restore kanıtı zorunlu; başarısız kaynak setinde arşiv reddedilir. Gerçek arşiv restore onayı ve canlı tarama henüz yapılmadı.
 - PR #9 merge edilmedi; ana IBO playlist, YEDEKLER, YENİLER, FAVORİLER korunur.
+
+
+## 31 Ekim 2026 — YouTube ve resmî web canlı yayın referansları
+- `v2/live_page_discovery.py`: HTML'deki YouTube canlı kanal/video sayfalarını ve canlı yayın sayfası bağlantılarını salt-okunur olarak ayıklar. Sonuçlar yalnızca referanstır; oynatılabilir IPTV URL veya yayın çalışıyor kanıtı değildir.
+- `v2/test_live_page_discovery.py`: çevrimdışı YouTube, resmî sayfa, tekrar, private IP, credential ve HTTP güvenlik testleri; CI'a eklendi.
+- Henüz canlı site tarayıcısına bağlanmadı, resmî kanal sahipliği doğrulanmadı, gerçek YouTube canlı durum kontrolü yapılmadı. Bu adımlar açık kalır.
