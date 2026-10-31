@@ -257,6 +257,9 @@ def main():
         if archived and not archived.issubset({x["url"] for x in restored}):
             raise SystemExit("Encrypted archive restore verification failed")
     result = {"schema": 1, "mode": "read-only", "configured_and_discovered_sources": len(sources), "source_count": len(loaded), "errors": errors, "source_audit": source_audit, "candidates": discover(loaded, live, scopes)}
+    result["coverage_status"] = ("OFFLINE_NO_NETWORK" if args.offline else
+                                 "COMPLETE_SOURCE_FETCH" if not errors else "PARTIAL_SOURCE_FETCH")
+    result["failed_source_count"] = len(errors)
     result["total_unique_candidates"] = len(result["candidates"])
     if args.previous_report:
         from source_loss_audit import compare
