@@ -575,3 +575,11 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - `v2/test_discovery_offline_regressions.py` (`f0bf096`): üç geçersiz CLI kombinasyonu için çevrimdışı fail-closed testleri. Zaten ordered-preflight discovery-tests aşamasına bağlı.
 - Bu ortamda GitHub Actions run sonuçlarını doğrulayacak listeleme/dispatch aracı bulunamadı; container üzerinden GitHub erişimi de DNS nedeniyle başarısız. Testlerin gerçekten geçtiği iddia edilmiyor.
 - Eksik adaptörler, şifreli kalıcı URL arşivi, gerçek restore testi ve kapsamlı tarama hâlâ tamamlanmadı. Ana playlist, YEDEKLER ve eski depo değiştirilmedi.
+
+
+## 31 Ekim 2026 — Toplu kaynak keşfi geliştirme dalı / PR #9
+- Güvenli çalışma dalı: `madsc/v2-discovery-bulk-20261031`; **draft PR #9**, merge YOK. Ana playlist/YEDEKLER/YENİLER/FAVORİLER/cihaz favorileri ve eski repo değiştirilmedi.
+- `v2/webpage_source_discovery.py`: herkese açık HTTPS HTML sayfalardan sadece `.m3u`/`.m3u8` linklerini ayrıştıran bağımsız adaptör; URL kimlik bilgisi, HTTP ve özel portlar reddedilir. `v2/test_webpage_source_discovery.py`: çevrimdışı güvenlik testleri.
+- `v2/discover.py`: `kind=html` kaynakları için sayfadaki en fazla 30 playlist linkini keşfeder, ayrı kaynak kimliği ve kaynak audit kaydı üretir; HTML asla oynatılabilir kanal sayılmaz. Henüz kaynak konfigürasyonuna doğrulanmamış HTML URL eklenmedi; gerçek uçtan uca tarama yapılmadı.
+- `.github/workflows/v2-ordered-preflight.yml`: yeni HTML testi sıralı discovery-tests aşamasına eklendi; `pull_request` tetikleyicisi de eklendi. PR #9 açıldı; commit üzerinden yapılan ilk workflow sorgusunda henüz run dönmedi. CI başarısı doğrulanmadı.
+- Kalan: gerçek kaynak URL'lerinin doğrulanması ve adaptör envanteri, şifreli kalıcı URL arşivi + gerçek restore kanıtı, Actions sonuçlarının incelenmesi, tam kaynak taraması. Merge yapma; güvenli arşiv olmadan gerçek kanal taraması yapma.
