@@ -11,6 +11,14 @@ def playlist(*items):
     )
 
 class DiscoveryOfflineRegression(unittest.TestCase):
+    def test_source_loss_audit_integration_contract(self):
+        import inspect
+        import discover as module
+        body = inspect.getsource(module.main)
+        self.assertIn("--previous-report", body)
+        self.assertIn("source_loss_audit", body)
+        self.assertIn("compare(previous, result)", body)
+
     def test_world_turkey_metadata(self):
         self.assertTrue(turkish_candidate({"name":"Turkey Live TV", "group":"World", "tvg_id":""}, "world"))
         self.assertTrue(turkish_candidate({"name":"TRT Haber", "group":"News", "tvg_id":""}, "world"))
