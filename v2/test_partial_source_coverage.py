@@ -27,6 +27,24 @@ class PartialCoverageTests(unittest.TestCase):
             report = forge.scan()
         self.assertEqual(report["coverage_status"], "PARTIAL_LIMITS")
         self.assertIn("GITLAB_PROJECT_PAGE_LIMIT", report["limits_hit"])
+    def test_gitlab_tree_pagination_fetches_second_page(self):
+        from forge_source_discovery import GITLAB_API
+        calls = []
+        def fake_api(url):
+            calls.append(url)
+            if "/repository/tree" in url:
+                if "page=2" in url:
+                    return [{"type": "blob", "path": "channels.m3u"}]
+                return [{"type": "blob", "path": "other.txt"}] * 100
+            if url.startswith(GITLAB_API):
+                return [{"id": 1, "default_branch": "main"}]
+            return {"data": []}
+        with patch.object(forge, "TERMS", ["iptv"]), \
+             patch.object(forge, "api_json", side_effect=fake_api):
+            report = forge.scan()
+        self.assertTrue(any("page=2" in url for url in calls))
+        self.assertEqual(len(report["sources"]), 1)
+        self.assertEqual(report["coverage_status"], "COMPLETE_QUERIES")
     def test_successful_source_candidates_still_deduplicate(self):
         sample = '#EXTM3U\n#EXTINF:-1 tvg-id="trt1.tr",TRT 1\nhttps://example.org/a.m3u8\n'
         candidates = discover.discover([("ok", sample)], "#EXTM3U\n", {"ok": "TR"})
