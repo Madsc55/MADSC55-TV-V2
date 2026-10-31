@@ -261,6 +261,8 @@ def main():
                                  "NO_SOURCES_ACCESSIBLE" if not loaded else
                                  "COMPLETE_SOURCE_FETCH" if not errors else "PARTIAL_SOURCE_FETCH")
     result["failed_source_count"] = len(errors)
+    result["playback_verified"] = False
+    result["source_fetch_complete"] = bool(not args.offline and loaded and not errors)
     result["total_unique_candidates"] = len(result["candidates"])
     if args.previous_report:
         from source_loss_audit import compare
