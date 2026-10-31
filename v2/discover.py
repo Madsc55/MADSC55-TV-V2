@@ -222,7 +222,7 @@ def main():
         from archive_acceptance_gate import check
         check()
         existing = {item["url"] for item in entries(live)}
-        archived = set()
+        archived = {item["url"] for item in restore(args.encrypted_archive)} if args.encrypted_archive.exists() else set()
         known_ids = recognized_channel_ids(loaded, scopes)
         for source_id, content in loaded:
             for item in entries(content):
