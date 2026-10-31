@@ -269,6 +269,34 @@ def main():
         bool(candidate.get("existing_channel_alternative")) for candidate in result["candidates"]
     )
     result["candidate_status"] = "UNVERIFIED"
+    # Surface reference-only discovery coverage without claiming those URLs are streams.
+    auxiliary_reports = {
+        "github_gist": ROOT / "v2/reports/github-source-discovery.json",
+        "gitlab_codeberg": ROOT / "v2/reports/forge-source-discovery.json",
+        "official_live_pages": ROOT / "v2/reports/live-page-references.json",
+        "public_playlist_indexes": ROOT / "v2/reports/webpage-playlist-references.json",
+        "youtube": ROOT / "v2/reports/youtube-live-candidates.json",
+    }
+    auxiliary = {}
+    for label, report_path in auxiliary_reports.items():
+        if not report_path.is_file():
+            auxiliary[label] = {"status": "REPORT_MISSING", "playback_verified": False}
+            continue
+        try:
+            document = json.loads(report_path.read_text(encoding="utf-8"))
+            if not isinstance(document, dict):
+                raise ValueError("Invalid report")
+            records = document.get("results", document.get("references", document.get("sources", [])))
+            if not isinstance(records, list):
+                raise ValueError("Invalid records")
+            auxiliary[label] = {"status": "REFERENCE_ONLY_NOT_ARCHIVED",
+                                "records": len(records),
+                                "playback_verified": False,
+                                "report_errors": len(document.get("errors", []))}
+        except (OSError, ValueError, TypeError):
+            auxiliary[label] = {"status": "REPORT_INVALID", "playback_verified": False}
+    result["auxiliary_discovery_coverage"] = auxiliary
+    result["all_discovery_sources_integrated_into_encrypted_archive"] = False
     if args.previous_report:
         from source_loss_audit import compare
         previous = json.loads(args.previous_report.read_text(encoding="utf-8"))
