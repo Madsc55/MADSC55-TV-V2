@@ -674,3 +674,11 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - `v2/test_run_all_discovery.py` sıralama, fail-closed, onay önkoşulu ve başarı akışı testleri CI'a eklendi.
 - ÖNEMLİ EKSİK: YouTube/resmî canlı sayfa keşfi, GitHub/Gist yeni keşfi, oynatma testi, cihaz test grupları bu tek komut akışına henüz dahil değildir. Tam kapsamlı arama olarak tanıtılmamalıdır. Gerçek çalıştırma yapılmadı; CI sonucu yeni commit için bekleniyor.
 - Ana İBO playlist, YEDEKLER, YENİLER, FAVORİLER değişmedi; PR #9 merge edilmedi.
+
+
+## 31 Ekim 2026 — Dünya kaynaklarındaki TR/AZ alternatiflerini koruma
+- Önceki tek-komut CI #41192597596 SUCCESS.
+- `v2/discover.py`: TR/AZ kaynaklarından bilinen tvg-id kimlikleri tek fonksiyonda toplanıyor; dünya listelerinde aynı tvg-id'ye ait alternatif yayın adresleri artık yalnızca rapora değil, şifreli arşive de yazılıyor. Genel isimli, kimliği eşleşmeyen dünya kanalları kabul edilmiyor.
+- `v2/test_cross_source_archive_parity.py` ve sıralı CI testi eklendi.
+- `v2/encrypted_archive.py` restore tüm şifreli dosyayı `readlines()` ile belleğe yüklemek yerine satır satır doğruluyor.
+- Son commit CI henüz doğrulanmadı. Gerçek tam tarama ve bağımsız yedek/restore kanıtı bekliyor. Ana İBO playlist, YEDEKLER, YENİLER, FAVORİLER değişmedi; PR #9 merge edilmedi.
