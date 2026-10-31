@@ -878,3 +878,10 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - `github_source_discovery.py`: `MAX_REPOS`, `MAX_FILES`, GitHub API `tree.truncated` durumları artık `limits_hit` ve `coverage_status=PARTIAL_LIMITS` olarak raporlanıyor. Limitler nedeniyle eksik taramaya `COMPLETE_QUERIES` denmeyecek.
 - `test_github_partial_discovery.py` içinde repo limiti ve kısaltılmış tree testleri eklendi; mevcut toplu CI içinde çalışır.
 - Henüz gerçek tam ağ taraması, bağımsız şifreli yedek, oynatma testleri yapılmadı. Ana IBO, YEDEKLER, YENİLER, FAVORİLER değişmedi; PR #9 merge edilmedi.
+
+
+## 31 Ekim 2026 — Kaynak kaybı raporu eksikliği kontrolü
+- `source_loss_audit.py` eski veya yeni `source_audit` boşken `NO_LARGE_REGRESSION` döndürmez; `MISSING_SOURCE_AUDIT` / `REVIEW_REQUIRED` üretir.
+- Eski ve yeni sayıların tip ve negatif değer doğrulaması eksik audit koşulunda da çalışır.
+- `test_source_loss_audit.py` iki yeni regresyon vakası ile güncellendi; tek toplu CI içinde çalışır.
+- Gerçek kaynak ağ taraması ve bağımsız arşiv yedeklemesi tamamlanmış değildir. Ana IBO, YEDEKLER, YENİLER, FAVORİLER korunuyor, PR #9 merge edilmedi.
