@@ -23,20 +23,8 @@
       "url": "https://onureroz.com/indirmeler/turk/"
     },
     {
-      "id": "internet-archive-iptv-search",
-      "url": "https://archive.org/search?query=iptv"
-    },
-    {
-      "id": "github-turkish-iptv-search",
-      "url": "https://github.com/search?q=turkish+iptv&type=repositories"
-    },
-    {
       "id": "gitlab-public-iptv-search",
       "url": "https://gitlab.com/explore/projects/topics/iptv"
-    },
-    {
-      "id": "codeberg-public-iptv-search",
-      "url": "https://codeberg.org/explore/repos?q=iptv"
     }
   ]
 }
