@@ -7,7 +7,8 @@ URLs, alter the live playlist or automatically promote unknown sources.
 import argparse
 import json
 from pathlib import Path
-from urllib.parse import urlencode, quote
+from urllib.parse import urlencode, quote, urlsplit
+from webpage_source_discovery import public_hostname
 import urllib.request
 from forge_source_discovery import (GITLAB_API, CODEBERG_API, TERMS,
     gitlab_projects, codeberg_projects, parse_tree_paths, playlist_sources)
@@ -16,9 +17,23 @@ HERE = Path(__file__).resolve().parent
 OUTPUT = HERE / "reports" / "forge-source-discovery.json"
 
 def api_json(url):
+    p = urlsplit(url)
+    if (p.scheme != "https" or not p.hostname or not public_hostname(p.hostname)
+            or p.hostname not in ("gitlab.com", "codeberg.org")
+            or p.username or p.password or p.port not in (None, 443)):
+        raise ValueError("Untrusted forge API host")
+    class SafeRedirect(urllib.request.HTTPRedirectHandler):
+        def redirect_request(self, request, fp, code, msg, headers, newurl):
+            target = urlsplit(newurl)
+            if (target.scheme != "https" or target.hostname != p.hostname
+                    or target.username or target.password
+                    or target.port not in (None, 443)):
+                raise ValueError("Unsafe forge API redirect")
+            return super().redirect_request(request, fp, code, msg, headers, newurl)
+    opener = urllib.request.build_opener(SafeRedirect())
     request = urllib.request.Request(url, headers={"User-Agent": "MADSC55-TV-V2-Discovery/1.0",
                                                     "Accept": "application/json"})
-    with urllib.request.urlopen(request, timeout=12) as response:
+    with opener.open(request, timeout=12) as response:
         payload = response.read(2_000_001)
     if len(payload) > 2_000_000:
         raise ValueError("Forge response too large")
