@@ -1,0 +1,5 @@
+{
+  "schema": 1,
+  "policy": "explicitly approved public HTTPS HTML indexes; references only, no auto-import",
+  "pages": []
+}
