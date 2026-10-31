@@ -83,6 +83,15 @@ class DiscoveryOfflineRegression(unittest.TestCase):
         result=discover([("a",a),("b",b)],"#EXTM3U\n",{"a":"TR","b":"TR"})
         self.assertEqual(len(result),2)
 
+    def test_fetch_rejects_private_source_before_network(self):
+        from discover import fetch
+        for url in ("https://127.0.0.1/secret.m3u",
+                    "https://192.168.1.1/private.m3u8",
+                    "https://localhost/test.m3u",
+                    "http://example.org/list.m3u"):
+            with self.subTest(url=url), self.assertRaises(ValueError):
+                fetch(url)
+
     def test_non_http_stream_ignored(self):
         data='#EXTM3U\n#EXTINF:-1,TRT Haber\nfile:///tmp/stream\n'
         self.assertEqual(list(entries(data)),[])
