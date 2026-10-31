@@ -206,6 +206,7 @@ def main():
                                 "url": page["url"], "scope": "candidate"})
     scopes = {source['id']: source.get('scope', 'candidate') for source in sources}
     fetched_playlist_urls = {source["url"] for source in sources if source.get("kind", "m3u") != "html"}
+    skipped_duplicate_index_links = 0
     for source in sources:
         if args.offline:
             continue
@@ -230,6 +231,7 @@ def main():
                                      "status": "INDEX_LINKS_ONLY_NOT_PLAYBACK_VERIFIED"})
                 for link in links:
                     if link in fetched_playlist_urls:
+                        skipped_duplicate_index_links += 1
                         continue
                     fetched_playlist_urls.add(link)
                     # Stable across HTML link reordering; never expose the URL in reports.
@@ -289,6 +291,7 @@ def main():
         "index_pages_checked": sum(item["status"] == "INDEX_LINKS_ONLY_NOT_PLAYBACK_VERIFIED" for item in source_audit),
         "index_playlist_links_found": sum(item["entries"] for item in source_audit if item["status"] == "INDEX_LINKS_ONLY_NOT_PLAYBACK_VERIFIED"),
         "failed_sources": len(errors),
+        "skipped_duplicate_index_links": skipped_duplicate_index_links,
         "playback_verified": False,
     }
     result["archive_source_set_partial"] = bool(args.encrypted_archive and errors)
