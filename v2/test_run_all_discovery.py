@@ -36,6 +36,15 @@ class RunnerTests(unittest.TestCase):
         with self.assertRaisesRegex(RuntimeError, "stage 2"):
             execute([["first"], ["second"], ["third"]], fake)
         self.assertEqual(len(calls), 2)
+    def test_availability_failure_continues_to_discovery(self):
+        calls = []
+        class Result:
+            def __init__(self, code): self.returncode = code
+        def fake(command, **kwargs):
+            calls.append(command)
+            return Result(1 if len(calls) == 1 else 0)
+        self.assertTrue(execute([["availability"], ["github"], ["encrypted"]], fake))
+        self.assertEqual(len(calls), 3)
     def test_success_runs_all_steps(self):
         class Result:
             returncode = 0
