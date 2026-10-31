@@ -904,3 +904,10 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - `run_all_discovery.py` altı aşamanın bitmesinin tam kapsama veya oynatma doğrulaması olmadığını açıkça raporlar. Kısmi kapsam için her alt rapor incelenmelidir.
 - Yeni resmî kaynakların ve gerçek kanal taramasının tamamlandığı iddia edilmez. Bağımsız kalıcı şifreli arşiv/restore kanıtı hâlâ gerçek taramanın önkoşuludur.
 - Ana IBO, YEDEKLER, YENİLER, FAVORİLER korunuyor; PR #9 merge edilmedi.
+
+
+## 31 Ekim 2026 — Forge sayfalama kaybı kontrolü
+- CI #41215502742 SUCCESS.
+- GitLab/Codeberg keşfi proje arama sayfa sınırına ve GitLab tree sayfa sınırına ulaşınca `limits_hit` ile `PARTIAL_LIMITS` raporlar; Codeberg truncated tree de aynı şekilde.
+- `test_partial_source_coverage.py` GitLab limit senaryosuyla genişletildi; tek toplu CI altında çalışır.
+- Sayfalama otomatik devam ettirilmedi: kısmi kapsam görünür kılındı, tam keşif iddiası yok. Gerçek tarama ve bağımsız şifreli arşiv doğrulaması bekliyor. Ana IBO/YEDEKLER/YENİLER/FAVORİLER değişmedi; PR #9 merge edilmedi.
