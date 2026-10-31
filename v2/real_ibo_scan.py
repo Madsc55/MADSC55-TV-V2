@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Real-network IPTV candidate scanner. Writes ONLY v2/reports/IBO_PROD_LIST.m3u8.
+"""Real-network IPTV candidate scanner; exports 2000-item device test batches.
 Not a replacement for v2/discover.py; can run beside the existing V2 engine.
 No mock data, no invented URLs. HTTP/HLS checks are not playback proof.
 """
@@ -17,7 +17,7 @@ import urllib.request
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 SOURCES = ROOT / 'v2/config/sources.json'
 LIVE = ROOT / 'MADSC55_TV_IBO_CALISANLAR_TEST.m3u8'
-OUT = ROOT / 'v2/reports/IBO_YENI_ADAYLAR_2000_PART1.m3u8'
+OUT = ROOT / 'v2/reports/IBO_YENI_ADAYLAR_PART1.m3u8'
 REPORT = ROOT / 'v2/reports/ibo-real-scan-report.json'
 UA = 'MADSC55-TV-V2-RealScanner/1.0'
 MAX_SOURCE = 25_000_000
@@ -92,7 +92,11 @@ def main():
         ap.error('workers must be 1..32 and limit 1..10000')
     if not args.live.is_file():
         ap.error('Protected main playlist not found; refusing unfiltered export')
-    existing = {entry['url'] for entry in parse_m3u(args.live.read_bytes())}
+    live_text = args.live.read_text(encoding='utf-8-sig', errors='replace')
+    existing = {line.strip() for line in live_text.splitlines()
+                if line.strip().startswith(('https://', 'http://'))}
+    if not existing:
+        ap.error('Protected main playlist contains no stream URLs; refusing unfiltered export')
     doc = json.loads(args.sources.read_text(encoding='utf-8'))
     sources = doc['sources'] if isinstance(doc, dict) else doc
     # Do not export incomplete results as a successful production list.
@@ -119,10 +123,12 @@ def main():
             checked += 1
             if result is not None:
                 good.append(result)
-    # Refuse to publish a partial list. Never overwrite an existing verified export on failure.
+    # Source outages are reported; a working subset can still be tested.
+    # Never modify the protected main playlist.
     report = {'source_count': len(sources), 'fetched_sources': len(source_counts),
               'failed_sources': failed, 'existing_main_urls': len(existing), 'unique_new_candidates': len(candidates),
               'http_checked': checked, 'http_hls_ok': len(good), 'exported_part1': min(len(good), args.limit),
+              'part_count': (len(good) + args.limit - 1) // args.limit,
               'playback_verified_on_device': False, 'mock_data_used': False,
               'status': 'READY_FOR_DEVICE_TEST' if good else 'NO_VERIFIED_CANDIDATES'}
     args.report.parent.mkdir(parents=True, exist_ok=True)
