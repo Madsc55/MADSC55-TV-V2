@@ -23,6 +23,8 @@ def check(env=None):
         raise RuntimeError("Archive evidence missing required passed checks")
     if not evidence.get("backup_location") or not evidence.get("restore_sha256"):
         raise RuntimeError("Archive evidence lacks backup location or restore checksum")
+    if evidence.get("backup_scope") == "local_separate_directory_not_independent_storage":
+        raise RuntimeError("Local backup drill does not establish independent durable backup")
     digest = evidence["restore_sha256"]
     if not isinstance(digest, str) or re.fullmatch(r"[0-9a-f]{64}", digest) is None:
         raise RuntimeError("Invalid restore SHA256 digest")
