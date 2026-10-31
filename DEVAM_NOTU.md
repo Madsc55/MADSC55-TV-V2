@@ -583,3 +583,9 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - `v2/discover.py`: `kind=html` kaynakları için sayfadaki en fazla 30 playlist linkini keşfeder, ayrı kaynak kimliği ve kaynak audit kaydı üretir; HTML asla oynatılabilir kanal sayılmaz. Henüz kaynak konfigürasyonuna doğrulanmamış HTML URL eklenmedi; gerçek uçtan uca tarama yapılmadı.
 - `.github/workflows/v2-ordered-preflight.yml`: yeni HTML testi sıralı discovery-tests aşamasına eklendi; `pull_request` tetikleyicisi de eklendi. PR #9 açıldı; commit üzerinden yapılan ilk workflow sorgusunda henüz run dönmedi. CI başarısı doğrulanmadı.
 - Kalan: gerçek kaynak URL'lerinin doğrulanması ve adaptör envanteri, şifreli kalıcı URL arşivi + gerçek restore kanıtı, Actions sonuçlarının incelenmesi, tam kaynak taraması. Merge yapma; güvenli arşiv olmadan gerçek kanal taraması yapma.
+
+
+## 31 Ekim 2026 — M3U EXTINF ayrıştırma düzeltmesi
+- `v2/discover.py` (`c170c43`): kanal adında virgül olduğunda `rsplit` ile adın kaybolmasını önler; tırnak içindeki grup virgüllerini atlayıp ilk tırnak-dışı virgülü kanal adı ayıracı kabul eder.
+- `v2/test_discovery_offline_regressions.py` (`ba7bbbf`): `group-title="News, Turkey"` ve `Channel, Extra` örneği ile çevrimdışı regresyon testi. Ordered-preflight discovery-tests aşamasında çalışacak.
+- Çalıştırma sonucu henüz doğrulanmadı. Draft PR #9 açık; merge yapılmadı. Ana playlist ve YEDEKLER değiştirilmedi.
