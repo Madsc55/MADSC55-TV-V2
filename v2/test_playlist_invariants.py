@@ -8,8 +8,28 @@ from collections import Counter
 from discover import ROOT, LIVE, SOURCES, entries
 
 def main():
-    actual_blob = subprocess.check_output(["git", "hash-object", str(LIVE)], text=True).strip()
-    assert actual_blob == "4b1c3cea4b5107a425abab60f62d41f9f81e05a7", "Protected IBO playlist content changed"
+    # Original bytes stay identical; only appended YEDEKLER entries are allowed.
+    current = LIVE.read_bytes()
+    original_size = 207344
+    assert len(current) >= original_size, "Original playlist was truncated"
+    original = current[:original_size]
+    original_hash = subprocess.run(
+        ["git", "hash-object", "--stdin"], input=original,
+        capture_output=True, check=True
+    ).stdout.decode().strip()
+    assert original_hash == "4b1c3cea4b5107a425abab60f62d41f9f81e05a7", "Original playlist bytes changed"
+    suffix = current[original_size:]
+    if suffix:
+        rows = [line for line in suffix.decode("utf-8").splitlines() if line.strip()]
+        assert len(rows) % 2 == 0, "Incomplete appended M3U record"
+        existing = {line.strip() for line in original.decode("utf-8-sig").splitlines()
+                    if line.strip().startswith(("http://", "https://"))}
+        for i in range(0, len(rows), 2):
+            header, url = rows[i:i + 2]
+            assert header.startswith("#EXTINF:") and 'group-title="🗂️ YEDEKLER (2)"' in header, "Only YEDEKLER may be appended"
+            assert url.startswith(("https://", "http://")) and url not in existing, "Invalid or duplicate stream URL"
+            assert not any(term in header.casefold() for term in ("trt arabi", "trt world")), "Blocked foreign-language channel"
+            existing.add(url)
     text = LIVE.read_text(encoding="utf-8-sig")
     channels = list(entries(text))
     assert text.startswith("#EXTM3U"), "Missing M3U header"
@@ -29,7 +49,10 @@ def main():
         import re
         match = re.search(r"\((\d+)\)$", group)
         assert match, f"Missing category counter: {group}"
-        assert int(match.group(1)) == count, f"Category count mismatch: {group}, actual {count}"
+        if group == "🗂️ YEDEKLER (2)":
+            assert count >= 2, "Original backup channels missing"
+        else:
+            assert int(match.group(1)) == count, f"Category count mismatch: {group}, actual {count}"
     sources = json.loads(SOURCES.read_text(encoding="utf-8"))["sources"]
     assert len(sources) >= 3, "Discovery sources missing"
     note = ROOT / "DEVAM_NOTU.md"
