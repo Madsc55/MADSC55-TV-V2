@@ -62,6 +62,21 @@ class DiscoveryOfflineRegression(unittest.TestCase):
     def test_turkish_url_not_language_proof(self):
         self.assertFalse(turkish_candidate({"name":"English News","group":"World","tvg_id":""},"world"))
 
+    def test_world_source_recovers_matching_regional_tvg_id(self):
+        regional = playlist(("TR.Sample", "Turkey", "Kanal", "https://example.invalid/tr.m3u8"))
+        world = playlist(("tr.sample", "World", "Channel", "https://example.invalid/world.m3u8"))
+        result = discover([("regional", regional), ("world", world)],
+                          "#EXTM3U\n", {"regional": "TR", "world": "world"})
+        self.assertEqual(len(result), 2)
+        self.assertEqual(result[1]["source"], "world")
+
+    def test_world_generic_name_does_not_cross_match(self):
+        regional = playlist(("", "Turkey", "News", "https://example.invalid/tr.m3u8"))
+        world = playlist(("", "World", "News", "https://example.invalid/world.m3u8"))
+        result = discover([("regional", regional), ("world", world)],
+                          "#EXTM3U\n", {"regional": "TR", "world": "world"})
+        self.assertEqual(len(result), 1)
+
     def test_multiple_urls_same_name_retained(self):
         a=playlist(("same.id","TR","Same","https://example.invalid/a.m3u8"))
         b=playlist(("same.id","TR","Same","https://example.invalid/b.m3u8"))
