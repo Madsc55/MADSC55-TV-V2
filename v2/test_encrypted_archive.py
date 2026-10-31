@@ -32,6 +32,15 @@ class EncryptedArchiveTests(unittest.TestCase):
             path.write_text(json.dumps(data) + "\n")
             with self.assertRaises(Exception):
                 restore(path, KEY)
+    def test_symlink_destination_rejected(self):
+        with tempfile.TemporaryDirectory() as folder:
+            target = Path(folder) / "target"
+            target.write_bytes(b"protected")
+            link = Path(folder) / "archive.jsonl.enc"
+            link.symlink_to(target)
+            with self.assertRaises(ValueError):
+                append(link, {"a": 1}, KEY)
+            self.assertEqual(target.read_bytes(), b"protected")
     def test_bad_key_rejected(self):
         with self.assertRaises(ValueError):
             append("never-created", {"a": 1}, "short")
