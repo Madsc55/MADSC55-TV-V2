@@ -76,6 +76,40 @@ def main():
                     errors.append({"repository": name, "path": path, "error": type(exc).__name__})
         except Exception as exc:
             errors.append({"repository": name, "error": type(exc).__name__})
+    # Public Gists are not searchable through the repository search API.
+    # Explicitly search public gist metadata through the GitHub Gist endpoint
+    # only for owners already discovered in relevant repository results.
+    gist_owners = sorted({name.split("/", 1)[0] for name in repos})[:30]
+    for owner in gist_owners:
+        if len(found) >= MAX_FILES:
+            break
+        try:
+            gists = api("https://api.github.com/users/" + urllib.parse.quote(owner, safe="") + "/gists?per_page=30")
+            if not isinstance(gists, list):
+                continue
+            for gist in gists:
+                for filename, meta in gist.get("files", {}).items():
+                    if len(found) >= MAX_FILES:
+                        break
+                    if not re.search(r"(?i)\\.(m3u8?|txt)$", filename):
+                        continue
+                    raw = meta.get("raw_url", "")
+                    p = urllib.parse.urlsplit(raw)
+                    if (p.scheme != "https" or p.hostname not in ("gist.githubusercontent.com", "raw.githubusercontent.com")
+                            or p.username or p.password or p.port not in (None, 443)
+                            or raw in configured):
+                        continue
+                    try:
+                        content = fetch(raw)
+                        sample = list(entries(content))
+                        if sample:
+                            found.append({"repository": owner + "/gist", "path": filename, "url": raw,
+                                          "entries": len(sample), "tr_name_hints": 0,
+                                          "status": "SOURCE_PARSED_STREAMS_NOT_PLAYBACK_VERIFIED"})
+                    except Exception as exc:
+                        errors.append({"repository": owner + "/gist", "path": filename, "error": type(exc).__name__})
+        except Exception as exc:
+            errors.append({"repository": owner + "/gist", "error": type(exc).__name__})
     found.sort(key=lambda item: (item["repository"].casefold(), item["path"].casefold()))
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps({"created_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
