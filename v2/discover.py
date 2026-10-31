@@ -205,6 +205,7 @@ def main():
                 sources.append({"id": "index-" + page["id"], "kind": "html",
                                 "url": page["url"], "scope": "candidate"})
     scopes = {source['id']: source.get('scope', 'candidate') for source in sources}
+    fetched_playlist_urls = {source["url"] for source in sources if source.get("kind", "m3u") != "html"}
     for source in sources:
         if args.offline:
             continue
@@ -228,6 +229,9 @@ def main():
                                      "distinct_stream_urls": 0,
                                      "status": "INDEX_LINKS_ONLY_NOT_PLAYBACK_VERIFIED"})
                 for link in links:
+                    if link in fetched_playlist_urls:
+                        continue
+                    fetched_playlist_urls.add(link)
                     # Stable across HTML link reordering; never expose the URL in reports.
                     child_id = source["id"] + "-link-" + hashlib.sha256(link.encode("utf-8")).hexdigest()[:16]
                     try:
