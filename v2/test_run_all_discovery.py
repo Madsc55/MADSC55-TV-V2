@@ -9,13 +9,14 @@ from run_all_discovery import plan, preflight, execute
 class RunnerTests(unittest.TestCase):
     def test_stage_order(self):
         steps = plan(pathlib.Path("/tmp/private.enc"), pathlib.Path("/tmp/old.json"))
-        self.assertEqual(len(steps), 5)
+        self.assertEqual(len(steps), 6)
         self.assertIn("source_availability_audit.py", steps[0][1])
         self.assertIn("github_source_discovery.py", steps[1][1])
         self.assertIn("run_forge_source_discovery.py", steps[2][1])
         self.assertIn("run_live_page_discovery.py", steps[3][1])
-        self.assertIn("discover.py", steps[4][1])
-        self.assertEqual(steps[4][-2:], ["--previous-report", "/tmp/old.json"])
+        self.assertIn("run_webpage_playlist_discovery.py", steps[4][1])
+        self.assertIn("discover.py", steps[5][1])
+        self.assertEqual(steps[5][-2:], ["--previous-report", "/tmp/old.json"])
     def test_refuse_without_archive_approval_before_network(self):
         with patch("run_all_discovery.check", side_effect=RuntimeError("no restore evidence")):
             with self.assertRaisesRegex(RuntimeError, "no restore evidence"):
