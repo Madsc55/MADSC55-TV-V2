@@ -21,7 +21,15 @@ class SourceAvailabilityTests(unittest.TestCase):
         report = audit([{"id": "missing", "url": "https://example.org/a.m3u"}],
                        lambda url: {"status": "HTTP_ERROR", "http_status": 404})
         self.assertEqual(report["results"][0]["http_status"], 404)
-        self.assertEqual(report["coverage_status"], "PARTIAL_SOURCE_AVAILABILITY")
+        self.assertEqual(report["coverage_status"], "NO_SOURCES_REACHABLE")
         self.assertEqual(report["unreachable_source_count"], 1)
+    def test_empty_inventory_not_complete(self):
+        report = audit([], lambda url: self.fail("unexpected probe"))
+        self.assertEqual(report["coverage_status"], "NO_CONFIGURED_SOURCES")
+    def test_mixed_source_status_is_partial(self):
+        sources = [{"id": "ok", "url": "https://example.org/a.m3u"},
+                   {"id": "bad", "url": "https://example.org/b.m3u"}]
+        report = audit(sources, lambda url: {"status": "HTTP_OK"} if url.endswith("a.m3u") else {"status": "FETCH_ERROR"})
+        self.assertEqual(report["coverage_status"], "PARTIAL_SOURCE_AVAILABILITY")
 if __name__ == "__main__":
     unittest.main(verbosity=2)
