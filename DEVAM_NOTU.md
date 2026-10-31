@@ -630,3 +630,10 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - Şifreli arşive symlink üzerinden yazma reddedildi; regresyon testi eklendi.
 - Önceki YouTube/web keşif değişiklikleri GitHub Actions #41190479762: SUCCESS. Yeni düzeltmelerin CI doğrulaması ayrıca bekleniyor.
 - Canlı tarama, şifreli yedek restore kanıtı ve oynatma testi henüz yapılmadı. Ana İBO playlist, YEDEKLER, YENİLER ve FAVORİLER korunuyor; PR #9 merge edilmedi.
+
+
+## 31 Ekim 2026 — GitLab/Codeberg keşif sonuçlarını kontrollü bağlama
+- `v2/forge_source_review.py`: kamuya açık GitLab raw API ve Codeberg M3U URL'lerini güvenli biçimde doğrulama, tekilleştirme ve sadece SHA256 onayı olan kaynakları seçme.
+- `v2/discover.py`: `v2/reports/forge-source-discovery.json` raporunu okuyabilir; yalnızca `v2/config/approved-forge-source-sha256.json` içindeki tam URL SHA256 onayı olan girdileri aday kaynak listesine ekler. Varsayılan onay listesi boş, otomatik aktarım yok.
+- `v2/test_forge_source_review.py` beş çevrimdışı test CI'a eklendi. Önceki CI #41190601977 SUCCESS; bu değişikliklerin sonucu henüz ayrıca doğrulanmadı.
+- GitLab/Codeberg canlı taraması henüz yapılmadı; kanal oynatma doğrulaması yapılmadı; PR #9 merge edilmedi. Ana playlist ve YEDEKLER korunur.
