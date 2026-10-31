@@ -196,34 +196,6 @@ def main():
             errors.append({"source": source["id"], "error": type(exc).__name__})
             source_audit.append({"source": source["id"], "status": "FETCH_FAILED",
                                  "error": type(exc).__name__})
-    if args.snapshot_output and (errors or not loaded):
-        raise SystemExit("Snapshot incomplete: no successful full source set; refusing private snapshot output")
-    if args.snapshot_output:
-        existing = {e["url"] for e in entries(live)}
-        seen_urls = set()
-        snapshot = []
-        snapshot_by_url = {}
-        for source_id, content in loaded:
-            for item in entries(content):
-                if not turkish_candidate(item, scopes.get(source_id, 'candidate')):
-                    continue
-                if item["url"] in existing:
-                    continue
-                if item["url"] in seen_urls:
-                    prior = snapshot_by_url[item["url"]]
-                    if source_id not in prior["source_ids"]:
-                        prior["source_ids"].append(source_id)
-                    continue
-                seen_urls.add(item["url"])
-                record = {"source": source_id, "source_ids": [source_id], **item}
-                snapshot.append(record)
-                snapshot_by_url[item["url"]] = record
-        private = ROOT / "v2/reports/private-playback-snapshot.json"
-        private.parent.mkdir(parents=True, exist_ok=True)
-        private.write_text(json.dumps({"schema": 1, "sources": source_audit, "candidates": snapshot}, ensure_ascii=False), encoding="utf-8")
-        private.chmod(0o600)
-        if errors:
-            raise SystemExit("Snapshot incomplete: " + str(len(errors)) + " source(s) failed; no playback permitted")
     if args.encrypted_archive:
         if errors or not loaded:
             raise SystemExit("Encrypted archive refused: source set incomplete")
