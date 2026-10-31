@@ -622,3 +622,11 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - `v2/live_page_discovery.py`: HTML'deki YouTube canlı kanal/video sayfalarını ve canlı yayın sayfası bağlantılarını salt-okunur olarak ayıklar. Sonuçlar yalnızca referanstır; oynatılabilir IPTV URL veya yayın çalışıyor kanıtı değildir.
 - `v2/test_live_page_discovery.py`: çevrimdışı YouTube, resmî sayfa, tekrar, private IP, credential ve HTTP güvenlik testleri; CI'a eklendi.
 - Henüz canlı site tarayıcısına bağlanmadı, resmî kanal sahipliği doğrulanmadı, gerçek YouTube canlı durum kontrolü yapılmadı. Bu adımlar açık kalır.
+
+
+## 31 Ekim 2026 — Kritik keşif veri kalitesi ve arşiv düzeltmeleri
+- `dearbulut-online` dünya listesi `scope=TR` yerine `scope=world`: yabancı kanalların topluca Türk kanalı sayılması engellendi. Kaynak sözleşmesine regresyon testi eklendi.
+- `discover.py` içinde devre dışı bırakılmış olsa da kalan şifresiz `private-playback-snapshot.json` yazma kodu tamamen kaldırıldı.
+- Şifreli arşive symlink üzerinden yazma reddedildi; regresyon testi eklendi.
+- Önceki YouTube/web keşif değişiklikleri GitHub Actions #41190479762: SUCCESS. Yeni düzeltmelerin CI doğrulaması ayrıca bekleniyor.
+- Canlı tarama, şifreli yedek restore kanıtı ve oynatma testi henüz yapılmadı. Ana İBO playlist, YEDEKLER, YENİLER ve FAVORİLER korunuyor; PR #9 merge edilmedi.
