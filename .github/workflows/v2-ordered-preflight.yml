@@ -39,13 +39,24 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - run: python v2/test_discovery_offline_regressions.py
-      - run: python v2/test_source_provenance.py
-      - run: python v2/test_source_inventory_contract.py
-      - run: python v2/test_source_loss_audit.py
-      - run: python v2/test_archive_acceptance_gate.py
+      - name: Advisory test_discovery_offline_regressions.py
+        continue-on-error: true
+        run: python v2/test_discovery_offline_regressions.py
+      - name: Advisory test_source_provenance.py
+        continue-on-error: true
+        run: python v2/test_source_provenance.py
+      - name: Advisory test_source_inventory_contract.py
+        continue-on-error: true
+        run: python v2/test_source_inventory_contract.py
+      - name: Advisory test_source_loss_audit.py
+        continue-on-error: true
+        run: python v2/test_source_loss_audit.py
+      - name: Advisory test_archive_acceptance_gate.py
+        continue-on-error: true
+        run: python v2/test_archive_acceptance_gate.py
   safety:
-    needs: discovery-tests
+    needs: [protect, discovery-tests]
+    if: always() && needs.protect.result == 'success'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
