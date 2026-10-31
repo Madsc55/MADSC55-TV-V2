@@ -30,7 +30,16 @@ def entries(data):
     for raw in data.splitlines():
         line = raw.strip()
         if line.startswith("#EXTINF:"):
-            name = line.rsplit(",", 1)[-1].strip()
+            # Channel name begins after the first comma outside quoted attributes.
+            quoted = False
+            separator = -1
+            for position, character in enumerate(line):
+                if character == '"':
+                    quoted = not quoted
+                elif character == "," and not quoted:
+                    separator = position
+                    break
+            name = line[separator + 1:].strip() if separator >= 0 else ""
             def field(label):
                 m = re.search(r'\b' + re.escape(label) + r'="([^"]*)"', line)
                 return m.group(1).strip() if m else ""
