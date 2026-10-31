@@ -772,3 +772,8 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - `v2/discover.py`: public candidate JSON'a yazılan name/tvg_id/group/logo alanlarında tam HTTPS URL'leri ve token/apikey/password/secret/auth/signature/sig/key biçimli değerler maskelenir, alanlar 512 karakterle sınırlandırılır. Şifreli özel arşivde orijinal kaynak metadata'sı korunur.
 - `v2/test_public_metadata_redaction.py` CI'a eklendi; yeni CI henüz doğrulanmadı.
 - Eksik gerçek kaynak taraması, bağımsız backup/restore onayı, canlı sayfa kaynak onayları ve playback doğrulaması devam eden işlerdir. Ana IBO playlist, YEDEKLER, YENİLER, FAVORİLER değiştirilmedi; PR #9 merge edilmedi.
+
+
+## 31 Ekim 2026 — CI #153 / run 41206103747
+- `discovery-tests` FAILED: `test_public_metadata_redaction.py` iki hata; Python raw regex içinde `\\S` ve `\\s` kullanıldığı için URL ve token maskelenmedi. `v2/discover.py` içindeki desenler `\S` ve `\s` olarak düzeltildi (commit cc504a3f79cca0235941df6324e07c9baa27d55c). Derleme ve playlist koruma testleri başarılıydı, safety önceki hatadan dolayı atlandı.
+- Son commitin CI sonucu henüz doğrulanmadı. Ana IBO playlist, YEDEKLER, YENİLER, FAVORİLER değişmedi; PR #9 merge edilmedi.
