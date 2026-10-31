@@ -31,9 +31,16 @@ class ArchiveGateTests(unittest.TestCase):
                   "backup_location": "secure-store",
                   "restore_sha256": digest or actual, "restored_file": str(restored)}
         path.write_text(json.dumps(record), encoding="utf-8")
+        path.chmod(0o600)
         return {"V2_ARCHIVE_RESTORE_APPROVED": "true",
                 "V2_ARCHIVE_RESTORE_EVIDENCE": str(path)}
 
+    def test_publicly_readable_evidence_rejected(self):
+        with tempfile.TemporaryDirectory() as directory:
+            env = self.evidence(directory)
+            Path(env["V2_ARCHIVE_RESTORE_EVIDENCE"]).chmod(0o644)
+            with self.assertRaisesRegex(RuntimeError, "owner-only"):
+                check(env)
     def test_complete_evidence(self):
         with tempfile.TemporaryDirectory() as directory:
             self.assertTrue(check(self.evidence(directory)))
