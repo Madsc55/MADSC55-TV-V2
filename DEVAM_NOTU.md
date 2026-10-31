@@ -849,3 +849,10 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - En az bir kaynak başarıyla yüklendiğinde şifreli arşiv, başarısız diğer kaynaklar yüzünden tüm başarılı adayları kaybetmez; `archive_source_set_partial=true` ile eksik kapsamı açıkça bildirir. Hiç kaynak erişilebilir değilse arşivleme reddedilir.
 - Toplu CI testleri: `test_run_all_discovery.py` ve yeni `test_partial_source_coverage.py`; yeni CI sonucu henüz doğrulanmadı.
 - Ana İBO, YEDEKLER, YENİLER, FAVORİLER korunuyor; PR #9 merge edilmedi. Bağımsız yedek onayı ve gerçek tarama henüz tamamlanmadı.
+
+
+## 31 Ekim 2026 — CI #203 hata düzeltmesi ve toplu testlerin birleştirilmesi
+- CI #41212322181 başarısızlık logu: `test_partial_scan_fail_closed.py::test_forge_main_fails_on_partial_result` eski `SystemExit` beklentisi nedeniyle FAIL; GitLab/Codeberg artık kısmi taramayı raporlayıp korur.
+- Eski test yeni kısmi rapor davranışına uyarlandı; API hata bilgisi raporda açıkça kalır, tam kapsama iddiası yoktur.
+- `v2-ordered-preflight.yml` PR bazlı concurrency ve `cancel-in-progress: true` ile eskimiş eşzamanlı testleri iptal ederek tek güncel toplu çalışmayı tercih eder.
+- Son CI henüz doğrulanmadı; ana IBO, YEDEKLER, YENİLER, FAVORİLER korunuyor, PR #9 merge edilmedi.
