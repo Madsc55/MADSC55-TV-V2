@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Offline invariants for MADSC55 TV V2 playlist and source configuration."""
 import json
-import subprocess
+import hashlib
 import pathlib
 import sys
 from collections import Counter
@@ -11,7 +11,7 @@ def main():
     # Protect the exact original bytes and permit only append-only YEDEKLER records.
     current = LIVE.read_bytes()
     original = current[:207344]
-    original_hash = subprocess.check_output(["git", "hash-object", "--stdin"], input=original).decode().strip()
+    original_hash = hashlib.sha1(b"blob " + str(len(original)).encode("ascii") + b"\0" + original).hexdigest()
     assert original_hash == "4b1c3cea4b5107a425abab60f62d41f9f81e05a7", "Original playlist bytes changed"
     assert current.startswith(original), "Protected IBO playlist content changed"
     extra = current[len(original):]
