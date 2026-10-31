@@ -220,6 +220,8 @@ def main():
                     last_error = exc
             if last_error is not None:
                 raise last_error
+            if source.get("kind", "m3u") != "html" and not content.lstrip().startswith("#EXTM3U"):
+                raise ValueError("Playlist source returned non-M3U content")
             if source.get("kind", "m3u") == "html":
                 links = discover_playlist_links(source["url"], content)[:30]
                 source_audit.append({"source": source["id"], "entries": len(links),
