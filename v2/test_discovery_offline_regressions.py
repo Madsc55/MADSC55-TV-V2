@@ -29,6 +29,13 @@ class DiscoveryOfflineRegression(unittest.TestCase):
         self.assertIn("source_loss_audit", body)
         self.assertIn("compare(previous, result)", body)
 
+    def test_extinf_comma_parsing(self):
+        line = '#EXTINF:-1 group-title="News, Turkey",Channel, Extra'
+        data = "\n".join(["#EXTM3U", line, "https://example.invalid/live.m3u8"])
+        parsed = list(entries(data))
+        self.assertEqual(parsed[0]["name"], "Channel, Extra")
+        self.assertEqual(parsed[0]["group"], "News, Turkey")
+
     def test_world_turkey_metadata(self):
         self.assertTrue(turkish_candidate({"name":"Turkey Live TV", "group":"World", "tvg_id":""}, "world"))
         self.assertTrue(turkish_candidate({"name":"TRT Haber", "group":"News", "tvg_id":""}, "world"))
