@@ -57,6 +57,7 @@ jobs:
       - run: python v2/test_run_all_discovery.py
       - run: python v2/test_github_source_safety.py
       - run: python v2/test_partial_scan_fail_closed.py
+      - run: python v2/test_restore_evidence_safety.py
       - run: python v2/test_run_live_page_discovery.py
       - run: python v2/test_cross_source_archive_parity.py
       - run: python v2/test_live_page_discovery.py
