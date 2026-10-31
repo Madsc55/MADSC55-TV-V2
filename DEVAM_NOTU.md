@@ -682,3 +682,11 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - `v2/test_cross_source_archive_parity.py` ve sıralı CI testi eklendi.
 - `v2/encrypted_archive.py` restore tüm şifreli dosyayı `readlines()` ile belleğe yüklemek yerine satır satır doğruluyor.
 - Son commit CI henüz doğrulanmadı. Gerçek tam tarama ve bağımsız yedek/restore kanıtı bekliyor. Ana İBO playlist, YEDEKLER, YENİLER, FAVORİLER değişmedi; PR #9 merge edilmedi.
+
+
+## 31 Ekim 2026 — Canlı sayfa/YouTube referans keşfi tek komuta bağlandı
+- Önceki düzeltme CI #41193528343 SUCCESS; #98 test hatası düzeltildi.
+- `v2/run_live_page_discovery.py` ve boş, onay gerektiren `v2/config/live-pages.json` eklendi. Açıkça onaylı public HTTPS sayfalardaki YouTube ve canlı sayfa bağlantıları sadece SHA256/kind olarak raporlanır; URL tokenları rapora yazılmaz, oynatılabilir kanal sayılmaz.
+- `v2/run_all_discovery.py` sırası artık: kaynak erişim kontrolü, GitLab/Codeberg keşfi, onaylı canlı sayfa referans keşfi, şifreli M3U aday taraması. Offline testleri CI'a eklendi.
+- KAPSAM SINIRI: `live-pages.json` şu anda boş; dolayısıyla gerçek resmî site/YouTube kapsamı henüz oluşmadı. GitHub/Gist yeni kaynak keşfi ve otomatik stream playback testi hâlâ eksik. Arşiv restore kanıtı olmadan gerçek tarama başlamaz. Yeni CI sonucu henüz doğrulanmadı.
+- Ana İBO playlist, YEDEKLER, YENİLER, FAVORİLER değişmedi; PR #9 merge edilmedi.
