@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Fail closed before network discovery until durable private archive is approved."""
 import json
+import hashlib
+import re
 import os
 from pathlib import Path
 
@@ -17,6 +19,18 @@ def check(env=None):
         raise RuntimeError("Archive evidence missing required passed checks")
     if not evidence.get("backup_location") or not evidence.get("restore_sha256"):
         raise RuntimeError("Archive evidence lacks backup location or restore checksum")
+    digest = evidence["restore_sha256"]
+    if not isinstance(digest, str) or re.fullmatch(r"[0-9a-f]{64}", digest) is None:
+        raise RuntimeError("Invalid restore SHA256 digest")
+    restored = evidence.get("restored_file")
+    if not isinstance(restored, str) or not restored:
+        raise RuntimeError("No restored archive file provided for independent integrity check")
+    restored_path = Path(restored)
+    if not restored_path.is_file():
+        raise RuntimeError("Restored archive file not found")
+    actual = hashlib.sha256(restored_path.read_bytes()).hexdigest()
+    if actual != digest:
+        raise RuntimeError("Restored archive integrity mismatch")
     return True
 
 if __name__ == "__main__":
