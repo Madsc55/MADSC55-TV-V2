@@ -227,8 +227,9 @@ def main():
                 source_audit.append({"source": source["id"], "entries": len(links),
                                      "distinct_stream_urls": 0,
                                      "status": "INDEX_LINKS_ONLY_NOT_PLAYBACK_VERIFIED"})
-                for i, link in enumerate(links):
-                    child_id = source["id"] + "-link-" + str(i)
+                for link in links:
+                    # Stable across HTML link reordering; never expose the URL in reports.
+                    child_id = source["id"] + "-link-" + hashlib.sha256(link.encode("utf-8")).hexdigest()[:16]
                     try:
                         child_text = fetch(link)
                         child_entries = list(entries(child_text))
