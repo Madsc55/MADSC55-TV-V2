@@ -5,6 +5,10 @@ on:
     paths:
       - 'v2/**'
       - '.github/workflows/v2-ordered-preflight.yml'
+  pull_request:
+    paths:
+      - 'v2/**'
+      - '.github/workflows/v2-ordered-preflight.yml'
   workflow_dispatch:
   schedule:
     - cron: '17 3 * * *'
