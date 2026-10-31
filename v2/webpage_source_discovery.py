@@ -43,7 +43,15 @@ def candidate_url(url):
         return False
 
 def discover_playlist_links(page_url, document):
-    if not page_url.startswith("https://"):
+    try:
+        parsed = urlsplit(page_url)
+        valid = (parsed.scheme == "https" and bool(parsed.hostname)
+                 and public_hostname(parsed.hostname) and not parsed.username
+                 and not parsed.password and parsed.port in (None, 443)
+                 and not parsed.fragment)
+    except ValueError:
+        valid = False
+    if not valid:
         raise ValueError("HTTPS public page required")
     parser = LinkParser()
     parser.feed(document[:2_000_000])
