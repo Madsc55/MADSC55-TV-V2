@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Real-network IPTV candidate scanner. Writes ONLY v2/reports/IBO_PROD_LIST.m3u8.
+"""Real-network IPTV candidate scanner; exports 2000-item device test batches.
 Not a replacement for v2/discover.py; can run beside the existing V2 engine.
 No mock data, no invented URLs. HTTP/HLS checks are not playback proof.
 """
@@ -14,9 +14,10 @@ import urllib.error
 import urllib.parse
 import urllib.request
 
-ROOT = pathlib.Path(__file__).resolve().parents[2]
+ROOT = pathlib.Path(__file__).resolve().parents[1]
 SOURCES = ROOT / 'v2/config/sources.json'
-OUT = ROOT / 'v2/reports/IBO_PROD_LIST.m3u8'
+LIVE = ROOT / 'MADSC55_TV_IBO_CALISANLAR_TEST.m3u8'
+OUT = ROOT / 'v2/reports/IBO_YENI_ADAYLAR_PART1.m3u8'
 REPORT = ROOT / 'v2/reports/ibo-real-scan-report.json'
 UA = 'MADSC55-TV-V2-RealScanner/1.0'
 MAX_SOURCE = 25_000_000
@@ -51,10 +52,9 @@ def parse_m3u(data):
 
 
 def tr_az(entry, scope):
-    if scope.upper() in ('TR', 'AZ'):
-        return True
+    # Country-level source labels do not prove the individual stream language.
     value = ' '.join(entry[k] for k in ('name', 'group', 'tvg_id')).casefold()
-    return bool(re.search(r'türk|turk|trt|azer|azər|azerbaijan|azərbaycan|(?:^|[ ._-])(?:tr|az)(?:$|[ ._-])', value))
+    return bool(re.search(r'türk|turk|trt (?:1|2|3|cocuk|çocuk|spor|muzik|müzik|eba)|azer|azər|azərbaycan|azerbaijan|(?:^|[ ._-])(?:tr|az)(?:$|[ ._-])', value)) and not any(x in value for x in ("trt arabi", "trt world", "young turks", "trt (greece)", "trt (venezuela)"))
 
 
 def check_hls(entry, timeout):
@@ -84,10 +84,19 @@ def main():
     ap.add_argument('--report', type=pathlib.Path, default=REPORT)
     ap.add_argument('--workers', type=int, default=12)
     ap.add_argument('--timeout', type=float, default=12)
-    ap.add_argument('--limit', type=int, default=1000)
+    ap.add_argument('--limit', type=int, default=2000)
+    ap.add_argument('--live', type=pathlib.Path, default=LIVE)
+    ap.add_argument('--append-live', action='store_true', help='Append verified new channels to YEDEKLER only')
     args = ap.parse_args()
     if not 1 <= args.workers <= 32 or not 1 <= args.limit <= 10000:
         ap.error('workers must be 1..32 and limit 1..10000')
+    if not args.live.is_file():
+        ap.error('Protected main playlist not found; refusing unfiltered export')
+    live_text = args.live.read_text(encoding='utf-8-sig', errors='replace')
+    existing = {line.strip() for line in live_text.splitlines()
+                if line.strip().startswith(('https://', 'http://'))}
+    if not existing:
+        ap.error('Protected main playlist contains no stream URLs; refusing unfiltered export')
     doc = json.loads(args.sources.read_text(encoding='utf-8'))
     sources = doc['sources'] if isinstance(doc, dict) else doc
     # Do not export incomplete results as a successful production list.
@@ -103,7 +112,8 @@ def main():
             source_counts[sid] = len(records)
             for entry in records:
                 if tr_az(entry, source.get('scope', 'candidate')):
-                    candidates.setdefault(entry['url'], entry)
+                    if entry['url'] not in existing:
+                        candidates.setdefault(entry['url'], entry)
         except (OSError, ValueError, UnicodeError, socket.timeout) as exc:
             failed.append({'id': sid, 'error': type(exc).__name__})
     checked = 0
@@ -113,17 +123,19 @@ def main():
             checked += 1
             if result is not None:
                 good.append(result)
-    # Refuse to publish a partial list. Never overwrite an existing verified export on failure.
+    # Source outages are reported; a working subset can still be tested.
+    # Never modify the protected main playlist.
     report = {'source_count': len(sources), 'fetched_sources': len(source_counts),
-              'failed_sources': failed, 'unique_candidates': len(candidates),
-              'http_checked': checked, 'http_hls_ok': len(good),
+              'failed_sources': failed, 'existing_main_urls': len(existing), 'unique_new_candidates': len(candidates),
+              'http_checked': checked, 'http_hls_ok': len(good), 'exported_part1': min(len(good), args.limit),
+              'part_count': (len(good) + args.limit - 1) // args.limit,
               'playback_verified_on_device': False, 'mock_data_used': False,
-              'status': 'READY_FOR_DEVICE_TEST' if not failed and good else 'INCOMPLETE'}
+              'status': 'READY_FOR_DEVICE_TEST' if good else 'NO_VERIFIED_CANDIDATES'}
     args.report.parent.mkdir(parents=True, exist_ok=True)
     args.report.write_text(json.dumps(report, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
-    if failed or not good:
+    if not good:
         print(json.dumps(report, ensure_ascii=False, indent=2))
-        raise SystemExit('No production playlist written: source failures or no verified HLS manifests')
+        raise SystemExit('No new HLS candidates verified; main playlist unchanged')
     lines = ['#EXTM3U']
     for item in good[:args.limit]:
         name = item['name'].replace('\n', ' ').replace('\r', ' ').replace(',', ' ')
@@ -133,6 +145,33 @@ def main():
     args.output.parent.mkdir(parents=True, exist_ok=True)
     temp.write_text('\n'.join(lines) + '\n', encoding='utf-8')
     temp.replace(args.output)
+    if args.append_live:
+        # Preserve every existing byte: append only new verified stream records.
+        original = args.live.read_bytes()
+        current_urls = {line.strip() for line in
+                        original.decode('utf-8-sig', 'replace').splitlines()
+                        if line.strip().startswith(('https://', 'http://'))}
+        additions = []
+        for item in good:
+            if item['url'] in current_urls:
+                continue
+            current_urls.add(item['url'])
+            safe_name = re.sub(r'[\r\n,]', ' ', item['name']).strip() or 'Yeni Kanal'
+            additions.extend([
+                f'#EXTINF:-1 group-title="🗂️ YEDEKLER (2)",{safe_name}',
+                item['url'],
+            ])
+        if additions:
+            separator = b'' if original.endswith(b'\n') else b'\n'
+            # Atomic write; preexisting content and categories remain byte-identical.
+            tmp = args.live.with_suffix(args.live.suffix + '.tmp')
+            tmp.write_bytes(original + separator +
+                            ('\n'.join(additions) + '\n').encode('utf-8'))
+            tmp.replace(args.live)
+        report['added_to_yedekler'] = len(additions) // 2
+        report['status'] = 'APPENDED_TO_YEDEKLER' if additions else 'NO_NEW_URLS'
+        args.report.write_text(json.dumps(report, indent=2, ensure_ascii=False) + '\n',
+                               encoding='utf-8')
     print(json.dumps(report, ensure_ascii=False, indent=2))
 
 
