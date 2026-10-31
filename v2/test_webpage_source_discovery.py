@@ -28,6 +28,12 @@ class WebpageSourceTests(unittest.TestCase):
                     '<a href="https://example.org/test.m3u">public</a>')
         self.assertEqual(discover_playlist_links("https://example.com", document),
                          ["https://example.org/test.m3u"])
+    def test_reject_private_and_credentialed_origin(self):
+        for page in ("https://localhost/index.html", "https://127.0.0.1/index.html",
+                     "https://user:pass@example.com/index.html",
+                     "https://example.com:8080/index.html"):
+            with self.subTest(page=page), self.assertRaises(ValueError):
+                discover_playlist_links(page, '<a href="/tv.m3u">TV</a>')
     def test_reject_http_page(self):
         with self.assertRaises(ValueError):
             discover_playlist_links("http://example.com", "")
