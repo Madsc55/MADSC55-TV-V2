@@ -41,6 +41,8 @@ def append(path, record, key_hex=None):
     flags = os.O_WRONLY | os.O_APPEND | os.O_CREAT
     if hasattr(os, "O_NOFOLLOW"):
         flags |= os.O_NOFOLLOW
+    if path.is_symlink():
+        raise ValueError("Archive path must not be a symlink")
     fd = os.open(path, flags, 0o600)
     try:
         if os.fstat(fd).st_mode & 0o077:
