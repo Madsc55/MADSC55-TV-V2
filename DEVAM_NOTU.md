@@ -777,3 +777,10 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 ## 31 Ekim 2026 — CI #153 / run 41206103747
 - `discovery-tests` FAILED: `test_public_metadata_redaction.py` iki hata; Python raw regex içinde `\\S` ve `\\s` kullanıldığı için URL ve token maskelenmedi. `v2/discover.py` içindeki desenler `\S` ve `\s` olarak düzeltildi (commit cc504a3f79cca0235941df6324e07c9baa27d55c). Derleme ve playlist koruma testleri başarılıydı, safety önceki hatadan dolayı atlandı.
 - Son commitin CI sonucu henüz doğrulanmadı. Ana IBO playlist, YEDEKLER, YENİLER, FAVORİLER değişmedi; PR #9 merge edilmedi.
+
+
+## 31 Ekim 2026 — Şifreli arşiv yedekleme/geri yükleme aracı
+- Önceki CI #41206405986 SUCCESS.
+- `v2/archive_backup_restore_drill.py`: mevcut AES-GCM arşivini ayrı dizine özel izinlerle kopyalayıp SHA256 ve kayıt bazında restore eşitliğini doğrulayan açıkça çalıştırılan yardımcı eklendi. Token taşıyan plaintext rapor yazmaz, mevcut dosyaları üzerine yazmaz, hedef symlink'leri reddeder.
+- `v2/test_archive_backup_restore_drill.py` CI'a eklendi. Yeni CI henüz doğrulanmadı.
+- ÖNEMLİ: ayrı dizin yedeği bağımsız/uzak dayanıklı depolama kanıtı değildir; gerçek bağımsız yedek onayı ayrıca gerekir. Gerçek tarama başlatılmadı. Ana IBO, YEDEKLER, YENİLER, FAVORİLER korunuyor, PR #9 merge edilmedi.
