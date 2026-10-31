@@ -85,7 +85,7 @@ def turkish_candidate(entry, scope):
     fields = " ".join((entry.get("group", ""), entry.get("tvg_id", ""), entry.get("name", "")))
     if re.search(r"(?i)(?:^|[^a-z])(?:trt|türk|turk|turkish|türkçe|türkiye|turkiye|turkey|türkiye tv|azerbaijan|azerbaycan|azərbaycan|azerbaijani|azeri|azərbaycan dili)(?:$|[^a-z])", fields):
         return True
-    if re.search(r"(?i)(?:^|[. _-])(?:tr)(?:[. _-]|$)", entry.get("tvg_id", "")):
+    if re.search(r"(?i)(?:^|[. _-])(?:tr|az)(?:[. _-]|$)", entry.get("tvg_id", "")):
         return True
     return False
 
