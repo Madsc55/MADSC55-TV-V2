@@ -45,6 +45,7 @@ jobs:
           python-version: '3.12'
       - run: python v2/test_discovery_offline_regressions.py
       - run: python v2/test_source_provenance.py
+      - run: python v2/test_public_metadata_redaction.py
       - run: python v2/test_source_inventory_contract.py
       - run: python v2/test_source_loss_audit.py
       - run: python v2/test_webpage_source_discovery.py
