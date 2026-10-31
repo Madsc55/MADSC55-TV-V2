@@ -1679,3 +1679,2187 @@ https://playlist.fasttvcdn.com/pl/rfrk9821hdy9dayo8wfyha/kltr-sanat-tv/playlist.
 https://tv-trt1.medya.trt.com.tr/master.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="DHA CANLI" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/9/9a/DHA_logo.png" group-title="🗂️ YEDEKLER (2)",DHA CANLI 720P HD
 https://603c568fccdf5.streamlock.net/live/dhaweb1_C5efC/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",Az Cinema (1080p)
+http://15.204.196.147:22880/CABLE-MAGES-AZCINEMA/video.m3u8
+#EXTINF:-1 group-title="YEDEKLER",Az Corazon (720p)
+http://200.115.120.1:8000/play/ca020/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",Az Mundo (1080p)
+http://15.204.142.109:22880/DIRECTV-ARGENTINA-AZMUNDO/INTERNACIONAL/video.m3u8
+#EXTINF:-1 group-title="YEDEKLER",Az Star TV (1080p)
+https://live.livestreamtv.ca/azstar/amlst:azstar/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",BBC First Turkiye
+http://88.212.7.14/live/bbc_first/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",Cartoon Network (Turkiye)
+http://176.65.153.40:6002/play/a013/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",Glendale 11 AZ (360p)
+https://edge-f.swagit.com/live/glendaleaz/live-1-a-1/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",RTTR Trento (720p)
+https://5f204aff97bee.streamlock.net/RTTRlive/livestream/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",The Young Turks (720p)
+https://tyt-samsungus.amagi.tv/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TR Sport (480p)
+https://livetr.teleromagna.it/mia/live/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TRT 3 (720p)
+https://tv-trt3.live.trt.com.tr/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TRT (Greece) (720p)
+https://av.hellasnet.tv/rst/trt/main_stream.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TRT (Venezuela) (410p) [Not 24/7]
+https://vcp12.myplaytv.com/trt/trt/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TRT Arabi (1080p) [Not 24/7]
+https://tv-trtarabi.medya.trt.com.tr/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TRT Cocuk (1440p)
+https://tv-trtcocuk.medya.trt.com.tr/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TRT EBA Ilkokul (720p)
+https://tv-e-okul00.medya.trt.com.tr/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TRT EBA Lise (720p)
+https://tv-e-okul02.medya.trt.com.tr/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TRT Spor Yildiz (1440p) [Geo-blocked]
+https://trt.daioncdn.net/trtspor-yildiz/master.m3u8?app=web&platform=trtspor
+#EXTINF:-1 group-title="YEDEKLER",TRT World HD
+https://dash2.antik.sk/live/test_trt_world_atktv/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",Turkmen Owazy (406p) [Not 24/7]
+https://alpha.tv.online.tm/hls/ch005.m3u8
+#EXTINF:-1 group-title="YEDEKLER",Turkmenistan (406p) [Not 24/7]
+https://alpha.tv.online.tm/hls/ch007.m3u8
+#EXTINF:-1 group-title="YEDEKLER",Turkmenistan Sport (406p) [Not 24/7]
+https://alpha.tv.online.tm/hls/ch004.m3u8
+#EXTINF:-1 group-title="YEDEKLER",West Azerbaijan TV
+https://ncdn.telewebion.ir/azarbayjangharbi/live/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",4U TV (720p)
+https://hls.4utv.live/hls/stream.m3u8
+#EXTINF:-1 group-title="YEDEKLER",Almahriah TV (576p)
+https://starmenajo.com/hls/almahriah/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",Elsharq TV (1080p) [Not 24/7]
+https://mn-nl.mncdn.com/elsharq_live/live/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",Kral Pop TV (720p)
+https://dogus-live.daioncdn.net/kralpoptv/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",Luys TV (1080p)
+https://b01c02nl.mediatriple.net/videoonlylive/mtpayqrfkgirxelive/broadcast_5e91c5ac96898.smil/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",Mekameleen TV (1080p)
+https://mn-nl.mncdn.com/mekameleen/smil:mekameleentv.smil/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",AzStarTV
+http://live.azstartv.com/azstar/smil:azstar.smil/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TRT
+https://av.hellasnet.tv/rst/trt/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",Altyn Asyr
+https://alpha.tv.online.tm/hls/ch001.m3u8
+#EXTINF:-1 group-title="YEDEKLER",Yaslyk
+https://alpha.tv.online.tm/hls/ch002.m3u8
+#EXTINF:-1 group-title="YEDEKLER",Miras
+https://alpha.tv.online.tm/hls/ch003.m3u8
+#EXTINF:-1 group-title="YEDEKLER",Ashgabat
+https://alpha.tv.online.tm/hls/ch006.m3u8
+#EXTINF:-1 group-title="YEDEKLER",ARKADAG
+https://alpha.tv.online.tm/hls/ch000.m3u8
+#EXTINF:-1 group-title="YEDEKLER",SHOW TV
+https://rmtftbjlne.turknet.ercdn.net/bpeytmnqyp/showtv/showtv.m3u8
+#EXTINF:-1 group-title="YEDEKLER",KANAL 7
+https://kanal7-live.daioncdn.net/kanal7/kanal7.m3u8
+#EXTINF:-1 group-title="YEDEKLER",KANAL 7 AVRUPA
+https://livetv.radyotvonline.net/kanal7live/kanal7avr/chunklist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",EKOL TV
+https://ekoltv-live.ercdn.net/ekoltv/ekoltv.m3u8
+#EXTINF:-1 group-title="YEDEKLER",KANAL 7
+https://kanal7-live.daioncdn.net/kanal7/kanal7_1080p.m3u8
+#EXTINF:-1 group-title="YEDEKLER",24
+https://turkmedya-live.ercdn.net/tv24/tv24_720p.m3u8
+#EXTINF:-1 group-title="YEDEKLER",Bloomberg HT TR
+http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/2317/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",360 TV HD TR
+http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/2320/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TV 41 TR
+http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6752/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",Line TV Bursa TR
+http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6759/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",Kardelen TV TR
+http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6763/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",Kanal Avrupa TR
+http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6766/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",ER TV TR
+http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6768/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",BRTV TR
+http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6776/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",AS TV Bursa TR
+http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6777/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TV Kayseri TR
+http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6786/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",FM TV TR
+http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6789/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",Lalegul TV TR
+http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6790/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TV 2000 TR
+http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6791/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",Meltem TV TR
+http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6792/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",Dost TV TR
+http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6793/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TRT Turk TR
+http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6798/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",Eurosport 1 HD TR
+http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6829/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",Da Vinci HD TR
+http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6857/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",Uzman Filmcilik HD TR
+http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6872/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",beIN Movies Premiere 2 HD TR
+http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6879/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",beIN Series Drama HD TR
+http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6882/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",Show Max TR
+http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6890/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",Eurostar TR
+http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6894/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",Kanal 7 Avrupa HD TR
+http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6905/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",A News HD TR
+http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6937/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",Euronews Russian TR
+http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/32069/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",Grand Cinema
+https://gcinemahls.wns.live/hls/stream.m3u8
+#EXTINF:-1 group-title="YEDEKLER",Kanal D Drama (1080p)
+https://cdn-uw2-prod.tsv2.amagi.tv/linear/amg01602-themahqfrance-vivekanald-samsungspain/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",Az Star TV (1080p)
+https://live.livestreamtv.ca/azstar/ngrp:azstar/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",EL TV (360p)
+http://85.132.53.162:1935/live/eltv/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",Kapaz TV
+http://85.132.78.122:8050/hls/stream/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",The Young Turks (1080p)
+https://amg01220-amg01220c1-firetv-us-5111.playouts.now.amagi.tv/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",Vilayet TV
+https://nl.livekadeh.com/hls2/vilayet.m3u8
+#EXTINF:-1 group-title="YEDEKLER",Cine 1
+https://canliyayin.cine1.com.tr/memfs/cbaef080-a742-4644-9e9e-2b9f6a5103c3.m3u8
+#EXTINF:-1 group-title="YEDEKLER",Haber61 TV (720p) [Not 24/7]
+https://win8.yayin.com.tr/haber61tv/smil:haber61tv.smil/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",Minika Cocuk (576p)
+http://rnttwmjcin.turknet.ercdn.net/lcpmvefbyo/minikago_cocuk/minikago_cocuk.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TGRT Haber (360p) [Not 24/7]
+https://b01c02nl.mediatriple.net/videoonlylive/mtsxxkzwwuqtglive/broadcast_5fe4598be8e5d.smil/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",Trabzon Buyuksehir Belediyesi TV (1080p)
+https://tv191.radyotelekom.com.tr:3612/stream/play.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TRT Muzik
+https://stream8.cinerama.uz/1208/tracks-v1a1/mono.m3u8
+#EXTINF:-1 group-title="YEDEKLER",Woman TV (1080p)
+https://embedlp.becdn.net/womantv.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TV 8.5
+https://tv8.daioncdn.net/tv8bucuk/tv8bucuk_1080p.m3u8?app=tv8bucuk_web&ce=3
+#EXTINF:-1 group-title="YEDEKLER",HABER 61
+http://win8.yayin.com.tr/haber61tv/smil:haber61tv.smil/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",NR 1 TURK
+https://b01c02nl.mediatriple.net/videoonlylive/mtkgeuihrlfwlive/broadcast_5c9e187770143.smil/chunklist_b400000.m3u8
+#EXTINF:-1 group-title="YEDEKLER",NR 1 DAMAR
+https://b01c02nl.mediatriple.net/videoonlylive/mtkgeuihrlfwlive/broadcast_5c9e19877b340.smil/chunklist_b400000.m3u8?md5=api5VtN5dEXl5cvRHMQBNQ&expires=1696713505
+#EXTINF:-1 group-title="YEDEKLER",POWER TV AKUSTiK
+https://listen.powerapp.com.tr/pturkakustik/akustik.smil/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",İSVİÇRE TV
+https://i41.ozelip.com:3269/hybrid/play.m3u8
+#EXTINF:-1 group-title="YEDEKLER",DİZİ TV
+https://playlist.fasttvcdn.com/pl/rfrk9821hdy9dayo8wfyha/dizi-tv/playlist/0.m3u8
+#EXTINF:-1 group-title="YEDEKLER",MC TV
+https://rrr.sz.xlcdn.com/?account=mceutv&file=mc2&type=live&service=wowza&protocol=https&output=playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",MUKABELE TV
+https://playlist.fasttvcdn.com/pl/rfrk9821hdy9dayo8wfyha/mukabele-tv/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",DERiN TV
+https://cdn1-derintv.yayin.com.tr/derintv/derintv/chunklist_w1486394141_b1796000.m3u8
+#EXTINF:-1 group-title="YEDEKLER",ERCİYES TV
+https://live.artidijitalmedya.com/artidijital_erciyestv/erciyestv/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",GRT GAZİANTEP TV
+https://live.artidijitalmedya.com/artidijital_grt/grt/chunks.m3u8
+#EXTINF:-1 group-title="YEDEKLER",GURBET 24 TV
+http://cdn-gurbet24.yayin.com.tr/gurbet24/gurbet24/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",İZMİR TIME 35 TV
+https://cdn-time35tv.yayin.com.tr/time35tv/time35tv/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",İKRA TV
+https://live.artidijitalmedya.com/artidijital_diyartv/diyartv/chunks.m3u8
+#EXTINF:-1 group-title="YEDEKLER",KANAL 19
+https://live.euromediacenter.com/kanal19/tracks-v1a1/mono.m3u8
+#EXTINF:-1 group-title="YEDEKLER",KANAL 34
+https://live.euromediacenter.com/kanal34/tracks-v1a1/mono.m3u8
+#EXTINF:-1 group-title="YEDEKLER",KANAL 53
+https://kanal53.ozelip.com:3448/hybrid/play.m3u8
+#EXTINF:-1 group-title="YEDEKLER",KANAL AVRUPA
+https://api-tv27.yayin.com.tr/kanalavrupa/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",KANAL PLUS
+https://live.artidijitalmedya.com/artidijital_kanalplus/kanalplus/mpeg/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",LİFE TV
+https://live.artidijitalmedya.com/artidijital_lifetv/lifetv/chunks.m3u8
+#EXTINF:-1 group-title="YEDEKLER",MERCAN TV
+https://live.artidijitalmedya.com/artidijital_mercantv/mercantv/chunks.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TV 264
+https://b01c02nl.mediatriple.net/videoonlylive/mtdxkkitgbrckilive/broadcast_5ee244263fd6d.smil/playlist.m3u8?md5=qb_9l3erQIDqZMjbKfALzA&expires=1651666386
+#EXTINF:-1 group-title="YEDEKLER",VUSLAT TV
+https://live.artidijitalmedya.com/artidijital_vuslattv/vuslattv/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",RIZE TURK HD
+https://yayin.rizeturk.com:3777/hybrid/play.m3u8
+#EXTINF:-1 group-title="YEDEKLER",ZEYNO TV
+https://tvsms.club/tv.php?kanal=zeynotv&file=.m3u8
+#EXTINF:-1 group-title="YEDEKLER",DOST TV
+https://tvsms.club/tvz.php?kanal=dost&file=.m3u8
+#EXTINF:-1 group-title="YEDEKLER",EZO TV
+https://tvsms.club/tvz.php?kanal=ezo&file=.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TOP POP TV
+https://tvsms.club/tvz.php?kanal=toppop&file=.m3u8
+#EXTINF:-1 group-title="YEDEKLER",A VİVA TV
+https://tvsms.club/tv.php?kanal=vivatv&file=.m3u8
+#EXTINF:-1 group-title="YEDEKLER",ARMA TV
+https://tvsms.club/tvz.php?kanal=arma&file=.m3u8
+#EXTINF:-1 group-title="YEDEKLER",SAGLIK CHANEL
+https://live.euromediacenter.com/saglikchannel/tracks-v1a1/mono.m3u8
+#EXTINF:-1 group-title="YEDEKLER",HÜR TV
+https://live.euromediacenter.com/hurtv/tracks-v1a1/mono.m3u8
+#EXTINF:-1 group-title="YEDEKLER",NR1 FASHION ONE
+http://b01c02nl.mediatriple.net/videoonlylive/mtkgeuihrlfwlive/u_stream_5c9e2ee6997cb_1/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",POWER TURK TAPTAZE
+http://livetv.powerapp.com.tr/pturktaptaze/taptaze.smil/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",Bloomberg TV EMEA Live Event (720p)
+https://bloomberg.com/media-manifest/streams/eu-event.m3u8
+#EXTINF:-1 group-title="YEDEKLER",Bloomberg TV Europe (720p)
+https://bloomberg.com/media-manifest/streams/eu.m3u8
+#EXTINF:-1 group-title="YEDEKLER",EWTN Europe (720p) [Not 24/7]
+https://cdn3.wowza.com/1/T2NXeHF6UGlGbHY3/WFluRldQ/hls/live/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",Syria TV (1080p)
+https://svs.itworkscdn.net/syriatvlive/syriatv.smil/playlist_dvr.m3u8
+#EXTINF:-1 group-title="YEDEKLER",Teve2 (1080p)
+https://teve2vod.duhnet.tv/S12/HLS_VOD/382843_2e5b/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",ULUSAL TV
+https://internettv.guventechnology.com/hls/ulusaltv/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",MedyaHaber TV
+https://hlspackager.akamaized.net/live/DB/MEDYA_HABER/HLS/MEDYA_HABER.m3u8
+#EXTINF:-1 group-title="YEDEKLER",DMAX
+http://dygvideo.dygdigital.com/live/hls/dmaxdai?m3u8
+#EXTINF:-1 group-title="YEDEKLER",TLC
+http://dygvideo.dygdigital.com/live/hls/tlctvdai?m3u8
+#EXTINF:-1 group-title="YEDEKLER",BBC Earth
+https://amg00793-amg00793c6-xumo-us-2669.playouts.now.amagi.tv/BBCStudios-BBCEarthA-hls/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",CGTN Documentry
+https://amg00405-rakutentv-cgtndocumentary-rakuten-0ql8j.amagi.tv/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",Discovering China
+https://amg01314-amg01314c8-distrotv-us-10218.playouts.now.amagi.tv/playlist/amg01314-cgtn-cgtndiscoveringchina-distrotvus/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",Documentary+
+https://ef79b15c8c7c46c7a9de9d33001dbd07.mediatailor.us-west-2.amazonaws.com/v1/master/ba62fe743df0fe93366eba3a257d792884136c7f/LINEAR-859-DOCUMENTARYPLUS-DOCUMENTARYPLUS/mt/documentaryplus/859/hls/master/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",NHK WORLD
+https://media-tyo.hls.nhkworld.jp/hls/w/live/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",Terra Mater WILD
+https://53ff3982.wurl.com/master/f36d25e7e52f1ba8d7e56eb859c636563214f541/UmxheHhUVi1ldV9UZXJyYU1hdGVyV2lsZF9ITFM/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",Film Screen HD
+https://edge-e3.evrideo.tv/f2dcbecf-5af0-47db-a82e-032112050a23_1000027346_HLS/manifest.m3u8
+#EXTINF:-1 group-title="YEDEKLER",EURONEWS EN
+https://cdn-euronews.akamaized.net/live/eds/euronews-en/25080/euronews-en.m3u8
+#EXTINF:-1 group-title="YEDEKLER",BBC NEWS
+https://vs-hls-push-ww-live.akamaized.net/x=4/i=urn:bbc:pips:service:bbc_news_channel_hd/pc_hd_abr_v2.m3u8
+#EXTINF:-1 group-title="YEDEKLER",GB NEWS
+https://live-gbnews.simplestreamcdn.com/live5/gbnews/bitrate1.isml/manifest.m3u8
+#EXTINF:-1 group-title="YEDEKLER",DW
+https://dwamdstream102.akamaized.net/hls/live/2015525/dwstream102/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",France 24
+https://live.france24.com/hls/live/2037218/F24_EN_HI_HLS/master_5000.m3u8
+#EXTINF:-1 group-title="YEDEKLER",Al Jazeera
+https://live-hls-apps-aje-fa.getaj.net/AJE/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",ABC News
+https://abc-news-dmd-streams-1.akamaized.net/out/v1/701126012d044971b3fa89406a440133/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",RT NEWS
+https://rt-glb.rttv.com/live/rtnews/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",CGTN
+https://english-livebkali.cgtn.com/live/encgtn.m3u8
+#EXTINF:-1 group-title="YEDEKLER",i24 NEWS EN
+https://i24newsenglish-cdn.encoders.immergo.tv/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",FOX NEWS
+https://fox-foxnewsnow-vizio.amagi.tv/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",CNN INT
+https://d3508xo7u38fy2.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-j79jq28qz6knd/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",CBS NEWS
+https://live-manifest.production-public.tubi.io/live/08b1a540-5618-46ce-b6e2-c0dfd1e8786f/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",CBC News
+https://cbsn-us-vtt.cbsnstream.cbsnews.com/out/v1/ef868690d34144509eda696884bf1619/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",NBC News NOW
+https://livehub-voidnet.onrender.com/cluster/streamcore/us/NBC_REDIS.m3u8
+#EXTINF:-1 group-title="YEDEKLER",GLOBAL NEWS
+https://live.corusdigitaldev.com/groupd/live/49a91e7f-1023-430f-8d66-561055f3d0f7/live.isml/live.m3u8
+#EXTINF:-1 group-title="YEDEKLER",ABC NEWS
+https://live-manifest.production-public.tubi.io/live/14e4f5f2-9787-4c49-8554-f2ad109764a7/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",ABC NEWS AUSTRALIA
+https://abc-news-dmd-streams-1.akamaized.net/out/v1/abc83881886746b0802dc3e7ca2bc792/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",CHANNEL NEWS ASIA
+http://d2e1asnsl7br7b.cloudfront.net/7782e205e72f43aeb4a48ec97f66ebbe/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",AFRICA 24 EN
+https://livevideo.vedge.infomaniak.com/livecast/ik:africa24english/manifest.m3u8
+#EXTINF:-1 group-title="YEDEKLER",Euronews Deutsch
+https://575b7833.wurl.com/master/f36d25e7e52f1ba8d7e56eb859c636563214f541/UmxheHhUVi1ldV9FdXJvbmV3c0RldXRzY2hfSExT/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",RT DEUTSCH
+https://rt-ger.rttv.com/live/rtdeutsch/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",RTL
+https://ma.anixa.tv/clips/stream/rtl/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",Das Erste
+https://daserste-live.ard-mcdn.de/daserste/live/hls/int/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",Tagesschau24
+https://tagesschau.akamaized.net/hls/live/2020115/tagesschau/tagesschau_1/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",SR
+https://srfs.akamaized.net/hls/live/689649/srfsgeo/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",WDR
+https://wdrfs247.akamaized.net/hls/live/681509/wdr_msl4_fs247/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",NDR International
+https://ndrint.akamaized.net/hls/live/2020766/ndr_int/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",NDR Hamburg
+https://mcdn.ndr.de/ndr/hls/ndr_fs/ndr_hh/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",Augsburg TV
+https://stream02.welocal.stream/stream/fhd-augsburgtv_104951/ngrp:stream_all/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",ARD Alpha
+https://mcdn.br.de/br/fs/ard_alpha/hls/de/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",BR Nord
+https://mcdn.br.de/br/fs/bfs_nord/hls/de/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",HR
+https://hrhls.akamaized.net/hls/live/2024525/hrhls/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",DELUXE MUSIC
+https://sdn-global-live-streaming-packager-cache.3qsdn.com/13456/13456_264_live.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TRACE URBAN
+https://lightning-traceurban-samsungau.amagi.tv/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",VEVO POP
+https://amg00056-amg00056c9-rakuten-fr-3243.playouts.now.amagi.tv/playlist/amg00056-vevotvfast-vevopopfr-rakutenfr/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",VEVO POP FAST
+https://amg00056-amg00056c9-rakuten-fr-3243.playouts.now.amagi.tv/ts-eu-w1-n2/playlist/amg00056-vevotvfast-vevopopfr-rakutenfr/playlist.m3u8?ads_amagi_channel=920
+#EXTINF:-1 group-title="YEDEKLER",VEVO HP RB
+https://amg00056-amg00056c14-rakuten-fr-3244.playouts.now.amagi.tv/playlist/amg00056-vevotvfast-vevohiphopandrbfr-rakutenfr/playlist.m3u8?ads_amagi_channel=916
+#EXTINF:-1 group-title="YEDEKLER",TRT 1
+https://trt.daioncdn.net/trt-1/master.m3u8?app=web
+#EXTINF:-1 group-title="YEDEKLER",TRT 1
+https://tv-trt1.medya.trt.com.tr/master_480.m3u8
+#EXTINF:-1 group-title="YEDEKLER",Show TV
+http://ciner.daioncdn.net/showtv/showtv_1080p.m3u8?app=showtv_web
+#EXTINF:-1 group-title="YEDEKLER",Star-TV
+https://dogus.daioncdn.net/startv/startv.m3u8?app=a20ac41e-bdc3-4aa1-934d-26b484480ac9
+#EXTINF:-1 group-title="YEDEKLER",Kanal D
+https://demiroren.daioncdn.net/kanald/kanald_1080p.m3u8?app=kanald_web
+#EXTINF:-1 group-title="YEDEKLER",Now TV
+http://uycyyuuzyh.turknet.ercdn.net/nphindgytw/nowtv/nowtv.m3u8
+#EXTINF:-1 group-title="YEDEKLER",Meltem TV
+http://vhxyrsly.rocketcdn.com/meltemtv/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TV4
+http://turkmedya-live.ercdn.net/tv4/tv4_720p.m3u8
+#EXTINF:-1 group-title="YEDEKLER",NTV
+http://dygvideo.dygdigital.com/live/hls/ntv4puhu?m3u8
+#EXTINF:-1 group-title="YEDEKLER",Cine 1 TV
+http://canliyayin.cine1.com.tr/memfs/cbaef080-a742-4644-9e9e-2b9f6a5103c3.m3u8
+#EXTINF:-1 group-title="YEDEKLER",Cine+
+http://cineplus-yesilcam.supersatadmin.workers.dev/cineplusyesilcam.m3u8
+#EXTINF:-1 group-title="YEDEKLER",SDM TV
+https://host.onlineradyotv.net:8081/sdmtv/tracks-v1a1/mono.m3u8
+#EXTINF:-1 group-title="YEDEKLER",BEGEN TV
+https://ip44.radyotelekomtv.com:3958/stream/play.m3u8
+#EXTINF:-1 group-title="YEDEKLER",Kanal D Drama (1080p)
+http://190.93.224.42/KANAL-D-DRAMA/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TRT World (576p)
+https://cdn.pishow.tv/ott/live/266/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TRT World (576p)
+https://fta.ektv.in/live/416/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",EL TV
+https://live.eltv.az/live/eltv/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",Az TV
+http://109.205.166.68/server124/aztv/index3.m3u8?e=1676581573&st=AzGSZjk1DpXY1SLc1m4OvA
+#EXTINF:-1 group-title="YEDEKLER",Az TV
+https://stream8.cinerama.uz/1455/tracks-v1a1/mono.m3u8
+#EXTINF:-1 group-title="YEDEKLER",Kurdistan TV (720p) [Not 24/7]
+https://5a3ed7a72ed4b.streamlock.net/live/SMIL:myStream.smil/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",MC TV (720p)
+https://rrr.sz.xlcdn.com/?account=mceutv&file=mc2&output=playlist.m3u8&protocol=https&service=wowza&type=live
+#EXTINF:-1 group-title="YEDEKLER",Bloomberg HT
+https://ciner.daioncdn.net/bloomberght/bloomberght_720p.m3u8
+#EXTINF:-1 group-title="YEDEKLER",DOST TV
+http://dost.stream.emsal.im/tv/live.m3u8
+#EXTINF:-1 group-title="YEDEKLER",Teve2
+https://teve2.duhnet.tv/S2/HLS_LIVE/teve2np/track_4_1000/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",Turkmenistan (406p)
+https://alpha.tv.online.tm/legacyhls/ch007.m3u8
+#EXTINF:-1 group-title="YEDEKLER",Turkmenistan Sport (406p)
+https://alpha.tv.online.tm/legacyhls/ch004.m3u8
+#EXTINF:-1 group-title="YEDEKLER",Turkmen Owazy (406p)
+https://alpha.tv.online.tm/legacyhls/ch005.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TRT 4K
+http://c3921155.edmonst.net/iptv/DVHP2VB5QXL7UC/4001/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",DAMAR TV
+https://tvsms.club/tv.php?kanal=damar&file=.m3u8
+#EXTINF:-1 group-title="YEDEKLER",ARABESK TV
+https://tvsms.club/tv.php?kanal=arabeskyeni&file=.m3u8
+#EXTINF:-1 group-title="YEDEKLER",SILA TV
+https://tvsms.club/tv.php?kanal=silatv&file=.m3u8
+#EXTINF:-1 group-title="YEDEKLER",GENC SMS TV
+https://tvsms.club/tv.php?kanal=genctv&file=.m3u8
+#EXTINF:-1 group-title="YEDEKLER",ALANYA ATV
+https://helga.iptv2022.com/sh/AlanyaTV/tracks-v1a1/mono.m3u8
+#EXTINF:-1 group-title="YEDEKLER",CNN TURK
+http://c3921155.edmonst.net/iptv/DVHP2VB5QXL7UC/6926/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",DMAX
+http://c3921155.edmonst.net/iptv/DVHP2VB5QXL7UC/2290/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TLC
+http://c3921155.edmonst.net/iptv/DVHP2VB5QXL7UC/6915/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TAGESSCHAU 24
+https://tagesschau-live.ard-mcdn.de/tagesschau/live/hls/de/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",NDR
+https://mcdn.ndr.de/ndr/hls/ndr_fs/ndr_nds/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",MAKKAH TV
+https://live.kwikmotion.com/sbrksaquranradiolive/srpksaquranradio/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",MADINAH TV
+https://cdn-globecast.akamaized.net/live/eds/saudi_sunnah/hls_roku/saudi_sunnah-avc1_600000=2-mp4a_145600_ara=3.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TRT SPOR YILDIZ
+http://c3921155.edmonst.net/iptv/DVHP2VB5QXL7UC/2145/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",CNEWS
+https://hls-m015-live-aka-canalplus.akamaized.net/live/disk/cnews-clair-hd/hls-v3-hd-clair/cnews-clair-hd.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TVL TV LIBERTÉS
+https://video.twimg.com/amplify_video/1929231504401469440/pl/WksBCUIWBSVQZCYc.m3u8?variant_version=1&tag=14
+#EXTINF:-1 group-title="YEDEKLER",LE MÉDIA TV
+https://raw.githubusercontent.com/BG47510/tube/refs/heads/main/lemedia.m3u8
+#EXTINF:-1 group-title="YEDEKLER",EURONEWS FR
+https://euronews-live-fre-fr.fast.rakuten.tv/v1/master/0547f18649bd788bec7b67b746e47670f558b6b2/production-LiveChannel-6564/bitok/e/26032/euronews-fr.m3u8
+#EXTINF:-1 group-title="YEDEKLER",FRANCE 24 FR
+https://live.france24.com/hls/live/2037179/F24_FR_HI_HLS/master_5000.m3u8
+#EXTINF:-1 group-title="YEDEKLER",PUBLIC-SÉNAT
+https://raw.githubusercontent.com/Paradise-91/ParaTV/main/streams/publicsenat/publicsenat-dm.m3u8
+#EXTINF:-1 group-title="YEDEKLER",BFM 2
+https://live-cdn-bfm2-euw1.bfmtv.bct.nextradiotv.com/m5/media.m3u8?bpkio_serviceid=7de32147a4f1055b8812bbac92a24d2e
+#EXTINF:-1 group-title="YEDEKLER",20 MINUTES TV IDF
+https://live-20minutestv.digiteka.com/1961167769/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",LE FIGARO IDF
+https://static.lefigaro.fr/secom/tnt.m3u8
+#EXTINF:-1 group-title="YEDEKLER",CGTN FRANÇAIS
+http://news.cgtn.com/resource/live/french/cgtn-f.m3u8
+#EXTINF:-1 group-title="YEDEKLER",MONACO INFO
+https://webtv.monacoinfo.com/live/prod/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",RDI CANADA
+https://rcavlive.akamaized.net/hls/live/704025/xcanrdi/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",AFRICA 24 FR
+https://africa24.vedge.infomaniak.com/livecast/ik:africa24/manifest.m3u8
+#EXTINF:-1 group-title="YEDEKLER",AFRICANEWS FR
+https://cdn-euronews.akamaized.net/live/eds/africanews-fr/25050/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",RT FRANÇAIS [censure-blocked]
+https://rt-fra.rttv.com/live/rtfrance/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",RT FRANÇAIS [censure-blocked]
+https://rt-fra.rttv.com/dvr/rtfrance/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",BFM TV (backup)
+https://live-cdn-stream-euw1.bfmtv.bct.nextradiotv.com/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",BFM TV (backup)
+https://live-cdn-stream-euw1.bfmtv.bct.nextradiotv.com/master.m3u8?bpkio_serviceid=7de32147a4f1055b7ea82c2886420955
+#EXTINF:-1 group-title="YEDEKLER",BFM TV (backup)
+https://live-cdn-stream-euw1.bfmtv.bct.nextradiotv.com/m1/media.m3u8?bpkio_serviceid=7de32147a4f1055b7ea82c2886420955
+#EXTINF:-1 group-title="YEDEKLER",BFM 2 (backup)
+https://live-cdn-bfm2-euw1.bfmtv.bct.nextradiotv.com/m1/media.m3u8?bpkio_serviceid=7de32147a4f1055b8812bbac92a24d2e
+#EXTINF:-1 group-title="YEDEKLER",BFM 2 (backup)
+https://d1ib1gsg71oarf.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-scp7wda722jph/BFM2_FR.m3u8
+#EXTINF:-1 group-title="YEDEKLER",BFM BUSINESS (backup)
+https://live-cdn-stream-euw1.bfmb.bct.nextradiotv.com/m1/media.m3u8?bpkio_serviceid=7de32147a4f1055b7de133c00ff64f92
+#EXTINF:-1 group-title="YEDEKLER",LE MÉDIA TV (backup ko)
+https://tvradiozap.eu/936
+#EXTINF:-1 group-title="YEDEKLER",EURONEWS FR (backup)
+http://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/60d35bcaf1ff4a00078af0a6livestitch/master.m3u8?deviceDNT=%7BTARGETOPT%7D&deviceModel=samsung&deviceVersion=unknown&appVersion=unknown&deviceType=samsung-tvplus&deviceMake=samsung
+#EXTINF:-1 group-title="YEDEKLER",FRANCE 24 FR (backup)
+https://live.france24.com/hls/live/2037179/F24_FR_HI_HLS/master_2300.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TV5MONDE INFO (backup)
+https://d161b1o6wfc5a3.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-3u7sgewc3l8ri/tvfm.m3u8
+#EXTINF:-1 group-title="YEDEKLER",CNEWS (backup)
+https://hls-m015-live-aka-canalplus.akamaized.net/live/disk/cnews-clair-hd/hls-ios-fhd-clair/cnews-clair-hd.m3u8
+#EXTINF:-1 group-title="YEDEKLER",CNEWS (backup)
+https://hls-m015-live-aka-canalplus.akamaized.net/live/disk/cnews-clair-ad-hd/hls-ios-fhd-clair/cnews-clair-ad-hd.m3u8
+#EXTINF:-1 group-title="YEDEKLER",CNEWS (backup)
+https://hls-m015-live-aka-canalplus.akamaized.net/live/disk/cnews-clair-ad-hd/hls-v3-hd-clair/cnews-clair-ad-hd.m3u8
+#EXTINF:-1 group-title="YEDEKLER",CNEWS (backup)
+https://raw.githubusercontent.com/Paradise-91/ParaTV/refs/heads/main/streams/canalplus/cnews-dm.m3u8
+#EXTINF:-1 group-title="YEDEKLER",LE MÉDIA TV (backup)
+https://raw.githubusercontent.com/BG47510/tube/main/lemedia.m3u8
+#EXTINF:-1 group-title="YEDEKLER",LE FIGARO IDF (backup)
+https://figarotv-live.freecaster.com/live/freecaster/figarotv.m3u8
+#EXTINF:-1 group-title="YEDEKLER",CGTN FRANÇAIS (backup)
+https://amg01314-cgtn-amg01314c2-rakuten-us-1319.playouts.now.amagi.tv/cgtn-fr-rakuten/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",AFRICANEWS FR (backup)
+https://stream.ads.ottera.tv/playlist.m3u8?network_id=10951
+#EXTINF:-1 group-title="YEDEKLER",T18
+https://raw.githubusercontent.com/Paradise-91/ParaTV/main/streams/t18/t18-dm.m3u8
+#EXTINF:-1 group-title="YEDEKLER",CSTAR
+https://raw.githubusercontent.com/Paradise-91/ParaTV/refs/heads/main/streams/canalplus/cstar-dm.m3u8
+#EXTINF:-1 group-title="YEDEKLER",C8 [OUT]
+https://tvradiozap.eu/tools/dm-m3u8.php/x5gv5rr.m3u8
+#EXTINF:-1 group-title="YEDEKLER",C8 [OUT]
+https://raw.githubusercontent.com/LeBazarDeBryan/XTVZ_/refs/heads/main/Stream/Live/C8.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TF1 (backup)
+https://raw.githubusercontent.com/LeBazarDeBryan/XTVZ_/refs/heads/main/Stream/Live/TF1.m3u8
+#EXTINF:-1 group-title="YEDEKLER",FRANCE 2 (backup)
+https://raw.githubusercontent.com/mikekaprielian/rtnaodhor93n398/refs/heads/main/fr/videof2.m3u8
+#EXTINF:-1 group-title="YEDEKLER",FUN RADIO TV BE
+https://funradiovisionhd.vedge.infomaniak.com/livecast/ik:funradiovisionhd/manifest.m3u8
+#EXTINF:-1 group-title="YEDEKLER",GÉNÉRATIONS TV
+https://edge11.vedge.infomaniak.com/livecast/ik:generation-tv/manifest.m3u8
+#EXTINF:-1 group-title="YEDEKLER",MÉLODY
+https://live.creacast.com/telemelody/smil:telemelody-yjvCxE7x.smil/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",QWEST JAZZ
+https://qwestjazz-rakuten.amagi.tv/hls/amagi_hls_data_rakutenAA-qwestjazz-rakuten/CDN/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TRACE URBAN
+https://amg01131-tracetv-traceurbanuk-samsunguk-6r213.amagi.tv/playlist/amg01131-tracetv-traceurbanuk-samsunguk/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TRACE SPORTS
+https://lightning-tracesport-samsungau.amagi.tv/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TRACE SPORTS
+https://trace-sportstars-samsungnz.amagi.tv/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",L'ÉQUIPE TV
+https://raw.githubusercontent.com/Paradise-91/ParaTV/main/streams/lequipe/la-chaine-l-equipe-en-direct-dm.m3u8
+#EXTINF:-1 group-title="YEDEKLER",AFTERFOOT RMC-BFM
+https://d278gam2ft6q08.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-0ic4hqa502el6/AfterfootTV_FR.m3u8
+#EXTINF:-1 group-title="YEDEKLER",ÉQUIDIA RACING GALOP
+https://raw.githubusercontent.com/Paradise-91/ParaTV/main/streams/equidia/racinggalop.m3u8
+#EXTINF:-1 group-title="YEDEKLER",ÉQUIDIA RACING MAG
+https://raw.githubusercontent.com/Paradise-91/ParaTV/main/streams/equidia/racingmag.m3u8
+#EXTINF:-1 group-title="YEDEKLER",ÉQUIDIA RACING TROT
+https://raw.githubusercontent.com/Paradise-91/ParaTV/main/streams/equidia/racingtrot.m3u8
+#EXTINF:-1 group-title="YEDEKLER",ÉQUIDIA RACING 1
+https://raw.githubusercontent.com/Paradise-91/ParaTV/main/streams/equidia/racing1.m3u8
+#EXTINF:-1 group-title="YEDEKLER",ÉQUIDIA RÉGION 1
+https://raw.githubusercontent.com/Paradise-91/ParaTV/main/streams/equidia/region01.m3u8
+#EXTINF:-1 group-title="YEDEKLER",GULLI
+https://lbcdn.6cloud.fr/resource/m6web/l/gulli_hls_sd_short_q2hyb21h.m3u8?groups[]=m6web-live-gulli_ext
+#EXTINF:-1 group-title="YEDEKLER",GONG
+https://cdn-uw2-prod.tsv2.amagi.tv/linear/amg01596-gongnetworks-gong-samsungfr/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",GONG
+https://amg01596-gongnetworks-gong-samsungfr-2q4y3.amagi.tv/playlist/amg01596-gongnetworks-gong-samsungfr/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",MGG E-SPORT
+https://d1mdvi698umja9.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-kuib43fy5umqi-ssai-prd/mgg.m3u8
+#EXTINF:-1 group-title="YEDEKLER",FIFA+ FR
+https://37b4c228.wurl.com/master/f36d25e7e52f1ba8d7e56eb859c636563214f541/UmFrdXRlblRWLWZyX0ZJRkFQbHVzRnJlbmNoX0hMUw/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",DRIVE AUTO
+https://amg01796-amg01796c2-rakuten-uk-3887.playouts.now.amagi.tv/playlist/amg01796-fastmediafast-drivetv-rakutenuk/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",MOTORVISION TV-2
+http://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/60817e1aa6997500072d0d6d/master.m3u8?deviceDNT=%7BTARGETOPT%7D&deviceModel=samsung&deviceVersion=unknown&appVersion=unknown&deviceType=samsung-tvplus&deviceMake=samsung
+#EXTINF:-1 group-title="YEDEKLER",TECH&CO
+https://live-cdn-technco-euw1.bfmb.bct.nextradiotv.com/m1/media.m3u8?bpkio_serviceid=7de32147a4f1055bd2f1574d94862544
+#EXTINF:-1 group-title="YEDEKLER",MEN'S UP TV
+https://tvradiozap.eu/tools/dm-m3u8.php/x2kr3hs.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TOP SANTÉ
+https://tvradiozap.eu/tools/dm-m3u8.php/720/x89yjnn.m3u8
+#EXTINF:-1 group-title="YEDEKLER",NATURE TIME
+https://amg00090-blueantmedia-naturetime-samsungfr-yakbf.amagi.tv/playlist/amg00090-blueantmedia-naturetime-samsungfr/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",NATURE TIME
+https://bamusa-naturetime-emea-fra-rakuten.amagi.tv/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TV5MONDE VOYAGE
+https://d1qvkge2x4ev90.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-8q6p9i1t9dw2k/tvfvo.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TV5MONDE VOYAGE
+https://stream.ads.ottera.tv/playlist.m3u8?network_id=11074
+#EXTINF:-1 group-title="YEDEKLER",VOYAGES ET SAVEURS
+https://amg01821-amg01821c24-samsung-fr-5157.playouts.now.amagi.tv/playlist/amg01821-lovetvfast-voyagesandsaveurs-samsungfr/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",VOYAGES+
+https://streams2.sofast.tv/ptnr-limex/title-VOYAGES-FRE_LIMEX/v1/master/611d79b11b77e2f571934fd80ca1413453772ac7/c30aa0d0-fb77-4f9b-8acf-b156ab5b969b/manifest.m3u8
+#EXTINF:-1 group-title="YEDEKLER",ALLO CINÉ
+https://d1yl6bf4hrzbr0.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-5km3zs4zs9sp0/allo.m3u8
+#EXTINF:-1 group-title="YEDEKLER",ALLO CINÉ
+https://stream.ads.ottera.tv/playlist.m3u8?network_id=10840
+#EXTINF:-1 group-title="YEDEKLER",RAKUTEN TOP FILMS TV
+https://01ac9352fbfa4204998783d41f9b1a2e.mediatailor.eu-west-1.amazonaws.com/v1/master/0547f18649bd788bec7b67b746e47670f558b6b2/production-LiveChannel-6068/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",BREF CINÉ
+https://c3776ebb1c7742cb9c0191b41b8b2432.mediatailor.us-east-1.amazonaws.com/v1/master/04fd913bb278d8775298c26fdca9d9841f37601f/Samsung-fr_Brefcinema/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",BBLACK! AFRICA
+https://livevideo.vedge.infomaniak.com/livecast/ik:bblackafrica/manifest.m3u8
+#EXTINF:-1 group-title="YEDEKLER",BBLACK! CARIBBEAN
+https://livevideo.vedge.infomaniak.com/livecast/ik:bblackcaribbean/manifest.m3u8
+#EXTINF:-1 group-title="YEDEKLER",BBLACK! CLASSIK
+https://livevideo.vedge.infomaniak.com/livecast/ik:bblackclassik/manifest.m3u8
+#EXTINF:-1 group-title="YEDEKLER",DIEU TV
+https://cdn.katapy.io/cache/stream/katapytv/dieu/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",FASHION TV
+https://cdn-ue1-prod.tsv2.amagi.tv/linear/amg01546-ftv-fashiontv-xiaomi/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TRACE URBAN (backup)
+https://cdn-apse1-prod.tsv2.amagi.tv/linear/amg01076-lightningintern-traceurban-samsungnz/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TRACE URBAN (backup)
+https://amg01131-tracetv-amg01131c1-rakuten-us-1081.playouts.now.amagi.tv/playlist/amg01131-tracetvfast-traceurban-rakutenus/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TV5MONDE STYLE [geo-area]
+https://ott.tv5monde.com/Content/HLS/Live/channel(style1)/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",FUN RADIO TV BE (backup)
+https://edge11.vedge.infomaniak.com/livecast/ik:funradiovisionhd/manifest.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TÉBÉO TV
+https://lives.digiteka.com/stream/e0fe6433-554e-4568-9a7e-31969136d8ff/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TVR RENNES
+https://cdn.live.easybroadcast.io/abr_corp/54_tvr_vtucuxt/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",ALPE D'HUEZ TV
+https://edge14.vedge.infomaniak.com/livecast/ik:adhtv/manifest.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TV7 BORDEAUX
+https://lives.digiteka.com/stream/17c6dea8-fb3f-46fe-b170-2ac88cd5667b/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TV7 COLMAR
+http://tv7.hdr-tv.com/live/tv7/livestream/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TV 3V
+https://tv3v.live-kd.com/live/tv3v/livestream/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",VIA MATÉLÉ
+https://5dd226f8f01e8.streamlock.net/via-matele-live/matelelive_1080/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",VIA OCCITANIE
+https://lives.digiteka.com/stream/9c424a1c-d202-465c-84e1-3efb89a43fee/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",VIA TELEPAESE
+https://srv.webtvmanager.fr:3970/live/viatelepaeselive.m3u8
+#EXTINF:-1 group-title="YEDEKLER",VOSGES TV
+https://vosgestv.live-kd.com/live/vosgestv/vosgestv/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",PUISSANCE TÉLÉVISION
+https://edge13.vedge.infomaniak.com/livecast/ik:puissancetelevision/manifest.m3u8
+#EXTINF:-1 group-title="YEDEKLER",CANNES LÉRINS TV
+https://vdo2.pro-fhi.net:3628/live/uppodsfqlive.m3u8
+#EXTINF:-1 group-title="YEDEKLER",LITTORAL TV
+https://live.creacast.com/littoralfm-ch1/stream/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TV8 MONTBLANC
+https://tvradiozap.eu/tools/dm-m3u8.php/x3wqv8b.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TVT TOURS
+https://lives.digiteka.com/stream/920f083a-9e61-4c09-9bc2-bdb664063aa9/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",BRIONNAIS TV
+https://stream2.mandarine.media/brionnaistv/brionnaistv/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",BRIONNAIS TV
+https://stream2.mandarine.media/brionnais_tv/brionnais_tv/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",UBIZNEWS OM5TV
+https://tvradiozap.eu/tools/dm-m3u8.php/x8dicii.m3u8
+#EXTINF:-1 group-title="YEDEKLER",MADRAS FM TV
+https://edge17.vedge.infomaniak.com/livecast/ik:madrasfmtv/manifest.m3u8
+#EXTINF:-1 group-title="YEDEKLER",ANTENNE RÉUNION
+https://live-antenne-reunion.zeop.tv/live/c3eds/antreunihd/hls_fta/antreunihd.m3u8
+#EXTINF:-1 group-title="YEDEKLER",ETV GUADELOUPE
+https://edge15.vedge.infomaniak.com/livecast/ik:etvgp/manifest.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TV MONACO
+https://production-fast-mcrtv.content.okast.tv/channels/2116dc08-1959-465d-857f-3619daefb66b/b702b2b9-aebd-436c-be69-2118f56f3d86/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",NO TÉLÉ
+https://streaming01.divercom.be/notele_live/_definst_/direct.stream/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TÉLÉ BRUXELLES
+https://59959724487e3.streamlock.net/stream/live/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",CARAC 1
+https://rougetv.vedge.infomaniak.com/livecast/rougetv/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",CARAC 1
+http://event.vedge.infomaniak.com/livecast/event/manifest.m3u8
+#EXTINF:-1 group-title="YEDEKLER",CARAC 2
+https://onefmhd.vedge.infomaniak.com/livecast/onefmhd/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",CARAC 3
+https://lfmhd.vedge.infomaniak.com/livecast/lfmhd/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TVM 3
+https://edge11.vedge.infomaniak.com/livecast/ik:tvm3/manifest.m3u8
+#EXTINF:-1 group-title="YEDEKLER",CANAL ALPHA
+https://livevideo.vedge.infomaniak.com/livecast/ik:canalalpha/manifest.m3u8
+#EXTINF:-1 group-title="YEDEKLER",CANAL ALPHA
+https://canalalphaju.vedge.infomaniak.com/livecast/canalalphaju/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",M LE MÉDIA
+https://raw.githubusercontent.com/BG47510/tube/refs/heads/main/mlemedia.m3u8
+#EXTINF:-1 group-title="YEDEKLER",SAVOIR.MÉDIA
+https://hls.savoir.media/live/stream.m3u8
+#EXTINF:-1 group-title="YEDEKLER",ICI QUÉBEC
+https://rcavlive.akamaized.net/hls/live/696615/xcancbft/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",ICI MONTRÉAL
+https://amdici.akamaized.net/hls/live/873426/ICI-Live-Stream/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",SÖZCÜ TV
+https://helga.iptv2022.com/szc_tv/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",A HABER
+https://trkvz-live.ercdn.net/ahaberhd/ahaberhd.m3u8
+#EXTINF:-1 group-title="YEDEKLER",DHA (feed 2)
+https://603c568fccdf5.streamlock.net/live2/dhaweb2/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TRT HABER (backup)
+https://tv.ensonhaber.com/trthaber/trthaber.m3u8
+#EXTINF:-1 group-title="YEDEKLER",HABER TÜRK (backup)
+https://ciner.daioncdn.net/haberturktv/haberturktv.m3u8?app=c98ab0b0-50cc-495b-bb37-778e91f5ff5b
+#EXTINF:-1 group-title="YEDEKLER",HABER TÜRK (backup)
+https://ensonhaber-live.ercdn.net/haberturk/haberturk.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TV 100 (backup)
+https://tv.ensonhaber.com/tv100/tv100.m3u8
+#EXTINF:-1 group-title="YEDEKLER",NTV (backup)
+http://dogus.daioncdn.net/ntv/ntv.m3u8?ce=3&&app=7c4bb802-0c41-409e-8cd2-799984995694
+#EXTINF:-1 group-title="YEDEKLER",NTV (backup)
+http://dygvideo.dygdigital.com/live/hls/puhuntvdai?m3u8
+#EXTINF:-1 group-title="YEDEKLER",EKOL TV (backup)
+https://helga.iptv2022.com/sh/ekol_tv/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",HALK TV (backup)
+https://halktv.daioncdn.net/halktv/halktv.m3u8?app=c86957d3-74a7-44da-9ad2-dc358c769609
+#EXTINF:-1 group-title="YEDEKLER",24 (backup)
+https://ensonhaber-live.ercdn.net/tv24/tv24.m3u8
+#EXTINF:-1 group-title="YEDEKLER",KANAL D
+https://live.duhnet.tv/S2/HLS_LIVE/kanalddainp/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",KANAL 7
+https://kanal7.daioncdn.net/kanal7/kanal7.m3u8?app=f99587ad-1637-494d-8255-da35b09d17a1
+#EXTINF:-1 group-title="YEDEKLER",TRT 1 (backup)
+https://tv-trt1-esdai.medya.trt.com.tr/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TRT 1 (backup)
+https://trt.daioncdn.net/trt-1/master.m3u8?app=ed3904e8-737b-4a5e-856a-1b0d7a0a94e2
+#EXTINF:-1 group-title="YEDEKLER",TRT 1 (backup)
+https://trt.daioncdn.net/trt-1/master.m3u8?app=e435840d-2653-45a3-afef-082d4ea998f3
+#EXTINF:-1 group-title="YEDEKLER",TRT 1 (backup)
+http://89.187.191.41/TRT-1-HD-TR/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TRT 1 (backup)
+https://helga.iptv2022.com/sh/trt_1/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",STAR (backup)
+http://dygvideo.dygdigital.com/live/hls/stardai?m3u8
+#EXTINF:-1 group-title="YEDEKLER",ATV (backup)
+https://new.cache-stream.workers.dev/stream/UCUVZ7T_kwkxDOGFcDlFI-hg/live.m3u8
+#EXTINF:-1 group-title="YEDEKLER",ATV (backup)
+https://trkvz-beta.daioncdn.net/atv/atv.m3u8?app=d1ce2d40-5256-4550-b02e-e73c185a314e
+#EXTINF:-1 group-title="YEDEKLER",ATV (backup)
+https://rnttwmjcin.turknet.ercdn.net/lcpmvefbyo/atv/atv_720p.m3u8
+#EXTINF:-1 group-title="YEDEKLER",360
+https://tv.ensonhaber.com/tv360/tv360.m3u8
+#EXTINF:-1 group-title="YEDEKLER",SAĞLIK CHANNEL
+https://live.euromediacenter.com/saglikchannel/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",WOMAN KADIN TV
+https://embedlp.b-cdn.net/womantv.m3u8
+#EXTINF:-1 group-title="YEDEKLER",MOR TV
+https://live.euromediacenter.com/tvmor/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TEVE 2
+https://live.duhnet.tv/S2/HLS_LIVE/teve2np/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TV8 BUÇUK
+https://tv8.daioncdn.net/tv8bucuk/tv8bucuk.m3u8?app=tv8bucuk_web
+#EXTINF:-1 group-title="YEDEKLER",TEVE 2 (backup)
+https://demiroren.daioncdn.net/teve2/teve2.m3u8?app=6aab838a-437e-4a1b-bbd0-e30f79cdbbbd
+#EXTINF:-1 group-title="YEDEKLER",TV8 BUÇUK (backup)
+https://tv8.daioncdn.net/tv8bucuk/tv8bucuk.m3u8?app=bf58ab52-4865-4c81-b223-26b41009801e
+#EXTINF:-1 group-title="YEDEKLER",TLC TR (backup)
+https://dogus.daioncdn.net/tlc/tlc.m3u8?app=1aca0aa1-06e3-41ff-a8e5-38d7df475469
+#EXTINF:-1 group-title="YEDEKLER",TRT SPOR [geo-blocked]
+https://trt.daioncdn.net/trtspor/master.m3u8?app=9b65474e-8197-4899-aabb-321fcf6dd9eb
+#EXTINF:-1 group-title="YEDEKLER",TJK TV [geo-blocked]
+http://tjktv.ercdn.net/tjktv.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TJK TV [geo-blocked]
+http://tjktv-live.tjk.org/tjktv.m3u8
+#EXTINF:-1 group-title="YEDEKLER",BIS HABER (backup)
+https://raw.githubusercontent.com/rideordie16/YouTube/main/spor/beinsportshaber.m3u8
+#EXTINF:-1 group-title="YEDEKLER",BIS HABER (backup)
+https://new.cache-stream.workers.dev/stream/UCPe9vNjHF1kEExT5kHwc7aw/live.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TRT SPOR (backup)
+https://trt.daioncdn.net/trtspor/master.m3u8?app=web
+#EXTINF:-1 group-title="YEDEKLER",TRT SPOR2 YILDIZ (backup)
+https://trt.daioncdn.net/trtspor-yildiz/master.m3u8?&app=2c6690bb-4021-4292-8ddc-c93a3cf04a3a
+#EXTINF:-1 group-title="YEDEKLER",A SPOR (backup)
+https://raw.githubusercontent.com/rideordie16/YouTube/main/spor/aspor.m3u8
+#EXTINF:-1 group-title="YEDEKLER",A SPOR [tkn-blocked]
+https://trkvz-beta.daioncdn.net/aspor/aspor.m3u8?app=45f847c4-04e8-419a-a561-2ebf87084765
+#EXTINF:-1 group-title="YEDEKLER",POWER TÜRK
+http://livetv.powerapp.com.tr/powerturkTV/powerturkhd.smil/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",POWER TÜRK SLOW
+http://livetv.powerapp.com.tr/pturkslow/slow.smil/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",POWER TÜRK AKUSTİK
+http://livetv.powerapp.com.tr/pturkakustik/akustik.smil/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",NUMBER ONE TÜRK
+https://b01c02nl.mediatriple.net/videoonlylive/mtkgeuihrlfwlive/broadcast_5c9e187770143.smil/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",NUMBER ONE TÜRK ASK
+https://b01c02nl.mediatriple.net/videoonlylive/mtkgeuihrlfwlive/broadcast_5c9e18f9c54e6.smil/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",NUMBER ONE TÜRK DAMAR
+https://b01c02nl.mediatriple.net/videoonlylive/mtkgeuihrlfwlive/broadcast_5c9e19877b340.smil/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",NUMBER ONE TÜRK DANCE
+https://b01c02nl.mediatriple.net/videoonlylive/mtkgeuihrlfwlive/broadcast_5c9e2aa89e721.smil/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",FASHION ONE
+https://b01c02nl.mediatriple.net/videoonlylive/mtkgeuihrlfwlive/u_stream_5c9e2ee6997cb_1/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",FASHION ONE
+https://b01c02nl.mediatriple.net/videoonlylive/mtkgeuihrlfwlive/broadcast_5c9e2ee690051.smil/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",POWER TV
+http://livetv.powerapp.com.tr/powerTV/powerhd.smil/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",POWER DANCE
+http://livetv.powerapp.com.tr/dance/dance.smil/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",POWER LOVE
+http://livetv.powerapp.com.tr/plove/love.smil/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",KRAL - KRAL POP (backup)
+http://dygvideo.dygdigital.com/live/hls/puhukralpopdai?m3u8
+#EXTINF:-1 group-title="YEDEKLER",KRAL - KRAL POP (backup)
+https://dogus.daioncdn.net/kralpoptv/kralpoptv.m3u8?app=f38a38b4-ce55-4040-8676-9826937d6128
+#EXTINF:-1 group-title="YEDEKLER",ABN TURKEY
+https://mediaserver.abnvideos.com/streams/turkish__discipleship.m3u8
+#EXTINF:-1 group-title="YEDEKLER",KANAL 7 AVRUPA (backup)
+https://raw.githubusercontent.com/rideordie16/YouTube/main/ch/kanal7eu.m3u8
+#EXTINF:-1 group-title="YEDEKLER",AS TV BURSA
+https://live.artidijitalmedya.com/artidijital_astv/astv/chunks.m3u8
+#EXTINF:-1 group-title="YEDEKLER",BRTV KARABÜK
+https://live.artidijitalmedya.com/artidijital_brtv/brtv/chunks.m3u8
+#EXTINF:-1 group-title="YEDEKLER",BURSA ON6 TV
+https://live.euromediacenter.com/on6tvyayin/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",EDİRNE TV
+https://yayin.edirnetv.com:8088/hls/etvcanliyayin.m3u8
+#EXTINF:-1 group-title="YEDEKLER",ESENLER ŞEHİR TV
+https://yayin30.haber100.com/live/sehirekrani/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",ETV KAYSERİ
+https://live.artidijitalmedya.com/artidijital_etv/etv/chunks.m3u8
+#EXTINF:-1 group-title="YEDEKLER",KANAL 23 ELAZIĞ
+https://cdn13-kanal23.yayin.com.tr/kanal23/kanal23/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",KANAL 3 AFYONKARAHİSAR
+https://live.artidijitalmedya.com/artidijital_kanal3/kanal3/chunks.m3u8
+#EXTINF:-1 group-title="YEDEKLER",KANAL 34 İSTANBUL
+https://live.euromediacenter.com/kanal34/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",KARABÜK DERİN TV
+https://cdn1-derintv.yayin.com.tr/derintv/derintv/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",POSTA TV ALANYA
+http://cdn-postatv.yayin.com.tr/postatv/postatv/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",SLOW KARADENİZ TV
+https://yayin.slowkaradeniztv.com:3390/hybrid/play.m3u8
+#EXTINF:-1 group-title="YEDEKLER",SUN RTV MERSİN
+https://live.artidijitalmedya.com/artidijital_sunrtv/sunrtv/chunks.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TV 3 AFYONKARAHİSAR
+https://live.artidijitalmedya.com/artidijital_tv3/tv3/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TV 264 SAKARYA
+http://mc1.mediatriple.net/videoonlylive/mtdxkkitgbrckilive/broadcast_5ee244263fd6d.smil/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TV 41 KOCAELİ
+https://live.artidijitalmedya.com/artidijital_tv41/tv41/chunks.m3u8
+#EXTINF:-1 group-title="YEDEKLER",BRÜKSEL TÜRK
+https://live.euromediacenter.com/brukselturk/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",BALKAN TÜRK
+https://live.euromediacenter.com/balkanturktv/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",EZGİ TV
+https://live.euromediacenter.com/ezgitv/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",KK TV
+http://old.kuzeykibris.tv/m3u8/kktv.m3u8
+#EXTINF:-1 group-title="YEDEKLER",ZAROK SORANÎ
+https://zindisorani.zaroktv.com.tr/hls/stream.m3u8
+#EXTINF:-1 group-title="YEDEKLER",ZAGROS TV
+https://5a3ed7a72ed4b.streamlock.net/zagrostv/SMIL:myStream.smil/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",WELAT TV
+http://stream.welattv.net:1935/welat/tv/.m3u8
+#EXTINF:-1 group-title="YEDEKLER",JÎN TV
+https://live.jintv.org/medialive/jintv.m3u8
+#EXTINF:-1 group-title="YEDEKLER",ALPHA TV
+https://alphatvlive2.siliconweb.com/alphatvlive/live_abr/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",ANT 1
+http://l2.cloudskep.com/ant1cm2/abr/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",ANT 1
+https://pcdn.antennaplus.gr/live/media0/antenna-gr/HLS/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",SKAI
+https://skai-live.siliconweb.com/media/cambria4/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",SKAI
+https://skai-live-back.siliconweb.com/media/cambria4/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",STAR
+https://livestar.siliconweb.com/starvod/star_int/star_int.m3u8
+#EXTINF:-1 group-title="YEDEKLER",STAR
+https://livestar.siliconweb.com/media/star1/star1.m3u8
+#EXTINF:-1 group-title="YEDEKLER",STAR
+https://livestar.siliconweb.com/media/star4/star4.m3u8
+#EXTINF:-1 group-title="YEDEKLER",STAR
+http://telmaco-cdn.akamaized.net/starcgr/default/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",MEGA
+http://c98db5952cb54b358365984178fb898a.msvdn.net/live/S14373792/aGr5KG7RcZ9a/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",MEGA
+https://streamcdng16-c98db5952cb54b358365984178fb898a.msvdn.net/live/S14373792/aGr5KG7RcZ9a/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",MEGA NEWS
+https://c98db5952cb54b358365984178fb898a.msvdn.net/live/S99841657/NU0xOarAMJ5X/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",OPEN TV
+https://liveopen.siliconweb.com/openTvLive/liveopen/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",SIGMA TV
+https://sl2.sigmatv.com/hls/live.m3u8
+#EXTINF:-1 group-title="YEDEKLER",MAD WORLD
+https://ellastvmax.gotdns.com/freetv/madworldtv/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",OMEGA
+https://l1.cloudskep.com/omegatv/omcy/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",RIK SAT CYPRUS
+http://l3.cloudskep.com/cybcsat/abr/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",ACTION 24
+https://actionlive.siliconweb.com/actionabr/actiontv/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",GROOVY TV
+http://web.onair-radio.eu:1935/groovytv/groovytv/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",NEA CRETE TV
+https://live.neatv.gr:8888/hls/neatv_high/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",BARAZA RELAXING TV
+https://rtmp.streams.ovh:1936/barazarelax/barazarelax/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",NRG TV
+http://tv.nrg91.gr:1935/onweb/live/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",BOYAH TV - KANALI VOULIS
+http://streamer-cache.grnet.gr/parliament/hls/webtv.m3u8
+#EXTINF:-1 group-title="YEDEKLER",BOYAH TV - KANALI VOULIS
+https://streamer-cache.grnet.gr/parliament/parltv.sdp/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",EXPLORE
+http://web.onair-radio.eu:1935/explorecy/explorecy/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",START TV
+https://live.cast-control.eu/StartMedia/StartMedia/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",KONTRA TV
+http://kontralive.siliconweb.com/live/kontratv/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",HIGH TV
+http://live.streams.ovh:1935/hightv/hightv/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",HELLENIC TV
+https://l5.cloudskep.com/hellenictv/htv/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",CRETA
+http://live.streams.ovh:1935/tvcreta/tvcreta/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",CORFU
+https://itv.streams.ovh/corfuchannel/corfuchannel/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",BLUE SKY
+https://cdn5.smart-tv-data.com/bluesky/bluesky-live/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",RED MUSIC
+https://fr.crystalweb.net:1936/redmusic/redmusic/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",BARAZA TV
+https://eco.streams.ovh:8081/barazatv/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",SIC NOTÍCIAS
+https://cdnapisec.kaltura.com/p/4526593/sp/4526593/playManifest/entryId/1_j8ztwihx/deliveryProfileId/672/protocol/https/format/applehttp/a.m3u8
+#EXTINF:-1 group-title="YEDEKLER",EURONEWS PT
+https://euronews-live-por-pt.fast.rakuten.tv/v1/master/0547f18649bd788bec7b67b746e47670f558b6b2/production-LiveChannel-6572/bitok/e/26035/euronews-pt.m3u8
+#EXTINF:-1 group-title="YEDEKLER",SIC REPLAY
+https://production-fast-sic.content.okast.tv/fa2e8c4385712f9a7dce4ff2dcebac2e/channels/d9070446-8448-455e-8075-773b1ba12562/d47eae0f-ad77-414a-9a1d-2a6628ba18c3/media_.m3u8
+#EXTINF:-1 group-title="YEDEKLER",SIC HD ALTA DEFINIÇÃO
+https://production-fast-sic.content.okast.tv/fa2e8c4385712f9aa54bbe52b1bd9b6b/channels/d9070446-8448-455e-8075-773b1ba12562/fc831b20-f252-4e7d-8cc5-2d05f4d43c1c/media_.m3u8
+#EXTINF:-1 group-title="YEDEKLER",PORTO CANAL
+https://pull-live-156-1.global.ssl.fastly.net/pc5865dc25400thmb-ea6bf03b14fa318f7133/smil:pc1-jhrgyuoqe5865db-68tkgb14fa318f7133f03.smil/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",AR PARLAMENTO
+https://playout175.livextend.cloud/livenlin4/_definst_/2liveartvpub2/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",KURIAKOS TV
+https://w1.manasat.com/ktv/smil:ktv.smil/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",KURIAKOS MUSIC
+https://w2.manasat.com/kmusic/smil:kmusic.smil/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",KURIAKOS CINE
+https://w2.manasat.com/kcine/smil:kcine.smil/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",KURIAKOS KIDS
+https://w2.manasat.com/kkids/smil:kkids.smil/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",EURONEWS PT (backup)
+http://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/619e6614c9d9650007a2b171livestitch/master.m3u8?deviceDNT=%7BTARGETOPT%7D&deviceModel=samsung&deviceVersion=unknown&appVersion=unknown&deviceType=samsung-tvplus&deviceMake=samsung
+#EXTINF:-1 group-title="YEDEKLER",TVE INTERNACIONAL
+https://rtvelivestream-rtveplayplus.rtve.es/rtvesec/int/tvei_eu_main_720.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TVE INTERNACIONAL
+https://rtvelivestream.rtve.es/rtvesec/int/tvei_eu_main.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TVE LA 1
+https://ztnr.rtve.es/ztnr/1688877.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TVE LA 1
+https://rtvelivestream.rtve.es/rtvesec/la1/la1_main_dvr.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TVE LA 2
+https://rtvelivestream.rtve.es/rtvesec/la2/la2_main_dvr.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TVE LA 2
+https://ztnr.rtve.es/ztnr/1688885.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TVE 24 H
+https://ztnr.rtve.es/ztnr/1694255.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TVE 24 H
+https://rtvelivestream.rtve.es/rtvesec/24h/24h_main_dvr.m3u8
+#EXTINF:-1 group-title="YEDEKLER",STAR TVE
+https://rtvelivestream-rtveplayplus.rtve.es/rtvesec/int/star_main_720.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TVE TDP
+https://ztnr.rtve.es/ztnr/1712295.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TVE CLAN
+https://ztnr.rtve.es/ztnr/5466990.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TELECINCO
+https://gitlab.com/movrey/movrel/-/raw/main/telecinco.m3u8
+#EXTINF:-1 group-title="YEDEKLER",LA SEXTA
+https://gitlab.com/movrey/movrel/-/raw/main/sexta.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TVE SOMOS CINE [geo-limited]
+https://ztnr.rtve.es/ztnr/6909845.m3u8
+#EXTINF:-1 group-title="YEDEKLER",RNE PARA TODOS
+https://ztnr.rtve.es/ztnr/6688753.m3u8
+#EXTINF:-1 group-title="YEDEKLER",RTVE PLAY CADENA 1
+https://ztnr.rtve.es/ztnr/6108696.m3u8
+#EXTINF:-1 group-title="YEDEKLER",RTVE PLAY CADENA 2
+https://ztnr.rtve.es/ztnr/6108703.m3u8
+#EXTINF:-1 group-title="YEDEKLER",RTVE PLAY CADENA 3
+https://ztnr.rtve.es/ztnr/6108704.m3u8
+#EXTINF:-1 group-title="YEDEKLER",RTVE PLAY CADENA 4
+https://ztnr.rtve.es/ztnr/6108720.m3u8
+#EXTINF:-1 group-title="YEDEKLER",EURONEWS ES
+https://euronews-live-spa-es.fast.rakuten.tv/v1/master/0547f18649bd788bec7b67b746e47670f558b6b2/production-LiveChannel-6571/bitok/e/26034/euronews-es.m3u8
+#EXTINF:-1 group-title="YEDEKLER",CANAL PARLAMENTO
+https://congresodirecto.akamaized.net/hls/live/2037973/canalparlamento/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",CANAL DIPUTADOS
+https://congresodirecto.akamaized.net/hls/live/2038274/canal1/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",SOL MÙSICA
+https://d2glyu450vvghm.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-21u4g5cjglv02/sm.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TRECE
+https://play.cdn.enetres.net/091DB7AFBD77442B9BA2F141DCC182F5021/021/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TRECE
+https://play.cdn.enetres.net/091DB7AFBD77442B9BA2F141DCC182F5021/live.smil/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",VIVE KANAL D DRAMA
+https://amg01602-themahqfrance-vivekanald-samsungspain-uu2zn.amagi.tv/playlist/amg01602-themahqfrance-vivekanald-samsungspain/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TRACE LATINA
+https://cdn-uw2-prod.tsv2.amagi.tv/linear/amg01131-tracetv-tracelatinaes-samsungspain/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",REAL MADRID TV
+https://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/65f96cd34e01740008ef1c97livestitch/master.m3u8?deviceDNT=%7BTARGETOPT%7D&deviceModel=samsung&deviceVersion=unknown&appVersion=unknown&deviceType=samsung-tvplus&deviceMake=samsung
+#EXTINF:-1 group-title="YEDEKLER",REAL MADRID TV
+https://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/65f96c0c2873090008d356d1livestitch/master.m3u8?deviceDNT=%7BTARGETOPT%7D&deviceModel=samsung&deviceVersion=unknown&appVersion=unknown&deviceType=samsung-tvplus&deviceMake=samsung
+#EXTINF:-1 group-title="YEDEKLER",EL TORO TV
+https://streaming-1.eltorotv.com/lb0/eltorotv-streaming-web/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",SUR 2 ANDALUCÍA
+https://cdnlive.codev8.net/rtvalive/channel22.smil/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",SUR NOTICIAS ANDALUCÍA
+https://cdnlive.codev8.net/rtvalive/smil:channel42.smil/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",CINE ANDALUCÍA
+https://cdnlive.codev8.net/rtvalive/smil:channel24.smil/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",COCINA ANDALUCÍA
+https://cloud.fastchannel.es/mic/manifiest/hls/acocina/acocina.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TURISMO ANDALUCÍA
+https://cloud.fastchannel.es/mic/manifiest/hls/aturismo/aturismo.m3u8
+#EXTINF:-1 group-title="YEDEKLER",LA 1 CANARIAS
+https://ztnr.rtve.es/ztnr/5190066.m3u8
+#EXTINF:-1 group-title="YEDEKLER",LA 2 CANARIAS
+https://ztnr.rtve.es/ztnr/5468585.m3u8
+#EXTINF:-1 group-title="YEDEKLER",24 H CANARIAS
+https://ztnr.rtve.es/ztnr/5473142.m3u8
+#EXTINF:-1 group-title="YEDEKLER",LA 1 CATALUNYA
+https://ztnr.rtve.es/ztnr/3293681.m3u8
+#EXTINF:-1 group-title="YEDEKLER",LA 1 CATALUNYA
+https://rtvelivestream.rtve.es/rtvesec/cat/la1_cat_main_dvr.m3u8
+#EXTINF:-1 group-title="YEDEKLER",LA 2 CATALUNYA
+https://ztnr.rtve.es/ztnr/3987218.m3u8
+#EXTINF:-1 group-title="YEDEKLER",LA 2 CATALUNYA
+https://rtvelivestream.rtve.es/rtvesec/cat/la2_cat_main_dvr.m3u8
+#EXTINF:-1 group-title="YEDEKLER",24 H CATALUNYA
+https://rtvelivestream.rtve.es/rtvesec/cat/24h_cat_main_dvr.m3u8
+#EXTINF:-1 group-title="YEDEKLER",24 H CATALUNYA
+https://ztnr.rtve.es/ztnr/4952053.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TV3 CATALUNYA INT
+https://directes3-tv-int.3catdirectes.cat/live-content/tvi-hls/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TV3 CATALUNYA 24H
+https://directes-tv-int.3catdirectes.cat/live-content/canal324-hls/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TV3 CATALUNYA 24H
+https://directes-tv-int.3catdirectes.cat/live-origin/canal324-hls/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TV3 CATALUNYA FAST 2
+https://fast-tailor.3catdirectes.cat/v1/channel/ccma-channel2/hls.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TV3 CATALUNYA C33
+https://directes-tv-int.3catdirectes.cat/live-content/c33-super3-hls/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",CATALUNYA BON DIA TV
+https://directes-tv-int.3catdirectes.cat/live-content/bondia-hls/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",CATALUNYA BON DIA TV
+https://directes-tv-int.3catdirectes.cat/live-origin/bondia-hls/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TVG GALICIA EU
+https://crtvg-europa.flumotion.cloud/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TVG 2
+https://crtvg-tvg2.flumotion.cloud/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",EITB 1
+https://multimedia.eitb.eus/live-content/etb1hd-hls/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",EITB 2
+https://multimedia.eitb.eus/live-content/etb2hd-hls/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",EITB INT
+https://multimedia.eitb.eus/live-content/eitbbasque-hls/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",RIOJA COCINA
+https://stream-us-east-1.getpublica.com/playlist.m3u8?network_id=12108
+#EXTINF:-1 group-title="YEDEKLER",FRANCE 24 ES
+https://live.france24.com/hls/live/2037220/F24_ES_HI_HLS/master_5000.m3u8
+#EXTINF:-1 group-title="YEDEKLER",DW ESPAÑOL
+https://dwamdstream104.akamaized.net/hls/live/2015530/dwstream104/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",CGTN ESPAÑOL
+http://news.cgtn.com/resource/live/espanol/cgtn-e.m3u8
+#EXTINF:-1 group-title="YEDEKLER",CNN EN ESPAÑOL [geoblocked]
+https://amg00803-amg00803c3-rakuten-us-5347.playouts.now.amagi.tv/playlist/amg00803-cnnfastinternational-cnnesponal-rakutenus/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",CNN EN ESPAÑOL [geoblocked]
+https://amg00803-amg00803c3-samsung-es-4975.playouts.now.amagi.tv/playlist/amg00803-cnnfastinternational-cnnesponal-samsunges/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",RT ESPAÑOL [censure-blocked]
+https://rt-esp.rttv.com/live/rtesp/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",RT ESPAÑOL [censure-blocked]
+https://rt-esp.rttv.com/dvr/rtesp/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",FRANCE 24 ES (backup)
+https://live.france24.com/hls/live/2037220/F24_ES_HI_HLS/master_2300.m3u8
+#EXTINF:-1 group-title="YEDEKLER",EURONEWS ES (backup)
+http://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/619d59b7cbef25000728221clivestitch/master.m3u8?deviceDNT=%7BTARGETOPT%7D&deviceModel=samsung&deviceVersion=unknown&appVersion=unknown&deviceType=samsung-tvplus&deviceMake=samsung
+#EXTINF:-1 group-title="YEDEKLER",EURONEWS ES (backup)
+http://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/60d3583ef310610007fb02b1livestitch/master.m3u8?deviceDNT=%7BTARGETOPT%7D&deviceModel=samsung&deviceVersion=unknown&appVersion=unknown&deviceType=samsung-tvplus&deviceMake=samsung
+#EXTINF:-1 group-title="YEDEKLER",EURONEWS ES (backup)
+http://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/60492dcf1c9b6a00089f41dflivestitch/master.m3u8?deviceDNT=%7BTARGETOPT%7D&deviceModel=samsung&deviceVersion=unknown&appVersion=unknown&deviceType=samsung-tvplus&deviceMake=samsung
+#EXTINF:-1 group-title="YEDEKLER",TVE 24 H (backup)
+https://rtvelivestream.rtve.es/rtvesec/24h/24h_main.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TVE INTERNACIONAL (america)
+https://rtvelivestream-rtveplayplus.rtve.es/rtvesec/int/tvei_ame_main_dvr_1080.m3u8
+#EXTINF:-1 group-title="YEDEKLER",STAR TVE (espana)
+https://rtvelivestream-rtveplayplus.rtve.es/rtvesec/int/star_main_dvr_1080.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TVE CLAN [geo-restricted]
+https://rtvelivestream-rtveplayplus.rtve.es/rtvesec/clan/clan_main_720.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TVE CLAN [geo-restricted]
+https://rtvelivestream.rtve.es/rtvesec/clan/clan_main.m3u8
+#EXTINF:-1 group-title="YEDEKLER",2M MONDE الثانية
+https://d2qh3gh0k5vp3v.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-n6pess5lwbghr/2M_ES.m3u8
+#EXTINF:-1 group-title="YEDEKLER",ATTASIA 9
+https://cdn.bestream.io:19360/alqanat9/alqanat9.m3u8
+#EXTINF:-1 group-title="YEDEKLER",AL24 NEWS
+https://cdn.live.easybroadcast.io/abr_corp/66_al24_u4yga6h/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",RESHET 13 רשת
+https://d2xg1g9o5vns8m.cloudfront.net/out/v1/66d4ac8748ce4a9298b4e40e48d1ae2f/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",NOW 14 עכשיו
+https://r.il.cdn-redge.media/livehls/oil/ch14/live/ch14/live.livx/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",CALCALA 10 ערוץ_הכלכלה
+https://r.il.cdn-redge.media/livehls/oil/calcala/live/channel10/live.livx/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",HAKNESSET 99 כנסת
+https://kneset.gostreaming.tv/p2-kneset/_definst_/myStream/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",HAKNESSET 99 sub-cc כנסת
+https://kneset.gostreaming.tv/p2-Accessibility/_definst_/myStream/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",RESHET 13 COMEDY
+https://d15ds134q59udk.cloudfront.net/out/v1/fbba879221d045598540ee783b140fe2/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",RESHET 13 NOFESH
+https://d1yd8hohnldm33.cloudfront.net/out/v1/19dee23c2cc24f689bd4e1288661ee0c/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",RESHET 13 REALITY
+https://d2dffl3588mvfk.cloudfront.net/out/v1/d8e15050ca4148aab0ee387a5e2eb46b/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",SPORT5 STUDIO RADIO LIVE
+https://rgelive.akamaized.net/hls/live/2043151/radiolive/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",SPORT5 STUDIO RADIO LIVE
+https://rgelive.akamaized.net/hls/live/2043095/live3/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",YNET NEWS ידיעות אחרונות
+https://ynet-live-01.ynet-pic1.yit.co.il/ynet/live.m3u8
+#EXTINF:-1 group-title="YEDEKLER",PANET 30 HALA هلا
+https://stream.panet.com/edge/halaTV/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",KABBALAH 96
+http://edge3.uk.kab.tv/live/tv66-heb-high/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",KABBALAH 96
+https://edge2.il.kab.tv/live/tv66-heb-high/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",HIDABROOT 97
+https://cdn.cybercdn.live/HidabrootIL/Live97/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",HIDABROOT 97
+https://edge-fs-10.cybercdn.live/HidabrootIL/Live97/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",SHELANU GOD-IL
+https://1247634592.rsc.cdn77.org/1247634592/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",RESHET 13 רשת (backup)
+https://reshet.g-mana.live/media/cdefce3a-14ec-46cc-a147-1275c4a8b9ed/mainManifest.m3u8
+#EXTINF:-1 group-title="YEDEKLER",RESHET 13 רשת (backup)
+https://d2xg1g9o5vns8m.cloudfront.net/out/v1/0855d703f7d5436fae6a9c7ce8ca5075/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",RESHET 13 רשת (backup)
+https://d18b0e6mopany4.cloudfront.net/out/v1/2f2bc414a3db4698a8e94b89eaf2da2a/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",RESHET 13 רשת (backup)
+https://reshet.g-mana.live/media/87f59c77-03f6-4bad-a648-897e095e7360/mainManifest.m3u8
+#EXTINF:-1 group-title="YEDEKLER",RESHET 13 COMEDY (backup)
+https://d15ds134q59udk.cloudfront.net/media/3b45de9e-c944-4fdc-a344-7c3042b5b104/mainManifest.m3u8
+#EXTINF:-1 group-title="YEDEKLER",CALCALA 10 ערוץ_הכלכלה (backup)
+https://r.il.cdn-redge.media/livehls/oil/calcala-live/live/channel10/live.livx/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",WALLA ! + (backup rescue)
+https://live.wcdn.co.il/news/prog_index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",WALLA ! + (backup secure)
+https://live.wcdn.co.il/yes/prog_index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",YNET NEWS (feed)
+https://ynet-live-02.ynet-pic1.yit.co.il/ynet/live.m3u8
+#EXTINF:-1 group-title="YEDEKLER",YNET NEWS (feed)
+https://ynet-live-03.ynet-pic1.yit.co.il/ynet/live.m3u8
+#EXTINF:-1 group-title="YEDEKLER",YNET NEWS (feed)
+https://ynet-live-04.ynet-pic1.yit.co.il/ynet/live.m3u8
+#EXTINF:-1 group-title="YEDEKLER",YNET NEWS (feed)
+https://ynet-live-05.ynet-pic1.yit.co.il/ynet/live.m3u8
+#EXTINF:-1 group-title="YEDEKLER",RESHET 13 רשת (backlink)
+https://cdnapisec.kaltura.com/p/2748741/sp/2748741/playManifest/entryId/1_l38msgjy/deliveryProfileId/672/protocol/https/format/applehttp/a.m3u8
+#EXTINF:-1 group-title="YEDEKLER",ONE LBN
+https://hms.pfs.gdn/v1/broadcast/one/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",VOICE OF LBN
+https://svs.itworkscdn.net/vdltvlive/vdltv.smil/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",FUTURE LBN
+https://live.kwikmotion.com/futurelive/ftv.smil/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",OTV LBN
+http://185.9.2.18/chid_312/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",AL JADEED
+http://185.9.2.18/chid_391/mono.m3u8
+#EXTINF:-1 group-title="YEDEKLER",AL IMAN
+https://svs.itworkscdn.net/alimanlive/imantv.smil/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",AL WIFAK
+http://alwifaklive.info:1935/live/myStream/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",MTV LBN
+https://hms.pfs.gdn/hms/v1/stream/mtv.m3u8?token=m67zo
+#EXTINF:-1 group-title="YEDEKLER",ONE TV LBN
+https://hms.pfs.gdn/hms/v1/stream/mtv.m3u8?token=4c8RZ
+#EXTINF:-1 group-title="YEDEKLER",HALA LONDON
+https://halalondon-live.ercdn.net/halalondon/halalondon.m3u8
+#EXTINF:-1 group-title="YEDEKLER",LIBYA WATANYA
+https://cdn-globecast.akamaized.net/live/eds/libya_al_watanya/hls_roku/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",AL MASAR
+https://starmenajo.com/hls/almasar/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",ALAWLA TV
+https://63b03f7689049.streamlock.net/live/1tv/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",ALAWLA TV
+https://63b03f7689049.streamlock.net/live/_definst_/1tv/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",ASSIRAT
+https://softverse.b-cdn.net/Assirat/assiratobs/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",SHARJAH TV
+https://cdn-globecast.akamaized.net/live/eds/sharjah_tv/hls_roku/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",SHARJAH TV 2
+https://svs.itworkscdn.net/smc2live/smc2tv.smil/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",QATAR TV
+https://live.kwikmotion.com/qtv1live/qtv1.smil/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",QATAR TV 2
+https://qatartv.akamaized.net/hls/live/2026574/qtv2/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",QATAR TV 2
+https://live.kwikmotion.com/qtv2live/qtv2.smil/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",SYRIA TV
+https://svs.itworkscdn.net/syriatvlive/syriatv.smil/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",SYRIA TV
+https://stream.ads.ottera.tv/playlist.m3u8?network_id=6017
+#EXTINF:-1 group-title="YEDEKLER",SYRIA TV
+https://live.kwikmotion.com/syriatvlive/syriatv.smil/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",SYRIA TV 2
+https://live.kwikmotion.com/syriatv02live/syriatv02.smil/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",AL WASAT TV
+https://alwasattv.hibridcdn.net/alwasattv/alwasat_abr/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",AL RAYYAN
+https://alrayyancdn.vidgyor.com/pub-nooldraybinbdh/liveabr/playlist_dvr.m3u8
+#EXTINF:-1 group-title="YEDEKLER",AL RAYYAN QADEEM
+https://alrayyancdn.vidgyor.com/pub-noalrayy3pwz0l/liveabr/playlist_dvr.m3u8
+#EXTINF:-1 group-title="YEDEKLER",AL MANAR
+https://edge.fastpublish.me/live/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",AL GHAD TV
+https://eazyvwqssi.erbvr.com/alghadtv/alghadtv.m3u8
+#EXTINF:-1 group-title="YEDEKLER",AL KHALIJ TV
+https://mn-nl.mncdn.com/khalij/khalij/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",PANET 30 HALA
+https://gstream4.panet.co.il/edge/halaTV/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",KAB 1
+https://svs.itworkscdn.net/kablatvlive/kabtv1.smil/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",AL WOUSTA
+https://svs.itworkscdn.net/alwoustalive/alwoustatv.smil/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",ATFAL
+https://5d658d7e9f562.streamlock.net/atfal1.com/atfal2/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",AJMAN TV
+https://cdn1.logichost.in/ajmantv/live/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",SUDAN TV
+https://cdn-globecast.akamaized.net/live/eds/sudan_tv/hls_roku/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",DABANGA
+https://hls.dabangasudan.org/hls/stream.m3u8
+#EXTINF:-1 group-title="YEDEKLER",AMMAN TV
+https://ammantv-live.ercdn.net/ammantvhd/ammantvhd.m3u8
+#EXTINF:-1 group-title="YEDEKLER",MEKAMELEEN
+http://mn-nl.mncdn.com/mekameleen/smil:mekameleentv.smil/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",AL MASIRAH
+https://live.cdnbridge.tv/Almasirah/Almasirah_all/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",BAHRAIN TV
+https://5c7b683162943.streamlock.net/live/ngrp:bahraintvmain_all/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",BAHRAIN TV INT
+https://5c7b683162943.streamlock.net/live/ngrp:bahraininternational_all/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",THAQAFEYYAH
+https://thaqafeyyah-enc.edgenextcdn.net/out/v1/f6851f68ada94f82ae6b64a441eb5ab1/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",THAQAFEYYAH
+https://thaqafeyyah-ak.akamaized.net/out/v1/f6851f68ada94f82ae6b64a441eb5ab1/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",PAYAM TV
+https://media2.streambrothers.com:1936/8218/8218/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",AL DAFRAH
+https://rtmp-live-ingest-eu-west-3-universe-dacast-com.akamaized.net/transmuxv1/streams/dbb8ac05-a020-784c-3a95-6ed027941532.m3u8
+#EXTINF:-1 group-title="YEDEKLER",RAJEEN
+https://mn-nl.mncdn.com/palabroad/live/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",PAL PBC
+https://pbc.furrera.ps/palestinehd/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",PAL PBC
+https://pbc.furrera.ps/palestinelivehd/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",MUSAWA
+https://pbc.furrera.ps/musawahd/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",PAL TV
+https://live.paltodaytv.com/paltv/live/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",WATAR PS
+http://htvint.mada.ps:8889/orient/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",WATAR PS
+https://htvint.mada.ps/orient/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",PALESTINIAN TV
+https://rp.tactivemedia.com/palestiniantv_source/live/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",YEMEN TODAY
+https://video.yementdy.tv/hls/yementoday.m3u8
+#EXTINF:-1 group-title="YEDEKLER",AL RASHEED
+https://media1.livaat.com/static/AL-RASHEED-HD/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",WATAN EGYPT
+https://rp.tactivemedia.com/watantv_source/live/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",AL ALARABY 2 (backup)
+https://stream.ads.ottera.tv/playlist.m3u8?network_id=5617
+#EXTINF:-1 group-title="YEDEKLER",AL ALARABY 2 (backup)
+https://origin-cae-t482536.cdn.nextologies.com/63d8c759c5db83b4/25c4f89d27a79014ALA2306/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",KAS QATAR 1
+https://liveakgr.alkassdigital.net/hls/live/2097037/Alkass1muytrdc/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",KAS QATAR 2
+https://liveakgr.alkassdigital.net/hls/live/2097037/Alkass2hefazq/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",KAS QATAR 3
+https://liveakgr.alkassdigital.net/hls/live/2097037/Alkass3vakazq/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",KAS QATAR 4
+https://liveakgr.alkassdigital.net/hls/live/2097037/Alkass4azq/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",KAS QATAR 5
+https://liveakgr.alkassdigital.net/hls/live/2097037/Alkass5azq/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",KAS QATAR 6
+https://liveakgr.alkassdigital.net/hls/live/2097037/Alkass6buzay/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",KAS QATAR SHOOF
+https://liveakgr.alkassdigital.net/hls/live/2097037/Alkass6Shoof1ab/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",SAUDI SBC SA
+https://sbc-prod-dub-ak.akamaized.net/out/v1/2eb1ad0f29984a339bc0fce4ce94dcbb/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",SAUDI SBC SA
+https://shd-gcp-live.edgenextcdn.net/live/bitmovin-sbc/90e09c0c28db26435799b4a14892a167/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",SAUDIA TV CH 1
+https://shls-masr2-ak.akamaized.net/out/v1/5ae66b453b62403199811ab78da9982a/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",SAUDIA TV CH 1
+https://saudi-tv-prod-dub-enc.edgenextcdn.net/out/v1/5ae66b453b62403199811ab78da9982a/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",SAUDIA TV CH 1
+https://cdn-globecast.akamaized.net/live/eds/saudi_tv/hls_roku/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",SAUDIA TV CH 1
+https://shd-gcp-live.edgenextcdn.net/live/bitmovin-saudi-tv/2ad66056b51fd8c1b624854623112e43/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",SAUDIA TV KSA NOW
+https://shd-gcp-live.edgenextcdn.net/live/bitmovin-ksa-now/71ed3aa814c643306c0a8bc4fcc7d17f/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",OMAN 1
+https://partneta.cdn.mgmlcdn.com/omantv/smil:omantv.stream.smil/chunklist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",OMAN MUNASHER
+https://partwota.cdn.mgmlcdn.com/omlive/smil:omlive.stream.smil/chunklist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",OMAN CULTURE
+https://partwota.cdn.mgmlcdn.com/omcultural/smil:omcultural.stream.smil/chunklist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",OMAN SPORT
+https://partneta.cdn.mgmlcdn.com/omsport/smil:omsport.stream.smil/chunklist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",OMAN TV
+https://cdn-globecast.akamaized.net/live/eds/oman_tv/hls_roku/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",JORDAN TV
+https://jrtv-live.ercdn.net/jordanhd/jordanhd.m3u8
+#EXTINF:-1 group-title="YEDEKLER",JORDAN TOURISM
+https://playlist.fasttvcdn.com/pl/cc0blorawy1ibohhrupraa/Tourism/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",JORDAN DRAMA
+https://playlist.fasttvcdn.com/pl/cc0blorawy1ibohhrupraa/Drama/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",JORDAN COMEDY
+https://playlist.fasttvcdn.com/pl/cc0blorawy1ibohhrupraa/Comedy/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",JORDAN KITCHEN
+https://playlist.fasttvcdn.com/pl/cc0blorawy1ibohhrupraa/cooking/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",JORDAN ARCHIVE
+https://playlist.fasttvcdn.com/pl/cc0blorawy1ibohhrupraa/Archive/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",JORDAN SONG
+https://playlist.fasttvcdn.com/pl/cc0blorawy1ibohhrupraa/Song/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",KUWAIT TV 1
+https://kwtktv1ta.cdn.mangomolo.com/ktv1/smil:ktv1.stream.smil/chunklist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",KUWAIT TV 2
+https://kwtktv2ta.cdn.mangomolo.com/ktv2/smil:ktv2.stream.smil/chunklist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",KUWAIT TV NEWS
+https://kwtktvata.cdn.mangomolo.com/ktva/smil:ktva.stream.smil/chunklist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",KUWAIT TV ARAB
+https://kwtktvata.cdn.mangomolo.com/ktva/smil:tktva.stream.smil/chunklist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",KUWAIT TV ETHRAA
+https://kwtethta.cdn.mangomolo.com/eth/smil:eth.stream.smil/chunklist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",KUWAIT TV KHALLIK
+https://kwtkbta.cdn.mangomolo.com/kb/smil:kb.stream.smil/chunklist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",KUWAIT TV KHALLIK
+https://kwtsplta.cdn.mangomolo.com/kb/smil:kb.stream.smil/chunklist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",KUWAIT TV QURAIN
+https://kwtktvaqta.cdn.mangomolo.com/ktvaq/smil:tktvaq.stream.smil/chunklist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",KUWAIT TV SPORTS
+https://kwtspta.cdn.mangomolo.com/sp/smil:sp.stream.smil/chunklist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",KUWAIT TV SPORT PLUS
+https://kwtsplta.cdn.mangomolo.com/spl/smil:spl.stream.smil/chunklist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",KUWAIT TV 1
+https://cdn-globecast.akamaized.net/live/eds/kuwait_tv1/hls_roku/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",KAS QATAR 1
+https://liveakgr.alkassdigital.net/hls/live/2097037/Alkass1xtgb/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",KAS QATAR 1
+https://liveakgr.alkassdigital.net/hls/live/2097037/Alkass1ctfsd/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",KAS QATAR 2
+https://liveakgr.alkassdigital.net/hls/live/2097037/Alkass2uyce/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",KAS QATAR 2
+https://liveakgr.alkassdigital.net/hls/live/2097037/Alkass2nbcq/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",KAS QATAR 3
+https://liveakgr.alkassdigital.net/hls/live/2097037/Alkass3lavya/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",KAS QATAR 3
+https://liveakgr.alkassdigital.net/hls/live/2097037/Alkass3actfsdc/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",KAS QATAR 4
+https://liveakgr.alkassdigital.net/hls/live/2097037/Alkass4xtgb/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",KAS QATAR 5
+https://liveakgr.alkassdigital.net/hls/live/2097037/Alkass5xtgb/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",KAS QATAR 6
+https://liveakgr.alkassdigital.net/hls/live/2097037/Alkass6laq/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",KAS QATAR 1
+https://liveakgr.alkassdigital.net/hls/live/2097037/Alkass1bup/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",KAS QATAR 2
+https://liveakgr.alkassdigital.net/hls/live/2097037/Alkass2hgof/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",KAS QATAR 3
+https://liveakgr.alkassdigital.net/hls/live/2097037/Alkass3pzrjl/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",KAS QATAR 4
+https://liveakgr.alkassdigital.net/hls/live/2097037/Alkass4xiuytgfficcn/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",KAS QATAR 5
+https://liveakgr.alkassdigital.net/hls/live/2097037/Alkass5xtyuwqa/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",KAS QATAR 5
+https://liveakgr.alkassdigital.net/hls/live/2097037/Alkass5xtwe/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",KAS QATAR 6
+https://liveakgr.alkassdigital.net/hls/live/2097037/Alkass6xydam/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",AL JAZEERA
+http://live-hls-web-aja.getaj.net/AJA/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",AL JAZEERA
+https://live-hls-apps-aja-v3-fa.getaj.net/AJA/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",AL ARABIYA
+https://live.alarabiya.net/alarabiapublish/alarabiya.smil/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",AL ARABIYA
+https://shls-live-ak.akamaized.net/out/v1/f5f319206ed740f9a831f2097c2ead23/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",AL ARABIYA HADATH
+https://av.alarabiya.net/alarabiapublish/alhadath.smil/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",AL ARABIYA HADATH
+https://shls-hadath-prod-dub.shahid.net/out/v1/0e1a306399c346faac4226aa0858f99b/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",AL ARABIYA HADATH
+https://shd-gcp-live.edgenextcdn.net/live/bitmovin-hadath/2ff87ec4c2f3ede35295a20637d9f8fd/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",AL ARABIYA HADATH
+https://hadath-prod-dub-ak.akamaized.net/out/v1/0e1a306399c346faac4226aa0858f99b/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",AL ARABIYA BUSINESS
+https://live.alarabiya.net/alarabiapublish/aswaaq.smil/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",AL ARABIYA BUSINESS
+https://alarabiya-business-ak.akamaized.net/out/v1/126027fa2f8c4d19be4551b77ec08cbb/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",AL JAZEERA MUBASHER
+https://live-hls-web-ajm.getaj.net/AJM/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",AL JAZEERA MUBASHER
+https://live-hls-apps-ajm-v3-fa.getaj.net/AJM/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",AL JAZEERA MUBASHER 2
+https://live-hls-web-ajm2-fa.getaj.net/AJM2/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",AL JAZEERA MUBASHER 24
+https://live-hls-web-ajm24-fa.getaj.net/AJM24/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",ASHARQ NEWS
+https://asharq-prod-dub-ak.akamaized.net/out/v1/3b6b4902cf8747a28619411239584002/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",ASHARQ NEWS
+https://svs.itworkscdn.net/bloomberarlive/bloomberg.smil/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",INEWS IQ
+https://live.i-news.tv/hls/stream.m3u8
+#EXTINF:-1 group-title="YEDEKLER",BBC NEWS ARABIA
+https://vs-hls-pushb-ww.live.cf.md.bbci.co.uk/x=4/i=urn:bbc:pips:service:bbc_arabic_tv/mobile_wifi_main_sd_abr_v2.m3u8
+#EXTINF:-1 group-title="YEDEKLER",BBC NEWS ARABIA
+https://vs-hls-pushb-ww-live.akamaized.net/x=4/i=urn:bbc:pips:service:bbc_arabic_tv/t=3840/v=pv14/b=5070016/main.m3u8
+#EXTINF:-1 group-title="YEDEKLER",SKY NEWS ARABIA
+https://stream.skynewsarabia.com/hls/sna.m3u8
+#EXTINF:-1 group-title="YEDEKLER",SKY NEWS ARABIA
+https://stream.skynewsarabia.com/ott/ott.m3u8
+#EXTINF:-1 group-title="YEDEKLER",CNBC ARABIA
+https://cnbc-live.akamaized.net/cnbc/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",DW ARABIC
+https://dwamdstream103.akamaized.net/hls/live/2015526/dwstream103/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",CGTN ARABIC
+https://news.cgtn.com/resource/live/arabic/cgtn-a.m3u8
+#EXTINF:-1 group-title="YEDEKLER",FRANCE 24 AR
+https://live.france24.com/hls/live/2037222/F24_AR_HI_HLS/master_5000.m3u8
+#EXTINF:-1 group-title="YEDEKLER",RT ARABIC [censure-blocked]
+https://rt-arb.rttv.com/live/rtarab/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",RT ARABIC [censure-blocked]
+https://rt-arb.rttv.com/dvr/rtarab/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",ASHARQ DOCS
+https://svs.itworkscdn.net/asharqdocumentarylive/asharqdocumentary.smil/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",ASHARQ DOCS 2
+https://svs.itworkscdn.net/asharqdiscoverylive/asharqd.smil/playlist_dvr.m3u8
+#EXTINF:-1 group-title="YEDEKLER",AL HIWAR
+https://mn-nl.mncdn.com/alhiwar_live/smil:alhiwar.smil/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",AL SHARQIYA
+http://ns8.indexforce.com:1935/alsharqiyalive/mystream/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",PANORAMA FM TV
+https://panoramafm-prod-dub-ak.akamaized.net/out/v1/66262e420d824475aaae794dc2d69f14/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",EL SHARQ
+https://mn-nl.mncdn.com/elsharq_live/live/chunklist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",SPACE TOON
+https://spacetoon-prod-dub-ak.akamaized.net/out/v1/6240b773a3f34cca95d119f9e76aec02/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",SPACE TOON
+https://shd-gcp-live.edgenextcdn.net/live/bitmovin-spacetoon/d8382fb9ab4b2307058f12c7ea90db54/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",SAT7 KIDS
+https://svs.itworkscdn.net/sat7kidslive/sat7kids.smil/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",AFARIN TV
+https://65f16f0fdfc51.streamlock.net/afarinTV/livestream/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",AL SHALLAL
+https://amg01480-alshallalfze-alshallal-ono-q0hfg.amagi.tv/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",AL HAYAT
+https://cdn3.wowza.com/5/OE5HREpIcEkySlNT/alhayat-live/ngrp:livestream_all/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",IQRAA 1
+https://playlist.fasttvcdn.com/pl/dlkqw1ftuvuuzkcb4pxdcg/Iqraafasttv1/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",IQRAA 2
+https://playlist.fasttvcdn.com/pl/dlkqw1ftuvuuzkcb4pxdcg/Iqraafasttv2/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",IQRAA 3
+https://playlist.fasttvcdn.com/pl/dlkqw1ftuvuuzkcb4pxdcg/Iqraafasttv3/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",QURAN
+http://m.live.net.sa:1935/live/quran/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",QURAN
+https://cdn-globecast.akamaized.net/live/eds/saudi_quran/hls_roku/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",BAHRAIN QURAN
+https://5c7b683162943.streamlock.net/live/ngrp:bahrainquran_all/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",SHARJAH QURAN
+https://live.kwikmotion.com/sharjahtvquranlive/shqurantv.smil/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",AL QAMAR
+https://streamer3.premio.link/alqamar/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",ALMASIRA MUBASHER
+https://live2.cdnbridge.tv/AlmasirahMubasher/Mubasher_All/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",AL EKHBARIA
+https://cdn-globecast.akamaized.net/live/eds/al_ekhbariya/hls_roku/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",AL EKHBARIA
+https://shd-gcp-live.edgenextcdn.net/live/bitmovin-al-ekhbaria/297b3ef1cd0633ad9cfba7473a686a06/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",AL SUNNAH TV
+https://sbc-prod-dub-enc.edgenextcdn.net/out/v1/b09bbb8d9b684763be4211b088168de7/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",AL SUNNAH TV
+http://m.live.net.sa:1935/live/sunnah/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",AL SUNNAH TV
+https://cdn-globecast.akamaized.net/live/eds/saudi_sunnah/hls_roku/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",AL MAJD HOLY QURAN TV
+https://edge66.magictvbox.com/liveApple/al_majd/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",AL ISTIQAMA
+https://jmc-live.ercdn.net/alistiqama/alistiqama.m3u8
+#EXTINF:-1 group-title="YEDEKLER",SAT7 ARABIC
+https://svs.itworkscdn.net/sat7arabiclive/sat7arabic.smil/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",CHARITY TV
+https://652930de05533.streamlock.net/live/ngrp:livestream_all/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",NOURSAT
+https://svs.itworkscdn.net/nour4satlive/livestream/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",NOURSAT AL SHARQ
+https://svs.itworkscdn.net/nour8satlive/livestream/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",NOURSAT AL KODDASS
+https://svs.itworkscdn.net/nour1satlive/livestream/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",NOURSAT ENG
+https://svs.itworkscdn.net/noursatenglive/noursateng.smil/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",AGHAPY TV
+https://5b622f07944df.streamlock.net/aghapy.tv/aghapy.smil/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",ASHARQ NEWS (backup)
+https://asharq-prod-dub-enc.edgenextcdn.net/out/v1/3b6b4902cf8747a28619411239584002/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",AL JAZEERA (backups)
+https://live-hls-web-aja-fa.thehlive.com/AJA/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",AL JAZEERA MUBASHER (backups)
+https://live-hls-web-ajm-fa.thehlive.com/AJM/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",AL JAZEERA MUBASHER 2 (backups)
+https://live-hls-web-ajm2-fa.thehlive.com/AJM2/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",AL ARABIYA (backup)
+https://shls-live-enc.edgenextcdn.net/out/v1/f5f319206ed740f9a831f2097c2ead23/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",AL ALARABY (backup)
+https://stream.ads.ottera.tv/playlist.m3u8?network_id=5616
+#EXTINF:-1 group-title="YEDEKLER",FRANCE 24 AR (backup)
+https://live.france24.com/hls/live/2037222/F24_AR_HI_HLS/master_2300.m3u8
+#EXTINF:-1 group-title="YEDEKLER",BBC NEWS ARABIA (backup)
+https://vs-hls-pushb-ww-live.akamaized.net/x=4/i=urn:bbc:pips:service:bbc_arabic_tv/pc_hd_abr_v2.m3u8
+#EXTINF:-1 group-title="YEDEKLER",MAAN NEWS [issue]
+https://htvmada.mada.ps:4443/maannews/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",CARTOON NETWORK AR [down]
+https://shls-masr2-ak.akamaized.net/out/v1/dc4aa87372374325a66be458f29eab0f/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",MBC 1
+https://mbc1-usa-enc.edgenextcdn.net/out/v1/8c1ce74bfd0743aab1026ef5b2aecfa4/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",MBC 1 USA
+https://shd-gcp-live.edgenextcdn.net/live/bitmovin-mbc-1-usa/fdac3a4fc0473f1f56e07ec1d63a4b7b/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",MBC 1 USA
+https://mbc-1-usa-ak.akamaized.net/out/v1/8c1ce74bfd0743aab1026ef5b2aecfa4/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",MBC 3
+https://mbc3-usa-enc.edgenextcdn.net/out/v1/8bbfec9446d84c9ea0dfa34edede6db9/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",MBC 3 USA
+https://shd-gcp-live.edgenextcdn.net/live/bitmovin-mbc-3-usa/5d58265a862a476dc7f97694addb5ded/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",MBC 3 USA
+https://mbc-3-usa-ak.akamaized.net/out/v1/8bbfec9446d84c9ea0dfa34edede6db9/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",MBC 4
+https://mbc4-prod-dub-enc.edgenextcdn.net/out/v1/c08681f81775496ab4afa2bac7ae7638/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",MBC DRAMA
+https://mbc1-enc.edgenextcdn.net/out/v1/b0b3a0e6750d4408bb86d703d5feffd1/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",MBC DRAMA
+https://mbcdrama-usa-enc.edgenextcdn.net/out/v1/876f960feec24a8aba9e9d3f9023174b/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",MBC DRAMA USA
+https://mbcdrama-usa-ak.akamaized.net/out/v1/876f960feec24a8aba9e9d3f9023174b/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",MBC DRAMA USA
+https://shd-gcp-live.edgenextcdn.net/live/bitmovin-mbc-drama-usa/ea2f5db904aff224b7066e59c7f585a2/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",MBC DRAMA MASR
+https://shls-live-enc.edgenextcdn.net/out/v1/08eca926a78a41339b8010c882410307/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",MBC DRAMA PLUS
+https://mbcplusdrama-prod-dub-enc.edgenextcdn.net/out/v1/97ca0ce6fc6142f4b14c0a694af59eab/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",MBC MASR 1
+https://mbc1-enc.edgenextcdn.net/out/v1/d5036cabf11e45bf9d0db410ca135c18/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",MBC MASR 1
+https://shls-live-enc.edgenextcdn.net/out/v1/d5036cabf11e45bf9d0db410ca135c18/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",MBC MASR 1
+https://masr-usa-enc.edgenextcdn.net/out/v1/5fcaf05b5cd64b3cb4a969e0470080c8/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",MBC MASR USA
+https://shd-gcp-live.edgenextcdn.net/live/bitmovin-mbc-masr-usa/cd8d40acdab28aac0582faa3bd3983f1/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",MBC MASR USA
+https://masr-usa-ak.akamaized.net/out/v1/5fcaf05b5cd64b3cb4a969e0470080c8/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",MBC MASR 2
+https://shd-gcp-live.edgenextcdn.net/live/bitmovin-mbc-masr-2/754931856515075b0aabf0e583495c68/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",MBC MASR 2
+https://shls-masr2-enc.edgenextcdn.net/out/v1/2720564b6a4641658fdfb6884b160da2/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",MBC IRAQ
+https://shd-gcp-live.edgenextcdn.net/live/bitmovin-mbc-iraq/e38c44b1b43474e1c39cb5b90203691e/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",MBC IRAQ
+https://iraq-prod-dub-enc.edgenextcdn.net/out/v1/c9bf1e87ea66478bb20bc5c93c9d41ea/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",MBC BOLLYWOOD
+https://shd-gcp-live.edgenextcdn.net/live/bitmovin-mbc-bollywood/546eb40d7dcf9a209255dd2496903764/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",MBC BOLLYWOOD
+https://mbcbollywood-prod-dub-enc.edgenextcdn.net/out/v1/d5bbe570e1514d3d9a142657d33d85e6/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",MBC LOUD FM TV
+https://d2lfa0y84k5bwn.cloudfront.net/out/v1/86dd4506a70c4d7fb35e2ab50296d9a3/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",ROTANA AFLAM PLUS
+https://cdn1.iptvcdn.tv/mcnc/ROTANA_AFLAMPLUS/playlist.m3u8?token=demo
+#EXTINF:-1 group-title="YEDEKLER",ROTANA M PLUS
+https://cdn1.iptvcdn.tv/mcnc/ROTANA_MPLUS/playlist.m3u8?token=demo
+#EXTINF:-1 group-title="YEDEKLER",ROTANA MUSIC
+https://cdn1.iptvcdn.tv/mcnc/ROTANA_MUSIC/playlist.m3u8?&token=demo
+#EXTINF:-1 group-title="YEDEKLER",ROTANA KHALIJA
+https://edge66.magictvbox.com/liveApple/rotana_khalijiah/tracks-v1a1/mono.m3u8
+#EXTINF:-1 group-title="YEDEKLER",ROTANA KHALIJA
+https://shls-masr2-ak.akamaized.net/out/v1/a639fd49db684f1b8c063d398101a888/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",MBC MASR 1 [offlink]
+https://shls-masr-ak.akamaized.net/out/v1/b7093401da27496797a8949de23f4578/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",RAI NEWS 24
+https://rainews2-live.akamaized.net/hls/live/598327/rainews2/rainews2/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",RAI NEWS 24
+https://8e7439fdb1694c8da3a0fd63e4dda518.msvdn.net/rainews1/hls/playlist_mo.m3u8
+#EXTINF:-1 group-title="YEDEKLER",RAI 3
+https://wzstreaming.rai.it/TVlive/smil:liveStream.smil/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",LA C NEWS 24
+https://f5842579ff984c1c98d63b8d789673eb.msvdn.net/live/S27391994/HVvPMzy/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TELETICINO
+https://vstream-cdn.ch/hls/teleticino_720p/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",ITALIA 2 TV
+https://59d7d6f47d7fc.streamlock.net/italia2/italia2/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",RETE TV
+https://57068da1deb21.streamlock.net/retetvitalia/retetvitalia/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",RETE 55
+https://live1.giocabet.tv/stream/6/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",CANALE 7
+http://wms.shared.streamshow.it/canale7/canale7/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",CAFE TV 24
+https://srvx1.selftv.video/cafe/live/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",CANALE 10
+https://nrvideo1.newradio.it:1936/desxcerbht/desxcerbht/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",EURO TV
+https://5f22d76e220e1.streamlock.net/eurotv/eurotv/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",RADIO 105 TV
+https://live02-seg.msr.cdn.mediaset.net/live/ch-ec/ec-clr.isml/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",DEEJAY TV
+https://4c4b867c89244861ac216426883d1ad0.msvdn.net/live/S85984808/sMO0tz9Sr2Rk/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",RADIO ITALIA TV
+https://radioitaliatv.akamaized.net/hls/live/2093117/RadioitaliaTV/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",RADIO ITALIA TREND
+https://radioitalia-samsungitaly.amagi.tv/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",RADIO KISS KISS TV
+https://kk.fluid.stream/KKMulti/smil:KissKissTV.smil/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",R101 TV
+https://live02-seg.msr.cdn.mediaset.net/live/ch-er/er-clr.isml/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",RTL 102.5
+https://dd782ed59e2a4e86aabf6fc508674b59.msvdn.net/live/S97044836/tbbP8T1ZRPBL/playlist_video.m3u8
+#EXTINF:-1 group-title="YEDEKLER",RTL 102.5 SEC
+https://dd782ed59e2a4e86aabf6fc508674b59.msvdn.net/live/S38122967/2lyQRIAAGgRR/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",SUPER!
+https://vimnitaly.akamaized.net/hls/live/2094034/super/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",EXTRA TV
+https://rst2.saiuzwebnetwork.it:8081/extratvlive/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",RADIO MONTECARLO TV
+https://live02-seg.msr.cdn.mediaset.net/live/ch-bb/bb-clr.isml/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",VIRGIN RADIO TV
+https://live02-seg.msr.cdn.mediaset.net/live/ch-ew/ew-clr.isml/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",ALTO ADIGE TV
+https://5f204aff97bee.streamlock.net/AltoAdigeTV/livestream/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",ANRENNA 2 BERGAMO
+https://58f12ffd2447a.streamlock.net/Antenna2/livestream/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",ARISTANIS TV
+https://video2.azotosolutions.com:1936/supertvoristano/supertvoristano/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",ARTE NETWORK
+https://tsw.streamingwebtv24.it:1936/artenetwork/artenetwork/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",AURORA ARTE
+https://59d7d6f47d7fc.streamlock.net/auroraarte/auroraarte/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",EURONEWS IT
+https://euronews-live-ita-it.fast.rakuten.tv/v1/master/0547f18649bd788bec7b67b746e47670f558b6b2/production-LiveChannel-6570/bitok/e/25674/euronews-it.m3u8
+#EXTINF:-1 group-title="YEDEKLER",DAS ERSTE INTL
+https://derste247liveint.akamaized.net/hls/live/662735/daserste_int/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",DAS ERSTE DE
+https://daserste-live.ard-mcdn.de/daserste/live/hls/de/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",EURONEWS DE
+https://euronews-live-deu-de.fast.rakuten.tv/v1/master/0547f18649bd788bec7b67b746e47670f558b6b2/production-LiveChannel-6567/bitok/e/26033/euronews-de.m3u8
+#EXTINF:-1 group-title="YEDEKLER",RT DEUTSCH [censure-blocked]
+https://rt-ger.rttv.com/dvr/rtdeutsch/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",RTL LUX
+https://live-edge.rtl.lu/channel1/smil:channel1/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",RTL LUX 2
+https://stream.rtl.lu/data/live/tele/channel2/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",DR TVA
+https://drlivedrtvahls.akamaized.net/hls/live/2113613/drlivedrtva/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",YLE TV WORLD
+https://yletvworld.akamaized.net/hls/live/622540/yletv1w/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TVP POLONIA
+https://raw.githubusercontent.com/fraudiay79/strm/refs/heads/main/platforms/links/pl/tvppolonia.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TVP POLONIA
+http://rr3.tvdosug.net/~109e1a3c05fcad5b22d13b9453dc0db5122/10094/hls/pl.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TVP INFO
+https://raw.githubusercontent.com/fraudiay79/strm/refs/heads/main/platforms/links/pl/tvpinfo.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TVP KULTURA
+https://raw.githubusercontent.com/fraudiay79/strm/refs/heads/main/platforms/links/pl/tvpkultura.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TVP KULTURA 2
+https://raw.githubusercontent.com/fraudiay79/strm/refs/heads/main/platforms/links/pl/tvpkultura2.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TVP HISTORIA
+https://raw.githubusercontent.com/fraudiay79/strm/refs/heads/main/platforms/links/pl/tvphistoria.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TVP HISTORIA 2
+https://raw.githubusercontent.com/fraudiay79/strm/refs/heads/main/platforms/links/pl/tvphistoria2.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TVP 1
+https://raw.githubusercontent.com/fraudiay79/strm/refs/heads/main/platforms/links/pl/tvp1.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TVP 2
+https://raw.githubusercontent.com/fraudiay79/strm/refs/heads/main/platforms/links/pl/tvp2.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TVP3 WARSZAWA
+https://raw.githubusercontent.com/fraudiay79/strm/refs/heads/main/platforms/links/pl/tvp3warszawa.m3u8
+#EXTINF:-1 group-title="YEDEKLER",EURONEWS PL
+https://euronews-live-pol-pl.fast.rakuten.tv/v1/master/0547f18649bd788bec7b67b746e47670f558b6b2/production-LiveChannel-6769/bitok/e/26235/euronews-pl.m3u8
+#EXTINF:-1 group-title="YEDEKLER",ANTENA 3 VOX
+https://live3vox.antenaplay.ro/a3free/a3free.m3u8
+#EXTINF:-1 group-title="YEDEKLER",KANAL D RO
+https://stream1.kanald.ro/iphone/knd-live.m3u8
+#EXTINF:-1 group-title="YEDEKLER",MOLDOVA 1
+https://v0.trm.md/static/streaming-playlists/hls/9b79338b-1870-4cd7-91d4-0f6ce5cac7ca/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",MOLDOVA 2
+https://v.trm.md/static/streaming-playlists/hls/937e4e0e-7174-4fb2-a299-480e68b49ecb/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",HRT 1
+https://webtvstream.bhtelecom.ba/hrt1.m3u8
+#EXTINF:-1 group-title="YEDEKLER",HRT 2
+https://webtvstream.bhtelecom.ba/hrt2.m3u8
+#EXTINF:-1 group-title="YEDEKLER",HRT 3
+https://webtvstream.bhtelecom.ba/hrt3.m3u8
+#EXTINF:-1 group-title="YEDEKLER",CMC TV
+https://stream.cmctv.hr:49998/cmc/live.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TV JADRAN
+https://tvjadran.stream.agatin.hr:3412/live/tvjadranlive.m3u8
+#EXTINF:-1 group-title="YEDEKLER",N1 HRV
+https://best-str.umn.cdn.united.cloud/stream?stream=sp1400&sp=n1info&channel=n1hrv&u=n1info&p=n1Sh4redSecre7iNf0&player=m3u8
+#EXTINF:-1 group-title="YEDEKLER",N1 BOS
+https://best-str.umn.cdn.united.cloud/stream?stream=sp1400&sp=n1info&channel=n1bos&u=n1info&p=n1Sh4redSecre7iNf0&player=m3u8
+#EXTINF:-1 group-title="YEDEKLER",RTS 1
+https://webtvstream.bhtelecom.ba/rts1.m3u8
+#EXTINF:-1 group-title="YEDEKLER",RTS 2
+https://webtvstream.bhtelecom.ba/rts2.m3u8
+#EXTINF:-1 group-title="YEDEKLER",RTS SVET
+https://webtvstream.bhtelecom.ba/rts_svet.m3u8
+#EXTINF:-1 group-title="YEDEKLER",PI KANAL
+https://stream.pikanal.rs/pikanal/pgm.m3u8
+#EXTINF:-1 group-title="YEDEKLER",N1 SRB
+https://best-str.umn.cdn.united.cloud/stream?stream=sp1400&sp=n1info&channel=n1srp&u=n1info&p=n1Sh4redSecre7iNf0&player=m3u8
+#EXTINF:-1 group-title="YEDEKLER",KAROLINA RD/TV
+https://peer2.tdiradio.com/static/streaming-playlists/hls/4207de1d-52e8-4591-ad9e-218069b864d1/0.m3u8
+#EXTINF:-1 group-title="YEDEKLER",NEWS 24 ALB
+https://tv.balkanweb.com/news24/livestream/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",ARTA TV
+https://gjirafa-video-live.gjirafa.net/gjvideo-live/mps-vgx-u9p-qv1/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",KOHAVISION
+https://gjirafa-video-live.gjirafa.net/gjvideo-livestream/lj9-pxm-o53-rp0/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",RTV 21 ALBANIA
+https://gjirafa-video-live.gjirafa.net/gjvideo-live/2cz-npl-jfn-9he/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TV7 ALBANIA
+https://gjirafa-video-live.gjirafa.net/gjvideo-livestream-specific/1z8-byc-4ee-lc9/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TV PRIRZENI
+https://gjirafa-video-live.gjirafa.net/gjvideo-live/5m0-cok-g5z-1xi/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TV SYRI
+https://gjirafa-video-live.gjirafa.net/gjvideo-live/xej-xnb-ba0-kup/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",ALB UK
+http://albuk.dyndns.tv:1935/albuk/albuk.stream/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TVA NEWS
+https://live.tvanews.com/live/tvanews/play.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TOP ESTRADA
+http://live.topestrada.com/live/topestrada/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",SHQIPONJA TV
+https://shiko.shqiponja-tv.com:3941/hybrid/play.m3u8
+#EXTINF:-1 group-title="YEDEKLER",OPOJA TV
+http://ip.opoja.tv:1935/tvopoja/tvopoja/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",GPB 1TV პირველი არხი
+https://tv.cdn.xsg.ge/gpb-1tv/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",GPB 2TV
+https://tv.cdn.xsg.ge/gpb-2tv/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",IMEDI
+https://tv.cdn.xsg.ge/imedihd/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",PALITRA
+https://livestream.palitra.ge/hls/palitratv/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",FORMULA
+https://tv.cdn.xsg.ge/c4635/TVFormula/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",ADJARA
+https://raw.githubusercontent.com/fraudiay79/strm/refs/heads/main/platforms/links/ge/adjara.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TV MZE
+https://raw.githubusercontent.com/fraudiay79/strm/refs/heads/main/platforms/links/ge/tvmze.m3u8
+#EXTINF:-1 group-title="YEDEKLER",EURONEWS GE
+https://raw.githubusercontent.com/fraudiay79/strm/refs/heads/main/platforms/links/ge/euronewsgeorgia.m3u8
+#EXTINF:-1 group-title="YEDEKLER",ERTSULOVNEBA
+https://raw.githubusercontent.com/fraudiay79/strm/refs/heads/main/platforms/links/ge/ertsulovneba.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TV25
+https://raw.githubusercontent.com/fraudiay79/strm/refs/heads/main/platforms/links/ge/tv25.m3u8
+#EXTINF:-1 group-title="YEDEKLER",MAESTRO
+https://raw.githubusercontent.com/fraudiay79/strm/refs/heads/main/platforms/links/ge/maestro.m3u8
+#EXTINF:-1 group-title="YEDEKLER",H1 ARM Հանրային հեռուստաը
+https://amtv.tulixcdn.com/amtv2/am2abr/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",H1 NEWS
+https://amtv.tulixcdn.com/amtv3/am3abr/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",H1 NEWS
+https://amtvusdvr.tulix.tv/am3abr/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",FRESH ARM
+https://freshtv-live.ru/FreshTV/index.m3u8?token=livestream
+#EXTINF:-1 group-title="YEDEKLER",MBC PERSIA
+https://mbcpersia-prod-dub-ak.akamaized.net/out/v1/bdc7cd0d990e4c54808632a52c396946/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",ASIL TV
+https://live.asil.tv/asiltv/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",NEJAT TV
+https://hls.nejat.live/hls/stream.m3u8
+#EXTINF:-1 group-title="YEDEKLER",24/7 BOX
+https://hls.247box.live/hls/stream.m3u8
+#EXTINF:-1 group-title="YEDEKLER",OX IR
+https://hls.oxir.live/hls/stream.m3u8
+#EXTINF:-1 group-title="YEDEKLER",AVA FAMILY
+https://familyhls.avatv.live/hls/stream.m3u8
+#EXTINF:-1 group-title="YEDEKLER",PARS
+https://parshls.wns.live/hls/stream.m3u8
+#EXTINF:-1 group-title="YEDEKLER",SL ONE
+https://slonehls.wns.live/hls/stream.m3u8
+#EXTINF:-1 group-title="YEDEKLER",SL TWO
+https://sltwohls.wns.live/hls/stream.m3u8
+#EXTINF:-1 group-title="YEDEKLER",ITN
+https://itnhls.wns.live/hls/stream.m3u8
+#EXTINF:-1 group-title="YEDEKLER",META FILM
+https://metafilmhls.wns.live/hls/stream.m3u8
+#EXTINF:-1 group-title="YEDEKLER",AVA SERIES
+https://avaserieshls.wns.live/hls/stream.m3u8
+#EXTINF:-1 group-title="YEDEKLER",FX TV
+https://fxtvhls.wns.live/hls/stream.m3u8
+#EXTINF:-1 group-title="YEDEKLER",OI TN
+https://oitnhls.wns.live/hls/stream.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TAPESH
+https://iptv.tapesh.tv/tapesh/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TAPESH IR
+https://iptv.tapesh.tv/tapeshiran/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",MIHAN TV
+https://iptv.mihantv.com/mihantv/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",PAYVAND
+https://uni6rtmp.tulix.tv/ucur1/Payvand/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",PJ TV
+https://uni01rtmp.tulix.tv/kensecure/pjtv.stream/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",PERSIANA NOSTALGIA
+https://noshls.persiana.live/hls/stream.m3u8
+#EXTINF:-1 group-title="YEDEKLER",PERSIANA MUSIC
+https://musichls.persiana.live/hls/stream.m3u8
+#EXTINF:-1 group-title="YEDEKLER",PERSIANA COMEDY
+https://comedyhls.persiana.live/hls/stream.m3u8
+#EXTINF:-1 group-title="YEDEKLER",PERSIANA IRANIAN
+https://irhls.persiana.live/hls/stream.m3u8
+#EXTINF:-1 group-title="YEDEKLER",PERSIANA ONE
+https://onehls.persiana.live/hls/stream.m3u8
+#EXTINF:-1 group-title="YEDEKLER",PERSIANA KOREA
+https://korhls.persiana.live/hls/stream.m3u8
+#EXTINF:-1 group-title="YEDEKLER",PERSIANA CINEMA
+https://cinehls.persiana.live/hls/stream.m3u8
+#EXTINF:-1 group-title="YEDEKLER",PERSIANA HD
+https://euhls.persiana.live/hls/stream.m3u8
+#EXTINF:-1 group-title="YEDEKLER",PERSIANA FAMILY
+https://familyhls.persiana.live/hls/stream.m3u8
+#EXTINF:-1 group-title="YEDEKLER",PERSIANA SCIENCE
+https://scihls.persiana.live/hls/stream.m3u8
+#EXTINF:-1 group-title="YEDEKLER",PERSIANA JUNIOR
+https://junhls.persiana.live/hls/stream.m3u8
+#EXTINF:-1 group-title="YEDEKLER",CNN INT
+https://turnerlive.warnermediacdn.com/hls/live/586495/cnngo/cnn_slate/VIDEO_0_3564000.m3u8
+#EXTINF:-1 group-title="YEDEKLER",CNN INT
+https://turnerlive.warnermediacdn.com/hls/live/586497/cnngo/cnni/VIDEO_0_3564000.m3u8
+#EXTINF:-1 group-title="YEDEKLER",CNN INT
+https://d3bp6dwmpbdajl.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-ury0meh5m4nzm/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",CNN FAST
+https://amg01448-samsungin-cnnnow-samsungin-4npqg.amagi.tv/playlist/amg01448-samsungin-cnnnow-samsungin/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",CNN FAST
+https://cdn-uw2-prod.tsv2.amagi.tv/linear/amg00405-rakutentv-cnnfastlg-rakuten-lgfr/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",CNN FAST
+https://d2anxhed2mfixb.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-wqc602hxepp0q/CNNFAST_GB.m3u8
+#EXTINF:-1 group-title="YEDEKLER",CNN FAST
+https://d3fzntptkfpmvg.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-6rc4k0y56fezj/CNNFAST_GB.m3u8
+#EXTINF:-1 group-title="YEDEKLER",FOX NEWS
+https://fox-foxnewsnow-samsungus.amagi.tv/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",FOX NEWS
+https://247preview.foxnews.com/hls/live/2020027/fncv3preview/primary.m3u8
+#EXTINF:-1 group-title="YEDEKLER",NBC NEWS
+https://d4ybyqrhce41r.cloudfront.net/v1/master/3fec3e5cac39a52b2132f9c66c83dae043dc17d4/prod-xumo-linear-nbcu-hlsv3/master.m3u8?ads.channelId=99991626
+#EXTINF:-1 group-title="YEDEKLER",NBC NEWS
+https://d4ybyqrhce41r.cloudfront.net/v1/master/3fec3e5cac39a52b2132f9c66c83dae043dc17d4/prod-xumo-linear-nbcu-hlsv3/master.m3u8?ads.channelId=99991247
+#EXTINF:-1 group-title="YEDEKLER",NBC NEWS
+http://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/5df97894467dfa00091c873clivestitch/master.m3u8?deviceDNT=%7BTARGETOPT%7D&deviceModel=samsung&deviceVersion=unknown&appVersion=unknown&deviceType=samsung-tvplus&deviceMake=samsung
+#EXTINF:-1 group-title="YEDEKLER",ABC NEWS
+https://abcnews-streams.akamaized.net/hls/live/2023560/abcnews1/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",CBS NEWS
+https://cbsn-us.cbsnstream.cbsnews.com/out/v1/55a8648e8f134e82a470f83d562deeca/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",CBS NEWS
+https://dai.google.com/linear/hls/event/EezGs5EpSjSr-sYjB2qysw/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",CBS NEWS
+https://dai.google.com/linear/hls/event/Sid4xiTQTkCT1SLu6rjUSQ/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",CBS NEWS
+https://dai.google.com/ssai/event/Sid4xiTQTkCT1SLu6rjUSQ/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",CBS NEWS
+http://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/6231ec93779a9d00079ba8e2livestitch/master.m3u8?deviceDNT=%7BTARGETOPT%7D&deviceModel=samsung&deviceVersion=unknown&appVersion=unknown&deviceType=samsung-tvplus&deviceMake=samsung
+#EXTINF:-1 group-title="YEDEKLER",CBS NEWS
+https://cfd-v4-service-channel-stitcher-use1-1.prd.pluto.tv/stitch/hls/channel/5a6b92f6e22a617379789618/master.m3u8?sid=0&deviceDNT=0&deviceId=0&deviceModel=unknown&deviceVersion=unknown&appVersion=unknown&deviceType=unknown&deviceMake=unknown
+#EXTINF:-1 group-title="YEDEKLER",CNBC NEWS
+https://amg01079-nbcuuk-amg01079c2-lg-gb-2030.playouts.now.amagi.tv/playlist/amg01079-nbcuukfast-cnbcuk-lggb/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",CNBC NEWS
+https://amg01079-nbcuuk-amg01079c1-lg-fr-2032.playouts.now.amagi.tv/playlist/amg01079-nbcuukfast-cnbcpe-lgfr/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",NEWS MAX
+https://nmx1ota.akamaized.net/hls/live/2107010/Live_1/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",NEWS MAX
+https://nmxlive.akamaized.net/hls/live/529965/Live_1/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",REAL AMERICAS VOICE
+https://d2jiqiw4g5lj5k.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/AmericasVoiceChannel-prod/AVSamsung/AVSamsung.m3u8
+#EXTINF:-1 group-title="YEDEKLER",REAL AMERICAS VOICE
+https://content.uplynk.com/channel/26bd482ffe364a1282bc3df28bd3c21f.m3u8
+#EXTINF:-1 group-title="YEDEKLER",USA TODAY
+https://cdn-ue1-prod.tsv2.amagi.tv/linear/amg00731-gannettcoinc-usatodaynews-plex/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",OANN
+https://oneamericanews-vizio.amagi.tv/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",OANN
+https://a-cdn.klowdtv.com/live1/oan_720p/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",HLN
+https://turnerlive.warnermediacdn.com/hls/live/586496/cnngo/hln/VIDEO_0_3564000.m3u8
+#EXTINF:-1 group-title="YEDEKLER",BBC NEWS
+https://vs-hls-push-ww-live.akamaized.net/x=4/i=urn:bbc:pips:service:bbc_news_channel_hd/t=3840/v=pv14/b=5070016/main.m3u8
+#EXTINF:-1 group-title="YEDEKLER",BBC NEWS
+https://vs-hls-push-ww.live.cf.md.bbci.co.uk/x=4/i=urn:bbc:pips:service:bbc_news_channel_hd/mobile_wifi_main_sd_abr_v2.m3u8
+#EXTINF:-1 group-title="YEDEKLER",BBC NEWS
+https://d3pxo1qcgzxtxs.cloudfront.net/10005/99951298/hls/playlist.m3u8?ads.xumo_channelId=99951298
+#EXTINF:-1 group-title="YEDEKLER",SKY NEWS
+http://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/55b285cd2665de274553d66flivestitch/master.m3u8?deviceDNT=%7BTARGETOPT%7D&deviceModel=samsung&deviceVersion=unknown&appVersion=unknown&deviceType=samsung-tvplus&deviceMake=samsung
+#EXTINF:-1 group-title="YEDEKLER",GB NEWS
+https://amg01076-lightningintern-gbnews-samsunguk-0lu52.amagi.tv/playlist/amg01076-lightningintern-gbnews-samsunguk/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",GB NEWS
+https://live-gbnews-ssai.simplestreamcdn.com/v1/master/82267e84b9e5053b3fd0ade12cb1a146df74169a/gbnews-live-TEST/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",FREE SPEECH TV
+https://edge.fstv-live-linear-channel.top.comcast.net/Content/HLS_HLSv3/Live/channel(b168a609-19c1-2203-ae1d-6b9726f05e67)/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",COURT TV
+https://content.uplynk.com/channel/6c0bd0f94b1d4526a98676e9699a10ef.m3u8
+#EXTINF:-1 group-title="YEDEKLER",NEWS WORLD
+https://amg01076-lightning-amg01076c5-rakuten-us-1788.playouts.now.amagi.tv/playlist/amg01076-lightning-newsworld-rakutenus/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",REUTERS TV
+https://amg00453-reuters-amg00453c1-samsung-de-2111.playouts.now.amagi.tv/playlist/amg00453-reuters-reuters-samsungde/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",REUTERS TV
+https://amg00453-reuters-amg00453c1-samsung-fr-2112.playouts.now.amagi.tv/playlist/amg00453-reuters-reuters-samsungfr/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",REUTERS TV
+https://d2kjqd7acfrwt3.cloudfront.net/playlist/amg00453-reuters-reuters-rakutenuk/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",VOA TV
+https://voa-ingest.akamaized.net/hls/live/2033874/tvmc06/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",BLOOMBERG US
+https://www.bloomberg.com/media-manifest/streams/us-event.m3u8
+#EXTINF:-1 group-title="YEDEKLER",BLOOMBERG US
+https://www.bloomberg.com/media-manifest/streams/phoenix-us.m3u8
+#EXTINF:-1 group-title="YEDEKLER",BLOOMBERG EU
+https://www.bloomberg.com/media-manifest/streams/eu.m3u8
+#EXTINF:-1 group-title="YEDEKLER",EURONEWS EN
+https://euronews-live-eng-uk.fast.rakuten.tv/v1/master/0547f18649bd788bec7b67b746e47670f558b6b2/production-LiveChannel-6503/bitok/e/26031/euronews-en.m3u8
+#EXTINF:-1 group-title="YEDEKLER",EURONEWS EN
+http://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/5ca1da6c593a5d78f0e7edcelivestitch/master.m3u8?deviceDNT=%7BTARGETOPT%7D&deviceModel=samsung&deviceVersion=unknown&appVersion=unknown&deviceType=samsung-tvplus&deviceMake=samsung
+#EXTINF:-1 group-title="YEDEKLER",EURONEWS EN
+https://streams.sofast.tv/euronewsen/live/eds/euronews-en/25017/euronews-en.m3u8
+#EXTINF:-1 group-title="YEDEKLER",EUROPE BY SAT
+https://streams.prd.commavservices.eu/live/ebs/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",EUROPE BY SAT +
+https://streams.prd.commavservices.eu/live/ebsplus/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",SKY NEWS AUSTRALIA
+https://amg00663-skynews-skynewsau-samsungau-r7n40.amagi.tv/playlist/amg00663-skynews-skynewsau-samsungau/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",INDIA TODAY
+https://indiatodaylive.akamaized.net/hls/live/2014320/indiatoday/indiatodaylive/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",WION NEWS INDIA
+https://d7x8z4yuq42qn.cloudfront.net/index_1.m3u8
+#EXTINF:-1 group-title="YEDEKLER",FRANCE 24 EN
+https://live.france24.com/hls/live/2037218/F24_EN_HI_HLS/master_2300.m3u8
+#EXTINF:-1 group-title="YEDEKLER",FRANCE 24 EN
+https://amg00106-france24-france24-samsunguk-qvpp8.amagi.tv/playlist/amg00106-france24-france24-samsunguk/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",FRANCE 24 FAST
+https://amg00106-france24-france24-samsungde-39lcm.amagi.tv/playlist/amg00106-france24-france24-samsungde/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",FRANCE 24 FAST
+https://amg00106-france24-france24-samsungspain-n4tez.amagi.tv/playlist/amg00106-france24-france24-samsungspain/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",FRANCE 24 FAST
+https://amg00106-amg00106c1-rakuten-uk-4654.playouts.now.amagi.tv/playlist/amg00106-france24fast-france24-rakutenuk/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",DW ENGLISH +
+https://dwamdstream105.akamaized.net/hls/live/2015531/dwstream105/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",DW ENGLISH +
+https://dwamdstream106.akamaized.net/hls/live/2017965/dwstream106/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",ARIRANG WORLD
+http://amdlive-ch01.ctnd.com.edgesuite.net/arirang_1ch/smil:arirang_1ch.smil/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",ARIRANG WORLD
+https://amdlive-ch01-g-ctnd-com.akamaized.net/arirang_1gch/smil:arirang_1gch.smil/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",ARIRANG WORLD
+https://amdlive-ch01-ctnd-com.akamaized.net/arirang_1ch/smil:arirang_1ch.smil/chunklist_b2256000_sleng.m3u8
+#EXTINF:-1 group-title="YEDEKLER",NHK WORLD
+https://nhkworld-tv.akamaized.net/hls/live/2115640/nhkworld-tv/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",NHK WORLD
+https://master.nhkworld.jp/nhkworld-tv/playlist/live.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TVP WORLD
+https://raw.githubusercontent.com/fraudiay79/strm/refs/heads/main/platforms/links/pl/tvpworld.m3u8
+#EXTINF:-1 group-title="YEDEKLER",AL JAZEERA NEWS
+https://live-hls-web-aje-fa.thehlive.com/AJE/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",CGTN NEWS
+https://news.cgtn.com/resource/live/english/cgtn-news.m3u8
+#EXTINF:-1 group-title="YEDEKLER",CGTN NEWS
+https://english-livetx.cgtn.com/hls/yypdyyctzb_hd.m3u8
+#EXTINF:-1 group-title="YEDEKLER",CGTN NEWS
+https://amg00405-rakutentv-cgtn-rakuten-i9tar.amagi.tv/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",RT NEWS [censure-blocked]
+https://rt-glb.rttv.com/dvr/rtnews/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",RT NEWS [censure-blocked]
+https://rumble-foxo.cdn.rumble.cloud/live/hr6yv36f/slot-4/mxtm-wdfe_1080p/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",CNN INT (backup)
+https://dqmhiwgbe98iq.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-1e8xhm2nv4xdw/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",CNN INT (backup)
+https://ds2c506obo7m8.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-7zjq3tdqasbg8/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",CNN FAST (backup)
+https://du6zy613vobd4.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-g58rwi2g496ww/CNNFAST_GB.m3u8
+#EXTINF:-1 group-title="YEDEKLER",CNN FAST (backup)
+https://d2sybdl23b9psq.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-bocx3i7bjz0dg/CNNFAST_GB.m3u8
+#EXTINF:-1 group-title="YEDEKLER",CNN FAST (backup)
+https://d2dbclbbd0dwnj.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-vfen7v8uxmmt1/CNNFAST_GB.m3u8
+#EXTINF:-1 group-title="YEDEKLER",CNN FAST (backup)
+https://d1k2s17sgkoemp.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-i4f8wxg6jeqii/CNNFAST_GB.m3u8
+#EXTINF:-1 group-title="YEDEKLER",CNN FAST (backup)
+https://d3hnx79nr9mhdw.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-1u2levt4fksmr/CNNFAST_GB.m3u8
+#EXTINF:-1 group-title="YEDEKLER",CNN FAST [geo-blocked]
+https://cdn-uw2-prod.tsv2.amagi.tv/linear/amg00405-rakutentv-cnnfastlg-rakuten-lggb/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",DELUXE MUSIC Dance
+https://sdn-global-live-streaming-packager-cache.3qsdn.com/64733/64733_264_live.m3u8
+#EXTINF:-1 group-title="YEDEKLER",DELUXE MUSIC Rap
+https://sdn-global-live-streaming-packager-cache.3qsdn.com/65183/65183_264_live.m3u8
+#EXTINF:-1 group-title="YEDEKLER",LCP/PS
+https://raw.githubusercontent.com/Paradise-91/ParaTV/main/streams/francetv/lcp-public-senat.m3u8
+#EXTINF:-1 group-title="YEDEKLER",RMC TALK INFO
+https://d75bm5ggq4k1o.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-gui89fv6hprsj/RMC_TALK_INFO_FR.m3u8
+#EXTINF:-1 group-title="YEDEKLER",BLOOMBERG FR
+https://995e2d68.wurl.com/master/f36d25e7e52f1ba8d7e56eb859c636563214f541/U2Ftc3VuZy1mcl9CbG9vbWJlcmdUVkZyYW5jZV9ITFM/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",EURONEWS FR (backup)
+https://cdn-euronews.akamaized.net/live/eds/euronews-fr/25081/euronews-fr.m3u8
+#EXTINF:-1 group-title="YEDEKLER",RMC STORY
+https://d15aro46bnpfm8.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-fqkqiax1078up/RMC_Story_FR.m3u8
+#EXTINF:-1 group-title="YEDEKLER",RMC DÉCOUVERTE
+https://d16zzycxcd0m0r.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-hixvx5kymecr9/RMC_Decouverte_FR.m3u8
+#EXTINF:-1 group-title="YEDEKLER",GULLI
+https://origin-m6web.live.6cloud.fr/out/v1/6play/6play-gulli/cmaf_fp00/hls-short-hd.m3u8
+#EXTINF:-1 group-title="YEDEKLER",MIEUX TV
+https://raw.githubusercontent.com/Paradise-91/ParaTV/main/streams/francetv/mieux.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TV5MONDE+ CHEFS
+https://d17g2p9a7he1mu.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-b4dzadk8a25ad/tv5ch.m3u8
+#EXTINF:-1 group-title="YEDEKLER",FASHION TV
+https://edge-fast3.evrideo.tv/bfdbb576-83f7-11f0-9f89-0200170e3e04_1000028043_HLS/manifest.m3u8
+#EXTINF:-1 group-title="YEDEKLER",L'ÉQUIPE LIVE 2
+https://d2sfyr4abdyf7s.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-d5yhiqv8rl7x3/Lequipe2_FR.m3u8
+#EXTINF:-1 group-title="YEDEKLER",CINÉ WESTERN
+https://amg00711-zylo-amg00711c8-rakuten-uk-2686.playouts.now.amagi.tv/playlist/amg00711-zylofast-cinewestern-rakutenuk/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",RAKUTEN TOP FILMS
+https://93ed06eba1ef4cf783b66dc6ea7c4f28.mediatailor.eu-west-1.amazonaws.com/v1/master/0547f18649bd788bec7b67b746e47670f558b6b2/production-LiveChannel-5986/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",RAKUTEN COMEDY FILMS
+https://cc9f70371e7144e7acae4de8b5832d7a.mediatailor.eu-west-1.amazonaws.com/v1/master/0547f18649bd788bec7b67b746e47670f558b6b2/production-LiveChannel-6183/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",RAKUTEN DRAMA FILMS
+https://f396f4db84a54f7bb496b2541477b626.mediatailor.eu-west-1.amazonaws.com/v1/master/0547f18649bd788bec7b67b746e47670f558b6b2/production-LiveChannel-6095/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",100% CINÉMA
+https://amg02162-amg02162c3-samsung-fr-8106.playouts.now.amagi.tv/ts-eu-w1-n2/playlist/amg02162-newenconnect-cinemachannel-samsungfr/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",SONY ONE HITS ACTION
+https://5098a8b860504a3690fd2e7c0a18d68f.mediatailor.us-west-2.amazonaws.com/v1/master/ba62fe743df0fe93366eba3a257d792884136c7f/LINEAR-817-FR-SONYONEHITSACTION-LG_FR/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",SONY ONE HITS COMEDIE
+https://7aa9671895264ec9a384dfed1b992171.mediatailor.us-west-2.amazonaws.com/v1/master/ba62fe743df0fe93366eba3a257d792884136c7f/LINEAR-818-FR-SONYONEHITSCOMDIE-LG_FR/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",SONY ONE THE BLACKLIST
+https://06cb85ad6ccb4a6b97f561e62d16ad3f.mediatailor.us-west-2.amazonaws.com/v1/master/ba62fe743df0fe93366eba3a257d792884136c7f/LINEAR-822-FR-SONYONETHEBLACKLIST-LG_FR/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",SONY ONE FAVORIS
+https://49d735318d6b4c30a24a7997ea594e1b.mediatailor.us-west-2.amazonaws.com/v1/master/ba62fe743df0fe93366eba3a257d792884136c7f/LINEAR-820-FR-SONYONEFAVORIS-LG_FR/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TV7 COLMAR
+https://tv7.live-kd.com/live/tv7/livestream/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",CARAC 5
+https://edge18.vedge.infomaniak.com/livecast/ik:carac5/manifest.m3u8
+#EXTINF:-1 group-title="YEDEKLER",BLOOMBERG HT
+https://ciner.daioncdn.net/bloomberght/bloomberght.m3u8?app=web&ce=3
+#EXTINF:-1 group-title="YEDEKLER",CNN TÜRK
+https://anym3u8player.com/youtube.php/id/68f4acd0082ad.m3u8
+#EXTINF:-1 group-title="YEDEKLER",YENİ ÇAĞ TV
+https://live.euromediacenter.com/yenicagtv/tracks-v1a1/mono.m3u8
+#EXTINF:-1 group-title="YEDEKLER",SHOW (backup)
+http://ciner.daioncdn.net/showtv/showtv.m3u8?app=showtv_web
+#EXTINF:-1 group-title="YEDEKLER",SHOW MAX
+http://rmtftbjlne.turknet.ercdn.net/bpeytmnqyp/showmax/showmax.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TEVE 2 (backup)
+http://demiroren.daioncdn.net/teve2/teve2.m3u8?app=web
+#EXTINF:-1 group-title="YEDEKLER",HT SPOR
+https://ciner.daioncdn.net/ht-spor/ht-spor.m3u8?app=web&ce=3
+#EXTINF:-1 group-title="YEDEKLER",EKOL SPORTS
+https://ekoltv-live.ercdn.net/ekolsport/ekolsport.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TAY TV
+http://duhnet.hipodrom.com/S2/HLS_LIVE/mislitaynp/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",DREAM TÜRK
+http://live.duhnet.tv/S2/HLS_LIVE/dreamturknp/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",RONAHI TV
+https://hlspackager.akamaized.net/live/DB/RONAHI_TV/HLS/RONAHI_TV.m3u8
+#EXTINF:-1 group-title="YEDEKLER",ANT 1
+https://raw.githubusercontent.com/jimgate07/grtv/refs/heads/master/Metadoseis/antenna.m3u8
+#EXTINF:-1 group-title="YEDEKLER",MEGA
+https://raw.githubusercontent.com/jimgate07/grtv/refs/heads/master/Metadoseis/mega.m3u8
+#EXTINF:-1 group-title="YEDEKLER",NETMAX TV
+https://es1.crystalweb.net:1936/netmaxtv/netmaxtv/chunklist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",EURONEWS PT (backup)
+https://cdn-euronews.akamaized.net/live/eds/euronews-pt/25077/euronews-pt.m3u8
+#EXTINF:-1 group-title="YEDEKLER",EURONEWS PT (backup)
+https://38cf202f635c4e6d9a9ecd1dc805222a.mediatailor.eu-west-1.amazonaws.com/v1/manifest/0547f18649bd788bec7b67b746e47670f558b6b2/production-LiveChannel-6572/aa7d84c5-ed1b-4706-aa89-11c525faf07d/5.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TVE CLAN
+https://rtvelivestream-rtveplayplus.rtve.es/rtvesec/int/clan_int_main_1080.m3u8
+#EXTINF:-1 group-title="YEDEKLER",SUR 1 ANDALUCÍA
+https://dfk2a268yviz9.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-ddiii1m6jt6of/CanalSurAndaluciaES.m3u8
+#EXTINF:-1 group-title="YEDEKLER",CASTILLA MEDIA
+https://cdnapisec.kaltura.com/p/2288691/sp/228869100/playManifest/entryId/1_gnz6ity9/protocol/https/format/applehttp/a.m3u8
+#EXTINF:-1 group-title="YEDEKLER",CASTILLA MEDIA
+https://cdnapisec.kaltura.com/p/2288691/sp/228869100/playManifest/entryId/1_gnz6ity9/format/applehttp/a.m3u8
+#EXTINF:-1 group-title="YEDEKLER",TELESUR
+https://mblesmain01.telesur.ultrabase.net/mbliveMain/hd/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",EURONEWS ES (backup)
+https://cdn-euronews.akamaized.net/live/eds/euronews-es/25082/euronews-es.m3u8
+#EXTINF:-1 group-title="YEDEKLER",MEDI 1 MG العربية
+https://cdn.live.easybroadcast.io/abr_corp/83_medi1tv-maghreb_jnbspmg/playlist_dvr.m3u8
+#EXTINF:-1 group-title="YEDEKLER",MEDI 1 AR العربية
+https://cdn.live.easybroadcast.io/abr_corp/83_medi1tv-arabic_g90v4ec/playlist_dvr.m3u8
+#EXTINF:-1 group-title="YEDEKLER",MEDI 1 AF العربية
+https://cdn.live.easybroadcast.io/abr_corp/83_medi1tv-afrique_tm7tu45/playlist_dvr.m3u8
+#EXTINF:-1 group-title="YEDEKLER",JAWHARA TV
+https://streaming.toutech.net/live/jtv/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",ENNAHAR TV (geoblocked)
+https://raw.githubusercontent.com/fraudiay79/strm/refs/heads/main/platforms/links/dz/ennahartv.m3u8
+#EXTINF:-1 group-title="YEDEKLER",EL HAYAT DZ (geoblocked)
+https://raw.githubusercontent.com/fraudiay79/strm/refs/heads/main/platforms/links/dz/elhayattv.m3u8
+#EXTINF:-1 group-title="YEDEKLER",ECHOROUK NEWS DZ (geoblocked)
+https://raw.githubusercontent.com/fraudiay79/strm/refs/heads/main/platforms/links/dz/echorouknews.m3u8
+#EXTINF:-1 group-title="YEDEKLER",ECHOROUK TV DZ (geoblocked)
+https://raw.githubusercontent.com/fraudiay79/strm/refs/heads/main/platforms/links/dz/echorouktv.m3u8
+#EXTINF:-1 group-title="YEDEKLER",RED LBN
+https://live.kwikmotion.com/redtvlive/redtv.smil/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",LBC LBN
+http://185.9.2.18/chid_327/mono.m3u8
+#EXTINF:-1 group-title="YEDEKLER",LBC INT
+http://185.9.2.18/chid_521/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",AL ALARABY 2
+https://live.kwikmotion.com/alaraby2live/alaraby2.smil/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",ALAWLA TV
+https://live.alawla.tv/hls/stream.m3u8
+#EXTINF:-1 group-title="YEDEKLER",AL SAHAT
+https://assahat.b-cdn.net/Assahat/assahatobs/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",AL HQEQA
+https://ghaasiflu.online/alhqeqa/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",AL TAGHIER
+https://jmc-live.ercdn.net/altaghier/altaghier.m3u8
+#EXTINF:-1 group-title="YEDEKLER",THAQAFEYYAH
+https://shd-gcp-live.edgenextcdn.net/live/bitmovin-thaqafeyyah/28c0d2a20dbf1dc049ce15d3973f494b/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",PALESTINIAN SAT
+https://cdn-globecast.akamaized.net/live/eds/palestinian_satellite_channel/hls_roku/palestinian_satellite_channel.m3u8
+#EXTINF:-1 group-title="YEDEKLER",WATTAN PS
+https://htvmada.mada.ps:4443/wattan/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",ISHTAR ASSYRIAN GLOBAL
+https://58cc65c534c67.streamlock.net/agnsat.com/agn2/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",KAS QATAR 1
+https://alkass.bassamnetflix2.workers.dev/hls/live/2097037/Alkass1buoicft/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",KAS QATAR 2
+https://alkass.bassamnetflix2.workers.dev/hls/live/2097037/Alkass2hefazqft/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",KAS QATAR 3
+https://alkass.bassamnetflix2.workers.dev/hls/live/2097037/Alkass3vakazqft/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",KAS QATAR 4
+https://alkass.bassamnetflix2.workers.dev/hls/live/2097037/Alkass4azqaft/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",KUWAIT TV NEWS
+https://cdn-globecast.akamaized.net/live/eds/ktv_al_akhbar/hls_roku/ktv_al_akhbar.m3u8
+#EXTINF:-1 group-title="YEDEKLER",AL ALARABY
+https://live.kwikmotion.com/alaraby1live/alaraby_abr/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",ASHARQ NEWS
+https://shd-gcp-live.edgenextcdn.net/live/bitmovin-asharq/10ae30c64e21402c8116a7fb1e5aa789/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",SHAMS TV
+https://stream.shams.tv/hls/0/stream.m3u8
+#EXTINF:-1 group-title="YEDEKLER",PANORAMA FM TV
+https://shd-gcp-live.edgenextcdn.net/live/bitmovin-panorama-fm/ea22f3856a1b772f793c43eb5d1c0636/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",WANASAH
+https://shd-gcp-live.edgenextcdn.net/live/bitmovin-wanasah/13e82ea6232fa647c43b26e8a41f173d/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",KOOGI TV
+https://5b622f07944df.streamlock.net/koogi.tv/koogi.smil/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",BBC NEWS ARABIA (backup)
+https://vs-hls-pushb-ww-live.akamaized.net/x=4/i=urn:bbc:pips:service:bbc_arabic_tv/mobile_wifi_main_hd_abr_v2.m3u8
+#EXTINF:-1 group-title="YEDEKLER",MBC 1
+https://shd-gcp-live.edgenextcdn.net/live/bitmovin-mbc-1-na/eec141533c90dd34722c503a296dd0d8/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",MBC 3 USA
+http://shd-gcp-live.edgenextcdn.net/live/bitmovin-mbc-3-usa/5d58265a862a476dc7f97694addb5ded/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",MBC 4
+https://shd-gcp-live.edgenextcdn.net/live/bitmovin-mbc-4/24f134f1cd63db9346439e96b86ca6ed/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",MBC 5
+https://shd-gcp-live.edgenextcdn.net/live/bitmovin-mbc-5/ee6b000cee0629411b666ab26cb13e9b/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",MBC DRAMA PLUS
+https://shd-gcp-live.edgenextcdn.net/live/bitmovin-mbc-plus-drama/e37251ec2aac8f6c98f75cd0fa37cd28/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",MBC GAMING
+https://shls-live-enc.edgenextcdn.net/out/v1/8ae5c35ffc5247a58e71a5c86dd31ad6/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",MBC FM LIVE TV
+https://shd-gcp-live.edgenextcdn.net/live/bitmovin-mbc-fm/3f36f7db6086acf058dc51681c87f8ad/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",LA 7
+https://d1chghleocc9sm.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-evfku205gqrtf/Live.m3u8
+#EXTINF:-1 group-title="YEDEKLER",RTL 102.5 PLS
+https://streamcdng14-dd782ed59e2a4e86aabf6fc508674b59.msvdn.net/live/S82929343/cAcsSu4Wecc5/playlist.m3u8
+#EXTINF:-1 group-title="YEDEKLER",RADIO 24 ORE LIVE TV
+https://ilsole24ore-radiovisual.akamaized.net/hls/live/2035302/persidera/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",EURONEWS IT
+https://cdn-euronews.akamaized.net/live/eds/euronews-it/25085/euronews-it.m3u8
+#EXTINF:-1 group-title="YEDEKLER",WDR DE
+https://wdr-live.ard-mcdn.de/wdr/live/hls/de/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",MOLDOVA RO
+https://moldovatv.ro/live-tv/live.m3u8
+#EXTINF:-1 group-title="YEDEKLER",HRT 1
+http://webtvstream.bhtelecom.ba/hrt1.m3u8
+#EXTINF:-1 group-title="YEDEKLER",HRT 2
+http://webtvstream.bhtelecom.ba/hrt2.m3u8
+#EXTINF:-1 group-title="YEDEKLER",HRT 3
+http://webtvstream.bhtelecom.ba/hrt3.m3u8
+#EXTINF:-1 group-title="YEDEKLER",RTS 1
+http://webtvstream.bhtelecom.ba/rts1.m3u8
+#EXTINF:-1 group-title="YEDEKLER",RTS 2
+http://webtvstream.bhtelecom.ba/rts2.m3u8
+#EXTINF:-1 group-title="YEDEKLER",RTS SVET
+http://webtvstream.bhtelecom.ba/rts_svet.m3u8
+#EXTINF:-1 group-title="YEDEKLER",VIZION PLUS AL
+https://tringliveviz.akamaized.net/delta/105/out/u/qwaszxerdfcvrtryuy.m3u8
+#EXTINF:-1 group-title="YEDEKLER",GPB HD
+https://raw.githubusercontent.com/fraudiay79/strm/refs/heads/main/platforms/links/ge/gpbhd.m3u8
+#EXTINF:-1 group-title="YEDEKLER",PIRVELI TV
+https://raw.githubusercontent.com/fraudiay79/strm/refs/heads/main/platforms/links/ge/pirvelitv.m3u8
+#EXTINF:-1 group-title="YEDEKLER",IRNA
+https://tv.irna.ir/live/stream/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",MBC PERSIA
+https://shd-gcp-live.edgenextcdn.net/live/bitmovin-mbc-persia/818ee8e4b592dc497608f066d825bfb4/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",CNN FAST
+https://live-media-aka.warnermediacdn.com/cmaf/live/2028716/cnnfast-international/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",NBC NEWS
+https://xumo-drct-nbcnn-ir8ze.fast.nbcuni.com/live/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",BBC NEWS
+https://vs-hls-push-ww-live.akamaized.net/x=4/i=urn:bbc:pips:service:bbc_news_channel_hd/iptv_hd_abr_v1.m3u8
+#EXTINF:-1 group-title="YEDEKLER",BBC NEWS
+https://vs-hls-push-ww-live.akamaized.net/x=4/i=urn:bbc:pips:service:bbc_news_channel_hd/mobile_wifi_main_hd_abr_v2.m3u8
+#EXTINF:-1 group-title="YEDEKLER",BBC NEWS
+https://vs-hls-pushb-ntham-gcomm-live.akamaized.net/x=4/i=urn:bbc:pips:service:bbc_world_news_north_america/pc_hd_abr_v2.m3u8
+#EXTINF:-1 group-title="YEDEKLER",SKY NEWS
+https://dqco14bu26p3z.cloudfront.net/30505/88818604/hls/master.m3u8?ads.xumo_channelId=88818604
+#EXTINF:-1 group-title="YEDEKLER",SKY NEWS
+https://xumo-drct-skynews-nc91a.fast.nbcuni.com/live/master.m3u8
+#EXTINF:-1 group-title="YEDEKLER",GB NEWS
+https://live-gbnews-ssai-test.simplestreamcdn.com/v1/master/82267e84b9e5053b3fd0ade12cb1a146df74169a/gbnews-live-TEST/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",GB NEWS
+https://live-gbnews.simplestreamcdn.com/s3/gbnews/index.m3u8
+#EXTINF:-1 group-title="YEDEKLER",NHK WORLD
+https://livehub-voidnet.onrender.com/cluster/streamcore/jp/NHK_StreamOrchestrator.m3u8
