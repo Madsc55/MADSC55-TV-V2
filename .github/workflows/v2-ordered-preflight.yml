@@ -54,6 +54,7 @@ jobs:
       - run: python v2/test_forge_source_review.py
       - run: python v2/test_forge_api_safety.py
       - run: python v2/test_source_availability_audit.py
+      - run: python v2/test_run_public_inventory.py
       - run: python v2/test_fetch_source_gate.py
       - run: python v2/test_run_all_discovery.py
       - run: python v2/test_github_source_safety.py
