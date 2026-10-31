@@ -5,12 +5,12 @@ from discover import discover, recognized_channel_ids, entries, turkish_candidat
 
 class CrossSourceArchiveParityTests(unittest.TestCase):
     def test_world_alternative_is_recognized_even_without_turkish_name(self):
-        tr = '#EXTM3U\n#EXTINF:-1 tvg-id="Channel.TR",Kanal\nhttps://example.org/tr.m3u8\n'
-        world = '#EXTM3U\n#EXTINF:-1 tvg-id="Channel.TR",News\nhttps://example.org/world.m3u8\n'
+        tr = '#EXTM3U\n#EXTINF:-1 tvg-id="ChannelXYZ",Kanal\nhttps://example.org/tr.m3u8\n'
+        world = '#EXTM3U\n#EXTINF:-1 tvg-id="ChannelXYZ",News\nhttps://example.org/world.m3u8\n'
         sources = [("tr", tr), ("world", world)]
         scopes = {"tr": "TR", "world": "world"}
         ids = recognized_channel_ids(sources, scopes)
-        self.assertIn("channel.tr", ids)
+        self.assertIn("channelxyz", ids)
         entry = next(entries(world))
         self.assertFalse(turkish_candidate(entry, "world"))
         self.assertIn(entry["tvg_id"].casefold(), ids)
