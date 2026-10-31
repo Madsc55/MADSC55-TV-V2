@@ -143,6 +143,11 @@ def main():
                     sources.append({"id": "github-auto-" + hashlib.sha256(url.encode("utf-8")).hexdigest()[:20], "url": url, "scope": "candidate"})
         except (OSError, ValueError, TypeError) as exc:
             raise SystemExit('Dynamic discovery inventory unreadable: ' + type(exc).__name__) from exc
+    if args.encrypted_archive:
+        from archive_acceptance_gate import check
+        check()
+        from encrypted_archive import _cipher
+        _cipher()
     loaded, errors, source_audit = [], [], []
     # A page is a discovery index, not an M3U stream. Expand only explicit
     # public HTTPS playlist links; never treat HTML as playable media.
