@@ -32,6 +32,14 @@ class SourceLossTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             compare(report(("a", "ok", 10), ("a", "ok", 20)), report())
 
+    def test_invalid_previous_count_rejected(self):
+        with self.assertRaises(ValueError):
+            compare(report(("a", "ok", -1)), report())
+
+    def test_invalid_current_count_rejected(self):
+        with self.assertRaises(ValueError):
+            compare(report(("a", "ok", 10)), report(("a", "ok", True)))
+
     def test_threshold_rejected(self):
         with self.assertRaises(ValueError):
             compare(report(), report(), 1.2)
