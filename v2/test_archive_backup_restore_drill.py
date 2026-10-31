@@ -20,6 +20,8 @@ class BackupRestoreDrillTests(unittest.TestCase):
                 result = drill(source, root / "independent" / "copy.enc",
                                root / "restored.enc", root / "evidence.json")
                 self.assertEqual(result["record_count"], 1)
+                self.assertIs(result["durable"], False)
+                self.assertEqual(result["backup_scope"], "local_separate_directory_not_independent_storage")
                 self.assertEqual(restore(root / "restored.enc"), restore(source))
                 self.assertEqual((root / "restored.enc").stat().st_mode & 0o077, 0)
                 self.assertNotIn("PRIVATE", (root / "evidence.json").read_text())
