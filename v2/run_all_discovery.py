@@ -30,8 +30,6 @@ def plan(archive, previous_report=None, include_youtube=True):
     return steps
 
 def preflight(archive, include_youtube=True):
-    if include_youtube and shutil.which('yt-dlp') is None:
-        raise RuntimeError('Full discovery requires yt-dlp; explicitly skip YouTube for partial coverage')
     if not archive or archive.is_symlink():
         raise RuntimeError("A private, non-symlink encrypted archive path is required")
     check()
@@ -41,6 +39,8 @@ def preflight(archive, include_youtube=True):
         mode = archive.stat().st_mode
         if not stat.S_ISREG(mode) or mode & 0o077:
             raise RuntimeError("Archive must be a private regular file")
+    if include_youtube and shutil.which("yt-dlp") is None:
+        raise RuntimeError("Full discovery requires yt-dlp; explicitly skip YouTube for partial coverage")
     return True
 
 def execute(steps, runner=subprocess.run):
