@@ -40,7 +40,7 @@ def api_json(url):
     return json.loads(payload)
 
 def scan():
-    found, errors, seen = [], [], set()
+    found, errors, seen, limits_hit = [], [], set(), set()
     for term in TERMS:
         queries = [
             ("gitlab", GITLAB_API + "?" + urlencode({"search": term, "simple": "true", "per_page": 12})),
@@ -50,6 +50,8 @@ def scan():
             try:
                 payload = api_json(url)
                 projects = gitlab_projects(payload) if forge == "gitlab" else codeberg_projects(payload)
+                if len(projects) >= 12:
+                    limits_hit.add(forge.upper() + "_PROJECT_PAGE_LIMIT")
             except (ValueError, OSError, TimeoutError) as exc:
                 errors.append({"forge": forge, "term": term, "error": type(exc).__name__})
                 continue
@@ -69,14 +71,19 @@ def scan():
                 try:
                     listing = api_json(tree)
                     if forge == "codeberg" and isinstance(listing, dict):
+                        if listing.get("truncated"):
+                            limits_hit.add("CODEBERG_TRUNCATED_TREE")
                         listing = listing.get("tree", [])
+                    if forge == "gitlab" and isinstance(listing, list) and len(listing) >= 100:
+                        limits_hit.add("GITLAB_TREE_PAGE_LIMIT")
                     paths = parse_tree_paths(listing)
                     for link in playlist_sources(project, paths):
                         found.append({"forge": forge, "source_url": link, "playback_verified": False})
                 except (ValueError, OSError, TimeoutError) as exc:
                     errors.append({"forge": forge, "project": identity, "error": type(exc).__name__})
     return {"schema": 1, "status": "source_references_only",
-            "coverage_status": "PARTIAL_API_ERRORS" if errors else "COMPLETE_QUERIES",
+            "coverage_status": "PARTIAL_API_ERRORS" if errors else "PARTIAL_LIMITS" if limits_hit else "COMPLETE_QUERIES",
+            "limits_hit": sorted(limits_hit),
             "sources": found,
             "errors": errors, "projects_examined": len(seen)}
 
@@ -88,7 +95,7 @@ def main():
     OUTPUT.parent.mkdir(parents=True, exist_ok=True)
     OUTPUT.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print("Forge source references:", len(report["sources"]), "errors:", len(report["errors"]))
-    if report["errors"]:
-        print("WARNING: Partial forge source discovery; inspect saved errors")
+    if report["errors"] or report["limits_hit"]:
+        print("WARNING: Partial forge source discovery; inspect saved errors and limits")
 if __name__ == "__main__":
     main()
