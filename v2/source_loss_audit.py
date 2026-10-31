@@ -19,8 +19,10 @@ def compare(previous, current, threshold=0.5):
     old, new = index(previous), index(current)
     findings = []
     for source, before in sorted(old.items()):
-        after = new.get(source)
         prior = before.get("distinct_stream_urls", before.get("entries", 0))
+        if type(prior) is not int or prior < 0:
+            raise ValueError("Invalid previous source count")
+        after = new.get(source)
         if after is None:
             findings.append({"source": source, "reason": "SOURCE_MISSING", "previous": prior, "current": None})
             continue
@@ -28,7 +30,7 @@ def compare(previous, current, threshold=0.5):
             findings.append({"source": source, "reason": "FETCH_FAILED", "previous": prior, "current": None})
             continue
         now = after.get("distinct_stream_urls", after.get("entries", 0))
-        if not isinstance(prior, int) or not isinstance(now, int) or min(prior, now) < 0:
+        if type(now) is not int or now < 0:
             raise ValueError("Invalid source count")
         if prior and now < prior * threshold:
             findings.append({"source": source, "reason": "SOURCE_DROP", "previous": prior, "current": now})
