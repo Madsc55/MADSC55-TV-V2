@@ -27,6 +27,8 @@ jobs:
           persist-credentials: true
       - name: Python version
         run: python3 --version
+      - name: Validate protected playlist before scan
+        run: python3 v2/test_playlist_invariants.py
       - name: Scan live HTTPS sources and check HLS manifests
         id: scan
         continue-on-error: true
