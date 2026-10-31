@@ -812,3 +812,10 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - CI #41210006846 ilk kontrolde in_progress (compile/protect success, discovery-tests queued).
 - HTML M3U indeks keşfi altıncı aşama olarak `run_all_discovery.py` içine eklendiğinden `test_run_all_discovery.py` içindeki eski 5-aşama beklentisi 6'ya, arşiv keşif aşaması indeksi 5'e düzeltildi (commit 47043c2785cae3131a8e4cd69e1b40b598d3d761).
 - Son CI henüz doğrulanmadı. Ana IBO, YEDEKLER, YENİLER, FAVORİLER değişmedi; PR #9 merge edilmedi.
+
+
+## 31 Ekim 2026 — Kaynak erişilebilirlik durumunun doğruluğu
+- 6 aşamalı koordinatör düzeltme commit'i 47043c2785cae3131a8e4cd69e1b40b598d3d761 için Actions #41210098077 SUCCESS.
+- `source_availability_audit.py`: hiç kaynak tanımlı değilse `NO_CONFIGURED_SOURCES`, hiçbir kaynak erişilebilir değilse `NO_SOURCES_REACHABLE`, karışık sonuçta `PARTIAL_SOURCE_AVAILABILITY`, tüm kaynaklar başarılıysa `COMPLETE`.
+- `run_public_inventory.py` boş kaynak listesiyle yanlışlıkla başarılı tamamlanamaz. İlgili offline regresyon testleri güncellendi.
+- Son commit CI henüz doğrulanmadı. Bu kontroller stream playback değildir; gerçek tam tarama ve bağımsız şifreli yedek kanıtı hâlâ gerekli. Korunan listelere dokunulmadı, PR #9 merge edilmedi.
