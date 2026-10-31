@@ -31,6 +31,15 @@ class CandidateIntegrityTests(unittest.TestCase):
         self.assertIn('result["source_integrity"] = integrity', body)
         self.assertIn('not integrity["verified"]', body)
 
+    def test_network_failure_is_audited_without_losing_successful_sources(self):
+        from unittest.mock import patch
+        from discover import fetch
+        # Network failures are classified without exposing URL or credentials.
+        with patch("urllib.request.build_opener") as opener:
+            opener.return_value.open.side_effect = TimeoutError("network timeout")
+            with self.assertRaises(TimeoutError):
+                fetch("https://iptv-org.github.io/iptv/index.m3u")
+
     def test_exact_candidate_set(self):
         result = self.audit(self.candidates)
         self.assertTrue(result["verified"])
