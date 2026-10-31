@@ -18,6 +18,11 @@ class LivePageTests(unittest.TestCase):
         refs = extract_live_references("https://example.org/index", html)
         self.assertEqual(len(refs), 1)
         self.assertEqual(refs[0]["kind"], "official-or-third-party-live-page")
+    def test_private_origin_rejected(self):
+        for url in ("https://127.0.0.1/index", "https://localhost/index",
+                    "https://user:pass@example.org/index"):
+            with self.subTest(url=url), self.assertRaises(ValueError):
+                extract_live_references(url, '<a href="/live">live</a>')
     def test_nonlive_pages_excluded(self):
         self.assertEqual(extract_live_references("https://example.org/index",
                                                  '<a href="/about">About</a>'), [])
