@@ -856,3 +856,11 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - Eski test yeni kısmi rapor davranışına uyarlandı; API hata bilgisi raporda açıkça kalır, tam kapsama iddiası yoktur.
 - `v2-ordered-preflight.yml` PR bazlı concurrency ve `cancel-in-progress: true` ile eskimiş eşzamanlı testleri iptal ederek tek güncel toplu çalışmayı tercih eder.
 - Son CI henüz doğrulanmadı; ana IBO, YEDEKLER, YENİLER, FAVORİLER korunuyor, PR #9 merge edilmedi.
+
+
+## 31 Ekim 2026 — Resmî yayın sayfaları ve HTML kaynak indeksleri kısmi tarama dayanıklılığı
+- CI #41212487179: compile/protect/discovery-tests/safety SUCCESS.
+- `run_live_page_discovery.py` ve `run_webpage_playlist_discovery.py` kısmi sayfa erişim hatasında başarılı referansları saklar ve `PARTIAL_APPROVED_PAGES` raporlar; otomatik oynatılabilir kanal ithalatı yoktur.
+- İki modülün testlerine başarı+başarısız sayfa kombinasyonu eklendi. Kaynak URL'leri, gizli tokenlar veya canlı IBO listesi rapora taşınmaz.
+- `live-pages.json` ve `playlist-index-pages.json` henüz boş: doğrulanmış resmî HTTPS sayfaları eklenmeden bu kategoriler taranmış sayılamaz.
+- Son CI henüz doğrulanmadı; ana IBO, YEDEKLER, YENİLER, FAVORİLER korunuyor; PR #9 merge edilmedi.
