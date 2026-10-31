@@ -16,7 +16,7 @@ def main():
     print("Source inventory checked:", report["source_count"],
           "reachable:", report["reachable_source_count"],
           "unreachable:", report["unreachable_source_count"])
-    if report["unreachable_source_count"]:
+    if report["unreachable_source_count"] or not report["source_count"]:
         raise SystemExit("Source inventory partially unavailable; inspect source IDs")
 if __name__ == "__main__":
     main()
