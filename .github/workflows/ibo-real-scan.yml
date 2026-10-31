@@ -48,7 +48,10 @@ jobs:
           path: v2/reports/IBO_YENI_ADAYLAR_PART*.m3u8
           if-no-files-found: error
           retention-days: 7
-      - name: Commit only appended YEDEKLER entries to V2 branch
+      - name: Verify protected playlist before publishing
+        if: steps.scan.outcome == 'success'
+        run: python3 v2/test_playlist_invariants.py
+      - name: Commit only appended YEDEKLER entries to main
         if: steps.scan.outcome == 'success'
         shell: bash
         run: |
@@ -61,7 +64,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -- "$target"
-          git commit -m "Append HLS-checked new channels to YEDEKLER [skip ci]"
+          git commit -m "Append HLS-checked new channels to YEDEKLER"
           git push origin "HEAD:main"
       - name: Propagate scan failure
         if: steps.scan.outcome != 'success'
