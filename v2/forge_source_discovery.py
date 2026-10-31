@@ -43,9 +43,9 @@ def codeberg_projects(payload):
 def playlist_sources(project, paths):
     """Only explicitly listed playlist files; no speculative URL guessing."""
     result = []
-    for path in paths[:MAX_PATHS]:
-        if not isinstance(path, str) or not path.lower().endswith((".m3u", ".m3u8")):
-            continue
+    playlist_paths = [path for path in paths if isinstance(path, str)
+                      and path.lower().endswith((".m3u", ".m3u8"))]
+    for path in playlist_paths[:MAX_PATHS]:
         if path.startswith("/") or ".." in path.split("/"):
             continue
         if project["forge"] == "gitlab":
