@@ -191,6 +191,19 @@ def main():
     # A page is a discovery index, not an M3U stream. Expand only explicit
     # public HTTPS playlist links; never treat HTML as playable media.
     from webpage_source_discovery import discover_playlist_links
+    # The approved public index inventory is part of the same source-fetch
+    # pipeline, but links are only parsed after validating the HTML origin.
+    index_inventory = ROOT / "v2/config/playlist-index-pages.json"
+    if index_inventory.exists():
+        index_document = json.loads(index_inventory.read_text(encoding="utf-8"))
+        if index_document.get("schema") != 1 or not isinstance(index_document.get("pages"), list):
+            raise SystemExit("Invalid approved public index inventory")
+        for page in index_document["pages"]:
+            if not isinstance(page, dict) or not isinstance(page.get("id"), str) or not isinstance(page.get("url"), str):
+                raise SystemExit("Invalid public index entry")
+            if not any(s["url"] == page["url"] for s in sources):
+                sources.append({"id": "index-" + page["id"], "kind": "html",
+                                "url": page["url"], "scope": "candidate"})
     scopes = {source['id']: source.get('scope', 'candidate') for source in sources}
     for source in sources:
         if args.offline:
