@@ -9,6 +9,66 @@
     {
       "id": "trt1-official-home",
       "url": "https://www.trt1.com.tr/"
+    },
+    {
+      "id": "trt-official",
+      "url": "https://www.trt.net.tr/"
+    },
+    {
+      "id": "trt-haber-official",
+      "url": "https://www.trthaber.com/"
+    },
+    {
+      "id": "trt-world-official",
+      "url": "https://www.trtworld.com/"
+    },
+    {
+      "id": "atv-official",
+      "url": "https://www.atv.com.tr/"
+    },
+    {
+      "id": "show-tv-official",
+      "url": "https://www.showtv.com.tr/"
+    },
+    {
+      "id": "kanal-d-official",
+      "url": "https://www.kanald.com.tr/"
+    },
+    {
+      "id": "star-tv-official",
+      "url": "https://www.startv.com.tr/"
+    },
+    {
+      "id": "now-tv-official",
+      "url": "https://www.nowtv.com.tr/"
+    },
+    {
+      "id": "tv8-official",
+      "url": "https://www.tv8.com.tr/"
+    },
+    {
+      "id": "haberturk-official",
+      "url": "https://www.haberturk.com/"
+    },
+    {
+      "id": "ntv-official",
+      "url": "https://www.ntv.com.tr/"
+    },
+    {
+      "id": "halk-tv-official",
+      "url": "https://halktv.com.tr/"
+    },
+    {
+      "id": "sozcu-tv-official",
+      "url": "https://www.sozcu.com.tr/"
+    },
+    {
+      "id": "azerbaijan-itv-official",
+      "url": "https://itv.az/"
+    },
+    {
+      "id": "azerbaijan-ictimai-official",
+      "url": "https://www.ictimai.az/"
     }
   ]
 }
