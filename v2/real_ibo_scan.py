@@ -52,10 +52,9 @@ def parse_m3u(data):
 
 
 def tr_az(entry, scope):
-    if scope.upper() in ('TR', 'AZ'):
-        return True
+    # Country-level source labels do not prove the individual stream language.
     value = ' '.join(entry[k] for k in ('name', 'group', 'tvg_id')).casefold()
-    return bool(re.search(r'türk|turk|trt|azer|azər|azerbaijan|azərbaycan|(?:^|[ ._-])(?:tr|az)(?:$|[ ._-])', value))
+    return bool(re.search(r'türk|turk|trt (?:1|2|3|cocuk|çocuk|spor|muzik|müzik|eba)|azer|azər|azərbaycan|azerbaijan|(?:^|[ ._-])(?:tr|az)(?:$|[ ._-])', value)) and not any(x in value for x in ("trt arabi", "trt world", "young turks", "trt (greece)", "trt (venezuela)"))
 
 
 def check_hls(entry, timeout):
@@ -159,7 +158,7 @@ def main():
             current_urls.add(item['url'])
             safe_name = re.sub(r'[\r\n,]', ' ', item['name']).strip() or 'Yeni Kanal'
             additions.extend([
-                f'#EXTINF:-1 group-title="YEDEKLER",{safe_name}',
+                f'#EXTINF:-1 group-title="🗂️ YEDEKLER (2)",{safe_name}',
                 item['url'],
             ])
         if additions:
