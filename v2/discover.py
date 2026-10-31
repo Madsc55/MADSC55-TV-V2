@@ -102,6 +102,9 @@ def main():
         except (OSError, ValueError, TypeError) as exc:
             raise SystemExit('Dynamic discovery inventory unreadable: ' + type(exc).__name__) from exc
     loaded, errors, source_audit = [], [], []
+    # A page is a discovery index, not an M3U stream. Expand only explicit
+    # public HTTPS playlist links; never treat HTML as playable media.
+    from webpage_source_discovery import discover_playlist_links
     scopes = {source['id']: source.get('scope', 'candidate') for source in sources}
     for source in sources:
         if args.offline:
@@ -118,6 +121,26 @@ def main():
                     last_error = exc
             if last_error is not None:
                 raise last_error
+            if source.get("kind", "m3u") == "html":
+                links = discover_playlist_links(source["url"], content)[:30]
+                source_audit.append({"source": source["id"], "entries": len(links),
+                                     "distinct_stream_urls": 0,
+                                     "status": "INDEX_LINKS_ONLY_NOT_PLAYBACK_VERIFIED"})
+                for i, link in enumerate(links):
+                    child_id = source["id"] + "-link-" + str(i)
+                    try:
+                        child_text = fetch(link)
+                        child_entries = list(entries(child_text))
+                        loaded.append((child_id, child_text))
+                        scopes[child_id] = source.get("scope", "candidate")
+                        source_audit.append({"source": child_id, "entries": len(child_entries),
+                                             "distinct_stream_urls": len({e["url"] for e in child_entries}),
+                                             "status": "PARSED_NOT_PLAYBACK_VERIFIED"})
+                    except Exception as exc:
+                        errors.append({"source": child_id, "error": type(exc).__name__})
+                        source_audit.append({"source": child_id, "status": "FETCH_FAILED",
+                                             "error": type(exc).__name__})
+                continue
             loaded.append((source["id"], content))
             source_audit.append({"source": source["id"], "entries": len(parsed),
                                  "distinct_stream_urls": len({e["url"] for e in parsed}),
