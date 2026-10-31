@@ -799,3 +799,10 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - `v2/run_public_inventory.py`: şifreli arşiv onayı gerektirmeden yalnızca mevcut 40 M3U kaynağının erişilebilirlik metadata'sını kontrol eden ayrı komut; eksik kaynak varsa nonzero exit ve rapor. Stream playback testi değildir.
 - `v2/test_run_public_inventory.py` eklendi ve CI'a bağlandı. Yeni CI sonucu henüz doğrulanmadı.
 - Gerçek ağ taraması ve bağımsız backup/restore onayı bekliyor. Ana IBO, YEDEKLER, YENİLER, FAVORİLER korunuyor; PR #9 merge edilmedi.
+
+
+## 31 Ekim 2026 — HTML M3U kaynak indeksi keşfi
+- Önceki CI #41209805958 SUCCESS.
+- `v2/run_webpage_playlist_discovery.py`: yalnızca açıkça onaylı genel HTTPS HTML indekslerinde M3U/M3U8 referansları bulur; public rapora yalnız SHA256 ve kaynak ID yazar; token içeren tam URL yazmaz, otomatik taramaya veya İBO'ya eklemez.
+- `v2/config/playlist-index-pages.json` varsayılan boş onay listesi, `v2/test_run_webpage_playlist_discovery.py` offline regresyonu ve `v2/run_all_discovery.py` entegrasyonu eklendi. Yeni CI sonucu henüz doğrulanmadı.
+- Onaylı HTML kaynak listesi henüz boş; gerçek kaynak taraması, bağımsız arşiv yedeği ve playback doğrulaması tamamlanmadı. Ana IBO/YEDEKLER/YENİLER/FAVORİLER korunuyor, PR #9 merge edilmedi.
