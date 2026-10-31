@@ -134,8 +134,10 @@ def main():
     args.report.parent.mkdir(parents=True, exist_ok=True)
     args.report.write_text(json.dumps(report, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
     if not good:
+        # A completed scan with zero eligible streams is a valid no-change result.
+        # Keep the report and original playlist intact; do not invent channels.
         print(json.dumps(report, ensure_ascii=False, indent=2))
-        raise SystemExit('No new HLS candidates verified; main playlist unchanged')
+        return
     lines = ['#EXTM3U']
     for item in good[:args.limit]:
         name = item['name'].replace('\n', ' ').replace('\r', ' ').replace(',', ' ')
