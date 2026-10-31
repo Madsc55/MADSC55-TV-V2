@@ -15,8 +15,9 @@ DYNAMIC = ROOT / "v2" / "reports" / "github-source-discovery.json"
 MAX_BYTES = 25_000_000
 
 def fetch(url):
-    if not url.startswith("https://"):
-        raise ValueError("HTTPS source required")
+    from webpage_source_discovery import candidate_url
+    if not candidate_url(url):
+        raise ValueError("Public HTTPS M3U source required")
     req = urllib.request.Request(url, headers={"User-Agent": "MADSC55-TV-V2-Discovery/1.0"})
     with urllib.request.urlopen(req, timeout=25) as res:
         data = res.read(MAX_BYTES + 1)
