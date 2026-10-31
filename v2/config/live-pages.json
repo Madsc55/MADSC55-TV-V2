@@ -1,5 +1,14 @@
 {
   "schema": 1,
   "policy": "explicitly reviewed public HTTPS origins only; no inferred playback",
-  "pages": []
+  "pages": [
+    {
+      "id": "aztv-official-home",
+      "url": "https://www.aztv.az/"
+    },
+    {
+      "id": "trt1-official-home",
+      "url": "https://www.trt1.com.tr/"
+    }
+  ]
 }
