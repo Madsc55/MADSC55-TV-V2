@@ -721,3 +721,11 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - `v2/test_partial_scan_fail_closed.py` CI'a eklendi. Yeni CI sonucu henüz doğrulanmadı.
 - KAPSAM: Ağ geçici hataları birleşik taramayı durdurabilir; güvenli tekrar deneme/işaretleme ve kalıcı keşif rapor arşivi henüz eksik. Gerçek tarama ve bağımsız restore kanıtı yok.
 - Ana IBO playlist, YEDEKLER, YENİLER, FAVORİLER değişmedi; PR #9 merge edilmedi.
+
+
+## 31 Ekim 2026 — Şifreli restore kanıtı güvenliği
+- Önceki CI #41200181346 SUCCESS.
+- `v2/archive_acceptance_gate.py` artık kanıt JSON'u için sembolik bağlantıyı reddeder; geri yüklenen şifreli arşiv için de sembolik bağlantıyı ve owner-only olmayan dosya izinlerini reddeder.
+- `v2/test_restore_evidence_safety.py` CI'a eklendi; yeni CI sonucu henüz doğrulanmadı.
+- Kalan kritik işler: kanıt dosyası bayrakları kendi başına bağımsız yedek varlığını kanıtlamaz; gerçek harici depolama/restore denemesi ve onay gereklidir. Gerçek toplu tarama yapılmadı. Onaylı canlı site listesi boş, playback testi eksik.
+- Ana IBO playlist, YEDEKLER, YENİLER, FAVORİLER değişmedi; PR #9 merge edilmedi.
