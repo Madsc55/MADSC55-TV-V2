@@ -44,6 +44,7 @@ def api(url):
 def main():
     configured = {x["url"] for x in json.loads(CONFIG.read_text())["sources"]}
     repos, errors, found = {}, [], []
+    limits_hit = []
     for query in QUERIES:
         try:
             url = "https://api.github.com/search/repositories?" + urllib.parse.urlencode({"q": query, "per_page": 50, "sort": "updated"})
@@ -52,11 +53,16 @@ def main():
                     repos[item["full_name"]] = item.get("default_branch", "main")
         except Exception as exc:
             errors.append({"query": query, "error": type(exc).__name__})
+    if len(repos) > MAX_REPOS:
+        limits_hit.append("MAX_REPOS")
     for name, branch in sorted(repos.items(), key=lambda item: item[0].casefold())[:MAX_REPOS]:
         if len(found) >= MAX_FILES:
+            limits_hit.append("MAX_FILES")
             break
         try:
             tree = api("https://api.github.com/repos/" + name + "/git/trees/" + urllib.parse.quote(branch, safe="") + "?recursive=1")
+            if tree.get("truncated"):
+                limits_hit.append("TRUNCATED_GITHUB_TREE")
             paths = [x["path"] for x in tree.get("tree", []) if x.get("type") == "blob" and re.search(r"(?i)\.(m3u8?|txt)$", x.get("path", ""))]
             for path in sorted(paths, key=str.casefold)[:8]:
                 if len(found) >= MAX_FILES:
@@ -115,11 +121,12 @@ def main():
     OUT.write_text(json.dumps({"created_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
        "policy": "READ_ONLY_NO_AUTOMATIC_SOURCE_OR_PLAYLIST_IMPORT", "repositories_discovered": len(repos),
        "sources_found": len(found), "sources": found, "errors": errors,
-       "coverage_status": "PARTIAL_API_ERRORS" if errors else "COMPLETE_QUERIES",
+       "limits_hit": sorted(set(limits_hit)),
+       "coverage_status": "PARTIAL_API_ERRORS" if errors else "PARTIAL_LIMITS" if limits_hit else "COMPLETE_QUERIES",
        "playback_verified": False}, ensure_ascii=False, indent=2) + "\n")
     print("Repositories:", len(repos), "parsed new sources:", len(found), "errors:", len(errors))
-    if errors:
-        print("WARNING: Partial GitHub/Gist discovery; inspect errors in saved report")
+    if errors or limits_hit:
+        print("WARNING: Partial GitHub/Gist discovery; inspect errors and limits in saved report")
 
 if __name__ == "__main__":
     main()
