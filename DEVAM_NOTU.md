@@ -864,3 +864,10 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - İki modülün testlerine başarı+başarısız sayfa kombinasyonu eklendi. Kaynak URL'leri, gizli tokenlar veya canlı IBO listesi rapora taşınmaz.
 - `live-pages.json` ve `playlist-index-pages.json` henüz boş: doğrulanmış resmî HTTPS sayfaları eklenmeden bu kategoriler taranmış sayılamaz.
 - Son CI henüz doğrulanmadı; ana IBO, YEDEKLER, YENİLER, FAVORİLER korunuyor; PR #9 merge edilmedi.
+
+
+## 31 Ekim 2026 — İlk doğrulanmış resmî canlı sayfa kaynakları
+- Toplu CI #41212797762 SUCCESS.
+- `v2/config/live-pages.json` boş olmaktan çıkarıldı: AzTV `https://www.aztv.az/` (kurumun resmî FAQ'sı canlı yayınları doğruluyor) ve TRT1 `https://www.trt1.com.tr/` (resmî yayın akışında canlı izle bulunuyor). Bunlar HTML referans keşfi içindir, M3U veya doğrulanmış oynatılabilir yayın değildir.
+- `test_run_live_page_discovery.py` kaynak envanteri benzersiz ID ve güvenli HTTPS kontrolünü toplu CI içinde yapar.
+- HTML playlist-index sayfa envanteri hâlâ boş; doğrulanmamış URL eklenmedi. Gerçek ağ taraması ve şifreli bağımsız arşiv kabulü bekliyor. Ana IBO, YEDEKLER, YENİLER, FAVORİLER korunuyor; PR #9 merge edilmedi.
