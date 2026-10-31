@@ -17,6 +17,11 @@ FORGE_APPROVALS = ROOT / "v2" / "config" / "approved-forge-source-sha256.json"
 GITHUB_APPROVALS = ROOT / "v2" / "config" / "approved-github-source-sha256.json"
 MAX_BYTES = 25_000_000
 
+def approved_github_source(url, approved_hashes):
+    from webpage_source_discovery import candidate_url
+    return (isinstance(url, str) and candidate_url(url)
+            and hashlib.sha256(url.encode("utf-8")).hexdigest() in approved_hashes)
+
 def fetch(url, allow_html=False):
     from webpage_source_discovery import candidate_url, public_hostname
     from forge_source_review import valid_forge_source
@@ -153,8 +158,8 @@ def main():
             dynamic = json.loads(DYNAMIC.read_text(encoding="utf-8"))
             for item in dynamic.get("sources", [])[:240]:
                 url = item.get("url", "")
-                if (isinstance(url, str) and hashlib.sha256(url.encode("utf-8")).hexdigest() in github_approvals
-                        and url.startswith("https://") and not any(s["url"] == url for s in sources)):
+                if (approved_github_source(url, github_approvals)
+                        and not any(s["url"] == url for s in sources)):
                     sources.append({"id": "github-auto-" + hashlib.sha256(url.encode("utf-8")).hexdigest()[:20], "url": url, "scope": "candidate"})
         except (OSError, ValueError, TypeError) as exc:
             raise SystemExit('Dynamic discovery inventory unreadable: ' + type(exc).__name__) from exc
