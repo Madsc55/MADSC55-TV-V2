@@ -897,3 +897,10 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - Gerçek hata: `test_restore_evidence_safety.py::test_reject_world_readable_restored_archive`, fixture restored dosyasını 0600 yaptıktan sonra evidence JSON dosyasını 0644 bıraktı. Yeni güvenlik kontrolü doğru şekilde reddetti.
 - Test fixture her iki dosyayı da 0600 yapacak şekilde düzeltildi. Şifreli arşiv güvenlik şartı gevşetilmedi.
 - Güncel toplu CI sonucu henüz doğrulanmadı. Ana IBO, YEDEKLER, YENİLER, FAVORİLER korunuyor, PR #9 merge edilmedi.
+
+
+## 31 Ekim 2026 — Son CI kontrolü ve toplu tarama durum ayrımı
+- CI #41214498144 SUCCESS (önceki kanıt dosya izinleri test hatası giderildi).
+- `run_all_discovery.py` altı aşamanın bitmesinin tam kapsama veya oynatma doğrulaması olmadığını açıkça raporlar. Kısmi kapsam için her alt rapor incelenmelidir.
+- Yeni resmî kaynakların ve gerçek kanal taramasının tamamlandığı iddia edilmez. Bağımsız kalıcı şifreli arşiv/restore kanıtı hâlâ gerçek taramanın önkoşuludur.
+- Ana IBO, YEDEKLER, YENİLER, FAVORİLER korunuyor; PR #9 merge edilmedi.
