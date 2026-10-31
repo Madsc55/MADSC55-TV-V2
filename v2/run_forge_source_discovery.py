@@ -70,12 +70,22 @@ def scan():
                             + quote(project["branch"], safe="") + "?recursive=true")
                 try:
                     listing = api_json(tree)
+                    if forge == "gitlab" and isinstance(listing, list) and len(listing) >= 100:
+                        combined = list(listing)
+                        for page in (2, 3):
+                            more = api_json(tree + "&page=" + str(page))
+                            if not isinstance(more, list):
+                                raise ValueError("Invalid GitLab tree page")
+                            combined.extend(more)
+                            if len(more) < 100:
+                                break
+                        else:
+                            limits_hit.add("GITLAB_TREE_PAGE_LIMIT")
+                        listing = combined
                     if forge == "codeberg" and isinstance(listing, dict):
                         if listing.get("truncated"):
                             limits_hit.add("CODEBERG_TRUNCATED_TREE")
                         listing = listing.get("tree", [])
-                    if forge == "gitlab" and isinstance(listing, list) and len(listing) >= 100:
-                        limits_hit.add("GITLAB_TREE_PAGE_LIMIT")
                     paths = parse_tree_paths(listing)
                     for link in playlist_sources(project, paths):
                         found.append({"forge": forge, "source_url": link, "playback_verified": False})
