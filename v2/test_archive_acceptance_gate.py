@@ -23,6 +23,7 @@ class ArchiveGateTests(unittest.TestCase):
     def evidence(self, directory, digest=None):
         restored = Path(directory) / "restored.bin"
         restored.write_bytes(b"test-only-restored-archive")
+        restored.chmod(0o600)
         actual = hashlib.sha256(restored.read_bytes()).hexdigest()
         path = Path(directory) / "evidence.json"
         record = {"encrypted": True, "durable": True,
@@ -47,7 +48,7 @@ class ArchiveGateTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             env = self.evidence(directory)
             (Path(directory) / "restored.bin").unlink()
-            with self.assertRaisesRegex(RuntimeError, "not found"):
+            with self.assertRaisesRegex(RuntimeError, "non-symlink file"):
                 check(env)
 
 if __name__ == "__main__":
