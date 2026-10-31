@@ -825,3 +825,10 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - Önceki Actions #41211016352 SUCCESS.
 - `v2/archive_backup_restore_drill.py` yerel farklı dizindeki kopya için `durable=false` raporlar; bağımsız kalıcı yedek iddiası kaldırıldı. `v2/test_archive_backup_restore_drill.py` bu durumu doğrular. Kabul kapısı ayrıca `backup_scope` yerel ise reddeder.
 - Gerçek tarama için bağımsız yedek ve restore kanıtı hâlâ gereklidir. Son CI sonucu bekliyor. Korunan IBO/YEDEKLER/YENİLER/FAVORİLER değiştirilmedi; PR #9 merge edilmedi.
+
+
+## 31 Ekim 2026 — Gist M3U keşif regex düzeltmesi
+- Önceki Actions #41211136199 SUCCESS.
+- `v2/github_source_discovery.py` Gist dosya adı eşleşmesindeki çift ters eğik çizgi (`\\\\.`) düzeltildi; `.m3u`, `.m3u8`, `.txt` uzantıları artık doğru eşleşebilir. Bu hata Gist keşfini sessizce kaçırıyordu.
+- `v2/test_gist_filename_discovery.py` ve CI adımı eklendi. Yeni CI henüz doğrulanmadı.
+- Ana IBO, YEDEKLER, YENİLER, FAVORİLER değiştirilmedi. Gerçek kaynak taraması ve bağımsız şifreli yedek doğrulaması bekliyor. PR #9 merge edilmedi.
