@@ -637,3 +637,10 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - `v2/discover.py`: `v2/reports/forge-source-discovery.json` raporunu okuyabilir; yalnızca `v2/config/approved-forge-source-sha256.json` içindeki tam URL SHA256 onayı olan girdileri aday kaynak listesine ekler. Varsayılan onay listesi boş, otomatik aktarım yok.
 - `v2/test_forge_source_review.py` beş çevrimdışı test CI'a eklendi. Önceki CI #41190601977 SUCCESS; bu değişikliklerin sonucu henüz ayrıca doğrulanmadı.
 - GitLab/Codeberg canlı taraması henüz yapılmadı; kanal oynatma doğrulaması yapılmadı; PR #9 merge edilmedi. Ana playlist ve YEDEKLER korunur.
+
+
+## 31 Ekim 2026 — Kaynak erişilebilirliği ön kontrolü
+- `v2/source_availability_audit.py --audit-public-sources`: kaynak dosyalarının HTTPS/HTTP durumunu ve ilk 1024 bayttaki M3U başlığını kontrol eder; stream URL'lerine bağlantı kurmaz, kaynak URL/token değerlerini rapora yazmaz.
+- Redirect güvenlik kontrolü, HTTP hata ayrımı ve `v2/test_source_availability_audit.py` testleri CI'a eklendi.
+- Bu araç gerçek yayın testi değildir. Kaynak denetimi henüz çalıştırılmadı; şifreli arşiv onayı, toplu kanal taraması ve IBO testleri açık kalır.
+- Önceki CI #41190756178 SUCCESS; yeni kod için CI henüz doğrulanmadı. Ana playlist/YEDEKLER korunur; PR #9 merge edilmedi.
