@@ -21,6 +21,13 @@ class WebpageSourceTests(unittest.TestCase):
         html = '<a href="/a.m3u">a</a><a href="/a.m3u">a</a><a href="/b.m3u#x">b</a>'
         self.assertEqual(discover_playlist_links("https://example.com", html),
                          ["https://example.com/a.m3u"])
+    def test_private_addresses_not_fetched(self):
+        document = ('<a href="https://127.0.0.1/test.m3u">loopback</a>'
+                    '<a href="https://192.168.1.3/test.m3u">private</a>'
+                    '<a href="https://localhost/test.m3u">local</a>'
+                    '<a href="https://example.org/test.m3u">public</a>')
+        self.assertEqual(discover_playlist_links("https://example.com", document),
+                         ["https://example.org/test.m3u"])
     def test_reject_http_page(self):
         with self.assertRaises(ValueError):
             discover_playlist_links("http://example.com", "")
