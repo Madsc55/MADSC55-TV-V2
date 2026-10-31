@@ -6,8 +6,6 @@ Never modifies IBO playlist or exports candidates to YEDEKLER. Playback and
 device verification remain separate because they are not yet implemented.
 """
 import argparse
-import json
-import os
 import pathlib
 import subprocess
 import sys
@@ -31,8 +29,11 @@ def preflight(archive):
         raise RuntimeError("A private, non-symlink encrypted archive path is required")
     check()
     _cipher()
-    if archive.exists() and (archive.stat().st_mode & 0o077):
-        raise RuntimeError("Archive permissions must be owner-only")
+    if archive.exists():
+        import stat
+        mode = archive.stat().st_mode
+        if not stat.S_ISREG(mode) or mode & 0o077:
+            raise RuntimeError("Archive must be a private regular file")
     return True
 
 def execute(steps, runner=subprocess.run):
