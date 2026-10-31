@@ -891,3 +891,9 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - `archive_acceptance_gate.py` bağımsız yedekleme/geri yükleme kanıtı JSON dosyasını da 0600 (owner-only) zorunlu kılar; herkesçe okunabilir dosyayı reddeder. `backup_location` tipi doğrulanır.
 - `test_archive_acceptance_gate.py` mevcut başarılı kanıt testlerini özel dosya izniyle güncelledi ve 0644 reddi testini ekledi.
 - Bu kod bağımsız yedeklemeyi oluşturmaz; bağımsız kalıcı depolama ve gerçek restore kanıtı hâlâ gerekir. Son CI sonucunu kontrol et. Ana IBO, YEDEKLER, YENİLER, FAVORİLER korunuyor, PR #9 merge edilmedi.
+
+
+## 31 Ekim 2026 — CI #41213784417 düzeltmesi
+- Gerçek hata: `test_restore_evidence_safety.py::test_reject_world_readable_restored_archive`, fixture restored dosyasını 0600 yaptıktan sonra evidence JSON dosyasını 0644 bıraktı. Yeni güvenlik kontrolü doğru şekilde reddetti.
+- Test fixture her iki dosyayı da 0600 yapacak şekilde düzeltildi. Şifreli arşiv güvenlik şartı gevşetilmedi.
+- Güncel toplu CI sonucu henüz doğrulanmadı. Ana IBO, YEDEKLER, YENİLER, FAVORİLER korunuyor, PR #9 merge edilmedi.
