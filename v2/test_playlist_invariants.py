@@ -9,8 +9,10 @@ from discover import ROOT, LIVE, SOURCES, entries
 
 def main():
     # Protect the exact original bytes and permit only append-only YEDEKLER records.
-    original = subprocess.check_output(["git", "show", "7c22eb14:MADSC55_TV_IBO_CALISANLAR_TEST.m3u8"])
     current = LIVE.read_bytes()
+    original = current[:207344]
+    original_hash = subprocess.check_output(["git", "hash-object", "--stdin"], input=original).decode().strip()
+    assert original_hash == "4b1c3cea4b5107a425abab60f62d41f9f81e05a7", "Original playlist bytes changed"
     assert current.startswith(original), "Protected IBO playlist content changed"
     extra = current[len(original):]
     if extra:
