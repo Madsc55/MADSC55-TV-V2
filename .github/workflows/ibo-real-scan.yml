@@ -1,12 +1,5 @@
 name: V2 Real IBO Candidate Scan
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - .github/workflows/ibo-real-scan.yml
-      - v2/real_ibo_scan.py
-      - v2/config/sources.json
   workflow_dispatch:
 
 permissions:
@@ -33,7 +26,7 @@ jobs:
         id: scan
         continue-on-error: true
         run: |
-          python3 v2/real_ibo_scan.py --workers 16 --timeout 8 --limit 2000 --append-live
+          python3 v2/real_ibo_scan.py --workers 16 --timeout 8 --limit 2000
       - name: Upload scan report
         if: always()
         uses: actions/upload-artifact@v4
@@ -54,7 +47,7 @@ jobs:
       - name: Verify protected playlist before publishing
         if: steps.scan.outcome == 'success'
         run: python3 v2/test_playlist_invariants.py
-      - name: Commit only appended YEDEKLER entries to main
+      - name: Preserve production playlist (read-only scan)
         if: steps.scan.outcome == 'success'
         shell: bash
         run: |
@@ -68,7 +61,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -- "$target"
           git commit -m "Append HLS-checked new channels to YEDEKLER"
-          git push origin "HEAD:main"
+          echo "Read-only mode: no production playlist writes"
       - name: Propagate scan failure
         if: steps.scan.outcome != 'success'
         run: exit 1
