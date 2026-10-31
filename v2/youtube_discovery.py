@@ -23,6 +23,16 @@ QUERIES = [
     "Türk çocuk televizyonu canlı yayın resmi",
     "Türkiye bölgesel yerel TV canlı yayın",
     "Türkçe Avrupa televizyonu canlı yayın resmi",
+    "Azerbaycan televiziya canlı yayım rəsmi",
+    "Azərbaycan xəbər kanalı canlı yayım",
+    "Azerice yerel televizyon canlı yayın",
+    "Türkçe Almanya televizyon canlı yayın resmi",
+    "Türkçe Hollanda Belçika televizyon canlı yayın",
+    "Türkçe Fransa Avusturya İsviçre televizyon canlı yayın",
+    "Türkçe İngiltere Amerika televizyon canlı yayın",
+    "Türkçe Balkanlar televizyon canlı yayın",
+    "Türkçe Kıbrıs televizyon canlı yayın",
+    "Türkiye il il yerel televizyon canlı yayın",
 ]
 def search(query):
     command = ["yt-dlp", "--flat-playlist", "--dump-single-json", "--no-warnings",
@@ -73,7 +83,7 @@ def main():
             seen.add(item["video_id"])
             results.append(item)
     # Keep network work bounded. Never promote YouTube URLs as direct IBO streams.
-    for item in results[:40]:
+    for item in results[:120]:
         item["status"] = verify(item)
     report = {"created_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
               "policy": "ADVISORY_ONLY_NO_PLAYLIST_WRITES_NO_AUTOMATIC_IBO_IMPORT",
