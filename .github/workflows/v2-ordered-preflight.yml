@@ -15,8 +15,8 @@ on:
 permissions:
   contents: read
 concurrency:
-  group: v2-ordered-preflight
-  cancel-in-progress: false
+  group: v2-ordered-preflight-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 jobs:
   compile:
     runs-on: ubuntu-latest
