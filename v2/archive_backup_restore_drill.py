@@ -39,7 +39,7 @@ def drill(archive, backup, restored, evidence):
             raise RuntimeError("Encrypted archive backup checksum mismatch")
     if restore(restored) != original:
         raise RuntimeError("Restored encrypted archive records mismatch")
-    result = {"encrypted": True, "durable": True, "restore_test_passed": True,
+    result = {"encrypted": True, "durable": False, "restore_test_passed": True,
               "integrity_verified": True, "backup_location": str(backup.resolve()),
               "restored_file": str(restored.resolve()), "restore_sha256": digest,
               "record_count": len(original),
