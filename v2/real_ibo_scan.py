@@ -150,7 +150,7 @@ def main():
         return
     lines = ['#EXTM3U']
     for item in good[:args.limit]:
-        name = item['name'].replace('\n', ' ').replace('\r', ' ').replace(',', ' ')
+        name = item['name'].replace('\n', ' ').replace('\r', ' ').replace(',', ' ').upper()
         group = item['group'].replace('"', '').replace('\n', ' ')
         logo = item.get('logo', '')
         logo_attr = f' tvg-logo="{logo}"' if logo.startswith(('https://', 'http://')) and '"' not in logo else ''
@@ -170,7 +170,7 @@ def main():
             if item['url'] in current_urls:
                 continue
             current_urls.add(item['url'])
-            safe_name = re.sub(r'[\r\n,]', ' ', item['name']).strip() or 'Yeni Kanal'
+            safe_name = (re.sub(r'[\r\n,]', ' ', item['name']).strip() or 'YENİ KANAL').upper()
             logo = item.get('logo', '')
             logo_attr = f' tvg-logo="{logo}"' if logo.startswith(('https://', 'http://')) and '"' not in logo else ''
             additions.extend([
