@@ -589,3 +589,10 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - `v2/discover.py` (`c170c43`): kanal adında virgül olduğunda `rsplit` ile adın kaybolmasını önler; tırnak içindeki grup virgüllerini atlayıp ilk tırnak-dışı virgülü kanal adı ayıracı kabul eder.
 - `v2/test_discovery_offline_regressions.py` (`ba7bbbf`): `group-title="News, Turkey"` ve `Channel, Extra` örneği ile çevrimdışı regresyon testi. Ordered-preflight discovery-tests aşamasında çalışacak.
 - Çalıştırma sonucu henüz doğrulanmadı. Draft PR #9 açık; merge yapılmadı. Ana playlist ve YEDEKLER değiştirilmedi.
+
+
+## 31 Ekim 2026 — Kaynak kaybı ve güvenli snapshot düzeltmeleri
+- `cf417943`: TR/AZ kaynaklarındaki dolu `tvg-id` değerleriyle dünya kaynaklarındaki aynı kanal kimliğini eşleştirerek yalnızca adında Türkçe anahtar kelime olmayan dünya varyantlarının elenmesini azaltır. Sadece TVG ID eşleştirilir; genel kanal adları üzerinden kör kabul yapılmaz.
+- `8ec7a155`: dünya eşleşmesi ve genel ad yanlış pozitifleri için iki çevrimdışı regresyon testi.
+- `68521ae8`: şifrelenmemiş token içeren `--snapshot-output` üretimini güvenli arşiv/restore tamamlanana kadar fail-closed kapatır. Bu seçenek şimdi açıkça CLI hata koduyla durur.
+- Bu çalışma gerçek tarama veya eski #60 sayısına geri dönüş kanıtı değildir. Testlerin yeni commit üzerinde başarı durumu ayrıca doğrulanmalı; PR #9 merge edilmedi. Eski depo ve ana playlist korunuyor.
