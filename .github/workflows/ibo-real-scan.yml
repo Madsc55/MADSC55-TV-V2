@@ -37,8 +37,8 @@ jobs:
         if: steps.scan.outcome == 'success'
         uses: actions/upload-artifact@v4
         with:
-          name: IBO_YENI_ADAYLAR_2000_PART1
-          path: v2/reports/IBO_YENI_ADAYLAR_2000_PART1.m3u8
+          name: IBO_YENI_ADAYLAR_2000_BATCHES
+          path: v2/reports/IBO_YENI_ADAYLAR_PART*.m3u8
           if-no-files-found: error
           retention-days: 7
       - name: Propagate scan failure
