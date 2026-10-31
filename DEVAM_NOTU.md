@@ -713,3 +713,11 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - `v2/github_source_discovery.py`: ilgili GitHub depo sahiplerinin herkese açık Gist metadata uç noktasından `.m3u/.m3u8/.txt` kaynaklarını aday olarak keşfetme eklendi. En fazla 30 sahibi ve mevcut 320 dosya üst sınırını kullanır. Adaylar doğrudan IBO listesine eklenmez.
 - KAPSAM: Gist genel arama API'si olmadığı için yalnızca ilgili repo sahiplerinin public Gist'leri taranır; tüm Gist'ler taranmış sayılmaz. Son değişikliğin CI sonucu henüz doğrulanmadı; gerçek dış ağ taraması henüz çalıştırılmadı.
 - Ana IBO playlist ve YEDEKLER değişmedi; PR #9 merge edilmedi.
+
+
+## 31 Ekim 2026 — Eksik kaynak taramasını başarı saymama
+- Önceki CI #41199619053 SUCCESS.
+- GitHub/Gist ve GitLab/Codeberg tarayıcıları, kaynak/API hataları rapora kaydedildikten sonra artık başarısız çıkış koduyla durur; birleşik koordinatör sonraki aşamaya geçmez. Önceden kısmi kaynak taraması başarılıymış gibi devam edebiliyordu.
+- `v2/test_partial_scan_fail_closed.py` CI'a eklendi. Yeni CI sonucu henüz doğrulanmadı.
+- KAPSAM: Ağ geçici hataları birleşik taramayı durdurabilir; güvenli tekrar deneme/işaretleme ve kalıcı keşif rapor arşivi henüz eksik. Gerçek tarama ve bağımsız restore kanıtı yok.
+- Ana IBO playlist, YEDEKLER, YENİLER, FAVORİLER değişmedi; PR #9 merge edilmedi.
