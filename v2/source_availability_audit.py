@@ -50,7 +50,9 @@ def audit(sources, fetcher=probe):
     failures = len(results) - ok
     return {"schema": 1, "kind": "source-level-only", "source_count": len(results),
             "reachable_source_count": ok, "unreachable_source_count": failures,
-            "coverage_status": "COMPLETE" if not failures else "PARTIAL_SOURCE_AVAILABILITY",
+            "coverage_status": ("NO_CONFIGURED_SOURCES" if not results else
+                                "NO_SOURCES_REACHABLE" if not ok else
+                                "COMPLETE" if not failures else "PARTIAL_SOURCE_AVAILABILITY"),
             "results": results, "playback_verified": False}
 
 def main():
