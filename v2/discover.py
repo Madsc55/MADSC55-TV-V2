@@ -339,6 +339,12 @@ def main():
         result["historical_candidate_recovery"] = {"previous_hashes": len(previous_hashes), "matched_now": len(previous_hashes & current_hashes), "still_missing": len(previous_hashes - current_hashes), "method": "URL_SHA256_ONLY_NOT_PLAYBACK_VERIFIED"}
         if result["source_loss_audit"]["findings"]:
             print("WARNING: source loss requires review; see source_loss_audit in report")
+    from source_integrity import verify
+    integrity = verify(loaded, live, scopes, result["candidates"], entries,
+                       turkish_candidate, recognized_channel_ids(loaded, scopes),
+                       source_audit, errors)
+    result["source_integrity"] = integrity
+    result["candidate_integrity_verified"] = integrity["verified"]
     result["candidate_limit"] = args.limit
     result["candidates_truncated"] = args.limit > 0 and len(result["candidates"]) > args.limit
     if args.limit > 0:
@@ -348,6 +354,8 @@ def main():
     print(f"Sources: {len(loaded)} | Candidates: {len(result['candidates'])} | Errors: {len(errors)}")
     if not args.offline and not loaded:
         raise SystemExit("No sources accessible")
+    if not args.offline and not integrity["verified"]:
+        raise SystemExit("Source integrity INCOMPLETE; inspect candidates.json")
 
 if __name__ == "__main__":
     main()
