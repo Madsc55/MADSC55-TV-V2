@@ -749,3 +749,11 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - `discovery-tests` FAILED: `test_archive_incremental_dedup.py` cryptography paketi kurulmadan çalıştırılmış; `ModuleNotFoundError: cryptography`. Paket yükleme aşaması testin önüne taşındı (commit d373bae349268bf55b27aa97769a59c5517a2f24).
 - Bu hata arşiv tekilleştirme algoritmasının başarısız olduğunu göstermez; CI bağımlılık sırası hatasıdır. Yeni CI sonucu henüz doğrulanmadı.
 - Ana IBO, YEDEKLER, YENİLER, FAVORİLER korunuyor; PR #9 merge edilmedi.
+
+
+## 31 Ekim 2026 — GitHub/Gist kaynak onay kapısı
+- CI #41202989680 SUCCESS.
+- `v2/discover.py`: GitHub/Gist raporunda keşfedilen kaynaklar artık doğrudan gerçek taramaya alınmaz; güvenli HTTPS playlist URL'si ve tam URL SHA256'sının `v2/config/approved-github-source-sha256.json` onay listesinde bulunması gerekir. Varsayılan onay listesi boştur. GitLab/Codeberg'deki ayrı onay modeliyle eşdeğer güvenlik uygulanır.
+- `v2/test_github_source_approval.py` CI'a bağlandı. Yeni CI henüz doğrulanmadı.
+- Onaylanmamış yeni kaynaklar kaybolmaz: kaynak referans raporunda aday olarak kalır; ancak yayın URL'leri taranmış sayılmaz. Gerçek tarama ve bağımsız yedek/restore kanıtı hâlâ yok.
+- Ana IBO playlist, YEDEKLER, YENİLER, FAVORİLER değişmedi; PR #9 merge edilmedi.
