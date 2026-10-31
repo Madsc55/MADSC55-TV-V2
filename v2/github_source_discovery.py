@@ -7,6 +7,7 @@ import pathlib
 import re
 import urllib.parse
 import urllib.request
+from webpage_source_discovery import public_hostname
 from discover import ROOT, entries, fetch
 
 CONFIG = ROOT / "v2/config/sources.json"
@@ -17,12 +18,28 @@ MAX_FILES = 320
 MAX_BYTES = 2_000_000
 
 def api(url):
+    parsed = urllib.parse.urlsplit(url)
+    if (parsed.scheme != "https" or parsed.hostname != "api.github.com"
+            or parsed.username or parsed.password or parsed.port not in (None, 443)):
+        raise ValueError("GitHub API must use trusted HTTPS host")
+    class SafeRedirect(urllib.request.HTTPRedirectHandler):
+        def redirect_request(self, request, fp, code, msg, headers, newurl):
+            target = urllib.parse.urlsplit(newurl)
+            if (target.scheme != "https" or target.hostname != "api.github.com"
+                    or target.username or target.password
+                    or target.port not in (None, 443)):
+                raise ValueError("Unsafe GitHub API redirect")
+            return super().redirect_request(request, fp, code, msg, headers, newurl)
     headers = {"User-Agent": "MADSC55-TV-V2-Discovery/1.0", "Accept": "application/vnd.github+json"}
     token = os.getenv("GITHUB_TOKEN")
     if token:
         headers["Authorization"] = "Bearer " + token
-    with urllib.request.urlopen(urllib.request.Request(url, headers=headers), timeout=18) as r:
-        return json.loads(r.read(MAX_BYTES).decode("utf-8"))
+    opener = urllib.request.build_opener(SafeRedirect())
+    with opener.open(urllib.request.Request(url, headers=headers), timeout=18) as r:
+        payload = r.read(MAX_BYTES + 1)
+    if len(payload) > MAX_BYTES:
+        raise ValueError("GitHub API response too large")
+    return json.loads(payload.decode("utf-8"))
 
 def main():
     configured = {x["url"] for x in json.loads(CONFIG.read_text())["sources"]}
