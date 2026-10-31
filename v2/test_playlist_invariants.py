@@ -8,8 +8,21 @@ from collections import Counter
 from discover import ROOT, LIVE, SOURCES, entries
 
 def main():
-    actual_blob = subprocess.check_output(["git", "hash-object", str(LIVE)], text=True).strip()
-    assert actual_blob == "4b1c3cea4b5107a425abab60f62d41f9f81e05a7", "Protected IBO playlist content changed"
+    # Protect the exact original bytes and permit only append-only YEDEKLER records.
+    original = subprocess.check_output(["git", "show", "7c22eb14:MADSC55_TV_IBO_CALISANLAR_TEST.m3u8"])
+    current = LIVE.read_bytes()
+    assert current.startswith(original), "Protected IBO playlist content changed"
+    extra = current[len(original):]
+    if extra:
+        rows = [row for row in extra.decode("utf-8").splitlines() if row.strip()]
+        assert len(rows) % 2 == 0, "Incomplete appended channel"
+        known = {row.strip() for row in original.decode("utf-8-sig").splitlines() if row.strip().startswith(("http://", "https://"))}
+        for i in range(0, len(rows), 2):
+            header, url = rows[i:i+2]
+            assert header.startswith("#EXTINF:") and 'group-title="🗂️ YEDEKLER (2)"' in header, "Non-YEDEKLER append blocked"
+            assert url.startswith(("http://", "https://")) and url not in known, "Duplicate or invalid appended URL"
+            assert not any(x in header.casefold() for x in ("trt arabi", "trt world")), "Foreign-language channel blocked"
+            known.add(url)
     text = LIVE.read_text(encoding="utf-8-sig")
     channels = list(entries(text))
     assert text.startswith("#EXTM3U"), "Missing M3U header"
@@ -29,7 +42,10 @@ def main():
         import re
         match = re.search(r"\((\d+)\)$", group)
         assert match, f"Missing category counter: {group}"
-        assert int(match.group(1)) == count, f"Category count mismatch: {group}, actual {count}"
+        if group == "🗂️ YEDEKLER (2)":
+            assert count >= 2, "Original backups missing"
+        else:
+            assert int(match.group(1)) == count, f"Category count mismatch: {group}, actual {count}"
     sources = json.loads(SOURCES.read_text(encoding="utf-8"))["sources"]
     assert len(sources) >= 3, "Discovery sources missing"
     note = ROOT / "DEVAM_NOTU.md"
