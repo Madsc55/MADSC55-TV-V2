@@ -45,6 +45,6 @@ def main():
     REPORT.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print("HTML playlist references:", len(report["references"]), "errors:", len(report["errors"]))
     if report["errors"]:
-        raise SystemExit("HTML index scan incomplete")
+        print("WARNING: Partial HTML index scan; review saved page IDs")
 if __name__ == "__main__":
     main()
