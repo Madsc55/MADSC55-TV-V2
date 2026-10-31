@@ -197,6 +197,8 @@ def main():
             source_audit.append({"source": source["id"], "status": "FETCH_FAILED",
                                  "error": type(exc).__name__})
     if args.encrypted_archive:
+        if args.encrypted_archive.is_symlink():
+            raise SystemExit("Encrypted archive path must not be a symlink")
         if errors or not loaded:
             raise SystemExit("Encrypted archive refused: source set incomplete")
         from encrypted_archive import append, restore
