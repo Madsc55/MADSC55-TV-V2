@@ -1,0 +1,140 @@
+#!/usr/bin/env python3
+"""Real-network IPTV candidate scanner. Writes ONLY v2/reports/IBO_PROD_LIST.m3u8.
+Not a replacement for v2/discover.py; can run beside the existing V2 engine.
+No mock data, no invented URLs. HTTP/HLS checks are not playback proof.
+"""
+import argparse
+import concurrent.futures
+import hashlib
+import json
+import pathlib
+import re
+import socket
+import urllib.error
+import urllib.parse
+import urllib.request
+
+ROOT = pathlib.Path(__file__).resolve().parents[2]
+SOURCES = ROOT / 'v2/config/sources.json'
+OUT = ROOT / 'v2/reports/IBO_PROD_LIST.m3u8'
+REPORT = ROOT / 'v2/reports/ibo-real-scan-report.json'
+UA = 'MADSC55-TV-V2-RealScanner/1.0'
+MAX_SOURCE = 25_000_000
+
+
+def fetch(url, timeout=18, limit=MAX_SOURCE):
+    req = urllib.request.Request(url, headers={'User-Agent': UA})
+    with urllib.request.urlopen(req, timeout=timeout) as response:
+        data = response.read(limit + 1)
+        if len(data) > limit:
+            raise ValueError('Source exceeded size limit')
+        return data
+
+
+def parse_m3u(data):
+    text = data.decode('utf-8-sig', 'replace')
+    if not text.lstrip().startswith('#EXTM3U'):
+        raise ValueError('Not an M3U playlist')
+    pending = None
+    for raw in text.splitlines():
+        line = raw.strip()
+        if line.startswith('#EXTINF:'):
+            name = line.rsplit(',', 1)[-1].strip() or 'Unknown'
+            group = re.search(r'group-title="([^"]*)"', line)
+            tvg = re.search(r'tvg-id="([^"]*)"', line)
+            pending = {'name': name, 'group': group.group(1) if group else '',
+                       'tvg_id': tvg.group(1) if tvg else ''}
+        elif line and not line.startswith('#'):
+            if pending and urllib.parse.urlsplit(line).scheme in ('http', 'https'):
+                yield {**pending, 'url': line}
+            pending = None
+
+
+def tr_az(entry, scope):
+    if scope.upper() in ('TR', 'AZ'):
+        return True
+    value = ' '.join(entry[k] for k in ('name', 'group', 'tvg_id')).casefold()
+    return bool(re.search(r'türk|turk|trt|azer|azər|azerbaijan|azərbaycan|(?:^|[ ._-])(?:tr|az)(?:$|[ ._-])', value))
+
+
+def check_hls(entry, timeout):
+    url = entry['url']
+    parsed = urllib.parse.urlsplit(url)
+    if parsed.scheme not in ('https', 'http') or not parsed.hostname:
+        return None
+    try:
+        req = urllib.request.Request(url, headers={'User-Agent': UA, 'Range': 'bytes=0-4095'})
+        with urllib.request.urlopen(req, timeout=timeout) as res:
+            status = res.status
+            content_type = res.headers.get('Content-Type', '').lower()
+            sample = res.read(4096)
+        hls = (b'#EXTM3U' in sample and (b'#EXT-X-' in sample or
+               'mpegurl' in content_type))
+        if status in (200, 206) and hls:
+            return entry
+    except (OSError, TimeoutError, urllib.error.URLError, ValueError):
+        pass
+    return None
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument('--sources', type=pathlib.Path, default=SOURCES)
+    ap.add_argument('--output', type=pathlib.Path, default=OUT)
+    ap.add_argument('--report', type=pathlib.Path, default=REPORT)
+    ap.add_argument('--workers', type=int, default=12)
+    ap.add_argument('--timeout', type=float, default=12)
+    ap.add_argument('--limit', type=int, default=1000)
+    args = ap.parse_args()
+    if not 1 <= args.workers <= 32 or not 1 <= args.limit <= 10000:
+        ap.error('workers must be 1..32 and limit 1..10000')
+    doc = json.loads(args.sources.read_text(encoding='utf-8'))
+    sources = doc['sources'] if isinstance(doc, dict) else doc
+    # Do not export incomplete results as a successful production list.
+    candidates = {}
+    failed = []
+    source_counts = {}
+    for source in sources:
+        sid, url = source['id'], source['url']
+        if urllib.parse.urlsplit(url).scheme != 'https':
+            failed.append({'id': sid, 'error': 'NonHTTPS source'}); continue
+        try:
+            records = list(parse_m3u(fetch(url, args.timeout)))
+            source_counts[sid] = len(records)
+            for entry in records:
+                if tr_az(entry, source.get('scope', 'candidate')):
+                    candidates.setdefault(entry['url'], entry)
+        except (OSError, ValueError, UnicodeError, socket.timeout) as exc:
+            failed.append({'id': sid, 'error': type(exc).__name__})
+    checked = 0
+    good = []
+    with concurrent.futures.ThreadPoolExecutor(max_workers=args.workers) as pool:
+        for result in pool.map(lambda x: check_hls(x, args.timeout), candidates.values()):
+            checked += 1
+            if result is not None:
+                good.append(result)
+    # Refuse to publish a partial list. Never overwrite an existing verified export on failure.
+    report = {'source_count': len(sources), 'fetched_sources': len(source_counts),
+              'failed_sources': failed, 'unique_candidates': len(candidates),
+              'http_checked': checked, 'http_hls_ok': len(good),
+              'playback_verified_on_device': False, 'mock_data_used': False,
+              'status': 'READY_FOR_DEVICE_TEST' if not failed and good else 'INCOMPLETE'}
+    args.report.parent.mkdir(parents=True, exist_ok=True)
+    args.report.write_text(json.dumps(report, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
+    if failed or not good:
+        print(json.dumps(report, ensure_ascii=False, indent=2))
+        raise SystemExit('No production playlist written: source failures or no verified HLS manifests')
+    lines = ['#EXTM3U']
+    for item in good[:args.limit]:
+        name = item['name'].replace('\n', ' ').replace('\r', ' ').replace(',', ' ')
+        group = item['group'].replace('"', '').replace('\n', ' ')
+        lines.extend([f'#EXTINF:-1 group-title="{group}",{name}', item['url']])
+    temp = args.output.with_suffix(args.output.suffix + '.tmp')
+    args.output.parent.mkdir(parents=True, exist_ok=True)
+    temp.write_text('\n'.join(lines) + '\n', encoding='utf-8')
+    temp.replace(args.output)
+    print(json.dumps(report, ensure_ascii=False, indent=2))
+
+
+if __name__ == '__main__':
+    main()
