@@ -596,3 +596,9 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - `8ec7a155`: dünya eşleşmesi ve genel ad yanlış pozitifleri için iki çevrimdışı regresyon testi.
 - `68521ae8`: şifrelenmemiş token içeren `--snapshot-output` üretimini güvenli arşiv/restore tamamlanana kadar fail-closed kapatır. Bu seçenek şimdi açıkça CLI hata koduyla durur.
 - Bu çalışma gerçek tarama veya eski #60 sayısına geri dönüş kanıtı değildir. Testlerin yeni commit üzerinde başarı durumu ayrıca doğrulanmalı; PR #9 merge edilmedi. Eski depo ve ana playlist korunuyor.
+
+
+## 31 Ekim 2026 — IPTV-org kaynak genişletmesi
+- `0fcad824`: IPTV-org resmî PLAYLISTS.md dokümanında belirtilen `raw/tr`, `raw/az`, `sources/tr`, `sources/az`, Central Asia, West Asia, International ve Worldwide olmak üzere 8 ek keşif girdisi; toplam statik kaynak 40. URL yapıları belgelenmiştir; her uç noktanın canlı HTTP erişimi bu commit ile doğrulanmamıştır.
+- `e3d8a093`: yalnızca public HTTPS M3U kaynakları veya konfigürasyonda `kind=html` olarak açıkça belirtilmiş public HTTPS sayfalar kabul edilir. `localhost`/private IP kaynağı engeli.
+- `--snapshot-output` şifreli arşiv kurulana dek kapalıdır. Canlı kaynak taraması ve playback testi yapılmadı. Ana İBO playlist, YEDEKLER ve eski repo korunur. PR #9 merge edilmedi.
