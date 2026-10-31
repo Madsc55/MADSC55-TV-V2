@@ -23,6 +23,7 @@ class ArchiveGateTests(unittest.TestCase):
     def evidence(self, directory, digest=None):
         restored = Path(directory) / "restored.bin"
         restored.write_bytes(b"test-only-restored-archive")
+        restored.chmod(0o600)
         actual = hashlib.sha256(restored.read_bytes()).hexdigest()
         path = Path(directory) / "evidence.json"
         record = {"encrypted": True, "durable": True,
@@ -30,12 +31,29 @@ class ArchiveGateTests(unittest.TestCase):
                   "backup_location": "secure-store",
                   "restore_sha256": digest or actual, "restored_file": str(restored)}
         path.write_text(json.dumps(record), encoding="utf-8")
+        path.chmod(0o600)
         return {"V2_ARCHIVE_RESTORE_APPROVED": "true",
                 "V2_ARCHIVE_RESTORE_EVIDENCE": str(path)}
 
+    def test_publicly_readable_evidence_rejected(self):
+        with tempfile.TemporaryDirectory() as directory:
+            env = self.evidence(directory)
+            Path(env["V2_ARCHIVE_RESTORE_EVIDENCE"]).chmod(0o644)
+            with self.assertRaisesRegex(RuntimeError, "owner-only"):
+                check(env)
     def test_complete_evidence(self):
         with tempfile.TemporaryDirectory() as directory:
             self.assertTrue(check(self.evidence(directory)))
+
+    def test_local_backup_drill_is_not_independent_evidence(self):
+        with tempfile.TemporaryDirectory() as directory:
+            env = self.evidence(directory)
+            evidence_path = Path(env["V2_ARCHIVE_RESTORE_EVIDENCE"])
+            evidence = json.loads(evidence_path.read_text(encoding="utf-8"))
+            evidence["backup_scope"] = "local_separate_directory_not_independent_storage"
+            evidence_path.write_text(json.dumps(evidence), encoding="utf-8")
+            with self.assertRaisesRegex(RuntimeError, "independent durable backup"):
+                check(env)
 
     def test_mismatched_restored_file(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -47,7 +65,7 @@ class ArchiveGateTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             env = self.evidence(directory)
             (Path(directory) / "restored.bin").unlink()
-            with self.assertRaisesRegex(RuntimeError, "not found"):
+            with self.assertRaisesRegex(RuntimeError, "non-symlink file"):
                 check(env)
 
 if __name__ == "__main__":
