@@ -690,3 +690,11 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - `v2/run_all_discovery.py` sırası artık: kaynak erişim kontrolü, GitLab/Codeberg keşfi, onaylı canlı sayfa referans keşfi, şifreli M3U aday taraması. Offline testleri CI'a eklendi.
 - KAPSAM SINIRI: `live-pages.json` şu anda boş; dolayısıyla gerçek resmî site/YouTube kapsamı henüz oluşmadı. GitHub/Gist yeni kaynak keşfi ve otomatik stream playback testi hâlâ eksik. Arşiv restore kanıtı olmadan gerçek tarama başlamaz. Yeni CI sonucu henüz doğrulanmadı.
 - Ana İBO playlist, YEDEKLER, YENİLER, FAVORİLER değişmedi; PR #9 merge edilmedi.
+
+
+## 31 Ekim 2026 — Kapsamı yanlış tamamlandı göstermeme
+- CI #41193892945 kontrol sırasında compile/protect/discovery-tests SUCCESS; safety henüz çalışıyordu.
+- `v2/run_live_page_discovery.py`: boş resmî canlı sayfa onay listesi raporda `NO_APPROVED_PAGES` olarak görünür. 100 sayfa üstü sessizce kesilmez, tarama reddedilir.
+- `v2/run_all_discovery.py`: şifreli arşiv hedefinin normal dosya olması da zorunlu; dizin hedefi reddedilir.
+- İki regresyon testi eklendi. Yeni CI sonucu henüz doğrulanmadı. Gerçek kaynak taraması yapılmadı; onaylı canlı sayfa listesi boş, bağımsız yedek/restore kanıtı bekliyor.
+- Ana İBO playlist ve YEDEKLER değişmedi, PR #9 merge edilmedi.
