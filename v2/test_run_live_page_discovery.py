@@ -23,5 +23,10 @@ class LivePageRunnerTests(unittest.TestCase):
         self.assertEqual(report["errors"][0]["error"], "UNSAFE_PAGE")
     def test_empty_inventory_is_safe(self):
         self.assertEqual(scan([])["pages_checked"], 0)
+        self.assertEqual(scan([])["coverage_status"], "NO_APPROVED_PAGES")
+    def test_refuse_silent_truncation(self):
+        pages = [{"id": str(i), "url": "https://example.org/live"} for i in range(101)]
+        with self.assertRaisesRegex(ValueError, "100-page"):
+            scan(pages, lambda url: self.fail("Must not fetch when inventory exceeds limit"))
 if __name__ == "__main__":
     unittest.main(verbosity=2)
