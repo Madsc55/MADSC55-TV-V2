@@ -706,3 +706,10 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - GitHub API çağrılarında HTTPS api.github.com hostu, güvenli yönlendirme ve 2MB yanıt sınırı eklendi. `v2/test_github_source_safety.py` ve koordinatör sıra testleri CI'a eklendi.
 - SINIR: GitHub/Gist tam kapsamı garanti edilmez; GitHub mevcut repo arama tarayıcısı Gist API aramasını ayrı yapmıyor. GitHub arama sonuçlarında 320 repo/320 dosya sınırı var. Onaylı canlı sayfa listesi hâlâ boş; restore kanıtı ve gerçek tarama henüz yok. Son CI sonucu doğrulanmadı.
 - Ana IBO playlist ve YEDEKLER değişmedi, PR #9 merge edilmedi.
+
+
+## 31 Ekim 2026 — GitHub Gist kaynak keşfi
+- Önceki CI #41199407417 SUCCESS.
+- `v2/github_source_discovery.py`: ilgili GitHub depo sahiplerinin herkese açık Gist metadata uç noktasından `.m3u/.m3u8/.txt` kaynaklarını aday olarak keşfetme eklendi. En fazla 30 sahibi ve mevcut 320 dosya üst sınırını kullanır. Adaylar doğrudan IBO listesine eklenmez.
+- KAPSAM: Gist genel arama API'si olmadığı için yalnızca ilgili repo sahiplerinin public Gist'leri taranır; tüm Gist'ler taranmış sayılmaz. Son değişikliğin CI sonucu henüz doğrulanmadı; gerçek dış ağ taraması henüz çalıştırılmadı.
+- Ana IBO playlist ve YEDEKLER değişmedi; PR #9 merge edilmedi.
