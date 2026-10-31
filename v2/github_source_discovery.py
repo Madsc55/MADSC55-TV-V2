@@ -91,7 +91,7 @@ def main():
                 for filename, meta in gist.get("files", {}).items():
                     if len(found) >= MAX_FILES:
                         break
-                    if not re.search(r"(?i)\\.(m3u8?|txt)$", filename):
+                    if not re.search(r"(?i)\.(m3u8?|txt)$", filename):
                         continue
                     raw = meta.get("raw_url", "")
                     p = urllib.parse.urlsplit(raw)
