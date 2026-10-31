@@ -65,7 +65,8 @@ def scan(pages, fetcher=fetch_page):
         except (ValueError, OSError, TimeoutError) as exc:
             errors.append({"page_id": page_id, "error": type(exc).__name__})
     return {"schema": 1, "kind": "references-only", "pages_checked": len(pages),
-            "coverage_status": "NO_APPROVED_PAGES" if not pages else "APPROVED_PAGES_CHECKED",
+            "coverage_status": ("NO_APPROVED_PAGES" if not pages else
+                                "PARTIAL_APPROVED_PAGES" if errors else "APPROVED_PAGES_CHECKED"),
             "references": result, "errors": errors, "playback_verified": False}
 
 def main():
