@@ -60,7 +60,7 @@
       "id": "dearbulut-online",
       "kind": "m3u",
       "url": "https://dearbulut.github.io/iptv/playlists/online.m3u",
-      "scope": "TR"
+      "scope": "world"
     },
     {
       "id": "omerdenizhan-iptv-org-tr",
