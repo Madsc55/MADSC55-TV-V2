@@ -757,3 +757,11 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - `v2/test_github_source_approval.py` CI'a bağlandı. Yeni CI henüz doğrulanmadı.
 - Onaylanmamış yeni kaynaklar kaybolmaz: kaynak referans raporunda aday olarak kalır; ancak yayın URL'leri taranmış sayılmaz. Gerçek tarama ve bağımsız yedek/restore kanıtı hâlâ yok.
 - Ana IBO playlist, YEDEKLER, YENİLER, FAVORİLER değişmedi; PR #9 merge edilmedi.
+
+
+## 31 Ekim 2026 — Kapsam raporlarının dürüst durum etiketleri
+- Önceki CI #41205709023 SUCCESS.
+- `v2/source_availability_audit.py`: erişilebilen/erişilemeyen kaynak sayıları ve `COMPLETE` / `PARTIAL_SOURCE_AVAILABILITY` etiketi eklendi. Bir kaynak HTTP hatası verirken bütün kaynaklar sağlıklıymış gibi raporlanmaz.
+- `v2/run_live_page_discovery.py`: onaylı canlı sayfa hatalarında `PARTIAL_APPROVED_PAGES` etiketi eklendi.
+- İki ilgili offline test güncellendi. Yeni CI henüz doğrulanmadı.
+- Gerçek bağımsız yedek ve restore onayı olmadan gerçek şifreli kanal taraması başlatılmadı. Ana IBO, YEDEKLER, YENİLER, FAVORİLER değiştirilmedi; PR #9 merge edilmedi.
