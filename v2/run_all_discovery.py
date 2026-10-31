@@ -13,7 +13,7 @@ from archive_acceptance_gate import check
 from encrypted_archive import _cipher
 
 ROOT = pathlib.Path(__file__).resolve().parent
-def plan(archive, previous_report=None):
+def plan(archive, previous_report=None, include_youtube=False):
     steps = [
         [sys.executable, str(ROOT / "source_availability_audit.py"), "--audit-public-sources"],
         [sys.executable, str(ROOT / "github_source_discovery.py")],
@@ -22,6 +22,8 @@ def plan(archive, previous_report=None):
         [sys.executable, str(ROOT / "run_webpage_playlist_discovery.py"), "--scan-approved-index-pages"],
         [sys.executable, str(ROOT / "discover.py"), "--encrypted-archive", str(archive)],
     ]
+    if include_youtube:
+        steps.insert(-1, [sys.executable, str(ROOT / "youtube_discovery.py")])
     if previous_report:
         steps[-1].extend(["--previous-report", str(previous_report)])
     return steps
@@ -54,9 +56,10 @@ def main():
                         help="Explicit opt-in to the complete currently implemented source scan")
     parser.add_argument("--encrypted-archive", type=pathlib.Path, required=True)
     parser.add_argument("--previous-report", type=pathlib.Path)
+    parser.add_argument("--include-youtube", action="store_true", help="Run separate advisory YouTube live metadata discovery; requires yt-dlp")
     args = parser.parse_args()
     preflight(args.encrypted_archive)
-    execute(plan(args.encrypted_archive, args.previous_report))
+    execute(plan(args.encrypted_archive, args.previous_report, args.include_youtube))
     print("Source discovery stages finished; check each report for PARTIAL coverage.")
     print("Playback and IBO device testing NOT verified.")
 if __name__ == "__main__":
