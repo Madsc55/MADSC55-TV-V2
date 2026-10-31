@@ -241,6 +241,48 @@
       "kind": "m3u",
       "url": "https://iptv-org.github.io/iptv/regions/ww.m3u",
       "scope": "world"
+    },
+    {
+      "id": "iptv-org-region-north-america",
+      "kind": "m3u",
+      "url": "https://iptv-org.github.io/iptv/regions/nam.m3u",
+      "scope": "world"
+    },
+    {
+      "id": "iptv-org-region-south-america",
+      "kind": "m3u",
+      "url": "https://iptv-org.github.io/iptv/regions/sam.m3u",
+      "scope": "world"
+    },
+    {
+      "id": "iptv-org-region-middle-east",
+      "kind": "m3u",
+      "url": "https://iptv-org.github.io/iptv/regions/me.m3u",
+      "scope": "world"
+    },
+    {
+      "id": "iptv-org-region-western-europe",
+      "kind": "m3u",
+      "url": "https://iptv-org.github.io/iptv/regions/wer.m3u",
+      "scope": "world"
+    },
+    {
+      "id": "iptv-org-region-eastern-europe",
+      "kind": "m3u",
+      "url": "https://iptv-org.github.io/iptv/regions/eeu.m3u",
+      "scope": "world"
+    },
+    {
+      "id": "iptv-org-region-northern-europe",
+      "kind": "m3u",
+      "url": "https://iptv-org.github.io/iptv/regions/neu.m3u",
+      "scope": "world"
+    },
+    {
+      "id": "iptv-org-region-southern-europe",
+      "kind": "m3u",
+      "url": "https://iptv-org.github.io/iptv/regions/seu.m3u",
+      "scope": "world"
     }
   ]
 }
