@@ -698,3 +698,11 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - `v2/run_all_discovery.py`: şifreli arşiv hedefinin normal dosya olması da zorunlu; dizin hedefi reddedilir.
 - İki regresyon testi eklendi. Yeni CI sonucu henüz doğrulanmadı. Gerçek kaynak taraması yapılmadı; onaylı canlı sayfa listesi boş, bağımsız yedek/restore kanıtı bekliyor.
 - Ana İBO playlist ve YEDEKLER değişmedi, PR #9 merge edilmedi.
+
+
+## 31 Ekim 2026 — GitHub kaynak keşfi tek komuta bağlandı
+- Önceki CI #41193990362 SUCCESS.
+- Mevcut `v2/github_source_discovery.py` GitHub M3U kaynak tarayıcısı `v2/run_all_discovery.py` akışına ikinci aşama olarak bağlandı. Artık sıra: erişilebilirlik, GitHub, GitLab/Codeberg, onaylı canlı sayfa referansları, şifreli M3U aday keşfi.
+- GitHub API çağrılarında HTTPS api.github.com hostu, güvenli yönlendirme ve 2MB yanıt sınırı eklendi. `v2/test_github_source_safety.py` ve koordinatör sıra testleri CI'a eklendi.
+- SINIR: GitHub/Gist tam kapsamı garanti edilmez; GitHub mevcut repo arama tarayıcısı Gist API aramasını ayrı yapmıyor. GitHub arama sonuçlarında 320 repo/320 dosya sınırı var. Onaylı canlı sayfa listesi hâlâ boş; restore kanıtı ve gerçek tarama henüz yok. Son CI sonucu doğrulanmadı.
+- Ana IBO playlist ve YEDEKLER değişmedi, PR #9 merge edilmedi.
