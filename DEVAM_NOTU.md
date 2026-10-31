@@ -784,3 +784,10 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - `v2/archive_backup_restore_drill.py`: mevcut AES-GCM arşivini ayrı dizine özel izinlerle kopyalayıp SHA256 ve kayıt bazında restore eşitliğini doğrulayan açıkça çalıştırılan yardımcı eklendi. Token taşıyan plaintext rapor yazmaz, mevcut dosyaları üzerine yazmaz, hedef symlink'leri reddeder.
 - `v2/test_archive_backup_restore_drill.py` CI'a eklendi. Yeni CI henüz doğrulanmadı.
 - ÖNEMLİ: ayrı dizin yedeği bağımsız/uzak dayanıklı depolama kanıtı değildir; gerçek bağımsız yedek onayı ayrıca gerekir. Gerçek tarama başlatılmadı. Ana IBO, YEDEKLER, YENİLER, FAVORİLER korunuyor, PR #9 merge edilmedi.
+
+
+## 31 Ekim 2026 — Yerel yedek kanıtı güvenlik kapısı
+- CI #41206705403 SUCCESS.
+- `archive_acceptance_gate.py`: yerel ayrı dizin yedekleme aracının ürettiği `backup_scope=local_separate_directory_not_independent_storage` kanıtı, bağımsız dayanıklı yedek olarak kabul edilmez; gerçek ağ taraması için fail-closed kalır.
+- `test_archive_acceptance_gate.py` regresyonu eklendi; yeni CI henüz doğrulanmadı.
+- Ana IBO, YEDEKLER, YENİLER, FAVORİLER korunuyor; PR #9 merge edilmedi.
