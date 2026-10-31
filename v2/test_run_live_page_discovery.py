@@ -33,6 +33,13 @@ class LivePageRunnerTests(unittest.TestCase):
         self.assertEqual(len(report["references"]), 1)
         self.assertEqual(report["coverage_status"], "PARTIAL_APPROVED_PAGES")
         self.assertEqual(len(report["errors"]), 1)
+    def test_approved_official_page_inventory(self):
+        import json
+        from run_live_page_discovery import CONFIG
+        pages = json.loads(CONFIG.read_text(encoding="utf-8"))["pages"]
+        self.assertGreaterEqual(len(pages), 2)
+        self.assertEqual(len({page["id"] for page in pages}), len(pages))
+        self.assertTrue(all(approved_page(page["url"]) for page in pages))
     def test_empty_inventory_is_safe(self):
         self.assertEqual(scan([])["pages_checked"], 0)
         self.assertEqual(scan([])["coverage_status"], "NO_APPROVED_PAGES")
