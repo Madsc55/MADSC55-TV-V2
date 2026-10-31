@@ -10,7 +10,7 @@ from pathlib import Path
 from urllib.parse import urlencode, quote, urlsplit
 from webpage_source_discovery import public_hostname
 import urllib.request
-from forge_source_discovery import (GITLAB_API, CODEBERG_API, TERMS,
+from forge_source_discovery import (GITLAB_API, CODEBERG_API, TERMS, MAX_PATHS,
     gitlab_projects, codeberg_projects, parse_tree_paths, playlist_sources)
 
 HERE = Path(__file__).resolve().parent
@@ -87,6 +87,8 @@ def scan():
                             limits_hit.add("CODEBERG_TRUNCATED_TREE")
                         listing = listing.get("tree", [])
                     paths = parse_tree_paths(listing)
+                    if sum(isinstance(p, str) and p.lower().endswith((".m3u", ".m3u8")) for p in paths) > MAX_PATHS:
+                        limits_hit.add(forge.upper() + "_PLAYLIST_PATH_LIMIT")
                     for link in playlist_sources(project, paths):
                         found.append({"forge": forge, "source_url": link, "playback_verified": False})
                 except (ValueError, OSError, TimeoutError) as exc:
