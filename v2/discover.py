@@ -232,6 +232,8 @@ def main():
                     try:
                         child_text = fetch(link)
                         child_entries = list(entries(child_text))
+                        if not child_text.lstrip().startswith("#EXTM3U"):
+                            raise ValueError("Indexed source is not an M3U playlist")
                         loaded.append((child_id, child_text))
                         scopes[child_id] = source.get("scope", "candidate")
                         source_audit.append({"source": child_id, "entries": len(child_entries),
