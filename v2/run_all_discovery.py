@@ -19,6 +19,7 @@ def plan(archive, previous_report=None):
     steps = [
         [sys.executable, str(ROOT / "source_availability_audit.py"), "--audit-public-sources"],
         [sys.executable, str(ROOT / "run_forge_source_discovery.py"), "--scan-public-forges"],
+        [sys.executable, str(ROOT / "run_live_page_discovery.py"), "--scan-approved-live-pages"],
         [sys.executable, str(ROOT / "discover.py"), "--encrypted-archive", str(archive)],
     ]
     if previous_report:
