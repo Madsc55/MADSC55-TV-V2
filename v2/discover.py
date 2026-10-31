@@ -86,6 +86,15 @@ def turkish_candidate(entry, scope):
 def key(entry):
     return (entry["tvg_id"].casefold(), entry["name"].casefold())
 
+def recognized_channel_ids(source_texts, scopes):
+    known = set()
+    for source_id, content in source_texts:
+        if scopes.get(source_id) in ("TR", "AZ"):
+            for item in entries(content):
+                if item["tvg_id"].strip():
+                    known.add(item["tvg_id"].strip().casefold())
+    return known
+
 def discover(source_texts, live_text, scopes):
     existing_urls = {e["url"] for e in entries(live_text)}
     existing_keys = {key(e) for e in entries(live_text) if e["tvg_id"]}
@@ -93,12 +102,7 @@ def discover(source_texts, live_text, scopes):
     # Match TVG IDs only: generic names like "News" must not pull in world channels.
     # Materialize once so generators remain safe and provenance stays deterministic.
     source_texts = list(source_texts)
-    known_ids = set()
-    for source_id, content in source_texts:
-        if scopes.get(source_id) in ("TR", "AZ"):
-            for item in entries(content):
-                if item["tvg_id"].strip():
-                    known_ids.add(item["tvg_id"].strip().casefold())
+    known_ids = recognized_channel_ids(source_texts, scopes)
     candidates, seen = [], set()
     provenance = {}
     for source_id, content in source_texts:
@@ -219,10 +223,12 @@ def main():
         check()
         existing = {item["url"] for item in entries(live)}
         archived = set()
+        known_ids = recognized_channel_ids(loaded, scopes)
         for source_id, content in loaded:
             for item in entries(content):
                 if (item["url"] not in existing and item["url"] not in archived
-                        and turkish_candidate(item, scopes.get(source_id, "candidate"))):
+                        and (turkish_candidate(item, scopes.get(source_id, "candidate"))
+                             or bool(item["tvg_id"].strip() and item["tvg_id"].strip().casefold() in known_ids))):
                     append(args.encrypted_archive, {"source": source_id, **item})
                     archived.add(item["url"])
         restored = restore(args.encrypted_archive)
