@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """One-command V2 discovery coordinator; fail closed before network activity.
 
-Runs public source availability, forge reference search, then encrypted discovery.
+Runs six bounded discovery stages and archives approved candidate sources.
 Never modifies IBO playlist or exports candidates to YEDEKLER. Playback and
 device verification remain separate because they are not yet implemented.
 """
@@ -57,6 +57,7 @@ def main():
     args = parser.parse_args()
     preflight(args.encrypted_archive)
     execute(plan(args.encrypted_archive, args.previous_report))
-    print("Source discovery finished; playback and IBO device testing NOT verified.")
+    print("Source discovery stages finished; check each report for PARTIAL coverage.")
+    print("Playback and IBO device testing NOT verified.")
 if __name__ == "__main__":
     main()
