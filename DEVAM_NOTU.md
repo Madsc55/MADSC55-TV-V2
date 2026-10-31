@@ -791,3 +791,11 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - `archive_acceptance_gate.py`: yerel ayrı dizin yedekleme aracının ürettiği `backup_scope=local_separate_directory_not_independent_storage` kanıtı, bağımsız dayanıklı yedek olarak kabul edilmez; gerçek ağ taraması için fail-closed kalır.
 - `test_archive_acceptance_gate.py` regresyonu eklendi; yeni CI henüz doğrulanmadı.
 - Ana IBO, YEDEKLER, YENİLER, FAVORİLER korunuyor; PR #9 merge edilmedi.
+
+
+## 31 Ekim 2026 — Genel kaynak envanteri ve kapsam doğruluğu
+- Önceki CI #41209148660 SUCCESS.
+- `v2/discover.py`: offline / hiç kaynak yok / eksik / tam kaynak çekme için açık `coverage_status`, ayrıca `failed_source_count` raporlanır. Şifreli arşiv modunda eksik kaynak fail-closed kalır.
+- `v2/run_public_inventory.py`: şifreli arşiv onayı gerektirmeden yalnızca mevcut 40 M3U kaynağının erişilebilirlik metadata'sını kontrol eden ayrı komut; eksik kaynak varsa nonzero exit ve rapor. Stream playback testi değildir.
+- `v2/test_run_public_inventory.py` eklendi ve CI'a bağlandı. Yeni CI sonucu henüz doğrulanmadı.
+- Gerçek ağ taraması ve bağımsız backup/restore onayı bekliyor. Ana IBO, YEDEKLER, YENİLER, FAVORİLER korunuyor; PR #9 merge edilmedi.
