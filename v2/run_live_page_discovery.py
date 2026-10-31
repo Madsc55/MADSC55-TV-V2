@@ -46,8 +46,10 @@ def fetch_page(url):
     return content.decode("utf-8", errors="replace")
 
 def scan(pages, fetcher=fetch_page):
+    if len(pages) > 100:
+        raise ValueError("Approved live-page inventory exceeds the 100-page scan limit")
     result, errors, seen = [], [], set()
-    for item in pages[:100]:
+    for item in pages:
         page_id, url = item["id"], item["url"]
         if not approved_page(url):
             errors.append({"page_id": page_id, "error": "UNSAFE_PAGE"})
@@ -62,7 +64,8 @@ def scan(pages, fetcher=fetch_page):
                                    "kind": ref["kind"], "playback_verified": False})
         except (ValueError, OSError, TimeoutError) as exc:
             errors.append({"page_id": page_id, "error": type(exc).__name__})
-    return {"schema": 1, "kind": "references-only", "pages_checked": min(len(pages), 100),
+    return {"schema": 1, "kind": "references-only", "pages_checked": len(pages),
+            "coverage_status": "NO_APPROVED_PAGES" if not pages else "APPROVED_PAGES_CHECKED",
             "references": result, "errors": errors, "playback_verified": False}
 
 def main():
