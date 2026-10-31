@@ -5,6 +5,7 @@ on:
     paths:
       - 'MADSC55_TV_IBO_CALISANLAR_TEST.m3u8'
       - 'v2/test_playlist_invariants.py'
+      - 'v2/real_ibo_scan.py'
       - '.github/workflows/v2-playlist-safety.yml'
 permissions:
   contents: read
