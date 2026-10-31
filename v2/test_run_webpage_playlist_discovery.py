@@ -15,6 +15,17 @@ class WebpagePlaylistRunnerTests(unittest.TestCase):
         report = scan([{"id": "bad", "url": "https://localhost/index"}],
                       lambda url: self.fail("No network allowed"))
         self.assertEqual(report["coverage_status"], "PARTIAL_APPROVED_PAGES")
+    def test_partial_index_failure_keeps_successful_references(self):
+        pages = [{"id": "good", "url": "https://example.org/index"},
+                 {"id": "bad", "url": "https://example.org/unavailable"}]
+        def fetch(url):
+            if url.endswith("unavailable"):
+                raise OSError("offline")
+            return '<a href="/tr.m3u">TR</a>'
+        report = scan(pages, fetch)
+        self.assertEqual(len(report["references"]), 1)
+        self.assertEqual(report["coverage_status"], "PARTIAL_APPROVED_PAGES")
+        self.assertEqual(len(report["errors"]), 1)
     def test_empty_is_not_full_coverage(self):
         self.assertEqual(scan([])["coverage_status"], "NO_APPROVED_PAGES")
     def test_refuse_silent_inventory_truncation(self):
