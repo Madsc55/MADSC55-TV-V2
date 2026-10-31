@@ -42,6 +42,9 @@ def execute(steps, runner=subprocess.run):
     for index, command in enumerate(steps, 1):
         result = runner(command, check=False, cwd=str(ROOT.parent))
         if result.returncode != 0:
+            if index == 1:
+                print("WARNING: Public source availability incomplete; continuing with independent discovery stages")
+                continue
             raise RuntimeError("Discovery stage " + str(index) + " failed; subsequent stages refused")
     return True
 
