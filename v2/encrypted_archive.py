@@ -9,6 +9,7 @@ import base64
 import hashlib
 import json
 import os
+import stat
 from pathlib import Path
 
 AAD = b"MADSC55-TV-V2-ARCHIVE-v1"
@@ -45,7 +46,10 @@ def append(path, record, key_hex=None):
         raise ValueError("Archive path must not be a symlink")
     fd = os.open(path, flags, 0o600)
     try:
-        if os.fstat(fd).st_mode & 0o077:
+        mode = os.fstat(fd).st_mode
+        if not stat.S_ISREG(mode):
+            raise ValueError("Archive destination must be a regular file")
+        if mode & 0o077:
             raise PermissionError("Archive permissions must be owner-only")
         with os.fdopen(fd, "ab", closefd=False) as stream:
             stream.write((json.dumps(item, separators=(",", ":")) + "\n").encode())
@@ -57,8 +61,20 @@ def append(path, record, key_hex=None):
 def restore(path, key_hex=None):
     cipher = _cipher(key_hex)
     records = []
-    with Path(path).open("rb") as stream:
-        for line in stream:
+    path = Path(path)
+    if path.is_symlink():
+        raise ValueError("Archive source must not be a symlink")
+    flags = os.O_RDONLY | (getattr(os, "O_NOFOLLOW", 0))
+    fd = os.open(path, flags)
+    try:
+        mode = os.fstat(fd).st_mode
+        if not stat.S_ISREG(mode) or mode & 0o077:
+            raise PermissionError("Archive source must be a private regular file")
+        with os.fdopen(fd, "rb", closefd=False) as stream:
+            lines = stream.readlines()
+    finally:
+        os.close(fd)
+    for line in lines:
             if len(line) > 3_000_000:
                 raise ValueError("Archive line too large")
             item = json.loads(line)
