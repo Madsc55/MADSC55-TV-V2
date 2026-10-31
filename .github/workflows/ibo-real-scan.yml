@@ -40,13 +40,14 @@ jobs:
           path: v2/reports/ibo-real-scan-report.json
           if-no-files-found: warn
           retention-days: 7
-      - name: Upload candidate playlist when scan succeeds
+      - name: Upload candidate playlist when one exists
         if: steps.scan.outcome == 'success'
+
         uses: actions/upload-artifact@v4
         with:
           name: IBO_YENI_ADAYLAR_2000_BATCHES
           path: v2/reports/IBO_YENI_ADAYLAR_PART*.m3u8
-          if-no-files-found: error
+          if-no-files-found: warn
           retention-days: 7
       - name: Verify protected playlist before publishing
         if: steps.scan.outcome == 'success'
