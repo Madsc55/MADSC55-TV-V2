@@ -658,3 +658,10 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - `v2/run_forge_source_discovery.py`: GitLab/Codeberg API çağrıları sadece güvenilir HTTPS hostlarına yapılır; farklı hosta/HTTP'ye yönlendirmeler reddedilir. `v2/test_forge_api_safety.py` testleri CI'a eklendi.
 - `v2/webpage_source_discovery.py`: HTML index sayfasının kendisi de public HTTPS, portsuz/443, credential'sız ve fragment'sız olmalı; regresyon testi eklendi.
 - Bu güvenlik düzeltmeleri henüz gerçek dış ağ taraması değildir. Manuel Actions workflow henüz başlatılmadı; sonuçlar ve şifreli arşiv restore kanıtı bekleniyor. Ana İBO playlist ve YEDEKLER değişmedi; PR #9 merge edilmedi.
+
+
+## 31 Ekim 2026 — Şifreli arşiv geri yükleme dosya güvenliği
+- Önceki CI #41191926265 SUCCESS.
+- `v2/encrypted_archive.py`: geri yüklemede symlink reddi, `O_NOFOLLOW`, sadece normal dosya ve sahibine özel izinler (0600) şartı; yazmada da normal dosya kontrolü.
+- `v2/test_encrypted_archive.py`: symlink restore ve 0644 izinli restore reddi testleri eklendi.
+- Bu değişikliklerin CI sonucu henüz kontrol edilmedi. Bağımsız dayanıklı yedek/restore kanıtı hâlâ gerekli; gerçek tarama başlamadı. Ana İBO playlist ve YEDEKLER değişmedi; PR #9 merge edilmedi.
