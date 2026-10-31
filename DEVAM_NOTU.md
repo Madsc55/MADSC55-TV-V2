@@ -765,3 +765,10 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - `v2/run_live_page_discovery.py`: onaylı canlı sayfa hatalarında `PARTIAL_APPROVED_PAGES` etiketi eklendi.
 - İki ilgili offline test güncellendi. Yeni CI henüz doğrulanmadı.
 - Gerçek bağımsız yedek ve restore onayı olmadan gerçek şifreli kanal taraması başlatılmadı. Ana IBO, YEDEKLER, YENİLER, FAVORİLER değiştirilmedi; PR #9 merge edilmedi.
+
+
+## 31 Ekim 2026 — Genel rapor metadata sızıntısı önleme
+- Önceki CI #41205904839 SUCCESS.
+- `v2/discover.py`: public candidate JSON'a yazılan name/tvg_id/group/logo alanlarında tam HTTPS URL'leri ve token/apikey/password/secret/auth/signature/sig/key biçimli değerler maskelenir, alanlar 512 karakterle sınırlandırılır. Şifreli özel arşivde orijinal kaynak metadata'sı korunur.
+- `v2/test_public_metadata_redaction.py` CI'a eklendi; yeni CI henüz doğrulanmadı.
+- Eksik gerçek kaynak taraması, bağımsız backup/restore onayı, canlı sayfa kaynak onayları ve playback doğrulaması devam eden işlerdir. Ana IBO playlist, YEDEKLER, YENİLER, FAVORİLER değiştirilmedi; PR #9 merge edilmedi.
