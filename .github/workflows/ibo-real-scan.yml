@@ -5,6 +5,7 @@ on:
       - madsc/v2-discovery-bulk-20261031
     paths:
       - .github/workflows/ibo-real-scan.yml
+      - v2/real_ibo_scan.py
   workflow_dispatch:
 
 permissions:
@@ -23,7 +24,7 @@ jobs:
         id: scan
         continue-on-error: true
         run: |
-          python3 v2/real_ibo_scan.py --workers 16 --timeout 8 --limit 1000
+          python3 v2/real_ibo_scan.py --workers 16 --timeout 8 --limit 2000
       - name: Upload scan report
         if: always()
         uses: actions/upload-artifact@v4
@@ -36,8 +37,8 @@ jobs:
         if: steps.scan.outcome == 'success'
         uses: actions/upload-artifact@v4
         with:
-          name: IBO_PROD_LIST
-          path: v2/reports/IBO_PROD_LIST.m3u8
+          name: IBO_YENI_ADAYLAR_2000_PART1
+          path: v2/reports/IBO_YENI_ADAYLAR_2000_PART1.m3u8
           if-no-files-found: error
           retention-days: 7
       - name: Propagate scan failure
