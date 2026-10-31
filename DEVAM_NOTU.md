@@ -918,3 +918,12 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - GitLab repository tree API ilk 100 dosyaya ulaştığında artık 2. ve gerekirse 3. sayfayı da okur. Üçüncü sayfa doluysa `GITLAB_TREE_PAGE_LIMIT` ile kısmi kapsam raporlanır.
 - `test_partial_source_coverage.py` ikinci sayfadaki M3U kaynağının bulunduğunu doğrulayan çevrimdışı testle genişletildi.
 - Ana IBO/YEDEKLER/YENİLER/FAVORİLER korunuyor; PR #9 merge edilmedi. Gerçek tam tarama ve bağımsız şifreli yedek hâlâ tamamlanmadı.
+
+
+## 31 Ekim 2026 — Görev 1: bütünlük entegrasyonu ve ağ dayanıklılığı (kısmi)
+- `v2/source_integrity.py` (9d3cf80) ve testleri (c593455) oluşturuldu. `discover.py` ana akışına `verify()` entegrasyonu commit 18f65813 ile eklendi; ek bağlantı testi 90f0fd90.
+- Geçici ağ hatalarında sınırlı yeniden deneme, kalıcı HTTP 4xx ve geçersiz içerikte erken durma, kaynak başına güvenli hata türü/deneme sayısı raporu commit efd72262 ile eklendi. Timeout test fixture'ı commit 692ae0f6.
+- CI: efd72262 için sıralı hazırlık #267 (run 41239473741) CANCELLED; 692ae0f6 için #268 (run 41239483328) SUCCESS: compile, protect, discovery-tests, safety dört iş de başarılı.
+- Bu CI, gerçek IPTV-org/Free-TV/onaylı M3U uçtan uca ağ taramasını, bütün kaynakların erişimini, sıfır aday kaybını veya Worldwide Discovery #80 kök nedeninin giderildiğini kanıtlamaz. #80 hata logu henüz incelenmedi. Ayrıca #268 adım listesinde `test_source_integrity.py` adı görülmediğinden bu özel testin CI'da yürütüldüğü iddia edilmez.
+- Görev 1 durumu: KISMEN TAMAMLANDI / GERÇEK TARAMA DOĞRULAMASI BEKLİYOR. Görev 2'ye kod değişikliğiyle geçilmedi; yalnızca mimari hazırlık yapılabilir.
+- Koruma: ana IBO playlist'i, YEDEKLER'deki iki kanal, YENİLER, FAVORİLER, cihaz favorileri, logo/EPG/kategoriler değiştirilmedi; main ve PR #9 birleştirilmedi.
