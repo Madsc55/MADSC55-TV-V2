@@ -840,3 +840,12 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - `github_source_discovery.py`: API/kaynak erişim hatalarında başarılı bulgular korunur, `coverage_status=PARTIAL_API_ERRORS`, `errors`, `playback_verified=false` raporlanır; kısmi tarama asla tam kapsama diye sunulmaz.
 - `test_github_partial_discovery.py` eklendi ve toplu CI'ya bağlandı. Bu davranış veri taraması için kısmi rapor, güvenlik onayları için fail-closed politikasını değiştirmez.
 - Ana IBO/YEDEKLER/YENİLER/FAVORİLER korunuyor; PR #9 merge edilmedi. Son CI henüz doğrulanmadı.
+
+
+## 31 Ekim 2026 — Toplu kısmi kaynak dayanıklılığı
+- Önceki toplu CI #41212171051 SUCCESS.
+- GitLab/Codeberg API hataları başarılı kaynak referanslarını artık düşürmez; `coverage_status=PARTIAL_API_ERRORS` raporlanır.
+- Kaynak erişim denetimi hata verdiğinde koordinatör sonraki bağımsız aşamaları çalıştırır; şifreli arşiv güvenlik preflight kontrolü zorunludur.
+- En az bir kaynak başarıyla yüklendiğinde şifreli arşiv, başarısız diğer kaynaklar yüzünden tüm başarılı adayları kaybetmez; `archive_source_set_partial=true` ile eksik kapsamı açıkça bildirir. Hiç kaynak erişilebilir değilse arşivleme reddedilir.
+- Toplu CI testleri: `test_run_all_discovery.py` ve yeni `test_partial_source_coverage.py`; yeni CI sonucu henüz doğrulanmadı.
+- Ana İBO, YEDEKLER, YENİLER, FAVORİLER korunuyor; PR #9 merge edilmedi. Bağımsız yedek onayı ve gerçek tarama henüz tamamlanmadı.
