@@ -42,8 +42,14 @@ def live_reference(url):
         return None
 
 def extract_live_references(page_url, html):
-    if not live_reference(page_url) and not (page_url.startswith("https://") and
-            public_hostname(urlsplit(page_url).hostname or "")):
+    try:
+        origin = urlsplit(page_url)
+        valid = (origin.scheme == "https" and bool(origin.hostname)
+                 and public_hostname(origin.hostname) and not origin.username
+                 and not origin.password and origin.port in (None, 443))
+    except ValueError:
+        valid = False
+    if not valid:
         raise ValueError("Public HTTPS page required")
     parser = LiveLinkParser()
     parser.feed(html[:2_000_000])
