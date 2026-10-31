@@ -119,7 +119,8 @@ def discover(source_texts, live_text, scopes):
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("--offline", action="store_true", help="Do not access external sources")
-    p.add_argument("--snapshot-output", action="store_true", help="Write private ephemeral playback snapshot")
+    p.add_argument("--snapshot-output", action="store_true", help="Legacy plaintext snapshot (disabled)")
+    p.add_argument("--encrypted-archive", type=pathlib.Path, help="Append candidates to AES-GCM private archive")
     p.add_argument("--limit", type=int, default=0, help="Maximum candidate count; 0 means no limit")
     p.add_argument("--previous-report", type=pathlib.Path, help="Previous discovery JSON for source-loss audit")
     args = p.parse_args()
@@ -127,6 +128,8 @@ def main():
         p.error("--limit must be zero or positive")
     if args.snapshot_output:
         p.error("Unencrypted token-bearing snapshots are disabled until encrypted archival and restore are verified")
+    if args.offline and args.encrypted_archive:
+        p.error("--encrypted-archive requires a real source scan")
     if args.offline and args.previous_report:
         p.error("--previous-report requires an actual network discovery run")
     live = LIVE.read_text(encoding="utf-8-sig")
@@ -216,6 +219,23 @@ def main():
         private.chmod(0o600)
         if errors:
             raise SystemExit("Snapshot incomplete: " + str(len(errors)) + " source(s) failed; no playback permitted")
+    if args.encrypted_archive:
+        if errors or not loaded:
+            raise SystemExit("Encrypted archive refused: source set incomplete")
+        from encrypted_archive import append, restore
+        from archive_acceptance_gate import check
+        check()
+        existing = {item["url"] for item in entries(live)}
+        archived = set()
+        for source_id, content in loaded:
+            for item in entries(content):
+                if (item["url"] not in existing and item["url"] not in archived
+                        and turkish_candidate(item, scopes.get(source_id, "candidate"))):
+                    append(args.encrypted_archive, {"source": source_id, **item})
+                    archived.add(item["url"])
+        restored = restore(args.encrypted_archive)
+        if archived and not archived.issubset({x["url"] for x in restored}):
+            raise SystemExit("Encrypted archive restore verification failed")
     result = {"schema": 1, "mode": "read-only", "configured_and_discovered_sources": len(sources), "source_count": len(loaded), "errors": errors, "source_audit": source_audit, "candidates": discover(loaded, live, scopes)}
     result["total_unique_candidates"] = len(result["candidates"])
     if args.previous_report:
