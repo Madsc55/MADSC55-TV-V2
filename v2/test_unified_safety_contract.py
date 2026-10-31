@@ -30,6 +30,8 @@ assert 'python v2/final_validation_summary.py' in workflow
 # Scanning must remain manual until infrastructure and archive restore are approved.
 assert '  workflow_dispatch:' in workflow
 assert '  push:' not in workflow and '  schedule:' not in workflow
+assert 'python v2/archive_acceptance_gate.py' in workflow
+assert workflow.index('python v2/archive_acceptance_gate.py') < workflow.index('python v2/github_source_discovery.py')
 # Separate nightly preflight must not contain network discovery/playback commands.
 preflight = (ROOT.parent / '.github/workflows/v2-ordered-preflight.yml').read_text(encoding='utf-8')
 assert '  schedule:' in preflight and '  workflow_dispatch:' in preflight
@@ -37,6 +39,7 @@ for forbidden in ('python v2/discover.py', 'python v2/github_source_discovery.py
     assert forbidden not in preflight, forbidden
 for required in ('needs: compile', 'needs: protect', 'needs: discovery-tests'):
     assert required in preflight, required
+assert 'python v2/test_archive_acceptance_gate.py' in preflight
 # New candidate sources must not silently disappear from the preparation config.
 import json
 sources = json.loads((ROOT / 'config/sources.json').read_text(encoding='utf-8'))['sources']
