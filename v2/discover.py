@@ -14,6 +14,7 @@ OUTPUT = ROOT / "v2" / "reports" / "candidates.json"
 DYNAMIC = ROOT / "v2" / "reports" / "github-source-discovery.json"
 FORGE = ROOT / "v2" / "reports" / "forge-source-discovery.json"
 FORGE_APPROVALS = ROOT / "v2" / "config" / "approved-forge-source-sha256.json"
+GITHUB_APPROVALS = ROOT / "v2" / "config" / "approved-github-source-sha256.json"
 MAX_BYTES = 25_000_000
 
 def fetch(url, allow_html=False):
@@ -141,12 +142,19 @@ def main():
         p.error("--previous-report requires an actual network discovery run")
     live = LIVE.read_text(encoding="utf-8-sig")
     sources = json.loads(SOURCES.read_text(encoding="utf-8"))["sources"]
+    github_approvals = set()
+    if GITHUB_APPROVALS.exists():
+        approval_doc = json.loads(GITHUB_APPROVALS.read_text(encoding="utf-8"))
+        if approval_doc.get("schema") != 1 or not isinstance(approval_doc.get("approved_sha256"), list):
+            raise SystemExit("Invalid GitHub source approval inventory")
+        github_approvals = set(approval_doc["approved_sha256"])
     if DYNAMIC.exists():
         try:
             dynamic = json.loads(DYNAMIC.read_text(encoding="utf-8"))
             for item in dynamic.get("sources", [])[:240]:
                 url = item.get("url", "")
-                if url.startswith("https://") and not any(s["url"] == url for s in sources):
+                if (isinstance(url, str) and hashlib.sha256(url.encode("utf-8")).hexdigest() in github_approvals
+                        and url.startswith("https://") and not any(s["url"] == url for s in sources)):
                     sources.append({"id": "github-auto-" + hashlib.sha256(url.encode("utf-8")).hexdigest()[:20], "url": url, "scope": "candidate"})
         except (OSError, ValueError, TypeError) as exc:
             raise SystemExit('Dynamic discovery inventory unreadable: ' + type(exc).__name__) from exc
