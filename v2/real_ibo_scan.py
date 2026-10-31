@@ -44,8 +44,10 @@ def parse_m3u(data):
             name = line.rsplit(',', 1)[-1].strip() or 'Unknown'
             group = re.search(r'group-title="([^"]*)"', line)
             tvg = re.search(r'tvg-id="([^"]*)"', line)
+            logo = re.search(r'tvg-logo="([^"]*)"', line)
             pending = {'name': name, 'group': group.group(1) if group else '',
-                       'tvg_id': tvg.group(1) if tvg else ''}
+                       'tvg_id': tvg.group(1) if tvg else '',
+                       'logo': logo.group(1) if logo else ''}
         elif line and not line.startswith('#'):
             if pending and urllib.parse.urlsplit(line).scheme in ('http', 'https'):
                 yield {**pending, 'url': line}
@@ -150,7 +152,9 @@ def main():
     for item in good[:args.limit]:
         name = item['name'].replace('\n', ' ').replace('\r', ' ').replace(',', ' ')
         group = item['group'].replace('"', '').replace('\n', ' ')
-        lines.extend([f'#EXTINF:-1 group-title="{group}",{name}', item['url']])
+        logo = item.get('logo', '')
+        logo_attr = f' tvg-logo="{logo}"' if logo.startswith(('https://', 'http://')) and '"' not in logo else ''
+        lines.extend([f'#EXTINF:-1{logo_attr} group-title="{group}",{name}', item['url']])
     temp = args.output.with_suffix(args.output.suffix + '.tmp')
     args.output.parent.mkdir(parents=True, exist_ok=True)
     temp.write_text('\n'.join(lines) + '\n', encoding='utf-8')
@@ -167,16 +171,25 @@ def main():
                 continue
             current_urls.add(item['url'])
             safe_name = re.sub(r'[\r\n,]', ' ', item['name']).strip() or 'Yeni Kanal'
+            logo = item.get('logo', '')
+            logo_attr = f' tvg-logo="{logo}"' if logo.startswith(('https://', 'http://')) and '"' not in logo else ''
             additions.extend([
-                f'#EXTINF:-1 group-title="🗂️ YEDEKLER (2)",{safe_name}',
+                f'#EXTINF:-1{logo_attr} group-title="🗂️ YEDEKLER (2)",{safe_name}',
                 item['url'],
             ])
         if additions:
             separator = b'' if original.endswith(b'\n') else b'\n'
             # Atomic write; preexisting content and categories remain byte-identical.
             tmp = args.live.with_suffix(args.live.suffix + '.tmp')
-            tmp.write_bytes(original + separator +
-                            ('\n'.join(additions) + '\n').encode('utf-8'))
+            # Normalize every YEDEKLER header to the new exact category total.
+            old_group = re.search(rb'group-title="\xf0\x9f\x97\x82\xef\xb8\x8f YEDEKLER \(\d+\)"', original)
+            if not old_group:
+                raise ValueError('YEDEKLER category not found')
+            new_count = len(re.findall(rb'group-title="\xf0\x9f\x97\x82\xef\xb8\x8f YEDEKLER \(\d+\)"', original)) + len(additions) // 2
+            group_new = f'group-title="🗂️ YEDEKLER ({new_count})"'.encode('utf-8')
+            combined = original + separator + ('\n'.join(additions) + '\n').encode('utf-8')
+            combined = re.sub(rb'group-title="\xf0\x9f\x97\x82\xef\xb8\x8f YEDEKLER \(\d+\)"', lambda _: group_new, combined)
+            tmp.write_bytes(combined)
             tmp.replace(args.live)
         report['added_to_yedekler'] = len(additions) // 2
         report['status'] = 'APPENDED_TO_YEDEKLER' if additions else 'NO_NEW_URLS'
