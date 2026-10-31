@@ -871,3 +871,10 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - `v2/config/live-pages.json` boş olmaktan çıkarıldı: AzTV `https://www.aztv.az/` (kurumun resmî FAQ'sı canlı yayınları doğruluyor) ve TRT1 `https://www.trt1.com.tr/` (resmî yayın akışında canlı izle bulunuyor). Bunlar HTML referans keşfi içindir, M3U veya doğrulanmış oynatılabilir yayın değildir.
 - `test_run_live_page_discovery.py` kaynak envanteri benzersiz ID ve güvenli HTTPS kontrolünü toplu CI içinde yapar.
 - HTML playlist-index sayfa envanteri hâlâ boş; doğrulanmamış URL eklenmedi. Gerçek ağ taraması ve şifreli bağımsız arşiv kabulü bekliyor. Ana IBO, YEDEKLER, YENİLER, FAVORİLER korunuyor; PR #9 merge edilmedi.
+
+
+## 31 Ekim 2026 — GitHub keşif kapsamı dürüstlüğü
+- Son doğrulanmış toplu CI #41212925415 SUCCESS.
+- `github_source_discovery.py`: `MAX_REPOS`, `MAX_FILES`, GitHub API `tree.truncated` durumları artık `limits_hit` ve `coverage_status=PARTIAL_LIMITS` olarak raporlanıyor. Limitler nedeniyle eksik taramaya `COMPLETE_QUERIES` denmeyecek.
+- `test_github_partial_discovery.py` içinde repo limiti ve kısaltılmış tree testleri eklendi; mevcut toplu CI içinde çalışır.
+- Henüz gerçek tam ağ taraması, bağımsız şifreli yedek, oynatma testleri yapılmadı. Ana IBO, YEDEKLER, YENİLER, FAVORİLER değişmedi; PR #9 merge edilmedi.
