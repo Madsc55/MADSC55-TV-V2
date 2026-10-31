@@ -14,7 +14,7 @@ import urllib.error
 import urllib.parse
 import urllib.request
 
-ROOT = pathlib.Path(__file__).resolve().parents[2]
+ROOT = pathlib.Path(__file__).resolve().parents[1]
 SOURCES = ROOT / 'v2/config/sources.json'
 OUT = ROOT / 'v2/reports/IBO_PROD_LIST.m3u8'
 REPORT = ROOT / 'v2/reports/ibo-real-scan-report.json'
