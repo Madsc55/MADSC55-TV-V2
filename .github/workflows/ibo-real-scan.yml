@@ -1,9 +1,11 @@
 name: V2 Real IBO Candidate Scan
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '23 4 * * *'
 
 permissions:
-  contents: read
+  contents: write
 
 concurrency:
   group: ibo-yedekler-${{ github.ref }}
@@ -17,7 +19,7 @@ jobs:
       - name: Checkout V2 branch
         uses: actions/checkout@v4
         with:
-          persist-credentials: false
+          persist-credentials: true
       - name: Python version
         run: python3 --version
       - name: Validate protected playlist before scan
@@ -26,7 +28,7 @@ jobs:
         id: scan
         continue-on-error: true
         run: |
-          python3 v2/real_ibo_scan.py --workers 16 --timeout 8 --limit 2000
+          python3 v2/real_ibo_scan.py --workers 16 --timeout 8 --limit 2000 --append-live
       - name: Upload scan report
         if: always()
         uses: actions/upload-artifact@v4
@@ -47,11 +49,22 @@ jobs:
       - name: Verify protected playlist before publishing
         if: steps.scan.outcome == 'success'
         run: python3 v2/test_playlist_invariants.py
-      - name: Ensure production playlist is unchanged
+      - name: Publish only validated YEDEKLER additions
         if: steps.scan.outcome == 'success'
         shell: bash
         run: |
-          git diff --exit-code -- MADSC55_TV_IBO_CALISANLAR_TEST.m3u8
+          set -euo pipefail
+          target="MADSC55_TV_IBO_CALISANLAR_TEST.m3u8"
+          if git diff --quiet -- "$target"; then
+            echo "No validated new streams to publish"
+            exit 0
+          fi
+          python3 v2/test_playlist_invariants.py
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- "$target"
+          git commit -m "Append HLS-checked candidates to YEDEKLER"
+          git push origin HEAD:main
       - name: Propagate scan failure
         if: steps.scan.outcome != 'success'
         run: exit 1
