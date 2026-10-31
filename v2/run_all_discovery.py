@@ -7,13 +7,14 @@ device verification remain separate because they are not yet implemented.
 """
 import argparse
 import pathlib
+import shutil
 import subprocess
 import sys
 from archive_acceptance_gate import check
 from encrypted_archive import _cipher
 
 ROOT = pathlib.Path(__file__).resolve().parent
-def plan(archive, previous_report=None, include_youtube=False):
+def plan(archive, previous_report=None, include_youtube=True):
     steps = [
         [sys.executable, str(ROOT / "source_availability_audit.py"), "--audit-public-sources"],
         [sys.executable, str(ROOT / "github_source_discovery.py")],
@@ -28,7 +29,9 @@ def plan(archive, previous_report=None, include_youtube=False):
         steps[-1].extend(["--previous-report", str(previous_report)])
     return steps
 
-def preflight(archive):
+def preflight(archive, include_youtube=True):
+    if include_youtube and shutil.which('yt-dlp') is None:
+        raise RuntimeError('Full discovery requires yt-dlp; explicitly skip YouTube for partial coverage')
     if not archive or archive.is_symlink():
         raise RuntimeError("A private, non-symlink encrypted archive path is required")
     check()
@@ -56,10 +59,11 @@ def main():
                         help="Explicit opt-in to the complete currently implemented source scan")
     parser.add_argument("--encrypted-archive", type=pathlib.Path, required=True)
     parser.add_argument("--previous-report", type=pathlib.Path)
-    parser.add_argument("--include-youtube", action="store_true", help="Run separate advisory YouTube live metadata discovery; requires yt-dlp")
+    parser.add_argument("--skip-youtube", action="store_true", help="Skip YouTube advisory scan; coverage is partial")
     args = parser.parse_args()
-    preflight(args.encrypted_archive)
-    execute(plan(args.encrypted_archive, args.previous_report, args.include_youtube))
+    include_youtube = not args.skip_youtube
+    preflight(args.encrypted_archive, include_youtube)
+    execute(plan(args.encrypted_archive, args.previous_report, include_youtube))
     print("Source discovery stages finished; check each report for PARTIAL coverage.")
     print("Playback and IBO device testing NOT verified.")
 if __name__ == "__main__":
