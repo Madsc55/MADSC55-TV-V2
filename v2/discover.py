@@ -238,8 +238,8 @@ def main():
     if args.encrypted_archive:
         if args.encrypted_archive.is_symlink():
             raise SystemExit("Encrypted archive path must not be a symlink")
-        if errors or not loaded:
-            raise SystemExit("Encrypted archive refused: source set incomplete")
+        if not loaded:
+            raise SystemExit("Encrypted archive refused: no accessible sources")
         from encrypted_archive import append, restore
         from archive_acceptance_gate import check
         check()
@@ -261,6 +261,7 @@ def main():
                                  "NO_SOURCES_ACCESSIBLE" if not loaded else
                                  "COMPLETE_SOURCE_FETCH" if not errors else "PARTIAL_SOURCE_FETCH")
     result["failed_source_count"] = len(errors)
+    result["archive_source_set_partial"] = bool(args.encrypted_archive and errors)
     result["playback_verified"] = False
     result["source_fetch_complete"] = bool(not args.offline and loaded and not errors)
     result["total_unique_candidates"] = len(result["candidates"])
