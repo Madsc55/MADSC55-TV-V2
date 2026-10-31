@@ -735,3 +735,11 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - `discovery-tests` FAILURE: `test_archive_acceptance_gate.py` test fikstürü geri yükleme dosyasını varsayılan 0644 izinleriyle oluşturuyordu; yeni güvenlik kapısı 0600 istiyor. Eksik dosya hata mesajı da değişmişti.
 - Fikstür 0600 yapıldı ve eksik dosya beklentisi güncellendi; güvenlik kapısı gevşetilmedi. Düzeltme commit: a3d634065dd8f2e36f7ddd0b53d9fa439c35b7de.
 - Yeni CI sonucu henüz doğrulanmadı. Gerçek tarama çalıştırılmadı; IBO ve YEDEKLER korunuyor.
+
+
+## 31 Ekim 2026 — Önceki şifreli arşiv kayıtlarıyla tekilleştirme
+- CI #41201354786: compile/protect/discovery-tests SUCCESS; safety kontrol anında in_progress.
+- `v2/discover.py`: şifreli arşiv mevcutsa önce restore edilerek önceki URL kayıtları okunur; yeni taramada aynı URL tekrar append edilmez. Restore hata verirse tarama fail-closed kalır.
+- `v2/test_archive_incremental_dedup.py` eklendi ve CI'a bağlandı. Yeni CI sonucu henüz doğrulanmadı.
+- Kalan: gerçek bağımsız backup/restore kanıtı, canlı site onaylı envanteri, playback testi, gerçek ağ taraması ve önceki taramalara karşı regresyon incelemesi.
+- Ana IBO playlist, YEDEKLER, YENİLER, FAVORİLER değişmedi; PR #9 merge edilmedi.
