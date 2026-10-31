@@ -278,6 +278,14 @@ def main():
                                  "NO_SOURCES_ACCESSIBLE" if not loaded else
                                  "COMPLETE_SOURCE_FETCH" if not errors else "PARTIAL_SOURCE_FETCH")
     result["failed_source_count"] = len(errors)
+    result["source_coverage_summary"] = {
+        "configured_sources": len(sources),
+        "parsed_playlists": sum(item["status"] == "PARSED_NOT_PLAYBACK_VERIFIED" for item in source_audit),
+        "index_pages_checked": sum(item["status"] == "INDEX_LINKS_ONLY_NOT_PLAYBACK_VERIFIED" for item in source_audit),
+        "index_playlist_links_found": sum(item["entries"] for item in source_audit if item["status"] == "INDEX_LINKS_ONLY_NOT_PLAYBACK_VERIFIED"),
+        "failed_sources": len(errors),
+        "playback_verified": False,
+    }
     result["archive_source_set_partial"] = bool(args.encrypted_archive and errors)
     result["playback_verified"] = False
     result["source_fetch_complete"] = bool(not args.offline and loaded and not errors)
