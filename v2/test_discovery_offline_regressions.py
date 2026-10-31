@@ -40,11 +40,11 @@ class DiscoveryOfflineRegression(unittest.TestCase):
     def test_multiple_urls_same_name_retained(self):
         a=playlist(("same.id","TR","Same","https://example.invalid/a.m3u8"))
         b=playlist(("same.id","TR","Same","https://example.invalid/b.m3u8"))
-        result=discover([("a",a),("b",b)],"#EXTM3U\\n",{"a":"TR","b":"TR"})
+        result=discover([("a",a),("b",b)],"#EXTM3U\n",{"a":"TR","b":"TR"})
         self.assertEqual(len(result),2)
 
     def test_non_http_stream_ignored(self):
-        data='#EXTM3U\\n#EXTINF:-1,TRT Haber\\nfile:///tmp/stream\\n'
+        data='#EXTM3U\n#EXTINF:-1,TRT Haber\nfile:///tmp/stream\n'
         self.assertEqual(list(entries(data)),[])
 
     def test_malformed_and_non_stream_lines(self):
