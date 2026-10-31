@@ -6,6 +6,9 @@ import json
 import pathlib
 import re
 import urllib.request
+import urllib.error
+import socket
+import time
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 LIVE = ROOT / "MADSC55_TV_IBO_CALISANLAR_TEST.m3u8"
@@ -212,14 +215,26 @@ def main():
             continue
         try:
             last_error = None
+            attempts = 0
             for attempt in range(4):
+                attempts = attempt + 1
                 try:
                     content = fetch(source["url"], allow_html=source.get("kind") == "html")
                     parsed = list(entries(content))
                     last_error = None
                     break
-                except Exception as exc:
+                except (TimeoutError, socket.timeout, urllib.error.URLError, urllib.error.HTTPError,
+                        OSError) as exc:
                     last_error = exc
+                    # Retry transient network failures only. Do not retry HTTP 4xx
+                    # (except 408/429) or validation failures.
+                    if isinstance(exc, urllib.error.HTTPError) and exc.code not in (408, 429, 500, 502, 503, 504):
+                        break
+                    if attempt < 3:
+                        time.sleep(min(2 ** attempt, 4))
+                except (ValueError, UnicodeError) as exc:
+                    last_error = exc
+                    break
             if last_error is not None:
                 raise last_error
             if source.get("kind", "m3u") != "html" and not content.lstrip().startswith("#EXTM3U"):
@@ -256,9 +271,10 @@ def main():
                                  "distinct_stream_urls": len({e["url"] for e in parsed}),
                                  "status": "PARSED_NOT_PLAYBACK_VERIFIED"})
         except Exception as exc:
-            errors.append({"source": source["id"], "error": type(exc).__name__})
+            errors.append({"source": source["id"], "error": type(exc).__name__,
+                           "attempts": attempts})
             source_audit.append({"source": source["id"], "status": "FETCH_FAILED",
-                                 "error": type(exc).__name__})
+                                 "error": type(exc).__name__, "attempts": attempts})
     if args.encrypted_archive:
         if args.encrypted_archive.is_symlink():
             raise SystemExit("Encrypted archive path must not be a symlink")
