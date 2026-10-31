@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """No-network tests for the ordered, single-command discovery coordinator."""
 import pathlib
+import tempfile
 import unittest
 from unittest.mock import patch
 from run_all_discovery import plan, preflight, execute
@@ -18,6 +19,11 @@ class RunnerTests(unittest.TestCase):
         with patch("run_all_discovery.check", side_effect=RuntimeError("no restore evidence")):
             with self.assertRaisesRegex(RuntimeError, "no restore evidence"):
                 preflight(pathlib.Path("/tmp/v2-test-archive.enc"))
+    def test_preflight_rejects_directory_archive(self):
+        with tempfile.TemporaryDirectory() as folder:
+            with patch("run_all_discovery.check", return_value=True), patch("run_all_discovery._cipher", return_value=object()):
+                with self.assertRaisesRegex(RuntimeError, "regular file"):
+                    preflight(pathlib.Path(folder))
     def test_stop_after_failure(self):
         calls = []
         class Result:
