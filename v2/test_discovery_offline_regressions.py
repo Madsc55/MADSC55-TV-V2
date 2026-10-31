@@ -11,6 +11,16 @@ def playlist(*items):
     )
 
 class DiscoveryOfflineRegression(unittest.TestCase):
+    def test_offline_snapshot_and_comparison_fail_closed(self):
+        import sys
+        from unittest.mock import patch
+        import discover as module
+        for flags in (["--offline", "--snapshot-output"], ["--offline", "--previous-report", "old.json"], ["--limit", "-1"]):
+            with self.subTest(flags=flags), patch.object(sys, "argv", ["discover.py", *flags]):
+                with self.assertRaises(SystemExit) as raised:
+                    module.main()
+                self.assertEqual(raised.exception.code, 2)
+
     def test_source_loss_audit_integration_contract(self):
         import inspect
         import discover as module
