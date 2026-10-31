@@ -75,7 +75,9 @@ def scan():
                         found.append({"forge": forge, "source_url": link, "playback_verified": False})
                 except (ValueError, OSError, TimeoutError) as exc:
                     errors.append({"forge": forge, "project": identity, "error": type(exc).__name__})
-    return {"schema": 1, "status": "source_references_only", "sources": found,
+    return {"schema": 1, "status": "source_references_only",
+            "coverage_status": "PARTIAL_API_ERRORS" if errors else "COMPLETE_QUERIES",
+            "sources": found,
             "errors": errors, "projects_examined": len(seen)}
 
 def main():
@@ -87,6 +89,6 @@ def main():
     OUTPUT.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print("Forge source references:", len(report["sources"]), "errors:", len(report["errors"]))
     if report["errors"]:
-        raise SystemExit("Public forge discovery incomplete; inspect source report")
+        print("WARNING: Partial forge source discovery; inspect saved errors")
 if __name__ == "__main__":
     main()
