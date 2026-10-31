@@ -24,7 +24,20 @@ def fetch(url, allow_html=False):
     if not (candidate_url(url) or valid_page):
         raise ValueError("Public HTTPS M3U source or approved HTML index required")
     req = urllib.request.Request(url, headers={"User-Agent": "MADSC55-TV-V2-Discovery/1.0"})
-    with urllib.request.urlopen(req, timeout=25) as res:
+    # Redirects must never escape the validated source origin into private hosts.
+    class SafeRedirect(urllib.request.HTTPRedirectHandler):
+        def redirect_request(self, request, fp, code, msg, headers, newurl):
+            from urllib.parse import urlsplit
+            from webpage_source_discovery import public_hostname
+            target = urlsplit(newurl)
+            if (target.scheme != "https" or not target.hostname
+                    or not public_hostname(target.hostname)
+                    or target.username or target.password
+                    or target.port not in (None, 443)):
+                raise ValueError("Unsafe source redirect")
+            return super().redirect_request(request, fp, code, msg, headers, newurl)
+    opener = urllib.request.build_opener(SafeRedirect())
+    with opener.open(req, timeout=25) as res:
         data = res.read(MAX_BYTES + 1)
     if len(data) > MAX_BYTES:
         raise ValueError("Source too large")
