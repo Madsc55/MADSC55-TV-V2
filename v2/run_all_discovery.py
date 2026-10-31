@@ -19,6 +19,7 @@ def plan(archive, previous_report=None):
         [sys.executable, str(ROOT / "github_source_discovery.py")],
         [sys.executable, str(ROOT / "run_forge_source_discovery.py"), "--scan-public-forges"],
         [sys.executable, str(ROOT / "run_live_page_discovery.py"), "--scan-approved-live-pages"],
+        [sys.executable, str(ROOT / "run_webpage_playlist_discovery.py"), "--scan-approved-index-pages"],
         [sys.executable, str(ROOT / "discover.py"), "--encrypted-archive", str(archive)],
     ]
     if previous_report:
