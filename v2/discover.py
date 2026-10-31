@@ -84,6 +84,12 @@ def main():
     p.add_argument("--limit", type=int, default=0, help="Maximum candidate count; 0 means no limit")
     p.add_argument("--previous-report", type=pathlib.Path, help="Previous discovery JSON for source-loss audit")
     args = p.parse_args()
+    if args.limit < 0:
+        p.error("--limit must be zero or positive")
+    if args.offline and args.snapshot_output:
+        p.error("--snapshot-output cannot be used with --offline")
+    if args.offline and args.previous_report:
+        p.error("--previous-report requires an actual network discovery run")
     live = LIVE.read_text(encoding="utf-8-sig")
     sources = json.loads(SOURCES.read_text(encoding="utf-8"))["sources"]
     if DYNAMIC.exists():
@@ -120,8 +126,8 @@ def main():
             errors.append({"source": source["id"], "error": type(exc).__name__})
             source_audit.append({"source": source["id"], "status": "FETCH_FAILED",
                                  "error": type(exc).__name__})
-    if args.snapshot_output and errors:
-        raise SystemExit("Snapshot incomplete: " + str(len(errors)) + " source(s) failed; refusing private snapshot output")
+    if args.snapshot_output and (errors or not loaded):
+        raise SystemExit("Snapshot incomplete: no successful full source set; refusing private snapshot output")
     if args.snapshot_output:
         existing = {e["url"] for e in entries(live)}
         seen_urls = set()
