@@ -50,8 +50,23 @@ def scan():
             try:
                 payload = api_json(url)
                 projects = gitlab_projects(payload) if forge == "gitlab" else codeberg_projects(payload)
-                if len(projects) >= 12:
-                    limits_hit.add(forge.upper() + "_PROJECT_PAGE_LIMIT")
+                # Follow bounded search pagination rather than silently dropping
+                # repositories beyond the first response.
+                first_count = len(payload) if forge == "gitlab" and isinstance(payload, list) else (
+                    len(payload.get("data", [])) if isinstance(payload, dict) else 0)
+                if first_count >= 12:
+                    for page in (2, 3):
+                        next_url = url + (("&page=" + str(page)) if forge == "gitlab"
+                                          else ("&page=" + str(page)))
+                        more = api_json(next_url)
+                        more_items = gitlab_projects(more) if forge == "gitlab" else codeberg_projects(more)
+                        projects.extend(more_items)
+                        raw_count = len(more) if forge == "gitlab" and isinstance(more, list) else (
+                            len(more.get("data", [])) if isinstance(more, dict) else 0)
+                        if raw_count < 12:
+                            break
+                    else:
+                        limits_hit.add(forge.upper() + "_PROJECT_PAGE_LIMIT")
             except (ValueError, OSError, TimeoutError) as exc:
                 errors.append({"forge": forge, "term": term, "error": type(exc).__name__})
                 continue
