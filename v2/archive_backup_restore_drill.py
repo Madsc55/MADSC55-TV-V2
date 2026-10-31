@@ -7,8 +7,7 @@ import os
 import pathlib
 import shutil
 import stat
-import tempfile
-from encrypted_archive import _cipher, append, restore
+from encrypted_archive import _cipher, restore
 
 def private_regular(path):
     path = pathlib.Path(path)
