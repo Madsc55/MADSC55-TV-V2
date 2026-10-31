@@ -90,8 +90,7 @@ def turkish_candidate(entry, scope):
     return False
 
 def public_metadata(value):
-    """Prevent stream tokens embedded in source metadata from reaching public JSON."""
-    from urllib.parse import urlsplit
+    """Mask URL and credential-like metadata before public report emission."""
     if not isinstance(value, str):
         return ""
     value = re.sub(r"https?://\\S+", "[URL_REDACTED]", value, flags=re.IGNORECASE)
