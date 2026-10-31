@@ -806,3 +806,9 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - `v2/run_webpage_playlist_discovery.py`: yalnızca açıkça onaylı genel HTTPS HTML indekslerinde M3U/M3U8 referansları bulur; public rapora yalnız SHA256 ve kaynak ID yazar; token içeren tam URL yazmaz, otomatik taramaya veya İBO'ya eklemez.
 - `v2/config/playlist-index-pages.json` varsayılan boş onay listesi, `v2/test_run_webpage_playlist_discovery.py` offline regresyonu ve `v2/run_all_discovery.py` entegrasyonu eklendi. Yeni CI sonucu henüz doğrulanmadı.
 - Onaylı HTML kaynak listesi henüz boş; gerçek kaynak taraması, bağımsız arşiv yedeği ve playback doğrulaması tamamlanmadı. Ana IBO/YEDEKLER/YENİLER/FAVORİLER korunuyor, PR #9 merge edilmedi.
+
+
+## 31 Ekim 2026 — Koordinatör testindeki altıncı aşama
+- CI #41210006846 ilk kontrolde in_progress (compile/protect success, discovery-tests queued).
+- HTML M3U indeks keşfi altıncı aşama olarak `run_all_discovery.py` içine eklendiğinden `test_run_all_discovery.py` içindeki eski 5-aşama beklentisi 6'ya, arşiv keşif aşaması indeksi 5'e düzeltildi (commit 47043c2785cae3131a8e4cd69e1b40b598d3d761).
+- Son CI henüz doğrulanmadı. Ana IBO, YEDEKLER, YENİLER, FAVORİLER değişmedi; PR #9 merge edilmedi.
