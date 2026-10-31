@@ -11,7 +11,7 @@ import urllib.error
 import urllib.request
 from pathlib import Path
 from urllib.parse import urlsplit
-from webpage_source_discovery import candidate_url
+from webpage_source_discovery import candidate_url, public_hostname
 
 ROOT = Path(__file__).resolve().parent
 CONFIG = ROOT / "config" / "sources.json"
@@ -20,10 +20,18 @@ MAX_BYTES = 1024
 def probe(url):
     if not candidate_url(url):
         return {"status": "INVALID_SOURCE_URL"}
+    class SafeRedirect(urllib.request.HTTPRedirectHandler):
+        def redirect_request(self, request, fp, code, msg, headers, newurl):
+            p = urlsplit(newurl)
+            if (p.scheme != "https" or not p.hostname or not public_hostname(p.hostname)
+                    or p.username or p.password or p.port not in (None, 443)):
+                raise ValueError("Unsafe source redirect")
+            return super().redirect_request(request, fp, code, msg, headers, newurl)
+    opener = urllib.request.build_opener(SafeRedirect())
     req = urllib.request.Request(url, method="GET",
         headers={"User-Agent": "MADSC55-TV-V2-SourceAudit/1.0", "Range": "bytes=0-1023"})
     try:
-        with urllib.request.urlopen(req, timeout=12) as response:
+        with opener.open(req, timeout=12) as response:
             content = response.read(MAX_BYTES)
             return {"status": "HTTP_OK", "http_status": response.status,
                     "sample_m3u_header": b"#EXTM3U" in content[:256]}
