@@ -12,7 +12,10 @@ def main():
     current = LIVE.read_bytes()
     original = current[:207344]
     original_hash = hashlib.sha1(b"blob " + str(len(original)).encode("ascii") + b"\0" + original).hexdigest()
-    assert original_hash == "4b1c3cea4b5107a425abab60f62d41f9f81e05a7", (\n        f"Original playlist bytes changed: actual={original_hash}, size={len(current)}, "\n        f"prefix_size={len(original)}, path={LIVE}. Verify the workflow branch and checkout."\n    )
+    assert original_hash == "4b1c3cea4b5107a425abab60f62d41f9f81e05a7", (
+        f"Original playlist bytes changed: actual={original_hash}, size={len(current)}, "
+        f"prefix_size={len(original)}, path={LIVE}. Verify the workflow branch and checkout."
+    )
     assert current.startswith(original), "Protected IBO playlist content changed"
     extra = current[len(original):]
     if extra:
