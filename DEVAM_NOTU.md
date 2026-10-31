@@ -819,3 +819,9 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - `source_availability_audit.py`: hiç kaynak tanımlı değilse `NO_CONFIGURED_SOURCES`, hiçbir kaynak erişilebilir değilse `NO_SOURCES_REACHABLE`, karışık sonuçta `PARTIAL_SOURCE_AVAILABILITY`, tüm kaynaklar başarılıysa `COMPLETE`.
 - `run_public_inventory.py` boş kaynak listesiyle yanlışlıkla başarılı tamamlanamaz. İlgili offline regresyon testleri güncellendi.
 - Son commit CI henüz doğrulanmadı. Bu kontroller stream playback değildir; gerçek tam tarama ve bağımsız şifreli yedek kanıtı hâlâ gerekli. Korunan listelere dokunulmadı, PR #9 merge edilmedi.
+
+
+## 31 Ekim 2026 — Yerel backup dayanıklılık düzeltmesi
+- Önceki Actions #41211016352 SUCCESS.
+- `v2/archive_backup_restore_drill.py` yerel farklı dizindeki kopya için `durable=false` raporlar; bağımsız kalıcı yedek iddiası kaldırıldı. `v2/test_archive_backup_restore_drill.py` bu durumu doğrular. Kabul kapısı ayrıca `backup_scope` yerel ise reddeder.
+- Gerçek tarama için bağımsız yedek ve restore kanıtı hâlâ gereklidir. Son CI sonucu bekliyor. Korunan IBO/YEDEKLER/YENİLER/FAVORİLER değiştirilmedi; PR #9 merge edilmedi.
