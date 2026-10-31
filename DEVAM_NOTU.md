@@ -911,3 +911,10 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - GitLab/Codeberg keşfi proje arama sayfa sınırına ve GitLab tree sayfa sınırına ulaşınca `limits_hit` ile `PARTIAL_LIMITS` raporlar; Codeberg truncated tree de aynı şekilde.
 - `test_partial_source_coverage.py` GitLab limit senaryosuyla genişletildi; tek toplu CI altında çalışır.
 - Sayfalama otomatik devam ettirilmedi: kısmi kapsam görünür kılındı, tam keşif iddiası yok. Gerçek tarama ve bağımsız şifreli arşiv doğrulaması bekliyor. Ana IBO/YEDEKLER/YENİLER/FAVORİLER değişmedi; PR #9 merge edilmedi.
+
+
+## 31 Ekim 2026 — GitLab kaynak taraması sayfalama iyileştirmesi
+- Son doğrulanmış CI #41215667614 SUCCESS.
+- GitLab repository tree API ilk 100 dosyaya ulaştığında artık 2. ve gerekirse 3. sayfayı da okur. Üçüncü sayfa doluysa `GITLAB_TREE_PAGE_LIMIT` ile kısmi kapsam raporlanır.
+- `test_partial_source_coverage.py` ikinci sayfadaki M3U kaynağının bulunduğunu doğrulayan çevrimdışı testle genişletildi.
+- Ana IBO/YEDEKLER/YENİLER/FAVORİLER korunuyor; PR #9 merge edilmedi. Gerçek tam tarama ve bağımsız şifreli yedek hâlâ tamamlanmadı.
