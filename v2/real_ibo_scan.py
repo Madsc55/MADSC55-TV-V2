@@ -6,6 +6,7 @@ No mock data, no invented URLs. HTTP/HLS checks are not playback proof.
 import argparse
 import concurrent.futures
 import hashlib
+import http.client
 import json
 import pathlib
 import re
@@ -78,7 +79,8 @@ def check_hls(entry, timeout):
                'mpegurl' in content_type))
         if status in (200, 206) and hls:
             return entry
-    except (OSError, TimeoutError, urllib.error.URLError, ValueError):
+    except (OSError, TimeoutError, urllib.error.URLError, ValueError,
+            http.client.IncompleteRead, http.client.HTTPException):
         pass
     return None
 
