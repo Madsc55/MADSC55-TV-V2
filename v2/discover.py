@@ -89,6 +89,16 @@ def turkish_candidate(entry, scope):
         return True
     return False
 
+def public_metadata(value):
+    """Prevent stream tokens embedded in source metadata from reaching public JSON."""
+    from urllib.parse import urlsplit
+    if not isinstance(value, str):
+        return ""
+    value = re.sub(r"https?://\\S+", "[URL_REDACTED]", value, flags=re.IGNORECASE)
+    value = re.sub(r"(?i)(?:token|apikey|api_key|password|passwd|secret|auth|signature|sig|key)\\s*[:=]\\s*[^\\s,;]+",
+                   "[CREDENTIAL_REDACTED]", value)
+    return value[:512]
+
 def key(entry):
     return (entry["tvg_id"].casefold(), entry["name"].casefold())
 
@@ -126,7 +136,7 @@ def discover(source_texts, live_text, scopes):
             seen.add(e["url"])
             provenance[digest] = [source_id]
             # Do not persist stream URLs/tokens in public reports.
-            candidates.append({"name": e["name"], "tvg_id": e["tvg_id"], "group": e["group"], "source": source_id, "source_ids": provenance[digest], "existing_channel_alternative": bool(e["tvg_id"] and key(e) in existing_keys), "url_sha256": hashlib.sha256(e["url"].encode()).hexdigest(), "logo": e["logo"]})
+            candidates.append({"name": public_metadata(e["name"]), "tvg_id": public_metadata(e["tvg_id"]), "group": public_metadata(e["group"]), "source": source_id, "source_ids": provenance[digest], "existing_channel_alternative": bool(e["tvg_id"] and key(e) in existing_keys), "url_sha256": hashlib.sha256(e["url"].encode()).hexdigest(), "logo": public_metadata(e["logo"])})
     return candidates
 
 def main():
