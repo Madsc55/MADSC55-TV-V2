@@ -41,6 +41,21 @@ class EncryptedArchiveTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 append(link, {"a": 1}, KEY)
             self.assertEqual(target.read_bytes(), b"protected")
+    def test_symlink_restore_rejected(self):
+        with tempfile.TemporaryDirectory() as folder:
+            target = Path(folder) / "real.enc"
+            append(target, {"a": 1}, KEY)
+            link = Path(folder) / "link.enc"
+            link.symlink_to(target)
+            with self.assertRaises(ValueError):
+                restore(link, KEY)
+    def test_public_permissions_restore_rejected(self):
+        with tempfile.TemporaryDirectory() as folder:
+            target = Path(folder) / "real.enc"
+            append(target, {"a": 1}, KEY)
+            target.chmod(0o644)
+            with self.assertRaises(PermissionError):
+                restore(target, KEY)
     def test_bad_key_rejected(self):
         with self.assertRaises(ValueError):
             append("never-created", {"a": 1}, "short")
