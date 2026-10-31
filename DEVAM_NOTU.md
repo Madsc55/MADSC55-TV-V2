@@ -743,3 +743,9 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - `v2/test_archive_incremental_dedup.py` eklendi ve CI'a bağlandı. Yeni CI sonucu henüz doğrulanmadı.
 - Kalan: gerçek bağımsız backup/restore kanıtı, canlı site onaylı envanteri, playback testi, gerçek ağ taraması ve önceki taramalara karşı regresyon incelemesi.
 - Ana IBO playlist, YEDEKLER, YENİLER, FAVORİLER değişmedi; PR #9 merge edilmedi.
+
+
+## 31 Ekim 2026 — CI #41201539996 düzeltmesi
+- `discovery-tests` FAILED: `test_archive_incremental_dedup.py` cryptography paketi kurulmadan çalıştırılmış; `ModuleNotFoundError: cryptography`. Paket yükleme aşaması testin önüne taşındı (commit d373bae349268bf55b27aa97769a59c5517a2f24).
+- Bu hata arşiv tekilleştirme algoritmasının başarısız olduğunu göstermez; CI bağımlılık sırası hatasıdır. Yeni CI sonucu henüz doğrulanmadı.
+- Ana IBO, YEDEKLER, YENİLER, FAVORİLER korunuyor; PR #9 merge edilmedi.
