@@ -14,10 +14,15 @@ OUTPUT = ROOT / "v2" / "reports" / "candidates.json"
 DYNAMIC = ROOT / "v2" / "reports" / "github-source-discovery.json"
 MAX_BYTES = 25_000_000
 
-def fetch(url):
-    from webpage_source_discovery import candidate_url
-    if not candidate_url(url):
-        raise ValueError("Public HTTPS M3U source required")
+def fetch(url, allow_html=False):
+    from webpage_source_discovery import candidate_url, public_hostname
+    from urllib.parse import urlsplit
+    parsed = urlsplit(url)
+    valid_page = (allow_html and parsed.scheme == "https" and parsed.hostname
+                  and public_hostname(parsed.hostname) and not parsed.username
+                  and not parsed.password and parsed.port in (None, 443))
+    if not (candidate_url(url) or valid_page):
+        raise ValueError("Public HTTPS M3U source or approved HTML index required")
     req = urllib.request.Request(url, headers={"User-Agent": "MADSC55-TV-V2-Discovery/1.0"})
     with urllib.request.urlopen(req, timeout=25) as res:
         data = res.read(MAX_BYTES + 1)
@@ -134,7 +139,7 @@ def main():
             last_error = None
             for attempt in range(4):
                 try:
-                    content = fetch(source["url"])
+                    content = fetch(source["url"], allow_html=source.get("kind") == "html")
                     parsed = list(entries(content))
                     last_error = None
                     break
