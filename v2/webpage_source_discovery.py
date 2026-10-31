@@ -5,6 +5,7 @@ Only public HTTPS links; no authentication, scraping bypass, or playlist mutatio
 import html
 from html.parser import HTMLParser
 from urllib.parse import urljoin, urlsplit
+import ipaddress
 
 MAX_LINKS = 2000
 EXTENSIONS = (".m3u", ".m3u8")
@@ -21,10 +22,19 @@ class LinkParser(HTMLParser):
         if url and len(self.links) < MAX_LINKS:
             self.links.append(url)
 
+def public_hostname(host):
+    if host.lower() in ("localhost",) or host.lower().endswith((".local", ".internal", ".localhost")):
+        return False
+    try:
+        return ipaddress.ip_address(host).is_global
+    except ValueError:
+        return True
+
 def candidate_url(url):
     try:
         parsed = urlsplit(url)
         return (parsed.scheme == "https" and bool(parsed.hostname)
+                and public_hostname(parsed.hostname)
                 and not parsed.username and not parsed.password
                 and parsed.port in (None, 443)
                 and parsed.path.lower().endswith(EXTENSIONS)
