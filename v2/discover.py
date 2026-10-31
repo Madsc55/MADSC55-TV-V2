@@ -12,6 +12,8 @@ LIVE = ROOT / "MADSC55_TV_IBO_CALISANLAR_TEST.m3u8"
 SOURCES = pathlib.Path(__file__).parent / "config" / "sources.json"
 OUTPUT = ROOT / "v2" / "reports" / "candidates.json"
 DYNAMIC = ROOT / "v2" / "reports" / "github-source-discovery.json"
+FORGE = ROOT / "v2" / "reports" / "forge-source-discovery.json"
+FORGE_APPROVALS = ROOT / "v2" / "config" / "approved-forge-source-sha256.json"
 MAX_BYTES = 25_000_000
 
 def fetch(url, allow_html=False):
@@ -143,6 +145,16 @@ def main():
                     sources.append({"id": "github-auto-" + hashlib.sha256(url.encode("utf-8")).hexdigest()[:20], "url": url, "scope": "candidate"})
         except (OSError, ValueError, TypeError) as exc:
             raise SystemExit('Dynamic discovery inventory unreadable: ' + type(exc).__name__) from exc
+    if FORGE.exists():
+        from forge_source_review import approved_sources
+        forge_report = json.loads(FORGE.read_text(encoding="utf-8"))
+        approvals = set()
+        if FORGE_APPROVALS.exists():
+            approval_doc = json.loads(FORGE_APPROVALS.read_text(encoding="utf-8"))
+            approvals = set(approval_doc.get("approved_sha256", []))
+        for source in approved_sources(forge_report, approvals):
+            if not any(x["url"] == source["url"] for x in sources):
+                sources.append(source)
     if args.encrypted_archive:
         from archive_acceptance_gate import check
         check()
