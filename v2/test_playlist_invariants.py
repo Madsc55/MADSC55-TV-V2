@@ -14,7 +14,9 @@ def main():
     backup_count = total_entries - 838
     assert backup_count >= 2
     backup_group = f"🗂️ YEDEKLER ({backup_count})"
-    baseline_end = 211257 + 2 * (len(str(backup_count)) - 1)
+    # Original 840 entries occupy 207344 bytes; only the two original
+    # YEDEKLER labels may grow when the displayed count changes.
+    baseline_end = 207344 + 2 * (len(str(backup_count)) - 1)
     original = current[:baseline_end].replace(
         f'group-title="{backup_group}"'.encode("utf-8"),
         'group-title="🗂️ YEDEKLER (2)"'.encode("utf-8"), 2
