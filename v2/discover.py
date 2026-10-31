@@ -93,8 +93,8 @@ def public_metadata(value):
     """Mask URL and credential-like metadata before public report emission."""
     if not isinstance(value, str):
         return ""
-    value = re.sub(r"https?://\\S+", "[URL_REDACTED]", value, flags=re.IGNORECASE)
-    value = re.sub(r"(?i)(?:token|apikey|api_key|password|passwd|secret|auth|signature|sig|key)\\s*[:=]\\s*[^\\s,;]+",
+    value = re.sub(r"https?://\S+", "[URL_REDACTED]", value, flags=re.IGNORECASE)
+    value = re.sub(r"(?i)(?:token|apikey|api_key|password|passwd|secret|auth|signature|sig|key)\s*[:=]\s*[^\s,;]+",
                    "[CREDENTIAL_REDACTED]", value)
     return value[:512]
 
