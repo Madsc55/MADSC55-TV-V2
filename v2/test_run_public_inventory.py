@@ -14,6 +14,15 @@ class PublicInventoryTests(unittest.TestCase):
             report.parent.mkdir.return_value = None
             with self.assertRaisesRegex(SystemExit, "partially unavailable"):
                 run_public_inventory.main()
+    def test_empty_inventory_is_not_success(self):
+        with patch("run_public_inventory.audit", return_value={
+            "source_count": 0, "reachable_source_count": 0,
+            "unreachable_source_count": 0, "results": []}), \
+             patch("run_public_inventory.REPORT") as report, \
+             patch("sys.argv", ["run_public_inventory.py", "--public-source-inventory"]):
+            with self.assertRaisesRegex(SystemExit, "partially unavailable"):
+                run_public_inventory.main()
+
     def test_complete_inventory_succeeds(self):
         with patch("run_public_inventory.audit", return_value={
             "source_count": 1, "reachable_source_count": 1,
