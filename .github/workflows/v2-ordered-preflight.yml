@@ -55,8 +55,7 @@ jobs:
         continue-on-error: true
         run: python v2/test_archive_acceptance_gate.py
   safety:
-    needs: [protect, discovery-tests]
-    if: always() && needs.protect.result == 'success'
+    needs: discovery-tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
