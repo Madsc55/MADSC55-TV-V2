@@ -273,6 +273,9 @@ def main():
         from source_loss_audit import compare
         previous = json.loads(args.previous_report.read_text(encoding="utf-8"))
         result["source_loss_audit"] = compare(previous, result)
+        previous_hashes = {item.get("url_sha256") for item in previous.get("candidates", []) if isinstance(item, dict) and item.get("url_sha256")}
+        current_hashes = {item["url_sha256"] for item in result["candidates"]}
+        result["historical_candidate_recovery"] = {"previous_hashes": len(previous_hashes), "matched_now": len(previous_hashes & current_hashes), "still_missing": len(previous_hashes - current_hashes), "method": "URL_SHA256_ONLY_NOT_PLAYBACK_VERIFIED"}
         if result["source_loss_audit"]["findings"]:
             print("WARNING: source loss requires review; see source_loss_audit in report")
     result["candidate_limit"] = args.limit
