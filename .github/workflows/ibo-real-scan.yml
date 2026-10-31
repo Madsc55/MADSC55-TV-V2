@@ -1,6 +1,10 @@
 name: V2 Real IBO Candidate Scan
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/ibo-real-scan.yml'
   schedule:
     - cron: '23 4 * * *'
 
@@ -19,11 +23,14 @@ jobs:
       - name: Checkout V2 branch
         uses: actions/checkout@v4
         with:
+          ref: main
           persist-credentials: true
       - name: Python version
         run: python3 --version
       - name: Validate protected playlist before scan
-        run: python3 v2/test_playlist_invariants.py
+        run: |
+          echo "Workflow commit: $GITHUB_SHA; checkout commit: $(git rev-parse HEAD)"
+          python3 v2/test_playlist_invariants.py
       - name: Scan live HTTPS sources and check HLS manifests
         id: scan
         continue-on-error: true
