@@ -116,6 +116,8 @@ def main():
        "policy": "READ_ONLY_NO_AUTOMATIC_SOURCE_OR_PLAYLIST_IMPORT", "repositories_discovered": len(repos),
        "sources_found": len(found), "sources": found, "errors": errors}, ensure_ascii=False, indent=2) + "\n")
     print("Repositories:", len(repos), "parsed new sources:", len(found), "errors:", len(errors))
+    if errors:
+        raise SystemExit("GitHub/Gist source discovery incomplete; inspect sanitized report")
 
 if __name__ == "__main__":
     main()
