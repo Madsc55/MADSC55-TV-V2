@@ -86,5 +86,7 @@ def main():
     OUTPUT.parent.mkdir(parents=True, exist_ok=True)
     OUTPUT.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print("Forge source references:", len(report["sources"]), "errors:", len(report["errors"]))
+    if report["errors"]:
+        raise SystemExit("Public forge discovery incomplete; inspect source report")
 if __name__ == "__main__":
     main()
