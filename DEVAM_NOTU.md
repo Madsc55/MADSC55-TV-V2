@@ -885,3 +885,9 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - Eski ve yeni sayıların tip ve negatif değer doğrulaması eksik audit koşulunda da çalışır.
 - `test_source_loss_audit.py` iki yeni regresyon vakası ile güncellendi; tek toplu CI içinde çalışır.
 - Gerçek kaynak ağ taraması ve bağımsız arşiv yedeklemesi tamamlanmış değildir. Ana IBO, YEDEKLER, YENİLER, FAVORİLER korunuyor, PR #9 merge edilmedi.
+
+
+## 31 Ekim 2026 — Şifreli arşiv kabul kanıtı dosya izinleri
+- `archive_acceptance_gate.py` bağımsız yedekleme/geri yükleme kanıtı JSON dosyasını da 0600 (owner-only) zorunlu kılar; herkesçe okunabilir dosyayı reddeder. `backup_location` tipi doğrulanır.
+- `test_archive_acceptance_gate.py` mevcut başarılı kanıt testlerini özel dosya izniyle güncelledi ve 0644 reddi testini ekledi.
+- Bu kod bağımsız yedeklemeyi oluşturmaz; bağımsız kalıcı depolama ve gerçek restore kanıtı hâlâ gerekir. Son CI sonucunu kontrol et. Ana IBO, YEDEKLER, YENİLER, FAVORİLER korunuyor, PR #9 merge edilmedi.
