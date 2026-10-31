@@ -10,7 +10,7 @@ from discover import ROOT, LIVE, SOURCES, entries
 def main():
     # Protect the exact original bytes and permit only append-only YEDEKLER records.
     current = LIVE.read_bytes()
-    original = current[:207344]
+    original = current[:211257]
     original_hash = hashlib.sha1(b"blob " + str(len(original)).encode("ascii") + b"\0" + original).hexdigest()
     assert original_hash == "4b1c3cea4b5107a425abab60f62d41f9f81e05a7", (
         f"Original playlist bytes changed: actual={original_hash}, size={len(current)}, "
