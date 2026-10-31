@@ -45,6 +45,20 @@ class PartialCoverageTests(unittest.TestCase):
         self.assertTrue(any("page=2" in url for url in calls))
         self.assertEqual(len(report["sources"]), 1)
         self.assertEqual(report["coverage_status"], "COMPLETE_QUERIES")
+    def test_forge_playlist_path_cap_is_visible(self):
+        from forge_source_discovery import GITLAB_API, MAX_PATHS
+        def fake_api(url):
+            if "/repository/tree" in url:
+                return [{"type": "blob", "path": "channels" + str(i) + ".m3u"} for i in range(MAX_PATHS + 1)]
+            if url.startswith(GITLAB_API):
+                return [{"id": 1, "default_branch": "main"}]
+            return {"data": []}
+        with patch.object(forge, "TERMS", ["iptv"]), \
+             patch.object(forge, "api_json", side_effect=fake_api):
+            report = forge.scan()
+        self.assertEqual(report["coverage_status"], "PARTIAL_LIMITS")
+        self.assertIn("GITLAB_PLAYLIST_PATH_LIMIT", report["limits_hit"])
+        self.assertEqual(len(report["sources"]), MAX_PATHS)
     def test_successful_source_candidates_still_deduplicate(self):
         sample = '#EXTM3U\n#EXTINF:-1 tvg-id="trt1.tr",TRT 1\nhttps://example.org/a.m3u8\n'
         candidates = discover.discover([("ok", sample)], "#EXTM3U\n", {"ok": "TR"})
