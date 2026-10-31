@@ -75,16 +75,16 @@ def restore(path, key_hex=None):
     finally:
         os.close(fd)
     for line in lines:
-            if len(line) > 3_000_000:
-                raise ValueError("Archive line too large")
-            item = json.loads(line)
-            if item.get("schema") != 1:
-                raise ValueError("Unsupported archive record")
-            nonce = base64.b64decode(item["nonce"], validate=True)
-            data = base64.b64decode(item["ciphertext"], validate=True)
-            if len(nonce) != 12:
-                raise ValueError("Invalid archive nonce")
-            records.append(json.loads(cipher.decrypt(nonce, data, AAD)))
+        if len(line) > 3_000_000:
+            raise ValueError("Archive line too large")
+        item = json.loads(line)
+        if item.get("schema") != 1:
+            raise ValueError("Unsupported archive record")
+        nonce = base64.b64decode(item["nonce"], validate=True)
+        data = base64.b64decode(item["ciphertext"], validate=True)
+        if len(nonce) != 12:
+            raise ValueError("Invalid archive nonce")
+        records.append(json.loads(cipher.decrypt(nonce, data, AAD)))
     return records
 
 def archive_sha256(path):
