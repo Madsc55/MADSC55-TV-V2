@@ -46,7 +46,11 @@ def audit(sources, fetcher=probe):
         outcome = fetcher(source["url"])
         results.append({"source_id": source["id"], "scope": source.get("scope", "candidate"),
                         **outcome})
+    ok = sum(item["status"] == "HTTP_OK" for item in results)
+    failures = len(results) - ok
     return {"schema": 1, "kind": "source-level-only", "source_count": len(results),
+            "reachable_source_count": ok, "unreachable_source_count": failures,
+            "coverage_status": "COMPLETE" if not failures else "PARTIAL_SOURCE_AVAILABILITY",
             "results": results, "playback_verified": False}
 
 def main():
@@ -57,6 +61,7 @@ def main():
     report = audit(sources)
     REPORT.parent.mkdir(parents=True, exist_ok=True)
     REPORT.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print("Source-level audit:", report["source_count"], "sources")
+    print("Source-level audit:", report["source_count"], "sources; reachable:",
+          report["reachable_source_count"], "unreachable:", report["unreachable_source_count"])
 if __name__ == "__main__":
     main()
