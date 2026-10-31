@@ -602,3 +602,10 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - `0fcad824`: IPTV-org resmî PLAYLISTS.md dokümanında belirtilen `raw/tr`, `raw/az`, `sources/tr`, `sources/az`, Central Asia, West Asia, International ve Worldwide olmak üzere 8 ek keşif girdisi; toplam statik kaynak 40. URL yapıları belgelenmiştir; her uç noktanın canlı HTTP erişimi bu commit ile doğrulanmamıştır.
 - `e3d8a093`: yalnızca public HTTPS M3U kaynakları veya konfigürasyonda `kind=html` olarak açıkça belirtilmiş public HTTPS sayfalar kabul edilir. `localhost`/private IP kaynağı engeli.
 - `--snapshot-output` şifreli arşiv kurulana dek kapalıdır. Canlı kaynak taraması ve playback testi yapılmadı. Ana İBO playlist, YEDEKLER ve eski repo korunur. PR #9 merge edilmedi.
+
+
+## 31 Ekim 2026 — GitLab/Codeberg genel keşif
+- `v2/forge_source_discovery.py`: kamuya açık GitLab ve Codeberg proje sonuçları ile açıkça listelenmiş M3U/M3U8 dosya yollarını ayrıştıran, sınırlı ve salt-okunur adaptörler.
+- `v2/run_forge_source_discovery.py --scan-public-forges`: API aramalarını çalıştıran isteğe bağlı komut; `v2/reports/forge-source-discovery.json` içine yalnızca kaynak referanslarını, hata ve proje sayısını kaydeder. Otomatik playlist aktarımı yoktur; GitLab API raw URL'leri mevcut M3U fetch izin listesine otomatik dahil değildir.
+- `v2/test_forge_source_discovery.py`: beş çevrimdışı test, sıralı CI'a eklendi.
+- Önceki GitHub Actions #41189996226 dört aşamada PASS; bu yeni modüller için Actions sonucu ayrıca bekleniyor. Gerçek forge taraması henüz çalıştırılmadı. Ana İBO playlist ve YEDEKLER korunur; PR #9 merge edilmedi.
