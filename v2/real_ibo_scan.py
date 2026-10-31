@@ -157,21 +157,21 @@ def main():
             if item['url'] in current_urls:
                 continue
             current_urls.add(item['url'])
-            safe_name = re.sub(r'[\\r\\n,]', ' ', item['name']).strip() or 'Yeni Kanal'
+            safe_name = re.sub(r'[\r\n,]', ' ', item['name']).strip() or 'Yeni Kanal'
             additions.extend([
                 f'#EXTINF:-1 group-title="YEDEKLER",{safe_name}',
                 item['url'],
             ])
         if additions:
-            separator = b'' if original.endswith(b'\\n') else b'\\n'
+            separator = b'' if original.endswith(b'\n') else b'\n'
             # Atomic write; preexisting content and categories remain byte-identical.
             tmp = args.live.with_suffix(args.live.suffix + '.tmp')
             tmp.write_bytes(original + separator +
-                            ('\\n'.join(additions) + '\\n').encode('utf-8'))
+                            ('\n'.join(additions) + '\n').encode('utf-8'))
             tmp.replace(args.live)
         report['added_to_yedekler'] = len(additions) // 2
         report['status'] = 'APPENDED_TO_YEDEKLER' if additions else 'NO_NEW_URLS'
-        args.report.write_text(json.dumps(report, indent=2, ensure_ascii=False) + '\\n',
+        args.report.write_text(json.dumps(report, indent=2, ensure_ascii=False) + '\n',
                                encoding='utf-8')
     print(json.dumps(report, ensure_ascii=False, indent=2))
 
