@@ -644,3 +644,10 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - Redirect güvenlik kontrolü, HTTP hata ayrımı ve `v2/test_source_availability_audit.py` testleri CI'a eklendi.
 - Bu araç gerçek yayın testi değildir. Kaynak denetimi henüz çalıştırılmadı; şifreli arşiv onayı, toplu kanal taraması ve IBO testleri açık kalır.
 - Önceki CI #41190756178 SUCCESS; yeni kod için CI henüz doğrulanmadı. Ana playlist/YEDEKLER korunur; PR #9 merge edilmedi.
+
+
+## 31 Ekim 2026 — Manuel gerçek kaynak denetimi hazırlığı
+- `.github/workflows/v2-manual-source-audit.yml`: yalnızca elle başlatılan, ayrı `source availability` ve `GitLab/Codeberg` genel kaynak referansı taramaları; 20 dk iş süresi, read-only izinler, 14 günlük rapor artifact'ları. Otomatik kanal yayın testi veya playlist değişikliği yok.
+- `discover.fetch` açıkça incelenmiş GitLab raw M3U API uç noktalarını kabul eder; özel ağ/HTTP kaynaklarını reddeden `v2/test_fetch_source_gate.py` CI'a eklendi.
+- Önceki CI #41191157932 SUCCESS. Bu yeni değişiklikler için CI henüz doğrulanmadı; manuel workflow henüz çalıştırılmadı.
+- Önemli: gerçek source-audit ve forge taraması için GitHub Actions arayüzünden manuel dispatch gerekir; mevcut araçlarla dispatch yapılmadı. Ana İBO playlist ve YEDEKLER korunur; PR #9 merge edilmedi.
