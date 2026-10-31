@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
   group: ibo-yedekler-${{ github.ref }}
@@ -17,7 +17,7 @@ jobs:
       - name: Checkout V2 branch
         uses: actions/checkout@v4
         with:
-          persist-credentials: true
+          persist-credentials: false
       - name: Python version
         run: python3 --version
       - name: Validate protected playlist before scan
@@ -47,21 +47,11 @@ jobs:
       - name: Verify protected playlist before publishing
         if: steps.scan.outcome == 'success'
         run: python3 v2/test_playlist_invariants.py
-      - name: Preserve production playlist (read-only scan)
+      - name: Ensure production playlist is unchanged
         if: steps.scan.outcome == 'success'
         shell: bash
         run: |
-          set -euo pipefail
-          target="MADSC55_TV_IBO_CALISANLAR_TEST.m3u8"
-          if git diff --quiet -- "$target"; then
-            echo "No new YEDEKLER streams to commit"
-            exit 0
-          fi
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -- "$target"
-          git commit -m "Append HLS-checked new channels to YEDEKLER"
-          echo "Read-only mode: no production playlist writes"
+          git diff --exit-code -- MADSC55_TV_IBO_CALISANLAR_TEST.m3u8
       - name: Propagate scan failure
         if: steps.scan.outcome != 'success'
         run: exit 1
