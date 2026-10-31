@@ -65,6 +65,7 @@ jobs:
       - run: python v2/test_live_page_discovery.py
       - run: python -m pip install 'cryptography>=42,<47'
       - run: python v2/test_archive_incremental_dedup.py
+      - run: python v2/test_archive_backup_restore_drill.py
       - run: python v2/test_encrypted_archive.py
       - run: python v2/test_archive_acceptance_gate.py
   safety:
