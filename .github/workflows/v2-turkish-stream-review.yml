@@ -26,6 +26,11 @@ jobs:
         run: python v2/test_unified_safety_contract.py
       - name: Check multi-source provenance before scanning
         run: python v2/test_source_provenance.py
+      - name: Require independently verified encrypted archive restore before any network scan
+        env:
+          V2_ARCHIVE_RESTORE_APPROVED: ${{ vars.V2_ARCHIVE_RESTORE_APPROVED }}
+          V2_ARCHIVE_RESTORE_EVIDENCE: ${{ vars.V2_ARCHIVE_RESTORE_EVIDENCE }}
+        run: python v2/archive_acceptance_gate.py
       - name: Discover GitHub sources once
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
