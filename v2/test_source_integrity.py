@@ -23,6 +23,14 @@ class CandidateIntegrityTests(unittest.TestCase):
                       turkish_candidate, recognized_channel_ids(self.sources, self.scopes),
                       [], errors or [])
 
+    def test_integrity_result_in_main_discovery(self):
+        import inspect
+        from discover import main
+        body = inspect.getsource(main)
+        self.assertIn("from source_integrity import verify", body)
+        self.assertIn('result["source_integrity"] = integrity', body)
+        self.assertIn('not integrity["verified"]', body)
+
     def test_exact_candidate_set(self):
         result = self.audit(self.candidates)
         self.assertTrue(result["verified"])
