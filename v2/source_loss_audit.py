@@ -18,6 +18,10 @@ def compare(previous, current, threshold=0.5):
         raise ValueError("threshold must be between 0 and 1")
     old, new = index(previous), index(current)
     findings = []
+    if not old or not new:
+        return {"previous_sources": len(old), "current_sources": len(new),
+                "findings": [{"reason": "MISSING_SOURCE_AUDIT", "previous": len(old), "current": len(new)}],
+                "status": "REVIEW_REQUIRED"}
     for source, before in sorted(old.items()):
         prior = before.get("distinct_stream_urls", before.get("entries", 0))
         if type(prior) is not int or prior < 0:
