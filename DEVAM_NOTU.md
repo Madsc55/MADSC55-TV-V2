@@ -832,3 +832,11 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - `v2/github_source_discovery.py` Gist dosya adı eşleşmesindeki çift ters eğik çizgi (`\\\\.`) düzeltildi; `.m3u`, `.m3u8`, `.txt` uzantıları artık doğru eşleşebilir. Bu hata Gist keşfini sessizce kaçırıyordu.
 - `v2/test_gist_filename_discovery.py` ve CI adımı eklendi. Yeni CI henüz doğrulanmadı.
 - Ana IBO, YEDEKLER, YENİLER, FAVORİLER değiştirilmedi. Gerçek kaynak taraması ve bağımsız şifreli yedek doğrulaması bekliyor. PR #9 merge edilmedi.
+
+
+## 31 Ekim 2026 — GitHub kaynak keşfi API hata toleransı ve testleri toplama
+- Kullanıcı GitHub M3U Source Discovery #11 başarısız ekranını bildirdi; tam job loguna erişilmediğinden spesifik HTTP hatası kesinleştirilmedi.
+- `v2-github-source-discovery.yml`: her push ile maliyetli GitHub API keşif taraması başlatan tetik kaldırıldı; schedule/manual kaldı. Toplu CI `v2-ordered-preflight.yml` çalışır.
+- `github_source_discovery.py`: API/kaynak erişim hatalarında başarılı bulgular korunur, `coverage_status=PARTIAL_API_ERRORS`, `errors`, `playback_verified=false` raporlanır; kısmi tarama asla tam kapsama diye sunulmaz.
+- `test_github_partial_discovery.py` eklendi ve toplu CI'ya bağlandı. Bu davranış veri taraması için kısmi rapor, güvenlik onayları için fail-closed politikasını değiştirmez.
+- Ana IBO/YEDEKLER/YENİLER/FAVORİLER korunuyor; PR #9 merge edilmedi. Son CI henüz doğrulanmadı.
