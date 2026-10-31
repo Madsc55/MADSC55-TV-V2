@@ -67,11 +67,22 @@ def key(entry):
 def discover(source_texts, live_text, scopes):
     existing_urls = {e["url"] for e in entries(live_text)}
     existing_keys = {key(e) for e in entries(live_text) if e["tvg_id"]}
+    # TR/AZ and Turkish-language playlists supply reliable cross-source identities.
+    # Match TVG IDs only: generic names like "News" must not pull in world channels.
+    # Materialize once so generators remain safe and provenance stays deterministic.
+    source_texts = list(source_texts)
+    known_ids = set()
+    for source_id, content in source_texts:
+        if scopes.get(source_id) in ("TR", "AZ"):
+            for item in entries(content):
+                if item["tvg_id"].strip():
+                    known_ids.add(item["tvg_id"].strip().casefold())
     candidates, seen = [], set()
     provenance = {}
     for source_id, content in source_texts:
         for e in entries(content):
-            if not turkish_candidate(e, scopes.get(source_id, 'candidate')):
+            recognized = bool(e["tvg_id"].strip() and e["tvg_id"].strip().casefold() in known_ids)
+            if not (turkish_candidate(e, scopes.get(source_id, 'candidate')) or recognized):
                 continue
             if e["url"] in existing_urls:
                 continue
