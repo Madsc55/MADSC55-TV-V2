@@ -265,6 +265,10 @@ def main():
     result["playback_verified"] = False
     result["source_fetch_complete"] = bool(not args.offline and loaded and not errors)
     result["total_unique_candidates"] = len(result["candidates"])
+    result["existing_channel_alternative_count"] = sum(
+        bool(candidate.get("existing_channel_alternative")) for candidate in result["candidates"]
+    )
+    result["candidate_status"] = "UNVERIFIED"
     if args.previous_report:
         from source_loss_audit import compare
         previous = json.loads(args.previous_report.read_text(encoding="utf-8"))
