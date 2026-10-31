@@ -665,3 +665,12 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - `v2/encrypted_archive.py`: geri yüklemede symlink reddi, `O_NOFOLLOW`, sadece normal dosya ve sahibine özel izinler (0600) şartı; yazmada da normal dosya kontrolü.
 - `v2/test_encrypted_archive.py`: symlink restore ve 0644 izinli restore reddi testleri eklendi.
 - Bu değişikliklerin CI sonucu henüz kontrol edilmedi. Bağımsız dayanıklı yedek/restore kanıtı hâlâ gerekli; gerçek tarama başlamadı. Ana İBO playlist ve YEDEKLER değişmedi; PR #9 merge edilmedi.
+
+
+## 31 Ekim 2026 — Tek komutla kaynak keşfi koordinatörü
+- Önceki CI #41192434838 SUCCESS.
+- `v2/run_all_discovery.py --run-all --encrypted-archive <private-path>` eklendi. Sıra: 1) kayıtlı kaynak erişilebilirliği, 2) GitLab/Codeberg kamuya açık kaynak referans keşfi, 3) şifreli arşiv zorunlu M3U aday taraması; isteğe bağlı `--previous-report` ile kayıp denetimi.
+- Ağdan önce bağımsız restore kanıtı `archive_acceptance_gate.check()` ve AES anahtarı doğrulanır. Aşama başarısızsa devam edilmez. Varsayılan forge onay listesi boş olduğundan yeni keşfedilen forge URL'leri otomatik oynatılabilir sayılmaz.
+- `v2/test_run_all_discovery.py` sıralama, fail-closed, onay önkoşulu ve başarı akışı testleri CI'a eklendi.
+- ÖNEMLİ EKSİK: YouTube/resmî canlı sayfa keşfi, GitHub/Gist yeni keşfi, oynatma testi, cihaz test grupları bu tek komut akışına henüz dahil değildir. Tam kapsamlı arama olarak tanıtılmamalıdır. Gerçek çalıştırma yapılmadı; CI sonucu yeni commit için bekleniyor.
+- Ana İBO playlist, YEDEKLER, YENİLER, FAVORİLER değişmedi; PR #9 merge edilmedi.
