@@ -609,3 +609,10 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - `v2/run_forge_source_discovery.py --scan-public-forges`: API aramalarını çalıştıran isteğe bağlı komut; `v2/reports/forge-source-discovery.json` içine yalnızca kaynak referanslarını, hata ve proje sayısını kaydeder. Otomatik playlist aktarımı yoktur; GitLab API raw URL'leri mevcut M3U fetch izin listesine otomatik dahil değildir.
 - `v2/test_forge_source_discovery.py`: beş çevrimdışı test, sıralı CI'a eklendi.
 - Önceki GitHub Actions #41189996226 dört aşamada PASS; bu yeni modüller için Actions sonucu ayrıca bekleniyor. Gerçek forge taraması henüz çalıştırılmadı. Ana İBO playlist ve YEDEKLER korunur; PR #9 merge edilmedi.
+
+
+## 31 Ekim 2026 — Şifreli arşiv altyapısı
+- `v2/encrypted_archive.py`: AES-256-GCM ile her kayıt için rastgele nonce, doğrulamalı şifreleme, append-only JSONL, 0600 dosya yetkisi, fsync ve doğrulamalı restore.
+- `v2/test_encrypted_archive.py`: şifreli roundtrip, ekleme, URL token gizliliği, bozulma ve yanlış anahtar testleri. CI discovery-tests aşamasına `cryptography` kurulumu ve test eklendi.
+- `v2/discover.py --encrypted-archive PATH`: eski şifresiz `--snapshot-output` kapalı kalır; şifreli arşiv seçeneği eklenmiştir. Tarama öncesi `V2_ARCHIVE_KEY_HEX` ve `archive_acceptance_gate.check()` ile bağımsız kalıcı yedek/restore kanıtı zorunlu; başarısız kaynak setinde arşiv reddedilir. Gerçek arşiv restore onayı ve canlı tarama henüz yapılmadı.
+- PR #9 merge edilmedi; ana IBO playlist, YEDEKLER, YENİLER, FAVORİLER korunur.
