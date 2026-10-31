@@ -71,20 +71,19 @@ def restore(path, key_hex=None):
         if not stat.S_ISREG(mode) or mode & 0o077:
             raise PermissionError("Archive source must be a private regular file")
         with os.fdopen(fd, "rb", closefd=False) as stream:
-            lines = stream.readlines()
+            for line in stream:
+                if len(line) > 3_000_000:
+                    raise ValueError("Archive line too large")
+                item = json.loads(line)
+                if item.get("schema") != 1:
+                    raise ValueError("Unsupported archive record")
+                nonce = base64.b64decode(item["nonce"], validate=True)
+                data = base64.b64decode(item["ciphertext"], validate=True)
+                if len(nonce) != 12:
+                    raise ValueError("Invalid archive nonce")
+                records.append(json.loads(cipher.decrypt(nonce, data, AAD)))
     finally:
         os.close(fd)
-    for line in lines:
-        if len(line) > 3_000_000:
-            raise ValueError("Archive line too large")
-        item = json.loads(line)
-        if item.get("schema") != 1:
-            raise ValueError("Unsupported archive record")
-        nonce = base64.b64decode(item["nonce"], validate=True)
-        data = base64.b64decode(item["ciphertext"], validate=True)
-        if len(nonce) != 12:
-            raise ValueError("Invalid archive nonce")
-        records.append(json.loads(cipher.decrypt(nonce, data, AAD)))
     return records
 
 def archive_sha256(path):
