@@ -46,6 +46,10 @@ class SourceInventoryContract(unittest.TestCase):
         self.assertFalse(REQUIRED - {s["id"] for s in self.sources},
                          "Core discovery source disappeared from inventory")
 
+    def test_global_online_feed_is_not_turkish_only(self):
+        source = next(x for x in self.sources if x["id"] == "dearbulut-online")
+        self.assertEqual(source["scope"], "world")
+
     def test_country_is_not_language_proof(self):
         from discover import turkish_candidate
         sample = {"name": "Unidentified Channel", "group": "", "tvg_id": ""}
