@@ -21,6 +21,7 @@ class LivePageRunnerTests(unittest.TestCase):
         report = scan([{"id": "bad", "url": "https://localhost/live"}],
                       lambda url: self.fail("Network must not be called"))
         self.assertEqual(report["errors"][0]["error"], "UNSAFE_PAGE")
+        self.assertEqual(report["coverage_status"], "PARTIAL_APPROVED_PAGES")
     def test_empty_inventory_is_safe(self):
         self.assertEqual(scan([])["pages_checked"], 0)
         self.assertEqual(scan([])["coverage_status"], "NO_APPROVED_PAGES")
