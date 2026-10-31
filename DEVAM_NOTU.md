@@ -651,3 +651,10 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - `discover.fetch` açıkça incelenmiş GitLab raw M3U API uç noktalarını kabul eder; özel ağ/HTTP kaynaklarını reddeden `v2/test_fetch_source_gate.py` CI'a eklendi.
 - Önceki CI #41191157932 SUCCESS. Bu yeni değişiklikler için CI henüz doğrulanmadı; manuel workflow henüz çalıştırılmadı.
 - Önemli: gerçek source-audit ve forge taraması için GitHub Actions arayüzünden manuel dispatch gerekir; mevcut araçlarla dispatch yapılmadı. Ana İBO playlist ve YEDEKLER korunur; PR #9 merge edilmedi.
+
+
+## 31 Ekim 2026 — API/HTML keşif giriş güvenliği
+- Önceki CI #41191731166 dört aşamada başarılı.
+- `v2/run_forge_source_discovery.py`: GitLab/Codeberg API çağrıları sadece güvenilir HTTPS hostlarına yapılır; farklı hosta/HTTP'ye yönlendirmeler reddedilir. `v2/test_forge_api_safety.py` testleri CI'a eklendi.
+- `v2/webpage_source_discovery.py`: HTML index sayfasının kendisi de public HTTPS, portsuz/443, credential'sız ve fragment'sız olmalı; regresyon testi eklendi.
+- Bu güvenlik düzeltmeleri henüz gerçek dış ağ taraması değildir. Manuel Actions workflow henüz başlatılmadı; sonuçlar ve şifreli arşiv restore kanıtı bekleniyor. Ana İBO playlist ve YEDEKLER değişmedi; PR #9 merge edilmedi.
