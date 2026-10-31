@@ -114,10 +114,12 @@ def main():
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps({"created_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
        "policy": "READ_ONLY_NO_AUTOMATIC_SOURCE_OR_PLAYLIST_IMPORT", "repositories_discovered": len(repos),
-       "sources_found": len(found), "sources": found, "errors": errors}, ensure_ascii=False, indent=2) + "\n")
+       "sources_found": len(found), "sources": found, "errors": errors,
+       "coverage_status": "PARTIAL_API_ERRORS" if errors else "COMPLETE_QUERIES",
+       "playback_verified": False}, ensure_ascii=False, indent=2) + "\n")
     print("Repositories:", len(repos), "parsed new sources:", len(found), "errors:", len(errors))
     if errors:
-        raise SystemExit("GitHub/Gist source discovery incomplete; inspect sanitized report")
+        print("WARNING: Partial GitHub/Gist discovery; inspect errors in saved report")
 
 if __name__ == "__main__":
     main()
