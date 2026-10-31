@@ -38,6 +38,16 @@ class ArchiveGateTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             self.assertTrue(check(self.evidence(directory)))
 
+    def test_local_backup_drill_is_not_independent_evidence(self):
+        with tempfile.TemporaryDirectory() as directory:
+            env = self.evidence(directory)
+            evidence_path = Path(env["V2_ARCHIVE_RESTORE_EVIDENCE"])
+            evidence = json.loads(evidence_path.read_text(encoding="utf-8"))
+            evidence["backup_scope"] = "local_separate_directory_not_independent_storage"
+            evidence_path.write_text(json.dumps(evidence), encoding="utf-8")
+            with self.assertRaisesRegex(RuntimeError, "independent durable backup"):
+                check(env)
+
     def test_mismatched_restored_file(self):
         with tempfile.TemporaryDirectory() as directory:
             env = self.evidence(directory, "a" * 64)
