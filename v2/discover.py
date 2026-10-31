@@ -106,8 +106,8 @@ def main():
     args = p.parse_args()
     if args.limit < 0:
         p.error("--limit must be zero or positive")
-    if args.offline and args.snapshot_output:
-        p.error("--snapshot-output cannot be used with --offline")
+    if args.snapshot_output:
+        p.error("Unencrypted token-bearing snapshots are disabled until encrypted archival and restore are verified")
     if args.offline and args.previous_report:
         p.error("--previous-report requires an actual network discovery run")
     live = LIVE.read_text(encoding="utf-8-sig")
