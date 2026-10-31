@@ -41,6 +41,7 @@ jobs:
           python-version: '3.12'
       - run: python v2/test_discovery_offline_regressions.py
       - run: python v2/test_source_provenance.py
+      - run: python v2/test_source_inventory_contract.py
       - run: python v2/test_archive_acceptance_gate.py
   safety:
     needs: discovery-tests
