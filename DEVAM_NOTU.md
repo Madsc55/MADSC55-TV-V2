@@ -729,3 +729,9 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - `v2/test_restore_evidence_safety.py` CI'a eklendi; yeni CI sonucu henüz doğrulanmadı.
 - Kalan kritik işler: kanıt dosyası bayrakları kendi başına bağımsız yedek varlığını kanıtlamaz; gerçek harici depolama/restore denemesi ve onay gereklidir. Gerçek toplu tarama yapılmadı. Onaylı canlı site listesi boş, playback testi eksik.
 - Ana IBO playlist, YEDEKLER, YENİLER, FAVORİLER değişmedi; PR #9 merge edilmedi.
+
+
+## 31 Ekim 2026 — CI #41201107681 hata düzeltmesi
+- `discovery-tests` FAILURE: `test_archive_acceptance_gate.py` test fikstürü geri yükleme dosyasını varsayılan 0644 izinleriyle oluşturuyordu; yeni güvenlik kapısı 0600 istiyor. Eksik dosya hata mesajı da değişmişti.
+- Fikstür 0600 yapıldı ve eksik dosya beklentisi güncellendi; güvenlik kapısı gevşetilmedi. Düzeltme commit: a3d634065dd8f2e36f7ddd0b53d9fa439c35b7de.
+- Yeni CI sonucu henüz doğrulanmadı. Gerçek tarama çalıştırılmadı; IBO ve YEDEKLER korunuyor.
