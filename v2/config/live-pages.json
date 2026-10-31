@@ -69,6 +69,46 @@
     {
       "id": "azerbaijan-ictimai-official",
       "url": "https://www.ictimai.az/"
+    },
+    {
+      "id": "trt-2-official",
+      "url": "https://www.trt2.com.tr/"
+    },
+    {
+      "id": "trt-spor-official",
+      "url": "https://www.trtspor.com.tr/"
+    },
+    {
+      "id": "a-haber-official",
+      "url": "https://www.ahaber.com.tr/"
+    },
+    {
+      "id": "cnn-turk-official",
+      "url": "https://www.cnnturk.com/"
+    },
+    {
+      "id": "tv100-official",
+      "url": "https://www.tv100.com/"
+    },
+    {
+      "id": "benguturk-official",
+      "url": "https://www.benguturk.com/"
+    },
+    {
+      "id": "tele1-official",
+      "url": "https://www.tele1.com.tr/"
+    },
+    {
+      "id": "ulusal-kanal-official",
+      "url": "https://www.ulusal.com.tr/"
+    },
+    {
+      "id": "kanal-7-official",
+      "url": "https://www.kanal7.com/"
+    },
+    {
+      "id": "az-baku-tv",
+      "url": "https://baku.tv/"
     }
   ]
 }
