@@ -52,6 +52,7 @@ jobs:
       - run: python v2/test_run_webpage_playlist_discovery.py
       - run: python v2/test_gist_filename_discovery.py
       - run: python v2/test_github_partial_discovery.py
+      - run: python v2/test_partial_source_coverage.py
       - run: python v2/test_reference_classifier.py
       - run: python v2/test_forge_source_discovery.py
       - run: python v2/test_forge_source_review.py
