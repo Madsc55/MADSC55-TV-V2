@@ -14,7 +14,7 @@ def probe(url, timeout=25, ffprobe='ffprobe'):
     executable = shutil.which(ffprobe)
     if not executable:
         return {'status': 'PROBE_UNAVAILABLE', 'video': False, 'audio': False}
-    command = [executable, '-v', 'error', '-nostdin', '-probesize', '1500000',
+    command = [executable, '-v', 'error', '-probesize', '1500000',
                '-analyzeduration', '3000000', '-rw_timeout', str(int(timeout * 1000000)),
                '-show_entries', 'stream=codec_type,codec_name,width,height',
                '-of', 'json', url]
