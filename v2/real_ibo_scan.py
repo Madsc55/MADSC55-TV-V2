@@ -14,6 +14,7 @@ import socket
 import urllib.error
 import urllib.parse
 import urllib.request
+from media_probe import probe
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 SOURCES = ROOT / 'v2/config/sources.json'
@@ -97,6 +98,7 @@ def main():
     ap.add_argument('--report', type=pathlib.Path, default=REPORT)
     ap.add_argument('--inventory', type=pathlib.Path, default=INVENTORY,
                     help='Durable full candidate inventory, including HTTP/HLS failures')
+    ap.add_argument('--probe-timeout', type=int, default=18)
     ap.add_argument('--workers', type=int, default=12)
     ap.add_argument('--timeout', type=float, default=12)
     ap.add_argument('--limit', type=int, default=2000)
@@ -146,6 +148,13 @@ def main():
                 good.append(result)
     # Retain every discovered new URL, including candidates that failed HTTP/HLS.
     # Network checks are not device playback proof; never silently lose a candidate.
+    # A successful HTTP/HLS manifest is not proof of media packets.
+    # Fail closed if ffprobe is absent or cannot identify an audio/video codec.
+    media_results = {}
+    with concurrent.futures.ThreadPoolExecutor(max_workers=args.workers) as pool:
+        for item, result in zip(good, pool.map(lambda item: probe(item['url'], args.probe_timeout), good)):
+            media_results[item['url']] = result
+    playable = [item for item in good if media_results[item['url']]['status'] == 'MEDIA_CONFIRMED']
     good_urls = {item['url'] for item in good}
     args.inventory.parent.mkdir(parents=True, exist_ok=True)
     inventory_tmp = args.inventory.with_suffix(args.inventory.suffix + '.tmp')
@@ -153,6 +162,7 @@ def main():
         for candidate in candidates.values():
             record = {**candidate,
                       'http_hls_status': 'HTTP_HLS_OK' if candidate['url'] in good_urls else 'UNVERIFIED_OR_FAILED',
+                      'media_probe': media_results.get(candidate['url'], {'status': 'NOT_PROBED', 'streams': []}),
                       'ibo_device_tested': False}
             inventory_file.write(json.dumps(record, ensure_ascii=False) + '\n')
     inventory_tmp.replace(args.inventory)
@@ -161,22 +171,23 @@ def main():
     report = {'source_count': len(sources), 'fetched_sources': len(source_counts),
               'failed_sources': failed, 'existing_main_urls': len(existing), 'unique_new_candidates': len(candidates),
               'http_checked': checked, 'http_hls_ok': len(good),
+              'media_confirmed': len(playable), 'media_probe_failed': len(good) - len(playable),
               'candidate_inventory': str(args.inventory),
               'unverified_or_failed_candidates': len(candidates) - len(good),
               'multi_source_candidates': sum(len(item['source_ids']) > 1 for item in candidates.values()),
-              'exported_part1': min(len(good), args.limit),
-              'part_count': (len(good) + args.limit - 1) // args.limit,
+              'exported_part1': min(len(playable), args.limit),
+              'part_count': (len(playable) + args.limit - 1) // args.limit,
               'playback_verified_on_device': False, 'mock_data_used': False,
-              'status': 'READY_FOR_DEVICE_TEST' if good else 'NO_VERIFIED_CANDIDATES'}
+              'status': 'READY_FOR_DEVICE_TEST' if playable else 'NO_MEDIA_CONFIRMED'}
     args.report.parent.mkdir(parents=True, exist_ok=True)
     args.report.write_text(json.dumps(report, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
-    if not good:
+    if not playable:
         # A completed scan with zero eligible streams is a valid no-change result.
         # Keep the report and original playlist intact; do not invent channels.
         print(json.dumps(report, ensure_ascii=False, indent=2))
         return
     lines = ['#EXTM3U']
-    for item in good[:args.limit]:
+    for item in playable[:args.limit]:
         name = item['name'].replace('\n', ' ').replace('\r', ' ').replace(',', ' ').upper()
         group = item['group'].replace('"', '').replace('\n', ' ')
         logo = item.get('logo', '')
