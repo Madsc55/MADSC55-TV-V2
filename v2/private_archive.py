@@ -29,6 +29,8 @@ def key_from_env():
 def atomic_private_write(path, payload):
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
+    if path.exists() and path.is_dir():
+        raise ValueError("Output must be a file")
     if path.is_symlink():
         raise ValueError("Refusing symlink output")
     tmp = path.with_name(path.name + "." + secrets.token_hex(8) + ".tmp")
@@ -66,6 +68,10 @@ def main():
     if args.operation != "verify" and args.destination is None:
         parser.error("--destination is required")
     if args.operation == "backup":
+        if args.evidence and args.evidence.resolve() == args.source.resolve():
+            raise ValueError("Evidence must not overwrite source")
+        if args.evidence and args.evidence.resolve() == args.destination.resolve():
+            raise ValueError("Evidence must not overwrite archive")
         if args.destination.resolve() == args.source.resolve():
             raise ValueError("Backup output must differ from source")
         plaintext = args.source.read_bytes()
