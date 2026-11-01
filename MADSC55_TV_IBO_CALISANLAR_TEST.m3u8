@@ -1679,6 +1679,34 @@ https://playlist.fasttvcdn.com/pl/rfrk9821hdy9dayo8wfyha/kltr-sanat-tv/playlist.
 https://tv-trt1.medya.trt.com.tr/master.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="DHA CANLI" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/9/9a/DHA_logo.png" group-title="🗂️ YEDEKLER (2002)",DHA CANLI 720P HD
 https://603c568fccdf5.streamlock.net/live/dhaweb1_C5efC/playlist.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/UBoBYUI.png" group-title="🗂️ YEDEKLER (2002)",BBC FİRST TURKİYE
+http://88.212.7.14/live/bbc_first/index.m3u8
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Cartoon_Network_2010_logo.svg/960px-Cartoon_Network_2010_logo.svg.png" group-title="🗂️ YEDEKLER (2002)",CARTOON NETWORK (TURKİYE)
+http://176.65.153.40:6002/play/a013/index.m3u8
+#EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/turkey/kanal-7-tr.png" group-title="🗂️ YEDEKLER (2002)",KANAL 7
+https://kanal7-live.daioncdn.net/kanal7/kanal7.m3u8
+#EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/turkey/kanal-7-tr.png" group-title="🗂️ YEDEKLER (2002)",KANAL 7
+https://kanal7-live.daioncdn.net/kanal7/kanal7_1080p.m3u8
+#EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/turkey/kanal-7-tr.png" group-title="🗂️ YEDEKLER (2002)",KANAL 7 AVRUPA
+https://livetv.radyotvonline.net/kanal7live/kanal7avr/chunklist.m3u8
+#EXTINF:-1 tvg-logo="http://epg.one/img/3958.png" group-title="🗂️ YEDEKLER (2002)",KANAL 7 AVRUPA HD TR
+http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6905/index.m3u8
+#EXTINF:-1 tvg-logo="http://epg.one/img/3828.png" group-title="🗂️ YEDEKLER (2002)",KANAL AVRUPA TR
+http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6766/index.m3u8
+#EXTINF:-1 tvg-logo="https://d3ckc0u56niq67.cloudfront.net/conf/images/show_tv_SpJ.png" group-title="🗂️ YEDEKLER (2002)",SHOW TV
+https://rmtftbjlne.turknet.ercdn.net/bpeytmnqyp/showtv/showtv.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/JrWFwBd.png" group-title="🗂️ YEDEKLER (2002)",TRT 3 (720P)
+https://tv-trt3.live.trt.com.tr/master.m3u8
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/TRT_%C3%87ocuk_logo_%282021%29.svg/960px-TRT_%C3%87ocuk_logo_%282021%29.svg.png" group-title="🗂️ YEDEKLER (2002)",TRT COCUK (1440P)
+https://tv-trtcocuk.medya.trt.com.tr/master.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/CRBfZi4.png" group-title="🗂️ YEDEKLER (2002)",TRT EBA ILKOKUL (720P)
+https://tv-e-okul00.medya.trt.com.tr/master.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/vj2L2L2.png" group-title="🗂️ YEDEKLER (2002)",TRT EBA LİSE (720P)
+https://tv-e-okul02.medya.trt.com.tr/master.m3u8
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/TRT_Spor_Y%C4%B1ld%C4%B1z_Logo.svg/960px-TRT_Spor_Y%C4%B1ld%C4%B1z_Logo.svg.png" group-title="🗂️ YEDEKLER (2002)",TRT SPOR YİLDİZ (1440P) [GEO-BLOCKED]
+https://trt.daioncdn.net/trtspor-yildiz/master.m3u8?app=web&platform=trtspor
+#EXTINF:-1 tvg-logo="http://epg.one/img/2951.png" group-title="🗂️ YEDEKLER (2002)",TRT TURK TR
+http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6798/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/tTCuczU.png" group-title="🗂️ YEDEKLER (2002)",:24 (1080P)
 http://88.212.15.50/live/test_trojka_25p/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/Q4A6ci4.png" group-title="🗂️ YEDEKLER (2002)",.BLACK (1080P)
@@ -3183,8 +3211,6 @@ http://23.239.31.26:8989/bbcamerica/index.m3u8
 https://amg00793-amg00793c40-rakuten-es-5444.playouts.now.amagi.tv/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/7/7e/BBC_Earth_2023.svg" group-title="🗂️ YEDEKLER (2002)",BBC EARTH (1080P)
 https://aegis-cloudfront-1.tubi.video/bb1fc6ad-9948-42ea-aaf3-20acfcdeecac/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/UBoBYUI.png" group-title="🗂️ YEDEKLER (2002)",BBC FİRST TURKİYE
-http://88.212.7.14/live/bbc_first/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/kcmHcSx.png" group-title="🗂️ YEDEKLER (2002)",BBC FOOD (1080P)
 https://d1e9r0b71zfwk7.cloudfront.net/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/rC0pi1D.png" group-title="🗂️ YEDEKLER (2002)",BBC HOME & GARDEN (1080P)
@@ -4087,8 +4113,6 @@ https://vodzong.mjunoon.tv:8087/streamtest/cartoon-network-87/live/87H/chunks.m3
 https://drk6xq0vhn.gpcdn.net/live/cn_sd_abr/index.m3u8
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Cartoon_Network_2010_logo.svg/960px-Cartoon_Network_2010_logo.svg.png" group-title="🗂️ YEDEKLER (2002)",CARTOON NETWORK (720P)
 http://212.5.144.156:8080/cartoon/index.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Cartoon_Network_2010_logo.svg/960px-Cartoon_Network_2010_logo.svg.png" group-title="🗂️ YEDEKLER (2002)",CARTOON NETWORK (TURKİYE)
-http://176.65.153.40:6002/play/a013/index.m3u8
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Cartoon_Network_Arabic_logo.png/960px-Cartoon_Network_Arabic_logo.png" group-title="🗂️ YEDEKLER (2002)",CARTOON NETWORK ARABİC
 http://149.100.11.252:8000/play/a056/index.m3u8
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Cartoon_Network_2010_logo.svg/960px-Cartoon_Network_2010_logo.svg.png" group-title="🗂️ YEDEKLER (2002)",CARTOON NETWORK ASİA (720P)
@@ -5615,16 +5639,6 @@ http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ
 https://edge-f.swagit.com/live/glendaleaz/live-1-a-1/playlist.m3u8
 #EXTINF:-1 group-title="🗂️ YEDEKLER (2002)",GRAND CİNEMA
 https://gcinemahls.wns.live/hls/stream.m3u8
-#EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/turkey/kanal-7-tr.png" group-title="🗂️ YEDEKLER (2002)",KANAL 7
-https://kanal7-live.daioncdn.net/kanal7/kanal7.m3u8
-#EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/turkey/kanal-7-tr.png" group-title="🗂️ YEDEKLER (2002)",KANAL 7
-https://kanal7-live.daioncdn.net/kanal7/kanal7_1080p.m3u8
-#EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/turkey/kanal-7-tr.png" group-title="🗂️ YEDEKLER (2002)",KANAL 7 AVRUPA
-https://livetv.radyotvonline.net/kanal7live/kanal7avr/chunklist.m3u8
-#EXTINF:-1 tvg-logo="http://epg.one/img/3958.png" group-title="🗂️ YEDEKLER (2002)",KANAL 7 AVRUPA HD TR
-http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6905/index.m3u8
-#EXTINF:-1 tvg-logo="http://epg.one/img/3828.png" group-title="🗂️ YEDEKLER (2002)",KANAL AVRUPA TR
-http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6766/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/WIeZMKT.png" group-title="🗂️ YEDEKLER (2002)",KANAL D DRAMA (1080P)
 https://cdn-uw2-prod.tsv2.amagi.tv/linear/amg01602-themahqfrance-vivekanald-samsungspain/playlist.m3u8
 #EXTINF:-1 tvg-logo="http://epg.one/img/3825.png" group-title="🗂️ YEDEKLER (2002)",KARDELEN TV TR
@@ -5645,22 +5659,8 @@ http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ
 https://alpha.tv.online.tm/hls/ch003.m3u8
 #EXTINF:-1 tvg-logo="http://epg.one/img/3943.png" group-title="🗂️ YEDEKLER (2002)",SHOW MAX TR
 http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6890/index.m3u8
-#EXTINF:-1 tvg-logo="https://d3ckc0u56niq67.cloudfront.net/conf/images/show_tv_SpJ.png" group-title="🗂️ YEDEKLER (2002)",SHOW TV
-https://rmtftbjlne.turknet.ercdn.net/bpeytmnqyp/showtv/showtv.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/ELXmaqg.png" group-title="🗂️ YEDEKLER (2002)",TR SPORT (480P)
 https://livetr.teleromagna.it/mia/live/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/JrWFwBd.png" group-title="🗂️ YEDEKLER (2002)",TRT 3 (720P)
-https://tv-trt3.live.trt.com.tr/master.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/TRT_%C3%87ocuk_logo_%282021%29.svg/960px-TRT_%C3%87ocuk_logo_%282021%29.svg.png" group-title="🗂️ YEDEKLER (2002)",TRT COCUK (1440P)
-https://tv-trtcocuk.medya.trt.com.tr/master.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/CRBfZi4.png" group-title="🗂️ YEDEKLER (2002)",TRT EBA ILKOKUL (720P)
-https://tv-e-okul00.medya.trt.com.tr/master.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/vj2L2L2.png" group-title="🗂️ YEDEKLER (2002)",TRT EBA LİSE (720P)
-https://tv-e-okul02.medya.trt.com.tr/master.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/TRT_Spor_Y%C4%B1ld%C4%B1z_Logo.svg/960px-TRT_Spor_Y%C4%B1ld%C4%B1z_Logo.svg.png" group-title="🗂️ YEDEKLER (2002)",TRT SPOR YİLDİZ (1440P) [GEO-BLOCKED]
-https://trt.daioncdn.net/trtspor-yildiz/master.m3u8?app=web&platform=trtspor
-#EXTINF:-1 tvg-logo="http://epg.one/img/2951.png" group-title="🗂️ YEDEKLER (2002)",TRT TURK TR
-http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6798/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/Ap7l2jC.png" group-title="🗂️ YEDEKLER (2002)",TURKMEN OWAZY (406P) [NOT 24/7]
 https://alpha.tv.online.tm/hls/ch005.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/iBBpBx4.png" group-title="🗂️ YEDEKLER (2002)",TURKMENİSTAN (406P) [NOT 24/7]
