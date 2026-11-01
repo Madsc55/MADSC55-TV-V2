@@ -18,7 +18,7 @@ jobs:
           python-version: '3.12'
       - name: Enforce frozen IBO playlist and permanent backups before all tests
         run: |
-          test "$(git hash-object MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)" = "39259e7e8a16b47141ae17ac1d471eb695d8a50f"
+          test "$(git hash-object MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)" = "c6cda4d6e4d31fbcd46971b830ed55d474923ed8"
           python v2/test_playlist_invariants.py
       - name: Compile and validate all V2 Python modules before scanning
         run: python -m compileall -q v2
@@ -298,7 +298,7 @@ jobs:
         run: python v2/youtube_discovery.py
       - name: Final playlist and backup safety invariants
         run: |
-          test "$(git hash-object MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)" = "39259e7e8a16b47141ae17ac1d471eb695d8a50f"
+          test "$(git hash-object MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)" = "c6cda4d6e4d31fbcd46971b830ed55d474923ed8"
           python v2/test_playlist_invariants.py
       - name: Generate final evidence summary
         if: always()
