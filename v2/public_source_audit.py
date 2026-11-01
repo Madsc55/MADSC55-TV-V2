@@ -12,7 +12,7 @@ from real_ibo_scan import parse_m3u, tr_az, ROOT
 
 def inspect(source):
     sid, url = source["id"], source["url"]
-    out = {"id": sid, "url": url, "status": "failed", "total": 0, "tr_az_candidates": 0}
+    out = {"id": sid, "url": url, "status": "failed", "total": 0, "tr_az_candidates": 0, "candidate_urls": []}
     try:
         req = urllib.request.Request(url, headers={"User-Agent": "MADSC55-TV-V2-public-audit/1"})
         with urllib.request.urlopen(req, timeout=20) as response:
@@ -20,8 +20,9 @@ def inspect(source):
         if len(data) > 25_000_000:
             raise ValueError("source exceeds 25MB")
         entries = list(parse_m3u(data))
+        selected = [x["url"] for x in entries if tr_az(x, source.get("scope", "candidate"))]
         out.update(status="ok", total=len(entries),
-                   tr_az_candidates=sum(tr_az(x, source.get("scope", "candidate")) for x in entries))
+                   tr_az_candidates=len(selected), candidate_urls=selected)
     except (OSError, ValueError, UnicodeError, urllib.error.URLError) as exc:
         out["error"] = type(exc).__name__
     return out
@@ -30,6 +31,10 @@ def main():
     sources = json.loads((ROOT / "v2/config/sources.json").read_text(encoding="utf-8"))["sources"]
     with concurrent.futures.ThreadPoolExecutor(max_workers=10) as pool:
         results = list(pool.map(inspect, sources))
+    unique_urls = set().union(*(set(x["candidate_urls"]) for x in results))
+    # Keep individual stream URLs out of public reports; only aggregate counts are published.
+    for item in results:
+        item["unique_candidate_urls"] = len(set(item.pop("candidate_urls")))
     report = {
         "timestamp_utc": datetime.now(timezone.utc).isoformat(),
         "kind": "REAL_NETWORK_SOURCE_AUDIT_NOT_AV_VERIFICATION",
@@ -37,6 +42,8 @@ def main():
         "sources_ok": sum(x["status"] == "ok" for x in results),
         "sources_failed": sum(x["status"] != "ok" for x in results),
         "candidate_occurrences_not_deduplicated": sum(x["tr_az_candidates"] for x in results),
+        "unique_candidate_urls_across_sources": len(unique_urls),
+        "language_is_metadata_inference_not_audio_verified": True,
         "sources": results,
         "protected_playlist_modified": False,
         "ibo_packages_produced": False,
