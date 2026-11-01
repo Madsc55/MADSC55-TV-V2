@@ -19,6 +19,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Install scanner import dependency
+        run: python -m pip install 'cryptography>=42,<47'
       - name: Fetch actual IPTV sources and count TR/AZ candidates
         run: python v2/public_source_audit.py
       - name: Preserve source audit evidence
