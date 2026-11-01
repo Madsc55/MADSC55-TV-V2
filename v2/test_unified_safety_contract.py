@@ -23,7 +23,7 @@ assert 'language.get("approved") != 0' in queue
 assert 'action_queue.get("approved") != 0' in summary
 assert 'review_pending = bool(' in summary
 assert 'test_playlist_invariants.py' in workflow
-assert '39259e7e8a16b47141ae17ac1d471eb695d8a50f' in workflow
+assert 'c6cda4d6e4d31fbcd46971b830ed55d474923ed8' in workflow
 assert 'python v2/turkish_language_evidence.py' in workflow
 assert 'python v2/postscan_unified_action_queue.py' in workflow
 assert 'python v2/final_validation_summary.py' in workflow
