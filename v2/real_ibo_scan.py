@@ -187,10 +187,9 @@ def main():
     args.report.write_text(json.dumps(report, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
     # Never leave a prior successful batch in place after a failed/empty scan.
     # Remove stale generated exports before reporting this run's status.
-    if failed or not good:
-        for previous in args.output.parent.glob(args.output.stem + '_PART*' + args.output.suffix):
-            previous.unlink(missing_ok=True)
-        args.output.unlink(missing_ok=True)
+    for previous in args.output.parent.glob(args.output.stem + '_PART*' + args.output.suffix):
+        previous.unlink(missing_ok=True)
+    args.output.unlink(missing_ok=True)
     if failed:
         report['status'] = 'INCOMPLETE_SOURCE_FETCH'
         report['written_parts'] = []
