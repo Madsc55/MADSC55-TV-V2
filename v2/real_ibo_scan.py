@@ -128,7 +128,11 @@ def main():
             for entry in records:
                 if tr_az(entry, source.get('scope', 'candidate')):
                     if entry['url'] not in existing:
-                        candidates.setdefault(entry['url'], entry)
+                        found = candidates.get(entry['url'])
+                        if found is None:
+                            candidates[entry['url']] = {**entry, 'source_ids': [sid]}
+                        elif sid not in found['source_ids']:
+                            found['source_ids'].append(sid)
         except (OSError, ValueError, UnicodeError, socket.timeout) as exc:
             failed.append({'id': sid, 'error': type(exc).__name__})
     checked = 0
@@ -157,6 +161,7 @@ def main():
               'http_checked': checked, 'http_hls_ok': len(good),
               'candidate_inventory': str(args.inventory),
               'unverified_or_failed_candidates': len(candidates) - len(good),
+              'multi_source_candidates': sum(len(item['source_ids']) > 1 for item in candidates.values()),
               'exported_part1': min(len(good), args.limit),
               'part_count': (len(good) + args.limit - 1) // args.limit,
               'playback_verified_on_device': False, 'mock_data_used': False,
