@@ -700,3 +700,12 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - `v2/real_ibo_scan.py` commit `7e47203`: `--append-live` ile ana playlistin değiştirilmesi reddedilir.
 - `.github/workflows/v2-ordered-preflight.yml` commit `322d049`: arşiv bağımlılığı ve zorunlu test adımı.
 - Yerel şifreleme testleri 3/3 geçti; GitHub CI sonucu ve gerçek kanal envanterinin harici kalıcı arşivi henüz doğrulanmadı. İBO paketleri ve gerçek video/ses testi tamamlandı olarak işaretlenmedi.
+
+
+## 2026-11-01 — Gerçek AV doğrulaması ve tarama envanteri şifreleme
+- `v2/stream_probe.py` commit `0d51513`, düzeltme `950599b`: ffprobe ile video ve ses codec'lerini gerçekten sorgulama; HTTP 200 başarı sayılmaz. Yerel sistem ffprobe kontrolü `-nostdin` seçeneğinin desteklenmediğini gösterdi, kaldırıldı.
+- `v2/test_stream_probe.py` commit `436ddff`: URL, ses/video, yalnız video ve timeout regresyon testleri; yerel test 4/4 başarılı.
+- `v2/real_ibo_scan.py` commit `37726c3`: IBO aday ihracı için gerçek video+ses codec doğrulaması zorunlu.
+- `v2/real_ibo_scan.py` commit `a597217`: envanter geçici düz metinden AES-GCM şifreli .enc arşive aktarılır; parola yoksa tarama başlamaz. Kalıcı harici yedek ve gerçek kaynaklarla uçtan uca tarama henüz yapılmadı.
+- `.github/workflows/v2-ordered-preflight.yml` commit `124461a`: AV testleri CI'ya eklendi. İlgili commit için GitHub Actions çalıştırması sorgusunda henüz sonuç yoktu.
+- Ana İBO playlisti ve YEDEKLER korunuyor. #60 kurtarma ve gerçek 1000/2000 paketleri tamamlanmadı.
