@@ -721,3 +721,12 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 ## 2026-11-01 17:43 — Şifreli envanterden aday geri kazanımı
 - `v2/real_ibo_scan.py` commit `2734c37`: önceki şifreli envanterde bulunan, ana listede olmayan ve yeni taramada kaybolmuş URL'ler yeniden aday havuzuna alınır ve ağ/video/ses testinden geçirilir. `recovered_from_previous_encrypted_inventory` raporlanır.
 - Bu işlev #60'daki yalnız kimliği bilinen 4.955 URL'yi adres olmadan geri getiremez. Gerçek internet taraması bu ortamda DNS erişimi nedeniyle çalıştırılamadı; başarılı canlı AV sayısı veya M3U paket sayısı ileri sürülmüyor.
+
+
+## 2026-11-01 — ZORUNLU ÇALIŞMA KURALI: Önce keşif kapsamı, sonra nihai AV taraması
+- Kullanıcı kararı: Eksik kaynak entegrasyonları bitmeden yapılan taramalar yalnızca ARA TARAMA olarak etiketlenir; nihai/tam kapsamlı tarama veya proje tamamlandı diye sunulmaz.
+- Önce TR/AZ/diaspora M3U kaynakları; IPTV-org, Free-TV, GitHub/Gist/GitLab/Codeberg, canlı TV web siteleri, resmî yayıncı siteleri, YouTube TR/AZ, Rec TV, Gopik TV, Güneş TV, Scribd ve erişilebilir diğer açık kaynakların keşif kapsamı incelenip ortak aday envanterine bağlanır. YouTube sayfa URL'si doğrudan IBO yayın URL'si sayılmaz.
+- Sonra #60 geçmiş kayıplar için gerçek URL kurtarma, tekrar ayıklama, TR/AZ aday sınıflandırması, logo eşleştirme ve ana playlistle karşılaştırma tamamlanır. Kaynak/metaveri ipucu ses dili doğrulaması olarak gösterilmez.
+- Ancak bundan sonra nihai geniş AV doğrulaması, şifreli arşiv/geri yükleme ve 2000'lik gerçek İBO test paketleri üretilir. Mevcut ara tarama kanıtları ve doğrulanmış adaylar kaybedilmez.
+- Koruma: yalnızca MADSC55-TV-V2; ana MADSC55_TV_IBO_CALISANLAR_TEST.m3u8, YEDEKLER, YENİLER, FAVORİLER ve cihaz favorileri değiştirilmez. YEDEKLER ilk iki sıra TRT 1 1440P QHD ve DHA CANLI 720P HD korunur. PR #9 izinsiz birleştirilmez. İBO Player cihaz testlerini kullanıcı yapar.
+- 2026-11-01 başarılı önceki ara tarama: 12.148 yeni URL adayı, 4.098 ffprobe AV doğrulanmış aday, 3 adet 2000 sınırına göre M3U parçası; bu sonuçlar nihai kapsam kanıtı değildir.
