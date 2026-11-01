@@ -593,3 +593,11 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 5. **Logolar ve sınıflandırma:** yalnız kanıtlı logo eşleştirmeleri; Türkçe/Azerice, ülke, yeni/mevcut, çalışan/belirsiz/çalışmayan etiketleri; farklı çalışan alternatif URL'leri koru.
 6. **Toplu rapor ve kullanıcı testi:** kaynak bazında aday, doğrulanan, kaybolan ve yeni sayıları; kullanıcıya 2000'lik YEDEKLER partileri. Kullanıcı onayı olmadan ana İBO playlistini değiştirme.
 - **Tamamlanma durumu:** Bu planın hiçbir aşaması güncel main üzerinde uçtan uca doğrulanmış olarak işaretlenmedi. Kod değişikliği ile başarılı çalışma kanıtı ayrı tutulacak.
+
+
+## 2026-11-01 — CI gerçek çelişki düzeltmeleri (doğrulama bekliyor)
+- Main playlist blob SHA `39259e7e8a16b47141ae17ac1d471eb695d8a50f`; önceki birleşik workflow `4b1c3...` sabitini kontrol ederek güncel playlisti yanlış reddediyordu. Workflow üç kontrolünde güncel blob SHA'ya geçildi: commit `696898c`.
+- `v2-ordered-preflight.yml` içindeki beş keşif testinin `continue-on-error: true` ayarı kaldırıldı; hatalı testler artık CI'yi kıracak: commit `5c84046`.
+- `v2/test_unified_safety_contract.py` güncel playlist SHA ve sıkı preflight koşuluna uyarlandı: commit `375e30a`.
+- Eski run `41189283457` dört job SUCCESS idi fakat bu commitleri kapsamaz. Yeni main Actions sonuçları henüz doğrulanmadı; tamamlandı/yeşil iddiası yoktur.
+- Playlist, YEDEKLER, YENİLER, FAVORİLER, cihaz favorileri, EPG ve eski depo değiştirilmedi. Sonraki adım: güncel CI job sonuçları ve başarısızsa logları; sonra kalan kod hatalarını düzelt.
