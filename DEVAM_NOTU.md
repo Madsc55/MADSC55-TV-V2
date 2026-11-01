@@ -607,3 +607,9 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - Kullanıcının #307 compile logu: `v2/test_unified_safety_contract.py` satır 42, `SyntaxError: unexpected character after line continuation character`.
 - Neden: önceki committe tek satır içine literal `\\nassert` yazılmıştı. Gerçek satır sonu ile değiştirildi; commit `67de3b8`.
 - Yeni Actions PASS henüz görülmedi; compile/protect/discovery-tests/safety sonucun kontrolü sıradaki iş. Ana playlist ve YEDEKLER değiştirilmedi.
+
+
+## 2026-11-01 — Logo Backup #5 push çakışması
+- Kullanıcının paylaştığı #5 `backup` logunda `git push` `main -> main (fetch first)` nedeniyle exit 1; indirme adımı değil, eşzamanlı main ilerlemesi kaynaklı non-fast-forward reddi.
+- `.github/workflows/v2-logo-backup.yml` commit `c83dd91`: logo commitinden sonra `git fetch origin main`, `git rebase origin/main`, `git push origin HEAD:main`; yarış halinde en fazla 5 güvenli deneme. Rebase çakışmasında abort ve kırmızı sonuç, asla force push yok.
+- #5 eski run başarılı hale gelmez; sonraki logo backup run sonucunu ayrıca doğrulamak gerekir. Bu değişiklik mevcut playlist/YEDEKLER/cihaz favorilerini değiştirmez.
