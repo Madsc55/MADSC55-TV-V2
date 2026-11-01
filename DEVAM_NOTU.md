@@ -613,3 +613,11 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - Kullanıcının paylaştığı #5 `backup` logunda `git push` `main -> main (fetch first)` nedeniyle exit 1; indirme adımı değil, eşzamanlı main ilerlemesi kaynaklı non-fast-forward reddi.
 - `.github/workflows/v2-logo-backup.yml` commit `c83dd91`: logo commitinden sonra `git fetch origin main`, `git rebase origin/main`, `git push origin HEAD:main`; yarış halinde en fazla 5 güvenli deneme. Rebase çakışmasında abort ve kırmızı sonuç, asla force push yok.
 - #5 eski run başarılı hale gelmez; sonraki logo backup run sonucunu ayrıca doğrulamak gerekir. Bu değişiklik mevcut playlist/YEDEKLER/cihaz favorilerini değiştirmez.
+
+
+## 2026-11-01 — YEDEKLER Türk kanalları önceliği
+- Ana playlist commit `4c8ebc4`: mevcut 2840 kaydın hiçbiri silinmeden 838 diğer kategori sırası korunarak, 2002 YEDEKLER içinde TRT 1 1440P QHD ve DHA CANLI 720P HD ilk iki sırada bırakıldı; adı açıkça Türkiye/TRT/Kanal 7/Kanal Avrupa/Show TV olan 14 kayıt hemen sonrasına alındı. Kalanlar sıralandı; başka ülkelerdeki ATV gibi belirsiz adlar Türk kabul edilmedi.
+- Playlist yeni blob SHA `c6cda4d6e4d31fbcd46971b830ed55d474923ed8`; frozen SHA workflow ve safety sözleşmesinde güncellendi (`822995e`, `90b34dc`).
+- Gelecekteki tarayıcı eklemeleri aynı Türkçe önceliği korusun diye `v2/real_ibo_scan.py` ve `v2/test_playlist_invariants.py` güncellendi (`41e8779`, `b9bb62f`), GEO-BLOCKED ad yazımı düzeltildi (`b83844b`, `756f0a5`).
+- YEDEKLER içinde 18 kayıtta `tvg-logo` eksik: 30A TV Classic Movies, 6 Wise TV, Afra Film, America Paraguay, Arax TV, Arko TV, Armenia Premium, Arvan TV, Cafe Film, Canada One, CC-TV, Chosen TV English, DanceTV Algorhythm, Dej TV, Dove Channel, Dr G Medical Examiner, DreamWorks Channel Latin America, Grand Cinema. Orijinal logoları henüz kanıtlı bulunmadığından yanlış logo atanmadı. `v2/mirror_logos.py` sadece zaten tanımlı logo URL'lerini indiriyor; eksik 18 logo keşfi yapmıyor.
+- Bu commitler için Actions yeşil sonucu henüz doğrulanmadı. İBO cihaz testi kullanıcıda.
