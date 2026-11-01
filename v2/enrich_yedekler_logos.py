@@ -10,12 +10,12 @@ from real_ibo_scan import SOURCES, LIVE, fetch, parse_m3u
 REPORT = pathlib.Path(__file__).resolve().parent / "reports" / "yedekler-logo-report.json"
 
 def norm(name):
-    name = re.sub(r"\\s*\\([^)]*(?:[0-9]{3,4}p|HD|FHD|UHD|QHD)[^)]*\\)", "", name, flags=re.I)
-    name = re.sub(r"\\s*\\[(?:not 24/7|geo-blocked)\\]", "", name, flags=re.I)
-    return re.sub(r"[^\\w]+", "", name.casefold())
+    name = re.sub(r"\s*\([^)]*(?:[0-9]{3,4}p|HD|FHD|UHD|QHD)[^)]*\)", "", name, flags=re.I)
+    name = re.sub(r"\s*\[(?:not 24/7|geo-blocked)\]", "", name, flags=re.I)
+    return re.sub(r"[^\w]+", "", name.casefold())
 
 def valid_logo(url):
-    if not isinstance(url, str) or len(url) > 2048 or any(c in url for c in '"\\r\\n<>'):
+    if not isinstance(url, str) or len(url) > 2048 or any(c in url for c in '"\r\n<>'):
         return False
     parsed = urlsplit(url)
     return parsed.scheme == "https" and bool(parsed.netloc)
@@ -72,11 +72,11 @@ def main():
     for i, row in enumerate(rows):
         if not row.startswith("#EXTINF:") or 'group-title="🗂️ YEDEKLER (' not in row:
             continue
-        if re.search(r'\\btvg-logo="https?://', row):
+        if re.search(r'\btvg-logo="https?://', row):
             continue
-        name = row.rstrip("\\r\\n").rsplit(",", 1)[-1].strip()
+        name = row.rstrip("\r\n").rsplit(",", 1)[-1].strip()
         url = rows[i + 1].strip() if i + 1 < len(rows) else ""
-        match_id = re.search(r'\\btvg-id="([^"]+)"', row)
+        match_id = re.search(r'\btvg-id="([^"]+)"', row)
         channel_id = match_id.group(1).casefold().strip() if match_id else ""
         candidates = [
             ("by_url", by_url.get(url, set())),
@@ -105,7 +105,7 @@ def main():
     stats["logos_added"] = added
     stats["still_missing_examples"] = missing[:100]
     REPORT.parent.mkdir(parents=True, exist_ok=True)
-    REPORT.write_text(json.dumps(stats, ensure_ascii=False, indent=2) + "\\n", encoding="utf-8")
+    REPORT.write_text(json.dumps(stats, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(stats, ensure_ascii=False))
 
 if __name__ == "__main__":
