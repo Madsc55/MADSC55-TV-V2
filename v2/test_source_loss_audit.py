@@ -23,6 +23,13 @@ class SourceLossTests(unittest.TestCase):
         self.assertEqual([x["reason"] for x in compare(before, after)["findings"]],
                          ["FETCH_FAILED", "SOURCE_MISSING"])
 
+    def test_source_drop_at_boundary(self):
+        before = report(("a", "PARSED_NOT_PLAYBACK_VERIFIED", 100))
+        exact_half = report(("a", "PARSED_NOT_PLAYBACK_VERIFIED", 50))
+        below_half = report(("a", "PARSED_NOT_PLAYBACK_VERIFIED", 49))
+        self.assertEqual(compare(before, exact_half)["status"], "NO_LARGE_REGRESSION")
+        self.assertEqual(compare(before, below_half)["findings"][0]["reason"], "SOURCE_DROP")
+
     def test_normal_change(self):
         before = report(("a", "PARSED_NOT_PLAYBACK_VERIFIED", 100))
         after = report(("a", "PARSED_NOT_PLAYBACK_VERIFIED", 70))
