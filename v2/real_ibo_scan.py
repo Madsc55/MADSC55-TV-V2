@@ -188,17 +188,28 @@ def main():
         # Keep the report and original playlist intact; do not invent channels.
         print(json.dumps(report, ensure_ascii=False, indent=2))
         return
-    lines = ['#EXTM3U']
-    for item in good[:args.limit]:
-        name = item['name'].replace('\n', ' ').replace('\r', ' ').replace(',', ' ').upper()
-        group = item['group'].replace('"', '').replace('\n', ' ')
-        logo = item.get('logo', '')
-        logo_attr = f' tvg-logo="{logo}"' if logo.startswith(('https://', 'http://')) and '"' not in logo else ''
-        lines.extend([f'#EXTINF:-1{logo_attr} group-title="{group}",{name}', item['url']])
-    temp = args.output.with_suffix(args.output.suffix + '.tmp')
-    args.output.parent.mkdir(parents=True, exist_ok=True)
-    temp.write_text('\n'.join(lines) + '\n', encoding='utf-8')
-    temp.replace(args.output)
+    # Write every verified stream, not only the first batch. Never claim
+    # additional parts exist unless they were actually written.
+    written_parts = []
+    for part_index, offset in enumerate(range(0, len(good), args.limit), 1):
+        lines = ['#EXTM3U']
+        for item in good[offset:offset + args.limit]:
+            name = item['name'].replace('\\n', ' ').replace('\\r', ' ').replace(',', ' ').upper()
+            group = item['group'].replace('"', '').replace('\\n', ' ')
+            logo = item.get('logo', '')
+            logo_attr = f' tvg-logo="{logo}"' if logo.startswith(('https://', 'http://')) and '"' not in logo else ''
+            lines.extend([f'#EXTINF:-1{logo_attr} group-title="{group}",{name}', item['url']])
+        destination = (args.output if part_index == 1 else
+                       args.output.with_name(args.output.stem + f'_PART{part_index}' + args.output.suffix))
+        temp = destination.with_suffix(destination.suffix + '.tmp')
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        temp.write_text('\\n'.join(lines) + '\\n', encoding='utf-8')
+        temp.replace(destination)
+        written_parts.append(str(destination))
+    report['written_parts'] = written_parts
+    report['part_count'] = len(written_parts)
+    report['exported_part1'] = min(len(good), args.limit)
+    args.report.write_text(json.dumps(report, indent=2, ensure_ascii=False) + '\\n', encoding='utf-8')
     if args.append_live:
         # Preserve every existing byte: append only new verified stream records.
         original = args.live.read_bytes()
