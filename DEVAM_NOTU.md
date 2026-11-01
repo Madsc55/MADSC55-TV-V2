@@ -685,3 +685,10 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - Tekrarlanan veya hatalı kaynaklar için çevrimdışı testler eklendi (`3df167a`).
 - GitHub yazma kontrolü başarılı (`944ca8d`).
 - Ana playlist ve YEDEKLER değiştirilmedi; Actions sonuçları henüz doğrulanmadı.
+
+
+## 2026-11-01 — Güvenlik kapısı ve yazma doğrulaması
+- `v2/discover.py` commit `0954621`: kaynak kaybı denetimi özel oynatma snapshot dosyası yazılmadan önce çalışır.
+- `v2/test_discovery_offline_regressions.py` commit `16912ab`: denetimin dosya yazımından önce bulunduğunu kontrol eden test eklendi.
+- Devir notuna doğrudan yazma yeniden çalışıyor. Korunan playlist ve YEDEKLER değiştirilmedi.
+- GitHub Actions çalışmasının sonucu henüz doğrulanmadı.
