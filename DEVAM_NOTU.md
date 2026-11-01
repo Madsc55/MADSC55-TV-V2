@@ -601,3 +601,9 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - `v2/test_unified_safety_contract.py` güncel playlist SHA ve sıkı preflight koşuluna uyarlandı: commit `375e30a`.
 - Eski run `41189283457` dört job SUCCESS idi fakat bu commitleri kapsamaz. Yeni main Actions sonuçları henüz doğrulanmadı; tamamlandı/yeşil iddiası yoktur.
 - Playlist, YEDEKLER, YENİLER, FAVORİLER, cihaz favorileri, EPG ve eski depo değiştirilmedi. Sonraki adım: güncel CI job sonuçları ve başarısızsa logları; sonra kalan kod hatalarını düzelt.
+
+
+## 2026-11-01 — #307 compile SyntaxError düzeltmesi
+- Kullanıcının #307 compile logu: `v2/test_unified_safety_contract.py` satır 42, `SyntaxError: unexpected character after line continuation character`.
+- Neden: önceki committe tek satır içine literal `\\nassert` yazılmıştı. Gerçek satır sonu ile değiştirildi; commit `67de3b8`.
+- Yeni Actions PASS henüz görülmedi; compile/protect/discovery-tests/safety sonucun kontrolü sıradaki iş. Ana playlist ve YEDEKLER değiştirilmedi.
