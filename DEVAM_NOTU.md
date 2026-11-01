@@ -678,3 +678,10 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - Bu değişiklikler yalnızca keşif raporunu etkiler; ana İBO playlisti, YEDEKLER ve favoriler değiştirilmedi. CI başarısı henüz doğrulanmadı.
 
 <!-- 2026-11-01 source inventory validation: 14fc9a1, tests: 3df167a -->
+
+
+## 2026-11-01 — Kaynak envanteri doğrulama kaydı
+- Kaynak kimlikleri ve HTTPS adresleri taramadan önce doğrulanıyor (`14fc9a1`).
+- Tekrarlanan veya hatalı kaynaklar için çevrimdışı testler eklendi (`3df167a`).
+- GitHub yazma kontrolü başarılı (`944ca8d`).
+- Ana playlist ve YEDEKLER değiştirilmedi; Actions sonuçları henüz doğrulanmadı.
