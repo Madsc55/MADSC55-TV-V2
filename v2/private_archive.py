@@ -66,6 +66,8 @@ def main():
     if args.operation != "verify" and args.destination is None:
         parser.error("--destination is required")
     if args.operation == "backup":
+        if args.destination.resolve() == args.source.resolve():
+            raise ValueError("Backup output must differ from source")
         plaintext = args.source.read_bytes()
         atomic_private_write(args.destination, encrypt(plaintext, key))
         restored = decrypt(args.destination.read_bytes(), key)
@@ -79,6 +81,8 @@ def main():
                       "durable": False}
             atomic_private_write(args.evidence, (json.dumps(record, indent=2)+"\n").encode())
     elif args.operation == "restore":
+        if args.destination.resolve() == args.source.resolve():
+            raise ValueError("Restore output must differ from source")
         atomic_private_write(args.destination, decrypt(args.source.read_bytes(), key))
     else:
         data = decrypt(args.source.read_bytes(), key)
