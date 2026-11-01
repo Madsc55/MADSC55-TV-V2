@@ -664,3 +664,9 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - `.github/workflows/v2-ordered-preflight.yml` commit `f03f0db`: `v2/test_discovery_metadata.py` artık `discovery-tests` işinde zorunlu olarak çalışır; başarısızlıkta `safety` aşamasına geçilmez.
 - Kaynak kaybı denetimindeki mevcut `v2/source_loss_audit.py` ve `v2/test_source_loss_audit.py` incelendi; önceki kaynaklara göre %50'den fazla düşüş ve kayıp/başarısız kaynak raporlanıyor. Bu modülün gerçek tarama baz çizgisi ayrıca doğrulanmalı.
 - GitHub Actions sonuçları bu kayıt anında doğrulanmış değildir. Ana playlist, YEDEKLER ve favoriler değiştirilmedi.
+
+
+## 2026-11-01 — Kaynak kaybı korumasında hata durumunu zorunlu kılma
+- `v2/discover.py` commit `d9fb64a`: `--previous-report` ile kıyaslama kaynak kaybı bulursa rapor diske yazıldıktan sonra süreç başarısız çıkış koduyla sonlandırılır; sessizce başarılı kabul edilmez.
+- `v2/test_source_loss_audit.py` commit `613f939`: %50 eşik sınırında regresyon testi eklendi.
+- Önceki rapor olmadan karşılaştırma yapılmaz; gerçek tarama ve CI sonucu henüz doğrulanmadı. Ana playlist ve YEDEKLER değiştirilmedi.
