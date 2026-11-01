@@ -658,3 +658,9 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - `v2/discover.py` commit `b51662f`: dünya listesindeki TR/AZ metaveri düzenli ifadesinin çift kaçış hatası düzeltildi.
 - `v2/test_discovery_metadata.py` commit `77c5627`: dünya kaynaklarında Türkçe/Azerice metaveri eşleşmeleri, ilgisiz aday reddi ve birden çok kaynağın korunması için çevrimdışı regresyon testleri eklendi.
 - GitHub Actions çalıştırma sonucu bu kayıtta henüz doğrulanmadı. Ana playlist, YEDEKLER ve favoriler değiştirilmedi.
+
+
+## 2026-11-01 — Zorunlu CI keşif regresyon kapısı
+- `.github/workflows/v2-ordered-preflight.yml` commit `f03f0db`: `v2/test_discovery_metadata.py` artık `discovery-tests` işinde zorunlu olarak çalışır; başarısızlıkta `safety` aşamasına geçilmez.
+- Kaynak kaybı denetimindeki mevcut `v2/source_loss_audit.py` ve `v2/test_source_loss_audit.py` incelendi; önceki kaynaklara göre %50'den fazla düşüş ve kayıp/başarısız kaynak raporlanıyor. Bu modülün gerçek tarama baz çizgisi ayrıca doğrulanmalı.
+- GitHub Actions sonuçları bu kayıt anında doğrulanmış değildir. Ana playlist, YEDEKLER ve favoriler değiştirilmedi.
