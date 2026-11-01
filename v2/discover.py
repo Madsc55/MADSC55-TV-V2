@@ -53,7 +53,7 @@ def turkish_candidate(entry, scope):
     # Explicit Turkish/Azerbaijani metadata survives broad world-list filtering.
     # This is only a discovery hint, never evidence of spoken language.
     metadata = " ".join((entry.get("group", ""), entry.get("name", ""), entry.get("tvg_id", "")))
-    if re.search(r"(?i)(?:\\b(?:tur|aze|az|tr)\\b|\\[(?:TR|AZ)\\]|(?:turkish|azerbaijani|türkçe|azerice))", metadata):
+    if re.search(r"(?i)(?:\b(?:tur|aze|az|tr)\b|\[(?:TR|AZ)\]|(?:turkish|azerbaijani|türkçe|azerice))", metadata):
         return True
     return False
 
