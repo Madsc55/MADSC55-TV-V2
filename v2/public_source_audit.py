@@ -10,6 +10,8 @@ import urllib.error
 from datetime import datetime, timezone
 from real_ibo_scan import parse_m3u, tr_az, ROOT
 
+MAIN_IBO_READ_ONLY = "https://raw.githubusercontent.com/Madsc55/Madsc55-Tv/main/MADSC55_TV_IBO_CALISANLAR_TEST.m3u8"
+
 def inspect(source):
     sid, url = source["id"], source["url"]
     out = {"id": sid, "url": url, "status": "failed", "total": 0, "tr_az_candidates": 0, "candidate_urls": []}
@@ -32,6 +34,16 @@ def main():
     with concurrent.futures.ThreadPoolExecutor(max_workers=10) as pool:
         results = list(pool.map(inspect, sources))
     unique_urls = set().union(*(set(x["candidate_urls"]) for x in results))
+    # Fail closed: never label a candidate as new without fetching the real IBO list.
+    main_request = urllib.request.Request(MAIN_IBO_READ_ONLY, headers={"User-Agent": "MADSC55-TV-V2-public-audit/1"})
+    with urllib.request.urlopen(main_request, timeout=30) as response:
+        main_bytes = response.read(25_000_001)
+    if len(main_bytes) > 25_000_000:
+        raise ValueError("Protected main playlist exceeds size limit")
+    main_urls = {x["url"] for x in parse_m3u(main_bytes)}
+    if not main_urls:
+        raise RuntimeError("Real primary IBO playlist unavailable or empty; refusing new-candidate counts")
+    new_urls = unique_urls - main_urls
     # Keep individual stream URLs out of public reports; only aggregate counts are published.
     for item in results:
         item["unique_candidate_urls"] = len(set(item.pop("candidate_urls")))
@@ -43,6 +55,10 @@ def main():
         "sources_failed": sum(x["status"] != "ok" for x in results),
         "candidate_occurrences_not_deduplicated": sum(x["tr_az_candidates"] for x in results),
         "unique_candidate_urls_across_sources": len(unique_urls),
+        "real_main_ibo_reference": MAIN_IBO_READ_ONLY,
+        "real_main_ibo_url_count": len(main_urls),
+        "candidate_urls_already_in_main": len(unique_urls & main_urls),
+        "new_candidate_urls_not_in_main_unverified": len(new_urls),
         "language_is_metadata_inference_not_audio_verified": True,
         "sources": results,
         "protected_playlist_modified": False,
