@@ -189,6 +189,16 @@ def main():
             group_new = f'group-title="🗂️ YEDEKLER ({new_count})"'.encode('utf-8')
             combined = original + separator + ('\n'.join(additions) + '\n').encode('utf-8')
             combined = re.sub(rb'group-title="\xf0\x9f\x97\x82\xef\xb8\x8f YEDEKLER \(\d+\)"', lambda _: group_new, combined)
+            # Only YEDEKLER is alphabetized; all other groups retain their order.
+            decoded = combined.decode('utf-8')
+            rows = decoded.splitlines()
+            if not rows or rows[0] != '#EXTM3U':
+                raise ValueError('Invalid playlist header')
+            pairs = [(rows[i], rows[i + 1]) for i in range(1, len(rows) - 1, 2)]
+            other = [p for p in pairs if 'group-title="🗂️ YEDEKLER (' not in p[0]]
+            backups = [p for p in pairs if 'group-title="🗂️ YEDEKLER (' in p[0]]
+            backups.sort(key=lambda p: p[0].rsplit(',', 1)[-1].casefold())
+            combined = ('#EXTM3U\\n' + ''.join(h + '\\n' + u + '\\n' for h, u in other + backups)).encode('utf-8')
             tmp.write_bytes(combined)
             tmp.replace(args.live)
         report['added_to_yedekler'] = len(additions) // 2
