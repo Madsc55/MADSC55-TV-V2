@@ -628,3 +628,9 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - `v2/test_playlist_invariants.py` düzeltildi: `bd469d3`; `v2/real_ibo_scan.py` düzeltildi: `8e105e7`. Her iki dosyanın GitHub'daki son içeriği tekrar okunarak tuple kapanışı `)` doğrulandı.
 - Playlist değiştirilmedi. 2002 YEDEKLER'in ilk iki kaydı TRT 1 ve DHA; sonraki 14 Türk yayın kaydı mevcut testin beklediği sıralamayla eşleşiyor. 838 diğer kayıt korunuyor.
 - Yeni Actions PASS sonucu henüz görülmedi. Gelecek çalışma compile/protect/discovery-tests/safety aşamalarında ayrıca doğrulanmalı; hata varsa loguna göre onarılmalı.
+
+
+## 2026-11-01 — Kanal keşfinde aday kaybını önleme
+- `v2/real_ibo_scan.py` commit `5a66508`: kaynaklardan keşfedilen yeni adayların tamamı, HTTP/HLS kontrolü geçsin veya geçmesin, atomik olarak `v2/reports/ibo-candidate-inventory.jsonl` dosyasına yazılıyor. Kayıtlarda `http_hls_status` ve `ibo_device_tested: false` bulunuyor. Başarılı cihaz testi olarak sunulmuyor.
+- Rapor artık aday envanteri konumunu ve HTTP/HLS doğrulanmamış/başarısız aday sayısını içeriyor. Kaynak erişim hataları mevcut raporda ayrıca tutuluyor.
+- Ana playlist/YEDEKLER değişmedi. Bu adım yalnızca sonraki taramalar çalıştığında envanter üretir; henüz yeni gerçek tarama veya Actions yeşil sonucu doğrulanmadı.
