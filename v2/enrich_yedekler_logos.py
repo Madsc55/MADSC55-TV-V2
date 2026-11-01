@@ -7,8 +7,8 @@ from real_ibo_scan import SOURCES, LIVE, fetch, parse_m3u
 import json
 
 def norm(name):
-    name = re.sub(r'\\s*\\([^)]*(?:p|P|HD|FHD|UHD)[^)]*\\)', '', name)
-    return re.sub(r'[^\\w]+', '', name.casefold())
+    name = re.sub(r'\s*\([^)]*(?:p|P|HD|FHD|UHD)[^)]*\)', '', name)
+    return re.sub(r'[^\w]+', '', name.casefold())
 
 def main():
     rows = LIVE.read_text(encoding='utf-8-sig').splitlines(keepends=True)
@@ -30,7 +30,7 @@ def main():
     for i, row in enumerate(rows):
         if not row.startswith('#EXTINF:') or 'YEDEKLER (' not in row or 'tvg-logo=' in row:
             continue
-        name = row.rstrip('\\r\\n').rsplit(',', 1)[-1]
+        name = row.rstrip('\r\n').rsplit(',', 1)[-1]
         url = rows[i + 1].strip() if i + 1 < len(rows) else ''
         logo = by_url.get(url)
         if not logo:
