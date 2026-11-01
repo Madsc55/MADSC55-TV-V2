@@ -20,7 +20,7 @@ def main():
     backup_names = [x["name"] for x in channels_pre if "YEDEKLER" in x["group"]]
     assert len(backup_names) == backup_count
     urls = [x["url"] for x in channels_pre]
-    assert len(urls) == len(set(urls)), "Duplicate stream URLs"
+    # Original playlist deliberately repeats streams across FAVORİLER/ULUSAL groups.\n    # Keep those intentional duplicates; reject only duplicates within YEDEKLER.\n    backup_urls = [x["url"] for x in channels_pre if "YEDEKLER" in x["group"]]\n    assert len(backup_urls) == len(set(backup_urls)), "Duplicate YEDEKLER stream URLs"
     text = LIVE.read_text(encoding="utf-8-sig")
     channels = list(entries(text))
     assert text.startswith("#EXTM3U"), "Missing M3U header"
