@@ -15,6 +15,8 @@ import urllib.error
 import urllib.parse
 import urllib.request
 from stream_probe import probe
+from secure_archive import backup as encrypt_inventory
+import os
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 SOURCES = ROOT / 'v2/config/sources.json'
@@ -106,6 +108,8 @@ def main():
     ap.add_argument('--live', type=pathlib.Path, default=LIVE)
     ap.add_argument('--append-live', action='store_true', help='Append verified new channels to YEDEKLER only')
     args = ap.parse_args()
+    if not os.environ.get('V2_ARCHIVE_PASSPHRASE'):
+        ap.error('V2_ARCHIVE_PASSPHRASE secret required to protect stream inventory')
     if args.append_live:
         ap.error('Protected main playlist is immutable; export candidates for separate device testing')
     if not 1 <= args.workers <= 32 or not 1 <= args.limit <= 10000:
@@ -158,13 +162,19 @@ def main():
                       'http_hls_status': 'AV_VERIFIED' if candidate['url'] in good_urls else 'UNVERIFIED_OR_FAILED',
                       'ibo_device_tested': False}
             inventory_file.write(json.dumps(record, ensure_ascii=False) + '\n')
-    inventory_tmp.replace(args.inventory)
+    encrypted_inventory = args.inventory.with_suffix(args.inventory.suffix + '.enc')
+    try:
+        archive_result = encrypt_inventory(inventory_tmp, encrypted_inventory,
+                                           os.environ['V2_ARCHIVE_PASSPHRASE'])
+    finally:
+        inventory_tmp.unlink(missing_ok=True)
+    # Never retain plaintext URL/token inventory in the GitHub working tree.
     # Source outages are reported; a working subset can still be tested.
     # Never modify the protected main playlist.
     report = {'source_count': len(sources), 'fetched_sources': len(source_counts),
               'failed_sources': failed, 'existing_main_urls': len(existing), 'unique_new_candidates': len(candidates),
               'http_checked': checked, 'http_hls_ok': len(good), 'av_verified': len(good),
-              'candidate_inventory': str(args.inventory),
+              'candidate_inventory': str(encrypted_inventory), 'archive_restore_test_passed': archive_result['restore_test_passed'],
               'unverified_or_failed_candidates': len(candidates) - len(good),
               'multi_source_candidates': sum(len(item['source_ids']) > 1 for item in candidates.values()),
               'exported_part1': min(len(good), args.limit),
