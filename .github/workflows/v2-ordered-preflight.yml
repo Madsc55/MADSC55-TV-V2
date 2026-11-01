@@ -40,19 +40,14 @@ jobs:
         with:
           python-version: '3.12'
       - name: Advisory test_discovery_offline_regressions.py
-        continue-on-error: true
         run: python v2/test_discovery_offline_regressions.py
       - name: Advisory test_source_provenance.py
-        continue-on-error: true
         run: python v2/test_source_provenance.py
       - name: Advisory test_source_inventory_contract.py
-        continue-on-error: true
         run: python v2/test_source_inventory_contract.py
       - name: Advisory test_source_loss_audit.py
-        continue-on-error: true
         run: python v2/test_source_loss_audit.py
       - name: Advisory test_archive_acceptance_gate.py
-        continue-on-error: true
         run: python v2/test_archive_acceptance_gate.py
   safety:
     needs: discovery-tests
