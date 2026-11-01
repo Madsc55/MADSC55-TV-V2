@@ -13,12 +13,15 @@ def main():
     current = LIVE.read_bytes()
     text = current.decode("utf-8-sig")
     channels_pre = list(entries(text))
-    assert len(channels_pre) >= 2840, "Playlist lost a channel from the 2026-11-01 protected baseline"\n    non_backup = [x for x in channels_pre if "YEDEKLER" not in x["group"]]\n    assert len(non_backup) == 838, "Protected non-YEDEKLER categories changed in size"
+    assert len(channels_pre) >= 2840, "Playlist lost a channel from the 2026-11-01 protected baseline"
+    non_backup = [x for x in channels_pre if "YEDEKLER" not in x["group"]]
+    assert len(non_backup) == 838, "Protected non-YEDEKLER categories changed in size"
     backup_count = sum("YEDEKLER" in x["group"] for x in channels_pre)
     backup_group = f"🗂️ YEDEKLER ({backup_count})"
     assert backup_count >= 2002, "Existing YEDEKLER test candidates were lost"
     backup_names = [x["name"] for x in channels_pre if "YEDEKLER" in x["group"]]
-    assert len(backup_names) == backup_count\n    assert all(x["group"] == backup_group for x in channels_pre if "YEDEKLER" in x["group"]), "YEDEKLER counter inconsistent"
+    assert len(backup_names) == backup_count
+    assert all(x["group"] == backup_group for x in channels_pre if "YEDEKLER" in x["group"]), "YEDEKLER counter inconsistent"
     urls = [x["url"] for x in channels_pre]
     # Original playlist repeats URLs across categories intentionally.
     backup_urls = [x["url"] for x in channels_pre if "YEDEKLER" in x["group"]]
