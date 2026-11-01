@@ -185,7 +185,9 @@ def main():
                       'http_hls_status': 'AV_VERIFIED' if candidate['url'] in good_urls else 'UNVERIFIED_OR_FAILED',
                       'ibo_device_tested': False}
             inventory_file.write(json.dumps(record, ensure_ascii=False) + '\n')
-    encrypted_inventory = args.inventory.with_suffix(args.inventory.suffix + '.enc')
+    # A failed source fetch must not overwrite the last complete encrypted baseline.
+    encrypted_inventory = args.inventory.with_suffix(
+        args.inventory.suffix + ('.pending.enc' if failed else '.enc'))
     try:
         archive_result = encrypt_inventory(inventory_tmp, encrypted_inventory,
                                            os.environ['V2_ARCHIVE_PASSPHRASE'])
