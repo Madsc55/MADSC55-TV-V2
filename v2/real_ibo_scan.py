@@ -122,7 +122,7 @@ def main():
     if not 1 <= args.workers <= 32 or not 1 <= args.limit <= 10000:
         ap.error('workers must be 1..32 and limit 1..10000')
     if not args.live.is_file():
-        ap.error('Protected main playlist not found; refusing unfiltered export')
+        ap.error('Protected V2 main playlist not found; refusing unfiltered export')
     live_text = args.live.read_text(encoding='utf-8-sig', errors='replace')
     existing = {line.strip() for line in live_text.splitlines()
                 if line.strip().startswith(('https://', 'http://'))}
