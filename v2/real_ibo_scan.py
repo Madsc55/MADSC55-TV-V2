@@ -21,6 +21,7 @@ import os
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 SOURCES = ROOT / 'v2/config/sources.json'
+DYNAMIC_SOURCES = ROOT / 'v2/reports/github-source-discovery.json'
 LIVE = ROOT / 'MADSC55_TV_IBO_CALISANLAR_TEST.m3u8'
 OUT = ROOT / 'v2/reports/IBO_YENI_ADAYLAR_PART1.m3u8'
 REPORT = ROOT / 'v2/reports/ibo-real-scan-report.json'
@@ -108,6 +109,8 @@ def check_hls(entry, timeout):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--sources', type=pathlib.Path, default=SOURCES)
+    ap.add_argument('--dynamic-sources', type=pathlib.Path, default=None,
+                    help='Optional GitHub discovery report; only parsed HTTPS M3U sources are included')
     ap.add_argument('--output', type=pathlib.Path, default=OUT)
     ap.add_argument('--report', type=pathlib.Path, default=REPORT)
     ap.add_argument('--inventory', type=pathlib.Path, default=INVENTORY,
@@ -129,7 +132,24 @@ def main():
     if not existing:
         ap.error('Protected main playlist contains no stream URLs; refusing unfiltered export')
     doc = json.loads(args.sources.read_text(encoding='utf-8'))
-    sources = doc['sources'] if isinstance(doc, dict) else doc
+    sources = list(doc['sources'] if isinstance(doc, dict) else doc)
+    dynamic_count = 0
+    if args.dynamic_sources is not None:
+        dynamic = json.loads(args.dynamic_sources.read_text(encoding='utf-8'))
+        if not isinstance(dynamic.get('sources'), list):
+            ap.error('Dynamic discovery report has no sources list')
+        seen_source_urls = {item['url'] for item in sources}
+        for item in dynamic['sources']:
+            url = item.get('url', '')
+            parsed = urllib.parse.urlsplit(url)
+            if (item.get('status') != 'SOURCE_PARSED_STREAMS_NOT_PLAYBACK_VERIFIED'
+                    or parsed.scheme != 'https' or not parsed.hostname or parsed.username
+                    or parsed.password or url in seen_source_urls):
+                continue
+            sources.append({'id': 'github-auto-' + hashlib.sha256(url.encode()).hexdigest()[:20],
+                            'url': url, 'scope': 'candidate'})
+            seen_source_urls.add(url)
+            dynamic_count += 1
     # Do not export incomplete results as a successful production list.
     candidates = {}
     failed = []
@@ -216,7 +236,7 @@ def main():
     # Never retain plaintext URL/token inventory in the GitHub working tree.
     # Source outages are reported; a working subset can still be tested.
     # Never modify the protected main playlist.
-    report = {'source_count': len(sources), 'fetched_sources': len(source_counts),
+    report = {'source_count': len(sources), 'dynamic_source_count': dynamic_count, 'fetched_sources': len(source_counts),
               'failed_sources': failed, 'source_counts': source_counts, 'source_drops': source_drops, 'existing_main_urls': len(existing), 'unique_new_candidates': len(candidates), 'recovered_from_previous_encrypted_inventory': recovered_from_archive,
               'http_checked': checked, 'http_hls_ok': len(good), 'av_verified': len(good),
               'candidate_inventory': str(encrypted_inventory), 'archive_restore_test_passed': archive_result['restore_test_passed'],
