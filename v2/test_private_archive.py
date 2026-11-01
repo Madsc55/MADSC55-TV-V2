@@ -19,6 +19,21 @@ class ArchiveTests(unittest.TestCase):
         with self.assertRaises(Exception):
             archive.decrypt(modified, key)
 
+    def test_wrong_key(self):
+        sealed = archive.encrypt(b"secret", os.urandom(32))
+        with self.assertRaises(Exception):
+            archive.decrypt(sealed, os.urandom(32))
+
+    def test_truncated_archive(self):
+        with self.assertRaises(ValueError):
+            archive.decrypt(b"V2ARCHIVE1\\n", os.urandom(32))
+
+    def test_key_validation(self):
+        from unittest.mock import patch
+        with patch.dict(os.environ, {"V2_ARCHIVE_KEY_B64": "invalid!"}):
+            with self.assertRaises(ValueError):
+                archive.key_from_env()
+
     def test_atomic_write(self):
         with tempfile.TemporaryDirectory() as directory:
             target = Path(directory) / "test.bin"
