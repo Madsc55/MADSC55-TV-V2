@@ -41,10 +41,20 @@ def main():
     ], "TRT 1 and DHA must permanently occupy YEDEKLER positions 1 and 2"
     assert sum(x["name"] == "TRT 1 1440P QHD" for x in backups) == 1, "Duplicate or missing TRT 1"
     assert sum(x["name"] == "DHA CANLI 720P HD" for x in backups) == 1, "Duplicate or missing DHA"
-    prioritized = [x["name"] for x in backups[2:] if x["name"] in TURKISH_BACKUP_PRIORITY]
-    assert len(prioritized) == 14, "Protected Turkish backup candidates missing"
-    assert [x["name"] for x in backups[2:2 + len(prioritized)]] == prioritized, "Turkish backup candidates must follow TRT and DHA"
-    assert prioritized == sorted(prioritized, key=str.casefold), "Turkish backup priority must be alphabetical"
+    # User-approved 24 YEDEKLER selections must remain directly after TRT 1 and DHA.
+    approved_names = (
+        "BBC FİRST TURKİYE", "CARTOON NETWORK (TURKİYE)", "KANAL 7",
+        "KANAL 7", "KANAL 7 AVRUPA", "KANAL 7 AVRUPA HD TR",
+        "TRT 3 (720P)", "TRT EBA LİSE (720P)",
+        "TRT SPOR YİLDİZ (1440P) [GEO-BLOCKED]", "360 TV HD TR",
+        "ATV (1080P)", "ATV (1080P)", "BRTV (720P)",
+        "KANAL D DRAMA (1080P)", "KARDELEN TV TR", "LALEGUL TV TR",
+        "LİNE TV BURSA TR", "SHOW MAX TR", "TV 2000 TR",
+        "ANGER MANAGEMENT CHANNEL (1080P)", "ANHUİ TV (1080P)",
+        "ANİ (576P)", "ANİMAL PLANET", "EBS PLUS 2 (360P)",
+    )
+    assert tuple(x["name"] for x in backups[2:26]) == approved_names, \
+        "User-approved YEDEKLER positions 3-26 changed"
 
 
     assert not any(x["name"].startswith(("TRT Arabi", "TRT World")) for x in channels), "Unwanted foreign-language trials remain"
