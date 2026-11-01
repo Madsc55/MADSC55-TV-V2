@@ -34,16 +34,22 @@ def main():
     with concurrent.futures.ThreadPoolExecutor(max_workers=10) as pool:
         results = list(pool.map(inspect, sources))
     unique_urls = set().union(*(set(x["candidate_urls"]) for x in results))
-    # Fail closed: never label a candidate as new without fetching the real IBO list.
-    main_request = urllib.request.Request(MAIN_IBO_READ_ONLY, headers={"User-Agent": "MADSC55-TV-V2-public-audit/1"})
-    with urllib.request.urlopen(main_request, timeout=30) as response:
-        main_bytes = response.read(25_000_001)
-    if len(main_bytes) > 25_000_000:
-        raise ValueError("Protected main playlist exceeds size limit")
-    main_urls = {x["url"] for x in parse_m3u(main_bytes)}
-    if not main_urls:
-        raise RuntimeError("Real primary IBO playlist unavailable or empty; refusing new-candidate counts")
-    new_urls = unique_urls - main_urls
+    # Reference may be unavailable; keep valid discovery evidence but never claim
+    # that candidates are absent from the protected IBO playlist.
+    main_urls = None
+    main_reference_error = None
+    try:
+        main_request = urllib.request.Request(MAIN_IBO_READ_ONLY, headers={"User-Agent": "MADSC55-TV-V2-public-audit/1"})
+        with urllib.request.urlopen(main_request, timeout=30) as response:
+            main_bytes = response.read(25_000_001)
+        if len(main_bytes) > 25_000_000:
+            raise ValueError("Protected main playlist exceeds size limit")
+        parsed_urls = {x["url"] for x in parse_m3u(main_bytes)}
+        if not parsed_urls:
+            raise ValueError("Protected main playlist empty")
+        main_urls = parsed_urls
+    except (OSError, ValueError, UnicodeError, urllib.error.URLError) as exc:
+        main_reference_error = type(exc).__name__ + (f": HTTP {exc.code}" if isinstance(exc, urllib.error.HTTPError) else "")
     # Keep individual stream URLs out of public reports; only aggregate counts are published.
     for item in results:
         item["unique_candidate_urls"] = len(set(item.pop("candidate_urls")))
@@ -56,9 +62,11 @@ def main():
         "candidate_occurrences_not_deduplicated": sum(x["tr_az_candidates"] for x in results),
         "unique_candidate_urls_across_sources": len(unique_urls),
         "real_main_ibo_reference": MAIN_IBO_READ_ONLY,
-        "real_main_ibo_url_count": len(main_urls),
-        "candidate_urls_already_in_main": len(unique_urls & main_urls),
-        "new_candidate_urls_not_in_main_unverified": len(new_urls),
+        "real_main_ibo_url_count": len(main_urls) if main_urls is not None else None,
+        "candidate_urls_already_in_main": len(unique_urls & main_urls) if main_urls is not None else None,
+        "new_candidate_urls_not_in_main_unverified": len(unique_urls - main_urls) if main_urls is not None else None,
+        "main_reference_error": main_reference_error,
+        "main_comparison_status": "OK" if main_urls is not None else "UNAVAILABLE_NO_NEW_CANDIDATE_CLAIM",
         "language_is_metadata_inference_not_audio_verified": True,
         "sources": results,
         "protected_playlist_modified": False,
