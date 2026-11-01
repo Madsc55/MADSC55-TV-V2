@@ -50,6 +50,11 @@ def turkish_candidate(entry, scope):
         return True
     if re.search(r"(?i)(?:^|[. _-])(?:tr)(?:[. _-]|$)", entry.get("tvg_id", "")):
         return True
+    # Explicit Turkish/Azerbaijani metadata survives broad world-list filtering.
+    # This is only a discovery hint, never evidence of spoken language.
+    metadata = " ".join((entry.get("group", ""), entry.get("name", ""), entry.get("tvg_id", "")))
+    if re.search(r"(?i)(?:\\b(?:tur|aze|az|tr)\\b|\\[(?:TR|AZ)\\]|(?:turkish|azerbaijani|türkçe|azerice))", metadata):
+        return True
     return False
 
 def key(entry):
