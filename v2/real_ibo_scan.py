@@ -189,6 +189,12 @@ def main():
         report['part_count'] = 0
         args.report.write_text(json.dumps(report, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
         raise SystemExit('Incomplete source fetch: refusing to export misleading IBO packages')
+    # Never leave a prior successful batch in place after a failed/empty scan.
+    # Remove stale generated exports before reporting this run's status.
+    if failed or not good:
+        for previous in args.output.parent.glob(args.output.stem + '_PART*' + args.output.suffix):
+            previous.unlink(missing_ok=True)
+        args.output.unlink(missing_ok=True)
     if not good:
         # A completed scan with zero eligible streams is a valid no-change result.
         # Keep the report and original playlist intact; do not invent channels.
