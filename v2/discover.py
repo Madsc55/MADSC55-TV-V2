@@ -14,6 +14,30 @@ OUTPUT = ROOT / "v2" / "reports" / "candidates.json"
 DYNAMIC = ROOT / "v2" / "reports" / "github-source-discovery.json"
 MAX_BYTES = 25_000_000
 
+def validate_sources(sources):
+    """Reject unsafe, ambiguous or duplicated configured source inventories."""
+    from urllib.parse import urlsplit
+    if not isinstance(sources, list) or not sources:
+        raise ValueError("Source inventory must be a nonempty list")
+    ids, urls = set(), set()
+    for item in sources:
+        if not isinstance(item, dict):
+            raise ValueError("Source entry must be an object")
+        sid, url = item.get("id"), item.get("url")
+        if not isinstance(sid, str) or not sid.strip() or sid in ids:
+            raise ValueError("Missing or duplicate source ID")
+        if not isinstance(url, str) or url in urls:
+            raise ValueError("Missing or duplicate source URL")
+        parsed = urlsplit(url)
+        if parsed.scheme != "https" or not parsed.hostname or parsed.username or parsed.password or parsed.fragment:
+            raise ValueError("Unsafe source URL")
+        if item.get("scope", "candidate") not in ("TR", "AZ", "SE", "world", "candidate"):
+            raise ValueError("Invalid source scope")
+        ids.add(sid)
+        urls.add(url)
+    return sources
+
+
 def fetch(url):
     if not url.startswith("https://"):
         raise ValueError("HTTPS source required")
@@ -116,6 +140,7 @@ def main():
                     sources.append({"id": "github-auto-" + hashlib.sha256(url.encode("utf-8")).hexdigest()[:20], "url": url, "scope": "candidate"})
         except (OSError, ValueError, TypeError) as exc:
             raise SystemExit('Dynamic discovery inventory unreadable: ' + type(exc).__name__) from exc
+    validate_sources(sources)
     loaded, errors, source_audit = [], [], []
     scopes = {source['id']: source.get('scope', 'candidate') for source in sources}
     for source in sources:
