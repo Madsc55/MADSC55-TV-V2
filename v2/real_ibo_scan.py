@@ -20,6 +20,7 @@ SOURCES = ROOT / 'v2/config/sources.json'
 LIVE = ROOT / 'MADSC55_TV_IBO_CALISANLAR_TEST.m3u8'
 OUT = ROOT / 'v2/reports/IBO_YENI_ADAYLAR_PART1.m3u8'
 REPORT = ROOT / 'v2/reports/ibo-real-scan-report.json'
+INVENTORY = ROOT / 'v2/reports/ibo-candidate-inventory.jsonl'
 UA = 'MADSC55-TV-V2-RealScanner/1.0'
 MAX_SOURCE = 25_000_000
 TURKISH_BACKUP_PRIORITY = ("BBC FİRST TURKİYE", "CARTOON NETWORK (TURKİYE)", "KANAL 7", "KANAL 7 AVRUPA", "KANAL 7 AVRUPA HD TR", "KANAL AVRUPA TR", "SHOW TV", "TRT 3 (720P)", "TRT COCUK (1440P)", "TRT EBA ILKOKUL (720P)", "TRT EBA LİSE (720P)", "TRT SPOR YİLDİZ (1440P) [GEO-BLOCKED]", "TRT TURK TR")
@@ -94,6 +95,8 @@ def main():
     ap.add_argument('--sources', type=pathlib.Path, default=SOURCES)
     ap.add_argument('--output', type=pathlib.Path, default=OUT)
     ap.add_argument('--report', type=pathlib.Path, default=REPORT)
+    ap.add_argument('--inventory', type=pathlib.Path, default=INVENTORY,
+                    help='Durable full candidate inventory, including HTTP/HLS failures')
     ap.add_argument('--workers', type=int, default=12)
     ap.add_argument('--timeout', type=float, default=12)
     ap.add_argument('--limit', type=int, default=2000)
@@ -135,11 +138,26 @@ def main():
             checked += 1
             if result is not None:
                 good.append(result)
+    # Retain every discovered new URL, including candidates that failed HTTP/HLS.
+    # Network checks are not device playback proof; never silently lose a candidate.
+    good_urls = {item['url'] for item in good}
+    args.inventory.parent.mkdir(parents=True, exist_ok=True)
+    inventory_tmp = args.inventory.with_suffix(args.inventory.suffix + '.tmp')
+    with inventory_tmp.open('w', encoding='utf-8') as inventory_file:
+        for candidate in candidates.values():
+            record = {**candidate,
+                      'http_hls_status': 'HTTP_HLS_OK' if candidate['url'] in good_urls else 'UNVERIFIED_OR_FAILED',
+                      'ibo_device_tested': False}
+            inventory_file.write(json.dumps(record, ensure_ascii=False) + '\n')
+    inventory_tmp.replace(args.inventory)
     # Source outages are reported; a working subset can still be tested.
     # Never modify the protected main playlist.
     report = {'source_count': len(sources), 'fetched_sources': len(source_counts),
               'failed_sources': failed, 'existing_main_urls': len(existing), 'unique_new_candidates': len(candidates),
-              'http_checked': checked, 'http_hls_ok': len(good), 'exported_part1': min(len(good), args.limit),
+              'http_checked': checked, 'http_hls_ok': len(good),
+              'candidate_inventory': str(args.inventory),
+              'unverified_or_failed_candidates': len(candidates) - len(good),
+              'exported_part1': min(len(good), args.limit),
               'part_count': (len(good) + args.limit - 1) // args.limit,
               'playback_verified_on_device': False, 'mock_data_used': False,
               'status': 'READY_FOR_DEVICE_TEST' if good else 'NO_VERIFIED_CANDIDATES'}
