@@ -103,6 +103,8 @@ def main():
     ap.add_argument('--live', type=pathlib.Path, default=LIVE)
     ap.add_argument('--append-live', action='store_true', help='Append verified new channels to YEDEKLER only')
     args = ap.parse_args()
+    if args.append_live:
+        ap.error('Protected main playlist is immutable; export candidates for separate device testing')
     if not 1 <= args.workers <= 32 or not 1 <= args.limit <= 10000:
         ap.error('workers must be 1..32 and limit 1..10000')
     if not args.live.is_file():
