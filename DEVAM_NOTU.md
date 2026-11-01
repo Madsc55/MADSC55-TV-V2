@@ -652,3 +652,9 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - `v2/discover.py` commit `fc39048`: dünya listelerindeki Türkçe/Azerice metaveri ipuçları daha geniş yakalanıyor; dil doğrulaması yapılmış sayılmıyor.
 - `v2/config/sources.json` commit `8df9eb3`: IPTV-org Amerika, Afrika ve Okyanusya bölgesel listeleri dünya/diaspora keşfine eklendi; kaynak sayısı 32'den 35'e çıktı. Erişilebilirlik ve gerçek tarama çıktıları henüz doğrulanmadı.
 - Korunan playlist, YEDEKLER, YENİLER, FAVORİLER ve cihaz favorileri değiştirilmedi. CI sonuçları doğrulanmadan aşama tamamlandı denmeyecek.
+
+
+## 2026-11-01 — Keşif modülü düzeltmesi ve regresyon testi
+- `v2/discover.py` commit `b51662f`: dünya listesindeki TR/AZ metaveri düzenli ifadesinin çift kaçış hatası düzeltildi.
+- `v2/test_discovery_metadata.py` commit `77c5627`: dünya kaynaklarında Türkçe/Azerice metaveri eşleşmeleri, ilgisiz aday reddi ve birden çok kaynağın korunması için çevrimdışı regresyon testleri eklendi.
+- GitHub Actions çalıştırma sonucu bu kayıtta henüz doğrulanmadı. Ana playlist, YEDEKLER ve favoriler değiştirilmedi.
