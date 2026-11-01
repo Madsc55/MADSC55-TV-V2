@@ -646,3 +646,9 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 ## 2026-11-01 — Kaynak geçmişini kaybetmeden tekilleştirme
 - `v2/real_ibo_scan.py` commit `621e9ec`: aynı yayın URL'si birden çok kaynakta görülürse tek aday olarak tutuluyor, ancak tüm `source_ids` korunuyor. `ibo-candidate-inventory.jsonl` kayıtları kaynak listesini taşıyor; rapora `multi_source_candidates` sayısı eklendi.
 - Bu kod değişikliği gelecek gerçek taramalarda etkili olur; yeni tarama ve Actions sonucu henüz doğrulanmadı. Ana playlist ve YEDEKLER değiştirilmedi.
+
+
+## 2026-11-01 — Aşama 1: dünya Türkçe/Azerice IPTV keşfi genişletmesi
+- `v2/discover.py` commit `fc39048`: dünya listelerindeki Türkçe/Azerice metaveri ipuçları daha geniş yakalanıyor; dil doğrulaması yapılmış sayılmıyor.
+- `v2/config/sources.json` commit `8df9eb3`: IPTV-org Amerika, Afrika ve Okyanusya bölgesel listeleri dünya/diaspora keşfine eklendi; kaynak sayısı 32'den 35'e çıktı. Erişilebilirlik ve gerçek tarama çıktıları henüz doğrulanmadı.
+- Korunan playlist, YEDEKLER, YENİLER, FAVORİLER ve cihaz favorileri değiştirilmedi. CI sonuçları doğrulanmadan aşama tamamlandı denmeyecek.
