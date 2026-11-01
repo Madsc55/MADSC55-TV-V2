@@ -1,0 +1,173 @@
+{
+  "source": "MADSC55_TV_IBO_CALISANLAR_TEST.m3u8",
+  "backup_count": 4002,
+  "missing_count": 33,
+  "policy": "Only verified original logos; never replace with guessed artwork",
+  "missing": [
+    {
+      "name": "30A TV CLASSİC MOVİES (720P)",
+      "tvg_id": "",
+      "status": "MISSING_ORIGINAL_LOGO"
+    },
+    {
+      "name": "6 WİSE TV (720P)",
+      "tvg_id": "",
+      "status": "MISSING_ORIGINAL_LOGO"
+    },
+    {
+      "name": "AFRA FİLM",
+      "tvg_id": "",
+      "status": "MISSING_ORIGINAL_LOGO"
+    },
+    {
+      "name": "AMERİCA PARAGUAY (720P)",
+      "tvg_id": "",
+      "status": "MISSING_ORIGINAL_LOGO"
+    },
+    {
+      "name": "ARAX TV",
+      "tvg_id": "",
+      "status": "MISSING_ORIGINAL_LOGO"
+    },
+    {
+      "name": "ARKO TV",
+      "tvg_id": "",
+      "status": "MISSING_ORIGINAL_LOGO"
+    },
+    {
+      "name": "ARMENİA PREMİUM (720P)",
+      "tvg_id": "",
+      "status": "MISSING_ORIGINAL_LOGO"
+    },
+    {
+      "name": "ARVAN TV",
+      "tvg_id": "",
+      "status": "MISSING_ORIGINAL_LOGO"
+    },
+    {
+      "name": "CAFE FİLM",
+      "tvg_id": "",
+      "status": "MISSING_ORIGINAL_LOGO"
+    },
+    {
+      "name": "CANADA ONE (720P)",
+      "tvg_id": "",
+      "status": "MISSING_ORIGINAL_LOGO"
+    },
+    {
+      "name": "CC-TV (720P)",
+      "tvg_id": "",
+      "status": "MISSING_ORIGINAL_LOGO"
+    },
+    {
+      "name": "CHOSEN TV ENGLİSH (480P)",
+      "tvg_id": "",
+      "status": "MISSING_ORIGINAL_LOGO"
+    },
+    {
+      "name": "DANCETV ALGORHYTHM (1080P)",
+      "tvg_id": "",
+      "status": "MISSING_ORIGINAL_LOGO"
+    },
+    {
+      "name": "DEJ TV",
+      "tvg_id": "",
+      "status": "MISSING_ORIGINAL_LOGO"
+    },
+    {
+      "name": "DOVE CHANNEL (1080P)",
+      "tvg_id": "",
+      "status": "MISSING_ORIGINAL_LOGO"
+    },
+    {
+      "name": "DR G MEDİCAL EXAMİNER (720P)",
+      "tvg_id": "",
+      "status": "MISSING_ORIGINAL_LOGO"
+    },
+    {
+      "name": "DREAMWORKS CHANNEL LATİN AMERİCA (1080P)",
+      "tvg_id": "",
+      "status": "MISSING_ORIGINAL_LOGO"
+    },
+    {
+      "name": "FX 2",
+      "tvg_id": "",
+      "status": "MISSING_ORIGINAL_LOGO"
+    },
+    {
+      "name": "GOLD STAR",
+      "tvg_id": "",
+      "status": "MISSING_ORIGINAL_LOGO"
+    },
+    {
+      "name": "GOLDMINES 2 (576P)",
+      "tvg_id": "",
+      "status": "MISSING_ORIGINAL_LOGO"
+    },
+    {
+      "name": "GRAND CİNEMA",
+      "tvg_id": "",
+      "status": "MISSING_ORIGINAL_LOGO"
+    },
+    {
+      "name": "HAHA TV",
+      "tvg_id": "",
+      "status": "MISSING_ORIGINAL_LOGO"
+    },
+    {
+      "name": "HARVEST USA (720P)",
+      "tvg_id": "",
+      "status": "MISSING_ORIGINAL_LOGO"
+    },
+    {
+      "name": "ICNET 3",
+      "tvg_id": "",
+      "status": "MISSING_ORIGINAL_LOGO"
+    },
+    {
+      "name": "IRAN NATIONAL REVOLUTION TV",
+      "tvg_id": "",
+      "status": "MISSING_ORIGINAL_LOGO"
+    },
+    {
+      "name": "JEWELRY TV 2 (1080P)",
+      "tvg_id": "",
+      "status": "MISSING_ORIGINAL_LOGO"
+    },
+    {
+      "name": "LANTHUNG TV (576P)",
+      "tvg_id": "",
+      "status": "MISSING_ORIGINAL_LOGO"
+    },
+    {
+      "name": "LIFEVISIONTV (720P)",
+      "tvg_id": "",
+      "status": "MISSING_ORIGINAL_LOGO"
+    },
+    {
+      "name": "LOVEWORLD USA (1080P)",
+      "tvg_id": "",
+      "status": "MISSING_ORIGINAL_LOGO"
+    },
+    {
+      "name": "MH 1 PRIME (720P)",
+      "tvg_id": "",
+      "status": "MISSING_ORIGINAL_LOGO"
+    },
+    {
+      "name": "MH ONE MOVIES (576P)",
+      "tvg_id": "",
+      "status": "MISSING_ORIGINAL_LOGO"
+    },
+    {
+      "name": "MUSLIM NETWORK TV",
+      "tvg_id": "",
+      "status": "MISSING_ORIGINAL_LOGO"
+    },
+    {
+      "name": "NEWS1 (720P)",
+      "tvg_id": "",
+      "status": "MISSING_ORIGINAL_LOGO"
+    }
+  ]
+}
