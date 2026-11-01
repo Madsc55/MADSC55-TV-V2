@@ -716,3 +716,8 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - Commit `755a29c`: M3U satır sonu kaçışları düzeltildi.
 - Commit `8de4c46`: kaynak erişim hatası varsa tarama raporu yazılır ancak eksik kaynaklı sonuçtan IBO paketleri dışa aktarılmaz.
 - Gerçek tarama sonucu, video/ses raporu, #60 kurtarma ve 1000/2000'lik gerçek çıktı henüz doğrulanmadı. Ana playlist, YEDEKLER ve favoriler değiştirilmedi.
+
+
+## 2026-11-01 17:43 — Şifreli envanterden aday geri kazanımı
+- `v2/real_ibo_scan.py` commit `2734c37`: önceki şifreli envanterde bulunan, ana listede olmayan ve yeni taramada kaybolmuş URL'ler yeniden aday havuzuna alınır ve ağ/video/ses testinden geçirilir. `recovered_from_previous_encrypted_inventory` raporlanır.
+- Bu işlev #60'daki yalnız kimliği bilinen 4.955 URL'yi adres olmadan geri getiremez. Gerçek internet taraması bu ortamda DNS erişimi nedeniyle çalıştırılamadı; başarılı canlı AV sayısı veya M3U paket sayısı ileri sürülmüyor.
