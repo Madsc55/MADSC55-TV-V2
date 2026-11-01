@@ -30,5 +30,21 @@ jobs:
           git add v2/logos
           if ! git diff --cached --quiet; then
             git commit -m "backup: mirror V2 channel logo images"
-            git push
+            # main may advance while the logo mirror is downloading images.
+            # Replay only this generated commit; never force-push or drop remote commits.
+            for attempt in 1 2 3 4 5; do
+              git fetch origin main
+              if ! git rebase origin/main; then
+                git rebase --abort
+                echo "::error::Logo backup rebase conflict; refusing to overwrite main."
+                exit 1
+              fi
+              if git push origin HEAD:main; then
+                exit 0
+              fi
+              echo "main advanced during push; retrying ($attempt/5)"
+              sleep 3
+            done
+            echo "::error::Logo backup push rejected after five safe retries."
+            exit 1
           fi
