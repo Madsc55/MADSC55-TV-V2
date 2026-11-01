@@ -197,7 +197,16 @@ def main():
             pairs = [(rows[i], rows[i + 1]) for i in range(1, len(rows) - 1, 2)]
             other = [p for p in pairs if 'group-title="🗂️ YEDEKLER (' not in p[0]]
             backups = [p for p in pairs if 'group-title="🗂️ YEDEKLER (' in p[0]]
+            pinned_names = ("TRT 1 1440P QHD", "DHA CANLI 720P HD")
+            pinned = []
+            for name in pinned_names:
+                matches = [p for p in backups if p[0].rsplit(",", 1)[-1] == name]
+                if len(matches) != 1:
+                    raise ValueError(f"Permanent YEDEKLER channel missing or duplicated: {name}")
+                pinned.append(matches[0])
+            backups = [p for p in backups if p not in pinned]
             backups.sort(key=lambda p: p[0].rsplit(',', 1)[-1].casefold())
+            backups = pinned + backups
             combined = ('#EXTM3U\n' + ''.join(h + '\n' + u + '\n' for h, u in other + backups)).encode('utf-8')
             tmp.write_bytes(combined)
             tmp.replace(args.live)
