@@ -29,6 +29,15 @@ class DiscoveryOfflineRegression(unittest.TestCase):
         self.assertIn("source_loss_audit", body)
         self.assertIn("compare(previous, result)", body)
 
+    def test_snapshot_gate_checks_source_loss_before_writing(self):
+        import inspect
+        import discover as module
+        body = inspect.getsource(module.main)
+        gate = body.index('if args.snapshot_output and args.previous_report:')
+        write = body.index('private.write_text(')
+        self.assertLess(gate, write)
+        self.assertIn('Snapshot blocked: source-loss regression requires review', body)
+
     def test_world_turkey_metadata(self):
         self.assertTrue(turkish_candidate({"name":"Turkey Live TV", "group":"World", "tvg_id":""}, "world"))
         self.assertTrue(turkish_candidate({"name":"TRT Haber", "group":"News", "tvg_id":""}, "world"))
