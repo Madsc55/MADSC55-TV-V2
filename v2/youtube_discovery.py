@@ -3,6 +3,7 @@
 
 Discovery is advisory: YouTube page URLs are not direct IBO-compatible stream URLs.
 """
+import concurrent.futures
 import datetime
 import json
 import pathlib
@@ -80,12 +81,17 @@ def main():
             seen.add(item["video_id"])
             results.append(item)
     # Keep network work bounded. Never promote YouTube URLs as direct IBO streams.
-    for item in results[:40]:
-        item["status"] = verify(item)
+    # Verify the full deduplicated discovery set, not an arbitrary first-40 slice.
+    # Bounded concurrency avoids serial per-video waits on slow upstream responses.
+    with concurrent.futures.ThreadPoolExecutor(max_workers=8) as pool:
+        statuses = list(pool.map(verify, results))
+    for item, status in zip(results, statuses):
+        item["status"] = status
     report = {"created_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
               "policy": "ADVISORY_ONLY_NO_PLAYLIST_WRITES_NO_AUTOMATIC_IBO_IMPORT",
               "queries": QUERIES, "errors": errors, "results": results,
               "live_verified": sum(x["status"] == "LIVE_METADATA_VERIFIED" for x in results),
+              "videos_checked": len(results),
               "verified_live_pages": [x for x in results if x["status"] == "LIVE_METADATA_VERIFIED"]}
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
