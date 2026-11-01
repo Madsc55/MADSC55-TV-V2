@@ -575,3 +575,21 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - `v2/test_discovery_offline_regressions.py` (`f0bf096`): üç geçersiz CLI kombinasyonu için çevrimdışı fail-closed testleri. Zaten ordered-preflight discovery-tests aşamasına bağlı.
 - Bu ortamda GitHub Actions run sonuçlarını doğrulayacak listeleme/dispatch aracı bulunamadı; container üzerinden GitHub erişimi de DNS nedeniyle başarısız. Testlerin gerçekten geçtiği iddia edilmiyor.
 - Eksik adaptörler, şifreli kalıcı URL arşivi, gerçek restore testi ve kapsamlı tarama hâlâ tamamlanmadı. Ana playlist, YEDEKLER ve eski depo değiştirilmedi.
+
+
+## 1 Kasım 2026 — doğrulanmış durum ve sıralı teslim planı
+- Bu bölüm önceki 27 Ekim kayıtlarının **yerine geçen güncel durumdur**; önceki 1047 kanal / 2 YEDEKLER sayımı artık güncel değildir.
+- V2 playlisti doğrudan okundu: **2840 kayıt**, **2002 YEDEKLER**, **838 diğer kategori kaydı**. Playlist içindeki 424 URL tekrarı farklı kategorilerdeki kasıtlı yayın tekrarlarını da kapsar; bütün listeyi benzersiz URL şartına bağlamak yanlıştır.
+- YEDEKLER dışında hiçbir kategorinin sırası değiştirilmeyecek; yalnız YEDEKLER alfabetik olacak. İBO cihaz testi kullanıcıya aittir.
+- Playlist güvenlik testindeki yanlış URL-tekillik koşulu ve ardından oluşan literal \\n sözdizimi hatası düzeltildi (93bea96, 8ef6483). Tarayıcıya YEDEKLER'e yeni kayıt eklenince yalnız bu kategoriyi yeniden sıralama eklendi (c222fe1). **Bu değişiklikler için yeni Actions başarısı henüz teyit edilmedi.**
+- Geçmişteki Actions run 41189283457 içinde compile, protect, discovery-tests, safety işleri başarılıydı; **eski başarılı çalışma yeni commit'leri doğrulamaz**.
+- YEDEKLER logoları tamamlanmadı; adayların gerçek IBO oynatımı henüz kullanıcı tarafından doğrulanmadı. Kaynak kapsamı ve eski kanalların kurtarılması tamamlandı denemez.
+
+### Sıralı işler ve bitiş ölçütleri
+1. **CI ve güvenlik:** Güncel main üzerinde derleme, playlist invariants, keşif ve güvenlik testlerini yeşil doğrula; orijinal 838 kaydı, iki ilk YEDEKLER kaydını ve tüm URL'leri koruyan değişmezleri güçlendir. Kırmızı job loglarını incelemeden tamamlandı deme.
+2. **Kaynak envanteri:** v2/config/sources.json ile tüm keşif adaptörlerini denetle; Türkçe M3U/M3U8, IPTV-org, Free-TV, GitHub/Gist, GitLab, Codeberg, canlı TV siteleri, resmî yayınlar, YouTube, Azerbaycan ve diaspora kapsamını kaynak bazında raporla. Güneş TV, Rec TV, Gopik TV ve TURKTV/Dearbulut/Onur Eroz'u ayrıca doğrula.
+3. **Kurtarma ve kayıp kontrolü:** #60 ve sonraki taramaları kaynak/URL bazında karşılaştır; kaybolan yayınları yeniden keşfet, her kaynağın ani düşüşünü raporla. Eksik URL'leri uydurma.
+4. **Kalıcı arşiv ve gerçek tarama:** aday URL, kaynak, tarih, sınıflandırma ve test kanıtını kayıpsız sakla; geri yükleme ve canlı manifest/video testlerini doğrula. HTTP erişimi IBO cihaz testi değildir.
+5. **Logolar ve sınıflandırma:** yalnız kanıtlı logo eşleştirmeleri; Türkçe/Azerice, ülke, yeni/mevcut, çalışan/belirsiz/çalışmayan etiketleri; farklı çalışan alternatif URL'leri koru.
+6. **Toplu rapor ve kullanıcı testi:** kaynak bazında aday, doğrulanan, kaybolan ve yeni sayıları; kullanıcıya 2000'lik YEDEKLER partileri. Kullanıcı onayı olmadan ana İBO playlistini değiştirme.
+- **Tamamlanma durumu:** Bu planın hiçbir aşaması güncel main üzerinde uçtan uca doğrulanmış olarak işaretlenmedi. Kod değişikliği ile başarılı çalışma kanıtı ayrı tutulacak.
