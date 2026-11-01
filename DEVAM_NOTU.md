@@ -676,3 +676,5 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - `v2/discover.py` commit `6185125`: keşif adaylarına `language_hint` (`tr_candidate`, `az_candidate`, `unknown`) ve `language_verified: false` eklendi. Coğrafi/metaveri işareti ses dili doğrulaması olarak gösterilmez.
 - `v2/test_discovery_metadata.py` commit `844227c`: bu sözleşme için regresyon testi eklendi; mevcut zorunlu preflight zincirinde çalışır.
 - Bu değişiklikler yalnızca keşif raporunu etkiler; ana İBO playlisti, YEDEKLER ve favoriler değiştirilmedi. CI başarısı henüz doğrulanmadı.
+
+<!-- 2026-11-01 source inventory validation: 14fc9a1, tests: 3df167a -->
