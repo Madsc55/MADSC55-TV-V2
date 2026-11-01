@@ -182,6 +182,8 @@ def main():
     args.report.parent.mkdir(parents=True, exist_ok=True)
     args.report.write_text(json.dumps(report, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
     if not playable:
+        if args.output.exists():
+            args.output.unlink()  # Do not leave an outdated test package masquerading as current.
         # A completed scan with zero eligible streams is a valid no-change result.
         # Keep the report and original playlist intact; do not invent channels.
         print(json.dumps(report, ensure_ascii=False, indent=2))
@@ -197,6 +199,28 @@ def main():
     args.output.parent.mkdir(parents=True, exist_ok=True)
     temp.write_text('\n'.join(lines) + '\n', encoding='utf-8')
     temp.replace(args.output)
+    # Produce both requested package sizes, with only confirmed media streams.
+    for package_size in (1000, 2000):
+        destination = args.output.parent / ("IBO_MEDIA_CONFIRMED_" + str(package_size) + ".m3u")
+        package_lines = ["#EXTM3U"]
+        for item in playable[:package_size]:
+            name = re.sub(r'[\\r\\n,]', ' ', item['name']).strip() or 'UNKNOWN'
+            group = re.sub(r'["\\r\\n]', '', item.get('group', ''))
+            logo = item.get('logo', '')
+            logo_attr = f' tvg-logo="{logo}"' if logo.startswith(('https://', 'http://')) and '"' not in logo else ''
+            package_lines.extend([f'#EXTINF:-1{logo_attr} group-title="{group}",{name}', item['url']])
+        package_tmp = destination.with_suffix(".tmp")
+        package_tmp.write_text('\\n'.join(package_lines) + '\\n', encoding='utf-8')
+        package_tmp.replace(destination)
+    final_report = dict(report)
+    final_report['packages'] = {
+        '1000': {'path': str(args.output.parent / "IBO_MEDIA_CONFIRMED_1000.m3u"), 'count': min(len(playable), 1000)},
+        '2000': {'path': str(args.output.parent / "IBO_MEDIA_CONFIRMED_2000.m3u"), 'count': min(len(playable), 2000)}
+    }
+    final_report['verified_by'] = 'ffprobe audio/video stream identification'
+    final_report['device_playback_verified'] = False
+    (args.report.parent / 'final_scan_report.json').write_text(
+        json.dumps(final_report, ensure_ascii=False, indent=2) + '\\n', encoding='utf-8')
     if args.append_live:
         # Preserve every existing byte: append only new verified stream records.
         original = args.live.read_bytes()
