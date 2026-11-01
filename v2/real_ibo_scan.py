@@ -106,12 +106,9 @@ def main():
     ap.add_argument('--timeout', type=float, default=12)
     ap.add_argument('--limit', type=int, default=2000)
     ap.add_argument('--live', type=pathlib.Path, default=LIVE)
-    ap.add_argument('--append-live', action='store_true', help='Append verified new channels to YEDEKLER only')
     args = ap.parse_args()
     if not os.environ.get('V2_ARCHIVE_PASSPHRASE'):
         ap.error('V2_ARCHIVE_PASSPHRASE secret required to protect stream inventory')
-    if args.append_live:
-        ap.error('Protected main playlist is immutable; export candidates for separate device testing')
     if not 1 <= args.workers <= 32 or not 1 <= args.limit <= 10000:
         ap.error('workers must be 1..32 and limit 1..10000')
     if not args.live.is_file():
@@ -246,61 +243,6 @@ def main():
     report['part_count'] = len(written_parts)
     report['exported_part1'] = min(len(good), args.limit)
     args.report.write_text(json.dumps(report, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
-    if args.append_live:
-        # Preserve every existing byte: append only new verified stream records.
-        original = args.live.read_bytes()
-        current_urls = {line.strip() for line in
-                        original.decode('utf-8-sig', 'replace').splitlines()
-                        if line.strip().startswith(('https://', 'http://'))}
-        additions = []
-        for item in good[:args.limit]:
-            if item['url'] in current_urls:
-                continue
-            current_urls.add(item['url'])
-            safe_name = (re.sub(r'[\r\n,]', ' ', item['name']).strip() or 'YENİ KANAL').upper()
-            logo = item.get('logo', '')
-            logo_attr = f' tvg-logo="{logo}"' if logo.startswith(('https://', 'http://')) and '"' not in logo else ''
-            additions.extend([
-                f'#EXTINF:-1{logo_attr} group-title="🗂️ YEDEKLER (2)",{safe_name}',
-                item['url'],
-            ])
-        if additions:
-            separator = b'' if original.endswith(b'\n') else b'\n'
-            # Atomic write; preexisting content and categories remain byte-identical.
-            tmp = args.live.with_suffix(args.live.suffix + '.tmp')
-            # Normalize every YEDEKLER header to the new exact category total.
-            old_group = re.search(rb'group-title="\xf0\x9f\x97\x82\xef\xb8\x8f YEDEKLER \(\d+\)"', original)
-            if not old_group:
-                raise ValueError('YEDEKLER category not found')
-            new_count = len(re.findall(rb'group-title="\xf0\x9f\x97\x82\xef\xb8\x8f YEDEKLER \(\d+\)"', original)) + len(additions) // 2
-            group_new = f'group-title="🗂️ YEDEKLER ({new_count})"'.encode('utf-8')
-            combined = original + separator + ('\n'.join(additions) + '\n').encode('utf-8')
-            combined = re.sub(rb'group-title="\xf0\x9f\x97\x82\xef\xb8\x8f YEDEKLER \(\d+\)"', lambda _: group_new, combined)
-            # Only YEDEKLER is alphabetized; all other groups retain their order.
-            decoded = combined.decode('utf-8')
-            rows = decoded.splitlines()
-            if not rows or rows[0] != '#EXTM3U':
-                raise ValueError('Invalid playlist header')
-            pairs = [(rows[i], rows[i + 1]) for i in range(1, len(rows) - 1, 2)]
-            other = [p for p in pairs if 'group-title="🗂️ YEDEKLER (' not in p[0]]
-            backups = [p for p in pairs if 'group-title="🗂️ YEDEKLER (' in p[0]]
-            pinned_names = ("TRT 1 1440P QHD", "DHA CANLI 720P HD")
-            pinned = []
-            for name in pinned_names:
-                matches = [p for p in backups if p[0].rsplit(",", 1)[-1] == name]
-                if len(matches) != 1:
-                    raise ValueError(f"Permanent YEDEKLER channel missing or duplicated: {name}")
-                pinned.append(matches[0])
-            backups = [p for p in backups if p not in pinned]
-            backups.sort(key=lambda p: (0 if p[0].rsplit(',', 1)[-1] in TURKISH_BACKUP_PRIORITY else 1, p[0].rsplit(',', 1)[-1].casefold()))
-            backups = pinned + backups
-            combined = ('#EXTM3U\n' + ''.join(h + '\n' + u + '\n' for h, u in other + backups)).encode('utf-8')
-            tmp.write_bytes(combined)
-            tmp.replace(args.live)
-        report['added_to_yedekler'] = len(additions) // 2
-        report['status'] = 'APPENDED_TO_YEDEKLER' if additions else 'NO_NEW_URLS'
-        args.report.write_text(json.dumps(report, indent=2, ensure_ascii=False) + '\n',
-                               encoding='utf-8')
     print(json.dumps(report, ensure_ascii=False, indent=2))
 
 
