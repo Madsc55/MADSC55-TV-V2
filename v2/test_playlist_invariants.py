@@ -41,20 +41,17 @@ def main():
     ], "TRT 1 and DHA must permanently occupy YEDEKLER positions 1 and 2"
     assert sum(x["name"] == "TRT 1 1440P QHD" for x in backups) == 1, "Duplicate or missing TRT 1"
     assert sum(x["name"] == "DHA CANLI 720P HD" for x in backups) == 1, "Duplicate or missing DHA"
-    # User-approved 24 YEDEKLER selections must remain directly after TRT 1 and DHA.
-    approved_names = (
-        "BBC FİRST TURKİYE", "CARTOON NETWORK (TURKİYE)", "KANAL 7",
-        "KANAL 7", "KANAL 7 AVRUPA", "KANAL 7 AVRUPA HD TR",
-        "TRT 3 (720P)", "TRT EBA LİSE (720P)",
-        "TRT SPOR YİLDİZ (1440P) [GEO-BLOCKED]", "360 TV HD TR",
-        "ATV (1080P)", "ATV (1080P)", "BRTV (720P)",
-        "KANAL D DRAMA (1080P)", "KARDELEN TV TR", "LALEGUL TV TR",
-        "LİNE TV BURSA TR", "SHOW MAX TR", "TV 2000 TR",
+    # Latest user-approved move: 12 selected entries were moved to the end.
+    # Do not enforce the obsolete 3-26 positions; keep their exact tail order.
+    approved_tail = (
+        "BBC FİRST TURKİYE", "TRT 3 (720P)", "ATV (1080P)",
+        "ATV (1080P)", "BRTV (720P)", "TV 2000 TR",
         "ANGER MANAGEMENT CHANNEL (1080P)", "ANHUİ TV (1080P)",
-        "ANİ (576P)", "ANİMAL PLANET", "EBS PLUS 2 (360P)",
+        "ANİMAL PLANET", "AS TV BURSA TR", "ATV", "FM TV TR",
     )
-    assert tuple(x["name"] for x in backups[2:26]) == approved_names, \
-        "User-approved YEDEKLER positions 3-26 changed"
+    assert backup_count == 4002, "User-approved 4002 YEDEKLER entries changed"
+    assert tuple(x["name"] for x in backups[-12:]) == approved_tail, \\
+        "User-approved 12 moved YEDEKLER channels are not at the end"
 
 
     assert not any(x["name"].startswith(("TRT Arabi", "TRT World")) for x in channels), "Unwanted foreign-language trials remain"
