@@ -198,7 +198,7 @@ def main():
             other = [p for p in pairs if 'group-title="🗂️ YEDEKLER (' not in p[0]]
             backups = [p for p in pairs if 'group-title="🗂️ YEDEKLER (' in p[0]]
             backups.sort(key=lambda p: p[0].rsplit(',', 1)[-1].casefold())
-            combined = ('#EXTM3U\\n' + ''.join(h + '\\n' + u + '\\n' for h, u in other + backups)).encode('utf-8')
+            combined = ('#EXTM3U\n' + ''.join(h + '\n' + u + '\n' for h, u in other + backups)).encode('utf-8')
             tmp.write_bytes(combined)
             tmp.replace(args.live)
         report['added_to_yedekler'] = len(additions) // 2
