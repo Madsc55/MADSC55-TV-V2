@@ -151,6 +151,19 @@ def main():
                             found['source_ids'].append(sid)
         except (OSError, ValueError, UnicodeError, socket.timeout) as exc:
             failed.append({'id': sid, 'error': type(exc).__name__})
+    # Compare source yields with the last complete scan before replacing its baseline.
+    source_drops = []
+    if args.report.exists():
+        try:
+            prior_report = json.loads(args.report.read_text(encoding='utf-8'))
+            if not prior_report.get('failed_sources') and not prior_report.get('source_drops'):
+                for sid, prior in prior_report.get('source_counts', {}).items():
+                    current = source_counts.get(sid)
+                    if isinstance(prior, int) and prior >= 20 and current is not None and current < prior * 0.5:
+                        source_drops.append({'id': sid, 'previous': prior, 'current': current})
+        except (OSError, ValueError, TypeError):
+            pass
+    incomplete = bool(failed or source_drops)
     # Carry forward historical candidates from the last encrypted inventory.
     # Missing streams are retained for rechecking, never silently dropped.
     previous_encrypted = args.inventory.with_suffix(args.inventory.suffix + '.enc')
@@ -194,7 +207,7 @@ def main():
             inventory_file.write(json.dumps(record, ensure_ascii=False) + '\n')
     # A failed source fetch must not overwrite the last complete encrypted baseline.
     encrypted_inventory = args.inventory.with_suffix(
-        args.inventory.suffix + ('.pending.enc' if failed else '.enc'))
+        args.inventory.suffix + ('.pending.enc' if incomplete else '.enc'))
     try:
         archive_result = encrypt_inventory(inventory_tmp, encrypted_inventory,
                                            os.environ['V2_ARCHIVE_PASSPHRASE'])
@@ -204,7 +217,7 @@ def main():
     # Source outages are reported; a working subset can still be tested.
     # Never modify the protected main playlist.
     report = {'source_count': len(sources), 'fetched_sources': len(source_counts),
-              'failed_sources': failed, 'existing_main_urls': len(existing), 'unique_new_candidates': len(candidates), 'recovered_from_previous_encrypted_inventory': recovered_from_archive,
+              'failed_sources': failed, 'source_counts': source_counts, 'source_drops': source_drops, 'existing_main_urls': len(existing), 'unique_new_candidates': len(candidates), 'recovered_from_previous_encrypted_inventory': recovered_from_archive,
               'http_checked': checked, 'http_hls_ok': len(good), 'av_verified': len(good),
               'candidate_inventory': str(encrypted_inventory), 'archive_restore_test_passed': archive_result['restore_test_passed'],
               'unverified_or_failed_candidates': len(candidates) - len(good),
@@ -220,12 +233,12 @@ def main():
     for previous in args.output.parent.glob(args.output.stem + '_PART*' + args.output.suffix):
         previous.unlink(missing_ok=True)
     args.output.unlink(missing_ok=True)
-    if failed:
-        report['status'] = 'INCOMPLETE_SOURCE_FETCH'
+    if incomplete:
+        report['status'] = 'INCOMPLETE_SOURCE_FETCH_OR_DROP'
         report['written_parts'] = []
         report['part_count'] = 0
         args.report.write_text(json.dumps(report, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
-        raise SystemExit('Incomplete source fetch: refusing to export misleading IBO packages')
+        raise SystemExit('Incomplete source fetch or source count collapse: refusing misleading IBO packages')
     if not good:
         # A completed scan with zero eligible streams is a valid no-change result.
         # Keep the report and original playlist intact; do not invent channels.
