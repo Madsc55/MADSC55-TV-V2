@@ -32,6 +32,9 @@ def export(archive, passphrase, destination, sizes=(1000, 2000), existing=()):
         records.append(record)
     destination = Path(destination)
     destination.mkdir(parents=True, exist_ok=True)
+    # Never leave older, larger exports that could be mistaken for this run.
+    for stale in destination.glob('IBO_AV_VERIFIED_*_PART*.m3u8'):
+        stale.unlink()
     result = {'av_verified_unique': len(records), 'packages': []}
     for size in sizes:
         for part, offset in enumerate(range(0, len(records), size), 1):
