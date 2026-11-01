@@ -14,6 +14,7 @@ import socket
 import urllib.error
 import urllib.parse
 import urllib.request
+from stream_probe import probe
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 SOURCES = ROOT / 'v2/config/sources.json'
@@ -83,7 +84,9 @@ def check_hls(entry, timeout):
         hls = (b'#EXTM3U' in sample and (b'#EXT-X-' in sample or
                'mpegurl' in content_type))
         if status in (200, 206) and hls:
-            return entry
+            outcome = probe(url, timeout=timeout)
+            if outcome['status'] == 'AV_VERIFIED':
+                return entry
     except (OSError, TimeoutError, urllib.error.URLError, ValueError,
             http.client.IncompleteRead, http.client.HTTPException):
         pass
@@ -152,7 +155,7 @@ def main():
     with inventory_tmp.open('w', encoding='utf-8') as inventory_file:
         for candidate in candidates.values():
             record = {**candidate,
-                      'http_hls_status': 'HTTP_HLS_OK' if candidate['url'] in good_urls else 'UNVERIFIED_OR_FAILED',
+                      'http_hls_status': 'AV_VERIFIED' if candidate['url'] in good_urls else 'UNVERIFIED_OR_FAILED',
                       'ibo_device_tested': False}
             inventory_file.write(json.dumps(record, ensure_ascii=False) + '\n')
     inventory_tmp.replace(args.inventory)
@@ -160,7 +163,7 @@ def main():
     # Never modify the protected main playlist.
     report = {'source_count': len(sources), 'fetched_sources': len(source_counts),
               'failed_sources': failed, 'existing_main_urls': len(existing), 'unique_new_candidates': len(candidates),
-              'http_checked': checked, 'http_hls_ok': len(good),
+              'http_checked': checked, 'http_hls_ok': len(good), 'av_verified': len(good),
               'candidate_inventory': str(args.inventory),
               'unverified_or_failed_candidates': len(candidates) - len(good),
               'multi_source_candidates': sum(len(item['source_ids']) > 1 for item in candidates.values()),
