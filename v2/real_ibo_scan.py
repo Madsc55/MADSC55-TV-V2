@@ -156,7 +156,9 @@ def main():
     good_urls = {item['url'] for item in good}
     args.inventory.parent.mkdir(parents=True, exist_ok=True)
     inventory_tmp = args.inventory.with_suffix(args.inventory.suffix + '.tmp')
-    with inventory_tmp.open('w', encoding='utf-8') as inventory_file:
+    # Restrict the temporary plaintext inventory before writing any URL tokens.
+    fd = os.open(inventory_tmp, os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o600)
+    with os.fdopen(fd, 'w', encoding='utf-8') as inventory_file:
         for candidate in candidates.values():
             record = {**candidate,
                       'http_hls_status': 'AV_VERIFIED' if candidate['url'] in good_urls else 'UNVERIFIED_OR_FAILED',
