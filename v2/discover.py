@@ -176,6 +176,8 @@ def main():
     print(f"Sources: {len(loaded)} | Candidates: {len(result['candidates'])} | Errors: {len(errors)}")
     if not args.offline and not loaded:
         raise SystemExit("No sources accessible")
+    if result.get("source_loss_audit", {}).get("findings"):
+        raise SystemExit("Source-loss regression detected; report preserved for review")
 
 if __name__ == "__main__":
     main()
