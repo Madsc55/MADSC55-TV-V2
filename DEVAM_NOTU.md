@@ -692,3 +692,11 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - `v2/test_discovery_offline_regressions.py` commit `16912ab`: denetimin dosya yazımından önce bulunduğunu kontrol eden test eklendi.
 - Devir notuna doğrudan yazma yeniden çalışıyor. Korunan playlist ve YEDEKLER değiştirilmedi.
 - GitHub Actions çalışmasının sonucu henüz doğrulanmadı.
+
+
+## 2026-11-01 — Şifreli arşiv ve ana playlist güvenliği
+- `v2/secure_archive.py` commit `6d9d2fd`: AES-256-GCM ve scrypt tabanlı şifreli envanter yedeği; atomik dosya yazımı, fsync ve geri yükleme doğrulaması.
+- `v2/test_secure_archive.py` commit `d1297a8`: şifre çözme, yanlış parola, değiştirilmiş arşiv ve disk geri yükleme testleri.
+- `v2/real_ibo_scan.py` commit `7e47203`: `--append-live` ile ana playlistin değiştirilmesi reddedilir.
+- `.github/workflows/v2-ordered-preflight.yml` commit `322d049`: arşiv bağımlılığı ve zorunlu test adımı.
+- Yerel şifreleme testleri 3/3 geçti; GitHub CI sonucu ve gerçek kanal envanterinin harici kalıcı arşivi henüz doğrulanmadı. İBO paketleri ve gerçek video/ses testi tamamlandı olarak işaretlenmedi.
