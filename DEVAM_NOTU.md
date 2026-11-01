@@ -709,3 +709,10 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - `v2/real_ibo_scan.py` commit `a597217`: envanter geçici düz metinden AES-GCM şifreli .enc arşive aktarılır; parola yoksa tarama başlamaz. Kalıcı harici yedek ve gerçek kaynaklarla uçtan uca tarama henüz yapılmadı.
 - `.github/workflows/v2-ordered-preflight.yml` commit `124461a`: AV testleri CI'ya eklendi. İlgili commit için GitHub Actions çalıştırması sorgusunda henüz sonuç yoktu.
 - Ana İBO playlisti ve YEDEKLER korunuyor. #60 kurtarma ve gerçek 1000/2000 paketleri tamamlanmadı.
+
+
+## 2026-11-01 — IBO paket çıktısı ve eksik kaynak güvenliği
+- `v2/real_ibo_scan.py` commit `c503035`: doğrulanmış tüm adayları disk üzerinde ayrı M3U partlarına yazıp `written_parts` ile gerçek dosya yollarını raporlar; ilk partla sınırlı değildir.
+- Commit `755a29c`: M3U satır sonu kaçışları düzeltildi.
+- Commit `8de4c46`: kaynak erişim hatası varsa tarama raporu yazılır ancak eksik kaynaklı sonuçtan IBO paketleri dışa aktarılmaz.
+- Gerçek tarama sonucu, video/ses raporu, #60 kurtarma ve 1000/2000'lik gerçek çıktı henüz doğrulanmadı. Ana playlist, YEDEKLER ve favoriler değiştirilmedi.
