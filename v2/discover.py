@@ -166,6 +166,13 @@ def main():
             errors.append({"source": source["id"], "error": type(exc).__name__})
             source_audit.append({"source": source["id"], "status": "FETCH_FAILED",
                                  "error": type(exc).__name__})
+    # A private playback snapshot must never be created before source-loss review.
+    if args.snapshot_output and args.previous_report:
+        from source_loss_audit import compare
+        previous = json.loads(args.previous_report.read_text(encoding="utf-8"))
+        audit = compare(previous, {"source_audit": source_audit})
+        if audit["findings"]:
+            raise SystemExit("Snapshot blocked: source-loss regression requires review")
     if args.snapshot_output and (errors or not loaded):
         raise SystemExit("Snapshot incomplete: no successful full source set; refusing private snapshot output")
     if args.snapshot_output:
