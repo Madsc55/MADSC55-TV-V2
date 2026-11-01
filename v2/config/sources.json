@@ -193,6 +193,24 @@
       "kind": "m3u",
       "url": "https://onureroz.com/indirmeler/dunya/index.m3u",
       "scope": "world"
+    },
+    {
+      "id": "iptv-org-region-americas",
+      "kind": "m3u",
+      "url": "https://iptv-org.github.io/iptv/regions/amer.m3u",
+      "scope": "world"
+    },
+    {
+      "id": "iptv-org-region-africa",
+      "kind": "m3u",
+      "url": "https://iptv-org.github.io/iptv/regions/afr.m3u",
+      "scope": "world"
+    },
+    {
+      "id": "iptv-org-region-oceania",
+      "kind": "m3u",
+      "url": "https://iptv-org.github.io/iptv/regions/oce.m3u",
+      "scope": "world"
     }
   ]
 }
