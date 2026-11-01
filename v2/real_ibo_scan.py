@@ -22,6 +22,8 @@ OUT = ROOT / 'v2/reports/IBO_YENI_ADAYLAR_PART1.m3u8'
 REPORT = ROOT / 'v2/reports/ibo-real-scan-report.json'
 UA = 'MADSC55-TV-V2-RealScanner/1.0'
 MAX_SOURCE = 25_000_000
+TURKISH_BACKUP_PRIORITY = ("BBC FİRST TURKİYE", "CARTOON NETWORK (TURKİYE)", "KANAL 7", "KANAL 7 AVRUPA", "KANAL 7 AVRUPA HD TR", "KANAL AVRUPA TR", "SHOW TV", "TRT 3 (720P)", "TRT COCUK (1440P)", "TRT EBA ILKOKUL (720P)", "TRT EBA LİSE (720P)", "TRT SPOR YİLDİZ (1440P) [GEO-BLOCKED)", "TRT TURK TR"]
+
 
 
 def fetch(url, timeout=18, limit=MAX_SOURCE):
@@ -205,7 +207,7 @@ def main():
                     raise ValueError(f"Permanent YEDEKLER channel missing or duplicated: {name}")
                 pinned.append(matches[0])
             backups = [p for p in backups if p not in pinned]
-            backups.sort(key=lambda p: p[0].rsplit(',', 1)[-1].casefold())
+            backups.sort(key=lambda p: (0 if p[0].rsplit(',', 1)[-1] in TURKISH_BACKUP_PRIORITY else 1, p[0].rsplit(',', 1)[-1].casefold()))
             backups = pinned + backups
             combined = ('#EXTM3U\n' + ''.join(h + '\n' + u + '\n' for h, u in other + backups)).encode('utf-8')
             tmp.write_bytes(combined)
