@@ -23,6 +23,13 @@ QUERIES = [
     "Türk çocuk televizyonu canlı yayın resmi",
     "Türkiye bölgesel yerel TV canlı yayın",
     "Türkçe Avrupa televizyonu canlı yayın resmi",
+    "Azərbaycan televiziya canlı yayım rəsmi",
+    "Azerbaycan TV canlı yayın resmi",
+    "Azərbaycanca xəbər kanalı canlı yayım",
+    "Azerbaycan diaspora televizyon canlı yayın",
+    "Rec TV canlı yayın resmi",
+    "Gopik TV canlı yayın resmi",
+    "Güneş TV canlı yayın resmi",
 ]
 def search(query):
     command = ["yt-dlp", "--flat-playlist", "--dump-single-json", "--no-warnings",
