@@ -26,6 +26,28 @@ def main():
                     by_name.setdefault(key, set()).add(logo)
         except (OSError, ValueError, UnicodeError) as exc:
             print(f"Skipped {source['id']}: {type(exc).__name__}")
+    # Official iptv-org channel/stream/logo mapping: exact stream URL first.
+    try:
+        def api(name):
+            return json.loads(fetch('https://iptv-org.github.io/api/' + name + '.json', timeout=25))
+        logos = {}
+        for logo in api('logos'):
+            if logo.get('in_use') and logo.get('url', '').startswith('https://'):
+                logos.setdefault(logo['channel'], logo['url'])
+        for stream in api('streams'):
+            channel = stream.get('channel')
+            url = stream.get('url')
+            if channel in logos and url:
+                by_url.setdefault(url, logos[channel])
+        for channel in api('channels'):
+            logo = logos.get(channel['id'])
+            if logo:
+                for name in [channel.get('name', '')] + (channel.get('alt_names') or []):
+                    key = norm(name)
+                    if key:
+                        by_name.setdefault(key, set()).add(logo)
+    except (OSError, ValueError, KeyError, UnicodeError) as exc:
+        print(f"IPTV-org metadata unavailable: {type(exc).__name__}")
     changed = 0
     for i, row in enumerate(rows):
         if not row.startswith('#EXTINF:') or 'YEDEKLER (' not in row or 'tvg-logo=' in row:
