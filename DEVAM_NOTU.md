@@ -621,3 +621,10 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - Gelecekteki tarayıcı eklemeleri aynı Türkçe önceliği korusun diye `v2/real_ibo_scan.py` ve `v2/test_playlist_invariants.py` güncellendi (`41e8779`, `b9bb62f`), GEO-BLOCKED ad yazımı düzeltildi (`b83844b`, `756f0a5`).
 - YEDEKLER içinde 18 kayıtta `tvg-logo` eksik: 30A TV Classic Movies, 6 Wise TV, Afra Film, America Paraguay, Arax TV, Arko TV, Armenia Premium, Arvan TV, Cafe Film, Canada One, CC-TV, Chosen TV English, DanceTV Algorhythm, Dej TV, Dove Channel, Dr G Medical Examiner, DreamWorks Channel Latin America, Grand Cinema. Orijinal logoları henüz kanıtlı bulunmadığından yanlış logo atanmadı. `v2/mirror_logos.py` sadece zaten tanımlı logo URL'lerini indiriyor; eksik 18 logo keşfi yapmıyor.
 - Bu commitler için Actions yeşil sonucu henüz doğrulanmadı. İBO cihaz testi kullanıcıda.
+
+
+## 2026-11-01 — #313/#314 compile ve playlist safety sözdizimi onarımı
+- Kullanıcının #313 ve #314 ekran görüntüleri: `v2/test_playlist_invariants.py` satır 10, `SyntaxError: closing parenthesis ']' does not match opening parenthesis '('`. `v2/real_ibo_scan.py` içindeki aynı öncelik tuple'ında da aynı yazım yanlışı vardı.
+- `v2/test_playlist_invariants.py` düzeltildi: `bd469d3`; `v2/real_ibo_scan.py` düzeltildi: `8e105e7`. Her iki dosyanın GitHub'daki son içeriği tekrar okunarak tuple kapanışı `)` doğrulandı.
+- Playlist değiştirilmedi. 2002 YEDEKLER'in ilk iki kaydı TRT 1 ve DHA; sonraki 14 Türk yayın kaydı mevcut testin beklediği sıralamayla eşleşiyor. 838 diğer kayıt korunuyor.
+- Yeni Actions PASS sonucu henüz görülmedi. Gelecek çalışma compile/protect/discovery-tests/safety aşamalarında ayrıca doğrulanmalı; hata varsa loguna göre onarılmalı.
