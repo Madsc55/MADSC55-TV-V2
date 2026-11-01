@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Offline regression tests for Turkish/Azerbaijani candidate discovery."""
 import unittest
-from discover import discover, turkish_candidate
+from discover import discover, turkish_candidate, candidate_language_hint
 
 
 def entry(name, group="", tvg_id=""):
@@ -23,6 +23,15 @@ class DiscoveryMetadataTests(unittest.TestCase):
 
     def test_unrelated_world_channel_is_not_accepted(self):
         self.assertFalse(turkish_candidate(entry("Unrelated Music", "World", "music.us"), "world"))
+
+    def test_language_hints_never_claim_audio_verification(self):
+        self.assertEqual(candidate_language_hint(entry("Example"), "TR"), "tr_candidate")
+        self.assertEqual(candidate_language_hint(entry("Example"), "AZ"), "az_candidate")
+        self.assertEqual(candidate_language_hint(entry("Unrelated"), "world"), "unknown")
+        source = '#EXTM3U\n#EXTINF:-1 group-title="TR",Example TR\nhttps://example.org/live.m3u8\n'
+        candidates = discover([("tr", source)], "#EXTM3U\n", {"tr": "TR"})
+        self.assertEqual(candidates[0]["language_hint"], "tr_candidate")
+        self.assertIs(candidates[0]["language_verified"], False)
 
     def test_source_provenance_is_preserved(self):
         source = "#EXTM3U\n#EXTINF:-1 group-title=\"TR\",Example TR\nhttps://example.org/live.m3u8\n"
