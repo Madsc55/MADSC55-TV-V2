@@ -10,7 +10,7 @@ import urllib.error
 from datetime import datetime, timezone
 from real_ibo_scan import parse_m3u, tr_az, ROOT
 
-MAIN_IBO_READ_ONLY = "https://raw.githubusercontent.com/Madsc55/Madsc55-Tv/main/MADSC55_TV_IBO_CALISANLAR_TEST.m3u8"
+MAIN_IBO_READ_ONLY = "https://raw.githubusercontent.com/Madsc55/MADSC55-TV-V2/main/MADSC55_TV_IBO_CALISANLAR_TEST.m3u8"
 
 def inspect(source):
     sid, url = source["id"], source["url"]
