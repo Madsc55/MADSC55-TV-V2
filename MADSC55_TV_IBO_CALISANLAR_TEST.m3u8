@@ -2429,7 +2429,7 @@ https://alex-stream.rosebud-media.de/bounce/alexlivetv50.smil/index.m3u8
 https://aom-live.maghost.ro/aomTV/streams/OOztu5o9Fx6dh9mD1711027803849.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/YPj6kXq.png" group-title="🗂️ YEDEKLER (2002)",ALGHADEER TV (1080P)
 https://sd343444.vodu.store:3356/live/Alghadeer/index.m3u8
-#EXTINF:-1 group-title="🗂️ YEDEKLER (2002)",ALHAQEQA ALDAWLİA (1080P)
+#EXTINF:-1 tvg-logo="https://i.ibb.co/1tXkQTsV/hqeqa.jpg" group-title="🗂️ YEDEKLER (2002)",ALHAQEQA ALDAWLİA (1080P)
 https://ghaasiflu.online/alhqeqa/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/h5EWT2n.png" group-title="🗂️ YEDEKLER (2002)",ALİENTO VİSİON (1080P)
 https://627bb251f23c7.streamlock.net:444/Alientoenvivo/Alientoenvivo/playlist.m3u8
@@ -2963,7 +2963,7 @@ https://cb0c87cc605942ff9766a4e6744bbadc.mediatailor.us-east-1.amazonaws.com/v1/
 https://live.obslivestream.com/autenticatvmux/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/sVc8cFt.png" group-title="🗂️ YEDEKLER (2002)",AUTO PLUS
 https://stream8.cinerama.uz/1036/tracks-v1a1/mono.m3u8
-#EXTINF:-1 group-title="🗂️ YEDEKLER (2002)",AVA FAMİLY
+#EXTINF:-1 tvg-logo="https://i.ibb.co/tqkV2sn/irflag.png" group-title="🗂️ YEDEKLER (2002)",AVA FAMİLY
 https://familyhls.avatv.live/hls/stream.m3u8
 #EXTINF:-1 tvg-logo="https://github.com/user-attachments/assets/a9259f18-b9f2-4aa0-86f0-8fba1f343e69" group-title="🗂️ YEDEKLER (2002)",AVA MEDİA (1080P)
 https://ava002.xyz/upload/images/1080.m3u8
@@ -5595,7 +5595,7 @@ https://nlb2-live.emitstream.com/hls/5f9asjsehd7gmyxsdpzu/master.m3u8
 https://tvsen6.aynaott.com/6xyZ3N4oHv2KBJdB6W4p/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/WWPIziG.png" group-title="🗂️ YEDEKLER (2002)",DUSHANBE HD (1080P)
 http://185.121.1.163:8083/DushanbeHD/index.m3u8
-#EXTINF:-1 group-title="🗂️ YEDEKLER (2002)",EKOL TV
+#EXTINF:-1 tvg-logo="https://i.ibb.co/Ln92Dj2/Ekoltv.png" group-title="🗂️ YEDEKLER (2002)",EKOL TV
 https://ekoltv-live.ercdn.net/ekoltv/ekoltv.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/8vmfZb5.png" group-title="🗂️ YEDEKLER (2002)",ELSHARQ TV (1080P) [NOT 24/7]
 https://mn-nl.mncdn.com/elsharq_live/live/playlist.m3u8
