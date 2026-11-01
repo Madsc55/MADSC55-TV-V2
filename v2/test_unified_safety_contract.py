@@ -39,7 +39,8 @@ for forbidden in ('python v2/discover.py', 'python v2/github_source_discovery.py
     assert forbidden not in preflight, forbidden
 for required in ('needs: compile', 'needs: protect', 'needs: discovery-tests'):
     assert required in preflight, required
-assert 'continue-on-error: true' not in preflight, 'Offline regression failures must block CI'\nassert 'python v2/test_archive_acceptance_gate.py' in preflight
+assert 'continue-on-error: true' not in preflight, 'Offline regression failures must block CI'
+assert 'python v2/test_archive_acceptance_gate.py' in preflight
 # New candidate sources must not silently disappear from the preparation config.
 import json
 sources = json.loads((ROOT / 'config/sources.json').read_text(encoding='utf-8'))['sources']
