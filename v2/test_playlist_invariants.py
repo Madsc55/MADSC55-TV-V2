@@ -50,7 +50,7 @@ def main():
         "ANİMAL PLANET", "AS TV BURSA TR", "ATV", "FM TV TR",
     )
     assert backup_count == 4002, "User-approved 4002 YEDEKLER entries changed"
-    assert tuple(x["name"] for x in backups[-12:]) == approved_tail, \\
+    assert tuple(x["name"] for x in backups[-12:]) == approved_tail, \
         "User-approved 12 moved YEDEKLER channels are not at the end"
 
 
