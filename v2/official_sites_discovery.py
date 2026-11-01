@@ -21,7 +21,7 @@ def main():
     sites = []
     seen = set()
     for item in catalog:
-        if item.get("country") != "TR" or item.get("is_nsfw") or item.get("closed"):
+        if item.get("country") not in ("TR", "AZ") or item.get("is_nsfw") or item.get("closed"):
             continue
         url = item.get("website") or ""
         parsed = urllib.parse.urlsplit(url)
@@ -41,6 +41,6 @@ def main():
               "count": len(sites), "channels": sites}
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print("Official Turkish TV sites discovered:", len(sites))
+    print("Official TR/AZ TV sites discovered:", len(sites))
 if __name__ == "__main__":
     main()
