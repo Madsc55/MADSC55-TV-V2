@@ -57,6 +57,16 @@ def turkish_candidate(entry, scope):
         return True
     return False
 
+def candidate_language_hint(entry, scope):
+    """Report metadata-based language hints, never claim verified audio."""
+    fields = " ".join(str(entry.get(k, "")) for k in ("group", "tvg_id", "name"))
+    if scope == "AZ" or re.search(r"(?i)(?:azerice|azeri|azerbaijani|azərbaycan|azerbaycan|azerbaijan|(?:^|[. _-])az(?:[. _-]|$))", fields):
+        return "az_candidate"
+    if scope == "TR" or re.search(r"(?i)(?:türk|turk|turkish|türkiye|turkiye|turkey|trt|(?:^|[. _-])tr(?:[. _-]|$))", fields):
+        return "tr_candidate"
+    return "unknown"
+
+
 def key(entry):
     return (entry["tvg_id"].casefold(), entry["name"].casefold())
 
@@ -79,7 +89,7 @@ def discover(source_texts, live_text, scopes):
             seen.add(e["url"])
             provenance[digest] = [source_id]
             # Do not persist stream URLs/tokens in public reports.
-            candidates.append({"name": e["name"], "tvg_id": e["tvg_id"], "group": e["group"], "source": source_id, "source_ids": provenance[digest], "existing_channel_alternative": bool(e["tvg_id"] and key(e) in existing_keys), "url_sha256": hashlib.sha256(e["url"].encode()).hexdigest(), "logo": e["logo"]})
+            candidates.append({"name": e["name"], "tvg_id": e["tvg_id"], "group": e["group"], "source": source_id, "source_ids": provenance[digest], "existing_channel_alternative": bool(e["tvg_id"] and key(e) in existing_keys), "language_hint": candidate_language_hint(e, scopes.get(source_id, "candidate")), "language_verified": False, "url_sha256": hashlib.sha256(e["url"].encode()).hexdigest(), "logo": e["logo"]})
     return candidates
 
 def main():
