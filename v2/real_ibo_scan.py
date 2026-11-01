@@ -15,7 +15,7 @@ import urllib.error
 import urllib.parse
 import urllib.request
 from stream_probe import probe
-from secure_archive import backup as encrypt_inventory
+from secure_archive import backup as encrypt_inventory, decrypt as decrypt_inventory
 import os
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
@@ -144,6 +144,27 @@ def main():
                             found['source_ids'].append(sid)
         except (OSError, ValueError, UnicodeError, socket.timeout) as exc:
             failed.append({'id': sid, 'error': type(exc).__name__})
+    # Carry forward historical candidates from the last encrypted inventory.
+    # Missing streams are retained for rechecking, never silently dropped.
+    previous_encrypted = args.inventory.with_suffix(args.inventory.suffix + '.enc')
+    recovered_from_archive = 0
+    if previous_encrypted.exists():
+        previous_data = decrypt_inventory(previous_encrypted.read_bytes(),
+                                          os.environ['V2_ARCHIVE_PASSPHRASE'])
+        for line in previous_data.splitlines():
+            if not line.strip():
+                continue
+            record = json.loads(line)
+            url = record.get('url')
+            if not isinstance(url, str) or url in candidates or url in existing:
+                continue
+            parsed = urllib.parse.urlsplit(url)
+            if parsed.scheme not in ('http', 'https') or not parsed.hostname:
+                continue
+            candidates[url] = {key: record.get(key, '') for key in ('name', 'group', 'tvg_id', 'logo')}
+            candidates[url]['url'] = url
+            candidates[url]['source_ids'] = record.get('source_ids', ['historical-archive'])
+            recovered_from_archive += 1
     checked = 0
     good = []
     with concurrent.futures.ThreadPoolExecutor(max_workers=args.workers) as pool:
@@ -174,7 +195,7 @@ def main():
     # Source outages are reported; a working subset can still be tested.
     # Never modify the protected main playlist.
     report = {'source_count': len(sources), 'fetched_sources': len(source_counts),
-              'failed_sources': failed, 'existing_main_urls': len(existing), 'unique_new_candidates': len(candidates),
+              'failed_sources': failed, 'existing_main_urls': len(existing), 'unique_new_candidates': len(candidates), 'recovered_from_previous_encrypted_inventory': recovered_from_archive,
               'http_checked': checked, 'http_hls_ok': len(good), 'av_verified': len(good),
               'candidate_inventory': str(encrypted_inventory), 'archive_restore_test_passed': archive_result['restore_test_passed'],
               'unverified_or_failed_candidates': len(candidates) - len(good),
