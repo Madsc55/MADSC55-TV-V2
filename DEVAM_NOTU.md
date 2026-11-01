@@ -634,3 +634,10 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - `v2/real_ibo_scan.py` commit `5a66508`: kaynaklardan keşfedilen yeni adayların tamamı, HTTP/HLS kontrolü geçsin veya geçmesin, atomik olarak `v2/reports/ibo-candidate-inventory.jsonl` dosyasına yazılıyor. Kayıtlarda `http_hls_status` ve `ibo_device_tested: false` bulunuyor. Başarılı cihaz testi olarak sunulmuyor.
 - Rapor artık aday envanteri konumunu ve HTTP/HLS doğrulanmamış/başarısız aday sayısını içeriyor. Kaynak erişim hataları mevcut raporda ayrıca tutuluyor.
 - Ana playlist/YEDEKLER değişmedi. Bu adım yalnızca sonraki taramalar çalıştığında envanter üretir; henüz yeni gerçek tarama veya Actions yeşil sonucu doğrulanmadı.
+
+
+## 2026-11-01 — Güncel playlist ve YEDEKLER logo denetimi
+- GitHub'dan doğrudan okunan güncel `MADSC55_TV_IBO_CALISANLAR_TEST.m3u8`: 4.840 EXTINF kaydı; 838 diğer gruplar, 4.002 YEDEKLER. TRT 1 ve DHA YEDEKLER'in ilk iki sırasında.
+- YEDEKLER içinde `tvg-logo` eksik/boş olan 33 kayıt bulundu (önceki 18 sayısı güncel değil). Tam isimler ve boş tvg-id bilgileri `v2/reports/yedekler-missing-logos.json` dosyasına kaydedildi, son düzeltme commit `3b45e31`.
+- Eksik logolar henüz bulunup eklenmedi; doğrulanmamış logo tahmini yapılmadı. Ana playlist değiştirilmedi.
+- Önceki CI yeşil run 41189283457 geçmişe ait; son commitlerin CI durumu hâlâ doğrulanmalı.
