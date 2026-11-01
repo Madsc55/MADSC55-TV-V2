@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Offline regression tests for Turkish/Azerbaijani candidate discovery."""
 import unittest
-from discover import discover, turkish_candidate, candidate_language_hint
+from discover import discover, turkish_candidate, candidate_language_hint, validate_sources
 
 
 def entry(name, group="", tvg_id=""):
@@ -23,6 +23,22 @@ class DiscoveryMetadataTests(unittest.TestCase):
 
     def test_unrelated_world_channel_is_not_accepted(self):
         self.assertFalse(turkish_candidate(entry("Unrelated Music", "World", "music.us"), "world"))
+
+    def test_source_inventory_rejects_duplicates_and_unsafe_urls(self):
+        good = {"id": "one", "url": "https://example.org/list.m3u", "scope": "TR"}
+        self.assertEqual(validate_sources([good]), [good])
+        bad_cases = (
+            [good, dict(good)],
+            [good, {"id": "two", "url": good["url"], "scope": "AZ"}],
+            [{"id": "bad", "url": "http://example.org/list.m3u"}],
+            [{"id": "bad", "url": "https://user:pass@example.org/list.m3u"}],
+            [{"id": "bad", "url": "https://example.org/list.m3u#fragment"}],
+            [{"id": "bad", "url": "https://example.org/list.m3u", "scope": "invalid"}],
+            [],
+        )
+        for case in bad_cases:
+            with self.subTest(case=case), self.assertRaises(ValueError):
+                validate_sources(case)
 
     def test_language_hints_never_claim_audio_verification(self):
         self.assertEqual(candidate_language_hint(entry("Example"), "TR"), "tr_candidate")
