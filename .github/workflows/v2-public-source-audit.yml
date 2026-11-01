@@ -1,0 +1,31 @@
+name: V2 Parolasiz Gercek Kaynak Denetimi
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/v2-public-source-audit.yml'
+      - 'v2/public_source_audit.py'
+  workflow_dispatch:
+  schedule:
+    - cron: '41 5 * * *'
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Fetch actual IPTV sources and count TR/AZ candidates
+        run: python v2/public_source_audit.py
+      - name: Preserve source audit evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v2-public-real-network-source-audit
+          path: v2/reports/public-source-audit.json
+          if-no-files-found: warn
+          retention-days: 30
