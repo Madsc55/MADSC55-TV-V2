@@ -11,6 +11,7 @@ import json
 import pathlib
 import re
 import socket
+import time
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -31,12 +32,21 @@ TURKISH_BACKUP_PRIORITY = ("BBC FİRST TURKİYE", "CARTOON NETWORK (TURKİYE)", 
 
 
 def fetch(url, timeout=18, limit=MAX_SOURCE):
+    """Retry transient source failures without silently accepting partial downloads."""
     req = urllib.request.Request(url, headers={'User-Agent': UA})
-    with urllib.request.urlopen(req, timeout=timeout) as response:
-        data = response.read(limit + 1)
-        if len(data) > limit:
-            raise ValueError('Source exceeded size limit')
-        return data
+    for attempt in range(3):
+        try:
+            with urllib.request.urlopen(req, timeout=timeout) as response:
+                data = response.read(limit + 1)
+                if len(data) > limit:
+                    raise ValueError('Source exceeded size limit')
+                return data
+        except (urllib.error.URLError, TimeoutError, OSError, http.client.HTTPException) as exc:
+            if isinstance(exc, urllib.error.HTTPError) and exc.code not in (408, 429, 500, 502, 503, 504):
+                raise
+            if attempt == 2:
+                raise
+            time.sleep(1 + attempt * 2)
 
 
 def parse_m3u(data):
