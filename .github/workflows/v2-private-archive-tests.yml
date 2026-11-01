@@ -5,6 +5,9 @@ on:
       - madsc/v2-encrypted-archive-20261101
     paths:
       - 'v2/private_archive.py'
+      - 'v2/real_ibo_scan.py'
+      - 'v2/media_probe.py'
+      - 'v2/test_media_probe.py'
       - 'v2/test_private_archive.py'
       - 'v2/archive_acceptance_gate.py'
       - 'v2/test_archive_acceptance_gate.py'
@@ -26,3 +29,5 @@ jobs:
         run: |
           python v2/test_private_archive.py
           python v2/test_archive_acceptance_gate.py
+          python v2/test_media_probe.py
+          python -m py_compile v2/real_ibo_scan.py v2/media_probe.py
