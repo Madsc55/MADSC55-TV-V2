@@ -22,6 +22,8 @@ jobs:
         with:
           python-version: '3.12'
       - run: python -m compileall -q v2
+      - name: Confirm playlist safety test compiles
+        run: python -m py_compile v2/test_playlist_invariants.py v2/real_ibo_scan.py
   protect:
     needs: compile
     runs-on: ubuntu-latest
