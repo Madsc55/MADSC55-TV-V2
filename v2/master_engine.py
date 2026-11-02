@@ -120,6 +120,20 @@ def main():
         for candidate in approved_sources(json.loads(FORGE.read_text(encoding="utf-8")), approvals):
             if not any(s["url"] == candidate["url"] for s in sources):
                 sources.append(candidate)
+    # Fail closed before any network access if a requested output would target
+    # the protected playlist or source configuration (including symlink aliases).
+    protected_paths = [LIVE.resolve(strict=False), SOURCES.resolve(strict=False)]
+    if DYNAMIC.exists():
+        protected_paths.append(DYNAMIC.resolve(strict=False))
+    if GITHUB_APPROVALS.exists():
+        protected_paths.append(GITHUB_APPROVALS.resolve(strict=False))
+    if FORGE.exists():
+        protected_paths.append(FORGE.resolve(strict=False))
+    if FORGE_APPROVALS.exists():
+        protected_paths.append(FORGE_APPROVALS.resolve(strict=False))
+    if any(path == archive_path or path == output_path or
+           output_path in path.parents for path in protected_paths):
+        p.error("Archive/output path overlaps protected playlist or source configuration")
     protected_hash_before = hashlib.sha256(LIVE.read_bytes()).hexdigest()
     live_text = LIVE.read_text(encoding="utf-8-sig")
     source_texts, failures = [], []
