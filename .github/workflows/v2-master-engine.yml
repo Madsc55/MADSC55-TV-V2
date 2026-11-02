@@ -37,13 +37,23 @@ jobs:
           PY
       - name: Compile Master Engine modules
         run: python -m compileall -q v2
-      - name: Run integration tests
+      - name: Run all offline regressions and preserve logs
+        shell: bash
         run: |
-          python v2/test_historical_url_recovery.py
-          python v2/test_master_engine.py
-          python v2/test_media_decode.py
-          python v2/test_actions_monitor.py
-          python v2/test_playlist_invariants.py
+          mkdir -p v2/reports/master-ci
+          failed=0
+          PYTHONPATH=v2 python -m unittest discover -s v2 -p 'test_*.py' -v > v2/reports/master-ci/unittest.log 2>&1 || failed=1
+          python v2/test_playlist_invariants.py > v2/reports/master-ci/playlist.log 2>&1 || failed=1
+          cat v2/reports/master-ci/*.log
+          grep -Eq '^Ran [1-9][0-9]* tests? in ' v2/reports/master-ci/unittest.log || failed=1
+          exit "$failed"
+      - name: Upload offline logs including failures
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v2-master-offline-${{ github.run_id }}
+          path: v2/reports/master-ci/
+          retention-days: 30
       - name: Record offline test run identity
         if: always()
         run: |
@@ -58,7 +68,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: madsc/v2-discovery-bulk-20261031
+          ref: ${{ github.sha }}
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -83,6 +93,12 @@ jobs:
         run: |
           mkdir -p v2/reports/master-run
           python v2/master_engine.py --archive v2/reports/master-run/inventory.enc --out v2/reports/master-run/output --limit 500
+      - name: Record master run identity
+        if: always()
+        run: |
+          mkdir -p v2/reports/master-run
+          printf 'run_id=%s\ncommit_sha=%s\njob=master\n' "$GITHUB_RUN_ID" "$GITHUB_SHA" > v2/reports/master-run/run-identity.txt
+          cat v2/reports/master-run/run-identity.txt >> "$GITHUB_STEP_SUMMARY"
       - name: Upload results even on partial failures
         if: always()
         uses: actions/upload-artifact@v4
@@ -91,6 +107,7 @@ jobs:
           path: |
             v2/reports/master-run/output/
             v2/reports/master-run/inventory.enc
+            v2/reports/master-run/run-identity.txt
           retention-days: 30
           if-no-files-found: warn
       - name: Protect working tree
