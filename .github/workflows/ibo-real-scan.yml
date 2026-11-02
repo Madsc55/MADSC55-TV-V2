@@ -72,6 +72,8 @@ jobs:
               raise SystemExit('Zero-candidate status contradicts verified count')
           if any(not path.is_file() for path in files):
               raise SystemExit('Reported batch file missing')
+          if files and any(path.parent.resolve() != Path('v2/reports').resolve() for path in files):
+              raise SystemExit('Unexpected batch output location')
           print('PASS: scanner report and archive restoration gate')
           PY
       - name: Upload scan report
