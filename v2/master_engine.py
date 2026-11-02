@@ -104,6 +104,8 @@ def main():
     restored = restore(args.archive) if items else []
     if restored != items:
         raise RuntimeError("Encrypted archive restore mismatch")
+    if not items:
+        raise RuntimeError("No valid candidates; refusing to report an empty scan as successful")
     verified = [x for x in items if x["network_status"] == "HLS_MANIFEST_REACHABLE"]
     for n in range(0, len(verified), args.limit):
         batch = verified[n:n + args.limit]
