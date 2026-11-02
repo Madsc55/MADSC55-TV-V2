@@ -36,6 +36,19 @@ class PartialSourceTests(unittest.TestCase):
                     with self.assertRaises(SystemExit):
                         real_ibo_scan.main()
 
+    def test_output_cannot_overwrite_protected_playlist(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = pathlib.Path(directory)
+            live = root / "protected.m3u8"
+            original = b"#EXTM3U\n#EXTINF:-1,Protected\nhttps://example.org/protected.m3u8\n"
+            live.write_bytes(original)
+            argv = ["real_ibo_scan.py", "--live", str(live), "--output", str(live)]
+            with patch.object(sys, "argv", argv), patch.object(
+                    real_ibo_scan, "fetch", side_effect=AssertionError("network called")):
+                with self.assertRaisesRegex(SystemExit, "protected main playlist"):
+                    real_ibo_scan.main()
+            self.assertEqual(live.read_bytes(), original)
+
     def test_failed_source_preserves_existing_package_and_reports_partial(self):
         with tempfile.TemporaryDirectory() as directory:
             root = pathlib.Path(directory)
