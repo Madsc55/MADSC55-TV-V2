@@ -22,6 +22,16 @@ class EncryptedArchiveTests(unittest.TestCase):
             self.assertEqual(restore(path, KEY), records)
             self.assertEqual(len(archive_sha256(path)), 64)
             self.assertEqual(path.stat().st_mode & 0o077, 0)
+    def test_truncated_archive_fails_closed(self):
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder) / "archive.jsonl.enc"
+            append(path, {"url": "https://example.invalid/first.m3u8"}, KEY)
+            append(path, {"url": "https://example.invalid/second.m3u8"}, KEY)
+            raw = path.read_bytes()
+            path.write_bytes(raw[:-12])
+            with self.assertRaises(Exception):
+                restore(path, KEY)
+
     def test_tamper_fails_authentication(self):
         with tempfile.TemporaryDirectory() as folder:
             path = Path(folder) / "archive.jsonl.enc"
