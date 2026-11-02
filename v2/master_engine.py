@@ -146,7 +146,7 @@ def main():
               "media_decoded": len(verified), "unknown_or_failed": sum(x["network_status"] != "HLS_MANIFEST_REACHABLE" for x in items),
               "historical": history_report, "archive_restore_verified": restored == items,
               "device_verified": False, "batch_count": (len(verified) + args.limit - 1) // args.limit if not failures else 0,
-              "status": "NO_CANDIDATES" if not items else ("NO_MEDIA_DECODED" if not verified else ("PARTIAL_SOURCE_FAILURE" if failures else "COMPLETE_SOURCE_FETCH"))}
+              "status": "PARTIAL_SOURCE_FAILURE" if failures else ("NO_CANDIDATES" if not items else ("NO_MEDIA_DECODED" if not verified else "COMPLETE_SOURCE_FETCH"))}
     (args.out / "report.json").write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     print(json.dumps({k: v for k, v in report.items() if k != "source_audit"}, ensure_ascii=False))
     if not items:
