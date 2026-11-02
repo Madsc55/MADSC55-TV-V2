@@ -1,3 +1,8 @@
+## 2 Kasım 2026 — eksik taramada paket koruması
+- `v2/real_ibo_scan.py` eksik kaynak taraması durumunda eski başarılı IBO paketlerini silmeyecek biçimde değiştirildi; eski `source_id` kaynak kimlikleri de taşınır (commit c6ce007d).
+- Değişiklik GitHub'a kaydedildi; Actions sonucu ve uçtan uca doğrulama henüz teyit edilmedi. Yeni ağ taraması başlatılmadı, ana liste/YEDEKLER/EPG değiştirilmedi.
+- Gerçek geçmiş #60 kayıtlarının adres bazında kurtarılması ve GitHub dışı kalıcı şifreli arşiv doğrulaması açık işlerdir.
+
 ## 2 Kasım 2026 — tarihsel kaynak kimliği uyumluluğu
 - `v2/consolidate_inventory.py` eski `source_id` alanını `source_ids` listesine taşır; bozuk `observations` öğelerini reddeder (654767c1). Offline regresyon testleri eklendi (d359444b).
 - Son commitler için Actions sonucu doğrulanmadı. #60 kayıplarının gerçek adreslerle kurtarılması ve GitHub dışı kalıcı yedekleme hâlâ açık. Ağ taraması ve YEDEKLER aktarımı yapılmadı.
