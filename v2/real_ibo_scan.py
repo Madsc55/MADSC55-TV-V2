@@ -86,7 +86,6 @@ def main():
     ap.add_argument('--timeout', type=float, default=12)
     ap.add_argument('--limit', type=int, default=2000)
     ap.add_argument('--live', type=pathlib.Path, default=LIVE)
-    ap.add_argument('--append-live', action='store_true', help='Append verified new channels to YEDEKLER only')
     args = ap.parse_args()
     if not 1 <= args.workers <= 32 or not 1 <= args.limit <= 10000:
         ap.error('workers must be 1..32 and limit 1..10000')
@@ -145,33 +144,6 @@ def main():
     args.output.parent.mkdir(parents=True, exist_ok=True)
     temp.write_text('\n'.join(lines) + '\n', encoding='utf-8')
     temp.replace(args.output)
-    if args.append_live:
-        # Preserve every existing byte: append only new verified stream records.
-        original = args.live.read_bytes()
-        current_urls = {line.strip() for line in
-                        original.decode('utf-8-sig', 'replace').splitlines()
-                        if line.strip().startswith(('https://', 'http://'))}
-        additions = []
-        for item in good:
-            if item['url'] in current_urls:
-                continue
-            current_urls.add(item['url'])
-            safe_name = re.sub(r'[\r\n,]', ' ', item['name']).strip() or 'Yeni Kanal'
-            additions.extend([
-                f'#EXTINF:-1 group-title="🗂️ YEDEKLER (2)",{safe_name}',
-                item['url'],
-            ])
-        if additions:
-            separator = b'' if original.endswith(b'\n') else b'\n'
-            # Atomic write; preexisting content and categories remain byte-identical.
-            tmp = args.live.with_suffix(args.live.suffix + '.tmp')
-            tmp.write_bytes(original + separator +
-                            ('\n'.join(additions) + '\n').encode('utf-8'))
-            tmp.replace(args.live)
-        report['added_to_yedekler'] = len(additions) // 2
-        report['status'] = 'APPENDED_TO_YEDEKLER' if additions else 'NO_NEW_URLS'
-        args.report.write_text(json.dumps(report, indent=2, ensure_ascii=False) + '\n',
-                               encoding='utf-8')
     print(json.dumps(report, ensure_ascii=False, indent=2))
 
 
