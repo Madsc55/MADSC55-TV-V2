@@ -5,6 +5,9 @@ from unittest.mock import patch
 import actions_monitor
 
 class MonitorTests(unittest.TestCase):
+    def test_monitor_targets_active_workflow(self):
+        self.assertEqual(actions_monitor.WORKFLOW, "v2-eight-stage-verification.yml")
+
     def test_run_states_and_failed_steps(self):
         runs = [
             {"id": 10, "run_number": 10, "head_sha": "abc", "status": "completed",
@@ -15,7 +18,7 @@ class MonitorTests(unittest.TestCase):
              "conclusion": "success", "html_url": "https://github.com/example/actions/runs/12"},
         ]
         def fake_api(path):
-            if "/workflows/v2-master-engine.yml/runs?" in path:
+            if "/workflows/v2-eight-stage-verification.yml/runs?" in path:
                 return {"workflow_runs": runs}
             if path.endswith("/10/jobs?per_page=100"):
                 return {"jobs": [{"id": 5, "name": "offline-tests", "status": "completed",
