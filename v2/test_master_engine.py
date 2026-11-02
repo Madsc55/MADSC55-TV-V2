@@ -75,7 +75,7 @@ class MasterTests(unittest.TestCase):
         self.assertFalse(bool(items) and [] == items)
 
     def test_duplicate_sources_decode_once_and_keep_all_provenance(self):
-        data = "#EXTM3U\\n#EXTINF:-1,TRT 1\\nhttps://example.org/new.m3u8\\n"
+        data = "#EXTM3U\n#EXTINF:-1,TRT 1\nhttps://example.org/new.m3u8\n"
         sources = [({"id": "first", "scope": "TR"}, data),
                    ({"id": "second", "scope": "TR"}, data)]
         probed, decoded = [], []
@@ -85,7 +85,7 @@ class MasterTests(unittest.TestCase):
         def decode(item):
             decoded.append(item["url"])
             return True
-        items, audit, _ = build(sources, "#EXTM3U\\n", checker=check, media_checker=decode)
+        items, audit, _ = build(sources, "#EXTM3U\n", checker=check, media_checker=decode)
         self.assertEqual(len(items), 1)
         self.assertEqual(items[0]["source_ids"], ["first", "second"])
         self.assertEqual(len(probed), 1)
