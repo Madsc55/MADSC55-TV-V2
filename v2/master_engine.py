@@ -149,12 +149,12 @@ def main():
               "status": "PARTIAL_SOURCE_FAILURE" if failures else ("NO_CANDIDATES" if not items else ("NO_MEDIA_DECODED" if not verified else "COMPLETE_SOURCE_FETCH"))}
     (args.out / "report.json").write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     print(json.dumps({k: v for k, v in report.items() if k != "source_audit"}, ensure_ascii=False))
+    if failures:
+        raise SystemExit("Partial source coverage; results preserved but run not successful")
     if not items:
         raise SystemExit("No candidates; report preserved, no packages exported")
     if not verified:
         raise SystemExit("No media-decoded candidates; inventory and report preserved, no packages exported")
-    if failures:
-        raise SystemExit("Partial source coverage; results preserved but run not successful")
 
 if __name__ == "__main__":
     main()
