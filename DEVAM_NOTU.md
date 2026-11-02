@@ -950,3 +950,10 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - `.github/workflows/v2-master-engine.yml` commit 528941a: manuel tetiklenen gerçek ağ workflow'u, şifreleme anahtarı GitHub Secret, çıktı artifact'i 30 gün saklanır. Bu artifact bağımsız kalıcı arşiv değildir.
 - Durum: AŞAMA 1 KOD ENTEGRASYONU İLK SÜRÜM; gerçek CI başarı sonucu ve uçtan uca test henüz doğrulanmadı. Kaynakların tamamı erişilebilir kabul edilemez; eksik kaynaklar raporlanır. Segment oynatımı, yönlendirme güvenliği, sağlam dil/ülke sınıflandırması, kalıcı bağımsız arşiv ve 4.955 gerçek URL kurtarma açık işlerdir.
 - Ana İBO/YEDEKLER/YENİLER/FAVORİLER değişmedi; PR #9 merge edilmedi.
+
+
+## 2 Kasım 2026 — Master Engine Actions yeşil testler ve devam kaydı
+- Kullanıcı GitHub Actions ekran görüntülerinde V2 Master Engine 1–6 çalışmalarının yeşil olduğunu doğruladı; sonraki `f8d88d1` ve `21047d7` testlerini ve `da9c7b3` testini de yeşil bildirdi. GitHub connector commit-workflow sorgusu boş sonuç döndürdüğünden run ID/log bağımsız doğrulanamadı; bunu test başarısızlığı sayma.
+- Commitler: `877f473` push otomatik CI; `032b0ce` push dosya filtresinin kaldırılması; `3819238` M3U kaynak doğrulaması; `6676436` onaylı GitHub/forge envanterleri; `e4f5785` entegrasyon girişinde geçersiz M3U reddi; `210b071` regresyon; `f8d88d1` stream checker istisna yalıtımı; `21047d7` regresyon; `da9c7b3` sıfır adayda başarılı çıkışı engelleme.
+- Yeşil olanlar otomatik çevrimdışı regresyonlardır; gerçek kaynak taraması, segment/video/audio oynatımı, 4.955 URL kurtarma, bağımsız kalıcı şifreli arşiv, İBO cihaz oynatma doğrulaması tamamlandı denemez.
+- Sonraki işlemler çalışma dalında; PR #9 kesinlikle merge edilmez. Ana `MADSC55_TV_IBO_CALISANLAR_TEST.m3u8`, YEDEKLER, YENİLER, FAVORİLER ve cihaz favorilerine dokunulmaz. Eski repo kullanılmaz.
