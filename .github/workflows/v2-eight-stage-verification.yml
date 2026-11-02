@@ -39,8 +39,7 @@ jobs:
         run: |
           mkdir -p v2/reports/ci
           # Discover TestCase tests in one suite; standalone scripts may contain zero unittest cases.
-          PYTHONPATH=v2 python -m unittest discover -s v2 -p 'test_*.py' -v >v2/reports/ci/unittest-discovery.log 2>&1
-          failed=$?
+          PYTHONPATH=v2 python -m unittest discover -s v2 -p 'test_*.py' -v >v2/reports/ci/unittest-discovery.log 2>&1 || failed=1
           python v2/test_playlist_invariants.py >v2/reports/ci/test_playlist_invariants.log 2>&1 || failed=1
           cat v2/reports/ci/*.log
           exit "$failed"
