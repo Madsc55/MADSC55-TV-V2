@@ -37,6 +37,7 @@ jobs:
         run: |
           python v2/test_historical_url_recovery.py
           python v2/test_master_engine.py
+          python v2/test_media_decode.py
           python v2/test_actions_monitor.py
           python v2/test_playlist_invariants.py
   master:
