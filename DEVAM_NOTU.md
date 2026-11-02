@@ -1,3 +1,9 @@
+## 2 Kasım 2026 — audio-only yanlış video doğrulaması düzeltmesi
+- `faae859e70c94fb0a2a317022cae0e8457452279`: FFmpeg `framemd5` çıktı satırını video karesi saymak için `#media_type 0: video` şartı eklendi; audio-only yanlış pozitif engellendi.
+- `1c95d7fd24d803d95d9d4c45a3d42b4e4f5e4791`: `v2/test_media_decode.py` içine audio-only regresyon testi eklendi ve geçerli video test verisi güncellendi.
+- Yerel `python -m unittest -v test_media_decode`: 6 test başarılı (gerçek test komutu çalıştırıldı; mock subprocess birim testleri). Yerel FFmpeg lavfi testsrc video kare üretimi: exit 0, 1 framemd5 satırı. Canlı internet erişimi yok, canlı yayın test sonucu yok; Actions run ID doğrulanmadı.
+- Ana playlist değiştirilmedi, PR #9 birleştirilmedi.
+
 ## 2 Kasım 2026 — FFmpeg gerçek kare doğrulaması entegrasyonu
 - `586c9e1933609d58b0b17cd4fa8856ab34dfb9ea`: `v2/media_decode.py` URL doğrulaması, zaman aşımı ve FFmpeg framemd5 çıktı kontrolü ile gerçek çözümlenen video karesini şart koşar.
 - `3a460f7ce793c8351212fcff0c0e9916aaca5874`: Master Engine manifest erişiminden sonra `media_checker` üzerinden kare doğrulamasını bağlar; cihaz doğrulaması ayrı kalır.
