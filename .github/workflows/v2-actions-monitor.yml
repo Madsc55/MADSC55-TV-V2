@@ -16,6 +16,8 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: madsc/v2-discovery-bulk-20261031
+      - name: Offline monitor regression
+        run: python v2/test_actions_monitor.py
       - name: Read last 10 Master Engine runs via GitHub Actions API
         env:
           GITHUB_TOKEN: ${{ github.token }}
