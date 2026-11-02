@@ -3,10 +3,6 @@ on:
   push:
     branches:
       - madsc/v2-discovery-bulk-20261031
-    paths:
-      - 'v2/master_engine.py'
-      - 'v2/test_master_engine.py'
-      - '.github/workflows/v2-master-engine.yml'
   workflow_dispatch:
 permissions:
   contents: read
