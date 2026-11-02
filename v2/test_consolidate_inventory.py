@@ -65,6 +65,28 @@ def main():
                                  env=env, capture_output=True, text=True)
         assert failure.returncode != 0
         assert not (base / "should-not-exist.enc").exists()
+        # Path aliases must not overwrite source data or double-count history.
+        same_path = subprocess.run([sys.executable, str(ROOT / "consolidate_inventory.py"),
+                                    "--encrypted-input", str(output),
+                                    "--encrypted-output", str(base / "." / "inventory.enc"),
+                                    "--report", str(base / "unsafe-report.json")],
+                                   env=env, capture_output=True, text=True)
+        assert same_path.returncode != 0
+        assert decrypt(output.read_bytes(), env["V2_ARCHIVE_PASSPHRASE"])
+        duplicate = subprocess.run([sys.executable, str(ROOT / "consolidate_inventory.py"),
+                                    "--input", str(first), "--input", str(base / "." / "first.jsonl"),
+                                    "--encrypted-output", str(base / "duplicate.enc"),
+                                    "--report", str(base / "duplicate.json")],
+                                   env=env, capture_output=True, text=True)
+        assert duplicate.returncode != 0
+        assert not (base / "duplicate.enc").exists()
+        overlapping_report = subprocess.run([sys.executable, str(ROOT / "consolidate_inventory.py"),
+                                             "--input", str(first),
+                                             "--encrypted-output", str(base / "overlap.enc"),
+                                             "--report", str(first)],
+                                            env=env, capture_output=True, text=True)
+        assert overlapping_report.returncode != 0
+        assert first.read_text(encoding="utf-8").startswith("{")
         print("PASS: offline encrypted inventory merge, source retention, restore")
 
 if __name__ == "__main__":
