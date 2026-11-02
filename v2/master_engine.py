@@ -43,7 +43,10 @@ def build(source_texts, live_text, history=(), checker=None, workers=8):
     if checker is None:
         return items, audit, history_report
     def check(item):
-        return bool(checker(item))
+        try:
+            return bool(checker(item))
+        except Exception:
+            return False
     with concurrent.futures.ThreadPoolExecutor(max_workers=workers) as pool:
         outcomes = list(pool.map(check, items))
     for item, ok in zip(items, outcomes):
