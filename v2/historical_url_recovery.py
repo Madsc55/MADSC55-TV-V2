@@ -30,7 +30,13 @@ def validate_url(value):
         if not address.is_global:
             return False
     except ValueError:
-        if parsed.hostname.lower() in ("localhost", "localhost.localdomain"):
+        host = parsed.hostname.lower().rstrip(".")
+        if host in ("localhost", "localhost.localdomain") or host.endswith(".localhost"):
+            return False
+        # Reject non-canonical numeric IPv4 forms (127.1, 2130706433,
+        # 0177.0.0.1, 0x7f000001) that resolvers may map to private IPs.
+        labels = host.split(".")
+        if labels and all(label and (label.isdecimal() or label.startswith("0x") and all(c in "0123456789abcdef" for c in label[2:])) for label in labels):
             return False
     try:
         port = parsed.port
