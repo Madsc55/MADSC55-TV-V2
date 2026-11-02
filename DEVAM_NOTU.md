@@ -1,3 +1,7 @@
+## 2 Kasım 2026 — Master Engine immutable playlist CI koruması
+- `cd0b5a44297b9bf7ada5b75ba745dd6a6b9b9b3e`: `.github/workflows/v2-master-engine.yml` offline-tests koruması yalnızca HEAD ile dosya karşılaştırmak yerine sabit doğrulanmış Git blob SHA `4b1c3cea4b5107a425abab60f62d41f9f81e05a7` değerini de kontrol ediyor. Böylece HEAD içinde yanlışlıkla değiştirilmiş ana playlist CI tarafından kabul edilmez.
+- CI sonucunun yeşil olduğu henüz bağımsız doğrulanmadı; gerçek run ID alınamadı. Ana playlist dosyası değiştirilmedi. Sekiz aşama uçtan uca tamamlandı sayılmıyor.
+
 ## 2 Kasım 2026 — Master Engine çıktı artifact kapsamı
 - `876e972299b359633fd75aecf191ce23277b5ac4`: manuel Master Engine işinin artifact kapsamı yalnızca `report.json` yerine `output/` içindeki gerçek rapor ve varsa M3U paketleri ile `inventory.enc` şifreli envanterini içeriyor. Bu yalnızca artifact toplama altyapısıdır; taramanın veya paket üretiminin başarılı olduğu iddiası değildir.
 - GitHub Actions artifact saklama süresi 30 gün; kalıcı harici şifreli arşiv yerine geçmez. Yeni commit'in Actions run ID/job sonucu henüz doğrulanmadı. Ana İBO playlisti, main, PR #9, eski depo değişmedi.
