@@ -152,9 +152,9 @@ def main():
                 batch = verified[index * package_size:(index + 1) * package_size]
                 lines = ["#EXTM3U"]
                 for item in batch:
-                    name = str(item.get("name", "Unknown")).replace("\\n", " ").replace("\\r", " ").replace(",", " ")
+                    name = str(item.get("name", "Unknown")).replace("\n", " ").replace("\r", " ").replace(",", " ")
                     lines.extend((f"#EXTINF:-1,{name}", item["url"]))
-                (args.out / f"ibo_{package_size}_part_{index + 1:04}.m3u").write_text("\\n".join(lines) + "\\n", encoding="utf-8")
+                (args.out / f"ibo_{package_size}_part_{index + 1:04}.m3u").write_text("\n".join(lines) + "\n", encoding="utf-8")
     else:
         standard_package_counts = {"500": 0, "1000": 0, "2000": 0}
     protected_hash_after = hashlib.sha256(LIVE.read_bytes()).hexdigest()
