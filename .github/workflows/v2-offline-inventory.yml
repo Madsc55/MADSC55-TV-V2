@@ -1,0 +1,26 @@
+name: V2 Offline Inventory Integrity
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'v2/consolidate_inventory.py'
+      - 'v2/test_consolidate_inventory.py'
+      - 'v2/secure_archive.py'
+      - '.github/workflows/v2-offline-inventory.yml'
+permissions:
+  contents: read
+jobs:
+  inventory:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install encryption dependency
+        run: python -m pip install 'cryptography>=42,<47'
+      - name: Compile inventory modules
+        run: python -m py_compile v2/consolidate_inventory.py v2/test_consolidate_inventory.py
+      - name: Test offline encrypted inventory restoration
+        run: python v2/test_consolidate_inventory.py
