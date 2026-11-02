@@ -59,6 +59,13 @@ jobs:
               raise SystemExit('Device verification claim must remain false')
           if report.get('exported_part1', 0) > 500:
               raise SystemExit('Batch size exceeds 500')
+          files = [Path(p) for p in report.get('written_parts', [])]
+          if report.get('status') == 'READY_FOR_DEVICE_TEST' and not files:
+              raise SystemExit('Verified candidates reported without batch files')
+          if report.get('status') == 'NO_VERIFIED_CANDIDATES' and files:
+              raise SystemExit('Unexpected batches reported for zero candidates')
+          if any(not path.is_file() for path in files):
+              raise SystemExit('Reported batch file missing')
           print('PASS: scanner report and archive restoration gate')
           PY
       - name: Upload scan report
