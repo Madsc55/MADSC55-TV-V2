@@ -35,7 +35,7 @@ jobs:
         run: |
           mkdir -p v2/reports/ci
           failed=0
-          for module in test_historical_url_recovery test_master_engine test_media_decode test_real_ibo_scan test_actions_monitor test_playlist_invariants; do
+          for module in test_historical_url_recovery test_master_engine test_media_decode test_real_ibo_scan test_actions_monitor; do
             if [ -f "v2/${module}.py" ]; then
               echo "Running ${module}"
               (cd v2 && python -m unittest -v "${module}") >"v2/reports/ci/${module}.log" 2>&1 || failed=1
@@ -44,6 +44,7 @@ jobs:
               failed=1
             fi
           done
+          python v2/test_playlist_invariants.py >v2/reports/ci/test_playlist_invariants.log 2>&1 || failed=1
           cat v2/reports/ci/*.log
           exit "$failed"
       - name: Upload regression logs even on failure
