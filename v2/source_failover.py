@@ -141,7 +141,10 @@ def recover_source(source, cache, fetcher=fetch_once, sleep=time.sleep):
         for attempt in range(len(DELAYS) + 1):
             try:
                 text = fetcher(url)
-                cache.set(source_id, text)
+                try:
+                    cache.set(source_id, text)
+                except (OSError, ValueError, FetchFailure) as exc:
+                    failures.append({"category": "CACHE_WRITE_FAILED", "reason": type(exc).__name__})
                 return text, {"id": source_id, "status": "PRIMARY_OK" if index == 0 else "FALLBACK_OK", "attempts": len(failures) + 1, "failures": failures, "fresh": True}
             except FetchFailure as exc:
                 failures.append({"url_sha256": hashlib.sha256(url.encode()).hexdigest(), "category": exc.category, "attempt": attempt + 1})
