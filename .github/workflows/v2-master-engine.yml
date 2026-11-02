@@ -29,6 +29,9 @@ jobs:
           before = hashlib.sha256(baseline).hexdigest()
           after = hashlib.sha256(current).hexdigest()
           print(f'Protected playlist SHA-256 HEAD={before} working_tree={after}')
+          immutable_blob = subprocess.check_output(['git', 'hash-object', path], text=True).strip()
+          if immutable_blob != '4b1c3cea4b5107a425abab60f62d41f9f81e05a7':
+              raise SystemExit('Protected playlist differs from immutable baseline')
           if before != after:
               raise SystemExit('Protected playlist SHA-256 mismatch')
           PY
