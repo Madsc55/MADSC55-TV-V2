@@ -68,7 +68,10 @@ def main():
     source_texts, failures = [], []
     for source in sources:
         try:
-            source_texts.append((source, fetch(source["url"])))
+            content = fetch(source["url"])
+            if not content.lstrip().startswith("#EXTM3U"):
+                raise ValueError("Source returned non-M3U content")
+            source_texts.append((source, content))
         except Exception as exc:
             failures.append({"id": source["id"], "status": "FETCH_FAILED", "reason": type(exc).__name__})
     history = list(read_records(args.history)) if args.history else []
