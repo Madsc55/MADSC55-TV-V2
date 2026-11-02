@@ -942,3 +942,11 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - Kurtarma ancak eski raporlarda gerçek HTTP(S) URL mevcutsa aday üretir; anonim ID'lerden adres uydurmaz; mevcut URL'leri ve tekrarları çıkarır, kaynak/metadata korur. Eski #60 arşivinin gerçek URL kayıtları henüz temin edilmediği için 4.955 adayın kurtarıldığı iddia edilmez.
 - CI'nın yeni commit sonrası yeşil sonucu henüz doğrulanmadı. Harici bağımsız şifreli yedek henüz doğrulanmadı.
 - Ana IBO, YEDEKLER, YENİLER, FAVORİLER ve yabancı arşiv değişmedi; PR #9 birleştirilmedi.
+
+
+## 2 Kasım 2026 — Master Engine ilk bütünleşik uygulama
+- `v2/master_engine.py` commit 9192b00: mevcut discover.py ayrıştırma/kaynak indirme, historical_url_recovery.py, real_ibo_scan.py HLS manifest kontrolü ve encrypted_archive.py birlikte çağrılır. Ana İBO salt okunur; URL tekilleştirme ve kaynak geçmişi tutulur; cihaz testi yapılmış iddiası yok; en fazla 500 kayıtlık ayrı M3U8 çıktısı.
+- `v2/test_master_engine.py` commit 549ca72: offline entegrasyon regresyonları eklendi.
+- `.github/workflows/v2-master-engine.yml` commit 528941a: manuel tetiklenen gerçek ağ workflow'u, şifreleme anahtarı GitHub Secret, çıktı artifact'i 30 gün saklanır. Bu artifact bağımsız kalıcı arşiv değildir.
+- Durum: AŞAMA 1 KOD ENTEGRASYONU İLK SÜRÜM; gerçek CI başarı sonucu ve uçtan uca test henüz doğrulanmadı. Kaynakların tamamı erişilebilir kabul edilemez; eksik kaynaklar raporlanır. Segment oynatımı, yönlendirme güvenliği, sağlam dil/ülke sınıflandırması, kalıcı bağımsız arşiv ve 4.955 gerçek URL kurtarma açık işlerdir.
+- Ana İBO/YEDEKLER/YENİLER/FAVORİLER değişmedi; PR #9 merge edilmedi.
