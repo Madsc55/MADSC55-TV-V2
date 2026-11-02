@@ -957,3 +957,12 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - Commitler: `877f473` push otomatik CI; `032b0ce` push dosya filtresinin kaldırılması; `3819238` M3U kaynak doğrulaması; `6676436` onaylı GitHub/forge envanterleri; `e4f5785` entegrasyon girişinde geçersiz M3U reddi; `210b071` regresyon; `f8d88d1` stream checker istisna yalıtımı; `21047d7` regresyon; `da9c7b3` sıfır adayda başarılı çıkışı engelleme.
 - Yeşil olanlar otomatik çevrimdışı regresyonlardır; gerçek kaynak taraması, segment/video/audio oynatımı, 4.955 URL kurtarma, bağımsız kalıcı şifreli arşiv, İBO cihaz oynatma doğrulaması tamamlandı denemez.
 - Sonraki işlemler çalışma dalında; PR #9 kesinlikle merge edilmez. Ana `MADSC55_TV_IBO_CALISANLAR_TEST.m3u8`, YEDEKLER, YENİLER, FAVORİLER ve cihaz favorilerine dokunulmaz. Eski repo kullanılmaz.
+
+
+## 2 Kasım 2026 — Actions izleme erişimi kök neden ve otomasyon
+- GitHub connector `fetch_commit_workflow_runs` yalnızca pull_request tetiklemeli run'ları döndürüyor; Master Engine push tetiklemeli olduğu için sonuç boş. Boş yanıt, testin çalışmadığını göstermez.
+- Alternatif doğrudan `api.github.com` erişimi bu oturumun container'ında DNS çözümleme hatası verdi; web üzerinden de API okunamadı. Bu yüzden son 10 gerçek run ID ve durumunu sohbet içinde doğrulamak mümkün olmadı.
+- `v2/actions_monitor.py` GitHub Actions içinde `github.token` ve `actions: read` izniyle son 10 Master Engine run ID, SHA, queued/in_progress/completed durumu, conclusion, URL ve başarısız job/step özetlerini `actions-last10.json` dosyasına çıkarır. Gizli token'ı rapora yazmaz.
+- `.github/workflows/v2-actions-monitor.yml` push, manual ve cron tetiklemeli izleme workflow'u; artifact saklama 30 gün. GitHub cron tetikleyicileri varsayılan dalda tanımlı workflow için çalışır; bu dal üzerindeki cron'un gerçekten tetiklendiği ayrıca doğrulanmalıdır.
+- `v2/test_actions_monitor.py` çevrimdışı durum/başarısız step regresyonu; Master Engine ve monitor CI akışlarına bağlandı. CI yeşil ve gerçek run ID sonucu henüz doğrulanmadı; kullanıcıdan ekran görüntüsü isteme.
+- Koruma: Ana İBO/YEDEKLER/YENİLER/FAVORİLER değişmedi; PR #9 merge edilmedi.
