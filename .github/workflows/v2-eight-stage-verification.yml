@@ -39,15 +39,20 @@ jobs:
         run: |
           mkdir -p v2/reports/ci
           failed=0
-          for module in test_historical_url_recovery test_master_engine test_encrypted_archive test_media_decode test_real_ibo_scan test_actions_monitor; do
-            if [ -f "v2/${module}.py" ]; then
-              echo "Running ${module}"
-              (cd v2 && python -m unittest -v "${module}") >"v2/reports/ci/${module}.log" 2>&1 || failed=1
-            else
-              printf 'MISSING TEST FILE: %s\n' "${module}" >"v2/reports/ci/${module}.log"
-              failed=1
-            fi
+          found=0
+          for test_file in v2/test_*.py; do
+            [ -f "$test_file" ] || continue
+            module="${test_file##*/}"
+            module="${module%.py}"
+            [ "$module" = "test_playlist_invariants" ] && continue
+            found=$((found + 1))
+            echo "Running ${module}"
+            (cd v2 && python -m unittest -v "${module}") >"v2/reports/ci/${module}.log" 2>&1 || failed=1
           done
+          if [ "$found" -eq 0 ]; then
+            echo "No regression test modules found" >&2
+            failed=1
+          fi
           python v2/test_playlist_invariants.py >v2/reports/ci/test_playlist_invariants.log 2>&1 || failed=1
           cat v2/reports/ci/*.log
           exit "$failed"
