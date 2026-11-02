@@ -8,23 +8,11 @@ from collections import Counter
 from discover import ROOT, LIVE, SOURCES, entries
 
 def main():
-    # Protect the exact original bytes and permit only append-only YEDEKLER records.
+    # Protect the complete Git blob, not a character-count-based byte prefix.
+    # UTF-8 channel names make text length different from byte length.
     current = LIVE.read_bytes()
-    original = current[:207344]
-    original_hash = subprocess.check_output(["git", "hash-object", "--stdin"], input=original).decode().strip()
-    assert original_hash == "4b1c3cea4b5107a425abab60f62d41f9f81e05a7", "Original playlist bytes changed"
-    assert current.startswith(original), "Protected IBO playlist content changed"
-    extra = current[len(original):]
-    if extra:
-        rows = [row for row in extra.decode("utf-8").splitlines() if row.strip()]
-        assert len(rows) % 2 == 0, "Incomplete appended channel"
-        known = {row.strip() for row in original.decode("utf-8-sig").splitlines() if row.strip().startswith(("http://", "https://"))}
-        for i in range(0, len(rows), 2):
-            header, url = rows[i:i+2]
-            assert header.startswith("#EXTINF:") and 'group-title="🗂️ YEDEKLER (2)"' in header, "Non-YEDEKLER append blocked"
-            assert url.startswith(("http://", "https://")) and url not in known, "Duplicate or invalid appended URL"
-            assert not any(x in header.casefold() for x in ("trt arabi", "trt world")), "Foreign-language channel blocked"
-            known.add(url)
+    current_hash = subprocess.check_output(["git", "hash-object", "--stdin"], input=current).decode().strip()
+    assert current_hash == "4b1c3cea4b5107a425abab60f62d41f9f81e05a7", "Protected IBO playlist bytes changed"
     text = LIVE.read_text(encoding="utf-8-sig")
     channels = list(entries(text))
     assert text.startswith("#EXTM3U"), "Missing M3U header"
