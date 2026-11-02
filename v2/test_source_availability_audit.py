@@ -1,8 +1,33 @@
 #!/usr/bin/env python3
 import unittest
-from source_availability_audit import audit
+from unittest.mock import patch
+import io
+from source_availability_audit import audit, probe
 
 class SourceAvailabilityTests(unittest.TestCase):
+    def test_probe_rejects_html_even_with_http_200(self):
+        class Response:
+            status = 200
+            def __enter__(self): return self
+            def __exit__(self, *args): return False
+            def read(self, size): return b"<html>not a playlist</html>"
+        with patch("source_availability_audit.urllib.request.build_opener") as opener:
+            opener.return_value.open.return_value = Response()
+            result = probe("https://example.org/playlist.m3u")
+        self.assertEqual(result["status"], "INVALID_M3U")
+        self.assertFalse(result["sample_m3u_header"])
+
+    def test_probe_accepts_bom_and_whitespace_m3u_header(self):
+        class Response:
+            status = 200
+            def __enter__(self): return self
+            def __exit__(self, *args): return False
+            def read(self, size): return b"\\xef\\xbb\\xbf\\n#EXTM3U\\n"
+        with patch("source_availability_audit.urllib.request.build_opener") as opener:
+            opener.return_value.open.return_value = Response()
+            result = probe("https://example.org/playlist.m3u")
+        self.assertEqual(result["status"], "HTTP_OK")
+
     def test_metadata_only(self):
         sources = [{"id": "tr", "url": "https://example.org/tr.m3u", "scope": "TR"},
                    {"id": "world", "url": "https://example.org/world.m3u", "scope": "world"}]
