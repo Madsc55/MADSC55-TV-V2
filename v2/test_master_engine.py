@@ -66,6 +66,14 @@ class MasterTests(unittest.TestCase):
         self.assertFalse(items[0]["media_decoded"])
         self.assertFalse(items[0]["device_verified"])
 
+    def test_empty_inventory_has_no_archive_restore_proof(self):
+        items, audit, report = build([], "#EXTM3U\n", [])
+        self.assertEqual(items, [])
+        self.assertEqual(audit, [])
+        self.assertEqual(report["recoverable_real_urls"], 0)
+        # An empty build cannot prove that an encrypted archive was restored.
+        self.assertFalse(bool(items) and [] == items)
+
     def test_no_device_success_inference(self):
         data = "#EXTM3U\n#EXTINF:-1,TRT 1\nhttps://example.org/new.m3u8\n"
         items, _, _ = build([({"id": "tr", "scope": "TR"}, data)], "#EXTM3U\n",
