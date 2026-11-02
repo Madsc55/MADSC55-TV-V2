@@ -51,6 +51,20 @@ def main():
                           env["V2_ARCHIVE_PASSPHRASE"]).decode().splitlines()]
         assert len(second_restore) == 2
         assert second_restore[0]["source_ids"] == ["source-A", "source-B"]
+        assert len(second_restore[0]["observations"]) == 2
+        assert json.loads(next_report.read_text(encoding="utf-8"))["observations_preserved"] == 3
+        # Reject corrupted encrypted history instead of silently losing records.
+        corrupted = base / "corrupted.enc"
+        data = bytearray(output.read_bytes())
+        data[-1] ^= 1
+        corrupted.write_bytes(data)
+        failure = subprocess.run([sys.executable, str(ROOT / "consolidate_inventory.py"),
+                                  "--encrypted-input", str(corrupted),
+                                  "--encrypted-output", str(base / "should-not-exist.enc"),
+                                  "--report", str(base / "should-not-exist.json")],
+                                 env=env, capture_output=True, text=True)
+        assert failure.returncode != 0
+        assert not (base / "should-not-exist.enc").exists()
         print("PASS: offline encrypted inventory merge, source retention, restore")
 
 if __name__ == "__main__":
