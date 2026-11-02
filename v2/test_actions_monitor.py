@@ -30,5 +30,10 @@ class MonitorTests(unittest.TestCase):
         self.assertEqual(result["runs"][1]["jobs"], [])
         self.assertEqual(result["runs"][2]["conclusion"], "success")
 
+    def test_missing_run_identity_is_rejected(self):
+        with patch.object(actions_monitor, "api", return_value={"workflow_runs": [{"status": "completed", "conclusion": "success"}]}):
+            with self.assertRaisesRegex(RuntimeError, "incomplete workflow run identity"):
+                actions_monitor.collect()
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)
