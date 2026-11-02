@@ -25,6 +25,12 @@ class HistoricalRecoveryTests(unittest.TestCase):
                     "https://@example.org/a.m3u8", "https://:pass@example.org/a.m3u8"):
             self.assertFalse(validate_url(url), url)
 
+    def test_rejects_alternate_loopback_host_notations(self):
+        for host in ("127.1", "2130706433", "0177.0.0.1", "0x7f000001",
+                     "foo.localhost", "localhost."):
+            self.assertFalse(validate_url(f"https://{host}/live.m3u8"), host)
+        self.assertTrue(validate_url("https://example.org/live.m3u8"))
+
     def test_malformed_ipv6_authority_is_rejected(self):
         self.assertFalse(validate_url("https://[broken/a.m3u8"))
         self.assertFalse(validate_url("https://[::1/a.m3u8"))
