@@ -21,7 +21,7 @@ def validate_url(value):
         return False
     try:
         parsed = urlsplit(value)
-        if parsed.scheme not in ("http", "https") or not parsed.hostname or parsed.username or parsed.password:
+        if parsed.scheme not in ("http", "https") or not parsed.hostname or parsed.username is not None or parsed.password is not None:
             return False
     except ValueError:
         return False
