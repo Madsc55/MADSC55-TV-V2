@@ -6,7 +6,7 @@ from historical_url_recovery import validate_url
 def decode_media(entry, timeout=20):
     """True only if ffmpeg actually outputs a decoded video frame checksum."""
     url = entry.get("url") if isinstance(entry, dict) else None
-    if not validate_url(url) or not 1 <= timeout <= 120:
+    if not validate_url(url) or not isinstance(timeout, (int, float)) or not 1 <= timeout <= 120:
         return False
     command = [
         "ffmpeg", "-hide_banner", "-nostdin", "-loglevel", "error",
