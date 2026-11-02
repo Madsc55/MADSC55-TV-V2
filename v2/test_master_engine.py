@@ -14,6 +14,7 @@ class MasterTests(unittest.TestCase):
         self.assertEqual(len(items), 1)
         self.assertEqual(items[0]["source_ids"], ["a", "b"])
         self.assertEqual(items[0]["network_status"], "HLS_MANIFEST_REACHABLE")
+        self.assertFalse(items[0]["media_decoded"])
         self.assertFalse(items[0]["device_verified"])
         self.assertEqual(len(items[0]["history"]), 1)
         self.assertEqual(report["historical_missing_real_url"], 1)
