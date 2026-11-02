@@ -47,6 +47,12 @@ def main():
     assert archive.exists(), "Foreign archive is missing"
     archived = list(entries(archive.read_text(encoding="utf-8-sig")))
     assert len(archived) == 3964, "Foreign archive lost channels"
+    # Protect exact original archive records and their order across future changes.
+    # Stream URL alone is insufficient: names, logos and metadata must survive.
+    assert all(x["url"].startswith(("https://", "http://")) for x in archived), "Invalid archived stream URL"
+    assert len({x["url"] for x in archived}) == len(archived), "Duplicate archive stream URL"
+    assert all(x["name"].strip() for x in archived), "Archived channel name missing"
+
     assert len(backups) + len(archived) == 4002, "Backup/archive total changed"
     assert not (set(x["url"] for x in backups) & set(x["url"] for x in archived)), "Archive and backups overlap"
 
