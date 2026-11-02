@@ -46,6 +46,8 @@ def merge_records(paths, encrypted_paths=(), passphrase=None):
                     merged[url]["observations"] = []
                 target = merged[url]
                 sources = record.get("source_ids", [])
+                if not sources and isinstance(record.get("source_id"), str):
+                    sources = [record["source_id"]]
                 if not isinstance(sources, list):
                     raise ValueError(f"{path}:{number}: source_ids must be a list")
                 for source in sources:
@@ -56,8 +58,10 @@ def merge_records(paths, encrypted_paths=(), passphrase=None):
                     if not target.get(field) and record.get(field):
                         target[field] = record[field]
                 prior = record.get("observations", [])
-                if prior and not isinstance(prior, list):
+                if not isinstance(prior, list):
                     raise ValueError(f"{path}:{number}: observations must be a list")
+                if any(not isinstance(item, dict) for item in prior):
+                    raise ValueError(f"{path}:{number}: observations must contain objects")
                 target["observations"].extend(prior)
                 if not prior:
                     target["observations"].append({
