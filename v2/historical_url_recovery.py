@@ -19,8 +19,11 @@ def read_records(path):
 def validate_url(value):
     if not isinstance(value, str):
         return False
-    parsed = urlsplit(value)
-    if parsed.scheme not in ("http", "https") or not parsed.hostname or parsed.username or parsed.password:
+    try:
+        parsed = urlsplit(value)
+        if parsed.scheme not in ("http", "https") or not parsed.hostname or parsed.username or parsed.password:
+            return False
+    except ValueError:
         return False
     try:
         address = ipaddress.ip_address(parsed.hostname)
