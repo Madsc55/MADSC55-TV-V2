@@ -25,6 +25,9 @@ jobs:
           import hashlib, pathlib, subprocess
           p = 'MADSC55_TV_IBO_CALISANLAR_TEST.m3u8'
           expected = subprocess.check_output(['git', 'show', 'HEAD:' + p])
+          baseline = '4b1c3cea4b5107a425abab60f62d41f9f81e05a7'
+          actual_blob = subprocess.check_output(['git', 'hash-object', p], text=True).strip()
+          assert actual_blob == baseline, 'Protected playlist changed from immutable baseline'
           actual = pathlib.Path(p).read_bytes()
           assert hashlib.sha256(expected).digest() == hashlib.sha256(actual).digest(), 'Protected playlist modified'
           print('protected_playlist_sha256=' + hashlib.sha256(actual).hexdigest())
