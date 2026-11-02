@@ -89,7 +89,7 @@ def main():
     ap.add_argument('--live', type=pathlib.Path, default=LIVE)
     args = ap.parse_args()
     if (not 1 <= args.workers <= 32 or not 1 <= args.limit <= 10000 or
-            not isinstance(args.timeout, float) or not math.isfinite(args.timeout) or
+            not math.isfinite(args.timeout) or
             not 0 < args.timeout <= 120):
         ap.error('workers must be 1..32 and limit 1..10000')
     if not args.live.is_file():
