@@ -120,8 +120,8 @@ def main():
     ap.add_argument('--limit', type=int, default=2000)
     ap.add_argument('--live', type=pathlib.Path, default=LIVE)
     args = ap.parse_args()
-    if not os.environ.get('V2_ARCHIVE_PASSPHRASE'):
-        ap.error('V2_ARCHIVE_PASSPHRASE secret required to protect stream inventory')
+    if len(os.environ.get('V2_ARCHIVE_PASSPHRASE', '')) < 16:
+        ap.error('V2_ARCHIVE_PASSPHRASE must contain at least 16 characters')
     if not 1 <= args.workers <= 32 or not 1 <= args.limit <= 10000:
         ap.error('workers must be 1..32 and limit 1..10000')
     if not args.live.is_file():
@@ -136,9 +136,8 @@ def main():
     foreign_archive = ROOT / 'v2/arsiv/yabanci_yedekler_2026-11-02_3964.m3u8'
     if not foreign_archive.is_file():
         ap.error('Protected foreign archive missing; refusing unfiltered export')
-    foreign_urls = {entry['url'] for entry in parse_m3u(
-        foreign_archive.read_bytes())}
     foreign_entries = list(parse_m3u(foreign_archive.read_bytes()))
+    foreign_urls = {entry['url'] for entry in foreign_entries}
     if len(foreign_entries) != 3964:
         ap.error('Foreign archive integrity failed; expected 3964 preserved entries')
     existing = main_urls | foreign_urls
@@ -214,7 +213,8 @@ def main():
             if not isinstance(url, str) or url in existing:
                 continue
             parsed = urllib.parse.urlsplit(url)
-            if parsed.scheme not in ('http', 'https') or not parsed.hostname:
+            if (parsed.scheme not in ('http', 'https') or not parsed.hostname
+                    or parsed.username or parsed.password):
                 continue
             historical_records[url] = record
             if url in candidates:
