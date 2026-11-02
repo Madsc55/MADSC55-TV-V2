@@ -13,11 +13,13 @@ class EncryptedArchiveTests(unittest.TestCase):
     def test_roundtrip_append_and_restore(self):
         with tempfile.TemporaryDirectory() as folder:
             path = Path(folder) / "archive.jsonl.enc"
-            append(path, {"url": "https://example.invalid/private.m3u8?token=secret"}, KEY)
-            append(path, {"url": "https://example.invalid/second.m3u8"}, KEY)
+            records = [{"url": "https://example.invalid/private.m3u8?token=secret"},
+                       {"url": "https://example.invalid/second.m3u8"}]
+            for record in records:
+                append(path, record, KEY)
             raw = path.read_bytes()
             self.assertNotIn(b"token=secret", raw)
-            self.assertEqual(len(restore(path, KEY)), 2)
+            self.assertEqual(restore(path, KEY), records)
             self.assertEqual(len(archive_sha256(path)), 64)
             self.assertEqual(path.stat().st_mode & 0o077, 0)
     def test_tamper_fails_authentication(self):
