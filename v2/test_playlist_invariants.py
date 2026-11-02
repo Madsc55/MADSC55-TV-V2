@@ -39,6 +39,7 @@ def main():
     assert [x["name"] for x in backups[:2]] == [
         "TRT 1 1440P QHD", "DHA CANLI 720P HD"
     ], "TRT 1 and DHA must permanently occupy YEDEKLER positions 1 and 2"
+    assert [x["name"] for x in backups[2:4]] == ["24", "ADA TV (1080P)"], "Approved positions 3 and 4 changed"
     assert sum(x["name"] == "TRT 1 1440P QHD" for x in backups) == 1, "Duplicate or missing TRT 1"
     assert sum(x["name"] == "DHA CANLI 720P HD" for x in backups) == 1, "Duplicate or missing DHA"
     # Latest user-approved move: 12 selected entries were moved to the end.
