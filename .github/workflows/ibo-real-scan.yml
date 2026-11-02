@@ -59,7 +59,7 @@ jobs:
               raise SystemExit('Device verification claim must remain false')
           if report.get('exported_part1', 0) > 500:
               raise SystemExit('Batch size exceeds 500')
-          files = [Path(p) for p in report.get('written_parts', [])]
+          files = [Path(p) for p in (report.get('written_parts') or [])]
           if report.get('status') == 'READY_FOR_DEVICE_TEST' and not files:
               raise SystemExit('Verified candidates reported without batch files')
           if report.get('status') == 'READY_FOR_DEVICE_TEST' and len(files) != report.get('part_count'):
@@ -85,6 +85,7 @@ jobs:
           if-no-files-found: warn
           retention-days: 7
       - name: Check whether verified batches exist
+        if: success()
         id: batches
         shell: bash
         run: |
