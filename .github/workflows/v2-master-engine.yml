@@ -40,7 +40,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: v2-master-run-${{ github.run_id }}
-          path: v2/reports/master-run/
+          path: v2/reports/master-run/output/report.json
           retention-days: 30
           if-no-files-found: warn
       - name: Protect working tree
