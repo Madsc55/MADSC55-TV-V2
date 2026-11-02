@@ -67,8 +67,8 @@ def main():
     p.add_argument("--timeout", type=float, default=12)
     p.add_argument("--limit", type=int, default=500)
     args = p.parse_args()
-    if not 1 <= args.limit <= 500 or not 1 <= args.workers <= 32:
-        p.error("limit 1..500; workers 1..32")
+    if not 1 <= args.limit <= 500 or not 1 <= args.workers <= 32 or not 0 < args.timeout <= 120:
+        p.error("limit 1..500; workers 1..32; timeout >0 and <=120")
     if not os.environ.get("V2_ARCHIVE_KEY_HEX"):
         p.error("V2_ARCHIVE_KEY_HEX secret is required")
     if args.archive.exists() or args.out.exists():
