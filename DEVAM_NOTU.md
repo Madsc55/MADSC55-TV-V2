@@ -934,3 +934,11 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - Bu CI, gerçek IPTV-org/Free-TV/onaylı M3U uçtan uca ağ taramasını, bütün kaynakların erişimini, sıfır aday kaybını veya Worldwide Discovery #80 kök nedeninin giderildiğini kanıtlamaz. #80 hata logu henüz incelenmedi. Ayrıca #268 adım listesinde `test_source_integrity.py` adı görülmediğinden bu özel testin CI'da yürütüldüğü iddia edilmez.
 - Görev 1 durumu: KISMEN TAMAMLANDI / GERÇEK TARAMA DOĞRULAMASI BEKLİYOR. Görev 2'ye kod değişikliğiyle geçilmedi; yalnızca mimari hazırlık yapılabilir.
 - Koruma: ana IBO playlist'i, YEDEKLER'deki iki kanal, YENİLER, FAVORİLER, cihaz favorileri, logo/EPG/kategoriler değiştirilmedi; main ve PR #9 birleştirilmedi.
+
+
+## 2 Kasım 2026 — Toplu çevrimdışı kurtarma entegrasyonu
+- `v2/historical_url_recovery.py` ve `v2/test_historical_url_recovery.py` çalışma dalına eklendi (daedaba0, ea7d1fa).
+- CI toplu test döngüsüne kurtarma testi ve değişiklik tetikleyicisi eklendi (75dd459). Çevrimdışı çalışır; gerçek ağ taraması başlatmaz.
+- Kurtarma ancak eski raporlarda gerçek HTTP(S) URL mevcutsa aday üretir; anonim ID'lerden adres uydurmaz; mevcut URL'leri ve tekrarları çıkarır, kaynak/metadata korur. Eski #60 arşivinin gerçek URL kayıtları henüz temin edilmediği için 4.955 adayın kurtarıldığı iddia edilmez.
+- CI'nın yeni commit sonrası yeşil sonucu henüz doğrulanmadı. Harici bağımsız şifreli yedek henüz doğrulanmadı.
+- Ana IBO, YEDEKLER, YENİLER, FAVORİLER ve yabancı arşiv değişmedi; PR #9 birleştirilmedi.
