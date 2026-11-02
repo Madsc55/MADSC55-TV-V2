@@ -138,15 +138,16 @@ def main():
         p.error("Archive/output path overlaps protected playlist or source configuration")
     protected_hash_before = hashlib.sha256(LIVE.read_bytes()).hexdigest()
     live_text = LIVE.read_text(encoding="utf-8-sig")
-    source_texts, failures = [], []
-    for source in sources:
-        try:
-            content = fetch(source["url"])
-            if not content.lstrip().startswith("#EXTM3U"):
-                raise ValueError("Source returned non-M3U content")
+    from source_failover import SourceCache, execute_pipeline
+    cache = SourceCache(ROOT / "cache" / "source-failover")
+    source_texts, failures, recovery_audit = [], [], []
+    for source, content, result in execute_pipeline(sources, cache):
+        recovery_audit.append(result)
+        if content is not None:
             source_texts.append((source, content))
-        except Exception as exc:
-            failures.append({"id": source["id"], "status": "FETCH_FAILED", "reason": type(exc).__name__})
+        if not result["fresh"]:
+            failures.append({"id": source["id"], "status": result["status"],
+                             "reason": "Fresh source unavailable"})
     history = list(read_records(args.history)) if args.history else []
     items, audit, history_report = build(source_texts, live_text, history,
                                          checker=lambda x: check_hls(x, args.timeout),
@@ -189,7 +190,7 @@ def main():
               "protected_playlist_sha256_after": protected_hash_after,
               "protected_playlist_unchanged": True,
               "configured_sources": len(sources), "fetched_sources": len(audit),
-              "failed_sources": failures, "source_audit": audit, "unique_candidates": len(items),
+              "failed_sources": failures, "source_audit": audit, "source_recovery_audit": recovery_audit, "unique_candidates": len(items),
               "manifest_reachable": sum(x["network_status"] == "HLS_MANIFEST_REACHABLE" for x in items),
               "media_decoded": len(verified), "unknown_or_failed": sum(x["network_status"] != "HLS_MANIFEST_REACHABLE" for x in items),
               "historical": history_report, "archive_restore_verified": bool(items) and restored == items,
