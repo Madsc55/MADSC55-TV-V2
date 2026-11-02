@@ -15,12 +15,12 @@ def main():
     current = LIVE.read_bytes()
     text = current.decode("utf-8-sig")
     channels_pre = list(entries(text))
-    assert len(channels_pre) >= 2840, "Playlist lost a channel from the 2026-11-01 protected baseline"
+    assert len(channels_pre) == 876, "Expected 838 protected channels and 38 approved backups"
     non_backup = [x for x in channels_pre if "YEDEKLER" not in x["group"]]
     assert len(non_backup) == 838, "Protected non-YEDEKLER categories changed in size"
     backup_count = sum("YEDEKLER" in x["group"] for x in channels_pre)
     backup_group = f"🗂️ YEDEKLER ({backup_count})"
-    assert backup_count >= 2002, "Existing YEDEKLER test candidates were lost"
+    assert backup_count == 38, "YEDEKLER must contain exactly the approved first 38 channels"
     backup_names = [x["name"] for x in channels_pre if "YEDEKLER" in x["group"]]
     assert len(backup_names) == backup_count
     assert all(x["group"] == backup_group for x in channels_pre if "YEDEKLER" in x["group"]), "YEDEKLER counter inconsistent"
@@ -33,7 +33,7 @@ def main():
     assert text.startswith("#EXTM3U"), "Missing M3U header"
     assert len(channels) >= 840, "Playlist shrank below the verified post-deduplication baseline"
     backups = [x for x in channels if "YEDEKLER" in x["group"]]
-    assert len(backups) >= 2002, "YEDEKLER lost test candidates"
+    assert len(backups) == 38, "YEDEKLER must contain exactly 38 channels"
     assert any(x["name"] == "TRT 1 1440P QHD" for x in backups), "Original TRT 1 backup missing"
     assert any(x["name"] == "DHA CANLI 720P HD" for x in backups), "Original DHA backup missing"
     assert [x["name"] for x in backups[:2]] == [
@@ -42,18 +42,13 @@ def main():
     assert [x["name"] for x in backups[2:5]] == ["EUROSPORT 1 HD TR", "24", "ADA TV (1080P)"], "Approved positions 3-5 changed"
     assert sum(x["name"] == "TRT 1 1440P QHD" for x in backups) == 1, "Duplicate or missing TRT 1"
     assert sum(x["name"] == "DHA CANLI 720P HD" for x in backups) == 1, "Duplicate or missing DHA"
-    # Latest user-approved move: 12 selected entries were moved to the end.
-    # Do not enforce the obsolete 3-26 positions; keep their exact tail order.
-    approved_tail = (
-        "BBC FİRST TURKİYE", "TRT 3 (720P)", "ATV (1080P)",
-        "ATV (1080P)", "BRTV (720P)", "TV 2000 TR",
-        "ANGER MANAGEMENT CHANNEL (1080P)", "ANHUİ TV (1080P)",
-        "ANİMAL PLANET", "AS TV BURSA TR", "ATV", "FM TV TR",
-    )
-    assert backup_count == 4002, "User-approved 4002 YEDEKLER entries changed"
-    assert tuple(x["name"] for x in backups[-12:]) == approved_tail, \
-        "User-approved 12 moved YEDEKLER channels are not at the end"
-
+    # Positions 39-4002 were safely moved to the foreign archive.
+    archive = ROOT / "v2" / "arsiv" / "yabanci_yedekler_2026-11-02_3964.m3u8"
+    assert archive.exists(), "Foreign archive is missing"
+    archived = list(entries(archive.read_text(encoding="utf-8-sig")))
+    assert len(archived) == 3964, "Foreign archive lost channels"
+    assert len(backups) + len(archived) == 4002, "Backup/archive total changed"
+    assert not (set(x["url"] for x in backups) & set(x["url"] for x in archived)), "Archive and backups overlap"
 
     assert not any(x["name"].startswith(("TRT Arabi", "TRT World")) for x in channels), "Unwanted foreign-language trials remain"
     for name in ("Aras TV (576p) [Not 24/7]", "Haber61 TV (720p) [Not 24/7]", "TV Den (576p) [Not 24/7]", "YOL TV"):
