@@ -119,9 +119,18 @@ def main():
                                          media_checker=lambda x: decode_media(x, args.timeout))
     # Never silently publish a partial scan as complete.
     args.out.mkdir(parents=True)
+    # Create an authenticated archive even when discovery yields no candidates.
+    # Empty archives must still be real files; a missing archive is not a valid backup.
+    if not items:
+        args.archive.parent.mkdir(parents=True, exist_ok=True)
+        flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL
+        if hasattr(os, "O_NOFOLLOW"):
+            flags |= os.O_NOFOLLOW
+        fd = os.open(args.archive, flags, 0o600)
+        os.close(fd)
     for item in items:
         append(args.archive, item)
-    restored = restore(args.archive) if items else []
+    restored = restore(args.archive)
     if restored != items:
         raise RuntimeError("Encrypted archive restore mismatch")
     verified = [x for x in items if x.get("media_decoded") is True]
