@@ -40,6 +40,17 @@ def main():
         assert len(restored[0]["observations"]) == 2
         assert restored[0]["name"] == "Test channel"
         assert len(restored) == 2
+        roundtrip = base / "roundtrip.enc"
+        next_report = base / "next-report.json"
+        subprocess.run([sys.executable, str(ROOT / "consolidate_inventory.py"),
+                        "--encrypted-input", str(output),
+                        "--encrypted-output", str(roundtrip),
+                        "--report", str(next_report)],
+                       env=env, check=True, capture_output=True, text=True)
+        second_restore = [json.loads(line) for line in decrypt(roundtrip.read_bytes(),
+                          env["V2_ARCHIVE_PASSPHRASE"]).decode().splitlines()]
+        assert len(second_restore) == 2
+        assert second_restore[0]["source_ids"] == ["source-A", "source-B"]
         print("PASS: offline encrypted inventory merge, source retention, restore")
 
 if __name__ == "__main__":
