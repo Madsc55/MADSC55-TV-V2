@@ -94,6 +94,16 @@ class MasterTests(unittest.TestCase):
         self.assertFalse(items[0]["device_verified"])
         self.assertEqual([entry["status"] for entry in audit], ["FETCHED", "FETCHED"])
 
+    def test_source_url_validation_blocks_private_and_credentialed_streams(self):
+        data = ("#EXTM3U\n"
+                "#EXTINF:-1,TRT 1\nhttp://127.0.0.1/internal.m3u8\n"
+                "#EXTINF:-1,TRT 1\nhttps://user:pass@example.org/private.m3u8\n"
+                "#EXTINF:-1,TRT 1\nhttps://example.org/public.m3u8\n")
+        items, audit, _ = build([({"id": "tr", "scope": "TR"}, data)], "#EXTM3U\n")
+        self.assertEqual([item["url"] for item in items], ["https://example.org/public.m3u8"])
+        self.assertEqual(audit[0]["parsed"], 3)
+        self.assertFalse(items[0].get("device_verified", False))
+
     def test_no_device_success_inference(self):
         data = "#EXTM3U\n#EXTINF:-1,TRT 1\nhttps://example.org/new.m3u8\n"
         items, _, _ = build([({"id": "tr", "scope": "TR"}, data)], "#EXTM3U\n",
