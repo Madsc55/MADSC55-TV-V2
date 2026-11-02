@@ -1,3 +1,8 @@
+## 2 Kasım 2026 — sekiz aşamalı talimat, Aşama 1 ilerlemesi
+- `e019759d9a7db1a6289450700069084bbeaff9b7`: Master Engine korunan playlist SHA-256 özetini kaynak indirme başlamadan önce alıyor; eksik kaynak taramasında yeni M3U paketi yayınlamıyor ve rapordaki batch_count sıfır kalıyor. Şifreli envanter ve rapor korunuyor.
+- GitHub bağlı dosya okuma/yazma erişimi çalıştı; doğrudan git klonlama `Could not resolve host: github.com` nedeniyle başarısız. Bu oturumda repo Python testleri ve canlı medya taraması çalıştırılamadı; commit testten geçmiş veya Aşama 1 tamamlanmış sayılmıyor.
+- Devam: çalışma dalında kodu bağımsız Python ortamında test et, özellikle `test_master_engine.py` ve `test_real_ibo_scan.py`; sonra Aşama 2 kaynak hata raporları. PR #9 ve main değişmedi, ana playlist değiştirilmedi.
+
 ## 2 Kasım 2026 — eksik kaynak durumu ve regresyon güvencesi
 - `8fb8bf58bf0ab44b1bf7450ac1666ed7d5e747ef`: `v2/real_ibo_scan.py` rapor durumu, devam notuyla tutarlı olacak şekilde `PARTIAL_SOURCE_FETCH` yapıldı; erişilemeyen kaynakta mevcut çıktı dosyası üzerine yazılmadan hata çıkışı korunuyor. Erişilemeyen ikinci kontrol bloğu kaldırıldı.
 - `85638a21970e9c1c30203a29ba7eb86581593f4e`: `v2/test_real_ibo_scan.py` eksik kaynak senaryosunda önceki paket baytlarının korunmasını, rapor durumunu ve ana listenin değiştirilmemesini sınayan regresyon testi eklendi.
