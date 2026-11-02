@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Read actual Master Engine Actions run states, conclusions, jobs and failed steps."""
+"""Read V2 Eight-Stage verification Actions runs, jobs and failed steps."""
 import json
 import os
 import sys
@@ -10,7 +10,7 @@ from pathlib import Path
 
 REPO = os.environ.get("GITHUB_REPOSITORY", "Madsc55/MADSC55-TV-V2")
 TOKEN = os.environ.get("GITHUB_TOKEN", "")
-WORKFLOW = "v2-master-engine.yml"
+WORKFLOW = "v2-eight-stage-verification.yml"
 BRANCH = "madsc/v2-discovery-bulk-20261031"
 
 def api(path):
@@ -34,7 +34,7 @@ def collect():
     # Query the exact workflow first: repo-wide first page can contain only monitor runs.
     runs = api(base + "/workflows/" + WORKFLOW + "/runs?" + q)["workflow_runs"]
     if not runs:
-        raise RuntimeError("GitHub API returned no Master Engine runs for the configured branch")
+        raise RuntimeError("GitHub API returned no V2 verification runs for the configured branch")
     if any(not run.get("id") or not run.get("head_sha") or not run.get("html_url") for run in runs):
         raise RuntimeError("GitHub API returned incomplete workflow run identity")
     records = []
