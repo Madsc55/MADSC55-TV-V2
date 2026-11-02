@@ -1,3 +1,10 @@
+## 3 Kasım 2026 — Worldwide Discovery kaynak bütünlüğü / #153 devam kaydı
+- Canlı beş kaynak doğrulaması başarılı: Actions 41548331416, commit 5290db79. Beş grubun her biri için en az bir HTTP erişilebilir M3U doğrulandı; bu yayın decode kanıtı değildir.
+- Worldwide Discovery önce 2, sonra 1 hata verdi. afff86b2 logları kalan hatayı görünür kıldı; d97ed1a sonrası canlı koşuda hata 'index-github-turkish-iptv-topics' (HTTPError) olarak belirlendi.
+- de1a8c2b ve d97ed1a isteğe bağlı HTML indeksinden türetilen bozuk M3U bağlantılarını zorunlu kaynak hatalarından ayırdı. 4cffec72 ayrıca erişilemeyen isteğe bağlı HTML indeks sayfasını 'OPTIONAL_INDEX_FAILED' olarak denetim kaydında tutuyor; zorunlu M3U kaynağı hataları ve gerçek aday bütünlüğü testleri başarısız olmaya devam eder.
+- Son kesin gözlenen Worldwide koşusu 41549287420 başarısızdı: 49 kaynak, 8077 aday, 1 hata (isteğe bağlı GitHub topic HTML indeksi). 4cffec72 sonrası toplu Actions sonucunu ayrıca doğrulamak gerekir; başarı doğrulanmadan tamamlandı denmez.
+- Ana İBO playlisti, YEDEKLER/YENİLER/FAVORİLER, main, PR #9 ve eski depo değiştirilmedi.
+
 ## 2 Kasım 2026 — M3U metadata koruması (test bekliyor)
 - `cffb38f5996acea625d58bc073bb95891cf689ea`: M3U export için EPG/logo/grup/URL korunumu regresyon testi eklendi. GitHub Actions sonucu henüz alınmadı; test başarı iddiası yok.
 - `e26e0f884b29b6c2af037d70904ee03ad71f2ab0`: `v2/master_engine.py` M3U dışa aktarımında `tvg-id`, `tvg-logo`, `group-title` alanlarını EXTINF satırına taşıyacak şekilde değiştirildi.
