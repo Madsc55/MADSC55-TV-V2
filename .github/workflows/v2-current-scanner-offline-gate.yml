@@ -20,6 +20,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Install test dependencies
+        run: python -m pip install 'cryptography>=42,<47'
       - name: Compile V2 branch code
         run: python -m compileall -q v2
       - name: Run source, discovery, protection and archive tests
