@@ -100,6 +100,7 @@ def main():
         for candidate in approved_sources(json.loads(FORGE.read_text(encoding="utf-8")), approvals):
             if not any(s["url"] == candidate["url"] for s in sources):
                 sources.append(candidate)
+    protected_hash_before = hashlib.sha256(LIVE.read_bytes()).hexdigest()
     live_text = LIVE.read_text(encoding="utf-8-sig")
     source_texts, failures = [], []
     for source in sources:
@@ -116,7 +117,6 @@ def main():
                                          workers=args.workers,
                                          media_checker=lambda x: decode_media(x, args.timeout))
     # Never silently publish a partial scan as complete.
-    protected_hash_before = hashlib.sha256(LIVE.read_bytes()).hexdigest()
     args.out.mkdir(parents=True)
     for item in items:
         append(args.archive, item)
@@ -125,13 +125,15 @@ def main():
         raise RuntimeError("Encrypted archive restore mismatch")
     verified = [x for x in items if x.get("media_decoded") is True]
     # A manifest check is not media decoding; never export it as a verified stream.
-    for n in range(0, len(verified), args.limit):
-        batch = verified[n:n + args.limit]
-        lines = ["#EXTM3U"]
-        for item in batch:
-            name = str(item.get("name", "Unknown")).replace("\n", " ").replace("\r", " ").replace(",", " ")
-            lines += [f'#EXTINF:-1,{name}', item["url"]]
-        (args.out / f"ibo_part_{n // args.limit + 1:04}.m3u8").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    # A partial source fetch cannot publish a new package as complete.
+    if not failures:
+        for n in range(0, len(verified), args.limit):
+            batch = verified[n:n + args.limit]
+            lines = ["#EXTM3U"]
+            for item in batch:
+                name = str(item.get("name", "Unknown")).replace("\n", " ").replace("\r", " ").replace(",", " ")
+                lines += [f'#EXTINF:-1,{name}', item["url"]]
+            (args.out / f"ibo_part_{n // args.limit + 1:04}.m3u8").write_text("\n".join(lines) + "\n", encoding="utf-8")
     protected_hash_after = hashlib.sha256(LIVE.read_bytes()).hexdigest()
     if protected_hash_before != protected_hash_after:
         raise RuntimeError("Protected main playlist SHA-256 changed during scan")
@@ -143,7 +145,7 @@ def main():
               "manifest_reachable": sum(x["network_status"] == "HLS_MANIFEST_REACHABLE" for x in items),
               "media_decoded": len(verified), "unknown_or_failed": sum(x["network_status"] != "HLS_MANIFEST_REACHABLE" for x in items),
               "historical": history_report, "archive_restore_verified": restored == items,
-              "device_verified": False, "batch_count": (len(verified) + args.limit - 1) // args.limit,
+              "device_verified": False, "batch_count": (len(verified) + args.limit - 1) // args.limit if not failures else 0,
               "status": "NO_CANDIDATES" if not items else ("NO_MEDIA_DECODED" if not verified else ("PARTIAL_SOURCE_FAILURE" if failures else "COMPLETE_SOURCE_FETCH"))}
     (args.out / "report.json").write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     print(json.dumps({k: v for k, v in report.items() if k != "source_audit"}, ensure_ascii=False))
