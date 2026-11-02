@@ -211,6 +211,7 @@ def main():
     fetched_playlist_urls = {source["url"] for source in sources if source.get("kind", "m3u") != "html"}
     skipped_duplicate_index_links = 0
     index_link_errors = []
+    optional_index_errors = []
     from source_failover import SourceCache, recover_source, FetchFailure
     failover_cache = SourceCache(ROOT / "v2" / "cache" / "discovery-source-failover")
     for source in sources:
@@ -286,9 +287,11 @@ def main():
                                  "distinct_stream_urls": len({e["url"] for e in parsed}),
                                  "status": "PARSED_NOT_PLAYBACK_VERIFIED"})
         except Exception as exc:
-            errors.append({"source": source["id"], "error": type(exc).__name__,
-                           "attempts": attempts})
-            source_audit.append({"source": source["id"], "status": "FETCH_FAILED",
+            optional = source.get("kind") == "html"
+            record = {"source": source["id"], "error": type(exc).__name__, "attempts": attempts}
+            (optional_index_errors if optional else errors).append(record)
+            source_audit.append({"source": source["id"],
+                                 "status": "OPTIONAL_INDEX_FAILED" if optional else "FETCH_FAILED",
                                  "error": type(exc).__name__, "attempts": attempts})
     if args.encrypted_archive:
         if args.encrypted_archive.is_symlink():
@@ -317,6 +320,7 @@ def main():
                                  "COMPLETE_SOURCE_FETCH" if not errors else "PARTIAL_SOURCE_FETCH")
     result["failed_source_count"] = len(errors)
     result["index_link_errors"] = index_link_errors
+    result["optional_index_errors"] = optional_index_errors
     result["failed_optional_index_links"] = len(index_link_errors)
     result["source_coverage_summary"] = {
         "configured_sources": len(sources),
