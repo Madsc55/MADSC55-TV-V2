@@ -121,7 +121,7 @@ def main():
     for item in items:
         append(args.archive, item)
     restored = restore(args.archive) if items else []
-    if items and restored != items:
+    if restored != items:
         raise RuntimeError("Encrypted archive restore mismatch")
     verified = [x for x in items if x.get("media_decoded") is True]
     # A manifest check is not media decoding; never export it as a verified stream.
