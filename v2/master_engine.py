@@ -123,6 +123,8 @@ def main():
     # Fail closed before any network access if a requested output would target
     # the protected playlist or source configuration (including symlink aliases).
     protected_paths = [LIVE.resolve(strict=False), SOURCES.resolve(strict=False)]
+    if args.history is not None:
+        protected_paths.append(args.history.resolve(strict=False))
     if DYNAMIC.exists():
         protected_paths.append(DYNAMIC.resolve(strict=False))
     if GITHUB_APPROVALS.exists():
