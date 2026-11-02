@@ -55,11 +55,16 @@ def merge_records(paths, encrypted_paths=(), passphrase=None):
                 for field in ("name", "group", "tvg_id", "logo", "country", "language"):
                     if not target.get(field) and record.get(field):
                         target[field] = record[field]
-                target["observations"].append({
-                    "input": path.name,
-                    "status": record.get("http_hls_status", record.get("status", "UNVERIFIED")),
-                    "ibo_device_tested": record.get("ibo_device_tested", False),
-                })
+                prior = record.get("observations", [])
+                if prior and not isinstance(prior, list):
+                    raise ValueError(f"{path}:{number}: observations must be a list")
+                target["observations"].extend(prior)
+                if not prior:
+                    target["observations"].append({
+                        "input": path.name,
+                        "status": record.get("http_hls_status", record.get("status", "UNVERIFIED")),
+                        "ibo_device_tested": record.get("ibo_device_tested", False),
+                    })
                 count += 1
         counts[path.name] = count
     return merged, counts
