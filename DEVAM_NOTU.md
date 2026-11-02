@@ -1,3 +1,7 @@
+## 2 Kasım 2026 — Master Engine çıktı artifact kapsamı
+- `876e972299b359633fd75aecf191ce23277b5ac4`: manuel Master Engine işinin artifact kapsamı yalnızca `report.json` yerine `output/` içindeki gerçek rapor ve varsa M3U paketleri ile `inventory.enc` şifreli envanterini içeriyor. Bu yalnızca artifact toplama altyapısıdır; taramanın veya paket üretiminin başarılı olduğu iddiası değildir.
+- GitHub Actions artifact saklama süresi 30 gün; kalıcı harici şifreli arşiv yerine geçmez. Yeni commit'in Actions run ID/job sonucu henüz doğrulanmadı. Ana İBO playlisti, main, PR #9, eski depo değişmedi.
+
 ## 2 Kasım 2026 — V2 Master Engine #107 hata kanıtı ve CI düzeltmesi
 - Kullanıcı ekran görüntüsü: **V2 Master Engine #107**, commit `3bfc43c`, **FAILURE**, `offline-tests` 11 saniyede başarısız, `master` skipped. `test_duplicate_sources_decode_once_and_keep_all_provenance`: `AssertionError: 0 != 1`; 10 testten 1 başarısız. Bu **eski commit** için sonuçtur; güncel dalın yeni test sonucu değildir. Sayısal Actions run ID ekran görüntüsünde yok.
 - `495314228800c43abc43b630fe4ec125abea9f3a` ile test M3U satır sonları düzeltilmişti; güncel dosyada doğru `\\n` kaçışları okundu.
