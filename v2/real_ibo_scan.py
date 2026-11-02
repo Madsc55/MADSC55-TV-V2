@@ -44,8 +44,10 @@ def parse_m3u(data):
             name = line.rsplit(',', 1)[-1].strip() or 'Unknown'
             group = re.search(r'group-title="([^"]*)"', line)
             tvg = re.search(r'tvg-id="([^"]*)"', line)
+            logo = re.search(r'tvg-logo="([^"]*)"', line)
             pending = {'name': name, 'group': group.group(1) if group else '',
-                       'tvg_id': tvg.group(1) if tvg else ''}
+                       'tvg_id': tvg.group(1) if tvg else '',
+                       'logo': logo.group(1) if logo else ''}
         elif line and not line.startswith('#'):
             if pending and urllib.parse.urlsplit(line).scheme in ('http', 'https'):
                 yield {**pending, 'url': line}
@@ -150,7 +152,11 @@ def main():
     for item in good[:args.limit]:
         name = item['name'].replace('\n', ' ').replace('\r', ' ').replace(',', ' ')
         group = item['group'].replace('"', '').replace('\n', ' ')
-        lines.extend([f'#EXTINF:-1 group-title="{group}",{name}', item['url']])
+        tvg_id = item.get('tvg_id', '').replace('"', '&quot;').replace('\n', ' ').replace('\r', ' ')
+        logo = item.get('logo', '').replace('"', '&quot;').replace('\n', ' ').replace('\r', ' ')
+        attrs = ' '.join(f'{key}="{value}"' for key, value in
+                         (('tvg-id', tvg_id), ('tvg-logo', logo), ('group-title', group)) if value)
+        lines.extend([f'#EXTINF:-1 {attrs},{name}', item['url']])
     temp = args.output.with_suffix(args.output.suffix + '.tmp')
     args.output.parent.mkdir(parents=True, exist_ok=True)
     temp.write_text('\n'.join(lines) + '\n', encoding='utf-8')
