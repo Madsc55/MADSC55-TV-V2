@@ -1,3 +1,8 @@
+## 2 Kasım 2026 — eksik kaynak durumu ve regresyon güvencesi
+- `8fb8bf58bf0ab44b1bf7450ac1666ed7d5e747ef`: `v2/real_ibo_scan.py` rapor durumu, devam notuyla tutarlı olacak şekilde `PARTIAL_SOURCE_FETCH` yapıldı; erişilemeyen kaynakta mevcut çıktı dosyası üzerine yazılmadan hata çıkışı korunuyor. Erişilemeyen ikinci kontrol bloğu kaldırıldı.
+- `85638a21970e9c1c30203a29ba7eb86581593f4e`: `v2/test_real_ibo_scan.py` eksik kaynak senaryosunda önceki paket baytlarının korunmasını, rapor durumunu ve ana listenin değiştirilmemesini sınayan regresyon testi eklendi.
+- Bu oturumda test çalıştırma veya Actions başarı sonucu doğrulanmadı. Canlı tarama ve medya decode yapılmadı. PR #9 birleştirilmedi; ana playlist değiştirilmedi.
+
 ## 2 Kasım 2026 — main üzerindeki #3 scan hata görüntüsü ve paket koruması
 - Kullanıcı ekran görüntüsü: `V2 Gerçek IPTV Tarama ve İBO Paketleri #3`, main `d9d80f2`, pull_request tetikleyicisi, scan job 53m18s, workflow 53m32s, `Incomplete source fetch or source count...`, exit 1. Bu, çalışma dalının Actions sonucu değildir; run ID ekran görüntüsünde görünmüyor.
 - `836498371324c7aade8cecd877c1f0f1c2202144`: çalışma dalı `v2/real_ibo_scan.py` eksik kaynakta `PARTIAL_SOURCE_FETCH` ve `source_coverage_complete=false` raporlar, mevcut başarılı paketi değiştirmeden hata ile çıkar.
