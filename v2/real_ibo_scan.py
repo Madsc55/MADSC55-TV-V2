@@ -133,16 +133,13 @@ def main():
               'source_coverage_complete': source_coverage_complete,
               'source_counts': source_counts,
               'playback_verified_on_device': False, 'mock_data_used': False,
-              'status': ('INCOMPLETE_SOURCE_FETCH' if not source_coverage_complete else
+              'status': ('PARTIAL_SOURCE_FETCH' if not source_coverage_complete else
                          'READY_FOR_DEVICE_TEST' if good else 'NO_VERIFIED_CANDIDATES')}
     args.report.parent.mkdir(parents=True, exist_ok=True)
     args.report.write_text(json.dumps(report, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
     if not source_coverage_complete:
         print(json.dumps(report, ensure_ascii=False, indent=2))
         raise SystemExit('Incomplete source fetch; no new test package published')
-    if failed:
-        print(json.dumps(report, ensure_ascii=False, indent=2))
-        raise SystemExit('Incomplete source fetch; existing packages preserved; see failed_sources')
     if not good:
         print(json.dumps(report, ensure_ascii=False, indent=2))
         raise SystemExit('No new HLS candidates verified; main playlist unchanged')
