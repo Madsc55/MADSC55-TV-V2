@@ -102,9 +102,9 @@ jobs:
           else:
               key = secrets.token_hex(32)
           with open(os.environ["GITHUB_ENV"], "a", encoding="utf-8") as env:
-              env.write("V2_ARCHIVE_KEY_HEX=" + key + "\\n")
+              env.write("V2_ARCHIVE_KEY_HEX=" + key + "\n")
           with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as output:
-              output.write("persistent=" + str(persistent).lower() + "\\n")
+              output.write("persistent=" + str(persistent).lower() + "\n")
           print("::add-mask::" + key)
           print("Archive mode: " + ("persistent configured key" if persistent else "ephemeral per-run key"))
           PY
