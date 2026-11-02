@@ -24,6 +24,19 @@ jobs:
           python-version: '3.12'
       - name: Install scanner dependencies
         run: python -m pip install 'cryptography>=42,<47'
+      - name: Validate archive secret and offline safety tests
+        env:
+          V2_ARCHIVE_PASSPHRASE: ${{ secrets.V2_ARCHIVE_PASSPHRASE }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ "${#V2_ARCHIVE_PASSPHRASE}" -lt 16 ]; then
+            echo "::error::V2_ARCHIVE_PASSPHRASE secret missing or too short"
+            exit 1
+          fi
+          python3 v2/test_secure_archive_roundtrip.py
+          python3 v2/test_consolidate_inventory.py
+          python3 v2/test_real_ibo_scan_offline.py
       - name: Scan live HTTPS sources and check HLS manifests
         env:
           V2_ARCHIVE_PASSPHRASE: ${{ secrets.V2_ARCHIVE_PASSPHRASE }}
