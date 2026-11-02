@@ -98,6 +98,8 @@ def main():
         raise SystemExit('Refusing to overwrite protected main playlist')
     if args.output.resolve() == args.report.resolve():
         raise SystemExit('Scanner output and report must use different paths')
+    if args.sources.resolve() in (args.output.resolve(), args.report.resolve()):
+        raise SystemExit('Refusing to overwrite source inventory configuration')
     if not args.live.is_file():
         ap.error('Protected main playlist not found; refusing unfiltered export')
     live_text = args.live.read_text(encoding='utf-8-sig', errors='replace')
