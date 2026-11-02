@@ -1,3 +1,8 @@
+## 2 Kasım 2026 — tarayıcı salt-okunur güvenlik düzeltmesi
+- Çalışma dalı `madsc/v2-discovery-bulk-20261031`: `a5044be1f8bad5e2e3bdf17747ed19b4e5647105` commit'i `v2/real_ibo_scan.py` içindeki `--append-live` seçeneğini ve korunan ana playlist'e yazan kodu kaldırdı.
+- Ana İBO playlist dosyasına bu commit'te dokunulmadı. GitHub Actions push koşusu sonucu henüz doğrulanmadı; commit bazlı PR filtreli API boş döndü, bu başarı/başarısızlık kanıtı değildir.
+- Gerçek medya decode, 500'lük paketlerin doğrulanması, kalıcı şifreli arşiv ve korunan dosyanın SHA-256 öncesi/sonrası karşılaştırması henüz doğrulanmadı.
+
 ## 2 Kasım 2026 — toplu V2 dal/CI/tarama denetimi
 - GitHub karşılaştırması: `main` ile `madsc/v2-discovery-bulk-20261031` ayrışmış; karşılaştırma anında çalışma dalı 284 commit ileride ve 210 commit geride. Otomatik birleştirme yapılmadı.
 - Çalışma dalındaki `.github/workflows/ibo-real-scan.yml` manuel tetiklenir ve `main` dalındaki güncel tarayıcı kodunu checkout eder. Böylece workflow dalı ile çalıştırılan kod dalı **farklıdır**; CI sonuçları buna göre yorumlanmalıdır.
