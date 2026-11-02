@@ -33,7 +33,7 @@ def probe(url):
     try:
         with opener.open(req, timeout=12) as response:
             content = response.read(MAX_BYTES)
-undefined           valid_header = content.lstrip(b"\\xef\\xbb\\xbf\\r\\n\\t ").startswith(b"#EXTM3U")
+            valid_header = content.lstrip(b"\xef\xbb\xbf\r\n\t ").startswith(b"#EXTM3U")
             return {"status": "HTTP_OK" if valid_header else "INVALID_M3U",
                     "http_status": response.status, "sample_m3u_header": valid_header}
     except urllib.error.HTTPError as exc:
