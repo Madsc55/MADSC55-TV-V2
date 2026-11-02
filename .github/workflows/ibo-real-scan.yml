@@ -90,7 +90,7 @@ jobs:
           import json
           from pathlib import Path
           report = json.loads(Path('v2/reports/ibo-real-scan-report.json').read_text())
-          files = report.get('written_parts', [])
+          files = report.get('written_parts') or []
           print('found=' + ('true' if files and all(Path(p).is_file() for p in files) else 'false'))
           PY
       - name: Upload candidate playlists
