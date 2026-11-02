@@ -68,6 +68,8 @@ jobs:
               raise SystemExit('Ready status without AV-verified candidates')
           if report.get('status') == 'NO_VERIFIED_CANDIDATES' and files:
               raise SystemExit('Unexpected batches reported for zero candidates')
+          if report.get('status') == 'NO_VERIFIED_CANDIDATES' and report.get('part_count') != 0:
+              raise SystemExit('Zero-candidate report has nonzero part count')
           if report.get('status') == 'NO_VERIFIED_CANDIDATES' and report.get('av_verified', 0) != 0:
               raise SystemExit('Zero-candidate status contradicts verified count')
           if any(not path.is_file() for path in files):
