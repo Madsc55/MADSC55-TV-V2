@@ -49,6 +49,34 @@ class PartialSourceTests(unittest.TestCase):
                     real_ibo_scan.main()
             self.assertEqual(live.read_bytes(), original)
 
+    def test_report_cannot_overwrite_protected_playlist(self):
+        with tempfile.TemporaryDirectory() as directory:
+            live = pathlib.Path(directory) / "protected.m3u8"
+            original = b"#EXTM3U\\nhttps://example.org/protected.m3u8\\n"
+            live.write_bytes(original)
+            argv = ["real_ibo_scan.py", "--live", str(live), "--report", str(live)]
+            with patch.object(sys, "argv", argv), patch.object(
+                    real_ibo_scan, "fetch", side_effect=AssertionError("network called")):
+                with self.assertRaisesRegex(SystemExit, "protected main playlist"):
+                    real_ibo_scan.main()
+            self.assertEqual(live.read_bytes(), original)
+
+    def test_report_cannot_replace_export(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = pathlib.Path(directory)
+            live = root / "protected.m3u8"
+            live.write_text("#EXTM3U\\nhttps://example.org/protected.m3u8\\n", encoding="utf-8")
+            output = root / "existing.m3u8"
+            original = b"previous export"
+            output.write_bytes(original)
+            argv = ["real_ibo_scan.py", "--live", str(live),
+                    "--output", str(output), "--report", str(output)]
+            with patch.object(sys, "argv", argv), patch.object(
+                    real_ibo_scan, "fetch", side_effect=AssertionError("network called")):
+                with self.assertRaisesRegex(SystemExit, "different paths"):
+                    real_ibo_scan.main()
+            self.assertEqual(output.read_bytes(), original)
+
     def test_failed_source_preserves_existing_package_and_reports_partial(self):
         with tempfile.TemporaryDirectory() as directory:
             root = pathlib.Path(directory)
