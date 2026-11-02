@@ -103,6 +103,7 @@ def main():
                                          checker=lambda x: check_hls(x, args.timeout),
                                          workers=args.workers)
     # Never silently publish a partial scan as complete.
+    protected_hash_before = hashlib.sha256(LIVE.read_bytes()).hexdigest()
     args.out.mkdir(parents=True)
     for item in items:
         append(args.archive, item)
@@ -118,7 +119,13 @@ def main():
             name = str(item.get("name", "Unknown")).replace("\n", " ").replace("\r", " ").replace(",", " ")
             lines += [f'#EXTINF:-1,{name}', item["url"]]
         (args.out / f"ibo_part_{n // args.limit + 1:04}.m3u8").write_text("\n".join(lines) + "\n", encoding="utf-8")
-    report = {"configured_sources": len(sources), "fetched_sources": len(audit),
+    protected_hash_after = hashlib.sha256(LIVE.read_bytes()).hexdigest()
+    if protected_hash_before != protected_hash_after:
+        raise RuntimeError("Protected main playlist SHA-256 changed during scan")
+    report = {"protected_playlist_sha256_before": protected_hash_before,
+              "protected_playlist_sha256_after": protected_hash_after,
+              "protected_playlist_unchanged": True,
+              "configured_sources": len(sources), "fetched_sources": len(audit),
               "failed_sources": failures, "source_audit": audit, "unique_candidates": len(items),
               "manifest_reachable": sum(x["network_status"] == "HLS_MANIFEST_REACHABLE" for x in items),
               "media_decoded": len(verified), "unknown_or_failed": sum(x["network_status"] != "HLS_MANIFEST_REACHABLE" for x in items),
