@@ -1,3 +1,8 @@
+## 2 Kasım 2026 — Master Engine regresyon güvencesi
+- `83df978abf42479e401903c2ada4f83a99e96407`: `v2/test_master_engine.py` manifest erişiminin medya decode kanıtı sayılmadığını test eden koşulla güncellendi.
+- GitHub Actions koşusunun gerçek run ID/job sonucu henüz alınamadı; PR-event filtreli run sorgusu ve commit status sorgusu boş döndü. Testin çalıştığı/yeşil olduğu iddia edilmiyor.
+- Ana playlist değiştirilmedi; SHA-256 öncesi/sonrası ölçümü henüz yapılmadı.
+
 ## 2 Kasım 2026 — Master Engine manifest/medya ayrımı
 - `22f36818d694c92563ec187bc5aaec9d503800c4`: `v2/master_engine.py` medya çözümlemesi kanıtlanmayan manifest adaylarının doğrulanmış paketlere yazılmasını engeller; `media_decoded` alanı varsayılan false, raporda manifest ve medya sayıları ayrı.
 - Bu commit gerçek ffprobe/ffmpeg decode entegrasyonu değildir. CI run ID, job sonucu ve regresyon test sonucu henüz doğrulanmadı. Gerçek paket üretilmedi; korunan ana playlist'e yazılmadı. SHA-256 karşılaştırması yapılmadı.
