@@ -1,3 +1,10 @@
+## 2 Kasım 2026 — toplu V2 dal/CI/tarama denetimi
+- GitHub karşılaştırması: `main` ile `madsc/v2-discovery-bulk-20261031` ayrışmış; karşılaştırma anında çalışma dalı 284 commit ileride ve 210 commit geride. Otomatik birleştirme yapılmadı.
+- Çalışma dalındaki `.github/workflows/ibo-real-scan.yml` manuel tetiklenir ve `main` dalındaki güncel tarayıcı kodunu checkout eder. Böylece workflow dalı ile çalıştırılan kod dalı **farklıdır**; CI sonuçları buna göre yorumlanmalıdır.
+- Workflow başarı kapıları, sıfır kanal, eksik kaynak, arşiv geri yükleme ve paket raporu kontrolleriyle güçlendirildi. Son düzeltme 858def4: doğrulama başarısızken paket yayınlanmaz, Actions çıktıları 30 gün saklanır. 30 günlük Actions artifact depolaması **kalıcı harici yedek değildir**.
+- Bu çalışma sırasında gerçek internet taraması ve yeni Actions koşusu başlatılmadı; mevcut CI başarısı doğrulanmadı. Ana playlist/YEDEKLER/EPG/favoriler değiştirilmedi; PR #9 birleştirilmedi.
+- Açık işler: güncel CI koşusunu doğrulamak; geçmiş #60 gerçek URL/4.955 aday kurtarmasını kanıtlamak; şifreli envanteri GitHub dışı kalıcı depoya kopyalayıp geri yüklemeyi doğrulamak; dalların kontrollü ve korunan dosyalara dokunmayan uyum planını uygulamak.
+
 # MADSC55 TV V2 — TEK DEVAM NOTU
 
 **Son güncelleme:** 27 Ekim 2026 — çok kaynaklı M3U arama ve kanal URL çakışma denetimi
