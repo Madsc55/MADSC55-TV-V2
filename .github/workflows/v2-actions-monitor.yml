@@ -3,8 +3,6 @@ on:
   push:
     branches:
       - madsc/v2-discovery-bulk-20261031
-  schedule:
-    - cron: '*/15 * * * *'
   workflow_dispatch:
 permissions:
   contents: read
@@ -22,6 +20,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
           ACTIONS_REPORT: actions-last10.json
+          GITHUB_RUN_ID: ${{ github.run_id }}
+          GITHUB_SHA: ${{ github.sha }}
         run: python v2/actions_monitor.py
       - name: Preserve verified run IDs and statuses
         if: always()
