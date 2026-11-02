@@ -16,7 +16,7 @@ class MasterTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             root = pathlib.Path(directory)
             history = root / "history.jsonl"
-            history.write_text('{"url":"https://example.org/old.m3u8"}\\n', encoding="utf-8")
+            history.write_text('{"url":"https://example.org/old.m3u8"}\n', encoding="utf-8")
             archive = root / "archive.enc"
             cases = [
                 (root, archive, "output parent of protected history"),
