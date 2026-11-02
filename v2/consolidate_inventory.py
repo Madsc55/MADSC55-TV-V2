@@ -66,7 +66,7 @@ def merge_records(paths, encrypted_paths=(), passphrase=None):
                         "ibo_device_tested": record.get("ibo_device_tested", False),
                     })
                 count += 1
-        counts[path.name] = count
+        counts[str(path)] = count
     return merged, counts
 
 def main():
@@ -85,8 +85,13 @@ def main():
         parser.error("Archive and report paths must differ")
     if not (args.input or args.encrypted_input):
         parser.error("At least one --input or --encrypted-input is required")
-    if args.encrypted_output in args.input + args.encrypted_input:
+    input_paths = args.input + args.encrypted_input
+    if any(args.encrypted_output.resolve() == path.resolve() for path in input_paths):
         parser.error("Refusing to overwrite an input archive")
+    if len({path.resolve() for path in input_paths}) != len(input_paths):
+        parser.error("Duplicate input file supplied; refusing duplicated observations")
+    if args.report.resolve() in {path.resolve() for path in input_paths}:
+        parser.error("Report path overlaps an input inventory")
     if not all(path.is_file() for path in args.input + args.encrypted_input):
         parser.error("Every input JSONL file must exist")
     records, counts = merge_records(args.input, args.encrypted_input, secret)
