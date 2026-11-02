@@ -85,7 +85,7 @@ def main():
         p.error("limit 1..500; workers 1..32; timeout >0 and <=120")
     if not os.environ.get("V2_ARCHIVE_KEY_HEX"):
         p.error("V2_ARCHIVE_KEY_HEX secret is required")
-    if args.archive.exists() or args.out.exists():
+    if args.archive.exists() or args.archive.is_symlink() or args.out.exists() or args.out.is_symlink():
         p.error("Refusing to overwrite previous archive or output directory")
     sources = json.loads(SOURCES.read_text(encoding="utf-8"))["sources"]
     # Include only previously approved dynamic GitHub and forge sources.
