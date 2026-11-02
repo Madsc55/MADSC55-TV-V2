@@ -24,6 +24,10 @@ class HistoricalRecoveryTests(unittest.TestCase):
                     "https://localhost/a.m3u8", "https://user:pass@example.org/a.m3u8"):
             self.assertFalse(validate_url(url), url)
 
+    def test_malformed_ipv6_authority_is_rejected(self):
+        self.assertFalse(validate_url("https://[broken/a.m3u8"))
+        self.assertFalse(validate_url("https://[::1/a.m3u8"))
+
     def test_no_fabricated_urls(self):
         recovered, report = recover([{"anonymous_id": "4955"}], [])
         self.assertEqual(recovered, [])
