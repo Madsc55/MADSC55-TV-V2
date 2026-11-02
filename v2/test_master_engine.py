@@ -15,6 +15,17 @@ class MasterTests(unittest.TestCase):
         self.assertTrue(rendered.endswith("\n"))
         self.assertNotIn("\\n", rendered)
 
+    def test_export_preserves_epg_logo_group_and_stream_url(self):
+        url = "https://example.org/unchanged-source.m3u8"
+        rows = [{"name": "TRT 1", "url": url, "tvg_id": "TRT1.tr",
+                 "logo": "https://example.org/trt.png", "group": "YEDEKLER"}]
+        rendered = render_m3u(rows)
+        self.assertEqual(rendered.splitlines(), [
+            "#EXTM3U",
+            '#EXTINF:-1 tvg-id="TRT1.tr" tvg-logo="https://example.org/trt.png" group-title="YEDEKLER",TRT 1',
+            url,
+        ])
+
     def test_real_parser_dedup_history_and_provenance(self):
         live = "#EXTM3U\n#EXTINF:-1,Existing\nhttps://example.org/existing.m3u8\n"
         data = "#EXTM3U\n#EXTINF:-1 tvg-id=\"TRT1.tr\",TRT 1\nhttps://example.org/new.m3u8\n#EXTINF:-1,Existing\nhttps://example.org/existing.m3u8\n"
