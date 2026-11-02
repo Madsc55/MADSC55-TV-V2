@@ -1,3 +1,9 @@
+## 2 Kasım 2026 — kaynak kimliği bütünlüğü ve 500'lük varsayılan paket (yeni çalışma)
+- `v2/consolidate_inventory.py` eski `source_id` ile yeni `source_ids` aynı kayıtta bulunduğunda ikisini de saklar (59d594e). Regresyon testi eklendi (9e44e86).
+- `v2/real_ibo_scan.py` geçmiş arşivden okunan her iki kaynak kimliği biçimini kayıpsız birleştirir ve varsayılan paket boyutu son kullanıcı kararıyla 500'dür (401d194). Offline regresyon testi eklendi (28c97fa).
+- Eski workflow run 41189283457'nin compile/protect/discovery-tests/safety işleri başarılı görüldü; bu eski run yeni commitlerin test kanıtı değildir. Yeni commitlerin Actions başarı sonucu doğrulanmadı.
+- Yeni internet taraması başlatılmadı; korunan playlist/YEDEKLER/EPG/favoriler değiştirilmedi. #60 gerçek URL kurtarma ve harici kalıcı şifreli yedek hâlâ açık.
+
 ## 2 Kasım 2026 — eksik taramada paket koruması
 - `v2/real_ibo_scan.py` eksik kaynak taraması durumunda eski başarılı IBO paketlerini silmeyecek biçimde değiştirildi; eski `source_id` kaynak kimlikleri de taşınır (commit c6ce007d).
 - Değişiklik GitHub'a kaydedildi; Actions sonucu ve uçtan uca doğrulama henüz teyit edilmedi. Yeni ağ taraması başlatılmadı, ana liste/YEDEKLER/EPG değiştirilmedi.
