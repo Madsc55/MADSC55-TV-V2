@@ -29,6 +29,12 @@ def validate_url(value):
     except ValueError:
         if parsed.hostname.lower() in ("localhost", "localhost.localdomain"):
             return False
+    try:
+        port = parsed.port
+    except ValueError:
+        return False
+    if port is not None and not 1 <= port <= 65535:
+        return False
     return True
 
 def recover(old_records, current_records):
