@@ -1,3 +1,8 @@
+## 2 Kasım 2026 — şifreli arşiv geri yükleme testleri
+- `v2/test_secure_archive_roundtrip.py` oluşturuldu (commit 20067e68): çevrimdışı fikstür üzerinde şifreleme, geri yükleme, bozulma ve yanlış şifre reddini sınar. Gerçek yayın verisi veya gerçek tarama değildir.
+- `.github/workflows/v2-offline-inventory.yml` bu testi CI'a dahil eder (commit 5d654015).
+- Bu değişiklik **harici kalıcı özel depolama sağlamaz**; Actions başarı sonucu henüz teyit edilmedi. Gerçek tarihsel kayıt kurtarma ve harici depolama hâlâ açık.
+
 ## 2 Kasım 2026 — son altyapı değişiklikleri ve açık doğrulamalar
 - Gerçek tarama BAŞLATILMADI; ana playlist, EPG, YEDEKLER ve yabancı arşiv değiştirilmedi. Yeni adayların YEDEKLER'e aktarımı yalnızca kullanıcı onayıyla, 500'lük gruplarla yapılır.
 - `v2/real_ibo_scan.py`: geçmiş envanterdeki kaynak kimlikleri ve gözlemler sonraki taramada korunacak biçimde güncellendi; 3964 yabancı arşiv kaydı benzersiz URL sayısına eşit olmak zorunda değil; eksik tarama raporunda yazılmayan paket sayısı sıfırlanır (commit 136565c7).
