@@ -219,7 +219,8 @@ def main():
             historical_records[url] = record
             if url in candidates:
                 current = candidates[url]
-                for sid in record.get('source_ids', []):
+                historical_sources = record.get('source_ids') or ([record['source_id']] if record.get('source_id') else ['historical-archive'])
+                for sid in historical_sources:
                     if sid not in current['source_ids']:
                         current['source_ids'].append(sid)
                 for key in ('name', 'group', 'tvg_id', 'logo'):
@@ -228,7 +229,7 @@ def main():
                 continue
             candidates[url] = {key: record.get(key, '') for key in ('name', 'group', 'tvg_id', 'logo')}
             candidates[url]['url'] = url
-            candidates[url]['source_ids'] = record.get('source_ids', ['historical-archive'])
+            candidates[url]['source_ids'] = record.get('source_ids') or ([record['source_id']] if record.get('source_id') else ['historical-archive'])
             recovered_from_archive += 1
     checked = 0
     good = []
@@ -281,11 +282,6 @@ def main():
               'status': 'READY_FOR_DEVICE_TEST' if good else 'NO_VERIFIED_CANDIDATES'}
     args.report.parent.mkdir(parents=True, exist_ok=True)
     args.report.write_text(json.dumps(report, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
-    # Never leave a prior successful batch in place after a failed/empty scan.
-    # Remove stale generated exports before reporting this run's status.
-    for previous in args.output.parent.glob(args.output.stem + '_PART*' + args.output.suffix):
-        previous.unlink(missing_ok=True)
-    args.output.unlink(missing_ok=True)
     if incomplete:
         report['status'] = 'INCOMPLETE_SOURCE_FETCH_OR_DROP'
         report['written_parts'] = []
@@ -298,6 +294,11 @@ def main():
         # Keep the report and original playlist intact; do not invent channels.
         print(json.dumps(report, ensure_ascii=False, indent=2))
         return
+    # Only a complete scan may replace previously published test exports.
+    # Do not destroy the last successful batch when a source is unavailable.
+    for previous in args.output.parent.glob(args.output.stem + '_PART*' + args.output.suffix):
+        previous.unlink(missing_ok=True)
+    args.output.unlink(missing_ok=True)
     # Write every verified stream, not only the first batch. Never claim
     # additional parts exist unless they were actually written.
     written_parts = []
