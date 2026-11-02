@@ -1,3 +1,11 @@
+## 2 Kasım 2026 — yeni oturum, CI doğrulama ve açık engeller
+- Koruma: yalnızca `madsc/v2-discovery-bulk-20261031` geliştirme dalı; ana `MADSC55_TV_IBO_CALISANLAR_TEST.m3u8`, `main`, eski depo ve PR #9 değiştirilmedi.
+- Son kullanıcı ekran görüntüsünde **Actions #43** (`3bfc43c0ea33ae9e1cb7897e425be8b7d76532c9`) **FAILURE**: offline regressions 154 testten 1 hata, FFmpeg başarılı. Bu koşu için sayısal API run ID henüz elde edilmedi; #43 yalnızca görünen çalışma numarasıdır.
+- `495314228800c43abc43b630fe4ec125abea9f3a`: yeni M3U regresyon testindeki yanlış `\\n` kaçışları düzeltildi. Sonraki testlerin yeşil olduğu kullanıcı tarafından bildirildi; API üzerinden doğrulanmış run ID/job sonucu yok.
+- `54c2b9bbea2b9cb4097cd12f1a525c7e7f67495f`: özel IP ve URL kimlik bilgileri için offline kaynak doğrulama testi eklendi; yeni koşu sonucu bağımsız doğrulanmadı.
+- `dcdac238143cc110f78e158deccd6c42166e3042`: regresyon işinin GitHub Actions adım özetine gerçek `GITHUB_RUN_ID` bağlantısı ve `GITHUB_SHA` yazması sağlandı; yeni CI sonucu henüz doğrulanmadı.
+- Gerçek açık işler: push Actions run ID ve loglarını API ile doğrulamak; tüm sekiz aşama için uçtan uca gerçek sonuç; geçmiş 4.955 adayın kanıtlı kurtarımı; canlı video decode; gerçek 500/1000/2000 paketler; GitHub dışı kalıcı şifreli arşiv geri yükleme; cihazda İBO testi. Hiçbiri yalnızca yeşil offline CI ile tamamlandı sayılmaz.
+
 ## 2 Kasım 2026 — GitHub Actions Verification #3 sonucu
 - Workflow: V2 Eight-Stage Runner Verification; commit `c86e3c2242f403de793178b0159e4c364a6dde95`.
 - Kullanıcının GitHub Actions ekran görüntüsünde `Verification 3` yeşil başarı simgesi ve 46 saniye süreyle görüntülendi. `Verification 1` ve `2` başarısızdı. Sayısal run ID, job detayları ve artifact içerikleri API üzerinden doğrulanamadı; burada uydurulmadı.
