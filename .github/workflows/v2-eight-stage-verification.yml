@@ -47,6 +47,15 @@ jobs:
           python v2/test_playlist_invariants.py >v2/reports/ci/test_playlist_invariants.log 2>&1 || failed=1
           cat v2/reports/ci/*.log
           exit "$failed"
+      - name: Record regression run identity and outcome
+        if: always()
+        shell: bash
+        env:
+          JOB_STATUS: ${{ job.status }}
+        run: |
+          mkdir -p v2/reports/ci
+          printf 'run_id=%s\ncommit_sha=%s\nworkflow=%s\njob=regression\nresult=%s\n' "$GITHUB_RUN_ID" "$GITHUB_SHA" "$GITHUB_WORKFLOW" "$JOB_STATUS" > v2/reports/ci/run-identity.txt
+          cat v2/reports/ci/run-identity.txt >> "$GITHUB_STEP_SUMMARY"
       - name: Upload regression logs even on failure
         if: always()
         uses: actions/upload-artifact@v4
@@ -81,6 +90,15 @@ jobs:
             echo 'Audio-only unexpectedly produced a video frame' >&2
             exit 1
           fi
+      - name: Record FFmpeg run identity and outcome
+        if: always()
+        shell: bash
+        env:
+          JOB_STATUS: ${{ job.status }}
+        run: |
+          mkdir -p v2/reports/ci
+          printf 'run_id=%s\ncommit_sha=%s\nworkflow=%s\njob=ffmpeg\nresult=%s\n' "$GITHUB_RUN_ID" "$GITHUB_SHA" "$GITHUB_WORKFLOW" "$JOB_STATUS" > v2/reports/ci/run-identity.txt
+          cat v2/reports/ci/run-identity.txt >> "$GITHUB_STEP_SUMMARY"
       - name: Upload FFmpeg logs
         if: always()
         uses: actions/upload-artifact@v4
