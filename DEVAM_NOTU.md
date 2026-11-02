@@ -1,5 +1,14 @@
 # MADSC55 TV V2 — TEK DEVAM NOTU
 
+## 2 Kasım 2026 — toplu altyapı tamamlama, taramasız
+- Kullanıcı açıkça yeni tarama istemiyor; eski kayıtların saklanması, entegrasyon ve offline doğrulama öncelikli. 500'lük YEDEKLER aktarımı yalnızca yeni açık kullanıcı talimatıyla yapılır.
+- `v2/consolidate_inventory.py` oluşturuldu (commit 1bbb788f): gerçek JSONL girişlerini URL'ye göre birleştirir; kaynak kimliklerini ve her gözlemi saklar; şifreli arşivi diske yazar ve geri yükleme kontrolü yapar. Yeni yayın adresi uydurmaz, internete çıkmaz.
+- `v2/test_consolidate_inventory.py` (commit 9628e09e) sentetik **yalnızca offline test fikstürü** kullanır; gerçek kanal çıktısı olarak sunulmaz.
+- `.github/workflows/v2-offline-inventory.yml` (commit b330fbdc) sadece offline bütünlük testlerini çalıştırır; kanal taraması yapmaz. İlk Actions sonucu henüz teyit edilmedi.
+- Henüz gerçek geçmiş JSONL dosyaları bu birleştiriciye verilmedi, kalıcı harici depolama sağlanmadı ve #60 URL kurtarma yapılmadı. Bunlar açık işlerdir.
+- 38 aktif YEDEKLER ve 3964 yabancı arşiv değişmedi. EPG ve ana playlist düzenlenmedi.
+
+
 ## 2 Kasım 2026 — kullanıcının yeni öncelik kararı
 - **Şimdi kanal araması/taraması başlatılmayacak.** Önce altyapı, entegrasyon, kaynak kaybı koruması, envanter ve offline test eksikleri kapatılacak.
 - Kanal araması tamamlandıktan sonra adaylar önce kalıcı envanterde saklanacak. **Kullanıcı açıkça söylemeden** YEDEKLER'e hiçbir aday aktarılmayacak.
