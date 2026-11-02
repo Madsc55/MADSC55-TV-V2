@@ -11,6 +11,12 @@ class DecodeTests(unittest.TestCase):
                 self.assertFalse(decode_media({"url": url}))
                 run.assert_not_called()
 
+    def test_invalid_timeout_type_fails_closed(self):
+        with patch("media_decode.subprocess.run") as run:
+            for timeout in (None, "20", [], {}):
+                self.assertFalse(decode_media({"url": "https://example.org/live.m3u8"}, timeout=timeout))
+            run.assert_not_called()
+
     @patch("media_decode.subprocess.run")
     def test_manifest_only_is_not_decode(self, run):
         run.return_value = CompletedProcess([], 0, "#format: frame checksums\n", "")
