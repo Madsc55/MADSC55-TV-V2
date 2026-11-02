@@ -35,6 +35,8 @@ def collect():
     runs = api(base + "/workflows/" + WORKFLOW + "/runs?" + q)["workflow_runs"]
     if not runs:
         raise RuntimeError("GitHub API returned no Master Engine runs for the configured branch")
+    if any(not run.get("id") or not run.get("head_sha") or not run.get("html_url") for run in runs):
+        raise RuntimeError("GitHub API returned incomplete workflow run identity")
     records = []
     for run in runs:
         record = {key: run.get(key) for key in (
