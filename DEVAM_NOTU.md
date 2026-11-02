@@ -1,3 +1,8 @@
+## 2 Kasım 2026 — kalıcı GitHub Actions runner doğrulaması
+- `6bf73292d496d4afe5238bd4a31f1b96f8f31c12`: `.github/workflows/v2-eight-stage-verification.yml` eklendi. Geliştirme dalına push ve workflow_dispatch ile tetiklenir. Runner `ubuntu-24.04`, Python `3.12.7`, cryptography `44.0.2`; ayrı job'da FFmpeg paket sürümü sabitlenmiştir. checkout, korunan playlist SHA-256, Python compile, altı regresyon modülü, FFmpeg yerel gerçek kare ve audio-only negatif kontrolü bulunur. Loglar başarısızlıkta da artifact olarak yüklenir.
+- GitHub bağlantısındaki commit-workflow sorgusu yalnızca pull_request tetikli koşuları getiriyor; bu commit için boş liste döndü. Dolayısıyla push-run ID, test sonucu ve job logu **doğrulanmadı**. Bu workflow canlı yayın doğrulaması yapmaz ve sekiz aşamanın tamamlandığı anlamına gelmez.
+- Sonraki işlem: Actions UI/API ile push run ID bul, job loglarını ve artifacts incele; başarısız kod/runner sürümünü düzelt. Ana playlist, main ve PR #9 değiştirilmedi.
+
 ## 2 Kasım 2026 — sekiz aşamalı talimat, Aşama 1 ilerlemesi
 - `e019759d9a7db1a6289450700069084bbeaff9b7`: Master Engine korunan playlist SHA-256 özetini kaynak indirme başlamadan önce alıyor; eksik kaynak taramasında yeni M3U paketi yayınlamıyor ve rapordaki batch_count sıfır kalıyor. Şifreli envanter ve rapor korunuyor.
 - GitHub bağlı dosya okuma/yazma erişimi çalıştı; doğrudan git klonlama `Could not resolve host: github.com` nedeniyle başarısız. Bu oturumda repo Python testleri ve canlı medya taraması çalıştırılamadı; commit testten geçmiş veya Aşama 1 tamamlanmış sayılmıyor.
