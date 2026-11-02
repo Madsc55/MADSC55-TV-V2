@@ -85,10 +85,11 @@ def main():
         p.error("limit 1..500; workers 1..32; timeout >0 and <=120")
     if not os.environ.get("V2_ARCHIVE_KEY_HEX"):
         p.error("V2_ARCHIVE_KEY_HEX secret is required")
-    if args.archive.exists() or args.archive.is_symlink() or args.out.exists() or args.out.is_symlink():
-        p.error("Refusing to overwrite previous archive or output directory")
     archive_path = args.archive.resolve(strict=False)
     output_path = args.out.resolve(strict=False)
+    if (args.archive.is_symlink() or args.out.is_symlink() or
+            archive_path.exists() or output_path.exists()):
+        p.error("Refusing to overwrite previous archive or output directory")
     if archive_path == output_path or archive_path in output_path.parents or output_path in archive_path.parents:
         p.error("Archive and output directory must be separate, non-nested paths")
     sources = json.loads(SOURCES.read_text(encoding="utf-8"))["sources"]
