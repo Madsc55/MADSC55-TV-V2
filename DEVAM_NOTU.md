@@ -1,5 +1,17 @@
 # MADSC55 TV V2 — TEK DEVAM NOTU
 
+## 2 Kasım 2026 — güncel durum (önceki tarihli notları geçersiz kılan kararlar)
+- Çalışılan tek depo: Madsc55/MADSC55-TV-V2. Ana dosya: MADSC55_TV_IBO_CALISANLAR_TEST.m3u8.
+- Kullanıcı YEDEKLER 1-38 kayıtlarını korumayı, 39-4002 arasındaki 3964 kaydı ayrı yabancı arşive taşımayı onayladı. Arşiv: v2/arsiv/yabanci_yedekler_2026-11-02_3964.m3u8.
+- V2 ana listede 838 diğer kategori kaydı + 38 YEDEKLER = 876 kayıt bulunur. TRT 1 ve DHA YEDEKLER ilk iki sırada, EUROSPORT 1 HD TR üçüncü, 24 dördüncü, ADA TV beşinci sıradadır.
+- Arşivdeki 3964 yayın adresi korunur; bunlar otomatik olarak Türkçe sayılmaz ve yeniden İBO test adayı yapılmaz.
+- v2/real_ibo_scan.py, yabancı arşivi zorunlu olarak okuyup URL'leri yeni adaylardan ayıklayacak şekilde güncellendi; commit 4c7fddeb. Bu kodun yeni Actions koşusu henüz doğrulanmadı.
+- Eski raporlarda 12148 ana listede olmayan URL ve 4098 AV doğrulama adayı bildirilmişti; güncel 500 kanal paketi hazırlanmış veya YEDEKLER'e eklenmiş değildir. Eski Actions artifact verileri yeniden elde edilmeli; yeni ağ testi ve Türkçe/Azerice kontrolü yapılmalıdır.
+- DEVAM_NOTU.md'nin aşağıdaki 27 Ekim kayıtları tarihsel bilgidir; eski YEDEKLER=2 ve 1047 kanal sayımları artık güncel değildir.
+- Koruma testleri 38 YEDEKLER + 3964 arşiv kuralına uyarlanmıştır. Gelecekte kullanıcı onayıyla 500 kanal eklenecekse testlerin sabit 38 sayımı da kontrollü güncellenmelidir.
+- GitHub Actions gerçek koşu sonucu ve IBO Player yenilemesi ayrı doğrulanır; commit başarısı oynatım kanıtı değildir.
+
+
 **Son güncelleme:** 27 Ekim 2026 — çok kaynaklı M3U arama ve kanal URL çakışma denetimi
 **Kural:** Projede devam ve devir için TEK kanonik dosya budur: `DEVAM_NOTU.md`. Yeni devir/durum notları açma; her çalışma sonunda bu dosyayı güncelle. Eski mimari K1–K5 ve 92 workflow geri getirilmeyecek.
 
