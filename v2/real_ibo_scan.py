@@ -123,6 +123,7 @@ def main():
             if result is not None:
                 good.append(result)
     # Source outages are reported; a working subset can still be tested.
+    # A network outage must not turn a previously valid export into an empty replacement.
     # Never modify the protected main playlist.
     source_coverage_complete = not failed and len(source_counts) == len(sources)
     report = {'source_count': len(sources), 'fetched_sources': len(source_counts),
@@ -139,6 +140,9 @@ def main():
     if not source_coverage_complete:
         print(json.dumps(report, ensure_ascii=False, indent=2))
         raise SystemExit('Incomplete source fetch; no new test package published')
+    if failed:
+        print(json.dumps(report, ensure_ascii=False, indent=2))
+        raise SystemExit('Incomplete source fetch; existing packages preserved; see failed_sources')
     if not good:
         print(json.dumps(report, ensure_ascii=False, indent=2))
         raise SystemExit('No new HLS candidates verified; main playlist unchanged')
