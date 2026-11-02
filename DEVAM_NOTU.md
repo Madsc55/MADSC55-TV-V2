@@ -1,3 +1,8 @@
+## 2 Kasım 2026 — M3U metadata koruması (test bekliyor)
+- `e26e0f884b29b6c2af037d70904ee03ad71f2ab0`: `v2/master_engine.py` M3U dışa aktarımında `tvg-id`, `tvg-logo`, `group-title` alanlarını EXTINF satırına taşıyacak şekilde değiştirildi.
+- GitHub Contents API yazma işlemi başarılı; yerel test, GitHub Actions run ID, medya decode ve gerçek M3U artifact henüz doğrulanmadı. Bu aşama TAMAMLANDI değildir.
+- Korunan ana İBO playlisti, YEDEKLER/YENİLER/FAVORİLER, main, PR #9 ve eski depo değiştirilmedi.
+
 ## 2 Kasım 2026 — gerçek M3U dışa aktarma satır sonu düzeltmesi
 - `ad1d70ca2bacf123fd199440f68bc0daa9da8dea`: `6a96d044` ile eklenen standart 500/1000/2000 paketlerinde gerçek satır sonları yerine yazılan literal `\\n` hatası düzeltildi. Bu hata paketlerin geçerli M3U olarak ayrıştırılmasını engelliyordu.
 - `02da2782dceb99f21a51346752f5c5e1bf655c0e`: standart paketlerle mevcut 500'lü batch'ler aynı `render_m3u()` fonksiyonunu kullanıyor; çıktı içeriği gerçek aday URL'lerinden türetiliyor.
