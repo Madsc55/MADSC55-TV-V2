@@ -133,6 +133,9 @@ def main():
                                          media_checker=lambda x: decode_media(x, args.timeout))
     # Never silently publish a partial scan as complete.
     args.out.mkdir(parents=True)
+    # The archive may be configured outside the output tree; create its parent
+    # only after all overwrite and nesting checks have passed.
+    args.archive.parent.mkdir(parents=True, exist_ok=True)
     # Only nonempty inventories produce authenticated encrypted records.
     for item in items:
         append(args.archive, item)
