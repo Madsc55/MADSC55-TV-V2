@@ -22,7 +22,7 @@ class SourceAvailabilityTests(unittest.TestCase):
             status = 200
             def __enter__(self): return self
             def __exit__(self, *args): return False
-            def read(self, size): return b"\\xef\\xbb\\xbf\\n#EXTM3U\\n"
+            def read(self, size): return b"\xef\xbb\xbf\n#EXTM3U\n"
         with patch("source_availability_audit.urllib.request.build_opener") as opener:
             opener.return_value.open.return_value = Response()
             result = probe("https://example.org/playlist.m3u")
