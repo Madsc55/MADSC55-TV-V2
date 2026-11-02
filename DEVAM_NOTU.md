@@ -1,3 +1,8 @@
+## 2 Kasım 2026 — sıfır medya doğrulaması başarı kapısı
+- `57674c9d84c6b87dffacd6e706af43b2b0aea864`: `v2/master_engine.py` gerçek medya decode sayısı sıfır olduğunda `NO_MEDIA_DECODED` raporu üretir ve başarısız çıkar; şifreli arşiv ve rapor kalır, doğrulanmamış yayın paketi üretilmez.
+- GitHub CLI bu yürütme ortamında kurulu değil (`gh: command not found`); git remote erişimi DNS nedeniyle engellendi (`Could not resolve host: github.com`). Push Actions run ID bu ortamda doğrulanamadı. Python regresyon testleri bu oturumda çalıştırılamadı; CI başarı iddiası yok.
+- Korunan ana playlist'e yazılmadı; öncesi/sonrası SHA-256 ölçümü gerçekleştirilmedi. Aşama 1 tamamlanmış sayılmıyor.
+
 ## 2 Kasım 2026 — Actions test bağımlılığı ve SHA-256 koruması
 - `0fea00650e8f12e9d94e22e6af2d510fcb53b562`: `.github/workflows/v2-master-engine.yml` offline-tests job'ına `cryptography>=42,<47` kurulumu ve korunan ana playlist'in HEAD/working-tree SHA-256 karşılaştırması eklendi. Playlist dosyası değiştirilmedi.
 - Bu kontrol için Actions run ID ve job sonucu henüz alınamadı; commit bazlı PR-event filtreli run API'si ve combined status boş döndü. CI başarılı ilan edilmedi.
