@@ -52,7 +52,9 @@ def collect():
                 )]
             } for job in jobs if job.get("conclusion") != "success"]
         records.append(record)
-    return {"repository": REPO, "workflow": WORKFLOW, "branch": BRANCH, "runs": records}
+    return {"repository": REPO, "workflow": WORKFLOW, "branch": BRANCH,
+            "monitor_run_id": os.environ.get("GITHUB_RUN_ID"),
+            "monitor_sha": os.environ.get("GITHUB_SHA"), "runs": records}
 
 def main():
     result = collect()
