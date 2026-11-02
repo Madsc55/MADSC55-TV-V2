@@ -77,6 +77,24 @@ class PartialSourceTests(unittest.TestCase):
                     real_ibo_scan.main()
             self.assertEqual(output.read_bytes(), original)
 
+    def test_source_configuration_cannot_be_replaced(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = pathlib.Path(directory)
+            live = root / "protected.m3u8"
+            live.write_text("#EXTM3U\\nhttps://example.org/protected.m3u8\\n", encoding="utf-8")
+            sources = root / "sources.json"
+            original = b'{"sources":[]}'
+            sources.write_bytes(original)
+            for flag in ("--output", "--report"):
+                with self.subTest(flag=flag):
+                    argv = ["real_ibo_scan.py", "--live", str(live),
+                            "--sources", str(sources), flag, str(sources)]
+                    with patch.object(sys, "argv", argv), patch.object(
+                            real_ibo_scan, "fetch", side_effect=AssertionError("network called")):
+                        with self.assertRaisesRegex(SystemExit, "source inventory"):
+                            real_ibo_scan.main()
+                    self.assertEqual(sources.read_bytes(), original)
+
     def test_failed_source_preserves_existing_package_and_reports_partial(self):
         with tempfile.TemporaryDirectory() as directory:
             root = pathlib.Path(directory)
