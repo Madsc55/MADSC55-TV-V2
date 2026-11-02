@@ -1,4 +1,5 @@
 ## 2 Kasım 2026 — M3U metadata koruması (test bekliyor)
+- `cffb38f5996acea625d58bc073bb95891cf689ea`: M3U export için EPG/logo/grup/URL korunumu regresyon testi eklendi. GitHub Actions sonucu henüz alınmadı; test başarı iddiası yok.
 - `e26e0f884b29b6c2af037d70904ee03ad71f2ab0`: `v2/master_engine.py` M3U dışa aktarımında `tvg-id`, `tvg-logo`, `group-title` alanlarını EXTINF satırına taşıyacak şekilde değiştirildi.
 - GitHub Contents API yazma işlemi başarılı; yerel test, GitHub Actions run ID, medya decode ve gerçek M3U artifact henüz doğrulanmadı. Bu aşama TAMAMLANDI değildir.
 - Korunan ana İBO playlisti, YEDEKLER/YENİLER/FAVORİLER, main, PR #9 ve eski depo değiştirilmedi.
