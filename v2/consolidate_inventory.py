@@ -46,10 +46,11 @@ def merge_records(paths, encrypted_paths=(), passphrase=None):
                     merged[url]["observations"] = []
                 target = merged[url]
                 sources = record.get("source_ids", [])
-                if not sources and isinstance(record.get("source_id"), str):
-                    sources = [record["source_id"]]
                 if not isinstance(sources, list):
                     raise ValueError(f"{path}:{number}: source_ids must be a list")
+                legacy_source = record.get("source_id")
+                if isinstance(legacy_source, str) and legacy_source:
+                    sources = [*sources, legacy_source]
                 for source in sources:
                     if isinstance(source, str) and source and source not in target["source_ids"]:
                         target["source_ids"].append(source)
