@@ -87,6 +87,35 @@ def main():
                                             env=env, capture_output=True, text=True)
         assert overlapping_report.returncode != 0
         assert first.read_text(encoding="utf-8").startswith("{")
+        legacy = base / "legacy.jsonl"
+        legacy.write_text(json.dumps({"url": "https://example.org/legacy.m3u8",
+                                      "source_id": "historical-source",
+                                      "observations": [{"status": "AV_VERIFIED",
+                                                        "origin": "past-scan"}]}) + "\n",
+                          encoding="utf-8")
+        legacy_output = base / "legacy.enc"
+        subprocess.run([sys.executable, str(ROOT / "consolidate_inventory.py"),
+                        "--input", str(legacy),
+                        "--encrypted-output", str(legacy_output),
+                        "--report", str(base / "legacy-report.json")],
+                       env=env, check=True, capture_output=True, text=True)
+        legacy_restored = json.loads(decrypt(legacy_output.read_bytes(),
+                                             env["V2_ARCHIVE_PASSPHRASE"]).decode().strip())
+        assert legacy_restored["source_ids"] == ["historical-source"]
+        assert legacy_restored["observations"] == [{"status": "AV_VERIFIED",
+                                                     "origin": "past-scan"}]
+        invalid = base / "invalid.jsonl"
+        invalid.write_text(json.dumps({"url": "https://example.org/bad.m3u8",
+                                       "observations": ["invalid-history"]}) + "\n",
+                           encoding="utf-8")
+        bad_output = base / "bad-output.enc"
+        failed = subprocess.run([sys.executable, str(ROOT / "consolidate_inventory.py"),
+                                 "--input", str(invalid),
+                                 "--encrypted-output", str(bad_output),
+                                 "--report", str(base / "bad-report.json")],
+                                env=env, capture_output=True, text=True)
+        assert failed.returncode != 0
+        assert not bad_output.exists()
         print("PASS: offline encrypted inventory merge, source retention, restore")
 
 if __name__ == "__main__":
