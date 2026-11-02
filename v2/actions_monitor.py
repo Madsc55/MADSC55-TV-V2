@@ -31,7 +31,9 @@ def api(path):
 def collect():
     base = "/repos/" + REPO + "/actions"
     q = urllib.parse.urlencode({"branch": BRANCH, "per_page": 10})
-    runs = api(base + "/workflows/" + WORKFLOW + "/runs?" + q)["workflow_runs"]
+    # Repository-wide run listing avoids a workflow filename lookup returning an empty result.
+    all_runs = api(base + "/runs?" + q)["workflow_runs"]
+    runs = [run for run in all_runs if run.get("path", "").split("@")[0].endswith("/" + WORKFLOW)][:10]
     if not runs:
         raise RuntimeError("GitHub API returned no Master Engine runs for the configured branch")
     records = []
