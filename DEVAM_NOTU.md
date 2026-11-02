@@ -1,3 +1,8 @@
+## 2 Kasım 2026 — main üzerindeki #3 scan hata görüntüsü ve paket koruması
+- Kullanıcı ekran görüntüsü: `V2 Gerçek IPTV Tarama ve İBO Paketleri #3`, main `d9d80f2`, pull_request tetikleyicisi, scan job 53m18s, workflow 53m32s, `Incomplete source fetch or source count...`, exit 1. Bu, çalışma dalının Actions sonucu değildir; run ID ekran görüntüsünde görünmüyor.
+- `836498371324c7aade8cecd877c1f0f1c2202144`: çalışma dalı `v2/real_ibo_scan.py` eksik kaynakta `PARTIAL_SOURCE_FETCH` ve `source_coverage_complete=false` raporlar, mevcut başarılı paketi değiştirmeden hata ile çıkar.
+- Bu değişiklik henüz GitHub Actions veya Python testleriyle doğrulanmadı. Ana İBO playlist'e dokunulmadı, PR #9 birleştirilmedi.
+
 ## 2 Kasım 2026 — audio-only yanlış video doğrulaması düzeltmesi
 - `faae859e70c94fb0a2a317022cae0e8457452279`: FFmpeg `framemd5` çıktı satırını video karesi saymak için `#media_type 0: video` şartı eklendi; audio-only yanlış pozitif engellendi.
 - `1c95d7fd24d803d95d9d4c45a3d42b4e4f5e4791`: `v2/test_media_decode.py` içine audio-only regresyon testi eklendi ve geçerli video test verisi güncellendi.
