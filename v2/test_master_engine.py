@@ -19,6 +19,19 @@ class MasterTests(unittest.TestCase):
         self.assertEqual(len(items[0]["history"]), 1)
         self.assertEqual(report["historical_missing_real_url"], 1)
         self.assertEqual([x["parsed"] for x in audit], [2, 2])
+    def test_media_decode_only_after_reachable_manifest(self):
+        data = "#EXTM3U\n#EXTINF:-1,TRT 1\nhttps://example.org/new.m3u8\n"
+        items, _, _ = build([({"id": "tr", "scope": "TR"}, data)], "#EXTM3U\n",
+                            checker=lambda item: True, media_checker=lambda item: True)
+        self.assertTrue(items[0]["media_decoded"])
+        self.assertFalse(items[0]["device_verified"])
+        called = []
+        items, _, _ = build([({"id": "tr", "scope": "TR"}, data)], "#EXTM3U\n",
+                            checker=lambda item: False,
+                            media_checker=lambda item: called.append(item) or True)
+        self.assertFalse(items[0]["media_decoded"])
+        self.assertEqual(called, [])
+
     def test_historical_existing_main_url_never_exported(self):
         live = "#EXTM3U\n#EXTINF:-1,Existing\nhttps://example.org/existing.m3u8\n"
         history = [{"url": "https://example.org/existing.m3u8", "source": "#60"}]
