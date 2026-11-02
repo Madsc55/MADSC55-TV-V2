@@ -14,10 +14,10 @@ import real_ibo_scan
 
 class PartialSourceTests(unittest.TestCase):
     def test_parse_m3u_preserves_epg_and_logo(self):
-        payload = (b'#EXTM3U\\n'
+        payload = (b'#EXTM3U\n'
                    b'#EXTINF:-1 tvg-id="trt1.tr" tvg-logo="https://example.org/logo.png" '
-                   b'group-title="Turkiye",TRT 1\\n'
-                   b'https://example.org/live.m3u8\\n')
+                   b'group-title="Turkiye",TRT 1\n'
+                   b'https://example.org/live.m3u8\n')
         entries = list(real_ibo_scan.parse_m3u(payload))
         self.assertEqual(len(entries), 1)
         self.assertEqual(entries[0]["tvg_id"], "trt1.tr")
@@ -28,7 +28,7 @@ class PartialSourceTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             root = pathlib.Path(directory)
             live = root / "protected.m3u8"
-            live.write_text("#EXTM3U\\nhttps://example.org/protected.m3u8\\n", encoding="utf-8")
+            live.write_text("#EXTM3U\nhttps://example.org/protected.m3u8\n", encoding="utf-8")
             with patch.object(sys, "argv", ["real_ibo_scan.py", "--live", str(live),
                                             "--timeout", "nan"]), patch.object(
                     real_ibo_scan, "fetch", side_effect=AssertionError("network called")):
