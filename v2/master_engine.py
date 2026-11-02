@@ -72,6 +72,14 @@ def build(source_texts, live_text, history=(), checker=None, workers=8, media_ch
             item["media_decoded"] = ok
     return items, audit, history_report
 
+def render_m3u(batch):
+    """Render only real candidate records; never synthesize stream addresses."""
+    lines = ["#EXTM3U"]
+    for item in batch:
+        name = str(item.get("name", "Unknown")).replace("\n", " ").replace("\r", " ").replace(",", " ")
+        lines.extend((f"#EXTINF:-1,{name}", item["url"]))
+    return "\n".join(lines) + "\n"
+
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("--history", type=Path)
@@ -136,11 +144,7 @@ def main():
     if not failures:
         for n in range(0, len(verified), args.limit):
             batch = verified[n:n + args.limit]
-            lines = ["#EXTM3U"]
-            for item in batch:
-                name = str(item.get("name", "Unknown")).replace("\n", " ").replace("\r", " ").replace(",", " ")
-                lines += [f'#EXTINF:-1,{name}', item["url"]]
-            (args.out / f"ibo_part_{n // args.limit + 1:04}.m3u8").write_text("\n".join(lines) + "\n", encoding="utf-8")
+            (args.out / f"ibo_part_{n // args.limit + 1:04}.m3u8").write_text(render_m3u(batch), encoding="utf-8")
     # Export each standard size only when enough independently media-decoded
     # candidates exist; never pad packages with fabricated or unverified URLs.
     standard_package_counts = {}
@@ -150,11 +154,7 @@ def main():
             standard_package_counts[str(package_size)] = full_packages
             for index in range(full_packages):
                 batch = verified[index * package_size:(index + 1) * package_size]
-                lines = ["#EXTM3U"]
-                for item in batch:
-                    name = str(item.get("name", "Unknown")).replace("\n", " ").replace("\r", " ").replace(",", " ")
-                    lines.extend((f"#EXTINF:-1,{name}", item["url"]))
-                (args.out / f"ibo_{package_size}_part_{index + 1:04}.m3u").write_text("\n".join(lines) + "\n", encoding="utf-8")
+                (args.out / f"ibo_{package_size}_part_{index + 1:04}.m3u").write_text(render_m3u(batch), encoding="utf-8")
     else:
         standard_package_counts = {"500": 0, "1000": 0, "2000": 0}
     protected_hash_after = hashlib.sha256(LIVE.read_bytes()).hexdigest()
