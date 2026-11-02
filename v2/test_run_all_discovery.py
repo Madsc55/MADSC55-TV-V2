@@ -1,12 +1,33 @@
 #!/usr/bin/env python3
 """No-network tests for the ordered, single-command discovery coordinator."""
 import pathlib
+import json
 import tempfile
 import unittest
 from unittest.mock import patch
-from run_all_discovery import plan, preflight, execute
+from run_all_discovery import plan, preflight, execute, validate_source_inventory
 
 class RunnerTests(unittest.TestCase):
+    def test_source_inventory_preflight_rejects_bad_entries_together(self):
+        with tempfile.TemporaryDirectory() as folder:
+            path = pathlib.Path(folder) / "sources.json"
+            valid = {"id": "tr", "kind": "m3u", "url": "https://example.org/tr.m3u", "scope": "TR"}
+            cases = [
+                [valid, dict(valid, id="duplicate")],
+                [dict(valid, url="http://example.org/tr.m3u")],
+                [dict(valid, url="https://user:pass@example.org/tr.m3u")],
+                [dict(valid, scope="unsupported")],
+                [],
+            ]
+            for sources in cases:
+                with self.subTest(sources=sources):
+                    path.write_text(json.dumps({"policy": "discovery-only; never modify live playlist", "sources": sources}), encoding="utf-8")
+                    with self.assertRaises(RuntimeError):
+                        validate_source_inventory(path)
+
+    def test_real_config_inventory_validates_offline(self):
+        self.assertGreater(validate_source_inventory(), 0)
+
     def test_stage_order(self):
         steps = plan(pathlib.Path("/tmp/private.enc"), pathlib.Path("/tmp/old.json"))
         self.assertEqual(len(steps), 7)
