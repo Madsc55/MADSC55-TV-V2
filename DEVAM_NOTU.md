@@ -1,3 +1,9 @@
+## 2 Kasım 2026 — tarihî URL koruması ve yeni regresyon
+- `0528e2f6dc6bc0d1491ebef83c8d79116b344a68`: tarihî URL doğrulayıcısı `127.1`, `2130706433`, `0177.0.0.1`, `0x7f000001` gibi resolver tarafından yerel IP'ye çözümlenebilen alternatif sayısal hostları ve `.localhost` alt alanlarını reddediyor. Gerçek kaynak envanterine veya ana playlist'e dokunulmadı.
+- `dab56afc23c2689bce50c05c7769484dc99d5ce3`: bu durumlar için çevrimdışı regresyon testi eklendi. GitHub'a commit kaydedilmesi Actions testinin başarılı olduğu anlamına gelmez.
+- Sekiz aşama durumu: (1) Master Engine kodu mevcut, uçtan uca kanıt yok; (2) kaynak entegrasyonları kısmen mevcut, gerçek tarama doğrulanmadı; (3) FFmpeg yerel kontrolü önceki ekranda başarılı, canlı yayın decode kanıtı yok; (4) 4.955 tarihî adayın tam kurtarma kanıtı yok; (5) sınıflandırma/tekilleştirme kısmen testli; (6) şifreli arşiv kodu mevcut, kalıcı dış geri yükleme kanıtı yok; (7) gerçek 500/1000/2000 çıktı dosyaları doğrulanmadı; (8) Actions #43 ve Master #107 eski commitlerde başarısız, yeni commitler için run ID/job sonucu elde edilmedi.
+- Koruma: `MADSC55_TV_IBO_CALISANLAR_TEST.m3u8`, `main`, PR #9 ve eski depo değiştirilmedi. Engeller: GitHub bağlantısında push Actions run listesi ve workflow_dispatch çağırma işlemi mevcut değil; bu nedenle yeni run ID veya başarı sonucu uydurulmadı.
+
 ## 2 Kasım 2026 — Master Engine immutable playlist CI koruması
 - `cd0b5a44297b9bf7ada5b75ba745dd6a6b9b9b3e`: `.github/workflows/v2-master-engine.yml` offline-tests koruması yalnızca HEAD ile dosya karşılaştırmak yerine sabit doğrulanmış Git blob SHA `4b1c3cea4b5107a425abab60f62d41f9f81e05a7` değerini de kontrol ediyor. Böylece HEAD içinde yanlışlıkla değiştirilmiş ana playlist CI tarafından kabul edilmez.
 - CI sonucunun yeşil olduğu henüz bağımsız doğrulanmadı; gerçek run ID alınamadı. Ana playlist dosyası değiştirilmedi. Sekiz aşama uçtan uca tamamlandı sayılmıyor.
