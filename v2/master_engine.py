@@ -119,12 +119,7 @@ def main():
                                          media_checker=lambda x: decode_media(x, args.timeout))
     # Never silently publish a partial scan as complete.
     args.out.mkdir(parents=True)
-    # Create an authenticated archive even when discovery yields no candidates.
-    # Empty archives must still be real files; a missing archive is not a valid backup.
-    if not items:
-        # An empty archive has no authenticated records and cannot prove recovery.
-        # Preserve the report without fabricating an archive success artifact.
-        pass
+    # Only nonempty inventories produce authenticated encrypted records.
     for item in items:
         append(args.archive, item)
     restored = restore(args.archive) if items else []
