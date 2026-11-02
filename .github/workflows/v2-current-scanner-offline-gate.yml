@@ -6,6 +6,8 @@ on:
     paths:
       - '.github/workflows/v2-current-scanner-offline-gate.yml'
       - '.github/workflows/ibo-real-scan.yml'
+      - 'v2/test_*.py'
+      - 'v2/discover.py'
   workflow_dispatch:
 
 permissions:
