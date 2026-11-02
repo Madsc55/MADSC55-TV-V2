@@ -251,13 +251,13 @@
     {
       "id": "iptv-org-region-south-america",
       "kind": "m3u",
-      "url": "https://iptv-org.github.io/iptv/regions/sam.m3u",
+      "url": "https://iptv-org.github.io/iptv/regions/southam.m3u",
       "scope": "world"
     },
     {
       "id": "iptv-org-region-middle-east",
       "kind": "m3u",
-      "url": "https://iptv-org.github.io/iptv/regions/me.m3u",
+      "url": "https://iptv-org.github.io/iptv/regions/mideast.m3u",
       "scope": "world"
     },
     {
@@ -269,7 +269,7 @@
     {
       "id": "iptv-org-region-eastern-europe",
       "kind": "m3u",
-      "url": "https://iptv-org.github.io/iptv/regions/eeu.m3u",
+      "url": "https://iptv-org.github.io/iptv/regions/cee.m3u",
       "scope": "world"
     },
     {
@@ -281,7 +281,7 @@
     {
       "id": "iptv-org-region-southern-europe",
       "kind": "m3u",
-      "url": "https://iptv-org.github.io/iptv/regions/seu.m3u",
+      "url": "https://iptv-org.github.io/iptv/regions/ser.m3u",
       "scope": "world"
     }
   ]
