@@ -13,7 +13,7 @@ class DecodeTests(unittest.TestCase):
 
     def test_invalid_timeout_type_fails_closed(self):
         with patch("media_decode.subprocess.run") as run:
-            for timeout in (None, "20", [], {}):
+            for timeout in (None, "20", [], {}, True, False, float("nan"), float("inf"), float("-inf")):
                 self.assertFalse(decode_media({"url": "https://example.org/live.m3u8"}, timeout=timeout))
             run.assert_not_called()
 
