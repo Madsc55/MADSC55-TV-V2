@@ -41,6 +41,10 @@ jobs:
           failed=0
           # Discover TestCase tests in one suite; standalone scripts may contain zero unittest cases.
           PYTHONPATH=v2 python -m unittest discover -s v2 -p 'test_*.py' -v >v2/reports/ci/unittest-discovery.log 2>&1 || failed=1
+          if ! grep -Eq '^Ran [1-9][0-9]* tests? in ' v2/reports/ci/unittest-discovery.log; then
+            echo 'ERROR: Bulk unittest discovery found no executed tests' | tee -a v2/reports/ci/unittest-discovery.log
+            failed=1
+          fi
           python v2/test_playlist_invariants.py >v2/reports/ci/test_playlist_invariants.log 2>&1 || failed=1
           cat v2/reports/ci/*.log
           if [ "$failed" -ne 0 ]; then
