@@ -81,8 +81,8 @@ def main():
     p.add_argument("--timeout", type=float, default=12)
     p.add_argument("--limit", type=int, default=500)
     args = p.parse_args()
-    if not 1 <= args.limit <= 500 or not 1 <= args.workers <= 32 or not math.isfinite(args.timeout) or not 0 < args.timeout <= 120:
-        p.error("limit 1..500; workers 1..32; timeout >0 and <=120")
+    if not 1 <= args.limit <= 2000 or not 1 <= args.workers <= 32 or not math.isfinite(args.timeout) or not 0 < args.timeout <= 120:
+        p.error("limit 1..2000; workers 1..32; timeout >0 and <=120")
     if not os.environ.get("V2_ARCHIVE_KEY_HEX"):
         p.error("V2_ARCHIVE_KEY_HEX secret is required")
     archive_path = args.archive.resolve(strict=False)
@@ -141,6 +141,22 @@ def main():
                 name = str(item.get("name", "Unknown")).replace("\n", " ").replace("\r", " ").replace(",", " ")
                 lines += [f'#EXTINF:-1,{name}', item["url"]]
             (args.out / f"ibo_part_{n // args.limit + 1:04}.m3u8").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    # Export each standard size only when enough independently media-decoded
+    # candidates exist; never pad packages with fabricated or unverified URLs.
+    standard_package_counts = {}
+    if not failures:
+        for package_size in (500, 1000, 2000):
+            full_packages = len(verified) // package_size
+            standard_package_counts[str(package_size)] = full_packages
+            for index in range(full_packages):
+                batch = verified[index * package_size:(index + 1) * package_size]
+                lines = ["#EXTM3U"]
+                for item in batch:
+                    name = str(item.get("name", "Unknown")).replace("\\n", " ").replace("\\r", " ").replace(",", " ")
+                    lines.extend((f"#EXTINF:-1,{name}", item["url"]))
+                (args.out / f"ibo_{package_size}_part_{index + 1:04}.m3u").write_text("\\n".join(lines) + "\\n", encoding="utf-8")
+    else:
+        standard_package_counts = {"500": 0, "1000": 0, "2000": 0}
     protected_hash_after = hashlib.sha256(LIVE.read_bytes()).hexdigest()
     if protected_hash_before != protected_hash_after:
         raise RuntimeError("Protected main playlist SHA-256 changed during scan")
@@ -152,7 +168,7 @@ def main():
               "manifest_reachable": sum(x["network_status"] == "HLS_MANIFEST_REACHABLE" for x in items),
               "media_decoded": len(verified), "unknown_or_failed": sum(x["network_status"] != "HLS_MANIFEST_REACHABLE" for x in items),
               "historical": history_report, "archive_restore_verified": bool(items) and restored == items,
-              "device_verified": False, "batch_count": (len(verified) + args.limit - 1) // args.limit if not failures else 0,
+              "device_verified": False, "standard_full_packages": standard_package_counts, "batch_count": (len(verified) + args.limit - 1) // args.limit if not failures else 0,
               "status": "PARTIAL_SOURCE_FAILURE" if failures else ("NO_CANDIDATES" if not items else ("NO_MEDIA_DECODED" if not verified else "COMPLETE_SOURCE_FETCH"))}
     (args.out / "report.json").write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     print(json.dumps({k: v for k, v in report.items() if k != "source_audit"}, ensure_ascii=False))
