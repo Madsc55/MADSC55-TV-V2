@@ -11,8 +11,9 @@ from discover import ROOT, LIVE, SOURCES, entries, turkish_candidate, fetch, app
 from historical_url_recovery import recover, read_records, validate_url
 from encrypted_archive import append, restore
 from real_ibo_scan import check_hls
+from media_decode import decode_media
 
-def build(source_texts, live_text, history=(), checker=None, workers=8):
+def build(source_texts, live_text, history=(), checker=None, workers=8, media_checker=None):
     """Pure integration boundary; source_texts contains actual fetched M3U contents."""
     existing = {x["url"] for x in entries(live_text)}
     candidate_map = {}
@@ -57,6 +58,17 @@ def build(source_texts, live_text, history=(), checker=None, workers=8):
         item["network_status"] = "HLS_MANIFEST_REACHABLE" if ok else "UNKNOWN_OR_FAILED"
         item["media_decoded"] = False
         item["device_verified"] = False
+    if media_checker is not None:
+        reachable = [item for item in items if item["network_status"] == "HLS_MANIFEST_REACHABLE"]
+        def decode(item):
+            try:
+                return bool(media_checker(item))
+            except Exception:
+                return False
+        with concurrent.futures.ThreadPoolExecutor(max_workers=workers) as pool:
+            decoded = list(pool.map(decode, reachable))
+        for item, ok in zip(reachable, decoded):
+            item["media_decoded"] = ok
     return items, audit, history_report
 
 def main():
@@ -101,7 +113,8 @@ def main():
     history = list(read_records(args.history)) if args.history else []
     items, audit, history_report = build(source_texts, live_text, history,
                                          checker=lambda x: check_hls(x, args.timeout),
-                                         workers=args.workers)
+                                         workers=args.workers,
+                                         media_checker=lambda x: decode_media(x, args.timeout))
     # Never silently publish a partial scan as complete.
     protected_hash_before = hashlib.sha256(LIVE.read_bytes()).hexdigest()
     args.out.mkdir(parents=True)
