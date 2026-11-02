@@ -94,8 +94,10 @@ def main():
             not math.isfinite(args.timeout) or
             not 0 < args.timeout <= 120):
         ap.error('workers must be 1..32 and limit 1..10000')
-    if args.output.resolve() == args.live.resolve():
+    if args.output.resolve() == args.live.resolve() or args.report.resolve() == args.live.resolve():
         raise SystemExit('Refusing to overwrite protected main playlist')
+    if args.output.resolve() == args.report.resolve():
+        raise SystemExit('Scanner output and report must use different paths')
     if not args.live.is_file():
         ap.error('Protected main playlist not found; refusing unfiltered export')
     live_text = args.live.read_text(encoding='utf-8-sig', errors='replace')
