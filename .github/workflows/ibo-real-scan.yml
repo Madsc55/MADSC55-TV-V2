@@ -62,6 +62,10 @@ jobs:
           files = [Path(p) for p in report.get('written_parts', [])]
           if report.get('status') == 'READY_FOR_DEVICE_TEST' and not files:
               raise SystemExit('Verified candidates reported without batch files')
+          if report.get('status') == 'READY_FOR_DEVICE_TEST' and len(files) != report.get('part_count'):
+              raise SystemExit('Batch count does not match scan report')
+          if report.get('status') == 'READY_FOR_DEVICE_TEST' and report.get('av_verified', 0) <= 0:
+              raise SystemExit('Ready status without AV-verified candidates')
           if report.get('status') == 'NO_VERIFIED_CANDIDATES' and files:
               raise SystemExit('Unexpected batches reported for zero candidates')
           if any(not path.is_file() for path in files):
