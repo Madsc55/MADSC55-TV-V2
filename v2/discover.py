@@ -210,6 +210,7 @@ def main():
     scopes = {source['id']: source.get('scope', 'candidate') for source in sources}
     fetched_playlist_urls = {source["url"] for source in sources if source.get("kind", "m3u") != "html"}
     skipped_duplicate_index_links = 0
+    index_link_errors = []
     from source_failover import SourceCache, recover_source, FetchFailure
     failover_cache = SourceCache(ROOT / "v2" / "cache" / "discovery-source-failover")
     for source in sources:
@@ -276,7 +277,7 @@ def main():
                                              "distinct_stream_urls": len({e["url"] for e in child_entries}),
                                              "status": "PARSED_NOT_PLAYBACK_VERIFIED"})
                     except Exception as exc:
-                        errors.append({"source": child_id, "error": type(exc).__name__})
+                        index_link_errors.append({"source": child_id, "error": type(exc).__name__})
                         source_audit.append({"source": child_id, "status": "FETCH_FAILED",
                                              "error": type(exc).__name__})
                 continue
@@ -315,12 +316,15 @@ def main():
                                  "NO_SOURCES_ACCESSIBLE" if not loaded else
                                  "COMPLETE_SOURCE_FETCH" if not errors else "PARTIAL_SOURCE_FETCH")
     result["failed_source_count"] = len(errors)
+    result["index_link_errors"] = index_link_errors
+    result["failed_optional_index_links"] = len(index_link_errors)
     result["source_coverage_summary"] = {
         "configured_sources": len(sources),
         "parsed_playlists": sum(item["status"] == "PARSED_NOT_PLAYBACK_VERIFIED" for item in source_audit),
         "index_pages_checked": sum(item["status"] == "INDEX_LINKS_ONLY_NOT_PLAYBACK_VERIFIED" for item in source_audit),
         "index_playlist_links_found": sum(item["entries"] for item in source_audit if item["status"] == "INDEX_LINKS_ONLY_NOT_PLAYBACK_VERIFIED"),
         "failed_sources": len(errors),
+        "failed_optional_index_links": len(index_link_errors),
         "skipped_duplicate_index_links": skipped_duplicate_index_links,
         "playback_verified": False,
     }
