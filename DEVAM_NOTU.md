@@ -1,3 +1,9 @@
+## 2 Kasım 2026 — gerçek M3U dışa aktarma satır sonu düzeltmesi
+- `ad1d70ca2bacf123fd199440f68bc0daa9da8dea`: `6a96d044` ile eklenen standart 500/1000/2000 paketlerinde gerçek satır sonları yerine yazılan literal `\\n` hatası düzeltildi. Bu hata paketlerin geçerli M3U olarak ayrıştırılmasını engelliyordu.
+- `02da2782dceb99f21a51346752f5c5e1bf655c0e`: standart paketlerle mevcut 500'lü batch'ler aynı `render_m3u()` fonksiyonunu kullanıyor; çıktı içeriği gerçek aday URL'lerinden türetiliyor.
+- `441ab5100e9aa09620975123bd94be0c175d5be6`: çok satırlı M3U formatı, isim temizliği, URL korunumu için regresyon testi eklendi.
+- Test durumu: kod ve test commit edildi; GitHub Actions run ID ve test sonucu doğrulanmadı. Yerel test koşusu yapılmadı. Fiziksel 500/1000/2000 gerçek paket üretimi ve kalıcı şifreli arşiv geri yüklemesi doğrulanmadı. Ana İBO playlisti, YEDEKLER/YENİLER/FAVORİLER, main, PR #9 ve eski depo değiştirilmedi.
+
 ## 2 Kasım 2026 — toplu CI ve gerçek paket dışa aktarma değişiklikleri
 - Eski hata kanıtı: Verification #43 (`3bfc43c`) 154 testten 1 hata; Master #107 aynı eski committe 10 testten 1 hata (`test_duplicate_sources_decode_once_and_keep_all_provenance`, `0 != 1`). Kaynak: kullanıcının Actions ekran görüntüleri. Eski test M3U kaçışları `4953142` ile daha önce düzeltilmişti; tekrar değiştirilmedi.
 - `d22967af76404813312e779793c1eea35fe28d09`: V2 Master Engine push job artık tüm unittest modüllerini toplu çalıştırır, logları hata halinde de artifact olarak saklar; manuel master job'u test edilen `github.sha` commitini checkout eder, gerçek run kimliğini artifact'e ekler.
