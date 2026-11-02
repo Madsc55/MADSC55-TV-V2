@@ -1,3 +1,7 @@
+## 2 Kasım 2026 — Actions test bağımlılığı ve SHA-256 koruması
+- `0fea00650e8f12e9d94e22e6af2d510fcb53b562`: `.github/workflows/v2-master-engine.yml` offline-tests job'ına `cryptography>=42,<47` kurulumu ve korunan ana playlist'in HEAD/working-tree SHA-256 karşılaştırması eklendi. Playlist dosyası değiştirilmedi.
+- Bu kontrol için Actions run ID ve job sonucu henüz alınamadı; commit bazlı PR-event filtreli run API'si ve combined status boş döndü. CI başarılı ilan edilmedi.
+
 ## 2 Kasım 2026 — Master Engine regresyon güvencesi
 - `83df978abf42479e401903c2ada4f83a99e96407`: `v2/test_master_engine.py` manifest erişiminin medya decode kanıtı sayılmadığını test eden koşulla güncellendi.
 - GitHub Actions koşusunun gerçek run ID/job sonucu henüz alınamadı; PR-event filtreli run sorgusu ve commit status sorgusu boş döndü. Testin çalıştığı/yeşil olduğu iddia edilmiyor.
