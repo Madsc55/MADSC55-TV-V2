@@ -87,7 +87,7 @@ def main():
     ap.add_argument('--limit', type=int, default=2000)
     ap.add_argument('--live', type=pathlib.Path, default=LIVE)
     args = ap.parse_args()
-    if not 1 <= args.workers <= 32 or not 1 <= args.limit <= 10000:
+    if not 1 <= args.workers <= 32 or not 1 <= args.limit <= 10000 or not 0 < args.timeout <= 120:
         ap.error('workers must be 1..32 and limit 1..10000')
     if not args.live.is_file():
         ap.error('Protected main playlist not found; refusing unfiltered export')
@@ -124,14 +124,21 @@ def main():
                 good.append(result)
     # Source outages are reported; a working subset can still be tested.
     # Never modify the protected main playlist.
+    source_coverage_complete = not failed and len(source_counts) == len(sources)
     report = {'source_count': len(sources), 'fetched_sources': len(source_counts),
               'failed_sources': failed, 'existing_main_urls': len(existing), 'unique_new_candidates': len(candidates),
               'http_checked': checked, 'http_hls_ok': len(good), 'exported_part1': min(len(good), args.limit),
               'part_count': (len(good) + args.limit - 1) // args.limit,
+              'source_coverage_complete': source_coverage_complete,
+              'source_counts': source_counts,
               'playback_verified_on_device': False, 'mock_data_used': False,
-              'status': 'READY_FOR_DEVICE_TEST' if good else 'NO_VERIFIED_CANDIDATES'}
+              'status': ('INCOMPLETE_SOURCE_FETCH' if not source_coverage_complete else
+                         'READY_FOR_DEVICE_TEST' if good else 'NO_VERIFIED_CANDIDATES')}
     args.report.parent.mkdir(parents=True, exist_ok=True)
     args.report.write_text(json.dumps(report, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
+    if not source_coverage_complete:
+        print(json.dumps(report, ensure_ascii=False, indent=2))
+        raise SystemExit('Incomplete source fetch; no new test package published')
     if not good:
         print(json.dumps(report, ensure_ascii=False, indent=2))
         raise SystemExit('No new HLS candidates verified; main playlist unchanged')
