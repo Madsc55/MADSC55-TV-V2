@@ -77,7 +77,8 @@ def render_m3u(batch):
     lines = ["#EXTM3U"]
     for item in batch:
         name = str(item.get("name", "Unknown")).replace("\n", " ").replace("\r", " ").replace(",", " ")
-        lines.extend((f"#EXTINF:-1,{name}", item["url"]))
+        attrs = " ".join(f'{label}="{str(item[key]).replace(chr(34), "&quot;").replace(chr(10), " ").replace(chr(13), " ")}"' for key, label in (("tvg_id", "tvg-id"), ("logo", "tvg-logo"), ("group", "group-title")) if item.get(key))
+        lines.extend((f"#EXTINF:-1{chr(32) + attrs if attrs else chr(0)[:0]},{name}", item["url"]))
     return "\n".join(lines) + "\n"
 
 def main():
