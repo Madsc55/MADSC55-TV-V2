@@ -18,6 +18,11 @@ class MasterTests(unittest.TestCase):
         self.assertEqual(len(items[0]["history"]), 1)
         self.assertEqual(report["historical_missing_real_url"], 1)
         self.assertEqual([x["parsed"] for x in audit], [2, 2])
+    def test_invalid_m3u_is_not_accepted(self):
+        items, audit, _ = build([({"id": "html", "scope": "TR"}, "<html>not a playlist</html>")], "#EXTM3U\n")
+        self.assertEqual(items, [])
+        self.assertEqual(audit[0]["status"], "INVALID_M3U")
+
     def test_no_device_success_inference(self):
         data = "#EXTM3U\n#EXTINF:-1,TRT 1\nhttps://example.org/new.m3u8\n"
         items, _, _ = build([({"id": "tr", "scope": "TR"}, data)], "#EXTM3U\n",
