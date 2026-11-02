@@ -104,6 +104,20 @@ def main():
         assert legacy_restored["source_ids"] == ["historical-source"]
         assert legacy_restored["observations"] == [{"status": "AV_VERIFIED",
                                                      "origin": "past-scan"}]
+        # Mixed historical/new source identifiers must both survive.
+        mixed = base / "mixed.jsonl"
+        mixed.write_text(json.dumps({"url": "https://example.org/mixed.m3u8",
+                                     "source_ids": ["modern-source"],
+                                     "source_id": "legacy-source"}) + "\n", encoding="utf-8")
+        mixed_output = base / "mixed.enc"
+        subprocess.run([sys.executable, str(ROOT / "consolidate_inventory.py"),
+                        "--input", str(mixed),
+                        "--encrypted-output", str(mixed_output),
+                        "--report", str(base / "mixed-report.json")],
+                       env=env, check=True, capture_output=True, text=True)
+        mixed_restored = json.loads(decrypt(mixed_output.read_bytes(),
+                                            env["V2_ARCHIVE_PASSPHRASE"]).decode().strip())
+        assert mixed_restored["source_ids"] == ["modern-source", "legacy-source"]
         invalid = base / "invalid.jsonl"
         invalid.write_text(json.dumps({"url": "https://example.org/bad.m3u8",
                                        "observations": ["invalid-history"]}) + "\n",
