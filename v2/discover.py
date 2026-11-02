@@ -210,6 +210,8 @@ def main():
     scopes = {source['id']: source.get('scope', 'candidate') for source in sources}
     fetched_playlist_urls = {source["url"] for source in sources if source.get("kind", "m3u") != "html"}
     skipped_duplicate_index_links = 0
+    from source_failover import SourceCache, recover_source, FetchFailure
+    failover_cache = SourceCache(ROOT / "v2" / "cache" / "discovery-source-failover")
     for source in sources:
         if args.offline:
             continue
@@ -219,7 +221,19 @@ def main():
             for attempt in range(4):
                 attempts = attempt + 1
                 try:
-                    content = fetch(source["url"], allow_html=source.get("kind") == "html")
+                    if source.get("kind") == "html":
+                        content = fetch(source["url"], allow_html=True)
+                    else:
+                        def source_fetch(url):
+                            try:
+                                return fetch(url)
+                            except urllib.error.HTTPError as exc:
+                                raise FetchFailure("HTTP_" + str(exc.code), exc.code in (408, 429, 500, 502, 503, 504)) from exc
+                            except (TimeoutError, socket.timeout, urllib.error.URLError, OSError) as exc:
+                                raise FetchFailure(type(exc).__name__, True) from exc
+                        content, recovery = recover_source(source, failover_cache, source_fetch)
+                        if content is None or not recovery["fresh"]:
+                            raise ValueError("No fresh source or fallback available")
                     parsed = list(entries(content))
                     last_error = None
                     break
