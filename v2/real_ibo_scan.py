@@ -131,6 +131,17 @@ def main():
                 if line.strip().startswith(('https://', 'http://'))}
     if not existing:
         ap.error('Protected main playlist contains no stream URLs; refusing unfiltered export')
+    # Previously rejected foreign YEDEKLER entries are retained in a separate
+    # archive, but must never be rediscovered as new Turkish IBO test candidates.
+    foreign_archive = ROOT / 'v2/arsiv/yabanci_yedekler_2026-11-02_3964.m3u8'
+    if not foreign_archive.is_file():
+        ap.error('Protected foreign archive missing; refusing unfiltered export')
+    foreign_urls = {entry['url'] for entry in parse_m3u(
+        foreign_archive.read_bytes())}
+    if len(foreign_urls) != 3964:
+        ap.error('Foreign archive integrity failed; expected 3964 distinct URLs')
+    existing.update(foreign_urls)
+
     doc = json.loads(args.sources.read_text(encoding='utf-8'))
     sources = list(doc['sources'] if isinstance(doc, dict) else doc)
     dynamic_count = 0
