@@ -4,6 +4,37 @@ import unittest
 from master_engine import build, render_m3u
 
 class MasterTests(unittest.TestCase):
+    def test_master_protected_output_paths_are_checked_before_network(self):
+        import contextlib
+        import io
+        import pathlib
+        import sys
+        import tempfile
+        from unittest.mock import patch
+        import master_engine
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = pathlib.Path(directory)
+            history = root / "history.jsonl"
+            history.write_text('{"url":"https://example.org/old.m3u8"}\\n', encoding="utf-8")
+            archive = root / "archive.enc"
+            cases = [
+                (root, archive, "output parent of protected history"),
+                (root / "output", history, "archive aliases history"),
+            ]
+            for out, archive_path, label in cases:
+                with self.subTest(case=label):
+                    argv = ["master_engine.py", "--history", str(history),
+                            "--archive", str(archive_path), "--out", str(out)]
+                    with patch.object(sys, "argv", argv), patch.dict(
+                            "os.environ", {"V2_ARCHIVE_KEY_HEX": "ab" * 32}), patch.object(
+                            master_engine, "fetch", side_effect=AssertionError("network called")):
+                        with contextlib.redirect_stderr(io.StringIO()):
+                            with self.assertRaises(SystemExit):
+                                master_engine.main()
+                    self.assertTrue(history.is_file())
+
+
     def test_export_is_valid_multiline_m3u_with_exact_real_urls(self):
         rows = [{"name": "TRT 1, HD\nLIVE", "url": "https://example.org/real-source.m3u8"},
                 {"name": "DHA", "url": "https://example.org/other-source.m3u8"}]
