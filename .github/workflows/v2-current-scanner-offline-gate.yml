@@ -1,0 +1,38 @@
+name: V2 Current Scanner Offline Gate
+on:
+  push:
+    branches:
+      - madsc/v2-discovery-bulk-20261031
+    paths:
+      - '.github/workflows/v2-current-scanner-offline-gate.yml'
+      - '.github/workflows/ibo-real-scan.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  scanner-offline-regressions:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout current scanner code from main (read-only)
+        uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install archive dependency
+        run: python -m pip install 'cryptography>=42,<47'
+      - name: Compile current scanner and archive modules
+        run: |
+          python -m py_compile v2/real_ibo_scan.py v2/secure_archive.py v2/consolidate_inventory.py
+      - name: Run all three offline regressions
+        run: |
+          python v2/test_secure_archive_roundtrip.py
+          python v2/test_consolidate_inventory.py
+          python v2/test_real_ibo_scan_offline.py
+      - name: Assert protected playlist and foreign archive remain untouched
+        run: |
+          git diff --exit-code -- MADSC55_TV_IBO_CALISANLAR_TEST.m3u8 v2/arsiv/yabanci_yedekler_2026-11-02_3964.m3u8
