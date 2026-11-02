@@ -94,6 +94,8 @@ def main():
             not math.isfinite(args.timeout) or
             not 0 < args.timeout <= 120):
         ap.error('workers must be 1..32 and limit 1..10000')
+    if args.output.resolve() == args.live.resolve():
+        raise SystemExit('Refusing to overwrite protected main playlist')
     if not args.live.is_file():
         ap.error('Protected main playlist not found; refusing unfiltered export')
     live_text = args.live.read_text(encoding='utf-8-sig', errors='replace')
@@ -148,8 +150,6 @@ def main():
     if not good:
         print(json.dumps(report, ensure_ascii=False, indent=2))
         raise SystemExit('No new HLS candidates verified; main playlist unchanged')
-    if args.output.resolve() == args.live.resolve():
-        raise SystemExit('Refusing to overwrite protected main playlist')
     lines = ['#EXTM3U']
     for item in good[:args.limit]:
         name = item['name'].replace('\n', ' ').replace('\r', ' ').replace(',', ' ')
