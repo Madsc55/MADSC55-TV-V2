@@ -21,7 +21,8 @@ class HistoricalRecoveryTests(unittest.TestCase):
 
     def test_rejects_private_and_credentialed_urls(self):
         for url in ("http://127.0.0.1/a.m3u8", "http://10.0.0.1/a.m3u8",
-                    "https://localhost/a.m3u8", "https://user:pass@example.org/a.m3u8"):
+                    "https://localhost/a.m3u8", "https://user:pass@example.org/a.m3u8",
+                    "https://@example.org/a.m3u8", "https://:pass@example.org/a.m3u8"):
             self.assertFalse(validate_url(url), url)
 
     def test_malformed_ipv6_authority_is_rejected(self):
