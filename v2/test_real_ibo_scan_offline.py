@@ -33,6 +33,14 @@ class ScannerOfflineTests(unittest.TestCase):
     def test_invalid_hls_url_is_not_verified(self):
         self.assertIsNone(scanner.check_hls({"url": "file:///tmp/mock.m3u8"}, 1))
 
+    def test_historical_source_ids_preserve_both_formats(self):
+        record = {"source_ids": ["new", "shared"], "source_id": "old"}
+        self.assertEqual(scanner.historical_source_ids(record), ["new", "shared", "old"])
+        self.assertEqual(scanner.historical_source_ids({"source_id": "old"}), ["old"])
+        self.assertEqual(scanner.historical_source_ids({}), ["historical-archive"])
+        with self.assertRaises(ValueError):
+            scanner.historical_source_ids({"source_ids": "invalid"})
+
     def test_archive_entry_count_not_unique_url_count(self):
         sample = (b'#EXTM3U\n#EXTINF:-1,One\nhttps://example.org/same.m3u8\n'
                   b'#EXTINF:-1,Two\nhttps://example.org/same.m3u8\n')
