@@ -55,6 +55,7 @@ def build(source_texts, live_text, history=(), checker=None, workers=8):
         outcomes = list(pool.map(check, items))
     for item, ok in zip(items, outcomes):
         item["network_status"] = "HLS_MANIFEST_REACHABLE" if ok else "UNKNOWN_OR_FAILED"
+        item["media_decoded"] = False
         item["device_verified"] = False
     return items, audit, history_report
 
@@ -112,7 +113,8 @@ def main():
         raise RuntimeError("No valid candidates; refusing to report an empty scan as successful")
     if not any(item["network_status"] == "HLS_MANIFEST_REACHABLE" for item in items):
         raise RuntimeError("No reachable HLS manifests; refusing successful scan status")
-    verified = [x for x in items if x["network_status"] == "HLS_MANIFEST_REACHABLE"]
+    verified = [x for x in items if x.get("media_decoded") is True]
+    # A manifest check is not media decoding; never export it as a verified stream.
     for n in range(0, len(verified), args.limit):
         batch = verified[n:n + args.limit]
         lines = ["#EXTM3U"]
@@ -122,7 +124,8 @@ def main():
         (args.out / f"ibo_part_{n // args.limit + 1:04}.m3u8").write_text("\n".join(lines) + "\n", encoding="utf-8")
     report = {"configured_sources": len(sources), "fetched_sources": len(audit),
               "failed_sources": failures, "source_audit": audit, "unique_candidates": len(items),
-              "manifest_reachable": len(verified), "unknown_or_failed": len(items) - len(verified),
+              "manifest_reachable": sum(x["network_status"] == "HLS_MANIFEST_REACHABLE" for x in items),
+              "media_decoded": len(verified), "unknown_or_failed": sum(x["network_status"] != "HLS_MANIFEST_REACHABLE" for x in items),
               "historical": history_report, "archive_restore_verified": restored == items,
               "device_verified": False, "batch_count": (len(verified) + args.limit - 1) // args.limit,
               "status": "PARTIAL_SOURCE_FAILURE" if failures else "COMPLETE_SOURCE_FETCH"}
