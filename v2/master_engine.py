@@ -18,6 +18,9 @@ def build(source_texts, live_text, history=(), checker=None, workers=8):
     candidate_map = {}
     audit = []
     for source, data in source_texts:
+        if not data.lstrip().startswith("#EXTM3U"):
+            audit.append({"id": source["id"], "parsed": 0, "eligible": 0, "status": "INVALID_M3U"})
+            continue
         parsed = list(entries(data))
         eligible = 0
         for item in parsed:
