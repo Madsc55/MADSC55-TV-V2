@@ -1,3 +1,9 @@
+## 2 Kasım 2026 — FFmpeg gerçek kare doğrulaması entegrasyonu
+- `586c9e1933609d58b0b17cd4fa8856ab34dfb9ea`: `v2/media_decode.py` URL doğrulaması, zaman aşımı ve FFmpeg framemd5 çıktı kontrolü ile gerçek çözümlenen video karesini şart koşar.
+- `3a460f7ce793c8351212fcff0c0e9916aaca5874`: Master Engine manifest erişiminden sonra `media_checker` üzerinden kare doğrulamasını bağlar; cihaz doğrulaması ayrı kalır.
+- `27345e294440737a51d9622884fae481ece8edbd`, `129aa8b1044bfff0099536e6047612ed872997b5`, `bcf6d844882479169fe4b4363f26e1e4fb49f4eb`: yeni decode testleri, iki CI job'ına test ekleme ve Master Engine geçiş testleri.
+- Yerel test: `python -m unittest -v test_media_decode` — 5 test, 5 başarılı (subprocess sonuçları taklit edilmiştir; canlı medya testi değildir). GitHub Actions run ID bu oturumda doğrulanmadı; tüm depo testleri çalıştırılmadı. Ana playlist'e dokunulmadı, PR #9 birleştirilmedi.
+
 ## 2 Kasım 2026 — Master Engine SHA-256 tarama koruması
 - `7d0e1414be8ac34c96111e4e2537e3a9f6c3ac65`: `v2/master_engine.py` korunan ana playlist'in tarama öncesi/sonrası SHA-256 değerlerini karşılaştırır, değişiklikte hata verir ve eşit özetleri rapora ekler. Playlist dosyası commit'te değiştirilmedi.
 - Bu oturumda Actions run ID ve yürütülmüş Python test sonucu doğrulanmadı; gerçek tarama başlatılmadığından çalışma zamanı SHA-256 değeri yok. Aşama 1 henüz tamamlanmadı.
