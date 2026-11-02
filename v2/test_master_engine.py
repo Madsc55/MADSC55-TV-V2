@@ -23,6 +23,14 @@ class MasterTests(unittest.TestCase):
         self.assertEqual(items, [])
         self.assertEqual(audit[0]["status"], "INVALID_M3U")
 
+    def test_checker_exception_does_not_abort_scan(self):
+        data = "#EXTM3U\n#EXTINF:-1,TRT 1\nhttps://example.org/new.m3u8\n"
+        def fail(_):
+            raise TimeoutError("stream timeout")
+        items, _, _ = build([({"id": "tr", "scope": "TR"}, data)], "#EXTM3U\n", checker=fail)
+        self.assertEqual(items[0]["network_status"], "UNKNOWN_OR_FAILED")
+        self.assertFalse(items[0]["device_verified"])
+
     def test_no_device_success_inference(self):
         data = "#EXTM3U\n#EXTINF:-1,TRT 1\nhttps://example.org/new.m3u8\n"
         items, _, _ = build([({"id": "tr", "scope": "TR"}, data)], "#EXTM3U\n",
