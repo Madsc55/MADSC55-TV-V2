@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """Offline historical URL recovery; never performs network scans or changes playlists."""
 import argparse
-import hashlib
 import json
 from pathlib import Path
 from urllib.parse import urlsplit
+import ipaddress
 
 def read_records(path):
     with Path(path).open(encoding="utf-8") as fh:
@@ -20,7 +20,16 @@ def validate_url(value):
     if not isinstance(value, str):
         return False
     parsed = urlsplit(value)
-    return parsed.scheme in ("http", "https") and bool(parsed.netloc)
+    if parsed.scheme not in ("http", "https") or not parsed.hostname or parsed.username or parsed.password:
+        return False
+    try:
+        address = ipaddress.ip_address(parsed.hostname)
+        if not address.is_global:
+            return False
+    except ValueError:
+        if parsed.hostname.lower() in ("localhost", "localhost.localdomain"):
+            return False
+    return True
 
 def recover(old_records, current_records):
     current = {row["url"] for row in current_records if validate_url(row.get("url"))}
