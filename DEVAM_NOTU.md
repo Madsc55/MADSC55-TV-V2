@@ -1,3 +1,7 @@
+## 2 Kasım 2026 — boş aday raporunun korunması
+- `a8efc12c07e92e9f965061f406623ee78a5e0019`: `v2/master_engine.py` sıfır adayda `NO_CANDIDATES` durumunu rapora kaydedip başarısız çıkıyor; sahte başarılı paket üretilmiyor.
+- GitHub Actions run ID ve gerçek test sonucu bu oturumda doğrulanmadı. Korunan playlist'e yazılmadı; SHA-256 karşılaştırması henüz yapılmadı. Aşama 1 tamamlandı iddiası yok.
+
 ## 2 Kasım 2026 — sıfır medya doğrulaması başarı kapısı
 - `57674c9d84c6b87dffacd6e706af43b2b0aea864`: `v2/master_engine.py` gerçek medya decode sayısı sıfır olduğunda `NO_MEDIA_DECODED` raporu üretir ve başarısız çıkar; şifreli arşiv ve rapor kalır, doğrulanmamış yayın paketi üretilmez.
 - GitHub CLI bu yürütme ortamında kurulu değil (`gh: command not found`); git remote erişimi DNS nedeniyle engellendi (`Could not resolve host: github.com`). Push Actions run ID bu ortamda doğrulanamadı. Python regresyon testleri bu oturumda çalıştırılamadı; CI başarı iddiası yok.
