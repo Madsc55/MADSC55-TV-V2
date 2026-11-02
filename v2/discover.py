@@ -278,7 +278,7 @@ def main():
                                              "status": "PARSED_NOT_PLAYBACK_VERIFIED"})
                     except Exception as exc:
                         index_link_errors.append({"source": child_id, "error": type(exc).__name__})
-                        source_audit.append({"source": child_id, "status": "FETCH_FAILED",
+                        source_audit.append({"source": child_id, "status": "OPTIONAL_INDEX_LINK_FAILED",
                                              "error": type(exc).__name__})
                 continue
             loaded.append((source["id"], content))
