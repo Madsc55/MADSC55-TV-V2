@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Real-network IPTV candidate scanner; exports 2000-item device test batches.
+"""Real-network IPTV candidate scanner; exports user-approved device test batches.
 Not a replacement for v2/discover.py; can run beside the existing V2 engine.
 No mock data, no invented URLs. HTTP/HLS checks are not playback proof.
 """
@@ -106,6 +106,16 @@ def check_hls(entry, timeout):
     return None
 
 
+def historical_source_ids(record):
+    """Keep both legacy and current source identifiers without duplicates."""
+    ids = record.get('source_ids', [])
+    if not isinstance(ids, list):
+        raise ValueError('Invalid historical source_ids')
+    legacy = record.get('source_id')
+    values = ids + ([legacy] if isinstance(legacy, str) and legacy else [])
+    return list(dict.fromkeys(x for x in values if isinstance(x, str) and x)) or ['historical-archive']
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--sources', type=pathlib.Path, default=SOURCES)
@@ -117,7 +127,7 @@ def main():
                     help='Durable full candidate inventory, including HTTP/HLS failures')
     ap.add_argument('--workers', type=int, default=12)
     ap.add_argument('--timeout', type=float, default=12)
-    ap.add_argument('--limit', type=int, default=2000)
+    ap.add_argument('--limit', type=int, default=500)
     ap.add_argument('--live', type=pathlib.Path, default=LIVE)
     args = ap.parse_args()
     if len(os.environ.get('V2_ARCHIVE_PASSPHRASE', '')) < 16:
@@ -219,7 +229,7 @@ def main():
             historical_records[url] = record
             if url in candidates:
                 current = candidates[url]
-                historical_sources = record.get('source_ids') or ([record['source_id']] if record.get('source_id') else ['historical-archive'])
+                historical_sources = historical_source_ids(record)
                 for sid in historical_sources:
                     if sid not in current['source_ids']:
                         current['source_ids'].append(sid)
@@ -229,7 +239,7 @@ def main():
                 continue
             candidates[url] = {key: record.get(key, '') for key in ('name', 'group', 'tvg_id', 'logo')}
             candidates[url]['url'] = url
-            candidates[url]['source_ids'] = record.get('source_ids') or ([record['source_id']] if record.get('source_id') else ['historical-archive'])
+            candidates[url]['source_ids'] = historical_source_ids(record)
             recovered_from_archive += 1
     checked = 0
     good = []
