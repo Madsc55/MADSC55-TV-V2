@@ -7,7 +7,7 @@ import json
 import os
 from pathlib import Path
 from urllib.parse import urlsplit
-from discover import ROOT, LIVE, SOURCES, entries, turkish_candidate, fetch
+from discover import ROOT, LIVE, SOURCES, entries, turkish_candidate, fetch, approved_github_source, DYNAMIC, GITHUB_APPROVALS, FORGE, FORGE_APPROVALS
 from historical_url_recovery import recover, read_records, validate_url
 from encrypted_archive import append, restore
 from real_ibo_scan import check_hls
@@ -64,6 +64,19 @@ def main():
     if args.archive.exists() or args.out.exists():
         p.error("Refusing to overwrite previous archive or output directory")
     sources = json.loads(SOURCES.read_text(encoding="utf-8"))["sources"]
+    # Include only previously approved dynamic GitHub and forge sources.
+    if DYNAMIC.exists() and GITHUB_APPROVALS.exists():
+        approvals = set(json.loads(GITHUB_APPROVALS.read_text(encoding="utf-8")).get("approved_sha256", []))
+        for candidate in json.loads(DYNAMIC.read_text(encoding="utf-8")).get("sources", [])[:240]:
+            url = candidate.get("url", "")
+            if approved_github_source(url, approvals) and not any(s["url"] == url for s in sources):
+                sources.append({"id": "github-auto-" + hashlib.sha256(url.encode()).hexdigest()[:20], "url": url, "scope": "candidate"})
+    if FORGE.exists() and FORGE_APPROVALS.exists():
+        from forge_source_review import approved_sources
+        approvals = set(json.loads(FORGE_APPROVALS.read_text(encoding="utf-8")).get("approved_sha256", []))
+        for candidate in approved_sources(json.loads(FORGE.read_text(encoding="utf-8")), approvals):
+            if not any(s["url"] == candidate["url"] for s in sources):
+                sources.append(candidate)
     live_text = LIVE.read_text(encoding="utf-8-sig")
     source_texts, failures = [], []
     for source in sources:
