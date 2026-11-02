@@ -966,3 +966,9 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - `.github/workflows/v2-actions-monitor.yml` push, manual ve cron tetiklemeli izleme workflow'u; artifact saklama 30 gün. GitHub cron tetikleyicileri varsayılan dalda tanımlı workflow için çalışır; bu dal üzerindeki cron'un gerçekten tetiklendiği ayrıca doğrulanmalıdır.
 - `v2/test_actions_monitor.py` çevrimdışı durum/başarısız step regresyonu; Master Engine ve monitor CI akışlarına bağlandı. CI yeşil ve gerçek run ID sonucu henüz doğrulanmadı; kullanıcıdan ekran görüntüsü isteme.
 - Koruma: Ana İBO/YEDEKLER/YENİLER/FAVORİLER değişmedi; PR #9 merge edilmedi.
+
+
+## 2 Kasım 2026 — Actions Monitor 9 kırmızı, düzeltme
+- Kullanıcının GitHub Actions ekran görüntüsü: Monitor 9 (`c6b34c4`) failure (10 sn); Monitor 8 (`c83532c`) success (10 sn); Monitor 7 (`8463872`) success (21 sn). Ekran görüntüsü job/step logu göstermiyor.
+- Olası regresyon: repository-wide `/actions/runs?per_page=10` sayfası diğer workflow çalışmalarıyla dolabilir; sadece Master Engine filtrelenince sıfır kayıt ve bilerek hata oluşur. `f3c569f` ile workflow-scoped API sorgusuna geri dönüldü; `9127251` ile test güncellendi. Gerçek hata logu/run ID elde edilmediği için kök neden kesin doğrulanmış değildir.
+- Yeni commitlerin yeşil durumu henüz doğrulanmadı; ana İBO değişmedi, PR #9 merge edilmedi.
