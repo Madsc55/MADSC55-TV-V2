@@ -22,5 +22,6 @@ def decode_media(entry, timeout=20):
         return False
     if result.returncode != 0:
         return False
-    return any(line and not line.startswith("#") and len(line.split(",")) >= 6
-               for line in result.stdout.splitlines())
+    return ("#media_type 0: video" in result.stdout and
+            any(line and not line.startswith("#") and len(line.split(",")) >= 6
+                for line in result.stdout.splitlines()))
