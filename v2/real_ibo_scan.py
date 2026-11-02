@@ -148,6 +148,8 @@ def main():
     if not good:
         print(json.dumps(report, ensure_ascii=False, indent=2))
         raise SystemExit('No new HLS candidates verified; main playlist unchanged')
+    if args.output.resolve() == args.live.resolve():
+        raise SystemExit('Refusing to overwrite protected main playlist')
     lines = ['#EXTM3U']
     for item in good[:args.limit]:
         name = item['name'].replace('\n', ' ').replace('\r', ' ').replace(',', ' ')
