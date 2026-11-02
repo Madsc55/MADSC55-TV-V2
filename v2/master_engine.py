@@ -37,6 +37,8 @@ def build(source_texts, live_text, history=(), checker=None, workers=8):
     historic, history_report = recover(history, [{"url": url} for url in existing])
     for item in historic:
         url = item["url"]
+        if not validate_url(url):
+            continue
         if url in existing:
             continue
         row = candidate_map.setdefault(url, dict(item, source_ids=[], history=[]))
