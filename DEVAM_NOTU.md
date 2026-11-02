@@ -1,3 +1,7 @@
+## 2 Kasım 2026 — Master Engine SHA-256 tarama koruması
+- `7d0e1414be8ac34c96111e4e2537e3a9f6c3ac65`: `v2/master_engine.py` korunan ana playlist'in tarama öncesi/sonrası SHA-256 değerlerini karşılaştırır, değişiklikte hata verir ve eşit özetleri rapora ekler. Playlist dosyası commit'te değiştirilmedi.
+- Bu oturumda Actions run ID ve yürütülmüş Python test sonucu doğrulanmadı; gerçek tarama başlatılmadığından çalışma zamanı SHA-256 değeri yok. Aşama 1 henüz tamamlanmadı.
+
 ## 2 Kasım 2026 — boş aday raporunun korunması
 - `a8efc12c07e92e9f965061f406623ee78a5e0019`: `v2/master_engine.py` sıfır adayda `NO_CANDIDATES` durumunu rapora kaydedip başarısız çıkıyor; sahte başarılı paket üretilmiyor.
 - GitHub Actions run ID ve gerçek test sonucu bu oturumda doğrulanmadı. Korunan playlist'e yazılmadı; SHA-256 karşılaştırması henüz yapılmadı. Aşama 1 tamamlandı iddiası yok.
