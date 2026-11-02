@@ -109,8 +109,6 @@ def main():
     restored = restore(args.archive) if items else []
     if restored != items:
         raise RuntimeError("Encrypted archive restore mismatch")
-    if not items:
-        raise RuntimeError("No valid candidates; refusing to report an empty scan as successful")
     verified = [x for x in items if x.get("media_decoded") is True]
     # A manifest check is not media decoding; never export it as a verified stream.
     for n in range(0, len(verified), args.limit):
@@ -126,9 +124,11 @@ def main():
               "media_decoded": len(verified), "unknown_or_failed": sum(x["network_status"] != "HLS_MANIFEST_REACHABLE" for x in items),
               "historical": history_report, "archive_restore_verified": restored == items,
               "device_verified": False, "batch_count": (len(verified) + args.limit - 1) // args.limit,
-              "status": "NO_MEDIA_DECODED" if not verified else ("PARTIAL_SOURCE_FAILURE" if failures else "COMPLETE_SOURCE_FETCH")}
+              "status": "NO_CANDIDATES" if not items else ("NO_MEDIA_DECODED" if not verified else ("PARTIAL_SOURCE_FAILURE" if failures else "COMPLETE_SOURCE_FETCH"))}
     (args.out / "report.json").write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     print(json.dumps({k: v for k, v in report.items() if k != "source_audit"}, ensure_ascii=False))
+    if not items:
+        raise SystemExit("No candidates; report preserved, no packages exported")
     if not verified:
         raise SystemExit("No media-decoded candidates; inventory and report preserved, no packages exported")
     if failures:
