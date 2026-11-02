@@ -42,6 +42,25 @@ jobs:
           V2_ARCHIVE_PASSPHRASE: ${{ secrets.V2_ARCHIVE_PASSPHRASE }}
         run: |
           python3 v2/real_ibo_scan.py --workers 16 --timeout 8 --limit 500
+      - name: Validate scanner report and archive restoration
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          report = json.loads(Path('v2/reports/ibo-real-scan-report.json').read_text())
+          if report.get('status') not in ('READY_FOR_DEVICE_TEST', 'NO_VERIFIED_CANDIDATES'):
+              raise SystemExit('Scan incomplete or invalid status: ' + str(report.get('status')))
+          if report.get('archive_restore_test_passed') is not True:
+              raise SystemExit('Encrypted inventory restoration not verified')
+          if report.get('failed_sources') or report.get('source_drops'):
+              raise SystemExit('Source failures or significant source drops')
+          if report.get('playback_verified_on_device') is not False:
+              raise SystemExit('Device verification claim must remain false')
+          if report.get('exported_part1', 0) > 500:
+              raise SystemExit('Batch size exceeds 500')
+          print('PASS: scanner report and archive restoration gate')
+          PY
       - name: Upload scan report
         if: always()
         uses: actions/upload-artifact@v4
