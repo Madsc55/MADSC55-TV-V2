@@ -141,6 +141,8 @@ def main():
     if len(foreign_urls) != 3964:
         ap.error('Foreign archive integrity failed; expected 3964 distinct URLs')
     existing.update(foreign_urls)
+    # A backup is not a fresh discovery simply because it moved to an archive.
+    # Preserve this exclusion when comparing the current main playlist.
 
     doc = json.loads(args.sources.read_text(encoding='utf-8'))
     sources = list(doc['sources'] if isinstance(doc, dict) else doc)
