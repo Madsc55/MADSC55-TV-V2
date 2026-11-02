@@ -56,6 +56,16 @@ class MasterTests(unittest.TestCase):
         self.assertEqual(items[0]["network_status"], "UNKNOWN_OR_FAILED")
         self.assertFalse(items[0]["device_verified"])
 
+    def test_media_checker_exception_fails_closed(self):
+        data = "#EXTM3U\n#EXTINF:-1,TRT 1\nhttps://example.org/new.m3u8\n"
+        def broken_decoder(_):
+            raise RuntimeError("decoder failed")
+        items, _, _ = build([({"id": "tr", "scope": "TR"}, data)], "#EXTM3U\n",
+                            checker=lambda item: True, media_checker=broken_decoder)
+        self.assertEqual(items[0]["network_status"], "HLS_MANIFEST_REACHABLE")
+        self.assertFalse(items[0]["media_decoded"])
+        self.assertFalse(items[0]["device_verified"])
+
     def test_no_device_success_inference(self):
         data = "#EXTM3U\n#EXTINF:-1,TRT 1\nhttps://example.org/new.m3u8\n"
         items, _, _ = build([({"id": "tr", "scope": "TR"}, data)], "#EXTM3U\n",
