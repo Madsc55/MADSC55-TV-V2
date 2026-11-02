@@ -6,6 +6,7 @@ on:
   workflow_dispatch:
 permissions:
   contents: read
+  actions: read
 jobs:
   regression:
     name: Offline regressions and protected playlist
@@ -47,6 +48,15 @@ jobs:
           python v2/test_playlist_invariants.py >v2/reports/ci/test_playlist_invariants.log 2>&1 || failed=1
           cat v2/reports/ci/*.log
           exit "$failed"
+      - name: Collect actual V2 Actions run status
+        if: always()
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          ACTIONS_REPORT: v2/reports/ci/actions-last10.json
+        run: |
+          python v2/actions_monitor.py >v2/reports/ci/actions-monitor.log 2>&1
+          cat v2/reports/ci/actions-monitor.log
       - name: Record regression run identity and outcome
         if: always()
         shell: bash
