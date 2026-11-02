@@ -1679,6 +1679,8 @@ https://playlist.fasttvcdn.com/pl/rfrk9821hdy9dayo8wfyha/kltr-sanat-tv/playlist.
 https://tv-trt1.medya.trt.com.tr/master.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="DHA CANLI" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/9/9a/DHA_logo.png" group-title="🗂️ YEDEKLER (4002)",DHA CANLI 720P HD
 https://603c568fccdf5.streamlock.net/live/dhaweb1_C5efC/playlist.m3u8
+#EXTINF:-1 tvg-logo="http://epg.one/img/3885.png" group-title="🗂️ YEDEKLER (4002)",EUROSPORT 1 HD TR
+http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6829/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.ibb.co/tHQpWvn/24.png" group-title="🗂️ YEDEKLER (4002)",24
 https://turkmedya-live.ercdn.net/tv24/tv24_720p.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/LPQfdz2.png" group-title="🗂️ YEDEKLER (4002)",ADA TV (1080P)
@@ -6095,8 +6097,6 @@ https://raw.githubusercontent.com/Paradise-91/ParaTV/main/streams/misc/europe-1-
 https://drk6xq0vhn.gpcdn.net/live/euro_sports_hd_abr/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/olQJgm7.png" group-title="🗂️ YEDEKLER (4002)",EUROSPORT 1 (576P)
 http://45.134.141.161:2200/ARG/Eurosport_1_HD/index.m3u8
-#EXTINF:-1 tvg-logo="http://epg.one/img/3885.png" group-title="🗂️ YEDEKLER (4002)",EUROSPORT 1 HD TR
-http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6829/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/0o3zjC7.png" group-title="🗂️ YEDEKLER (4002)",EUROSPORT 4K CZECHIA
 http://88.212.15.50/live/esp_4k_atk/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/8PxpamC.png" group-title="🗂️ YEDEKLER (4002)",EUTV (720P)
