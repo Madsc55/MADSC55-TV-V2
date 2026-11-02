@@ -71,8 +71,10 @@ def merge_records(paths, encrypted_paths=(), passphrase=None):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--input", type=Path, action="append", default=[],\n                        help="Plaintext real candidate JSONL; repeat for multiple inputs")
-    parser.add_argument("--encrypted-input", type=Path, action="append", default=[],\n                        help="Previously encrypted V2 JSONL inventory")
+    parser.add_argument("--input", type=Path, action="append", default=[],
+                        help="Plaintext real candidate JSONL; repeat for multiple inputs")
+    parser.add_argument("--encrypted-input", type=Path, action="append", default=[],
+                        help="Previously encrypted V2 JSONL inventory")
     parser.add_argument("--encrypted-output", type=Path, required=True)
     parser.add_argument("--report", type=Path, required=True)
     args = parser.parse_args()
@@ -81,7 +83,11 @@ def main():
         parser.error("V2_ARCHIVE_PASSPHRASE must contain at least 16 characters")
     if args.encrypted_output.resolve() == args.report.resolve():
         parser.error("Archive and report paths must differ")
-    if not (args.input or args.encrypted_input):\n        parser.error("At least one --input or --encrypted-input is required")\n    if args.encrypted_output in args.input + args.encrypted_input:\n        parser.error("Refusing to overwrite an input archive")\n    if not all(path.is_file() for path in args.input + args.encrypted_input):
+    if not (args.input or args.encrypted_input):
+        parser.error("At least one --input or --encrypted-input is required")
+    if args.encrypted_output in args.input + args.encrypted_input:
+        parser.error("Refusing to overwrite an input archive")
+    if not all(path.is_file() for path in args.input + args.encrypted_input):
         parser.error("Every input JSONL file must exist")
     records, counts = merge_records(args.input, args.encrypted_input, secret)
     if not records:
