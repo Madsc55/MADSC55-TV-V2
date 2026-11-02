@@ -6,8 +6,6 @@ on:
       - '.github/workflows/v2-public-source-audit.yml'
       - 'v2/public_source_audit.py'
   workflow_dispatch:
-  schedule:
-    - cron: '41 5 * * *'
 permissions:
   contents: read
 jobs:
