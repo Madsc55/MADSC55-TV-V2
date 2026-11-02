@@ -74,6 +74,26 @@ class MasterTests(unittest.TestCase):
         # An empty build cannot prove that an encrypted archive was restored.
         self.assertFalse(bool(items) and [] == items)
 
+    def test_duplicate_sources_decode_once_and_keep_all_provenance(self):
+        data = "#EXTM3U\\n#EXTINF:-1,TRT 1\\nhttps://example.org/new.m3u8\\n"
+        sources = [({"id": "first", "scope": "TR"}, data),
+                   ({"id": "second", "scope": "TR"}, data)]
+        probed, decoded = [], []
+        def check(item):
+            probed.append(item["url"])
+            return True
+        def decode(item):
+            decoded.append(item["url"])
+            return True
+        items, audit, _ = build(sources, "#EXTM3U\\n", checker=check, media_checker=decode)
+        self.assertEqual(len(items), 1)
+        self.assertEqual(items[0]["source_ids"], ["first", "second"])
+        self.assertEqual(len(probed), 1)
+        self.assertEqual(len(decoded), 1)
+        self.assertTrue(items[0]["media_decoded"])
+        self.assertFalse(items[0]["device_verified"])
+        self.assertEqual([entry["status"] for entry in audit], ["FETCHED", "FETCHED"])
+
     def test_no_device_success_inference(self):
         data = "#EXTM3U\n#EXTINF:-1,TRT 1\nhttps://example.org/new.m3u8\n"
         items, _, _ = build([({"id": "tr", "scope": "TR"}, data)], "#EXTM3U\n",
