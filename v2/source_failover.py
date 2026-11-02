@@ -17,9 +17,9 @@ DELAYS = (2, 4, 8)
 RETRYABLE = {408, 429, 500, 502, 503, 504}
 ALTERNATIVES = {
     "ilyswch-iptv-tr": ("https://iptv-org.github.io/iptv/countries/tr.m3u", "https://iptv-org.github.io/iptv/languages/tur.m3u"),
-    "iptv-org-region-south-america": ("https://iptv-org.github.io/iptv/regions/amer.m3u", "https://iptv-org.github.io/iptv/index.m3u"),
-    "iptv-org-region-middle-east": ("https://iptv-org.github.io/iptv/regions/asia.m3u", "https://iptv-org.github.io/iptv/index.m3u"),
-    "iptv-org-region-eastern-europe": ("https://iptv-org.github.io/iptv/regions/eur.m3u", "https://iptv-org.github.io/iptv/index.m3u"),
+    "iptv-org-region-south-america": ("https://iptv-org.github.io/iptv/regions/latam.m3u", "https://iptv-org.github.io/iptv/regions/amer.m3u"),
+    "iptv-org-region-middle-east": ("https://iptv-org.github.io/iptv/regions/mena.m3u", "https://iptv-org.github.io/iptv/regions/asia.m3u"),
+    "iptv-org-region-eastern-europe": ("https://iptv-org.github.io/iptv/regions/eur.m3u", "https://iptv-org.github.io/iptv/regions/emea.m3u"),
     "iptv-org-region-southern-europe": ("https://iptv-org.github.io/iptv/regions/eur.m3u", "https://iptv-org.github.io/iptv/index.m3u"),
 }
 
