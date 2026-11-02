@@ -42,6 +42,10 @@ jobs:
           PYTHONPATH=v2 python -m unittest discover -s v2 -p 'test_*.py' -v >v2/reports/ci/unittest-discovery.log 2>&1 || failed=1
           python v2/test_playlist_invariants.py >v2/reports/ci/test_playlist_invariants.log 2>&1 || failed=1
           cat v2/reports/ci/*.log
+          if [ "$failed" -ne 0 ]; then
+            echo '=== FAILURES / ERRORS / TRACEBACKS ==='
+            grep -nE '^(FAIL:|ERROR:|FAILED |Traceback|ImportError|ModuleNotFoundError|AssertionError|SystemExit|usage:)' v2/reports/ci/*.log || true
+          fi
           exit "$failed"
       - name: Collect actual V2 Actions run status
         if: always()
