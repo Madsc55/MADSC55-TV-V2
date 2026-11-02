@@ -27,7 +27,7 @@ class MasterTests(unittest.TestCase):
     def test_invalid_historical_url_never_becomes_candidate(self):
         history = [{"url": "file:///etc/passwd", "source": "#60"}, {"url": "https://example.org/valid.m3u8", "source": "#60"}]
         items, _, _ = build([], "#EXTM3U\n", history)
-        self.assertTrue(all(item["url"].startswith("https://") for item in items))
+        self.assertEqual([item["url"] for item in items], ["https://example.org/valid.m3u8"])
 
     def test_invalid_m3u_is_not_accepted(self):
         items, audit, _ = build([({"id": "html", "scope": "TR"}, "<html>not a playlist</html>")], "#EXTM3U\n")
