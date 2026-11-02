@@ -32,6 +32,8 @@ def collect():
     base = "/repos/" + REPO + "/actions"
     q = urllib.parse.urlencode({"branch": BRANCH, "per_page": 10})
     runs = api(base + "/workflows/" + WORKFLOW + "/runs?" + q)["workflow_runs"]
+    if not runs:
+        raise RuntimeError("GitHub API returned no Master Engine runs for the configured branch")
     records = []
     for run in runs:
         record = {key: run.get(key) for key in (
