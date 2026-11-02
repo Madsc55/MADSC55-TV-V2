@@ -1,3 +1,9 @@
+## 2 Kasım 2026 — V2 Master Engine #107 hata kanıtı ve CI düzeltmesi
+- Kullanıcı ekran görüntüsü: **V2 Master Engine #107**, commit `3bfc43c`, **FAILURE**, `offline-tests` 11 saniyede başarısız, `master` skipped. `test_duplicate_sources_decode_once_and_keep_all_provenance`: `AssertionError: 0 != 1`; 10 testten 1 başarısız. Bu **eski commit** için sonuçtur; güncel dalın yeni test sonucu değildir. Sayısal Actions run ID ekran görüntüsünde yok.
+- `495314228800c43abc43b630fe4ec125abea9f3a` ile test M3U satır sonları düzeltilmişti; güncel dosyada doğru `\\n` kaçışları okundu.
+- `2ebbde12ebea4772ee5d9d91cef4fdb51315bce3`: `.github/workflows/v2-master-engine.yml` içinde manuel gerçek master job'u `needs: offline-tests` ile başarı kapısına bağlandı; offline job özeti gerçek run ID, commit ve URL gösterecek. Kod commit edildi, yeni Actions sonucu henüz doğrulanmadı.
+- Korunan ana playlist, `main`, PR #9 ve eski depo değiştirilmedi.
+
 ## 2 Kasım 2026 — yeni oturum, CI doğrulama ve açık engeller
 - Koruma: yalnızca `madsc/v2-discovery-bulk-20261031` geliştirme dalı; ana `MADSC55_TV_IBO_CALISANLAR_TEST.m3u8`, `main`, eski depo ve PR #9 değiştirilmedi.
 - Son kullanıcı ekran görüntüsünde **Actions #43** (`3bfc43c0ea33ae9e1cb7897e425be8b7d76532c9`) **FAILURE**: offline regressions 154 testten 1 hata, FFmpeg başarılı. Bu koşu için sayısal API run ID henüz elde edilmedi; #43 yalnızca görünen çalışma numarasıdır.
