@@ -1,3 +1,10 @@
+## 2 Kasım 2026 — toplu CI ve gerçek paket dışa aktarma değişiklikleri
+- Eski hata kanıtı: Verification #43 (`3bfc43c`) 154 testten 1 hata; Master #107 aynı eski committe 10 testten 1 hata (`test_duplicate_sources_decode_once_and_keep_all_provenance`, `0 != 1`). Kaynak: kullanıcının Actions ekran görüntüleri. Eski test M3U kaçışları `4953142` ile daha önce düzeltilmişti; tekrar değiştirilmedi.
+- `d22967af76404813312e779793c1eea35fe28d09`: V2 Master Engine push job artık tüm unittest modüllerini toplu çalıştırır, logları hata halinde de artifact olarak saklar; manuel master job'u test edilen `github.sha` commitini checkout eder, gerçek run kimliğini artifact'e ekler.
+- `6a96d044a5436407ff498b55170861c355fcd923`: Master Engine mevcut 500'lü çıktıya ek olarak **yalnızca yeterli sayıda gerçek medya-decode doğrulanmış aday olduğunda** 500, 1000, 2000 tam dolu fiziksel `.m3u` paketlerini üretir. Eksik paketleri sahte URL ile doldurmaz; kısmi kaynak hatasında paket yayımlamaz; rapora `standard_full_packages` sayıları eklenir. Bu kod değişikliği gerçek dosyaların üretildiği anlamına gelmez.
+- GitHub Actions: geliştirme dalı push tetikleyicileri yapılandırılmıştır; yeni commitlerin sayısal run ID ve job sonucu bağlı API üzerinden elde edilmedi, başarılı sayılmadı. Gerçek canlı tarama yalnızca manuel workflow_dispatch ile, `V2_ARCHIVE_KEY_HEX` sırrı varsa çalışır. Doğrulanmış yayın adedi ve tarihî 4.955 adayın gerçek dosyası mevcut oturumda doğrulanamadı. Artifact 30 gün saklanır; kalıcı harici arşiv yerine geçmez.
+- Ana İBO playlisti, YEDEKLER/YENİLER/FAVORİLER, `main`, PR #9 ve eski depo değiştirilmedi.
+
 ## 2 Kasım 2026 — tarihî URL koruması ve yeni regresyon
 - `0528e2f6dc6bc0d1491ebef83c8d79116b344a68`: tarihî URL doğrulayıcısı `127.1`, `2130706433`, `0177.0.0.1`, `0x7f000001` gibi resolver tarafından yerel IP'ye çözümlenebilen alternatif sayısal hostları ve `.localhost` alt alanlarını reddediyor. Gerçek kaynak envanterine veya ana playlist'e dokunulmadı.
 - `dab56afc23c2689bce50c05c7769484dc99d5ce3`: bu durumlar için çevrimdışı regresyon testi eklendi. GitHub'a commit kaydedilmesi Actions testinin başarılı olduğu anlamına gelmez.
