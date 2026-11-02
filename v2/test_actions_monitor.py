@@ -15,6 +15,8 @@ class MonitorTests(unittest.TestCase):
              "conclusion": "success", "html_url": "https://github.com/example/actions/runs/12"},
         ]
         def fake_api(path):
+            if "/workflows/v2-master-engine.yml/runs?" in path:
+                return {"workflow_runs": runs}
             if path.endswith("/10/jobs?per_page=100"):
                 return {"jobs": [{"id": 5, "name": "offline-tests", "status": "completed",
                     "conclusion": "failure", "steps": [
