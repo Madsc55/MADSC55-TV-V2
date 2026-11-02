@@ -47,6 +47,8 @@ jobs:
           fi
           python v2/test_playlist_invariants.py >v2/reports/ci/test_playlist_invariants.log 2>&1 || failed=1
           cat v2/reports/ci/*.log
+          echo "Actions run: https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" >> "$GITHUB_STEP_SUMMARY"
+          echo "Commit: ${GITHUB_SHA}" >> "$GITHUB_STEP_SUMMARY"
           if [ "$failed" -ne 0 ]; then
             echo '=== FAILURES / ERRORS / TRACEBACKS ==='
             grep -nE '^(FAIL:|ERROR:|FAILED |Traceback|ImportError|ModuleNotFoundError|AssertionError|SystemExit|usage:)' v2/reports/ci/*.log || true
