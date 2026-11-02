@@ -9,6 +9,7 @@ import argparse
 import hashlib
 import json
 import os
+import io
 from pathlib import Path
 from urllib.parse import urlsplit
 from secure_archive import encrypt, decrypt, atomic_write
@@ -19,12 +20,16 @@ def valid_url(url):
     parsed = urlsplit(url)
     return parsed.scheme in ("http", "https") and bool(parsed.hostname) and not parsed.username and not parsed.password
 
-def merge_records(paths):
+def merge_records(paths, encrypted_paths=(), passphrase=None):
     merged = {}
     counts = {}
-    for path in paths:
+    for path in list(paths) + list(encrypted_paths):
         count = 0
-        with open(path, encoding="utf-8-sig") as stream:
+        if path in encrypted_paths:
+            stream = io.StringIO(decrypt(path.read_bytes(), passphrase).decode("utf-8-sig"))
+        else:
+            stream = open(path, encoding="utf-8-sig")
+        with stream:
             for number, line in enumerate(stream, 1):
                 if not line.strip():
                     continue
@@ -61,7 +66,8 @@ def merge_records(paths):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--input", type=Path, action="append", required=True)
+    parser.add_argument("--input", type=Path, action="append", default=[],\n                        help="Plaintext real candidate JSONL; repeat for multiple inputs")
+    parser.add_argument("--encrypted-input", type=Path, action="append", default=[],\n                        help="Previously encrypted V2 JSONL inventory")
     parser.add_argument("--encrypted-output", type=Path, required=True)
     parser.add_argument("--report", type=Path, required=True)
     args = parser.parse_args()
@@ -70,9 +76,9 @@ def main():
         parser.error("V2_ARCHIVE_PASSPHRASE must contain at least 16 characters")
     if args.encrypted_output.resolve() == args.report.resolve():
         parser.error("Archive and report paths must differ")
-    if not all(path.is_file() for path in args.input):
+    if not (args.input or args.encrypted_input):\n        parser.error("At least one --input or --encrypted-input is required")\n    if args.encrypted_output in args.input + args.encrypted_input:\n        parser.error("Refusing to overwrite an input archive")\n    if not all(path.is_file() for path in args.input + args.encrypted_input):
         parser.error("Every input JSONL file must exist")
-    records, counts = merge_records(args.input)
+    records, counts = merge_records(args.input, args.encrypted_input, secret)
     if not records:
         parser.error("No real candidates found; refusing empty archive")
     raw = "".join(json.dumps(value, ensure_ascii=False, sort_keys=True) + "\n"
