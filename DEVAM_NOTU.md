@@ -1,3 +1,7 @@
+## 2 Kasım 2026 — Master Engine manifest/medya ayrımı
+- `22f36818d694c92563ec187bc5aaec9d503800c4`: `v2/master_engine.py` medya çözümlemesi kanıtlanmayan manifest adaylarının doğrulanmış paketlere yazılmasını engeller; `media_decoded` alanı varsayılan false, raporda manifest ve medya sayıları ayrı.
+- Bu commit gerçek ffprobe/ffmpeg decode entegrasyonu değildir. CI run ID, job sonucu ve regresyon test sonucu henüz doğrulanmadı. Gerçek paket üretilmedi; korunan ana playlist'e yazılmadı. SHA-256 karşılaştırması yapılmadı.
+
 ## 2 Kasım 2026 — tarayıcı salt-okunur güvenlik düzeltmesi
 - Çalışma dalı `madsc/v2-discovery-bulk-20261031`: `a5044be1f8bad5e2e3bdf17747ed19b4e5647105` commit'i `v2/real_ibo_scan.py` içindeki `--append-live` seçeneğini ve korunan ana playlist'e yazan kodu kaldırdı.
 - Ana İBO playlist dosyasına bu commit'te dokunulmadı. GitHub Actions push koşusu sonucu henüz doğrulanmadı; commit bazlı PR filtreli API boş döndü, bu başarı/başarısızlık kanıtı değildir.
