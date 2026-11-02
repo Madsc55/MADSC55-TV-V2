@@ -1,3 +1,9 @@
+## 2 Kasım 2026 — GitHub Actions Verification #3 sonucu
+- Workflow: V2 Eight-Stage Runner Verification; commit `c86e3c2242f403de793178b0159e4c364a6dde95`.
+- Kullanıcının GitHub Actions ekran görüntüsünde `Verification 3` yeşil başarı simgesi ve 46 saniye süreyle görüntülendi. `Verification 1` ve `2` başarısızdı. Sayısal run ID, job detayları ve artifact içerikleri API üzerinden doğrulanamadı; burada uydurulmadı.
+- Bu doğrulama çevrimdışı regresyon/yerel FFmpeg kontrolüdür; canlı IPTV yayın taraması, gerçek 500/1000/2000 paket üretimi ve cihazda IBO oynatma kanıtı değildir.
+- Ana İBO playlisti, main ve PR #9 değiştirilmedi.
+
 ## 2 Kasım 2026 — kalıcı GitHub Actions runner doğrulaması
 - `6bf73292d496d4afe5238bd4a31f1b96f8f31c12`: `.github/workflows/v2-eight-stage-verification.yml` eklendi. Geliştirme dalına push ve workflow_dispatch ile tetiklenir. Runner `ubuntu-24.04`, Python `3.12.7`, cryptography `44.0.2`; ayrı job'da FFmpeg paket sürümü sabitlenmiştir. checkout, korunan playlist SHA-256, Python compile, altı regresyon modülü, FFmpeg yerel gerçek kare ve audio-only negatif kontrolü bulunur. Loglar başarısızlıkta da artifact olarak yüklenir.
 - GitHub bağlantısındaki commit-workflow sorgusu yalnızca pull_request tetikli koşuları getiriyor; bu commit için boş liste döndü. Dolayısıyla push-run ID, test sonucu ve job logu **doğrulanmadı**. Bu workflow canlı yayın doğrulaması yapmaz ve sekiz aşamanın tamamlandığı anlamına gelmez.
