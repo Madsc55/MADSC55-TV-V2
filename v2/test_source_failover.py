@@ -62,6 +62,18 @@ class FailoverTests(unittest.TestCase):
         results = execute_pipeline([self.source, good], self.cache, fetch, lambda _: None)
         self.assertEqual([r[2]["status"] for r in results], ["UNAVAILABLE", "PRIMARY_OK"])
 
+    def test_cache_write_failure_does_not_discard_fresh_source(self):
+        def broken_set(source_id, content):
+            raise OSError("read-only cache")
+        self.cache.set = broken_set
+        def fetch(url):
+            return "#EXTM3U\\n"
+        content, audit = recover_source(self.source, self.cache, fetch, lambda _: None)
+        self.assertEqual(content, "#EXTM3U\\n")
+        self.assertTrue(audit["fresh"])
+        self.assertEqual(audit["status"], "PRIMARY_OK")
+        self.assertEqual(audit["failures"][0]["category"], "CACHE_WRITE_FAILED")
+
     def test_invalid_content_is_rejected(self):
         with self.assertRaises(FetchFailure):
             validate_m3u(b"<html>not a playlist</html>")
