@@ -12,6 +12,32 @@ permissions:
   contents: read
 
 jobs:
+  branch-offline-regressions:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compile V2 branch code
+        run: python -m compileall -q v2
+      - name: Run source, discovery, protection and archive tests
+        run: |
+          set -e
+          python v2/test_playlist_invariants.py
+          python v2/test_discovery_offline_regressions.py
+          python v2/test_source_inventory_contract.py
+          python v2/test_source_loss_audit.py
+          python v2/test_archive_acceptance_gate.py
+          python v2/test_archive_backup_restore_drill.py
+          python v2/test_partial_scan_fail_closed.py
+          python v2/test_partial_source_coverage.py
+          python v2/test_public_metadata_redaction.py
+          python v2/test_source_integrity.py
+          python v2/test_webpage_source_discovery.py
+          python v2/test_forge_source_discovery.py
+          python v2/test_live_page_discovery.py
   scanner-offline-regressions:
     runs-on: ubuntu-latest
     timeout-minutes: 15
