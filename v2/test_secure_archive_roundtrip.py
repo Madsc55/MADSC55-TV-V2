@@ -22,6 +22,15 @@ def main():
         recovered = root / "restored.jsonl"
         assert restore(encrypted, recovered, secret) == hashlib.sha256(payload).hexdigest()
         assert recovered.read_bytes() == payload
+        # Direct API calls must not overwrite their own input.
+        for operation in (backup, restore):
+            try:
+                operation(encrypted, encrypted, secret)
+            except ValueError:
+                pass
+            else:
+                raise AssertionError("Same-path archive operation accepted")
+        assert decrypt(encrypted.read_bytes(), secret) == payload
         damaged = bytearray(encrypted.read_bytes())
         damaged[-1] ^= 1
         bad = root / "bad.enc"
