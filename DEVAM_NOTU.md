@@ -1,3 +1,11 @@
+## 2 Kasım 2026 — son altyapı değişiklikleri ve açık doğrulamalar
+- Gerçek tarama BAŞLATILMADI; ana playlist, EPG, YEDEKLER ve yabancı arşiv değiştirilmedi. Yeni adayların YEDEKLER'e aktarımı yalnızca kullanıcı onayıyla, 500'lük gruplarla yapılır.
+- `v2/real_ibo_scan.py`: geçmiş envanterdeki kaynak kimlikleri ve gözlemler sonraki taramada korunacak biçimde güncellendi; 3964 yabancı arşiv kaydı benzersiz URL sayısına eşit olmak zorunda değil; eksik tarama raporunda yazılmayan paket sayısı sıfırlanır (commit 136565c7).
+- `v2/consolidate_inventory.py`: dosya yolunun farklı yazımlarıyla şifreli girişin üzerine yazma, yinelenen giriş ve rapor/giriş çakışması engellendi (commit 134355e5).
+- Offline CI artık tarayıcının Python sözdizimini de denetliyor; ağ taraması çalıştırmıyor (commit 556f7717).
+- `v2/test_consolidate_inventory.py`: gözlem geçmişi roundtrip, bozuk arşiv reddi, giriş/çıkış yol çakışması ve tekrar giriş regresyonları eklendi (commit 5bd76de ve 6753f451).
+- **Doğrulanmamış:** Bu son commitlerin Actions yeşil sonucu; geçmiş #60 kayıplarının gerçek URL bazında kurtarılması; harici özel depolamaya yedek aktarımı ve geri yükleme; gerçek uçtan uca üretim koşusu. Bunlar tamamlandı diye raporlanamaz.
+
 # MADSC55 TV V2 — TEK DEVAM NOTU
 
 ## 2 Kasım 2026 — toplu altyapı tamamlama, taramasız
