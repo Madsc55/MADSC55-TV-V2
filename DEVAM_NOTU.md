@@ -1,3 +1,7 @@
+## 2 Kasım 2026 — tarihsel kaynak kimliği uyumluluğu
+- `v2/consolidate_inventory.py` eski `source_id` alanını `source_ids` listesine taşır; bozuk `observations` öğelerini reddeder (654767c1). Offline regresyon testleri eklendi (d359444b).
+- Son commitler için Actions sonucu doğrulanmadı. #60 kayıplarının gerçek adreslerle kurtarılması ve GitHub dışı kalıcı yedekleme hâlâ açık. Ağ taraması ve YEDEKLER aktarımı yapılmadı.
+
 ## 2 Kasım 2026 — şifreli arşiv geri yükleme testleri
 - `v2/test_secure_archive_roundtrip.py` oluşturuldu (commit 20067e68): çevrimdışı fikstür üzerinde şifreleme, geri yükleme, bozulma ve yanlış şifre reddini sınar. Gerçek yayın verisi veya gerçek tarama değildir.
 - `.github/workflows/v2-offline-inventory.yml` bu testi CI'a dahil eder (commit 5d654015).
