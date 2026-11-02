@@ -92,8 +92,13 @@ def main():
     args = p.parse_args()
     if not 1 <= args.limit <= 2000 or not 1 <= args.workers <= 32 or not math.isfinite(args.timeout) or not 0 < args.timeout <= 120:
         p.error("limit 1..2000; workers 1..32; timeout >0 and <=120")
-    if not os.environ.get("V2_ARCHIVE_KEY_HEX"):
-        p.error("V2_ARCHIVE_KEY_HEX secret is required")
+    key_hex = os.environ.get("V2_ARCHIVE_KEY_HEX", "")
+    if len(key_hex) != 64:
+        p.error("V2_ARCHIVE_KEY_HEX must contain 64 hex characters")
+    try:
+        bytes.fromhex(key_hex)
+    except ValueError:
+        p.error("V2_ARCHIVE_KEY_HEX must be hexadecimal")
     archive_path = args.archive.resolve(strict=False)
     output_path = args.out.resolve(strict=False)
     if (args.archive.is_symlink() or args.out.is_symlink() or
