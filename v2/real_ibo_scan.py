@@ -127,9 +127,9 @@ def main():
     if not args.live.is_file():
         ap.error('Protected V2 main playlist not found; refusing unfiltered export')
     live_text = args.live.read_text(encoding='utf-8-sig', errors='replace')
-    existing = {line.strip() for line in live_text.splitlines()
+    main_urls = {line.strip() for line in live_text.splitlines()
                 if line.strip().startswith(('https://', 'http://'))}
-    if not existing:
+    if not main_urls:
         ap.error('Protected main playlist contains no stream URLs; refusing unfiltered export')
     # Previously rejected foreign YEDEKLER entries are retained in a separate
     # archive, but must never be rediscovered as new Turkish IBO test candidates.
@@ -138,9 +138,10 @@ def main():
         ap.error('Protected foreign archive missing; refusing unfiltered export')
     foreign_urls = {entry['url'] for entry in parse_m3u(
         foreign_archive.read_bytes())}
-    if len(foreign_urls) != 3964:
-        ap.error('Foreign archive integrity failed; expected 3964 distinct URLs')
-    existing.update(foreign_urls)
+    foreign_entries = list(parse_m3u(foreign_archive.read_bytes()))
+    if len(foreign_entries) != 3964:
+        ap.error('Foreign archive integrity failed; expected 3964 preserved entries')
+    existing = main_urls | foreign_urls
     # A backup is not a fresh discovery simply because it moved to an archive.
     # Preserve this exclusion when comparing the current main playlist.
 
@@ -201,6 +202,7 @@ def main():
     # Missing streams are retained for rechecking, never silently dropped.
     previous_encrypted = args.inventory.with_suffix(args.inventory.suffix + '.enc')
     recovered_from_archive = 0
+    historical_records = {}
     if previous_encrypted.exists():
         previous_data = decrypt_inventory(previous_encrypted.read_bytes(),
                                           os.environ['V2_ARCHIVE_PASSPHRASE'])
@@ -209,10 +211,20 @@ def main():
                 continue
             record = json.loads(line)
             url = record.get('url')
-            if not isinstance(url, str) or url in candidates or url in existing:
+            if not isinstance(url, str) or url in existing:
                 continue
             parsed = urllib.parse.urlsplit(url)
             if parsed.scheme not in ('http', 'https') or not parsed.hostname:
+                continue
+            historical_records[url] = record
+            if url in candidates:
+                current = candidates[url]
+                for sid in record.get('source_ids', []):
+                    if sid not in current['source_ids']:
+                        current['source_ids'].append(sid)
+                for key in ('name', 'group', 'tvg_id', 'logo'):
+                    if not current.get(key) and record.get(key):
+                        current[key] = record[key]
                 continue
             candidates[url] = {key: record.get(key, '') for key in ('name', 'group', 'tvg_id', 'logo')}
             candidates[url]['url'] = url
@@ -234,9 +246,17 @@ def main():
     fd = os.open(inventory_tmp, os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o600)
     with os.fdopen(fd, 'w', encoding='utf-8') as inventory_file:
         for candidate in candidates.values():
-            record = {**candidate,
-                      'http_hls_status': 'AV_VERIFIED' if candidate['url'] in good_urls else 'UNVERIFIED_OR_FAILED',
-                      'ibo_device_tested': False}
+            previous = historical_records.get(candidate['url'], {})
+            old_observations = previous.get('observations', [])
+            if not isinstance(old_observations, list):
+                old_observations = []
+            if not old_observations and previous.get('http_hls_status'):
+                old_observations = [{'status': previous['http_hls_status'], 'origin': 'previous-inventory'}]
+            new_status = 'AV_VERIFIED' if candidate['url'] in good_urls else 'UNVERIFIED_OR_FAILED'
+            record = {**previous, **candidate,
+                      'http_hls_status': new_status,
+                      'ibo_device_tested': previous.get('ibo_device_tested', False),
+                      'observations': old_observations + [{'status': new_status, 'origin': 'current-scan'}]}
             inventory_file.write(json.dumps(record, ensure_ascii=False) + '\n')
     # A failed source fetch must not overwrite the last complete encrypted baseline.
     encrypted_inventory = args.inventory.with_suffix(
@@ -250,7 +270,7 @@ def main():
     # Source outages are reported; a working subset can still be tested.
     # Never modify the protected main playlist.
     report = {'source_count': len(sources), 'dynamic_source_count': dynamic_count, 'fetched_sources': len(source_counts),
-              'failed_sources': failed, 'source_counts': source_counts, 'source_drops': source_drops, 'existing_main_urls': len(existing), 'unique_new_candidates': len(candidates), 'recovered_from_previous_encrypted_inventory': recovered_from_archive,
+              'failed_sources': failed, 'source_counts': source_counts, 'source_drops': source_drops, 'existing_main_urls': len(main_urls), 'excluded_foreign_archive_urls': len(foreign_urls), 'unique_new_candidates': len(candidates), 'recovered_from_previous_encrypted_inventory': recovered_from_archive,
               'http_checked': checked, 'http_hls_ok': len(good), 'av_verified': len(good),
               'candidate_inventory': str(encrypted_inventory), 'archive_restore_test_passed': archive_result['restore_test_passed'],
               'unverified_or_failed_candidates': len(candidates) - len(good),
@@ -270,6 +290,7 @@ def main():
         report['status'] = 'INCOMPLETE_SOURCE_FETCH_OR_DROP'
         report['written_parts'] = []
         report['part_count'] = 0
+        report['exported_part1'] = 0
         args.report.write_text(json.dumps(report, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
         raise SystemExit('Incomplete source fetch or source count collapse: refusing misleading IBO packages')
     if not good:
