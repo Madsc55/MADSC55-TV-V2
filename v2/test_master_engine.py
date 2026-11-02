@@ -18,6 +18,12 @@ class MasterTests(unittest.TestCase):
         self.assertEqual(len(items[0]["history"]), 1)
         self.assertEqual(report["historical_missing_real_url"], 1)
         self.assertEqual([x["parsed"] for x in audit], [2, 2])
+    def test_historical_existing_main_url_never_exported(self):
+        live = "#EXTM3U\n#EXTINF:-1,Existing\nhttps://example.org/existing.m3u8\n"
+        history = [{"url": "https://example.org/existing.m3u8", "source": "#60"}]
+        items, _, _ = build([], live, history)
+        self.assertEqual(items, [])
+
     def test_invalid_m3u_is_not_accepted(self):
         items, audit, _ = build([({"id": "html", "scope": "TR"}, "<html>not a playlist</html>")], "#EXTM3U\n")
         self.assertEqual(items, [])
