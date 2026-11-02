@@ -38,21 +38,9 @@ jobs:
         shell: bash
         run: |
           mkdir -p v2/reports/ci
-          failed=0
-          found=0
-          for test_file in v2/test_*.py; do
-            [ -f "$test_file" ] || continue
-            module="${test_file##*/}"
-            module="${module%.py}"
-            [ "$module" = "test_playlist_invariants" ] && continue
-            found=$((found + 1))
-            echo "Running ${module}"
-            (cd v2 && python -m unittest -v "${module}") >"v2/reports/ci/${module}.log" 2>&1 || failed=1
-          done
-          if [ "$found" -eq 0 ]; then
-            echo "No regression test modules found" >&2
-            failed=1
-          fi
+          # Discover TestCase tests in one suite; standalone scripts may contain zero unittest cases.
+          PYTHONPATH=v2 python -m unittest discover -s v2 -p 'test_*.py' -v >v2/reports/ci/unittest-discovery.log 2>&1
+          failed=$?
           python v2/test_playlist_invariants.py >v2/reports/ci/test_playlist_invariants.log 2>&1 || failed=1
           cat v2/reports/ci/*.log
           exit "$failed"
