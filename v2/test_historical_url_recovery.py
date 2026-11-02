@@ -29,6 +29,15 @@ class HistoricalRecoveryTests(unittest.TestCase):
         self.assertFalse(validate_url("https://[broken/a.m3u8"))
         self.assertFalse(validate_url("https://[::1/a.m3u8"))
 
+    def test_historical_duplicates_are_not_reintroduced(self):
+        old = [{"url": "https://example.org/a.m3u8", "name": "original"},
+               {"url": "https://example.org/a.m3u8", "name": "duplicate"},
+               {"url": "https://example.org/b.m3u8", "name": "B"}]
+        recovered, report = recover(old, [{"url": "https://example.org/b.m3u8"}])
+        self.assertEqual([row["url"] for row in recovered], ["https://example.org/a.m3u8"])
+        self.assertEqual(recovered[0]["name"], "original")
+        self.assertEqual(report["recoverable_real_urls"], 1)
+
     def test_no_fabricated_urls(self):
         recovered, report = recover([{"anonymous_id": "4955"}], [])
         self.assertEqual(recovered, [])
