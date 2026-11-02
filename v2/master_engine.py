@@ -121,7 +121,7 @@ def main():
     for item in items:
         append(args.archive, item)
     restored = restore(args.archive) if items else []
-    if restored != items:
+    if items and restored != items:
         raise RuntimeError("Encrypted archive restore mismatch")
     verified = [x for x in items if x.get("media_decoded") is True]
     # A manifest check is not media decoding; never export it as a verified stream.
@@ -144,7 +144,7 @@ def main():
               "failed_sources": failures, "source_audit": audit, "unique_candidates": len(items),
               "manifest_reachable": sum(x["network_status"] == "HLS_MANIFEST_REACHABLE" for x in items),
               "media_decoded": len(verified), "unknown_or_failed": sum(x["network_status"] != "HLS_MANIFEST_REACHABLE" for x in items),
-              "historical": history_report, "archive_restore_verified": restored == items,
+              "historical": history_report, "archive_restore_verified": bool(items) and restored == items,
               "device_verified": False, "batch_count": (len(verified) + args.limit - 1) // args.limit if not failures else 0,
               "status": "PARTIAL_SOURCE_FAILURE" if failures else ("NO_CANDIDATES" if not items else ("NO_MEDIA_DECODED" if not verified else "COMPLETE_SOURCE_FETCH"))}
     (args.out / "report.json").write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
