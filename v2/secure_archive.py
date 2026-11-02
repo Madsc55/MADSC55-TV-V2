@@ -60,7 +60,9 @@ def atomic_write(path, data):
             os.unlink(temporary)
 
 def backup(source, destination, passphrase):
-    source = Path(source)
+    source, destination = Path(source), Path(destination)
+    if source.resolve() == destination.resolve():
+        raise ValueError('Source and destination must differ')
     if source.stat().st_size > MAX_INPUT:
         raise ValueError('Archive input exceeds maximum size')
     raw = source.read_bytes()
@@ -76,7 +78,10 @@ def backup(source, destination, passphrase):
             'bytes': len(raw)}
 
 def restore(source, destination, passphrase):
-    raw = decrypt(Path(source).read_bytes(), passphrase)
+    source, destination = Path(source), Path(destination)
+    if source.resolve() == destination.resolve():
+        raise ValueError('Source and destination must differ')
+    raw = decrypt(source.read_bytes(), passphrase)
     atomic_write(destination, raw)
     return hashlib.sha256(Path(destination).read_bytes()).hexdigest()
 
