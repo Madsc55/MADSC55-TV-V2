@@ -1,9 +1,20 @@
 #!/usr/bin/env python3
 """Offline integration tests for the master engine. No mocked success reports."""
 import unittest
-from master_engine import build
+from master_engine import build, render_m3u
 
 class MasterTests(unittest.TestCase):
+    def test_export_is_valid_multiline_m3u_with_exact_real_urls(self):
+        rows = [{"name": "TRT 1, HD\nLIVE", "url": "https://example.org/real-source.m3u8"},
+                {"name": "DHA", "url": "https://example.org/other-source.m3u8"}]
+        rendered = render_m3u(rows)
+        self.assertEqual(rendered.splitlines(), [
+            "#EXTM3U", "#EXTINF:-1,TRT 1  HD LIVE",
+            "https://example.org/real-source.m3u8",
+            "#EXTINF:-1,DHA", "https://example.org/other-source.m3u8"])
+        self.assertTrue(rendered.endswith("\n"))
+        self.assertNotIn("\\n", rendered)
+
     def test_real_parser_dedup_history_and_provenance(self):
         live = "#EXTM3U\n#EXTINF:-1,Existing\nhttps://example.org/existing.m3u8\n"
         data = "#EXTM3U\n#EXTINF:-1 tvg-id=\"TRT1.tr\",TRT 1\nhttps://example.org/new.m3u8\n#EXTINF:-1,Existing\nhttps://example.org/existing.m3u8\n"
