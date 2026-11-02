@@ -87,7 +87,9 @@ def main():
         p.error("V2_ARCHIVE_KEY_HEX secret is required")
     if args.archive.exists() or args.archive.is_symlink() or args.out.exists() or args.out.is_symlink():
         p.error("Refusing to overwrite previous archive or output directory")
-    if args.archive == args.out or args.archive in args.out.parents or args.out in args.archive.parents:
+    archive_path = args.archive.resolve(strict=False)
+    output_path = args.out.resolve(strict=False)
+    if archive_path == output_path or archive_path in output_path.parents or output_path in archive_path.parents:
         p.error("Archive and output directory must be separate, non-nested paths")
     sources = json.loads(SOURCES.read_text(encoding="utf-8"))["sources"]
     # Include only previously approved dynamic GitHub and forge sources.
