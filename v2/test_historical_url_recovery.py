@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """No-network historical recovery contract tests."""
 import unittest
-from historical_url_recovery import recover
+from historical_url_recovery import recover, validate_url
 
 class HistoricalRecoveryTests(unittest.TestCase):
     def test_preserves_real_urls_and_metadata(self):
@@ -18,6 +18,11 @@ class HistoricalRecoveryTests(unittest.TestCase):
         self.assertEqual(recovered[0]["recovery_status"], "HISTORICAL_NOT_REVERIFIED")
         self.assertEqual(report["historical_missing_real_url"], 2)
         self.assertFalse(report["device_verified"])
+
+    def test_rejects_private_and_credentialed_urls(self):
+        for url in ("http://127.0.0.1/a.m3u8", "http://10.0.0.1/a.m3u8",
+                    "https://localhost/a.m3u8", "https://user:pass@example.org/a.m3u8"):
+            self.assertFalse(validate_url(url), url)
 
     def test_no_fabricated_urls(self):
         recovered, report = recover([{"anonymous_id": "4955"}], [])
