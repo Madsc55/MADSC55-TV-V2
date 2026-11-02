@@ -1,5 +1,15 @@
 # MADSC55 TV V2 — TEK DEVAM NOTU
 
+## 2 Kasım 2026 — kullanıcının yeni öncelik kararı
+- **Şimdi kanal araması/taraması başlatılmayacak.** Önce altyapı, entegrasyon, kaynak kaybı koruması, envanter ve offline test eksikleri kapatılacak.
+- Kanal araması tamamlandıktan sonra adaylar önce kalıcı envanterde saklanacak. **Kullanıcı açıkça söylemeden** YEDEKLER'e hiçbir aday aktarılmayacak.
+- Kullanıcının yeni İBO test grubu **500 kanal** (önceki 2000'lik kararının yerine geçer). 500 sayısını doldurmak için sahte/çalışmayan URL üretilmeyecek.
+- Ana V2 playlist, 38 mevcut YEDEKLER kanalı, 3964 kayıtlı yabancı arşivi, EPG ve favoriler korunacak; TRT 1 ile DHA ilk iki sırada.
+- `.github/workflows/v2-public-source-audit.yml` günlük otomatik taraması durduruldu; workflow elle çalıştırılabilir, ancak kullanıcı onayı olmadan tetiklenmeyecek. Commit a36e7ca7.
+- Diğer keşif workflow'larının zamanlayıcıları ayrı ayrı denetlenmeli; bu değişiklik **bütün taramaların durduğu anlamına gelmez**.
+- Kodun varlığı, Actions başarısı ve kalıcı arşiv/üretim teslimi birbirinden ayrı doğrulanacak.
+
+
 ## 2 Kasım 2026 — güncel durum (önceki tarihli notları geçersiz kılan kararlar)
 - Çalışılan tek depo: Madsc55/MADSC55-TV-V2. Ana dosya: MADSC55_TV_IBO_CALISANLAR_TEST.m3u8.
 - Kullanıcı YEDEKLER 1-38 kayıtlarını korumayı, 39-4002 arasındaki 3964 kaydı ayrı yabancı arşive taşımayı onayladı. Arşiv: v2/arsiv/yabanci_yedekler_2026-11-02_3964.m3u8.
