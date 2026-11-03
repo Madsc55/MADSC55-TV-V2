@@ -8,6 +8,8 @@ on:
       - 'v2/historical_url_recovery.py'
       - 'v2/test_historical_inventory_guard.py'
       - 'v2/test_historical_url_recovery.py'
+      - 'v2/test_master_engine.py'
+      - 'v2/test_stage3_master_integration.py'
       - 'v2/test_source_loss_audit.py'
       - 'v2/master_engine.py'
       - '.github/workflows/v2-stage3-historical-inventory.yml'
