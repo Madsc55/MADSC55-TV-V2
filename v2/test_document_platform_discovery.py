@@ -91,12 +91,23 @@ class ThreePlatformAdapterTests(unittest.TestCase):
     return '#EXTM3U\n#EXTINF:-1 tvg-id="TRT1.tr",TRT 1\nhttps://video.example.org/live.m3u8\n'
    if url.endswith("empty.m3u"):return "#EXTM3U\n#EXT-X-STREAM-INF:PROGRAM-ID=1\n"
    raise OSError("unavailable")
-  good,report=verify_sources(rows,fetch)
+  good,report=verify_sources(rows,fetch,resolver=lambda url: True)
   self.assertEqual(len(good),1)
   self.assertEqual(good[0]["id"],rows[0]["id"])
   self.assertEqual([x["status"] for x in report],
       ["M3U_CHANNEL_ENTRIES","NO_CHANNEL_ENTRIES","SOURCE_READ_OR_PARSE_FAILED_OSError"])
   self.assertEqual(sum(x["channel_entries"] for x in report),1)
   self.assertNotIn("https://example.org/",str(report))
+
+ def test_block_private_resolved_document_source_without_fetch(self):
+  url="https://example.org/live.m3u"
+  row={"url":url,"url_sha256":digest(url),"id":"docref-"+digest(url)[:20],
+       "kind":"m3u","scope":"candidate","platforms":["internet-archive"]}
+  good,report=verify_sources([row],
+    fetcher=lambda url:self.fail("No fetch after unsafe DNS"),
+    resolver=lambda url:False)
+  self.assertEqual(good,[])
+  self.assertEqual(report[0]["status"],"UNSAFE_OR_UNRESOLVABLE_SOURCE_HOST")
+  self.assertFalse(report[0]["playback_verified"])
 
 if __name__=="__main__":unittest.main()

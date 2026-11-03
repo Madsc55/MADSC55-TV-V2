@@ -140,6 +140,10 @@ jobs:
         run: |
           python v2/github_source_discovery.py || echo 'GitHub reference discovery unavailable; audited fixed sources continue'
           python v2/run_forge_source_discovery.py || echo 'Forge reference discovery unavailable; audited fixed sources continue'
+      - name: Read-only public Scribd SlideShare Internet Archive source intake
+        run: |
+          PYTHONPATH=v2 python v2/document_platform_discovery.py --scan-public-documents
+          PYTHONPATH=v2 python -c "from document_platform_discovery import accepted_sources; print('Validated document source feeds:', len(accepted_sources()))"
       - name: All approved URL identities and AV decode in bounded parallel batches
         shell: bash
         run: |

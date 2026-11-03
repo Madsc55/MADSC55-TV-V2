@@ -172,18 +172,22 @@ def scan(read=fetch_public,search_pages=SEARCH_PAGES,archive_search=ARCHIVE_SEAR
                      "PUBLIC_PAGES_QUERIED_NOT_PLAYBACK_VERIFIED")}
  return report,sources
 
-def verify_sources(sources, fetcher=None):
+def verify_sources(sources, fetcher=None, resolver=None):
  """Confirm that a public M3U reference contains at least one channel pair.
 
  Failed/invalid source references remain in the anonymous audit, but are not
  handed to the main channel scanner. Never infer video/audio or device playback.
  """
  from discover import fetch, entries
+ from historical_targeted_playback import public_dns
  fetcher = fetch if fetcher is None else fetcher
+ resolver = public_dns if resolver is None else resolver
  if len(sources)>MAX_SOURCES:
   raise ValueError("Unbounded public document source candidate count")
  def inspect(source):
   try:
+   if not source_url(source["url"]) or not resolver(source["url"]):
+    return (source,"UNSAFE_OR_UNRESOLVABLE_SOURCE_HOST",0)
    content=fetcher(source["url"])
    if not content.lstrip().startswith("#EXTM3U"):
     raise ValueError("NO_M3U_HEADER")
