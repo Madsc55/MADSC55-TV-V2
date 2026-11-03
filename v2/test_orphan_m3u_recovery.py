@@ -254,6 +254,65 @@ class OrphanRecoveryTests(unittest.TestCase):
                       key_path=path / "unused.pem", reader=lambda _: "#EXTM3U\n")
             self.assertEqual(exists.read_text(), "PRESERVE")
 
+    def test_source_now_repairs_exact_old_metadata_not_same_name_guess(self):
+        from orphan_m3u_recovery import candidate_repairs_from_current_verified_sources
+        meta = '#EXTINF:-1 tvg-id="T.tr",TR TV'
+        docs = {
+            "discevisita-tr": "#EXTM3U\n" + meta +
+                             "\nhttps://example.org/new-current.m3u8\n",
+            "github-auto-24": "#EXTM3U\n",
+            "onureroz-turk-karma": "#EXTM3U\n",
+            "onureroz-turk-all": "#EXTM3U\n",
+        }
+        baseline = {"sources": {k: [] for k in docs}}
+        baseline["sources"]["discevisita-tr"] = [
+            hashlib.sha256(meta.encode()).hexdigest()]
+        results = candidate_repairs_from_current_verified_sources(baseline, docs)
+        self.assertEqual(len(results), 1)
+        one = results[0]
+        self.assertEqual(one["reason"], "UPSTREAM_ORIGINAL_URI_RESTORED")
+        self.assertEqual(one["source_id"], "discevisita-tr")
+        self.assertEqual(len(one["candidates"]), 1)
+        self.assertTrue(next(iter(one["candidates"].values()))[
+            "proof_original_upstream_now_has_uri"])
+        self.assertEqual(one["uri_structure"], "PUBLIC_ABSOLUTE_HTTP_URI")
+
+    def test_current_upstream_fix_is_ffprobed_and_not_published(self):
+        meta = '#EXTINF:-1 tvg-id="T.tr",TR TV'
+        baseline = {"sources": {
+            "discevisita-tr": [hashlib.sha256(meta.encode()).hexdigest()],
+            "github-auto-24": [],
+            "onureroz-turk-karma": [],
+            "onureroz-turk-all": []}}
+        current = "#EXTM3U\n" + meta + "\nhttps://example.org/new-current.m3u8\n"
+        def reader(url):
+            if "discevisita/iptv/main" in url:
+                return current
+            return "#EXTM3U\n"
+        def probe(item):
+            return {"url_sha256": item[0], "status": "VIDEO_STREAM_OBSERVED",
+                    "video_stream": True, "audio_stream": True}
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder)
+            with (patch("orphan_baseline_guard.load_immutable_baseline",
+                        return_value=baseline),
+                  patch("orphan_m3u_recovery.seal_rows", return_value=1)):
+                output = audit(
+                    report_path=path / "public.json",
+                    sealed_path=path / "private.sealed",
+                    all_candidates_sealed_path=path / "all.sealed",
+                    immutable_orphan_baseline_path=path / "mock-source-baseline.json",
+                    key_path=path / "unused.pem",
+                    reader=reader,
+                    commits=lambda *args, **kwargs: [],
+                    probe=probe)
+            self.assertEqual(output["restored_current_upstream_uri_occurrences"], 1)
+            self.assertEqual(output["currently_unpaired_source_occurrences"], 0)
+            self.assertEqual(output["unique_candidates_video_audio_verified"], 1)
+            self.assertEqual(output["immutable_orphan_identity_guard"]["status"],
+                             "NO_ORIGINAL_METADATA_IDENTITY_LOSS")
+            self.assertNotIn("example.org", (path / "public.json").read_text())
+
     def test_end_to_end_four_source_batch_and_sealed_only_for_verified_av(self):
         def reader(url):
             if "discevisita/iptv/main" in url:

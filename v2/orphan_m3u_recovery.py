@@ -347,6 +347,42 @@ def evaluate(sources, *, probe=probe_one):
 
 
 
+def candidate_repairs_from_current_verified_sources(baseline, source_documents):
+    """Return true original SHA-matched URI repairs, never guessed channel URLs.
+
+    If the publisher adds a valid URI beneath an original EXTINF record, the
+    channel's immutable SHA already proves the metadata came from that source.
+    These candidate URLs still require guarded FFprobe A/V checks before being
+    marked video/audio verified or considered for a separate user device test.
+    """
+    repairs = []
+    for source_id, original_hashes in baseline["sources"].items():
+        wanted = set(original_hashes)
+        text = source_documents[source_id]
+        pairs, _ = parse_exact_pairs(text)
+        for extinf, urls in pairs.items():
+            digest = _hash(extinf)
+            if digest not in wanted:
+                continue
+            candidates = {
+                _hash(url): {
+                    "url": url,
+                    "proof_rules": ["EXACT_ORIGINAL_EXTINF_NOW_HAS_URI"],
+                    "proof_existing_source_ids": [source_id],
+                    "proof_original_upstream_now_has_uri": True,
+                }
+                for url in urls if validate_url(url)
+            }
+            if candidates:
+                repairs.append({
+                    "source_id": source_id, "extinf_sha256": digest,
+                    "extinf": extinf, "reason": "UPSTREAM_ORIGINAL_URI_RESTORED",
+                    "line_number": None, "uri_structure": "PUBLIC_ABSOLUTE_HTTP_URI",
+                    "candidates": candidates,
+                })
+    return repairs
+
+
 def sealed_retest_candidate_rows(sources, proof_states):
     """Retain all exact-proven historical URLs, even if today's A/V probe failed.
 
@@ -454,11 +490,30 @@ def audit(*, report_path, sealed_path, key_path, limit=20,
                 "uri_structure": item["uri_structure"],
                 "candidates": alts.get(item["extinf"], {})})
     identity_guard = None
+    fixed_current_originals = []
     if immutable_orphan_baseline_path is not None:
         from orphan_baseline_guard import (load_immutable_baseline,
                                            reconcile_immutable_sources)
         immutable = load_immutable_baseline(immutable_orphan_baseline_path)
         identity_guard = reconcile_immutable_sources(immutable, source_documents)
+        fixed_current_originals = candidate_repairs_from_current_verified_sources(
+            immutable, source_documents)
+        orphan_occurrences_before_repairs = len(sources)
+        by_source_identity = {
+            (x["source_id"], x["extinf_sha256"]): x for x in sources}
+        for fixed in fixed_current_originals:
+            key = (fixed["source_id"], fixed["extinf_sha256"])
+            original = by_source_identity.get(key)
+            if original is not None:
+                # An upstream file may contain one broken and one valid copy
+                # of the exact same original EXTINF: preserve both evidences.
+                original["candidates"].update(fixed["candidates"])
+                original["reason"] = "UPSTREAM_PARTIALLY_RESTORED"
+            else:
+                sources.append(fixed)
+                by_source_identity[key] = fixed
+    else:
+        orphan_occurrences_before_repairs = len(sources)
     existing_report = None
     if known_source_catalog is not None:
         existing, existing_report = find_existing_exact_identity(
@@ -489,6 +544,8 @@ def audit(*, report_path, sealed_path, key_path, limit=20,
                                        "diagnostic_category": p.get("diagnostic_category"),
                                        "proof_commits": record.get("proof_commits", []),
                                        "proof_rules": sorted(record.get("proof_rules", [])),
+                                       "proof_original_upstream_now_has_uri":
+                                           bool(record.get("proof_original_upstream_now_has_uri")),
                                        "publisher_official_alternate":
                                            bool(record.get("proof_official_feed")),
                                        "exact_epg_and_name_other_source":
@@ -506,6 +563,8 @@ def audit(*, report_path, sealed_path, key_path, limit=20,
         "status": "SOURCE_REPAIR_CANDIDATES_VERIFIED" if verified_rows
                   else "NO_CURRENT_AV_VERIFIED_REPLACEMENTS",
         "upstream_sources": source_summaries,
+        "currently_unpaired_source_occurrences": orphan_occurrences_before_repairs,
+        "restored_current_upstream_uri_occurrences": len(fixed_current_originals),
         "orphan_entries": len(sources),
         "unique_orphan_metadata_identities": len({
             item["extinf_sha256"] for item in sources}),
