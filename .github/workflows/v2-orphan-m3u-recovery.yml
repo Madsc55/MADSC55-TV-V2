@@ -1,12 +1,21 @@
 name: V2 Turkish M3U Orphan Recovery — Exact History and AV Batch
 on:
   workflow_dispatch:
+  push:
+    branches: [madsc/v2-discovery-bulk-20261031]
+    paths:
+      - '.github/workflows/v2-orphan-m3u-recovery.yml'
+      - 'v2/orphan_m3u_recovery.py'
+      - 'v2/test_orphan_m3u_recovery.py'
 
 permissions:
   contents: read
 
 jobs:
   four-sources-one-batch:
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event_name == 'push' && github.event.head_commit.message == 'fix(v2): widen orphan recovery to validated public document sources')
     name: Four verified sources, deduped broken records; grouped tests and AV audit
     runs-on: ubuntu-24.04
     timeout-minutes: 65
@@ -32,6 +41,7 @@ jobs:
           set -o pipefail
           PYTHONPATH=v2 python -m unittest -v \
             test_orphan_m3u_recovery \
+            test_document_platform_discovery \
             test_orphan_baseline_guard \
             test_m3u_source_content_audit \
             test_historical_targeted_playback \
@@ -40,6 +50,11 @@ jobs:
             test_source_loss_audit \
             test_turkish_m3u_source_audit \
             2>&1 | tee v2/reports/ci/three-source-orphan-regressions.log
+      - name: Discover public Scribd SlideShare Internet Archive sources once
+        shell: bash
+        run: |
+          PYTHONPATH=v2 python v2/document_platform_discovery.py --scan-public-documents
+          PYTHONPATH=v2 python -c "from document_platform_discovery import accepted_sources; print('Vetted public document M3U sources:', len(accepted_sources()))"
       - name: Compare four original M3U sources, immutable orphan identities, and known historical feeds
         shell: bash
         env:
@@ -62,5 +77,6 @@ jobs:
             v2/reports/ci/three-source-av-verified.sealed
             v2/reports/ci/three-source-all-historical-candidates.sealed
             v2/reports/ci/three-source-orphan-regressions.log
+            v2/reports/document-platform-references.json
           if-no-files-found: warn
           retention-days: 30

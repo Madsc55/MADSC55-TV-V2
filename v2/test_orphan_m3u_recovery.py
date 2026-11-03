@@ -313,6 +313,62 @@ class OrphanRecoveryTests(unittest.TestCase):
                              "NO_ORIGINAL_METADATA_IDENTITY_LOSS")
             self.assertNotIn("example.org", (path / "public.json").read_text())
 
+
+    def test_verified_public_document_exact_identity_recovery_only(self):
+        """New Archive evidence must not change exact-identity semantics."""
+        from orphan_m3u_recovery import find_existing_exact_identity
+        missing = [
+            {"extinf": self.dis, "extinf_sha256": hashlib.sha256(self.dis.encode()).hexdigest()},
+            {"extinf": self.onur, "extinf_sha256": hashlib.sha256(self.onur.encode()).hexdigest()},
+        ]
+        src = {"id": "docref-reviewed", "url": "https://archive.org/download/iptv-list/tr.m3u",
+               "kind": "m3u", "scope": "candidate",
+               "origin": "public-document-reference"}
+        exact = "#EXTM3U\n" + self.dis + "\n" + self.a + "\n"
+        wrong = '#EXTINF:-1 tvg-id="different.tr",CNN Türk'
+        content = exact + wrong + "\n" + self.b + "\n"
+        fetched = []
+        def doc_fetch(url):
+            fetched.append(url)
+            return content
+        matched, report = find_existing_exact_identity(
+            missing, [src], reader=lambda u: self.fail("Must use guarded document reader"),
+            doc_reader=doc_fetch, doc_resolver=lambda url: True)
+        self.assertEqual(len(matched), 1)
+        self.assertEqual(report["vetted_public_document_sources_checked"], 1)
+        self.assertEqual(report["orphan_entries_with_exact_existing_epg_and_name"], 1)
+        key = missing[0]["extinf_sha256"]
+        self.assertEqual(matched[key][hashlib.sha256(self.a.encode()).hexdigest()]
+                         ["proof_existing_source_ids"], ["docref-reviewed"])
+        self.assertEqual(fetched, [src["url"]])
+
+    def test_document_source_private_dns_blocks_fetch_and_candidate(self):
+        from orphan_m3u_recovery import find_existing_exact_identity
+        missing = [{"extinf": self.dis,
+                    "extinf_sha256": hashlib.sha256(self.dis.encode()).hexdigest()}]
+        src = {"id": "docref-reviewed", "url": "https://archive.org/download/public/list.m3u",
+               "kind": "m3u", "scope": "candidate",
+               "origin": "public-document-reference"}
+        matched, report = find_existing_exact_identity(
+            missing, [src], reader=lambda u: self.fail("Wrong reader"),
+            doc_reader=lambda u: self.fail("Untrusted DNS must prevent fetch"),
+            doc_resolver=lambda url: False)
+        self.assertEqual(dict(matched), {})
+        self.assertEqual(report["source_documents_unavailable_count"], 1)
+
+    def test_document_source_invalid_header_is_not_promoted(self):
+        from orphan_m3u_recovery import find_existing_exact_identity
+        missing = [{"extinf": self.dis,
+                    "extinf_sha256": hashlib.sha256(self.dis.encode()).hexdigest()}]
+        src = {"id": "docref-reviewed", "url": "https://archive.org/download/public/list.m3u",
+               "kind": "m3u", "scope": "candidate",
+               "origin": "public-document-reference"}
+        matched, report = find_existing_exact_identity(
+            missing, [src], doc_reader=lambda url: self.dis+"\n"+self.a,
+            doc_resolver=lambda url: True)
+        self.assertEqual(dict(matched), {})
+        self.assertEqual(report["source_documents_unavailable_count"], 1)
+
     def test_end_to_end_four_source_batch_and_sealed_only_for_verified_av(self):
         def reader(url):
             if "discevisita/iptv/main" in url:

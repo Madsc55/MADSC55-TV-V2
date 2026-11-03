@@ -256,7 +256,11 @@ def exact_channel_identity(extinf):
 
 
 def existing_source_catalog():
-    """Only 46 enabled configured sources and 17 original #60 feeds."""
+    """The immutable 63 known sources plus vetted public-document M3U sources.
+
+    Only sources whose M3U channel pairs were verified enter this catalog;
+    original source IDs and the 46+17 historical counts are never reduced.
+    """
     from discover import load_original_run60_sources
     root = Path(__file__).resolve().parent
     cfg = json.loads((root / "config/sources.json").read_text(encoding="utf-8"))
@@ -267,14 +271,27 @@ def existing_source_catalog():
     if (len(active) != 46 or len(originals) != 17
             or len({x["id"] for x in all_sources}) != 63):
         raise ValueError("Original 63-source catalog coverage differs")
+    from document_platform_discovery import accepted_sources
+    known_urls = {item["url"] for item in all_sources}
+    known_ids = {item["id"] for item in all_sources}
+    for item in accepted_sources():
+        if item["url"] in known_urls:
+            continue
+        if item["id"] in known_ids:
+            raise ValueError("Document source identity conflicts with original ledger")
+        all_sources.append(item)
+        known_urls.add(item["url"])
+        known_ids.add(item["id"])
     return all_sources
 
 
-def find_existing_exact_identity(orphans, catalog, *, reader=_read_document):
-    """Only metadata-equivalent alternatives from already-known sources.
+def find_existing_exact_identity(orphans, catalog, *, reader=_read_document,
+                                 doc_reader=None, doc_resolver=None):
+    """Exact EPG ID + channel-name recovery from known and reviewed sources.
 
-    No new provider searches; a same EPG ID and exact name is a candidate,
-    NEVER proof of actual channel content or suitability for the IBO device.
+    Public-document sources must also pass URL and public DNS checks before
+    the distinct safe, redirect-validated document fetcher is invoked. Matching
+    alone never proves channel content, actual playback or device compatibility.
     """
     wanted = defaultdict(list)
     for item in orphans:
@@ -284,7 +301,19 @@ def find_existing_exact_identity(orphans, catalog, *, reader=_read_document):
 
     def one(source):
         try:
-            data = reader(source["url"])
+            if source.get("origin") == "public-document-reference":
+                from document_platform_discovery import source_url
+                from discover import fetch
+                from historical_targeted_playback import public_dns
+                resolver = public_dns if doc_resolver is None else doc_resolver
+                if not source_url(source["url"]) or not resolver(source["url"]):
+                    raise ValueError("Unsafe public document source")
+                source_reader = fetch if doc_reader is None else doc_reader
+                data = source_reader(source["url"])
+                if not data.lstrip().startswith("#EXTM3U"):
+                    raise ValueError("Public document is not an M3U feed")
+            else:
+                data = reader(source["url"])
             pairs, _ = parse_exact_pairs(data)
             found = []
             for extinf, urls in pairs.items():
@@ -312,6 +341,8 @@ def find_existing_exact_identity(orphans, catalog, *, reader=_read_document):
             item["proof_existing_source_ids"].sort()
     return matched, {
         "preconfigured_sources_checked": len(catalog),
+        "vetted_public_document_sources_checked": sum(
+            source.get("origin") == "public-document-reference" for source in catalog),
         "source_documents_unavailable_count": len(failures),
         "unavailable_source_ids": sorted(failures),
         "orphan_entries_with_exact_existing_epg_and_name": len(matched),
@@ -589,7 +620,8 @@ def audit(*, report_path, sealed_path, key_path, limit=20,
         "immutable_orphan_identity_guard": identity_guard,
         "records": source_evidence,
         "plain_stream_urls_reported": False, "protected_playlist_modified": False,
-        "ibo_device_verified": False, "scan_scope": "ONLY_FOUR_VERIFIED_M3U_FEEDS_AND_KNOWN_EXISTING_CATALOG",
+        "ibo_device_verified": False,
+        "scan_scope": "FOUR_ORIGINAL_M3U_FEEDS_63_KNOWN_AND_VALIDATED_PUBLIC_DOCUMENT_SOURCES",
     }
     if verified_rows:
         seal_rows(verified_rows, key_path, sealed_path)
