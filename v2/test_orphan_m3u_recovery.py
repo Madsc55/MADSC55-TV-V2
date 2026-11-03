@@ -32,6 +32,16 @@ class OrphanRecoveryTests(unittest.TestCase):
         self.assertEqual(len(matches[self.dis]), 1)
         self.assertEqual(counts["historical_files_read"], 1)
 
+    def test_malformed_http_without_host_is_reported_not_played(self):
+        from orphan_m3u_recovery import classify_invalid_uri_structure
+        self.assertEqual(classify_invalid_uri_structure("http:///missing.m3u8"),
+                         "HTTP_URI_WITHOUT_HOST")
+        text = "#EXTM3U\n#EXTINF:-1,No host\nhttp:///missing.m3u8\n"
+        pairs, orphans = parse_exact_pairs(text)
+        self.assertEqual(len(pairs), 0)
+        self.assertEqual(len(orphans), 1)
+        self.assertEqual(orphans[0]["uri_structure"], "HTTP_URI_WITHOUT_HOST")
+
     def test_nonpublic_http_is_safely_excluded_but_not_an_orphan(self):
         from orphan_m3u_recovery import count_excluded_network_references
         content = ("#EXTM3U\n#EXTINF:-1,Private\n"

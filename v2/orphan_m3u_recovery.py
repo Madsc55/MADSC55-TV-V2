@@ -58,6 +58,21 @@ def is_nonpublic_absolute_http_reference(value):
         return False
 
 
+def classify_invalid_uri_structure(value):
+    if value is None:
+        return "NO_URI_PROVIDED"
+    if value.startswith(("http://", "https://")):
+        try:
+            u = urlsplit(value)
+            return "HTTP_URI_WITHOUT_HOST" if not u.hostname else (
+                "HTTP_URI_REJECTED_BY_SAFETY_POLICY")
+        except ValueError:
+            return "MALFORMED_HTTP_URI"
+    if re.match(r"^[A-Za-z][A-Za-z0-9+.-]*://", value):
+        return "NON_HTTP_PROTOCOL_REFERENCE"
+    return "RELATIVE_OR_UNRECOGNIZED_URI"
+
+
 def parse_exact_pairs(payload):
     """Return exact metadata-keyed orphan lines and valid URL candidates."""
     if not isinstance(payload, str):
@@ -66,10 +81,11 @@ def parse_exact_pairs(payload):
     orphan = []
     pending = None
 
-    def orphaned(reason, previous):
+    def orphaned(reason, previous, bad_reference=None):
         n, extinf = previous
         orphan.append({"line_number": n, "extinf_sha256": _hash(extinf),
-                       "extinf": extinf, "reason": reason})
+                       "extinf": extinf, "reason": reason,
+                       "uri_structure": classify_invalid_uri_structure(bad_reference)})
 
     for n, raw in enumerate(payload.splitlines(), 1):
         line = raw.strip()
@@ -82,13 +98,13 @@ def parse_exact_pairs(payload):
             if validate_url(line):
                 rows[extinf].add(line)
             elif line.startswith(("[NO PUBLIC STREAM]", "[NO STREAM]")):
-                orphaned("EXPLICIT_NO_PUBLIC_STREAM_PLACEHOLDER", pending)
+                orphaned("EXPLICIT_NO_PUBLIC_STREAM_PLACEHOLDER", pending, line)
             elif is_nonpublic_absolute_http_reference(line):
                 # Present absolute HTTP URI rejected by our public-network safety
                 # rules: not a *missing* EXTINF pair and never a probe candidate.
                 pass
             else:
-                orphaned("INVALID_OR_RELATIVE_STREAM_REFERENCE", pending)
+                orphaned("INVALID_OR_RELATIVE_STREAM_REFERENCE", pending, line)
             pending = None
     if pending:
         orphaned("TRAILING_EXTINF_WITHOUT_URI", pending)
@@ -355,6 +371,7 @@ def audit(*, report_path, sealed_path, key_path, limit=20,
         source_evidence.append({
             "source_id": item["source_id"], "line_number": item["line_number"],
             "extinf_sha256": item["extinf_sha256"], "reason": item["reason"],
+            "uri_structure": item["uri_structure"],
             "historical_or_official_candidates": len(candidate_evidence),
             "verified_av_candidates": sum(x["video_stream"] and x["audio_stream"]
                                           for x in candidate_evidence),
@@ -365,6 +382,8 @@ def audit(*, report_path, sealed_path, key_path, limit=20,
                   else "NO_CURRENT_AV_VERIFIED_REPLACEMENTS",
         "upstream_sources": source_summaries,
         "orphan_entries": len(sources),
+        "orphan_uri_structure_counts": dict(sorted(Counter(
+            item["uri_structure"] for item in sources).items())),
         "unique_candidate_urls_historically_or_officially_proven": len(probed),
         "unique_candidates_video_audio_verified": len(verified_rows),
         "orphan_entries_with_current_av": sum(
