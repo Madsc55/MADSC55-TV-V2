@@ -93,3 +93,52 @@ jobs:
             v2/reports/ci/main-default-branch-risk.json
           if-no-files-found: warn
           retention-days: 30
+
+  final-worldwide-acceptance:
+    name: One-time worldwide M3U AV decode, metadata routing and RSA sealed evidence
+    if: github.event_name == 'push' && github.event.head_commit.message == 'feat(v2): execute final read-only worldwide AV acceptance scan'
+    needs: grouped-protection-check
+    runs-on: ubuntu-24.04
+    timeout-minutes: 330
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Pinned crypto and local video audio decoders
+        run: |
+          python -m pip install cryptography==44.0.2 PyYAML==6.0.2
+          command -v ffprobe && command -v ffmpeg
+      - name: Grouped read-only scanner, orphan, language and historic protection regressions
+        shell: bash
+        run: |
+          PYTHONPATH=v2 python -m unittest -v test_final_batch_acceptance test_orphan_m3u_recovery test_orphan_baseline_guard test_m3u_source_content_audit test_historical_targeted_playback test_source_loss_audit test_language_evidence_functional
+          python v2/test_playlist_invariants.py
+          test "$(git hash-object MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)" = '4b1c3cea4b5107a425abab60f62d41f9f81e05a7'
+          test "$(sha256sum v2/history/stage3-4955-hash-only.jsonl | cut -d' ' -f1)" = 'ee00a844a028e3410715d411467a2d3306f5f5cc4565766140b6438e786cdd27'
+      - name: Expand approved GitHub and GitLab Codeberg discovery references
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          python v2/github_source_discovery.py || echo 'GitHub reference discovery unavailable; audited fixed sources continue'
+          python v2/run_forge_source_discovery.py || echo 'Forge reference discovery unavailable; audited fixed sources continue'
+      - name: All approved URL identities and AV decode in bounded parallel batches
+        shell: bash
+        run: |
+          PYTHONPATH=v2 python v2/final_batch_acceptance.py --workers 24 --budget-seconds 14400
+      - name: Preserve only anonymous report and private RSA encrypted stream candidates
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v2-final-worldwide-acceptance-${{ github.run_id }}
+          path: |
+            v2/reports/ci/final-worldwide-acceptance.json
+            v2/reports/ci/final-worldwide-*.sealed
+          if-no-files-found: warn
+          retention-days: 30
