@@ -45,6 +45,25 @@ class HistoricalTargetedPlaybackTests(unittest.TestCase):
         self.assertEqual(result["status"], "PROBE_FAILED_NOT_PROVEN_DEAD")
         self.assertNotIn(url, str(result))
 
+    def test_unsafe_error_text_is_never_reported(self):
+        url = "https://stream.example.org/live.m3u8?token=PRIVATE"
+        result = probe_one((sha(url), url),
+                           runner=lambda cmd, **k: subprocess.CompletedProcess(
+                               cmd, 1, "", "HTTP error 403 at " + url),
+                           resolver=lambda _: True)
+        self.assertEqual(result["status"], "PROBE_FAILED_NOT_PROVEN_DEAD")
+        self.assertEqual(result["diagnostic_category"], "HTTP_FORBIDDEN")
+        self.assertNotIn(url, str(result))
+        self.assertNotIn("PRIVATE", str(result))
+
+    def test_unrecognized_ffprobe_option_is_distinct_from_stream_death(self):
+        url = "https://stream.example.org/live.m3u8"
+        result = probe_one((sha(url), url),
+                           runner=lambda cmd, **k: subprocess.CompletedProcess(
+                               cmd, 1, "", "Unrecognized option 'max_redirects'"),
+                           resolver=lambda _: True)
+        self.assertEqual(result["diagnostic_category"], "FFPROBE_OPTION_UNSUPPORTED")
+
     def test_unresolved_host_does_not_invoke_media_process(self):
         url = "https://stream.example.org/bad.m3u8"
         called = []

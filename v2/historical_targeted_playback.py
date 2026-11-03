@@ -74,6 +74,32 @@ def public_dns(url, lookup=socket.getaddrinfo):
         return False
 
 
+def classify_probe_failure(stderr):
+    """Return a fixed safe category; never return URL-bearing ffmpeg stderr."""
+    s = str(stderr or "").casefold()
+    if "unrecognized option" in s or "option not found" in s:
+        return "FFPROBE_OPTION_UNSUPPORTED"
+    if "401" in s or "unauthorized" in s:
+        return "AUTH_REQUIRED"
+    if "403" in s or "forbidden" in s:
+        return "HTTP_FORBIDDEN"
+    if "404" in s or "not found" in s:
+        return "HTTP_NOT_FOUND"
+    if "redirect" in s or "302" in s or "301" in s:
+        return "REDIRECT_REQUIRED_OR_BLOCKED"
+    if "protocol" in s and "whitelist" in s:
+        return "PROTOCOL_DISALLOWED_BY_SAFETY"
+    if "timed out" in s or "timeout" in s:
+        return "NETWORK_TIMEOUT"
+    if "name resolution" in s or "resolve host" in s:
+        return "DNS_RESOLUTION_ERROR"
+    if "server returned" in s or "http error" in s:
+        return "HTTP_RESPONSE_ERROR"
+    if "invalid data" in s or "could not find codec" in s:
+        return "MEDIA_FORMAT_UNSUPPORTED"
+    return "UNKNOWN_NETWORK_OR_MEDIA_ERROR"
+
+
 def probe_one(item, runner=subprocess.run, resolver=public_dns):
     digest, url = item
     if not resolver(url):
@@ -82,7 +108,7 @@ def probe_one(item, runner=subprocess.run, resolver=public_dns):
     # Strict no-redirect and protocol constraints; no subprocess output or URL
     # is forwarded to the Actions logs. A failure is not proof of a dead stream.
     command = [
-        "ffprobe", "-hide_banner", "-loglevel", "quiet", "-nostdin",
+        "ffprobe", "-hide_banner", "-loglevel", "error", "-nostdin",
         "-rw_timeout", "5000000", "-max_redirects", "0",
         "-protocol_whitelist", "http,https,tcp,tls,crypto",
         "-analyzeduration", "2000000", "-probesize", "65536",
@@ -92,6 +118,7 @@ def probe_one(item, runner=subprocess.run, resolver=public_dns):
         proc = runner(command, capture_output=True, text=True, timeout=15)
         if proc.returncode != 0:
             return {"url_sha256": digest, "status": "PROBE_FAILED_NOT_PROVEN_DEAD",
+                    "diagnostic_category": classify_probe_failure(proc.stderr),
                     "video_stream": False, "audio_stream": False}
         streams = json.loads(proc.stdout).get("streams", [])
         video = any(s.get("codec_type") == "video" for s in streams)
@@ -121,6 +148,8 @@ def audit(missing, recovered, *, runner=subprocess.run, resolver=public_dns, wor
             "not_found_in_git_history_count": len(not_found),
             "not_found_sha256": not_found,
             "status_counts": dict(sorted(Counter(item["status"] for item in results).items())),
+            "diagnostic_counts": dict(sorted(Counter(
+                item.get("diagnostic_category", "NONE") for item in results).items())),
             "results": results, "no_plaintext_stream_urls": True,
             "main_playlist_modified": False, "ibo_device_verified": False,
             "not_current_source_feed_evidence": True}
