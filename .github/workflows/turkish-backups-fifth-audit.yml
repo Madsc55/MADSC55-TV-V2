@@ -1,22 +1,18 @@
-name: Turkish backups fifth audit
+name: Turkish backups fifth audit (production writer suspended)
 on:
-  push:
-    paths:
-      - '.github/workflows/turkish-backups-fifth-audit.yml'
   workflow_dispatch:
 permissions:
-  contents: write
+  contents: read
 jobs:
-  audit:
-    runs-on: ubuntu-latest
+  protected-read-only-check:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 6
     steps:
       - uses: actions/checkout@v4
-      - name: Move overlooked Turkish local stations
-        run: python v2/turkish_backups_fifth_pass.py
-      - name: Commit corrected category totals
+        with:
+          persist-credentials: false
+      - name: Verify protected IBO playlist without changing it
         run: |
-          git config user.name github-actions
-          git config user.email actions@users.noreply.github.com
-          git add MADSC55_TV_IBO_CALISANLAR_TEST.m3u8
-          git commit -m 'Move additional Turkish local stations into YENI TURK'
-          git push
+          test "$(git hash-object MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)" = "4b1c3cea4b5107a425abab60f62d41f9f81e05a7"
+          python v2/test_playlist_invariants.py
+          echo "Production publisher is suspended: read-only token, no git writes, no automatic triggers."

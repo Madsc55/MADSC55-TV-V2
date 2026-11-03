@@ -1,11 +1,6 @@
 name: MADSC TV — Tek Toplu Güvenlik ve Bitiş Kontrolü
 on:
   workflow_dispatch:
-  push:
-    paths:
-      - 'v2/test_language_evidence_functional.py'
-      - 'v2/spoken_language_sample_review.py'
-      - '.github/workflows/v2-one-shot-final-contract.yml'
 permissions:
   contents: read
 concurrency:

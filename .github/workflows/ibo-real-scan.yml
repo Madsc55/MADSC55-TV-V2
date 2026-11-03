@@ -1,87 +1,18 @@
-name: V2 Real IBO Candidate Scan
+name: V2 Real IBO Candidate Scan (production writer suspended)
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - '.github/workflows/ibo-real-scan.yml'
-  schedule:
-    - cron: '23 4 * * *'
-
 permissions:
-  contents: write
-
-concurrency:
-  group: ibo-yedekler-${{ github.ref }}
-  cancel-in-progress: false
-
+  contents: read
 jobs:
-  scan:
-    runs-on: ubuntu-latest
-    timeout-minutes: 90
+  protected-read-only-check:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 6
     steps:
-      - name: Checkout V2 branch
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
-          ref: main
-          persist-credentials: true
-      - name: Python version
-        run: python3 --version
-      - name: Validate protected playlist before scan
+          persist-credentials: false
+      - name: Verify protected IBO playlist without changing it
         run: |
-          echo "Workflow commit: $GITHUB_SHA; checkout commit: $(git rev-parse HEAD)"
-          python3 v2/test_playlist_invariants.py
-      - name: Scan live HTTPS sources and check HLS manifests
-        id: scan
-        continue-on-error: true
-        run: |
-          python3 v2/real_ibo_scan.py --workers 16 --timeout 8 --limit 2000 --append-live
-      - name: Upload scan report
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: ibo-real-scan-report
-          path: v2/reports/ibo-real-scan-report.json
-          if-no-files-found: warn
-          retention-days: 7
-      - name: Upload candidate playlist when one exists
-        if: steps.scan.outcome == 'success'
-
-        uses: actions/upload-artifact@v4
-        with:
-          name: IBO_YENI_ADAYLAR_2000_BATCHES
-          path: v2/reports/IBO_YENI_ADAYLAR_PART*.m3u8
-          if-no-files-found: warn
-          retention-days: 7
-      - name: Resolve channel logos during each discovery run
-        if: steps.scan.outcome == 'success'
-        run: python3 v2/enrich_yedekler_logos.py
-      - name: Upload logo matching report
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: ibo-discovery-logo-report
-          path: v2/reports/yedekler-logo-report.json
-          if-no-files-found: warn
-      - name: Verify protected playlist before publishing
-        if: steps.scan.outcome == 'success'
-        run: python3 v2/test_playlist_invariants.py
-      - name: Publish only validated YEDEKLER additions
-        if: steps.scan.outcome == 'success'
-        shell: bash
-        run: |
-          set -euo pipefail
-          target="MADSC55_TV_IBO_CALISANLAR_TEST.m3u8"
-          if git diff --quiet -- "$target"; then
-            echo "No validated new streams to publish"
-            exit 0
-          fi
-          python3 v2/test_playlist_invariants.py
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -- "$target"
-          git commit -m "Append HLS-checked candidates to YEDEKLER"
-          git push origin HEAD:main
-      - name: Propagate scan failure
-        if: steps.scan.outcome != 'success'
-        run: exit 1
+          test "$(git hash-object MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)" = "4b1c3cea4b5107a425abab60f62d41f9f81e05a7"
+          python v2/test_playlist_invariants.py
+          echo "Production publisher is suspended: read-only token, no git writes, no automatic triggers."

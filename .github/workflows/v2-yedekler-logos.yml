@@ -1,49 +1,18 @@
-name: V2 YEDEKLER Verified Logos
+name: V2 YEDEKLER Verified Logos (production writer suspended)
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - '.github/workflows/v2-yedekler-logos.yml'
-  schedule:
-    - cron: '41 5 * * 0'
 permissions:
-  contents: write
-concurrency:
-  group: v2-yedekler-logos
-  cancel-in-progress: false
+  contents: read
 jobs:
-  enrich:
-    runs-on: ubuntu-latest
-    timeout-minutes: 35
+  protected-read-only-check:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 6
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: main
-      - name: Verify playlist before changes
-        run: python3 v2/test_playlist_invariants.py
-      - name: Resolve real logos from channel metadata
-        run: python3 v2/enrich_yedekler_logos.py
-      - name: Upload logo matching report
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: yedekler-logo-report
-          path: v2/reports/yedekler-logo-report.json
-          if-no-files-found: warn
-      - name: Verify playlist after changes
-        run: python3 v2/test_playlist_invariants.py
-      - name: Commit only validated logo metadata
-        shell: bash
+          persist-credentials: false
+      - name: Verify protected IBO playlist without changing it
         run: |
-          set -euo pipefail
-          target="MADSC55_TV_IBO_CALISANLAR_TEST.m3u8"
-          if git diff --quiet -- "$target"; then
-            echo "No new verified logos"
-            exit 0
-          fi
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -- "$target"
-          git commit -m "Add verified YEDEKLER channel logos"
-          git push origin HEAD:main
+          test "$(git hash-object MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)" = "4b1c3cea4b5107a425abab60f62d41f9f81e05a7"
+          python v2/test_playlist_invariants.py
+          echo "Production publisher is suspended: read-only token, no git writes, no automatic triggers."

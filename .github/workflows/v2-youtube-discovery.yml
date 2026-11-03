@@ -1,12 +1,6 @@
 name: V2 YouTube Turkish TV Discovery
 on:
   workflow_dispatch:
-  push:
-    paths:
-      - 'v2/youtube_discovery.py'
-      - '.github/workflows/v2-youtube-discovery.yml'
-  schedule:
-    - cron: '41 5 * * *'
 permissions:
   contents: read
 jobs:

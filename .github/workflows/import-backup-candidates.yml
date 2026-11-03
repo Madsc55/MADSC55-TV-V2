@@ -1,29 +1,18 @@
-name: Backup candidates import
+name: Backup candidates import (production writer suspended)
 on:
-  push:
-    paths:
-      - '.github/workflows/import-backup-candidates.yml'
   workflow_dispatch:
 permissions:
-  contents: write
-  actions: read
+  contents: read
 jobs:
-  import:
-    runs-on: ubuntu-latest
+  protected-read-only-check:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 6
     steps:
       - uses: actions/checkout@v4
-      - name: Download scan results
-        env:
-          GH_TOKEN: ${{ github.token }}
+        with:
+          persist-credentials: false
+      - name: Verify protected IBO playlist without changing it
         run: |
-          gh run download 40758418496 -n unified-private-playback-snapshot -D v2/reports
-          gh run download 40758418496 -n turkish-stream-review -D /tmp/scan61 && cp /tmp/scan61/v2/reports/all-source-playback-aggregate.json v2/reports/
-      - name: Prepare backup candidates
-        run: python v2/add_scan61_to_backups.py
-      - name: Save playlist
-        run: |
-          git config user.name github-actions
-          git config user.email actions@users.noreply.github.com
-          git add MADSC55_TV_IBO_CALISANLAR_TEST.m3u8
-          git commit -m 'Add verified decoded candidates to backups'
-          git push
+          test "$(git hash-object MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)" = "4b1c3cea4b5107a425abab60f62d41f9f81e05a7"
+          python v2/test_playlist_invariants.py
+          echo "Production publisher is suspended: read-only token, no git writes, no automatic triggers."

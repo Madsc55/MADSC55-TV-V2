@@ -1,12 +1,6 @@
 name: V2 Turkish Stream Candidate Probe
 on:
   workflow_dispatch:
-  push:
-    paths:
-      - 'v2/turkish_stream_probe.py'
-      - '.github/workflows/v2-turkish-stream-probe.yml'
-  schedule:
-    - cron: '45 5 * * 2,5'
 permissions:
   contents: read
 jobs:

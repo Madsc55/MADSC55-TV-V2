@@ -1,12 +1,6 @@
 name: V2 GitHub Turkish M3U Source Discovery
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '25 5 * * 1,4'
-  push:
-    paths:
-      - 'v2/github_source_discovery.py'
-      - '.github/workflows/v2-github-source-discovery.yml'
 permissions:
   contents: read
 concurrency:

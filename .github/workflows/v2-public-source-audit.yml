@@ -1,10 +1,5 @@
 name: V2 Parolasiz Gercek Kaynak Denetimi
 on:
-  push:
-    branches: [main]
-    paths:
-      - '.github/workflows/v2-public-source-audit.yml'
-      - 'v2/public_source_audit.py'
   workflow_dispatch:
 permissions:
   contents: read

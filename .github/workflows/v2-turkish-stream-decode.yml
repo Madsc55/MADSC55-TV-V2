@@ -1,12 +1,6 @@
 name: V2 Turkish Stream Short Decode
 on:
   workflow_dispatch:
-  push:
-    paths:
-      - 'v2/turkish_stream_decode.py'
-      - '.github/workflows/v2-turkish-stream-decode.yml'
-  schedule:
-    - cron: '55 5 * * 2,5'
 permissions:
   contents: read
 jobs:

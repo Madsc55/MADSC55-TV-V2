@@ -1,13 +1,6 @@
 name: V2 Official Turkish TV Site Discovery
 on:
   workflow_dispatch:
-  push:
-    paths:
-      - 'v2/official_sites_discovery.py'
-      - 'v2/official_site_gap.py'
-      - '.github/workflows/v2-official-sites.yml'
-  schedule:
-    - cron: '12 6 * * 1'
 permissions:
   contents: read
 jobs:

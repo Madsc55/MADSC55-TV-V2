@@ -1,12 +1,6 @@
 name: V2 Gercek IPTV Tarama ve IBO Paketleri
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '23 4 * * *'
-  push:
-    branches: [main]
-    paths:
-      - '.github/workflows/v2-real-iptv-scan.yml'
 permissions:
   contents: read
 concurrency:

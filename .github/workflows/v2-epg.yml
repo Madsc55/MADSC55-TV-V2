@@ -1,35 +1,18 @@
-name: V2 Independent EPG
+name: V2 Independent EPG (production writer suspended)
 on:
-  push:
-    paths:
-      - '.github/workflows/v2-epg.yml'
-      - 'v2/build_epg.py'
-      - 'v2/epg_sources.json'
   workflow_dispatch:
-  schedule:
-    - cron: '43 3 * * *'
 permissions:
-  contents: write
-concurrency:
-  group: v2-epg-publish
-  cancel-in-progress: false
+  contents: read
 jobs:
-  epg:
-    runs-on: ubuntu-latest
-    timeout-minutes: 25
+  protected-read-only-check:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 6
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
-      - name: Build and validate independent V2 EPG
-        run: python v2/build_epg.py
-      - name: Publish only validated guide
+          persist-credentials: false
+      - name: Verify protected IBO playlist without changing it
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add madsc-epg.xml v2/epg-report.json
-          if ! git diff --cached --quiet; then
-            git commit -m "data: refresh V2 XMLTV guide"
-            git push
-          fi
+          test "$(git hash-object MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)" = "4b1c3cea4b5107a425abab60f62d41f9f81e05a7"
+          python v2/test_playlist_invariants.py
+          echo "Production publisher is suspended: read-only token, no git writes, no automatic triggers."

@@ -1,15 +1,6 @@
 name: V2 Offline Inventory Integrity
 on:
   workflow_dispatch:
-  push:
-    paths:
-      - 'v2/consolidate_inventory.py'
-      - 'v2/test_consolidate_inventory.py'
-      - 'v2/secure_archive.py'
-      - 'v2/real_ibo_scan.py'
-      - 'v2/test_secure_archive_roundtrip.py'
-      - 'v2/test_real_ibo_scan_offline.py'
-      - '.github/workflows/v2-offline-inventory.yml'
 permissions:
   contents: read
 jobs:

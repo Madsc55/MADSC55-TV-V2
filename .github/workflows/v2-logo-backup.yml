@@ -1,50 +1,18 @@
-name: V2 Logo Backup (non-destructive)
+name: V2 Logo Backup (non-destructive) (production writer suspended)
 on:
-  push:
-    paths:
-      - '.github/workflows/v2-logo-backup.yml'
-      - 'v2/mirror_logos.py'
   workflow_dispatch:
-  schedule:
-    - cron: '29 2 * * 0'
 permissions:
-  contents: write
-concurrency:
-  group: v2-logo-backup
-  cancel-in-progress: false
+  contents: read
 jobs:
-  backup:
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
+  protected-read-only-check:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 6
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
-      - name: Mirror logos
-        run: python v2/mirror_logos.py
-      - name: Commit saved images and manifest
+          persist-credentials: false
+      - name: Verify protected IBO playlist without changing it
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add v2/logos
-          if ! git diff --cached --quiet; then
-            git commit -m "backup: mirror V2 channel logo images"
-            # main may advance while the logo mirror is downloading images.
-            # Replay only this generated commit; never force-push or drop remote commits.
-            for attempt in 1 2 3 4 5; do
-              git fetch origin main
-              if ! git rebase origin/main; then
-                git rebase --abort
-                echo "::error::Logo backup rebase conflict; refusing to overwrite main."
-                exit 1
-              fi
-              if git push origin HEAD:main; then
-                exit 0
-              fi
-              echo "main advanced during push; retrying ($attempt/5)"
-              sleep 3
-            done
-            echo "::error::Logo backup push rejected after five safe retries."
-            exit 1
-          fi
+          test "$(git hash-object MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)" = "4b1c3cea4b5107a425abab60f62d41f9f81e05a7"
+          python v2/test_playlist_invariants.py
+          echo "Production publisher is suspended: read-only token, no git writes, no automatic triggers."

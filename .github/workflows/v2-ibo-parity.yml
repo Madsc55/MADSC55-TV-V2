@@ -1,12 +1,6 @@
 name: V2 Canonical IBO Playlist Parity
 on:
   workflow_dispatch:
-  push:
-    paths:
-      - 'v2/ibo_parity.py'
-      - '.github/workflows/v2-ibo-parity.yml'
-  schedule:
-    - cron: '18 7 * * *'
 permissions:
   contents: read
 jobs:
