@@ -11,6 +11,7 @@ on:
       - 'v2/history/stage3-4955-hash-only.jsonl'
       - 'v2/test_historical_region_collisions.py'
       - 'v2/test_stage3_hash_evidence_linkage.py'
+      - 'v2/test_stage3_identity_integrity.py'
       - 'v2/test_historical_url_recovery.py'
       - 'v2/test_master_engine.py'
       - 'v2/test_stage3_master_integration.py'
@@ -48,6 +49,7 @@ jobs:
             test_stage3_immutable_history \
             test_historical_region_collisions \
             test_stage3_hash_evidence_linkage \
+            test_stage3_identity_integrity \
             test_stage3_master_integration \
             test_stage3_legacy_importers \
             test_historical_url_recovery \

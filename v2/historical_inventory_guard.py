@@ -32,7 +32,14 @@ def identity(row):
     """Identity is a real URL hash or previously recorded 64-char SHA256 only."""
     url = row.get("url")
     if validate_url(url):
-        return digest(url)
+        key = digest(url)
+        # A claimed SHA associated with a real URL must be an exact identity,
+        # not a second, unrelated historical identity.
+        if "url_sha256" in row:
+            stored = row["url_sha256"]
+            if not isinstance(stored, str) or not SHA256.fullmatch(stored.lower()) or stored.lower() != key:
+                raise ValueError("Stream URL and claimed SHA256 identity disagree")
+        return key
     stored = row.get("url_sha256")
     return stored.lower() if isinstance(stored, str) and SHA256.fullmatch(stored.lower()) else None
 
@@ -77,6 +84,40 @@ def classify(row):
             "spoken_language_verified": False}
 
 
+def region_signals(row):
+    """Collect independent TR/AZ hints; contradictory hints require review.
+
+    A single field may itself contain both hints. Historical hash-only
+    metadata is advisory, not evidence of a playable URL or spoken language.
+    """
+    signals = set()
+    baseline = classify(row)["region_candidate"]
+    if baseline in ("TR", "AZ"):
+        signals.add(baseline)
+    for field in ("scope", "country", "region", "country_code"):
+        value = row.get(field)
+        if not isinstance(value, str):
+            continue
+        normalized = value.strip().casefold()
+        if normalized in ("tr", "turkey", "turkiye", "türkiye"):
+            signals.add("TR")
+        if normalized in ("az", "azerbaijan", "azerbaycan", "azərbaycan"):
+            signals.add("AZ")
+    tvg = row.get("tvg_id")
+    if isinstance(tvg, str):
+        if TVG_TR.search(tvg):
+            signals.add("TR")
+        if TVG_AZ.search(tvg):
+            signals.add("AZ")
+    metadata = " ".join(row.get(k) for k in ("name", "group")
+                        if isinstance(row.get(k), str))
+    if TR_HINT.search(metadata):
+        signals.add("TR")
+    if AZ_HINT.search(metadata):
+        signals.add("AZ")
+    return signals
+
+
 def source_ids(row):
     values = []
     supplied = row.get("source_ids", [])
@@ -103,6 +144,9 @@ def reconcile(historical_records, current_records=(), expected_historical_record
     for row in historical + current:
         if not isinstance(row, dict):
             raise ValueError("Inventory contains a non-object record")
+        # Fail before creating any encrypted or public output on corrupt
+        # URL/hash pairs, even when the record would otherwise be skipped.
+        identity(row)
     # Raw historical evidence is immutable in the protected snapshot.
     protected = [dict(row) for row in historical]
     indexed = {}
@@ -183,14 +227,13 @@ def reconcile(historical_records, current_records=(), expected_historical_record
     # Evaluate both real-URL and hash-only evidence for the SAME verified digest.
     # Otherwise a #60 TR hash and a newer AZ URL could be silently mislabelled.
     region_evidence, historical_conflicts = {}, set()
-    for row in historical + current:
+    for position, row in enumerate(historical + current):
         key = identity(row)
         if key is None or key not in indexed:
             continue
-        region = classify(row)["region_candidate"]
-        if region in ("TR", "AZ"):
-            region_evidence.setdefault(key, set()).add(region)
-        if row in historical and row.get("classification_evidence") == "CONFLICTING_TR_AZ_EVIDENCE":
+        region_evidence.setdefault(key, set()).update(region_signals(row))
+        if (position < len(historical)
+                and row.get("classification_evidence") == "CONFLICTING_TR_AZ_EVIDENCE"):
             historical_conflicts.add(key)
     conflicting_region_ids = {key for key, regions in region_evidence.items()
                               if len(regions) > 1} | historical_conflicts
@@ -242,6 +285,8 @@ def reconcile(historical_records, current_records=(), expected_historical_record
         "az_candidates": sum(x["region_candidate"] == "AZ" for x in candidates),
         "unknown_region_candidates": sum(x["region_candidate"] == "UNKNOWN" for x in candidates),
         "conflicting_tr_az_candidate_urls": len(conflicting_region_ids),
+        "historical_rows_with_internal_region_conflict": sum(
+            len(region_signals(row)) > 1 for row in historical),
         "historical_identity_sha256": hashlib.sha256("".join(sorted(all_ids)).encode()).hexdigest(),
         "historical_preservation_verified": False,
         "real_streams_reverified": 0, "device_verified": False, "channel_playlist_modified": False,
