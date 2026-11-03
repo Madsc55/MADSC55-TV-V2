@@ -67,11 +67,25 @@ jobs:
           paths = [root/'ibo-candidate-inventory.jsonl.enc',
                    root/'v2'/'ibo-candidate-inventory.jsonl.enc']
           available = [p for p in paths if p.is_file()]
+          # Encrypted original stream URLs remain unavailable, but all actual
+          # #60 decoded historical hashes are now permanently in this branch.
+          import hashlib
+          history = root/'v2/history/stage3-4955-hash-only.jsonl'
+          real_rows = [json.loads(line) for line in history.read_text(encoding='utf-8').splitlines() if line]
+          hash_ids = [row['url_sha256'] for row in real_rows]
+          digest = hashlib.sha256(''.join(sorted(hash_ids)).encode()).hexdigest()
+          assert len(real_rows) == len(set(hash_ids)) == expected
+          assert digest == 'e84cf1273ae54fc89de5d7edc3a46b4db78b91ddd7d6953dabdde30a6c3e0c83'
+          assert all('url' not in row for row in real_rows)
           result = {
               'schema': 1,
               'historical_expected_records': expected,
               'historical_dataset_present_in_checkout': bool(available),
+              'real_4955_hash_only_dataset_present': True,
+              'real_4955_hash_only_dataset_verified': True,
+              'real_4955_hash_only_identities': len(real_rows),
               'historical_4955_real_records_restored': False,
+              'historical_playable_urls_restored': 0,
               'offline_synthetic_regressions_are_not_real_history_recovery': True,
               'device_verified': False,
               'main_playlist_modified': False
