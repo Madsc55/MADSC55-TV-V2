@@ -1,0 +1,83 @@
+#!/usr/bin/env python3
+"""Grouped in-memory full-source loss regressions; never uses network."""
+import hashlib
+import unittest
+
+from m3u_source_content_audit import audit_contents
+
+
+def digest(url):
+    return hashlib.sha256(url.encode()).hexdigest()
+
+
+class FullM3UCoverageTests(unittest.TestCase):
+    def test_successful_header_with_zero_streams_must_not_pass(self):
+        sources = [{"id": "tr", "url": "https://fixture.example/a.m3u"}]
+        report = audit_contents(sources, [], lambda _: "#EXTM3U\n")
+        self.assertEqual(report["source_content_review_required"], 1)
+        self.assertEqual(report["source_status_counts"]["EMPTY_PLAYLIST"], 1)
+
+    def test_current_historical_url_hash_membership_not_just_count(self):
+        sources = [{"id": "tr", "url": "https://fixture.example/tr.m3u"},
+                   {"id": "world", "url": "https://fixture.example/world.m3u"}]
+        old = ["https://fixture.example/old.m3u8",
+               "https://fixture.example/retained.m3u8"]
+        def fetch(url):
+            stream = old[1] if url.endswith("tr.m3u") else "https://fixture.example/new.m3u8"
+            return "#EXTM3U\n#EXTINF:-1,Channel\n" + stream + "\n"
+        result = audit_contents(sources, [digest(x) for x in old], fetch)
+        self.assertEqual(result["union_unique_url_sha256"], 2)
+        self.assertEqual(result["historical_identifiers_present_in_current_sources"], 1)
+        self.assertEqual(result["historical_identifiers_absent_from_current_sources"], 1)
+        self.assertEqual(result["status"], "COMPLETE_SOURCE_CONTENT_PARSED")
+        self.assertEqual(result["current_streams_playback_checked"], 0)
+
+    def test_retired_source_is_kept_in_report_but_not_fetched(self):
+        sources = [{"id": "retired", "url": "https://fixture.example/deleted.m3u",
+                    "enabled": False},
+                   {"id": "active", "url": "https://fixture.example/active.m3u"}]
+        calls = []
+        def fetch(url):
+            calls.append(url)
+            return "#EXTM3U\n#EXTINF:-1,Channel\nhttps://fixture.example/live.m3u8"
+        result = audit_contents(sources, [], fetch)
+        self.assertEqual(len(calls), 1)
+        self.assertEqual(result["source_results"][0]["status"], "RETIRED_IN_ORIGINAL_INVENTORY")
+        self.assertEqual(result["active_sources"], 1)
+
+    def test_parse_loss_does_not_count_as_complete(self):
+        source = [{"id": "tr", "url": "https://fixture.example/one.m3u"}]
+        result = audit_contents(source, [], lambda _: "#EXTM3U\n#EXTINF:-1,Missing URL\n")
+        self.assertEqual(result["source_status_counts"]["EMPTY_PLAYLIST"], 1)
+        self.assertEqual(result["source_results"][0]["unpaired_extinf"], 1)
+
+    def test_failed_one_does_not_erase_other_or_leak_token(self):
+        sources = [{"id": "one", "url": "https://fixture.example/a?token=SECRET"},
+                   {"id": "two", "url": "https://fixture.example/b"}]
+        def fetch(url):
+            if "SECRET" in url:
+                raise RuntimeError("SECRET_PRIVATE_QUERY")
+            return "#EXTM3U\n#EXTINF:-1,Good\nhttps://fixture.example/good.m3u8\n"
+        r = audit_contents(sources, [], fetch)
+        self.assertEqual(r["source_content_review_required"], 1)
+        self.assertEqual(r["union_unique_url_sha256"], 1)
+        self.assertNotIn("SECRET", str(r))
+
+    def test_duplicate_urls_counted_once_but_raw_entries_retained(self):
+        source = [{"id": "tr", "url": "https://fixture.example/tr.m3u"}]
+        body = "#EXTM3U\n" + ("#EXTINF:-1,Chan\nhttps://fixture.example/a.m3u8\n" * 2)
+        result = audit_contents(source, [digest("https://fixture.example/a.m3u8")],
+                                lambda _: body)
+        self.assertEqual(result["source_results"][0]["entries"], 2)
+        self.assertEqual(result["source_results"][0]["unique_urls"], 1)
+        self.assertEqual(result["source_results"][0]["duplicate_url_entries"], 1)
+
+    def test_corrupt_or_duplicate_historical_sha_fails_closed(self):
+        source = [{"id": "tr", "url": "https://fixture.example/tr.m3u"}]
+        for baseline in ([digest("a"), digest("a")], ["not-a-sha"]):
+            with self.subTest(baseline=baseline), self.assertRaises(ValueError):
+                audit_contents(source, baseline, lambda _: "#EXTM3U\n")
+
+
+if __name__ == "__main__":
+    unittest.main()

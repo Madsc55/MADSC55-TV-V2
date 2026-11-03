@@ -13,6 +13,7 @@ from pathlib import Path
 
 from source_availability_audit import probe as source_header_probe
 from compare_historical_playback import load as load_aggregate
+from m3u_source_content_audit import audit_contents
 
 OLD_RUN = 40743765437
 NEW_RUN = 40948768782
@@ -113,6 +114,8 @@ def main():
     p.add_argument("--sources", type=Path, required=True)
     p.add_argument("--output", type=Path, required=True)
     p.add_argument("--workers", type=int, default=8)
+    p.add_argument("--audit-full-source-content", action="store_true",
+                   help="Read full public M3U files, not any stream/media URL")
     p.add_argument("--historical-old", type=Path)
     p.add_argument("--historical-new", type=Path)
     p.add_argument("--baseline", type=Path)
@@ -126,12 +129,27 @@ def main():
         if not all(v is not None for v in selected):
             p.error("Historical loss evidence requires both real aggregates and immutable baseline")
         result["historical_loss"] = compare_original_runs(*selected)
+    if args.audit_full_source_content:
+        if args.baseline is None:
+            p.error("Full source content audit requires immutable historical baseline")
+        history_rows = [json.loads(line) for line in args.baseline.read_text(encoding="utf-8").splitlines()
+                        if line]
+        baseline_hashes = [row["url_sha256"] for row in history_rows]
+        if len(baseline_hashes) != 4955:
+            p.error("Unverified real historical baseline")
+        result["source_content_audit"] = audit_contents(
+            config["sources"], baseline_hashes, workers=args.workers)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
                            encoding="utf-8")
+    content_audit = result.get("source_content_audit", {})
     print("M3U source headers reachable:", result["source_headers_reachable"], "/",
-          result["configured_sources"], "historical identity comparison:",
-          result.get("historical_loss", {}).get("previously_video_decoded_not_retested", "NOT_LOADED"))
+          result["active_sources"], "historical identity comparison:",
+          result.get("historical_loss", {}).get("previously_video_decoded_not_retested", "NOT_LOADED"),
+          "full source feeds parsed:", content_audit.get("fully_parsed_sources", "NOT_AUDITED"),
+          "historical URL hashes in current feeds:",
+          content_audit.get("historical_identifiers_present_in_current_sources", "NOT_AUDITED"),
+          "content status:", content_audit.get("status", "NOT_AUDITED"))
 
 
 if __name__ == "__main__":
