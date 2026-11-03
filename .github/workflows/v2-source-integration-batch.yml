@@ -12,22 +12,93 @@ on:
 permissions:
   contents: read
 jobs:
-  source-integration-batch:
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
+  offline-source-safety:
+    name: All source adapter regressions - no false acceptance
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Batch regression suite
-        run: python -m unittest discover -s v2/tests -p 'test_source_integration_gate.py' -v
-      - name: Verify source handoff reports without claiming AV playback
-        run: python v2/source_integration_gate.py | tee source-integration-audit.json; test ${PIPESTATUS[0]} -eq 0
-      - name: Upload source integration audit
+      - name: Verify protected development IBO snapshot is immutable
+        run: test "$(git hash-object MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)" = '4b1c3cea4b5107a425abab60f62d41f9f81e05a7'
+      - name: Run related source and handoff tests in one offline batch
+        shell: bash
+        run: |
+          set -euo pipefail
+          PYTHONPATH=v2 python -m unittest -v             test_source_adapters_batch             test_document_platform_discovery             test_source_inventory_contract             test_run_all_discovery             test_source_integrity             test_source_loss_audit
+          python -m unittest discover -s v2/tests -p 'test_source_integration_gate.py' -v
+      - name: Preserve fail-closed status without fabricated live reports
+        shell: bash
+        run: |
+          mkdir -p v2/reports/ci
+          PYTHONPATH=v2 python - <<'PY'
+          import json
+          from pathlib import Path
+          from source_integration_gate import audit
+          result = audit()
+          Path('v2/reports/ci/source-handoff-offline.json').write_text(
+              json.dumps(result, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+          assert result['status'] == 'INCOMPLETE', result
+          assert 'INCOMPLETE_ADAPTER_HANDOFF' in result['errors'], result
+          assert result['av_verified'] is False
+          assert result['ibo_device_verified'] is False
+          print('OFFLINE_GUARD_PASS: real source handoff is not claimed without adapter reports')
+          PY
+      - name: Upload anonymous offline source safety result
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: v2-source-integration-audit
-          path: source-integration-audit.json
+          name: v2-source-offline-guard-${{ github.run_id }}
+          path: v2/reports/ci/source-handoff-offline.json
           if-no-files-found: warn
+          retention-days: 30
+
+  live-source-handoff:
+    name: Explicit live source reports and acceptance - no IBO playlist writes
+    if: github.event_name == 'workflow_dispatch'
+    needs: offline-source-safety
+    runs-on: ubuntu-24.04
+    timeout-minutes: 75
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install YouTube source discovery dependency
+        run: python -m pip install yt-dlp
+      - name: Generate real read-only GitHub and Gist report
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: timeout 1200s python v2/github_source_discovery.py
+      - name: Generate real public GitLab and Codeberg report
+        run: timeout 900s python v2/run_forge_source_discovery.py --scan-public-forges
+      - name: Generate approved publisher live-page and playlist-index reports
+        run: |
+          timeout 600s python v2/run_live_page_discovery.py --scan-approved-live-pages
+          timeout 600s python v2/run_webpage_playlist_discovery.py --scan-approved-index-pages
+      - name: Generate advisory YouTube source report - not direct stream proof
+        run: timeout 1200s python v2/youtube_discovery.py
+      - name: Generate public-document report and actual validated M3U source handoff
+        run: timeout 1200s python v2/document_platform_discovery.py --scan-public-documents
+      - name: Require all seven original adapter reports before source acceptance
+        shell: bash
+        run: |
+          set -o pipefail
+          mkdir -p v2/reports/ci
+          python v2/source_integration_gate.py | tee v2/reports/ci/source-integration-audit.json
+      - name: Upload anonymous audit only, never plaintext discovered source URLs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v2-source-integration-audit-${{ github.run_id }}
+          path: v2/reports/ci/source-integration-audit.json
+          if-no-files-found: warn
+          retention-days: 30

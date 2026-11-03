@@ -16,12 +16,12 @@ def fixture(events="  workflow_dispatch:\n", perms="  contents: read\n",
 
 
 class ActionsTriggerProtectionTests(unittest.TestCase):
-    def test_real_58_workflows_are_protected_as_one_group(self):
+    def test_real_59_workflows_are_protected_as_one_group(self):
         root = Path(__file__).resolve().parents[1] / ".github/workflows"
-        result = audit_repository(root, minimum_workflows=58)
+        result = audit_repository(root, minimum_workflows=59)
         self.assertEqual(result["status"], "DEVELOPMENT_BRANCH_TRIGGER_GATE_PASS",
                          result["issues"])
-        self.assertEqual(result["workflows_checked"], 58)
+        self.assertEqual(result["workflows_checked"], 59)
         self.assertEqual(result["locked_publishers"], len(LOCKED_PUBLISHERS))
         self.assertEqual(result["issues"], [])
         self.assertEqual(result["default_branch_runtime_schedules_disabled"],

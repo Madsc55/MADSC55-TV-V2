@@ -77,6 +77,7 @@ SAFE_PUSH_CI = frozenset({
     "v2-ordered-preflight",
     "v2-playlist-safety",
     "v2-source-adapter-batch",
+    "v2-source-integration-batch",
     "v2-stage5-archive-acceptance",
     "v2-stage5-final-production-archive",
     "v2-turkish-m3u-source-coverage",
