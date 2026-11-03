@@ -48,7 +48,7 @@ class FullM3UCoverageTests(unittest.TestCase):
     def test_parse_loss_does_not_count_as_complete(self):
         source = [{"id": "tr", "url": "https://fixture.example/one.m3u"}]
         result = audit_contents(source, [], lambda _: "#EXTM3U\n#EXTINF:-1,Missing URL\n")
-        self.assertEqual(result["source_status_counts"]["EMPTY_PLAYLIST"], 1)
+        self.assertEqual(result["source_status_counts"]["INCOMPLETE_EXTINF_PAIRS"], 1)
         self.assertEqual(result["source_results"][0]["unpaired_extinf"], 1)
 
     def test_udp_and_rtmp_are_not_mislabelled_as_corrupt_http_streams(self):
