@@ -13,6 +13,7 @@ on:
       - 'v2/test_stage3_hash_evidence_linkage.py'
       - 'v2/test_stage3_identity_integrity.py'
       - 'v2/test_stage3_archive_lineage.py'
+      - 'v2/test_stage3_atomic_classification.py'
       - '.github/workflows/v2-stage3-real-history.yml'
   workflow_dispatch:
 
@@ -49,6 +50,7 @@ jobs:
             test_stage3_hash_evidence_linkage \
             test_stage3_identity_integrity \
             test_stage3_archive_lineage \
+            test_stage3_atomic_classification \
             test_historical_url_recovery \
             test_stage3_master_integration \
             test_stage3_legacy_importers \

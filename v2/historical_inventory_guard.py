@@ -12,6 +12,7 @@ import json
 import os
 from pathlib import Path
 import re
+import tempfile
 
 from encrypted_archive import _cipher, append, restore, MAX_RECORD_BYTES
 from historical_url_recovery import read_records, validate_url
@@ -45,8 +46,8 @@ def identity(row):
     return stored.lower() if isinstance(stored, str) and SHA256.fullmatch(stored.lower()) else None
 
 
-def classify(row):
-    """Country/metadata *candidate* evidence, never verified spoken language."""
+def _classify_preferred(row):
+    """Original preferred evidence; never a spoken-language verification."""
     # Preserve already-reviewed region *metadata* in hash-only historical records.
     # A hash has no URL and must never become an exportable stream address.
     if (not validate_url(row.get("url"))
@@ -92,7 +93,7 @@ def region_signals(row):
     metadata is advisory, not evidence of a playable URL or spoken language.
     """
     signals = set()
-    baseline = classify(row)["region_candidate"]
+    baseline = _classify_preferred(row)["region_candidate"]
     if baseline in ("TR", "AZ"):
         signals.add(baseline)
     for field in ("scope", "country", "region", "country_code"):
@@ -117,6 +118,22 @@ def region_signals(row):
     if AZ_HINT.search(metadata):
         signals.add("AZ")
     return signals
+
+
+def classify(row):
+    """Conservatively classify TR/AZ with all independent hints considered."""
+    preferred = _classify_preferred(row)
+    # Never undo an earlier review of conflicting historical evidence.
+    if (row.get("region_candidate") == "UNKNOWN"
+            and row.get("classification_evidence") == "CONFLICTING_TR_AZ_EVIDENCE"):
+        return {"region_candidate": "UNKNOWN",
+                "classification_evidence": "CONFLICTING_TR_AZ_EVIDENCE",
+                "spoken_language_verified": False}
+    if len(region_signals(row)) > 1:
+        return {"region_candidate": "UNKNOWN",
+                "classification_evidence": "CONFLICTING_TR_AZ_EVIDENCE",
+                "spoken_language_verified": False}
+    return preferred
 
 
 def source_ids(row):
@@ -343,20 +360,28 @@ def preserve_to_new_archive(path, protected, candidates):
     }
     expected = payload + [manifest]
     path.parent.mkdir(parents=True, exist_ok=True)
-    flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL | getattr(os, "O_NOFOLLOW", 0)
-    fd = os.open(path, flags, 0o600)
+    # Stage privately in the SAME directory. Never leave an incomplete .enc
+    # at the requested final path when encryption, fsync, or restore fails.
+    fd, staging_name = tempfile.mkstemp(prefix=".stage3-archive-", suffix=".enc",
+                                         dir=path.parent)
     os.close(fd)
-    for block in expected:
-        append(path, block)
-    recovered = restore(path)
-    verified = recovered == expected
-    if verified:
-        # Check the same integrity/record-count contract used on later restores.
-        decoded_raw, decoded_view = _verify_archive_envelope(recovered)
-        verified = decoded_raw == protected and decoded_view == candidates
-    if not verified:
-        raise RuntimeError("Encrypted historical archive restore mismatch")
-    return True
+    staging = Path(staging_name)
+    try:
+        for block in expected:
+            append(staging, block)
+        recovered = restore(staging)
+        verified = recovered == expected
+        if verified:
+            decoded_raw, decoded_view = _verify_archive_envelope(recovered)
+            verified = decoded_raw == protected and decoded_view == candidates
+        if not verified:
+            raise RuntimeError("Encrypted historical archive restore mismatch")
+        # Hard link publication is atomic and fails when a concurrent writer
+        # created the final destination. os.replace would overwrite evidence.
+        os.link(staging, path, follow_symlinks=False)
+        return True
+    finally:
+        staging.unlink(missing_ok=True)
 
 
 def _verify_archive_envelope(blocks):
