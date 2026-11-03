@@ -1,0 +1,68 @@
+name: V2 Turkish M3U Orphan Recovery — Exact History and AV Batch
+on:
+  push:
+    branches: [madsc/v2-discovery-bulk-20261031]
+    paths:
+      - 'v2/orphan_m3u_recovery.py'
+      - 'v2/test_orphan_m3u_recovery.py'
+      - '.github/workflows/v2-orphan-m3u-recovery.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  three-sources-one-batch:
+    name: Restore exact old URLs for 41 orphan records; one grouped test and AV audit
+    runs-on: ubuntu-24.04
+    timeout-minutes: 24
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install pinned encryption dependency and FFprobe
+        run: |
+          python -m pip install cryptography==44.0.2
+          command -v ffprobe || (sudo apt-get update -qq && sudo apt-get install -y --no-install-recommends ffmpeg)
+      - name: Protect immutable IBO playlist and existing historical metadata
+        run: |
+          test "$(git hash-object MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)" = '4b1c3cea4b5107a425abab60f62d41f9f81e05a7'
+          test "$(sha256sum v2/history/stage3-4955-hash-only.jsonl | cut -d' ' -f1)" = 'ee00a844a028e3410715d411467a2d3306f5f5cc4565766140b6438e786cdd27'
+      - name: One grouped orphan, exact history and source preservation regression suite
+        shell: bash
+        run: |
+          mkdir -p v2/reports/ci
+          set -o pipefail
+          PYTHONPATH=v2 python -m unittest -v \
+            test_orphan_m3u_recovery \
+            test_m3u_source_content_audit \
+            test_historical_targeted_playback \
+            test_run60_source_ledger \
+            test_run60_source_discovery \
+            test_source_loss_audit \
+            test_turkish_m3u_source_audit \
+            2>&1 | tee v2/reports/ci/three-source-orphan-regressions.log
+      - name: Compare three actual M3U sources to prior exact Git history / official alternatives
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          PYTHONPATH=v2 python v2/orphan_m3u_recovery.py \
+            --history-revisions 20 \
+            --public-key v2/config/stage3_transit_public.pem \
+            --report v2/reports/ci/three-source-orphan-anonymous.json \
+            --sealed v2/reports/ci/three-source-av-verified.sealed
+      - name: Upload only anonymized evidence and RSA-encrypted successful AV URLs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v2-three-source-orphan-evidence-${{ github.run_id }}
+          path: |
+            v2/reports/ci/three-source-orphan-anonymous.json
+            v2/reports/ci/three-source-av-verified.sealed
+            v2/reports/ci/three-source-orphan-regressions.log
+          if-no-files-found: warn
+          retention-days: 30
