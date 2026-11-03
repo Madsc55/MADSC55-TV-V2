@@ -261,6 +261,11 @@ def main():
          "reason": item.get("retirement_reason", "RETAINED_HISTORICAL_SOURCE")}
         for item in retired_sources
     ]
+    # Bounded public document references enter the same source-loss and dedup pipeline.
+    from document_platform_discovery import accepted_sources
+    for doc_source in accepted_sources():
+        if not any(s["url"] == doc_source["url"] for s in sources):
+            sources.append(doc_source)
     # A page is a discovery index, not an M3U stream. Expand only explicit
     # public HTTPS playlist links; never treat HTML as playable media.
     from webpage_source_discovery import discover_playlist_links

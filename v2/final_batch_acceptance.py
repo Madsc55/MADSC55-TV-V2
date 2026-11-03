@@ -64,6 +64,11 @@ def sources():
         for row in approved_sources(json.loads(FORGE.read_text()), approvals):
             if row["url"] not in known:
                 entries_.append(row); known.add(row["url"])
+    from document_platform_discovery import accepted_sources
+    for doc_source in accepted_sources():
+        if doc_source["url"] not in known:
+            entries_.append(doc_source)
+            known.add(doc_source["url"])
     ix = ROOT / "v2/config/playlist-index-pages.json"
     if ix.is_file():
         from webpage_source_discovery import discover_playlist_links

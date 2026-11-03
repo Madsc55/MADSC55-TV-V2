@@ -8,6 +8,11 @@ on:
       - 'v2/test_actions_trigger_protection_audit.py'
       - 'v2/actions_default_branch_audit.py'
       - 'v2/test_actions_default_branch_audit.py'
+      - 'v2/document_platform_discovery.py'
+      - 'v2/test_document_platform_discovery.py'
+      - 'v2/run_all_discovery.py'
+      - 'v2/discover.py'
+      - 'v2/final_batch_acceptance.py'
   workflow_dispatch:
 permissions:
   contents: read
@@ -49,6 +54,8 @@ jobs:
             test_actions_default_branch_audit \
             test_actions_monitor \
             test_source_loss_audit \
+            test_document_platform_discovery \
+            test_run_all_discovery \
             test_orphan_baseline_guard \
             test_run60_source_ledger \
             2>&1 | tee v2/reports/ci/actions-trigger-protection-tests.log
@@ -145,5 +152,38 @@ jobs:
           path: |
             v2/reports/ci/final-worldwide-acceptance.json
             v2/reports/ci/final-worldwide-*.sealed
+          if-no-files-found: warn
+          retention-days: 30
+
+  document-platform-live-audit:
+    name: Three public document adapters, one batch plus anonymous live coverage
+    if: >-
+      github.event_name == 'push' && github.event.head_commit.message == 'feat(v2): integrate Scribd SlideShare Internet Archive source adapters'
+    needs: grouped-protection-check
+    runs-on: ubuntu-24.04
+    timeout-minutes: 18
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Grouped source adapter and source handoff offline safety tests
+        run: |
+          PYTHONPATH=v2 python -m unittest -v test_document_platform_discovery test_run_all_discovery test_run_webpage_playlist_discovery test_webpage_source_discovery test_source_inventory_contract
+          python v2/test_playlist_invariants.py
+      - name: Real anonymous public-document discovery, no playlist writing
+        run: |
+          PYTHONPATH=v2 python v2/document_platform_discovery.py --scan-public-documents
+          PYTHONPATH=v2 python -c "from document_platform_discovery import accepted_sources; print('Safe source handoff:', len(accepted_sources()))"
+      - name: Save anonymous coverage only, no source URLs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v2-public-document-adapters-${{ github.run_id }}
+          path: v2/reports/document-platform-references.json
           if-no-files-found: warn
           retention-days: 30

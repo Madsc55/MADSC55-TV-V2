@@ -35,6 +35,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: python v2/github_source_discovery.py
+      - name: Scan public Scribd SlideShare and Internet Archive references
+        run: python v2/document_platform_discovery.py --scan-public-documents
       - name: Fetch and deduplicate all M3U candidates once
         run: python v2/discover.py --snapshot-output
       - name: Verify private and public candidate identity before artifact handoff

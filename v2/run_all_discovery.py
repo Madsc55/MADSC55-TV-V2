@@ -23,6 +23,7 @@ def plan(archive, previous_report=None, include_youtube=True):
         [sys.executable, str(ROOT / "run_forge_source_discovery.py"), "--scan-public-forges"],
         [sys.executable, str(ROOT / "run_live_page_discovery.py"), "--scan-approved-live-pages"],
         [sys.executable, str(ROOT / "run_webpage_playlist_discovery.py"), "--scan-approved-index-pages"],
+        [sys.executable, str(ROOT / "document_platform_discovery.py"), "--scan-public-documents"],
         [sys.executable, str(ROOT / "discover.py"), "--encrypted-archive", str(archive)],
     ]
     if include_youtube:
