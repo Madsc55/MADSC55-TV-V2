@@ -45,5 +45,16 @@
   "source_original_stage3_sha256": "808152d71ae5bc81aaf594e151753272dadcdd3495c9231bb781598bd934a7b3",
   "stage": 5,
   "status": "STAGE5_ENCRYPTED_ARCHIVE_PRODUCTION_ACCEPTED",
-  "storage_provider": "OpenAI private ChatGPT Library, independent of GitHub Actions and Google Drive evidence copies"
+  "storage_provider": "OpenAI private ChatGPT Library, independent of GitHub Actions and Google Drive evidence copies",
+  "independent_second_backup_provider": "Google Drive (owner-only, separate from ChatGPT Library and GitHub)",
+  "independent_second_backup_file_id": "1nSKpgpkHh_iNihtZBIEqF9YzNpWy6tUJ",
+  "independent_second_backup_size_bytes": 5234628,
+  "independent_second_backup_sha256": "38db9b094c48e49eb0b5b1234ddc6a109f215d6d9fa732a1a4d0cf592673fe4c",
+  "independent_second_backup_downloaded_and_aes256gcm_restored": true,
+  "independent_second_backup_restored_historical_original_urls": 4955,
+  "independent_second_backup_restored_orphan_real_url_candidates": 107,
+  "independent_second_backup_privacy": "Owner only; AES secret not copied to Google Drive",
+  "independent_second_backup_verified_utc_date": "2026-11-03",
+  "durable_backup_provider_count": 2,
+  "acceptance_scope_limit": "Historical real URLs durable and cryptographically restorable; current FFprobe playback and IBO device tests remain unverified"
 }
