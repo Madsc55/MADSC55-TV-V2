@@ -3,6 +3,7 @@
 Only public M3U source references; no login bypass and no playback approval.
 """
 import argparse
+from concurrent.futures import ThreadPoolExecutor
 import hashlib
 import html
 from html.parser import HTMLParser
@@ -171,6 +172,33 @@ def scan(read=fetch_public,search_pages=SEARCH_PAGES,archive_search=ARCHIVE_SEAR
                      "PUBLIC_PAGES_QUERIED_NOT_PLAYBACK_VERIFIED")}
  return report,sources
 
+def verify_sources(sources, fetcher=None):
+ """Confirm that a public M3U reference contains at least one channel pair.
+
+ Failed/invalid source references remain in the anonymous audit, but are not
+ handed to the main channel scanner. Never infer video/audio or device playback.
+ """
+ from discover import fetch, entries
+ fetcher = fetch if fetcher is None else fetcher
+ if len(sources)>MAX_SOURCES:
+  raise ValueError("Unbounded public document source candidate count")
+ def inspect(source):
+  try:
+   content=fetcher(source["url"])
+   if not content.lstrip().startswith("#EXTM3U"):
+    raise ValueError("NO_M3U_HEADER")
+   count=sum(1 for _ in entries(content))
+   return (source,"M3U_CHANNEL_ENTRIES" if count>0 else "NO_CHANNEL_ENTRIES",count)
+  except Exception as exc:
+   return (source,"SOURCE_READ_OR_PARSE_FAILED_"+type(exc).__name__,0)
+ with ThreadPoolExecutor(max_workers=8) as pool:
+  audits=list(pool.map(inspect,sources))
+ accepted=[source for source,status,count in audits if status=="M3U_CHANNEL_ENTRIES"]
+ report=[{"url_sha256":source["url_sha256"],"status":status,
+          "channel_entries":count,"playback_verified":False}
+         for source,status,count in audits]
+ return accepted,report
+
 def accepted_sources(path=SOURCES):
  path=Path(path)
  if not path.exists():return []
@@ -198,7 +226,12 @@ def main():
  p=argparse.ArgumentParser()
  p.add_argument("--scan-public-documents",action="store_true",required=True)
  p.parse_args()
- report,sources=scan()
+ report,candidates=scan()
+ sources,verification=verify_sources(candidates)
+ report["m3u_source_validation"]=verification
+ report["validated_m3u_source_count"]=len(sources)
+ report["validated_m3u_source_channel_entries"]=sum(x["channel_entries"] for x in verification)
+ report["source_candidates_failed_validation"]=len(candidates)-len(sources)
  REPORT.parent.mkdir(parents=True,exist_ok=True)
  REPORT.write_text(json.dumps(report,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
  SOURCES.write_text(json.dumps({"schema":1,"kind":"DOCUMENT_PLATFORM_M3U_HANDOFF",
@@ -207,6 +240,8 @@ def main():
  print("Document discovery public summary:",{k:{"queries":v["queries"],
   "documents":v["documents_checked"],"source_refs":v["candidate_sources"],
   "errors":v["errors"]} for k,v in report["platforms"].items()},
+  "validated_m3u_sources:",len(sources),"raw_channel_entries:",
+  report["validated_m3u_source_channel_entries"],
   "coverage:",report["coverage_status"])
 
 if __name__=="__main__":main()

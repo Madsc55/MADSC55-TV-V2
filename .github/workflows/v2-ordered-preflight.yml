@@ -91,7 +91,7 @@ jobs:
   document-platform-live-audit:
     name: Read-only live public Scribd SlideShare Internet Archive audit in one job
     if: >-
-      github.event_name == 'push' && github.event.head_commit.message == 'test(v2): grouped public document M3U content acceptance'
+      github.event_name == 'push' && github.event.head_commit.message == 'fix(v2): reject invalid public document M3U sources before scan'
     needs: safety
     runs-on: ubuntu-24.04
     timeout-minutes: 18

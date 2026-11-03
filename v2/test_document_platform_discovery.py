@@ -5,7 +5,7 @@ from pathlib import Path
 import tempfile
 import unittest
 from document_platform_discovery import (ARCHIVE_SEARCH,PLATFORMS,accepted_sources,
- allowed_page,archive_file_refs,digest,page_references,scan,source_url)
+ allowed_page,archive_file_refs,digest,page_references,scan,source_url,verify_sources)
 
 class ThreePlatformAdapterTests(unittest.TestCase):
  def test_tokenless_public_https_only(self):
@@ -77,5 +77,26 @@ class ThreePlatformAdapterTests(unittest.TestCase):
    for invalid in ([row,row],[dict(row,id="incorrect")],[dict(row,url=url+"?token=1")]):
     write(invalid)
     with self.assertRaises(ValueError):accepted_sources(p)
+
+
+ def test_m3u_source_validation_blocks_empty_bad_and_retains_good(self):
+  from document_platform_discovery import digest
+  def src(url):
+   return {"url":url,"url_sha256":digest(url),"id":"docref-"+digest(url)[:20],
+           "kind":"m3u","scope":"candidate","platforms":["internet-archive"]}
+  rows=[src("https://example.org/valid.m3u"),src("https://example.org/empty.m3u"),
+        src("https://example.org/failed.m3u")]
+  def fetch(url):
+   if url.endswith("valid.m3u"):
+    return '#EXTM3U\n#EXTINF:-1 tvg-id="TRT1.tr",TRT 1\nhttps://video.example.org/live.m3u8\n'
+   if url.endswith("empty.m3u"):return "#EXTM3U\n#EXT-X-STREAM-INF:PROGRAM-ID=1\n"
+   raise OSError("unavailable")
+  good,report=verify_sources(rows,fetch)
+  self.assertEqual(len(good),1)
+  self.assertEqual(good[0]["id"],rows[0]["id"])
+  self.assertEqual([x["status"] for x in report],
+      ["M3U_CHANNEL_ENTRIES","NO_CHANNEL_ENTRIES","SOURCE_READ_OR_PARSE_FAILED_OSError"])
+  self.assertEqual(sum(x["channel_entries"] for x in report),1)
+  self.assertNotIn("https://example.org/",str(report))
 
 if __name__=="__main__":unittest.main()
