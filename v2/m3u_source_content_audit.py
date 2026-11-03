@@ -9,7 +9,7 @@ from concurrent.futures import ThreadPoolExecutor
 import hashlib
 import re
 
-from discover import entries
+from discover import entries, has_http_url_hostname
 from source_failover import fetch_once
 
 HEX = re.compile(r"[0-9a-f]{64}\Z")
@@ -37,6 +37,8 @@ def enumerate_unpaired_reference_evidence(payload):
         elif line and not line.startswith("#") and pending is not None:
             if line.startswith(("[NO PUBLIC STREAM]", "[NO STREAM]")):
                 add("EXPLICIT_NO_PUBLIC_STREAM_PLACEHOLDER", pending)
+            elif line.startswith(("http://", "https://")) and not has_http_url_hostname(line):
+                add("HTTP_URI_WITHOUT_HOST", pending)
             elif not re.match(r"^[A-Za-z][A-Za-z0-9+.-]*://", line):
                 add("INVALID_OR_RELATIVE_STREAM_REFERENCE", pending)
             pending = None

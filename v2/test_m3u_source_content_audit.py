@@ -135,6 +135,20 @@ class FullM3UCoverageTests(unittest.TestCase):
         self.assertEqual(r["union_unique_url_sha256"], 1)
         self.assertNotIn("SECRET", str(r))
 
+    def test_http_without_host_is_quarantined_not_accepted_as_stream(self):
+        from discover import entries, has_http_url_hostname
+        src = [{"id": "onur", "url": "https://fixture.example/onur.m3u"}]
+        bad = "http:///broken/stream.m3u8"
+        body = ("#EXTM3U\n#EXTINF:-1,Malformed\n" + bad + "\n"
+                "#EXTINF:-1,Valid\nhttps://fixture.example/valid.m3u8\n")
+        self.assertFalse(has_http_url_hostname(bad))
+        self.assertEqual(len(list(entries(body))), 1)
+        result = audit_contents(src, [], lambda _: body)
+        self.assertEqual(result["status"], "REVIEW_REQUIRED")
+        self.assertEqual(result["source_results"][0]["actual_malformed_extinf"], 1)
+        self.assertEqual(result["unpaired_reason_totals"], {"HTTP_URI_WITHOUT_HOST": 1})
+        self.assertNotIn(bad, str(result))
+
     def test_duplicate_urls_counted_once_but_raw_entries_retained(self):
         source = [{"id": "tr", "url": "https://fixture.example/tr.m3u"}]
         body = "#EXTM3U\n" + ("#EXTINF:-1,Chan\nhttps://fixture.example/a.m3u8\n" * 2)

@@ -94,6 +94,16 @@ def fetch(url, allow_html=False):
         raise ValueError("Source too large")
     return data.decode("utf-8-sig", errors="replace")
 
+def has_http_url_hostname(url):
+    """Reject structurally broken HTTP URLs without filtering private device URLs."""
+    from urllib.parse import urlsplit
+    try:
+        parsed = urlsplit(url)
+        return parsed.scheme in ("http", "https") and bool(parsed.hostname)
+    except ValueError:
+        return False
+
+
 def entries(data):
     """Parse adjacent EXTINF/stream pairs in linear time."""
     pending = None
@@ -115,7 +125,8 @@ def entries(data):
                 return m.group(1).strip() if m else ""
             pending = {"name": name, "tvg_id": field("tvg-id"), "logo": field("tvg-logo"), "group": field("group-title")}
         elif line and not line.startswith("#"):
-            if pending is not None and line.startswith(("https://", "http://")):
+            if (pending is not None and line.startswith(("https://", "http://"))
+                    and has_http_url_hostname(line)):
                 yield {**pending, "url": line}
             pending = None
 
