@@ -39,6 +39,16 @@ def identity(row):
 
 def classify(row):
     """Country/metadata *candidate* evidence, never verified spoken language."""
+    # Preserve already-reviewed region *metadata* in hash-only historical records.
+    # A hash has no URL and must never become an exportable stream address.
+    if (not validate_url(row.get("url"))
+            and isinstance(row.get("url_sha256"), str)
+            and SHA256.fullmatch(row["url_sha256"].lower())
+            and row.get("region_candidate") in ("TR", "AZ", "UNKNOWN")
+            and row.get("classification_evidence") in ("SOURCE_GEO", "TVG_ID", "METADATA", "NONE", "CONFLICTING_TR_AZ_EVIDENCE")):
+        return {"region_candidate": row["region_candidate"],
+                "classification_evidence": row["classification_evidence"],
+                "spoken_language_verified": False}
     fields = (row.get("scope"), row.get("country"), row.get("region"), row.get("country_code"))
     for value in fields:
         if not isinstance(value, str):

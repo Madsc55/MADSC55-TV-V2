@@ -74,6 +74,36 @@ jobs:
           assert report["region_candidates"]["TR"] + report["region_candidates"]["AZ"] + report["region_candidates"]["UNKNOWN"] == 4955
           print("Real #60->#72 hash-only history retained and categorized:", report["region_candidates"])
           PY
+      - name: Reconcile all 4955 real identities through loss guard and AES-GCM roundtrip
+        shell: bash
+        env:
+          PYTHONPATH: v2
+        run: |
+          python - <<'PY'
+          import json, os, secrets, tempfile
+          from pathlib import Path
+          from historical_inventory_guard import reconcile, preserve_to_new_archive
+          index = Path('v2/reports/ci/stage3-4955-hash-only.jsonl')
+          records = [json.loads(line) for line in index.read_text(encoding='utf-8').splitlines() if line]
+          protected, candidates, report = reconcile(records, expected_historical_records=4955)
+          assert len(protected) == 4955 and len(candidates) == 0
+          assert report['historical_hash_only_identities'] == 4955
+          assert report['historical_unique_real_urls'] == 0
+          assert report['historical_tr_candidate_records'] == 50
+          assert report['historical_az_candidate_records'] == 1
+          assert report['historical_unknown_region_records'] == 4904
+          with tempfile.TemporaryDirectory() as d:
+              os.environ['V2_ARCHIVE_KEY_HEX'] = secrets.token_hex(32)
+              assert preserve_to_new_archive(Path(d) / 'roundtrip.enc', protected, candidates)
+              del os.environ['V2_ARCHIVE_KEY_HEX']
+          summary_path = Path('v2/reports/ci/stage3-real-history-summary.json')
+          summary = json.loads(summary_path.read_text(encoding='utf-8'))
+          summary['loss_guard_hash_only_4955_verified'] = True
+          summary['ephemeral_aesgcm_restore_4955_verified'] = True
+          summary['persisted_cleartext_stream_urls'] = 0
+          summary_path.write_text(json.dumps(summary, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+          print('4955 real hash-only identities preserved and AES-GCM roundtrip verified.')
+          PY
       - name: Upload real-source anonymous evidence and single grouped test log
         if: always()
         uses: actions/upload-artifact@v4

@@ -4,6 +4,7 @@ import hashlib
 import unittest
 
 from real_historical_stage3 import recover
+from historical_inventory_guard import reconcile
 
 
 def sha(i):
@@ -68,6 +69,20 @@ class RealHistoricalStage3Tests(unittest.TestCase):
             recover(good, aggregate([]),
                     candidates([{"url_sha256": sha(1), "url": "https://private.invalid/live.m3u8"}]),
                     expected_missing=1)
+
+    def test_hash_only_historical_guard_keeps_reviewed_candidate_region(self):
+        old = aggregate([{"url_sha256": sha(5), "playback": "VIDEO_DECODED"}])
+        records, report = recover(old, aggregate([]),
+                                  candidates([{"url_sha256": sha(5), "tvg_id": "TRT1.tr"}]),
+                                  expected_missing=1)
+        raw, exportable, guarded = reconcile(records, expected_historical_records=1)
+        self.assertEqual(raw, records)
+        self.assertEqual(exportable, [])
+        self.assertEqual(guarded["historical_hash_only_identities"], 1)
+        self.assertEqual(guarded["historical_tr_candidate_records"], 1)
+        self.assertEqual(guarded["historical_az_candidate_records"], 0)
+        self.assertEqual(guarded["historical_unique_real_urls"], 0)
+        self.assertFalse(raw[0]["spoken_language_verified"])
 
     def test_missing_with_unknown_region_remains_unclassified(self):
         old = aggregate([{"url_sha256": sha(4), "playback": "VIDEO_DECODED"}])
