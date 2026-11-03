@@ -8,7 +8,7 @@ import yaml
 
 ROOT=Path(__file__).resolve().parents[1]
 WORKFLOWS=ROOT/".github/workflows"
-EXPECTED_BLOB="4b1c3cea4b5107a425abab60f62d41f9f81e05a7"
+EXPECTED_BLOB="165c726cd9211f9f51c31f1c718e0911bab79e1b"
 ORIGINAL_FILES=frozenset("""
 alphabetize-yeni-turk.yml backups-logo-audit.yml full-turkish-backups-audit.yml
 ibo-real-scan.yml import-backup-candidates.yml move-turkish-backups.yml

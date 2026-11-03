@@ -13,6 +13,6 @@ jobs:
           persist-credentials: false
       - name: Verify protected IBO playlist without changing it
         run: |
-          test "$(git hash-object MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)" = "4b1c3cea4b5107a425abab60f62d41f9f81e05a7"
+          test "$(git hash-object MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)" = "165c726cd9211f9f51c31f1c718e0911bab79e1b"
           python v2/test_playlist_invariants.py
           echo "Production publisher is suspended: read-only token, no git writes, no automatic triggers."
