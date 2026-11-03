@@ -193,3 +193,88 @@ jobs:
           path: v2/reports/document-platform-references.json
           if-no-files-found: warn
           retention-days: 30
+
+  orphan-46-live-recovery:
+    name: Exact original 50 identities and 46 missing AV streams — one guarded batch
+    if: >-
+      github.event_name == 'push' && github.event.head_commit.message == 'feat(v2): run exact 46 orphan AV rescue with pinned public registry'
+    needs: grouped-protection-check
+    runs-on: ubuntu-24.04
+    timeout-minutes: 140
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install pinned crypto and safe read-only video audio verifier
+        run: |
+          python -m pip install cryptography==44.0.2 PyYAML==6.0.2
+          command -v ffprobe || (sudo apt-get update -qq && sudo apt-get install -y --no-install-recommends ffmpeg)
+      - name: Verify original IBO and all 4955 historical identity fingerprints
+        run: |
+          test "$(git hash-object MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)" = '4b1c3cea4b5107a425abab60f62d41f9f81e05a7'
+          test "$(sha256sum v2/history/stage3-4955-hash-only.jsonl | cut -d' ' -f1)" = 'ee00a844a028e3410715d411467a2d3306f5f5cc4565766140b6438e786cdd27'
+      - name: One grouped offline regression suite for 50 identities and loss guards
+        run: |
+          PYTHONPATH=v2 python -m unittest -v test_orphan_m3u_recovery test_orphan_iptv_org_registry test_orphan_baseline_guard test_m3u_source_content_audit test_historical_targeted_playback test_source_loss_audit test_document_platform_discovery
+      - name: Collect vetted public Scribd SlideShare Internet Archive M3U sources
+        run: |
+          PYTHONPATH=v2 python v2/document_platform_discovery.py --scan-public-documents
+      - name: Fetch real publisher history and IPTV-org registry and probe all exact candidates
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p v2/reports/ci
+          PYTHONPATH=v2 python v2/orphan_m3u_recovery.py \
+            --history-revisions 300 \
+            --include-public-registry \
+            --public-key v2/config/stage3_transit_public.pem \
+            --report v2/reports/ci/orphan-46-exact-recovery-anonymous.json \
+            --sealed v2/reports/ci/orphan-46-live-av.sealed \
+            --all-candidates-sealed v2/reports/ci/orphan-46-all-exact-candidates.sealed \
+            --immutable-orphan-baseline v2/history/m3u-orphan-50-hash-baseline.json
+      - name: Fail closed if any of the 46 still lacks video and audio proof
+        shell: bash
+        run: |
+          PYTHONPATH=v2 python - <<'PY'
+          import json
+          from pathlib import Path
+          f=Path('v2/reports/ci/orphan-46-exact-recovery-anonymous.json')
+          d=json.loads(f.read_text(encoding='utf-8'))
+          assert d.get('protected_playlist_modified') is False
+          assert d.get('plain_stream_urls_reported') is False
+          guard=d.get('immutable_orphan_identity_guard',{})
+          assert guard.get('original_source_occurrences') == 55
+          assert guard.get('original_distinct_extinf_identities') == 50
+          assert guard.get('original_occurrences_missing_metadata') == 0
+          assert d.get('all_proven_url_candidates_sealed_for_future_retest') == d.get(
+             'unique_candidate_urls_historically_or_officially_proven')
+          found={row['extinf_sha256'] for row in d['records']
+                 if any(c.get('video_stream') and c.get('audio_stream') for c in row['candidates'])}
+          missing=50-len(found)
+          assert len({r['extinf_sha256'] for r in d['records']}) == 50
+          print('REAL_RESCUED_IDENTITIES',len(found))
+          print('REAL_UNRESOLVED_IDENTITIES',missing)
+          print('ALL_PROVEN_CANDIDATES_RSA_SEALED',d.get(
+              'all_proven_url_candidates_sealed_for_future_retest'))
+          print('PUBLIC_IPTV_ORG_REGISTRY',d.get('public_iptv_org_registry_reconciliation',{}).get('status'))
+          if missing:
+              raise SystemExit('RECOVERY_INCOMPLETE_REAL_VIDEO_AUDIO_REQUIRED: '+str(missing))
+          PY
+      - name: Preserve anonymous hashes and private encrypted recovery only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v2-orphan-46-one-batch-${{ github.run_id }}
+          path: |
+            v2/reports/ci/orphan-46-exact-recovery-anonymous.json
+            v2/reports/ci/orphan-46-live-av.sealed
+            v2/reports/ci/orphan-46-all-exact-candidates.sealed
+            v2/reports/document-platform-references.json
+          if-no-files-found: warn
+          retention-days: 30
