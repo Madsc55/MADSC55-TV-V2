@@ -129,7 +129,7 @@ jobs:
       - name: Grouped read-only scanner, orphan, language and historic protection regressions
         shell: bash
         run: |
-          PYTHONPATH=v2 python -m unittest -v test_final_batch_acceptance test_orphan_m3u_recovery test_orphan_baseline_guard test_m3u_source_content_audit test_historical_targeted_playback test_source_loss_audit test_language_evidence_functional
+          PYTHONPATH=v2 python -m unittest -v test_final_batch_acceptance test_final_worldwide_report_gate test_orphan_m3u_recovery test_orphan_baseline_guard test_m3u_source_content_audit test_historical_targeted_playback test_source_loss_audit test_language_evidence_functional
           python v2/test_playlist_invariants.py
           test "$(git hash-object MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)" = '4b1c3cea4b5107a425abab60f62d41f9f81e05a7'
           test "$(sha256sum v2/history/stage3-4955-hash-only.jsonl | cut -d' ' -f1)" = 'ee00a844a028e3410715d411467a2d3306f5f5cc4565766140b6438e786cdd27'
@@ -148,6 +148,8 @@ jobs:
         shell: bash
         run: |
           PYTHONPATH=v2 python v2/final_batch_acceptance.py --workers 24 --budget-seconds 14400
+      - name: Verify full worldwide AV coverage and RSA sealed manifests in one audit
+        run: PYTHONPATH=v2 python v2/final_worldwide_report_gate.py --report v2/reports/ci/final-worldwide-acceptance.json
       - name: Preserve only anonymous report and private RSA encrypted stream candidates
         if: always()
         uses: actions/upload-artifact@v4
