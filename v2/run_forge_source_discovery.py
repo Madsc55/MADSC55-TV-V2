@@ -54,6 +54,8 @@ def scan(request=None, terms=None):
         for forge, url in queries:
             try:
                 payload = request(url)
+                if (forge == "gitlab" and not isinstance(payload, list)) or (forge == "codeberg" and not isinstance(payload, dict)):
+                    raise ValueError("Invalid forge search response")
                 projects = gitlab_projects(payload) if forge == "gitlab" else codeberg_projects(payload)
                 # Follow bounded search pagination rather than silently dropping
                 # repositories beyond the first response.
@@ -82,7 +84,7 @@ def scan(request=None, terms=None):
                 seen.add(identity)
                 if forge == "gitlab":
                     tree = (GITLAB_API + "/" + str(project["id"]) + "/repository/tree?"
-                            + urlencode({"ref": project["branch"], "recursive": "true", "per_page": 100}))
+                            + urlencode({"ref": project["branch"], "recursive": "true", "per_page": 100, "pagination": "keyset"}))
                 else:
                     tree = ("https://codeberg.org/api/v1/repos/"
                             + quote(project["owner"], safe="") + "/"
@@ -90,22 +92,35 @@ def scan(request=None, terms=None):
                             + quote(project["branch"], safe="") + "?recursive=true")
                 try:
                     listing = request(tree)
-                    if forge == "gitlab" and isinstance(listing, list) and len(listing) >= 100:
-                        combined = list(listing)
-                        for page in (2, 3):
-                            more = request(tree + "&page=" + str(page))
-                            if not isinstance(more, list):
-                                raise ValueError("Invalid GitLab tree page")
-                            combined.extend(more)
-                            if len(more) < 100:
-                                break
-                        else:
-                            limits_hit.add("GITLAB_TREE_PAGE_LIMIT")
-                        listing = combined
-                    if forge == "codeberg" and isinstance(listing, dict):
+                    if forge == "gitlab":
+                        if not isinstance(listing, list):
+                            raise ValueError("Invalid GitLab repository tree")
+                        if len(listing) >= 100:
+                            combined = list(listing)
+                            current_page = listing
+                            for page in (2, 3):
+                                # Use keyset pagination for real GitLab records with IDs.
+                                # Numbered pages retain compatibility with older responses.
+                                last_id = current_page[-1].get("id") if isinstance(current_page[-1], dict) else None
+                                next_url = (tree + "&page_token=" + quote(last_id, safe="")
+                                            if isinstance(last_id, str) and last_id
+                                            else tree + "&page=" + str(page))
+                                more = request(next_url)
+                                if not isinstance(more, list):
+                                    raise ValueError("Invalid GitLab tree page")
+                                combined.extend(more)
+                                current_page = more
+                                if len(more) < 100:
+                                    break
+                            else:
+                                limits_hit.add("GITLAB_TREE_PAGE_LIMIT")
+                            listing = combined
+                    else:
+                        if not isinstance(listing, dict) or not isinstance(listing.get("tree"), list):
+                            raise ValueError("Invalid Codeberg repository tree")
                         if listing.get("truncated"):
                             limits_hit.add("CODEBERG_TRUNCATED_TREE")
-                        listing = listing.get("tree", [])
+                        listing = listing["tree"]
                     paths = parse_tree_paths(listing)
                     if sum(isinstance(p, str) and p.lower().endswith((".m3u", ".m3u8")) for p in paths) > MAX_PATHS:
                         limits_hit.add(forge.upper() + "_PLAYLIST_PATH_LIMIT")

@@ -48,9 +48,18 @@ def main():
     for query in QUERIES:
         try:
             url = "https://api.github.com/search/repositories?" + urllib.parse.urlencode({"q": query, "per_page": 50, "sort": "updated"})
-            for item in api(url).get("items", []):
-                if not item.get("fork") and not item.get("archived"):
-                    repos[item["full_name"]] = item.get("default_branch", "main")
+            page = api(url)
+            if not isinstance(page, dict) or not isinstance(page.get("items"), list):
+                raise ValueError("Invalid GitHub repository search response")
+            if isinstance(page.get("total_count"), int) and page["total_count"] > len(page["items"]):
+                limits_hit.append("GITHUB_SEARCH_FIRST_PAGE_LIMIT")
+            for item in page["items"]:
+                if not isinstance(item, dict) or item.get("fork") or item.get("archived"):
+                    continue
+                name, branch = item.get("full_name"), item.get("default_branch")
+                if (isinstance(name, str) and re.fullmatch(r"[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+", name)
+                        and isinstance(branch, str) and branch.strip()):
+                    repos[name] = branch
         except Exception as exc:
             errors.append({"query": query, "error": type(exc).__name__})
     if len(repos) > MAX_REPOS:
@@ -64,7 +73,11 @@ def main():
             if tree.get("truncated"):
                 limits_hit.append("TRUNCATED_GITHUB_TREE")
             paths = [x["path"] for x in tree.get("tree", []) if x.get("type") == "blob" and re.search(r"(?i)\.(m3u8?|txt)$", x.get("path", ""))]
+            if len(paths) > 8:
+                limits_hit.append("GITHUB_REPO_PLAYLIST_FILE_LIMIT")
             for path in sorted(paths, key=str.casefold)[:8]:
+                if path.startswith("/") or ".." in path.split("/") or "\\" in path:
+                    continue
                 if len(found) >= MAX_FILES:
                     break
                 raw = "https://raw.githubusercontent.com/" + name + "/" + urllib.parse.quote(branch, safe="") + "/" + urllib.parse.quote(path, safe="/")
@@ -98,13 +111,21 @@ def main():
             gists = api("https://api.github.com/users/" + urllib.parse.quote(owner, safe="") + "/gists?per_page=30")
             if not isinstance(gists, list):
                 continue
+            if len(gists) >= 30:
+                limits_hit.append("GITHUB_GIST_FIRST_PAGE_LIMIT")
             for gist in gists:
-                for filename, meta in gist.get("files", {}).items():
+                if not isinstance(gist, dict) or not isinstance(gist.get("files"), dict):
+                    continue
+                for filename, meta in gist["files"].items():
+                    if not isinstance(filename, str) or not isinstance(meta, dict):
+                        continue
                     if len(found) >= MAX_FILES:
                         break
                     if not re.search(r"(?i)\.(m3u8?|txt)$", filename):
                         continue
                     raw = meta.get("raw_url", "")
+                    if not isinstance(raw, str):
+                        continue
                     p = urllib.parse.urlsplit(raw)
                     if (p.scheme != "https" or p.hostname not in ("gist.githubusercontent.com", "raw.githubusercontent.com")
                             or p.username or p.password or p.port not in (None, 443)
