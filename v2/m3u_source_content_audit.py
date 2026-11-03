@@ -26,16 +26,30 @@ def _one(source, fetcher):
             raise ValueError("INVALID_M3U_PAYLOAD")
         parsed = list(entries(payload))
         unique = {hashlib.sha256(e["url"].encode("utf-8")).hexdigest() for e in parsed}
-        declared = sum(1 for line in payload.splitlines()
-                       if line.lstrip().startswith("#EXTINF:"))
-        # An HTTP 200 M3U header is NOT proof the feed contained stream URLs.
-        state = ("EMPTY_PLAYLIST" if not parsed else
-                 "INCOMPLETE_EXTINF_PAIRS" if declared != len(parsed) else
+        declared, non_http = 0, 0
+        awaiting = False
+        for raw in payload.splitlines():
+            line = raw.strip()
+            if line.startswith("#EXTINF:"):
+                declared += 1
+                awaiting = True
+            elif line and not line.startswith("#") and awaiting:
+                if re.match(r"^[A-Za-z][A-Za-z0-9+.-]*://", line) and not line.startswith(("http://", "https://")):
+                    non_http += 1
+                awaiting = False
+        # The existing discovery parser intentionally accepts only HTTP(S).
+        # UDP/RTMP/RTSP/etc references are not deleted or described as broken.
+        dangling = max(0, declared - len(parsed) - non_http)
+        state = ("INCOMPLETE_EXTINF_PAIRS" if dangling else
+                 "NON_HTTP_ONLY_REFERENCES" if not parsed and non_http else
+                 "EMPTY_PLAYLIST" if not parsed else
+                 "PARSED_WITH_NON_HTTP_REFERENCES_NOT_PLAYBACK_VERIFIED" if non_http else
                  "PARSED_M3U_NOT_PLAYBACK_VERIFIED")
         return ({"source_id": ident, "status": state,
                  "entries": len(parsed), "unique_urls": len(unique),
                  "duplicate_url_entries": len(parsed) - len(unique),
-                 "unpaired_extinf": max(0, declared - len(parsed))}, unique)
+                 "non_http_stream_references": non_http,
+                 "unpaired_extinf": dangling}, unique)
     except Exception as exc:
         # Intentionally do not log exception text, request URL, or credentials.
         return ({"source_id": ident, "status": "SOURCE_CONTENT_FAILED",
@@ -62,7 +76,9 @@ def audit_contents(sources, historical_hashes, fetcher=fetch_once, workers=8):
                          "historical_4955_identifiers_in_source": len(hashes & original)})
     statuses = dict(sorted(Counter(x["status"] for x in enriched).items()))
     active = [x for x in enriched if x["status"] != "RETIRED_IN_ORIGINAL_INVENTORY"]
-    valid = [x for x in active if x["status"] == "PARSED_M3U_NOT_PLAYBACK_VERIFIED"]
+    valid = [x for x in active if x["status"] in (
+        "PARSED_M3U_NOT_PLAYBACK_VERIFIED",
+        "PARSED_WITH_NON_HTTP_REFERENCES_NOT_PLAYBACK_VERIFIED")]
     historical_now = union & original
     return {
         "schema": 1,
@@ -74,6 +90,8 @@ def audit_contents(sources, historical_hashes, fetcher=fetch_once, workers=8):
         "status": "COMPLETE_SOURCE_CONTENT_PARSED" if len(valid) == len(active)
                   else "REVIEW_REQUIRED",
         "source_status_counts": statuses,
+        "non_http_reference_count": sum(x.get("non_http_stream_references", 0) for x in active),
+        "unpaired_extinf_count": sum(x.get("unpaired_extinf", 0) for x in active),
         "source_results": enriched,
         "union_unique_url_sha256": len(union),
         "historical_baseline_count": len(original),

@@ -51,6 +51,27 @@ class FullM3UCoverageTests(unittest.TestCase):
         self.assertEqual(result["source_status_counts"]["EMPTY_PLAYLIST"], 1)
         self.assertEqual(result["source_results"][0]["unpaired_extinf"], 1)
 
+    def test_udp_and_rtmp_are_not_mislabelled_as_corrupt_http_streams(self):
+        source = [{"id": "mixed", "url": "https://fixture.example/feed.m3u"}]
+        body = ("#EXTM3U\n"
+                "#EXTINF:-1,HTTP channel\nhttps://fixture.example/one.m3u8\n"
+                "#EXTINF:-1,UDP channel\nudp://@239.0.0.1:5000\n"
+                "#EXTINF:-1,RTMP channel\nrtmp://fixture.example/live\n")
+        result = audit_contents(source, [], lambda _: body)
+        self.assertEqual(result["source_status_counts"], {
+            "PARSED_WITH_NON_HTTP_REFERENCES_NOT_PLAYBACK_VERIFIED": 1})
+        self.assertEqual(result["non_http_reference_count"], 2)
+        self.assertEqual(result["unpaired_extinf_count"], 0)
+        self.assertEqual(result["union_unique_url_sha256"], 1)
+
+    def test_malformed_extinf_still_requires_review(self):
+        source = [{"id": "tr", "url": "https://fixture.example/feed.m3u"}]
+        body = ("#EXTM3U\n#EXTINF:-1,Valid\nhttps://fixture.example/one.m3u8\n"
+                "#EXTINF:-1,No playable location\n")
+        result = audit_contents(source, [], lambda _: body)
+        self.assertEqual(result["status"], "REVIEW_REQUIRED")
+        self.assertEqual(result["source_results"][0]["unpaired_extinf"], 1)
+
     def test_failed_one_does_not_erase_other_or_leak_token(self):
         sources = [{"id": "one", "url": "https://fixture.example/a?token=SECRET"},
                    {"id": "two", "url": "https://fixture.example/b"}]
