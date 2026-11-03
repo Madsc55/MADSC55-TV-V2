@@ -32,6 +32,7 @@ jobs:
           set -o pipefail
           PYTHONPATH=v2 python -m unittest -v \
             test_orphan_m3u_recovery \
+            test_orphan_iptv_org_registry \
             test_document_platform_discovery \
             test_orphan_baseline_guard \
             test_m3u_source_content_audit \
@@ -53,6 +54,7 @@ jobs:
         run: |
           PYTHONPATH=v2 python v2/orphan_m3u_recovery.py \
             --history-revisions 300 \
+            --include-public-registry \
             --public-key v2/config/stage3_transit_public.pem \
             --report v2/reports/ci/three-source-orphan-anonymous.json \
             --sealed v2/reports/ci/three-source-av-verified.sealed \

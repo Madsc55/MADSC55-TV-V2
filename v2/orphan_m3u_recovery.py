@@ -217,16 +217,29 @@ def find_historical(orphan_rows, repo, path, *, limit=20,
 
 
 def find_official_alternates(orphan_rows, *, reader=_read_document):
+    """Publisher URLs must match exact EXTINF or exact EPG ID AND channel name."""
     wanted = {row["extinf"] for row in orphan_rows}
+    identities = defaultdict(set)
+    for extinf in wanted:
+        identity = exact_channel_identity(extinf)
+        if identity is not None:
+            identities[identity].add(extinf)
     matches = defaultdict(dict)
     states = []
     for source in ONUR_ALTERNATES:
         try:
             rows, _ = parse_exact_pairs(reader(source))
-            for extinf in wanted & rows.keys():
-                for url in rows[extinf]:
-                    matches[extinf].setdefault(_hash(url), {"url": url,
-                                                             "proof_official_feed": source})
+            for extinf, urls in rows.items():
+                destinations = {extinf: "EXACT_EXTINF"} if extinf in wanted else {}
+                for dst in identities.get(exact_channel_identity(extinf), []):
+                    destinations.setdefault(dst, "EXACT_EPG_ID_AND_NAME_OFFICIAL_ALTERNATE")
+                for dst, rule in destinations.items():
+                    for url in urls:
+                        proof = matches[dst].setdefault(
+                            _hash(url), {"url": url, "proof_official_feed": source,
+                                         "proof_rules": []})
+                        if rule not in proof["proof_rules"]:
+                            proof["proof_rules"].append(rule)
             states.append("READ")
         except (OSError, ValueError, TypeError):
             states.append("UNAVAILABLE")
@@ -465,7 +478,8 @@ def sealed_retest_candidate_rows(sources, proof_states):
 def audit(*, report_path, sealed_path, key_path, limit=20,
           reader=_read_document, commits=historical_revisions, probe=probe_one,
           known_source_catalog=None, all_candidates_sealed_path=None,
-          immutable_orphan_baseline_path=None):
+          immutable_orphan_baseline_path=None, public_registry=False,
+          registry_fetcher=None):
     if all_candidates_sealed_path is not None:
         paths = [Path(report_path).resolve(), Path(sealed_path).resolve(),
                  Path(all_candidates_sealed_path).resolve()]
@@ -555,6 +569,21 @@ def audit(*, report_path, sealed_path, key_path, limit=20,
                 ids = set(record.get("proof_existing_source_ids", []))
                 ids.update(candidate["proof_existing_source_ids"])
                 record["proof_existing_source_ids"] = sorted(ids)
+    public_registry_report = {"status": "NOT_REQUESTED"}
+    if public_registry:
+        from orphan_iptv_org_registry import find_exact_orphan_streams
+        if registry_fetcher is None:
+            registry_candidates, public_registry_report = find_exact_orphan_streams(sources)
+        else:
+            registry_candidates, public_registry_report = find_exact_orphan_streams(
+                sources, fetcher=registry_fetcher)
+        for item in sources:
+            for urlsha, candidate in registry_candidates.get(item["extinf_sha256"], {}).items():
+                record = item["candidates"].setdefault(urlsha, {"url": candidate["url"]})
+                if record["url"] != candidate["url"]:
+                    raise ValueError("Contradictory registry URL for SHA256 identity")
+                for field in ("proof_existing_source_ids", "proof_rules"):
+                    record[field] = sorted(set(record.get(field, [])) | set(candidate[field]))
     probed, verified_rows, mapping = evaluate(sources, probe=probe)
     proof_states = {p["url_sha256"]: p for p in probed}
     sealed_candidate_count = None
@@ -603,6 +632,7 @@ def audit(*, report_path, sealed_path, key_path, limit=20,
             item["extinf_sha256"] for item in sources}),
         "orphan_uri_structure_counts": dict(sorted(Counter(
             item["uri_structure"] for item in sources).items())),
+        "public_iptv_org_registry_reconciliation": public_registry_report,
         "unique_candidate_urls_historically_or_officially_proven": len(probed),
         "all_proven_url_candidates_sealed_for_future_retest": sealed_candidate_count,
         "currently_unverified_candidate_urls_preserved_in_encrypted_archive":
@@ -643,6 +673,8 @@ def main():
     p.add_argument("--public-key", type=Path,
                    default=Path("v2/config/stage3_transit_public.pem"))
     p.add_argument("--history-revisions", type=int, default=20)
+    p.add_argument("--include-public-registry", action="store_true",
+                   help="Cross-check exact EPG ID and registered name in public IPTV-org API")
     p.add_argument("--immutable-orphan-baseline", type=Path,
                    default=Path("v2/history/m3u-orphan-50-hash-baseline.json"))
     args = p.parse_args()
@@ -658,7 +690,8 @@ def main():
                    key_path=args.public_key, limit=args.history_revisions,
                    known_source_catalog=existing_source_catalog(),
                    all_candidates_sealed_path=args.all_candidates_sealed,
-                   immutable_orphan_baseline_path=args.immutable_orphan_baseline)
+                   immutable_orphan_baseline_path=args.immutable_orphan_baseline,
+                   public_registry=args.include_public_registry)
     if result["immutable_orphan_identity_guard"]["status"] == "LOSS_RISK_REVIEW_REQUIRED":
         print("LOSS_RISK: original orphan EXTINF metadata missing, requires manual review")
         raise SystemExit(2)
