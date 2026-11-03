@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Repair evidence for only the 41 orphan entries in 3 known M3U documents.
+"""Repair evidence for orphan entries in four known M3U source documents.
 
 This job never modifies upstream feeds or the protected IBO playlist. Exact
 #EXTINF matches from historical Git commits / the publisher's official
@@ -26,7 +26,10 @@ ORIGINALS = (
     ("discevisita-tr", "discevisita/iptv", "tr.m3u"),
     ("github-auto-24", "Hannstcott/SunshineTr", "sunshinetv.m3u"),
 )
-ONUR = ("onureroz-turk-karma", "https://onureroz.com/indirmeler/turk/karma-index.m3u")
+ONUR_SOURCES = (
+    ("onureroz-turk-karma", "https://onureroz.com/indirmeler/turk/karma-index.m3u"),
+    ("onureroz-turk-all", "https://onureroz.com/indirmeler/turk/all.m3u"),
+)
 ONUR_ALTERNATES = (
     "https://onureroz.com/indirmeler/turk/index.m3u",
     "https://onureroz.com/indirmeler/turk/all.m3u",
@@ -329,21 +332,24 @@ def audit(*, report_path, sealed_path, key_path, limit=20,
                             "line_number": item["line_number"],
                             "uri_structure": item["uri_structure"],
                             "candidates": candidates})
-    current = reader(ONUR[1])
-    _, orphans = parse_exact_pairs(current)
-    orphans = [o for o in orphans
-               if o["reason"] != "EXPLICIT_NO_PUBLIC_STREAM_PLACEHOLDER"]
-    alts, alt_status = find_official_alternates(orphans, reader=reader)
-    source_summaries.append({"source_id": ONUR[0], "orphan_count": len(orphans),
-                             "excluded_nonpublic_http_references":
-                                 count_excluded_network_references(current),
-                             "original_document_sha256": _hash(current), **alt_status})
-    for item in orphans:
-        sources.append({"source_id": ONUR[0], "extinf_sha256": item["extinf_sha256"],
-                        "extinf": item["extinf"], "reason": item["reason"],
-                        "line_number": item["line_number"],
-                        "uri_structure": item["uri_structure"],
-                        "candidates": alts.get(item["extinf"], {})})
+    for ident, source_url in ONUR_SOURCES:
+        current = reader(source_url)
+        _, orphans = parse_exact_pairs(current)
+        orphans = [o for o in orphans
+                   if o["reason"] != "EXPLICIT_NO_PUBLIC_STREAM_PLACEHOLDER"]
+        alts, alt_status = find_official_alternates(orphans, reader=reader)
+        source_summaries.append({
+            "source_id": ident, "orphan_count": len(orphans),
+            "excluded_nonpublic_http_references":
+                count_excluded_network_references(current),
+            "original_document_sha256": _hash(current), **alt_status})
+        for item in orphans:
+            sources.append({
+                "source_id": ident, "extinf_sha256": item["extinf_sha256"],
+                "extinf": item["extinf"], "reason": item["reason"],
+                "line_number": item["line_number"],
+                "uri_structure": item["uri_structure"],
+                "candidates": alts.get(item["extinf"], {})})
     existing_report = None
     if known_source_catalog is not None:
         existing, existing_report = find_existing_exact_identity(
@@ -379,11 +385,15 @@ def audit(*, report_path, sealed_path, key_path, limit=20,
                                           for x in candidate_evidence),
             "candidates": candidate_evidence})
     result = {
-        "schema": 1, "kind": "THREE_UPSTREAM_ORPHAN_REPAIR_EVIDENCE_NOT_IBO",
+        "schema": 1, "kind": "FOUR_UPSTREAM_ORPHAN_REPAIR_EVIDENCE_NOT_IBO",
         "status": "SOURCE_REPAIR_CANDIDATES_VERIFIED" if verified_rows
                   else "NO_CURRENT_AV_VERIFIED_REPLACEMENTS",
         "upstream_sources": source_summaries,
         "orphan_entries": len(sources),
+        "unique_orphan_metadata_identities": len({
+            item["extinf_sha256"] for item in sources}),
+        "duplicate_orphan_occurrences": len(sources) - len({
+            item["extinf_sha256"] for item in sources}),
         "orphan_uri_structure_counts": dict(sorted(Counter(
             item["uri_structure"] for item in sources).items())),
         "unique_candidate_urls_historically_or_officially_proven": len(probed),
@@ -398,7 +408,7 @@ def audit(*, report_path, sealed_path, key_path, limit=20,
         "existing_catalog_reconciliation": existing_report,
         "records": source_evidence,
         "plain_stream_urls_reported": False, "protected_playlist_modified": False,
-        "ibo_device_verified": False, "scan_scope": "ONLY_THREE_PREVIOUSLY_FLAGGED_M3U_SOURCES",
+        "ibo_device_verified": False, "scan_scope": "ONLY_FOUR_VERIFIED_M3U_FEEDS_AND_KNOWN_EXISTING_CATALOG",
     }
     if verified_rows:
         seal_rows(verified_rows, key_path, sealed_path)
@@ -428,7 +438,7 @@ def main():
     result = audit(report_path=args.report, sealed_path=args.sealed,
                    key_path=args.public_key, limit=args.history_revisions,
                    known_source_catalog=existing_source_catalog())
-    print("Three source orphan metadata cases:", result["orphan_entries"],
+    print("Four source orphan metadata occurrences:", result["orphan_entries"],
           "exact historic/official candidate URL hashes:",
           result["unique_candidate_urls_historically_or_officially_proven"],
           "currently video+audio verified:",

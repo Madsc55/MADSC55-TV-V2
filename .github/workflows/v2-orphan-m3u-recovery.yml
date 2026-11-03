@@ -15,8 +15,8 @@ permissions:
   contents: read
 
 jobs:
-  three-sources-one-batch:
-    name: Restore exact old URLs for 41 orphan records; one grouped test and AV audit
+  four-sources-one-batch:
+    name: Four verified sources, deduped broken records; grouped tests and AV audit
     runs-on: ubuntu-24.04
     timeout-minutes: 24
     steps:

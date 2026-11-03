@@ -111,13 +111,15 @@ class OrphanRecoveryTests(unittest.TestCase):
         self.assertEqual(rows[0]["url"], self.a)
         self.assertIn(entry, m[p[0]["url_sha256"]])
 
-    def test_end_to_end_three_source_batch_and_sealed_only_for_verified_av(self):
+    def test_end_to_end_four_source_batch_and_sealed_only_for_verified_av(self):
         def reader(url):
             if "discevisita/iptv/main" in url:
                 return "#EXTM3U\n" + self.dis + "\n#EXTINF:-1,Safe\n" + self.a
             if "SunshineTr/main" in url:
                 return "#EXTM3U\n" + self.sun + "\n#EXTINF:-1,Safe\n" + self.b
             if "/karma-index.m3u" in url:
+                return "#EXTM3U\n" + self.onur + "\n/relative.m3u8"
+            if url.endswith("/all.m3u"):
                 return "#EXTM3U\n" + self.onur + "\n/relative.m3u8"
             if "discevisita/iptv/" in url:
                 return "#EXTM3U\n" + self.dis + "\n" + self.a
@@ -140,9 +142,11 @@ class OrphanRecoveryTests(unittest.TestCase):
                 seal.assert_called_once()
                 self.assertEqual(len(seal.call_args.args[0]), 1)
             public = report.read_text()
-            self.assertEqual(res["orphan_entries"], 3)
+            self.assertEqual(res["orphan_entries"], 4)
+            self.assertEqual(res["unique_orphan_metadata_identities"], 3)
+            self.assertEqual(res["duplicate_orphan_occurrences"], 1)
             self.assertEqual(res["unique_candidates_video_audio_verified"], 1)
-            self.assertEqual(res["orphan_entries_without_current_av"], 2)
+            self.assertEqual(res["orphan_entries_without_current_av"], 3)
             self.assertNotIn(self.a, public)
             self.assertNotIn(self.b, public)
             self.assertNotIn("CNN Türk", public)
