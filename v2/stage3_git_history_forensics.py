@@ -103,7 +103,7 @@ def iter_url_entries(path, data):
             yield {"url": value, "name": "", "tvg_id": "", "group": ""}
 
 
-def audit(index, *, encrypted_output=None):
+def audit(index, *, encrypted_output=None, sealed_output=None, seal_public_key=None):
     raw = Path(index).read_bytes()
     if hashlib.sha256(raw).hexdigest() != "ee00a844a028e3410715d411467a2d3306f5f5cc4565766140b6438e786cdd27":
         raise ValueError("Original 4955 immutable #60 history index mismatch")
@@ -133,6 +133,11 @@ def audit(index, *, encrypted_output=None):
             elif source not in found[key]["source_ids"]:
                 found[key]["source_ids"].append(source)
     matches = list(found.values())
+    if sealed_output is not None:
+        if seal_public_key is None:
+            raise ValueError("Missing public key for confidential recovered URL transport")
+        from stage3_sealed_export import seal_rows
+        seal_rows(matches, seal_public_key, sealed_output)
     if encrypted_output is not None:
         if not matches:
             encrypted_state = "NO_MATCHES"
@@ -157,6 +162,7 @@ def audit(index, *, encrypted_output=None):
         "historical_hashes_not_matched": 4955 - len(matches),
         "matched_historical_sha256": sorted(found),
         "encrypted_recovery_artifact": encrypted_state,
+        "confidential_rsa_aes_transit_sealed": sealed_output is not None,
         "real_stream_playback_reverified": 0,
         "device_verified": False,
         "channel_playlist_modified": False,
@@ -169,13 +175,16 @@ def main():
     parser.add_argument("--index", type=Path, required=True)
     parser.add_argument("--report", type=Path, required=True)
     parser.add_argument("--encrypted-output", type=Path)
+    parser.add_argument("--sealed-output", type=Path)
+    parser.add_argument("--seal-public-key", type=Path)
     args = parser.parse_args()
-    outputs = [args.report] + ([args.encrypted_output] if args.encrypted_output else [])
+    outputs = [args.report] + ([args.encrypted_output] if args.encrypted_output else []) + ([args.sealed_output] if args.sealed_output else [])
     if any(x.exists() or x.is_symlink() or x.resolve() == args.index.resolve() for x in outputs):
         parser.error("Refusing overwrite of existing output or history input")
     if len(set(x.resolve() for x in outputs)) != len(outputs):
         parser.error("Overlapping output paths")
-    result = audit(args.index, encrypted_output=args.encrypted_output)
+    result = audit(args.index, encrypted_output=args.encrypted_output,
+                   sealed_output=args.sealed_output, seal_public_key=args.seal_public_key)
     args.report.parent.mkdir(parents=True, exist_ok=True)
     with args.report.open("x", encoding="utf-8") as stream:
         json.dump(result, stream, indent=2, sort_keys=True)
