@@ -152,6 +152,12 @@ def find_historical(orphan_rows, repo, path, *, limit=20,
     if (repo, path) not in {(r, p) for _, r, p in ORIGINALS}:
         raise ValueError("Historical source outside pinned scope")
     wanted = {o["extinf"] for o in orphan_rows}
+    by_identity = defaultdict(set)
+    for extinf in wanted:
+        identity = exact_channel_identity(extinf)
+        if identity is not None:
+            by_identity[identity].add(extinf)
+
     matches = defaultdict(dict)
     files_read = 0
     failures = 0
@@ -162,16 +168,30 @@ def find_historical(orphan_rows, repo, path, *, limit=20,
         try:
             rows, _ = parse_exact_pairs(reader(url))
             files_read += 1
-            for extinf in wanted & rows.keys():
-                for stream in rows[extinf]:
-                    h = _hash(stream)
-                    candidate = matches[extinf].setdefault(h, {"url": stream,
-                                                                "proof_commits": []})
-                    candidate["proof_commits"].append(revision)
+            for historical_extinf, streams in rows.items():
+                destinations = {}
+                if historical_extinf in wanted:
+                    destinations[historical_extinf] = "EXACT_EXTINF"
+                historical_identity = exact_channel_identity(historical_extinf)
+                if historical_identity is not None:
+                    for current_extinf in by_identity.get(historical_identity, ()):
+                        destinations.setdefault(current_extinf, "EXACT_EPG_ID_AND_NAME")
+                for target_extinf, rule in destinations.items():
+                    for stream in streams:
+                        h = _hash(stream)
+                        candidate = matches[target_extinf].setdefault(
+                            h, {"url": stream, "proof_commits": [], "proof_rules": []})
+                        if revision not in candidate["proof_commits"]:
+                            candidate["proof_commits"].append(revision)
+                        if rule not in candidate["proof_rules"]:
+                            candidate["proof_rules"].append(rule)
         except (OSError, ValueError, TypeError):
             failures += 1
     return matches, {"revisions_listed": len(revisions), "historical_files_read": files_read,
-                     "historical_files_unavailable": failures}
+                     "historical_files_unavailable": failures,
+                     "metadata_identity_match_rule":
+                         "EXACT_EXTINF_OR_EXACT_EPG_ID_AND_CHANNEL_NAME"}
+
 
 
 def find_official_alternates(orphan_rows, *, reader=_read_document):
@@ -372,6 +392,7 @@ def audit(*, report_path, sealed_path, key_path, limit=20,
                                        "status": p["status"],
                                        "diagnostic_category": p.get("diagnostic_category"),
                                        "proof_commits": record.get("proof_commits", []),
+                                       "proof_rules": sorted(record.get("proof_rules", [])),
                                        "publisher_official_alternate":
                                            bool(record.get("proof_official_feed")),
                                        "exact_epg_and_name_other_source":

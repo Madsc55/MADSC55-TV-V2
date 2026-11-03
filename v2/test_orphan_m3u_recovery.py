@@ -32,6 +32,33 @@ class OrphanRecoveryTests(unittest.TestCase):
         self.assertEqual(len(matches[self.dis]), 1)
         self.assertEqual(counts["historical_files_read"], 1)
 
+    def test_historical_exact_epg_name_with_changed_logo_recovers_candidate(self):
+        old_line = '#EXTINF:-1 tvg-id="KanalT.tr" tvg-logo="old.png",Kanal T'
+        new_line = '#EXTINF:-1 tvg-id="KanalT.tr" tvg-logo="new.png",Kanal T'
+        wrong_line = '#EXTINF:-1 tvg-id="KanalT.tr",Kanal T 2'
+        candidates = [
+            {"extinf": new_line}, {"extinf": wrong_line}]
+        historical = "#EXTM3U\n" + old_line + "\n" + self.a + "\n"
+        matches, evidence = find_historical(
+            candidates, "discevisita/iptv", "tr.m3u",
+            commits=lambda *args, **kwargs: ["a" * 40],
+            reader=lambda url: historical)
+        sha = hashlib.sha256(self.a.encode()).hexdigest()
+        self.assertEqual(matches[new_line][sha]["url"], self.a)
+        self.assertEqual(matches[new_line][sha]["proof_rules"],
+                         ["EXACT_EPG_ID_AND_NAME"])
+        self.assertNotIn(wrong_line, matches)
+        self.assertEqual(evidence["historical_files_read"], 1)
+
+    def test_historical_exact_extinf_provenance_remains_explicit(self):
+        historical = "#EXTM3U\n" + self.dis + "\n" + self.a + "\n"
+        matches, evidence = find_historical(
+            [{"extinf": self.dis}], "discevisita/iptv", "tr.m3u",
+            commits=lambda *args, **kwargs: ["a" * 40],
+            reader=lambda url: historical)
+        sha = hashlib.sha256(self.a.encode()).hexdigest()
+        self.assertEqual(matches[self.dis][sha]["proof_rules"], ["EXACT_EXTINF"])
+
     def test_malformed_http_without_host_is_reported_not_played(self):
         from orphan_m3u_recovery import classify_invalid_uri_structure
         self.assertEqual(classify_invalid_uri_structure("http:///missing.m3u8"),
