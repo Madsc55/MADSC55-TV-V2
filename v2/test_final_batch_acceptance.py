@@ -33,5 +33,29 @@ class FinalBatchAcceptanceTests(unittest.TestCase):
     def test_correct_git_blob_hash_algorithm(self):
         self.assertEqual(len(gitblob(b"test")), 40)
 
+
+    def test_worldwide_source_snapshot_includes_document_handoff(self):
+        from pathlib import Path
+        from unittest.mock import patch
+        from final_batch_acceptance import sources
+        from document_platform_discovery import digest
+        url = "https://archive.org/download/public-list/channels.m3u8"
+        row = {"id": "docref-" + digest(url)[:20], "url": url,
+               "kind": "m3u", "scope": "candidate",
+               "origin": "public-document-reference"}
+        with (patch("document_platform_discovery.accepted_sources",
+                    return_value=[row]),
+              patch("final_batch_acceptance.DYNAMIC",
+                    Path("/no-dynamic-source-inventory")),
+              patch("final_batch_acceptance.FORGE",
+                    Path("/no-forge-source-inventory")),
+              patch("final_batch_acceptance.fetch", side_effect=OSError("offline"))):
+            found, configured, historic = sources()
+        matches = [x for x in found if x.get("url") == url]
+        self.assertEqual(len(matches), 1)
+        self.assertEqual(matches[0]["id"], row["id"])
+        self.assertEqual(historic, 17)
+        self.assertEqual(configured, 47)
+
 if __name__ == "__main__":
     unittest.main()

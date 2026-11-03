@@ -369,6 +369,35 @@ class OrphanRecoveryTests(unittest.TestCase):
         self.assertEqual(dict(matched), {})
         self.assertEqual(report["source_documents_unavailable_count"], 1)
 
+
+    def test_catalog_preserves_63_sources_and_adds_reviewed_public_documents(self):
+        from orphan_m3u_recovery import existing_source_catalog
+        from document_platform_discovery import digest
+        rows = []
+        for name in ("a.m3u", "b.m3u8"):
+            url = "https://archive.org/download/public-record/" + name
+            rows.append({"id": "docref-" + digest(url)[:20], "url": url,
+                         "kind": "m3u", "scope": "candidate",
+                         "origin": "public-document-reference"})
+        with patch("document_platform_discovery.accepted_sources", return_value=rows):
+            result = existing_source_catalog()
+        self.assertEqual(len(result), 65)
+        self.assertEqual(len(result[:63]), 63)
+        self.assertEqual(len({item["id"] for item in result}), len(result))
+        self.assertEqual(len([x for x in result
+            if x.get("origin") == "public-document-reference"]), 2)
+        self.assertTrue(all(x["id"].startswith("docref-") for x in result[-2:]))
+
+    def test_catalog_does_not_duplicate_existing_source_url(self):
+        from orphan_m3u_recovery import existing_source_catalog
+        with patch("document_platform_discovery.accepted_sources", return_value=[]):
+            original = existing_source_catalog()
+        duplicated = dict(original[0], origin="public-document-reference")
+        with patch("document_platform_discovery.accepted_sources",
+                   return_value=[duplicated]):
+            result = existing_source_catalog()
+        self.assertEqual(len(result), 63)
+
     def test_end_to_end_four_source_batch_and_sealed_only_for_verified_av(self):
         def reader(url):
             if "discevisita/iptv/main" in url:
