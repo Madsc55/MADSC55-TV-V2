@@ -62,10 +62,10 @@ def inventory_coverage(historical, active_sources, supplemental_rows):
                          if r["source_id"] not in supplementary)
     inaccessible = sorted(r["source_id"] for r in required
                           if r["source_id"] in supplementary
-                          and r["source_id"] != "___" and
-                          supplementary[r["source_id"]]["status"]
+                          and supplementary[r["source_id"]]["status"]
                           not in ("PARSED_M3U_NOT_PLAYBACK_VERIFIED",
-                                  "PARSED_WITH_NON_HTTP_REFERENCES_NOT_PLAYBACK_VERIFIED"))
+                                  "PARSED_WITH_NON_HTTP_REFERENCES_NOT_PLAYBACK_VERIFIED",
+                                  "PARSED_HISTORICAL_HEADERLESS_NORMALIZED_NO_PLAYBACK"))
     return {
         "historical_dynamic_source_identities": len(required),
         "recovered_exact_original_source_locations": len(required) - len(missing_map),

@@ -42,9 +42,26 @@ def _one(source, fetcher):
         return ({"source_id": ident, "status": "RETIRED_IN_ORIGINAL_INVENTORY",
                  "entries": 0, "unique_urls": 0}, set())
     try:
-        payload = fetcher(source["url"])
-        if not isinstance(payload, str) or not payload.lstrip("\ufeff\r\n\t ").startswith("#EXTM3U"):
+        # Only original #60 GitHub source URLs proven by the historic
+        # discovery artifact may use the less strict headerless M3U parser.
+        # Generic configured feeds still require a valid #EXTM3U header.
+        if source.get("historical_source_only") and fetcher is fetch_once:
+            from discover import fetch as vetted_document_fetch
+            payload = vetted_document_fetch(source["url"])
+        else:
+            payload = fetcher(source["url"])
+        if not isinstance(payload, str):
             raise ValueError("INVALID_M3U_PAYLOAD")
+        normalized_historical_header = False
+        payload_start = payload.lstrip("\ufeff\r\n\t ")
+        if not payload_start.startswith("#EXTM3U"):
+            if (source.get("historical_source_only")
+                    and payload_start.startswith("#EXTINF:")
+                    and not source.get("enabled", True) is False):
+                payload = "#EXTM3U\n" + payload_start
+                normalized_historical_header = True
+            else:
+                raise ValueError("INVALID_M3U_PAYLOAD")
         parsed = list(entries(payload))
         unique = {hashlib.sha256(e["url"].encode("utf-8")).hexdigest() for e in parsed}
         declared, non_http = 0, 0
@@ -67,6 +84,8 @@ def _one(source, fetcher):
         state = ("INCOMPLETE_EXTINF_PAIRS" if dangling else
                  "NON_HTTP_ONLY_REFERENCES" if not parsed and non_http else
                  "EMPTY_PLAYLIST" if not parsed else
+                 "PARSED_HISTORICAL_HEADERLESS_NORMALIZED_NO_PLAYBACK"
+                 if normalized_historical_header else
                  "PARSED_WITH_NON_HTTP_REFERENCES_NOT_PLAYBACK_VERIFIED" if non_http else
                  "PARSED_M3U_NOT_PLAYBACK_VERIFIED")
         return ({"source_id": ident, "status": state,
@@ -74,7 +93,8 @@ def _one(source, fetcher):
                  "duplicate_url_entries": len(parsed) - len(unique),
                  "non_http_stream_references": non_http,
                  "unpaired_extinf": dangling,
-                 "unpaired_reason_counts": reasons}, unique)
+                 "unpaired_reason_counts": reasons,
+                 "historical_header_normalized": normalized_historical_header}, unique)
     except Exception as exc:
         # Intentionally do not log exception text, request URL, or credentials.
         return ({"source_id": ident, "status": "SOURCE_CONTENT_FAILED",
@@ -106,7 +126,8 @@ def audit_contents(sources, historical_hashes, fetcher=fetch_once, workers=8, pr
     active = [x for x in enriched if x["status"] != "RETIRED_IN_ORIGINAL_INVENTORY"]
     valid = [x for x in active if x["status"] in (
         "PARSED_M3U_NOT_PLAYBACK_VERIFIED",
-        "PARSED_WITH_NON_HTTP_REFERENCES_NOT_PLAYBACK_VERIFIED")]
+        "PARSED_WITH_NON_HTTP_REFERENCES_NOT_PLAYBACK_VERIFIED",
+        "PARSED_HISTORICAL_HEADERLESS_NORMALIZED_NO_PLAYBACK")]
     historical_now = union & original
     return {
         "schema": 1,

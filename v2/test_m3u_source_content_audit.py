@@ -72,6 +72,21 @@ class FullM3UCoverageTests(unittest.TestCase):
         self.assertEqual(result["status"], "REVIEW_REQUIRED")
         self.assertEqual(result["source_results"][0]["unpaired_extinf"], 1)
 
+    def test_headerless_original_source_normalized_only_when_proven_historical(self):
+        src = [{"id": "github-auto-8", "url": "https://fixture.example/old.m3u",
+                "historical_source_only": True}]
+        content = "#EXTINF:-1,Original listing\nhttps://fixture.example/old.m3u8\n"
+        report = audit_contents(src, [digest("https://fixture.example/old.m3u8")],
+                                lambda _: content)
+        self.assertEqual(report["source_status_counts"],
+                         {"PARSED_HISTORICAL_HEADERLESS_NORMALIZED_NO_PLAYBACK": 1})
+        self.assertEqual(report["historical_identifiers_present_in_current_sources"], 1)
+        self.assertTrue(report["source_results"][0]["historical_header_normalized"])
+        generic = [{"id": "generic", "url": src[0]["url"]}]
+        rejected = audit_contents(generic, [], lambda _: content)
+        self.assertEqual(rejected["source_status_counts"],
+                         {"SOURCE_CONTENT_FAILED": 1})
+
     def test_upstream_placeholder_and_adjacent_extinf_not_mislabeled_as_streams(self):
         source = [{"id": "tr", "url": "https://fixture.example/tr.m3u"}]
         body = ("#EXTM3U\n#EXTINF:-1,No public stream\n"
