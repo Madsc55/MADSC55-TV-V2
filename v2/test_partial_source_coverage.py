@@ -19,6 +19,8 @@ class PartialCoverageTests(unittest.TestCase):
         def fake_api(url):
             if url.startswith(GITLAB_API) and "/repository/tree" not in url:
                 return projects
+            if "codeberg.org/api/v1/repos/search" in url:
+                return {"data": []}
             return []
         with patch.object(forge, "TERMS", ["iptv"]), \
              patch.object(forge, "gitlab_projects", return_value=projects), \
