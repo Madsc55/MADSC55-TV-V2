@@ -10,6 +10,7 @@ from pathlib import Path
 from urllib.parse import urlsplit
 from discover import ROOT, LIVE, SOURCES, entries, turkish_candidate, fetch, approved_github_source, DYNAMIC, GITHUB_APPROVALS, FORGE, FORGE_APPROVALS
 from historical_url_recovery import recover, read_records, validate_url
+from historical_inventory_guard import classify, reconcile, _chunks
 from encrypted_archive import append, restore
 from real_ibo_scan import check_hls
 from media_decode import decode_media
@@ -32,7 +33,9 @@ def build(source_texts, live_text, history=(), checker=None, workers=8, media_ch
             url = item["url"]
             if url in existing or not validate_url(url):
                 continue
-            row = candidate_map.setdefault(url, dict(item, source_ids=[], history=[]))
+            row = candidate_map.setdefault(url, dict(item, scope=source.get("scope", "candidate"), source_ids=[], history=[]))
+            if source.get("scope") in ("TR", "AZ") and row.get("scope") not in ("TR", "AZ"):
+                row["scope"] = source["scope"]
             if source["id"] not in row["source_ids"]:
                 row["source_ids"].append(source["id"])
         audit.append({"id": source["id"], "parsed": len(parsed), "eligible": eligible, "status": "FETCHED"})
@@ -45,7 +48,16 @@ def build(source_texts, live_text, history=(), checker=None, workers=8, media_ch
             continue
         row = candidate_map.setdefault(url, dict(item, source_ids=[], history=[]))
         row["history"].append({"status": "HISTORICAL_NOT_REVERIFIED", "source": item.get("source", "historical")})
+        for source_id in item.get("source_ids", []):
+            if isinstance(source_id, str) and source_id and source_id not in row["source_ids"]:
+                row["source_ids"].append(source_id)
+        for field in ("name", "logo", "tvg_id", "group", "scope", "country"):
+            if not row.get(field) and item.get(field):
+                row[field] = item[field]
     items = list(candidate_map.values())
+    for item in items:
+        item.update(classify(item))
+        item["spoken_language_verified"] = False
     if checker is None:
         return items, audit, history_report
     def check(item):
@@ -71,6 +83,17 @@ def build(source_texts, live_text, history=(), checker=None, workers=8, media_ch
         for item, ok in zip(reachable, decoded):
             item["media_decoded"] = ok
     return items, audit, history_report
+
+def archive_records(items, history):
+    """Archive every historical row, including duplicates/hash-only and failures."""
+    return list(_chunks(history, "raw_historical_evidence")) + list(items)
+
+
+def export_candidates(items):
+    """Decoded TR/AZ candidates only; do not publish unclassified history."""
+    return [row for row in items if row.get("media_decoded") is True
+            and row.get("region_candidate") in ("TR", "AZ")]
+
 
 def render_m3u(batch):
     """Render only real candidate records; never synthesize stream addresses."""
@@ -158,13 +181,20 @@ def main():
     # The archive may be configured outside the output tree; create its parent
     # only after all overwrite and nesting checks have passed.
     args.archive.parent.mkdir(parents=True, exist_ok=True)
-    # Only nonempty inventories produce authenticated encrypted records.
-    for item in items:
+    # The protected archive includes original historical rows even if they
+    # are dead, duplicated, hash-only, or not classified as TR/AZ.
+    protected_history = None
+    if history:
+        _, _, protected_history = reconcile(history, [{"url": x["url"]} for x in items])
+        protected_history["expected_historical_records"] = 4955
+        protected_history["real_4955_baseline_present"] = len(history) == 4955
+    archived_items = archive_records(items, history)
+    for item in archived_items:
         append(args.archive, item)
-    restored = restore(args.archive) if items else []
-    if restored != items:
+    restored = restore(args.archive) if archived_items else []
+    if restored != archived_items:
         raise RuntimeError("Encrypted archive restore mismatch")
-    verified = [x for x in items if x.get("media_decoded") is True]
+    verified = export_candidates(items)
     # A manifest check is not media decoding; never export it as a verified stream.
     # A partial source fetch cannot publish a new package as complete.
     if not failures:
@@ -193,7 +223,9 @@ def main():
               "failed_sources": failures, "source_audit": audit, "source_recovery_audit": recovery_audit, "unique_candidates": len(items),
               "manifest_reachable": sum(x["network_status"] == "HLS_MANIFEST_REACHABLE" for x in items),
               "media_decoded": len(verified), "unknown_or_failed": sum(x["network_status"] != "HLS_MANIFEST_REACHABLE" for x in items),
-              "historical": history_report, "archive_restore_verified": bool(items) and restored == items,
+              "historical": history_report, "historical_loss_guard": protected_history,
+              "historical_raw_records_preserved": len(history),
+              "archive_restore_verified": bool(archived_items) and restored == archived_items,
               "device_verified": False, "standard_full_packages": standard_package_counts, "batch_count": (len(verified) + args.limit - 1) // args.limit if not failures else 0,
               "status": "PARTIAL_SOURCE_FAILURE" if failures else ("NO_CANDIDATES" if not items else ("NO_MEDIA_DECODED" if not verified else "COMPLETE_SOURCE_FETCH"))}
     (args.out / "report.json").write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
