@@ -1,0 +1,58 @@
+{
+  "schema": 1,
+  "stage": 3,
+  "date": "2026-11-03",
+  "repository": "Madsc55/MADSC55-TV-V2",
+  "branch": "madsc/v2-discovery-bulk-20261031",
+  "evidence": "REAL_HISTORICAL_URL_SHA256_RECONSTRUCTION_NO_NEW_PLAYBACK",
+  "original_run": 40743765437,
+  "comparison_run": 40948768782,
+  "original_historical_hashes": 4955,
+  "exact_original_stream_urls_recovered": 4955,
+  "hashes_without_original_url": 0,
+  "duplicated_candidate_stream_urls": 0,
+  "historical_source_observations": 11682,
+  "original_channel_metadata_restored": 4955,
+  "source_unique_matches": {
+    "v2_git_history": 4902,
+    "original_github_source_commits": 2844,
+    "original_configured_sources": 2075,
+    "dearbulut_dated_health_states": 1861,
+    "other_v2_m3u_lists": 216
+  },
+  "final_unique_union": 4955,
+  "region_metadata_candidates": {
+    "TR": 50,
+    "AZ": 1,
+    "UNKNOWN": 4904
+  },
+  "complete_m3u": {
+    "filename": "MADSC55_V2_STAGE3_4955_GECMIS_KURTARMA_TEST.m3u8",
+    "channels": 4955,
+    "sha256": "d7a0725a1120753ef72a5561a09cdde66abc82f94f6c9e52d6a37401acdde1d3"
+  },
+  "test_batches": [
+    2000,
+    2000,
+    955
+  ],
+  "aesgcm_v2_archive": {
+    "filename": "MADSC55_V2_STAGE3_4955_REAL_URLS_RECOVERED.enc",
+    "encrypted_blocks": 151,
+    "historical_baseline_rows": 4955,
+    "recovered_current_rows": 4955,
+    "deduplicated_candidates": 4955,
+    "roundtrip_verified": true,
+    "private_key_committed": false
+  },
+  "actions": {
+    "recovery_run": 41633342078,
+    "encrypted_evidence_run": 41633732031,
+    "grouped_tests_passed": 109,
+    "encrypted_artifact_id": 13229641611
+  },
+  "present_day_video_audio_retested": false,
+  "device_playback_verified": false,
+  "main_playlist_modified": false,
+  "note": "Historical URLs recovered exactly, not currently playback-verified; private stream URLs and AES keys are not stored in this GitHub manifest."
+}
