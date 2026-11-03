@@ -33,13 +33,17 @@ def normalize(report):
     for record in report.get("sources", [])[:500]:
         if not isinstance(record, dict):
             continue
-        url = record.get("source_url", "")
+        url = record.get("source_url") or record.get("url", "")
         if not isinstance(url, str) or not valid_forge_source(url) or url in seen:
+            continue
+        forge = record.get("forge")
+        host = urlsplit(url).hostname
+        if forge not in ("gitlab", "codeberg") or (forge == "gitlab" and host != "gitlab.com") or (forge == "codeberg" and host != "codeberg.org"):
             continue
         seen.add(url)
         sources.append({"id": "forge-auto-" + hashlib.sha256(url.encode()).hexdigest()[:20],
                         "url": url, "scope": "candidate",
-                        "kind": "m3u", "origin": record.get("forge", "unknown")})
+                        "kind": "m3u", "origin": forge})
     return sources
 
 def approved_sources(report, approved_hashes):
