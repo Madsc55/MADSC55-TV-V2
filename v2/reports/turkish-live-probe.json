@@ -1,0 +1,543 @@
+{
+  "checked_at_utc": "2026-10-29T08:44:15.394983+00:00",
+  "checked": 68,
+  "manifest_ok": 9,
+  "failed_or_unverified": 59,
+  "limitations": "Manifest accessibility is not proof of decodable video, Turkish language, rights or IBO compatibility",
+  "results": [
+    {
+      "name": "24Kitchen",
+      "id": "24Kitchen.us",
+      "url": "http://hls127.freeott.top:8080/BG_24_Kitchen/video.m3u8",
+      "status": "failed",
+      "http_status": null,
+      "error": "timed out"
+    },
+    {
+      "name": "ATV Avrupa",
+      "id": "ATVAvrupa.tr",
+      "url": "https://flask-api-hls-atvavrupahdtrkvz-live.onrender.com/hls_stream/master.m3u8",
+      "status": "failed",
+      "http_status": null,
+      "error": "HTTP Error 503: Service Unavailable"
+    },
+    {
+      "name": "BabyFirst",
+      "id": "BabyFirst.us",
+      "url": "https://jmp2.uk/plu-5f4fb4cf605ddf000748e16f.m3u8",
+      "status": "failed",
+      "http_status": null,
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "name": "BabyFirst",
+      "id": "BabyFirst.us",
+      "url": "http://168.228.44.241:9997/play/a07u/index.m3u8",
+      "status": "hls_manifest_ok",
+      "http_status": 200
+    },
+    {
+      "name": "BabyFirst",
+      "id": "BabyFirst.us",
+      "url": "http://181.78.106.127:5000/play/a0sa/index.m3u8",
+      "status": "hls_manifest_ok",
+      "http_status": 200
+    },
+    {
+      "name": "BabyFirst",
+      "id": "BabyFirst.us",
+      "url": "https://jmp2.uk/plu-5ebac49ce4dc8b00078b23bc.m3u8",
+      "status": "failed",
+      "http_status": null,
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "name": "BabyTV",
+      "id": "BabyTV.uk",
+      "url": "http://138.121.15.230:9002/BABY-TV/index.m3u8",
+      "status": "hls_manifest_ok",
+      "http_status": 200
+    },
+    {
+      "name": "BabyTV",
+      "id": "BabyTV.uk",
+      "url": "http://181.78.12.119:16123/play/ch01/index.m3u8",
+      "status": "failed",
+      "http_status": null,
+      "error": "<urlopen error timed out>"
+    },
+    {
+      "name": "BabyTV",
+      "id": "BabyTV.uk",
+      "url": "http://38.44.109.41:8003/play/a0eh",
+      "status": "failed",
+      "http_status": null,
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "name": "Benguturk TV",
+      "id": "BenguturkTV.tr",
+      "url": "http://185.234.111.229:8000/play/a05u",
+      "status": "failed",
+      "http_status": null,
+      "error": "<urlopen error timed out>"
+    },
+    {
+      "name": "Bloomberg HT",
+      "id": "BloombergHT.tr",
+      "url": "https://ciner-live.daioncdn.net/bloomberght/bloomberght.m3u8",
+      "status": "failed",
+      "http_status": null,
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "name": "Cekmekoy TV",
+      "id": "CekmekoyTV.tr",
+      "url": "https://cdn-cekmekoybeltv.yayin.com.tr/cekmekoybeltv/cekmekoybeltv_1080p/playlist.m3u8",
+      "status": "failed",
+      "http_status": null,
+      "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'cdn-cekmekoybeltv.yayin.com.tr'. (_ssl.c:1000)>"
+    },
+    {
+      "name": "Eurosport 1",
+      "id": "Eurosport1.fr",
+      "url": "http://88.212.7.14/live/esp1_hun/index.m3u8",
+      "status": "hls_manifest_ok",
+      "http_status": 200
+    },
+    {
+      "name": "Eurosport 1",
+      "id": "Eurosport1.fr",
+      "url": "http://stream.mcquack.net/176/index.m3u8",
+      "status": "failed",
+      "http_status": null,
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "name": "Eurosport 2",
+      "id": "Eurosport2.fr",
+      "url": "http://88.212.7.14/live/esp2_hun/index.m3u8",
+      "status": "hls_manifest_ok",
+      "http_status": 200
+    },
+    {
+      "name": "Eurosport 2",
+      "id": "Eurosport2.fr",
+      "url": "http://stream.mcquack.net/192/index.m3u8",
+      "status": "failed",
+      "http_status": null,
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "name": "GEM 24B",
+      "id": "GEM24B.tr",
+      "url": "https://ca-rt.onetv.app/gem24b/index-0.m3u8?token=onetv202",
+      "status": "failed",
+      "http_status": null,
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "name": "GEM Bollywood",
+      "id": "GEMBollywood.tr",
+      "url": "https://ca-rt.onetv.app/gembollywood/index-0.m3u8?token=onetv202",
+      "status": "failed",
+      "http_status": null,
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "name": "GEM Classic",
+      "id": "GEMClassic.tr",
+      "url": "https://ca-rt.onetv.app/gemclassic/index-0.m3u8?token=onetv202",
+      "status": "failed",
+      "http_status": null,
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "name": "GEM Comedy",
+      "id": "GEMComedy.tr",
+      "url": "https://ca-rt.onetv.app/gemcomedy/index-0.m3u8?token=onetv202",
+      "status": "failed",
+      "http_status": null,
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "name": "GEM Drama",
+      "id": "GEMDrama.tr",
+      "url": "https://ca-rt.onetv.app/gemdrama/index-0.m3u8?token=onetv202",
+      "status": "failed",
+      "http_status": null,
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "name": "GEM Drama +",
+      "id": "GEMDramaPlus.tr",
+      "url": "https://ca-rt.onetv.app/gemdramaplus/index-0.m3u8?token=onetv202",
+      "status": "failed",
+      "http_status": null,
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "name": "GEM Entertainment",
+      "id": "GEMEntertainment.tr",
+      "url": "https://ca-rt.onetv.app/gementertainment/index-0.m3u8?token=onetv202",
+      "status": "failed",
+      "http_status": null,
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "name": "GEM Film",
+      "id": "GEMFilm.tr",
+      "url": "https://ca-rt.onetv.app/gemfilm/index-0.m3u8?token=onetv202",
+      "status": "failed",
+      "http_status": null,
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "name": "GEM Fit",
+      "id": "GEMFit.tr",
+      "url": "https://ca-rt.onetv.app/gemfit/index-0.m3u8?token=onetv202",
+      "status": "failed",
+      "http_status": null,
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "name": "GEM Food",
+      "id": "GEMFood.tr",
+      "url": "https://ca-rt.onetv.app/gemfood/index-0.m3u8?token=onetv202",
+      "status": "failed",
+      "http_status": null,
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "name": "GEM Junior",
+      "id": "GEMJunior.tr",
+      "url": "https://ca-rt.onetv.app/gemjunior/index-0.m3u8?token=onetv202",
+      "status": "failed",
+      "http_status": null,
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "name": "GEM Kids",
+      "id": "GEMKids.tr",
+      "url": "https://ca-rt.onetv.app/gemkids/index-0.m3u8?token=onetv202",
+      "status": "failed",
+      "http_status": null,
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "name": "GEM Life",
+      "id": "GEMLife.tr",
+      "url": "https://ca-rt.onetv.app/gemlife/index-0.m3u8?token=onetv202",
+      "status": "failed",
+      "http_status": null,
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "name": "GEM Mifa",
+      "id": "GEMMifa.tr",
+      "url": "https://ca-rt.onetv.app/gemmifa/index-0.m3u8?token=onetv202",
+      "status": "failed",
+      "http_status": null,
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "name": "GEM Mifa +",
+      "id": "GEMMifaPlus.tr",
+      "url": "https://ca-rt.onetv.app/gemmifaplus/index-0.m3u8?token=onetv202",
+      "status": "failed",
+      "http_status": null,
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "name": "GEM Nature",
+      "id": "GEMNature.tr",
+      "url": "https://ca-rt.onetv.app/gemnature/index-0.m3u8?token=onetv202",
+      "status": "failed",
+      "http_status": null,
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "name": "GEM Onyx",
+      "id": "GEMOnyx.tr",
+      "url": "https://ca-rt.onetv.app/gemonyx/index-0.m3u8?token=onetv202",
+      "status": "failed",
+      "http_status": null,
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "name": "GEM Pixel",
+      "id": "GEMPixel.tr",
+      "url": "https://glserver1.tamashaland.com/live/aBCH96886YznRbGOiqTnnQ__/stream_0.m3u8",
+      "status": "failed",
+      "http_status": null,
+      "error": "The read operation timed out"
+    },
+    {
+      "name": "GEM Pixel",
+      "id": "GEMPixel.tr",
+      "url": "https://ca-rt.onetv.app/gempixel/index-0.m3u8?token=onetv202",
+      "status": "failed",
+      "http_status": null,
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "name": "GEM River",
+      "id": "GEMRiver.tr",
+      "url": "https://ca-rt.onetv.app/gemriver/index-0.m3u8?token=onetv202",
+      "status": "failed",
+      "http_status": null,
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "name": "GEM River +",
+      "id": "GEMRiverPlus.tr",
+      "url": "https://ca-rt.onetv.app/gemriverplus/index-0.m3u8?token=onetv202",
+      "status": "failed",
+      "http_status": null,
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "name": "GEM Rubix",
+      "id": "GEMRubix.tr",
+      "url": "https://ca-rt.onetv.app/gemrubix/index-0.m3u8?token=onetv202",
+      "status": "failed",
+      "http_status": null,
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "name": "GEM Rubix +",
+      "id": "GEMRubixPlus.tr",
+      "url": "https://ca-rt.onetv.app/gemrubixplus/index-0.m3u8?token=onetv202",
+      "status": "failed",
+      "http_status": null,
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "name": "GEM Series +",
+      "id": "GEMSeriesPlus.tr",
+      "url": "https://ca-rt.onetv.app/gemseriesplus/index-0.m3u8?token=onetv202",
+      "status": "failed",
+      "http_status": null,
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "name": "GEM Sport",
+      "id": "GEMSport.tr",
+      "url": "https://steep-wildflower-284d.nhhwkiszzzvcuojxdo.workers.dev/?url=https://gg.hls2.xyz/live/IR+-+GEM+Sport/chunks.m3u8",
+      "status": "failed",
+      "http_status": null,
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "name": "GEM TV",
+      "id": "GEMTV.tr",
+      "url": "https://ca-rt.onetv.app/gem/index-0.m3u8?token=onetv202",
+      "status": "failed",
+      "http_status": null,
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "name": "GEM TV +",
+      "id": "GEMTVPlus.tr",
+      "url": "https://ca-rt.onetv.app/gemtvplus/index-0.m3u8?token=onetv202",
+      "status": "failed",
+      "http_status": null,
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "name": "GZT",
+      "id": "GZT.tr",
+      "url": "https://gzttv-live.lg.mncdn.com/gzttv/gzttv/playlist.m3u8",
+      "status": "failed",
+      "http_status": null,
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "name": "Kanal 7",
+      "id": "Kanal7.tr",
+      "url": "https://kanal7.blutv.com/blutv_kanal7_live/live.m3u8",
+      "status": "failed",
+      "http_status": null,
+      "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'kanal7.blutv.com'. (_ssl.c:1000)>"
+    },
+    {
+      "name": "Kral Pop TV",
+      "id": "KralPopTV.tr",
+      "url": "https://dogus-live.daioncdn.net/kralpoptv/playlist.m3u8",
+      "status": "hls_manifest_ok",
+      "http_status": 200
+    },
+    {
+      "name": "Love Nature",
+      "id": "LoveNature.ca",
+      "url": "https://jmp2.uk/plu-66df8a29b25d2b0008fc5fe0.m3u8",
+      "status": "hls_manifest_ok",
+      "http_status": 200
+    },
+    {
+      "name": "Manas TV",
+      "id": "ManasTV.kg",
+      "url": "http://120.70.60.179:9901/tsfile/live/1001_1.m3u8?key=txiptv&playlive=0&authid=0",
+      "status": "failed",
+      "http_status": null,
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "name": "MovieSmart Turk",
+      "id": "MovieSmartTurk.tr",
+      "url": "http://playhdnewjj.xyz:8080/recc121412/KVqfhtdJ2nQ7/174",
+      "status": "failed",
+      "http_status": null,
+      "error": "[Errno 104] Connection reset by peer"
+    },
+    {
+      "name": "MyZen TV",
+      "id": "MyZenTV.fr",
+      "url": "https://cdn-ue1-prod.tsv2.amagi.tv/linear/amg01255-secomcofites-my-myzen-en-plex/playlist.m3u8",
+      "status": "failed",
+      "http_status": null,
+      "error": "<urlopen error [Errno -2] Name or service not known>"
+    },
+    {
+      "name": "Number 1 TV",
+      "id": "Number1TV.tr",
+      "url": "https://mn-nl.mncdn.com/blutv_nr12/live.m3u8",
+      "status": "failed",
+      "http_status": null,
+      "error": "Remote end closed connection without response"
+    },
+    {
+      "name": "On4 TV",
+      "id": "On4TV.tr",
+      "url": "https://edge1.socialsmart.tv/on4/bant1/playlist.m3u8",
+      "status": "failed",
+      "http_status": null,
+      "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'edge1.socialsmart.tv'. (_ssl.c:1000)>"
+    },
+    {
+      "name": "PowerTurk TV",
+      "id": "PowerTurkTV.tr",
+      "url": "https://powerturk.blutv.com/blutv_powerturk/powerturk_sd.smil/playlist.m3u8",
+      "status": "failed",
+      "http_status": null,
+      "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'powerturk.blutv.com'. (_ssl.c:1000)>"
+    },
+    {
+      "name": "Qaf TV",
+      "id": "QafTV.tr",
+      "url": "https://customer-9vqui33qma2rownb.cloudflarestream.com/7792e558fe54e23bdd4b462ec275cdba/manifest/video.m3u8",
+      "status": "not_hls",
+      "http_status": 204
+    },
+    {
+      "name": "RTG TV",
+      "id": "RTGTV.ru",
+      "url": "http://46.53.200.153:7777/play/a00u/index.m3u8",
+      "status": "hls_manifest_ok",
+      "http_status": 200
+    },
+    {
+      "name": "RTG TV",
+      "id": "RTGTV.ru",
+      "url": "http://31.148.48.15/RTG_HD/index.m3u8",
+      "status": "failed",
+      "http_status": null,
+      "error": "<urlopen error timed out>"
+    },
+    {
+      "name": "RTG TV",
+      "id": "RTGTV.ru",
+      "url": "http://31.148.48.15/RTG/index.m3u8",
+      "status": "failed",
+      "http_status": null,
+      "error": "<urlopen error timed out>"
+    },
+    {
+      "name": "Show Turk",
+      "id": "ShowTurk.tr",
+      "url": "https://raw.githubusercontent.com/bnyusuf67-crypto/streams/refs/heads/main/streams/shturk.m3u8",
+      "status": "failed",
+      "http_status": null,
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "name": "S Sport 2",
+      "id": "SSport2.tr",
+      "url": "https://bcovlive-a.akamaihd.net/29c60f23ea4840ba8726925a77fcfd0b/eu-central-1/6415845530001/profile_0/chunklist.m3u8",
+      "status": "failed",
+      "http_status": null,
+      "error": "HTTP Error 400: Bad Request"
+    },
+    {
+      "name": "Timeless Dizi Channel",
+      "id": "TimelessDiziChannel.pl",
+      "url": "http://hls127.freeott.top:8080/BG_Dizi_HD/video.m3u8",
+      "status": "failed",
+      "http_status": null,
+      "error": "timed out"
+    },
+    {
+      "name": "TRT 3",
+      "id": "TRT3.tr",
+      "url": "https://tv-trt3.live.trt.com.tr/master.m3u8",
+      "status": "hls_manifest_ok",
+      "http_status": 200
+    },
+    {
+      "name": "TRT Belgesel",
+      "id": "TRTBelgesel.tr",
+      "url": "https://tv-trtbelgesel.medya.trt.com.tr/master.m3u8",
+      "status": "failed",
+      "http_status": null,
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "name": "TRT Belgesel",
+      "id": "TRTBelgesel.tr",
+      "url": "http://hls127.freeott.top:8080/TRT_BELGESEL_TR/video.m3u8",
+      "status": "failed",
+      "http_status": null,
+      "error": "timed out"
+    },
+    {
+      "name": "TRT Spor",
+      "id": "TRTSpor.tr",
+      "url": "https://corestream.siteyaptim.live/trt-spor/index.m3u8",
+      "status": "failed",
+      "http_status": null,
+      "error": "<urlopen error [Errno -3] Temporary failure in name resolution>"
+    },
+    {
+      "name": "TRT World",
+      "id": "TRTWorld.tr",
+      "url": "https://cdn.pishow.tv/ott/live/266/master.m3u8",
+      "status": "failed",
+      "http_status": null,
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "name": "TV 42",
+      "id": "TV42.tr",
+      "url": "https://canli.tv42.com.tr/memfs/d936e417-c4bd-4d42-89a2-02f289892d1d.m3u8",
+      "status": "failed",
+      "http_status": null,
+      "error": "<urlopen error timed out>"
+    },
+    {
+      "name": "TVNET",
+      "id": "TVNET.tr",
+      "url": "https://tvnet-live.lg.mncdn.com/tvnet/tvnet/playlist.m3u8",
+      "status": "failed",
+      "http_status": null,
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "name": "Ulke TV",
+      "id": "UlkeTV.tr",
+      "url": "http://217.174.229.138:8000/play/a0el",
+      "status": "failed",
+      "http_status": null,
+      "error": "<urlopen error timed out>"
+    }
+  ]
+}

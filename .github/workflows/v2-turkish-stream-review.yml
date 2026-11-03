@@ -1,0 +1,343 @@
+name: Kanalları ara — Tek Birleşik Görev
+on:
+  workflow_dispatch:
+concurrency:
+  group: v2-turkish-stream-review-main
+  cancel-in-progress: false
+  queue: max
+permissions:
+  contents: read
+jobs:
+  sources:
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Enforce frozen IBO playlist and permanent backups before all tests
+        run: |
+          test "$(git hash-object MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)" = "4b1c3cea4b5107a425abab60f62d41f9f81e05a7"
+          python v2/test_playlist_invariants.py
+      - name: Compile and validate all V2 Python modules before scanning
+        run: python -m compileall -q v2
+      - name: Run offline consolidated safety contracts before network scans
+        run: python v2/test_unified_safety_contract.py
+      - name: Check multi-source provenance before scanning
+        run: python v2/test_source_provenance.py
+      - name: Require independently verified encrypted archive restore before any network scan
+        env:
+          V2_ARCHIVE_RESTORE_APPROVED: ${{ vars.V2_ARCHIVE_RESTORE_APPROVED }}
+          V2_ARCHIVE_RESTORE_EVIDENCE: ${{ vars.V2_ARCHIVE_RESTORE_EVIDENCE }}
+        run: python v2/archive_acceptance_gate.py
+      - name: Discover GitHub sources once
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python v2/github_source_discovery.py
+      - name: Scan public Scribd SlideShare and Internet Archive references
+        run: python v2/document_platform_discovery.py --scan-public-documents
+      - name: Fetch and deduplicate all M3U candidates once
+        run: python v2/discover.py --snapshot-output
+      - name: Verify private and public candidate identity before artifact handoff
+        run: |
+          python v2/verify_private_archive_input.py \
+            --private v2/reports/private-playback-snapshot.json \
+            --public v2/reports/candidates.json
+      - name: Report newly scanned candidate and source counts
+        run: |
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          data=json.loads(Path('v2/reports/candidates.json').read_text())
+          lines=['## Fresh source scan', '', '| Metric | Count |', '|---|---:|', f"| Unique candidate stream URLs | {data['total_unique_candidates']} |", f"| Sources fetched | {data['source_count']} |", f"| Source errors | {len(data['errors'])} |", '', 'Candidates are not verified unique channels or confirmed Turkish speech.']
+          with open(os.environ['GITHUB_STEP_SUMMARY'],'a') as out: out.write(chr(10).join(lines)+chr(10))
+          PY
+      - name: Share safe candidate report
+        uses: actions/upload-artifact@v4
+        with:
+          name: unified-source-candidates
+          path: v2/reports/candidates.json
+          if-no-files-found: error
+      - name: Share private playback snapshot
+        uses: actions/upload-artifact@v4
+        with:
+          name: unified-private-playback-snapshot
+          path: v2/reports/private-playback-snapshot.json
+          retention-days: 1
+          if-no-files-found: error
+      - name: Share immutable discovery result
+        uses: actions/upload-artifact@v4
+        with:
+          name: unified-source-snapshot
+          path: v2/reports/github-source-discovery.json
+          if-no-files-found: error
+
+  playback:
+    needs: sources
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+        page: [0, 1]
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install ffprobe
+        run: sudo apt-get update -qq && sudo apt-get install -y ffmpeg
+      - name: Protect live playlist
+        run: python v2/test_playlist_invariants.py
+      - name: Download shared source discovery
+        id: download_source_snapshot
+        continue-on-error: true
+        uses: actions/download-artifact@v4
+        with:
+          name: unified-source-snapshot
+          path: v2/reports
+      - name: Retry shared source discovery download after transient transfer failure
+        if: steps.download_source_snapshot.outcome == 'failure'
+        uses: actions/download-artifact@v4
+        with:
+          name: unified-source-snapshot
+          path: v2/reports
+      - name: Require downloaded source discovery snapshot
+        run: |
+          test -s v2/reports/github-source-discovery.json
+          python -c "import json; from pathlib import Path; d=json.loads(Path('v2/reports/github-source-discovery.json').read_text()); assert isinstance(d.get('sources'), list)"
+      - name: Download private candidate snapshot
+        id: private_snapshot_download
+        continue-on-error: true
+        uses: actions/download-artifact@v4
+        with:
+          name: unified-private-playback-snapshot
+          path: v2/reports
+      - name: Retry private candidate snapshot download
+        if: steps.private_snapshot_download.outcome == 'failure'
+        uses: actions/download-artifact@v4
+        with:
+          name: unified-private-playback-snapshot
+          path: v2/reports
+      - name: Download public-safe candidate inventory for hash parity
+        uses: actions/download-artifact@v4
+        with:
+          name: unified-source-candidates
+          path: v2/reports
+      - name: Restore checkpoint for same run and exact candidate snapshot
+        uses: actions/cache/restore@v4
+        with:
+          path: v2/reports/all-source-playback.checkpoint.json
+          key: playback-${{ github.run_id }}-${{ matrix.page }}-${{ matrix.shard }}-${{ hashFiles('v2/reports/private-playback-snapshot.json') }}-attempt-${{ github.run_attempt }}
+          restore-keys: |
+            playback-${{ github.run_id }}-${{ matrix.page }}-${{ matrix.shard }}-${{ hashFiles('v2/reports/private-playback-snapshot.json') }}-attempt-
+      - name: Verify candidate playback in bounded batch
+        env:
+          PLAYBACK_PER_SOURCE: '250'
+          PLAYBACK_MAX_SECONDS: '960'
+          PLAYBACK_PAGE: ${{ matrix.page }}
+          PLAYBACK_SHARD_COUNT: '16'
+          PLAYBACK_SHARD_INDEX: ${{ matrix.shard }}
+        run: |
+          set -o pipefail
+          for pass in 1 2 3; do
+            echo "Playback continuation pass $pass of 3"
+            if python v2/all_source_playback.py; then
+              echo "All assigned candidates verified"
+              exit 0
+            fi
+            if [ "$pass" -eq 3 ]; then
+              echo "Playback remains incomplete; preserving checkpoint and failing closed"
+              exit 1
+            fi
+            echo "Continuing remaining candidates from checkpoint"
+          done
+      - name: Save checkpoint even when playback fails
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: v2/reports/all-source-playback.checkpoint.json
+          key: playback-${{ github.run_id }}-${{ matrix.page }}-${{ matrix.shard }}-${{ hashFiles('v2/reports/private-playback-snapshot.json') }}-attempt-${{ github.run_attempt }}
+      - name: Persist resumable checkpoint as restricted diagnostic artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playback-checkpoint-page-${{ matrix.page }}-shard-${{ matrix.shard }}
+          path: v2/reports/all-source-playback.checkpoint.json
+          retention-days: 1
+          if-no-files-found: ignore
+      - name: Upload batch evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: unified-playback-page-${{ matrix.page }}-shard-${{ matrix.shard }}
+          path: v2/reports/all-source-playback.json
+          if-no-files-found: ignore
+
+  review:
+    needs: [sources, playback]
+    if: ${{ always() && needs.sources.result == 'success' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 65
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install ffprobe
+        run: sudo apt-get update -qq && sudo apt-get install -y ffmpeg
+      - name: Install YouTube discovery dependency
+        run: python -m pip install --disable-pip-version-check yt-dlp
+      - name: Validate scripts
+        run: python -m py_compile v2/discover.py v2/stream_url_collisions.py v2/quality_upgrades.py v2/turkish_stream_catalog.py v2/turkish_stream_probe.py v2/turkish_stream_decode.py v2/turkish_stream_review.py v2/candidate_assets.py v2/frame_collisions.py v2/current_stream_resolution.py v2/stream_stability.py v2/test_playlist_invariants.py v2/final_validation_summary.py v2/newlisttr_extract.py v2/build_newlisttr_ibo_test.py v2/candidate_metadata_audit.py
+      - name: Download shared source discovery
+        id: review_source_download
+        continue-on-error: true
+        uses: actions/download-artifact@v4
+        with:
+          name: unified-source-snapshot
+          path: v2/reports
+      - name: Retry download shared source discovery after transfer failure
+        if: steps.review_source_download.outcome == 'failure'
+        uses: actions/download-artifact@v4
+        with:
+          name: unified-source-snapshot
+          path: v2/reports
+      - name: Download shared candidate report
+        id: review_candidates_download
+        continue-on-error: true
+        uses: actions/download-artifact@v4
+        with:
+          name: unified-source-candidates
+          path: v2/reports
+      - name: Retry download shared candidate report after transfer failure
+        if: steps.review_candidates_download.outcome == 'failure'
+        uses: actions/download-artifact@v4
+        with:
+          name: unified-source-candidates
+          path: v2/reports
+      - name: Download all playback batch evidence
+        uses: actions/download-artifact@v4
+        with:
+          pattern: unified-playback-page-*-shard-*
+          path: v2/reports/shards
+      - name: Merge all playback evidence
+        run: python v2/aggregate_playback_shards.py
+      - name: Audit metadata for every discovered candidate
+        run: python v2/candidate_metadata_audit.py
+      - name: Classify every candidate from this run without rescanning
+        run: |
+          python -m py_compile v2/postscan_triage.py v2/postscan_identity_consistency.py
+          python v2/postscan_triage.py
+      - name: Audit Turkish spoken-language evidence for every candidate
+        run: |
+          python -m py_compile v2/turkish_language_evidence.py
+          python v2/turkish_language_evidence.py
+      - name: Audit identity metadata conflicts in the same run
+        run: python v2/postscan_identity_consistency.py
+      - name: Audit same URL across different channels
+        run: python v2/stream_url_collisions.py
+      - name: Generate unified postscan action queue without rescanning
+        run: python v2/postscan_unified_action_queue.py
+      - name: Refresh candidates
+        run: python v2/turkish_stream_catalog.py
+      - name: Find quality upgrades for existing channels
+        run: python v2/quality_upgrades.py
+      - name: HTTP candidate probe
+        run: python v2/turkish_stream_probe.py
+      - name: Short decoder verification
+        run: python v2/turkish_stream_decode.py
+      - name: Extract verified NewlistTR channels separately
+        run: python v2/newlisttr_extract.py
+      - name: Measure current playlist stream resolutions in batches
+        run: |
+          for batch in $(seq 0 9); do
+            python v2/current_stream_resolution.py --batch "$batch" --batch-size 120
+            cp v2/reports/current-stream-resolution.json "v2/reports/current-stream-resolution-batch-${batch}.json"
+          done
+      - name: Merge baseline batches
+        run: |
+          python - <<'PY'
+          import glob, json
+          from pathlib import Path
+          files = sorted(glob.glob('v2/reports/current-stream-resolution-batch-*.json'))
+          batches = [json.loads(Path(p).read_text()) for p in files]
+          merged = dict(batches[0])
+          merged['results'] = [x for batch in batches for x in batch['results']]
+          merged['selected'] = len(merged['results'])
+          merged['measured'] = sum(x['status'] == 'MEASURED' for x in merged['results'])
+          merged['batches'] = len(batches)
+          Path('v2/reports/current-stream-resolution.json').write_text(json.dumps(merged, ensure_ascii=False, indent=2) + chr(10))
+          print('Baseline coverage:', merged['selected'], 'of', merged['distinct_channel_ids'])
+          PY
+      - name: Attach measured quality to upgrade report
+        run: python v2/quality_upgrades.py
+      - name: Build manual review queue
+        run: python v2/turkish_stream_review.py
+      - name: Build isolated provisional IBO review playlist
+        run: python v2/build_verified_test_playlist.py
+      - name: Map candidate EPG and logo metadata
+        run: python v2/candidate_assets.py
+      - name: Compare short video frames for possible duplicates
+        run: python v2/frame_collisions.py
+      - name: Repeated stream stability samples
+        run: python v2/stream_stability.py --rounds 3 --interval 90 --limit 32
+      - name: Validate playlist EPG XMLTV sources
+        run: python v2/epg_integrity.py
+      - name: Check playlist logos and EPG URLs
+        run: python v2/assets_health.py
+      - name: Audit logo formats and attribution
+        run: python v2/logo_attribution.py
+      - name: Discover official broadcaster sites
+        continue-on-error: true
+        run: |
+          python v2/official_sites_discovery.py
+          python v2/official_site_gap.py
+      - name: Discover YouTube live candidates
+        continue-on-error: true
+        run: python v2/youtube_discovery.py
+      - name: Final playlist and backup safety invariants
+        run: |
+          test "$(git hash-object MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)" = "4b1c3cea4b5107a425abab60f62d41f9f81e05a7"
+          python v2/test_playlist_invariants.py
+      - name: Generate final evidence summary
+        if: always()
+        run: python v2/final_validation_summary.py
+      - name: Save final diagnostic evidence even when validation rejects incomplete coverage
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: turkish-stream-review
+          path: |
+            v2/reports/github-source-discovery.json
+            v2/reports/candidates.json
+            v2/reports/candidate-metadata-audit.json
+            v2/reports/turkish-language-evidence.json
+            v2/reports/postscan-*.json
+            v2/reports/all-source-playback-aggregate.json
+            v2/reports/stream-url-collisions.json
+            v2/reports/quality-upgrades.json
+            v2/reports/current-stream-resolution.json
+            v2/reports/current-stream-resolution-batch-*.json
+            v2/reports/candidate-assets.json
+            v2/reports/frame-collisions.json
+            v2/reports/stream-stability.json
+            v2/reports/final-validation-summary.json
+            v2/reports/newlisttr-check.json
+            v2/reports/newlisttr-decoded-only.m3u8
+            MADSC55_TV_IBO_CALISANLAR_TEST.m3u8
+            v2/reports/turkish-stream-candidates.json
+            v2/reports/turkish-stream-probe.json
+            v2/reports/turkish-stream-decode.json
+            v2/reports/turkish-stream-review-queue.json
+            v2/reports/short-decoded-review-only.m3u8
+            v2/reports/short-decoded-playlist-summary.json
+            v2/reports/epg-integrity.json
+            v2/reports/assets-health.json
+            v2/reports/logo-attribution.json
+            v2/reports/official-tv-sites.json
+            v2/reports/official-tv-gap.json
+            v2/reports/youtube-live-candidates.json
+          if-no-files-found: ignore

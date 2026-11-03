@@ -1,0 +1,87 @@
+name: V2 Turkish M3U Source Coverage and Historical Loss
+on:
+  push:
+    branches: [madsc/v2-discovery-bulk-20261031]
+    paths:
+      - 'v2/source_loss_audit.py'
+      - 'v2/test_source_loss_audit.py'
+      - 'v2/turkish_m3u_source_audit.py'
+      - 'v2/test_turkish_m3u_source_audit.py'
+      - 'v2/config/sources.json'
+      - 'v2/source_failover.py'
+      - 'v2/test_source_failover.py'
+      - 'v2/discover.py'
+      - 'v2/m3u_source_content_audit.py'
+      - 'v2/test_m3u_source_content_audit.py'
+      - 'v2/history/run60-dynamic-source-ledger.json'
+      - 'v2/run60_source_ledger.py'
+      - 'v2/test_run60_source_ledger.py'
+      - 'v2/test_run60_source_discovery.py'
+      - '.github/workflows/v2-world-discovery.yml'
+      - '.github/workflows/v2-turkish-m3u-source-coverage.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  turkish-m3u-loss-batch:
+    name: Turkish M3U source-only audit, genuine 60/72 loss and grouped regressions
+    runs-on: ubuntu-24.04
+    timeout-minutes: 17
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Protect immutable IBO playlist
+        run: test "$(git hash-object MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)" = '4b1c3cea4b5107a425abab60f62d41f9f81e05a7'
+      - name: Batch source losses, source integrity, failover and audit regressions
+        shell: bash
+        run: |
+          mkdir -p v2/reports/ci
+          set -o pipefail
+          PYTHONPATH=v2 python -m unittest -v \
+            test_source_loss_audit \
+            test_turkish_m3u_source_audit \
+            test_m3u_source_content_audit \
+            test_run60_source_ledger \
+            test_run60_source_discovery \
+            test_source_integrity \
+            test_source_failover \
+            test_source_availability_audit \
+            test_source_inventory_contract \
+            2>&1 | tee v2/reports/ci/turkish-m3u-loss-tests.log
+      - name: Download real #60 and #72 aggregate evidence without scanning channel streams
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          mkdir -p "$RUNNER_TEMP/madsc-60" "$RUNNER_TEMP/madsc-72"
+          gh run download 40743765437 -n turkish-stream-review -D "$RUNNER_TEMP/madsc-60"
+          gh run download 40743765437 -n unified-source-snapshot -D "$RUNNER_TEMP/madsc-60"
+          gh run download 40948768782 -n turkish-stream-review -D "$RUNNER_TEMP/madsc-72"
+      - name: Verify original 4955 URL hash losses and full M3U source content coverage
+        shell: bash
+        run: |
+          PYTHONPATH=v2 python v2/turkish_m3u_source_audit.py \
+            --sources v2/config/sources.json \
+            --workers 8 \
+            --audit-full-source-content \
+            --historical-dynamic-ledger v2/history/run60-dynamic-source-ledger.json \
+            --run60-source-snapshot "$RUNNER_TEMP/madsc-60/github-source-discovery.json" \
+            --historical-old "$RUNNER_TEMP/madsc-60/v2/reports/all-source-playback-aggregate.json" \
+            --historical-new "$RUNNER_TEMP/madsc-72/v2/reports/all-source-playback-aggregate.json" \
+            --baseline v2/history/stage3-4955-hash-only.jsonl \
+            --output v2/reports/ci/turkish-m3u-source-loss.json
+      - name: Upload single grouped evidence bundle
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: turkish-m3u-source-loss-${{ github.run_id }}
+          path: |
+            v2/reports/ci/turkish-m3u-loss-tests.log
+            v2/reports/ci/turkish-m3u-source-loss.json
+          if-no-files-found: warn
+          retention-days: 30

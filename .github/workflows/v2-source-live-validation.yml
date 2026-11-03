@@ -1,0 +1,54 @@
+name: V2 Five Source Live Validation
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+jobs:
+  validate-five-sources:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate all five source endpoints and their fallbacks in one batch
+        run: |
+          python - <<'PY'
+          import json,sys,urllib.request,urllib.error
+          from pathlib import Path
+          sys.path.insert(0,'v2')
+          from source_failover import ALTERNATIVES,validate_m3u,safe_url,MAX_BYTES
+          sources={s['id']:s for s in json.loads(Path('v2/config/sources.json').read_text())['sources']}
+          report=[]
+          for source_id in ALTERNATIVES:
+              source=sources[source_id]
+              outcomes=[]
+              for url in dict.fromkeys((source['url'],*ALTERNATIVES[source_id])):
+                  result={'url':url,'ok':False}
+                  try:
+                      if not safe_url(url): raise ValueError('UNSAFE_URL')
+                      request=urllib.request.Request(url,headers={'User-Agent':'MADSC55-TV-V2-Source-Validation/1.0'})
+                      with urllib.request.urlopen(request,timeout=12) as response:
+                          body=response.read(MAX_BYTES+1)
+                          validate_m3u(body)
+                          result.update(ok=True,status=response.status,bytes=len(body))
+                  except Exception as exc:
+                      result['error']=type(exc).__name__+': '+str(exc)[:180]
+                  outcomes.append(result)
+              report.append({'id':source_id,'reachable':any(x['ok'] for x in outcomes),'checks':outcomes})
+          Path('source-live-validation.json').write_text(json.dumps(report,indent=2)+'\n')
+          for item in report:
+              print(item['id'], 'REACHABLE' if item['reachable'] else 'UNREACHABLE')
+              for check in item['checks']:
+                  print(' ',check['url'],check.get('status',check.get('error')))
+          if not all(item['reachable'] for item in report):
+              sys.exit('Some sources have no reachable validated M3U endpoint')
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: five-source-live-validation
+          path: source-live-validation.json
+          if-no-files-found: warn

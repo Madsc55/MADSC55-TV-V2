@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "policy": "explicitly approved public HTTPS HTML indexes; references only, no auto-import",
+  "pages": [
+    {
+      "id": "iptv-org-public-index",
+      "url": "https://iptv-org.github.io/"
+    },
+    {
+      "id": "free-tv-public-index",
+      "url": "https://github.com/Free-TV/IPTV"
+    },
+    {
+      "id": "dearbulut-public-index",
+      "url": "https://dearbulut.github.io/iptv/"
+    },
+    {
+      "id": "turktv-public-index",
+      "url": "https://itasli.github.io/TURKTV/"
+    },
+    {
+      "id": "onureroz-public-index",
+      "url": "https://onureroz.com/indirmeler/turk/"
+    },
+    {
+      "id": "gitlab-public-iptv-search",
+      "url": "https://gitlab.com/explore/projects/topics/iptv"
+    },
+    {
+      "id": "github-iptv-org-repository",
+      "url": "https://github.com/iptv-org/iptv"
+    },
+    {
+      "id": "github-turkish-iptv-topics",
+      "url": "https://github.com/topics/turkish-iptv"
+    },
+    {
+      "id": "github-gist-public",
+      "url": "https://gist.github.com/discover"
+    }
+  ]
+}

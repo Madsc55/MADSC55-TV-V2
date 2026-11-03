@@ -1,0 +1,69 @@
+name: V2 Current Scanner Offline Gate
+on:
+  push:
+    branches:
+      - madsc/v2-discovery-bulk-20261031
+    paths:
+      - '.github/workflows/v2-current-scanner-offline-gate.yml'
+      - '.github/workflows/ibo-real-scan.yml'
+      - 'v2/test_*.py'
+      - 'v2/discover.py'
+      - 'v2/historical_url_recovery.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  branch-offline-regressions:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install test dependencies
+        run: python -m pip install 'cryptography>=42,<47'
+      - name: Compile V2 branch code
+        run: python -m compileall -q v2
+      - name: Run all branch regressions and collect every failure
+        shell: bash
+        run: |
+          failed=0
+          for test in historical_url_recovery playlist_invariants discovery_offline_regressions source_inventory_contract source_loss_audit archive_acceptance_gate archive_backup_restore_drill partial_scan_fail_closed partial_source_coverage public_metadata_redaction source_integrity webpage_source_discovery forge_source_discovery live_page_discovery; do
+            echo "::group::${test}"
+            if python "v2/test_${test}.py"; then
+              echo "PASS ${test}"
+            else
+              echo "::error title=V2 regression failed::test_${test}.py failed"
+              failed=$((failed + 1))
+            fi
+            echo "::endgroup::"
+          done
+          echo "Total failed tests: $failed"
+          test "$failed" -eq 0
+  scanner-offline-regressions:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout current scanner code from main (read-only)
+        uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install archive dependency
+        run: python -m pip install 'cryptography>=42,<47'
+      - name: Compile current scanner and archive modules
+        run: |
+          python -m py_compile v2/real_ibo_scan.py v2/secure_archive.py v2/consolidate_inventory.py
+      - name: Run all three offline regressions
+        run: |
+          python v2/test_secure_archive_roundtrip.py
+          python v2/test_consolidate_inventory.py
+          python v2/test_real_ibo_scan_offline.py
+      - name: Assert protected playlist and foreign archive remain untouched
+        run: |
+          git diff --exit-code -- MADSC55_TV_IBO_CALISANLAR_TEST.m3u8 v2/arsiv/yabanci_yedekler_2026-11-02_3964.m3u8

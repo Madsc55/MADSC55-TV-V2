@@ -1,0 +1,33 @@
+name: V2 Actions Status Monitor
+on:
+  push:
+    branches:
+      - madsc/v2-discovery-bulk-20261031
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  read-master-runs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: madsc/v2-discovery-bulk-20261031
+      - name: Offline monitor regression
+        run: python v2/test_actions_monitor.py
+      - name: Read last 10 Master Engine runs via GitHub Actions API
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          ACTIONS_REPORT: actions-last10.json
+          GITHUB_RUN_ID: ${{ github.run_id }}
+          GITHUB_SHA: ${{ github.sha }}
+        run: python v2/actions_monitor.py
+      - name: Preserve verified run IDs and statuses
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v2-actions-status-${{ github.run_id }}
+          path: actions-last10.json
+          if-no-files-found: warn
+          retention-days: 30

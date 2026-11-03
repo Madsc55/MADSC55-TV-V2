@@ -1,0 +1,51 @@
+{
+  "schema": 1,
+  "project": "MADSC55-TV-V2",
+  "created_utc": "2026-11-03",
+  "state": "INDEPENDENT_CIPHERTEXT_BACKUP_RESTORED_BUT_PRIVATE_KEY_DECRYPTION_NOT_VERIFIED",
+  "backup_provider": "owner_private_google_drive_outside_github",
+  "backup_folder_shared": false,
+  "source_runs": [
+    41633732031,
+    41669860900
+  ],
+  "encrypted_artifact_checks": [
+    {
+      "label": "stage3-4955",
+      "source_artifact_id": 13229641611,
+      "archive_size_bytes": 1693785,
+      "source_zip_sha256": "808152d71ae5bc81aaf594e151753272dadcdd3495c9231bb781598bd934a7b3",
+      "drive_readback_sha256": "808152d71ae5bc81aaf594e151753272dadcdd3495c9231bb781598bd934a7b3",
+      "sealed_record_counts": {
+        "stage3-original-github-recovered.sealed": 2844,
+        "stage3-git-history-recovered.sealed": 4902,
+        "stage3-original-configured-recovered.sealed": 2075,
+        "stage3-dearbulut-health-recovered.sealed": 1861
+      }
+    },
+    {
+      "label": "orphan-107",
+      "source_artifact_id": 13247127468,
+      "archive_size_bytes": 85339,
+      "source_zip_sha256": "09b71f108e0d6dc59e8b148196725a26deb9f823eab7a231a054807f96a9f58b",
+      "drive_readback_sha256": "09b71f108e0d6dc59e8b148196725a26deb9f823eab7a231a054807f96a9f58b",
+      "sealed_record_counts": {
+        "three-source-all-historical-candidates.sealed": 107,
+        "three-source-av-verified.sealed": 4
+      }
+    }
+  ],
+  "historic_hash_count": 4955,
+  "historic_identity_sha256": "e84cf1273ae54fc89de5d7edc3a46b4db78b91ddd7d6953dabdde30a6c3e0c83",
+  "historic_rows_sha256": "ee00a844a028e3410715d411467a2d3306f5f5cc4565766140b6438e786cdd27",
+  "orphan_source_occurrences": 55,
+  "orphan_unique_metadata_identities": 50,
+  "independent_upload_and_download": true,
+  "ciphertext_zip_digest_verified": true,
+  "envelope_structure_verified": true,
+  "encrypted_url_decryption_verified": false,
+  "production_acceptance_complete": false,
+  "pending_requirement": "original matching RSA private key for four stage3 and two orphan sealed envelopes, and genuine versioned production AES archive restore",
+  "protected_playlist_modified": false,
+  "world_discovery_triggered": false
+}

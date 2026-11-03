@@ -1,0 +1,140 @@
+name: V2 Master Engine
+on:
+  push:
+    branches:
+      - madsc/v2-discovery-bulk-20261031
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  offline-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install test dependencies
+        run: python -m pip install cryptography==44.0.2 PyYAML==6.0.2
+      - name: Verify protected playlist SHA-256
+        run: |
+          python - <<'PY'
+          import hashlib
+          import pathlib
+          import subprocess
+          path = 'MADSC55_TV_IBO_CALISANLAR_TEST.m3u8'
+          baseline = subprocess.check_output(['git', 'show', 'HEAD:' + path])
+          current = pathlib.Path(path).read_bytes()
+          before = hashlib.sha256(baseline).hexdigest()
+          after = hashlib.sha256(current).hexdigest()
+          print(f'Protected playlist SHA-256 HEAD={before} working_tree={after}')
+          immutable_blob = subprocess.check_output(['git', 'hash-object', path], text=True).strip()
+          if immutable_blob != '4b1c3cea4b5107a425abab60f62d41f9f81e05a7':
+              raise SystemExit('Protected playlist differs from immutable baseline')
+          if before != after:
+              raise SystemExit('Protected playlist SHA-256 mismatch')
+          PY
+      - name: Compile Master Engine modules
+        run: python -m compileall -q v2
+      - name: Run all offline regressions and preserve logs
+        shell: bash
+        run: |
+          mkdir -p v2/reports/master-ci
+          failed=0
+          PYTHONPATH=v2 python -m unittest discover -s v2 -p 'test_*.py' -v > v2/reports/master-ci/unittest.log 2>&1 || failed=1
+          python v2/test_playlist_invariants.py > v2/reports/master-ci/playlist.log 2>&1 || failed=1
+          cat v2/reports/master-ci/*.log
+          grep -Eq '^Ran [1-9][0-9]* tests? in ' v2/reports/master-ci/unittest.log || failed=1
+          exit "$failed"
+      - name: Upload offline logs including failures
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v2-master-offline-${{ github.run_id }}
+          path: v2/reports/master-ci/
+          retention-days: 30
+      - name: Record offline test run identity
+        if: always()
+        run: |
+          echo "Run ID: ${GITHUB_RUN_ID}" >> "$GITHUB_STEP_SUMMARY"
+          echo "Commit: ${GITHUB_SHA}" >> "$GITHUB_STEP_SUMMARY"
+          echo "Run URL: https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" >> "$GITHUB_STEP_SUMMARY"
+  master:
+    needs: offline-tests
+    if: github.event_name == 'push' && contains(github.event.head_commit.message, '[run-live-master]')
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install archive dependency
+        run: python -m pip install 'cryptography>=42,<47'
+      - name: Offline master regressions
+        run: |
+          python v2/test_historical_url_recovery.py
+          python v2/test_master_engine.py
+          python v2/test_playlist_invariants.py
+      - name: Prepare encryption key for live scan
+        id: archive-key
+        env:
+          CONFIGURED_ARCHIVE_KEY: ${{ secrets.V2_ARCHIVE_KEY_HEX }}
+        shell: bash
+        run: |
+          python - <<'PY'
+          import os, secrets
+          from pathlib import Path
+          configured = os.environ.get("CONFIGURED_ARCHIVE_KEY", "")
+          persistent = False
+          if configured:
+              if len(configured) != 64:
+                  raise SystemExit("Configured archive key must contain exactly 64 hexadecimal characters")
+              try:
+                  bytes.fromhex(configured)
+              except ValueError:
+                  raise SystemExit("Configured archive key is not hexadecimal")
+              key = configured
+              persistent = True
+          else:
+              key = secrets.token_hex(32)
+          with open(os.environ["GITHUB_ENV"], "a", encoding="utf-8") as env:
+              env.write("V2_ARCHIVE_KEY_HEX=" + key + "\n")
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as output:
+              output.write("persistent=" + str(persistent).lower() + "\n")
+          print("::add-mask::" + key)
+          print("Archive mode: " + ("persistent configured key" if persistent else "ephemeral per-run key"))
+          PY
+      - name: Real master discovery and verification
+        run: |
+          mkdir -p v2/reports/master-run
+          python v2/master_engine.py --archive v2/reports/master-run/inventory.enc --out v2/reports/master-run/output --limit 500
+      - name: Remove unrecoverable ephemeral archive before artifact upload
+        if: always() && steps.archive-key.outputs.persistent != 'true'
+        run: |
+          rm -f v2/reports/master-run/inventory.enc
+          echo "Ephemeral encryption used: no persistent encrypted archive exported." >> "$GITHUB_STEP_SUMMARY"
+      - name: Record master run identity
+        if: always()
+        run: |
+          mkdir -p v2/reports/master-run
+          printf 'run_id=%s\ncommit_sha=%s\njob=master\n' "$GITHUB_RUN_ID" "$GITHUB_SHA" > v2/reports/master-run/run-identity.txt
+          cat v2/reports/master-run/run-identity.txt >> "$GITHUB_STEP_SUMMARY"
+      - name: Upload results even on partial failures
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v2-master-run-${{ github.run_id }}
+          path: |
+            v2/reports/master-run/output/
+            v2/reports/master-run/inventory.enc
+            v2/reports/master-run/run-identity.txt
+          retention-days: 30
+          if-no-files-found: warn
+      - name: Protect working tree
+        if: always()
+        run: |
+          git diff --exit-code -- MADSC55_TV_IBO_CALISANLAR_TEST.m3u8

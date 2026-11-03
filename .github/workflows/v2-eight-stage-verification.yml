@@ -1,0 +1,125 @@
+name: V2 Eight-Stage Runner Verification
+on:
+  push:
+    branches:
+      - madsc/v2-discovery-bulk-20261031
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  regression:
+    name: Offline regressions and protected playlist
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.7'
+      - name: Install pinned Python dependency
+        run: python -m pip install cryptography==44.0.2 PyYAML==6.0.2
+      - name: Verify protected playlist against committed HEAD
+        run: |
+          python - <<'PY'
+          import hashlib, pathlib, subprocess
+          p = 'MADSC55_TV_IBO_CALISANLAR_TEST.m3u8'
+          expected = subprocess.check_output(['git', 'show', 'HEAD:' + p])
+          baseline = '4b1c3cea4b5107a425abab60f62d41f9f81e05a7'
+          actual_blob = subprocess.check_output(['git', 'hash-object', p], text=True).strip()
+          assert actual_blob == baseline, 'Protected playlist changed from immutable baseline'
+          actual = pathlib.Path(p).read_bytes()
+          assert hashlib.sha256(expected).digest() == hashlib.sha256(actual).digest(), 'Protected playlist modified'
+          print('protected_playlist_sha256=' + hashlib.sha256(actual).hexdigest())
+          PY
+      - name: Compile modules
+        run: python -m compileall -q v2
+      - name: Run independent offline regressions with separate logs
+        shell: bash
+        run: |
+          mkdir -p v2/reports/ci
+          failed=0
+          # Discover TestCase tests in one suite; standalone scripts may contain zero unittest cases.
+          PYTHONPATH=v2 python -m unittest discover -s v2 -p 'test_*.py' -v >v2/reports/ci/unittest-discovery.log 2>&1 || failed=1
+          if ! grep -Eq '^Ran [1-9][0-9]* tests? in ' v2/reports/ci/unittest-discovery.log; then
+            echo 'ERROR: Bulk unittest discovery found no executed tests' | tee -a v2/reports/ci/unittest-discovery.log
+            failed=1
+          fi
+          python v2/test_playlist_invariants.py >v2/reports/ci/test_playlist_invariants.log 2>&1 || failed=1
+          cat v2/reports/ci/*.log
+          echo "Actions run: https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" >> "$GITHUB_STEP_SUMMARY"
+          echo "Commit: ${GITHUB_SHA}" >> "$GITHUB_STEP_SUMMARY"
+          if [ "$failed" -ne 0 ]; then
+            echo '=== FAILURES / ERRORS / TRACEBACKS ==='
+            grep -nE '^(FAIL:|ERROR:|FAILED |Traceback|ImportError|ModuleNotFoundError|AssertionError|SystemExit|usage:)' v2/reports/ci/*.log || true
+          fi
+          exit "$failed"
+      - name: Collect actual V2 Actions run status
+        if: always()
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          ACTIONS_REPORT: v2/reports/ci/actions-last10.json
+        run: |
+          python v2/actions_monitor.py >v2/reports/ci/actions-monitor.log 2>&1
+          cat v2/reports/ci/actions-monitor.log
+      - name: Record regression run identity and outcome
+        if: always()
+        shell: bash
+        env:
+          JOB_STATUS: ${{ job.status }}
+        run: |
+          mkdir -p v2/reports/ci
+          printf 'run_id=%s\ncommit_sha=%s\nworkflow=%s\njob=regression\nresult=%s\n' "$GITHUB_RUN_ID" "$GITHUB_SHA" "$GITHUB_WORKFLOW" "$JOB_STATUS" > v2/reports/ci/run-identity.txt
+          cat v2/reports/ci/run-identity.txt >> "$GITHUB_STEP_SUMMARY"
+      - name: Upload regression logs even on failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v2-regression-${{ github.run_id }}
+          path: v2/reports/ci/
+          retention-days: 30
+          if-no-files-found: warn
+  ffmpeg:
+    name: FFmpeg real local video and audio-only guard
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.7'
+      - name: Install pinned FFmpeg package
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg=7:6.1.1-3ubuntu5
+          ffmpeg -version | head -n 1
+      - name: Decode real generated video frame and reject audio-only
+        shell: bash
+        run: |
+          mkdir -p v2/reports/ci
+          set -o pipefail
+          ffmpeg -hide_banner -nostdin -loglevel error -f lavfi -i 'testsrc=size=128x72:rate=1' -frames:v 1 -f framemd5 - >v2/reports/ci/ffmpeg-video.log 2>v2/reports/ci/ffmpeg-video-error.log
+          grep -q '#media_type 0: video' v2/reports/ci/ffmpeg-video.log
+          grep -E '^[0-9]+,' v2/reports/ci/ffmpeg-video.log
+          if ffmpeg -hide_banner -nostdin -loglevel error -f lavfi -i 'sine=frequency=440:sample_rate=44100' -map 0:v:0 -frames:v 1 -f framemd5 - >v2/reports/ci/ffmpeg-audio-only.log 2>&1; then
+            echo 'Audio-only unexpectedly produced a video frame' >&2
+            exit 1
+          fi
+      - name: Record FFmpeg run identity and outcome
+        if: always()
+        shell: bash
+        env:
+          JOB_STATUS: ${{ job.status }}
+        run: |
+          mkdir -p v2/reports/ci
+          printf 'run_id=%s\ncommit_sha=%s\nworkflow=%s\njob=ffmpeg\nresult=%s\n' "$GITHUB_RUN_ID" "$GITHUB_SHA" "$GITHUB_WORKFLOW" "$JOB_STATUS" > v2/reports/ci/run-identity.txt
+          cat v2/reports/ci/run-identity.txt >> "$GITHUB_STEP_SUMMARY"
+      - name: Upload FFmpeg logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v2-ffmpeg-${{ github.run_id }}
+          path: v2/reports/ci/
+          retention-days: 30
+          if-no-files-found: warn

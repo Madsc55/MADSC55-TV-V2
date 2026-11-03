@@ -1,0 +1,22 @@
+# Protected V2: previous automatic playlist publisher is intentionally locked.
+# Original implementation remains in Git history. Restore only after
+# explicit user-approved production/device verification.
+name: Bruksel Turk PNG Logo (V2 protected lock)
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  protected-readonly-check:
+    if: github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Protect main IBO file and reject automatic promotion
+        shell: bash
+        run: |
+          test "$(git hash-object MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)" = '4b1c3cea4b5107a425abab60f62d41f9f81e05a7'
+          test -z "$(git status --porcelain -- MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)"
+          echo "Legacy playlist mutation disabled; no scan, commit or push is executed."

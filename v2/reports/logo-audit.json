@@ -1,0 +1,7539 @@
+{
+  "total": 12648,
+  "filled_from_existing": 31,
+  "filled_from_iptv_org": 0,
+  "unresolved_counts": {
+    "YENI_TURK": 172,
+    "YEDEKLER": 1709
+  },
+  "unresolved": {
+    "YENI_TURK": [
+      {
+        "name": "24",
+        "tvg_id": ""
+      },
+      {
+        "name": "A HABER TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "A NEWS FHD TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "A PARA FHD TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "A SPORT",
+        "tvg_id": ""
+      },
+      {
+        "name": "A2",
+        "tvg_id": ""
+      },
+      {
+        "name": "A2 TV FHD TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "ANIMAL PLANET HD TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "ANIMAL PLANET TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "ATV AVRUPA TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "ATV FHD TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "ATV TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "BABY TV TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "BBC EARTH HD TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "BBC EARTH TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "BEGEN TV",
+        "tvg_id": ""
+      },
+      {
+        "name": "BEIN IZ TV HD",
+        "tvg_id": ""
+      },
+      {
+        "name": "BEIN MOVIES ACTION 2 HD TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "BEIN MOVIES ACTION 2 HD TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "BEIN MOVIES ACTION HD TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "BEIN MOVIES FAMILY HD TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "BEIN MOVIES FAMILY HD TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "BEIN SERIES COMEDY HD TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "BEIN SPORTS HABER FHD TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "BELEMTÜRK",
+        "tvg_id": ""
+      },
+      {
+        "name": "BEYAZ TV FHD TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "BEYAZ TV TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "BI KANAL",
+        "tvg_id": ""
+      },
+      {
+        "name": "BI KANAL",
+        "tvg_id": ""
+      },
+      {
+        "name": "BOOMERANG HD TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "BURSA LINE TV",
+        "tvg_id": ""
+      },
+      {
+        "name": "CARTOON NETWORK TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "CNN TURK FHD TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "DA VINCI LEARNING HD TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "DERIN TV",
+        "tvg_id": ""
+      },
+      {
+        "name": "DISCOVERY SCIENCE TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "DISNEY XD TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "DMAX FHD TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "DMAX TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "DREAM TURK FHD TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "D�ZG�N TV",
+        "tvg_id": ""
+      },
+      {
+        "name": "EDIRNE TV",
+        "tvg_id": ""
+      },
+      {
+        "name": "EGE TV TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "EKOL TV",
+        "tvg_id": "ext"
+      },
+      {
+        "name": "ESENLER SEHIR EKRANI",
+        "tvg_id": ""
+      },
+      {
+        "name": "EURO D TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "EUROSTAR HD TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "FOX TV FHD TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "FOX TV HD TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "FOX TV TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "GLOBAL HABER TV TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "GRT GAZİANTEP TV",
+        "tvg_id": ""
+      },
+      {
+        "name": "GURBET 24 TV",
+        "tvg_id": ""
+      },
+      {
+        "name": "HABER 61",
+        "tvg_id": ""
+      },
+      {
+        "name": "HABER TURK FHD TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "HISTORY CHANNEL HD TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "HRT AKDENIZ",
+        "tvg_id": ""
+      },
+      {
+        "name": "İZMİR TIME 35 TV",
+        "tvg_id": ""
+      },
+      {
+        "name": "KANAL 19",
+        "tvg_id": ""
+      },
+      {
+        "name": "KANAL 19",
+        "tvg_id": ""
+      },
+      {
+        "name": "KANAL 19",
+        "tvg_id": ""
+      },
+      {
+        "name": "KANAL 23 FHD",
+        "tvg_id": ""
+      },
+      {
+        "name": "KANAL 53",
+        "tvg_id": ""
+      },
+      {
+        "name": "KANAL 7 AVRUPA TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "KANAL 7 FHD TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "KANAL 7 HD",
+        "tvg_id": ""
+      },
+      {
+        "name": "KANAL 7 TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "KANAL CAY TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "KANAL D PO SCTE",
+        "tvg_id": ""
+      },
+      {
+        "name": "KANAL D TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "KANAL PLUS",
+        "tvg_id": ""
+      },
+      {
+        "name": "KANAL PLUS",
+        "tvg_id": ""
+      },
+      {
+        "name": "KANAL V TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "KOCAELI TV TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "KRT TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "LA CASA DE PAPEL-TR S03 LA CASA DE PAPEL S03E01 1080P NF DUAL [TR-SPA] WEB-DL DDP5.1 H264 - TURG",
+        "tvg_id": ""
+      },
+      {
+        "name": "LA CASA DE PAPEL-TR S03 LA CASA DE PAPEL S03E02 1080P NF DUAL [TR-SPA] WEB-DL DDP5.1 H264 - TURG",
+        "tvg_id": ""
+      },
+      {
+        "name": "LA CASA DE PAPEL-TR S03 LA CASA DE PAPEL S03E03 1080P NF DUAL [TR-SPA] WEB-DL DDP5.1 H264 - TURG",
+        "tvg_id": ""
+      },
+      {
+        "name": "LA CASA DE PAPEL-TR S03 LA CASA DE PAPEL S03E04 1080P NF DUAL [TR-SPA] WEB-DL DDP5.1 H264 - TURG",
+        "tvg_id": ""
+      },
+      {
+        "name": "LA CASA DE PAPEL-TR S03 LA CASA DE PAPEL S03E05 1080P NF DUAL [TR-SPA] WEB-DL DDP5.1 H264 - TURG",
+        "tvg_id": ""
+      },
+      {
+        "name": "LA CASA DE PAPEL-TR S03 LA CASA DE PAPEL S03E06 1080P NF DUAL [TR-SPA] WEB-DL DDP5.1 H264 - TURG",
+        "tvg_id": ""
+      },
+      {
+        "name": "LA CASA DE PAPEL-TR S03 LA CASA DE PAPEL S03E07 1080P NF DUAL [TR-SPA] WEB-DL DDP5.1 H264 - TURG",
+        "tvg_id": ""
+      },
+      {
+        "name": "LA CASA DE PAPEL-TR S03 LA CASA DE PAPEL S03E08 1080P NF DUAL [TR-SPA] WEB-DL DDP5.1 H264 - TURG",
+        "tvg_id": ""
+      },
+      {
+        "name": "LOVE NATURE HD TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "MINIKA COCUK TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "MINIKA GO TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "MOVIE SMART CLASSIC HD TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "MR  ROBOT TR S01 MR.ROBOT.S01E01",
+        "tvg_id": ""
+      },
+      {
+        "name": "MR  ROBOT TR S01 MR.ROBOT.S01E02",
+        "tvg_id": ""
+      },
+      {
+        "name": "MR  ROBOT TR S01 MR.ROBOT.S01E03",
+        "tvg_id": ""
+      },
+      {
+        "name": "MR  ROBOT TR S01 MR.ROBOT.S01E04",
+        "tvg_id": ""
+      },
+      {
+        "name": "MR  ROBOT TR S01 MR.ROBOT.S01E05",
+        "tvg_id": ""
+      },
+      {
+        "name": "MR  ROBOT TR S01 MR.ROBOT.S01E06",
+        "tvg_id": ""
+      },
+      {
+        "name": "MR  ROBOT TR S01 MR.ROBOT.S01E07",
+        "tvg_id": ""
+      },
+      {
+        "name": "MR  ROBOT TR S01 MR.ROBOT.S01E08",
+        "tvg_id": ""
+      },
+      {
+        "name": "MR  ROBOT TR S01 MR.ROBOT.S01E09",
+        "tvg_id": ""
+      },
+      {
+        "name": "MR  ROBOT TR S01 MR.ROBOT.S01E10",
+        "tvg_id": ""
+      },
+      {
+        "name": "MR  ROBOT TR S02 MR.ROBOT.S02E01.TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "MR  ROBOT TR S02 MR.ROBOT.S02E02.TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "MR  ROBOT TR S02 MR.ROBOT.S02E03.TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "MR  ROBOT TR S02 MR.ROBOT.S02E04.TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "MR  ROBOT TR S02 MR.ROBOT.S02E05.TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "MR  ROBOT TR S02 MR.ROBOT.S02E06",
+        "tvg_id": ""
+      },
+      {
+        "name": "MR  ROBOT TR S02 MR.ROBOT.S02E07.TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "MR  ROBOT TR S02 MR.ROBOT.S02E08.TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "MR  ROBOT TR S02 MR.ROBOT.S02E09.TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "MR  ROBOT TR S02 MR.ROBOT.S02E10.TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "MR  ROBOT TR S02 MR.ROBOT.S02E11.TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "MR  ROBOT TR S02 MR.ROBOT.S02E12.TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "MR  ROBOT TR S03 MR.ROBOT.S03E01.TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "MR  ROBOT TR S03 MR.ROBOT.S03E02.TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "MR  ROBOT TR S03 MR.ROBOT.S03E03.TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "MR  ROBOT TR S03 MR.ROBOT.S03E04.TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "MR  ROBOT TR S03 MR.ROBOT.S03E05.TR.",
+        "tvg_id": ""
+      },
+      {
+        "name": "MR  ROBOT TR S03 MR.ROBOT.S03E06.TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "MR  ROBOT TR S03 MR.ROBOT.S03E07.TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "MR  ROBOT TR S03 MR.ROBOT.S03E08.TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "MR  ROBOT TR S03 MR.ROBOT.S03E09.TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "MR  ROBOT TR S03 MR.ROBOT.S03E10.TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "MR  ROBOT TR S04 MR ROBOT S04E02",
+        "tvg_id": ""
+      },
+      {
+        "name": "MR  ROBOT TR S04 MR ROBOT S04E04",
+        "tvg_id": ""
+      },
+      {
+        "name": "NATGEO HD TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "NATGEO WILD HD TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "NICK JR TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "NICKELODEON TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "NR 1 TURK",
+        "tvg_id": ""
+      },
+      {
+        "name": "NR1 TURK TV HD",
+        "tvg_id": ""
+      },
+      {
+        "name": "NTV FHD TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "NTV TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "POWER TV AKUSTIK",
+        "tvg_id": ""
+      },
+      {
+        "name": "RIZE TURK HD",
+        "tvg_id": ""
+      },
+      {
+        "name": "RUHA TV",
+        "tvg_id": ""
+      },
+      {
+        "name": "RUHA TV",
+        "tvg_id": ""
+      },
+      {
+        "name": "RUMELI TV TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "SDM TV",
+        "tvg_id": ""
+      },
+      {
+        "name": "SHOW MAX (DIZI & SINEMA)",
+        "tvg_id": ""
+      },
+      {
+        "name": "SHOW TV TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "SONMEZ TV",
+        "tvg_id": ""
+      },
+      {
+        "name": "SONMEZ TV",
+        "tvg_id": ""
+      },
+      {
+        "name": "STAR TV FHD TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "STAR-TV",
+        "tvg_id": "star-tv-hd-tr"
+      },
+      {
+        "name": "T.A.Y TV TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "TATLISES",
+        "tvg_id": ""
+      },
+      {
+        "name": "TELE 1 TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "TEVE2 FHD TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "TGRT BELGESEL TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "TGRT HABER FHD TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "TGRT HABER HD TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "TH TURK HABER TV",
+        "tvg_id": ""
+      },
+      {
+        "name": "TLC HD TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "TLC TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "TOKAT TV",
+        "tvg_id": ""
+      },
+      {
+        "name": "TRT 1 FHD TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "TRT 1 HD",
+        "tvg_id": ""
+      },
+      {
+        "name": "TRT 2 FHD TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "TRT BELGESEL TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "TRT HABER HD TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "TRT HD 4K",
+        "tvg_id": ""
+      },
+      {
+        "name": "TRT TURK EUROPA",
+        "tvg_id": ""
+      },
+      {
+        "name": "TV 8 FHD TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "TV 8 HD TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "TV 8 INT TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "TV 8.5 FHD TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "TV 8.5 HD TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "TV NET TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "TV100 TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "TV4",
+        "tvg_id": ""
+      },
+      {
+        "name": "TV8 HD",
+        "tvg_id": ""
+      },
+      {
+        "name": "ULKE TV TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "ULUSAL KANAL TR",
+        "tvg_id": ""
+      },
+      {
+        "name": "VIYANA TV HD",
+        "tvg_id": ""
+      },
+      {
+        "name": "YABAN TV TR",
+        "tvg_id": ""
+      }
+    ],
+    "YEDEKLER": [
+      {
+        "name": "30A TV CLASSIC MOVIES (720P)",
+        "tvg_id": "30ATVClassicMovies.us@SD"
+      },
+      {
+        "name": "4 AFGHANISTAN",
+        "tvg_id": "4Afghanistan.fr@SD"
+      },
+      {
+        "name": "4 MUSIC",
+        "tvg_id": "4Music.fr@SD"
+      },
+      {
+        "name": "6 WISE TV (720P)",
+        "tvg_id": "6WiseTv.us@SD"
+      },
+      {
+        "name": "A VİVA TV",
+        "tvg_id": ""
+      },
+      {
+        "name": "AFILI ASK-TR S01 AFILI ASK S01E01",
+        "tvg_id": ""
+      },
+      {
+        "name": "AFILI ASK-TR S01 AFILI ASK S01E02",
+        "tvg_id": ""
+      },
+      {
+        "name": "AFILI ASK-TR S01 AFILI ASK S01E03",
+        "tvg_id": ""
+      },
+      {
+        "name": "AFILI ASK-TR S01 AFILI ASK S01E04",
+        "tvg_id": ""
+      },
+      {
+        "name": "AFILI ASK-TR S01 AFILI ASK S01E05",
+        "tvg_id": ""
+      },
+      {
+        "name": "AFILI ASK-TR S01 AFILI ASK S01E06",
+        "tvg_id": ""
+      },
+      {
+        "name": "AFILI ASK-TR S01 AFILI ASK S01E07",
+        "tvg_id": ""
+      },
+      {
+        "name": "AFILI ASK-TR S01 AFILI ASK S01E09",
+        "tvg_id": ""
+      },
+      {
+        "name": "AFILI ASK-TR S01 AFILI ASK S01E10",
+        "tvg_id": ""
+      },
+      {
+        "name": "AFILI ASK-TR S01 AFILI ASK S01E11",
+        "tvg_id": ""
+      },
+      {
+        "name": "AFILI ASK-TR S01 AFILI ASK S01E12",
+        "tvg_id": ""
+      },
+      {
+        "name": "AFILI ASK-TR S01 AFILI ASK S01E13",
+        "tvg_id": ""
+      },
+      {
+        "name": "AFILI ASK-TR S01 AFILI ASK S01E14",
+        "tvg_id": ""
+      },
+      {
+        "name": "AFILI ASK-TR S01 AFILI ASK S01E15",
+        "tvg_id": ""
+      },
+      {
+        "name": "AFILI ASK-TR S01 AFILI ASK S01E16",
+        "tvg_id": ""
+      },
+      {
+        "name": "AFILI ASK-TR S01 AFILI ASK S01E17",
+        "tvg_id": ""
+      },
+      {
+        "name": "AFILI ASK-TR S01 AFILI ASK S01E18",
+        "tvg_id": ""
+      },
+      {
+        "name": "AFILI ASK-TR S01 AFILI ASK S01E19",
+        "tvg_id": ""
+      },
+      {
+        "name": "AFILI ASK-TR S01 AFILI ASK S01E21",
+        "tvg_id": ""
+      },
+      {
+        "name": "AFILI ASK-TR S01 AFILI ASK S01E22",
+        "tvg_id": ""
+      },
+      {
+        "name": "AFILI ASK-TR S01 AFILI ASK S01E24",
+        "tvg_id": ""
+      },
+      {
+        "name": "AFILI ASK-TR S01 AFILI ASK S01E25",
+        "tvg_id": ""
+      },
+      {
+        "name": "AFILI ASK-TR S01 AFILI ASK S01E26",
+        "tvg_id": ""
+      },
+      {
+        "name": "AFILI ASK-TR S01 AFILI ASK S01E27",
+        "tvg_id": ""
+      },
+      {
+        "name": "AFILI ASK-TR S01 AFILI ASK S01E29",
+        "tvg_id": ""
+      },
+      {
+        "name": "AFILI ASK-TR S01 AFILI ASK S01E30",
+        "tvg_id": ""
+      },
+      {
+        "name": "AFILI ASK-TR S01 AFILI ASK S01E31",
+        "tvg_id": ""
+      },
+      {
+        "name": "AFILI ASK-TR S01 AFILI ASK S01E32",
+        "tvg_id": ""
+      },
+      {
+        "name": "AFILI ASK-TR S01 AFILI ASK S01E33",
+        "tvg_id": ""
+      },
+      {
+        "name": "AFILI ASK-TR S01 AFILI ASK S01E34",
+        "tvg_id": ""
+      },
+      {
+        "name": "AFILI ASK-TR S01 AFILI ASK S01E35",
+        "tvg_id": ""
+      },
+      {
+        "name": "AFILI ASK-TR S01 AFILI ASK S01E36",
+        "tvg_id": ""
+      },
+      {
+        "name": "AFILI ASK-TR S01 AFILI ASK S01E37",
+        "tvg_id": ""
+      },
+      {
+        "name": "AFILI ASK-TR S01 AFILI ASK S01E38",
+        "tvg_id": ""
+      },
+      {
+        "name": "AFILI ASK-TR S01 AFILI ASK S01E40",
+        "tvg_id": ""
+      },
+      {
+        "name": "AFILI ASK-TR S01 AFILI ASK S01E41",
+        "tvg_id": ""
+      },
+      {
+        "name": "AFILI ASK-TR S01 AFILI ASK S01E42",
+        "tvg_id": ""
+      },
+      {
+        "name": "AFRA FILM",
+        "tvg_id": "AfraFilm.ir@SD"
+      },
+      {
+        "name": "AIR CONNECT TV",
+        "tvg_id": ""
+      },
+      {
+        "name": "ALHAQEQA ALDAWLIA (1080P) [NOT 24/7]",
+        "tvg_id": "AlhaqeqaAldawlia.jo@SD"
+      },
+      {
+        "name": "AMC Ⓖ",
+        "tvg_id": "AMC.hu"
+      },
+      {
+        "name": "ANNE-TR S01 ANNE.S01E01",
+        "tvg_id": ""
+      },
+      {
+        "name": "ANNE-TR S01 ANNE.S01E02",
+        "tvg_id": ""
+      },
+      {
+        "name": "ANNE-TR S01 ANNE.S01E03",
+        "tvg_id": ""
+      },
+      {
+        "name": "ANNE-TR S01 ANNE.S01E04",
+        "tvg_id": ""
+      },
+      {
+        "name": "ANNE-TR S01 ANNE.S01E05",
+        "tvg_id": ""
+      },
+      {
+        "name": "ANNE-TR S01 ANNE.S01E06",
+        "tvg_id": ""
+      },
+      {
+        "name": "ANNE-TR S01 ANNE.S01E07",
+        "tvg_id": ""
+      },
+      {
+        "name": "ANNE-TR S01 ANNE.S01E08",
+        "tvg_id": ""
+      },
+      {
+        "name": "ANNE-TR S01 ANNE.S01E09",
+        "tvg_id": ""
+      },
+      {
+        "name": "ANNE-TR S01 ANNE.S01E10",
+        "tvg_id": ""
+      },
+      {
+        "name": "ANNE-TR S01 ANNE.S01E13",
+        "tvg_id": ""
+      },
+      {
+        "name": "ANNE-TR S01 ANNE.S01E14",
+        "tvg_id": ""
+      },
+      {
+        "name": "ANNE-TR S01 ANNE.S01E15",
+        "tvg_id": ""
+      },
+      {
+        "name": "ANNE-TR S01 ANNE.S01E20",
+        "tvg_id": ""
+      },
+      {
+        "name": "ANNE-TR S01 ANNE.S01E23",
+        "tvg_id": ""
+      },
+      {
+        "name": "ANNE-TR S01 ANNE.S01E24",
+        "tvg_id": ""
+      },
+      {
+        "name": "ANNE-TR S01 ANNE.S01E25",
+        "tvg_id": ""
+      },
+      {
+        "name": "ANNE-TR S01 ANNE.S01E26",
+        "tvg_id": ""
+      },
+      {
+        "name": "ANNE-TR S01 ANNE.S01E27",
+        "tvg_id": ""
+      },
+      {
+        "name": "ANNE-TR S01 ANNE.S01E28",
+        "tvg_id": ""
+      },
+      {
+        "name": "ANNE-TR S01 ANNE.S01E29",
+        "tvg_id": ""
+      },
+      {
+        "name": "ANNE-TR S01 ANNE.S01E30",
+        "tvg_id": ""
+      },
+      {
+        "name": "ANNE-TR S01 ANNE.S01E31",
+        "tvg_id": ""
+      },
+      {
+        "name": "ANNE-TR S01 ANNE.S01E32",
+        "tvg_id": ""
+      },
+      {
+        "name": "ANNE-TR S01 ANNE.S01E33.FINAL",
+        "tvg_id": ""
+      },
+      {
+        "name": "ARAX TV",
+        "tvg_id": "AraxTV.ir@SD"
+      },
+      {
+        "name": "ARKA SOKAKLAR-TR S13 ARKA.SOKAKLAR.S13E01",
+        "tvg_id": ""
+      },
+      {
+        "name": "ARKA SOKAKLAR-TR S13 ARKA.SOKAKLAR.S13E02",
+        "tvg_id": ""
+      },
+      {
+        "name": "ARKA SOKAKLAR-TR S13 ARKA.SOKAKLAR.S13E03",
+        "tvg_id": ""
+      },
+      {
+        "name": "ARKA SOKAKLAR-TR S13 ARKA.SOKAKLAR.S13E04",
+        "tvg_id": ""
+      },
+      {
+        "name": "ARKA SOKAKLAR-TR S13 ARKA.SOKAKLAR.S13E05",
+        "tvg_id": ""
+      },
+      {
+        "name": "ARKA SOKAKLAR-TR S13 ARKA.SOKAKLAR.S13E06",
+        "tvg_id": ""
+      },
+      {
+        "name": "ARKA SOKAKLAR-TR S13 ARKA.SOKAKLAR.S13E07",
+        "tvg_id": ""
+      },
+      {
+        "name": "ARKA SOKAKLAR-TR S13 ARKA.SOKAKLAR.S13E08",
+        "tvg_id": ""
+      },
+      {
+        "name": "ARKA SOKAKLAR-TR S13 ARKA.SOKAKLAR.S13E09",
+        "tvg_id": ""
+      },
+      {
+        "name": "ARKA SOKAKLAR-TR S13 ARKA.SOKAKLAR.S13E10.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "ARKA SOKAKLAR-TR S13 ARKA.SOKAKLAR.S13E11.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "ARKA SOKAKLAR-TR S13 ARKA.SOKAKLAR.S13E12.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "ARKA SOKAKLAR-TR S13 ARKA.SOKAKLAR.S13E13.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "ARKA SOKAKLAR-TR S13 ARKA.SOKAKLAR.S13E14.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "ARKA SOKAKLAR-TR S13 ARKA.SOKAKLAR.S13E15.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "ARKA SOKAKLAR-TR S13 ARKA.SOKAKLAR.S13E17.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "ARKA SOKAKLAR-TR S13 ARKA.SOKAKLAR.S13E18.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "ARKA SOKAKLAR-TR S13 ARKA.SOKAKLAR.S13E19.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "ARKA SOKAKLAR-TR S13 ARKA.SOKAKLAR.S13E20.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "ARKA SOKAKLAR-TR S13 ARKA.SOKAKLAR.S13E21.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "ARKA SOKAKLAR-TR S13 ARKA.SOKAKLAR.S13E22.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "ARKA SOKAKLAR-TR S13 ARKA.SOKAKLAR.S13E23.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "ARKA SOKAKLAR-TR S13 ARKA.SOKAKLAR.S13E24.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "ARKA SOKAKLAR-TR S13 ARKA.SOKAKLAR.S13E25.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "ARKA SOKAKLAR-TR S13 ARKA.SOKAKLAR.S13E26.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "ARKA SOKAKLAR-TR S13 ARKA.SOKAKLAR.S13E27.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "ARKA SOKAKLAR-TR S13 ARKA.SOKAKLAR.S13E28",
+        "tvg_id": ""
+      },
+      {
+        "name": "ARKA SOKAKLAR-TR S13 ARKA.SOKAKLAR.S13E29",
+        "tvg_id": ""
+      },
+      {
+        "name": "ARKA SOKAKLAR-TR S13 ARKA.SOKAKLAR.S13E30.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "ARKA SOKAKLAR-TR S13 ARKA.SOKAKLAR.S13E31.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "ARKA SOKAKLAR-TR S13 ARKA.SOKAKLAR.S13E32.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "ARKA SOKAKLAR-TR S13 ARKA.SOKAKLAR.S13E33.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "ARKA SOKAKLAR-TR S13 ARKA.SOKAKLAR.S13E34.SEASON.FINAL.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "ARKA SOKAKLAR-TR S14 ARKA.SOKAKLAR.S14E01.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "ARKO TV",
+        "tvg_id": "ArkoTV.ir@SD"
+      },
+      {
+        "name": "ARMENIA PREMIUM (720P)",
+        "tvg_id": "ArmeniaPremium.am@SD"
+      },
+      {
+        "name": "ARVAN TV",
+        "tvg_id": "ArvanTV.ir@SD"
+      },
+      {
+        "name": "ATRINA TV",
+        "tvg_id": "AtrinaTV.ir@SD"
+      },
+      {
+        "name": "AVA FAMILY",
+        "tvg_id": "AVAFamily.ir@SD"
+      },
+      {
+        "name": "AVLU-TR S01 AVLU.S01E01",
+        "tvg_id": ""
+      },
+      {
+        "name": "AVLU-TR S01 AVLU.S01E02",
+        "tvg_id": ""
+      },
+      {
+        "name": "AVLU-TR S01 AVLU.S01E03",
+        "tvg_id": ""
+      },
+      {
+        "name": "AVLU-TR S01 AVLU.S01E04",
+        "tvg_id": ""
+      },
+      {
+        "name": "AVLU-TR S01 AVLU.S01E05",
+        "tvg_id": ""
+      },
+      {
+        "name": "AVLU-TR S01 AVLU.S01E06",
+        "tvg_id": ""
+      },
+      {
+        "name": "AVLU-TR S01 AVLU.S01E07",
+        "tvg_id": ""
+      },
+      {
+        "name": "AVLU-TR S01 AVLU.S01E08",
+        "tvg_id": ""
+      },
+      {
+        "name": "AVLU-TR S01 AVLU.S01E09",
+        "tvg_id": ""
+      },
+      {
+        "name": "AVLU-TR S01 AVLU.S01E10",
+        "tvg_id": ""
+      },
+      {
+        "name": "AVLU-TR S01 AVLU.S01E11",
+        "tvg_id": ""
+      },
+      {
+        "name": "AVLU-TR S02 AVLU.S02E01",
+        "tvg_id": ""
+      },
+      {
+        "name": "AVLU-TR S02 AVLU.S02E02",
+        "tvg_id": ""
+      },
+      {
+        "name": "AVLU-TR S02 AVLU.S02E03",
+        "tvg_id": ""
+      },
+      {
+        "name": "AVLU-TR S02 AVLU.S02E04.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "AVLU-TR S02 AVLU.S02E05.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "AVLU-TR S02 AVLU.S02E06.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "AVLU-TR S02 AVLU.S02E07.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "AVLU-TR S02 AVLU.S02E08.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "AVLU-TR S02 AVLU.S02E09.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "AVLU-TR S02 AVLU.S02E10.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "AVLU-TR S02 AVLU.S02E11.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "AVLU-TR S02 AVLU.S02E12.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "AVLU-TR S02 AVLU.S02E13.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "AVLU-TR S02 AVLU.S02E14.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "AVLU-TR S02 AVLU.S02E15.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "AVLU-TR S02 AVLU.S02E16.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "AVLU-TR S02 AVLU.S02E17.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "AVLU-TR S02 AVLU.S02E18.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "AVLU-TR S02 AVLU.S02E19.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "AVLU-TR S02 AVLU.S02E20.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "AVLU-TR S02 AVLU.S02E21.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "AVLU-TR S02 AVLU.S02E22.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "AVLU-TR S02 AVLU.S02E23.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "AVLU-TR S02 AVLU.S02E24.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "AVLU-TR S02 AVLU.S02E25.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "AVLU-TR S02 AVLU.S02E26.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "AVLU-TR S02 AVLU.S02E27.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "AVLU-TR S02 AVLU.S02E28.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "AVLU-TR S02 AVLU.S02E29.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "AVLU-TR S02 AVLU.S02E30.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "AVLU-TR S02 AVLU.S02E31.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "AVLU-TR S02 AVLU.S02E32.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "AVLU-TR S02 AVLU.S02E33.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "AVLU-TR S02 AVLU.S02E34.SEASON.FINAL.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "BEHZAT C. AN ANKARA POLICEMAN-TR S04 BEHZAT C BIR ANKARA POLISIYESI S04E03.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "BEHZAT C. AN ANKARA POLICEMAN-TR S04 BEHZAT.C.BIR.ANKARA.POLISIYESI.S04E00.REHBER.BOLUM.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "BEHZAT C. AN ANKARA POLICEMAN-TR S04 BEHZATC BIR ANKARA POLISIYESI S04B04.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "BEHZAT C. AN ANKARA POLICEMAN-TR S04 BEHZATC BIR ANKARA POLISIYESI S04B05.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "BEHZAT C. AN ANKARA POLICEMAN-TR S04 BEHZATC BIR ANKARA POLISIYESI S04B06.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "BEHZAT C. AN ANKARA POLICEMAN-TR S04 BEHZATC BIR ANKARA POLISIYESI S04B07.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "BEHZAT C. AN ANKARA POLICEMAN-TR S04 BEHZATC BIR ANKARA POLISIYESI S04B08.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "BEHZAT C. AN ANKARA POLICEMAN-TR S04 BEHZATC BIR ANKARA POLISIYESI S04E02.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "BEHZAT C. AN ANKARA POLICEMAN-TR S04 BEHZATC.BIR.ANKARA.POLISIYESI.S04E01.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "BİR TV",
+        "tvg_id": ""
+      },
+      {
+        "name": "BIR ZAMANLAR CUKUROVA-TR S01 BIR.ZAMANLAR.CUKUROVA.S01E01",
+        "tvg_id": ""
+      },
+      {
+        "name": "BIR ZAMANLAR CUKUROVA-TR S01 BIR.ZAMANLAR.CUKUROVA.S01E02",
+        "tvg_id": ""
+      },
+      {
+        "name": "BIR ZAMANLAR CUKUROVA-TR S01 BIR.ZAMANLAR.CUKUROVA.S01E03",
+        "tvg_id": ""
+      },
+      {
+        "name": "BIR ZAMANLAR CUKUROVA-TR S01 BIR.ZAMANLAR.CUKUROVA.S01E04",
+        "tvg_id": ""
+      },
+      {
+        "name": "BIR ZAMANLAR CUKUROVA-TR S01 BIR.ZAMANLAR.CUKUROVA.S01E05.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "BIR ZAMANLAR CUKUROVA-TR S01 BIR.ZAMANLAR.CUKUROVA.S01E06",
+        "tvg_id": ""
+      },
+      {
+        "name": "BIR ZAMANLAR CUKUROVA-TR S01 BIR.ZAMANLAR.CUKUROVA.S01E07.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "BIR ZAMANLAR CUKUROVA-TR S01 BIR.ZAMANLAR.CUKUROVA.S01E08.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "BIR ZAMANLAR CUKUROVA-TR S01 BIR.ZAMANLAR.CUKUROVA.S01E09.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "BIR ZAMANLAR CUKUROVA-TR S01 BIR.ZAMANLAR.CUKUROVA.S01E10.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "BIR ZAMANLAR CUKUROVA-TR S01 BIR.ZAMANLAR.CUKUROVA.S01E11.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "BIR ZAMANLAR CUKUROVA-TR S01 BIR.ZAMANLAR.CUKUROVA.S01E12.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "BIR ZAMANLAR CUKUROVA-TR S01 BIR.ZAMANLAR.CUKUROVA.S01E13.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "BIR ZAMANLAR CUKUROVA-TR S01 BIR.ZAMANLAR.CUKUROVA.S01E14.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "BIR ZAMANLAR CUKUROVA-TR S01 BIR.ZAMANLAR.CUKUROVA.S01E15.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "BIR ZAMANLAR CUKUROVA-TR S01 BIR.ZAMANLAR.CUKUROVA.S01E16.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "BIR ZAMANLAR CUKUROVA-TR S01 BIR.ZAMANLAR.CUKUROVA.S01E17.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "BIR ZAMANLAR CUKUROVA-TR S01 BIR.ZAMANLAR.CUKUROVA.S01E18.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "BIR ZAMANLAR CUKUROVA-TR S01 BIR.ZAMANLAR.CUKUROVA.S01E19.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "BIR ZAMANLAR CUKUROVA-TR S01 BIR.ZAMANLAR.CUKUROVA.S01E20.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "BIR ZAMANLAR CUKUROVA-TR S01 BIR.ZAMANLAR.CUKUROVA.S01E21.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "BIR ZAMANLAR CUKUROVA-TR S01 BIR.ZAMANLAR.CUKUROVA.S01E22.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "BIR ZAMANLAR CUKUROVA-TR S01 BIR.ZAMANLAR.CUKUROVA.S01E23.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "BIR ZAMANLAR CUKUROVA-TR S01 BIR.ZAMANLAR.CUKUROVA.S01E24.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "BIR ZAMANLAR CUKUROVA-TR S01 BIR.ZAMANLAR.CUKUROVA.S01E25.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "BIR ZAMANLAR CUKUROVA-TR S01 BIR.ZAMANLAR.CUKUROVA.S01E26.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "BIR ZAMANLAR CUKUROVA-TR S01 BIR.ZAMANLAR.CUKUROVA.S01E27.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "BIR ZAMANLAR CUKUROVA-TR S01 BIR.ZAMANLAR.CUKUROVA.S01E28.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "BIR ZAMANLAR CUKUROVA-TR S01 BIR.ZAMANLAR.CUKUROVA.S01E29.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "BIR ZAMANLAR CUKUROVA-TR S01 BIR.ZAMANLAR.CUKUROVA.S01E30.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "BIR ZAMANLAR CUKUROVA-TR S01 BIR.ZAMANLAR.CUKUROVA.S01E31.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "BIR ZAMANLAR CUKUROVA-TR S01 BIR.ZAMANLAR.CUKUROVA.S01E32.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "BIR ZAMANLAR CUKUROVA-TR S01 BIR.ZAMANLAR.CUKUROVA.S01E33.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "BIR ZAMANLAR CUKUROVA-TR S01 BIR.ZAMANLAR.CUKUROVA.S01E34.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "BIR ZAMANLAR CUKUROVA-TR S01 BIR.ZAMANLAR.CUKUROVA.S01E35.SEASON.FINAL.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "BIR ZAMANLAR CUKUROVA-TR S02 BIR ZAMANLAR CUKUROVA S02E04",
+        "tvg_id": ""
+      },
+      {
+        "name": "BIR ZAMANLAR CUKUROVA-TR S02 BIR ZAMANLAR CUKUROVA S02E10",
+        "tvg_id": ""
+      },
+      {
+        "name": "BODRUM KENT TV",
+        "tvg_id": ""
+      },
+      {
+        "name": "BODRUM KENT TV",
+        "tvg_id": ""
+      },
+      {
+        "name": "BODRUM KENT TV",
+        "tvg_id": ""
+      },
+      {
+        "name": "BOZKIR-TR S01 BOZKIR.2018.S1B01",
+        "tvg_id": ""
+      },
+      {
+        "name": "BOZKIR-TR S01 BOZKIR.2018.S1B02",
+        "tvg_id": ""
+      },
+      {
+        "name": "BOZKIR-TR S01 BOZKIR.2018.S1B03",
+        "tvg_id": ""
+      },
+      {
+        "name": "BOZKIR-TR S01 BOZKIR.2018.S1B04",
+        "tvg_id": ""
+      },
+      {
+        "name": "BOZKIR-TR S01 BOZKIR.2018.S1B05",
+        "tvg_id": ""
+      },
+      {
+        "name": "BOZKIR-TR S01 BOZKIR.2018.S1B06",
+        "tvg_id": ""
+      },
+      {
+        "name": "BOZKIR-TR S01 BOZKIR.2018.S1B07",
+        "tvg_id": ""
+      },
+      {
+        "name": "BOZKIR-TR S01 BOZKIR.2018.S1B08",
+        "tvg_id": ""
+      },
+      {
+        "name": "BOZKIR-TR S01 BOZKIR.2018.S1B09",
+        "tvg_id": ""
+      },
+      {
+        "name": "BOZKIR-TR S01 BOZKIR.2018.S1B10",
+        "tvg_id": ""
+      },
+      {
+        "name": "CAFE FILM",
+        "tvg_id": "CafeFilm.ir@SD"
+      },
+      {
+        "name": "CANAL 26",
+        "tvg_id": ""
+      },
+      {
+        "name": "CARPISMA-TR S01 CARPISMA.S01E01.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "CARPISMA-TR S01 CARPISMA.S01E02.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "CARPISMA-TR S01 CARPISMA.S01E03.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "CARPISMA-TR S01 CARPISMA.S01E04.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "CARPISMA-TR S01 CARPISMA.S01E05.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "CARPISMA-TR S01 CARPISMA.S01E06.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "CARPISMA-TR S01 CARPISMA.S01E07.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "CARPISMA-TR S01 CARPISMA.S01E08.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "CARPISMA-TR S01 CARPISMA.S01E09.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "CARPISMA-TR S01 CARPISMA.S01E10.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "CARPISMA-TR S01 CARPISMA.S01E11.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "CARPISMA-TR S01 CARPISMA.S01E12.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "CARPISMA-TR S01 CARPISMA.S01E13.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "CARPISMA-TR S01 CARPISMA.S01E14.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "CARPISMA-TR S01 CARPISMA.S01E15.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "CARPISMA-TR S01 CARPISMA.S01E16.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "CARPISMA-TR S01 CARPISMA.S01E17.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "CARPISMA-TR S01 CARPISMA.S01E18.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "CARPISMA-TR S01 CARPISMA.S01E19.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "CARPISMA-TR S01 CARPISMA.S01E20.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "CARPISMA-TR S01 CARPISMA.S01E21.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "CARPISMA-TR S01 CARPISMA.S01E22.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "CARPISMA-TR S01 CARPISMA.S01E23.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "CARPISMA-TR S01 CARPISMA.S01E24.FINAL.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "CC-TV (720P)",
+        "tvg_id": "CCTV.us@SD"
+      },
+      {
+        "name": "CHERNOBYL-TR S01 CHERNOBYL.TR.S01E01",
+        "tvg_id": ""
+      },
+      {
+        "name": "CHERNOBYL-TR S01 CHERNOBYL.TR.S01E02",
+        "tvg_id": ""
+      },
+      {
+        "name": "CHERNOBYL-TR S01 CHERNOBYL.TR.S01E03",
+        "tvg_id": ""
+      },
+      {
+        "name": "CHERNOBYL-TR S01 CHERNOBYL.TR.S01E04",
+        "tvg_id": ""
+      },
+      {
+        "name": "CHERNOBYL-TR S01 CHERNOBYL.TR.S01E05.FINAL.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "CHOSEN TV ENGLISH (360P)",
+        "tvg_id": "ChosenTVEnglish.ng@SD"
+      },
+      {
+        "name": "CINE.BOX",
+        "tvg_id": "cinebox.bg@SD"
+      },
+      {
+        "name": "CLASSIC TV",
+        "tvg_id": "ClassicTV.ir@SD"
+      },
+      {
+        "name": "COOL",
+        "tvg_id": "Cool.hu"
+      },
+      {
+        "name": "CUKUR-TR S01 CUKUR.S01E01",
+        "tvg_id": ""
+      },
+      {
+        "name": "CUKUR-TR S01 CUKUR.S01E02",
+        "tvg_id": ""
+      },
+      {
+        "name": "CUKUR-TR S01 CUKUR.S01E03",
+        "tvg_id": ""
+      },
+      {
+        "name": "CUKUR-TR S01 CUKUR.S01E04",
+        "tvg_id": ""
+      },
+      {
+        "name": "CUKUR-TR S01 CUKUR.S01E05",
+        "tvg_id": ""
+      },
+      {
+        "name": "CUKUR-TR S01 CUKUR.S01E06",
+        "tvg_id": ""
+      },
+      {
+        "name": "CUKUR-TR S01 CUKUR.S01E07",
+        "tvg_id": ""
+      },
+      {
+        "name": "CUKUR-TR S01 CUKUR.S01E08",
+        "tvg_id": ""
+      },
+      {
+        "name": "CUKUR-TR S01 CUKUR.S01E09",
+        "tvg_id": ""
+      },
+      {
+        "name": "CUKUR-TR S01 CUKUR.S01E10",
+        "tvg_id": ""
+      },
+      {
+        "name": "CUKUR-TR S01 CUKUR.S01E11",
+        "tvg_id": ""
+      },
+      {
+        "name": "CUKUR-TR S01 CUKUR.S01E12",
+        "tvg_id": ""
+      },
+      {
+        "name": "CUKUR-TR S01 CUKUR.S01E13",
+        "tvg_id": ""
+      },
+      {
+        "name": "CUKUR-TR S01 CUKUR.S01E14",
+        "tvg_id": ""
+      },
+      {
+        "name": "CUKUR-TR S01 CUKUR.S01E15",
+        "tvg_id": ""
+      },
+      {
+        "name": "CUKUR-TR S01 CUKUR.S01E16",
+        "tvg_id": ""
+      },
+      {
+        "name": "CUKUR-TR S01 CUKUR.S01E17",
+        "tvg_id": ""
+      },
+      {
+        "name": "CUKUR-TR S01 CUKUR.S01E18",
+        "tvg_id": ""
+      },
+      {
+        "name": "CUKUR-TR S01 CUKUR.S01E19",
+        "tvg_id": ""
+      },
+      {
+        "name": "CUKUR-TR S01 CUKUR.S01E20",
+        "tvg_id": ""
+      },
+      {
+        "name": "CUKUR-TR S01 CUKUR.S01E21",
+        "tvg_id": ""
+      },
+      {
+        "name": "CUKUR-TR S01 CUKUR.S01E22",
+        "tvg_id": ""
+      },
+      {
+        "name": "CUKUR-TR S01 CUKUR.S01E24",
+        "tvg_id": ""
+      },
+      {
+        "name": "CUKUR-TR S01 CUKUR.S01E25",
+        "tvg_id": ""
+      },
+      {
+        "name": "CUKUR-TR S01 CUKUR.S01E26",
+        "tvg_id": ""
+      },
+      {
+        "name": "CUKUR-TR S01 CUKUR.S01E27",
+        "tvg_id": ""
+      },
+      {
+        "name": "CUKUR-TR S01 CUKUR.S01E28",
+        "tvg_id": ""
+      },
+      {
+        "name": "CUKUR-TR S01 CUKUR.S01E29",
+        "tvg_id": ""
+      },
+      {
+        "name": "CUKUR-TR S01 CUKUR.S01E30",
+        "tvg_id": ""
+      },
+      {
+        "name": "CUKUR-TR S01 CUKUR.S01E31",
+        "tvg_id": ""
+      },
+      {
+        "name": "CUKUR-TR S01 CUKUR.S01E32",
+        "tvg_id": ""
+      },
+      {
+        "name": "CUKUR-TR S01 CUKUR.S01E33",
+        "tvg_id": ""
+      },
+      {
+        "name": "CUKUR-TR S02 CUKUR.S02E01",
+        "tvg_id": ""
+      },
+      {
+        "name": "CUKUR-TR S02 CUKUR.S02E02",
+        "tvg_id": ""
+      },
+      {
+        "name": "CUKUR-TR S02 CUKUR.S02E03",
+        "tvg_id": ""
+      },
+      {
+        "name": "CUKUR-TR S02 CUKUR.S02E04",
+        "tvg_id": ""
+      },
+      {
+        "name": "CUKUR-TR S02 CUKUR.S02E05.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "CUKUR-TR S02 CUKUR.S02E06.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "CUKUR-TR S02 CUKUR.S02E07.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "CUKUR-TR S02 CUKUR.S02E08",
+        "tvg_id": ""
+      },
+      {
+        "name": "CUKUR-TR S02 CUKUR.S02E09",
+        "tvg_id": ""
+      },
+      {
+        "name": "CUKUR-TR S02 CUKUR.S02E10.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "CUKUR-TR S02 CUKUR.S02E11.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "CUKUR-TR S02 CUKUR.S02E12.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "CUKUR-TR S02 CUKUR.S02E13.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "CUKUR-TR S02 CUKUR.S02E14.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "CUKUR-TR S02 CUKUR.S02E15.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "CUKUR-TR S02 CUKUR.S02E16.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "CUKUR-TR S02 CUKUR.S02E17.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "CUKUR-TR S02 CUKUR.S02E18.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "CUKUR-TR S02 CUKUR.S02E19.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "CUKUR-TR S02 CUKUR.S02E20.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "CUKUR-TR S02 CUKUR.S02E21.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "CUKUR-TR S02 CUKUR.S02E22.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "CUKUR-TR S02 CUKUR.S02E23.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "CUKUR-TR S02 CUKUR.S02E24.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "CUKUR-TR S02 CUKUR.S02E25.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "CUKUR-TR S02 CUKUR.S02E26.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "CUKUR-TR S02 CUKUR.S02E27.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "CUKUR-TR S02 CUKUR.S02E28.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "CUKUR-TR S02 CUKUR.S02E29.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "CUKUR-TR S02 CUKUR.S02E30.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "CUKUR-TR S02 CUKUR.S02E31.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "CUKUR-TR S02 CUKUR.S02E32.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "CUKUR-TR S02 CUKUR.S02E33.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "CUKUR-TR S02 CUKUR.S02E34.SEASON.FINAL.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "CUKUR-TR S03 CUKUR S03E06",
+        "tvg_id": ""
+      },
+      {
+        "name": "CUKUR-TR S03 CUKUR.S03E01.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "DA NANG TV2 (1080P) [NOT 24/7]",
+        "tvg_id": "DaNangTV2.vn@SD"
+      },
+      {
+        "name": "DANCETV ALGORHYTHM (1080P)",
+        "tvg_id": "DanceTVAlgorhythm.ee@SD"
+      },
+      {
+        "name": "DARK-TR S01 DARK.TR.S01E01",
+        "tvg_id": ""
+      },
+      {
+        "name": "DARK-TR S01 DARK.TR.S01E02",
+        "tvg_id": ""
+      },
+      {
+        "name": "DARK-TR S01 DARK.TR.S01E03",
+        "tvg_id": ""
+      },
+      {
+        "name": "DARK-TR S01 DARK.TR.S01E04",
+        "tvg_id": ""
+      },
+      {
+        "name": "DARK-TR S01 DARK.TR.S01E05",
+        "tvg_id": ""
+      },
+      {
+        "name": "DARK-TR S01 DARK.TR.S01E06",
+        "tvg_id": ""
+      },
+      {
+        "name": "DARK-TR S01 DARK.TR.S01E07",
+        "tvg_id": ""
+      },
+      {
+        "name": "DARK-TR S01 DARK.TR.S01E08",
+        "tvg_id": ""
+      },
+      {
+        "name": "DARK-TR S01 DARK.TR.S01E09",
+        "tvg_id": ""
+      },
+      {
+        "name": "DARK-TR S01 DARK.TR.S01E10",
+        "tvg_id": ""
+      },
+      {
+        "name": "DATIS TV",
+        "tvg_id": "DatisTV.ir@SD"
+      },
+      {
+        "name": "DEJ TV",
+        "tvg_id": "DejTV.ir"
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S01 DIRILIS.ERTUGRUL.BLM.S01E01.HDTV.1080P",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S01 DIRILIS.ERTUGRUL.BLM.S01E02.HDTV.1080P",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S01 DIRILIS.ERTUGRUL.BLM.S01E03.HDTV.1080P",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S01 DIRILIS.ERTUGRUL.BLM.S01E04.HDTV.1080P",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S01 DIRILIS.ERTUGRUL.BLM.S01E05.HDTV.1080P",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S01 DIRILIS.ERTUGRUL.BLM.S01E06.HDTV.1080P",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S01 DIRILIS.ERTUGRUL.BLM.S01E07.HDTV.1080P",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S01 DIRILIS.ERTUGRUL.BLM.S01E08.HDTV.1080P",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S01 DIRILIS.ERTUGRUL.BLM.S01E09.HDTV.1080P",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S01 DIRILIS.ERTUGRUL.BLM.S01E10.HDTV.1080P",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S01 DIRILIS.ERTUGRUL.BLM.S01E11.HDTV-1080P.OPED",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S01 DIRILIS.ERTUGRUL.BLM.S01E12.HDTV-1080P.OPED",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S01 DIRILIS.ERTUGRUL.BLM.S01E13.HDTV.1080P",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S01 DIRILIS.ERTUGRUL.BLM.S01E14.HDTV.1080P-OPED",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S01 DIRILIS.ERTUGRUL.BLM.S01E15.HDTV.1080P-OPED",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S01 DIRILIS.ERTUGRUL.BLM.S01E16.HDTV.1080P",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S01 DIRILIS.ERTUGRUL.BLM.S01E17.HDTV.1080P",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S01 DIRILIS.ERTUGRUL.BLM.S01E18.HDTV.1080P",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S01 DIRILIS.ERTUGRUL.BLM.S01E19.HDTV.1080P",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S01 DIRILIS.ERTUGRUL.BLM.S01E20.HDTV.1080P",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S01 DIRILIS.ERTUGRUL.BLM.S01E21.HDTV.1080P",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S01 DIRILIS.ERTUGRUL.BLM.S01E22.HDTV.1080P",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S01 DIRILIS.ERTUGRUL.BLM.S01E23.HDTV.1080P",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S01 DIRILIS.ERTUGRUL.BLM.S01E24.HDTV.1080P",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S01 DIRILIS.ERTUGRUL.BLM.S01E25.HDTV.1080P",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S01 DIRILIS.ERTUGRUL.BLM.S01E26.HDTV.1080P",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S02 DIRILIS.ERTUGRUL.BLM.S02E27",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S02 DIRILIS.ERTUGRUL.BLM.S02E28",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S02 DIRILIS.ERTUGRUL.BLM.S02E29",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S02 DIRILIS.ERTUGRUL.BLM.S02E30.FULL.HD_BY.LORD",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S02 DIRILIS.ERTUGRUL.BLM.S02E31.FULLHD_BY.LORD",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S02 DIRILIS.ERTUGRUL.BLM.S02E32.FULLHD_BY.LORD",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S02 DIRILIS.ERTUGRUL.BLM.S02E33.FULLHD_BY.LORD",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S02 DIRILIS.ERTUGRUL.BLM.S02E34.FULLHD_BY.LORD",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S02 DIRILIS.ERTUGRUL.BLM.S02E35.FULLHD_BY.LORD",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S02 DIRILIS.ERTUGRUL.BLM.S02E36.FULLHD_BY.LORD",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S02 DIRILIS.ERTUGRUL.BLM.S02E37.FULLHD_BY.LORD",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S02 DIRILIS.ERTUGRUL.BLM.S02E38.FULLHD_BY.LORD",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S02 DIRILIS.ERTUGRUL.BLM.S02E39.FULLHD_BY.LORD",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S02 DIRILIS.ERTUGRUL.BLM.S02E40.FULLHD_BY.LORD",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S02 DIRILIS.ERTUGRUL.BLM.S02E41.FULLHD_BY.LORD",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S02 DIRILIS.ERTUGRUL.BLM.S02E42.FULLHD_BY.LORD",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S02 DIRILIS.ERTUGRUL.BLM.S02E43.FULLHD_1080P",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S02 DIRILIS.ERTUGRUL.BLM.S02E44.FULLHD_BY.LORD",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S02 DIRILIS.ERTUGRUL.BLM.S02E45.FULLHD_BY.LORD",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S02 DIRILIS.ERTUGRUL.BLM.S02E46.FULLHD_BY.LORD",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S02 DIRILIS.ERTUGRUL.BLM.S02E47.FULLHD_BY.LORD",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S02 DIRILIS.ERTUGRUL.BLM.S02E48.FULLHD_BY.LORD",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S02 DIRILIS.ERTUGRUL.BLM.S02E49.FULLHD_BY.LORD",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S02 DIRILIS.ERTUGRUL.BLM.S02E50.FULLHD_BY.LORD",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S02 DIRILIS.ERTUGRUL.BLM.S02E51.FULLHD_BY.LORD",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S02 DIRILIS.ERTUGRUL.BLM.S02E52.FULLHD_BY.LORD",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S02 DIRILIS.ERTUGRUL.BLM.S02E53.FULLHD_BY.LORD",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S02 DIRILIS.ERTUGRUL.BLM.S02E54.FULLHD_BY.LORD",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S02 DIRILIS.ERTUGRUL.BLM.S02E55.FULLHD_BY.LORD",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S02 DIRILIS.ERTUGRUL.BLM.S02E56.FULLHD_BY.LORD",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S02 DIRILIS.ERTUGRUL.BLM.S02E57.FULLHD",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S02 DIRILIS.ERTUGRUL.BLM.S02E58.FULLHD_BY.LORD",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S02 DIRILIS.ERTUGRUL.BLM.S02E59.FULLHD_BY.LORD",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S02 DIRILIS.ERTUGRUL.BLM.S02E60.FULLHD_BY.LORD",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S02 DIRILIS.ERTUGRUL.BLM.S02E61.FULLHD_BY.LORD",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S03 DIRILIS.ERTUGRUL.BLM.S03E62.WEB.DL.1080P_OPED",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S03 DIRILIS.ERTUGRUL.BLM.S03E63.WEB.DL.1080P_OPED",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S03 DIRILIS.ERTUGRUL.BLM.S03E64.WEB.DL.1080P_OPED",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S03 DIRILIS.ERTUGRUL.BLM.S03E65.WEB.DL.1080P_OPED",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S03 DIRILIS.ERTUGRUL.BLM.S03E66.WEB.DL.1080P_OPED",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S03 DIRILIS.ERTUGRUL.BLM.S03E67.WEB.DL.1080P_OPED",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S03 DIRILIS.ERTUGRUL.BLM.S03E68.WEB.DL.1080P_OPED",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S03 DIRILIS.ERTUGRUL.BLM.S03E69.WEB.DL.1080P",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S03 DIRILIS.ERTUGRUL.BLM.S03E70.WEB.DL.1080P_OPED",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S03 DIRILIS.ERTUGRUL.BLM.S03E71.WEB.DL.1080P_OPED",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S03 DIRILIS.ERTUGRUL.BLM.S03E72.WEB.DL.1080P_OPED",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S03 DIRILIS.ERTUGRUL.BLM.S03E73.WEB.DL.1080P_OPED",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S03 DIRILIS.ERTUGRUL.BLM.S03E74.WEB.DL.1080P_OPED",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S03 DIRILIS.ERTUGRUL.BLM.S03E75.WEB.DL.1080P_OPED",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S03 DIRILIS.ERTUGRUL.BLM.S03E76.WEB.DL.1080P_OPED",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S03 DIRILIS.ERTUGRUL.BLM.S03E77.WEB.DL.1080P_OPED",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S03 DIRILIS.ERTUGRUL.BLM.S03E78.HDTV.1080P.AC3",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S03 DIRILIS.ERTUGRUL.BLM.S03E79.WEB.DL.1080P_OPED",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S03 DIRILIS.ERTUGRUL.BLM.S03E80.WEB.DL.1080P_OPED",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S03 DIRILIS.ERTUGRUL.BLM.S03E81.WEB.DL.1080P_OPED",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S03 DIRILIS.ERTUGRUL.BLM.S03E82.WEB.DL.1080P_OPED",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S03 DIRILIS.ERTUGRUL.BLM.S03E83.WEB.DL.1080P",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S03 DIRILIS.ERTUGRUL.BLM.S03E84.HDTV.1080P-AC3_OPED",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S03 DIRILIS.ERTUGRUL.BLM.S03E85.HDTV.1080P-AC3_OPED",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S03 DIRILIS.ERTUGRUL.BLM.S03E86.WEB-DL.1080P-AC3_OPED",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S03 DIRILIS.ERTUGRUL.BLM.S03E87.WEB-DL.1080P-AC3",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S03 DIRILIS.ERTUGRUL.BLM.S03E88.WEB-DL.1080P",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S03 DIRILIS.ERTUGRUL.BLM.S03E89.WEB-DL.1080P",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S03 DIRILIS.ERTUGRUL.BLM.S03E90.WEB-DL.1080P",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S03 DIRILIS.ERTUGRUL.BLM.S03E91.WEB-DL.1080P.SEZON.FINALI",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S04 DIRILIS.ERTUGRUL.BLM.S04E100.WEB.DL.1080P",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S04 DIRILIS.ERTUGRUL.BLM.S04E101.WEB-DL.1080P.OPED",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S04 DIRILIS.ERTUGRUL.BLM.S04E102.BLM.1080P.WEB-DL.OPED",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S04 DIRILIS.ERTUGRUL.BLM.S04E103.BLM.1080P.WEB-DL.OPED",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S04 DIRILIS.ERTUGRUL.BLM.S04E104.BLM.1080P.WEB-DL.OPED",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S04 DIRILIS.ERTUGRUL.BLM.S04E105.BLM.1080P.WEB-DL.OPED",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S04 DIRILIS.ERTUGRUL.BLM.S04E106.BLM.1080P.WEB-DL.OPED",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S04 DIRILIS.ERTUGRUL.BLM.S04E107.BLM.1080P.WEB-DL.OPED",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S04 DIRILIS.ERTUGRUL.BLM.S04E108.BLM.1080P.WEB-DL.OPED",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S04 DIRILIS.ERTUGRUL.BLM.S04E109.BLM.1080P.WEB-DL.OPED",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S04 DIRILIS.ERTUGRUL.BLM.S04E110.BLM.1080P.WEB-DL.OPED",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S04 DIRILIS.ERTUGRUL.BLM.S04E111.BLM.1080P.WEB-DL.OPED",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S04 DIRILIS.ERTUGRUL.BLM.S04E112.BLM.1080P.WEB-DL",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S04 DIRILIS.ERTUGRUL.BLM.S04E113.BLM.1080P.WEB-DL",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S04 DIRILIS.ERTUGRUL.BLM.S04E114.BLM.1080P.WEB-DL",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S04 DIRILIS.ERTUGRUL.BLM.S04E115.BLM.1080P.WEB-DL",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S04 DIRILIS.ERTUGRUL.BLM.S04E116.BLM.1080P.WEB-DL",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S04 DIRILIS.ERTUGRUL.BLM.S04E117.BLM.1080P.WEB-DL",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S04 DIRILIS.ERTUGRUL.BLM.S04E118.BLM.1080P.WEB-DL.OPED",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S04 DIRILIS.ERTUGRUL.BLM.S04E119.BLM.1080P.WEB-DL.OPED",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S04 DIRILIS.ERTUGRUL.BLM.S04E120.BLM.1080P.WEB-DL.OPED",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S04 DIRILIS.ERTUGRUL.BLM.S04E121.BLM.1080P.SEASON-FINAL",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S04 DIRILIS.ERTUGRUL.BLM.S04E92.WEB.DL.1080P_OPED",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S04 DIRILIS.ERTUGRUL.BLM.S04E93.WEB.DL.720P",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S04 DIRILIS.ERTUGRUL.BLM.S04E94.WEB.DL.1080P",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S04 DIRILIS.ERTUGRUL.BLM.S04E95.WEB.DL.1080P",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S04 DIRILIS.ERTUGRUL.BLM.S04E96.WEB.DL.1080P",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S04 DIRILIS.ERTUGRUL.BLM.S04E97.WEB.DL.1080P",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S04 DIRILIS.ERTUGRUL.BLM.S04E98.WEB.DL.1080P",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S04 DIRILIS.ERTUGRUL.BLM.S04E99.WEB.DL.1080P",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S05 DIRILIS.ERTUGRUL.S05E01.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S05 DIRILIS.ERTUGRUL.S05E02.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S05 DIRILIS.ERTUGRUL.S05E03.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S05 DIRILIS.ERTUGRUL.S05E04.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S05 DIRILIS.ERTUGRUL.S05E05.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S05 DIRILIS.ERTUGRUL.S05E06.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S05 DIRILIS.ERTUGRUL.S05E07.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S05 DIRILIS.ERTUGRUL.S05E08.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S05 DIRILIS.ERTUGRUL.S05E09.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S05 DIRILIS.ERTUGRUL.S05E10.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S05 DIRILIS.ERTUGRUL.S05E11.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S05 DIRILIS.ERTUGRUL.S05E12.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S05 DIRILIS.ERTUGRUL.S05E13.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S05 DIRILIS.ERTUGRUL.S05E14.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S05 DIRILIS.ERTUGRUL.S05E15.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S05 DIRILIS.ERTUGRUL.S05E16.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S05 DIRILIS.ERTUGRUL.S05E17.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S05 DIRILIS.ERTUGRUL.S05E18.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S05 DIRILIS.ERTUGRUL.S05E19.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S05 DIRILIS.ERTUGRUL.S05E21.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S05 DIRILIS.ERTUGRUL.S05E22.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S05 DIRILIS.ERTUGRUL.S05E23.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S05 DIRILIS.ERTUGRUL.S05E24.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S05 DIRILIS.ERTUGRUL.S05E25.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S05 DIRILIS.ERTUĞRUL.S05E26.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S05 DIRILIS.ERTUĞRUL.S05E27.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S05 DIRILIS.ERTUĞRUL.S05E28.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "DIRILIS: ERTUGRUL-TR S05 DIRILIS.ERTUGRUL.S05E29.SEASON.FINAL.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "DİZİ TV",
+        "tvg_id": ""
+      },
+      {
+        "name": "DMAX",
+        "tvg_id": ""
+      },
+      {
+        "name": "DOVE CHANNEL (1080P)",
+        "tvg_id": "DoveChannel.us@SD"
+      },
+      {
+        "name": "DREAMWORKS CHANNEL LATIN AMERICA (1080P)",
+        "tvg_id": "DreamWorksChannelLatinAmerica.us"
+      },
+      {
+        "name": "EGENIN HAMSISI-TR S01 EGE'NIN HAMSISI S01E08",
+        "tvg_id": ""
+      },
+      {
+        "name": "EGENIN HAMSISI-TR S01 EGENIN.HAMSISI.S01E01",
+        "tvg_id": ""
+      },
+      {
+        "name": "EGENIN HAMSISI-TR S01 EGENIN.HAMSISI.S01E02",
+        "tvg_id": ""
+      },
+      {
+        "name": "EGENIN HAMSISI-TR S01 EGENIN.HAMSISI.S01E03",
+        "tvg_id": ""
+      },
+      {
+        "name": "EGENIN HAMSISI-TR S01 EGENIN.HAMSISI.S01E04",
+        "tvg_id": ""
+      },
+      {
+        "name": "EGENIN HAMSISI-TR S01 EGENIN.HAMSISI.S01E05",
+        "tvg_id": ""
+      },
+      {
+        "name": "EGENIN HAMSISI-TR S01 EGENIN.HAMSISI.S01E06",
+        "tvg_id": ""
+      },
+      {
+        "name": "EGENIN HAMSISI-TR S01 EGENIN.HAMSISI.S01E07",
+        "tvg_id": ""
+      },
+      {
+        "name": "EGENIN HAMSISI-TR S01 EGENIN.HAMSISI.S01E09",
+        "tvg_id": ""
+      },
+      {
+        "name": "EGENIN HAMSISI-TR S01 EGENIN.HAMSISI.S01E10",
+        "tvg_id": ""
+      },
+      {
+        "name": "EGENIN HAMSISI-TR S01 EGENIN.HAMSISI.S01E11",
+        "tvg_id": ""
+      },
+      {
+        "name": "EGENIN HAMSISI-TR S01 EGENIN.HAMSISI.S01E12",
+        "tvg_id": ""
+      },
+      {
+        "name": "EGENIN HAMSISI-TR S01 EGENIN.HAMSISI.S01E13.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "EGENIN HAMSISI-TR S01 EGENIN.HAMSISI.S01E14.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "EGENIN HAMSISI-TR S01 EGENIN.HAMSISI.S01E15.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "EGENIN HAMSISI-TR S01 EGENIN.HAMSISI.S01E16.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "EGENIN HAMSISI-TR S01 EGENIN.HAMSISI.S01E17.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "EGENIN HAMSISI-TR S01 EGENIN.HAMSISI.S01E18.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "EGENIN HAMSISI-TR S01 EGENIN.HAMSISI.S01E19.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "EGENIN HAMSISI-TR S01 EGENIN.HAMSISI.S01E20.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "EGENIN HAMSISI-TR S01 EGENIN.HAMSISI.S01E21.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "EGENIN HAMSISI-TR S01 EGENIN.HAMSISI.S01E22.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "EGENIN HAMSISI-TR S01 EGENIN.HAMSISI.S01E23_FINAL.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "EKIDS (576P)",
+        "tvg_id": "EKids.bg@SD"
+      },
+      {
+        "name": "EPLANET TV",
+        "tvg_id": "EPlanetTV.ir@SD"
+      },
+      {
+        "name": "ERCIYES TV",
+        "tvg_id": ""
+      },
+      {
+        "name": "ERCİYES TV",
+        "tvg_id": ""
+      },
+      {
+        "name": "ERKENCI KUS-TR S01 ERKENCI.KUS.S01E01",
+        "tvg_id": ""
+      },
+      {
+        "name": "ERKENCI KUS-TR S01 ERKENCI.KUS.S01E02",
+        "tvg_id": ""
+      },
+      {
+        "name": "ERKENCI KUS-TR S01 ERKENCI.KUS.S01E03",
+        "tvg_id": ""
+      },
+      {
+        "name": "ERKENCI KUS-TR S01 ERKENCI.KUS.S01E05",
+        "tvg_id": ""
+      },
+      {
+        "name": "ERKENCI KUS-TR S01 ERKENCI.KUS.S01E06",
+        "tvg_id": ""
+      },
+      {
+        "name": "ERKENCI KUS-TR S01 ERKENCI.KUS.S01E08",
+        "tvg_id": ""
+      },
+      {
+        "name": "ERKENCI KUS-TR S01 ERKENCI.KUS.S01E09",
+        "tvg_id": ""
+      },
+      {
+        "name": "ERKENCI KUS-TR S01 ERKENCI.KUS.S01E11",
+        "tvg_id": ""
+      },
+      {
+        "name": "ERKENCI KUS-TR S01 ERKENCI.KUS.S01E12",
+        "tvg_id": ""
+      },
+      {
+        "name": "ERKENCI KUS-TR S01 ERKENCI.KUS.S01E13",
+        "tvg_id": ""
+      },
+      {
+        "name": "ERKENCI KUS-TR S01 ERKENCI.KUS.S01E15",
+        "tvg_id": ""
+      },
+      {
+        "name": "ERKENCI KUS-TR S01 ERKENCI.KUS.S01E16",
+        "tvg_id": ""
+      },
+      {
+        "name": "ERKENCI KUS-TR S01 ERKENCI.KUS.S01E17",
+        "tvg_id": ""
+      },
+      {
+        "name": "ERKENCI KUS-TR S01 ERKENCI.KUS.S01E22",
+        "tvg_id": ""
+      },
+      {
+        "name": "ERKENCI KUS-TR S01 ERKENCI.KUS.S01E26",
+        "tvg_id": ""
+      },
+      {
+        "name": "ERKENCI KUS-TR S01 ERKENCI.KUS.S01E27",
+        "tvg_id": ""
+      },
+      {
+        "name": "ERKENCI KUS-TR S01 ERKENCI.KUS.S01E28",
+        "tvg_id": ""
+      },
+      {
+        "name": "ERKENCI KUS-TR S01 ERKENCI.KUS.S01E29",
+        "tvg_id": ""
+      },
+      {
+        "name": "ERKENCI KUS-TR S01 ERKENCI.KUS.S01E30",
+        "tvg_id": ""
+      },
+      {
+        "name": "ERKENCI KUS-TR S01 ERKENCI.KUS.S01E31",
+        "tvg_id": ""
+      },
+      {
+        "name": "ERKENCI KUS-TR S01 ERKENCI.KUS.S01E32",
+        "tvg_id": ""
+      },
+      {
+        "name": "ERKENCI KUS-TR S01 ERKENCI.KUS.S01E33",
+        "tvg_id": ""
+      },
+      {
+        "name": "ERKENCI KUS-TR S01 ERKENCI.KUS.S01E34",
+        "tvg_id": ""
+      },
+      {
+        "name": "ERKENCI KUS-TR S01 ERKENCI.KUS.S01E35",
+        "tvg_id": ""
+      },
+      {
+        "name": "ERKENCI KUS-TR S01 ERKENCI.KUS.S01E36",
+        "tvg_id": ""
+      },
+      {
+        "name": "ERKENCI KUS-TR S01 ERKENCI.KUS.S01E37",
+        "tvg_id": ""
+      },
+      {
+        "name": "ERKENCI KUS-TR S01 ERKENCI.KUS.S01E38",
+        "tvg_id": ""
+      },
+      {
+        "name": "ERKENCI KUS-TR S01 ERKENCI.KUS.S01E40",
+        "tvg_id": ""
+      },
+      {
+        "name": "ERKENCI KUS-TR S01 ERKENCI.KUS.S01E41",
+        "tvg_id": ""
+      },
+      {
+        "name": "ERKENCI KUS-TR S01 ERKENCI.KUS.S01E42",
+        "tvg_id": ""
+      },
+      {
+        "name": "ERKENCI KUS-TR S01 ERKENCI.KUS.S01E43",
+        "tvg_id": ""
+      },
+      {
+        "name": "ERKENCI KUS-TR S01 ERKENCI.KUS.S01E44",
+        "tvg_id": ""
+      },
+      {
+        "name": "ERKENCI KUS-TR S01 ERKENCI.KUS.S01E45",
+        "tvg_id": ""
+      },
+      {
+        "name": "ERKENCI KUS-TR S01 ERKENCI.KUS.S01E46",
+        "tvg_id": ""
+      },
+      {
+        "name": "ERKENCI KUS-TR S01 ERKENCI.KUS.S01E47",
+        "tvg_id": ""
+      },
+      {
+        "name": "ERKENCI KUS-TR S01 ERKENCI.KUS.S01E48",
+        "tvg_id": ""
+      },
+      {
+        "name": "ERKENCI KUS-TR S01 ERKENCI.KUS.S01E49",
+        "tvg_id": ""
+      },
+      {
+        "name": "ERKENCI KUS-TR S01 ERKENCI.KUS.S01E51.FINAL",
+        "tvg_id": ""
+      },
+      {
+        "name": "ES TV (ESZTERGOM)",
+        "tvg_id": "EsztergomTV.hu"
+      },
+      {
+        "name": "ESKIYA DUNYAYA HUKUMDAR OLMAZ-TR S04 ESKIYA.DUNYAYA.HUKUMDAR.OLMAZ.S04E01",
+        "tvg_id": ""
+      },
+      {
+        "name": "ESKIYA DUNYAYA HUKUMDAR OLMAZ-TR S04 ESKIYA.DUNYAYA.HUKUMDAR.OLMAZ.S04E02",
+        "tvg_id": ""
+      },
+      {
+        "name": "ESKIYA DUNYAYA HUKUMDAR OLMAZ-TR S04 ESKIYA.DUNYAYA.HUKUMDAR.OLMAZ.S04E03.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "ESKIYA DUNYAYA HUKUMDAR OLMAZ-TR S04 ESKIYA.DUNYAYA.HUKUMDAR.OLMAZ.S04E04.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "ESKIYA DUNYAYA HUKUMDAR OLMAZ-TR S04 ESKIYA.DUNYAYA.HUKUMDAR.OLMAZ.S04E05.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "ESKIYA DUNYAYA HUKUMDAR OLMAZ-TR S04 ESKIYA.DUNYAYA.HUKUMDAR.OLMAZ.S04E06.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "ESKIYA DUNYAYA HUKUMDAR OLMAZ-TR S04 ESKIYA.DUNYAYA.HUKUMDAR.OLMAZ.S04E07.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "ESKIYA DUNYAYA HUKUMDAR OLMAZ-TR S04 ESKIYA.DUNYAYA.HUKUMDAR.OLMAZ.S04E08.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "ESKIYA DUNYAYA HUKUMDAR OLMAZ-TR S04 ESKIYA.DUNYAYA.HUKUMDAR.OLMAZ.S04E09.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "ESKIYA DUNYAYA HUKUMDAR OLMAZ-TR S04 ESKIYA.DUNYAYA.HUKUMDAR.OLMAZ.S04E10.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "ESKIYA DUNYAYA HUKUMDAR OLMAZ-TR S04 ESKIYA.DUNYAYA.HUKUMDAR.OLMAZ.S04E11.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "ESKIYA DUNYAYA HUKUMDAR OLMAZ-TR S04 ESKIYA.DUNYAYA.HUKUMDAR.OLMAZ.S04E12.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "ESKIYA DUNYAYA HUKUMDAR OLMAZ-TR S04 ESKIYA.DUNYAYA.HUKUMDAR.OLMAZ.S04E13.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "ESKIYA DUNYAYA HUKUMDAR OLMAZ-TR S04 ESKIYA.DUNYAYA.HUKUMDAR.OLMAZ.S04E14.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "ESKIYA DUNYAYA HUKUMDAR OLMAZ-TR S04 ESKIYA.DUNYAYA.HUKUMDAR.OLMAZ.S04E15.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "ESKIYA DUNYAYA HUKUMDAR OLMAZ-TR S04 ESKIYA.DUNYAYA.HUKUMDAR.OLMAZ.S04E16.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "ESKIYA DUNYAYA HUKUMDAR OLMAZ-TR S04 ESKIYA.DUNYAYA.HUKUMDAR.OLMAZ.S04E17.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "ESKIYA DUNYAYA HUKUMDAR OLMAZ-TR S04 ESKIYA.DUNYAYA.HUKUMDAR.OLMAZ.S04E18.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "ESKIYA DUNYAYA HUKUMDAR OLMAZ-TR S04 ESKIYA.DUNYAYA.HUKUMDAR.OLMAZ.S04E19.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "ESKIYA DUNYAYA HUKUMDAR OLMAZ-TR S04 ESKIYA.DUNYAYA.HUKUMDAR.OLMAZ.S04E20.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "ESKIYA DUNYAYA HUKUMDAR OLMAZ-TR S04 ESKIYA.DUNYAYA.HUKUMDAR.OLMAZ.S04E21.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "ESKIYA DUNYAYA HUKUMDAR OLMAZ-TR S04 ESKIYA.DUNYAYA.HUKUMDAR.OLMAZ.S04E22.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "ESKIYA DUNYAYA HUKUMDAR OLMAZ-TR S04 ESKIYA.DUNYAYA.HUKUMDAR.OLMAZ.S04E23.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "ESKIYA DUNYAYA HUKUMDAR OLMAZ-TR S04 ESKIYA.DUNYAYA.HUKUMDAR.OLMAZ.S04E24.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "ESKIYA DUNYAYA HUKUMDAR OLMAZ-TR S04 ESKIYA.DUNYAYA.HUKUMDAR.OLMAZ.S04E25.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "ESKIYA DUNYAYA HUKUMDAR OLMAZ-TR S04 ESKIYA.DUNYAYA.HUKUMDAR.OLMAZ.S04E26.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "ESKIYA DUNYAYA HUKUMDAR OLMAZ-TR S04 ESKIYA.DUNYAYA.HUKUMDAR.OLMAZ.S04E27.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "ESKIYA DUNYAYA HUKUMDAR OLMAZ-TR S04 ESKIYA.DUNYAYA.HUKUMDAR.OLMAZ.S04E28.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "ESKIYA DUNYAYA HUKUMDAR OLMAZ-TR S04 ESKIYA.DUNYAYA.HUKUMDAR.OLMAZ.S04E29.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "ESKIYA DUNYAYA HUKUMDAR OLMAZ-TR S04 ESKIYA.DUNYAYA.HUKUMDAR.OLMAZ.S04E30.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "ESKIYA DUNYAYA HUKUMDAR OLMAZ-TR S04 ESKIYA.DUNYAYA.HUKUMDAR.OLMAZ.S04E31.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "ESKIYA DUNYAYA HUKUMDAR OLMAZ-TR S04 ESKIYA.DUNYAYA.HUKUMDAR.OLMAZ.S04E32.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "ESKIYA DUNYAYA HUKUMDAR OLMAZ-TR S05 ESKIYA DUNYAYA HUKUMDAR OLMAZ S05E03",
+        "tvg_id": ""
+      },
+      {
+        "name": "ESKIYA DUNYAYA HUKUMDAR OLMAZ-TR S05 ESKIYA DUNYAYA HUKUMDAR OLMAZ S05E05",
+        "tvg_id": ""
+      },
+      {
+        "name": "FAZILET HANIM VE KIZLARI-TR S01 FAZILET.HANIM.VE.KIZLARI.S01E01.BOLUM.",
+        "tvg_id": ""
+      },
+      {
+        "name": "FAZILET HANIM VE KIZLARI-TR S01 FAZILET.HANIM.VE.KIZLARI.S01E02.BOLUM",
+        "tvg_id": ""
+      },
+      {
+        "name": "FAZILET HANIM VE KIZLARI-TR S01 FAZILET.HANIM.VE.KIZLARI.S01E03.BOLUM",
+        "tvg_id": ""
+      },
+      {
+        "name": "FAZILET HANIM VE KIZLARI-TR S01 FAZILET.HANIM.VE.KIZLARI.S01E04.BOLUM",
+        "tvg_id": ""
+      },
+      {
+        "name": "FAZILET HANIM VE KIZLARI-TR S01 FAZILET.HANIM.VE.KIZLARI.S01E05.BOLUM",
+        "tvg_id": ""
+      },
+      {
+        "name": "FAZILET HANIM VE KIZLARI-TR S01 FAZILET.HANIM.VE.KIZLARI.S01E06.BOLUM",
+        "tvg_id": ""
+      },
+      {
+        "name": "FAZILET HANIM VE KIZLARI-TR S01 FAZILET.HANIM.VE.KIZLARI.S01E07.BOLUM",
+        "tvg_id": ""
+      },
+      {
+        "name": "FAZILET HANIM VE KIZLARI-TR S01 FAZILET.HANIM.VE.KIZLARI.S01E08.BOLUM",
+        "tvg_id": ""
+      },
+      {
+        "name": "FAZILET HANIM VE KIZLARI-TR S01 FAZILET.HANIM.VE.KIZLARI.S01E09.BOLUM",
+        "tvg_id": ""
+      },
+      {
+        "name": "FAZILET HANIM VE KIZLARI-TR S01 FAZILET.HANIM.VE.KIZLARI.S01E10.BOLUM",
+        "tvg_id": ""
+      },
+      {
+        "name": "FAZILET HANIM VE KIZLARI-TR S01 FAZILET.HANIM.VE.KIZLARI.S01E11.BOLUM",
+        "tvg_id": ""
+      },
+      {
+        "name": "FAZILET HANIM VE KIZLARI-TR S01 FAZILET.HANIM.VE.KIZLARI.S01E12.BOLUM",
+        "tvg_id": ""
+      },
+      {
+        "name": "FAZILET HANIM VE KIZLARI-TR S01 FAZILET.HANIM.VE.KIZLARI.S01E13.BOLUM",
+        "tvg_id": ""
+      },
+      {
+        "name": "FI-TR S01 FI.S01E01",
+        "tvg_id": ""
+      },
+      {
+        "name": "FI-TR S01 FI.S01E02",
+        "tvg_id": ""
+      },
+      {
+        "name": "FI-TR S01 FI.S01E03",
+        "tvg_id": ""
+      },
+      {
+        "name": "FI-TR S01 FI.S01E04",
+        "tvg_id": ""
+      },
+      {
+        "name": "FI-TR S01 FI.S01E05",
+        "tvg_id": ""
+      },
+      {
+        "name": "FI-TR S01 FI.S01E06",
+        "tvg_id": ""
+      },
+      {
+        "name": "FI-TR S01 FI.S01E07",
+        "tvg_id": ""
+      },
+      {
+        "name": "FI-TR S01 FI.S01E08",
+        "tvg_id": ""
+      },
+      {
+        "name": "FI-TR S01 FI.S01E09",
+        "tvg_id": ""
+      },
+      {
+        "name": "FI-TR S01 FI.S01E10",
+        "tvg_id": ""
+      },
+      {
+        "name": "FI-TR S01 FI.S01E11",
+        "tvg_id": ""
+      },
+      {
+        "name": "FI-TR S01 FI.S01E12.SEASON.FINAL",
+        "tvg_id": ""
+      },
+      {
+        "name": "FI-TR S02 FI.CI.S02E01",
+        "tvg_id": ""
+      },
+      {
+        "name": "FI-TR S02 FI.CI.S02E02",
+        "tvg_id": ""
+      },
+      {
+        "name": "FI-TR S02 FI.CI.S02E03",
+        "tvg_id": ""
+      },
+      {
+        "name": "FI-TR S02 FI.CI.S02E04",
+        "tvg_id": ""
+      },
+      {
+        "name": "FI-TR S02 FI.CI.S02E05",
+        "tvg_id": ""
+      },
+      {
+        "name": "FI-TR S02 FI.CI.S02E06",
+        "tvg_id": ""
+      },
+      {
+        "name": "FI-TR S02 FI.CI.S02E07",
+        "tvg_id": ""
+      },
+      {
+        "name": "FI-TR S02 FI.CI.S02E08",
+        "tvg_id": ""
+      },
+      {
+        "name": "FI-TR S02 FI.CI.S02E09",
+        "tvg_id": ""
+      },
+      {
+        "name": "FI-TR S02 FI.CI.S02E10.FINAL",
+        "tvg_id": ""
+      },
+      {
+        "name": "FILM+",
+        "tvg_id": "Film+.hu"
+      },
+      {
+        "name": "FORTUNA TV",
+        "tvg_id": ""
+      },
+      {
+        "name": "FORTUNA TV",
+        "tvg_id": ""
+      },
+      {
+        "name": "FRT TV",
+        "tvg_id": ""
+      },
+      {
+        "name": "FRT TV",
+        "tvg_id": ""
+      },
+      {
+        "name": "FX 1",
+        "tvg_id": "FX1.ir@SD"
+      },
+      {
+        "name": "FX 2",
+        "tvg_id": "FX2.ir@SD"
+      },
+      {
+        "name": "GAME OF THRONES-TR S01 GAME.OF.THRONES.TR.S01E01",
+        "tvg_id": ""
+      },
+      {
+        "name": "GAME OF THRONES-TR S01 GAME.OF.THRONES.TR.S01E02",
+        "tvg_id": ""
+      },
+      {
+        "name": "GAME OF THRONES-TR S01 GAME.OF.THRONES.TR.S01E03",
+        "tvg_id": ""
+      },
+      {
+        "name": "GAME OF THRONES-TR S01 GAME.OF.THRONES.TR.S01E04",
+        "tvg_id": ""
+      },
+      {
+        "name": "GAME OF THRONES-TR S01 GAME.OF.THRONES.TR.S01E05",
+        "tvg_id": ""
+      },
+      {
+        "name": "GAME OF THRONES-TR S01 GAME.OF.THRONES.TR.S01E06",
+        "tvg_id": ""
+      },
+      {
+        "name": "GAME OF THRONES-TR S01 GAME.OF.THRONES.TR.S01E07",
+        "tvg_id": ""
+      },
+      {
+        "name": "GAME OF THRONES-TR S01 GAME.OF.THRONES.TR.S01E08",
+        "tvg_id": ""
+      },
+      {
+        "name": "GAME OF THRONES-TR S01 GAME.OF.THRONES.TR.S01E09",
+        "tvg_id": ""
+      },
+      {
+        "name": "GAME OF THRONES-TR S01 GAME.OF.THRONES.TR.S01E10",
+        "tvg_id": ""
+      },
+      {
+        "name": "GAME OF THRONES-TR S02 GAME.OF.THRONES.TR.S02E01",
+        "tvg_id": ""
+      },
+      {
+        "name": "GAME OF THRONES-TR S02 GAME.OF.THRONES.TR.S02E02",
+        "tvg_id": ""
+      },
+      {
+        "name": "GAME OF THRONES-TR S02 GAME.OF.THRONES.TR.S02E03",
+        "tvg_id": ""
+      },
+      {
+        "name": "GAME OF THRONES-TR S02 GAME.OF.THRONES.TR.S02E04",
+        "tvg_id": ""
+      },
+      {
+        "name": "GAME OF THRONES-TR S02 GAME.OF.THRONES.TR.S02E05",
+        "tvg_id": ""
+      },
+      {
+        "name": "GAME OF THRONES-TR S02 GAME.OF.THRONES.TR.S02E06",
+        "tvg_id": ""
+      },
+      {
+        "name": "GAME OF THRONES-TR S02 GAME.OF.THRONES.TR.S02E07",
+        "tvg_id": ""
+      },
+      {
+        "name": "GAME OF THRONES-TR S02 GAME.OF.THRONES.TR.S02E08",
+        "tvg_id": ""
+      },
+      {
+        "name": "GAME OF THRONES-TR S02 GAME.OF.THRONES.TR.S02E09",
+        "tvg_id": ""
+      },
+      {
+        "name": "GAME OF THRONES-TR S02 GAME.OF.THRONES.TR.S02E10",
+        "tvg_id": ""
+      },
+      {
+        "name": "GAME OF THRONES-TR S03 GAME.OF.THRONES.TR.S03E01",
+        "tvg_id": ""
+      },
+      {
+        "name": "GAME OF THRONES-TR S03 GAME.OF.THRONES.TR.S03E02",
+        "tvg_id": ""
+      },
+      {
+        "name": "GAME OF THRONES-TR S03 GAME.OF.THRONES.TR.S03E03",
+        "tvg_id": ""
+      },
+      {
+        "name": "GAME OF THRONES-TR S03 GAME.OF.THRONES.TR.S03E04",
+        "tvg_id": ""
+      },
+      {
+        "name": "GAME OF THRONES-TR S03 GAME.OF.THRONES.TR.S03E05",
+        "tvg_id": ""
+      },
+      {
+        "name": "GAME OF THRONES-TR S03 GAME.OF.THRONES.TR.S03E06",
+        "tvg_id": ""
+      },
+      {
+        "name": "GAME OF THRONES-TR S03 GAME.OF.THRONES.TR.S03E07",
+        "tvg_id": ""
+      },
+      {
+        "name": "GAME OF THRONES-TR S03 GAME.OF.THRONES.TR.S03E08",
+        "tvg_id": ""
+      },
+      {
+        "name": "GAME OF THRONES-TR S03 GAME.OF.THRONES.TR.S03E09",
+        "tvg_id": ""
+      },
+      {
+        "name": "GAME OF THRONES-TR S03 GAME.OF.THRONES.TR.S03E10",
+        "tvg_id": ""
+      },
+      {
+        "name": "GAME OF THRONES-TR S04 GAME.OF.THRONES.TR.S04E01",
+        "tvg_id": ""
+      },
+      {
+        "name": "GAME OF THRONES-TR S04 GAME.OF.THRONES.TR.S04E02",
+        "tvg_id": ""
+      },
+      {
+        "name": "GAME OF THRONES-TR S04 GAME.OF.THRONES.TR.S04E03",
+        "tvg_id": ""
+      },
+      {
+        "name": "GAME OF THRONES-TR S04 GAME.OF.THRONES.TR.S04E04",
+        "tvg_id": ""
+      },
+      {
+        "name": "GAME OF THRONES-TR S04 GAME.OF.THRONES.TR.S04E05",
+        "tvg_id": ""
+      },
+      {
+        "name": "GAME OF THRONES-TR S04 GAME.OF.THRONES.TR.S04E06",
+        "tvg_id": ""
+      },
+      {
+        "name": "GAME OF THRONES-TR S04 GAME.OF.THRONES.TR.S04E07",
+        "tvg_id": ""
+      },
+      {
+        "name": "GAME OF THRONES-TR S04 GAME.OF.THRONES.TR.S04E08",
+        "tvg_id": ""
+      },
+      {
+        "name": "GAME OF THRONES-TR S04 GAME.OF.THRONES.TR.S04E09",
+        "tvg_id": ""
+      },
+      {
+        "name": "GAME OF THRONES-TR S04 GAME.OF.THRONES.TR.S04E10",
+        "tvg_id": ""
+      },
+      {
+        "name": "GAME OF THRONES-TR S05 GAME.OF.THRONES.TR.S05E01",
+        "tvg_id": ""
+      },
+      {
+        "name": "GAME OF THRONES-TR S05 GAME.OF.THRONES.TR.S05E02",
+        "tvg_id": ""
+      },
+      {
+        "name": "GAME OF THRONES-TR S05 GAME.OF.THRONES.TR.S05E03",
+        "tvg_id": ""
+      },
+      {
+        "name": "GAME OF THRONES-TR S05 GAME.OF.THRONES.TR.S05E04",
+        "tvg_id": ""
+      },
+      {
+        "name": "GAME OF THRONES-TR S05 GAME.OF.THRONES.TR.S05E05",
+        "tvg_id": ""
+      },
+      {
+        "name": "GAME OF THRONES-TR S05 GAME.OF.THRONES.TR.S05E06",
+        "tvg_id": ""
+      },
+      {
+        "name": "GAME OF THRONES-TR S05 GAME.OF.THRONES.TR.S05E07",
+        "tvg_id": ""
+      },
+      {
+        "name": "GAME OF THRONES-TR S05 GAME.OF.THRONES.TR.S05E08",
+        "tvg_id": ""
+      },
+      {
+        "name": "GAME OF THRONES-TR S05 GAME.OF.THRONES.TR.S05E09",
+        "tvg_id": ""
+      },
+      {
+        "name": "GAME OF THRONES-TR S05 GAME.OF.THRONES.TR.S05E10",
+        "tvg_id": ""
+      },
+      {
+        "name": "GAME OF THRONES-TR S06 GAME.OF.THRONES.TR.S06E01",
+        "tvg_id": ""
+      },
+      {
+        "name": "GAME OF THRONES-TR S06 GAME.OF.THRONES.TR.S06E02",
+        "tvg_id": ""
+      },
+      {
+        "name": "GAME OF THRONES-TR S06 GAME.OF.THRONES.TR.S06E03",
+        "tvg_id": ""
+      },
+      {
+        "name": "GAME OF THRONES-TR S06 GAME.OF.THRONES.TR.S06E04",
+        "tvg_id": ""
+      },
+      {
+        "name": "GAME OF THRONES-TR S06 GAME.OF.THRONES.TR.S06E05",
+        "tvg_id": ""
+      },
+      {
+        "name": "GAME OF THRONES-TR S06 GAME.OF.THRONES.TR.S06E06",
+        "tvg_id": ""
+      },
+      {
+        "name": "GAME OF THRONES-TR S06 GAME.OF.THRONES.TR.S06E07",
+        "tvg_id": ""
+      },
+      {
+        "name": "GAME OF THRONES-TR S06 GAME.OF.THRONES.TR.S06E08",
+        "tvg_id": ""
+      },
+      {
+        "name": "GAME OF THRONES-TR S06 GAME.OF.THRONES.TR.S06E09",
+        "tvg_id": ""
+      },
+      {
+        "name": "GAME OF THRONES-TR S06 GAME.OF.THRONES.TR.S06E10",
+        "tvg_id": ""
+      },
+      {
+        "name": "GAME OF THRONES-TR S07 GAME.OF.THRONES.TR.S07E01",
+        "tvg_id": ""
+      },
+      {
+        "name": "GAME OF THRONES-TR S07 GAME.OF.THRONES.TR.S07E02",
+        "tvg_id": ""
+      },
+      {
+        "name": "GAME OF THRONES-TR S07 GAME.OF.THRONES.TR.S07E03",
+        "tvg_id": ""
+      },
+      {
+        "name": "GAME OF THRONES-TR S07 GAME.OF.THRONES.TR.S07E04",
+        "tvg_id": ""
+      },
+      {
+        "name": "GAME OF THRONES-TR S07 GAME.OF.THRONES.TR.S07E05",
+        "tvg_id": ""
+      },
+      {
+        "name": "GAME OF THRONES-TR S07 GAME.OF.THRONES.TR.S07E06",
+        "tvg_id": ""
+      },
+      {
+        "name": "GAME OF THRONES-TR S07 GAME.OF.THRONES.TR.S07E07",
+        "tvg_id": ""
+      },
+      {
+        "name": "GAME OF THRONES-TR S08 GAME.OF.THRONES.TR.S08E03.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "GAME OF THRONES-TR S08 GAME.OF.THRONES.TRDUBLAJ.FINAL.S08E06.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "GAME OF THRONES-TR S08 GAME.OF.THRONES.TRDUBLAJ.S08E01",
+        "tvg_id": ""
+      },
+      {
+        "name": "GAME OF THRONES-TR S08 GAME.OF.THRONES.TRDUBLAJ.S08E02",
+        "tvg_id": ""
+      },
+      {
+        "name": "GAME OF THRONES-TR S08 GAME.OF.THRONES.TRDUBLAJ.S08E04.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "GAME OF THRONES-TR S08 GAME.OF.THRONES.TRDUBLAJ.S08E05.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "GAME OF THRONES-TR S08 GAME.OF.THRONES.TRSUBTITLE.S08E04.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "GAME OF THRONES-TR S08 GAME.OF.THRONES.TRSUBTITLE.S08E05.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "GAME OF THRONES-TR S08 GAME.OF.THRONES.TRSUBTITLE.S08E06.FINAL.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "GOLD STAR",
+        "tvg_id": "GoldStar.ir@SD"
+      },
+      {
+        "name": "GOLDMINES 2 (576P)",
+        "tvg_id": "Goldmines2.in@SD"
+      },
+      {
+        "name": "GULPERI-TR S01 GULPERI.S01E01",
+        "tvg_id": ""
+      },
+      {
+        "name": "GULPERI-TR S01 GULPERI.S01E02",
+        "tvg_id": ""
+      },
+      {
+        "name": "GULPERI-TR S01 GULPERI.S01E03",
+        "tvg_id": ""
+      },
+      {
+        "name": "GULPERI-TR S01 GULPERI.S01E04",
+        "tvg_id": ""
+      },
+      {
+        "name": "GULPERI-TR S01 GULPERI.S01E05",
+        "tvg_id": ""
+      },
+      {
+        "name": "GULPERI-TR S01 GULPERI.S01E06",
+        "tvg_id": ""
+      },
+      {
+        "name": "GULPERI-TR S01 GULPERI.S01E07",
+        "tvg_id": ""
+      },
+      {
+        "name": "GULPERI-TR S01 GULPERI.S01E08",
+        "tvg_id": ""
+      },
+      {
+        "name": "GULPERI-TR S01 GULPERI.S01E09.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "GULPERI-TR S01 GULPERI.S01E10.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "GULPERI-TR S01 GULPERI.S01E11.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "GULPERI-TR S01 GULPERI.S01E12.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "GULPERI-TR S01 GULPERI.S01E13.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "GULPERI-TR S01 GULPERI.S01E14.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "GULPERI-TR S01 GULPERI.S01E15.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "GULPERI-TR S01 GULPERI.S01E16.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "GULPERI-TR S01 GULPERI.S01E17.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "GULPERI-TR S01 GULPERI.S01E18.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "GULPERI-TR S01 GULPERI.S01E19.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "GULPERI-TR S01 GULPERI.S01E20.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "GULPERI-TR S01 GULPERI.S01E21.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "GULPERI-TR S01 GULPERI.S01E22.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "GULPERI-TR S01 GULPERI.S01E23.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "GULPERI-TR S01 GULPERI.S01E24.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "GULPERI-TR S01 GULPERI.S01E25.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "GULPERI-TR S01 GULPERI.S01E26.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "GULPERI-TR S01 GULPERI.S01E27.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "GULPERI-TR S01 GULPERI.S01E28.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "GULPERI-TR S01 GULPERI.S01E29.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "GULPERI-TR S01 GULPERI.S01E30.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "HAHA TV",
+        "tvg_id": "HAHATV.sk@SD"
+      },
+      {
+        "name": "HAKAN: MUHAFIZ-TR S01 HAKAN.MUHAFIZ.2018.S01E01",
+        "tvg_id": ""
+      },
+      {
+        "name": "HAKAN: MUHAFIZ-TR S01 HAKAN.MUHAFIZ.2018.S01E02",
+        "tvg_id": ""
+      },
+      {
+        "name": "HAKAN: MUHAFIZ-TR S01 HAKAN.MUHAFIZ.2018.S01E03",
+        "tvg_id": ""
+      },
+      {
+        "name": "HAKAN: MUHAFIZ-TR S01 HAKAN.MUHAFIZ.2018.S01E04",
+        "tvg_id": ""
+      },
+      {
+        "name": "HAKAN: MUHAFIZ-TR S01 HAKAN.MUHAFIZ.2018.S01E05",
+        "tvg_id": ""
+      },
+      {
+        "name": "HAKAN: MUHAFIZ-TR S01 HAKAN.MUHAFIZ.2018.S01E06",
+        "tvg_id": ""
+      },
+      {
+        "name": "HAKAN: MUHAFIZ-TR S01 HAKAN.MUHAFIZ.2018.S01E07",
+        "tvg_id": ""
+      },
+      {
+        "name": "HAKAN: MUHAFIZ-TR S01 HAKAN.MUHAFIZ.2018.S01E08",
+        "tvg_id": ""
+      },
+      {
+        "name": "HAKAN: MUHAFIZ-TR S01 HAKAN.MUHAFIZ.2018.S01E09",
+        "tvg_id": ""
+      },
+      {
+        "name": "HAKAN: MUHAFIZ-TR S01 HAKAN.MUHAFIZ.2018.S01E10",
+        "tvg_id": ""
+      },
+      {
+        "name": "HAKAN: MUHAFIZ-TR S02 THE.PROTECTOR.2018.S02E01",
+        "tvg_id": ""
+      },
+      {
+        "name": "HAKAN: MUHAFIZ-TR S02 THE.PROTECTOR.2018.S02E02",
+        "tvg_id": ""
+      },
+      {
+        "name": "HAKAN: MUHAFIZ-TR S02 THE.PROTECTOR.2018.S02E03",
+        "tvg_id": ""
+      },
+      {
+        "name": "HAKAN: MUHAFIZ-TR S02 THE.PROTECTOR.2018.S02E04",
+        "tvg_id": ""
+      },
+      {
+        "name": "HAKAN: MUHAFIZ-TR S02 THE.PROTECTOR.2018.S02E05",
+        "tvg_id": ""
+      },
+      {
+        "name": "HAKAN: MUHAFIZ-TR S02 THE.PROTECTOR.2018.S02E06",
+        "tvg_id": ""
+      },
+      {
+        "name": "HAKAN: MUHAFIZ-TR S02 THE.PROTECTOR.2018.S02E07",
+        "tvg_id": ""
+      },
+      {
+        "name": "HAKAN: MUHAFIZ-TR S02 THE.PROTECTOR.2018.S02E08",
+        "tvg_id": ""
+      },
+      {
+        "name": "HARVEST USA (576P)",
+        "tvg_id": "HarvestUSA.in@SD"
+      },
+      {
+        "name": "HERCAI-TR S01 HERCAI S01 E01",
+        "tvg_id": ""
+      },
+      {
+        "name": "HERCAI-TR S01 HERCAI S01 E02",
+        "tvg_id": ""
+      },
+      {
+        "name": "HERCAI-TR S01 HERCAI S01 E3.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "HERCAI-TR S01 HERCAI.S01E04.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "HERCAI-TR S01 HERCAI.S01E05.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "HERCAI-TR S01 HERCAI.S01E06.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "HERCAI-TR S01 HERCAI.S01E07.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "HERCAI-TR S01 HERCAI.S01E08.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "HERCAI-TR S01 HERCAI.S01E09.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "HERCAI-TR S01 HERCAI.S01E10.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "HERCAI-TR S01 HERCAI.S01E11.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "HERCAI-TR S01 HERCAI.S01E12.SEASON.FINAL.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "HERCAI-TR S02 HERCAI.S02E14",
+        "tvg_id": ""
+      },
+      {
+        "name": "HERCAI-TR S02 HERCAI.S02E19",
+        "tvg_id": ""
+      },
+      {
+        "name": "HERCAI-TR S02 HERCAI.S02E23",
+        "tvg_id": ""
+      },
+      {
+        "name": "HÜR TV",
+        "tvg_id": ""
+      },
+      {
+        "name": "ICNET 3",
+        "tvg_id": "icnet3.ca@SD"
+      },
+      {
+        "name": "İKRA TV",
+        "tvg_id": ""
+      },
+      {
+        "name": "IRAN NAMA",
+        "tvg_id": "IranNama.fr@SD"
+      },
+      {
+        "name": "IRAN NATIONAL REVOLUTION TV",
+        "tvg_id": "IranNationalRevolutionTV.us@HD"
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S01 ISTANBULLU.GELIN.S01E01",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S01 ISTANBULLU.GELIN.S01E02",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S01 ISTANBULLU.GELIN.S01E03",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S01 ISTANBULLU.GELIN.S01E04",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S01 ISTANBULLU.GELIN.S01E05",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S01 ISTANBULLU.GELIN.S01E06",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S01 ISTANBULLU.GELIN.S01E07",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S01 ISTANBULLU.GELIN.S01E08",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S01 ISTANBULLU.GELIN.S01E09",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S01 ISTANBULLU.GELIN.S01E10",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S01 ISTANBULLU.GELIN.S01E11",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S01 ISTANBULLU.GELIN.S01E12",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S01 ISTANBULLU.GELIN.S01E13",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S01 ISTANBULLU.GELIN.S01E14",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S01 ISTANBULLU.GELIN.S01E15",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S01 ISTANBULLU.GELIN.S01E16",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S01 ISTANBULLU.GELIN.S01E17",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S01 ISTANBULLU.GELIN.S01E18",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S01 ISTANBULLU.GELIN.S01E19",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S01 ISTANBULLU.GELIN.S01E20",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S01 ISTANBULLU.GELIN.S01E21",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S01 ISTANBULLU.GELIN.S01E22",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S01 ISTANBULLU.GELIN.S01E23",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S01 ISTANBULLU.GELIN.S01E24",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S01 ISTANBULLU.GELIN.S01E25",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S01 ISTANBULLU.GELIN.S01E26",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S01 ISTANBULLU.GELIN.S01E27",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S01 ISTANBULLU.GELIN.S01E28",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S01 ISTANBULLU.GELIN.S01E29",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S01 ISTANBULLU.GELIN.S01E30",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S01 ISTANBULLU.GELIN.S01E31",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S01 ISTANBULLU.GELIN.S01E32",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S01 ISTANBULLU.GELIN.S01E33",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S01 ISTANBULLU.GELIN.S01E34",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S01 ISTANBULLU.GELIN.S01E35",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S01 ISTANBULLU.GELIN.S01E36",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S01 ISTANBULLU.GELIN.S01E37",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S01 ISTANBULLU.GELIN.S01E38",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S01 ISTANBULLU.GELIN.S01E39",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S01 ISTANBULLU.GELIN.S01E40",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S01 ISTANBULLU.GELIN.S01E41",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S01 ISTANBULLU.GELIN.S01E42",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S01 ISTANBULLU.GELIN.S01E43",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S01 ISTANBULLU.GELIN.S01E44",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S01 ISTANBULLU.GELIN.S01E45",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S01 ISTANBULLU.GELIN.S01E46",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S01 ISTANBULLU.GELIN.S01E47",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S01 ISTANBULLU.GELIN.S01E48",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S01 ISTANBULLU.GELIN.S01E49",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S01 ISTANBULLU.GELIN.S01E50",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S01 ISTANBULLU.GELIN.S01E51",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S01 ISTANBULLU.GELIN.S01E52",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S01 ISTANBULLU.GELIN.S01E53.SEASON.FINAL",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S03 ISTANBULLU.GELIN.S03E01",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S03 ISTANBULLU.GELIN.S03E02",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S03 ISTANBULLU.GELIN.S03E03",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S03 ISTANBULLU.GELIN.S03E04.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S03 ISTANBULLU.GELIN.S03E05.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S03 ISTANBULLU.GELIN.S03E06.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S03 ISTANBULLU.GELIN.S03E07.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S03 ISTANBULLU.GELIN.S03E08.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S03 ISTANBULLU.GELIN.S03E09.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S03 ISTANBULLU.GELIN.S03E10.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S03 ISTANBULLU.GELIN.S03E11.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S03 ISTANBULLU.GELIN.S03E12.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S03 ISTANBULLU.GELIN.S03E13.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S03 ISTANBULLU.GELIN.S03E14.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S03 ISTANBULLU.GELIN.S03E15.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S03 ISTANBULLU.GELIN.S03E16.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S03 ISTANBULLU.GELIN.S03E17.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S03 ISTANBULLU.GELIN.S03E18.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S03 ISTANBULLU.GELIN.S03E19.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S03 ISTANBULLU.GELIN.S03E20.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S03 ISTANBULLU.GELIN.S03E21.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S03 ISTANBULLU.GELIN.S03E22.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S03 ISTANBULLU.GELIN.S03E23.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S03 ISTANBULLU.GELIN.S03E24.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S03 ISTANBULLU.GELIN.S03E25.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S03 ISTANBULLU.GELIN.S03E26.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S03 ISTANBULLU.GELIN.S03E27.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S03 ISTANBULLU.GELIN.S03E28.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S03 ISTANBULLU.GELIN.S03E29.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S03 ISTANBULLU.GELIN.S03E30.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S03 ISTANBULLU.GELIN.S03E31.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S03 ISTANBULLU.GELIN.S03E32.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S03 ISTANBULLU.GELIN.S03E33.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "ISTANBULLU GELIN-TR S03 ISTANBULLU.GELIN.S03E34.FINAL.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "İSVİÇRE TV",
+        "tvg_id": ""
+      },
+      {
+        "name": "JET SOSYETE-TR S01 JET.SOSYETE.S01E01",
+        "tvg_id": ""
+      },
+      {
+        "name": "JET SOSYETE-TR S01 JET.SOSYETE.S01E02",
+        "tvg_id": ""
+      },
+      {
+        "name": "JET SOSYETE-TR S01 JET.SOSYETE.S01E03",
+        "tvg_id": ""
+      },
+      {
+        "name": "JET SOSYETE-TR S01 JET.SOSYETE.S01E04",
+        "tvg_id": ""
+      },
+      {
+        "name": "JET SOSYETE-TR S01 JET.SOSYETE.S01E05",
+        "tvg_id": ""
+      },
+      {
+        "name": "JET SOSYETE-TR S01 JET.SOSYETE.S01E06",
+        "tvg_id": ""
+      },
+      {
+        "name": "JET SOSYETE-TR S01 JET.SOSYETE.S01E07",
+        "tvg_id": ""
+      },
+      {
+        "name": "JET SOSYETE-TR S01 JET.SOSYETE.S01E08",
+        "tvg_id": ""
+      },
+      {
+        "name": "JET SOSYETE-TR S01 JET.SOSYETE.S01E09",
+        "tvg_id": ""
+      },
+      {
+        "name": "JET SOSYETE-TR S01 JET.SOSYETE.S01E10",
+        "tvg_id": ""
+      },
+      {
+        "name": "JET SOSYETE-TR S01 JET.SOSYETE.S01E11",
+        "tvg_id": ""
+      },
+      {
+        "name": "JET SOSYETE-TR S01 JET.SOSYETE.S01E12",
+        "tvg_id": ""
+      },
+      {
+        "name": "JET SOSYETE-TR S01 JET.SOSYETE.S01E13",
+        "tvg_id": ""
+      },
+      {
+        "name": "JET SOSYETE-TR S01 JET.SOSYETE.S01E14",
+        "tvg_id": ""
+      },
+      {
+        "name": "JET SOSYETE-TR S01 JET.SOSYETE.S01E15.SEASON.FINAL",
+        "tvg_id": ""
+      },
+      {
+        "name": "JET SOSYETE-TR S02 JET.SOSYETE.S02E01",
+        "tvg_id": ""
+      },
+      {
+        "name": "JET SOSYETE-TR S02 JET.SOSYETE.S02E02.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "JET SOSYETE-TR S02 JET.SOSYETE.S02E03.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "JET SOSYETE-TR S02 JET.SOSYETE.S02E04.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "JET SOSYETE-TR S02 JET.SOSYETE.S02E05.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "JET SOSYETE-TR S02 JET.SOSYETE.S02E06.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "JET SOSYETE-TR S02 JET.SOSYETE.S02E07.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "JET SOSYETE-TR S02 JET.SOSYETE.S02E08.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "JET SOSYETE-TR S02 JET.SOSYETE.S02E09.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "JET SOSYETE-TR S02 JET.SOSYETE.S02E10.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "JET SOSYETE-TR S02 JET.SOSYETE.S02E11.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "JET SOSYETE-TR S02 JET.SOSYETE.S02E12.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "JET SOSYETE-TR S02 JET.SOSYETE.S02E13.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "JET SOSYETE-TR S02 JET.SOSYETE.S02E14.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "JET SOSYETE-TR S02 JET.SOSYETE.S02E15.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "JET SOSYETE-TR S02 JET.SOSYETE.S02E16.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "JET SOSYETE-TR S02 JET.SOSYETE.S02E17.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "JET SOSYETE-TR S02 JET.SOSYETE.S02E18.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "JET SOSYETE-TR S02 JET.SOSYETE.S02E19.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "JET SOSYETE-TR S02 JET.SOSYETE.S02E20.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "JET SOSYETE-TR S02 JET.SOSYETE.S02E21",
+        "tvg_id": ""
+      },
+      {
+        "name": "JET SOSYETE-TR S02 JET.SOSYETE.S02E22",
+        "tvg_id": ""
+      },
+      {
+        "name": "JET SOSYETE-TR S02 JET.SOSYETE.S02E23.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "JEWELRY TV 2 (720P)",
+        "tvg_id": "JewelryTV2.us@SD"
+      },
+      {
+        "name": "KADIN-TR S02 KADIN.S02E01",
+        "tvg_id": ""
+      },
+      {
+        "name": "KADIN-TR S02 KADIN.S02E02",
+        "tvg_id": ""
+      },
+      {
+        "name": "KADIN-TR S02 KADIN.S02E03",
+        "tvg_id": ""
+      },
+      {
+        "name": "KADIN-TR S02 KADIN.S02E04.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "KADIN-TR S02 KADIN.S02E05.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "KADIN-TR S02 KADIN.S02E06.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "KADIN-TR S02 KADIN.S02E07.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "KADIN-TR S02 KADIN.S02E08.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "KADIN-TR S02 KADIN.S02E09.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "KADIN-TR S02 KADIN.S02E10.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "KADIN-TR S02 KADIN.S02E11.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "KADIN-TR S02 KADIN.S02E12.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "KADIN-TR S02 KADIN.S02E13.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "KADIN-TR S02 KADIN.S02E14.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "KADIN-TR S02 KADIN.S02E15.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "KADIN-TR S02 KADIN.S02E16.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "KADIN-TR S02 KADIN.S02E17.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "KADIN-TR S02 KADIN.S02E18.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "KADIN-TR S02 KADIN.S02E19.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "KADIN-TR S02 KADIN.S02E20.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "KADIN-TR S02 KADIN.S02E21.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "KADIN-TR S02 KADIN.S02E22.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "KADIN-TR S02 KADIN.S02E23.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "KADIN-TR S02 KADIN.S02E24.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "KADIN-TR S02 KADIN.S02E25.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "KADIN-TR S02 KADIN.S02E26.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "KADIN-TR S02 KADIN.S02E27.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "KADIN-TR S02 KADIN.S02E28.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "KADIN-TR S02 KADIN.S02E29.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "KADIN-TR S02 KADIN.S02E30.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "KADIN-TR S02 KADIN.S02E31.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "KADIN-TR S02 KADIN.S02E32.SEASON.FINAL.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "KADIN-TR S03 KADIN S03E03",
+        "tvg_id": ""
+      },
+      {
+        "name": "KADIN-TR S03 KADIN S03E04",
+        "tvg_id": ""
+      },
+      {
+        "name": "KADIN-TR S03 KADIN S03E09",
+        "tvg_id": ""
+      },
+      {
+        "name": "KARDES COCUKLARI-TR S01 KARDES.COCUKLARI.S01E01",
+        "tvg_id": ""
+      },
+      {
+        "name": "KARDES COCUKLARI-TR S01 KARDES.COCUKLARI.S01E02",
+        "tvg_id": ""
+      },
+      {
+        "name": "KARDES COCUKLARI-TR S01 KARDES.COCUKLARI.S01E03.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "KARDES COCUKLARI-TR S01 KARDES.COCUKLARI.S01E04.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "KARDES COCUKLARI-TR S01 KARDES.COCUKLARI.S01E05.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "KARDES COCUKLARI-TR S01 KARDES.COCUKLARI.S01E06.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "KARDES COCUKLARI-TR S01 KARDES.COCUKLARI.S01E07.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "KARDES COCUKLARI-TR S01 KARDES.COCUKLARI.S01E08.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "KARDES COCUKLARI-TR S01 KARDES.COCUKLARI.S01E09.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "KARDES COCUKLARI-TR S01 KARDES.COCUKLARI.S01E10.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "KARDES COCUKLARI-TR S01 KARDES.COCUKLARI.S01E11.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "KARDES COCUKLARI-TR S01 KARDES.COCUKLARI.S01E12.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "KARDES COCUKLARI-TR S01 KARDES.COCUKLARI.S01E13.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "KARDES COCUKLARI-TR S01 KARDES.COCUKLARI.S01E14.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "KARDES COCUKLARI-TR S01 KARDES.COCUKLARI.S01E15.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "KARDES COCUKLARI-TR S01 KARDES.COCUKLARI.S01E16.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "KARDES COCUKLARI-TR S01 KARDES.COCUKLARI.S01E17.SEASON.FINAL.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIRALIK AŞK-TR S01 KIRALIK ASK S01E01 HD",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIRALIK AŞK-TR S01 KIRALIK ASK S01E03 HD",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIRALIK AŞK-TR S01 KIRALIK ASK S01E04 HD",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIRALIK AŞK-TR S01 KIRALIK ASK S01E05 HD",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIRALIK AŞK-TR S01 KIRALIK ASK S01E06 HD",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIRALIK AŞK-TR S01 KIRALIK ASK S01E07 HD",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIRALIK AŞK-TR S01 KIRALIK ASK S01E08 HD",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIRALIK AŞK-TR S01 KIRALIK ASK S01E09 HD",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIRALIK AŞK-TR S01 KIRALIK ASK S01E10 HD",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIRALIK AŞK-TR S01 KIRALIK ASK S01E11 HD",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIRALIK AŞK-TR S01 KIRALIK ASK S01E12 HD",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIRALIK AŞK-TR S01 KIRALIK ASK S01E13 HD",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIRALIK AŞK-TR S01 KIRALIK ASK S01E14 HD",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIRALIK AŞK-TR S01 KIRALIK ASK S01E15 HD",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIRALIK AŞK-TR S01 KIRALIK ASK S01E16 HD",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIRALIK AŞK-TR S01 KIRALIK ASK S01E17 HD",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIRALIK AŞK-TR S01 KIRALIK ASK S01E18 HD",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIRALIK AŞK-TR S01 KIRALIK ASK S01E19 HD",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIRALIK AŞK-TR S01 KIRALIK ASK S01E20 HD",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIRALIK AŞK-TR S02 KIRALIK ASK S02E21 HD",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIRALIK AŞK-TR S02 KIRALIK ASK S02E22 HD",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIRALIK AŞK-TR S02 KIRALIK ASK S02E23 HD",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIRALIK AŞK-TR S02 KIRALIK ASK S02E24 HD",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIRALIK AŞK-TR S02 KIRALIK ASK S02E25 HD",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIRALIK AŞK-TR S02 KIRALIK ASK S02E26 HD",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIRALIK AŞK-TR S02 KIRALIK ASK S02E27 HD",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIRALIK AŞK-TR S02 KIRALIK ASK S02E28 HD",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIRALIK AŞK-TR S02 KIRALIK ASK S02E29 HD",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIRALIK AŞK-TR S02 KIRALIK ASK S02E30 HD",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIRALIK AŞK-TR S02 KIRALIK ASK S02E31 HD",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIRALIK AŞK-TR S02 KIRALIK ASK S02E32 HD",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIRALIK AŞK-TR S02 KIRALIK ASK S02E33 HD",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIRALIK AŞK-TR S02 KIRALIK ASK S02E34 HD",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIRALIK AŞK-TR S02 KIRALIK ASK S02E35 HD",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIRALIK AŞK-TR S02 KIRALIK ASK S02E36 HD",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIRALIK AŞK-TR S02 KIRALIK ASK S02E37 HD",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIRALIK AŞK-TR S02 KIRALIK ASK S02E38 HD",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIRALIK AŞK-TR S02 KIRALIK ASK S02E39 HD",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIRALIK AŞK-TR S02 KIRALIK ASK S02E40 HD",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIRALIK AŞK-TR S03 KIRALIK.ASK.S03E41",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIRALIK AŞK-TR S03 KIRALIK.ASK.S03E42",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIRALIK AŞK-TR S03 KIRALIK.ASK.S03E43",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIRALIK AŞK-TR S03 KIRALIK.ASK.S03E44",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIRALIK AŞK-TR S03 KIRALIK.ASK.S03E45",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIRALIK AŞK-TR S03 KIRALIK.ASK.S03E46",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIRALIK AŞK-TR S03 KIRALIK.ASK.S03E47",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIRALIK AŞK-TR S03 KIRALIK.ASK.S03E48",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIRALIK AŞK-TR S03 KIRALIK.ASK.S03E49",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIRALIK AŞK-TR S03 KIRALIK.ASK.S03E50",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIRALIK AŞK-TR S03 KIRALIK.ASK.S03E51",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIRALIK AŞK-TR S03 KIRALIK.ASK.S03E52",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIRALIK AŞK-TR S03 KIRALIK.ASK.S03E53",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIRALIK AŞK-TR S03 KIRALIK.ASK.S03E54",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIRALIK AŞK-TR S03 KIRALIK.ASK.S03E55",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIRALIK AŞK-TR S03 KIRALIK.ASK.S03E56",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIRALIK AŞK-TR S03 KIRALIK.ASK.S03E57",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIRALIK AŞK-TR S03 KIRALIK.ASK.S03E58",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIRALIK AŞK-TR S03 KIRALIK.ASK.S03E59",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIRALIK AŞK-TR S03 KIRALIK.ASK.S03E60",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIRALIK AŞK-TR S03 KIRALIK.ASK.S03E61",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIRALIK AŞK-TR S03 KIRALIK.ASK.S03E62",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIRALIK AŞK-TR S03 KIRALIK.ASK.S03E63",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIRALIK AŞK-TR S03 KIRALIK.ASK.S03E64",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIRALIK AŞK-TR S03 KIRALIK.ASK.S03E65",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIRALIK AŞK-TR S03 KIRALIK.ASK.S03E66",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIRALIK AŞK-TR S03 KIRALIK.ASK.S03E67",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIRALIK AŞK-TR S03 KIRALIK.ASK.S03E68",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIRALIK AŞK-TR S03 KIRALIK.ASK.S03E69",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIZIM-TR S01 KIZIM.S01E01",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIZIM-TR S01 KIZIM.S01E02",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIZIM-TR S01 KIZIM.S01E03",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIZIM-TR S01 KIZIM.S01E04",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIZIM-TR S01 KIZIM.S01E05",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIZIM-TR S01 KIZIM.S01E06",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIZIM-TR S01 KIZIM.S01E07",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIZIM-TR S01 KIZIM.S01E08",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIZIM-TR S01 KIZIM.S01E09",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIZIM-TR S01 KIZIM.S01E10",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIZIM-TR S01 KIZIM.S01E11",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIZIM-TR S01 KIZIM.S01E12",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIZIM-TR S01 KIZIM.S01E13",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIZIM-TR S01 KIZIM.S01E14",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIZIM-TR S01 KIZIM.S01E15",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIZIM-TR S01 KIZIM.S01E16",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIZIM-TR S01 KIZIM.S01E19.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIZIM-TR S01 KIZIM.S01E20.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIZIM-TR S01 KIZIM.S01E21.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIZIM-TR S01 KIZIM.S01E22.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIZIM-TR S01 KIZIM.S01E23.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIZIM-TR S01 KIZIM.S01E24.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIZIM-TR S01 KIZIM.S01E25.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIZIM-TR S01 KIZIM.S01E26.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIZIM-TR S01 KIZIM.S01E27.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIZIM-TR S01 KIZIM.S01E28.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIZIM-TR S01 KIZIM.S01E29.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIZIM-TR S01 KIZIM.S01E30.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIZIM-TR S01 KIZIM.S01E31.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIZIM-TR S01 KIZIM.S01E32.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIZIM-TR S01 KIZIM.S01E33.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "KIZIM-TR S01 KIZIM.S01E34.FINAL.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "KOCA KOCA YALANLAR-TR S01 EPISODE 9",
+        "tvg_id": ""
+      },
+      {
+        "name": "KOCA KOCA YALANLAR-TR S01 KOCA.KOCA.YALANLAR.S01E01",
+        "tvg_id": ""
+      },
+      {
+        "name": "KOCA KOCA YALANLAR-TR S01 KOCA.KOCA.YALANLAR.S01E02",
+        "tvg_id": ""
+      },
+      {
+        "name": "KOCA KOCA YALANLAR-TR S01 KOCA.KOCA.YALANLAR.S01E03",
+        "tvg_id": ""
+      },
+      {
+        "name": "KOCA KOCA YALANLAR-TR S01 KOCA.KOCA.YALANLAR.S01E04",
+        "tvg_id": ""
+      },
+      {
+        "name": "KOCA KOCA YALANLAR-TR S01 KOCA.KOCA.YALANLAR.S01E05",
+        "tvg_id": ""
+      },
+      {
+        "name": "KOCA KOCA YALANLAR-TR S01 KOCA.KOCA.YALANLAR.S01E06",
+        "tvg_id": ""
+      },
+      {
+        "name": "KOCA KOCA YALANLAR-TR S01 KOCA.KOCA.YALANLAR.S01E07",
+        "tvg_id": ""
+      },
+      {
+        "name": "KOCA KOCA YALANLAR-TR S01 KOCA.KOCA.YALANLAR.S01E08",
+        "tvg_id": ""
+      },
+      {
+        "name": "KOCA KOCA YALANLAR-TR S01 KOCA.KOCA.YALANLAR.S01E10.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "KOCA KOCA YALANLAR-TR S01 KOCA.KOCA.YALANLAR.S01E11",
+        "tvg_id": ""
+      },
+      {
+        "name": "KOCA KOCA YALANLAR-TR S01 KOCA.KOCA.YALANLAR.S01E12.FINAL",
+        "tvg_id": ""
+      },
+      {
+        "name": "KURSUN-TR S01 KURSUN S01E01",
+        "tvg_id": ""
+      },
+      {
+        "name": "KURSUN-TR S01 KURSUN S01E03",
+        "tvg_id": ""
+      },
+      {
+        "name": "KURULUS OSMAN-TR S01 KURULUS OSMAN S01E02",
+        "tvg_id": ""
+      },
+      {
+        "name": "KUZGUN-TR S01 KUZGUN.S01E12.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "KUZGUN-TR S01 KUZGUN.S01E13.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "KUZGUN-TR S01 KUZGUN.S01E14.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "KUZGUN-TR S01 KUZGUN.S01E15.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "KUZGUN-TR S01 KUZGUN.S01E16.SEASON.FINAL.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "KUZGUN-TR S01 KUZGUNS01E01.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "KUZGUN-TR S01 KUZGUNS01E02.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "KUZGUN-TR S01 KUZGUNS01E03.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "KUZGUN-TR S01 KUZGUNS01E04.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "KUZGUN-TR S01 KUZGUNS01E05.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "KUZGUN-TR S01 KUZGUNS01E06.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "KUZGUN-TR S01 KUZGUNS01E07.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "KUZGUN-TR S01 KUZGUNS01E08.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "KUZGUN-TR S01 KUZGUNS01E09.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "KUZGUN-TR S01 KUZGUNS01E10.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "KUZGUN-TR S01 KUZGUNS01E11.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "LA CASA DE PAPEL-TR S01 LA.CASA.DE.PAPEL.S01E01.1080P.NF",
+        "tvg_id": ""
+      },
+      {
+        "name": "LA CASA DE PAPEL-TR S01 LA.CASA.DE.PAPEL.S01E02.1080P.NF",
+        "tvg_id": ""
+      },
+      {
+        "name": "LA CASA DE PAPEL-TR S01 LA.CASA.DE.PAPEL.S01E03.1080P.NF",
+        "tvg_id": ""
+      },
+      {
+        "name": "LA CASA DE PAPEL-TR S01 LA.CASA.DE.PAPEL.S01E04.1080P.NF",
+        "tvg_id": ""
+      },
+      {
+        "name": "LA CASA DE PAPEL-TR S01 LA.CASA.DE.PAPEL.S01E05.1080P.NF",
+        "tvg_id": ""
+      },
+      {
+        "name": "LA CASA DE PAPEL-TR S01 LA.CASA.DE.PAPEL.S01E06.1080P.NF",
+        "tvg_id": ""
+      },
+      {
+        "name": "LA CASA DE PAPEL-TR S01 LA.CASA.DE.PAPEL.S01E07.1080P.NF",
+        "tvg_id": ""
+      },
+      {
+        "name": "LA CASA DE PAPEL-TR S01 LA.CASA.DE.PAPEL.S01E08.1080P.NF",
+        "tvg_id": ""
+      },
+      {
+        "name": "LA CASA DE PAPEL-TR S01 LA.CASA.DE.PAPEL.S01E09.1080P.NF",
+        "tvg_id": ""
+      },
+      {
+        "name": "LA CASA DE PAPEL-TR S01 LA.CASA.DE.PAPEL.S01E10.1080P.NF",
+        "tvg_id": ""
+      },
+      {
+        "name": "LA CASA DE PAPEL-TR S01 LA.CASA.DE.PAPEL.S01E11.1080P.NF",
+        "tvg_id": ""
+      },
+      {
+        "name": "LA CASA DE PAPEL-TR S01 LA.CASA.DE.PAPEL.S01E12.1080P.NF",
+        "tvg_id": ""
+      },
+      {
+        "name": "LA CASA DE PAPEL-TR S01 LA.CASA.DE.PAPEL.S01E13.1080P.NF",
+        "tvg_id": ""
+      },
+      {
+        "name": "LA CASA DE PAPEL-TR S02 LA.CASA.DE.PAPEL.S02E01.1080P.NF",
+        "tvg_id": ""
+      },
+      {
+        "name": "LA CASA DE PAPEL-TR S02 LA.CASA.DE.PAPEL.S02E02.1080P.NF",
+        "tvg_id": ""
+      },
+      {
+        "name": "LA CASA DE PAPEL-TR S02 LA.CASA.DE.PAPEL.S02E03.1080P.NF",
+        "tvg_id": ""
+      },
+      {
+        "name": "LA CASA DE PAPEL-TR S02 LA.CASA.DE.PAPEL.S02E04.1080P.NF",
+        "tvg_id": ""
+      },
+      {
+        "name": "LA CASA DE PAPEL-TR S02 LA.CASA.DE.PAPEL.S02E05.1080P.NF",
+        "tvg_id": ""
+      },
+      {
+        "name": "LA CASA DE PAPEL-TR S02 LA.CASA.DE.PAPEL.S02E06.1080P.NF",
+        "tvg_id": ""
+      },
+      {
+        "name": "LA CASA DE PAPEL-TR S02 LA.CASA.DE.PAPEL.S02E07.1080P.NF",
+        "tvg_id": ""
+      },
+      {
+        "name": "LA CASA DE PAPEL-TR S02 LA.CASA.DE.PAPEL.S02E08.1080P.NF",
+        "tvg_id": ""
+      },
+      {
+        "name": "LA CASA DE PAPEL-TR S02 LA.CASA.DE.PAPEL.S02E09.1080P.NF",
+        "tvg_id": ""
+      },
+      {
+        "name": "LA CASA DE PAPEL-TR S04 MONEY.HEIST.S04E01",
+        "tvg_id": ""
+      },
+      {
+        "name": "LA CASA DE PAPEL-TR S04 MONEY.HEIST.S04E08",
+        "tvg_id": ""
+      },
+      {
+        "name": "LANTHUNG TV",
+        "tvg_id": "LanthungTV.th@SD"
+      },
+      {
+        "name": "LIFEVISIONTV (406P) [NOT 24/7]",
+        "tvg_id": "LifevisionTV.us@SD"
+      },
+      {
+        "name": "LOVEWORLD USA (720P)",
+        "tvg_id": "LoveWorldUSA.ng@SD"
+      },
+      {
+        "name": "LYCHNOS",
+        "tvg_id": "lychnostv.gr"
+      },
+      {
+        "name": "MASUM-TR S01 MASUM S01E07",
+        "tvg_id": ""
+      },
+      {
+        "name": "MEDJUGORJE ITALIA TV (480P)",
+        "tvg_id": "MedjugorjeItaliaTV.it@SD"
+      },
+      {
+        "name": "MESSIAH-TR S01 MESSIAH.S01E01",
+        "tvg_id": ""
+      },
+      {
+        "name": "MESSIAH-TR S01 MESSIAH.S01E04",
+        "tvg_id": ""
+      },
+      {
+        "name": "META FILM TV",
+        "tvg_id": "MetaFilmTV.ir@SD"
+      },
+      {
+        "name": "MH 1 PRIME (576P)",
+        "tvg_id": "Mh1Prime.in@SD"
+      },
+      {
+        "name": "MH ONE MOVIES (576P)",
+        "tvg_id": "MHOneMovies.in@SD"
+      },
+      {
+        "name": "MUCIZE DOKTOR-TR S01 MUCIZE DOKTOR S01E02",
+        "tvg_id": ""
+      },
+      {
+        "name": "MUCIZE DOKTOR-TR S01 MUCIZE DOKTOR S01E04",
+        "tvg_id": ""
+      },
+      {
+        "name": "MUCIZE DOKTOR-TR S01 MUCIZE DOKTOR S01E07",
+        "tvg_id": ""
+      },
+      {
+        "name": "MUCIZE DOKTOR-TR S01 MUCIZE DOKTOR S01E09",
+        "tvg_id": ""
+      },
+      {
+        "name": "MUCIZE DOKTOR-TR S01 MUCIZE.DOKTOR.S01E01.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "MUHTESEM İKILI-TR S01 MUHTESEM.IKILI.S01E01",
+        "tvg_id": ""
+      },
+      {
+        "name": "MUHTESEM İKILI-TR S01 MUHTESEM.IKILI.S01E02",
+        "tvg_id": ""
+      },
+      {
+        "name": "MUHTESEM İKILI-TR S01 MUHTESEM.IKILI.S01E03",
+        "tvg_id": ""
+      },
+      {
+        "name": "MUHTESEM İKILI-TR S01 MUHTESEM.IKILI.S01E04",
+        "tvg_id": ""
+      },
+      {
+        "name": "MUHTESEM İKILI-TR S01 MUHTESEM.IKILI.S01E05",
+        "tvg_id": ""
+      },
+      {
+        "name": "MUHTESEM İKILI-TR S01 MUHTESEM.IKILI.S01E06",
+        "tvg_id": ""
+      },
+      {
+        "name": "MUHTESEM İKILI-TR S01 MUHTESEM.IKILI.S01E07",
+        "tvg_id": ""
+      },
+      {
+        "name": "MUHTESEM İKILI-TR S01 MUHTESEM.IKILI.S01E08",
+        "tvg_id": ""
+      },
+      {
+        "name": "MUHTESEM İKILI-TR S01 MUHTESEM.IKILI.S01E09.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "MUHTESEM İKILI-TR S01 MUHTESEM.IKILI.S01E10.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "MUHTESEM İKILI-TR S01 MUHTESEM.IKILI.S01E11.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "MUHTESEM İKILI-TR S01 MUHTESEM.IKILI.S01E12.FINAL.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "MUKABELE TV",
+        "tvg_id": ""
+      },
+      {
+        "name": "MUSLIM NETWORK TV",
+        "tvg_id": "MuslimNetworkTV.us@SD"
+      },
+      {
+        "name": "NEFES NEFESE-TR S01 NEFES.NEFESE.S01E01",
+        "tvg_id": ""
+      },
+      {
+        "name": "NEFES NEFESE-TR S01 NEFES.NEFESE.S01E02",
+        "tvg_id": ""
+      },
+      {
+        "name": "NEFES NEFESE-TR S01 NEFES.NEFESE.S01E03",
+        "tvg_id": ""
+      },
+      {
+        "name": "NEFES NEFESE-TR S01 NEFES.NEFESE.S01E04",
+        "tvg_id": ""
+      },
+      {
+        "name": "NEFES NEFESE-TR S01 NEFES.NEFESE.S01E05",
+        "tvg_id": ""
+      },
+      {
+        "name": "NEFES NEFESE-TR S01 NEFES.NEFESE.S01E06",
+        "tvg_id": ""
+      },
+      {
+        "name": "NEFES NEFESE-TR S01 NEFES.NEFESE.S01E07",
+        "tvg_id": ""
+      },
+      {
+        "name": "NEFES NEFESE-TR S01 NEFES.NEFESE.S01E08",
+        "tvg_id": ""
+      },
+      {
+        "name": "NEFES NEFESE-TR S01 NEFES.NEFESE.S01E09",
+        "tvg_id": ""
+      },
+      {
+        "name": "NEFES NEFESE-TR S01 NEFES.NEFESE.S01E10(FINAL).MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "NEWFLIX",
+        "tvg_id": "NewFlix.ir@SD"
+      },
+      {
+        "name": "NEWS STATE PUNJAB HARYANA HIMACHAL (1080P)",
+        "tvg_id": "NewsStatePunjabHaryanaHimachal.in@SD"
+      },
+      {
+        "name": "NEWS1",
+        "tvg_id": "News1.th@SD"
+      },
+      {
+        "name": "NIGBATI (720P) [NOT 24/7]",
+        "tvg_id": "Nigbati.ng@SD"
+      },
+      {
+        "name": "NOBET-2019 S01 NOBET S01 E01",
+        "tvg_id": ""
+      },
+      {
+        "name": "NOBET-2019 S01 NOBET S01 E02",
+        "tvg_id": ""
+      },
+      {
+        "name": "NOBET-2019 S01 NOBET S01 E03",
+        "tvg_id": ""
+      },
+      {
+        "name": "NOBET-2019 S01 NOBET S01 E05.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "NOBET-2019 S01 NOBET S01 E4.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "NOBET-2019 S01 NOBET.S01E06.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "NOBET-2019 S01 NOBET.S01E07.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "NOBET-2019 S01 NOBET.S01E08.FINAL.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "NOTICIAS 16 (720P) [NOT 24/7]",
+        "tvg_id": "Noticias16.do@SD"
+      },
+      {
+        "name": "NOVO TEMPO (720P)",
+        "tvg_id": "NovoTempo.br"
+      },
+      {
+        "name": "NOVO TEMPO (720P)",
+        "tvg_id": "NovoTempo.br@SD"
+      },
+      {
+        "name": "NOW 80'S",
+        "tvg_id": ""
+      },
+      {
+        "name": "NR 1 DAMAR",
+        "tvg_id": ""
+      },
+      {
+        "name": "OMROEP BRABANT RADIO (1080P)",
+        "tvg_id": "OmroepBrabantRadio.nl@SD"
+      },
+      {
+        "name": "PAVYON-TR S01 PAVYON S01E03.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "PAVYON-TR S01 PAVYON.S01B01",
+        "tvg_id": ""
+      },
+      {
+        "name": "PAVYON-TR S01 PAVYON.S01E02.1080P.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "PAVYON-TR S01 PAVYON.S01E04.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "PAVYON-TR S01 PAVYON.S01E05",
+        "tvg_id": ""
+      },
+      {
+        "name": "PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDLHAMID.S03E01",
+        "tvg_id": ""
+      },
+      {
+        "name": "PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDLHAMID.S03E22.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDÜLHAMID.S03E02.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDÜLHAMID.S03E03.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDÜLHAMID.S03E04.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDULHAMID.S03E05.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDÜLHAMID.S03E06.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDÜLHAMID.S03E07.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDÜLHAMID.S03E08.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDÜLHAMID.S03E09.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDÜLHAMID.S03E10.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDÜLHAMID.S03E11.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDULHAMID.S03E12.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDÜLHAMID.S03E13.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDÜLHAMID.S03E14.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDÜLHAMID.S03E15.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDÜLHAMID.S03E16.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDÜLHAMID.S03E17.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDÜLHAMID.S03E18.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDÜLHAMID.S03E19.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDÜLHAMID.S03E20.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDÜLHAMID.S03E21.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDÜLHAMID.S03E23.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDÜLHAMID.S03E24.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDÜLHAMID.S03E25.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDÜLHAMID.S03E26.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDÜLHAMID.S03E27.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDÜLHAMID.S03E28.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDÜLHAMID.S03E29.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDÜLHAMID.S03E30.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDULHAMID.S03E31.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDULHAMID.S03E32.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDULHAMID.S03E33.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDULHAMID.S03E34.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "PAYITAHT ABDULHAMID-TR S03 PAYITAHT.ABDULHAMID.S03E35.SEASON.FINAL.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "PAYITAHT ABDULHAMID-TR S04 PAYITAHT ABDULHAMID S04E02",
+        "tvg_id": ""
+      },
+      {
+        "name": "PAYITAHT ABDULHAMID-TR S04 PAYITAHT ABDULHAMID S04E04",
+        "tvg_id": ""
+      },
+      {
+        "name": "PAYITAHT ABDULHAMID-TR S04 PAYITAHT ABDULHAMID S04E09",
+        "tvg_id": ""
+      },
+      {
+        "name": "PERSIANA DOCS",
+        "tvg_id": "PersianaDocs.fr@HD"
+      },
+      {
+        "name": "PERSIANA FIGHT",
+        "tvg_id": "PersianaFight.fr@HD"
+      },
+      {
+        "name": "PERSIANA FOLK",
+        "tvg_id": "PersianaFolk.fr@HD"
+      },
+      {
+        "name": "PERSIANA LATINO",
+        "tvg_id": "PersianaLatino.fr@SD"
+      },
+      {
+        "name": "PERSIANA MEDICAL",
+        "tvg_id": "PersianaMedical.fr@SD"
+      },
+      {
+        "name": "PERSIANA REALITY",
+        "tvg_id": "PersianaReality.fr@HD"
+      },
+      {
+        "name": "PERSIANA SERIES",
+        "tvg_id": "PersianaSeries.fr@HD"
+      },
+      {
+        "name": "PERSIANA TRAVEL",
+        "tvg_id": "PersianaTravel.fr@SD"
+      },
+      {
+        "name": "PERSIANA VIBE",
+        "tvg_id": "PersianaVibe.fr@HD"
+      },
+      {
+        "name": "PLENITUDE TV",
+        "tvg_id": "PlenitudeTV.br@SD"
+      },
+      {
+        "name": "PLOVDIV ORTHODOX TV (1080P)",
+        "tvg_id": "PlovdivOrthodoxTV.bg@SD"
+      },
+      {
+        "name": "PMC ROYALE (1080P)",
+        "tvg_id": "PMCRoyale.ae@SD"
+      },
+      {
+        "name": "REDE SECULO 21 (720P)",
+        "tvg_id": "RedeSeculo21.br"
+      },
+      {
+        "name": "REDE SECULO 21 (720P)",
+        "tvg_id": "RedeSeculo21.br@SD"
+      },
+      {
+        "name": "REV AND ROLL (720P)",
+        "tvg_id": "RevandRoll.us@SD"
+      },
+      {
+        "name": "REVRY QUEER (1080P)",
+        "tvg_id": "RevryQueer.us"
+      },
+      {
+        "name": "REVRY QUEER (720P)",
+        "tvg_id": "RevryQueer.us@SD"
+      },
+      {
+        "name": "RISE OF EMPIRES: OTTOMAN-TR S01 RISE.OF.EMPIRES.OTTOMAN.S01E01",
+        "tvg_id": ""
+      },
+      {
+        "name": "RISE OF EMPIRES: OTTOMAN-TR S01 RISE.OF.EMPIRES.OTTOMAN.S01E04",
+        "tvg_id": ""
+      },
+      {
+        "name": "RISE OF EMPIRES: OTTOMAN-TR S01 RISE.OF.EMPIRES.OTTOMAN.S01E05",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAGLIK CHANEL",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAHSIYET-TR S01 SAHSIYET S01E02",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAHSIYET-TR S01 SAHSIYET S01E04",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAHSIYET-TR S01 SAHSIYET S01E05",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAHSIYET-TR S01 SAHSIYET S01E07",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAIRAM TV (576P)",
+        "tvg_id": "SairamTV.in@SD"
+      },
+      {
+        "name": "SARDARI TV (1080P) [NOT 24/7]",
+        "tvg_id": "SardariTV.ca@SD"
+      },
+      {
+        "name": "SAVASCI-TR S01 SAVASCI S01 E01",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAVASCI-TR S01 SAVASCI S01 E02",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAVASCI-TR S01 SAVASCI S01 E03",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAVASCI-TR S01 SAVASCI S01 E04",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAVASCI-TR S01 SAVASCI S01 E05",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAVASCI-TR S01 SAVASCI S01 E06",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAVASCI-TR S01 SAVASCI S01 E07",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAVASCI-TR S01 SAVASCI S01 E08",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAVASCI-TR S01 SAVASCI S01 E09",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAVASCI-TR S01 SAVASCI S01 E10",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAVASCI-TR S01 SAVASCI S01 E11",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAVASCI-TR S01 SAVASCI S01 E12",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAVASCI-TR S01 SAVASCI S01 E13",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAVASCI-TR S01 SAVASCI S01 E14",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAVASCI-TR S01 SAVASCI S01 E15",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAVASCI-TR S01 SAVASCI S01 E16",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAVASCI-TR S01 SAVASCI S01 E17",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAVASCI-TR S01 SAVASCI S01 E18",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAVASCI-TR S01 SAVASCI S01 E19",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAVASCI-TR S01 SAVASCI S01 E20",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAVASCI-TR S01 SAVASCI S01 E21",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAVASCI-TR S01 SAVASCI S01 E22",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAVASCI-TR S01 SAVASCI S01 E23",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAVASCI-TR S01 SAVASCI S01 E24",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAVASCI-TR S01 SAVASCI S01 E25",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAVASCI-TR S01 SAVASCI S01 E26",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAVASCI-TR S01 SAVASCI S01 E27",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAVASCI-TR S01 SAVASCI S01 E28",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAVASCI-TR S01 SAVASCI S01 E29",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAVASCI-TR S01 SAVASCI S01 E30",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAVASCI-TR S01 SAVASCI S01 E31",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAVASCI-TR S01 SAVASCI S01 E32",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAVASCI-TR S01 SAVASCI S01 E33",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAVASCI-TR S01 SAVASCI S01 E34",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAVASCI-TR S01 SAVASCI S01 E35",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAVASCI-TR S01 SAVASCI S01 E36",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAVASCI-TR S01 SAVASCI S01 E37",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAVASCI-TR S01 SAVASCI S01 E38",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAVASCI-TR S01 SAVASCI S01 E39",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAVASCI-TR S01 SAVASCI S01 E40",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAVASCI-TR S01 SAVASCI S01 E41",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAVASCI-TR S01 SAVASCI S01 E42",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAVASCI-TR S01 SAVASCI S01 E43",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAVASCI-TR S01 SAVASCI S01 E44",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAVASCI-TR S01 SAVASCI S01 E45",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAVASCI-TR S01 SAVASCI S01 E46",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAVASCI-TR S01 SAVASCI S01 E47",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAVASCI-TR S01 SAVASCI S01 E48",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAVASCI-TR S02 SAVASCI S02 E01",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAVASCI-TR S02 SAVASCI S02 E02",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAVASCI-TR S02 SAVASCI S02 E03",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAVASCI-TR S02 SAVASCI S02 E04",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAVASCI-TR S02 SAVASCI S02 E05",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAVASCI-TR S02 SAVASCI S02 E06",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAVASCI-TR S02 SAVASCI S02 E07",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAVASCI-TR S02 SAVASCI S02 E08",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAVASCI-TR S02 SAVASCI S02 E09",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAVASCI-TR S02 SAVASCI S02 E10",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAVASCI-TR S02 SAVASCI S02 E11",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAVASCI-TR S02 SAVASCI S02 E12",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAVASCI-TR S02 SAVASCI S02 E13",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAVASCI-TR S02 SAVASCI S02 E14",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAVASCI-TR S02 SAVASCI S02 E15",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAVASCI-TR S02 SAVASCI S02 E16",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAVASCI-TR S02 SAVASCI S02 E17",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAVASCI-TR S02 SAVASCI S02 E18",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAVASCI-TR S02 SAVASCI S02 E19",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAVASCI-TR S02 SAVASCI S02 E20",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAVASCI-TR S02 SAVASCI S02 E21",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAVASCI-TR S02 SAVASCI.E02E24.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAVASCI-TR S02 SAVASCI.E02E25.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAVASCI-TR S02 SAVASCI.E02E26.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAVASCI-TR S02 SAVASCI.E02E27.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAVASCI-TR S02 SAVASCI.E02E28.SEASON.FINAL.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAVASCI-TR S02 SAVASCI.S02E22.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "SAVASCI-TR S02 SAVASCI.S02E23.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "SEN ANLAT KARADENIZ-TR S01 SEN.ANLAT.KARADENIZ.BL.S01E01.720P.WEB-DL.X264",
+        "tvg_id": ""
+      },
+      {
+        "name": "SEN ANLAT KARADENIZ-TR S01 SEN.ANLAT.KARADENIZ.BL.S01E02.720P.WEB-DL.X264",
+        "tvg_id": ""
+      },
+      {
+        "name": "SEN ANLAT KARADENIZ-TR S01 SEN.ANLAT.KARADENIZ.BL.S01E03.720P.WEB-DL.X264",
+        "tvg_id": ""
+      },
+      {
+        "name": "SEN ANLAT KARADENIZ-TR S01 SEN.ANLAT.KARADENIZ.BL.S01E04.720P.WEB-DL.X264",
+        "tvg_id": ""
+      },
+      {
+        "name": "SEN ANLAT KARADENIZ-TR S01 SEN.ANLAT.KARADENIZ.BL.S01E05.720P.WEB-DL.X264",
+        "tvg_id": ""
+      },
+      {
+        "name": "SEN ANLAT KARADENIZ-TR S01 SEN.ANLAT.KARADENIZ.BL.S01E06.720P.WEB-DL.X264",
+        "tvg_id": ""
+      },
+      {
+        "name": "SEN ANLAT KARADENIZ-TR S01 SEN.ANLAT.KARADENIZ.BL.S01E07.720P.WEB-DL.X264",
+        "tvg_id": ""
+      },
+      {
+        "name": "SEN ANLAT KARADENIZ-TR S01 SEN.ANLAT.KARADENIZ.BL.S01E08.720P.WEB-DL.X264",
+        "tvg_id": ""
+      },
+      {
+        "name": "SEN ANLAT KARADENIZ-TR S01 SEN.ANLAT.KARADENIZ.BL.S01E09.720P.WEB-DL.X264",
+        "tvg_id": ""
+      },
+      {
+        "name": "SEN ANLAT KARADENIZ-TR S01 SEN.ANLAT.KARADENIZ.BL.S01E10.720P.WEB-DL.X264",
+        "tvg_id": ""
+      },
+      {
+        "name": "SEN ANLAT KARADENIZ-TR S01 SEN.ANLAT.KARADENIZ.BL.S01E11.720P.WEB-DL.X264",
+        "tvg_id": ""
+      },
+      {
+        "name": "SEN ANLAT KARADENIZ-TR S01 SEN.ANLAT.KARADENIZ.BL.S01E12.720P.WEB-DL.X264",
+        "tvg_id": ""
+      },
+      {
+        "name": "SEN ANLAT KARADENIZ-TR S01 SEN.ANLAT.KARADENIZ.BL.S01E13.720P.WEB-DL.X264",
+        "tvg_id": ""
+      },
+      {
+        "name": "SEN ANLAT KARADENIZ-TR S01 SEN.ANLAT.KARADENIZ.BL.S01E14.720P.WEB-DL.X264",
+        "tvg_id": ""
+      },
+      {
+        "name": "SEN ANLAT KARADENIZ-TR S01 SEN.ANLAT.KARADENIZ.BL.S01E15.720P.WEB-DL.X264",
+        "tvg_id": ""
+      },
+      {
+        "name": "SEN ANLAT KARADENIZ-TR S01 SEN.ANLAT.KARADENIZ.BL.S01E16.720P.WEB-DL.X264",
+        "tvg_id": ""
+      },
+      {
+        "name": "SEN ANLAT KARADENIZ-TR S01 SEN.ANLAT.KARADENIZ.BL.S01E17.720P.WEB-DL.X264",
+        "tvg_id": ""
+      },
+      {
+        "name": "SEN ANLAT KARADENIZ-TR S01 SEN.ANLAT.KARADENIZ.BL.S01E18.720P.WEB-DL.X264",
+        "tvg_id": ""
+      },
+      {
+        "name": "SEN ANLAT KARADENIZ-TR S01 SEN.ANLAT.KARADENIZ.BL.S01E19.720P.WEB-DL.X264",
+        "tvg_id": ""
+      },
+      {
+        "name": "SEN ANLAT KARADENIZ-TR S01 SEN.ANLAT.KARADENIZ.BL.S01E20.720P.WEB-DL.X264",
+        "tvg_id": ""
+      },
+      {
+        "name": "SEN ANLAT KARADENIZ-TR S01 SEN.ANLAT.KARADENIZ.BL.S01E21.SEZON.FINALI.720P.WEB-DL.X264",
+        "tvg_id": ""
+      },
+      {
+        "name": "SEN ANLAT KARADENIZ-TR S02 SEN.ANLAT.KARADENIZ.S02E01",
+        "tvg_id": ""
+      },
+      {
+        "name": "SEN ANLAT KARADENIZ-TR S02 SEN.ANLAT.KARADENIZ.S02E02",
+        "tvg_id": ""
+      },
+      {
+        "name": "SEN ANLAT KARADENIZ-TR S02 SEN.ANLAT.KARADENIZ.S02E03",
+        "tvg_id": ""
+      },
+      {
+        "name": "SEN ANLAT KARADENIZ-TR S02 SEN.ANLAT.KARADENIZ.S02E04.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "SEN ANLAT KARADENIZ-TR S02 SEN.ANLAT.KARADENIZ.S02E05.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "SEN ANLAT KARADENIZ-TR S02 SEN.ANLAT.KARADENIZ.S02E06.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "SEN ANLAT KARADENIZ-TR S02 SEN.ANLAT.KARADENIZ.S02E07.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "SEN ANLAT KARADENIZ-TR S02 SEN.ANLAT.KARADENIZ.S02E08.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "SEN ANLAT KARADENIZ-TR S02 SEN.ANLAT.KARADENIZ.S02E09.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "SEN ANLAT KARADENIZ-TR S02 SEN.ANLAT.KARADENIZ.S02E10.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "SEN ANLAT KARADENIZ-TR S02 SEN.ANLAT.KARADENIZ.S02E11.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "SEN ANLAT KARADENIZ-TR S02 SEN.ANLAT.KARADENIZ.S02E12.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "SEN ANLAT KARADENIZ-TR S02 SEN.ANLAT.KARADENIZ.S02E13.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "SEN ANLAT KARADENIZ-TR S02 SEN.ANLAT.KARADENIZ.S02E14.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "SEN ANLAT KARADENIZ-TR S02 SEN.ANLAT.KARADENIZ.S02E15.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "SEN ANLAT KARADENIZ-TR S02 SEN.ANLAT.KARADENIZ.S02E16.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "SEN ANLAT KARADENIZ-TR S02 SEN.ANLAT.KARADENIZ.S02E17.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "SEN ANLAT KARADENIZ-TR S02 SEN.ANLAT.KARADENIZ.S02E18.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "SEN ANLAT KARADENIZ-TR S02 SEN.ANLAT.KARADENIZ.S02E19.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "SEN ANLAT KARADENIZ-TR S02 SEN.ANLAT.KARADENIZ.S02E20.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "SEN ANLAT KARADENIZ-TR S02 SEN.ANLAT.KARADENIZ.S02E21.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "SEN ANLAT KARADENIZ-TR S02 SEN.ANLAT.KARADENIZ.S02E22.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "SEN ANLAT KARADENIZ-TR S02 SEN.ANLAT.KARADENIZ.S02E23.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "SEN ANLAT KARADENIZ-TR S02 SEN.ANLAT.KARADENIZ.S02E24.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "SEN ANLAT KARADENIZ-TR S02 SEN.ANLAT.KARADENIZ.S02E25.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "SEN ANLAT KARADENIZ-TR S02 SEN.ANLAT.KARADENIZ.S02E26.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "SEN ANLAT KARADENIZ-TR S02 SEN.ANLAT.KARADENIZ.S02E27.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "SEN ANLAT KARADENIZ-TR S02 SEN.ANLAT.KARADENIZ.S02E28.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "SEN ANLAT KARADENIZ-TR S02 SEN.ANLAT.KARADENIZ.S02E29.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "SEN ANLAT KARADENIZ-TR S02 SEN.ANLAT.KARADENIZ.S02E30.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "SEN ANLAT KARADENIZ-TR S02 SEN.ANLAT.KARADENIZ.S02E31.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "SEN ANLAT KARADENIZ-TR S02 SEN.ANLAT.KARADENIZ.S02E32.SEASON.FINAL.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "SEN ANLAT KARADENIZ-TR S03 SEN.ANLAT.KARADENIZ.S03E01.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "SEN ANLAT KARADENIZ-TR S03 SEN.ANLAT.KARADENIZ.S03E02.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "SENDER NEU JERUSALEM (576P)",
+        "tvg_id": "SenderNeuJerusalem.de@SD"
+      },
+      {
+        "name": "SIFIR BIR – BIR ZAMANLAR ADANA’DA-TR S01 SIFIR.BIR.BIR.ZAMANLAR.ADANADA.S01E01",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIFIR BIR – BIR ZAMANLAR ADANA’DA-TR S01 SIFIR.BIR.BIR.ZAMANLAR.ADANADA.S01E02",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIFIR BIR – BIR ZAMANLAR ADANA’DA-TR S01 SIFIR.BIR.BIR.ZAMANLAR.ADANADA.S01E03",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIFIR BIR – BIR ZAMANLAR ADANA’DA-TR S01 SIFIR.BIR.BIR.ZAMANLAR.ADANADA.S01E04",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIFIR BIR – BIR ZAMANLAR ADANA’DA-TR S01 SIFIR.BIR.BIR.ZAMANLAR.ADANADA.S01E05(SEASON.FINAL)",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIFIR BIR – BIR ZAMANLAR ADANA’DA-TR S02 SIFIR.BIR.BIR.ZAMANLAR.ADANADA.S02E06",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIFIR BIR – BIR ZAMANLAR ADANA’DA-TR S02 SIFIR.BIR.BIR.ZAMANLAR.ADANADA.S02E07",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIFIR BIR – BIR ZAMANLAR ADANA’DA-TR S02 SIFIR.BIR.BIR.ZAMANLAR.ADANADA.S02E08",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIFIR BIR – BIR ZAMANLAR ADANA’DA-TR S02 SIFIR.BIR.BIR.ZAMANLAR.ADANADA.S02E09",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIFIR BIR – BIR ZAMANLAR ADANA’DA-TR S02 SIFIR.BIR.BIR.ZAMANLAR.ADANADA.S02E10(SEASON.FINAL)",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIFIR BIR – BIR ZAMANLAR ADANA’DA-TR S03 SIFIR.BIR.BIR.ZAMANLAR.ADANADA.S03E11",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIFIR BIR – BIR ZAMANLAR ADANA’DA-TR S03 SIFIR.BIR.BIR.ZAMANLAR.ADANADA.S03E12",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIFIR BIR – BIR ZAMANLAR ADANA’DA-TR S03 SIFIR.BIR.BIR.ZAMANLAR.ADANADA.S03E13",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIFIR BIR – BIR ZAMANLAR ADANA’DA-TR S03 SIFIR.BIR.BIR.ZAMANLAR.ADANADA.S03E14",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIFIR BIR – BIR ZAMANLAR ADANA’DA-TR S03 SIFIR.BIR.BIR.ZAMANLAR.ADANADA.S03E15",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIFIR BIR – BIR ZAMANLAR ADANA’DA-TR S03 SIFIR.BIR.BIR.ZAMANLAR.ADANADA.S03E16",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIFIR BIR – BIR ZAMANLAR ADANA’DA-TR S03 SIFIR.BIR.BIR.ZAMANLAR.ADANADA.S03E17",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIFIR BIR – BIR ZAMANLAR ADANA’DA-TR S03 SIFIR.BIR.BIR.ZAMANLAR.ADANADA.S03E18.(SEASON.FINAL)",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIFIR BIR – BIR ZAMANLAR ADANA’DA-TR S04 SIFIR.BIR.BIR.ZAMANLAR.ADANADA.S04E19",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIFIR BIR – BIR ZAMANLAR ADANA’DA-TR S04 SIFIR.BIR.BIR.ZAMANLAR.ADANADA.S04E20",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIFIR BIR – BIR ZAMANLAR ADANA’DA-TR S04 SIFIR.BIR.BIR.ZAMANLAR.ADANADA.S04E21",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIFIR BIR – BIR ZAMANLAR ADANA’DA-TR S04 SIFIR.BIR.BIR.ZAMANLAR.ADANADA.S04E22",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIFIR BIR – BIR ZAMANLAR ADANA’DA-TR S04 SIFIR.BIR.BIR.ZAMANLAR.ADANADA.S04E23",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIFIR BIR – BIR ZAMANLAR ADANA’DA-TR S04 SIFIR.BIR.BIR.ZAMANLAR.ADANADA.S04E24",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIFIR BIR – BIR ZAMANLAR ADANA’DA-TR S04 SIFIR.BIR.BIR.ZAMANLAR.ADANADA.S04E25",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIFIR BIR – BIR ZAMANLAR ADANA’DA-TR S04 SIFIR.BIR.BIR.ZAMANLAR.ADANADA.S04E26",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIFIR BIR – BIR ZAMANLAR ADANA’DA-TR S04 SIFIR.BIR.BIR.ZAMANLAR.ADANADA.S04E27",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIFIR BIR – BIR ZAMANLAR ADANA’DA-TR S04 SIFIR.BIR.BIR.ZAMANLAR.ADANADA.S04E28",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIFIR BIR – BIR ZAMANLAR ADANA’DA-TR S04 SIFIR.BIR.BIR.ZAMANLAR.ADANADA.S04E29.SEASON.FINAL",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIFIR BIR – BIR ZAMANLAR ADANA’DA-TR S05 SIFIR.BIR.BIR.ZAMANLAR.ADANADA.S05E01",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIFIR BIR – BIR ZAMANLAR ADANA’DA-TR S05 SIFIR.BIR.BIR.ZAMANLAR.ADANADA.S05E02",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIFIR BIR – BIR ZAMANLAR ADANA’DA-TR S05 SIFIR.BIR.BIR.ZAMANLAR.ADANADA.S05E03",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIFIR BIR – BIR ZAMANLAR ADANA’DA-TR S05 SIFIR.BIR.BIR.ZAMANLAR.ADANADA.S05E04",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIFIR BIR – BIR ZAMANLAR ADANA’DA-TR S05 SIFIR.BIR.BIR.ZAMANLAR.ADANADA.S05E05",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIFIR BIR – BIR ZAMANLAR ADANA’DA-TR S05 SIFIR.BIR.BIR.ZAMANLAR.ADANADA.S05E06",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIFIR BIR – BIR ZAMANLAR ADANA’DA-TR S05 SIFIR.BIR.BIR.ZAMANLAR.ADANADA.S05E07",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIFIR BIR – BIR ZAMANLAR ADANA’DA-TR S05 SIFIR.BIR.BIR.ZAMANLAR.ADANADA.S05E08.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIFIR BIR – BIR ZAMANLAR ADANA’DA-TR S06 SIFIR.BIR.BIR.ZAMANLAR.ADANADA.S06E01.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIFIR BIR – BIR ZAMANLAR ADANA’DA-TR S06 SIFIR.BIR.BIR.ZAMANLAR.ADANADA.S06E02.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIFIR BIR – BIR ZAMANLAR ADANA’DA-TR S06 SIFIR.BIR.BIR.ZAMANLAR.ADANADA.S06E03.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIFIR BIR – BIR ZAMANLAR ADANA’DA-TR S06 SIFIR.BIR.BIR.ZAMANLAR.ADANADA.S06E04.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIFIR BIR – BIR ZAMANLAR ADANA’DA-TR S06 SIFIR.BIR.BIR.ZAMANLAR.ADANADA.S06E05.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIFIR BIR – BIR ZAMANLAR ADANA’DA-TR S06 SIFIR.BIR.BIR.ZAMANLAR.ADANADA.S06E06.FINAL.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIYAH BEYAZ ASK-TR S01 SIYAH.BEYAZ.ASK.BL.S01E01.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIYAH BEYAZ ASK-TR S01 SIYAH.BEYAZ.ASK.BL.S01E02.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIYAH BEYAZ ASK-TR S01 SIYAH.BEYAZ.ASK.BL.S01E03.720P.WEB-DL.X264",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIYAH BEYAZ ASK-TR S01 SIYAH.BEYAZ.ASK.BL.S01E04.720P.WEB-DL.X264",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIYAH BEYAZ ASK-TR S01 SIYAH.BEYAZ.ASK.BL.S01E05.720P.WEB-DL.X264",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIYAH BEYAZ ASK-TR S01 SIYAH.BEYAZ.ASK.BL.S01E06.720P.WEB-DL.X264",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIYAH BEYAZ ASK-TR S01 SIYAH.BEYAZ.ASK.BL.S01E07.720P.WEB-DL.X264",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIYAH BEYAZ ASK-TR S01 SIYAH.BEYAZ.ASK.BL.S01E08.720P.WEB-DL.X264",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIYAH BEYAZ ASK-TR S01 SIYAH.BEYAZ.ASK.BL.S01E09.720P.WEB-DL.X264",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIYAH BEYAZ ASK-TR S01 SIYAH.BEYAZ.ASK.BL.S01E10.720P.WEB-DL.X264",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIYAH BEYAZ ASK-TR S01 SIYAH.BEYAZ.ASK.BL.S01E11.720P.WEB-DL.X264",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIYAH BEYAZ ASK-TR S01 SIYAH.BEYAZ.ASK.BL.S01E12.720P.WEB-DL.X264",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIYAH BEYAZ ASK-TR S01 SIYAH.BEYAZ.ASK.BL.S01E13.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIYAH BEYAZ ASK-TR S01 SIYAH.BEYAZ.ASK.BL.S01E14.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIYAH BEYAZ ASK-TR S01 SIYAH.BEYAZ.ASK.BL.S01E15.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIYAH BEYAZ ASK-TR S01 SIYAH.BEYAZ.ASK.BL.S01E16.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIYAH BEYAZ ASK-TR S01 SIYAH.BEYAZ.ASK.BL.S01E17.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIYAH BEYAZ ASK-TR S01 SIYAH.BEYAZ.ASK.BL.S01E18.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIYAH BEYAZ ASK-TR S01 SIYAH.BEYAZ.ASK.BL.S01E19.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIYAH BEYAZ ASK-TR S01 SIYAH.BEYAZ.ASK.BL.S01E20.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIYAH BEYAZ ASK-TR S01 SIYAH.BEYAZ.ASK.BL.S01E21.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIYAH BEYAZ ASK-TR S01 SIYAH.BEYAZ.ASK.BL.S01E22.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIYAH BEYAZ ASK-TR S01 SIYAH.BEYAZ.ASK.BL.S01E23.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIYAH BEYAZ ASK-TR S01 SIYAH.BEYAZ.ASK.BL.S01E24.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIYAH BEYAZ ASK-TR S01 SIYAH.BEYAZ.ASK.BL.S01E25.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIYAH BEYAZ ASK-TR S01 SIYAH.BEYAZ.ASK.BL.S01E26.720P.WEB-DL.X264",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIYAH BEYAZ ASK-TR S01 SIYAH.BEYAZ.ASK.BL.S01E27.720P.WEB-DL.X264",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIYAH BEYAZ ASK-TR S01 SIYAH.BEYAZ.ASK.BL.S01E28.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIYAH BEYAZ ASK-TR S01 SIYAH.BEYAZ.ASK.BL.S01E29.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIYAH BEYAZ ASK-TR S01 SIYAH.BEYAZ.ASK.BL.S01E30.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIYAH BEYAZ ASK-TR S01 SIYAH.BEYAZ.ASK.BL.S01E31.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIYAH BEYAZ ASK-TR S01 SIYAH.BEYAZ.ASK.BL.S01E32.FINAL.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIYAH İNCI-TR S01 SIYAH.INCI.BL.S01E01.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIYAH İNCI-TR S01 SIYAH.INCI.BL.S01E02.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIYAH İNCI-TR S01 SIYAH.INCI.BL.S01E03.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIYAH İNCI-TR S01 SIYAH.INCI.BL.S01E04.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIYAH İNCI-TR S01 SIYAH.INCI.BL.S01E05.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIYAH İNCI-TR S01 SIYAH.INCI.BL.S01E06.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIYAH İNCI-TR S01 SIYAH.INCI.BL.S01E07.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIYAH İNCI-TR S01 SIYAH.INCI.BL.S01E08.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIYAH İNCI-TR S01 SIYAH.INCI.BL.S01E09.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIYAH İNCI-TR S01 SIYAH.INCI.BL.S01E10.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIYAH İNCI-TR S01 SIYAH.INCI.BL.S01E11.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIYAH İNCI-TR S01 SIYAH.INCI.BL.S01E12.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIYAH İNCI-TR S01 SIYAH.INCI.BL.S01E13.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIYAH İNCI-TR S01 SIYAH.INCI.BL.S01E14.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIYAH İNCI-TR S01 SIYAH.INCI.BL.S01E15.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIYAH İNCI-TR S01 SIYAH.INCI.BL.S01E16.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIYAH İNCI-TR S01 SIYAH.INCI.BL.S01E17.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIYAH İNCI-TR S01 SIYAH.INCI.BL.S01E18.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIYAH İNCI-TR S01 SIYAH.INCI.BL.S01E19.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SIYAH İNCI-TR S01 SIYAH.INCI.BL.S01E20.FINAL.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S01 SOZ.BL.S01E01.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S01 SOZ.BL.S01E02.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S01 SOZ.BL.S01E03.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S01 SOZ.BL.S01E04.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S01 SOZ.BL.S01E05.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S01 SOZ.BL.S01E06.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S01 SOZ.BL.S01E07.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S01 SOZ.BL.S01E08.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S01 SOZ.BL.S01E09.HDTV.720P.X264-AC3.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S01 SOZ.BL.S01E10.HDTV.720P.X264-AC3.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S01 SOZ.BL.S01E11.HDTV.720P.X264-AC3.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S01 SOZ.BL.S01E12.SEZON.FINALI.HDTV.720P.X264-AC3.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S02 SOZ.BL.S02E13.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S02 SOZ.BL.S02E14.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S02 SOZ.BL.S02E15.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S02 SOZ.BL.S02E16.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S02 SOZ.BL.S02E17.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S02 SOZ.BL.S02E18.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S02 SOZ.BL.S02E19.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S02 SOZ.BL.S02E20.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S02 SOZ.BL.S02E21.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S02 SOZ.BL.S02E22.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S02 SOZ.BL.S02E23.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S02 SOZ.BL.S02E24.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S02 SOZ.BL.S02E25.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S02 SOZ.BL.S02E29.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S02 SOZ.BL.S02E30.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S02 SOZ.BL.S02E31.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S02 SOZ.BL.S02E32.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S02 SOZ.BL.S02E33.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S02 SOZ.BL.S02E34.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S02 SOZ.BL.S02E35.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S02 SOZ.BL.S02E36.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S02 SOZ.BL.S02E37.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S02 SOZ.BL.S02E38.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S02 SOZ.BL.S02E39.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S02 SOZ.BL.S02E40.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S02 SOZ.BL.S02E41.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S02 SOZ.BL.S02E42.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S02 SOZ.BL.S02E43.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S02 SOZ.BL.S02E44.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S02 SOZ.BL.S02E45.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S02 SOZ.BL.S02E46.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S02 SOZ.BL.S02E47.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S02 SOZ.BL.S02E48.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S02 SOZ.BL.S02E49.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S02 SOZ.BL.S02E50.SEZON.FINALI.720P.WEB-DL.X264.DIVXUP",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S03 SOZ.E03S32.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S03 SOZ.E03S33.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S03 SOZ.E03S34.FINAL.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S03 SOZ.S03E01",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S03 SOZ.S03E02",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S03 SOZ.S03E03",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S03 SOZ.S03E04",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S03 SOZ.S03E05.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S03 SOZ.S03E06.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S03 SOZ.S03E07.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S03 SOZ.S03E08.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S03 SOZ.S03E09.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S03 SOZ.S03E10.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S03 SOZ.S03E11.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S03 SOZ.S03E12.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S03 SOZ.S03E13.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S03 SOZ.S03E14.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S03 SOZ.S03E15.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S03 SOZ.S03E16.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S03 SOZ.S03E17.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S03 SOZ.S03E18.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S03 SOZ.S03E19.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S03 SOZ.S03E20.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S03 SOZ.S03E21.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S03 SOZ.S03E22.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S03 SOZ.S03E23.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S03 SOZ.S03E24.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S03 SOZ.S03E25.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S03 SOZ.S03E26.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S03 SOZ.S03E27.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S03 SOZ.S03E29.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S03 SOZ.S03E30.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "SOZ-TR S03 SOZ.S03E31.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "STINGRAY GREATEST HITS (1080P)",
+        "tvg_id": "StingrayGreatestHits.ca"
+      },
+      {
+        "name": "STVR LIVE",
+        "tvg_id": ""
+      },
+      {
+        "name": "TAROTEAME (576P)",
+        "tvg_id": "Taroteame.es@SD"
+      },
+      {
+        "name": "TELE FE BOLIVIA (720P)",
+        "tvg_id": "TeleFeBolivia.bo@SD"
+      },
+      {
+        "name": "TELE ONE 16",
+        "tvg_id": "TeleOne16.it@SD"
+      },
+      {
+        "name": "TEMPO TV",
+        "tvg_id": ""
+      },
+      {
+        "name": "THAT'S 80S (720P)",
+        "tvg_id": "Thats80s.uk@SD"
+      },
+      {
+        "name": "THE ARCHIVE (1080P)",
+        "tvg_id": "TheArchive.us@SD"
+      },
+      {
+        "name": "THE WITCHER-TR S01 THE.WITCHER.S01E02",
+        "tvg_id": ""
+      },
+      {
+        "name": "TL ESTRELLA (720P)",
+        "tvg_id": "TLEstrella.bo@SD"
+      },
+      {
+        "name": "TLN MEDIA CHICAGO (720P)",
+        "tvg_id": "TLNMediaChicago.us@SD"
+      },
+      {
+        "name": "TLN MEDIA SAN FRANCISCO (720P)",
+        "tvg_id": "TLNMediaSanFrancisco.us@SD"
+      },
+      {
+        "name": "TOLGSHOW-TR S01 TOLGSHOW.S01E01",
+        "tvg_id": ""
+      },
+      {
+        "name": "TOLGSHOW-TR S01 TOLGSHOW.S01E02",
+        "tvg_id": ""
+      },
+      {
+        "name": "TOLGSHOW-TR S01 TOLGSHOW.S01E03",
+        "tvg_id": ""
+      },
+      {
+        "name": "TOLGSHOW-TR S01 TOLGSHOW.S01E04",
+        "tvg_id": ""
+      },
+      {
+        "name": "TOLGSHOW-TR S01 TOLGSHOW.S01E05",
+        "tvg_id": ""
+      },
+      {
+        "name": "TOLGSHOW-TR S01 TOLGSHOW.S01E06",
+        "tvg_id": ""
+      },
+      {
+        "name": "TOLGSHOW-TR S01 TOLGSHOW.S01E07",
+        "tvg_id": ""
+      },
+      {
+        "name": "TOLGSHOW-TR S01 TOLGSHOW.S01E08",
+        "tvg_id": ""
+      },
+      {
+        "name": "TOLGSHOW-TR S01 TOLGSHOW.S01E09",
+        "tvg_id": ""
+      },
+      {
+        "name": "TOLGSHOW-TR S01 TOLGSHOW.S01E10",
+        "tvg_id": ""
+      },
+      {
+        "name": "TOLGSHOW-TR S01 TOLGSHOW.S01E11",
+        "tvg_id": ""
+      },
+      {
+        "name": "TOLGSHOW-TR S01 TOLGSHOW.S01E12",
+        "tvg_id": ""
+      },
+      {
+        "name": "TOLGSHOW-TR S01 TOLGSHOW.S01E13",
+        "tvg_id": ""
+      },
+      {
+        "name": "TOLGSHOW-TR S01 TOLGSHOW.S01E14",
+        "tvg_id": ""
+      },
+      {
+        "name": "TOLGSHOW-TR S01 TOLGSHOW.S01E15",
+        "tvg_id": ""
+      },
+      {
+        "name": "TOLGSHOW-TR S01 TOLGSHOW.S01E16",
+        "tvg_id": ""
+      },
+      {
+        "name": "TOLGSHOW-TR S01 TOLGSHOW.S01E17",
+        "tvg_id": ""
+      },
+      {
+        "name": "TOLGSHOW-TR S01 TOLGSHOW.S01E18",
+        "tvg_id": ""
+      },
+      {
+        "name": "TOLGSHOW-TR S02 TOLGSHOW.S02E19",
+        "tvg_id": ""
+      },
+      {
+        "name": "TOLGSHOW-TR S02 TOLGSHOW.S02E20",
+        "tvg_id": ""
+      },
+      {
+        "name": "TOLGSHOW-TR S02 TOLGSHOW.S02E21",
+        "tvg_id": ""
+      },
+      {
+        "name": "TOLGSHOW-TR S02 TOLGSHOW.S02E22",
+        "tvg_id": ""
+      },
+      {
+        "name": "TOLGSHOW-TR S02 TOLGSHOW.S02E23",
+        "tvg_id": ""
+      },
+      {
+        "name": "TOLGSHOW-TR S02 TOLGSHOW.S02E24",
+        "tvg_id": ""
+      },
+      {
+        "name": "TOLGSHOW-TR S02 TOLGSHOW.S02E25",
+        "tvg_id": ""
+      },
+      {
+        "name": "TOLGSHOW-TR S02 TOLGSHOW.S02E26(FINAL)",
+        "tvg_id": ""
+      },
+      {
+        "name": "TOP POP TV",
+        "tvg_id": ""
+      },
+      {
+        "name": "TOTALMUSIC 2000S (720P)",
+        "tvg_id": "Totalmusic2000s.uk@HD"
+      },
+      {
+        "name": "TSTV (720P)",
+        "tvg_id": "TSTV.us@SD"
+      },
+      {
+        "name": "TV GLOBO BRASILIA (1080P)",
+        "tvg_id": "TVGloboBrasilia.br@SD"
+      },
+      {
+        "name": "TV RODINA (1080P)",
+        "tvg_id": "TVRodina.bg@SD"
+      },
+      {
+        "name": "TVS MUSIC NETWORK (720P)",
+        "tvg_id": "TVSMusicNetwork.us@SD"
+      },
+      {
+        "name": "TVS SELECT NETWORK (720P)",
+        "tvg_id": "TVSSelectNetwork.us@SD"
+      },
+      {
+        "name": "TVS SPORTS BUREAU (720P)",
+        "tvg_id": "TVSSportsBureau.us@SD"
+      },
+      {
+        "name": "TVS TELEVISION NETWORK (480P)",
+        "tvg_id": "TVSTelevisionNetwork.us@SD"
+      },
+      {
+        "name": "UFAK TEFEK CINAYETLER-TR S01 UFAK.TEFEK.CINAYETLER.S01E01",
+        "tvg_id": ""
+      },
+      {
+        "name": "UFAK TEFEK CINAYETLER-TR S01 UFAK.TEFEK.CINAYETLER.S01E02",
+        "tvg_id": ""
+      },
+      {
+        "name": "UFAK TEFEK CINAYETLER-TR S01 UFAK.TEFEK.CINAYETLER.S01E03",
+        "tvg_id": ""
+      },
+      {
+        "name": "UFAK TEFEK CINAYETLER-TR S01 UFAK.TEFEK.CINAYETLER.S01E04",
+        "tvg_id": ""
+      },
+      {
+        "name": "UFAK TEFEK CINAYETLER-TR S01 UFAK.TEFEK.CINAYETLER.S01E05",
+        "tvg_id": ""
+      },
+      {
+        "name": "UFAK TEFEK CINAYETLER-TR S01 UFAK.TEFEK.CINAYETLER.S01E06",
+        "tvg_id": ""
+      },
+      {
+        "name": "UFAK TEFEK CINAYETLER-TR S01 UFAK.TEFEK.CINAYETLER.S01E07",
+        "tvg_id": ""
+      },
+      {
+        "name": "UFAK TEFEK CINAYETLER-TR S01 UFAK.TEFEK.CINAYETLER.S01E08",
+        "tvg_id": ""
+      },
+      {
+        "name": "UFAK TEFEK CINAYETLER-TR S01 UFAK.TEFEK.CINAYETLER.S01E09",
+        "tvg_id": ""
+      },
+      {
+        "name": "UFAK TEFEK CINAYETLER-TR S01 UFAK.TEFEK.CINAYETLER.S01E10",
+        "tvg_id": ""
+      },
+      {
+        "name": "UFAK TEFEK CINAYETLER-TR S01 UFAK.TEFEK.CINAYETLER.S01E11",
+        "tvg_id": ""
+      },
+      {
+        "name": "UFAK TEFEK CINAYETLER-TR S01 UFAK.TEFEK.CINAYETLER.S01E12",
+        "tvg_id": ""
+      },
+      {
+        "name": "UFAK TEFEK CINAYETLER-TR S01 UFAK.TEFEK.CINAYETLER.S01E13",
+        "tvg_id": ""
+      },
+      {
+        "name": "UFAK TEFEK CINAYETLER-TR S01 UFAK.TEFEK.CINAYETLER.S01E14",
+        "tvg_id": ""
+      },
+      {
+        "name": "UFAK TEFEK CINAYETLER-TR S01 UFAK.TEFEK.CINAYETLER.S01E15",
+        "tvg_id": ""
+      },
+      {
+        "name": "UFAK TEFEK CINAYETLER-TR S01 UFAK.TEFEK.CINAYETLER.S01E16",
+        "tvg_id": ""
+      },
+      {
+        "name": "UFAK TEFEK CINAYETLER-TR S01 UFAK.TEFEK.CINAYETLER.S01E17",
+        "tvg_id": ""
+      },
+      {
+        "name": "UFAK TEFEK CINAYETLER-TR S01 UFAK.TEFEK.CINAYETLER.S01E18",
+        "tvg_id": ""
+      },
+      {
+        "name": "UFAK TEFEK CINAYETLER-TR S01 UFAK.TEFEK.CINAYETLER.S01E19",
+        "tvg_id": ""
+      },
+      {
+        "name": "UFAK TEFEK CINAYETLER-TR S01 UFAK.TEFEK.CINAYETLER.S01E20",
+        "tvg_id": ""
+      },
+      {
+        "name": "UFAK TEFEK CINAYETLER-TR S01 UFAK.TEFEK.CINAYETLER.S01E21",
+        "tvg_id": ""
+      },
+      {
+        "name": "UFAK TEFEK CINAYETLER-TR S01 UFAK.TEFEK.CINAYETLER.S01E22",
+        "tvg_id": ""
+      },
+      {
+        "name": "UFAK TEFEK CINAYETLER-TR S01 UFAK.TEFEK.CINAYETLER.S01E23",
+        "tvg_id": ""
+      },
+      {
+        "name": "UFAK TEFEK CINAYETLER-TR S01 UFAK.TEFEK.CINAYETLER.S01E24",
+        "tvg_id": ""
+      },
+      {
+        "name": "UFAK TEFEK CINAYETLER-TR S01 UFAK.TEFEK.CINAYETLER.S01E25",
+        "tvg_id": ""
+      },
+      {
+        "name": "UFAK TEFEK CINAYETLER-TR S01 UFAK.TEFEK.CINAYETLER.S01E26",
+        "tvg_id": ""
+      },
+      {
+        "name": "UFAK TEFEK CINAYETLER-TR S01 UFAK.TEFEK.CINAYETLER.S01E27",
+        "tvg_id": ""
+      },
+      {
+        "name": "UFAK TEFEK CINAYETLER-TR S01 UFAK.TEFEK.CINAYETLER.S01E28",
+        "tvg_id": ""
+      },
+      {
+        "name": "UFAK TEFEK CINAYETLER-TR S01 UFAK.TEFEK.CINAYETLER.S01E29",
+        "tvg_id": ""
+      },
+      {
+        "name": "UFAK TEFEK CINAYETLER-TR S01 UFAK.TEFEK.CINAYETLER.S01E30",
+        "tvg_id": ""
+      },
+      {
+        "name": "UFAK TEFEK CINAYETLER-TR S01 UFAK.TEFEK.CINAYETLER.S01E31",
+        "tvg_id": ""
+      },
+      {
+        "name": "UFAK TEFEK CINAYETLER-TR S01 UFAK.TEFEK.CINAYETLER.S01E32.SEASON.FINAL",
+        "tvg_id": ""
+      },
+      {
+        "name": "UFAK TEFEK CINAYETLER-TR S02 EPISODE 5",
+        "tvg_id": ""
+      },
+      {
+        "name": "UFAK TEFEK CINAYETLER-TR S02 EPISODE 6",
+        "tvg_id": ""
+      },
+      {
+        "name": "UFAK TEFEK CINAYETLER-TR S02 EPISODE 7",
+        "tvg_id": ""
+      },
+      {
+        "name": "UFAK TEFEK CINAYETLER-TR S02 EPISODE 8",
+        "tvg_id": ""
+      },
+      {
+        "name": "UFAK TEFEK CINAYETLER-TR S02 UFAK.TEFEK.CINAYETLER.S02E01",
+        "tvg_id": ""
+      },
+      {
+        "name": "UFAK TEFEK CINAYETLER-TR S02 UFAK.TEFEK.CINAYETLER.S02E02",
+        "tvg_id": ""
+      },
+      {
+        "name": "UFAK TEFEK CINAYETLER-TR S02 UFAK.TEFEK.CINAYETLER.S02E03",
+        "tvg_id": ""
+      },
+      {
+        "name": "UFAK TEFEK CINAYETLER-TR S02 UFAK.TEFEK.CINAYETLER.S02E04",
+        "tvg_id": ""
+      },
+      {
+        "name": "UFAK TEFEK CINAYETLER-TR S02 UFAK.TEFEK.CINAYETLER.S02E09.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "UFAK TEFEK CINAYETLER-TR S02 UFAK.TEFEK.CINAYETLER.S02E10.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "UFAK TEFEK CINAYETLER-TR S02 UFAK.TEFEK.CINAYETLER.S02E11.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "UFAK TEFEK CINAYETLER-TR S02 UFAK.TEFEK.CINAYETLER.S02E12.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "UFAK TEFEK CINAYETLER-TR S02 UFAK.TEFEK.CINAYETLER.S02E13FINAL.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "WESTERNS 4U (1080P)",
+        "tvg_id": "Westerns4U.us@SD"
+      },
+      {
+        "name": "WLNG RADIO (410P) [NOT 24/7]",
+        "tvg_id": "WLNGRadio.us@SD"
+      },
+      {
+        "name": "YASAK ELMA-TR S02 YASAK.ELMA.S02E01",
+        "tvg_id": ""
+      },
+      {
+        "name": "YASAK ELMA-TR S02 YASAK.ELMA.S02E02",
+        "tvg_id": ""
+      },
+      {
+        "name": "YASAK ELMA-TR S02 YASAK.ELMA.S02E03",
+        "tvg_id": ""
+      },
+      {
+        "name": "YASAK ELMA-TR S02 YASAK.ELMA.S02E04",
+        "tvg_id": ""
+      },
+      {
+        "name": "YASAK ELMA-TR S02 YASAK.ELMA.S02E05",
+        "tvg_id": ""
+      },
+      {
+        "name": "YASAK ELMA-TR S02 YASAK.ELMA.S02E06",
+        "tvg_id": ""
+      },
+      {
+        "name": "YASAK ELMA-TR S02 YASAK.ELMA.S02E07",
+        "tvg_id": ""
+      },
+      {
+        "name": "YASAK ELMA-TR S02 YASAK.ELMA.S02E08",
+        "tvg_id": ""
+      },
+      {
+        "name": "YASAK ELMA-TR S02 YASAK.ELMA.S02E09",
+        "tvg_id": ""
+      },
+      {
+        "name": "YASAK ELMA-TR S02 YASAK.ELMA.S02E10",
+        "tvg_id": ""
+      },
+      {
+        "name": "YASAK ELMA-TR S02 YASAK.ELMA.S02E11",
+        "tvg_id": ""
+      },
+      {
+        "name": "YASAK ELMA-TR S02 YASAK.ELMA.S02E12",
+        "tvg_id": ""
+      },
+      {
+        "name": "YASAK ELMA-TR S02 YASAK.ELMA.S02E13",
+        "tvg_id": ""
+      },
+      {
+        "name": "YASAK ELMA-TR S02 YASAK.ELMA.S02E14",
+        "tvg_id": ""
+      },
+      {
+        "name": "YASAK ELMA-TR S02 YASAK.ELMA.S02E15",
+        "tvg_id": ""
+      },
+      {
+        "name": "YASAK ELMA-TR S02 YASAK.ELMA.S02E16",
+        "tvg_id": ""
+      },
+      {
+        "name": "YASAK ELMA-TR S02 YASAK.ELMA.S02E17",
+        "tvg_id": ""
+      },
+      {
+        "name": "YASAK ELMA-TR S02 YASAK.ELMA.S02E18",
+        "tvg_id": ""
+      },
+      {
+        "name": "YASAK ELMA-TR S02 YASAK.ELMA.S02E19",
+        "tvg_id": ""
+      },
+      {
+        "name": "YASAK ELMA-TR S02 YASAK.ELMA.S02E20",
+        "tvg_id": ""
+      },
+      {
+        "name": "YASAK ELMA-TR S02 YASAK.ELMA.S02E21",
+        "tvg_id": ""
+      },
+      {
+        "name": "YASAK ELMA-TR S02 YASAK.ELMA.S02E22",
+        "tvg_id": ""
+      },
+      {
+        "name": "YASAK ELMA-TR S02 YASAK.ELMA.S02E23",
+        "tvg_id": ""
+      },
+      {
+        "name": "YASAK ELMA-TR S02 YASAK.ELMA.S02E24",
+        "tvg_id": ""
+      },
+      {
+        "name": "YASAK ELMA-TR S02 YASAK.ELMA.S02E25",
+        "tvg_id": ""
+      },
+      {
+        "name": "YASAK ELMA-TR S02 YASAK.ELMA.S02E26.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "YASAK ELMA-TR S02 YASAK.ELMA.S02E27.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "YASAK ELMA-TR S02 YASAK.ELMA.S02E28.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "YASAK ELMA-TR S02 YASAK.ELMA.S02E29.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "YASAK ELMA-TR S02 YASAK.ELMA.S02E30.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "YASAK ELMA-TR S02 YASAK.ELMA.S02E31.MKV",
+        "tvg_id": ""
+      },
+      {
+        "name": "YASAK ELMA-TR S02 YASAK.ELMA.S02E32.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "YASAK ELMA-TR S02 YASAK.ELMA.S02E33.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "YASAK ELMA-TR S02 YASAK.ELMA.S02E34.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "YASAK ELMA-TR S02 YASAK.ELMA.S02E35.SEASON.FINAL.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "YASAK ELMA-TR S03 YASAK.ELMA.S03E01.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "YASAK ELMA-TR S03 YASAK.ELMA.S03E02.MP4",
+        "tvg_id": ""
+      },
+      {
+        "name": "YASAMAYANLAR-TR S01 YASAMAYANLAR.S01E01",
+        "tvg_id": ""
+      },
+      {
+        "name": "YASAMAYANLAR-TR S01 YASAMAYANLAR.S01E02",
+        "tvg_id": ""
+      },
+      {
+        "name": "YASAMAYANLAR-TR S01 YASAMAYANLAR.S01E03",
+        "tvg_id": ""
+      },
+      {
+        "name": "YASAMAYANLAR-TR S01 YASAMAYANLAR.S01E04",
+        "tvg_id": ""
+      },
+      {
+        "name": "YASAMAYANLAR-TR S01 YASAMAYANLAR.S01E05",
+        "tvg_id": ""
+      },
+      {
+        "name": "YASAMAYANLAR-TR S01 YASAMAYANLAR.S01E06",
+        "tvg_id": ""
+      },
+      {
+        "name": "YASAMAYANLAR-TR S01 YASAMAYANLAR.S01E07",
+        "tvg_id": ""
+      },
+      {
+        "name": "YASAMAYANLAR-TR S01 YASAMAYANLAR.S01E08.FINAL",
+        "tvg_id": ""
+      },
+      {
+        "name": "YOU-TR S01 YOU.S01E01.NF",
+        "tvg_id": ""
+      },
+      {
+        "name": "YOU-TR S01 YOU.S01E02.NF",
+        "tvg_id": ""
+      },
+      {
+        "name": "YOU-TR S01 YOU.S01E03.NF",
+        "tvg_id": ""
+      },
+      {
+        "name": "YOU-TR S01 YOU.S01E04.NF",
+        "tvg_id": ""
+      },
+      {
+        "name": "YOU-TR S01 YOU.S01E05.NF",
+        "tvg_id": ""
+      },
+      {
+        "name": "YOU-TR S01 YOU.S01E06.NF",
+        "tvg_id": ""
+      },
+      {
+        "name": "YOU-TR S01 YOU.S01E07.NF",
+        "tvg_id": ""
+      },
+      {
+        "name": "YOU-TR S01 YOU.S01E08.NF",
+        "tvg_id": ""
+      },
+      {
+        "name": "YOU-TR S01 YOU.S01E09.NF",
+        "tvg_id": ""
+      },
+      {
+        "name": "YOU-TR S01 YOU.S01E10.NF",
+        "tvg_id": ""
+      },
+      {
+        "name": "YOU-TR S02 YOU.S02E07",
+        "tvg_id": ""
+      },
+      {
+        "name": "ZAINABIA CHANNEL",
+        "tvg_id": "ZainabiaChannel.in@SD"
+      },
+      {
+        "name": "ZALIM ISTANBUL-TR S01 ZALIM ISTANBUL S01E02",
+        "tvg_id": ""
+      },
+      {
+        "name": "ZALIM ISTANBUL-TR S01 ZALIM ISTANBUL S01E05",
+        "tvg_id": ""
+      },
+      {
+        "name": "ZALIM ISTANBUL-TR S01 ZALIM ISTANBUL S01E08",
+        "tvg_id": ""
+      },
+      {
+        "name": "ZALIM ISTANBUL-TR S01 ZALIM ISTANBUL S01E12",
+        "tvg_id": ""
+      },
+      {
+        "name": "ZALIM ISTANBUL-TR S01 ZALIM ISTANBUL S01E14",
+        "tvg_id": ""
+      },
+      {
+        "name": "ZALIM ISTANBUL-TR S01 ZALIM ISTANBUL S01E15",
+        "tvg_id": ""
+      },
+      {
+        "name": "ZALIM ISTANBUL-TR S01 ZALIM ISTANBUL S01E21",
+        "tvg_id": ""
+      },
+      {
+        "name": "ZALIM ISTANBUL-TR S01 ZALIM ISTANBUL S01E24",
+        "tvg_id": ""
+      },
+      {
+        "name": "ZALIM ISTANBUL-TR S01 ZALIM ISTANBUL S01E26",
+        "tvg_id": ""
+      },
+      {
+        "name": "ZARIN TV (1080P)",
+        "tvg_id": "ZarinTV.us@SD"
+      },
+      {
+        "name": "ZED TV",
+        "tvg_id": "ZedTV.ir"
+      },
+      {
+        "name": "ZEYNO TV",
+        "tvg_id": ""
+      }
+    ]
+  }
+}

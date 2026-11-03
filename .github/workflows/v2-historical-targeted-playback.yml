@@ -1,0 +1,70 @@
+name: V2 Historical Missing-URL Video Audio Evidence (read-only)
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  targeted-historical-playback:
+    name: Hash-verified historical missing streams, one grouped validation
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Prove immutable IBO playlist unchanged
+        run: test "$(git hash-object MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)" = '4b1c3cea4b5107a425abab60f62d41f9f81e05a7'
+      - name: Run all relevant safety and identity tests in one batch
+        shell: bash
+        run: |
+          set -o pipefail
+          mkdir -p v2/reports/ci
+          PYTHONPATH=v2 python -m unittest -v \
+            test_historical_targeted_playback \
+            test_run60_source_ledger \
+            test_m3u_source_content_audit \
+            test_turkish_m3u_source_audit \
+            test_source_loss_audit \
+            2>&1 | tee v2/reports/ci/historical-targeted-playback-tests.log
+      - name: Load true eight missing hashes from last full-content evidence
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          mkdir -p "$RUNNER_TEMP/m3u-loss"
+          gh run download 41647290610 -n turkish-m3u-source-loss-41647290610 -D "$RUNNER_TEMP/m3u-loss"
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          report=json.loads((Path(os.environ['RUNNER_TEMP'])/'m3u-loss'/'turkish-m3u-source-loss.json').read_text())
+          audit=report['source_content_audit']
+          assert audit['historical_baseline_count']==4955
+          assert audit['historical_identifiers_absent_from_current_sources']==8
+          assert audit['historical_identifiers_present_in_current_sources']==4947
+          assert audit['current_streams_playback_checked']==0
+          print('Accepted original 4955 baseline; eight missing hashes were independently proven.')
+          PY
+      - name: Recover exact stream URLs only in transient memory and probe video audio
+        shell: bash
+        run: |
+          command -v ffprobe || (sudo apt-get update -qq && sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends ffmpeg)
+          PYTHONPATH=v2 python v2/historical_targeted_playback.py \
+            --missing-report "$RUNNER_TEMP/m3u-loss/turkish-m3u-source-loss.json" \
+            --baseline v2/history/stage3-4955-hash-only.jsonl \
+            --output v2/reports/ci/historical-targeted-playback-anonymous.json
+      - name: Upload only SHA-only evidence and grouped test log
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: v2-historical-targeted-evidence-${{ github.run_id }}
+          path: |
+            v2/reports/ci/historical-targeted-playback-anonymous.json
+            v2/reports/ci/historical-targeted-playback-tests.log
+          if-no-files-found: warn
+          retention-days: 30
