@@ -14,7 +14,7 @@ class FailoverTests(unittest.TestCase):
         self.tmp = tempfile.TemporaryDirectory()
         self.addCleanup(self.tmp.cleanup)
         self.cache = SourceCache(Path(self.tmp.name))
-        self.source = {"id": "ilyswch-iptv-tr", "url": "https://example.org/primary.m3u"}
+        self.source = {"id": "iptv-org-region-south-america", "url": "https://example.org/primary.m3u"}
 
     def test_retry_then_fallback_preserves_source_identity(self):
         calls, delays = [], []
@@ -26,10 +26,20 @@ class FailoverTests(unittest.TestCase):
         content, audit = recover_source(self.source, self.cache, fetch, delays.append)
         self.assertEqual(audit["status"], "FALLBACK_OK")
         self.assertTrue(audit["fresh"])
+        self.assertFalse(audit["upstream_source_identity_preserved"])
         self.assertEqual(delays, [2, 4, 8])
         self.assertEqual(calls[:4], [self.source["url"]] * 4)
         self.assertEqual(calls[4], ALTERNATIVES[self.source["id"]][0])
-        self.assertEqual(self.cache.get(self.source["id"]), content)
+        self.assertIsNone(self.cache.get(self.source["id"]))
+
+    def test_retired_ilyswch_source_is_not_relabelled_as_iptv_org(self):
+        self.assertNotIn("ilyswch-iptv-tr", ALTERNATIVES)
+        retired = {"id": "ilyswch-iptv-tr", "url": "https://example.org/deleted.m3u"}
+        def fetch(_):
+            raise FetchFailure("HTTP_404")
+        content, audit = recover_source(retired, self.cache, fetch, lambda _: None)
+        self.assertIsNone(content)
+        self.assertEqual(audit["status"], "UNAVAILABLE")
 
     def test_failed_sources_use_cache_but_not_fresh(self):
         self.cache.set(self.source["id"], "#EXTM3U\n")

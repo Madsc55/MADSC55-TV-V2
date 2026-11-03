@@ -42,7 +42,9 @@
       "id": "ilyswch-iptv-tr",
       "kind": "m3u",
       "url": "https://raw.githubusercontent.com/ilyswch/IPTV-TR/main/box.m3u",
-      "scope": "TR"
+      "scope": "TR",
+      "enabled": false,
+      "retirement_reason": "UPSTREAM_REPOSITORY_NO_LONGER_CONTAINS_M3U_2026_11_03"
     },
     {
       "id": "akan1970-newlisttr",

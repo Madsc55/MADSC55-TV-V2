@@ -16,7 +16,6 @@ MAX_BYTES = 16 * 1024 * 1024
 DELAYS = (2, 4, 8)
 RETRYABLE = {408, 429, 500, 502, 503, 504}
 ALTERNATIVES = {
-    "ilyswch-iptv-tr": ("https://iptv-org.github.io/iptv/countries/tr.m3u", "https://iptv-org.github.io/iptv/languages/tur.m3u"),
     "iptv-org-region-south-america": ("https://iptv-org.github.io/iptv/regions/latam.m3u", "https://iptv-org.github.io/iptv/regions/amer.m3u"),
     "iptv-org-region-middle-east": ("https://iptv-org.github.io/iptv/regions/mena.m3u", "https://iptv-org.github.io/iptv/regions/asia.m3u"),
     "iptv-org-region-eastern-europe": ("https://iptv-org.github.io/iptv/regions/eur.m3u", "https://iptv-org.github.io/iptv/regions/emea.m3u"),
@@ -141,11 +140,18 @@ def recover_source(source, cache, fetcher=fetch_once, sleep=time.sleep):
         for attempt in range(len(DELAYS) + 1):
             try:
                 text = fetcher(url)
-                try:
-                    cache.set(source_id, text)
-                except (OSError, ValueError, FetchFailure) as exc:
-                    failures.append({"category": "CACHE_WRITE_FAILED", "reason": type(exc).__name__})
-                return text, {"id": source_id, "status": "PRIMARY_OK" if index == 0 else "FALLBACK_OK", "attempts": len(failures) + 1, "failures": failures, "fresh": True}
+                if index == 0:
+                    try:
+                        cache.set(source_id, text)
+                    except (OSError, ValueError, FetchFailure) as exc:
+                        failures.append({"category": "CACHE_WRITE_FAILED", "reason": type(exc).__name__})
+                # A substitute feed must never masquerade as the original source.
+                return text, {"id": source_id,
+                              "status": "PRIMARY_OK" if index == 0 else "FALLBACK_OK",
+                              "upstream_source_identity_preserved": index == 0,
+                              "used_url_sha256": hashlib.sha256(url.encode()).hexdigest(),
+                              "attempts": len(failures) + 1,
+                              "failures": failures, "fresh": True}
             except FetchFailure as exc:
                 failures.append({"url_sha256": hashlib.sha256(url.encode()).hexdigest(), "category": exc.category, "attempt": attempt + 1})
                 if not exc.retryable or attempt == len(DELAYS):
