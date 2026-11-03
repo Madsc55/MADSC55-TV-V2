@@ -6,9 +6,12 @@ on:
       - '.github/workflows/**'
       - 'v2/actions_trigger_protection_audit.py'
       - 'v2/test_actions_trigger_protection_audit.py'
+      - 'v2/actions_default_branch_audit.py'
+      - 'v2/test_actions_default_branch_audit.py'
   workflow_dispatch:
 permissions:
   contents: read
+  actions: read
 concurrency:
   group: v2-actions-trigger-protection-${{ github.ref }}
   cancel-in-progress: false
@@ -31,6 +34,11 @@ jobs:
         run: |
           test "$(git hash-object MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)" = '4b1c3cea4b5107a425abab60f62d41f9f81e05a7'
           test "$(sha256sum v2/history/stage3-4955-hash-only.jsonl | cut -d' ' -f1)" = 'ee00a844a028e3410715d411467a2d3306f5f5cc4565766140b6438e786cdd27'
+      - name: Fetch exact default-branch workflow snapshot without checkout or push
+        shell: bash
+        run: |
+          git fetch --no-tags --depth=1 origin +refs/heads/main:refs/remotes/origin/main
+          git rev-parse --verify refs/remotes/origin/main^{commit}
       - name: All 58 workflows and related protections validated in one batch
         shell: bash
         run: |
@@ -38,6 +46,7 @@ jobs:
           mkdir -p v2/reports/ci
           PYTHONPATH=v2 python -m unittest -v \
             test_actions_trigger_protection_audit \
+            test_actions_default_branch_audit \
             test_actions_monitor \
             test_source_loss_audit \
             test_orphan_baseline_guard \
@@ -48,6 +57,31 @@ jobs:
           python v2/actions_trigger_protection_audit.py \
             --workflows .github/workflows \
             --output v2/reports/ci/actions-trigger-protection.json
+      - name: Inspect real default-branch Actions permissions and active workflow states
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          PYTHONPATH=v2 python v2/actions_default_branch_audit.py \
+            --revision refs/remotes/origin/main \
+            --output v2/reports/ci/main-default-branch-risk.json
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          report=json.loads(Path('v2/reports/ci/main-default-branch-risk.json').read_text())
+          message=(
+              "Default-branch readiness: " + report["readiness"] +
+              " | main revision: " + report["main_revision"] +
+              " | workflow files: " + str(report["source_files"]) +
+              " | write/push definitions: " + str(report["counts"]["writable_publisher"]) +
+              " | schedules: " + str(report["counts"]["scheduled"]) +
+              " | branch protected: " + str(report["branch_protected"]) +
+              "\n"
+          )
+          print(message)
+          with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8") as fh:
+              fh.write("### V2 main runtime readiness (read-only)\n\n" + message)
+          PY
       - name: Save only anonymous guard result and test evidence
         if: always()
         uses: actions/upload-artifact@v4
@@ -56,5 +90,6 @@ jobs:
           path: |
             v2/reports/ci/actions-trigger-protection.json
             v2/reports/ci/actions-trigger-protection-tests.log
+            v2/reports/ci/main-default-branch-risk.json
           if-no-files-found: warn
           retention-days: 30
