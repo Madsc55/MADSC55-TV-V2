@@ -6,6 +6,7 @@ Only the *candidate view* is deduplicated by exact stream URL SHA256.
 No private stream URLs are written to plaintext files, stdout or CI reports.
 """
 import argparse
+import csv
 import hashlib
 import json
 import os
@@ -225,17 +226,43 @@ def preserve_to_new_archive(path, protected, candidates):
     return verified
 
 
+def read_historical_csv(path):
+    """Consume a genuine SHA256-only historical comparison CSV without URLs."""
+    with Path(path).open(encoding="utf-8-sig", newline="") as handle:
+        reader = csv.DictReader(handle)
+        if not reader.fieldnames or "url_sha256" not in reader.fieldnames:
+            raise ValueError("Historical comparison CSV must contain url_sha256")
+        for row in reader:
+            yield dict(row)
+
+
+def read_historical_aggregate(path):
+    """Consume prior complete video-playback aggregate without inventing URLs."""
+    report = json.loads(Path(path).read_text(encoding="utf-8"))
+    rows = report.get("channel_results") if isinstance(report, dict) else None
+    if (not isinstance(rows, list) or not report.get("coverage_complete")
+            or report.get("unique_tested") != len(rows)):
+        raise ValueError("Historical playback aggregate is incomplete")
+    for row in rows:
+        if not isinstance(row, dict):
+            raise ValueError("Historical playback aggregate has invalid record")
+        yield row
+
+
 def main():
     parser = argparse.ArgumentParser(description="Offline historical loss guard, no stream requests")
     source = parser.add_mutually_exclusive_group(required=True)
     source.add_argument("--historical-jsonl", type=Path)
     source.add_argument("--historical-archive", type=Path)
+    source.add_argument("--historical-csv", type=Path, help="Legacy hash-only recovery CSV")
+    source.add_argument("--historical-aggregate", type=Path, help="Legacy complete playback JSON")
     parser.add_argument("--current-jsonl", type=Path)
     parser.add_argument("--out-archive", type=Path, required=True)
     parser.add_argument("--report", type=Path, required=True)
     parser.add_argument("--expected-historical-records", type=int, default=4955)
     args = parser.parse_args()
-    inputs = [x for x in (args.historical_jsonl, args.historical_archive, args.current_jsonl) if x]
+    inputs = [x for x in (args.historical_jsonl, args.historical_archive, args.historical_csv,
+                          args.historical_aggregate, args.current_jsonl) if x]
     outputs = (args.out_archive, args.report)
     if (args.expected_historical_records <= 0 or len({x.resolve(strict=False) for x in inputs + list(outputs)}) != len(inputs) + len(outputs)
             or any(x.exists() or x.is_symlink() for x in outputs)
@@ -247,6 +274,10 @@ def main():
             historical = [row for block in historical
                           for row in (block["records"] if block.get("kind") == "raw_historical_and_new"
                                       else [block] if "kind" not in block else [])]
+    elif args.historical_csv:
+        historical = list(read_historical_csv(args.historical_csv))
+    elif args.historical_aggregate:
+        historical = list(read_historical_aggregate(args.historical_aggregate))
     else:
         historical = list(read_records(args.historical_jsonl))
     current = list(read_records(args.current_jsonl)) if args.current_jsonl else []
