@@ -54,7 +54,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           PYTHONPATH=v2 python v2/orphan_m3u_recovery.py \
-            --history-revisions 20 \
+            --history-revisions 35 \
             --public-key v2/config/stage3_transit_public.pem \
             --report v2/reports/ci/three-source-orphan-anonymous.json \
             --sealed v2/reports/ci/three-source-av-verified.sealed
