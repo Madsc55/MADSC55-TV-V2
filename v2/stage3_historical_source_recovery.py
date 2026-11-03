@@ -82,7 +82,8 @@ def audit(history, original_source_snapshot):
     for index, source in enumerate(sources):
         name = "github-auto-" + str(index)
         repo, path = source.get("repository"), source.get("path")
-        if not isinstance(repo, str) or not re.fullmatch(r"[\w.-]+/[\w.-]+", repo):
+        if (not isinstance(repo, str) or not re.fullmatch(r"[\w.-]+/[\w.-]+", repo)
+                or any(part in (".", "..") for part in repo.split("/"))):
             raise ValueError("Invalid original GitHub repository")
         if not isinstance(path, str) or not path or len(path) > 512 or ".." in path.split("/"):
             raise ValueError("Invalid original source file path")
