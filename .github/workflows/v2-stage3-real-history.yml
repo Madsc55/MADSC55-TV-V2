@@ -10,6 +10,7 @@ on:
       - 'v2/history/stage3-4955-hash-only.jsonl'
       - 'v2/historical_local_match.py'
       - 'v2/test_historical_local_match.py'
+      - 'v2/test_stage3_hash_evidence_linkage.py'
       - '.github/workflows/v2-stage3-real-history.yml'
   workflow_dispatch:
 
@@ -43,6 +44,7 @@ jobs:
             test_historical_local_match \
             test_historical_inventory_guard \
             test_historical_region_collisions \
+            test_stage3_hash_evidence_linkage \
             test_historical_url_recovery \
             test_stage3_master_integration \
             test_stage3_legacy_importers \

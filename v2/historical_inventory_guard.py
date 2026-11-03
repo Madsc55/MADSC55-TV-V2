@@ -109,15 +109,23 @@ def reconcile(historical_records, current_records=(), expected_historical_record
     all_ids, hashed_only, unknown = set(), set(), 0
     duplicate_historical = 0
     historical_with_url = set()
+    hash_only_sources = {}
+    seen_historical_keys = set()
+    duplicate_historical_identities = 0
     for row in historical:
         key = identity(row)
         if key is None:
             unknown += 1
             continue
+        if key in seen_historical_keys:
+            duplicate_historical_identities += 1
+        seen_historical_keys.add(key)
         all_ids.add(key)
         url = row.get("url")
         if not validate_url(url):
             hashed_only.add(key)
+            prior = hash_only_sources.setdefault(key, [])
+            prior.extend(x for x in source_ids(row) if x not in prior)
             continue
         historical_with_url.add(key)
         if key in indexed:
@@ -165,20 +173,27 @@ def reconcile(historical_records, current_records=(), expected_historical_record
             indexed[key] = item
             # New real URL evidence supplements, never replaces historic rows.
             protected.append(dict(row))
-    # A stream URL can be listed as TR in one historical source and AZ in
-    # another. Preserve both raw records, but never silently assign the first
-    # region to the deduplicated candidate when evidence conflicts.
-    region_evidence = {}
+    # Carry forward source attribution attached to a SHA-only historical row
+    # whenever a genuine matching URL appears. This does not guess an address.
+    for key, old_sources in hash_only_sources.items():
+        if key in indexed:
+            item = indexed[key]
+            item["source_ids"] = list(dict.fromkeys(old_sources + item["source_ids"]))
+
+    # Evaluate both real-URL and hash-only evidence for the SAME verified digest.
+    # Otherwise a #60 TR hash and a newer AZ URL could be silently mislabelled.
+    region_evidence, historical_conflicts = {}, set()
     for row in historical + current:
-        url = row.get("url")
-        if not validate_url(url):
+        key = identity(row)
+        if key is None or key not in indexed:
             continue
-        key = digest(url)
         region = classify(row)["region_candidate"]
         if region in ("TR", "AZ"):
             region_evidence.setdefault(key, set()).add(region)
+        if row in historical and row.get("classification_evidence") == "CONFLICTING_TR_AZ_EVIDENCE":
+            historical_conflicts.add(key)
     conflicting_region_ids = {key for key, regions in region_evidence.items()
-                              if len(regions) > 1}
+                              if len(regions) > 1} | historical_conflicts
 
     candidates = []
     for key, item in indexed.items():
@@ -188,6 +203,13 @@ def reconcile(historical_records, current_records=(), expected_historical_record
         if key in conflicting_region_ids:
             candidate.update(region_candidate="UNKNOWN",
                              classification_evidence="CONFLICTING_TR_AZ_EVIDENCE",
+                             spoken_language_verified=False)
+        elif (candidate["region_candidate"] == "UNKNOWN"
+              and len(region_evidence.get(key, ())) == 1):
+            # Historical metadata can be a regional candidate hint, never
+            # evidence of current broadcast health or spoken language.
+            candidate.update(region_candidate=next(iter(region_evidence[key])),
+                             classification_evidence="HISTORICAL_REGION_EVIDENCE",
                              spoken_language_verified=False)
         candidate["device_verified"] = False
         # Existing flags cannot turn historical evidence into media proof.
@@ -205,11 +227,13 @@ def reconcile(historical_records, current_records=(), expected_historical_record
         "historical_unique_identities": len(all_ids),
         "historical_unique_real_urls": len(historical_with_url),
         "historical_duplicate_url_rows": duplicate_historical,
+        "historical_duplicate_identity_rows": duplicate_historical_identities,
         "historical_hash_only_identities": len(hashed_only),
         "historical_unidentified_records_preserved": unknown,
         "historical_identities_present_in_current": len(all_ids & current_identity),
         "historical_identities_not_in_current": len(unresolved),
         "historical_hash_only_linked_to_real_urls": len(hash_evidence_linked),
+        "historical_hash_only_provenance_linked": sum(key in indexed for key in hash_only_sources),
         "current_distinct_real_urls": len(current_identity),
         "current_invalid_url_records": current_invalid,
         "current_duplicate_url_rows": current_duplicates,
