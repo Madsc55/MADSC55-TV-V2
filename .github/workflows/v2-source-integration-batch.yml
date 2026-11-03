@@ -1,0 +1,26 @@
+name: V2 Source Integration Batch
+on:
+  push:
+    branches:
+      - madsc/v2-discovery-bulk-20261031
+    paths:
+      - 'v2/source_integration_gate.py'
+      - 'v2/tests/test_source_integration_gate.py'
+      - 'v2/config/sources.json'
+      - '.github/workflows/v2-source-integration-batch.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  source-integration-batch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Batch regression suite
+        run: python -m unittest discover -s v2/tests -p 'test_source_integration_gate.py' -v
+      - name: Verify source handoff reports without claiming AV playback
+        run: python v2/source_integration_gate.py
