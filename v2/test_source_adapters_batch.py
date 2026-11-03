@@ -54,7 +54,7 @@ class SourceAdapterIntegrationBatch(unittest.TestCase):
         def request(url):
             calls.append(url)
             if "gitlab.com/api/v4/projects?" in url:
-                return [{"id": 42, "default_branch": "main"}] if "page=" not in url else []
+                return [{"id": 42, "default_branch": "main"}] if "&page=" not in url else []
             if "/api/v4/projects/42/repository/tree?" in url:
                 return [{"type": "blob", "path": "tr.m3u"}]
             if "codeberg.org/api/v1/repos/search?" in url:

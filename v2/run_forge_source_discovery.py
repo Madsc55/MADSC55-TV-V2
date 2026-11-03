@@ -39,7 +39,12 @@ def api_json(url):
         raise ValueError("Forge response too large")
     return json.loads(payload)
 
-def scan(request=api_json, terms=TERMS):
+def scan(request=None, terms=None):
+    # Late binding keeps runtime configuration and offline mock injection consistent.
+    if request is None:
+        request = api_json
+    if terms is None:
+        terms = TERMS
     found, errors, seen, limits_hit, found_urls = [], [], set(), set(), set()
     for term in dict.fromkeys(terms):
         queries = [
