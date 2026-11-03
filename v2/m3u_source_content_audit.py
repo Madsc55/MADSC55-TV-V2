@@ -15,25 +15,39 @@ from source_failover import fetch_once
 HEX = re.compile(r"[0-9a-f]{64}\Z")
 
 
-def analyze_unpaired_reference_reasons(payload):
-    """Count unresolved EXTINF lines without leaking names, media URLs, tokens."""
-    pending = False
-    reasons = Counter()
-    for raw in payload.splitlines():
+def enumerate_unpaired_reference_evidence(payload):
+    """Keep SHA-only identity, line and reason for every unpaired EXTINF record.
+
+    No channel name, URL, access token or original line is emitted in reports.
+    """
+    issues = []
+    pending = None
+    def add(reason, original):
+        line_number, extinf_line = original
+        issues.append({"line_number": line_number,
+                       "extinf_sha256": hashlib.sha256(
+                           extinf_line.encode("utf-8")).hexdigest(),
+                       "reason": reason})
+    for line_number, raw in enumerate(payload.splitlines(), 1):
         line = raw.strip()
         if line.startswith("#EXTINF:"):
-            if pending:
-                reasons["MISSING_URI_BEFORE_NEXT_EXTINF"] += 1
-            pending = True
-        elif line and not line.startswith("#") and pending:
+            if pending is not None:
+                add("MISSING_URI_BEFORE_NEXT_EXTINF", pending)
+            pending = (line_number, line)
+        elif line and not line.startswith("#") and pending is not None:
             if line.startswith(("[NO PUBLIC STREAM]", "[NO STREAM]")):
-                reasons["EXPLICIT_NO_PUBLIC_STREAM_PLACEHOLDER"] += 1
+                add("EXPLICIT_NO_PUBLIC_STREAM_PLACEHOLDER", pending)
             elif not re.match(r"^[A-Za-z][A-Za-z0-9+.-]*://", line):
-                reasons["INVALID_OR_RELATIVE_STREAM_REFERENCE"] += 1
-            pending = False
-    if pending:
-        reasons["TRAILING_EXTINF_WITHOUT_URI"] += 1
-    return dict(sorted(reasons.items()))
+                add("INVALID_OR_RELATIVE_STREAM_REFERENCE", pending)
+            pending = None
+    if pending is not None:
+        add("TRAILING_EXTINF_WITHOUT_URI", pending)
+    return issues
+
+
+def analyze_unpaired_reference_reasons(payload):
+    evidence = enumerate_unpaired_reference_evidence(payload)
+    return dict(sorted(Counter(item["reason"] for item in evidence).items()))
 
 
 def _one(source, fetcher):
@@ -78,7 +92,8 @@ def _one(source, fetcher):
         # The existing discovery parser intentionally accepts only HTTP(S).
         # UDP/RTMP/RTSP/etc references are not deleted or described as broken.
         dangling = max(0, declared - len(parsed) - non_http)
-        reasons = analyze_unpaired_reference_reasons(payload)
+        orphan_evidence = enumerate_unpaired_reference_evidence(payload)
+        reasons = dict(sorted(Counter(x["reason"] for x in orphan_evidence).items()))
         if sum(reasons.values()) != dangling:
             raise ValueError("Malformed reference tally not internally consistent")
         intentionally_unavailable = reasons.get("EXPLICIT_NO_PUBLIC_STREAM_PLACEHOLDER", 0)
@@ -99,6 +114,7 @@ def _one(source, fetcher):
                  "unpaired_extinf": dangling,
                  "actual_malformed_extinf": actual_malformed,
                  "unpaired_reason_counts": reasons,
+                 "orphan_reference_evidence": orphan_evidence,
                  "historical_header_normalized": normalized_historical_header}, unique)
     except Exception as exc:
         # Intentionally do not log exception text, request URL, or credentials.

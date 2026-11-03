@@ -98,6 +98,18 @@ class FullM3UCoverageTests(unittest.TestCase):
         self.assertEqual(result["source_status_counts"],
                          {"PARSED_WITH_DECLARED_NO_PUBLIC_STREAM_PLACEHOLDERS": 1})
 
+    def test_orphan_metadata_hashes_preserved_without_urls_or_names(self):
+        from m3u_source_content_audit import enumerate_unpaired_reference_evidence
+        payload = ("#EXTM3U\n#EXTINF:-1,No URL\n"
+                   "#EXTINF:-1,Valid\nhttps://example.org/valid.m3u8\n")
+        evidence = enumerate_unpaired_reference_evidence(payload)
+        self.assertEqual(len(evidence), 1)
+        self.assertEqual(evidence[0]["reason"], "MISSING_URI_BEFORE_NEXT_EXTINF")
+        self.assertEqual(evidence[0]["line_number"], 2)
+        self.assertEqual(len(evidence[0]["extinf_sha256"]), 64)
+        self.assertNotIn("No URL", str(evidence))
+        self.assertNotIn("valid.m3u8", str(evidence))
+
     def test_upstream_placeholder_and_adjacent_extinf_not_mislabeled_as_streams(self):
         source = [{"id": "tr", "url": "https://fixture.example/tr.m3u"}]
         body = ("#EXTM3U\n#EXTINF:-1,No public stream\n"
