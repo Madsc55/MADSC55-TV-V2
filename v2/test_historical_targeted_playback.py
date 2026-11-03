@@ -64,6 +64,20 @@ class HistoricalTargetedPlaybackTests(unittest.TestCase):
                            resolver=lambda _: True)
         self.assertEqual(result["diagnostic_category"], "FFPROBE_OPTION_UNSUPPORTED")
 
+    def test_compatible_ffprobe_arguments_and_no_plaintext_log(self):
+        url = "https://stream.example.org/safe.m3u8"
+        called = []
+        def fake_runner(args, **kwargs):
+            called.extend(args)
+            return subprocess.CompletedProcess(args, 0, json.dumps({"streams": [
+                {"codec_type": "video"}]}), "")
+        output = probe_one((sha(url), url), runner=fake_runner,
+                           resolver=lambda _: True)
+        self.assertEqual(output["status"], "VIDEO_STREAM_OBSERVED")
+        self.assertNotIn("-max_redirects", called)
+        self.assertIn("-protocol_whitelist", called)
+        self.assertNotIn(url, str(output))
+
     def test_unresolved_host_does_not_invoke_media_process(self):
         url = "https://stream.example.org/bad.m3u8"
         called = []

@@ -109,7 +109,7 @@ def probe_one(item, runner=subprocess.run, resolver=public_dns):
     # is forwarded to the Actions logs. A failure is not proof of a dead stream.
     command = [
         "ffprobe", "-hide_banner", "-loglevel", "error", "-nostdin",
-        "-rw_timeout", "5000000", "-max_redirects", "0",
+        "-rw_timeout", "5000000",
         "-protocol_whitelist", "http,https,tcp,tls,crypto",
         "-analyzeduration", "2000000", "-probesize", "65536",
         "-show_entries", "stream=codec_type", "-of", "json", url,
