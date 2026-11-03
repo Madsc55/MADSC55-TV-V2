@@ -13,6 +13,9 @@ on:
       - 'v2/discover.py'
       - 'v2/m3u_source_content_audit.py'
       - 'v2/test_m3u_source_content_audit.py'
+      - 'v2/history/run60-dynamic-source-ledger.json'
+      - 'v2/run60_source_ledger.py'
+      - 'v2/test_run60_source_ledger.py'
       - '.github/workflows/v2-turkish-m3u-source-coverage.yml'
   workflow_dispatch:
 
@@ -41,6 +44,7 @@ jobs:
             test_source_loss_audit \
             test_turkish_m3u_source_audit \
             test_m3u_source_content_audit \
+            test_run60_source_ledger \
             test_source_integrity \
             test_source_failover \
             test_source_availability_audit \
@@ -53,6 +57,7 @@ jobs:
         run: |
           mkdir -p "$RUNNER_TEMP/madsc-60" "$RUNNER_TEMP/madsc-72"
           gh run download 40743765437 -n turkish-stream-review -D "$RUNNER_TEMP/madsc-60"
+          gh run download 40743765437 -n unified-source-snapshot -D "$RUNNER_TEMP/madsc-60"
           gh run download 40948768782 -n turkish-stream-review -D "$RUNNER_TEMP/madsc-72"
       - name: Verify original 4955 URL hash losses and full M3U source content coverage
         shell: bash
@@ -61,6 +66,8 @@ jobs:
             --sources v2/config/sources.json \
             --workers 8 \
             --audit-full-source-content \
+            --historical-dynamic-ledger v2/history/run60-dynamic-source-ledger.json \
+            --run60-source-snapshot "$RUNNER_TEMP/madsc-60/github-source-discovery.json" \
             --historical-old "$RUNNER_TEMP/madsc-60/v2/reports/all-source-playback-aggregate.json" \
             --historical-new "$RUNNER_TEMP/madsc-72/v2/reports/all-source-playback-aggregate.json" \
             --baseline v2/history/stage3-4955-hash-only.jsonl \

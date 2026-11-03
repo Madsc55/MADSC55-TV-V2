@@ -72,6 +72,19 @@ class FullM3UCoverageTests(unittest.TestCase):
         self.assertEqual(result["status"], "REVIEW_REQUIRED")
         self.assertEqual(result["source_results"][0]["unpaired_extinf"], 1)
 
+    def test_upstream_placeholder_and_adjacent_extinf_not_mislabeled_as_streams(self):
+        source = [{"id": "tr", "url": "https://fixture.example/tr.m3u"}]
+        body = ("#EXTM3U\n#EXTINF:-1,No public stream\n"
+                "[NO PUBLIC STREAM]\n"
+                "#EXTINF:-1,No location\n"
+                "#EXTINF:-1,Real\nhttps://fixture.example/valid.m3u8\n")
+        result = audit_contents(source, [], lambda _: body)
+        self.assertEqual(result["unpaired_extinf_count"], 2)
+        self.assertEqual(result["unpaired_reason_totals"],
+                         {"EXPLICIT_NO_PUBLIC_STREAM_PLACEHOLDER": 1,
+                          "MISSING_URI_BEFORE_NEXT_EXTINF": 1})
+        self.assertEqual(result["union_unique_url_sha256"], 1)
+
     def test_failed_one_does_not_erase_other_or_leak_token(self):
         sources = [{"id": "one", "url": "https://fixture.example/a?token=SECRET"},
                    {"id": "two", "url": "https://fixture.example/b"}]

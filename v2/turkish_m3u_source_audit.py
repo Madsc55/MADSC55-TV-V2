@@ -14,6 +14,7 @@ from pathlib import Path
 from source_availability_audit import probe as source_header_probe
 from compare_historical_playback import load as load_aggregate
 from m3u_source_content_audit import audit_contents
+from run60_source_ledger import read_verified_ledger, inventory_coverage
 
 OLD_RUN = 40743765437
 NEW_RUN = 40948768782
@@ -149,6 +150,8 @@ def main():
     p.add_argument("--historical-old", type=Path)
     p.add_argument("--historical-new", type=Path)
     p.add_argument("--baseline", type=Path)
+    p.add_argument("--historical-dynamic-ledger", type=Path)
+    p.add_argument("--run60-source-snapshot", type=Path)
     args = p.parse_args()
     if args.output.exists() or args.output.is_symlink() or args.output.resolve() == args.sources.resolve():
         p.error("Refusing to overwrite an existing source file/report")
@@ -169,6 +172,19 @@ def main():
             approved_count=len(approvals.get("approved_sha256", [])),
             dynamic_catalog_available=(Path(__file__).resolve().parent /
                                        "reports/github-source-discovery.json").is_file())
+    original_sources = []
+    if args.historical_dynamic_ledger or args.run60_source_snapshot:
+        if (not args.historical_dynamic_ledger or not args.run60_source_snapshot
+                or "historical_loss" not in result):
+            p.error("Exact original historical source ledger and #60 snapshot required together")
+        original_sources = read_verified_ledger(
+            args.historical_dynamic_ledger, args.run60_source_snapshot,
+            result["historical_loss"])
+        result["historical_source_catalog_gaps_before_restoration"] = result[
+            "historical_source_catalog_gaps"]
+        result["historical_source_catalog_gaps"] = historical_source_catalog_gaps(
+            result["historical_loss"], config["sources"] + original_sources,
+            approved_count=0, dynamic_catalog_available=True)
     if args.audit_full_source_content:
         if args.baseline is None:
             p.error("Full source content audit requires immutable historical baseline")
@@ -178,7 +194,14 @@ def main():
         if len(baseline_hashes) != 4955:
             p.error("Unverified real historical baseline")
         result["source_content_audit"] = audit_contents(
-            config["sources"], baseline_hashes, workers=args.workers)
+            config["sources"] + original_sources, baseline_hashes,
+            workers=args.workers,
+            primary_source_ids={s["id"] for s in config["sources"]}
+            if original_sources else None)
+        if original_sources:
+            result["historical_dynamic_source_readback"] = inventory_coverage(
+                result["historical_loss"], config["sources"],
+                result["source_content_audit"]["source_results"])
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
                            encoding="utf-8")
