@@ -33,9 +33,9 @@ class OrphanRecoveryTests(unittest.TestCase):
 
     def test_nonpublic_http_is_safely_excluded_but_not_an_orphan(self):
         from orphan_m3u_recovery import count_excluded_network_references
-        content = ("#EXTM3U\\n#EXTINF:-1,Private\\n"
-                   "http://192.168.1.10/live.m3u8\\n"
-                   "#EXTINF:-1,Valid\\nhttps://public.example.org/good.m3u8\\n")
+        content = ("#EXTM3U\n#EXTINF:-1,Private\n"
+                   "http://192.168.1.10/live.m3u8\n"
+                   "#EXTINF:-1,Valid\nhttps://public.example.org/good.m3u8\n")
         rows, orphan = parse_exact_pairs(content)
         self.assertEqual(len(orphan), 0)
         self.assertEqual(len(rows), 1)
