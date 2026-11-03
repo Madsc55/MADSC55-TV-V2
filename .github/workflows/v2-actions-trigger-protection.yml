@@ -1,4 +1,4 @@
-name: V2 Actions Trigger & Protected Playlist Gate (53+ workflows)
+name: V2 Actions Trigger & Protected Playlist Gate (58 workflows)
 on:
   push:
     branches: [madsc/v2-discovery-bulk-20261031]
@@ -31,7 +31,7 @@ jobs:
         run: |
           test "$(git hash-object MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)" = '4b1c3cea4b5107a425abab60f62d41f9f81e05a7'
           test "$(sha256sum v2/history/stage3-4955-hash-only.jsonl | cut -d' ' -f1)" = 'ee00a844a028e3410715d411467a2d3306f5f5cc4565766140b6438e786cdd27'
-      - name: All 54 workflows and related protections validated in one batch
+      - name: All 58 workflows and related protections validated in one batch
         shell: bash
         run: |
           set -o pipefail

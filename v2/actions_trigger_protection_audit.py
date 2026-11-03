@@ -33,6 +33,7 @@ LOCKED_PUBLISHERS = frozenset({
     "turkish-category-audit",
     "v2-bruksel-logo-png",
     "v2-promote-yedekler",
+    "v2-yedekler-logos",
 })
 MANUAL_ARTIFACT_ONLY = frozenset({"v2-epg", "v2-logo-backup"})
 MANUAL_NETWORK_OR_MEDIA = frozenset({
@@ -57,6 +58,9 @@ MANUAL_NETWORK_OR_MEDIA = frozenset({
     "v2-source-live-validation",
     "v2-turkish-stream-review",
     "v2-world-discovery",
+    "v2-real-iptv-scan",
+    "v2-public-source-audit",
+    "v2-offline-inventory",
     "v2-turkish-tv-health",
     "v2-postscan-triage",
     "v2-manual-source-audit",
@@ -168,7 +172,7 @@ def validate_workflow(path, source):
     }
 
 
-def audit_repository(workflow_root, minimum_workflows=54):
+def audit_repository(workflow_root, minimum_workflows=58):
     files = sorted(Path(workflow_root).glob("*.yml")) + sorted(Path(workflow_root).glob("*.yaml"))
     report = {"schema": 1, "kind": "V2_WORKFLOW_TRIGGER_PROTECTION_READONLY",
               "workflows_checked": len(files), "minimum_expected": minimum_workflows,
