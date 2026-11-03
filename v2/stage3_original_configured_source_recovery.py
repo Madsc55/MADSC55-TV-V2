@@ -23,7 +23,7 @@ SOURCES = (
 )
 
 
-def audit_configured(history):
+def audit_configured(history, *, return_records=False):
     hashes = validate_index(history, 4955)
     found, audits = {}, []
     for source, label, url, provenance in SOURCES:
@@ -41,7 +41,7 @@ def audit_configured(history):
             # Do not print exception text, which could include URL credentials.
             item.update(status="UNAVAILABLE", error_type=type(exc).__name__)
         audits.append(item)
-    return {
+    result = {
         "schema": 1,
         "policy": "EXACT_SHA256_EXISTING_CONFIGURED_SOURCE_URL_LOOKUP",
         "historical_hash_identities": 4955,
@@ -55,17 +55,30 @@ def audit_configured(history):
         "main_playlist_modified": False,
         "plaintext_urls_logged": False,
     }
+    return (result, list(found.values())) if return_records else result
 
 
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--index", required=True, type=Path)
     parser.add_argument("--report", required=True, type=Path)
+    parser.add_argument("--seal-public-key", type=Path)
+    parser.add_argument("--sealed-output", type=Path)
     args = parser.parse_args()
-    if args.report.exists() or args.report.is_symlink() or args.report.resolve() == args.index.resolve():
-        parser.error("Refusing overwrite or report/input collision")
+    outputs = [args.report] + ([args.sealed_output] if args.sealed_output else [])
+    if (any(p.exists() or p.is_symlink() or p.resolve() == args.index.resolve() for p in outputs)
+            or len(set(p.resolve() for p in outputs)) != len(outputs)):
+        parser.error("Refusing unsafe or colliding recovery output")
     history = [json.loads(line) for line in args.index.read_text(encoding="utf-8").splitlines() if line]
-    result = audit_configured(history)
+    result, matches = audit_configured(history, return_records=True)
+    if args.sealed_output:
+        if not args.seal_public_key:
+            raise ValueError("Missing public key for confidential recovery evidence")
+        from stage3_sealed_export import seal_rows
+        seal_rows(matches, args.seal_public_key, args.sealed_output)
+        result["confidential_rsa_aes_transit_sealed"] = True
+    else:
+        result["confidential_rsa_aes_transit_sealed"] = False
     args.report.parent.mkdir(parents=True, exist_ok=True)
     with args.report.open("x", encoding="utf-8") as output:
         json.dump(result, output, ensure_ascii=False, indent=2, sort_keys=True)
