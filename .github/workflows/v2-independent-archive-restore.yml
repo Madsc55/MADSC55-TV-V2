@@ -1,0 +1,51 @@
+name: V2 Independent Durable Archive Restore Acceptance
+on:
+  workflow_dispatch:
+    inputs:
+      s3_bucket:
+        description: 'Private versioned S3 bucket holding the encrypted V2 archive'
+        required: true
+        type: string
+      s3_object_key:
+        description: 'Encrypted V2 archive object key'
+        required: true
+        type: string
+      s3_version_id:
+        description: 'Immutable S3 object version ID'
+        required: true
+        type: string
+permissions:
+  contents: read
+  id-token: write
+jobs:
+  independent-restore:
+    if: github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.7'
+      - name: Install pinned cryptography
+        run: python -m pip install cryptography==44.0.2
+      - name: Verify protected IBO playlist
+        run: test "$(git hash-object MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)" = '4b1c3cea4b5107a425abab60f62d41f9f81e05a7'
+      - name: Obtain short-lived AWS OIDC credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.V2_ARCHIVE_AWS_ROLE_ARN }}
+          aws-region: ${{ vars.V2_ARCHIVE_AWS_REGION }}
+      - name: Download and verify independent immutable archive
+        shell: bash
+        env:
+          V2_ARCHIVE_KEY_HEX: ${{ secrets.V2_ARCHIVE_KEY_HEX }}
+          V2_ARCHIVE_EXPECTED_SHA256: ${{ secrets.V2_ARCHIVE_EXPECTED_SHA256 }}
+          ARCHIVE_BUCKET: ${{ inputs.s3_bucket }}
+          ARCHIVE_OBJECT_KEY: ${{ inputs.s3_object_key }}
+          ARCHIVE_VERSION: ${{ inputs.s3_version_id }}
+        run: |
+          set -euo pipefail
+          python v2/independent_s3_restore.py --bucket "$ARCHIVE_BUCKET" --key "$ARCHIVE_OBJECT_KEY" --version-id "$ARCHIVE_VERSION"
+          echo 'PASS: independently downloaded, decrypted and checked all 4955 historical identities' >> "$GITHUB_STEP_SUMMARY"
+          echo "Commit: ${GITHUB_SHA}" >> "$GITHUB_STEP_SUMMARY"
