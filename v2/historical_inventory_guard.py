@@ -328,6 +328,58 @@ def preserve_to_new_archive(path, protected, candidates):
     return verified
 
 
+def unpack_archive_snapshot(blocks, expected_historical_records):
+    """Restore historic prefix and later URL evidence without losing either.
+
+    V1 encrypted blocks use raw_historical_and_new for both groups. Since
+    reconcile always writes all historical rows first, the required baseline
+    count defines an unambiguous split. Fail closed on mixed or damaged blocks.
+    """
+    if not isinstance(blocks, list) or not blocks:
+        raise ValueError("Missing encrypted archive records")
+    wrapped = [isinstance(block, dict) and block.get("guard_schema") == SCHEMA
+               for block in blocks]
+    if not any(wrapped):
+        if not all(isinstance(row, dict) and "kind" not in row for row in blocks):
+            raise ValueError("Invalid legacy encrypted historical archive")
+        if len(blocks) != expected_historical_records:
+            raise ValueError("Legacy archive does not match historical baseline")
+        return list(blocks), [], None
+    if not all(wrapped):
+        raise ValueError("Mixed or unrecognized encrypted archive formats")
+    raw, view, seen_view = [], [], False
+    for block in blocks:
+        if set(block) != {"kind", "guard_schema", "records"}:
+            raise ValueError("Invalid encrypted archive block fields")
+        rows = block["records"]
+        if not isinstance(rows, list) or not rows or not all(isinstance(x, dict) for x in rows):
+            raise ValueError("Invalid encrypted archive block records")
+        if block["kind"] == "raw_historical_and_new":
+            if seen_view:
+                raise ValueError("Historical evidence follows candidate view")
+            raw.extend(rows)
+        elif block["kind"] == "deduplicated_view":
+            seen_view = True
+            view.extend(rows)
+        else:
+            raise ValueError("Unknown encrypted archive block kind")
+    if len(raw) < expected_historical_records:
+        raise ValueError("Encrypted history shorter than baseline")
+    return raw[:expected_historical_records], raw[expected_historical_records:], view
+
+
+def verify_historical_baseline(historical, baseline_records):
+    """Require the exact immutable history identity set, never just a row count."""
+    expected = [identity(row) for row in baseline_records]
+    observed = [identity(row) for row in historical]
+    if (not expected or None in expected or None in observed or
+            len(expected) != len(set(expected)) or
+            len(expected) != len(observed) or
+            set(expected) != set(observed)):
+        raise ValueError("Historical identities do not match immutable baseline")
+    return hashlib.sha256("".join(sorted(expected)).encode("ascii")).hexdigest()
+
+
 def read_historical_csv(path):
     """Consume a genuine SHA256-only historical comparison CSV without URLs."""
     with Path(path).open(encoding="utf-8-sig", newline="") as handle:
@@ -359,31 +411,42 @@ def main():
     source.add_argument("--historical-csv", type=Path, help="Legacy hash-only recovery CSV")
     source.add_argument("--historical-aggregate", type=Path, help="Legacy complete playback JSON")
     parser.add_argument("--current-jsonl", type=Path)
+    parser.add_argument("--baseline-index", type=Path,
+                        help="Require exact SHA256 identity set of immutable historical index")
     parser.add_argument("--out-archive", type=Path, required=True)
     parser.add_argument("--report", type=Path, required=True)
     parser.add_argument("--expected-historical-records", type=int, default=4955)
     args = parser.parse_args()
     inputs = [x for x in (args.historical_jsonl, args.historical_archive, args.historical_csv,
-                          args.historical_aggregate, args.current_jsonl) if x]
+                          args.historical_aggregate, args.current_jsonl, args.baseline_index) if x]
     outputs = (args.out_archive, args.report)
     if (args.expected_historical_records <= 0 or len({x.resolve(strict=False) for x in inputs + list(outputs)}) != len(inputs) + len(outputs)
             or any(x.exists() or x.is_symlink() for x in outputs)
             or args.report.suffix != ".json"):
         parser.error("Unsafe output/input collision or invalid expected history count")
+    earlier_current, archived_view = [], None
     if args.historical_archive:
-        historical = restore(args.historical_archive)
-        if any(isinstance(x, dict) and x.get("guard_schema") == SCHEMA for x in historical):
-            historical = [row for block in historical
-                          for row in (block["records"] if block.get("kind") == "raw_historical_and_new"
-                                      else [block] if "kind" not in block else [])]
+        historical, earlier_current, archived_view = unpack_archive_snapshot(
+            restore(args.historical_archive), args.expected_historical_records)
     elif args.historical_csv:
         historical = list(read_historical_csv(args.historical_csv))
     elif args.historical_aggregate:
         historical = list(read_historical_aggregate(args.historical_aggregate))
     else:
         historical = list(read_records(args.historical_jsonl))
-    current = list(read_records(args.current_jsonl)) if args.current_jsonl else []
+    if args.baseline_index:
+        baseline = list(read_records(args.baseline_index))
+        verify_historical_baseline(historical, baseline)
+    current = earlier_current + (list(read_records(args.current_jsonl)) if args.current_jsonl else [])
     protected, indexed, report = reconcile(historical, current, args.expected_historical_records)
+    if archived_view is not None:
+        # An existing encrypted view may have older classification rules;
+        # stream URL identities may never disappear or change.
+        original_ids = [identity(row) for row in archived_view]
+        new_ids = [identity(row) for row in indexed]
+        if (None in original_ids or len(set(original_ids)) != len(original_ids)
+                or not set(original_ids).issubset(set(new_ids))):
+            raise ValueError("Encrypted archive candidate identities disagree")
     report["historical_preservation_verified"] = preserve_to_new_archive(args.out_archive, protected, indexed)
     args.report.parent.mkdir(parents=True, exist_ok=True)
     args.report.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
