@@ -85,7 +85,7 @@ class OrphanRecoveryTests(unittest.TestCase):
     def test_historical_revisions_reject_unbounded_or_unpinned_scope(self):
         from orphan_m3u_recovery import historical_revisions
         with self.assertRaises(ValueError):
-            historical_revisions("discevisita/iptv", "tr.m3u", limit=151)
+            historical_revisions("discevisita/iptv", "tr.m3u", limit=301)
         with self.assertRaises(ValueError):
             historical_revisions("untrusted/iptv", "tr.m3u", limit=100)
 

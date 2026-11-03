@@ -133,7 +133,7 @@ def historical_revisions(repo, path, *, limit=20):
     """Read a bounded number of real Git revisions, including older pages."""
     if (repo, path) not in {(r, p) for _, r, p in ORIGINALS}:
         raise ValueError("Historical source outside pinned scope")
-    if type(limit) is not int or not 1 <= limit <= 150:
+    if type(limit) is not int or not 1 <= limit <= 300:
         raise ValueError("Historical revision limit out of bounds")
     owner, name = repo.split("/")
     shas, seen = [], set()
@@ -548,7 +548,7 @@ def main():
             or args.all_candidates_sealed.is_symlink()
             or len({args.report.resolve(), args.sealed.resolve(),
                     args.all_candidates_sealed.resolve()}) != 3
-            or not 1 <= args.history_revisions <= 150):
+            or not 1 <= args.history_revisions <= 300):
         p.error("Unsafe output path or unbounded history")
     result = audit(report_path=args.report, sealed_path=args.sealed,
                    key_path=args.public_key, limit=args.history_revisions,
