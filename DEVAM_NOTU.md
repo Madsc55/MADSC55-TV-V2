@@ -1095,3 +1095,15 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - Kullanıcının GitHub Actions ekran görüntüsü: Monitor 9 (`c6b34c4`) failure (10 sn); Monitor 8 (`c83532c`) success (10 sn); Monitor 7 (`8463872`) success (21 sn). Ekran görüntüsü job/step logu göstermiyor.
 - Olası regresyon: repository-wide `/actions/runs?per_page=10` sayfası diğer workflow çalışmalarıyla dolabilir; sadece Master Engine filtrelenince sıfır kayıt ve bilerek hata oluşur. `f3c569f` ile workflow-scoped API sorgusuna geri dönüldü; `9127251` ile test güncellendi. Gerçek hata logu/run ID elde edilmediği için kök neden kesin doğrulanmış değildir.
 - Yeni commitlerin yeşil durumu henüz doğrulanmadı; ana İBO değişmedi, PR #9 merge edilmedi.
+
+## 3 Kasım 2026 — Aşama 2 kaynak adaptörleri: kod ve toplu CI doğrulaması tamamlandı
+
+- Çalışma dalı: `madsc/v2-discovery-bulk-20261031`. Ana IBO `MADSC55_TV_IBO_CALISANLAR_TEST.m3u8`, YEDEKLER/YENİLER/FAVORİLER, `main`, eski depo ve PR #9 değiştirilmedi.
+- GitLab/Codeberg normalize etme, platform adresi denetimi ve tek tarayıcı kullanımı düzenlendi. GitLab ağacında yeni API `pagination=keyset&page_token=...` desteklendi, eski yanıtlarda numaralı sayfa uyumluluğu korundu. Hatalı GitLab/Codeberg JSON yanıtları başarı diye gösterilmiyor.
+- GitHub/Gist arama ilk sayfa, repo başına dosya ve Gist sayfa sınırları `limits_hit` içinde raporlanıyor. Güvenilmeyen repo adları/path girdileri ve geçersiz Gist metadata öğeleri eleniyor. Onaysız kaynağın otomatik ana listeye aktarılması yasak.
+- Kod commitleri: `d87d18eb`, `5eb5916e`, `edf98a13`, `1a062ed0`, `a0f6c5e6`, son kod commit `172b08a1`.
+- `v2/source_adapter_service_health.py` altı gerçek kaynak/API servisinin yalnızca erişimini/sözdizimini sınar: IPTV-org TR, Free-TV, GitHub repo API, genel Gist API, GitLab proje API, Codeberg repo API. Kanal stream URL taraması, oynatma doğrulaması, ana playlist yazımı YOKTUR.
+- GitHub Actions `V2 Source Adapter Bulk Validation` run **41559468171 SUCCESS**: bir seferde **62 ilgili regresyon testi OK**, altı gerçek kaynak/API kontrolü **6/6 AVAILABLE**, rapor artifact `v2-source-service-health-41559468171`.
+- Son kod commit `172b08a1` için ayrıca `V2 Eight-Stage Runner Verification` run **41559468062 SUCCESS**: **194 unittest OK**, **14 koruma testi OK**, FFmpeg test işi SUCCESS, korunan playlist SHA256 `7e62b0beec0b928ed30ac86827077f2dd6d7e739f42a573ce849c7d64f5e8eb4`.
+- Aynı commit: `V2 Master Engine` **41559468053 SUCCESS** (offline-tests başarılı, gerçek master görevi SKIPPED); `Current Scanner Offline Gate` **41559468066 SUCCESS**; `Actions Status Monitor` **41559468100 SUCCESS**.
+- **Aşama 2 kod entegrasyonu, servis ulaşılabilirliği ve toplu CI doğrulaması bitmiştir.** Bu durum tüm keşif adaylarının, gerçek görüntü/ses dekodunun, şifreli arşiv geri yüklemenin veya IBO Player cihaz oynatmasının başarıyla doğrulandığı anlamına gelmez. Yeni geniş kanal taraması bu aşamada yapılmadı.
