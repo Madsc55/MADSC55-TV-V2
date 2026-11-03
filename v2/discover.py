@@ -20,6 +20,45 @@ FORGE_APPROVALS = ROOT / "v2" / "config" / "approved-forge-source-sha256.json"
 GITHUB_APPROVALS = ROOT / "v2" / "config" / "approved-github-source-sha256.json"
 MAX_BYTES = 25_000_000
 
+def load_original_run60_sources(path):
+    """Load only original #60 GitHub source IDs proven by the snapshot CI gate.
+
+    Historic sources stay discovery candidates; they never auto-promote streams
+    into the protected IBO playlist.
+    """
+    from urllib.parse import urlsplit
+    doc = json.loads(pathlib.Path(path).read_text(encoding="utf-8"))
+    if (doc.get("schema") != 1 or doc.get("source_run_id") != 40743765437
+            or doc.get("artifact_id") != 12840886350
+            or not isinstance(doc.get("sources"), list)
+            or len(doc["sources"]) != 17
+            or sum(x.get("old_only", 0) for x in doc["sources"]) != 8449):
+        raise ValueError("Unverified original #60 source ledger")
+    restored, seen = [], set()
+    for row in doc["sources"]:
+        ident, url = row.get("id"), row.get("url")
+        if not isinstance(ident, str) or not re.fullmatch(r"github-auto-(?:0|[1-9][0-9]*)", ident):
+            raise ValueError("Invalid original source identity")
+        if ident in seen or not isinstance(url, str):
+            raise ValueError("Duplicate or missing original source URL")
+        p = urlsplit(url)
+        if (p.scheme != "https" or p.hostname != "raw.githubusercontent.com"
+                or p.username or p.password or p.fragment or p.port not in (None, 443)
+                or not p.path.lower().endswith((".m3u", ".m3u8", ".m3u8"))):
+            raise ValueError("Original source URL is not a public GitHub M3U")
+        seen.add(ident)
+        restored.append({"id": ident, "url": url, "kind": "m3u",
+                         "scope": "candidate", "historical_source_only": True})
+    return restored
+
+
+def normalize_original_source_text(source, content):
+    """Accept headerless EXTINF feeds only for verified #60 source labels."""
+    if source.get("historical_source_only") and content.lstrip("\ufeff\r\n\t ").startswith("#EXTINF:"):
+        return "#EXTM3U\n" + content.lstrip("\ufeff\r\n\t ")
+    return content
+
+
 def approved_github_source(url, approved_hashes):
     from webpage_source_discovery import candidate_url
     return (isinstance(url, str) and candidate_url(url)
@@ -148,6 +187,8 @@ def main():
     p.add_argument("--encrypted-archive", type=pathlib.Path, help="Append candidates to AES-GCM private archive")
     p.add_argument("--limit", type=int, default=0, help="Maximum candidate count; 0 means no limit")
     p.add_argument("--previous-report", type=pathlib.Path, help="Previous discovery JSON for source-loss audit")
+    p.add_argument("--include-original-run60-github-sources", action="store_true",
+                   help="Include the 17 exact originally discovered GitHub source locations")
     args = p.parse_args()
     if args.limit < 0:
         p.error("--limit must be zero or positive")
@@ -161,6 +202,17 @@ def main():
     configured = json.loads(SOURCES.read_text(encoding="utf-8"))["sources"]
     retired_sources = [item for item in configured if item.get("enabled", True) is False]
     sources = [item for item in configured if item.get("enabled", True) is not False]
+    if args.include_original_run60_github_sources:
+        original_sources = load_original_run60_sources(
+            ROOT / "v2/history/run60-dynamic-source-ledger.json")
+        known_ids = {item["id"] for item in sources}
+        known_urls = {item["url"] for item in sources}
+        for item in original_sources:
+            if item["id"] in known_ids or item["url"] in known_urls:
+                raise SystemExit("Original source ledger overlaps current M3U source identity")
+            sources.append(item)
+            known_ids.add(item["id"])
+            known_urls.add(item["url"])
     github_approvals = set()
     if GITHUB_APPROVALS.exists():
         approval_doc = json.loads(GITHUB_APPROVALS.read_text(encoding="utf-8"))
@@ -235,7 +287,7 @@ def main():
                     else:
                         def source_fetch(url):
                             try:
-                                return fetch(url)
+                                return normalize_original_source_text(source, fetch(url))
                             except urllib.error.HTTPError as exc:
                                 raise FetchFailure("HTTP_" + str(exc.code), exc.code in (408, 429, 500, 502, 503, 504)) from exc
                             except (TimeoutError, socket.timeout, urllib.error.URLError, OSError) as exc:

@@ -16,6 +16,8 @@ on:
       - 'v2/history/run60-dynamic-source-ledger.json'
       - 'v2/run60_source_ledger.py'
       - 'v2/test_run60_source_ledger.py'
+      - 'v2/test_run60_source_discovery.py'
+      - '.github/workflows/v2-world-discovery.yml'
       - '.github/workflows/v2-turkish-m3u-source-coverage.yml'
   workflow_dispatch:
 
@@ -45,6 +47,7 @@ jobs:
             test_turkish_m3u_source_audit \
             test_m3u_source_content_audit \
             test_run60_source_ledger \
+            test_run60_source_discovery \
             test_source_integrity \
             test_source_failover \
             test_source_availability_audit \
