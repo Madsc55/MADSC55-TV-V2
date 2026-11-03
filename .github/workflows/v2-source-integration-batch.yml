@@ -23,4 +23,11 @@ jobs:
       - name: Batch regression suite
         run: python -m unittest discover -s v2/tests -p 'test_source_integration_gate.py' -v
       - name: Verify source handoff reports without claiming AV playback
-        run: python v2/source_integration_gate.py
+        run: python v2/source_integration_gate.py | tee source-integration-audit.json; test ${PIPESTATUS[0]} -eq 0
+      - name: Upload source integration audit
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v2-source-integration-audit
+          path: source-integration-audit.json
+          if-no-files-found: warn
