@@ -75,6 +75,7 @@ class HistoricalTargetedPlaybackTests(unittest.TestCase):
                            resolver=lambda _: True)
         self.assertEqual(output["status"], "VIDEO_STREAM_OBSERVED")
         self.assertNotIn("-max_redirects", called)
+        self.assertNotIn("-nostdin", called)
         self.assertIn("-protocol_whitelist", called)
         self.assertNotIn(url, str(output))
 

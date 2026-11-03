@@ -108,14 +108,14 @@ def probe_one(item, runner=subprocess.run, resolver=public_dns):
     # Strict no-redirect and protocol constraints; no subprocess output or URL
     # is forwarded to the Actions logs. A failure is not proof of a dead stream.
     command = [
-        "ffprobe", "-hide_banner", "-loglevel", "error", "-nostdin",
+        "ffprobe", "-hide_banner", "-loglevel", "error",
         "-rw_timeout", "5000000",
         "-protocol_whitelist", "http,https,tcp,tls,crypto",
         "-analyzeduration", "2000000", "-probesize", "65536",
         "-show_entries", "stream=codec_type", "-of", "json", url,
     ]
     try:
-        proc = runner(command, capture_output=True, text=True, timeout=15)
+        proc = runner(command, capture_output=True, text=True, timeout=15, stdin=subprocess.DEVNULL)
         if proc.returncode != 0:
             return {"url_sha256": digest, "status": "PROBE_FAILED_NOT_PROVEN_DEAD",
                     "diagnostic_category": classify_probe_failure(proc.stderr),
