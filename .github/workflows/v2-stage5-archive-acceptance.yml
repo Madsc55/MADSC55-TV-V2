@@ -1,0 +1,55 @@
+name: V2 Stage 5 Durable Encrypted Archive Group Acceptance
+on:
+  push:
+    branches:
+      - madsc/v2-discovery-bulk-20261031
+    paths:
+      - 'v2/durable_evidence_archive.py'
+      - 'v2/test_durable_evidence_archive.py'
+      - 'v2/history/independent-aes-archive-20261103.json'
+      - '.github/workflows/v2-stage5-archive-acceptance.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  encrypted-archive-batch:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install fixed cryptography
+        run: python -m pip install cryptography==44.0.2
+      - name: Check immutable IBO main playlist
+        run: test "$(git hash-object MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)" = '4b1c3cea4b5107a425abab60f62d41f9f81e05a7'
+      - name: Run one grouped archive encryption and recovery acceptance suite
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p v2/reports/ci
+          PYTHONPATH=v2 python -m unittest -v             test_durable_evidence_archive             test_archive_acceptance_gate             test_archive_backup_restore_drill             test_encrypted_archive             test_restore_evidence_safety             test_independent_s3_restore             test_stage3_archive_lineage             test_stage3_immutable_history             test_offsite_sealed_evidence             2>&1 | tee v2/reports/ci/stage5-encrypted-archive-batch.log
+      - name: Verify pinned independent readback evidence and reject false full acceptance
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          data=json.loads(Path('v2/history/independent-aes-archive-20261103.json').read_text())
+          assert data['full_historical_hashes']==4955
+          assert data['externally_restored_and_decrypted_with_aes256gcm'] is True
+          assert data['original_URL_RSA_private_restore_completed'] is False
+          assert data['full_production_URL_acceptance'] is False
+          assert data['archive_sha256']=='88fb339447a25670b3531d0eaa8980532041c40d92ef52ab76d270792fda9d45'
+          print('PASS: original independently recovered AES evidence attestation matches frozen checksum')
+          print('NOT CLAIMED: original RSA-encrypted private URL decryption or IBO device playback')
+          PY
+      - name: Upload combined evidence log
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: v2-stage5-encrypted-evidence-${{ github.run_id }}
+          path: v2/reports/ci/stage5-encrypted-archive-batch.log
+          retention-days: 30
+          if-no-files-found: warn
