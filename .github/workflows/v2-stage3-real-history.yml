@@ -14,6 +14,8 @@ on:
       - 'v2/historical_local_match.py'
       - 'v2/stage3_historical_source_recovery.py'
       - 'v2/stage3_original_configured_source_recovery.py'
+      - 'v2/stage3_dearbulut_health_recovery.py'
+      - 'v2/test_stage3_dearbulut_health_recovery.py'
       - 'v2/test_stage3_original_configured_source_recovery.py'
       - 'v2/test_stage3_historical_source_recovery.py'
       - 'v2/test_historical_local_match.py'
@@ -56,6 +58,7 @@ jobs:
             test_historical_local_match \
             test_stage3_historical_source_recovery \
             test_stage3_original_configured_source_recovery \
+            test_stage3_dearbulut_health_recovery \
             test_historical_inventory_guard \
             test_historical_region_collisions \
             test_stage3_hash_evidence_linkage \
@@ -254,6 +257,13 @@ jobs:
           python v2/stage3_original_configured_source_recovery.py \
             --index v2/history/stage3-4955-hash-only.jsonl \
             --report v2/reports/ci/stage3-original-configured-source-matches.json
+      - name: Check missing historical Dearbulut URL identities in dated health state archives
+        env:
+          PYTHONPATH: v2
+        run: |
+          python v2/stage3_dearbulut_health_recovery.py \
+            --index v2/history/stage3-4955-hash-only.jsonl \
+            --report v2/reports/ci/stage3-dearbulut-historical-health-url-match.json
       - name: Combine 4,955 real historical URL matches across V2 branches and original source commits
         shell: bash
         run: |
@@ -266,7 +276,11 @@ jobs:
           historical=set(history['matched_hashes'])
           configured=json.loads(Path('v2/reports/ci/stage3-original-configured-source-matches.json').read_text())
           original_sources=set(configured['matched_hashes'])
-          total=original|historical|original_sources
+          git_audit=json.loads(Path('v2/reports/ci/stage3-git-history-exact-url-match.json').read_text())
+          git_matches=set(git_audit['matched_historical_sha256'])
+          health_audit=json.loads(Path('v2/reports/ci/stage3-dearbulut-historical-health-url-match.json').read_text())
+          health_matches=set(health_audit['matched_hashes'])
+          total=original|historical|original_sources|git_matches|health_matches
           assert len(total) <= 4955
           assert len(total)+ (4955-len(total)) == 4955
           assert all(isinstance(x,str) and len(x)==64 for x in total)
@@ -277,6 +291,8 @@ jobs:
             'v2_branch_matched':len(original),
             'original_source_matched':len(historical),
             'configured_original_source_matched':len(original_sources),
+            'v2_git_history_matched':len(git_matches),
+            'dearbulut_historical_health_matched':len(health_matches),
             'overlap_matched':len(original & historical),
             'unique_exact_original_url_matches':len(total),
             'still_without_original_url':4955-len(total),
@@ -349,6 +365,7 @@ jobs:
             v2/reports/ci/stage3-other-v2-branches-exact-url-matches.json
             v2/reports/ci/stage3-original-github-historical-urls.json
             v2/reports/ci/stage3-original-configured-source-matches.json
+            v2/reports/ci/stage3-dearbulut-historical-health-url-match.json
             v2/reports/ci/stage3-combined-real-url-recovery.json
           retention-days: 90
           if-no-files-found: warn
