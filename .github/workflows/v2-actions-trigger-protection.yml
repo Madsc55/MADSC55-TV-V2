@@ -25,7 +25,7 @@ jobs:
         with:
           python-version: '3.12'
       - name: Pin offline YAML workflow parser
-        run: python -m pip install PyYAML==6.0.2
+        run: python -m pip install PyYAML==6.0.2 cryptography==44.0.2
       - name: Verify protected original playlist and history fingerprints
         shell: bash
         run: |

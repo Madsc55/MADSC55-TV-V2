@@ -327,23 +327,17 @@ jobs:
           assert digest=='e84cf1273ae54fc89de5d7edc3a46b4db78b91ddd7d6953dabdde30a6c3e0c83'
           print('Validated immutable anonymized 4955 historical stream identities:', digest)
           PY
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git fetch origin refs/heads/madsc/v2-discovery-bulk-20261031
-          git checkout -B stage3-archive FETCH_HEAD
-          mkdir -p v2/history
-          if test -e v2/history/stage3-4955-hash-only.jsonl; then
-            cmp v2/history/stage3-4955-hash-only.jsonl v2/reports/ci/stage3-4955-hash-only.jsonl || {
-              echo 'Historical immutable index mismatch; refusing overwrite'
-              exit 1
-            }
-            echo 'Historical index already committed and matches original artifact'
-          else
-            cp v2/reports/ci/stage3-4955-hash-only.jsonl v2/history/stage3-4955-hash-only.jsonl
-            git add v2/history/stage3-4955-hash-only.jsonl
-            git commit -m "data(v2): preserve 4955 original decoded historical anonymous identities"
-            git push origin HEAD:refs/heads/madsc/v2-discovery-bulk-20261031
-          fi
+          # The original historical index is immutable and already committed.
+          # Verify exact equivalence; never write or push from Actions.
+          test -e v2/history/stage3-4955-hash-only.jsonl || {
+            echo 'Immutable historical index absent; refusing synthetic reconstruction'
+            exit 1
+          }
+          cmp v2/history/stage3-4955-hash-only.jsonl v2/reports/ci/stage3-4955-hash-only.jsonl || {
+            echo 'Historical immutable index mismatch; refusing overwrite'
+            exit 1
+          }
+          echo 'Historical index exactly matches the original #60 artifact'
       - name: Upload real-source anonymous evidence and single grouped test log
         if: always()
         uses: actions/upload-artifact@v4
