@@ -168,8 +168,7 @@ class Stage3ArchiveLineageTests(unittest.TestCase):
         self.assertEqual(report["total_raw_records_preserved"], 8)
         self.assertEqual(len(candidates), 1)
         self.assertEqual(candidates[0]["source_ids"],
-                         ["#60", "late-hash-provenance", "new-a", "new-b"] if False
-                         else ["#60", "new-a", "new-b", "late-hash-provenance"])
+                         ["#60", "new-a", "new-b", "late-hash-provenance"])
         self.assertEqual(candidates[0]["region_candidate"], "TR")
         self.assertEqual(report["historical_hash_only_linked_to_real_urls"], 1)
         self.assertEqual(report["unique_candidate_urls"], 1)

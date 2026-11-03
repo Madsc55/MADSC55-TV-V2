@@ -244,11 +244,14 @@ def reconcile(historical_records, current_records=(), expected_historical_record
     # Link SHA-only source provenance to a *real, exact* URL identity when
     # available, whether its hash evidence came from #60 or a later backup.
     # All original hash-only evidence stays separately in protected.
-    for mapping in (hash_only_sources, current_hash_only_sources):
-        for key, old_sources in mapping.items():
-            if key in indexed:
-                item = indexed[key]
-                item["source_ids"] = list(dict.fromkeys(old_sources + item["source_ids"]))
+    for key, old_sources in hash_only_sources.items():
+        if key in indexed:
+            item = indexed[key]
+            item["source_ids"] = list(dict.fromkeys(old_sources + item["source_ids"]))
+    for key, newer_sources in current_hash_only_sources.items():
+        if key in indexed:
+            item = indexed[key]
+            item["source_ids"] = list(dict.fromkeys(item["source_ids"] + newer_sources))
 
     # Evaluate both real-URL and hash-only evidence for the SAME verified digest.
     # Otherwise a #60 TR hash and a newer AZ URL could be silently mislabelled.
