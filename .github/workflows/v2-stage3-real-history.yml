@@ -9,6 +9,8 @@ on:
       - 'v2/test_stage3_immutable_history.py'
       - 'v2/history/stage3-4955-hash-only.jsonl'
       - 'v2/stage3_real_complete_audit.py'
+      - 'v2/stage3_git_history_forensics.py'
+      - 'v2/test_stage3_git_history_forensics.py'
       - 'v2/historical_local_match.py'
       - 'v2/stage3_historical_source_recovery.py'
       - 'v2/test_stage3_historical_source_recovery.py'
@@ -31,6 +33,8 @@ jobs:
     timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -55,6 +59,7 @@ jobs:
             test_stage3_identity_integrity \
             test_stage3_archive_lineage \
             test_stage3_atomic_classification \
+            test_stage3_git_history_forensics \
             test_historical_url_recovery \
             test_stage3_master_integration \
             test_stage3_legacy_importers \
@@ -72,6 +77,21 @@ jobs:
           python v2/stage3_real_complete_audit.py \
             --index v2/history/stage3-4955-hash-only.jsonl \
             --report v2/reports/ci/stage3-real-4955-complete-audit.json
+      - name: Fetch only V2 Git branches and inspect historical M3U/JSON blobs offline
+        shell: bash
+        env:
+          PYTHONPATH: v2
+          V2_ARCHIVE_KEY_HEX: ${{ secrets.V2_ARCHIVE_KEY_HEX }}
+        run: |
+          git fetch --no-tags origin '+refs/heads/*:refs/remotes/origin/*'
+          args=(
+            --index v2/history/stage3-4955-hash-only.jsonl
+            --report v2/reports/ci/stage3-git-history-exact-url-match.json
+          )
+          if test -n "$V2_ARCHIVE_KEY_HEX"; then
+            args+=(--encrypted-output v2/reports/ci/stage3-git-history-url-evidence.enc)
+          fi
+          python v2/stage3_git_history_forensics.py "${args[@]}"
       - name: Download actual #60 and #72 artifacts — no source or playback scans
         env:
           GH_TOKEN: ${{ github.token }}
@@ -310,6 +330,8 @@ jobs:
             v2/reports/ci/stage3-4955-hash-only.jsonl
             v2/reports/ci/stage3-real-history-summary.json
             v2/reports/ci/stage3-real-4955-complete-audit.json
+            v2/reports/ci/stage3-git-history-exact-url-match.json
+            v2/reports/ci/stage3-git-history-url-evidence.enc
             v2/reports/ci/stage3-local-hash-match.json
             v2/reports/ci/stage3-other-v2-branches-exact-url-matches.json
             v2/reports/ci/stage3-original-github-historical-urls.json
