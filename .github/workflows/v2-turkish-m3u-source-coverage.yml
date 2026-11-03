@@ -7,6 +7,10 @@ on:
       - 'v2/test_source_loss_audit.py'
       - 'v2/turkish_m3u_source_audit.py'
       - 'v2/test_turkish_m3u_source_audit.py'
+      - 'v2/config/sources.json'
+      - 'v2/source_failover.py'
+      - 'v2/test_source_failover.py'
+      - 'v2/discover.py'
       - '.github/workflows/v2-turkish-m3u-source-coverage.yml'
   workflow_dispatch:
 

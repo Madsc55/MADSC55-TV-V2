@@ -19,6 +19,11 @@ NEW_RUN = 40948768782
 
 
 def safe_probing_result(source, checker):
+    if source.get("enabled", True) is False:
+        return {"source_id": source["id"], "scope": source.get("scope", "candidate"),
+                "source_url_sha256": hashlib.sha256(source["url"].encode()).hexdigest(),
+                "status": "DISABLED_UPSTREAM_REMOVED",
+                "reason": source.get("retirement_reason", "HISTORICAL_SOURCE_RETAINED")}
     try:
         outcome = checker(source["url"])
         if not isinstance(outcome, dict) or not isinstance(outcome.get("status"), str):
@@ -44,14 +49,20 @@ def audit_endpoints(sources, checker=source_header_probe, workers=8):
         for s in sources
     ):
         raise ValueError("Invalid or duplicated M3U source")
+    if any(source.get("enabled", True) not in (True, False) for source in sources):
+        raise ValueError("Invalid source enablement flag")
     with ThreadPoolExecutor(max_workers=workers) as executor:
         results = list(executor.map(lambda s: safe_probing_result(s, checker), sources))
     available = sum(item["status"] == "HTTP_OK" for item in results)
+    retired = sum(item["status"] == "DISABLED_UPSTREAM_REMOVED" for item in results)
+    active = len(sources) - retired
     statuses = dict(sorted(Counter(item["status"] for item in results).items()))
     return {"schema": 1, "kind": "READ_ONLY_SOURCE_HEADERS_NOT_STREAM_PLAYBACK",
-            "configured_sources": len(sources), "source_headers_reachable": available,
-            "source_headers_unreachable": len(sources) - available,
-            "status": ("SOURCE_HEADERS_REACHABLE" if available == len(sources)
+            "configured_sources": len(sources), "active_sources": active,
+            "retired_historical_sources": retired,
+            "source_headers_reachable": available,
+            "source_headers_unreachable": active - available,
+            "status": ("ACTIVE_SOURCE_HEADERS_REACHABLE" if available == active and active
                        else "PARTIAL_SOURCE_HEADERS" if available
                        else "NO_SOURCE_HEADERS_REACHABLE"),
             "status_counts": statuses, "sources": results,

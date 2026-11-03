@@ -23,6 +23,24 @@ class TurkishSourceAuditTests(unittest.TestCase):
         self.assertNotIn("SECRET", str(output))
         self.assertEqual(output["media_streams_probed"], 0)
 
+    def test_retired_upstream_is_preserved_without_fetching(self):
+        rows = [
+            {"id": "retired", "url": "https://example.org/old.m3u", "enabled": False,
+             "retirement_reason": "UPSTREAM_REPOSITORY_NO_LONGER_CONTAINS_M3U_2026_11_03"},
+            {"id": "active", "url": "https://example.org/active.m3u"},
+        ]
+        checked = []
+        def checker(url):
+            checked.append(url)
+            return {"status": "HTTP_OK"}
+        result = audit_endpoints(rows, checker)
+        self.assertEqual(len(checked), 1)
+        self.assertEqual(result["retired_historical_sources"], 1)
+        self.assertEqual(result["active_sources"], 1)
+        self.assertEqual(result["source_headers_unreachable"], 0)
+        self.assertEqual(result["status"], "ACTIVE_SOURCE_HEADERS_REACHABLE")
+        self.assertEqual(result["sources"][0]["status"], "DISABLED_UPSTREAM_REMOVED")
+
     def test_source_exception_does_not_erase_remaining_sources(self):
         sources = [{"id": "one", "url": "https://example.org/one.m3u"},
                    {"id": "two", "url": "https://example.org/two.m3u"}]

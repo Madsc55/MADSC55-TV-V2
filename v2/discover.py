@@ -158,7 +158,9 @@ def main():
     if args.offline and args.previous_report:
         p.error("--previous-report requires an actual network discovery run")
     live = LIVE.read_text(encoding="utf-8-sig")
-    sources = json.loads(SOURCES.read_text(encoding="utf-8"))["sources"]
+    configured = json.loads(SOURCES.read_text(encoding="utf-8"))["sources"]
+    retired_sources = [item for item in configured if item.get("enabled", True) is False]
+    sources = [item for item in configured if item.get("enabled", True) is not False]
     github_approvals = set()
     if GITHUB_APPROVALS.exists():
         approval_doc = json.loads(GITHUB_APPROVALS.read_text(encoding="utf-8"))
@@ -190,7 +192,12 @@ def main():
         check()
         from encrypted_archive import _cipher
         _cipher()
-    loaded, errors, source_audit = [], [], []
+    loaded, errors, source_audit = [], [], [
+        {"source": item["id"], "status": "DISABLED_UPSTREAM_REMOVED",
+         "entries": 0, "distinct_stream_urls": 0,
+         "reason": item.get("retirement_reason", "RETAINED_HISTORICAL_SOURCE")}
+        for item in retired_sources
+    ]
     # A page is a discovery index, not an M3U stream. Expand only explicit
     # public HTTPS playlist links; never treat HTML as playable media.
     from webpage_source_discovery import discover_playlist_links
@@ -282,8 +289,18 @@ def main():
                         source_audit.append({"source": child_id, "status": "OPTIONAL_INDEX_LINK_FAILED",
                                              "error": type(exc).__name__})
                 continue
-            loaded.append((source["id"], content))
-            source_audit.append({"source": source["id"], "entries": len(parsed),
+            effective_source_id = source["id"]
+            if recovery["status"] == "FALLBACK_OK":
+                # Alternate streams are not proof that the old source remains.
+                effective_source_id += "-alternative-" + recovery["used_url_sha256"][:16]
+                scopes[effective_source_id] = source.get("scope", "candidate")
+                errors.append({"source": source["id"], "error": "ORIGINAL_SOURCE_UNAVAILABLE",
+                               "attempts": recovery["attempts"]})
+                source_audit.append({"source": source["id"], "status": "FETCH_FAILED",
+                                     "error": "ORIGINAL_SOURCE_UNAVAILABLE",
+                                     "attempts": recovery["attempts"]})
+            loaded.append((effective_source_id, content))
+            source_audit.append({"source": effective_source_id, "entries": len(parsed),
                                  "distinct_stream_urls": len({e["url"] for e in parsed}),
                                  "status": "PARSED_NOT_PLAYBACK_VERIFIED"})
         except Exception as exc:
@@ -314,7 +331,7 @@ def main():
         restored = restore(args.encrypted_archive)
         if archived and not archived.issubset({x["url"] for x in restored}):
             raise SystemExit("Encrypted archive restore verification failed")
-    result = {"schema": 1, "mode": "read-only", "configured_and_discovered_sources": len(sources), "source_count": len(loaded), "errors": errors, "source_audit": source_audit, "candidates": discover(loaded, live, scopes)}
+    result = {"schema": 1, "mode": "read-only", "configured_and_discovered_sources": len(sources), "configured_inventory_total": len(configured), "retired_configured_source_ids": [item["id"] for item in retired_sources], "source_count": len(loaded), "errors": errors, "source_audit": source_audit, "candidates": discover(loaded, live, scopes)}
     result["coverage_status"] = ("OFFLINE_NO_NETWORK" if args.offline else
                                  "NO_SOURCES_ACCESSIBLE" if not loaded else
                                  "COMPLETE_SOURCE_FETCH" if not errors else "PARTIAL_SOURCE_FETCH")
