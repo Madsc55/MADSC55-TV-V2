@@ -23,6 +23,8 @@ PLAYLIST = "MADSC55_TV_IBO_CALISANLAR_TEST.m3u8"
 EXPECTED_REPO = "Madsc55/MADSC55-TV-V2"
 GIT_MUTATE = re.compile(r"(?<![\w-])git[ \t]+(?:-C[ \t]+\S+[ \t]+)?(?:push|commit)[ \t\n]", re.I)
 SCHEDULE_EVENTS = {"schedule"}
+PRIVILEGED_EVENTS = {"workflow_run", "pull_request_target", "repository_dispatch"}
+GIT_MUTATE = re.compile(r"(?<![\w-])git[ \t]+(?:-C[ \t]+\S+[ \t]+)?(?:push|commit|add)[ \t\n]", re.I)
 ALLOWED_REMOTE = re.compile(r"[0-9a-f]{40}\Z")
 
 
@@ -38,7 +40,8 @@ def _events(doc):
 
 
 def summarize_default_branch(workflows, *, revision, protection=None,
-                             enabled_states=None, rulesets=None, source_error=None):
+                             enabled_states=None, rulesets=None, source_error=None,
+                             pr_policy_verified=False):
     """Make a fail-closed finding from real YAML contents and optional server data."""
     if not isinstance(workflows, dict) or not workflows:
         raise ValueError("No default-branch workflows to inspect")
@@ -47,7 +50,10 @@ def summarize_default_branch(workflows, *, revision, protection=None,
     counts = {"writable_publisher": [], "scheduled": [],
               "push_triggered": [], "playlist_writer": [],
               "unparseable": [], "enabled_writable_publisher": [],
-              "enabled_scheduled": [], "state_unknown": []}
+              "enabled_scheduled": [], "state_unknown": [],
+              "contents_write_permission": [], "enabled_contents_write_permission": [],
+              "git_mutation_command": [], "enabled_git_mutation_command": [],
+              "privileged_event": [], "enabled_privileged_event": []}
     details = {}
     for path, text in sorted(workflows.items()):
         if not path.startswith(".github/workflows/") or not path.endswith((".yml", ".yaml")):
@@ -69,6 +75,8 @@ def summarize_default_branch(workflows, *, revision, protection=None,
             write_permission = (permissions.get("contents") == "write" or
                                 any(item.get("contents") == "write" for item in job_permissions))
             push = bool(re.search(r"(?<![\w-])git[ \t]+push\b", text, re.I))
+            mutation = bool(GIT_MUTATE.search(text))
+            privileged = bool(events & PRIVILEGED_EVENTS)
             # Same workflow path returned by the live GitHub workflow list.
             state = enabled_states.get(path) if enabled_states is not None else None
             if state is None:
@@ -77,6 +85,18 @@ def summarize_default_branch(workflows, *, revision, protection=None,
             scheduled = "schedule" in events
             pushed = "push" in events
             playlist_writer = writable and PLAYLIST in text
+            if write_permission:
+                counts["contents_write_permission"].append(path)
+            if mutation:
+                counts["git_mutation_command"].append(path)
+            if privileged:
+                counts["privileged_event"].append(path)
+            if state == "active" and write_permission:
+                counts["enabled_contents_write_permission"].append(path)
+            if state == "active" and mutation:
+                counts["enabled_git_mutation_command"].append(path)
+            if state == "active" and privileged:
+                counts["enabled_privileged_event"].append(path)
             if writable:
                 counts["writable_publisher"].append(path)
             if scheduled:
@@ -93,6 +113,9 @@ def summarize_default_branch(workflows, *, revision, protection=None,
                 "events": sorted(events), "workflow_state": state or "UNKNOWN",
                 "contents_write_and_git_push": writable,
                 "scheduled": scheduled, "playlist_mutation_path": playlist_writer,
+                "contents_write": write_permission,
+                "git_mutation_command": mutation,
+                "privileged_event": privileged,
             }
         except (yaml.YAMLError, ValueError, TypeError) as exc:
             counts["unparseable"].append(path)
@@ -100,8 +123,14 @@ def summarize_default_branch(workflows, *, revision, protection=None,
     protected = protection is True or (isinstance(rulesets, list) and
                   any(isinstance(rule, dict) and rule.get("enforcement") == "active"
                       for rule in rulesets))
-    missing_live = protection is None or enabled_states is None or rulesets is None or bool(source_error)
+    # A protected:true flag alone does not prove required PR review or that
+    # administrator bypasses are prevented. Do not issue an unsafe READY.
+    missing_live = (protection is None or enabled_states is None or
+                    rulesets is None or bool(source_error) or
+                    pr_policy_verified is not True)
     unsafe = bool(counts["writable_publisher"] or counts["scheduled"] or
+                  counts["contents_write_permission"] or
+                  counts["git_mutation_command"] or counts["privileged_event"] or
                   counts["unparseable"] or not protected)
     if unsafe:
         readiness = "MAIN_DEFAULT_BRANCH_NOT_SAFE"
@@ -115,6 +144,7 @@ def summarize_default_branch(workflows, *, revision, protection=None,
         "main_revision": revision,
         "source_files": len(workflows),
         "branch_protected": protection,
+        "required_pr_policy_verified": pr_policy_verified is True,
         "active_rulesets": sum(1 for rule in (rulesets or [])
                                if isinstance(rule, dict) and rule.get("enforcement") == "active")
                            if rulesets is not None else None,
@@ -201,7 +231,28 @@ def live_main_state(snapshot_sha):
         page += 1
     else:
         raise ValueError("Workflow state list exceeds pagination guard")
-    return bool(branch.get("protected")), rulesets, states
+    # Prevent a concurrent main update during the multi-page state query.
+    confirmation = _api(base + "/branches/main")
+    if confirmation.get("commit", {}).get("sha") != snapshot_sha:
+        raise RuntimeError("Main advanced during live state query")
+    pr_policy_verified = False
+    if branch.get("protected") is True:
+        try:
+            policy = _api(base + "/branches/main/protection")
+            reviews = policy.get("required_pull_request_reviews")
+            admins = policy.get("enforce_admins")
+            pr_policy_verified = bool(
+                isinstance(reviews, dict)
+                and int(reviews.get("required_approving_review_count") or 0) >= 1
+                and isinstance(admins, dict) and admins.get("enabled") is True
+                and (policy.get("allow_force_pushes") or {}).get("enabled") is not True
+                and (policy.get("allow_deletions") or {}).get("enabled") is not True
+            )
+        except (RuntimeError, ValueError, TypeError, urllib.error.URLError,
+                TimeoutError, OSError):
+            # Default Actions token may lack permission for this detail.
+            pr_policy_verified = False
+    return bool(branch.get("protected")), rulesets, states, pr_policy_verified
 
 
 def main():
@@ -212,14 +263,16 @@ def main():
     args = parser.parse_args()
     sha, workflows = main_snapshot(args.revision)
     protection = rulesets = states = None
+    pr_policy_verified = False
     source_error = None
     try:
-        protection, rulesets, states = live_main_state(sha)
+        protection, rulesets, states, pr_policy_verified = live_main_state(sha)
     except (ValueError, RuntimeError, urllib.error.URLError, TimeoutError, OSError) as exc:
         source_error = type(exc).__name__ + ": " + str(exc)[:100]
     report = summarize_default_branch(
         workflows, revision=sha, protection=protection, rulesets=rulesets,
-        enabled_states=states, source_error=source_error)
+        enabled_states=states, source_error=source_error,
+        pr_policy_verified=pr_policy_verified)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(report, ensure_ascii=False,
                                       indent=2, sort_keys=True) + "\n")
@@ -230,6 +283,7 @@ def main():
           "active_write_paths:", report["counts"]["enabled_writable_publisher"],
           "active_schedules:", report["counts"]["enabled_scheduled"],
           "branch_protected:", protection,
+          "required_pr_policy_verified:", pr_policy_verified,
           "runtime_states_verified:", states is not None)
     # This is a read-only diagnostic, NOT an assertion of production readiness.
     # Structural errors still cause CI failure; risk remains explicit as NOT_SAFE.

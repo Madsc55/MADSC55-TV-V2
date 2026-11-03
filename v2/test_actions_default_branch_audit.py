@@ -64,10 +64,53 @@ class MainDefaultBranchExposureTests(unittest.TestCase):
         a, b = item("safe")
         report = summarize_default_branch({a: b}, revision=SHA,
                                            protection=True, rulesets=[],
-                                           enabled_states={a: "active"})
+                                           enabled_states={a: "active"},
+                                           pr_policy_verified=True)
         self.assertEqual(report["readiness"], "MAIN_DEFAULT_BRANCH_READY")
         self.assertFalse(report["main_branch_modified"])
         self.assertFalse(report["automations_disabled_by_audit"])
+
+    def test_protected_flag_alone_cannot_certify_required_pr_reviews(self):
+        a, b = item("safe")
+        report = summarize_default_branch({a: b}, revision=SHA,
+                                           protection=True, rulesets=[],
+                                           enabled_states={a: "active"})
+        self.assertEqual(report["readiness"],
+                         "MAIN_DEFAULT_BRANCH_NOT_FULLY_VERIFIED")
+        self.assertFalse(report["required_pr_policy_verified"])
+
+    def test_contents_write_without_git_push_is_not_safe(self):
+        a, b = item("api-writer", writer=True)
+        b = b.replace("git add v2/reports/a.json", "echo could-use-github-api")
+        b = b.replace("git commit -m 'example' && git push", "echo no-git-push")
+        report = summarize_default_branch({a: b}, revision=SHA,
+                                           protection=True, rulesets=[],
+                                           enabled_states={a: "active"},
+                                           pr_policy_verified=True)
+        self.assertEqual(report["counts"]["writable_publisher"], 0)
+        self.assertEqual(report["counts"]["contents_write_permission"], 1)
+        self.assertEqual(report["counts"]["enabled_contents_write_permission"], 1)
+        self.assertEqual(report["readiness"], "MAIN_DEFAULT_BRANCH_NOT_SAFE")
+
+    def test_privileged_event_without_push_is_not_safe(self):
+        a, b = item("privileged")
+        b = b.replace("workflow_dispatch:", "pull_request_target:")
+        report = summarize_default_branch({a: b}, revision=SHA,
+                                           protection=True, rulesets=[],
+                                           enabled_states={a: "active"},
+                                           pr_policy_verified=True)
+        self.assertEqual(report["counts"]["privileged_event"], 1)
+        self.assertEqual(report["readiness"], "MAIN_DEFAULT_BRANCH_NOT_SAFE")
+
+    def test_git_mutation_without_contents_write_is_detected(self):
+        a, b = item("shell")
+        b = b.replace("echo safe", "git -C . push origin HEAD:main")
+        report = summarize_default_branch({a: b}, revision=SHA,
+                                           protection=True, rulesets=[],
+                                           enabled_states={a: "active"},
+                                           pr_policy_verified=True)
+        self.assertEqual(report["counts"]["git_mutation_command"], 1)
+        self.assertEqual(report["readiness"], "MAIN_DEFAULT_BRANCH_NOT_SAFE")
 
     def test_malformed_yaml_is_not_trusted(self):
         a, _ = item("bad")
