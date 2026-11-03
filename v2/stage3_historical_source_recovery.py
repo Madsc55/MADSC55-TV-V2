@@ -93,7 +93,7 @@ def audit(history, original_source_snapshot):
             revision = historical_commit(repo, path)
             uri = ("https://raw.githubusercontent.com/" + quote(repo, safe="/") +
                    "/" + revision + "/" + quote(path, safe="/"))
-            feed = _read(uri).decode("utf-8-sig")
+            feed = _read(uri).decode("utf-8-sig", errors="replace")
             matches, parsed = match_feed(hashes, feed, name)
             item.update(status="HISTORICAL_FILE_READ", original_commit=revision,
                         parsed_valid_urls=parsed, matched_hashes=len(matches))
