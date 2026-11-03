@@ -32,7 +32,7 @@ ONUR_ALTERNATES = (
     "https://onureroz.com/indirmeler/turk/all.m3u",
 )
 MAX_FILE_BYTES = 32_000_000
-MAX_CANDIDATE_STREAMS = 100
+MAX_CANDIDATE_STREAMS = 256
 
 
 def _hash(s):
@@ -173,6 +173,91 @@ def find_official_alternates(orphan_rows, *, reader=_read_document):
                      "official_alternate_feeds_unavailable": states.count("UNAVAILABLE")}
 
 
+def exact_channel_identity(extinf):
+    """Only exact case-folded tvg-id PLUS channel display-name evidence.
+
+    Reject missing IDs and names; never use name-only or fuzzy similarity.
+    """
+    m = re.search(r'\btvg-id="([^"]+)"', extinf, flags=re.IGNORECASE)
+    if not m or not m.group(1).strip():
+        return None
+    quoted, name_at = False, -1
+    for i, c in enumerate(extinf):
+        if c == '"':
+            quoted = not quoted
+        elif c == "," and not quoted:
+            name_at = i
+            break
+    name = extinf[name_at + 1:].strip() if name_at >= 0 else ""
+    if not name:
+        return None
+    return (m.group(1).strip().casefold(), " ".join(name.casefold().split()))
+
+
+def existing_source_catalog():
+    """Only 46 enabled configured sources and 17 original #60 feeds."""
+    from discover import load_original_run60_sources
+    root = Path(__file__).resolve().parent
+    cfg = json.loads((root / "config/sources.json").read_text(encoding="utf-8"))
+    originals = load_original_run60_sources(
+        root / "history/run60-dynamic-source-ledger.json")
+    active = [x for x in cfg["sources"] if x.get("enabled", True) is not False]
+    all_sources = active + originals
+    if (len(active) != 46 or len(originals) != 17
+            or len({x["id"] for x in all_sources}) != 63):
+        raise ValueError("Original 63-source catalog coverage differs")
+    return all_sources
+
+
+def find_existing_exact_identity(orphans, catalog, *, reader=_read_document):
+    """Only metadata-equivalent alternatives from already-known sources.
+
+    No new provider searches; a same EPG ID and exact name is a candidate,
+    NEVER proof of actual channel content or suitability for the IBO device.
+    """
+    wanted = defaultdict(list)
+    for item in orphans:
+        identity = exact_channel_identity(item["extinf"])
+        if identity is not None:
+            wanted[identity].append(item["extinf_sha256"])
+
+    def one(source):
+        try:
+            data = reader(source["url"])
+            pairs, _ = parse_exact_pairs(data)
+            found = []
+            for extinf, urls in pairs.items():
+                for dst in wanted.get(exact_channel_identity(extinf), []):
+                    for url in urls:
+                        found.append((dst, _hash(url), url, source["id"]))
+            return found, None
+        except (OSError, ValueError, TypeError):
+            return [], "SOURCE_DOCUMENT_UNAVAILABLE_OR_INVALID"
+
+    matched = defaultdict(dict)
+    failures = []
+    with ThreadPoolExecutor(max_workers=8) as pool:
+        for source, result in zip(catalog, pool.map(one, catalog)):
+            found, error = result
+            if error:
+                failures.append(source["id"])
+            for extinf_sha, url_sha, url, source_id in found:
+                cand = matched[extinf_sha].setdefault(
+                    url_sha, {"url": url, "proof_existing_source_ids": []})
+                if source_id not in cand["proof_existing_source_ids"]:
+                    cand["proof_existing_source_ids"].append(source_id)
+    for values in matched.values():
+        for item in values.values():
+            item["proof_existing_source_ids"].sort()
+    return matched, {
+        "preconfigured_sources_checked": len(catalog),
+        "source_documents_unavailable_count": len(failures),
+        "unavailable_source_ids": sorted(failures),
+        "orphan_entries_with_exact_existing_epg_and_name": len(matched),
+        "proof_only": "MATCHED_EPG_ID_AND_EXACT_CHANNEL_NAME_NOT_CHANNEL_CONTENT",
+    }
+
+
 def evaluate(sources, *, probe=probe_one):
     """Use deduped URL candidates, report only anonymous evidence."""
     mapping = defaultdict(list)
@@ -201,7 +286,8 @@ def evaluate(sources, *, probe=probe_one):
 
 
 def audit(*, report_path, sealed_path, key_path, limit=20,
-          reader=_read_document, commits=historical_revisions, probe=probe_one):
+          reader=_read_document, commits=historical_revisions, probe=probe_one,
+          known_source_catalog=None):
     sources = []
     source_summaries = []
     source_evidence = []
@@ -240,6 +326,16 @@ def audit(*, report_path, sealed_path, key_path, limit=20,
                         "extinf": item["extinf"], "reason": item["reason"],
                         "line_number": item["line_number"],
                         "candidates": alts.get(item["extinf"], {})})
+    existing_report = None
+    if known_source_catalog is not None:
+        existing, existing_report = find_existing_exact_identity(
+            sources, known_source_catalog, reader=reader)
+        for item in sources:
+            for urlsha, candidate in existing.get(item["extinf_sha256"], {}).items():
+                record = item["candidates"].setdefault(urlsha, {"url": candidate["url"]})
+                ids = set(record.get("proof_existing_source_ids", []))
+                ids.update(candidate["proof_existing_source_ids"])
+                record["proof_existing_source_ids"] = sorted(ids)
     probed, verified_rows, mapping = evaluate(sources, probe=probe)
     proof_states = {p["url_sha256"]: p for p in probed}
     for item in sources:
@@ -253,7 +349,9 @@ def audit(*, report_path, sealed_path, key_path, limit=20,
                                        "diagnostic_category": p.get("diagnostic_category"),
                                        "proof_commits": record.get("proof_commits", []),
                                        "publisher_official_alternate":
-                                           bool(record.get("proof_official_feed"))})
+                                           bool(record.get("proof_official_feed")),
+                                       "exact_epg_and_name_other_source":
+                                           record.get("proof_existing_source_ids", [])})
         source_evidence.append({
             "source_id": item["source_id"], "line_number": item["line_number"],
             "extinf_sha256": item["extinf_sha256"], "reason": item["reason"],
@@ -276,6 +374,7 @@ def audit(*, report_path, sealed_path, key_path, limit=20,
             not any(p["video_stream"] and p["audio_stream"] for p in x["candidates"])
             for x in source_evidence),
         "unavailable_historical_git_files": historic_errors,
+        "existing_catalog_reconciliation": existing_report,
         "records": source_evidence,
         "plain_stream_urls_reported": False, "protected_playlist_modified": False,
         "ibo_device_verified": False, "scan_scope": "ONLY_THREE_PREVIOUSLY_FLAGGED_M3U_SOURCES",
@@ -306,14 +405,18 @@ def main():
             or not 1 <= args.history_revisions <= 35):
         p.error("Unsafe output path or unbounded history")
     result = audit(report_path=args.report, sealed_path=args.sealed,
-                   key_path=args.public_key, limit=args.history_revisions)
+                   key_path=args.public_key, limit=args.history_revisions,
+                   known_source_catalog=existing_source_catalog())
     print("Three source orphan metadata cases:", result["orphan_entries"],
           "exact historic/official candidate URL hashes:",
           result["unique_candidate_urls_historically_or_officially_proven"],
           "currently video+audio verified:",
           result["unique_candidates_video_audio_verified"],
           "orphan entries with no current verified replacement:",
-          result["orphan_entries_without_current_av"])
+          result["orphan_entries_without_current_av"],
+          "existing source catalog checked:",
+          result.get("existing_catalog_reconciliation", {}).get(
+              "preconfigured_sources_checked"))
 
 
 if __name__ == "__main__":

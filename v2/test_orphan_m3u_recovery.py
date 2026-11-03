@@ -8,7 +8,8 @@ import unittest
 from unittest.mock import patch
 
 from orphan_m3u_recovery import (
-    parse_exact_pairs, find_historical, find_official_alternates, evaluate, audit
+    parse_exact_pairs, find_historical, find_official_alternates, evaluate, audit,
+    exact_channel_identity, find_existing_exact_identity,
 )
 
 
@@ -62,6 +63,29 @@ class OrphanRecoveryTests(unittest.TestCase):
         urls, missing = parse_exact_pairs(content)
         self.assertEqual(len(missing), 2)
         self.assertEqual(sum(len(s) for s in urls.values()), 1)
+
+    def test_exact_epg_id_and_name_matching_without_fuzzy_guessing(self):
+        src = '#EXTINF:-1 tvg-id="ZDF.de" tvg-logo="old.png",ZDF'
+        alt = '#EXTINF:-1 tvg-id="ZDF.de" tvg-logo="new.png",ZDF'
+        changed_name = '#EXTINF:-1 tvg-id="ZDF.de",ZDFneo'
+        self.assertEqual(exact_channel_identity(src), exact_channel_identity(alt))
+        self.assertNotEqual(exact_channel_identity(src),
+                            exact_channel_identity(changed_name))
+        self.assertIsNone(exact_channel_identity('#EXTINF:-1,ZDF'))
+
+    def test_exact_existing_source_match_does_not_invent_url(self):
+        src = '#EXTINF:-1 tvg-id="ZDF.de",ZDF'
+        orphan = [{"extinf": src, "extinf_sha256": hashlib.sha256(src.encode()).hexdigest()}]
+        catalog = [{"id": "already-known", "url": "https://feeds.example.org/world.m3u"}]
+        alternate = '#EXTINF:-1 tvg-id="ZDF.de" group-title="Germany",ZDF'
+        content = "#EXTM3U\n" + alternate + "\n" + self.b + "\n"
+        found, stats = find_existing_exact_identity(
+            orphan, catalog, reader=lambda _: content)
+        digest = hashlib.sha256(self.b.encode()).hexdigest()
+        self.assertEqual(found[orphan[0]["extinf_sha256"]][digest]["url"], self.b)
+        self.assertEqual(stats["orphan_entries_with_exact_existing_epg_and_name"], 1)
+        self.assertEqual(stats["preconfigured_sources_checked"], 1)
+        self.assertEqual(stats["source_documents_unavailable_count"], 0)
 
     def test_probe_dedup_and_no_plaintext_in_public_report(self):
         c = {"url": self.a, "proof_commits": ["a"*40]}
