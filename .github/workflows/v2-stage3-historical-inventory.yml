@@ -38,6 +38,7 @@ jobs:
           set -o pipefail
           PYTHONPATH=v2 python -m unittest -v \
             test_historical_inventory_guard \
+            test_stage3_master_integration \
             test_historical_url_recovery \
             test_source_loss_audit \
             test_master_engine \

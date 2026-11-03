@@ -48,12 +48,26 @@ def build(source_texts, live_text, history=(), checker=None, workers=8, media_ch
             continue
         row = candidate_map.setdefault(url, dict(item, source_ids=[], history=[]))
         row["history"].append({"status": "HISTORICAL_NOT_REVERIFIED", "source": item.get("source", "historical")})
-        for source_id in item.get("source_ids", []):
+        previous_sources = item.get("source_ids", [])
+        for source_id in previous_sources if isinstance(previous_sources, list) else []:
             if isinstance(source_id, str) and source_id and source_id not in row["source_ids"]:
                 row["source_ids"].append(source_id)
         for field in ("name", "logo", "tvg_id", "group", "scope", "country"):
             if not row.get(field) and item.get(field):
                 row[field] = item[field]
+    # Historical duplicates carry independent source attribution. Never discard it.
+    for old_row in history:
+        old_url = old_row.get("url") if isinstance(old_row, dict) else None
+        if validate_url(old_url) and old_url in candidate_map:
+            item = candidate_map[old_url]
+            historical_sources = old_row.get("source_ids", [])
+            historical_sources = historical_sources if isinstance(historical_sources, list) else []
+            for source_id in [old_row.get("source"), *historical_sources]:
+                if isinstance(source_id, str) and source_id and source_id not in item["source_ids"]:
+                    item["source_ids"].append(source_id)
+            for field in ("name", "logo", "tvg_id", "group", "scope", "country"):
+                if not item.get(field) and old_row.get(field):
+                    item[field] = old_row[field]
     items = list(candidate_map.values())
     for item in items:
         item.update(classify(item))
