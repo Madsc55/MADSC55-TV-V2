@@ -91,7 +91,7 @@ jobs:
   document-platform-live-audit:
     name: Read-only live public Scribd SlideShare Internet Archive audit in one job
     if: >-
-      github.event_name == 'push' && github.event.head_commit.message == 'test(v2): grouped public document adapter acceptance'
+      github.event_name == 'push' && github.event.head_commit.message == 'test(v2): grouped public document M3U content acceptance'
     needs: safety
     runs-on: ubuntu-24.04
     timeout-minutes: 18
@@ -112,11 +112,42 @@ jobs:
         run: |
           PYTHONPATH=v2 python v2/document_platform_discovery.py --scan-public-documents
           PYTHONPATH=v2 python -c "from document_platform_discovery import accepted_sources; print('Safe document source handoff:', len(accepted_sources()))"
+      - name: Public M3U content check for document candidate sources, no video claim
+        run: |
+          PYTHONPATH=v2 python - <<'PY'
+          import json
+          from pathlib import Path
+          from document_platform_discovery import accepted_sources
+          from discover import fetch, entries
+          report = []
+          for item in accepted_sources():
+              try:
+                  document = fetch(item["url"])
+                  if not document.lstrip().startswith("#EXTM3U"):
+                      raise ValueError("NOT_M3U_HEADER")
+                  entry_count = sum(1 for _ in entries(document))
+                  status = "M3U_CHANNEL_ENTRIES_UNVERIFIED" if entry_count else "NO_CHANNEL_ENTRIES"
+              except Exception as exc:
+                  status = "SOURCE_FETCH_OR_PARSE_FAILED_" + type(exc).__name__
+                  entry_count = 0
+              report.append({"source_id": item["id"], "status": status,
+                             "channel_entries": entry_count, "playback_verified": False})
+          output = {"schema": 1, "sources_checked": len(report),
+                    "m3u_with_channel_entries": sum(x["channel_entries"] > 0 for x in report),
+                    "entries_seen": sum(x["channel_entries"] for x in report),
+                    "playback_verified": False, "sources": report}
+          Path("v2/reports/document-platform-m3u-acceptance.json").write_text(
+              json.dumps(output, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+          print("Document M3U content accepted:", output["m3u_with_channel_entries"],
+                "/", output["sources_checked"], "raw channel records:", output["entries_seen"])
+          PY
       - name: Upload anonymous adapter coverage and errors only
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: v2-public-document-source-acceptance-${{ github.run_id }}
-          path: v2/reports/document-platform-references.json
+          path: |
+            v2/reports/document-platform-references.json
+            v2/reports/document-platform-m3u-acceptance.json
           if-no-files-found: warn
           retention-days: 30
