@@ -22,6 +22,7 @@ AZ_HINT = re.compile(r"(?i)(?:azer(?:i|baijan|baycan)?|azər|azərbaycan)")
 TVG_TR = re.compile(r"(?i)(?:^|[._-])tr(?:$|[._-])")
 TVG_AZ = re.compile(r"(?i)(?:^|[._-])az(?:$|[._-])")
 SCHEMA = "historical-inventory-guard-v1"
+SCHEMA_V2 = "historical-inventory-guard-v2"
 
 
 def digest(url):
@@ -294,38 +295,114 @@ def reconcile(historical_records, current_records=(), expected_historical_record
     return protected, candidates, summary
 
 
-def _chunks(records, kind):
+def _chunks(records, kind, schema=SCHEMA_V2):
     batch, length = [], 0
     for record in records:
         payload = json.dumps(record, ensure_ascii=False, separators=(",", ":")).encode("utf-8")
         if len(payload) > MAX_RECORD_BYTES // 2:
             raise ValueError("Inventory record too large")
         if batch and (length + len(payload) > MAX_RECORD_BYTES // 2 or len(batch) >= 100):
-            yield {"kind": kind, "guard_schema": SCHEMA, "records": batch}
+            yield {"kind": kind, "guard_schema": schema, "records": batch}
             batch, length = [], 0
         batch.append(record)
         length += len(payload)
     if batch:
-        yield {"kind": kind, "guard_schema": SCHEMA, "records": batch}
+        yield {"kind": kind, "guard_schema": schema, "records": batch}
+
+
+def _archive_payload_sha256(blocks):
+    """Stable digest over all original records, their order and source metadata."""
+    data = json.dumps(blocks, ensure_ascii=False, sort_keys=True,
+                      separators=(",", ":")).encode("utf-8")
+    return hashlib.sha256(data).hexdigest()
 
 
 def preserve_to_new_archive(path, protected, candidates):
-    """Create a *new* encrypted archive; compare its full decrypt with inputs."""
+    """Create a complete authenticated archive, including a final manifest.
+
+    AES-GCM authenticates each block but cannot independently detect deletion of
+    a *whole* valid block. The final encrypted manifest binds count and digest
+    of every preceding block; V1 archives remain readable for migration.
+    """
     path = Path(path)
     if path.exists() or path.is_symlink() or path.suffix != ".enc":
         raise ValueError("Refusing to overwrite archive or write non-encrypted output")
     _cipher()
+    protected, candidates = list(protected), list(candidates)
+    payload = list(_chunks(protected, "raw_historical_and_new"))
+    payload.extend(_chunks(candidates, "deduplicated_view"))
+    if not payload:
+        raise ValueError("Cannot create empty historical archive")
+    manifest = {
+        "kind": "archive_manifest",
+        "guard_schema": SCHEMA_V2,
+        "block_count": len(payload),
+        "raw_record_count": len(protected),
+        "candidate_record_count": len(candidates),
+        "payload_sha256": _archive_payload_sha256(payload),
+    }
+    expected = payload + [manifest]
     path.parent.mkdir(parents=True, exist_ok=True)
     flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL | getattr(os, "O_NOFOLLOW", 0)
     fd = os.open(path, flags, 0o600)
     os.close(fd)
-    expected = list(_chunks(protected, "raw_historical_and_new")) + list(_chunks(candidates, "deduplicated_view"))
     for block in expected:
         append(path, block)
-    verified = restore(path) == expected
+    recovered = restore(path)
+    verified = recovered == expected
+    if verified:
+        # Check the same integrity/record-count contract used on later restores.
+        decoded_raw, decoded_view = _verify_archive_envelope(recovered)
+        verified = decoded_raw == protected and decoded_view == candidates
     if not verified:
         raise RuntimeError("Encrypted historical archive restore mismatch")
-    return verified
+    return True
+
+
+def _verify_archive_envelope(blocks):
+    """Reject fully removed, reordered or swapped valid encrypted V2 blocks."""
+    if not blocks:
+        raise ValueError("Encrypted archive is empty")
+    formats = [block.get("guard_schema") if isinstance(block, dict) else None
+               for block in blocks]
+    if SCHEMA_V2 not in formats:
+        return None, None  # Historical V1 without a final manifest.
+    if any(schema != SCHEMA_V2 for schema in formats):
+        raise ValueError("Mixed historical archive schemas")
+    manifest = blocks[-1]
+    expected_keys = {"kind", "guard_schema", "block_count", "raw_record_count",
+                     "candidate_record_count", "payload_sha256"}
+    if set(manifest) != expected_keys or manifest.get("kind") != "archive_manifest":
+        raise ValueError("V2 encrypted archive manifest missing")
+    payload = blocks[:-1]
+    if (type(manifest["block_count"]) is not int or
+            manifest["block_count"] != len(payload)):
+        raise ValueError("Encrypted archive block count differs from manifest")
+    if manifest["payload_sha256"] != _archive_payload_sha256(payload):
+        raise ValueError("Encrypted archive payload differs from manifest")
+    raw, view, after_view = [], [], False
+    for block in payload:
+        if set(block) != {"kind", "guard_schema", "records"}:
+            raise ValueError("Invalid encrypted archive block fields")
+        records = block["records"]
+        if not isinstance(records, list) or not records or not all(
+                isinstance(record, dict) for record in records):
+            raise ValueError("Invalid encrypted archive block records")
+        if block["kind"] == "raw_historical_and_new":
+            if after_view:
+                raise ValueError("Historical evidence follows candidate view")
+            raw.extend(records)
+        elif block["kind"] == "deduplicated_view":
+            after_view = True
+            view.extend(records)
+        else:
+            raise ValueError("Unknown encrypted archive block kind")
+    if (type(manifest["raw_record_count"]) is not int or
+            type(manifest["candidate_record_count"]) is not int or
+            len(raw) != manifest["raw_record_count"] or
+            len(view) != manifest["candidate_record_count"]):
+        raise ValueError("Encrypted archive record counts differ from manifest")
+    return raw, view
 
 
 def unpack_archive_snapshot(blocks, expected_historical_records):
@@ -337,8 +414,8 @@ def unpack_archive_snapshot(blocks, expected_historical_records):
     """
     if not isinstance(blocks, list) or not blocks:
         raise ValueError("Missing encrypted archive records")
-    wrapped = [isinstance(block, dict) and block.get("guard_schema") == SCHEMA
-               for block in blocks]
+    wrapped = [isinstance(block, dict) and block.get("guard_schema") in
+               (SCHEMA, SCHEMA_V2) for block in blocks]
     if not any(wrapped):
         if not all(isinstance(row, dict) and "kind" not in row for row in blocks):
             raise ValueError("Invalid legacy encrypted historical archive")
@@ -347,6 +424,11 @@ def unpack_archive_snapshot(blocks, expected_historical_records):
         return list(blocks), [], None
     if not all(wrapped):
         raise ValueError("Mixed or unrecognized encrypted archive formats")
+    if any(block.get("guard_schema") == SCHEMA_V2 for block in blocks):
+        raw, view = _verify_archive_envelope(blocks)
+        if len(raw) < expected_historical_records:
+            raise ValueError("Encrypted history shorter than baseline")
+        return raw[:expected_historical_records], raw[expected_historical_records:], view
     raw, view, seen_view = [], [], False
     for block in blocks:
         if set(block) != {"kind", "guard_schema", "records"}:

@@ -9,7 +9,7 @@ from unittest.mock import patch
 
 from encrypted_archive import restore
 from historical_inventory_guard import (
-    SCHEMA, digest, preserve_to_new_archive, reconcile,
+    SCHEMA, SCHEMA_V2, digest, preserve_to_new_archive, reconcile,
     unpack_archive_snapshot, verify_historical_baseline,
 )
 
@@ -96,6 +96,50 @@ class Stage3ArchiveLineageTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "metadata differs"):
             verify_historical_baseline([first, dict(second, status="INVENTED")],
                                        [first, second])
+
+    def test_v2_manifest_detects_deletion_of_full_authenticated_tail_block(self):
+        original = [{"url_sha256": hashlib.sha256(("real-history-%d" % n).encode()).hexdigest(),
+                     "source": "#60", "region_candidate": "UNKNOWN",
+                     "classification_evidence": "NONE"}
+                    for n in range(205)]
+        protected, view, _ = reconcile(original, [], 205)
+        with tempfile.TemporaryDirectory() as temp:
+            archive = Path(temp) / "real.enc"
+            with patch.dict(os.environ, {"V2_ARCHIVE_KEY_HEX": "3c" * 32}):
+                self.assertTrue(preserve_to_new_archive(archive, protected, view))
+                unmodified = restore(archive)
+                self.assertEqual(unmodified[-1]["kind"], "archive_manifest")
+                self.assertEqual(unmodified[-1]["guard_schema"], SCHEMA_V2)
+                history, newer, candidates = unpack_archive_snapshot(unmodified, 205)
+                self.assertEqual(history, original)
+                self.assertEqual(newer, [])
+                self.assertEqual(candidates, [])
+                # All remaining blocks are valid AES-GCM plaintext, but their
+                # authenticated manifest is absent: never accept this as done.
+                with self.assertRaisesRegex(ValueError, "manifest missing"):
+                    unpack_archive_snapshot(unmodified[:-1], 205)
+                # A missing middle data block must fail, not merely report
+                # fewer streams or regenerate a smaller candidate view.
+                with self.assertRaisesRegex(ValueError, "block count"):
+                    unpack_archive_snapshot(unmodified[:1] + unmodified[2:], 205)
+
+    def test_v2_manifest_detects_reordered_blocks_or_missing_candidate_view(self):
+        original = [{"url_sha256": hashlib.sha256(("original-%d" % n).encode()).hexdigest()}
+                    for n in range(105)]
+        new = [{"url": "https://fixture.example.org/extra.m3u8", "source": "later"}]
+        protected, view, _ = reconcile(original, new, 105)
+        with tempfile.TemporaryDirectory() as temp:
+            path = Path(temp) / "complete.enc"
+            with patch.dict(os.environ, {"V2_ARCHIVE_KEY_HEX": "ab" * 32}):
+                self.assertTrue(preserve_to_new_archive(path, protected, view))
+                blocks = restore(path)
+                self.assertGreaterEqual(len(blocks), 4)
+                with self.assertRaisesRegex(ValueError, "payload differs"):
+                    unpack_archive_snapshot([blocks[1], blocks[0], *blocks[2:]], 105)
+                # Removing a complete candidate block leaves old history intact
+                # but must still be diagnosed as a loss of recent evidence.
+                with self.assertRaisesRegex(ValueError, "block count"):
+                    unpack_archive_snapshot(blocks[:-2] + blocks[-1:], 105)
 
     def test_legacy_exact_count_archive_remains_compatible(self):
         old = [{"url_sha256": hashlib.sha256(b"old").hexdigest()}]
