@@ -12,6 +12,9 @@ on:
       - 'v2/stage3_real_complete_audit.py'
       - 'v2/stage3_git_history_forensics.py'
       - 'v2/test_stage3_git_history_forensics.py'
+      - 'v2/stage3_sealed_export.py'
+      - 'v2/test_stage3_sealed_export.py'
+      - 'v2/config/stage3_transit_public.pem'
       - 'v2/test_historical_region_collisions.py'
       - 'v2/test_stage3_hash_evidence_linkage.py'
       - 'v2/test_stage3_identity_integrity.py'
@@ -58,6 +61,7 @@ jobs:
             test_stage3_archive_lineage \
             test_stage3_atomic_classification \
             test_stage3_git_history_forensics \
+            test_stage3_sealed_export \
             test_stage3_master_integration \
             test_stage3_legacy_importers \
             test_historical_url_recovery \
