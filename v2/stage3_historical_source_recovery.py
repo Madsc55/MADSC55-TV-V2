@@ -135,8 +135,10 @@ def main():
     parser.add_argument("--original-discovery", required=True, type=Path)
     parser.add_argument("--report", required=True, type=Path)
     parser.add_argument("--private-archive", type=Path)
+    parser.add_argument("--sealed-output", type=Path)
+    parser.add_argument("--seal-public-key", type=Path)
     args = parser.parse_args()
-    targets = [args.report] + ([args.private_archive] if args.private_archive else [])
+    targets = [args.report] + ([args.private_archive] if args.private_archive else []) + ([args.sealed_output] if args.sealed_output else [])
     if len({str(x.resolve()) for x in [args.index, args.original_discovery, *targets]}) != 2 + len(targets):
         parser.error("Input and output paths must be distinct")
     if any(p.exists() or p.is_symlink() for p in targets):
@@ -144,6 +146,14 @@ def main():
     history = [json.loads(line) for line in args.index.read_text(encoding="utf-8").splitlines() if line]
     source_snapshot = json.loads(args.original_discovery.read_text(encoding="utf-8"))
     report, matches = audit(history, source_snapshot)
+    if args.sealed_output:
+        if not args.seal_public_key:
+            raise ValueError("Missing recovery encryption public key")
+        from stage3_sealed_export import seal_rows
+        seal_rows(matches, args.seal_public_key, args.sealed_output)
+        report["confidential_rsa_aes_transit_sealed"] = True
+    else:
+        report["confidential_rsa_aes_transit_sealed"] = False
     if args.private_archive:
         if not os.environ.get("V2_ARCHIVE_KEY_HEX"):
             raise ValueError("Private archive requires V2_ARCHIVE_KEY_HEX")
