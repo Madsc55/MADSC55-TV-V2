@@ -369,7 +369,15 @@ def unpack_archive_snapshot(blocks, expected_historical_records):
 
 
 def verify_historical_baseline(historical, baseline_records):
-    """Require the exact immutable history identity set, never just a row count."""
+    """Require complete immutable historical records, not merely the same hashes.
+
+    A modified region candidate, source, playback status or review flag is
+    historical data corruption even when its SHA-256 URL identity is unchanged.
+    Record ordering and JSON key order do not affect the check.
+    """
+    historical, baseline_records = list(historical), list(baseline_records)
+    if not all(isinstance(row, dict) for row in historical + baseline_records):
+        raise ValueError("Historical baseline contains a non-object record")
     expected = [identity(row) for row in baseline_records]
     observed = [identity(row) for row in historical]
     if (not expected or None in expected or None in observed or
@@ -377,6 +385,9 @@ def verify_historical_baseline(historical, baseline_records):
             len(expected) != len(observed) or
             set(expected) != set(observed)):
         raise ValueError("Historical identities do not match immutable baseline")
+    reference = {identity(row): row for row in baseline_records}
+    if any(row != reference[identity(row)] for row in historical):
+        raise ValueError("Historical record metadata differs from immutable baseline")
     return hashlib.sha256("".join(sorted(expected)).encode("ascii")).hexdigest()
 
 

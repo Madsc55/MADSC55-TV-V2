@@ -68,6 +68,35 @@ class Stage3ArchiveLineageTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "immutable baseline"):
             verify_historical_baseline([a, a], [a, b])
 
+    def test_same_hash_with_tampered_region_source_or_flags_is_rejected(self):
+        old = [{"url_sha256": digest("https://fixture.example.org/real.m3u8"),
+                "region_candidate": "TR", "source": "run60",
+                "classification_evidence": "METADATA",
+                "spoken_language_verified": False, "device_verified": False}]
+        self.assertEqual(verify_historical_baseline(old, old),
+                         hashlib.sha256(old[0]["url_sha256"].encode()).hexdigest())
+        for patched in (
+            dict(old[0], region_candidate="AZ"),
+            dict(old[0], source="unknown"),
+            dict(old[0], classification_evidence="SOURCE_GEO"),
+            dict(old[0], device_verified=True),
+            dict(old[0], spoken_language_verified=True),
+        ):
+            with self.subTest(patched=patched), self.assertRaisesRegex(
+                    ValueError, "metadata differs"):
+                verify_historical_baseline([patched], old)
+
+    def test_metadata_integrity_is_order_independent_but_complete(self):
+        first = {"url_sha256": hashlib.sha256(b"stage3-first").hexdigest(),
+                 "source": "original"}
+        second = {"url_sha256": hashlib.sha256(b"stage3-second").hexdigest(),
+                  "source": "original-2"}
+        self.assertEqual(verify_historical_baseline([first, second], [second, first]),
+                         verify_historical_baseline([second, first], [first, second]))
+        with self.assertRaisesRegex(ValueError, "metadata differs"):
+            verify_historical_baseline([first, dict(second, status="INVENTED")],
+                                       [first, second])
+
     def test_legacy_exact_count_archive_remains_compatible(self):
         old = [{"url_sha256": hashlib.sha256(b"old").hexdigest()}]
         self.assertEqual(unpack_archive_snapshot(old, 1), (old, [], None))

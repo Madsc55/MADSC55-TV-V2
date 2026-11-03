@@ -104,9 +104,22 @@ jobs:
           assert report['historical_tr_candidate_records'] == 50
           assert report['historical_az_candidate_records'] == 1
           assert report['historical_unknown_region_records'] == 4904
+          # Verify both original SHA identity membership and complete metadata
+          # against the permanent, separately checksummed real #60 baseline.
+          from historical_inventory_guard import verify_historical_baseline, unpack_archive_snapshot
+          from encrypted_archive import restore
+          baseline_path = Path('v2/history/stage3-4955-hash-only.jsonl')
+          baseline = [json.loads(line) for line in baseline_path.read_text(encoding='utf-8').splitlines() if line]
+          baseline_digest = verify_historical_baseline(records, baseline)
+          assert baseline_digest == 'e84cf1273ae54fc89de5d7edc3a46b4db78b91ddd7d6953dabdde30a6c3e0c83'
           with tempfile.TemporaryDirectory() as d:
               os.environ['V2_ARCHIVE_KEY_HEX'] = secrets.token_hex(32)
-              assert preserve_to_new_archive(Path(d) / 'roundtrip.enc', protected, candidates)
+              archive = Path(d) / 'roundtrip.enc'
+              assert preserve_to_new_archive(archive, protected, candidates)
+              restored_history, restored_additions, restored_view = unpack_archive_snapshot(
+                  restore(archive), 4955)
+              assert restored_additions == [] and restored_view == []
+              assert verify_historical_baseline(restored_history, baseline) == baseline_digest
               del os.environ['V2_ARCHIVE_KEY_HEX']
           summary_path = Path('v2/reports/ci/stage3-real-history-summary.json')
           summary = json.loads(summary_path.read_text(encoding='utf-8'))
