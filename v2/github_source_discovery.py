@@ -85,7 +85,12 @@ def main():
     # Public Gists are not searchable through the repository search API.
     # Explicitly search public gist metadata through the GitHub Gist endpoint
     # only for owners already discovered in relevant repository results.
-    gist_owners = sorted({name.split("/", 1)[0] for name in repos})[:30]
+    all_gist_owners = sorted({name.split("/", 1)[0] for name in repos})
+    if len(all_gist_owners) > 30:
+        limits_hit.append("MAX_GIST_OWNERS")
+    if len(found) >= MAX_FILES:
+        limits_hit.append("MAX_FILES")
+    gist_owners = all_gist_owners[:30]
     for owner in gist_owners:
         if len(found) >= MAX_FILES:
             break

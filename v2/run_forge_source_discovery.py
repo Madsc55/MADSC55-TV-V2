@@ -39,16 +39,16 @@ def api_json(url):
         raise ValueError("Forge response too large")
     return json.loads(payload)
 
-def scan():
-    found, errors, seen, limits_hit = [], [], set(), set()
-    for term in TERMS:
+def scan(request=api_json, terms=TERMS):
+    found, errors, seen, limits_hit, found_urls = [], [], set(), set(), set()
+    for term in dict.fromkeys(terms):
         queries = [
             ("gitlab", GITLAB_API + "?" + urlencode({"search": term, "simple": "true", "per_page": 12})),
             ("codeberg", CODEBERG_API + "?" + urlencode({"q": term, "limit": 12})),
         ]
         for forge, url in queries:
             try:
-                payload = api_json(url)
+                payload = request(url)
                 projects = gitlab_projects(payload) if forge == "gitlab" else codeberg_projects(payload)
                 # Follow bounded search pagination rather than silently dropping
                 # repositories beyond the first response.
@@ -58,7 +58,7 @@ def scan():
                     for page in (2, 3):
                         next_url = url + (("&page=" + str(page)) if forge == "gitlab"
                                           else ("&page=" + str(page)))
-                        more = api_json(next_url)
+                        more = request(next_url)
                         more_items = gitlab_projects(more) if forge == "gitlab" else codeberg_projects(more)
                         projects.extend(more_items)
                         raw_count = len(more) if forge == "gitlab" and isinstance(more, list) else (
@@ -84,11 +84,11 @@ def scan():
                             + quote(project["name"], safe="") + "/git/trees/"
                             + quote(project["branch"], safe="") + "?recursive=true")
                 try:
-                    listing = api_json(tree)
+                    listing = request(tree)
                     if forge == "gitlab" and isinstance(listing, list) and len(listing) >= 100:
                         combined = list(listing)
                         for page in (2, 3):
-                            more = api_json(tree + "&page=" + str(page))
+                            more = request(tree + "&page=" + str(page))
                             if not isinstance(more, list):
                                 raise ValueError("Invalid GitLab tree page")
                             combined.extend(more)
@@ -105,13 +105,15 @@ def scan():
                     if sum(isinstance(p, str) and p.lower().endswith((".m3u", ".m3u8")) for p in paths) > MAX_PATHS:
                         limits_hit.add(forge.upper() + "_PLAYLIST_PATH_LIMIT")
                     for link in playlist_sources(project, paths):
-                        found.append({"forge": forge, "source_url": link, "playback_verified": False})
+                        if link not in found_urls:
+                            found_urls.add(link)
+                            found.append({"forge": forge, "source_url": link, "playback_verified": False})
                 except (ValueError, OSError, TimeoutError) as exc:
                     errors.append({"forge": forge, "project": identity, "error": type(exc).__name__})
     return {"schema": 1, "status": "source_references_only",
             "coverage_status": "PARTIAL_API_ERRORS" if errors else "PARTIAL_LIMITS" if limits_hit else "COMPLETE_QUERIES",
             "limits_hit": sorted(limits_hit),
-            "sources": found,
+            "sources": found, "source_count": len(found), "playback_verified": False,
             "errors": errors, "projects_examined": len(seen)}
 
 def main():
