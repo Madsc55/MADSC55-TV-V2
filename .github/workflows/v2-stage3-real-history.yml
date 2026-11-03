@@ -11,6 +11,9 @@ on:
       - 'v2/stage3_real_complete_audit.py'
       - 'v2/stage3_git_history_forensics.py'
       - 'v2/test_stage3_git_history_forensics.py'
+      - 'v2/stage3_sealed_export.py'
+      - 'v2/test_stage3_sealed_export.py'
+      - 'v2/config/stage3_transit_public.pem'
       - 'v2/historical_local_match.py'
       - 'v2/stage3_historical_source_recovery.py'
       - 'v2/stage3_original_configured_source_recovery.py'
@@ -66,6 +69,7 @@ jobs:
             test_stage3_archive_lineage \
             test_stage3_atomic_classification \
             test_stage3_git_history_forensics \
+            test_stage3_sealed_export \
             test_historical_url_recovery \
             test_stage3_master_integration \
             test_stage3_legacy_importers \
@@ -93,6 +97,8 @@ jobs:
           args=(
             --index v2/history/stage3-4955-hash-only.jsonl
             --report v2/reports/ci/stage3-git-history-exact-url-match.json
+            --seal-public-key v2/config/stage3_transit_public.pem
+            --sealed-output v2/reports/ci/stage3-git-history-recovered.sealed
           )
           if test -n "$V2_ARCHIVE_KEY_HEX"; then
             args+=(--encrypted-output v2/reports/ci/stage3-git-history-url-evidence.enc)
@@ -249,21 +255,27 @@ jobs:
           python v2/stage3_historical_source_recovery.py \
             --index v2/history/stage3-4955-hash-only.jsonl \
             --original-discovery "$RUNNER_TEMP/stage3-original-github-sources/github-source-discovery.json" \
-            --report v2/reports/ci/stage3-original-github-historical-urls.json
+            --report v2/reports/ci/stage3-original-github-historical-urls.json \
+            --seal-public-key v2/config/stage3_transit_public.pem \
+            --sealed-output v2/reports/ci/stage3-original-github-recovered.sealed
       - name: Recheck original #60 configured IPTV-org Free-TV and Dearbulut source URL identities
         env:
           PYTHONPATH: v2
         run: |
           python v2/stage3_original_configured_source_recovery.py \
             --index v2/history/stage3-4955-hash-only.jsonl \
-            --report v2/reports/ci/stage3-original-configured-source-matches.json
+            --report v2/reports/ci/stage3-original-configured-source-matches.json \
+            --seal-public-key v2/config/stage3_transit_public.pem \
+            --sealed-output v2/reports/ci/stage3-original-configured-recovered.sealed
       - name: Check missing historical Dearbulut URL identities in dated health state archives
         env:
           PYTHONPATH: v2
         run: |
           python v2/stage3_dearbulut_health_recovery.py \
             --index v2/history/stage3-4955-hash-only.jsonl \
-            --report v2/reports/ci/stage3-dearbulut-historical-health-url-match.json
+            --report v2/reports/ci/stage3-dearbulut-historical-health-url-match.json \
+            --seal-public-key v2/config/stage3_transit_public.pem \
+            --sealed-output v2/reports/ci/stage3-dearbulut-health-recovered.sealed
       - name: Combine 4,955 real historical URL matches across V2 branches and original source commits
         shell: bash
         run: |
@@ -281,7 +293,7 @@ jobs:
           health_audit=json.loads(Path('v2/reports/ci/stage3-dearbulut-historical-health-url-match.json').read_text())
           health_matches=set(health_audit['matched_hashes'])
           total=original|historical|original_sources|git_matches|health_matches
-          assert len(total) <= 4955
+          assert len(total) == 4955, 'Real historical URL recovery lost original identities'
           assert len(total)+ (4955-len(total)) == 4955
           assert all(isinstance(x,str) and len(x)==64 for x in total)
           summary={
@@ -361,6 +373,10 @@ jobs:
             v2/reports/ci/stage3-real-4955-complete-audit.json
             v2/reports/ci/stage3-git-history-exact-url-match.json
             v2/reports/ci/stage3-git-history-url-evidence.enc
+            v2/reports/ci/stage3-git-history-recovered.sealed
+            v2/reports/ci/stage3-original-github-recovered.sealed
+            v2/reports/ci/stage3-original-configured-recovered.sealed
+            v2/reports/ci/stage3-dearbulut-health-recovered.sealed
             v2/reports/ci/stage3-local-hash-match.json
             v2/reports/ci/stage3-other-v2-branches-exact-url-matches.json
             v2/reports/ci/stage3-original-github-historical-urls.json
