@@ -36,8 +36,8 @@ def normalize(report):
         url = record.get("source_url") or record.get("url", "")
         if not isinstance(url, str) or not valid_forge_source(url) or url in seen:
             continue
-        forge = record.get("forge")
         host = urlsplit(url).hostname
+        forge = record.get("forge") or ({"gitlab.com": "gitlab", "codeberg.org": "codeberg"}.get(host))
         if forge not in ("gitlab", "codeberg") or (forge == "gitlab" and host != "gitlab.com") or (forge == "codeberg" and host != "codeberg.org"):
             continue
         seen.add(url)
