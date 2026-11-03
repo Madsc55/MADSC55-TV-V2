@@ -1,0 +1,77 @@
+name: V2 Stage5 Historical 4955 RSA Re-Seal
+on:
+  push:
+    branches: [madsc/v2-discovery-bulk-20261031]
+    paths: ['v2/config/stage5_recovery_public.pem', '.github/workflows/v2-stage5-historical-reseal.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  recover:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install pinned cryptography
+        run: python -m pip install cryptography==44.0.2
+      - name: Verify protected playlist and public key
+        run: |
+          test "$(git hash-object MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)" = '4b1c3cea4b5107a425abab60f62d41f9f81e05a7'
+          python - <<'PY'
+          from cryptography.hazmat.primitives.serialization import load_pem_public_key
+          from cryptography.hazmat.primitives.asymmetric import rsa
+          from pathlib import Path
+          key=load_pem_public_key(Path('v2/config/stage5_recovery_public.pem').read_bytes())
+          assert isinstance(key,rsa.RSAPublicKey) and key.key_size>=3072
+          print('PASS: RSA-3072 public key; no private key on GitHub runner')
+          PY
+      - name: Recover real original 4955 URLs from known historical sources only and RSA-reseal in bulk
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PYTHONPATH: v2
+        run: |
+          set -euo pipefail
+          mkdir -p v2/reports/ci "$RUNNER_TEMP/stage5-original-source"
+          git fetch --no-tags origin '+refs/heads/*:refs/remotes/origin/*'
+          gh run download 40743765437 --repo "$GITHUB_REPOSITORY" -n unified-source-snapshot -D "$RUNNER_TEMP/stage5-original-source"
+          python v2/stage3_git_history_forensics.py --index v2/history/stage3-4955-hash-only.jsonl --report v2/reports/ci/stage5-git-hashes.json --sealed-output v2/reports/ci/stage5-git.sealed --seal-public-key v2/config/stage5_recovery_public.pem
+          python v2/stage3_historical_source_recovery.py --index v2/history/stage3-4955-hash-only.jsonl --original-discovery "$RUNNER_TEMP/stage5-original-source/github-source-discovery.json" --report v2/reports/ci/stage5-original-hashes.json --sealed-output v2/reports/ci/stage5-original.sealed --seal-public-key v2/config/stage5_recovery_public.pem
+          python v2/stage3_original_configured_source_recovery.py --index v2/history/stage3-4955-hash-only.jsonl --report v2/reports/ci/stage5-configured-hashes.json --sealed-output v2/reports/ci/stage5-configured.sealed --seal-public-key v2/config/stage5_recovery_public.pem
+          python v2/stage3_dearbulut_health_recovery.py --index v2/history/stage3-4955-hash-only.jsonl --report v2/reports/ci/stage5-dearbulut-hashes.json --sealed-output v2/reports/ci/stage5-dearbulut.sealed --seal-public-key v2/config/stage5_recovery_public.pem
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          history=[json.loads(l) for l in Path('v2/history/stage3-4955-hash-only.jsonl').read_text().splitlines() if l]
+          expected={r['url_sha256'] for r in history}
+          paths=[('stage5-git-hashes.json','matched_historical_sha256'),('stage5-original-hashes.json','matched_hashes'),('stage5-configured-hashes.json','matched_hashes'),('stage5-dearbulut-hashes.json','matched_hashes')]
+          counts=[]; all_found=set()
+          for p,k in paths:
+              rows=json.loads((Path('v2/reports/ci')/p).read_text())[k]
+              group=set(rows)
+              assert len(group)==len(rows) and group.issubset(expected)
+              all_found.update(group); counts.append(len(group))
+          assert len(expected)==len(all_found)==4955 and all_found==expected
+          data={'historical_original_URL_hashes':4955,'recovered_RSA_sealed_original_hashes':len(all_found),'per_source_counts':counts,'new_world_channel_scan':False,'plaintext_URLs_exported':False,'device_verified':False}
+          Path('v2/reports/ci/stage5-historical-union.json').write_text(json.dumps(data,sort_keys=True)+'\n')
+          print('PASS: all 4955 original URL identities were re-sealed to new RSA public key')
+          PY
+      - name: Upload only RSA sealed records and anonymous proof
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: stage5-4955-resealed-${{ github.run_id }}
+          path: |
+            v2/reports/ci/stage5-git.sealed
+            v2/reports/ci/stage5-original.sealed
+            v2/reports/ci/stage5-configured.sealed
+            v2/reports/ci/stage5-dearbulut.sealed
+            v2/reports/ci/stage5-historical-union.json
+          retention-days: 90
+          if-no-files-found: warn
