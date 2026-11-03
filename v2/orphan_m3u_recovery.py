@@ -397,7 +397,8 @@ def sealed_retest_candidate_rows(sources, proof_states):
 
 def audit(*, report_path, sealed_path, key_path, limit=20,
           reader=_read_document, commits=historical_revisions, probe=probe_one,
-          known_source_catalog=None, all_candidates_sealed_path=None):
+          known_source_catalog=None, all_candidates_sealed_path=None,
+          immutable_orphan_baseline_path=None):
     if all_candidates_sealed_path is not None:
         paths = [Path(report_path).resolve(), Path(sealed_path).resolve(),
                  Path(all_candidates_sealed_path).resolve()]
@@ -406,6 +407,7 @@ def audit(*, report_path, sealed_path, key_path, limit=20,
         if (Path(all_candidates_sealed_path).exists() or
                 Path(all_candidates_sealed_path).is_symlink()):
             raise ValueError("Refusing overwrite of sealed candidate archive")
+    source_documents = {}
     sources = []
     source_summaries = []
     source_evidence = []
@@ -413,6 +415,7 @@ def audit(*, report_path, sealed_path, key_path, limit=20,
     for ident, repo, path in ORIGINALS:
         upstream = "https://raw.githubusercontent.com/" + repo + "/main/" + quote(path)
         current = reader(upstream)
+        source_documents[ident] = current
         _, orphans = parse_exact_pairs(current)
         orphans = [o for o in orphans if o["reason"] !=
                    "EXPLICIT_NO_PUBLIC_STREAM_PLACEHOLDER"]
@@ -433,6 +436,7 @@ def audit(*, report_path, sealed_path, key_path, limit=20,
                             "candidates": candidates})
     for ident, source_url in ONUR_SOURCES:
         current = reader(source_url)
+        source_documents[ident] = current
         _, orphans = parse_exact_pairs(current)
         orphans = [o for o in orphans
                    if o["reason"] != "EXPLICIT_NO_PUBLIC_STREAM_PLACEHOLDER"]
@@ -449,6 +453,12 @@ def audit(*, report_path, sealed_path, key_path, limit=20,
                 "line_number": item["line_number"],
                 "uri_structure": item["uri_structure"],
                 "candidates": alts.get(item["extinf"], {})})
+    identity_guard = None
+    if immutable_orphan_baseline_path is not None:
+        from orphan_baseline_guard import (load_immutable_baseline,
+                                           reconcile_immutable_sources)
+        immutable = load_immutable_baseline(immutable_orphan_baseline_path)
+        identity_guard = reconcile_immutable_sources(immutable, source_documents)
     existing_report = None
     if known_source_catalog is not None:
         existing, existing_report = find_existing_exact_identity(
@@ -517,6 +527,7 @@ def audit(*, report_path, sealed_path, key_path, limit=20,
             for x in source_evidence),
         "unavailable_historical_git_files": historic_errors,
         "existing_catalog_reconciliation": existing_report,
+        "immutable_orphan_identity_guard": identity_guard,
         "records": source_evidence,
         "plain_stream_urls_reported": False, "protected_playlist_modified": False,
         "ibo_device_verified": False, "scan_scope": "ONLY_FOUR_VERIFIED_M3U_FEEDS_AND_KNOWN_EXISTING_CATALOG",
@@ -541,6 +552,8 @@ def main():
     p.add_argument("--public-key", type=Path,
                    default=Path("v2/config/stage3_transit_public.pem"))
     p.add_argument("--history-revisions", type=int, default=20)
+    p.add_argument("--immutable-orphan-baseline", type=Path,
+                   default=Path("v2/history/m3u-orphan-50-hash-baseline.json"))
     args = p.parse_args()
     if (args.report.exists() or args.report.is_symlink()
             or args.sealed.exists() or args.sealed.is_symlink()
@@ -553,7 +566,11 @@ def main():
     result = audit(report_path=args.report, sealed_path=args.sealed,
                    key_path=args.public_key, limit=args.history_revisions,
                    known_source_catalog=existing_source_catalog(),
-                   all_candidates_sealed_path=args.all_candidates_sealed)
+                   all_candidates_sealed_path=args.all_candidates_sealed,
+                   immutable_orphan_baseline_path=args.immutable_orphan_baseline)
+    if result["immutable_orphan_identity_guard"]["status"] == "LOSS_RISK_REVIEW_REQUIRED":
+        print("LOSS_RISK: original orphan EXTINF metadata missing, requires manual review")
+        raise SystemExit(2)
     print("Four source orphan metadata occurrences:", result["orphan_entries"],
           "exact historic/official candidate URL hashes:",
           result["unique_candidate_urls_historically_or_officially_proven"],
@@ -563,6 +580,9 @@ def main():
           result["all_proven_url_candidates_sealed_for_future_retest"],
           "orphan entries with no current verified replacement:",
           result["orphan_entries_without_current_av"],
+          "immutable historical EXTINF source identities present:",
+          result["immutable_orphan_identity_guard"]["original_source_occurrences_still_present"],
+          "/ 55",
           "existing source catalog checked:",
           result.get("existing_catalog_reconciliation", {}).get(
               "preconfigured_sources_checked"))

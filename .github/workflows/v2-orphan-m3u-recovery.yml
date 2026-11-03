@@ -8,6 +8,9 @@ on:
       - 'v2/test_m3u_source_content_audit.py'
       - 'v2/discover.py'
       - 'v2/test_orphan_m3u_recovery.py'
+      - 'v2/orphan_baseline_guard.py'
+      - 'v2/test_orphan_baseline_guard.py'
+      - 'v2/history/m3u-orphan-50-hash-baseline.json'
       - '.github/workflows/v2-orphan-m3u-recovery.yml'
   workflow_dispatch:
 
@@ -41,6 +44,7 @@ jobs:
           set -o pipefail
           PYTHONPATH=v2 python -m unittest -v \
             test_orphan_m3u_recovery \
+            test_orphan_baseline_guard \
             test_m3u_source_content_audit \
             test_historical_targeted_playback \
             test_run60_source_ledger \
@@ -48,7 +52,7 @@ jobs:
             test_source_loss_audit \
             test_turkish_m3u_source_audit \
             2>&1 | tee v2/reports/ci/three-source-orphan-regressions.log
-      - name: Compare three actual M3U sources to prior exact Git history / official alternatives
+      - name: Compare four original M3U sources, immutable orphan identities, and known historical feeds
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
@@ -58,7 +62,8 @@ jobs:
             --public-key v2/config/stage3_transit_public.pem \
             --report v2/reports/ci/three-source-orphan-anonymous.json \
             --sealed v2/reports/ci/three-source-av-verified.sealed \
-            --all-candidates-sealed v2/reports/ci/three-source-all-historical-candidates.sealed
+            --all-candidates-sealed v2/reports/ci/three-source-all-historical-candidates.sealed \
+            --immutable-orphan-baseline v2/history/m3u-orphan-50-hash-baseline.json
       - name: Upload anonymized evidence and RSA-encrypted verified plus unverified URL candidates
         if: always()
         uses: actions/upload-artifact@v4
