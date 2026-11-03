@@ -9,6 +9,7 @@ on:
       - 'v2/test_historical_inventory_guard.py'
       - 'v2/test_stage3_immutable_history.py'
       - 'v2/history/stage3-4955-hash-only.jsonl'
+      - 'v2/stage3_real_complete_audit.py'
       - 'v2/test_historical_region_collisions.py'
       - 'v2/test_stage3_hash_evidence_linkage.py'
       - 'v2/test_stage3_identity_integrity.py'
@@ -102,6 +103,13 @@ jobs:
           p.write_text(json.dumps(result,indent=2)+'\n',encoding='utf-8')
           print(json.dumps(result))
           PY
+      - name: Audit the original 4955 real historical rows and full encrypted restore
+        env:
+          PYTHONPATH: v2
+        run: |
+          python v2/stage3_real_complete_audit.py \
+            --index v2/history/stage3-4955-hash-only.jsonl \
+            --report v2/reports/ci/stage3-real-4955-complete-audit.json
       - name: Upload grouped stage 3 evidence
         if: always()
         uses: actions/upload-artifact@v4
@@ -110,5 +118,6 @@ jobs:
           path: |
             v2/reports/ci/stage3-historical-batch.log
             v2/reports/ci/stage3-historical-evidence.json
+            v2/reports/ci/stage3-real-4955-complete-audit.json
           if-no-files-found: warn
           retention-days: 30
