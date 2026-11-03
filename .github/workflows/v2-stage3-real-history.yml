@@ -168,6 +168,45 @@ jobs:
           print('Existing local exact URL matches:', result['matched_real_url_identities'],
                 'remaining hash-only:', result['unmatched_hash_identities'])
           PY
+      - name: Check historical URL matches in OTHER V2 branch and archived M3U snapshots (read-only)
+        shell: bash
+        env:
+          PYTHONPATH: v2
+        run: |
+          set -euo pipefail
+          git fetch --no-tags origin \
+            '+refs/heads/main:refs/remotes/origin/main' \
+            '+refs/heads/madsc/v2-encrypted-archive-20261101:refs/remotes/origin/madsc/v2-encrypted-archive-20261101'
+          mkdir -p "$RUNNER_TEMP/v2-historical-branch-m3u"
+          git show 'refs/remotes/origin/main:v2/arsiv/yabanci_yedekler_2026-11-02_3964.m3u8' \
+            > "$RUNNER_TEMP/v2-historical-branch-m3u/main-foreign-archive.m3u8"
+          git show 'refs/remotes/origin/main:MADSC55_TV_IBO_CALISANLAR_TEST.m3u8' \
+            > "$RUNNER_TEMP/v2-historical-branch-m3u/main-ibo.m3u8"
+          git show 'refs/remotes/origin/main:MADSC55_IBO_NEWLISTTR_YEDEKLER_TEST.m3u8' \
+            > "$RUNNER_TEMP/v2-historical-branch-m3u/main-backups.m3u8"
+          git show 'refs/remotes/origin/madsc/v2-encrypted-archive-20261101:MADSC55_TV_IBO_CALISANLAR_TEST.m3u8' \
+            > "$RUNNER_TEMP/v2-historical-branch-m3u/other-v2-ibo.m3u8"
+          git show 'refs/remotes/origin/madsc/v2-encrypted-archive-20261101:MADSC55_IBO_NEWLISTTR_YEDEKLER_TEST.m3u8' \
+            > "$RUNNER_TEMP/v2-historical-branch-m3u/other-v2-backups.m3u8"
+          python v2/historical_local_match.py \
+            --history-index v2/history/stage3-4955-hash-only.jsonl \
+            --playlist "$RUNNER_TEMP/v2-historical-branch-m3u/main-foreign-archive.m3u8" \
+            --playlist "$RUNNER_TEMP/v2-historical-branch-m3u/main-ibo.m3u8" \
+            --playlist "$RUNNER_TEMP/v2-historical-branch-m3u/main-backups.m3u8" \
+            --playlist "$RUNNER_TEMP/v2-historical-branch-m3u/other-v2-ibo.m3u8" \
+            --playlist "$RUNNER_TEMP/v2-historical-branch-m3u/other-v2-backups.m3u8" \
+            --report v2/reports/ci/stage3-other-v2-branches-exact-url-matches.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('v2/reports/ci/stage3-other-v2-branches-exact-url-matches.json')
+          report=json.loads(p.read_text())
+          assert report['historical_hash_identities']==4955
+          assert report['matched_real_url_identities']+report['unmatched_hash_identities']==4955
+          assert not report['plaintext_url_emitted']
+          print('Other V2 branches (five real M3U files): exact recovered URL hashes:',
+                report['matched_real_url_identities'])
+          PY
       - name: Permanently preserve the real 4955 hash-only identities in V2 branch
         if: github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' && github.repository == 'Madsc55/MADSC55-TV-V2'
         shell: bash
@@ -219,5 +258,6 @@ jobs:
             v2/reports/ci/stage3-real-history-summary.json
             v2/reports/ci/stage3-real-4955-complete-audit.json
             v2/reports/ci/stage3-local-hash-match.json
+            v2/reports/ci/stage3-other-v2-branches-exact-url-matches.json
           retention-days: 90
           if-no-files-found: warn
