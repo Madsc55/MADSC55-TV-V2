@@ -1107,3 +1107,13 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - Son kod commit `172b08a1` için ayrıca `V2 Eight-Stage Runner Verification` run **41559468062 SUCCESS**: **194 unittest OK**, **14 koruma testi OK**, FFmpeg test işi SUCCESS, korunan playlist SHA256 `7e62b0beec0b928ed30ac86827077f2dd6d7e739f42a573ce849c7d64f5e8eb4`.
 - Aynı commit: `V2 Master Engine` **41559468053 SUCCESS** (offline-tests başarılı, gerçek master görevi SKIPPED); `Current Scanner Offline Gate` **41559468066 SUCCESS**; `Actions Status Monitor` **41559468100 SUCCESS**.
 - **Aşama 2 kod entegrasyonu, servis ulaşılabilirliği ve toplu CI doğrulaması bitmiştir.** Bu durum tüm keşif adaylarının, gerçek görüntü/ses dekodunun, şifreli arşiv geri yüklemenin veya IBO Player cihaz oynatmasının başarıyla doğrulandığı anlamına gelmez. Yeni geniş kanal taraması bu aşamada yapılmadı.
+
+## 3 Kasım 2026 — Aşama 3: geçmiş 4.955 aday için koruma ve TR/AZ çakışma önlemi
+
+- Çalışma dalı `madsc/v2-discovery-bulk-20261031`; ana `MADSC55_TV_IBO_CALISANLAR_TEST.m3u8`, YEDEKLER, YENİLER, FAVORİLER, `main`, eski depo ve PR #9 değiştirilmedi.
+- Mevcut `historical_inventory_guard.py` gerçek geçmiş satırlarının tümünü ham şifreli kanıtta saklıyor; yayın URL'si mevcut olan adayları gerçek URL'nin SHA-256 değeriyle tekilleştiriyor; hash-only, başarısız ve adsız kayıtları geçmişten silmiyor. Verilen `--expected-historical-records 4955` sayısı uyuşmazsa hata veriyor; sahte yayın URL'si üretmiyor.
+- Yeni commit `bb3defec61be4eda1a63ce97d11f41af0d22a1e6`: aynı URL için tarihî veya yeni kaynakta TR ve AZ çelişkisi varsa **raw geçmişi ve provenance'ı koruyarak** adayın `region_candidate` alanını `UNKNOWN`, kanıtını `CONFLICTING_TR_AZ_EVIDENCE` yapıyor ve `conflicting_tr_az_candidate_urls` sayısını raporluyor. Konuşulan dil doğrulanmış sayılmıyor.
+- `v2/test_historical_region_collisions.py` dört regresyon testi içeriyor; `.github/workflows/v2-stage3-historical-inventory.yml` mevcut konu bazlı toplu işine bağlandı.
+- GitHub Actions `V2 Stage 3 Historical Inventory Loss Protection` run **41613346076 SUCCESS**: **63 test OK**, şifreli koruma, geçmiş kaynak/kayıp, tekilleştirme, TR/AZ ve hash-only kanıt testleri bir toplu işte yürütüldü.
+- Aynı run kanıt raporu açıkça `historical_dataset_present_in_checkout=false`, `historical_4955_real_records_restored=false` raporluyor. Testlerdeki 4.955 kayıt **sentetik test fikstürüdür, gerçek #60 envanteri değildir**. Gerçek 4.955 kayıt kaynağı gelmeden fiilî arşiv kurtarması tamamlandı denemez.
+- Tekilleştirme yalnızca aday görünümündedir, orijinal geçmiş satırları silinmez. Kaynak coğrafyası, TVG-ID ve yayın adı **konuşulan Türkçe/Azerice kanıtı değildir**; İBO cihaz testi kullanıcıya aittir.
