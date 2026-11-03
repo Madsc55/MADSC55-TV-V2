@@ -57,8 +57,9 @@ jobs:
             --history-revisions 150 \
             --public-key v2/config/stage3_transit_public.pem \
             --report v2/reports/ci/three-source-orphan-anonymous.json \
-            --sealed v2/reports/ci/three-source-av-verified.sealed
-      - name: Upload only anonymized evidence and RSA-encrypted successful AV URLs
+            --sealed v2/reports/ci/three-source-av-verified.sealed \
+            --all-candidates-sealed v2/reports/ci/three-source-all-historical-candidates.sealed
+      - name: Upload anonymized evidence and RSA-encrypted verified plus unverified URL candidates
         if: always()
         uses: actions/upload-artifact@v4
         with:
@@ -66,6 +67,7 @@ jobs:
           path: |
             v2/reports/ci/three-source-orphan-anonymous.json
             v2/reports/ci/three-source-av-verified.sealed
+            v2/reports/ci/three-source-all-historical-candidates.sealed
             v2/reports/ci/three-source-orphan-regressions.log
           if-no-files-found: warn
           retention-days: 30

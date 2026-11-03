@@ -177,6 +177,83 @@ class OrphanRecoveryTests(unittest.TestCase):
         self.assertEqual(rows[0]["url"], self.a)
         self.assertIn(entry, m[p[0]["url_sha256"]])
 
+    def test_failed_historical_candidates_preserved_for_retest(self):
+        from orphan_m3u_recovery import sealed_retest_candidate_rows
+        url = self.a
+        digest = hashlib.sha256(url.encode()).hexdigest()
+        orphan = {"source_id": "discevisita-tr", "extinf_sha256": "a" * 64,
+                  "candidates": {digest: {"url": url,
+                                         "proof_commits": ["b" * 40],
+                                         "proof_rules": ["EXACT_EXTINF"]}}}
+        state = {digest: {"url_sha256": digest,
+                          "status": "PROBE_FAILED_NOT_PROVEN_DEAD",
+                          "video_stream": False, "audio_stream": False}}
+        rows = sealed_retest_candidate_rows([orphan], state)
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0]["url_sha256"], digest)
+        self.assertEqual(rows[0]["proof_commits"], ["b" * 40])
+        self.assertEqual(rows[0]["source_ids"], ["discevisita-tr"])
+        self.assertTrue(rows[0]["needs_retest"])
+
+    def test_same_stream_in_two_sources_keeps_both_provenances(self):
+        from orphan_m3u_recovery import sealed_retest_candidate_rows
+        digest = hashlib.sha256(self.a.encode()).hexdigest()
+        sources = [
+            {"source_id": "source-a", "extinf_sha256": "a" * 64,
+             "candidates": {digest: {"url": self.a}}},
+            {"source_id": "source-b", "extinf_sha256": "b" * 64,
+             "candidates": {digest: {"url": self.a}}}]
+        probes = {digest: {"status": "VIDEO_STREAM_OBSERVED",
+                           "video_stream": True, "audio_stream": True}}
+        rows = sealed_retest_candidate_rows(sources, probes)
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0]["source_ids"], ["source-a", "source-b"])
+        self.assertEqual(rows[0]["orphan_extinf_sha256"], ["a" * 64, "b" * 64])
+        self.assertFalse(rows[0]["needs_retest"])
+
+    def test_all_candidates_are_sealed_only_in_private_archive(self):
+        line = self.dis
+        def reader(url):
+            if "discevisita/iptv/main" in url:
+                return "#EXTM3U\n" + line + "\n"
+            if "discevisita/iptv/" in url:
+                return "#EXTM3U\n" + line + "\n" + self.a + "\n"
+            return "#EXTM3U\n"
+        def failed(item):
+            return {"url_sha256": item[0], "status": "PROBE_FAILED_NOT_PROVEN_DEAD",
+                    "video_stream": False, "audio_stream": False}
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder)
+            with patch("orphan_m3u_recovery.seal_rows", return_value=1) as seal:
+                result = audit(
+                    report_path=path / "public.json",
+                    sealed_path=path / "av.sealed",
+                    all_candidates_sealed_path=path / "all.sealed",
+                    key_path=path / "unused.pem", limit=1,
+                    reader=reader, commits=lambda *args, **kwargs: ["a" * 40],
+                    probe=failed)
+                self.assertEqual(seal.call_count, 1)
+                rows = seal.call_args.args[0]
+                self.assertEqual(len(rows), 1)
+                self.assertEqual(rows[0]["url"], self.a)
+                self.assertTrue(rows[0]["needs_retest"])
+                self.assertEqual(seal.call_args.args[2], path / "all.sealed")
+            self.assertEqual(result["all_proven_url_candidates_sealed_for_future_retest"], 1)
+            self.assertEqual(result["currently_unverified_candidate_urls_preserved_in_encrypted_archive"], 1)
+            self.assertNotIn(self.a, (path / "public.json").read_text())
+
+    def test_candidate_archive_never_overwrites_existing_evidence(self):
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder)
+            exists = path / "existing.sealed"
+            exists.write_text("PRESERVE")
+            with self.assertRaisesRegex(ValueError, "Refusing overwrite"):
+                audit(report_path=path / "public.json",
+                      sealed_path=path / "av.sealed",
+                      all_candidates_sealed_path=exists,
+                      key_path=path / "unused.pem", reader=lambda _: "#EXTM3U\n")
+            self.assertEqual(exists.read_text(), "PRESERVE")
+
     def test_end_to_end_four_source_batch_and_sealed_only_for_verified_av(self):
         def reader(url):
             if "discevisita/iptv/main" in url:

@@ -346,9 +346,66 @@ def evaluate(sources, *, probe=probe_one):
     return probed, rows, mapping
 
 
+
+def sealed_retest_candidate_rows(sources, proof_states):
+    """Retain all exact-proven historical URLs, even if today's A/V probe failed.
+
+    Returned plaintext must only go into seal_rows; public reports contain
+    counts, URL SHA256 and status categories, never stream URLs.
+    """
+    index = {}
+    for source in sources:
+        for digest, candidate in source["candidates"].items():
+            url = candidate["url"]
+            if _hash(url) != digest or not validate_url(url):
+                raise ValueError("Invalid historical candidate identity")
+            existing = index.get(digest)
+            if existing is None:
+                existing = {"url": url, "url_sha256": digest,
+                            "source_ids": set(), "orphan_extinf_sha256": set(),
+                            "proof_commits": set(), "proof_rules": set(),
+                            "proof_existing_source_ids": set()}
+                index[digest] = existing
+            if existing["url"] != url:
+                raise ValueError("Contradictory candidate URL for same SHA256")
+            existing["source_ids"].add(source["source_id"])
+            existing["orphan_extinf_sha256"].add(source["extinf_sha256"])
+            existing["proof_commits"].update(candidate.get("proof_commits", []))
+            existing["proof_rules"].update(candidate.get("proof_rules", []))
+            existing["proof_existing_source_ids"].update(
+                candidate.get("proof_existing_source_ids", []))
+    if set(index) != set(proof_states):
+        raise ValueError("Cannot archive candidates without exact probe status")
+    rows = []
+    for digest in sorted(index):
+        old = index[digest]
+        status = proof_states[digest]
+        rows.append({"url": old["url"], "url_sha256": digest,
+                     "source_ids": sorted(old["source_ids"]),
+                     "orphan_extinf_sha256": sorted(old["orphan_extinf_sha256"]),
+                     "proof_commits": sorted(old["proof_commits"]),
+                     "proof_rules": sorted(old["proof_rules"]),
+                     "proof_existing_source_ids":
+                         sorted(old["proof_existing_source_ids"]),
+                     "probe_status": status["status"],
+                     "video_stream": bool(status.get("video_stream")),
+                     "audio_stream": bool(status.get("audio_stream")),
+                     "needs_retest": not (
+                         status.get("video_stream") and status.get("audio_stream"))})
+    return rows
+
+
 def audit(*, report_path, sealed_path, key_path, limit=20,
           reader=_read_document, commits=historical_revisions, probe=probe_one,
-          known_source_catalog=None):
+          known_source_catalog=None, all_candidates_sealed_path=None):
+    if all_candidates_sealed_path is not None:
+        paths = [Path(report_path).resolve(), Path(sealed_path).resolve(),
+                 Path(all_candidates_sealed_path).resolve()]
+        if len(set(paths)) != 3:
+            raise ValueError("Public and encrypted output paths must be distinct")
+        if (Path(all_candidates_sealed_path).exists() or
+                Path(all_candidates_sealed_path).is_symlink()):
+            raise ValueError("Refusing overwrite of sealed candidate archive")
     sources = []
     source_summaries = []
     source_evidence = []
@@ -404,6 +461,13 @@ def audit(*, report_path, sealed_path, key_path, limit=20,
                 record["proof_existing_source_ids"] = sorted(ids)
     probed, verified_rows, mapping = evaluate(sources, probe=probe)
     proof_states = {p["url_sha256"]: p for p in probed}
+    sealed_candidate_count = None
+    if all_candidates_sealed_path is not None:
+        # All failed candidates are retained for later bounded retesting;
+        # this does not promote a failed stream to playable.
+        private_candidates = sealed_retest_candidate_rows(sources, proof_states)
+        sealed_candidate_count = seal_rows(
+            private_candidates, key_path, all_candidates_sealed_path)
     for item in sources:
         candidate_evidence = []
         for sha, record in sorted(item["candidates"].items()):
@@ -440,6 +504,10 @@ def audit(*, report_path, sealed_path, key_path, limit=20,
         "orphan_uri_structure_counts": dict(sorted(Counter(
             item["uri_structure"] for item in sources).items())),
         "unique_candidate_urls_historically_or_officially_proven": len(probed),
+        "all_proven_url_candidates_sealed_for_future_retest": sealed_candidate_count,
+        "currently_unverified_candidate_urls_preserved_in_encrypted_archive":
+            sealed_candidate_count - len(verified_rows)
+            if sealed_candidate_count is not None else None,
         "unique_candidates_video_audio_verified": len(verified_rows),
         "orphan_entries_with_current_av": sum(
             any(p["video_stream"] and p["audio_stream"] for p in x["candidates"])
@@ -469,23 +537,30 @@ def main():
     p = argparse.ArgumentParser()
     p.add_argument("--report", type=Path, required=True)
     p.add_argument("--sealed", type=Path, required=True)
+    p.add_argument("--all-candidates-sealed", type=Path, required=True)
     p.add_argument("--public-key", type=Path,
                    default=Path("v2/config/stage3_transit_public.pem"))
     p.add_argument("--history-revisions", type=int, default=20)
     args = p.parse_args()
     if (args.report.exists() or args.report.is_symlink()
             or args.sealed.exists() or args.sealed.is_symlink()
-            or args.report.resolve() == args.sealed.resolve()
+            or args.all_candidates_sealed.exists()
+            or args.all_candidates_sealed.is_symlink()
+            or len({args.report.resolve(), args.sealed.resolve(),
+                    args.all_candidates_sealed.resolve()}) != 3
             or not 1 <= args.history_revisions <= 150):
         p.error("Unsafe output path or unbounded history")
     result = audit(report_path=args.report, sealed_path=args.sealed,
                    key_path=args.public_key, limit=args.history_revisions,
-                   known_source_catalog=existing_source_catalog())
+                   known_source_catalog=existing_source_catalog(),
+                   all_candidates_sealed_path=args.all_candidates_sealed)
     print("Four source orphan metadata occurrences:", result["orphan_entries"],
           "exact historic/official candidate URL hashes:",
           result["unique_candidate_urls_historically_or_officially_proven"],
           "currently video+audio verified:",
           result["unique_candidates_video_audio_verified"],
+          "all candidate URLs sealed:",
+          result["all_proven_url_candidates_sealed_for_future_retest"],
           "orphan entries with no current verified replacement:",
           result["orphan_entries_without_current_av"],
           "existing source catalog checked:",
