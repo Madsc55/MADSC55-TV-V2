@@ -15,7 +15,7 @@ import json
 import os
 from pathlib import Path
 import re
-from urllib.parse import quote, urlencode
+from urllib.parse import quote, urlencode, urlsplit
 
 from stage3_historical_source_recovery import _read
 from historical_url_recovery import validate_url
@@ -74,12 +74,32 @@ def parse_exact_pairs(payload):
                 rows[extinf].add(line)
             elif line.startswith(("[NO PUBLIC STREAM]", "[NO STREAM]")):
                 orphaned("EXPLICIT_NO_PUBLIC_STREAM_PLACEHOLDER", pending)
+            elif line.startswith(("http://", "https://")) and urlsplit(line).hostname:
+                # Present absolute HTTP URI rejected by our public-network safety
+                # rules: not a *missing* EXTINF pair and never a probe candidate.
+                pass
             else:
                 orphaned("INVALID_OR_RELATIVE_STREAM_REFERENCE", pending)
             pending = None
     if pending:
         orphaned("TRAILING_EXTINF_WITHOUT_URI", pending)
     return rows, orphan
+
+
+def count_excluded_network_references(payload):
+    """Count nonpublic/credentialed HTTP media locations without exposing them."""
+    pending = False
+    count = 0
+    for raw in payload.splitlines():
+        line = raw.strip()
+        if line.startswith("#EXTINF:"):
+            pending = True
+        elif line and not line.startswith("#") and pending:
+            if (line.startswith(("http://", "https://"))
+                    and urlsplit(line).hostname and not validate_url(line)):
+                count += 1
+            pending = False
+    return count
 
 
 def historical_revisions(repo, path, *, limit=20):
@@ -188,6 +208,8 @@ def audit(*, report_path, sealed_path, key_path, limit=20,
                                       limit=limit, reader=reader, commits=commits)
         historic_errors += status["historical_files_unavailable"]
         source_summaries.append({"source_id": ident, "orphan_count": len(orphans),
+                                  "excluded_nonpublic_http_references":
+                                      count_excluded_network_references(current),
                                   "original_document_sha256": _hash(current),
                                   **status})
         for item in orphans:
@@ -202,6 +224,8 @@ def audit(*, report_path, sealed_path, key_path, limit=20,
                if o["reason"] != "EXPLICIT_NO_PUBLIC_STREAM_PLACEHOLDER"]
     alts, alt_status = find_official_alternates(orphans, reader=reader)
     source_summaries.append({"source_id": ONUR[0], "orphan_count": len(orphans),
+                             "excluded_nonpublic_http_references":
+                                 count_excluded_network_references(current),
                              "original_document_sha256": _hash(current), **alt_status})
     for item in orphans:
         sources.append({"source_id": ONUR[0], "extinf_sha256": item["extinf_sha256"],
