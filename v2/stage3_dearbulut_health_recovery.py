@@ -20,7 +20,7 @@ HEALTH_STATE_REVISIONS = (
 )
 
 
-def audit_health(history):
+def audit_health(history, *, return_records=False):
     hashes = validate_index(history, 4955)
     found, source_details = {}, []
     for timestamp, sha in HEALTH_STATE_REVISIONS:
@@ -66,18 +66,30 @@ def audit_health(history):
         "device_verified": False,
         "public_report_has_plaintext_urls": False,
     }
-    return result
+    return (result, list(found.values())) if return_records else result
 
 
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--index", required=True, type=Path)
     parser.add_argument("--report", required=True, type=Path)
+    parser.add_argument("--seal-public-key", type=Path)
+    parser.add_argument("--sealed-output", type=Path)
     args = parser.parse_args()
-    if args.report.exists() or args.report.is_symlink() or args.report.resolve() == args.index.resolve():
-        parser.error("Refusing report overwrite or collision")
+    outputs = [args.report] + ([args.sealed_output] if args.sealed_output else [])
+    if (any(p.exists() or p.is_symlink() or p.resolve() == args.index.resolve() for p in outputs)
+            or len(set(p.resolve() for p in outputs)) != len(outputs)):
+        parser.error("Refusing output overwrite or collision")
     history = [json.loads(line) for line in args.index.read_text(encoding="utf-8").splitlines() if line]
-    report = audit_health(history)
+    report, matches = audit_health(history, return_records=True)
+    if args.sealed_output:
+        if not args.seal_public_key:
+            raise ValueError("Missing public key for encrypted historical URL evidence")
+        from stage3_sealed_export import seal_rows
+        seal_rows(matches, args.seal_public_key, args.sealed_output)
+        report["confidential_rsa_aes_transit_sealed"] = True
+    else:
+        report["confidential_rsa_aes_transit_sealed"] = False
     args.report.parent.mkdir(parents=True, exist_ok=True)
     with args.report.open("x", encoding="utf-8") as handle:
         json.dump(report, handle, indent=2, sort_keys=True)
