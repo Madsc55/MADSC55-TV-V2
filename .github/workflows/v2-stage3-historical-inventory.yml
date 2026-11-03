@@ -10,6 +10,8 @@ on:
       - 'v2/test_stage3_immutable_history.py'
       - 'v2/history/stage3-4955-hash-only.jsonl'
       - 'v2/stage3_real_complete_audit.py'
+      - 'v2/stage3_exact_coverage.py'
+      - 'v2/test_stage3_exact_coverage.py'
       - 'v2/stage3_git_history_forensics.py'
       - 'v2/test_stage3_git_history_forensics.py'
       - 'v2/stage3_sealed_export.py'
@@ -57,6 +59,7 @@ jobs:
             test_stage3_immutable_history \
             test_historical_region_collisions \
             test_stage3_hash_evidence_linkage \
+            test_stage3_exact_coverage \
             test_stage3_identity_integrity \
             test_stage3_archive_lineage \
             test_stage3_atomic_classification \
@@ -83,8 +86,8 @@ jobs:
           paths = [root/'ibo-candidate-inventory.jsonl.enc',
                    root/'v2'/'ibo-candidate-inventory.jsonl.enc']
           available = [p for p in paths if p.is_file()]
-          # Encrypted original stream URLs remain unavailable, but all actual
-          # #60 decoded historical hashes are now permanently in this branch.
+          # The immutable #60 hash-only baseline never contained URL strings.
+          # Prior source/URL matching evidence is reported separately below.
           import hashlib
           history = root/'v2/history/stage3-4955-hash-only.jsonl'
           real_rows = [json.loads(line) for line in history.read_text(encoding='utf-8').splitlines() if line]
@@ -93,6 +96,13 @@ jobs:
           assert len(real_rows) == len(set(hash_ids)) == expected
           assert digest == 'e84cf1273ae54fc89de5d7edc3a46b4db78b91ddd7d6953dabdde30a6c3e0c83'
           assert all('url' not in row for row in real_rows)
+          previous = json.loads((root/'v2/history/stage3-4955-real-url-recovery-status.json')
+                                .read_text(encoding='utf-8'))
+          assert previous['original_historical_hashes'] == expected
+          assert previous['exact_original_stream_urls_recovered'] == expected
+          assert previous['hashes_without_original_url'] == 0
+          assert previous['region_metadata_candidates'] == {'TR': 50, 'AZ': 1, 'UNKNOWN': 4904}
+          assert isinstance(previous['actions']['encrypted_evidence_run'], int)
           result = {
               'schema': 1,
               'historical_expected_records': expected,
@@ -100,8 +110,11 @@ jobs:
               'real_4955_hash_only_dataset_present': True,
               'real_4955_hash_only_dataset_verified': True,
               'real_4955_hash_only_identities': len(real_rows),
-              'historical_4955_real_records_restored': False,
-              'historical_playable_urls_restored': 0,
+              'hash_only_baseline_contains_plaintext_urls': False,
+              'historical_exact_url_matches_in_prior_sealed_source_evidence': previous['exact_original_stream_urls_recovered'],
+              'prior_encrypted_evidence_run': previous['actions']['encrypted_evidence_run'],
+              'prior_recovery_is_not_independently_redecrypted_in_this_job': True,
+              'present_day_video_audio_playback_reverified': False,
               'offline_synthetic_regressions_are_not_real_history_recovery': True,
               'device_verified': False,
               'main_playlist_modified': False

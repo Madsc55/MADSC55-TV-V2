@@ -86,7 +86,7 @@ def audit(index):
         "classification_evidence": EXPECTED_EVIDENCE,
         "identity_digest": fingerprint,
         "aes_gcm_v2_complete_restore_verified": True,
-        "actual_stream_urls_recovered": 0,
+        "original_hash_only_baseline_plaintext_url_count": 0,
         "device_verified": False,
         "live_channel_scan_performed": False,
         "protected_main_playlist_modified": False,
@@ -105,7 +105,7 @@ def main():
     with args.report.open("x", encoding="utf-8") as handle:
         json.dump(result, handle, ensure_ascii=False, indent=2, sort_keys=True)
         handle.write("\n")
-    print("Real 4955 original hash identities, TR/AZ metadata, and AES-GCM restore verified. URLs recovered: 0")
+    print("Real 4955 original hash identities, TR/AZ metadata and AES-GCM restore verified; original hash-only baseline contains zero URL strings (prior sealed URL recovery is a separate proof).")
 
 
 if __name__ == "__main__":
