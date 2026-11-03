@@ -327,6 +327,7 @@ def audit(*, report_path, sealed_path, key_path, limit=20,
             sources.append({"source_id": ident, "extinf_sha256": item["extinf_sha256"],
                             "extinf": item["extinf"], "reason": item["reason"],
                             "line_number": item["line_number"],
+                            "uri_structure": item["uri_structure"],
                             "candidates": candidates})
     current = reader(ONUR[1])
     _, orphans = parse_exact_pairs(current)
@@ -341,6 +342,7 @@ def audit(*, report_path, sealed_path, key_path, limit=20,
         sources.append({"source_id": ONUR[0], "extinf_sha256": item["extinf_sha256"],
                         "extinf": item["extinf"], "reason": item["reason"],
                         "line_number": item["line_number"],
+                        "uri_structure": item["uri_structure"],
                         "candidates": alts.get(item["extinf"], {})})
     existing_report = None
     if known_source_catalog is not None:
