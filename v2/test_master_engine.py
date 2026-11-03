@@ -65,7 +65,7 @@ class MasterTests(unittest.TestCase):
                    {"anonymous_id": "missing-real-url"}]
         items, audit, report = build(sources, live, history, checker=lambda item: True)
         self.assertEqual(len(items), 1)
-        self.assertEqual(items[0]["source_ids"], ["a", "b"])
+        self.assertEqual(items[0]["source_ids"], ["a", "b", "#60"])
         self.assertEqual(items[0]["network_status"], "HLS_MANIFEST_REACHABLE")
         self.assertFalse(items[0]["media_decoded"])
         self.assertFalse(items[0]["device_verified"])
