@@ -165,8 +165,11 @@ def reconcile(historical_records, current_records=(), expected_historical_record
         # Fail before creating any encrypted or public output on corrupt
         # URL/hash pairs, even when the record would otherwise be skipped.
         identity(row)
-    # Raw historical evidence is immutable in the protected snapshot.
-    protected = [dict(row) for row in historical]
+    # Preserve every original historical and incoming record in the encrypted
+    # raw evidence. Even failed/unsafe/hash-only/duplicate incoming rows remain
+    # auditable. Only the candidate *view* is deduplicated by valid URL.
+    # The first N records are always the immutable historical baseline.
+    protected = [dict(row) for row in historical + current]
     indexed = {}
     all_ids, hashed_only, unknown = set(), set(), 0
     duplicate_historical = 0
@@ -209,10 +212,15 @@ def reconcile(historical_records, current_records=(), expected_historical_record
     current_invalid = 0
     current_duplicates = 0
     hash_evidence_linked = set()
+    current_hash_only_sources = {}
     for row in current:
         url = row.get("url")
         if not validate_url(url):
             current_invalid += 1
+            key = identity(row)
+            if key is not None:
+                prior = current_hash_only_sources.setdefault(key, [])
+                prior.extend(x for x in source_ids(row) if x not in prior)
             continue
         key = digest(url)
         if key in current_identity:
@@ -233,14 +241,14 @@ def reconcile(historical_records, current_records=(), expected_historical_record
             item["source_ids"] = source_ids(row)
             item["historical_not_reverified"] = key in all_ids
             indexed[key] = item
-            # New real URL evidence supplements, never replaces historic rows.
-            protected.append(dict(row))
-    # Carry forward source attribution attached to a SHA-only historical row
-    # whenever a genuine matching URL appears. This does not guess an address.
-    for key, old_sources in hash_only_sources.items():
-        if key in indexed:
-            item = indexed[key]
-            item["source_ids"] = list(dict.fromkeys(old_sources + item["source_ids"]))
+    # Link SHA-only source provenance to a *real, exact* URL identity when
+    # available, whether its hash evidence came from #60 or a later backup.
+    # All original hash-only evidence stays separately in protected.
+    for mapping in (hash_only_sources, current_hash_only_sources):
+        for key, old_sources in mapping.items():
+            if key in indexed:
+                item = indexed[key]
+                item["source_ids"] = list(dict.fromkeys(old_sources + item["source_ids"]))
 
     # Evaluate both real-URL and hash-only evidence for the SAME verified digest.
     # Otherwise a #60 TR hash and a newer AZ URL could be silently mislabelled.
@@ -282,6 +290,10 @@ def reconcile(historical_records, current_records=(), expected_historical_record
         "historical_records_expected": expected_historical_records,
         "historical_records_observed": len(historical),
         "historical_records_preserved": len(historical),
+        "current_records_preserved": len(current),
+        "current_invalid_records_preserved": current_invalid,
+        "current_duplicate_url_rows_preserved": current_duplicates,
+        "total_raw_records_preserved": len(protected),
         "historical_tr_candidate_records": sum(classify(row)["region_candidate"] == "TR" for row in historical),
         "historical_az_candidate_records": sum(classify(row)["region_candidate"] == "AZ" for row in historical),
         "historical_unknown_region_records": sum(classify(row)["region_candidate"] == "UNKNOWN" for row in historical),

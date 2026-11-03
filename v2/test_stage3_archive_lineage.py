@@ -141,6 +141,72 @@ class Stage3ArchiveLineageTests(unittest.TestCase):
                 with self.assertRaisesRegex(ValueError, "block count"):
                     unpack_archive_snapshot(blocks[:-2] + blocks[-1:], 105)
 
+    def test_failed_duplicate_and_sha_only_incoming_rows_survive_aesgcm_recovery(self):
+        url = "https://fixture.example.org/already-seen.m3u8?key=ONE"
+        historical = [
+            {"url_sha256": digest(url), "source": "#60",
+             "region_candidate": "TR", "classification_evidence": "METADATA"},
+            {"url_sha256": hashlib.sha256(b"still-lost").hexdigest(),
+             "source": "#60", "region_candidate": "UNKNOWN",
+             "classification_evidence": "NONE"},
+        ]
+        incoming = [
+            {"url": url, "name": "First", "source": "new-a", "scope": "TR"},
+            {"url": url, "name": "Duplicate listing", "source": "new-b", "scope": "TR"},
+            {"url": "http://127.0.0.1/internal", "status": "FAILED", "source": "failed"},
+            {"url_sha256": hashlib.sha256(b"not-yet-recovered").hexdigest(),
+             "source": "new-hash-only", "status": "PENDING"},
+            {"anonymous_id": "no-address", "source": "unidentified"},
+            {"url_sha256": digest(url), "source": "late-hash-provenance"},
+        ]
+        preserved, candidates, report = reconcile(historical, incoming, 2)
+        self.assertEqual(preserved, historical + incoming)
+        self.assertEqual(report["historical_records_preserved"], 2)
+        self.assertEqual(report["current_records_preserved"], 6)
+        self.assertEqual(report["current_invalid_records_preserved"], 4)
+        self.assertEqual(report["current_duplicate_url_rows_preserved"], 1)
+        self.assertEqual(report["total_raw_records_preserved"], 8)
+        self.assertEqual(len(candidates), 1)
+        self.assertEqual(candidates[0]["source_ids"],
+                         ["#60", "late-hash-provenance", "new-a", "new-b"] if False
+                         else ["#60", "new-a", "new-b", "late-hash-provenance"])
+        self.assertEqual(candidates[0]["region_candidate"], "TR")
+        self.assertEqual(report["historical_hash_only_linked_to_real_urls"], 1)
+        self.assertEqual(report["unique_candidate_urls"], 1)
+        with tempfile.TemporaryDirectory() as tmp:
+            archive = Path(tmp) / "history-and-failures.enc"
+            rerecorded = Path(tmp) / "history-and-failures-again.enc"
+            with patch.dict(os.environ, {"V2_ARCHIVE_KEY_HEX": "7c" * 32}):
+                self.assertTrue(preserve_to_new_archive(archive, preserved, candidates))
+                old, current, view = unpack_archive_snapshot(restore(archive), 2)
+                self.assertEqual(old, historical)
+                self.assertEqual(current, incoming)
+                self.assertEqual(view, candidates)
+                redone, recon_candidates, summary = reconcile(old, current, 2)
+                self.assertEqual(redone, preserved)
+                self.assertEqual(recon_candidates, candidates)
+                self.assertTrue(preserve_to_new_archive(
+                    rerecorded, redone, recon_candidates))
+                self.assertEqual(restore(archive), restore(rerecorded))
+
+    def test_valid_historical_url_and_duplicate_current_sources_all_preserved(self):
+        url = "https://fixture.example.org/historic-live.m3u8"
+        old = [{"url": url, "source": "old", "scope": "TR"}]
+        now = [
+            {"url": url, "source": "relisted", "scope": "TR"},
+            {"url": url, "source": "relisted-second", "scope": "TR"},
+            {"url_sha256": digest(url), "source": "metadata-only", "scope": "TR"},
+        ]
+        raw, view, counts = reconcile(old, now, 1)
+        self.assertEqual(raw, old + now)
+        self.assertEqual(len(view), 1)
+        self.assertEqual(view[0]["source_ids"],
+                         ["old", "relisted", "relisted-second", "metadata-only"])
+        self.assertEqual(counts["historical_duplicate_identity_rows"], 0)
+        self.assertEqual(counts["current_duplicate_url_rows"], 1)
+        self.assertEqual(counts["current_records_preserved"], 3)
+        self.assertEqual(counts["historical_unique_real_urls"], 1)
+
     def test_legacy_exact_count_archive_remains_compatible(self):
         old = [{"url_sha256": hashlib.sha256(b"old").hexdigest()}]
         self.assertEqual(unpack_archive_snapshot(old, 1), (old, [], None))

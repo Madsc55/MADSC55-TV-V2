@@ -31,7 +31,7 @@ class HistoricalRegionCollisionTests(unittest.TestCase):
         old = [{"url": url, "country": "Türkiye", "source": "historical"}]
         current = [{"url": url, "country": "Azerbaijan", "source": "current"}]
         raw, indexed, summary = reconcile(old, current, 1)
-        self.assertEqual(raw, old)
+        self.assertEqual(raw, old + current)
         self.assertEqual(indexed[0]["region_candidate"], "UNKNOWN")
         self.assertEqual(summary["conflicting_tr_az_candidate_urls"], 1)
         self.assertEqual(summary["historical_tr_candidate_records"], 1)
