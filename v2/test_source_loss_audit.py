@@ -48,6 +48,40 @@ class SourceLossTests(unittest.TestCase):
         result = compare(report(("old", "ok", 20)), report())
         self.assertEqual(result["status"], "REVIEW_REQUIRED")
         self.assertEqual(result["findings"][0]["reason"], "MISSING_SOURCE_AUDIT")
+    def test_same_count_but_missing_historical_sha_is_flagged(self):
+        import hashlib
+        digest = lambda s: hashlib.sha256(s.encode()).hexdigest()
+        before = report(("tr", "PARSED_NOT_PLAYBACK_VERIFIED", 2))
+        after = report(("tr", "PARSED_NOT_PLAYBACK_VERIFIED", 2))
+        before["candidates"] = [{"url_sha256": digest("old-a")},
+                                {"url_sha256": digest("old-b")}]
+        after["candidates"] = [{"url_sha256": digest("old-a")},
+                               {"url_sha256": digest("new-c")}]
+        result = compare(before, after)
+        self.assertEqual(result["candidate_audit"]["absent_from_current_candidates"], 1)
+        self.assertEqual(result["findings"][0]["reason"], "HISTORICAL_CANDIDATES_ABSENT")
+
+    def test_truncated_inventory_cannot_prove_absence(self):
+        before = report(("tr", "PARSED_NOT_PLAYBACK_VERIFIED", 2))
+        after = report(("tr", "PARSED_NOT_PLAYBACK_VERIFIED", 2))
+        before["candidates"] = []
+        after["candidates"] = []
+        after["candidates_truncated"] = True
+        self.assertEqual(compare(before, after)["candidate_audit"]["status"], "NOT_COMPARABLE")
+
+    def test_invalid_candidate_hash_or_duplicate_rejected(self):
+        import hashlib
+        d = hashlib.sha256(b"real").hexdigest()
+        before = report(("tr", "ok", 1))
+        after = report(("tr", "ok", 1))
+        before["candidates"] = [{"url_sha256": d}, {"url_sha256": d}]
+        after["candidates"] = []
+        with self.assertRaisesRegex(ValueError, "Duplicate"):
+            compare(before, after)
+        before["candidates"] = [{"url_sha256": "not-a-hash"}]
+        with self.assertRaisesRegex(ValueError, "Invalid candidate"):
+            compare(before, after)
+
     def test_threshold_rejected(self):
         with self.assertRaises(ValueError):
             compare(report(), report(), 1.2)
