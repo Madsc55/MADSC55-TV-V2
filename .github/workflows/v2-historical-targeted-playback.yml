@@ -59,7 +59,7 @@ jobs:
       - name: Recover exact stream URLs only in transient memory and probe video audio
         shell: bash
         run: |
-          command -v ffprobe
+          command -v ffprobe || (sudo apt-get update -qq && sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends ffmpeg)
           PYTHONPATH=v2 python v2/historical_targeted_playback.py \
             --missing-report "$RUNNER_TEMP/m3u-loss/turkish-m3u-source-loss.json" \
             --baseline v2/history/stage3-4955-hash-only.jsonl \
