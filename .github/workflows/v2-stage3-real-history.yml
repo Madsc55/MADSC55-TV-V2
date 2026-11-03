@@ -10,6 +10,8 @@ on:
       - 'v2/history/stage3-4955-hash-only.jsonl'
       - 'v2/stage3_real_complete_audit.py'
       - 'v2/historical_local_match.py'
+      - 'v2/stage3_historical_source_recovery.py'
+      - 'v2/test_stage3_historical_source_recovery.py'
       - 'v2/test_historical_local_match.py'
       - 'v2/test_stage3_hash_evidence_linkage.py'
       - 'v2/test_stage3_identity_integrity.py'
@@ -46,6 +48,7 @@ jobs:
             test_real_historical_stage3 \
             test_stage3_immutable_history \
             test_historical_local_match \
+            test_stage3_historical_source_recovery \
             test_historical_inventory_guard \
             test_historical_region_collisions \
             test_stage3_hash_evidence_linkage \
@@ -207,6 +210,56 @@ jobs:
           print('Other V2 branches (five real M3U files): exact recovered URL hashes:',
                 report['matched_real_url_identities'])
           PY
+      - name: Recover exact SHA-256 URLs from original October 28 GitHub source snapshots only
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PYTHONPATH: v2
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/stage3-original-github-sources"
+          gh run download 40743765437 --repo "$GITHUB_REPOSITORY" \
+            -n unified-source-snapshot -D "$RUNNER_TEMP/stage3-original-github-sources"
+          python v2/stage3_historical_source_recovery.py \
+            --index v2/history/stage3-4955-hash-only.jsonl \
+            --original-discovery "$RUNNER_TEMP/stage3-original-github-sources/github-source-discovery.json" \
+            --report v2/reports/ci/stage3-original-github-historical-urls.json
+      - name: Combine 4,955 real historical URL matches across V2 branches and original source commits
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          repo=json.loads(Path('v2/reports/ci/stage3-other-v2-branches-exact-url-matches.json').read_text())
+          history=json.loads(Path('v2/reports/ci/stage3-original-github-historical-urls.json').read_text())
+          original=set(repo['matched_hashes'])
+          historical=set(history['matched_hashes'])
+          total=original|historical
+          assert len(total) <= 4955
+          assert len(total)+ (4955-len(total)) == 4955
+          assert all(isinstance(x,str) and len(x)==64 for x in total)
+          summary={
+            'schema':1,
+            'policy':'LOSSLESS_REAL_HISTORICAL_HASH_EXACT_URL_MATCH_NO_AUTOPUBLISH',
+            'historical_hashes':4955,
+            'v2_branch_matched':len(original),
+            'original_source_matched':len(historical),
+            'overlap_matched':len(original & historical),
+            'unique_exact_original_url_matches':len(total),
+            'still_without_original_url':4955-len(total),
+            'matched_hashes':sorted(total),
+            'source_commit_errors':history['source_files_unavailable'],
+            'real_streams_playback_reverified':0,
+            'device_playback_verified':False,
+            'plaintext_url_emitted':False,
+            'main_playlist_modified':False
+          }
+          Path('v2/reports/ci/stage3-combined-real-url-recovery.json').write_text(
+              json.dumps(summary,indent=2,sort_keys=True)+'\n')
+          print('Exactly recovered historical SHA256 URL identities:',len(total),
+                'still URL-less:',4955-len(total),
+                'unavailable source revisions:',summary['source_commit_errors'])
+          PY
       - name: Permanently preserve the real 4955 hash-only identities in V2 branch
         if: github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' && github.repository == 'Madsc55/MADSC55-TV-V2'
         shell: bash
@@ -259,5 +312,7 @@ jobs:
             v2/reports/ci/stage3-real-4955-complete-audit.json
             v2/reports/ci/stage3-local-hash-match.json
             v2/reports/ci/stage3-other-v2-branches-exact-url-matches.json
+            v2/reports/ci/stage3-original-github-historical-urls.json
+            v2/reports/ci/stage3-combined-real-url-recovery.json
           retention-days: 90
           if-no-files-found: warn
