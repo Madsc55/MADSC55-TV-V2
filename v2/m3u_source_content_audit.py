@@ -81,7 +81,11 @@ def _one(source, fetcher):
         reasons = analyze_unpaired_reference_reasons(payload)
         if sum(reasons.values()) != dangling:
             raise ValueError("Malformed reference tally not internally consistent")
-        state = ("INCOMPLETE_EXTINF_PAIRS" if dangling else
+        intentionally_unavailable = reasons.get("EXPLICIT_NO_PUBLIC_STREAM_PLACEHOLDER", 0)
+        actual_malformed = dangling - intentionally_unavailable
+        state = ("INCOMPLETE_EXTINF_PAIRS" if actual_malformed else
+                 "PARSED_WITH_DECLARED_NO_PUBLIC_STREAM_PLACEHOLDERS"
+                 if intentionally_unavailable and parsed else
                  "NON_HTTP_ONLY_REFERENCES" if not parsed and non_http else
                  "EMPTY_PLAYLIST" if not parsed else
                  "PARSED_HISTORICAL_HEADERLESS_NORMALIZED_NO_PLAYBACK"
@@ -93,6 +97,7 @@ def _one(source, fetcher):
                  "duplicate_url_entries": len(parsed) - len(unique),
                  "non_http_stream_references": non_http,
                  "unpaired_extinf": dangling,
+                 "actual_malformed_extinf": actual_malformed,
                  "unpaired_reason_counts": reasons,
                  "historical_header_normalized": normalized_historical_header}, unique)
     except Exception as exc:
@@ -127,7 +132,8 @@ def audit_contents(sources, historical_hashes, fetcher=fetch_once, workers=8, pr
     valid = [x for x in active if x["status"] in (
         "PARSED_M3U_NOT_PLAYBACK_VERIFIED",
         "PARSED_WITH_NON_HTTP_REFERENCES_NOT_PLAYBACK_VERIFIED",
-        "PARSED_HISTORICAL_HEADERLESS_NORMALIZED_NO_PLAYBACK")]
+        "PARSED_HISTORICAL_HEADERLESS_NORMALIZED_NO_PLAYBACK",
+        "PARSED_WITH_DECLARED_NO_PUBLIC_STREAM_PLACEHOLDERS")]
     historical_now = union & original
     return {
         "schema": 1,
@@ -141,6 +147,8 @@ def audit_contents(sources, historical_hashes, fetcher=fetch_once, workers=8, pr
         "source_status_counts": statuses,
         "non_http_reference_count": sum(x.get("non_http_stream_references", 0) for x in active),
         "unpaired_extinf_count": sum(x.get("unpaired_extinf", 0) for x in active),
+        "actual_malformed_extinf_count":
+            sum(x.get("actual_malformed_extinf", 0) for x in active),
         "unpaired_reason_totals": dict(sorted(
             sum((Counter(x.get("unpaired_reason_counts", {})) for x in active),
                 Counter()).items())),

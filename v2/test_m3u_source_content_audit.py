@@ -87,6 +87,17 @@ class FullM3UCoverageTests(unittest.TestCase):
         self.assertEqual(rejected["source_status_counts"],
                          {"SOURCE_CONTENT_FAILED": 1})
 
+    def test_documented_no_public_stream_is_not_misreported_as_broken(self):
+        source = [{"id": "free-tv", "url": "https://fixture.example/free.m3u"}]
+        body = ("#EXTM3U\n#EXTINF:-1,No public stream\n[NO PUBLIC STREAM]\n"
+                "#EXTINF:-1,Valid\nhttps://fixture.example/valid.m3u8\n")
+        result = audit_contents(source, [], lambda _: body)
+        self.assertEqual(result["status"], "COMPLETE_SOURCE_CONTENT_PARSED")
+        self.assertEqual(result["unpaired_extinf_count"], 1)
+        self.assertEqual(result["actual_malformed_extinf_count"], 0)
+        self.assertEqual(result["source_status_counts"],
+                         {"PARSED_WITH_DECLARED_NO_PUBLIC_STREAM_PLACEHOLDERS": 1})
+
     def test_upstream_placeholder_and_adjacent_extinf_not_mislabeled_as_streams(self):
         source = [{"id": "tr", "url": "https://fixture.example/tr.m3u"}]
         body = ("#EXTM3U\n#EXTINF:-1,No public stream\n"
