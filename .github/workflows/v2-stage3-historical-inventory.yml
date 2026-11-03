@@ -7,6 +7,7 @@ on:
       - 'v2/historical_inventory_guard.py'
       - 'v2/historical_url_recovery.py'
       - 'v2/test_historical_inventory_guard.py'
+      - 'v2/test_historical_region_collisions.py'
       - 'v2/test_historical_url_recovery.py'
       - 'v2/test_master_engine.py'
       - 'v2/test_stage3_master_integration.py'
@@ -41,6 +42,7 @@ jobs:
           set -o pipefail
           PYTHONPATH=v2 python -m unittest -v \
             test_historical_inventory_guard \
+            test_historical_region_collisions \
             test_stage3_master_integration \
             test_stage3_legacy_importers \
             test_historical_url_recovery \

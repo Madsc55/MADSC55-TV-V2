@@ -155,11 +155,30 @@ def reconcile(historical_records, current_records=(), expected_historical_record
             indexed[key] = item
             # New real URL evidence supplements, never replaces historic rows.
             protected.append(dict(row))
+    # A stream URL can be listed as TR in one historical source and AZ in
+    # another. Preserve both raw records, but never silently assign the first
+    # region to the deduplicated candidate when evidence conflicts.
+    region_evidence = {}
+    for row in historical + current:
+        url = row.get("url")
+        if not validate_url(url):
+            continue
+        key = digest(url)
+        region = classify(row)["region_candidate"]
+        if region in ("TR", "AZ"):
+            region_evidence.setdefault(key, set()).add(region)
+    conflicting_region_ids = {key for key, regions in region_evidence.items()
+                              if len(regions) > 1}
+
     candidates = []
     for key, item in indexed.items():
         candidate = dict(item)
         candidate["url_sha256"] = key
         candidate.update(classify(candidate))
+        if key in conflicting_region_ids:
+            candidate.update(region_candidate="UNKNOWN",
+                             classification_evidence="CONFLICTING_TR_AZ_EVIDENCE",
+                             spoken_language_verified=False)
         candidate["device_verified"] = False
         # Existing flags cannot turn historical evidence into media proof.
         candidate["historical_not_reverified"] = key in all_ids
@@ -188,6 +207,7 @@ def reconcile(historical_records, current_records=(), expected_historical_record
         "tr_candidates": sum(x["region_candidate"] == "TR" for x in candidates),
         "az_candidates": sum(x["region_candidate"] == "AZ" for x in candidates),
         "unknown_region_candidates": sum(x["region_candidate"] == "UNKNOWN" for x in candidates),
+        "conflicting_tr_az_candidate_urls": len(conflicting_region_ids),
         "historical_identity_sha256": hashlib.sha256("".join(sorted(all_ids)).encode()).hexdigest(),
         "historical_preservation_verified": False,
         "real_streams_reverified": 0, "device_verified": False, "channel_playlist_modified": False,
