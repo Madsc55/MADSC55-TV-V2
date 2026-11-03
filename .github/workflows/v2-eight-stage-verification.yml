@@ -18,7 +18,7 @@ jobs:
         with:
           python-version: '3.12.7'
       - name: Install pinned Python dependency
-        run: python -m pip install cryptography==44.0.2
+        run: python -m pip install cryptography==44.0.2 PyYAML==6.0.2
       - name: Verify protected playlist against committed HEAD
         run: |
           python - <<'PY'

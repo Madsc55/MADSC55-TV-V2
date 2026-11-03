@@ -32,9 +32,10 @@ assert '  workflow_dispatch:' in workflow
 assert '  push:' not in workflow and '  schedule:' not in workflow
 assert 'python v2/archive_acceptance_gate.py' in workflow
 assert workflow.index('python v2/archive_acceptance_gate.py') < workflow.index('python v2/github_source_discovery.py')
-# Separate nightly preflight must not contain network discovery/playback commands.
+# Ordered offline preflight must never start a scan or use scheduled execution.
 preflight = (ROOT.parent / '.github/workflows/v2-ordered-preflight.yml').read_text(encoding='utf-8')
-assert '  schedule:' in preflight and '  workflow_dispatch:' in preflight
+assert '  schedule:' not in preflight and '  workflow_dispatch:' in preflight
+assert '  push:' in preflight and 'madsc/v2-discovery-bulk-20261031' in preflight
 for forbidden in ('python v2/discover.py', 'python v2/github_source_discovery.py', 'python v2/all_source_playback.py'):
     assert forbidden not in preflight, forbidden
 for required in ('needs: compile', 'needs: protect', 'needs: discovery-tests'):
