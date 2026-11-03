@@ -10,6 +10,7 @@ on:
       - 'v2/test_historical_url_recovery.py'
       - 'v2/test_master_engine.py'
       - 'v2/test_stage3_master_integration.py'
+      - 'v2/test_stage3_legacy_importers.py'
       - 'v2/test_source_loss_audit.py'
       - 'v2/master_engine.py'
       - '.github/workflows/v2-stage3-historical-inventory.yml'
@@ -41,6 +42,7 @@ jobs:
           PYTHONPATH=v2 python -m unittest -v \
             test_historical_inventory_guard \
             test_stage3_master_integration \
+            test_stage3_legacy_importers \
             test_historical_url_recovery \
             test_source_loss_audit \
             test_master_engine \
