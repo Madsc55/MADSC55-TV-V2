@@ -50,6 +50,45 @@ class OrphanRecoveryTests(unittest.TestCase):
         self.assertNotIn(wrong_line, matches)
         self.assertEqual(evidence["historical_files_read"], 1)
 
+    def test_historical_revisions_paginate_and_never_invent_commits(self):
+        from orphan_m3u_recovery import historical_revisions
+        calls = []
+        def fake_read(url, api=False):
+            from urllib.parse import parse_qs, urlsplit
+            self.assertTrue(api)
+            qs = parse_qs(urlsplit(url).query)
+            self.assertEqual(qs["per_page"], ["100"])
+            page = int(qs["page"][0])
+            calls.append(page)
+            first = (page - 1) * 100
+            count = 100 if page == 1 else 50
+            return json.dumps([{"sha": format(first + i + 1, "040x")}
+                               for i in range(count)]).encode()
+        with patch("orphan_m3u_recovery._read", side_effect=fake_read):
+            revs = historical_revisions("Hannstcott/SunshineTr",
+                                        "sunshinetv.m3u", limit=150)
+        self.assertEqual(len(revs), 150)
+        self.assertEqual(calls, [1, 2])
+        self.assertEqual(len(set(revs)), 150)
+
+    def test_historical_revisions_duplicate_page_rejected(self):
+        from orphan_m3u_recovery import historical_revisions
+        def fake_read(url, api=False):
+            from urllib.parse import parse_qs, urlsplit
+            page = int(parse_qs(urlsplit(url).query)["page"][0])
+            return json.dumps([{"sha": format(i + 1, "040x")}
+                               for i in range(100 if page == 1 else 1)]).encode()
+        with patch("orphan_m3u_recovery._read", side_effect=fake_read):
+            with self.assertRaisesRegex(ValueError, "Duplicate historical"):
+                historical_revisions("discevisita/iptv", "tr.m3u", limit=101)
+
+    def test_historical_revisions_reject_unbounded_or_unpinned_scope(self):
+        from orphan_m3u_recovery import historical_revisions
+        with self.assertRaises(ValueError):
+            historical_revisions("discevisita/iptv", "tr.m3u", limit=151)
+        with self.assertRaises(ValueError):
+            historical_revisions("untrusted/iptv", "tr.m3u", limit=100)
+
     def test_historical_exact_extinf_provenance_remains_explicit(self):
         historical = "#EXTM3U\n" + self.dis + "\n" + self.a + "\n"
         matches, evidence = find_historical(

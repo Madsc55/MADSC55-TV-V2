@@ -35,7 +35,7 @@ ONUR_ALTERNATES = (
     "https://onureroz.com/indirmeler/turk/all.m3u",
 )
 MAX_FILE_BYTES = 32_000_000
-MAX_CANDIDATE_STREAMS = 256
+MAX_CANDIDATE_STREAMS = 800
 
 
 def _hash(s):
@@ -130,21 +130,34 @@ def count_excluded_network_references(payload):
 
 
 def historical_revisions(repo, path, *, limit=20):
+    """Read a bounded number of real Git revisions, including older pages."""
     if (repo, path) not in {(r, p) for _, r, p in ORIGINALS}:
         raise ValueError("Historical source outside pinned scope")
+    if type(limit) is not int or not 1 <= limit <= 150:
+        raise ValueError("Historical revision limit out of bounds")
     owner, name = repo.split("/")
-    url = ("https://api.github.com/repos/" + quote(owner) + "/" + quote(name)
-           + "/commits?" + urlencode({"path": path, "per_page": str(limit)}))
-    data = json.loads(_read(url, api=True))
-    if not isinstance(data, list):
-        raise ValueError("GitHub history is not a list")
-    shas = []
-    for entry in data[:limit]:
-        sha = entry.get("sha") if isinstance(entry, dict) else None
-        if not isinstance(sha, str) or not re.fullmatch(r"[a-f0-9]{40}", sha):
-            raise ValueError("Untrusted historical Git revision")
-        shas.append(sha)
-    return shas
+    shas, seen = [], set()
+    while len(shas) < limit:
+        page = len(shas) // 100 + 1
+        query = urlencode({"path": path, "per_page": "100", "page": str(page)})
+        url = ("https://api.github.com/repos/" + quote(owner) + "/" + quote(name)
+               + "/commits?" + query)
+        data = json.loads(_read(url, api=True))
+        if not isinstance(data, list):
+            raise ValueError("GitHub history is not a list")
+        if len(data) > 100:
+            raise ValueError("GitHub history page exceeded 100 results")
+        for entry in data:
+            sha = entry.get("sha") if isinstance(entry, dict) else None
+            if not isinstance(sha, str) or not re.fullmatch(r"[a-f0-9]{40}", sha):
+                raise ValueError("Untrusted historical Git revision")
+            if sha in seen:
+                raise ValueError("Duplicate historical revision across pages")
+            seen.add(sha)
+            shas.append(sha)
+        if len(data) < 100:
+            break
+    return shas[:limit]
 
 
 def find_historical(orphan_rows, repo, path, *, limit=20,
@@ -162,11 +175,22 @@ def find_historical(orphan_rows, repo, path, *, limit=20,
     files_read = 0
     failures = 0
     revisions = commits(repo, path, limit=limit)
-    for revision in revisions:
+    def fetch_revision(revision):
         url = ("https://raw.githubusercontent.com/" + repo + "/" + revision
                + "/" + quote(path, safe="/"))
         try:
             rows, _ = parse_exact_pairs(reader(url))
+            return revision, rows, False
+        except (OSError, ValueError, TypeError):
+            return revision, {}, True
+
+    # Bounded concurrency preserves revision order and avoids 300 sequential
+    # HTTP requests. No media/stream URL is fetched in this archive pass.
+    with ThreadPoolExecutor(max_workers=8) as pool:
+        for revision, rows, failed in pool.map(fetch_revision, revisions):
+            if failed:
+                failures += 1
+                continue
             files_read += 1
             for historical_extinf, streams in rows.items():
                 destinations = {}
@@ -185,8 +209,6 @@ def find_historical(orphan_rows, repo, path, *, limit=20,
                             candidate["proof_commits"].append(revision)
                         if rule not in candidate["proof_rules"]:
                             candidate["proof_rules"].append(rule)
-        except (OSError, ValueError, TypeError):
-            failures += 1
     return matches, {"revisions_listed": len(revisions), "historical_files_read": files_read,
                      "historical_files_unavailable": failures,
                      "metadata_identity_match_rule":
@@ -309,7 +331,7 @@ def evaluate(sources, *, probe=probe_one):
             mapping[digest].append(item)
     if len(urls) > MAX_CANDIDATE_STREAMS:
         raise ValueError("Too many historical streams for bounded validation")
-    with ThreadPoolExecutor(max_workers=4) as pool:
+    with ThreadPoolExecutor(max_workers=8) as pool:
         probed = list(pool.map(probe, sorted(urls.items())))
     verified = {z["url_sha256"] for z in probed
                 if z["status"] == "VIDEO_STREAM_OBSERVED"
@@ -454,7 +476,7 @@ def main():
     if (args.report.exists() or args.report.is_symlink()
             or args.sealed.exists() or args.sealed.is_symlink()
             or args.report.resolve() == args.sealed.resolve()
-            or not 1 <= args.history_revisions <= 35):
+            or not 1 <= args.history_revisions <= 150):
         p.error("Unsafe output path or unbounded history")
     result = audit(report_path=args.report, sealed_path=args.sealed,
                    key_path=args.public_key, limit=args.history_revisions,
