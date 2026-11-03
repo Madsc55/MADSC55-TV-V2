@@ -37,7 +37,7 @@ def api_json(url):
 
 def scan(request=api_json, terms=TERMS):
     sources, errors, seen = [], [], set()
-    for term in terms:
+    for term in dict.fromkeys(terms):
         for forge in ("gitlab", "codeberg"):
             try:
                 if forge == "gitlab":
@@ -53,7 +53,8 @@ def scan(request=api_json, terms=TERMS):
                 try:
                     if forge == "gitlab":
                         tree = "https://gitlab.com/api/v4/projects/" + str(project["id"]) + "/repository/tree?" + urllib.parse.urlencode({"ref": project["branch"], "recursive": "true", "per_page": 100})
-                        paths = parse_tree_paths(request(tree))
+                        payload = request(tree)
+                        paths = parse_tree_paths(payload if isinstance(payload, list) else [])
                     else:
                         tree = ("https://codeberg.org/api/v1/repos/" + urllib.parse.quote(project["owner"], safe="") + "/" + urllib.parse.quote(project["name"], safe="") + "/git/trees/" + urllib.parse.quote(project["branch"], safe="") + "?recursive=true")
                         payload = request(tree)
