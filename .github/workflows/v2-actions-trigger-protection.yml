@@ -1,0 +1,60 @@
+name: V2 Actions Trigger & Protected Playlist Gate (53+ workflows)
+on:
+  push:
+    branches: [madsc/v2-discovery-bulk-20261031]
+    paths:
+      - '.github/workflows/**'
+      - 'v2/actions_trigger_protection_audit.py'
+      - 'v2/test_actions_trigger_protection_audit.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: v2-actions-trigger-protection-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  grouped-protection-check:
+    name: All Actions triggers, write permissions, protected playlist, and history
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Pin offline YAML workflow parser
+        run: python -m pip install PyYAML==6.0.2
+      - name: Verify protected original playlist and history fingerprints
+        shell: bash
+        run: |
+          test "$(git hash-object MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)" = '4b1c3cea4b5107a425abab60f62d41f9f81e05a7'
+          test "$(sha256sum v2/history/stage3-4955-hash-only.jsonl | cut -d' ' -f1)" = 'ee00a844a028e3410715d411467a2d3306f5f5cc4565766140b6438e786cdd27'
+      - name: All 54 workflows and related protections validated in one batch
+        shell: bash
+        run: |
+          set -o pipefail
+          mkdir -p v2/reports/ci
+          PYTHONPATH=v2 python -m unittest -v \
+            test_actions_trigger_protection_audit \
+            test_actions_monitor \
+            test_source_loss_audit \
+            test_orphan_baseline_guard \
+            test_run60_source_ledger \
+            2>&1 | tee v2/reports/ci/actions-trigger-protection-tests.log
+          PYTHONPATH=v2 python v2/test_playlist_invariants.py \
+            2>&1 | tee -a v2/reports/ci/actions-trigger-protection-tests.log
+          python v2/actions_trigger_protection_audit.py \
+            --workflows .github/workflows \
+            --output v2/reports/ci/actions-trigger-protection.json
+      - name: Save only anonymous guard result and test evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v2-actions-trigger-protection-${{ github.run_id }}
+          path: |
+            v2/reports/ci/actions-trigger-protection.json
+            v2/reports/ci/actions-trigger-protection-tests.log
+          if-no-files-found: warn
+          retention-days: 30

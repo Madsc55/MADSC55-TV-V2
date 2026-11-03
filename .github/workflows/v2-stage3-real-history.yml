@@ -1,38 +1,9 @@
 name: V2 Stage 3 Real Historical 4955 Evidence
 on:
-  push:
-    branches:
-      - madsc/v2-discovery-bulk-20261031
-    paths:
-      - 'v2/real_historical_stage3.py'
-      - 'v2/test_real_historical_stage3.py'
-      - 'v2/test_stage3_immutable_history.py'
-      - 'v2/history/stage3-4955-hash-only.jsonl'
-      - 'v2/stage3_real_complete_audit.py'
-      - 'v2/stage3_exact_coverage.py'
-      - 'v2/test_stage3_exact_coverage.py'
-      - 'v2/stage3_git_history_forensics.py'
-      - 'v2/test_stage3_git_history_forensics.py'
-      - 'v2/stage3_sealed_export.py'
-      - 'v2/test_stage3_sealed_export.py'
-      - 'v2/config/stage3_transit_public.pem'
-      - 'v2/historical_local_match.py'
-      - 'v2/stage3_historical_source_recovery.py'
-      - 'v2/stage3_original_configured_source_recovery.py'
-      - 'v2/stage3_dearbulut_health_recovery.py'
-      - 'v2/test_stage3_dearbulut_health_recovery.py'
-      - 'v2/test_stage3_original_configured_source_recovery.py'
-      - 'v2/test_stage3_historical_source_recovery.py'
-      - 'v2/test_historical_local_match.py'
-      - 'v2/test_stage3_hash_evidence_linkage.py'
-      - 'v2/test_stage3_identity_integrity.py'
-      - 'v2/test_stage3_archive_lineage.py'
-      - 'v2/test_stage3_atomic_classification.py'
-      - '.github/workflows/v2-stage3-real-history.yml'
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
   actions: read
 
 jobs:

@@ -1,12 +1,9 @@
 name: V2 Five Source Live Validation
 on:
-  push:
-    branches: [madsc/v2-discovery-bulk-20261031]
-    paths:
-      - 'v2/source_failover.py'
-      - 'v2/config/sources.json'
-      - '.github/workflows/v2-source-live-validation.yml'
   workflow_dispatch:
+
+permissions:
+  contents: read
 jobs:
   validate-five-sources:
     runs-on: ubuntu-latest

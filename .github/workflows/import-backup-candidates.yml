@@ -1,29 +1,22 @@
-name: Backup candidates import
+# Protected V2: previous automatic playlist publisher is intentionally locked.
+# Original implementation remains in Git history and may only be restored by
+# an explicit user-approved change after independent device verification.
+name: Backup candidates import (V2 protected lock)
 on:
-  push:
-    paths:
-      - '.github/workflows/import-backup-candidates.yml'
   workflow_dispatch:
 permissions:
-  contents: write
-  actions: read
+  contents: read
 jobs:
-  import:
-    runs-on: ubuntu-latest
+  protected-readonly-check:
+    if: github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031'
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
-      - name: Download scan results
-        env:
-          GH_TOKEN: ${{ github.token }}
+        with:
+          persist-credentials: false
+      - name: Protect main IBO file and reject automatic promotion
+        shell: bash
         run: |
-          gh run download 40758418496 -n unified-private-playback-snapshot -D v2/reports
-          gh run download 40758418496 -n turkish-stream-review -D /tmp/scan61 && cp /tmp/scan61/v2/reports/all-source-playback-aggregate.json v2/reports/
-      - name: Prepare backup candidates
-        run: python v2/add_scan61_to_backups.py
-      - name: Save playlist
-        run: |
-          git config user.name github-actions
-          git config user.email actions@users.noreply.github.com
-          git add MADSC55_TV_IBO_CALISANLAR_TEST.m3u8
-          git commit -m 'Add verified decoded candidates to backups'
-          git push
+          test "$(git hash-object MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)" = '4b1c3cea4b5107a425abab60f62d41f9f81e05a7'
+          test -z "$(git status --porcelain -- MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)"
+          echo "Legacy playlist mutation disabled; no scan, commit or push is executed."

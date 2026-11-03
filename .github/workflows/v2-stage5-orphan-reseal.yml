@@ -1,9 +1,5 @@
 name: V2 Stage5 Orphan 107 Independent RSA Re-Seal
 on:
-  push:
-    branches: [madsc/v2-discovery-bulk-20261031]
-    paths:
-      - '.github/workflows/v2-stage5-orphan-reseal.yml'
   workflow_dispatch:
 
 permissions:

@@ -2,6 +2,7 @@ name: MADSC TV — Tek Toplu Güvenlik ve Bitiş Kontrolü
 on:
   workflow_dispatch:
   push:
+    branches: [madsc/v2-discovery-bulk-20261031]
     paths:
       - 'v2/test_language_evidence_functional.py'
       - 'v2/spoken_language_sample_review.py'

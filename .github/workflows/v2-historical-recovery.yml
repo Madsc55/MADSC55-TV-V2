@@ -1,9 +1,7 @@
 name: MADSC TV — Eski ve Yeni Tarama Kurtarma Kontrolü
 on:
   workflow_dispatch:
-  push:
-    paths:
-      - '.github/workflows/v2-historical-recovery.yml'
+
 permissions:
   contents: read
 jobs:

@@ -1,17 +1,5 @@
 name: V2 Turkish M3U Orphan Recovery — Exact History and AV Batch
 on:
-  push:
-    branches: [madsc/v2-discovery-bulk-20261031]
-    paths:
-      - 'v2/orphan_m3u_recovery.py'
-      - 'v2/m3u_source_content_audit.py'
-      - 'v2/test_m3u_source_content_audit.py'
-      - 'v2/discover.py'
-      - 'v2/test_orphan_m3u_recovery.py'
-      - 'v2/orphan_baseline_guard.py'
-      - 'v2/test_orphan_baseline_guard.py'
-      - 'v2/history/m3u-orphan-50-hash-baseline.json'
-      - '.github/workflows/v2-orphan-m3u-recovery.yml'
   workflow_dispatch:
 
 permissions:

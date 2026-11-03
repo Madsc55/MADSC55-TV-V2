@@ -1,8 +1,7 @@
 name: V2 GitHub Turkish M3U Source Discovery
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '25 5 * * 1,4'
+
 permissions:
   contents: read
 concurrency:

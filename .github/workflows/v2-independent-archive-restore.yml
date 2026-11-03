@@ -1,12 +1,5 @@
 name: V2 Independent Durable Archive Restore Acceptance
 on:
-  push:
-    branches:
-      - madsc/v2-discovery-bulk-20261031
-    paths:
-      - 'v2/archive_acceptance_gate.py'
-      - 'v2/independent_s3_restore.py'
-      - '.github/workflows/v2-independent-archive-restore.yml'
   workflow_dispatch:
     inputs:
       s3_bucket:
@@ -21,6 +14,7 @@ on:
         description: 'Immutable S3 object version ID'
         required: true
         type: string
+
 permissions:
   contents: read
   id-token: write

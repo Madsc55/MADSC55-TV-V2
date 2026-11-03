@@ -1,12 +1,7 @@
 name: V2 Turkish Stream Catalog Discovery
 on:
   workflow_dispatch:
-  push:
-    paths:
-      - 'v2/turkish_stream_catalog.py'
-      - '.github/workflows/v2-turkish-stream-catalog.yml'
-  schedule:
-    - cron: '27 5 * * 2,5'
+
 permissions:
   contents: read
 jobs:

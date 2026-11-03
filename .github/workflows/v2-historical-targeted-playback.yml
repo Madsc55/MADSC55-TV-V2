@@ -1,11 +1,5 @@
 name: V2 Historical Missing-URL Video Audio Evidence (read-only)
 on:
-  push:
-    branches: [madsc/v2-discovery-bulk-20261031]
-    paths:
-      - 'v2/historical_targeted_playback.py'
-      - 'v2/test_historical_targeted_playback.py'
-      - '.github/workflows/v2-historical-targeted-playback.yml'
   workflow_dispatch:
 
 permissions:

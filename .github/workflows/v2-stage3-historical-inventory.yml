@@ -1,34 +1,5 @@
 name: V2 Stage 3 Historical Inventory Loss Protection
 on:
-  push:
-    branches:
-      - madsc/v2-discovery-bulk-20261031
-    paths:
-      - 'v2/historical_inventory_guard.py'
-      - 'v2/historical_url_recovery.py'
-      - 'v2/test_historical_inventory_guard.py'
-      - 'v2/test_stage3_immutable_history.py'
-      - 'v2/history/stage3-4955-hash-only.jsonl'
-      - 'v2/stage3_real_complete_audit.py'
-      - 'v2/stage3_exact_coverage.py'
-      - 'v2/test_stage3_exact_coverage.py'
-      - 'v2/stage3_git_history_forensics.py'
-      - 'v2/test_stage3_git_history_forensics.py'
-      - 'v2/stage3_sealed_export.py'
-      - 'v2/test_stage3_sealed_export.py'
-      - 'v2/config/stage3_transit_public.pem'
-      - 'v2/test_historical_region_collisions.py'
-      - 'v2/test_stage3_hash_evidence_linkage.py'
-      - 'v2/test_stage3_identity_integrity.py'
-      - 'v2/test_stage3_archive_lineage.py'
-      - 'v2/test_stage3_atomic_classification.py'
-      - 'v2/test_historical_url_recovery.py'
-      - 'v2/test_master_engine.py'
-      - 'v2/test_stage3_master_integration.py'
-      - 'v2/test_stage3_legacy_importers.py'
-      - 'v2/test_source_loss_audit.py'
-      - 'v2/master_engine.py'
-      - '.github/workflows/v2-stage3-historical-inventory.yml'
   workflow_dispatch:
 
 permissions:

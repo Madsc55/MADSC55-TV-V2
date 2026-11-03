@@ -1,34 +1,33 @@
-name: V2 Logo Backup (non-destructive)
+name: V2 Logo Backup (manual read-only export)
 on:
-  push:
-    paths:
-      - '.github/workflows/v2-logo-backup.yml'
-      - 'v2/mirror_logos.py'
   workflow_dispatch:
-  schedule:
-    - cron: '29 2 * * 0'
 permissions:
-  contents: write
+  contents: read
 concurrency:
   group: v2-logo-backup
   cancel-in-progress: false
 jobs:
   backup:
+    if: github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031'
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
       - name: Mirror logos
         run: python v2/mirror_logos.py
-      - name: Commit saved images and manifest
+      - name: Protect immutable IBO before delivering read-only artifact
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add v2/logos
-          if ! git diff --cached --quiet; then
-            git commit -m "backup: mirror V2 channel logo images"
-            git push
-          fi
+          test "$(git hash-object MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)" = '4b1c3cea4b5107a425abab60f62d41f9f81e05a7'
+      - name: Upload local output for manual review (never publish to main)
+        uses: actions/upload-artifact@v4
+        with:
+          name: v2-logo-backup-read-only-preview
+          path: |
+            v2/logos/
+          if-no-files-found: warn
+          retention-days: 14
