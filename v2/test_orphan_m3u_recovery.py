@@ -31,6 +31,16 @@ class OrphanRecoveryTests(unittest.TestCase):
         self.assertEqual(len(matches[self.dis]), 1)
         self.assertEqual(counts["historical_files_read"], 1)
 
+    def test_nonpublic_http_is_safely_excluded_but_not_an_orphan(self):
+        from orphan_m3u_recovery import count_excluded_network_references
+        content = ("#EXTM3U\\n#EXTINF:-1,Private\\n"
+                   "http://192.168.1.10/live.m3u8\\n"
+                   "#EXTINF:-1,Valid\\nhttps://public.example.org/good.m3u8\\n")
+        rows, orphan = parse_exact_pairs(content)
+        self.assertEqual(len(orphan), 0)
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(count_excluded_network_references(content), 1)
+
     def test_nonoriginal_source_path_cannot_be_sneaked_in(self):
         with self.assertRaisesRegex(ValueError, "outside pinned"):
             find_historical([], "somewhere/unknown", "other.m3u",

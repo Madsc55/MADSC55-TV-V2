@@ -49,6 +49,15 @@ def _read_document(url):
     return text
 
 
+def is_nonpublic_absolute_http_reference(value):
+    if not value.startswith(("http://", "https://")):
+        return False
+    try:
+        return bool(urlsplit(value).hostname) and not validate_url(value)
+    except ValueError:
+        return False
+
+
 def parse_exact_pairs(payload):
     """Return exact metadata-keyed orphan lines and valid URL candidates."""
     if not isinstance(payload, str):
@@ -74,7 +83,7 @@ def parse_exact_pairs(payload):
                 rows[extinf].add(line)
             elif line.startswith(("[NO PUBLIC STREAM]", "[NO STREAM]")):
                 orphaned("EXPLICIT_NO_PUBLIC_STREAM_PLACEHOLDER", pending)
-            elif line.startswith(("http://", "https://")) and urlsplit(line).hostname:
+            elif is_nonpublic_absolute_http_reference(line):
                 # Present absolute HTTP URI rejected by our public-network safety
                 # rules: not a *missing* EXTINF pair and never a probe candidate.
                 pass
@@ -95,8 +104,7 @@ def count_excluded_network_references(payload):
         if line.startswith("#EXTINF:"):
             pending = True
         elif line and not line.startswith("#") and pending:
-            if (line.startswith(("http://", "https://"))
-                    and urlsplit(line).hostname and not validate_url(line)):
+            if is_nonpublic_absolute_http_reference(line):
                 count += 1
             pending = False
     return count
