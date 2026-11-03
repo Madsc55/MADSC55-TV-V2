@@ -102,6 +102,8 @@ def historical_revisions(repo, path, *, limit=20):
 
 def find_historical(orphan_rows, repo, path, *, limit=20,
                     commits=historical_revisions, reader=_read_document):
+    if (repo, path) not in {(r, p) for _, r, p in ORIGINALS}:
+        raise ValueError("Historical source outside pinned scope")
     wanted = {o["extinf"] for o in orphan_rows}
     matches = defaultdict(dict)
     files_read = 0
