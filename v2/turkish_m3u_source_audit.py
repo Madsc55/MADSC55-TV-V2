@@ -109,6 +109,36 @@ def compare_original_runs(old_path, new_path, baseline_path):
             "no_stream_urls_emitted": True}
 
 
+def historical_source_catalog_gaps(historical, configured_sources, approved_count=0,
+                                   dynamic_catalog_available=False):
+    """Identify historical dynamic sources missing from the current approved catalog.
+
+    Counts describe #60/#72 provenance, not confirmed present-day stream deaths.
+    """
+    configured_ids = {row["id"] for row in configured_sources}
+    gaps = sorted(
+        ({"source_id": row["source_id"],
+          "historical_tested": row["old_tested"],
+          "later_tested": row["new_tested"],
+          "old_only_url_identities": row["old_only_url_identities"],
+          "kind": ("DYNAMIC_GITHUB_SOURCE" if row["source_id"].startswith("github-auto-")
+                   else "UNCONFIGURED_HISTORICAL_SOURCE")}
+         for row in historical.get("source_breakdown", [])
+         if row["old_tested"] and row["source_id"] not in configured_ids),
+        key=lambda row: (-row["old_only_url_identities"], row["source_id"]))
+    return {
+        "schema": 1,
+        "status": "HISTORICAL_SOURCE_GAP_REVIEW_REQUIRED" if gaps else "NO_HISTORICAL_SOURCE_ID_GAPS",
+        "unconfigured_historical_source_ids": len(gaps),
+        "old_only_url_identities_at_unconfigured_sources":
+            sum(row["old_only_url_identities"] for row in gaps),
+        "approved_github_source_hash_count": approved_count,
+        "dynamic_catalog_present_in_checkout": bool(dynamic_catalog_available),
+        "gaps": gaps,
+        "note": "Never autoapprove or re-label historical GitHub sources from a hash count.",
+    }
+
+
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("--sources", type=Path, required=True)
@@ -129,6 +159,16 @@ def main():
         if not all(v is not None for v in selected):
             p.error("Historical loss evidence requires both real aggregates and immutable baseline")
         result["historical_loss"] = compare_original_runs(*selected)
+        approvals_file = Path(__file__).resolve().parent / "config/approved-github-source-sha256.json"
+        approvals = (json.loads(approvals_file.read_text(encoding="utf-8"))
+                     if approvals_file.is_file() else {})
+        if not isinstance(approvals.get("approved_sha256", []), list):
+            p.error("Invalid source approval inventory")
+        result["historical_source_catalog_gaps"] = historical_source_catalog_gaps(
+            result["historical_loss"], config["sources"],
+            approved_count=len(approvals.get("approved_sha256", [])),
+            dynamic_catalog_available=(Path(__file__).resolve().parent /
+                                       "reports/github-source-discovery.json").is_file())
     if args.audit_full_source_content:
         if args.baseline is None:
             p.error("Full source content audit requires immutable historical baseline")

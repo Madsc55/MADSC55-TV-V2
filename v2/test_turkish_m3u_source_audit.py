@@ -3,7 +3,9 @@
 import hashlib
 import unittest
 
-from turkish_m3u_source_audit import audit_endpoints, safe_probing_result
+from turkish_m3u_source_audit import (
+    audit_endpoints, safe_probing_result, historical_source_catalog_gaps,
+)
 
 
 class TurkishSourceAuditTests(unittest.TestCase):
@@ -40,6 +42,30 @@ class TurkishSourceAuditTests(unittest.TestCase):
         self.assertEqual(result["source_headers_unreachable"], 0)
         self.assertEqual(result["status"], "ACTIVE_SOURCE_HEADERS_REACHABLE")
         self.assertEqual(result["sources"][0]["status"], "DISABLED_UPSTREAM_REMOVED")
+
+    def test_dynamic_historical_sources_cannot_silently_disappear(self):
+        original = {"source_breakdown": [
+            {"source_id": "github-auto-7", "old_tested": 4931,
+             "new_tested": 0, "old_only_url_identities": 4682},
+            {"source_id": "iptv-org", "old_tested": 11204,
+             "new_tested": 9, "old_only_url_identities": 3858},
+        ]}
+        result = historical_source_catalog_gaps(
+            original, [{"id": "iptv-org"}], 0, False)
+        self.assertEqual(result["unconfigured_historical_source_ids"], 1)
+        self.assertEqual(result["old_only_url_identities_at_unconfigured_sources"], 4682)
+        self.assertEqual(result["approved_github_source_hash_count"], 0)
+        self.assertEqual(result["gaps"][0]["source_id"], "github-auto-7")
+        self.assertEqual(result["status"], "HISTORICAL_SOURCE_GAP_REVIEW_REQUIRED")
+
+    def test_matching_historical_source_is_not_a_missing_source(self):
+        original = {"source_breakdown": [
+            {"source_id": "iptv-org", "old_tested": 150,
+             "new_tested": 150, "old_only_url_identities": 0},
+        ]}
+        result = historical_source_catalog_gaps(original, [{"id": "iptv-org"}])
+        self.assertEqual(result["gaps"], [])
+        self.assertEqual(result["status"], "NO_HISTORICAL_SOURCE_ID_GAPS")
 
     def test_source_exception_does_not_erase_remaining_sources(self):
         sources = [{"id": "one", "url": "https://example.org/one.m3u"},
