@@ -1,5 +1,12 @@
 name: V2 Independent Durable Archive Restore Acceptance
 on:
+  push:
+    branches:
+      - madsc/v2-discovery-bulk-20261031
+    paths:
+      - 'v2/archive_acceptance_gate.py'
+      - 'v2/independent_s3_restore.py'
+      - '.github/workflows/v2-independent-archive-restore.yml'
   workflow_dispatch:
     inputs:
       s3_bucket:
@@ -19,7 +26,7 @@ permissions:
   id-token: write
 jobs:
   independent-restore:
-    if: github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031'
+    if: github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' && (inputs.s3_bucket != '' || vars.V2_ARCHIVE_S3_BUCKET != '') && (inputs.s3_version_id != '' || vars.V2_ARCHIVE_S3_VERSION_ID != '')
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     steps:
@@ -41,9 +48,9 @@ jobs:
         env:
           V2_ARCHIVE_KEY_HEX: ${{ secrets.V2_ARCHIVE_KEY_HEX }}
           V2_ARCHIVE_EXPECTED_SHA256: ${{ secrets.V2_ARCHIVE_EXPECTED_SHA256 }}
-          ARCHIVE_BUCKET: ${{ inputs.s3_bucket }}
-          ARCHIVE_OBJECT_KEY: ${{ inputs.s3_object_key }}
-          ARCHIVE_VERSION: ${{ inputs.s3_version_id }}
+          ARCHIVE_BUCKET: ${{ inputs.s3_bucket || vars.V2_ARCHIVE_S3_BUCKET }}
+          ARCHIVE_OBJECT_KEY: ${{ inputs.s3_object_key || vars.V2_ARCHIVE_S3_OBJECT_KEY }}
+          ARCHIVE_VERSION: ${{ inputs.s3_version_id || vars.V2_ARCHIVE_S3_VERSION_ID }}
         run: |
           set -euo pipefail
           python v2/independent_s3_restore.py --bucket "$ARCHIVE_BUCKET" --key "$ARCHIVE_OBJECT_KEY" --version-id "$ARCHIVE_VERSION"
