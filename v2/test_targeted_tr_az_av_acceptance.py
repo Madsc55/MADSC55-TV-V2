@@ -82,6 +82,9 @@ class TargetedTrAzAcceptanceTests(unittest.TestCase):
             directory=Path(d)
             path,doc=self._fixture(directory)
             result=validate(path,require_complete=True)
+            self.assertEqual(result["status"],"TARGET_METADATA_SCOPE_PROBE_COMPLETE")
+            self.assertEqual(result["total_discovered_urls"],3)
+            self.assertEqual(result["excluded_without_tr_az_metadata_or_source_hint"],2)
             self.assertEqual(result["included_target_urls"],1)
             self.assertEqual(result["decoded_video_audio"],1)
             self.assertFalse(result["spoken_language_verified"])
@@ -98,7 +101,9 @@ class TargetedTrAzAcceptanceTests(unittest.TestCase):
             path.write_text(json.dumps(doc))
             with self.assertRaisesRegex(ValueError,"INCOMPLETE_TARGET"):
                 validate(path,require_complete=True)
-            self.assertFalse(validate(path)["source_coverage_complete"])
+            partial=validate(path)
+            self.assertFalse(partial["source_coverage_complete"])
+            self.assertEqual(partial["status"],"TARGET_METADATA_SCOPE_PARTIAL")
 
 
 if __name__=="__main__":

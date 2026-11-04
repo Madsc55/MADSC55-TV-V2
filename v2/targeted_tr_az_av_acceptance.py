@@ -154,10 +154,16 @@ def validate(path, require_complete=False):
         raise ValueError("INVALID_SOURCE_FAILURE_COUNT")
     if require_complete and (unprobed or data["source_fetch_failures"]):
         raise ValueError("INCOMPLETE_TARGET_SOURCE_OR_PROBE_COVERAGE")
+    complete = not unprobed and data["source_fetch_failures"] == 0
     return {
-        "status": "TARGET_METADATA_SCOPE_PROBE_COMPLETE" if not unprobed else "TARGET_METADATA_SCOPE_PROBE_PARTIAL",
-        "included_target_urls": n, "unprobed": unprobed,
-        "decoded_video_audio": decoded, "source_coverage_complete": not bool(data.get("source_fetch_failures")),
+        "status": ("TARGET_METADATA_SCOPE_PROBE_COMPLETE" if complete
+                   else "TARGET_METADATA_SCOPE_PARTIAL"),
+        "total_discovered_urls": total,
+        "included_target_urls": n,
+        "excluded_without_tr_az_metadata_or_source_hint": total-n,
+        "unprobed": unprobed,
+        "decoded_video_audio": decoded,
+        "source_coverage_complete": data["source_fetch_failures"] == 0,
         "rsa_encrypted_urls_preserved": count,
         "ibo_device_verified": False, "spoken_language_verified": False,
     }
