@@ -66,6 +66,35 @@ class PlatformVerificationTests(unittest.TestCase):
             '<script><img alt="https://example.org/hidden.m3u"></script>',"slideshare")
         self.assertEqual(refs,[])
 
+    def test_reviewed_slideshare_public_reference_still_requires_real_m3u(self):
+        from document_platform_discovery import verify_sources
+        slide=PUBLIC_DOCUMENT_PAGES["slideshare"][0]
+        def fetch_page(url):
+            if "advancedsearch.php" in url:
+                return json.dumps({"response":{"docs":[]}})
+            if url == slide:
+                return "<title>IPTV Github.pdf</title>"
+            return ""
+        opts={"read":fetch_page,
+              "search_pages":{"scribd":(),"slideshare":()},
+              "document_pages":{"scribd":(),"slideshare":(slide,)}}
+        report,links=scan(**opts)
+        self.assertEqual(len(links),1)
+        self.assertEqual(report["platforms"]["slideshare"]["candidate_sources"],1)
+        self.assertEqual(report["platforms"]["slideshare"]["reviewed_public_reference_pages"],1)
+        def valid_source(url):
+            return '#EXTM3U\n#EXTINF:-1,TRT 1\nhttps://example.org/live.m3u8\n'
+        accepted,proof=verify_sources(links,fetcher=valid_source,resolver=lambda url:True)
+        self.assertEqual(len(accepted),1)
+        self.assertEqual(proof[0]["status"],"M3U_CHANNEL_ENTRIES")
+        self.assertFalse(proof[0]["playback_verified"])
+        def no_marker(url):
+            if "advancedsearch.php" in url:
+                return json.dumps({"response":{"docs":[]}})
+            return "anonymous document"
+        _,invalid=scan(**dict(opts,read=no_marker))
+        self.assertEqual(invalid,[])
+
     def test_direct_public_documents_even_with_empty_search_results(self):
         def read(url):
             if "advancedsearch.php" in url:

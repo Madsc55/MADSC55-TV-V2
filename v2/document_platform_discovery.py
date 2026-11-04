@@ -41,6 +41,14 @@ PUBLIC_DOCUMENT_PAGES = {
   "https://www.slideshare.net/slideshow/iptv-githubpdf/258657900",
  ),
 }
+# Manually reviewed links visibly documented in a named public page. They
+# must still pass live M3U header, EXTINF and public DNS checks. They are
+# NOT treated as new channels or as playback evidence.
+REVIEWED_PUBLIC_DOCUMENT_PLAYLISTS = {
+ "https://www.slideshare.net/slideshow/iptv-githubpdf/258657900": (
+  "https://iptv-org.github.io/iptv/languages/tur.m3u",
+ ),
+}
 ARCHIVE_SEARCH="https://archive.org/advancedsearch.php?"+urlencode({
  "q":"(title:iptv OR title:m3u OR subject:iptv) AND (mediatype:texts OR mediatype:software)",
  "fl[]":"identifier","rows":48,"page":1,"output":"json"})
@@ -180,7 +188,18 @@ def scan(read=fetch_public,search_pages=SEARCH_PAGES,archive_search=ARCHIVE_SEAR
     continue
    stats[provider]["documents_checked"]+=1
    try:
-    _,refs=page_references(doc,read(doc),provider)
+    html_text=read(doc)
+    _,refs=page_references(doc,html_text,provider)
+    # The reviewed SlideShare source reference is visible in its published
+    # slides but its client-rendered image-alt text may not reach an ordinary
+    # HTML request. Only use the known citation when its public document page
+    # actually loads and identifies the expected presentation.
+    if (provider=="slideshare" and
+        doc in REVIEWED_PUBLIC_DOCUMENT_PLAYLISTS and
+        "iptv github" in html_text.casefold()):
+     refs.extend(REVIEWED_PUBLIC_DOCUMENT_PLAYLISTS[doc])
+     stats[provider]["reviewed_public_reference_pages"]=(
+      stats[provider].get("reviewed_public_reference_pages",0)+1)
     add(provider,refs)
    except (OSError,ValueError,TypeError,TimeoutError) as e:
     fail(provider,"PUBLIC_DOCUMENT",e)
