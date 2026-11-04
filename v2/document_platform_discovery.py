@@ -77,23 +77,60 @@ def source_url(url):
   and not re.search(r"(?i)(?:token|secret|password|auth|signature|apikey|key)=",p.path)
   and not re.search(r"(?i)/(?:private|internal|admin)/",p.path))
 
+def public_jsonld_descriptions(document):
+ """Only public descriptive schema fields, never arbitrary script code."""
+ try:
+  data=json.loads(document)
+ except (ValueError,TypeError):
+  return []
+ pending=[data];out=[];visited=0
+ while pending and visited<300 and len(out)<60:
+  item=pending.pop();visited+=1
+  if isinstance(item,list):
+   pending.extend(item[:100])
+  elif isinstance(item,dict):
+   for key,value in item.items():
+    if key in ("description","text","articleBody") and isinstance(value,str):
+     out.append(value[:10000])
+    elif isinstance(value,(dict,list)):
+     pending.append(value)
+ return out
+
+
 class VisibleLinks(HTMLParser):
  def __init__(self):
   super().__init__(convert_charrefs=True)
   self.links=[];self.visible=[];self.hidden=0
+  self.ld_active=False;self.ld_parts=[];self.ld_bytes=0
  def handle_starttag(self,tag,attrs):
+  props=dict(attrs)
+  if tag=="script" and not self.hidden:
+   self.ld_active=(props.get("type","").lower()=="application/ld+json")
+   self.ld_parts=[];self.ld_bytes=0
+  if not self.hidden and tag=="meta":
+   name=(props.get("name") or props.get("property") or "").lower()
+   content=props.get("content")
+   if name in ("description","og:description","twitter:description") and isinstance(content,str):
+    if len(content)<=20000 and len(self.visible)<20000:self.visible.append(content)
+  if not self.hidden and tag in ("img","a","span","div"):
+   for key in ("alt","aria-label"):
+    hint=props.get(key)
+    if isinstance(hint,str) and len(hint)<=6000 and len(self.visible)<20000:
+     self.visible.append(hint)
   if tag in ("script","style","noscript"):self.hidden+=1
   if not self.hidden and tag=="a":
-   url=dict(attrs).get("href")
+   url=props.get("href")
    if url and len(self.links)<1500:self.links.append(url)
-  # SlideShare often exposes slide text in an image's public alt attribute,
-  # not as HTML text. No image download, PDF download or OCR is performed.
-  if not self.hidden and tag=="img" and len(self.visible)<20000:
-   alt=dict(attrs).get("alt")
-   if isinstance(alt,str) and len(alt)<=6000:self.visible.append(alt)
  def handle_endtag(self,tag):
+  if tag=="script" and self.ld_active:
+   for value in public_jsonld_descriptions("".join(self.ld_parts)):
+    if len(self.visible)<20000:self.visible.append(value)
+   self.ld_active=False;self.ld_parts=[];self.ld_bytes=0
   if tag in ("script","style","noscript"):self.hidden=max(0,self.hidden-1)
  def handle_data(self,data):
+  if self.ld_active and self.ld_bytes<200000:
+   part=data[:200000-self.ld_bytes]
+   self.ld_parts.append(part);self.ld_bytes+=len(part)
   if not self.hidden and len(self.visible)<20000:self.visible.append(data)
 
 def page_references(page_url,document,provider):

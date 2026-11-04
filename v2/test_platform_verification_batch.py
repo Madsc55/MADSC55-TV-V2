@@ -11,6 +11,58 @@ from document_platform_discovery import PUBLIC_DOCUMENT_PAGES, page_references, 
 
 
 class PlatformVerificationTests(unittest.TestCase):
+    def test_conflicting_youtube_full_metadata_is_not_accepted(self):
+        from youtube_discovery import verify_with_reason
+        from unittest.mock import Mock, patch
+        item={"url":"https://www.youtube.com/watch?v=ABCDEFGHIJK"}
+        contradictory=[
+            {"is_live":True,"live_status":"was_live"},
+            {"is_live":False,"live_status":"is_live"},
+        ]
+        for meta in contradictory:
+            with self.subTest(meta=meta):
+                with patch("youtube_discovery.subprocess.run",return_value=Mock(
+                        returncode=0,stdout=json.dumps(meta))):
+                    self.assertEqual(
+                        verify_with_reason(item),
+                        ("UNVERIFIED", "LIVE_METADATA_STATUS_CONFLICT"))
+
+    def test_public_description_meta_and_accessibility_links(self):
+        # Public page metadata and visible accessibility text may contain
+        # valid M3U references when rendered slide text is not inline HTML.
+        page="https://www.slideshare.net/slideshow/iptv-githubpdf/258657900"
+        html=(
+          '<meta name="description" content="TR https://example.org/tr.m3u">'
+          '<meta property="og:description" content="AZ https://example.org/az.m3u8">'
+          '<span aria-label="playlist https://example.org/extra.m3u"></span>')
+        _,refs=page_references(page,html,"slideshare")
+        self.assertEqual(refs,[
+            "https://example.org/tr.m3u",
+            "https://example.org/az.m3u8",
+            "https://example.org/extra.m3u"])
+
+    def test_structured_public_jsonld_description_only(self):
+        page="https://www.scribd.com/document/834636179/Extm3u-Yeni"
+        structured=json.dumps({
+            "@type":"CreativeWork",
+            "description":"Turkish playlist https://example.org/tr.m3u",
+            "publisher":{"description":"AZ list https://example.org/az.m3u8"},
+            "secret":"https://example.org/private-hidden.m3u"})
+        source=('<script type="application/ld+json">'+structured+'</script>'
+                '<script>var internal="https://example.org/script.m3u"</script>')
+        _,urls=page_references(page,source,"scribd")
+        self.assertEqual(urls,[
+            "https://example.org/tr.m3u",
+            "https://example.org/az.m3u8"])
+        self.assertNotIn("https://example.org/script.m3u",urls)
+
+    def test_invalid_structured_data_not_accepted(self):
+        page="https://www.slideshare.net/slideshow/iptv-githubpdf/258657900"
+        html=('<script type="application/ld+json">{not-json '
+              'https://example.org/fake.m3u</script>')
+        _,refs=page_references(page,html,"slideshare")
+        self.assertEqual(refs,[])
+
     def test_youtube_official_live_search_is_key_gated(self):
         from youtube_official_live_api import search_live
         with patch.dict("os.environ", {}, clear=True):

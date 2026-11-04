@@ -105,13 +105,13 @@ def verify_with_reason(item):
         if p.returncode != 0:
             return "UNVERIFIED", failure_reason(p.stderr)
         meta = json.loads(p.stdout)
-        if meta.get("is_live") is True or meta.get("live_status") == "is_live":
-            return "LIVE_METADATA_VERIFIED", "LIVE_METADATA_CONFIRMED"
-        state = meta.get("live_status")
-        if state in ("not_live", "was_live", "post_live", "is_upcoming"):
-            return "NOT_CURRENTLY_LIVE", "LIVE_METADATA_EXPLICITLY_NOT_LIVE"
-        if meta.get("is_live") is False:
-            return "NOT_CURRENTLY_LIVE", "LIVE_METADATA_EXPLICITLY_NOT_LIVE"
+        status, reason = search_live_metadata(meta)
+        if status == "LIVE_METADATA_VERIFIED":
+            return status, "LIVE_METADATA_CONFIRMED"
+        if status == "NOT_CURRENTLY_LIVE":
+            return status, "LIVE_METADATA_EXPLICITLY_NOT_LIVE"
+        if reason == "SEARCH_CONFLICTING_LIVE_FIELDS":
+            return "UNVERIFIED", "LIVE_METADATA_STATUS_CONFLICT"
         return "UNVERIFIED", "LIVE_METADATA_STATUS_MISSING"
     except subprocess.TimeoutExpired:
         return "UNVERIFIED", "TIMEOUT"
