@@ -225,7 +225,7 @@ jobs:
       github.event_name == 'push' &&
       github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
       github.repository == 'Madsc55/MADSC55-TV-V2' &&
-      github.event.head_commit.message == 'fix(v2): validate public Scribd and SlideShare M3U citations'
+      github.event.head_commit.message == 'fix(v2): resolve archived Scribd language playlist codes'
     needs: offline-source-safety
     runs-on: ubuntu-24.04
     timeout-minutes: 40
@@ -268,6 +268,8 @@ jobs:
           assert d["reviewed_public_reference_evidence"]["reviewed_reference_count"] == 4
           assert d["reviewed_public_reference_evidence"]["platforms"]["scribd"]["reviewed_reference_count"] == 2
           assert d["reviewed_public_reference_evidence"]["platforms"]["slideshare"]["reviewed_reference_count"] == 2
+          assert d["reference_accounting"]["reviewed_document_historical_url_updates"] == 2
+          assert d["reviewed_public_reference_evidence"]["validated_resolved_historical_citations"] <= 2
           assert d["reviewed_public_reference_evidence"]["verified_video_audio"] is False
           assert d["reviewed_public_reference_evidence"]["ibo_device_verified"] is False
           platform={x:{

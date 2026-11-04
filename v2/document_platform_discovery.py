@@ -58,6 +58,16 @@ REVIEWED_PUBLIC_DOCUMENT_PLAYLISTS = {
   "https://iptv-org.github.io/iptv/languages/aze.m3u",
  ),
 }
+# Two *historical* URLs printed in the public Scribd document use
+# obsolete two-letter codes. The current authoritative IPTV-org index uses
+# ISO-639-3 (fra, ara). Resolve only this reviewed allowlist, preserving
+# citation provenance. No user-supplied arbitrary redirects or new streams.
+REVIEWED_CANONICAL_M3U_URLS = {
+ "https://iptv-org.github.io/iptv/languages/fr.m3u":
+ "https://iptv-org.github.io/iptv/languages/fra.m3u",
+ "https://iptv-org.github.io/iptv/languages/ar.m3u":
+ "https://iptv-org.github.io/iptv/languages/ara.m3u",
+}
 ARCHIVE_SEARCH="https://archive.org/advancedsearch.php?"+urlencode({
  "q":"(title:iptv OR title:m3u OR subject:iptv) AND (mediatype:texts OR mediatype:software)",
  "fl[]":"identifier","rows":48,"page":1,"output":"json"})
@@ -338,6 +348,16 @@ def accepted_sources(path=SOURCES):
                  "origin":"public-document-reference"})
  return result
 
+def canonical_reviewed_source(url):
+ """Resolve exact historical public citation, never arbitrary/unsafe URL."""
+ if not source_url(url):
+  raise ValueError("Unsafe reviewed citation URL")
+ result=REVIEWED_CANONICAL_M3U_URLS.get(url,url)
+ if not source_url(result):
+  raise ValueError("Unsafe canonical public source URL")
+ return result
+
+
 def reviewed_document_source_rows(reviewed_references=None):
  """Known public document citations are checked as files, never imported twice.
 
@@ -349,15 +369,17 @@ def reviewed_document_source_rows(reviewed_references=None):
  for page,urls in reviewed.items():
   if not allowed_page(page):
    raise ValueError("Invalid public citation document")
-  for url in urls:
-   if not source_url(url):
-    raise ValueError("Unsafe reviewed citation URL")
-   provenance.setdefault(url,set()).add(page)
+  for original_url in urls:
+   url=canonical_reviewed_source(original_url)
+   record=provenance.setdefault(url,{"pages":set(),"stale":False})
+   record["pages"].add(page)
+   record["stale"] |= (original_url!=url)
  return [
   {"id":"docref-"+digest(url)[:20], "kind":"m3u",
    "scope":"candidate","url":url,"url_sha256":digest(url),
    "platforms":sorted({"scribd" if urlsplit(page).hostname=="www.scribd.com"
-                       else "slideshare" for page in provenance[url]}),
+                       else "slideshare" for page in provenance[url]["pages"]}),
+   "citation_resolved_from_stale_url":provenance[url]["stale"],
    "playback_verified":False}
   for url in sorted(provenance)
  ]
@@ -382,6 +404,8 @@ def reviewed_reference_evidence(configured_urls, fetcher=None, resolver=None,
   "platforms":platform_summary,
   "reviewed_reference_count":len(sources),
   "m3u_content_validated":len(verified),
+  "validated_resolved_historical_citations":
+      sum(row["citation_resolved_from_stale_url"] for row in verified),
   "validated_existing_configured_references":
       sum(row["url"] in configured_urls for row in verified),
   "validated_not_configured_references":
@@ -399,11 +423,15 @@ def source_accounting(accepted, configured_urls, reviewed_references=None):
   raise ValueError("Invalid source accounting")
  existing=sum(row["url"] in configured_urls for row in accepted)
  reviewed=REVIEWED_PUBLIC_DOCUMENT_PLAYLISTS if reviewed_references is None else reviewed_references
- refs={url for values in reviewed.values() for url in values if source_url(url)}
+ refs={canonical_reviewed_source(url) for values in reviewed.values()
+       for url in values}
  return {
   "validated_existing_sources":existing,
   "validated_novel_sources":len(accepted)-existing,
   "reviewed_document_references":len(refs),
+  "reviewed_document_historical_url_updates":
+      sum(url in REVIEWED_CANONICAL_M3U_URLS
+          for values in reviewed.values() for url in values),
   "reviewed_document_references_already_configured":len(refs & configured_urls),
   "reviewed_document_references_unconfigured":len(refs - configured_urls),
   "reviewed_references_are_not_playback_evidence":True,

@@ -155,6 +155,28 @@ class PlatformVerificationTests(unittest.TestCase):
         self.assertEqual({r["status"] for r in report["verification"]},
                          {"M3U_CHANNEL_ENTRIES","SOURCE_READ_OR_PARSE_FAILED_ValueError"})
 
+    def test_scribd_stale_citation_urls_resolve_to_authoritative_language_ids(self):
+        from document_platform_discovery import (
+            canonical_reviewed_source, reviewed_document_source_rows)
+        self.assertEqual(
+            canonical_reviewed_source("https://iptv-org.github.io/iptv/languages/fr.m3u"),
+            "https://iptv-org.github.io/iptv/languages/fra.m3u")
+        self.assertEqual(
+            canonical_reviewed_source("https://iptv-org.github.io/iptv/languages/ar.m3u"),
+            "https://iptv-org.github.io/iptv/languages/ara.m3u")
+        self.assertEqual(
+            canonical_reviewed_source("https://example.org/unchanged.m3u"),
+            "https://example.org/unchanged.m3u")
+        with self.assertRaises(ValueError):
+            canonical_reviewed_source("http://127.0.0.1/private.m3u")
+        rows=reviewed_document_source_rows()
+        scribd=[r for r in rows if "scribd" in r["platforms"]]
+        self.assertEqual(len(scribd),2)
+        self.assertTrue(all(r["citation_resolved_from_stale_url"] for r in scribd))
+        self.assertEqual({r["url"].split("/")[-1] for r in scribd},
+                         {"fra.m3u","ara.m3u"})
+        self.assertTrue(all(not r["playback_verified"] for r in scribd))
+
     def test_scribd_public_reviewed_m3u_refs_have_correct_provider_and_no_tr_import(self):
         from document_platform_discovery import (
             reviewed_document_source_rows, reviewed_reference_evidence)
@@ -163,7 +185,7 @@ class PlatformVerificationTests(unittest.TestCase):
         slide=[row for row in sources if "slideshare" in row["platforms"]]
         self.assertEqual(len(sources),4)
         self.assertEqual({r["url"].split("/")[-1] for r in scribd},
-                         {"fr.m3u","ar.m3u"})
+                         {"fra.m3u","ara.m3u"})
         self.assertEqual({r["url"].split("/")[-1] for r in slide},
                          {"tur.m3u","aze.m3u"})
         self.assertTrue(all(r["playback_verified"] is False for r in sources))
@@ -174,6 +196,7 @@ class PlatformVerificationTests(unittest.TestCase):
             resolver=lambda url:True)
         self.assertEqual(report["reviewed_reference_count"],4)
         self.assertEqual(report["m3u_content_validated"],4)
+        self.assertEqual(report["validated_resolved_historical_citations"],2)
         self.assertEqual(report["validated_existing_configured_references"],2)
         self.assertEqual(report["validated_not_configured_references"],2)
         self.assertEqual(report["platforms"]["scribd"]["m3u_content_validated"],2)
@@ -251,6 +274,7 @@ class PlatformVerificationTests(unittest.TestCase):
         self.assertEqual(result["validated_existing_sources"],1)
         self.assertEqual(result["validated_novel_sources"],1)
         self.assertEqual(result["reviewed_document_references"],4)
+        self.assertEqual(result["reviewed_document_historical_url_updates"],2)
         self.assertEqual(result["reviewed_document_references_already_configured"],1)
         self.assertEqual(result["reviewed_document_references_unconfigured"],3)
         self.assertTrue(result["reviewed_references_are_not_playback_evidence"])
