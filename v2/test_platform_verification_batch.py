@@ -123,8 +123,12 @@ class PlatformVerificationTests(unittest.TestCase):
 
     def test_reviewed_slideshare_tr_az_sources_live_read_without_duplicate_import(self):
         from document_platform_discovery import (
+            REVIEWED_PUBLIC_DOCUMENT_PLAYLISTS,
             reviewed_document_source_rows, reviewed_reference_evidence)
-        rows=reviewed_document_source_rows()
+        slideshare={
+            p:urls for p,urls in REVIEWED_PUBLIC_DOCUMENT_PLAYLISTS.items()
+            if "slideshare.net" in p}
+        rows=reviewed_document_source_rows(slideshare)
         self.assertEqual(len(rows),2)
         self.assertEqual({x["url"].split("/")[-1] for x in rows},
                          {"tur.m3u","aze.m3u"})
@@ -137,7 +141,8 @@ class PlatformVerificationTests(unittest.TestCase):
                 return '#EXTM3U\n#EXTINF:-1,TRT 1\nhttps://example.org/tr.m3u8\n'
             return 'Not an M3U playlist'
         report=reviewed_reference_evidence(configured,fetcher=fetch,
-                                           resolver=lambda url:True)
+                                           resolver=lambda url:True,
+                                           reviewed_references=slideshare)
         self.assertEqual(len(calls),2)
         self.assertEqual(report["reviewed_reference_count"],2)
         self.assertEqual(report["m3u_content_validated"],1)
@@ -149,6 +154,33 @@ class PlatformVerificationTests(unittest.TestCase):
         self.assertNotIn("https://",str(report))
         self.assertEqual({r["status"] for r in report["verification"]},
                          {"M3U_CHANNEL_ENTRIES","SOURCE_READ_OR_PARSE_FAILED_ValueError"})
+
+    def test_scribd_public_reviewed_m3u_refs_have_correct_provider_and_no_tr_import(self):
+        from document_platform_discovery import (
+            reviewed_document_source_rows, reviewed_reference_evidence)
+        sources=reviewed_document_source_rows()
+        scribd=[row for row in sources if "scribd" in row["platforms"]]
+        slide=[row for row in sources if "slideshare" in row["platforms"]]
+        self.assertEqual(len(sources),4)
+        self.assertEqual({r["url"].split("/")[-1] for r in scribd},
+                         {"fr.m3u","ar.m3u"})
+        self.assertEqual({r["url"].split("/")[-1] for r in slide},
+                         {"tur.m3u","aze.m3u"})
+        self.assertTrue(all(r["playback_verified"] is False for r in sources))
+        fake_m3u='#EXTM3U\n#EXTINF:-1,Example TV\nhttps://example.org/live.m3u8\n'
+        report=reviewed_reference_evidence(
+            {row["url"] for row in slide},
+            fetcher=lambda url:fake_m3u,
+            resolver=lambda url:True)
+        self.assertEqual(report["reviewed_reference_count"],4)
+        self.assertEqual(report["m3u_content_validated"],4)
+        self.assertEqual(report["validated_existing_configured_references"],2)
+        self.assertEqual(report["validated_not_configured_references"],2)
+        self.assertEqual(report["platforms"]["scribd"]["m3u_content_validated"],2)
+        self.assertEqual(report["platforms"]["slideshare"]["m3u_content_validated"],2)
+        self.assertFalse(report["verified_video_audio"])
+        self.assertFalse(report["ibo_device_verified"])
+        self.assertNotIn("https://",str(report))
 
     def test_reviewed_slideshare_valid_source_not_preapproved_as_video(self):
         from document_platform_discovery import reviewed_reference_evidence
@@ -218,9 +250,9 @@ class PlatformVerificationTests(unittest.TestCase):
         result=source_accounting([{"url":known},{"url":novel}],{known})
         self.assertEqual(result["validated_existing_sources"],1)
         self.assertEqual(result["validated_novel_sources"],1)
-        self.assertEqual(result["reviewed_document_references"],2)
+        self.assertEqual(result["reviewed_document_references"],4)
         self.assertEqual(result["reviewed_document_references_already_configured"],1)
-        self.assertEqual(result["reviewed_document_references_unconfigured"],1)
+        self.assertEqual(result["reviewed_document_references_unconfigured"],3)
         self.assertTrue(result["reviewed_references_are_not_playback_evidence"])
 
     def test_official_api_live_requires_active_start_and_no_end(self):

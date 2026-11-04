@@ -47,6 +47,12 @@ PUBLIC_DOCUMENT_PAGES = {
 # must still pass live M3U header, EXTINF and public DNS checks. They are
 # NOT treated as new channels or as playback evidence.
 REVIEWED_PUBLIC_DOCUMENT_PLAYLISTS = {
+ # Public screenshot caption contains these exact non-TR M3U URLs; they
+ # are provider wiring evidence only, never auto-imported to TR/AZ lists.
+ "https://www.scribd.com/document/758425845/iptv": (
+  "https://iptv-org.github.io/iptv/languages/fr.m3u",
+  "https://iptv-org.github.io/iptv/languages/ar.m3u",
+ ),
  "https://www.slideshare.net/slideshow/iptv-githubpdf/258657900": (
   "https://iptv-org.github.io/iptv/languages/tur.m3u",
   "https://iptv-org.github.io/iptv/languages/aze.m3u",
@@ -333,7 +339,7 @@ def accepted_sources(path=SOURCES):
  return result
 
 def reviewed_document_source_rows(reviewed_references=None):
- """Known public slide citations are checked as files, never imported twice.
+ """Known public document citations are checked as files, never imported twice.
 
  This is a citation ledger, not a claim that the HTML fetch contained the
  URL, and not a playback acceptance gate.
@@ -350,7 +356,9 @@ def reviewed_document_source_rows(reviewed_references=None):
  return [
   {"id":"docref-"+digest(url)[:20], "kind":"m3u",
    "scope":"candidate","url":url,"url_sha256":digest(url),
-   "platforms":["slideshare"],"playback_verified":False}
+   "platforms":sorted({"scribd" if urlsplit(page).hostname=="www.scribd.com"
+                       else "slideshare" for page in provenance[url]}),
+   "playback_verified":False}
   for url in sorted(provenance)
  ]
 
@@ -360,7 +368,18 @@ def reviewed_reference_evidence(configured_urls, fetcher=None, resolver=None,
  """Live-read every reviewed M3U citation and clearly mark old-source overlap."""
  sources=reviewed_document_source_rows(reviewed_references)
  verified,checks=verify_sources(sources,fetcher=fetcher,resolver=resolver)
+ valid_hashes={row["url_sha256"] for row in verified}
+ platform_summary={}
+ for platform in ("scribd","slideshare"):
+  matching=[row for row in sources if platform in row["platforms"]]
+  platform_summary[platform]={
+   "reviewed_reference_count":len(matching),
+   "m3u_content_validated":
+       sum(row["url_sha256"] in valid_hashes for row in matching),
+   "av_verified":False,
+  }
  return {
+  "platforms":platform_summary,
   "reviewed_reference_count":len(sources),
   "m3u_content_validated":len(verified),
   "validated_existing_configured_references":
@@ -405,8 +424,8 @@ def main():
  config=json.loads((ROOT/"config/sources.json").read_text(encoding="utf-8"))
  configured={x["url"] for x in config["sources"]}
  report["reference_accounting"]=source_accounting(sources,configured)
- # Verify the actual public M3U files named in manually reviewed SlideShare
- # captions, even when the site HTML fails to expose the slides' text.
+ # Verify only exact public M3U URLs named in manually reviewed Scribd and
+ # SlideShare captions, even when a site renders its text as images.
  # No citations are silently imported into a protected playlist.
  report["reviewed_public_reference_evidence"]=reviewed_reference_evidence(configured)
  for provider in ("scribd","slideshare"):
@@ -427,6 +446,7 @@ def main():
   report["validated_m3u_source_channel_entries"],
   "coverage:",report["coverage_status"],
   "reference_accounting:",report["reference_accounting"],
-  "reviewed_reference_verified:",report["reviewed_public_reference_evidence"]["m3u_content_validated"])
+  "reviewed_reference_verified:",report["reviewed_public_reference_evidence"]["m3u_content_validated"],
+  "reviewed_platforms:",report["reviewed_public_reference_evidence"]["platforms"])
 
 if __name__=="__main__":main()
