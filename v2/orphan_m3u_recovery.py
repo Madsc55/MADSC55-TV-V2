@@ -168,10 +168,14 @@ def find_historical(orphan_rows, repo, path, *, limit=20,
         raise ValueError("Historical source outside pinned scope")
     wanted = {o["extinf"] for o in orphan_rows}
     by_identity = defaultdict(set)
+    by_logo_group = defaultdict(set)
     for extinf in wanted:
         identity = exact_channel_identity(extinf)
         if identity is not None:
             by_identity[identity].add(extinf)
+        strict = exact_no_epg_logo_group_name(extinf)
+        if strict is not None:
+            by_logo_group[strict].add(extinf)
 
     matches = defaultdict(dict)
     files_read = 0
@@ -202,6 +206,10 @@ def find_historical(orphan_rows, repo, path, *, limit=20,
                 if historical_identity is not None:
                     for current_extinf in by_identity.get(historical_identity, ()):
                         destinations.setdefault(current_extinf, "EXACT_EPG_ID_AND_NAME")
+                logo_identity = exact_no_epg_logo_group_name(historical_extinf)
+                if logo_identity is not None:
+                    for current_extinf in by_logo_group.get(logo_identity, ()):
+                        destinations.setdefault(current_extinf, "EXACT_NO_EPG_LOGO_GROUP_NAME")
                 for target_extinf, rule in destinations.items():
                     for stream in streams:
                         h = _hash(stream)
@@ -222,10 +230,14 @@ def find_official_alternates(orphan_rows, *, reader=_read_document):
     """Publisher URLs must match exact EXTINF or exact EPG ID AND channel name."""
     wanted = {row["extinf"] for row in orphan_rows}
     identities = defaultdict(set)
+    by_logo_group = defaultdict(set)
     for extinf in wanted:
         identity = exact_channel_identity(extinf)
         if identity is not None:
             identities[identity].add(extinf)
+        strict = exact_no_epg_logo_group_name(extinf)
+        if strict is not None:
+            by_logo_group[strict].add(extinf)
     matches = defaultdict(dict)
     states = []
     for source in ONUR_ALTERNATES:
@@ -235,6 +247,10 @@ def find_official_alternates(orphan_rows, *, reader=_read_document):
                 destinations = {extinf: "EXACT_EXTINF"} if extinf in wanted else {}
                 for dst in identities.get(exact_channel_identity(extinf), []):
                     destinations.setdefault(dst, "EXACT_EPG_ID_AND_NAME_OFFICIAL_ALTERNATE")
+                logo_identity = exact_no_epg_logo_group_name(extinf)
+                if logo_identity is not None:
+                    for dst in by_logo_group.get(logo_identity, ()):
+                        destinations.setdefault(dst, "EXACT_NO_EPG_LOGO_GROUP_NAME_OFFICIAL_ALTERNATE")
                 for dst, rule in destinations.items():
                     for url in urls:
                         proof = matches[dst].setdefault(
@@ -269,6 +285,43 @@ def exact_channel_identity(extinf):
         return None
     return (m.group(1).strip().casefold(), " ".join(name.casefold().split()))
 
+
+
+
+def exact_no_epg_logo_group_name(extinf):
+    """Secondary strict identity: no EPG ID, exact name + group + logo.
+
+    A logo alone or an unverified name is never enough. This only discovers
+    real alternate URLs, whose audio/video must still be separately probed.
+    Channels with a populated tvg-id cannot fall back to the weaker rule.
+    """
+    if not isinstance(extinf, str) or not extinf.startswith("#EXTINF:"):
+        return None
+    epg = re.search(r'\btvg-id="([^"]*)"', extinf, flags=re.IGNORECASE)
+    if epg and epg.group(1).strip():
+        return None
+    group = re.search(r'\bgroup-title="([^"]+)"', extinf, flags=re.IGNORECASE)
+    logo = re.search(r'\btvg-logo="([^"]+)"', extinf, flags=re.IGNORECASE)
+    if not group or not logo:
+        return None
+    group_value = " ".join(group.group(1).casefold().split())
+    logo_value = logo.group(1).strip()
+    if not group_value or not logo_value.startswith(("https://", "http://")):
+        return None
+    in_quotes = False
+    name_position = -1
+    for i, char in enumerate(extinf):
+        if char == '"':
+            in_quotes = not in_quotes
+        elif char == "," and not in_quotes:
+            name_position = i
+            break
+    if name_position < 0:
+        return None
+    name = " ".join(extinf[name_position + 1:].casefold().split())
+    if not name:
+        return None
+    return (group_value, logo_value, name)
 
 
 def restore_exact_original_metadata_from_official_alternates(
@@ -342,6 +395,7 @@ def find_existing_exact_identity(orphans, catalog, *, reader=_read_document,
     alone never proves channel content, actual playback or device compatibility.
     """
     wanted = defaultdict(list)
+    by_logo_group = defaultdict(list)
     exact_originals = defaultdict(list)
     for item in orphans:
         extinf, digest = item["extinf"], item["extinf_sha256"]
@@ -351,6 +405,9 @@ def find_existing_exact_identity(orphans, catalog, *, reader=_read_document,
         identity = exact_channel_identity(extinf)
         if identity is not None:
             wanted[identity].append(digest)
+        strict = exact_no_epg_logo_group_name(extinf)
+        if strict is not None:
+            by_logo_group[strict].append(digest)
 
     def one(source):
         try:
@@ -386,6 +443,10 @@ def find_existing_exact_identity(orphans, catalog, *, reader=_read_document,
                            for dst in exact_originals.get(extinf, ())}
                 for dst in wanted.get(exact_channel_identity(extinf), ()):
                     targets.setdefault(dst, "EXACT_EPG_ID_AND_CHANNEL_NAME")
+                logo_identity = exact_no_epg_logo_group_name(extinf)
+                if logo_identity is not None:
+                    for dst in by_logo_group.get(logo_identity, ()):
+                        targets.setdefault(dst, "EXACT_NO_EPG_LOGO_GROUP_NAME")
                 for dst, proof_rule in targets.items():
                     for url in urls:
                         found.append((dst, _hash(url), url, source["id"], proof_rule))
@@ -428,8 +489,10 @@ def find_existing_exact_identity(orphans, catalog, *, reader=_read_document,
                 x["extinf_sha256"] for x in orphans if exact_channel_identity(x["extinf"]) is not None}),
         "orphan_entries_with_exact_original_extinf": len(
             proof_identity_groups["EXACT_ORIGINAL_EXTINF"]),
+        "orphan_entries_with_exact_no_epg_logo_group_name": len(
+            proof_identity_groups["EXACT_NO_EPG_LOGO_GROUP_NAME"]),
         "orphan_entries_with_any_exact_existing_match": len(matched),
-        "proof_only": "EXACT_EXTINF_OR_EXACT_EPG_ID_AND_NAME_NOT_CHANNEL_CONTENT",
+        "proof_only": "EXACT_EXTINF_OR_EPG_ID_AND_NAME_OR_NO_EPG_LOGO_GROUP_NAME_NOT_CHANNEL_CONTENT",
     }
 
 

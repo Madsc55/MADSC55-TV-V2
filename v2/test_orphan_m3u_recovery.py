@@ -10,7 +10,7 @@ from unittest.mock import patch
 from orphan_m3u_recovery import (
     parse_exact_pairs, find_historical, find_official_alternates, evaluate, audit,
     restore_exact_original_metadata_from_official_alternates,
-    exact_channel_identity, find_existing_exact_identity,
+    exact_channel_identity, exact_no_epg_logo_group_name, find_existing_exact_identity,
 )
 
 
@@ -194,6 +194,68 @@ class OrphanRecoveryTests(unittest.TestCase):
         self.assertEqual(set(matched[wanted]), {hashlib.sha256(self.a.encode()).hexdigest()})
         self.assertEqual(matched[wanted][hashlib.sha256(self.a.encode()).hexdigest()]["proof_rules"],
                          ["EXACT_EPG_ID_AND_NAME_OFFICIAL_ALTERNATE"])
+
+
+    def test_no_epg_requires_exact_name_group_and_logo(self):
+        original = '#EXTINF:-1 tvg-logo="https://logos.example.org/test.png" group-title="Haber",Kanal A'
+        same = '#EXTINF:-1 group-title="Haber" tvg-logo="https://logos.example.org/test.png",KANAL A'
+        wrong_group = same.replace('group-title="Haber"', 'group-title="Spor"')
+        wrong_logo = same.replace("test.png", "other.png")
+        self.assertEqual(exact_no_epg_logo_group_name(original),
+                         exact_no_epg_logo_group_name(same))
+        self.assertNotEqual(exact_no_epg_logo_group_name(original),
+                            exact_no_epg_logo_group_name(wrong_group))
+        self.assertNotEqual(exact_no_epg_logo_group_name(original),
+                            exact_no_epg_logo_group_name(wrong_logo))
+        self.assertIsNone(exact_no_epg_logo_group_name('#EXTINF:-1 group-title="Haber",Kanal A'))
+        self.assertIsNone(exact_no_epg_logo_group_name(original.replace("tvg-logo", "logo")))
+        self.assertIsNone(exact_no_epg_logo_group_name(original.replace("Kanal A", "")))
+        self.assertIsNone(exact_no_epg_logo_group_name(original.replace('#EXTINF:-1', '#EXTINF:-1 tvg-id="KanalA.tr"')))
+
+    def test_no_epg_strong_exact_catalog_recovers_candidate_not_av(self):
+        original = '#EXTINF:-1 tvg-logo="https://logos.example.org/one.png" group-title="News",One TV'
+        changed = '#EXTINF:-1 group-title="News" tvg-logo="https://logos.example.org/one.png",ONE TV'
+        orphan = [{"extinf": original, "extinf_sha256": hashlib.sha256(original.encode()).hexdigest()}]
+        feed = "#EXTM3U\n" + changed + "\n" + self.a + "\n"
+        catalog = [{"id": "reviewed-feed", "url": "https://feeds.example.org/world.m3u"}]
+        found, stats = find_existing_exact_identity(orphan, catalog, reader=lambda _: feed)
+        sha = hashlib.sha256(self.a.encode()).hexdigest()
+        self.assertEqual(found[orphan[0]["extinf_sha256"]][sha]["proof_rules"],
+                         ["EXACT_NO_EPG_LOGO_GROUP_NAME"])
+        self.assertEqual(stats["orphan_entries_with_exact_no_epg_logo_group_name"], 1)
+
+    def test_no_epg_same_name_only_or_wrong_logo_cannot_match(self):
+        original = '#EXTINF:-1 tvg-logo="https://logos.example.org/one.png" group-title="News",One TV'
+        altered = '#EXTINF:-1 tvg-logo="https://logos.example.org/two.png" group-title="News",One TV'
+        orphan = [{"extinf": original, "extinf_sha256": hashlib.sha256(original.encode()).hexdigest()}]
+        catalog = [{"id": "reviewed-feed", "url": "https://feeds.example.org/world.m3u"}]
+        found, stats = find_existing_exact_identity(orphan, catalog,
+                        reader=lambda _: "#EXTM3U\n" + altered + "\n" + self.a + "\n")
+        self.assertFalse(found)
+        self.assertEqual(stats["orphan_entries_with_any_exact_existing_match"], 0)
+
+    def test_no_epg_strong_official_alternate_is_only_url_evidence(self):
+        original = '#EXTINF:-1 tvg-logo="https://logos.example.org/test.png" group-title="Test",One'
+        alternate = '#EXTINF:-1 group-title="Test" tvg-logo="https://logos.example.org/test.png",ONE'
+        def read(_):
+            return "#EXTM3U\n" + alternate + "\n" + self.b + "\n"
+        candidates, stats = find_official_alternates([{"extinf": original}], reader=read)
+        sha = hashlib.sha256(self.b.encode()).hexdigest()
+        self.assertEqual(candidates[original][sha]["proof_rules"],
+                         ["EXACT_NO_EPG_LOGO_GROUP_NAME_OFFICIAL_ALTERNATE"])
+        self.assertEqual(stats["official_alternate_feeds_read"], 3)
+
+    def test_no_epg_historical_revisions_allow_strong_identity_only(self):
+        original = '#EXTINF:-1 tvg-logo="https://logos.example.org/test.png" group-title="News",ONE TV'
+        historical = '#EXTINF:-1 group-title="News" tvg-logo="https://logos.example.org/test.png",One TV'
+        matches, stats = find_historical(
+            [{"extinf": original}], "discevisita/iptv", "tr.m3u",
+            commits=lambda *a, **k: ["a"*40],
+            reader=lambda _: "#EXTM3U\n" + historical + "\n" + self.a + "\n")
+        sha = hashlib.sha256(self.a.encode()).hexdigest()
+        self.assertEqual(matches[original][sha]["proof_rules"],
+                         ["EXACT_NO_EPG_LOGO_GROUP_NAME"])
+        self.assertEqual(stats["historical_files_read"], 1)
 
     def test_no_http_url_is_inferred_from_invalid_or_missing_reference(self):
         content = ("#EXTM3U\n" + self.dis + "\n#EXTINF:-1,Next\n" + self.a
