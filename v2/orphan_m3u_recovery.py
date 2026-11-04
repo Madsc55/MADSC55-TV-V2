@@ -289,14 +289,28 @@ def exact_channel_identity(extinf):
     m = re.search(r'\btvg-id="([^"]+)"', extinf, flags=re.IGNORECASE)
     if not m or not m.group(1).strip():
         return None
-    quoted, name_at = False, -1
+    # Some genuine upstream M3U records have malformed EXTINF punctuation:
+    #   #EXTINF:-1, tvg-id="vtc12hd" ...,VTC12
+    # and one Hanoicab3 record has an unfinished trailing group-title quote.
+    # Correct ONLY these bounded, syntactically identifiable defects.
+    # Preserve the original EXTINF bytes/hash and never infer a media URL.
+    quoted = False
+    separators = []
     for i, c in enumerate(extinf):
         if c == '"':
             quoted = not quoted
         elif c == "," and not quoted:
-            name_at = i
-            break
-    name = extinf[name_at + 1:].strip() if name_at >= 0 else ""
+            separators.append(i)
+    if (re.match(r'^#EXTINF:-1,\s*tvg-id="', extinf, flags=re.I)
+            and len(separators) >= 2):
+        name = extinf[separators[1] + 1:].strip()
+    elif separators:
+        name = extinf[separators[0] + 1:].strip()
+    else:
+        unclosed = (extinf.count('"') % 2 == 1)
+        recover = re.search(
+            r'\bgroup-title="\s*,([^,\r\n"]+)\Z', extinf, flags=re.I)
+        name = recover.group(1).strip() if unclosed and recover else ""
     if not name:
         return None
     return (m.group(1).strip().casefold(), " ".join(name.casefold().split()))

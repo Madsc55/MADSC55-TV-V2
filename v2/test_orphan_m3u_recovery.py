@@ -286,6 +286,48 @@ class OrphanRecoveryTests(unittest.TestCase):
         self.assertEqual(report["orphan_entries_with_reviewed_hanoicab_name_alias"], 1)
         self.assertNotIn("video_stream", proof)
 
+
+    def test_vendor_malformed_extinf_commas_do_not_hide_real_exact_epg_name(self):
+        vtc12 = ('#EXTINF:-1, tvg-id="vtc12hd" group-title="VTC" '
+                 'catchup-source="https://history.example.org/catchup",VTC12')
+        vtc13 = ('#EXTINF:-1, tvg-id="vtc13hd" group-title="VTC" '
+                 'catchup-source="https://history.example.org/catchup",VTC13')
+        self.assertEqual(exact_channel_identity(vtc12), ("vtc12hd", "vtc12"))
+        self.assertEqual(exact_channel_identity(vtc13), ("vtc13hd", "vtc13"))
+        self.assertEqual(exact_channel_identity(
+            '#EXTINF:-1 tvg-id="News.tr",News, Europe'),
+            ("news.tr", "news, europe"))
+
+    def test_vendor_unclosed_group_quote_restores_only_exact_hanoicab_name(self):
+        broken = ('#EXTINF:-1 tvg-id="antg" group-title="VTVCAB" '
+                  'tvg-logo="https://logos.example.org/hanoicab.png" '
+                  'group-title=" ,Hanoicab 3 | An Ninh Thế Giới')
+        good = '#EXTINF:-1 tvg-id="antg",An Ninh Thế Giới'
+        self.assertEqual(exact_channel_identity(broken),
+                         ("antg", "hanoicab 3 | an ninh thế giới"))
+        self.assertEqual(reviewed_hanoicab3_identity(broken),
+                         reviewed_hanoicab3_identity(good))
+        self.assertIsNone(exact_channel_identity(
+            '#EXTINF:-1 tvg-id="antg" group-title="unfinished'))
+        self.assertIsNone(exact_channel_identity(
+            '#EXTINF:-1 tvg-id="antg" group-title=" ,Wrong,Comma'))
+
+    def test_malformed_vendor_original_retains_sha_exact_alt_and_no_auto_av(self):
+        broken = ('#EXTINF:-1 tvg-id="antg" group-title="VTVCAB" '
+                  'tvg-logo="https://logos.example.org/h.png" group-title=" ,'
+                  'Hanoicab 3 | An Ninh Thế Giới')
+        original_sha = hashlib.sha256(broken.encode()).hexdigest()
+        orphan = [{"extinf": broken, "extinf_sha256": original_sha}]
+        feed = ('#EXTM3U\n#EXTINF:-1 tvg-id="antg",An Ninh Thế Giới\n'
+                + self.b + '\n')
+        found, report = find_existing_exact_identity(
+            orphan, [{"id": "reviewed-vietnam", "url": "https://feeds.example.org/vn.m3u"}],
+            reader=lambda _url: feed)
+        candidate = found[original_sha][hashlib.sha256(self.b.encode()).hexdigest()]
+        self.assertEqual(candidate["proof_rules"], ["REVIEWED_ANTG_NAME_ALIAS"])
+        self.assertEqual(report["orphan_entries_with_any_exact_existing_match"], 1)
+        self.assertNotIn("video_stream", candidate)
+
     def test_no_http_url_is_inferred_from_invalid_or_missing_reference(self):
         content = ("#EXTM3U\n" + self.dis + "\n#EXTINF:-1,Next\n" + self.a
                    + "\n#EXTINF:-1,Empty\n/relative/not-an-absolute-url\n")
