@@ -291,15 +291,15 @@ class PlatformVerificationTests(unittest.TestCase):
               "search_pages":{"scribd":(),"slideshare":()},
               "document_pages":{"scribd":(),"slideshare":(slide,)}}
         report,links=scan(**opts)
-        self.assertEqual(len(links),1)
-        self.assertEqual(report["platforms"]["slideshare"]["candidate_sources"],1)
+        self.assertEqual(len(links),2)
+        self.assertEqual(report["platforms"]["slideshare"]["candidate_sources"],2)
         self.assertEqual(report["platforms"]["slideshare"]["reviewed_public_reference_pages"],1)
         def valid_source(url):
             return '#EXTM3U\n#EXTINF:-1,TRT 1\nhttps://example.org/live.m3u8\n'
         accepted,proof=verify_sources(links,fetcher=valid_source,resolver=lambda url:True)
-        self.assertEqual(len(accepted),1)
-        self.assertEqual(proof[0]["status"],"M3U_CHANNEL_ENTRIES")
-        self.assertFalse(proof[0]["playback_verified"])
+        self.assertEqual(len(accepted),2)
+        self.assertTrue(all(x["status"]=="M3U_CHANNEL_ENTRIES" for x in proof))
+        self.assertTrue(all(x["playback_verified"] is False for x in proof))
         def no_marker(url):
             if "advancedsearch.php" in url:
                 return json.dumps({"response":{"docs":[]}})
