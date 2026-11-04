@@ -65,6 +65,7 @@ def scan(request=None, terms=None):
     if terms is None:
         terms = TERMS
     found, errors, seen, limits_hit, found_urls = [], [], set(), set(), set()
+    confirmed_empty_projects, stale_branches_refreshed = set(), 0
     for term in dict.fromkeys(terms):
         queries = [
             ("gitlab", GITLAB_API + "?" + urlencode({"search": term, "simple": "true", "per_page": 12})),
@@ -110,7 +111,32 @@ def scan(request=None, terms=None):
                             + quote(project["name"], safe="") + "/git/trees/"
                             + quote(project["branch"], safe="") + "?recursive=true")
                 try:
-                    listing = request(tree)
+                    try:
+                        listing = request(tree)
+                    except urllib.error.HTTPError as exc:
+                        if forge != "gitlab" or exc.code != 404:
+                            raise
+                        # A public GitLab search index may retain a stale
+                        # default branch or an empty repository. Recheck the
+                        # *exact* publicly indexed project ID before treating
+                        # the 404 as a lost source; never suppress an unknown
+                        # 404 or try an unauthorised project.
+                        detail = request(GITLAB_API + "/" + str(project["id"]))
+                        if (not isinstance(detail, dict)
+                                or detail.get("id") != project["id"]):
+                            raise ValueError("Malformed GitLab project refresh")
+                        if detail.get("empty_repo") is True:
+                            confirmed_empty_projects.add(project["id"])
+                            continue
+                        branch = detail.get("default_branch")
+                        if not isinstance(branch, str) or not branch or branch == project["branch"]:
+                            raise
+                        project = dict(project, branch=branch)
+                        tree = (GITLAB_API + "/" + str(project["id"]) + "/repository/tree?"
+                                + urlencode({"ref": project["branch"], "recursive": "true",
+                                             "per_page": 100, "pagination": "keyset"}))
+                        listing = request(tree)
+                        stale_branches_refreshed += 1
                     if forge == "gitlab":
                         if not isinstance(listing, list):
                             raise ValueError("Invalid GitLab repository tree")
@@ -159,7 +185,9 @@ def scan(request=None, terms=None):
             "limits_hit": sorted(limits_hit),
             "sources": found, "source_count": len(found), "playback_verified": False,
             "errors": errors, "anonymous_error_summary": error_summary(errors),
-            "projects_examined": len(seen)}
+            "projects_examined": len(seen),
+            "gitlab_confirmed_empty_projects_skipped": len(confirmed_empty_projects),
+            "gitlab_stale_branch_recoveries": stale_branches_refreshed}
 
 def main():
     parser = argparse.ArgumentParser()

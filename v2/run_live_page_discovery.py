@@ -57,7 +57,14 @@ def fetch_page(url):
         except urllib.error.HTTPError as exc:
             # Retry only transient HTTP failures; do not bypass 403 or
             # pretend a blocked publisher page has been inspected.
-            if exc.code not in (429, 500, 502, 503, 504) or attempt == 2:
+            if exc.code not in (408, 429, 500, 502, 503, 504) or attempt == 2:
+                raise
+            time.sleep(min(2 ** attempt, 3))
+        except (urllib.error.URLError, TimeoutError):
+            # The official AZTV site has intermittently failed DNS/network
+            # lookups. Retry bounded transport failures only, retaining
+            # the original error if no actual page was fetched.
+            if attempt == 2:
                 raise
             time.sleep(min(2 ** attempt, 3))
     if len(content) > MAX_BYTES:

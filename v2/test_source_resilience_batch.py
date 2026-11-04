@@ -102,5 +102,35 @@ class SourceResilienceBatch(unittest.TestCase):
                 live.fetch_page("https://example.org/")
         self.assertEqual(blocked.calls, 1)
 
+
+    def test_live_page_transient_dns_error_retries_without_bypassing_unsafe_redirect(self):
+        import io
+        from unittest.mock import patch
+        from urllib.error import URLError
+        import run_live_page_discovery as live
+        class TransientNetwork:
+            calls = 0
+            def open(self, request, timeout=12):
+                self.calls += 1
+                if self.calls == 1:
+                    raise URLError("temporary lookup failure")
+                return io.BytesIO(b'<html><a href="/canli">canli</a></html>')
+        opener = TransientNetwork()
+        with patch("urllib.request.build_opener", return_value=opener), \
+             patch.object(live.time, "sleep", return_value=None):
+            self.assertIn("<html>", live.fetch_page("https://example.org/"))
+        self.assertEqual(opener.calls, 2)
+        class UnsafeRedirect:
+            calls = 0
+            def open(self, request, timeout=12):
+                self.calls += 1
+                raise ValueError("Unsafe live page redirect")
+        unsafe = UnsafeRedirect()
+        with patch("urllib.request.build_opener", return_value=unsafe), \
+             patch.object(live.time, "sleep", return_value=None):
+            with self.assertRaises(ValueError):
+                live.fetch_page("https://example.org/")
+        self.assertEqual(unsafe.calls, 1)
+
 if __name__ == "__main__":
     unittest.main()
