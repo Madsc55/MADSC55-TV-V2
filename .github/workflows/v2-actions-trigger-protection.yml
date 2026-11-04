@@ -17,6 +17,8 @@ on:
       - 'v2/test_historical_targeted_playback.py'
       - 'v2/orphan_m3u_recovery.py'
       - 'v2/test_orphan_m3u_recovery.py'
+      - 'v2/main_playlist_candidate_bridge.py'
+      - 'v2/test_main_playlist_candidate_bridge.py'
   workflow_dispatch:
 permissions:
   contents: read
