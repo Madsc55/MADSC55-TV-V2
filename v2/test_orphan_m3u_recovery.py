@@ -143,9 +143,9 @@ class OrphanRecoveryTests(unittest.TestCase):
         def read(url):
             seen.append(url)
             if url == "https://onureroz.com/indirmeler/dunya/index.m3u":
-                return ("#EXTM3U\\n" + same_identity + "\\n" + self.a +
-                        "\\n" + different_channel + "\\n" + self.b + "\\n")
-            return "#EXTM3U\\n"
+                return ("#EXTM3U\n" + same_identity + "\n" + self.a +
+                        "\n" + different_channel + "\n" + self.b + "\n")
+            return "#EXTM3U\n"
         matched, summary = find_official_alternates([{"extinf": wanted}], reader=read)
         self.assertEqual(len(seen), 3)
         self.assertEqual(summary["official_alternate_feeds_read"], 3)
