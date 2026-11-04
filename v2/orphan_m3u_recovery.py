@@ -314,7 +314,16 @@ def find_existing_exact_identity(orphans, catalog, *, reader=_read_document,
 
     def one(source):
         try:
-            if source.get("origin") == "public-document-reference":
+            if source.get("origin") == "orphan-discovery-reference":
+                from orphan_source_expansion import safe_reference_url
+                from historical_targeted_playback import public_dns
+                from discover import fetch
+                if not safe_reference_url(source["url"]) or not public_dns(source["url"]):
+                    raise ValueError("Unsafe public orphan discovery reference")
+                data = fetch(source["url"])
+                if not data.lstrip("\ufeff\r\n\t ").startswith("#EXTM3U"):
+                    raise ValueError("Public orphan source missing M3U header")
+            elif source.get("origin") == "public-document-reference":
                 from document_platform_discovery import source_url
                 from discover import fetch
                 from historical_targeted_playback import public_dns
@@ -356,6 +365,8 @@ def find_existing_exact_identity(orphans, catalog, *, reader=_read_document,
         "preconfigured_sources_checked": len(catalog),
         "vetted_public_document_sources_checked": sum(
             source.get("origin") == "public-document-reference" for source in catalog),
+        "public_discovery_source_references_checked": sum(
+            source.get("origin") == "orphan-discovery-reference" for source in catalog),
         "source_documents_unavailable_count": len(failures),
         "unavailable_source_ids": sorted(failures),
         "orphan_entries_with_exact_existing_epg_and_name": len(matched),
@@ -673,6 +684,8 @@ def main():
     p.add_argument("--public-key", type=Path,
                    default=Path("v2/config/stage3_transit_public.pem"))
     p.add_argument("--history-revisions", type=int, default=20)
+    p.add_argument("--include-public-discovery", action="store_true",
+                   help="Review bounded verified public source reports only for exact orphan matches")
     p.add_argument("--include-public-registry", action="store_true",
                    help="Cross-check exact EPG ID and registered name in public IPTV-org API")
     p.add_argument("--immutable-orphan-baseline", type=Path,
@@ -686,9 +699,17 @@ def main():
                     args.all_candidates_sealed.resolve()}) != 3
             or not 1 <= args.history_revisions <= 300):
         p.error("Unsafe output path or unbounded history")
+    known_catalog = existing_source_catalog()
+    if args.include_public_discovery:
+        from orphan_source_expansion import reviewed_source_references
+        added_sources, public_source_stats = reviewed_source_references(
+            {x["url"] for x in known_catalog})
+        known_catalog.extend(added_sources)
+        print("Extra public source references for exact orphan metadata only:",
+              public_source_stats["new_source_references"])
     result = audit(report_path=args.report, sealed_path=args.sealed,
                    key_path=args.public_key, limit=args.history_revisions,
-                   known_source_catalog=existing_source_catalog(),
+                   known_source_catalog=known_catalog,
                    all_candidates_sealed_path=args.all_candidates_sealed,
                    immutable_orphan_baseline_path=args.immutable_orphan_baseline,
                    public_registry=args.include_public_registry)
