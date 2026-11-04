@@ -36,6 +36,8 @@ PUBLIC_DOCUMENT_PAGES = {
  "scribd": (
   "https://www.scribd.com/document/834636179/Extm3u-Yeni",
   "https://www.scribd.com/document/1052024011/Uygun-Olan-Kanallar%C4%B1m-Resmi-Turkce-Olarak",
+  "https://www.scribd.com/document/758425845/iptv",
+  "https://www.scribd.com/document/730318246/m3u-Link-Almekhlafi",
  ),
  "slideshare": (
   "https://www.slideshare.net/slideshow/iptv-githubpdf/258657900",

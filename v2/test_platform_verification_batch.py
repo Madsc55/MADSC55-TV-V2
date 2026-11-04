@@ -11,6 +11,26 @@ from document_platform_discovery import PUBLIC_DOCUMENT_PAGES, page_references, 
 
 
 class PlatformVerificationTests(unittest.TestCase):
+    def test_more_public_scribd_documents_do_not_infer_streams(self):
+        self.assertEqual(len(PUBLIC_DOCUMENT_PAGES["scribd"]),4)
+        target="https://www.scribd.com/document/758425845/iptv"
+        self.assertIn(target,PUBLIC_DOCUMENT_PAGES["scribd"])
+        def read(url):
+            if "advancedsearch.php" in url:
+                return json.dumps({"response":{"docs":[]}})
+            if url==target:
+                return '<img alt="Turkish https://iptv-org.github.io/iptv/countries/tr.m3u">'
+            return ""
+        report,found=scan(
+            read=read,
+            search_pages={"scribd":(),"slideshare":()},
+            document_pages={"scribd":(target,),"slideshare":()})
+        self.assertEqual(report["platforms"]["scribd"]["documents_checked"],1)
+        self.assertEqual(report["platforms"]["scribd"]["candidate_sources"],1)
+        self.assertEqual(len(found),1)
+        self.assertFalse(found[0]["playback_verified"])
+        self.assertNotIn(found[0]["url"],str(report))
+
     def test_youtube_search_live_metadata_must_be_explicit_and_consistent(self):
         from youtube_discovery import search_live_metadata
         self.assertEqual(search_live_metadata({}),
