@@ -164,8 +164,10 @@ def main():
     OUTPUT.parent.mkdir(parents=True, exist_ok=True)
     OUTPUT.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print("Forge source references:", len(report["sources"]), "errors:", len(report["errors"]),
-          "anonymous_error_summary:", json.dumps(report["anonymous_error_summary"], sort_keys=True))
-    if report["errors"] or report["limits_hit"]:
+          "anonymous_error_summary:", json.dumps(
+              report.get("anonymous_error_summary", error_summary(report.get("errors", []))),
+              sort_keys=True))
+    if report.get("errors") or report.get("limits_hit"):
         print("WARNING: Partial forge source discovery; inspect saved errors and limits")
 if __name__ == "__main__":
     main()

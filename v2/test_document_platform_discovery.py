@@ -4,7 +4,7 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
-from document_platform_discovery import (ARCHIVE_SEARCH,PLATFORMS,accepted_sources,
+from document_platform_discovery import (ARCHIVE_SEARCH,SEARCH_PAGES,PLATFORMS,accepted_sources,
  allowed_page,archive_file_refs,digest,page_references,scan,source_url,verify_sources)
 
 class ThreePlatformAdapterTests(unittest.TestCase):
@@ -63,7 +63,8 @@ class ThreePlatformAdapterTests(unittest.TestCase):
    raise AssertionError(url)
   report,rows=scan(read=read)
   self.assertEqual(len(rows),1)
-  self.assertEqual(report["platforms"]["scribd"]["errors"],2)
+  self.assertEqual(report["platforms"]["scribd"]["errors"],len(SEARCH_PAGES["scribd"]))
+  self.assertEqual(report["platforms"]["scribd"]["queries"],len(SEARCH_PAGES["scribd"]))
   self.assertEqual(report["coverage_status"],"PARTIAL_PUBLIC_ACCESS")
  def test_handoff_rejects_tampering_and_duplicates(self):
   url="https://example.org/tr.m3u";h=digest(url)
