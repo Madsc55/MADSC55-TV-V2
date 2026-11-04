@@ -163,6 +163,41 @@ class OrphanRecoveryTests(unittest.TestCase):
         self.assertEqual(stats["preconfigured_sources_checked"], 1)
         self.assertEqual(stats["source_documents_unavailable_count"], 0)
 
+
+    def test_identical_original_extinf_without_epg_id_matches_exactly(self):
+        original = '#EXTINF:-1 group-title="World",Unlisted Regional TV'
+        orphan = [{"extinf": original,
+                   "extinf_sha256": hashlib.sha256(original.encode()).hexdigest()}]
+        feed = "#EXTM3U\\n" + original + "\\n" + self.a + "\\n"
+        catalog = [{"id": "public-reviewed", "url": "https://feeds.example.org/all.m3u"}]
+        found, report = find_existing_exact_identity(
+            orphan, catalog, reader=lambda url: feed)
+        match = found[orphan[0]["extinf_sha256"]][hashlib.sha256(self.a.encode()).hexdigest()]
+        self.assertEqual(match["proof_existing_source_ids"], ["public-reviewed"])
+        self.assertEqual(match["proof_rules"], ["EXACT_ORIGINAL_EXTINF"])
+        self.assertEqual(report["orphan_entries_with_exact_original_extinf"], 1)
+        self.assertEqual(report["orphan_entries_with_any_exact_existing_match"], 1)
+        self.assertEqual(report["orphan_entries_with_exact_existing_epg_and_name"], 0)
+
+    def test_without_epg_id_name_only_or_changed_extinf_never_matches(self):
+        original = '#EXTINF:-1 group-title="World",Unlisted Regional TV'
+        orphan = [{"extinf": original,
+                   "extinf_sha256": hashlib.sha256(original.encode()).hexdigest()}]
+        altered = '#EXTINF:-1 group-title="Other",Unlisted Regional TV'
+        feed = "#EXTM3U\\n" + altered + "\\n" + self.a + "\\n"
+        catalog = [{"id": "public-reviewed", "url": "https://feeds.example.org/all.m3u"}]
+        found, report = find_existing_exact_identity(
+            orphan, catalog, reader=lambda url: feed)
+        self.assertFalse(found)
+        self.assertEqual(report["orphan_entries_with_any_exact_existing_match"], 0)
+        self.assertEqual(report["orphan_entries_with_exact_original_extinf"], 0)
+
+    def test_tampered_original_sha_never_enters_exact_source_recovery(self):
+        original = '#EXTINF:-1,Unknown TV'
+        orphan = [{"extinf": original, "extinf_sha256": "0" * 64}]
+        with self.assertRaises(ValueError):
+            find_existing_exact_identity(orphan, [])
+
     def test_probe_dedup_and_no_plaintext_in_public_report(self):
         c = {"url": self.a, "proof_commits": ["a"*40]}
         entry = {"source_id": "discevisita-tr", "extinf_sha256": "x"*64,

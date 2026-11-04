@@ -300,17 +300,24 @@ def existing_source_catalog():
 
 def find_existing_exact_identity(orphans, catalog, *, reader=_read_document,
                                  doc_reader=None, doc_resolver=None):
-    """Exact EPG ID + channel-name recovery from known and reviewed sources.
+    """Exact original EXTINF or EPG ID + channel-name recovery from reviewed sources.
 
+    An unchanged original EXTINF line is a stronger identity than an inferred
+    name, including when tvg-id is absent. No fuzzy/name-only matches allowed.
     Public-document sources must also pass URL and public DNS checks before
     the distinct safe, redirect-validated document fetcher is invoked. Matching
     alone never proves channel content, actual playback or device compatibility.
     """
     wanted = defaultdict(list)
+    exact_originals = defaultdict(list)
     for item in orphans:
-        identity = exact_channel_identity(item["extinf"])
+        extinf, digest = item["extinf"], item["extinf_sha256"]
+        if _hash(extinf) != digest:
+            raise ValueError("Orphan EXTINF identity hash mismatch")
+        exact_originals[extinf].append(digest)
+        identity = exact_channel_identity(extinf)
         if identity is not None:
-            wanted[identity].append(item["extinf_sha256"])
+            wanted[identity].append(digest)
 
     def one(source):
         try:
@@ -339,28 +346,38 @@ def find_existing_exact_identity(orphans, catalog, *, reader=_read_document,
             pairs, _ = parse_exact_pairs(data)
             found = []
             for extinf, urls in pairs.items():
-                for dst in wanted.get(exact_channel_identity(extinf), []):
+                targets = {dst: "EXACT_ORIGINAL_EXTINF"
+                           for dst in exact_originals.get(extinf, ())}
+                for dst in wanted.get(exact_channel_identity(extinf), ()):
+                    targets.setdefault(dst, "EXACT_EPG_ID_AND_CHANNEL_NAME")
+                for dst, proof_rule in targets.items():
                     for url in urls:
-                        found.append((dst, _hash(url), url, source["id"]))
+                        found.append((dst, _hash(url), url, source["id"], proof_rule))
             return found, None
         except (OSError, ValueError, TypeError):
             return [], "SOURCE_DOCUMENT_UNAVAILABLE_OR_INVALID"
 
     matched = defaultdict(dict)
+    proof_identity_groups = defaultdict(set)
     failures = []
     with ThreadPoolExecutor(max_workers=8) as pool:
         for source, result in zip(catalog, pool.map(one, catalog)):
             found, error = result
             if error:
                 failures.append(source["id"])
-            for extinf_sha, url_sha, url, source_id in found:
+            for extinf_sha, url_sha, url, source_id, proof_rule in found:
+                proof_identity_groups[proof_rule].add(extinf_sha)
                 cand = matched[extinf_sha].setdefault(
-                    url_sha, {"url": url, "proof_existing_source_ids": []})
+                    url_sha, {"url": url, "proof_existing_source_ids": [],
+                              "proof_rules": []})
                 if source_id not in cand["proof_existing_source_ids"]:
                     cand["proof_existing_source_ids"].append(source_id)
+                if proof_rule not in cand["proof_rules"]:
+                    cand["proof_rules"].append(proof_rule)
     for values in matched.values():
         for item in values.values():
             item["proof_existing_source_ids"].sort()
+            item["proof_rules"].sort()
     return matched, {
         "preconfigured_sources_checked": len(catalog),
         "vetted_public_document_sources_checked": sum(
@@ -369,8 +386,14 @@ def find_existing_exact_identity(orphans, catalog, *, reader=_read_document,
             source.get("origin") == "orphan-discovery-reference" for source in catalog),
         "source_documents_unavailable_count": len(failures),
         "unavailable_source_ids": sorted(failures),
-        "orphan_entries_with_exact_existing_epg_and_name": len(matched),
-        "proof_only": "MATCHED_EPG_ID_AND_EXACT_CHANNEL_NAME_NOT_CHANNEL_CONTENT",
+        "orphan_entries_with_exact_existing_epg_and_name": len(
+            proof_identity_groups["EXACT_EPG_ID_AND_CHANNEL_NAME"] |
+            proof_identity_groups["EXACT_ORIGINAL_EXTINF"] & {
+                x["extinf_sha256"] for x in orphans if exact_channel_identity(x["extinf"]) is not None}),
+        "orphan_entries_with_exact_original_extinf": len(
+            proof_identity_groups["EXACT_ORIGINAL_EXTINF"]),
+        "orphan_entries_with_any_exact_existing_match": len(matched),
+        "proof_only": "EXACT_EXTINF_OR_EXACT_EPG_ID_AND_NAME_NOT_CHANNEL_CONTENT",
     }
 
 
@@ -580,6 +603,8 @@ def audit(*, report_path, sealed_path, key_path, limit=20,
                 ids = set(record.get("proof_existing_source_ids", []))
                 ids.update(candidate["proof_existing_source_ids"])
                 record["proof_existing_source_ids"] = sorted(ids)
+                record["proof_rules"] = sorted(set(record.get("proof_rules", [])) |
+                                              set(candidate.get("proof_rules", [])))
     public_registry_report = {"status": "NOT_REQUESTED"}
     if public_registry:
         from orphan_iptv_org_registry import find_exact_orphan_streams

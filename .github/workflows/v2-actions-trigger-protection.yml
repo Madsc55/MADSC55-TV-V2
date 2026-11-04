@@ -15,6 +15,8 @@ on:
       - 'v2/final_batch_acceptance.py'
       - 'v2/historical_targeted_playback.py'
       - 'v2/test_historical_targeted_playback.py'
+      - 'v2/orphan_m3u_recovery.py'
+      - 'v2/test_orphan_m3u_recovery.py'
   workflow_dispatch:
 permissions:
   contents: read
