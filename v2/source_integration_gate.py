@@ -177,8 +177,12 @@ def audit():
             and (dynamic_handoff.get("failed_source_fetches", 0) > 0
                  or any(dynamic_handoff.get("bounded_truncation", {}).values()))):
         errors.append("PARTIAL_DYNAMIC_SOURCE_INSPECTION")
-    if (live_handoff.get("status") not in (None, "NOT_REQUESTED")
-            and live_handoff.get("pages_unavailable", 0) > 0):
+    # Live-page handoff has no mandatory 'status' field: the page counters
+    # themselves are evidence. Never hide unreachable pages because status
+    # is omitted in an otherwise valid scan report.
+    if (live_handoff.get("pages_unavailable", 0) > 0
+            or live_handoff.get("pages_inspected", 0) <
+               live_handoff.get("new_pages_queued", 0)):
         errors.append("PARTIAL_LIVE_PAGE_INSPECTION")
     status = ("INCOMPLETE" if errors and "INCOMPLETE_ADAPTER_HANDOFF" in errors or
               "MISSING_STATIC_SOURCES" in errors or "DUPLICATE_SOURCE_IDS" in errors or
