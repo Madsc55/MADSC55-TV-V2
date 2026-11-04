@@ -61,7 +61,7 @@ class MainProtectedPlaylistBridgeTests(unittest.TestCase):
     def test_rejects_wrong_backup_anchor_and_foreign_count(self):
         changed = self.main.read_text().replace("DHA CANLI 720P HD", "DHA WRONG", 1)
         self.main.write_text(changed, encoding="utf-8")
-        self.mock_pins["v2-main-ibo-876"] = sha(self.main.read_bytes())
+        PINNED_BLOBS["v2-main-ibo-876"] = sha(self.main.read_bytes())
         with self.assertRaisesRegex(ValueError, "two anchor contract"):
             validated_v2_main_catalog(self.main, self.foreign)
 
