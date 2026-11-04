@@ -90,6 +90,7 @@ def error_summary(rows):
 def main():
     configured = {x["url"] for x in json.loads(CONFIG.read_text())["sources"]}
     repos, errors, found = {}, [], []
+    skipped_empty_repositories = set()
     limits_hit = []
     for query in QUERIES:
         try:
@@ -103,9 +104,17 @@ def main():
                 if not isinstance(item, dict) or item.get("fork") or item.get("archived"):
                     continue
                 name, branch = item.get("full_name"), item.get("default_branch")
+                # GitHub returns 409 for empty repositories without a Git tree.
+                # Skip only when search metadata *proves* the repository is empty
+                # or disabled; other 409 responses remain reportable errors.
+                if item.get("size") == 0 or item.get("disabled") is True:
+                    if isinstance(name, str):
+                        skipped_empty_repositories.add(name)
+                    continue
                 if (isinstance(name, str) and re.fullmatch(r"[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+", name)
                         and isinstance(branch, str) and branch.strip()):
                     repos[name] = branch
+                    skipped_empty_repositories.discard(name)
         except Exception as exc:
             errors.append({"query": query, "error": error_kind(exc)})
     if len(repos) > MAX_REPOS:
@@ -152,7 +161,8 @@ def main():
     if len(found) >= MAX_FILES:
         limits_hit.append("MAX_FILES")
     gist_owners = all_gist_owners[:30]
-    for owner in gist_owners:
+    gist_owners_unchecked_due_to_rate_limit = 0
+    for owner_index, owner in enumerate(gist_owners):
         if len(found) >= MAX_FILES:
             break
         try:
@@ -188,6 +198,15 @@ def main():
                                           "status": "SOURCE_PARSED_STREAMS_NOT_PLAYBACK_VERIFIED"})
                     except Exception as exc:
                         errors.append({"repository": owner + "/gist", "path": filename, "error": error_kind(exc)})
+        except urllib.error.HTTPError as exc:
+            errors.append({"repository": owner + "/gist", "error": error_kind(exc)})
+            # Once the anonymous public-Gist budget is exhausted, further
+            # requests cannot improve coverage. Record the unvisited owners.
+            remaining = str((exc.headers or {}).get("X-RateLimit-Remaining", "")).strip()
+            if exc.code in (403, 429) and remaining == "0":
+                limits_hit.append("GIST_PUBLIC_RATE_LIMIT_EXHAUSTED")
+                gist_owners_unchecked_due_to_rate_limit = len(gist_owners) - owner_index - 1
+                break
         except Exception as exc:
             errors.append({"repository": owner + "/gist", "error": error_kind(exc)})
     found.sort(key=lambda item: (item["repository"].casefold(), item["path"].casefold()))
@@ -195,6 +214,8 @@ def main():
     OUT.write_text(json.dumps({"created_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
        "policy": "READ_ONLY_NO_AUTOMATIC_SOURCE_OR_PLAYLIST_IMPORT", "repositories_discovered": len(repos),
        "sources_found": len(found), "sources": found, "errors": errors,
+       "skipped_metadata_proven_empty_or_disabled_repositories": len(skipped_empty_repositories),
+       "gist_owners_unchecked_due_to_rate_limit": gist_owners_unchecked_due_to_rate_limit,
        "anonymous_error_summary": error_summary(errors),
        "limits_hit": sorted(set(limits_hit)),
        "coverage_status": "PARTIAL_API_ERRORS" if errors else "PARTIAL_LIMITS" if limits_hit else "COMPLETE_QUERIES",

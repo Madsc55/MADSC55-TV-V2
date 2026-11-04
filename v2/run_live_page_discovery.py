@@ -7,6 +7,7 @@ changes to IBO playlists. Never prints query strings from discovered links.
 import argparse
 import hashlib
 import json
+import time
 from collections import Counter
 import urllib.error
 from pathlib import Path
@@ -48,8 +49,17 @@ def fetch_page(url):
             return super().redirect_request(request, fp, code, msg, headers, newurl)
     opener = urllib.request.build_opener(SafeRedirect())
     request = urllib.request.Request(url, headers={"User-Agent": "MADSC55-TV-V2-LiveReference/1.0"})
-    with opener.open(request, timeout=12) as response:
-        content = response.read(MAX_BYTES + 1)
+    for attempt in range(3):
+        try:
+            with opener.open(request, timeout=12) as response:
+                content = response.read(MAX_BYTES + 1)
+            break
+        except urllib.error.HTTPError as exc:
+            # Retry only transient HTTP failures; do not bypass 403 or
+            # pretend a blocked publisher page has been inspected.
+            if exc.code not in (429, 500, 502, 503, 504) or attempt == 2:
+                raise
+            time.sleep(min(2 ** attempt, 3))
     if len(content) > MAX_BYTES:
         raise ValueError("Live page too large")
     return content.decode("utf-8", errors="replace")

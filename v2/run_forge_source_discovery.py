@@ -118,15 +118,20 @@ def scan(request=None, terms=None):
                             combined = list(listing)
                             current_page = listing
                             for page in (2, 3):
-                                # Use keyset pagination for real GitLab records with IDs.
-                                # Numbered pages retain compatibility with older responses.
+                                # GitLab 15+ repository trees use keyset pagination.
+                                # Falling back to &page= on a keyset URL is invalid
+                                # and can manufacture HTTP errors or duplicate pages.
                                 last_id = current_page[-1].get("id") if isinstance(current_page[-1], dict) else None
-                                next_url = (tree + "&page_token=" + quote(last_id, safe="")
-                                            if isinstance(last_id, str) and last_id
-                                            else tree + "&page=" + str(page))
+                                if not isinstance(last_id, str) or not last_id:
+                                    limits_hit.add("GITLAB_TREE_KEYSET_TOKEN_UNAVAILABLE")
+                                    break
+                                next_url = tree + "&page_token=" + quote(last_id, safe="")
                                 more = request(next_url)
                                 if not isinstance(more, list):
                                     raise ValueError("Invalid GitLab tree page")
+                                if more == current_page:
+                                    limits_hit.add("GITLAB_TREE_REPEAT_PAGE")
+                                    break
                                 combined.extend(more)
                                 current_page = more
                                 if len(more) < 100:

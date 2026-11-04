@@ -21,6 +21,12 @@ def gitlab_projects(payload):
     for item in payload[:MAX_PROJECTS]:
         if not isinstance(item, dict):
             continue
+        # Public search metadata can identify empty, archived and deleted
+        # projects before a tree request that would otherwise return 404.
+        if (item.get("empty_repo") is True or item.get("archived") is True
+                or item.get("marked_for_deletion_on") or item.get("marked_for_deletion_at")
+                or item.get("repository_access_level") == "disabled"):
+            continue
         project_id = item.get("id")
         branch = item.get("default_branch")
         if isinstance(project_id, int) and project_id > 0 and isinstance(branch, str) and branch:
@@ -32,6 +38,8 @@ def codeberg_projects(payload):
     result = []
     for item in items[:MAX_PROJECTS]:
         if not isinstance(item, dict):
+            continue
+        if item.get("empty") is True or item.get("archived") is True or item.get("private") is True:
             continue
         owner = item.get("owner", {})
         owner_name = owner.get("login", "") if isinstance(owner, dict) else ""

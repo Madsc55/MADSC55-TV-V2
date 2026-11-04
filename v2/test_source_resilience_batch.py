@@ -73,5 +73,34 @@ class SourceResilienceBatch(unittest.TestCase):
         self.assertIn("archive.org/advancedsearch.php?", ARCHIVE_SEARCH)
 
 
+    def test_live_page_retries_transient_503_without_retrying_403(self):
+        import io
+        from unittest.mock import patch
+        from urllib.error import HTTPError
+        import run_live_page_discovery as live
+        class FakeOpener:
+            calls = 0
+            def open(self, request, timeout=12):
+                self.calls += 1
+                if self.calls == 1:
+                    raise HTTPError(request.full_url, 503, "transient", {}, None)
+                return io.BytesIO(b'<html><a href="/live/">live</a></html>')
+        opener = FakeOpener()
+        with patch("urllib.request.build_opener", return_value=opener), \
+             patch.object(live.time, "sleep", return_value=None):
+            self.assertIn("<html>", live.fetch_page("https://example.org/"))
+        self.assertEqual(opener.calls, 2)
+        class AlwaysForbidden:
+            calls = 0
+            def open(self, request, timeout=12):
+                self.calls += 1
+                raise HTTPError(request.full_url, 403, "blocked", {}, None)
+        blocked = AlwaysForbidden()
+        with patch("urllib.request.build_opener", return_value=blocked), \
+             patch.object(live.time, "sleep", return_value=None):
+            with self.assertRaises(HTTPError):
+                live.fetch_page("https://example.org/")
+        self.assertEqual(blocked.calls, 1)
+
 if __name__ == "__main__":
     unittest.main()
