@@ -13,7 +13,7 @@ import time
 
 from stage3_historical_source_recovery import _read
 
-MAX_QUERIES = 13
+MAX_QUERIES = 26  # Both M3U and M3U8 across up to 13 identities
 MAX_REFERENCES = 80
 PER_QUERY = 6
 REPO_PATH = re.compile(
@@ -32,14 +32,16 @@ def _channel_name(extinf):
     return ""
 
 
-def query_for_metadata(extinf):
+def query_for_metadata(extinf, extension="m3u"):
     """A name may locate a source; it NEVER by itself validates the channel."""
+    if extension not in ("m3u", "m3u8"):
+        raise ValueError("Only M3U and M3U8 discovery extensions are accepted")
     if not isinstance(extinf, str) or not extinf.startswith("#EXTINF:"):
         return None
     found = re.search(r'\btvg-id="([^"]+)"', extinf, flags=re.I)
     channel_id = found.group(1).strip() if found else ""
     if SAFE_EPG.fullmatch(channel_id):
-        return '"' + channel_id + '" extension:m3u'
+        return '"' + channel_id + '" extension:' + extension
     name = _channel_name(extinf)
     if not 4 <= len(name) <= 88:
         return None
@@ -48,7 +50,7 @@ def query_for_metadata(extinf):
         return None
     if "://" in name or "=" in name or ":" in name:
         return None
-    return '"' + name + '" extension:m3u'
+    return '"' + name + '" extension:' + extension
 
 
 def pinned_public_file(row):
@@ -64,10 +66,11 @@ def pinned_public_file(row):
     found = REPO_PATH.fullmatch(html)
     if not found:
         return None
-    owner, name, commit, _ = found.groups()
+    owner, name, commit, html_path = found.groups()
     if repo.get("full_name", "").casefold() != (owner + "/" + name).casefold():
         return None
-    if (len(path) > 512 or not path.casefold().endswith(".m3u")
+    if (len(path) > 512 or not path.casefold().endswith((".m3u", ".m3u8"))
+            or html_path != path
             or any(piece in ("", ".", "..") for piece in path.split("/"))
             or any(ord(c) < 32 for c in path)):
         return None
@@ -96,10 +99,11 @@ def targeted_source_references(orphan_rows, known_urls, *, fetcher=_read,
     queries = []
     seen_queries = set()
     for digest, extinf in sorted(deduped.items()):
-        query = query_for_metadata(extinf)
-        if query is not None and query not in seen_queries:
-            queries.append(query)
-            seen_queries.add(query)
+        for extension in ("m3u", "m3u8"):
+            query = query_for_metadata(extinf, extension=extension)
+            if query is not None and query not in seen_queries:
+                queries.append(query)
+                seen_queries.add(query)
     selected = queries[:max_queries]
     skipped_count = max(0, len(queries) - len(selected))
     refs = []
