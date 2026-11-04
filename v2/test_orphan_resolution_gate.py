@@ -39,6 +39,21 @@ class OrphanResolutionGateTests(unittest.TestCase):
         self.assertEqual(result["no_valid_candidate_identities"], 13)
         self.assertEqual(result["remaining_unverified_identities"], 45)
         self.assertEqual(result["status"], "RECOVERY_INCOMPLETE_REAL_AV_REQUIRED")
+        queues = result["hash_only_identity_work_queues"]
+        self.assertEqual(len(queues["video_audio_verified"]), 5)
+        self.assertEqual(len(queues["candidate_av_unverified"]), 32)
+        self.assertEqual(len(queues["without_valid_candidate"]), 13)
+        all_ids = [row["original_extinf_sha256"]
+                   for entries in queues.values() for row in entries]
+        self.assertEqual(len(all_ids), len(set(all_ids)))
+        self.assertEqual(len(all_ids), 50)
+        self.assertTrue(all(not row["candidate_url_sha256"]
+                            for row in queues["without_valid_candidate"]))
+        self.assertTrue(all(row["candidate_url_sha256"]
+                            for row in queues["candidate_av_unverified"]))
+        self.assertTrue(all(all(len(x) == 64 for x in row["candidate_url_sha256"])
+                            for entries in queues.values() for row in entries))
+
 
     def test_missing_original_identity_is_hard_error(self):
         r = fixture()

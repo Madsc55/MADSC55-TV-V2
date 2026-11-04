@@ -42,7 +42,8 @@ def classify_report(data):
         if "url" in row or "stream_url" in row:
             raise ValueError("Plaintext URLs in public source report")
         current = states.setdefault(digest, {"sources": set(), "has_candidate": False,
-                                             "has_av": False})
+                                             "has_av": False,
+                                             "url_sha256": set(), "diagnostics": set()})
         current["sources"].add(source)
         per_source.setdefault(source, set()).add(digest)
         for candidate in candidates:
@@ -51,23 +52,38 @@ def classify_report(data):
             if not isinstance(candidate.get("url_sha256"), str) or not HASH.fullmatch(candidate["url_sha256"]):
                 raise ValueError("Missing candidate URL hash")
             current["has_candidate"] = True
+            current["url_sha256"].add(candidate["url_sha256"])
             if (candidate.get("video_stream") is True
                     and candidate.get("audio_stream") is True
                     and candidate.get("status") == "VIDEO_STREAM_OBSERVED"):
                 current["has_av"] = True
             elif isinstance(candidate.get("diagnostic_category"), str):
                 causes[candidate["diagnostic_category"]] += 1
+                current["diagnostics"].add(candidate["diagnostic_category"])
     if len(states) != 50:
         raise ValueError("Original 50 distinct metadata hashes not preserved")
     status = {"video_audio_verified": 0, "candidate_av_unverified": 0,
               "without_valid_candidate": 0}
     source_breakdown = {x: {"verified": 0, "candidate_unverified": 0,
                             "no_candidate": 0} for x in per_source}
-    for state in states.values():
+    # Hash-only identities are useful recovery work queues; unlike per-source
+    # occurrence counts, these deduplicate the 55 original rows into exactly 50.
+    identity_queues = {
+        "video_audio_verified": [],
+        "candidate_av_unverified": [],
+        "without_valid_candidate": [],
+    }
+    for digest, state in sorted(states.items()):
         field = ("video_audio_verified" if state["has_av"] else
                  "candidate_av_unverified" if state["has_candidate"] else
                  "without_valid_candidate")
         status[field] += 1
+        identity_queues[field].append({
+            "original_extinf_sha256": digest,
+            "original_source_ids": sorted(state["sources"]),
+            "candidate_url_sha256": sorted(state["url_sha256"]),
+            "diagnostic_categories": sorted(state["diagnostics"]),
+        })
         for source in state["sources"]:
             source_breakdown[source][{"video_audio_verified":"verified",
                                      "candidate_av_unverified":"candidate_unverified",
@@ -81,6 +97,7 @@ def classify_report(data):
             "no_valid_candidate_identities": status["without_valid_candidate"],
             "remaining_unverified_identities": remaining,
             "by_original_source": dict(sorted(source_breakdown.items())),
+            "hash_only_identity_work_queues": identity_queues,
             "diagnostic_categories_not_playback_proof": dict(sorted(causes.items())),
             "encrypted_candidate_count": data.get("all_proven_url_candidates_sealed_for_future_retest"),
             "no_plaintext_urls_reported": True,
