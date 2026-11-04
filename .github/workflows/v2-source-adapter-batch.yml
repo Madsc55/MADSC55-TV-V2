@@ -131,7 +131,9 @@ jobs:
           print("TARGETED_SOURCE_RECHECK", payload)
           PY
       - name: One-off exact 10 public M3U and M3U8 source search (NO media probe)
-        if: ${{ github.event_name == 'push' && github.event.head_commit.message == 'fix(v2): one-shot orphan M3U8 source-only recheck' }}
+        if: >-
+          github.event_name == 'push' &&
+          github.event.head_commit.message == 'fix(v2): one-shot orphan M3U8 source-only recheck'
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
