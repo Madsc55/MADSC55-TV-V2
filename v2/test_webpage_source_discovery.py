@@ -34,6 +34,19 @@ class WebpageSourceTests(unittest.TestCase):
                      "https://example.com:8080/index.html"):
             with self.subTest(page=page), self.assertRaises(ValueError):
                 discover_playlist_links(page, '<a href="/tv.m3u">TV</a>')
+    def test_github_blob_view_is_canonical_raw_and_deduplicated(self):
+        # Regression: run #41915184812 index-d7b8649d94005380 INVALID_SOURCE.
+        blob = "https://github.com/Free-TV/IPTV/blob/master/playlist.m3u8"
+        raw = "https://raw.githubusercontent.com/Free-TV/IPTV/master/playlist.m3u8"
+        document = '<a href="' + blob + '">view</a><a href="' + raw + '">raw</a>'
+        self.assertEqual(discover_playlist_links("https://github.com/Free-TV/IPTV", document), [raw])
+
+    def test_github_blob_nested_playlist_and_malformed_paths(self):
+        document = ('<a href="https://github.com/iptv-org/iptv/blob/master/streams/tr.m3u">tr</a>'
+                    '<a href="https://github.com/org/repo/blob/main/list.m3u?x=1">query</a>')
+        self.assertEqual(discover_playlist_links("https://example.com", document),
+                         ["https://raw.githubusercontent.com/iptv-org/iptv/master/streams/tr.m3u"])
+
     def test_reject_http_page(self):
         with self.assertRaises(ValueError):
             discover_playlist_links("http://example.com", "")

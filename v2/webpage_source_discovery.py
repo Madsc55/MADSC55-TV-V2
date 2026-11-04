@@ -6,9 +6,27 @@ import html
 from html.parser import HTMLParser
 from urllib.parse import urljoin, urlsplit
 import ipaddress
+import re
 
 MAX_LINKS = 2000
 EXTENSIONS = (".m3u", ".m3u8")
+GITHUB_BLOB_PLAYLIST = re.compile(
+    r"/([A-Za-z0-9_.-]+)/([A-Za-z0-9_.-]+)/blob/([A-Za-z0-9_.-]+)/(.+\\.(?:m3u|m3u8))",
+    re.IGNORECASE,
+)
+
+
+def canonical_playlist_url(url):
+    """A GitHub /blob/ HTML view must never be fetched as an M3U source."""
+    parsed = urlsplit(url)
+    if parsed.hostname != "github.com" or "/blob/" not in parsed.path:
+        return url
+    match = GITHUB_BLOB_PLAYLIST.fullmatch(parsed.path)
+    if not match or parsed.query:
+        return ""  # Do not admit noncanonical GitHub HTML views as sources.
+    return ("https://raw.githubusercontent.com/" + "/".join(match.groups()))
+
+
 
 class LinkParser(HTMLParser):
     def __init__(self):
@@ -58,7 +76,9 @@ def discover_playlist_links(page_url, document):
     seen, found = set(), []
     for href in parser.links:
         url = html.unescape(urljoin(page_url, href))
-        if candidate_url(url) and url not in seen:
-            seen.add(url)
-            found.append(url)
+        if candidate_url(url):
+            url = canonical_playlist_url(url)
+            if candidate_url(url) and url not in seen:
+                seen.add(url)
+                found.append(url)
     return found
