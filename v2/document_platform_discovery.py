@@ -30,6 +30,17 @@ SEARCH_PAGES={
                "https://www.slideshare.net/search?searchfrom=header&q=turkish+iptv",
                "https://www.slideshare.net/search?searchfrom=header&q=azerbaijan+iptv"),
 }
+# Public, human-reviewable examples. Discovery is not playback acceptance.
+# These pages may contain only redacted stream addresses; never infer a URL.
+PUBLIC_DOCUMENT_PAGES = {
+ "scribd": (
+  "https://www.scribd.com/document/834636179/Extm3u-Yeni",
+  "https://www.scribd.com/document/1052024011/Uygun-Olan-Kanallar%C4%B1m-Resmi-Turkce-Olarak",
+ ),
+ "slideshare": (
+  "https://www.slideshare.net/slideshow/iptv-githubpdf/258657900",
+ ),
+}
 ARCHIVE_SEARCH="https://archive.org/advancedsearch.php?"+urlencode({
  "q":"(title:iptv OR title:m3u OR subject:iptv) AND (mediatype:texts OR mediatype:software)",
  "fl[]":"identifier","rows":48,"page":1,"output":"json"})
@@ -65,6 +76,11 @@ class VisibleLinks(HTMLParser):
   if not self.hidden and tag=="a":
    url=dict(attrs).get("href")
    if url and len(self.links)<1500:self.links.append(url)
+  # SlideShare often exposes slide text in an image's public alt attribute,
+  # not as HTML text. No image download, PDF download or OCR is performed.
+  if not self.hidden and tag=="img" and len(self.visible)<20000:
+   alt=dict(attrs).get("alt")
+   if isinstance(alt,str) and len(alt)<=6000:self.visible.append(alt)
  def handle_endtag(self,tag):
   if tag in ("script","style","noscript"):self.hidden=max(0,self.hidden-1)
  def handle_data(self,data):
@@ -124,7 +140,12 @@ def fetch_public(url):
  if len(data)>limit:raise ValueError("Document exceeds size limit")
  return data.decode("utf-8-sig",errors="replace")
 
-def scan(read=fetch_public,search_pages=SEARCH_PAGES,archive_search=ARCHIVE_SEARCH):
+def scan(read=fetch_public,search_pages=SEARCH_PAGES,archive_search=ARCHIVE_SEARCH,
+         document_pages=None):
+ # Preserve deterministic offline injection without unexpected network reads.
+ # The production call still scans all reviewed public document pages.
+ if document_pages is None:
+  document_pages=PUBLIC_DOCUMENT_PAGES if read is fetch_public else {}
  links={};errors=[]
  stats={k:{"queries":0,"documents_checked":0,"candidate_sources":0,"errors":0} for k in PLATFORMS}
  def fail(provider,stage,exc):
@@ -135,15 +156,34 @@ def scan(read=fetch_public,search_pages=SEARCH_PAGES,archive_search=ARCHIVE_SEAR
    if source_url(url) and (len(links)<MAX_SOURCES or url in links):
     links.setdefault(url,set()).add(provider)
  for provider in ("scribd","slideshare"):
+  documents=[]
   for seed in search_pages.get(provider,())[:4]:
    stats[provider]["queries"]+=1
-   try:docs,refs=page_references(seed,read(seed),provider);add(provider,refs)
+   try:
+    docs,refs=page_references(seed,read(seed),provider)
+    add(provider,refs)
+    documents.extend(docs)
    except (OSError,ValueError,TypeError,TimeoutError) as e:
-    fail(provider,"PUBLIC_SEARCH",e);continue
-   for doc in docs[:MAX_DOCS]:
-    stats[provider]["documents_checked"]+=1
-    try:_,refs=page_references(doc,read(doc),provider);add(provider,refs)
-    except (OSError,ValueError,TypeError,TimeoutError) as e:fail(provider,"PUBLIC_DOCUMENT",e)
+    fail(provider,"PUBLIC_SEARCH",e)
+  # Public seed documents are checked even when search results are empty or
+  # rendered by client-side JS. They do not become candidate stream URLs.
+  documents.extend(document_pages.get(provider,())[:MAX_DOCS])
+  seen_docs=set()
+  for doc in documents:
+   if doc in seen_docs:continue
+   if len(seen_docs)>=MAX_DOCS:break
+   seen_docs.add(doc)
+   path=urlsplit(doc).path
+   wanted="/document/" if provider=="scribd" else "/slideshow/"
+   if not allowed_page(doc) or not path.startswith(wanted):
+    fail(provider,"INVALID_PUBLIC_DOCUMENT_SEED",ValueError("Invalid public document"))
+    continue
+   stats[provider]["documents_checked"]+=1
+   try:
+    _,refs=page_references(doc,read(doc),provider)
+    add(provider,refs)
+   except (OSError,ValueError,TypeError,TimeoutError) as e:
+    fail(provider,"PUBLIC_DOCUMENT",e)
  stats["internet-archive"]["queries"]+=1
  try:
   response=json.loads(read(archive_search)).get("response",{})

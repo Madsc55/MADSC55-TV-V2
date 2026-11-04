@@ -10,6 +10,7 @@ import shutil
 import subprocess
 from collections import Counter
 from concurrent.futures import ThreadPoolExecutor
+from youtube_official_live_api import verify_ids
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 OUT = ROOT / "v2/reports/youtube-live-candidates.json"
@@ -42,7 +43,7 @@ def search(query):
     try:
         p = subprocess.run(command, capture_output=True, text=True, timeout=65)
         if p.returncode != 0:
-            return [], "SEARCH_FAILED"
+            return [], "SEARCH_" + failure_reason(p.stderr)
         data = json.loads(p.stdout)
         found = []
         for item in data.get("entries") or []:
@@ -51,10 +52,21 @@ def search(query):
             video_id = item.get("id") or ""
             if not isinstance(video_id, str) or len(video_id) != 11 or not all(c.isascii() and (c.isalnum() or c in "_-") for c in video_id):
                 continue
+            # An explicit yt-dlp result field is usable metadata evidence.
+            # A title containing "LIVE" is not. Confirm with official API
+            # when configured; otherwise keep any uncertain video unverified.
+            live_status = item.get("live_status")
+            flat_live = (item.get("is_live") is True or live_status == "is_live")
+            flat_offline = live_status in ("not_live", "was_live", "post_live", "is_upcoming")
             found.append({"video_id": video_id, "title": str(item.get("title") or "")[:200],
                           "channel": str(item.get("channel") or item.get("uploader") or "")[:120],
                           "url": f"https://www.youtube.com/watch?v={video_id}",
-                          "status": "DISCOVERED_NOT_LIVE_VERIFIED"})
+                          "status": ("LIVE_METADATA_VERIFIED" if flat_live else
+                                     "NOT_CURRENTLY_LIVE" if flat_offline else
+                                     "DISCOVERED_NOT_LIVE_VERIFIED"),
+                          "metadata_reason": ("SEARCH_FLAT_LIVE_METADATA" if flat_live else
+                                               "SEARCH_FLAT_NOT_LIVE" if flat_offline else
+                                               "NOT_YET_CHECKED")})
         return found, None
     except (OSError, ValueError, subprocess.TimeoutExpired):
         return [], "SEARCH_TIMEOUT_OR_ERROR"
@@ -117,14 +129,26 @@ def main():
                 continue
             seen.add(item["video_id"])
             results.append(item)
-    # Check every discovered video in a bounded parallel batch. Search pages
-    # are not direct IPTV streams, even when live metadata succeeds.
-    with ThreadPoolExecutor(max_workers=8) as executor:
-        for item, detail in zip(results, executor.map(verify_with_reason, results)):
+    # Official videos.list checks at most 50 IDs per request and costs little
+    # quota. It is optional: no API key -> no invented verification. The key
+    # is never serialized to any report.
+    official, api_status = verify_ids([item["video_id"] for item in results])
+    for item in results:
+        result = official.get(item["video_id"])
+        if result is not None:
+            item["status"], item["metadata_reason"] = result
+    # For remaining unknowns, attempt ordinary public yt-dlp metadata.
+    # Avoid re-querying videos already confirmed live/offline by providers.
+    unknown = [item for item in results
+               if item["status"] == "DISCOVERED_NOT_LIVE_VERIFIED"]
+    with ThreadPoolExecutor(max_workers=3) as executor:
+        for item, detail in zip(unknown, executor.map(verify_with_reason, unknown)):
             item["status"], item["metadata_reason"] = detail
     report = {"created_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
               "policy": "ADVISORY_ONLY_NO_PLAYLIST_WRITES_NO_AUTOMATIC_IBO_IMPORT",
               "queries": QUERIES, "errors": errors, "results": results,
+              "official_youtube_api_status": api_status,
+              "official_youtube_api_classified": len(official),
               "live_verified": sum(x["status"] == "LIVE_METADATA_VERIFIED" for x in results),
               "verified_live_pages": [x for x in results if x["status"] == "LIVE_METADATA_VERIFIED"],
               "anonymous_metadata_reason_counts": dict(sorted(Counter(
@@ -135,6 +159,7 @@ def main():
     print("YouTube discovered:", len(results), "live metadata verified:", report["live_verified"],
           "metadata unverified:", report["metadata_unverified_count"],
           "unattempted:", report["metadata_unattempted_count"], "query errors:", len(errors),
-          "reason_counts:", json.dumps(report["anonymous_metadata_reason_counts"], sort_keys=True))
+          "reason_counts:", json.dumps(report["anonymous_metadata_reason_counts"], sort_keys=True),
+          "official_api_status:", api_status, "api_classified:", len(official))
 if __name__ == "__main__":
     main()

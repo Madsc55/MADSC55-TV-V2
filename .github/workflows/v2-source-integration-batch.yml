@@ -20,6 +20,8 @@ on:
       - 'v2/document_platform_discovery.py'
       - 'v2/run_live_page_discovery.py'
       - 'v2/youtube_discovery.py'
+      - 'v2/youtube_official_live_api.py'
+      - 'v2/test_platform_verification_batch.py'
       - 'v2/test_source_resilience_batch.py'
       - 'v2/final_batch_acceptance.py'
       - 'v2/advisory_channel_identity_bridge.py'
@@ -64,7 +66,8 @@ jobs:
             test_run_webpage_playlist_discovery \
             test_github_source_approval \
             test_forge_source_review \
-            test_source_resilience_batch
+            test_source_resilience_batch \
+            test_platform_verification_batch
           python -m unittest discover -s v2/tests -p 'test_source_integration_gate.py' -v
       - name: Preserve fail-closed status without fabricated live reports
         shell: bash
@@ -136,6 +139,8 @@ jobs:
           timeout 600s python v2/run_live_page_discovery.py --scan-approved-live-pages
           timeout 600s python v2/run_webpage_playlist_discovery.py --scan-approved-index-pages
       - name: Generate advisory YouTube source report - not direct stream proof
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
         run: timeout 1200s python v2/youtube_discovery.py
       - name: Generate public-document report and actual validated M3U source handoff
         run: timeout 1200s python v2/document_platform_discovery.py --scan-public-documents
@@ -211,5 +216,85 @@ jobs:
           path: |
             v2/reports/ci/final-worldwide-acceptance.json
             v2/reports/ci/final-worldwide-*.sealed
+          if-no-files-found: warn
+          retention-days: 30
+
+  platform-verification-batch:
+    name: Public Scribd SlideShare and YouTube live evidence, one grouped run
+    if: >-
+      github.event_name == 'push' &&
+      github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
+      github.repository == 'Madsc55/MADSC55-TV-V2' &&
+      github.event.head_commit.message == 'fix(v2): verify public document and YouTube live metadata'
+    needs: offline-source-safety
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check protected playlist and immutable historic IDs
+        run: |
+          test "$(git hash-object MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)" = '4b1c3cea4b5107a425abab60f62d41f9f81e05a7'
+          test "$(sha256sum v2/history/stage3-4955-hash-only.jsonl | cut -d' ' -f1)" = 'ee00a844a028e3410715d411467a2d3306f5f5cc4565766140b6438e786cdd27'
+      - name: Install public YouTube metadata extractor
+        run: python -m pip install yt-dlp
+      - name: Discover and verify public YouTube live metadata in one batch
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+        run: timeout 1200s python v2/youtube_discovery.py
+      - name: Inspect indexed and exact public Scribd SlideShare plus Archive documents
+        run: timeout 1200s python v2/document_platform_discovery.py --scan-public-documents
+      - name: Audit both platforms and preserve anonymous proof without false playback
+        shell: bash
+        run: |
+          mkdir -p v2/reports/ci
+          PYTHONPATH=v2 python - <<'PY'
+          from pathlib import Path
+          import json
+          y=json.loads(Path("v2/reports/youtube-live-candidates.json").read_text())
+          d=json.loads(Path("v2/reports/document-platform-references.json").read_text())
+          assert y["policy"]=="ADVISORY_ONLY_NO_PLAYLIST_WRITES_NO_AUTOMATIC_IBO_IMPORT"
+          assert y["metadata_unattempted_count"]==0
+          assert d["playback_verified"] is False
+          assert set(("scribd","slideshare","internet-archive")) <= set(d["platforms"])
+          assert d["validated_m3u_source_count"]<=d["source_candidates"]
+          platform={x:{
+            "public_queries":d["platforms"][x]["queries"],
+            "documents_checked":d["platforms"][x]["documents_checked"],
+            "public_m3u_references":d["platforms"][x]["candidate_sources"],
+            "source_errors":d["platforms"][x]["errors"]
+          } for x in ("scribd","slideshare","internet-archive")}
+          report={
+            "kind":"V2_PUBLIC_PLATFORM_EVIDENCE_ONLY",
+            "youtube_video_candidates":len(y["results"]),
+            "youtube_live_metadata_verified":y["live_verified"],
+            "youtube_unverified":y["metadata_unverified_count"],
+            "youtube_query_errors":len(y["errors"]),
+            "youtube_error_classes":y["anonymous_metadata_reason_counts"],
+            "youtube_official_api_status":y["official_youtube_api_status"],
+            "youtube_official_api_classified":y["official_youtube_api_classified"],
+            "platforms":platform,
+            "document_m3u_source_candidates":d["source_candidates"],
+            "document_m3u_sources_parsed":d["validated_m3u_source_count"],
+            "av_verified":False,
+            "ibo_device_verified":False,
+            "playlist_modified":False
+          }
+          p=Path("v2/reports/ci/platform-verification-anonymous.json")
+          p.write_text(json.dumps(report,ensure_ascii=False,indent=2)+"\n")
+          print(json.dumps(report,ensure_ascii=False,sort_keys=True))
+          PY
+      - name: Upload anonymous source status; no video IDs, API key or source URLs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v2-platform-verification-${{ github.run_id }}
+          path: v2/reports/ci/platform-verification-anonymous.json
           if-no-files-found: warn
           retention-days: 30
