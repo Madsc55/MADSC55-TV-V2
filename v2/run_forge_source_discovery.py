@@ -68,6 +68,7 @@ def scan(request=None, terms=None):
     confirmed_empty_projects, stale_branches_refreshed = set(), 0
     relocated_projects_recovered = 0
     gitlab_default_ref_tree_recoveries = 0
+    gitlab_public_branch_listing_recoveries = 0
     for term in dict.fromkeys(terms):
         queries = [
             ("gitlab", GITLAB_API + "?" + urlencode({"search": term, "simple": "true", "per_page": 12})),
@@ -155,32 +156,58 @@ def scan(request=None, terms=None):
                         tree = (GITLAB_API + "/" + str(project["id"]) + "/repository/tree?"
                                 + urlencode({"ref": project["branch"], "recursive": "true",
                                              "per_page": 100, "pagination": "keyset"}))
-                        if branch != previous_branch or refreshed_id != previous_id:
-                            try:
-                                listing = request(tree)
-                            except urllib.error.HTTPError as retry_exc:
-                                if retry_exc.code != 404:
-                                    raise
-                                # GitLab supports the public default branch
-                                # without a ref parameter; try that exact root
-                                # once before marking this project inaccessible.
+                        try:
+                            if branch != previous_branch or refreshed_id != previous_id:
+                                try:
+                                    listing = request(tree)
+                                except urllib.error.HTTPError as retry_exc:
+                                    if retry_exc.code != 404:
+                                        raise
+                                    # Public default root, no speculative ref.
+                                    tree = (GITLAB_API + "/" + str(project["id"])
+                                            + "/repository/tree?"
+                                            + urlencode({"recursive": "true", "per_page": 100,
+                                                         "pagination": "keyset"}))
+                                    listing = request(tree)
+                                    gitlab_default_ref_tree_recoveries += 1
+                            else:
                                 tree = (GITLAB_API + "/" + str(project["id"])
                                         + "/repository/tree?"
                                         + urlencode({"recursive": "true", "per_page": 100,
                                                      "pagination": "keyset"}))
                                 listing = request(tree)
                                 gitlab_default_ref_tree_recoveries += 1
-                        else:
-                            # Verified same public project/branch but the
-                            # explicit ref produced 404. GitLab documents that
-                            # omitted ref selects the default branch; no
-                            # guessed paths, tokens or foreign hosts.
+                        except urllib.error.HTTPError as root_exc:
+                            if root_exc.code != 404:
+                                raise
+                            # If GitLab's default metadata is stale, inspect
+                            # only the exact verified *public* project's listed
+                            # default branch. Never guess main/master, or
+                            # follow an arbitrary ref or private repository.
+                            branch_rows = request(
+                                GITLAB_API + "/" + str(project["id"]) +
+                                "/repository/branches?per_page=20")
+                            if not isinstance(branch_rows, list) or len(branch_rows) > 20:
+                                raise ValueError("Invalid public GitLab branch list")
+                            approved = [x["name"] for x in branch_rows
+                                        if isinstance(x, dict) and
+                                        x.get("default") is True and
+                                        isinstance(x.get("name"), str) and
+                                        1 <= len(x["name"]) <= 120 and
+                                        x["name"] not in (".", "..") and
+                                        ".." not in x["name"].split("/") and
+                                        __import__("re").fullmatch(
+                                            r"[A-Za-z0-9_.\-/]+", x["name"])]
+                            if len(approved) != 1 or approved[0] == branch:
+                                raise root_exc
+                            project = dict(project, branch=approved[0])
                             tree = (GITLAB_API + "/" + str(project["id"])
                                     + "/repository/tree?"
-                                    + urlencode({"recursive": "true", "per_page": 100,
+                                    + urlencode({"ref": project["branch"],
+                                                 "recursive": "true", "per_page": 100,
                                                  "pagination": "keyset"}))
                             listing = request(tree)
-                            gitlab_default_ref_tree_recoveries += 1
+                            gitlab_public_branch_listing_recoveries += 1
                         if branch != previous_branch:
                             stale_branches_refreshed += 1
                         if refreshed_id != previous_id:
@@ -237,7 +264,8 @@ def scan(request=None, terms=None):
             "gitlab_confirmed_empty_projects_skipped": len(confirmed_empty_projects),
             "gitlab_stale_branch_recoveries": stale_branches_refreshed,
             "gitlab_relocated_projects_recovered": relocated_projects_recovered,
-            "gitlab_default_ref_tree_recoveries": gitlab_default_ref_tree_recoveries}
+            "gitlab_default_ref_tree_recoveries": gitlab_default_ref_tree_recoveries,
+            "gitlab_public_branch_listing_recoveries": gitlab_public_branch_listing_recoveries}
 
 def main():
     parser = argparse.ArgumentParser()

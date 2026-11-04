@@ -345,5 +345,52 @@ class SourceAdapterIntegrationBatch(unittest.TestCase):
         self.assertEqual(report["anonymous_error_summary"],{"gitlab:HTTP_404":1})
         self.assertEqual(report["coverage_status"],"PARTIAL_API_ERRORS")
 
+
+    def test_gitlab_public_default_branch_listing_recovers_stale_tree(self):
+        from urllib.error import HTTPError
+        called=[]
+        def request(url):
+            called.append(url)
+            if "gitlab.com/api/v4/projects?" in url:
+                return [{"id": 42, "default_branch": "main",
+                         "path_with_namespace": "public/tv"}]
+            if "codeberg.org/api/v1/repos/search?" in url:
+                return {"data": []}
+            if url.endswith("/api/v4/projects/42"):
+                return {"id": 42, "default_branch": "main", "empty_repo": False}
+            if url.endswith("/projects/42/repository/branches?per_page=20"):
+                return [{"name": "real-tr-branch", "default": True},
+                        {"name": "private-branch", "default": False}]
+            if "/projects/42/repository/tree?" in url:
+                if "ref=real-tr-branch" in url:
+                    return [{"type": "blob", "path": "tr.m3u8"}]
+                raise HTTPError(url, 404, "Stale default", {}, None)
+            raise AssertionError(url)
+        report = forge.scan(request, terms=("iptv",))
+        self.assertEqual(report["errors"], [])
+        self.assertEqual(report["source_count"], 1)
+        self.assertEqual(report["gitlab_public_branch_listing_recoveries"], 1)
+        self.assertIn("ref=real-tr-branch", report["sources"][0]["source_url"])
+        self.assertFalse(report["playback_verified"])
+
+    def test_gitlab_unverified_branch_404_is_not_hidden(self):
+        from urllib.error import HTTPError
+        def request(url):
+            if "gitlab.com/api/v4/projects?" in url:
+                return [{"id": 42, "default_branch": "main"}]
+            if "codeberg.org/api/v1/repos/search?" in url:
+                return {"data": []}
+            if url.endswith("/api/v4/projects/42"):
+                return {"id": 42, "default_branch": "main", "empty_repo": False}
+            if "/projects/42/repository/branches?" in url:
+                return [{"name": "some-other", "default": False}]
+            if "/projects/42/repository/tree?" in url:
+                raise HTTPError(url, 404, "Not available", {}, None)
+            raise AssertionError(url)
+        report = forge.scan(request, terms=("iptv",))
+        self.assertEqual(report["source_count"], 0)
+        self.assertEqual(report["anonymous_error_summary"], {"gitlab:HTTP_404": 1})
+        self.assertEqual(report["gitlab_public_branch_listing_recoveries"], 0)
+
 if __name__ == "__main__":
     unittest.main()

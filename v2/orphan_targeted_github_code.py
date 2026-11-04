@@ -8,6 +8,8 @@ their candidate streams decoded/probed independently. Never return a stream URL.
 import hashlib
 import json
 import re
+import urllib.error
+from collections import Counter
 from urllib.parse import quote, urlencode
 import time
 
@@ -109,6 +111,7 @@ def targeted_source_references(orphan_rows, known_urls, *, fetcher=_read,
     refs = []
     known = set(known_urls)
     errors = invalid = incomplete = 0
+    error_categories = Counter()
     for index, query in enumerate(selected):
         # Authenticated GitHub Code Search has a separate rate limit.
         if index:
@@ -137,8 +140,20 @@ def targeted_source_references(orphan_rows, known_urls, *, fetcher=_read,
                              "url": url, "origin": "orphan-discovery-reference",
                              "scope": "candidate", "kind": "m3u"})
                 known.add(url)
-        except (OSError, ValueError, TypeError, KeyError, UnicodeError):
+        except (OSError, ValueError, TypeError, KeyError, UnicodeError) as exc:
             errors += 1
+            # Log only fixed categories: HTTP error bodies and exception
+            # strings may expose query metadata, source URLs or credentials.
+            if isinstance(exc, urllib.error.HTTPError):
+                bucket = "HTTP_" + str(exc.code) if exc.code in (
+                    401, 403, 404, 422, 429, 500, 502, 503, 504) else "HTTP_OTHER"
+            elif isinstance(exc, TimeoutError):
+                bucket = "TIMEOUT"
+            elif isinstance(exc, OSError):
+                bucket = "NETWORK_OR_RATE_LIMIT"
+            else:
+                bucket = "INVALID_SEARCH_RESPONSE"
+            error_categories[bucket] += 1
     status = ("NO_QUERYABLE_TARGETS" if not selected else
               "PARTIAL_PUBLIC_CODE_SEARCH" if errors or incomplete or skipped_count else
               "PUBLIC_CODE_REFERENCES_ONLY")
@@ -149,6 +164,7 @@ def targeted_source_references(orphan_rows, known_urls, *, fetcher=_read,
         "queries_attempted": len(selected), "query_budget": max_queries,
         "source_references_added": len(refs),
         "unavailable_or_failed_queries": errors,
+        "anonymous_error_categories": dict(sorted(error_categories.items())),
         "incomplete_search_queries": incomplete,
         "truncated_queries_or_references": skipped_count,
         "invalid_or_duplicate_public_references": invalid,

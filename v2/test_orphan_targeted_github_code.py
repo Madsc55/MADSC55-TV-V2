@@ -107,5 +107,20 @@ class TargetedGitHubCodeDiscoveryTests(unittest.TestCase):
         self.assertGreaterEqual(stats["invalid_or_duplicate_public_references"], 1)
 
 
+
+    def test_http_error_categories_are_anonymous_and_rate_failures_not_hidden(self):
+        from urllib.error import HTTPError
+        meta = '#EXTINF:-1 tvg-id="Channel.tr",Channel'
+        def fake(uri, api=False):
+            raise HTTPError(uri, 403, "rate-limited secret", {}, None)
+        refs, report = targeted_source_references(
+            [orphan(meta)], set(), fetcher=fake, pause=lambda _: None)
+        self.assertEqual(refs, [])
+        self.assertEqual(report["queries_attempted"], 2)
+        self.assertEqual(report["unavailable_or_failed_queries"], 2)
+        self.assertEqual(report["anonymous_error_categories"], {"HTTP_403": 2})
+        self.assertEqual(report["status"], "PARTIAL_PUBLIC_CODE_SEARCH")
+        self.assertNotIn("secret", str(report))
+
 if __name__ == "__main__":
     unittest.main()
