@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "kind": "YABANCILAR_3964_SEPARATE_ARCHIVE_CATEGORY_COPY",
+  "source_repository": "Madsc55/MADSC55-TV-V2",
+  "source_branch": "main",
+  "source_commit": "9fc8c286ffd06110b310155d60e1f154436761f7",
+  "source_archive_path": "v2/arsiv/yabanci_yedekler_2026-11-02_3964.m3u8",
+  "source_git_blob_sha": "c54272e97f711c3074303cec74739d6d0ec806b2",
+  "new_archive_path": "v2/arsiv/YABANCILAR_3964_KORUNAN.m3u8",
+  "new_git_blob_sha": "c2fa626bbe4634e593895184f9bf098ef5168855",
+  "original_category": "🗂️ YEDEKLER (4002)",
+  "new_category": "🌍 YABANCILAR (3964)",
+  "preserved_extinf_entries": 3964,
+  "metadata_and_stream_urls_unchanged": true,
+  "only_group_title_relabelled": true,
+  "changes_main_playlist": false,
+  "source_archive_preserved": true,
+  "classification_note": "Historical user-assigned foreign section; language and IBO device playback are not independently reverified"
+}

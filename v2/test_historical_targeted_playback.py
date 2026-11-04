@@ -79,6 +79,35 @@ class HistoricalTargetedPlaybackTests(unittest.TestCase):
         self.assertIn("-protocol_whitelist", called)
         self.assertNotIn(url, str(output))
 
+
+    def test_bounded_public_compatibility_retry_can_recover_real_av(self):
+        url = "https://stream.example.org/public.m3u8"
+        attempts = []
+        def run(args, **kwargs):
+            attempts.append((args, kwargs["timeout"]))
+            if len(attempts) == 1:
+                return subprocess.CompletedProcess(args, 1, "", "HTTP error 403")
+            return subprocess.CompletedProcess(args, 0,
+                json.dumps({"streams": [{"codec_type": "video"}, {"codec_type": "audio"}]}), "")
+        result = probe_one((sha(url), url), runner=run, resolver=lambda _: True)
+        self.assertEqual(result["status"], "VIDEO_STREAM_OBSERVED")
+        self.assertTrue(result["video_stream"] and result["audio_stream"])
+        self.assertEqual(len(attempts), 2)
+        self.assertIn("-user_agent", attempts[1][0])
+        self.assertLessEqual(attempts[1][1], 35)
+        self.assertNotIn(url, str(result))
+
+    def test_authenticated_streams_are_not_bypassed_or_called_verified(self):
+        url = "https://stream.example.org/restricted.m3u8"
+        calls = []
+        def run(args, **kwargs):
+            calls.append(args)
+            return subprocess.CompletedProcess(args, 1, "", "401 Unauthorized")
+        result = probe_one((sha(url), url), runner=run, resolver=lambda _: True)
+        self.assertEqual(result["diagnostic_category"], "AUTH_REQUIRED")
+        self.assertFalse(result["video_stream"] or result["audio_stream"])
+        self.assertEqual(len(calls), 1)
+
     def test_unresolved_host_does_not_invoke_media_process(self):
         url = "https://stream.example.org/bad.m3u8"
         called = []

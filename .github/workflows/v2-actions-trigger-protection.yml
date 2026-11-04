@@ -13,6 +13,8 @@ on:
       - 'v2/run_all_discovery.py'
       - 'v2/discover.py'
       - 'v2/final_batch_acceptance.py'
+      - 'v2/historical_targeted_playback.py'
+      - 'v2/test_historical_targeted_playback.py'
   workflow_dispatch:
 permissions:
   contents: read

@@ -105,32 +105,71 @@ def probe_one(item, runner=subprocess.run, resolver=public_dns):
     if not resolver(url):
         return {"url_sha256": digest, "status": "UNSAFE_OR_UNRESOLVABLE_HOST",
                 "video_stream": False, "audio_stream": False}
-    # Strict no-redirect and protocol constraints; no subprocess output or URL
-    # is forwarded to the Actions logs. A failure is not proof of a dead stream.
-    command = [
+    # Both passes remain public, read-only and bounded. No authorization tokens,
+    # Referrer spoofing, playlist writes or plaintext stderr are permitted.
+    common = [
         "ffprobe", "-hide_banner", "-loglevel", "error",
-        "-rw_timeout", "5000000",
         "-protocol_whitelist", "http,https,tcp,tls,crypto",
-        "-analyzeduration", "2000000", "-probesize", "65536",
+    ]
+    first = common + [
+        "-rw_timeout", "5000000", "-analyzeduration", "2000000",
+        "-probesize", "65536",
         "-show_entries", "stream=codec_type", "-of", "json", url,
     ]
-    try:
-        proc = runner(command, capture_output=True, text=True, timeout=15, stdin=subprocess.DEVNULL)
-        if proc.returncode != 0:
-            return {"url_sha256": digest, "status": "PROBE_FAILED_NOT_PROVEN_DEAD",
-                    "diagnostic_category": classify_probe_failure(proc.stderr),
+    compatible = common + [
+        "-user_agent", "Mozilla/5.0 (compatible; MADSC55-TV-V2/1.0)",
+        "-rw_timeout", "12000000", "-analyzeduration", "10000000",
+        "-probesize", "1048576",
+        "-show_entries", "stream=codec_type", "-of", "json", url,
+    ]
+
+    def attempt(command, timeout):
+        try:
+            proc = runner(command, capture_output=True, text=True, timeout=timeout,
+                          stdin=subprocess.DEVNULL)
+            if proc.returncode != 0:
+                return {"url_sha256": digest,
+                        "status": "PROBE_FAILED_NOT_PROVEN_DEAD",
+                        "diagnostic_category": classify_probe_failure(proc.stderr),
+                        "video_stream": False, "audio_stream": False}
+            streams = json.loads(proc.stdout).get("streams", [])
+            if not isinstance(streams, list):
+                raise ValueError("Malformed ffprobe stream list")
+            video = any(isinstance(s, dict) and s.get("codec_type") == "video"
+                        for s in streams)
+            audio = any(isinstance(s, dict) and s.get("codec_type") == "audio"
+                        for s in streams)
+            return {"url_sha256": digest,
+                    "status": ("VIDEO_STREAM_OBSERVED" if video else
+                               "AUDIO_ONLY_OBSERVED" if audio else
+                               "NO_AUDIO_VIDEO_STREAM_OBSERVED"),
+                    "video_stream": video, "audio_stream": audio}
+        except (OSError, subprocess.TimeoutExpired, ValueError, TypeError):
+            return {"url_sha256": digest,
+                    "status": "PROBE_FAILED_NOT_PROVEN_DEAD",
                     "video_stream": False, "audio_stream": False}
-        streams = json.loads(proc.stdout).get("streams", [])
-        video = any(s.get("codec_type") == "video" for s in streams)
-        audio = any(s.get("codec_type") == "audio" for s in streams)
-        return {"url_sha256": digest,
-                "status": "VIDEO_STREAM_OBSERVED" if video else
-                          "AUDIO_ONLY_OBSERVED" if audio else
-                          "NO_AUDIO_VIDEO_STREAM_OBSERVED",
-                "video_stream": video, "audio_stream": audio}
-    except (OSError, subprocess.TimeoutExpired, ValueError, TypeError):
-        return {"url_sha256": digest, "status": "PROBE_FAILED_NOT_PROVEN_DEAD",
-                "video_stream": False, "audio_stream": False}
+
+    initial = attempt(first, 15)
+    if initial["video_stream"] and initial["audio_stream"]:
+        return initial
+    # Do not retry 401/authenticated, missing (404) or unsafe hosts.
+    retryable = (initial["status"] in (
+        "VIDEO_STREAM_OBSERVED", "AUDIO_ONLY_OBSERVED",
+        "NO_AUDIO_VIDEO_STREAM_OBSERVED")
+        or initial.get("diagnostic_category") in (
+            "HTTP_FORBIDDEN", "HTTP_RESPONSE_ERROR", "NETWORK_TIMEOUT",
+            "MEDIA_FORMAT_UNSUPPORTED", "UNKNOWN_NETWORK_OR_MEDIA_ERROR"))
+    if not retryable:
+        return initial
+    second = attempt(compatible, 35)
+    if second["video_stream"] and second["audio_stream"]:
+        second["bounded_compatibility_retry"] = True
+        return second
+    # Keep the strongest evidence; a failed retry cannot erase a video stream.
+    if initial["video_stream"] or initial["audio_stream"]:
+        return initial
+    second["bounded_compatibility_retry"] = True
+    return second
 
 
 def audit(missing, recovered, *, runner=subprocess.run, resolver=public_dns, workers=4):
