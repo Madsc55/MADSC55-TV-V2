@@ -612,7 +612,8 @@ def audit(*, report_path, sealed_path, key_path, limit=20,
           reader=_read_document, commits=historical_revisions, probe=probe_one,
           known_source_catalog=None, all_candidates_sealed_path=None,
           immutable_orphan_baseline_path=None, public_registry=False,
-          registry_fetcher=None):
+          registry_fetcher=None, targeted_code_search=False,
+          targeted_fetcher=None):
     if all_candidates_sealed_path is not None:
         paths = [Path(report_path).resolve(), Path(sealed_path).resolve(),
                  Path(all_candidates_sealed_path).resolve()]
@@ -752,6 +753,39 @@ def audit(*, report_path, sealed_path, key_path, limit=20,
                     raise ValueError("Contradictory registry URL for SHA256 identity")
                 for field in ("proof_existing_source_ids", "proof_rules"):
                     record[field] = sorted(set(record.get(field, [])) | set(candidate[field]))
+    targeted_search_report = {"status": "NOT_REQUESTED"}
+    if targeted_code_search:
+        # Only currently URL-less exact original identities get targeted code
+        # search; pinned public M3U references are NOT media playback proof.
+        from orphan_targeted_github_code import targeted_source_references
+        if known_source_catalog is None:
+            raise ValueError("Targeted code search needs approved source catalog")
+        missing = {}
+        for item in sources:
+            if not item["candidates"]:
+                missing.setdefault(item["extinf_sha256"], item)
+        known = {item["url"] for item in known_source_catalog
+                 if isinstance(item.get("url"), str)}
+        kwargs = {} if targeted_fetcher is None else {"fetcher": targeted_fetcher}
+        pinned_sources, targeted_search_report = targeted_source_references(
+            list(missing.values()), known, **kwargs)
+        matched_count = 0
+        if pinned_sources:
+            targeted, targeted_scan_report = find_existing_exact_identity(
+                sources, pinned_sources, reader=reader)
+            matched_count = len(targeted)
+            for item in sources:
+                for urlsha, candidate in targeted.get(item["extinf_sha256"], {}).items():
+                    record = item["candidates"].setdefault(
+                        urlsha, {"url": candidate["url"]})
+                    if record["url"] != candidate["url"]:
+                        raise ValueError("Contradictory targeted source URL for SHA")
+                    for field in ("proof_existing_source_ids", "proof_rules"):
+                        record[field] = sorted(
+                            set(record.get(field, [])) | set(candidate[field]))
+            targeted_search_report["pinned_source_files_unavailable"] = (
+                targeted_scan_report["source_documents_unavailable_count"])
+        targeted_search_report["exact_identity_matches_found"] = matched_count
     probed, verified_rows, mapping = evaluate(sources, probe=probe)
     proof_states = {p["url_sha256"]: p for p in probed}
     sealed_candidate_count = None
@@ -804,6 +838,7 @@ def audit(*, report_path, sealed_path, key_path, limit=20,
         "orphan_uri_structure_counts": dict(sorted(Counter(
             item["uri_structure"] for item in sources).items())),
         "public_iptv_org_registry_reconciliation": public_registry_report,
+        "targeted_public_github_code_search": targeted_search_report,
         "unique_candidate_urls_historically_or_officially_proven": len(probed),
         "all_proven_url_candidates_sealed_for_future_retest": sealed_candidate_count,
         "currently_unverified_candidate_urls_preserved_in_encrypted_archive":
@@ -848,6 +883,8 @@ def main():
     p.add_argument("--v2-main-foreign-archive-snapshot", type=Path)
     p.add_argument("--include-public-discovery", action="store_true",
                    help="Review bounded verified public source reports only for exact orphan matches")
+    p.add_argument("--include-targeted-code-search", action="store_true",
+                   help="Bounded GitHub code search for source-less original identities")
     p.add_argument("--include-public-registry", action="store_true",
                    help="Cross-check exact EPG ID and registered name in public IPTV-org API")
     p.add_argument("--immutable-orphan-baseline", type=Path,
@@ -882,7 +919,8 @@ def main():
                    known_source_catalog=known_catalog,
                    all_candidates_sealed_path=args.all_candidates_sealed,
                    immutable_orphan_baseline_path=args.immutable_orphan_baseline,
-                   public_registry=args.include_public_registry)
+                   public_registry=args.include_public_registry,
+                   targeted_code_search=args.include_targeted_code_search)
     if result["immutable_orphan_identity_guard"]["status"] == "LOSS_RISK_REVIEW_REQUIRED":
         print("LOSS_RISK: original orphan EXTINF metadata missing, requires manual review")
         raise SystemExit(2)

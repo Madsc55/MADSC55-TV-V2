@@ -19,6 +19,8 @@ on:
       - 'v2/test_orphan_m3u_recovery.py'
       - 'v2/orphan_resolution_gate.py'
       - 'v2/test_orphan_resolution_gate.py'
+      - 'v2/orphan_targeted_github_code.py'
+      - 'v2/test_orphan_targeted_github_code.py'
       - 'v2/main_playlist_candidate_bridge.py'
       - 'v2/test_main_playlist_candidate_bridge.py'
   workflow_dispatch:
@@ -229,7 +231,7 @@ jobs:
           test "$(sha256sum v2/history/stage3-4955-hash-only.jsonl | cut -d' ' -f1)" = 'ee00a844a028e3410715d411467a2d3306f5f5cc4565766140b6438e786cdd27'
       - name: One grouped offline regression suite for 50 identities and loss guards
         run: |
-          PYTHONPATH=v2 python -m unittest -v test_orphan_m3u_recovery test_orphan_iptv_org_registry test_orphan_source_expansion test_main_playlist_candidate_bridge test_orphan_resolution_gate test_orphan_baseline_guard test_m3u_source_content_audit test_historical_targeted_playback test_source_loss_audit test_document_platform_discovery
+          PYTHONPATH=v2 python -m unittest -v test_orphan_m3u_recovery test_orphan_iptv_org_registry test_orphan_source_expansion test_orphan_targeted_github_code test_main_playlist_candidate_bridge test_orphan_resolution_gate test_orphan_baseline_guard test_m3u_source_content_audit test_historical_targeted_playback test_source_loss_audit test_document_platform_discovery
       - name: Collect vetted public Scribd SlideShare Internet Archive M3U sources
         run: |
           PYTHONPATH=v2 python v2/document_platform_discovery.py --scan-public-documents
@@ -278,6 +280,7 @@ jobs:
             --history-revisions 300 \
             --include-public-registry \
             --include-public-discovery \
+            --include-targeted-code-search \
             --v2-main-playlist-snapshot "$RUNNER_TEMP/v2-protected-source-snapshots/main-ibo.m3u8" \
             --v2-main-foreign-archive-snapshot "$RUNNER_TEMP/v2-protected-source-snapshots/foreign-archive.m3u8" \
             --public-key v2/config/stage3_transit_public.pem \
