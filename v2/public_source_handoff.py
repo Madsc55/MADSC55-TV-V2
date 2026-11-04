@@ -13,7 +13,7 @@ import re
 from orphan_source_expansion import safe_reference_url
 from run_live_page_discovery import approved_page
 
-MAX_PER_PROVIDER = 24
+MAX_PER_PROVIDER = 64
 MAX_LIVE_PAGES = 100
 PUBLIC_SOURCE_STATUS = "SOURCE_PARSED_STREAMS_NOT_PLAYBACK_VERIFIED"
 

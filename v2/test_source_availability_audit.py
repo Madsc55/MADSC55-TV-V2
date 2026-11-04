@@ -2,7 +2,7 @@
 import unittest
 from unittest.mock import patch
 import io
-from source_availability_audit import audit, probe
+from source_availability_audit import audit, probe, active_source_inventory
 
 class SourceAvailabilityTests(unittest.TestCase):
     def test_probe_rejects_html_even_with_http_200(self):
@@ -42,6 +42,20 @@ class SourceAvailabilityTests(unittest.TestCase):
         self.assertEqual(report["reachable_source_count"], 2)
         self.assertFalse(report["playback_verified"])
         self.assertNotIn("url", report["results"][0])
+    def test_retired_historical_source_not_counted_as_active_unavailable(self):
+        rows = [
+            {"id": "active", "url": "https://example.org/tr.m3u"},
+            {"id": "retired", "url": "https://example.org/missing.m3u",
+             "enabled": False},
+        ]
+        active, disabled = active_source_inventory(rows)
+        self.assertEqual([x["id"] for x in active], ["active"])
+        self.assertEqual(disabled, ["retired"])
+        outcome = audit(active, lambda _: {"status": "HTTP_OK"})
+        self.assertEqual(outcome["source_count"], 1)
+        self.assertEqual(outcome["coverage_status"], "COMPLETE")
+        self.assertFalse(outcome["playback_verified"])
+
     def test_error_kept_per_source(self):
         report = audit([{"id": "missing", "url": "https://example.org/a.m3u"}],
                        lambda url: {"status": "HTTP_ERROR", "http_status": 404})

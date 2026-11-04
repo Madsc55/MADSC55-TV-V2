@@ -57,7 +57,16 @@ class SourceHandoffTests(unittest.TestCase):
         self.assertEqual(len(refs), 1)
         self.assertEqual(stats["skipped_unreviewed_or_duplicate"]["github_gist"], 2)
         with self.assertRaises(ValueError):
-            staged_references(self.g, self.f, set(), max_per_provider=25)
+            staged_references(self.g, self.f, set(), max_per_provider=65)
+
+    def test_full_valid_reference_budget_does_not_truncate_48_references(self):
+        github = [gh("https://raw.githubusercontent.com/public/tv/main/list%02d.m3u" % i)
+                  for i in range(48)]
+        self.write(github, [forge()])
+        refs, result = staged_references(self.g, self.f, set())
+        self.assertEqual(result["accepted_for_inspection"]["github_gist"], 48)
+        self.assertEqual(result["bounded_truncation"]["github_gist"], 0)
+        self.assertEqual(len(refs), 49)
 
     def test_invalid_missing_partial_reports_never_claim_success(self):
         self.g.unlink()

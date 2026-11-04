@@ -56,12 +56,27 @@ def audit(sources, fetcher=probe):
                                 "COMPLETE" if not failures else "PARTIAL_SOURCE_AVAILABILITY"),
             "results": results, "playback_verified": False}
 
+def active_source_inventory(configured):
+    """Keep disabled historical feeds in inventory, but do not probe them."""
+    if not isinstance(configured, list) or any(
+            not isinstance(item, dict) or not isinstance(item.get("id"), str)
+            for item in configured):
+        raise ValueError("Malformed configured source inventory")
+    active = [row for row in configured if row.get("enabled", True) is not False]
+    disabled = [row["id"] for row in configured if row.get("enabled", True) is False]
+    return active, disabled
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--audit-public-sources", action="store_true", required=True)
     args = parser.parse_args()
-    sources = json.loads(CONFIG.read_text(encoding="utf-8"))["sources"]
+    configured = json.loads(CONFIG.read_text(encoding="utf-8"))["sources"]
+    sources, disabled = active_source_inventory(configured)
     report = audit(sources)
+    report["configured_total_including_disabled"] = len(configured)
+    report["disabled_historical_sources_not_probed"] = disabled
+    report["disabled_source_count"] = len(disabled)
     REPORT.parent.mkdir(parents=True, exist_ok=True)
     REPORT.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print("Source-level audit:", report["source_count"], "sources; reachable:",
