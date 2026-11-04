@@ -168,7 +168,7 @@ class OrphanRecoveryTests(unittest.TestCase):
         original = '#EXTINF:-1 group-title="World",Unlisted Regional TV'
         orphan = [{"extinf": original,
                    "extinf_sha256": hashlib.sha256(original.encode()).hexdigest()}]
-        feed = "#EXTM3U\\n" + original + "\\n" + self.a + "\\n"
+        feed = "#EXTM3U\n" + original + "\n" + self.a + "\n"
         catalog = [{"id": "public-reviewed", "url": "https://feeds.example.org/all.m3u"}]
         found, report = find_existing_exact_identity(
             orphan, catalog, reader=lambda url: feed)
@@ -184,7 +184,7 @@ class OrphanRecoveryTests(unittest.TestCase):
         orphan = [{"extinf": original,
                    "extinf_sha256": hashlib.sha256(original.encode()).hexdigest()}]
         altered = '#EXTINF:-1 group-title="Other",Unlisted Regional TV'
-        feed = "#EXTM3U\\n" + altered + "\\n" + self.a + "\\n"
+        feed = "#EXTM3U\n" + altered + "\n" + self.a + "\n"
         catalog = [{"id": "public-reviewed", "url": "https://feeds.example.org/all.m3u"}]
         found, report = find_existing_exact_identity(
             orphan, catalog, reader=lambda url: feed)
