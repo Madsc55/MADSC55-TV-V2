@@ -35,7 +35,7 @@ def link_advisory_identities(candidates, official_report, youtube_report):
         raise ValueError("Invalid candidate list")
     official = _read(official_report)
     youtube = _read(youtube_report)
-    names, ids = {}, {}
+    names, ids, by_digest = {}, {}, {}
     for item in candidates:
         if not isinstance(item, dict):
             raise ValueError("Invalid M3U candidate row")
@@ -44,6 +44,7 @@ def link_advisory_identities(candidates, official_report, youtube_report):
             raise ValueError("Invalid M3U candidate URL hash")
         name = norm(item.get("name"))
         epg = norm(item.get("tvg_id"))
+        by_digest[digest] = item
         if name:
             names.setdefault(name, set()).add(digest)
         if epg:
@@ -74,7 +75,7 @@ def link_advisory_identities(candidates, official_report, youtube_report):
             if not epg or not channel_name:
                 continue
             for digest in ids.get(epg, ()):
-                original = next((x for x in candidates if x["url_sha256"] == digest), None)
+                original = by_digest.get(digest)
                 if original and norm(original.get("name")) == channel_name:
                     attach(digest, "official_site_catalog_ids", epg)
                     official_matches += 1

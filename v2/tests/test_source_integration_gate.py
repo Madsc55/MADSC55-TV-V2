@@ -75,7 +75,7 @@ class IntegrationGateTests(unittest.TestCase):
         self.assertFalse(result["ibo_device_verified"])
         self.assertFalse(result["main_playlist_modified"])
         self.assertEqual(result["routing"]["youtube"],
-                         "LIVE_PAGE_METADATA_ONLY_NO_DIRECT_IBO_HLS")
+                         "EXACT_LIVE_UPLOADER_TO_M3U_IDENTITY_LINK_ONLY_NO_DIRECT_IBO_HLS")
 
     def test_routing_matrix_all_requested_families_still_not_playback_accepted(self):
         result = gate.audit()
