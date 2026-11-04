@@ -300,5 +300,50 @@ class SourceAdapterIntegrationBatch(unittest.TestCase):
         self.assertEqual(result["anonymous_error_summary"], {"gitlab:ValueError": 1})
         self.assertEqual(result["coverage_status"], "PARTIAL_API_ERRORS")
 
+
+    def test_gitlab_404_recovers_only_verified_default_branch_without_ref(self):
+        from urllib.error import HTTPError
+        calls=[]
+        def request(url):
+            calls.append(url)
+            if "gitlab.com/api/v4/projects?" in url:
+                return [{"id": 42, "default_branch":"main",
+                         "path_with_namespace":"official-iptv/channels"}]
+            if "codeberg.org/api/v1/repos/search?" in url:
+                return {"data":[]}
+            if url.endswith("/api/v4/projects/42"):
+                return {"id":42, "default_branch":"main", "empty_repo":False}
+            if "/projects/42/repository/tree?" in url:
+                if "ref=main" in url:
+                    raise HTTPError(url,404,"missing explicit ref",{},None)
+                return [{"type":"blob", "path":"tr.m3u"}]
+            raise AssertionError(url)
+        report=forge.scan(request,terms=("iptv",))
+        self.assertEqual(report["errors"],[])
+        self.assertEqual(report["source_count"],1)
+        self.assertEqual(report["gitlab_default_ref_tree_recoveries"],1)
+        self.assertEqual(report["gitlab_stale_branch_recoveries"],0)
+        self.assertEqual(report["coverage_status"],"COMPLETE_QUERIES")
+        self.assertTrue(any("/repository/tree?" in x and "ref=" not in x
+                            for x in calls))
+        self.assertFalse(report["playback_verified"])
+
+    def test_gitlab_both_ref_and_default_404_is_honestly_reported(self):
+        from urllib.error import HTTPError
+        def request(url):
+            if "gitlab.com/api/v4/projects?" in url:
+                return [{"id":42, "default_branch":"main"}]
+            if "codeberg.org/api/v1/repos/search?" in url:
+                return {"data":[]}
+            if url.endswith("/api/v4/projects/42"):
+                return {"id":42, "default_branch":"main", "empty_repo":False}
+            if "/projects/42/repository/tree?" in url:
+                raise HTTPError(url,404,"not accessible",{},None)
+            raise AssertionError(url)
+        report=forge.scan(request,terms=("iptv",))
+        self.assertEqual(report["source_count"],0)
+        self.assertEqual(report["anonymous_error_summary"],{"gitlab:HTTP_404":1})
+        self.assertEqual(report["coverage_status"],"PARTIAL_API_ERRORS")
+
 if __name__ == "__main__":
     unittest.main()

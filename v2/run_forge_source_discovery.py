@@ -67,6 +67,7 @@ def scan(request=None, terms=None):
     found, errors, seen, limits_hit, found_urls = [], [], set(), set(), set()
     confirmed_empty_projects, stale_branches_refreshed = set(), 0
     relocated_projects_recovered = 0
+    gitlab_default_ref_tree_recoveries = 0
     for term in dict.fromkeys(terms):
         queries = [
             ("gitlab", GITLAB_API + "?" + urlencode({"search": term, "simple": "true", "per_page": 12})),
@@ -148,14 +149,38 @@ def scan(request=None, terms=None):
                             confirmed_empty_projects.add(previous_id)
                             continue
                         branch = detail.get("default_branch")
-                        if (not isinstance(branch, str) or not branch or
-                                (branch == previous_branch and refreshed_id == previous_id)):
+                        if not isinstance(branch, str) or not branch:
                             raise
                         project = dict(project, id=refreshed_id, branch=branch)
                         tree = (GITLAB_API + "/" + str(project["id"]) + "/repository/tree?"
                                 + urlencode({"ref": project["branch"], "recursive": "true",
                                              "per_page": 100, "pagination": "keyset"}))
-                        listing = request(tree)
+                        if branch != previous_branch or refreshed_id != previous_id:
+                            try:
+                                listing = request(tree)
+                            except urllib.error.HTTPError as retry_exc:
+                                if retry_exc.code != 404:
+                                    raise
+                                # GitLab supports the public default branch
+                                # without a ref parameter; try that exact root
+                                # once before marking this project inaccessible.
+                                tree = (GITLAB_API + "/" + str(project["id"])
+                                        + "/repository/tree?"
+                                        + urlencode({"recursive": "true", "per_page": 100,
+                                                     "pagination": "keyset"}))
+                                listing = request(tree)
+                                gitlab_default_ref_tree_recoveries += 1
+                        else:
+                            # Verified same public project/branch but the
+                            # explicit ref produced 404. GitLab documents that
+                            # omitted ref selects the default branch; no
+                            # guessed paths, tokens or foreign hosts.
+                            tree = (GITLAB_API + "/" + str(project["id"])
+                                    + "/repository/tree?"
+                                    + urlencode({"recursive": "true", "per_page": 100,
+                                                 "pagination": "keyset"}))
+                            listing = request(tree)
+                            gitlab_default_ref_tree_recoveries += 1
                         if branch != previous_branch:
                             stale_branches_refreshed += 1
                         if refreshed_id != previous_id:
@@ -211,7 +236,8 @@ def scan(request=None, terms=None):
             "projects_examined": len(seen),
             "gitlab_confirmed_empty_projects_skipped": len(confirmed_empty_projects),
             "gitlab_stale_branch_recoveries": stale_branches_refreshed,
-            "gitlab_relocated_projects_recovered": relocated_projects_recovered}
+            "gitlab_relocated_projects_recovered": relocated_projects_recovered,
+            "gitlab_default_ref_tree_recoveries": gitlab_default_ref_tree_recoveries}
 
 def main():
     parser = argparse.ArgumentParser()

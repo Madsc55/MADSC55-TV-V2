@@ -49,6 +49,25 @@ class LivePageRunnerTests(unittest.TestCase):
         self.assertTrue(all(approved_page(pages[id]) for id in
                             ("aztv-official-home", "halk-tv-official")))
 
+
+    def test_official_live_endpoints_are_real_publisher_pages(self):
+        import json
+        from run_live_page_discovery import CONFIG
+        pages={p["id"]:p["url"] for p in json.loads(CONFIG.read_text(
+            encoding="utf-8"))["pages"]}
+        expected={
+            "trt-spor-official":"https://www.trtspor.com.tr/canli-yayin-izle/trt-spor",
+            "tv100-official":"https://www.tv100.com/canli-yayin",
+            "benguturk-official":"https://www.benguturk.com/canli-yayin/",
+            "ulusal-kanal-official":"https://www.ulusal.com.tr/ulusal-kanal-canli-izle",
+        }
+        for ident,url in expected.items():
+            with self.subTest(id=ident):
+                self.assertEqual(pages[ident],url)
+                self.assertTrue(approved_page(url))
+        self.assertEqual(len(pages),27)
+        self.assertEqual(len(set(pages.values())),27)
+
     def test_empty_inventory_is_safe(self):
         self.assertEqual(scan([])["pages_checked"], 0)
         self.assertEqual(scan([])["coverage_status"], "NO_APPROVED_PAGES")
