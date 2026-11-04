@@ -311,3 +311,87 @@ jobs:
           path: v2/reports/ci/platform-verification-anonymous.json
           if-no-files-found: warn
           retention-days: 30
+
+  unified-read-only-channel-search:
+    name: Unified TR AZ source search - all adapters no IBO writes
+    if: >-
+      github.event_name == 'push' &&
+      github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
+      github.repository == 'Madsc55/MADSC55-TV-V2' &&
+      github.event.head_commit.message == 'fix(v2): complete read only channel discovery routing'
+    needs: offline-source-safety
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify no production playlist or history changes
+        run: |
+          test "$(git hash-object MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)" = '4b1c3cea4b5107a425abab60f62d41f9f81e05a7'
+          test "$(sha256sum v2/history/stage3-4955-hash-only.jsonl | cut -d' ' -f1)" = 'ee00a844a028e3410715d411467a2d3306f5f5cc4565766140b6438e786cdd27'
+      - name: Install public YouTube search dependency
+        run: python -m pip install yt-dlp
+      - name: Execute all source adapters and centralized TR AZ candidate discovery in order
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+        run: timeout 10000s python v2/run_all_discovery.py --run-all --source-only
+      - name: Validate complete adapter wiring and preserve honest incomplete source status
+        shell: bash
+        run: |
+          set -euo pipefail
+          PYTHONPATH=v2 python - <<'PY'
+          import json
+          from pathlib import Path
+          from source_integration_gate import audit
+          result=audit()
+          assert result["adapter_wiring_valid"] is True, result["errors"]
+          assert result["channel_candidate_scan_present"] is True
+          assert result["av_verified"] is False
+          assert result["ibo_device_verified"] is False
+          assert result["main_playlist_modified"] is False
+          c=json.loads(Path("v2/reports/candidates.json").read_text())
+          y=json.loads(Path("v2/reports/youtube-live-candidates.json").read_text())
+          d=json.loads(Path("v2/reports/document-platform-references.json").read_text())
+          report={
+            "kind":"V2_READ_ONLY_ALL_SOURCE_DISCOVERY_EVIDENCE",
+            "configured_source_count":result["static_source_count"],
+            "candidate_count":c["total_unique_candidates"],
+            "source_scan_coverage":c.get("coverage_status"),
+            "source_families":sorted(result["source_families"]),
+            "source_adapter_status":result["status"],
+            "external_source_coverage_complete":result["external_source_coverage_complete"],
+            "degraded_source_families":result["degraded_source_families"],
+            "source_errors":result["errors"],
+            "adapter_report_states":result["adapter_reports"],
+            "youtube_video_candidates":len(y["results"]),
+            "youtube_live_metadata_verified":y["live_verified"],
+            "youtube_unverified":y["metadata_unverified_count"],
+            "youtube_api_status":y["official_youtube_api_status"],
+            "document_m3u_validated":d["validated_m3u_source_count"],
+            "reviewed_document_m3u_validated":d["reviewed_public_reference_evidence"]["m3u_content_validated"],
+            "spoken_language_verified":False,
+            "video_audio_probed_by_this_workflow":False,
+            "ibo_device_verified":False,
+            "protected_playlist_modified":False,
+            "durable_encrypted_new_candidate_archive_created":False
+          }
+          out=Path("v2/reports/ci/unified-source-search-anonymous.json")
+          out.parent.mkdir(parents=True,exist_ok=True)
+          out.write_text(json.dumps(report,ensure_ascii=False,indent=2)+"\n")
+          print("UNIFIED_SOURCE_SEARCH_ANONYMOUS",json.dumps(report,ensure_ascii=False,sort_keys=True))
+          PY
+      - name: Upload only anonymous source coverage; never plaintext channel URLs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v2-unified-source-search-${{ github.run_id }}
+          path: v2/reports/ci/unified-source-search-anonymous.json
+          if-no-files-found: warn
+          retention-days: 30

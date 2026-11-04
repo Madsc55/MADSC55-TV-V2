@@ -7,6 +7,7 @@ Never modifies IBO playlist or exports candidates to YEDEKLER. Playback and
 device verification remain separate because they are not yet implemented.
 """
 import argparse
+import hashlib
 import json
 import pathlib
 import shutil
@@ -16,8 +17,13 @@ from archive_acceptance_gate import check
 from encrypted_archive import _cipher
 from urllib.parse import urlsplit
 
+# These are development-branch protection fingerprints. This read-only
+# route cannot write to production playlists or mutate encrypted history.
+PROTECTED_PLAYLIST_BLOB = "4b1c3cea4b5107a425abab60f62d41f9f81e05a7"
+PROTECTED_HISTORY_SHA256 = "ee00a844a028e3410715d411467a2d3306f5f5cc4565766140b6438e786cdd27"
+
 ROOT = pathlib.Path(__file__).resolve().parent
-def plan(archive, previous_report=None, include_youtube=True):
+def plan(archive=None, previous_report=None, include_youtube=True, source_only=False):
     steps = [
         [sys.executable, str(ROOT / "source_availability_audit.py"), "--audit-public-sources"],
         [sys.executable, str(ROOT / "github_source_discovery.py")],
@@ -28,10 +34,17 @@ def plan(archive, previous_report=None, include_youtube=True):
         [sys.executable, str(ROOT / "run_webpage_playlist_discovery.py"), "--scan-approved-index-pages"],
         [sys.executable, str(ROOT / "document_platform_discovery.py"), "--scan-public-documents"],
         [sys.executable, str(ROOT / "discover.py"), "--include-original-run60-github-sources",
-         "--include-reviewed-public-source-references", "--include-approved-live-page-indexes",
-         "--encrypted-archive", str(archive)],
-        [sys.executable, str(ROOT / "source_integration_gate.py")],
+         "--include-reviewed-public-source-references", "--include-approved-live-page-indexes"],
+        [sys.executable, str(ROOT / "source_integration_gate.py"),
+         "--accept-partial-routing"],
     ]
+    if source_only:
+        if archive is not None:
+            raise ValueError("Read-only discovery cannot select an archive path")
+    else:
+        if archive is None:
+            raise ValueError("Durable discovery requires the private archive")
+        steps[-2].extend(["--encrypted-archive", str(archive)])
     if include_youtube:
         steps.insert(-2, [sys.executable, str(ROOT / "youtube_discovery.py")])
     if previous_report:
@@ -66,13 +79,30 @@ def validate_source_inventory(config_path=None):
         urls.add(url)
     return len(sources)
 
-def preflight(archive, include_youtube=True):
-    if not archive or archive.is_symlink():
-        raise RuntimeError("A private, non-symlink encrypted archive path is required")
+def check_immutable_read_only_baseline():
+    """Fail closed on unexpected protected playlist or history content."""
+    playlist = ROOT.parent / "MADSC55_TV_IBO_CALISANLAR_TEST.m3u8"
+    historical = ROOT / "history/stage3-4955-hash-only.jsonl"
+    if playlist.is_symlink() or historical.is_symlink():
+        raise RuntimeError("Protected scan baseline cannot be symlinks")
+    binary = playlist.read_bytes()
+    blob = hashlib.sha1(b"blob " + str(len(binary)).encode() + b"\0" + binary).hexdigest()
+    if blob != PROTECTED_PLAYLIST_BLOB or hashlib.sha256(historical.read_bytes()).hexdigest() != PROTECTED_HISTORY_SHA256:
+        raise RuntimeError("Protected development playlist/history baseline mismatch")
+
+
+def preflight(archive=None, include_youtube=True, source_only=False):
     validate_source_inventory()
-    check()
-    _cipher()
-    if archive.exists():
+    if source_only:
+        if archive is not None:
+            raise RuntimeError("Read-only discovery must not touch a private archive")
+        check_immutable_read_only_baseline()
+    else:
+        if not archive or archive.is_symlink():
+            raise RuntimeError("A private, non-symlink encrypted archive path is required")
+        check()
+        _cipher()
+    if not source_only and archive.exists():
         import stat
         mode = archive.stat().st_mode
         if not stat.S_ISREG(mode) or mode & 0o077:
@@ -92,14 +122,24 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--run-all", action="store_true", required=True,
                         help="Explicit opt-in to the complete currently implemented source scan")
-    parser.add_argument("--encrypted-archive", type=pathlib.Path, required=True)
+    parser.add_argument("--encrypted-archive", type=pathlib.Path,
+                        help="Durable mode: require independently restored AES-GCM archive")
+    parser.add_argument("--source-only", action="store_true",
+                        help="Read-only complete adapter search, no archive or playlist writes; candidates are not durably backed up")
     parser.add_argument("--previous-report", type=pathlib.Path)
     parser.add_argument("--skip-youtube", action="store_true", help="Skip YouTube advisory scan; coverage is partial")
     args = parser.parse_args()
+    if args.source_only == bool(args.encrypted_archive):
+        parser.error("Select exactly one of --source-only or --encrypted-archive")
     include_youtube = not args.skip_youtube
-    preflight(args.encrypted_archive, include_youtube)
-    execute(plan(args.encrypted_archive, args.previous_report, include_youtube))
+    preflight(args.encrypted_archive, include_youtube, source_only=args.source_only)
+    execute(plan(args.encrypted_archive, args.previous_report, include_youtube,
+                 source_only=args.source_only))
     print("Source discovery stages finished; check each report for PARTIAL coverage.")
+    if args.source_only:
+        print("SOURCE_ONLY: no new candidates written to a durable encrypted archive.")
+    else:
+        print("DURABLE_ARCHIVE_MODE: authenticated archive gate passed.")
     print("YouTube and official broadcaster identities are cross-linked as metadata only.")
     print("Playback and IBO device testing NOT verified.")
 if __name__ == "__main__":

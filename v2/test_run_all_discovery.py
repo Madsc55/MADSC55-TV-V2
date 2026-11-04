@@ -42,7 +42,49 @@ class RunnerTests(unittest.TestCase):
         self.assertIn("--include-original-run60-github-sources", steps[-2])
         self.assertIn("--include-reviewed-public-source-references", steps[-2])
         self.assertIn("--include-approved-live-page-indexes", steps[-2])
+        self.assertIn("--encrypted-archive", steps[-2])
+        self.assertIn("--accept-partial-routing", steps[-1])
         self.assertEqual(steps[-2][-2:], ["--previous-report", "/tmp/old.json"])
+
+    def test_source_only_runs_all_configured_adapters_without_archive(self):
+        steps=plan(source_only=True)
+        names=[pathlib.Path(cmd[1]).name for cmd in steps]
+        self.assertEqual(len(names),11)
+        self.assertEqual(names[-3:],
+                         ["youtube_discovery.py","discover.py","source_integration_gate.py"])
+        self.assertNotIn("--encrypted-archive",steps[-2])
+        self.assertIn("--accept-partial-routing",steps[-1])
+        self.assertIn("--include-original-run60-github-sources",steps[-2])
+        self.assertIn("--include-reviewed-public-source-references",steps[-2])
+        self.assertIn("--include-approved-live-page-indexes",steps[-2])
+        with self.assertRaises(ValueError):
+            plan(pathlib.Path("/tmp/not-allowed.enc"),source_only=True)
+        with self.assertRaises(ValueError):
+            plan()
+
+    def test_source_only_checks_protected_hashes_without_cryptographic_bypass(self):
+        from run_all_discovery import check_immutable_read_only_baseline
+        check_immutable_read_only_baseline()
+        with (patch("run_all_discovery.check",
+                    side_effect=RuntimeError("Must not inspect remote archive")),
+              patch("run_all_discovery._cipher",
+                    side_effect=RuntimeError("Must not need key")),
+              patch("run_all_discovery.shutil.which",return_value="yt-dlp")):
+            self.assertTrue(preflight(source_only=True))
+        with self.assertRaisesRegex(RuntimeError,"must not touch"):
+            preflight(pathlib.Path("/tmp/archive.enc"),source_only=True)
+
+    def test_source_only_detects_protected_baseline_mismatch(self):
+        from run_all_discovery import check_immutable_read_only_baseline
+        with tempfile.TemporaryDirectory() as tmp:
+            fake_root=pathlib.Path(tmp)/"v2"
+            fake_root.mkdir()
+            (pathlib.Path(tmp)/"MADSC55_TV_IBO_CALISANLAR_TEST.m3u8").write_text("#EXTM3U\\n")
+            (fake_root/"history").mkdir()
+            (fake_root/"history"/"stage3-4955-hash-only.jsonl").write_text("{}\\n")
+            with patch("run_all_discovery.ROOT",fake_root):
+                with self.assertRaisesRegex(RuntimeError,"baseline mismatch"):
+                    check_immutable_read_only_baseline()
 
     def test_youtube_opt_out_keeps_official_and_final_gate(self):
         steps = plan(pathlib.Path("/tmp/private.enc"), include_youtube=False)
