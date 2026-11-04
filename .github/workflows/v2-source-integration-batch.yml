@@ -6,6 +6,11 @@ on:
     paths:
       - 'v2/source_integration_gate.py'
       - 'v2/tests/test_source_integration_gate.py'
+      - 'v2/run_all_discovery.py'
+      - 'v2/test_run_all_discovery.py'
+      - 'v2/discover.py'
+      - 'v2/channel_watchlist.py'
+      - 'v2/test_channel_watchlist.py'
       - 'v2/config/sources.json'
       - '.github/workflows/v2-source-integration-batch.yml'
   workflow_dispatch:
@@ -29,7 +34,20 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          PYTHONPATH=v2 python -m unittest -v             test_source_adapters_batch             test_document_platform_discovery             test_source_inventory_contract             test_run_all_discovery             test_source_integrity             test_source_loss_audit
+          PYTHONPATH=v2 python -m unittest -v \
+            test_source_adapters_batch \
+            test_document_platform_discovery \
+            test_source_inventory_contract \
+            test_run_all_discovery \
+            test_discovery_offline_regressions \
+            test_channel_watchlist \
+            test_source_integrity \
+            test_source_loss_audit \
+            test_live_page_discovery \
+            test_run_live_page_discovery \
+            test_run_webpage_playlist_discovery \
+            test_github_source_approval \
+            test_forge_source_review
           python -m unittest discover -s v2/tests -p 'test_source_integration_gate.py' -v
       - name: Preserve fail-closed status without fabricated live reports
         shell: bash
@@ -59,10 +77,15 @@ jobs:
 
   live-source-handoff:
     name: Explicit live source reports and acceptance - no IBO playlist writes
-    if: github.event_name == 'workflow_dispatch'
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event_name == 'push' &&
+       github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
+       github.repository == 'Madsc55/MADSC55-TV-V2' &&
+       github.event.head_commit.message == 'feat(v2): run complete source wiring and grouped live scan')
     needs: offline-source-safety
     runs-on: ubuntu-24.04
-    timeout-minutes: 75
+    timeout-minutes: 150
     permissions:
       contents: read
     steps:
@@ -74,12 +97,23 @@ jobs:
           python-version: '3.12'
       - name: Install YouTube source discovery dependency
         run: python -m pip install yt-dlp
+      - name: Verify immutable playlist and historical identity baseline
+        shell: bash
+        run: |
+          test "$(git hash-object MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)" = '4b1c3cea4b5107a425abab60f62d41f9f81e05a7'
+          test "$(sha256sum v2/history/stage3-4955-hash-only.jsonl | cut -d' ' -f1)" = 'ee00a844a028e3410715d411467a2d3306f5f5cc4565766140b6438e786cdd27'
+      - name: Audit 47 static M3U entrypoints without claiming playback
+        run: timeout 900s python v2/source_availability_audit.py --audit-public-sources
       - name: Generate real read-only GitHub and Gist report
         env:
           GITHUB_TOKEN: ${{ github.token }}
         run: timeout 1200s python v2/github_source_discovery.py
       - name: Generate real public GitLab and Codeberg report
         run: timeout 900s python v2/run_forge_source_discovery.py --scan-public-forges
+      - name: Generate official Turkish broadcaster directory and exact missing-name review
+        run: |
+          timeout 120s python v2/official_sites_discovery.py
+          python v2/official_site_gap.py
       - name: Generate approved publisher live-page and playlist-index reports
         run: |
           timeout 600s python v2/run_live_page_discovery.py --scan-approved-live-pages
@@ -88,17 +122,33 @@ jobs:
         run: timeout 1200s python v2/youtube_discovery.py
       - name: Generate public-document report and actual validated M3U source handoff
         run: timeout 1200s python v2/document_platform_discovery.py --scan-public-documents
-      - name: Require all seven original adapter reports before source acceptance
+      - name: One unified read-only channel candidate search from static and approved M3U sources
+        shell: bash
+        run: timeout 4500s python v2/discover.py --include-original-run60-github-sources
+      - name: Require all eleven adapter, official directory and channel-scan reports before source acceptance
         shell: bash
         run: |
           set -o pipefail
           mkdir -p v2/reports/ci
           python v2/source_integration_gate.py | tee v2/reports/ci/source-integration-audit.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d = json.loads(Path("v2/reports/candidates.json").read_text())
+          print("CHANNEL_SCAN_SOURCE_COUNT", d.get("source_count"))
+          print("CHANNEL_SCAN_CANDIDATES", d.get("total_unique_candidates"))
+          print("CHANNEL_SCAN_COVERAGE", d.get("coverage_status"))
+          print("DEVICE_PLAYBACK_VERIFIED", False)
+          PY
       - name: Upload anonymous audit only, never plaintext discovered source URLs
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: v2-source-integration-audit-${{ github.run_id }}
-          path: v2/reports/ci/source-integration-audit.json
+          path: |
+            v2/reports/ci/source-integration-audit.json
+            v2/reports/candidates.json
+            v2/reports/official-tv-gap.json
+            v2/reports/source-availability-audit.json
           if-no-files-found: warn
           retention-days: 30

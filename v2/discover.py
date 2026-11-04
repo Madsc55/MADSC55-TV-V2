@@ -432,6 +432,10 @@ def main():
         "official_live_pages": ROOT / "v2/reports/live-page-references.json",
         "public_playlist_indexes": ROOT / "v2/reports/webpage-playlist-references.json",
         "youtube": ROOT / "v2/reports/youtube-live-candidates.json",
+        "document_platforms": ROOT / "v2/reports/document-platform-references.json",
+        "official_turkish_sites": ROOT / "v2/reports/official-tv-sites.json",
+        "official_site_matching": ROOT / "v2/reports/official-tv-gap.json",
+        "source_availability": ROOT / "v2/reports/source-availability-audit.json",
     }
     auxiliary = {}
     for label, report_path in auxiliary_reports.items():
@@ -453,6 +457,11 @@ def main():
             auxiliary[label] = {"status": "REPORT_INVALID", "playback_verified": False}
     result["auxiliary_discovery_coverage"] = auxiliary
     result["all_discovery_sources_integrated_into_encrypted_archive"] = False
+    from channel_watchlist import report as target_channel_report
+    result["exact_named_channel_watchlist"] = target_channel_report(loaded, live)
+    result["discovery_routing"] = "STATIC_AND_APPROVED_M3U_SCANNED; HTML_YOUTUBE_OFFICIAL_SITES_REFERENCE_ONLY"
+    result["spoken_turkish_or_azeri_verified"] = False
+    result["ibo_device_verified"] = False
     if args.previous_report:
         from source_loss_audit import compare
         previous = json.loads(args.previous_report.read_text(encoding="utf-8"))

@@ -1,14 +1,40 @@
 #!/usr/bin/env python3
-"""Batch unit checks for read-only source integration acceptance."""
+"""Grouped source-to-channel-scan acceptance regressions, offline and read-only."""
 import json
+from pathlib import Path
+import sys
 import tempfile
 import unittest
-from pathlib import Path
 from unittest.mock import patch
-import sys
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import source_integration_gate as gate
+
+
+def report_fixture(name):
+    data = {}
+    for field, definition in gate.SHAPES[name]:
+        data[field] = definition() if isinstance(definition, type) else definition
+    if name == "source_availability":
+        data.update(source_count=0, playback_verified=False)
+    if name == "github_gist":
+        data.update(sources_found=0, playback_verified=False, limits_hit=[])
+    if name == "gitlab_codeberg":
+        data.update(source_count=0, playback_verified=False, limits_hit=[])
+    if name in ("official_live_pages", "webpage_indexes"):
+        data["playback_verified"] = False
+    if name == "youtube":
+        data["queries"] = ["Turkish broadcaster live"]
+        data["live_verified"] = 0
+    if name == "document_platforms":
+        data.update(
+            platforms={key: {"queries": 1, "errors": 0}
+                       for key in ("scribd", "slideshare", "internet-archive")},
+            playback_verified=False, validated_m3u_source_count=0)
+    if name == "channel_scan":
+        data.update(candidate_status="UNVERIFIED",
+                    coverage_status="COMPLETE_SOURCE_FETCH")
+    return data
 
 
 class IntegrationGateTests(unittest.TestCase):
@@ -18,46 +44,93 @@ class IntegrationGateTests(unittest.TestCase):
         root = Path(self.tmp.name)
         self.config = root / "sources.json"
         self.reports = {k: root / (k + ".json") for k in gate.REPORTS}
-        self.p1 = patch.object(gate, "CONFIG", self.config)
-        self.p2 = patch.object(gate, "REPORTS", self.reports)
-        self.p1.start()
-        self.p2.start()
-        self.addCleanup(self.p1.stop)
-        self.addCleanup(self.p2.stop)
+        self.c1 = patch.object(gate, "CONFIG", self.config)
+        self.c2 = patch.object(gate, "REPORTS", self.reports)
+        self.c1.start()
+        self.c2.start()
+        self.addCleanup(self.c1.stop)
+        self.addCleanup(self.c2.stop)
         self.write_sources(sorted(gate.REQUIRED))
-        for path in self.reports.values():
-            path.write_text("{}", encoding="utf-8")
+        for name in self.reports:
+            self.write_report(name, report_fixture(name))
 
     def write_sources(self, ids):
-        self.config.write_text(json.dumps({"sources": [
-            {"id": item, "url": "https://example.org/" + item + ".m3u"}
-            for item in ids
-        ]}), encoding="utf-8")
+        self.config.write_text(json.dumps({
+            "policy": "discovery-only; never modify live playlist",
+            "sources": [{"id": item, "url": "https://example.org/" + item + ".m3u"}
+                        for item in ids]
+        }), encoding="utf-8")
 
-    def test_complete_reference_handoff_is_not_av_approval(self):
+    def write_report(self, name, data):
+        self.reports[name].write_text(json.dumps(data), encoding="utf-8")
+
+    def test_all_real_adapter_signatures_and_channel_scan_are_wired(self):
         result = gate.audit()
         self.assertEqual(result["status"], "INTEGRATED_REFERENCES_NOT_AV_VERIFIED")
+        self.assertEqual(len(result["adapter_reports"]), 11)
+        self.assertTrue(all(x == "VALID" for x in result["adapter_reports"].values()))
+        self.assertEqual(result["errors"], [])
         self.assertFalse(result["av_verified"])
+        self.assertFalse(result["spoken_language_verified"])
         self.assertFalse(result["ibo_device_verified"])
-        self.assertFalse(result["errors"])
+        self.assertFalse(result["main_playlist_modified"])
+        self.assertEqual(result["routing"]["youtube"],
+                         "LIVE_PAGE_METADATA_ONLY_NO_DIRECT_IBO_HLS")
 
-    def test_missing_static_source_fails(self):
+    def test_static_core_sources_not_dropped(self):
         self.write_sources(sorted(gate.REQUIRED - {"iptv-org-az"}))
         self.assertIn("MISSING_STATIC_SOURCES", gate.audit()["errors"])
 
-    def test_duplicate_source_id_fails(self):
+    def test_static_duplicates_fail_closed(self):
         self.write_sources(sorted(gate.REQUIRED) + ["iptv-org"])
         self.assertIn("DUPLICATE_SOURCE_IDS", gate.audit()["errors"])
 
-    def test_missing_adapter_report_fails(self):
-        self.reports["youtube"].unlink()
-        result = gate.audit()
-        self.assertEqual(result["adapter_reports"]["youtube"], "MISSING")
-        self.assertIn("INCOMPLETE_ADAPTER_HANDOFF", result["errors"])
+    def test_missing_adapters_and_m3u_scan_fail_closed(self):
+        self.reports["channel_scan"].unlink()
+        d = gate.audit()
+        self.assertEqual(d["adapter_reports"]["channel_scan"], "MISSING")
+        self.assertIn("INCOMPLETE_ADAPTER_HANDOFF", d["errors"])
 
-    def test_invalid_adapter_report_fails(self):
-        self.reports["document_platforms"].write_text("{", encoding="utf-8")
+    def test_empty_dictionary_is_not_fake_success(self):
+        for name in gate.REPORTS:
+            with self.subTest(name=name):
+                self.write_report(name, {})
+                self.assertEqual(gate.audit()["adapter_reports"][name], "INVALID")
+                self.write_report(name, report_fixture(name))
+
+    def test_corrupt_live_adapters_and_youtube_playback_separation(self):
+        self.write_report("youtube", {"results": []})
+        self.assertEqual(gate.audit()["adapter_reports"]["youtube"], "INVALID")
+        self.write_report("youtube", report_fixture("youtube"))
+        bad = report_fixture("official_live_pages")
+        bad["playback_verified"] = True
+        self.write_report("official_live_pages", bad)
+        self.assertEqual(gate.audit()["adapter_reports"]["official_live_pages"], "INVALID")
+
+    def test_partial_real_source_fetch_never_green(self):
+        scan = report_fixture("channel_scan")
+        scan["coverage_status"] = "PARTIAL_SOURCE_FETCH"
+        self.write_report("channel_scan", scan)
+        d = gate.audit()
+        self.assertEqual(d["status"], "PARTIAL_REFERENCES_NOT_AV_VERIFIED")
+        self.assertIn("PARTIAL_ADAPTER_COVERAGE", d["errors"])
+
+    def test_document_reference_count_must_match_validated_handoff(self):
+        doc = report_fixture("document_platforms")
+        doc["validated_m3u_source_count"] = 2
+        self.write_report("document_platforms", doc)
+        self.assertIn("DOCUMENT_SOURCE_HANDOFF_MISMATCH", gate.audit()["errors"])
+
+    def test_missing_platform_or_inconsistent_official_counts_not_accepted(self):
+        doc = report_fixture("document_platforms")
+        del doc["platforms"]["slideshare"]
+        self.write_report("document_platforms", doc)
         self.assertEqual(gate.audit()["adapter_reports"]["document_platforms"], "INVALID")
+        self.write_report("document_platforms", report_fixture("document_platforms"))
+        official = report_fixture("official_sites")
+        official["count"] = 1
+        self.write_report("official_sites", official)
+        self.assertEqual(gate.audit()["adapter_reports"]["official_sites"], "INVALID")
 
 
 if __name__ == "__main__":

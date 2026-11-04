@@ -30,16 +30,26 @@ class RunnerTests(unittest.TestCase):
 
     def test_stage_order(self):
         steps = plan(pathlib.Path("/tmp/private.enc"), pathlib.Path("/tmp/old.json"))
-        self.assertEqual(len(steps), 8)
-        self.assertIn("source_availability_audit.py", steps[0][1])
-        self.assertIn("github_source_discovery.py", steps[1][1])
-        self.assertIn("run_forge_source_discovery.py", steps[2][1])
-        self.assertIn("run_live_page_discovery.py", steps[3][1])
-        self.assertIn("run_webpage_playlist_discovery.py", steps[4][1])
-        self.assertIn("document_platform_discovery.py", steps[5][1])
-        self.assertIn("youtube_discovery.py", steps[6][1])
-        self.assertIn("discover.py", steps[7][1])
-        self.assertEqual(steps[7][-2:], ["--previous-report", "/tmp/old.json"])
+        expected = [
+            "source_availability_audit.py", "github_source_discovery.py",
+            "run_forge_source_discovery.py", "official_sites_discovery.py",
+            "official_site_gap.py", "run_live_page_discovery.py",
+            "run_webpage_playlist_discovery.py", "document_platform_discovery.py",
+            "youtube_discovery.py", "discover.py", "source_integration_gate.py"
+        ]
+        self.assertEqual(len(steps), 11)
+        self.assertEqual([pathlib.Path(cmd[1]).name for cmd in steps], expected)
+        self.assertIn("--include-original-run60-github-sources", steps[-2])
+        self.assertEqual(steps[-2][-2:], ["--previous-report", "/tmp/old.json"])
+
+    def test_youtube_opt_out_keeps_official_and_final_gate(self):
+        steps = plan(pathlib.Path("/tmp/private.enc"), include_youtube=False)
+        names = [pathlib.Path(x[1]).name for x in steps]
+        self.assertEqual(len(names), 10)
+        self.assertNotIn("youtube_discovery.py", names)
+        self.assertEqual(names[-2:], ["discover.py", "source_integration_gate.py"])
+        self.assertIn("official_site_gap.py", names)
+
     def test_refuse_without_archive_approval_before_network(self):
         with patch("run_all_discovery.check", side_effect=RuntimeError("no restore evidence")):
             with self.assertRaisesRegex(RuntimeError, "no restore evidence"):

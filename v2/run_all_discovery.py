@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """One-command V2 discovery coordinator; fail closed before network activity.
 
-Runs six bounded discovery stages and archives approved candidate sources.
+Runs approved source adapters, broadcaster metadata, live M3U candidates, and
+read-only integration checks while retaining all historical identities.
 Never modifies IBO playlist or exports candidates to YEDEKLER. Playback and
 device verification remain separate because they are not yet implemented.
 """
@@ -21,15 +22,19 @@ def plan(archive, previous_report=None, include_youtube=True):
         [sys.executable, str(ROOT / "source_availability_audit.py"), "--audit-public-sources"],
         [sys.executable, str(ROOT / "github_source_discovery.py")],
         [sys.executable, str(ROOT / "run_forge_source_discovery.py"), "--scan-public-forges"],
+        [sys.executable, str(ROOT / "official_sites_discovery.py")],
+        [sys.executable, str(ROOT / "official_site_gap.py")],
         [sys.executable, str(ROOT / "run_live_page_discovery.py"), "--scan-approved-live-pages"],
         [sys.executable, str(ROOT / "run_webpage_playlist_discovery.py"), "--scan-approved-index-pages"],
         [sys.executable, str(ROOT / "document_platform_discovery.py"), "--scan-public-documents"],
-        [sys.executable, str(ROOT / "discover.py"), "--encrypted-archive", str(archive)],
+        [sys.executable, str(ROOT / "discover.py"), "--include-original-run60-github-sources",
+         "--encrypted-archive", str(archive)],
+        [sys.executable, str(ROOT / "source_integration_gate.py")],
     ]
     if include_youtube:
-        steps.insert(-1, [sys.executable, str(ROOT / "youtube_discovery.py")])
+        steps.insert(-2, [sys.executable, str(ROOT / "youtube_discovery.py")])
     if previous_report:
-        steps[-1].extend(["--previous-report", str(previous_report)])
+        steps[-2].extend(["--previous-report", str(previous_report)])
     return steps
 
 def validate_source_inventory(config_path=None):
