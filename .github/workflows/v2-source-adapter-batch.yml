@@ -56,6 +56,71 @@ jobs:
             2>&1 | tee v2/reports/ci/source-adapter-batch.log
       - name: Probe six public source/API entrypoints, no channel discovery
         run: python v2/source_adapter_service_health.py --audit-source-services
+      - name: Targeted source remainder recheck in one live group - no AV or IBO writes
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 480s python v2/source_availability_audit.py --audit-public-sources
+          timeout 480s python v2/run_forge_source_discovery.py --scan-public-forges
+          timeout 480s python v2/run_live_page_discovery.py --scan-approved-live-pages
+          timeout 480s python v2/document_platform_discovery.py --scan-public-documents
+          PYTHONPATH=v2 python - <<'PY'
+          import json
+          from pathlib import Path
+
+          base = Path("v2/reports")
+          static = json.loads((base / "source-availability-audit.json").read_text())
+          forge = json.loads((base / "forge-source-discovery.json").read_text())
+          pages = json.loads((base / "live-page-references.json").read_text())
+          docs = json.loads((base / "document-platform-references.json").read_text())
+
+          def public_project(row):
+              try:
+                  return json.loads(row.get("project", "{}")).get("id")
+              except (ValueError, TypeError):
+                  return None
+
+          report = {
+              "kind": "V2_TARGETED_READ_ONLY_SOURCE_RECHECK",
+              "static_checked": static["source_count"],
+              "static_reachable": static["reachable_source_count"],
+              "static_failures": [
+                  {"id": x["source_id"], "status": x["status"],
+                   "http_status": x.get("http_status"), "error": x.get("error")}
+                  for x in static["results"] if x["status"] != "HTTP_OK"
+              ],
+              "forge_sources": forge["source_count"],
+              "forge_failures": [
+                  {"forge": x.get("forge"), "error": x.get("error"),
+                   "public_project_id": public_project(x)}
+                  for x in forge["errors"]
+              ],
+              "forge_limits": forge["limits_hit"],
+              "live_pages_checked": pages["pages_checked"],
+              "live_page_failures": [
+                  {"id": x.get("page_id"), "error": x.get("error")} for x in pages["errors"]
+              ],
+              "document_source_candidates": docs["source_candidates"],
+              "document_failures": [
+                  {"platform": x.get("platform"), "stage": x.get("stage"),
+                   "error": x.get("error")} for x in docs["errors"]
+              ],
+              "external_source_coverage_complete": (
+                  not static["unreachable_source_count"] and
+                  not forge["errors"] and not forge["limits_hit"] and
+                  not pages["errors"] and not docs["errors"]
+              ),
+              "av_verified": False, "ibo_device_verified": False,
+              "protected_playlist_modified": False,
+          }
+          payload = json.dumps(report, ensure_ascii=False, sort_keys=True)
+          assert "https://" not in payload and "http://" not in payload
+          assert report["static_checked"] == 46
+          dest = base / "ci" / "source-recheck-anonymous.json"
+          dest.parent.mkdir(parents=True, exist_ok=True)
+          dest.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n")
+          print("TARGETED_SOURCE_RECHECK", payload)
+          PY
       - name: Upload grouped source service evidence
         if: always()
         uses: actions/upload-artifact@v4
@@ -64,5 +129,6 @@ jobs:
           path: |
             v2/reports/ci/source-adapter-batch.log
             v2/reports/source-adapter-service-health.json
+            v2/reports/ci/source-recheck-anonymous.json
           if-no-files-found: warn
           retention-days: 30

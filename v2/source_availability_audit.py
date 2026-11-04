@@ -30,16 +30,26 @@ def probe(url):
     opener = urllib.request.build_opener(SafeRedirect())
     req = urllib.request.Request(url, method="GET",
         headers={"User-Agent": "MADSC55-TV-V2-SourceAudit/1.0", "Range": "bytes=0-1023"})
-    try:
-        with opener.open(req, timeout=12) as response:
-            content = response.read(MAX_BYTES)
-            valid_header = content.removeprefix(b"\xef\xbb\xbf").lstrip(b"\r\n\t ").startswith(b"#EXTM3U")
-            return {"status": "HTTP_OK" if valid_header else "INVALID_M3U",
-                    "http_status": response.status, "sample_m3u_header": valid_header}
-    except urllib.error.HTTPError as exc:
-        return {"status": "HTTP_ERROR", "http_status": exc.code}
-    except (urllib.error.URLError, TimeoutError, ValueError, OSError) as exc:
-        return {"status": "FETCH_ERROR", "error": type(exc).__name__}
+    for attempt in range(3):
+        try:
+            with opener.open(req, timeout=12) as response:
+                content = response.read(MAX_BYTES)
+                valid_header = content.removeprefix(b"\xef\xbb\xbf").lstrip(b"\r\n\t ").startswith(b"#EXTM3U")
+                return {"status": "HTTP_OK" if valid_header else "INVALID_M3U",
+                        "http_status": response.status, "sample_m3u_header": valid_header}
+        except urllib.error.HTTPError as exc:
+            if exc.code in (408, 429, 500, 502, 503, 504) and attempt < 2:
+                time.sleep(min(2 ** attempt, 3))
+                continue
+            return {"status": "HTTP_ERROR", "http_status": exc.code}
+        except (urllib.error.URLError, TimeoutError, ValueError, OSError) as exc:
+            # Retry only temporary network errors. Unsafe redirects and
+            # malformed HTTP responses must remain visible failures.
+            if isinstance(exc, (urllib.error.URLError, TimeoutError)) and attempt < 2:
+                time.sleep(min(2 ** attempt, 3))
+                continue
+            return {"status": "FETCH_ERROR", "error": type(exc).__name__}
+    raise AssertionError("Unreachable source availability retry state")
 
 def audit(sources, fetcher=probe):
     results = []

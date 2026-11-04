@@ -70,5 +70,36 @@ class SourceAvailabilityTests(unittest.TestCase):
                    {"id": "bad", "url": "https://example.org/b.m3u"}]
         report = audit(sources, lambda url: {"status": "HTTP_OK"} if url.endswith("a.m3u") else {"status": "FETCH_ERROR"})
         self.assertEqual(report["coverage_status"], "PARTIAL_SOURCE_AVAILABILITY")
+
+    def test_transient_http_503_is_rechecked_but_403_is_reported(self):
+        from urllib.error import HTTPError
+        class Response:
+            status = 200
+            def __enter__(self): return self
+            def __exit__(self, *args): return False
+            def read(self, size): return b"#EXTM3U\n"
+        with patch("source_availability_audit.urllib.request.build_opener") as opener, \
+             patch("source_availability_audit.time.sleep") as sleep:
+            opener.return_value.open.side_effect = [
+                HTTPError("https://example.org/a.m3u", 503, "temporary", {}, None),
+                Response()]
+            result = probe("https://example.org/a.m3u")
+            self.assertEqual(result["status"], "HTTP_OK")
+            self.assertEqual(opener.return_value.open.call_count, 2)
+            self.assertEqual(sleep.call_count, 1)
+        with patch("source_availability_audit.urllib.request.build_opener") as opener:
+            opener.return_value.open.side_effect = HTTPError(
+                "https://example.org/a.m3u", 403, "forbidden", {}, None)
+            result = probe("https://example.org/a.m3u")
+            self.assertEqual(result, {"status": "HTTP_ERROR", "http_status": 403})
+            self.assertEqual(opener.return_value.open.call_count, 1)
+
+    def test_unsafe_redirect_not_retried(self):
+        with patch("source_availability_audit.urllib.request.build_opener") as opener:
+            opener.return_value.open.side_effect = ValueError("Unsafe source redirect")
+            result = probe("https://example.org/a.m3u")
+            self.assertEqual(result, {"status": "FETCH_ERROR", "error": "ValueError"})
+            self.assertEqual(opener.return_value.open.call_count, 1)
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)
