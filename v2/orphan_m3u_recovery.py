@@ -33,6 +33,8 @@ ONUR_SOURCES = (
 ONUR_ALTERNATES = (
     "https://onureroz.com/indirmeler/turk/index.m3u",
     "https://onureroz.com/indirmeler/turk/all.m3u",
+    # Publicly listed by the same publisher; exact EXTINF / EPG+name only.
+    "https://onureroz.com/indirmeler/dunya/index.m3u",
 )
 MAX_FILE_BYTES = 32_000_000
 MAX_CANDIDATE_STREAMS = 800

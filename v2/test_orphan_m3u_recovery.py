@@ -131,7 +131,28 @@ class OrphanRecoveryTests(unittest.TestCase):
             return "#EXTM3U\n#EXTINF:-1,Other\n" + self.a
         evidence, status = find_official_alternates(missing, reader=read)
         self.assertEqual(len(evidence[self.onur]), 1)
-        self.assertEqual(status["official_alternate_feeds_read"], 2)
+        self.assertEqual(status["official_alternate_feeds_read"], 3)
+
+
+    def test_official_world_index_requires_exact_identity_for_candidates(self):
+        # This URL is explicitly listed by the original publisher.
+        wanted = '#EXTINF:-1 tvg-id="TestWorld.tr" tvg-logo="old.png",Test World'
+        same_identity = '#EXTINF:-1 tvg-id="TestWorld.tr" tvg-logo="new.png",Test World'
+        different_channel = '#EXTINF:-1 tvg-id="TestWorld.tr",Test World 2'
+        seen = []
+        def read(url):
+            seen.append(url)
+            if url == "https://onureroz.com/indirmeler/dunya/index.m3u":
+                return ("#EXTM3U\\n" + same_identity + "\\n" + self.a +
+                        "\\n" + different_channel + "\\n" + self.b + "\\n")
+            return "#EXTM3U\\n"
+        matched, summary = find_official_alternates([{"extinf": wanted}], reader=read)
+        self.assertEqual(len(seen), 3)
+        self.assertEqual(summary["official_alternate_feeds_read"], 3)
+        self.assertEqual(set(matched), {wanted})
+        self.assertEqual(set(matched[wanted]), {hashlib.sha256(self.a.encode()).hexdigest()})
+        self.assertEqual(matched[wanted][hashlib.sha256(self.a.encode()).hexdigest()]["proof_rules"],
+                         ["EXACT_EPG_ID_AND_NAME_OFFICIAL_ALTERNATE"])
 
     def test_no_http_url_is_inferred_from_invalid_or_missing_reference(self):
         content = ("#EXTM3U\n" + self.dis + "\n#EXTINF:-1,Next\n" + self.a
