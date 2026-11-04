@@ -481,6 +481,13 @@ def main():
         except (OSError, ValueError, TypeError):
             auxiliary[label] = {"status": "REPORT_INVALID", "playback_verified": False}
     result["auxiliary_discovery_coverage"] = auxiliary
+    # Real metadata-only connection to the same M3U candidate identities.
+    # No YouTube URL or official website URL is ever a media candidate.
+    from advisory_channel_identity_bridge import link_advisory_identities
+    result["advisory_channel_identity_handoff"] = link_advisory_identities(
+        result["candidates"],
+        ROOT / "v2/reports/official-tv-sites.json",
+        ROOT / "v2/reports/youtube-live-candidates.json")
     source_lookup = {source["id"]: source for source in sources}
     dynamic_checked = [row for row in source_audit if
                        source_lookup.get(row["source"], {}).get("origin") ==

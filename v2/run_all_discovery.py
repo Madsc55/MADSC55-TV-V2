@@ -100,6 +100,7 @@ def main():
     preflight(args.encrypted_archive, include_youtube)
     execute(plan(args.encrypted_archive, args.previous_report, include_youtube))
     print("Source discovery stages finished; check each report for PARTIAL coverage.")
+    print("YouTube and official broadcaster identities are cross-linked as metadata only.")
     print("Playback and IBO device testing NOT verified.")
 if __name__ == "__main__":
     main()

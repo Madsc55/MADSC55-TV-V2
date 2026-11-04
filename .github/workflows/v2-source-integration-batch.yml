@@ -20,6 +20,8 @@ on:
       - 'v2/document_platform_discovery.py'
       - 'v2/run_live_page_discovery.py'
       - 'v2/youtube_discovery.py'
+      - 'v2/advisory_channel_identity_bridge.py'
+      - 'v2/test_advisory_channel_identity_bridge.py'
       - 'v2/config/sources.json'
       - '.github/workflows/v2-source-integration-batch.yml'
   workflow_dispatch:
@@ -45,6 +47,7 @@ jobs:
           set -euo pipefail
           PYTHONPATH=v2 python -m unittest -v \
             test_source_adapters_batch \
+            test_advisory_channel_identity_bridge \
             test_public_source_handoff \
             test_source_availability_audit \
             test_document_platform_discovery \

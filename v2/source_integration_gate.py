@@ -103,6 +103,14 @@ def _valid(name, data):
             return False
         source_handoff = data.get("public_source_reference_handoff")
         live_handoff = data.get("approved_live_page_handoff")
+        advisory = data.get("advisory_channel_identity_handoff")
+        if advisory is not None and (advisory.get("av_verified") is not False
+                                    or advisory.get("ibo_device_verified") is not False
+                                    or advisory.get("youtube_pages_are_not_m3u_streams") is not True
+                                    or advisory.get("official_websites_are_not_m3u_streams") is not True
+                                    or type(advisory.get("linked_m3u_candidates")) is not int
+                                    or advisory["linked_m3u_candidates"] != len(advisory.get("links", []))):
+            return False
         if source_handoff is not None and source_handoff.get("status") != "NOT_REQUESTED":
             if (not isinstance(source_handoff.get("report_checked"), dict)
                     or set(source_handoff["report_checked"]) !=
@@ -173,6 +181,7 @@ def audit():
     source_scan = loaded.get("channel_scan", {})
     dynamic_handoff = source_scan.get("public_source_reference_handoff", {})
     live_handoff = source_scan.get("approved_live_page_handoff", {})
+    advisory_handoff = source_scan.get("advisory_channel_identity_handoff", {})
     if (dynamic_handoff.get("status") not in (None, "NOT_REQUESTED")
             and (dynamic_handoff.get("failed_source_fetches", 0) > 0
                  or any(dynamic_handoff.get("bounded_truncation", {}).values()))):
@@ -260,8 +269,8 @@ def audit():
             "gitlab_codeberg": "HASH_APPROVED_M3U_ONLY",
             "document_platforms": "VALIDATED_PUBLIC_M3U_ONLY",
             "live_web_pages": "REFERENCE_ONLY_UNLESS_APPROVED_INDEX_M3U_PARSED",
-            "official_broadcaster_sites": "OFFICIAL_METADATA_IDENTITY_REVIEW_ONLY",
-            "youtube": "LIVE_PAGE_METADATA_ONLY_NO_DIRECT_IBO_HLS",
+            "official_broadcaster_sites": "EXACT_OFFICIAL_CATALOG_ID_AND_NAME_TO_M3U_LINK_NOT_AV",
+            "youtube": "EXACT_LIVE_UPLOADER_TO_M3U_IDENTITY_LINK_ONLY_NO_DIRECT_IBO_HLS",
             "turkish_m3u": "STATIC_M3U_CHANNEL_CANDIDATE_SCAN_NOT_AV",
             "iptv_org": "WORLD_TR_AZ_TUR_AZE_COUNTRY_LANGUAGE_SOURCE_CANDIDATES",
             "free_tv": "INDEPENDENT_M3U_SOURCE_CANDIDATES",
@@ -273,6 +282,7 @@ def audit():
             "document_adapters": "SCRIBD_SLIDESHARE_INTERNET_ARCHIVE_PUBLIC_M3U_ONLY",
         },
         "actual_candidate_handoff": {
+            "official_sites_and_youtube_exact_metadata": advisory_handoff,
             "github_gist_and_gitlab_codeberg": dynamic_handoff,
             "approved_live_page_indexes": live_handoff,
             "candidate_scan_report_available": "channel_scan" in loaded,
