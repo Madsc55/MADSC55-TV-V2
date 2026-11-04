@@ -11,6 +11,45 @@ from document_platform_discovery import PUBLIC_DOCUMENT_PAGES, page_references, 
 
 
 class PlatformVerificationTests(unittest.TestCase):
+    def test_youtube_search_live_metadata_must_be_explicit_and_consistent(self):
+        from youtube_discovery import search_live_metadata
+        self.assertEqual(search_live_metadata({}),
+                         ("DISCOVERED_NOT_LIVE_VERIFIED", "SEARCH_NO_EXPLICIT_LIVE_STATUS"))
+        self.assertEqual(search_live_metadata({"live_status":"is_live"}),
+                         ("LIVE_METADATA_VERIFIED", "SEARCH_FLAT_LIVE_METADATA"))
+        self.assertEqual(search_live_metadata({"live_status":"was_live"}),
+                         ("NOT_CURRENTLY_LIVE", "SEARCH_FLAT_NOT_LIVE"))
+        self.assertEqual(search_live_metadata({"live_status":"is_live","is_live":False}),
+                         ("DISCOVERED_NOT_LIVE_VERIFIED", "SEARCH_CONFLICTING_LIVE_FIELDS"))
+        self.assertEqual(search_live_metadata({"live_status":"was_live","is_live":True}),
+                         ("DISCOVERED_NOT_LIVE_VERIFIED", "SEARCH_CONFLICTING_LIVE_FIELDS"))
+
+    def test_youtube_incomplete_metadata_is_not_called_offline(self):
+        from youtube_discovery import verify_with_reason
+        from unittest.mock import Mock, patch
+        item={"url":"https://www.youtube.com/watch?v=ABCDEFGHIJK"}
+        with patch("youtube_discovery.subprocess.run",return_value=Mock(
+                returncode=0,stdout='{}')) as run:
+            self.assertEqual(verify_with_reason(item),
+                             ("UNVERIFIED", "LIVE_METADATA_STATUS_MISSING"))
+            self.assertTrue(run.called)
+        with patch("youtube_discovery.subprocess.run",return_value=Mock(
+                returncode=0,stdout='{"live_status":"not_live"}')):
+            self.assertEqual(verify_with_reason(item),
+                             ("NOT_CURRENTLY_LIVE", "LIVE_METADATA_EXPLICITLY_NOT_LIVE"))
+
+    def test_document_verified_sources_separated_from_existing(self):
+        from document_platform_discovery import source_accounting
+        known="https://iptv-org.github.io/iptv/languages/tur.m3u"
+        novel="https://example.org/public.m3u"
+        result=source_accounting([{"url":known},{"url":novel}],{known})
+        self.assertEqual(result["validated_existing_sources"],1)
+        self.assertEqual(result["validated_novel_sources"],1)
+        self.assertEqual(result["reviewed_document_references"],1)
+        self.assertEqual(result["reviewed_document_references_already_configured"],1)
+        self.assertEqual(result["reviewed_document_references_unconfigured"],0)
+        self.assertTrue(result["reviewed_references_are_not_playback_evidence"])
+
     def test_official_api_live_requires_active_start_and_no_end(self):
         row = {"id": "ABCDEFGHIJK",
                "snippet": {"liveBroadcastContent": "live"},

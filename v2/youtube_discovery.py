@@ -55,21 +55,34 @@ def search(query):
             # An explicit yt-dlp result field is usable metadata evidence.
             # A title containing "LIVE" is not. Confirm with official API
             # when configured; otherwise keep any uncertain video unverified.
-            live_status = item.get("live_status")
-            flat_live = (item.get("is_live") is True or live_status == "is_live")
-            flat_offline = live_status in ("not_live", "was_live", "post_live", "is_upcoming")
+            status, reason = search_live_metadata(item)
             found.append({"video_id": video_id, "title": str(item.get("title") or "")[:200],
                           "channel": str(item.get("channel") or item.get("uploader") or "")[:120],
                           "url": f"https://www.youtube.com/watch?v={video_id}",
-                          "status": ("LIVE_METADATA_VERIFIED" if flat_live else
-                                     "NOT_CURRENTLY_LIVE" if flat_offline else
-                                     "DISCOVERED_NOT_LIVE_VERIFIED"),
-                          "metadata_reason": ("SEARCH_FLAT_LIVE_METADATA" if flat_live else
-                                               "SEARCH_FLAT_NOT_LIVE" if flat_offline else
-                                               "NOT_YET_CHECKED")})
+                          "status": status, "metadata_reason": reason})
         return found, None
     except (OSError, ValueError, subprocess.TimeoutExpired):
         return [], "SEARCH_TIMEOUT_OR_ERROR"
+
+def search_live_metadata(item):
+    """Only explicit, consistent live fields determine a broadcast's state."""
+    if not isinstance(item, dict):
+        return "DISCOVERED_NOT_LIVE_VERIFIED", "SEARCH_NO_EXPLICIT_LIVE_STATUS"
+    state, flag = item.get("live_status"), item.get("is_live")
+    if state == "is_live":
+        if flag is False:
+            return "DISCOVERED_NOT_LIVE_VERIFIED", "SEARCH_CONFLICTING_LIVE_FIELDS"
+        return "LIVE_METADATA_VERIFIED", "SEARCH_FLAT_LIVE_METADATA"
+    if state in ("not_live", "was_live", "post_live", "is_upcoming"):
+        if flag is True:
+            return "DISCOVERED_NOT_LIVE_VERIFIED", "SEARCH_CONFLICTING_LIVE_FIELDS"
+        return "NOT_CURRENTLY_LIVE", "SEARCH_FLAT_NOT_LIVE"
+    if flag is True:
+        return "LIVE_METADATA_VERIFIED", "SEARCH_FLAT_LIVE_METADATA"
+    if flag is False:
+        return "NOT_CURRENTLY_LIVE", "SEARCH_FLAT_NOT_LIVE"
+    return "DISCOVERED_NOT_LIVE_VERIFIED", "SEARCH_NO_EXPLICIT_LIVE_STATUS"
+
 
 def failure_reason(stderr):
     """Classify unverified metadata without publishing URLs or raw server text."""
@@ -94,7 +107,12 @@ def verify_with_reason(item):
         meta = json.loads(p.stdout)
         if meta.get("is_live") is True or meta.get("live_status") == "is_live":
             return "LIVE_METADATA_VERIFIED", "LIVE_METADATA_CONFIRMED"
-        return "NOT_CURRENTLY_LIVE", "LIVE_METADATA_NOT_PRESENT"
+        state = meta.get("live_status")
+        if state in ("not_live", "was_live", "post_live", "is_upcoming"):
+            return "NOT_CURRENTLY_LIVE", "LIVE_METADATA_EXPLICITLY_NOT_LIVE"
+        if meta.get("is_live") is False:
+            return "NOT_CURRENTLY_LIVE", "LIVE_METADATA_EXPLICITLY_NOT_LIVE"
+        return "UNVERIFIED", "LIVE_METADATA_STATUS_MISSING"
     except subprocess.TimeoutExpired:
         return "UNVERIFIED", "TIMEOUT"
     except (OSError, ValueError):
@@ -149,6 +167,10 @@ def main():
               "queries": QUERIES, "errors": errors, "results": results,
               "official_youtube_api_status": api_status,
               "official_youtube_api_classified": len(official),
+              "verification_status": ("ALL_RESULTS_CLASSIFIED" if
+                    all(item["status"] in ("LIVE_METADATA_VERIFIED", "NOT_CURRENTLY_LIVE")
+                        for item in results) and not errors
+                    else "PARTIAL_EXTERNAL_METADATA_ACCESS"),
               "live_verified": sum(x["status"] == "LIVE_METADATA_VERIFIED" for x in results),
               "verified_live_pages": [x for x in results if x["status"] == "LIVE_METADATA_VERIFIED"],
               "anonymous_metadata_reason_counts": dict(sorted(Counter(

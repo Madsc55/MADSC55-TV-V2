@@ -292,6 +292,23 @@ def accepted_sources(path=SOURCES):
                  "origin":"public-document-reference"})
  return result
 
+def source_accounting(accepted, configured_urls, reviewed_references=None):
+ """Separate verified public M3U files from duplicate known source citations."""
+ if not isinstance(configured_urls, set) or not isinstance(accepted, list):
+  raise ValueError("Invalid source accounting")
+ existing=sum(row["url"] in configured_urls for row in accepted)
+ reviewed=REVIEWED_PUBLIC_DOCUMENT_PLAYLISTS if reviewed_references is None else reviewed_references
+ refs={url for values in reviewed.values() for url in values if source_url(url)}
+ return {
+  "validated_existing_sources":existing,
+  "validated_novel_sources":len(accepted)-existing,
+  "reviewed_document_references":len(refs),
+  "reviewed_document_references_already_configured":len(refs & configured_urls),
+  "reviewed_document_references_unconfigured":len(refs - configured_urls),
+  "reviewed_references_are_not_playback_evidence":True,
+ }
+
+
 def main():
  p=argparse.ArgumentParser()
  p.add_argument("--scan-public-documents",action="store_true",required=True)
@@ -302,6 +319,16 @@ def main():
  report["validated_m3u_source_count"]=len(sources)
  report["validated_m3u_source_channel_entries"]=sum(x["channel_entries"] for x in verification)
  report["source_candidates_failed_validation"]=len(candidates)-len(sources)
+ # Already-configured public citations remain attribution, not new streams.
+ config=json.loads((ROOT/"config/sources.json").read_text(encoding="utf-8"))
+ configured={x["url"] for x in config["sources"]}
+ report["reference_accounting"]=source_accounting(sources,configured)
+ for provider in ("scribd","slideshare"):
+  entry=report["platforms"][provider]
+  entry["public_extraction_status"]=(
+   "PUBLIC_M3U_REFERENCES_FOUND" if entry["candidate_sources"] else
+   "NO_PARSEABLE_M3U_IN_CHECKED_PUBLIC_PAGES" if entry["errors"]==0 else
+   "PARTIAL_DOCUMENT_ACCESS")
  REPORT.parent.mkdir(parents=True,exist_ok=True)
  REPORT.write_text(json.dumps(report,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
  SOURCES.write_text(json.dumps({"schema":1,"kind":"DOCUMENT_PLATFORM_M3U_HANDOFF",
@@ -312,6 +339,7 @@ def main():
   "errors":v["errors"]} for k,v in report["platforms"].items()},
   "validated_m3u_sources:",len(sources),"raw_channel_entries:",
   report["validated_m3u_source_channel_entries"],
-  "coverage:",report["coverage_status"])
+  "coverage:",report["coverage_status"],
+  "reference_accounting:",report["reference_accounting"])
 
 if __name__=="__main__":main()
