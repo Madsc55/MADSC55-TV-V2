@@ -337,6 +337,9 @@ class SourceAdapterIntegrationBatch(unittest.TestCase):
                 return {"data":[]}
             if url.endswith("/api/v4/projects/42"):
                 return {"id":42, "default_branch":"main", "empty_repo":False}
+            if url.endswith("/projects/42/repository/branches?per_page=20"):
+                # No verified alternative branch: source must stay 404.
+                return []
             if "/projects/42/repository/tree?" in url:
                 raise HTTPError(url,404,"not accessible",{},None)
             raise AssertionError(url)

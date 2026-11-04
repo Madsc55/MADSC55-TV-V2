@@ -6,6 +6,7 @@ URLs, alter the live playlist or automatically promote unknown sources.
 """
 import argparse
 import json
+import re
 from pathlib import Path
 from urllib.parse import urlencode, quote, urlsplit
 from webpage_source_discovery import public_hostname
@@ -196,7 +197,7 @@ def scan(request=None, terms=None):
                                         1 <= len(x["name"]) <= 120 and
                                         x["name"] not in (".", "..") and
                                         ".." not in x["name"].split("/") and
-                                        __import__("re").fullmatch(
+                                        re.fullmatch(
                                             r"[A-Za-z0-9_.\-/]+", x["name"])]
                             if len(approved) != 1 or approved[0] == branch:
                                 raise root_exc
