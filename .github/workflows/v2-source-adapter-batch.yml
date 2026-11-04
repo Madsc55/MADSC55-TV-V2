@@ -12,6 +12,10 @@ on:
       - 'v2/config/sources.json'
       - 'v2/config/live-pages.json'
       - 'v2/test_run_live_page_discovery.py'
+      - 'v2/orphan_source_only_recheck.py'
+      - 'v2/test_orphan_source_only_recheck.py'
+      - 'v2/orphan_targeted_github_code.py'
+      - 'v2/history/orphan-10-no-candidate-public-hashes.json'
       - '.github/workflows/v2-source-adapter-batch.yml'
   workflow_dispatch:
 
@@ -56,6 +60,8 @@ jobs:
             test_webpage_source_discovery \
             test_source_availability_audit \
             test_run_live_page_discovery \
+            test_orphan_source_only_recheck \
+            test_orphan_targeted_github_code \
             2>&1 | tee v2/reports/ci/source-adapter-batch.log
       - name: Probe six public source/API entrypoints, no channel discovery
         run: python v2/source_adapter_service_health.py --audit-source-services
@@ -124,6 +130,16 @@ jobs:
           dest.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n")
           print("TARGETED_SOURCE_RECHECK", payload)
           PY
+      - name: One-off exact 10 public M3U and M3U8 source search (NO media probe)
+        if: ${{ github.event_name == 'push' && github.event.head_commit.message == 'fix(v2): one-shot orphan M3U8 source-only recheck' }}
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python -m pip install cryptography==44.0.2
+          timeout 900s python v2/orphan_source_only_recheck.py --source-only \
+            --report v2/reports/ci/orphan-10-source-only-anonymous.json \
+            --sealed v2/reports/ci/orphan-10-new-candidates.sealed
       - name: Upload grouped source service evidence
         if: always()
         uses: actions/upload-artifact@v4
@@ -133,5 +149,7 @@ jobs:
             v2/reports/ci/source-adapter-batch.log
             v2/reports/source-adapter-service-health.json
             v2/reports/ci/source-recheck-anonymous.json
+            v2/reports/ci/orphan-10-source-only-anonymous.json
+            v2/reports/ci/orphan-10-new-candidates.sealed
           if-no-files-found: warn
           retention-days: 30
