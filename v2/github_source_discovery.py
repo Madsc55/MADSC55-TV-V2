@@ -18,6 +18,7 @@ OUT = ROOT / "v2/reports/github-source-discovery.json"
 QUERIES = ["turkish iptv m3u", "turkiye m3u", "tr iptv playlist", "turkish tv playlist", "türkçe canlı tv m3u", "turk kanallari m3u", "turkish channels iptv", "iptv tr m3u8", "türk televizyon m3u", "turkish live tv playlist", "azerbaijan iptv m3u", "azerbaycan tv m3u", "azeri iptv playlist", "turk azeri iptv", "free turkish tv m3u", "turkish live channels m3u8", "türk iptv ücretsiz", "canlı tv izle m3u", "turkish diaspora iptv", "tr az channels playlist", "güneş tv canlı yayın m3u", "rec tv canlı yayın m3u", "gopik tv canlı yayın m3u", "azerbaycan türkçe canlı tv m3u", "turkish television germany m3u", "turkish tv netherlands m3u"]
 MAX_REPOS = 320
 MAX_FILES = 320
+GITHUB_SEARCH_PAGE_SIZE = 100  # REST search/repositories permits up to 100 per page
 MAX_BYTES = 2_000_000
 
 def api(url):
@@ -94,12 +95,16 @@ def main():
     limits_hit = []
     for query in QUERIES:
         try:
-            url = "https://api.github.com/search/repositories?" + urllib.parse.urlencode({"q": query, "per_page": 50, "sort": "updated"})
+            url = "https://api.github.com/search/repositories?" + urllib.parse.urlencode({"q": query, "per_page": GITHUB_SEARCH_PAGE_SIZE, "sort": "updated"})
             page = api(url)
             if not isinstance(page, dict) or not isinstance(page.get("items"), list):
                 raise ValueError("Invalid GitHub repository search response")
             if isinstance(page.get("total_count"), int) and page["total_count"] > len(page["items"]):
                 limits_hit.append("GITHUB_SEARCH_FIRST_PAGE_LIMIT")
+            # GitHub may return HTTP 200 with fewer-than-complete matches.
+            # Never misrepresent those results as complete coverage.
+            if page.get("incomplete_results") is True:
+                limits_hit.append("GITHUB_SEARCH_INCOMPLETE_RESULTS")
             for item in page["items"]:
                 if not isinstance(item, dict) or item.get("fork") or item.get("archived"):
                     continue

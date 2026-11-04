@@ -77,5 +77,36 @@ class SourcePaginationCoverageTests(unittest.TestCase):
             self.assertFalse(output["playback_verified"])
 
 
+    def test_github_first_page_uses_100_and_reports_incomplete_search(self):
+        from urllib.parse import urlsplit, parse_qs
+        with tempfile.TemporaryDirectory() as temp:
+            config = pathlib.Path(temp) / "sources.json"
+            report = pathlib.Path(temp) / "github.json"
+            config.write_text('{"sources":[]}', encoding="utf-8")
+            seen = []
+            def api(url):
+                seen.append(url)
+                if "/search/repositories?" in url:
+                    q = parse_qs(urlsplit(url).query)
+                    self.assertEqual(q["per_page"], ["100"])
+                    return {"total_count": 1, "incomplete_results": True,
+                            "items": [{"full_name": "public/channel-list",
+                                       "default_branch": "main", "size": 1}]}
+                if "/git/trees/" in url:
+                    return {"tree": []}
+                if "/users/public/gists?" in url:
+                    return []
+                raise AssertionError(url)
+            with patch.object(github, "CONFIG", config), \
+                 patch.object(github, "OUT", report), \
+                 patch.object(github, "QUERIES", ["turkish channels m3u"]), \
+                 patch.object(github, "api", side_effect=api):
+                github.main()
+            data = json.loads(report.read_text(encoding="utf-8"))
+            self.assertEqual(data["repositories_discovered"], 1)
+            self.assertIn("GITHUB_SEARCH_INCOMPLETE_RESULTS", data["limits_hit"])
+            self.assertEqual(data["coverage_status"], "PARTIAL_LIMITS")
+            self.assertFalse(data["playback_verified"])
+
 if __name__ == "__main__":
     unittest.main()
