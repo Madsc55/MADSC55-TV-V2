@@ -11,7 +11,7 @@ import re
 MAX_LINKS = 2000
 EXTENSIONS = (".m3u", ".m3u8")
 GITHUB_BLOB_PLAYLIST = re.compile(
-    r"/([A-Za-z0-9_.-]+)/([A-Za-z0-9_.-]+)/blob/([A-Za-z0-9_.-]+)/(.+\\.(?:m3u|m3u8))",
+    r"/([A-Za-z0-9_.-]+)/([A-Za-z0-9_.-]+)/blob/([A-Za-z0-9_.-]+)/(.+[.](?:m3u|m3u8))",
     re.IGNORECASE,
 )
 
