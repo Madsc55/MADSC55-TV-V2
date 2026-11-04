@@ -35,16 +35,18 @@ class PartialCoverageTests(unittest.TestCase):
         def fake_api(url):
             calls.append(url)
             if "/repository/tree" in url:
-                if "page=2" in url:
-                    return [{"type": "blob", "path": "channels.m3u"}]
-                return [{"type": "blob", "path": "other.txt"}] * 100
+                if "page_token=next_token" in url:
+                    return [{"type": "blob", "path": "channels.m3u", "id": "final_token"}]
+                return [{"type": "blob", "path": "other.txt",
+                         "id": "next_token" if i == 99 else str(i)} for i in range(100)]
             if url.startswith(GITLAB_API):
                 return [{"id": 1, "default_branch": "main"}]
             return {"data": []}
         with patch.object(forge, "TERMS", ["iptv"]), \
              patch.object(forge, "api_json", side_effect=fake_api):
             report = forge.scan()
-        self.assertTrue(any("page=2" in url for url in calls))
+        self.assertTrue(any("page_token=next_token" in url for url in calls))
+        self.assertFalse(any("&page=" in url for url in calls if "/repository/tree" in url))
         self.assertEqual(len(report["sources"]), 1)
         self.assertEqual(report["coverage_status"], "COMPLETE_QUERIES")
     def test_forge_playlist_path_cap_is_visible(self):
