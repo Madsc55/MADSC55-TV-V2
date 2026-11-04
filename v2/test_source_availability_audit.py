@@ -11,11 +11,38 @@ class SourceAvailabilityTests(unittest.TestCase):
             def __enter__(self): return self
             def __exit__(self, *args): return False
             def read(self, size): return b"<html>not a playlist</html>"
-        with patch("source_availability_audit.urllib.request.build_opener") as opener:
+        with patch("source_availability_audit.urllib.request.build_opener") as opener, \
+             patch("source_availability_audit.time.sleep"):
             opener.return_value.open.return_value = Response()
             result = probe("https://example.org/playlist.m3u")
         self.assertEqual(result["status"], "INVALID_M3U")
         self.assertFalse(result["sample_m3u_header"])
+
+    def test_http_200_non_m3u_transient_response_is_retried_but_not_accepted_without_header(self):
+        class Response:
+            status = 200
+            def __init__(self, content): self.content = content
+            def __enter__(self): return self
+            def __exit__(self, *args): return False
+            def read(self, size): return self.content
+        with patch("source_availability_audit.urllib.request.build_opener") as opener, \
+             patch("source_availability_audit.time.sleep") as sleep:
+            opener.return_value.open.side_effect = [
+                Response(b"<html>temporary page</html>"),
+                Response(b"#EXTM3U\\n#EXTINF:-1,T\\nhttps://example.org/live.m3u8")]
+            result = probe("https://example.org/list.m3u")
+            self.assertEqual(result["status"], "HTTP_OK")
+            self.assertEqual(opener.return_value.open.call_count, 2)
+            self.assertEqual(sleep.call_count, 1)
+        with patch("source_availability_audit.urllib.request.build_opener") as opener, \
+             patch("source_availability_audit.time.sleep") as sleep:
+            opener.return_value.open.return_value = Response(b"<html>persistent failure</html>")
+            result = probe("https://example.org/list.m3u")
+            self.assertEqual(result["status"], "INVALID_M3U")
+            self.assertEqual(result["http_status"], 200)
+            self.assertEqual(result["invalid_m3u_retry_attempts"], 2)
+            self.assertEqual(opener.return_value.open.call_count, 3)
+            self.assertEqual(sleep.call_count, 2)
 
     def test_probe_accepts_bom_and_whitespace_m3u_header(self):
         class Response:

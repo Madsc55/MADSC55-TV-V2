@@ -35,8 +35,15 @@ def probe(url):
             with opener.open(req, timeout=12) as response:
                 content = response.read(MAX_BYTES)
                 valid_header = content.removeprefix(b"\xef\xbb\xbf").lstrip(b"\r\n\t ").startswith(b"#EXTM3U")
+                if not valid_header and attempt < 2:
+                    # Some upstream playlist services intermittently serve
+                    # HTML/error pages with HTTP 200. Retry twice, but never
+                    # pretend a persistent non-M3U response is a valid feed.
+                    time.sleep(min(2 ** attempt, 3))
+                    continue
                 return {"status": "HTTP_OK" if valid_header else "INVALID_M3U",
-                        "http_status": response.status, "sample_m3u_header": valid_header}
+                        "http_status": response.status, "sample_m3u_header": valid_header,
+                        "invalid_m3u_retry_attempts": attempt if not valid_header else 0}
         except urllib.error.HTTPError as exc:
             if exc.code in (408, 429, 500, 502, 503, 504) and attempt < 2:
                 time.sleep(min(2 ** attempt, 3))

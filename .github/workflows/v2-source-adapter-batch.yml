@@ -5,6 +5,8 @@ on:
       - madsc/v2-discovery-bulk-20261031
     paths:
       - 'v2/source_adapter_service_health.py'
+      - 'v2/source_availability_audit.py'
+      - 'v2/test_source_availability_audit.py'
       - 'v2/test_source_adapter_service_health.py'
       - 'v2/github_source_discovery.py'
       - 'v2/run_forge_source_discovery.py'
