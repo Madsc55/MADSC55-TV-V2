@@ -188,7 +188,14 @@ jobs:
       - name: Install real AV validation and encrypted evidence dependencies
         run: |
           python -m pip install cryptography==44.0.2
-          command -v ffprobe && command -v ffmpeg
+          if ! command -v ffprobe >/dev/null || ! command -v ffmpeg >/dev/null; then
+            sudo apt-get update -qq
+            sudo apt-get install -y --no-install-recommends ffmpeg
+          fi
+          command -v ffprobe
+          command -v ffmpeg
+          ffprobe -version | head -n 1
+          ffmpeg -version | head -n 1
       - name: Grouped AV and encrypted archive offline regressions
         run: |
           PYTHONPATH=v2 python -m unittest -v test_final_batch_acceptance test_final_worldwide_report_gate
