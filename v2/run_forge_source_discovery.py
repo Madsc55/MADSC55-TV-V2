@@ -10,6 +10,8 @@ from pathlib import Path
 from urllib.parse import urlencode, quote, urlsplit
 from webpage_source_discovery import public_hostname
 import urllib.request
+import urllib.error
+import time
 from forge_source_discovery import (GITLAB_API, CODEBERG_API, TERMS, MAX_PATHS,
     gitlab_projects, codeberg_projects, parse_tree_paths, playlist_sources)
 
@@ -33,8 +35,15 @@ def api_json(url):
     opener = urllib.request.build_opener(SafeRedirect())
     request = urllib.request.Request(url, headers={"User-Agent": "MADSC55-TV-V2-Discovery/1.0",
                                                     "Accept": "application/json"})
-    with opener.open(request, timeout=12) as response:
-        payload = response.read(2_000_001)
+    for attempt in range(3):
+        try:
+            with opener.open(request, timeout=12) as response:
+                payload = response.read(2_000_001)
+            break
+        except urllib.error.HTTPError as exc:
+            if exc.code not in (429, 500, 502, 503, 504) or attempt == 2:
+                raise
+            time.sleep(min(2 ** attempt, 3))
     if len(payload) > 2_000_000:
         raise ValueError("Forge response too large")
     return json.loads(payload)

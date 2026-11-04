@@ -27,14 +27,21 @@ def approved_page(url):
     except ValueError:
         return False
 
+def safe_page_redirect(origin_url, target_url):
+    """Permit only public HTTPS redirects between the same host and www alias."""
+    if not approved_page(target_url):
+        return False
+    origin = urlsplit(origin_url).hostname.lower()
+    target = urlsplit(target_url).hostname.lower()
+    return origin.removeprefix("www.") == target.removeprefix("www.")
+
+
 def fetch_page(url):
     if not approved_page(url):
         raise ValueError("Only approved public HTTPS page URLs are allowed")
-    host = urlsplit(url).hostname
     class SafeRedirect(urllib.request.HTTPRedirectHandler):
         def redirect_request(self, request, fp, code, msg, headers, newurl):
-            p = urlsplit(newurl)
-            if not approved_page(newurl) or p.hostname != host:
+            if not safe_page_redirect(url, newurl):
                 raise ValueError("Unsafe live page redirect")
             return super().redirect_request(request, fp, code, msg, headers, newurl)
     opener = urllib.request.build_opener(SafeRedirect())

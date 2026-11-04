@@ -18,7 +18,7 @@ ROOT=Path(__file__).resolve().parent
 REPORT=ROOT/"reports/document-platform-references.json"
 SOURCES=ROOT/"reports/document-platform-sources.json"
 PLATFORMS=("scribd","slideshare","internet-archive")
-MAX_DOCS=8
+MAX_DOCS=24
 MAX_SOURCES=180
 SEARCH_PAGES={
  "scribd":("https://www.scribd.com/search?query=iptv%20m3u",
@@ -28,7 +28,7 @@ SEARCH_PAGES={
 }
 ARCHIVE_SEARCH="https://archive.org/advancedsearch.php?"+urlencode({
  "q":"(title:iptv OR title:m3u OR subject:iptv) AND (mediatype:texts OR mediatype:software)",
- "fl[]":"identifier","rows":20,"page":1,"output":"json"})
+ "fl[]":"identifier","rows":48,"page":1,"output":"json"})
 ALLOWED={"www.scribd.com":("/search","/document/"),
  "www.slideshare.net":("/search","/slideshow/"),
  "archive.org":("/advancedsearch.php","/metadata/")}
@@ -161,6 +161,9 @@ def scan(read=fetch_public,search_pages=SEARCH_PAGES,archive_search=ARCHIVE_SEAR
                   "url":url,"url_sha256":h,"platforms":sorted(providers),
                   "playback_verified":False})
   for provider in providers:stats[provider]["candidate_sources"]+=1
+ for provider in PLATFORMS:
+  stats[provider]["reference_status"]=("PUBLIC_M3U_REFERENCES_FOUND"
+   if stats[provider]["candidate_sources"] else "NO_PUBLIC_M3U_REFERENCES")
  report={"schema":1,"kind":"PUBLIC_DOCUMENT_REFERENCES_ONLY",
   "policy":"read-only-anonymous-no-login-no-playback-approval",
   "platforms":stats,"source_candidates":len(sources),

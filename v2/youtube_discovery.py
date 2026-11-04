@@ -8,6 +8,7 @@ import json
 import pathlib
 import shutil
 import subprocess
+from concurrent.futures import ThreadPoolExecutor
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 OUT = ROOT / "v2/reports/youtube-live-candidates.json"
@@ -69,6 +70,17 @@ def verify(item):
     except (OSError, ValueError, subprocess.TimeoutExpired):
         return "UNVERIFIED"
 
+def metadata_summary(results):
+    statuses = [item["status"] for item in results]
+    checked = sum(value != "DISCOVERED_NOT_LIVE_VERIFIED" for value in statuses)
+    unknown = sum(value == "UNVERIFIED" for value in statuses)
+    return {"metadata_verification_attempted": checked,
+            "metadata_unverified_count": unknown,
+            "metadata_not_live_count": sum(value == "NOT_CURRENTLY_LIVE" for value in statuses),
+            "metadata_unattempted_count": len(results) - checked,
+            "metadata_coverage_complete": checked == len(results) and unknown == 0}
+
+
 def main():
     if not shutil.which("yt-dlp"):
         raise SystemExit("yt-dlp required")
@@ -82,16 +94,21 @@ def main():
                 continue
             seen.add(item["video_id"])
             results.append(item)
-    # Keep network work bounded. Never promote YouTube URLs as direct IBO streams.
-    for item in results[:120]:
-        item["status"] = verify(item)
+    # Check every discovered video in a bounded parallel batch. Search pages
+    # are not direct IPTV streams, even when live metadata succeeds.
+    with ThreadPoolExecutor(max_workers=8) as executor:
+        for item, status in zip(results, executor.map(verify, results)):
+            item["status"] = status
     report = {"created_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
               "policy": "ADVISORY_ONLY_NO_PLAYLIST_WRITES_NO_AUTOMATIC_IBO_IMPORT",
               "queries": QUERIES, "errors": errors, "results": results,
               "live_verified": sum(x["status"] == "LIVE_METADATA_VERIFIED" for x in results),
-              "verified_live_pages": [x for x in results if x["status"] == "LIVE_METADATA_VERIFIED"]}
+              "verified_live_pages": [x for x in results if x["status"] == "LIVE_METADATA_VERIFIED"],
+              **metadata_summary(results)}
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print("YouTube discovered:", len(results), "live metadata verified:", report["live_verified"], "query errors:", len(errors))
+    print("YouTube discovered:", len(results), "live metadata verified:", report["live_verified"],
+          "metadata unverified:", report["metadata_unverified_count"],
+          "unattempted:", report["metadata_unattempted_count"], "query errors:", len(errors))
 if __name__ == "__main__":
     main()

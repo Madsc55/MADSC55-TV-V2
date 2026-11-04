@@ -7,6 +7,8 @@ import pathlib
 import re
 import urllib.parse
 import urllib.request
+import urllib.error
+import time
 from webpage_source_discovery import public_hostname
 from discover import ROOT, entries, fetch
 
@@ -35,11 +37,36 @@ def api(url):
     if token:
         headers["Authorization"] = "Bearer " + token
     opener = urllib.request.build_opener(SafeRedirect())
-    with opener.open(urllib.request.Request(url, headers=headers), timeout=18) as r:
-        payload = r.read(MAX_BYTES + 1)
+    request = urllib.request.Request(url, headers=headers)
+    # Retry transient service failures only; credential/rate-budget exhaustion
+    # and missing repositories remain visible as partial external coverage.
+    for attempt in range(3):
+        try:
+            with opener.open(request, timeout=18) as r:
+                payload = r.read(MAX_BYTES + 1)
+            break
+        except urllib.error.HTTPError as exc:
+            if exc.code not in (429, 500, 502, 503, 504) or attempt == 2:
+                raise
+            time.sleep(min(2 ** attempt, 3))
     if len(payload) > MAX_BYTES:
         raise ValueError("GitHub API response too large")
     return json.loads(payload.decode("utf-8"))
+
+def eligible_playlist_path(path):
+    """Inspect M3U/M3U8 files and only playlist-named text exports.
+
+    Arbitrary .txt files waste GitHub's public raw-file budget and cause
+    avoidable fetch errors without adding plausible channel candidates.
+    """
+    if not isinstance(path, str) or path.startswith("/") or "\\" in path or ".." in path.split("/"):
+        return False
+    if re.search(r"(?i)\.m3u8?$", path):
+        return True
+    basename = path.rsplit("/", 1)[-1].casefold()
+    return bool(basename.endswith(".txt") and
+                re.search(r"iptv|m3u|playlist|channel|stream|kanal|turk|azer|^tv[._-]", basename))
+
 
 def main():
     configured = {x["url"] for x in json.loads(CONFIG.read_text())["sources"]}
@@ -72,7 +99,9 @@ def main():
             tree = api("https://api.github.com/repos/" + name + "/git/trees/" + urllib.parse.quote(branch, safe="") + "?recursive=1")
             if tree.get("truncated"):
                 limits_hit.append("TRUNCATED_GITHUB_TREE")
-            paths = [x["path"] for x in tree.get("tree", []) if x.get("type") == "blob" and re.search(r"(?i)\.(m3u8?|txt)$", x.get("path", ""))]
+            paths = [x["path"] for x in tree.get("tree", [])
+                     if isinstance(x, dict) and x.get("type") == "blob"
+                     and eligible_playlist_path(x.get("path"))]
             if len(paths) > 8:
                 limits_hit.append("GITHUB_REPO_PLAYLIST_FILE_LIMIT")
             for path in sorted(paths, key=str.casefold)[:8]:
