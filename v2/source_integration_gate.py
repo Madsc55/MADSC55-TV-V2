@@ -97,8 +97,29 @@ def _valid(name, data):
         return False
     if name == "source_availability" and data.get("source_count") != len(data["results"]):
         return False
-    if name == "channel_scan" and data.get("candidate_status") != "UNVERIFIED":
-        return False
+    if name == "channel_scan":
+        if data.get("candidate_status") != "UNVERIFIED":
+            return False
+        source_handoff = data.get("public_source_reference_handoff")
+        live_handoff = data.get("approved_live_page_handoff")
+        if source_handoff is not None and source_handoff.get("status") != "NOT_REQUESTED":
+            if (not isinstance(source_handoff.get("report_checked"), dict)
+                    or set(source_handoff["report_checked"]) !=
+                    {"github_gist", "gitlab_codeberg"}
+                    or any(value is not True for value in source_handoff["report_checked"].values())
+                    or any(type(source_handoff.get(field)) is not int for field in (
+                        "inspection_records", "parsed_channel_playlists", "failed_source_fetches"))
+                    or source_handoff.get("playback_verified") is not False):
+                return False
+            expected = sum(source_handoff.get("accepted_for_inspection", {}).values())
+            if expected != source_handoff["inspection_records"]:
+                return False
+        if live_handoff is not None and live_handoff.get("status") != "NOT_REQUESTED":
+            if (type(live_handoff.get("new_pages_queued")) is not int
+                    or type(live_handoff.get("pages_inspected")) is not int
+                    or live_handoff["new_pages_queued"] != live_handoff["pages_inspected"]
+                    or live_handoff.get("playback_verified") is not False):
+                return False
     return True
 
 def audit():
@@ -148,6 +169,16 @@ def audit():
         errors.append("DOCUMENT_SOURCE_HANDOFF_MISMATCH")
     if problems:
         errors.append("PARTIAL_ADAPTER_COVERAGE")
+    source_scan = loaded.get("channel_scan", {})
+    dynamic_handoff = source_scan.get("public_source_reference_handoff", {})
+    live_handoff = source_scan.get("approved_live_page_handoff", {})
+    if (dynamic_handoff.get("status") not in (None, "NOT_REQUESTED")
+            and (dynamic_handoff.get("failed_source_fetches", 0) > 0
+                 or any(dynamic_handoff.get("bounded_truncation", {}).values()))):
+        errors.append("PARTIAL_DYNAMIC_SOURCE_INSPECTION")
+    if (live_handoff.get("status") not in (None, "NOT_REQUESTED")
+            and live_handoff.get("pages_unavailable", 0) > 0):
+        errors.append("PARTIAL_LIVE_PAGE_INSPECTION")
     status = ("INCOMPLETE" if errors and "INCOMPLETE_ADAPTER_HANDOFF" in errors or
               "MISSING_STATIC_SOURCES" in errors or "DUPLICATE_SOURCE_IDS" in errors or
               "DOCUMENT_SOURCE_HANDOFF_MISMATCH" in errors
@@ -168,6 +199,20 @@ def audit():
             "live_web_pages": "REFERENCE_ONLY_UNLESS_APPROVED_INDEX_M3U_PARSED",
             "official_broadcaster_sites": "OFFICIAL_METADATA_IDENTITY_REVIEW_ONLY",
             "youtube": "LIVE_PAGE_METADATA_ONLY_NO_DIRECT_IBO_HLS",
+            "turkish_m3u": "STATIC_M3U_CHANNEL_CANDIDATE_SCAN_NOT_AV",
+            "iptv_org": "WORLD_TR_AZ_TUR_AZE_COUNTRY_LANGUAGE_SOURCE_CANDIDATES",
+            "free_tv": "INDEPENDENT_M3U_SOURCE_CANDIDATES",
+            "europe_diaspora": "WORLD_AND_EUROPE_METADATA_ONLY_SPOKEN_LANGUAGE_UNKNOWN",
+            "azerbaijan_azerice": "AZ_AND_AZE_SOURCES_SPOKEN_LANGUAGE_NOT_VERIFIED",
+            "live_tv_websites": "APPROVED_HTML_PAGES_M3U_LIST_LINKS_ONLY",
+            "official_broadcaster_streams": "WEBSITE_DIRECTORY_NOT_HLS_OR_AV",
+            "gunes_rec_gopik": "EXACT_NAME_WATCHLIST_NOT_AV",
+            "document_adapters": "SCRIBD_SLIDESHARE_INTERNET_ARCHIVE_PUBLIC_M3U_ONLY",
+        },
+        "actual_candidate_handoff": {
+            "github_gist_and_gitlab_codeberg": dynamic_handoff,
+            "approved_live_page_indexes": live_handoff,
+            "candidate_scan_report_available": "channel_scan" in loaded,
         },
         "av_verified": False, "spoken_language_verified": False,
         "ibo_device_verified": False, "main_playlist_modified": False,

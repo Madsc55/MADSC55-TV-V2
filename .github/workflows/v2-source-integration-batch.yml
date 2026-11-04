@@ -11,6 +11,13 @@ on:
       - 'v2/discover.py'
       - 'v2/channel_watchlist.py'
       - 'v2/test_channel_watchlist.py'
+      - 'v2/public_source_handoff.py'
+      - 'v2/test_public_source_handoff.py'
+      - 'v2/github_source_discovery.py'
+      - 'v2/run_forge_source_discovery.py'
+      - 'v2/document_platform_discovery.py'
+      - 'v2/run_live_page_discovery.py'
+      - 'v2/youtube_discovery.py'
       - 'v2/config/sources.json'
       - '.github/workflows/v2-source-integration-batch.yml'
   workflow_dispatch:
@@ -36,6 +43,7 @@ jobs:
           set -euo pipefail
           PYTHONPATH=v2 python -m unittest -v \
             test_source_adapters_batch \
+            test_public_source_handoff \
             test_document_platform_discovery \
             test_source_inventory_contract \
             test_run_all_discovery \
@@ -122,9 +130,13 @@ jobs:
         run: timeout 1200s python v2/youtube_discovery.py
       - name: Generate public-document report and actual validated M3U source handoff
         run: timeout 1200s python v2/document_platform_discovery.py --scan-public-documents
-      - name: One unified read-only channel candidate search from static and approved M3U sources
+      - name: Unified bounded channel search from static, discovered public, archive and live page M3U sources
         shell: bash
-        run: timeout 4500s python v2/discover.py --include-original-run60-github-sources
+        run: >-
+          timeout 4500s python v2/discover.py
+          --include-original-run60-github-sources
+          --include-reviewed-public-source-references
+          --include-approved-live-page-indexes
       - name: Require all eleven adapter, official directory and channel-scan reports before source acceptance
         shell: bash
         run: |

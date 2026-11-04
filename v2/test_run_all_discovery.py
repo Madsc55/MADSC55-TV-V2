@@ -40,6 +40,8 @@ class RunnerTests(unittest.TestCase):
         self.assertEqual(len(steps), 11)
         self.assertEqual([pathlib.Path(cmd[1]).name for cmd in steps], expected)
         self.assertIn("--include-original-run60-github-sources", steps[-2])
+        self.assertIn("--include-reviewed-public-source-references", steps[-2])
+        self.assertIn("--include-approved-live-page-indexes", steps[-2])
         self.assertEqual(steps[-2][-2:], ["--previous-report", "/tmp/old.json"])
 
     def test_youtube_opt_out_keeps_official_and_final_gate(self):

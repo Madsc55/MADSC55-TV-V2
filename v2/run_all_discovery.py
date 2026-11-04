@@ -28,6 +28,7 @@ def plan(archive, previous_report=None, include_youtube=True):
         [sys.executable, str(ROOT / "run_webpage_playlist_discovery.py"), "--scan-approved-index-pages"],
         [sys.executable, str(ROOT / "document_platform_discovery.py"), "--scan-public-documents"],
         [sys.executable, str(ROOT / "discover.py"), "--include-original-run60-github-sources",
+         "--include-reviewed-public-source-references", "--include-approved-live-page-indexes",
          "--encrypted-archive", str(archive)],
         [sys.executable, str(ROOT / "source_integration_gate.py")],
     ]

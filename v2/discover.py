@@ -200,6 +200,10 @@ def main():
     p.add_argument("--previous-report", type=pathlib.Path, help="Previous discovery JSON for source-loss audit")
     p.add_argument("--include-original-run60-github-sources", action="store_true",
                    help="Include the 17 exact originally discovered GitHub source locations")
+    p.add_argument("--include-reviewed-public-source-references", action="store_true",
+                   help="Read-only bounded parsing of public GitHub/Gist and GitLab/Codeberg M3U source references")
+    p.add_argument("--include-approved-live-page-indexes", action="store_true",
+                   help="Check approved broadcaster HTML pages for real M3U channel-list links only")
     args = p.parse_args()
     if args.limit < 0:
         p.error("--limit must be zero or positive")
@@ -266,6 +270,21 @@ def main():
     for doc_source in accepted_sources():
         if not any(s["url"] == doc_source["url"] for s in sources):
             sources.append(doc_source)
+    # Dynamic references that are not in permanent SHA approval files may be
+    # inspected only during explicitly requested read-only source discovery.
+    # No source reference or M3U channel metadata is treated as media/AV proof.
+    public_source_handoff = {"status": "NOT_REQUESTED", "playback_verified": False}
+    if args.include_reviewed_public_source_references:
+        from public_source_handoff import staged_references
+        inspected, public_source_handoff = staged_references(
+            DYNAMIC, FORGE, {s["url"] for s in sources})
+        sources.extend(inspected)
+    live_page_handoff = {"status": "NOT_REQUESTED", "playback_verified": False}
+    if args.include_approved_live_page_indexes:
+        from public_source_handoff import approved_live_index_sources
+        live_pages, live_page_handoff = approved_live_index_sources(
+            ROOT / "v2/config/live-pages.json", {s["url"] for s in sources})
+        sources.extend(live_pages)
     # A page is a discovery index, not an M3U stream. Expand only explicit
     # public HTTPS playlist links; never treat HTML as playable media.
     from webpage_source_discovery import discover_playlist_links
@@ -292,9 +311,15 @@ def main():
     for source in sources:
         if args.offline:
             continue
+        attempts = 0
         try:
+            # Public dynamic references must resolve exclusively to globally
+            # routable hosts. This gate is separate from playlist M3U parsing.
+            if source.get("origin") == "reviewed-public-source-reference":
+                from historical_targeted_playback import public_dns
+                if not public_dns(source["url"]):
+                    raise ValueError("Unsafe or unresolved public dynamic source host")
             last_error = None
-            attempts = 0
             for attempt in range(4):
                 attempts = attempt + 1
                 try:
@@ -456,10 +481,38 @@ def main():
         except (OSError, ValueError, TypeError):
             auxiliary[label] = {"status": "REPORT_INVALID", "playback_verified": False}
     result["auxiliary_discovery_coverage"] = auxiliary
+    source_lookup = {source["id"]: source for source in sources}
+    dynamic_checked = [row for row in source_audit if
+                       source_lookup.get(row["source"], {}).get("origin") ==
+                       "reviewed-public-source-reference"]
+    live_checked = [row for row in source_audit if
+                    source_lookup.get(row["source"], {}).get("origin") ==
+                    "approved-live-page-index"]
+    if args.include_reviewed_public_source_references:
+        public_source_handoff = {**public_source_handoff,
+            "inspection_records": len(dynamic_checked),
+            "parsed_channel_playlists": sum(
+                row["status"] == "PARSED_NOT_PLAYBACK_VERIFIED" for row in dynamic_checked),
+            "failed_source_fetches": sum(row["status"] == "FETCH_FAILED"
+                                        for row in dynamic_checked)}
+    if args.include_approved_live_page_indexes:
+        live_page_handoff = {**live_page_handoff,
+            "pages_inspected": len(live_checked),
+            "pages_with_m3u_links": sum(
+                row["status"] == "INDEX_LINKS_ONLY_NOT_PLAYBACK_VERIFIED"
+                and row.get("entries", 0) > 0 for row in live_checked),
+            "pages_unavailable": sum(row["status"] == "OPTIONAL_INDEX_FAILED"
+                                     for row in live_checked)}
+    result["public_source_reference_handoff"] = public_source_handoff
+    result["approved_live_page_handoff"] = live_page_handoff
     result["all_discovery_sources_integrated_into_encrypted_archive"] = False
     from channel_watchlist import report as target_channel_report
     result["exact_named_channel_watchlist"] = target_channel_report(loaded, live)
-    result["discovery_routing"] = "STATIC_AND_APPROVED_M3U_SCANNED; HTML_YOUTUBE_OFFICIAL_SITES_REFERENCE_ONLY"
+    result["discovery_routing"] = (
+        "STATIC_AND_APPROVED_M3U_SCANNED;"
+        "REVIEWED_PUBLIC_GITHUB_GIST_GITLAB_CODEBERG_SCANNED_IF_OPTED;"
+        "APPROVED_LIVE_HTML_INDEX_M3U_SCANNED_IF_PRESENT;"
+        "YOUTUBE_AND_OFFICIAL_SITES_REFERENCE_ONLY_NOT_PLAYBACK_PROOF")
     result["spoken_turkish_or_azeri_verified"] = False
     result["ibo_device_verified"] = False
     if args.previous_report:
