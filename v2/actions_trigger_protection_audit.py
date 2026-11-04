@@ -64,6 +64,7 @@ MANUAL_NETWORK_OR_MEDIA = frozenset({
     "v2-turkish-tv-health",
     "v2-postscan-triage",
     "v2-manual-source-audit",
+    "v2-targeted-tr-az-av",
 })
 # These are existing read-only regression / source-feed coverage checks. The
 # whitelist is explicit so a newly added workflow cannot opt into push scans.

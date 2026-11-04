@@ -1,12 +1,5 @@
 name: V2 Targeted TR AZ Grouped AV Evidence
 on:
-  push:
-    branches:
-      - madsc/v2-discovery-bulk-20261031
-    paths:
-      - 'v2/targeted_tr_az_av_acceptance.py'
-      - 'v2/test_targeted_tr_az_av_acceptance.py'
-      - '.github/workflows/v2-targeted-tr-az-av.yml'
   workflow_dispatch:
 permissions:
   contents: read
@@ -33,12 +26,6 @@ jobs:
 
   live-target-evidence:
     name: Real TR AZ metadata-source AV batch - no IBO publication
-    if: >-
-      github.event_name == 'workflow_dispatch' ||
-      (github.event_name == 'push' &&
-       github.repository == 'Madsc55/MADSC55-TV-V2' &&
-       github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
-       github.event.head_commit.message == 'fix(v2): launch grouped TR AZ candidate AV evidence')
     needs: offline-target-acceptance
     runs-on: ubuntu-24.04
     timeout-minutes: 350
