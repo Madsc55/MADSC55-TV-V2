@@ -203,8 +203,16 @@ def audit():
                         "candidate_scan_handoff": dynamic_handoff.get("report_checked", {}).get("github_gist") is True},
         "gitlab_codeberg": {"adapter_report_valid": "gitlab_codeberg" in loaded,
                             "candidate_scan_handoff": dynamic_handoff.get("report_checked", {}).get("gitlab_codeberg") is True},
-        "live_tv_websites": {"adapter_report_valid": "official_live_pages" in loaded,
-                             "candidate_scan_handoff": live_handoff.get("status") not in (None, "NOT_REQUESTED")},
+        "live_tv_websites": {
+            "adapter_report_valid": "official_live_pages" in loaded,
+            "approved_page_inspection_complete": (
+                type(live_handoff.get("new_pages_queued")) is int
+                and type(live_handoff.get("pages_inspected")) is int
+                and live_handoff["pages_inspected"] == live_handoff["new_pages_queued"]),
+            "approved_pages_inspected": live_handoff.get("pages_inspected", 0),
+            "unavailable_pages": live_handoff.get("pages_unavailable", 0),
+            "m3u_links_found": live_handoff.get("pages_with_m3u_links", 0),
+            "av_playback_verified": False},
         "official_broadcaster_sites": {"adapter_report_valid": "official_sites" in loaded,
                                       "identity_review_connected": "official_site_matching" in loaded,
                                       "av_playback_complete": False},

@@ -107,6 +107,22 @@ class IntegrationGateTests(unittest.TestCase):
         self.assertFalse(result["adapter_wiring_valid"])
         self.assertIn("INCOMPLETE_ADAPTER_HANDOFF", result["errors"])
 
+    def test_live_page_inspection_is_not_misreported_as_no_adapter_handoff(self):
+        scan = report_fixture("channel_scan")
+        scan["approved_live_page_handoff"] = {
+            "schema": 1, "new_pages_queued": 27, "pages_inspected": 27,
+            "pages_unavailable": 5, "pages_with_m3u_links": 0,
+            "playback_verified": False}
+        self.write_report("channel_scan", scan)
+        result = gate.audit()
+        live = result["source_families"]["live_tv_websites"]
+        self.assertTrue(live["approved_page_inspection_complete"])
+        self.assertEqual(live["approved_pages_inspected"], 27)
+        self.assertEqual(live["unavailable_pages"], 5)
+        self.assertEqual(live["m3u_links_found"], 0)
+        self.assertFalse(live["av_playback_verified"])
+        self.assertIn("PARTIAL_LIVE_PAGE_INSPECTION", result["errors"])
+
     def test_real_dynamic_and_live_page_handoff_must_match_actual_scan(self):
         scan = report_fixture("channel_scan")
         scan["public_source_reference_handoff"] = {
