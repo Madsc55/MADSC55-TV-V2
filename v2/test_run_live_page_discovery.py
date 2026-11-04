@@ -40,6 +40,15 @@ class LivePageRunnerTests(unittest.TestCase):
         self.assertGreaterEqual(len(pages), 2)
         self.assertEqual(len({page["id"] for page in pages}), len(pages))
         self.assertTrue(all(approved_page(page["url"]) for page in pages))
+    def test_verified_official_live_page_entrypoints(self):
+        import json
+        from run_live_page_discovery import CONFIG
+        pages = {p["id"]: p["url"] for p in json.loads(CONFIG.read_text(encoding="utf-8"))["pages"]}
+        self.assertEqual(pages["aztv-official-home"], "https://www.aztv.az/az")
+        self.assertEqual(pages["halk-tv-official"], "https://halktv.com.tr/canli-yayin")
+        self.assertTrue(all(approved_page(pages[id]) for id in
+                            ("aztv-official-home", "halk-tv-official")))
+
     def test_empty_inventory_is_safe(self):
         self.assertEqual(scan([])["pages_checked"], 0)
         self.assertEqual(scan([])["coverage_status"], "NO_APPROVED_PAGES")

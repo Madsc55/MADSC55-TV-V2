@@ -10,6 +10,8 @@ on:
       - 'v2/run_forge_source_discovery.py'
       - 'v2/forge_source_discovery.py'
       - 'v2/config/sources.json'
+      - 'v2/config/live-pages.json'
+      - 'v2/test_run_live_page_discovery.py'
       - '.github/workflows/v2-source-adapter-batch.yml'
   workflow_dispatch:
 
@@ -53,6 +55,7 @@ jobs:
             test_source_inventory_contract \
             test_webpage_source_discovery \
             test_source_availability_audit \
+            test_run_live_page_discovery \
             2>&1 | tee v2/reports/ci/source-adapter-batch.log
       - name: Probe six public source/API entrypoints, no channel discovery
         run: python v2/source_adapter_service_health.py --audit-source-services

@@ -4,7 +4,7 @@
   "pages": [
     {
       "id": "aztv-official-home",
-      "url": "https://www.aztv.az/"
+      "url": "https://www.aztv.az/az"
     },
     {
       "id": "trt1-official-home",
@@ -56,7 +56,7 @@
     },
     {
       "id": "halk-tv-official",
-      "url": "https://halktv.com.tr/"
+      "url": "https://halktv.com.tr/canli-yayin"
     },
     {
       "id": "sozcu-tv-official",
