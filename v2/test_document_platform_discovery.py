@@ -66,6 +66,30 @@ class ThreePlatformAdapterTests(unittest.TestCase):
   self.assertEqual(report["platforms"]["scribd"]["errors"],len(SEARCH_PAGES["scribd"]))
   self.assertEqual(report["platforms"]["scribd"]["queries"],len(SEARCH_PAGES["scribd"]))
   self.assertEqual(report["coverage_status"],"PARTIAL_PUBLIC_ACCESS")
+ def test_archive_reviews_all_48_search_results_including_last_record(self):
+  def read(url):
+   if "advancedsearch.php" in url:
+    return json.dumps({"response":{"numFound":120,"docs":[
+     {"identifier":"iptv-item-"+str(i)} for i in range(48)]}})
+   if "/metadata/iptv-item-" in url:
+    index=int(url.rsplit("iptv-item-",1)[-1])
+    files=([{"name":"tr.m3u","size":"150","source":"original"}]
+     if index==47 else [])
+    return json.dumps({"files":files})
+   raise AssertionError("Unexpected document endpoint: "+url)
+  report,sources=scan(read=read,search_pages={},document_pages={})
+  info=report["platforms"]["internet-archive"]
+  self.assertEqual(info["queries"],1)
+  self.assertEqual(info["documents_checked"],48)
+  self.assertEqual(info["search_rows_returned"],48)
+  self.assertEqual(info["indexed_result_count"],120)
+  self.assertTrue(info["search_window_limited"])
+  self.assertEqual(len(sources),1)
+  self.assertEqual(sources[0]["id"],"docref-"+digest(
+   "https://archive.org/download/iptv-item-47/tr.m3u")[:20])
+  self.assertFalse(report["playback_verified"])
+  self.assertEqual(report["errors"],[])
+
  def test_handoff_rejects_tampering_and_duplicates(self):
   url="https://example.org/tr.m3u";h=digest(url)
   row={"id":"docref-"+h[:20],"kind":"m3u","scope":"candidate",

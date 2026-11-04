@@ -68,7 +68,7 @@ class SourceResilienceBatch(unittest.TestCase):
         self.assertEqual(failure_reason(""), "EXTRACTOR_FAILED")
 
     def test_archive_public_metadata_query_remains_bounded(self):
-        self.assertEqual(MAX_DOCS, 24)
+        self.assertEqual(MAX_DOCS, 48)
         self.assertIn("rows=48", ARCHIVE_SEARCH)
         self.assertIn("archive.org/advancedsearch.php?", ARCHIVE_SEARCH)
 

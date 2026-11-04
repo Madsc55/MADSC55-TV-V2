@@ -18,7 +18,7 @@ ROOT=Path(__file__).resolve().parent
 REPORT=ROOT/"reports/document-platform-references.json"
 SOURCES=ROOT/"reports/document-platform-sources.json"
 PLATFORMS=("scribd","slideshare","internet-archive")
-MAX_DOCS=24
+MAX_DOCS=48
 MAX_SOURCES=180
 SEARCH_PAGES={
  "scribd":("https://www.scribd.com/search?query=iptv%20m3u",
@@ -264,6 +264,15 @@ def scan(read=fetch_public,search_pages=SEARCH_PAGES,archive_search=ARCHIVE_SEAR
   response=json.loads(read(archive_search)).get("response",{})
   docs=response.get("docs")
   if not isinstance(docs,list):raise ValueError("Malformed archive search response")
+  # Inspect all 48 requested rows rather than silently dropping rows 25-48.
+  # Live search ranking can vary; an absent source is never deleted from
+  # protected historical channel inventory on that evidence alone.
+  total=response.get("numFound")
+  stats["internet-archive"]["search_rows_returned"]=len(docs)
+  stats["internet-archive"]["search_window_limited"]=(
+   (isinstance(total,int) and total>len(docs)) or len(docs)>MAX_DOCS)
+  stats["internet-archive"]["indexed_result_count"]=(
+   total if isinstance(total,int) and total>=0 else None)
   for row in docs[:MAX_DOCS]:
    ident=row.get("identifier") if isinstance(row,dict) else None
    if not isinstance(ident,str) or not re.fullmatch(r"[A-Za-z0-9_.-]{1,160}",ident):continue
