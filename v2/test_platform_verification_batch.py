@@ -20,7 +20,7 @@ class PlatformVerificationTests(unittest.TestCase):
 
     def test_youtube_official_live_search_confirms_video_start_and_end(self):
         from youtube_official_live_api import search_live
-        ids = ("ABCDEFGHIJK", "12345678901", "zyxwvutsrqpo")
+        ids = ("ABCDEFGHIJK", "12345678901", "zyxwvutsrqp")
         calls = []
         def fetch_search(url):
             q = parse_qs(urlsplit(url).query)

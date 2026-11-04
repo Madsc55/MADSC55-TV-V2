@@ -225,7 +225,7 @@ jobs:
       github.event_name == 'push' &&
       github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
       github.repository == 'Madsc55/MADSC55-TV-V2' &&
-      github.event.head_commit.message == 'feat(v2): verify official YouTube live search in source batch'
+      github.event.head_commit.message == 'fix(v2): finalize official YouTube live search batch'
     needs: offline-source-safety
     runs-on: ubuntu-24.04
     timeout-minutes: 40
