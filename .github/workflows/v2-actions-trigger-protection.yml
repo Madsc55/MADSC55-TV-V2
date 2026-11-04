@@ -225,7 +225,7 @@ jobs:
           test "$(sha256sum v2/history/stage3-4955-hash-only.jsonl | cut -d' ' -f1)" = 'ee00a844a028e3410715d411467a2d3306f5f5cc4565766140b6438e786cdd27'
       - name: One grouped offline regression suite for 50 identities and loss guards
         run: |
-          PYTHONPATH=v2 python -m unittest -v test_orphan_m3u_recovery test_orphan_iptv_org_registry test_orphan_source_expansion test_orphan_resolution_gate test_orphan_baseline_guard test_m3u_source_content_audit test_historical_targeted_playback test_source_loss_audit test_document_platform_discovery
+          PYTHONPATH=v2 python -m unittest -v test_orphan_m3u_recovery test_orphan_iptv_org_registry test_orphan_source_expansion test_main_playlist_candidate_bridge test_orphan_resolution_gate test_orphan_baseline_guard test_m3u_source_content_audit test_historical_targeted_playback test_source_loss_audit test_document_platform_discovery
       - name: Collect vetted public Scribd SlideShare Internet Archive M3U sources
         run: |
           PYTHONPATH=v2 python v2/document_platform_discovery.py --scan-public-documents
@@ -242,6 +242,22 @@ jobs:
           source.main()
           PY
           PYTHONPATH=v2 python v2/run_forge_source_discovery.py --scan-public-forges
+      - name: Inspect pinned main 38 YEDEKLER and separate 3964 foreign archive read-only
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch --no-tags --depth=1 origin '+refs/heads/main:refs/remotes/origin/main'
+          mkdir -p "$RUNNER_TEMP/v2-protected-source-snapshots"
+          git show 'refs/remotes/origin/main:MADSC55_TV_IBO_CALISANLAR_TEST.m3u8' > "$RUNNER_TEMP/v2-protected-source-snapshots/main-ibo.m3u8"
+          git show 'refs/remotes/origin/main:v2/arsiv/yabanci_yedekler_2026-11-02_3964.m3u8' > "$RUNNER_TEMP/v2-protected-source-snapshots/foreign-archive.m3u8"
+          PYTHONPATH=v2 python - <<'PY'
+          import os
+          from pathlib import Path
+          from main_playlist_candidate_bridge import validated_v2_main_catalog
+          parent = Path(os.environ["RUNNER_TEMP"]) / "v2-protected-source-snapshots"
+          _, report = validated_v2_main_catalog(parent / "main-ibo.m3u8", parent / "foreign-archive.m3u8")
+          print("Protected V2 source-only identity bridge:", report)
+          PY
       - name: Fetch real publisher history and IPTV-org registry and probe all exact candidates
         env:
           GH_TOKEN: ${{ github.token }}
@@ -251,6 +267,8 @@ jobs:
             --history-revisions 300 \
             --include-public-registry \
             --include-public-discovery \
+            --v2-main-playlist-snapshot "$RUNNER_TEMP/v2-protected-source-snapshots/main-ibo.m3u8" \
+            --v2-main-foreign-archive-snapshot "$RUNNER_TEMP/v2-protected-source-snapshots/foreign-archive.m3u8" \
             --public-key v2/config/stage3_transit_public.pem \
             --report v2/reports/ci/orphan-46-exact-recovery-anonymous.json \
             --sealed v2/reports/ci/orphan-46-live-av.sealed \

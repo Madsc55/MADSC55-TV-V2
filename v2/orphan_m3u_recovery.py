@@ -323,7 +323,10 @@ def find_existing_exact_identity(orphans, catalog, *, reader=_read_document,
 
     def one(source):
         try:
-            if source.get("origin") == "orphan-discovery-reference":
+            if source.get("origin") == "v2-main-protected-playlist":
+                from main_playlist_candidate_bridge import read_verified_snapshot
+                data = read_verified_snapshot(source)
+            elif source.get("origin") == "orphan-discovery-reference":
                 from orphan_source_expansion import safe_reference_url
                 from historical_targeted_playback import public_dns
                 from discover import fetch
@@ -711,6 +714,8 @@ def main():
     p.add_argument("--public-key", type=Path,
                    default=Path("v2/config/stage3_transit_public.pem"))
     p.add_argument("--history-revisions", type=int, default=20)
+    p.add_argument("--v2-main-playlist-snapshot", type=Path)
+    p.add_argument("--v2-main-foreign-archive-snapshot", type=Path)
     p.add_argument("--include-public-discovery", action="store_true",
                    help="Review bounded verified public source reports only for exact orphan matches")
     p.add_argument("--include-public-registry", action="store_true",
@@ -726,6 +731,8 @@ def main():
                     args.all_candidates_sealed.resolve()}) != 3
             or not 1 <= args.history_revisions <= 300):
         p.error("Unsafe output path or unbounded history")
+    if bool(args.v2_main_playlist_snapshot) != bool(args.v2_main_foreign_archive_snapshot):
+        p.error("Both protected V2 main snapshots must be provided together")
     known_catalog = existing_source_catalog()
     if args.include_public_discovery:
         from orphan_source_expansion import reviewed_source_references
@@ -734,6 +741,12 @@ def main():
         known_catalog.extend(added_sources)
         print("Extra public source references for exact orphan metadata only:",
               public_source_stats["new_source_references"])
+    if args.v2_main_playlist_snapshot:
+        from main_playlist_candidate_bridge import validated_v2_main_catalog
+        protected_catalog, protected_counts = validated_v2_main_catalog(
+            args.v2_main_playlist_snapshot, args.v2_main_foreign_archive_snapshot)
+        known_catalog.extend(protected_catalog)
+        print("Protected main read-only source handoff:", protected_counts)
     result = audit(report_path=args.report, sealed_path=args.sealed,
                    key_path=args.public_key, limit=args.history_revisions,
                    known_source_catalog=known_catalog,
