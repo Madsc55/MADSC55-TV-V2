@@ -225,7 +225,7 @@ jobs:
       github.event_name == 'push' &&
       github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
       github.repository == 'Madsc55/MADSC55-TV-V2' &&
-      github.event.head_commit.message == 'fix(v2): extend public Scribd document search'
+      github.event.head_commit.message == 'feat(v2): verify official YouTube live search in source batch'
     needs: offline-source-safety
     runs-on: ubuntu-24.04
     timeout-minutes: 40
@@ -280,6 +280,8 @@ jobs:
             "youtube_error_classes":y["anonymous_metadata_reason_counts"],
             "youtube_official_api_status":y["official_youtube_api_status"],
             "youtube_official_api_classified":y["official_youtube_api_classified"],
+            "youtube_official_live_search_status":y["official_live_search_status"],
+            "youtube_official_live_search_new_candidates":y["official_live_search_new_candidates"],
             "youtube_verification_status":y["verification_status"],
             "platforms":platform,
             "document_m3u_source_candidates":d["source_candidates"],

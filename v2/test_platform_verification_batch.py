@@ -11,6 +11,64 @@ from document_platform_discovery import PUBLIC_DOCUMENT_PAGES, page_references, 
 
 
 class PlatformVerificationTests(unittest.TestCase):
+    def test_youtube_official_live_search_is_key_gated(self):
+        from youtube_official_live_api import search_live
+        with patch.dict("os.environ", {}, clear=True):
+            rows, state = search_live(["Türk haber canlı"])
+        self.assertEqual(rows, [])
+        self.assertEqual(state, "API_KEY_NOT_CONFIGURED")
+
+    def test_youtube_official_live_search_confirms_video_start_and_end(self):
+        from youtube_official_live_api import search_live
+        ids = ("ABCDEFGHIJK", "12345678901", "zyxwvutsrqpo")
+        calls = []
+        def fetch_search(url):
+            q = parse_qs(urlsplit(url).query)
+            calls.append(url)
+            self.assertEqual(q["eventType"], ["live"])
+            self.assertEqual(q["type"], ["video"])
+            return {"items": [
+                {"id": {"videoId": video_id},
+                 "snippet": {"title": "Türk haber", "channelTitle": "Resmi kanal"}}
+                for video_id in ids]}
+        def fetch_details(url):
+            q = parse_qs(urlsplit(url).query)
+            calls.append(url)
+            self.assertEqual(set(q["id"][0].split(",")), set(ids))
+            return {"items": [
+                {"id": ids[0], "snippet": {"liveBroadcastContent": "live"},
+                 "liveStreamingDetails": {"actualStartTime": "2026-11-04T19:00:00Z"}},
+                {"id": ids[1], "snippet": {"liveBroadcastContent": "live"},
+                 "liveStreamingDetails": {"actualStartTime": "2026-11-04T18:00:00Z",
+                                          "actualEndTime": "2026-11-04T19:00:00Z"}},
+                {"id": ids[2], "snippet": {"liveBroadcastContent": "upcoming"},
+                 "liveStreamingDetails": {}}]}
+        rows, status = search_live(["Türk haber canlı"], key="fake-secret-key",
+                                   search_request=fetch_search, video_request=fetch_details)
+        self.assertEqual(status, "API_LIVE_SEARCH_VERIFIED")
+        self.assertEqual([x["video_id"] for x in rows], [ids[0]])
+        self.assertEqual(rows[0]["metadata_reason"], "OFFICIAL_API_ACTIVE_LIVE")
+        self.assertEqual(len(calls), 2)
+        self.assertNotIn("fake-secret-key", str((rows, status)))
+
+    def test_youtube_official_live_search_limits_queries_and_fails_closed(self):
+        from youtube_official_live_api import search_live
+        called = []
+        def empty(url):
+            called.append(url)
+            return {"items":[]}
+        rows, state = search_live(["q1","q2","q3","q4","q5"], key="testing-key", search_request=empty)
+        self.assertEqual(rows, [])
+        self.assertEqual(state, "API_SEARCH_NO_PUBLIC_VIDEOS")
+        self.assertEqual(len(called), 4)
+        rows, state = search_live(["bad\nquery"], key="testing-key",search_request=empty)
+        self.assertEqual((rows,state), ([], "INVALID_SEARCH_QUERIES"))
+        def forbidden(url):
+            raise HTTPError(url, 403, "forbidden", {}, None)
+        rows, state = search_live(["q"], key="fake-secret", search_request=forbidden)
+        self.assertEqual((rows,state), ([], "API_SEARCH_HTTP_403"))
+        self.assertNotIn("fake-secret", str((rows,state)))
+
     def test_more_public_scribd_documents_do_not_infer_streams(self):
         self.assertEqual(len(PUBLIC_DOCUMENT_PAGES["scribd"]),4)
         target="https://www.scribd.com/document/758425845/iptv"

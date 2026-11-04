@@ -10,7 +10,7 @@ import shutil
 import subprocess
 from collections import Counter
 from concurrent.futures import ThreadPoolExecutor
-from youtube_official_live_api import verify_ids
+from youtube_official_live_api import verify_ids, search_live
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 OUT = ROOT / "v2/reports/youtube-live-candidates.json"
@@ -147,9 +147,22 @@ def main():
                 continue
             seen.add(item["video_id"])
             results.append(item)
-    # Official videos.list checks at most 50 IDs per request and costs little
-    # quota. It is optional: no API key -> no invented verification. The key
-    # is never serialized to any report.
+    # Optional official live search is independent from yt-dlp scraping.
+    # videos.list confirms start and no end before a search result is accepted.
+    # Without an API key, this is explicitly partial rather than simulated.
+    live_search_rows, live_search_status = search_live(QUERIES[:4])
+    new_official_live = 0
+    for item in live_search_rows:
+        if item["video_id"] in seen:
+            existing = next(row for row in results if row["video_id"] == item["video_id"])
+            existing["status"] = "LIVE_METADATA_VERIFIED"
+            existing["metadata_reason"] = "OFFICIAL_API_ACTIVE_LIVE"
+            continue
+        seen.add(item["video_id"])
+        results.append(item)
+        new_official_live += 1
+    # Official videos.list checks at most 50 IDs per request; even search
+    # results are never direct IPTV stream URLs.
     official, api_status = verify_ids([item["video_id"] for item in results])
     for item in results:
         result = official.get(item["video_id"])
@@ -167,6 +180,8 @@ def main():
               "queries": QUERIES, "errors": errors, "results": results,
               "official_youtube_api_status": api_status,
               "official_youtube_api_classified": len(official),
+              "official_live_search_status": live_search_status,
+              "official_live_search_new_candidates": new_official_live,
               "verification_status": ("ALL_RESULTS_CLASSIFIED" if
                     all(item["status"] in ("LIVE_METADATA_VERIFIED", "NOT_CURRENTLY_LIVE")
                         for item in results) and not errors
@@ -182,6 +197,7 @@ def main():
           "metadata unverified:", report["metadata_unverified_count"],
           "unattempted:", report["metadata_unattempted_count"], "query errors:", len(errors),
           "reason_counts:", json.dumps(report["anonymous_metadata_reason_counts"], sort_keys=True),
-          "official_api_status:", api_status, "api_classified:", len(official))
+          "official_api_status:", api_status, "api_classified:", len(official),
+          "live_search_status:", live_search_status, "new_live_search_candidates:", new_official_live)
 if __name__ == "__main__":
     main()
