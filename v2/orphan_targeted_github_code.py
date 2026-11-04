@@ -112,6 +112,7 @@ def targeted_source_references(orphan_rows, known_urls, *, fetcher=_read,
     known = set(known_urls)
     errors = invalid = incomplete = 0
     error_categories = Counter()
+    actual_queries = rate_limit_deferred = 0
     for index, query in enumerate(selected):
         # Authenticated GitHub Code Search has a separate rate limit.
         if index:
@@ -120,8 +121,22 @@ def targeted_source_references(orphan_rows, known_urls, *, fetcher=_read,
             pause(65)
         uri = ("https://api.github.com/search/code?"
                + urlencode({"q": query, "per_page": PER_QUERY, "page": 1}))
+        actual_queries += 1
         try:
-            response = json.loads(fetcher(uri, api=True))
+            try:
+                raw = fetcher(uri, api=True)
+            except urllib.error.HTTPError as limit_error:
+                if limit_error.code != 429:
+                    raise
+                # Honor GitHub's explicit Retry-After only when bounded.
+                # No speculative rate-limit bypass or repeated hammering.
+                headers = limit_error.headers or {}
+                delay = headers.get("Retry-After", "")
+                if not isinstance(delay, str) or not delay.isdecimal() or not 1 <= int(delay) <= 60:
+                    raise
+                pause(int(delay))
+                raw = fetcher(uri, api=True)
+            response = json.loads(raw)
             items = response.get("items") if isinstance(response, dict) else None
             if not isinstance(items, list) or len(items) > PER_QUERY:
                 raise ValueError("GitHub code search response has no bounded results")
@@ -154,14 +169,21 @@ def targeted_source_references(orphan_rows, known_urls, *, fetcher=_read,
             else:
                 bucket = "INVALID_SEARCH_RESPONSE"
             error_categories[bucket] += 1
+            if isinstance(exc, urllib.error.HTTPError) and exc.code == 429:
+                # Explicitly defer remaining searches; an HTTP 429 says
+                # NOTHING about whether any orphan stream currently exists.
+                rate_limit_deferred = len(selected) - index - 1
+                break
     status = ("NO_QUERYABLE_TARGETS" if not selected else
-              "PARTIAL_PUBLIC_CODE_SEARCH" if errors or incomplete or skipped_count else
+              "PARTIAL_PUBLIC_CODE_SEARCH" if errors or incomplete or skipped_count or rate_limit_deferred else
               "PUBLIC_CODE_REFERENCES_ONLY")
     return refs, {
         "schema": 1, "kind": "ORPHAN_EXACT_METADATA_PUBLIC_CODE_SEARCH",
         "status": status, "distinct_orphan_identities_supplied": len(deduped),
         "distinct_queries_available": len(queries),
-        "queries_attempted": len(selected), "query_budget": max_queries,
+        "queries_attempted": actual_queries, "queries_selected": len(selected),
+        "queries_deferred_due_rate_limit": rate_limit_deferred,
+        "query_budget": max_queries,
         "source_references_added": len(refs),
         "unavailable_or_failed_queries": errors,
         "anonymous_error_categories": dict(sorted(error_categories.items())),

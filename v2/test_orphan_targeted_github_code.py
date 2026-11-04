@@ -122,5 +122,44 @@ class TargetedGitHubCodeDiscoveryTests(unittest.TestCase):
         self.assertEqual(report["status"], "PARTIAL_PUBLIC_CODE_SEARCH")
         self.assertNotIn("secret", str(report))
 
+
+    def test_http_429_stops_bounded_group_and_marks_deferred_queries(self):
+        from urllib.error import HTTPError
+        meta = '#EXTINF:-1 tvg-id="Channel.tr",Channel'
+        received = []
+        def fake(uri, api=False):
+            received.append(uri)
+            raise HTTPError(uri, 429, "Rate limit", {}, None)
+        refs, report = targeted_source_references(
+            [orphan(meta)], set(), fetcher=fake, pause=lambda _: None)
+        self.assertEqual(refs, [])
+        self.assertEqual(len(received), 1)
+        self.assertEqual(report["queries_attempted"], 1)
+        self.assertEqual(report["queries_selected"], 2)
+        self.assertEqual(report["queries_deferred_due_rate_limit"], 1)
+        self.assertEqual(report["anonymous_error_categories"], {"HTTP_429": 1})
+        self.assertEqual(report["status"], "PARTIAL_PUBLIC_CODE_SEARCH")
+
+    def test_http_429_explicit_bounded_retry_after_can_restore_search(self):
+        from urllib.error import HTTPError
+        meta = '#EXTINF:-1 tvg-id="Channel.tr",Channel'
+        calls, sleeps = [], []
+        def fake(uri, api=False):
+            calls.append(uri)
+            if len(calls) == 1:
+                raise HTTPError(uri, 429, "Retry after two seconds",
+                                {"Retry-After": "2"}, None)
+            return b'{"items":[],"incomplete_results":false}'
+        refs, report = targeted_source_references(
+            [orphan(meta)], set(), fetcher=fake, pause=sleeps.append)
+        self.assertEqual(refs, [])
+        self.assertEqual(report["queries_attempted"], 2)
+        self.assertEqual(report["unavailable_or_failed_queries"], 0)
+        self.assertEqual(report["queries_deferred_due_rate_limit"], 0)
+        self.assertEqual(len(calls), 3)
+        self.assertIn(2, sleeps)
+        self.assertEqual(report["status"], "PUBLIC_CODE_REFERENCES_ONLY")
+
+
 if __name__ == "__main__":
     unittest.main()
