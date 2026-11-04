@@ -1,5 +1,10 @@
 name: V2 Turkish M3U Orphan Recovery — Exact History and AV Batch
 on:
+  push:
+    branches:
+      - madsc/v2-discovery-bulk-20261031
+    paths:
+      - '.github/workflows/v2-orphan-m3u-recovery.yml'
   workflow_dispatch:
 
 permissions:
@@ -7,7 +12,12 @@ permissions:
 
 jobs:
   four-sources-one-batch:
-    name: Four verified sources, deduped broken records; grouped tests and AV audit
+    # Explicit one-off read-only development run; future push commits
+    # cannot repeatedly rescan the historical archive by accident.
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      github.event.head_commit.message == 'fix(v2): recover remaining orphan AV with current sources'
+    name: Four original feeds plus verified public discovery; exact orphan AV batch
     runs-on: ubuntu-24.04
     timeout-minutes: 65
     steps:
@@ -32,6 +42,10 @@ jobs:
           set -o pipefail
           PYTHONPATH=v2 python -m unittest -v \
             test_orphan_m3u_recovery \
+            test_orphan_source_expansion \
+            test_orphan_targeted_github_code \
+            test_orphan_resolution_gate \
+            test_source_adapters_batch \
             test_orphan_iptv_org_registry \
             test_document_platform_discovery \
             test_orphan_baseline_guard \
@@ -47,6 +61,13 @@ jobs:
         run: |
           PYTHONPATH=v2 python v2/document_platform_discovery.py --scan-public-documents
           PYTHONPATH=v2 python -c "from document_platform_discovery import accepted_sources; print('Vetted public document M3U sources:', len(accepted_sources()))"
+      - name: Discover reviewed GitHub Gist GitLab Codeberg public M3U sources in one batch
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          PYTHONPATH=v2 python v2/github_source_discovery.py
+          PYTHONPATH=v2 python v2/run_forge_source_discovery.py --scan-public-forges
       - name: Compare four original M3U sources, immutable orphan identities, and known historical feeds
         shell: bash
         env:
@@ -54,12 +75,19 @@ jobs:
         run: |
           PYTHONPATH=v2 python v2/orphan_m3u_recovery.py \
             --history-revisions 300 \
+            --include-public-discovery \
+            --include-targeted-code-search \
             --include-public-registry \
             --public-key v2/config/stage3_transit_public.pem \
             --report v2/reports/ci/three-source-orphan-anonymous.json \
             --sealed v2/reports/ci/three-source-av-verified.sealed \
             --all-candidates-sealed v2/reports/ci/three-source-all-historical-candidates.sealed \
             --immutable-orphan-baseline v2/history/m3u-orphan-50-hash-baseline.json
+      - name: Fail closed if any of the original 50 identities still lacks real video and audio
+        run: |
+          PYTHONPATH=v2 python v2/orphan_resolution_gate.py \
+            --report v2/reports/ci/three-source-orphan-anonymous.json \
+            --output v2/reports/ci/orphan-50-resolution-anonymous.json
       - name: Upload anonymized evidence and RSA-encrypted verified plus unverified URL candidates
         if: always()
         uses: actions/upload-artifact@v4
@@ -67,6 +95,7 @@ jobs:
           name: v2-three-source-orphan-evidence-${{ github.run_id }}
           path: |
             v2/reports/ci/three-source-orphan-anonymous.json
+            v2/reports/ci/orphan-50-resolution-anonymous.json
             v2/reports/ci/three-source-av-verified.sealed
             v2/reports/ci/three-source-all-historical-candidates.sealed
             v2/reports/ci/three-source-orphan-regressions.log
