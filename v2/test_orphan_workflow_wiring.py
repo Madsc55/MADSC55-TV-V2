@@ -23,11 +23,13 @@ class OrphanWorkflowWiringTests(unittest.TestCase):
         self.assertLess(content.index("v2/github_source_discovery.py"),
                         content.index("v2/orphan_m3u_recovery.py"))
 
-    def test_read_only_one_off_trigger_and_real_av_fail_closed_gate(self):
+    def test_manual_only_read_only_and_strict_av_gate(self):
         text = WORKFLOW.read_text(encoding="utf-8")
         self.assertIn("contents: read", text)
-        self.assertIn("madsc/v2-discovery-bulk-20261031", text)
-        self.assertIn("github.event.head_commit.message", text)
+        self.assertIn("  workflow_dispatch:", text)
+        self.assertNotIn("  push:", text)
+        self.assertNotIn("  pull_request:", text)
+        self.assertNotIn("github.event.head_commit.message", text)
         self.assertIn("v2/orphan_resolution_gate.py", text)
         self.assertIn("--all-candidates-sealed", text)
         self.assertIn("v2/reports/ci/orphan-50-resolution-anonymous.json", text)
