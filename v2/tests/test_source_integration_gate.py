@@ -77,6 +77,36 @@ class IntegrationGateTests(unittest.TestCase):
         self.assertEqual(result["routing"]["youtube"],
                          "LIVE_PAGE_METADATA_ONLY_NO_DIRECT_IBO_HLS")
 
+    def test_routing_matrix_all_requested_families_still_not_playback_accepted(self):
+        result = gate.audit()
+        self.assertTrue(result["adapter_wiring_valid"])
+        self.assertTrue(result["channel_candidate_scan_present"])
+        self.assertTrue(result["external_source_coverage_complete"])
+        self.assertFalse(result["full_av_playback_accepted"])
+        self.assertEqual(len(result["source_families"]), 13)
+        for key in ("youtube_turkish_live", "scribd_slideshare_internet_archive",
+                    "azerbaijan_azerice", "europe_world_turkish",
+                    "gunes_rec_gopik", "github_gist", "gitlab_codeberg"):
+            self.assertIn(key, result["source_families"])
+        self.assertFalse(result["source_families"]["youtube_turkish_live"]["direct_ibo_hls_verified"])
+
+    def test_partial_external_source_errors_do_not_hide_valid_wiring(self):
+        github = report_fixture("github_gist")
+        github["coverage_status"] = "PARTIAL_API"
+        github["errors"] = [{"reason": "TEMPORARY_HTTP_ERROR"}]
+        self.write_report("github_gist", github)
+        result = gate.audit()
+        self.assertTrue(result["adapter_wiring_valid"])
+        self.assertFalse(result["external_source_coverage_complete"])
+        self.assertEqual(result["status"], "PARTIAL_REFERENCES_NOT_AV_VERIFIED")
+        self.assertFalse(result["full_av_playback_accepted"])
+
+    def test_missing_document_report_rejects_structural_routing(self):
+        self.reports["document_handoff"].unlink()
+        result = gate.audit()
+        self.assertFalse(result["adapter_wiring_valid"])
+        self.assertIn("INCOMPLETE_ADAPTER_HANDOFF", result["errors"])
+
     def test_real_dynamic_and_live_page_handoff_must_match_actual_scan(self):
         scan = report_fixture("channel_scan")
         scan["public_source_reference_handoff"] = {

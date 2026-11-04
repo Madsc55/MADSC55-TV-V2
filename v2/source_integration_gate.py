@@ -5,6 +5,7 @@ Static M3U feeds and separately approved dynamic M3U sources enter discover.py.
 YouTube, live HTML pages and official broadcaster websites are advisory only.
 Incomplete reports never count as a fully integrated source run.
 """
+import argparse
 import json
 from pathlib import Path
 
@@ -184,8 +185,58 @@ def audit():
               "DOCUMENT_SOURCE_HANDOFF_MISMATCH" in errors
               else "PARTIAL_REFERENCES_NOT_AV_VERIFIED" if errors
               else "INTEGRATED_REFERENCES_NOT_AV_VERIFIED")
+    # Independent measures: complete adapter wiring does not guarantee
+    # third-party availability, completed AV decoding, language or IBO playback.
+    hard_failures = {"MISSING_STATIC_SOURCES", "DUPLICATE_SOURCE_IDS",
+                     "INCOMPLETE_ADAPTER_HANDOFF", "DOCUMENT_SOURCE_HANDOFF_MISMATCH"}
+    adapter_wiring_valid = not bool(hard_failures.intersection(errors))
+    family = {
+        "turkish_m3u_m3u8": {
+            "source_configured": not bool(missing), "candidate_scan_connected": "channel_scan" in loaded,
+            "av_playback_complete": False},
+        "iptv_org_world_tr_az_and_language": {
+            "source_configured": not bool(missing), "candidate_scan_connected": "channel_scan" in loaded,
+            "spoken_language_verified": False},
+        "free_tv": {"source_configured": "free-tv-independent" in ids,
+                    "candidate_scan_connected": "channel_scan" in loaded},
+        "github_gist": {"adapter_report_valid": "github_gist" in loaded,
+                        "candidate_scan_handoff": dynamic_handoff.get("report_checked", {}).get("github_gist") is True},
+        "gitlab_codeberg": {"adapter_report_valid": "gitlab_codeberg" in loaded,
+                            "candidate_scan_handoff": dynamic_handoff.get("report_checked", {}).get("gitlab_codeberg") is True},
+        "live_tv_websites": {"adapter_report_valid": "official_live_pages" in loaded,
+                             "candidate_scan_handoff": live_handoff.get("status") not in (None, "NOT_REQUESTED")},
+        "official_broadcaster_sites": {"adapter_report_valid": "official_sites" in loaded,
+                                      "identity_review_connected": "official_site_matching" in loaded,
+                                      "av_playback_complete": False},
+        "youtube_turkish_live": {"adapter_report_valid": "youtube" in loaded,
+                                 "metadata_live_verified_count": loaded.get("youtube", {}).get("live_verified", 0),
+                                 "direct_ibo_hls_verified": False},
+        "azerbaijan_azerice": {"source_configured": not bool(missing),
+                               "spoken_language_verified": False},
+        "europe_world_turkish": {"source_configured": not bool(missing),
+                                 "diaspora_completeness_verified": False},
+        "gunes_rec_gopik": {"exact_metadata_watchlist_connected": "channel_scan" in loaded,
+                            "av_playback_complete": False},
+        "turktv_dearbulut_onureroz": {"source_configured": not bool(missing),
+                                     "candidate_scan_connected": "channel_scan" in loaded},
+        "scribd_slideshare_internet_archive": {
+            "adapter_report_valid": "document_platforms" in loaded,
+            "validated_public_m3u_sources": len(handoff.get("sources", [])) if handoff else 0,
+            "candidate_scan_connected": "channel_scan" in loaded,
+            "platforms": {
+                platform: {
+                    "queries": loaded.get("document_platforms", {}).get("platforms", {}).get(platform, {}).get("queries", 0),
+                    "sources_discovered": loaded.get("document_platforms", {}).get("platforms", {}).get(platform, {}).get("candidate_sources", 0)}
+                for platform in ("scribd", "slideshare", "internet-archive")},
+            "av_playback_complete": False},
+    }
     return {
         "schema": 2, "kind": "V2_END_TO_END_CHANNEL_SOURCE_ROUTING_AUDIT",
+        "adapter_wiring_valid": adapter_wiring_valid,
+        "external_source_coverage_complete": not bool(errors),
+        "channel_candidate_scan_present": "channel_scan" in loaded,
+        "full_av_playback_accepted": False,
+        "source_families": family,
         "status": status, "static_source_count": len(sources),
         "missing_static_sources": missing, "duplicate_source_ids": duplicates,
         "adapter_reports": reports, "anonymous_row_counts": counts,
@@ -219,7 +270,23 @@ def audit():
         "private_candidate_urls_exported": False,
     }
 
-if __name__ == "__main__":
+def main():
+    parser = argparse.ArgumentParser(description="Separate source wiring from live coverage and AV acceptance")
+    parser.add_argument("--accept-partial-routing", action="store_true",
+                        help="Exit zero for structurally connected sources while reporting partial external coverage; NEVER approve playback")
+    args = parser.parse_args()
     result = audit()
     print(json.dumps(result, ensure_ascii=False, indent=2))
-    raise SystemExit(0 if not result["errors"] else 1)
+    if not args.accept_partial_routing:
+        return 0 if not result["errors"] else 1
+    if not result["adapter_wiring_valid"]:
+        return 1
+    if not result["channel_candidate_scan_present"]:
+        return 1
+    if result["full_av_playback_accepted"] or result["av_verified"]:
+        return 1
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

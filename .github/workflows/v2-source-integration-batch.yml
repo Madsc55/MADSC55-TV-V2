@@ -145,14 +145,26 @@ jobs:
         run: |
           set -o pipefail
           mkdir -p v2/reports/ci
-          python v2/source_integration_gate.py | tee v2/reports/ci/source-integration-audit.json
+          python v2/source_integration_gate.py --accept-partial-routing | tee v2/reports/ci/source-integration-audit.json
           python - <<'PY'
           import json
           from pathlib import Path
           d = json.loads(Path("v2/reports/candidates.json").read_text())
+          a = json.loads(Path("v2/reports/ci/source-integration-audit.json").read_text())
+          assert a["adapter_wiring_valid"] is True, a["errors"]
+          assert a["channel_candidate_scan_present"] is True
+          assert a["full_av_playback_accepted"] is False
+          assert a["av_verified"] is False
+          assert a["ibo_device_verified"] is False
+          assert len(a["source_families"]) == 13
+          assert len(a["source_families"]["scribd_slideshare_internet_archive"]["platforms"]) == 3
+          print("SOURCE_ROUTING_WIRED", True)
+          print("EXTERNAL_SOURCE_COVERAGE_COMPLETE", a["external_source_coverage_complete"])
+          print("DEGRADED_FAMILIES", a["degraded_source_families"])
           print("CHANNEL_SCAN_SOURCE_COUNT", d.get("source_count"))
           print("CHANNEL_SCAN_CANDIDATES", d.get("total_unique_candidates"))
           print("CHANNEL_SCAN_COVERAGE", d.get("coverage_status"))
+          print("AV_PLAYBACK_VERIFIED", False)
           print("DEVICE_PLAYBACK_VERIFIED", False)
           PY
       - name: Upload anonymous audit only, never plaintext discovered source URLs
