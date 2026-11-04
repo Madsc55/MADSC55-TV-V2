@@ -35,7 +35,11 @@ def api(url):
             return super().redirect_request(request, fp, code, msg, headers, newurl)
     headers = {"User-Agent": "MADSC55-TV-V2-Discovery/1.0", "Accept": "application/vnd.github+json"}
     token = os.getenv("GITHUB_TOKEN")
-    if token:
+    # GitHub Actions' installation token can receive 403 for public Gists.
+    # Public user Gists can be read anonymously; never send an app token
+    # there, and still report any anonymous HTTP/rate-limit failure.
+    public_gist_read = bool(re.fullmatch(r"/users/[A-Za-z0-9_.-]+/gists", parsed.path))
+    if token and not public_gist_read:
         headers["Authorization"] = "Bearer " + token
     opener = urllib.request.build_opener(SafeRedirect())
     request = urllib.request.Request(url, headers=headers)
