@@ -9,6 +9,7 @@ from unittest.mock import patch
 
 from orphan_m3u_recovery import (
     parse_exact_pairs, find_historical, find_official_alternates, evaluate, audit,
+    restore_exact_original_metadata_from_official_alternates,
     exact_channel_identity, find_existing_exact_identity,
 )
 
@@ -122,6 +123,46 @@ class OrphanRecoveryTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "outside pinned"):
             find_historical([], "somewhere/unknown", "other.m3u",
                             commits=lambda *a, **k: [])
+
+    def test_unavailable_publisher_can_only_restore_exact_metadata_from_official_source(self):
+        original_a = '#EXTINF:-1 tvg-id="One.tr",One'
+        original_b = '#EXTINF:-1 tvg-id="Two.tr",Two'
+        other = '#EXTINF:-1 tvg-id="Two.tr",Two 2'
+        baseline = {"sources": {"onureroz-turk-all": [
+            hashlib.sha256(original_a.encode()).hexdigest(),
+            hashlib.sha256(original_b.encode()).hexdigest(),
+        ]}}
+        checked = []
+        def read(url):
+            checked.append(url)
+            if url.endswith("all.m3u"):
+                raise ValueError("Not an M3U document")
+            return ("#EXTM3U\n" + original_a + "\n" + self.a + "\n"
+                    + original_b + "\n" + self.b + "\n"
+                    + other + "\n" + self.a + "\n")
+        restored = restore_exact_original_metadata_from_official_alternates(
+            "onureroz-turk-all", baseline, reader=read)
+        paired, orphans = parse_exact_pairs(restored)
+        self.assertEqual(paired, {})
+        self.assertEqual({r["extinf_sha256"] for r in orphans},
+                         set(baseline["sources"]["onureroz-turk-all"]))
+        self.assertEqual(len(orphans), 2)
+        self.assertNotIn(self.a, restored)
+        self.assertNotIn(self.b, restored)
+        self.assertTrue(checked)
+
+    def test_unavailable_publisher_missing_one_exact_hash_hard_fails(self):
+        original = '#EXTINF:-1 tvg-id="One.tr",One'
+        absent = '#EXTINF:-1 tvg-id="Two.tr",Two'
+        baseline = {"sources": {"onureroz-turk-karma": [
+            hashlib.sha256(original.encode()).hexdigest(),
+            hashlib.sha256(absent.encode()).hexdigest(),
+        ]}}
+        def read(url):
+            return "#EXTM3U\n" + original + "\n" + self.a + "\n"
+        with self.assertRaisesRegex(ValueError, "EXACT_METADATA_NOT_RECOVERED"):
+            restore_exact_original_metadata_from_official_alternates(
+                "onureroz-turk-karma", baseline, reader=read)
 
     def test_partial_onur_official_alternates_do_not_claim_full_recovery(self):
         missing = [{"extinf": self.onur}]

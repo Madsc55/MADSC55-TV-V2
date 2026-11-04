@@ -270,6 +270,37 @@ def exact_channel_identity(extinf):
     return (m.group(1).strip().casefold(), " ".join(name.casefold().split()))
 
 
+
+def restore_exact_original_metadata_from_official_alternates(
+        source_id, baseline, *, reader):
+    """Rebuild only published, exact SHA-256 EXTINF metadata when an original
+    publisher feed is unavailable. NEVER reconstruct a URL or assert that the
+    original upstream URI is active. The actual alternate URLs are separately
+    collected and FFprobed via find_official_alternates.
+    """
+    expected = set(baseline["sources"][source_id])
+    observed = {}
+    for official_url in ONUR_ALTERNATES:
+        try:
+            document = reader(official_url)
+        except (OSError, TypeError, ValueError):
+            continue
+        for raw in document.splitlines():
+            extinf = raw.strip()
+            if not extinf.startswith("#EXTINF:"):
+                continue
+            digest = _hash(extinf)
+            if digest in expected:
+                observed.setdefault(digest, extinf)
+    missing = expected - set(observed)
+    if missing:
+        raise ValueError(
+            "ORIGINAL_PUBLISHER_M3U_UNAVAILABLE_AND_EXACT_METADATA_NOT_RECOVERED:"
+            + source_id + ":" + str(len(missing)))
+    # These bare EXTINF lines are real publisher metadata, not invented
+    # addresses; the subsequent candidate search must retrieve real URLs.
+    return "#EXTM3U\n" + "\n".join(observed[h] for h in sorted(expected)) + "\n"
+
 def existing_source_catalog():
     """The immutable 63 known sources plus vetted public-document M3U sources.
 
@@ -527,7 +558,12 @@ def audit(*, report_path, sealed_path, key_path, limit=20,
         if (Path(all_candidates_sealed_path).exists() or
                 Path(all_candidates_sealed_path).is_symlink()):
             raise ValueError("Refusing overwrite of sealed candidate archive")
+    immutable = None
+    if immutable_orphan_baseline_path is not None:
+        from orphan_baseline_guard import load_immutable_baseline
+        immutable = load_immutable_baseline(immutable_orphan_baseline_path)
     source_documents = {}
+    official_metadata_fallback_ids = []
     sources = []
     source_summaries = []
     source_evidence = []
@@ -554,15 +590,45 @@ def audit(*, report_path, sealed_path, key_path, limit=20,
                             "line_number": item["line_number"],
                             "uri_structure": item["uri_structure"],
                             "candidates": candidates})
+    # Reuse each publisher document once: repeated rapid requests can trigger
+    # temporary HTML/error responses instead of the published M3U. No retry
+    # storms, no synthetic metadata and no unsafe host fallbacks.
+    onur_cache = {}
+    def onur_reader(url):
+        if url in onur_cache:
+            if onur_cache[url] is None:
+                raise ValueError("Publisher document unavailable in this run")
+            return onur_cache[url]
+        try:
+            result = reader(url)
+            if not result.lstrip("\ufeff\r\n\t ").startswith(("#EXTM3U", "#EXTINF:")):
+                raise ValueError("Not an M3U document")
+            onur_cache[url] = result
+            return result
+        except (OSError, TypeError, ValueError):
+            onur_cache[url] = None
+            raise
+
     for ident, source_url in ONUR_SOURCES:
-        current = reader(source_url)
+        original_current_available = True
+        try:
+            current = onur_reader(source_url)
+        except (OSError, TypeError, ValueError):
+            if immutable is None:
+                raise
+            current = restore_exact_original_metadata_from_official_alternates(
+                ident, immutable, reader=onur_reader)
+            official_metadata_fallback_ids.append(ident)
+            original_current_available = False
         source_documents[ident] = current
         _, orphans = parse_exact_pairs(current)
         orphans = [o for o in orphans
                    if o["reason"] != "EXPLICIT_NO_PUBLIC_STREAM_PLACEHOLDER"]
-        alts, alt_status = find_official_alternates(orphans, reader=reader)
+        alts, alt_status = find_official_alternates(orphans, reader=onur_reader)
         source_summaries.append({
             "source_id": ident, "orphan_count": len(orphans),
+            "original_source_current_document_available": original_current_available,
+            "exact_official_metadata_fallback_only": not original_current_available,
             "excluded_nonpublic_http_references":
                 count_excluded_network_references(current),
             "original_document_sha256": _hash(current), **alt_status})
@@ -576,9 +642,7 @@ def audit(*, report_path, sealed_path, key_path, limit=20,
     identity_guard = None
     fixed_current_originals = []
     if immutable_orphan_baseline_path is not None:
-        from orphan_baseline_guard import (load_immutable_baseline,
-                                           reconcile_immutable_sources)
-        immutable = load_immutable_baseline(immutable_orphan_baseline_path)
+        from orphan_baseline_guard import reconcile_immutable_sources
         identity_guard = reconcile_immutable_sources(immutable, source_documents)
         fixed_current_originals = candidate_repairs_from_current_verified_sources(
             immutable, source_documents)
@@ -664,6 +728,9 @@ def audit(*, report_path, sealed_path, key_path, limit=20,
         "status": "SOURCE_REPAIR_CANDIDATES_VERIFIED" if verified_rows
                   else "NO_CURRENT_AV_VERIFIED_REPLACEMENTS",
         "upstream_sources": source_summaries,
+        "unavailable_original_publisher_documents_restored_as_exact_metadata_only":
+            sorted(official_metadata_fallback_ids),
+        "original_publisher_media_streams_inferred_from_metadata": False,
         "currently_unpaired_source_occurrences": orphan_occurrences_before_repairs,
         "restored_current_upstream_uri_occurrences": len(fixed_current_originals),
         "orphan_entries": len(sources),
