@@ -14,7 +14,7 @@ import urllib.request
 API_HOST = "www.googleapis.com"
 BASE = "https://" + API_HOST + "/youtube/v3/videos"
 MAX_BATCH = 50
-ID_RE = re.compile(r"[A-Za-z0-9_-]{11}\\Z")
+ID_RE = re.compile(r"[A-Za-z0-9_-]{11}\Z")
 
 
 def _official_request(url):
