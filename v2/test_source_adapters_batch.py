@@ -252,5 +252,53 @@ class SourceAdapterIntegrationBatch(unittest.TestCase):
         self.assertEqual(result["anonymous_error_summary"], {"gitlab:HTTP_404": 1})
         self.assertEqual(result["gitlab_confirmed_empty_projects_skipped"], 0)
 
+
+    def test_gitlab_public_path_recovers_reindexed_project(self):
+        from urllib.error import HTTPError
+        calls = []
+        def request(url):
+            calls.append(url)
+            if "gitlab.com/api/v4/projects?" in url:
+                return [{"id": 42, "default_branch": "old",
+                         "path_with_namespace": "public-group/iptv-list"}]
+            if "codeberg.org/api/v1/repos/search?" in url:
+                return {"data": []}
+            if "/projects/42/repository/tree?" in url:
+                raise HTTPError(url, 404, "stale index", {}, None)
+            if url.endswith("/api/v4/projects/42"):
+                raise HTTPError(url, 404, "old id missing", {}, None)
+            if url.endswith("/api/v4/projects/public-group%2Fiptv-list"):
+                return {"id": 99, "default_branch": "main",
+                        "path_with_namespace": "public-group/iptv-list"}
+            if "/projects/99/repository/tree?" in url:
+                return [{"type": "blob", "path": "tr.m3u"}]
+            raise AssertionError(url)
+        result = forge.scan(request, terms=("iptv",))
+        self.assertEqual(result["errors"], [])
+        self.assertEqual(result["source_count"], 1)
+        self.assertEqual(result["gitlab_relocated_projects_recovered"], 1)
+        self.assertTrue(any("/projects/99/repository/files/tr.m3u/raw?" in x["source_url"]
+                            for x in result["sources"]))
+        self.assertFalse(result["playback_verified"])
+
+    def test_gitlab_public_path_mismatch_remains_error(self):
+        from urllib.error import HTTPError
+        def request(url):
+            if "gitlab.com/api/v4/projects?" in url:
+                return [{"id": 42, "default_branch": "main",
+                         "path_with_namespace": "public-group/iptv-list"}]
+            if "codeberg.org/api/v1/repos/search?" in url:
+                return {"data": []}
+            if "/projects/42/repository/tree?" in url or url.endswith("/api/v4/projects/42"):
+                raise HTTPError(url, 404, "gone", {}, None)
+            if url.endswith("/api/v4/projects/public-group%2Fiptv-list"):
+                return {"id": 99, "default_branch": "main",
+                        "path_with_namespace": "different-owner/iptv-list"}
+            raise AssertionError(url)
+        result = forge.scan(request, terms=("iptv",))
+        self.assertEqual(result["source_count"], 0)
+        self.assertEqual(result["anonymous_error_summary"], {"gitlab:ValueError": 1})
+        self.assertEqual(result["coverage_status"], "PARTIAL_API_ERRORS")
+
 if __name__ == "__main__":
     unittest.main()

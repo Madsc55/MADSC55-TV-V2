@@ -66,6 +66,7 @@ def scan(request=None, terms=None):
         terms = TERMS
     found, errors, seen, limits_hit, found_urls = [], [], set(), set(), set()
     confirmed_empty_projects, stale_branches_refreshed = set(), 0
+    relocated_projects_recovered = 0
     for term in dict.fromkeys(terms):
         queries = [
             ("gitlab", GITLAB_API + "?" + urlencode({"search": term, "simple": "true", "per_page": 12})),
@@ -121,22 +122,44 @@ def scan(request=None, terms=None):
                         # *exact* publicly indexed project ID before treating
                         # the 404 as a lost source; never suppress an unknown
                         # 404 or try an unauthorised project.
-                        detail = request(GITLAB_API + "/" + str(project["id"]))
-                        if (not isinstance(detail, dict)
-                                or detail.get("id") != project["id"]):
+                        previous_id, previous_branch = project["id"], project["branch"]
+                        from_verified_path = False
+                        try:
+                            detail = request(GITLAB_API + "/" + str(previous_id))
+                        except urllib.error.HTTPError as detail_error:
+                            original_path = project.get("path_with_namespace")
+                            if detail_error.code != 404 or not original_path:
+                                raise
+                            # Recover only via the exact public path supplied
+                            # by the original GitLab search metadata.
+                            detail = request(GITLAB_API + "/" + quote(original_path, safe=""))
+                            from_verified_path = True
+                        if not isinstance(detail, dict):
                             raise ValueError("Malformed GitLab project refresh")
+                        refreshed_id = detail.get("id")
+                        if not isinstance(refreshed_id, int) or refreshed_id <= 0:
+                            raise ValueError("Invalid refreshed GitLab project ID")
+                        if (from_verified_path and
+                                detail.get("path_with_namespace") != project["path_with_namespace"]):
+                            raise ValueError("GitLab project path changed unexpectedly")
+                        if not from_verified_path and refreshed_id != previous_id:
+                            raise ValueError("GitLab project ID mismatch")
                         if detail.get("empty_repo") is True:
-                            confirmed_empty_projects.add(project["id"])
+                            confirmed_empty_projects.add(previous_id)
                             continue
                         branch = detail.get("default_branch")
-                        if not isinstance(branch, str) or not branch or branch == project["branch"]:
+                        if (not isinstance(branch, str) or not branch or
+                                (branch == previous_branch and refreshed_id == previous_id)):
                             raise
-                        project = dict(project, branch=branch)
+                        project = dict(project, id=refreshed_id, branch=branch)
                         tree = (GITLAB_API + "/" + str(project["id"]) + "/repository/tree?"
                                 + urlencode({"ref": project["branch"], "recursive": "true",
                                              "per_page": 100, "pagination": "keyset"}))
                         listing = request(tree)
-                        stale_branches_refreshed += 1
+                        if branch != previous_branch:
+                            stale_branches_refreshed += 1
+                        if refreshed_id != previous_id:
+                            relocated_projects_recovered += 1
                     if forge == "gitlab":
                         if not isinstance(listing, list):
                             raise ValueError("Invalid GitLab repository tree")
@@ -187,7 +210,8 @@ def scan(request=None, terms=None):
             "errors": errors, "anonymous_error_summary": error_summary(errors),
             "projects_examined": len(seen),
             "gitlab_confirmed_empty_projects_skipped": len(confirmed_empty_projects),
-            "gitlab_stale_branch_recoveries": stale_branches_refreshed}
+            "gitlab_stale_branch_recoveries": stale_branches_refreshed,
+            "gitlab_relocated_projects_recovered": relocated_projects_recovered}
 
 def main():
     parser = argparse.ArgumentParser()

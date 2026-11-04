@@ -44,8 +44,10 @@ def fetch_page(url):
         raise ValueError("Only approved public HTTPS page URLs are allowed")
     class SafeRedirect(urllib.request.HTTPRedirectHandler):
         def redirect_request(self, request, fp, code, msg, headers, newurl):
+            if not approved_page(newurl):
+                raise ValueError("Unsafe live page redirect: INVALID_TARGET")
             if not safe_page_redirect(url, newurl):
-                raise ValueError("Unsafe live page redirect")
+                raise ValueError("Unsafe live page redirect: CROSS_HOST")
             return super().redirect_request(request, fp, code, msg, headers, newurl)
     opener = urllib.request.build_opener(SafeRedirect())
     request = urllib.request.Request(url, headers={"User-Agent": "MADSC55-TV-V2-LiveReference/1.0"})
@@ -72,7 +74,15 @@ def fetch_page(url):
     return content.decode("utf-8", errors="replace")
 
 def error_kind(exc):
-    return ("HTTP_" + str(exc.code)) if isinstance(exc, urllib.error.HTTPError) else type(exc).__name__
+    if isinstance(exc, urllib.error.HTTPError):
+        return "HTTP_" + str(exc.code)
+    if isinstance(exc, ValueError):
+        # Categorize our own security decisions without publishing the
+        # redirected destination, query parameters, or a token-bearing URL.
+        code = str(exc).removeprefix("Unsafe live page redirect: ")
+        if code in ("INVALID_TARGET", "CROSS_HOST"):
+            return "REDIRECT_" + code
+    return type(exc).__name__
 
 
 def scan(pages, fetcher=fetch_page):

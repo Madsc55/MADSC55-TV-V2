@@ -132,5 +132,17 @@ class SourceResilienceBatch(unittest.TestCase):
                 live.fetch_page("https://example.org/")
         self.assertEqual(unsafe.calls, 1)
 
+
+    def test_live_redirect_diagnostics_do_not_leak_destinations(self):
+        from run_live_page_discovery import error_kind
+        self.assertEqual(
+            error_kind(ValueError("Unsafe live page redirect: CROSS_HOST")),
+            "REDIRECT_CROSS_HOST")
+        self.assertEqual(
+            error_kind(ValueError("Unsafe live page redirect: INVALID_TARGET")),
+            "REDIRECT_INVALID_TARGET")
+        self.assertEqual(error_kind(ValueError("Sensitive link: secret")), "ValueError")
+        self.assertNotIn("secret", error_kind(ValueError("Sensitive link: secret")))
+
 if __name__ == "__main__":
     unittest.main()

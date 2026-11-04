@@ -5,6 +5,7 @@ No credentials. Output only candidate public HTTPS playlist source URLs.
 No channel URL playback, no private repository access, no playlist writes.
 """
 import json
+import re
 from urllib.parse import quote, urlsplit
 from webpage_source_discovery import candidate_url
 
@@ -30,7 +31,16 @@ def gitlab_projects(payload):
         project_id = item.get("id")
         branch = item.get("default_branch")
         if isinstance(project_id, int) and project_id > 0 and isinstance(branch, str) and branch:
-            result.append({"forge": "gitlab", "id": project_id, "branch": branch})
+            project = {"forge": "gitlab", "id": project_id, "branch": branch}
+            # A public project's canonical path can recover a moved/reindexed
+            # GitLab search ID. Require known-safe slug segments, and allow
+            # no arbitrary hostname or query input from search metadata.
+            name = item.get("path_with_namespace")
+            if (isinstance(name, str) and
+                    re.fullmatch(r"[A-Za-z0-9_.-]+(?:/[A-Za-z0-9_.-]+){1,6}", name) and
+                    all(piece not in (".", "..") for piece in name.split("/"))):
+                project["path_with_namespace"] = name
+            result.append(project)
     return result
 
 def codeberg_projects(payload):
