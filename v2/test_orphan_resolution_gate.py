@@ -1,7 +1,12 @@
 #!/usr/bin/env python3
 """Single offline regression for immutable orphan resolution accounting."""
 import unittest
-from orphan_resolution_gate import classify_report
+import json
+import sys
+import tempfile
+from pathlib import Path
+from unittest.mock import patch
+from orphan_resolution_gate import classify_report, main
 
 
 def fixture():
@@ -54,6 +59,25 @@ class OrphanResolutionGateTests(unittest.TestCase):
         self.assertTrue(all(all(len(x) == 64 for x in row["candidate_url_sha256"])
                             for entries in queues.values() for row in entries))
 
+
+    def test_report_only_records_missing_av_but_default_still_fails(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            inp = root / "input.json"
+            inp.write_text(json.dumps(fixture()), encoding="utf-8")
+            out1, out2 = root / "report_only.json", root / "strict.json"
+            with patch.object(sys, "argv", ["gate", "--report", str(inp),
+                                           "--output", str(out1), "--report-only"]):
+                main()
+            saved = json.loads(out1.read_text(encoding="utf-8"))
+            self.assertEqual(saved["status"], "RECOVERY_INCOMPLETE_REAL_AV_REQUIRED")
+            self.assertEqual(saved["remaining_unverified_identities"], 45)
+            self.assertEqual(len(saved["hash_only_identity_work_queues"]["without_valid_candidate"]), 13)
+            with patch.object(sys, "argv", ["gate", "--report", str(inp),
+                                           "--output", str(out2)]):
+                with self.assertRaisesRegex(SystemExit, "RECOVERY_INCOMPLETE"):
+                    main()
+            self.assertEqual(json.loads(out2.read_text())["remaining_unverified_identities"], 45)
 
     def test_missing_original_identity_is_hard_error(self):
         r = fixture()

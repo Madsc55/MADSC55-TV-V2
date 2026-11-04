@@ -240,9 +240,16 @@ jobs:
         run: |
           PYTHONPATH=v2 python - <<'PY'
           import github_source_discovery as source
-          source.QUERIES = ["turkish iptv m3u", "azerbaijan iptv m3u", "tr iptv playlist"]
-          source.MAX_REPOS = 45
-          source.MAX_FILES = 60
+          # Wider official/public discovery for 13 source-less identities;
+          # exact EXTINF or exact EPG+name matches remain mandatory.
+          source.QUERIES = [
+              "turkish iptv m3u", "azerbaijan iptv m3u", "tr iptv playlist",
+              "turkiye m3u", "turkish channels iptv", "turkish tv playlist",
+              "azerbaycan tv m3u", "turk azeri iptv", "free turkish tv m3u",
+              "turkish diaspora iptv", "german tv m3u", "worldwide iptv m3u",
+          ]
+          source.MAX_REPOS = 120
+          source.MAX_FILES = 120
           source.main()
           PY
           PYTHONPATH=v2 python v2/run_forge_source_discovery.py --scan-public-forges
@@ -283,8 +290,9 @@ jobs:
         run: |
           PYTHONPATH=v2 python v2/orphan_resolution_gate.py \
             --report v2/reports/ci/orphan-46-exact-recovery-anonymous.json \
-            --output v2/reports/ci/orphan-50-resolution-anonymous.json
-      - name: Fail closed if any of the 46 still lacks video and audio proof
+            --output v2/reports/ci/orphan-50-resolution-anonymous.json \
+            --report-only
+      - name: Final strict AV acceptance only after all 50 identity diagnostics are archived
         shell: bash
         run: |
           PYTHONPATH=v2 python - <<'PY'

@@ -108,6 +108,8 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--report", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--report-only", action="store_true",
+                        help="Write complete anonymous resolution diagnostics; final CI acceptance still fails on missing AV")
     args = parser.parse_args()
     if args.output.exists() or args.output.is_symlink():
         parser.error("Refusing to overwrite previous resolution evidence")
@@ -119,7 +121,7 @@ def main():
           "CANDIDATE_UNVERIFIED", result["candidate_present_av_unverified_identities"],
           "NO_CANDIDATE", result["no_valid_candidate_identities"],
           "UNRESOLVED", result["remaining_unverified_identities"])
-    if result["remaining_unverified_identities"]:
+    if result["remaining_unverified_identities"] and not args.report_only:
         raise SystemExit("RECOVERY_INCOMPLETE_REAL_AV_REQUIRED")
 
 
