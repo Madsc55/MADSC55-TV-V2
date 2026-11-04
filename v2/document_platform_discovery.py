@@ -49,6 +49,7 @@ PUBLIC_DOCUMENT_PAGES = {
 REVIEWED_PUBLIC_DOCUMENT_PLAYLISTS = {
  "https://www.slideshare.net/slideshow/iptv-githubpdf/258657900": (
   "https://iptv-org.github.io/iptv/languages/tur.m3u",
+  "https://iptv-org.github.io/iptv/languages/aze.m3u",
  ),
 }
 ARCHIVE_SEARCH="https://archive.org/advancedsearch.php?"+urlencode({
@@ -331,6 +332,48 @@ def accepted_sources(path=SOURCES):
                  "origin":"public-document-reference"})
  return result
 
+def reviewed_document_source_rows(reviewed_references=None):
+ """Known public slide citations are checked as files, never imported twice.
+
+ This is a citation ledger, not a claim that the HTML fetch contained the
+ URL, and not a playback acceptance gate.
+ """
+ reviewed=REVIEWED_PUBLIC_DOCUMENT_PLAYLISTS if reviewed_references is None else reviewed_references
+ provenance={}
+ for page,urls in reviewed.items():
+  if not allowed_page(page):
+   raise ValueError("Invalid public citation document")
+  for url in urls:
+   if not source_url(url):
+    raise ValueError("Unsafe reviewed citation URL")
+   provenance.setdefault(url,set()).add(page)
+ return [
+  {"id":"docref-"+digest(url)[:20], "kind":"m3u",
+   "scope":"candidate","url":url,"url_sha256":digest(url),
+   "platforms":["slideshare"],"playback_verified":False}
+  for url in sorted(provenance)
+ ]
+
+
+def reviewed_reference_evidence(configured_urls, fetcher=None, resolver=None,
+                                reviewed_references=None):
+ """Live-read every reviewed M3U citation and clearly mark old-source overlap."""
+ sources=reviewed_document_source_rows(reviewed_references)
+ verified,checks=verify_sources(sources,fetcher=fetcher,resolver=resolver)
+ return {
+  "reviewed_reference_count":len(sources),
+  "m3u_content_validated":len(verified),
+  "validated_existing_configured_references":
+      sum(row["url"] in configured_urls for row in verified),
+  "validated_not_configured_references":
+      sum(row["url"] not in configured_urls for row in verified),
+  "verification":checks,
+  "verified_video_audio":False,
+  "ibo_device_verified":False,
+  "referenced_document_provenance_only":True,
+ }
+
+
 def source_accounting(accepted, configured_urls, reviewed_references=None):
  """Separate verified public M3U files from duplicate known source citations."""
  if not isinstance(configured_urls, set) or not isinstance(accepted, list):
@@ -362,6 +405,10 @@ def main():
  config=json.loads((ROOT/"config/sources.json").read_text(encoding="utf-8"))
  configured={x["url"] for x in config["sources"]}
  report["reference_accounting"]=source_accounting(sources,configured)
+ # Verify the actual public M3U files named in manually reviewed SlideShare
+ # captions, even when the site HTML fails to expose the slides' text.
+ # No citations are silently imported into a protected playlist.
+ report["reviewed_public_reference_evidence"]=reviewed_reference_evidence(configured)
  for provider in ("scribd","slideshare"):
   entry=report["platforms"][provider]
   entry["public_extraction_status"]=(
@@ -379,6 +426,7 @@ def main():
   "validated_m3u_sources:",len(sources),"raw_channel_entries:",
   report["validated_m3u_source_channel_entries"],
   "coverage:",report["coverage_status"],
-  "reference_accounting:",report["reference_accounting"])
+  "reference_accounting:",report["reference_accounting"],
+  "reviewed_reference_verified:",report["reviewed_public_reference_evidence"]["m3u_content_validated"])
 
 if __name__=="__main__":main()

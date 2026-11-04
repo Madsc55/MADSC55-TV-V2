@@ -121,6 +121,49 @@ class PlatformVerificationTests(unittest.TestCase):
         self.assertEqual((rows,state), ([], "API_SEARCH_HTTP_403"))
         self.assertNotIn("fake-secret", str((rows,state)))
 
+    def test_reviewed_slideshare_tr_az_sources_live_read_without_duplicate_import(self):
+        from document_platform_discovery import (
+            reviewed_document_source_rows, reviewed_reference_evidence)
+        rows=reviewed_document_source_rows()
+        self.assertEqual(len(rows),2)
+        self.assertEqual({x["url"].split("/")[-1] for x in rows},
+                         {"tur.m3u","aze.m3u"})
+        self.assertTrue(all(x["playback_verified"] is False for x in rows))
+        configured={x["url"] for x in rows}
+        calls=[]
+        def fetch(url):
+            calls.append(url)
+            if url.endswith("tur.m3u"):
+                return '#EXTM3U\n#EXTINF:-1,TRT 1\nhttps://example.org/tr.m3u8\n'
+            return 'Not an M3U playlist'
+        report=reviewed_reference_evidence(configured,fetcher=fetch,
+                                           resolver=lambda url:True)
+        self.assertEqual(len(calls),2)
+        self.assertEqual(report["reviewed_reference_count"],2)
+        self.assertEqual(report["m3u_content_validated"],1)
+        self.assertEqual(report["validated_existing_configured_references"],1)
+        self.assertEqual(report["validated_not_configured_references"],0)
+        self.assertTrue(report["referenced_document_provenance_only"])
+        self.assertFalse(report["verified_video_audio"])
+        self.assertFalse(report["ibo_device_verified"])
+        self.assertNotIn("https://",str(report))
+        self.assertEqual({r["status"] for r in report["verification"]},
+                         {"M3U_CHANNEL_ENTRIES","SOURCE_READ_OR_PARSE_FAILED_ValueError"})
+
+    def test_reviewed_slideshare_valid_source_not_preapproved_as_video(self):
+        from document_platform_discovery import reviewed_reference_evidence
+        ref={
+          "https://www.slideshare.net/slideshow/iptv-githubpdf/258657900":
+            ("https://example.org/public.m3u",)}
+        report=reviewed_reference_evidence(
+            set(),
+            fetcher=lambda url:'#EXTM3U\n#EXTINF:-1,Demo\nhttps://example.org/play.m3u8\n',
+            resolver=lambda url:True,
+            reviewed_references=ref)
+        self.assertEqual(report["m3u_content_validated"],1)
+        self.assertEqual(report["validated_not_configured_references"],1)
+        self.assertFalse(report["verified_video_audio"])
+
     def test_more_public_scribd_documents_do_not_infer_streams(self):
         self.assertEqual(len(PUBLIC_DOCUMENT_PAGES["scribd"]),4)
         target="https://www.scribd.com/document/758425845/iptv"
@@ -175,9 +218,9 @@ class PlatformVerificationTests(unittest.TestCase):
         result=source_accounting([{"url":known},{"url":novel}],{known})
         self.assertEqual(result["validated_existing_sources"],1)
         self.assertEqual(result["validated_novel_sources"],1)
-        self.assertEqual(result["reviewed_document_references"],1)
+        self.assertEqual(result["reviewed_document_references"],2)
         self.assertEqual(result["reviewed_document_references_already_configured"],1)
-        self.assertEqual(result["reviewed_document_references_unconfigured"],0)
+        self.assertEqual(result["reviewed_document_references_unconfigured"],1)
         self.assertTrue(result["reviewed_references_are_not_playback_evidence"])
 
     def test_official_api_live_requires_active_start_and_no_end(self):

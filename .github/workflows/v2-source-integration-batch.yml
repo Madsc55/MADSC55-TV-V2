@@ -225,7 +225,7 @@ jobs:
       github.event_name == 'push' &&
       github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
       github.repository == 'Madsc55/MADSC55-TV-V2' &&
-      github.event.head_commit.message == 'fix(v2): verify public document descriptions and live status consistency'
+      github.event.head_commit.message == 'fix(v2): verify reviewed SlideShare TR and AZ M3U citations'
     needs: offline-source-safety
     runs-on: ubuntu-24.04
     timeout-minutes: 40
@@ -265,6 +265,9 @@ jobs:
           assert set(("scribd","slideshare","internet-archive")) <= set(d["platforms"])
           assert d["validated_m3u_source_count"]<=d["source_candidates"]
           assert d["reference_accounting"]["reviewed_references_are_not_playback_evidence"] is True
+          assert d["reviewed_public_reference_evidence"]["reviewed_reference_count"] == 2
+          assert d["reviewed_public_reference_evidence"]["verified_video_audio"] is False
+          assert d["reviewed_public_reference_evidence"]["ibo_device_verified"] is False
           platform={x:{
             "public_queries":d["platforms"][x]["queries"],
             "documents_checked":d["platforms"][x]["documents_checked"],
@@ -287,6 +290,7 @@ jobs:
             "document_m3u_source_candidates":d["source_candidates"],
             "document_m3u_sources_parsed":d["validated_m3u_source_count"],
             "document_reference_accounting":d["reference_accounting"],
+            "reviewed_slideshare_source_validation":d["reviewed_public_reference_evidence"],
             "av_verified":False,
             "ibo_device_verified":False,
             "playlist_modified":False
