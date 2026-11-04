@@ -72,7 +72,8 @@ class TargetedGitHubCodeDiscoveryTests(unittest.TestCase):
             orphans + [orphans[0]], set(), fetcher=fake, pause=waits.append)
         self.assertEqual(refs, [])
         self.assertEqual(len(seen), 13)
-        self.assertEqual(waits, [65])
+        self.assertEqual(waits.count(8), 12)
+        self.assertEqual(waits.count(65), 1)
         self.assertEqual(stats["distinct_orphan_identities_supplied"], 13)
         self.assertEqual(stats["queries_attempted"], 13)
 

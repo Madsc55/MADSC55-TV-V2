@@ -169,6 +169,7 @@ def find_historical(orphan_rows, repo, path, *, limit=20,
     wanted = {o["extinf"] for o in orphan_rows}
     by_identity = defaultdict(set)
     by_logo_group = defaultdict(set)
+    by_reviewed_alias = defaultdict(set)
     for extinf in wanted:
         identity = exact_channel_identity(extinf)
         if identity is not None:
@@ -176,6 +177,9 @@ def find_historical(orphan_rows, repo, path, *, limit=20,
         strict = exact_no_epg_logo_group_name(extinf)
         if strict is not None:
             by_logo_group[strict].add(extinf)
+        alias = reviewed_hanoicab3_identity(extinf)
+        if alias is not None:
+            by_reviewed_alias[alias].add(extinf)
 
     matches = defaultdict(dict)
     files_read = 0
@@ -210,6 +214,10 @@ def find_historical(orphan_rows, repo, path, *, limit=20,
                 if logo_identity is not None:
                     for current_extinf in by_logo_group.get(logo_identity, ()):
                         destinations.setdefault(current_extinf, "EXACT_NO_EPG_LOGO_GROUP_NAME")
+                reviewed = reviewed_hanoicab3_identity(historical_extinf)
+                if reviewed is not None:
+                    for current_extinf in by_reviewed_alias.get(reviewed, ()):
+                        destinations.setdefault(current_extinf, "REVIEWED_ANTG_NAME_ALIAS")
                 for target_extinf, rule in destinations.items():
                     for stream in streams:
                         h = _hash(stream)
@@ -231,6 +239,7 @@ def find_official_alternates(orphan_rows, *, reader=_read_document):
     wanted = {row["extinf"] for row in orphan_rows}
     identities = defaultdict(set)
     by_logo_group = defaultdict(set)
+    by_reviewed_alias = defaultdict(set)
     for extinf in wanted:
         identity = exact_channel_identity(extinf)
         if identity is not None:
@@ -238,6 +247,9 @@ def find_official_alternates(orphan_rows, *, reader=_read_document):
         strict = exact_no_epg_logo_group_name(extinf)
         if strict is not None:
             by_logo_group[strict].add(extinf)
+        alias = reviewed_hanoicab3_identity(extinf)
+        if alias is not None:
+            by_reviewed_alias[alias].add(extinf)
     matches = defaultdict(dict)
     states = []
     for source in ONUR_ALTERNATES:
@@ -251,6 +263,10 @@ def find_official_alternates(orphan_rows, *, reader=_read_document):
                 if logo_identity is not None:
                     for dst in by_logo_group.get(logo_identity, ()):
                         destinations.setdefault(dst, "EXACT_NO_EPG_LOGO_GROUP_NAME_OFFICIAL_ALTERNATE")
+                reviewed = reviewed_hanoicab3_identity(extinf)
+                if reviewed is not None:
+                    for dst in by_reviewed_alias.get(reviewed, ()):
+                        destinations.setdefault(dst, "REVIEWED_ANTG_NAME_ALIAS_OFFICIAL_ALTERNATE")
                 for dst, rule in destinations.items():
                     for url in urls:
                         proof = matches[dst].setdefault(
@@ -286,6 +302,22 @@ def exact_channel_identity(extinf):
     return (m.group(1).strip().casefold(), " ".join(name.casefold().split()))
 
 
+
+
+
+def reviewed_hanoicab3_identity(extinf):
+    """Explicit Hanoicab 3 / An Ninh The Gioi alias with the SAME EPG ID.
+
+    This independently documented historical channel name is NOT a fuzzy
+    string rule. Only these two exact spellings and 'antg' are accepted;
+    a resulting URL still has no playback evidence until FFprobe checks it.
+    """
+    ident = exact_channel_identity(extinf)
+    if ident is None or ident[0] != "antg":
+        return None
+    if ident[1] not in ("hanoicab 3 | an ninh thế giới", "an ninh thế giới"):
+        return None
+    return ("antg", "an ninh thế giới")
 
 
 def exact_no_epg_logo_group_name(extinf):
@@ -396,6 +428,7 @@ def find_existing_exact_identity(orphans, catalog, *, reader=_read_document,
     """
     wanted = defaultdict(list)
     by_logo_group = defaultdict(list)
+    by_reviewed_alias = defaultdict(list)
     exact_originals = defaultdict(list)
     for item in orphans:
         extinf, digest = item["extinf"], item["extinf_sha256"]
@@ -408,6 +441,9 @@ def find_existing_exact_identity(orphans, catalog, *, reader=_read_document,
         strict = exact_no_epg_logo_group_name(extinf)
         if strict is not None:
             by_logo_group[strict].append(digest)
+        alias = reviewed_hanoicab3_identity(extinf)
+        if alias is not None:
+            by_reviewed_alias[alias].append(digest)
 
     def one(source):
         try:
@@ -447,6 +483,10 @@ def find_existing_exact_identity(orphans, catalog, *, reader=_read_document,
                 if logo_identity is not None:
                     for dst in by_logo_group.get(logo_identity, ()):
                         targets.setdefault(dst, "EXACT_NO_EPG_LOGO_GROUP_NAME")
+                reviewed = reviewed_hanoicab3_identity(extinf)
+                if reviewed is not None:
+                    for dst in by_reviewed_alias.get(reviewed, ()):
+                        targets.setdefault(dst, "REVIEWED_ANTG_NAME_ALIAS")
                 for dst, proof_rule in targets.items():
                     for url in urls:
                         found.append((dst, _hash(url), url, source["id"], proof_rule))
@@ -491,8 +531,10 @@ def find_existing_exact_identity(orphans, catalog, *, reader=_read_document,
             proof_identity_groups["EXACT_ORIGINAL_EXTINF"]),
         "orphan_entries_with_exact_no_epg_logo_group_name": len(
             proof_identity_groups["EXACT_NO_EPG_LOGO_GROUP_NAME"]),
+        "orphan_entries_with_reviewed_hanoicab_name_alias": len(
+            proof_identity_groups["REVIEWED_ANTG_NAME_ALIAS"]),
         "orphan_entries_with_any_exact_existing_match": len(matched),
-        "proof_only": "EXACT_EXTINF_OR_EPG_ID_AND_NAME_OR_NO_EPG_LOGO_GROUP_NAME_NOT_CHANNEL_CONTENT",
+        "proof_only": "EXACT_EXTINF_OR_EPG_NAME_OR_NO_EPG_LOGO_GROUP_OR_REVIEWED_ANTG_ALIAS_NOT_AV",
     }
 
 

@@ -107,6 +107,8 @@ def targeted_source_references(orphan_rows, known_urls, *, fetcher=_read,
     errors = invalid = incomplete = 0
     for index, query in enumerate(selected):
         # Authenticated GitHub Code Search has a separate rate limit.
+        if index:
+            pause(8)
         if index and index % 8 == 0:
             pause(65)
         uri = ("https://api.github.com/search/code?"

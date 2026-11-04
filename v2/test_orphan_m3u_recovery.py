@@ -10,7 +10,8 @@ from unittest.mock import patch
 from orphan_m3u_recovery import (
     parse_exact_pairs, find_historical, find_official_alternates, evaluate, audit,
     restore_exact_original_metadata_from_official_alternates,
-    exact_channel_identity, exact_no_epg_logo_group_name, find_existing_exact_identity,
+    exact_channel_identity, exact_no_epg_logo_group_name, reviewed_hanoicab3_identity,
+    find_existing_exact_identity,
 )
 
 
@@ -256,6 +257,34 @@ class OrphanRecoveryTests(unittest.TestCase):
         self.assertEqual(matches[original][sha]["proof_rules"],
                          ["EXACT_NO_EPG_LOGO_GROUP_NAME"])
         self.assertEqual(stats["historical_files_read"], 1)
+
+
+    def test_reviewed_hanoicab3_alias_only_exact_known_epg_and_names(self):
+        original = '#EXTINF:-1 tvg-id="antg",Hanoicab 3 | An Ninh Thế Giới'
+        alt = '#EXTINF:-1 tvg-id="antg",An Ninh Thế Giới'
+        self.assertEqual(reviewed_hanoicab3_identity(original),
+                         reviewed_hanoicab3_identity(alt))
+        self.assertIsNone(reviewed_hanoicab3_identity(
+            '#EXTINF:-1 tvg-id="antv",An Ninh Thế Giới'))
+        self.assertIsNone(reviewed_hanoicab3_identity(
+            '#EXTINF:-1 tvg-id="antg",An Ninh Thế Giới 2'))
+        self.assertIsNone(reviewed_hanoicab3_identity(
+            '#EXTINF:-1,Hanoicab 3 | An Ninh Thế Giới'))
+
+    def test_reviewed_hanoicab3_source_name_alias_must_still_be_probed(self):
+        original = '#EXTINF:-1 tvg-id="antg",Hanoicab 3 | An Ninh Thế Giới'
+        alternate = '#EXTINF:-1 tvg-id="antg",An Ninh Thế Giới'
+        record = {"extinf": original,
+                  "extinf_sha256": hashlib.sha256(original.encode()).hexdigest()}
+        feed = "#EXTM3U\n" + alternate + "\n" + self.a + "\n"
+        catalog = [{"id":"verified-public-source", "url":"https://public.example.org/all.m3u"}]
+        matched, report = find_existing_exact_identity([record], catalog,
+                        reader=lambda _url: feed)
+        sha = hashlib.sha256(self.a.encode()).hexdigest()
+        proof = matched[record["extinf_sha256"]][sha]
+        self.assertEqual(proof["proof_rules"], ["REVIEWED_ANTG_NAME_ALIAS"])
+        self.assertEqual(report["orphan_entries_with_reviewed_hanoicab_name_alias"], 1)
+        self.assertNotIn("video_stream", proof)
 
     def test_no_http_url_is_inferred_from_invalid_or_missing_reference(self):
         content = ("#EXTM3U\n" + self.dis + "\n#EXTINF:-1,Next\n" + self.a
