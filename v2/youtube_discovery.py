@@ -8,6 +8,7 @@ import json
 import pathlib
 import shutil
 import subprocess
+from collections import Counter
 from concurrent.futures import ThreadPoolExecutor
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
@@ -58,17 +59,39 @@ def search(query):
     except (OSError, ValueError, subprocess.TimeoutExpired):
         return [], "SEARCH_TIMEOUT_OR_ERROR"
 
-def verify(item):
+def failure_reason(stderr):
+    """Classify unverified metadata without publishing URLs or raw server text."""
+    msg = (stderr or "").lower()
+    if "not a bot" in msg or "automated requests" in msg: return "BOT_CHALLENGE"
+    if "sign in" in msg or "login" in msg: return "AUTH_REQUIRED"
+    if "429" in msg or "too many requests" in msg: return "RATE_LIMITED"
+    if "403" in msg or "forbidden" in msg: return "HTTP_FORBIDDEN"
+    if "unavailable in your country" in msg: return "GEO_RESTRICTED"
+    if "video unavailable" in msg or "not available" in msg: return "VIDEO_UNAVAILABLE"
+    if "timed out" in msg or "timeout" in msg: return "TIMEOUT"
+    return "EXTRACTOR_FAILED"
+
+
+def verify_with_reason(item):
     try:
         p = subprocess.run(["yt-dlp", "--skip-download", "--dump-single-json", "--no-warnings",
                             "--socket-timeout", "8", item["url"]],
                            capture_output=True, text=True, timeout=24)
         if p.returncode != 0:
-            return "UNVERIFIED"
+            return "UNVERIFIED", failure_reason(p.stderr)
         meta = json.loads(p.stdout)
-        return "LIVE_METADATA_VERIFIED" if meta.get("is_live") is True or meta.get("live_status") == "is_live" else "NOT_CURRENTLY_LIVE"
-    except (OSError, ValueError, subprocess.TimeoutExpired):
-        return "UNVERIFIED"
+        if meta.get("is_live") is True or meta.get("live_status") == "is_live":
+            return "LIVE_METADATA_VERIFIED", "LIVE_METADATA_CONFIRMED"
+        return "NOT_CURRENTLY_LIVE", "LIVE_METADATA_NOT_PRESENT"
+    except subprocess.TimeoutExpired:
+        return "UNVERIFIED", "TIMEOUT"
+    except (OSError, ValueError):
+        return "UNVERIFIED", "PARSE_OR_PROCESS_ERROR"
+
+
+def verify(item):
+    # Retain the previous caller's string status contract.
+    return verify_with_reason(item)[0]
 
 def metadata_summary(results):
     statuses = [item["status"] for item in results]
@@ -97,18 +120,21 @@ def main():
     # Check every discovered video in a bounded parallel batch. Search pages
     # are not direct IPTV streams, even when live metadata succeeds.
     with ThreadPoolExecutor(max_workers=8) as executor:
-        for item, status in zip(results, executor.map(verify, results)):
-            item["status"] = status
+        for item, detail in zip(results, executor.map(verify_with_reason, results)):
+            item["status"], item["metadata_reason"] = detail
     report = {"created_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
               "policy": "ADVISORY_ONLY_NO_PLAYLIST_WRITES_NO_AUTOMATIC_IBO_IMPORT",
               "queries": QUERIES, "errors": errors, "results": results,
               "live_verified": sum(x["status"] == "LIVE_METADATA_VERIFIED" for x in results),
               "verified_live_pages": [x for x in results if x["status"] == "LIVE_METADATA_VERIFIED"],
+              "anonymous_metadata_reason_counts": dict(sorted(Counter(
+                  item.get("metadata_reason", "NOT_CHECKED") for item in results).items())),
               **metadata_summary(results)}
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print("YouTube discovered:", len(results), "live metadata verified:", report["live_verified"],
           "metadata unverified:", report["metadata_unverified_count"],
-          "unattempted:", report["metadata_unattempted_count"], "query errors:", len(errors))
+          "unattempted:", report["metadata_unattempted_count"], "query errors:", len(errors),
+          "reason_counts:", json.dumps(report["anonymous_metadata_reason_counts"], sort_keys=True))
 if __name__ == "__main__":
     main()

@@ -42,7 +42,7 @@ def route(meta, scopes):
         return "FOREIGN_METADATA_HINT"
     return "LANGUAGE_UNVERIFIED"
 
-def sources():
+def sources(require_public_reports=False):
     config = json.loads(SOURCES.read_text())["sources"]
     entries_ = [dict(x) for x in config if x.get("enabled", True) is not False]
     hist = load_original_run60_sources(ROOT / "v2/history/run60-dynamic-source-ledger.json")
@@ -64,6 +64,21 @@ def sources():
         for row in approved_sources(json.loads(FORGE.read_text()), approvals):
             if row["url"] not in known:
                 entries_.append(row); known.add(row["url"])
+    # Include bounded validated-for-inspection M3U references in read-only AV
+    # probing, never in protected playlist publication.
+    github_report = ROOT / "v2/reports/github-source-discovery.json"
+    forge_report = ROOT / "v2/reports/forge-source-discovery.json"
+    if require_public_reports and not (github_report.is_file() and forge_report.is_file()):
+        raise ValueError("Required reviewed public M3U source reports are missing")
+    if github_report.is_file() and forge_report.is_file():
+        from public_source_handoff import staged_references
+        reviewed, handoff = staged_references(github_report, forge_report, known)
+        for public_source in reviewed:
+            if public_source["url"] not in known:
+                entries_.append(public_source)
+                known.add(public_source["url"])
+        if require_public_reports and not all(handoff["report_checked"].values()):
+            raise ValueError("Incomplete public source inspection handoff")
     from document_platform_discovery import accepted_sources
     for doc_source in accepted_sources():
         if doc_source["url"] not in known:
@@ -172,13 +187,15 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--workers", type=int, default=24)
     parser.add_argument("--budget-seconds", type=int, default=14400)
+    parser.add_argument("--require-public-sources", action="store_true",
+                        help="Fail rather than silently skip reviewed dynamic source reports")
     a = parser.parse_args()
     if not 1 <= a.workers <= 32 or not 60 <= a.budget_seconds <= 14400:
         parser.error("Unsafe scan limits")
     if sha(HISTORY.read_bytes()) != HISTORY_SHA or gitblob(LIVE.read_bytes()) != LIVE_BLOB:
         raise SystemExit("Protected data fingerprint differs")
     t0 = time.monotonic()
-    all_sources, configured, historic = sources()
+    all_sources, configured, historic = sources(require_public_reports=a.require_public_sources)
     with ThreadPoolExecutor(max_workers=12) as executor:
         outputs = list(executor.map(fetch_one, all_sources))
     scopes = {x["id"]: x.get("scope", "candidate") for x in all_sources}

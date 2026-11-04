@@ -9,6 +9,7 @@ import urllib.parse
 import urllib.request
 import urllib.error
 import time
+from collections import Counter
 from webpage_source_discovery import public_hostname
 from discover import ROOT, entries, fetch
 
@@ -68,6 +69,20 @@ def eligible_playlist_path(path):
                 re.search(r"iptv|m3u|playlist|channel|stream|kanal|turk|azer|^tv[._-]", basename))
 
 
+def error_kind(exc):
+    """Anonymous HTTP/status class, never raw error strings or URLs."""
+    return ("HTTP_" + str(exc.code)) if isinstance(exc, urllib.error.HTTPError) else type(exc).__name__
+
+
+def error_summary(rows):
+    counts = Counter()
+    for row in rows:
+        family = ("search" if "query" in row else
+                  "gist" if str(row.get("repository", "")).endswith("/gist") else "repo")
+        counts[family + ":" + str(row.get("error", "UNKNOWN"))] += 1
+    return dict(sorted(counts.items()))
+
+
 def main():
     configured = {x["url"] for x in json.loads(CONFIG.read_text())["sources"]}
     repos, errors, found = {}, [], []
@@ -88,7 +103,7 @@ def main():
                         and isinstance(branch, str) and branch.strip()):
                     repos[name] = branch
         except Exception as exc:
-            errors.append({"query": query, "error": type(exc).__name__})
+            errors.append({"query": query, "error": error_kind(exc)})
     if len(repos) > MAX_REPOS:
         limits_hit.append("MAX_REPOS")
     for name, branch in sorted(repos.items(), key=lambda item: item[0].casefold())[:MAX_REPOS]:
@@ -121,9 +136,9 @@ def main():
                                   "tr_name_hints": sum(bool(re.search(r"(?i)\b(trt|türk|turk|kanal|haber)\b", x["name"])) for x in sample),
                                   "status": "SOURCE_PARSED_STREAMS_NOT_PLAYBACK_VERIFIED"})
                 except Exception as exc:
-                    errors.append({"repository": name, "path": path, "error": type(exc).__name__})
+                    errors.append({"repository": name, "path": path, "error": error_kind(exc)})
         except Exception as exc:
-            errors.append({"repository": name, "error": type(exc).__name__})
+            errors.append({"repository": name, "error": error_kind(exc)})
     # Public Gists are not searchable through the repository search API.
     # Explicitly search public gist metadata through the GitHub Gist endpoint
     # only for owners already discovered in relevant repository results.
@@ -150,7 +165,7 @@ def main():
                         continue
                     if len(found) >= MAX_FILES:
                         break
-                    if not re.search(r"(?i)\.(m3u8?|txt)$", filename):
+                    if not eligible_playlist_path(filename):
                         continue
                     raw = meta.get("raw_url", "")
                     if not isinstance(raw, str):
@@ -168,18 +183,20 @@ def main():
                                           "entries": len(sample), "tr_name_hints": 0,
                                           "status": "SOURCE_PARSED_STREAMS_NOT_PLAYBACK_VERIFIED"})
                     except Exception as exc:
-                        errors.append({"repository": owner + "/gist", "path": filename, "error": type(exc).__name__})
+                        errors.append({"repository": owner + "/gist", "path": filename, "error": error_kind(exc)})
         except Exception as exc:
-            errors.append({"repository": owner + "/gist", "error": type(exc).__name__})
+            errors.append({"repository": owner + "/gist", "error": error_kind(exc)})
     found.sort(key=lambda item: (item["repository"].casefold(), item["path"].casefold()))
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps({"created_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
        "policy": "READ_ONLY_NO_AUTOMATIC_SOURCE_OR_PLAYLIST_IMPORT", "repositories_discovered": len(repos),
        "sources_found": len(found), "sources": found, "errors": errors,
+       "anonymous_error_summary": error_summary(errors),
        "limits_hit": sorted(set(limits_hit)),
        "coverage_status": "PARTIAL_API_ERRORS" if errors else "PARTIAL_LIMITS" if limits_hit else "COMPLETE_QUERIES",
        "playback_verified": False}, ensure_ascii=False, indent=2) + "\n")
-    print("Repositories:", len(repos), "parsed new sources:", len(found), "errors:", len(errors))
+    print("Repositories:", len(repos), "parsed new sources:", len(found), "errors:", len(errors),
+          "anonymous_error_summary:", json.dumps(error_summary(errors), sort_keys=True))
     if errors or limits_hit:
         print("WARNING: Partial GitHub/Gist discovery; inspect errors and limits in saved report")
 

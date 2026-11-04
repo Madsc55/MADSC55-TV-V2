@@ -22,9 +22,13 @@ MAX_DOCS=24
 MAX_SOURCES=180
 SEARCH_PAGES={
  "scribd":("https://www.scribd.com/search?query=iptv%20m3u",
-           "https://www.scribd.com/search?query=turkish%20iptv"),
+           "https://www.scribd.com/search?query=turkish%20iptv",
+           "https://www.scribd.com/search?query=azerbaijan%20iptv",
+           "https://www.scribd.com/search?query=tv%20playlist%20m3u"),
  "slideshare":("https://www.slideshare.net/search?searchfrom=header&q=iptv",
-               "https://www.slideshare.net/search?searchfrom=header&q=m3u"),
+               "https://www.slideshare.net/search?searchfrom=header&q=m3u",
+               "https://www.slideshare.net/search?searchfrom=header&q=turkish+iptv",
+               "https://www.slideshare.net/search?searchfrom=header&q=azerbaijan+iptv"),
 }
 ARCHIVE_SEARCH="https://archive.org/advancedsearch.php?"+urlencode({
  "q":"(title:iptv OR title:m3u OR subject:iptv) AND (mediatype:texts OR mediatype:software)",

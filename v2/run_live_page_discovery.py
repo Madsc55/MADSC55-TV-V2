@@ -7,6 +7,8 @@ changes to IBO playlists. Never prints query strings from discovered links.
 import argparse
 import hashlib
 import json
+from collections import Counter
+import urllib.error
 from pathlib import Path
 from urllib.parse import urlsplit
 import urllib.request
@@ -52,6 +54,10 @@ def fetch_page(url):
         raise ValueError("Live page too large")
     return content.decode("utf-8", errors="replace")
 
+def error_kind(exc):
+    return ("HTTP_" + str(exc.code)) if isinstance(exc, urllib.error.HTTPError) else type(exc).__name__
+
+
 def scan(pages, fetcher=fetch_page):
     if len(pages) > 100:
         raise ValueError("Approved live-page inventory exceeds the 100-page scan limit")
@@ -70,11 +76,13 @@ def scan(pages, fetcher=fetch_page):
                     result.append({"page_id": page_id, "url_sha256": digest,
                                    "kind": ref["kind"], "playback_verified": False})
         except (ValueError, OSError, TimeoutError) as exc:
-            errors.append({"page_id": page_id, "error": type(exc).__name__})
+            errors.append({"page_id": page_id, "error": error_kind(exc)})
     return {"schema": 1, "kind": "references-only", "pages_checked": len(pages),
             "coverage_status": ("NO_APPROVED_PAGES" if not pages else
                                 "PARTIAL_APPROVED_PAGES" if errors else "APPROVED_PAGES_CHECKED"),
-            "references": result, "errors": errors, "playback_verified": False}
+            "references": result, "errors": errors,
+            "anonymous_error_summary": dict(sorted(Counter(x["error"] for x in errors).items())),
+            "playback_verified": False}
 
 def main():
     parser = argparse.ArgumentParser()
@@ -84,7 +92,8 @@ def main():
     report = scan(pages)
     REPORT.parent.mkdir(parents=True, exist_ok=True)
     REPORT.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print("Live-page references:", len(report["references"]), "errors:", len(report["errors"]))
+    print("Live-page references:", len(report["references"]), "errors:", len(report["errors"]),
+          "anonymous_error_summary:", json.dumps(report["anonymous_error_summary"], sort_keys=True))
     if report["errors"]:
         print("WARNING: Partial approved live-page scan; review saved page IDs")
 if __name__ == "__main__":

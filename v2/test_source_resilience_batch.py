@@ -2,10 +2,12 @@
 """Grouped offline regressions for resilient V2 public-source discovery."""
 import unittest
 
-from github_source_discovery import eligible_playlist_path
-from run_live_page_discovery import safe_page_redirect
-from youtube_discovery import metadata_summary
+from github_source_discovery import eligible_playlist_path, error_summary as github_errors, error_kind as github_kind
+from run_live_page_discovery import safe_page_redirect, scan, error_kind as page_kind
+from youtube_discovery import metadata_summary, failure_reason
 from document_platform_discovery import MAX_DOCS, ARCHIVE_SEARCH
+from run_forge_source_discovery import error_summary as forge_errors
+from urllib.error import HTTPError
 
 
 class SourceResilienceBatch(unittest.TestCase):
@@ -43,6 +45,27 @@ class SourceResilienceBatch(unittest.TestCase):
         self.assertFalse(result["metadata_coverage_complete"])
         self.assertTrue(metadata_summary([
             {"status": "LIVE_METADATA_VERIFIED"}])["metadata_coverage_complete"])
+
+    def test_error_buckets_never_include_urls_or_secrets(self):
+        exc = HTTPError("https://example.org/private?token=secret", 403, "forbidden", {}, None)
+        self.assertEqual(github_kind(exc), "HTTP_403")
+        self.assertEqual(page_kind(exc), "HTTP_403")
+        self.assertEqual(github_errors([
+            {"repository": "a/gist", "error": "HTTP_403"},
+            {"query": "test", "error": "HTTP_429"}]),
+            {"gist:HTTP_403": 1, "search:HTTP_429": 1})
+        self.assertEqual(forge_errors([
+            {"forge": "gitlab", "error": "HTTP_403"}]), {"gitlab:HTTP_403": 1})
+        report = scan([{"id": "foo", "url": "https://example.org/live"}],
+                      fetcher=lambda _: (_ for _ in ()).throw(exc))
+        self.assertEqual(report["anonymous_error_summary"], {"HTTP_403": 1})
+        self.assertNotIn("secret", str(report))
+
+    def test_youtube_unverified_is_not_playback(self):
+        self.assertEqual(failure_reason("Sign in to confirm you're not a bot"), "BOT_CHALLENGE")
+        self.assertEqual(failure_reason("HTTP Error 429"), "RATE_LIMITED")
+        self.assertEqual(failure_reason("video unavailable"), "VIDEO_UNAVAILABLE")
+        self.assertEqual(failure_reason(""), "EXTRACTOR_FAILED")
 
     def test_archive_public_metadata_query_remains_bounded(self):
         self.assertEqual(MAX_DOCS, 24)

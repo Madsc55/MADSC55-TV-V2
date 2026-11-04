@@ -21,6 +21,7 @@ on:
       - 'v2/run_live_page_discovery.py'
       - 'v2/youtube_discovery.py'
       - 'v2/test_source_resilience_batch.py'
+      - 'v2/final_batch_acceptance.py'
       - 'v2/advisory_channel_identity_bridge.py'
       - 'v2/test_advisory_channel_identity_bridge.py'
       - 'v2/config/sources.json'
@@ -98,7 +99,7 @@ jobs:
       (github.event_name == 'push' &&
        github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
        github.repository == 'Madsc55/MADSC55-TV-V2' &&
-       github.event.head_commit.message == 'fix(v2): harden source discovery and run grouped live verification')
+       github.event.head_commit.message == 'fix(v2): classify source failures and run grouped AV evidence')
     needs: offline-source-safety
     runs-on: ubuntu-24.04
     timeout-minutes: 150
@@ -182,5 +183,26 @@ jobs:
             v2/reports/candidates.json
             v2/reports/official-tv-gap.json
             v2/reports/source-availability-audit.json
+          if-no-files-found: warn
+          retention-days: 30
+      - name: Install real AV validation and encrypted evidence dependencies
+        run: |
+          python -m pip install cryptography==44.0.2
+          command -v ffprobe && command -v ffmpeg
+      - name: Grouped AV and encrypted archive offline regressions
+        run: |
+          PYTHONPATH=v2 python -m unittest -v test_final_batch_acceptance test_final_worldwide_report_gate
+      - name: Real bounded video-plus-audio scan of static, reviewed public and document sources
+        run: timeout 8000s python v2/final_batch_acceptance.py --workers 32 --budget-seconds 7200 --require-public-sources
+      - name: Require complete AV probe coverage, valid SHA256 evidence and encrypted URL archive
+        run: PYTHONPATH=v2 python v2/final_worldwide_report_gate.py --report v2/reports/ci/final-worldwide-acceptance.json
+      - name: Upload anonymous AV report and encrypted stream evidence; no plaintext URLs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v2-grouped-av-evidence-${{ github.run_id }}
+          path: |
+            v2/reports/ci/final-worldwide-acceptance.json
+            v2/reports/ci/final-worldwide-*.sealed
           if-no-files-found: warn
           retention-days: 30

@@ -12,6 +12,7 @@ from webpage_source_discovery import public_hostname
 import urllib.request
 import urllib.error
 import time
+from collections import Counter
 from forge_source_discovery import (GITLAB_API, CODEBERG_API, TERMS, MAX_PATHS,
     gitlab_projects, codeberg_projects, parse_tree_paths, playlist_sources)
 
@@ -47,6 +48,15 @@ def api_json(url):
     if len(payload) > 2_000_000:
         raise ValueError("Forge response too large")
     return json.loads(payload)
+
+def error_kind(exc):
+    return ("HTTP_" + str(exc.code)) if isinstance(exc, urllib.error.HTTPError) else type(exc).__name__
+
+
+def error_summary(rows):
+    counts = Counter(str(row.get("forge", "?")) + ":" + str(row.get("error", "?")) for row in rows)
+    return dict(sorted(counts.items()))
+
 
 def scan(request=None, terms=None):
     # Late binding keeps runtime configuration and offline mock injection consistent.
@@ -84,7 +94,7 @@ def scan(request=None, terms=None):
                     else:
                         limits_hit.add(forge.upper() + "_PROJECT_PAGE_LIMIT")
             except (ValueError, OSError, TimeoutError) as exc:
-                errors.append({"forge": forge, "term": term, "error": type(exc).__name__})
+                errors.append({"forge": forge, "term": term, "error": error_kind(exc)})
                 continue
             for project in projects:
                 identity = json.dumps(project, sort_keys=True)
@@ -138,12 +148,13 @@ def scan(request=None, terms=None):
                             found_urls.add(link)
                             found.append({"forge": forge, "source_url": link, "playback_verified": False})
                 except (ValueError, OSError, TimeoutError) as exc:
-                    errors.append({"forge": forge, "project": identity, "error": type(exc).__name__})
+                    errors.append({"forge": forge, "project": identity, "error": error_kind(exc)})
     return {"schema": 1, "status": "source_references_only",
             "coverage_status": "PARTIAL_API_ERRORS" if errors else "PARTIAL_LIMITS" if limits_hit else "COMPLETE_QUERIES",
             "limits_hit": sorted(limits_hit),
             "sources": found, "source_count": len(found), "playback_verified": False,
-            "errors": errors, "projects_examined": len(seen)}
+            "errors": errors, "anonymous_error_summary": error_summary(errors),
+            "projects_examined": len(seen)}
 
 def main():
     parser = argparse.ArgumentParser()
@@ -152,7 +163,8 @@ def main():
     report = scan()
     OUTPUT.parent.mkdir(parents=True, exist_ok=True)
     OUTPUT.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print("Forge source references:", len(report["sources"]), "errors:", len(report["errors"]))
+    print("Forge source references:", len(report["sources"]), "errors:", len(report["errors"]),
+          "anonymous_error_summary:", json.dumps(report["anonymous_error_summary"], sort_keys=True))
     if report["errors"] or report["limits_hit"]:
         print("WARNING: Partial forge source discovery; inspect saved errors and limits")
 if __name__ == "__main__":
