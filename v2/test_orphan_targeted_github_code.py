@@ -1,0 +1,99 @@
+#!/usr/bin/env python3
+"""Offline grouped regression tests for targeted GitHub code-search references."""
+import hashlib
+import json
+from urllib.parse import parse_qs, urlsplit
+import unittest
+from orphan_targeted_github_code import (
+    query_for_metadata, pinned_public_file, targeted_source_references)
+
+
+def orphan(meta):
+    return {"extinf": meta,
+            "extinf_sha256": hashlib.sha256(meta.encode("utf-8")).hexdigest()}
+
+
+def row(path="regional.m3u", repo="public/tv", revision="a"*40):
+    return {"repository": {"full_name": repo, "private": False},
+            "html_url": "https://github.com/" + repo + "/blob/" + revision + "/" + path,
+            "path": path, "size": 5000}
+
+
+class TargetedGitHubCodeDiscoveryTests(unittest.TestCase):
+    def test_pinned_public_git_sha_yields_discovery_reference_not_stream(self):
+        queried = []
+        def fake(uri, api=False):
+            self.assertTrue(api)
+            q = parse_qs(urlsplit(uri).query)["q"][0]
+            queried.append(q)
+            return json.dumps({"items": [row()], "incomplete_results": False}).encode()
+        m = '#EXTINF:-1 tvg-id="KanalID.tr",Kanal A'
+        refs, stats = targeted_source_references([orphan(m)], set(), fetcher=fake)
+        self.assertEqual(queried, ['"KanalID.tr" extension:m3u'])
+        self.assertEqual(len(refs), 1)
+        self.assertEqual(refs[0]["url"],
+                         "https://raw.githubusercontent.com/public/tv/" + "a"*40 + "/regional.m3u")
+        self.assertEqual(stats["status"], "PUBLIC_CODE_REFERENCES_ONLY")
+        self.assertFalse(stats["playback_verified"])
+
+    def test_refuses_unpinned_private_non_m3u_or_oversized_search_hits(self):
+        good = row()
+        invalid = [
+            {**good, "html_url": good["html_url"].replace("/" + "a"*40 + "/", "/main/")},
+            {**good, "repository": {"full_name": "public/tv", "private": True}},
+            row(path="../secret.m3u"), row(path="playlist.json"),
+            {**good, "size": 9000000},
+            {**good, "repository": {"full_name": "wrong/repo", "private": False}},
+        ]
+        self.assertTrue(pinned_public_file(good))
+        for candidate in invalid:
+            self.assertIsNone(pinned_public_file(candidate))
+
+    def test_no_sensitive_search_query_or_fabricated_identity(self):
+        self.assertIsNone(query_for_metadata('#EXTINF:-1,name:has:colon'))
+        self.assertIsNone(query_for_metadata('#EXTINF:-1,token=https://secret'))
+        self.assertIsNone(query_for_metadata('#EXTINF:-1,TV'))
+        self.assertEqual(query_for_metadata('#EXTINF:-1,Regional TV'),
+                         '"Regional TV" extension:m3u')
+        with self.assertRaisesRegex(ValueError, "exact immutable"):
+            targeted_source_references(
+                [{"extinf_sha256": "a"*64, "extinf": "#EXTINF:-1,Wrong"}],
+                set(), fetcher=lambda *_a, **_k: b'{}')
+
+    def test_13_deduplicated_orphans_are_queried_in_one_budgeted_group(self):
+        seen = []
+        waits = []
+        def fake(uri, api=False):
+            seen.append(parse_qs(urlsplit(uri).query)["q"][0])
+            return b'{"items":[],"incomplete_results":false}'
+        orphans = [orphan('#EXTINF:-1 tvg-id="channel%02d.vn",Channel %d' % (i, i))
+                   for i in range(13)]
+        refs, stats = targeted_source_references(
+            orphans + [orphans[0]], set(), fetcher=fake, pause=waits.append)
+        self.assertEqual(refs, [])
+        self.assertEqual(len(seen), 13)
+        self.assertEqual(waits, [65])
+        self.assertEqual(stats["distinct_orphan_identities_supplied"], 13)
+        self.assertEqual(stats["queries_attempted"], 13)
+
+    def test_search_rate_limit_or_invalid_json_never_claims_complete(self):
+        m = '#EXTINF:-1 tvg-id="Channel.tr",Channel'
+        refs, stats = targeted_source_references(
+            [orphan(m)], set(),
+            fetcher=lambda *a, **kw: (_ for _ in ()).throw(OSError("Rate limited")))
+        self.assertEqual(refs, [])
+        self.assertEqual(stats["status"], "PARTIAL_PUBLIC_CODE_SEARCH")
+        self.assertEqual(stats["unavailable_or_failed_queries"], 1)
+
+    def test_duplicate_candidate_references_remain_single(self):
+        m1 = '#EXTINF:-1 tvg-id="Channel1.tr",Channel One'
+        m2 = '#EXTINF:-1 tvg-id="Channel2.tr",Channel Two'
+        refs, stats = targeted_source_references(
+            [orphan(m1), orphan(m2)], set(),
+            fetcher=lambda *a, **kw: json.dumps({"items":[row(),row()]}).encode())
+        self.assertEqual(len(refs), 1)
+        self.assertGreaterEqual(stats["invalid_or_duplicate_public_references"], 1)
+
+
+if __name__ == "__main__":
+    unittest.main()
