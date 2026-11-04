@@ -342,6 +342,10 @@ class SourceAdapterIntegrationBatch(unittest.TestCase):
                 return []
             if "/projects/42/repository/tree?" in url:
                 raise HTTPError(url,404,"not accessible",{},None)
+            if url.endswith("/projects/42/repository/branches?per_page=20"):
+                # Public project exists, but no verified default branch is
+                # available. The 404 must remain an explicit error.
+                return []
             raise AssertionError(url)
         report=forge.scan(request,terms=("iptv",))
         self.assertEqual(report["source_count"],0)
