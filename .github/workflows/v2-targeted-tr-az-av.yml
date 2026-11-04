@@ -1,0 +1,85 @@
+name: V2 Targeted TR AZ Grouped AV Evidence
+on:
+  push:
+    branches:
+      - madsc/v2-discovery-bulk-20261031
+    paths:
+      - 'v2/targeted_tr_az_av_acceptance.py'
+      - 'v2/test_targeted_tr_az_av_acceptance.py'
+      - '.github/workflows/v2-targeted-tr-az-av.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  offline-target-acceptance:
+    name: Grouped TR AZ source routing, playback and encrypted proof regressions
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install pinned encrypted evidence dependency
+        run: python -m pip install cryptography==44.0.2
+      - name: Verify protected playlist and historical source baseline
+        run: |
+          test "$(git hash-object MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)" = '4b1c3cea4b5107a425abab60f62d41f9f81e05a7'
+          test "$(sha256sum v2/history/stage3-4955-hash-only.jsonl | cut -d' ' -f1)" = 'ee00a844a028e3410715d411467a2d3306f5f5cc4565766140b6438e786cdd27'
+      - name: Run all related AV scope, encryption and integrity tests together
+        run: PYTHONPATH=v2 python -m unittest -v test_targeted_tr_az_av_acceptance test_final_batch_acceptance test_final_worldwide_report_gate
+
+  live-target-evidence:
+    name: Real TR AZ metadata-source AV batch - no IBO publication
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event_name == 'push' &&
+       github.repository == 'Madsc55/MADSC55-TV-V2' &&
+       github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
+       github.event.head_commit.message == 'fix(v2): launch grouped TR AZ candidate AV evidence')
+    needs: offline-target-acceptance
+    runs-on: ubuntu-24.04
+    timeout-minutes: 350
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify protected historical and playlist fingerprints
+        run: |
+          test "$(git hash-object MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)" = '4b1c3cea4b5107a425abab60f62d41f9f81e05a7'
+          test "$(sha256sum v2/history/stage3-4955-hash-only.jsonl | cut -d' ' -f1)" = 'ee00a844a028e3410715d411467a2d3306f5f5cc4565766140b6438e786cdd27'
+      - name: Install public source and encrypted AV dependencies
+        run: |
+          python -m pip install cryptography==44.0.2 yt-dlp
+          if ! command -v ffprobe >/dev/null || ! command -v ffmpeg >/dev/null; then
+            sudo apt-get update -qq
+            sudo apt-get install -y --no-install-recommends ffmpeg
+          fi
+          ffprobe -version | head -n 1
+          ffmpeg -version | head -n 1
+      - name: Run all configured source adapters and candidate handoff once
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+        run: timeout 10000s python v2/run_all_discovery.py --run-all --source-only
+      - name: Bulk real video plus audio proof of TR AZ source or metadata candidates
+        run: timeout 10000s python v2/targeted_tr_az_av_acceptance.py --workers 32 --budget-seconds 7200
+      - name: Require complete scoped probe and source coverage before declaring acceptance
+        run: PYTHONPATH=v2 python v2/targeted_tr_az_av_acceptance.py --validate-only --require-complete
+      - name: Upload anonymous TR AZ report and RSA-encrypted source evidence only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v2-targeted-traz-av-${{ github.run_id }}
+          path: |
+            v2/reports/ci/targeted-tr-az-acceptance.json
+            v2/reports/ci/target-traz-*.sealed
+          if-no-files-found: warn
+          retention-days: 30
