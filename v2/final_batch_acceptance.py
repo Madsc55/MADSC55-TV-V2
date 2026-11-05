@@ -187,6 +187,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--workers", type=int, default=24)
     parser.add_argument("--budget-seconds", type=int, default=14400)
+    parser.add_argument("--reuse-report", type=Path, help="Prior hash-only anonymous AV evidence; never plaintext URLs")
     parser.add_argument("--require-public-sources", action="store_true",
                         help="Fail rather than silently skip reviewed dynamic source reports")
     a = parser.parse_args()
@@ -211,13 +212,36 @@ def main():
             old["source_ids"].add(source); old["scopes"].add(scopes[source])
     entries_ = sorted(inventory.items())
     checks = {}
+    if a.reuse_report and a.reuse_report.is_file():
+        prior = json.loads(a.reuse_report.read_text(encoding="utf-8"))
+        if prior.get("kind") != "V2_WORLDWIDE_READ_ONLY_FINAL_ACCEPTANCE":
+            raise SystemExit("Invalid prior AV evidence report")
+        allowed = {"VIDEO_AUDIO_DECODED", "VIDEO_AUDIO_STREAMS_ONLY", "VIDEO_ONLY",
+                   "AUDIO_ONLY", "NO_AV", "UNSAFE_OR_UNRESOLVED_HOST",
+                   "PROBE_UNCONFIRMED"}
+        for row in prior.get("candidates", []):
+            digest = row.get("url_sha256", "")
+            status = row.get("status", "")
+            if (digest in inventory and re.fullmatch(r"[0-9a-f]{64}", digest)
+                    and (status in allowed or status.startswith("PROBE_FAILED_"))
+                    and isinstance(row.get("decoded"), bool)
+                    and isinstance(row.get("video"), bool)
+                    and isinstance(row.get("audio"), bool)
+                    and (not row["decoded"] or
+                         (status == "VIDEO_AUDIO_DECODED" and row["video"] and row["audio"]))):
+                checks[digest] = {"url_sha256": digest, "status": status,
+                    "video": row["video"], "audio": row["audio"],
+                    "decoded": row["decoded"],
+                    "audio_lang_tags": row.get("audio_tags_not_spoken_language_proof", [])}
+        print("Reused prior hash-only AV evidence:", len(checks), flush=True)
     expired = False
     deadline = t0 + a.budget_seconds
     with ThreadPoolExecutor(max_workers=a.workers) as executor:
         for offset in range(0, len(entries_), 128):
             if time.monotonic() > deadline:
                 expired = True; break
-            rows = [(digest, item["url"]) for digest, item in entries_[offset:offset+128]]
+            rows = [(digest, item["url"]) for digest, item in entries_[offset:offset+128] if digest not in checks]
+            if not rows: continue
             for result in executor.map(probe, rows):
                 checks[result["url_sha256"]] = result
             if offset % 1280 == 0:
