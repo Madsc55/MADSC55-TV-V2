@@ -9,6 +9,11 @@ from traz_av_evidence_union import BASE,_read,merge
 class CrossRunAVTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
+        sources = [BASE/'traz-api-av-acceptance.json',
+                   BASE/'traz-missing-target-real-av.json',
+                   BASE/'traz-missing-stream-epg-crosswalk.json']
+        if not all(p.is_file() for p in sources):
+            raise unittest.SkipTest('Pinned Actions artifact inputs absent from ordinary offline checkout')
         cls.p = _read(BASE/'traz-api-av-acceptance.json')[0]
         cls.n = _read(BASE/'traz-missing-target-real-av.json')[0]
         cls.g = _read(BASE/'traz-missing-stream-epg-crosswalk.json')[0]
