@@ -113,10 +113,54 @@ def preflight(archive=None, include_youtube=True, source_only=False):
         raise RuntimeError("Full discovery requires yt-dlp; explicitly skip YouTube for partial coverage")
     return True
 
-def execute(steps, runner=subprocess.run):
+def accept_partial_source_snapshot():
+    """Only real source-fetch failures can allow READ-ONLY downstream triage.
+
+    This does not approve playback or turn a partial scan into a complete one.
+    No encrypted archival/publication mode may bypass the full source gate.
+    """
+    import re
+    path = ROOT / "reports/candidates.json"
+    if path.is_symlink() or not path.is_file() or path.stat().st_size > 85_000_000:
+        raise RuntimeError("Partial source snapshot missing or unsafe")
+    report = json.loads(path.read_text(encoding="utf-8"))
+    candidates = report.get("candidates")
+    errors = report.get("errors")
+    if (report.get("schema") != 1 or report.get("mode") != "read-only"
+            or report.get("coverage_status") != "PARTIAL_SOURCE_FETCH"
+            or report.get("source_fetch_complete") is not False
+            or report.get("playback_verified") is not False
+            or report.get("candidate_status") != "UNVERIFIED"
+            or not isinstance(errors, list) or not errors
+            or report.get("failed_source_count") != len(errors)
+            or not isinstance(candidates, list) or len(candidates) > 150000
+            or report.get("total_unique_candidates") != len(candidates)):
+        raise RuntimeError("Invalid or fabricated partial source evidence")
+    hashes = set()
+    for item in candidates:
+        digest = item.get("url_sha256") if isinstance(item, dict) else None
+        if (not isinstance(digest, str) or not re.fullmatch(r"[0-9a-f]{64}", digest)
+                or digest in hashes or any(k in item for k in
+                     ("url", "stream_url", "raw_url", "href"))):
+            raise RuntimeError("Unsafe or repeated partial candidate URL identity")
+        hashes.add(digest)
+    check_immutable_read_only_baseline()
+    print("SOURCE_SCAN_PARTIAL_UNVERIFIED", json.dumps({
+        "candidates": len(candidates), "failed_sources": len(errors),
+        "coverage_complete": False, "av_verified": False}, sort_keys=True))
+    return True
+
+
+def execute(steps, runner=subprocess.run, *, allow_readonly_partial=False):
     for index, command in enumerate(steps, 1):
         result = runner(command, check=False, cwd=str(ROOT.parent))
         if result.returncode != 0:
+            stage = pathlib.Path(command[1]).name if len(command) > 1 else ""
+            if (allow_readonly_partial and result.returncode == 1
+                    and stage == "discover.py" and accept_partial_source_snapshot()):
+                # Continue ONLY anonymous identity and source-gap reports.
+                # Full source scan remains PARTIAL and no AV approval is created.
+                continue
             raise RuntimeError("Discovery stage " + str(index) + " failed; subsequent stages refused")
     return True
 
@@ -136,7 +180,7 @@ def main():
     include_youtube = not args.skip_youtube
     preflight(args.encrypted_archive, include_youtube, source_only=args.source_only)
     execute(plan(args.encrypted_archive, args.previous_report, include_youtube,
-                 source_only=args.source_only))
+                 source_only=args.source_only), allow_readonly_partial=args.source_only)
     print("Source discovery stages finished; check each report for PARTIAL coverage.")
     if args.source_only:
         print("SOURCE_ONLY: no new candidates written to a durable encrypted archive.")

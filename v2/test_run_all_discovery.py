@@ -124,6 +124,29 @@ class RunnerTests(unittest.TestCase):
         with self.assertRaisesRegex(RuntimeError, "stage 1"):
             execute([["availability"], ["github"], ["encrypted"]], fake)
         self.assertEqual(len(calls), 1)
+    def test_readonly_partial_source_can_continue_only_with_verified_snapshot(self):
+        from run_all_discovery import execute
+        class Result:
+            def __init__(self, code): self.returncode = code
+        calls = []
+        def fake(command, **kwargs):
+            calls.append(command)
+            return Result(1 if len(calls) == 2 else 0)
+        steps = [["python", "v2/source_availability_audit.py"],
+                 ["python", "v2/discover.py"],
+                 ["python", "v2/traz_gap_crosswalk.py"]]
+        with patch("run_all_discovery.accept_partial_source_snapshot", return_value=True):
+            self.assertTrue(execute(steps, fake, allow_readonly_partial=True))
+        self.assertEqual(len(calls), 3)
+        with patch("run_all_discovery.accept_partial_source_snapshot", return_value=True):
+            with self.assertRaisesRegex(RuntimeError, "stage 2"):
+                execute(steps, fake_runner := (lambda c, **kw: Result(1 if
+                    "discover.py" in c[1] else 0)), allow_readonly_partial=False)
+        with patch("run_all_discovery.accept_partial_source_snapshot",
+                   side_effect=RuntimeError("Invalid partial source")):
+            with self.assertRaisesRegex(RuntimeError, "Invalid partial"):
+                execute(steps, fake_runner, allow_readonly_partial=True)
+
     def test_success_runs_all_steps(self):
         class Result:
             returncode = 0

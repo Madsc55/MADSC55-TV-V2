@@ -17,7 +17,16 @@ import time
 from urllib.parse import urlsplit
 from urllib.request import Request, build_opener, HTTPRedirectHandler
 from traz_api_source_batch import fetch_api,public_stream
-from final_batch_acceptance import ROOT,LIVE,LIVE_BLOB,HISTORY,HISTORY_SHA,sha,gitblob,public_dns
+# Keep module importable by offline grouped source tests without cryptography.
+# Real FFmpeg/DNS evidence imports happen only inside controlled live execution.
+ROOT=Path(__file__).resolve().parents[1]
+
+def sha(value):
+    return hashlib.sha256(value.encode("utf-8") if isinstance(value,str) else value).hexdigest()
+
+def live_public_dns(url):
+    from final_batch_acceptance import public_dns
+    return public_dns(url)
 
 PRIOR=ROOT/"v2/reports/ci/traz-api-av-acceptance.json"
 OUT=ROOT/"v2/reports/ci/traz-hls-codec-shortterm-av.json"
@@ -82,8 +91,9 @@ def decode_details(stderr):
             if m:audio=m.group(1)[:28]
     return {"video_codec":video,"audio_codec":audio,"width":width,"height":height}
 
-def sample(url,runner=subprocess.run,resolver=public_dns):
+def sample(url,runner=subprocess.run,resolver=None):
     empty=decode_details("")
+    if resolver is None: resolver=live_public_dns
     if not public_stream(url) or not resolver(url):
         return {"status":"UNSAFE_OR_UNRESOLVED_HOST","decoded":False,**empty}
     try:
@@ -111,7 +121,8 @@ def hls_tags(text):
     return {"status":"HLS_MEDIA_PLAYLIST" if "#EXTINF" in text or "#EXT-X-TARGETDURATION" in text else "HLS_UNKNOWN",
             "variant_count":0,"max_declared_height":None}
 
-def manifest(url,resolver=public_dns):
+def manifest(url,resolver=None):
+    if resolver is None: resolver=live_public_dns
     p=urlsplit(url)
     if p.scheme!="https" or not p.path.lower().endswith(".m3u8") or not resolver(url):
         return {"status":"NOT_INSPECTED","variant_count":None,"max_declared_height":None}
@@ -160,6 +171,7 @@ def aggregate(prior,urls,bad,missing,first,second,hls):
       "ibo_device_verified":False,"protected_playlist_modified":False,"streams":rows}
 
 def main():
+    from final_batch_acceptance import LIVE,LIVE_BLOB,HISTORY,HISTORY_SHA,gitblob
     parser=argparse.ArgumentParser()
     parser.add_argument("--workers",type=int,default=20)
     parser.add_argument("--interval",type=int,default=35)
