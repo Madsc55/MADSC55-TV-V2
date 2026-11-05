@@ -1,12 +1,20 @@
 name: V2 Turkish M3U Orphan Recovery — Exact History and AV Batch
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - madsc/v2-discovery-bulk-20261031
+    paths:
+      - '.github/workflows/v2-orphan-m3u-recovery.yml'
 
 permissions:
   contents: read
 
 jobs:
   four-sources-one-batch:
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      github.event.head_commit.message == 'ci(v2): one-time grouped orphan 50 AV recheck'
     name: Four original feeds plus verified public discovery; exact orphan AV batch
     runs-on: ubuntu-24.04
     timeout-minutes: 65
