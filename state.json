@@ -1,0 +1,40 @@
+{
+  "schema": 1,
+  "project": "MADSC55 TV V2",
+  "repository": "Madsc55/MADSC55-TV-V2",
+  "branch": "madsc/v2-discovery-bulk-20261031",
+  "current_step": "global_av_scan_acceptance",
+  "current_step_status": "in_progress_unverified",
+  "source_run_url": "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42077381839",
+  "last_verified_run_observation": {
+    "live_av_job": "in_progress",
+    "completed_success_jobs": 3,
+    "skipped_jobs": 8
+  },
+  "completed_steps": [
+    "main_security_protection",
+    "previous_worldwide_av_scan"
+  ],
+  "pending_steps": [
+    "global_av_scan_acceptance",
+    "historical_channel_recovery",
+    "source_adapter_acceptance",
+    "historical_inventory_integrity",
+    "tr_az_classification",
+    "ibo_exports",
+    "bulk_final_acceptance",
+    "user_ibo_device_test"
+  ],
+  "rules": {
+    "no_main_writes": true,
+    "no_protected_ibo_playlist_writes": true,
+    "no_pr9_merge": true,
+    "preserve_historical_identities": true,
+    "preserve_favorites": true,
+    "require_real_video_and_audio": true,
+    "batch_related_tests": true,
+    "do_not_claim_unverified_success": true,
+    "old_repository_forbidden": true
+  },
+  "note": "Status is an observation, not a completed test; refresh GitHub Actions before advancing current_step."
+}
