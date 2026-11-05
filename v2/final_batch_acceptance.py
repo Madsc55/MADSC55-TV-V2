@@ -163,6 +163,7 @@ def report(source_results, inventory, checks, *, configured, historic, expired, 
             "language_route": lang_route,
             "audio_tags_not_spoken_language_proof": result["audio_lang_tags"],
             "spoken_language_verified": False, "status": result["status"],
+            "evidence_origin": result.get("evidence_origin", "NOT_PROBED"),
             "video": result["video"], "audio": result["audio"],
             "decoded": result["decoded"], "ibo_player_verified": False})
     return {
@@ -174,6 +175,7 @@ def report(source_results, inventory, checks, *, configured, historic, expired, 
         "probed": len(checks), "unprobed": len(inventory)-len(checks),
         "probe_budget_expired": expired,
         "av_status_counts": dict(Counter(x["status"] for x in checks.values())),
+        "evidence_origin_counts": dict(Counter(x.get("evidence_origin", "UNATTRIBUTED") for x in checks.values())),
         "audio_video_decoded": sum(x["decoded"] for x in checks.values()),
         "metadata_language_route_counts": dict(route_counts),
         "spoken_language_verified": 0,
@@ -218,7 +220,8 @@ def resume_checks(prior, inventory):
             raise ValueError("Invalid audio tags")
         checks[digest] = {"url_sha256": digest, "status": status,
                           "video": row["video"], "audio": row["audio"],
-                          "decoded": row["decoded"], "audio_lang_tags": tags}
+                          "decoded": row["decoded"], "audio_lang_tags": tags,
+                          "evidence_origin": "PRIOR_RUN_HASH_ONLY_NOT_FRESH"}
     return checks
 
 def main():
@@ -269,6 +272,7 @@ def main():
             rows = pending[offset:offset+128]
             if not rows: continue
             for result in executor.map(probe, rows):
+                result["evidence_origin"] = "CURRENT_RUN_FFPROBE_FFMPEG"
                 checks[result["url_sha256"]] = result
             if offset % 1280 == 0:
                 print("Probed:", len(checks), "/", len(entries_), flush=True)
