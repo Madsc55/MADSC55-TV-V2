@@ -134,12 +134,9 @@ jobs:
   live-source-handoff:
     name: Explicit live source reports and acceptance - no IBO playlist writes
     if: >-
-      github.event_name == 'workflow_dispatch' ||
-      (github.event_name == 'push' &&
-       github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
-       github.repository == 'Madsc55/MADSC55-TV-V2' &&
-       (github.event.head_commit.message == 'fix(v2): classify source failures and run grouped AV evidence' ||
-        github.event.head_commit.message == 'ci(v2): run ordered source discovery and grouped AV acceptance'))
+      (github.event_name == 'workflow_dispatch' || github.event_name == 'push') &&
+      github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
+      github.repository == 'Madsc55/MADSC55-TV-V2'
     needs: offline-source-safety
     runs-on: ubuntu-24.04
     timeout-minutes: 150
@@ -259,17 +256,9 @@ jobs:
   platform-verification-batch:
     name: Public Scribd SlideShare and YouTube live evidence, one grouped run
     if: >-
-      (github.event_name == 'workflow_dispatch' &&
-       github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
-       github.repository == 'Madsc55/MADSC55-TV-V2') ||
-      (github.event_name == 'push' &&
-       github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
-       github.repository == 'Madsc55/MADSC55-TV-V2' &&
-       github.event.head_commit.message == 'ci(v2): run grouped pending recovery and source verification') ||
-      (github.event_name == 'push' &&
-             github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
-             github.repository == 'Madsc55/MADSC55-TV-V2' &&
-             github.event.head_commit.message == 'fix(v2): resolve archived Scribd language playlist codes')
+      (github.event_name == 'workflow_dispatch' || github.event_name == 'push') &&
+      github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
+      github.repository == 'Madsc55/MADSC55-TV-V2'
     needs: offline-source-safety
     runs-on: ubuntu-24.04
     timeout-minutes: 40
@@ -359,18 +348,9 @@ jobs:
   unified-read-only-channel-search:
     name: Unified TR AZ source search - all adapters no IBO writes
     if: >-
-      (github.event_name == 'workflow_dispatch' &&
-       github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
-       github.repository == 'Madsc55/MADSC55-TV-V2') ||
-      (github.event_name == 'push' &&
-       github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
-       github.repository == 'Madsc55/MADSC55-TV-V2' &&
-       github.event.head_commit.message == 'ci(v2): run grouped pending recovery and source verification') ||
-      (github.event_name == 'push' &&
-             github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
-             github.repository == 'Madsc55/MADSC55-TV-V2' &&
-             (github.event.head_commit.message == 'fix(v2): complete read only channel discovery routing' ||
-              github.event.head_commit.message == 'feat(v2): review TR AZ missing exact-name M3U and XMLTV candidates'))
+      (github.event_name == 'workflow_dispatch' || github.event_name == 'push') &&
+      github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
+      github.repository == 'Madsc55/MADSC55-TV-V2'
     needs: offline-source-safety
     runs-on: ubuntu-24.04
     timeout-minutes: 180
@@ -509,17 +489,9 @@ jobs:
     name: Reconcile TR AZ missing EPG, missing streams and real AV from two immutable run artifacts
     needs: offline-source-safety
     if: >-
-      (github.event_name == 'workflow_dispatch' &&
-       github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
-       github.repository == 'Madsc55/MADSC55-TV-V2') ||
-      (github.event_name == 'push' &&
-       github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
-       github.repository == 'Madsc55/MADSC55-TV-V2' &&
-       github.event.head_commit.message == 'ci(v2): run grouped pending recovery and source verification') ||
-      (github.event_name == 'push' &&
-             github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
-             github.repository == 'Madsc55/MADSC55-TV-V2' &&
-             github.event.head_commit.message == 'feat(v2): generate real TR AZ EPG and AV backlogs from immutable evidence')
+      (github.event_name == 'workflow_dispatch' || github.event_name == 'push') &&
+      github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
+      github.repository == 'Madsc55/MADSC55-TV-V2'
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     permissions:
@@ -602,17 +574,9 @@ jobs:
   traz-hls-codec-shortterm:
     name: Real FFmpeg HLS codecs and repeated short AV - read only
     if: >-
-      (github.event_name == 'workflow_dispatch' &&
-       github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
-       github.repository == 'Madsc55/MADSC55-TV-V2') ||
-      (github.event_name == 'push' &&
-       github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
-       github.repository == 'Madsc55/MADSC55-TV-V2' &&
-       github.event.head_commit.message == 'ci(v2): run grouped pending recovery and source verification') ||
-      (github.event_name == 'push' &&
-             github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
-             github.repository == 'Madsc55/MADSC55-TV-V2' &&
-             github.event.head_commit.message == 'feat(v2): measure HLS codecs and repeat real AV without claiming long-term stability')
+      (github.event_name == 'workflow_dispatch' || github.event_name == 'push') &&
+      github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
+      github.repository == 'Madsc55/MADSC55-TV-V2'
     needs: offline-source-safety
     runs-on: ubuntu-24.04
     timeout-minutes: 55
@@ -690,17 +654,9 @@ jobs:
   traz-missing-hash-real-av:
     name: Probe exact 84 newly matched TR AZ identities and preserve RSA evidence
     if: >-
-      (github.event_name == 'workflow_dispatch' &&
-       github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
-       github.repository == 'Madsc55/MADSC55-TV-V2') ||
-      (github.event_name == 'push' &&
-       github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
-       github.repository == 'Madsc55/MADSC55-TV-V2' &&
-       github.event.head_commit.message == 'ci(v2): run grouped pending recovery and source verification') ||
-      (github.event_name == 'push' &&
-             github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
-             github.repository == 'Madsc55/MADSC55-TV-V2' &&
-             github.event.head_commit.message == 'feat(v2): grouped real FFmpeg recovery of 84 newly matched TR AZ channel identities')
+      (github.event_name == 'workflow_dispatch' || github.event_name == 'push') &&
+      github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
+      github.repository == 'Madsc55/MADSC55-TV-V2'
     needs: offline-source-safety
     runs-on: ubuntu-24.04
     timeout-minutes: 65
@@ -782,17 +738,9 @@ jobs:
   traz-targeted-transient-av-retry:
     name: One bounded real AV retry for transient failures only
     if: >-
-      (github.event_name == 'workflow_dispatch' &&
-       github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
-       github.repository == 'Madsc55/MADSC55-TV-V2') ||
-      (github.event_name == 'push' &&
-       github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
-       github.repository == 'Madsc55/MADSC55-TV-V2' &&
-       github.event.head_commit.message == 'ci(v2): run grouped pending recovery and source verification') ||
-      (github.event_name == 'push' &&
-             github.repository == 'Madsc55/MADSC55-TV-V2' &&
-             github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
-             github.event.head_commit.message == 'feat(v2): batch transient TR AZ AV recheck with sealed evidence')
+      (github.event_name == 'workflow_dispatch' || github.event_name == 'push') &&
+      github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
+      github.repository == 'Madsc55/MADSC55-TV-V2'
     needs: offline-source-safety
     runs-on: ubuntu-24.04
     timeout-minutes: 55
@@ -876,17 +824,9 @@ jobs:
   traz-official-feed-variant-av:
     name: Trusted IPTV org feed variant 217 missing ID source and AV recovery
     if: >-
-      (github.event_name == 'workflow_dispatch' &&
-       github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
-       github.repository == 'Madsc55/MADSC55-TV-V2') ||
-      (github.event_name == 'push' &&
-       github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
-       github.repository == 'Madsc55/MADSC55-TV-V2' &&
-       github.event.head_commit.message == 'ci(v2): run grouped pending recovery and source verification') ||
-      (github.event_name == 'push' &&
-             github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
-             github.repository == 'Madsc55/MADSC55-TV-V2' &&
-             github.event.head_commit.message == 'feat(v2): accept trusted IPTV org feed variants and probe missing TR AZ channels')
+      (github.event_name == 'workflow_dispatch' || github.event_name == 'push') &&
+      github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
+      github.repository == 'Madsc55/MADSC55-TV-V2'
     needs: offline-source-safety
     runs-on: ubuntu-24.04
     timeout-minutes: 75
@@ -988,17 +928,9 @@ jobs:
   traz-name-only-bounded-av:
     name: Real FFmpeg decode of 15 unconfirmed TR AZ name-only channel leads
     if: >-
-      (github.event_name == 'workflow_dispatch' &&
-       github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
-       github.repository == 'Madsc55/MADSC55-TV-V2') ||
-      (github.event_name == 'push' &&
-       github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
-       github.repository == 'Madsc55/MADSC55-TV-V2' &&
-       github.event.head_commit.message == 'ci(v2): run grouped pending recovery and source verification') ||
-      (github.event_name == 'push' &&
-             github.repository == 'Madsc55/MADSC55-TV-V2' &&
-             github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
-             github.event.head_commit.message == 'feat(v2): verify TR AZ name-based stream leads with real AV without identity promotion')
+      (github.event_name == 'workflow_dispatch' || github.event_name == 'push') &&
+      github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
+      github.repository == 'Madsc55/MADSC55-TV-V2'
     needs: offline-source-safety
     runs-on: ubuntu-24.04
     timeout-minutes: 65
@@ -1072,9 +1004,9 @@ jobs:
   traz-additional-xmltv-gap:
     name: Additional public TR AZ XMLTV source EPG gap review only
     if: >-
-      github.event_name == 'push' &&
-      github.repository == 'Madsc55/MADSC55-TV-V2' &&
-      github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031'
+      (github.event_name == 'workflow_dispatch' || github.event_name == 'push') &&
+      github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
+      github.repository == 'Madsc55/MADSC55-TV-V2'
     needs: offline-source-safety
     runs-on: ubuntu-24.04
     timeout-minutes: 22
