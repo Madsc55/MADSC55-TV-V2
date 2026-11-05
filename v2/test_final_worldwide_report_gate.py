@@ -100,6 +100,27 @@ class FinalWorldwideReportGateTests(unittest.TestCase):
         self.fails("SOME_URLS_UNPROBED_BUDGET")
         self.assertEqual(self.check(complete=False)["status"], "PARTIAL_AV_COVERAGE_EVIDENCE")
 
+    def test_provenance_counts_and_invalid_origin_rejected(self):
+        self.report["evidence_origin_counts"] = {"PRIOR_RUN_HASH_ONLY_NOT_FRESH": 1}
+        self.report["candidates"][0]["evidence_origin"] = "PRIOR_RUN_HASH_ONLY_NOT_FRESH"
+        self.assertEqual(self.check()["decoded_video_audio"], 1)
+        self.report["evidence_origin_counts"] = {"CURRENT_RUN_FFPROBE_FFMPEG": 1}
+        self.fails("EVIDENCE_ORIGIN_DISTRIBUTION_MISMATCH")
+        self.report["candidates"][0]["evidence_origin"] = "FAKE_FRESH"
+        self.fails("INVALID_EVIDENCE_ORIGIN")
+
+    def test_unprobed_cannot_claim_fresh_av_evidence(self):
+        self.report["evidence_origin_counts"] = {"CURRENT_RUN_FFPROBE_FFMPEG": 1}
+        self.report["candidates"][0]["evidence_origin"] = "CURRENT_RUN_FFPROBE_FFMPEG"
+        self.report["candidates"][0].update({
+            "status": "NOT_PROBED_BUDGET", "video": False,
+            "audio": False, "decoded": False})
+        self.report.update({"probed": 0, "unprobed": 1,
+                            "probe_budget_expired": True, "audio_video_decoded": 0,
+                            "av_status_counts": {}})
+        with self.assertRaisesRegex(ValueError, "UNPROBED_MISLABELED"):
+            self.check(complete=False)
+
     def test_duplicate_and_invalid_hash_rejected(self):
         self.report["candidates"][0]["url_sha256"] = "bad"
         self.fails("INVALID_CANDIDATE_SHA")
