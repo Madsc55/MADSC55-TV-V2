@@ -65,7 +65,7 @@ class PrivateIboAcceptanceTests(unittest.TestCase):
             "video":True,"audio":True,"channel_ids":["TV.tr"]})
         with tempfile.TemporaryDirectory() as tmp:
             root=Path(tmp)
-            output=root/"test.m3u8"
+            output=root/"private-test.m3u8"
             main=root/"main.m3u8"
             main.write_text("#EXTM3U\n")
             with patch.object(exporter,"MAIN",main),\
