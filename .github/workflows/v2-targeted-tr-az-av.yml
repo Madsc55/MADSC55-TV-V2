@@ -22,7 +22,7 @@ jobs:
           test "$(git hash-object MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)" = '4b1c3cea4b5107a425abab60f62d41f9f81e05a7'
           test "$(sha256sum v2/history/stage3-4955-hash-only.jsonl | cut -d' ' -f1)" = 'ee00a844a028e3410715d411467a2d3306f5f5cc4565766140b6438e786cdd27'
       - name: Run all related AV scope, encryption and integrity tests together
-        run: PYTHONPATH=v2 python -m unittest -v test_targeted_tr_az_av_acceptance test_final_batch_acceptance test_final_worldwide_report_gate
+        run: PYTHONPATH=v2 python -m unittest -v test_targeted_tr_az_av_acceptance test_final_batch_acceptance test_final_worldwide_report_gate test_document_platform_validation_regression
 
   live-target-evidence:
     name: Real TR AZ metadata-source AV batch - no IBO publication
