@@ -53,9 +53,15 @@ def classify_report(data):
                 raise ValueError("Missing candidate URL hash")
             current["has_candidate"] = True
             current["url_sha256"].add(candidate["url_sha256"])
-            if (candidate.get("video_stream") is True
-                    and candidate.get("audio_stream") is True
-                    and candidate.get("status") == "VIDEO_STREAM_OBSERVED"):
+            decoded = candidate.get("ffmpeg_video_audio_decoded", False)
+            if type(decoded) is not bool:
+                raise ValueError("Decoder proof must be boolean")
+            if ((decoded and (candidate.get("status") != "VIDEO_AUDIO_DECODED"
+                              or candidate.get("video_stream") is not True
+                              or candidate.get("audio_stream") is not True))
+                    or candidate.get("status") == "VIDEO_AUDIO_DECODED" and not decoded):
+                raise ValueError("FFprobe-only evidence cannot claim real AV")
+            if decoded:
                 current["has_av"] = True
             elif isinstance(candidate.get("diagnostic_category"), str):
                 causes[candidate["diagnostic_category"]] += 1
@@ -100,6 +106,7 @@ def classify_report(data):
             "hash_only_identity_work_queues": identity_queues,
             "diagnostic_categories_not_playback_proof": dict(sorted(causes.items())),
             "encrypted_candidate_count": data.get("all_proven_url_candidates_sealed_for_future_retest"),
+            "av_acceptance_rule": "FFMPEG_VIDEO_AND_AUDIO_DECODED_ONLY",
             "no_plaintext_urls_reported": True,
             "protected_ibo_playlist_unchanged": True, "ibo_device_verified": False}
 

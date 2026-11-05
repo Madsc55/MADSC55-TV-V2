@@ -3,8 +3,8 @@
 
 This job never modifies upstream feeds or the protected IBO playlist. Exact
 #EXTINF matches from historical Git commits / the publisher's official
-alternate feeds are candidate URL evidence; FFprobe A/V is required before a
-candidate is called playable. Plaintext stream URLs are held only in memory
+alternate feeds are candidate URL evidence; real FFmpeg video+audio decoding
+is required before a candidate is called playable. Plaintext stream URLs are held only in memory
 and, for proven A/V successes, sealed to the existing RSA public key.
 """
 import argparse
@@ -19,7 +19,7 @@ from urllib.parse import quote, urlencode, urlsplit
 
 from stage3_historical_source_recovery import _read
 from historical_url_recovery import validate_url
-from historical_targeted_playback import probe_one
+from final_batch_acceptance import probe as ffmpeg_probe
 from stage3_sealed_export import seal_rows
 
 ORIGINALS = (
@@ -552,7 +552,28 @@ def find_existing_exact_identity(orphans, catalog, *, reader=_read_document,
     }
 
 
-def evaluate(sources, *, probe=probe_one):
+def probe_real_av(pair):
+    """Validate actual FFprobe and one-second FFmpeg video+audio decode."""
+    result = ffmpeg_probe(pair)
+    if (not isinstance(result, dict) or result.get("url_sha256") != pair[0]
+            or any(type(result.get(field)) is not bool
+                   for field in ("video", "audio", "decoded"))):
+        raise ValueError("Invalid real FFmpeg evidence")
+    status = result.get("status")
+    if not isinstance(status, str) or not re.fullmatch(r"[A-Z_]{2,100}", status):
+        raise ValueError("Unapproved media status")
+    decoded = result["decoded"]
+    if (decoded and (not result["video"] or not result["audio"]
+                     or status != "VIDEO_AUDIO_DECODED")
+            or status == "VIDEO_AUDIO_DECODED" and not decoded):
+        raise ValueError("False FFmpeg video+audio proof")
+    return {"url_sha256": pair[0], "status": status,
+            "video_stream": result["video"], "audio_stream": result["audio"],
+            "ffmpeg_video_audio_decoded": decoded,
+            "diagnostic_category": None if decoded else status}
+
+
+def evaluate(sources, *, probe=probe_real_av):
     """Use deduped URL candidates, report only anonymous evidence."""
     mapping = defaultdict(list)
     urls = {}
@@ -566,9 +587,22 @@ def evaluate(sources, *, probe=probe_one):
         raise ValueError("Too many historical streams for bounded validation")
     with ThreadPoolExecutor(max_workers=8) as pool:
         probed = list(pool.map(probe, sorted(urls.items())))
+    if (len(probed) != len(urls) or
+            {z.get("url_sha256") for z in probed} != set(urls)):
+        raise ValueError("Incomplete candidate SHA playback coverage")
+    for evidence in probed:
+        status = evidence.get("status")
+        decoded = evidence.get("ffmpeg_video_audio_decoded", False)
+        if (not isinstance(status, str)
+                or not re.fullmatch(r"[A-Z_]{2,100}", status)
+                or type(decoded) is not bool
+                or decoded and (status != "VIDEO_AUDIO_DECODED"
+                                or evidence.get("video_stream") is not True
+                                or evidence.get("audio_stream") is not True)
+                or status == "VIDEO_AUDIO_DECODED" and not decoded):
+            raise ValueError("Unproven or inconsistent FFmpeg decoder evidence")
     verified = {z["url_sha256"] for z in probed
-                if z["status"] == "VIDEO_STREAM_OBSERVED"
-                and z.get("video_stream") and z.get("audio_stream")}
+                if z.get("ffmpeg_video_audio_decoded") is True}
     rows = []
     for sha in sorted(verified):
         owners = mapping[sha]
@@ -659,13 +693,15 @@ def sealed_retest_candidate_rows(sources, proof_states):
                      "probe_status": status["status"],
                      "video_stream": bool(status.get("video_stream")),
                      "audio_stream": bool(status.get("audio_stream")),
-                     "needs_retest": not (
-                         status.get("video_stream") and status.get("audio_stream"))})
+                     "ffmpeg_video_audio_decoded":
+                         status.get("ffmpeg_video_audio_decoded") is True,
+                     "needs_retest":
+                         status.get("ffmpeg_video_audio_decoded") is not True})
     return rows
 
 
 def audit(*, report_path, sealed_path, key_path, limit=20,
-          reader=_read_document, commits=historical_revisions, probe=probe_one,
+          reader=_read_document, commits=historical_revisions, probe=probe_real_av,
           known_source_catalog=None, all_candidates_sealed_path=None,
           immutable_orphan_baseline_path=None, public_registry=False,
           registry_fetcher=None, targeted_code_search=False,
@@ -858,6 +894,8 @@ def audit(*, report_path, sealed_path, key_path, limit=20,
             candidate_evidence.append({"url_sha256": sha,
                                        "video_stream": bool(p.get("video_stream")),
                                        "audio_stream": bool(p.get("audio_stream")),
+                                       "ffmpeg_video_audio_decoded":
+                                           p.get("ffmpeg_video_audio_decoded") is True,
                                        "status": p["status"],
                                        "diagnostic_category": p.get("diagnostic_category"),
                                        "proof_commits": record.get("proof_commits", []),
@@ -873,7 +911,7 @@ def audit(*, report_path, sealed_path, key_path, limit=20,
             "extinf_sha256": item["extinf_sha256"], "reason": item["reason"],
             "uri_structure": item["uri_structure"],
             "historical_or_official_candidates": len(candidate_evidence),
-            "verified_av_candidates": sum(x["video_stream"] and x["audio_stream"]
+            "verified_av_candidates": sum(x["ffmpeg_video_audio_decoded"]
                                           for x in candidate_evidence),
             "candidates": candidate_evidence})
     result = {
@@ -902,10 +940,10 @@ def audit(*, report_path, sealed_path, key_path, limit=20,
             if sealed_candidate_count is not None else None,
         "unique_candidates_video_audio_verified": len(verified_rows),
         "orphan_entries_with_current_av": sum(
-            any(p["video_stream"] and p["audio_stream"] for p in x["candidates"])
+            any(p["ffmpeg_video_audio_decoded"] for p in x["candidates"])
             for x in source_evidence),
         "orphan_entries_without_current_av": sum(
-            not any(p["video_stream"] and p["audio_stream"] for p in x["candidates"])
+            not any(p["ffmpeg_video_audio_decoded"] for p in x["candidates"])
             for x in source_evidence),
         "unavailable_historical_git_files": historic_errors,
         "existing_catalog_reconciliation": existing_report,
@@ -913,6 +951,7 @@ def audit(*, report_path, sealed_path, key_path, limit=20,
         "records": source_evidence,
         "plain_stream_urls_reported": False, "protected_playlist_modified": False,
         "ibo_device_verified": False,
+        "av_acceptance_rule": "FFMPEG_VIDEO_AND_AUDIO_DECODED_ONLY",
         "scan_scope": "FOUR_ORIGINAL_M3U_FEEDS_63_KNOWN_AND_VALIDATED_PUBLIC_DOCUMENT_SOURCES",
     }
     if verified_rows:

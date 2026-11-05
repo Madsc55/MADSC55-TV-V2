@@ -399,13 +399,40 @@ class OrphanRecoveryTests(unittest.TestCase):
                  "extinf": self.dis,
                  "candidates": {hashlib.sha256(self.a.encode()).hexdigest(): c}}
         def verified(item):
-            return {"url_sha256": item[0], "status": "VIDEO_STREAM_OBSERVED",
-                    "video_stream": True, "audio_stream": True}
+            return {"url_sha256": item[0], "status": "VIDEO_AUDIO_DECODED",
+                    "video_stream": True, "audio_stream": True,
+                    "ffmpeg_video_audio_decoded": True}
         p, rows, m = evaluate([entry, entry], probe=verified)
         self.assertEqual(len(p), 1)
         self.assertEqual(len(rows), 1)
         self.assertEqual(rows[0]["url"], self.a)
         self.assertIn(entry, m[p[0]["url_sha256"]])
+
+    def test_ffprobe_both_streams_without_decoder_stays_unverified(self):
+        digest = hashlib.sha256(self.a.encode()).hexdigest()
+        item = {"source_id": "discevisita-tr", "extinf_sha256": "a" * 64,
+                "extinf": self.dis, "candidates": {digest: {"url": self.a}}}
+        def streams_only(pair):
+            return {"url_sha256": pair[0], "status": "VIDEO_STREAM_OBSERVED",
+                    "video_stream": True, "audio_stream": True}
+        checked, successful, mapping = evaluate([item], probe=streams_only)
+        self.assertEqual(len(checked), 1)
+        self.assertEqual(successful, [])
+        self.assertEqual(len(mapping), 1)
+        from orphan_m3u_recovery import sealed_retest_candidate_rows
+        preserved = sealed_retest_candidate_rows([item],
+            {checked[0]["url_sha256"]: checked[0]})
+        self.assertTrue(preserved[0]["needs_retest"])
+
+    def test_inconsistent_ffmpeg_success_rejected(self):
+        digest = hashlib.sha256(self.a.encode()).hexdigest()
+        item = {"source_id": "discevisita-tr", "extinf_sha256": "a" * 64,
+                "extinf": self.dis, "candidates": {digest: {"url": self.a}}}
+        with self.assertRaises(ValueError):
+            evaluate([item], probe=lambda pair: {
+                "url_sha256": pair[0], "status": "VIDEO_AUDIO_DECODED",
+                "video_stream": True, "audio_stream": False,
+                "ffmpeg_video_audio_decoded": True})
 
     def test_failed_historical_candidates_preserved_for_retest(self):
         from orphan_m3u_recovery import sealed_retest_candidate_rows
@@ -439,7 +466,8 @@ class OrphanRecoveryTests(unittest.TestCase):
         self.assertEqual(len(rows), 1)
         self.assertEqual(rows[0]["source_ids"], ["source-a", "source-b"])
         self.assertEqual(rows[0]["orphan_extinf_sha256"], ["a" * 64, "b" * 64])
-        self.assertFalse(rows[0]["needs_retest"])
+        self.assertTrue(rows[0]["needs_retest"])
+        self.assertFalse(rows[0]["ffmpeg_video_audio_decoded"])
 
     def test_all_candidates_are_sealed_only_in_private_archive(self):
         line = self.dis
@@ -507,7 +535,7 @@ class OrphanRecoveryTests(unittest.TestCase):
             "proof_original_upstream_now_has_uri"])
         self.assertEqual(one["uri_structure"], "PUBLIC_ABSOLUTE_HTTP_URI")
 
-    def test_current_upstream_fix_is_ffprobed_and_not_published(self):
+    def test_current_upstream_fix_is_real_decoded_and_not_published(self):
         meta = '#EXTINF:-1 tvg-id="T.tr",TR TV'
         baseline = {"sources": {
             "discevisita-tr": [hashlib.sha256(meta.encode()).hexdigest()],
@@ -520,8 +548,9 @@ class OrphanRecoveryTests(unittest.TestCase):
                 return current
             return "#EXTM3U\n"
         def probe(item):
-            return {"url_sha256": item[0], "status": "VIDEO_STREAM_OBSERVED",
-                    "video_stream": True, "audio_stream": True}
+            return {"url_sha256": item[0], "status": "VIDEO_AUDIO_DECODED",
+                    "video_stream": True, "audio_stream": True,
+                    "ffmpeg_video_audio_decoded": True}
         with tempfile.TemporaryDirectory() as folder:
             path = Path(folder)
             with (patch("orphan_baseline_guard.load_immutable_baseline",
@@ -646,8 +675,11 @@ class OrphanRecoveryTests(unittest.TestCase):
                 return "#EXTM3U\n" + self.onur + "\n" + self.b
             return "#EXTM3U\n"
         def probe(item):
-            return {"url_sha256": item[0], "status": "VIDEO_STREAM_OBSERVED",
-                    "video_stream": True, "audio_stream": item[1] == self.a}
+            decoded = item[1] == self.a
+            return {"url_sha256": item[0],
+                    "status": "VIDEO_AUDIO_DECODED" if decoded else "VIDEO_ONLY",
+                    "video_stream": True, "audio_stream": decoded,
+                    "ffmpeg_video_audio_decoded": decoded}
         with tempfile.TemporaryDirectory() as directory:
             report = Path(directory)/"public.json"
             sealed = Path(directory)/"private.sealed"

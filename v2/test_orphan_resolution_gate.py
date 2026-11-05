@@ -19,7 +19,8 @@ def fixture():
                         "extinf_sha256": ("%064x" % (i+1)),
                         "candidates": ([{"url_sha256": "%064x" % (i+100),
                                          "video_stream": av, "audio_stream": av,
-                                         "status": "VIDEO_STREAM_OBSERVED" if av else "PROBE_FAILED_NOT_PROVEN_DEAD"}]
+                                         "ffmpeg_video_audio_decoded": av,
+                                         "status": "VIDEO_AUDIO_DECODED" if av else "PROBE_FAILED_NOT_PROVEN_DEAD"}]
                                        if candidate else [])})
     for i in range(5):
         records.append(dict(records[i]))
@@ -87,10 +88,29 @@ class OrphanResolutionGateTests(unittest.TestCase):
 
     def test_candidate_without_video_audio_is_not_verified(self):
         r = fixture()
-        r["records"][0]["candidates"][0]["audio_stream"] = False
-        r["records"][50]["candidates"][0]["audio_stream"] = False
+        for index in (0, 50):
+            r["records"][index]["candidates"][0].update({
+                "audio_stream": False, "ffmpeg_video_audio_decoded": False,
+                "status": "VIDEO_ONLY"})
         result = classify_report(r)
         self.assertEqual(result["video_audio_verified_identities"], 4)
+
+    def test_legacy_ffprobe_only_not_accepted_as_av(self):
+        r = fixture()
+        for index in (0, 50):
+            r["records"][index]["candidates"][0].update({
+                "status": "VIDEO_STREAM_OBSERVED",
+                "ffmpeg_video_audio_decoded": False,
+                "video_stream": True, "audio_stream": True})
+        result = classify_report(r)
+        self.assertEqual(result["video_audio_verified_identities"], 4)
+        self.assertEqual(result["remaining_unverified_identities"], 46)
+
+    def test_false_decoded_claim_without_audio_rejected(self):
+        r = fixture()
+        r["records"][0]["candidates"][0]["audio_stream"] = False
+        with self.assertRaises(ValueError):
+            classify_report(r)
 
     def test_report_with_public_plaintext_url_rejected(self):
         r = fixture()
