@@ -23,6 +23,8 @@ on:
       - 'v2/test_historical_world_av_bridge.py'
       - 'v2/orphan_world_av_bridge.py'
       - 'v2/test_orphan_world_av_bridge.py'
+      - 'v2/orphan_evidence_triage.py'
+      - 'v2/test_orphan_evidence_triage.py'
       - '.github/workflows/v2-world-discovery.yml'
       - '.github/workflows/v2-turkish-m3u-source-coverage.yml'
   workflow_dispatch:
@@ -70,6 +72,7 @@ jobs:
             test_historical_exact_real_av \
             test_historical_world_av_bridge \
             test_orphan_world_av_bridge \
+            test_orphan_evidence_triage \
             2>&1 | tee v2/reports/ci/turkish-m3u-loss-tests.log
       - name: Download real #60 and #72 aggregate evidence without scanning channel streams
         env:
@@ -168,6 +171,17 @@ jobs:
             --current-orphan "$RUNNER_TEMP/madsc-orphan/ci/three-source-orphan-anonymous.json" \
             --previous-world "$RUNNER_TEMP/madsc-world/final-worldwide-acceptance.json" \
             --output v2/reports/ci/orphan-50-prior-world-anonymous.json
+      - name: Classify all original orphan candidates using actual prior FFmpeg evidence
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/v2-orphan-actionability"
+          gh run download 42018761724 -n orphan-50-expanded-av-evidence-42018761724 -D "$RUNNER_TEMP/v2-orphan-actionability"
+          PYTHONPATH=v2 python v2/orphan_evidence_triage.py \
+            --report "$RUNNER_TEMP/v2-orphan-actionability/ci/orphan-50-pinned-main-anonymous.json" \
+            --output v2/reports/ci/orphan-50-actionability-anonymous.json
       - name: Upload single grouped evidence bundle
         if: always()
         uses: actions/upload-artifact@v4
@@ -180,5 +194,6 @@ jobs:
             v2/reports/ci/historical-current-missing-real-ffmpeg-anonymous.json
             v2/reports/ci/historical-4955-prior-world-av-anonymous.json
             v2/reports/ci/orphan-50-prior-world-anonymous.json
+            v2/reports/ci/orphan-50-actionability-anonymous.json
           if-no-files-found: warn
           retention-days: 30
