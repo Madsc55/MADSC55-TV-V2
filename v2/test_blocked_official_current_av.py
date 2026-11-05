@@ -63,7 +63,7 @@ class BlockedOfficialCurrentAVTests(unittest.TestCase):
     def test_partial_source_does_not_claim_complete(self):
         config, reader = fixture()
         def broken(url):
-            if "sayatsirinoglu" in url:
+            if sorted(SOURCES)[0] in url:
                 raise OSError("unavailable")
             return reader(url)
         report, rows = scan(config, reader=broken, prober=fake_probe)
