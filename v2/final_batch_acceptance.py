@@ -229,6 +229,14 @@ def resume_checks(prior, inventory):
                           "evidence_origin": "PRIOR_RUN_HASH_ONLY_NOT_FRESH"}
     return checks
 
+def prioritized_pending(entries_, inventory, checks):
+    """Prefer TR/AZ metadata leads without dropping or certifying any other URL."""
+    pending = [(digest, item["url"]) for digest, item in entries_ if digest not in checks]
+    pending.sort(key=lambda pair: (
+        0 if route(inventory[pair[0]]["meta"], inventory[pair[0]]["scopes"]).startswith(("TR_", "AZ_")) else 1,
+        pair[0]))
+    return pending
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--workers", type=int, default=24)
@@ -271,10 +279,7 @@ def main():
     deadline = t0 + a.budget_seconds
     # Prioritize TR/AZ candidates within the same bounded global audit.
     # Every candidate remains in the encrypted inventory, even if the budget expires.
-    pending = [(digest, item["url"]) for digest, item in entries_ if digest not in checks]
-    pending.sort(key=lambda pair: (
-        0 if route(inventory[pair[0]]["meta"], inventory[pair[0]]["scopes"]).startswith(("TR_", "AZ_")) else 1,
-        pair[0]))
+    pending = prioritized_pending(entries_, inventory, checks)
     with ThreadPoolExecutor(max_workers=a.workers) as executor:
         # Smaller bounded batches reduce deadline overshoot on slow or hanging streams.
         for offset in range(0, len(pending), 32):
