@@ -83,6 +83,16 @@ class SourceAvailabilityTests(unittest.TestCase):
         self.assertEqual(outcome["coverage_status"], "COMPLETE")
         self.assertFalse(outcome["playback_verified"])
 
+    def test_reject_duplicate_or_blank_source_ids(self):
+        for rows in ([{"id": "same"}, {"id": "same"}], [{"id": "  "} ]):
+            with self.subTest(rows=rows), self.assertRaises(ValueError):
+                active_source_inventory(rows)
+
+    def test_reject_non_boolean_enabled_flags(self):
+        for flag in (0, 1, "false", None):
+            with self.subTest(flag=flag), self.assertRaises(ValueError):
+                active_source_inventory([{"id": "source", "enabled": flag}])
+
     def test_error_kept_per_source(self):
         report = audit([{"id": "missing", "url": "https://example.org/a.m3u"}],
                        lambda url: {"status": "HTTP_ERROR", "http_status": 404})
