@@ -88,9 +88,23 @@ def inspect(report_path: Path, require_complete=True):
         routes[route] += 1
         for key in ("video", "audio", "decoded"):
             require(type(row.get(key)) is bool, "INVALID_AV_BOOL")
+        expected_av = {
+            "VIDEO_AUDIO_DECODED": (True, True, True),
+            "VIDEO_AUDIO_STREAMS_ONLY": (True, True, False),
+            "VIDEO_ONLY": (True, False, False),
+            "AUDIO_ONLY": (False, True, False),
+            "NO_AV": (False, False, False),
+        }
+        if st in expected_av:
+            require((row["video"], row["audio"], row["decoded"]) == expected_av[st],
+                    "INCONSISTENT_AV_STATUS_FLAGS")
+        elif st == "NOT_PROBED_BUDGET":
+            require(not (row["video"] or row["audio"] or row["decoded"]),
+                    "UNPROBED_WITH_AV_FLAGS")
+        else:
+            require(not (row["video"] or row["audio"] or row["decoded"]),
+                    "FAILED_PROBE_WITH_AV_FLAGS")
         if row["decoded"]:
-            require(row["video"] and row["audio"] and st == "VIDEO_AUDIO_DECODED",
-                    "FALSE_AV_DECODE_CLAIM")
             decoded += 1
     def integer(key):
         x = report.get(key)
