@@ -36,6 +36,7 @@ def plan(archive=None, previous_report=None, include_youtube=True, source_only=F
         [sys.executable, str(ROOT / "traz_api_source_batch.py"), "--public-only"],
         [sys.executable, str(ROOT / "discover.py"), "--include-original-run60-github-sources",
          "--include-reviewed-public-source-references", "--include-approved-live-page-indexes"],
+        [sys.executable, str(ROOT / "traz_api_m3u_bridge.py")],
         [sys.executable, str(ROOT / "source_integration_gate.py"),
          "--accept-partial-routing"],
     ]
@@ -45,11 +46,11 @@ def plan(archive=None, previous_report=None, include_youtube=True, source_only=F
     else:
         if archive is None:
             raise ValueError("Durable discovery requires the private archive")
-        steps[-2].extend(["--encrypted-archive", str(archive)])
+        steps[-3].extend(["--encrypted-archive", str(archive)])
     if include_youtube:
-        steps.insert(-2, [sys.executable, str(ROOT / "youtube_discovery.py")])
+        steps.insert(-3, [sys.executable, str(ROOT / "youtube_discovery.py")])
     if previous_report:
-        steps[-2].extend(["--previous-report", str(previous_report)])
+        steps[-3].extend(["--previous-report", str(previous_report)])
     return steps
 
 def validate_source_inventory(config_path=None):
