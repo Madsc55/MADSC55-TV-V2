@@ -11,6 +11,8 @@ on:
       - 'v2/traz_gap_crosswalk.py'
       - 'v2/traz_official_feed_variant_gap.py'
       - 'v2/traz_name_leads_real_av.py'
+      - 'v2/traz_extra_xmltv_review.py'
+      - 'v2/test_traz_extra_xmltv_review.py'
       - 'v2/test_traz_name_leads_real_av.py'
       - 'v2/test_traz_official_feed_variant_gap.py'
       - 'v2/traz_missing_name_xmltv_review.py'
@@ -89,6 +91,7 @@ jobs:
             test_traz_gap_crosswalk \
             test_traz_official_feed_variant_gap \
             test_traz_name_leads_real_av \
+            test_traz_extra_xmltv_review \
             test_traz_missing_name_xmltv_review \
             test_traz_transient_av_recovery \
             test_traz_hls_codec_stability \
@@ -1001,5 +1004,81 @@ jobs:
           path: |
             v2/reports/ci/traz-name-leads-real-av.json
             v2/reports/ci/traz-name-leads-real-av.sealed
+          if-no-files-found: warn
+          retention-days: 30
+
+  traz-additional-xmltv-gap:
+    name: Additional public TR AZ XMLTV source EPG gap review only
+    if: >-
+      github.event_name == 'push' &&
+      github.repository == 'Madsc55/MADSC55-TV-V2' &&
+      github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
+      github.event.head_commit.message == 'feat(v2): review additional TR AZ XMLTV sources for missing guides'
+    needs: offline-source-safety
+    runs-on: ubuntu-24.04
+    timeout-minutes: 22
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Guard immutable 4955 historical IDs and protected IBO playlist
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git hash-object MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)" = '4b1c3cea4b5107a425abab60f62d41f9f81e05a7'
+          test "$(sha256sum v2/history/stage3-4955-hash-only.jsonl | cut -d' ' -f1)" = 'ee00a844a028e3410715d411467a2d3306f5f5cc4565766140b6438e786cdd27'
+      - name: Download existing 344-gap API identity evidence without rescan
+        uses: actions/download-artifact@v4
+        with:
+          name: traz-api-safe-evidence-42065292765
+          run-id: 42065292765
+          github-token: ${{ github.token }}
+          path: v2/reports/ci
+      - name: Download original 2 exact plus 7 alias XMLTV evidence
+        uses: actions/download-artifact@v4
+        with:
+          name: v2-unified-source-search-42065292765
+          run-id: 42065292765
+          github-token: ${{ github.token }}
+          path: v2/reports/ci
+      - name: Grouped safety tests for exact ID, unique display name, XMLTV timestamps and no fake schedules
+        shell: bash
+        run: |
+          set -euo pipefail
+          PYTHONPATH=v2 python -m unittest -v test_traz_extra_xmltv_review test_traz_missing_name_xmltv_review test_traz_gap_crosswalk
+      - name: Inspect four additional approved XMLTV sources in one bounded batch
+        run: timeout 480s python v2/traz_extra_xmltv_review.py
+      - name: Validate original 335 gap, metadata-only matches and anonymous public output
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path("v2/reports/ci/traz-additional-xmltv-gap.json")
+          r=json.loads(p.read_text(encoding="utf-8"))
+          assert r["original_missing_epg_api_identities"]==344
+          assert r["already_matched_from_original_sources"]==9
+          assert r["previously_without_xmltv_candidate"]==335
+          assert r["additional_guide_candidate_identities"]+r["still_missing_epg_identities"]==335
+          assert not r["programme_schedule_accuracy_verified"]
+          assert not r["new_stream_av_verified"]
+          assert not r["ibo_device_verified"] and not r["protected_playlist_modified"]
+          assert len(r["source_audit"])==4
+          assert "https://" not in p.read_text() and "http://" not in p.read_text()
+          print("ADDITIONAL_XMLTV_GAP_VERIFIED",r["additional_guide_candidate_identities"])
+          PY
+      - name: Upload only anonymous extra XMLTV metadata report, never guide data or IPTV URLs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v2-traz-additional-xmltv-gap-${{ github.run_id }}
+          path: v2/reports/ci/traz-additional-xmltv-gap.json
           if-no-files-found: warn
           retention-days: 30
