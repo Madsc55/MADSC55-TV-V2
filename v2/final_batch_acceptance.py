@@ -212,7 +212,7 @@ def resume_checks(prior, inventory):
         # Only a completed video+audio decode is reusable evidence.
         # Stream-only, video-only, audio-only and NO_AV are not playback proof;
         # probe them again rather than freezing a transient source failure.
-        if digest not in inventory or status != "VIDEO_AUDIO_DECODED":
+        if digest not in inventory or status not in allowed:
             continue
         if any(type(row.get(k)) is not bool for k in ("video", "audio", "decoded")):
             raise ValueError("Invalid AV evidence flags")
@@ -221,6 +221,8 @@ def resume_checks(prior, inventory):
         tags = row.get("audio_tags_not_spoken_language_proof", [])
         if not isinstance(tags, list) or any(not isinstance(t, str) for t in tags):
             raise ValueError("Invalid audio tags")
+        if status != "VIDEO_AUDIO_DECODED":
+            continue
         checks[digest] = {"url_sha256": digest, "status": status,
                           "video": row["video"], "audio": row["audio"],
                           "decoded": row["decoded"], "audio_lang_tags": tags,
