@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "kind": "V2_ORPHAN_50_EXTRA_PINNED_PUBLIC_SOURCE_BATCH_EVIDENCE",
+  "date_utc": "2026-11-05",
+  "branch": "madsc/v2-discovery-bulk-20261031",
+  "tested_commit": "4f31c72fe1539fca0f330f28bdbe392c343ae9d3",
+  "github_actions_run_id": 42024784927,
+  "github_actions_url": "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42024784927",
+  "artifact_id": 13413551231,
+  "artifact_zip_sha256": "26fd2ab89f66799d175e20a775df6a5c0afaeb0fc951cefc8c99756674217036",
+  "pinned_public_repository": "shovo127/IPTV-By-Shovo",
+  "pinned_source_commit": "f3008de1e64cd7049acf2a897868ad1faa1bf6c1",
+  "additional_candidate_only_source_refs": 2,
+  "candidate_source_scopes": [
+    "TR",
+    "AZ"
+  ],
+  "preliminary_source_comparison": {
+    "compared_to": "iptv-org/iptv streams/tr.m3u and streams/az.m3u at inspection time",
+    "extra_tr_stream_url_candidates": 70,
+    "extra_az_stream_url_candidates": 13,
+    "all_are_source_hints_not_av_proof": true
+  },
+  "original_orphan_occurrences_preserved": 55,
+  "unique_orphan_identities_preserved": 50,
+  "distinct_original_identities_with_exact_metadata_match_in_new_sources": 0,
+  "new_unique_exact_orphan_stream_urls": 0,
+  "new_real_ffmpeg_av_verified_orphan_identities": 0,
+  "source_document_errors": 0,
+  "prior_verified_current_av_identities_unchanged": 4,
+  "prior_candidate_unverified_identities_unchanged": 36,
+  "prior_no_exact_candidate_identities_unchanged": 10,
+  "prior_historical_candidate_url_hashes_not_reprobed": 125,
+  "grouped_offline_regressions_passed": 158,
+  "batch_workflow_status": "success",
+  "all_50_av_recovered": false,
+  "original_46_fixed_and_17_dynamic_sources_modified": false,
+  "main_playlist_modified": false,
+  "ibo_device_verified": false,
+  "no_fake_playable_stream_claimed": true,
+  "prospective_follow_up": "Only source updates with exact matching publisher metadata and real FFmpeg decode can increase accepted recovered channels."
+}
