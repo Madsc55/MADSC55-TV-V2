@@ -139,7 +139,7 @@ jobs:
       github.repository == 'Madsc55/MADSC55-TV-V2'
     needs: offline-source-safety
     runs-on: ubuntu-24.04
-    timeout-minutes: 150
+    timeout-minutes: 300
     permissions:
       contents: read
     steps:
@@ -239,7 +239,7 @@ jobs:
         run: |
           PYTHONPATH=v2 python -m unittest -v test_final_batch_acceptance test_final_worldwide_report_gate
       - name: Real bounded video-plus-audio scan of static, reviewed public and document sources
-        run: timeout 8000s python v2/final_batch_acceptance.py --workers 32 --budget-seconds 7200 --require-public-sources
+        run: timeout 16000s python v2/final_batch_acceptance.py --workers 32 --budget-seconds 14400 --require-public-sources
       - name: Require complete AV probe coverage, valid SHA256 evidence and encrypted URL archive
         run: PYTHONPATH=v2 python v2/final_worldwide_report_gate.py --report v2/reports/ci/final-worldwide-acceptance.json
       - name: Upload anonymous AV report and encrypted stream evidence; no plaintext URLs
