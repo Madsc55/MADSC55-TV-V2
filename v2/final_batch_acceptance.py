@@ -194,6 +194,11 @@ def resume_checks(prior, inventory):
     seen = set()
     allowed = {"VIDEO_AUDIO_DECODED", "VIDEO_AUDIO_STREAMS_ONLY",
                "VIDEO_ONLY", "AUDIO_ONLY", "NO_AV"}
+    expected_flags = {"VIDEO_AUDIO_DECODED": (True, True, True),
+                      "VIDEO_AUDIO_STREAMS_ONLY": (True, True, False),
+                      "VIDEO_ONLY": (True, False, False),
+                      "AUDIO_ONLY": (False, True, False),
+                      "NO_AV": (False, False, False)}
     for row in rows:
         if not isinstance(row, dict):
             raise ValueError("Invalid prior candidate")
@@ -206,10 +211,8 @@ def resume_checks(prior, inventory):
             continue
         if any(type(row.get(k)) is not bool for k in ("video", "audio", "decoded")):
             raise ValueError("Invalid AV evidence flags")
-        if row["decoded"] != (status == "VIDEO_AUDIO_DECODED"):
-            raise ValueError("Inconsistent decode status")
-        if row["decoded"] and not (row["video"] and row["audio"]):
-            raise ValueError("Incomplete decoded AV evidence")
+        if (row["video"], row["audio"], row["decoded"]) != expected_flags[status]:
+            raise ValueError("Inconsistent AV status flags")
         tags = row.get("audio_tags_not_spoken_language_proof", [])
         if not isinstance(tags, list) or any(not isinstance(t, str) for t in tags):
             raise ValueError("Invalid audio tags")
