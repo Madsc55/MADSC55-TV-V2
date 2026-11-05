@@ -103,7 +103,11 @@ def sample(url,runner=subprocess.run,resolver=None):
               "http,https,tcp,tls,crypto","-i",url,"-map","0:v:0",
               "-map","0:a:0","-t","1","-f","null","-"]
         p=runner(args,capture_output=True,text=True,stdin=subprocess.DEVNULL,timeout=28)
-        return {"status":"VIDEO_AUDIO_DECODED" if p.returncode==0 else "CURRENT_AV_UNVERIFIED",
+        # A native FFmpeg signal/segfault is an INFRASTRUCTURE failure, not
+        # evidence that an IPTV broadcaster has stopped transmitting.
+        return {"status":("VIDEO_AUDIO_DECODED" if p.returncode==0 else
+                          "FFMPEG_RUNTIME_SIGNAL" if p.returncode<0 else
+                          "CURRENT_AV_UNVERIFIED"),
                 "decoded":p.returncode==0,**decode_details(p.stderr)}
     except (OSError,ValueError,TypeError,subprocess.TimeoutExpired):
         return {"status":"PROBE_ERROR_NOT_DEAD","decoded":False,**empty}
@@ -169,6 +173,9 @@ def aggregate(prior,urls,bad,missing,first,second,hls):
       "both_short_av_samples_decoded":sum(x["both_samples_decode"] for x in rows),
       "codec_pairs_measured":sum(x["video_codec_measured"] is not None and x["audio_codec_measured"] is not None for x in rows),
       "hls_masters":sum(x["manifest"].get("status")=="HLS_MASTER_METADATA_NOT_AV" for x in rows),
+      "ffmpeg_runtime_signals":sum(
+          x["av_round_1"]=="FFMPEG_RUNTIME_SIGNAL" or
+          x["av_round_2"]=="FFMPEG_RUNTIME_SIGNAL" for x in rows),
       "short_interval_does_not_prove_24h_uptime":True,
       "spoken_language_verified":False,"sweden_access_verified":False,
       "ibo_device_verified":False,"protected_playlist_modified":False,"streams":rows}
@@ -199,7 +206,10 @@ def main():
     print("HLS_CODEC_MULTI_SAMPLE_REAL_AV",json.dumps({k:result[k] for k in
         ("prior_av_verified_streams","current_api_exact_urls","api_identity_mismatches",
          "api_urls_no_longer_listed","both_short_av_samples_decoded",
-         "codec_pairs_measured","hls_masters")},sort_keys=True))
+         "codec_pairs_measured","hls_masters","ffmpeg_runtime_signals")},sort_keys=True))
+    if result["ffmpeg_runtime_signals"] and (
+            result["ffmpeg_runtime_signals"] >= len(urls)//4):
+        raise RuntimeError("FFMPEG_RUNTIME_CRASHES_NOT_IPTV_CHANNEL_FAILURE")
 
 if __name__=="__main__":
     main()

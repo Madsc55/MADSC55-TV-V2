@@ -39,8 +39,15 @@ class HlsCodecEvidenceTests(unittest.TestCase):
         bad=sample(URL,runner=lambda *a,**kw:Mock(returncode=1,stderr=text),resolver=lambda u:True)
         self.assertTrue(good["decoded"])
         self.assertFalse(bad["decoded"])
+        signal=sample(URL,runner=lambda *a,**kw:Mock(returncode=-11,stderr=""),
+                      resolver=lambda u:True)
+        self.assertEqual(signal["status"],"FFMPEG_RUNTIME_SIGNAL")
+        self.assertFalse(signal["decoded"])
         out=aggregate({HASH:("TV.tr",)},{HASH:URL},[],[],{HASH:good},{HASH:bad},{})
         self.assertEqual(out["both_short_av_samples_decoded"],0)
+        crash=aggregate({HASH:("TV.tr",)},{HASH:URL},[],[],{HASH:signal},
+                        {HASH:signal},{})
+        self.assertEqual(crash["ffmpeg_runtime_signals"],1)
         self.assertIsNone(out["streams"][0]["reliability_score"])
         self.assertFalse(out["ibo_device_verified"])
         self.assertNotIn(URL,str(out))

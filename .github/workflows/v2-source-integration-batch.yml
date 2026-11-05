@@ -581,19 +581,24 @@ jobs:
           run-id: 42033067184
           github-token: ${{ github.token }}
           path: v2/reports/ci
-      - name: Install pinned crypto and real FFmpeg decoder
+      - name: Install real distro FFmpeg with ffprobe and HTTPS support - fail on infrastructure errors
         shell: bash
         run: |
           set -euo pipefail
           python -m pip install cryptography==44.0.2
-          if ! command -v ffmpeg >/dev/null 2>&1; then
-            python -m pip install --disable-pip-version-check --retries 2 --timeout 20 imageio-ffmpeg==0.6.0
-            FF_BIN="$(python -c 'import imageio_ffmpeg;print(imageio_ffmpeg.get_ffmpeg_exe())')"
-            test -x "$FF_BIN"
-            mkdir -p "$RUNNER_TEMP/v2-real-ffmpeg"
-            ln -s "$FF_BIN" "$RUNNER_TEMP/v2-real-ffmpeg/ffmpeg"
-            echo "$RUNNER_TEMP/v2-real-ffmpeg" >> "$GITHUB_PATH"
+          # The portable wheel failed network FFmpeg re-probes in the earlier
+          # Actions run. Use real distro ffmpeg+ffprobe and fail if unavailable.
+          if [ ! -x /usr/bin/ffmpeg ] || [ ! -x /usr/bin/ffprobe ]; then
+            timeout 360s sudo apt-get -o Acquire::Retries=2 -o Acquire::http::Timeout=20 update -qq
+            timeout 540s sudo apt-get -o Acquire::Retries=2 -o Acquire::http::Timeout=20 install -y --no-install-recommends ffmpeg
           fi
+          test -x /usr/bin/ffmpeg
+          test -x /usr/bin/ffprobe
+          /usr/bin/ffmpeg -version | head -n 1
+          /usr/bin/ffprobe -version | head -n 1
+          /usr/bin/ffmpeg -protocols | grep -q 'https'
+          echo "DISTRO_FFMPEG_FFPROBE_HTTPS_READY"
+          echo "/usr/bin" >> "$GITHUB_PATH"
       - name: Run all related HLS codec AV and source gap regressions together
         run: PYTHONPATH=v2 python -m unittest -v test_traz_gap_crosswalk test_traz_hls_codec_stability test_traz_api_av_batch
       - name: Real video plus audio samples twice and HLS manifest inspection in a single bounded batch
@@ -612,6 +617,7 @@ jobs:
           assert all(row["reliability_score"] is None and
                      row["long_term_uptime_verified"] is False for row in d["streams"])
           assert d["short_interval_does_not_prove_24h_uptime"] is True
+          assert d["ffmpeg_runtime_signals"]==0, "FFmpeg crashed, never label channels dead"
           assert d["protected_playlist_modified"] is False and d["ibo_device_verified"] is False
           assert "https://" not in p.read_text() and "http://" not in p.read_text()
           print("HLS_SHORTTERM_AV",d["both_short_av_samples_decoded"])
