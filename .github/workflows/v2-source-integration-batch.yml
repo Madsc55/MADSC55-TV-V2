@@ -73,6 +73,7 @@ jobs:
             test_source_resilience_batch \
             test_platform_verification_batch \
             test_traz_gap_crosswalk \
+            test_traz_hls_codec_stability \
             test_traz_api_source_batch \
             test_traz_api_m3u_bridge \
             test_av_verified_sealed_ibo_export
@@ -542,5 +543,76 @@ jobs:
         with:
           name: v2-traz-api-av-next-bulk-queue-${{ github.run_id }}
           path: v2/reports/ci/traz-api-next-bulk-review.json
+          if-no-files-found: warn
+          retention-days: 30
+
+  traz-hls-codec-shortterm:
+    name: Real FFmpeg HLS codecs and repeated short AV - read only
+    if: >-
+      github.event_name == 'push' &&
+      github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
+      github.repository == 'Madsc55/MADSC55-TV-V2' &&
+      github.event.head_commit.message == 'feat(v2): measure HLS codecs and repeat real AV without claiming long-term stability'
+    needs: offline-source-safety
+    runs-on: ubuntu-24.04
+    timeout-minutes: 55
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify protected playlist and historical SHA baseline
+        run: |
+          test "$(git hash-object MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)" = '4b1c3cea4b5107a425abab60f62d41f9f81e05a7'
+          test "$(sha256sum v2/history/stage3-4955-hash-only.jsonl | cut -d' ' -f1)" = 'ee00a844a028e3410715d411467a2d3306f5f5cc4565766140b6438e786cdd27'
+      - name: Get pinned real FFmpeg AV evidence from prior completed run
+        uses: actions/download-artifact@v4
+        with:
+          name: traz-real-av-anonymous-42033067184
+          run-id: 42033067184
+          github-token: ${{ github.token }}
+          path: v2/reports/ci
+      - name: Install pinned crypto and real FFmpeg decoder
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install cryptography==44.0.2
+          if ! command -v ffmpeg >/dev/null 2>&1; then
+            python -m pip install --disable-pip-version-check --retries 2 --timeout 20 imageio-ffmpeg==0.6.0
+            FF_BIN="$(python -c 'import imageio_ffmpeg;print(imageio_ffmpeg.get_ffmpeg_exe())')"
+            test -x "$FF_BIN"
+            mkdir -p "$RUNNER_TEMP/v2-real-ffmpeg"
+            ln -s "$FF_BIN" "$RUNNER_TEMP/v2-real-ffmpeg/ffmpeg"
+            echo "$RUNNER_TEMP/v2-real-ffmpeg" >> "$GITHUB_PATH"
+          fi
+      - name: Run all related HLS codec AV and source gap regressions together
+        run: PYTHONPATH=v2 python -m unittest -v test_traz_gap_crosswalk test_traz_hls_codec_stability test_traz_api_av_batch
+      - name: Real video plus audio samples twice and HLS manifest inspection in a single bounded batch
+        run: timeout 2600s python v2/traz_hls_codec_stability.py --workers 20 --interval 35
+      - name: Verify anonymous report never claims Swedish access or 24-hour reliability
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path("v2/reports/ci/traz-hls-codec-shortterm-av.json")
+          d=json.loads(p.read_text())
+          assert d["policy"]=="PUBLIC_SHA_ONLY_NO_PLAYLIST_PROMOTION"
+          assert d["prior_av_verified_streams"]==171
+          assert d["short_interval_does_not_prove_24h_uptime"] is True
+          assert d["protected_playlist_modified"] is False and d["ibo_device_verified"] is False
+          assert "https://" not in p.read_text() and "http://" not in p.read_text()
+          print("HLS_SHORTTERM_AV",d["both_short_av_samples_decoded"])
+          PY
+      - name: Upload only SHA hashes codec and short-term observation
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: traz-hls-codec-shortterm-${{ github.run_id }}
+          path: v2/reports/ci/traz-hls-codec-shortterm-av.json
           if-no-files-found: warn
           retention-days: 30
