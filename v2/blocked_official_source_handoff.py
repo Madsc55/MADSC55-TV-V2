@@ -34,7 +34,7 @@ TARGETS = {
 # Approved, already configured sources. No external search results promoted.
 SOURCES = frozenset({
     "iptv-org-tr", "iptv-org-tr-streams", "iptv-turk-tr",
-    "hayatiptv-tr-master", "discevisita-tr",
+    "hayatiptv-tr-master", "discevisita-tr", "sayatsirinoglu-tr",
 })
 MAX_ENTRIES_PER_SOURCE = 25000
 
@@ -76,7 +76,7 @@ def audit(config, *, reader=fetch):
                 raise ValueError("Duplicate or unsafe approved source")
             approved[sid] = url
     if set(approved) != SOURCES:
-        raise ValueError("Five previously approved M3U sources required")
+        raise ValueError("Six previously approved M3U sources required")
     candidate_by_sha = {}
     source_status = {}
     matched_pages = defaultdict(set)

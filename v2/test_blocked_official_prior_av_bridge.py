@@ -15,13 +15,13 @@ class BlockedOfficialPriorEvidenceTests(unittest.TestCase):
             "video_audio_verified":False,
             "no_plaintext_stream_urls":True,
             "protected_ibo_playlist_modified":False,
-            "candidate_url_count":8,
+            "candidate_url_count":9,
             "candidate_url_sha256":[x["url_sha256"] for x in cls.prior["records"]]}
 
-    def test_reconcile_real_8_hashes_four_previous_av_not_current(self):
+    def test_reconcile_real_9_hashes_four_previous_av_not_current(self):
         r=reconcile(self.current,self.prior)
         self.assertEqual(r["previous_decoder_verified_candidates"],4)
-        self.assertEqual(r["current_exact_candidates"],8)
+        self.assertEqual(r["current_exact_candidates"],9)
         self.assertEqual(len(r["previous_decoder_verified_channel_pages"]),3)
         self.assertEqual(r["previous_status_counts"]["VIDEO_AUDIO_DECODED"],4)
         self.assertFalse(r["current_video_audio_verified"])
@@ -30,7 +30,7 @@ class BlockedOfficialPriorEvidenceTests(unittest.TestCase):
 
     def test_new_candidate_is_not_falsely_marked_previous_av(self):
         current=copy.deepcopy(self.current)
-        current["candidate_url_sha256"]=current["candidate_url_sha256"][:7]+["0"*64]
+        current["candidate_url_sha256"]=current["candidate_url_sha256"][:8]+["0"*64]
         result=reconcile(current,self.prior)
         self.assertEqual(result["previous_status_counts"]["NOT_PRESENT_IN_PRIOR_AV_ARTIFACT"],1)
 
@@ -46,7 +46,7 @@ class BlockedOfficialPriorEvidenceTests(unittest.TestCase):
 
     def test_malformed_current_candidate_count_fails(self):
         changed=copy.deepcopy(self.current)
-        changed["candidate_url_count"]=10
+        changed["candidate_url_count"]=12
         with self.assertRaises(ValueError):
             reconcile(changed,self.prior)
 

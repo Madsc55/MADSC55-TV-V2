@@ -36,8 +36,8 @@ def reconcile(current, old):
             old.get("now_verified_video_audio") is not False):
         raise ValueError("Missing prior real AV artifact provenance")
     rows = old.get("records")
-    if not isinstance(rows,list) or len(rows) != 8:
-        raise ValueError("The exact prior AV evidence must include 8 URL hashes")
+    if not isinstance(rows,list) or len(rows) != 9:
+        raise ValueError("The exact prior AV evidence must include 9 URL hashes")
     seen={}
     for row in rows:
         sha,page,status=row.get("url_sha256"),row.get("page_id"),row.get("prior_probe_status")

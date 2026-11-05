@@ -23,6 +23,11 @@
       "prior_probe_status": "UNSAFE_OR_UNRESOLVED_HOST"
     },
     {
+      "url_sha256": "9061aacbec1600d9c0b2542191e4312e8c37503e4e89c3bc15f2ca4005102c31",
+      "page_id": "ulusal-kanal-official",
+      "prior_probe_status": "PROBE_FAILED_NETWORK_TIMEOUT"
+    },
+    {
       "url_sha256": "9f49525cb29be4413770074f7b9b2a75079e00c18bff3f6922c345f604b50d22",
       "page_id": "halk-tv-official",
       "prior_probe_status": "VIDEO_AUDIO_DECODED"
@@ -51,5 +56,7 @@
   "verified_previous_video_audio_count": 4,
   "now_verified_video_audio": false,
   "ibo_device_verified": false,
-  "plaintext_urls_in_ledger": false
+  "plaintext_urls_in_ledger": false,
+  "expanded_approved_source_id": "sayatsirinoglu-tr",
+  "expanded_candidate_referenced_in_prior_artifact": true
 }

@@ -37,7 +37,7 @@ class BlockedOfficialHandoffTests(unittest.TestCase):
         docs["iptv-turk-tr"] = feed((one,url))
         result, rows = audit(config(),reader=lambda source:
                              docs[source.rsplit("/",1)[-1].removesuffix(".m3u")])
-        self.assertEqual(result["configured_sources_valid"],5)
+        self.assertEqual(result["configured_sources_valid"],6)
         self.assertEqual(result["candidate_url_count"],2)
         self.assertEqual(result["candidate_channel_counts"]["tv100-official"],1)
         selected = next(x for x in rows if x["url"] == url)
@@ -54,11 +54,26 @@ class BlockedOfficialHandoffTests(unittest.TestCase):
                              (_ for _ in ()).throw(OSError("unavailable"))
                              if url.endswith("iptv-turk-tr.m3u") else
                              feed((one,"https://example.org/trt.m3u8")))
-        self.assertEqual(result["configured_sources_valid"],4)
+        self.assertEqual(result["configured_sources_valid"],5)
         self.assertEqual(result["candidate_channel_counts"]["trt-spor-official"],1)
         self.assertEqual(result["source_status"]["iptv-turk-tr"],"UNAVAILABLE_OR_INVALID")
         self.assertEqual(len(rows),1)
         self.assertFalse(result["external_source_coverage_complete"])
+
+    def test_ulusal_kanal_exact_approved_sixth_source_only(self):
+        line = '#EXTINF:-1 tvg-id="UlusalKanal.tr",Ulusal Kanal (720p)'
+        docs = {sid: feed() for sid in SOURCES}
+        docs["sayatsirinoglu-tr"] = feed(
+            (line, "https://stream.example.org/ulusaltv/index.m3u8"))
+        report, rows = audit(config(), reader=lambda uri:
+                             docs[uri.rsplit("/", 1)[-1].removesuffix(".m3u")])
+        self.assertEqual(report["configured_sources_checked"], 6)
+        self.assertEqual(report["candidate_channel_counts"]["ulusal-kanal-official"], 1)
+        self.assertEqual(report["blocked_page_ids_without_exact_candidate"],
+                         ["trt-spor-official", "tv100-official",
+                          "benguturk-official", "halk-tv-official"])
+        self.assertEqual(rows[0]["source_ids"], ["sayatsirinoglu-tr"])
+        self.assertFalse(report["video_audio_verified"])
 
     def test_private_invalid_url_rejected_and_no_name_only_matching(self):
         pair = '#EXTINF:-1 tvg-id="TV100.tr",TV 100'
