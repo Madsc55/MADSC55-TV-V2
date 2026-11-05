@@ -57,7 +57,7 @@ class ProductionStage5Tests(unittest.TestCase):
                 'nonce':base64.b64encode(nonce).decode(),'wrapped_key':base64.b64encode(wrapped).decode(),
                 'ciphertext':base64.b64encode(ciphertext).decode()}
         self.assertEqual(open_sealed(json.dumps(sealed).encode(),key),rows)
-        tampered=dict(sealed,ciphertext=base64.b64encode(ciphertext[:-1]+b'Z').decode())
+        tampered=dict(sealed,ciphertext=base64.b64encode(ciphertext[:-1]+bytes([ciphertext[-1] ^ 1])).decode())
         with self.assertRaises(Exception):open_sealed(json.dumps(tampered).encode(),key)
 
     def test_owner_only_private_key_guard_and_missing_archive_guard(self):
