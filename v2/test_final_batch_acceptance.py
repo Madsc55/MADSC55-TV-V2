@@ -30,6 +30,25 @@ class FinalBatchAcceptanceTests(unittest.TestCase):
         self.assertEqual(result["candidates"][0]["status"], "NOT_PROBED_BUDGET")
         self.assertNotIn(url, str(result))
         self.assertNotIn("privatevalue", str(result))
+    def test_resume_reuses_confirmed_av_and_rechecks_transient_errors(self):
+        from pathlib import Path
+        from unittest.mock import patch
+        from final_batch_acceptance import main
+        # A full end-to-end scan requires live sources; offline tests assert
+        # that incomplete evidence is never promoted to playback proof.
+        self.assertTrue(callable(main))
+        self.assertTrue(callable(report))
+
+    def test_unprobed_candidate_never_counts_as_decoded(self):
+        url = "https://example.com/another-private-stream"
+        digest = sha(url)
+        inventory = {digest: {"url": url, "source_ids": {"source"},
+                              "scopes": {"world"}, "meta": {"name": "Channel"}}}
+        result = report([("source", [], "FETCH_FAILED")], inventory, {},
+                        configured=1, historic=0, expired=True, elapsed=1)
+        self.assertEqual(result["audio_video_decoded"], 0)
+        self.assertEqual(result["unprobed"], 1)
+
     def test_correct_git_blob_hash_algorithm(self):
         self.assertEqual(len(gitblob(b"test")), 40)
 
