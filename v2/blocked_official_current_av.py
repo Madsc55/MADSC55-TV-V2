@@ -20,6 +20,13 @@ HEX = re.compile(r"[0-9a-f]{64}\Z")
 STATUSES = {"VIDEO_AUDIO_DECODED", "VIDEO_AUDIO_STREAMS_ONLY", "VIDEO_ONLY",
             "AUDIO_ONLY", "NO_AV", "UNVERIFIED", "UNSAFE_OR_UNRESOLVED_HOST",
             "PROBE_UNCONFIRMED"}
+# A single second attempt is allowed only for potentially transient probe failures.
+# Authentication/HTTP 403/404, unsafe hosts and codec/AV observations never retry.
+TRANSIENT_RECHECK = frozenset({
+    "PROBE_FAILED_NETWORK_TIMEOUT",
+    "PROBE_FAILED_DNS_RESOLUTION_ERROR",
+    "PROBE_UNCONFIRMED",
+})
 
 
 def scan(config, *, reader=None, prober=probe, workers=4):
@@ -29,11 +36,7 @@ def scan(config, *, reader=None, prober=probe, workers=4):
     if len(candidates) > 500 or len({x["url_sha256"] for x in candidates}) != len(candidates):
         raise ValueError("Invalid exact candidate inventory")
 
-    def run(item):
-        digest, url = item["url_sha256"], item["url"]
-        if hashlib.sha256(url.encode()).hexdigest() != digest:
-            raise ValueError("Candidate URL SHA mismatch")
-        evidence = prober((digest, url))
+    def checked(evidence, digest):
         if (not isinstance(evidence, dict) or evidence.get("url_sha256") != digest
                 or any(type(evidence.get(x)) is not bool for x in ("video", "audio", "decoded"))):
             raise ValueError("Invalid real AV evidence")
@@ -44,19 +47,35 @@ def scan(config, *, reader=None, prober=probe, workers=4):
         if evidence["decoded"] and (status != "VIDEO_AUDIO_DECODED" or
                                     not evidence["video"] or not evidence["audio"]):
             raise ValueError("False decoded video/audio claim")
-        return evidence
+        return status
+
+    def run(item):
+        digest, url = item["url_sha256"], item["url"]
+        if hashlib.sha256(url.encode()).hexdigest() != digest:
+            raise ValueError("Candidate URL SHA mismatch")
+        evidence = prober((digest, url))
+        status = checked(evidence, digest)
+        retried = status in TRANSIENT_RECHECK
+        if retried:
+            # Bounded same-batch retry; never attempt to bypass 403/404 or unsafe DNS.
+            second = prober((digest, url))
+            checked(second, digest)
+            evidence = second
+        return evidence, retried, retried and evidence["decoded"]
 
     with ThreadPoolExecutor(max_workers=workers) as executor:
         checks = list(executor.map(run, candidates))
     private, public, pages = [], [], set()
-    for item, evidence in zip(candidates, checks):
+    for item, (evidence, retried, retry_recovered) in zip(candidates, checks):
         if evidence["decoded"]:
             pages.update(item["matched_blocked_pages"])
         row = {"url_sha256": item["url_sha256"],
                "matched_blocked_pages": item["matched_blocked_pages"],
                "source_ids": item["source_ids"], "status": evidence["status"],
                "video": evidence["video"], "audio": evidence["audio"],
-               "decoded": evidence["decoded"], "ibo_device_verified": False}
+               "decoded": evidence["decoded"], "ibo_device_verified": False,
+               "transient_retry_attempted": retried,
+               "transient_retry_recovered": retry_recovered}
         public.append(row)
         private.append({**row, "url": item["url"]})
     report = {
@@ -69,6 +88,8 @@ def scan(config, *, reader=None, prober=probe, workers=4):
         "pages_without_exact_source_candidates": source["blocked_page_ids_without_exact_candidate"],
         "candidate_url_count": len(public), "candidate_urls_probed": len(public),
         "candidate_urls_not_probed": 0,
+        "transient_retry_attempt_count": sum(x[1] for x in checks),
+        "transient_retry_av_recovered_count": sum(x[2] for x in checks),
         "current_real_video_audio_decoded_count": sum(x["decoded"] for x in public),
         "current_real_video_audio_decoded_pages": sorted(pages),
         "current_real_video_audio_unverified_count": sum(not x["decoded"] for x in public),
@@ -110,11 +131,17 @@ def validate(report_path, sealed_path, *, require_complete=False):
                 row.get("ibo_device_verified") is not False or
                 any(type(row.get(x)) is not bool for x in ("video", "audio", "decoded")) or
                 row["decoded"] and (not row["video"] or not row["audio"] or
-                                    row.get("status") != "VIDEO_AUDIO_DECODED")):
+                                    row.get("status") != "VIDEO_AUDIO_DECODED") or
+                any(type(row.get(x)) is not bool for x in
+                    ("transient_retry_attempted", "transient_retry_recovered")) or
+                row["transient_retry_recovered"] and
+                    (not row["transient_retry_attempted"] or not row["decoded"])):
             raise ValueError("False or malformed candidate proof")
     if (doc.get("current_real_video_audio_decoded_count") != sum(x["decoded"] for x in rows)
             or doc.get("current_real_video_audio_unverified_count") != sum(not x["decoded"] for x in rows)
-            or doc.get("av_status_counts") != dict(sorted(Counter(x["status"] for x in rows).items()))):
+            or doc.get("av_status_counts") != dict(sorted(Counter(x["status"] for x in rows).items()))
+            or doc.get("transient_retry_attempt_count") != sum(x["transient_retry_attempted"] for x in rows)
+            or doc.get("transient_retry_av_recovered_count") != sum(x["transient_retry_recovered"] for x in rows)):
         raise ValueError("Inconsistent AV aggregates")
     if (envelope.get("schema") != 1 or
             envelope.get("kind") != "RSA_OAEP_SHA256_AES256_GCM_ZLIB" or
@@ -131,7 +158,9 @@ def validate(report_path, sealed_path, *, require_complete=False):
             "current_video_audio_decoded": doc["current_real_video_audio_decoded_count"],
             "current_video_audio_unverified": doc["current_real_video_audio_unverified_count"],
             "channel_pages_with_real_av": len(doc["current_real_video_audio_decoded_pages"]),
-            "source_coverage_complete": complete, "ibo_device_verified": False}
+            "source_coverage_complete": complete, "ibo_device_verified": False,
+            "transient_retry_attempt_count": doc["transient_retry_attempt_count"],
+            "transient_retry_av_recovered_count": doc["transient_retry_av_recovered_count"]}
 
 
 def main():
@@ -169,6 +198,8 @@ def main():
         "current_real_video_audio_decoded_count": report["current_real_video_audio_decoded_count"],
         "current_real_video_audio_decoded_pages": report["current_real_video_audio_decoded_pages"],
         "current_real_video_audio_unverified_count": report["current_real_video_audio_unverified_count"],
+        "transient_retry_attempt_count": report["transient_retry_attempt_count"],
+        "transient_retry_av_recovered_count": report["transient_retry_av_recovered_count"],
     }, sort_keys=True))
 
 

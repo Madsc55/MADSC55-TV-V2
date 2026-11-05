@@ -52,6 +52,51 @@ class BlockedOfficialCurrentAVTests(unittest.TestCase):
         self.assertTrue(all(x["url_sha256"] == hashlib.sha256(x["url"].encode()).hexdigest()
                             for x in private))
 
+    def test_bounded_transient_retry_in_same_group_without_403_404_bypass(self):
+        config, reader = fixture()
+        attempts = {}
+        def prober(item):
+            digest, url = item
+            index = int(url.rsplit("/", 1)[-1].removesuffix(".m3u8"))
+            attempts[index] = attempts.get(index, 0) + 1
+            if index == 0 and attempts[index] == 2:
+                status = "VIDEO_AUDIO_DECODED"
+            elif index == 0:
+                status = "PROBE_FAILED_NETWORK_TIMEOUT"
+            elif index == 1:
+                status = "PROBE_FAILED_HTTP_FORBIDDEN"
+            elif index == 2:
+                status = "PROBE_FAILED_HTTP_NOT_FOUND"
+            elif index == 3:
+                status = "UNSAFE_OR_UNRESOLVED_HOST"
+            else:
+                status = "PROBE_UNCONFIRMED"
+            success = status == "VIDEO_AUDIO_DECODED"
+            return {"url_sha256": digest, "status": status,
+                    "video": success, "audio": success, "decoded": success}
+        result, _ = scan(config, reader=reader, prober=prober)
+        self.assertEqual(attempts, {0: 2, 1: 1, 2: 1, 3: 1, 4: 2})
+        self.assertEqual(result["candidate_urls_probed"], 5)
+        self.assertEqual(result["transient_retry_attempt_count"], 2)
+        self.assertEqual(result["transient_retry_av_recovered_count"], 1)
+        self.assertEqual(result["current_real_video_audio_decoded_count"], 1)
+        self.assertFalse(result["all_candidates_current_av_verified"])
+        self.assertNotIn("https://", json.dumps(result))
+
+    def test_invalid_second_probe_is_rejected(self):
+        config, reader = fixture()
+        attempts = {}
+        def prober(item):
+            digest, _ = item
+            attempts[digest] = attempts.get(digest, 0) + 1
+            if attempts[digest] == 2:
+                return {"url_sha256": digest, "status": "VIDEO_AUDIO_DECODED",
+                        "video": False, "audio": True, "decoded": True}
+            return {"url_sha256": digest, "status": "PROBE_FAILED_NETWORK_TIMEOUT",
+                    "video": False, "audio": False, "decoded": False}
+        with self.assertRaisesRegex(ValueError, "False decoded"):
+            scan(config, reader=reader, prober=prober)
+
     def test_false_decoder_success_refused(self):
         config, reader = fixture()
         def liar(item):
