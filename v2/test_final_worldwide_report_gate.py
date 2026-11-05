@@ -145,6 +145,15 @@ class FinalWorldwideReportGateTests(unittest.TestCase):
         self.report["av_status_counts"] = {"PROBE_UNCONFIRMED": 1}
         self.fails("FAILED_PROBE_WITH_AV_FLAGS")
 
+    def test_malformed_evidence_origin_distribution_rejected(self):
+        self.report["candidates"][0]["evidence_origin"] = "CURRENT_RUN_FFPROBE_FFMPEG"
+        for invalid in (None, [], {"CURRENT_RUN_FFPROBE_FFMPEG": True},
+                        {"CURRENT_RUN_FFPROBE_FFMPEG": 0},
+                        {"UNKNOWN_ORIGIN": 1}):
+            with self.subTest(invalid=invalid):
+                self.report["evidence_origin_counts"] = invalid
+                self.fails("INVALID_EVIDENCE_ORIGIN_DISTRIBUTION")
+
     def test_duplicate_and_invalid_hash_rejected(self):
         self.report["candidates"][0]["url_sha256"] = "bad"
         self.fails("INVALID_CANDIDATE_SHA")
