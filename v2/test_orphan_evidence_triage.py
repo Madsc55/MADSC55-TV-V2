@@ -55,6 +55,9 @@ class OriginalFiftyAnonymousTriageTests(unittest.TestCase):
             summarize(x)
         x=sample()
         x["records"][50]["candidates"][0]["status"] = "PROBE_FAILED_NETWORK_TIMEOUT"
+        x["records"][50]["candidates"][0]["ffmpeg_video_audio_decoded"] = False
+        x["records"][50]["candidates"][0]["video_stream"] = False
+        x["records"][50]["candidates"][0]["audio_stream"] = False
         with self.assertRaisesRegex(ValueError, "Contradictory"):
             summarize(x)
     def test_original_occurrences_missing_hard_fail(self):
