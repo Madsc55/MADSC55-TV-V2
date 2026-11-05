@@ -135,6 +135,25 @@ class FinalBatchAcceptanceTests(unittest.TestCase):
         self.assertIn('args+=(--reuse-report v2/reports/ci/prior/final-worldwide-acceptance.json)', workflow)
         self.assertIn('timeout 16000s python v2/final_batch_acceptance.py "${args[@]}"', workflow)
 
+    def test_tr_az_priority_keeps_every_unverified_global_candidate(self):
+        from final_batch_acceptance import prioritized_pending
+        from final_batch_acceptance import sha
+        urls = ["https://example.com/world", "https://example.com/tr",
+                "https://example.com/az", "https://example.com/checked"]
+        digests = [sha(url) for url in urls]
+        inventory = {
+            digests[0]: {"url": urls[0], "meta": {"name": "Global TV"}, "scopes": {"world"}},
+            digests[1]: {"url": urls[1], "meta": {"name": "TRT 1"}, "scopes": {"world"}},
+            digests[2]: {"url": urls[2], "meta": {"name": "Azərbaycan TV"}, "scopes": {"world"}},
+            digests[3]: {"url": urls[3], "meta": {"name": "Already decoded"}, "scopes": {"world"}},
+        }
+        entries_ = sorted(inventory.items())
+        checks = {digests[3]: {"status": "VIDEO_AUDIO_DECODED"}}
+        pending = prioritized_pending(entries_, inventory, checks)
+        self.assertEqual({digest for digest, _ in pending}, set(digests[:3]))
+        self.assertEqual({digest for digest, _ in pending[:2]}, set(digests[1:3]))
+        self.assertEqual(pending[-1][0], digests[0])
+
     def test_correct_git_blob_hash_algorithm(self):
         self.assertEqual(len(gitblob(b"test")), 40)
 
