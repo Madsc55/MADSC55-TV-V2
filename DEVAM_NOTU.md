@@ -1,3 +1,38 @@
+## 5 Kasım 2026 — 15 MADDELİK PAKETİN GERÇEK TOPLU UYGULAMA VE KABUL KAYDI
+
+**Uygulama:** Yalnız \`Madsc55/MADSC55-TV-V2\` geliştirme dalında. GitHub ana İBO listesi korunmuştur; YEDEKLER/YENİLER/FAVORİLER, sabit TRT 1/DHA kayıtları, eski depo ve açık PR #9 değiştirilmemiştir. Cihaz testi kullanıcıya aittir. Bu kayıt kaynak/AV/IBO kanıt türlerini birbirine karıştırmaz.
+
+**Doğrulanmış kod ve test kanıtı:**
+- [9c9a544a](https://github.com/Madsc55/MADSC55-TV-V2/commit/9c9a544a21fe3773be349e82e52bd1d61acfeb5e) IPTV API/EPG kimlik keşfi ve İBO test listesi için gerçek FFmpeg video+ses güvenlik kapısı.
+- [571218a0](https://github.com/Madsc55/MADSC55-TV-V2/commit/571218a0e88def780d0013c0ec2b9405fb1d7bb7) büyük API koleksiyonları düzeltmesi, korunan ana listeye yazabilecek eski NewlistTR aktarıcısının pasifleştirilmesi. [API koşusu #42032119279](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42032119279) başarılı, 17/17 ilgili test geçti.
+- [b10f52a1](https://github.com/Madsc55/MADSC55-TV-V2/commit/b10f52a16c62cc751f46f863985f981e786d2275) gerçek, toplu FFprobe+FFmpeg AV kabulü ve RSA/AES şifreli URL kanıtı. [Koşu #42033067184](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42033067184) BAŞARILI: 270 adresin 270'i test edildi, 171 adresde görüntü+ses decode edildi, 99 adres geçmedi, 0 adres taranmamış; 147 ayrı IPTV API kanal kimliğinde kanıtlı akış var, 24 kanıtlı alternatif URL var. Bu 147 kimliğin konuşma dili veya İBO cihazı kanıtlanmamıştır.
+- [71c3230d](https://github.com/Madsc55/MADSC55-TV-V2/commit/71c3230d28dd1f015c029f1d611cb6dce8d82565) şifreli adres/kanal kimliği uyuşmazlığını reddeden dışa aktarma koruması. [IBO özel aktarım güvenlik koşusu #42033543589](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42033543589) başarılı.
+- [e17f28d4](https://github.com/Madsc55/MADSC55-TV-V2/commit/e17f28d4467b5c1eb25cb0d0faeb32564b951a1b) API URL hash + TVG-ID kesin kimlik eşleştirmesini sıralı kaynağa bağladı. [Birleşik arama #42034880458](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42034880458) BAŞARILI iş akışı, ancak **kaynak kapsamı kısmi**: 47 yapılandırılmış kaynak; 13 kaynak ailesi; 9.163 benzersiz aday; 237 YouTube video sayfası, bunlardan yalnız 38'inde canlı metadata doğrulandı, 116'sı metadata açısından belirsiz. YouTube API anahtarı yapılandırılmamış. GitHub/Gist, GitLab/Codeberg ve resmî canlı sayfa kaynaklarında sınır/hatalar var. Sayfa referansları İBO M3U8 değildir.
+- [db80008c](https://github.com/Madsc55/MADSC55-TV-V2/commit/db80008c3a3dd6f08d4b8313af221fabeb877580) gerçek API+AV kanıtını yeniden taramadan iş kuyruğuna dönüştüren modül. [Master #42035591970](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42035591970), [Eight-Stage #42035592124](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42035592124) BAŞARILI; 641/641 çevrimdışı regresyon geçti.
+- [31dda5ef](https://github.com/Madsc55/MADSC55-TV-V2/commit/31dda5ef8e88c1d7f79571a7355486b759441a53) mevcut iki tamamlanmış Actions kanıtını tekrar yayın taramadan birleştirir; [koşu #42036109234](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42036109234) BAŞARILI, 25/25 ilgili test başarılı, şifreli kanıt SHA bütünlüğü sağlam. Anonim çıktı artifact: \`v2-traz-api-av-next-bulk-queue-42036109234\`, artifact ID \`13418921771\`.
+
+**15 madde ilerleme ve açık işler (tamamlanmayanlara TAMAM denmez):**
+1. Dünya çapında TR/AZ/Türkçe kaynak keşfi: 13 aile taraması ve API üzerinden **geliştirildi**; canlı kaynak kapsama hataları nedeniyle **kısmi**.
+2. YouTube canlı keşif: 237 aday, 38 canlı metadata; API anahtarı eksik/116 metadata belirsiz. **Kısmi, İBO URL kanıtı değil.**
+3. Resmî yayıncı siteleri: dizin/site eşleştirme mevcut; herkese açık doğrudan HLS kaynağı için kanal bazında AV kabulü **tamamlanmadı**.
+4. M3U/M3U8 ve doküman/forge kaynakları: 9.163 aday ve adapter raporları; GitHub/Gist, GitLab/Codeberg, HTML indeksi kısıtları **kısmi**.
+5. Tarihî kimlik kurtarma: 4.955 tarihî orijinal URL/hash eşleşmesi korunuyor; 50 özgün bozuk kimlikten en son doğrulanmış eski raporda 46'sı gerçek AV'siz. Yeni API AV adresleri bu kimliklere otomatik kurtarıldı sayılmadı. **Açık.**
+6. Alternatif akışlar: 147 kimlikte 171 AV-doğrulanmış adres, 24 ek alternatif; kalıcı istikrar ve resmî yayıncı kesinliği henüz yok. **Kısmi.**
+7. Gerçek toplu AV kabulü: API adaylarının 270/270 adresi topluca test edildi, 171 video+ses decode edildi; **bu kapsam için tamam**, tüm dünya/İBO cihaz testi değil.
+8. Periyodik keşif/sağlık: kaynak takip kodu mevcut; uzun dönem ve cihaz doğrulaması **açık**.
+9. Açık IPTV API: 529 hedef kanal kimliği, 270 adres adayı ve 71 Türkiye/Azerbaycan dışı Türkçe/Azerice feed-dili metadata kimliği; **API keşif ve birleştirme tamam**, AV ayrı.
+10. EPG/XMLTV: API rehber eşleşmesi 185, **344 EPG referansı eksik kimlik** yeni iş kuyruğunda; XMLTV program doğruluğu ayrıca **açık**.
+11. Konuşulan dil: API ülke/feed bilgileri gerçek ses dili kanıtı değildir. **Açık.**
+12. İsveç erişimi: Actions runner sonucu İsveç ağında cihaz testi değildir; geo/DRM aşılmadı. **Açık.**
+13. HLS/codec/çözünürlük: eski kalite modülleri mevcut; yeni 270 aday için tam master/variant kalite ve codec kabulü **açık**.
+14. Aynı kanal alternatif isim eşleştirme: API kimliği + URL SHA ve kesin TVG-ID bağlantısı entegre; muğlak adları otomatik birleştirmiyor. **Kod tamam, canlı referans kapsamında eşleşme raporu.**
+15. Kanal güvenilirlik puanı: sadece tek zamanlı AV kanıtı yüksek güvenilirlik üretmez; bu adaylarda puan bilinmiyor ve uzun dönem ölçüm **açık**.
+
+**Bir sonraki işlemlerin korumalı sırası:** Kaynak kapsama sorunları ve 309 stream-adressiz kimlik → 344 EPG eksiği / kanal kimliği köprüsü → tarihî 46 AV eksik kimlik için kesin alternatif bulma → yeni konuşma dili/İsveç/HLS kalite/stabilite kanıtı → şifreli kanıtın kullanıcıya ait **özel RSA anahtarla yerel açılması** ve yalnız ayrı \`private-*.m3u8\` İBO cihaz-test listesi. Doğrudan plaintext URL'ler açık artifact'lara aktarılmaz; ana İBO değişmez, PR #9 birleştirilmez.
+
+---
+
+
 ## 5 Kasım 2026 — İLAVE 7 TAVSİYE (9–15): TR/AZ canlı kanal keşfi ikinci genişletme paketi
 - **Durum:** Kullanıcının sonraki proje çalışmaları için açıkça notlara eklenmesini istediği yedi yeni öneridir. İlk sekiz öneriyle birlikte **15 maddelik tek toplu geliştirme paketi** olarak değerlendirilecek. Bu satırlar tamamlanan özellik veya test kanıtı değildir.
 - **9. Açık IPTV API keşfi:** Kamuya açık, izinli JSON/API kaynaklarını (özellikle IPTV-org ve uygun Dearbulut metadata'sını) kanal kimlikleri, ülke/dil, logo, alternatif isim, EPG ve yayın kaynağı eşleşmesi için kullan; API kaydı doğrudan çalışan stream kanıtı sayılmaz.
