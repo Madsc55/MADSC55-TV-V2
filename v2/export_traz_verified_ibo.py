@@ -67,14 +67,26 @@ def export(private_key,output=DEFAULT,report_file=REPORT,sealed_file=SEALED):
         raise ValueError("Refuse partial AV evidence export")
     rows=open_rows(sealed_file,private_key)
     selected,ambiguous=make_entries(d,rows)
-    lines=["#EXTM3U"]
+    # Keep exactly one primary per exact channel ID. Remaining FFmpeg-backed
+    # URLs stay in an isolated alternative group, never protected YEDEKLER.
+    primary,alternatives={},[]
     for name,url in selected:
-        lines.extend(['#EXTINF:-1 group-title="TEST - GERCEK AV, IBO CIHAZ ONAYI BEKLIYOR",'+name,url])
+        if name not in primary:
+            primary[name]=url
+        else:
+            alternatives.append((name,url))
+    lines=["#EXTM3U"]
+    for name,url in sorted(primary.items()):
+        lines.extend(['#EXTINF:-1 group-title="TEST - AV KANITLI, IBO CIHAZ BEKLIYOR",'+name,url])
+    for name,url in alternatives:
+        lines.extend(['#EXTINF:-1 group-title="TEST - ALTERNATIF AKIS, IBO CIHAZ BEKLIYOR",'+name+" [ALT]",url])
     output.parent.mkdir(parents=True,exist_ok=True)
     fd=os.open(output,os.O_CREAT|os.O_EXCL|os.O_WRONLY,0o600)
     with os.fdopen(fd,"w",encoding="utf-8") as out:
         out.write("\n".join(lines)+"\n")
     return {"private_test_entries":len(selected),
+            "distinct_primary_channel_ids":len(primary),
+            "alternative_av_streams":len(alternatives),
             "ambiguous_channel_identities_not_exported":ambiguous,
             "ibo_device_verified":False,"main_playlist_modified":False,
             "long_term_stability_unverified":True}
