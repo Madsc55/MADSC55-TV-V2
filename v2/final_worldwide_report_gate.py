@@ -81,11 +81,19 @@ def inspect(report_path: Path, require_complete=True):
             evidence_origins[origin] += 1
         st = row.get("status")
         require(isinstance(st, str) and st, "MISSING_PROBE_STATUS")
-        require(st in ("VIDEO_AUDIO_DECODED", "VIDEO_AUDIO_STREAMS_ONLY",
-                       "VIDEO_ONLY", "AUDIO_ONLY", "NO_AV",
-                       "NOT_PROBED_BUDGET", "PROBE_UNCONFIRMED",
-                       "UNSAFE_OR_UNRESOLVED_HOST", "UNVERIFIED") or
-                st.startswith("PROBE_FAILED_"),
+        known_statuses = {"VIDEO_AUDIO_DECODED", "VIDEO_AUDIO_STREAMS_ONLY",
+                          "VIDEO_ONLY", "AUDIO_ONLY", "NO_AV",
+                          "NOT_PROBED_BUDGET", "PROBE_UNCONFIRMED",
+                          "UNSAFE_OR_UNRESOLVED_HOST", "UNVERIFIED"}
+        failure_reasons = {"FFPROBE_OPTION_UNSUPPORTED", "AUTH_REQUIRED",
+                           "HTTP_FORBIDDEN", "HTTP_NOT_FOUND",
+                           "REDIRECT_REQUIRED_OR_BLOCKED",
+                           "PROTOCOL_DISALLOWED_BY_SAFETY", "NETWORK_TIMEOUT",
+                           "DNS_RESOLUTION_ERROR", "HTTP_RESPONSE_ERROR",
+                           "MEDIA_FORMAT_UNSUPPORTED",
+                           "UNKNOWN_NETWORK_OR_MEDIA_ERROR"}
+        require(st in known_statuses or st in {
+                    "PROBE_FAILED_" + reason for reason in failure_reasons},
                 "UNKNOWN_PROBE_STATUS")
         if st == "NOT_PROBED_BUDGET":
             if origin_tracking:
