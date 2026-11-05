@@ -12,6 +12,8 @@ from pathlib import Path, PurePosixPath
 import re
 from urllib.parse import quote, urlencode, urljoin, urlsplit
 import urllib.request
+import urllib.error
+import time
 from webpage_source_discovery import candidate_url
 
 ROOT=Path(__file__).resolve().parent
@@ -198,9 +200,22 @@ def fetch_public(url):
  req=urllib.request.Request(url,headers={
   "User-Agent":"MADSC55-TV-V2-PublicDocumentIndex/1.0",
   "Accept":"text/html,application/json"})
- with urllib.request.build_opener(Redirect()).open(req,timeout=12) as res:
-  limit=1000000 if host=="archive.org" else 2000000
-  data=res.read(limit+1)
+ limit=1000000 if host=="archive.org" else 2000000
+ opener=urllib.request.build_opener(Redirect())
+ for attempt in range(2):
+  try:
+   with opener.open(req,timeout=12) as res:
+    data=res.read(limit+1)
+   break
+  except urllib.error.HTTPError as exc:
+   # 403/404 remain genuine access failures. Retry only transient 5xx.
+   if attempt or exc.code not in (500,502,503,504):
+    raise
+   time.sleep(1)
+  except (TimeoutError,urllib.error.URLError):
+   # One retry of an idempotent public GET; no alternate host or auth bypass.
+   if attempt:raise
+   time.sleep(1)
  if len(data)>limit:raise ValueError("Document exceeds size limit")
  return data.decode("utf-8-sig",errors="replace")
 

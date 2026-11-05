@@ -4,10 +4,35 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
+from unittest.mock import patch, MagicMock
+from urllib.error import HTTPError
 from document_platform_discovery import (ARCHIVE_SEARCH,SEARCH_PAGES,PLATFORMS,accepted_sources,
- allowed_page,archive_file_refs,digest,page_references,scan,source_url,verify_sources)
+ allowed_page,archive_file_refs,digest,fetch_public,page_references,scan,source_url,verify_sources)
 
 class ThreePlatformAdapterTests(unittest.TestCase):
+ def test_archive_metadata_timeout_recovers_without_changed_host(self):
+  opener=MagicMock()
+  reply=MagicMock()
+  reply.__enter__.return_value.read.return_value=b'{"files":[]}'
+  opener.open.side_effect=[TimeoutError("temporary"),reply]
+  with patch("document_platform_discovery.urllib.request.build_opener",return_value=opener), \
+       patch("document_platform_discovery.time.sleep") as sleep:
+   self.assertEqual(fetch_public("https://archive.org/metadata/public-iptv"),
+                    '{"files":[]}')
+  self.assertEqual(opener.open.call_count,2)
+  sleep.assert_called_once()
+
+ def test_archive_metadata_403_is_not_retried(self):
+  opener=MagicMock()
+  opener.open.side_effect=HTTPError(
+   "https://archive.org/metadata/public-iptv",403,"Forbidden",{},None)
+  with patch("document_platform_discovery.urllib.request.build_opener",return_value=opener), \
+       patch("document_platform_discovery.time.sleep") as sleep:
+   with self.assertRaises(HTTPError):
+    fetch_public("https://archive.org/metadata/public-iptv")
+  self.assertEqual(opener.open.call_count,1)
+  sleep.assert_not_called()
+
  def test_tokenless_public_https_only(self):
   self.assertTrue(source_url("https://example.org/live.m3u"))
   for url in ("http://example.org/live.m3u","https://127.0.0.1/a.m3u",

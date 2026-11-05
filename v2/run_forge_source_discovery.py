@@ -46,6 +46,11 @@ def api_json(url):
             if exc.code not in (429, 500, 502, 503, 504) or attempt == 2:
                 raise
             time.sleep(min(2 ** attempt, 3))
+        except (TimeoutError, urllib.error.URLError):
+            # Only bounded transport retries; never bypass 403/404 or unsafe redirects.
+            if attempt == 2:
+                raise
+            time.sleep(min(2 ** attempt, 3))
     if len(payload) > 2_000_000:
         raise ValueError("Forge response too large")
     return json.loads(payload)
