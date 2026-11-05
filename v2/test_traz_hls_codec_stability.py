@@ -44,6 +44,18 @@ class HlsCodecEvidenceTests(unittest.TestCase):
         self.assertIsNone(out["streams"][0]["reliability_score"])
         self.assertFalse(out["ibo_device_verified"])
         self.assertNotIn(URL,str(out))
+    def test_malformed_http_chunk_is_unverified_not_fatal(self):
+        import http.client
+        from unittest.mock import patch
+        from traz_hls_codec_stability import manifest
+        class BrokenOpener:
+            def open(self,*args,**kwargs):
+                raise http.client.IncompleteRead(b"partial")
+        with patch("traz_hls_codec_stability.build_opener",return_value=BrokenOpener()):
+            out=manifest(URL,resolver=lambda url:True)
+        self.assertEqual(out["status"],"UNAVAILABLE")
+        self.assertNotIn("partial",str(out))
+
     def test_hls_master_variant_not_av(self):
         m=hls_tags("#EXTM3U\n#EXT-X-STREAM-INF:BANDWIDTH=2000000,RESOLUTION=1280x720\nx.m3u8\n#EXT-X-STREAM-INF:BANDWIDTH=4000000,RESOLUTION=1920x1080\ny.m3u8\n")
         self.assertEqual(m["variant_count"],2)

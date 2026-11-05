@@ -8,6 +8,7 @@ in anonymous reports. Production playlists are not accessed for writing.
 import argparse
 from concurrent.futures import ThreadPoolExecutor
 import hashlib
+import http.client
 import json
 from pathlib import Path
 import re
@@ -138,7 +139,9 @@ def manifest(url,resolver=None):
             data=res.read(250001)
         if len(data)>250000:raise ValueError("Large HLS manifest")
         return hls_tags(data.decode("utf-8-sig",errors="replace"))
-    except (OSError,ValueError,UnicodeError):
+    except (OSError,ValueError,UnicodeError,http.client.HTTPException):
+        # Many public HLS servers close malformed/chunked responses abruptly.
+        # This is not a stream-decode failure and never counts as a dead channel.
         return {"status":"UNAVAILABLE","variant_count":None,"max_declared_height":None}
 
 def aggregate(prior,urls,bad,missing,first,second,hls):
