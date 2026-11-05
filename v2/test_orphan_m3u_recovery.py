@@ -640,12 +640,16 @@ class OrphanRecoveryTests(unittest.TestCase):
                          "origin": "public-document-reference"})
         with patch("document_platform_discovery.accepted_sources", return_value=rows):
             result = existing_source_catalog()
-        self.assertEqual(len(result), 65)
+        self.assertEqual(len(result), 67)
         self.assertEqual(len(result[:63]), 63)
         self.assertEqual(len({item["id"] for item in result}), len(result))
         self.assertEqual(len([x for x in result
             if x.get("origin") == "public-document-reference"]), 2)
-        self.assertTrue(all(x["id"].startswith("docref-") for x in result[-2:]))
+        self.assertTrue(all(x["id"].startswith("docref-") for x in result[63:65]))
+        self.assertEqual(len([x for x in result
+            if x.get("origin") == "orphan-discovery-reference"]), 2)
+        self.assertEqual({x["scope"] for x in result[-2:]}, {"TR", "AZ"})
+        self.assertTrue(all(x.get("playback_verified") is False for x in result[-2:]))
 
     def test_catalog_does_not_duplicate_existing_source_url(self):
         from orphan_m3u_recovery import existing_source_catalog
@@ -655,7 +659,8 @@ class OrphanRecoveryTests(unittest.TestCase):
         with patch("document_platform_discovery.accepted_sources",
                    return_value=[duplicated]):
             result = existing_source_catalog()
-        self.assertEqual(len(result), 63)
+        self.assertEqual(len(result), 65)
+        self.assertEqual(result[-2:], original[-2:])
 
     def test_end_to_end_four_source_batch_and_sealed_only_for_verified_av(self):
         def reader(url):

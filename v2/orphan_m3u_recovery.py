@@ -428,6 +428,10 @@ def existing_source_catalog():
         all_sources.append(item)
         known_urls.add(item["url"])
         known_ids.add(item["id"])
+    # Two separately pinned third-party TR/AZ candidate-only references.
+    # Preserve the 46 fixed and 17 historical base identities unchanged.
+    from orphan_curated_traz_sources import pinned_traz_candidate_references
+    all_sources.extend(pinned_traz_candidate_references(known_urls, known_ids))
     return all_sources
 
 
