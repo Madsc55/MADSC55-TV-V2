@@ -15,7 +15,7 @@ class TwoNewPinnedSourceBatchTests(unittest.TestCase):
                    "onureroz-turk-karma": [], "onureroz-turk-all": []}
         docs = {}
         for sid, count in zip(sources, (19,21,8,7)):
-            values = ["#EXTINF:-1 tvg-id=\"ch"+str(i)+"\",Name"+str(i)
+            values = ["#EXTINF:-1 tvg-id=\""+sid+"-ch"+str(i)+"\",Name"+str(i)
                       for i in range(count)]
             sources[sid] = [digest(x) for x in values]
             docs[sid] = "#EXTM3U\n" + "\n".join(values)
