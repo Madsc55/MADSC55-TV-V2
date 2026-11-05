@@ -1,11 +1,5 @@
 name: V2 TR AZ Private IBO Test Export Grouped Gate
 on:
-  push:
-    branches: [madsc/v2-discovery-bulk-20261031]
-    paths:
-      - 'v2/export_traz_verified_ibo.py'
-      - 'v2/test_export_traz_verified_ibo.py'
-      - '.github/workflows/v2-traz-private-ibo-gate.yml'
   workflow_dispatch:
 permissions:
   contents: read

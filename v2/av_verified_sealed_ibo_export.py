@@ -11,7 +11,6 @@ import os
 from pathlib import Path
 
 from discover import ROOT
-from stage3_sealed_export import open_rows
 from traz_api_source_batch import public_stream
 
 REPORTS = ROOT / "v2/reports"
@@ -132,6 +131,7 @@ def main():
     if (manifest.get("sha256")!=hashlib.sha256(payload).hexdigest()
             or manifest.get("records")!=report.get("unique_url_candidates")):
         raise SystemExit("Encrypted report and source evidence mismatch")
+    from stage3_sealed_export import open_rows
     content,summary=select(report,open_rows(args.sealed,args.private_key))
     if not summary["verified_entries"]:
         print(json.dumps(summary,sort_keys=True))

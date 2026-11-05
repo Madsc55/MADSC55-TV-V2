@@ -20,12 +20,16 @@ MAIN=ROOT/"MADSC55_TV_IBO_CALISANLAR_TEST.m3u8"
 
 def make_entries(report,rows):
     public={x["url_sha256"]:x for x in report["streams"]}
+    if len(public)!=len(report["streams"]):
+        raise ValueError("Duplicate AV address hashes")
     result=[]
     seen=set()
     ambiguous=0
     for row in rows:
         url=row.get("url")
         h=row.get("url_sha256")
+        if isinstance(url,str) and any(ord(c)<32 for c in url):
+            raise ValueError("M3U control characters in URL")
         if not isinstance(url,str) or hashlib.sha256(url.encode()).hexdigest()!=h:
             raise ValueError("Private AV candidate URL identity mismatch")
         p=public.get(h)
@@ -56,6 +60,8 @@ def make_entries(report,rows):
 
 def export(private_key,output=DEFAULT,report_file=REPORT,sealed_file=SEALED):
     output=Path(output)
+    if not output.name.startswith("private-") or output.suffix!=".m3u8":
+        raise ValueError("Only isolated private M3U8 device-test output")
     if output.resolve()==MAIN.resolve():
         raise ValueError("Refuse writing production IBO playlist")
     if output.exists() or output.is_symlink():
@@ -75,6 +81,8 @@ def export(private_key,output=DEFAULT,report_file=REPORT,sealed_file=SEALED):
             primary[name]=url
         else:
             alternatives.append((name,url))
+    if not selected:
+        raise ValueError("No proven real AV; refusing empty IBO export")
     lines=["#EXTM3U"]
     for name,url in sorted(primary.items()):
         lines.extend(['#EXTINF:-1 group-title="TEST - AV KANITLI, IBO CIHAZ BEKLIYOR",'+name,url])

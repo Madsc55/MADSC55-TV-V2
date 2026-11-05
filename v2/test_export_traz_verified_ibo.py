@@ -86,7 +86,7 @@ class PrivateIboAcceptanceTests(unittest.TestCase):
             main=root/"main.m3u8"
             main.write_text("#EXTM3U\n#EXTINF:-1,Existing\nhttps://cdn.example.org/old.m3u8\n")
             original=main.read_bytes()
-            destination=root/"device-test.m3u8"
+            destination=root/"private-device-test.m3u8"
             with patch.object(exporter,"MAIN",main),\
                  patch.object(exporter,"validate",return_value=public),\
                  patch.object(exporter,"open_rows",return_value=private):
