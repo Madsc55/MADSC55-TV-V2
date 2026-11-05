@@ -66,10 +66,12 @@ class OriginalFiftyAnonymousTriageTests(unittest.TestCase):
         x=sample()
         x["records"][1]["candidates"][0]["status"] = "VIDEO_ONLY"
         x["records"][1]["candidates"][0]["video_stream"] = True
+        x["records"][51]["candidates"][0]["status"] = "VIDEO_ONLY"
+        x["records"][51]["candidates"][0]["video_stream"] = True
         a=summarize(x)
         self.assertEqual(a["current_ffmpeg_video_audio_verified"],1)
         self.assertEqual(a["candidate_url_status_counts"]["VIDEO_ONLY"],1)
-    def test_broken_no-host_reference_never_infers_media_url(self):
+    def test_broken_no_host_reference_never_infers_media_url(self):
         a=summarize(sample())
         x=[i for i in a["identities"] if i["decision"]=="MISSING_EXACT_PUBLIC_STREAM_SOURCE"]
         self.assertEqual(x[0]["no_candidate_original_uri_structures"],["HTTP_URI_WITHOUT_HOST"])
