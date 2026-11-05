@@ -40,6 +40,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Install pinned encrypted-evidence and FFmpeg acceptance dependency
+        run: python -m pip install cryptography==44.0.2
       - name: Protect immutable IBO playlist and all 4955 historical URL identities
         shell: bash
         run: |
