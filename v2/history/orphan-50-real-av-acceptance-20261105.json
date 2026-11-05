@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "kind": "V2_ORPHAN_50_REAL_AV_VERIFIED_BATCH_RECORD",
+  "date": "2026-11-05",
+  "evidence_run_id": 42016728153,
+  "evidence_job_id": 127209004215,
+  "evidence_run_commit": "5001d9f16d4679451441c19fb050a649f6b6316a",
+  "run_url": "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42016728153",
+  "sealed_artifact": {
+    "id": 13410266434,
+    "url": "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42016728153/artifacts/13410266434",
+    "sha256": "541bbec79d1f3415253156ac3b62e89e2ed27f9a291f3f6536141d07ea407054"
+  },
+  "source_occurrences_preserved": 55,
+  "unique_channel_identities_preserved": 50,
+  "current_real_ffmpeg_video_audio_verified": 4,
+  "addresses_present_current_av_unverified": 36,
+  "without_exact_valid_address_candidate": 10,
+  "current_av_unverified_total": 46,
+  "encrypted_unique_url_candidates": 125,
+  "grouped_offline_regressions_passed": 132,
+  "source_catalog_checked": 118,
+  "immutable_read_only_main_sources": {
+    "main_channels": 876,
+    "yedekler_entries": 38,
+    "yedekler_fixed_first_two": 2,
+    "foreign_historical_entries": 3964,
+    "main_git_blob": "165c726cd9211f9f51c31f1c718e0911bab79e1b",
+    "foreign_git_blob": "c54272e97f711c3074303cec74739d6d0ec806b2"
+  },
+  "additional_document_discovery": {
+    "internet_archive_sources_with_valid_m3u": 3,
+    "internet_archive_raw_extinf_records": 653,
+    "external_sources_coverage_complete": false
+  },
+  "acceptance": "RECOVERY_INCOMPLETE_REAL_AV_REQUIRED",
+  "all_50_currently_video_audio_verified": false,
+  "source_records_deleted": false,
+  "no_unverified_channel_promoted": true,
+  "original_ibo_playlist_modified": false,
+  "ibo_device_verified": false,
+  "plaintext_stream_urls_exported": false,
+  "future_checks": "Manual-only v2-orphan-m3u-recovery.yml already supports pinned main and foreign snapshots; no recurring scan or automatic playlists.",
+  "note": "Complete bulk evidence collection, not complete channel playback recovery; HTTP 403 and absence of exact matching streams must not be guessed or called successes."
+}
