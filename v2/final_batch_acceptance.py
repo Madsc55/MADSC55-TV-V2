@@ -271,10 +271,11 @@ def main():
     deadline = t0 + a.budget_seconds
     pending = [(digest, item["url"]) for digest, item in entries_ if digest not in checks]
     with ThreadPoolExecutor(max_workers=a.workers) as executor:
-        for offset in range(0, len(pending), 128):
+        # Smaller bounded batches reduce deadline overshoot on slow or hanging streams.
+        for offset in range(0, len(pending), 32):
             if time.monotonic() > deadline:
                 expired = True; break
-            rows = pending[offset:offset+128]
+            rows = pending[offset:offset+32]
             if not rows: continue
             for result in executor.map(probe, rows):
                 result["evidence_origin"] = "CURRENT_RUN_FFPROBE_FFMPEG"
