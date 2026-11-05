@@ -1,5 +1,9 @@
 name: V2 Turkish M3U Orphan Recovery — Exact History and AV Batch
 on:
+  push:
+    branches: [madsc/v2-discovery-bulk-20261031]
+    paths:
+      - '.github/workflows/v2-orphan-m3u-recovery.yml'
   workflow_dispatch:
 
 permissions:
@@ -8,6 +12,8 @@ permissions:
 jobs:
   four-sources-one-batch:
     name: Four original feeds plus verified public discovery; exact orphan AV batch
+    # One development-only push run; manual dispatch remains available.
+    if: github.event_name == 'workflow_dispatch' || github.event.head_commit.message == 'ci(v2): run full orphan FFmpeg evidence batch'
     runs-on: ubuntu-24.04
     timeout-minutes: 65
     steps:
@@ -32,6 +38,8 @@ jobs:
           set -o pipefail
           PYTHONPATH=v2 python -m unittest -v \
             test_orphan_m3u_recovery \
+            test_orphan_source_only_recheck \
+            test_historical_exact_real_av \
             test_orphan_source_expansion \
             test_orphan_targeted_github_code \
             test_orphan_resolution_gate \
