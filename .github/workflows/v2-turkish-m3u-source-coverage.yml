@@ -29,11 +29,12 @@ jobs:
   turkish-m3u-loss-batch:
     name: Turkish M3U source-only audit, genuine 60/72 loss and grouped regressions
     runs-on: ubuntu-24.04
-    timeout-minutes: 17
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -57,6 +58,7 @@ jobs:
             test_source_failover \
             test_source_availability_audit \
             test_source_inventory_contract \
+            test_historical_targeted_playback \
             2>&1 | tee v2/reports/ci/turkish-m3u-loss-tests.log
       - name: Download real #60 and #72 aggregate evidence without scanning channel streams
         env:
@@ -80,6 +82,34 @@ jobs:
             --historical-new "$RUNNER_TEMP/madsc-72/v2/reports/all-source-playback-aggregate.json" \
             --baseline v2/history/stage3-4955-hash-only.jsonl \
             --output v2/reports/ci/turkish-m3u-source-loss.json
+      - name: Probe the exact historical URL hashes still absent from all 63 current M3U source feeds
+        shell: bash
+        run: |
+          if ! command -v ffprobe >/dev/null; then
+            sudo apt-get update -qq
+            sudo apt-get install -y --no-install-recommends ffmpeg
+          fi
+          timeout 900s python v2/historical_targeted_playback.py \
+            --missing-report v2/reports/ci/turkish-m3u-source-loss.json \
+            --baseline v2/history/stage3-4955-hash-only.jsonl \
+            --output v2/reports/ci/historical-current-missing-ffprobe-anonymous.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          full=json.loads(Path("v2/reports/ci/turkish-m3u-source-loss.json").read_text())
+          probe=json.loads(Path("v2/reports/ci/historical-current-missing-ffprobe-anonymous.json").read_text())
+          sample=full["source_content_audit"]["historical_identifiers_absent_sha256_sample"]
+          assert len(sample)==full["source_content_audit"]["historical_identifiers_absent_from_current_sources"]
+          assert probe["requested_historical_url_sha256"]==len(sample)
+          assert probe["exact_git_history_urls_recovered"]+probe["not_found_in_git_history_count"]==len(sample)
+          assert probe["no_plaintext_stream_urls"]
+          assert probe["main_playlist_modified"] is False and probe["ibo_device_verified"] is False
+          print("HISTORICAL_EXACT_CURRENT_MISSING",json.dumps({
+            "missing_hashes":len(sample),
+            "actual_exact_git_urls":probe["exact_git_history_urls_recovered"],
+            "unrecoverable_from_local_history":probe["not_found_in_git_history_count"],
+            "ffprobe_statuses":probe["status_counts"]},sort_keys=True))
+          PY
       - name: Upload single grouped evidence bundle
         if: always()
         uses: actions/upload-artifact@v4
@@ -88,5 +118,6 @@ jobs:
           path: |
             v2/reports/ci/turkish-m3u-loss-tests.log
             v2/reports/ci/turkish-m3u-source-loss.json
+            v2/reports/ci/historical-current-missing-ffprobe-anonymous.json
           if-no-files-found: warn
           retention-days: 30
