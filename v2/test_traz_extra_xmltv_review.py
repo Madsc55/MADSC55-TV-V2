@@ -59,6 +59,27 @@ class AdditionalXmltvSafetyTests(unittest.TestCase):
              b'<programme channel="x" start="20261105080000 +0000" stop="20261105090000 +0000"/></tv>')
         hit,_,_=parse_guide(xml,{"Gamma.tr"},{"gamma tv":"Gamma.tr"})
         self.assertEqual(hit,{})
+    def test_duplicate_provider_conflicting_names_rejected(self):
+        xml=(b'<tv><channel id="provider-x"><display-name>Gamma TV</display-name></channel>'
+             b'<channel id="provider-x"><display-name>Delta TV</display-name></channel>'
+             b'<programme channel="provider-x" start="20261105080000 +0000"'
+             b' stop="20261105090000 +0000"/></tv>')
+        matched,records,timed=parse_guide(
+            xml,{"Gamma.tr","Delta.tr"},
+            {"gamma tv":"Gamma.tr","delta tv":"Delta.tr"})
+        self.assertEqual(matched,{})
+        self.assertEqual(records,set())
+        self.assertEqual(timed,set())
+    def test_duplicate_provider_invalid_then_valid_rejected(self):
+        xml=(b'<tv><channel id="provider-x"><display-name>Unknown</display-name></channel>'
+             b'<channel id="provider-x"><display-name>Gamma TV</display-name></channel></tv>')
+        matched,_,_=parse_guide(xml,{"Gamma.tr"},{"gamma tv":"Gamma.tr"})
+        self.assertEqual(matched,{})
+    def test_duplicate_provider_consistent_identity_retained(self):
+        xml=(b'<tv><channel id="provider-x"><display-name>Gamma TV</display-name></channel>'
+             b'<channel id="provider-x"><display-name>Gamma TV</display-name></channel></tv>')
+        matched,_,_=parse_guide(xml,{"Gamma.tr"},{"gamma tv":"Gamma.tr"})
+        self.assertIn("Gamma.tr",matched)
     def test_invalid_times_do_not_prove_schedule(self):
         xml=(b'<tv><channel id="Gamma.tr"/>'
              b'<programme channel="Gamma.tr" start="20261105090000 +0000"'
