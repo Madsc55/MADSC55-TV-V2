@@ -44,6 +44,25 @@ class FinalBatchAcceptanceTests(unittest.TestCase):
         self.assertEqual(set(reused), {good})
         self.assertEqual(reused[good]["evidence_origin"], "PRIOR_RUN_HASH_ONLY_NOT_FRESH")
 
+    def test_resume_reprobes_all_unconfirmed_av_statuses(self):
+        from final_batch_acceptance import resume_checks
+        statuses = [
+            ("VIDEO_AUDIO_STREAMS_ONLY", True, True, False),
+            ("VIDEO_ONLY", True, False, False),
+            ("AUDIO_ONLY", False, True, False),
+            ("NO_AV", False, False, False),
+        ]
+        candidates = []
+        inventory = {}
+        for index, (status, video, audio, decoded) in enumerate(statuses):
+            digest = sha("https://example.com/reprobe/" + str(index))
+            inventory[digest] = {}
+            candidates.append({"url_sha256": digest, "status": status,
+                               "video": video, "audio": audio, "decoded": decoded})
+        prior = {"schema": 1, "kind": "V2_WORLDWIDE_READ_ONLY_FINAL_ACCEPTANCE",
+                 "unique_url_candidates": len(candidates), "candidates": candidates}
+        self.assertEqual(resume_checks(prior, inventory), {})
+
     def test_resume_rejects_duplicate_hash_and_false_decode(self):
         from final_batch_acceptance import resume_checks
         digest = sha("https://example.com/a")
