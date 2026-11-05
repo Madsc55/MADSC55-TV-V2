@@ -451,3 +451,88 @@ jobs:
           path: v2/reports/ci/traz-api-source-audit.json
           if-no-files-found: warn
           retention-days: 30
+
+  traz-api-bulk-evidence-review:
+    name: Reconcile TR AZ missing EPG, missing streams and real AV from two immutable run artifacts
+    needs: offline-source-safety
+    if: >-
+      github.event_name == 'push' &&
+      github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
+      github.repository == 'Madsc55/MADSC55-TV-V2' &&
+      github.event.head_commit.message == 'feat(v2): generate real TR AZ EPG and AV backlogs from immutable evidence'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Assert protected playlists and 4955 historical SHA identities are frozen
+        run: |
+          test "$(git hash-object MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)" = '4b1c3cea4b5107a425abab60f62d41f9f81e05a7'
+          test "$(sha256sum v2/history/stage3-4955-hash-only.jsonl | cut -d' ' -f1)" = 'ee00a844a028e3410715d411467a2d3306f5f5cc4565766140b6438e786cdd27'
+      - name: Get pinned public source metadata from completed API run - no rescanning
+        uses: actions/download-artifact@v4
+        with:
+          name: traz-api-safe-evidence-42034880458
+          run-id: 42034880458
+          github-token: ${{ github.token }}
+          path: v2/reports/ci
+      - name: Get pinned public FFmpeg proof and RSA sealed URLs from completed AV run - no rescanning
+        uses: actions/download-artifact@v4
+        with:
+          name: traz-real-av-anonymous-42033067184
+          run-id: 42033067184
+          github-token: ${{ github.token }}
+          path: v2/reports/ci
+      - name: Validate all evidence digests and run grouped API EPG AV review tests
+        run: |
+          set -euo pipefail
+          PYTHONPATH=v2 python -m unittest -v test_traz_api_source_batch test_traz_api_av_batch test_traz_api_bulk_review test_traz_api_m3u_bridge test_export_traz_verified_ibo
+          python - <<'PY'
+          import hashlib,json
+          from pathlib import Path
+          root=Path("v2/reports/ci")
+          d=json.loads((root/"traz-api-av-acceptance.json").read_text())
+          encrypted=root/"traz-api-av-evidence.sealed"
+          assert hashlib.sha256(encrypted.read_bytes()).hexdigest()==d["encrypted_evidence"]["sha256"]
+          assert d["encrypted_evidence"]["records"]==len(d["streams"])
+          assert d["unprobed"]==0
+          assert d["protected_playlist_modified"] is False
+          print("RSA_SEALED_EVIDENCE_INTEGRITY_OK",True)
+          PY
+      - name: Build real immutable API and AV backed TR AZ missing-work queue
+        run: python v2/traz_api_bulk_review.py
+      - name: Enforce exact 270 URL and 171 decoded AV evidence, no raw URL export
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path("v2/reports/ci/traz-api-next-bulk-review.json")
+          d=json.loads(p.read_text(encoding="utf-8"))
+          assert d["url_hashes_tested"]==270
+          assert d["video_audio_decoded_url_hashes"]==171
+          assert d["identities_with_decoded_av"]==147
+          assert d["decoded_av_alternative_urls"]==24
+          assert d["missing_epg_reference_count"]==344
+          assert d["identities_with_no_stream_url_lead"]==309
+          assert d["spoken_language_verified"] is False
+          assert d["sweden_access_verified"] is False
+          assert d["ibo_device_verified"] is False
+          assert d["protected_playlist_modified"] is False
+          assert "https://" not in p.read_text() and "http://" not in p.read_text()
+          print("EXACT_BULK_EVIDENCE_RECONCILED",True)
+          PY
+      - name: Upload anonymous action queue only; no private streaming URL or secrets
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v2-traz-api-av-next-bulk-queue-${{ github.run_id }}
+          path: v2/reports/ci/traz-api-next-bulk-review.json
+          if-no-files-found: warn
+          retention-days: 30
