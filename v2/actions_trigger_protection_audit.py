@@ -83,6 +83,7 @@ SAFE_PUSH_CI = frozenset({
     "v2-stage5-final-production-archive",
     "v2-turkish-m3u-source-coverage",
     "v2-actions-trigger-protection",
+    "v2-traz-av-evidence-union",
 })
 ALLOWED_EVENTS = frozenset({"push", "pull_request", "workflow_dispatch"})
 GIT_WRITER = re.compile(r"(?<![\w-])git[ \t]+(?:-C[ \t]+\S+[ \t]+)?(?:push|commit|add)[ \t\n]", re.I)

@@ -1,0 +1,82 @@
+name: V2 TR AZ Pinned AV Evidence Union
+on:
+  push:
+    branches:
+      - madsc/v2-discovery-bulk-20261031
+    paths:
+      - 'v2/traz_av_evidence_union.py'
+      - 'v2/test_traz_av_evidence_union.py'
+      - '.github/workflows/v2-traz-av-evidence-union.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  offline-immutable-evidence-union:
+    name: Merge two real AV snapshots without reprobing streams
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Reject protected playlist or history mutation
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git hash-object MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)" = '4b1c3cea4b5107a425abab60f62d41f9f81e05a7'
+          test "$(sha256sum v2/history/stage3-4955-hash-only.jsonl | cut -d' ' -f1)" = 'ee00a844a028e3410715d411467a2d3306f5f5cc4565766140b6438e786cdd27'
+      - name: Fetch original 270 URL AV evidence from successful immutable run
+        uses: actions/download-artifact@v4
+        with:
+          name: traz-real-av-anonymous-42033067184
+          run-id: 42033067184
+          github-token: ${{ github.token }}
+          path: v2/reports/ci
+      - name: Fetch exact M3U and XMLTV gap triage from successful immutable run
+        uses: actions/download-artifact@v4
+        with:
+          name: v2-unified-source-search-42040392400
+          run-id: 42040392400
+          github-token: ${{ github.token }}
+          path: v2/reports/ci
+      - name: Fetch 84 identity targeted FFmpeg AV evidence without rerunning it
+        uses: actions/download-artifact@v4
+        with:
+          name: traz-missing-real-av-rsa-42043534038
+          run-id: 42043534038
+          github-token: ${{ github.token }}
+          path: v2/reports/ci
+      - name: Test identity security, anti-spoofing and EPG metadata as one offline batch
+        shell: bash
+        run: |
+          set -euo pipefail
+          PYTHONPATH=v2 python -m unittest -v test_traz_av_evidence_union test_traz_gap_crosswalk
+      - name: Build verified, anonymous 150-channel 174-URL hash-only cross-run report
+        shell: bash
+        run: |
+          set -euo pipefail
+          python v2/traz_av_evidence_union.py
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p = Path('v2/reports/ci/traz-av-evidence-union.json')
+          d = json.loads(p.read_text(encoding='utf-8'))
+          assert d['total_distinct_video_audio_channel_ids'] == 150
+          assert d['total_distinct_video_audio_stream_hashes'] == 174
+          assert d['newly_av_proven_channel_ids'] == ['Cine1.tr','DMAX.tr','TLC.tr']
+          assert d['protected_playlist_modified'] is False
+          assert d['ibo_device_verified'] is False
+          assert d['old_historical_orphan_50_auto_recovered'] is False
+          assert 'https://' not in p.read_text() and 'http://' not in p.read_text()
+          print('ANONYMOUS_CROSS_RUN_AV_INTEGRITY_PASS')
+          PY
+      - name: Upload anonymous verified union report only
+        uses: actions/upload-artifact@v4
+        with:
+          name: v2-traz-anonymous-av-evidence-union
+          path: v2/reports/ci/traz-av-evidence-union.json
+          if-no-files-found: error
