@@ -17,6 +17,8 @@ on:
       - 'v2/orphan_source_only_recheck.py'
       - 'v2/test_orphan_source_only_recheck.py'
       - 'v2/orphan_targeted_github_code.py'
+      - 'v2/blocked_official_source_handoff.py'
+      - 'v2/test_blocked_official_source_handoff.py'
       - 'v2/history/orphan-10-no-candidate-public-hashes.json'
       - '.github/workflows/v2-source-adapter-batch.yml'
   workflow_dispatch:
@@ -66,6 +68,7 @@ jobs:
             test_run_live_page_discovery \
             test_orphan_source_only_recheck \
             test_orphan_targeted_github_code \
+            test_blocked_official_source_handoff \
             2>&1 | tee v2/reports/ci/source-adapter-batch.log
       - name: Probe six public source/API entrypoints, no channel discovery
         run: python v2/source_adapter_service_health.py --audit-source-services
@@ -134,6 +137,12 @@ jobs:
           dest.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n")
           print("TARGETED_SOURCE_RECHECK", payload)
           PY
+      - name: Seal exact blocked official channel alternatives from pre-approved public M3U feeds
+        shell: bash
+        run: |
+          timeout 180s python v2/blocked_official_source_handoff.py --exact-source-handoff \
+            --report v2/reports/ci/blocked-official-exact-source-anonymous.json \
+            --sealed v2/reports/ci/blocked-official-exact-source-candidates.sealed
       - name: One-off exact 10 public M3U and M3U8 source search (NO media probe)
         if: >-
           github.event_name == 'push' &&
@@ -156,5 +165,7 @@ jobs:
             v2/reports/ci/source-recheck-anonymous.json
             v2/reports/ci/orphan-10-source-only-anonymous.json
             v2/reports/ci/orphan-10-new-candidates.sealed
+            v2/reports/ci/blocked-official-exact-source-anonymous.json
+            v2/reports/ci/blocked-official-exact-source-candidates.sealed
           if-no-files-found: warn
           retention-days: 30
