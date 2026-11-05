@@ -39,7 +39,9 @@ def make_entries(report,rows):
         if row.get("video") is not True or row.get("audio") is not True:
             raise ValueError("False FFmpeg dual decode evidence")
         ids=p.get("channel_ids")
-        if not isinstance(ids,list) or len(ids)!=1 or ids!=row.get("channel_ids"):
+        if not isinstance(ids,list) or ids!=row.get("channel_ids"):
+            raise ValueError("Encrypted channel identity differs from AV report")
+        if len(ids)!=1:
             ambiguous+=1
             continue
         if not public_stream(url):
