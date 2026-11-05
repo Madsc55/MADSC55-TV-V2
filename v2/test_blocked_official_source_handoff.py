@@ -83,6 +83,49 @@ class BlockedOfficialHandoffTests(unittest.TestCase):
         self.assertEqual(rows,[])
         self.assertEqual(result["blocked_page_count_with_candidate"],0)
 
+
+    def test_all_configured_active_sources_search_exact_channel_identity(self):
+        cfg = config()
+        cfg["sources"].append({"id": "extra-reviewed-tr",
+                               "scope": "TR",
+                               "url": "https://example.org/extra-reviewed-tr.m3u"})
+        docs = {sid: feed() for sid in SOURCES}
+        url = "https://example.org/extra-trt-spor.m3u8"
+        docs["extra-reviewed-tr"] = feed(
+            ('#EXTINF:-1 tvg-id="TRTSpor.tr@HD",TRT Spor [720p]', url),
+            ('#EXTINF:-1 tvg-id="TRTSpor.tr",TRT Spor Copy',
+             "https://example.org/wrong-identity.m3u8"))
+        report, rows = audit(cfg, reader=lambda source:
+            docs[source.rsplit("/", 1)[-1].removesuffix(".m3u")])
+        self.assertEqual(report["configured_sources_checked"], 6)
+        self.assertEqual(report["configured_sources_valid"], 6)
+        self.assertEqual(report["all_configured_active_sources_checked"], 7)
+        self.assertEqual(report["all_configured_active_sources_valid"], 7)
+        self.assertEqual(report["supplemental_sources_valid"], 1)
+        self.assertEqual(report["candidate_url_count"], 1)
+        self.assertEqual(rows[0]["url"], url)
+        self.assertEqual(rows[0]["source_ids"], ["extra-reviewed-tr"])
+        self.assertFalse(report["video_audio_verified"])
+
+    def test_disabled_or_unsafe_supplemental_sources_are_never_fetched(self):
+        cfg = config()
+        cfg["sources"] += [
+            {"id": "disabled-feed", "url": "https://example.org/disabled.m3u",
+             "enabled": False},
+            {"id": "unsafe-extra", "url": "http://127.0.0.1/private.m3u"}]
+        docs = {sid: feed() for sid in SOURCES}
+        visited = []
+        def read(uri):
+            visited.append(uri)
+            return docs[uri.rsplit("/", 1)[-1].removesuffix(".m3u")]
+        report, rows = audit(cfg, reader=read)
+        self.assertEqual(len(visited), 6)
+        self.assertEqual(rows, [])
+        self.assertEqual(report["supplemental_sources_checked"], 1)
+        self.assertEqual(report["supplemental_sources_valid"], 0)
+        self.assertEqual(report["supplemental_sources_unavailable"], ["unsafe-extra"])
+        self.assertFalse(report["full_configured_catalog_source_coverage_complete"])
+
     def test_missing_or_untrusted_source_inventory_fails_closed(self):
         rows = config()
         rows["sources"][0]["url"]="http://127.0.0.1/private.m3u"

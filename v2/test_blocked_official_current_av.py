@@ -83,6 +83,35 @@ class BlockedOfficialCurrentAVTests(unittest.TestCase):
         self.assertFalse(result["all_candidates_current_av_verified"])
         self.assertNotIn("https://", json.dumps(result))
 
+
+    def test_supplementary_source_candidate_gets_real_av_group_check(self):
+        cfg, original_reader = fixture()
+        cfg["sources"].append({"id": "extra-allowed-tr",
+                               "url": "https://example.org/extra-allowed-tr.m3u",
+                               "scope": "TR"})
+        extra_url = "https://example.org/extra-channel.m3u8"
+        def reader(uri):
+            if uri.endswith("/extra-allowed-tr.m3u"):
+                return ('#EXTM3U\n'
+                        '#EXTINF:-1 tvg-id="UlusalKanal.tr",Ulusal Kanal\n'
+                        + extra_url + '\n')
+            return original_reader(uri)
+        def prober(pair):
+            if pair[1] == extra_url:
+                return {"url_sha256": pair[0], "status": "VIDEO_AUDIO_DECODED",
+                        "video": True, "audio": True, "decoded": True}
+            return fake_probe(pair)
+        report, private = scan(cfg, reader=reader, prober=prober)
+        self.assertEqual(report["source_valid_count"], 6)
+        self.assertEqual(report["all_configured_active_sources_checked"], 7)
+        self.assertEqual(report["all_configured_active_sources_valid"], 7)
+        self.assertTrue(report["full_configured_catalog_source_coverage_complete"])
+        self.assertEqual(report["candidate_url_count"], 6)
+        self.assertEqual(report["candidate_urls_probed"], 6)
+        self.assertEqual(report["current_real_video_audio_decoded_count"], 3)
+        self.assertTrue(any(x["url"] == extra_url for x in private))
+        self.assertNotIn(extra_url, json.dumps(report))
+
     def test_invalid_second_probe_is_rejected(self):
         config, reader = fixture()
         attempts = {}

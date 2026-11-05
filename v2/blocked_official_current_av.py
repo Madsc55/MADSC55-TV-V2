@@ -82,6 +82,14 @@ def scan(config, *, reader=None, prober=probe, workers=4):
         "schema": 1, "kind": "V2_BLOCKED_OFFICIAL_REAL_FFPROBE_FFMPEG_AV",
         "source_count": len(SOURCES),
         "source_valid_count": source["configured_sources_valid"],
+        "all_configured_active_sources_checked":
+            source["all_configured_active_sources_checked"],
+        "all_configured_active_sources_valid":
+            source["all_configured_active_sources_valid"],
+        "supplemental_sources_checked": source["supplemental_sources_checked"],
+        "supplemental_sources_valid": source["supplemental_sources_valid"],
+        "full_configured_catalog_source_coverage_complete":
+            source["full_configured_catalog_source_coverage_complete"],
         "source_status": source["source_status"],
         "exact_target_page_count": len(TARGETS),
         "pages_with_exact_source_candidates": source["blocked_page_count_with_candidate"],
@@ -193,6 +201,10 @@ def main():
     print("BLOCKED_OFFICIAL_REAL_AV", json.dumps({
         "source_count": report["source_count"],
         "source_valid_count": report["source_valid_count"],
+        "all_configured_active_sources_checked":
+            report["all_configured_active_sources_checked"],
+        "all_configured_active_sources_valid":
+            report["all_configured_active_sources_valid"],
         "candidate_url_count": report["candidate_url_count"],
         "candidate_urls_probed": report["candidate_urls_probed"],
         "current_real_video_audio_decoded_count": report["current_real_video_audio_decoded_count"],
