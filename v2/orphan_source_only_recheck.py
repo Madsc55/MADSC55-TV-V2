@@ -88,6 +88,7 @@ def source_only_scan(targets, *, search=targeted_source_references,
         "discovery_complete": (not lookup["unavailable_or_failed_queries"] and
                                not lookup["incomplete_search_queries"] and
                                not lookup["truncated_queries_or_references"] and
+                               not lookup.get("queries_deferred_due_rate_limit", 0) and
                                not review["source_documents_unavailable_count"]),
         "video_audio_verified": False, "ibo_device_verified": False,
         "protected_playlist_modified": False, "stream_urls_plaintext_reported": False}

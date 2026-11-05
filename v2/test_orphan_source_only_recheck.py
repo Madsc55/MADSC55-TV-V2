@@ -70,6 +70,27 @@ class OrphanSourceOnlyTests(unittest.TestCase):
         self.assertFalse(report["video_audio_verified"])
         self.assertNotIn("https://", str(report))
 
+    def test_rate_limit_deferred_queries_are_never_called_complete(self):
+        targets = []
+        for i in range(10):
+            meta = "#EXTINF:-1,Deferred%d" % i
+            targets.append({"extinf": meta,
+                            "extinf_sha256": hashlib.sha256(meta.encode()).hexdigest()})
+        def lookup(rows, known):
+            return [], {"queries_attempted": 1,
+                        "queries_deferred_due_rate_limit": 9,
+                        "unavailable_or_failed_queries": 0,
+                        "incomplete_search_queries": 0,
+                        "truncated_queries_or_references": 0}
+        def matcher(rows, refs):
+            return {}, {"source_documents_unavailable_count": 0}
+        report, candidates = source_only_scan(targets, search=lookup, match=matcher)
+        self.assertEqual(report["queries_deferred_due_rate_limit"], 9)
+        self.assertFalse(report["discovery_complete"])
+        self.assertEqual(report["still_without_exact_candidate"], 10)
+        self.assertEqual(candidates, [])
+        self.assertFalse(report["video_audio_verified"])
+
     def test_untrusted_candidate_sha_and_extra_identity_fail_closed(self):
         targets = []
         for i in range(10):
