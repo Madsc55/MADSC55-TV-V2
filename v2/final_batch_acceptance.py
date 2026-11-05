@@ -209,7 +209,10 @@ def resume_checks(prior, inventory):
             raise ValueError("Invalid or repeated candidate digest")
         seen.add(digest)
         status = row.get("status")
-        if digest not in inventory or status not in allowed:
+        # Only a completed video+audio decode is reusable evidence.
+        # Stream-only, video-only, audio-only and NO_AV are not playback proof;
+        # probe them again rather than freezing a transient source failure.
+        if digest not in inventory or status != "VIDEO_AUDIO_DECODED":
             continue
         if any(type(row.get(k)) is not bool for k in ("video", "audio", "decoded")):
             raise ValueError("Invalid AV evidence flags")
