@@ -21,6 +21,8 @@ on:
       - 'v2/test_blocked_official_source_handoff.py'
       - 'v2/blocked_official_prior_av_bridge.py'
       - 'v2/test_blocked_official_prior_av_bridge.py'
+      - 'v2/blocked_official_current_av.py'
+      - 'v2/test_blocked_official_current_av.py'
       - 'v2/history/blocked-official-prior-real-av-sha.json'
       - 'v2/history/orphan-10-no-candidate-public-hashes.json'
       - '.github/workflows/v2-source-adapter-batch.yml'
@@ -73,6 +75,7 @@ jobs:
             test_orphan_targeted_github_code \
             test_blocked_official_source_handoff \
             test_blocked_official_prior_av_bridge \
+            test_blocked_official_current_av \
             2>&1 | tee v2/reports/ci/source-adapter-batch.log
       - name: Probe six public source/API entrypoints, no channel discovery
         run: python v2/source_adapter_service_health.py --audit-source-services
@@ -178,5 +181,58 @@ jobs:
             v2/reports/ci/blocked-official-exact-source-anonymous.json
             v2/reports/ci/blocked-official-exact-source-candidates.sealed
             v2/reports/ci/blocked-official-prior-av-anonymous.json
+          if-no-files-found: warn
+          retention-days: 30
+
+  real-av:
+    name: Real grouped FFprobe and FFmpeg AV for five blocked publisher alternatives
+    needs: adapters
+    runs-on: ubuntu-24.04
+    timeout-minutes: 14
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify immutable IBO playlist and historical baseline
+        shell: bash
+        run: |
+          test "$(git hash-object MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)" = '4b1c3cea4b5107a425abab60f62d41f9f81e05a7'
+          test "$(sha256sum v2/history/stage3-4955-hash-only.jsonl | cut -d' ' -f1)" = 'ee00a844a028e3410715d411467a2d3306f5f5cc4565766140b6438e786cdd27'
+      - name: Install pinned encryption and real AV decoder dependencies
+        shell: bash
+        run: |
+          python -m pip install cryptography==44.0.2
+          if ! command -v ffprobe >/dev/null || ! command -v ffmpeg >/dev/null; then
+            sudo apt-get update -qq
+            sudo apt-get install -y --no-install-recommends ffmpeg
+          fi
+          ffprobe -version | head -n 1
+          ffmpeg -version | head -n 1
+      - name: Real FFprobe and FFmpeg decode every exact approved candidate together
+        shell: bash
+        run: |
+          timeout 600s python v2/blocked_official_current_av.py --probe-all \
+            --workers 4 \
+            --report v2/reports/ci/blocked-official-current-real-av-anonymous.json \
+            --sealed v2/reports/ci/blocked-official-current-real-av.sealed
+      - name: Require six approved feeds and five channel identities with complete probe coverage
+        shell: bash
+        run: |
+          PYTHONPATH=v2 python v2/blocked_official_current_av.py --validate-only --require-complete \
+            --report v2/reports/ci/blocked-official-current-real-av-anonymous.json \
+            --sealed v2/reports/ci/blocked-official-current-real-av.sealed
+      - name: Upload anonymous real AV and RSA-sealed private URL evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v2-blocked-official-real-av-${{ github.run_id }}
+          path: |
+            v2/reports/ci/blocked-official-current-real-av-anonymous.json
+            v2/reports/ci/blocked-official-current-real-av.sealed
           if-no-files-found: warn
           retention-days: 30
