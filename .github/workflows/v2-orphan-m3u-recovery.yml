@@ -32,6 +32,7 @@ jobs:
           set -o pipefail
           PYTHONPATH=v2 python -m unittest -v \
             test_orphan_m3u_recovery \
+            test_main_playlist_candidate_bridge \
             test_orphan_source_only_recheck \
             test_historical_exact_real_av \
             test_orphan_source_expansion \
@@ -60,6 +61,32 @@ jobs:
         run: |
           PYTHONPATH=v2 python v2/github_source_discovery.py
           PYTHONPATH=v2 python v2/run_forge_source_discovery.py --scan-public-forges
+      - name: Read pinned protected main and 3964-entry foreign archive as sources only
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/v2-main-snapshots"
+          # Read immutable Git blobs, never touch the working or production playlist.
+          if ! git cat-file blob 165c726cd9211f9f51c31f1c718e0911bab79e1b > "$RUNNER_TEMP/v2-main-snapshots/main-876.m3u8" 2>/dev/null; then
+            gh api repos/Madsc55/MADSC55-TV-V2/git/blobs/165c726cd9211f9f51c31f1c718e0911bab79e1b --jq '.content' | base64 --decode > "$RUNNER_TEMP/v2-main-snapshots/main-876.m3u8"
+          fi
+          if ! git cat-file blob c54272e97f711c3074303cec74739d6d0ec806b2 > "$RUNNER_TEMP/v2-main-snapshots/foreign-3964.m3u8" 2>/dev/null; then
+            gh api repos/Madsc55/MADSC55-TV-V2/git/blobs/c54272e97f711c3074303cec74739d6d0ec806b2 --jq '.content' | base64 --decode > "$RUNNER_TEMP/v2-main-snapshots/foreign-3964.m3u8"
+          fi
+          PYTHONPATH=v2 python - <<'PY'
+          import os
+          from pathlib import Path
+          from main_playlist_candidate_bridge import validated_v2_main_catalog
+          root=Path(os.environ["RUNNER_TEMP"])/"v2-main-snapshots"
+          _, evidence=validated_v2_main_catalog(root/"main-876.m3u8",root/"foreign-3964.m3u8")
+          assert evidence["immutable_blobs_verified"] is True
+          assert evidence["playlist_modified"] is False
+          print("PINNED_V2_MAIN_READ_ONLY",{
+              k:evidence[k] for k in ("active_main_channels","active_yedekler",
+               "fixed_anchor_channels","separate_archived_yabancilar")})
+          PY
       - name: Compare four original M3U sources, immutable orphan identities, and known historical feeds
         shell: bash
         env:
@@ -67,6 +94,8 @@ jobs:
         run: |
           PYTHONPATH=v2 python v2/orphan_m3u_recovery.py \
             --history-revisions 300 \
+            --v2-main-playlist-snapshot "$RUNNER_TEMP/v2-main-snapshots/main-876.m3u8" \
+            --v2-main-foreign-archive-snapshot "$RUNNER_TEMP/v2-main-snapshots/foreign-3964.m3u8" \
             --include-public-discovery \
             --include-targeted-code-search \
             --include-public-registry \

@@ -17,6 +17,11 @@ class OrphanWorkflowWiringTests(unittest.TestCase):
             "--include-targeted-code-search",
             "--include-public-registry",
             "--history-revisions 300",
+            "165c726cd9211f9f51c31f1c718e0911bab79e1b",
+            "c54272e97f711c3074303cec74739d6d0ec806b2",
+            "validated_v2_main_catalog",
+            "--v2-main-playlist-snapshot",
+            "--v2-main-foreign-archive-snapshot",
         ):
             with self.subTest(field=required):
                 self.assertIn(required, content)
