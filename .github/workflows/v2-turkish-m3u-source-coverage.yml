@@ -25,6 +25,12 @@ on:
       - 'v2/test_orphan_world_av_bridge.py'
       - 'v2/orphan_evidence_triage.py'
       - 'v2/test_orphan_evidence_triage.py'
+      - 'v2/orphan_curated_traz_sources.py'
+      - 'v2/test_orphan_curated_traz_sources.py'
+      - 'v2/orphan_curated_traz_batch.py'
+      - 'v2/test_orphan_curated_traz_batch.py'
+      - 'v2/orphan_m3u_recovery.py'
+      - 'v2/test_orphan_m3u_recovery.py'
       - '.github/workflows/v2-world-discovery.yml'
       - '.github/workflows/v2-turkish-m3u-source-coverage.yml'
   workflow_dispatch:
@@ -73,6 +79,9 @@ jobs:
             test_historical_world_av_bridge \
             test_orphan_world_av_bridge \
             test_orphan_evidence_triage \
+            test_orphan_curated_traz_sources \
+            test_orphan_curated_traz_batch \
+            test_orphan_m3u_recovery \
             2>&1 | tee v2/reports/ci/turkish-m3u-loss-tests.log
       - name: Download real #60 and #72 aggregate evidence without scanning channel streams
         env:
@@ -182,6 +191,13 @@ jobs:
           PYTHONPATH=v2 python v2/orphan_evidence_triage.py \
             --report "$RUNNER_TEMP/v2-orphan-actionability/ci/orphan-50-pinned-main-anonymous.json" \
             --output v2/reports/ci/orphan-50-actionability-anonymous.json
+      - name: Match two new pinned TR/AZ feeds to all original 50 identities, probe only new exact URLs
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout 600s env PYTHONPATH=v2 python v2/orphan_curated_traz_batch.py \
+            --report v2/reports/ci/orphan-50-two-new-traz-anonymous.json \
+            --sealed v2/reports/ci/orphan-50-two-new-traz-candidates.sealed
       - name: Upload single grouped evidence bundle
         if: always()
         uses: actions/upload-artifact@v4
@@ -195,5 +211,7 @@ jobs:
             v2/reports/ci/historical-4955-prior-world-av-anonymous.json
             v2/reports/ci/orphan-50-prior-world-anonymous.json
             v2/reports/ci/orphan-50-actionability-anonymous.json
+            v2/reports/ci/orphan-50-two-new-traz-anonymous.json
+            v2/reports/ci/orphan-50-two-new-traz-candidates.sealed
           if-no-files-found: warn
           retention-days: 30
