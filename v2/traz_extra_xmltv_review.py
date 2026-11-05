@@ -22,10 +22,11 @@ PREV=ROOT/"v2/reports/ci/traz-missing-name-xmltv-review.json"
 GAP=ROOT/"v2/reports/ci/traz-missing-stream-epg-crosswalk.json"
 OUT=ROOT/"v2/reports/ci/traz-additional-xmltv-gap.json"
 SOURCES=(
-    "https://dearbulut.github.io/iptv/epg/tr.xml.gz",
-    "https://dearbulut.github.io/iptv/epg/az.xml.gz",
-    "https://dearbulut.github.io/iptv/epg/guide.xml.gz",
-    "https://iptvx.one/epg/epg.xml.gz",
+    "https://m3u-edit.com/epg-source.php?file=TR1.xml.gz",
+    "https://m3u-edit.com/epg-source.php?file=TR3.xml.gz",
+    "https://raw.githubusercontent.com/ahmethascelik/epghost/main/xmltv.xml",
+    "https://raw.githubusercontent.com/hayatiptv/iptv/master/tr-EPG-guide.xml",
+    "https://raw.githubusercontent.com/teleonline/listas/main/epg.xml.gz",
 )
 TIME=re.compile(r"^(\d{14})\s+([+-]\d{4})$")
 

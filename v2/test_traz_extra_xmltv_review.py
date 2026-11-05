@@ -33,7 +33,7 @@ class AdditionalXmltvSafetyTests(unittest.TestCase):
         self.assertEqual(remaining,{"Gamma.tr","Delta.tr"})
         self.assertEqual((n,old),(4,2))
         r=review(api,gap,prior,channels,
-                 ["https://dearbulut.github.io/iptv/epg/tr.xml.gz"],
+                 ["https://m3u-edit.com/epg-source.php?file=TR1.xml.gz"],
                  lambda _:xml)
         self.assertEqual(r["additional_guide_candidate_identities"],1)
         self.assertEqual(r["still_missing_epg_identities"],1)
@@ -45,7 +45,7 @@ class AdditionalXmltvSafetyTests(unittest.TestCase):
     def test_invalid_xmltv_does_not_invent_guide_success(self):
         api,gap,prior,channels,_=fixture()
         r=review(api,gap,prior,channels,
-                 ["https://dearbulut.github.io/iptv/epg/tr.xml.gz"],
+                 ["https://m3u-edit.com/epg-source.php?file=TR1.xml.gz"],
                  lambda _:b"<html></html>")
         self.assertFalse(r["all_new_sources_parsed"])
         self.assertEqual(r["additional_guide_candidate_identities"],0)

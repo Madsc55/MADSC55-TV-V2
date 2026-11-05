@@ -1013,7 +1013,8 @@ jobs:
       github.event_name == 'push' &&
       github.repository == 'Madsc55/MADSC55-TV-V2' &&
       github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
-      github.event.head_commit.message == 'feat(v2): review additional TR AZ XMLTV sources for missing guides'
+      (github.event.head_commit.message == 'feat(v2): review additional TR AZ XMLTV sources for missing guides' ||
+       github.event.head_commit.message == 'fix(v2): use verified external Turkish XMLTV sources and require real parse')
     needs: offline-source-safety
     runs-on: ubuntu-24.04
     timeout-minutes: 22
@@ -1052,7 +1053,7 @@ jobs:
         run: |
           set -euo pipefail
           PYTHONPATH=v2 python -m unittest -v test_traz_extra_xmltv_review test_traz_missing_name_xmltv_review test_traz_gap_crosswalk
-      - name: Inspect four additional approved XMLTV sources in one bounded batch
+      - name: Inspect five verified public XMLTV URLs in one bounded batch
         run: timeout 480s python v2/traz_extra_xmltv_review.py
       - name: Validate original 335 gap, metadata-only matches and anonymous public output
         shell: bash
@@ -1070,7 +1071,8 @@ jobs:
           assert not r["programme_schedule_accuracy_verified"]
           assert not r["new_stream_av_verified"]
           assert not r["ibo_device_verified"] and not r["protected_playlist_modified"]
-          assert len(r["source_audit"])==4
+          assert len(r["source_audit"])==5
+          assert any(x["status"]=="XMLTV_PARSED_METADATA_ONLY" for x in r["source_audit"]), "No XMLTV source parsed; do not claim acceptance"
           assert "https://" not in p.read_text() and "http://" not in p.read_text()
           print("ADDITIONAL_XMLTV_GAP_VERIFIED",r["additional_guide_candidate_identities"])
           PY
