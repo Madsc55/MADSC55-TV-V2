@@ -83,8 +83,8 @@ def _valid(name, data):
             return False
         if type(data.get("validated_m3u_source_count")) is not int:
             return False
-        if any(type(x.get("queries")) is not int for x in data["platforms"].values()
-               if isinstance(x, dict)):
+        if any(not isinstance(x, dict) or type(x.get("queries")) is not int
+               or x["queries"] < 0 for x in data["platforms"].values()):
             return False
     if name == "official_sites" and len(data["channels"]) != data["count"]:
         return False
