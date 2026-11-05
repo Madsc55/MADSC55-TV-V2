@@ -168,6 +168,25 @@ class FinalWorldwideReportGateTests(unittest.TestCase):
         self.report["av_status_counts"] = {"FABRICATED_SUCCESS": 1}
         self.fails("UNKNOWN_PROBE_STATUS")
 
+    def test_probe_failure_status_whitelist(self):
+        from historical_targeted_playback import classify_probe_failure
+        examples = ("401 Unauthorized", "403 Forbidden", "404 Not Found",
+                    "network timed out", "DNS name resolution failed",
+                    "invalid data found", "unrecognized option",
+                    "protocol whitelist rejected", "unexpected error")
+        for stderr in examples:
+            with self.subTest(stderr=stderr):
+                status = "PROBE_FAILED_" + classify_probe_failure(stderr)
+                self.report["candidates"][0].update(
+                    {"status": status, "video": False,
+                     "audio": False, "decoded": False})
+                self.report["audio_video_decoded"] = 0
+                self.report["av_status_counts"] = {status: 1}
+                self.assertEqual(self.check()["probed"], 1)
+        self.report["candidates"][0]["status"] = "PROBE_FAILED_FAKE_SUCCESS"
+        self.report["av_status_counts"] = {"PROBE_FAILED_FAKE_SUCCESS": 1}
+        self.fails("UNKNOWN_PROBE_STATUS")
+
     def test_duplicate_and_invalid_hash_rejected(self):
         self.report["candidates"][0]["url_sha256"] = "bad"
         self.fails("INVALID_CANDIDATE_SHA")
