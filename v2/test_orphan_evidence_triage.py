@@ -73,7 +73,7 @@ class OriginalFiftyAnonymousTriageTests(unittest.TestCase):
         a=summarize(sample())
         x=[i for i in a["identities"] if i["decision"]=="MISSING_EXACT_PUBLIC_STREAM_SOURCE"]
         self.assertEqual(x[0]["no_candidate_original_uri_structures"],["HTTP_URI_WITHOUT_HOST"])
-        self.assertNotIn("url",str(a).lower().replace("candidate_url_status_counts",""))
+        self.assertNotIn("://",str(a))
     def test_archive_mismatch_rejected(self):
         x=sample()
         x["all_proven_url_candidates_sealed_for_future_retest"]=48

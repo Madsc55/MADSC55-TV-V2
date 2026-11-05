@@ -11,8 +11,8 @@ import json
 from pathlib import Path
 import re
 
-_SHA = re.compile(r"[a-f0-9]{64}\\Z")
-_STATUS = re.compile(r"[A-Z_]{2,100}\\Z")
+_SHA = re.compile(r"[a-f0-9]{64}\Z")
+_STATUS = re.compile(r"[A-Z_]{2,100}\Z")
 
 def classify(status):
     if status == "VIDEO_AUDIO_DECODED":
@@ -144,7 +144,7 @@ def main():
     evidence = json.loads(a.report.read_text(encoding="utf-8"))
     output = summarize(evidence)
     a.output.parent.mkdir(parents=True, exist_ok=True)
-    a.output.write_text(json.dumps(output, ensure_ascii=False, sort_keys=True, indent=2)+"\\n", encoding="utf-8")
+    a.output.write_text(json.dumps(output, ensure_ascii=False, sort_keys=True, indent=2)+"\n", encoding="utf-8")
     print("ORPHAN_50_ACTIONABILITY", json.dumps({
         k: v for k, v in output.items() if k not in ("identities", "candidate_url_status_counts")
     }, sort_keys=True))
