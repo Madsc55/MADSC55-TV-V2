@@ -50,6 +50,35 @@ class PrivateIboAcceptanceTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             exporter.make_entries(public,private+private)
 
+    def test_multiple_verified_urls_per_channel_are_primary_plus_alternatives(self):
+        import hashlib
+        second_url="https://cdn.example.org/backup.m3u8"
+        second_hash=hashlib.sha256(second_url.encode()).hexdigest()
+        public,private=fixtures()
+        public["unique_url_candidates"]=2
+        public["streams"].append({
+            "url_sha256":second_hash,"status":"VIDEO_AUDIO_DECODED",
+            "decoded":True,"channel_ids":["TV.tr"]})
+        private.append({
+            "url":second_url,"url_sha256":second_hash,
+            "probe_status":"VIDEO_AUDIO_DECODED","decoded":True,
+            "video":True,"audio":True,"channel_ids":["TV.tr"]})
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp)
+            output=root/"test.m3u8"
+            main=root/"main.m3u8"
+            main.write_text("#EXTM3U\n")
+            with patch.object(exporter,"MAIN",main),\
+                 patch.object(exporter,"validate",return_value=public),\
+                 patch.object(exporter,"open_rows",return_value=private):
+                summary=exporter.export(root/"secret.pem",output)
+            self.assertEqual(summary["private_test_entries"],2)
+            self.assertEqual(summary["distinct_primary_channel_ids"],1)
+            self.assertEqual(summary["alternative_av_streams"],1)
+            self.assertEqual(output.read_text().count("#EXTINF:"),2)
+            self.assertIn("TEST - ALTERNATIF AKIS",output.read_text())
+            self.assertEqual(main.read_text(),"#EXTM3U\n")
+
     def test_output_private_separate_and_main_immutable(self):
         public,private=fixtures()
         with tempfile.TemporaryDirectory() as tmp:
