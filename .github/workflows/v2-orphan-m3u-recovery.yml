@@ -13,7 +13,9 @@ jobs:
   four-sources-one-batch:
     name: Four original feeds plus verified public discovery; exact orphan AV batch
     # One development-only push run; manual dispatch remains available.
-    if: github.event_name == 'workflow_dispatch' || github.event.head_commit.message == 'ci(v2): run full orphan FFmpeg evidence batch'
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      github.event.head_commit.message == 'ci(v2): run full orphan FFmpeg evidence batch'
     runs-on: ubuntu-24.04
     timeout-minutes: 65
     steps:
