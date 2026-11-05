@@ -105,5 +105,17 @@ def load_and_join(api_path=API,m3u_path=M3U):
     return join(json.loads(p.read_text(encoding="utf-8")),
                 json.loads(m.read_text(encoding="utf-8")))
 
+OUTPUT=ROOT/"v2/reports/ci/traz-api-m3u-exact-matches.json"
+
+def main():
+    result=load_and_join()
+    OUTPUT.parent.mkdir(parents=True,exist_ok=True)
+    OUTPUT.write_text(json.dumps(result,ensure_ascii=False,sort_keys=True)+"\n",encoding="utf-8")
+    print(json.dumps({
+        "api_m3u_shared_stream_hashes":result["m3u_url_hashes_present_in_api"],
+        "exact_api_m3u_channel_id_matches":result["exact_channel_and_url_hash_matches"],
+        "identity_review_not_autopromoted":result["url_hash_overlaps_without_exact_channel_id"],
+        "playback_verified_by_bridge":False},sort_keys=True))
+
 if __name__=="__main__":
-    print(json.dumps(load_and_join(),ensure_ascii=False,sort_keys=True))
+    main()
