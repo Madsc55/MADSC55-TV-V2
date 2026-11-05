@@ -1,11 +1,6 @@
 name: V2 Historical Missing-URL Video Audio Evidence (read-only)
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - madsc/v2-discovery-bulk-20261031
-    paths:
-      - '.github/workflows/v2-historical-targeted-playback.yml'
 
 permissions:
   contents: read
@@ -13,9 +8,6 @@ permissions:
 
 jobs:
   targeted-historical-playback:
-    if: >-
-      github.event_name == 'workflow_dispatch' ||
-      github.event.head_commit.message == 'ci(v2): grouped seven historical missing URL FFprobe recheck'
     name: Hash-verified historical missing streams, one grouped validation
     runs-on: ubuntu-24.04
     timeout-minutes: 30
