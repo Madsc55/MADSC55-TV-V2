@@ -121,6 +121,30 @@ class FinalWorldwideReportGateTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "UNPROBED_MISLABELED"):
             self.check(complete=False)
 
+    def test_all_av_status_classes_reject_inconsistent_flags(self):
+        cases = [
+            ("VIDEO_AUDIO_STREAMS_ONLY", True, False, False),
+            ("VIDEO_ONLY", True, True, False),
+            ("AUDIO_ONLY", False, False, False),
+            ("NO_AV", False, True, False),
+        ]
+        for status, video, audio, decoded in cases:
+            with self.subTest(status=status):
+                self.report["candidates"][0].update(
+                    {"status": status, "video": video, "audio": audio,
+                     "decoded": decoded})
+                self.report["audio_video_decoded"] = 0
+                self.report["av_status_counts"] = {status: 1}
+                self.fails("INCONSISTENT_AV_STATUS_FLAGS")
+
+    def test_failed_probe_cannot_claim_video_stream(self):
+        self.report["candidates"][0].update(
+            {"status": "PROBE_UNCONFIRMED", "video": True,
+             "audio": False, "decoded": False})
+        self.report["audio_video_decoded"] = 0
+        self.report["av_status_counts"] = {"PROBE_UNCONFIRMED": 1}
+        self.fails("FAILED_PROBE_WITH_AV_FLAGS")
+
     def test_duplicate_and_invalid_hash_rejected(self):
         self.report["candidates"][0]["url_sha256"] = "bad"
         self.fails("INVALID_CANDIDATE_SHA")
