@@ -1,11 +1,5 @@
 name: V2 TR AZ API One Grouped Real AV Batch
 on:
-  push:
-    branches: [madsc/v2-discovery-bulk-20261031]
-    paths:
-      - 'v2/traz_api_av_batch.py'
-      - 'v2/test_traz_api_av_batch.py'
-      - '.github/workflows/v2-traz-api-real-av.yml'
   workflow_dispatch:
 permissions:
   contents: read
