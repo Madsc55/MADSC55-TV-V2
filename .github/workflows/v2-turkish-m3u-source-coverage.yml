@@ -19,6 +19,8 @@ on:
       - 'v2/test_run60_source_discovery.py'
       - 'v2/historical_exact_real_av.py'
       - 'v2/test_historical_exact_real_av.py'
+      - 'v2/historical_world_av_bridge.py'
+      - 'v2/test_historical_world_av_bridge.py'
       - '.github/workflows/v2-world-discovery.yml'
       - '.github/workflows/v2-turkish-m3u-source-coverage.yml'
   workflow_dispatch:
@@ -64,6 +66,7 @@ jobs:
             test_source_inventory_contract \
             test_historical_targeted_playback \
             test_historical_exact_real_av \
+            test_historical_world_av_bridge \
             2>&1 | tee v2/reports/ci/turkish-m3u-loss-tests.log
       - name: Download real #60 and #72 aggregate evidence without scanning channel streams
         env:
@@ -139,6 +142,18 @@ jobs:
             "real_ffmpeg_decoded":b["current_real_ffmpeg_video_audio_decoded_count"],
             "unverified":b["url_hashes_unverified_after_real_probe"]},sort_keys=True))
           PY
+      - name: Reconcile all 4955 immutable URL hashes with the earlier 33657-stream real FFmpeg worldwide proof
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          mkdir -p "$RUNNER_TEMP/madsc-world"
+          gh run download 41715476184 -n v2-final-worldwide-acceptance-41715476184 -D "$RUNNER_TEMP/madsc-world"
+          python v2/historical_world_av_bridge.py \
+            --prior-world-report "$RUNNER_TEMP/madsc-world/final-worldwide-acceptance.json" \
+            --current-source-report v2/reports/ci/turkish-m3u-source-loss.json \
+            --historical-baseline v2/history/stage3-4955-hash-only.jsonl \
+            --output v2/reports/ci/historical-4955-prior-world-av-anonymous.json
       - name: Upload single grouped evidence bundle
         if: always()
         uses: actions/upload-artifact@v4
@@ -149,5 +164,6 @@ jobs:
             v2/reports/ci/turkish-m3u-source-loss.json
             v2/reports/ci/historical-current-missing-ffprobe-anonymous.json
             v2/reports/ci/historical-current-missing-real-ffmpeg-anonymous.json
+            v2/reports/ci/historical-4955-prior-world-av-anonymous.json
           if-no-files-found: warn
           retention-days: 30
