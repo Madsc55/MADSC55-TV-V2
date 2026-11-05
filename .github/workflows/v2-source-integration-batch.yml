@@ -133,7 +133,8 @@ jobs:
       (github.event_name == 'push' &&
        github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
        github.repository == 'Madsc55/MADSC55-TV-V2' &&
-       github.event.head_commit.message == 'fix(v2): classify source failures and run grouped AV evidence')
+       (github.event.head_commit.message == 'fix(v2): classify source failures and run grouped AV evidence' ||
+        github.event.head_commit.message == 'ci(v2): run ordered source discovery and grouped AV acceptance'))
     needs: offline-source-safety
     runs-on: ubuntu-24.04
     timeout-minutes: 150
