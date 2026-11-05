@@ -1,0 +1,55 @@
+{
+  "schema": 1,
+  "kind": "V2_BLOCKED_OFFICIAL_PRIOR_REAL_AV_SHA_ONLY",
+  "source_artifact_id": 13366661937,
+  "source_file": "targeted-tr-az-acceptance.json",
+  "source_report_sha256": "d7245c4d74f536511b39395081e5c973d08a6243b62b286195a44c565faaafa6",
+  "source_scope_probed": 9197,
+  "compared_live_source_run_id": 41939434438,
+  "records": [
+    {
+      "url_sha256": "133ef70d15f1975a373355b8137f689ca233ddd3955a0a307c307b6e602d58c1",
+      "page_id": "benguturk-official",
+      "prior_probe_status": "VIDEO_AUDIO_DECODED"
+    },
+    {
+      "url_sha256": "26833a99ba0e2944f6ed4b8c303d938942fdfa2afae57e0bea97e56bb92ac6bb",
+      "page_id": "benguturk-official",
+      "prior_probe_status": "PROBE_FAILED_NETWORK_TIMEOUT"
+    },
+    {
+      "url_sha256": "770d38644d52bfad090e4fbcb5149a8d28dcd00fe2e51c473321ac7f63d51120",
+      "page_id": "tv100-official",
+      "prior_probe_status": "UNSAFE_OR_UNRESOLVED_HOST"
+    },
+    {
+      "url_sha256": "9f49525cb29be4413770074f7b9b2a75079e00c18bff3f6922c345f604b50d22",
+      "page_id": "halk-tv-official",
+      "prior_probe_status": "VIDEO_AUDIO_DECODED"
+    },
+    {
+      "url_sha256": "9f4960fa7af53816db5f02a5b9e95e3009c680d0ec392d0a09c2462dae864188",
+      "page_id": "trt-spor-official",
+      "prior_probe_status": "UNSAFE_OR_UNRESOLVED_HOST"
+    },
+    {
+      "url_sha256": "c1ddfef920a0f7fe61cf09c6d5663d1bc713a491ab550b03399dd19a4fc87f0e",
+      "page_id": "halk-tv-official",
+      "prior_probe_status": "VIDEO_AUDIO_DECODED"
+    },
+    {
+      "url_sha256": "cc351559509b967770be1e94a9f85820f6ce907ae3ab08621d30f419538e4926",
+      "page_id": "tv100-official",
+      "prior_probe_status": "VIDEO_AUDIO_DECODED"
+    },
+    {
+      "url_sha256": "f4d30d62d59b04f381a3e2282ebad6421f2f4ffd7790dfe0bea83584431e08d5",
+      "page_id": "tv100-official",
+      "prior_probe_status": "UNSAFE_OR_UNRESOLVED_HOST"
+    }
+  ],
+  "verified_previous_video_audio_count": 4,
+  "now_verified_video_audio": false,
+  "ibo_device_verified": false,
+  "plaintext_urls_in_ledger": false
+}
