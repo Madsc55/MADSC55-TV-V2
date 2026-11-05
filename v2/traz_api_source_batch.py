@@ -122,6 +122,8 @@ def build(channels,feeds,streams,guides):
             "worldwide_language_feed_identities":sum(v["country"] not in ("TR","AZ") for v in identity.values()),
             "epg_target_identities":len(set(identity)&guide_ids),
             "target_identities_without_epg_reference":len(set(identity)-guide_ids),
+            "identities_missing_epg":sorted(set(identity)-guide_ids),
+            "identities_without_stream_url_lead":sorted(set(identity)-{r["channel_id"] for r in private}),
             "unique_channel_url_pairs":len(public),
             "unique_stream_url_hashes":len(hashes),
             "same_url_multiple_channel_id_pairs":len(public)-len(hashes),

@@ -21,7 +21,7 @@ jobs:
       - name: Related API identity EPG safety AV export and source-order tests in one batch
         run: |
           python -m compileall -q v2
-          PYTHONPATH=v2 python -m unittest -v test_traz_api_source_batch test_run_all_discovery test_playlist_invariants
+          PYTHONPATH=v2 python -m unittest -v test_traz_api_source_batch test_traz_api_m3u_bridge test_run_all_discovery test_playlist_invariants
   public-api-discovery:
     needs: grouped-offline
     runs-on: ubuntu-24.04

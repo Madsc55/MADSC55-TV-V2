@@ -178,6 +178,20 @@ def audit():
         errors.append("DOCUMENT_SOURCE_HANDOFF_MISMATCH")
     if problems:
         errors.append("PARTIAL_ADAPTER_COVERAGE")
+    # API references are metadata only. Cross-validate exact channel ID plus
+    # public URL hash against the M3U scan; never invent playable candidates.
+    api_crosswalk = {"status": "API_REPORT_NOT_PRESENT"}
+    api_report = ROOT / "v2/reports/ci/traz-api-source-audit.json"
+    if api_report.exists() and "channel_scan" in loaded:
+        try:
+            from traz_api_m3u_bridge import load_and_join
+            api_crosswalk = load_and_join(
+                api_report, REPORTS["channel_scan"])
+            api_crosswalk["status"] = "EXACT_HASH_AND_ID_AUDITED"
+        except (OSError, ValueError, TypeError, KeyError):
+            api_crosswalk = {"status": "INVALID_API_CROSSWALK",
+                             "av_verified": False}
+            problems.append("traz_api:INVALID_CROSSWALK")
     source_scan = loaded.get("channel_scan", {})
     dynamic_handoff = source_scan.get("public_source_reference_handoff", {})
     live_handoff = source_scan.get("approved_live_page_handoff", {})
@@ -290,6 +304,7 @@ def audit():
         "av_verified": False, "spoken_language_verified": False,
         "ibo_device_verified": False, "main_playlist_modified": False,
         "private_candidate_urls_exported": False,
+        "traz_api_exact_crosswalk": api_crosswalk,
     }
 
 def main():
