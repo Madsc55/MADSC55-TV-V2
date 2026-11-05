@@ -61,6 +61,10 @@ class TrAzEnrichmentTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,"Duplicate"):
             build([{"id":"test.tr","country":"TR"},{"id":"test.tr","country":"TR"}],[],[],[])
 
+    def test_legacy_writer_cannot_target_protected_main(self):
+        import build_newlisttr_ibo_test as legacy
+        self.assertNotEqual(legacy.DEST,legacy.LIVE)
+
     def test_separate_test_playlist_accepts_only_decoded_video_plus_audio(self):
         baseline="#EXTM3U\n#EXTINF:-1,Original\nhttps://example.org/original.m3u8\n"
         rows=[

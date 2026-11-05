@@ -1,35 +1,31 @@
 #!/usr/bin/env python3
-"""Create separate IBO test playlist: existing V2 entries + decoded NewlistTR in YEDEKLER."""
-import re
-from pathlib import Path
+"""Retired protected-playlist writer. Preserve an advisory-only review manifest.
+
+No historical backup category, frozen TRT/DHA entries, favorites or LIVE M3U
+may be rewritten by this script. Only the strict FFmpeg AV gated separate
+test export is eligible for IBO device review.
+"""
+import json
 from discover import ROOT, LIVE, entries
 
 SOURCE = ROOT / "v2/reports/newlisttr-decoded-only.m3u8"
-DEST = LIVE
+DEST = ROOT / "v2/reports/legacy-newlisttr-review-only.m3u8"
+SUMMARY = ROOT / "v2/reports/legacy-newlisttr-not-promoted.json"
 
 def main():
-    original = LIVE.read_text(encoding="utf-8-sig").rstrip() + "\n"
-    decoded = list(entries(SOURCE.read_text(encoding="utf-8-sig")))
-    existing_urls = {item["url"] for item in entries(original)}
-    added = [item for item in decoded if item["url"] not in existing_urls]
-    original_backups = sum("YEDEKLER" in item["group"] for item in entries(original))
-    if original_backups > 2:
-        print("Main playlist already has test backups; refusing duplicate import")
-        return
-    backup_group = f"🗂️ YEDEKLER ({original_backups + len(added)})"
-    # User-authorized import into main playlist YEDEKLER, preserving original entries.
-    original = re.sub(r'group-title="([^"]*YEDEKLER) \(\d+\)"',
-                      lambda m: 'group-title="' + backup_group + '"', original)
-    lines = [original.rstrip()]
-    for item in added:
-        def clean(s):
-            return str(s or "").replace('"', "'").replace("\n", " ").replace("\r", " ")
-        lines.append(f'#EXTINF:-1 tvg-id="{clean(item["tvg_id"])}" tvg-logo="{clean(item["logo"])}" group-title="{backup_group}",{clean(item["name"])}')
-        lines.append(item["url"])
-    DEST.write_text("\n".join(lines) + "\n", encoding="utf-8")
-    print(f"IBO separate test playlist: original={len(list(entries(original)))} added={len(added)} backups={original_backups + len(added)}")
-    assert original_backups == 2, "Original backup invariant failed"
-    assert len(list(entries(DEST.read_text(encoding="utf-8")))) == len(list(entries(original))) + len(added)
+    original = LIVE.read_bytes()
+    rows = list(entries(SOURCE.read_text(encoding="utf-8-sig")))
+    DEST.parent.mkdir(parents=True, exist_ok=True)
+    DEST.write_text("#EXTM3U\n", encoding="utf-8")
+    SUMMARY.write_text(json.dumps({
+        "policy":"LEGACY_IMPORT_RETIRED_NO_AUTO_IBO_PROMOTION",
+        "source_rows_metadata_only":len(rows),
+        "exported_ibo_channels":0,"protected_playlist_modified":False,
+        "next_step":"Require genuine FFmpeg video and audio evidence via build_verified_test_playlist.py"
+    },ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+    if LIVE.read_bytes()!=original:
+        raise RuntimeError("Protected playlist changed during legacy review")
+    print("Legacy NewlistTR import disabled; advisory rows:",len(rows))
 
-if __name__ == "__main__":
+if __name__=="__main__":
     main()

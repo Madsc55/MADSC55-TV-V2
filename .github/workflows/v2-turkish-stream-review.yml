@@ -276,7 +276,7 @@ jobs:
         run: python v2/quality_upgrades.py
       - name: Build manual review queue
         run: python v2/turkish_stream_review.py
-      - name: Build isolated provisional IBO review playlist
+      - name: Build separate IBO test M3U ONLY with explicit decoded video and audio evidence
         run: python v2/build_verified_test_playlist.py
       - name: Map candidate EPG and logo metadata
         run: python v2/candidate_assets.py
@@ -332,8 +332,8 @@ jobs:
             v2/reports/turkish-stream-probe.json
             v2/reports/turkish-stream-decode.json
             v2/reports/turkish-stream-review-queue.json
-            v2/reports/short-decoded-review-only.m3u8
-            v2/reports/short-decoded-playlist-summary.json
+            v2/reports/av-verified-ibo-test-only.m3u8
+            v2/reports/av-verified-test-summary.json
             v2/reports/epg-integrity.json
             v2/reports/assets-health.json
             v2/reports/logo-attribution.json

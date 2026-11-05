@@ -20,7 +20,7 @@ PRIVATE=ROOT/"v2/reports/private-traz-api-candidates.json"
 HOST="iptv-org.github.io"
 KINDS=("channels","feeds","streams","guides")
 MAX_BYTES=40_000_000
-MAX_ROWS=120_000
+MAX_ROWS=600_000
 
 def fetch_api(kind):
     if kind not in KINDS: raise ValueError("Unapproved API collection")
@@ -37,7 +37,10 @@ def fetch_api(kind):
         raw=response.read(MAX_BYTES+1)
     if len(raw)>MAX_BYTES: raise ValueError("Oversized API response")
     data=json.loads(raw)
-    if not isinstance(data,list) or len(data)>MAX_ROWS: raise ValueError("Invalid API list")
+    if not isinstance(data,list):
+        raise ValueError("Invalid IPTV API list type for "+kind)
+    if len(data)>MAX_ROWS:
+        raise ValueError("IPTV API "+kind+" exceeds safe row bound: "+str(len(data)))
     return data
 
 def public_stream(url):
