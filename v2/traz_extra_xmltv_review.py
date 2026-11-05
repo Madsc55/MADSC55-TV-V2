@@ -81,6 +81,7 @@ def parse_guide(raw,wanted,unique_names):
     if not isinstance(raw,bytes) or len(raw)>110000000:
         raise ValueError("Invalid decompressed XMLTV bytes")
     candidates={}
+    rejected_providers=set()
     programme=Counter()
     timed=Counter()
     try:
@@ -99,14 +100,24 @@ def parse_guide(raw,wanted,unique_names):
                 if match in wanted:display_names.add(match)
                 el.clear()
             elif event=="end" and el.tag=="channel":
+                proposed=None
                 if current and current in wanted:
                     # Exact XMLTV ID takes precedence, but contradictory authoritative
                     # display-name evidence is held for review, never promoted.
                     if not display_names or display_names=={current}:
-                        candidates[current]=(current,"EXACT_XMLTV_ID")
+                        proposed=(current,"EXACT_XMLTV_ID")
                 elif current and len(display_names)==1:
                     cid=next(iter(display_names))
-                    candidates[current]=(cid,"UNIQUE_REGISTRY_DISPLAY_NAME")
+                    proposed=(cid,"UNIQUE_REGISTRY_DISPLAY_NAME")
+                # Repeated provider IDs with conflicting or invalid definitions
+                # must never be promoted as verified identity matches.
+                if current and current not in rejected_providers:
+                    if proposed is None or (current in candidates and
+                                             candidates[current] != proposed):
+                        rejected_providers.add(current)
+                        candidates.pop(current,None)
+                    else:
+                        candidates[current]=proposed
                 current=None
                 display_names=set()
                 el.clear()
