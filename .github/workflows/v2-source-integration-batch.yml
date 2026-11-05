@@ -1,4 +1,5 @@
 name: V2 Source Integration Batch
+# Read-only grouped source, historical recovery and AV acceptance; protected IBO unchanged.
 on:
   push:
     branches:
