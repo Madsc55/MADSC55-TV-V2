@@ -10,6 +10,8 @@ on:
       - 'v2/test_traz_hls_codec_stability.py'
       - 'v2/traz_gap_crosswalk.py'
       - 'v2/traz_missing_name_xmltv_review.py'
+      - 'v2/traz_transient_av_recovery.py'
+      - 'v2/test_traz_transient_av_recovery.py'
       - 'v2/test_traz_missing_name_xmltv_review.py'
       - 'v2/test_traz_gap_crosswalk.py'
       - 'v2/traz_combined_private_ibo.py'
@@ -82,6 +84,7 @@ jobs:
             test_platform_verification_batch \
             test_traz_gap_crosswalk \
             test_traz_missing_name_xmltv_review \
+            test_traz_transient_av_recovery \
             test_traz_hls_codec_stability \
             test_traz_api_source_batch \
             test_traz_api_m3u_bridge \
@@ -723,5 +726,92 @@ jobs:
           path: |
             v2/reports/ci/traz-missing-target-real-av.json
             v2/reports/ci/traz-missing-target-av.sealed
+          if-no-files-found: warn
+          retention-days: 30
+
+  traz-targeted-transient-av-retry:
+    name: One bounded real AV retry for transient failures only
+    if: >-
+      github.event_name == 'push' &&
+      github.repository == 'Madsc55/MADSC55-TV-V2' &&
+      github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
+      github.event.head_commit.message == 'feat(v2): batch transient TR AZ AV recheck with sealed evidence'
+    needs: offline-source-safety
+    runs-on: ubuntu-24.04
+    timeout-minutes: 55
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Guard original history and protected primary IBO bytes
+        run: |
+          set -euo pipefail
+          test "$(git hash-object MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)" = '4b1c3cea4b5107a425abab60f62d41f9f81e05a7'
+          test "$(sha256sum v2/history/stage3-4955-hash-only.jsonl | cut -d' ' -f1)" = 'ee00a844a028e3410715d411467a2d3306f5f5cc4565766140b6438e786cdd27'
+      - name: Read exact previously checked URL hashes and encrypted source provenance
+        uses: actions/download-artifact@v4
+        with:
+          name: traz-missing-real-av-rsa-42043534038
+          run-id: 42043534038
+          github-token: ${{ github.token }}
+          path: v2/reports/ci
+      - name: Read immutable original exact missing-source metadata, no fresh broad rescan
+        uses: actions/download-artifact@v4
+        with:
+          name: v2-unified-source-search-42040392400
+          run-id: 42040392400
+          github-token: ${{ github.token }}
+          path: v2/reports/ci
+      - name: Install pinned encryption and real FFmpeg with HTTPS validation
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install cryptography==44.0.2
+          if [ ! -x /usr/bin/ffprobe ] || [ ! -x /usr/bin/ffmpeg ]; then
+            timeout 360s sudo apt-get -o Acquire::Retries=2 -o Acquire::http::Timeout=20 update -qq
+            timeout 1200s sudo apt-get -o Acquire::Retries=3 -o Acquire::http::Timeout=20 install -y --no-install-recommends ffmpeg
+          fi
+          test -x /usr/bin/ffprobe
+          test -x /usr/bin/ffmpeg
+          /usr/bin/ffmpeg -protocols | grep -q https
+      - name: One grouped offline spoof and no-repeat regression batch
+        run: PYTHONPATH=v2 python -m unittest -v test_traz_transient_av_recovery test_traz_missing_target_av test_traz_gap_crosswalk
+      - name: Recheck only recoverable transient original AV failures with real FFprobe FFmpeg
+        run: timeout 2000s python v2/traz_transient_av_recovery.py --workers 16
+      - name: Validate immutable original AV counts and fresh sealed evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib,json
+          from pathlib import Path
+          p=Path("v2/reports/ci/traz-transient-av-retry.json")
+          r=json.loads(p.read_text(encoding="utf-8"))
+          encrypted=Path("v2/reports/ci/traz-transient-av-retry.sealed")
+          assert r["kind"]=="V2_TR_AZ_TRANSIENT_TARGET_REAL_AV_RETRY"
+          assert r["original_av_channel_identities"]==3
+          assert r["retryable_original_hashes"]==89
+          assert r["reprobed_url_hashes"]==r["recovered_exact_current_url_hashes"]
+          assert r["reprobed_url_hashes"]<=89
+          assert r["fresh_video_audio_decoded_hashes"]==r["new_rsa_evidence"]["records_encrypted"]
+          assert hashlib.sha256(encrypted.read_bytes()).hexdigest()==r["new_rsa_evidence"]["sha256"]
+          assert not r["protected_playlist_modified"] and not r["ibo_device_verified"]
+          assert "https://" not in p.read_text() and "http://" not in p.read_text()
+          print("TRANSIENT_AV_BATCH_VERIFIED",r["new_distinct_av_identities"])
+          PY
+      - name: Upload anonymous hashes and RSA sealed URL evidence, no plaintext
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v2-traz-transient-real-av-rsa-${{ github.run_id }}
+          path: |
+            v2/reports/ci/traz-transient-av-retry.json
+            v2/reports/ci/traz-transient-av-retry.sealed
           if-no-files-found: warn
           retention-days: 30
