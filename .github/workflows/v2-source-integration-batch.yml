@@ -10,6 +10,8 @@ on:
       - 'v2/test_traz_hls_codec_stability.py'
       - 'v2/traz_gap_crosswalk.py'
       - 'v2/test_traz_gap_crosswalk.py'
+      - 'v2/traz_combined_private_ibo.py'
+      - 'v2/test_traz_combined_private_ibo.py'
       - 'v2/av_verified_sealed_ibo_export.py'
       - 'v2/test_av_verified_sealed_ibo_export.py'
       - 'v2/test_traz_api_m3u_bridge.py'
@@ -80,7 +82,8 @@ jobs:
             test_traz_hls_codec_stability \
             test_traz_api_source_batch \
             test_traz_api_m3u_bridge \
-            test_av_verified_sealed_ibo_export
+            test_av_verified_sealed_ibo_export \
+            test_traz_combined_private_ibo
           python -m unittest discover -s v2/tests -p 'test_source_integration_gate.py' -v
       - name: Preserve fail-closed status without fabricated live reports
         shell: bash
