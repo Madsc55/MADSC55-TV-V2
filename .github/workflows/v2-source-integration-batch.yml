@@ -613,7 +613,7 @@ jobs:
       github.repository == 'Madsc55/MADSC55-TV-V2'
     needs: offline-source-safety
     runs-on: ubuntu-24.04
-    timeout-minutes: 55
+    timeout-minutes: 90
     permissions:
       contents: read
       actions: read
@@ -644,7 +644,7 @@ jobs:
           # Actions run. Use real distro ffmpeg+ffprobe and fail if unavailable.
           if [ ! -x /usr/bin/ffmpeg ] || [ ! -x /usr/bin/ffprobe ]; then
             timeout 360s sudo apt-get -o Acquire::Retries=2 -o Acquire::http::Timeout=20 update -qq
-            timeout 540s sudo apt-get -o Acquire::Retries=2 -o Acquire::http::Timeout=20 install -y --no-install-recommends ffmpeg
+            timeout 1500s sudo apt-get -o Acquire::Retries=2 -o Acquire::http::Timeout=20 install -y --no-install-recommends ffmpeg
           fi
           test -x /usr/bin/ffmpeg
           test -x /usr/bin/ffprobe
