@@ -51,6 +51,14 @@ def inspect(report_path: Path, require_complete=True):
     unprobed = 0
     evidence_origins = Counter()
     origin_tracking = "evidence_origin_counts" in report
+    if origin_tracking:
+        require(isinstance(report["evidence_origin_counts"], dict),
+                "INVALID_EVIDENCE_ORIGIN_DISTRIBUTION")
+        require(all(k in ("CURRENT_RUN_FFPROBE_FFMPEG",
+                          "PRIOR_RUN_HASH_ONLY_NOT_FRESH") and
+                    type(v) is int and v > 0
+                    for k, v in report["evidence_origin_counts"].items()),
+                "INVALID_EVIDENCE_ORIGIN_DISTRIBUTION")
     for i, row in enumerate(candidates):
         require(isinstance(row, dict), "INVALID_CANDIDATE_OBJECT")
         h = row.get("url_sha256")
