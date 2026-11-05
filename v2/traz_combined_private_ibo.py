@@ -13,7 +13,6 @@ from pathlib import Path
 
 from discover import ROOT, entries
 from av_verified_sealed_ibo_export import select as select_api, esc, validate_destination
-from stage3_sealed_export import open_rows
 from traz_api_source_batch import public_stream
 
 REPORTS = ROOT / "v2/reports"
@@ -149,9 +148,8 @@ def check_envelope(report_path, sealed_path, label):
     if not isinstance(evidence, dict):
         raise ValueError("Missing " + label + " RSA manifest")
     raw = sealed_path.read_bytes()
-    if (evidence.get("sha256") != hashlib.sha256(raw).hexdigest() or
-            evidence.get("records") if label == "API" else
-            evidence.get("records_encrypted")) is None:
+    number = evidence.get("records") if label == "API" else evidence.get("records_encrypted")
+    if evidence.get("sha256") != hashlib.sha256(raw).hexdigest() or number is None:
         raise ValueError("Missing " + label + " RSA digest or count")
     count = evidence["records"] if label == "API" else evidence["records_encrypted"]
     required = report.get("unique_url_candidates") if label == "API" else report.get("matched_current_source_hashes")
@@ -174,6 +172,7 @@ def main():
         raise SystemExit("A local, non-symlink RSA private key is required")
     api = check_envelope(args.api_report, args.api_sealed, "API")
     target = check_envelope(args.target_report, args.target_sealed, "TARGET")
+    from stage3_sealed_export import open_rows
     text, summary = make_combined(
         api, open_rows(args.api_sealed, args.private_key),
         target, open_rows(args.target_sealed, args.private_key))
