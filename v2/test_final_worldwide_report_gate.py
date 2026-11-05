@@ -160,6 +160,14 @@ class FinalWorldwideReportGateTests(unittest.TestCase):
                 self.report["probe_budget_expired"] = invalid
                 self.fails("BUDGET_EXPIRY_INCONSISTENT")
 
+    def test_unknown_probe_status_rejected(self):
+        self.report["candidates"][0].update(
+            {"status": "FABRICATED_SUCCESS", "video": False,
+             "audio": False, "decoded": False})
+        self.report["audio_video_decoded"] = 0
+        self.report["av_status_counts"] = {"FABRICATED_SUCCESS": 1}
+        self.fails("UNKNOWN_PROBE_STATUS")
+
     def test_duplicate_and_invalid_hash_rejected(self):
         self.report["candidates"][0]["url_sha256"] = "bad"
         self.fails("INVALID_CANDIDATE_SHA")
