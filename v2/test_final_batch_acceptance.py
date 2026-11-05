@@ -30,14 +30,31 @@ class FinalBatchAcceptanceTests(unittest.TestCase):
         self.assertEqual(result["candidates"][0]["status"], "NOT_PROBED_BUDGET")
         self.assertNotIn(url, str(result))
         self.assertNotIn("privatevalue", str(result))
-    def test_resume_reuses_confirmed_av_and_rechecks_transient_errors(self):
-        from pathlib import Path
-        from unittest.mock import patch
-        from final_batch_acceptance import main
-        # A full end-to-end scan requires live sources; offline tests assert
-        # that incomplete evidence is never promoted to playback proof.
-        self.assertTrue(callable(main))
-        self.assertTrue(callable(report))
+    def test_resume_accepts_valid_av_and_rechecks_transient_failures(self):
+        from final_batch_acceptance import resume_checks
+        good, transient = sha("https://example.com/a"), sha("https://example.com/b")
+        inventory = {good: {}, transient: {}}
+        prior = {"schema": 1, "kind": "V2_WORLDWIDE_READ_ONLY_FINAL_ACCEPTANCE",
+                 "unique_url_candidates": 2, "candidates": [
+                    {"url_sha256": good, "status": "VIDEO_AUDIO_DECODED",
+                     "video": True, "audio": True, "decoded": True},
+                    {"url_sha256": transient, "status": "PROBE_FAILED_TIMEOUT",
+                     "video": False, "audio": False, "decoded": False}]}
+        self.assertEqual(set(resume_checks(prior, inventory)), {good})
+
+    def test_resume_rejects_duplicate_hash_and_false_decode(self):
+        from final_batch_acceptance import resume_checks
+        digest = sha("https://example.com/a")
+        row = {"url_sha256": digest, "status": "VIDEO_AUDIO_DECODED",
+               "video": True, "audio": False, "decoded": True}
+        prior = {"schema": 1, "kind": "V2_WORLDWIDE_READ_ONLY_FINAL_ACCEPTANCE",
+                 "unique_url_candidates": 1, "candidates": [row]}
+        with self.assertRaises(ValueError):
+            resume_checks(prior, {digest: {}})
+        prior["unique_url_candidates"] = 2
+        prior["candidates"] = [row, dict(row)]
+        with self.assertRaises(ValueError):
+            resume_checks(prior, {digest: {}})
 
     def test_unprobed_candidate_never_counts_as_decoded(self):
         url = "https://example.com/another-private-stream"
