@@ -6,6 +6,10 @@ on:
     paths:
       - 'v2/source_integration_gate.py'
       - 'v2/traz_api_m3u_bridge.py'
+      - 'v2/traz_hls_codec_stability.py'
+      - 'v2/test_traz_hls_codec_stability.py'
+      - 'v2/traz_gap_crosswalk.py'
+      - 'v2/test_traz_gap_crosswalk.py'
       - 'v2/av_verified_sealed_ibo_export.py'
       - 'v2/test_av_verified_sealed_ibo_export.py'
       - 'v2/test_traz_api_m3u_bridge.py'
@@ -603,6 +607,10 @@ jobs:
           d=json.loads(p.read_text())
           assert d["policy"]=="PUBLIC_SHA_ONLY_NO_PLAYLIST_PROMOTION"
           assert d["prior_av_verified_streams"]==171
+          assert len(d["streams"])==171
+          assert len({row["url_sha256"] for row in d["streams"]})==171
+          assert all(row["reliability_score"] is None and
+                     row["long_term_uptime_verified"] is False for row in d["streams"])
           assert d["short_interval_does_not_prove_24h_uptime"] is True
           assert d["protected_playlist_modified"] is False and d["ibo_device_verified"] is False
           assert "https://" not in p.read_text() and "http://" not in p.read_text()
