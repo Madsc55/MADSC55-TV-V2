@@ -40,7 +40,9 @@ class FinalBatchAcceptanceTests(unittest.TestCase):
                      "video": True, "audio": True, "decoded": True},
                     {"url_sha256": transient, "status": "PROBE_FAILED_TIMEOUT",
                      "video": False, "audio": False, "decoded": False}]}
-        self.assertEqual(set(resume_checks(prior, inventory)), {good})
+        reused = resume_checks(prior, inventory)
+        self.assertEqual(set(reused), {good})
+        self.assertEqual(reused[good]["evidence_origin"], "PRIOR_RUN_HASH_ONLY_NOT_FRESH")
 
     def test_resume_rejects_duplicate_hash_and_false_decode(self):
         from final_batch_acceptance import resume_checks
@@ -74,6 +76,24 @@ class FinalBatchAcceptanceTests(unittest.TestCase):
                              "audio": audio, "decoded": decoded}]}
                 with self.assertRaises(ValueError):
                     resume_checks(prior, {digest: {}})
+
+    def test_report_separates_prior_evidence_from_current_probe(self):
+        from final_batch_acceptance import report
+        old, fresh = sha("https://example.com/old"), sha("https://example.com/new")
+        inventory = {d: {"url": "https://example.com/private", "meta": {"name": "TV"},
+                         "source_ids": {"source"}, "scopes": {"world"}} for d in (old, fresh)}
+        checks = {d: {"status": "VIDEO_AUDIO_DECODED", "video": True,
+                      "audio": True, "decoded": True, "audio_lang_tags": [],
+                      "evidence_origin": origin} for d, origin in
+                  ((old, "PRIOR_RUN_HASH_ONLY_NOT_FRESH"),
+                   (fresh, "CURRENT_RUN_FFPROBE_FFMPEG"))}
+        result = report([("source", [], "FETCHED")], inventory, checks,
+                        configured=1, historic=0, expired=False, elapsed=1)
+        self.assertEqual(result["evidence_origin_counts"],
+                         {"PRIOR_RUN_HASH_ONLY_NOT_FRESH": 1,
+                          "CURRENT_RUN_FFPROBE_FFMPEG": 1})
+        self.assertEqual({x["evidence_origin"] for x in result["candidates"]},
+                         {"PRIOR_RUN_HASH_ONLY_NOT_FRESH", "CURRENT_RUN_FFPROBE_FFMPEG"})
 
     def test_unprobed_candidate_never_counts_as_decoded(self):
         url = "https://example.com/another-private-stream"
