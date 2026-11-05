@@ -45,6 +45,41 @@ class CombinePrivateIbo(unittest.TestCase):
         self.assertEqual(content.count("#EXTINF:"),2)
         self.assertIn("New.az",content)
 
+    def test_real_two_sample_av_prioritizes_primary_not_invents_uptime(self):
+        api,private,target,sealed=fixture()
+        good=sha(API_URL)
+        shortterm={"schema":1,"kind":"TR_AZ_REAL_FFMPEG_HLS_CODEC_SHORT_TERM",
+           "policy":"PUBLIC_SHA_ONLY_NO_PLAYLIST_PROMOTION",
+           "protected_playlist_modified":False,"ibo_device_verified":False,
+           "short_interval_does_not_prove_24h_uptime":True,
+           "prior_av_verified_streams":1,
+           "both_short_av_samples_decoded":1,
+           "streams":[{"url_sha256":good,"exact_channel_ids":["TV.tr"],
+                "both_samples_decode":True,"av_round_1":"VIDEO_AUDIO_DECODED",
+                "av_round_2":"VIDEO_AUDIO_DECODED"}]}
+        content,result=make_combined(api,private,target,sealed,shortterm=shortterm)
+        self.assertIn("TEST - IKI KISA AV ORNEGI",content)
+        self.assertEqual(result["shortterm_two_sample_hashes"],1)
+        self.assertFalse(result["long_term_reliability_claimed"])
+        shortterm["streams"][0]["exact_channel_ids"]=["Other.tr"]
+        with self.assertRaisesRegex(ValueError,"mismatch"):
+            make_combined(api,private,target,sealed,shortterm=shortterm)
+
+    def test_shortterm_metadata_not_false_decode_proof(self):
+        a,p,t,s=fixture()
+        shortterm={"schema":1,"kind":"TR_AZ_REAL_FFMPEG_HLS_CODEC_SHORT_TERM",
+          "policy":"PUBLIC_SHA_ONLY_NO_PLAYLIST_PROMOTION",
+          "protected_playlist_modified":False,"ibo_device_verified":False,
+          "short_interval_does_not_prove_24h_uptime":True,
+          "prior_av_verified_streams":1,
+          "both_short_av_samples_decoded":1,
+          "streams":[{"url_sha256":sha(API_URL),
+             "exact_channel_ids":["TV.tr"],"both_samples_decode":True,
+             "av_round_1":"VIDEO_AUDIO_STREAMS_ONLY",
+             "av_round_2":"VIDEO_AUDIO_DECODED"}]}
+        with self.assertRaisesRegex(ValueError,"False repeated"):
+            make_combined(a,p,t,s,shortterm=shortterm)
+
     def test_duplicate_address_same_identity_is_deduplicated(self):
         a,p,t,s=fixture()
         t["results"][0]["url_sha256"]=sha(API_URL)

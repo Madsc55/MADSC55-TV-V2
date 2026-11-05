@@ -77,11 +77,52 @@ def checked_target(target, rows):
     return accepted
 
 
-def make_combined(api, api_rows, target, target_rows):
+def validated_shortterm_hashes(report, api):
+    """Two short AV samples only prioritize test order; never prove 24h uptime."""
+    if report is None:
+        return set()
+    if (not isinstance(report, dict) or report.get("schema") != 1
+            or report.get("kind") != "TR_AZ_REAL_FFMPEG_HLS_CODEC_SHORT_TERM"
+            or report.get("policy") != "PUBLIC_SHA_ONLY_NO_PLAYLIST_PROMOTION"
+            or report.get("protected_playlist_modified") is not False
+            or report.get("ibo_device_verified") is not False
+            or report.get("short_interval_does_not_prove_24h_uptime") is not True):
+        raise ValueError("Untrusted HLS short-term evidence")
+    known = {r["url_sha256"]: sorted(r.get("channel_ids") or [])
+             for r in api.get("streams",[]) if r.get("decoded") is True}
+    if (len(known) != api.get("video_audio_decoded")
+            or report.get("prior_av_verified_streams") != len(known)):
+        raise ValueError("Short-term AV is not tied to this API acceptance run")
+    rows = report.get("streams")
+    if not isinstance(rows,list) or len(rows) != len(known):
+        raise ValueError("Incomplete short-term AV evidence")
+    seen = set()
+    repeated = set()
+    for row in rows:
+        if not isinstance(row,dict) or "url" in row:
+            raise ValueError("Plaintext or malformed stability row")
+        digest = row.get("url_sha256")
+        if (digest not in known or digest in seen
+                or sorted(row.get("exact_channel_ids") or []) != known[digest]):
+            raise ValueError("Cross-run AV URL/identity mismatch")
+        seen.add(digest)
+        if row.get("both_samples_decode") is True:
+            if (row.get("av_round_1") != "VIDEO_AUDIO_DECODED"
+                    or row.get("av_round_2") != "VIDEO_AUDIO_DECODED"):
+                raise ValueError("False repeated FFmpeg video/audio evidence")
+            repeated.add(digest)
+    if (seen != set(known) or
+            len(repeated) != report.get("both_short_av_samples_decoded")):
+        raise ValueError("Incomplete repeated AV report")
+    return repeated
+
+
+def make_combined(api, api_rows, target, target_rows, shortterm=None):
     if (api.get("unprobed") != 0 or
             api.get("probed") != api.get("unique_url_candidates") or
             api.get("protected_playlist_modified") is not False):
         raise ValueError("API FFmpeg evidence coverage incomplete")
+    repeated = validated_shortterm_hashes(shortterm, api)
     first_text, first_summary = select_api(api, api_rows)
     if api.get("video_audio_decoded") != sum(
             x.get("decoded") is True for x in api.get("streams", [])):
@@ -113,9 +154,17 @@ def make_combined(api, api_rows, target, target_rows):
         raise ValueError("Refusing empty or fabricated device test list")
     lines = ["#EXTM3U"]
     for cid in sorted(by_id):
-        for n, (url, source) in enumerate(by_id[cid]):
-            group = ("TEST - AV KANITLI, IBO CIHAZ BEKLIYOR" if n == 0
-                     else "TEST - ALTERNATIF AV, IBO CIHAZ BEKLIYOR")
+        # Prefer two short FFmpeg AV samples as the primary; keep all one-time
+        # verified alternatives for device testing, without a 24h uptime claim.
+        ordered = sorted(by_id[cid], key=lambda pair: (
+            hashlib.sha256(pair[0].encode("utf-8")).hexdigest() not in repeated,
+            pair[1] != "api"))
+        for n, (url, source) in enumerate(ordered):
+            digest = hashlib.sha256(url.encode("utf-8")).hexdigest()
+            group = ("TEST - IKI KISA AV ORNEGI, CIHAZ BEKLIYOR"
+                     if n == 0 and digest in repeated else
+                     "TEST - AV KANITLI, IBO CIHAZ BEKLIYOR" if n == 0 else
+                     "TEST - ALTERNATIF AV, IBO CIHAZ BEKLIYOR")
             display = esc(cid) + (" [ALT]" if n else "")
             lines.extend(['#EXTINF:-1 tvg-id="' + esc(cid) +
                           '" group-title="' + group + '",' + display, url])
@@ -134,6 +183,8 @@ def make_combined(api, api_rows, target, target_rows):
         "long_term_uptime_verified": False,
         "protected_playlist_modified": False,
         "unverified_streams_exported": 0,
+        "shortterm_two_sample_hashes": len(repeated),
+        "long_term_reliability_claimed": False,
     }
     return "\n".join(lines) + "\n", summary
 
@@ -165,6 +216,8 @@ def main():
     p.add_argument("--api-sealed", type=Path, default=API_SEALED)
     p.add_argument("--target-report", type=Path, default=TARGET_REPORT)
     p.add_argument("--target-sealed", type=Path, default=TARGET_SEALED)
+    p.add_argument("--shortterm-report", type=Path, default=None,
+                   help="Optional public hash-only two-sample FFmpeg evidence")
     p.add_argument("--out", type=Path, default=DEFAULT_OUT)
     args = p.parse_args()
     validate_destination(args.out)
@@ -173,9 +226,15 @@ def main():
     api = check_envelope(args.api_report, args.api_sealed, "API")
     target = check_envelope(args.target_report, args.target_sealed, "TARGET")
     from stage3_sealed_export import open_rows
+    shortterm = None
+    if args.shortterm_report is not None:
+        path = args.shortterm_report
+        if path.is_symlink() or not path.is_file() or path.stat().st_size > 20_000_000:
+            raise SystemExit("Unsafe two-sample evidence path")
+        shortterm = json.loads(path.read_text(encoding="utf-8"))
     text, summary = make_combined(
         api, open_rows(args.api_sealed, args.private_key),
-        target, open_rows(args.target_sealed, args.private_key))
+        target, open_rows(args.target_sealed, args.private_key), shortterm=shortterm)
     flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL | getattr(os, "O_NOFOLLOW", 0)
     fd = os.open(args.out, flags, 0o600)
     with os.fdopen(fd, "w", encoding="utf-8") as stream:
