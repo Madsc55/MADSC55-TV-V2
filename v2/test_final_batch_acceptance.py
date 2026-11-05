@@ -56,6 +56,25 @@ class FinalBatchAcceptanceTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             resume_checks(prior, {digest: {}})
 
+    def test_resume_rejects_all_inconsistent_av_status_classes(self):
+        from final_batch_acceptance import resume_checks
+        digest = sha("https://example.com/av")
+        states = [
+            ("VIDEO_AUDIO_DECODED", True, False, True),
+            ("VIDEO_AUDIO_STREAMS_ONLY", True, False, False),
+            ("VIDEO_ONLY", True, True, False),
+            ("AUDIO_ONLY", True, True, False),
+            ("NO_AV", False, True, False),
+        ]
+        for status, video, audio, decoded in states:
+            with self.subTest(status=status):
+                prior = {"schema": 1, "kind": "V2_WORLDWIDE_READ_ONLY_FINAL_ACCEPTANCE",
+                         "unique_url_candidates": 1, "candidates": [
+                            {"url_sha256": digest, "status": status, "video": video,
+                             "audio": audio, "decoded": decoded}]}
+                with self.assertRaises(ValueError):
+                    resume_checks(prior, {digest: {}})
+
     def test_unprobed_candidate_never_counts_as_decoded(self):
         url = "https://example.com/another-private-stream"
         digest = sha(url)
