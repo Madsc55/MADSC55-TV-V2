@@ -35,9 +35,9 @@ class RunnerTests(unittest.TestCase):
             "run_forge_source_discovery.py", "official_sites_discovery.py",
             "official_site_gap.py", "run_live_page_discovery.py",
             "run_webpage_playlist_discovery.py", "document_platform_discovery.py",
-            "youtube_discovery.py", "discover.py", "source_integration_gate.py"
+            "traz_api_source_batch.py", "youtube_discovery.py", "discover.py", "source_integration_gate.py"
         ]
-        self.assertEqual(len(steps), 11)
+        self.assertEqual(len(steps), 12)
         self.assertEqual([pathlib.Path(cmd[1]).name for cmd in steps], expected)
         self.assertIn("--include-original-run60-github-sources", steps[-2])
         self.assertIn("--include-reviewed-public-source-references", steps[-2])
@@ -49,7 +49,7 @@ class RunnerTests(unittest.TestCase):
     def test_source_only_runs_all_configured_adapters_without_archive(self):
         steps=plan(source_only=True)
         names=[pathlib.Path(cmd[1]).name for cmd in steps]
-        self.assertEqual(len(names),11)
+        self.assertEqual(len(names),12)
         self.assertEqual(names[-3:],
                          ["youtube_discovery.py","discover.py","source_integration_gate.py"])
         self.assertNotIn("--encrypted-archive",steps[-2])
@@ -89,7 +89,7 @@ class RunnerTests(unittest.TestCase):
     def test_youtube_opt_out_keeps_official_and_final_gate(self):
         steps = plan(pathlib.Path("/tmp/private.enc"), include_youtube=False)
         names = [pathlib.Path(x[1]).name for x in steps]
-        self.assertEqual(len(names), 10)
+        self.assertEqual(len(names), 11)
         self.assertNotIn("youtube_discovery.py", names)
         self.assertEqual(names[-2:], ["discover.py", "source_integration_gate.py"])
         self.assertIn("official_site_gap.py", names)

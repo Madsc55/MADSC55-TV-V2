@@ -33,6 +33,7 @@ def plan(archive=None, previous_report=None, include_youtube=True, source_only=F
         [sys.executable, str(ROOT / "run_live_page_discovery.py"), "--scan-approved-live-pages"],
         [sys.executable, str(ROOT / "run_webpage_playlist_discovery.py"), "--scan-approved-index-pages"],
         [sys.executable, str(ROOT / "document_platform_discovery.py"), "--scan-public-documents"],
+        [sys.executable, str(ROOT / "traz_api_source_batch.py")],
         [sys.executable, str(ROOT / "discover.py"), "--include-original-run60-github-sources",
          "--include-reviewed-public-source-references", "--include-approved-live-page-indexes"],
         [sys.executable, str(ROOT / "source_integration_gate.py"),

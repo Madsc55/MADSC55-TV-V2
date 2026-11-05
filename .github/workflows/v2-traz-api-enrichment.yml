@@ -1,0 +1,69 @@
+name: V2 TR AZ Worldwide API and EPG Bulk Enrichment
+on:
+  push:
+    branches: [madsc/v2-discovery-bulk-20261031]
+    paths:
+      - 'v2/traz_api_source_batch.py'
+      - 'v2/test_traz_api_source_batch.py'
+      - 'v2/build_verified_test_playlist.py'
+      - 'v2/run_all_discovery.py'
+      - 'v2/test_run_all_discovery.py'
+      - '.github/workflows/v2-traz-api-enrichment.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  grouped-offline:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Protected baseline integrity
+        run: |
+          test "$(git hash-object MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)" = '4b1c3cea4b5107a425abab60f62d41f9f81e05a7'
+          test "$(sha256sum v2/history/stage3-4955-hash-only.jsonl | cut -d' ' -f1)" = 'ee00a844a028e3410715d411467a2d3306f5f5cc4565766140b6438e786cdd27'
+      - name: Related API identity EPG safety AV export and source-order tests in one batch
+        run: |
+          python -m compileall -q v2
+          PYTHONPATH=v2 python -m unittest -v test_traz_api_source_batch test_run_all_discovery test_playlist_invariants
+  public-api-discovery:
+    needs: grouped-offline
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Fetch official channel feed stream and guide metadata read-only
+        run: timeout 950s python v2/traz_api_source_batch.py --public-only
+      - name: Assert no fictitious AV or device verification
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path("v2/reports/ci/traz-api-source-audit.json").read_text())
+          assert d["policy"]=="READ_ONLY_METADATA_NOT_AV_NO_IBO_WRITES"
+          assert d["all_streams_av_verified"] is False
+          assert d["ibo_device_verified"] is False
+          assert d["protected_playlist_modified"] is False
+          assert d["unique_channel_url_pairs"]==len(d["stream_references"])
+          assert all(not x["av_verified"] and "url" not in x for x in d["stream_references"])
+          print("API_TR_AZ_IDENTITY_CANDIDATES",d["target_unique_channel_ids"])
+          print("UNVERIFIED_STREAM_LEADS",d["unique_channel_url_pairs"])
+          PY
+      - name: Upload anonymous hash-only report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: traz-api-public-metadata-${{ github.run_id }}
+          path: v2/reports/ci/traz-api-source-audit.json
+          if-no-files-found: warn
+          retention-days: 30
