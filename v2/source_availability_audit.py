@@ -79,8 +79,13 @@ def active_source_inventory(configured):
             not isinstance(item, dict) or not isinstance(item.get("id"), str)
             for item in configured):
         raise ValueError("Malformed configured source inventory")
-    active = [row for row in configured if row.get("enabled", True) is not False]
-    disabled = [row["id"] for row in configured if row.get("enabled", True) is False]
+    ids = [row["id"] for row in configured]
+    if any(not item.strip() for item in ids) or len(ids) != len(set(ids)):
+        raise ValueError("Empty or duplicate configured source ID")
+    if any(type(row.get("enabled", True)) is not bool for row in configured):
+        raise ValueError("Invalid configured source enabled flag")
+    active = [row for row in configured if row.get("enabled", True)]
+    disabled = [row["id"] for row in configured if not row.get("enabled", True)]
     return active, disabled
 
 
