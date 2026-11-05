@@ -1,0 +1,67 @@
+#!/usr/bin/env python3
+"""Grouped offline private IBO export acceptance and false proof rejection."""
+import hashlib
+import tempfile
+import unittest
+from pathlib import Path
+from av_verified_sealed_ibo_export import select,validate_destination
+
+def fixture(decoded=True,ids=None):
+    if ids is None:ids=["TestTV.tr"]
+    url="https://cdn.example.org/stream.m3u8"
+    digest=hashlib.sha256(url.encode()).hexdigest()
+    stream={"url_sha256":digest,"status":"VIDEO_AUDIO_DECODED" if decoded else "VIDEO_AUDIO_STREAMS_ONLY",
+            "channel_ids":ids,"video":True,"audio":True,"decoded":decoded}
+    report={"schema":1,"kind":"TR_AZ_IPTV_API_REAL_FFMPEG_AV_ACCEPTANCE",
+            "policy":"ANONYMOUS_HASH_ONLY_RSA_ENCRYPTED_URLS",
+            "unique_url_candidates":1,"streams":[stream],
+            "protected_playlist_modified":False,"ibo_device_verified":False}
+    rows=[{"url_sha256":digest,"url":url,"channel_ids":ids,
+           "probe_status":stream["status"],"video":True,"audio":True,"decoded":decoded}]
+    return report,rows
+
+class SeparatePrivateExport(unittest.TestCase):
+    def test_real_video_audio_and_exact_identity_exported(self):
+        content,summary=select(*fixture())
+        self.assertEqual(summary["verified_entries"],1)
+        self.assertIn('tvg-id="TestTV.tr"',content)
+        self.assertIn('https://cdn.example.org/stream.m3u8',content)
+        self.assertFalse(summary["ibo_device_verified"])
+
+    def test_ffprobe_only_never_exported(self):
+        content,summary=select(*fixture(decoded=False))
+        self.assertEqual(summary["verified_entries"],0)
+        self.assertEqual(content,"#EXTM3U\n")
+
+    def test_ambiguous_one_url_multiple_identities_not_exported(self):
+        content,summary=select(*fixture(ids=["One.tr","Two.az"]))
+        self.assertEqual(summary["verified_entries"],0)
+        self.assertEqual(summary["ambiguous_multi_channel_url_skipped"],1)
+
+    def test_wrong_hash_and_false_av_rejected(self):
+        report,rows=fixture()
+        rows[0]["url"]="https://cdn.example.org/different.m3u8"
+        with self.assertRaises(ValueError):select(report,rows)
+        report,rows=fixture()
+        rows[0]["video"]=False
+        # No false AV proof from sealed mismatch; decoded gating will not export.
+        content,summary=select(report,rows)
+        self.assertEqual(summary["verified_entries"],0)
+        report,rows=fixture()
+        report["streams"][0]["audio"]=False
+        with self.assertRaises(ValueError):select(report,rows)
+
+    def test_cannot_target_main_or_existing_file(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path=Path(tmp)/"MADSC55_TV_IBO_CALISANLAR_TEST.m3u8"
+            with self.assertRaises(ValueError):validate_destination(path)
+            from av_verified_sealed_ibo_export import REPORTS
+            target=REPORTS/"private-test-existing.m3u8"
+            try:
+                target.touch(exist_ok=False)
+                with self.assertRaises(ValueError):validate_destination(target)
+            finally:
+                target.unlink(missing_ok=True)
+
+if __name__=="__main__":
+    unittest.main()

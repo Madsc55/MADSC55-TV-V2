@@ -6,6 +6,8 @@ on:
     paths:
       - 'v2/source_integration_gate.py'
       - 'v2/traz_api_m3u_bridge.py'
+      - 'v2/av_verified_sealed_ibo_export.py'
+      - 'v2/test_av_verified_sealed_ibo_export.py'
       - 'v2/test_traz_api_m3u_bridge.py'
       - 'v2/tests/test_source_integration_gate.py'
       - 'v2/run_all_discovery.py'
@@ -71,7 +73,8 @@ jobs:
             test_source_resilience_batch \
             test_platform_verification_batch \
             test_traz_api_source_batch \
-            test_traz_api_m3u_bridge
+            test_traz_api_m3u_bridge \
+            test_av_verified_sealed_ibo_export
           python -m unittest discover -s v2/tests -p 'test_source_integration_gate.py' -v
       - name: Preserve fail-closed status without fabricated live reports
         shell: bash

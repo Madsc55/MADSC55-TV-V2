@@ -23,7 +23,7 @@ jobs:
       - name: Run exact API EPG AV and protected playlist unit suites together
         run: |
           python -m compileall -q v2
-          PYTHONPATH=v2 python -m unittest -v test_traz_api_source_batch test_traz_api_av_batch test_targeted_tr_az_av_acceptance
+          PYTHONPATH=v2 python -m unittest -v test_traz_api_source_batch test_traz_api_av_batch test_av_verified_sealed_ibo_export test_targeted_tr_az_av_acceptance
   group-real-video-audio:
     needs: grouped-acceptance-tests
     runs-on: ubuntu-24.04
