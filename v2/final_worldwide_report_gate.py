@@ -78,10 +78,10 @@ def inspect(report_path: Path, require_complete=True):
                 require(row["evidence_origin"] == "NOT_PROBED",
                         "UNPROBED_MISLABELED_AS_AV_EVIDENCE")
             unprobed += 1
-        elif origin_tracking:
-            require(row["evidence_origin"] != "NOT_PROBED",
-                    "PROBED_MISLABELED_AS_UNPROBED")
         else:
+            if origin_tracking:
+                require(row["evidence_origin"] != "NOT_PROBED",
+                        "PROBED_MISLABELED_AS_UNPROBED")
             statuses[st] += 1
         route = row.get("language_route")
         require(isinstance(route, str) and route, "MISSING_LANGUAGE_ROUTE")
