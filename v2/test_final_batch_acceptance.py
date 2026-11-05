@@ -124,6 +124,17 @@ class FinalBatchAcceptanceTests(unittest.TestCase):
         self.assertEqual(result["audio_video_decoded"], 0)
         self.assertEqual(result["unprobed"], 1)
 
+    def test_batch_workflow_does_not_require_old_run_artifact(self):
+        """An expired historical run must not prevent a fresh real AV scan."""
+        from pathlib import Path
+        workflow = (Path(__file__).resolve().parents[1] /
+                    ".github/workflows/v2-source-integration-batch.yml").read_text()
+        self.assertIn("if gh run download 42077381839", workflow)
+        self.assertIn("Prior evidence unavailable; scan without reuse", workflow)
+        self.assertIn('if test -s v2/reports/ci/prior/final-worldwide-acceptance.json; then', workflow)
+        self.assertIn('args+=(--reuse-report v2/reports/ci/prior/final-worldwide-acceptance.json)', workflow)
+        self.assertIn('timeout 16000s python v2/final_batch_acceptance.py "${args[@]}"', workflow)
+
     def test_correct_git_blob_hash_algorithm(self):
         self.assertEqual(len(gitblob(b"test")), 40)
 
