@@ -81,6 +81,12 @@ def inspect(report_path: Path, require_complete=True):
             evidence_origins[origin] += 1
         st = row.get("status")
         require(isinstance(st, str) and st, "MISSING_PROBE_STATUS")
+        require(st in ("VIDEO_AUDIO_DECODED", "VIDEO_AUDIO_STREAMS_ONLY",
+                       "VIDEO_ONLY", "AUDIO_ONLY", "NO_AV",
+                       "NOT_PROBED_BUDGET", "PROBE_UNCONFIRMED",
+                       "UNSAFE_OR_UNRESOLVED_HOST", "UNVERIFIED") or
+                st.startswith("PROBE_FAILED_"),
+                "UNKNOWN_PROBE_STATUS")
         if st == "NOT_PROBED_BUDGET":
             if origin_tracking:
                 require(row["evidence_origin"] == "NOT_PROBED",
