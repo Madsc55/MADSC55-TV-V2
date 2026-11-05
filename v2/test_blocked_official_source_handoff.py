@@ -70,8 +70,8 @@ class BlockedOfficialHandoffTests(unittest.TestCase):
         self.assertEqual(report["configured_sources_checked"], 6)
         self.assertEqual(report["candidate_channel_counts"]["ulusal-kanal-official"], 1)
         self.assertEqual(report["blocked_page_ids_without_exact_candidate"],
-                         ["trt-spor-official", "tv100-official",
-                          "benguturk-official", "halk-tv-official"])
+                         ["benguturk-official", "halk-tv-official",
+                          "trt-spor-official", "tv100-official"])
         self.assertEqual(rows[0]["source_ids"], ["sayatsirinoglu-tr"])
         self.assertFalse(report["video_audio_verified"])
 
