@@ -78,5 +78,22 @@ class GapCrosswalkTests(unittest.TestCase):
         self.assertFalse(r["all_sources_parsed"])
         self.assertEqual(r["exact_xmltv_channel_id_candidates"],0)
 
+    def test_iptv_org_feed_variant_is_same_exact_broadcaster_only_if_source_trusted(self):
+        from traz_gap_crosswalk import canonical_tvg_id
+        self.assertEqual(canonical_tvg_id("Alpha.tr@SD",["iptv-org-tr-streams"]),"alpha.tr")
+        self.assertEqual(canonical_tvg_id("Alpha.tr@HD",["iptv-org-tr"]),"alpha.tr")
+        self.assertEqual(canonical_tvg_id("Alpha.tr@SD",["untrusted"]), "alpha.tr@sd")
+        self.assertEqual(canonical_tvg_id("Alpha.tr@weird",["iptv-org-tr"]),"alpha.tr@weird")
+        api,scan=fixtures()
+        scan["candidates"][0]["tvg_id"]="Alpha.tr@SD"
+        scan["candidates"][0]["source_ids"]=["iptv-org-tr-streams"]
+        report=reconcile(api,scan)
+        self.assertEqual(report["exact_missing_stream_identities_with_other_m3u_leads"],2)
+        api,scan=fixtures()
+        scan["candidates"][0]["tvg_id"]="Alpha.tr@SD"
+        scan["candidates"][0]["source_ids"]=["untrusted"]
+        report=reconcile(api,scan)
+        self.assertEqual(report["exact_missing_stream_identities_with_other_m3u_leads"],1)
+
 if __name__=="__main__":
     unittest.main()

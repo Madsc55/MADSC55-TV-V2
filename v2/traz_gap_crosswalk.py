@@ -27,6 +27,23 @@ EPG_CONFIG=ROOT/"v2/epg_sources.json"
 OUT=ROOT/"v2/reports/ci/traz-missing-stream-epg-crosswalk.json"
 HEX=re.compile(r"[0-9a-f]{64}\Z")
 MAX_CANDIDATES=150000
+
+# IPTV-org may emit channel IDs as Channel.tr@SD or Channel.tr@HD: @...
+# is a stream/feed rendition, never a separate broadcaster. Only its own
+# approved M3U source IDs can supply this exact metadata hint.
+FEED_VARIANTS=frozenset({"SD","HD","FHD","UHD","QHD","4K","8K"})
+def canonical_tvg_id(tvg,source_ids):
+    if not isinstance(tvg,str) or len(tvg)>200:
+        return None
+    original=tvg.strip()
+    if not original or "://" in original or any(ord(c)<32 for c in original):
+        return None
+    raw,mark,variant=original.rpartition("@")
+    known=isinstance(source_ids,(list,tuple,set)) and any(
+        isinstance(s,str) and s.startswith("iptv-org") for s in source_ids)
+    if mark and variant.upper() in FEED_VARIANTS and known and "." in raw:
+        return raw.casefold()
+    return original.casefold()
 MAX_COMPRESSED=20_000_000
 MAX_DECOMPRESSED=110_000_000
 
@@ -86,11 +103,10 @@ def reconcile(api,m3u):
         if not isinstance(h,str) or not HEX.fullmatch(h) or h in seen:
             raise ValueError("Bad or duplicate M3U URL identity hash")
         seen.add(h)
-        if not isinstance(tvg,str): continue
-        cid=missing.get(tvg.strip().casefold())
-        if cid is None: continue
         provenance=item.get("source_ids")
         if not isinstance(provenance,list): provenance=[]
+        cid=missing.get(canonical_tvg_id(tvg,provenance))
+        if cid is None: continue
         # Only stable source identifiers; strip uncontrolled URL-like metadata.
         refs_safe=sorted(set(x[:96] for x in provenance
             if isinstance(x,str) and re.fullmatch(r"[A-Za-z0-9_.:/-]{1,96}",x)

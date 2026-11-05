@@ -56,5 +56,14 @@ class ExactAPIToM3UBridge(unittest.TestCase):
         api["stream_references"][0]["url"]="https://not-public.example.org/a.m3u8"
         with self.assertRaises(ValueError):join(api,scan)
 
+    def test_verified_iptv_org_feed_suffix_exact_hash_only(self):
+        api,scan=self.fixture()
+        scan["candidates"][0]["tvg_id"]="SZCTV.tr@SD"
+        r=join(api,scan)
+        self.assertEqual(r["exact_channel_and_url_hash_matches"],1)
+        scan["candidates"][0]["source_ids"]=["not-iptv-org"]
+        r=join(api,scan)
+        self.assertEqual(r["exact_channel_and_url_hash_matches"],0)
+
 if __name__=="__main__":
     unittest.main()

@@ -58,5 +58,16 @@ class TargetedNewSourceRealAVContracts(unittest.TestCase):
         self.assertEqual(out["source_errors"],{"fixed-tr":"FETCH_FAILED_TimeoutError"})
         self.assertTrue(out["non_av_candidates_not_promoted"])
 
+    def test_trusted_iptv_org_feed_variant_is_eligible_for_exact_hash_only(self):
+        doc=fixture()
+        doc["candidate_identities"][0]["candidate_m3u_url_hashes"][0]["source_ids"]=["iptv-org-tr-streams"]
+        target=select_targets(doc)
+        found,_=match_fetched(target,[("iptv-org-tr-streams",
+            [{"tvg_id":"TV.tr@SD","url":URL1}],"FETCHED")])
+        self.assertIn(h(URL1),found)
+        found,_=match_fetched(target,[("iptv-org-tr-streams",
+            [{"tvg_id":"Wrong.tr@SD","url":URL1}],"FETCHED")])
+        self.assertEqual(found,{})
+
 if __name__=="__main__":
     unittest.main()

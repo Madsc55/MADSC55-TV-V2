@@ -9,6 +9,8 @@ on:
       - 'v2/traz_hls_codec_stability.py'
       - 'v2/test_traz_hls_codec_stability.py'
       - 'v2/traz_gap_crosswalk.py'
+      - 'v2/traz_official_feed_variant_gap.py'
+      - 'v2/test_traz_official_feed_variant_gap.py'
       - 'v2/traz_missing_name_xmltv_review.py'
       - 'v2/traz_transient_av_recovery.py'
       - 'v2/test_traz_transient_av_recovery.py'
@@ -83,6 +85,7 @@ jobs:
             test_source_resilience_batch \
             test_platform_verification_batch \
             test_traz_gap_crosswalk \
+            test_traz_official_feed_variant_gap \
             test_traz_missing_name_xmltv_review \
             test_traz_transient_av_recovery \
             test_traz_hls_codec_stability \
@@ -813,5 +816,110 @@ jobs:
           path: |
             v2/reports/ci/traz-transient-av-retry.json
             v2/reports/ci/traz-transient-av-retry.sealed
+          if-no-files-found: warn
+          retention-days: 30
+
+  traz-official-feed-variant-av:
+    name: Trusted IPTV org feed variant 217 missing ID source and AV recovery
+    if: >-
+      github.event_name == 'push' &&
+      github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
+      github.repository == 'Madsc55/MADSC55-TV-V2' &&
+      github.event.head_commit.message == 'feat(v2): accept trusted IPTV org feed variants and probe missing TR AZ channels'
+    needs: offline-source-safety
+    runs-on: ubuntu-24.04
+    timeout-minutes: 75
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify historical and protected IBO hashes before any network activity
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git hash-object MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)" = '4b1c3cea4b5107a425abab60f62d41f9f81e05a7'
+          test "$(sha256sum v2/history/stage3-4955-hash-only.jsonl | cut -d' ' -f1)" = 'ee00a844a028e3410715d411467a2d3306f5f5cc4565766140b6438e786cdd27'
+      - name: Fetch original 309 missing ID API metadata without complete re-scan
+        uses: actions/download-artifact@v4
+        with:
+          name: traz-api-safe-evidence-42065292765
+          run-id: 42065292765
+          github-token: ${{ github.token }}
+          path: v2/reports/ci
+      - name: Fetch original 92 matched / 217 remaining identity scope
+        uses: actions/download-artifact@v4
+        with:
+          name: v2-unified-source-search-42065292765
+          run-id: 42065292765
+          github-token: ${{ github.token }}
+          path: v2/reports/ci
+      - name: Install pinned RSA encryption and actual FFprobe and FFmpeg
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install cryptography==44.0.2
+          if [ ! -x /usr/bin/ffmpeg ] || [ ! -x /usr/bin/ffprobe ]; then
+            timeout 360s sudo apt-get -o Acquire::Retries=2 -o Acquire::http::Timeout=20 update -qq
+            timeout 1200s sudo apt-get -o Acquire::Retries=3 -o Acquire::http::Timeout=20 install -y --no-install-recommends ffmpeg
+          fi
+          /usr/bin/ffmpeg -protocols | grep -q https
+      - name: Grouped trusted feed variant exact ID and anti-spoof tests
+        run: |
+          set -euo pipefail
+          PYTHONPATH=v2 python -m unittest -v test_traz_official_feed_variant_gap test_traz_gap_crosswalk test_traz_missing_target_av test_traz_api_m3u_bridge
+      - name: Discover exact trusted SD HD stream renditions only for 217 unfilled API identities
+        run: timeout 180s python v2/traz_official_feed_variant_gap.py
+      - name: Single real FFprobe FFmpeg batch and RSA sealing of decoded source addresses
+        run: |
+          set -euo pipefail
+          PYTHONPATH=v2 timeout 2600s python - <<'PY'
+          from pathlib import Path
+          import traz_missing_target_av as t
+          t.TARGET=Path("v2/reports/ci/traz-official-feed-variant-gap.json")
+          t.OUT=Path("v2/reports/ci/traz-official-feed-variant-real-av.json")
+          t.SEALED=Path("v2/reports/ci/traz-official-feed-variant-real-av.sealed")
+          t.scan(workers=24)
+          PY
+      - name: Assert exact AV count and original baseline preserved with no public URLs
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib,json
+          from pathlib import Path
+          p=Path("v2/reports/ci")
+          gap_file=p/"traz-official-feed-variant-gap.json"
+          av_file=p/"traz-official-feed-variant-real-av.json"
+          d=json.loads(gap_file.read_text())
+          a=json.loads(av_file.read_text())
+          sealed=p/"traz-official-feed-variant-real-av.sealed"
+          assert d["original_missing_api_stream_identities"]==309
+          assert d["original_exact_source_matched_identities"]==92
+          assert d["missing_api_stream_identities"]==217
+          assert a["candidate_hashes"]==d["exact_missing_stream_candidate_hashes"]
+          assert a["ffmpeg_probed"]==a["matched_current_source_hashes"]
+          assert a["real_video_audio_decoded_hashes"]<=a["ffmpeg_probed"]
+          assert hashlib.sha256(sealed.read_bytes()).hexdigest()==a["rsa_sealed_matches"]["sha256"]
+          assert not a["ibo_device_verified"] and not a["protected_playlist_modified"]
+          assert not a["old_historical_orphan_50_auto_recovered"]
+          assert "http://" not in av_file.read_text() and "https://" not in av_file.read_text()
+          assert "http://" not in gap_file.read_text() and "https://" not in gap_file.read_text()
+          print("OFFICIAL_FEED_REAL_AV_PASS",a["real_video_audio_channel_ids"])
+          PY
+      - name: Archive only anonymous official feed AV report and RSA encrypted URL proofs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v2-traz-official-feed-variant-av-rsa-${{ github.run_id }}
+          path: |
+            v2/reports/ci/traz-official-feed-variant-gap.json
+            v2/reports/ci/traz-official-feed-variant-real-av.json
+            v2/reports/ci/traz-official-feed-variant-real-av.sealed
           if-no-files-found: warn
           retention-days: 30

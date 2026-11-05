@@ -17,6 +17,7 @@ from final_batch_acceptance import (
     ROOT,LIVE,LIVE_BLOB,HISTORY,HISTORY_SHA,gitblob,sha,fetch_one,probe,KEY)
 from discover import SOURCES,load_original_run60_sources
 from stage3_sealed_export import seal_rows
+from traz_gap_crosswalk import canonical_tvg_id
 
 TARGET=ROOT/"v2/reports/ci/traz-missing-stream-epg-crosswalk.json"
 OUT=ROOT/"v2/reports/ci/traz-missing-target-real-av.json"
@@ -96,7 +97,7 @@ def match_fetched(targets,outputs):
             if not isinstance(url,str):continue
             h=sha(url)
             expected=targets.get(h)
-            if expected is None or row["tvg_id"].strip().casefold()!=expected["channel_id"].casefold():
+            if expected is None or canonical_tvg_id(row["tvg_id"],[sid])!=expected["channel_id"].casefold():
                 continue
             if sid not in expected["source_ids"]:
                 continue

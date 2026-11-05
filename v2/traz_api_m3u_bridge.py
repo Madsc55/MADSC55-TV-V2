@@ -8,6 +8,7 @@ import json
 import re
 from collections import defaultdict
 from pathlib import Path
+from traz_gap_crosswalk import canonical_tvg_id
 
 ROOT=Path(__file__).resolve().parents[1]
 API=ROOT/"v2/reports/ci/traz-api-source-audit.json"
@@ -55,7 +56,7 @@ def join(api,scan):
         providers=api_by_hash.get(digest)
         if not providers: continue
         tvg=str(row.get("tvg_id") or "").strip()
-        key=tvg.casefold()
+        key=canonical_tvg_id(tvg,row.get("source_ids"))
         if key in providers:
             reference=providers[key]
             exact.append({
