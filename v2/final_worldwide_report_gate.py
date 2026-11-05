@@ -49,6 +49,8 @@ def inspect(report_path: Path, require_complete=True):
     routes = Counter()
     decoded = 0
     unprobed = 0
+    evidence_origins = Counter()
+    origin_tracking = "evidence_origin_counts" in report
     for i, row in enumerate(candidates):
         require(isinstance(row, dict), "INVALID_CANDIDATE_OBJECT")
         h = row.get("url_sha256")
@@ -63,10 +65,22 @@ def inspect(report_path: Path, require_complete=True):
                 "MISSING_SOURCE_PROVENANCE")
         require(row.get("spoken_language_verified") is False and
                 row.get("ibo_player_verified") is False, "UNSUPPORTED_VERIFICATION_CLAIM")
+        if origin_tracking:
+            origin = row.get("evidence_origin")
+            require(origin in ("CURRENT_RUN_FFPROBE_FFMPEG",
+                               "PRIOR_RUN_HASH_ONLY_NOT_FRESH", "NOT_PROBED"),
+                    "INVALID_EVIDENCE_ORIGIN")
+            evidence_origins[origin] += 1
         st = row.get("status")
         require(isinstance(st, str) and st, "MISSING_PROBE_STATUS")
         if st == "NOT_PROBED_BUDGET":
+            if origin_tracking:
+                require(row["evidence_origin"] == "NOT_PROBED",
+                        "UNPROBED_MISLABELED_AS_AV_EVIDENCE")
             unprobed += 1
+        elif origin_tracking:
+            require(row["evidence_origin"] != "NOT_PROBED",
+                    "PROBED_MISLABELED_AS_UNPROBED")
         else:
             statuses[st] += 1
         route = row.get("language_route")
@@ -87,6 +101,10 @@ def inspect(report_path: Path, require_complete=True):
     require(unprobed == report["unprobed"] and sum(statuses.values()) == probed,
             "CANDIDATE_STATUS_COUNT_MISMATCH")
     require(report.get("av_status_counts") == dict(statuses), "AV_STATUS_DISTRIBUTION_MISMATCH")
+    if origin_tracking:
+        require(report["evidence_origin_counts"] == dict(
+            (key, val) for key, val in evidence_origins.items()
+            if key != "NOT_PROBED"), "EVIDENCE_ORIGIN_DISTRIBUTION_MISMATCH")
     require(report.get("metadata_language_route_counts") == dict(routes),
             "LANGUAGE_ROUTE_DISTRIBUTION_MISMATCH")
     require(integer("audio_video_decoded") == decoded, "DECODED_TOTAL_MISMATCH")
