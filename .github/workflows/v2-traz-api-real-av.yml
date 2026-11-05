@@ -1,0 +1,64 @@
+name: V2 TR AZ API One Grouped Real AV Batch
+on:
+  push:
+    branches: [madsc/v2-discovery-bulk-20261031]
+    paths:
+      - 'v2/traz_api_av_batch.py'
+      - 'v2/test_traz_api_av_batch.py'
+      - '.github/workflows/v2-traz-api-real-av.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  grouped-acceptance-tests:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Pin RSA/AES dependency
+        run: python -m pip install cryptography==44.0.2
+      - name: Require unchanged historic identities and main IBO
+        run: |
+          test "$(git hash-object MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)" = '4b1c3cea4b5107a425abab60f62d41f9f81e05a7'
+          test "$(sha256sum v2/history/stage3-4955-hash-only.jsonl | cut -d' ' -f1)" = 'ee00a844a028e3410715d411467a2d3306f5f5cc4565766140b6438e786cdd27'
+      - name: Run exact API EPG AV and protected playlist unit suites together
+        run: |
+          python -m compileall -q v2
+          PYTHONPATH=v2 python -m unittest -v test_traz_api_source_batch test_traz_api_av_batch test_targeted_tr_az_av_acceptance
+  group-real-video-audio:
+    needs: grouped-acceptance-tests
+    runs-on: ubuntu-24.04
+    timeout-minutes: 75
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install RSA and real AV probe dependencies
+        run: |
+          python -m pip install cryptography==44.0.2
+          if ! command -v ffprobe >/dev/null || ! command -v ffmpeg >/dev/null; then
+            sudo apt-get update -qq
+            sudo apt-get install -y --no-install-recommends ffmpeg
+          fi
+      - name: Check all accepted public IPTV API stream URLs as one real AV batch
+        run: timeout 3700s python v2/traz_api_av_batch.py --workers 24 --budget-seconds 3300
+      - name: Require complete probing and valid RSA encrypted URL evidence
+        run: PYTHONPATH=v2 python v2/traz_api_av_batch.py --validate-only
+      - name: Upload only anonymous hashes and RSA encrypted evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: traz-real-av-anonymous-${{ github.run_id }}
+          path: |
+            v2/reports/ci/traz-api-av-acceptance.json
+            v2/reports/ci/traz-api-av-evidence.sealed
+          if-no-files-found: warn
+          retention-days: 30
