@@ -218,19 +218,19 @@ def main():
         prior = json.loads(a.reuse_report.read_text(encoding="utf-8"))
         if prior.get("kind") != "V2_WORLDWIDE_READ_ONLY_FINAL_ACCEPTANCE":
             raise SystemExit("Invalid prior AV evidence report")
+        # Recheck transient failures; never freeze an outage into historical evidence.
         allowed = {"VIDEO_AUDIO_DECODED", "VIDEO_AUDIO_STREAMS_ONLY", "VIDEO_ONLY",
-                   "AUDIO_ONLY", "NO_AV", "UNSAFE_OR_UNRESOLVED_HOST",
-                   "PROBE_UNCONFIRMED"}
+                   "AUDIO_ONLY", "NO_AV"}
         for row in prior.get("candidates", []):
             digest = row.get("url_sha256", "")
             status = row.get("status", "")
             if (digest in inventory and re.fullmatch(r"[0-9a-f]{64}", digest)
-                    and (status in allowed or status.startswith("PROBE_FAILED_"))
+                    and status in allowed
                     and isinstance(row.get("decoded"), bool)
                     and isinstance(row.get("video"), bool)
                     and isinstance(row.get("audio"), bool)
-                    and (not row["decoded"] or
-                         (status == "VIDEO_AUDIO_DECODED" and row["video"] and row["audio"]))):
+                    and (row["decoded"] == (status == "VIDEO_AUDIO_DECODED"))
+                    and (not row["decoded"] or (row["video"] and row["audio"]))):
                 checks[digest] = {"url_sha256": digest, "status": status,
                     "video": row["video"], "audio": row["audio"],
                     "decoded": row["decoded"],
@@ -238,16 +238,18 @@ def main():
         print("Reused prior hash-only AV evidence:", len(checks), flush=True)
     expired = False
     deadline = t0 + a.budget_seconds
+    pending = [(digest, item["url"]) for digest, item in entries_ if digest not in checks]
     with ThreadPoolExecutor(max_workers=a.workers) as executor:
-        for offset in range(0, len(entries_), 128):
+        for offset in range(0, len(pending), 128):
             if time.monotonic() > deadline:
                 expired = True; break
-            rows = [(digest, item["url"]) for digest, item in entries_[offset:offset+128] if digest not in checks]
+            rows = pending[offset:offset+128]
             if not rows: continue
             for result in executor.map(probe, rows):
                 checks[result["url_sha256"]] = result
             if offset % 1280 == 0:
                 print("Probed:", len(checks), "/", len(entries_), flush=True)
+    expired = len(checks) < len(entries_)
     REPORTS.mkdir(parents=True, exist_ok=True)
     sealed = []
     for i, offset in enumerate(range(0, len(entries_), 4000), 1):
