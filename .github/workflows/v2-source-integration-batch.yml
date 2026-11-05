@@ -243,16 +243,34 @@ jobs:
       - name: Grouped AV and encrypted archive offline regressions
         run: |
           PYTHONPATH=v2 python -m unittest -v test_final_batch_acceptance test_final_worldwide_report_gate
-      - name: Restore previous anonymous AV evidence for hash-only resume
+      - name: Restore verified anonymous AV evidence when available
         env:
           GH_TOKEN: ${{ github.token }}
+        shell: bash
         run: |
+          set -euo pipefail
           mkdir -p v2/reports/ci/prior
-          gh run download 42077381839 --repo Madsc55/MADSC55-TV-V2 --name v2-grouped-av-evidence-42077381839 --dir v2/reports/ci/prior
-          test -s v2/reports/ci/prior/final-worldwide-acceptance.json
-          PYTHONPATH=v2 python v2/final_worldwide_report_gate.py --report v2/reports/ci/prior/final-worldwide-acceptance.json --allow-unprobed
+          # The historical run can be unfinished, expired, or missing artifacts.
+          # In that case do a fresh real AV scan rather than falsely claim reuse.
+          if gh run download 42077381839 --repo Madsc55/MADSC55-TV-V2 --name v2-grouped-av-evidence-42077381839 --dir v2/reports/ci/prior; then
+            if test -s v2/reports/ci/prior/final-worldwide-acceptance.json && PYTHONPATH=v2 python v2/final_worldwide_report_gate.py --report v2/reports/ci/prior/final-worldwide-acceptance.json --allow-unprobed; then
+              echo "Verified prior anonymous evidence; resume enabled"
+            else
+              rm -f v2/reports/ci/prior/final-worldwide-acceptance.json
+              echo "Prior evidence invalid; scan without reuse"
+            fi
+          else
+            echo "Prior evidence unavailable; scan without reuse"
+          fi
       - name: Real bounded video-plus-audio scan of static, reviewed public and document sources
-        run: timeout 16000s python v2/final_batch_acceptance.py --workers 32 --budget-seconds 14400 --require-public-sources --reuse-report v2/reports/ci/prior/final-worldwide-acceptance.json
+        shell: bash
+        run: |
+          set -euo pipefail
+          args=(--workers 32 --budget-seconds 14400 --require-public-sources)
+          if test -s v2/reports/ci/prior/final-worldwide-acceptance.json; then
+            args+=(--reuse-report v2/reports/ci/prior/final-worldwide-acceptance.json)
+          fi
+          timeout 16000s python v2/final_batch_acceptance.py "${args[@]}"
       - name: Require complete AV probe coverage, valid SHA256 evidence and encrypted URL archive
         run: PYTHONPATH=v2 python v2/final_worldwide_report_gate.py --report v2/reports/ci/final-worldwide-acceptance.json
       - name: Upload anonymous AV report and encrypted stream evidence; no plaintext URLs
