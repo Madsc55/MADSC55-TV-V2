@@ -20,6 +20,7 @@ from urllib.parse import quote, urlencode, urlsplit
 from stage3_historical_source_recovery import _read
 from historical_url_recovery import validate_url
 from final_batch_acceptance import probe as ffmpeg_probe
+from orphan_strong_av_probe import extended_probe
 from stage3_sealed_export import seal_rows
 
 ORIGINALS = (
@@ -562,6 +563,10 @@ def probe_real_av(pair):
     status = result.get("status")
     if not isinstance(status, str) or not re.fullmatch(r"[A-Z_]{2,100}", status):
         raise ValueError("Unapproved media status")
+    # Second, wider FFprobe+FFmpeg decoding only after ambiguous media proof.
+    # 401/403/404, unsafe hosts, and already decoded streams are never retried.
+    result = extended_probe(pair, result)
+    status = result["status"]
     decoded = result["decoded"]
     if (decoded and (not result["video"] or not result["audio"]
                      or status != "VIDEO_AUDIO_DECODED")
