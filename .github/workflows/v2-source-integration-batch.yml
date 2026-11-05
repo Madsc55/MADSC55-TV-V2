@@ -10,6 +10,8 @@ on:
       - 'v2/test_traz_hls_codec_stability.py'
       - 'v2/traz_gap_crosswalk.py'
       - 'v2/traz_official_feed_variant_gap.py'
+      - 'v2/traz_name_leads_real_av.py'
+      - 'v2/test_traz_name_leads_real_av.py'
       - 'v2/test_traz_official_feed_variant_gap.py'
       - 'v2/traz_missing_name_xmltv_review.py'
       - 'v2/traz_transient_av_recovery.py'
@@ -86,6 +88,7 @@ jobs:
             test_platform_verification_batch \
             test_traz_gap_crosswalk \
             test_traz_official_feed_variant_gap \
+            test_traz_name_leads_real_av \
             test_traz_missing_name_xmltv_review \
             test_traz_transient_av_recovery \
             test_traz_hls_codec_stability \
@@ -921,5 +924,82 @@ jobs:
             v2/reports/ci/traz-official-feed-variant-gap.json
             v2/reports/ci/traz-official-feed-variant-real-av.json
             v2/reports/ci/traz-official-feed-variant-real-av.sealed
+          if-no-files-found: warn
+          retention-days: 30
+
+  traz-name-only-bounded-av:
+    name: Real FFmpeg decode of 15 unconfirmed TR AZ name-only channel leads
+    if: >-
+      github.event_name == 'push' &&
+      github.repository == 'Madsc55/MADSC55-TV-V2' &&
+      github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
+      github.event.head_commit.message == 'feat(v2): verify TR AZ name-based stream leads with real AV without identity promotion'
+    needs: offline-source-safety
+    runs-on: ubuntu-24.04
+    timeout-minutes: 65
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify original protected IBO and historical 4955 SHA
+        run: |
+          set -euo pipefail
+          test "$(git hash-object MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)" = '4b1c3cea4b5107a425abab60f62d41f9f81e05a7'
+          test "$(sha256sum v2/history/stage3-4955-hash-only.jsonl | cut -d' ' -f1)" = 'ee00a844a028e3410715d411467a2d3306f5f5cc4565766140b6438e786cdd27'
+      - name: Use original immutable 15 name-only identity and 24 URL hash metadata, no universe scan
+        uses: actions/download-artifact@v4
+        with:
+          name: v2-unified-source-search-42065292765
+          run-id: 42065292765
+          github-token: ${{ github.token }}
+          path: v2/reports/ci
+      - name: Install real HTTPS FFprobe FFmpeg and pinned RSA cryptography
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install cryptography==44.0.2
+          if [ ! -x /usr/bin/ffmpeg ] || [ ! -x /usr/bin/ffprobe ]; then
+            timeout 360s sudo apt-get -o Acquire::Retries=2 -o Acquire::http::Timeout=20 update -qq
+            timeout 1200s sudo apt-get -o Acquire::Retries=3 -o Acquire::http::Timeout=20 install -y --no-install-recommends ffmpeg
+          fi
+          /usr/bin/ffmpeg -protocols | grep -q https
+      - name: One grouped anti-misidentification and AV spoof regression suite
+        run: PYTHONPATH=v2 python -m unittest -v test_traz_name_leads_real_av test_traz_missing_name_xmltv_review test_traz_missing_target_av
+      - name: Fetch only configured old M3U source references and probe exact 24 name metadata URL hashes
+        run: timeout 2200s python v2/traz_name_leads_real_av.py
+      - name: Enforce metadata only broadcaster identity, real FFmpeg and RSA evidence integrity
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib,json
+          from pathlib import Path
+          p=Path("v2/reports/ci/traz-name-leads-real-av.json")
+          d=json.loads(p.read_text())
+          seal=Path("v2/reports/ci/traz-name-leads-real-av.sealed")
+          assert d["name_candidate_stream_hashes"]==24
+          assert d["name_candidate_channel_ids"]==15
+          assert d["ffmpeg_probed"]==d["current_exact_name_sha_source_hashes"]
+          assert d["video_audio_decoded_hashes"]<=d["ffmpeg_probed"]<=24
+          assert d["channel_identities_confirmed_by_video"]==0
+          assert not d["ibo_device_verified"] and not d["protected_playlist_modified"]
+          assert hashlib.sha256(seal.read_bytes()).hexdigest()==d["rsa_sealed_av"]["sha256"]
+          assert "http://" not in p.read_text() and "https://" not in p.read_text()
+          print("NAME_ONLY_AV_VERIFIED_NO_IDENTITY_CLAIM",d["video_audio_decoded_hashes"])
+          PY
+      - name: Upload only anonymous AV hash report and encrypted stream addresses
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v2-traz-name-only-av-rsa-${{ github.run_id }}
+          path: |
+            v2/reports/ci/traz-name-leads-real-av.json
+            v2/reports/ci/traz-name-leads-real-av.sealed
           if-no-files-found: warn
           retention-days: 30
