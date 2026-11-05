@@ -95,6 +95,9 @@ def inspect(report_path: Path, require_complete=True):
             "AUDIO_ONLY": (False, True, False),
             "NO_AV": (False, False, False),
         }
+        if row["decoded"]:
+            require(row["video"] and row["audio"] and st == "VIDEO_AUDIO_DECODED",
+                    "FALSE_AV_DECODE_CLAIM")
         if st in expected_av:
             require((row["video"], row["audio"], row["decoded"]) == expected_av[st],
                     "INCONSISTENT_AV_STATUS_FLAGS")
