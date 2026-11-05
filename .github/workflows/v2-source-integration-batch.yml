@@ -667,12 +667,20 @@ jobs:
         run: |
           set -euo pipefail
           python -m pip install cryptography==44.0.2
-          if ! command -v ffmpeg >/dev/null 2>&1 || ! command -v ffprobe >/dev/null 2>&1; then
-            timeout 300s sudo apt-get update -qq
-            timeout 350s sudo apt-get install -y --no-install-recommends ffmpeg
+          # Previously the runner's Azure Ubuntu mirror timed out after 350s
+          # while fetching large FFmpeg dependencies. It never probed a URL.
+          # Use bounded HTTP timeouts, retries and sufficient package budget;
+          # fail infrastructure-closed instead of claiming a broken channel.
+          if [ ! -x /usr/bin/ffmpeg ] || [ ! -x /usr/bin/ffprobe ]; then
+            timeout 360s sudo apt-get -o Acquire::Retries=2 -o Acquire::http::Timeout=20 update -qq
+            timeout 1200s sudo apt-get -o Acquire::Retries=3 -o Acquire::http::Timeout=20 install -y --no-install-recommends ffmpeg
           fi
-          command -v ffmpeg
-          command -v ffprobe
+          test -x /usr/bin/ffmpeg
+          test -x /usr/bin/ffprobe
+          /usr/bin/ffmpeg -version | head -n 1
+          /usr/bin/ffprobe -version | head -n 1
+          /usr/bin/ffmpeg -protocols | grep -q https
+          echo "FFMPEG_FFPROBE_HTTPS_READY"
       - name: Offline grouped original source identity and real AV spoof rejection regression
         run: PYTHONPATH=v2 python -m unittest -v test_traz_missing_target_av test_traz_gap_crosswalk test_targeted_tr_az_av_acceptance
       - name: One bounded real AV FFmpeg probe batch only on exact renewed source URL SHA
