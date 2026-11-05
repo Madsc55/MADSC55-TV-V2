@@ -89,17 +89,22 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12.7'
-      - name: Verify FFmpeg on runner (bounded fallback only if absent)
+      - name: Provision actual FFmpeg for local video guard without slow apt-mirror dependency
+        shell: bash
         run: |
-          # The ubuntu-24.04 image already provides FFmpeg. Unconditional
-          # apt-get update/old exact version pins can hang the entire gate
-          # and do not prove decoding. Keep a bounded installation fallback.
-          if ! command -v ffmpeg >/dev/null 2>&1 || ! command -v ffprobe >/dev/null 2>&1; then
-            timeout 120s sudo apt-get update -qq
-            timeout 120s sudo apt-get install -y ffmpeg
+          set -euo pipefail
+          # A genuine FFmpeg executable is mandatory. A failed apt mirror is
+          # infrastructure noise, not evidence of a failed channel.
+          if ! command -v ffmpeg >/dev/null 2>&1; then
+            python -m pip install --disable-pip-version-check --retries 2 --timeout 20 imageio-ffmpeg==0.6.0
+            FF_BIN="$(python -c 'import imageio_ffmpeg; print(imageio_ffmpeg.get_ffmpeg_exe())')"
+            test -x "$FF_BIN"
+            mkdir -p "$RUNNER_TEMP/v2-ffmpeg-bin"
+            ln -s "$FF_BIN" "$RUNNER_TEMP/v2-ffmpeg-bin/ffmpeg"
+            echo "$RUNNER_TEMP/v2-ffmpeg-bin" >> "$GITHUB_PATH"
+            export PATH="$RUNNER_TEMP/v2-ffmpeg-bin:$PATH"
           fi
           command -v ffmpeg
-          command -v ffprobe
           ffmpeg -version | head -n 1
       - name: Decode real generated video frame and reject audio-only
         shell: bash

@@ -72,6 +72,7 @@ jobs:
             test_forge_source_review \
             test_source_resilience_batch \
             test_platform_verification_batch \
+            test_traz_gap_crosswalk \
             test_traz_api_source_batch \
             test_traz_api_m3u_bridge \
             test_av_verified_sealed_ibo_export
@@ -349,6 +350,8 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
         run: timeout 10000s python v2/run_all_discovery.py --run-all --source-only
+      - name: Cross-check 309 streamless IDs and 344 guide gaps against real M3U and XMLTV sources in one batch
+        run: timeout 180s python v2/traz_gap_crosswalk.py
       - name: Validate complete adapter wiring and preserve honest incomplete source status
         shell: bash
         run: |
@@ -399,7 +402,10 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: v2-unified-source-search-${{ github.run_id }}
-          path: v2/reports/ci/unified-source-search-anonymous.json
+          path: |
+            v2/reports/ci/unified-source-search-anonymous.json
+            v2/reports/ci/traz-missing-stream-epg-crosswalk.json
+            v2/reports/ci/traz-api-m3u-exact-matches.json
           if-no-files-found: warn
           retention-days: 30
 
