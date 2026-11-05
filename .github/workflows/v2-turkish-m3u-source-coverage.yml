@@ -17,6 +17,8 @@ on:
       - 'v2/run60_source_ledger.py'
       - 'v2/test_run60_source_ledger.py'
       - 'v2/test_run60_source_discovery.py'
+      - 'v2/historical_exact_real_av.py'
+      - 'v2/test_historical_exact_real_av.py'
       - '.github/workflows/v2-world-discovery.yml'
       - '.github/workflows/v2-turkish-m3u-source-coverage.yml'
   workflow_dispatch:
@@ -59,6 +61,7 @@ jobs:
             test_source_availability_audit \
             test_source_inventory_contract \
             test_historical_targeted_playback \
+            test_historical_exact_real_av \
             2>&1 | tee v2/reports/ci/turkish-m3u-loss-tests.log
       - name: Download real #60 and #72 aggregate evidence without scanning channel streams
         env:
@@ -110,6 +113,30 @@ jobs:
             "unrecoverable_from_local_history":probe["not_found_in_git_history_count"],
             "ffprobe_statuses":probe["status_counts"]},sort_keys=True))
           PY
+      - name: Verify actual one-second video and audio decoding of all exact recovered historical URLs in one batch
+        shell: bash
+        run: |
+          command -v ffprobe
+          command -v ffmpeg
+          timeout 900s python v2/historical_exact_real_av.py --real-av-batch \
+            --missing-report v2/reports/ci/turkish-m3u-source-loss.json \
+            --baseline v2/history/stage3-4955-hash-only.jsonl \
+            --output v2/reports/ci/historical-current-missing-real-ffmpeg-anonymous.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          a=json.loads(Path("v2/reports/ci/historical-current-missing-ffprobe-anonymous.json").read_text())
+          b=json.loads(Path("v2/reports/ci/historical-current-missing-real-ffmpeg-anonymous.json").read_text())
+          assert a["requested_historical_url_sha256"]==b["original_historical_url_hashes_requested"]
+          assert a["exact_git_history_urls_recovered"]==b["exact_git_history_url_hashes_found"]
+          assert b["no_plaintext_urls"] and b["protected_playlist_modified"] is False
+          assert b["ibo_device_verified"] is False
+          assert b["current_real_ffmpeg_video_audio_decoded_count"]<=b["ffprobe_video_audio_both_streams_count"]
+          print("HISTORICAL_CURRENT_REAL_AV_ACCEPTANCE",json.dumps({
+            "requested":b["original_historical_url_hashes_requested"],
+            "real_ffmpeg_decoded":b["current_real_ffmpeg_video_audio_decoded_count"],
+            "unverified":b["url_hashes_unverified_after_real_probe"]},sort_keys=True))
+          PY
       - name: Upload single grouped evidence bundle
         if: always()
         uses: actions/upload-artifact@v4
@@ -119,5 +146,6 @@ jobs:
             v2/reports/ci/turkish-m3u-loss-tests.log
             v2/reports/ci/turkish-m3u-source-loss.json
             v2/reports/ci/historical-current-missing-ffprobe-anonymous.json
+            v2/reports/ci/historical-current-missing-real-ffmpeg-anonymous.json
           if-no-files-found: warn
           retention-days: 30
