@@ -154,6 +154,12 @@ class FinalWorldwideReportGateTests(unittest.TestCase):
                 self.report["evidence_origin_counts"] = invalid
                 self.fails("INVALID_EVIDENCE_ORIGIN_DISTRIBUTION")
 
+    def test_budget_expiry_requires_boolean(self):
+        for invalid in (None, 0, 1, "false", [], {}):
+            with self.subTest(invalid=invalid):
+                self.report["probe_budget_expired"] = invalid
+                self.fails("BUDGET_EXPIRY_INCONSISTENT")
+
     def test_duplicate_and_invalid_hash_rejected(self):
         self.report["candidates"][0]["url_sha256"] = "bad"
         self.fails("INVALID_CANDIDATE_SHA")
