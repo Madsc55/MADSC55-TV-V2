@@ -212,7 +212,9 @@ def main():
             old["source_ids"].add(source); old["scopes"].add(scopes[source])
     entries_ = sorted(inventory.items())
     checks = {}
-    if a.reuse_report and a.reuse_report.is_file():
+    if a.reuse_report:
+        if not a.reuse_report.is_file():
+            raise SystemExit("Required prior AV evidence is missing")
         prior = json.loads(a.reuse_report.read_text(encoding="utf-8"))
         if prior.get("kind") != "V2_WORLDWIDE_READ_ONLY_FINAL_ACCEPTANCE":
             raise SystemExit("Invalid prior AV evidence report")
