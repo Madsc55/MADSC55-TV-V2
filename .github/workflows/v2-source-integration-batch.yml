@@ -624,3 +624,80 @@ jobs:
           path: v2/reports/ci/traz-hls-codec-shortterm-av.json
           if-no-files-found: warn
           retention-days: 30
+
+  traz-missing-hash-real-av:
+    name: Probe exact 84 newly matched TR AZ identities and preserve RSA evidence
+    if: >-
+      github.event_name == 'push' &&
+      github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
+      github.repository == 'Madsc55/MADSC55-TV-V2' &&
+      github.event.head_commit.message == 'feat(v2): grouped real FFmpeg recovery of 84 newly matched TR AZ channel identities'
+    needs: offline-source-safety
+    runs-on: ubuntu-24.04
+    timeout-minutes: 65
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Ensure original protected IBO and historical identity SHA hashes
+        run: |
+          test "$(git hash-object MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)" = '4b1c3cea4b5107a425abab60f62d41f9f81e05a7'
+          test "$(sha256sum v2/history/stage3-4955-hash-only.jsonl | cut -d' ' -f1)" = 'ee00a844a028e3410715d411467a2d3306f5f5cc4565766140b6438e786cdd27'
+      - name: Download exact 84 identity 158 hash missing-source candidates from original verified artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: v2-unified-source-search-42040392400
+          run-id: 42040392400
+          github-token: ${{ github.token }}
+          path: v2/reports/ci
+      - name: Install cryptographic sealing and real FFmpeg / FFprobe tools
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install cryptography==44.0.2
+          if ! command -v ffmpeg >/dev/null 2>&1 || ! command -v ffprobe >/dev/null 2>&1; then
+            timeout 300s sudo apt-get update -qq
+            timeout 350s sudo apt-get install -y --no-install-recommends ffmpeg
+          fi
+          command -v ffmpeg
+          command -v ffprobe
+      - name: Offline grouped original source identity and real AV spoof rejection regression
+        run: PYTHONPATH=v2 python -m unittest -v test_traz_missing_target_av test_traz_gap_crosswalk test_targeted_tr_az_av_acceptance
+      - name: One bounded real AV FFmpeg probe batch only on exact renewed source URL SHA
+        run: timeout 2600s python v2/traz_missing_target_av.py --workers 24
+      - name: Validate anonymous report and RSA sealed URL checksum without public plaintext
+        run: |
+          python - <<'PY'
+          import hashlib,json
+          from pathlib import Path
+          base=Path("v2/reports/ci")
+          p=base/"traz-missing-target-real-av.json"
+          d=json.loads(p.read_text(encoding="utf-8"))
+          assert d["policy"]=="PUBLIC_SHA_ONLY_RSA_AES_SEALED_STREAM_URLS"
+          assert d["candidate_hashes"]==158
+          assert d["ffmpeg_probed"]==d["matched_current_source_hashes"]
+          assert d["real_video_audio_decoded_hashes"]<=d["ffmpeg_probed"]
+          assert d["old_historical_orphan_50_auto_recovered"] is False
+          assert d["protected_playlist_modified"] is False
+          assert d["ibo_device_verified"] is False
+          assert hashlib.sha256((base/d["rsa_sealed_matches"]["name"]).read_bytes()).hexdigest()==d["rsa_sealed_matches"]["sha256"]
+          assert "http://" not in p.read_text() and "https://" not in p.read_text()
+          print("NEW_REAL_AV_HASHES",d["real_video_audio_decoded_hashes"])
+          print("EXACT_NEW_CHANNEL_IDS",d["real_video_audio_channel_ids"])
+          PY
+      - name: Upload only anonymous AV results and encrypted exact-source URL archive
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: traz-missing-real-av-rsa-${{ github.run_id }}
+          path: |
+            v2/reports/ci/traz-missing-target-real-av.json
+            v2/reports/ci/traz-missing-target-av.sealed
+          if-no-files-found: warn
+          retention-days: 30
