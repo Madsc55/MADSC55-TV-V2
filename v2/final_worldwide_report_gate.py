@@ -157,7 +157,8 @@ def inspect(report_path: Path, require_complete=True):
         require(actual == digest, "SEALED_CHECKSUM_MISMATCH")
     require(chunk_sum == count, "SEALED_CHUNK_TOTAL_MISMATCH")
     require(len(manifest) == (count + 3999) // 4000, "SEALED_CHUNK_NUMBER_MISMATCH")
-    require(bool(report.get("probe_budget_expired")) == bool(unprobed) or not unprobed,
+    require(type(report.get("probe_budget_expired")) is bool and
+            (unprobed == 0 or report["probe_budget_expired"] is True),
             "BUDGET_EXPIRY_INCONSISTENT")
     if require_complete:
         require(unprobed == 0 and report.get("probe_budget_expired") is False,
