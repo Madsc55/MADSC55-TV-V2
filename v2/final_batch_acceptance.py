@@ -183,6 +183,41 @@ def report(source_results, inventory, checks, *, configured, historic, expired, 
         "plaintext_url_in_public_report": False, "elapsed_seconds": round(elapsed, 1),
         "candidates": candidates}
 
+def resume_checks(prior, inventory):
+    """Accept matching AV evidence only; transient failures get re-probed."""
+    if prior.get("schema") != 1 or prior.get("kind") != "V2_WORLDWIDE_READ_ONLY_FINAL_ACCEPTANCE":
+        raise ValueError("Invalid prior report")
+    rows = prior.get("candidates")
+    if not isinstance(rows, list) or len(rows) != prior.get("unique_url_candidates"):
+        raise ValueError("Invalid prior candidate count")
+    checks = {}
+    seen = set()
+    allowed = {"VIDEO_AUDIO_DECODED", "VIDEO_AUDIO_STREAMS_ONLY",
+               "VIDEO_ONLY", "AUDIO_ONLY", "NO_AV"}
+    for row in rows:
+        if not isinstance(row, dict):
+            raise ValueError("Invalid prior candidate")
+        digest = row.get("url_sha256")
+        if not isinstance(digest, str) or not re.fullmatch("[0-9a-f]{64}", digest) or digest in seen:
+            raise ValueError("Invalid or repeated candidate digest")
+        seen.add(digest)
+        status = row.get("status")
+        if digest not in inventory or status not in allowed:
+            continue
+        if any(type(row.get(k)) is not bool for k in ("video", "audio", "decoded")):
+            raise ValueError("Invalid AV evidence flags")
+        if row["decoded"] != (status == "VIDEO_AUDIO_DECODED"):
+            raise ValueError("Inconsistent decode status")
+        if row["decoded"] and not (row["video"] and row["audio"]):
+            raise ValueError("Incomplete decoded AV evidence")
+        tags = row.get("audio_tags_not_spoken_language_proof", [])
+        if not isinstance(tags, list) or any(not isinstance(t, str) for t in tags):
+            raise ValueError("Invalid audio tags")
+        checks[digest] = {"url_sha256": digest, "status": status,
+                          "video": row["video"], "audio": row["audio"],
+                          "decoded": row["decoded"], "audio_lang_tags": tags}
+    return checks
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--workers", type=int, default=24)
@@ -219,22 +254,7 @@ def main():
         if prior.get("kind") != "V2_WORLDWIDE_READ_ONLY_FINAL_ACCEPTANCE":
             raise SystemExit("Invalid prior AV evidence report")
         # Recheck transient failures; never freeze an outage into historical evidence.
-        allowed = {"VIDEO_AUDIO_DECODED", "VIDEO_AUDIO_STREAMS_ONLY", "VIDEO_ONLY",
-                   "AUDIO_ONLY", "NO_AV"}
-        for row in prior.get("candidates", []):
-            digest = row.get("url_sha256", "")
-            status = row.get("status", "")
-            if (digest in inventory and re.fullmatch(r"[0-9a-f]{64}", digest)
-                    and status in allowed
-                    and isinstance(row.get("decoded"), bool)
-                    and isinstance(row.get("video"), bool)
-                    and isinstance(row.get("audio"), bool)
-                    and (row["decoded"] == (status == "VIDEO_AUDIO_DECODED"))
-                    and (not row["decoded"] or (row["video"] and row["audio"]))):
-                checks[digest] = {"url_sha256": digest, "status": status,
-                    "video": row["video"], "audio": row["audio"],
-                    "decoded": row["decoded"],
-                    "audio_lang_tags": row.get("audio_tags_not_spoken_language_proof", [])}
+        checks = resume_checks(prior, inventory)
         print("Reused prior hash-only AV evidence:", len(checks), flush=True)
     expired = False
     deadline = t0 + a.budget_seconds
