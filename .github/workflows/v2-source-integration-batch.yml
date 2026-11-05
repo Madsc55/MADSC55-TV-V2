@@ -67,7 +67,8 @@ jobs:
             test_github_source_approval \
             test_forge_source_review \
             test_source_resilience_batch \
-            test_platform_verification_batch
+            test_platform_verification_batch \
+            test_traz_api_source_batch
           python -m unittest discover -s v2/tests -p 'test_source_integration_gate.py' -v
       - name: Preserve fail-closed status without fabricated live reports
         shell: bash
@@ -393,5 +394,54 @@ jobs:
         with:
           name: v2-unified-source-search-${{ github.run_id }}
           path: v2/reports/ci/unified-source-search-anonymous.json
+          if-no-files-found: warn
+          retention-days: 30
+
+
+  traz-api-metadata-readonly:
+    name: Worldwide TR AZ exact IPTV API and EPG source metadata
+    needs: offline-source-safety
+    if: github.event_name == 'push' && github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Protect main playlist and original historical inventory
+        run: |
+          test "$(git hash-object MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)" = '4b1c3cea4b5107a425abab60f62d41f9f81e05a7'
+          test "$(sha256sum v2/history/stage3-4955-hash-only.jsonl | cut -d' ' -f1)" = 'ee00a844a028e3410715d411467a2d3306f5f5cc4565766140b6438e786cdd27'
+      - name: Read global TR AZ IPTV API feeds streams channel IDs and guides
+        run: timeout 960s python v2/traz_api_source_batch.py --public-only
+      - name: Reject invented AV and IBO device playback claims
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path("v2/reports/ci/traz-api-source-audit.json").read_text())
+          assert d["policy"]=="READ_ONLY_METADATA_NOT_AV_NO_IBO_WRITES"
+          assert d["all_streams_av_verified"] is False
+          assert d["spoken_language_verified"] is False
+          assert d["sweden_access_verified"] is False
+          assert d["ibo_device_verified"] is False
+          assert d["protected_playlist_modified"] is False
+          assert len(d["stream_references"])==d["unique_channel_url_pairs"]
+          assert all("url" not in x and not x["av_verified"] for x in d["stream_references"])
+          print("EXACT_CHANNEL_IDENTITIES",d["target_unique_channel_ids"])
+          print("STREAM_URL_LEADS_NOT_AV",d["unique_channel_url_pairs"])
+          print("EPG_IDENTITIES",d["epg_target_identities"])
+          PY
+      - name: Upload hash-only anonymous public report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: traz-api-safe-evidence-${{ github.run_id }}
+          path: v2/reports/ci/traz-api-source-audit.json
           if-no-files-found: warn
           retention-days: 30

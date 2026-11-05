@@ -54,6 +54,7 @@ class RunnerTests(unittest.TestCase):
                          ["youtube_discovery.py","discover.py","source_integration_gate.py"])
         self.assertNotIn("--encrypted-archive",steps[-2])
         self.assertIn("--accept-partial-routing",steps[-1])
+        self.assertIn("--public-only", steps[-4])
         self.assertIn("--include-original-run60-github-sources",steps[-2])
         self.assertIn("--include-reviewed-public-source-references",steps[-2])
         self.assertIn("--include-approved-live-page-indexes",steps[-2])

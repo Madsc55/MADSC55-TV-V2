@@ -19,7 +19,7 @@ PUBLIC=ROOT/"v2/reports/ci/traz-api-source-audit.json"
 PRIVATE=ROOT/"v2/reports/private-traz-api-candidates.json"
 HOST="iptv-org.github.io"
 KINDS=("channels","feeds","streams","guides")
-MAX_BYTES=40_000_000
+MAX_BYTES=120_000_000
 MAX_ROWS=600_000
 
 def fetch_api(kind):

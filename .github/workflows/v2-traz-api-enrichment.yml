@@ -1,14 +1,5 @@
 name: V2 TR AZ Worldwide API and EPG Bulk Enrichment
 on:
-  push:
-    branches: [madsc/v2-discovery-bulk-20261031]
-    paths:
-      - 'v2/traz_api_source_batch.py'
-      - 'v2/test_traz_api_source_batch.py'
-      - 'v2/build_verified_test_playlist.py'
-      - 'v2/run_all_discovery.py'
-      - 'v2/test_run_all_discovery.py'
-      - '.github/workflows/v2-traz-api-enrichment.yml'
   workflow_dispatch:
 permissions:
   contents: read
