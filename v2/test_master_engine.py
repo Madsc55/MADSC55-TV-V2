@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Offline integration tests for the master engine. No mocked success reports."""
 import unittest
-from master_engine import build, render_m3u
+from master_engine import build, render_m3u, export_candidates
 
 class MasterTests(unittest.TestCase):
     def test_master_protected_output_paths_are_checked_before_network(self):
@@ -84,6 +84,22 @@ class MasterTests(unittest.TestCase):
                             media_checker=lambda item: called.append(item) or True)
         self.assertFalse(items[0]["media_decoded"])
         self.assertEqual(called, [])
+
+    def test_k2_k5_export_gate_requires_decoded_tr_az_and_keeps_device_unverified(self):
+        rows = [
+            {"name": "TR", "url": "https://example.org/tr.m3u8", "region_candidate": "TR",
+             "media_decoded": True, "device_verified": False},
+            {"name": "AZ", "url": "https://example.org/az.m3u8", "region_candidate": "AZ",
+             "media_decoded": True, "device_verified": False},
+            {"name": "HTTP-only", "region_candidate": "TR", "media_decoded": False},
+            {"name": "Unknown", "region_candidate": "unknown", "media_decoded": True},
+            {"name": "Foreign", "region_candidate": "foreign", "media_decoded": True},
+            {"name": "Unproven", "region_candidate": "AZ", "media_decoded": 1},
+        ]
+        selected = export_candidates(rows)
+        self.assertEqual([x["name"] for x in selected], ["TR", "AZ"])
+        self.assertTrue(all(x["device_verified"] is False for x in selected))
+        self.assertEqual(len(rows), 6, "Filtering must not erase historical candidates")
 
     def test_historical_existing_main_url_never_exported(self):
         live = "#EXTM3U\n#EXTINF:-1,Existing\nhttps://example.org/existing.m3u8\n"
