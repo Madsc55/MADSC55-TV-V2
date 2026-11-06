@@ -39,6 +39,22 @@ class EncryptedArchiveTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "integrity mismatch"):
                 restore_verified(path, manifest, KEY)
 
+    def test_manifest_detects_mutation_during_restore(self):
+        from unittest.mock import patch
+        import encrypted_archive as archive
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder) / "archive.jsonl.enc"
+            append(path, {"id": 1}, KEY)
+            manifest = archive_manifest(path, KEY)
+            original_restore = archive.restore
+            def mutate_after_restore(p, key):
+                rows = original_restore(p, key)
+                append(p, {"id": 2}, key)
+                return rows
+            with patch.object(archive, "restore", side_effect=mutate_after_restore):
+                with self.assertRaisesRegex(ValueError, "changed during verified restore"):
+                    restore_verified(path, manifest, KEY)
+
     def test_manifest_invalid_count_fails_closed(self):
         with tempfile.TemporaryDirectory() as folder:
             path = Path(folder) / "archive.jsonl.enc"
