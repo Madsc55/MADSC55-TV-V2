@@ -134,6 +134,8 @@ def _valid(name, data):
         if live_handoff is not None and live_handoff.get("status") != "NOT_REQUESTED":
             if (type(live_handoff.get("new_pages_queued")) is not int
                     or type(live_handoff.get("pages_inspected")) is not int
+                    or live_handoff["new_pages_queued"] < 0
+                    or live_handoff["pages_inspected"] < 0
                     or live_handoff["new_pages_queued"] != live_handoff["pages_inspected"]
                     or live_handoff.get("playback_verified") is not False):
                 return False
