@@ -85,7 +85,9 @@
         "extinf_entries": 1110,
         "yedekler_entries": 65
       },
-      "policy": "read_only_comparison_no_merge_no_delete_no_device_playback_claim"
+      "policy": "read_only_comparison_no_merge_no_delete_no_device_playback_claim",
+      "user_confirmed_primary": "MADSC55_IBO_NEWLISTTR_YEDEKLER_TEST.m3u8",
+      "legacy_protected_separately": "MADSC55_TV_IBO_CALISANLAR_TEST.m3u8"
     }
   },
   "completed_steps": [
@@ -113,5 +115,7 @@
     "do_not_claim_unverified_success": true,
     "old_repository_forbidden": true
   },
-  "note": "Canonical record. Two distinct dev playlists compared read-only: protected main 840 EXTINF/2 YEDEKLER vs second test 1110 EXTINF/65 YEDEKLER. Do not merge or overwrite. Source integration batch #42216075104 still in_progress. No main/PR9 edits."
+  "note": "User explicitly confirms MADSC55_IBO_NEWLISTTR_YEDEKLER_TEST.m3u8 is their actual primary IBO playlist (1110 EXTINF, 65 YEDEKLER at last check). Preserve it and separately preserve formerly protected MADSC55_TV_IBO_CALISANLAR_TEST.m3u8 (840 EXTINF, 2 YEDEKLER). No playlist modifications authorized; dev state-only update, no main or PR9 changes.",
+  "user_confirmed_primary_playlist": "MADSC55_IBO_NEWLISTTR_YEDEKLER_TEST.m3u8",
+  "user_confirmed_primary_playlist_policy": "USER_CONFIRMED_PRIMARY_PROTECT_NO_AUTOMATED_WRITES"
 }
