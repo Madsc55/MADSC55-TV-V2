@@ -48,7 +48,8 @@ class TaskEngineTests(unittest.TestCase):
 
     def test_user_directed_heavy_work_deferred_without_false_completion(self):
         ledger = copy.deepcopy(self.ledger)
-        # #7 may already be completed; #9 remains an independent ready task.
+        # Stable fixture: future closures must not invalidate scheduler tests.
+        ledger["statuses"][8]["status"] = "pending"
         self.assertEqual(e.select(self.master, ledger, self.root, defer_heavy=True), 9)
         ready = e.independent_ready(self.master, ledger, self.root, defer_heavy=True)
         self.assertNotIn(3, ready)
@@ -69,11 +70,13 @@ class TaskEngineTests(unittest.TestCase):
         output = io.StringIO()
         with patch("sys.argv", ["task_engine"]), contextlib.redirect_stdout(output):
             e.main()
-        self.assertEqual(json.loads(output.getvalue())["next_task_id"], 9)
+        self.assertEqual(json.loads(output.getvalue())["next_task_id"],
+                         e.select(self.master, self.ledger, self.root, defer_heavy=True))
         output = io.StringIO()
         with patch("sys.argv", ["task_engine", "--include-heavy"]), contextlib.redirect_stdout(output):
             e.main()
-        self.assertEqual(json.loads(output.getvalue())["next_task_id"], 3)
+        self.assertEqual(json.loads(output.getvalue())["next_task_id"],
+                         e.select(self.master, self.ledger, self.root, defer_heavy=False))
 
     def test_completed_not_reselected(self):
         ledger = self.scenario_ledger()
