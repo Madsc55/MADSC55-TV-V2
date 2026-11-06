@@ -51,6 +51,7 @@ def crosswalk(baseline_path, worldwide_path):
         "historical_not_in_worldwide_report": len(hashes) - len(matched),
         "historical_decoded_url_sha256": sorted(decoded),
         "historical_match_url_sha256": sorted(matched),
+        "historical_missing_worldwide_url_sha256": sorted(set(hashes) - set(by_hash)),
         "protected_playlist_modified": False,
         "ibo_device_verified": False,
         "historical_broadcaster_identity_verified": False,
