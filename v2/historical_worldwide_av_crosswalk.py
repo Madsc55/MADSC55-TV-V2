@@ -33,6 +33,8 @@ def crosswalk(baseline_path, worldwide_path):
     acceptance = inspect(worldwide_path, require_complete=True)
     report = json.loads(worldwide_path.read_text(encoding="utf-8"))
     by_hash = {row["url_sha256"]: row for row in report["candidates"]}
+    if len(by_hash) != len(report["candidates"]):
+        raise ValueError("Duplicate worldwide URL SHA identities")
     matched = set(hashes) & set(by_hash)
     decoded = {h for h in matched if by_hash[h]["status"] == "VIDEO_AUDIO_DECODED"
                and by_hash[h]["decoded"] is True
