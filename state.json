@@ -33,7 +33,9 @@
       "unproven_status_triage_commit": "2613d1078c6a0546542ef17725cd773304144ed2",
       "unproven_status_triage_ci": "passed Eight-Stage #42229469279 and Current Scanner #42229469259",
       "recovery_review_queue_commit": "00ea526ea5e220a34db833dd869a47a68e3a2355",
-      "recovery_review_queue_ci": "pending"
+      "recovery_review_queue_ci": "passed Master Engine #42229625563, Eight-Stage #42229625551, Current Scanner #42229625602, Sirali Hazirlik #42229625636",
+      "anonymous_queue_counts_workflow_commit": "101d52241c67f4da55b3b94146bc49d74da2fb3b",
+      "anonymous_queue_counts_run": "not yet executed; explicit workflow_dispatch required"
     },
     "security_trigger_failure": {
       "commit": "56060074",
@@ -72,5 +74,5 @@
     "do_not_claim_unverified_success": true,
     "old_repository_forbidden": true
   },
-  "note": "One canonical progress file. 1886 matched historical hashes without AV now have read-only disjoint recovery-review queues (partial media, transient retry, source research, other); real group counts require pinned AV artifact rerun. 7 absent remain. No stream promotion or protected writes."
+  "note": "Canonical record. Four read-only recovery queues pass grouped regressions. Explicit historical crosswalk workflow now validates and prints anonymous group counts, but has not run at this commit. 4955 preserved, 3062 prior AV, 1886 matched without AV, 7 missing. No protected playlist writes."
 }
