@@ -1,3 +1,13 @@
+## 6 Kasım 2026 — Actions #42302404218 kök neden ve düzeltme kaydı
+
+- **Gerçek koşu:** [#42302404218](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42302404218), job 128183217444, 139 test / 3 failure / 20 error. Korunan IBO ve tarihî metadata hash kontrolü **başarılı**; 17-modül toplu test job'u **başarısız**; canlı AV tarama job'u **skipped**.
+- **Kök neden:** Salt okunur offline job'da `cryptography` kurulmamış; 20 import hatasının ortak nedeni `ModuleNotFoundError: No module named 'cryptography'`. Üç failure: iki baseline senaryosu fixture içinde aynı kaynak/hash çiftini yineliyor; aday sayısı testi şifreli aday sayısı için yeni doğru üst sınır davranışı yerine eski eşitlik varsayımını kullanıyor.
+- [e07de418](https://github.com/Madsc55/MADSC55-TV-V2/commit/e07de418edabba4c7d8ccabcbf17f1854a95871f): mevcut salt okunur job'a sabit `cryptography==44.0.2` kurulumu eklendi.
+- [4672f994](https://github.com/Madsc55/MADSC55-TV-V2/commit/4672f994b47d933a9232c2cc887f143dea3d7b3b): 55 benzersiz kaynak/hash çifti / 50 kimlik sağlayan baseline fixture; eksik özgün kimlik, yeni upstream kayıt ve açık URL testleri; 38 adayın 37'lik mühürlü arşive sığmadığını reddeden güvenlik regresyonu. Bu test dosyası değişikliği, yalnız dev dalındaki read-only 17 modüllük push tetikleyicisinin kapsamındadır.
+- **Doğrulama bekliyor:** Son commit için yeni Actions run ID/log/başarı henüz alınamadı. Başarılı denmeden bu aşama kapanmayacak. Korunan `main`, IBO, PR #9 ve geçmiş envanter değiştirilmedi.
+
+---
+
 ## 6 Kasım 2026 — Salt okunur toplu regresyon tetikleyicisi eklendi; Actions sonucu BEKLİYOR
 
 - Mevcut `.github/workflows/v2-orphan-m3u-recovery.yml` önceden yalnız `workflow_dispatch` içerdiği için push ile çalışmıyordu.
