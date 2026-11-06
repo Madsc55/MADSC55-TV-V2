@@ -11,7 +11,8 @@ from orphan_resolution_gate import classify_report, main
 
 def fixture():
     records = []
-    sources = ("github-auto-24", "onureroz-turk-all")
+    sources = ("discevisita-tr", "github-auto-24",
+               "onureroz-turk-karma", "onureroz-turk-all")
     for i in range(50):
         av = i < 5
         candidate = i < 37
@@ -109,6 +110,18 @@ class OrphanResolutionGateTests(unittest.TestCase):
     def test_false_decoded_claim_without_audio_rejected(self):
         r = fixture()
         r["records"][0]["candidates"][0]["audio_stream"] = False
+        with self.assertRaises(ValueError):
+            classify_report(r)
+
+    def test_unrecognized_original_source_rejected(self):
+        r = fixture()
+        r["records"][0]["source_id"] = "untrusted-publisher"
+        with self.assertRaises(ValueError):
+            classify_report(r)
+
+    def test_nested_stream_url_rejected(self):
+        r = fixture()
+        r["records"][0]["candidates"][0]["stream_url"] = "https://example.net/secret.m3u8"
         with self.assertRaises(ValueError):
             classify_report(r)
 
