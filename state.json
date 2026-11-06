@@ -31,7 +31,9 @@
       "lossless_partition_regression_commit": "d3c110a3df7a69efff3e72aae3103c26846f0cc6",
       "lossless_partition_regression_status": "passed in Eight-Stage Runner #42229296789 and Master Engine #42229296797",
       "unproven_status_triage_commit": "2613d1078c6a0546542ef17725cd773304144ed2",
-      "unproven_status_triage_ci": "pending"
+      "unproven_status_triage_ci": "passed Eight-Stage #42229469279 and Current Scanner #42229469259",
+      "recovery_review_queue_commit": "00ea526ea5e220a34db833dd869a47a68e3a2355",
+      "recovery_review_queue_ci": "pending"
     },
     "security_trigger_failure": {
       "commit": "56060074",
@@ -70,5 +72,5 @@
     "do_not_claim_unverified_success": true,
     "old_repository_forbidden": true
   },
-  "note": "Canonical record only. Historical exact SHA: 4955 preserved, 4948 matched, 3062 prior AV decoded, 1886 unproven, 7 absent. Unproven now categorized by real probe status without claiming dead streams; grouped CI pending. No protected writes."
+  "note": "One canonical progress file. 1886 matched historical hashes without AV now have read-only disjoint recovery-review queues (partial media, transient retry, source research, other); real group counts require pinned AV artifact rerun. 7 absent remain. No stream promotion or protected writes."
 }
