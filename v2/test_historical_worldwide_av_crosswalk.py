@@ -128,8 +128,8 @@ class HistoricalWorldwideAVCrosswalkTests(unittest.TestCase):
                 if self:
                     key = next(iter(self))
                     self[key] += 1
-        with patch.object(module, "BASELINE_SHA256", hashlib.sha256(self.raw).hexdigest()), \\
-             patch.object(module, "inspect", return_value={"candidate_hashes": 3}), \\
+        with patch.object(module, "BASELINE_SHA256", hashlib.sha256(self.raw).hexdigest()), \
+             patch.object(module, "inspect", return_value={"candidate_hashes": 3}), \
              patch.object(module, "Counter", InflatedCounter):
             with self.assertRaisesRegex(ValueError, "lossless partition"):
                 module.crosswalk(self.historical, self.world)
