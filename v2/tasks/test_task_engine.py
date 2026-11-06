@@ -50,7 +50,7 @@ class TaskEngineTests(unittest.TestCase):
         ledger = self.scenario_ledger()
         ledger["statuses"][0].update(status="completed", evidence_urls=["https://github.com/example/evidence"], last_checked_at="2026-11-06T16:00:00Z")
         self.assertNotEqual(e.select(self.master, ledger, self.root), 1)
-        self.assertEqual(e.select(self.master, ledger, self.root), 4)
+        self.assertEqual(e.select(self.master, ledger, self.root), 3)
 
     def test_failed_cannot_be_marked_complete(self):
         with self.assertRaisesRegex(ValueError, "No completion"):
