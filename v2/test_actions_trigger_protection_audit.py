@@ -50,6 +50,17 @@ class ActionsTriggerProtectionTests(unittest.TestCase):
         self.assertLess(install, first_test)
         self.assertNotIn("cryptography>=42,<47", discovery)
 
+    def test_push_safety_workflow_cannot_launch_live_scan_jobs(self):
+        root = Path(__file__).resolve().parents[1] / ".github/workflows"
+        source = (root / "v2-actions-trigger-protection.yml").read_text(encoding="utf-8")
+        for name in ("final-worldwide-acceptance", "document-platform-live-audit",
+                     "orphan-46-live-recovery"):
+            section = source.split("  " + name + ":\n", 1)[1]
+            next_job = section.find("\n  ", 1)
+            if next_job >= 0:
+                section = section[:next_job]
+            self.assertIn("    if: ${{ false }}", section, name)
+
     def test_unknown_automatic_push_is_rejected(self):
         text = fixture("  push:\n    branches: [" + DEV + "]\n")
         issues, _ = validate_workflow(Path("unreviewed-discovery.yml"), text)
