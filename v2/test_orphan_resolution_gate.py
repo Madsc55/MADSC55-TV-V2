@@ -43,28 +43,27 @@ def fixture():
 class OrphanResolutionGateTests(unittest.TestCase):
     def test_new_upstream_orphans_do_not_replace_original_55(self):
         r = fixture()
-        baseline = {"sources": {}}
-        for row in r["records"]:
-            values = baseline["sources"].setdefault(row["source_id"], [])
-            if row["extinf_sha256"] not in values:
-                values.append(row["extinf_sha256"])
-        # Five originals share their identity across different sources.
-        # The immutable ledger contains all 55 source/hash pairs.
-        baseline["sources"] = {
+        # Preserve 50 identities in 55 distinct source/hash occurrences.
+        # Duplicate identities across DIFFERENT sources, not twice in one.
+        for offset, original in enumerate((17, 18, 0, 1, 36)):
+            r["records"][50 + offset] = dict(r["records"][original])
+            r["records"][50 + offset]["source_id"] = (
+                ("discevisita-tr" if offset < 2 else
+                 "github-auto-24" if offset < 4 else "onureroz-turk-all"))
+        baseline = {"sources": {
             source: sorted({row["extinf_sha256"] for row in r["records"]
                             if row["source_id"] == source})
             for source in ("discevisita-tr", "github-auto-24",
-                           "onureroz-turk-karma", "onureroz-turk-all")}
-        # The fixture duplicates five source/hash pairs, whereas a real
-        # immutable ledger holds 55 distinct source/hash pairs. Construct a
-        # baseline-compatible sample with 55 unique original occurrences.
-        for i, row in enumerate(r["records"][50:]):
-            row["extinf_sha256"] = "%064x" % (1000 + i)
-            baseline["sources"][row["source_id"]].append(row["extinf_sha256"])
-        # This synthetic case has 55 identities, so the strict 50-identity
-        # guard must reject it rather than silently change accounting.
-        with self.assertRaises(ValueError):
-            classify_report(r, baseline=baseline)
+                           "onureroz-turk-karma", "onureroz-turk-all")}}
+        self.assertEqual(sum(map(len, baseline["sources"].values())), 55)
+        self.assertEqual(len({row["extinf_sha256"] for row in r["records"]}), 50)
+        r["records"].append({
+            "source_id": "github-auto-24", "extinf_sha256": "%064x" % 9999,
+            "candidates": []})
+        result = classify_report(r, baseline=baseline)
+        self.assertEqual(result["original_occurrences_preserved"], 55)
+        self.assertEqual(result["original_identities_preserved"], 50)
+        self.assertEqual(result["remaining_unverified_identities"], 45)
 
     def test_missing_baseline_identity_rejected_even_with_extra_rows(self):
         r = fixture()
