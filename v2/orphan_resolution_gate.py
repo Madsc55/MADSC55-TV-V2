@@ -16,7 +16,7 @@ ORIGINAL_SOURCES = frozenset(("discevisita-tr", "github-auto-24",
                               "onureroz-turk-karma", "onureroz-turk-all"))
 
 
-def classify_report(data):
+def classify_report(data, baseline=None):
     guard = data.get("immutable_orphan_identity_guard", {})
     if (data.get("protected_playlist_modified") is not False
             or data.get("plain_stream_urls_reported") is not False
@@ -29,7 +29,21 @@ def classify_report(data):
                 != data.get("unique_candidate_urls_historically_or_officially_proven")):
         raise ValueError("Original 55/50 identity, encryption or playlist guard failed")
     records = data.get("records")
-    if not isinstance(records, list) or len(records) != 55:
+    if not isinstance(records, list):
+        raise ValueError("Missing original metadata records")
+    if baseline is not None:
+        expected = {(source, digest)
+                    for source, hashes in baseline["sources"].items()
+                    for digest in hashes}
+        observed = [(row.get("source_id"), row.get("extinf_sha256"))
+                    for row in records if isinstance(row, dict)]
+        if len(observed) != len(records) or len(set(observed)) != len(observed):
+            raise ValueError("Duplicate or malformed orphan metadata records")
+        if not expected.issubset(set(observed)):
+            raise ValueError("Missing original 55 metadata occurrences")
+        records = [row for row in records
+                   if (row["source_id"], row["extinf_sha256"]) in expected]
+    if len(records) != 55:
         raise ValueError("Missing original 55 metadata occurrences")
     states = {}
     per_source = {}
@@ -127,10 +141,16 @@ def main():
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--report-only", action="store_true",
                         help="Write complete anonymous resolution diagnostics; final CI acceptance still fails on missing AV")
+    parser.add_argument("--immutable-orphan-baseline", type=Path)
     args = parser.parse_args()
     if args.output.exists() or args.output.is_symlink():
         parser.error("Refusing to overwrite previous resolution evidence")
-    result = classify_report(json.loads(args.report.read_text(encoding="utf-8")))
+    baseline = None
+    if args.immutable_orphan_baseline is not None:
+        from orphan_baseline_guard import load_immutable_baseline
+        baseline = load_immutable_baseline(args.immutable_orphan_baseline)
+    result = classify_report(json.loads(args.report.read_text(encoding="utf-8")),
+                             baseline=baseline)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
                            encoding="utf-8")
