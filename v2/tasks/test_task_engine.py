@@ -21,6 +21,9 @@ class TaskEngineTests(unittest.TestCase):
         ledger["statuses"][0]["status"] = "in_progress"
         ledger["statuses"][1]["status"] = "completed"
         ledger["statuses"][3]["status"] = "pending"
+        # Preserve original baseline for deterministic historical ordering assertions.
+        for task_id in (7, 8, 10):
+            ledger["statuses"][task_id - 1]["status"] = "pending"
         return ledger
 
     def test_all_33_complete_and_dependency_graph(self):
