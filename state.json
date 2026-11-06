@@ -7,7 +7,15 @@
   "current_step_status": "partial_sha_av_crosswalk_verified_no_device_claim",
   "source_run_url": "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42216075104",
   "last_verified_run_observation": {
-    "source_integration_batch": "pending",
+    "source_integration_batch": {
+      "run_id": 42216075104,
+      "status": "in_progress",
+      "jobs_success": 9,
+      "jobs_in_progress": 3,
+      "jobs_failed": 0,
+      "observed": "2026-11-06",
+      "note": "Live source acceptance and unified TR/AZ search still running; no AV or IBO promotion claims"
+    },
     "source_integration_run_id": 42216075104,
     "development_commit": "405a1fc52ba0c0542eabe6d8a6e4fb521bad039d",
     "development_checks_success": [
@@ -38,7 +46,7 @@
       "anonymous_queue_counts_run": "not executed on updated commit; workflow_dispatch required; no automatic trigger",
       "latest_dedicated_run": "42228674931 on 56060074, successful but predates four-queue report",
       "unsafe_unprobed_review_fix": "91d147a581cbf92b9099f63ec3ac7588ce386b42",
-      "unsafe_unprobed_review_ci": "pending"
+      "unsafe_unprobed_review_ci": "Master Engine #42233306554, Eight-Stage #42233306494, Current Scanner #42233306540 PASS; Sirali Hazirlik #42233306475 in_progress"
     },
     "security_trigger_failure": {
       "commit": "56060074",
@@ -89,5 +97,5 @@
     "do_not_claim_unverified_success": true,
     "old_repository_forbidden": true
   },
-  "note": "Single canonical record: five prior grouped gates green. Newly corrected historical recovery routing: NOT_PROBED_BUDGET and safety-disallowed protocol go to source_research, never transient_retry. New grouped CI pending. Dedicated four-queue real counts still not executed. No protected writes."
+  "note": "Single canonical state. Historical safe routing 4 main gates passed; source integration batch 42216075104 resumed with 9 completed success and 3 running jobs. Dedicated historical four-queue counts still not executed. Protected IBO/main/PR9 untouched."
 }
