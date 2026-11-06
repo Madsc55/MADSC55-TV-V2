@@ -134,6 +134,17 @@ class HistoricalWorldwideAVCrosswalkTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "lossless partition"):
                 module.crosswalk(self.historical, self.world)
 
+    def test_duplicate_worldwide_sha_evidence_rejected(self):
+        # Duplicate worldwide rows must not overwrite one another silently.
+        row = {"url_sha256": self.hashes[0], "status": "VIDEO_AUDIO_DECODED",
+               "decoded": True, "video": True, "audio": True}
+        self.world.write_text(json.dumps({"candidates": [row, dict(row)]}))
+        with (patch.object(module, "BASELINE_SHA256",
+                           hashlib.sha256(self.raw).hexdigest()),
+              patch.object(module, "inspect", return_value={"candidate_hashes": 2})):
+            with self.assertRaisesRegex(ValueError, "Duplicate worldwide URL SHA"):
+                module.crosswalk(self.historical, self.world)
+
     def test_tampered_historical_baseline_rejected(self):
         self.historical.write_bytes(self.raw + b" ")
         with self.assertRaises(ValueError):
