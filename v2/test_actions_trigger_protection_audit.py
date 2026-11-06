@@ -44,7 +44,7 @@ class ActionsTriggerProtectionTests(unittest.TestCase):
         source = path.read_text(encoding="utf-8")
         issues, _ = validate_workflow(path, source)
         self.assertEqual(issues, [], issues)
-        discovery = source.split("  discovery-tests:\\n", 1)[1].split("  safety:\\n", 1)[0]
+        discovery = source.split("  discovery-tests:\n", 1)[1].split("  safety:\n", 1)[0]
         install = discovery.index("python -m pip install cryptography==44.0.2")
         first_test = discovery.index("python v2/test_discovery_offline_regressions.py")
         self.assertLess(install, first_test)
