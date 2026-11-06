@@ -78,6 +78,30 @@ class HistoricalWorldwideAVCrosswalkTests(unittest.TestCase):
         self.assertEqual(sum(result["historical_unproven_status_counts"].values()),
                          result["historical_matched_without_av_proof"])
 
+    def test_transient_failures_are_reviewed_not_marked_dead(self):
+        statuses = [
+            "PROBE_FAILED_NETWORK_TIMEOUT",
+            "PROBE_FAILED_DNS_RESOLUTION_ERROR",
+            "PROBE_FAILED_HTTP_FORBIDDEN",
+            "VIDEO_AUDIO_STREAMS_ONLY",
+            "PROBE_FAILED_MEDIA_FORMAT_UNSUPPORTED",
+        ]
+        self.world.write_text(json.dumps({"candidates": [
+            {"url_sha256": self.hashes[i], "status": status,
+             "decoded": False, "video": False, "audio": False}
+            for i, status in enumerate(statuses)
+        ]}))
+        with patch.object(module, "BASELINE_SHA256", hashlib.sha256(self.raw).hexdigest()), \\
+             patch.object(module, "inspect", return_value={"candidate_hashes": 5}):
+            result = module.crosswalk(self.historical, self.world)
+        groups = result["historical_recovery_review_url_sha256"]
+        self.assertEqual(groups["transient_retry"], [self.hashes[0], self.hashes[1]])
+        self.assertEqual(groups["source_research"], [self.hashes[2]])
+        self.assertEqual(groups["partial_media"], [self.hashes[3]])
+        self.assertEqual(groups["other_unproven"], [self.hashes[4]])
+        self.assertEqual(result["historical_exact_hash_av_decoded"], 0)
+        self.assertEqual(sum(result["historical_recovery_review_counts"].values()), 5)
+
     def test_tampered_historical_baseline_rejected(self):
         self.historical.write_bytes(self.raw + b" ")
         with self.assertRaises(ValueError):
