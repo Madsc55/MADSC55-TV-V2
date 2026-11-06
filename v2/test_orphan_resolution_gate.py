@@ -13,17 +13,19 @@ def fixture():
     records = []
     sources = ("discevisita-tr", "github-auto-24",
                "onureroz-turk-karma", "onureroz-turk-all")
+    source_for_index = ([sources[0]] * 17 + [sources[1]] * 19 +
+                        [sources[2]] * 8 + [sources[3]] * 6)
     for i in range(50):
         av = i < 5
         candidate = i < 37
-        records.append({"source_id": sources[i % 2],
+        records.append({"source_id": source_for_index[i],
                         "extinf_sha256": ("%064x" % (i+1)),
                         "candidates": ([{"url_sha256": "%064x" % (i+100),
                                          "video_stream": av, "audio_stream": av,
                                          "ffmpeg_video_audio_decoded": av,
                                          "status": "VIDEO_AUDIO_DECODED" if av else "PROBE_FAILED_NOT_PROVEN_DEAD"}]
                                        if candidate else [])})
-    for i in range(5):
+    for i in (0, 1, 17, 18, 44):
         records.append(dict(records[i]))
     return {"immutable_orphan_identity_guard":
                 {"original_source_occurrences": 55,
@@ -111,6 +113,12 @@ class OrphanResolutionGateTests(unittest.TestCase):
         r = fixture()
         r["records"][0]["candidates"][0]["audio_stream"] = False
         with self.assertRaises(ValueError):
+            classify_report(r)
+
+    def test_source_occurrence_drift_rejected(self):
+        r = fixture()
+        r["records"][0]["source_id"] = "github-auto-24"
+        with self.assertRaisesRegex(ValueError, "per-source occurrence"):
             classify_report(r)
 
     def test_unrecognized_original_source_rejected(self):
