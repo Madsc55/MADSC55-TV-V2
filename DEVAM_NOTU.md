@@ -1,3 +1,12 @@
+## 6 Kasım 2026 — 4672f994 kurtarma kabulü BAŞARILI; diğer sistem kapıları AÇIK
+
+- **Doğrulanan Actions:** [#42303308753](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42303308753), commit [4672f994](https://github.com/Madsc55/MADSC55-TV-V2/commit/4672f994b47d933a9232c2cc887f143dea3d7b3b), job `128186296451`: **190 test, OK** (17 modüllük read-only kurtarma regresyonu). Şifreleme kurulumu ve korunan IBO/tarihî metadata kontrolleri geçti. Canlı AV job `128186298557` **skipped**.
+- **Diğer kapılar:** Kullanıcı aynı commit için Master Engine, Eight-Stage Runner, Ordered Preflight ve Actions Trigger & Protected Playlist Gate başarısızlığını bildirdi. Bu dört koşunun run/job ID ve logları henüz erişilebilir araçlarla tespit edilemedi; ortak kök neden **doğrulanmadı**, rastgele düzeltme yapılmadı. Commit bazlı PR-run sorgusu 0 sonuç verdi; bu sorgu push/dispatch koşularını kapsamıyor.
+- **Karar:** Başarılı 17 modüllük regresyon tekrar çalıştırılmayacak. Dört sistem kapısının gerçek logları alınmadan yeşil kabul edilmeyecek; canlı 45 kimlik AV kurtarma da tamamlandı sayılmayacak.
+- **Koruma:** Yalnız geliştirme dalındaki bu görev notu değiştirildi; `main`, ana IBO, PR #9, arşiv ve eski depo değişmedi.
+
+---
+
 ## 6 Kasım 2026 — Actions #42302404218 kök neden ve düzeltme kaydı
 
 - **Gerçek koşu:** [#42302404218](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42302404218), job 128183217444, 139 test / 3 failure / 20 error. Korunan IBO ve tarihî metadata hash kontrolü **başarılı**; 17-modül toplu test job'u **başarısız**; canlı AV tarama job'u **skipped**.
