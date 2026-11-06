@@ -27,6 +27,17 @@ class ActionsTriggerProtectionTests(unittest.TestCase):
         self.assertEqual(result["default_branch_runtime_schedules_disabled"],
                          "NOT_VERIFIABLE_FROM_DEV_BRANCH")
 
+    def test_live_orphan_recovery_remains_manual_only_after_offline_ci(self):
+        root = Path(__file__).resolve().parents[1] / ".github/workflows"
+        path = root / "v2-orphan-m3u-recovery.yml"
+        source = path.read_text(encoding="utf-8")
+        issues, info = validate_workflow(path, source)
+        self.assertEqual(issues, [], issues)
+        self.assertEqual(info["events"], ["workflow_dispatch"])
+        self.assertIn("test_orphan_resolution_gate", source)
+        self.assertIn("cryptography==44.0.2", source)
+        self.assertIn("4b1c3cea4b5107a425abab60f62d41f9f81e05a7", source)
+
     def test_unknown_automatic_push_is_rejected(self):
         text = fixture("  push:\n    branches: [" + DEV + "]\n")
         issues, _ = validate_workflow(Path("unreviewed-discovery.yml"), text)
