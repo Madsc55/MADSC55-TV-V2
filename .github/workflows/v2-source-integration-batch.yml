@@ -726,13 +726,14 @@ jobs:
           # fail infrastructure-closed instead of claiming a broken channel.
           if [ ! -x /usr/bin/ffmpeg ] || [ ! -x /usr/bin/ffprobe ]; then
             timeout 360s sudo apt-get -o Acquire::Retries=2 -o Acquire::http::Timeout=20 update -qq
-            timeout 1200s sudo apt-get -o Acquire::Retries=3 -o Acquire::http::Timeout=20 install -y --no-install-recommends ffmpeg
+            timeout 1200s sudo apt-get -o Acquire::Retries=3 -o Acquire::http::Timeout=20 -o Acquire::https::Timeout=20 install -y --no-install-recommends ffmpeg
           fi
           test -x /usr/bin/ffmpeg
           test -x /usr/bin/ffprobe
           /usr/bin/ffmpeg -version | head -n 1
           /usr/bin/ffprobe -version | head -n 1
           /usr/bin/ffmpeg -protocols | grep -q https
+          timeout 15s /usr/bin/ffprobe -version >/dev/null
           echo "FFMPEG_FFPROBE_HTTPS_READY"
       - name: Offline grouped original source identity and real AV spoof rejection regression
         run: PYTHONPATH=v2 python -m unittest -v test_traz_missing_target_av test_traz_gap_crosswalk test_targeted_tr_az_av_acceptance
@@ -814,7 +815,7 @@ jobs:
           python -m pip install cryptography==44.0.2
           if [ ! -x /usr/bin/ffprobe ] || [ ! -x /usr/bin/ffmpeg ]; then
             timeout 360s sudo apt-get -o Acquire::Retries=2 -o Acquire::http::Timeout=20 update -qq
-            timeout 1200s sudo apt-get -o Acquire::Retries=3 -o Acquire::http::Timeout=20 install -y --no-install-recommends ffmpeg
+            timeout 1200s sudo apt-get -o Acquire::Retries=3 -o Acquire::http::Timeout=20 -o Acquire::https::Timeout=20 install -y --no-install-recommends ffmpeg
           fi
           test -x /usr/bin/ffprobe
           test -x /usr/bin/ffmpeg
@@ -901,7 +902,7 @@ jobs:
           python -m pip install cryptography==44.0.2
           if [ ! -x /usr/bin/ffmpeg ] || [ ! -x /usr/bin/ffprobe ]; then
             timeout 360s sudo apt-get -o Acquire::Retries=2 -o Acquire::http::Timeout=20 update -qq
-            timeout 1200s sudo apt-get -o Acquire::Retries=3 -o Acquire::http::Timeout=20 install -y --no-install-recommends ffmpeg
+            timeout 1200s sudo apt-get -o Acquire::Retries=3 -o Acquire::http::Timeout=20 -o Acquire::https::Timeout=20 install -y --no-install-recommends ffmpeg
           fi
           /usr/bin/ffmpeg -protocols | grep -q https
       - name: Grouped trusted feed variant exact ID and anti-spoof tests
@@ -997,7 +998,7 @@ jobs:
           python -m pip install cryptography==44.0.2
           if [ ! -x /usr/bin/ffmpeg ] || [ ! -x /usr/bin/ffprobe ]; then
             timeout 360s sudo apt-get -o Acquire::Retries=2 -o Acquire::http::Timeout=20 update -qq
-            timeout 1200s sudo apt-get -o Acquire::Retries=3 -o Acquire::http::Timeout=20 install -y --no-install-recommends ffmpeg
+            timeout 1200s sudo apt-get -o Acquire::Retries=3 -o Acquire::http::Timeout=20 -o Acquire::https::Timeout=20 install -y --no-install-recommends ffmpeg
           fi
           /usr/bin/ffmpeg -protocols | grep -q https
       - name: One grouped anti-misidentification and AV spoof regression suite
