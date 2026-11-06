@@ -34,6 +34,7 @@ def classify_report(data):
     states = {}
     per_source = {}
     causes = Counter()
+    source_occurrences = Counter()
     for row in records:
         digest = row.get("extinf_sha256")
         source = row.get("source_id")
@@ -44,6 +45,7 @@ def classify_report(data):
             raise ValueError("Malformed original candidate identity")
         if "url" in row or "stream_url" in row:
             raise ValueError("Plaintext URLs in public source report")
+        source_occurrences[source] += 1
         current = states.setdefault(digest, {"sources": set(), "has_candidate": False,
                                              "has_av": False,
                                              "url_sha256": set(), "diagnostics": set()})
@@ -69,8 +71,11 @@ def classify_report(data):
             elif isinstance(candidate.get("diagnostic_category"), str):
                 causes[candidate["diagnostic_category"]] += 1
                 current["diagnostics"].add(candidate["diagnostic_category"])
-    if len(states) != 50:
-        raise ValueError("Original 50 distinct metadata hashes not preserved")
+    expected_occurrences = {"discevisita-tr": 19, "github-auto-24": 21,
+                            "onureroz-turk-karma": 8, "onureroz-turk-all": 7}
+    if (len(states) != 50 or
+            dict(source_occurrences) != expected_occurrences):
+        raise ValueError("Original 55/50 identity or per-source occurrence counts not preserved")
     status = {"video_audio_verified": 0, "candidate_av_unverified": 0,
               "without_valid_candidate": 0}
     source_breakdown = {x: {"verified": 0, "candidate_unverified": 0,
