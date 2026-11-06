@@ -91,7 +91,7 @@ class HistoricalWorldwideAVCrosswalkTests(unittest.TestCase):
              "decoded": False, "video": False, "audio": False}
             for i, status in enumerate(statuses)
         ]}))
-        with patch.object(module, "BASELINE_SHA256", hashlib.sha256(self.raw).hexdigest()), \\
+        with patch.object(module, "BASELINE_SHA256", hashlib.sha256(self.raw).hexdigest()), \
              patch.object(module, "inspect", return_value={"candidate_hashes": 5}):
             result = module.crosswalk(self.historical, self.world)
         groups = result["historical_recovery_review_url_sha256"]
