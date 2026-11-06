@@ -1,0 +1,60 @@
+name: V2 Historical AV Crosswalk Reuse
+# Read-only SHA-only historical crosswalk against a pinned, completed AV run.
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - madsc/v2-discovery-bulk-20261031
+    paths:
+      - 'v2/historical_worldwide_av_crosswalk.py'
+      - 'v2/test_historical_worldwide_av_crosswalk.py'
+      - '.github/workflows/v2-historical-av-crosswalk-reuse.yml'
+permissions:
+  contents: read
+  actions: read
+jobs:
+  pinned-historical-crosswalk:
+    if: github.repository == 'Madsc55/MADSC55-TV-V2' && github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify immutable historical and protected playlist snapshots
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(sha256sum v2/history/stage3-4955-hash-only.jsonl | cut -d' ' -f1)" = 'ee00a844a028e3410715d411467a2d3306f5f5cc4565766140b6438e786cdd27'
+          test "$(git hash-object MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)" = '4b1c3cea4b5107a425abab60f62d41f9f81e05a7'
+      - name: Run grouped crosswalk and sealed worldwide report regressions
+        run: PYTHONPATH=v2 python -m unittest -v test_historical_worldwide_av_crosswalk test_final_worldwide_report_gate
+      - name: Download pinned completed worldwide AV evidence - never rescan
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p v2/reports/ci
+          gh run download 42194464091 --repo Madsc55/MADSC55-TV-V2 --name v2-grouped-av-evidence-42194464091 --dir v2/reports/ci
+          test -s v2/reports/ci/final-worldwide-acceptance.json
+      - name: Require complete sealed AV evidence and crosswalk 4955 historical hashes
+        shell: bash
+        run: |
+          set -euo pipefail
+          PYTHONPATH=v2 python v2/final_worldwide_report_gate.py --report v2/reports/ci/final-worldwide-acceptance.json
+          PYTHONPATH=v2 python v2/historical_worldwide_av_crosswalk.py \
+            --baseline v2/history/stage3-4955-hash-only.jsonl \
+            --worldwide v2/reports/ci/final-worldwide-acceptance.json \
+            --out v2/reports/ci/historical-worldwide-av-crosswalk.json
+      - name: Upload SHA-only crosswalk without URLs or private sealed data
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v2-historical-av-crosswalk-${{ github.run_id }}
+          path: v2/reports/ci/historical-worldwide-av-crosswalk.json
+          if-no-files-found: error
+          retention-days: 30
