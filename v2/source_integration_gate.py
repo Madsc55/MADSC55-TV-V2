@@ -81,7 +81,8 @@ def _valid(name, data):
     if name == "document_platforms":
         if set(("scribd", "slideshare", "internet-archive")) - set(data["platforms"]):
             return False
-        if type(data.get("validated_m3u_source_count")) is not int:
+        if (type(data.get("validated_m3u_source_count")) is not int
+                or data["validated_m3u_source_count"] < 0):
             return False
         if any(not isinstance(x, dict) or type(x.get("queries")) is not int
                or x["queries"] < 0 for x in data["platforms"].values()):
