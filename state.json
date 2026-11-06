@@ -10,14 +10,13 @@
     "source_integration_batch": {
       "run_id": 42216075104,
       "status": "in_progress",
-      "jobs_success": 10,
-      "jobs_in_progress": 2,
+      "jobs_success": 11,
+      "jobs_in_progress": 1,
       "jobs_failed": 0,
       "active_steps": [
-        "FFmpeg distro installation and HTTPS support",
-        "bounded video-plus-audio scan of reviewed public/document sources"
+        "Real bounded video-plus-audio scan of static, reviewed public and document sources"
       ],
-      "artifacts_available": 11,
+      "artifacts_available": 12,
       "head_sha": "062cf6ae9783803bb45b06efd4e877bcb6333f8e",
       "note": "Evidence artifacts available, but artifact contents and final AV acceptance not yet reviewed; no IBO promotion"
     },
@@ -120,7 +119,7 @@
     "do_not_claim_unverified_success": true,
     "old_repository_forbidden": true
   },
-  "note": "User's active IBO playlist is main/MADSC55_TV_IBO_CALISANLAR_TEST.m3u8, never modify. Source integration batch #42216075104: 10 successful jobs, 2 running, 11 artifacts, no final acceptance. Latest d875056c grouped checks all green. No playlist/main/PR9 writes.",
+  "note": "Primary IBO playlist on main remains protected. Source integration #42216075104: 11/12 jobs successful, final real AV scan in progress, 12 evidence artifacts; final AV acceptance and historical crosswalk within that job not yet complete. No playlist/main/PR9 writes.",
   "user_confirmed_primary_playlist": "MADSC55_TV_IBO_CALISANLAR_TEST.m3u8",
   "user_confirmed_primary_playlist_policy": "CURRENT_IBO_PLAYER_USES_MAIN_BRANCH_RAW_URL_PROTECTED_NO_AUTOMATED_WRITES",
   "user_confirmed_primary_playlist_url": "https://raw.githubusercontent.com/Madsc55/MADSC55-TV-V2/main/MADSC55_TV_IBO_CALISANLAR_TEST.m3u8"
