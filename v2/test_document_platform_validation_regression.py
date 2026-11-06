@@ -98,5 +98,18 @@ class DocumentPlatformValidationTests(unittest.TestCase):
         self.assertFalse(_valid("channel_scan", report))
 
 
+    def test_negative_live_page_count_is_rejected(self):
+        report = {
+            "schema": 1, "candidates": [], "source_audit": [],
+            "coverage_status": "COMPLETE", "playback_verified": False,
+            "candidate_status": "UNVERIFIED",
+            "approved_live_page_handoff": {
+                "status": "COMPLETE", "new_pages_queued": -1,
+                "pages_inspected": -1, "playback_verified": False,
+            },
+        }
+        self.assertFalse(_valid("channel_scan", report))
+
+
 if __name__ == "__main__":
     unittest.main()
