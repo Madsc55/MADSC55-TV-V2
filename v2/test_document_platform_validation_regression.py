@@ -82,5 +82,21 @@ class DocumentPlatformValidationTests(unittest.TestCase):
         self.assertFalse(_valid("channel_scan", report))
 
 
+    def test_negative_source_inspection_count(self):
+        report = {
+            "schema": 1, "candidates": [], "source_audit": [],
+            "coverage_status": "COMPLETE", "playback_verified": False,
+            "candidate_status": "UNVERIFIED",
+            "public_source_reference_handoff": {
+                "status": "COMPLETE",
+                "report_checked": {"github_gist": True, "gitlab_codeberg": True},
+                "inspection_records": 1, "parsed_channel_playlists": 0,
+                "failed_source_fetches": 0, "playback_verified": False,
+                "accepted_for_inspection": {"github_gist": -1},
+            },
+        }
+        self.assertFalse(_valid("channel_scan", report))
+
+
 if __name__ == "__main__":
     unittest.main()
