@@ -29,7 +29,9 @@
       "missing_hash_triage_commit": "e1b9f8e9b806b058f52b64f8f980fecbed1634d0",
       "missing_hash_triage_retest": "development gates passed on e1b9f8e9; dedicated pinned artifact rerun not yet confirmed",
       "lossless_partition_regression_commit": "d3c110a3df7a69efff3e72aae3103c26846f0cc6",
-      "lossless_partition_regression_status": "pending CI"
+      "lossless_partition_regression_status": "passed in Eight-Stage Runner #42229296789 and Master Engine #42229296797",
+      "unproven_status_triage_commit": "2613d1078c6a0546542ef17725cd773304144ed2",
+      "unproven_status_triage_ci": "pending"
     },
     "security_trigger_failure": {
       "commit": "56060074",
@@ -68,5 +70,5 @@
     "do_not_claim_unverified_success": true,
     "old_repository_forbidden": true
   },
-  "note": "Single canonical record. 4955 historic SHA IDs preserved: 4948 exact world matches, 3062 prior video+audio decoded, 1886 matched without AV, 7 missing. New lossless-partition regression pending CI. Source Integration Batch still pending at last check; do not imply device playback."
+  "note": "Canonical record only. Historical exact SHA: 4955 preserved, 4948 matched, 3062 prior AV decoded, 1886 unproven, 7 absent. Unproven now categorized by real probe status without claiming dead streams; grouped CI pending. No protected writes."
 }
