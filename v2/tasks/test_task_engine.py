@@ -62,6 +62,19 @@ class TaskEngineTests(unittest.TestCase):
                 row["status"] = "blocked"
         self.assertEqual(e.select(self.master, ledger, self.root, defer_heavy=True), 3)
 
+    def test_cli_defaults_to_deferred_heavy_tasks(self):
+        import contextlib
+        import io
+        from unittest.mock import patch
+        output = io.StringIO()
+        with patch("sys.argv", ["task_engine"]), contextlib.redirect_stdout(output):
+            e.main()
+        self.assertEqual(json.loads(output.getvalue())["next_task_id"], 7)
+        output = io.StringIO()
+        with patch("sys.argv", ["task_engine", "--include-heavy"]), contextlib.redirect_stdout(output):
+            e.main()
+        self.assertEqual(json.loads(output.getvalue())["next_task_id"], 3)
+
     def test_completed_not_reselected(self):
         ledger = self.scenario_ledger()
         ledger["statuses"][0].update(status="completed", evidence_urls=["https://github.com/example/evidence"], last_checked_at="2026-11-06T16:00:00Z")
