@@ -1,3 +1,14 @@
+## 6 Kasım 2026 — V2 DEVAM: Ordered Preflight şifreleme bağımlılığı sırası
+
+- Önceki geliştirme HEAD `4b024105cb5ffb435f835441dbcae31f56d75d86` kontrol edildi.
+- [4ce71b05](https://github.com/Madsc55/MADSC55-TV-V2/commit/4ce71b0511f912e8792ed42d57afa98a7e2167c1): `.github/workflows/v2-ordered-preflight.yml` `discovery-tests` içinde `cryptography==44.0.2` artık ilk testten **önce** yükleniyor; geç kurulum kaldırıldı. Import kaynaklı hata olasılığı giderildi; log kanıtı olmadan asıl CI hatası olduğu iddia edilmiyor.
+- [Issue #1](https://github.com/Madsc55/MADSC55-TV-V2/issues/1) güncellendi, **AÇIK** kaldı.
+- Başarılı [17 modül / 190 test Actions #42303308753](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42303308753) gereksiz tekrarlanmadı.
+- **Kabul engeli:** Dört sistem workflow'unun güncel run ID/job loglarına mevcut bağlantıdan ulaşılamıyor. Yeni toplu test sonucu doğrulanmadı. 45 AV kimlik kurtarma da tamamlanmış değil.
+- Yalnız dev workflow ve görev notu değişti; `main`, PR #9, IBO, kategoriler ve tarihî envanter korunuyor.
+
+---
+
 ## 6 Kasım 2026 — V2 DEVAM: görev #1 güvenlik regresyonu eklendi, kabul AÇIK
 
 - Geliştirme dalı kontrolünde önceki HEAD `403c1729dac3efc901afa4b09ff44e07e7ce478d` idi. GitHub'da mevcut `[V2 SIRA]` #1–#8 kayıtları bulundu; yeni proje/Issue açılmadı.
