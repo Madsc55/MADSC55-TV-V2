@@ -104,6 +104,9 @@ def _valid(name, data):
         source_handoff = data.get("public_source_reference_handoff")
         live_handoff = data.get("approved_live_page_handoff")
         advisory = data.get("advisory_channel_identity_handoff")
+        if any(x is not None and not isinstance(x, dict) for x in
+               (advisory, source_handoff, live_handoff)):
+            return False
         if advisory is not None and (advisory.get("av_verified") is not False
                                     or advisory.get("ibo_device_verified") is not False
                                     or advisory.get("youtube_pages_are_not_m3u_streams") is not True
