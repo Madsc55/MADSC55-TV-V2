@@ -5,11 +5,20 @@
   "branch": "madsc/v2-discovery-bulk-20261031",
   "current_step": "global_av_scan_acceptance",
   "current_step_status": "in_progress_unverified",
-  "source_run_url": "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42077381839",
+  "source_run_url": "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42216075104",
   "last_verified_run_observation": {
-    "live_av_job": "in_progress",
-    "completed_success_jobs": 3,
-    "skipped_jobs": 8
+    "source_integration_batch": "pending",
+    "source_integration_run_id": 42216075104,
+    "development_commit": "405a1fc52ba0c0542eabe6d8a6e4fb521bad039d",
+    "development_checks_success": [
+      "V2 Master Engine #42227793511",
+      "V2 Actions Status Monitor #42227793878",
+      "V2 Current Scanner Offline Gate #42227793542",
+      "V2 Eight-Stage Runner Verification #42227793586",
+      "V2 Sirali Hazirlik Testleri #42227793588"
+    ],
+    "av_evidence_union_run": "success #42227771885 (prior commit 95d1eb56)",
+    "new_three_regressions": "added in 405a1fc5; standalone execution not independently confirmed"
   },
   "completed_steps": [
     "main_security_protection",
@@ -36,5 +45,5 @@
     "do_not_claim_unverified_success": true,
     "old_repository_forbidden": true
   },
-  "note": "Status is an observation, not a completed test; refresh GitHub Actions before advancing current_step."
+  "note": "Single canonical progress record. Last observed source integration batch pending; completed development gates do not imply real AV or IBO device acceptance. Refresh Actions and sealed artifacts before advancing."
 }
