@@ -46,6 +46,27 @@ def crosswalk(baseline_path, worldwide_path):
         status: sorted(h for h in unproven if by_hash[h]["status"] == status)
         for status in unproven_status_counts
     }
+    # Priority is an investigation queue, not a claim that a URL is recoverable.
+    retryable = {
+        "PROBE_FAILED_NETWORK_TIMEOUT", "PROBE_FAILED_DNS_RESOLUTION_ERROR",
+        "PROBE_FAILED_HTTP_RESPONSE_ERROR", "PROBE_FAILED_REDIRECT_REQUIRED_OR_BLOCKED",
+        "PROBE_FAILED_UNKNOWN_NETWORK_OR_MEDIA_ERROR",
+        "PROBE_UNCONFIRMED", "UNVERIFIED",
+    }
+    media_partial = {"VIDEO_ONLY", "AUDIO_ONLY", "VIDEO_AUDIO_STREAMS_ONLY"}
+    auth_or_missing = {
+        "PROBE_FAILED_AUTH_REQUIRED", "PROBE_FAILED_HTTP_FORBIDDEN",
+        "PROBE_FAILED_HTTP_NOT_FOUND", "UNSAFE_OR_UNRESOLVED_HOST",
+    }
+    priority = {"partial_media": [], "transient_retry": [],
+                "source_research": [], "other_unproven": []}
+    for h in sorted(unproven):
+        status = by_hash[h]["status"]
+        group = ("partial_media" if status in media_partial else
+                 "transient_retry" if status in retryable else
+                 "source_research" if status in auth_or_missing else
+                 "other_unproven")
+        priority[group].append(h)
     result = {
         "schema": 1,
         "kind": "V2_HISTORICAL_WORLDWIDE_EXACT_SHA_AV_CROSSWALK",
@@ -60,6 +81,8 @@ def crosswalk(baseline_path, worldwide_path):
         "historical_matched_without_av_proof": len(unproven),
         "historical_unproven_status_counts": unproven_status_counts,
         "historical_unproven_url_sha256_by_status": unproven_by_status,
+        "historical_recovery_review_counts": {k: len(v) for k, v in priority.items()},
+        "historical_recovery_review_url_sha256": priority,
         "historical_not_in_worldwide_report": len(hashes) - len(matched),
         "historical_decoded_url_sha256": sorted(decoded),
         "historical_match_url_sha256": sorted(matched),
