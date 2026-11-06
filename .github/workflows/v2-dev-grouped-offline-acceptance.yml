@@ -1,0 +1,34 @@
+name: V2 Dev Grouped Offline Acceptance
+on:
+  push:
+    branches:
+      - madsc/v2-discovery-bulk-20261031
+    paths:
+      - 'v2/**'
+      - '.github/workflows/v2-dev-grouped-offline-acceptance.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: v2-dev-grouped-offline-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  grouped-offline:
+    name: Source, recovery, AV, RSA and historical regression batch
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install encrypted evidence dependency
+        run: python -m pip install cryptography==44.0.2
+      - name: Verify immutable IBO and historical fingerprints
+        run: |
+          test "$(git hash-object MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)" = '4b1c3cea4b5107a425abab60f62d41f9f81e05a7'
+          test "$(sha256sum v2/history/stage3-4955-hash-only.jsonl | cut -d' ' -f1)" = 'ee00a844a028e3410715d411467a2d3306f5f5cc4565766140b6438e786cdd27'
+      - name: Run related acceptance modules together without live rescan
+        run: PYTHONPATH=v2 python -m unittest -v test_targeted_tr_az_av_acceptance test_final_batch_acceptance test_final_worldwide_report_gate test_document_platform_validation_regression
