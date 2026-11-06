@@ -1,10 +1,10 @@
 # MADSC55 TV V2 — Kalıcı görev ilerlemesi
 
-**Kaynak:** `state.json` (proje), `v2/tasks/state.json` (33 görevin tek durum kaydı), `master_tasks.json` (değişmez görev tanımları).
+**Durum kaynakları:** kök `state.json` (proje), `v2/tasks/state.json` (33 görev), `master_tasks.json` (tanım ve bağımlılık).
 
-- 33 görev kayıtlı; 0 kanıtla tamamlandı, 1 devam ediyor, 32 bekliyor.
-- P0 #1: [Kaynak entegrasyonu #42216075104](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42216075104): 11 başarılı, 1 çalışıyor; AV kabulü **tamamlanmadı**.
-- P0 #2 bağımsız toplu test denetimi yapılabilir.
-- Geliştirme dalında en son doğrulanan toplu testler: [Master Engine #42244284859](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42244284859), [Eight-Stage #42244284904](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42244284904), [Sıralı Hazırlık #42244284944](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42244284944), [Actions Monitor #42244284900](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42244284900) başarılı; yeni görev sistemi commitlerinin testleri ayrıca gereklidir.
+- 33 görev kayıtlı; **0 tamamlandı**, **2 devam ediyor** (#1 ve #2), **31 bekliyor**.
+- **P0 #1:** [Kaynak entegrasyonu #42216075104](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42216075104): 11 başarılı, 1 çalışıyor. Son gerçek AV kabul raporu henüz yok.
+- **P0 #2:** Yeni görev sistemi için Master Engine [#42249430770](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42249430770) ve Eight-Stage [#42249430807](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42249430807) başarılı; görev motorunun **10/10 bağımsız offline testi geçti**. Güvenlik tetikleyici kontrolü [#42249430717](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42249430717) başarılı. Son durum değişikliği commitinin testleri ayrıca kontrol edilmeden #2 kapatılmaz.
+- **Sıradaki seçilen iş:** #1; bekleyen dış AV taraması sırasında bağımsız #2 yürütülüyor.
 
-**Kesin kural:** Yeşil CI, gerçek FFmpeg görüntü+ses kanıtı değildir. Korunan `main`, PR #9 ve ana İBO listesi değiştirilemez. Yeni görev sisteminin kurulumu ve test kabulü tamamlanmadan görevler kapatılmaz.
+**Kabul kuralları:** Yeşil CI gerçek video+ses kanıtı değildir; HTTP 200 ve isim eşleşmesi yayın doğrulamaz. Ana İBO listesi, `main`, PR #9 ve favoriler değişmez. Görev tamamlandı ancak kanıtla işaretlenir.
