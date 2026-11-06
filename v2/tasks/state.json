@@ -88,11 +88,13 @@
     },
     {
       "id": 9,
-      "status": "pending",
-      "last_checked_at": null,
-      "evidence_urls": [],
-      "blocker": null,
-      "reason": null
+      "status": "in_progress",
+      "last_checked_at": "2026-11-07T00:00:00Z",
+      "evidence_urls": [
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42216075104"
+      ],
+      "blocker": "Official/live-page discovery is partial and this workflow did not perform AV decoding; must reconcile exact official provenance and separate AV evidence before completion.",
+      "reason": "Inspected actual v2-unified-source-search-42216075104 ZIP artifact 13510407476: 47 configured sources, 8988 candidates, official_live_pages VALID report shape but PARTIAL_COVERAGE and SOURCE_ERRORS; video_audio_probed_by_this_workflow=false, protected_playlist_modified=false. Evidence is source discovery only, not playback."
     },
     {
       "id": 10,
