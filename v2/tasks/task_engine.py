@@ -142,10 +142,10 @@ def main():
     p.add_argument("--root", type=Path, default=Path("state.json"))
     p.add_argument("--manifest", type=Path, default=Path("v2/tasks/master_tasks.json"))
     p.add_argument("--ledger", type=Path, default=Path("v2/tasks/state.json"))
-    p.add_argument("--defer-heavy", action="store_true", help="Schedule 45-channel, historical AV and 2643-address work last")
+    p.add_argument("--include-heavy", action="store_true", help="Explicitly allow 45-channel, historical AV and 2643-address work before other ready tasks")
     args = p.parse_args()
     master, ledger, root = [json.loads(p.read_text(encoding="utf-8")) for p in (args.manifest, args.ledger, args.root)]
-    print(json.dumps({"next_task_id": select(master, ledger, root, defer_heavy=args.defer_heavy), "policy": "READ_ONLY_NO_GITHUB_WRITES"}))
+    print(json.dumps({"next_task_id": select(master, ledger, root, defer_heavy=not args.include_heavy), "policy": "READ_ONLY_NO_GITHUB_WRITES"}))
 
 
 if __name__ == "__main__":
