@@ -1,3 +1,14 @@
+## 6 Kasım 2026 — Salt okunur toplu regresyon tetikleyicisi eklendi; Actions sonucu BEKLİYOR
+
+- Mevcut `.github/workflows/v2-orphan-m3u-recovery.yml` önceden yalnız `workflow_dispatch` içerdiği için push ile çalışmıyordu.
+- [1f53039c](https://github.com/Madsc55/MADSC55-TV-V2/commit/1f53039c0725e654860652103c89ddd01597693f): mevcut workflow'a yalnız `madsc/v2-discovery-bulk-20261031` dalında `v2/test_orphan_resolution_gate.py` değişince çalışan **read-only 17 modüllük offline** job eklendi. Mevcut canlı dört kaynak kurtarma job'u yalnız `workflow_dispatch` ile çalışmaya devam eder; `contents: read` korunur.
+- [c674f949](https://github.com/Madsc55/MADSC55-TV-V2/commit/c674f949fb113c014c0a0358b5510ae890b76896): test dosyasına açıklama commit'i gönderilerek push tetikleyicisi koşulu sağlandı.
+- **Kanıt sınırı:** GitHub Actions run ID, job sonucu veya logu henüz alınamadı. Push tetikleyicisinin çalışması amaçlandı; başarılı/başlamış olduğu **iddia edilmiyor**. CI doğrulanmadan 17 modül veya 45 kanal tamamlandı sayılmayacak.
+- Sonraki iş: gerçek run ID ve 17-modül logunu kontrol et; hata varsa düzelt, yeniden tetikle; kabulden sonra 45 kimliğin AV kurtarmasına geç.
+- Ana IBO, `main`, PR #9, tarihî kimlikler ve özel URL arşivi değiştirilmedi.
+
+---
+
 ## 6 Kasım 2026 — 468cd6cd sonrası doğrulanmış devam kaydı (kurtarma toplu kabulü AÇIK)
 
 - **Geliştirme dalı:** `madsc/v2-discovery-bulk-20261031`. Son kontrol edilen kod commit'i `468cd6cde98eaa6952641fe0ca0caec44bbc394c`.
