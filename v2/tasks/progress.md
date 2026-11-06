@@ -18,3 +18,10 @@
 - `v2/encrypted_archive.py` şifreli JSONL kaydında eksik satır sonunu artık fail-closed reddeder: [`0ba1c2ca`](https://github.com/Madsc55/MADSC55-TV-V2/commit/0ba1c2ca15577ac4424d8093382b3415790caef7).
 - Tam JSON fakat sonlandırıcı eksik kaydı reddeden regresyon eklendi ve satır sonu literal düzeltildi: [`c7cd4c45`](https://github.com/Madsc55/MADSC55-TV-V2/commit/c7cd4c45763aefa6771df96bf3fdc53d4fb1a1fb).
 - Kaynak dosyalar GitHub'dan tekrar okunarak statik doğrulandı; toplu CI logu **henüz alınmadı**. Arşivin ortasından silinen eksiksiz kayıtları saptamak ayrıca manifest/sayı/hash karşılaştırması gerektirir. **#13 tamamlandı olarak işaretlenmedi.**
+
+
+## 7 Kasım 2026 — Kanıtla iki görev kapatıldı
+- **33 görev: 4 completed (#1,#2,#8,#22), 2 in_progress (#3,#4), 27 pending.**
+- **#22 tamamlandı:** Korunan playlist GitHub blob SHA `4b1c3cea4b5107a425abab60f62d41f9f81e05a7` ve YEDEKLER ilk iki kanalının sırası doğrudan tekrar okundu. Ledger commit [`a6d065f7`](https://github.com/Madsc55/MADSC55-TV-V2/commit/a6d065f75bc77877d358b6dd2341b3c7902552d6).
+- **#8 tamamlandı:** Gerçek [Actions #41723036558](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/41723036558) yeniden sorgulandı; compile/protect/discovery-tests/safety ve Scribd/SlideShare/Internet Archive canlı public kaynak denetimi dahil **5/5 jobs success**. Archive'da iki gerçek M3U kaynak, 18.035 ham kayıt; diğer iki platformda geçerli M3U bulunmaması kanıtlandı. Bu **AV doğrulaması değildir**. Ledger commit [`fb6f81f8`](https://github.com/Madsc55/MADSC55-TV-V2/commit/fb6f81f8232c9593a172b2b611a4de6d0e0ea1bd).
+- Yeni test koşusu başlatılmadı; eski run'ın job sonuçları doğrudan GitHub'dan doğrulandı. 45 kanal, 2.643 adres, IBO cihaz testi açık. Ana IBO/main/PR değiştirilmedi.
