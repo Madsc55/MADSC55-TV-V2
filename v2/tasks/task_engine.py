@@ -73,6 +73,13 @@ def safe_transition(row, new_status, evidence_urls=(), checked_at=None, user_con
                 **({"user_device_confirmation": True} if user_confirmed else {}))
 
 
+def require_matching_sha(observed_sha, expected_sha):
+    """Caller must use GitHub's conditional blob-SHA update after this check."""
+    if not observed_sha or not expected_sha or observed_sha != expected_sha:
+        raise ValueError("Concurrent state update; refetch and reconcile")
+    return True
+
+
 def require_fresh_github(fetch_result):
     if not isinstance(fetch_result, dict) or fetch_result.get("status") != "completed":
         raise ValueError("GitHub unavailable or run incomplete")
