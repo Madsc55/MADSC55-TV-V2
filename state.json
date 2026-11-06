@@ -46,7 +46,7 @@
       "anonymous_queue_counts_run": "not executed on updated commit; workflow_dispatch required; no automatic trigger",
       "latest_dedicated_run": "42228674931 on 56060074, successful but predates four-queue report",
       "unsafe_unprobed_review_fix": "91d147a581cbf92b9099f63ec3ac7588ce386b42",
-      "unsafe_unprobed_review_ci": "Master Engine #42233306554, Eight-Stage #42233306494, Current Scanner #42233306540 PASS; Sirali Hazirlik #42233306475 in_progress"
+      "unsafe_unprobed_review_ci": "five grouped gates PASS on 91d147a5 including Sirali Hazirlik #42233306475"
     },
     "security_trigger_failure": {
       "commit": "56060074",
@@ -70,6 +70,22 @@
       "cause": "SyntaxError in v2/test_historical_worldwide_av_crosswalk.py line 94: doubled backslash",
       "fix_commit": "d5d7dbe0435ec692fe45f61300c3b17927c9c97d",
       "retest": "PASS: five grouped gates on d5d7dbe0 (#42231947323, #42231947255, #42231947325, #42231947278, #42231947460); later c0acbfb0 3/3 PASS"
+    },
+    "playlist_comparison": {
+      "branch": "madsc/v2-discovery-bulk-20261031",
+      "protected_main": {
+        "file": "MADSC55_TV_IBO_CALISANLAR_TEST.m3u8",
+        "blob_sha": "4b1c3cea4b5107a425abab60f62d41f9f81e05a7",
+        "extinf_entries": 840,
+        "yedekler_entries": 2
+      },
+      "secondary_test": {
+        "file": "MADSC55_IBO_NEWLISTTR_YEDEKLER_TEST.m3u8",
+        "blob_sha": "25554c523195dd4834635edfb5fbe9b9330f49d7",
+        "extinf_entries": 1110,
+        "yedekler_entries": 65
+      },
+      "policy": "read_only_comparison_no_merge_no_delete_no_device_playback_claim"
     }
   },
   "completed_steps": [
@@ -97,5 +113,5 @@
     "do_not_claim_unverified_success": true,
     "old_repository_forbidden": true
   },
-  "note": "Single canonical state. Historical safe routing 4 main gates passed; source integration batch 42216075104 resumed with 9 completed success and 3 running jobs. Dedicated historical four-queue counts still not executed. Protected IBO/main/PR9 untouched."
+  "note": "Canonical record. Two distinct dev playlists compared read-only: protected main 840 EXTINF/2 YEDEKLER vs second test 1110 EXTINF/65 YEDEKLER. Do not merge or overwrite. Source integration batch #42216075104 still in_progress. No main/PR9 edits."
 }
