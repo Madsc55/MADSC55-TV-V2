@@ -33,6 +33,11 @@ class DocumentPlatformValidationTests(unittest.TestCase):
         report["platforms"]["slideshare"]["queries"] = -1
         self.assertFalse(_valid("document_platforms", report))
 
+    def test_boolean_validated_m3u_count_is_rejected(self):
+        report = valid_report()
+        report["validated_m3u_source_count"] = True
+        self.assertFalse(_valid("document_platforms", report))
+
     def test_negative_validated_m3u_count_is_rejected(self):
         report = valid_report()
         report["validated_m3u_source_count"] = -1
