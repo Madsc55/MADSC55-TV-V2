@@ -44,23 +44,27 @@ def fixture():
             "records": records}
 
 
+def baseline_fixture():
+    """Fifty identities in 55 distinct source/hash occurrences."""
+    r = fixture()
+    for offset, original in enumerate((17, 18, 0, 1, 36)):
+        r["records"][50 + offset] = dict(r["records"][original])
+        r["records"][50 + offset]["source_id"] = (
+            "discevisita-tr" if offset < 2 else
+            "github-auto-24" if offset < 4 else "onureroz-turk-all")
+    baseline = {"sources": {
+        source: sorted({row["extinf_sha256"] for row in r["records"]
+                        if row["source_id"] == source})
+        for source in ("discevisita-tr", "github-auto-24",
+                       "onureroz-turk-karma", "onureroz-turk-all")}}
+    assert sum(map(len, baseline["sources"].values())) == 55
+    assert len({row["extinf_sha256"] for row in r["records"]}) == 50
+    return r, baseline
+
+
 class OrphanResolutionGateTests(unittest.TestCase):
     def test_new_upstream_orphans_do_not_replace_original_55(self):
-        r = fixture()
-        # Preserve 50 identities in 55 distinct source/hash occurrences.
-        # Duplicate identities across DIFFERENT sources, not twice in one.
-        for offset, original in enumerate((17, 18, 0, 1, 36)):
-            r["records"][50 + offset] = dict(r["records"][original])
-            r["records"][50 + offset]["source_id"] = (
-                ("discevisita-tr" if offset < 2 else
-                 "github-auto-24" if offset < 4 else "onureroz-turk-all"))
-        baseline = {"sources": {
-            source: sorted({row["extinf_sha256"] for row in r["records"]
-                            if row["source_id"] == source})
-            for source in ("discevisita-tr", "github-auto-24",
-                           "onureroz-turk-karma", "onureroz-turk-all")}}
-        self.assertEqual(sum(map(len, baseline["sources"].values())), 55)
-        self.assertEqual(len({row["extinf_sha256"] for row in r["records"]}), 50)
+        r, baseline = baseline_fixture()
         r["records"].append({
             "source_id": "github-auto-24", "extinf_sha256": "%064x" % 9999,
             "candidates": []})
@@ -70,23 +74,16 @@ class OrphanResolutionGateTests(unittest.TestCase):
         self.assertEqual(result["remaining_unverified_identities"], 45)
 
     def test_missing_baseline_identity_rejected_even_with_extra_rows(self):
-        r = fixture()
-        baseline = {"sources": {
-            source: sorted({row["extinf_sha256"] for row in r["records"]
-                            if row["source_id"] == source})
-            for source in ("discevisita-tr", "github-auto-24",
-                           "onureroz-turk-karma", "onureroz-turk-all")}}
-        baseline["sources"]["discevisita-tr"].append("%064x" % 9999)
+        r, baseline = baseline_fixture()
+        missing = r["records"].pop(0)
+        r["records"].append({
+            "source_id": missing["source_id"],
+            "extinf_sha256": "%064x" % 9999, "candidates": []})
         with self.assertRaisesRegex(ValueError, "Missing original 55"):
             classify_report(r, baseline=baseline)
 
     def test_extra_upstream_row_cannot_leak_plaintext_url(self):
-        r = fixture()
-        baseline = {"sources": {
-            source: sorted({row["extinf_sha256"] for row in r["records"]
-                            if row["source_id"] == source})
-            for source in ("discevisita-tr", "github-auto-24",
-                           "onureroz-turk-karma", "onureroz-turk-all")}}
+        r, baseline = baseline_fixture()
         r["records"].append({
             "source_id": "github-auto-24",
             "extinf_sha256": "%064x" % 9999,
@@ -170,7 +167,13 @@ class OrphanResolutionGateTests(unittest.TestCase):
 
     def test_sealed_candidate_count_must_match_distinct_hashes(self):
         r = fixture()
-        r["records"][1]["candidates"][0]["url_sha256"] = r["records"][0]["candidates"][0]["url_sha256"]
+        # 38 distinct original candidate hashes cannot fit in a sealed
+        # archive reporting only 37; never loosen the archive upper bound.
+        r["records"][1]["candidates"].append({
+            "url_sha256": "%064x" % 9999,
+            "video_stream": False, "audio_stream": False,
+            "ffmpeg_video_audio_decoded": False,
+            "status": "PROBE_FAILED_NOT_PROVEN_DEAD"})
         with self.assertRaisesRegex(ValueError, "Original 55/50 identity"):
             classify_report(r)
 
