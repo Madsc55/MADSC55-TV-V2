@@ -15,6 +15,14 @@ class TaskEngineTests(unittest.TestCase):
         cls.ledger = json.loads((ROOT / "v2/tasks/state.json").read_text())
         cls.root = json.loads((ROOT / "state.json").read_text())
 
+    def scenario_ledger(self):
+        """Synthetic baseline: tests must not depend on live task completion."""
+        ledger = copy.deepcopy(self.ledger)
+        ledger["statuses"][0]["status"] = "in_progress"
+        ledger["statuses"][1]["status"] = "in_progress"
+        ledger["statuses"][3]["status"] = "pending"
+        return ledger
+
     def test_all_33_complete_and_dependency_graph(self):
         tasks, rows = e.validate(self.master, self.ledger, self.root)
         self.assertEqual(len(tasks), 33)
@@ -22,13 +30,13 @@ class TaskEngineTests(unittest.TestCase):
         self.assertEqual([t["priority"] for t in self.master["tasks"][:6]], ["P0"] * 6)
 
     def test_next_and_resume(self):
-        self.assertEqual(e.select(self.master, self.ledger, self.root), 1)
-        ledger = copy.deepcopy(self.ledger)
+        ledger = self.scenario_ledger()
+        self.assertEqual(e.select(self.master, ledger, self.root), 1)
         ledger["statuses"][0]["status"] = "blocked"
         self.assertEqual(e.select(self.master, ledger, self.root), 4)
 
     def test_independent_work_after_p0_completion(self):
-        ledger = copy.deepcopy(self.ledger)
+        ledger = self.scenario_ledger()
         ledger["statuses"][1].update(status="completed",
             evidence_urls=["https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42250095219"],
             last_checked_at="2026-11-06T16:15:00Z")
@@ -39,7 +47,7 @@ class TaskEngineTests(unittest.TestCase):
         self.assertIn(13, independent)
 
     def test_completed_not_reselected(self):
-        ledger = copy.deepcopy(self.ledger)
+        ledger = self.scenario_ledger()
         ledger["statuses"][0].update(status="completed", evidence_urls=["https://github.com/example/evidence"], last_checked_at="2026-11-06T16:00:00Z")
         self.assertNotEqual(e.select(self.master, ledger, self.root), 1)
         self.assertEqual(e.select(self.master, ledger, self.root), 4)
