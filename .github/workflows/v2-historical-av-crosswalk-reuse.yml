@@ -44,6 +44,28 @@ jobs:
             --baseline v2/history/stage3-4955-hash-only.jsonl \
             --worldwide v2/reports/ci/final-worldwide-acceptance.json \
             --out v2/reports/ci/historical-worldwide-av-crosswalk.json
+      - name: Validate lossless recovery review groups and print anonymous counts
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          r = json.loads(Path("v2/reports/ci/historical-worldwide-av-crosswalk.json").read_text())
+          counts = r["historical_recovery_review_counts"]
+          groups = r["historical_recovery_review_url_sha256"]
+          assert set(counts) == {"partial_media", "transient_retry", "source_research", "other_unproven"}
+          assert all(len(groups[k]) == counts[k] for k in counts)
+          all_hashes = [h for group in groups.values() for h in group]
+          assert len(all_hashes) == len(set(all_hashes))
+          assert set(all_hashes) == set(r["historical_match_url_sha256"]) - set(r["historical_decoded_url_sha256"])
+          assert sum(counts.values()) == r["historical_matched_without_av_proof"]
+          assert r["historical_identities_preserved"] == 4955
+          assert r["historical_exact_hash_matches"] + r["historical_not_in_worldwide_report"] == 4955
+          print("HISTORICAL_RECOVERY_REVIEW_COUNTS", json.dumps(counts, sort_keys=True))
+          print("HISTORICAL_WORLDWIDE_MISSING", r["historical_not_in_worldwide_report"])
+          print("HISTORICAL_AV_DECODED_PRIOR_EVIDENCE", r["historical_exact_hash_av_decoded"])
+          PY
       - name: Upload SHA-only crosswalk without URLs or private sealed data
         if: success()
         uses: actions/upload-artifact@v4
