@@ -9,6 +9,8 @@ REPO = "Madsc55/MADSC55-TV-V2"
 BRANCH = "madsc/v2-discovery-bulk-20261031"
 PROTECTED = {"MADSC55_TV_IBO_CALISANLAR_TEST.m3u8"}
 PRIORITY = {"P0": 0, "P1": 1, "P2": 2, "P3": 3}
+# User-directed scheduling only; does not change dependencies or completion criteria.
+DEFERRED_LAST = frozenset({3, 4, 6})
 
 
 def validate(master, ledger, root):
@@ -52,11 +54,13 @@ def validate(master, ledger, root):
     return by_id, {row["id"]: row for row in rows}
 
 
-def select(master, ledger, root):
+def select(master, ledger, root, defer_heavy=False):
     tasks, rows = validate(master, ledger, root)
     # Resume ongoing work first; blocked work is not silently marked successful.
     ready = [t for t in tasks.values() if rows[t["id"]]["status"] in ("pending", "in_progress")
              and all(rows[d]["status"] == "completed" for d in t["depends_on"])]
+    if defer_heavy and any(t["id"] not in DEFERRED_LAST for t in ready):
+        ready = [t for t in ready if t["id"] not in DEFERRED_LAST]
     ready.sort(key=lambda t: (PRIORITY[t["priority"]], 0 if rows[t["id"]]["status"] == "in_progress" else 1, t["id"]))
     return ready[0]["id"] if ready else None
 
@@ -114,7 +118,7 @@ def verify_grouped_actions(runs, expected_sha, required_names):
     return accepted
 
 
-def independent_ready(master, ledger, root, excluded=()):
+def independent_ready(master, ledger, root, excluded=(), defer_heavy=False):
     """List independent eligible tasks without treating a running AV gate as success."""
     tasks, rows = validate(master, ledger, root)
     excluded = set(excluded)
@@ -122,6 +126,8 @@ def independent_ready(master, ledger, root, excluded=()):
              if t["id"] not in excluded
              and rows[t["id"]]["status"] in ("pending", "in_progress")
              and all(rows[d]["status"] == "completed" for d in t["depends_on"])]
+    if defer_heavy and any(t["id"] not in DEFERRED_LAST for t in ready):
+        ready = [t for t in ready if t["id"] not in DEFERRED_LAST]
     return [t["id"] for t in sorted(ready, key=lambda t: (PRIORITY[t["priority"]], t["id"]))]
 
 
@@ -136,9 +142,10 @@ def main():
     p.add_argument("--root", type=Path, default=Path("state.json"))
     p.add_argument("--manifest", type=Path, default=Path("v2/tasks/master_tasks.json"))
     p.add_argument("--ledger", type=Path, default=Path("v2/tasks/state.json"))
+    p.add_argument("--defer-heavy", action="store_true", help="Schedule 45-channel, historical AV and 2643-address work last")
     args = p.parse_args()
     master, ledger, root = [json.loads(p.read_text(encoding="utf-8")) for p in (args.manifest, args.ledger, args.root)]
-    print(json.dumps({"next_task_id": select(master, ledger, root), "policy": "READ_ONLY_NO_GITHUB_WRITES"}))
+    print(json.dumps({"next_task_id": select(master, ledger, root, defer_heavy=args.defer_heavy), "policy": "READ_ONLY_NO_GITHUB_WRITES"}))
 
 
 if __name__ == "__main__":
