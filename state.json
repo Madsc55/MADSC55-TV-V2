@@ -47,7 +47,19 @@
       "V2 Master Engine #42229179797",
       "V2 Eight-Stage Runner Verification #42229179753",
       "V2 Actions Status Monitor #42229179882"
-    ]
+    ],
+    "latest_regression_failure": {
+      "commit": "669d11f9",
+      "runs": [
+        42231771270,
+        42231771257,
+        42231771049,
+        42231771182
+      ],
+      "cause": "SyntaxError in v2/test_historical_worldwide_av_crosswalk.py line 94: doubled backslash",
+      "fix_commit": "d5d7dbe0435ec692fe45f61300c3b17927c9c97d",
+      "retest": "pending"
+    }
   },
   "completed_steps": [
     "main_security_protection",
@@ -74,5 +86,5 @@
     "do_not_claim_unverified_success": true,
     "old_repository_forbidden": true
   },
-  "note": "Canonical record. Four read-only recovery queues pass grouped regressions. Explicit historical crosswalk workflow now validates and prints anonymous group counts, but has not run at this commit. 4955 preserved, 3062 prior AV, 1886 matched without AV, 7 missing. No protected playlist writes."
+  "note": "One canonical record. A new test introduced a syntax error, fixed in d5d7dbe0; grouped CI must pass before closure. No protected playlist or main changes. Historical recovery still partial."
 }
