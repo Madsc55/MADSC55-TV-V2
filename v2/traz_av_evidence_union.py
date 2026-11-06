@@ -113,9 +113,14 @@ def merge(prior, newer, gap):
                 raise ValueError('Fabricated new AV success')
             new_decodes += 1
             new_ids.add(cid)
-            if h in found and found[h] != frozenset([cid]):
-                raise ValueError('Same proven URL assigned to different broadcaster')
-            found[h] = frozenset([cid])
+            if h in found:
+                # A prior verified URL may legitimately map to several exact
+                # channel IDs. The new exact ID must already be one of them;
+                # never discard the other historically proven identities.
+                if cid not in found[h]:
+                    raise ValueError('Same proven URL assigned to different broadcaster')
+            else:
+                found[h] = frozenset([cid])
     if (expected or matched != newer['matched_current_source_hashes'] or
         len(newer['results']) - matched != newer.get('unmatched_or_unavailable_hashes') or
         dict(statuses) != newer.get('av_status_counts') or
