@@ -1,0 +1,281 @@
+{
+  "schema": 1,
+  "canonical_state": "state.json",
+  "generated_at": "2026-11-06T16:05:00Z",
+  "observed_commit": "7ee3815028d6afa798b43ab7f2a009365ef13f0d",
+  "statuses": [
+    {
+      "id": 1,
+      "status": "in_progress",
+      "last_checked_at": "2026-11-06T16:05:00Z",
+      "evidence_urls": [
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42216075104"
+      ],
+      "blocker": null,
+      "reason": "11 jobs succeeded, final AV job in progress; AV evidence not accepted"
+    },
+    {
+      "id": 2,
+      "status": "pending",
+      "last_checked_at": null,
+      "evidence_urls": [],
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "id": 3,
+      "status": "pending",
+      "last_checked_at": null,
+      "evidence_urls": [],
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "id": 4,
+      "status": "pending",
+      "last_checked_at": null,
+      "evidence_urls": [],
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "id": 5,
+      "status": "pending",
+      "last_checked_at": null,
+      "evidence_urls": [],
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "id": 6,
+      "status": "pending",
+      "last_checked_at": null,
+      "evidence_urls": [],
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "id": 7,
+      "status": "pending",
+      "last_checked_at": null,
+      "evidence_urls": [],
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "id": 8,
+      "status": "pending",
+      "last_checked_at": null,
+      "evidence_urls": [],
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "id": 9,
+      "status": "pending",
+      "last_checked_at": null,
+      "evidence_urls": [],
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "id": 10,
+      "status": "pending",
+      "last_checked_at": null,
+      "evidence_urls": [],
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "id": 11,
+      "status": "pending",
+      "last_checked_at": null,
+      "evidence_urls": [],
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "id": 12,
+      "status": "pending",
+      "last_checked_at": null,
+      "evidence_urls": [],
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "id": 13,
+      "status": "pending",
+      "last_checked_at": null,
+      "evidence_urls": [],
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "id": 14,
+      "status": "pending",
+      "last_checked_at": null,
+      "evidence_urls": [],
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "id": 15,
+      "status": "pending",
+      "last_checked_at": null,
+      "evidence_urls": [],
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "id": 16,
+      "status": "pending",
+      "last_checked_at": null,
+      "evidence_urls": [],
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "id": 17,
+      "status": "pending",
+      "last_checked_at": null,
+      "evidence_urls": [],
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "id": 18,
+      "status": "pending",
+      "last_checked_at": null,
+      "evidence_urls": [],
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "id": 19,
+      "status": "pending",
+      "last_checked_at": null,
+      "evidence_urls": [],
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "id": 20,
+      "status": "pending",
+      "last_checked_at": null,
+      "evidence_urls": [],
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "id": 21,
+      "status": "pending",
+      "last_checked_at": null,
+      "evidence_urls": [],
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "id": 22,
+      "status": "pending",
+      "last_checked_at": null,
+      "evidence_urls": [],
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "id": 23,
+      "status": "pending",
+      "last_checked_at": null,
+      "evidence_urls": [],
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "id": 24,
+      "status": "pending",
+      "last_checked_at": null,
+      "evidence_urls": [],
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "id": 25,
+      "status": "pending",
+      "last_checked_at": null,
+      "evidence_urls": [],
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "id": 26,
+      "status": "pending",
+      "last_checked_at": null,
+      "evidence_urls": [],
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "id": 27,
+      "status": "pending",
+      "last_checked_at": null,
+      "evidence_urls": [],
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "id": 28,
+      "status": "pending",
+      "last_checked_at": null,
+      "evidence_urls": [],
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "id": 29,
+      "status": "pending",
+      "last_checked_at": null,
+      "evidence_urls": [],
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "id": 30,
+      "status": "pending",
+      "last_checked_at": null,
+      "evidence_urls": [],
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "id": 31,
+      "status": "pending",
+      "last_checked_at": null,
+      "evidence_urls": [],
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "id": 32,
+      "status": "pending",
+      "last_checked_at": null,
+      "evidence_urls": [],
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "id": 33,
+      "status": "pending",
+      "last_checked_at": null,
+      "evidence_urls": [],
+      "blocker": null,
+      "reason": null
+    }
+  ],
+  "allowed_statuses": [
+    "pending",
+    "in_progress",
+    "blocked",
+    "completed"
+  ],
+  "note": "Derived task ledger, not independent source of truth. Root state.json is canonical; this snapshot must be reconciled by hash/commit before mutation. No task completed without evidence."
+}
