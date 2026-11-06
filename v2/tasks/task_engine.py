@@ -88,6 +88,32 @@ def require_fresh_github(fetch_result):
     return True
 
 
+def verify_grouped_actions(runs, expected_sha, required_names):
+    """Require fresh, same-commit, successful workflow runs; no partial green."""
+    if not isinstance(runs, list) or not expected_sha or not required_names:
+        raise ValueError("Missing GitHub Actions evidence")
+    accepted = {}
+    for run in runs:
+        if not isinstance(run, dict):
+            raise ValueError("Invalid GitHub run")
+        if run.get("head_sha") != expected_sha:
+            continue
+        name = run.get("name")
+        if name not in required_names:
+            continue
+        if run.get("status") != "completed" or run.get("conclusion") != "success":
+            raise ValueError("Required grouped Actions run incomplete or failed: " + str(name))
+        if not isinstance(run.get("id"), int) or not run.get("html_url", "").startswith(
+                "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/"):
+            raise ValueError("Missing trusted Actions run identity")
+        if name in accepted:
+            raise ValueError("Ambiguous duplicate Actions workflow evidence")
+        accepted[name] = run["html_url"]
+    if set(accepted) != set(required_names):
+        raise ValueError("Missing required same-commit Actions checks")
+    return accepted
+
+
 def assert_safe_write(path, branch):
     if branch != BRANCH or Path(path).name in PROTECTED or str(path).startswith("../"):
         raise ValueError("Protected path or branch")
