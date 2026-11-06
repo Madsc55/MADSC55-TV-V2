@@ -1583,3 +1583,10 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - GitHub issue aramasında `[V2 SIRA]` olarak **8 ana görev** bulundu; 01–02 kapalı, 03–08 açık. Kullanıcının andığı **33 alt görevin** ayrı Issue kaydı bu aramada bulunmadı; sayı teyit edilmeden 33'ün tamamı kapatılmış sayılmaz.
 - Öncelik: 03 K2/K5 offline eşdeğerliği; 04 TR/AZ kaynak adaptörleri; 05 #60/#74 hash kaybı; 06 özel URL arşivi/restore; 07 toplu offline CI; 08 yalnız açık kullanıcı onayıyla manuel canlı tarama, 45 kurtarılmamış kimlik, 2.643 adres ve IBO 2.000'lik partileri.
 - Ana IBO playlist, `main`, PR'lar ve eski repo değişmedi. Cihaz testi kullanıcıda. Canlı tarama yalnız kullanıcı onayından sonra.
+
+
+## 7 Kasım 2026 — KULLANICI EMRİ: kurtarma ve uzun canlı AV taramaları EN SON
+- Kullanıcının açık emri: **45 kurtarılamayan kanal (#3), tarihî kayıtların ayrıntılı AV/kurtarma doğrulaması (#4, #15, #17 ile ilişkili kısım) ve 2.643 kayıp yayın adresinin gerçek görüntü+ses taraması (#6) en sona bırakılacak.** Bu işler tamamlanmış sayılmayacak; mevcut kayıtlar, şifreli arşiv ve kanıtlar korunacak.
+- Önce bu üç ağır işe bağımlı **olmayan** görevler ele alınacak: kaynak adaptörleri #7–#10, hata sınıflandırma #12, arşiv bütünlüğü/restore #13, tarihî kimliklerin kayıpsız korunması #14 (uzun AV taraması olmadan doğrulanabilen kısmı), güvenli otomasyon #23/#25/#26/#27 ve uygun diğer bağımsız görevler.
+- `v2/tasks/master_tasks.json` bağımlılık grafiği bozulmayacak; bağımlı görevler, öncülleri bitmeden sahte tamamlanmayacak. #32 cihaz testi yalnız kullanıcı tarafından doğrulanabilir. Korunan IBO, `main`, PR #9 ve eski repo değiştirilmeyecek.
+- Bu talimat **önceki P0 öncelik sırasını uygulama bakımından geçersiz kılar**; teknik güvenlik ve gerçek AV kanıtı koşullarını kaldırmaz.
