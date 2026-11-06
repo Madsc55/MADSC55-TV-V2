@@ -86,8 +86,8 @@
         "yedekler_entries": 65
       },
       "policy": "read_only_comparison_no_merge_no_delete_no_device_playback_claim",
-      "user_confirmed_primary": "MADSC55_IBO_NEWLISTTR_YEDEKLER_TEST.m3u8",
-      "legacy_protected_separately": "MADSC55_TV_IBO_CALISANLAR_TEST.m3u8"
+      "user_confirmed_primary": "MADSC55_TV_IBO_CALISANLAR_TEST.m3u8",
+      "secondary_test_only": "MADSC55_IBO_NEWLISTTR_YEDEKLER_TEST.m3u8"
     }
   },
   "completed_steps": [
@@ -115,7 +115,8 @@
     "do_not_claim_unverified_success": true,
     "old_repository_forbidden": true
   },
-  "note": "User explicitly confirms MADSC55_IBO_NEWLISTTR_YEDEKLER_TEST.m3u8 is their actual primary IBO playlist (1110 EXTINF, 65 YEDEKLER at last check). Preserve it and separately preserve formerly protected MADSC55_TV_IBO_CALISANLAR_TEST.m3u8 (840 EXTINF, 2 YEDEKLER). No playlist modifications authorized; dev state-only update, no main or PR9 changes.",
-  "user_confirmed_primary_playlist": "MADSC55_IBO_NEWLISTTR_YEDEKLER_TEST.m3u8",
-  "user_confirmed_primary_playlist_policy": "USER_CONFIRMED_PRIMARY_PROTECT_NO_AUTOMATED_WRITES"
+  "note": "LATEST EXPLICIT USER CLARIFICATION OVERRIDES PRIOR CONFUSION: active IBO Player playlist is main/MADSC55_TV_IBO_CALISANLAR_TEST.m3u8 at the exact raw.githubusercontent.com URL. Do not change main or this protected playlist. MADSC55_IBO_NEWLISTTR_YEDEKLER_TEST.m3u8 is a separate test playlist, not the currently used IBO playlist. Previous state commit a698d056 misidentified primary; corrected here. No playlist writes.",
+  "user_confirmed_primary_playlist": "MADSC55_TV_IBO_CALISANLAR_TEST.m3u8",
+  "user_confirmed_primary_playlist_policy": "CURRENT_IBO_PLAYER_USES_MAIN_BRANCH_RAW_URL_PROTECTED_NO_AUTOMATED_WRITES",
+  "user_confirmed_primary_playlist_url": "https://raw.githubusercontent.com/Madsc55/MADSC55-TV-V2/main/MADSC55_TV_IBO_CALISANLAR_TEST.m3u8"
 }
