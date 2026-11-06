@@ -95,14 +95,17 @@ class OrphanIptvOrgRegistryTests(unittest.TestCase):
         found, stats = self.check()
         self.assertNotIn("public.example.org", json.dumps(stats))
         self.assertIn("public.example.org", str(found))
-    def test_one_time_live_recovery_remains_single_push_read_only(self):
+    def test_legacy_live_recovery_stays_disabled_on_push(self):
         from pathlib import Path
         workflow=(Path(__file__).resolve().parents[1]/
                   ".github/workflows/v2-actions-trigger-protection.yml").read_text(
                       encoding="utf-8")
         block=workflow.split("\n  orphan-46-live-recovery:",1)
         self.assertEqual(len(block),2)
-        self.assertIn("github.event.head_commit.message == 'feat(v2): run exact 46 orphan AV rescue with pinned public registry'",block[1])
+        # Live media/network scans must not run on push; retain the disabled
+        # legacy job only as an auditable, read-only historical definition.
+        self.assertIn("    if: ${{ false }}", block[1])
+        self.assertNotIn("github.event.head_commit.message ==", block[1])
         self.assertIn("    needs: grouped-protection-check",block[1])
         self.assertIn("    permissions:\n      contents: read",block[1])
         self.assertIn("--include-public-registry",block[1])
