@@ -6,6 +6,7 @@ on:
       - '.github/workflows/**'
       - 'v2/actions_trigger_protection_audit.py'
       - 'v2/test_actions_trigger_protection_audit.py'
+      - 'v2/test_playlist_invariants.py'
       - 'v2/actions_default_branch_audit.py'
       - 'v2/test_actions_default_branch_audit.py'
       - 'v2/document_platform_discovery.py'
