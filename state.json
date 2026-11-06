@@ -10,11 +10,16 @@
     "source_integration_batch": {
       "run_id": 42216075104,
       "status": "in_progress",
-      "jobs_success": 9,
-      "jobs_in_progress": 3,
+      "jobs_success": 10,
+      "jobs_in_progress": 2,
       "jobs_failed": 0,
-      "observed": "2026-11-06",
-      "note": "Live source acceptance and unified TR/AZ search still running; no AV or IBO promotion claims"
+      "active_steps": [
+        "FFmpeg distro installation and HTTPS support",
+        "bounded video-plus-audio scan of reviewed public/document sources"
+      ],
+      "artifacts_available": 11,
+      "head_sha": "062cf6ae9783803bb45b06efd4e877bcb6333f8e",
+      "note": "Evidence artifacts available, but artifact contents and final AV acceptance not yet reviewed; no IBO promotion"
     },
     "source_integration_run_id": 42216075104,
     "development_commit": "405a1fc52ba0c0542eabe6d8a6e4fb521bad039d",
@@ -115,7 +120,7 @@
     "do_not_claim_unverified_success": true,
     "old_repository_forbidden": true
   },
-  "note": "LATEST EXPLICIT USER CLARIFICATION OVERRIDES PRIOR CONFUSION: active IBO Player playlist is main/MADSC55_TV_IBO_CALISANLAR_TEST.m3u8 at the exact raw.githubusercontent.com URL. Do not change main or this protected playlist. MADSC55_IBO_NEWLISTTR_YEDEKLER_TEST.m3u8 is a separate test playlist, not the currently used IBO playlist. Previous state commit a698d056 misidentified primary; corrected here. No playlist writes.",
+  "note": "User's active IBO playlist is main/MADSC55_TV_IBO_CALISANLAR_TEST.m3u8, never modify. Source integration batch #42216075104: 10 successful jobs, 2 running, 11 artifacts, no final acceptance. Latest d875056c grouped checks all green. No playlist/main/PR9 writes.",
   "user_confirmed_primary_playlist": "MADSC55_TV_IBO_CALISANLAR_TEST.m3u8",
   "user_confirmed_primary_playlist_policy": "CURRENT_IBO_PLAYER_USES_MAIN_BRANCH_RAW_URL_PROTECTED_NO_AUTOMATED_WRITES",
   "user_confirmed_primary_playlist_url": "https://raw.githubusercontent.com/Madsc55/MADSC55-TV-V2/main/MADSC55_TV_IBO_CALISANLAR_TEST.m3u8"
