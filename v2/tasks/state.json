@@ -75,11 +75,13 @@
     },
     {
       "id": 8,
-      "status": "pending",
-      "last_checked_at": null,
-      "evidence_urls": [],
+      "status": "completed",
+      "last_checked_at": "2026-11-07T00:23:00+01:00",
+      "evidence_urls": [
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/41723036558"
+      ],
       "blocker": null,
-      "reason": null
+      "reason": "Rechecked actual GitHub Actions run #41723036558 jobs: compile, protect, discovery-tests, safety and read-only live public Scribd/SlideShare/Internet Archive audit all completed with success. Historical audit reported 2 validated public Archive M3U sources, 18,035 raw EXTINF entries; Scribd/SlideShare yielded no validated M3U. Source discovery is not AV/device proof. Existing document_platform_discovery.py and grouped test_document_platform_discovery.py cover all three platforms."
     },
     {
       "id": 9,
