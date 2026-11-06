@@ -8,3 +8,7 @@
 - **Sonraki bağımsız işler:** #7, #8, #9, #10, #13, #22, #23, #27 (bağımlılıkları karşılanmış; canlı AV işi sürerken ilerletilebilir).
 
 **Not:** Yeşil CI gerçek görüntü+ses kanıtı değildir. `main`, PR #9, ana IBO listesi ve favoriler korunur. Durum dosyasındaki değişiklikler için yeni commit testleri ayrıca izlenir.
+
+
+## 7 Kasım 2026 — Kanonik ledger ile güncel düzeltme
+`v2/tasks/state.json` yeniden okundu: **33 görev, 2 completed (#1,#2), 2 in_progress (#3,#4), 29 pending**. Yukarıdaki 1/1/31 sayımı eski bir anlık görüntüdür. `[V2 SIRA]` başlıklı 8 GitHub Issue üst aşamadır; 33 alt görev `master_tasks.json` ve `state.json` ile yönetilir. #3 ve #4'ün AV/tarihî kanıtları henüz tamamlanmadı. Bu belge türetilmiş görünüm; durum otoritesi `v2/tasks/state.json` olarak kalır.
