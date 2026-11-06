@@ -49,5 +49,23 @@ class DocumentPlatformValidationTests(unittest.TestCase):
         self.assertFalse(_valid("document_platforms", report))
 
 
+    def test_malformed_channel_advisory_handoffs_are_rejected(self):
+        base = {
+            "schema": 1,
+            "candidates": [],
+            "source_audit": [],
+            "coverage_status": "COMPLETE",
+            "playback_verified": False,
+            "candidate_status": "UNVERIFIED",
+        }
+        for key in ("advisory_channel_identity_handoff",
+                    "public_source_reference_handoff",
+                    "approved_live_page_handoff"):
+            with self.subTest(key=key):
+                report = dict(base)
+                report[key] = "invalid"
+                self.assertFalse(_valid("channel_scan", report))
+
+
 if __name__ == "__main__":
     unittest.main()
