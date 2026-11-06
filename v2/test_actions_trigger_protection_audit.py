@@ -38,6 +38,18 @@ class ActionsTriggerProtectionTests(unittest.TestCase):
         self.assertIn("cryptography==44.0.2", source)
         self.assertIn("4b1c3cea4b5107a425abab60f62d41f9f81e05a7", source)
 
+    def test_ordered_preflight_installs_crypto_before_discovery_tests(self):
+        root = Path(__file__).resolve().parents[1] / ".github/workflows"
+        path = root / "v2-ordered-preflight.yml"
+        source = path.read_text(encoding="utf-8")
+        issues, _ = validate_workflow(path, source)
+        self.assertEqual(issues, [], issues)
+        discovery = source.split("  discovery-tests:\\n", 1)[1].split("  safety:\\n", 1)[0]
+        install = discovery.index("python -m pip install cryptography==44.0.2")
+        first_test = discovery.index("python v2/test_discovery_offline_regressions.py")
+        self.assertLess(install, first_test)
+        self.assertNotIn("cryptography>=42,<47", discovery)
+
     def test_unknown_automatic_push_is_rejected(self):
         text = fixture("  push:\n    branches: [" + DEV + "]\n")
         issues, _ = validate_workflow(Path("unreviewed-discovery.yml"), text)
