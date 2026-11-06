@@ -48,12 +48,12 @@ class TaskEngineTests(unittest.TestCase):
 
     def test_user_directed_heavy_work_deferred_without_false_completion(self):
         ledger = copy.deepcopy(self.ledger)
-        # Actual ledger has #3/#4 in progress, while independent #7/#9 are ready.
-        self.assertEqual(e.select(self.master, ledger, self.root, defer_heavy=True), 7)
+        # #7 may already be completed; #9 remains an independent ready task.
+        self.assertEqual(e.select(self.master, ledger, self.root, defer_heavy=True), 9)
         ready = e.independent_ready(self.master, ledger, self.root, defer_heavy=True)
         self.assertNotIn(3, ready)
         self.assertNotIn(4, ready)
-        self.assertIn(7, ready)
+        self.assertIn(9, ready)
         self.assertEqual(ledger["statuses"][2]["status"], "in_progress")
         self.assertEqual(ledger["statuses"][3]["status"], "in_progress")
         # If all other work is blocked, heavy work must remain selectable.
@@ -69,7 +69,7 @@ class TaskEngineTests(unittest.TestCase):
         output = io.StringIO()
         with patch("sys.argv", ["task_engine"]), contextlib.redirect_stdout(output):
             e.main()
-        self.assertEqual(json.loads(output.getvalue())["next_task_id"], 7)
+        self.assertEqual(json.loads(output.getvalue())["next_task_id"], 9)
         output = io.StringIO()
         with patch("sys.argv", ["task_engine", "--include-heavy"]), contextlib.redirect_stdout(output):
             e.main()
