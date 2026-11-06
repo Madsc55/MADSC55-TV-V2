@@ -96,11 +96,13 @@
     },
     {
       "id": 10,
-      "status": "pending",
-      "last_checked_at": null,
-      "evidence_urls": [],
+      "status": "completed",
+      "last_checked_at": "2026-11-07T00:45:00+01:00",
+      "evidence_urls": [
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42216075104"
+      ],
       "blocker": null,
-      "reason": null
+      "reason": "Verified all jobs success in source integration batch #42216075104, including 'Worldwide TR AZ exact IPTV API and EPG source metadata', 'Trusted IPTV org feed variant 217 missing ID source and AV recovery', and exact-identity TR/AZ probing. Closes feed/identity matching acceptance only; name-only leads and unverified AV remain unpromoted, historic #4/#15/#18 remain pending."
     },
     {
       "id": 11,
