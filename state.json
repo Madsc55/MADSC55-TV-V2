@@ -9,16 +9,14 @@
   "last_verified_run_observation": {
     "source_integration_batch": {
       "run_id": 42216075104,
-      "status": "in_progress",
-      "jobs_success": 11,
-      "jobs_in_progress": 1,
+      "status": "completed",
+      "jobs_success": 12,
+      "jobs_in_progress": 0,
       "jobs_failed": 0,
-      "active_steps": [
-        "Real bounded video-plus-audio scan of static, reviewed public and document sources"
-      ],
-      "artifacts_available": 12,
+      "active_steps": [],
+      "artifacts_available": 13,
       "head_sha": "062cf6ae9783803bb45b06efd4e877bcb6333f8e",
-      "note": "Evidence artifacts available, but artifact contents and final AV acceptance not yet reviewed; no IBO promotion"
+      "note": "All 12 jobs success and 13 artifacts verified via GitHub API; unified source artifact inspected: 47 configured sources, 8988 candidates, partial official live-page coverage, video_audio_probed_by_this_workflow=false. No IBO promotion."
     },
     "source_integration_run_id": 42216075104,
     "development_commit": "405a1fc52ba0c0542eabe6d8a6e4fb521bad039d",
@@ -119,7 +117,7 @@
     "do_not_claim_unverified_success": true,
     "old_repository_forbidden": true
   },
-  "note": "Primary IBO playlist on main remains protected. Source integration #42216075104: 11/12 jobs successful, final real AV scan in progress, 12 evidence artifacts; final AV acceptance and historical crosswalk within that job not yet complete. No playlist/main/PR9 writes.",
+  "note": "Source integration #42216075104: 12/12 jobs successful and 13 artifacts verified. Unified discovery report has 47 sources and 8988 candidates, but partial official live-page coverage and no AV probing in that workflow. No protected playlist/main/PR9 writes.",
   "user_confirmed_primary_playlist": "MADSC55_TV_IBO_CALISANLAR_TEST.m3u8",
   "user_confirmed_primary_playlist_policy": "CURRENT_IBO_PLAYER_USES_MAIN_BRANCH_RAW_URL_PROTECTED_NO_AUTOMATED_WRITES",
   "user_confirmed_primary_playlist_url": "https://raw.githubusercontent.com/Madsc55/MADSC55-TV-V2/main/MADSC55_TV_IBO_CALISANLAR_TEST.m3u8",
