@@ -44,6 +44,11 @@ class HistoricalWorldwideAVCrosswalkTests(unittest.TestCase):
         self.assertEqual(result["historical_unproven_status_counts"], {"VIDEO_ONLY": 1})
         self.assertEqual(result["historical_unproven_url_sha256_by_status"],
                          {"VIDEO_ONLY": [self.hashes[1]]})
+        self.assertEqual(result["historical_recovery_review_counts"],
+                         {"partial_media": 1, "transient_retry": 0,
+                          "source_research": 0, "other_unproven": 0})
+        self.assertEqual(result["historical_recovery_review_url_sha256"]["partial_media"],
+                         [self.hashes[1]])
         self.assertEqual(result["historical_not_in_worldwide_report"], 4953)
         self.assertEqual(len(result["historical_missing_worldwide_url_sha256"]), 4953)
         self.assertEqual(result["historical_missing_worldwide_url_sha256"], sorted(self.hashes[2:]))
@@ -63,6 +68,11 @@ class HistoricalWorldwideAVCrosswalkTests(unittest.TestCase):
         self.assertEqual(len(decoded) + result["historical_matched_without_av_proof"],
                          len(matched))
         self.assertEqual(result["historical_not_in_worldwide_report"], len(missing))
+        review = result["historical_recovery_review_url_sha256"]
+        self.assertEqual(set().union(*(set(v) for v in review.values())),
+                         matched - decoded)
+        self.assertEqual(sum(result["historical_recovery_review_counts"].values()),
+                         len(matched - decoded))
         groups = result["historical_unproven_url_sha256_by_status"]
         self.assertEqual(set().union(*(set(v) for v in groups.values())), matched - decoded)
         self.assertEqual(sum(result["historical_unproven_status_counts"].values()),
