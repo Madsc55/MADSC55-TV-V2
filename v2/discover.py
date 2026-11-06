@@ -34,19 +34,20 @@ def load_original_run60_sources(path):
             or len(doc["sources"]) != 17
             or sum(x.get("old_only", 0) for x in doc["sources"]) != 8449):
         raise ValueError("Unverified original #60 source ledger")
-    restored, seen = [], set()
+    restored, seen, seen_urls = [], set(), set()
     for row in doc["sources"]:
         ident, url = row.get("id"), row.get("url")
         if not isinstance(ident, str) or not re.fullmatch(r"github-auto-(?:0|[1-9][0-9]*)", ident):
             raise ValueError("Invalid original source identity")
-        if ident in seen or not isinstance(url, str):
-            raise ValueError("Duplicate or missing original source URL")
+        if ident in seen or not isinstance(url, str) or url in seen_urls:
+            raise ValueError("Duplicate or missing original source identity/URL")
         p = urlsplit(url)
         if (p.scheme != "https" or p.hostname != "raw.githubusercontent.com"
                 or p.username or p.password or p.fragment or p.port not in (None, 443)
-                or not p.path.lower().endswith((".m3u", ".m3u8", ".m3u8"))):
+                or not p.path.lower().endswith((".m3u", ".m3u8"))):
             raise ValueError("Original source URL is not a public GitHub M3U")
         seen.add(ident)
+        seen_urls.add(url)
         restored.append({"id": ident, "url": url, "kind": "m3u",
                          "scope": "candidate", "historical_source_only": True})
     return restored
