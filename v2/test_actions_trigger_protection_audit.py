@@ -53,10 +53,11 @@ class ActionsTriggerProtectionTests(unittest.TestCase):
     def test_push_safety_workflow_cannot_launch_live_scan_jobs(self):
         root = Path(__file__).resolve().parents[1] / ".github/workflows"
         source = (root / "v2-actions-trigger-protection.yml").read_text(encoding="utf-8")
+        import yaml
+        jobs = yaml.safe_load(source)["jobs"]
         for name in ("final-worldwide-acceptance", "document-platform-live-audit",
                      "orphan-46-live-recovery"):
-            section = source.split("  " + name + ":\n", 1)[1]
-            self.assertIn("    if: ${{ false }}", section[:500], name)
+            self.assertEqual(jobs[name].get("if"), "${{ false }}", name)
 
     def test_unknown_automatic_push_is_rejected(self):
         text = fixture("  push:\n    branches: [" + DEV + "]\n")
