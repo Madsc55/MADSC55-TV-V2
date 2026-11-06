@@ -1,11 +1,5 @@
 name: V2 Dev Grouped Offline Acceptance
 on:
-  push:
-    branches:
-      - madsc/v2-discovery-bulk-20261031
-    paths:
-      - 'v2/**'
-      - '.github/workflows/v2-dev-grouped-offline-acceptance.yml'
   workflow_dispatch:
 permissions:
   contents: read
