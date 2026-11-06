@@ -187,11 +187,14 @@
     },
     {
       "id": 22,
-      "status": "pending",
-      "last_checked_at": null,
-      "evidence_urls": [],
+      "status": "completed",
+      "last_checked_at": "2026-11-07T00:23:00+01:00",
+      "evidence_urls": [
+        "https://github.com/Madsc55/MADSC55-TV-V2/blob/madsc/v2-discovery-bulk-20261031/MADSC55_TV_IBO_CALISANLAR_TEST.m3u8",
+        "https://github.com/Madsc55/MADSC55-TV-V2/commit/4672356dcb85b0c7d2c2a3444062485f8a640aaf"
+      ],
       "blocker": null,
-      "reason": null
+      "reason": "Verified live GitHub dev-branch protected playlist blob 4b1c3cea4b5107a425abab60f62d41f9f81e05a7, and exact first two YEDEKLER entries TRT 1 1440P QHD, DHA CANLI 720P HD. Regression in v2/test_playlist_invariants.py asserts exact order. No playlist write or IBO device-playback claim."
     },
     {
       "id": 23,
