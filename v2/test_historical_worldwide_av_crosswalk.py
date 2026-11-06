@@ -42,6 +42,9 @@ class HistoricalWorldwideAVCrosswalkTests(unittest.TestCase):
         self.assertEqual(result["historical_exact_hash_av_decoded"], 1)
         self.assertEqual(result["historical_matched_without_av_proof"], 1)
         self.assertEqual(result["historical_not_in_worldwide_report"], 4953)
+        self.assertEqual(len(result["historical_missing_worldwide_url_sha256"]), 4953)
+        self.assertEqual(result["historical_missing_worldwide_url_sha256"], sorted(self.hashes[2:]))
+        self.assertTrue(all(len(h) == 64 for h in result["historical_missing_worldwide_url_sha256"]))
         self.assertFalse(result["protected_playlist_modified"])
         self.assertFalse(result["ibo_device_verified"])
 
