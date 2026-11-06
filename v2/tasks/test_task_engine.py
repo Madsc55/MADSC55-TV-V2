@@ -41,6 +41,26 @@ class TaskEngineTests(unittest.TestCase):
             with self.subTest(value=value), self.assertRaises(ValueError):
                 e.require_fresh_github(value)
 
+    def test_grouped_actions_same_commit_and_all_success(self):
+        sha = "a" * 40
+        names = ["V2 Master Engine", "V2 Eight-Stage Runner Verification"]
+        runs = [{"name": name, "head_sha": sha, "status": "completed",
+                 "conclusion": "success", "id": i + 100,
+                 "html_url": "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/" + str(i + 100)}
+                for i, name in enumerate(names)]
+        self.assertEqual(len(e.verify_grouped_actions(runs, sha, names)), 2)
+        for changed in (
+            lambda r: r[0].update(status="in_progress", conclusion=None),
+            lambda r: r[0].update(conclusion="failure"),
+            lambda r: r[0].update(head_sha="b" * 40),
+            lambda r: r.pop(),
+            lambda r: r[0].update(html_url="https://invalid.example/1"),
+        ):
+            broken = copy.deepcopy(runs)
+            changed(broken)
+            with self.subTest(broken=broken), self.assertRaises(ValueError):
+                e.verify_grouped_actions(broken, sha, names)
+
     def test_concurrent_state_conflict(self):
         self.assertTrue(e.require_matching_sha("sha1", "sha1"))
         with self.assertRaisesRegex(ValueError, "Concurrent"):
