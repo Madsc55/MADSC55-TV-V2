@@ -3,8 +3,8 @@
   "project": "MADSC55 TV V2",
   "repository": "Madsc55/MADSC55-TV-V2",
   "branch": "madsc/v2-discovery-bulk-20261031",
-  "current_step": "global_av_scan_acceptance",
-  "current_step_status": "in_progress_unverified",
+  "current_step": "historical_channel_recovery",
+  "current_step_status": "partial_sha_av_crosswalk_verified_no_device_claim",
   "source_run_url": "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42216075104",
   "last_verified_run_observation": {
     "source_integration_batch": "pending",
@@ -18,14 +18,28 @@
       "V2 Sirali Hazirlik Testleri #42227793588"
     ],
     "av_evidence_union_run": "success #42227771885 (prior commit 95d1eb56)",
-    "new_three_regressions": "added in 405a1fc5; standalone execution not independently confirmed"
+    "new_three_regressions": "added in 405a1fc5; standalone execution not independently confirmed",
+    "historical_crosswalk": {
+      "run_id": 42228674931,
+      "conclusion": "success",
+      "preserved": 4955,
+      "exact_matches": 4948,
+      "decoded_video_audio": 3062,
+      "not_in_worldwide": 7
+    },
+    "security_trigger_failure": {
+      "commit": "56060074",
+      "reason": "UNAPPROVED_AUTOMATIC_PUSH",
+      "fix_commit": "c18a1f4f9b7745d53e9d3f8d61eaffdf0fbfe4ed",
+      "retest": "pending"
+    }
   },
   "completed_steps": [
     "main_security_protection",
-    "previous_worldwide_av_scan"
+    "previous_worldwide_av_scan",
+    "historical_worldwide_sha_crosswalk_readonly"
   ],
   "pending_steps": [
-    "global_av_scan_acceptance",
     "historical_channel_recovery",
     "source_adapter_acceptance",
     "historical_inventory_integrity",
@@ -45,5 +59,5 @@
     "do_not_claim_unverified_success": true,
     "old_repository_forbidden": true
   },
-  "note": "Single canonical progress record. Last observed source integration batch pending; completed development gates do not imply real AV or IBO device acceptance. Refresh Actions and sealed artifacts before advancing."
+  "note": "Canonical progress only. SHA AV crosswalk confirmed for 3062 historical URLs in pinned worldwide scan; not fresh or IBO device playback. Trigger fix must pass security regression. Source Integration Batch pending; never promote without verified AV."
 }
