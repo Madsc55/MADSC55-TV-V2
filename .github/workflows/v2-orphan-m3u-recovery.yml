@@ -21,6 +21,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Install pinned cryptography for offline regression imports
+        run: python -m pip install cryptography==44.0.2
       - name: Protect immutable IBO playlist and historical metadata
         run: |
           test "$(git hash-object MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)" = '4b1c3cea4b5107a425abab60f62d41f9f81e05a7'
