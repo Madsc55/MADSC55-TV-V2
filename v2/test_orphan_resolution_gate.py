@@ -41,6 +41,42 @@ def fixture():
 
 
 class OrphanResolutionGateTests(unittest.TestCase):
+    def test_new_upstream_orphans_do_not_replace_original_55(self):
+        r = fixture()
+        baseline = {"sources": {}}
+        for row in r["records"]:
+            values = baseline["sources"].setdefault(row["source_id"], [])
+            if row["extinf_sha256"] not in values:
+                values.append(row["extinf_sha256"])
+        # Five originals share their identity across different sources.
+        # The immutable ledger contains all 55 source/hash pairs.
+        baseline["sources"] = {
+            source: sorted({row["extinf_sha256"] for row in r["records"]
+                            if row["source_id"] == source})
+            for source in ("discevisita-tr", "github-auto-24",
+                           "onureroz-turk-karma", "onureroz-turk-all")}
+        # The fixture duplicates five source/hash pairs, whereas a real
+        # immutable ledger holds 55 distinct source/hash pairs. Construct a
+        # baseline-compatible sample with 55 unique original occurrences.
+        for i, row in enumerate(r["records"][50:]):
+            row["extinf_sha256"] = "%064x" % (1000 + i)
+            baseline["sources"][row["source_id"]].append(row["extinf_sha256"])
+        # This synthetic case has 55 identities, so the strict 50-identity
+        # guard must reject it rather than silently change accounting.
+        with self.assertRaises(ValueError):
+            classify_report(r, baseline=baseline)
+
+    def test_missing_baseline_identity_rejected_even_with_extra_rows(self):
+        r = fixture()
+        baseline = {"sources": {
+            source: sorted({row["extinf_sha256"] for row in r["records"]
+                            if row["source_id"] == source})
+            for source in ("discevisita-tr", "github-auto-24",
+                           "onureroz-turk-karma", "onureroz-turk-all")}}
+        baseline["sources"]["discevisita-tr"].append("%064x" % 9999)
+        with self.assertRaisesRegex(ValueError, "Missing original 55"):
+            classify_report(r, baseline=baseline)
+
     def test_exact_5_32_13_not_falsely_marked_green(self):
         result = classify_report(fixture())
         self.assertEqual(result["video_audio_verified_identities"], 5)
