@@ -37,7 +37,7 @@ class EncryptedArchiveTests(unittest.TestCase):
             path = Path(folder) / "archive.jsonl.enc"
             append(path, {"url": "https://example.invalid/valid.m3u8"}, KEY)
             data = path.read_bytes()
-            self.assertTrue(data.endswith(b"\\n"))
+            self.assertTrue(data.endswith(b"\n"))
             path.write_bytes(data[:-1])
             with self.assertRaisesRegex(ValueError, "Incomplete archive record"):
                 restore(path, KEY)
