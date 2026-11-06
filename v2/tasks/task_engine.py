@@ -1,0 +1,101 @@
+#!/usr/bin/env python3
+"""Read-only, fail-closed MADSC55 V2 task selection and evidence checks."""
+import argparse
+import json
+from pathlib import Path
+
+STATUSES = {"pending", "in_progress", "blocked", "completed"}
+REPO = "Madsc55/MADSC55-TV-V2"
+BRANCH = "madsc/v2-discovery-bulk-20261031"
+PROTECTED = {"MADSC55_TV_IBO_CALISANLAR_TEST.m3u8"}
+PRIORITY = {"P0": 0, "P1": 1, "P2": 2, "P3": 3}
+
+
+def validate(master, ledger, root):
+    if root.get("repository") != REPO or root.get("branch") != BRANCH:
+        raise ValueError("Wrong repository or branch")
+    if root.get("task_tracking", {}).get("task_ledger") != "v2/tasks/state.json":
+        raise ValueError("Canonical state link missing")
+    tasks = master["tasks"]
+    if len(tasks) != 33 or [t["id"] for t in tasks] != list(range(1, 34)):
+        raise ValueError("Must register exactly 33 ordered tasks")
+    if master.get("repository") != REPO or master.get("branch") != BRANCH:
+        raise ValueError("Wrong task manifest target")
+    by_id = {t["id"]: t for t in tasks}
+    for t in tasks:
+        if t["priority"] not in PRIORITY or not t["acceptance"] or not isinstance(t["evidence_urls"], list):
+            raise ValueError("Incomplete task acceptance or priority")
+        if any(d not in by_id or d == t["id"] for d in t["depends_on"]):
+            raise ValueError("Invalid dependency")
+    visiting, visited = set(), set()
+    def visit(i):
+        if i in visiting:
+            raise ValueError("Cyclic dependency")
+        if i not in visited:
+            visiting.add(i)
+            for d in by_id[i]["depends_on"]:
+                visit(d)
+            visiting.remove(i)
+            visited.add(i)
+    for i in by_id:
+        visit(i)
+    rows = ledger["statuses"]
+    if len(rows) != 33 or sorted(row["id"] for row in rows) != list(range(1, 34)):
+        raise ValueError("Incomplete task status ledger")
+    for row in rows:
+        if row["status"] not in STATUSES:
+            raise ValueError("Invalid task status")
+        if row["status"] == "completed" and (not row["evidence_urls"] or not row["last_checked_at"]):
+            raise ValueError("Completed task without verified evidence")
+        if row["id"] == 32 and row["status"] == "completed" and not row.get("user_device_confirmation"):
+            raise ValueError("Device test requires user confirmation")
+    return by_id, {row["id"]: row for row in rows}
+
+
+def select(master, ledger, root):
+    tasks, rows = validate(master, ledger, root)
+    # Resume ongoing work first; blocked work is not silently marked successful.
+    ready = [t for t in tasks.values() if rows[t["id"]]["status"] in ("pending", "in_progress")
+             and all(rows[d]["status"] == "completed" for d in t["depends_on"])]
+    ready.sort(key=lambda t: (PRIORITY[t["priority"]], 0 if rows[t["id"]]["status"] == "in_progress" else 1, t["id"]))
+    return ready[0]["id"] if ready else None
+
+
+def safe_transition(row, new_status, evidence_urls=(), checked_at=None, user_confirmed=False):
+    if new_status not in STATUSES:
+        raise ValueError("Unknown status")
+    if new_status == "completed" and (not evidence_urls or not checked_at):
+        raise ValueError("No completion without evidence and verification timestamp")
+    if row["id"] == 32 and new_status == "completed" and not user_confirmed:
+        raise ValueError("Only user can confirm device test")
+    return dict(row, status=new_status, evidence_urls=list(evidence_urls) if evidence_urls else row["evidence_urls"],
+                last_checked_at=checked_at or row["last_checked_at"],
+                **({"user_device_confirmation": True} if user_confirmed else {}))
+
+
+def require_fresh_github(fetch_result):
+    if not isinstance(fetch_result, dict) or fetch_result.get("status") != "completed":
+        raise ValueError("GitHub unavailable or run incomplete")
+    if fetch_result.get("conclusion") != "success":
+        raise ValueError("GitHub run not successful")
+    return True
+
+
+def assert_safe_write(path, branch):
+    if branch != BRANCH or Path(path).name in PROTECTED or str(path).startswith("../"):
+        raise ValueError("Protected path or branch")
+    return True
+
+
+def main():
+    p = argparse.ArgumentParser()
+    p.add_argument("--root", type=Path, default=Path("state.json"))
+    p.add_argument("--manifest", type=Path, default=Path("v2/tasks/master_tasks.json"))
+    p.add_argument("--ledger", type=Path, default=Path("v2/tasks/state.json"))
+    args = p.parse_args()
+    master, ledger, root = [json.loads(p.read_text(encoding="utf-8")) for p in (args.manifest, args.ledger, args.root)]
+    print(json.dumps({"next_task_id": select(master, ledger, root), "policy": "READ_ONLY_NO_GITHUB_WRITES"}))
+
+
+if __name__ == "__main__":
+    main()
