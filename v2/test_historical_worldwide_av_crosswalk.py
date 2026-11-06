@@ -119,6 +119,21 @@ class HistoricalWorldwideAVCrosswalkTests(unittest.TestCase):
         self.assertEqual(groups["transient_retry"], [])
         self.assertEqual(result["historical_exact_hash_av_decoded"], 0)
 
+    def test_rejects_duplicate_recovery_queue_membership(self):
+        # A corrupted queue must never silently double-count historical IDs.
+        original = module.Counter
+        class InflatedCounter(original):
+            def __init__(self, iterable=()):
+                super().__init__(iterable)
+                if self:
+                    key = next(iter(self))
+                    self[key] += 1
+        with patch.object(module, "BASELINE_SHA256", hashlib.sha256(self.raw).hexdigest()), \\
+             patch.object(module, "inspect", return_value={"candidate_hashes": 3}), \\
+             patch.object(module, "Counter", InflatedCounter):
+            with self.assertRaisesRegex(ValueError, "lossless partition"):
+                module.crosswalk(self.historical, self.world)
+
     def test_tampered_historical_baseline_rejected(self):
         self.historical.write_bytes(self.raw + b" ")
         with self.assertRaises(ValueError):
