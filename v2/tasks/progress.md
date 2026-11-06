@@ -12,3 +12,9 @@
 
 ## 7 Kasım 2026 — Kanonik ledger ile güncel düzeltme
 `v2/tasks/state.json` yeniden okundu: **33 görev, 2 completed (#1,#2), 2 in_progress (#3,#4), 29 pending**. Yukarıdaki 1/1/31 sayımı eski bir anlık görüntüdür. `[V2 SIRA]` başlıklı 8 GitHub Issue üst aşamadır; 33 alt görev `master_tasks.json` ve `state.json` ile yönetilir. #3 ve #4'ün AV/tarihî kanıtları henüz tamamlanmadı. Bu belge türetilmiş görünüm; durum otoritesi `v2/tasks/state.json` olarak kalır.
+
+
+## 7 Kasım 2026 — #13 arşiv restore güvenliği (kısmi)
+- `v2/encrypted_archive.py` şifreli JSONL kaydında eksik satır sonunu artık fail-closed reddeder: [`0ba1c2ca`](https://github.com/Madsc55/MADSC55-TV-V2/commit/0ba1c2ca15577ac4424d8093382b3415790caef7).
+- Tam JSON fakat sonlandırıcı eksik kaydı reddeden regresyon eklendi ve satır sonu literal düzeltildi: [`c7cd4c45`](https://github.com/Madsc55/MADSC55-TV-V2/commit/c7cd4c45763aefa6771df96bf3fdc53d4fb1a1fb).
+- Kaynak dosyalar GitHub'dan tekrar okunarak statik doğrulandı; toplu CI logu **henüz alınmadı**. Arşivin ortasından silinen eksiksiz kayıtları saptamak ayrıca manifest/sayı/hash karşılaştırması gerektirir. **#13 tamamlandı olarak işaretlenmedi.**
