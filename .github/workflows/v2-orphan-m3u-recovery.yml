@@ -1,12 +1,64 @@
 name: V2 Turkish M3U Orphan Recovery — Exact History and AV Batch
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - madsc/v2-discovery-bulk-20261031
+    paths:
+      - v2/test_orphan_resolution_gate.py
 
 permissions:
   contents: read
 
 jobs:
+  offline-orphan-regressions:
+    name: Read-only 17-module orphan regression batch
+    if: github.event_name == 'push'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Protect immutable IBO playlist and historical metadata
+        run: |
+          test "$(git hash-object MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)" = '4b1c3cea4b5107a425abab60f62d41f9f81e05a7'
+          test "$(sha256sum v2/history/stage3-4955-hash-only.jsonl | cut -d' ' -f1)" = 'ee00a844a028e3410715d411467a2d3306f5f5cc4565766140b6438e786cdd27'
+      - name: One grouped orphan, exact history and source preservation regression suite
+        shell: bash
+        run: |
+          mkdir -p v2/reports/ci
+          set -o pipefail
+          PYTHONPATH=v2 python -m unittest -v \
+            test_orphan_m3u_recovery \
+            test_main_playlist_candidate_bridge \
+            test_orphan_source_only_recheck \
+            test_historical_exact_real_av \
+            test_orphan_source_expansion \
+            test_orphan_targeted_github_code \
+            test_orphan_resolution_gate \
+            test_source_adapters_batch \
+            test_orphan_iptv_org_registry \
+            test_document_platform_discovery \
+            test_orphan_baseline_guard \
+            test_m3u_source_content_audit \
+            test_historical_targeted_playback \
+            test_run60_source_ledger \
+            test_run60_source_discovery \
+            test_source_loss_audit \
+            test_turkish_m3u_source_audit \
+            2>&1 | tee v2/reports/ci/three-source-orphan-regressions.log
+      - name: Upload grouped regression log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v2-offline-orphan-regressions-${{ github.run_id }}
+          path: v2/reports/ci/three-source-orphan-regressions.log
+          if-no-files-found: warn
+
   four-sources-one-batch:
+    if: github.event_name == 'workflow_dispatch'
     name: Four original feeds plus verified public discovery; exact orphan AV batch
     runs-on: ubuntu-24.04
     timeout-minutes: 65
