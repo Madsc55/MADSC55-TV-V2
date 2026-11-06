@@ -122,6 +122,9 @@ def _valid(name, data):
                     or any(value is not True for value in source_handoff["report_checked"].values())
                     or any(type(source_handoff.get(field)) is not int for field in (
                         "inspection_records", "parsed_channel_playlists", "failed_source_fetches"))
+                    or not isinstance(source_handoff.get("accepted_for_inspection"), dict)
+                    or any(type(v) is not int or v < 0 for v in
+                           source_handoff["accepted_for_inspection"].values())
                     or source_handoff.get("playback_verified") is not False):
                 return False
             expected = sum(source_handoff.get("accepted_for_inspection", {}).values())
