@@ -27,14 +27,21 @@
       "decoded_video_audio": 3062,
       "not_in_worldwide": 7,
       "missing_hash_triage_commit": "e1b9f8e9b806b058f52b64f8f980fecbed1634d0",
-      "missing_hash_triage_retest": "pending"
+      "missing_hash_triage_retest": "development gates passed on e1b9f8e9; dedicated pinned artifact rerun not yet confirmed",
+      "lossless_partition_regression_commit": "d3c110a3df7a69efff3e72aae3103c26846f0cc6",
+      "lossless_partition_regression_status": "pending CI"
     },
     "security_trigger_failure": {
       "commit": "56060074",
       "reason": "UNAPPROVED_AUTOMATIC_PUSH",
       "fix_commit": "c18a1f4f9b7745d53e9d3f8d61eaffdf0fbfe4ed",
       "retest": "passed: 42228912627, 42228912814, 42228912810"
-    }
+    },
+    "development_checks_success_latest": [
+      "V2 Master Engine #42229179797",
+      "V2 Eight-Stage Runner Verification #42229179753",
+      "V2 Actions Status Monitor #42229179882"
+    ]
   },
   "completed_steps": [
     "main_security_protection",
@@ -61,5 +68,5 @@
     "do_not_claim_unverified_success": true,
     "old_repository_forbidden": true
   },
-  "note": "Canonical record. Security trigger gate verified green after fix. 4955 preserved, 4948 exact SHA matched, 3062 AV decoded, 7 absent from pinned worldwide. New SHA-only missing hash output awaits grouped CI; no device proof or IBO writes."
+  "note": "Single canonical record. 4955 historic SHA IDs preserved: 4948 exact world matches, 3062 prior video+audio decoded, 1886 matched without AV, 7 missing. New lossless-partition regression pending CI. Source Integration Batch still pending at last check; do not imply device playback."
 }
