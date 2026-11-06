@@ -5,7 +5,7 @@ import os
 import tempfile
 import unittest
 from pathlib import Path
-from encrypted_archive import append, restore, archive_sha256
+from encrypted_archive import append, restore, archive_sha256, archive_manifest, restore_verified
 
 KEY = "ab" * 32
 
@@ -22,6 +22,32 @@ class EncryptedArchiveTests(unittest.TestCase):
             self.assertEqual(restore(path, KEY), records)
             self.assertEqual(len(archive_sha256(path)), 64)
             self.assertEqual(path.stat().st_mode & 0o077, 0)
+    def test_manifest_detects_whole_record_deletion_and_reordering(self):
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder) / "archive.jsonl.enc"
+            rows = [{"id": 1}, {"id": 2}, {"id": 3}]
+            for row in rows:
+                append(path, row, KEY)
+            manifest = archive_manifest(path, KEY)
+            self.assertEqual(manifest["record_count"], 3)
+            self.assertEqual(restore_verified(path, manifest, KEY), rows)
+            lines = path.read_bytes().splitlines(keepends=True)
+            path.write_bytes(lines[0] + lines[2])
+            with self.assertRaisesRegex(ValueError, "integrity mismatch"):
+                restore_verified(path, manifest, KEY)
+            path.write_bytes(lines[1] + lines[0] + lines[2])
+            with self.assertRaisesRegex(ValueError, "integrity mismatch"):
+                restore_verified(path, manifest, KEY)
+
+    def test_manifest_invalid_count_fails_closed(self):
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder) / "archive.jsonl.enc"
+            append(path, {"id": 1}, KEY)
+            manifest = archive_manifest(path, KEY)
+            manifest["record_count"] = 2
+            with self.assertRaisesRegex(ValueError, "count mismatch"):
+                restore_verified(path, manifest, KEY)
+
     def test_truncated_archive_fails_closed(self):
         with tempfile.TemporaryDirectory() as folder:
             path = Path(folder) / "archive.jsonl.enc"
