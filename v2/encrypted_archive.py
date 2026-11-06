@@ -115,6 +115,8 @@ def restore_verified(path, manifest, key_hex=None):
     if archive_sha256(path) != digest:
         raise ValueError("Archive integrity mismatch")
     records = restore(path, key_hex)
+    if archive_sha256(path) != digest:
+        raise ValueError("Archive changed during verified restore")
     if len(records) != count:
         raise ValueError("Archive record count mismatch")
     return records
