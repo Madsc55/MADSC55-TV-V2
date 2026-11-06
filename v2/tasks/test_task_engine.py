@@ -19,7 +19,7 @@ class TaskEngineTests(unittest.TestCase):
         """Synthetic baseline: tests must not depend on live task completion."""
         ledger = copy.deepcopy(self.ledger)
         ledger["statuses"][0]["status"] = "in_progress"
-        ledger["statuses"][1]["status"] = "in_progress"
+        ledger["statuses"][1]["status"] = "completed"
         ledger["statuses"][3]["status"] = "pending"
         return ledger
 
