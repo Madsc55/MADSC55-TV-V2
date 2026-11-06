@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""Single offline regression for immutable orphan resolution accounting."""
+"""Single offline regression for immutable orphan resolution accounting.
+
+Changes to this test module trigger the existing read-only 17-module dev CI batch.
+The live four-source recovery remains manual-only.
+"""
 import unittest
 import json
 import sys
