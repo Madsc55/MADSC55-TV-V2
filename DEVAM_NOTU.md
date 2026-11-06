@@ -1,3 +1,11 @@
+## 6 Kasım 2026 — V2 DEVAM: yeni Actions regresyonu satır sonu hatası düzeltildi
+
+- [1ea909d8](https://github.com/Madsc55/MADSC55-TV-V2/commit/1ea909d8183004d4f92d19cca04a0a2440f307b7): `test_ordered_preflight_installs_crypto_before_discovery_tests` içindeki `source.split` ayraçları Python'da gerçek satır sonunu eşleştirecek biçime getirildi. Güvenlik denetimleri gevşetilmedi.
+- [Issue #1](https://github.com/Madsc55/MADSC55-TV-V2/issues/1) güncellendi; **açık**. Dört sistem workflow'unun yeni gerçek Actions kabul logları alınamadı.
+- [#42303308753](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42303308753) 190 testlik önceki başarı tekrar çalıştırılmadı; canlı AV kurtarma kanıtı hâlâ yok. `main`, PR #9, korunan IBO ve tarihî envanter değiştirilmedi.
+
+---
+
 ## 6 Kasım 2026 — V2 DEVAM: Ordered Preflight sırası için güvenlik regresyonu
 
 - [bb3e6f06](https://github.com/Madsc55/MADSC55-TV-V2/commit/bb3e6f06ce64005d9862f7b935b4df5da10e9e9a): `v2/test_actions_trigger_protection_audit.py` içine, `v2-ordered-preflight.yml` `discovery-tests` içinde `cryptography==44.0.2` kurulumunun ilk testten önce olması ve geniş sürüm aralığı bulunmaması şartı eklendi.
