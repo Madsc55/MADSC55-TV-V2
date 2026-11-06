@@ -54,10 +54,12 @@ def crosswalk(baseline_path, worldwide_path):
         "PROBE_UNCONFIRMED", "UNVERIFIED",
     }
     media_partial = {"VIDEO_ONLY", "AUDIO_ONLY", "VIDEO_AUDIO_STREAMS_ONLY"}
-    auth_or_missing = {
+    auth_or_missing = {"NOT_PROBED_BUDGET",
         "PROBE_FAILED_AUTH_REQUIRED", "PROBE_FAILED_HTTP_FORBIDDEN",
         "PROBE_FAILED_HTTP_NOT_FOUND", "UNSAFE_OR_UNRESOLVED_HOST",
+        "PROBE_FAILED_PROTOCOL_DISALLOWED_BY_SAFETY",
     }
+    # No network retry of unprobed/unsafe entries is implied by queue membership.
     priority = {"partial_media": [], "transient_retry": [],
                 "source_research": [], "other_unproven": []}
     for h in sorted(unproven):
