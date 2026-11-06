@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "canonical_state": "state.json",
-  "generated_at": "2026-11-06T17:38:56Z",
+  "generated_at": "2026-11-06T17:50:00Z",
   "observed_commit": "3cec2d44597b8e89e8be543806c3054a86204237",
   "statuses": [
     {
@@ -30,11 +30,14 @@
     },
     {
       "id": 3,
-      "status": "pending",
-      "last_checked_at": null,
-      "evidence_urls": [],
+      "status": "in_progress",
+      "last_checked_at": "2026-11-06T17:50:00Z",
+      "evidence_urls": [
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42216075104",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42264490846"
+      ],
       "blocker": null,
-      "reason": null
+      "reason": "P0 dependencies #1 and #2 completed. Began evidence reconciliation of immutable 55 occurrences / 50 identities; 45 identities remain unproven until exact-match FFmpeg AV evidence or documented blocked reasons. No recovery promoted."
     },
     {
       "id": 4,
