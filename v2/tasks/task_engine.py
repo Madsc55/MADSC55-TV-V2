@@ -114,6 +114,17 @@ def verify_grouped_actions(runs, expected_sha, required_names):
     return accepted
 
 
+def independent_ready(master, ledger, root, excluded=()):
+    """List independent eligible tasks without treating a running AV gate as success."""
+    tasks, rows = validate(master, ledger, root)
+    excluded = set(excluded)
+    ready = [t for t in tasks.values()
+             if t["id"] not in excluded
+             and rows[t["id"]]["status"] in ("pending", "in_progress")
+             and all(rows[d]["status"] == "completed" for d in t["depends_on"])]
+    return [t["id"] for t in sorted(ready, key=lambda t: (PRIORITY[t["priority"]], t["id"]))]
+
+
 def assert_safe_write(path, branch):
     if branch != BRANCH or Path(path).name in PROTECTED or str(path).startswith("../"):
         raise ValueError("Protected path or branch")
