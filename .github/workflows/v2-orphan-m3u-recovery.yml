@@ -108,6 +108,7 @@ jobs:
         run: |
           PYTHONPATH=v2 python v2/orphan_resolution_gate.py \
             --report v2/reports/ci/three-source-orphan-anonymous.json \
+            --immutable-orphan-baseline v2/history/m3u-orphan-50-hash-baseline.json \
             --output v2/reports/ci/orphan-50-resolution-anonymous.json
       - name: Upload anonymized evidence and RSA-encrypted verified plus unverified URL candidates
         if: always()
