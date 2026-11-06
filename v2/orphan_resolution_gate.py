@@ -12,6 +12,9 @@ import re
 
 HASH = re.compile(r"[0-9a-f]{64}\Z")
 
+ORIGINAL_SOURCES = frozenset(("discevisita-tr", "github-auto-24",
+                              "onureroz-turk-karma", "onureroz-turk-all"))
+
 
 def classify_report(data):
     guard = data.get("immutable_orphan_identity_guard", {})
