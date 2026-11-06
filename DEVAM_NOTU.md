@@ -1,3 +1,14 @@
+## 6 Kasım 2026 — V2 DEVAM: görev #1 güvenlik regresyonu eklendi, kabul AÇIK
+
+- Geliştirme dalı kontrolünde önceki HEAD `403c1729dac3efc901afa4b09ff44e07e7ce478d` idi. GitHub'da mevcut `[V2 SIRA]` #1–#8 kayıtları bulundu; yeni proje/Issue açılmadı.
+- [eb34b7ba](https://github.com/Madsc55/MADSC55-TV-V2/commit/eb34b7ba4acb2a1eab7a9beb5d1fa920b464d3c0): `v2/test_actions_trigger_protection_audit.py` içinde canlı orphan kurtarma workflow'unun manuel-only olması, şifreleme bağımlılığı, ilgili offline regresyon ve değişmez IBO hash denetimi için yeni fail-closed test eklendi.
+- [Issue #1](https://github.com/Madsc55/MADSC55-TV-V2/issues/1) güncellendi ve **açık** bırakıldı.
+- Başarılı önceki 17 modül / 190 test kanıtı [#42303308753](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42303308753) tekrar çalıştırılmadı.
+- **Engel:** Bu oturumda GitHub Actions'ın son push run listesine erişim sağlayan connector işlemi bulunmadığından, yeni kodun Master/Eight-Stage/Preflight/Trigger Gate kabulü doğrulanamadı. Yeni Actions run ID veya yeşil sonucu iddia edilmiyor.
+- **Koruma:** `main`, PR #9, ana IBO, sabit TRT/DHA sırası, kategoriler, cihaz favorileri, tarihî arşiv ve eski repo değiştirilmedi. Canlı 45 kanal kurtarma hâlâ açık.
+
+---
+
 ## 6 Kasım 2026 — Ortak sistem CI tetikleyici çakışması giderildi, Actions doğrulaması açık
 
 - **Korunan ve tekrar çalıştırılmayan başarılı koşu:** [#42303308753](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42303308753), commit `4672f994`, 17 modül / 190 test `OK`; canlı AV job `skipped`.
