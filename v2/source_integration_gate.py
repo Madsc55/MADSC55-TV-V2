@@ -120,7 +120,8 @@ def _valid(name, data):
                     or set(source_handoff["report_checked"]) !=
                     {"github_gist", "gitlab_codeberg"}
                     or any(value is not True for value in source_handoff["report_checked"].values())
-                    or any(type(source_handoff.get(field)) is not int for field in (
+                    or any(type(source_handoff.get(field)) is not int
+                           or source_handoff[field] < 0 for field in (
                         "inspection_records", "parsed_channel_playlists", "failed_source_fetches"))
                     or not isinstance(source_handoff.get("accepted_for_inspection"), dict)
                     or any(type(v) is not int or v < 0 for v in
