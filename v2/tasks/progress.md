@@ -2,9 +2,9 @@
 
 **Durum kaynakları:** kök `state.json` (proje), `v2/tasks/state.json` (33 görev), `master_tasks.json` (tanım ve bağımlılık).
 
-- 33 görev kayıtlı; **0 tamamlandı**, **2 devam ediyor** (#1 ve #2), **31 bekliyor**.
-- **P0 #1:** [Kaynak entegrasyonu #42216075104](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42216075104): 11 başarılı, 1 çalışıyor. Son gerçek AV kabul raporu henüz yok.
-- **P0 #2:** Yeni görev sistemi için Master Engine [#42249430770](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42249430770) ve Eight-Stage [#42249430807](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42249430807) başarılı; görev motorunun **10/10 bağımsız offline testi geçti**. Güvenlik tetikleyici kontrolü [#42249430717](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42249430717) başarılı. Son durum değişikliği commitinin testleri ayrıca kontrol edilmeden #2 kapatılmaz.
-- **Sıradaki seçilen iş:** #1; bekleyen dış AV taraması sırasında bağımsız #2 yürütülüyor.
+- **33 görev:** 1 tamamlandı (#2), 1 devam ediyor (#1), 31 bekliyor.
+- **P0 #2 tamamlandı:** aynı `3cec2d44597b8e89e8be543806c3054a86204237` commit'inde [Master #42250095219](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42250095219), [Eight-Stage #42250095240](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42250095240), [Sıralı Hazırlık #42250095447](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42250095447), [Actions Monitor #42250095305](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42250095305) başarılı.
+- **P0 #1 devam ediyor:** [Kaynak entegrasyonu #42216075104](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42216075104) son canlı AV kabul işi hâlâ çalışıyor; 11 iş başarılı, 1 devam ediyor. Kanıt içeriği doğrulanmadan tamamlandı denmez.
+- **Sonraki bağımsız işler:** #7, #8, #9, #10, #13, #22, #23, #27 (bağımlılıkları karşılanmış; canlı AV işi sürerken ilerletilebilir).
 
-**Kabul kuralları:** Yeşil CI gerçek video+ses kanıtı değildir; HTTP 200 ve isim eşleşmesi yayın doğrulamaz. Ana İBO listesi, `main`, PR #9 ve favoriler değişmez. Görev tamamlandı ancak kanıtla işaretlenir.
+**Not:** Yeşil CI gerçek görüntü+ses kanıtı değildir. `main`, PR #9, ana IBO listesi ve favoriler korunur. Durum dosyasındaki değişiklikler için yeni commit testleri ayrıca izlenir.
