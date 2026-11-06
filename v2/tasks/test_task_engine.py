@@ -53,7 +53,8 @@ class TaskEngineTests(unittest.TestCase):
         ledger = copy.deepcopy(self.ledger)
         # Stable fixture: future closures must not invalidate scheduler tests.
         ledger["statuses"][8]["status"] = "pending"
-        self.assertEqual(e.select(self.master, ledger, self.root, defer_heavy=True), 9)
+        # Task 5 is P0 and ready once tasks 7 and 8 are complete.
+        self.assertEqual(e.select(self.master, ledger, self.root, defer_heavy=True), 5)
         ready = e.independent_ready(self.master, ledger, self.root, defer_heavy=True)
         self.assertNotIn(3, ready)
         self.assertNotIn(4, ready)
