@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "selected_task_id": 1,
+  "reason": "P0 first unresolved; source integration AV job still in progress; independent P0 task 2 can be checked meanwhile",
+  "parallel_ready_task_ids": [
+    2
+  ],
+  "observed_run": "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42216075104",
+  "last_checked_at": "2026-11-06T16:05:00Z",
+  "selection_requires_fresh_state": true
+}
