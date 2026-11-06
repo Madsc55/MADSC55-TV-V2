@@ -56,10 +56,7 @@ class ActionsTriggerProtectionTests(unittest.TestCase):
         for name in ("final-worldwide-acceptance", "document-platform-live-audit",
                      "orphan-46-live-recovery"):
             section = source.split("  " + name + ":\n", 1)[1]
-            next_job = section.find("\n  ", 1)
-            if next_job >= 0:
-                section = section[:next_job]
-            self.assertIn("    if: ${{ false }}", section, name)
+            self.assertIn("    if: ${{ false }}", section[:500], name)
 
     def test_unknown_automatic_push_is_rejected(self):
         text = fixture("  push:\n    branches: [" + DEV + "]\n")
