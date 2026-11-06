@@ -112,7 +112,8 @@ def _valid(name, data):
                                     or advisory.get("youtube_pages_are_not_m3u_streams") is not True
                                     or advisory.get("official_websites_are_not_m3u_streams") is not True
                                     or type(advisory.get("linked_m3u_candidates")) is not int
-                                    or advisory["linked_m3u_candidates"] != len(advisory.get("links", []))):
+                                    or not isinstance(advisory.get("links"), list)
+                                    or advisory["linked_m3u_candidates"] != len(advisory["links"])):
             return False
         if source_handoff is not None and source_handoff.get("status") != "NOT_REQUESTED":
             if (not isinstance(source_handoff.get("report_checked"), dict)
