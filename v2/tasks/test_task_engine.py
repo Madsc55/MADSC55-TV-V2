@@ -46,6 +46,22 @@ class TaskEngineTests(unittest.TestCase):
         self.assertEqual(independent[:5], [4, 7, 8, 9, 10])
         self.assertIn(13, independent)
 
+    def test_user_directed_heavy_work_deferred_without_false_completion(self):
+        ledger = copy.deepcopy(self.ledger)
+        # Actual ledger has #3/#4 in progress, while independent #7/#9 are ready.
+        self.assertEqual(e.select(self.master, ledger, self.root, defer_heavy=True), 7)
+        ready = e.independent_ready(self.master, ledger, self.root, defer_heavy=True)
+        self.assertNotIn(3, ready)
+        self.assertNotIn(4, ready)
+        self.assertIn(7, ready)
+        self.assertEqual(ledger["statuses"][2]["status"], "in_progress")
+        self.assertEqual(ledger["statuses"][3]["status"], "in_progress")
+        # If all other work is blocked, heavy work must remain selectable.
+        for row in ledger["statuses"]:
+            if row["id"] not in (1, 2, 3, 4, 8, 22):
+                row["status"] = "blocked"
+        self.assertEqual(e.select(self.master, ledger, self.root, defer_heavy=True), 3)
+
     def test_completed_not_reselected(self):
         ledger = self.scenario_ledger()
         ledger["statuses"][0].update(status="completed", evidence_urls=["https://github.com/example/evidence"], last_checked_at="2026-11-06T16:00:00Z")
