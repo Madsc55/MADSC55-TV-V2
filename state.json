@@ -25,13 +25,15 @@
       "preserved": 4955,
       "exact_matches": 4948,
       "decoded_video_audio": 3062,
-      "not_in_worldwide": 7
+      "not_in_worldwide": 7,
+      "missing_hash_triage_commit": "e1b9f8e9b806b058f52b64f8f980fecbed1634d0",
+      "missing_hash_triage_retest": "pending"
     },
     "security_trigger_failure": {
       "commit": "56060074",
       "reason": "UNAPPROVED_AUTOMATIC_PUSH",
       "fix_commit": "c18a1f4f9b7745d53e9d3f8d61eaffdf0fbfe4ed",
-      "retest": "pending"
+      "retest": "passed: 42228912627, 42228912814, 42228912810"
     }
   },
   "completed_steps": [
@@ -59,5 +61,5 @@
     "do_not_claim_unverified_success": true,
     "old_repository_forbidden": true
   },
-  "note": "Canonical progress only. SHA AV crosswalk confirmed for 3062 historical URLs in pinned worldwide scan; not fresh or IBO device playback. Trigger fix must pass security regression. Source Integration Batch pending; never promote without verified AV."
+  "note": "Canonical record. Security trigger gate verified green after fix. 4955 preserved, 4948 exact SHA matched, 3062 AV decoded, 7 absent from pinned worldwide. New SHA-only missing hash output awaits grouped CI; no device proof or IBO writes."
 }
