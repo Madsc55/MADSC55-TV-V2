@@ -76,6 +76,20 @@ class OrphanResolutionGateTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "Missing original 55"):
             classify_report(r, baseline=baseline)
 
+    def test_extra_upstream_row_cannot_leak_plaintext_url(self):
+        r = fixture()
+        baseline = {"sources": {
+            source: sorted({row["extinf_sha256"] for row in r["records"]
+                            if row["source_id"] == source})
+            for source in ("discevisita-tr", "github-auto-24",
+                           "onureroz-turk-karma", "onureroz-turk-all")}}
+        r["records"].append({
+            "source_id": "github-auto-24",
+            "extinf_sha256": "%064x" % 9999,
+            "candidates": [{"url": "https://example.net/private.m3u8"}]})
+        with self.assertRaisesRegex(ValueError, "private URL"):
+            classify_report(r, baseline=baseline)
+
     def test_exact_5_32_13_not_falsely_marked_green(self):
         result = classify_report(fixture())
         self.assertEqual(result["video_audio_verified_identities"], 5)
