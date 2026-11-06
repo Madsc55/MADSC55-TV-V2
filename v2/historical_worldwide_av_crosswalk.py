@@ -5,6 +5,7 @@ Never infer a channel from its name, metadata, EPG or an HTTP-only response.
 No URL decryption, playlist writes, or device-playback claims.
 """
 import argparse
+from collections import Counter
 import hashlib
 import json
 from pathlib import Path
@@ -36,6 +37,15 @@ def crosswalk(baseline_path, worldwide_path):
     decoded = {h for h in matched if by_hash[h]["status"] == "VIDEO_AUDIO_DECODED"
                and by_hash[h]["decoded"] is True
                and by_hash[h]["video"] is True and by_hash[h]["audio"] is True}
+    # Distinguish unproven probe outcomes without treating transient failures as dead.
+    unproven = matched - decoded
+    unproven_status_counts = dict(sorted(Counter(
+        by_hash[h]["status"] for h in unproven
+    ).items()))
+    unproven_by_status = {
+        status: sorted(h for h in unproven if by_hash[h]["status"] == status)
+        for status in unproven_status_counts
+    }
     result = {
         "schema": 1,
         "kind": "V2_HISTORICAL_WORLDWIDE_EXACT_SHA_AV_CROSSWALK",
@@ -47,7 +57,9 @@ def crosswalk(baseline_path, worldwide_path):
         "worldwide_av_decoded": sum(row["decoded"] is True for row in by_hash.values()),
         "historical_exact_hash_matches": len(matched),
         "historical_exact_hash_av_decoded": len(decoded),
-        "historical_matched_without_av_proof": len(matched - decoded),
+        "historical_matched_without_av_proof": len(unproven),
+        "historical_unproven_status_counts": unproven_status_counts,
+        "historical_unproven_url_sha256_by_status": unproven_by_status,
         "historical_not_in_worldwide_report": len(hashes) - len(matched),
         "historical_decoded_url_sha256": sorted(decoded),
         "historical_match_url_sha256": sorted(matched),
