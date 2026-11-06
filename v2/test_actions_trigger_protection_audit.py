@@ -50,6 +50,16 @@ class ActionsTriggerProtectionTests(unittest.TestCase):
         self.assertLess(install, first_test)
         self.assertNotIn("cryptography>=42,<47", discovery)
 
+    def test_playlist_invariant_changes_trigger_grouped_safety_ci(self):
+        import yaml
+        root = Path(__file__).resolve().parents[1] / ".github/workflows"
+        workflow = yaml.safe_load(
+            (root / "v2-actions-trigger-protection.yml").read_text(encoding="utf-8"))
+        event = workflow.get("on", workflow.get(True))
+        paths = event["push"]["paths"]
+        self.assertIn("v2/test_playlist_invariants.py", paths)
+        self.assertIn(".github/workflows/**", paths)
+
     def test_push_safety_workflow_cannot_launch_live_scan_jobs(self):
         root = Path(__file__).resolve().parents[1] / ".github/workflows"
         source = (root / "v2-actions-trigger-protection.yml").read_text(encoding="utf-8")
