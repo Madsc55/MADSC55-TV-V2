@@ -67,11 +67,14 @@
     },
     {
       "id": 7,
-      "status": "pending",
-      "last_checked_at": null,
-      "evidence_urls": [],
+      "status": "completed",
+      "last_checked_at": "2026-11-07T00:23:00+01:00",
+      "evidence_urls": [
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42216075104",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42250095447"
+      ],
       "blocker": null,
-      "reason": null
+      "reason": "GitHub Actions #42216075104 independently rechecked: all 12 source integration batch jobs succeeded, including all-source-adapter regressions and unified source search. #42250095447 discovery-tests, compile, protect and safety succeeded. Offline GitHub/Gist approval test and GitLab/Codeberg forge-source normalization, dedupe and provenance/approval tests exist. Read-only source discovery accepted; does not claim all sources accessible or AV/IBO verified."
     },
     {
       "id": 8,
