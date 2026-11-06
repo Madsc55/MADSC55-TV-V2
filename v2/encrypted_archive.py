@@ -72,6 +72,8 @@ def restore(path, key_hex=None):
             raise PermissionError("Archive source must be a private regular file")
         with os.fdopen(fd, "rb", closefd=False) as stream:
             for line in stream:
+                if not line.endswith(b"\n"):
+                    raise ValueError("Incomplete archive record: missing newline")
                 if len(line) > 3_000_000:
                     raise ValueError("Archive line too large")
                 item = json.loads(line)
