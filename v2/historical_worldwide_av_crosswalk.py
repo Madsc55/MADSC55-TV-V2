@@ -99,6 +99,8 @@ def crosswalk(baseline_path, worldwide_path):
     missing = set(hashes) - matched
     queues = [set(group) for group in priority.values()]
     if (matched & missing or matched | missing != set(hashes)
+            or any(queues[i] & queues[j] for i in range(len(queues))
+                   for j in range(i + 1, len(queues)))
             or sum(map(len, queues)) != len(unproven)
             or set().union(*queues) != unproven
             or sum(unproven_status_counts.values()) != len(unproven)
