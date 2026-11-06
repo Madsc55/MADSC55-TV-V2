@@ -37,6 +37,14 @@ def _read(path):
         raise ValueError('Public evidence must not contain plaintext URLs')
     return json.loads(content), sha256(content).hexdigest()
 
+def retain_proven_identity(found, url_hash, channel_id):
+    """Preserve every prior exact ID on a decoded SHA; reject conflicting IDs."""
+    if url_hash in found:
+        if channel_id not in found[url_hash]:
+            raise ValueError('Same proven URL assigned to different broadcaster')
+    else:
+        found[url_hash] = frozenset([channel_id])
+
 def merge(prior, newer, gap):
     prior = _check(prior, 'TR_AZ_IPTV_API_REAL_FFMPEG_AV_ACCEPTANCE',
                    'ANONYMOUS_HASH_ONLY_RSA_ENCRYPTED_URLS')
@@ -113,14 +121,7 @@ def merge(prior, newer, gap):
                 raise ValueError('Fabricated new AV success')
             new_decodes += 1
             new_ids.add(cid)
-            if h in found:
-                # A prior verified URL may legitimately map to several exact
-                # channel IDs. The new exact ID must already be one of them;
-                # never discard the other historically proven identities.
-                if cid not in found[h]:
-                    raise ValueError('Same proven URL assigned to different broadcaster')
-            else:
-                found[h] = frozenset([cid])
+            retain_proven_identity(found, h, cid)
     if (expected or matched != newer['matched_current_source_hashes'] or
         len(newer['results']) - matched != newer.get('unmatched_or_unavailable_hashes') or
         dict(statuses) != newer.get('av_status_counts') or
