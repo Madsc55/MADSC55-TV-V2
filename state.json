@@ -122,5 +122,17 @@
   "note": "Primary IBO playlist on main remains protected. Source integration #42216075104: 11/12 jobs successful, final real AV scan in progress, 12 evidence artifacts; final AV acceptance and historical crosswalk within that job not yet complete. No playlist/main/PR9 writes.",
   "user_confirmed_primary_playlist": "MADSC55_TV_IBO_CALISANLAR_TEST.m3u8",
   "user_confirmed_primary_playlist_policy": "CURRENT_IBO_PLAYER_USES_MAIN_BRANCH_RAW_URL_PROTECTED_NO_AUTOMATED_WRITES",
-  "user_confirmed_primary_playlist_url": "https://raw.githubusercontent.com/Madsc55/MADSC55-TV-V2/main/MADSC55_TV_IBO_CALISANLAR_TEST.m3u8"
+  "user_confirmed_primary_playlist_url": "https://raw.githubusercontent.com/Madsc55/MADSC55-TV-V2/main/MADSC55_TV_IBO_CALISANLAR_TEST.m3u8",
+  "task_tracking": {
+    "schema": 1,
+    "manifest": "v2/tasks/master_tasks.json",
+    "task_ledger": "v2/tasks/state.json",
+    "progress": "v2/tasks/progress.md",
+    "next_action": "v2/tasks/next_action.json",
+    "engine": "v2/tasks/task_engine.py",
+    "total_tasks": 33,
+    "canonical_root": "state.json",
+    "status_authority": "v2/tasks/state.json for per-task statuses; root state.json for project-wide state",
+    "update_policy": "read fresh SHA, compare-and-swap; fail closed on conflicts; no auto-completion from Actions alone"
+  }
 }
