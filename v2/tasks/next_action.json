@@ -1,23 +1,16 @@
 {
   "schema": 1,
-  "selected_task_id": 1,
+  "selected_task_id": 3,
   "parallel_ready_task_ids": [
-    7,
-    8,
-    9,
-    10,
-    13,
-    22,
-    23,
-    27
+    4
   ],
-  "reason": "P0 #2 closed after four same-commit grouped Actions checks; #1 awaits real live AV acceptance; independent P1/P2 source/archive/guard tasks may proceed while live run continues",
+  "reason": "P0 #1 and #2 completed; #3 immutable 50-identity orphan AV evidence recovery now active; #4 historical SHA crosswalk independently active. Do not infer playback from source availability.",
   "observed_run": "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42216075104",
   "verified_grouped_tests": [
     "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42249430770",
     "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42249430807",
     "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42249430717"
   ],
-  "last_checked_at": "2026-11-06T16:15:00Z",
+  "last_checked_at": "2026-11-06T17:50:00Z",
   "selection_requires_fresh_state": true
 }
