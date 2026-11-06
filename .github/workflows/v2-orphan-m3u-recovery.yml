@@ -1,6 +1,11 @@
 name: V2 Turkish M3U Orphan Recovery — Exact History and AV Batch
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - madsc/v2-discovery-bulk-20261031
+    paths:
+      - .github/workflows/v2-orphan-m3u-recovery.yml
 
 permissions:
   contents: read
