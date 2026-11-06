@@ -1,0 +1,440 @@
+{
+  "schema": 1,
+  "repository": "Madsc55/MADSC55-TV-V2",
+  "branch": "madsc/v2-discovery-bulk-20261031",
+  "canonical_state": "state.json",
+  "tasks": [
+    {
+      "id": 1,
+      "title": "Kaynak entegrasyonu AV taramasını sonuçlandır",
+      "priority": "P0",
+      "depends_on": [],
+      "acceptance": "Final source integration run completed; every job successful; sealed AV report and encrypted artifact validated",
+      "evidence_urls": [],
+      "last_checked_at": null,
+      "owner": "automation_with_review"
+    },
+    {
+      "id": 2,
+      "title": "Son kod değişikliklerinin toplu testlerini doğrula",
+      "priority": "P0",
+      "depends_on": [],
+      "acceptance": "Latest development commit has all required grouped Actions checks successful; no skipped/failing required checks",
+      "evidence_urls": [],
+      "last_checked_at": null,
+      "owner": "automation_with_review"
+    },
+    {
+      "id": 3,
+      "title": "Kurtarılamayan 45 kanal kimliğini araştır",
+      "priority": "P0",
+      "depends_on": [
+        1,
+        2
+      ],
+      "acceptance": "All 50 immutable identities accounted for; each of 45 unresolved has documented exact-match AV result or evidence-backed blocked reason; no fabricated recoveries",
+      "evidence_urls": [],
+      "last_checked_at": null,
+      "owner": "automation_with_review"
+    },
+    {
+      "id": 4,
+      "title": "4.955 tarihî kimlikte 1.886 AV kanıtsız ve 7 eşleşmeyen kaydı incele",
+      "priority": "P0",
+      "depends_on": [
+        2
+      ],
+      "acceptance": "4,955 unique baseline hashes retained; 1,886 unproven partitioned; seven missing investigated; sealed AV provenance and exact SHA mapping checked",
+      "evidence_urls": [],
+      "last_checked_at": null,
+      "owner": "automation_with_review"
+    },
+    {
+      "id": 5,
+      "title": "3 bozuk kaynak satırını ve 17 dinamik kaynak boşluğunu onar",
+      "priority": "P0",
+      "depends_on": [
+        7,
+        8
+      ],
+      "acceptance": "Three malformed source records repaired and 17 historical dynamic sources accounted for; grouped adapter regression passes",
+      "evidence_urls": [],
+      "last_checked_at": null,
+      "owner": "automation_with_review"
+    },
+    {
+      "id": 6,
+      "title": "2.643 kayıp yayın adresini toplu FFmpeg AV testinden geçir",
+      "priority": "P0",
+      "depends_on": [
+        4,
+        5
+      ],
+      "acceptance": "2,643 candidate hashes each have a bounded safe real FFmpeg video+audio probe result or explicit justified exclusion; encrypted URLs retained",
+      "evidence_urls": [],
+      "last_checked_at": null,
+      "owner": "automation_with_review"
+    },
+    {
+      "id": 7,
+      "title": "GitHub/Gist, GitLab ve Codeberg entegrasyonları",
+      "priority": "P1",
+      "depends_on": [
+        2
+      ],
+      "acceptance": "All three platform adapters have successful end-to-end discovery, dedupe and source provenance tests",
+      "evidence_urls": [],
+      "last_checked_at": null,
+      "owner": "automation_with_review"
+    },
+    {
+      "id": 8,
+      "title": "Scribd, SlideShare ve Internet Archive kaynakları",
+      "priority": "P1",
+      "depends_on": [
+        2
+      ],
+      "acceptance": "All three document/archive adapters validated on actual public source samples, with AV separated from discovery",
+      "evidence_urls": [],
+      "last_checked_at": null,
+      "owner": "automation_with_review"
+    },
+    {
+      "id": 9,
+      "title": "Resmî yayıncı ve canlı TV kaynakları",
+      "priority": "P1",
+      "depends_on": [
+        2
+      ],
+      "acceptance": "Official broadcaster and live-site candidates verified with provenance and real AV evidence where claimed",
+      "evidence_urls": [],
+      "last_checked_at": null,
+      "owner": "automation_with_review"
+    },
+    {
+      "id": 10,
+      "title": "IPTV-org TR/AZ eşleştirmeleri",
+      "priority": "P1",
+      "depends_on": [
+        2
+      ],
+      "acceptance": "TR/AZ exact IDs verified against IPTV-org country/language feeds without name-only promotion",
+      "evidence_urls": [],
+      "last_checked_at": null,
+      "owner": "automation_with_review"
+    },
+    {
+      "id": 11,
+      "title": "URL tekrarlarını ayıkla ve kaynak geçmişini koru",
+      "priority": "P1",
+      "depends_on": [
+        7,
+        8,
+        9,
+        10
+      ],
+      "acceptance": "Duplicate URL hashes collapsed while all source histories and identities are retained",
+      "evidence_urls": [],
+      "last_checked_at": null,
+      "owner": "automation_with_review"
+    },
+    {
+      "id": 12,
+      "title": "Yayın hatalarını sınıflandır",
+      "priority": "P1",
+      "depends_on": [
+        1
+      ],
+      "acceptance": "Every probe outcome classified as AV decoded, partial, transient, blocked, unsafe or unknown without false working status",
+      "evidence_urls": [],
+      "last_checked_at": null,
+      "owner": "automation_with_review"
+    },
+    {
+      "id": 13,
+      "title": "RSA arşiv bütünlüğü ve geri yükleme",
+      "priority": "P1",
+      "depends_on": [
+        2
+      ],
+      "acceptance": "Encrypted archives pass integrity checks and restore roundtrip; no secrets or plaintext URLs exposed",
+      "evidence_urls": [],
+      "last_checked_at": null,
+      "owner": "automation_with_review"
+    },
+    {
+      "id": 14,
+      "title": "4.955 tarihî kimliği koru",
+      "priority": "P1",
+      "depends_on": [
+        13
+      ],
+      "acceptance": "All 4,955 unique historical hashes and their prior evidence survive roundtrip and failure paths",
+      "evidence_urls": [],
+      "last_checked_at": null,
+      "owner": "automation_with_review"
+    },
+    {
+      "id": 15,
+      "title": "SHA, URL ve yayıncı kimliği eşleştirmesi",
+      "priority": "P1",
+      "depends_on": [
+        4,
+        11,
+        14
+      ],
+      "acceptance": "Exact hash-to-URL and broadcaster identity crosswalk backed by source provenance, no name-only claim",
+      "evidence_urls": [],
+      "last_checked_at": null,
+      "owner": "automation_with_review"
+    },
+    {
+      "id": 16,
+      "title": "Geçici hatalarda geçmiş kanıtları koru",
+      "priority": "P1",
+      "depends_on": [
+        12,
+        14
+      ],
+      "acceptance": "Transient HTTP/DNS/timeout failures preserve previous working evidence and channel IDs",
+      "evidence_urls": [],
+      "last_checked_at": null,
+      "owner": "automation_with_review"
+    },
+    {
+      "id": 17,
+      "title": "Kurtarma kuyruklarını ve arşiv sonuçlarını tamamla",
+      "priority": "P1",
+      "depends_on": [
+        3,
+        4,
+        6,
+        15,
+        16
+      ],
+      "acceptance": "All recovery queues losslessly partition unresolved identities and accepted evidence is archived encrypted",
+      "evidence_urls": [],
+      "last_checked_at": null,
+      "owner": "automation_with_review"
+    },
+    {
+      "id": 18,
+      "title": "TR/AZ kanal kimliklerini doğrula",
+      "priority": "P2",
+      "depends_on": [
+        10,
+        15
+      ],
+      "acceptance": "TR/AZ channel identities confirmed by exact reliable metadata and source evidence; ambiguous IDs flagged",
+      "evidence_urls": [],
+      "last_checked_at": null,
+      "owner": "automation_with_review"
+    },
+    {
+      "id": 19,
+      "title": "XMLTV/EPG eşleştirmelerini düzelt",
+      "priority": "P2",
+      "depends_on": [
+        18
+      ],
+      "acceptance": "XMLTV mappings checked against verified channel IDs; collisions and missing EPG documented",
+      "evidence_urls": [],
+      "last_checked_at": null,
+      "owner": "automation_with_review"
+    },
+    {
+      "id": 20,
+      "title": "Gerçek yayın kalitesi etiketlerini doğrula",
+      "priority": "P2",
+      "depends_on": [
+        17
+      ],
+      "acceptance": "Resolution and quality labels backed by measured FFmpeg stream metadata, not channel names",
+      "evidence_urls": [],
+      "last_checked_at": null,
+      "owner": "automation_with_review"
+    },
+    {
+      "id": 21,
+      "title": "Kategorileri düzenle",
+      "priority": "P2",
+      "depends_on": [
+        18,
+        20,
+        22
+      ],
+      "acceptance": "Category ordering verified and YEDEKLER/YENİLER/FAVORİLER untouched; foreign channels segregated only in safe export",
+      "evidence_urls": [],
+      "last_checked_at": null,
+      "owner": "automation_with_review"
+    },
+    {
+      "id": 22,
+      "title": "TRT 1 ve DHA sabit sırasını koru",
+      "priority": "P2",
+      "depends_on": [
+        2
+      ],
+      "acceptance": "Protected first YEDEKLER entries TRT 1 1440P QHD then DHA CANLI 720P HD verified unchanged",
+      "evidence_urls": [],
+      "last_checked_at": null,
+      "owner": "automation_with_review"
+    },
+    {
+      "id": 23,
+      "title": "Master Engine, Eight-Stage Runner ve Ordered Preflight entegrasyonu",
+      "priority": "P2",
+      "depends_on": [
+        2
+      ],
+      "acceptance": "Master, Eight-Stage and Ordered Preflight complete grouped integration without protected writes",
+      "evidence_urls": [],
+      "last_checked_at": null,
+      "owner": "automation_with_review"
+    },
+    {
+      "id": 24,
+      "title": "Otomatik keşif, kurtarma ve kanıt saklama kabulü",
+      "priority": "P2",
+      "depends_on": [
+        7,
+        8,
+        9,
+        10,
+        13,
+        23
+      ],
+      "acceptance": "Discovery-to-AV-to-encrypted-archive acceptance passes with real artifacts, no false AV promotions",
+      "evidence_urls": [],
+      "last_checked_at": null,
+      "owner": "automation_with_review"
+    },
+    {
+      "id": 25,
+      "title": "Süre aşımı, tekrar deneme ve takılma kontrolleri",
+      "priority": "P2",
+      "depends_on": [
+        23
+      ],
+      "acceptance": "Bounded timeouts, retry budgets, stuck-job detection and no unsafe retry proven by grouped tests",
+      "evidence_urls": [],
+      "last_checked_at": null,
+      "owner": "automation_with_review"
+    },
+    {
+      "id": 26,
+      "title": "Actions hata raporları ve güvenli yeniden deneme",
+      "priority": "P2",
+      "depends_on": [
+        23,
+        25
+      ],
+      "acceptance": "Failure reason, safe retry limits and no false green outcomes verified from real Actions metadata",
+      "evidence_urls": [],
+      "last_checked_at": null,
+      "owner": "automation_with_review"
+    },
+    {
+      "id": 27,
+      "title": "Merkezî state.json ile GitHub sonuçlarının tutarlılığı",
+      "priority": "P2",
+      "depends_on": [
+        2
+      ],
+      "acceptance": "Canonical root state.json reconciles GitHub runs; optimistic SHA concurrency and offline fail-closed tested",
+      "evidence_urls": [],
+      "last_checked_at": null,
+      "owner": "automation_with_review"
+    },
+    {
+      "id": 28,
+      "title": "Doğrulanmış ibo_1000.m3u paketi",
+      "priority": "P3",
+      "depends_on": [
+        17,
+        18,
+        20,
+        21,
+        24
+      ],
+      "acceptance": "ibo_1000.m3u created only from individually AV-proven records; never pad to target",
+      "evidence_urls": [],
+      "last_checked_at": null,
+      "owner": "automation_with_review"
+    },
+    {
+      "id": 29,
+      "title": "Doğrulanmış ibo_2000.m3u paketi",
+      "priority": "P3",
+      "depends_on": [
+        28
+      ],
+      "acceptance": "ibo_2000.m3u created only from individually AV-proven records; never pad to target",
+      "evidence_urls": [],
+      "last_checked_at": null,
+      "owner": "automation_with_review"
+    },
+    {
+      "id": 30,
+      "title": "M3U, kategori ve tekrar kontrolleri",
+      "priority": "P3",
+      "depends_on": [
+        28,
+        29
+      ],
+      "acceptance": "Both export packages pass syntax, category, duplicate and provenance gates",
+      "evidence_urls": [],
+      "last_checked_at": null,
+      "owner": "automation_with_review"
+    },
+    {
+      "id": 31,
+      "title": "Son toplu kabul testleri",
+      "priority": "P3",
+      "depends_on": [
+        17,
+        24,
+        26,
+        27,
+        30
+      ],
+      "acceptance": "All grouped final acceptance checks green with encrypted AV evidence and immutable playlist checks",
+      "evidence_urls": [],
+      "last_checked_at": null,
+      "owner": "automation_with_review"
+    },
+    {
+      "id": 32,
+      "title": "IBO Player cihaz testi — yalnızca kullanıcı",
+      "priority": "P3",
+      "depends_on": [
+        31
+      ],
+      "acceptance": "User supplies actual IBO Player device playback test evidence; automation cannot mark this complete",
+      "evidence_urls": [],
+      "last_checked_at": null,
+      "owner": "user"
+    },
+    {
+      "id": 33,
+      "title": "Son arşiv ve tamamlanma raporu",
+      "priority": "P3",
+      "depends_on": [
+        31,
+        32
+      ],
+      "acceptance": "Final archive integrity and completion report cites verified runs, user device result and remaining exclusions",
+      "evidence_urls": [],
+      "last_checked_at": null,
+      "owner": "automation_with_review"
+    }
+  ],
+  "policy": {
+    "no_main_writes": true,
+    "no_protected_playlist_writes": true,
+    "no_pr9_merge": true,
+    "no_plaintext_urls": true,
+    "real_video_and_audio_required": true,
+    "device_test_user_only": true
+  }
+}
