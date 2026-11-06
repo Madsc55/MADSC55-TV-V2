@@ -93,6 +93,15 @@ def crosswalk(baseline_path, worldwide_path):
         "ibo_device_verified": False,
         "historical_broadcaster_identity_verified": False,
     }
+    # Fail closed if any historical identity is omitted or counted twice.
+    missing = set(hashes) - matched
+    queues = [set(group) for group in priority.values()]
+    if (matched & missing or matched | missing != set(hashes)
+            or sum(map(len, queues)) != len(unproven)
+            or set().union(*queues) != unproven
+            or sum(unproven_status_counts.values()) != len(unproven)
+            or len(decoded) + len(unproven) + len(missing) != 4955):
+        raise ValueError("Historical AV crosswalk lossless partition failed")
     if result["worldwide_candidates"] != acceptance["candidate_hashes"]:
         raise ValueError("Validated candidate tally changed")
     return result
