@@ -35,7 +35,7 @@ class TaskEngineTests(unittest.TestCase):
         self.assertEqual(e.select(self.master, ledger, self.root), 1)
         independent = e.independent_ready(self.master, ledger, self.root, excluded=(1,))
         self.assertNotIn(2, independent)
-        self.assertEqual(independent[:4], [7, 8, 9, 10])
+        self.assertEqual(independent[:5], [4, 7, 8, 9, 10])
         self.assertIn(13, independent)
 
     def test_completed_not_reselected(self):
