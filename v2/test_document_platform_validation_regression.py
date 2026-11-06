@@ -67,5 +67,20 @@ class DocumentPlatformValidationTests(unittest.TestCase):
                 self.assertFalse(_valid("channel_scan", report))
 
 
+    def test_invalid_channel_advisory_links(self):
+        report = {
+            "schema": 1, "candidates": [], "source_audit": [],
+            "coverage_status": "COMPLETE", "playback_verified": False,
+            "candidate_status": "UNVERIFIED",
+            "advisory_channel_identity_handoff": {
+                "av_verified": False, "ibo_device_verified": False,
+                "youtube_pages_are_not_m3u_streams": True,
+                "official_websites_are_not_m3u_streams": True,
+                "linked_m3u_candidates": 1, "links": "invalid",
+            },
+        }
+        self.assertFalse(_valid("channel_scan", report))
+
+
 if __name__ == "__main__":
     unittest.main()
