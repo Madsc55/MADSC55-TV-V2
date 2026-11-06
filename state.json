@@ -35,7 +35,8 @@
       "recovery_review_queue_commit": "00ea526ea5e220a34db833dd869a47a68e3a2355",
       "recovery_review_queue_ci": "passed Master Engine #42229625563, Eight-Stage #42229625551, Current Scanner #42229625602, Sirali Hazirlik #42229625636",
       "anonymous_queue_counts_workflow_commit": "101d52241c67f4da55b3b94146bc49d74da2fb3b",
-      "anonymous_queue_counts_run": "not yet executed; explicit workflow_dispatch required"
+      "anonymous_queue_counts_run": "not executed on updated commit; workflow_dispatch required; no automatic trigger",
+      "latest_dedicated_run": "42228674931 on 56060074, successful but predates four-queue report"
     },
     "security_trigger_failure": {
       "commit": "56060074",
@@ -58,7 +59,7 @@
       ],
       "cause": "SyntaxError in v2/test_historical_worldwide_av_crosswalk.py line 94: doubled backslash",
       "fix_commit": "d5d7dbe0435ec692fe45f61300c3b17927c9c97d",
-      "retest": "pending"
+      "retest": "PASS: five grouped gates on d5d7dbe0 (#42231947323, #42231947255, #42231947325, #42231947278, #42231947460); later c0acbfb0 3/3 PASS"
     }
   },
   "completed_steps": [
@@ -86,5 +87,5 @@
     "do_not_claim_unverified_success": true,
     "old_repository_forbidden": true
   },
-  "note": "One canonical record. A new test introduced a syntax error, fixed in d5d7dbe0; grouped CI must pass before closure. No protected playlist or main changes. Historical recovery still partial."
+  "note": "Canonical progress: SyntaxError corrected and all five grouped gates PASS. Historical crosswalk dedicated run 42228674931 predates four-queue counters; no verified real queue counts yet. 4955 preserved, 4948 matched, 3062 prior AV, 1886 unproven, 7 missing. No main, PR9 or protected IBO edits."
 }
