@@ -36,7 +36,7 @@ def classify_report(data):
         source = row.get("source_id")
         candidates = row.get("candidates")
         if (not isinstance(digest, str) or not HASH.fullmatch(digest)
-                or not isinstance(source, str)
+                or source not in ORIGINAL_SOURCES
                 or not isinstance(candidates, list)):
             raise ValueError("Malformed original candidate identity")
         if "url" in row or "stream_url" in row:
@@ -47,7 +47,7 @@ def classify_report(data):
         current["sources"].add(source)
         per_source.setdefault(source, set()).add(digest)
         for candidate in candidates:
-            if not isinstance(candidate, dict) or "url" in candidate:
+            if not isinstance(candidate, dict) or "url" in candidate or "stream_url" in candidate:
                 raise ValueError("Unexpected private URL in public evidence")
             if not isinstance(candidate.get("url_sha256"), str) or not HASH.fullmatch(candidate["url_sha256"]):
                 raise ValueError("Missing candidate URL hash")
