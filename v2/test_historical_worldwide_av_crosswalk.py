@@ -48,6 +48,19 @@ class HistoricalWorldwideAVCrosswalkTests(unittest.TestCase):
         self.assertFalse(result["protected_playlist_modified"])
         self.assertFalse(result["ibo_device_verified"])
 
+    def test_missing_and_matched_sha_partition_is_lossless(self):
+        result = self.run_crosswalk()
+        matched = set(result["historical_match_url_sha256"])
+        missing = set(result["historical_missing_worldwide_url_sha256"])
+        decoded = set(result["historical_decoded_url_sha256"])
+        self.assertFalse(matched & missing)
+        self.assertEqual(matched | missing, set(self.hashes))
+        self.assertTrue(decoded <= matched)
+        self.assertEqual(len(matched) + len(missing), 4955)
+        self.assertEqual(len(decoded) + result["historical_matched_without_av_proof"],
+                         len(matched))
+        self.assertEqual(result["historical_not_in_worldwide_report"], len(missing))
+
     def test_tampered_historical_baseline_rejected(self):
         self.historical.write_bytes(self.raw + b" ")
         with self.assertRaises(ValueError):
