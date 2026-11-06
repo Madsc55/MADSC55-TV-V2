@@ -90,3 +90,27 @@ def restore(path, key_hex=None):
 
 def archive_sha256(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+
+def archive_manifest(path, key_hex=None):
+    """Create a non-secret, authenticated-record-verified snapshot for external retention."""
+    records = restore(path, key_hex)
+    return {"schema": 1, "sha256": archive_sha256(path), "record_count": len(records)}
+
+
+def restore_verified(path, manifest, key_hex=None):
+    """Reject whole-line deletion, reordering or replacement against a retained manifest."""
+    if not isinstance(manifest, dict) or manifest.get("schema") != 1:
+        raise ValueError("Invalid archive manifest")
+    digest = manifest.get("sha256")
+    count = manifest.get("record_count")
+    if not isinstance(digest, str) or len(digest) != 64 or not all(c in "0123456789abcdef" for c in digest):
+        raise ValueError("Invalid archive digest")
+    if type(count) is not int or count < 0:
+        raise ValueError("Invalid archive count")
+    if archive_sha256(path) != digest:
+        raise ValueError("Archive integrity mismatch")
+    records = restore(path, key_hex)
+    if len(records) != count:
+        raise ValueError("Archive record count mismatch")
+    return records
