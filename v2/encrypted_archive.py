@@ -94,8 +94,12 @@ def archive_sha256(path):
 
 def archive_manifest(path, key_hex=None):
     """Create a non-secret, authenticated-record-verified snapshot for external retention."""
+    before = archive_sha256(path)
     records = restore(path, key_hex)
-    return {"schema": 1, "sha256": archive_sha256(path), "record_count": len(records)}
+    after = archive_sha256(path)
+    if before != after:
+        raise ValueError("Archive changed during manifest creation")
+    return {"schema": 1, "sha256": after, "record_count": len(records)}
 
 
 def restore_verified(path, manifest, key_hex=None):
