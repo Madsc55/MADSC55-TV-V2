@@ -1,3 +1,13 @@
+## 6 Kasım 2026 — Ortak sistem CI tetikleyici çakışması giderildi, Actions doğrulaması açık
+
+- **Korunan ve tekrar çalıştırılmayan başarılı koşu:** [#42303308753](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42303308753), commit `4672f994`, 17 modül / 190 test `OK`; canlı AV job `skipped`.
+- **Doğrudan doğrulanan kök neden:** `v2/actions_trigger_protection_audit.py` içindeki `MANUAL_NETWORK_OR_MEDIA` kümesi `v2-orphan-m3u-recovery` workflow'unu yalnız `workflow_dispatch` ile sınırlar. Önceki offline regresyonu başlatmak için bu dosyaya eklenen `push`, `UNAPPROVED_AUTOMATIC_PUSH` ve `NETWORK_OR_MEDIA_NOT_MANUAL_ONLY` ihlallerine neden olur. Bu güvenlik kapısı gevşetilmedi.
+- **Düzeltme:** [db2b52aa](https://github.com/Madsc55/MADSC55-TV-V2/commit/db2b52aaf116144a579199353aeb0def4dcd8078): mevcut `v2-orphan-m3u-recovery.yml` tam olarak önceki manuel-only blob `c4e291dbe726709db3b6beba07d491d0db6de25b` içeriğine geri döndürüldü. Read-only 190-test başarısı tarihsel kanıt olarak korunuyor.
+- **Bekleyen doğrulama:** Master Engine, Eight-Stage Runner, Ordered Preflight ve Actions Trigger & Protected Playlist Gate için bu commit sonrası gerçek run/job logları henüz alınamadı; dört işin hepsi geçti denemez. Geliştirme dalındaki yeni push'un mevcut güvenli CI tetikleyicilerini başlatması beklenir, fakat run ID doğrulanmadan başlatıldı iddiası yapılmaz.
+- **Sonraki aşama:** Dört sistem CI koşusunun sonuçlarını ve olası ek hataları doğrula; yalnız hepsi başarılıysa gerçek 45 kimlik AV kurtarmaya geç. `main`, ana IBO, PR #9, eski repo ve tarihî arşiv değişmedi.
+
+---
+
 ## 6 Kasım 2026 — 4672f994 kurtarma kabulü BAŞARILI; diğer sistem kapıları AÇIK
 
 - **Doğrulanan Actions:** [#42303308753](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42303308753), commit [4672f994](https://github.com/Madsc55/MADSC55-TV-V2/commit/4672f994b47d933a9232c2cc887f143dea3d7b3b), job `128186296451`: **190 test, OK** (17 modüllük read-only kurtarma regresyonu). Şifreleme kurulumu ve korunan IBO/tarihî metadata kontrolleri geçti. Canlı AV job `128186298557` **skipped**.
