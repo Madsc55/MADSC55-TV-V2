@@ -35,6 +35,8 @@ jobs:
           if before != after:
               raise SystemExit('Protected playlist SHA-256 mismatch')
           PY
+      - name: Verify permanent 33-task engine and fail-closed safety in one batch
+        run: PYTHONPATH=v2/tasks python -m unittest discover -s v2/tasks -p 'test_*.py' -v
       - name: Compile Master Engine modules
         run: python -m compileall -q v2
       - name: Run all offline regressions and preserve logs
