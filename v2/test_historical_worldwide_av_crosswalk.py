@@ -102,6 +102,23 @@ class HistoricalWorldwideAVCrosswalkTests(unittest.TestCase):
         self.assertEqual(result["historical_exact_hash_av_decoded"], 0)
         self.assertEqual(sum(result["historical_recovery_review_counts"].values()), 5)
 
+    def test_unprobed_and_unsafe_protocol_are_not_network_retry_candidates(self):
+        statuses = ["NOT_PROBED_BUDGET",
+                    "PROBE_FAILED_PROTOCOL_DISALLOWED_BY_SAFETY"]
+        self.world.write_text(json.dumps({"candidates": [
+            {"url_sha256": self.hashes[i], "status": status,
+             "decoded": False, "video": False, "audio": False}
+            for i, status in enumerate(statuses)
+        ]}))
+        with (patch.object(module, "BASELINE_SHA256",
+                           hashlib.sha256(self.raw).hexdigest()),
+              patch.object(module, "inspect", return_value={"candidate_hashes": 2})):
+            result = module.crosswalk(self.historical, self.world)
+        groups = result["historical_recovery_review_url_sha256"]
+        self.assertEqual(groups["source_research"], self.hashes[:2])
+        self.assertEqual(groups["transient_retry"], [])
+        self.assertEqual(result["historical_exact_hash_av_decoded"], 0)
+
     def test_tampered_historical_baseline_rejected(self):
         self.historical.write_bytes(self.raw + b" ")
         with self.assertRaises(ValueError):
