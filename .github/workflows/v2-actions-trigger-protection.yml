@@ -114,7 +114,7 @@ jobs:
   final-worldwide-acceptance:
     name: One-time worldwide M3U AV decode, metadata routing and RSA sealed evidence
     if: >-
-      github.event_name == 'push' && github.event.head_commit.message == 'feat(v2): execute final read-only worldwide AV acceptance scan'
+      false # disabled: live media/network jobs must never be triggered by push
     needs: grouped-protection-check
     runs-on: ubuntu-24.04
     timeout-minutes: 330
@@ -174,7 +174,7 @@ jobs:
   document-platform-live-audit:
     name: Three public document adapters, one batch plus anonymous live coverage
     if: >-
-      github.event_name == 'push' && github.event.head_commit.message == 'feat(v2): integrate Scribd SlideShare Internet Archive source adapters'
+      false # disabled: live media/network jobs must never be triggered by push
     needs: grouped-protection-check
     runs-on: ubuntu-24.04
     timeout-minutes: 18
@@ -207,7 +207,7 @@ jobs:
   orphan-46-live-recovery:
     name: Exact original 50 identities and 46 missing AV streams — one guarded batch
     if: >-
-      github.event_name == 'push' && github.event.head_commit.message == 'feat(v2): run exact 46 orphan AV rescue with pinned public registry'
+      false # disabled: live media/network jobs must never be triggered by push
     needs: grouped-protection-check
     runs-on: ubuntu-24.04
     timeout-minutes: 140
