@@ -115,6 +115,12 @@ class OrphanResolutionGateTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             classify_report(r)
 
+    def test_sealed_candidate_count_must_match_distinct_hashes(self):
+        r = fixture()
+        r["records"][1]["candidates"][0]["url_sha256"] = r["records"][0]["candidates"][0]["url_sha256"]
+        with self.assertRaisesRegex(ValueError, "Original 55/50 identity"):
+            classify_report(r)
+
     def test_source_occurrence_drift_rejected(self):
         r = fixture()
         r["records"][0]["source_id"] = "github-auto-24"
