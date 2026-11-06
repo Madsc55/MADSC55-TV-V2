@@ -41,6 +41,17 @@ def classify_report(data, baseline=None):
             raise ValueError("Duplicate or malformed orphan metadata records")
         if not expected.issubset(set(observed)):
             raise ValueError("Missing original 55 metadata occurrences")
+        # New upstream rows are excluded from original-50 AV accounting,
+        # but their public evidence must still be free of plaintext URLs.
+        for row in records:
+            if "url" in row or "stream_url" in row:
+                raise ValueError("Plaintext URLs in public source report")
+            if not isinstance(row.get("candidates"), list):
+                raise ValueError("Malformed upstream candidate evidence")
+            for candidate in row["candidates"]:
+                if (not isinstance(candidate, dict)
+                        or "url" in candidate or "stream_url" in candidate):
+                    raise ValueError("Unexpected private URL in public evidence")
         records = [row for row in records
                    if (row["source_id"], row["extinf_sha256"]) in expected]
     if len(records) != 55:
