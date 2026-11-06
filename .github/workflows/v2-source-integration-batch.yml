@@ -60,6 +60,10 @@ on:
   workflow_dispatch:
 permissions:
   contents: read
+# Serialize expensive AV scans without cancelling an active evidence-producing run.
+concurrency:
+  group: v2-source-integration-bulk-${{ github.ref }}
+  cancel-in-progress: false
 jobs:
   offline-source-safety:
     name: All source adapter regressions - no false acceptance
