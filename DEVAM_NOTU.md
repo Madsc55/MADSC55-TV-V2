@@ -1,3 +1,12 @@
+## 6 Kasım 2026 — V2 DEVAM: Ordered Preflight sırası için güvenlik regresyonu
+
+- [bb3e6f06](https://github.com/Madsc55/MADSC55-TV-V2/commit/bb3e6f06ce64005d9862f7b935b4df5da10e9e9a): `v2/test_actions_trigger_protection_audit.py` içine, `v2-ordered-preflight.yml` `discovery-tests` içinde `cryptography==44.0.2` kurulumunun ilk testten önce olması ve geniş sürüm aralığı bulunmaması şartı eklendi.
+- [Issue #1](https://github.com/Madsc55/MADSC55-TV-V2/issues/1) güncellendi; açık.
+- `b16661aa` için GitHub combined commit statuses boş döndü; Actions run sonucunu göstermez. Yeni toplu sistem testinin başarı logu alınamadı. Önceki başarılı [#42303308753](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42303308753) tekrar çalıştırılmadı.
+- Gerçek AV kanıtı olmadan 45 kanal kurtarılmış sayılmaz. `main`, PR #9, IBO ve tarihî envanter değişmedi.
+
+---
+
 ## 6 Kasım 2026 — V2 DEVAM: Ordered Preflight şifreleme bağımlılığı sırası
 
 - Önceki geliştirme HEAD `4b024105cb5ffb435f835441dbcae31f56d75d86` kontrol edildi.
