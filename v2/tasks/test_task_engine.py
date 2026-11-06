@@ -27,6 +27,17 @@ class TaskEngineTests(unittest.TestCase):
         ledger["statuses"][0]["status"] = "blocked"
         self.assertEqual(e.select(self.master, ledger, self.root), 2)
 
+    def test_independent_work_after_p0_completion(self):
+        ledger = copy.deepcopy(self.ledger)
+        ledger["statuses"][1].update(status="completed",
+            evidence_urls=["https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42250095219"],
+            last_checked_at="2026-11-06T16:15:00Z")
+        self.assertEqual(e.select(self.master, ledger, self.root), 1)
+        independent = e.independent_ready(self.master, ledger, self.root, excluded=(1,))
+        self.assertNotIn(2, independent)
+        self.assertEqual(independent[:4], [7, 8, 9, 10])
+        self.assertIn(13, independent)
+
     def test_completed_not_reselected(self):
         ledger = copy.deepcopy(self.ledger)
         ledger["statuses"][0].update(status="completed", evidence_urls=["https://github.com/example/evidence"], last_checked_at="2026-11-06T16:00:00Z")
