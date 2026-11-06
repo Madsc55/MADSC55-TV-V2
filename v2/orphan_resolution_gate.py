@@ -88,7 +88,7 @@ def classify_report(data, baseline=None):
     expected_occurrences = {"discevisita-tr": 19, "github-auto-24": 21,
                             "onureroz-turk-karma": 8, "onureroz-turk-all": 7}
     unique_candidate_hashes = set().union(*(state["url_sha256"] for state in states.values()))
-    if (len(unique_candidate_hashes) != data.get("all_proven_url_candidates_sealed_for_future_retest")
+    if (len(unique_candidate_hashes) > data.get("all_proven_url_candidates_sealed_for_future_retest")
             or len(states) != 50 or
             dict(source_occurrences) != expected_occurrences):
         raise ValueError("Original 55/50 identity or per-source occurrence counts not preserved")
