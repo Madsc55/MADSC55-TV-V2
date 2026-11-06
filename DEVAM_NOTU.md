@@ -1,3 +1,15 @@
+## 6 Kasım 2026 — 468cd6cd sonrası doğrulanmış devam kaydı (kurtarma toplu kabulü AÇIK)
+
+- **Geliştirme dalı:** `madsc/v2-discovery-bulk-20261031`. Son kontrol edilen kod commit'i `468cd6cde98eaa6952641fe0ca0caec44bbc394c`.
+- **Mevcut takip:** GitHub Issues `[V2 SIRA]` kayıtları ve bu `DEVAM_NOTU.md` bulundu. Mevcut kayıtlar silinmedi veya yeniden başlatılmadı. Önceden kararlaştırılan 33 işin tam eşleştirmesi henüz doğrulanmadığından, 8 görünen Issue kaydı 33 işin tamamı olarak yorumlanmamalıdır.
+- **Actions kontrolü:** `468cd6cd` için combined status sorgusunda 0 durum; yalnız PR tetiklemeli runları döndüren commit-run sorgusunda 0 sonuç. Bunlar manuel `workflow_dispatch` koşularının yokluğunu ispatlamaz. `.github/workflows/v2-orphan-m3u-recovery.yml` manuel tetiklemeli. **Bu kayıt tarihinde yeni toplu koşu başlatıldığı veya başarılı olduğu doğrulanmadı.**
+- **İlk açık kabul:** `v2/test_orphan_resolution_gate.py` dahil 17 modüllük tek toplu offline regresyonu çalıştır; ardından mevcut 55 kaynak kaydı/50 kanal kimliği fail-closed kapısını gerçek şifreli kanıtlarla değerlendir. Başarılı CI olmadan tamamlandı sayma.
+- **Önemli ayrım:** 5 AV kanıtlı / 32 adaylı AV kanıtsız / 13 adaysız, son tarihî raporun 50 kimliklik dağılımıdır; yeni test sonucu değildir. 45 eksik kanal kurtarılmış sayılmaz.
+- **Koruma:** `main`, PR #9, `MADSC55_TV_IBO_CALISANLAR_TEST.m3u8`, YEDEKLER/YENİLER/FAVORİLER, TRT 1/DHA sabit sırası, eski repo ve tarihî kanıtlar değiştirilmedi.
+- **Sonraki işler:** 33 görev korunarak sıralı devam: kurtarma kabulü → 45 kimlik → 2.643 adres → doküman/forge adaptörleri → 3 bozuk satır/17 dinamik kaynak → 4.955 kimlik/1.886 AV açığı ve RSA/SHA restore → TR/AZ/XMLTV → Actions güvenliği → ayrı IBO 1000/2000 paketleri → toplu kabul ve kullanıcı cihaz testi.
+
+---
+
 ## 5 Kasım 2026 — 15 MADDELİK PAKETİN GERÇEK TOPLU UYGULAMA VE KABUL KAYDI
 
 **Uygulama:** Yalnız \`Madsc55/MADSC55-TV-V2\` geliştirme dalında. GitHub ana İBO listesi korunmuştur; YEDEKLER/YENİLER/FAVORİLER, sabit TRT 1/DHA kayıtları, eski depo ve açık PR #9 değiştirilmemiştir. Cihaz testi kullanıcıya aittir. Bu kayıt kaynak/AV/IBO kanıt türlerini birbirine karıştırmaz.
