@@ -147,7 +147,10 @@ def audit():
     sources = cfg.get("sources")
     if not isinstance(sources, list) or cfg.get("policy") != "discovery-only; never modify live playlist":
         raise ValueError("Invalid immutable static source inventory")
-    ids = [s.get("id") for s in sources]
+    if any(not isinstance(s, dict) or not isinstance(s.get("id"), str)
+           or not s["id"].strip() for s in sources):
+        raise ValueError("Invalid static source record or empty source ID")
+    ids = [s["id"] for s in sources]
     missing = sorted(REQUIRED - {s.get("id") for s in sources
                                  if s.get("enabled", True) is not False})
     duplicates = sorted({x for x in ids if ids.count(x) > 1})
