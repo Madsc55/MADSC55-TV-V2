@@ -53,6 +53,7 @@ class TaskEngineTests(unittest.TestCase):
         ledger = copy.deepcopy(self.ledger)
         # Stable fixture: future closures must not invalidate scheduler tests.
         ledger["statuses"][8]["status"] = "pending"
+        ledger["statuses"][4]["status"] = "pending"  # Explicit fixture: live task 5 may be blocked.
         # Task 5 is P0 and ready once tasks 7 and 8 are complete.
         self.assertEqual(e.select(self.master, ledger, self.root, defer_heavy=True), 5)
         ready = e.independent_ready(self.master, ledger, self.root, defer_heavy=True)
@@ -111,6 +112,9 @@ class TaskEngineTests(unittest.TestCase):
             lambda r: r[0].update(head_sha="b" * 40),
             lambda r: r.pop(),
             lambda r: r[0].update(html_url="https://invalid.example/1"),
+            lambda r: r[0].update(html_url=r[1]["html_url"]),
+            lambda r: r[0].update(id=True),
+            lambda r: r[0].update(id=0),
         ):
             broken = copy.deepcopy(runs)
             changed(broken)
