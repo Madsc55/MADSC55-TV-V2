@@ -43,9 +43,9 @@ class MonitorTests(unittest.TestCase):
     def test_all_grouped_workflows_are_queried(self):
         observed = []
         def fake_api(path):
-            observed.append(path)
             if "/runs/" in path and path.endswith("/jobs?per_page=100"):
                 return {"total_count": 1, "jobs": [{"id": 90, "status": "completed", "conclusion": "success", "steps": []}]}
+            observed.append(path)
             workflow = path.split("/workflows/", 1)[1].split("/runs?", 1)[0]
             return {"workflow_runs": [{"id": len(observed), "head_sha": "a" * 40,
                 "html_url": "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/" + str(len(observed)),
