@@ -148,8 +148,10 @@ def audit():
     if not isinstance(sources, list) or cfg.get("policy") != "discovery-only; never modify live playlist":
         raise ValueError("Invalid immutable static source inventory")
     if any(not isinstance(s, dict) or not isinstance(s.get("id"), str)
-           or not s["id"].strip() for s in sources):
-        raise ValueError("Invalid static source record or empty source ID")
+           or not s["id"].strip() or
+           ("enabled" in s and type(s["enabled"]) is not bool)
+           for s in sources):
+        raise ValueError("Invalid static source record, ID or enabled flag")
     ids = [s["id"] for s in sources]
     missing = sorted(REQUIRED - {s.get("id") for s in sources
                                  if s.get("enabled", True) is not False})
