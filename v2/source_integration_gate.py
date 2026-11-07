@@ -212,6 +212,7 @@ def audit():
             api_crosswalk = {"status": "INVALID_API_CROSSWALK",
                              "av_verified": False}
             problems.append("traz_api:INVALID_CROSSWALK")
+            errors.append("INVALID_API_CROSSWALK")
     source_scan = loaded.get("channel_scan", {})
     dynamic_handoff = source_scan.get("public_source_reference_handoff", {})
     live_handoff = source_scan.get("approved_live_page_handoff", {})
