@@ -144,8 +144,9 @@ class TaskEngineTests(unittest.TestCase):
             e.reconcile_root_actions(root, self.ledger, runs, sha, [name])
         stale = copy.deepcopy(self.root)
         stale["last_verified_run_observation"]["development_commit"] = "d" * 40
-        with self.assertRaisesRegex(ValueError, "stale or mismatched"):
-            e.reconcile_root_actions(stale, self.ledger, runs, sha, [name])
+        # The root is a historical observation; matching fresh Actions proof wins.
+        self.assertEqual(e.reconcile_root_actions(stale, self.ledger, runs, sha, [name])["expected_sha"], sha)
+        self.assertEqual(e.reconcile_root_actions(stale, self.ledger, runs, sha, [name])["accepted_runs"][name], runs[0]["html_url"])
 
     def test_concurrent_state_conflict(self):
         self.assertTrue(e.require_matching_sha("sha1", "sha1"))
