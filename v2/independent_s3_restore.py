@@ -23,7 +23,7 @@ def restore_s3_version(bucket, key, version, expected, runner=subprocess.run):
     if not archive_key:
         raise RuntimeError("Missing private archive key")
     if not re.fullmatch(r"[0-9a-fA-F]{64}", archive_key):
-        raise RuntimeError("Invalid private archive key")
+        raise RuntimeError("invalid private archive key")
     # Large encrypted inventories need a bounded but configurable retrieval window.
     timeout_raw = os.environ.get("V2_S3_RESTORE_TIMEOUT_SECONDS", "900")
     if not timeout_raw.isdecimal() or not 30 <= int(timeout_raw) <= 3600:
