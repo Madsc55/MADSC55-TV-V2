@@ -20,7 +20,7 @@ permissions:
   id-token: write
 jobs:
   independent-restore:
-    if: github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' && (inputs.s3_bucket != '' || vars.V2_ARCHIVE_S3_BUCKET != '') && (inputs.s3_version_id != '' || vars.V2_ARCHIVE_S3_VERSION_ID != '')
+    if: github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' && (inputs.s3_bucket != '' || vars.V2_ARCHIVE_S3_BUCKET != '') && (inputs.s3_version_id != '' || vars.V2_ARCHIVE_S3_VERSION_ID != '') && (inputs.s3_object_key != '' || vars.V2_ARCHIVE_S3_OBJECT_KEY != '')
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     steps:
@@ -32,6 +32,25 @@ jobs:
         run: python -m pip install cryptography==44.0.2
       - name: Verify protected IBO playlist
         run: test "$(git hash-object MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)" = '4b1c3cea4b5107a425abab60f62d41f9f81e05a7'
+      - name: Validate immutable restore configuration before AWS credentials
+        env:
+          ARCHIVE_KEY: ${{ secrets.V2_ARCHIVE_KEY_HEX }}
+          PINNED_SHA256: ${{ secrets.V2_ARCHIVE_EXPECTED_SHA256 }}
+          ROLE_ARN: ${{ secrets.V2_ARCHIVE_AWS_ROLE_ARN }}
+          AWS_REGION: ${{ vars.V2_ARCHIVE_AWS_REGION }}
+        run: |
+          python - <<'PY'
+          import os, re
+          key = os.environ.get("ARCHIVE_KEY", "")
+          sha = os.environ.get("PINNED_SHA256", "")
+          if not re.fullmatch(r"[0-9a-fA-F]{64}", key):
+              raise SystemExit("BLOCKED: missing or invalid durable archive key")
+          if not re.fullmatch(r"[0-9a-f]{64}", sha):
+              raise SystemExit("BLOCKED: missing immutable archive SHA256")
+          if not os.environ.get("ROLE_ARN") or not os.environ.get("AWS_REGION"):
+              raise SystemExit("BLOCKED: missing AWS OIDC role or region")
+          print("Archive restore configuration validated before requesting AWS credentials")
+          PY
       - name: Obtain short-lived AWS OIDC credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
