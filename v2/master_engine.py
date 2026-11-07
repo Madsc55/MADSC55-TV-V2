@@ -198,10 +198,23 @@ def main():
             failures.append({"id": source["id"], "status": result["status"],
                              "reason": "Fresh source unavailable"})
     history = list(read_records(args.history)) if args.history else []
+    from collections import Counter
+    import threading
+    av_diagnostics = Counter()
+    diagnostics_lock = threading.Lock()
+    def probe_with_diagnostics(item):
+        detail = {}
+        ok = decode_media(item, args.timeout, diagnostic=detail)
+        category = detail.get("reason", "unknown")
+        if category == "ffmpeg_nonzero_exit":
+            category += ":" + detail.get("stderr_category", "other")
+        with diagnostics_lock:
+            av_diagnostics[category] += 1
+        return ok
     items, audit, history_report = build(source_texts, live_text, history,
                                          checker=lambda x: hls_reachable(x, args.timeout),
                                          workers=args.workers,
-                                         media_checker=lambda x: decode_media(x, args.timeout))
+                                         media_checker=probe_with_diagnostics)
     # Never silently publish a partial scan as complete.
     args.out.mkdir(parents=True)
     # The archive may be configured outside the output tree; create its parent
@@ -248,7 +261,7 @@ def main():
               "configured_sources": len(sources), "fetched_sources": len(audit),
               "failed_sources": failures, "source_audit": audit, "source_recovery_audit": recovery_audit, "unique_candidates": len(items),
               "manifest_reachable": sum(x["network_status"] == "HLS_MANIFEST_REACHABLE" for x in items),
-              "media_decoded": len(verified), "unknown_or_failed": sum(x["network_status"] != "HLS_MANIFEST_REACHABLE" for x in items),
+              "media_decoded": len(verified), "ffmpeg_failure_categories": dict(sorted(av_diagnostics.items())), "unknown_or_failed": sum(x["network_status"] != "HLS_MANIFEST_REACHABLE" for x in items),
               "historical": history_report, "historical_loss_guard": protected_history,
               "historical_raw_records_preserved": len(history),
               "archive_restore_verified": bool(archived_items) and restored == archived_items,
