@@ -20,7 +20,7 @@ permissions:
   id-token: write
 jobs:
   independent-restore:
-    if: github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' && (inputs.s3_bucket != '' || vars.V2_ARCHIVE_S3_BUCKET != '') && (inputs.s3_version_id != '' || vars.V2_ARCHIVE_S3_VERSION_ID != '') && (inputs.s3_object_key != '' || vars.V2_ARCHIVE_S3_OBJECT_KEY != '')
+    if: github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031'
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     steps:
@@ -38,9 +38,16 @@ jobs:
           PINNED_SHA256: ${{ secrets.V2_ARCHIVE_EXPECTED_SHA256 }}
           ROLE_ARN: ${{ secrets.V2_ARCHIVE_AWS_ROLE_ARN }}
           AWS_REGION: ${{ vars.V2_ARCHIVE_AWS_REGION }}
+          ARCHIVE_BUCKET: ${{ inputs.s3_bucket || vars.V2_ARCHIVE_S3_BUCKET }}
+          ARCHIVE_OBJECT_KEY: ${{ inputs.s3_object_key || vars.V2_ARCHIVE_S3_OBJECT_KEY }}
+          ARCHIVE_VERSION: ${{ inputs.s3_version_id || vars.V2_ARCHIVE_S3_VERSION_ID }}
         run: |
           python - <<'PY'
           import os, re
+          if not all(os.environ.get(k, "").strip() for k in ("ARCHIVE_BUCKET", "ARCHIVE_OBJECT_KEY", "ARCHIVE_VERSION")):
+              raise SystemExit("BLOCKED: missing S3 bucket, object key or immutable version ID")
+          if os.environ["ARCHIVE_VERSION"] == "null":
+              raise SystemExit("BLOCKED: mutable null S3 version cannot be accepted")
           key = os.environ.get("ARCHIVE_KEY", "")
           sha = os.environ.get("PINNED_SHA256", "")
           if not re.fullmatch(r"[0-9a-fA-F]{64}", key):
