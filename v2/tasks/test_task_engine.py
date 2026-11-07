@@ -187,8 +187,15 @@ class TaskEngineTests(unittest.TestCase):
                 e.safe_transition(row, target)
 
     def test_device_confirmation_cannot_attach_to_other_tasks(self):
-        with self.assertRaisesRegex(ValueError, "only applies to task 32"):
-            e.safe_transition(self.ledger["statuses"][0], "in_progress", user_confirmed=True)
+        # Completed and pending tasks must both reject unauthorized device evidence.
+        for task_id in (1, 13):
+            with self.subTest(task_id=task_id), self.assertRaisesRegex(ValueError, "only applies to task 32"):
+                e.safe_transition(self.ledger["statuses"][task_id - 1], "in_progress", user_confirmed=True)
+
+    def test_completed_task_guard_remains_after_device_validation(self):
+        row = copy.deepcopy(self.ledger["statuses"][0])
+        with self.assertRaisesRegex(ValueError, "downgraded"):
+            e.safe_transition(row, "in_progress", user_confirmed=False)
 
     def test_device_test_user_only(self):
         with self.assertRaisesRegex(ValueError, "Only user"):
