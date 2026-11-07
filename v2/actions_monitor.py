@@ -67,8 +67,13 @@ def collect():
             and run.get("status") == "completed"
             and run.get("conclusion") == "success")
         record["jobs"] = []
-        if run.get("status") == "completed" and run.get("conclusion") != "success":
-            jobs = api(base + "/runs/%s/jobs?per_page=100" % run["id"]).get("jobs", [])
+        record["jobs_checked"] = False
+        if run.get("status") == "completed":
+            response = api(base + "/runs/%s/jobs?per_page=100" % run["id"])
+            jobs = response.get("jobs")
+            if not isinstance(jobs, list):
+                raise RuntimeError("Missing Actions job details for run %s" % run["id"])
+            record["jobs_checked"] = True
             record["jobs"] = [{
                 "id": job.get("id"), "name": job.get("name"),
                 "status": job.get("status"), "conclusion": job.get("conclusion"),
@@ -78,7 +83,12 @@ def collect():
                 } for step in job.get("steps", []) if step.get("conclusion") in (
                     "failure", "cancelled", "timed_out"
                 )]
-            } for job in jobs if job.get("conclusion") != "success"]
+            } for job in jobs]
+            # A workflow-level green with no job evidence or skipped jobs is not AV acceptance.
+            record["acceptance_candidate"] = (record["acceptance_candidate"]
+                and bool(jobs) and response.get("total_count") == len(jobs)
+                and all(job.get("status") == "completed"
+                        and job.get("conclusion") == "success" for job in jobs))
         records.append(record)
     return {"repository": REPO, "workflows": list(WORKFLOWS), "branch": BRANCH,
             "monitor_run_id": os.environ.get("GITHUB_RUN_ID"),
