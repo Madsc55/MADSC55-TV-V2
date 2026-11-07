@@ -1,3 +1,14 @@
+## 7 Kasım 2026 — #27 ve #13/#V2 SIRA 06 gerçek değişikliklerin devri
+
+- #27 SHA eşleştirme güvenlik kontrolü: `v2/tasks/task_engine.py` kök `last_verified_run_observation.development_commit` ile beklenen Actions commit SHA'sını karşılaştırır; uyumsuzlukta fail-closed. Commit [739373bf](https://github.com/Madsc55/MADSC55-TV-V2/commit/739373bf3290927b5ee0cf97ef8d38e95b724664).
+- #27 regresyonları: [e98f01ba](https://github.com/Madsc55/MADSC55-TV-V2/commit/e98f01ba024916aeb714e246184617721bf3c489), testte yanlış kök fixture kullanımının düzeltmesi [9cc38334](https://github.com/Madsc55/MADSC55-TV-V2/commit/9cc38334117a2ddd1df8d2b6e541197a6decea35).
+- #13/#V2 SIRA 06: gerçek arşiv modülleri `v2/encrypted_archive.py`, `v2/archive_acceptance_gate.py`, `v2/independent_s3_restore.py`. `v2/secure_archive.py` bu dalda yoktur; eski dosya adıyla arama tekrarlanmasın.
+- S3 offline regresyonlarına doğru sürüm + yanlış checksum ve eksik anahtar durumları eklendi: [6db0e61f](https://github.com/Madsc55/MADSC55-TV-V2/commit/6db0e61f5a2cb483b3c4a32a1e21dcf971099857). Toplu `v2-ordered-preflight.yml` discovery-tests aşamasına `python v2/test_independent_s3_restore.py` eklendi: [18e54905](https://github.com/Madsc55/MADSC55-TV-V2/commit/18e5490531c9b373649c2c871e381b4844736f71).
+- **Kabul kanıtı bekleniyor:** Bu yeni commitlerde push Actions run ID/job/log henüz doğrulanmadı; commit varlığı test başarısı değildir. GitHub'ın commit-run bağlayıcısı yalnız PR koşularını döndürebilir. Gerçek S3 versioned get-object + AES-GCM + 4.955 kimlik restore kanıtı yok; #13/#14 ve #27 tamamlandı olarak işaretlenmeyecek.
+- Önceki gerçek koşu #42303308753'te yalnız offline 17-modül işinin sonucu success, canlı AV işi skipped; bu yeni commitlerin testi değildir. Korunan main/PR #9/ana İBO playlist değişmedi.
+
+---
+
 ## 7 Kasım 2026 — Görev #27 gerçek CI tetikleme ve toplu test entegrasyonu
 
 - `.github/workflows/v2-actions-trigger-protection.yml` geliştirici dalında güncellendi: `v2/tasks/task_engine.py` ve `v2/tasks/test_task_engine.py` değişiklikleri artık `push` path filtrelerinde; `tasks.test_task_engine` mevcut toplu güvenlik regresyon komutuna eklendi. `PYTHONPATH=v2:v2/tasks` ile test modülünün gerçek import yolu tanımlandı.
