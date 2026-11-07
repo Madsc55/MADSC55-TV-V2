@@ -28,7 +28,8 @@ def load_original_run60_sources(path):
     """
     from urllib.parse import urlsplit
     doc = json.loads(pathlib.Path(path).read_text(encoding="utf-8"))
-    if (doc.get("schema") != 1 or doc.get("source_run_id") != 40743765437
+    if (not isinstance(doc, dict) or doc.get("schema") != 1
+            or doc.get("source_run_id") != 40743765437
             or doc.get("artifact_id") != 12840886350
             or not isinstance(doc.get("sources"), list)
             or len(doc["sources"]) != 17
