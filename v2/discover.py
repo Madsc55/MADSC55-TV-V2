@@ -32,7 +32,10 @@ def load_original_run60_sources(path):
             or doc.get("artifact_id") != 12840886350
             or not isinstance(doc.get("sources"), list)
             or len(doc["sources"]) != 17
-            or sum(x.get("old_only", 0) for x in doc["sources"]) != 8449):
+            or any(not isinstance(x, dict) or not isinstance(x.get("old_only"), int)
+                   or isinstance(x.get("old_only"), bool) or x["old_only"] < 0
+                   for x in doc["sources"])
+            or sum(x["old_only"] for x in doc["sources"]) != 8449):
         raise ValueError("Unverified original #60 source ledger")
     restored, seen, seen_urls = [], set(), set()
     for row in doc["sources"]:
