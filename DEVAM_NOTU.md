@@ -63,6 +63,8 @@
 
 - **7 Kasım #27 workflow/job kabul sıkılaştırması:** `855dccb18107c3494af853aa853ff51b6cb0000b` ile `v2/actions_monitor.py` tamamlanan workflow'ların tüm job kayıtlarını `total_count` ile birlikte okur, boş/eksik/atlanan/başarısız job bulunan yeşil workflow'u kabul adayı saymaz. `18dd2916206ce88ac2192e139b1562049cfb75a9` regresyon fixture'larını ve eksik/skipped job testlerini günceller. Bu kod/test değişikliği **GitHub'a yazıldı**, ancak yeni push run ID ve gerçek job logu doğrulanmadığından #27 hâlâ açıktır; eski #816 kanıt değildir. `main`, PR #9, korunan IBO listesi, saatlik otomasyon değişmedi.
 
+- **7 Kasım #27 mevcut testin gerçek kırılması düzeltildi (izleme özelliği eklenmedi):** `v2/test_actions_monitor.py` içindeki `test_all_grouped_workflows_are_queried` fixture'ı `observed.append(path)` ile hem dört workflow sorgusunu hem de sonradan eklenen job sorgularını sayıyordu. Bu nedenle `len(observed)==len(WORKFLOWS)` assertion'ı hatalıydı. `4f4f84c4f97df15cea2e1a238b49cfd93143828d` ile yalnız workflow sorguları sayılıyor; job sorguları testin kapsamına karıştırılmıyor. Güncel push Actions run ID/log erişimi olmadığından testin yeşile döndüğü **iddia edilmez**; #27 açık. Önceki #816 sonucu yeni kod kabulü değildir.
+
 ## En son değişiklikler ve bekleyen gerçek kabul
 
 - **#9 kaynak entegrasyonu:** `727bf0c239fa7155c6ef4413fdaad88d6a7a9a55` kaynak workflow push path kapsamını genişletti; `7ff7f1e82d99f6f50abaade9eb9d6418ee0eba01` Master Engine regresyonlarını toplu kaynak testine ekledi. Kaynak uçtan uca canlı kabulü tamamlanmış sayılmaz.
