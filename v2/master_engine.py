@@ -15,6 +15,10 @@ from encrypted_archive import append, restore
 from real_ibo_scan import check_hls
 from media_decode import decode_media
 
+def active_sources(configured):
+    """Keep retired sources in the catalog but never fetch them in live runs."""
+    return [source for source in configured if source.get("enabled", True) is not False]
+
 def build(source_texts, live_text, history=(), checker=None, workers=8, media_checker=None):
     """Pure integration boundary; source_texts contains actual fetched M3U contents."""
     existing = {x["url"] for x in entries(live_text)}
@@ -151,8 +155,7 @@ def main():
         p.error("Refusing to overwrite previous archive or output directory")
     if archive_path == output_path or archive_path in output_path.parents or output_path in archive_path.parents:
         p.error("Archive and output directory must be separate, non-nested paths")
-    sources = [source for source in json.loads(SOURCES.read_text(encoding="utf-8"))["sources"]
-               if source.get("enabled", True) is not False]
+    sources = active_sources(json.loads(SOURCES.read_text(encoding="utf-8"))["sources"])
     # Include only previously approved dynamic GitHub and forge sources.
     if DYNAMIC.exists() and GITHUB_APPROVALS.exists():
         approvals = set(json.loads(GITHUB_APPROVALS.read_text(encoding="utf-8")).get("approved_sha256", []))
