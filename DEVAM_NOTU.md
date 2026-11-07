@@ -53,6 +53,8 @@
 
 - **7 Kasım, Master Engine #816 offline-tests gerçek hata düzeltmesi:** Kullanıcının bildirdiği 18 testten 1 failure: `test_device_confirmation_cannot_attach_to_other_tasks` tamamlanmış görevde `Completed task cannot be silently reopened or downgraded` aldı, beklenen `only applies to task 32` idi. `v2/tasks/task_engine.py` içindeki `safe_transition` doğrulama sırası düzeltildi; tamamlanmış görev downgrade koruması aynen kaldı. Kod `be01ebae4aebc6e61c64b3d32a8d0a285eb6795a`, test `1b1a18f65b827804dd7981a5ed89bb263b477fab`. Yeni toplu Actions #816 sonrası run/job sonucu **henüz doğrulanmadı**; #27 açık. Workflow tetikleyicisi çalıştığı kullanıcı tarafından bildirildi; tekrar yetki/tetikleme araştırması yapma. Bağımsız geliştirmeye devam et.
 
+- **7 Kasım, yeni Master Engine test düzeltmesi:** `v2/test_master_engine.py` içindeki iki AV fail-closed testinin M3U fixture'ında Python kaynak metnine çift kaçışlı `\\n` yazıldığı doğrulandı; M3U satırları ayrışmıyordu. `11181ef3c32e17288b03a95ee3abb888f6c2dbcb` ile kaynak literalinde doğru `\n` kullanıldı. Bu bir gerçek test-fixture hatası düzeltmesidir; güncel Actions run/job sonucuna erişilmediğinden #23/#27 kabulü **açık**. Kullanıcının bildirdiği #816 eski başarısız run yeni kodun kabulü değildir. Yeni sohbet, run ID olmadan başarı iddia etmesin; başka bağımsız göreve geçsin.
+
 ## En son değişiklikler ve bekleyen gerçek kabul
 
 - **#9 kaynak entegrasyonu:** `727bf0c239fa7155c6ef4413fdaad88d6a7a9a55` kaynak workflow push path kapsamını genişletti; `7ff7f1e82d99f6f50abaade9eb9d6418ee0eba01` Master Engine regresyonlarını toplu kaynak testine ekledi. Kaynak uçtan uca canlı kabulü tamamlanmış sayılmaz.
