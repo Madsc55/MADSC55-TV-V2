@@ -51,6 +51,8 @@
 
 - **#27 ek güvenlik:** `f4bc66db3ec1e1bb4e6e1f61ec896bf40413340e` Actions izleyicisine gerçek head_branch/event uygunluğu ve `acceptance_candidate` gözlem alanı ekledi; `ab9c5dee8619c0f05127b0499168714b5c17bee9` yanlış branch ve PR yeşil koşularının kabul sayılmamasını regresyonla güvenceye aldı. Bunlar yalnız kod/test eklemeleridir; yeni Actions toplu kabulü hâlâ bekliyor.
 
+- **7 Kasım, Master Engine #816 offline-tests gerçek hata düzeltmesi:** Kullanıcının bildirdiği 18 testten 1 failure: `test_device_confirmation_cannot_attach_to_other_tasks` tamamlanmış görevde `Completed task cannot be silently reopened or downgraded` aldı, beklenen `only applies to task 32` idi. `v2/tasks/task_engine.py` içindeki `safe_transition` doğrulama sırası düzeltildi; tamamlanmış görev downgrade koruması aynen kaldı. Kod `be01ebae4aebc6e61c64b3d32a8d0a285eb6795a`, test `1b1a18f65b827804dd7981a5ed89bb263b477fab`. Yeni toplu Actions #816 sonrası run/job sonucu **henüz doğrulanmadı**; #27 açık. Workflow tetikleyicisi çalıştığı kullanıcı tarafından bildirildi; tekrar yetki/tetikleme araştırması yapma. Bağımsız geliştirmeye devam et.
+
 ## En son değişiklikler ve bekleyen gerçek kabul
 
 - **#9 kaynak entegrasyonu:** `727bf0c239fa7155c6ef4413fdaad88d6a7a9a55` kaynak workflow push path kapsamını genişletti; `7ff7f1e82d99f6f50abaade9eb9d6418ee0eba01` Master Engine regresyonlarını toplu kaynak testine ekledi. Kaynak uçtan uca canlı kabulü tamamlanmış sayılmaz.
