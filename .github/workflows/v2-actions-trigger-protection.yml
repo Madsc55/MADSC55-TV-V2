@@ -13,6 +13,8 @@ on:
       - 'v2/test_document_platform_discovery.py'
       - 'v2/run_all_discovery.py'
       - 'v2/discover.py'
+      - 'v2/test_original_run60_ledger.py'
+      - 'v2/history/run60-dynamic-source-ledger.json'
       - 'v2/final_batch_acceptance.py'
       - 'v2/historical_targeted_playback.py'
       - 'v2/test_historical_targeted_playback.py'
@@ -69,6 +71,7 @@ jobs:
             test_run_all_discovery \
             test_orphan_baseline_guard \
             test_run60_source_ledger \
+            test_original_run60_ledger \
             2>&1 | tee v2/reports/ci/actions-trigger-protection-tests.log
           PYTHONPATH=v2 python v2/test_playlist_invariants.py \
             2>&1 | tee -a v2/reports/ci/actions-trigger-protection-tests.log
