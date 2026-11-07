@@ -27,7 +27,28 @@ class DecodeTests(unittest.TestCase):
         run.return_value = CompletedProcess([], 0, "#format: frame checksums\n#media_type 0: video\n#media_type 1: audio\n0, 0, 0, 1, 123, 0123456789abcdef\n1, 0, 0, 1, 123, abcdef0123456789\n", "")
         self.assertTrue(decode_media({"url": "https://example.org/live.m3u8"}))
         self.assertIn("-frames:v", run.call_args.args[0])
-        self.assertIn("-frames:a", run.call_args.args[0])
+        self.assertNotIn("-frames:a", run.call_args.args[0])
+        self.assertIn("-t", run.call_args.args[0])
+
+    def test_real_ffmpeg_frame_muxer_emits_video_and_audio(self):
+        """Exercise real FFmpeg: one audio frame used to terminate before video."""
+        import shutil
+        import subprocess
+        if not shutil.which("ffmpeg"):
+            self.skipTest("FFmpeg not installed")
+        command = ["ffmpeg", "-hide_banner", "-nostdin", "-loglevel", "error",
+                   "-f", "lavfi", "-i", "testsrc2=size=64x64:rate=25",
+                   "-f", "lavfi", "-i", "sine=frequency=440",
+                   "-map", "0:v:0", "-map", "1:a:0",
+                   "-frames:v", "1", "-t", "3", "-f", "framemd5", "-"]
+        result = subprocess.run(command, capture_output=True, text=True, timeout=15)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn("#media_type 0: video", result.stdout)
+        self.assertIn("#media_type 1: audio", result.stdout)
+        frames = [line.split(",", 1)[0].strip() for line in result.stdout.splitlines()
+                  if line and not line.startswith("#")]
+        self.assertIn("0", frames)
+        self.assertIn("1", frames)
 
     @patch("media_decode.subprocess.run")
     def test_video_only_checksum_is_not_av(self, run):
