@@ -74,6 +74,16 @@ class RemoteRestoreTests(unittest.TestCase):
                 restore_s3_version("versioned-bucket", "v2/archive.enc",
                                    "version-one", self.sha, runner=must_not_run)
 
+    def test_invalid_archive_key_is_rejected_before_remote_request(self):
+        def must_not_run(command, **kwargs):
+            self.fail("Invalid archive key must not reach S3")
+        for invalid in ("a" * 63, "z" * 64, "a" * 65, "ab" * 31 + "zz"):
+            with self.subTest(key_length=len(invalid)):
+                with patch.dict(os.environ, {"V2_ARCHIVE_KEY_HEX": invalid}):
+                    with self.assertRaisesRegex(RuntimeError, "invalid private archive key"):
+                        restore_s3_version("versioned-bucket", "v2/archive.enc",
+                                           "version-one", self.sha, runner=must_not_run)
+
     def test_null_version_is_mutable_and_rejected_before_s3(self):
         def must_not_run(command, **kwargs):
             self.fail("Mutable null version must never be downloaded")
