@@ -112,8 +112,11 @@ def require_fresh_github(fetch_result):
 
 def verify_grouped_actions(runs, expected_sha, required_names):
     """Require fresh, same-commit, successful workflow runs; no partial green."""
-    if not isinstance(runs, list) or not expected_sha or not required_names:
-        raise ValueError("Missing GitHub Actions evidence")
+    if (not isinstance(runs, list) or not isinstance(expected_sha, str)
+            or not isinstance(required_names, (list, tuple)) or not required_names
+            or any(not isinstance(name, str) or not name for name in required_names)
+            or len(set(required_names)) != len(required_names)):
+        raise ValueError("Missing or duplicate required GitHub Actions evidence")
     accepted = {}
     for run in runs:
         if not isinstance(run, dict):
