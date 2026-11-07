@@ -19,8 +19,9 @@ def restore_s3_version(bucket, key, version, expected, runner=subprocess.run):
         raise ValueError("Specific immutable S3 object version required")
     if not isinstance(expected, str) or re.fullmatch(r"[0-9a-f]{64}", expected) is None:
         raise ValueError("Independently pinned archive SHA256 required")
-    if not os.environ.get("V2_ARCHIVE_KEY_HEX"):
-        raise RuntimeError("Missing private archive key")
+    archive_key = os.environ.get("V2_ARCHIVE_KEY_HEX", "")
+    if not re.fullmatch(r"[0-9a-fA-F]{64}", archive_key):
+        raise RuntimeError("Missing or invalid private archive key")
     # Large encrypted inventories need a bounded but configurable retrieval window.
     timeout_raw = os.environ.get("V2_S3_RESTORE_TIMEOUT_SECONDS", "900")
     if not timeout_raw.isdecimal() or not 30 <= int(timeout_raw) <= 3600:
