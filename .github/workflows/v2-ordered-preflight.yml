@@ -74,6 +74,7 @@ jobs:
       - run: python v2/test_archive_backup_restore_drill.py
       - run: python v2/test_encrypted_archive.py
       - run: python v2/test_archive_acceptance_gate.py
+      - run: python v2/test_independent_s3_restore.py
   safety:
     needs: discovery-tests
     runs-on: ubuntu-latest
