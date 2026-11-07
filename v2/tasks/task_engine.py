@@ -41,6 +41,17 @@ def validate(master, ledger, root):
             visited.add(i)
     for i in by_id:
         visit(i)
+    tracking = root.get("task_tracking", {})
+    if (tracking.get("manifest") != "v2/tasks/master_tasks.json" or
+            tracking.get("canonical_root") != "state.json" or
+            tracking.get("total_tasks") != 33 or
+            tracking.get("status_authority") !=
+            "v2/tasks/state.json for per-task statuses; root state.json for project-wide state"):
+        raise ValueError("Canonical root state metadata mismatch")
+    if master.get("canonical_state") != "state.json":
+        raise ValueError("Manifest canonical root mismatch")
+    if ledger.get("repository") != REPO or ledger.get("branch") != BRANCH:
+        raise ValueError("Task ledger repository or branch mismatch")
     rows = ledger["statuses"]
     if len(rows) != 33 or sorted(row["id"] for row in rows) != list(range(1, 34)):
         raise ValueError("Incomplete task status ledger")
