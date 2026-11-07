@@ -71,6 +71,17 @@ class HistoricalDynamicSourceTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "Untrusted"):
             self.load()
 
+    def test_malformed_original_url_is_rejected_without_unhandled_exception(self):
+        for url in ("https://raw.githubusercontent.com:invalid/a/b/main/x.m3u",
+                    "https://[broken/a/b/main/x.m3u",
+                    "https://raw.githubusercontent.com/a/b/main/x.txt"):
+            with self.subTest(url=url):
+                self.original["sources"][0]["url"] = url
+                self.snap["sources"][0]["url"] = url
+                self.write()
+                with self.assertRaisesRegex(ValueError, "Untrusted"):
+                    self.load()
+
     def test_catalog_mapping_and_live_read_are_separate_claims(self):
         supplemental = [{"source_id": "github-auto-0",
                          "status": "SOURCE_CONTENT_FAILED"}]
