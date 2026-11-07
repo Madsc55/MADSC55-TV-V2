@@ -55,6 +55,8 @@
 
 - **7 Kasım, yeni Master Engine test düzeltmesi:** `v2/test_master_engine.py` içindeki iki AV fail-closed testinin M3U fixture'ında Python kaynak metnine çift kaçışlı `\\n` yazıldığı doğrulandı; M3U satırları ayrışmıyordu. `11181ef3c32e17288b03a95ee3abb888f6c2dbcb` ile kaynak literalinde doğru `\n` kullanıldı. Bu bir gerçek test-fixture hatası düzeltmesidir; güncel Actions run/job sonucuna erişilmediğinden #23/#27 kabulü **açık**. Kullanıcının bildirdiği #816 eski başarısız run yeni kodun kabulü değildir. Yeni sohbet, run ID olmadan başarı iddia etmesin; başka bağımsız göreve geçsin.
 
+- **7 Kasım bağımsız CI regresyon onarımı:** `v2/test_actions_monitor.py` dosyasında testin kaynak kodunda gerçek Python sözdizimini bozan metinsel `\\n` bulundu; ayrıca başarısız job adımlarını denetleyen fixture yanlış workflow'a veri döndürüyordu. `e897fe89b6a73771df0f01d9c340efe307ada621` ile sözdizimi ve fixture routing düzeltildi. Bu kod GitHub'a yazıldı; **güncel run/job sonucu henüz doğrulanmadı**, #27 ve #23 açık. Eski #816 yeni kod kabulü değildir.
+
 ## En son değişiklikler ve bekleyen gerçek kabul
 
 - **#9 kaynak entegrasyonu:** `727bf0c239fa7155c6ef4413fdaad88d6a7a9a55` kaynak workflow push path kapsamını genişletti; `7ff7f1e82d99f6f50abaade9eb9d6418ee0eba01` Master Engine regresyonlarını toplu kaynak testine ekledi. Kaynak uçtan uca canlı kabulü tamamlanmış sayılmaz.
