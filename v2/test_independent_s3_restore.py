@@ -34,6 +34,19 @@ class RemoteRestoreTests(unittest.TestCase):
                 restore_s3_version("versioned-bucket", "v2/archive.enc",
                                    "version-one", self.sha, runner=copy_from_remote), self.sha)
 
+    def test_s3_object_key_reserved_uri_characters_restore(self):
+        # Real S3 keys may contain #, ?, spaces and percent characters.
+        # Evidence must represent the same object without URI fragment/query loss.
+        from archive_acceptance_gate import check
+        key = "v2/private archive#1?revision%20.enc"
+        def copy_from_remote(command, **kwargs):
+            self.assertEqual(command[command.index("--key") + 1], key)
+            shutil.copyfile(self.source, command[-1])
+            return SimpleNamespace(stdout=json.dumps({"VersionId": "version-one"}))
+        with patch.dict(os.environ, {"V2_ARCHIVE_KEY_HEX": "ab" * 32}):
+            self.assertEqual(restore_s3_version("versioned-bucket", key,
+                "version-one", self.sha, runner=copy_from_remote), self.sha)
+
     def test_s3_retrieval_timeout_is_bounded_and_configurable(self):
         observed = []
         def copy_from_remote(command, **kwargs):
