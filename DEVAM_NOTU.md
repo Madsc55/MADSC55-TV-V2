@@ -1783,3 +1783,9 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - Aynı dal/dosya yazmalarında güncel blob SHA ile optimistic concurrency uygula; farklı workflow'ların concurrency grupları ortak GitHub yazar kilidi sayılmaz. Saatlik yürütücüyle gerçek çakışma varsa paylaşılan görev sahipliği veya atomik kilit olmadan çakışan yazmayı yapma; bağımsız işleri sürdür.
 - Görev ancak gerçek uygulama, çalışmış test, gerekli **başarılı Actions run**, göreve özgü kabul ve commit/run kanıtı varsa tamamlandı olur. #32 yalnız kullanıcının IBO Player cihaz testine bağlıdır. Kanıtları görev kaydına ekle; engelleri açık bırak.
 - Tur sonunda önceki ve yeni tamamlanan/33, yeni kapanan görevler, commit URL'leri, **doğrulanmış** Actions run URL/sonuçları, somut engeller ve sonraki bağımsız iş grubu dışında uzun durum tekrarı yapma. Her sonraki `V2 DEVAM` bu emri uygular.
+
+
+## 7 Kasım 2026 — Kullanıcı tarafından eklenen arşiv anahtarı için canlı kabul
+- Kullanıcının GitHub Actions repository secrets ekranında iki secret kaydı görülüyor; değerler ve tam adlar ekranda görünmüyor. Secret varlığı/formatı yalnız gerçek canlı job tarafından doğrulanabilir.
+- Önceki canlı Master Engine #42396041860, `V2_ARCHIVE_KEY_HEX` eksik olduğu için güvenli biçimde durmuştu. Yeni canlı kabul, `offline-tests` ve koşullu `master` job sonuçları ile logları üzerinden yapılacak.
+- Bu tetikleme arşiv anahtarını okumaz/yazmaz, önceki Stage 5 anahtarlarını değiştirmez; `main`, PR #9 ve korunan IBO listesine dokunmaz. Sonuç gelmeden #23 kapanmaz.
