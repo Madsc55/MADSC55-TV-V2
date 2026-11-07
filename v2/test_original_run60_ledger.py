@@ -42,7 +42,9 @@ class OriginalRun60LedgerTests(unittest.TestCase):
 
     def test_missing_and_private_source_urls_rejected(self):
         for invalid in ("", "http://raw.githubusercontent.com/a/b/main/x.m3u",
-                        "https://localhost/x.m3u", "https://raw.githubusercontent.com/a/b/main/x.txt"):
+                        "https://localhost/x.m3u", "https://raw.githubusercontent.com/a/b/main/x.txt",
+                        "https://raw.githubusercontent.com:bad/a/b/main/x.m3u",
+                        "https://[broken/a/b/main/x.m3u"):
             with self.subTest(invalid=invalid):
                 document = json.loads(json.dumps(self.original))
                 document["sources"][0]["url"] = invalid
