@@ -14,7 +14,8 @@ def read_verified_ledger(ledger_path, snapshot_path, historical_loss,
                          expected_sources=17, expected_old_only=8449):
     ledger = json.loads(Path(ledger_path).read_text(encoding="utf-8"))
     snapshot = json.loads(Path(snapshot_path).read_text(encoding="utf-8"))
-    if (ledger.get("schema") != 1 or ledger.get("source_run_id") != 40743765437
+    if (not isinstance(ledger, dict) or not isinstance(snapshot, dict)
+            or ledger.get("schema") != 1 or ledger.get("source_run_id") != 40743765437
             or ledger.get("artifact_id") != 12840886350
             or not isinstance(ledger.get("sources"), list)
             or not isinstance(snapshot.get("sources"), list)):
@@ -22,6 +23,8 @@ def read_verified_ledger(ledger_path, snapshot_path, historical_loss,
     source_breakdown = {r["source_id"]: r for r in historical_loss["source_breakdown"]}
     found, found_urls, items = set(), set(), []
     for row in ledger["sources"]:
+        if not isinstance(row, dict):
+            raise ValueError("Invalid #60 dynamic source record")
         ident = row.get("id", "")
         if not isinstance(ident, str) or not ident.startswith("github-auto-"):
             raise ValueError("Invalid #60 dynamic source identity")
