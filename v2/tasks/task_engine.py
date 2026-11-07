@@ -82,6 +82,10 @@ def select(master, ledger, root, defer_heavy=False):
 def safe_transition(row, new_status, evidence_urls=(), checked_at=None, user_confirmed=False):
     if new_status not in STATUSES:
         raise ValueError("Unknown status")
+    if row.get("status") == "completed" and new_status != "completed":
+        raise ValueError("Completed task cannot be silently reopened or downgraded")
+    if user_confirmed and row.get("id") != 32:
+        raise ValueError("User device confirmation only applies to task 32")
     if new_status == "completed" and (not evidence_urls or not checked_at):
         raise ValueError("No completion without evidence and verification timestamp")
     if row["id"] == 32 and new_status == "completed" and not user_confirmed:
