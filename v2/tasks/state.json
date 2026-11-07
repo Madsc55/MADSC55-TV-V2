@@ -120,11 +120,13 @@
     },
     {
       "id": 12,
-      "status": "pending",
-      "last_checked_at": null,
-      "evidence_urls": [],
+      "status": "completed",
+      "last_checked_at": "2026-11-07T10:40:00Z",
+      "evidence_urls": [
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42228674931"
+      ],
       "blocker": null,
-      "reason": null
+      "reason": "Verified real GitHub Actions job 127928618610: FINAL_WORLDWIDE_REPORT_GATE COMPLETE_AV_COVERAGE_EVIDENCE, 34209/34209 probed, 0 unprobed, 12968 VIDEO_AUDIO_DECODED, 9 sealed artifacts, 23 regression tests OK. v2/final_worldwide_report_gate.py validates every candidate against explicit known statuses and error categories, consistent video/audio/decoded flags, all status totals and encrypted manifest integrity; unknown outcomes fail closed. This closes classification of the sealed worldwide report, NOT recovery of 45 identities, 2643 live retests, or IBO device playback."
     },
     {
       "id": 13,
