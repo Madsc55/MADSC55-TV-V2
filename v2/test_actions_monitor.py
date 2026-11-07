@@ -6,7 +6,8 @@ import actions_monitor
 
 class MonitorTests(unittest.TestCase):
     def test_monitor_targets_active_workflow(self):
-        self.assertEqual(actions_monitor.WORKFLOW, "v2-eight-stage-verification.yml")
+        self.assertEqual(set(actions_monitor.WORKFLOWS), {
+            "v2-eight-stage-verification.yml", "v2-master-engine.yml",\n            "v2-source-integration-batch.yml", "v2-ordered-preflight.yml"})
 
     def test_run_states_and_failed_steps(self):
         runs = [
@@ -19,7 +20,7 @@ class MonitorTests(unittest.TestCase):
         ]
         def fake_api(path):
             if "/workflows/v2-eight-stage-verification.yml/runs?" in path:
-                return {"workflow_runs": runs}
+                return {"workflow_runs": []}
             if path.endswith("/10/jobs?per_page=100"):
                 return {"jobs": [{"id": 5, "name": "offline-tests", "status": "completed",
                     "conclusion": "failure", "steps": [
@@ -32,6 +33,21 @@ class MonitorTests(unittest.TestCase):
         self.assertEqual(result["runs"][0]["jobs"][0]["failed_steps"][0]["name"], "Tests")
         self.assertEqual(result["runs"][1]["jobs"], [])
         self.assertEqual(result["runs"][2]["conclusion"], "success")
+        self.assertTrue(all(row["workflow_file"] == "v2-eight-stage-verification.yml" for row in result["runs"]))
+
+    def test_all_grouped_workflows_are_queried(self):
+        observed = []
+        def fake_api(path):
+            observed.append(path)
+            workflow = path.split("/workflows/", 1)[1].split("/runs?", 1)[0]
+            return {"workflow_runs": [{"id": len(observed), "head_sha": "a" * 40,
+                "html_url": "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/" + str(len(observed)),
+                "status": "completed", "conclusion": "success"}]}
+        with patch.object(actions_monitor, "api", side_effect=fake_api):
+            result = actions_monitor.collect()
+        self.assertEqual(len(observed), len(actions_monitor.WORKFLOWS))
+        self.assertEqual({row["workflow_file"] for row in result["runs"]},
+                         set(actions_monitor.WORKFLOWS))
 
     def test_missing_run_identity_is_rejected(self):
         with patch.object(actions_monitor, "api", return_value={"workflow_runs": [{"status": "completed", "conclusion": "success"}]}):
