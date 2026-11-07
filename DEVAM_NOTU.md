@@ -1,3 +1,11 @@
+## 7 Kasım 2026 — #27 SHA gözlem kilitlenmesi düzeltildi
+
+- Önceki [739373bf](https://github.com/Madsc55/MADSC55-TV-V2/commit/739373bf3290927b5ee0cf97ef8d38e95b724664) değişikliğindeki `root.last_verified_run_observation.development_commit == expected_sha` koşulu, kök dosyanın commit anında güncellenememesi nedeniyle yeni push kabulünü kilitleyebilirdi.
+- [13fe5917](https://github.com/Madsc55/MADSC55-TV-V2/commit/13fe59177827770bcddb20ba95a2cc65212462f2) bu zorunluluğu kaldırdı. Kök gözlemi tarihîdir; `verify_grouped_actions` hâlâ beklenen commit SHA'sına ait bütün gerekli başarılı gerçek Actions run kayıtlarını şart koşar.
+- [d522acb4](https://github.com/Madsc55/MADSC55-TV-V2/commit/d522acb436685ab89a16cf312cc5f12ccdaca376) regresyonu güncelledi. Kod commitleri gerçek; yeni toplu Actions sonucu henüz doğrulanmadı. #27 tamamlandı sayılmaz.
+
+---
+
 ## 7 Kasım 2026 — #27 ve #13/#V2 SIRA 06 gerçek değişikliklerin devri
 
 - #27 SHA eşleştirme güvenlik kontrolü: `v2/tasks/task_engine.py` kök `last_verified_run_observation.development_commit` ile beklenen Actions commit SHA'sını karşılaştırır; uyumsuzlukta fail-closed. Commit [739373bf](https://github.com/Madsc55/MADSC55-TV-V2/commit/739373bf3290927b5ee0cf97ef8d38e95b724664).
