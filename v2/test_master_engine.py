@@ -4,6 +4,17 @@ import unittest
 from master_engine import build, render_m3u, export_candidates
 
 class MasterTests(unittest.TestCase):
+    def test_real_hls_scanner_returns_entry_not_boolean(self):
+        from unittest.mock import patch
+        import master_engine
+        entry = {"url": "https://example.org/real.m3u8"}
+        with patch.object(master_engine, "check_hls", return_value=entry):
+            self.assertTrue(master_engine.hls_reachable(entry, 12))
+        with patch.object(master_engine, "check_hls", return_value=None):
+            self.assertFalse(master_engine.hls_reachable(entry, 12))
+        with patch.object(master_engine, "check_hls", return_value={"error": "HTTP_404"}):
+            self.assertFalse(master_engine.hls_reachable(entry, 12))
+
     def test_master_protected_output_paths_are_checked_before_network(self):
         import contextlib
         import io
