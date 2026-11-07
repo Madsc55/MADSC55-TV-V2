@@ -228,16 +228,14 @@ def audit():
             or live_handoff.get("pages_inspected", 0) <
                live_handoff.get("new_pages_queued", 0)):
         errors.append("PARTIAL_LIVE_PAGE_INSPECTION")
-    status = ("INCOMPLETE" if errors and "INCOMPLETE_ADAPTER_HANDOFF" in errors or
-              "MISSING_STATIC_SOURCES" in errors or "DUPLICATE_SOURCE_IDS" in errors or
-              "DOCUMENT_SOURCE_HANDOFF_MISMATCH" in errors
-              else "PARTIAL_REFERENCES_NOT_AV_VERIFIED" if errors
-              else "INTEGRATED_REFERENCES_NOT_AV_VERIFIED")
     # Independent measures: complete adapter wiring does not guarantee
     # third-party availability, completed AV decoding, language or IBO playback.
     hard_failures = {"MISSING_STATIC_SOURCES", "DUPLICATE_SOURCE_IDS",
                      "INCOMPLETE_ADAPTER_HANDOFF", "DOCUMENT_SOURCE_HANDOFF_MISMATCH"}
     adapter_wiring_valid = not bool(hard_failures.intersection(errors))
+    status = ("INCOMPLETE" if not adapter_wiring_valid
+              else "PARTIAL_REFERENCES_NOT_AV_VERIFIED" if errors
+              else "INTEGRATED_REFERENCES_NOT_AV_VERIFIED")
     family = {
         "turkish_m3u_m3u8": {
             "source_configured": not bool(missing), "candidate_scan_connected": "channel_scan" in loaded,
