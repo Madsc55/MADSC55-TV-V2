@@ -245,11 +245,14 @@
     },
     {
       "id": 27,
-      "status": "pending",
-      "last_checked_at": null,
-      "evidence_urls": [],
-      "blocker": null,
-      "reason": null
+      "status": "in_progress",
+      "last_checked_at": "2026-11-07T11:00:00Z",
+      "evidence_urls": [
+        "https://github.com/Madsc55/MADSC55-TV-V2/commit/3cb9e22ad1e7a62a3b9bc73948c48c39e7e1386e",
+        "https://github.com/Madsc55/MADSC55-TV-V2/commit/3f0ec9507c054a70be11b293157186ecc6a49ee1"
+      ],
+      "blocker": "New grouped regression Actions run and end-to-end canonical root state reconciliation not yet verified; do not close task.",
+      "reason": "Strengthened verify_grouped_actions to require exact trusted run URL matching numeric ID and reject bool/zero IDs; added regression cases. Stabilized scheduler test fixture so blocked live task #5 cannot invalidate deterministic test expectations. Changes on dev branch only; not yet accepted by new Actions run."
     },
     {
       "id": 28,
