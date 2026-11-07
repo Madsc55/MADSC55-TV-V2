@@ -102,7 +102,7 @@ jobs:
               raise SystemExit("Live master blocked: invalid archive encryption key")
           print("::add-mask::" + key)
           with open(os.environ["GITHUB_ENV"], "a", encoding="utf-8") as output:
-              output.write("V2_ARCHIVE_KEY_HEX=" + key + "\\n")
+              output.write("V2_ARCHIVE_KEY_HEX=" + key + "\n")
           print("Persistent encryption key verified; no ephemeral archive permitted")
           PY
       - name: Real master discovery and verification
