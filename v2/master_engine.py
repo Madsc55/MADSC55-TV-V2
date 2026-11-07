@@ -76,7 +76,8 @@ def build(source_texts, live_text, history=(), checker=None, workers=8, media_ch
         return items, audit, history_report
     def check(item):
         try:
-            return bool(checker(item))
+            # Reject truthy error payloads; only explicit reachability is accepted.
+            return checker(item) is True
         except Exception:
             return False
     with concurrent.futures.ThreadPoolExecutor(max_workers=workers) as pool:
