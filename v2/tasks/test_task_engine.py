@@ -141,6 +141,17 @@ class TaskEngineTests(unittest.TestCase):
             with self.subTest(unsafe=unsafe), self.assertRaises(ValueError):
                 e.assert_safe_write(unsafe, e.BRANCH)
 
+    def test_completed_task_cannot_silently_regress(self):
+        row = copy.deepcopy(self.ledger["statuses"][1])
+        self.assertEqual(row["status"], "completed")
+        for target in ("pending", "in_progress", "blocked"):
+            with self.subTest(target=target), self.assertRaisesRegex(ValueError, "downgraded"):
+                e.safe_transition(row, target)
+
+    def test_device_confirmation_cannot_attach_to_other_tasks(self):
+        with self.assertRaisesRegex(ValueError, "only applies to task 32"):
+            e.safe_transition(self.ledger["statuses"][0], "in_progress", user_confirmed=True)
+
     def test_device_test_user_only(self):
         with self.assertRaisesRegex(ValueError, "Only user"):
             e.safe_transition(self.ledger["statuses"][31], "completed",
