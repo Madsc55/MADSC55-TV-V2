@@ -21,6 +21,11 @@ def restore_s3_version(bucket, key, version, expected, runner=subprocess.run):
         raise ValueError("Independently pinned archive SHA256 required")
     if not os.environ.get("V2_ARCHIVE_KEY_HEX"):
         raise RuntimeError("Missing private archive key")
+    # Large encrypted inventories need a bounded but configurable retrieval window.
+    timeout_raw = os.environ.get("V2_S3_RESTORE_TIMEOUT_SECONDS", "900")
+    if not timeout_raw.isdecimal() or not 30 <= int(timeout_raw) <= 3600:
+        raise ValueError("S3 restore timeout must be 30..3600 seconds")
+    timeout_seconds = int(timeout_raw)
     with tempfile.TemporaryDirectory(prefix="v2-remote-restore-") as directory:
         root = Path(directory)
         root.chmod(0o700)
@@ -28,7 +33,7 @@ def restore_s3_version(bucket, key, version, expected, runner=subprocess.run):
         command = ["aws", "s3api", "get-object", "--no-cli-pager", "--bucket", bucket,
                    "--key", key, "--version-id", version, str(downloaded)]
         # Bound remote retrieval so a stalled S3 connection cannot hold the worker indefinitely.
-        result = runner(command, check=True, capture_output=True, text=True, timeout=180)
+        result = runner(command, check=True, capture_output=True, text=True, timeout=timeout_seconds)
         metadata = json.loads(result.stdout)
         if not isinstance(metadata, dict) or metadata.get("VersionId") != version:
             raise RuntimeError("Remote object version was not verified by S3")
