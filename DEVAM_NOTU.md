@@ -1,3 +1,13 @@
+## 7 Kasım 2026 — Görev #27 güvenli GitHub yazma yolu sertleştirmesi
+
+- Gerçek geliştirme dalı kodu `v2/tasks/task_engine.py` içindeki `assert_safe_write` artık mutlak yolları, iç içe `..` kaçışlarını, `.`/boş bileşenleri, ters bölü işaretlerini, boş veya string olmayan yolları ve korunan IBO dosyasını fail-closed reddediyor.
+- `v2/tasks/test_task_engine.py` bu geçiş/koruma bypass örneklerini regresyon testlerine ekledi.
+- Kod: https://github.com/Madsc55/MADSC55-TV-V2/commit/6f12eb5f232b513715e975f8021b1a8aa43d00a4 ; test: https://github.com/Madsc55/MADSC55-TV-V2/commit/bd1ab1d818b798ebe20c0477cc2c9432919ab50e
+- Bu oturumda yeni GitHub Actions run/job sonucu doğrulanmadı ve yerel test çalıştırılmadı; görev #27 **açık**. Eski yeşil runları yeni commitin kabulü olarak kullanma.
+- Ana IBO listesi, main, PR #9 ve tarihî envanter değiştirilmedi.
+
+---
+
 ## 7 Kasım 2026 — Görev #27: Actions kanıt kimliği doğrulaması güçlendirildi
 
 - `v2/tasks/task_engine.py` `verify_grouped_actions`: başarılı Actions run kaydı artık yalnız URL önekiyle kabul edilmiyor; URL'deki run ID, gerçek pozitif tamsayı `id` alanıyla birebir aynı olmalı. Python `bool` kimliği ve `0` da reddediliyor. Böylece başka başarılı run'ın bağlantısını taşıyan sahte/yanlış kayıt kabul edilmiyor.
