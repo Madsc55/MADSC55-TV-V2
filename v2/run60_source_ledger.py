@@ -38,10 +38,15 @@ def read_verified_ledger(ledger_path, snapshot_path, historical_loss,
                 or not evidence or row.get("run60_tested") != evidence["old_tested"]
                 or row.get("old_only") != evidence["old_only_url_identities"]):
             raise ValueError("Historical source URL or count not backed by original #60 evidence")
-        u = urlsplit(row["url"])
-        if (u.scheme != "https" or u.hostname != "raw.githubusercontent.com"
-                or u.username or u.password or u.fragment or u.port not in (None, 443)
-                or row.get("kind") != "m3u"):
+        try:
+            u = urlsplit(row["url"])
+            trusted = (u.scheme == "https" and u.hostname == "raw.githubusercontent.com"
+                       and not u.username and not u.password and not u.fragment
+                       and u.port in (None, 443) and row.get("kind") == "m3u"
+                       and u.path.lower().endswith((".m3u", ".m3u8")))
+        except (ValueError, TypeError):
+            trusted = False
+        if not trusted:
             raise ValueError("Untrusted historical M3U document endpoint")
         found.add(ident)
         found_urls.add(row["url"])
