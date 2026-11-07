@@ -40,6 +40,10 @@ class SourceInventoryContract(unittest.TestCase):
         scan["public_source_reference_handoff"]["bounded_truncation"] = {"github_gist": "false"}
         self.assertFalse(_valid("channel_scan", scan))
         scan["public_source_reference_handoff"]["bounded_truncation"] = {"github_gist": False}
+        self.assertFalse(_valid("channel_scan", scan))
+        scan["public_source_reference_handoff"]["bounded_truncation"] = {"github_gist": -1}
+        self.assertFalse(_valid("channel_scan", scan))
+        scan["public_source_reference_handoff"]["bounded_truncation"] = {"github_gist": 0}
         self.assertTrue(_valid("channel_scan", scan))
 
     def test_discovery_only(self):
