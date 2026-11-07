@@ -1,3 +1,67 @@
+# MADSC55 TV V2 — TEK GİRİŞLİ KALICI DEVİR / CANLI GÖREV DEFTERİ
+
+> **Yeni sohbet başlangıcı:** Yalnızca `Madsc55/MADSC55-TV-V2` deposunun `madsc/v2-discovery-bulk-20261031` dalındaki bu dosyayı, `v2/tasks/master_tasks.json`, `v2/tasks/state.json` ve GitHub'daki mevcut **[V2 SIRA]** issue kayıtlarını oku. Bu üst bölüm en güncel iş akışı özetidir; alttaki uzun kronoloji tarihîdir, güncel durum sayılmaz. Görevleri sıfırlama veya yeni görev seti oluşturma. Dosyayı büyük değişikliklerde tek güncellemede yenile.
+
+## Yetki, güvenlik ve tekrar etmeme kuralları (7 Kasım 2026)
+
+- **Yalnız dev dalına yaz:** Eski `madsc-tv`, `main`, PR #9, `MADSC55_TV_IBO_CALISANLAR_TEST.m3u8`, YEDEKLER/YENİLER/FAVORİLER, cihaz favorileri, tarihî envanter ve saatlik otomasyon dokunulmaz. TRT 1 1440P QHD ve DHA CANLI 720P HD sabit ilk iki YEDEKLER girdisidir. PR #9 birleştirilmez.
+- Gerçek FFmpeg video+audio kanıtı olmadan kanal çalışıyor sayılmaz; HTTP/manifest/EPG eşleşmesi AV değildir. IBO cihaz testini kullanıcı yapar. Prototip, mock yayın, sahte başarı ve yalnız yeşil test için kabul gevşetme yasak.
+- **Bağlayıcı sınırı (tekrar araştırma):** GitHub dosya okuma/yazma, belirli run ID ile job/log okuma var. Genel push workflow run geçmişini listeleme ve yeni workflow_dispatch başlatma aracı bu oturumda yok. `fetch_commit_workflow_runs` PR odaklı; birleşik commit status boşluğu push koşusunun yokluğu değildir. Run ID olmadan yeni kabul iddiası yok. Yetkili başka çalışma ortamı gerekirse bunu bir defa engel olarak kaydet; bağımsız geliştirmeye geç.
+- **CI:** `v2-master-engine.yml` ve `v2-actions-monitor.yml` dev push için filtresiz; `v2-ordered-preflight.yml` dev push `v2/**` filtresiyle; `v2-source-integration-batch.yml` seçilmiş kaynak yolları ve artık `v2/master_engine.py`, `v2/test_master_engine.py`, `v2/tasks/**` için. `workflow_dispatch` bu dört workflow'da tanımlı. Güvenlik gereği canlı medya kurtarma bazı workflow'larda manuel-only kalır. GitHub Actions depo ayarlarının etkinliği / yeni run kesinliği kanıtlanmadı; kanıt olmadan tetikleyici değiştirme.
+
+## Kanonik 33 görev (canlı ledger okuması)
+
+- **7 completed, 4 in_progress, 1 blocked, 21 pending = 33.** Durum otoritesi `v2/tasks/state.json`; aşağıdaki tablo 7 Kasım okuma anının anlık görüntüsüdür, ileride değişirse ledger esas alınır. Evidence sayısı başarı kanıtının içeriğini otomatik doğrulamaz.
+
+| # | Görev | Ledger durumu | Evidence URL adedi |
+|---:|---|---|---:|
+| 1 | Kaynak entegrasyonu AV taramasını sonuçlandır | completed | 2 |
+| 2 | Son kod değişikliklerinin toplu testlerini doğrula | completed | 4 |
+| 3 | Kurtarılamayan 45 kanal kimliğini araştır | in_progress | 2 |
+| 4 | 4.955 tarihî kimlikte 1.886 AV kanıtsız ve 7 eşleşmeyen kaydı incele | in_progress | 2 |
+| 5 | 3 bozuk kaynak satırını ve 17 dinamik kaynak boşluğunu onar | blocked | 2 |
+| 6 | 2.643 kayıp yayın adresini toplu FFmpeg AV testinden geçir | pending | 0 |
+| 7 | GitHub/Gist, GitLab ve Codeberg entegrasyonları | completed | 2 |
+| 8 | Scribd, SlideShare ve Internet Archive kaynakları | completed | 1 |
+| 9 | Resmî yayıncı ve canlı TV kaynakları | in_progress | 1 |
+| 10 | IPTV-org TR/AZ eşleştirmeleri | completed | 1 |
+| 11 | URL tekrarlarını ayıkla ve kaynak geçmişini koru | pending | 0 |
+| 12 | Yayın hatalarını sınıflandır | completed | 1 |
+| 13 | RSA arşiv bütünlüğü ve geri yükleme | pending | 0 |
+| 14 | 4.955 tarihî kimliği koru | pending | 0 |
+| 15 | SHA, URL ve yayıncı kimliği eşleştirmesi | pending | 0 |
+| 16 | Geçici hatalarda geçmiş kanıtları koru | pending | 0 |
+| 17 | Kurtarma kuyruklarını ve arşiv sonuçlarını tamamla | pending | 0 |
+| 18 | TR/AZ kanal kimliklerini doğrula | pending | 0 |
+| 19 | XMLTV/EPG eşleştirmelerini düzelt | pending | 0 |
+| 20 | Gerçek yayın kalitesi etiketlerini doğrula | pending | 0 |
+| 21 | Kategorileri düzenle | pending | 0 |
+| 22 | TRT 1 ve DHA sabit sırasını koru | completed | 2 |
+| 23 | Master Engine, Eight-Stage Runner ve Ordered Preflight entegrasyonu | pending | 0 |
+| 24 | Otomatik keşif, kurtarma ve kanıt saklama kabulü | pending | 0 |
+| 25 | Süre aşımı, tekrar deneme ve takılma kontrolleri | pending | 0 |
+| 26 | Actions hata raporları ve güvenli yeniden deneme | pending | 0 |
+| 27 | Merkezî state.json ile GitHub sonuçlarının tutarlılığı | in_progress | 2 |
+| 28 | Doğrulanmış ibo_1000.m3u paketi | pending | 0 |
+| 29 | Doğrulanmış ibo_2000.m3u paketi | pending | 0 |
+| 30 | M3U, kategori ve tekrar kontrolleri | pending | 0 |
+| 31 | Son toplu kabul testleri | pending | 0 |
+| 32 | IBO Player cihaz testi — yalnızca kullanıcı | pending | 0 |
+| 33 | Son arşiv ve tamamlanma raporu | pending | 0 |
+
+## En son değişiklikler ve bekleyen gerçek kabul
+
+- **#9 kaynak entegrasyonu:** `727bf0c239fa7155c6ef4413fdaad88d6a7a9a55` kaynak workflow push path kapsamını genişletti; `7ff7f1e82d99f6f50abaade9eb9d6418ee0eba01` Master Engine regresyonlarını toplu kaynak testine ekledi. Kaynak uçtan uca canlı kabulü tamamlanmış sayılmaz.
+- **#23 Master Engine:** `ece56e3b80d5e859ec45587e2d35371c713e32e2` decoder'ın truthy hata payload'ını AV saymasını engelledi; `902a7b7185839dcdd51282111bb8eddd2619aeaa` test ekledi. `600518d072165b39011baa02dac70802ed2f021b` HTTP kontrolünü explicit True yaptı; `4922f583ca5bcbdb2d5f447e5fbf787e90946b3f` regresyonu ekledi. Yeni commitler için toplu kabul henüz doğrulanmadı.
+- **#13 bağımsız S3 restore:** `ba03465048f3a72fbdf70fa34a9c7ca206ca40d6` workflow preflight fail-closed; `f827bd404e1da3f61a0b805071e77286d25af8bd` gerçek indirmeden önce 64-hex key doğruluyor; `d7a57200ad5a652d3765c6113d578a3a91b623fe` regresyon. Gerçek versioned S3 download + AES-GCM + 4.955 tarihî kimlik roundtrip kanıtı bekliyor; **tamamlanmadı**.
+- **#27 Actions kabulü:** `9b786eb81863bd7414871ce1ccfd6d0a91a70e42` izleyiciyi dört workflow'a genişletti; `7437256ab02a5fec5fc994f6acc8c1ff8e588049` regresyon. Gerçek güncel run/job logları ve kök state tutarlılık kabulü bekliyor. Önceki 4 workflow'luk düzeltme için yeni Actions sonucu iddia edilmez.
+- **Doğrulanmış tarihî kanıt (yalnız ilgili eski SHA):** Actions [#42228674931](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42228674931) dünya AV: 34.209/34.209 tarama, 12.968 video+ses, 9 mühürlü paket; 4.955 tarihî kimlik, 4.948 exact SHA, 3.062 AV, 7 eksik SHA. Actions [#42303308753](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42303308753) 17 modül / 190 offline test başarılı, canlı AV skipped. **Bunlar yeni commitlerin kabulü değildir.** 45 kurtarılmamış kanalın gerçek AV işi kullanıcı önceliğiyle en sona bırakıldı; hiçbir sahte kurtarma yok.
+- **Sonraki bağımsız işler:** #13 gerçek restore önkoşulları ve hatalı kanıt kabulü; #23 güvenli Master/Eight-Stage/Preflight; #27 run kayıtlarının doğru kimlik ve kapsam denetimi; #9 canlı kaynak handoff/provenance. Ardından uygun diğer bağımsız görevler. Her önemli kod değişikliğinde ilgili offline regresyonu ekle, topluca çalıştırılabilen yetkili ortamda çalıştır, gerçek sonuçları kanıtla. Test çalıştırılamazsa açık bırak.
+
+---
+
+## TARİHÎ KAYITLAR (eski tarihler ve SHA'lar; canlı ledger yerine geçmez)
+
 ## 7 Kasım 2026 — #27 SHA gözlem kilitlenmesi düzeltildi
 
 - Önceki [739373bf](https://github.com/Madsc55/MADSC55-TV-V2/commit/739373bf3290927b5ee0cf97ef8d38e95b724664) değişikliğindeki `root.last_verified_run_observation.development_commit == expected_sha` koşulu, kök dosyanın commit anında güncellenememesi nedeniyle yeni push kabulünü kilitleyebilirdi.
