@@ -133,6 +133,13 @@ class TaskEngineTests(unittest.TestCase):
             with self.subTest(path=path), self.assertRaises(ValueError):
                 e.assert_safe_write(path, branch)
         self.assertTrue(e.assert_safe_write("v2/tasks/progress.md", e.BRANCH))
+        for unsafe in ("v2/../state.json", "v2/tasks/../../state.json",
+                       "/tmp/state.json", "v2//state.json", "./state.json",
+                       "v2/./state.json",
+                       "v2/tasks/../MADSC55_TV_IBO_CALISANLAR_TEST.m3u8",
+                       "", None):
+            with self.subTest(unsafe=unsafe), self.assertRaises(ValueError):
+                e.assert_safe_write(unsafe, e.BRANCH)
 
     def test_device_test_user_only(self):
         with self.assertRaisesRegex(ValueError, "Only user"):
