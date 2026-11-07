@@ -10,7 +10,8 @@ from pathlib import Path
 
 REPO = os.environ.get("GITHUB_REPOSITORY", "Madsc55/MADSC55-TV-V2")
 TOKEN = os.environ.get("GITHUB_TOKEN", "")
-WORKFLOW = "v2-eight-stage-verification.yml"
+WORKFLOWS = ("v2-eight-stage-verification.yml", "v2-master-engine.yml",
+             "v2-source-integration-batch.yml", "v2-ordered-preflight.yml")
 BRANCH = "madsc/v2-discovery-bulk-20261031"
 
 def api(path):
@@ -31,8 +32,16 @@ def api(path):
 def collect():
     base = "/repos/" + REPO + "/actions"
     q = urllib.parse.urlencode({"branch": BRANCH, "per_page": 10})
-    # Query the exact workflow first: repo-wide first page can contain only monitor runs.
-    runs = api(base + "/workflows/" + WORKFLOW + "/runs?" + q)["workflow_runs"]
+    # Query each required workflow independently: repo-wide pages may be dominated by monitor runs.
+    runs = []
+    for workflow in WORKFLOWS:
+        batch = api(base + "/workflows/" + workflow + "/runs?" + q)["workflow_runs"]
+        if not isinstance(batch, list):
+            raise RuntimeError("Invalid GitHub workflow runs response: " + workflow)
+        for run in batch:
+            run = dict(run)
+            run["_workflow_file"] = workflow
+            runs.append(run)
     if not runs:
         raise RuntimeError("GitHub API returned no V2 verification runs for the configured branch")
     if any(not run.get("id") or not run.get("head_sha") or not run.get("html_url") for run in runs):
@@ -43,6 +52,7 @@ def collect():
             "id", "run_number", "run_attempt", "event", "head_sha",
             "status", "conclusion", "html_url", "created_at", "updated_at"
         )}
+        record["workflow_file"] = run["_workflow_file"]
         record["jobs"] = []
         if run.get("status") == "completed" and run.get("conclusion") != "success":
             jobs = api(base + "/runs/%s/jobs?per_page=100" % run["id"]).get("jobs", [])
@@ -57,7 +67,7 @@ def collect():
                 )]
             } for job in jobs if job.get("conclusion") != "success"]
         records.append(record)
-    return {"repository": REPO, "workflow": WORKFLOW, "branch": BRANCH,
+    return {"repository": REPO, "workflows": list(WORKFLOWS), "branch": BRANCH,
             "monitor_run_id": os.environ.get("GITHUB_RUN_ID"),
             "monitor_sha": os.environ.get("GITHUB_SHA"), "runs": records}
 
