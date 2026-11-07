@@ -44,10 +44,15 @@ def load_original_run60_sources(path):
             raise ValueError("Invalid original source identity")
         if ident in seen or not isinstance(url, str) or url in seen_urls:
             raise ValueError("Duplicate or missing original source identity/URL")
-        p = urlsplit(url)
-        if (p.scheme != "https" or p.hostname != "raw.githubusercontent.com"
-                or p.username or p.password or p.fragment or p.port not in (None, 443)
-                or not p.path.lower().endswith((".m3u", ".m3u8"))):
+        try:
+            p = urlsplit(url)
+            valid_url = (p.scheme == "https" and p.hostname == "raw.githubusercontent.com"
+                         and not p.username and not p.password and not p.fragment
+                         and p.port in (None, 443)
+                         and p.path.lower().endswith((".m3u", ".m3u8")))
+        except ValueError:
+            valid_url = False
+        if not valid_url:
             raise ValueError("Original source URL is not a public GitHub M3U")
         seen.add(ident)
         seen_urls.add(url)
