@@ -49,6 +49,17 @@ class OriginalRun60LedgerTests(unittest.TestCase):
                 with self.assertRaises(ValueError):
                     self.load_modified(document)
 
+    def test_malformed_source_rows_and_counts_rejected_without_crash(self):
+        malformed = (None, [], "not-a-record", {"id": "github-auto-0"},
+                     {"old_only": "8449"}, {"old_only": True},
+                     {"old_only": -1})
+        for value in malformed:
+            with self.subTest(value=value):
+                document = json.loads(json.dumps(self.original))
+                document["sources"][0] = value
+                with self.assertRaises(ValueError):
+                    self.load_modified(document)
+
     def test_headerless_historical_feed_only_normalized_for_verified_source(self):
         feed = "#EXTINF:-1,Historical\nhttps://example.org/a.m3u8\n"
         self.assertTrue(normalize_original_source_text({"historical_source_only": True}, feed).startswith("#EXTM3U\n"))
