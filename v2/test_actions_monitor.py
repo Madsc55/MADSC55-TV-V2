@@ -7,7 +7,8 @@ import actions_monitor
 class MonitorTests(unittest.TestCase):
     def test_monitor_targets_active_workflow(self):
         self.assertEqual(set(actions_monitor.WORKFLOWS), {
-            "v2-eight-stage-verification.yml", "v2-master-engine.yml",\n            "v2-source-integration-batch.yml", "v2-ordered-preflight.yml"})
+            "v2-eight-stage-verification.yml", "v2-master-engine.yml",
+            "v2-source-integration-batch.yml", "v2-ordered-preflight.yml"})
 
     def test_run_states_and_failed_steps(self):
         runs = [
@@ -20,6 +21,8 @@ class MonitorTests(unittest.TestCase):
         ]
         def fake_api(path):
             if "/workflows/v2-eight-stage-verification.yml/runs?" in path:
+                return {"workflow_runs": runs}
+            if "/workflows/" in path:
                 return {"workflow_runs": []}
             if path.endswith("/10/jobs?per_page=100"):
                 return {"jobs": [{"id": 5, "name": "offline-tests", "status": "completed",
