@@ -4,6 +4,18 @@ import unittest
 from master_engine import build, render_m3u, export_candidates
 
 class MasterTests(unittest.TestCase):
+    def test_retired_source_remains_in_catalog_but_is_not_fetched(self):
+        import json
+        from discover import SOURCES
+        from master_engine import active_sources
+        configured = json.loads(SOURCES.read_text(encoding="utf-8"))["sources"]
+        retired = [source for source in configured if source.get("enabled") is False]
+        active = active_sources(configured)
+        self.assertTrue(any(source["id"] == "ilyswch-iptv-tr" for source in retired))
+        self.assertFalse(any(source["id"] == "ilyswch-iptv-tr" for source in active))
+        self.assertEqual(len(active) + len(retired), len(configured))
+        self.assertTrue(all(source.get("enabled", True) is not False for source in active))
+
     def test_real_hls_scanner_returns_entry_not_boolean(self):
         from unittest.mock import patch
         import master_engine
