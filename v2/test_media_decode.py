@@ -26,7 +26,7 @@ class DecodeTests(unittest.TestCase):
     def test_frame_checksum_proves_decode(self, run):
         run.return_value = CompletedProcess([], 0, "#format: frame checksums\n#media_type 0: video\n#media_type 1: audio\n0, 0, 0, 1, 123, 0123456789abcdef\n1, 0, 0, 1, 123, abcdef0123456789\n", "")
         self.assertTrue(decode_media({"url": "https://example.org/live.m3u8"}))
-        self.assertIn("-frames:v", run.call_args.args[0])
+        self.assertNotIn("-frames:v", run.call_args.args[0])
         self.assertNotIn("-frames:a", run.call_args.args[0])
         self.assertIn("-t", run.call_args.args[0])
 
@@ -49,6 +49,32 @@ class DecodeTests(unittest.TestCase):
                   if line and not line.startswith("#")]
         self.assertIn("0", frames)
         self.assertIn("1", frames)
+
+    def test_delayed_audio_is_decoded_before_bounded_end(self):
+        """Real FFmpeg regression: audio starts after the first video frame."""
+        import shutil
+        import subprocess
+        if not shutil.which("ffmpeg"):
+            self.skipTest("FFmpeg not installed")
+        command = ["ffmpeg", "-hide_banner", "-nostdin", "-loglevel", "error",
+                   "-f", "lavfi", "-i", "testsrc2=size=64x64:rate=25",
+                   "-f", "lavfi", "-i", "sine=frequency=440",
+                   "-filter_complex", "[1:a]adelay=500|500[a]",
+                   "-map", "0:v:0", "-map", "[a]",
+                   "-t", "2", "-f", "framemd5", "-"]
+        result = subprocess.run(command, capture_output=True, text=True, timeout=15)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        media = {}
+        frames = set()
+        for line in result.stdout.splitlines():
+            if line.startswith("#media_type "):
+                index, kind = line[len("#media_type "):].split(":", 1)
+                media[int(index)] = kind.strip()
+            elif line and not line.startswith("#"):
+                fields = [field.strip() for field in line.split(",")]
+                if len(fields) >= 6 and fields[0].isdigit() and fields[4].isdigit() and int(fields[4]) > 0:
+                    frames.add(media.get(int(fields[0])))
+        self.assertEqual(frames, {"video", "audio"})
 
     @patch("media_decode.subprocess.run")
     def test_video_only_checksum_is_not_av(self, run):
