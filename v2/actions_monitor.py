@@ -53,6 +53,14 @@ def collect():
             "status", "conclusion", "html_url", "created_at", "updated_at"
         )}
         record["workflow_file"] = run["_workflow_file"]
+        record["head_branch"] = run.get("head_branch")
+        record["run_event"] = run.get("event")
+        record["same_development_branch"] = run.get("head_branch") == BRANCH
+        record["eligible_event"] = run.get("event") in ("push", "workflow_dispatch")
+        # Monitor observations are not acceptance until SHA, branch, event and jobs agree.
+        record["acceptance_candidate"] = (record["same_development_branch"]
+            and record["eligible_event"] and run.get("status") == "completed"
+            and run.get("conclusion") == "success")
         record["jobs"] = []
         if run.get("status") == "completed" and run.get("conclusion") != "success":
             jobs = api(base + "/runs/%s/jobs?per_page=100" % run["id"]).get("jobs", [])
