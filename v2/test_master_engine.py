@@ -72,6 +72,22 @@ class MasterTests(unittest.TestCase):
         self.assertEqual(len(items[0]["history"]), 1)
         self.assertEqual(report["historical_missing_real_url"], 1)
         self.assertEqual([x["parsed"] for x in audit], [2, 2])
+    def test_network_checker_error_payload_blocks_decoder(self):
+        data = "#EXTM3U\\n#EXTINF:-1,TRT 1\\nhttps://example.org/new.m3u8\\n"
+        for response in ({"error": "timeout"}, "HTTP 403", 1, [True], None, False):
+            with self.subTest(response=response):
+                decoded_calls = []
+                def decoder(item):
+                    decoded_calls.append(item)
+                    return True
+                items, _, _ = build([({"id": "tr", "scope": "TR"}, data)],
+                                    "#EXTM3U\\n", checker=lambda item: response,
+                                    media_checker=decoder)
+                self.assertEqual(len(items), 1)
+                self.assertEqual(items[0]["network_status"], "UNKNOWN_OR_FAILED")
+                self.assertFalse(items[0]["media_decoded"])
+                self.assertEqual(decoded_calls, [])
+
     def test_decoder_error_payload_cannot_promote_candidate(self):
         # A decoder returning structured failure information is not AV evidence.
         data = "#EXTM3U\\n#EXTINF:-1,TRT 1\\nhttps://example.org/new.m3u8\\n"
