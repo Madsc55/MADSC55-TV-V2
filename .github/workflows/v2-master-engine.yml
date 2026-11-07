@@ -7,6 +7,11 @@ on:
 permissions:
   contents: read
   actions: read
+# Serialize this workflow's runs on the development branch without canceling
+# an in-flight acceptance run. This is an Actions-run lock, not a Git writer lock.
+concurrency:
+  group: v2-master-engine-${{ github.ref }}
+  cancel-in-progress: false
 jobs:
   offline-tests:
     runs-on: ubuntu-latest
