@@ -57,9 +57,14 @@ def collect():
         record["run_event"] = run.get("event")
         record["same_development_branch"] = run.get("head_branch") == BRANCH
         record["eligible_event"] = run.get("event") in ("push", "workflow_dispatch")
-        # Monitor observations are not acceptance until SHA, branch, event and jobs agree.
+        monitor_sha = os.environ.get("GITHUB_SHA", "")
+        record["same_monitor_sha"] = (len(monitor_sha) == 40
+            and run.get("head_sha") == monitor_sha)
+        # A historical green run cannot qualify as acceptance for this monitor commit.
+        # This is still only a candidate: grouped job evidence is required separately.
         record["acceptance_candidate"] = (record["same_development_branch"]
-            and record["eligible_event"] and run.get("status") == "completed"
+            and record["eligible_event"] and record["same_monitor_sha"]
+            and run.get("status") == "completed"
             and run.get("conclusion") == "success")
         record["jobs"] = []
         if run.get("status") == "completed" and run.get("conclusion") != "success":
