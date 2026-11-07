@@ -6,6 +6,9 @@ on:
       - madsc/v2-discovery-bulk-20261031
     paths:
       - 'v2/source_integration_gate.py'
+      - 'v2/master_engine.py'
+      - 'v2/test_master_engine.py'
+      - 'v2/tasks/**'
       - 'v2/orphan_m3u_recovery.py'
       - 'v2/orphan_iptv_org_registry.py'
       - 'v2/orphan_baseline_guard.py'
