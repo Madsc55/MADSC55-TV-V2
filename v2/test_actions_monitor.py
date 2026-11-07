@@ -63,11 +63,24 @@ class MonitorTests(unittest.TestCase):
                         "head_branch": target_branch, "event": event,
                         "status": "completed", "conclusion": "success",
                         "html_url": "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/123"}]}
-                with patch.object(actions_monitor, "api", side_effect=fake_api):
+                with patch.object(actions_monitor, "api", side_effect=fake_api), patch.dict(
+                        "os.environ", {"GITHUB_SHA": "a" * 40}):
                     result = actions_monitor.collect()
                 self.assertTrue(result["runs"])
                 self.assertTrue(all(row["acceptance_candidate"] is accepted
                                     for row in result["runs"]))
+
+    def test_historical_green_sha_cannot_be_current_acceptance(self):
+        def fake_api(path):
+            return {"workflow_runs": [{"id": 123, "head_sha": "b" * 40,
+                "head_branch": actions_monitor.BRANCH, "event": "push",
+                "status": "completed", "conclusion": "success",
+                "html_url": "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/123"}]}
+        with patch.dict("os.environ", {"GITHUB_SHA": "a" * 40}), patch.object(
+                actions_monitor, "api", side_effect=fake_api):
+            result = actions_monitor.collect()
+        self.assertTrue(all(not row["same_monitor_sha"] and not row["acceptance_candidate"]
+                            for row in result["runs"]))
 
     def test_missing_run_identity_is_rejected(self):
         with patch.object(actions_monitor, "api", return_value={"workflow_runs": [{"status": "completed", "conclusion": "success"}]}):
