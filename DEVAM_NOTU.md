@@ -1,3 +1,16 @@
+## 33 görevden sonra — #34 Türkiye M3U/M3U8 geniş kapsamlı keşif (BEKLEMEDE)
+
+**Kalıcı iş kaydı:** https://github.com/Madsc55/MADSC55-TV-V2/issues/10
+**Başlatma şartı:** Kanonik 33 görev tamamlanmadan bu iş başlatılmaz; mevcut 33 görev ledger'ına eklenmez veya sıra değiştirilmez. Şu an yalnızca yapılacak iş olarak kaydedilmiştir.
+
+- Arama adları: `turkiye.m3u`, `tr.m3u8`, `tr.m3u`, `turkish-iptv`, `canli-tv`, `yerel-tv`, `iptv-turkiye`, `m3u tr`, `m3u8 tr`, `Türkiye IPTV`, `Turkish TV playlist` ve ilgili Türkçe/İngilizce varyasyonlar.
+- Kaynak türleri: GitHub/Gist, GitLab, Codeberg, bağımsız açık IPTV/M3U dizinleri, Internet Archive, resmî yayıncılar, canlı TV web sayfaları; YouTube Live yalnız aday/kimlik araştırmasıdır, sayfa bağlantısı oynatılabilir M3U kabul edilmez.
+- Özellikle araştırılacak örnekler: https://github.com/omerdenizhan/IPTV-M3U ; https://github.com/iptv-turk-tr/iptv/blob/main/list.m3u ; https://github.com/iptv-org/iptv/blob/master/streams/tr.m3u ; https://github.com/Free-TV/IPTV . Bunlar şu an **aday kaynaklardır**, doğrulanmış yeni V2 kaynakları veya çalışan kanallar değildir.
+- Kaynak güvenliği, URL/kimlik tekrar ayıklama, tarihî provenance, gerçek FFmpeg video+audio kanıtı, TR/AZ sınıflandırma ve ayrı IBO test çıktısı şarttır. Tek tek değil toplu test; cihaz kabulü kullanıcıya aittir.
+- **Koruma:** Yalnız V2 dev dalı; eski `madsc-tv`, `main`, PR #9, `MADSC55_TV_IBO_CALISANLAR_TEST.m3u8`, YEDEKLER/YENİLER/FAVORİLER, cihaz favorileri ve sabit TRT 1/DHA sırası değiştirilmez.
+
+---
+
 ## 7 Kasım — Gerçek Master Engine kabul koşusu talebi
 
 #23 için yalnız offline yeşil workflow yeterli değildir. Bu dev commit mesajındaki `[run-live-master]` işareti, mevcut `V2 Master Engine` workflow'unun canlı `master` job'unu tetiklemek içindir. Job gerçek 500-aday keşif/doğrulama çalıştırır; kalıcı şifreleme anahtarı eksikse fail-closed durur. Run ID, job adımları ve çıktı kanıtı doğrulanmadan #23 kapatılmaz. Korunan IBO, main, PR #9 değiştirilmeyecektir.
