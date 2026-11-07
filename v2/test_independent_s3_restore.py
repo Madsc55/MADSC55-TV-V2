@@ -51,6 +51,14 @@ class RemoteRestoreTests(unittest.TestCase):
                 restore_s3_version("versioned-bucket", "v2/archive.enc",
                                    "version-one", self.sha, runner=must_not_run)
 
+    def test_null_version_is_mutable_and_rejected_before_s3(self):
+        def must_not_run(command, **kwargs):
+            self.fail("Mutable null version must never be downloaded")
+        with patch.dict(os.environ, {"V2_ARCHIVE_KEY_HEX": "ab" * 32}):
+            with self.assertRaisesRegex(ValueError, "immutable"):
+                restore_s3_version("versioned-bucket", "v2/archive.enc",
+                                   "null", self.sha, runner=must_not_run)
+
     def test_bad_remote_version_and_digest_are_rejected(self):
         def copy_from_remote(command, **kwargs):
             shutil.copyfile(self.source, command[-1])
