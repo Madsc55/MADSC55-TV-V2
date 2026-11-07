@@ -35,6 +35,16 @@ class DecodeTests(unittest.TestCase):
         self.assertFalse(decode_media({"url": "https://example.org/live.m3u8"}))
 
     @patch("media_decode.subprocess.run")
+    def test_declared_audio_without_decoded_audio_is_not_av(self, run):
+        run.return_value = CompletedProcess([], 0, "#media_type 0: video\n#media_type 1: audio\n0, 0, 0, 1, 123, 0123456789abcdef\n", "")
+        self.assertFalse(decode_media({"url": "https://example.org/live.m3u8"}))
+
+    @patch("media_decode.subprocess.run")
+    def test_zero_length_audio_frame_is_not_av(self, run):
+        run.return_value = CompletedProcess([], 0, "#media_type 0: video\n#media_type 1: audio\n0, 0, 0, 1, 123, 0123456789abcdef\n1, 0, 0, 1, 0, abcdef0123456789\n", "")
+        self.assertFalse(decode_media({"url": "https://example.org/live.m3u8"}))
+
+    @patch("media_decode.subprocess.run")
     def test_audio_only_checksum_is_not_video(self, run):
         run.return_value = CompletedProcess([], 0, "#media_type 0: audio\n0, 0, 0, 1, 123, 0123456789abcdef\n", "")
         self.assertFalse(decode_media({"url": "https://example.org/live.m3u8"}))
