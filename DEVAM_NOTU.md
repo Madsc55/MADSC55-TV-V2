@@ -49,6 +49,8 @@
 | 32 | IBO Player cihaz testi — yalnızca kullanıcı | pending | 0 |
 | 33 | Son arşiv ve tamamlanma raporu | pending | 0 |
 
+- **#27 ek güvenlik:** `f4bc66db3ec1e1bb4e6e1f61ec896bf40413340e` Actions izleyicisine gerçek head_branch/event uygunluğu ve `acceptance_candidate` gözlem alanı ekledi; `ab9c5dee8619c0f05127b0499168714b5c17bee9` yanlış branch ve PR yeşil koşularının kabul sayılmamasını regresyonla güvenceye aldı. Bunlar yalnız kod/test eklemeleridir; yeni Actions toplu kabulü hâlâ bekliyor.
+
 ## En son değişiklikler ve bekleyen gerçek kabul
 
 - **#9 kaynak entegrasyonu:** `727bf0c239fa7155c6ef4413fdaad88d6a7a9a55` kaynak workflow push path kapsamını genişletti; `7ff7f1e82d99f6f50abaade9eb9d6418ee0eba01` Master Engine regresyonlarını toplu kaynak testine ekledi. Kaynak uçtan uca canlı kabulü tamamlanmış sayılmaz.
