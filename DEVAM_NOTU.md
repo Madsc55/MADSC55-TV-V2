@@ -61,6 +61,8 @@
 
 - **7 Kasım #27 güncel SHA kanıt sınırı:** `463fea97e4da580093d187c8d68144fcbe707285` Actions monitor'da `same_monitor_sha` şartı ekledi; geçmişte başarılı olmuş başka SHA'nın `acceptance_candidate` sayılması engellendi. `6bdff16123dcb125657d84ea06e65265c5978aa6` eski SHA reddi ve doğru SHA senaryolarını test ediyor. Gerçek güncel GitHub Actions run/job sonucu **bu turda doğrulanmadı**; bu iki commit için kabul yok. #27 açık, 7/33 değişmedi. Eski #816 sonucu yeni kod kanıtı değildir.
 
+- **7 Kasım #27 workflow/job kabul sıkılaştırması:** `855dccb18107c3494af853aa853ff51b6cb0000b` ile `v2/actions_monitor.py` tamamlanan workflow'ların tüm job kayıtlarını `total_count` ile birlikte okur, boş/eksik/atlanan/başarısız job bulunan yeşil workflow'u kabul adayı saymaz. `18dd2916206ce88ac2192e139b1562049cfb75a9` regresyon fixture'larını ve eksik/skipped job testlerini günceller. Bu kod/test değişikliği **GitHub'a yazıldı**, ancak yeni push run ID ve gerçek job logu doğrulanmadığından #27 hâlâ açıktır; eski #816 kanıt değildir. `main`, PR #9, korunan IBO listesi, saatlik otomasyon değişmedi.
+
 ## En son değişiklikler ve bekleyen gerçek kabul
 
 - **#9 kaynak entegrasyonu:** `727bf0c239fa7155c6ef4413fdaad88d6a7a9a55` kaynak workflow push path kapsamını genişletti; `7ff7f1e82d99f6f50abaade9eb9d6418ee0eba01` Master Engine regresyonlarını toplu kaynak testine ekledi. Kaynak uçtan uca canlı kabulü tamamlanmış sayılmaz.
