@@ -1,3 +1,12 @@
+## 7 Kasım 2026 — Görev #12 gerçek dünya FFmpeg kanıtıyla tamamlandı
+
+- Gerçek Actions [#42228674931](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42228674931), job `127928618610` logu: `FINAL_WORLDWIDE_REPORT_GATE` = `COMPLETE_AV_COVERAGE_EVIDENCE`, **34.209/34.209** gerçek aday taranmış, **12.968** video+ses decode, **0** taranmamış, **9** SHA bütünlüğü denetlenen mühürlü paket; **23** regresyon testi `OK`.
+- `v2/final_worldwide_report_gate.py` bütün adayların tanımlı probe/arıza durumlarına, tutarlı `video/audio/decoded` bayraklarına ve eksiksiz sayım/şifreli manifest koşullarına uymasını zorunlu kılıyor; bilinmeyen durum fail-closed. Bu kanıtla mevcut görev ledgerındaki **#12 yayın hatalarını sınıflandır** tamamlandı.
+- Bu kabul yalnız doğrulanmış dünya raporunun sınıflandırılması içindir; **45 kanal**, **2.643 eksik adresin yeni canlı AV testi**, **1.886 tarihî AV açığı**, **7 eksik SHA**, **IBO cihaz testi** tamamlandı sayılmaz. Sonraki iş #13 RSA restore ve #14 tarihî koruma kabulü için gerçek artifact/roundtrip kanıtı.
+- Üretim verisi uydurulmadı. `main`, PR #9, ana IBO ve tarihî envanter değişmedi.
+
+---
+
 ## 7 Kasım 2026 — Üretim kanıtı: tarihî 4.955 SHA/AV koşusu yeniden doğrulandı
 
 - GitHub Actions [#42228674931](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42228674931), gerçek job `127928618610`: **success**. Logdaki `HISTORICAL_EXACT_SHA_AV`: 4.955 tarihî kimlik korundu, 4.948 kesin SHA eşleşti, 3.062 video+ses decode kanıtlı, 7 dünya raporunda yok.
