@@ -27,7 +27,8 @@ def restore_s3_version(bucket, key, version, expected, runner=subprocess.run):
         downloaded = root / "restored.enc"
         command = ["aws", "s3api", "get-object", "--no-cli-pager", "--bucket", bucket,
                    "--key", key, "--version-id", version, str(downloaded)]
-        result = runner(command, check=True, capture_output=True, text=True)
+        # Bound remote retrieval so a stalled S3 connection cannot hold the worker indefinitely.
+        result = runner(command, check=True, capture_output=True, text=True, timeout=180)
         metadata = json.loads(result.stdout)
         if not isinstance(metadata, dict) or metadata.get("VersionId") != version:
             raise RuntimeError("Remote object version was not verified by S3")
