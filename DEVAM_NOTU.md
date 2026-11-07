@@ -1,3 +1,12 @@
+## 7 Kasım 2026 — Görev #27 gerçek CI tetikleme ve toplu test entegrasyonu
+
+- `.github/workflows/v2-actions-trigger-protection.yml` geliştirici dalında güncellendi: `v2/tasks/task_engine.py` ve `v2/tasks/test_task_engine.py` değişiklikleri artık `push` path filtrelerinde; `tasks.test_task_engine` mevcut toplu güvenlik regresyon komutuna eklendi. `PYTHONPATH=v2:v2/tasks` ile test modülünün gerçek import yolu tanımlandı.
+- Commitler: [34a93be0](https://github.com/Madsc55/MADSC55-TV-V2/commit/34a93be05e5f74f9353a47b45f24508c800b71a6), [83dbe788](https://github.com/Madsc55/MADSC55-TV-V2/commit/83dbe788bdcb9023db03514d1b319c5556a376d6).
+- Bu workflow değişikliği bir push koşusunu tetikleyebilir; ancak bu oturumda yeni run ID/job sonucu elde edilmedi. **Başarılı CI veya görev #27 tamamlandı iddiası yok.** Gerçek koşu sonucunu kontrol etmeden kapatma.
+- Canlı AV workflowu manuel-only kalır; ana IBO, main, PR #9, tarihî envanter değişmedi.
+
+---
+
 ## 7 Kasım 2026 — Görev #27 güvenli GitHub yazma yolu sertleştirmesi
 
 - Gerçek geliştirme dalı kodu `v2/tasks/task_engine.py` içindeki `assert_safe_write` artık mutlak yolları, iç içe `..` kaçışlarını, `.`/boş bileşenleri, ters bölü işaretlerini, boş veya string olmayan yolları ve korunan IBO dosyasını fail-closed reddediyor.
