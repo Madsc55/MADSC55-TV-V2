@@ -137,7 +137,7 @@ class TaskEngineTests(unittest.TestCase):
         for bad in ([], [dict(runs[0], head_sha="d" * 40)],
                     [dict(runs[0], conclusion="failure")]):
             with self.subTest(bad=bad), self.assertRaises(ValueError):
-                e.reconcile_root_actions(self.root, self.ledger, bad, sha, [name])
+                e.reconcile_root_actions(root, self.ledger, bad, sha, [name])
         root = copy.deepcopy(self.root)
         root.pop("last_verified_run_observation", None)
         with self.assertRaises(ValueError):
