@@ -18,7 +18,7 @@ class HistoricalDynamicSourceTests(unittest.TestCase):
         self.original = {"schema": 1, "source_run_id": 40743765437,
                          "artifact_id": 12840886350, "sources": [
                              {"id": "github-auto-0", "url": self.url,
-                              "kind": "m3u", "original_entries": 10,
+                              "kind": "m3u", "scope": "candidate", "original_entries": 10,
                               "run60_tested": 9, "old_only": 8}]}
         self.snap = {"sources": [{"url": self.url, "entries": 10}]}
         self.history = {"source_breakdown": [
@@ -82,6 +82,20 @@ class HistoricalDynamicSourceTests(unittest.TestCase):
                 self.snapshot.write_text(json.dumps(value))
                 with self.assertRaisesRegex(ValueError, "provenance unavailable"):
                     self.load()
+
+    def test_original_snapshot_malformed_row_rejected(self):
+        for value in (None, [], "bad"):
+            with self.subTest(value=value):
+                self.snap["sources"][0] = value
+                self.write()
+                with self.assertRaisesRegex(ValueError, "Malformed original"):
+                    self.load()
+
+    def test_historical_scope_cannot_be_promoted_to_playlist(self):
+        self.original["sources"][0]["scope"] = "playlist"
+        self.write()
+        with self.assertRaisesRegex(ValueError, "not backed"):
+            self.load()
 
     def test_invalid_original_source_row_is_rejected(self):
         for value in (None, [], "invalid"):
