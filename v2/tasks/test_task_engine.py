@@ -106,6 +106,12 @@ class TaskEngineTests(unittest.TestCase):
                  "html_url": "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/" + str(i + 100)}
                 for i, name in enumerate(names)]
         self.assertEqual(len(e.verify_grouped_actions(runs, sha, names)), 2)
+        with self.assertRaisesRegex(ValueError, "duplicate"):
+            e.verify_grouped_actions(runs, sha, [names[0], names[0]])
+        with self.assertRaises(ValueError):
+            e.verify_grouped_actions(runs, sha, [""])
+        with self.assertRaises(ValueError):
+            e.verify_grouped_actions(runs, sha, "V2 Master Engine")
         for changed in (
             lambda r: r[0].update(status="in_progress", conclusion=None),
             lambda r: r[0].update(conclusion="failure"),
