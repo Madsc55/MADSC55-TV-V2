@@ -129,7 +129,7 @@ class IntegrationGateTests(unittest.TestCase):
             "schema": 1, "report_checked": {
                 "github_gist": True, "gitlab_codeberg": True},
             "accepted_for_inspection": {"github_gist": 2, "gitlab_codeberg": 1},
-            "bounded_truncation": {"github_gist": False, "gitlab_codeberg": False},
+            "bounded_truncation": {"github_gist": 0, "gitlab_codeberg": 0},
             "inspection_records": 3, "parsed_channel_playlists": 3,
             "failed_source_fetches": 0, "playback_verified": False}
         scan["approved_live_page_handoff"] = {
@@ -141,6 +141,10 @@ class IntegrationGateTests(unittest.TestCase):
         self.assertEqual(passed["actual_candidate_handoff"]
                          ["github_gist_and_gitlab_codeberg"]
                          ["parsed_channel_playlists"], 3)
+        scan["public_source_reference_handoff"]["bounded_truncation"]["github_gist"] = -1
+        self.write_report("channel_scan", scan)
+        self.assertEqual(gate.audit()["adapter_reports"]["channel_scan"], "INVALID")
+        scan["public_source_reference_handoff"]["bounded_truncation"]["github_gist"] = 0
         scan["public_source_reference_handoff"]["inspection_records"] = 2
         self.write_report("channel_scan", scan)
         self.assertEqual(gate.audit()["adapter_reports"]["channel_scan"], "INVALID")
