@@ -1795,3 +1795,9 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - Yeni canlı arşivler için `v2/live_archive_key.py` mevcut `V2_ARCHIVE_PASSPHRASE` secret'ından sabit alan ayrımlı scrypt ile kalıcı 256-bit anahtar türetir. Geçerli `V2_ARCHIVE_KEY_HEX` varsa önceliklidir; geçersiz/eksikse güçlü mevcut passphrase kullanılır. Gizli değerler yazdırılmaz.
 - Geçmiş Stage 5 AES arşivleri ve özel kurtarma anahtarları **değiştirilmez**; bu yeni türetme yalnız canlı Master Engine çıktılarını etkiler. Regresyon testleri toplu offline gate içindedir.
 - Bu commit `[run-live-master]` ile gerçek kaynak keşfi ve arşiv kabulünü ister. Canlı sonuç ve job logu doğrulanmadan #23 tamamlanmış sayılmaz.
+
+
+## 7 Kasım 2026 — Canlı Master Engine gerçek hata analizi
+- Gerçek run #42406632255: offline-tests başarılı; canlı master başarısız. `V2_ARCHIVE_PASSPHRASE` ile scrypt türetme başarılı; şifreli arşiv geri okuma başarılı ve korunan playlist SHA değişmedi. 47 kaynak; `ilyswch-iptv-tr` HTTP 404; 7.785 benzersiz aday, fakat HLS erişim sayacı 0.
+- Kök neden bulundu: `real_ibo_scan.check_hls` başarıda aynı entry nesnesini döndürürken `master_engine.build` checker sonucunu `is True` ile kabul ediyordu. `hls_reachable` adaptörü ve `test_real_hls_scanner_returns_entry_not_boolean` regresyonu eklendi. Bu düzeltme henüz yeni canlı FFmpeg kanıtı değildir.
+- Gerçek kaynak 404 ve canlı AV tarama sonuçları yeniden doğrulanmadan #23 veya yayın paketi görevleri tamamlandı sayılmaz. 7.785 aday için 0 AV raporu artık güvenilir erişilemezlik kanıtı sayılmamalıdır.
