@@ -35,8 +35,11 @@ def read_verified_ledger(ledger_path, snapshot_path, historical_loss,
         if ident in found or row.get("url") in found_urls or index >= len(snapshot["sources"]):
             raise ValueError("Duplicate or out-of-range historical source")
         original = snapshot["sources"][index]
+        if not isinstance(original, dict):
+            raise ValueError("Malformed original #60 snapshot source record")
         evidence = source_breakdown.get(ident)
-        if (row.get("url") != original.get("url")
+        if (row.get("scope") != "candidate" or row.get("provenance") not in (None, "run60-github-source-discovery-index")
+                or row.get("url") != original.get("url")
                 or row.get("original_entries") != original.get("entries")
                 or not evidence or row.get("run60_tested") != evidence["old_tested"]
                 or row.get("old_only") != evidence["old_only_url_identities"]):
