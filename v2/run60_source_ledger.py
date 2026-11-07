@@ -20,7 +20,7 @@ def read_verified_ledger(ledger_path, snapshot_path, historical_loss,
             or not isinstance(snapshot.get("sources"), list)):
         raise ValueError("Original #60 source provenance unavailable")
     source_breakdown = {r["source_id"]: r for r in historical_loss["source_breakdown"]}
-    found, items = set(), []
+    found, found_urls, items = set(), set(), []
     for row in ledger["sources"]:
         ident = row.get("id", "")
         if not isinstance(ident, str) or not ident.startswith("github-auto-"):
@@ -29,7 +29,7 @@ def read_verified_ledger(ledger_path, snapshot_path, historical_loss,
         if not idx_str.isdecimal() or str(int(idx_str)) != idx_str:
             raise ValueError("Invalid #60 source index")
         index = int(idx_str)
-        if ident in found or index >= len(snapshot["sources"]):
+        if ident in found or row.get("url") in found_urls or index >= len(snapshot["sources"]):
             raise ValueError("Duplicate or out-of-range historical source")
         original = snapshot["sources"][index]
         evidence = source_breakdown.get(ident)
@@ -44,6 +44,7 @@ def read_verified_ledger(ledger_path, snapshot_path, historical_loss,
                 or row.get("kind") != "m3u"):
             raise ValueError("Untrusted historical M3U document endpoint")
         found.add(ident)
+        found_urls.add(row["url"])
         items.append({"id": ident, "url": row["url"], "kind": "m3u",
                       "scope": "candidate", "historical_source_only": True})
     if (len(items) != expected_sources
