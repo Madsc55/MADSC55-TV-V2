@@ -137,6 +137,25 @@ def verify_grouped_actions(runs, expected_sha, required_names):
     return accepted
 
 
+
+def reconcile_root_actions(root, ledger, runs, expected_sha, required_names):
+    """Read-only reconciliation: root observations never imply fresh acceptance."""
+    if not isinstance(root, dict) or not isinstance(ledger, dict):
+        raise ValueError("Missing canonical state")
+    if root.get("repository") != REPO or root.get("branch") != BRANCH:
+        raise ValueError("Wrong canonical root")
+    if ledger.get("canonical_state") != "state.json":
+        raise ValueError("Wrong task ledger")
+    observed = root.get("last_verified_run_observation")
+    if not isinstance(observed, dict):
+        raise ValueError("Missing root GitHub observation")
+    accepted = verify_grouped_actions(runs, expected_sha, required_names)
+    # Return evidence only; never mutate the root or mark any task completed.
+    return {"repository": REPO, "branch": BRANCH,
+            "expected_sha": expected_sha, "accepted_runs": accepted,
+            "root_observation_present": True, "task_statuses_unchanged": True}
+
+
 def independent_ready(master, ledger, root, excluded=(), defer_heavy=False):
     """List independent eligible tasks without treating a running AV gate as success."""
     tasks, rows = validate(master, ledger, root)
