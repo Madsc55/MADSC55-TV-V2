@@ -51,6 +51,12 @@ class OriginalRun60LedgerTests(unittest.TestCase):
                 with self.assertRaises(ValueError):
                     self.load_modified(document)
 
+    def test_malformed_ledger_root_rejected_without_crash(self):
+        for document in (None, [], "invalid", 17, True):
+            with self.subTest(document=document):
+                with self.assertRaises(ValueError):
+                    self.load_modified(document)
+
     def test_malformed_source_rows_and_counts_rejected_without_crash(self):
         malformed = (None, [], "not-a-record", {"id": "github-auto-0"},
                      {"old_only": "8449"}, {"old_only": True},
