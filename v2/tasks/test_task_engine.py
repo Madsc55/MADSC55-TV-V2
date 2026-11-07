@@ -101,7 +101,7 @@ class TaskEngineTests(unittest.TestCase):
     def test_grouped_actions_same_commit_and_all_success(self):
         sha = "a" * 40
         names = ["V2 Master Engine", "V2 Eight-Stage Runner Verification"]
-        runs = [{"name": name, "head_sha": sha, "status": "completed",
+        runs = [{"name": name, "head_sha": sha, "head_branch": e.BRANCH, "event": "push", "status": "completed",
                  "conclusion": "success", "id": i + 100,
                  "html_url": "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/" + str(i + 100)}
                 for i, name in enumerate(names)]
@@ -133,7 +133,7 @@ class TaskEngineTests(unittest.TestCase):
     def test_readonly_root_actions_reconciliation(self):
         sha = "c" * 40
         name = "V2 Master Engine"
-        runs = [{"name": name, "head_sha": sha, "status": "completed",
+        runs = [{"name": name, "head_sha": sha, "head_branch": e.BRANCH, "event": "push", "status": "completed",
                  "conclusion": "success", "id": 1001,
                  "html_url": "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/1001"}]
         root = copy.deepcopy(self.root)
@@ -144,6 +144,8 @@ class TaskEngineTests(unittest.TestCase):
         self.assertEqual(root, root_before)
         self.assertEqual(self.ledger, ledger_before)
         for bad in ([], [dict(runs[0], head_sha="d" * 40)],
+                    [dict(runs[0], head_branch="main")],
+                    [dict(runs[0], event="pull_request")],
                     [dict(runs[0], conclusion="failure")]):
             with self.subTest(bad=bad), self.assertRaises(ValueError):
                 e.reconcile_root_actions(root, self.ledger, bad, sha, [name])
