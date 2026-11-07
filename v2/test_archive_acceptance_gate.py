@@ -50,6 +50,7 @@ class ArchiveGateTests(unittest.TestCase):
         for changed in ({"backup_scope": "local_separate_directory_not_independent_storage"},
                         {"backup_location": "file:///tmp/archive.enc"},
                         {"remote_object_version": ""},
+                        {"remote_object_version": "null"},
                         {"retrieval_method": "unverified_copy"},
                         {"historical_record_count": 4954}):
             with self.subTest(changed=changed), self.assertRaises(RuntimeError):
