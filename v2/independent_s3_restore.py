@@ -32,7 +32,12 @@ def restore_s3_version(bucket, key, version, expected, runner=subprocess.run):
         if not isinstance(metadata, dict) or metadata.get("VersionId") != version:
             raise RuntimeError("Remote object version was not verified by S3")
         downloaded.chmod(0o600)
-        digest = hashlib.sha256(downloaded.read_bytes()).hexdigest()
+        # Hash in bounded chunks: encrypted historical archives can be much larger than RAM.
+        digest = hashlib.sha256()
+        with downloaded.open("rb") as archive:
+            for chunk in iter(lambda: archive.read(1024 * 1024), b""):
+                digest.update(chunk)
+        digest = digest.hexdigest()
         if digest != expected:
             raise RuntimeError("Remote archive differs from pinned original checksum")
         evidence = root / "restore-evidence.json"
