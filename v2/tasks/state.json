@@ -245,14 +245,15 @@
     },
     {
       "id": 27,
-      "status": "in_progress",
-      "last_checked_at": "2026-11-07T11:00:00Z",
+      "status": "completed",
+      "last_checked_at": "2026-11-07T16:00:00Z",
       "evidence_urls": [
-        "https://github.com/Madsc55/MADSC55-TV-V2/commit/3cb9e22ad1e7a62a3b9bc73948c48c39e7e1386e",
-        "https://github.com/Madsc55/MADSC55-TV-V2/commit/3f0ec9507c054a70be11b293157186ecc6a49ee1"
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42391685418",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42391685379",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42391685458"
       ],
-      "blocker": "New grouped regression Actions run and end-to-end canonical root state reconciliation not yet verified; do not close task.",
-      "reason": "Strengthened verify_grouped_actions to require exact trusted run URL matching numeric ID and reject bool/zero IDs; added regression cases. Stabilized scheduler test fixture so blocked live task #5 cannot invalidate deterministic test expectations. Changes on dev branch only; not yet accepted by new Actions run."
+      "blocker": null,
+      "reason": "Task #27 canonical root/ledger reconciliation and SHA concurrency fail-closed regressions in v2/tasks/test_task_engine.py passed in real Master Engine offline-tests job for exact commit 90f195b010df2e1992b2d39bbdc43beb06ba9d98, run 42391685418; Eight-Stage both jobs success run 42391685379; monitor job success run 42391685458. Tests cover root links, same-commit GitHub run identity, stale root observations, SHA mismatch rejection, unauthorized device evidence, and protected writes. Read-only reconciliation does not claim live master execution: conditional master job skipped by design."
     },
     {
       "id": 28,
