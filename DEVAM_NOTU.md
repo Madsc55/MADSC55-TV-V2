@@ -1,3 +1,7 @@
+## 7 Kasım — Gerçek Master Engine kabul koşusu talebi
+
+#23 için yalnız offline yeşil workflow yeterli değildir. Bu dev commit mesajındaki `[run-live-master]` işareti, mevcut `V2 Master Engine` workflow'unun canlı `master` job'unu tetiklemek içindir. Job gerçek 500-aday keşif/doğrulama çalıştırır; kalıcı şifreleme anahtarı eksikse fail-closed durur. Run ID, job adımları ve çıktı kanıtı doğrulanmadan #23 kapatılmaz. Korunan IBO, main, PR #9 değiştirilmeyecektir.
+
 ## 7 Kasım — S3 regresyon hatası kapandı
 
 `a00fac0b` commit'inde üç workflow'u kıran yanlış DEL test girdisi `d2bfb9299421cf8a690a7189b0ecd95f679913c2` ile düzeltildi. Aynı SHA üzerinde gerçek Actions job sonuçları: Eight-Stage `42395053358` (2/2 success), Master Engine `42395053334` (offline-tests success, koşullu master skipped), Ordered Preflight `42395053346` (compile/protect/discovery-tests/safety success, koşullu live audit skipped), Current Scanner `42395053399` (2/2 success), Actions Monitor `42395053377` (success). Gerçek S3 remote restore kanıtı yok; #13 açık. Canlı Master Engine kabulü yok; #23 açık. İlerleme 8/33. Korunan IBO, main ve PR #9 değiştirilmedi.
