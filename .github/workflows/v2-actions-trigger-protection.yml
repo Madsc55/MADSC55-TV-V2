@@ -14,6 +14,8 @@ on:
       - 'v2/run_all_discovery.py'
       - 'v2/discover.py'
       - 'v2/test_original_run60_ledger.py'
+      - 'v2/run60_source_ledger.py'
+      - 'v2/test_run60_source_ledger.py'
       - 'v2/history/run60-dynamic-source-ledger.json'
       - 'v2/final_batch_acceptance.py'
       - 'v2/historical_targeted_playback.py'
