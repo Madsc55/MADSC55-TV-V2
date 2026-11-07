@@ -24,9 +24,15 @@ class DecodeTests(unittest.TestCase):
 
     @patch("media_decode.subprocess.run")
     def test_frame_checksum_proves_decode(self, run):
-        run.return_value = CompletedProcess([], 0, "#format: frame checksums\n#media_type 0: video\n0, 0, 0, 1, 123, 0123456789abcdef\n", "")
+        run.return_value = CompletedProcess([], 0, "#format: frame checksums\n#media_type 0: video\n#media_type 1: audio\n0, 0, 0, 1, 123, 0123456789abcdef\n1, 0, 0, 1, 123, abcdef0123456789\n", "")
         self.assertTrue(decode_media({"url": "https://example.org/live.m3u8"}))
         self.assertIn("-frames:v", run.call_args.args[0])
+        self.assertIn("-frames:a", run.call_args.args[0])
+
+    @patch("media_decode.subprocess.run")
+    def test_video_only_checksum_is_not_av(self, run):
+        run.return_value = CompletedProcess([], 0, "#media_type 0: video\n0, 0, 0, 1, 123, 0123456789abcdef\n", "")
+        self.assertFalse(decode_media({"url": "https://example.org/live.m3u8"}))
 
     @patch("media_decode.subprocess.run")
     def test_audio_only_checksum_is_not_video(self, run):
