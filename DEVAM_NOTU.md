@@ -1789,3 +1789,9 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - Kullanıcının GitHub Actions repository secrets ekranında iki secret kaydı görülüyor; değerler ve tam adlar ekranda görünmüyor. Secret varlığı/formatı yalnız gerçek canlı job tarafından doğrulanabilir.
 - Önceki canlı Master Engine #42396041860, `V2_ARCHIVE_KEY_HEX` eksik olduğu için güvenli biçimde durmuştu. Yeni canlı kabul, `offline-tests` ve koşullu `master` job sonuçları ile logları üzerinden yapılacak.
 - Bu tetikleme arşiv anahtarını okumaz/yazmaz, önceki Stage 5 anahtarlarını değiştirmez; `main`, PR #9 ve korunan IBO listesine dokunmaz. Sonuç gelmeden #23 kapanmaz.
+
+
+## 7 Kasım 2026 — Gerçek passphrase uyumluluğu ve canlı kabul
+- Yeni canlı arşivler için `v2/live_archive_key.py` mevcut `V2_ARCHIVE_PASSPHRASE` secret'ından sabit alan ayrımlı scrypt ile kalıcı 256-bit anahtar türetir. Geçerli `V2_ARCHIVE_KEY_HEX` varsa önceliklidir; geçersiz/eksikse güçlü mevcut passphrase kullanılır. Gizli değerler yazdırılmaz.
+- Geçmiş Stage 5 AES arşivleri ve özel kurtarma anahtarları **değiştirilmez**; bu yeni türetme yalnız canlı Master Engine çıktılarını etkiler. Regresyon testleri toplu offline gate içindedir.
+- Bu commit `[run-live-master]` ile gerçek kaynak keşfi ve arşiv kabulünü ister. Canlı sonuç ve job logu doğrulanmadan #23 tamamlanmış sayılmaz.
