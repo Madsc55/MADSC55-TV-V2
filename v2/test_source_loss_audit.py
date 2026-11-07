@@ -8,6 +8,23 @@ def report(*rows):
                              for name, status, count in rows]}
 
 class SourceLossTests(unittest.TestCase):
+    def test_three_malformed_source_audit_records_rejected(self):
+        baseline = report(("original", "PARSED_NOT_PLAYBACK_VERIFIED", 3))
+        malformed = (None, [], {"status": "ok"})
+        for row in malformed:
+            with self.subTest(row=row):
+                with self.assertRaises(ValueError):
+                    compare({"source_audit": [row]}, baseline)
+                with self.assertRaises(ValueError):
+                    compare(baseline, {"source_audit": [row]})
+
+    def test_malformed_source_audit_root_rejected(self):
+        baseline = report(("original", "ok", 3))
+        for value in (None, [], {"source_audit": None}):
+            with self.subTest(value=value):
+                with self.assertRaises(ValueError):
+                    compare(value, baseline)
+
     def test_historical_large_source_drop(self):
         before = report(("iptv-org", "PARSED_NOT_PLAYBACK_VERIFIED", 11204),
                         ("free-tv", "PARSED_NOT_PLAYBACK_VERIFIED", 1347))
