@@ -34,6 +34,29 @@ class RemoteRestoreTests(unittest.TestCase):
                 restore_s3_version("versioned-bucket", "v2/archive.enc",
                                    "version-one", self.sha, runner=copy_from_remote), self.sha)
 
+    def test_s3_retrieval_timeout_is_bounded_and_configurable(self):
+        observed = []
+        def copy_from_remote(command, **kwargs):
+            observed.append(kwargs["timeout"])
+            shutil.copyfile(self.source, command[-1])
+            return SimpleNamespace(stdout=json.dumps({"VersionId": "version-one"}))
+        with patch.dict(os.environ, {"V2_ARCHIVE_KEY_HEX": "ab" * 32,
+                                  "V2_S3_RESTORE_TIMEOUT_SECONDS": "1200"}):
+            self.assertEqual(restore_s3_version("versioned-bucket", "v2/archive.enc",
+                             "version-one", self.sha, runner=copy_from_remote), self.sha)
+        self.assertEqual(observed, [1200])
+
+    def test_invalid_s3_timeout_is_rejected_before_remote_access(self):
+        def must_not_run(command, **kwargs):
+            self.fail("Invalid timeout must not reach S3")
+        for invalid in ("0", "-1", "3601", "NaN", "29"):
+            with self.subTest(timeout=invalid):
+                with patch.dict(os.environ, {"V2_ARCHIVE_KEY_HEX": "ab" * 32,
+                                          "V2_S3_RESTORE_TIMEOUT_SECONDS": invalid}):
+                    with self.assertRaisesRegex(ValueError, "timeout"):
+                        restore_s3_version("versioned-bucket", "v2/archive.enc",
+                                           "version-one", self.sha, runner=must_not_run)
+
     def test_matching_version_with_wrong_pinned_digest_is_rejected(self):
         def copy_from_remote(command, **kwargs):
             shutil.copyfile(self.source, command[-1])
