@@ -52,7 +52,8 @@ def validate(master, ledger, root):
         raise ValueError("Manifest canonical root mismatch")
     if (ledger.get("canonical_state") != "state.json" or
             ledger.get("schema") != 1 or
-            ledger.get("allowed_statuses") != sorted(STATUSES)):
+            set(ledger.get("allowed_statuses", [])) != STATUSES or
+            len(ledger.get("allowed_statuses", [])) != len(STATUSES)):
         raise ValueError("Task ledger canonical state metadata mismatch")
     rows = ledger["statuses"]
     if len(rows) != 33 or sorted(row["id"] for row in rows) != list(range(1, 34)):
