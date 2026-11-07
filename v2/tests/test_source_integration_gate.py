@@ -129,7 +129,7 @@ class IntegrationGateTests(unittest.TestCase):
             "schema": 1, "report_checked": {
                 "github_gist": True, "gitlab_codeberg": True},
             "accepted_for_inspection": {"github_gist": 2, "gitlab_codeberg": 1},
-            "bounded_truncation": {"github_gist": 0, "gitlab_codeberg": 0},
+            "bounded_truncation": {"github_gist": False, "gitlab_codeberg": False},
             "inspection_records": 3, "parsed_channel_playlists": 3,
             "failed_source_fetches": 0, "playback_verified": False}
         scan["approved_live_page_handoff"] = {
