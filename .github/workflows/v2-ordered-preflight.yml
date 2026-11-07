@@ -75,6 +75,8 @@ jobs:
       - run: python v2/test_encrypted_archive.py
       - run: python v2/test_archive_acceptance_gate.py
       - run: python v2/test_independent_s3_restore.py
+      - name: Verify canonical 33-task state and Actions evidence regressions
+        run: python v2/tasks/test_task_engine.py
   safety:
     needs: discovery-tests
     runs-on: ubuntu-latest
