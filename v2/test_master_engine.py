@@ -72,6 +72,18 @@ class MasterTests(unittest.TestCase):
         self.assertEqual(len(items[0]["history"]), 1)
         self.assertEqual(report["historical_missing_real_url"], 1)
         self.assertEqual([x["parsed"] for x in audit], [2, 2])
+    def test_decoder_error_payload_cannot_promote_candidate(self):
+        # A decoder returning structured failure information is not AV evidence.
+        data = "#EXTM3U\\n#EXTINF:-1,TRT 1\\nhttps://example.org/new.m3u8\\n"
+        for response in ({"error": "decoder_timeout"}, "FAILED", 1, [True], None, False):
+            with self.subTest(response=response):
+                items, _, _ = build([({"id": "tr", "scope": "TR"}, data)],
+                                    "#EXTM3U\\n", checker=lambda item: True,
+                                    media_checker=lambda item: response)
+                self.assertEqual(len(items), 1)
+                self.assertFalse(items[0]["media_decoded"])
+                self.assertEqual(export_candidates(items), [])
+
     def test_media_decode_only_after_reachable_manifest(self):
         data = "#EXTM3U\n#EXTINF:-1,TRT 1\nhttps://example.org/new.m3u8\n"
         items, _, _ = build([({"id": "tr", "scope": "TR"}, data)], "#EXTM3U\n",
