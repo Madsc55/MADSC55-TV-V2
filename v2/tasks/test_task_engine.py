@@ -112,6 +112,9 @@ class TaskEngineTests(unittest.TestCase):
             e.verify_grouped_actions(runs, sha, [""])
         with self.assertRaises(ValueError):
             e.verify_grouped_actions(runs, sha, "V2 Master Engine")
+        for invalid_sha in ("", "a" * 39, "a" * 41, "g" * 40, "A" * 40):
+            with self.subTest(invalid_sha=invalid_sha), self.assertRaises(ValueError):
+                e.verify_grouped_actions(runs, invalid_sha, names)
         for changed in (
             lambda r: r[0].update(status="in_progress", conclusion=None),
             lambda r: r[0].update(conclusion="failure"),
