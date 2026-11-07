@@ -68,7 +68,7 @@ jobs:
         run: |
           set -o pipefail
           mkdir -p v2/reports/ci
-          PYTHONPATH=v2 python -m unittest -v \
+          PYTHONPATH=v2:v2/tasks python -m unittest -v \
             test_actions_trigger_protection_audit \
             test_actions_default_branch_audit \
             test_actions_monitor \
