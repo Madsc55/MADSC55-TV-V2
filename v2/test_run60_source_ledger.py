@@ -71,6 +71,26 @@ class HistoricalDynamicSourceTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "Untrusted"):
             self.load()
 
+    def test_invalid_ledger_and_snapshot_roots_are_rejected(self):
+        for value in (None, [], "invalid", 17):
+            with self.subTest(value=value):
+                self.write()
+                self.ledger.write_text(json.dumps(value))
+                with self.assertRaisesRegex(ValueError, "provenance unavailable"):
+                    self.load()
+                self.write()
+                self.snapshot.write_text(json.dumps(value))
+                with self.assertRaisesRegex(ValueError, "provenance unavailable"):
+                    self.load()
+
+    def test_invalid_original_source_row_is_rejected(self):
+        for value in (None, [], "invalid"):
+            with self.subTest(value=value):
+                self.original["sources"][0] = value
+                self.write()
+                with self.assertRaisesRegex(ValueError, "Invalid #60 dynamic source record"):
+                    self.load()
+
     def test_malformed_original_url_is_rejected_without_unhandled_exception(self):
         for url in ("https://raw.githubusercontent.com:invalid/a/b/main/x.m3u",
                     "https://[broken/a/b/main/x.m3u",
