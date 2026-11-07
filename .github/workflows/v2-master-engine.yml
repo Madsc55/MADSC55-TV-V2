@@ -86,24 +86,24 @@ jobs:
           python v2/test_historical_url_recovery.py
           python v2/test_master_engine.py
           python v2/test_playlist_invariants.py
-      - name: Require durable archive key before live discovery
+      - name: Resolve durable live archive key before discovery
         env:
           CONFIGURED_ARCHIVE_KEY: ${{ secrets.V2_ARCHIVE_KEY_HEX }}
+          CONFIGURED_ARCHIVE_PASSPHRASE: ${{ secrets.V2_ARCHIVE_PASSPHRASE }}
         shell: bash
         run: |
-          python - <<'PY'
+          PYTHONPATH=v2 python - <<'PY'
           import os
-          key = os.environ.get("CONFIGURED_ARCHIVE_KEY", "")
-          if len(key) != 64:
-              raise SystemExit("Live master blocked: persistent V2_ARCHIVE_KEY_HEX secret required")
+          from live_archive_key import resolve_key
           try:
-              bytes.fromhex(key)
-          except ValueError:
-              raise SystemExit("Live master blocked: invalid archive encryption key")
+              key, source = resolve_key(os.environ.get("CONFIGURED_ARCHIVE_KEY", ""),
+                                        os.environ.get("CONFIGURED_ARCHIVE_PASSPHRASE", ""))
+          except ValueError as exc:
+              raise SystemExit("Live master blocked: " + str(exc))
           print("::add-mask::" + key)
           with open(os.environ["GITHUB_ENV"], "a", encoding="utf-8") as output:
-              output.write("V2_ARCHIVE_KEY_HEX=" + key + "\n")
-          print("Persistent encryption key verified; no ephemeral archive permitted")
+              output.write("V2_ARCHIVE_KEY_HEX=" + key + "\\n")
+          print("Durable live archive key resolved using " + source + "; historical archive keys unchanged")
           PY
       - name: Real master discovery and verification
         run: |
