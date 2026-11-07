@@ -59,6 +59,8 @@
 
 - **7 Kasım #13 S3 restore regresyon onarımı:** `v2/independent_s3_restore.py` boş anahtar ile hatalı biçimli anahtarı aynı hata mesajıyla reddediyordu; mevcut `test_missing_private_key_prevents_remote_request` ve `test_invalid_archive_key_is_rejected_before_remote_request` farklı hata mesajlarını beklediğinden offline test başarısız olabilirdi. `bab86a67e0bb73229077c2f120fafbe883757c79` ile boş anahtar `Missing private archive key`, biçimi bozuk anahtar `Invalid private archive key` mesajını üretir; her ikisi de S3 bağlantısından **önce** reddedilir. Gerçek S3 geri yükleme ve yeni toplu Actions kabulü hâlâ doğrulanmadı, #13 açık.
 
+- **7 Kasım #27 güncel SHA kanıt sınırı:** `463fea97e4da580093d187c8d68144fcbe707285` Actions monitor'da `same_monitor_sha` şartı ekledi; geçmişte başarılı olmuş başka SHA'nın `acceptance_candidate` sayılması engellendi. `6bdff16123dcb125657d84ea06e65265c5978aa6` eski SHA reddi ve doğru SHA senaryolarını test ediyor. Gerçek güncel GitHub Actions run/job sonucu **bu turda doğrulanmadı**; bu iki commit için kabul yok. #27 açık, 7/33 değişmedi. Eski #816 sonucu yeni kod kanıtı değildir.
+
 ## En son değişiklikler ve bekleyen gerçek kabul
 
 - **#9 kaynak entegrasyonu:** `727bf0c239fa7155c6ef4413fdaad88d6a7a9a55` kaynak workflow push path kapsamını genişletti; `7ff7f1e82d99f6f50abaade9eb9d6418ee0eba01` Master Engine regresyonlarını toplu kaynak testine ekledi. Kaynak uçtan uca canlı kabulü tamamlanmış sayılmaz.
