@@ -6,10 +6,14 @@ import re
 from pathlib import Path
 
 def index(report):
+    if not isinstance(report, dict) or not isinstance(report.get("source_audit", []), list):
+        raise ValueError("Malformed source audit report")
     result = {}
     for item in report.get("source_audit", []):
+        if not isinstance(item, dict):
+            raise ValueError("Malformed source audit record")
         source = item.get("source")
-        if not source or source in result:
+        if not isinstance(source, str) or not source.strip() or source in result:
             raise ValueError("Missing or duplicate source identifier")
         result[source] = item
     return result
