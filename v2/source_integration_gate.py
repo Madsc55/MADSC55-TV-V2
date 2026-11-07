@@ -214,9 +214,9 @@ def audit():
             problems.append("traz_api:INVALID_CROSSWALK")
             errors.append("INVALID_API_CROSSWALK")
     source_scan = loaded.get("channel_scan", {})
-    dynamic_handoff = source_scan.get("public_source_reference_handoff", {})
-    live_handoff = source_scan.get("approved_live_page_handoff", {})
-    advisory_handoff = source_scan.get("advisory_channel_identity_handoff", {})
+    dynamic_handoff = source_scan.get("public_source_reference_handoff") or {}
+    live_handoff = source_scan.get("approved_live_page_handoff") or {}
+    advisory_handoff = source_scan.get("advisory_channel_identity_handoff") or {}
     if (dynamic_handoff.get("status") not in (None, "NOT_REQUESTED")
             and (dynamic_handoff.get("failed_source_fetches", 0) > 0
                  or any(dynamic_handoff.get("bounded_truncation", {}).values()))):
