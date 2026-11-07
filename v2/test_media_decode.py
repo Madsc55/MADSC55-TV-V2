@@ -102,6 +102,15 @@ class DecodeTests(unittest.TestCase):
         self.assertFalse(decode_media({"url": "https://example.org/live.m3u8"}))
 
     @patch("media_decode.subprocess.run")
+    def test_diagnostics_classify_failure_without_exposing_url(self, run):
+        run.return_value = CompletedProcess([], 1, "", "https://example.org/live.m3u8: Server returned 403 Forbidden")
+        details = {}
+        self.assertFalse(decode_media({"url": "https://example.org/live.m3u8"}, diagnostic=details))
+        self.assertEqual(details["reason"], "ffmpeg_nonzero_exit")
+        self.assertEqual(details["stderr_category"], "http")
+        self.assertNotIn("example.org", str(details))
+
+    @patch("media_decode.subprocess.run")
     def test_nonzero_exit_fails_closed(self, run):
         run.return_value = CompletedProcess([], 1, "", "error")
         self.assertFalse(decode_media({"url": "https://example.org/live.m3u8"}))
