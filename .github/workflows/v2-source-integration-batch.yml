@@ -88,6 +88,7 @@ jobs:
         run: |
           set -euo pipefail
           PYTHONPATH=v2 python -m unittest -v \
+            test_master_engine \
             test_source_adapters_batch \
             test_advisory_channel_identity_bridge \
             test_public_source_handoff \
