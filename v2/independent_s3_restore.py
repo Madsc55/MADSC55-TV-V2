@@ -8,6 +8,7 @@ import re
 import subprocess
 import tempfile
 from pathlib import Path
+from urllib.parse import quote
 from archive_acceptance_gate import check
 
 def restore_s3_version(bucket, key, version, expected, runner=subprocess.run):
@@ -54,7 +55,7 @@ def restore_s3_version(bucket, key, version, expected, runner=subprocess.run):
             "encrypted": True, "durable": True, "restore_test_passed": True,
             "integrity_verified": True, "backup_scope": "independent_remote_storage",
             "retrieval_method": "aws_s3api_versioned_get_object",
-            "backup_location": "s3://" + bucket + "/" + key,
+            "backup_location": "s3://" + bucket + "/" + quote(key, safe="/"),
             "remote_object_version": version, "historical_record_count": 4955,
             "restore_sha256": digest, "restored_file": str(downloaded)
         }, sort_keys=True), encoding="utf-8")
