@@ -125,6 +125,9 @@ def verify_grouped_actions(runs, expected_sha, required_names):
             raise ValueError("Invalid GitHub run")
         if run.get("head_sha") != expected_sha:
             continue
+        # A same-SHA run from a fork or unrelated ref is not development acceptance.
+        if run.get("head_branch") != BRANCH or run.get("event") not in ("push", "workflow_dispatch"):
+            continue
         name = run.get("name")
         if name not in required_names:
             continue
