@@ -1,3 +1,13 @@
+## 7 Kasım 2026 — Görev #27: Actions kanıt kimliği doğrulaması güçlendirildi
+
+- `v2/tasks/task_engine.py` `verify_grouped_actions`: başarılı Actions run kaydı artık yalnız URL önekiyle kabul edilmiyor; URL'deki run ID, gerçek pozitif tamsayı `id` alanıyla birebir aynı olmalı. Python `bool` kimliği ve `0` da reddediliyor. Böylece başka başarılı run'ın bağlantısını taşıyan sahte/yanlış kayıt kabul edilmiyor.
+- `v2/tasks/test_task_engine.py`: yanlış run URL/ID ve geçersiz ID regresyonları eklendi. Görev #5'in gerçek ledgerda `blocked` olması test fixture'ına açıkça ayrıldı; canlı durumun sentetik zamanlama testini bozması önlendi.
+- Commitler: [3cb9e22a](https://github.com/Madsc55/MADSC55-TV-V2/commit/3cb9e22ad1e7a62a3b9bc73948c48c39e7e1386e), [3f0ec950](https://github.com/Madsc55/MADSC55-TV-V2/commit/3f0ec9507c054a70be11b293157186ecc6a49ee1).
+- Görev #27 **in_progress**, tamamlanmadı: yeni commit için gerçek toplu Actions kabulü ve kök `state.json` ile uçtan uca tutarlılık kanıtı bekleniyor. Yeni FFmpeg taraması yapılmadı, kanalların AV durumu yükseltilmedi.
+- `main`, PR #9, ana IBO ve tarihî envanter değişmedi.
+
+---
+
 ## 7 Kasım 2026 — Görev #12 gerçek dünya FFmpeg kanıtıyla tamamlandı
 
 - Gerçek Actions [#42228674931](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42228674931), job `127928618610` logu: `FINAL_WORLDWIDE_REPORT_GATE` = `COMPLETE_AV_COVERAGE_EVIDENCE`, **34.209/34.209** gerçek aday taranmış, **12.968** video+ses decode, **0** taranmamış, **9** SHA bütünlüğü denetlenen mühürlü paket; **23** regresyon testi `OK`.
