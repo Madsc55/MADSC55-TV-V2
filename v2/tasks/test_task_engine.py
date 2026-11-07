@@ -152,6 +152,27 @@ class TaskEngineTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "Cyclic"):
             e.validate(master, self.ledger, self.root)
 
+    def test_canonical_state_reconciliation_rejects_mismatches(self):
+        for field, invalid in (("manifest", "v2/tasks/other.json"),
+                               ("canonical_root", "other.json"),
+                               ("total_tasks", 32),
+                               ("status_authority", "unknown")):
+            root = copy.deepcopy(self.root)
+            root["task_tracking"][field] = invalid
+            with self.subTest(field=field), self.assertRaises(ValueError):
+                e.validate(self.master, self.ledger, root)
+        manifest = copy.deepcopy(self.master)
+        manifest["canonical_state"] = "other.json"
+        with self.assertRaises(ValueError):
+            e.validate(manifest, self.ledger, self.root)
+        for field, invalid in (("canonical_state", "other.json"),
+                               ("schema", 2),
+                               ("allowed_statuses", ["pending", "completed"])):
+            ledger = copy.deepcopy(self.ledger)
+            ledger[field] = invalid
+            with self.subTest(field=field), self.assertRaises(ValueError):
+                e.validate(self.master, ledger, self.root)
+
     def test_root_link_required(self):
         root = copy.deepcopy(self.root)
         root.pop("task_tracking", None)
