@@ -100,7 +100,7 @@ class RemoteRestoreTests(unittest.TestCase):
     def test_s3_key_utf8_byte_limit_and_del_rejected_before_network(self):
         def must_not_run(command, **kwargs):
             self.fail("Invalid S3 key must not reach remote retrieval")
-        invalid_keys = ("é" * 513, "v2/archive\\x7f.enc", "")
+        invalid_keys = ("é" * 513, "v2/archive" + chr(127) + ".enc", "")
         with patch.dict(os.environ, {"V2_ARCHIVE_KEY_HEX": "ab" * 32}):
             for key in invalid_keys:
                 with self.subTest(key_length=len(key)):
