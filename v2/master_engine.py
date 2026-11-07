@@ -89,7 +89,9 @@ def build(source_texts, live_text, history=(), checker=None, workers=8, media_ch
         reachable = [item for item in items if item["network_status"] == "HLS_MANIFEST_REACHABLE"]
         def decode(item):
             try:
-                return bool(media_checker(item))
+                # Only an explicit decoder success can promote a stream to AV-verified.
+                # Non-empty error dictionaries and strings must never count as playback.
+                return media_checker(item) is True
             except Exception:
                 return False
         with concurrent.futures.ThreadPoolExecutor(max_workers=workers) as pool:
