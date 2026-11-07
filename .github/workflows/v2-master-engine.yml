@@ -69,7 +69,7 @@ jobs:
           echo "Run URL: https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" >> "$GITHUB_STEP_SUMMARY"
   master:
     needs: offline-tests
-    if: github.event_name == 'push' && contains(github.event.head_commit.message, '[run-live-master]')
+    if: github.event_name == 'push' && github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' && contains(github.event.head_commit.message, '[run-live-master]')
     runs-on: ubuntu-latest
     timeout-minutes: 120
     steps:
@@ -79,8 +79,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Install archive dependency
-        run: python -m pip install 'cryptography>=42,<47'
+      - name: Install pinned archive dependency
+        run: python -m pip install cryptography==44.0.2 PyYAML==6.0.2
       - name: Offline master regressions
         run: |
           python v2/test_historical_url_recovery.py
