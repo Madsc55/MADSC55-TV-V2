@@ -2,6 +2,7 @@
 """Read-only, fail-closed MADSC55 V2 task selection and evidence checks."""
 import argparse
 import json
+import re
 from pathlib import Path, PurePosixPath
 
 STATUSES = {"pending", "in_progress", "blocked", "completed"}
@@ -113,6 +114,7 @@ def require_fresh_github(fetch_result):
 def verify_grouped_actions(runs, expected_sha, required_names):
     """Require fresh, same-commit, successful workflow runs; no partial green."""
     if (not isinstance(runs, list) or not isinstance(expected_sha, str)
+            or re.fullmatch(r"[0-9a-f]{40}", expected_sha) is None
             or not isinstance(required_names, (list, tuple)) or not required_names
             or any(not isinstance(name, str) or not name for name in required_names)
             or len(set(required_names)) != len(required_names)):
