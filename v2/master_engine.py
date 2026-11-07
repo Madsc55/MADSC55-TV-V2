@@ -101,6 +101,11 @@ def build(source_texts, live_text, history=(), checker=None, workers=8, media_ch
             item["media_decoded"] = ok
     return items, audit, history_report
 
+def hls_reachable(item, timeout):
+    """Scanner returns the same entry on actual HLS manifest success, not True."""
+    return check_hls(item, timeout) is item
+
+
 def archive_records(items, history):
     """Archive every historical row, including duplicates/hash-only and failures."""
     return list(_chunks(history, "raw_historical_evidence")) + list(items)
@@ -190,7 +195,7 @@ def main():
                              "reason": "Fresh source unavailable"})
     history = list(read_records(args.history)) if args.history else []
     items, audit, history_report = build(source_texts, live_text, history,
-                                         checker=lambda x: check_hls(x, args.timeout) is x,
+                                         checker=lambda x: hls_reachable(x, args.timeout),
                                          workers=args.workers,
                                          media_checker=lambda x: decode_media(x, args.timeout))
     # Never silently publish a partial scan as complete.
