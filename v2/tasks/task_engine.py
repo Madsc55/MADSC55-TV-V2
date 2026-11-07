@@ -107,8 +107,9 @@ def verify_grouped_actions(runs, expected_sha, required_names):
             continue
         if run.get("status") != "completed" or run.get("conclusion") != "success":
             raise ValueError("Required grouped Actions run incomplete or failed: " + str(name))
-        if not isinstance(run.get("id"), int) or not run.get("html_url", "").startswith(
-                "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/"):
+        if (type(run.get("id")) is not int or run["id"] <= 0 or
+                run.get("html_url") != (
+                    "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/" + str(run["id"]))):
             raise ValueError("Missing trusted Actions run identity")
         if name in accepted:
             raise ValueError("Ambiguous duplicate Actions workflow evidence")
