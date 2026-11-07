@@ -14,7 +14,7 @@ from archive_acceptance_gate import check
 def restore_s3_version(bucket, key, version, expected, runner=subprocess.run):
     if not isinstance(bucket, str) or not re.fullmatch(r"[a-z0-9][a-z0-9.-]{1,61}[a-z0-9]", bucket):
         raise ValueError("Invalid private S3 bucket")
-    if not isinstance(key, str) or not key or len(key) > 1024 or any(ord(c) < 32 for c in key):
+    if not isinstance(key, str) or not key or len(key.encode("utf-8")) > 1024 or any(ord(c) < 32 or ord(c) == 127 for c in key):
         raise ValueError("Invalid S3 object key")
     if not isinstance(version, str) or not 1 <= len(version) <= 255 or version == "null" or any(ord(c) < 33 for c in version):
         raise ValueError("Specific immutable S3 object version required")
