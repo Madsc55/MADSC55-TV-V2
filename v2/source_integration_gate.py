@@ -119,7 +119,7 @@ def _valid(name, data):
         if source_handoff is not None and source_handoff.get("status") != "NOT_REQUESTED":
             # A malformed truncation report must never become a successful handoff.
             truncation = source_handoff.get("bounded_truncation", {})
-            if not isinstance(truncation, dict) or any(type(v) is not bool for v in truncation.values()):
+            if not isinstance(truncation, dict) or any(type(v) is not int or v < 0 for v in truncation.values()):
                 return False
             if (not isinstance(source_handoff.get("report_checked"), dict)
                     or set(source_handoff["report_checked"]) !=
