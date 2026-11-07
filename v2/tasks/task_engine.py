@@ -2,7 +2,7 @@
 """Read-only, fail-closed MADSC55 V2 task selection and evidence checks."""
 import argparse
 import json
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 
 STATUSES = {"pending", "in_progress", "blocked", "completed"}
 REPO = "Madsc55/MADSC55-TV-V2"
@@ -133,10 +133,16 @@ def independent_ready(master, ledger, root, excluded=(), defer_heavy=False):
 
 
 def assert_safe_write(path, branch):
-    if branch != BRANCH or Path(path).name in PROTECTED or str(path).startswith("../"):
+    """Reject noncanonical, absolute and protected paths before GitHub writes."""
+    if branch != BRANCH or not isinstance(path, str) or not path:
+        raise ValueError("Protected path or branch")
+    if (chr(92) in path or chr(0) in path or
+            any(part in ("", ".", "..") for part in path.split("/"))):
+        raise ValueError("Protected path or branch")
+    candidate = PurePosixPath(path)
+    if candidate.is_absolute() or candidate.name in PROTECTED:
         raise ValueError("Protected path or branch")
     return True
-
 
 def main():
     p = argparse.ArgumentParser()
