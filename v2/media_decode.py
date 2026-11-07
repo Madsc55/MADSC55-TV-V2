@@ -16,7 +16,7 @@ def decode_media(entry, timeout=20):
         "-protocol_whitelist", "http,https,tcp,tls,crypto",
         "-rw_timeout", str(int(timeout * 1000000)),
         "-i", url, "-map", "0:v:0", "-map", "0:a:0",
-        "-frames:v", "1", "-t", str(int(timeout)),
+        "-t", str(int(timeout)),
         "-f", "framemd5", "-"
     ]
     try:
