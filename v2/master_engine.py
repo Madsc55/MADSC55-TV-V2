@@ -190,7 +190,7 @@ def main():
                              "reason": "Fresh source unavailable"})
     history = list(read_records(args.history)) if args.history else []
     items, audit, history_report = build(source_texts, live_text, history,
-                                         checker=lambda x: check_hls(x, args.timeout),
+                                         checker=lambda x: check_hls(x, args.timeout) is x,
                                          workers=args.workers,
                                          media_checker=lambda x: decode_media(x, args.timeout))
     # Never silently publish a partial scan as complete.
