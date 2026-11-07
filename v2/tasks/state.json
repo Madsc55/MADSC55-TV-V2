@@ -51,11 +51,14 @@
     },
     {
       "id": 5,
-      "status": "pending",
-      "last_checked_at": null,
-      "evidence_urls": [],
-      "blocker": null,
-      "reason": null
+      "status": "blocked",
+      "last_checked_at": "2026-11-07T10:02:00Z",
+      "evidence_urls": [
+        "https://github.com/Madsc55/MADSC55-TV-V2/commit/eaac39fb4afc4036e2db17f5c2e671b45274d820",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42303308753"
+      ],
+      "blocker": "Three ORIGINAL malformed source records cannot be identified from accessible provenance; generic malformed-record regression is not repair of those original rows. Latest grouped Actions run for CI filter change is not yet identified. Do not repeat text searches; proceed to independent tasks.",
+      "reason": "17 historical dynamic source identities and 8,449 old_only references accounted for in historical ledger, but original 3 source records not proven fixed. Historical Actions #42303308753 shows 190 offline tests passed and live AV job skipped; predates latest source-loss/CI commits."
     },
     {
       "id": 6,
