@@ -127,10 +127,12 @@ class TaskEngineTests(unittest.TestCase):
         runs = [{"name": name, "head_sha": sha, "status": "completed",
                  "conclusion": "success", "id": 1001,
                  "html_url": "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/1001"}]
-        root_before, ledger_before = copy.deepcopy(self.root), copy.deepcopy(self.ledger)
-        result = e.reconcile_root_actions(self.root, self.ledger, runs, sha, [name])
+        root = copy.deepcopy(self.root)
+        root["last_verified_run_observation"]["development_commit"] = sha
+        root_before, ledger_before = copy.deepcopy(root), copy.deepcopy(self.ledger)
+        result = e.reconcile_root_actions(root, self.ledger, runs, sha, [name])
         self.assertTrue(result["task_statuses_unchanged"])
-        self.assertEqual(self.root, root_before)
+        self.assertEqual(root, root_before)
         self.assertEqual(self.ledger, ledger_before)
         for bad in ([], [dict(runs[0], head_sha="d" * 40)],
                     [dict(runs[0], conclusion="failure")]):
@@ -140,6 +142,10 @@ class TaskEngineTests(unittest.TestCase):
         root.pop("last_verified_run_observation", None)
         with self.assertRaises(ValueError):
             e.reconcile_root_actions(root, self.ledger, runs, sha, [name])
+        stale = copy.deepcopy(self.root)
+        stale["last_verified_run_observation"]["development_commit"] = "d" * 40
+        with self.assertRaisesRegex(ValueError, "stale or mismatched"):
+            e.reconcile_root_actions(stale, self.ledger, runs, sha, [name])
 
     def test_concurrent_state_conflict(self):
         self.assertTrue(e.require_matching_sha("sha1", "sha1"))
