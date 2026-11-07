@@ -22,6 +22,26 @@ class SourceInventoryContract(unittest.TestCase):
         cls.config = json.loads(CONFIG.read_text(encoding="utf-8"))
         cls.sources = cls.config["sources"]
 
+    def test_malformed_dynamic_truncation_report_fails_closed(self):
+        from source_integration_gate import _valid
+        scan = {
+            "schema": 1, "candidates": [], "source_audit": [],
+            "coverage_status": "COMPLETE", "playback_verified": False,
+            "candidate_status": "UNVERIFIED",
+            "public_source_reference_handoff": {
+                "status": "INSPECTED", "bounded_truncation": ["bad"],
+                "report_checked": {"github_gist": True, "gitlab_codeberg": True},
+                "inspection_records": 0, "parsed_channel_playlists": 0,
+                "failed_source_fetches": 0, "accepted_for_inspection": {},
+                "playback_verified": False,
+            },
+        }
+        self.assertFalse(_valid("channel_scan", scan))
+        scan["public_source_reference_handoff"]["bounded_truncation"] = {"github_gist": "false"}
+        self.assertFalse(_valid("channel_scan", scan))
+        scan["public_source_reference_handoff"]["bounded_truncation"] = {"github_gist": False}
+        self.assertTrue(_valid("channel_scan", scan))
+
     def test_discovery_only(self):
         self.assertEqual(self.config["policy"], "discovery-only; never modify live playlist")
 
