@@ -45,6 +45,18 @@ class HistoricalDynamicSourceTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "not backed"):
             self.load()
 
+    def test_duplicate_url_across_two_original_ids_rejected(self):
+        second = dict(self.original["sources"][0], id="github-auto-1")
+        self.original["sources"].append(second)
+        self.snap["sources"].append(dict(self.snap["sources"][0]))
+        self.history["source_breakdown"].append({
+            "source_id": "github-auto-1", "old_tested": 9,
+            "old_only_url_identities": 8})
+        self.write()
+        with self.assertRaisesRegex(ValueError, "Duplicate"):
+            read_verified_ledger(self.ledger, self.snapshot, self.history,
+                                 expected_sources=2, expected_old_only=16)
+
     def test_missing_original_entry_rejected(self):
         self.original["sources"][0]["run60_tested"] = 10
         self.write()
