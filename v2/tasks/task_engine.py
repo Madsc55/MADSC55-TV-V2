@@ -149,10 +149,9 @@ def reconcile_root_actions(root, ledger, runs, expected_sha, required_names):
     observed = root.get("last_verified_run_observation")
     if not isinstance(observed, dict):
         raise ValueError("Missing root GitHub observation")
-    # A successful run on a newer commit cannot validate stale root observations.
-    observed_sha = observed.get("development_commit")
-    if observed_sha != expected_sha:
-        raise ValueError("Canonical root GitHub observation is stale or mismatched")
+    # Root observations are historical. Fresh acceptance comes only from
+    # same-commit successful Actions runs; requiring root SHA equality would
+    # create an impossible commit/update cycle for state.json.
     accepted = verify_grouped_actions(runs, expected_sha, required_names)
     # Return evidence only; never mutate the root or mark any task completed.
     return {"repository": REPO, "branch": BRANCH,
