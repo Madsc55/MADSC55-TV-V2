@@ -57,6 +57,8 @@
 
 - **7 Kasım bağımsız CI regresyon onarımı:** `v2/test_actions_monitor.py` dosyasında testin kaynak kodunda gerçek Python sözdizimini bozan metinsel `\\n` bulundu; ayrıca başarısız job adımlarını denetleyen fixture yanlış workflow'a veri döndürüyordu. `e897fe89b6a73771df0f01d9c340efe307ada621` ile sözdizimi ve fixture routing düzeltildi. Bu kod GitHub'a yazıldı; **güncel run/job sonucu henüz doğrulanmadı**, #27 ve #23 açık. Eski #816 yeni kod kabulü değildir.
 
+- **7 Kasım #13 S3 restore regresyon onarımı:** `v2/independent_s3_restore.py` boş anahtar ile hatalı biçimli anahtarı aynı hata mesajıyla reddediyordu; mevcut `test_missing_private_key_prevents_remote_request` ve `test_invalid_archive_key_is_rejected_before_remote_request` farklı hata mesajlarını beklediğinden offline test başarısız olabilirdi. `bab86a67e0bb73229077c2f120fafbe883757c79` ile boş anahtar `Missing private archive key`, biçimi bozuk anahtar `Invalid private archive key` mesajını üretir; her ikisi de S3 bağlantısından **önce** reddedilir. Gerçek S3 geri yükleme ve yeni toplu Actions kabulü hâlâ doğrulanmadı, #13 açık.
+
 ## En son değişiklikler ve bekleyen gerçek kabul
 
 - **#9 kaynak entegrasyonu:** `727bf0c239fa7155c6ef4413fdaad88d6a7a9a55` kaynak workflow push path kapsamını genişletti; `7ff7f1e82d99f6f50abaade9eb9d6418ee0eba01` Master Engine regresyonlarını toplu kaynak testine ekledi. Kaynak uçtan uca canlı kabulü tamamlanmış sayılmaz.
