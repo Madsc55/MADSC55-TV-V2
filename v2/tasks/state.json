@@ -1,8 +1,8 @@
 {
   "schema": 1,
   "canonical_state": "state.json",
-  "generated_at": "2026-11-06T17:50:00Z",
-  "observed_commit": "3cec2d44597b8e89e8be543806c3054a86204237",
+  "generated_at": "2026-11-08T00:00:00Z",
+  "observed_commit": "c36083b8e9551a0a6795c6b2c0cf0350662440a6",
   "statuses": [
     {
       "id": 1,
@@ -42,13 +42,15 @@
     {
       "id": 4,
       "status": "in_progress",
-      "last_checked_at": "2026-11-07T10:15:00Z",
+      "last_checked_at": "2026-11-08T00:00:00Z",
       "evidence_urls": [
         "https://github.com/Madsc55/MADSC55-TV-V2/commit/5d208cf40e9d99915963bb9f56c4aff0f591ed02",
-        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42228674931"
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42228674931",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42503692984",
+        "https://github.com/Madsc55/MADSC55-TV-V2/commit/c36083b8e9551a0a6795c6b2c0cf0350662440a6"
       ],
-      "blocker": "Seven historical hashes absent from worldwide report; 1886 exact matches lack video+audio decode evidence. Do not mark recovered without exact AV verification and encrypted provenance.",
-      "reason": "Real Actions job 127928618610 succeeded: HISTORICAL_EXACT_SHA_AV 4955 preserved, 4948 exact SHA matches, 3062 video+audio decoded, 7 not in worldwide report. Artifact 13507480461 exists, unexpired, SHA256 digest 78f4b2188696e159662a29bf6cab3530992bd39490367d7342c0fef9958c23fb. This run is historical, not a new live FFmpeg scan. 1886 matched-but-unproven plus 7 unmatched remain unresolved."
+      "blocker": "Latest complete worldwide report has 20 historical SHA hashes absent and 1866 matched hashes without decoded video+audio. Pinned read-only historical crosswalk workflow now references run 42503692984, but manual workflow_dispatch has not run; do not mark completed or claim current playback.",
+      "reason": "Latest Source Integration Batch #42503692984 completed successfully: HISTORICAL_EXACT_SHA_AV preserved 4955 identities, 4935 exact SHA matches, 3069 AV decoded, 20 not in worldwide report; 1866 matched without AV proof. Counts are not directly comparable to the earlier scan because its candidate coverage differs. Workflow pin corrected at c36083b8; four subsequent grouped CI workflows passed, but the manual crosswalk is still unexecuted. Historical identity and sealed evidence only, not IBO device proof."
     },
     {
       "id": 5,
