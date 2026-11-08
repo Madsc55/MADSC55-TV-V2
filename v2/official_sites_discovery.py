@@ -5,6 +5,7 @@ import json
 import pathlib
 import urllib.parse
 import urllib.request
+from historical_url_recovery import validate_url
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 OUT = ROOT / "v2/reports/official-tv-sites.json"
@@ -24,11 +25,9 @@ def main():
         if item.get("country") != "TR" or item.get("is_nsfw") or item.get("closed"):
             continue
         url = item.get("website") or ""
+        if not validate_url(url):
+            continue
         parsed = urllib.parse.urlsplit(url)
-        if parsed.scheme not in ("http", "https") or not parsed.hostname:
-            continue
-        if parsed.hostname.lower() in ("localhost",) or parsed.hostname.endswith(".local"):
-            continue
         key = (item.get("id"), parsed.hostname.lower())
         if key in seen:
             continue
