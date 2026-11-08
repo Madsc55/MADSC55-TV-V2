@@ -27,6 +27,10 @@ def collect_official_sites(catalog):
         if not validate_url(url):
             continue
         parsed = urllib.parse.urlsplit(url)
+        # Directory websites are references, never credential-bearing stream URLs.
+        # Avoid persisting query tokens or fragments in a plaintext discovery report.
+        if parsed.query or parsed.fragment:
+            continue
         key = (channel_id, parsed.hostname.lower())
         if key in seen:
             continue
