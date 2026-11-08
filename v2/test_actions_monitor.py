@@ -1,10 +1,37 @@
 #!/usr/bin/env python3
 """Offline regression for Actions run status collection."""
 import unittest
+import io
+import urllib.error
 from unittest.mock import patch
 import actions_monitor
 
 class MonitorTests(unittest.TestCase):
+    def test_transient_api_failure_retries_then_succeeds(self):
+        payload = io.BytesIO(b'{"workflow_runs": []}')
+        class Response:
+            def __enter__(self):
+                return payload
+            def __exit__(self, *args):
+                return False
+        transient = urllib.error.HTTPError("https://api.github.com", 503, "temporary", {}, None)
+        with patch.object(actions_monitor, "TOKEN", "test"), patch.object(
+                actions_monitor.urllib.request, "urlopen", side_effect=[transient, Response()]) as opener, patch.object(
+                actions_monitor.time, "sleep") as sleep:
+            self.assertEqual(actions_monitor.api("/test"), {"workflow_runs": []})
+        self.assertEqual(opener.call_count, 2)
+        sleep.assert_called_once()
+
+    def test_authorization_failure_never_retries(self):
+        denied = urllib.error.HTTPError("https://api.github.com", 403, "forbidden", {}, None)
+        with patch.object(actions_monitor, "TOKEN", "test"), patch.object(
+                actions_monitor.urllib.request, "urlopen", side_effect=denied) as opener, patch.object(
+                actions_monitor.time, "sleep") as sleep:
+            with self.assertRaisesRegex(RuntimeError, "HTTP 403"):
+                actions_monitor.api("/test")
+        self.assertEqual(opener.call_count, 1)
+        sleep.assert_not_called()
+
     def test_monitor_targets_active_workflow(self):
         self.assertEqual(set(actions_monitor.WORKFLOWS), {
             "v2-eight-stage-verification.yml", "v2-master-engine.yml",
