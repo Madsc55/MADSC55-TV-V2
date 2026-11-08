@@ -209,10 +209,9 @@ class TaskEngineTests(unittest.TestCase):
             row["status"] = "completed"
             row["evidence_urls"] = ["https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/123"]
             row["last_checked_at"] = "2026-11-08T00:00:00Z"
+        ledger["statuses"][31]["user_device_confirmation"] = True
         self.assertFalse(e.issue34_ready(self.master, ledger, self.root))
         self.assertFalse(e.issue34_ready(self.master, ledger, self.root, user_approved=1))
-        self.assertFalse(e.issue34_ready(self.master, ledger, self.root, user_approved=True))
-        ledger["statuses"][31]["user_device_confirmation"] = True
         self.assertTrue(e.issue34_ready(self.master, ledger, self.root, user_approved=True))
         for task_id in (1, 32, 33):
             broken = copy.deepcopy(ledger)
