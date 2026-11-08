@@ -111,6 +111,20 @@ class DecodeTests(unittest.TestCase):
         self.assertNotIn("example.org", str(details))
 
     @patch("media_decode.subprocess.run")
+    def test_missing_ffmpeg_is_distinguished_from_bad_stream(self, run):
+        run.side_effect = FileNotFoundError("ffmpeg")
+        diagnostic = {}
+        self.assertFalse(decode_media({"url": "https://example.org/live.m3u8"}, diagnostic=diagnostic))
+        self.assertEqual(diagnostic, {"reason": "ffmpeg_executable_missing"})
+
+    @patch("media_decode.subprocess.run")
+    def test_denied_ffmpeg_is_distinguished_from_bad_stream(self, run):
+        run.side_effect = PermissionError("ffmpeg")
+        diagnostic = {}
+        self.assertFalse(decode_media({"url": "https://example.org/live.m3u8"}, diagnostic=diagnostic))
+        self.assertEqual(diagnostic, {"reason": "ffmpeg_executable_denied"})
+
+    @patch("media_decode.subprocess.run")
     def test_nonzero_exit_fails_closed(self, run):
         run.return_value = CompletedProcess([], 1, "", "error")
         self.assertFalse(decode_media({"url": "https://example.org/live.m3u8"}))
