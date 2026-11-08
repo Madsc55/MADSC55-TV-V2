@@ -17,6 +17,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Verify current V2 continuation and canonical task files at startup
+        shell: bash
+        run: |
+          set -euo pipefail
+          for file in DEVAM_NOTU.md v2/tasks/master_tasks.json v2/tasks/state.json; do
+            test -s "$file"
+            git cat-file -e "HEAD:$file"
+            test "$(git hash-object "$file")" = "$(git rev-parse "HEAD:$file")"
+            printf 'V2_STARTUP_READ commit=%s file=%s blob=%s\n' "$GITHUB_SHA" "$file" "$(git rev-parse "HEAD:$file")"
+          done
+          PYTHONPATH=v2/tasks python v2/tasks/task_engine.py --root state.json --manifest v2/tasks/master_tasks.json --ledger v2/tasks/state.json
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -76,6 +87,17 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.sha }}
+      - name: Verify current V2 continuation and canonical task files at startup
+        shell: bash
+        run: |
+          set -euo pipefail
+          for file in DEVAM_NOTU.md v2/tasks/master_tasks.json v2/tasks/state.json; do
+            test -s "$file"
+            git cat-file -e "HEAD:$file"
+            test "$(git hash-object "$file")" = "$(git rev-parse "HEAD:$file")"
+            printf 'V2_STARTUP_READ commit=%s file=%s blob=%s\n' "$GITHUB_SHA" "$file" "$(git rev-parse "HEAD:$file")"
+          done
+          PYTHONPATH=v2/tasks python v2/tasks/task_engine.py --root state.json --manifest v2/tasks/master_tasks.json --ledger v2/tasks/state.json
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
