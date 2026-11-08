@@ -40,7 +40,14 @@ def decode_media(entry, timeout=20, diagnostic=None):
                                 timeout=timeout + 5, check=False)
     except (OSError, subprocess.TimeoutExpired, ValueError) as exc:
         if diagnostic is not None:
-            diagnostic["reason"] = "timeout" if isinstance(exc, subprocess.TimeoutExpired) else "execution_error"
+            if isinstance(exc, subprocess.TimeoutExpired):
+                diagnostic["reason"] = "timeout"
+            elif isinstance(exc, FileNotFoundError):
+                diagnostic["reason"] = "ffmpeg_executable_missing"
+            elif isinstance(exc, PermissionError):
+                diagnostic["reason"] = "ffmpeg_executable_denied"
+            else:
+                diagnostic["reason"] = "execution_error"
         return False
     if result.returncode != 0:
         if diagnostic is not None:
