@@ -136,6 +136,16 @@ class MasterTests(unittest.TestCase):
         self.assertFalse(items[0]["media_decoded"])
         self.assertEqual(called, [])
 
+    def test_av_totals_and_export_eligibility_are_distinct(self):
+        rows = [
+            {"name": "TR", "region_candidate": "TR", "media_decoded": True},
+            {"name": "Foreign", "region_candidate": "foreign", "media_decoded": True},
+            {"name": "HTTP only", "region_candidate": "AZ", "media_decoded": False},
+        ]
+        self.assertEqual(sum(row.get("media_decoded") is True for row in rows), 2)
+        self.assertEqual(len(export_candidates(rows)), 1)
+        self.assertEqual(len(rows), 3)
+
     def test_k2_k5_export_gate_requires_decoded_tr_az_and_keeps_device_unverified(self):
         rows = [
             {"name": "TR", "url": "https://example.org/tr.m3u8", "region_candidate": "TR",
