@@ -1,13 +1,8 @@
 name: V2 Historical AV Crosswalk Reuse
 # Read-only SHA-only historical crosswalk against a pinned, completed AV run.
-# One-time dev workflow-file push trigger and manual dispatch; no publisher, cron or rescan.
+# Manual, read-only execution only; no publisher, cron or automatic push.
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - madsc/v2-discovery-bulk-20261031
-    paths:
-      - .github/workflows/v2-historical-av-crosswalk-reuse.yml
 permissions:
   contents: read
   actions: read
