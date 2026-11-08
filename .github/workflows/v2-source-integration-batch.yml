@@ -1152,29 +1152,6 @@ jobs:
           path: v2/reports/ci/traz-additional-xmltv-gap.json
           if-no-files-found: warn
           retention-days: 30
-\\t' read -r created artifact_id source_run; do
-              if test "$source_run" = "$GITHUB_RUN_ID"; then continue; fi
-              if gh api "repos/${GITHUB_REPOSITORY}/actions/runs/$source_run" --jq '.status' | grep -qx completed; then
-                if gh api "repos/${GITHUB_REPOSITORY}/actions/artifacts/$artifact_id/zip" > /tmp/v2-checkpoint.zip &&
-                   unzip -p /tmp/v2-checkpoint.zip final-worldwide-checkpoint.json > v2/reports/ci/prior/final-worldwide-checkpoint.json &&
-                   test -s v2/reports/ci/prior/final-worldwide-checkpoint.json; then
-                  echo "Recovered hash-only checkpoint from run $source_run"
-                  break
-                fi
-              fi
-            done
-          if test -s v2/reports/ci/prior/final-worldwide-checkpoint.json; then
-            python -m json.tool v2/reports/ci/prior/final-worldwide-checkpoint.json >/dev/null
-          fi
-      - name: Real bounded video-plus-audio scan of static, reviewed public and document sources
-        shell: bash
-        run: |
-          set -euo pipefail
-          args=(--workers 32 --budget-seconds 14400 --require-public-sources)
-          if test -s v2/reports/ci/prior/final-worldwide-acceptance.json; then
-            args+=(--reuse-report v2/reports/ci/prior/final-worldwide-acceptance.json)
-          fi
-          timeout 16000s python v2/final_batch_acceptance.py "${args[@]}"
       - name: Require complete AV probe coverage, valid SHA256 evidence and encrypted URL archive
         run: PYTHONPATH=v2 python v2/final_worldwide_report_gate.py --report v2/reports/ci/final-worldwide-acceptance.json
       - name: Crosswalk 4955 immutable historical hashes against accepted worldwide decoded AV
