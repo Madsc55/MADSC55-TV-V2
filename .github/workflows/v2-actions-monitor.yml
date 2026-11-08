@@ -13,7 +13,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: madsc/v2-discovery-bulk-20261031
+          ref: ${{ github.sha }}
+      - name: Fail closed if checkout differs from triggering commit
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          echo "V2_MONITOR_CHECKOUT_SHA=$GITHUB_SHA"
       - name: Offline monitor regression
         run: python v2/test_actions_monitor.py
       - name: Read last 10 Master Engine runs via GitHub Actions API
