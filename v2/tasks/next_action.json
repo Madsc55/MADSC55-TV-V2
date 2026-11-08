@@ -2,15 +2,19 @@
   "schema": 1,
   "selected_task_id": 3,
   "parallel_ready_task_ids": [
-    4
+    4,
+    9,
+    13,
+    23
   ],
-  "reason": "P0 #1 and #2 completed; #3 immutable 50-identity orphan AV evidence recovery now active; #4 historical SHA crosswalk independently active. Do not infer playback from source availability.",
-  "observed_run": "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42216075104",
+  "reason": "P0 #3 45 unresolved exact AV identities remains first; #4 verified read-only crosswalk #42530040643 (4955 preserved; 3069 decoded; 1866 unproven; 20 missing) requires recovery, not re-run. Independent #9,#13,#23 may be bulk tested. Post-33 Turkey-wide #34 is tracked in GitHub issue #10 and must not run before 33 tasks and user IBO test.",
+  "observed_run": "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42530040643",
   "verified_grouped_tests": [
-    "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42249430770",
-    "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42249430807",
-    "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42249430717"
+    "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42530114705",
+    "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42530114713",
+    "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42530114685",
+    "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42530114759"
   ],
-  "last_checked_at": "2026-11-06T17:50:00Z",
+  "last_checked_at": "2026-11-08T22:24:07Z",
   "selection_requires_fresh_state": true
 }
