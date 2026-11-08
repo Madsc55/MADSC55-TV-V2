@@ -33,7 +33,7 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p v2/reports/ci
-          gh run download 42194464091 --repo Madsc55/MADSC55-TV-V2 --name v2-grouped-av-evidence-42194464091 --dir v2/reports/ci
+          gh run download 42503692984 --repo Madsc55/MADSC55-TV-V2 --name v2-grouped-av-evidence-42503692984 --dir v2/reports/ci
           test -s v2/reports/ci/final-worldwide-acceptance.json
       - name: Require complete sealed AV evidence and crosswalk 4955 historical hashes
         shell: bash
