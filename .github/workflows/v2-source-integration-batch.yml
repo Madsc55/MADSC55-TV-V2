@@ -273,6 +273,892 @@ jobs:
           else
             echo "Prior evidence unavailable; scan without reuse"
           fi
+      - name: Recover latest finished hash-only AV checkpoint
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p v2/reports/ci/prior
+          gh api "repos/${GITHUB_REPOSITORY}/actions/artifacts?per_page=100" --jq '.artifacts[] | select(.expired == false and (.name | startswith("v2-av-checkpoint-"))) | [.created_at, .id, .workflow_run.id] | @tsv' |
+            sort -r | while IFS=
+        shell: bash
+        run: |
+          set -euo pipefail
+          args=(--workers 32 --budget-seconds 14400 --require-public-sources)
+          args+=(--checkpoint v2/reports/ci/final-worldwide-checkpoint.json)
+          if test -s v2/reports/ci/prior/final-worldwide-checkpoint.json; then
+            args+=(--reuse-report v2/reports/ci/prior/final-worldwide-checkpoint.json)
+          elif test -s v2/reports/ci/prior/final-worldwide-acceptance.json; then
+            args+=(--reuse-report v2/reports/ci/prior/final-worldwide-acceptance.json)
+          fi
+          timeout 16000s python v2/final_batch_acceptance.py "${args[@]}"
+      - name: Require complete AV probe coverage, valid SHA256 evidence and encrypted URL archive
+        run: PYTHONPATH=v2 python v2/final_worldwide_report_gate.py --report v2/reports/ci/final-worldwide-acceptance.json
+      - name: Crosswalk 4955 immutable historical hashes against accepted worldwide decoded AV
+        run: |
+          PYTHONPATH=v2 python v2/historical_worldwide_av_crosswalk.py \
+            --baseline v2/history/stage3-4955-hash-only.jsonl \
+            --worldwide v2/reports/ci/final-worldwide-acceptance.json \
+            --out v2/reports/ci/historical-worldwide-av-crosswalk.json
+      - name: Upload recoverable hash-only checkpoint after timeout or failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v2-av-checkpoint-${{ github.run_id }}
+          path: v2/reports/ci/final-worldwide-checkpoint.json
+          if-no-files-found: warn
+          retention-days: 30
+      - name: Upload anonymous AV report and encrypted stream evidence; no plaintext URLs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v2-grouped-av-evidence-${{ github.run_id }}
+          path: |
+            v2/reports/ci/final-worldwide-acceptance.json
+            v2/reports/ci/historical-worldwide-av-crosswalk.json
+            v2/reports/ci/final-worldwide-*.sealed
+          if-no-files-found: warn
+          retention-days: 30
+
+  platform-verification-batch:
+    name: Public Scribd SlideShare and YouTube live evidence, one grouped run
+    if: >-
+      (github.event_name == 'workflow_dispatch' || github.event_name == 'push') &&
+      github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
+      github.repository == 'Madsc55/MADSC55-TV-V2'
+    needs: offline-source-safety
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check protected playlist and immutable historic IDs
+        run: |
+          test "$(git hash-object MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)" = '4b1c3cea4b5107a425abab60f62d41f9f81e05a7'
+          test "$(sha256sum v2/history/stage3-4955-hash-only.jsonl | cut -d' ' -f1)" = 'ee00a844a028e3410715d411467a2d3306f5f5cc4565766140b6438e786cdd27'
+      - name: Install public YouTube metadata extractor
+        run: python -m pip install yt-dlp
+      - name: Discover and verify public YouTube live metadata in one batch
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+        run: timeout 1200s python v2/youtube_discovery.py
+      - name: Inspect indexed and exact public Scribd SlideShare plus Archive documents
+        run: timeout 1200s python v2/document_platform_discovery.py --scan-public-documents
+      - name: Audit both platforms and preserve anonymous proof without false playback
+        shell: bash
+        run: |
+          mkdir -p v2/reports/ci
+          PYTHONPATH=v2 python - <<'PY'
+          from pathlib import Path
+          import json
+          y=json.loads(Path("v2/reports/youtube-live-candidates.json").read_text())
+          d=json.loads(Path("v2/reports/document-platform-references.json").read_text())
+          assert y["policy"]=="ADVISORY_ONLY_NO_PLAYLIST_WRITES_NO_AUTOMATIC_IBO_IMPORT"
+          assert y["metadata_unattempted_count"]==0
+          assert d["playback_verified"] is False
+          assert set(("scribd","slideshare","internet-archive")) <= set(d["platforms"])
+          assert d["validated_m3u_source_count"]<=d["source_candidates"]
+          assert d["reference_accounting"]["reviewed_references_are_not_playback_evidence"] is True
+          assert d["reviewed_public_reference_evidence"]["reviewed_reference_count"] == 4
+          assert d["reviewed_public_reference_evidence"]["platforms"]["scribd"]["reviewed_reference_count"] == 2
+          assert d["reviewed_public_reference_evidence"]["platforms"]["slideshare"]["reviewed_reference_count"] == 2
+          assert d["reference_accounting"]["reviewed_document_historical_url_updates"] == 2
+          assert d["reviewed_public_reference_evidence"]["validated_resolved_historical_citations"] <= 2
+          assert d["reviewed_public_reference_evidence"]["verified_video_audio"] is False
+          assert d["reviewed_public_reference_evidence"]["ibo_device_verified"] is False
+          platform={x:{
+            "public_queries":d["platforms"][x]["queries"],
+            "documents_checked":d["platforms"][x]["documents_checked"],
+            "public_m3u_references":d["platforms"][x]["candidate_sources"],
+            "source_errors":d["platforms"][x]["errors"]
+          } for x in ("scribd","slideshare","internet-archive")}
+          report={
+            "kind":"V2_PUBLIC_PLATFORM_EVIDENCE_ONLY",
+            "youtube_video_candidates":len(y["results"]),
+            "youtube_live_metadata_verified":y["live_verified"],
+            "youtube_unverified":y["metadata_unverified_count"],
+            "youtube_query_errors":len(y["errors"]),
+            "youtube_error_classes":y["anonymous_metadata_reason_counts"],
+            "youtube_official_api_status":y["official_youtube_api_status"],
+            "youtube_official_api_classified":y["official_youtube_api_classified"],
+            "youtube_official_live_search_status":y["official_live_search_status"],
+            "youtube_official_live_search_new_candidates":y["official_live_search_new_candidates"],
+            "youtube_verification_status":y["verification_status"],
+            "platforms":platform,
+            "document_m3u_source_candidates":d["source_candidates"],
+            "document_m3u_sources_parsed":d["validated_m3u_source_count"],
+            "document_reference_accounting":d["reference_accounting"],
+            "reviewed_document_source_validation":d["reviewed_public_reference_evidence"],
+            "av_verified":False,
+            "ibo_device_verified":False,
+            "playlist_modified":False
+          }
+          p=Path("v2/reports/ci/platform-verification-anonymous.json")
+          p.write_text(json.dumps(report,ensure_ascii=False,indent=2)+"\n")
+          print(json.dumps(report,ensure_ascii=False,sort_keys=True))
+          PY
+      - name: Upload anonymous source status; no video IDs, API key or source URLs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v2-platform-verification-${{ github.run_id }}
+          path: v2/reports/ci/platform-verification-anonymous.json
+          if-no-files-found: warn
+          retention-days: 30
+
+  unified-read-only-channel-search:
+    name: Unified TR AZ source search - all adapters no IBO writes
+    if: >-
+      (github.event_name == 'workflow_dispatch' || github.event_name == 'push') &&
+      github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
+      github.repository == 'Madsc55/MADSC55-TV-V2'
+    needs: offline-source-safety
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify no production playlist or history changes
+        run: |
+          test "$(git hash-object MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)" = '4b1c3cea4b5107a425abab60f62d41f9f81e05a7'
+          test "$(sha256sum v2/history/stage3-4955-hash-only.jsonl | cut -d' ' -f1)" = 'ee00a844a028e3410715d411467a2d3306f5f5cc4565766140b6438e786cdd27'
+      - name: Install public YouTube search dependency
+        run: python -m pip install yt-dlp
+      - name: Execute all source adapters and centralized TR AZ candidate discovery in order
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+        run: timeout 10000s python v2/run_all_discovery.py --run-all --source-only
+      - name: Cross-check 309 streamless IDs and 344 guide gaps against real M3U and XMLTV sources in one batch
+        run: timeout 180s python v2/traz_gap_crosswalk.py
+      - name: Review remaining missing identities using exact and unambiguous authoritative names and real XMLTV feeds
+        run: timeout 180s python v2/traz_missing_name_xmltv_review.py
+      - name: Validate complete adapter wiring and preserve honest incomplete source status
+        shell: bash
+        run: |
+          set -euo pipefail
+          PYTHONPATH=v2 python - <<'PY'
+          import json
+          from pathlib import Path
+          from source_integration_gate import audit
+          result=audit()
+          assert result["adapter_wiring_valid"] is True, result["errors"]
+          assert result["channel_candidate_scan_present"] is True
+          assert result["av_verified"] is False
+          assert result["ibo_device_verified"] is False
+          assert result["main_playlist_modified"] is False
+          c=json.loads(Path("v2/reports/candidates.json").read_text())
+          y=json.loads(Path("v2/reports/youtube-live-candidates.json").read_text())
+          d=json.loads(Path("v2/reports/document-platform-references.json").read_text())
+          report={
+            "kind":"V2_READ_ONLY_ALL_SOURCE_DISCOVERY_EVIDENCE",
+            "configured_source_count":result["static_source_count"],
+            "candidate_count":c["total_unique_candidates"],
+            "source_scan_coverage":c.get("coverage_status"),
+            "source_families":sorted(result["source_families"]),
+            "source_adapter_status":result["status"],
+            "external_source_coverage_complete":result["external_source_coverage_complete"],
+            "degraded_source_families":result["degraded_source_families"],
+            "source_errors":result["errors"],
+            "adapter_report_states":result["adapter_reports"],
+            "youtube_video_candidates":len(y["results"]),
+            "youtube_live_metadata_verified":y["live_verified"],
+            "youtube_unverified":y["metadata_unverified_count"],
+            "youtube_api_status":y["official_youtube_api_status"],
+            "document_m3u_validated":d["validated_m3u_source_count"],
+            "reviewed_document_m3u_validated":d["reviewed_public_reference_evidence"]["m3u_content_validated"],
+            "spoken_language_verified":False,
+            "video_audio_probed_by_this_workflow":False,
+            "ibo_device_verified":False,
+            "protected_playlist_modified":False,
+            "durable_encrypted_new_candidate_archive_created":False
+          }
+          out=Path("v2/reports/ci/unified-source-search-anonymous.json")
+          out.parent.mkdir(parents=True,exist_ok=True)
+          out.write_text(json.dumps(report,ensure_ascii=False,indent=2)+"\n")
+          print("UNIFIED_SOURCE_SEARCH_ANONYMOUS",json.dumps(report,ensure_ascii=False,sort_keys=True))
+          PY
+      - name: Upload only anonymous source coverage; never plaintext channel URLs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v2-unified-source-search-${{ github.run_id }}
+          path: |
+            v2/reports/ci/unified-source-search-anonymous.json
+            v2/reports/ci/traz-missing-stream-epg-crosswalk.json
+            v2/reports/ci/traz-missing-name-xmltv-review.json
+            v2/reports/ci/traz-api-m3u-exact-matches.json
+          if-no-files-found: warn
+          retention-days: 30
+
+
+  traz-api-metadata-readonly:
+    name: Worldwide TR AZ exact IPTV API and EPG source metadata
+    needs: offline-source-safety
+    if: github.event_name == 'push' && github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Protect main playlist and original historical inventory
+        run: |
+          test "$(git hash-object MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)" = '4b1c3cea4b5107a425abab60f62d41f9f81e05a7'
+          test "$(sha256sum v2/history/stage3-4955-hash-only.jsonl | cut -d' ' -f1)" = 'ee00a844a028e3410715d411467a2d3306f5f5cc4565766140b6438e786cdd27'
+      - name: Read global TR AZ IPTV API feeds streams channel IDs and guides
+        run: timeout 960s python v2/traz_api_source_batch.py --public-only
+      - name: Reject invented AV and IBO device playback claims
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path("v2/reports/ci/traz-api-source-audit.json").read_text())
+          assert d["policy"]=="READ_ONLY_METADATA_NOT_AV_NO_IBO_WRITES"
+          assert d["all_streams_av_verified"] is False
+          assert d["spoken_language_verified"] is False
+          assert d["sweden_access_verified"] is False
+          assert d["ibo_device_verified"] is False
+          assert d["protected_playlist_modified"] is False
+          assert len(d["stream_references"])==d["unique_channel_url_pairs"]
+          assert all("url" not in x and not x["av_verified"] for x in d["stream_references"])
+          print("EXACT_CHANNEL_IDENTITIES",d["target_unique_channel_ids"])
+          print("STREAM_URL_LEADS_NOT_AV",d["unique_channel_url_pairs"])
+          print("EPG_IDENTITIES",d["epg_target_identities"])
+          PY
+      - name: Upload hash-only anonymous public report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: traz-api-safe-evidence-${{ github.run_id }}
+          path: v2/reports/ci/traz-api-source-audit.json
+          if-no-files-found: warn
+          retention-days: 30
+
+  traz-api-bulk-evidence-review:
+    name: Reconcile TR AZ missing EPG, missing streams and real AV from two immutable run artifacts
+    needs: offline-source-safety
+    if: >-
+      (github.event_name == 'workflow_dispatch' || github.event_name == 'push') &&
+      github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
+      github.repository == 'Madsc55/MADSC55-TV-V2'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Assert protected playlists and 4955 historical SHA identities are frozen
+        run: |
+          test "$(git hash-object MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)" = '4b1c3cea4b5107a425abab60f62d41f9f81e05a7'
+          test "$(sha256sum v2/history/stage3-4955-hash-only.jsonl | cut -d' ' -f1)" = 'ee00a844a028e3410715d411467a2d3306f5f5cc4565766140b6438e786cdd27'
+      - name: Get pinned public source metadata from completed API run - no rescanning
+        uses: actions/download-artifact@v4
+        with:
+          name: traz-api-safe-evidence-42034880458
+          run-id: 42034880458
+          github-token: ${{ github.token }}
+          path: v2/reports/ci
+      - name: Get pinned public FFmpeg proof and RSA sealed URLs from completed AV run - no rescanning
+        uses: actions/download-artifact@v4
+        with:
+          name: traz-real-av-anonymous-42033067184
+          run-id: 42033067184
+          github-token: ${{ github.token }}
+          path: v2/reports/ci
+      - name: Install pinned RSA and AES validation dependency before grouped evidence tests
+        run: python -m pip install cryptography==44.0.2
+      - name: Validate all evidence digests and run grouped API EPG AV review tests
+        run: |
+          set -euo pipefail
+          PYTHONPATH=v2 python -m unittest -v test_traz_api_source_batch test_traz_api_av_batch test_traz_api_bulk_review test_traz_api_m3u_bridge test_export_traz_verified_ibo
+          python - <<'PY'
+          import hashlib,json
+          from pathlib import Path
+          root=Path("v2/reports/ci")
+          d=json.loads((root/"traz-api-av-acceptance.json").read_text())
+          encrypted=root/"traz-api-av-evidence.sealed"
+          assert hashlib.sha256(encrypted.read_bytes()).hexdigest()==d["encrypted_evidence"]["sha256"]
+          assert d["encrypted_evidence"]["records"]==len(d["streams"])
+          assert d["unprobed"]==0
+          assert d["protected_playlist_modified"] is False
+          print("RSA_SEALED_EVIDENCE_INTEGRITY_OK",True)
+          PY
+      - name: Build real immutable API and AV backed TR AZ missing-work queue
+        run: python v2/traz_api_bulk_review.py
+      - name: Enforce exact 270 URL and 171 decoded AV evidence, no raw URL export
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path("v2/reports/ci/traz-api-next-bulk-review.json")
+          d=json.loads(p.read_text(encoding="utf-8"))
+          assert d["url_hashes_tested"]==270
+          assert d["video_audio_decoded_url_hashes"]==171
+          assert d["identities_with_decoded_av"]==147
+          assert d["decoded_av_alternative_urls"]==24
+          assert d["missing_epg_reference_count"]==344
+          assert d["identities_with_no_stream_url_lead"]==309
+          assert d["spoken_language_verified"] is False
+          assert d["sweden_access_verified"] is False
+          assert d["ibo_device_verified"] is False
+          assert d["protected_playlist_modified"] is False
+          assert "https://" not in p.read_text() and "http://" not in p.read_text()
+          print("EXACT_BULK_EVIDENCE_RECONCILED",True)
+          PY
+      - name: Upload anonymous action queue only; no private streaming URL or secrets
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v2-traz-api-av-next-bulk-queue-${{ github.run_id }}
+          path: v2/reports/ci/traz-api-next-bulk-review.json
+          if-no-files-found: warn
+          retention-days: 30
+
+  traz-hls-codec-shortterm:
+    name: Real FFmpeg HLS codecs and repeated short AV - read only
+    if: >-
+      (github.event_name == 'workflow_dispatch' || github.event_name == 'push') &&
+      github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
+      github.repository == 'Madsc55/MADSC55-TV-V2'
+    needs: offline-source-safety
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify protected playlist and historical SHA baseline
+        run: |
+          test "$(git hash-object MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)" = '4b1c3cea4b5107a425abab60f62d41f9f81e05a7'
+          test "$(sha256sum v2/history/stage3-4955-hash-only.jsonl | cut -d' ' -f1)" = 'ee00a844a028e3410715d411467a2d3306f5f5cc4565766140b6438e786cdd27'
+      - name: Get pinned real FFmpeg AV evidence from prior completed run
+        uses: actions/download-artifact@v4
+        with:
+          name: traz-real-av-anonymous-42033067184
+          run-id: 42033067184
+          github-token: ${{ github.token }}
+          path: v2/reports/ci
+      - name: Install real distro FFmpeg with ffprobe and HTTPS support - fail on infrastructure errors
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install cryptography==44.0.2
+          # The portable wheel failed network FFmpeg re-probes in the earlier
+          # Actions run. Use real distro ffmpeg+ffprobe and fail if unavailable.
+          if [ ! -x /usr/bin/ffmpeg ] || [ ! -x /usr/bin/ffprobe ]; then
+            timeout 360s sudo apt-get -o Acquire::Retries=2 -o Acquire::http::Timeout=20 update -qq
+            timeout 1500s sudo apt-get -o Acquire::Retries=2 -o Acquire::http::Timeout=20 install -y --no-install-recommends ffmpeg
+          fi
+          test -x /usr/bin/ffmpeg
+          test -x /usr/bin/ffprobe
+          /usr/bin/ffmpeg -version | head -n 1
+          /usr/bin/ffprobe -version | head -n 1
+          /usr/bin/ffmpeg -protocols | grep -q 'https'
+          echo "DISTRO_FFMPEG_FFPROBE_HTTPS_READY"
+          echo "/usr/bin" >> "$GITHUB_PATH"
+      - name: Run all related HLS codec AV and source gap regressions together
+        run: PYTHONPATH=v2 python -m unittest -v test_traz_gap_crosswalk test_traz_hls_codec_stability test_traz_api_av_batch
+      - name: Real video plus audio samples twice and HLS manifest inspection in a single bounded batch
+        run: timeout 2600s python v2/traz_hls_codec_stability.py --workers 20 --interval 35
+      - name: Verify anonymous report never claims Swedish access or 24-hour reliability
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path("v2/reports/ci/traz-hls-codec-shortterm-av.json")
+          d=json.loads(p.read_text())
+          assert d["policy"]=="PUBLIC_SHA_ONLY_NO_PLAYLIST_PROMOTION"
+          assert d["prior_av_verified_streams"]==171
+          assert len(d["streams"])==171
+          assert len({row["url_sha256"] for row in d["streams"]})==171
+          assert all(row["reliability_score"] is None and
+                     row["long_term_uptime_verified"] is False for row in d["streams"])
+          assert d["short_interval_does_not_prove_24h_uptime"] is True
+          assert d["ffmpeg_runtime_signals"]==0, "FFmpeg crashed, never label channels dead"
+          assert d["protected_playlist_modified"] is False and d["ibo_device_verified"] is False
+          assert "https://" not in p.read_text() and "http://" not in p.read_text()
+          print("HLS_SHORTTERM_AV",d["both_short_av_samples_decoded"])
+          PY
+      - name: Upload only SHA hashes codec and short-term observation
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: traz-hls-codec-shortterm-${{ github.run_id }}
+          path: v2/reports/ci/traz-hls-codec-shortterm-av.json
+          if-no-files-found: warn
+          retention-days: 30
+
+  traz-missing-hash-real-av:
+    name: Probe exact 84 newly matched TR AZ identities and preserve RSA evidence
+    if: >-
+      (github.event_name == 'workflow_dispatch' || github.event_name == 'push') &&
+      github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
+      github.repository == 'Madsc55/MADSC55-TV-V2'
+    needs: offline-source-safety
+    runs-on: ubuntu-24.04
+    timeout-minutes: 65
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Ensure original protected IBO and historical identity SHA hashes
+        run: |
+          test "$(git hash-object MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)" = '4b1c3cea4b5107a425abab60f62d41f9f81e05a7'
+          test "$(sha256sum v2/history/stage3-4955-hash-only.jsonl | cut -d' ' -f1)" = 'ee00a844a028e3410715d411467a2d3306f5f5cc4565766140b6438e786cdd27'
+      - name: Download exact 84 identity 158 hash missing-source candidates from original verified artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: v2-unified-source-search-42040392400
+          run-id: 42040392400
+          github-token: ${{ github.token }}
+          path: v2/reports/ci
+      - name: Install cryptographic sealing and real FFmpeg / FFprobe tools
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install cryptography==44.0.2
+          # Previously the runner's Azure Ubuntu mirror timed out after 350s
+          # while fetching large FFmpeg dependencies. It never probed a URL.
+          # Use bounded HTTP timeouts, retries and sufficient package budget;
+          # fail infrastructure-closed instead of claiming a broken channel.
+          if [ ! -x /usr/bin/ffmpeg ] || [ ! -x /usr/bin/ffprobe ]; then
+            timeout 360s sudo apt-get -o Acquire::Retries=2 -o Acquire::http::Timeout=20 update -qq
+            timeout 1200s sudo apt-get -o Acquire::Retries=3 -o Acquire::http::Timeout=20 -o Acquire::https::Timeout=20 install -y --no-install-recommends ffmpeg
+          fi
+          test -x /usr/bin/ffmpeg
+          test -x /usr/bin/ffprobe
+          /usr/bin/ffmpeg -version | head -n 1
+          /usr/bin/ffprobe -version | head -n 1
+          /usr/bin/ffmpeg -protocols | grep -q https
+          timeout 15s /usr/bin/ffprobe -version >/dev/null
+          echo "FFMPEG_FFPROBE_HTTPS_READY"
+      - name: Offline grouped original source identity and real AV spoof rejection regression
+        run: PYTHONPATH=v2 python -m unittest -v test_traz_missing_target_av test_traz_gap_crosswalk test_targeted_tr_az_av_acceptance
+      - name: One bounded real AV FFmpeg probe batch only on exact renewed source URL SHA
+        run: timeout 2600s python v2/traz_missing_target_av.py --workers 24
+      - name: Validate anonymous report and RSA sealed URL checksum without public plaintext
+        run: |
+          python - <<'PY'
+          import hashlib,json
+          from pathlib import Path
+          base=Path("v2/reports/ci")
+          p=base/"traz-missing-target-real-av.json"
+          d=json.loads(p.read_text(encoding="utf-8"))
+          assert d["policy"]=="PUBLIC_SHA_ONLY_RSA_AES_SEALED_STREAM_URLS"
+          assert d["candidate_hashes"]==158
+          assert d["ffmpeg_probed"]==d["matched_current_source_hashes"]
+          assert d["real_video_audio_decoded_hashes"]<=d["ffmpeg_probed"]
+          assert d["old_historical_orphan_50_auto_recovered"] is False
+          assert d["protected_playlist_modified"] is False
+          assert d["ibo_device_verified"] is False
+          assert hashlib.sha256((base/d["rsa_sealed_matches"]["name"]).read_bytes()).hexdigest()==d["rsa_sealed_matches"]["sha256"]
+          assert "http://" not in p.read_text() and "https://" not in p.read_text()
+          print("NEW_REAL_AV_HASHES",d["real_video_audio_decoded_hashes"])
+          print("EXACT_NEW_CHANNEL_IDS",d["real_video_audio_channel_ids"])
+          PY
+      - name: Upload only anonymous AV results and encrypted exact-source URL archive
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: traz-missing-real-av-rsa-${{ github.run_id }}
+          path: |
+            v2/reports/ci/traz-missing-target-real-av.json
+            v2/reports/ci/traz-missing-target-av.sealed
+          if-no-files-found: warn
+          retention-days: 30
+
+  traz-targeted-transient-av-retry:
+    name: One bounded real AV retry for transient failures only
+    if: >-
+      (github.event_name == 'workflow_dispatch' || github.event_name == 'push') &&
+      github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
+      github.repository == 'Madsc55/MADSC55-TV-V2'
+    needs: offline-source-safety
+    runs-on: ubuntu-24.04
+    timeout-minutes: 55
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Guard original history and protected primary IBO bytes
+        run: |
+          set -euo pipefail
+          test "$(git hash-object MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)" = '4b1c3cea4b5107a425abab60f62d41f9f81e05a7'
+          test "$(sha256sum v2/history/stage3-4955-hash-only.jsonl | cut -d' ' -f1)" = 'ee00a844a028e3410715d411467a2d3306f5f5cc4565766140b6438e786cdd27'
+      - name: Read exact previously checked URL hashes and encrypted source provenance
+        uses: actions/download-artifact@v4
+        with:
+          name: traz-missing-real-av-rsa-42043534038
+          run-id: 42043534038
+          github-token: ${{ github.token }}
+          path: v2/reports/ci
+      - name: Read immutable original exact missing-source metadata, no fresh broad rescan
+        uses: actions/download-artifact@v4
+        with:
+          name: v2-unified-source-search-42040392400
+          run-id: 42040392400
+          github-token: ${{ github.token }}
+          path: v2/reports/ci
+      - name: Install pinned encryption and real FFmpeg with HTTPS validation
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install cryptography==44.0.2
+          if [ ! -x /usr/bin/ffprobe ] || [ ! -x /usr/bin/ffmpeg ]; then
+            timeout 360s sudo apt-get -o Acquire::Retries=2 -o Acquire::http::Timeout=20 update -qq
+            timeout 1200s sudo apt-get -o Acquire::Retries=3 -o Acquire::http::Timeout=20 -o Acquire::https::Timeout=20 install -y --no-install-recommends ffmpeg
+          fi
+          test -x /usr/bin/ffprobe
+          test -x /usr/bin/ffmpeg
+          /usr/bin/ffmpeg -protocols | grep -q https
+      - name: One grouped offline spoof and no-repeat regression batch
+        run: PYTHONPATH=v2 python -m unittest -v test_traz_transient_av_recovery test_traz_missing_target_av test_traz_gap_crosswalk
+      - name: Recheck only recoverable transient original AV failures with real FFprobe FFmpeg
+        run: timeout 2000s python v2/traz_transient_av_recovery.py --workers 16
+      - name: Validate immutable original AV counts and fresh sealed evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib,json
+          from pathlib import Path
+          p=Path("v2/reports/ci/traz-transient-av-retry.json")
+          r=json.loads(p.read_text(encoding="utf-8"))
+          encrypted=Path("v2/reports/ci/traz-transient-av-retry.sealed")
+          assert r["kind"]=="V2_TR_AZ_TRANSIENT_TARGET_REAL_AV_RETRY"
+          assert r["original_av_channel_identities"]==3
+          assert r["retryable_original_hashes"]==89
+          assert r["reprobed_url_hashes"]==r["recovered_exact_current_url_hashes"]
+          assert r["reprobed_url_hashes"]<=89
+          assert r["fresh_video_audio_decoded_hashes"]==r["new_rsa_evidence"]["records_encrypted"]
+          assert hashlib.sha256(encrypted.read_bytes()).hexdigest()==r["new_rsa_evidence"]["sha256"]
+          assert not r["protected_playlist_modified"] and not r["ibo_device_verified"]
+          assert "https://" not in p.read_text() and "http://" not in p.read_text()
+          print("TRANSIENT_AV_BATCH_VERIFIED",r["new_distinct_av_identities"])
+          PY
+      - name: Upload anonymous hashes and RSA sealed URL evidence, no plaintext
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v2-traz-transient-real-av-rsa-${{ github.run_id }}
+          path: |
+            v2/reports/ci/traz-transient-av-retry.json
+            v2/reports/ci/traz-transient-av-retry.sealed
+          if-no-files-found: warn
+          retention-days: 30
+
+  traz-official-feed-variant-av:
+    name: Trusted IPTV org feed variant 217 missing ID source and AV recovery
+    if: >-
+      (github.event_name == 'workflow_dispatch' || github.event_name == 'push') &&
+      github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
+      github.repository == 'Madsc55/MADSC55-TV-V2'
+    needs: offline-source-safety
+    runs-on: ubuntu-24.04
+    timeout-minutes: 75
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify historical and protected IBO hashes before any network activity
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git hash-object MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)" = '4b1c3cea4b5107a425abab60f62d41f9f81e05a7'
+          test "$(sha256sum v2/history/stage3-4955-hash-only.jsonl | cut -d' ' -f1)" = 'ee00a844a028e3410715d411467a2d3306f5f5cc4565766140b6438e786cdd27'
+      - name: Fetch original 309 missing ID API metadata without complete re-scan
+        uses: actions/download-artifact@v4
+        with:
+          name: traz-api-safe-evidence-42065292765
+          run-id: 42065292765
+          github-token: ${{ github.token }}
+          path: v2/reports/ci
+      - name: Fetch original 92 matched / 217 remaining identity scope
+        uses: actions/download-artifact@v4
+        with:
+          name: v2-unified-source-search-42065292765
+          run-id: 42065292765
+          github-token: ${{ github.token }}
+          path: v2/reports/ci
+      - name: Install pinned RSA encryption and actual FFprobe and FFmpeg
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install cryptography==44.0.2
+          if [ ! -x /usr/bin/ffmpeg ] || [ ! -x /usr/bin/ffprobe ]; then
+            timeout 360s sudo apt-get -o Acquire::Retries=2 -o Acquire::http::Timeout=20 update -qq
+            timeout 1200s sudo apt-get -o Acquire::Retries=3 -o Acquire::http::Timeout=20 -o Acquire::https::Timeout=20 install -y --no-install-recommends ffmpeg
+          fi
+          /usr/bin/ffmpeg -protocols | grep -q https
+      - name: Grouped trusted feed variant exact ID and anti-spoof tests
+        run: |
+          set -euo pipefail
+          PYTHONPATH=v2 python -m unittest -v test_traz_official_feed_variant_gap test_traz_gap_crosswalk test_traz_missing_target_av test_traz_api_m3u_bridge
+      - name: Discover exact trusted SD HD stream renditions only for 217 unfilled API identities
+        run: timeout 180s python v2/traz_official_feed_variant_gap.py
+      - name: Single real FFprobe FFmpeg batch and RSA sealing of decoded source addresses
+        run: |
+          set -euo pipefail
+          PYTHONPATH=v2 timeout 2600s python - <<'PY'
+          from pathlib import Path
+          import traz_missing_target_av as t
+          t.TARGET=Path("v2/reports/ci/traz-official-feed-variant-gap.json")
+          t.OUT=Path("v2/reports/ci/traz-official-feed-variant-real-av.json")
+          t.SEALED=Path("v2/reports/ci/traz-official-feed-variant-real-av.sealed")
+          t.scan(workers=24)
+          PY
+      - name: Assert exact AV count and original baseline preserved with no public URLs
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib,json
+          from pathlib import Path
+          p=Path("v2/reports/ci")
+          gap_file=p/"traz-official-feed-variant-gap.json"
+          av_file=p/"traz-official-feed-variant-real-av.json"
+          d=json.loads(gap_file.read_text())
+          a=json.loads(av_file.read_text())
+          sealed=p/"traz-official-feed-variant-real-av.sealed"
+          assert d["original_missing_api_stream_identities"]==309
+          assert d["original_exact_source_matched_identities"]==92
+          assert d["missing_api_stream_identities"]==217
+          assert a["candidate_hashes"]==d["exact_missing_stream_candidate_hashes"]
+          assert a["ffmpeg_probed"]==a["matched_current_source_hashes"]
+          assert a["real_video_audio_decoded_hashes"]<=a["ffmpeg_probed"]
+          assert hashlib.sha256(sealed.read_bytes()).hexdigest()==a["rsa_sealed_matches"]["sha256"]
+          assert not a["ibo_device_verified"] and not a["protected_playlist_modified"]
+          assert not a["old_historical_orphan_50_auto_recovered"]
+          assert "http://" not in av_file.read_text() and "https://" not in av_file.read_text()
+          assert "http://" not in gap_file.read_text() and "https://" not in gap_file.read_text()
+          print("OFFICIAL_FEED_REAL_AV_PASS",a["real_video_audio_channel_ids"])
+          PY
+      - name: Archive only anonymous official feed AV report and RSA encrypted URL proofs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v2-traz-official-feed-variant-av-rsa-${{ github.run_id }}
+          path: |
+            v2/reports/ci/traz-official-feed-variant-gap.json
+            v2/reports/ci/traz-official-feed-variant-real-av.json
+            v2/reports/ci/traz-official-feed-variant-real-av.sealed
+          if-no-files-found: warn
+          retention-days: 30
+
+  traz-name-only-bounded-av:
+    name: Real FFmpeg decode of 15 unconfirmed TR AZ name-only channel leads
+    if: >-
+      (github.event_name == 'workflow_dispatch' || github.event_name == 'push') &&
+      github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
+      github.repository == 'Madsc55/MADSC55-TV-V2'
+    needs: offline-source-safety
+    runs-on: ubuntu-24.04
+    timeout-minutes: 65
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify original protected IBO and historical 4955 SHA
+        run: |
+          set -euo pipefail
+          test "$(git hash-object MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)" = '4b1c3cea4b5107a425abab60f62d41f9f81e05a7'
+          test "$(sha256sum v2/history/stage3-4955-hash-only.jsonl | cut -d' ' -f1)" = 'ee00a844a028e3410715d411467a2d3306f5f5cc4565766140b6438e786cdd27'
+      - name: Use original immutable 15 name-only identity and 24 URL hash metadata, no universe scan
+        uses: actions/download-artifact@v4
+        with:
+          name: v2-unified-source-search-42065292765
+          run-id: 42065292765
+          github-token: ${{ github.token }}
+          path: v2/reports/ci
+      - name: Install real HTTPS FFprobe FFmpeg and pinned RSA cryptography
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install cryptography==44.0.2
+          if [ ! -x /usr/bin/ffmpeg ] || [ ! -x /usr/bin/ffprobe ]; then
+            timeout 360s sudo apt-get -o Acquire::Retries=2 -o Acquire::http::Timeout=20 update -qq
+            timeout 1200s sudo apt-get -o Acquire::Retries=3 -o Acquire::http::Timeout=20 -o Acquire::https::Timeout=20 install -y --no-install-recommends ffmpeg
+          fi
+          /usr/bin/ffmpeg -protocols | grep -q https
+      - name: One grouped anti-misidentification and AV spoof regression suite
+        run: PYTHONPATH=v2 python -m unittest -v test_traz_name_leads_real_av test_traz_missing_name_xmltv_review test_traz_missing_target_av
+      - name: Fetch only configured old M3U source references and probe exact 24 name metadata URL hashes
+        run: timeout 2200s python v2/traz_name_leads_real_av.py
+      - name: Enforce metadata only broadcaster identity, real FFmpeg and RSA evidence integrity
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib,json
+          from pathlib import Path
+          p=Path("v2/reports/ci/traz-name-leads-real-av.json")
+          d=json.loads(p.read_text())
+          seal=Path("v2/reports/ci/traz-name-leads-real-av.sealed")
+          assert d["name_candidate_stream_hashes"]==24
+          assert d["name_candidate_channel_ids"]==15
+          assert d["ffmpeg_probed"]==d["current_exact_name_sha_source_hashes"]
+          assert d["video_audio_decoded_hashes"]<=d["ffmpeg_probed"]<=24
+          assert d["channel_identities_confirmed_by_video"]==0
+          assert not d["ibo_device_verified"] and not d["protected_playlist_modified"]
+          assert hashlib.sha256(seal.read_bytes()).hexdigest()==d["rsa_sealed_av"]["sha256"]
+          assert "http://" not in p.read_text() and "https://" not in p.read_text()
+          print("NAME_ONLY_AV_VERIFIED_NO_IDENTITY_CLAIM",d["video_audio_decoded_hashes"])
+          PY
+      - name: Upload only anonymous AV hash report and encrypted stream addresses
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v2-traz-name-only-av-rsa-${{ github.run_id }}
+          path: |
+            v2/reports/ci/traz-name-leads-real-av.json
+            v2/reports/ci/traz-name-leads-real-av.sealed
+          if-no-files-found: warn
+          retention-days: 30
+
+  traz-additional-xmltv-gap:
+    name: Additional public TR AZ XMLTV source EPG gap review only
+    if: >-
+      (github.event_name == 'workflow_dispatch' || github.event_name == 'push') &&
+      github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
+      github.repository == 'Madsc55/MADSC55-TV-V2'
+    needs: offline-source-safety
+    runs-on: ubuntu-24.04
+    timeout-minutes: 22
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Guard immutable 4955 historical IDs and protected IBO playlist
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git hash-object MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)" = '4b1c3cea4b5107a425abab60f62d41f9f81e05a7'
+          test "$(sha256sum v2/history/stage3-4955-hash-only.jsonl | cut -d' ' -f1)" = 'ee00a844a028e3410715d411467a2d3306f5f5cc4565766140b6438e786cdd27'
+      - name: Download existing 344-gap API identity evidence without rescan
+        uses: actions/download-artifact@v4
+        with:
+          name: traz-api-safe-evidence-42065292765
+          run-id: 42065292765
+          github-token: ${{ github.token }}
+          path: v2/reports/ci
+      - name: Download original 2 exact plus 7 alias XMLTV evidence
+        uses: actions/download-artifact@v4
+        with:
+          name: v2-unified-source-search-42065292765
+          run-id: 42065292765
+          github-token: ${{ github.token }}
+          path: v2/reports/ci
+      - name: Grouped safety tests for exact ID, unique display name, XMLTV timestamps and no fake schedules
+        shell: bash
+        run: |
+          set -euo pipefail
+          PYTHONPATH=v2 python -m unittest -v test_traz_extra_xmltv_review test_traz_missing_name_xmltv_review test_traz_gap_crosswalk
+      - name: Inspect five verified public XMLTV URLs in one bounded batch
+        run: timeout 480s python v2/traz_extra_xmltv_review.py
+      - name: Validate original 335 gap, metadata-only matches and anonymous public output
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path("v2/reports/ci/traz-additional-xmltv-gap.json")
+          r=json.loads(p.read_text(encoding="utf-8"))
+          assert r["original_missing_epg_api_identities"]==344
+          assert r["already_matched_from_original_sources"]==9
+          assert r["previously_without_xmltv_candidate"]==335
+          assert r["additional_guide_candidate_identities"]+r["still_missing_epg_identities"]==335
+          assert not r["programme_schedule_accuracy_verified"]
+          assert not r["new_stream_av_verified"]
+          assert not r["ibo_device_verified"] and not r["protected_playlist_modified"]
+          assert len(r["source_audit"])==5
+          assert any(x["status"]=="XMLTV_PARSED_METADATA_ONLY" for x in r["source_audit"]), "No XMLTV source parsed; do not claim acceptance"
+          assert "https://" not in p.read_text() and "http://" not in p.read_text()
+          print("ADDITIONAL_XMLTV_GAP_VERIFIED",r["additional_guide_candidate_identities"])
+          PY
+      - name: Upload only anonymous extra XMLTV metadata report, never guide data or IPTV URLs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v2-traz-additional-xmltv-gap-${{ github.run_id }}
+          path: v2/reports/ci/traz-additional-xmltv-gap.json
+          if-no-files-found: warn
+          retention-days: 30
+\\t' read -r created artifact_id source_run; do
+              if test "$source_run" = "$GITHUB_RUN_ID"; then continue; fi
+              if gh api "repos/${GITHUB_REPOSITORY}/actions/runs/$source_run" --jq '.status' | grep -qx completed; then
+                if gh api "repos/${GITHUB_REPOSITORY}/actions/artifacts/$artifact_id/zip" > /tmp/v2-checkpoint.zip &&
+                   unzip -p /tmp/v2-checkpoint.zip final-worldwide-checkpoint.json > v2/reports/ci/prior/final-worldwide-checkpoint.json &&
+                   test -s v2/reports/ci/prior/final-worldwide-checkpoint.json; then
+                  echo "Recovered hash-only checkpoint from run $source_run"
+                  break
+                fi
+              fi
+            done
+          if test -s v2/reports/ci/prior/final-worldwide-checkpoint.json; then
+            python -m json.tool v2/reports/ci/prior/final-worldwide-checkpoint.json >/dev/null
+          fi
       - name: Real bounded video-plus-audio scan of static, reviewed public and document sources
         shell: bash
         run: |

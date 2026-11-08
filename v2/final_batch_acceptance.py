@@ -229,6 +229,19 @@ def resume_checks(prior, inventory):
                           "evidence_origin": "PRIOR_RUN_HASH_ONLY_NOT_FRESH"}
     return checks
 
+def write_checkpoint(path, outputs, inventory, checks, configured, historic, elapsed):
+    """Atomic hash-only snapshot. Never persist stream URLs or claim device playback."""
+    snapshot = report(outputs, inventory, checks, configured=configured,
+                      historic=historic, expired=len(checks) < len(inventory),
+                      elapsed=elapsed)
+    snapshot["checkpoint_partial"] = True
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temp = path.with_suffix(".tmp")
+    temp.write_text(json.dumps(snapshot, ensure_ascii=False, sort_keys=True) + "\n",
+                    encoding="utf-8")
+    temp.replace(path)
+
+
 def prioritized_pending(entries_, inventory, checks):
     """Prefer TR/AZ metadata leads without dropping or certifying any other URL."""
     pending = [(digest, item["url"]) for digest, item in entries_ if digest not in checks]
@@ -242,6 +255,7 @@ def main():
     parser.add_argument("--workers", type=int, default=24)
     parser.add_argument("--budget-seconds", type=int, default=14400)
     parser.add_argument("--reuse-report", type=Path, help="Prior hash-only anonymous AV evidence; never plaintext URLs")
+    parser.add_argument("--checkpoint", type=Path, help="Atomic hash-only progress snapshot")
     parser.add_argument("--require-public-sources", action="store_true",
                         help="Fail rather than silently skip reviewed dynamic source reports")
     a = parser.parse_args()
@@ -290,9 +304,15 @@ def main():
             for result in executor.map(probe, rows):
                 result["evidence_origin"] = "CURRENT_RUN_FFPROBE_FFMPEG"
                 checks[result["url_sha256"]] = result
+            if a.checkpoint and (offset % 1024 == 0 or offset + len(rows) >= len(pending)):
+                write_checkpoint(a.checkpoint, outputs, inventory, checks,
+                                 configured, historic, time.monotonic()-t0)
             if offset % 1280 == 0:
                 print("Probed:", len(checks), "/", len(entries_), flush=True)
     expired = len(checks) < len(entries_)
+    if a.checkpoint:
+        write_checkpoint(a.checkpoint, outputs, inventory, checks,
+                         configured, historic, time.monotonic()-t0)
     REPORTS.mkdir(parents=True, exist_ok=True)
     sealed = []
     for i, offset in enumerate(range(0, len(entries_), 4000), 1):

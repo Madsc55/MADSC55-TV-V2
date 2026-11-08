@@ -30,6 +30,27 @@ class FinalBatchAcceptanceTests(unittest.TestCase):
         self.assertEqual(result["candidates"][0]["status"], "NOT_PROBED_BUDGET")
         self.assertNotIn(url, str(result))
         self.assertNotIn("privatevalue", str(result))
+    def test_checkpoint_is_atomic_hash_only_and_resumable(self):
+        from final_batch_acceptance import write_checkpoint, resume_checks
+        from pathlib import Path
+        from tempfile import TemporaryDirectory
+        import json
+        url = "https://example.com/live?token=secret"
+        digest = sha(url)
+        inventory = {digest: {"url": url, "meta": {"name": "TV"},
+                              "source_ids": {"s"}, "scopes": {"world"}}}
+        checks = {digest: {"url_sha256": digest, "status": "VIDEO_AUDIO_DECODED",
+                           "video": True, "audio": True, "decoded": True,
+                           "audio_lang_tags": [], "evidence_origin": "CURRENT_RUN_FFPROBE_FFMPEG"}}
+        with TemporaryDirectory() as directory:
+            path = Path(directory) / "checkpoint.json"
+            write_checkpoint(path, [("s", [], "FETCHED")], inventory, checks, 1, 0, 1)
+            content = path.read_text()
+            self.assertNotIn(url, content)
+            self.assertNotIn("secret", content)
+            self.assertFalse(path.with_suffix(".tmp").exists())
+            self.assertEqual(set(resume_checks(json.loads(content), inventory)), {digest})
+
     def test_resume_accepts_valid_av_and_rechecks_transient_failures(self):
         from final_batch_acceptance import resume_checks
         good, transient = sha("https://example.com/a"), sha("https://example.com/b")
