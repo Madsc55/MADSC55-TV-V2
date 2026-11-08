@@ -117,8 +117,9 @@ def main():
     parser.add_argument("--worldwide", type=Path, required=True)
     parser.add_argument("--out", type=Path, required=True)
     args = parser.parse_args()
-    if args.out.is_symlink() or args.out.suffix != ".json":
-        raise ValueError("Unsafe output path")
+    if (args.out.exists() or args.out.is_symlink() or args.out.suffix != ".json"
+            or args.out.resolve() in {args.baseline.resolve(), args.worldwide.resolve()}):
+        raise ValueError("Refuse unsafe or existing evidence output")
     result = crosswalk(args.baseline, args.worldwide)
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(json.dumps(result, indent=2, sort_keys=True) + "\n", encoding="utf-8")
