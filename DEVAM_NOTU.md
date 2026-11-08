@@ -1,3 +1,15 @@
+## Görev yürütücüsü için üç doğrulama/düzeltme (33 görev kapsamında, AÇIK)
+
+Bu üç madde **34. görev değildir**; mevcut 33 görevin görev yönetimi/otomasyon güvenilirliği kapsamındaki açık teknik eksikleridir. Kodda ve gerçek GitHub Actions çalışma kanıtlarında doğrulanmadan tamamlandı denmez:
+
+1. **Her çalışma başında okuma:** Otomasyonun gerçekten `DEVAM_NOTU.md`, `v2/tasks/master_tasks.json` ve `v2/tasks/state.json` dosyalarını dev dalındaki güncel commit'ten okuduğunu, başlangıç logları ve testlerle doğrula; eksikse uygulayıp topluca test et.
+2. **Kanıtlı durum güncellemesi:** İş sonunda gerçek run/job sonuçları, commit SHA, AV/cihaz kanıtı ayrımı, hata ve engel gerekçesiyle kanonik `state.json` güncellenmeli; devam notu büyük değişikliklerde senkronize edilmeli. `completed` kanıtsız verilmemeli; tamamlanan işler yeniden açılmamalı. Çakışan saatlik çalışmalara karşı tek-yazıcı/eşzamanlılık koruması olmalı.
+3. **33→34 kapısı:** Yalnızca kanonik 33 görevin hepsi kabul kanıtıyla `completed` olduktan sonra https://github.com/Madsc55/MADSC55-TV-V2/issues/10 için açık onaylı/uygun sıraya alma ve otomatik başlatma koşulu uygulanmalı; erken başlamama, tekrarlı başlamama ve cihaz testi kullanıcıya ait olma kuralları doğrulanmalı.
+
+**Durum:** Bu maddeler yapılacak/doğrulanacak işlerdir; uygulanmış veya test edilmiş sayılmaz. Yalnız V2 dev dalı; main, PR #9 ve korunan IBO listesi değişmez.
+
+---
+
 ## 33 görevden sonra — #34 Türkiye M3U/M3U8 geniş kapsamlı keşif (BEKLEMEDE)
 
 **Kalıcı iş kaydı:** https://github.com/Madsc55/MADSC55-TV-V2/issues/10
