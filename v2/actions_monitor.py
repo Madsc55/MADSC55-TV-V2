@@ -3,6 +3,7 @@
 import json
 import os
 import sys
+import time
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -23,11 +24,19 @@ def api(path):
         "X-GitHub-Api-Version": "2022-11-28",
         "User-Agent": "MADSC55-V2-Actions-Monitor",
     })
-    try:
-        with urllib.request.urlopen(req, timeout=30) as response:
-            return json.load(response)
-    except urllib.error.HTTPError as exc:
-        raise RuntimeError("GitHub Actions API HTTP %d; check actions:read and repository access" % exc.code) from exc
+    # Retry only bounded transient API failures. Never retry authorization or
+    # malformed responses; the monitor must fail closed rather than show green.
+    for attempt in range(3):
+        try:
+            with urllib.request.urlopen(req, timeout=30) as response:
+                return json.load(response)
+        except urllib.error.HTTPError as exc:
+            if exc.code not in (408, 429, 500, 502, 503, 504) or attempt == 2:
+                raise RuntimeError("GitHub Actions API HTTP %d; check actions:read and repository access" % exc.code) from exc
+        except (urllib.error.URLError, TimeoutError) as exc:
+            if attempt == 2:
+                raise RuntimeError("GitHub Actions API transport failure after bounded retries") from exc
+        time.sleep(min(2 ** attempt, 2))
 
 def collect():
     base = "/repos/" + REPO + "/actions"
