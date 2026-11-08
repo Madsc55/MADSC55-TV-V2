@@ -12,6 +12,31 @@ OUT = ROOT / "v2/reports/official-tv-sites.json"
 URL = "https://iptv-org.github.io/api/channels.json"
 MAX_BYTES = 30_000_000
 
+def collect_official_sites(catalog):
+    if not isinstance(catalog, list):
+        raise ValueError("Official channel catalog must be a list")
+    sites = []
+    seen = set()
+    for item in catalog:
+        if not isinstance(item, dict) or item.get("country") != "TR" or item.get("is_nsfw") or item.get("closed"):
+            continue
+        channel_id = item.get("id")
+        if not isinstance(channel_id, str) or not channel_id.strip():
+            continue
+        url = item.get("website") or ""
+        if not validate_url(url):
+            continue
+        parsed = urllib.parse.urlsplit(url)
+        key = (channel_id, parsed.hostname.lower())
+        if key in seen:
+            continue
+        seen.add(key)
+        sites.append({"channel_id": channel_id, "name": str(item.get("name") or ""),
+                      "official_site": url, "domain": parsed.hostname.lower(),
+                      "status": "DIRECTORY_REFERENCE_ONLY_NOT_STREAM_VERIFIED"})
+    return sites
+
+
 def main():
     req = urllib.request.Request(URL, headers={"User-Agent": "MADSC55-V2-Official-Sites/1.0"})
     with urllib.request.urlopen(req, timeout=35) as res:
@@ -19,22 +44,7 @@ def main():
     if len(raw) > MAX_BYTES:
         raise SystemExit("Channel catalog too large")
     catalog = json.loads(raw)
-    sites = []
-    seen = set()
-    for item in catalog:
-        if item.get("country") != "TR" or item.get("is_nsfw") or item.get("closed"):
-            continue
-        url = item.get("website") or ""
-        if not validate_url(url):
-            continue
-        parsed = urllib.parse.urlsplit(url)
-        key = (item.get("id"), parsed.hostname.lower())
-        if key in seen:
-            continue
-        seen.add(key)
-        sites.append({"channel_id": str(item.get("id") or ""), "name": str(item.get("name") or ""),
-                      "official_site": url, "domain": parsed.hostname.lower(),
-                      "status": "DIRECTORY_REFERENCE_ONLY_NOT_STREAM_VERIFIED"})
+    sites = collect_official_sites(catalog)
     report = {"created_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
               "source": URL, "policy": "READ_ONLY_NO_PLAYLIST_CHANGES_NO_DRM_BYPASS",
               "count": len(sites), "channels": sites}
