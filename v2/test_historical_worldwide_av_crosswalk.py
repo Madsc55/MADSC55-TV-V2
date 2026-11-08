@@ -156,6 +156,30 @@ class HistoricalWorldwideAVCrosswalkTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "bad sealed digest"):
                 module.crosswalk(self.historical, self.world)
 
+    def test_cli_refuses_existing_report_without_overwrite(self):
+        import sys
+        out = self.base / "crosswalk.json"
+        out.write_text("PRESERVE_ORIGINAL_EVIDENCE")
+        with patch.object(sys, "argv", ["crosswalk", "--baseline", str(self.historical),
+                                         "--worldwide", str(self.world),
+                                         "--out", str(out)]):
+            with self.assertRaisesRegex(ValueError, "existing evidence output"):
+                module.main()
+        self.assertEqual(out.read_text(), "PRESERVE_ORIGINAL_EVIDENCE")
+
+    def test_cli_refuses_symlink_report_without_modifying_target(self):
+        import sys
+        target = self.base / "sealed.json"
+        target.write_text("PRESERVE_SEALED_EVIDENCE")
+        alias = self.base / "crosswalk.json"
+        alias.symlink_to(target)
+        with patch.object(sys, "argv", ["crosswalk", "--baseline", str(self.historical),
+                                         "--worldwide", str(self.world),
+                                         "--out", str(alias)]):
+            with self.assertRaisesRegex(ValueError, "existing evidence output"):
+                module.main()
+        self.assertEqual(target.read_text(), "PRESERVE_SEALED_EVIDENCE")
+
     def test_symlink_baseline_rejected(self):
         alias = self.base / "alias.jsonl"
         alias.symlink_to(self.historical)
