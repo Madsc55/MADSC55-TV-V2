@@ -261,7 +261,7 @@ def main():
               "configured_sources": len(sources), "fetched_sources": len(audit),
               "failed_sources": failures, "source_audit": audit, "source_recovery_audit": recovery_audit, "unique_candidates": len(items),
               "manifest_reachable": sum(x["network_status"] == "HLS_MANIFEST_REACHABLE" for x in items),
-              "media_decoded": len(verified), "ffmpeg_failure_categories": dict(sorted(av_diagnostics.items())), "unknown_or_failed": sum(x["network_status"] != "HLS_MANIFEST_REACHABLE" for x in items),
+              "media_decoded": len(verified), "all_regions_media_decoded": sum(item.get("media_decoded") is True for item in items), "tr_az_export_eligible": len(verified), "ffmpeg_failure_categories": dict(sorted(av_diagnostics.items())), "unknown_or_failed": sum(x["network_status"] != "HLS_MANIFEST_REACHABLE" for x in items),
               "historical": history_report, "historical_loss_guard": protected_history,
               "historical_raw_records_preserved": len(history),
               "archive_restore_verified": bool(archived_items) and restored == archived_items,
