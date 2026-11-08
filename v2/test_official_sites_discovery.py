@@ -15,6 +15,8 @@ class OfficialSitesTests(unittest.TestCase):
         rows = [None, "invalid", {}, {"country": "TR", "id": "", "website": "https://example.org"},
                 {"country": "TR", "id": "local", "website": "http://127.0.0.1/live"},
                 {"country": "TR", "id": "credential", "website": "https://user:pass@example.org/live"},
+                {"country": "TR", "id": "token", "website": "https://example.org/live?token=secret"},
+                {"country": "TR", "id": "fragment", "website": "https://example.org/live#secret"},
                 {"country": "AZ", "id": "other", "website": "https://example.org"},
                 {"country": "TR", "id": "closed", "closed": True, "website": "https://example.org"},
                 {"country": "TR", "id": "valid.tr", "name": "Valid TV", "website": "https://example.org/live"},
@@ -22,6 +24,7 @@ class OfficialSitesTests(unittest.TestCase):
         found = collect_official_sites(rows)
         self.assertEqual(len(found), 1)
         self.assertEqual(found[0]["channel_id"], "valid.tr")
+        self.assertNotIn("secret", str(found))
         self.assertEqual(found[0]["status"], "DIRECTORY_REFERENCE_ONLY_NOT_STREAM_VERIFIED")
 
 
