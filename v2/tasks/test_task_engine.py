@@ -202,6 +202,27 @@ class TaskEngineTests(unittest.TestCase):
             e.safe_transition(self.ledger["statuses"][31], "completed",
                               ["https://github.com/example/evidence"], "2026-11-06T16:00:00Z")
 
+    def test_issue34_never_starts_before_33_and_explicit_user_approval(self):
+        ledger = copy.deepcopy(self.ledger)
+        self.assertFalse(e.issue34_ready(self.master, ledger, self.root, user_approved=True))
+        for row in ledger["statuses"]:
+            row["status"] = "completed"
+            row["evidence_urls"] = ["https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/123"]
+            row["last_checked_at"] = "2026-11-08T00:00:00Z"
+        self.assertFalse(e.issue34_ready(self.master, ledger, self.root))
+        self.assertFalse(e.issue34_ready(self.master, ledger, self.root, user_approved=1))
+        self.assertFalse(e.issue34_ready(self.master, ledger, self.root, user_approved=True))
+        ledger["statuses"][31]["user_device_confirmation"] = True
+        self.assertTrue(e.issue34_ready(self.master, ledger, self.root, user_approved=True))
+        for task_id in (1, 32, 33):
+            broken = copy.deepcopy(ledger)
+            broken["statuses"][task_id - 1]["status"] = "pending"
+            self.assertFalse(e.issue34_ready(self.master, broken, self.root, user_approved=True))
+        broken = copy.deepcopy(ledger)
+        broken["statuses"][31]["evidence_urls"] = []
+        with self.assertRaises(ValueError):
+            e.issue34_ready(self.master, broken, self.root, user_approved=True)
+
     def test_dependency_cycle_rejected(self):
         master = copy.deepcopy(self.master)
         master["tasks"][0]["depends_on"] = [3]
