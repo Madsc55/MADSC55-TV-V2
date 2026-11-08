@@ -39,12 +39,12 @@
     },
     {
       "id": 4,
-      "title": "4.955 tarihî kimlikte 1.886 AV kanıtsız ve 7 eşleşmeyen kaydı incele",
+      "title": "4.955 tarihî kimlikte 1.866 AV kanıtsız ve 20 eşleşmeyen kaydı incele",
       "priority": "P0",
       "depends_on": [
         2
       ],
-      "acceptance": "4,955 unique baseline hashes retained; 1,886 unproven partitioned; seven missing investigated; sealed AV provenance and exact SHA mapping checked",
+      "acceptance": "4,955 unique baseline hashes retained; 1,866 unproven partitioned into 1,658 partial media, 173 source research, 30 transient retry and 5 other; 20 missing investigated; sealed AV provenance and exact SHA mapping checked; no IBO device claim",
       "evidence_urls": [],
       "last_checked_at": null,
       "owner": "automation_with_review"
