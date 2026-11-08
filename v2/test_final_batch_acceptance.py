@@ -152,7 +152,7 @@ class FinalBatchAcceptanceTests(unittest.TestCase):
                     ".github/workflows/v2-source-integration-batch.yml").read_text()
         self.assertIn("if gh run download 42077381839", workflow)
         self.assertIn("Prior evidence unavailable; scan without reuse", workflow)
-        self.assertIn('if test -s v2/reports/ci/prior/final-worldwide-acceptance.json; then', workflow)
+        self.assertIn('elif test -s v2/reports/ci/prior/final-worldwide-acceptance.json; then', workflow)
         self.assertIn('args+=(--reuse-report v2/reports/ci/prior/final-worldwide-acceptance.json)', workflow)
         self.assertIn('timeout 16000s python v2/final_batch_acceptance.py "${args[@]}"', workflow)
 
