@@ -43,7 +43,7 @@ jobs:
           PYTHONPATH=v2 python v2/historical_worldwide_av_crosswalk.py \
             --baseline v2/history/stage3-4955-hash-only.jsonl \
             --worldwide v2/reports/ci/final-worldwide-acceptance.json \
-            --out v2/reports/ci/historical-worldwide-av-crosswalk.json
+            --out v2/reports/ci/historical-worldwide-av-crosswalk-reuse.json
       - name: Validate lossless recovery review groups and print anonymous counts
         shell: bash
         run: |
@@ -51,7 +51,7 @@ jobs:
           python - <<'PY'
           import json
           from pathlib import Path
-          r = json.loads(Path("v2/reports/ci/historical-worldwide-av-crosswalk.json").read_text())
+          r = json.loads(Path("v2/reports/ci/historical-worldwide-av-crosswalk-reuse.json").read_text())
           counts = r["historical_recovery_review_counts"]
           groups = r["historical_recovery_review_url_sha256"]
           assert set(counts) == {"partial_media", "transient_retry", "source_research", "other_unproven"}
@@ -71,6 +71,6 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: v2-historical-av-crosswalk-${{ github.run_id }}
-          path: v2/reports/ci/historical-worldwide-av-crosswalk.json
+          path: v2/reports/ci/historical-worldwide-av-crosswalk-reuse.json
           if-no-files-found: error
           retention-days: 30
