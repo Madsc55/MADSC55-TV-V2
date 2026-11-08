@@ -180,6 +180,26 @@ def independent_ready(master, ledger, root, excluded=(), defer_heavy=False):
     return [t["id"] for t in sorted(ready, key=lambda t: (PRIORITY[t["priority"]], t["id"]))]
 
 
+
+def issue34_ready(master, ledger, root, user_approved=False):
+    """Fail-closed, read-only gate for post-33 discovery issue #10.
+
+    A caller must separately establish explicit user approval; this function
+    never starts an issue, edits GitHub, or impersonates IBO device evidence.
+    """
+    tasks, rows = validate(master, ledger, root)
+    if set(tasks) != set(range(1, 34)):
+        raise ValueError("Canonical 33 tasks required")
+    if user_approved is not True:
+        return False
+    if any(row["status"] != "completed" for row in rows.values()):
+        return False
+    if any(not row.get("evidence_urls") or not row.get("last_checked_at")
+           for row in rows.values()):
+        return False
+    return rows[32].get("user_device_confirmation") is True
+
+
 def assert_safe_write(path, branch):
     """Reject noncanonical, absolute and protected paths before GitHub writes."""
     if branch != BRANCH or not isinstance(path, str) or not path:
