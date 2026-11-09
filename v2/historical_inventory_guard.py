@@ -455,6 +455,10 @@ def _verify_archive_envelope(blocks):
             len(raw) != manifest["raw_record_count"] or
             len(view) != manifest["candidate_record_count"]):
         raise ValueError("Encrypted archive record counts differ from manifest")
+    # A validly encrypted manifest must not certify a view-only snapshot as a
+    # complete historical backup. Without raw rows there is nothing to restore.
+    if not raw:
+        raise ValueError("Encrypted archive missing raw historical evidence")
     return raw, view
 
 
