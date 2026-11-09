@@ -1,3 +1,8 @@
+## 9 Kasım — #14 tam 4.955 satırlık şifreli roundtrip kabul testi
+
+- `a8b379af`: `v2/test_historical_inventory_guard.py` artık **4.955 sentetik tarihî kayıt + yeni kaynak** için AES arşiv yazma/geri okuma, aynı SHA'lı üç farklı kaynak ve farklı önceki AV/hata durumu, tam ham metadata korunması, aday görünümde tekilleştirme, AV/IBO doğrulaması uydurulmaması ve tam baseline çoklu-küme eşitliğini birlikte test ediyor. Bu gerçek tarihî dosyanın yerini tutmaz.
+- Push ile beş offline Actions tetiklendi (ilk gözlem queued). Sonuçlar görülmeden #14 veya bağımlı #16 completed sayılmayacak. #11/#14/#16 in_progress; #15/#18/#19 bekliyor. Kaynak envanteri, ana IBO, main ve PR #9 değişmedi.
+
 ## 9 Kasım — Son yeşil CI ve #11/#14/#16 görev durumu
 
 - `81f53be7` commit'inde **beş** temel workflow `completed/success`: Master Engine **offline-tests** (live master skipped), Eight-Stage, Sıralı Hazırlık, Current Scanner Offline, Actions Monitor. Kaynak entegrasyonu uzun işi `27335019` için son gözlemde `in_progress` idi; başarılı kabul edilmedi.
