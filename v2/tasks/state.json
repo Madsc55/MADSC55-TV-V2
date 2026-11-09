@@ -231,10 +231,12 @@
       "evidence_urls": [
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42611524072",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42611524049",
-        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42611524123"
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42611524123",
+        "https://github.com/Madsc55/MADSC55-TV-V2/blob/madsc/v2-discovery-bulk-20261031/.github/workflows/v2-master-engine.yml",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42611795555"
       ],
-      "blocker": "Three workflow conclusions are success on same commit dc9d034b, but Master Engine job 'master' was skipped, and Ordered Preflight live public audit was skipped. Task #23 requires actual grouped Master + Eight-Stage + Ordered integration, not workflow-level green with required jobs skipped. Need safe explicit integration run and non-skipped acceptance evidence; do not trigger costly AV scan or protected playlist writes.",
-      "reason": "Verified per-job outcomes: Master Engine #42611524072 offline-tests success, master skipped; Eight-Stage #42611524049 two jobs success; Ordered Preflight #42611524123 compile/protect/discovery-tests/safety success, live public audit skipped. Same-head SHA dc9d034b; task stays in progress until required integration is executed."
+      "blocker": "Actual end-to-end live master acceptance still lacks a non-skipped run. Launch only a deliberate [run-live-master] development commit when archive secret readiness and bounded scan budget are verified; ordinary task-state commits must not start costly live scans. Grouped offline and Eight-Stage success is not sufficient to close #23.",
+      "reason": "Root cause confirmed from .github/workflows/v2-master-engine.yml: live 'master' job deliberately requires a development push whose HEAD commit message contains [run-live-master]; ordinary pushes run only offline-tests. This is a safety/expense guard, not an unexplained Actions failure. Latest #42611795555 completed success on offline path. Ordered Preflight live public audit is likewise conditional. Do not misrepresent skipped optional live jobs as failure or as proof of live master integration."
     },
     {
       "id": 24,
