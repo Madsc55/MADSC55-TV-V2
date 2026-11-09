@@ -107,9 +107,11 @@ def aggregate(targets,known_av,found,source_statuses,unknown,proofs,old_status_c
             rows.append({"url_sha256":h,"channel_id":item["channel_id"],
                          "status":"NOT_FOUND_IN_FRESH_SOURCE","decoded":False})
         else:
-            if (p.get("url_sha256")!=h or p.get("decoded") not in (True,False) or
+            if (p.get("url_sha256")!=h or type(p.get("decoded")) is not bool or
+                not isinstance(p.get("status"),str) or
                 (p["decoded"] and (p.get("status")!="VIDEO_AUDIO_DECODED" or
-                                     p.get("video") is not True or p.get("audio") is not True))):
+                                     p.get("video") is not True or p.get("audio") is not True)) or
+                (not p["decoded"] and p.get("status")=="VIDEO_AUDIO_DECODED")):
                 raise ValueError("Fake FFmpeg recovery")
             rows.append({"url_sha256":h,"channel_id":item["channel_id"],
                          "status":p["status"],"decoded":p["decoded"]})
