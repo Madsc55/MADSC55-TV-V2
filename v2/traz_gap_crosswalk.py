@@ -119,9 +119,9 @@ def reconcile(api,m3u):
         cid=missing.get(canonical_tvg_id(tvg,provenance))
         if cid is None: continue
         # Only stable source identifiers; strip uncontrolled URL-like metadata.
-        refs_safe=sorted(set(x[:96] for x in provenance
-            if isinstance(x,str) and re.fullmatch(r"[A-Za-z0-9_.:/-]{1,96}",x)
-            and "://" not in x))[:12]
+        refs_safe=sorted(set(provenance))
+        if len(refs_safe)>12:
+            raise ValueError("Too many M3U source provenance identities")
         previously_other=bool(api_by_hash.get(h) and cid.casefold() not in api_by_hash[h])
         possible[cid][h]={
            "url_sha256":h,"source_ids":refs_safe,
