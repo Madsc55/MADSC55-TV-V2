@@ -291,6 +291,9 @@ def reconcile(historical_records, current_records=(), expected_historical_record
         candidate["decoded"] = False
         candidate["video"] = False
         candidate["audio"] = False
+        # Historical playback statuses remain in the authenticated raw archive;
+        # a deduplicated discovery candidate is never a fresh FFmpeg result.
+        candidate["status"] = "NOT_REVERIFIED"
         # Existing flags cannot turn historical evidence into media proof.
         candidate["historical_not_reverified"] = key in all_ids
         candidates.append(candidate)
