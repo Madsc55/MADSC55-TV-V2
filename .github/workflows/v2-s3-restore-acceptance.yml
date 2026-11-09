@@ -58,20 +58,13 @@ jobs:
             }
           cat v2/reports/s3-restore/restore-result.log
           grep -Fx 'PASS: independent versioned offsite AES-GCM restore; 4955 historical identities' v2/reports/s3-restore/restore-result.log
-          grep -Eq '^restored_sha256=[0-9a-f]{64}
-      - name: Record verifiable run identity even on failure
-        if: always()
-        shell: bash
-        run: |
-          printf 'Run: https://github.com/%s/actions/runs/%s\nCommit: %s\n' "$GITHUB_REPOSITORY" "$GITHUB_RUN_ID" "$GITHUB_SHA" >> "$GITHUB_STEP_SUMMARY"
- v2/reports/s3-restore/restore-result.log
+          grep -Eq '^restored_sha256=[0-9a-f]{64}$' v2/reports/s3-restore/restore-result.log
           echo "Independent versioned S3 restore and authenticated 4955-identity acceptance passed" >> "$GITHUB_STEP_SUMMARY"
       - name: Record verifiable run identity even on failure
         if: always()
         shell: bash
         run: |
           printf 'Run: https://github.com/%s/actions/runs/%s\nCommit: %s\n' "$GITHUB_REPOSITORY" "$GITHUB_RUN_ID" "$GITHUB_SHA" >> "$GITHUB_STEP_SUMMARY"
-
       - name: Upload successful independent restore receipt without private archive or S3 coordinates
         if: always()
         uses: actions/upload-artifact@v4
