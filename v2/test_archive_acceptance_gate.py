@@ -42,6 +42,18 @@ class ArchiveGateTests(unittest.TestCase):
     def test_actual_4955_history_roundtrip(self):
         self.assertTrue(check(self.prepared()))
 
+    def test_tampered_baseline_metadata_with_same_sha_identities_is_rejected(self):
+        """Changing reference metadata cannot redefine the immutable baseline."""
+        lines = BASELINE.read_text(encoding="utf-8").splitlines()
+        record = json.loads(lines[0])
+        record["source"] = "TAMPERED_REFERENCE_METADATA"
+        lines[0] = json.dumps(record, ensure_ascii=False)
+        modified = self.root / "tampered-baseline.jsonl"
+        modified.write_text("\n".join(lines) + "\n", encoding="utf-8")
+        with patch("archive_acceptance_gate.BASELINE", modified):
+            with self.assertRaisesRegex(RuntimeError, "historical identities or metadata"):
+                check(self.prepared())
+
     def test_missing_approval_or_evidence(self):
         with self.assertRaises(RuntimeError): check({})
         with self.assertRaises(RuntimeError): check({"V2_ARCHIVE_RESTORE_APPROVED": "true"})
