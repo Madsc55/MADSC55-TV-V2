@@ -232,6 +232,7 @@ def inspect_epg_gap(epg_ids,source_urls,fetcher=_fetch_xmltv):
     inspected=[]
     matching=set()
     with_programme=set()
+    channel_source_counts=Counter()
     for url in source_urls:
         h=sha(url) if isinstance(url,str) else None
         try:
@@ -239,6 +240,7 @@ def inspect_epg_gap(epg_ids,source_urls,fetcher=_fetch_xmltv):
             channels,programmes=inspect_xmltv(raw,wanted)
             status="XMLTV_PARSED"
             matching|=channels
+            channel_source_counts.update(channels)
             with_programme|=(channels&set(programmes))
             inspected.append({"epg_source_url_sha256":h,"status":status,
                 "exact_missing_api_guide_ids":len(channels),
@@ -256,6 +258,9 @@ def inspect_epg_gap(epg_ids,source_urls,fetcher=_fetch_xmltv):
       "exact_xmltv_ids_with_programme_records":len(with_programme),
       "remaining_without_xmltv_channel_id_candidate":len(wanted-matching),
       "exact_xmltv_candidate_ids":sorted(matching),
+      "cross_source_xmltv_id_collisions":sorted(k for k,v in channel_source_counts.items() if v>1),
+      "cross_source_xmltv_collision_count":sum(v>1 for v in channel_source_counts.values()),
+      "cross_source_collision_requires_manual_review":True,
       "source_results":inspected,
       "schedules_correctly_verified":False,
       "stream_playback_verified":False,
