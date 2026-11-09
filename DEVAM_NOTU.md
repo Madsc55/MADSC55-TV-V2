@@ -1,3 +1,9 @@
+## 9 Kasım — #14 şifreli arşivde ham tarihî kanıt zorunluluğu
+
+- `454859d`: `_verify_archive_envelope` artık geçerli blok sayısı ve payload SHA256 manifesti bulunsa bile **ham tarihî kayıt bulunmayan** view-only arşivi reddeder; eski tarihî veriyi geri yükleme kabulü olmadan kaybolmuş saymaz.
+- `0898eb1`: tam tutarlı manifest ve SHA256 ile oluşturulmuş ama `raw_record_count=0` olan sentetik view-only arşivin reddini doğrulayan regresyon eklendi.
+- Değişiklikler geliştirme dalındadır; Actions sonucu henüz doğrulanmadı. #14 ve bağımlı #13 gerçek şifreli uzak restore kabulü açık; 8/33. main, PR #9 ve ana IBO listesi değiştirilmedi.
+
 ## 9 Kasım — #11/#14 hash-only tarihî TR kanıtı ile yeni AZ URL çelişkisi
 
 - `b6a52099`: aynı gerçek URL'nin tarihî TR ve yeni AZ kaynaklarında çelişmesi halinde kaynak kimlikleri korunurken `UNKNOWN/CONFLICTING_TR_AZ_EVIDENCE` ve `NOT_REVERIFIED` bekleyen regresyon eklendi.
