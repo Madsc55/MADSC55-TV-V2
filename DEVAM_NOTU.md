@@ -1,3 +1,10 @@
+## 9 Kasım — V2 BİTİR: #11/#14 eksik kaynak geçmişi kaybını engelleme
+
+- GitHub Actions #42672120731 için jobs ve artifacts API sorguları boş döndü; test hata loguna erişilemedi. Bu çalışmanın başarı veya kök hata nedeni doğrulanmadı. Link: https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42672120731
+- `1ed59a14`: şifreli aday görünümünde kaynak etiketlerinin yalnızca ham URL geçmişinin alt kümesi olması artık yeterli değil; aynı SHA kimliğine ait tüm kaynak geçmişinin eksiksiz korunması zorunlu. Sahte etiketler kadar eksik etiketler de reddedilir.
+- `1b5acb42`: kaynak etiketi tamamen silinmiş aday için regresyon eklendi; mevcut uydurma/tekrarlı kaynak durumları da korunuyor.
+- Yeni commit'ler için gerçek CI sonucu doğrulanmadı. #11/#13/#14/#16 kapatılmadı; bağımsız S3 geri yükleme ve uçtan uca geçici hata kabulü bekliyor. 8/33; main, PR #9, korumalı İBO ve tarihî baseline değiştirilmedi.
+
 ## 9 Kasım — #11/#14 şifreli aday kaynak etiketlerini ham URL kimliğine bağlama
 
 - `32bad600`: `archive_acceptance_gate.check` her deduplikasyon adayının `source_ids` etiketlerini tam URL SHA kimliğine ait ham arşiv kayıtlarının `source_ids/source_id/source` birleşimiyle doğrular. Aynı hash'e ait hash-only tarihî kaynaklar da hesaba katılır. Uydurma, tekrarlı veya geçersiz kaynak etiketi reddedilir.
