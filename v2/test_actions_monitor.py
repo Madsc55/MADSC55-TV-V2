@@ -206,6 +206,32 @@ class MonitorTests(unittest.TestCase):
                     result = actions_monitor.collect()
                 self.assertTrue(all(not row["acceptance_candidate"] for row in result["runs"]))
 
+    def test_failure_reasons_cover_failed_jobs_skipped_steps_and_stale_sha(self):
+        scenarios = [
+            ("failure", "failure", [{"number": 1, "name": "AV", "conclusion": "failure"}],
+             "job_124_step_1_failure"),
+            ("success", "success", [{"number": 2, "name": "Archive", "conclusion": "skipped"}],
+             "job_124_step_2_skipped"),
+            ("success", "success", [{"number": 3, "name": "Checks", "conclusion": "success"}],
+             "not_current_commit_or_incomplete_step_evidence"),
+        ]
+        for workflow_conclusion, job_conclusion, steps, expected in scenarios:
+            with self.subTest(expected=expected):
+                def fake_api(path):
+                    if path.endswith("/123/jobs?per_page=100"):
+                        return {"total_count": 1, "jobs": [{"id": 124,
+                            "status": "completed", "conclusion": job_conclusion, "steps": steps}]}
+                    return {"workflow_runs": [{"id": 123, "head_sha": "b" * 40,
+                        "head_branch": actions_monitor.BRANCH, "event": "push",
+                        "status": "completed", "conclusion": workflow_conclusion,
+                        "html_url": "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/123"}]}
+                with patch.dict("os.environ", {"GITHUB_SHA": "a" * 40}), patch.object(
+                        actions_monitor, "api", side_effect=fake_api):
+                    result = actions_monitor.collect()
+                self.assertTrue(result["runs"])
+                self.assertIn(expected, result["runs"][0]["failure_reasons"])
+                self.assertFalse(result["runs"][0]["acceptance_candidate"])
+
     def test_untrusted_run_identity_and_truncated_job_pages_rejected(self):
         base = {"id": 123, "head_sha": "a" * 40, "head_branch": actions_monitor.BRANCH,
                 "event": "push", "status": "completed", "conclusion": "success",
