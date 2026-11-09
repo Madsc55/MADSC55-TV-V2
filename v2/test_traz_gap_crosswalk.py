@@ -83,6 +83,8 @@ class GapCrosswalkTests(unittest.TestCase):
         self.assertEqual(canonical_tvg_id("Alpha.tr@SD",["iptv-org-tr-streams"]),"alpha.tr")
         self.assertEqual(canonical_tvg_id("Alpha.tr@HD",["iptv-org-tr"]),"alpha.tr")
         self.assertEqual(canonical_tvg_id("Alpha.tr@SD",["untrusted"]), "alpha.tr@sd")
+        self.assertEqual(canonical_tvg_id("Alpha.tr@HD",["iptv-org.evil"]), "alpha.tr@hd")
+        self.assertEqual(canonical_tvg_id("Alpha.tr@HD",["iptv-org:spoof"]), "alpha.tr@hd")
         self.assertEqual(canonical_tvg_id("Alpha.tr@weird",["iptv-org-tr"]),"alpha.tr@weird")
         api,scan=fixtures()
         scan["candidates"][0]["tvg_id"]="Alpha.tr@SD"
