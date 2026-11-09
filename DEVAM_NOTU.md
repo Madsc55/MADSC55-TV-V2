@@ -1,3 +1,9 @@
+## 9 Kasım — V2 DEVAM: #13 gerçek S3 restore kabul workflow'u
+
+- `589b0f72`: `.github/workflows/v2-s3-restore-acceptance.yml` eklendi. Geliştirme dalındaki ilgili dosya push'larında ve manuel dispatch ile bağımsız versioned S3 `get-object` + SHA256 + AES-GCM + 4.955 tarihî kimlik kabulünü `v2/independent_s3_restore.py` üzerinden yürütür. `concurrency.cancel-in-progress: false`, read-only repository yetkisi, 65 dakikalık job timeout, eksik secret için fail-closed kapısı ve Actions run/commit özeti bulunur.
+- Dış erişim gereksinimleri: `V2_S3_RESTORE_AWS_ACCESS_KEY_ID`, `V2_S3_RESTORE_AWS_SECRET_ACCESS_KEY`, `V2_S3_RESTORE_AWS_REGION`, `V2_S3_RESTORE_BUCKET`, `V2_S3_RESTORE_OBJECT_KEY`, `V2_S3_RESTORE_VERSION_ID`, `V2_S3_RESTORE_PINNED_SHA256`, `V2_ARCHIVE_KEY_HEX` (isteğe bağlı AWS session token). Bağımsız pinlenmiş SHA ve gerçek sürüm olmadan #13 kapanmaz.
+- Workflow commit'i yapıldı fakat **gerçek S3 çalışması ve Actions run sonucu bu oturumda doğrulanmadı**; #13 açık, 8/33. Ana İBO/main/PR #9/tarihî baseline korunuyor. Devam: gerçek workflow job logunu al, gerekirse secrets/izin engelini kaydet, bağımsız işlere geç.
+
 ## 9 Kasım — V2 DEVAM: Task Engine CI hata logları
 
 - `7a091fe2`: `v2-master-engine.yml` içinde 33 görev Task Engine testleri `task-engine.log` dosyasına yazılır; test hatası sonraki grouped/compile/offline testleri ve artifact yüklemesini engellemez. `steps.task_engine_tests.outcome` son fail-closed kapısına eklendi: skipped/failure hiçbir durumda başarı sayılmaz.
