@@ -39,6 +39,16 @@ jobs:
           python-version: '3.12'
       - name: Install test dependencies
         run: python -m pip install cryptography==44.0.2 PyYAML==6.0.2
+      - name: Install real FFmpeg for offline AV regression tests
+        id: install_ffmpeg
+        continue-on-error: true
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends ffmpeg
+          command -v ffmpeg
+          command -v ffprobe
       - name: Verify FFmpeg audio and video decoders for AV regression coverage
         id: ffmpeg_capabilities
         continue-on-error: true
@@ -137,14 +147,15 @@ jobs:
         if: always()
         shell: bash
         env:
+          FFMPEG_INSTALL_RESULT: ${{ steps.install_ffmpeg.outcome }}
           FFMPEG_RESULT: ${{ steps.ffmpeg_capabilities.outcome }}
           TASK_ENGINE_RESULT: ${{ steps.task_engine_tests.outcome }}
           GROUPED_RESULT: ${{ steps.grouped_acceptance.outcome }}
           COMPILE_RESULT: ${{ steps.compile_modules.outcome }}
           OFFLINE_RESULT: ${{ steps.offline_regressions.outcome }}
         run: |
-          printf 'FFmpeg=%s TaskEngine=%s Grouped=%s Compile=%s Offline=%s\n' "$FFMPEG_RESULT" "$TASK_ENGINE_RESULT" "$GROUPED_RESULT" "$COMPILE_RESULT" "$OFFLINE_RESULT" >> "$GITHUB_STEP_SUMMARY"
-          if [ "$FFMPEG_RESULT" != "success" ] || [ "$TASK_ENGINE_RESULT" != "success" ] || [ "$GROUPED_RESULT" != "success" ] || [ "$COMPILE_RESULT" != "success" ] || [ "$OFFLINE_RESULT" != "success" ]; then
+          printf 'FFmpegInstall=%s FFmpeg=%s TaskEngine=%s Grouped=%s Compile=%s Offline=%s\n' "$FFMPEG_INSTALL_RESULT" "$FFMPEG_RESULT" "$TASK_ENGINE_RESULT" "$GROUPED_RESULT" "$COMPILE_RESULT" "$OFFLINE_RESULT" >> "$GITHUB_STEP_SUMMARY"
+          if [ "$FFMPEG_INSTALL_RESULT" != "success" ] || [ "$FFMPEG_RESULT" != "success" ] || [ "$TASK_ENGINE_RESULT" != "success" ] || [ "$GROUPED_RESULT" != "success" ] || [ "$COMPILE_RESULT" != "success" ] || [ "$OFFLINE_RESULT" != "success" ]; then
             echo "Required offline checks failed or were skipped; acceptance rejected" >> "$GITHUB_STEP_SUMMARY"
             exit 1
           fi
