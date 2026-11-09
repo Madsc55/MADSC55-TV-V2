@@ -353,6 +353,14 @@
       "evidence_urls": [],
       "blocker": null,
       "reason": null
+    },
+    {
+      "id": 34,
+      "status": "pending",
+      "last_checked_at": null,
+      "evidence_urls": [],
+      "blocker": null,
+      "reason": "Deferred until task 33 accepted; final broad scan is last."
     }
   ],
   "allowed_statuses": [
