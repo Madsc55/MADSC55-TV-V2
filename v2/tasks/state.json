@@ -248,19 +248,31 @@
     },
     {
       "id": 25,
-      "status": "pending",
-      "last_checked_at": null,
-      "evidence_urls": [],
-      "blocker": null,
-      "reason": null
+      "status": "in_progress",
+      "last_checked_at": "2026-11-09",
+      "evidence_urls": [
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42612061352",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42612061310",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42612061433",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42612061331",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42612061408"
+      ],
+      "blocker": "Remaining: verify timeout and bounded retry behaviour for actual long-running live master/source integration jobs; offline monitor tests alone do not establish all workflow timeout guarantees.",
+      "reason": "Implemented and CI-tested advisory Actions stalled-run age detection (2-hour threshold, timezone-aware, invalid/missing/future timestamps fail to unknown); bounded GitHub API retries already exist. Five grouped workflows completed success on 1ca8d2dc. This does not prove all live scan timeout and unsafe retry acceptance paths."
     },
     {
       "id": 26,
-      "status": "pending",
-      "last_checked_at": null,
-      "evidence_urls": [],
-      "blocker": null,
-      "reason": null
+      "status": "in_progress",
+      "last_checked_at": "2026-11-09",
+      "evidence_urls": [
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42612061352",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42612061310",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42612061433",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42612061331",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42612061408"
+      ],
+      "blocker": "Remaining: demonstrate failure classification and safe retry bounds from real failed or stalled Actions jobs; success-only workflow evidence cannot close acceptance.",
+      "reason": "Verified five grouped workflows on 1ca8d2dc; monitor job completed success. Actions monitor already reports failed steps, checks same SHA/branch and refuses skipped jobs as AV acceptance; new stale run detection never auto-retries. Need real failed/stalled Actions metadata and explicit retry-budget acceptance before completion."
     },
     {
       "id": 27,
