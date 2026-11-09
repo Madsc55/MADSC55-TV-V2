@@ -50,6 +50,15 @@ class MonitorTests(unittest.TestCase):
         self.assertTrue(actions_monitor.stalled_run(
             run, now=now, threshold_seconds=3 * 3600))
 
+    def test_master_stall_budget_allows_120_minute_job_and_queue(self):
+        now = datetime(2026, 11, 9, 18, 0, tzinfo=timezone.utc)
+        run = {"status": "in_progress", "run_started_at":
+               (now - timedelta(minutes=125)).isoformat()}
+        self.assertFalse(actions_monitor.stalled_run(
+            run, now=now, threshold_seconds=3 * 3600))
+        self.assertTrue(actions_monitor.stalled_run(
+            run, now=now, threshold_seconds=2 * 3600))
+
     def test_transient_api_failure_retries_then_succeeds(self):
         payload = io.BytesIO(b'{"workflow_runs": []}')
         class Response:
