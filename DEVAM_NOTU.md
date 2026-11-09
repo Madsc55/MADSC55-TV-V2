@@ -1,3 +1,9 @@
+## 9 Kasım — #11/#14 eski kaynak alanları provenans denetimi
+
+- `95abdf31`: şifreli deduplikasyon adayındaki `source_ids` kümesinin ham SHA kaynak geçmişine eşit olması yanında eski `source`/`source_id` alanları da `source_ids(candidate)` üzerinden aynı kümeye bağlandı. Doğru `source_ids` yanında sahte eski kaynak etiketi artık reddedilir.
+- `7cb641b4`: hem `source` hem `source_id` sahteciliği için ayrı AES-GCM arşiv regresyonu eklendi; gerçek 4.955 hash-only tarihî baseline dosyası değiştirilmedi.
+- Master Engine push offline kabul adımı bu regresyonu kapsar; bu commit'lerin yeni Actions run ID/sonuçları API ile doğrulanmadı. #11/#13/#14/#16 açık, kapanan 0, 8/33. Gerçek uzak S3 ve AV kanıtı olmadan tamamlandı yazılmadı. Main, PR #9 ve ana İBO korunuyor.
+
 ## 9 Kasım — #11 hash-only kaynak geçmişi regresyonu
 
 - `b2022f98`: 4.955 tarihî baseline korunarak aynı URL SHA'sına bağlı yeni hash-only kaynak satırı ve gerçek URL satırı birlikte arşivlenir. Deduplike adaydan hash-only kaynak etiketi çıkarıldığında `archive_acceptance_gate.check` reddetmeli; test eklendi.
