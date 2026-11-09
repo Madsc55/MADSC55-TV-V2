@@ -121,7 +121,8 @@ def check(env=None):
         if (not isinstance(labels, list)
                 or any(not isinstance(label, str) or not label for label in labels)
                 or len(labels) != len(set(labels))
-                or set(labels) != raw_sources.get(key, set())):
+                or set(labels) != raw_sources.get(key, set())
+                or set(source_ids(candidate)) != raw_sources.get(key, set())):
             raise RuntimeError("Encrypted candidate view has missing or fabricated source provenance")
     # Archived deduplication is a discovery view, not a playback proof. Even
     # an authenticated archive cannot elevate old evidence to fresh AV status.
