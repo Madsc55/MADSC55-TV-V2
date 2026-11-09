@@ -75,6 +75,16 @@ class MonitorTests(unittest.TestCase):
         self.assertEqual(opener.call_count, 1)
         sleep.assert_not_called()
 
+    def test_monitor_names_match_grouped_acceptance_contract(self):
+        expected = {
+            "v2-eight-stage-verification.yml": "V2 Eight-Stage Runner Verification",
+            "v2-master-engine.yml": "V2 Master Engine",
+            "v2-source-integration-batch.yml": "V2 Source Integration Batch",
+            "v2-ordered-preflight.yml": "V2 Sirali Hazirlik Testleri",
+        }
+        self.assertEqual(actions_monitor.WORKFLOW_NAMES, expected)
+        self.assertEqual(set(expected), set(actions_monitor.WORKFLOWS))
+
     def test_monitor_targets_active_workflow(self):
         self.assertEqual(set(actions_monitor.WORKFLOWS), {
             "v2-eight-stage-verification.yml", "v2-master-engine.yml",
@@ -125,6 +135,8 @@ class MonitorTests(unittest.TestCase):
         self.assertEqual(len(observed), len(actions_monitor.WORKFLOWS))
         self.assertEqual({row["workflow_file"] for row in result["runs"]},
                          set(actions_monitor.WORKFLOWS))
+        self.assertEqual({row["name"] for row in result["runs"]},
+                         set(actions_monitor.WORKFLOW_NAMES.values()))
 
     def test_green_wrong_branch_or_event_is_not_acceptance_candidate(self):
         cases = [("main", "push", False),
