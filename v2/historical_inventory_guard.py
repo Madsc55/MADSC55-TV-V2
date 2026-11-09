@@ -283,6 +283,9 @@ def reconcile(historical_records, current_records=(), expected_historical_record
             candidate.update(region_candidate=next(iter(region_evidence[key])),
                              classification_evidence="HISTORICAL_REGION_EVIDENCE",
                              spoken_language_verified=False)
+        # Discovery/deduplication is not a new FFmpeg probe. Keep all claimed
+        # flags in encrypted raw evidence, but never promote the candidate view.
+        candidate["av_verified"] = False
         candidate["device_verified"] = False
         # Existing flags cannot turn historical evidence into media proof.
         candidate["historical_not_reverified"] = key in all_ids
