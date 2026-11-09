@@ -85,6 +85,8 @@ def select_retry(prior,gap):
             if status!="VIDEO_AUDIO_DECODED" or row.get("video") is not True or row.get("audio") is not True:
                 raise ValueError("Fabricated previous AV")
             known_av.add(cid)
+        elif status=="VIDEO_AUDIO_DECODED":
+            raise ValueError("Contradictory previous FFmpeg AV status")
         elif status in RETRYABLE and source_ids:
             retry[h]={"channel_id":cid,"source_ids":set(source_ids)}
         counts[status]+=1
