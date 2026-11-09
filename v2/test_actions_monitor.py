@@ -99,6 +99,30 @@ class MonitorTests(unittest.TestCase):
             "v2-eight-stage-verification.yml", "v2-master-engine.yml",
             "v2-source-integration-batch.yml", "v2-ordered-preflight.yml"})
 
+    def test_stalled_active_job_is_reported_without_acceptance_or_retry(self):
+        run={"id":77,"head_sha":"a"*40,"status":"in_progress",
+             "conclusion":None,"head_branch":actions_monitor.BRANCH,"event":"push",
+             "created_at":"2026-11-01T00:00:00Z",
+             "html_url":"https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/77"}
+        seen=[]
+        def fake_api(path):
+            seen.append(path)
+            if "/workflows/" in path:
+                return {"workflow_runs":[run] if "v2-source-integration-batch" in path else []}
+            if path.endswith("/77/jobs?per_page=100"):
+                return {"total_count":1,"jobs":[{"id":123,"name":"Real AV scan",
+                    "status":"in_progress","conclusion":None,
+                    "started_at":"2026-11-01T00:01:00Z"}]}
+            raise AssertionError(path)
+        with patch.object(actions_monitor,"api",side_effect=fake_api):
+            result=actions_monitor.collect()
+        row=result["runs"][0]
+        self.assertTrue(row["active_job_evidence_complete"])
+        self.assertEqual(row["active_jobs"][0]["id"],123)
+        self.assertFalse(row["acceptance_candidate"])
+        self.assertFalse(row["automatic_retry_permitted"])
+        self.assertEqual(len([p for p in seen if "/77/jobs?" in p]),1)
+
     def test_run_states_and_failed_steps(self):
         runs = [
             {"id": 10, "run_number": 10, "head_sha": "a" * 40, "status": "completed",
