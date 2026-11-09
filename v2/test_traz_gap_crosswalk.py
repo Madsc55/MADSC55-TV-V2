@@ -56,6 +56,13 @@ class GapCrosswalkTests(unittest.TestCase):
             with self.subTest(mode=mode),self.assertRaises(ValueError):
                 reconcile(api,scan)
 
+    def test_malformed_api_source_identity_rejected(self):
+        for bad in ("", "https://example.org/live", "Alpha.tr\\nInjected", "x"*201):
+            api,scan=fixtures()
+            api["stream_references"][0]["channel_id"]=bad
+            with self.subTest(bad=bad),self.assertRaisesRegex(ValueError,"Invalid API hash-only identity"):
+                reconcile(api,scan)
+
     def test_duplicate_api_channel_hash_pair_is_rejected(self):
         api,scan=fixtures()
         api["stream_references"].append(copy.deepcopy(api["stream_references"][0]))
