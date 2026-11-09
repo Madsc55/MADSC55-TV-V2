@@ -62,6 +62,28 @@ class HistoricalInventoryGuardTests(unittest.TestCase):
                 self.assertEqual(result["classification_evidence"], evidence)
                 self.assertFalse(result["spoken_language_verified"])
 
+    def test_same_url_conflicting_historical_and_current_region_stays_unknown(self):
+        """Deduplication must not silently prefer a new AZ hint over old TR."""
+        url = "https://fixture.example.org/region-conflict.m3u8"
+        old = [{"url": url, "scope": "TR", "source_id": "historical-tr",
+                "status": "VIDEO_AUDIO_DECODED", "av_verified": True}]
+        current = [{"url": url, "country_code": "AZ",
+                    "source_id": "current-az", "av_verified": True}]
+        raw, candidates, summary = reconcile(old, current, 1)
+        self.assertEqual(raw, old + current)
+        self.assertEqual(len(candidates), 1)
+        candidate = candidates[0]
+        self.assertEqual(candidate["source_ids"],
+                         ["historical-tr", "current-az"])
+        self.assertEqual(candidate["region_candidate"], "UNKNOWN")
+        self.assertEqual(candidate["classification_evidence"],
+                         "CONFLICTING_TR_AZ_EVIDENCE")
+        self.assertFalse(candidate["spoken_language_verified"])
+        self.assertFalse(candidate["av_verified"])
+        self.assertFalse(candidate["decoded"])
+        self.assertEqual(candidate["status"], "NOT_REVERIFIED")
+        self.assertEqual(summary["conflicting_tr_az_candidate_urls"], 1)
+
     def test_missing_or_extra_history_fail_closed(self):
         rows = [{"url": "https://fixture.example.org/a.m3u8"}]
         with self.assertRaisesRegex(ValueError, "baseline"):
