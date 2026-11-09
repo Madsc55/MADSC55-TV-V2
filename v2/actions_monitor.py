@@ -141,7 +141,11 @@ def collect():
                         break
                     all_jobs.extend(chunk)
                 jobs=all_jobs
-            if type(total) is not int or not isinstance(jobs,list) or total != len(jobs):
+            if (type(total) is not int or not isinstance(jobs,list) or
+                    total != len(jobs) or
+                    any(type(job.get("id")) is not int or job["id"]<=0 for job in jobs if isinstance(job,dict)) or
+                    any(not isinstance(job,dict) for job in jobs) or
+                    len({job["id"] for job in jobs})!=len(jobs)):
                 record["active_job_evidence_complete"] = False
                 record["failure_reasons"].append("incomplete_active_job_inventory")
             else:
