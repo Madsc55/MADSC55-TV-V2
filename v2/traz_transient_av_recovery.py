@@ -99,6 +99,14 @@ def select_retry(prior,gap):
     return retry,known_av,counts
 
 def aggregate(targets,known_av,found,source_statuses,unknown,proofs,old_status_counts):
+    if (not isinstance(targets,dict) or not isinstance(found,dict) or
+        not isinstance(proofs,dict) or not set(found).issubset(set(targets)) or
+        any(not isinstance(item,dict) or not isinstance(found[h],dict) or
+            found[h].get("channel_id")!=item.get("channel_id") or
+            not isinstance(found[h].get("url"),str) or
+            hashlib.sha256(found[h]["url"].encode("utf-8")).hexdigest()!=h
+            for h,item in targets.items() if h in found)):
+        raise ValueError("Live source hash or channel identity mismatch")
     if set(proofs)!=set(found):
         raise ValueError("Live real FFmpeg coverage missing")
     rows=[]
