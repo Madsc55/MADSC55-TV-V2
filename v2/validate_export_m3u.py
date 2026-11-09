@@ -25,8 +25,9 @@ def validate_m3u(text: str) -> list[str]:
             if pending is not None:
                 errors.append(f"line {number}: previous EXTINF has no URL")
             pending = number
-            if not GROUP.search(line):
-                errors.append(f"line {number}: missing group-title")
+            match = GROUP.search(line)
+            if not match or not match.group(1).strip():
+                errors.append(f"line {number}: missing or empty group-title")
             if "," not in line or not line.rsplit(",", 1)[-1].strip():
                 errors.append(f"line {number}: missing channel name")
         elif line.startswith("#"):
