@@ -90,8 +90,11 @@ class TaskEngineTests(unittest.TestCase):
         self.assertEqual(e.select(self.master, ledger, self.root), 3)
 
     def test_failed_cannot_be_marked_complete(self):
+        # Use an unfinished task: repeating an already-completed status is idempotent.
+        row = copy.deepcopy(self.ledger["statuses"][12])
+        self.assertNotEqual(row["status"], "completed")
         with self.assertRaisesRegex(ValueError, "No completion"):
-            e.safe_transition(self.ledger["statuses"][0], "completed")
+            e.safe_transition(row, "completed")
 
     def test_github_offline_or_failure_is_not_success(self):
         for value in (None, {}, {"status": "in_progress"}, {"status": "completed", "conclusion": "failure"}):
