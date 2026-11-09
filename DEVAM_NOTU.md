@@ -1,3 +1,8 @@
+## 9 Kasım — V2 DEVAM: gerçek FFmpeg offline kurulum engeli giderildi
+
+- `f8f18344`: Master Engine `offline-tests` job'unda AV regresyonlarından önce Ubuntu `ffmpeg` paketi `apt-get` ile yüklenir; `ffmpeg` ve `ffprobe` yürütülebilirleri doğrulanır. `install_ffmpeg.outcome` son fail-closed gate'e bağlandı. Önceki değişiklik yalnızca varlığı denetliyordu; artık gerçek decoder testleri için kurulum açıkça sağlanıyor.
+- Bu değişiklik henüz Actions üzerinde doğrulanmış bir FFmpeg decode sonucu değildir; #23 ve #26 açık. Gerçek S3 geri yükleme kabulü #13 de açık; 8/33. Korunan ana İBO, main, PR #9 ve 4.955 tarihî kimlik değişmedi.
+
 ## 9 Kasım — V2 DEVAM: gerçek FFmpeg regresyonları atlanırsa offline kabul reddi
 
 - `e1f7c7bd`: Master Engine `offline_regressions` adımı `unittest.log` içindeki `skipped 'FFmpeg not installed'` ve `skipped 'ffprobe not installed'` kayıtlarını denetler; bu durumda offline adım başarısız olur ve fail-closed final gate kabulü reddeder. Eski 829 test / 3 skipped çalışmasının FFmpeg atlamaları artık kabul edilmeyecek.
