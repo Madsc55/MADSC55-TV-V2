@@ -129,7 +129,12 @@ def collect():
             record["acceptance_candidate"] = (record["acceptance_candidate"]
                 and bool(jobs) and response.get("total_count") == len(jobs)
                 and all(job.get("status") == "completed"
-                        and job.get("conclusion") == "success" for job in jobs))
+                        and job.get("conclusion") == "success"
+                        and isinstance(job.get("steps"), list)
+                        and bool(job["steps"])
+                        and all(step.get("conclusion") == "success"
+                                for step in job["steps"])
+                        for job in jobs))
         records.append(record)
     return {"repository": REPO, "workflows": list(WORKFLOWS), "branch": BRANCH,
             "monitor_run_id": os.environ.get("GITHUB_RUN_ID"),
