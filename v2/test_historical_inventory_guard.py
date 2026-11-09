@@ -125,6 +125,22 @@ class HistoricalInventoryGuardTests(unittest.TestCase):
         self.assertTrue(matched[0]["historical_not_reverified"])
         self.assertFalse(matched[0]["device_verified"])
 
+    def test_legacy_source_id_survives_duplicate_and_hash_only_merge(self):
+        url = "https://fixture.example.org/legacy.m3u8"
+        old = [{"url": url, "source_id": "old-source"},
+               {"url_sha256": hashlib.sha256(url.encode()).hexdigest(),
+                "source_id": "hash-backup"}]
+        current = [{"url": url, "source_ids": ["modern"],
+                    "source_id": "new-legacy", "source": "current"}]
+        raw, candidates, report = reconcile(old, current)
+        self.assertEqual(raw, old + current)
+        self.assertEqual(len(candidates), 1)
+        self.assertEqual(candidates[0]["source_ids"],
+                         ["hash-backup", "old-source", "modern",
+                          "new-legacy", "current"])
+        self.assertFalse(candidates[0]["av_verified"])
+        self.assertEqual(report["unique_candidate_urls"], 1)
+
     def test_4955_duplicate_historical_records_validate_full_metadata_multiset(self):
         old=[{"url":"https://fixture.example.org/%04d.m3u8" % i,
               "source":"old","status":"HISTORICAL"} for i in range(4953)]
