@@ -104,7 +104,8 @@ def check(env=None):
     raw_url_ids = {identity(row) for row in historical + newer
                    if validate_url(row.get("url"))}
     candidate_ids = [identity(row) for row in candidates]
-    if (None in candidate_ids or len(candidate_ids) != len(set(candidate_ids))
+    if (any(not validate_url(row.get("url")) for row in candidates)
+            or None in candidate_ids or len(candidate_ids) != len(set(candidate_ids))
             or not set(candidate_ids).issubset(raw_url_ids)):
         raise RuntimeError("Encrypted candidate view lacks raw URL provenance")
     # Archived deduplication is a discovery view, not a playback proof. Even
