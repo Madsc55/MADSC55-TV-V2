@@ -1,3 +1,9 @@
+## 9 Kasım — #14 hash-only adayın gerçek URL sayılmasını önleme
+
+- `7f6dad5b`: `archive_acceptance_gate.check` şifreli aday görünümündeki her kayıtta `validate_url(row.get("url"))` şartını zorunlu kılar. Ham arşivde aynı SHA'ya ait URL olsa bile adayın kendisi URL'sizse kabul edilmez.
+- `f20847b4`: 4.955 gerçek baseline, gerçek yeni ham URL, eşleşen `url_sha256`, fakat URL'si kaldırılmış şifreli aday görünümünün reddi için regresyon eklendi.
+- `v2-master-engine.yml` geliştirme dalındaki her push için `offline-tests` job'unu tanımlar; bu turda yeni commit'in Actions run/job sonucu doğrulanamadı. Classic combined commit status sorguları boş; bu başarı veya başarısızlık kanıtı değildir. Gerçek uzak S3 restore #13 ve #14 kabulü açık, 8/33. main, PR #9 ve korumalı İBO değiştirilmedi.
+
 ## 9 Kasım — #14 şifreli aday görünümünde sahte yeni AV reddi
 
 - `0d28d3f9`: `archive_acceptance_gate.check` aday görünümündeki `status=NOT_REVERIFIED`, `av_verified/decoded/video/audio/spoken_language_verified=False` koşullarını zorunlu kılar. Geçerli AES-GCM manifesti ve gerçek ham URL provenansı olsa bile sahte yeni AV bayrakları reddedilir; tarihî kanıt silinmez.
