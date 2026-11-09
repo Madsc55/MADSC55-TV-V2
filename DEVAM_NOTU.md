@@ -1,3 +1,9 @@
+## 9 Kasım — #14 şifreli aday görünümünde sahte yeni AV reddi
+
+- `0d28d3f9`: `archive_acceptance_gate.check` aday görünümündeki `status=NOT_REVERIFIED`, `av_verified/decoded/video/audio/spoken_language_verified=False` koşullarını zorunlu kılar. Geçerli AES-GCM manifesti ve gerçek ham URL provenansı olsa bile sahte yeni AV bayrakları reddedilir; tarihî kanıt silinmez.
+- `be7b8c54`: gerçek 4.955 hash-only referansla, geçerli ham URL ve şifreli manifest üzerinden `av_verified=True` sahteciliğinin reddini test eden regresyon eklendi.
+- Yeni kod/test commit'leri henüz Actions ile doğrulanmadı. #13 gerçek bağımsız S3 restore, #14 bütün kabul ve #16 uçtan uca geçici hata kabulü açık; 8/33. main, PR #9 ve korumalı İBO listesi değiştirilmedi.
+
 ## 9 Kasım — #14 şifreli aday görünümü için ham URL provenans zorunluluğu
 
 - `3bf50997`: `archive_acceptance_gate.check`, AES-GCM manifesti ve 4.955 baseline doğrulandıktan sonra her adayın exact URL SHA kimliğinin `historical + newer` ham kayıtlardaki gerçek, geçerli URL kimliğinden gelmesini zorunlu kılar; adayda kimlik yoksa, tekrar varsa veya ham URL'de karşılığı yoksa reddeder.
