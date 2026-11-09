@@ -117,6 +117,9 @@ class TaskEngineTests(unittest.TestCase):
         names = ["V2 Master Engine", "V2 Eight-Stage Runner Verification"]
         runs = [{"name": name, "head_sha": sha, "head_branch": e.BRANCH, "event": "push", "status": "completed",
                  "conclusion": "success", "id": i + 100,
+                 "jobs_checked": True, "jobs_total_count": 1,
+                 "jobs": [{"status": "completed", "conclusion": "success",
+                           "steps": [{"conclusion": "success"}]}],
                  "html_url": "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/" + str(i + 100)}
                 for i, name in enumerate(names)]
         self.assertEqual(len(e.verify_grouped_actions(runs, sha, names)), 2)
@@ -144,11 +147,34 @@ class TaskEngineTests(unittest.TestCase):
             with self.subTest(broken=broken), self.assertRaises(ValueError):
                 e.verify_grouped_actions(broken, sha, names)
 
+    def test_grouped_actions_rejects_skipped_or_missing_jobs_and_steps(self):
+        sha = "a" * 40
+        base = {"name": "V2 Master Engine", "head_sha": sha, "head_branch": e.BRANCH,
+                "event": "push", "status": "completed", "conclusion": "success",
+                "id": 123, "html_url": "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/123",
+                "jobs_checked": True, "jobs_total_count": 1,
+                "jobs": [{"status": "completed", "conclusion": "success",
+                          "steps": [{"conclusion": "success"}]}]}
+        self.assertEqual(len(e.verify_grouped_actions([base], sha, [base["name"]])), 1)
+        for change in (
+            {"jobs_checked": False}, {"jobs_total_count": 2}, {"jobs": []},
+            {"jobs": [{"status": "completed", "conclusion": "skipped",
+                       "steps": [{"conclusion": "success"}]}]},
+            {"jobs": [{"status": "completed", "conclusion": "success",
+                       "steps": [{"conclusion": "skipped"}]}]},
+            {"jobs": [{"status": "completed", "conclusion": "success", "steps": []}]},
+        ):
+            with self.subTest(change=change), self.assertRaisesRegex(ValueError, "job evidence"):
+                e.verify_grouped_actions([dict(base, **change)], sha, [base["name"]])
+
     def test_readonly_root_actions_reconciliation(self):
         sha = "c" * 40
         name = "V2 Master Engine"
         runs = [{"name": name, "head_sha": sha, "head_branch": e.BRANCH, "event": "push", "status": "completed",
                  "conclusion": "success", "id": 1001,
+                 "jobs_checked": True, "jobs_total_count": 1,
+                 "jobs": [{"status": "completed", "conclusion": "success",
+                           "steps": [{"conclusion": "success"}]}],
                  "html_url": "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/1001"}]
         root = copy.deepcopy(self.root)
         root["last_verified_run_observation"]["development_commit"] = sha
