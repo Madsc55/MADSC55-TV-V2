@@ -1,3 +1,9 @@
+## 9 Kasım — V2 DEVAM #14 gerçek çoklu tarihî kimlik regresyonu
+
+- #14 `verify_historical_baseline` artık aynı URL SHA'ya ait birden fazla tarihî kaydı tek sözlük girdisine indirgemez; **tam kayıt çoklu kümesini** ve bütün kaynak/durum metadatasını doğrular. Aynı hash'e sahip farklı geçmiş satırları kabul edilir; satır silinmesi, değiştirilmesi veya yeni sahte AV durumu reddedilir. Kod commit `1fe5c6b6`, 4.955 satırlık tekrar/metadata regresyonu `ddfb14eb`.
+- Önceki `27335019` commit'inde Master Engine offline, Eight-Stage, Ordered Preflight, Scanner Offline ve Actions Monitor completed/success; Master Engine **live master skipped**. Source Integration Batch son gözlemde in_progress; bu başarı diye sayılmadı.
+- `ddfb14eb` için toplu Actions henüz queued/pending. **#11/#14/#16 kapatılmadı**; #14 gerçek arşiv/baseline kabulü ve #11'in #9 bağımlılığı hâlâ açık. #15/#18/#19 sıralı bağımlılıkları bekliyor.
+
 ## 9 Kasım — Toplu #11/#14/#16 çalışma devri (kabul bekliyor)
 
 - Kullanıcı emri: #11, #14, #16 topluca; kabulden sonra #15/#18/#19. Bu turda **hiçbiri completed yapılmadı**; bağımlılıklar ve gerçek 4.955 baseline/remote S3 kabul kanıtı ayrı doğrulanmalı.
