@@ -1,3 +1,9 @@
+## 9 Kasım — #11 tam URL aday kümesi kayıp koruması
+
+- `8ca5e9d1` ve `a609c3eb`: `archive_acceptance_gate.check` yalnızca adayların ham URL'lerden türediğini değil, **her geçerli ham URL kimliğinin** aday görünümünde tam bir kez bulunduğunu doğrular. Eski regresyonların hata metni sözleşmesi korundu.
+- `b8d8d6f5`: 4.955 değişmez tarihî baseline + iki ayrı geçerli URL ile AES-GCM arşiv kurup, bir URL'nin aday görünümünden silinmesini reddeden test eklendi.
+- Yeni commit'ler için GitHub Actions sonucu henüz doğrulanmadı; #11/#13/#14/#16 kapanmadı, 8/33. Gerçek S3 ve AV kabul kanıtı gerekliliği sürüyor. Main, PR #9, ana İBO, tarihî envanter değiştirilmedi.
+
 ## 9 Kasım — #11/#14 eski kaynak alanları provenans denetimi
 
 - `95abdf31`: şifreli deduplikasyon adayındaki `source_ids` kümesinin ham SHA kaynak geçmişine eşit olması yanında eski `source`/`source_id` alanları da `source_ids(candidate)` üzerinden aynı kümeye bağlandı. Doğru `source_ids` yanında sahte eski kaynak etiketi artık reddedilir.
