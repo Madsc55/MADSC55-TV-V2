@@ -1,3 +1,8 @@
+## 9 Kasım — V2 DEVAM: canlı Master Engine fail-closed shell
+
+- `98142262`: `v2-master-engine.yml` canlı `Real master discovery and verification` adımı `shell: bash` ve `set -euo pipefail` ile sıkılaştırıldı. Gerçek `master_engine.py` komutu başarısızsa Actions adımı başarısız olur; job çıktıları `if: always()` ile toplanmaya devam eder.
+- Bu kod değişikliği gerçek canlı kanal AV kabulünü, 4.955 arşiv geri yüklemesini veya Actions başarı durumunu tek başına kanıtlamaz. #13/#23/#26 açık; 8/33. main, PR #9, ana İBO ve tarihî baseline değişmedi.
+
 ## 9 Kasım — V2 DEVAM: #23 manuel canlı Master Engine kabul tetiklemesi
 
 - `84f31b9a`: `v2-master-engine.yml` `workflow_dispatch` için varsayılanı `false` olan `run_live_master` boolean girdisi eklendi. `master` job artık geliştirme dalında ya özel `[run-live-master]` push commit'i ile ya da **açıkça `run_live_master=true` seçilmiş manuel dispatch** ile çalışabilir. Offline job kabulü `needs: offline-tests` ile korunur; gerçek FFmpeg/şifreli arşiv şartları gevşetilmedi.
