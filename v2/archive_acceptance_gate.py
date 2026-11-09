@@ -12,7 +12,8 @@ import stat
 from pathlib import Path
 from urllib.parse import urlsplit
 from encrypted_archive import restore
-from historical_inventory_guard import SCHEMA_V2, unpack_archive_snapshot, verify_historical_baseline
+from historical_inventory_guard import SCHEMA_V2, identity, unpack_archive_snapshot, verify_historical_baseline
+from historical_url_recovery import validate_url
 
 BASELINE = Path(__file__).resolve().parent / "history/stage3-4955-hash-only.jsonl"
 EXPECTED_HISTORY = 4955
@@ -97,6 +98,15 @@ def check(env=None):
         raise RuntimeError("Encrypted restore lost historical identities or metadata") from exc
     if result != EXPECTED_HASH or not isinstance(newer, list) or not isinstance(candidates, list):
         raise RuntimeError("Restored historical inventory differs from immutable baseline")
+    # A valid manifest authenticates what was stored, not whether the candidate
+    # view actually came from the archived raw rows. Never accept a fabricated
+    # URL candidate that cannot be traced to its exact original URL digest.
+    raw_url_ids = {identity(row) for row in historical + newer
+                   if validate_url(row.get("url"))}
+    candidate_ids = [identity(row) for row in candidates]
+    if (None in candidate_ids or len(candidate_ids) != len(set(candidate_ids))
+            or not set(candidate_ids).issubset(raw_url_ids)):
+        raise RuntimeError("Encrypted candidate view lacks raw URL provenance")
     return True
 
 if __name__ == "__main__":
