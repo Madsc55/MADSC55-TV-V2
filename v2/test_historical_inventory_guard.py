@@ -140,7 +140,7 @@ class HistoricalInventoryGuardTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,"metadata"):
             verify_historical_baseline(corrupted,old)
         missing=old[:-1]+[dict(old[1])]
-        with self.assertRaisesRegex(ValueError,"metadata"):
+        with self.assertRaisesRegex(ValueError,"identities"):
             verify_historical_baseline(missing,old)
 
     def test_duplicate_sources_preserve_history_without_promoting_claimed_av(self):
