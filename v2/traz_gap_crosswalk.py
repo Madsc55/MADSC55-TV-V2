@@ -216,6 +216,7 @@ def inspect_xmltv(data,requested):
     if not isinstance(data,bytes):
         raise ValueError("Expected XMLTV bytes")
     channel_ids=set()
+    seen_xmltv_ids=set()
     duplicate_channel_ids=set()
     programmes=Counter()
     if len(data)>MAX_DECOMPRESSED:
@@ -227,11 +228,15 @@ def inspect_xmltv(data,requested):
             raise ValueError("Not XMLTV")
         for event,element in parser:
             if event!="end":continue
-            if element.tag=="channel" and element.get("id") in requested:
+            if element.tag=="channel":
                 cid=element.get("id")
-                if cid in channel_ids:
+                if not isinstance(cid,str) or not cid or len(cid)>200 or any(ord(c)<32 for c in cid):
+                    raise ValueError("Malformed XMLTV channel identity")
+                if cid in seen_xmltv_ids:
                     duplicate_channel_ids.add(cid)
-                channel_ids.add(cid)
+                seen_xmltv_ids.add(cid)
+                if cid in requested:
+                    channel_ids.add(cid)
             if element.tag=="programme" and element.get("channel") in requested:
                 programmes[element.get("channel")]+=1
             element.clear()
