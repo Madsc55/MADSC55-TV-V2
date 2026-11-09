@@ -149,6 +149,18 @@ class RemoteRestoreTests(unittest.TestCase):
                         restore_s3_version("versioned-bucket", key,
                                            "version-one", self.sha, runner=must_not_run)
 
+    def test_malformed_bucket_dns_names_rejected_before_s3(self):
+        def must_not_run(command, **kwargs):
+            self.fail("Invalid bucket must not reach remote retrieval")
+        invalid = ("abc..def", "abc.-def", "abc-.def", "192.168.1.1",
+                   "abc_def", "a" * 64)
+        with patch.dict(os.environ, {"V2_ARCHIVE_KEY_HEX": "ab" * 32}):
+            for bucket in invalid:
+                with self.subTest(bucket=bucket):
+                    with self.assertRaisesRegex(ValueError, "S3 bucket"):
+                        restore_s3_version(bucket, "v2/archive.enc",
+                                           "version-one", self.sha, runner=must_not_run)
+
     def test_null_version_is_mutable_and_rejected_before_s3(self):
         def must_not_run(command, **kwargs):
             self.fail("Mutable null version must never be downloaded")
