@@ -266,7 +266,7 @@ def inspect_epg_gap(epg_ids,source_urls,fetcher=_fetch_xmltv):
       "exact_xmltv_candidate_ids":sorted(matching),
       "cross_source_xmltv_id_collisions":sorted(k for k,v in channel_source_counts.items() if v>1),
       "cross_source_xmltv_collision_count":sum(v>1 for v in channel_source_counts.values()),
-      "cross_source_collision_requires_manual_review":True,
+      "cross_source_collision_requires_manual_review":any(v>1 for v in channel_source_counts.values()),
       "source_results":inspected,
       "schedules_correctly_verified":False,
       "stream_playback_verified":False,
