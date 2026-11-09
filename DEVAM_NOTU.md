@@ -1,3 +1,11 @@
+## 9 Kasım — Source Integration Batch #42606783037 tamamlandı; güncel gerçek AV artefaktı okundu
+
+- GitHub Actions `42606783037`: **12/12 job completed/success** (kaynak adapter regresyonu, FFmpeg HLS, geçici hata yeniden denemesi, TR/AZ kaynak ve EPG araması dahil). `42609830543` için job listesi boş döndü; bu run'ın başarısı doğrulanmış sayılmaz.
+- `v2-grouped-av-evidence-42606783037` (artifact `13677038022`) ZIP indirildi; `final-worldwide-acceptance.json` ve `historical-worldwide-av-crosswalk.json` doğrudan okundu.
+- 35.934 aday, 35.934 probed, 0 unprobed, 14.495 toplam decoded AV. Bunların `evidence_origin` ile tek tek sayımında **86 CURRENT_RUN_FFPROBE_FFMPEG decoded**, **14.409 PRIOR_RUN_HASH_ONLY_NOT_FRESH decoded**; 14.495'i yeni canlı yayın olarak sayma.
+- Tarihî 4.955 kimlik korunmuş; 4.890 exact SHA eşleşmesi; **3.046** eşleşmede AV; **1.844** eşleşmede AV yok; **65** dünya raporunda yok. `historical_broadcaster_identity_verified=false`, `ibo_device_verified=false`, `readiness=REVIEW_REQUIRED`. Önceki #42539900333 raporuna göre 62→86 current-run decoded ve 3.042→3.046 tarihî matched AV; farklı run'lar arasında yeni tekil kanal farkı doğrulanmadı.
+- #9/#11/#13/#14/#16 bağımlılıkları açık; #13 gerçek sürümlü uzak S3 restore + gizli anahtar gerektiriyor. **8/33** değişmedi. main, PR #9 ve ana İBO listesine dokunulmadı.
+
 ## 9 Kasım — #14 şifreli arşivde ham tarihî kanıt zorunluluğu
 
 - `454859d`: `_verify_archive_envelope` artık geçerli blok sayısı ve payload SHA256 manifesti bulunsa bile **ham tarihî kayıt bulunmayan** view-only arşivi reddeder; eski tarihî veriyi geri yükleme kabulü olmadan kaybolmuş saymaz.
