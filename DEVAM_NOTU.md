@@ -1,3 +1,9 @@
+## 9 Kasım — V2 DEVAM: #25/#26 Actions kimlik ve eksik job kanıtı fail-closed
+
+- `70b10a4a`: Actions monitor, workflow run kimliğinde pozitif gerçek sayı, 40 karakter küçük harf SHA ve repo ile run ID'ye tam uyan GitHub URL'sini zorunlu kılar. `jobs?per_page=100` boş, eksik, yanlış sayıda veya `total_count` geçersizse başarı raporlamadan hata verir. Önceden yalnız `acceptance_candidate=false` olabilen eksik job sayfaları artık açık hata üretir.
+- `28341003` ve `6d8922e5`: Geçerli run fixture'ları düzeltildi; sahte URL/kimlik/SHA, eksik/truncated job sayfaları ve atlanmış job regresyonları yeni fail-closed davranışına uyarlandı.
+- Bunlar #25/#26 için **kod ve test ilerlemesi**, henüz gerçek GitHub Actions kabulü değildir; görevleri kapatma. 8/33, #34 son, ana IBO/main/PR #9 ve 4.955 tarihî kimlikler korunuyor.
+
 ## 9 Kasım — V2 DEVAM: #26 Actions kabulünde adım düzeyinde fail-closed düzeltmesi
 
 - `68fc52cd`: Yeşil workflow ve job sonuçlarının içindeki başarısız, atlanmış veya eksik step kanıtları artık `acceptance_candidate` olarak kabul edilmiyor. Job tamamlandı/success, tam jobs sayısı, aynı SHA/dal/olay ve her step'in `success` olması birlikte gerekli.
