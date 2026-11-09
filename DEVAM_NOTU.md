@@ -1,3 +1,9 @@
+## 9 Kasım — #14 sahte cihaz/İBO kabulü reddi
+
+- `264a6fc1`: `archive_acceptance_gate.check`, şifreli deduplikasyon aday görünümündeki `device_verified` ve `ibo_device_verified` alanlarının da açıkça `False` olmasını zorunlu kılar. Geçerli AES-GCM manifesti ve ham URL provenansı, cihaz/İBO AV kabulü yerine geçmez.
+- `c09bd39c`: her iki bayrağı ayrı ayrı `True` yaparak 4.955 gerçek tarihî referansla oluşturulan şifreli arşivin reddi regresyonu eklendi.
+- GitHub Actions'ın bu iki yeni commit'e ait offline test sonucu doğrulanmadı; classic commit status boşluğu Actions başarı/başarısızlık kanıtı değildir. #13 uzak S3 geri yükleme ve #14 kabulü açık; 8/33. main, PR #9 ve korumalı İBO değişmedi.
+
 ## 9 Kasım — #14 hash-only adayın gerçek URL sayılmasını önleme
 
 - `7f6dad5b`: `archive_acceptance_gate.check` şifreli aday görünümündeki her kayıtta `validate_url(row.get("url"))` şartını zorunlu kılar. Ham arşivde aynı SHA'ya ait URL olsa bile adayın kendisi URL'sizse kabul edilmez.
