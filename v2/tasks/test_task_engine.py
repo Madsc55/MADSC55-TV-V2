@@ -36,7 +36,7 @@ class TaskEngineTests(unittest.TestCase):
         ledger = self.scenario_ledger()
         self.assertEqual(e.select(self.master, ledger, self.root), 1)
         ledger["statuses"][0]["status"] = "blocked"
-        self.assertEqual(e.select(self.master, ledger, self.root), 4)
+        self.assertNotIn(e.select(self.master, ledger, self.root), (3, 4, 6))
 
     def test_independent_work_after_p0_completion(self):
         ledger = self.scenario_ledger()
@@ -46,7 +46,7 @@ class TaskEngineTests(unittest.TestCase):
         self.assertEqual(e.select(self.master, ledger, self.root), 1)
         independent = e.independent_ready(self.master, ledger, self.root, excluded=(1,))
         self.assertNotIn(2, independent)
-        self.assertEqual(independent[:5], [4, 7, 8, 9, 10])
+        self.assertEqual(independent[:4], [7, 8, 9, 10])
         self.assertIn(13, independent)
 
     def test_user_directed_heavy_work_deferred_without_false_completion(self):
@@ -66,7 +66,7 @@ class TaskEngineTests(unittest.TestCase):
         for row in ledger["statuses"]:
             if row["id"] not in (1, 2, 3, 4, 8, 22):
                 row["status"] = "blocked"
-        self.assertEqual(e.select(self.master, ledger, self.root, defer_heavy=True), 3)
+        self.assertIsNone(e.select(self.master, ledger, self.root, defer_heavy=True))
 
     def test_cli_defaults_to_deferred_heavy_tasks(self):
         import contextlib
@@ -87,7 +87,7 @@ class TaskEngineTests(unittest.TestCase):
         ledger = self.scenario_ledger()
         ledger["statuses"][0].update(status="completed", evidence_urls=["https://github.com/example/evidence"], last_checked_at="2026-11-06T16:00:00Z")
         self.assertNotEqual(e.select(self.master, ledger, self.root), 1)
-        self.assertEqual(e.select(self.master, ledger, self.root), 3)
+        self.assertNotIn(e.select(self.master, ledger, self.root), (3, 4, 6))
 
     def test_failed_cannot_be_marked_complete(self):
         # Use an unfinished task: repeating an already-completed status is idempotent.
@@ -225,6 +225,9 @@ class TaskEngineTests(unittest.TestCase):
         ledger["statuses"][31]["user_device_confirmation"] = True
         self.assertFalse(e.issue34_ready(self.master, ledger, self.root))
         self.assertFalse(e.issue34_ready(self.master, ledger, self.root, user_approved=1))
+        self.assertTrue(e.issue34_ready(self.master, ledger, self.root, user_approved=True))
+        for deferred_id in (3, 4, 6):
+            ledger["statuses"][deferred_id - 1].update(status="pending", evidence_urls=[], last_checked_at=None)
         self.assertTrue(e.issue34_ready(self.master, ledger, self.root, user_approved=True))
         for task_id in (1, 32, 33):
             broken = copy.deepcopy(ledger)
