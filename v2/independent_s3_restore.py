@@ -16,7 +16,7 @@ def restore_s3_version(bucket, key, version, expected, runner=subprocess.run):
         raise ValueError("Invalid private S3 bucket")
     if not isinstance(key, str) or not key or len(key.encode("utf-8")) > 1024 or any(ord(c) < 32 or ord(c) == 127 for c in key):
         raise ValueError("Invalid S3 object key")
-    if not isinstance(version, str) or not 1 <= len(version) <= 255 or version == "null" or any(ord(c) < 33 for c in version):
+    if not isinstance(version, str) or not 1 <= len(version) <= 255 or version == "null" or any(ord(c) < 33 or ord(c) == 127 for c in version):
         raise ValueError("Specific immutable S3 object version required")
     if not isinstance(expected, str) or re.fullmatch(r"[0-9a-f]{64}", expected) is None:
         raise ValueError("Independently pinned archive SHA256 required")
