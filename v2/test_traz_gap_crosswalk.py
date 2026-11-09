@@ -5,6 +5,10 @@ import hashlib
 import unittest
 from traz_gap_crosswalk import reconcile,inspect_xmltv,inspect_epg_gap
 
+import urllib.request
+from unittest.mock import patch
+from traz_gap_crosswalk import SameHostRedirect
+
 def digest(x):return hashlib.sha256(x.encode()).hexdigest()
 
 def fixtures():
@@ -216,3 +220,16 @@ class GapCrosswalkTests(unittest.TestCase):
 
 if __name__=="__main__":
     unittest.main()
+
+class XMLTVRedirectSafetyTests(unittest.TestCase):
+    def test_redirect_rejects_same_host_unsafe_target(self):
+        req=urllib.request.Request("https://example.org/guide.xml")
+        handler=SameHostRedirect()
+        for target in ("https://example.org:8443/private",
+                       "https://user:pass@example.org/guide.xml",
+                       "https://example.org/guide.xml#fragment",
+                       "http://example.org/guide.xml",
+                       "https://different.example.org/guide.xml"):
+            with self.subTest(target=target),patch("traz_gap_crosswalk._source_check",return_value=False),self.assertRaises(ValueError):
+                handler.redirect_request(req,None,302,"Found",{},target)
+
