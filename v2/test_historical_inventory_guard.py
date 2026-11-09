@@ -136,7 +136,7 @@ class HistoricalInventoryGuardTests(unittest.TestCase):
         self.assertEqual(raw,old+current)
         self.assertEqual(len(view),1)
         self.assertEqual(view[0]["source_ids"],
-                         ["historical","new-a","new-b","hash-only"])
+                         ["hash-only","historical","new-a","new-b"])
         self.assertIs(view[0]["av_verified"],False)
         self.assertIs(view[0]["device_verified"],False)
         self.assertEqual(report["current_duplicate_url_rows"],1)
