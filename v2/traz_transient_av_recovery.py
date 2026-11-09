@@ -117,7 +117,7 @@ def aggregate(targets,known_av,found,source_statuses,unknown,proofs,old_status_c
             rows.append({"url_sha256":h,"channel_id":item["channel_id"],
                          "status":"NOT_FOUND_IN_FRESH_SOURCE","decoded":False})
         else:
-            if (p.get("url_sha256")!=h or type(p.get("decoded")) is not bool or
+            if (not isinstance(p,dict) or p.get("url_sha256")!=h or type(p.get("decoded")) is not bool or
                 not isinstance(p.get("status"),str) or
                 (p["decoded"] and (p.get("status")!="VIDEO_AUDIO_DECODED" or
                                      p.get("video") is not True or p.get("audio") is not True)) or
@@ -131,6 +131,7 @@ def aggregate(targets,known_av,found,source_statuses,unknown,proofs,old_status_c
     return {"schema":1,"kind":"V2_TR_AZ_TRANSIENT_TARGET_REAL_AV_RETRY",
             "policy":"READ_ONLY_NEW_RSA_SEALED_FFMPEG_PROOF_ONLY",
             "original_av_channel_identities":len(known_av),
+            "original_av_channel_ids_preserved":sorted(known_av),
             "retryable_original_hashes":len(targets),
             "recovered_exact_current_url_hashes":len(found),
             "reprobed_url_hashes":len(proofs),
