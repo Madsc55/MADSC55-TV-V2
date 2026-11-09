@@ -1,3 +1,9 @@
+## 9 Kasım — #13/#14 immutable 4.955 tarihî referans dosyasının tam içerik sabitlemesi
+
+- `48476187`: `archive_acceptance_gate.py` artık `v2/history/stage3-4955-hash-only.jsonl` dosyasının tam Git blob SHA1'ini (`c91c94a3f19097dec2855105da26d8b9a8329f8b`) doğruluyor; yalnızca 4.955 URL SHA kimliği toplamı yeterli değil. Referans dosyasındaki kaynak/metadata değiştirilirse şifreli geri yükleme kabulü fail-closed.
+- `dd66114d`: URL SHA kimlikleri korunurken ilk tarihî referans kaydının metadata'sı değiştirildiğinde kabulün reddini doğrulayan regresyon eklendi.
+- Source Integration Batch `42606783037` 12/12 job success ve güncel AV kanıtları önceki notta; bu yeni commit'lerin CI sonucu henüz doğrulanmadı. Gerçek bağımsız S3 restore kabulü için özel yetki ve sırlar gerekiyor; #13/#14 açık, 8/33. main/PR #9/ana IBO değiştirilmedi.
+
 ## 9 Kasım — Source Integration Batch #42606783037 tamamlandı; güncel gerçek AV artefaktı okundu
 
 - GitHub Actions `42606783037`: **12/12 job completed/success** (kaynak adapter regresyonu, FFmpeg HLS, geçici hata yeniden denemesi, TR/AZ kaynak ve EPG araması dahil). `42609830543` için job listesi boş döndü; bu run'ın başarısı doğrulanmış sayılmaz.
