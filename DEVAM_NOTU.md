@@ -1,3 +1,10 @@
+## 9 Kasım — V2 DEVAM: #23/#26 gerçek job/step kanıtı ile toplu Actions kabulü
+
+- `07b5b9e7`: `v2/tasks/task_engine.py::verify_grouped_actions` artık aynı SHA/branch/workflow success dışında **jobs_checked**, eksiksiz `jobs_total_count`, her job'un completed/success olması ve her step'in success olmasını zorunlu kılar. Eski sadece workflow-level yeşil kabul açığı kapatıldı.
+- `4ef1f3de`: Başarılı job fixture'ları gerçek step kanıtına uyarlandı; eksik job sayfası, skipped job/step ve boş step durumları için regresyonlar eklendi.
+- `8195c49f`: Actions monitor artık `jobs_total_count` ve her job için `steps` sonucunu da raporluyor; böylece task engine bu kayıtlarla fail-closed kabul yapabilir.
+- Bunlar **gerçek GitHub Actions koşusu doğrulanmadan kapanmış görev değildir**. Kanonik 8/33. #34 son; main, PR #9, korunan IBO ve 4.955 tarihî kimlik değiştirilmedi.
+
 ## 9 Kasım — V2 DEVAM: #11/#13/#14/#16/#23/#25/#26 tek Ordered Preflight kabul grubu
 
 - `6d3f403a`: Ordered Preflight `discovery-tests` işi artık aynı CI job içinde 33 görev motorunun tüm testlerini, Actions monitor fail-closed regresyonlarını ve `test_archive_acceptance_gate`, `test_historical_inventory_guard`, `test_independent_s3_restore`, `test_traz_transient_av_recovery` modüllerini birlikte çalıştırıyor. Bunlar bir test başarısız olunca sonraki kabul zincirine geçmeden fail eder. Böylece #11/#13/#14/#16 ve #23/#25/#26 için farklı testlerin birbirinden kopuk raporlanması azaltıldı.
