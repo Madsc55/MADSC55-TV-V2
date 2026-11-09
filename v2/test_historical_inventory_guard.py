@@ -139,6 +139,10 @@ class HistoricalInventoryGuardTests(unittest.TestCase):
         corrupted[-1]["status"]="VIDEO_AUDIO_DECODED"
         with self.assertRaisesRegex(ValueError,"metadata"):
             verify_historical_baseline(corrupted,old)
+        metadata_only=[dict(x) for x in old]
+        metadata_only[-1]["source"]="forged-new-source"
+        with self.assertRaisesRegex(ValueError,"metadata"):
+            verify_historical_baseline(metadata_only,old)
         missing=old[:-1]+[dict(old[1])]
         with self.assertRaisesRegex(ValueError,"identities"):
             verify_historical_baseline(missing,old)
