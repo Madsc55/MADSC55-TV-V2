@@ -149,6 +149,27 @@ class ArchiveGateTests(unittest.TestCase):
                 with self.assertRaisesRegex(RuntimeError, "source provenance"):
                     check(env)
 
+    def test_hash_only_historical_source_must_survive_url_recovery(self):
+        """A recovered exact URL must retain labels from hash-only history."""
+        from historical_inventory_guard import digest, preserve_to_new_archive, reconcile
+        history = [json.loads(line) for line in BASELINE.read_text().splitlines() if line]
+        url = "https://fixture.example.org/linked-historical.m3u8"
+        raw, view, _ = reconcile(history, [
+            {"url_sha256": digest(url), "source_id": "hash-only-source"},
+            {"url": url, "source_id": "live-source"}], 4955)
+        self.assertEqual(len(view), 1)
+        self.assertEqual(set(view[0]["source_ids"]),
+                         {"hash-only-source", "live-source"})
+        forged = [dict(view[0], source_ids=["live-source"])]
+        archive = self.root / "lost-hash-only-source.enc"
+        with patch.dict(os.environ, {"V2_ARCHIVE_KEY_HEX": "ab" * 32}):
+            preserve_to_new_archive(archive, raw, forged)
+        digest_value = hashlib.sha256(archive.read_bytes()).hexdigest()
+        env = self.prepared(restored_file=str(archive), restore_sha256=digest_value)
+        env["V2_ARCHIVE_EXPECTED_SHA256"] = digest_value
+        with self.assertRaisesRegex(RuntimeError, "source provenance"):
+            check(env)
+
     def test_missing_approval_or_evidence(self):
         with self.assertRaises(RuntimeError): check({})
         with self.assertRaises(RuntimeError): check({"V2_ARCHIVE_RESTORE_APPROVED": "true"})
