@@ -31,6 +31,8 @@ def validate_m3u(text: str) -> list[str]:
             if "," not in line or not line.rsplit(",", 1)[-1].strip():
                 errors.append(f"line {number}: missing channel name")
         elif line.startswith("#"):
+            if pending is not None and line.startswith("#EXT-X-"):
+                errors.append(f"line {number}: HLS manifest directive in M3U channel list")
             continue
         else:
             if pending is None:
