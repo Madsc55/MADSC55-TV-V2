@@ -90,6 +90,24 @@ class TransientBatchSafety(unittest.TestCase):
                     aggregate(target,old,{digest:{"url":"Two.az","channel_id":"Two.az"}},
                               {},[],fake,counts)
 
+    def test_prior_av_identity_remains_explicit_when_all_sources_timeout(self):
+        prior,gap=fixture()
+        targets,known,counts=select_retry(prior,gap)
+        report=aggregate(targets,known,{},{"source":"PROBE_FAILED_NETWORK_TIMEOUT"},
+                         [],{},counts)
+        self.assertEqual(report["original_av_channel_ids_preserved"],sorted(known))
+        self.assertEqual(report["new_distinct_av_identities"],0)
+        self.assertEqual(report["fresh_video_audio_decoded_hashes"],0)
+        self.assertEqual(report["unavailable_original_url_hashes"],len(targets))
+
+    def test_malformed_live_probe_is_rejected_before_claiming_av(self):
+        prior,gap=fixture()
+        targets,known,counts=select_retry(prior,gap)
+        h=sha("Two.az")
+        found={h:{"url":"Two.az","channel_id":"Two.az"}}
+        with self.assertRaisesRegex(ValueError,"Fake FFmpeg recovery"):
+            aggregate(targets,known,found,{},[],{h:None},counts)
+
     def test_retry_rejects_wrong_live_source_hash_or_broadcaster(self):
         p,g=fixture()
         targets,old,counts=select_retry(p,g)
