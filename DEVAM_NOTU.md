@@ -1,3 +1,9 @@
+## 9 Kasım — #11/#14 tarihî AV durum metnini yeni kanıt gibi taşımama
+
+- `d2ed4223` 5 offline workflow **completed/success**; `dfb42523` Master Engine, Eight-Stage ve Actions Monitor **completed/success**. Bunlar gerçek canlı AV veya IBO cihaz kabulü değildir.
+- `8f92147c`: ham tarihî `status=VIDEO_AUDIO_DECODED` değeri şifreli arşivde değiştirilmeden korunur, ancak yeni tekilleştirilmiş adayın `status` değeri `NOT_REVERIFIED` yapılır; önceki decoded/video/audio/AV/IBO bayrakları false kalır. `84951b41`: hem tarihî durumun korunmasını hem aday durumunun güvenliğini doğrulayan regresyon.
+- Son test commit'i için CI **henüz doğrulanmadı**. #11/#14/#16 ve bağımlılıkları açık, 8/33. main, PR #9, ana IBO ve tarihî envanter değişmedi.
+
 ## 9 Kasım — #11/#14 aday görünümünde eski AV kanıtının taşınması engellendi
 
 - `a7989ba5`: tarihî ham kayıtların `decoded/video/audio/av_verified/device_verified/ibo_device_verified` bayrakları arşivde aynen korunur; **yeni tarama yapılmadan** tekilleştirilmiş URL aday görünümünde bu bayrakların tamamı `False` yapılır. Kaynak geçmişi kaybolmaz.
