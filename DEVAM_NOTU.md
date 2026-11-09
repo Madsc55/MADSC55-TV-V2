@@ -1,3 +1,9 @@
+## 9 Kasım — V2 DEVAM: #13 AWS CLI kurulum ve eski offline artifact kontrolü
+
+- `353bf909`: bağımsız S3 restore workflow'u sabitlenmemiş `awscli` pip kurulumunu kaldırdı; GitHub-hosted runner'daki `aws` ikilisini `command -v aws` / `aws --version` ile doğrular. Şifreleme kütüphanesi sabit `cryptography==44.0.2` kalır. Gerçek AWS erişimi ve versioned restore henüz doğrulanmadı.
+- Daha eski, mevcut `github-actions-artifact-13677940957.zip` offline artefaktı yerel olarak incelendi: `unittest.log` **829 test OK (skipped=3)**, `playlist.log` **840 kanal, 2 yedek, 13 kategori, 47 keşif kaynağı PASS** bildiriyor. Bu eski artefaktın en son geliştirme commit'i ile aynı SHA'ya ait olduğu doğrulanmadı; 3 skipped test bulunduğundan son toplu kabul veya #13/#26 için yeşil kanıt sayılmaz.
+- Bu oturumda son commit'e ait Actions run/job ID ve gerçek S3 restore sonucu alınamadı. Görevler açık; 8/33. main, PR #9, korunan ana İBO, kategoriler ve tarihî 4.955 baseline değişmedi.
+
 ## 9 Kasım — V2 DEVAM: gerçek S3 workflow bağımlılık kontrolü
 
 - `fe894d70`: S3 restore workflow'unda varlığı bu ortamda doğrulanmamış sabit `awscli==1.42.68` sürümü yerine `awscli` kurulumu ve `aws --version` kontrolü eklendi; `cryptography==44.0.2` sabit kalır. Bu değişiklik gerçek restore kanıtı değildir.
