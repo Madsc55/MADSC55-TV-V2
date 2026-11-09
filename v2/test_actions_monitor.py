@@ -12,7 +12,7 @@ class MonitorTests(unittest.TestCase):
     def test_main_emits_stalled_warning_without_retry(self):
         result = {"runs": [{"id": 17, "workflow_file": "v2-source-integration-batch.yml",
             "possibly_stalled": True, "head_sha": "a" * 40, "status": "in_progress",
-            "conclusion": None, "html_url": "https://github.com/example/actions/runs/17"}]}
+            "conclusion": None, "html_url": "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/17"}]}
         output = io.StringIO()
         with patch.object(actions_monitor, "collect", return_value=result), patch.object(
                 actions_monitor.Path, "write_text", return_value=None), redirect_stdout(output):
@@ -82,12 +82,12 @@ class MonitorTests(unittest.TestCase):
 
     def test_run_states_and_failed_steps(self):
         runs = [
-            {"id": 10, "run_number": 10, "head_sha": "abc", "status": "completed",
-             "conclusion": "failure", "html_url": "https://github.com/example/actions/runs/10"},
-            {"id": 11, "run_number": 11, "head_sha": "def", "status": "in_progress",
-             "conclusion": None, "html_url": "https://github.com/example/actions/runs/11"},
-            {"id": 12, "run_number": 12, "head_sha": "ghi", "status": "completed",
-             "conclusion": "success", "html_url": "https://github.com/example/actions/runs/12"},
+            {"id": 10, "run_number": 10, "head_sha": "a" * 40, "status": "completed",
+             "conclusion": "failure", "html_url": "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/10"},
+            {"id": 11, "run_number": 11, "head_sha": "b" * 40, "status": "in_progress",
+             "conclusion": None, "html_url": "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/11"},
+            {"id": 12, "run_number": 12, "head_sha": "c" * 40, "status": "completed",
+             "conclusion": "success", "html_url": "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/12"},
         ]
         def fake_api(path):
             if "/workflows/v2-eight-stage-verification.yml/runs?" in path:
@@ -201,6 +201,29 @@ class MonitorTests(unittest.TestCase):
                         actions_monitor, "api", side_effect=fake_api):
                     result = actions_monitor.collect()
                 self.assertTrue(all(not row["acceptance_candidate"] for row in result["runs"]))
+
+    def test_untrusted_run_identity_and_truncated_job_pages_rejected(self):
+        base = {"id": 123, "head_sha": "a" * 40, "head_branch": actions_monitor.BRANCH,
+                "event": "push", "status": "completed", "conclusion": "success",
+                "html_url": "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/123"}
+        for changed in ({"id": True}, {"id": -1}, {"head_sha": "a" * 39},
+                        {"head_sha": "G" * 40}, {"html_url": "https://example.com/123"}):
+            with self.subTest(changed=changed):
+                def fake_api(path):
+                    return {"workflow_runs": [dict(base, **changed)]}
+                with patch.object(actions_monitor, "api", side_effect=fake_api):
+                    with self.assertRaisesRegex(RuntimeError, "untrusted"):
+                        actions_monitor.collect()
+        for total in (0, 2, None, True):
+            with self.subTest(total=total):
+                def fake_api(path):
+                    if path.endswith("/123/jobs?per_page=100"):
+                        return {"total_count": total, "jobs": [{"id": 12, "status": "completed",
+                            "conclusion": "success", "steps": [{"number": 1, "conclusion": "success"}]}]}
+                    return {"workflow_runs": [base]}
+                with patch.object(actions_monitor, "api", side_effect=fake_api):
+                    with self.assertRaisesRegex(RuntimeError, "Incomplete Actions job details"):
+                        actions_monitor.collect()
 
     def test_missing_run_identity_is_rejected(self):
         with patch.object(actions_monitor, "api", return_value={"workflow_runs": [{"status": "completed", "conclusion": "success"}]}):
