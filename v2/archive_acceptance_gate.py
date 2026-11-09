@@ -107,7 +107,7 @@ def check(env=None):
     if (any(not validate_url(row.get("url")) for row in candidates)
             or None in candidate_ids or len(candidate_ids) != len(set(candidate_ids))
             or set(candidate_ids) != raw_url_ids):
-        raise RuntimeError("Encrypted candidate view lacks complete raw URL provenance")
+        raise RuntimeError("Encrypted candidate view lacks raw URL provenance")
     # A matching URL digest alone does not authorize arbitrary source labels.
     # Preserve legacy source/source_id and hash-only provenance for the same
     # exact digest, but reject source identifiers invented in the candidate view.
