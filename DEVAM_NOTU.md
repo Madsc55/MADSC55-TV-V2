@@ -1,3 +1,8 @@
+## 9 Kasım — V2 DEVAM: #23 manuel canlı Master Engine kabul tetiklemesi
+
+- `84f31b9a`: `v2-master-engine.yml` `workflow_dispatch` için varsayılanı `false` olan `run_live_master` boolean girdisi eklendi. `master` job artık geliştirme dalında ya özel `[run-live-master]` push commit'i ile ya da **açıkça `run_live_master=true` seçilmiş manuel dispatch** ile çalışabilir. Offline job kabulü `needs: offline-tests` ile korunur; gerçek FFmpeg/şifreli arşiv şartları gevşetilmedi.
+- Bu değişiklik workflow çalıştırıldığını veya canlı AV kabulünün geçtiğini kanıtlamaz. Actions run/job logu bu oturumda doğrulanamadı. #23 ve #26 açık, 8/33. Ana İBO, main, PR #9 ve tarihî baseline korunuyor.
+
 ## 9 Kasım — V2 DEVAM: FFmpeg CI yetenek ve AV bağımlılık kaydı
 
 - `6c035e65`: Master Engine offline-tests içine FFmpeg ve FFprobe araçlarını, sürümü, decoder/filter listesini `v2/reports/master-ci/ffmpeg-capabilities.log` artefaktında saklayan kontrol eklendi. `ffmpeg_capabilities.outcome` son fail-closed kabul kapısında kontrol edilir; başarısızsa yeşil kabul yok, diğer test logları toplanır.
