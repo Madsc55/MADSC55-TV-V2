@@ -1,3 +1,9 @@
+## 9 Kasım — V2 BİTİR: toplu kabul iş akışı tetikleme düzeltmesi
+
+- `89b46d90`: `.github/workflows/v2-master-engine.yml` geliştirme dalındaki her push'ta `test_archive_acceptance_gate`, `test_historical_inventory_guard`, `test_independent_s3_restore`, `test_traz_transient_av_recovery` modüllerini ayrı fail-closed adımda çalıştırır. `v2/reports/master-ci/acceptance-11-13-14-16.log` başarısızlıkta bile artifact'a dahil edilir.
+- Eski başarısız run #42672120731 jobs/artifacts API ile boş dönüyor; ona takılmadan yeni push tetiklemesi uygulandı. Yeni run ID, job sonucu ve log henüz GitHub API ile doğrulanamadı. Testleri geçmeden #11/#13/#14/#16 kapatılmayacak. Özellikle gerçek bağımsız S3 restore ve uçtan uca transient AV kabulü, sentetik regresyondan ayrı kanıt gerektirir.
+- Kapatılan görev 0, mevcut 8/33. Main, PR #9, ana İBO listesi, tarihî envanter değiştirilmedi.
+
 ## 9 Kasım — V2 BİTİR: #11/#14 eksik kaynak geçmişi kaybını engelleme
 
 - GitHub Actions #42672120731 için jobs ve artifacts API sorguları boş döndü; test hata loguna erişilemedi. Bu çalışmanın başarı veya kök hata nedeni doğrulanmadı. Link: https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42672120731
