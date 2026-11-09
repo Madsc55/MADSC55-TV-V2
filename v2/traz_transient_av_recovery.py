@@ -75,7 +75,7 @@ def select_retry(prior,gap):
         status=row.get("status")
         decoded=row.get("decoded")
         source_ids=row.get("source_ids")
-        if (not isinstance(status,str) or decoded not in (True,False)
+        if (not isinstance(status,str) or type(decoded) is not bool
             or not isinstance(source_ids,list) or len(source_ids)>30
             or any(not isinstance(s,str) or not re.fullmatch(r"[A-Za-z0-9_.:/-]{1,96}",s)
                    or "://" in s for s in source_ids)):
