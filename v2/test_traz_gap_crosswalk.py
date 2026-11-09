@@ -128,6 +128,20 @@ class GapCrosswalkTests(unittest.TestCase):
         self.assertEqual(report["source_results"][1]["status"],"XMLTV_PARSED")
         self.assertFalse(report["cross_source_collision_requires_manual_review"])
 
+    def test_unrequested_xmltv_channel_duplicate_fails_closed(self):
+        raw=b'<tv><channel id="Other.tr"/><channel id="Other.tr"/><channel id="Alpha.tr"/></tv>'
+        with self.assertRaisesRegex(ValueError,"Duplicate XMLTV channel identity"):
+            inspect_xmltv(raw,{"Alpha.tr"})
+        report=inspect_epg_gap(["Alpha.tr"],["https://example.org/guide.xml"],fetcher=lambda _:raw)
+        self.assertEqual(report["parsed_sources"],0)
+        self.assertEqual(report["exact_xmltv_channel_id_candidates"],0)
+
+    def test_malformed_unrequested_xmltv_channel_identity_fails_closed(self):
+        for raw in (b'<tv><channel/></tv>',b'<tv><channel id=""/></tv>',
+                    b'<tv><channel id="Other&#10;tr"/></tv>'):
+            with self.subTest(raw=raw),self.assertRaisesRegex(ValueError,"Malformed XMLTV channel identity"):
+                inspect_xmltv(raw,{"Alpha.tr"})
+
     def test_duplicate_channel_id_inside_single_xmltv_source_is_rejected(self):
         duplicated=b'<tv><channel id="Alpha.tr"/><channel id="Alpha.tr"/></tv>'
         with self.assertRaisesRegex(ValueError,"Duplicate XMLTV channel identity"):
