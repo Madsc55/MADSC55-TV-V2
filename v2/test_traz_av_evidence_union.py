@@ -13,7 +13,7 @@ class CrossRunAVTests(unittest.TestCase):
         sources = [BASE/'traz-api-av-acceptance.json',
                    BASE/'traz-missing-target-real-av.json',
                    BASE/'traz-missing-stream-epg-crosswalk.json']
-        present = [p.is_file() for p in sources]
+        present = [p.exists() or p.is_symlink() for p in sources]
         if not any(present):
             raise unittest.SkipTest('Pinned Actions artifact inputs absent from ordinary offline checkout')
         if not all(present):
@@ -74,6 +74,23 @@ class PinnedEvidencePresenceTests(unittest.TestCase):
             with patch.dict(CrossRunAVTests.setUpClass.__func__.__globals__,
                             {'BASE': Path(tmp)}):
                 with self.assertRaises(unittest.SkipTest):
+                    CrossRunAVTests.setUpClass()
+
+    def test_broken_symlink_is_not_treated_as_absent(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            (Path(tmp) / 'traz-api-av-acceptance.json').symlink_to(
+                Path(tmp) / 'missing-artifact.json')
+            with patch.dict(CrossRunAVTests.setUpClass.__func__.__globals__,
+                            {'BASE': Path(tmp)}):
+                with self.assertRaisesRegex(RuntimeError, 'Incomplete pinned Actions AV evidence'):
+                    CrossRunAVTests.setUpClass()
+
+    def test_directory_placeholder_is_not_treated_as_absent(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            (Path(tmp) / 'traz-api-av-acceptance.json').mkdir()
+            with patch.dict(CrossRunAVTests.setUpClass.__func__.__globals__,
+                            {'BASE': Path(tmp)}):
+                with self.assertRaisesRegex(RuntimeError, 'Incomplete pinned Actions AV evidence'):
                     CrossRunAVTests.setUpClass()
 
     def test_one_or_two_inputs_fail_closed(self):
