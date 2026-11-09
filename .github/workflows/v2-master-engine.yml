@@ -71,8 +71,15 @@ jobs:
           printf 'Acceptance group exit=%s\n' "$result" >> "$GITHUB_STEP_SUMMARY"
           exit "$result"
       - name: Compile Master Engine modules
-        run: python -m compileall -q v2
+        id: compile_modules
+        continue-on-error: true
+        shell: bash
+        run: |
+          mkdir -p v2/reports/master-ci
+          python -m compileall -q v2 > v2/reports/master-ci/compile.log 2>&1
       - name: Run all offline regressions and preserve logs
+        id: offline_regressions
+        continue-on-error: true
         shell: bash
         run: |
           mkdir -p v2/reports/master-ci
@@ -94,9 +101,12 @@ jobs:
         shell: bash
         env:
           GROUPED_RESULT: ${{ steps.grouped_acceptance.outcome }}
+          COMPILE_RESULT: ${{ steps.compile_modules.outcome }}
+          OFFLINE_RESULT: ${{ steps.offline_regressions.outcome }}
         run: |
-          if [ "$GROUPED_RESULT" != "success" ]; then
-            echo "Grouped archive/AV acceptance did not succeed: $GROUPED_RESULT" >> "$GITHUB_STEP_SUMMARY"
+          printf 'Grouped=%s Compile=%s Offline=%s\n' "$GROUPED_RESULT" "$COMPILE_RESULT" "$OFFLINE_RESULT" >> "$GITHUB_STEP_SUMMARY"
+          if [ "$GROUPED_RESULT" != "success" ] || [ "$COMPILE_RESULT" != "success" ] || [ "$OFFLINE_RESULT" != "success" ]; then
+            echo "Required offline checks failed or were skipped; acceptance rejected" >> "$GITHUB_STEP_SUMMARY"
             exit 1
           fi
       - name: Record offline test run identity
