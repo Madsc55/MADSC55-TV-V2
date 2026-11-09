@@ -76,7 +76,12 @@ jobs:
       - run: python v2/test_archive_acceptance_gate.py
       - run: python v2/test_independent_s3_restore.py
       - name: Verify canonical 33-task state and Actions evidence regressions
-        run: python v2/tasks/test_task_engine.py
+        shell: bash
+        run: |
+          set -euo pipefail
+          PYTHONPATH=v2/tasks python -m unittest discover -s v2/tasks -p 'test_*.py' -v
+          PYTHONPATH=v2 python -m unittest -v test_actions_monitor
+          PYTHONPATH=v2 python -m unittest -v test_archive_acceptance_gate test_historical_inventory_guard test_independent_s3_restore test_traz_transient_av_recovery
   safety:
     needs: discovery-tests
     runs-on: ubuntu-latest
