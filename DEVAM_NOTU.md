@@ -1,3 +1,8 @@
+## 9 Kasım — V2 DEVAM: Task Engine CI hata logları
+
+- `7a091fe2`: `v2-master-engine.yml` içinde 33 görev Task Engine testleri `task-engine.log` dosyasına yazılır; test hatası sonraki grouped/compile/offline testleri ve artifact yüklemesini engellemez. `steps.task_engine_tests.outcome` son fail-closed kapısına eklendi: skipped/failure hiçbir durumda başarı sayılmaz.
+- GitHub Actions için yeni run ID veya doğrulanmış test sonucu bu oturumda elde edilmedi. Görev #26 henüz kapatılmadı; 8/33. Saatlik otomasyonla yazma çakışması önlemek için güncel blob SHA kontrol edildi. main, PR #9, ana İBO ve 4.955 tarihî baseline değiştirilmedi.
+
 ## 9 Kasım — V2 DEVAM: #26 derleme ve offline regresyon logları
 
 - `688bbd61`: Master Engine offline-tests işinde derleme ve tüm offline regresyon adımları artık kendi sonuçlarını `steps.compile_modules.outcome` / `steps.offline_regressions.outcome` olarak saklıyor. `continue-on-error` yalnızca log toplamak için; derleme, toplu arşiv/AV kabulü veya genel regresyon başarısız/atlanan ise son fail-closed kapısı job'u başarısız bitiriyor. `compile.log`, `unittest.log`, `playlist.log` ve `acceptance-11-13-14-16.log` artifact kapsamındadır.
