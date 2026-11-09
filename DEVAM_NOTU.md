@@ -1,3 +1,10 @@
+## 9 Kasım — V2 DEVAM: toplu bitirme, tek kabul döngüsü
+
+- Kullanıcı talimatı: 33 görev içindeki birbirine bağlı işleri tek tek kozmetik düzeltmelerle uzatma; mevcut 8 kabul edilmiş görevi yeniden yapma. Kanonik `master_tasks.json` ve `state.json` esas; #3/#4/#6 `deferred_optional` (kanıtları korunur, tamamlandı diye işaretlenmez), zorunlu kapsam 30 görevdir. #34 (`issues/10`) ancak 30 zorunlu kabul ve #32 gerçek kullanıcı cihaz testi sonrası.
+- Uygulama grupları: A=#5/#9/#11/#13/#14/#16; B=#23/#25/#26; C=#15/#17/#18/#19/#20/#21/#24; D=#28/#29/#30/#31; E=#32/#33. Bağımlılık engelleri kayıt altına alınır, bağımsız işler durdurulmaz. Tek toplu Actions kabulünde bütün gerekli işler, atlanmış job'lar, loglar, FFmpeg gerçek görüntü+ses, şifreli arşiv ve korunmuş IBO doğrulanır; yalnız kanıtı bulunanlar kapanır.
+- `f5f3ebfb`: Master Engine offline toplu kabulüne 60 dakikalık job üst sınırı ve #11/#13/#14/#16 + görev motoru test loglarının mevcut olduğunu zorunlu denetleyen adım eklendi. Önceki fail-closed sonuç kapısı korunuyor. **Bu commit için gerçek Actions test sonucu henüz doğrulanmadı**; 8/33, görev kapanışı yok. #13 gerçek sürümlü S3 ve #32 kullanıcı cihaz testi harici kabul şartlarıdır.
+- Koruma: yalnız `madsc/v2-discovery-bulk-20261031`; main, PR #9, ana İBO, YEDEKLER/YENİLER/FAVORİLER ve 4.955 tarihî kimlik değiştirilmez.
+
 ## 9 Kasım — V2 DEVAM: #13 S3 bucket adının ağ öncesi doğrulanması
 
 - `8f7490a4`: `independent_s3_restore.py` artık DNS etiketi boş/başında veya sonunda tire olan ve IPv4 adresine benzeyen bucket isimlerini gerçek AWS çağrısından önce reddediyor.
