@@ -131,6 +131,16 @@ def collect():
             active = api(base + "/runs/%s/jobs?per_page=100" % run["id"])
             jobs = active.get("jobs")
             total = active.get("total_count")
+            if type(total) is int and total>len(jobs or []) and isinstance(jobs,list):
+                all_jobs=list(jobs)
+                for page in range(2,(total+99)//100+1):
+                    part=api(base + "/runs/%s/jobs?per_page=100&page=%s" % (run["id"],page))
+                    chunk=part.get("jobs")
+                    if type(part.get("total_count")) is not int or part["total_count"]!=total or not isinstance(chunk,list) or not chunk:
+                        all_jobs=[]
+                        break
+                    all_jobs.extend(chunk)
+                jobs=all_jobs
             if type(total) is not int or not isinstance(jobs,list) or total != len(jobs):
                 record["active_job_evidence_complete"] = False
                 record["failure_reasons"].append("incomplete_active_job_inventory")
