@@ -100,12 +100,14 @@
     {
       "id": 9,
       "status": "in_progress",
-      "last_checked_at": "2026-11-07T00:00:00Z",
+      "last_checked_at": "2026-11-09",
       "evidence_urls": [
-        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42216075104"
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42216075104",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42539900333",
+        "https://github.com/Madsc55/MADSC55-TV-V2/blob/madsc/v2-discovery-bulk-20261031/v2/history/blocked-official-prior-real-av-sha.json"
       ],
-      "blocker": "Official/live-page discovery is partial and this workflow did not perform AV decoding; must reconcile exact official provenance and separate AV evidence before completion.",
-      "reason": "Inspected actual v2-unified-source-search-42216075104 ZIP artifact 13510407476: 47 configured sources, 8988 candidates, official_live_pages VALID report shape but PARTIAL_COVERAGE and SOURCE_ERRORS; video_audio_probed_by_this_workflow=false, protected_playlist_modified=false. Evidence is source discovery only, not playback."
+      "blocker": "Official-page discovery still partial and source errors unresolved; exact candidate provenance must be reconciled against current AV artifacts. Historical SHA-only decode is not proof of current availability or official publisher ownership. Do not promote to completed.",
+      "reason": "Read-only official-source evidence reconciled: source discovery remains PARTIAL_COVERAGE/SOURCE_ERRORS, but prior immutable SHA-only AV ledger contains 9 candidate hashes for five exact official IDs; 4 prior VIDEO_AUDIO_DECODED records (Benguturk 1, Halk TV 2, TV100 1), with timeout/unsafe results for others. This is historical AV for exact URL hashes, not current playback or verified publisher-origin stream. Last worldwide Source Integration Batch #42539900333 succeeded; newer batch #42606783037 remains running, next #42609830543 pending. No fresh current official AV acceptance; task remains in_progress."
     },
     {
       "id": 10,
