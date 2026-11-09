@@ -149,6 +149,18 @@ class GapCrosswalkTests(unittest.TestCase):
         self.assertEqual(report["source_results"][1]["status"],"XMLTV_PARSED")
         self.assertFalse(report["cross_source_collision_requires_manual_review"])
 
+    def test_xmltv_programme_without_declared_channel_is_not_evidence(self):
+        raw=b'<tv><programme channel="Alpha.tr"/><channel id="Beta.az"/></tv>'
+        channels,programmes=inspect_xmltv(raw,{"Alpha.tr","Beta.az"})
+        self.assertEqual(channels,{"Beta.az"})
+        self.assertEqual(programmes, {})
+        report=inspect_epg_gap(["Alpha.tr","Beta.az"],["https://example.org/guide.xml"],fetcher=lambda _:raw)
+        self.assertEqual(report["exact_xmltv_ids_with_programme_records"],0)
+        self.assertEqual(report["exact_xmltv_channel_id_candidates"],1)
+        ordered=b'<tv><programme channel="Alpha.tr"/><channel id="Alpha.tr"/></tv>'
+        channels,programmes=inspect_xmltv(ordered,{"Alpha.tr"})
+        self.assertEqual(programmes["Alpha.tr"],1)
+
     def test_unrequested_xmltv_channel_duplicate_fails_closed(self):
         raw=b'<tv><channel id="Other.tr"/><channel id="Other.tr"/><channel id="Alpha.tr"/></tv>'
         with self.assertRaisesRegex(ValueError,"Duplicate XMLTV channel identity"):
