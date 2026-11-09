@@ -1,3 +1,9 @@
+## 9 Kasım — V2 DEVAM: #13 S3 bucket adının ağ öncesi doğrulanması
+
+- `8f7490a4`: `independent_s3_restore.py` artık DNS etiketi boş/başında veya sonunda tire olan ve IPv4 adresine benzeyen bucket isimlerini gerçek AWS çağrısından önce reddediyor.
+- `9eed3757`: `test_independent_s3_restore.py` içine bozuk bucket isimlerinin ağa çıkmadan reddini doğrulayan regresyon eklendi.
+- Testin güncel Actions sonucuna ve gerçek sürümlü S3 restore kabulüne henüz erişilmedi; #13 açık, 8/33. main, PR #9, ana İBO ve tarihî envanter değişmedi.
+
 ## 9 Kasım — V2 DEVAM: #13 gerçek S3 restore öncesi şifreleme güvenlik regresyonları
 
 - `4d50cd0e`: bağımsız S3 Actions iş akışında AWS erişiminden önce `test_independent_s3_restore.py` ve `test_archive_acceptance_gate.py` testlerinin tamamı `unittest discover` ile zorunlu çalışır. Hatalı yerel S3 sürüm/sha/şifreleme kabulü remote restore aşamasını başlatmaz.
