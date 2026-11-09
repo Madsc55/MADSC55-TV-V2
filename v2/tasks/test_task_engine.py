@@ -19,6 +19,7 @@ class TaskEngineTests(unittest.TestCase):
         """Synthetic baseline: tests must not depend on live task completion."""
         ledger = copy.deepcopy(self.ledger)
         ledger["statuses"][0]["status"] = "in_progress"
+        ledger["statuses"][11]["status"] = "pending"  # #12 depends on #1
         ledger["statuses"][1]["status"] = "completed"
         ledger["statuses"][3]["status"] = "pending"
         # Preserve original baseline for deterministic historical ordering assertions.
@@ -31,6 +32,16 @@ class TaskEngineTests(unittest.TestCase):
         self.assertEqual(len(tasks), 33)
         self.assertEqual(len(rows), 33)
         self.assertEqual([t["priority"] for t in self.master["tasks"][:6]], ["P0"] * 6)
+
+    def test_completed_task_requires_completed_dependencies(self):
+        ledger = copy.deepcopy(self.ledger)
+        ledger["statuses"][0]["status"] = "in_progress"
+        with self.assertRaisesRegex(ValueError, "unfinished dependencies"):
+            e.validate(self.master, ledger, self.root)
+        ledger = copy.deepcopy(self.ledger)
+        ledger["statuses"][6]["status"] = "pending"  # #7 feeds no already-completed downstream except itself
+        with self.assertRaisesRegex(ValueError, "unfinished dependencies"):
+            e.validate(self.master, ledger, self.root)
 
     def test_next_and_resume(self):
         ledger = self.scenario_ledger()
