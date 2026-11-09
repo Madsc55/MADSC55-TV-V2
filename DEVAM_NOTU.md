@@ -1,3 +1,9 @@
+## 9 Kasım — #16 FFmpeg null proof CI hatası düzeltildi
+
+- `25f45bff` Master Engine ve Eight-Stage **failure**: `test_malformed_live_probe_is_rejected_before_claiming_av` explicit `{sha: None}` verildiğinde ValueError bekliyordu; `aggregate` yanlışlıkla `p is None` üzerinden bunu bulunamayan kaynak gibi sayıyordu.
+- `baf6f5a3` ile `if h not in proofs` kontrolü eklendi; gerçek eksik kaynak ile mevcut ama bozuk FFmpeg kanıtı ayrıldı. Sahte başarı üretilmedi. **Yeni commit için Actions henüz doğrulanmadı**; önceki kırmızı koşular yeşil kabul edilmedi.
+- #11/#14/#16 in_progress; #13 gerçek özel S3 restore ve #9 resmî kaynak kanıtı hâlâ engel. Sonraki adım `baf6f5a3` grouped Actions sonucunu alıp #15/#18/#19 bağımlılıklarına ilerlemek.
+
 ## 9 Kasım — #16 gerçek kesinti sırasında önceki AV kimlikleri korunuyor
 
 - `22f7fab7`: `aggregate` raporuna `original_av_channel_ids_preserved` eklendi; geçici DNS/HTTP/timeout nedeniyle **hiçbir yeni kaynak bulunmasa bile** önceki gerçek AV kanıtlı kanal kimlikleri açıkça raporda tutulur. Malformed FFmpeg proof (`None`) kabul edilmez. `9c136f72` regresyonları hem tam kaynak kesintisini hem malformed probe reddini test eder.
