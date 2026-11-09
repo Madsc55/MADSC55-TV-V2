@@ -1,3 +1,8 @@
+## 9 Kasım — V2 DEVAM: bozuk AV kanıt yer tutucuları fail-closed
+
+- `3475b4a`: `test_traz_av_evidence_union.py` dosya mevcudiyet kontrolü bozuk symlink ve klasör yer tutucularını artık tamamen yok saymaz. Tek başına mevcutsa `Incomplete pinned Actions AV evidence` hatasıyla durur; regresyon senaryoları eklendi.
+- Gerçek Actions kabulü henüz doğrulanmadı; AV kanıtı veya tarihî kurtarma sayısı artırılmadı. 8/33, main/PR #9/İBO koruması değişmedi.
+
 ## 9 Kasım — V2 DEVAM: Actions commit sorgusu kapsam düzeltmesi
 
 - `fetch_commit_workflow_runs` GitHub bağlantısında yalnız `pull_request` tetikli koşuları döndürür. `58d4071e`, `f6854106`, `9e5324e` ve `58ba1cbf` için boş sonuç, `push` Actions koşusu başlamadı anlamına **gelmez**. Önceki notlardaki 'Actions sorgusu çalışma döndürmedi' ifadesi yalnız bu sınırlı sorgunun çıktısıdır; testin gerçekten tetiklenmediği iddiası değildir.
