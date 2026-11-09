@@ -24,7 +24,8 @@ jobs:
           python-version: '3.12'
       - name: Install pinned restore dependencies
         run: |
-          python -m pip install cryptography==44.0.2 awscli==1.42.68
+          python -m pip install cryptography==44.0.2 awscli
+          aws --version
       - name: Restore pinned version from independent S3 and validate all historical identities
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.V2_S3_RESTORE_AWS_ACCESS_KEY_ID }}
