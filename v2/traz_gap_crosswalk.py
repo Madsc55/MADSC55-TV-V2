@@ -90,6 +90,9 @@ def reconcile(api,m3u):
         if (not isinstance(item,dict) or "url" in item or
                 item.get("av_verified") is not False or
                 not isinstance(item.get("channel_id"),str) or
+                not 0<len(item["channel_id"])<=200 or
+                "://" in item["channel_id"] or
+                any(ord(c)<32 for c in item["channel_id"]) or
                 not isinstance(item.get("url_sha256"),str) or
                 not HEX.fullmatch(item["url_sha256"])):
             raise ValueError("Invalid API hash-only identity")
