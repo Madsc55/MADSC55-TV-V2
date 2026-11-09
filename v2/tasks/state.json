@@ -226,11 +226,15 @@
     },
     {
       "id": 23,
-      "status": "pending",
-      "last_checked_at": null,
-      "evidence_urls": [],
-      "blocker": null,
-      "reason": null
+      "status": "in_progress",
+      "last_checked_at": "2026-11-09",
+      "evidence_urls": [
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42611524072",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42611524049",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42611524123"
+      ],
+      "blocker": "Three workflow conclusions are success on same commit dc9d034b, but Master Engine job 'master' was skipped, and Ordered Preflight live public audit was skipped. Task #23 requires actual grouped Master + Eight-Stage + Ordered integration, not workflow-level green with required jobs skipped. Need safe explicit integration run and non-skipped acceptance evidence; do not trigger costly AV scan or protected playlist writes.",
+      "reason": "Verified per-job outcomes: Master Engine #42611524072 offline-tests success, master skipped; Eight-Stage #42611524049 two jobs success; Ordered Preflight #42611524123 compile/protect/discovery-tests/safety success, live public audit skipped. Same-head SHA dc9d034b; task stays in progress until required integration is executed."
     },
     {
       "id": 24,
