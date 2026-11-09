@@ -1,3 +1,9 @@
+## 9 Kasım — Actions hata loglarının tam toplanması (#26)
+
+- `c575c179`: Master Engine offline işinde #11/#13/#14/#16 toplu kabul adımı hata verdiğinde sonraki genel offline regresyonların ve log artifact yüklemesinin atlanmaması için adım `continue-on-error` ile izlenir; **son fail-closed kapısı** `steps.grouped_acceptance.outcome != success` ise job'u kırmızı bitirir. Bu, testleri yeşile çevirmez; hata inceleme kapsamını genişletir.
+- Geliştirme dalındaki push tetikleyicisi mevcut, workflow `concurrency.cancel-in-progress: false` ile aynı workflow koşularını sıraya alır; bu kilit GitHub dosya yazıcıları arasında atomik kilit değildir.
+- Yeni push için gerçek Actions run/job/log sonucu bu oturumda henüz elde edilmedi. #26 ve diğer görevler açık, 8/33. Gerçek S3 versioned restore ve kullanıcı cihaz testi dış bağımlılıkları sürüyor.
+
 ## KALICI TALİMAT — MADSC55 TV V2 TÜM KALAN İŞLERİ BİTİR (9 Kasım 2026)
 
 **Devam komutu: `V2 DEVAM`.** Her oturumda yalnızca `Madsc55/MADSC55-TV-V2` reposunun `madsc/v2-discovery-bulk-20261031` geliştirme dalında `[V2 SIRA]` GitHub kayıtlarını, `v2/tasks/master_tasks.json`, `v2/tasks/state.json` ve bu dosyayı yeniden oku. 33 görevin zaten kabul edilmiş 8 tanesini tekrarlama; kalan 25'i öncelik/bağımlılık sırasıyla **gerçek uygulama, test, Actions doğrulaması, commit ve görev durumu güncellemesi** ile ilerlet. Sadece durum raporu döngüsüne girme. Her küçük adımda yeniden onay isteme.
