@@ -141,6 +141,8 @@ def main():
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(result, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     for run in result["runs"]:
+        if run["possibly_stalled"] is True:
+            print("::warning::Potentially stalled Actions run %s workflow=%s; review manually, no automatic retry" % (run["id"], run["workflow_file"]))
         print("run_id=%s sha=%s status=%s conclusion=%s url=%s" % (
             run["id"], run["head_sha"], run["status"], run["conclusion"], run["html_url"]))
     if len(result["runs"]) < 10:
