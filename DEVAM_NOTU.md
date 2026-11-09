@@ -1,3 +1,10 @@
+## 9 Kasım — Gerçek Actions artefaktı ile tarihî SHA/AV çapraz kontrolü
+
+- GitHub Actions run `42539900333` içindeki `v2-grouped-av-evidence-42539900333` ZIP artefaktı indirildi; `final-worldwide-acceptance.json` ve `historical-worldwide-av-crosswalk.json` açılıp okundu. Artefakt SHA256: `6981e10e090417ec83dfeff0d0d3da3a7dbcd95fe4437f2aa56c13742fe85e39`; run head: `15da708c003e49dde49bfce7b68310ad77cf2302`.
+- Gerçek tarama raporu: 35.542 adayın 35.542'si probe edildi, 14.417'sinde görüntü+ses çözümlendi; 0 unprobed; `readiness=REVIEW_REQUIRED`, `ibo_player_verified=false`, `spoken_language_verified=0`. İBO kabulü değildir.
+- Tarihî hash-only çapraz kontrol: 4.955 kimlik korunmuş; 4.890 exact URL SHA eşleşmiş; 3.042 eşleşmede decoded AV; 1.848 eşleşmede AV kanıtı yok; 65 tarihî kimlik dünya raporunda yok. `historical_broadcaster_identity_verified=false`, `ibo_device_verified=false`. Rapor gerçek tarihî veriyi kapsar, ancak #14 uzak arşiv restore/metadata multiset kabulünü **tek başına kanıtlamaz**.
+- #11/#14/#16 açık kalır; #13 gerçek şifreli uzak yedek restore ve #9 resmî kaynak provenans kabulü eksiktir. Yeni AV kanıtı icat edilmedi, ana IBO/main/PR #9 değiştirilmedi. Son commit CI'si ayrıca doğrulanmalı.
+
 ## 9 Kasım — #11/#14 tarihî AV durum metnini yeni kanıt gibi taşımama
 
 - `d2ed4223` 5 offline workflow **completed/success**; `dfb42523` Master Engine, Eight-Stage ve Actions Monitor **completed/success**. Bunlar gerçek canlı AV veya IBO cihaz kabulü değildir.
