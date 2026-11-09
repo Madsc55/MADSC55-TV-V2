@@ -149,6 +149,26 @@ class ArchiveGateTests(unittest.TestCase):
                 with self.assertRaisesRegex(RuntimeError, "source provenance"):
                     check(env)
 
+    def test_candidate_legacy_source_field_cannot_forge_provenance(self):
+        """Legacy source/source_id fields cannot contradict source_ids."""
+        from historical_inventory_guard import preserve_to_new_archive, reconcile
+        history = [json.loads(line) for line in BASELINE.read_text().splitlines() if line]
+        raw, view, _ = reconcile(history, [
+            {"url": "https://fixture.example.org/legacy-source.m3u8",
+             "source_id": "real-source"}], 4955)
+        self.assertEqual(len(view), 1)
+        for index, field in enumerate(("source", "source_id")):
+            with self.subTest(field=field):
+                forged = [dict(view[0], **{field: "unrelated-source"})]
+                archive = self.root / ("legacy-source-" + str(index) + ".enc")
+                with patch.dict(os.environ, {"V2_ARCHIVE_KEY_HEX": "ab" * 32}):
+                    preserve_to_new_archive(archive, raw, forged)
+                checksum = hashlib.sha256(archive.read_bytes()).hexdigest()
+                env = self.prepared(restored_file=str(archive), restore_sha256=checksum)
+                env["V2_ARCHIVE_EXPECTED_SHA256"] = checksum
+                with self.assertRaisesRegex(RuntimeError, "source provenance"):
+                    check(env)
+
     def test_hash_only_historical_source_must_survive_url_recovery(self):
         """A recovered exact URL must retain labels from hash-only history."""
         from historical_inventory_guard import digest, preserve_to_new_archive, reconcile
