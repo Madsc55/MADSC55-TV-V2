@@ -154,7 +154,7 @@ def collect():
                     "id": job.get("id"), "name": job.get("name"),
                     "status": job.get("status"), "conclusion": job.get("conclusion"),
                     "started_at": job.get("started_at")
-                } for job in jobs if job.get("status") in ("in_progress","queued","waiting")]
+                } for job in jobs if job.get("status") in ("in_progress","queued","waiting","pending","requested")]
         if run.get("status") == "completed":
             # GitHub paginates workflow jobs at 100 entries. Never classify a
             # truncated first page as complete or drop evidence from later pages.
