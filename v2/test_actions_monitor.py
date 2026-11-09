@@ -100,7 +100,7 @@ class MonitorTests(unittest.TestCase):
                         {"number": 1, "name": "Checkout", "conclusion": "success"},
                         {"number": 2, "name": "Tests", "conclusion": "failure"}]}]}
             if path.endswith("/12/jobs?per_page=100"):
-                return {"total_count": 1, "jobs": [{"id": 6, "name": "offline-tests", "status": "completed", "conclusion": "success", "steps": []}]}
+                return {"total_count": 1, "jobs": [{"id": 6, "name": "offline-tests", "status": "completed", "conclusion": "success", "steps": [{"number": 1, "name": "Checks", "conclusion": "success"}]}]}
             return {"workflow_runs": runs}
         with patch.object(actions_monitor, "TOKEN", "unit-test-token"), patch.object(actions_monitor, "api", side_effect=fake_api):
             result = actions_monitor.collect()
@@ -114,7 +114,7 @@ class MonitorTests(unittest.TestCase):
         observed = []
         def fake_api(path):
             if "/runs/" in path and path.endswith("/jobs?per_page=100"):
-                return {"total_count": 1, "jobs": [{"id": 90, "status": "completed", "conclusion": "success", "steps": []}]}
+                return {"total_count": 1, "jobs": [{"id": 90, "status": "completed", "conclusion": "success", "steps": [{"number": 1, "name": "Checks", "conclusion": "success"}]}]}
             observed.append(path)
             workflow = path.split("/workflows/", 1)[1].split("/runs?", 1)[0]
             return {"workflow_runs": [{"id": len(observed), "head_sha": "a" * 40,
@@ -134,7 +134,7 @@ class MonitorTests(unittest.TestCase):
             with self.subTest(branch=target_branch, event=event):
                 def fake_api(path):
                     if path.endswith("/123/jobs?per_page=100"):
-                        return {"total_count": 1, "jobs": [{"id": 124, "status": "completed", "conclusion": "success", "steps": []}]}
+                        return {"total_count": 1, "jobs": [{"id": 124, "status": "completed", "conclusion": "success", "steps": [{"number": 1, "name": "Checks", "conclusion": "success"}]}]}
                     return {"workflow_runs": [{"id": 123, "head_sha": "a" * 40,
                         "head_branch": target_branch, "event": event,
                         "status": "completed", "conclusion": "success",
@@ -149,7 +149,7 @@ class MonitorTests(unittest.TestCase):
     def test_historical_green_sha_cannot_be_current_acceptance(self):
         def fake_api(path):
             if path.endswith("/123/jobs?per_page=100"):
-                return {"total_count": 1, "jobs": [{"id": 124, "status": "completed", "conclusion": "success", "steps": []}]}
+                return {"total_count": 1, "jobs": [{"id": 124, "status": "completed", "conclusion": "success", "steps": [{"number": 1, "name": "Checks", "conclusion": "success"}]}]}
             return {"workflow_runs": [{"id": 123, "head_sha": "b" * 40,
                 "head_branch": actions_monitor.BRANCH, "event": "push",
                 "status": "completed", "conclusion": "success",
@@ -168,6 +168,31 @@ class MonitorTests(unittest.TestCase):
                 def fake_api(path):
                     if path.endswith("/123/jobs?per_page=100"):
                         return {"total_count": total, "jobs": jobs}
+                    return {"workflow_runs": [{"id": 123, "head_sha": "a" * 40,
+                        "head_branch": actions_monitor.BRANCH, "event": "push",
+                        "status": "completed", "conclusion": "success",
+                        "html_url": "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/123"}]}
+                with patch.dict("os.environ", {"GITHUB_SHA": "a" * 40}), patch.object(
+                        actions_monitor, "api", side_effect=fake_api):
+                    result = actions_monitor.collect()
+                self.assertTrue(all(not row["acceptance_candidate"] for row in result["runs"]))
+
+    def test_green_job_with_failed_skipped_or_missing_step_is_not_accepted(self):
+        for steps in (
+            [{"number": 1, "name": "Offline", "conclusion": "failure"}],
+            [{"number": 1, "name": "AV", "conclusion": "skipped"}],
+            [{"number": 1, "name": "Archive", "conclusion": "cancelled"}],
+            [{"number": 1, "name": "Checks", "conclusion": None}],
+            [],
+            None,
+        ):
+            with self.subTest(steps=steps):
+                job = {"id": 124, "status": "completed", "conclusion": "success"}
+                if steps is not None:
+                    job["steps"] = steps
+                def fake_api(path):
+                    if path.endswith("/123/jobs?per_page=100"):
+                        return {"total_count": 1, "jobs": [job]}
                     return {"workflow_runs": [{"id": 123, "head_sha": "a" * 40,
                         "head_branch": actions_monitor.BRANCH, "event": "push",
                         "status": "completed", "conclusion": "success",
