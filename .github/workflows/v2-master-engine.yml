@@ -207,7 +207,9 @@ jobs:
           print("Durable live archive key resolved using " + source + "; historical archive keys unchanged")
           PY
       - name: Real master discovery and verification
+        shell: bash
         run: |
+          set -euo pipefail
           mkdir -p v2/reports/master-run
           python v2/master_engine.py --archive v2/reports/master-run/inventory.enc --out v2/reports/master-run/output --limit 500
       - name: Record master run identity
