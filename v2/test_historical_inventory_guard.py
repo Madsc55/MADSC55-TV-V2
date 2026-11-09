@@ -179,6 +179,23 @@ class HistoricalInventoryGuardTests(unittest.TestCase):
                 self.assertIs(matched["av_verified"],False)
                 self.assertIs(matched["device_verified"],False)
 
+    def test_old_decoded_flags_never_become_fresh_candidate_av(self):
+        url="https://fixture.example.org/old-av.m3u8"
+        old=[{"url":url,"source":"historical","status":"VIDEO_AUDIO_DECODED",
+              "decoded":True,"video":True,"audio":True,
+              "av_verified":True,"device_verified":True,
+              "ibo_device_verified":True}]
+        current=[{"url":url,"source":"fresh","decoded":True,
+                  "video":True,"audio":True,"av_verified":True}]
+        raw,view,_=reconcile(old,current)
+        self.assertEqual(raw,old+current)
+        self.assertEqual(len(view),1)
+        self.assertEqual(view[0]["source_ids"],["historical","fresh"])
+        for flag in ("decoded","video","audio","av_verified",
+                     "device_verified","ibo_device_verified"):
+            with self.subTest(flag=flag):
+                self.assertIs(view[0][flag],False)
+
     def test_duplicate_sources_preserve_history_without_promoting_claimed_av(self):
         url="https://fixture.example.org/source.m3u8"
         old=[{"url":url,"source":"historical","av_verified":True},
