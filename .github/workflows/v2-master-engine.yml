@@ -53,6 +53,21 @@ jobs:
           PY
       - name: Verify permanent 33-task engine and fail-closed safety in one batch
         run: PYTHONPATH=v2/tasks python -m unittest discover -s v2/tasks -p 'test_*.py' -v
+      - name: Run grouped historical archive and transient AV acceptance regressions
+        shell: bash
+        run: |
+          mkdir -p v2/reports/master-ci
+          set +e
+          PYTHONPATH=v2 python -m unittest -v \
+            test_archive_acceptance_gate \
+            test_historical_inventory_guard \
+            test_independent_s3_restore \
+            test_traz_transient_av_recovery \
+            > v2/reports/master-ci/acceptance-11-13-14-16.log 2>&1
+          result=$?
+          cat v2/reports/master-ci/acceptance-11-13-14-16.log
+          printf 'Acceptance group exit=%s\\n' "$result" >> "$GITHUB_STEP_SUMMARY"
+          exit "$result"
       - name: Compile Master Engine modules
         run: python -m compileall -q v2
       - name: Run all offline regressions and preserve logs
