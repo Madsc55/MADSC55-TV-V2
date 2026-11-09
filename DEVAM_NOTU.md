@@ -1,3 +1,8 @@
+## 9 Kasım — V2 DEVAM: #13 S3 Actions workflow sözdizimi onarımı
+
+- `d4fa42cb`: `.github/workflows/v2-s3-restore-acceptance.yml` dosyasında önceki düzenlemeden kalan bozuk `grep -Eq '^restored_sha256=[0-9a-f]{64}$'` satırı ve yanlışlıkla ikiye katlanmış `Record verifiable run identity` adımı düzeltildi. Böylece şifreli S3 restore başarı SHA256 kontrolü ve Actions artefakt yükleme sırası yeniden geçerli hâle getirildi.
+- Gerçek AWS sürümlü geri yükleme ve Actions kabul kanıtı hâlâ alınmadı; #13 açık ve genel durum 8/33. Ana İBO, main, PR #9 ve 4.955 tarihî kimlikler değiştirilmedi.
+
 ## 9 Kasım — V2 DEVAM: gerçek FFmpeg offline kurulum engeli giderildi
 
 - `f8f18344`: Master Engine `offline-tests` job'unda AV regresyonlarından önce Ubuntu `ffmpeg` paketi `apt-get` ile yüklenir; `ffmpeg` ve `ffprobe` yürütülebilirleri doğrulanır. `install_ffmpeg.outcome` son fail-closed gate'e bağlandı. Önceki değişiklik yalnızca varlığı denetliyordu; artık gerçek decoder testleri için kurulum açıkça sağlanıyor.
