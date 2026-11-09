@@ -103,7 +103,9 @@ def collect():
         # Source integration has a configured 300-minute job budget; its
         # ordinary 2-hour age is not a stuck-job signal.
         stall_threshold = (6 * 3600 if run["_workflow_file"] ==
-                           "v2-source-integration-batch.yml" else 2 * 3600)
+                           "v2-source-integration-batch.yml" else
+                           3 * 3600 if run["_workflow_file"] ==
+                           "v2-master-engine.yml" else 2 * 3600)
         record["stall_threshold_seconds"] = stall_threshold
         record["possibly_stalled"] = stalled_run(run, threshold_seconds=stall_threshold)
         record["automatic_retry_permitted"] = False
