@@ -16,6 +16,12 @@ TOKEN = os.environ.get("GITHUB_TOKEN", "")
 WORKFLOWS = ("v2-eight-stage-verification.yml", "v2-master-engine.yml",
              "v2-source-integration-batch.yml", "v2-ordered-preflight.yml")
 BRANCH = "madsc/v2-discovery-bulk-20261031"
+WORKFLOW_NAMES = {
+    "v2-eight-stage-verification.yml": "V2 Eight-Stage Runner Verification",
+    "v2-master-engine.yml": "V2 Master Engine",
+    "v2-source-integration-batch.yml": "V2 Source Integration Batch",
+    "v2-ordered-preflight.yml": "V2 Sirali Hazirlik Testleri",
+}
 
 def api(path):
     if not TOKEN:
@@ -93,6 +99,7 @@ def collect():
             "status", "conclusion", "html_url", "created_at", "run_started_at", "updated_at"
         )}
         record["workflow_file"] = run["_workflow_file"]
+        record["name"] = WORKFLOW_NAMES[run["_workflow_file"]]
         # Source integration has a configured 300-minute job budget; its
         # ordinary 2-hour age is not a stuck-job signal.
         stall_threshold = (6 * 3600 if run["_workflow_file"] ==
