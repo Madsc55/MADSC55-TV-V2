@@ -121,7 +121,7 @@ def collect():
                 "failed_steps": [{
                     "number": step.get("number"), "name": step.get("name"),
                     "conclusion": step.get("conclusion")
-                } for step in job.get("steps", []) if step.get("conclusion") in (
+                } for step in (job.get("steps") or []) if step.get("conclusion") in (
                     "failure", "cancelled", "timed_out"
                 )]
             } for job in jobs]
