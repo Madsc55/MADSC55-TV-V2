@@ -28,6 +28,37 @@ class BackupRestoreDrillTests(unittest.TestCase):
                 with self.assertRaisesRegex(RuntimeError, "must not exist"):
                     drill(source, root / "independent" / "copy.enc",
                           root / "another.enc", root / "other.json")
+    def test_tampered_ciphertext_rejected_without_backup_or_evidence(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = pathlib.Path(d)
+            (root / "independent").mkdir()
+            source = root / "archive.enc"
+            backup = root / "independent" / "copy.enc"
+            restored = root / "restored.enc"
+            evidence = root / "evidence.json"
+            with patch.dict(os.environ, {"V2_ARCHIVE_KEY_HEX": "ab" * 32}):
+                append(source, {"url": "https://example.org/live.m3u8?token=SECRET"})
+                corrupted = bytearray(source.read_bytes())
+                corrupted[-1] ^= 1
+                source.write_bytes(corrupted)
+                with self.assertRaises(Exception):
+                    drill(source, backup, restored, evidence)
+                for destination in (backup, restored, evidence):
+                    self.assertFalse(destination.exists(), destination)
+
+    def test_wrong_archive_key_rejected_without_plaintext_evidence(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = pathlib.Path(d)
+            (root / "independent").mkdir()
+            source = root / "archive.enc"
+            with patch.dict(os.environ, {"V2_ARCHIVE_KEY_HEX": "ab" * 32}):
+                append(source, {"url": "https://example.org/live.m3u8?token=SECRET"})
+            with patch.dict(os.environ, {"V2_ARCHIVE_KEY_HEX": "cd" * 32}):
+                with self.assertRaises(Exception):
+                    drill(source, root / "independent" / "copy.enc",
+                          root / "restored.enc", root / "evidence.json")
+            self.assertFalse((root / "evidence.json").exists())
+
     def test_reject_same_backup_directory(self):
         with tempfile.TemporaryDirectory() as d:
             root = pathlib.Path(d)
