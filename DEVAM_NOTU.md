@@ -1,3 +1,8 @@
+## 9 Kasım — V2 DEVAM: #11/#13/#14/#16/#23/#25/#26 tek Ordered Preflight kabul grubu
+
+- `6d3f403a`: Ordered Preflight `discovery-tests` işi artık aynı CI job içinde 33 görev motorunun tüm testlerini, Actions monitor fail-closed regresyonlarını ve `test_archive_acceptance_gate`, `test_historical_inventory_guard`, `test_independent_s3_restore`, `test_traz_transient_av_recovery` modüllerini birlikte çalıştırıyor. Bunlar bir test başarısız olunca sonraki kabul zincirine geçmeden fail eder. Böylece #11/#13/#14/#16 ve #23/#25/#26 için farklı testlerin birbirinden kopuk raporlanması azaltıldı.
+- Bu grup **gerçek S3 bağımsız restore** veya **canlı FFmpeg yayın kanıtı** yerine geçmez. Workflow çalışması/sonuçları bu turda henüz doğrulanmadı. 8/33 değişmedi; #34 beklemede; main/PR #9/korunan IBO/tarihî 4.955 kimlikler korunur.
+
 ## 9 Kasım — V2 DEVAM: #26 hata nedenleri raporu ve toplu regresyon
 
 - `d17b6d55`: `v2/actions_monitor.py` artık gerçek GitHub metadata'sındaki başarısız job/step, atlanmış step, workflow failure ve eski SHA kaynaklı kabul engelini `failure_reasons` içinde açıkça kaydeder. Atlanan step, sahte yeşil sonuç sayılmaz; güvenli olmayan otomatik tekrar deneme açılmadı.
