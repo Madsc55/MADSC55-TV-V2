@@ -41,6 +41,10 @@ def restore_s3_version(bucket, key, version, expected, runner=subprocess.run):
         metadata = json.loads(result.stdout)
         if not isinstance(metadata, dict) or metadata.get("VersionId") != version:
             raise RuntimeError("Remote object version was not verified by S3")
+        # Never follow an unexpected symlink or accept a missing/non-regular
+        # remote download as a restored archive, even with matching metadata.
+        if downloaded.is_symlink() or not downloaded.is_file():
+            raise RuntimeError("S3 retrieval did not create a regular encrypted archive")
         downloaded.chmod(0o600)
         # Hash in bounded chunks: encrypted historical archives can be much larger than RAM.
         digest = hashlib.sha256()
