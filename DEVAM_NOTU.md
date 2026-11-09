@@ -1,3 +1,13 @@
+## 9 Kasım — Tarihî kurtarma zorunluluğu kaldırıldı; beşli CI doğrulandı
+
+- Kullanıcı kararı uygulandı: `v2/tasks/master_tasks.json` görev #3/#4/#6 için `deferred_optional` kapsamını tanımlar; bu görevlerin kanıtları ve 4.955 tarihî kimlik korunur, **completed** sahte biçimde verilmez. Diğer görevlerin bu üç kayda olan bağımlılıkları çıkarıldı. `v2/tasks/task_engine.py` zorunlu seçimde bunları atlar; #34 kapısında ertelenenleri zorunlu tamamlanma olarak saymaz. Kod/test commit'leri `4997184917073de17ec3332779d592b5e4afe837`, `9b908eea3a44c0f006cfdd637ce2345697b232da`, `4dc213d1aa244f074feb707e17cdb4db57418f06`.
+- Aynı son commit `4dc213d1` için beş GitHub Actions workflow'u **completed/success**: Master Engine #42610015411, Eight-Stage #42610015533, Ordered Preflight #42610015392, Actions Monitor #42610015523, Actions Trigger & Protected Playlist Gate #42610015394. Bunlar CI kod/güvenlik doğrulamasıdır; canlı AV veya IBO cihaz testi değildir.
+- `5cce6da32dc6c2b3bdebf92d11824bbe5a5a355f` ile Source Integration Batch push.paths'den `v2/tasks/**` kaldırıldı. Workflow dosyasının kendisinin değişmesi nedeniyle eski başlatılmış ağır tarama ve bir kuyruk işi hâlâ ayrıca kontrol edilmeli; sırf görev dosyası değişikliği yeni ağır tarama tetiklemez.
+- **Yeni aktif odak:** #9 resmî yayıncı/canlı TV kaynağında gerçek provenance ve AV ayrımı; #11 URL hash tekrarları ve kaynak geçmişi. #11, #9 kabul edilene kadar tamamlandı denmez. #5'in üç özgün bozuk satır engeli ayrıca açık kalır. #13 S3 gerçek restore ve #23 gerçek live master kanıtı olmadan kapatılmaz. Ana IBO, main, PR #9 korunur.
+- 33 numaralı kayıt şimdilik denetim/izlenebilirlik için saklanır; üçü kullanıcı kararıyla isteğe bağlıdır. **Zorunlu kapsam 30 görevdir.** #34 için zorunlu 30'un kabulü ve #32 kullanıcı cihaz testi gerekir; mevcut geçmiş notlardaki '33/33 zorunlu' ifadeleri bu karar ışığında güncel değildir.
+
+---
+
 ## 9 Kasım — KULLANICI KARARI: tarihî kurtarma taramalarını zorunlu bitiş kapsamından çıkar (UYGULAMA BEKLİYOR)
 
 Kullanıcı, tarihî kanal/kaynakların tek tek yeniden bulunmasını ana V2 tamamlanmasının ön şartı olmaktan çıkarmayı açıkça istedi. Bu karar #3 (45/50 özel kimlik), #4 (4.955 tarihî kimliğin eksik AV araştırması) ve #6 (2.643 kayıp adresin yeniden AV taraması) için geçerlidir. Tarihî envanter, şifreli adaylar ve mevcut AV kanıtları **silinmez**; kanıtsız yayınlar çalışıyor sayılmaz. Genel kanal keşfi, yeni kaynakların gerçek AV doğrulaması, güvenlik, IBO koruması ve kullanıcı cihaz testi devam eder.
