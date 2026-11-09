@@ -113,7 +113,9 @@ def reconcile(api,m3u):
             raise ValueError("Bad or duplicate M3U URL identity hash")
         seen.add(h)
         provenance=item.get("source_ids")
-        if not isinstance(provenance,list): provenance=[]
+        if (not isinstance(provenance,list) or len(provenance)>100 or
+                any(not isinstance(x,str) or not re.fullmatch(r"[A-Za-z0-9_.:/-]{1,96}",x) or "://" in x for x in provenance)):
+            raise ValueError("Invalid M3U source provenance")
         cid=missing.get(canonical_tvg_id(tvg,provenance))
         if cid is None: continue
         # Only stable source identifiers; strip uncontrolled URL-like metadata.
