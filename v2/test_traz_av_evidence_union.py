@@ -12,8 +12,11 @@ class CrossRunAVTests(unittest.TestCase):
         sources = [BASE/'traz-api-av-acceptance.json',
                    BASE/'traz-missing-target-real-av.json',
                    BASE/'traz-missing-stream-epg-crosswalk.json']
-        if not all(p.is_file() for p in sources):
+        present = [p.is_file() for p in sources]
+        if not any(present):
             raise unittest.SkipTest('Pinned Actions artifact inputs absent from ordinary offline checkout')
+        if not all(present):
+            raise RuntimeError('Incomplete pinned Actions AV evidence inputs; partial evidence cannot be accepted')
         cls.p = _read(BASE/'traz-api-av-acceptance.json')[0]
         cls.n = _read(BASE/'traz-missing-target-real-av.json')[0]
         cls.g = _read(BASE/'traz-missing-stream-epg-crosswalk.json')[0]
