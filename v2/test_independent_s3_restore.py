@@ -4,6 +4,7 @@ import hashlib
 import json
 import os
 import shutil
+import subprocess
 import tempfile
 import unittest
 from pathlib import Path
@@ -78,6 +79,29 @@ class RemoteRestoreTests(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError, "pinned original checksum"):
                 restore_s3_version("versioned-bucket", "v2/archive.enc",
                                    "version-one", "0" * 64, runner=copy_from_remote)
+
+    def test_remote_timeout_fails_closed_without_restore_acceptance(self):
+        calls = []
+        def timed_out(command, **kwargs):
+            calls.append(kwargs["timeout"])
+            raise subprocess.TimeoutExpired(command, kwargs["timeout"])
+        with patch.dict(os.environ, {"V2_ARCHIVE_KEY_HEX": "ab" * 32,
+                                  "V2_S3_RESTORE_TIMEOUT_SECONDS": "60"}):
+            with self.assertRaises(subprocess.TimeoutExpired):
+                restore_s3_version("versioned-bucket", "v2/archive.enc",
+                                   "version-one", self.sha, runner=timed_out)
+        self.assertEqual(calls, [60])
+
+    def test_missing_or_malformed_remote_version_metadata_is_rejected(self):
+        for payload in ('{}', 'not-json', '[]', '{"VersionId": null}'):
+            with self.subTest(payload=payload):
+                def copy_from_remote(command, **kwargs):
+                    shutil.copyfile(self.source, command[-1])
+                    return SimpleNamespace(stdout=payload)
+                with patch.dict(os.environ, {"V2_ARCHIVE_KEY_HEX": "ab" * 32}):
+                    with self.assertRaises((RuntimeError, ValueError)):
+                        restore_s3_version("versioned-bucket", "v2/archive.enc",
+                                           "version-one", self.sha, runner=copy_from_remote)
 
     def test_missing_private_key_prevents_remote_request(self):
         def must_not_run(command, **kwargs):
