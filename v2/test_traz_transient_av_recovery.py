@@ -90,6 +90,18 @@ class TransientBatchSafety(unittest.TestCase):
                     aggregate(target,old,{digest:{"url":"Two.az","channel_id":"Two.az"}},
                               {},[],fake,counts)
 
+    def test_failed_probe_cannot_smuggle_video_or_audio_success_flags(self):
+        prior,gap=fixture()
+        targets,known,counts=select_retry(prior,gap)
+        h=sha("Two.az")
+        found={h:{"url":"Two.az","channel_id":"Two.az"}}
+        for video,audio in ((True,False),(False,True),(True,True)):
+            with self.subTest(video=video,audio=audio):
+                proof={h:{"url_sha256":h,"status":"PROBE_FAILED_NETWORK_TIMEOUT",
+                          "decoded":False,"video":video,"audio":audio}}
+                with self.assertRaisesRegex(ValueError,"Fake FFmpeg recovery"):
+                    aggregate(targets,known,found,{},[],proof,counts)
+
     def test_prior_av_identity_remains_explicit_when_all_sources_timeout(self):
         prior,gap=fixture()
         targets,known,counts=select_retry(prior,gap)
