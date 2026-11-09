@@ -179,10 +179,11 @@
       "last_checked_at": "2026-11-09",
       "evidence_urls": [
         "https://github.com/Madsc55/MADSC55-TV-V2/commit/a5ff82a5f9ceded6de356ecb6827945f1a1a374d",
-        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42623941094"
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42623941094",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42706126197/job/129463381480"
       ],
       "blocker": "Depends on #14 historical baseline and real transient-source failure acceptance.",
-      "reason": "Transient retry retains prior decoded AV channel IDs, rejects mismatched URL SHA/channel identity and forged FFmpeg status; grouped offline CI green. End-to-end prior AV evidence retention acceptance still pending."
+      "reason": "Transient retry retains prior decoded AV channel IDs, rejects mismatched URL SHA/channel identity and forged FFmpeg status; grouped offline CI green. End-to-end prior AV evidence retention acceptance still pending. Real Actions job 129463381480 reprobed 89 selected transient URLs with FFmpeg, preserved 3 previous successes and recorded 0 fresh decodes. Historical baseline dependency remains open."
     },
     {
       "id": 17,
