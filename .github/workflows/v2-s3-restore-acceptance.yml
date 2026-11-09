@@ -27,6 +27,12 @@ jobs:
           python -m pip install cryptography==44.0.2
           command -v aws
           aws --version
+      - name: Run independent S3 restore security regressions before remote access
+        shell: bash
+        run: |
+          set -euo pipefail
+          PYTHONPATH=v2 python -m unittest discover -s v2 -p 'test_independent_s3_restore.py' -v
+          PYTHONPATH=v2 python -m unittest discover -s v2 -p 'test_archive_acceptance_gate.py' -v
       - name: Restore pinned version from independent S3 and validate all historical identities
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.V2_S3_RESTORE_AWS_ACCESS_KEY_ID }}
