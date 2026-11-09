@@ -107,6 +107,16 @@ def check(env=None):
     if (None in candidate_ids or len(candidate_ids) != len(set(candidate_ids))
             or not set(candidate_ids).issubset(raw_url_ids)):
         raise RuntimeError("Encrypted candidate view lacks raw URL provenance")
+    # Archived deduplication is a discovery view, not a playback proof. Even
+    # an authenticated archive cannot elevate old evidence to fresh AV status.
+    for candidate in candidates:
+        if (candidate.get("status") != "NOT_REVERIFIED"
+                or candidate.get("av_verified") is not False
+                or candidate.get("decoded") is not False
+                or candidate.get("video") is not False
+                or candidate.get("audio") is not False
+                or candidate.get("spoken_language_verified") is not False):
+            raise RuntimeError("Encrypted candidate view falsely claims fresh AV")
     return True
 
 if __name__ == "__main__":
