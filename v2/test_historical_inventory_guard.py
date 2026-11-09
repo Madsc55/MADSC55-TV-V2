@@ -11,7 +11,7 @@ from unittest.mock import patch
 
 from encrypted_archive import restore
 from historical_inventory_guard import (SCHEMA, classify, identity, preserve_to_new_archive,
-                                        reconcile)
+                                        reconcile, verify_historical_baseline)
 
 
 class HistoricalInventoryGuardTests(unittest.TestCase):
@@ -124,6 +124,24 @@ class HistoricalInventoryGuardTests(unittest.TestCase):
                          ["historical", "current-one", "current-two"])
         self.assertTrue(matched[0]["historical_not_reverified"])
         self.assertFalse(matched[0]["device_verified"])
+
+    def test_4955_duplicate_historical_records_validate_full_metadata_multiset(self):
+        old=[{"url":"https://fixture.example.org/%04d.m3u8" % i,
+              "source":"old","status":"HISTORICAL"} for i in range(4953)]
+        old.extend([
+            {"url":old[0]["url"],"source":"legacy-backup","status":"TIMEOUT"},
+            {"url":old[0]["url"],"source":"legacy-backup","status":"TIMEOUT"},
+        ])
+        self.assertEqual(len(old),4955)
+        self.assertEqual(verify_historical_baseline(list(reversed(old)),old),
+                         verify_historical_baseline(old,old))
+        corrupted=[dict(x) for x in old]
+        corrupted[-1]["status"]="VIDEO_AUDIO_DECODED"
+        with self.assertRaisesRegex(ValueError,"metadata"):
+            verify_historical_baseline(corrupted,old)
+        missing=old[:-1]+[dict(old[1])]
+        with self.assertRaisesRegex(ValueError,"metadata"):
+            verify_historical_baseline(missing,old)
 
     def test_duplicate_sources_preserve_history_without_promoting_claimed_av(self):
         url="https://fixture.example.org/source.m3u8"
