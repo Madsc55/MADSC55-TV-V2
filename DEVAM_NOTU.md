@@ -1,3 +1,9 @@
+## 9 Kasım — V2 DEVAM: gerçek FFmpeg regresyonları atlanırsa offline kabul reddi
+
+- `e1f7c7bd`: Master Engine `offline_regressions` adımı `unittest.log` içindeki `skipped 'FFmpeg not installed'` ve `skipped 'ffprobe not installed'` kayıtlarını denetler; bu durumda offline adım başarısız olur ve fail-closed final gate kabulü reddeder. Eski 829 test / 3 skipped çalışmasının FFmpeg atlamaları artık kabul edilmeyecek.
+- Normal offline checkout'ta pinlenmiş Actions AV kanıt dosyaları bulunmadığında `CrossRunAVTests` atlaması ayrı bir sorun olarak duruyor; bu değişiklik onun için sahte AV kanıtı üretmez.
+- Son commit için gerçek Actions job/artefakt başarı kanıtı henüz alınamadı. 8/33; main, PR #9, ana İBO ve tarihî envanter korunuyor.
+
 ## 9 Kasım — V2 DEVAM: #13 bağımsız S3 geri yükleme sonuç artefaktı
 
 - `6fa017f2`: `v2-s3-restore-acceptance.yml` başarılı gerçek sürümlü S3 restore sonrası `v2/reports/s3-restore/restore-result.log` içine yalnızca kabul çıktısını ve şifreli dosyanın SHA256'sını yazar, PASS ve 64 haneli SHA256 kalıbını doğrular; başarılı sonuç `v2-s3-restore-result-<run_id>` artefaktına yüklenir.
