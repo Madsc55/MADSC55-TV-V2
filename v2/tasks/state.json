@@ -121,11 +121,14 @@
     },
     {
       "id": 11,
-      "status": "pending",
-      "last_checked_at": null,
-      "evidence_urls": [],
-      "blocker": null,
-      "reason": null
+      "status": "in_progress",
+      "last_checked_at": "2026-11-09",
+      "evidence_urls": [
+        "https://github.com/Madsc55/MADSC55-TV-V2/commit/cd231eb861335f2fde9caa791489c47fe4e7b546",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42623941094"
+      ],
+      "blocker": "#9 official-source discovery and full provenance acceptance remain open.",
+      "reason": "Exact URL SHA deduplication, source lineage and no fabricated AV verified by offline regression; pending #9 official-source provenance dependency and complete acceptance."
     },
     {
       "id": 12,
@@ -151,11 +154,14 @@
     },
     {
       "id": 14,
-      "status": "pending",
-      "last_checked_at": null,
-      "evidence_urls": [],
-      "blocker": null,
-      "reason": null
+      "status": "in_progress",
+      "last_checked_at": "2026-11-09",
+      "evidence_urls": [
+        "https://github.com/Madsc55/MADSC55-TV-V2/commit/1fe5c6b6d3e20c51362fb3673970a69e1ba0e1c9",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42623941094"
+      ],
+      "blocker": "#13 encrypted remote restore acceptance and actual 4955-record baseline evidence remain outstanding.",
+      "reason": "4955-row synthetic regression preserves duplicate SHA records, original metadata and rejects missing/tampered records; grouped offline CI green. Real 4955 historical baseline and encrypted failure-path acceptance not yet verified."
     },
     {
       "id": 15,
@@ -167,11 +173,14 @@
     },
     {
       "id": 16,
-      "status": "pending",
-      "last_checked_at": null,
-      "evidence_urls": [],
-      "blocker": null,
-      "reason": null
+      "status": "in_progress",
+      "last_checked_at": "2026-11-09",
+      "evidence_urls": [
+        "https://github.com/Madsc55/MADSC55-TV-V2/commit/a5ff82a5f9ceded6de356ecb6827945f1a1a374d",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42623941094"
+      ],
+      "blocker": "Depends on #14 historical baseline and real transient-source failure acceptance.",
+      "reason": "Transient retry retains prior decoded AV channel IDs, rejects mismatched URL SHA/channel identity and forged FFmpeg status; grouped offline CI green. End-to-end prior AV evidence retention acceptance still pending."
     },
     {
       "id": 17,
