@@ -103,6 +103,23 @@ class RemoteRestoreTests(unittest.TestCase):
                         restore_s3_version("versioned-bucket", "v2/archive.enc",
                                            "version-one", self.sha, runner=copy_from_remote)
 
+    def test_s3_success_metadata_without_download_is_rejected(self):
+        def no_file(command, **kwargs):
+            return SimpleNamespace(stdout=json.dumps({"VersionId": "version-one"}))
+        with patch.dict(os.environ, {"V2_ARCHIVE_KEY_HEX": "ab" * 32}):
+            with self.assertRaisesRegex(RuntimeError, "regular encrypted archive"):
+                restore_s3_version("versioned-bucket", "v2/archive.enc",
+                                   "version-one", self.sha, runner=no_file)
+
+    def test_s3_symlink_download_is_rejected(self):
+        def symlink_file(command, **kwargs):
+            Path(command[-1]).symlink_to(self.source)
+            return SimpleNamespace(stdout=json.dumps({"VersionId": "version-one"}))
+        with patch.dict(os.environ, {"V2_ARCHIVE_KEY_HEX": "ab" * 32}):
+            with self.assertRaisesRegex(RuntimeError, "regular encrypted archive"):
+                restore_s3_version("versioned-bucket", "v2/archive.enc",
+                                   "version-one", self.sha, runner=symlink_file)
+
     def test_missing_private_key_prevents_remote_request(self):
         def must_not_run(command, **kwargs):
             self.fail("S3 must not be contacted without archive key")
