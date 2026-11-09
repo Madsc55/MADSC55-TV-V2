@@ -91,6 +91,40 @@ class HistoricalInventoryGuardTests(unittest.TestCase):
         self.assertEqual(len(protected), 3)
         self.assertTrue(indexed[0]["historical_not_reverified"])
 
+    def test_corrupt_new_identity_cannot_overwrite_historical_archive(self):
+        old = [{"url": "https://fixture.example.org/historic.m3u8",
+                "source": "historical"},
+               {"url_sha256": hashlib.sha256(b"unresolved").hexdigest()}]
+        preserved, indexed, _ = reconcile(old)
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "historic.enc"
+            with patch.dict(os.environ, {"V2_ARCHIVE_KEY_HEX": "ab" * 32}):
+                self.assertTrue(preserve_to_new_archive(path, preserved, indexed))
+                before = path.read_bytes()
+                original = restore(path)
+                corrupt = [{"url": "https://fixture.example.org/new.m3u8",
+                            "url_sha256": "0" * 64}]
+                with self.assertRaisesRegex(ValueError, "disagree"):
+                    reconcile(old, corrupt)
+                self.assertEqual(path.read_bytes(), before)
+                self.assertEqual(restore(path), original)
+
+    def test_duplicate_current_sources_preserve_history_without_false_av(self):
+        url = "https://fixture.example.org/historic.m3u8"
+        old = [{"url": url, "source": "historical"},
+               {"url_sha256": hashlib.sha256(b"missing").hexdigest()}]
+        current = [{"url": url, "source": "current-one"},
+                   {"url": url, "source": "current-two"}]
+        preserved, indexed, _ = reconcile(old, current)
+        self.assertEqual(preserved[:len(old)], old)
+        self.assertEqual(len(preserved), 4)
+        matched = [row for row in indexed if row["url"] == url]
+        self.assertEqual(len(matched), 1)
+        self.assertEqual(matched[0]["source_ids"],
+                         ["historical", "current-one", "current-two"])
+        self.assertTrue(matched[0]["historical_not_reverified"])
+        self.assertFalse(matched[0]["device_verified"])
+
     def test_encrypted_snapshot_restores_every_raw_row_and_deduplicated_view(self):
         old = [{"url": "https://fixture.example.org/a.m3u8", "source": "#60"},
                {"url": "https://fixture.example.org/a.m3u8", "logo": "old"},
