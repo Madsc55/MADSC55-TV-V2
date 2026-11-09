@@ -1,3 +1,9 @@
+## 9 Kasım — V2 DEVAM: görev bağımlılıkları toplu kabul koruması
+
+- `1e968bb0`: Kanonik 33 görev motoru artık **tamamlandı** işaretlenmiş bir görevin herhangi bir `depends_on` ön koşulu tamamlanmamışsa tüm ledger'ı reddediyor. Böylece bağlı işlerin gerçek kabulü olmadan downstream görevler yeşil gösterilemiyor.
+- `05341dda`, `d11a833e`: #1→#12 ve #2→#7/#8/#10/#22/#27 bağımlılıkları için regresyon testleri ve bağımsız senaryo fixture düzeltmesi eklendi.
+- Bu commit'ler için GitHub Actions sonucunun başarılı olduğu **henüz doğrulanmadı**. 8/33 görev tamamlandı; yeni kabul/gerçek S3 veya canlı AV sonucu iddia edilmez. #34 beklemede. Sadece V2 geliştirme dalı değişti; ana IBO/main/PR #9 ve 4.955 tarihî kimlikler korunur.
+
 ## 9 Kasım — V2 DEVAM: toplu Actions hata zinciri onarımı
 
 - `14b46437`: Master Engine workflow'unda `Verify grouped test logs` başarısız olursa GitHub Actions varsayılan `success()` nedeniyle sonraki tüm offline regresyonların **atlanması** riski giderildi. Log bütünlük adımı `continue-on-error` ile sonucunu kaydeder; tüm offline regresyonlar `if: always()` ile çalışır; son fail-closed kapısı `GROUPED_LOG_RESULT` başarısız/atlandıysa job'u kırmızı bitirir. Böylece hem toplu hata raporları toplanır hem eksik log yeşil kabul edilmez.
