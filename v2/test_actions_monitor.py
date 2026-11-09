@@ -99,6 +99,28 @@ class MonitorTests(unittest.TestCase):
             "v2-eight-stage-verification.yml", "v2-master-engine.yml",
             "v2-source-integration-batch.yml", "v2-ordered-preflight.yml"})
 
+    def test_stalled_job_inventory_paginates_all_jobs(self):
+        run={"id":78,"head_sha":"a"*40,"status":"in_progress",
+             "conclusion":None,"head_branch":actions_monitor.BRANCH,"event":"push",
+             "created_at":"2026-11-01T00:00:00Z",
+             "html_url":"https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/78"}
+        seen=[]
+        def fake_api(path):
+            seen.append(path)
+            if "/workflows/" in path:
+                return {"workflow_runs":[run] if "v2-source-integration-batch" in path else []}
+            if path.endswith("/78/jobs?per_page=100"):
+                return {"total_count":101,"jobs":[{"id":i,"status":"completed"} for i in range(100)]}
+            if path.endswith("/78/jobs?per_page=100&page=2"):
+                return {"total_count":101,"jobs":[{"id":101,"name":"AV scan","status":"in_progress"}]}
+            raise AssertionError(path)
+        with patch.object(actions_monitor,"api",side_effect=fake_api):
+            row=actions_monitor.collect()["runs"][0]
+        self.assertTrue(row["active_job_evidence_complete"])
+        self.assertEqual([x["id"] for x in row["active_jobs"]],[101])
+        self.assertEqual(len([p for p in seen if "/78/jobs?" in p]),2)
+        self.assertFalse(row["acceptance_candidate"])
+
     def test_stalled_active_job_is_reported_without_acceptance_or_retry(self):
         run={"id":77,"head_sha":"a"*40,"status":"in_progress",
              "conclusion":None,"head_branch":actions_monitor.BRANCH,"event":"push",
