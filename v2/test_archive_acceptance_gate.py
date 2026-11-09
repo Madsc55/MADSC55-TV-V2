@@ -54,6 +54,21 @@ class ArchiveGateTests(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError, "historical identities or metadata"):
                 check(self.prepared())
 
+    def test_authenticated_candidate_without_raw_url_provenance_rejected(self):
+        """Even a fully encrypted view cannot invent a playable URL."""
+        from historical_inventory_guard import preserve_to_new_archive
+        history = [json.loads(line) for line in BASELINE.read_text().splitlines() if line]
+        forged = [{"url": "https://fixture.example.org/forged.m3u8",
+                   "source_ids": ["invented"], "status": "NOT_REVERIFIED"}]
+        archive = self.root / "forged-view.enc"
+        with patch.dict(os.environ, {"V2_ARCHIVE_KEY_HEX": "ab" * 32}):
+            preserve_to_new_archive(archive, history, forged)
+        digest = hashlib.sha256(archive.read_bytes()).hexdigest()
+        env = self.prepared(restored_file=str(archive), restore_sha256=digest)
+        env["V2_ARCHIVE_EXPECTED_SHA256"] = digest
+        with self.assertRaisesRegex(RuntimeError, "lacks raw URL provenance"):
+            check(env)
+
     def test_missing_approval_or_evidence(self):
         with self.assertRaises(RuntimeError): check({})
         with self.assertRaises(RuntimeError): check({"V2_ARCHIVE_RESTORE_APPROVED": "true"})
