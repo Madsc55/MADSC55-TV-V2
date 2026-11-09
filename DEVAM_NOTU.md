@@ -1,3 +1,9 @@
+## 9 Kasım — V2 DEVAM: FFmpeg CI yetenek ve AV bağımlılık kaydı
+
+- `6c035e65`: Master Engine offline-tests içine FFmpeg ve FFprobe araçlarını, sürümü, decoder/filter listesini `v2/reports/master-ci/ffmpeg-capabilities.log` artefaktında saklayan kontrol eklendi. `ffmpeg_capabilities.outcome` son fail-closed kabul kapısında kontrol edilir; başarısızsa yeşil kabul yok, diğer test logları toplanır.
+- Bu değişiklik gerçek kanal AV kanıtı değildir. Eski 829 test / 3 skipped artefaktı son SHA'nın doğrulaması değildir. Yeni commit'e ait gerçek Actions run/job sonucu henüz elde edilmedi. #13 ve #26 açık, genel 8/33.
+- Geliştirme dalı dışında değişiklik yok; main, PR #9, ana İBO listesi, kategoriler ve 4.955 tarihî baseline korunuyor.
+
 ## 9 Kasım — V2 DEVAM: #13 AWS CLI kurulum ve eski offline artifact kontrolü
 
 - `353bf909`: bağımsız S3 restore workflow'u sabitlenmemiş `awscli` pip kurulumunu kaldırdı; GitHub-hosted runner'daki `aws` ikilisini `command -v aws` / `aws --version` ile doğrular. Şifreleme kütüphanesi sabit `cryptography==44.0.2` kalır. Gerçek AWS erişimi ve versioned restore henüz doğrulanmadı.
