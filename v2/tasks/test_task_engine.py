@@ -23,7 +23,7 @@ class TaskEngineTests(unittest.TestCase):
         ledger["statuses"][1]["status"] = "completed"
         ledger["statuses"][3]["status"] = "pending"
         # Preserve original baseline for deterministic historical ordering assertions.
-        for task_id in (7, 8, 10):
+        for task_id in (7, 8, 10, 13):
             ledger["statuses"][task_id - 1]["status"] = "pending"
         return ledger
 
@@ -59,6 +59,10 @@ class TaskEngineTests(unittest.TestCase):
         self.assertNotIn(2, independent)
         self.assertEqual(independent[:4], [7, 8, 9, 10])
         self.assertIn(13, independent)
+        ledger["statuses"][12]["status"] = "blocked"
+        independent = e.independent_ready(self.master, ledger, self.root, excluded=(1,))
+        self.assertNotIn(13, independent)
+        self.assertIn(23, independent)  # An external archive blocker must not stop the motor work.
 
     def test_user_directed_heavy_work_deferred_without_false_completion(self):
         ledger = copy.deepcopy(self.ledger)
