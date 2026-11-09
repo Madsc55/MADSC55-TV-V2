@@ -134,12 +134,12 @@ class ArchiveGateTests(unittest.TestCase):
             {"url": url, "source_id": "original-source"}], 4955)
         self.assertEqual(len(view), 1)
         self.assertEqual(view[0]["source_ids"], ["original-source"])
-        for labels in (["invented-source"], ["original-source", "invented-source"],
-                       ["original-source", "original-source"]):
+        for index, labels in enumerate((["invented-source"],
+                                        ["original-source", "invented-source"],
+                                        ["original-source", "original-source"])):
             with self.subTest(labels=labels):
                 forged = [dict(view[0], source_ids=labels)]
-                archive = self.root / ("forged-source-" + str(len(labels)) +
-                                       "-" + str(labels[0] == "invented-source") + ".enc")
+                archive = self.root / ("forged-source-" + str(index) + ".enc")
                 with patch.dict(os.environ, {"V2_ARCHIVE_KEY_HEX": "ab" * 32}):
                     preserve_to_new_archive(archive, raw, forged)
                 digest = hashlib.sha256(archive.read_bytes()).hexdigest()
