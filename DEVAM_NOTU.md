@@ -1,3 +1,12 @@
+## 9 Kasım — #13 bağımsız S3 geri yükleme güvenliği, kanıt sınırı
+
+- Dev commit `4f5d2685a6685dc429e59a1ca7c69068b73b3c6f`: `v2/independent_s3_restore.py` artık S3 nesne sürüm kimliğindeki DEL (ASCII 127) kontrol karakterini ağ isteğinden önce reddeder.
+- Dev commit `897de2a34fccdbe744fe787fa74c3eb7f13b531d`: `v2/test_independent_s3_restore.py` için S3'ü hiç çağırmama regresyonu eklendi.
+- Aynı ikinci SHA üzerinde gerçek Actions: Eight-Stage #42539429702 (2/2 success), Current Scanner #42539429699 (2/2 success), Actions Monitor #42539429671 (success), Master Engine #42539429747 (offline-tests success; live master skipped), Ordered Preflight #42539429620 (compile/protect/discovery-tests/safety success; read-only live audit skipped). Bu sonuçlar **offline güvenlik kabulüdür**, gerçek AWS S3 sürüm geri yükleme kanıtı değildir; #13 açık kalır.
+- Paralel uzun Source Integration Batch #42530626269 son gözlemde 11/12 success, bir canlı AV rapor job'u in_progress. Onunla yarışan ikinci ağır tarama başlatılmadı. Main, PR #9, IBO listesi ve 4.955 tarihî kayıt değiştirilmedi.
+
+---
+
 ## Görev yürütücüsü için üç doğrulama/düzeltme (33 görev kapsamında, AÇIK)
 
 Bu üç madde **34. görev değildir**; mevcut 33 görevin görev yönetimi/otomasyon güvenilirliği kapsamındaki açık teknik eksikleridir. Kodda ve gerçek GitHub Actions çalışma kanıtlarında doğrulanmadan tamamlandı denmez:
