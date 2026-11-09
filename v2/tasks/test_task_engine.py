@@ -192,6 +192,16 @@ class TaskEngineTests(unittest.TestCase):
             with self.subTest(task_id=task_id), self.assertRaisesRegex(ValueError, "only applies to task 32"):
                 e.safe_transition(self.ledger["statuses"][task_id - 1], "in_progress", user_confirmed=True)
 
+    def test_completed_task_idempotent_without_evidence_replacement(self):
+        row = copy.deepcopy(self.ledger["statuses"][0])
+        self.assertEqual(e.safe_transition(row, "completed"), row)
+        self.assertEqual(e.safe_transition(row, "completed", row["evidence_urls"],
+                                           row["last_checked_at"]), row)
+        with self.assertRaisesRegex(ValueError, "evidence cannot"):
+            e.safe_transition(row, "completed", ["https://example.org/other"])
+        with self.assertRaisesRegex(ValueError, "timestamp cannot"):
+            e.safe_transition(row, "completed", checked_at="2099-01-01T00:00:00Z")
+
     def test_completed_task_guard_remains_after_device_validation(self):
         row = copy.deepcopy(self.ledger["statuses"][0])
         with self.assertRaisesRegex(ValueError, "downgraded"):
