@@ -8,7 +8,8 @@ on:
       - 'v2/source_integration_gate.py'
       - 'v2/master_engine.py'
       - 'v2/test_master_engine.py'
-      - 'v2/tasks/**'
+      # Task ledger and scheduler edits are not live-source changes.
+      # Keep the expensive AV workflow restricted to actual scanner inputs.
       - 'v2/orphan_m3u_recovery.py'
       - 'v2/orphan_iptv_org_registry.py'
       - 'v2/orphan_baseline_guard.py'
