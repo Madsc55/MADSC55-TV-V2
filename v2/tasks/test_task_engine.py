@@ -243,7 +243,12 @@ class TaskEngineTests(unittest.TestCase):
         for task_id in (1, 32, 33):
             broken = copy.deepcopy(ledger)
             broken["statuses"][task_id - 1]["status"] = "pending"
-            self.assertFalse(e.issue34_ready(self.master, broken, self.root, user_approved=True))
+            if task_id == 1:
+                # #12 remains completed; corrupt dependency state must fail closed.
+                with self.assertRaisesRegex(ValueError, "unfinished dependencies"):
+                    e.issue34_ready(self.master, broken, self.root, user_approved=True)
+            else:
+                self.assertFalse(e.issue34_ready(self.master, broken, self.root, user_approved=True))
         broken = copy.deepcopy(ledger)
         broken["statuses"][31]["evidence_urls"] = []
         with self.assertRaises(ValueError):
