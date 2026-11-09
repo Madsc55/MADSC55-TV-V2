@@ -1,3 +1,9 @@
+## 9 Kasım — #11/#14 aday görünümünde eski AV kanıtının taşınması engellendi
+
+- `a7989ba5`: tarihî ham kayıtların `decoded/video/audio/av_verified/device_verified/ibo_device_verified` bayrakları arşivde aynen korunur; **yeni tarama yapılmadan** tekilleştirilmiş URL aday görünümünde bu bayrakların tamamı `False` yapılır. Kaynak geçmişi kaybolmaz.
+- `d2ed4223`: hem tarihî hem yeni kaynakta eski AV/IBO bayrakları `True` olsa bile ham kayıtların tam korunması ve aday görünümde sahte AV oluşmaması regresyonu. Push sonrası Actions **pending/queued**, başarı ilan edilmedi.
+- #11/#14/#16 in_progress, #9 ve #13 kabul bağımlılıkları açık. Toplam 8/33. main, PR #9, IBO ve tarihî envanter değiştirilmedi.
+
 ## 9 Kasım — #16 FFmpeg başarısız probunda çelişkili AV bayrakları reddi
 
 - `baf6f5a3` ve `1d4dc57f` Master Engine offline ve Eight-Stage **success**; önceki explicit-null proof CI hatası çözüldü.
