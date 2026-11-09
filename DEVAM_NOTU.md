@@ -1,3 +1,8 @@
+## 9 Kasım — tarihî SHA üyelik hesaplaması
+
+- `5737ad74`: #14 şifreli arşiv kabulünde tarihî SHA üyelik kümesi kayıt başına tek kimlik hesaplamasıyla kuruluyor; kabul şartı ve korunmuş baseline değişmedi.
+- Yeni GitHub Actions run ID, yeşil test kanıtı veya gerçek uzak S3 restore kanıtı elde edilmedi. Bu turda hiçbir görev kapanmadı; 8/33. main, PR #9, ana İBO ve tarihî envanter korunuyor.
+
 ## 9 Kasım — Master Engine toplu kabul çıktısı
 
 - `093475c4`: #11/#13/#14/#16 toplu offline kabul adımının `GITHUB_STEP_SUMMARY` çıkış kodu satırında tek ters bölü newline kaçışı kullanıldı; push tetikleyicisi geliştirme dalında mevcut.
