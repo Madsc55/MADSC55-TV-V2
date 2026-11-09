@@ -85,6 +85,7 @@ def reconcile(api,m3u):
             or len(candidates)!=m3u.get("total_unique_candidates")):
         raise ValueError("Incomplete API/M3U candidate inventory")
     api_by_hash=defaultdict(set)
+    seen_api_pairs=set()
     for item in refs:
         if (not isinstance(item,dict) or "url" in item or
                 item.get("av_verified") is not False or
@@ -92,6 +93,10 @@ def reconcile(api,m3u):
                 not isinstance(item.get("url_sha256"),str) or
                 not HEX.fullmatch(item["url_sha256"])):
             raise ValueError("Invalid API hash-only identity")
+        pair=(item["channel_id"].casefold(),item["url_sha256"])
+        if pair in seen_api_pairs:
+            raise ValueError("Duplicate API channel and URL hash pair")
+        seen_api_pairs.add(pair)
         api_by_hash[item["url_sha256"]].add(item["channel_id"].casefold())
     possible=defaultdict(dict)
     hash_to_matched_ids=defaultdict(set)
