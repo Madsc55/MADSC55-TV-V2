@@ -208,6 +208,7 @@ def inspect_xmltv(data,requested):
     if not isinstance(data,bytes):
         raise ValueError("Expected XMLTV bytes")
     channel_ids=set()
+    duplicate_channel_ids=set()
     programmes=Counter()
     if len(data)>MAX_DECOMPRESSED:
         raise ValueError("Oversized XMLTV content")
@@ -219,12 +220,17 @@ def inspect_xmltv(data,requested):
         for event,element in parser:
             if event!="end":continue
             if element.tag=="channel" and element.get("id") in requested:
-                channel_ids.add(element.get("id"))
+                cid=element.get("id")
+                if cid in channel_ids:
+                    duplicate_channel_ids.add(cid)
+                channel_ids.add(cid)
             if element.tag=="programme" and element.get("channel") in requested:
                 programmes[element.get("channel")]+=1
             element.clear()
     except (ET.ParseError,StopIteration) as e:
         raise ValueError("Malformed XMLTV") from e
+    if duplicate_channel_ids:
+        raise ValueError("Duplicate XMLTV channel identity")
     return channel_ids,programmes
 
 def inspect_epg_gap(epg_ids,source_urls,fetcher=_fetch_xmltv):
