@@ -506,12 +506,17 @@ def verify_historical_baseline(historical, baseline_records):
     expected = [identity(row) for row in baseline_records]
     observed = [identity(row) for row in historical]
     if (not expected or None in expected or None in observed or
-            len(expected) != len(set(expected)) or
             len(expected) != len(observed) or
-            set(expected) != set(observed)):
+            sorted(expected) != sorted(observed)):
         raise ValueError("Historical identities do not match immutable baseline")
-    reference = {identity(row): row for row in baseline_records}
-    if any(row != reference[identity(row)] for row in historical):
+    # A real archive can contain multiple records with the same URL hash but
+    # different source, logo or playback metadata. A dict keyed by SHA would
+    # silently discard those historical rows. Compare complete record multisets.
+    from collections import Counter
+    def fingerprint(row):
+        return json.dumps(row, sort_keys=True, ensure_ascii=False,
+                          separators=(",", ":"))
+    if Counter(map(fingerprint, historical)) != Counter(map(fingerprint, baseline_records)):
         raise ValueError("Historical record metadata differs from immutable baseline")
     return hashlib.sha256("".join(sorted(expected)).encode("ascii")).hexdigest()
 
