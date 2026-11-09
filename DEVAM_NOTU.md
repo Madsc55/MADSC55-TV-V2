@@ -1,3 +1,8 @@
+## 9 Kasım — V2 DEVAM: #13 gerçek S3 restore öncesi şifreleme güvenlik regresyonları
+
+- `4d50cd0e`: bağımsız S3 Actions iş akışında AWS erişiminden önce `test_independent_s3_restore.py` ve `test_archive_acceptance_gate.py` testlerinin tamamı `unittest discover` ile zorunlu çalışır. Hatalı yerel S3 sürüm/sha/şifreleme kabulü remote restore aşamasını başlatmaz.
+- Güncel workflow test sonucu ve gerçek sürümlü S3 arşiv geri yüklemesi henüz doğrulanmadı; #13 ve bağımlı #14 açık, 8/33. main, PR #9, ana İBO ve tarihî envanter değiştirilmedi.
+
 ## 9 Kasım — V2 DEVAM: #13 S3 Actions workflow sözdizimi onarımı
 
 - `d4fa42cb`: `.github/workflows/v2-s3-restore-acceptance.yml` dosyasında önceki düzenlemeden kalan bozuk `grep -Eq '^restored_sha256=[0-9a-f]{64}$'` satırı ve yanlışlıkla ikiye katlanmış `Record verifiable run identity` adımı düzeltildi. Böylece şifreli S3 restore başarı SHA256 kontrolü ve Actions artefakt yükleme sırası yeniden geçerli hâle getirildi.
