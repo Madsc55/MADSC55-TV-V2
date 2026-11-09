@@ -149,6 +149,25 @@ class ArchiveGateTests(unittest.TestCase):
                 with self.assertRaisesRegex(RuntimeError, "source provenance"):
                     check(env)
 
+    def test_new_candidate_cannot_forge_historical_membership(self):
+        """Historical protection flag must follow the immutable SHA baseline."""
+        from historical_inventory_guard import preserve_to_new_archive, reconcile
+        history = [json.loads(line) for line in BASELINE.read_text().splitlines() if line]
+        raw, view, _ = reconcile(history, [
+            {"url": "https://fixture.example.org/not-historical.m3u8",
+             "source_id": "new-discovery"}], 4955)
+        self.assertEqual(len(view), 1)
+        self.assertIs(view[0]["historical_not_reverified"], False)
+        forged = [dict(view[0], historical_not_reverified=True)]
+        archive = self.root / "forged-historical-membership.enc"
+        with patch.dict(os.environ, {"V2_ARCHIVE_KEY_HEX": "ab" * 32}):
+            preserve_to_new_archive(archive, raw, forged)
+        checksum = hashlib.sha256(archive.read_bytes()).hexdigest()
+        env = self.prepared(restored_file=str(archive), restore_sha256=checksum)
+        env["V2_ARCHIVE_EXPECTED_SHA256"] = checksum
+        with self.assertRaisesRegex(RuntimeError, "historical identity protection"):
+            check(env)
+
     def test_candidate_view_cannot_silently_omit_valid_raw_url(self):
         """Deduplication may collapse duplicates, never discard distinct URLs."""
         from historical_inventory_guard import preserve_to_new_archive, reconcile
