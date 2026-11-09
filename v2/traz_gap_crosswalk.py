@@ -247,11 +247,11 @@ def inspect_epg_gap(epg_ids,source_urls,fetcher=_fetch_xmltv):
                 "status":"XMLTV_DUPLICATE_SOURCE_SKIPPED",
                 "exact_missing_api_guide_ids":0,"matched_ids_with_programmes":0})
             continue
-        if h is not None:
-            seen_source_hashes.add(h)
         try:
             raw=fetcher(url)
             channels,programmes=inspect_xmltv(raw,wanted)
+            if h is not None:
+                seen_source_hashes.add(h)
             status="XMLTV_PARSED"
             matching|=channels
             channel_source_counts.update(channels)
