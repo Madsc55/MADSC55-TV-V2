@@ -40,7 +40,8 @@ def canonical_tvg_id(tvg,source_ids):
         return None
     raw,mark,variant=original.rpartition("@")
     known=isinstance(source_ids,(list,tuple,set)) and any(
-        isinstance(s,str) and s.startswith("iptv-org") for s in source_ids)
+        isinstance(s,str) and (s == "iptv-org" or s.startswith("iptv-org-"))
+        for s in source_ids)
     if mark and variant.upper() in FEED_VARIANTS and known and "." in raw:
         return raw.casefold()
     return original.casefold()
