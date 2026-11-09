@@ -1,3 +1,8 @@
+## 9 Kasım — V2 DEVAM: #26 derleme ve offline regresyon logları
+
+- `688bbd61`: Master Engine offline-tests işinde derleme ve tüm offline regresyon adımları artık kendi sonuçlarını `steps.compile_modules.outcome` / `steps.offline_regressions.outcome` olarak saklıyor. `continue-on-error` yalnızca log toplamak için; derleme, toplu arşiv/AV kabulü veya genel regresyon başarısız/atlanan ise son fail-closed kapısı job'u başarısız bitiriyor. `compile.log`, `unittest.log`, `playlist.log` ve `acceptance-11-13-14-16.log` artifact kapsamındadır.
+- Değişiklik geliştirme dalına commit edildi. Bu commit için gerçek GitHub Actions run ID / test sonucu henüz doğrulanamadı. #26 kapanmadı; 8/33. Saatlik otomasyonla çakışmamak için GitHub dosya SHA'sı her yazmadan önce okundu. main, PR #9, ana İBO ve 4.955 tarihî kayıt değişmedi.
+
 ## 9 Kasım — Actions hata loglarının tam toplanması (#26)
 
 - `c575c179`: Master Engine offline işinde #11/#13/#14/#16 toplu kabul adımı hata verdiğinde sonraki genel offline regresyonların ve log artifact yüklemesinin atlanmaması için adım `continue-on-error` ile izlenir; **son fail-closed kapısı** `steps.grouped_acceptance.outcome != success` ise job'u kırmızı bitirir. Bu, testleri yeşile çevirmez; hata inceleme kapsamını genişletir.
