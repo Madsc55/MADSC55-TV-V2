@@ -49,6 +49,17 @@ class GapCrosswalkTests(unittest.TestCase):
         r=reconcile(api,scan)
         self.assertEqual(r["exact_missing_stream_identities_with_other_m3u_leads"],1)
 
+    def test_inventory_counts_require_real_integers_not_booleans(self):
+        for section,key in (("api","target_unique_channel_ids"),
+                            ("api","target_identities_without_epg_reference"),
+                            ("api","unique_channel_url_pairs"),
+                            ("m3u","total_unique_candidates")):
+            for invalid in (True,False,"3",3.0):
+                api,scan=fixtures()
+                (api if section=="api" else scan)[key]=invalid
+                with self.subTest(section=section,key=key,invalid=invalid),self.assertRaises(ValueError):
+                    reconcile(api,scan)
+
     def test_fake_playback_and_plaintext_source_rejected(self):
         for mode in ("api_av","m3u_av","plaintext","duplicate","count"):
             api,scan=fixtures()
