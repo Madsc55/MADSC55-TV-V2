@@ -1,3 +1,8 @@
+## 9 Kasım — #16 gerçek kesinti sırasında önceki AV kimlikleri korunuyor
+
+- `22f7fab7`: `aggregate` raporuna `original_av_channel_ids_preserved` eklendi; geçici DNS/HTTP/timeout nedeniyle **hiçbir yeni kaynak bulunmasa bile** önceki gerçek AV kanıtlı kanal kimlikleri açıkça raporda tutulur. Malformed FFmpeg proof (`None`) kabul edilmez. `9c136f72` regresyonları hem tam kaynak kesintisini hem malformed probe reddini test eder.
+- Önceki `a8b379af` 4.955 satırlık AES roundtrip regresyonu Master Engine, Eight-Stage, Sıralı Hazırlık, Scanner Offline ve Actions Monitor workflow'larında başarılı. `9c136f72` son commit Actions kabulü henüz görülmedi. **#16 in_progress**; canlı/gerçek tarihî kabul yok. #11/#14 de açık; #15/#18/#19 bağımlılıkları devam ediyor.
+
 ## 9 Kasım — #14 tam 4.955 satırlık şifreli roundtrip kabul testi
 
 - `a8b379af`: `v2/test_historical_inventory_guard.py` artık **4.955 sentetik tarihî kayıt + yeni kaynak** için AES arşiv yazma/geri okuma, aynı SHA'lı üç farklı kaynak ve farklı önceki AV/hata durumu, tam ham metadata korunması, aday görünümde tekilleştirme, AV/IBO doğrulaması uydurulmaması ve tam baseline çoklu-küme eşitliğini birlikte test ediyor. Bu gerçek tarihî dosyanın yerini tutmaz.
