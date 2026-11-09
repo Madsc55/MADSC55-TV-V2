@@ -1,3 +1,9 @@
+## 9 Kasım — #11/#14 şifreli aday kaynak etiketlerini ham URL kimliğine bağlama
+
+- `32bad600`: `archive_acceptance_gate.check` her deduplikasyon adayının `source_ids` etiketlerini tam URL SHA kimliğine ait ham arşiv kayıtlarının `source_ids/source_id/source` birleşimiyle doğrular. Aynı hash'e ait hash-only tarihî kaynaklar da hesaba katılır. Uydurma, tekrarlı veya geçersiz kaynak etiketi reddedilir.
+- `a8b9ec78`, `61fdfee7`: gerçek 4.955 tarihî referans ve AES-GCM arşiv ile uydurma/karışık/tekrarlı kaynak etiketlerinin reddini doğrulayan regresyon; her alt durum için benzersiz geçici arşiv yolu düzeltmesi.
+- Bu yeni commit'ler için GitHub Actions test sonucu henüz doğrulanmadı; görev kapatma yok, 8/33. #13 bağımsız uzak S3 geri yükleme ve #14 tam kabul açık. main/PR #9/korumalı İBO değiştirilmedi.
+
 ## 9 Kasım — #14 sahte cihaz/İBO kabulü reddi
 
 - `264a6fc1`: `archive_acceptance_gate.check`, şifreli deduplikasyon aday görünümündeki `device_verified` ve `ibo_device_verified` alanlarının da açıkça `False` olmasını zorunlu kılar. Geçerli AES-GCM manifesti ve ham URL provenansı, cihaz/İBO AV kabulü yerine geçmez.
