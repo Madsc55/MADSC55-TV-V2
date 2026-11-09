@@ -24,17 +24,26 @@ def verify(source_texts, live_text, scopes, candidates, parser, predicate, known
             expected.setdefault(digest, set()).add(source_id)
     observed = {}
     duplicates = 0
+    malformed = 0
     for item in candidates:
         digest = item.get("url_sha256")
+        sources = item.get("source_ids")
+        if (not isinstance(digest, str) or len(digest) != 64
+                or any(ch not in "0123456789abcdef" for ch in digest)
+                or not isinstance(sources, list)
+                or not sources or not all(isinstance(s, str) and s for s in sources)
+                or len(sources) != len(set(sources))):
+            malformed += 1
+            continue
         if digest in observed:
             duplicates += 1
-        observed[digest] = set(item.get("source_ids", []))
+        observed[digest] = set(sources)
     missing = set(expected) - set(observed)
     unexpected = set(observed) - set(expected)
     provenance_mismatch = {digest for digest in expected.keys() & observed.keys()
                            if expected[digest] != observed[digest]}
     audit_failures = [row for row in source_audit if row.get("status") == "FETCH_FAILED"]
-    verified = not (missing or unexpected or provenance_mismatch or duplicates or errors or audit_failures)
+    verified = not (missing or unexpected or provenance_mismatch or duplicates or malformed or errors or audit_failures)
     return {
         "schema": 1,
         "status": "COMPLETE" if verified else "INCOMPLETE",
@@ -46,6 +55,7 @@ def verify(source_texts, live_text, scopes, candidates, parser, predicate, known
         "missing_candidate_count": len(missing),
         "unexpected_candidate_count": len(unexpected),
         "duplicate_candidate_count": duplicates,
+        "malformed_candidate_count": malformed,
         "provenance_mismatch_count": len(provenance_mismatch),
         "source_error_count": len(errors),
         "missing_candidate_sha256": sorted(missing)[:100],
