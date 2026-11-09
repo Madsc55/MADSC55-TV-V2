@@ -84,6 +84,34 @@ class HistoricalInventoryGuardTests(unittest.TestCase):
         self.assertEqual(candidate["status"], "NOT_REVERIFIED")
         self.assertEqual(summary["conflicting_tr_az_candidate_urls"], 1)
 
+    def test_hash_only_historical_tr_conflicts_with_current_az_url(self):
+        """An exact SHA link preserves TR provenance without relabelling AZ."""
+        url = "https://fixture.example.org/hash-region-conflict.m3u8"
+        sha = hashlib.sha256(url.encode("utf-8")).hexdigest()
+        old = [{"url_sha256": sha, "scope": "TR",
+                "source_id": "historical-hash"}]
+        current = [{"url": url, "scope": "AZ",
+                    "source_id": "current-url",
+                    "decoded": True, "video": True, "audio": True}]
+        raw, candidates, summary = reconcile(old, current, 1)
+        self.assertEqual(raw, old + current)
+        self.assertEqual(len(candidates), 1)
+        candidate = candidates[0]
+        self.assertEqual(candidate["source_ids"],
+                         ["historical-hash", "current-url"])
+        self.assertEqual(candidate["url_sha256"], sha)
+        self.assertEqual(candidate["region_candidate"], "UNKNOWN")
+        self.assertEqual(candidate["classification_evidence"],
+                         "CONFLICTING_TR_AZ_EVIDENCE")
+        self.assertTrue(candidate["historical_not_reverified"])
+        self.assertFalse(candidate["decoded"])
+        self.assertFalse(candidate["video"])
+        self.assertFalse(candidate["audio"])
+        self.assertFalse(candidate["av_verified"])
+        self.assertEqual(candidate["status"], "NOT_REVERIFIED")
+        self.assertEqual(summary["historical_hash_only_linked_to_real_urls"], 1)
+        self.assertEqual(summary["conflicting_tr_az_candidate_urls"], 1)
+
     def test_missing_or_extra_history_fail_closed(self):
         rows = [{"url": "https://fixture.example.org/a.m3u8"}]
         with self.assertRaisesRegex(ValueError, "baseline"):
