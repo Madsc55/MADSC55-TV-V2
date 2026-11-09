@@ -125,6 +125,22 @@ class HistoricalInventoryGuardTests(unittest.TestCase):
         self.assertTrue(matched[0]["historical_not_reverified"])
         self.assertFalse(matched[0]["device_verified"])
 
+    def test_duplicate_sources_preserve_history_without_promoting_claimed_av(self):
+        url="https://fixture.example.org/source.m3u8"
+        old=[{"url":url,"source":"historical","av_verified":True},
+             {"url_sha256":hashlib.sha256(url.encode()).hexdigest(),
+              "source":"hash-only"}]
+        current=[{"url":url,"source":"new-a","av_verified":True},
+                 {"url":url,"source":"new-b","av_verified":True}]
+        raw,view,report=reconcile(old,current)
+        self.assertEqual(raw,old+current)
+        self.assertEqual(len(view),1)
+        self.assertEqual(view[0]["source_ids"],
+                         ["historical","new-a","new-b","hash-only"])
+        self.assertIs(view[0]["av_verified"],False)
+        self.assertIs(view[0]["device_verified"],False)
+        self.assertEqual(report["current_duplicate_url_rows"],1)
+
     def test_encrypted_snapshot_restores_every_raw_row_and_deduplicated_view(self):
         old = [{"url": "https://fixture.example.org/a.m3u8", "source": "#60"},
                {"url": "https://fixture.example.org/a.m3u8", "logo": "old"},
