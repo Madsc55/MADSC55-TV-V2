@@ -2,12 +2,24 @@
 """Offline regression for Actions run status collection."""
 import unittest
 import io
+from contextlib import redirect_stdout
 from datetime import datetime, timezone, timedelta
 import urllib.error
 from unittest.mock import patch
 import actions_monitor
 
 class MonitorTests(unittest.TestCase):
+    def test_main_emits_stalled_warning_without_retry(self):
+        result = {"runs": [{"id": 17, "workflow_file": "v2-source-integration-batch.yml",
+            "possibly_stalled": True, "head_sha": "a" * 40, "status": "in_progress",
+            "conclusion": None, "html_url": "https://github.com/example/actions/runs/17"}]}
+        output = io.StringIO()
+        with patch.object(actions_monitor, "collect", return_value=result), patch.object(
+                actions_monitor.Path, "write_text", return_value=None), redirect_stdout(output):
+            actions_monitor.main()
+        self.assertIn("::warning::Potentially stalled Actions run 17", output.getvalue())
+        self.assertIn("no automatic retry", output.getvalue())
+
     def test_stalled_run_age_is_advisory_and_never_retries(self):
         now = datetime(2026, 11, 9, 12, 0, tzinfo=timezone.utc)
         old = (now - timedelta(hours=3)).isoformat()
