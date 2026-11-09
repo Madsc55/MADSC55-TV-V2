@@ -267,6 +267,33 @@ class MonitorTests(unittest.TestCase):
                     with self.assertRaisesRegex(RuntimeError, "Incomplete Actions job details"):
                         actions_monitor.collect()
 
+    def test_failed_jobless_run_does_not_hide_later_successful_run(self):
+        for conclusion in ("failure", "cancelled", "timed_out"):
+            with self.subTest(conclusion=conclusion):
+                runs = [{"id": i, "head_sha": "a" * 40,
+                         "head_branch": actions_monitor.BRANCH, "event": "push",
+                         "status": "completed", "conclusion": outcome,
+                         "html_url": "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/" + str(i)}
+                        for i, outcome in ((123, conclusion), (124, "success"))]
+                def fake_api(path):
+                    if path.endswith("/123/jobs?per_page=100"):
+                        return {"total_count": 0, "jobs": []}
+                    if path.endswith("/124/jobs?per_page=100"):
+                        return {"total_count": 1, "jobs": [{"id": 125,
+                            "status": "completed", "conclusion": "success",
+                            "steps": [{"number": 1, "conclusion": "success"}]}]}
+                    if "/workflows/v2-eight-stage-verification.yml/" in path:
+                        return {"workflow_runs": runs}
+                    return {"workflow_runs": []}
+                with patch.dict("os.environ", {"GITHUB_SHA": "a" * 40}), patch.object(
+                        actions_monitor, "api", side_effect=fake_api):
+                    records = actions_monitor.collect()["runs"]
+                self.assertEqual(len(records), 2)
+                self.assertFalse(records[0]["acceptance_candidate"])
+                self.assertFalse(records[0]["jobs_checked"])
+                self.assertIn("no_jobs_created", records[0]["failure_reasons"])
+                self.assertTrue(records[1]["acceptance_candidate"])
+
     def test_missing_run_identity_is_rejected(self):
         with patch.object(actions_monitor, "api", return_value={"workflow_runs": [{"status": "completed", "conclusion": "success"}]}):
             with self.assertRaisesRegex(RuntimeError, "incomplete or untrusted workflow run identity"):

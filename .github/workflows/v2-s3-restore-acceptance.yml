@@ -1,13 +1,6 @@
 name: V2 Independent S3 Restore Acceptance
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - madsc/v2-discovery-bulk-20261031
-    paths:
-      - '.github/workflows/v2-s3-restore-acceptance.yml'
-      - 'v2/independent_s3_restore.py'
-      - 'v2/archive_acceptance_gate.py'
 permissions:
   contents: read
 concurrency:

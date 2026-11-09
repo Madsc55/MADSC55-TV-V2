@@ -127,6 +127,17 @@ def collect():
         if run.get("status") == "completed":
             response = api(base + "/runs/%s/jobs?per_page=100" % run["id"])
             jobs = response.get("jobs")
+            # GitHub can finish a failed/cancelled run before creating any jobs.
+            # Preserve that negative evidence without aborting unrelated runs.
+            if (jobs == [] and type(response.get("total_count")) is int
+                    and response["total_count"] == 0
+                    and run.get("conclusion") in ("failure", "cancelled", "timed_out")):
+                record["acceptance_candidate"] = False
+                record["jobs_total_count"] = 0
+                record["failure_reasons"] = [
+                    "workflow_" + run["conclusion"], "no_jobs_created"]
+                records.append(record)
+                continue
             if (not isinstance(jobs, list) or
                     type(response.get("total_count")) is not int or
                     response["total_count"] != len(jobs) or not jobs):

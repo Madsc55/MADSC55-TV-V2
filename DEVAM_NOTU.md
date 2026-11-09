@@ -1,3 +1,14 @@
+## 9 Kasım 2026 — Kullanıcı talimatı: toplu bitirme ve gerçek hata giderme
+
+- Zorunlu kapsam 30 görev; mevcut tamamlanan 8, açık 22. #3/#4/#6 ertelenmiş isteğe bağlı kayıtlar olarak korunur, tamamlandı sayılmaz. #34 (GitHub issue #10) ana zorunlu kabulden ve gerçek #32 cihaz testinden sonra; erken keşif başlatılmaz.
+- Kesin sıra: 1) #5/#9/#11/#13/#14/#16; 2) #23/#25/#26; 3) #15/#17/#18/#19/#20/#21; 4) #24 uçtan uca; 5) #28/#29/#30/#31; 6) #32/#33; 7) #34. Bağımlı kodlar ve regresyonlar birlikte ele alınır; engelli iş bağımsız işi durdurmaz; her küçük düzeltmeden sonra yeni kullanıcı komutu beklenmez.
+- GitHub issue numarası ile kanonik görev numarası farklıdır: [V2 SIRA] issue #1–#8 eski listedir; 33 görev için v2/tasks/master_tasks.json ve v2/tasks/state.json esastır.
+- Gerçek başarısız loglar okundu: Master #42703385316/job 129454129743, Eight-Stage #42703384947/job 129453716644, Ordered #42703359378/job 129453810481, Monitor #42703384931/job 129453715623. Önceki 'Actions sonuçlarına erişilemiyor' engeli bu oturumda aşıldı.
+- Toplu düzeltmeler: S3 IPv4 bucket regex kaçışı; uzak S3 workflow'unun onaysız otomatik push tetiklemesini kaldırıp manuel restore olarak koruma; #32 beklerken #33 tamamlandı diyen bozuk fixture için fail-closed beklentisi; GitHub'ın jobs oluşturmadan başarısız bitirdiği koşuyu no_jobs_created olarak raporlayıp diğer koşuları kaybetmeme. Yeşil fakat eksik job kanıtı hâlâ reddedilir.
+- Yerel toplu doğrulama: görev motoru 23 test OK; ana unittest keşfi 858 test OK (1 skip: checkout'ta bulunmayan sabitlenmiş gerçek Actions AV dosyaları); playlist invariants PASS: 840 kanal, 2 yedek, 13 kategori, 47 kaynak. Yerel cryptography 50.0.2; CI sabit 44.0.2 ile ayrıca doğrulanacak. Bu sonuç gerçek S3/kanal AV/cihaz kanıtı değildir.
+- Açık dış kabul: #5 özgün üç bozuk satırın kanıtı, #9 resmî kaynak provenance ve gerçek AV, #13 gerçek sürümlü S3 restore, #23 canlı entegrasyon, #32 kullanıcı cihaz testi. Eksik kanıt varken görev sayısı artırılmaz.
+- Sadece madsc/v2-discovery-bulk-20261031; main, PR #9 üzerinde doğrudan işlem, korunan İBO, kategoriler ve tarihî envanter değiştirilmedi.
+
 ## 9 Kasım — V2 DEVAM: bozuk AV kanıt yer tutucuları fail-closed
 
 - `3475b4a`: `test_traz_av_evidence_union.py` dosya mevcudiyet kontrolü bozuk symlink ve klasör yer tutucularını artık tamamen yok saymaz. Tek başına mevcutsa `Incomplete pinned Actions AV evidence` hatasıyla durur; regresyon senaryoları eklendi.

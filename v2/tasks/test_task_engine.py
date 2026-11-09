@@ -269,8 +269,8 @@ class TaskEngineTests(unittest.TestCase):
         for task_id in (1, 32, 33):
             broken = copy.deepcopy(ledger)
             broken["statuses"][task_id - 1]["status"] = "pending"
-            if task_id == 1:
-                # #12 remains completed; corrupt dependency state must fail closed.
+            if task_id in (1, 32):
+                # A dependent (#12 or #33) remains completed: reject the corrupt ledger.
                 with self.assertRaisesRegex(ValueError, "unfinished dependencies"):
                     e.issue34_ready(self.master, broken, self.root, user_approved=True)
             else:
