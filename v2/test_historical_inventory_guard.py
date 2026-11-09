@@ -112,6 +112,21 @@ class HistoricalInventoryGuardTests(unittest.TestCase):
         self.assertEqual(summary["historical_hash_only_linked_to_real_urls"], 1)
         self.assertEqual(summary["conflicting_tr_az_candidate_urls"], 1)
 
+    def test_valid_manifest_cannot_certify_view_only_archive(self):
+        """Authenticated counts and digest are insufficient without raw rows."""
+        from historical_inventory_guard import (
+            SCHEMA_V2, _archive_payload_sha256, _verify_archive_envelope)
+        candidate = {"url_sha256": hashlib.sha256(b"candidate").hexdigest(),
+                     "status": "NOT_REVERIFIED", "av_verified": False}
+        payload = [{"kind": "deduplicated_view", "guard_schema": SCHEMA_V2,
+                    "records": [candidate]}]
+        manifest = {"kind": "archive_manifest", "guard_schema": SCHEMA_V2,
+                    "block_count": 1, "raw_record_count": 0,
+                    "candidate_record_count": 1,
+                    "payload_sha256": _archive_payload_sha256(payload)}
+        with self.assertRaisesRegex(ValueError, "missing raw historical"):
+            _verify_archive_envelope(payload + [manifest])
+
     def test_missing_or_extra_history_fail_closed(self):
         rows = [{"url": "https://fixture.example.org/a.m3u8"}]
         with self.assertRaisesRegex(ValueError, "baseline"):
