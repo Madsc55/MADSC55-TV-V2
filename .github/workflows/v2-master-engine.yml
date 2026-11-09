@@ -52,7 +52,15 @@ jobs:
               raise SystemExit('Protected playlist SHA-256 mismatch')
           PY
       - name: Verify permanent 33-task engine and fail-closed safety in one batch
-        run: PYTHONPATH=v2/tasks python -m unittest discover -s v2/tasks -p 'test_*.py' -v
+        id: task_engine_tests
+        continue-on-error: true
+        shell: bash
+        run: |
+          mkdir -p v2/reports/master-ci
+          PYTHONPATH=v2/tasks python -m unittest discover -s v2/tasks -p 'test_*.py' -v > v2/reports/master-ci/task-engine.log 2>&1
+          result=$?
+          cat v2/reports/master-ci/task-engine.log
+          exit "$result"
       - name: Run grouped historical archive and transient AV acceptance regressions
         id: grouped_acceptance
         continue-on-error: true
@@ -100,12 +108,13 @@ jobs:
         if: always()
         shell: bash
         env:
+          TASK_ENGINE_RESULT: ${{ steps.task_engine_tests.outcome }}
           GROUPED_RESULT: ${{ steps.grouped_acceptance.outcome }}
           COMPILE_RESULT: ${{ steps.compile_modules.outcome }}
           OFFLINE_RESULT: ${{ steps.offline_regressions.outcome }}
         run: |
-          printf 'Grouped=%s Compile=%s Offline=%s\n' "$GROUPED_RESULT" "$COMPILE_RESULT" "$OFFLINE_RESULT" >> "$GITHUB_STEP_SUMMARY"
-          if [ "$GROUPED_RESULT" != "success" ] || [ "$COMPILE_RESULT" != "success" ] || [ "$OFFLINE_RESULT" != "success" ]; then
+          printf 'TaskEngine=%s Grouped=%s Compile=%s Offline=%s\n' "$TASK_ENGINE_RESULT" "$GROUPED_RESULT" "$COMPILE_RESULT" "$OFFLINE_RESULT" >> "$GITHUB_STEP_SUMMARY"
+          if [ "$TASK_ENGINE_RESULT" != "success" ] || [ "$GROUPED_RESULT" != "success" ] || [ "$COMPILE_RESULT" != "success" ] || [ "$OFFLINE_RESULT" != "success" ]; then
             echo "Required offline checks failed or were skipped; acceptance rejected" >> "$GITHUB_STEP_SUMMARY"
             exit 1
           fi
