@@ -2,11 +2,31 @@
 """Offline regression for Actions run status collection."""
 import unittest
 import io
+from datetime import datetime, timezone, timedelta
 import urllib.error
 from unittest.mock import patch
 import actions_monitor
 
 class MonitorTests(unittest.TestCase):
+    def test_stalled_run_age_is_advisory_and_never_retries(self):
+        now = datetime(2026, 11, 9, 12, 0, tzinfo=timezone.utc)
+        old = (now - timedelta(hours=3)).isoformat()
+        fresh = (now - timedelta(minutes=10)).isoformat()
+        self.assertTrue(actions_monitor.stalled_run(
+            {"status": "in_progress", "created_at": old}, now=now))
+        self.assertFalse(actions_monitor.stalled_run(
+            {"status": "queued", "created_at": fresh}, now=now))
+        self.assertFalse(actions_monitor.stalled_run(
+            {"status": "completed", "created_at": old}, now=now))
+        self.assertIsNone(actions_monitor.stalled_run(
+            {"status": "in_progress", "created_at": "invalid"}, now=now))
+        self.assertIsNone(actions_monitor.stalled_run(
+            {"status": "in_progress", "created_at": "2026-11-09T09:00:00"}, now=now))
+        self.assertIsNone(actions_monitor.stalled_run(
+            {"status": "in_progress"}, now=now))
+        self.assertIsNone(actions_monitor.stalled_run(
+            {"status": "in_progress", "created_at": (now + timedelta(hours=1)).isoformat()}, now=now))
+
     def test_transient_api_failure_retries_then_succeeds(self):
         payload = io.BytesIO(b'{"workflow_runs": []}')
         class Response:
