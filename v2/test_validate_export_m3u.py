@@ -22,6 +22,10 @@ class ExportM3UTests(unittest.TestCase):
         self.assertTrue(any("group-title" in e for e in
                             validate_m3u("#EXTM3U\n#EXTINF:-1,Channel\nhttps://example.org/a\n")))
 
+    def test_empty_group(self):
+        self.assertTrue(any("empty group-title" in e for e in
+                            validate_m3u('#EXTM3U\\n#EXTINF:-1 group-title="",Channel\\nhttps://example.org/a\\n')))
+
     def test_duplicate_stream(self):
         self.assertTrue(any("duplicate stream URL" in e for e in
                             validate_m3u(playlist("https://example.org/a", "https://example.org/a"))))
