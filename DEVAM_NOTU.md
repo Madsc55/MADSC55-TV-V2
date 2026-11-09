@@ -1,3 +1,9 @@
+## 9 Kasım — V2 DEVAM: #26 hata nedenleri raporu ve toplu regresyon
+
+- `d17b6d55`: `v2/actions_monitor.py` artık gerçek GitHub metadata'sındaki başarısız job/step, atlanmış step, workflow failure ve eski SHA kaynaklı kabul engelini `failure_reasons` içinde açıkça kaydeder. Atlanan step, sahte yeşil sonuç sayılmaz; güvenli olmayan otomatik tekrar deneme açılmadı.
+- `86536f9b`: AV failure, arşiv skipped step ve geçmiş commit SHA senaryoları için toplu offline regresyon eklendi.
+- **Kabul bekliyor:** Son değişikliklere ait Actions yeşil test kanıtı henüz doğrulanmadı; #23/#25/#26 kapatılmadı. Kanonik 8/33. #34 son; main, PR #9, ana IBO ve tarihî 4.955 kimlikler değişmedi.
+
 ## 9 Kasım — V2 DEVAM: #25/#26 Actions kimlik ve eksik job kanıtı fail-closed
 
 - `70b10a4a`: Actions monitor, workflow run kimliğinde pozitif gerçek sayı, 40 karakter küçük harf SHA ve repo ile run ID'ye tam uyan GitHub URL'sini zorunlu kılar. `jobs?per_page=100` boş, eksik, yanlış sayıda veya `total_count` geçersizse başarı raporlamadan hata verir. Önceden yalnız `acceptance_candidate=false` olabilen eksik job sayfaları artık açık hata üretir.
