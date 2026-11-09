@@ -1,3 +1,8 @@
+## 9 Kasım — V2 DEVAM: Actions commit sorgusu kapsam düzeltmesi
+
+- `fetch_commit_workflow_runs` GitHub bağlantısında yalnız `pull_request` tetikli koşuları döndürür. `58d4071e`, `f6854106`, `9e5324e` ve `58ba1cbf` için boş sonuç, `push` Actions koşusu başlamadı anlamına **gelmez**. Önceki notlardaki 'Actions sorgusu çalışma döndürmedi' ifadesi yalnız bu sınırlı sorgunun çıktısıdır; testin gerçekten tetiklenmediği iddiası değildir.
+- Son commit'lerin push workflow job/step sonuçları henüz doğrulanmadı; yeni başarı, görev kapanışı veya canlı AV kanıtı iddia edilmez. Kanonik 8/33. main, PR #9, korunan İBO ve 4.955 tarihî kimlikler değiştirilmedi.
+
 ## 9 Kasım — V2 DEVAM: sabitlenmiş AV kanıtı eksikliği için gerçek regresyon senaryoları
 
 - `9e5324e`: Sıfır, bir ve iki sabitlenmiş AV kanıt dosyası senaryoları için bağımsız unittest eklendi. Sıfırda dürüst SkipTest; bir/ikide fail-closed RuntimeError beklenir. Gerçek kanıt dosyası veya kanal kurtarma sonucu üretilmedi.
