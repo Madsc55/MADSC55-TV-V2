@@ -4,6 +4,7 @@ import copy
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 from traz_av_evidence_union import BASE,_read,merge
 
 class CrossRunAVTests(unittest.TestCase):
@@ -64,6 +65,30 @@ class CrossRunAVTests(unittest.TestCase):
             p = Path(tmp)/'report.json'
             p.write_text('{"stream_url":"https://example.org/video.m3u8"}')
             with self.assertRaises(ValueError):_read(p)
+
+class PinnedEvidencePresenceTests(unittest.TestCase):
+    """Presence checks must run even when real pinned artifacts are unavailable."""
+
+    def test_all_absent_is_explicitly_skipped(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            with patch.dict(CrossRunAVTests.setUpClass.__func__.__globals__,
+                            {'BASE': Path(tmp)}):
+                with self.assertRaises(unittest.SkipTest):
+                    CrossRunAVTests.setUpClass()
+
+    def test_one_or_two_inputs_fail_closed(self):
+        names = ('traz-api-av-acceptance.json',
+                 'traz-missing-target-real-av.json',
+                 'traz-missing-stream-epg-crosswalk.json')
+        for count in (1, 2):
+            with self.subTest(present=count), tempfile.TemporaryDirectory() as tmp:
+                for name in names[:count]:
+                    (Path(tmp) / name).write_text('{}', encoding='utf-8')
+                with patch.dict(CrossRunAVTests.setUpClass.__func__.__globals__,
+                                {'BASE': Path(tmp)}):
+                    with self.assertRaisesRegex(RuntimeError, 'Incomplete pinned Actions AV evidence'):
+                        CrossRunAVTests.setUpClass()
+
 
 if __name__ == '__main__':
     unittest.main()
