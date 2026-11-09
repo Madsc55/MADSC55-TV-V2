@@ -39,7 +39,7 @@ class TaskEngineTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "unfinished dependencies"):
             e.validate(self.master, ledger, self.root)
         ledger = copy.deepcopy(self.ledger)
-        ledger["statuses"][6]["status"] = "pending"  # #7 feeds no already-completed downstream except itself
+        ledger["statuses"][1]["status"] = "pending"  # #7, #8, #10, #22, #27 depend on #2
         with self.assertRaisesRegex(ValueError, "unfinished dependencies"):
             e.validate(self.master, ledger, self.root)
 
