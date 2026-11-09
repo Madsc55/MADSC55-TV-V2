@@ -239,8 +239,16 @@ def inspect_epg_gap(epg_ids,source_urls,fetcher=_fetch_xmltv):
     matching=set()
     with_programme=set()
     channel_source_counts=Counter()
+    seen_source_hashes=set()
     for url in source_urls:
         h=sha(url) if isinstance(url,str) else None
+        if h is not None and h in seen_source_hashes:
+            inspected.append({"epg_source_url_sha256":h,
+                "status":"XMLTV_DUPLICATE_SOURCE_SKIPPED",
+                "exact_missing_api_guide_ids":0,"matched_ids_with_programmes":0})
+            continue
+        if h is not None:
+            seen_source_hashes.add(h)
         try:
             raw=fetcher(url)
             channels,programmes=inspect_xmltv(raw,wanted)
@@ -258,7 +266,7 @@ def inspect_epg_gap(epg_ids,source_urls,fetcher=_fetch_xmltv):
     return {
       "source_count":len(source_urls),
       "parsed_sources":sum(x["status"]=="XMLTV_PARSED" for x in inspected),
-      "all_sources_parsed":bool(source_urls) and all(x["status"]=="XMLTV_PARSED" for x in inspected),
+      "all_sources_parsed":bool(source_urls) and all(x["status"] in ("XMLTV_PARSED","XMLTV_DUPLICATE_SOURCE_SKIPPED") for x in inspected) and any(x["status"]=="XMLTV_PARSED" for x in inspected),
       "missing_api_guide_identities":len(wanted),
       "exact_xmltv_channel_id_candidates":len(matching),
       "exact_xmltv_ids_with_programme_records":len(with_programme),
