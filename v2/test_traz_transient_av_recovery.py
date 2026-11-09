@@ -35,7 +35,7 @@ class TransientBatchSafety(unittest.TestCase):
         self.assertEqual(set(target),{sha("Two.az")})
         self.assertEqual(old,{"One.tr"})
         self.assertEqual(sum(counts.values()),3)
-        url="https://cdn.example.org/stream.m3u8"
+        url="Two.az"
         found={sha("Two.az"):{"url":url,"channel_id":"Two.az","source_ids":{"source-tr"}}}
         proof={sha("Two.az"):{"url_sha256":sha("Two.az"),"status":"VIDEO_AUDIO_DECODED",
                                "video":True,"audio":True,"decoded":True}}
@@ -89,6 +89,21 @@ class TransientBatchSafety(unittest.TestCase):
                 with self.assertRaisesRegex(ValueError,"Fake FFmpeg recovery"):
                     aggregate(target,old,{digest:{"url":"https://e.org/x"}},
                               {},[],fake,counts)
+
+    def test_retry_rejects_wrong_live_source_hash_or_broadcaster(self):
+        p,g=fixture()
+        targets,old,counts=select_retry(p,g)
+        h=sha("Two.az")
+        proof={h:{"url_sha256":h,"status":"VIDEO_AUDIO_DECODED",
+                  "video":True,"audio":True,"decoded":True}}
+        for found in (
+            {h:{"url":"https://example.org/unrelated.m3u8","channel_id":"Two.az"}},
+            {h:{"url":"Two.az","channel_id":"Other.az"}},
+            {sha("unexpected"):{"url":"unexpected","channel_id":"Two.az"}},
+        ):
+            with self.subTest(found=found):
+                with self.assertRaisesRegex(ValueError,"Live source hash or channel"):
+                    aggregate(targets,old,found,{},[],proof,counts)
 
     def test_source_outage_does_not_delete_identities(self):
         p,g=fixture()
