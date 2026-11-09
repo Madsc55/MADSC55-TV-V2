@@ -1,3 +1,10 @@
+## 9 Kasım — Toplu #11/#14/#16 çalışma devri (kabul bekliyor)
+
+- Kullanıcı emri: #11, #14, #16 topluca; kabulden sonra #15/#18/#19. Bu turda **hiçbiri completed yapılmadı**; bağımlılıklar ve gerçek 4.955 baseline/remote S3 kabul kanıtı ayrı doğrulanmalı.
+- #11: `v2/historical_inventory_guard.py` deduplicated view içindeki kaynaklardan taşınan `av_verified` bayrağını zorunlu false yapar; ham tarihî ve yeni kayıtlar şifreli arşiv için aynen korunur. Test: aynı URL'nin iki yeni kaynağı ve tarihî SHA-only kaynak geçmişi kaybolmaz, AV/cihaz kanıtı uydurulmaz. Commit'ler `cd231eb8`, `c7847d09`, `807f608e`.
+- #16: `v2/traz_transient_av_recovery.py` yeniden deneme çıktısında tam URL SHA256 eşleşmesini, kaynak hedef kümesini ve kanal kimliğini kontrol eder; başka kanala ait AV kanıtını kabul etmez. Regresyon `3cffeb32`; kod `a5ff82a5`. Önceki başarı kimlikleri geçici bağlantı hatasında korunur.
+- #14: Tarihî kimliklerin şifreli arşiv roundtrip ve başarısızlık yolu testleri mevcut; **gerçek 4.955 kayıtla güncel kabul kanıtı olmadan kapatılmayacak**. #11, #14 ve #16'nın son commit CI iş/job sonuçları doğrulanmalı. Ana IBO, main, PR #9 ve tarihî envanter değiştirilmedi.
+
 ## 9 Kasım — Tarihî kurtarma zorunluluğu kaldırıldı; beşli CI doğrulandı
 
 - Kullanıcı kararı uygulandı: `v2/tasks/master_tasks.json` görev #3/#4/#6 için `deferred_optional` kapsamını tanımlar; bu görevlerin kanıtları ve 4.955 tarihî kimlik korunur, **completed** sahte biçimde verilmez. Diğer görevlerin bu üç kayda olan bağımlılıkları çıkarıldı. `v2/tasks/task_engine.py` zorunlu seçimde bunları atlar; #34 kapısında ertelenenleri zorunlu tamamlanma olarak saymaz. Kod/test commit'leri `4997184917073de17ec3332779d592b5e4afe837`, `9b908eea3a44c0f006cfdd637ce2345697b232da`, `4dc213d1aa244f074feb707e17cdb4db57418f06`.
