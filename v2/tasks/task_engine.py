@@ -9,7 +9,7 @@ STATUSES = {"pending", "in_progress", "blocked", "completed"}
 REPO = "Madsc55/MADSC55-TV-V2"
 BRANCH = "madsc/v2-discovery-bulk-20261031"
 PROTECTED = {"MADSC55_TV_IBO_CALISANLAR_TEST.m3u8"}
-PRIORITY = {"P0": 0, "P1": 1, "P2": 2, "P3": 3}
+PRIORITY = {"P0": 0, "P1": 1, "P2": 2, "P3": 3, "P4": 4}
 # User-directed scheduling only; does not change dependencies or completion criteria.
 DEFERRED_LAST = frozenset({3, 4, 6})
 OPTIONAL_SCOPE = "deferred_optional"
@@ -21,8 +21,8 @@ def validate(master, ledger, root):
     if root.get("task_tracking", {}).get("task_ledger") != "v2/tasks/state.json":
         raise ValueError("Canonical state link missing")
     tasks = master["tasks"]
-    if len(tasks) != 33 or [t["id"] for t in tasks] != list(range(1, 34)):
-        raise ValueError("Must register exactly 33 ordered tasks")
+    if len(tasks) != 34 or [t["id"] for t in tasks] != list(range(1, 35)):
+        raise ValueError("Must register exactly 34 ordered tasks")
     if master.get("repository") != REPO or master.get("branch") != BRANCH:
         raise ValueError("Wrong task manifest target")
     by_id = {t["id"]: t for t in tasks}
@@ -48,7 +48,7 @@ def validate(master, ledger, root):
     tracking = root.get("task_tracking", {})
     if (tracking.get("manifest") != "v2/tasks/master_tasks.json" or
             tracking.get("canonical_root") != "state.json" or
-            tracking.get("total_tasks") != 33 or
+            tracking.get("total_tasks") != 34 or
             tracking.get("status_authority") !=
             "v2/tasks/state.json for per-task statuses; root state.json for project-wide state"):
         raise ValueError("Canonical root state metadata mismatch")
@@ -60,7 +60,7 @@ def validate(master, ledger, root):
             len(ledger.get("allowed_statuses", [])) != len(STATUSES)):
         raise ValueError("Task ledger canonical state metadata mismatch")
     rows = ledger["statuses"]
-    if len(rows) != 33 or sorted(row["id"] for row in rows) != list(range(1, 34)):
+    if len(rows) != 34 or sorted(row["id"] for row in rows) != list(range(1, 35)):
         raise ValueError("Incomplete task status ledger")
     # A completed task cannot be accepted while any mandatory prerequisite
     # remains incomplete. Validate the entire ledger, not just the next task.
