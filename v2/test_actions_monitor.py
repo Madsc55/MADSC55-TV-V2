@@ -27,6 +27,17 @@ class MonitorTests(unittest.TestCase):
         self.assertIsNone(actions_monitor.stalled_run(
             {"status": "in_progress", "created_at": (now + timedelta(hours=1)).isoformat()}, now=now))
 
+    def test_source_integration_stall_budget_is_longer_than_standard(self):
+        now = datetime(2026, 11, 9, 18, 0, tzinfo=timezone.utc)
+        started = (now - timedelta(hours=4)).isoformat()
+        run = {"status": "in_progress", "created_at": started}
+        self.assertTrue(actions_monitor.stalled_run(
+            run, now=now, threshold_seconds=2 * 3600))
+        self.assertFalse(actions_monitor.stalled_run(
+            run, now=now, threshold_seconds=6 * 3600))
+        self.assertTrue(actions_monitor.stalled_run(
+            run, now=now, threshold_seconds=3 * 3600))
+
     def test_transient_api_failure_retries_then_succeeds(self):
         payload = io.BytesIO(b'{"workflow_runs": []}')
         class Response:
