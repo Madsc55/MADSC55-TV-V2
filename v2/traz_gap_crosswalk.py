@@ -246,6 +246,8 @@ def inspect_xmltv(data,requested):
         raise ValueError("Malformed XMLTV") from e
     if duplicate_channel_ids:
         raise ValueError("Duplicate XMLTV channel identity")
+    # A programme referencing an undeclared channel is not an EPG match.
+    programmes=Counter({cid:count for cid,count in programmes.items() if cid in channel_ids})
     return channel_ids,programmes
 
 def inspect_epg_gap(epg_ids,source_urls,fetcher=_fetch_xmltv):
