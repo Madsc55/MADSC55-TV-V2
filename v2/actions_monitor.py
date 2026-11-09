@@ -127,8 +127,26 @@ def collect():
         record["jobs_checked"] = False
         record["failure_reasons"] = []
         if run.get("status") == "completed":
+            # GitHub paginates workflow jobs at 100 entries. Never classify a
+            # truncated first page as complete or drop evidence from later pages.
             response = api(base + "/runs/%s/jobs?per_page=100" % run["id"])
             jobs = response.get("jobs")
+            if (isinstance(jobs, list) and
+                    type(response.get("total_count")) is int and
+                    response["total_count"] > len(jobs)):
+                total = response["total_count"]
+                all_jobs = list(jobs)
+                for page in range(2, (total + 99) // 100 + 1):
+                    part = api(base + "/runs/%s/jobs?per_page=100&page=%s" %
+                               (run["id"], page))
+                    chunk = part.get("jobs")
+                    if (type(part.get("total_count")) is not int or
+                            part["total_count"] != total or
+                            not isinstance(chunk, list) or not chunk):
+                        raise RuntimeError("Incomplete Actions job details for run %s" % run["id"])
+                    all_jobs.extend(chunk)
+                response = dict(response, jobs=all_jobs)
+                jobs = all_jobs
             # GitHub can finish a failed/cancelled run before creating any jobs.
             # Preserve that negative evidence without aborting unrelated runs.
             if (jobs == [] and type(response.get("total_count")) is int
