@@ -16,6 +16,9 @@ from historical_inventory_guard import SCHEMA_V2, unpack_archive_snapshot, verif
 
 BASELINE = Path(__file__).resolve().parent / "history/stage3-4955-hash-only.jsonl"
 EXPECTED_HISTORY = 4955
+# Pin the complete historical metadata, not just its URL identity multiset.
+# Git blob SHA1 includes the byte length and content of the immutable baseline.
+BASELINE_GIT_BLOB_SHA1 = "c91c94a3f19097dec2855105da26d8b9a8329f8b"
 EXPECTED_HASH = "e84cf1273ae54fc89de5d7edc3a46b4db78b91ddd7d6953dabdde30a6c3e0c83"
 
 def private_file(value, label):
@@ -83,8 +86,12 @@ def check(env=None):
         raise RuntimeError("Authenticated V2 archive manifest missing")
     try:
         historical, newer, candidates = unpack_archive_snapshot(blocks, EXPECTED_HISTORY)
-        baseline = [json.loads(line) for line in BASELINE.read_text(
-            encoding="utf-8").splitlines() if line]
+        baseline_bytes = BASELINE.read_bytes()
+        blob = b"blob " + str(len(baseline_bytes)).encode("ascii") + b"\0" + baseline_bytes
+        if hashlib.sha1(blob).hexdigest() != BASELINE_GIT_BLOB_SHA1:
+            raise ValueError("Immutable historical baseline content changed")
+        baseline = [json.loads(line) for line in baseline_bytes.decode(
+            "utf-8").splitlines() if line]
         result = verify_historical_baseline(historical, baseline)
     except Exception as exc:
         raise RuntimeError("Encrypted restore lost historical identities or metadata") from exc
