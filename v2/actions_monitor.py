@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Read V2 Eight-Stage verification Actions runs, jobs and failed steps."""
 import json
+import re
 from datetime import datetime, timezone
 import os
 import sys
@@ -78,8 +79,13 @@ def collect():
             runs.append(run)
     if not runs:
         raise RuntimeError("GitHub API returned no V2 verification runs for the configured branch")
-    if any(not run.get("id") or not run.get("head_sha") or not run.get("html_url") for run in runs):
-        raise RuntimeError("GitHub API returned incomplete workflow run identity")
+    if any(type(run.get("id")) is not int or run["id"] <= 0
+           or not isinstance(run.get("head_sha"), str)
+           or re.fullmatch(r"[0-9a-f]{40}", run["head_sha"]) is None
+           or run.get("html_url") !=
+           "https://github.com/" + REPO + "/actions/runs/" + str(run["id"])
+           for run in runs):
+        raise RuntimeError("GitHub API returned incomplete or untrusted workflow run identity")
     records = []
     for run in runs:
         record = {key: run.get(key) for key in (
@@ -112,8 +118,10 @@ def collect():
         if run.get("status") == "completed":
             response = api(base + "/runs/%s/jobs?per_page=100" % run["id"])
             jobs = response.get("jobs")
-            if not isinstance(jobs, list):
-                raise RuntimeError("Missing Actions job details for run %s" % run["id"])
+            if (not isinstance(jobs, list) or
+                    type(response.get("total_count")) is not int or
+                    response["total_count"] != len(jobs) or not jobs):
+                raise RuntimeError("Incomplete Actions job details for run %s" % run["id"])
             record["jobs_checked"] = True
             record["jobs"] = [{
                 "id": job.get("id"), "name": job.get("name"),
