@@ -52,7 +52,8 @@ jobs:
           PYTHONPATH=v2 python v2/independent_s3_restore.py \
             --bucket "$S3_BUCKET" --key "$S3_OBJECT_KEY" --version-id "$S3_VERSION_ID" \
             > v2/reports/s3-restore/restore-result.log 2>&1 || {
-              echo "Independent S3 restore failed; inspect this job's restore-result.log artifact" >&2
+              rm -f v2/reports/s3-restore/restore-result.log
+              echo "::error::Independent S3 restore failed; private S3 coordinates and command output withheld" >&2
               exit 1
             }
           cat v2/reports/s3-restore/restore-result.log
@@ -71,7 +72,7 @@ jobs:
         run: |
           printf 'Run: https://github.com/%s/actions/runs/%s\nCommit: %s\n' "$GITHUB_REPOSITORY" "$GITHUB_RUN_ID" "$GITHUB_SHA" >> "$GITHUB_STEP_SUMMARY"
 
-      - name: Upload independent restore result without private archive or S3 coordinates
+      - name: Upload successful independent restore receipt without private archive or S3 coordinates
         if: always()
         uses: actions/upload-artifact@v4
         with:
