@@ -1,3 +1,9 @@
+## 9 Kasım — Son yeşil CI ve #11/#14/#16 görev durumu
+
+- `81f53be7` commit'inde **beş** temel workflow `completed/success`: Master Engine **offline-tests** (live master skipped), Eight-Stage, Sıralı Hazırlık, Current Scanner Offline, Actions Monitor. Kaynak entegrasyonu uzun işi `27335019` için son gözlemde `in_progress` idi; başarılı kabul edilmedi.
+- `v2/tasks/state.json` #11/#14/#16 artık **in_progress** ve ilgili kanıt bağlantıları, bağımlılıklar, gerçek engeller kayıtlı (commit `d5fee039`). **Hiçbiri completed değil.** #11: #9 resmî kaynak keşfi; #14: #13 bağımsız şifreli arşiv geri yükleme ve gerçek 4.955 kayıt kanıtı; #16: #14 ve gerçek geçici yayın hatası kabulü. Sonraki sıralama #15→#18→#19.
+- Daha önceki `14fbb8c0` test hatası `94acf4bb` ve `81f53be7` ile düzeltildi; son başarılı iş akışları bu düzeltmeyi doğruladı. **Yeşil offline test gerçek canlı AV veya IBO cihaz kanıtı değildir.**
+
 ## 9 Kasım — V2 DEVAM #14 gerçek çoklu tarihî kimlik regresyonu
 
 - #14 `verify_historical_baseline` artık aynı URL SHA'ya ait birden fazla tarihî kaydı tek sözlük girdisine indirgemez; **tam kayıt çoklu kümesini** ve bütün kaynak/durum metadatasını doğrular. Aynı hash'e sahip farklı geçmiş satırları kabul edilir; satır silinmesi, değiştirilmesi veya yeni sahte AV durumu reddedilir. Kod commit `1fe5c6b6`, 4.955 satırlık tekrar/metadata regresyonu `ddfb14eb`.
