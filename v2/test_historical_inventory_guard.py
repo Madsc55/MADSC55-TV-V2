@@ -191,6 +191,8 @@ class HistoricalInventoryGuardTests(unittest.TestCase):
         self.assertEqual(raw,old+current)
         self.assertEqual(len(view),1)
         self.assertEqual(view[0]["source_ids"],["historical","fresh"])
+        self.assertEqual(view[0]["status"],"NOT_REVERIFIED")
+        self.assertEqual(raw[0]["status"],"VIDEO_AUDIO_DECODED")
         for flag in ("decoded","video","audio","av_verified",
                      "device_verified","ibo_device_verified"):
             with self.subTest(flag=flag):
