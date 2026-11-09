@@ -62,6 +62,17 @@ def validate(master, ledger, root):
     rows = ledger["statuses"]
     if len(rows) != 33 or sorted(row["id"] for row in rows) != list(range(1, 34)):
         raise ValueError("Incomplete task status ledger")
+    # A completed task cannot be accepted while any mandatory prerequisite
+    # remains incomplete. Validate the entire ledger, not just the next task.
+    status_by_id = {row["id"]: row["status"] for row in rows}
+    for task in tasks:
+        if status_by_id[task["id"]] == "completed":
+            missing = [dep for dep in task["depends_on"]
+                       if status_by_id[dep] != "completed"]
+            if missing:
+                raise ValueError(
+                    "Completed task has unfinished dependencies: "
+                    + str(task["id"]) + " -> " + ",".join(map(str, missing)))
     for row in rows:
         if row["status"] not in STATUSES:
             raise ValueError("Invalid task status")
