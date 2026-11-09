@@ -128,7 +128,7 @@
     "progress": "v2/tasks/progress.md",
     "next_action": "v2/tasks/next_action.json",
     "engine": "v2/tasks/task_engine.py",
-    "total_tasks": 33,
+    "total_tasks": 34,
     "canonical_root": "state.json",
     "status_authority": "v2/tasks/state.json for per-task statuses; root state.json for project-wide state",
     "update_policy": "read fresh SHA, compare-and-swap; fail closed on conflicts; no auto-completion from Actions alone"
