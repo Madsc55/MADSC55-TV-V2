@@ -263,6 +263,9 @@ class TaskEngineTests(unittest.TestCase):
             row["status"] = "completed"
             row["evidence_urls"] = ["https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/123"]
             row["last_checked_at"] = "2026-11-08T00:00:00Z"
+        # #34 is the next pending task, never a completed prerequisite.
+        # Marking it complete would make a later #33=pending fixture corrupt.
+        ledger["statuses"][33]["status"] = "pending"
         ledger["statuses"][31]["user_device_confirmation"] = True
         self.assertFalse(e.issue34_ready(self.master, ledger, self.root))
         self.assertFalse(e.issue34_ready(self.master, ledger, self.root, user_approved=1))
