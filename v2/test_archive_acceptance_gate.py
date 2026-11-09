@@ -134,7 +134,8 @@ class ArchiveGateTests(unittest.TestCase):
             {"url": url, "source_id": "original-source"}], 4955)
         self.assertEqual(len(view), 1)
         self.assertEqual(view[0]["source_ids"], ["original-source"])
-        for index, labels in enumerate((["invented-source"],
+        for index, labels in enumerate(([],
+                                        ["invented-source"],
                                         ["original-source", "invented-source"],
                                         ["original-source", "original-source"])):
             with self.subTest(labels=labels):
@@ -145,7 +146,7 @@ class ArchiveGateTests(unittest.TestCase):
                 digest = hashlib.sha256(archive.read_bytes()).hexdigest()
                 env = self.prepared(restored_file=str(archive), restore_sha256=digest)
                 env["V2_ARCHIVE_EXPECTED_SHA256"] = digest
-                with self.assertRaisesRegex(RuntimeError, "fabricated source provenance"):
+                with self.assertRaisesRegex(RuntimeError, "source provenance"):
                     check(env)
 
     def test_missing_approval_or_evidence(self):
