@@ -114,6 +114,7 @@ def collect():
             and run.get("status") == "completed"
             and run.get("conclusion") == "success")
         record["jobs"] = []
+        record["jobs_total_count"] = None
         record["jobs_checked"] = False
         record["failure_reasons"] = []
         if run.get("status") == "completed":
@@ -124,9 +125,12 @@ def collect():
                     response["total_count"] != len(jobs) or not jobs):
                 raise RuntimeError("Incomplete Actions job details for run %s" % run["id"])
             record["jobs_checked"] = True
+            record["jobs_total_count"] = response["total_count"]
             record["jobs"] = [{
                 "id": job.get("id"), "name": job.get("name"),
                 "status": job.get("status"), "conclusion": job.get("conclusion"),
+                "steps": [{"number": step.get("number"), "conclusion": step.get("conclusion")}
+                          for step in (job.get("steps") or [])],
                 "failed_steps": [{
                     "number": step.get("number"), "name": step.get("name"),
                     "conclusion": step.get("conclusion")
