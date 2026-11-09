@@ -60,7 +60,7 @@ def check(env=None):
         raise RuntimeError("Independent backup must be a versioned S3 object URI")
     version = evidence.get("remote_object_version")
     if (not isinstance(version, str) or not 1 <= len(version) <= 255 or
-            version == "null" or any(ord(c) < 33 for c in version)):
+            version == "null" or any(ord(c) < 33 or ord(c) == 127 for c in version)):
         raise RuntimeError("Missing immutable remote object version")
     if evidence.get("historical_record_count") != EXPECTED_HISTORY:
         raise RuntimeError("Evidence does not cover all 4955 historical identities")
