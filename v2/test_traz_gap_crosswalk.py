@@ -80,6 +80,9 @@ class GapCrosswalkTests(unittest.TestCase):
         self.assertFalse(report["schedules_correctly_verified"])
         single=inspect_epg_gap(["Alpha.tr"],["https://example.org/first.xml"],fetcher=lambda _:xml)
         self.assertEqual(single["cross_source_xmltv_id_collisions"],[])
+        self.assertFalse(single["cross_source_collision_requires_manual_review"])
+        empty=inspect_epg_gap(["Alpha.tr"],[],fetcher=lambda _:xml)
+        self.assertFalse(empty["cross_source_collision_requires_manual_review"])
 
     def test_duplicate_channel_id_inside_single_xmltv_source_is_rejected(self):
         duplicated=b'<tv><channel id="Alpha.tr"/><channel id="Alpha.tr"/></tv>'
