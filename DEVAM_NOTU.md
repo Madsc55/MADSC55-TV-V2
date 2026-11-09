@@ -1,3 +1,8 @@
+## 9 Kasım — V2 DEVAM: #34 geçiş testinin yeni bağımlılık kapısıyla uyumu
+
+- `c8a462a3`: Yeni fail-closed bağımlılık kontrolüyle çelişen `test_issue34_never_starts_before_33_and_explicit_user_approval` regresyonu düzeltildi. #1 beklerken ona bağlı tamamlanmış #12 varsa bozuk ledger için `ValueError` beklenir; diğer #32/#33 bekleme senaryoları hâlâ `False` bekler. Testi yeşil varsayma; Actions kanıtı bekleniyor.
+- Kanonik durum **8/33**; hiçbir görev sahte kanıtla kapatılmadı. #34 son, main/PR #9/korunan IBO/tarihî 4.955 kimlikler değişmedi.
+
 ## 9 Kasım — V2 DEVAM: görev bağımlılıkları toplu kabul koruması
 
 - `1e968bb0`: Kanonik 33 görev motoru artık **tamamlandı** işaretlenmiş bir görevin herhangi bir `depends_on` ön koşulu tamamlanmamışsa tüm ledger'ı reddediyor. Böylece bağlı işlerin gerçek kabulü olmadan downstream görevler yeşil gösterilemiyor.
