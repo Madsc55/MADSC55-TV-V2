@@ -194,8 +194,9 @@ class SameHostRedirect(urllib.request.HTTPRedirectHandler):
     def redirect_request(self,req,fp,code,msg,headers,newurl):
         original=urlsplit(req.full_url)
         target=urlsplit(newurl)
-        if target.scheme!="https" or target.hostname!=original.hostname:
-            raise ValueError("Cross-origin XMLTV redirect refused")
+        if (target.scheme!="https" or target.hostname!=original.hostname or
+                not _source_check(newurl)):
+            raise ValueError("Unsafe XMLTV redirect refused")
         return super().redirect_request(req,fp,code,msg,headers,newurl)
 
 def _fetch_xmltv(url):
