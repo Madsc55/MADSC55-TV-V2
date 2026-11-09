@@ -76,7 +76,10 @@ def reconcile(api,m3u):
     missing=exact_ids(api.get("identities_without_stream_url_lead"),"missing_stream")
     epg=exact_ids(api.get("identities_missing_epg"),"missing_epg",
                   api.get("target_identities_without_epg_reference"))
-    if not isinstance(total,int) or total<0 or len(missing)>total or len(epg)>total:
+    if (type(total) is not int or total<0 or len(missing)>total or len(epg)>total or
+            type(api.get("target_identities_without_epg_reference")) is not int or
+            type(api.get("unique_channel_url_pairs")) is not int or
+            type(m3u.get("total_unique_candidates")) is not int):
         raise ValueError("Inconsistent API target identities")
     refs=api.get("stream_references")
     candidates=m3u.get("candidates")
