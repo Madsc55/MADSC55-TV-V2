@@ -4,6 +4,12 @@ on:
     branches:
       - madsc/v2-discovery-bulk-20261031
   workflow_dispatch:
+    inputs:
+      run_live_master:
+        description: 'Run real FFmpeg live master acceptance (requires archive secrets)'
+        type: boolean
+        required: true
+        default: false
 permissions:
   contents: read
   actions: read
@@ -143,7 +149,7 @@ jobs:
           echo "Run URL: https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" >> "$GITHUB_STEP_SUMMARY"
   master:
     needs: offline-tests
-    if: github.event_name == 'push' && github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' && contains(github.event.head_commit.message, '[run-live-master]')
+    if: github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' && ((github.event_name == 'push' && contains(github.event.head_commit.message, '[run-live-master]')) || (github.event_name == 'workflow_dispatch' && inputs.run_live_master == true))
     runs-on: ubuntu-latest
     timeout-minutes: 120
     steps:
