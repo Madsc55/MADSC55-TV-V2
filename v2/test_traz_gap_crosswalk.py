@@ -57,7 +57,7 @@ class GapCrosswalkTests(unittest.TestCase):
                 reconcile(api,scan)
 
     def test_malformed_api_source_identity_rejected(self):
-        for bad in ("", "https://example.org/live", "Alpha.tr\\nInjected", "x"*201):
+        for bad in ("", "https://example.org/live", "Alpha.tr"+chr(10)+"Injected", "x"*201):
             api,scan=fixtures()
             api["stream_references"][0]["channel_id"]=bad
             with self.subTest(bad=bad),self.assertRaisesRegex(ValueError,"Invalid API hash-only identity"):
