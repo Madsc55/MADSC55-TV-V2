@@ -1,3 +1,9 @@
+## 9 Kasım — #14 tarihî kimlik işareti güvenliği
+
+- `26866de0`: şifreli aday görünümünün `historical_not_reverified` değeri değişmez tarihî baseline SHA kimlik kümesiyle birebir karşılaştırılıyor; adayın kendini sahte biçimde tarihî olarak işaretlemesi veya gerçek tarihî işaretini gizlemesi reddedilir.
+- `cb92cc65`: 4.955 gerçek tarihî kayıt + yeni geçerli URL içeren AES-GCM arşivde sahte tarihî üyelik bayrağının reddini sınayan regresyon eklendi.
+- GitHub Actions yeni commit'ler için doğrulanmış sonuç vermedi; bu nedenle #14 kapatılmadı. Bağımlı #13 uzak S3 geri yükleme kanıtı ve diğer kabul koşulları açık. Genel durum 8/33. main, PR #9, ana İBO ve tarihî baseline değişmedi.
+
 ## 9 Kasım — #11 tam URL aday kümesi kayıp koruması
 
 - `8ca5e9d1` ve `a609c3eb`: `archive_acceptance_gate.check` yalnızca adayların ham URL'lerden türediğini değil, **her geçerli ham URL kimliğinin** aday görünümünde tam bir kez bulunduğunu doğrular. Eski regresyonların hata metni sözleşmesi korundu.
