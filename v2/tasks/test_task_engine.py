@@ -27,10 +27,10 @@ class TaskEngineTests(unittest.TestCase):
             ledger["statuses"][task_id - 1]["status"] = "pending"
         return ledger
 
-    def test_all_33_complete_and_dependency_graph(self):
+    def test_all_34_registered_and_dependency_graph(self):
         tasks, rows = e.validate(self.master, self.ledger, self.root)
-        self.assertEqual(len(tasks), 33)
-        self.assertEqual(len(rows), 33)
+        self.assertEqual(len(tasks), 34)
+        self.assertEqual(len(rows), 34)
         self.assertEqual([t["priority"] for t in self.master["tasks"][:6]], ["P0"] * 6)
 
     def test_completed_task_requires_completed_dependencies(self):
