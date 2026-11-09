@@ -1,3 +1,8 @@
+## 9 Kasım — V2 DEVAM: toplu görev motoru hata çıktısı korunuyor
+
+- `c56cba4b`: Master Engine `task_engine_tests` adımında başarısız `unittest` komutunun bash `-e` yüzünden logu yazdırmadan adımı kesmesi düzeltildi. Artık hata kodu yakalanır, tam `task-engine.log` gösterilir, aynı başarısız kodla çıkılır. Diğer toplu testler ve `if: always()` artefaktı çalışır; son fail-closed gate başarısız işi yeşil saymaz.
+- Bu bir kabul başarısı değildir: güncel Actions sonucu, gerçek #13 S3 restore ve #23 canlı master kabulü hâlâ doğrulanmalı. Kanonik durum 8/33, #34 beklemede; korunan main, PR #9, ana IBO ve 4.955 tarihî kimlikler değişmedi.
+
 ## 9 Kasım — V2 DEVAM: toplu bitirme, tek kabul döngüsü
 
 - Kullanıcı talimatı: 33 görev içindeki birbirine bağlı işleri tek tek kozmetik düzeltmelerle uzatma; mevcut 8 kabul edilmiş görevi yeniden yapma. Kanonik `master_tasks.json` ve `state.json` esas; #3/#4/#6 `deferred_optional` (kanıtları korunur, tamamlandı diye işaretlenmez), zorunlu kapsam 30 görevdir. #34 (`issues/10`) ancak 30 zorunlu kabul ve #32 gerçek kullanıcı cihaz testi sonrası.
