@@ -88,6 +88,24 @@ class ArchiveGateTests(unittest.TestCase):
         with self.assertRaisesRegex(RuntimeError, "falsely claims fresh AV"):
             check(env)
 
+    def test_hash_only_candidate_cannot_pass_as_real_url_view(self):
+        """A matching digest alone does not create a playable candidate URL."""
+        from historical_inventory_guard import digest, preserve_to_new_archive, reconcile
+        history = [json.loads(line) for line in BASELINE.read_text().splitlines() if line]
+        url = "https://fixture.example.org/source-url.m3u8"
+        protected, candidates, _ = reconcile(history, [{"url": url}], 4955)
+        self.assertEqual(len(candidates), 1)
+        candidates[0].pop("url")
+        self.assertEqual(candidates[0]["url_sha256"], digest(url))
+        archive = self.root / "hash-only-candidate.enc"
+        with patch.dict(os.environ, {"V2_ARCHIVE_KEY_HEX": "ab" * 32}):
+            preserve_to_new_archive(archive, protected, candidates)
+        digest_value = hashlib.sha256(archive.read_bytes()).hexdigest()
+        env = self.prepared(restored_file=str(archive), restore_sha256=digest_value)
+        env["V2_ARCHIVE_EXPECTED_SHA256"] = digest_value
+        with self.assertRaisesRegex(RuntimeError, "lacks raw URL provenance"):
+            check(env)
+
     def test_missing_approval_or_evidence(self):
         with self.assertRaises(RuntimeError): check({})
         with self.assertRaises(RuntimeError): check({"V2_ARCHIVE_RESTORE_APPROVED": "true"})
