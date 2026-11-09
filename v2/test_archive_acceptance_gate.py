@@ -69,6 +69,25 @@ class ArchiveGateTests(unittest.TestCase):
         with self.assertRaisesRegex(RuntimeError, "lacks raw URL provenance"):
             check(env)
 
+    def test_authenticated_candidate_cannot_claim_fresh_av(self):
+        """Matching URL provenance still cannot manufacture decoded playback."""
+        from historical_inventory_guard import preserve_to_new_archive, reconcile
+        history = [json.loads(line) for line in BASELINE.read_text().splitlines() if line]
+        url = "https://fixture.example.org/historical-candidate.m3u8"
+        current = [{"url": url, "source_id": "fixture"}]
+        protected, candidates, _ = reconcile(history, current, 4955)
+        self.assertEqual(len(candidates), 1)
+        self.assertFalse(candidates[0]["av_verified"])
+        candidates[0]["av_verified"] = True
+        archive = self.root / "forged-fresh-av.enc"
+        with patch.dict(os.environ, {"V2_ARCHIVE_KEY_HEX": "ab" * 32}):
+            preserve_to_new_archive(archive, protected, candidates)
+        digest = hashlib.sha256(archive.read_bytes()).hexdigest()
+        env = self.prepared(restored_file=str(archive), restore_sha256=digest)
+        env["V2_ARCHIVE_EXPECTED_SHA256"] = digest
+        with self.assertRaisesRegex(RuntimeError, "falsely claims fresh AV"):
+            check(env)
+
     def test_missing_approval_or_evidence(self):
         with self.assertRaises(RuntimeError): check({})
         with self.assertRaises(RuntimeError): check({"V2_ARCHIVE_RESTORE_APPROVED": "true"})
