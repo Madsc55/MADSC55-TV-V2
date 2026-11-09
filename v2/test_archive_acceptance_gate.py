@@ -56,6 +56,12 @@ class ArchiveGateTests(unittest.TestCase):
             with self.subTest(changed=changed), self.assertRaises(RuntimeError):
                 check(self.prepared(**changed))
 
+    def test_reject_control_character_in_remote_version_evidence(self):
+        for invalid in ("revision" + chr(127), "revision\nnext", "revision\t"):
+            with self.subTest(version=repr(invalid)):
+                with self.assertRaisesRegex(RuntimeError, "immutable"):
+                    check(self.prepared(remote_object_version=invalid))
+
     def test_independent_digest_and_key_required(self):
         env = self.prepared()
         env["V2_ARCHIVE_EXPECTED_SHA256"] = "f" * 64
