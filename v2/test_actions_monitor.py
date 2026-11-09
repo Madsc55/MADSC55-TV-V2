@@ -121,6 +121,25 @@ class MonitorTests(unittest.TestCase):
         self.assertEqual(len([p for p in seen if "/78/jobs?" in p]),2)
         self.assertFalse(row["acceptance_candidate"])
 
+    def test_stalled_queued_run_collects_jobs_without_retry(self):
+        run={"id":78,"head_sha":"b"*40,"status":"queued",
+             "conclusion":None,"head_branch":actions_monitor.BRANCH,"event":"push",
+             "created_at":"2026-11-01T00:00:00Z",
+             "html_url":"https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/78"}
+        def fake_api(path):
+            if "/workflows/" in path:
+                return {"workflow_runs":[run] if "v2-master-engine" in path else []}
+            if path.endswith("/78/jobs?per_page=100"):
+                return {"total_count":0,"jobs":[]}
+            raise AssertionError(path)
+        with patch.object(actions_monitor,"api",side_effect=fake_api):
+            row=actions_monitor.collect()["runs"][0]
+        self.assertTrue(row["active_job_evidence_complete"])
+        self.assertEqual(row["active_jobs"],[])
+        self.assertIn("workflow_not_completed",row["failure_reasons"])
+        self.assertFalse(row["automatic_retry_permitted"])
+        self.assertFalse(row["acceptance_candidate"])
+
     def test_stalled_job_duplicate_ids_fail_closed(self):
         run={"id":77,"head_sha":"a"*40,"status":"in_progress",
              "conclusion":None,"head_branch":actions_monitor.BRANCH,"event":"push",
