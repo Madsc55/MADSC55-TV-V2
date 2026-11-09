@@ -142,14 +142,15 @@
     },
     {
       "id": 13,
-      "status": "in_progress",
-      "last_checked_at": "2026-11-09",
+      "status": "blocked",
+      "last_checked_at": "2026-11-09T21:44:00Z",
       "evidence_urls": [
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42610981885",
         "https://github.com/Madsc55/MADSC55-TV-V2/blob/madsc/v2-discovery-bulk-20261031/v2/independent_s3_restore.py",
-        "https://github.com/Madsc55/MADSC55-TV-V2/blob/madsc/v2-discovery-bulk-20261031/v2/test_independent_s3_restore.py"
+        "https://github.com/Madsc55/MADSC55-TV-V2/blob/madsc/v2-discovery-bulk-20261031/v2/test_independent_s3_restore.py",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42688764100"
       ],
-      "blocker": "Actual independent versioned S3 get-object + pinned SHA256 + authenticated 4955-row archive restore has not been evidenced by a real remote run. Offline mocked AWS retrieval and local restore drill cannot close this task; requires authorized private S3 credentials, immutable version and archive key in protected CI secrets.",
+      "blocker": "Confirmed real S3 Actions job 129402597538 failed before retrieval: Required independent S3 restore secret missing: AWS_ACCESS_KEY_ID (repository secret V2_S3_RESTORE_AWS_ACCESS_KEY_ID). Remaining secrets not evaluated after first missing value; do not claim remote restore. User/admin must configure authorized S3 credentials and pinned object in protected Actions secrets.",
       "reason": "Grouped Master Engine run #42610981885 success on aa5f5a58. Reviewed independent_s3_restore.py: bounded real AWS S3 version retrieval, object version validation, pinned SHA256 and archive_acceptance_gate; test_independent_s3_restore.py exercises mocked remote retrieval only. archive_backup_restore_drill.py explicitly marks local separate-directory copy not independent storage. Task started without false remote acceptance or public secrets."
     },
     {
@@ -236,13 +237,15 @@
     {
       "id": 23,
       "status": "in_progress",
-      "last_checked_at": "2026-11-09",
+      "last_checked_at": "2026-11-09T21:44:00Z",
       "evidence_urls": [
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42611524072",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42611524049",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42611524123",
         "https://github.com/Madsc55/MADSC55-TV-V2/blob/madsc/v2-discovery-bulk-20261031/.github/workflows/v2-master-engine.yml",
-        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42611795555"
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42611795555",
+        "https://github.com/Madsc55/MADSC55-TV-V2/commit/934fa7c33bf36a037f74cf5565ef2ff1e25f59ce",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42704737745"
       ],
       "blocker": "Actual end-to-end live master acceptance still lacks a non-skipped run. Launch only a deliberate [run-live-master] development commit when archive secret readiness and bounded scan budget are verified; ordinary task-state commits must not start costly live scans. Grouped offline and Eight-Stage success is not sufficient to close #23.",
       "reason": "Root cause confirmed from .github/workflows/v2-master-engine.yml: live 'master' job deliberately requires a development push whose HEAD commit message contains [run-live-master]; ordinary pushes run only offline-tests. This is a safety/expense guard, not an unexplained Actions failure. Latest #42611795555 completed success on offline path. Ordered Preflight live public audit is likewise conditional. Do not misrepresent skipped optional live jobs as failure or as proof of live master integration."
@@ -258,13 +261,15 @@
     {
       "id": 25,
       "status": "in_progress",
-      "last_checked_at": "2026-11-09",
+      "last_checked_at": "2026-11-09T21:44:00Z",
       "evidence_urls": [
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42612061352",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42612061310",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42612061433",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42612061331",
-        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42612061408"
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42612061408",
+        "https://github.com/Madsc55/MADSC55-TV-V2/commit/934fa7c33bf36a037f74cf5565ef2ff1e25f59ce",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42704737745"
       ],
       "blocker": "Remaining: verify timeout and bounded retry behaviour for actual long-running live master/source integration jobs; offline monitor tests alone do not establish all workflow timeout guarantees.",
       "reason": "Implemented and CI-tested advisory Actions stalled-run age detection (2-hour threshold, timezone-aware, invalid/missing/future timestamps fail to unknown); bounded GitHub API retries already exist. Five grouped workflows completed success on 1ca8d2dc. This does not prove all live scan timeout and unsafe retry acceptance paths."
@@ -272,16 +277,20 @@
     {
       "id": 26,
       "status": "in_progress",
-      "last_checked_at": "2026-11-09",
+      "last_checked_at": "2026-11-09T21:44:00Z",
       "evidence_urls": [
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42612061352",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42612061310",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42612061433",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42612061331",
-        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42612061408"
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42612061408",
+        "https://github.com/Madsc55/MADSC55-TV-V2/commit/934fa7c33bf36a037f74cf5565ef2ff1e25f59ce",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42704737745",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42703384931",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42704737959"
       ],
-      "blocker": "Remaining: demonstrate failure classification and safe retry bounds from real failed or stalled Actions jobs; success-only workflow evidence cannot close acceptance.",
-      "reason": "Verified five grouped workflows on 1ca8d2dc; monitor job completed success. Actions monitor already reports failed steps, checks same SHA/branch and refuses skipped jobs as AV acceptance; new stale run detection never auto-retries. Need real failed/stalled Actions metadata and explicit retry-budget acceptance before completion."
+      "blocker": "#23 live integration and #25 live timeout/retry acceptance dependencies remain incomplete; do not close solely on offline and monitor success.",
+      "reason": "Real failed Master/Eight-Stage/Ordered/Monitor job logs diagnosed and repaired together on 934fa7c. Monitor now preserves failed runs with zero jobs as negative evidence and continues collecting remaining runs; success with missing/truncated job evidence still rejected. New monitor job 129458449756 succeeded. Offline bounded retry and no unsafe automatic rerun regressions pass."
     },
     {
       "id": 27,

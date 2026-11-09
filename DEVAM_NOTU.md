@@ -1,3 +1,11 @@
+## 9 Kasım 2026 — Toplu gerçek CI sonucu ve doğrulanmış dış engel
+
+- Kod commit'i `934fa7c33bf36a037f74cf5565ef2ff1e25f59ce`: Master #42704737745 offline-tests job 129458450050 success; 23 görev motoru + 61 arşiv/kurtarma testi + 858 toplu test (1 pinned-AV-input skip). Canlı master job skipped, canlı kabul değildir.
+- Ordered #42704737847 compile/protect/discovery-tests/safety success; koşullu canlı belge audit skipped. Eight-Stage #42704737698 iki job success, ancak regression logunda FFmpeg kurulu olmadığı için 2 ek AV testi skipped: bu son kabul sayılmadı. Bu follow-up aynı regression job'a FFmpeg/FFprobe kurulumunu ve eksik decoder nedeniyle skip olursa başarısızlık kontrolünü ekler.
+- Monitor #42704737959/job 129458449756 success; Trigger Protection #42704737837 ve Current Scanner #42704738093 success. Koşu/job/loglar doğrudan okundu; yeşil workflow koşullu canlı kabul yerine geçirilmedi.
+- #13 gerçek dış engel doğrulandı: S3 #42688764100/job 129402597538, 2026-11-09T20:00:45Z: `Required independent S3 restore secret missing: AWS_ACCESS_KEY_ID`. Karşılık gelen repository secret `V2_S3_RESTORE_AWS_ACCESS_KEY_ID`. İlk eksikte durduğu için diğer sırların hazır olduğu çıkarılamaz. Yetkili gerçek AWS erişimi, sürümlü nesne, pinned hash ve arşiv anahtarı olmadan restore yapılamaz. Sır değerleri sohbete veya repoya yazılmamalı.
+- Görev ledger'ında #13 blocked ve #23/#25/#26 güncel kanıt bağlantıları kaydedildi; 8 tamamlanan / 22 zorunlu açık / 3 ertelenen değişmedi. Kullanıcının toplu bitirme talimatı önceki bölümde kalıcıdır; bağımsız ilerleme sürdürülür. #34 başlatılmadı.
+
 ## 9 Kasım 2026 — Kullanıcı talimatı: toplu bitirme ve gerçek hata giderme
 
 - Zorunlu kapsam 30 görev; mevcut tamamlanan 8, açık 22. #3/#4/#6 ertelenmiş isteğe bağlı kayıtlar olarak korunur, tamamlandı sayılmaz. #34 (GitHub issue #10) ana zorunlu kabulden ve gerçek #32 cihaz testinden sonra; erken keşif başlatılmaz.
