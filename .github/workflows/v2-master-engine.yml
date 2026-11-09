@@ -119,7 +119,9 @@ jobs:
           mkdir -p v2/reports/master-ci
           python -m compileall -q v2 > v2/reports/master-ci/compile.log 2>&1
       - name: Verify grouped test logs are not empty or falsely green
+        id: grouped_log_integrity
         if: always()
+        continue-on-error: true
         shell: bash
         run: |
           set -euo pipefail
@@ -132,6 +134,7 @@ jobs:
           echo "Grouped test logs exist; final acceptance still depends on all step outcomes" >> "$GITHUB_STEP_SUMMARY"
       - name: Run all offline regressions and preserve logs
         id: offline_regressions
+        if: always()
         continue-on-error: true
         shell: bash
         run: |
@@ -164,11 +167,12 @@ jobs:
           FFMPEG_RESULT: ${{ steps.ffmpeg_capabilities.outcome }}
           TASK_ENGINE_RESULT: ${{ steps.task_engine_tests.outcome }}
           GROUPED_RESULT: ${{ steps.grouped_acceptance.outcome }}
+          GROUPED_LOG_RESULT: ${{ steps.grouped_log_integrity.outcome }}
           COMPILE_RESULT: ${{ steps.compile_modules.outcome }}
           OFFLINE_RESULT: ${{ steps.offline_regressions.outcome }}
         run: |
-          printf 'FFmpegInstall=%s FFmpeg=%s TaskEngine=%s Grouped=%s Compile=%s Offline=%s\n' "$FFMPEG_INSTALL_RESULT" "$FFMPEG_RESULT" "$TASK_ENGINE_RESULT" "$GROUPED_RESULT" "$COMPILE_RESULT" "$OFFLINE_RESULT" >> "$GITHUB_STEP_SUMMARY"
-          if [ "$FFMPEG_INSTALL_RESULT" != "success" ] || [ "$FFMPEG_RESULT" != "success" ] || [ "$TASK_ENGINE_RESULT" != "success" ] || [ "$GROUPED_RESULT" != "success" ] || [ "$COMPILE_RESULT" != "success" ] || [ "$OFFLINE_RESULT" != "success" ]; then
+          printf 'FFmpegInstall=%s FFmpeg=%s TaskEngine=%s Grouped=%s GroupedLogs=%s Compile=%s Offline=%s\n' "$FFMPEG_INSTALL_RESULT" "$FFMPEG_RESULT" "$TASK_ENGINE_RESULT" "$GROUPED_RESULT" "$GROUPED_LOG_RESULT" "$COMPILE_RESULT" "$OFFLINE_RESULT" >> "$GITHUB_STEP_SUMMARY"
+          if [ "$FFMPEG_INSTALL_RESULT" != "success" ] || [ "$FFMPEG_RESULT" != "success" ] || [ "$TASK_ENGINE_RESULT" != "success" ] || [ "$GROUPED_RESULT" != "success" ] || [ "$GROUPED_LOG_RESULT" != "success" ] || [ "$COMPILE_RESULT" != "success" ] || [ "$OFFLINE_RESULT" != "success" ]; then
             echo "Required offline checks failed or were skipped; acceptance rejected" >> "$GITHUB_STEP_SUMMARY"
             exit 1
           fi
