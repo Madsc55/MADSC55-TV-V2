@@ -1,3 +1,9 @@
+## 9 Kasım — #16 FFmpeg başarısız probunda çelişkili AV bayrakları reddi
+
+- `baf6f5a3` ve `1d4dc57f` Master Engine offline ve Eight-Stage **success**; önceki explicit-null proof CI hatası çözüldü.
+- `3fb6dd47`: FFmpeg sonucu `decoded=False` iken `video=True` veya `audio=True` içerirse `aggregate` artık `ValueError` verir; kaynak başarısızlığı AV kanıtına dönüşmez. `b24c9414`: üç çelişkili bayrak kombinasyonu için regresyon. Son test commit'inin Actions sonucu henüz doğrulanmadı.
+- Source Integration Batch koşuları `pending/cancelled` görüldü; bu **başarı değildir**. #9 resmî kaynak kanıtı, #13 gerçek özel S3 geri yükleme, #14 gerçek 4.955 arşiv kabulü ve #16 gerçek kesinti kabulü hâlâ açık. #11/#14/#16 tamamlanmadı, toplam 8/33.
+
 ## 9 Kasım — #16 FFmpeg null proof CI hatası düzeltildi
 
 - `25f45bff` Master Engine ve Eight-Stage **failure**: `test_malformed_live_probe_is_rejected_before_claiming_av` explicit `{sha: None}` verildiğinde ValueError bekliyordu; `aggregate` yanlışlıkla `p is None` üzerinden bunu bulunamayan kaynak gibi sayıyordu.
