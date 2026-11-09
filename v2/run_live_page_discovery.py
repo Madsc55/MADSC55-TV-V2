@@ -88,26 +88,37 @@ def error_kind(exc):
 def scan(pages, fetcher=fetch_page):
     if len(pages) > 100:
         raise ValueError("Approved live-page inventory exceeds the 100-page scan limit")
-    result, errors, seen = [], [], set()
+    result, errors, by_hash = [], [], {}
+    page_results = []
     for item in pages:
         page_id, url = item["id"], item["url"]
         if not approved_page(url):
             errors.append({"page_id": page_id, "error": "UNSAFE_PAGE"})
+            page_results.append({"page_id": page_id, "status": "UNSAFE_PAGE"})
             continue
         try:
-            refs = extract_live_references(url, fetcher(url))
+            document = fetcher(url)
+            refs = extract_live_references(url, document)
+            page_results.append({"page_id": page_id, "status": "FETCHED",
+                                 "document_sha256": hashlib.sha256(document.encode("utf-8")).hexdigest(),
+                                 "reference_count": len(refs)})
             for ref in refs:
                 digest = hashlib.sha256(ref["url"].encode()).hexdigest()
-                if digest not in seen:
-                    seen.add(digest)
-                    result.append({"page_id": page_id, "url_sha256": digest,
-                                   "kind": ref["kind"], "playback_verified": False})
+                if digest not in by_hash:
+                    row = {"page_id": page_id, "page_ids": [page_id],
+                           "url_sha256": digest, "kind": ref["kind"],
+                           "playback_verified": False}
+                    by_hash[digest] = row
+                    result.append(row)
+                elif page_id not in by_hash[digest]["page_ids"]:
+                    by_hash[digest]["page_ids"].append(page_id)
         except (ValueError, OSError, TimeoutError) as exc:
             errors.append({"page_id": page_id, "error": error_kind(exc)})
+            page_results.append({"page_id": page_id, "status": "ERROR", "error": error_kind(exc)})
     return {"schema": 1, "kind": "references-only", "pages_checked": len(pages),
             "coverage_status": ("NO_APPROVED_PAGES" if not pages else
                                 "PARTIAL_APPROVED_PAGES" if errors else "APPROVED_PAGES_CHECKED"),
-            "references": result, "errors": errors,
+            "references": result, "errors": errors, "page_results": page_results,
             "anonymous_error_summary": dict(sorted(Counter(x["error"] for x in errors).items())),
             "playback_verified": False}
 

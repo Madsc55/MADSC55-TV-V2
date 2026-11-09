@@ -68,6 +68,33 @@ class LivePageRunnerTests(unittest.TestCase):
         self.assertEqual(len(pages),27)
         self.assertEqual(len(set(pages.values())),27)
 
+    def test_shared_reference_retains_all_source_pages_after_dedup(self):
+        pages = [{"id": "first", "url": "https://one.example/live"},
+                 {"id": "second", "url": "https://two.example/live"},
+                 {"id": "failed", "url": "https://three.example/live"}]
+        def fetch(url):
+            if "three.example" in url:
+                raise OSError("unavailable")
+            return '<a href="https://www.youtube.com/watch?v=abc123">Live</a>' * 2
+        report = scan(pages, fetch)
+        self.assertEqual(len(report["references"]), 1)
+        row = report["references"][0]
+        self.assertEqual(row["page_id"], "first")  # Legacy consumer compatibility.
+        self.assertEqual(row["page_ids"], ["first", "second"])
+        self.assertFalse(row["playback_verified"])
+        self.assertEqual([r["status"] for r in report["page_results"]],
+                         ["FETCHED", "FETCHED", "ERROR"])
+        self.assertEqual(report["coverage_status"], "PARTIAL_APPROVED_PAGES")
+
+    def test_fetched_page_without_references_is_accounted_for(self):
+        import hashlib
+        html = "<html>no live references</html>"
+        report = scan([{"id": "empty", "url": "https://example.org/"}], lambda url: html)
+        self.assertEqual(report["references"], [])
+        self.assertEqual(report["page_results"], [{"page_id": "empty", "status": "FETCHED",
+            "document_sha256": hashlib.sha256(html.encode()).hexdigest(), "reference_count": 0}])
+        self.assertFalse(report["playback_verified"])
+
     def test_empty_inventory_is_safe(self):
         self.assertEqual(scan([])["pages_checked"], 0)
         self.assertEqual(scan([])["coverage_status"], "NO_APPROVED_PAGES")

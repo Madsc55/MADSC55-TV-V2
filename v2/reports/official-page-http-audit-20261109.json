@@ -1,0 +1,709 @@
+{
+  "schema": 1,
+  "kind": "READ_ONLY_APPROVED_PAGE_HTTP_REFERENCE_AUDIT",
+  "checked_at": "2026-11-09T21:49:13.336943+00:00",
+  "observed_commit": "d8823a13ee8c03409886d04b48e22b0efa4030c4",
+  "method": "Existing fetch_page and extract_live_references on all 27 configured pages; six workers; normal bounded retry; no 403 bypass",
+  "pages_checked": 27,
+  "pages_fetched": 26,
+  "unique_reference_hashes": 68,
+  "shared_reference_hashes": 15,
+  "reference_source_associations": 83,
+  "playback_verified": false,
+  "protected_playlist_modified": false,
+  "pages": [
+    {
+      "page_id": "aztv-official-home",
+      "status": "FETCHED",
+      "html_sha256": "cde01003a0ea64f55ad0f755e9f3b072f64e6ab8857734174332c99a8b8fa1f9",
+      "references": [
+        "e93e6b2ef1e565759ef38e5499727635af5cd8a9217250ef93e7dc94d67c9885",
+        "e655731b2ed893adc6736440a7e39aad8e80b000fd0ca4d4ea19ae909c891e05",
+        "e81e2b15f101731f9ce1f79d6519dea020140113e81cf5b41f04f89dfd6362ca",
+        "8641b3c5bd400958e92866fb77c663ee102f1ac2fad381eeae7cfda686c2ab1e",
+        "57c6d2dfd186b8bd5881c3a92fef442b976d1b3290514782b28578ecf000a3da",
+        "a6dabf0829c3e1b56491f8210e278ddd086c00b2ee45559c10516ea2d2847c8d",
+        "71c252ce11f125a6ef2d401de7bd5584893ef561b6feb4afd54ae6c2b821a800",
+        "8369126a299d5e062c30f18b0fe24b6b97cabaad3edec530ca118826b3578276",
+        "4d813baba77ce0f57b09198e744bd568e25f78d46e26866ee1235f49e6db8436",
+        "a9b00cb4dcaba2034773541edf21170d0562db6762932608c1860c396488d1ab"
+      ]
+    },
+    {
+      "page_id": "trt1-official-home",
+      "status": "FETCHED",
+      "html_sha256": "1438b53a41ace950c508bbb47750a92941bc9f3da37bcc860cd0e85c09541cb2",
+      "references": [
+        "307afbeb8131ac8676ae7bcfaebfc369c1d3bf25d195d3034781db430e559a9d",
+        "d6fd39afa01ff7a7d21112a1cfe15ae982a43a733627d549e6eb8f74c4c9a80c",
+        "a96b7f4656ba700de8c82c62db741ac6887859b8707a2ecbba47af35437c9ca1",
+        "c7ba5cfdac90a7fd874773f868ab5411141834da234012e5f6ef4a993f47d2c9",
+        "5586f37a34848cff0bed2e1606b367c0f5f2a7ca296be5eb03bd4d32373aee52",
+        "f2a508e365a9b1b3a616919a7755d48b732bc8e1a2cae822d14a3ba28d03fd99",
+        "a24bf0e6b54226978fd97d2dc346df2a6bddf6da14b68370848f07aaba0285c3",
+        "b6384f5d5da8d887ea442b741dc3992a35b9d5357f0996e47d014c8100cbab8f",
+        "3d02cb37867d97b1acb80e0ba7187a8f7ce3a17ac969261e0d011597d4f8c093",
+        "4d4d29655e4fe34b870e5dd7492d567ba3754249e296199e044400eb6b07a9bf",
+        "c0a1616abfb580a818f20372ac91587ac61e5bfdb9aafb6d56411d7086d74406",
+        "82aa1695ad08b0934d37f5b0eefd9b9f03dfd19b88102869204d05327f9a1c57",
+        "1b6078116d9ac3eb0b59e201aeed66298e1fc874d9fbd8aa04c35889e3879928",
+        "620f8744f140acef7bc5addd28d122a4d112b9b9255895b056781d265d8220a2",
+        "ed732782e11ba4b38a86b54c4c8c8b8a515a3cd7d6bd11ac8554343afcbf1742",
+        "76c4c4c934ee0e3524e89ef84e0f1ebdd35d7070c56b75dd88e2921801a4c761",
+        "e2854341919299e81f3ad3dce7b5293960fe0d54f75fcf8cd58be56e402a832c",
+        "f25ec4618bf935e5a4ef63e2abdae832d2e8716625442cec47b14e9a1272cec4"
+      ]
+    },
+    {
+      "page_id": "trt-official",
+      "status": "FETCHED",
+      "html_sha256": "0e7ab4496f86382c3b749c1e6b41ea1d9837d92f26432c007b9a54c350560b26",
+      "references": [
+        "f25ec4618bf935e5a4ef63e2abdae832d2e8716625442cec47b14e9a1272cec4",
+        "307afbeb8131ac8676ae7bcfaebfc369c1d3bf25d195d3034781db430e559a9d",
+        "5586f37a34848cff0bed2e1606b367c0f5f2a7ca296be5eb03bd4d32373aee52",
+        "f2a508e365a9b1b3a616919a7755d48b732bc8e1a2cae822d14a3ba28d03fd99",
+        "a24bf0e6b54226978fd97d2dc346df2a6bddf6da14b68370848f07aaba0285c3",
+        "4d4d29655e4fe34b870e5dd7492d567ba3754249e296199e044400eb6b07a9bf",
+        "b6384f5d5da8d887ea442b741dc3992a35b9d5357f0996e47d014c8100cbab8f",
+        "3d02cb37867d97b1acb80e0ba7187a8f7ce3a17ac969261e0d011597d4f8c093",
+        "ed732782e11ba4b38a86b54c4c8c8b8a515a3cd7d6bd11ac8554343afcbf1742",
+        "c0a1616abfb580a818f20372ac91587ac61e5bfdb9aafb6d56411d7086d74406",
+        "82aa1695ad08b0934d37f5b0eefd9b9f03dfd19b88102869204d05327f9a1c57",
+        "6e8d8de009f1806a18314a729aff1fa2e5443689acb7491f419b5a758ce75780",
+        "14e2fa8f051d1c9790657679a904b2c06500a3e242696a47718e7307e0b3be68",
+        "d8e53dc1a22a139cbe17e09c1c21b221a9f633650ed6a90a72f09c94d41894a0",
+        "1f8ce3cec3aa9da39222e62c788f6034de41d44524f58a06b0769162ecee37ea",
+        "1b6078116d9ac3eb0b59e201aeed66298e1fc874d9fbd8aa04c35889e3879928",
+        "620f8744f140acef7bc5addd28d122a4d112b9b9255895b056781d265d8220a2",
+        "76c4c4c934ee0e3524e89ef84e0f1ebdd35d7070c56b75dd88e2921801a4c761",
+        "e2854341919299e81f3ad3dce7b5293960fe0d54f75fcf8cd58be56e402a832c",
+        "fd49f12f5ca59ee7d3d4df10625ca1de4a371211ea7dfe2aec43adb06a3794a7"
+      ]
+    },
+    {
+      "page_id": "trt-haber-official",
+      "status": "FETCHED",
+      "html_sha256": "b75370481a91b1358ded3dd260228d5212858a20f0c31f758aaa00b4a3423486",
+      "references": [
+        "e86c1a591e28158887b3cb8b8c45583c6848b6c8df0ab197a2b95b780e8b9292"
+      ]
+    },
+    {
+      "page_id": "trt-world-official",
+      "status": "FETCHED",
+      "html_sha256": "ecb14cde229ebca749af328925323462fda736b781ce7e90085612c860158b60",
+      "references": [
+        "a9f3dc3d2141c4b826c6eea1226adad315ef3671205955dfa7db09d3029dca2d",
+        "d51dbff1faddbee908dc6dfe84d0682b73d640cd021e3bb8f6e219578a6eaaec"
+      ]
+    },
+    {
+      "page_id": "atv-official",
+      "status": "FETCHED",
+      "html_sha256": "37c029f4dc8076585e9df7f8d8b02883cd0a138f412258e6ccedbc914cf0db90",
+      "references": [
+        "cdfd6d357998760f3d9b6197aa1cb0227e1b757b4391c4527117760871a461ce",
+        "302280ebf560f79b5fd0310405660f2a8850052d8d3ff093d9f79e789b662ddf"
+      ]
+    },
+    {
+      "page_id": "show-tv-official",
+      "status": "FETCHED",
+      "html_sha256": "89efb011942c518e57363019662fc0f0997f22ef4d101d1d1e6dfe70f637ede4",
+      "references": [
+        "96dd46f6a5c0ba48df51fccdc490fa5a74dd1cd9277d3260af423711bfc3a22b"
+      ]
+    },
+    {
+      "page_id": "kanal-d-official",
+      "status": "FETCHED",
+      "html_sha256": "5a4255ac7b8c0c639fd7e10b10433f4b30306da7038d22c5213e8ccd9929b663",
+      "references": [
+        "8e21bfd114935d7e6d168c695812045dfbd173ad9ce038f3005f20a268a5ea3a",
+        "fb26ab4cbf4fe68e6edaafeb0e06e410b20a639629d9c5f72bc1078cebfa8908"
+      ]
+    },
+    {
+      "page_id": "star-tv-official",
+      "status": "FETCHED",
+      "html_sha256": "affb6dc386a04856370f08c3f5f85bedf37de648f2e0f3ad2cf4a529577febcc",
+      "references": [
+        "2068449fd55d7e5c6be75ad853cc098ab403ace03de21fd85d1c41f3f9f2386c"
+      ]
+    },
+    {
+      "page_id": "now-tv-official",
+      "status": "FETCHED",
+      "html_sha256": "6181f3716dc721eff4ae3b2856715fc27c67638e1805e2b7d4e1c95a92341821",
+      "references": [
+        "87a45c343516b208e6bd77ad8d49eda3b092304941ba877fe697e93885073299",
+        "3339e2b4011651d998a81c774b547b144ce4342d77292dd7f13ada127e1c315c"
+      ]
+    },
+    {
+      "page_id": "tv8-official",
+      "status": "FETCHED",
+      "html_sha256": "8d2861050f4ad89e29710e65ca4843dea7f2c90f3d7651f69cd7976a4a15cb10",
+      "references": [
+        "f5a3af5c3d9c6323730c2a95773702fc7f1717ad5696626b8825cacbf96ee1fd"
+      ]
+    },
+    {
+      "page_id": "haberturk-official",
+      "status": "FETCHED",
+      "html_sha256": "44944fb63661fcb06d4e564af6ddf89cfa6d4d7ec9964ea3f1038e8e84cf92b5",
+      "references": [
+        "dfc26a2f756319375347c86d9dba188f42d6e1c370ad3da0046091115fff3b3a",
+        "2d48ff601329de0a0e96ca981dce4b5f5b37c3a98309715ba0e46886f8e290f3",
+        "7b4ad5fc438f2097dedc4e63bd09e181a8c71662859719f5931b9c299614bdef"
+      ]
+    },
+    {
+      "page_id": "ntv-official",
+      "status": "FETCHED",
+      "html_sha256": "b1ba13712a7fd006ee833b7c8f923087046e40432ee3d70b328bbd6dab5b0547",
+      "references": [
+        "52e9f99cfb4aebe40c2a5ae34e20ccd31a38ce5079ba946ddab5e73f46b8c9df"
+      ]
+    },
+    {
+      "page_id": "halk-tv-official",
+      "status": "FETCHED",
+      "html_sha256": "694863433c28886bdb33eb02e5bb42715dd49d34cf2daa4413ef1ccd5238160c",
+      "references": [
+        "d2afaa0b1eae35bc5fdd4a5dbdac651081499b359912fd804273f1906ac92f4e",
+        "0c424563251ae05a4e6ff3f6559dad255f315586e7aa75b0a51343d2347271b2"
+      ]
+    },
+    {
+      "page_id": "sozcu-tv-official",
+      "status": "FETCHED",
+      "html_sha256": "fc748af66bfcf85fabf618ae42dfe4ec22bc520b1bb0dfebb098ad22bff0a069",
+      "references": [
+        "84609e687dbefbbe62df81f3ca9318d104e23e54a5f6fd027bfc21866fd1cf50"
+      ]
+    },
+    {
+      "page_id": "azerbaijan-itv-official",
+      "status": "FETCHED",
+      "html_sha256": "bd7a927b79a99f5f1c0b190f6b0c963da66cc957730d622608adc084ec6b07cf",
+      "references": []
+    },
+    {
+      "page_id": "azerbaijan-ictimai-official",
+      "status": "FETCHED",
+      "html_sha256": "8d9f09984762e478a925ef6928e53c07ee443c88a5548abee706b9fa2ea7fa18",
+      "references": []
+    },
+    {
+      "page_id": "trt-2-official",
+      "status": "FETCHED",
+      "html_sha256": "2923b80d800639dcf2dc40f6ee7fd635e08e85a0db72551b5eb1b0bb98b46716",
+      "references": [
+        "763e99ee7e98778a814bc8c04557e0951ddd6e83423f94e3a1df92ffe48e7743"
+      ]
+    },
+    {
+      "page_id": "trt-spor-official",
+      "status": "ERROR",
+      "error": "HTTP_403"
+    },
+    {
+      "page_id": "a-haber-official",
+      "status": "FETCHED",
+      "html_sha256": "5a2c93023a9597e66140327219b1bd2a7fa8652250db8e51f7a01682b0ab29f7",
+      "references": [
+        "c3433a44338239b710e1f57d512d63d96175fe99cc8b37a2836fa9d99517800d",
+        "0d29db5fb06276830058c58af6dab4ec04886106cf37bc4ffe85080cdfe207d9",
+        "858b934c6aabfb5d9835000f4bba2ef9ff7d3ce51dbcb91dca7bb943b68600d5",
+        "5f94c54c61d1fd3fc82d681647390e8457f7d23f0cd009843b743784b0c0e9a6",
+        "0318d67e546ca7065685a3298251255c9d9dddf7f61ca7cc8a01b7d584599f4f"
+      ]
+    },
+    {
+      "page_id": "cnn-turk-official",
+      "status": "FETCHED",
+      "html_sha256": "cff835c848d27259d66633440a85112c2651c7ef70e00a5a48675c8eff15ac44",
+      "references": [
+        "597f9c64c997706fa45e0247faa25dde7827b09708889681dd328573219a8bb9"
+      ]
+    },
+    {
+      "page_id": "tv100-official",
+      "status": "FETCHED",
+      "html_sha256": "3a5d828e6a0acfe5ec3ac3e866c382002930fd66ea327ad39ec1556fafbbec0b",
+      "references": [
+        "3d92921539822eeb975b41f8e2705306e80779ce513ac0c80bac902d794538b8"
+      ]
+    },
+    {
+      "page_id": "benguturk-official",
+      "status": "FETCHED",
+      "html_sha256": "777dd2df748617712880a6bb3907371d4c7d5f0016b5b3429631f6d7756c8046",
+      "references": [
+        "90e19fd45b07c1acd470675800f67841a78d36d76d9aaf8fe2d810645a0edcb2",
+        "149cadfa9a4cc3f27e5a23390d555465b63fe3b303a681fe52f42cd11c40c63d"
+      ]
+    },
+    {
+      "page_id": "tele1-official",
+      "status": "FETCHED",
+      "html_sha256": "b89e4f8a4780e284b46d59116f656d53410bb96cb5db6528776a1e4a5ce48580",
+      "references": [
+        "98f20840d04de604be0a566bf2eaaa59bf735026729ac09266b2a6d2477ce543"
+      ]
+    },
+    {
+      "page_id": "ulusal-kanal-official",
+      "status": "FETCHED",
+      "html_sha256": "51c05ef102b731a50c920606c54f827e05e173b1e85d20c5edec2218357ce3d6",
+      "references": [
+        "ce032e06a18cec5b2c04dd1aec556a0161fe614a46659fcfc3887183c42823e5",
+        "c59f70ec664cd1be0835770b46651a2ed37129e518034dbf3beb258e7ff0e62b"
+      ]
+    },
+    {
+      "page_id": "kanal-7-official",
+      "status": "FETCHED",
+      "html_sha256": "8323ef000202f081c80dd1fb60b17a80031ae98faba15577f8426cbee7430a67",
+      "references": [
+        "a435d60c2ab59e03b2cb371de833286a4dc39194850e6ab7e82e3def0d072ca1"
+      ]
+    },
+    {
+      "page_id": "az-baku-tv",
+      "status": "FETCHED",
+      "html_sha256": "4b07fbb138744447ace9d2aa085044054e5663d8b8b867538231e211d3b83e9a",
+      "references": [
+        "a514e76a2afb7e6653dd9afa561dc5109b1a95ef65df9ac2ca4aed754319c80d",
+        "a5d0d8a72c3b07d1b214f466f25911300607a89ec3c33962c45e5a56873e551b"
+      ]
+    }
+  ],
+  "reference_sources": [
+    {
+      "url_sha256": "0318d67e546ca7065685a3298251255c9d9dddf7f61ca7cc8a01b7d584599f4f",
+      "page_ids": [
+        "a-haber-official"
+      ]
+    },
+    {
+      "url_sha256": "0c424563251ae05a4e6ff3f6559dad255f315586e7aa75b0a51343d2347271b2",
+      "page_ids": [
+        "halk-tv-official"
+      ]
+    },
+    {
+      "url_sha256": "0d29db5fb06276830058c58af6dab4ec04886106cf37bc4ffe85080cdfe207d9",
+      "page_ids": [
+        "a-haber-official"
+      ]
+    },
+    {
+      "url_sha256": "149cadfa9a4cc3f27e5a23390d555465b63fe3b303a681fe52f42cd11c40c63d",
+      "page_ids": [
+        "benguturk-official"
+      ]
+    },
+    {
+      "url_sha256": "14e2fa8f051d1c9790657679a904b2c06500a3e242696a47718e7307e0b3be68",
+      "page_ids": [
+        "trt-official"
+      ]
+    },
+    {
+      "url_sha256": "1b6078116d9ac3eb0b59e201aeed66298e1fc874d9fbd8aa04c35889e3879928",
+      "page_ids": [
+        "trt1-official-home",
+        "trt-official"
+      ]
+    },
+    {
+      "url_sha256": "1f8ce3cec3aa9da39222e62c788f6034de41d44524f58a06b0769162ecee37ea",
+      "page_ids": [
+        "trt-official"
+      ]
+    },
+    {
+      "url_sha256": "2068449fd55d7e5c6be75ad853cc098ab403ace03de21fd85d1c41f3f9f2386c",
+      "page_ids": [
+        "star-tv-official"
+      ]
+    },
+    {
+      "url_sha256": "2d48ff601329de0a0e96ca981dce4b5f5b37c3a98309715ba0e46886f8e290f3",
+      "page_ids": [
+        "haberturk-official"
+      ]
+    },
+    {
+      "url_sha256": "302280ebf560f79b5fd0310405660f2a8850052d8d3ff093d9f79e789b662ddf",
+      "page_ids": [
+        "atv-official"
+      ]
+    },
+    {
+      "url_sha256": "307afbeb8131ac8676ae7bcfaebfc369c1d3bf25d195d3034781db430e559a9d",
+      "page_ids": [
+        "trt1-official-home",
+        "trt-official"
+      ]
+    },
+    {
+      "url_sha256": "3339e2b4011651d998a81c774b547b144ce4342d77292dd7f13ada127e1c315c",
+      "page_ids": [
+        "now-tv-official"
+      ]
+    },
+    {
+      "url_sha256": "3d02cb37867d97b1acb80e0ba7187a8f7ce3a17ac969261e0d011597d4f8c093",
+      "page_ids": [
+        "trt1-official-home",
+        "trt-official"
+      ]
+    },
+    {
+      "url_sha256": "3d92921539822eeb975b41f8e2705306e80779ce513ac0c80bac902d794538b8",
+      "page_ids": [
+        "tv100-official"
+      ]
+    },
+    {
+      "url_sha256": "4d4d29655e4fe34b870e5dd7492d567ba3754249e296199e044400eb6b07a9bf",
+      "page_ids": [
+        "trt1-official-home",
+        "trt-official"
+      ]
+    },
+    {
+      "url_sha256": "4d813baba77ce0f57b09198e744bd568e25f78d46e26866ee1235f49e6db8436",
+      "page_ids": [
+        "aztv-official-home"
+      ]
+    },
+    {
+      "url_sha256": "52e9f99cfb4aebe40c2a5ae34e20ccd31a38ce5079ba946ddab5e73f46b8c9df",
+      "page_ids": [
+        "ntv-official"
+      ]
+    },
+    {
+      "url_sha256": "5586f37a34848cff0bed2e1606b367c0f5f2a7ca296be5eb03bd4d32373aee52",
+      "page_ids": [
+        "trt1-official-home",
+        "trt-official"
+      ]
+    },
+    {
+      "url_sha256": "57c6d2dfd186b8bd5881c3a92fef442b976d1b3290514782b28578ecf000a3da",
+      "page_ids": [
+        "aztv-official-home"
+      ]
+    },
+    {
+      "url_sha256": "597f9c64c997706fa45e0247faa25dde7827b09708889681dd328573219a8bb9",
+      "page_ids": [
+        "cnn-turk-official"
+      ]
+    },
+    {
+      "url_sha256": "5f94c54c61d1fd3fc82d681647390e8457f7d23f0cd009843b743784b0c0e9a6",
+      "page_ids": [
+        "a-haber-official"
+      ]
+    },
+    {
+      "url_sha256": "620f8744f140acef7bc5addd28d122a4d112b9b9255895b056781d265d8220a2",
+      "page_ids": [
+        "trt1-official-home",
+        "trt-official"
+      ]
+    },
+    {
+      "url_sha256": "6e8d8de009f1806a18314a729aff1fa2e5443689acb7491f419b5a758ce75780",
+      "page_ids": [
+        "trt-official"
+      ]
+    },
+    {
+      "url_sha256": "71c252ce11f125a6ef2d401de7bd5584893ef561b6feb4afd54ae6c2b821a800",
+      "page_ids": [
+        "aztv-official-home"
+      ]
+    },
+    {
+      "url_sha256": "763e99ee7e98778a814bc8c04557e0951ddd6e83423f94e3a1df92ffe48e7743",
+      "page_ids": [
+        "trt-2-official"
+      ]
+    },
+    {
+      "url_sha256": "76c4c4c934ee0e3524e89ef84e0f1ebdd35d7070c56b75dd88e2921801a4c761",
+      "page_ids": [
+        "trt1-official-home",
+        "trt-official"
+      ]
+    },
+    {
+      "url_sha256": "7b4ad5fc438f2097dedc4e63bd09e181a8c71662859719f5931b9c299614bdef",
+      "page_ids": [
+        "haberturk-official"
+      ]
+    },
+    {
+      "url_sha256": "82aa1695ad08b0934d37f5b0eefd9b9f03dfd19b88102869204d05327f9a1c57",
+      "page_ids": [
+        "trt1-official-home",
+        "trt-official"
+      ]
+    },
+    {
+      "url_sha256": "8369126a299d5e062c30f18b0fe24b6b97cabaad3edec530ca118826b3578276",
+      "page_ids": [
+        "aztv-official-home"
+      ]
+    },
+    {
+      "url_sha256": "84609e687dbefbbe62df81f3ca9318d104e23e54a5f6fd027bfc21866fd1cf50",
+      "page_ids": [
+        "sozcu-tv-official"
+      ]
+    },
+    {
+      "url_sha256": "858b934c6aabfb5d9835000f4bba2ef9ff7d3ce51dbcb91dca7bb943b68600d5",
+      "page_ids": [
+        "a-haber-official"
+      ]
+    },
+    {
+      "url_sha256": "8641b3c5bd400958e92866fb77c663ee102f1ac2fad381eeae7cfda686c2ab1e",
+      "page_ids": [
+        "aztv-official-home"
+      ]
+    },
+    {
+      "url_sha256": "87a45c343516b208e6bd77ad8d49eda3b092304941ba877fe697e93885073299",
+      "page_ids": [
+        "now-tv-official"
+      ]
+    },
+    {
+      "url_sha256": "8e21bfd114935d7e6d168c695812045dfbd173ad9ce038f3005f20a268a5ea3a",
+      "page_ids": [
+        "kanal-d-official"
+      ]
+    },
+    {
+      "url_sha256": "90e19fd45b07c1acd470675800f67841a78d36d76d9aaf8fe2d810645a0edcb2",
+      "page_ids": [
+        "benguturk-official"
+      ]
+    },
+    {
+      "url_sha256": "96dd46f6a5c0ba48df51fccdc490fa5a74dd1cd9277d3260af423711bfc3a22b",
+      "page_ids": [
+        "show-tv-official"
+      ]
+    },
+    {
+      "url_sha256": "98f20840d04de604be0a566bf2eaaa59bf735026729ac09266b2a6d2477ce543",
+      "page_ids": [
+        "tele1-official"
+      ]
+    },
+    {
+      "url_sha256": "a24bf0e6b54226978fd97d2dc346df2a6bddf6da14b68370848f07aaba0285c3",
+      "page_ids": [
+        "trt1-official-home",
+        "trt-official"
+      ]
+    },
+    {
+      "url_sha256": "a435d60c2ab59e03b2cb371de833286a4dc39194850e6ab7e82e3def0d072ca1",
+      "page_ids": [
+        "kanal-7-official"
+      ]
+    },
+    {
+      "url_sha256": "a514e76a2afb7e6653dd9afa561dc5109b1a95ef65df9ac2ca4aed754319c80d",
+      "page_ids": [
+        "az-baku-tv"
+      ]
+    },
+    {
+      "url_sha256": "a5d0d8a72c3b07d1b214f466f25911300607a89ec3c33962c45e5a56873e551b",
+      "page_ids": [
+        "az-baku-tv"
+      ]
+    },
+    {
+      "url_sha256": "a6dabf0829c3e1b56491f8210e278ddd086c00b2ee45559c10516ea2d2847c8d",
+      "page_ids": [
+        "aztv-official-home"
+      ]
+    },
+    {
+      "url_sha256": "a96b7f4656ba700de8c82c62db741ac6887859b8707a2ecbba47af35437c9ca1",
+      "page_ids": [
+        "trt1-official-home"
+      ]
+    },
+    {
+      "url_sha256": "a9b00cb4dcaba2034773541edf21170d0562db6762932608c1860c396488d1ab",
+      "page_ids": [
+        "aztv-official-home"
+      ]
+    },
+    {
+      "url_sha256": "a9f3dc3d2141c4b826c6eea1226adad315ef3671205955dfa7db09d3029dca2d",
+      "page_ids": [
+        "trt-world-official"
+      ]
+    },
+    {
+      "url_sha256": "b6384f5d5da8d887ea442b741dc3992a35b9d5357f0996e47d014c8100cbab8f",
+      "page_ids": [
+        "trt1-official-home",
+        "trt-official"
+      ]
+    },
+    {
+      "url_sha256": "c0a1616abfb580a818f20372ac91587ac61e5bfdb9aafb6d56411d7086d74406",
+      "page_ids": [
+        "trt1-official-home",
+        "trt-official"
+      ]
+    },
+    {
+      "url_sha256": "c3433a44338239b710e1f57d512d63d96175fe99cc8b37a2836fa9d99517800d",
+      "page_ids": [
+        "a-haber-official"
+      ]
+    },
+    {
+      "url_sha256": "c59f70ec664cd1be0835770b46651a2ed37129e518034dbf3beb258e7ff0e62b",
+      "page_ids": [
+        "ulusal-kanal-official"
+      ]
+    },
+    {
+      "url_sha256": "c7ba5cfdac90a7fd874773f868ab5411141834da234012e5f6ef4a993f47d2c9",
+      "page_ids": [
+        "trt1-official-home"
+      ]
+    },
+    {
+      "url_sha256": "cdfd6d357998760f3d9b6197aa1cb0227e1b757b4391c4527117760871a461ce",
+      "page_ids": [
+        "atv-official"
+      ]
+    },
+    {
+      "url_sha256": "ce032e06a18cec5b2c04dd1aec556a0161fe614a46659fcfc3887183c42823e5",
+      "page_ids": [
+        "ulusal-kanal-official"
+      ]
+    },
+    {
+      "url_sha256": "d2afaa0b1eae35bc5fdd4a5dbdac651081499b359912fd804273f1906ac92f4e",
+      "page_ids": [
+        "halk-tv-official"
+      ]
+    },
+    {
+      "url_sha256": "d51dbff1faddbee908dc6dfe84d0682b73d640cd021e3bb8f6e219578a6eaaec",
+      "page_ids": [
+        "trt-world-official"
+      ]
+    },
+    {
+      "url_sha256": "d6fd39afa01ff7a7d21112a1cfe15ae982a43a733627d549e6eb8f74c4c9a80c",
+      "page_ids": [
+        "trt1-official-home"
+      ]
+    },
+    {
+      "url_sha256": "d8e53dc1a22a139cbe17e09c1c21b221a9f633650ed6a90a72f09c94d41894a0",
+      "page_ids": [
+        "trt-official"
+      ]
+    },
+    {
+      "url_sha256": "dfc26a2f756319375347c86d9dba188f42d6e1c370ad3da0046091115fff3b3a",
+      "page_ids": [
+        "haberturk-official"
+      ]
+    },
+    {
+      "url_sha256": "e2854341919299e81f3ad3dce7b5293960fe0d54f75fcf8cd58be56e402a832c",
+      "page_ids": [
+        "trt1-official-home",
+        "trt-official"
+      ]
+    },
+    {
+      "url_sha256": "e655731b2ed893adc6736440a7e39aad8e80b000fd0ca4d4ea19ae909c891e05",
+      "page_ids": [
+        "aztv-official-home"
+      ]
+    },
+    {
+      "url_sha256": "e81e2b15f101731f9ce1f79d6519dea020140113e81cf5b41f04f89dfd6362ca",
+      "page_ids": [
+        "aztv-official-home"
+      ]
+    },
+    {
+      "url_sha256": "e86c1a591e28158887b3cb8b8c45583c6848b6c8df0ab197a2b95b780e8b9292",
+      "page_ids": [
+        "trt-haber-official"
+      ]
+    },
+    {
+      "url_sha256": "e93e6b2ef1e565759ef38e5499727635af5cd8a9217250ef93e7dc94d67c9885",
+      "page_ids": [
+        "aztv-official-home"
+      ]
+    },
+    {
+      "url_sha256": "ed732782e11ba4b38a86b54c4c8c8b8a515a3cd7d6bd11ac8554343afcbf1742",
+      "page_ids": [
+        "trt1-official-home",
+        "trt-official"
+      ]
+    },
+    {
+      "url_sha256": "f25ec4618bf935e5a4ef63e2abdae832d2e8716625442cec47b14e9a1272cec4",
+      "page_ids": [
+        "trt1-official-home",
+        "trt-official"
+      ]
+    },
+    {
+      "url_sha256": "f2a508e365a9b1b3a616919a7755d48b732bc8e1a2cae822d14a3ba28d03fd99",
+      "page_ids": [
+        "trt1-official-home",
+        "trt-official"
+      ]
+    },
+    {
+      "url_sha256": "f5a3af5c3d9c6323730c2a95773702fc7f1717ad5696626b8825cacbf96ee1fd",
+      "page_ids": [
+        "tv8-official"
+      ]
+    },
+    {
+      "url_sha256": "fb26ab4cbf4fe68e6edaafeb0e06e410b20a639629d9c5f72bc1078cebfa8908",
+      "page_ids": [
+        "kanal-d-official"
+      ]
+    },
+    {
+      "url_sha256": "fd49f12f5ca59ee7d3d4df10625ca1de4a371211ea7dfe2aec43adb06a3794a7",
+      "page_ids": [
+        "trt-official"
+      ]
+    }
+  ]
+}

@@ -1,3 +1,12 @@
+## 9 Kasım 2026 — #9/#11 gerçek resmî sayfa denetimi ve kaynak geçmişi onarımı
+
+- Mevcut 27 onaylı resmî sayfa mevcut güvenli HTTP okuyucuyla sınırlı olarak kontrol edildi: **26 FETCHED, 1 HTTP_403 (trt-spor-official)**. Önceki beş sayfalık sorun kaydına göre bu ortamda TV100, Bengütürk, Ulusal ve Halk TV sayfaları okunabildi; farklı ortamların erişim sonuçları birbirinin yerine geçirilmez.
+- 68 benzersiz canlı sayfa/YouTube referans hash'i ve 83 kaynak-sayfa bağı bulundu. 15 ortak referans TRT1 ve TRT sayfalarında birlikte mevcut. Bunlar stream AV kanıtı değildir.
+- Gerçek kod açığı: run_live_page_discovery.scan tekilleştirirken ikinci sayfanın kimliğini kaybediyordu. Artık her hash için tüm page_ids korunur; eski page_id alanı ilk kaynak olarak uyumluluk için kalır. Her sayfanın FETCHED/ERROR/UNSAFE_PAGE sonucu ve okunan belgenin hash'i kaydedilir; sıfır referanslı başarılı sayfa da görünürdür.
+- v2/reports/official-page-http-audit-20261109.json: ham URL veya HTML içermez; gerçek sayfa durumları, belge/hash ve kaynak bağları kayıtlıdır. #34 geniş araması başlatılmadı, yalnız mevcut envanter denetlendi.
+- Yerel toplu test: **860 test OK (1 pinned AV artefakt skip), 23 görev motoru testi OK**. Kaynak birleştirme + kısmi hata + boş sayfa regresyonları eklendi. Yeni Actions sonucu ayrıca doğrulanacak.
+- #9 açık: TRT Spor HTTP_403 ve gerçek stream provenance/AV kabulü; #11 #9 bağımlılığı nedeniyle açık. #13 gerçek S3 sırrı engeli ve diğer kabul sınırları korunuyor. Yeni görev tamamlandı iddiası yok; 8/33.
+
 ## 9 Kasım 2026 — Son toplu doğrulama: gerçek Actions loglarıyla kabul edilen kod düzeltmeleri
 
 - Test edilen kod SHA: `66d3ea738d71143c824c7e3bf1b86407c7d36012`. S3 blocked kaydının scheduler fixture'ını bozduğu gerçek hata da giderildi: sentetik #13 pending senaryosu gerçek ledger'dan ayrıldı; #13 blocked iken #23 bağımsız işinin hazır kaldığı doğrulandı.
