@@ -43,7 +43,7 @@ class TransientBatchSafety(unittest.TestCase):
         self.assertEqual(report["new_distinct_av_identities"],1)
         self.assertEqual(report["previous_failures_not_retried"],2)
         self.assertFalse(report["ibo_device_verified"])
-        self.assertNotIn(url,str(report))
+        self.assertNotIn("https://cdn.example.org/stream.m3u8",str(report))
     def test_identity_mismatch_and_fake_prior_rejected(self):
         p,g=fixture()
         p["results"][1]["exact_channel_id"]="Other.tr"
@@ -74,7 +74,7 @@ class TransientBatchSafety(unittest.TestCase):
         fake={digest:{"url_sha256":digest,"status":"VIDEO_AUDIO_DECODED",
                       "video":False,"audio":True,"decoded":True}}
         with self.assertRaises(ValueError):
-            aggregate(target,old,{digest:{"url":"https://e.org/x"}},
+            aggregate(target,old,{digest:{"url":"Two.az","channel_id":"Two.az"}},
                       {},[],fake,counts)
     def test_contradictory_retry_proof_never_claims_av(self):
         p,g=fixture()
@@ -87,7 +87,7 @@ class TransientBatchSafety(unittest.TestCase):
                 fake={digest:{"url_sha256":digest,"status":status,
                               "video":True,"audio":True,"decoded":decoded}}
                 with self.assertRaisesRegex(ValueError,"Fake FFmpeg recovery"):
-                    aggregate(target,old,{digest:{"url":"https://e.org/x"}},
+                    aggregate(target,old,{digest:{"url":"Two.az","channel_id":"Two.az"}},
                               {},[],fake,counts)
 
     def test_retry_rejects_wrong_live_source_hash_or_broadcaster(self):
