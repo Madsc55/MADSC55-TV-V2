@@ -1,3 +1,15 @@
+## 9 Kasım 2026 — Son toplu doğrulama: gerçek Actions loglarıyla kabul edilen kod düzeltmeleri
+
+- Test edilen kod SHA: `66d3ea738d71143c824c7e3bf1b86407c7d36012`. S3 blocked kaydının scheduler fixture'ını bozduğu gerçek hata da giderildi: sentetik #13 pending senaryosu gerçek ledger'dan ayrıldı; #13 blocked iken #23 bağımsız işinin hazır kaldığı doğrulandı.
+- [Eight-Stage #42705282435](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42705282435): iki job success. Regression job 129460347195: görev motoru 23 test OK; ana suite 858 test OK (skipped=1). FFmpeg artık aynı regression job'da kurulu; iki gerçek decoder testi atlanmadı.
+- [Master #42705282534](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42705282534): offline job 129460509831 success; 23 görev motoru, 61 arşiv/kurtarma, 858 ana test başarılı. Canlı master job 129460930010 skipped; #23 canlı kabul değildir.
+- [Ordered #42705282473](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42705282473), [Trigger Protection #42705282452](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42705282452), [Monitor #42705282440](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42705282440) completed/success. Önceki kırmızı koşular yeşil diye değiştirilmedi; yeni SHA koşuları ayrıca doğrulandı.
+- Kalan tek offline skip: `Pinned Actions artifact inputs absent from ordinary offline checkout`. Bu eksik gerçek kanıt tamamlanmış sayılmaz; canlı kanal/S3/cihaz kabulü üretilmedi.
+- Son mevcut Source Integration #42629066294 ayrıca okundu: 12/12 job success; final rapor 35.915/35.915 probe, 14.516 video+audio decoded. Ancak resmî canlı sayfa ailesinde PARTIAL_COVERAGE/SOURCE_ERRORS ve external_source_coverage_complete=false devam ediyor. Dünya toplamı #9 resmî kaynak kabulü veya tarihî kurtarma yerine kullanılamaz.
+- Somut bekleyenler: #5 üç özgün bozuk satırın kimliği; #9 resmî kaynak/provenance kabulü; #13 eksik protected AWS access key ve gerçek sürümlü restore; #23 canlı master; #32 cihaz testi. Bağımlı işler sahte kanıtla kapatılmadı; 8/33 kayıt tamamlandı, 30 zorunlu kapsamın 22'si açık. #34 en son.
+- Korunan İBO blob SHA yeniden doğrulandı: `4b1c3cea4b5107a425abab60f62d41f9f81e05a7`. main, PR #9 üzerinde doğrudan işlem, kategoriler veya tarihî envanter değişikliği yok.
+- Bu bölüm test edilen kod SHA'sını sabitler; bölümün kendisini ekleyen sonraki docs-only commit ayrı bir yeni canlı kabul iddiası değildir.
+
 ## 9 Kasım 2026 — Toplu gerçek CI sonucu ve doğrulanmış dış engel
 
 - Kod commit'i `934fa7c33bf36a037f74cf5565ef2ff1e25f59ce`: Master #42704737745 offline-tests job 129458450050 success; 23 görev motoru + 61 arşiv/kurtarma testi + 858 toplu test (1 pinned-AV-input skip). Canlı master job skipped, canlı kabul değildir.
