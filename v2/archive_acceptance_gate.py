@@ -127,7 +127,7 @@ def check(env=None):
     # Historical membership is derived from the immutable raw inventory, not
     # from mutable candidate metadata. A forged false value must not hide a
     # recovered historical URL from later protection and retry decisions.
-    historical_ids = {identity(row) for row in historical if identity(row) is not None}
+    historical_ids = {key for row in historical if (key := identity(row)) is not None}
     for candidate, key in zip(candidates, candidate_ids):
         if candidate.get("historical_not_reverified") is not (key in historical_ids):
             raise RuntimeError("Encrypted candidate view misstates historical identity protection")
