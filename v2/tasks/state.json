@@ -31,18 +31,19 @@
     {
       "id": 3,
       "status": "in_progress",
-      "last_checked_at": "2026-11-06T17:50:00Z",
+      "last_checked_at": "2026-11-09T03:55:08Z",
       "evidence_urls": [
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42216075104",
-        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42264490846"
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42264490846",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42539900333"
       ],
-      "blocker": null,
-      "reason": "P0 dependencies #1 and #2 completed. Began evidence reconciliation of immutable 55 occurrences / 50 identities; 45 identities remain unproven until exact-match FFmpeg AV evidence or documented blocked reasons. No recovery promoted."
+      "blocker": "Historical 45 unresolved identities still require per-identity exact AV proof or evidence-backed exclusion; worldwide totals and 3 TR/AZ decoded sources cannot be automatically attributed to those 45.",
+      "reason": "Verified 2026-11-09 live Source Integration Batch #42539900333: all 12/12 jobs success; 35,542/35,542 URLs FFmpeg probed, 14,417 video+audio decoded worldwide. Separate exact TR/AZ target probe: 137 sources probed, 3 video+audio decoded, 21 unavailable among 158 target hashes. This is not evidence that any of the historical 45 unresolved identities were recovered; exact historical identity reconciliation remains open."
     },
     {
       "id": 4,
       "status": "in_progress",
-      "last_checked_at": "2026-11-08T22:24:07Z",
+      "last_checked_at": "2026-11-09T03:55:08Z",
       "evidence_urls": [
         "https://github.com/Madsc55/MADSC55-TV-V2/commit/5d208cf40e9d99915963bb9f56c4aff0f591ed02",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42228674931",
@@ -50,10 +51,11 @@
         "https://github.com/Madsc55/MADSC55-TV-V2/commit/c36083b8e9551a0a6795c6b2c0cf0350662440a6",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42530040643",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42530114705",
-        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42530114713"
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42530114713",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42539900333"
       ],
-      "blocker": "Still 1866 matched historical SHA without video+audio decoded and 20 absent from worldwide evidence. Exact-source recovery and documented exclusions remain; successful SHA crosswalk is not completion.",
-      "reason": "Pinned read-only crosswalk #42530040643 SUCCESS; 4955 historical SHA retained; 4935 exact matches; 3069 prior AV decoded; 1866 matched without AV (1658 partial_media, 173 source_research, 30 transient_retry, 5 other_unproven); 20 missing. No IBO device or broadcaster identity verification. Subsequent grouped Master Engine and protection gates passed on 9de5e5f6."
+      "blocker": "Latest worldwide snapshot has 1,848 matched historical identities without decoded AV and 65 absent; earlier snapshot had 1,866 matched without AV and 20 absent. Differences require source/identity provenance reconciliation, not silent acceptance.",
+      "reason": "Historical crosswalk from live Source Integration Batch #42539900333: 4,955 historical identities preserved, 4,890 exact SHA matches, 3,042 historical exact matches with video+audio decoded, 65 historical identities absent from this particular worldwide report. Earlier crosswalk #42530040643 reported 4,935 matches / 3,069 decoded / 20 absent, so do not replace baseline or claim recovery from differing run snapshots. Exact provenance reconciliation remains open."
     },
     {
       "id": 5,
