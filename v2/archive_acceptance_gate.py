@@ -12,7 +12,7 @@ import stat
 from pathlib import Path
 from urllib.parse import urlsplit
 from encrypted_archive import restore
-from historical_inventory_guard import SCHEMA_V2, identity, unpack_archive_snapshot, verify_historical_baseline
+from historical_inventory_guard import SCHEMA_V2, identity, source_ids, unpack_archive_snapshot, verify_historical_baseline
 from historical_url_recovery import validate_url
 
 BASELINE = Path(__file__).resolve().parent / "history/stage3-4955-hash-only.jsonl"
@@ -108,6 +108,21 @@ def check(env=None):
             or None in candidate_ids or len(candidate_ids) != len(set(candidate_ids))
             or not set(candidate_ids).issubset(raw_url_ids)):
         raise RuntimeError("Encrypted candidate view lacks raw URL provenance")
+    # A matching URL digest alone does not authorize arbitrary source labels.
+    # Preserve legacy source/source_id and hash-only provenance for the same
+    # exact digest, but reject source identifiers invented in the candidate view.
+    raw_sources = {}
+    for row in historical + newer:
+        key = identity(row)
+        if key is not None:
+            raw_sources.setdefault(key, set()).update(source_ids(row))
+    for candidate, key in zip(candidates, candidate_ids):
+        labels = candidate.get("source_ids")
+        if (not isinstance(labels, list)
+                or any(not isinstance(label, str) or not label for label in labels)
+                or len(labels) != len(set(labels))
+                or not set(labels).issubset(raw_sources.get(key, set()))):
+            raise RuntimeError("Encrypted candidate view has fabricated source provenance")
     # Archived deduplication is a discovery view, not a playback proof. Even
     # an authenticated archive cannot elevate old evidence to fresh AV status.
     for candidate in candidates:
