@@ -1,3 +1,9 @@
+## 9 Kasım — V2 DEVAM: #23/#26 monitor–task engine kanıt sözleşmesi
+
+- `49d29ede`: Actions monitor raporundaki her workflow kaydına gerçek YAML başlığıyla eşleşen `name` eklendi. Önceden yalnız `workflow_file` vardı; görev motorunun `verify_grouped_actions` fonksiyonu ise `name` aradığı için gerçek monitor raporu doğrudan kabul edilemiyordu.
+- `f833a0be`: Dört workflow için ad eşlemesi ve gerçek monitor kayıtlarında `name` bulunması regresyonla kontrol ediliyor.
+- Kod/testler commit edildi; **gerçek Actions sonucu bu turda doğrulanamadı**. #23/#26 kapanmadı, 8/33. #34 son; main, PR #9, korunan IBO ve tarihî 4.955 kimlikler değişmedi.
+
 ## 9 Kasım — V2 DEVAM: #23/#26 gerçek job/step kanıtı ile toplu Actions kabulü
 
 - `07b5b9e7`: `v2/tasks/task_engine.py::verify_grouped_actions` artık aynı SHA/branch/workflow success dışında **jobs_checked**, eksiksiz `jobs_total_count`, her job'un completed/success olması ve her step'in success olmasını zorunlu kılar. Eski sadece workflow-level yeşil kabul açığı kapatıldı.
