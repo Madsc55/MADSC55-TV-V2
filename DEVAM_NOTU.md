@@ -1,3 +1,9 @@
+## 9 Kasım — #11 hash-only kaynak geçmişi regresyonu
+
+- `b2022f98`: 4.955 tarihî baseline korunarak aynı URL SHA'sına bağlı yeni hash-only kaynak satırı ve gerçek URL satırı birlikte arşivlenir. Deduplike adaydan hash-only kaynak etiketi çıkarıldığında `archive_acceptance_gate.check` reddetmeli; test eklendi.
+- V2 Master Engine geliştirme dalı push tetikleyicisi ve #11/#13/#14/#16 toplu offline kabul adımı mevcut. GitHub connector'ün commit-run sorgusu push çalışmaları için sonuç sağlamıyor; yeni run ID veya başarılı test sonucu henüz doğrulanmadı.
+- Görev kapanışı yok (8/33); #13 gerçek versioned S3 geri yükleme kanıtı, #14 bağımlılığı ve #16 gerçek geçici hata uçtan uca kanıtı açık. main/PR #9/ana İBO/tarihî baseline korunuyor.
+
 ## 9 Kasım — V2 BİTİR: toplu kabul iş akışı tetikleme düzeltmesi
 
 - `89b46d90`: `.github/workflows/v2-master-engine.yml` geliştirme dalındaki her push'ta `test_archive_acceptance_gate`, `test_historical_inventory_guard`, `test_independent_s3_restore`, `test_traz_transient_av_recovery` modüllerini ayrı fail-closed adımda çalıştırır. `v2/reports/master-ci/acceptance-11-13-14-16.log` başarısızlıkta bile artifact'a dahil edilir.
