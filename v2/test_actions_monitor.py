@@ -121,6 +121,24 @@ class MonitorTests(unittest.TestCase):
         self.assertEqual(len([p for p in seen if "/78/jobs?" in p]),2)
         self.assertFalse(row["acceptance_candidate"])
 
+    def test_stalled_requested_and_pending_jobs_remain_visible(self):
+        run={"id":79,"head_sha":"c"*40,"status":"waiting",
+             "conclusion":None,"head_branch":actions_monitor.BRANCH,"event":"push",
+             "created_at":"2026-11-01T00:00:00Z",
+             "html_url":"https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/79"}
+        def fake_api(path):
+            if "/workflows/" in path:
+                return {"workflow_runs":[run] if "v2-master-engine" in path else []}
+            if path.endswith("/79/jobs?per_page=100"):
+                return {"total_count":2,"jobs":[{"id":201,"status":"requested"},
+                                                {"id":202,"status":"pending"}]}
+            raise AssertionError(path)
+        with patch.object(actions_monitor,"api",side_effect=fake_api):
+            row=actions_monitor.collect()["runs"][0]
+        self.assertEqual({j["status"] for j in row["active_jobs"]},{"requested","pending"})
+        self.assertFalse(row["acceptance_candidate"])
+        self.assertFalse(row["automatic_retry_permitted"])
+
     def test_stalled_queued_run_collects_jobs_without_retry(self):
         run={"id":78,"head_sha":"b"*40,"status":"queued",
              "conclusion":None,"head_branch":actions_monitor.BRANCH,"event":"push",
