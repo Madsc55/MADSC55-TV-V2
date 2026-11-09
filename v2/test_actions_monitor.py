@@ -253,6 +253,31 @@ class MonitorTests(unittest.TestCase):
                 self.assertIn(expected, result["runs"][0]["failure_reasons"])
                 self.assertFalse(result["runs"][0]["acceptance_candidate"])
 
+    def test_paginated_jobs_all_checked_before_acceptance(self):
+        run = {"id": 123, "head_sha": "a" * 40,
+               "head_branch": actions_monitor.BRANCH, "event": "push",
+               "status": "completed", "conclusion": "success",
+               "html_url": "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/123"}
+        good = {"id": 1, "status": "completed", "conclusion": "success",
+                "steps": [{"number": 1, "conclusion": "success"}]}
+        skipped = {"id": 101, "status": "completed", "conclusion": "skipped",
+                   "steps": []}
+        requested = []
+        def fake_api(path):
+            requested.append(path)
+            if path.endswith("/123/jobs?per_page=100"):
+                return {"total_count": 101, "jobs": [dict(good, id=i) for i in range(1, 101)]}
+            if path.endswith("/123/jobs?per_page=100&page=2"):
+                return {"total_count": 101, "jobs": [skipped]}
+            return {"workflow_runs": [run]}
+        with patch.dict("os.environ", {"GITHUB_SHA": "a" * 40}), patch.object(
+                actions_monitor, "api", side_effect=fake_api):
+            result = actions_monitor.collect()
+        self.assertEqual(len(result["runs"][0]["jobs"]), 101)
+        self.assertFalse(result["runs"][0]["acceptance_candidate"])
+        self.assertIn("job_101_skipped", result["runs"][0]["failure_reasons"])
+        self.assertIn("/repos/Madsc55/MADSC55-TV-V2/actions/runs/123/jobs?per_page=100&page=2", requested)
+
     def test_untrusted_run_identity_and_truncated_job_pages_rejected(self):
         base = {"id": 123, "head_sha": "a" * 40, "head_branch": actions_monitor.BRANCH,
                 "event": "push", "status": "completed", "conclusion": "success",
