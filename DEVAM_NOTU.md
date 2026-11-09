@@ -1,3 +1,8 @@
+## 9 Kasım — V2 DEVAM: sabitlenmiş AV kanıtı eksikliği için gerçek regresyon senaryoları
+
+- `9e5324e`: Sıfır, bir ve iki sabitlenmiş AV kanıt dosyası senaryoları için bağımsız unittest eklendi. Sıfırda dürüst SkipTest; bir/ikide fail-closed RuntimeError beklenir. Gerçek kanıt dosyası veya kanal kurtarma sonucu üretilmedi.
+- `58d4071e` ve `f6854106` commit'leri için Actions sorgusu çalışma döndürmedi; yeni testin sonucu da henüz doğrulanmadı. 8/33 değişmedi. main, PR #9, ana İBO ve 4.955 tarihî kimlik korunur.
+
 ## 9 Kasım — V2 DEVAM: kısmi sabitlenmiş AV kanıtı artık sessizce atlanmaz
 
 - `58d4071e`: `test_traz_av_evidence_union.py` üç sabitlenmiş Actions AV kanıtından yalnız bir kısmı varsa `SkipTest` yerine açık hata verir. Üçü de normal offline checkout'ta yoksa eski dürüst atlama korunur; bu gerçek AV kanıtı üretmez.
