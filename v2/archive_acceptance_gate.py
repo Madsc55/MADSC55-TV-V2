@@ -113,6 +113,8 @@ def check(env=None):
     for candidate in candidates:
         if (candidate.get("status") != "NOT_REVERIFIED"
                 or candidate.get("av_verified") is not False
+                or candidate.get("device_verified") is not False
+                or candidate.get("ibo_device_verified") is not False
                 or candidate.get("decoded") is not False
                 or candidate.get("video") is not False
                 or candidate.get("audio") is not False
