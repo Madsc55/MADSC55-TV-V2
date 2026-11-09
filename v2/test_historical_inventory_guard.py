@@ -147,6 +147,38 @@ class HistoricalInventoryGuardTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,"identities"):
             verify_historical_baseline(missing,old)
 
+    def test_4955_row_encrypted_roundtrip_retains_duplicate_provenance(self):
+        old=[{"url":"https://fixture.example.org/%04d.m3u8" % i,
+              "source":"historical","status":"PROBE_FAILED_NETWORK_TIMEOUT"}
+             for i in range(4953)]
+        old.extend([
+            {"url":old[0]["url"],"source":"backup-one","status":"VIDEO_AUDIO_DECODED"},
+            {"url":old[0]["url"],"source":"backup-two","status":"PROBE_FAILED_HTTP_RESPONSE_ERROR"},
+        ])
+        new=[{"url":old[0]["url"],"source":"fresh-source","av_verified":True}]
+        raw,view,summary=reconcile(old,new,4955)
+        self.assertEqual(summary["historical_records_preserved"],4955)
+        with tempfile.TemporaryDirectory() as tmp:
+            path=Path(tmp)/"all-history.enc"
+            with patch.dict(os.environ,{"V2_ARCHIVE_KEY_HEX":"ab"*32}):
+                self.assertTrue(preserve_to_new_archive(path,raw,view))
+                restored=restore(path)
+                restored_raw=[row for block in restored
+                              if block["kind"]=="raw_historical_and_new"
+                              for row in block["records"]]
+                restored_view=[row for block in restored
+                               if block["kind"]=="deduplicated_view"
+                               for row in block["records"]]
+                self.assertEqual(restored_raw,old+new)
+                self.assertEqual(restored_view,view)
+                self.assertEqual(verify_historical_baseline(restored_raw[:4955],old),
+                                 verify_historical_baseline(old,old))
+                matched=next(x for x in restored_view if x["url"]==old[0]["url"])
+                self.assertEqual(matched["source_ids"],
+                                 ["historical","backup-one","backup-two","fresh-source"])
+                self.assertIs(matched["av_verified"],False)
+                self.assertIs(matched["device_verified"],False)
+
     def test_duplicate_sources_preserve_history_without_promoting_claimed_av(self):
         url="https://fixture.example.org/source.m3u8"
         old=[{"url":url,"source":"historical","av_verified":True},
