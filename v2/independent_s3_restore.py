@@ -5,6 +5,7 @@ import hashlib
 import json
 import os
 import re
+import stat
 import subprocess
 import tempfile
 from pathlib import Path
@@ -43,7 +44,7 @@ def restore_s3_version(bucket, key, version, expected, runner=subprocess.run):
             raise RuntimeError("Remote object version was not verified by S3")
         # Never follow an unexpected symlink or accept a missing/non-regular
         # remote download as a restored archive, even with matching metadata.
-        if downloaded.is_symlink() or not downloaded.is_file():
+        if downloaded.is_symlink() or not downloaded.is_file() or not stat.S_ISREG(downloaded.lstat().st_mode):
             raise RuntimeError("S3 retrieval did not create a regular encrypted archive")
         downloaded.chmod(0o600)
         # Hash in bounded chunks: encrypted historical archives can be much larger than RAM.
