@@ -218,9 +218,6 @@ class GapCrosswalkTests(unittest.TestCase):
         report=reconcile(api,scan)
         self.assertEqual(report["exact_missing_stream_identities_with_other_m3u_leads"],1)
 
-if __name__=="__main__":
-    unittest.main()
-
 class XMLTVRedirectSafetyTests(unittest.TestCase):
     def test_redirect_rejects_same_host_unsafe_target(self):
         req=urllib.request.Request("https://example.org/guide.xml")
@@ -233,3 +230,6 @@ class XMLTVRedirectSafetyTests(unittest.TestCase):
             with self.subTest(target=target),patch("traz_gap_crosswalk._source_check",return_value=False),self.assertRaises(ValueError):
                 handler.redirect_request(req,None,302,"Found",{},target)
 
+
+if __name__=="__main__":
+    unittest.main()
