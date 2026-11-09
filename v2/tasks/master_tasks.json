@@ -35,7 +35,9 @@
       "acceptance": "All 50 immutable identities accounted for; each of 45 unresolved has documented exact-match AV result or evidence-backed blocked reason; no fabricated recoveries",
       "evidence_urls": [],
       "last_checked_at": null,
-      "owner": "automation_with_review"
+      "owner": "automation_with_review",
+      "scope": "deferred_optional",
+      "deferred_reason": "User opted out of mandatory historical recovery; retain historical records and AV evidence without false completion."
     },
     {
       "id": 4,
@@ -47,7 +49,9 @@
       "acceptance": "4,955 unique baseline hashes retained; 1,866 unproven partitioned into 1,658 partial media, 173 source research, 30 transient retry and 5 other; 20 missing investigated; sealed AV provenance and exact SHA mapping checked; no IBO device claim",
       "evidence_urls": [],
       "last_checked_at": null,
-      "owner": "automation_with_review"
+      "owner": "automation_with_review",
+      "scope": "deferred_optional",
+      "deferred_reason": "User opted out of mandatory historical recovery; retain historical records and AV evidence without false completion."
     },
     {
       "id": 5,
@@ -73,7 +77,9 @@
       "acceptance": "2,643 candidate hashes each have a bounded safe real FFmpeg video+audio probe result or explicit justified exclusion; encrypted URLs retained",
       "evidence_urls": [],
       "last_checked_at": null,
-      "owner": "automation_with_review"
+      "owner": "automation_with_review",
+      "scope": "deferred_optional",
+      "deferred_reason": "User opted out of mandatory historical recovery; retain historical records and AV evidence without false completion."
     },
     {
       "id": 7,
@@ -179,7 +185,6 @@
       "title": "SHA, URL ve yayıncı kimliği eşleştirmesi",
       "priority": "P1",
       "depends_on": [
-        4,
         11,
         14
       ],
@@ -206,9 +211,6 @@
       "title": "Kurtarma kuyruklarını ve arşiv sonuçlarını tamamla",
       "priority": "P1",
       "depends_on": [
-        3,
-        4,
-        6,
         15,
         16
       ],
