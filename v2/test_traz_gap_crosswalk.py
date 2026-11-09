@@ -56,6 +56,16 @@ class GapCrosswalkTests(unittest.TestCase):
             with self.subTest(mode=mode),self.assertRaises(ValueError):
                 reconcile(api,scan)
 
+    def test_m3u_provenance_is_never_silently_truncated(self):
+        api,scan=fixtures()
+        scan["candidates"][0]["source_ids"]=["source-"+str(i) for i in range(13)]
+        with self.assertRaisesRegex(ValueError,"Too many M3U source provenance identities"):
+            reconcile(api,scan)
+        scan["candidates"][0]["source_ids"]=["iptv-org-tr"]*13
+        report=reconcile(api,scan)
+        candidate=next(x for x in report["candidate_identities"] if x["channel_id"]=="Alpha.tr")
+        self.assertEqual(candidate["candidate_m3u_url_hashes"][0]["source_ids"],["iptv-org-tr"])
+
     def test_invalid_m3u_provenance_fails_closed(self):
         for bad in (None,"iptv-org-tr",["https://example.org/source"],
                     ["source"+chr(10)+"injected"],["x"*97],["ok"]*101):
