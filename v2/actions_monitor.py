@@ -115,6 +115,7 @@ def collect():
             and run.get("conclusion") == "success")
         record["jobs"] = []
         record["jobs_checked"] = False
+        record["failure_reasons"] = []
         if run.get("status") == "completed":
             response = api(base + "/runs/%s/jobs?per_page=100" % run["id"])
             jobs = response.get("jobs")
@@ -130,7 +131,7 @@ def collect():
                     "number": step.get("number"), "name": step.get("name"),
                     "conclusion": step.get("conclusion")
                 } for step in (job.get("steps") or []) if step.get("conclusion") in (
-                    "failure", "cancelled", "timed_out"
+                    "failure", "cancelled", "timed_out", "skipped", "neutral"
                 )]
             } for job in jobs]
             # A workflow-level green with no job evidence or skipped jobs is not AV acceptance.
@@ -143,6 +144,21 @@ def collect():
                         and all(step.get("conclusion") == "success"
                                 for step in job["steps"])
                         for job in jobs))
+        if run.get("status") != "completed":
+            record["failure_reasons"].append("workflow_not_completed")
+        elif run.get("conclusion") != "success":
+            record["failure_reasons"].append("workflow_" + str(run.get("conclusion")))
+        if record["jobs_checked"]:
+            for job in record["jobs"]:
+                if job["status"] != "completed" or job["conclusion"] != "success":
+                    record["failure_reasons"].append(
+                        "job_%s_%s" % (job["id"], job["conclusion"]))
+                for step in job["failed_steps"]:
+                    record["failure_reasons"].append(
+                        "job_%s_step_%s_%s" % (
+                            job["id"], step["number"], step["conclusion"]))
+            if not record["acceptance_candidate"] and not record["failure_reasons"]:
+                record["failure_reasons"].append("not_current_commit_or_incomplete_step_evidence")
         records.append(record)
     return {"repository": REPO, "workflows": list(WORKFLOWS), "branch": BRANCH,
             "monitor_run_id": os.environ.get("GITHUB_RUN_ID"),
