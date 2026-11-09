@@ -156,6 +156,18 @@ def verify_grouped_actions(runs, expected_sha, required_names):
                 run.get("html_url") != (
                     "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/" + str(run["id"]))):
             raise ValueError("Missing trusted Actions run identity")
+        jobs = run.get("jobs")
+        if (run.get("jobs_checked") is not True or not isinstance(jobs, list)
+                or not jobs or type(run.get("jobs_total_count")) is not int
+                or run["jobs_total_count"] != len(jobs)):
+            raise ValueError("Missing complete grouped Actions job evidence")
+        if any(not isinstance(job, dict) or job.get("status") != "completed"
+               or job.get("conclusion") != "success"
+               or not isinstance(job.get("steps"), list) or not job["steps"]
+               or any(not isinstance(step, dict)
+                      or step.get("conclusion") != "success"
+                      for step in job["steps"]) for job in jobs):
+            raise ValueError("Skipped, failed or incomplete grouped Actions job evidence")
         if name in accepted:
             raise ValueError("Ambiguous duplicate Actions workflow evidence")
         accepted[name] = run["html_url"]
