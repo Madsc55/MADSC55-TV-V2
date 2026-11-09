@@ -2256,3 +2256,13 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - Gerçek run #42406632255: offline-tests başarılı; canlı master başarısız. `V2_ARCHIVE_PASSPHRASE` ile scrypt türetme başarılı; şifreli arşiv geri okuma başarılı ve korunan playlist SHA değişmedi. 47 kaynak; `ilyswch-iptv-tr` HTTP 404; 7.785 benzersiz aday, fakat HLS erişim sayacı 0.
 - Kök neden bulundu: `real_ibo_scan.check_hls` başarıda aynı entry nesnesini döndürürken `master_engine.build` checker sonucunu `is True` ile kabul ediyordu. `hls_reachable` adaptörü ve `test_real_hls_scanner_returns_entry_not_boolean` regresyonu eklendi. Bu düzeltme henüz yeni canlı FFmpeg kanıtı değildir.
 - Gerçek kaynak 404 ve canlı AV tarama sonuçları yeniden doğrulanmadan #23 veya yayın paketi görevleri tamamlandı sayılmaz. 7.785 aday için 0 AV raporu artık güvenilir erişilemezlik kanıtı sayılmamalıdır.
+
+
+## 9 Kasım 2026 — Kullanıcı V2 DEVAM kalıcı yürütme emri (Codex çakışma korumalı)
+- Her V2 DEVAM başlangıcında bu dosyayı, [V2 SIRA] GitHub görevlerini ve v2/tasks/state.json'u güncel geliştirme dalından oku; gerçek dal adı: `madsc/v2-discovery-bulk-20261031` (development/dev varsayma).
+- Zorunlu grup sırası: #5 #9 #11 #13 #14 #16 → #23 #25 #26 → #15 #17 #18 #19 #20 #21 → #24 → #28 #29 #30 #31 → #32 #33. Bloklu işi gerekçesiyle kaydet, bağımsız göreve geç. #3, #4, #6 ertelenmiş; #34 yalnız bütün zorunlu işler kabul edilince.
+- Gruplarda kodu tamamla, regresyonları topluca çalıştır, geliştirme dalına commit/push et; aynı SHA için zorunlu Actions job sonuçlarını doğrula. Yalnız görev-özel kabul kanıtı varsa issue kapat, state.json'u güncelle ve commit/run/kanıt URL'lerini buraya ekle. Gerçek FFmpeg görüntü+ses kanıtı olmayan yayın kabul edilmez.
+- #5 özgün kaynak satırları, #13 gerçek S3 restore veya #32 kullanıcı IBO cihaz testi eksikse bunları dış engel olarak açık tut; uydurma kanıt üretme.
+- Diğer sohbetler, Codex ve saatlik yürütücüyle çakışma koruması: her yazımdan hemen önce güncel HEAD/blob SHA denetle; paylaşılan atomik görev kilidi veya açık görev sahipliği yoksa aynı dosya/görev üzerinde eşzamanlı değişiklik yapma. Başkasının commitini ezme, force-push yapma, çalışan canlı taramayı tekrar başlatma; bağımsız salt-okunur kabul kontrollerine devam et.
+- main, PR #9, ana IBO listesi, mevcut kategoriler ve tarihî envanter değişmez. Bu emir sonraki tüm V2 DEVAM oturumlarında geçerlidir.
+- Bu kayıt yalnız yürütme talimatıdır; test başarısı, görev kapanışı veya canlı AV kabulü değildir.
