@@ -1,3 +1,9 @@
+## 9 Kasım — V2 DEVAM: #13 bağımsız S3 geri yükleme sonuç artefaktı
+
+- `6fa017f2`: `v2-s3-restore-acceptance.yml` başarılı gerçek sürümlü S3 restore sonrası `v2/reports/s3-restore/restore-result.log` içine yalnızca kabul çıktısını ve şifreli dosyanın SHA256'sını yazar, PASS ve 64 haneli SHA256 kalıbını doğrular; başarılı sonuç `v2-s3-restore-result-<run_id>` artefaktına yüklenir.
+- `01c1881f`: başarısız restore durumunda S3 komutunun özel koordinat içerebilen çıktısı silinir, sadece genel hata mesajı gösterilir. Başarısız restore logu artefakta yüklenmez.
+- Kod ve CI kabul mekanizması geliştirildi; gerçek AWS erişimi, doğru sürümlü şifreli nesne, pinned SHA256 ve archive key ile Actions başarı kanıtı hâlâ doğrulanmadı. #13/#14 açık; görev durumu 8/33. main, PR #9, ana İBO, kategoriler ve 4.955 tarihî kimlik değiştirilmedi.
+
 ## 9 Kasım — V2 DEVAM: canlı Master Engine fail-closed shell
 
 - `98142262`: `v2-master-engine.yml` canlı `Real master discovery and verification` adımı `shell: bash` ve `set -euo pipefail` ile sıkılaştırıldı. Gerçek `master_engine.py` komutu başarısızsa Actions adımı başarısız olur; job çıktıları `if: always()` ile toplanmaya devam eder.
