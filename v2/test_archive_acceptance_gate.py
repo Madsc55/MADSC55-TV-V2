@@ -125,6 +125,29 @@ class ArchiveGateTests(unittest.TestCase):
                 with self.assertRaisesRegex(RuntimeError, "falsely claims fresh AV"):
                     check(env)
 
+    def test_candidate_source_labels_must_match_exact_raw_url_history(self):
+        """A valid URL digest cannot borrow another channel's source labels."""
+        from historical_inventory_guard import preserve_to_new_archive, reconcile
+        history = [json.loads(line) for line in BASELINE.read_text().splitlines() if line]
+        url = "https://fixture.example.org/source-provenance.m3u8"
+        raw, view, _ = reconcile(history, [
+            {"url": url, "source_id": "original-source"}], 4955)
+        self.assertEqual(len(view), 1)
+        self.assertEqual(view[0]["source_ids"], ["original-source"])
+        for labels in (["invented-source"], ["original-source", "invented-source"],
+                       ["original-source", "original-source"]):
+            with self.subTest(labels=labels):
+                forged = [dict(view[0], source_ids=labels)]
+                archive = self.root / ("forged-source-" + str(len(labels)) +
+                                       "-" + str(labels[0] == "invented-source") + ".enc")
+                with patch.dict(os.environ, {"V2_ARCHIVE_KEY_HEX": "ab" * 32}):
+                    preserve_to_new_archive(archive, raw, forged)
+                digest = hashlib.sha256(archive.read_bytes()).hexdigest()
+                env = self.prepared(restored_file=str(archive), restore_sha256=digest)
+                env["V2_ARCHIVE_EXPECTED_SHA256"] = digest
+                with self.assertRaisesRegex(RuntimeError, "fabricated source provenance"):
+                    check(env)
+
     def test_missing_approval_or_evidence(self):
         with self.assertRaises(RuntimeError): check({})
         with self.assertRaises(RuntimeError): check({"V2_ARCHIVE_RESTORE_APPROVED": "true"})
