@@ -68,6 +68,19 @@ class GapCrosswalkTests(unittest.TestCase):
         self.assertEqual(report["remaining_without_xmltv_channel_id_candidate"],1)
         self.assertFalse(report["schedules_correctly_verified"])
 
+    def test_cross_source_exact_xmltv_id_collision_is_flagged_not_verified(self):
+        xml=b'<tv><channel id="Alpha.tr"/><programme channel="Alpha.tr"/></tv>'
+        report=inspect_epg_gap(["Alpha.tr","Beta.az"],
+            ["https://example.org/first.xml","https://example.org/second.xml"],
+            fetcher=lambda _:xml)
+        self.assertEqual(report["cross_source_xmltv_id_collisions"],["Alpha.tr"])
+        self.assertEqual(report["cross_source_xmltv_collision_count"],1)
+        self.assertEqual(report["exact_xmltv_channel_id_candidates"],1)
+        self.assertTrue(report["cross_source_collision_requires_manual_review"])
+        self.assertFalse(report["schedules_correctly_verified"])
+        single=inspect_epg_gap(["Alpha.tr"],["https://example.org/first.xml"],fetcher=lambda _:xml)
+        self.assertEqual(single["cross_source_xmltv_id_collisions"],[])
+
     def test_bad_xmltv_and_source_failure_fail_partial_without_fake_epg(self):
         for raw in (b"<html></html>",b"<tv>",b"<!DOCTYPE foo><not-tv/>"):
             with self.subTest(raw=raw),self.assertRaises(ValueError):
