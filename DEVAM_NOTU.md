@@ -1,3 +1,9 @@
+## 9 Kasım — #11/#14 hash-only tarihî TR kanıtı ile yeni AZ URL çelişkisi
+
+- `b6a52099`: aynı gerçek URL'nin tarihî TR ve yeni AZ kaynaklarında çelişmesi halinde kaynak kimlikleri korunurken `UNKNOWN/CONFLICTING_TR_AZ_EVIDENCE` ve `NOT_REVERIFIED` bekleyen regresyon eklendi.
+- `abc05b67`: tarihî **yalnız SHA256** TR kimliğiyle eşleşen yeni AZ URL'si için ayrı regresyon eklendi. Ham tarihî kayıt korunur, SHA eşleşmesi ve iki kaynak provenansı tutulur; yeni aday AV/decoded/video/audio bayrakları false kalır.
+- Bunlar yeni kod testleridir; GitHub Actions'ın bu commit'lerde başarılı çalıştığı henüz kanıtlanmadı. #11/#14/#16 açık, 8/33. Ana IBO, main ve PR #9 değiştirilmedi.
+
 ## 9 Kasım — AV kanıtı tazeliği: 14.417 toplam, yalnızca 62 bu koşuda yeni
 
 - `42539900333` / `v2-grouped-av-evidence` artefaktındaki `final-worldwide-acceptance.json` içindeki **35.542 adayın tamamının** `evidence_origin` ve `decoded/video/audio` alanları tek tek sayıldı: `CURRENT_RUN_FFPROBE_FFMPEG` 21.187 kayıt, `PRIOR_RUN_HASH_ONLY_NOT_FRESH` 14.355 kayıt.
