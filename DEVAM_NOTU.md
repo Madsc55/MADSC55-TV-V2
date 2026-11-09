@@ -1,3 +1,10 @@
+## 9 Kasım — V2 DEVAM: #26 Actions kabulünde adım düzeyinde fail-closed düzeltmesi
+
+- `68fc52cd`: Yeşil workflow ve job sonuçlarının içindeki başarısız, atlanmış veya eksik step kanıtları artık `acceptance_candidate` olarak kabul edilmiyor. Job tamamlandı/success, tam jobs sayısı, aynı SHA/dal/olay ve her step'in `success` olması birlikte gerekli.
+- `a5ef8a3c`: failed/skipped/cancelled/None/boş/eksik step durumları için toplu regresyon testi; önceki başarılı sentetik job fixture'larına gerçek step kayıtları eklendi.
+- `ca2d3b8a`: API `steps=null` döndürürse raporlama TypeError vermeden fail-closed davranır.
+- **Bu henüz #26 kapanışı değildir.** GitHub Actions üzerinde yeni commit'e ait toplu test sonuçları ve gerçek hatalı/atlanan job kanıtı doğrulanmadı. Kanonik 8/33; #34 beklemede; ana IBO, main, PR #9 ve tarihî 4.955 kimlik değiştirilmedi.
+
 ## 9 Kasım — V2 DEVAM: #34 geçiş testinin yeni bağımlılık kapısıyla uyumu
 
 - `c8a462a3`: Yeni fail-closed bağımlılık kontrolüyle çelişen `test_issue34_never_starts_before_33_and_explicit_user_approval` regresyonu düzeltildi. #1 beklerken ona bağlı tamamlanmış #12 varsa bozuk ledger için `ValueError` beklenir; diğer #32/#33 bekleme senaryoları hâlâ `False` bekler. Testi yeşil varsayma; Actions kanıtı bekleniyor.
