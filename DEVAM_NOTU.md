@@ -1,3 +1,11 @@
+## 9 Kasım — KULLANICI KARARI: tarihî kurtarma taramalarını zorunlu bitiş kapsamından çıkar (UYGULAMA BEKLİYOR)
+
+Kullanıcı, tarihî kanal/kaynakların tek tek yeniden bulunmasını ana V2 tamamlanmasının ön şartı olmaktan çıkarmayı açıkça istedi. Bu karar #3 (45/50 özel kimlik), #4 (4.955 tarihî kimliğin eksik AV araştırması) ve #6 (2.643 kayıp adresin yeniden AV taraması) için geçerlidir. Tarihî envanter, şifreli adaylar ve mevcut AV kanıtları **silinmez**; kanıtsız yayınlar çalışıyor sayılmaz. Genel kanal keşfi, yeni kaynakların gerçek AV doğrulaması, güvenlik, IBO koruması ve kullanıcı cihaz testi devam eder.
+
+**ÖNEMLİ:** Henüz kanonik 33 görev manifesti/ledger'ı değiştirilmedi; #3/#4/#6 otomatik olarak completed sayılmadı. Bu üç görevi çıkarma/defer etme uygulaması, bağımlılıkları (#17 ve ardılları), 33→34 kapısını ve testleri birlikte güvenli biçimde yeniden düzenlemeyi gerektiriyor. Mevcut uzun Source Integration Batch #42606783037 sürerken ağır AV tetikleyen `v2/tasks/**` dosyalarına yeni yazma yapılmamalı. Önce bu workflow'un görev defteri değişikliklerinde gereksiz tarama başlatması önlenmeli; sonra tek toplu commit ve regresyon testleriyle karar uygulanmalı. #34 geniş TR/dünya kanal keşfi unutulmayacak; erken başlatma kapısı da yeni kapsamla uyumlu biçimde güncellenmeli.
+
+---
+
 ## 9 Kasım — #13 bağımsız S3 geri yükleme güvenliği, kanıt sınırı
 
 - Dev commit `4f5d2685a6685dc429e59a1ca7c69068b73b3c6f`: `v2/independent_s3_restore.py` artık S3 nesne sürüm kimliğindeki DEL (ASCII 127) kontrol karakterini ağ isteğinden önce reddeder.
