@@ -124,6 +124,13 @@ def check(env=None):
                 or set(labels) != raw_sources.get(key, set())
                 or set(source_ids(candidate)) != raw_sources.get(key, set())):
             raise RuntimeError("Encrypted candidate view has missing or fabricated source provenance")
+    # Historical membership is derived from the immutable raw inventory, not
+    # from mutable candidate metadata. A forged false value must not hide a
+    # recovered historical URL from later protection and retry decisions.
+    historical_ids = {identity(row) for row in historical if identity(row) is not None}
+    for candidate, key in zip(candidates, candidate_ids):
+        if candidate.get("historical_not_reverified") is not (key in historical_ids):
+            raise RuntimeError("Encrypted candidate view misstates historical identity protection")
     # Archived deduplication is a discovery view, not a playback proof. Even
     # an authenticated archive cannot elevate old evidence to fresh AV status.
     for candidate in candidates:
