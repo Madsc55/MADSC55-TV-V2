@@ -13,7 +13,11 @@ from urllib.parse import quote
 from archive_acceptance_gate import check
 
 def restore_s3_version(bucket, key, version, expected, runner=subprocess.run):
-    if not isinstance(bucket, str) or not re.fullmatch(r"[a-z0-9][a-z0-9.-]{1,61}[a-z0-9]", bucket):
+    if (not isinstance(bucket, str)
+            or not re.fullmatch(r"[a-z0-9][a-z0-9.-]{1,61}[a-z0-9]", bucket)
+            or any(not label or label[0] == "-" or label[-1] == "-"
+                   for label in bucket.split("."))
+            or re.fullmatch(r"[0-9]+(?:\\.[0-9]+){3}", bucket)):
         raise ValueError("Invalid private S3 bucket")
     if not isinstance(key, str) or not key or len(key.encode("utf-8")) > 1024 or any(ord(c) < 32 or ord(c) == 127 for c in key):
         raise ValueError("Invalid S3 object key")
