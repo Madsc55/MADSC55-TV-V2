@@ -84,6 +84,17 @@ class GapCrosswalkTests(unittest.TestCase):
         empty=inspect_epg_gap(["Alpha.tr"],[],fetcher=lambda _:xml)
         self.assertFalse(empty["cross_source_collision_requires_manual_review"])
 
+    def test_duplicate_xmltv_source_url_is_not_cross_source_collision(self):
+        xml=b'<tv><channel id="Alpha.tr"/></tv>'
+        report=inspect_epg_gap(["Alpha.tr"],
+            ["https://example.org/guide.xml","https://example.org/guide.xml"],
+            fetcher=lambda _:xml)
+        self.assertEqual(report["parsed_sources"],1)
+        self.assertTrue(report["all_sources_parsed"])
+        self.assertEqual(report["cross_source_xmltv_id_collisions"],[])
+        self.assertFalse(report["cross_source_collision_requires_manual_review"])
+        self.assertEqual(report["source_results"][1]["status"],"XMLTV_DUPLICATE_SOURCE_SKIPPED")
+
     def test_duplicate_channel_id_inside_single_xmltv_source_is_rejected(self):
         duplicated=b'<tv><channel id="Alpha.tr"/><channel id="Alpha.tr"/></tv>'
         with self.assertRaisesRegex(ValueError,"Duplicate XMLTV channel identity"):
