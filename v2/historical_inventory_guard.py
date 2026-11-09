@@ -141,9 +141,12 @@ def source_ids(row):
     supplied = row.get("source_ids", [])
     if isinstance(supplied, list):
         values.extend(x for x in supplied if isinstance(x, str) and x)
-    source = row.get("source")
-    if isinstance(source, str) and source:
-        values.append(source)
+    # Older archives used source_id; retaining only source/source_ids would
+    # silently discard their provenance in the deduplicated candidate view.
+    for field in ("source_id", "source"):
+        source = row.get(field)
+        if isinstance(source, str) and source:
+            values.append(source)
     return list(dict.fromkeys(values))
 
 
