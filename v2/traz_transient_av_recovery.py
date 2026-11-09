@@ -113,7 +113,7 @@ def aggregate(targets,known_av,found,source_statuses,unknown,proofs,old_status_c
     added_ids=set()
     for h,item in sorted(targets.items()):
         p=proofs.get(h)
-        if p is None:
+        if h not in proofs:
             rows.append({"url_sha256":h,"channel_id":item["channel_id"],
                          "status":"NOT_FOUND_IN_FRESH_SOURCE","decoded":False})
         else:
