@@ -1,3 +1,9 @@
+## 9 Kasım — #14 şifreli aday görünümü için ham URL provenans zorunluluğu
+
+- `3bf50997`: `archive_acceptance_gate.check`, AES-GCM manifesti ve 4.955 baseline doğrulandıktan sonra her adayın exact URL SHA kimliğinin `historical + newer` ham kayıtlardaki gerçek, geçerli URL kimliğinden gelmesini zorunlu kılar; adayda kimlik yoksa, tekrar varsa veya ham URL'de karşılığı yoksa reddeder.
+- `6ded27c0`: gerçek 4.955 referans kaydı ve geçerli şifreli manifestle üretilmiş ancak ham kayıtlarda olmayan sentetik aday URL'sini içeren arşivin reddini doğrulayan regresyon eklendi.
+- Geliştirme dalına commit edildi. Yeni commit'lerin CI sonucu henüz doğrulanmadı; #13 bağımsız S3 restore kabulü ve #14 kapanmadı. **8/33**; main, PR #9, korumalı İBO değiştirilmedi.
+
 ## 9 Kasım — #13/#14 immutable 4.955 tarihî referans dosyasının tam içerik sabitlemesi
 
 - `48476187`: `archive_acceptance_gate.py` artık `v2/history/stage3-4955-hash-only.jsonl` dosyasının tam Git blob SHA1'ini (`c91c94a3f19097dec2855105da26d8b9a8329f8b`) doğruluyor; yalnızca 4.955 URL SHA kimliği toplamı yeterli değil. Referans dosyasındaki kaynak/metadata değiştirilirse şifreli geri yükleme kabulü fail-closed.
