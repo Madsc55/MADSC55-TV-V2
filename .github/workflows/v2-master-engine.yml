@@ -118,6 +118,13 @@ jobs:
           python v2/test_playlist_invariants.py > v2/reports/master-ci/playlist.log 2>&1 || failed=1
           cat v2/reports/master-ci/*.log
           grep -Eq '^Ran [1-9][0-9]* tests? in ' v2/reports/master-ci/unittest.log || failed=1
+          # Do not accept an all-green offline run if actual FFmpeg decode
+          # regressions were silently skipped. Historical cross-run artifact
+          # skips are tracked separately and are not fabricated as new AV proof.
+          if grep -Eiq "skipped ['\"]FFmpeg not installed['\"]|skipped ['\"]ffprobe not installed['\"]" v2/reports/master-ci/unittest.log; then
+            echo "::error::Real FFmpeg AV regression was skipped; offline acceptance rejected"
+            failed=1
+          fi
           exit "$failed"
       - name: Upload offline logs including failures
         if: always()
