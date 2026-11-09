@@ -51,6 +51,14 @@ class TransientBatchSafety(unittest.TestCase):
         p,g=fixture()
         p["results"][0]["audio"]=False
         with self.assertRaises(ValueError):select_retry(p,g)
+    def test_previous_success_status_without_decoded_av_is_rejected(self):
+        p,g=fixture()
+        p["results"][0]["decoded"]=False
+        p["results"][0]["video"]=False
+        p["results"][0]["audio"]=False
+        with self.assertRaisesRegex(ValueError,"Contradictory previous"):
+            select_retry(p,g)
+
     def test_numeric_previous_decoded_flags_are_not_av_evidence(self):
         for numeric in (0, 1):
             p,g=fixture()
