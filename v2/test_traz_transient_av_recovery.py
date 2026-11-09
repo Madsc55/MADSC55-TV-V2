@@ -60,6 +60,20 @@ class TransientBatchSafety(unittest.TestCase):
         with self.assertRaises(ValueError):
             aggregate(target,old,{digest:{"url":"https://e.org/x"}},
                       {},[],fake,counts)
+    def test_contradictory_retry_proof_never_claims_av(self):
+        p,g=fixture()
+        target,old,counts=select_retry(p,g)
+        digest=sha("Two.az")
+        for decoded,status in ((False,"VIDEO_AUDIO_DECODED"),
+                               (1,"VIDEO_AUDIO_DECODED"),
+                               (0,"PROBE_FAILED_NETWORK_TIMEOUT")):
+            with self.subTest(decoded=decoded,status=status):
+                fake={digest:{"url_sha256":digest,"status":status,
+                              "video":True,"audio":True,"decoded":decoded}}
+                with self.assertRaisesRegex(ValueError,"Fake FFmpeg recovery"):
+                    aggregate(target,old,{digest:{"url":"https://e.org/x"}},
+                              {},[],fake,counts)
+
     def test_source_outage_does_not_delete_identities(self):
         p,g=fixture()
         target,old,counts=select_retry(p,g)
