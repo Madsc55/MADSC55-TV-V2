@@ -87,8 +87,13 @@ def safe_transition(row, new_status, evidence_urls=(), checked_at=None, user_con
         raise ValueError("User device confirmation only applies to task 32")
     if row.get("status") == "completed" and new_status != "completed":
         raise ValueError("Completed task cannot be silently reopened or downgraded")
-    if new_status == "completed" and (not evidence_urls or not checked_at):
+    if new_status == "completed" and row.get("status") != "completed" and (not evidence_urls or not checked_at):
         raise ValueError("No completion without evidence and verification timestamp")
+    if new_status == "completed" and row.get("status") == "completed":
+        if evidence_urls and list(evidence_urls) != row.get("evidence_urls"):
+            raise ValueError("Completed task evidence cannot be silently replaced")
+        if checked_at and checked_at != row.get("last_checked_at"):
+            raise ValueError("Completed task verification timestamp cannot be silently replaced")
     if row["id"] == 32 and new_status == "completed" and not user_confirmed:
         raise ValueError("Only user can confirm device test")
     return dict(row, status=new_status, evidence_urls=list(evidence_urls) if evidence_urls else row["evidence_urls"],
