@@ -51,6 +51,14 @@ class TransientBatchSafety(unittest.TestCase):
         p,g=fixture()
         p["results"][0]["audio"]=False
         with self.assertRaises(ValueError):select_retry(p,g)
+    def test_numeric_previous_decoded_flags_are_not_av_evidence(self):
+        for numeric in (0, 1):
+            p,g=fixture()
+            p["results"][0]["decoded"]=numeric
+            with self.subTest(decoded=numeric):
+                with self.assertRaisesRegex(ValueError,"Malformed previous"):
+                    select_retry(p,g)
+
     def test_new_ffmpeg_forgery_rejected(self):
         p,g=fixture()
         target,old,counts=select_retry(p,g)
