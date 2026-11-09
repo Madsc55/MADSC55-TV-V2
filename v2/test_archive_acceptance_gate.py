@@ -149,6 +149,23 @@ class ArchiveGateTests(unittest.TestCase):
                 with self.assertRaisesRegex(RuntimeError, "source provenance"):
                     check(env)
 
+    def test_candidate_view_cannot_silently_omit_valid_raw_url(self):
+        """Deduplication may collapse duplicates, never discard distinct URLs."""
+        from historical_inventory_guard import preserve_to_new_archive, reconcile
+        history = [json.loads(line) for line in BASELINE.read_text().splitlines() if line]
+        raw, view, _ = reconcile(history, [
+            {"url": "https://fixture.example.org/first.m3u8", "source_id": "first"},
+            {"url": "https://fixture.example.org/second.m3u8", "source_id": "second"}], 4955)
+        self.assertEqual(len(view), 2)
+        archive = self.root / "missing-valid-url.enc"
+        with patch.dict(os.environ, {"V2_ARCHIVE_KEY_HEX": "ab" * 32}):
+            preserve_to_new_archive(archive, raw, view[:1])
+        checksum = hashlib.sha256(archive.read_bytes()).hexdigest()
+        env = self.prepared(restored_file=str(archive), restore_sha256=checksum)
+        env["V2_ARCHIVE_EXPECTED_SHA256"] = checksum
+        with self.assertRaisesRegex(RuntimeError, "lacks raw URL provenance"):
+            check(env)
+
     def test_candidate_legacy_source_field_cannot_forge_provenance(self):
         """Legacy source/source_id fields cannot contradict source_ids."""
         from historical_inventory_guard import preserve_to_new_archive, reconcile
