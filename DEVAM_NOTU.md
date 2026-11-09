@@ -1,3 +1,8 @@
+## 9 Kasım — V2 DEVAM: toplu Actions hata zinciri onarımı
+
+- `14b46437`: Master Engine workflow'unda `Verify grouped test logs` başarısız olursa GitHub Actions varsayılan `success()` nedeniyle sonraki tüm offline regresyonların **atlanması** riski giderildi. Log bütünlük adımı `continue-on-error` ile sonucunu kaydeder; tüm offline regresyonlar `if: always()` ile çalışır; son fail-closed kapısı `GROUPED_LOG_RESULT` başarısız/atlandıysa job'u kırmızı bitirir. Böylece hem toplu hata raporları toplanır hem eksik log yeşil kabul edilmez.
+- Bu kod commit'i gerçek Actions test başarısı değildir. Güncel run/job kanıtı alınmadan #23/#26 kapanmaz; genel 8/33, #34 en son. main, PR #9, ana İBO ve tarihî 4.955 kimlik korunur.
+
 ## 9 Kasım — V2 DEVAM: toplu görev motoru hata çıktısı korunuyor
 
 - `c56cba4b`: Master Engine `task_engine_tests` adımında başarısız `unittest` komutunun bash `-e` yüzünden logu yazdırmadan adımı kesmesi düzeltildi. Artık hata kodu yakalanır, tam `task-engine.log` gösterilir, aynı başarısız kodla çıkılır. Diğer toplu testler ve `if: always()` artefaktı çalışır; son fail-closed gate başarısız işi yeşil saymaz.
