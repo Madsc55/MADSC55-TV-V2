@@ -12,6 +12,7 @@ PROTECTED = {"MADSC55_TV_IBO_CALISANLAR_TEST.m3u8"}
 PRIORITY = {"P0": 0, "P1": 1, "P2": 2, "P3": 3}
 # User-directed scheduling only; does not change dependencies or completion criteria.
 DEFERRED_LAST = frozenset({3, 4, 6})
+OPTIONAL_SCOPE = "deferred_optional"
 
 
 def validate(master, ledger, root):
@@ -26,6 +27,8 @@ def validate(master, ledger, root):
         raise ValueError("Wrong task manifest target")
     by_id = {t["id"]: t for t in tasks}
     for t in tasks:
+        if (t.get("scope") == OPTIONAL_SCOPE) != (t["id"] in DEFERRED_LAST):
+            raise ValueError("Unexpected deferred task scope")
         if t["priority"] not in PRIORITY or not t["acceptance"] or not isinstance(t["evidence_urls"], list):
             raise ValueError("Incomplete task acceptance or priority")
         if any(d not in by_id or d == t["id"] for d in t["depends_on"]):
@@ -72,7 +75,7 @@ def validate(master, ledger, root):
 def select(master, ledger, root, defer_heavy=False):
     tasks, rows = validate(master, ledger, root)
     # Resume ongoing work first; blocked work is not silently marked successful.
-    ready = [t for t in tasks.values() if rows[t["id"]]["status"] in ("pending", "in_progress")
+    ready = [t for t in tasks.values() if t.get("scope") != OPTIONAL_SCOPE and rows[t["id"]]["status"] in ("pending", "in_progress")
              and all(rows[d]["status"] == "completed" for d in t["depends_on"])]
     if defer_heavy and any(t["id"] not in DEFERRED_LAST for t in ready):
         ready = [t for t in ready if t["id"] not in DEFERRED_LAST]
@@ -177,7 +180,7 @@ def independent_ready(master, ledger, root, excluded=(), defer_heavy=False):
     tasks, rows = validate(master, ledger, root)
     excluded = set(excluded)
     ready = [t for t in tasks.values()
-             if t["id"] not in excluded
+             if t["id"] not in excluded and t.get("scope") != OPTIONAL_SCOPE
              and rows[t["id"]]["status"] in ("pending", "in_progress")
              and all(rows[d]["status"] == "completed" for d in t["depends_on"])]
     if defer_heavy and any(t["id"] not in DEFERRED_LAST for t in ready):
@@ -197,10 +200,10 @@ def issue34_ready(master, ledger, root, user_approved=False):
         raise ValueError("Canonical 33 tasks required")
     if user_approved is not True:
         return False
-    if any(row["status"] != "completed" for row in rows.values()):
+    if any(row["status"] != "completed" for i, row in rows.items() if i not in DEFERRED_LAST):
         return False
     if any(not row.get("evidence_urls") or not row.get("last_checked_at")
-           for row in rows.values()):
+           for i, row in rows.items() if i not in DEFERRED_LAST):
         return False
     return rows[32].get("user_device_confirmation") is True
 
