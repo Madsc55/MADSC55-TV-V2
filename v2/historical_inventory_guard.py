@@ -287,6 +287,10 @@ def reconcile(historical_records, current_records=(), expected_historical_record
         # flags in encrypted raw evidence, but never promote the candidate view.
         candidate["av_verified"] = False
         candidate["device_verified"] = False
+        candidate["ibo_device_verified"] = False
+        candidate["decoded"] = False
+        candidate["video"] = False
+        candidate["audio"] = False
         # Existing flags cannot turn historical evidence into media proof.
         candidate["historical_not_reverified"] = key in all_ids
         candidates.append(candidate)
