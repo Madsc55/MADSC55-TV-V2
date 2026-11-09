@@ -126,6 +126,21 @@ def collect():
         record["jobs_total_count"] = None
         record["jobs_checked"] = False
         record["failure_reasons"] = []
+        if run.get("status") == "in_progress" and record["possibly_stalled"] is True:
+            # Inspect the active job without cancelling or retrying long AV scans.
+            active = api(base + "/runs/%s/jobs?per_page=100" % run["id"])
+            jobs = active.get("jobs")
+            total = active.get("total_count")
+            if type(total) is not int or not isinstance(jobs,list) or total != len(jobs):
+                record["active_job_evidence_complete"] = False
+                record["failure_reasons"].append("incomplete_active_job_inventory")
+            else:
+                record["active_job_evidence_complete"] = True
+                record["active_jobs"] = [{
+                    "id": job.get("id"), "name": job.get("name"),
+                    "status": job.get("status"), "conclusion": job.get("conclusion"),
+                    "started_at": job.get("started_at")
+                } for job in jobs if job.get("status") in ("in_progress","queued","waiting")]
         if run.get("status") == "completed":
             # GitHub paginates workflow jobs at 100 entries. Never classify a
             # truncated first page as complete or drop evidence from later pages.
