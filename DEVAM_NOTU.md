@@ -1,3 +1,8 @@
+## 9 Kasım — V2 DEVAM: kısmi sabitlenmiş AV kanıtı artık sessizce atlanmaz
+
+- `58d4071e`: `test_traz_av_evidence_union.py` üç sabitlenmiş Actions AV kanıtından yalnız bir kısmı varsa `SkipTest` yerine açık hata verir. Üçü de normal offline checkout'ta yoksa eski dürüst atlama korunur; bu gerçek AV kanıtı üretmez.
+- Güncel Actions sonucu henüz doğrulanmadı. 8/33 değişmedi; main, PR #9, korunan İBO ve tarihî 4.955 kimlikler değiştirilmedi.
+
 ## 9 Kasım — V2 DEVAM: #23/#26 monitor–task engine kanıt sözleşmesi
 
 - `49d29ede`: Actions monitor raporundaki her workflow kaydına gerçek YAML başlığıyla eşleşen `name` eklendi. Önceden yalnız `workflow_file` vardı; görev motorunun `verify_grouped_actions` fonksiyonu ise `name` aradığı için gerçek monitor raporu doğrudan kabul edilemiyordu.
