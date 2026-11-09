@@ -219,11 +219,11 @@ def issue34_ready(master, ledger, root, user_approved=False):
     never starts an issue, edits GitHub, or impersonates IBO device evidence.
     """
     tasks, rows = validate(master, ledger, root)
-    if set(tasks) != set(range(1, 34)):
-        raise ValueError("Canonical 33 tasks required")
+    if set(tasks) != set(range(1, 35)):
+        raise ValueError("Canonical 34 tasks required")
     if user_approved is not True:
         return False
-    if any(row["status"] != "completed" for i, row in rows.items() if i not in DEFERRED_LAST):
+    if any(row["status"] != "completed" for i, row in rows.items() if i not in DEFERRED_LAST and i != 34):
         return False
     if any(not row.get("evidence_urls") or not row.get("last_checked_at")
            for i, row in rows.items() if i not in DEFERRED_LAST):
