@@ -1,3 +1,9 @@
+## 9 Kasım — AV kanıtı tazeliği: 14.417 toplam, yalnızca 62 bu koşuda yeni
+
+- `42539900333` / `v2-grouped-av-evidence` artefaktındaki `final-worldwide-acceptance.json` içindeki **35.542 adayın tamamının** `evidence_origin` ve `decoded/video/audio` alanları tek tek sayıldı: `CURRENT_RUN_FFPROBE_FFMPEG` 21.187 kayıt, `PRIOR_RUN_HASH_ONLY_NOT_FRESH` 14.355 kayıt.
+- 14.417 `VIDEO_AUDIO_DECODED` kaydının **62'si bu koşudaki FFprobe/FFmpeg**, **14.355'i eski koşudan hash-only korunmuş kanıt**. Önceki notta geçen 14.417, yeni canlı doğrulama sayısı olarak yorumlanmamalıdır; toplam birleştirilmiş AV sayısıdır.
+- Bu ayrım #14/#16 için kritik: tarihî AV kanıtı saklanır fakat yeni AV kabulüne terfi ettirilmez. 4.890 tarihî SHA eşleşmesi / 3.042 tarihî decoded AV, otomatik olarak 3.042 yeni prob veya İBO oynatma kabulü değildir. #11/#14/#16 açık, 8/33 değişmedi.
+
 ## 9 Kasım — Gerçek Actions artefaktı ile tarihî SHA/AV çapraz kontrolü
 
 - GitHub Actions run `42539900333` içindeki `v2-grouped-av-evidence-42539900333` ZIP artefaktı indirildi; `final-worldwide-acceptance.json` ve `historical-worldwide-av-crosswalk.json` açılıp okundu. Artefakt SHA256: `6981e10e090417ec83dfeff0d0d3da3a7dbcd95fe4437f2aa56c13742fe85e39`; run head: `15da708c003e49dde49bfce7b68310ad77cf2302`.
