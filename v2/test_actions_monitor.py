@@ -174,8 +174,12 @@ class MonitorTests(unittest.TestCase):
                         "html_url": "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/123"}]}
                 with patch.dict("os.environ", {"GITHUB_SHA": "a" * 40}), patch.object(
                         actions_monitor, "api", side_effect=fake_api):
-                    result = actions_monitor.collect()
-                self.assertTrue(all(not row["acceptance_candidate"] for row in result["runs"]))
+                    if not jobs or total != len(jobs):
+                        with self.assertRaisesRegex(RuntimeError, "Incomplete Actions job details"):
+                            actions_monitor.collect()
+                    else:
+                        result = actions_monitor.collect()
+                        self.assertTrue(all(not row["acceptance_candidate"] for row in result["runs"]))
 
     def test_green_job_with_failed_skipped_or_missing_step_is_not_accepted(self):
         for steps in (
@@ -227,7 +231,7 @@ class MonitorTests(unittest.TestCase):
 
     def test_missing_run_identity_is_rejected(self):
         with patch.object(actions_monitor, "api", return_value={"workflow_runs": [{"status": "completed", "conclusion": "success"}]}):
-            with self.assertRaisesRegex(RuntimeError, "incomplete workflow run identity"):
+            with self.assertRaisesRegex(RuntimeError, "incomplete or untrusted workflow run identity"):
                 actions_monitor.collect()
 
 if __name__ == "__main__":
