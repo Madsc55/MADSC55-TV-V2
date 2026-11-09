@@ -240,6 +240,12 @@ def inspect_xmltv(data,requested):
                 if cid in requested:
                     channel_ids.add(cid)
             if element.tag=="programme" and element.get("channel") in requested:
+                start=element.get("start")
+                stop=element.get("stop")
+                if (not isinstance(start,str) or not isinstance(stop,str) or
+                        not re.fullmatch(r"\d{14} [+-]\d{4}",start) or
+                        not re.fullmatch(r"\d{14} [+-]\d{4}",stop)):
+                    raise ValueError("Malformed XMLTV programme timestamps")
                 programmes[element.get("channel")]+=1
             element.clear()
     except (ET.ParseError,StopIteration) as e:
