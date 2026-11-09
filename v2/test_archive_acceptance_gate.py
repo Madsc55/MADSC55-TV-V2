@@ -106,6 +106,25 @@ class ArchiveGateTests(unittest.TestCase):
         with self.assertRaisesRegex(RuntimeError, "lacks raw URL provenance"):
             check(env)
 
+    def test_encrypted_candidate_cannot_claim_ibo_device_acceptance(self):
+        """A real URL and authentic archive are not device playback proof."""
+        from historical_inventory_guard import preserve_to_new_archive, reconcile
+        history = [json.loads(line) for line in BASELINE.read_text().splitlines() if line]
+        raw, view, _ = reconcile(history, [
+            {"url": "https://fixture.example.org/ibo-candidate.m3u8"}], 4955)
+        self.assertEqual(len(view), 1)
+        for field in ("device_verified", "ibo_device_verified"):
+            with self.subTest(field=field):
+                forged = [dict(view[0], **{field: True})]
+                archive = self.root / (field + "-forged.enc")
+                with patch.dict(os.environ, {"V2_ARCHIVE_KEY_HEX": "ab" * 32}):
+                    preserve_to_new_archive(archive, raw, forged)
+                digest = hashlib.sha256(archive.read_bytes()).hexdigest()
+                env = self.prepared(restored_file=str(archive), restore_sha256=digest)
+                env["V2_ARCHIVE_EXPECTED_SHA256"] = digest
+                with self.assertRaisesRegex(RuntimeError, "falsely claims fresh AV"):
+                    check(env)
+
     def test_missing_approval_or_evidence(self):
         with self.assertRaises(RuntimeError): check({})
         with self.assertRaises(RuntimeError): check({"V2_ARCHIVE_RESTORE_APPROVED": "true"})
