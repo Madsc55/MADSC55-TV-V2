@@ -429,6 +429,18 @@
       "evidence_urls": [],
       "last_checked_at": null,
       "owner": "automation_with_review"
+    },
+    {
+      "id": 34,
+      "title": "Son genel kanal keşfi ve Türkiye M3U/M3U8 kapsamlı taraması",
+      "priority": "P4",
+      "depends_on": [
+        33
+      ],
+      "acceptance": "All preceding mandatory tasks accepted; comprehensive worldwide/TR/AZ official and public M3U/M3U8 discovery executed once with bounded source coverage, archived results and real FFmpeg AV evidence; unverified references remain candidates; protected playlist unchanged",
+      "evidence_urls": [],
+      "last_checked_at": null,
+      "owner": "automation_with_review"
     }
   ],
   "policy": {
