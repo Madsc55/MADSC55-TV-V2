@@ -56,6 +56,16 @@ class GapCrosswalkTests(unittest.TestCase):
             with self.subTest(mode=mode),self.assertRaises(ValueError):
                 reconcile(api,scan)
 
+    def test_duplicate_api_channel_hash_pair_is_rejected(self):
+        api,scan=fixtures()
+        api["stream_references"].append(copy.deepcopy(api["stream_references"][0]))
+        api["unique_channel_url_pairs"]=2
+        with self.assertRaisesRegex(ValueError,"Duplicate API channel and URL hash pair"):
+            reconcile(api,scan)
+        api["stream_references"][1]["channel_id"]="Different.tr"
+        result=reconcile(api,scan)
+        self.assertEqual(result["exact_missing_stream_identities_with_other_m3u_leads"],2)
+
     def test_exact_xmltv_channel_and_programme_not_schedule_accuracy(self):
         xml=b'<tv><channel id="Alpha.tr"/><channel id="Other.tr"/><programme channel="Alpha.tr" start="20261105080000 +0000" stop="20261105090000 +0000"><title>News</title></programme></tv>'
         ids,programme=inspect_xmltv(xml,{"Alpha.tr","Beta.az"})
