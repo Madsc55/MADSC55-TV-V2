@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Read V2 Eight-Stage verification Actions runs, jobs and failed steps."""
 import json
+from datetime import datetime, timezone
 import os
 import sys
 import time
@@ -38,6 +39,30 @@ def api(path):
                 raise RuntimeError("GitHub Actions API transport failure after bounded retries") from exc
         time.sleep(min(2 ** attempt, 2))
 
+def stalled_run(run, now=None, threshold_seconds=7200):
+    """Flag a running workflow whose creation time exceeds a bounded window.
+
+    This is advisory only: never cancel, retry, or declare failure based on age.
+    Invalid or missing timestamps fail closed to unknown (None).
+    """
+    if run.get("status") not in ("in_progress", "queued", "waiting", "pending"):
+        return False
+    raw = run.get("run_started_at") or run.get("created_at")
+    if not isinstance(raw, str):
+        return None
+    try:
+        started = datetime.fromisoformat(raw.replace("Z", "+00:00"))
+        if started.tzinfo is None:
+            return None
+        current = now if now is not None else datetime.now(timezone.utc)
+        age = (current - started).total_seconds()
+    except (ValueError, TypeError, OverflowError):
+        return None
+    if age < 0:
+        return None
+    return age >= threshold_seconds
+
+
 def collect():
     base = "/repos/" + REPO + "/actions"
     q = urllib.parse.urlencode({"branch": BRANCH, "per_page": 10})
@@ -59,9 +84,11 @@ def collect():
     for run in runs:
         record = {key: run.get(key) for key in (
             "id", "run_number", "run_attempt", "event", "head_sha",
-            "status", "conclusion", "html_url", "created_at", "updated_at"
+            "status", "conclusion", "html_url", "created_at", "run_started_at", "updated_at"
         )}
         record["workflow_file"] = run["_workflow_file"]
+        record["possibly_stalled"] = stalled_run(run)
+        record["automatic_retry_permitted"] = False
         record["head_branch"] = run.get("head_branch")
         record["run_event"] = run.get("event")
         record["same_development_branch"] = run.get("head_branch") == BRANCH
