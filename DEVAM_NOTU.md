@@ -1,3 +1,9 @@
+## 9 Kasım — V2 DEVAM: gerçek S3 workflow bağımlılık kontrolü
+
+- `fe894d70`: S3 restore workflow'unda varlığı bu ortamda doğrulanmamış sabit `awscli==1.42.68` sürümü yerine `awscli` kurulumu ve `aws --version` kontrolü eklendi; `cryptography==44.0.2` sabit kalır. Bu değişiklik gerçek restore kanıtı değildir.
+- GitHub commit-workflow-run sorgusu `fe894d70` ve `589b0f72` için `workflow_runs: []` döndürdü. Bu uç nokta push çalışmaları için eksik sonuç verebildiğinden, **run başlamadı / başarılı / başarısız** sonucu çıkarılmadı. Gerçek Actions run ID, log ve versioned S3 kabulü halen doğrulanamadı.
+- #13 açık; 8/33. Ana İBO, main, PR #9, tarihî 4.955 kayıt değişmedi. Saatlik otomasyonla eşzamanlı yazmayı önlemek için dosya blob SHA'sı taze okundu.
+
 ## 9 Kasım — V2 DEVAM: #13 gerçek S3 restore kabul workflow'u
 
 - `589b0f72`: `.github/workflows/v2-s3-restore-acceptance.yml` eklendi. Geliştirme dalındaki ilgili dosya push'larında ve manuel dispatch ile bağımsız versioned S3 `get-object` + SHA256 + AES-GCM + 4.955 tarihî kimlik kabulünü `v2/independent_s3_restore.py` üzerinden yürütür. `concurrency.cancel-in-progress: false`, read-only repository yetkisi, 65 dakikalık job timeout, eksik secret için fail-closed kapısı ve Actions run/commit özeti bulunur.
