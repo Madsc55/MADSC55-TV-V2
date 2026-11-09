@@ -1,3 +1,16 @@
+## KALICI TALİMAT — MADSC55 TV V2 TÜM KALAN İŞLERİ BİTİR (9 Kasım 2026)
+
+**Devam komutu: `V2 DEVAM`.** Her oturumda yalnızca `Madsc55/MADSC55-TV-V2` reposunun `madsc/v2-discovery-bulk-20261031` geliştirme dalında `[V2 SIRA]` GitHub kayıtlarını, `v2/tasks/master_tasks.json`, `v2/tasks/state.json` ve bu dosyayı yeniden oku. 33 görevin zaten kabul edilmiş 8 tanesini tekrarlama; kalan 25'i öncelik/bağımlılık sırasıyla **gerçek uygulama, test, Actions doğrulaması, commit ve görev durumu güncellemesi** ile ilerlet. Sadece durum raporu döngüsüne girme. Her küçük adımda yeniden onay isteme.
+
+1. Önce Actions push/dispatch tetikleme, job logları, artifact, test bağımlılıkları ve güvenli yeniden denemeyi düzelt; geçerli son SHA için başarı kanıtını al. Başarısız, atlanan veya logu alınamayan job'u yeşil sayma.
+2. #13 gerçek bağımsız, sürümlü S3 şifreli arşiv geri yüklemesini (bağımsız pinlenmiş SHA256, AES-GCM, 4.955 değişmez kimlik) kabul et; S3 yetkisi/sırları yoksa gerçek dış bağımlılık olarak işaretle, sentetik testle tamamlandı yazma.
+3. #9, #11, #14, #16, #23, #25, #26 kabul şartlarını doğrula; sonra bağımsız/bağımlı kalan görevleri bitir. Gerçek FFmpeg görüntü+ses olmadan kanala AV kanıtı verme; tarihî 45/4.955 ve 2.643 kayıp adres için uydurma URL/kurtarma yazma.
+4. Resmî kaynak, dünya/TR/AZ/YouTube canlı yayınları, GitHub/Gist/GitLab/Codeberg/Scribd/SlideShare/Internet Archive, `turkiye.m3u`, `tr.m3u8`, `turkish-iptv`, `canli-tv`, `yerel-tv`, `iptv-turkiye`, M3U/M3U8, XMLTV/EPG, kalite ve kaynak geçmişi keşiflerini görev sırasıyla kapsa; yalnızca gerçek AV ile doğrulanmışları paketle.
+5. Yeni IBO 1000/2000 paketlerini oluştur ve test et; **main, PR #9, ana İBO listesi, YEDEKLER/YENİLER/FAVORİLER, kategoriler, 4.955 tarihî kimlik ve cihaz favorileri değiştirilemez.** Kullanıcı IBO Player cihaz testi #32 dış bağımlılıktır; kullanıcı yapmadan tamamlandı yazma.
+6. Her aşamada `DEVAM_NOTU.md` ve görev durum dosyasına test sonucu, commit, gerçek Actions URL'si, kapananlar, kalanlar ve gerçek engelleri kaydet. İşler engellenirse gerekçesini yazıp bağımsız göreve geç. Saatlik otomasyonla çakışmamak için mevcut kilitleri koru; aynı dosyada eşzamanlı yazma yapma, SHA kontrolü ve güvenli tekrar deneme uygula. Hedef 33/33 **kanıtlı** kabul; dış bağımlılıkları açıkça belirt.
+
+**Başlangıç durumu:** 8/33 tamam; 10 devam, 1 engelli, 14 bekleyen. Son değişikliklerin Actions kanıtı yok. Bu kalıcı talimatın eklenmesi görev kabulü veya test başarısı değildir.
+
 ## 9 Kasım — tarihî SHA üyelik hesaplaması
 
 - `5737ad74`: #14 şifreli arşiv kabulünde tarihî SHA üyelik kümesi kayıt başına tek kimlik hesaplamasıyla kuruluyor; kabul şartı ve korunmuş baseline değişmedi.
