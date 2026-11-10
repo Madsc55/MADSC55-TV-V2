@@ -155,5 +155,20 @@ class FailoverTests(unittest.TestCase):
         self.assertIn("RETRY_BUDGET_EXHAUSTED",
             [f["category"] for f in results[0][2]["failures"]])
 
+
+    def test_late_success_cannot_be_promoted_to_fresh_cache(self):
+        tick = [0.0]
+        def late_fetch(url):
+            tick[0] = 2.0
+            return "#EXTM3U\\n#EXTINF:-1,Example\\nhttps://example.com/live.m3u8\\n"
+        content, audit = recover_source(self.source, self.cache,
+            fetcher=late_fetch, sleep=lambda _: None,
+            deadline=1.0, clock=lambda: tick[0])
+        self.assertIsNone(content)
+        self.assertFalse(audit["fresh"])
+        self.assertEqual(audit["status"], "UNAVAILABLE")
+        self.assertIn("RETRY_BUDGET_EXHAUSTED",
+                      [row["category"] for row in audit["failures"]])
+
 if __name__ == "__main__":
     unittest.main()
