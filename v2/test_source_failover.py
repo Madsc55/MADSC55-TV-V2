@@ -133,5 +133,14 @@ class FailoverTests(unittest.TestCase):
         self.assertTrue(all(0 < timeout <= 1.5 for timeout in observed))
         self.assertFalse(audit["fresh"])
 
+
+    def test_boolean_deadline_is_rejected_before_fetch(self):
+        calls = []
+        with self.assertRaises(ValueError):
+            recover_source(self.source, self.cache,
+                fetcher=lambda url: calls.append(url),
+                deadline=True, clock=lambda: 0.0)
+        self.assertEqual(calls, [])
+
 if __name__ == "__main__":
     unittest.main()
