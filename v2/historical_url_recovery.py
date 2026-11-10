@@ -60,6 +60,10 @@ def recover(old_records, current_records):
         seen.add(url)
         candidate = dict(row, recovery_status="HISTORICAL_NOT_REVERIFIED",
                          source_status="HISTORICAL_ARTIFACT")
+        # Keep original historical status as provenance, never as current playback acceptance.
+        if "status" in row:
+            candidate["historical_status"] = row["status"]
+        candidate["status"] = "HISTORICAL_NOT_REVERIFIED"
         # Historical success flags are not proof of current video+audio decoding.
         for flag in ("av_verified", "device_verified", "video_verified", "audio_verified",
                      "playback_verified", "ibo_device_verified"):
