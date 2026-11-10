@@ -135,6 +135,18 @@ class HistoricalTargetedPlaybackTests(unittest.TestCase):
         self.assertEqual(found, {identity: url})
         self.assertEqual(evidence["oversized_git_blobs_skipped"], 0)
 
+    def test_bounded_sample_accepted_when_total_missing_is_larger(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(__file__).resolve().parent
+            baseline = root / "history/stage3-4955-hash-only.jsonl"
+            identities = sorted(json.loads(line)["url_sha256"]
+                                for line in baseline.read_text().splitlines() if line.strip())
+            report_path = Path(folder) / "report.json"
+            report_path.write_text(json.dumps({"source_content_audit": {
+                "historical_identifiers_absent_from_current_sources": 31,
+                "historical_identifiers_absent_sha256_sample": identities[:30]}}))
+            self.assertEqual(load_missing_report(report_path, baseline), set(identities[:30]))
+
     def test_truncated_missing_report_rejected(self):
         with tempfile.TemporaryDirectory() as folder:
             report_path = Path(folder) / "report.json"
