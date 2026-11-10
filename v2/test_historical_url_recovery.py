@@ -83,6 +83,14 @@ class HistoricalRecoveryTests(unittest.TestCase):
         self.assertEqual(recovered[0]["name"], "original")
         self.assertEqual(recovered[0]["status"], "HISTORICAL_NOT_REVERIFIED")
 
+    def test_non_object_historical_records_fail_closed(self):
+        for bad in (None, "broken", ["not", "an", "object"], 123):
+            with self.subTest(record=bad):
+                with self.assertRaisesRegex(ValueError, "requires object records"):
+                    recover([{"url": "https://example.org/live.m3u8"}, bad], [])
+                with self.assertRaisesRegex(ValueError, "requires object records"):
+                    recover([], [bad])
+
     def test_no_fabricated_urls(self):
         recovered, report = recover([{"anonymous_id": "4955"}], [])
         self.assertEqual(recovered, [])
