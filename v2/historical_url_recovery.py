@@ -38,7 +38,7 @@ def validate_url(value):
         labels = host.split(".")
         if (not host or len(host) > 253 or len(labels) < 2
                 or any(not label or len(label) > 63 or label.startswith("-")
-                       or label.endswith("-") for label in labels)):
+                       or label.endswith("-") or not label.isascii()\n                       or any(c not in "abcdefghijklmnopqrstuvwxyz0123456789-" for c in label)\n                       for label in labels)):
             return False
         if all(label.isdecimal() or (label.startswith("0x") and len(label) > 2
                   and all(c in "0123456789abcdef" for c in label[2:])) for label in labels):
