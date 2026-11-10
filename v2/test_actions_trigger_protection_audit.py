@@ -66,6 +66,11 @@ class ActionsTriggerProtectionTests(unittest.TestCase):
             del damaged["jobs"][job]["timeout-minutes"]
             rejected, _ = validate_workflow(path, yaml.safe_dump(damaged, sort_keys=False))
             self.assertIn("UNBOUNDED_PREFLIGHT_JOB:" + job, rejected)
+            for invalid in ("0", str(maximum + 1), "unlimited"):
+                damaged = copy.deepcopy(document)
+                damaged["jobs"][job]["timeout-minutes"] = invalid
+                rejected, _ = validate_workflow(path, yaml.safe_dump(damaged, sort_keys=False))
+                self.assertIn("UNBOUNDED_PREFLIGHT_JOB:" + job, rejected)
 
     def test_playlist_invariant_changes_trigger_grouped_safety_ci(self):
         import yaml
