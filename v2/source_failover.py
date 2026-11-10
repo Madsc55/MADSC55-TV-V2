@@ -186,11 +186,11 @@ def recover_source(source, cache, fetcher=fetch_once, sleep=time.sleep, *, deadl
     return cached, {"id": source_id, "status": "CACHE_RECOVERED" if cached is not None else "UNAVAILABLE", "attempts": len(failures), "failures": failures, "fresh": False}
 
 
-def execute_pipeline(sources, cache, fetcher=fetch_once, sleep=time.sleep):
+def execute_pipeline(sources, cache, fetcher=fetch_once, sleep=time.sleep, *, deadline=None, clock=time.monotonic):
     results = []
     for source in sources:
         try:
-            content, audit = recover_source(source, cache, fetcher, sleep)
+            content, audit = recover_source(source, cache, fetcher, sleep, deadline=deadline, clock=clock)
         except Exception as exc:
             content, audit = None, {"id": source["id"], "status": "UNEXPECTED_ERROR", "fresh": False, "failures": [{"category": type(exc).__name__}]}
         results.append((source, content, audit))
