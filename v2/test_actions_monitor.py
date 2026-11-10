@@ -136,6 +136,7 @@ class MonitorTests(unittest.TestCase):
             "v2-source-integration-batch.yml": "V2 Source Integration Batch",
             "v2-ordered-preflight.yml": "V2 Sirali Hazirlik Testleri",
             "v2-actions-monitor.yml": "V2 Actions Status Monitor",
+            "v2-turkish-m3u-source-coverage.yml": "V2 Turkish M3U Source Coverage and Historical Loss",
         }
         self.assertEqual(actions_monitor.WORKFLOW_NAMES, expected)
         self.assertEqual(set(expected), set(actions_monitor.WORKFLOWS))
@@ -144,7 +145,7 @@ class MonitorTests(unittest.TestCase):
         self.assertEqual(set(actions_monitor.WORKFLOWS), {
             "v2-eight-stage-verification.yml", "v2-master-engine.yml",
             "v2-source-integration-batch.yml", "v2-ordered-preflight.yml",
-            "v2-actions-monitor.yml"})
+            "v2-actions-monitor.yml", "v2-turkish-m3u-source-coverage.yml"})
 
     def test_stalled_job_inventory_paginates_all_jobs(self):
         run={"id":78,"head_sha":"a"*40,"status":"in_progress",
