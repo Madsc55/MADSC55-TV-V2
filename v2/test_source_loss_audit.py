@@ -43,7 +43,7 @@ class SourceLossTests(unittest.TestCase):
     def test_normal_change(self):
         before = report(("a", "PARSED_NOT_PLAYBACK_VERIFIED", 100))
         after = report(("a", "PARSED_NOT_PLAYBACK_VERIFIED", 70))
-        self.assertEqual(compare(before, after)["status"], "NO_LARGE_REGRESSION")
+        self.assertEqual(compare(before, after)["status"], "SOURCE_COUNTS_OK_CANDIDATE_PROOF_MISSING")
 
     def test_duplicate_source_rejected(self):
         with self.assertRaises(ValueError):
