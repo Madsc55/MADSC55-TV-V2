@@ -89,5 +89,20 @@ class FailoverTests(unittest.TestCase):
             validate_m3u(b"<html>not a playlist</html>")
 
 
+
+    def test_retry_backoff_does_not_cross_deadline(self):
+        calls, sleeps = [], []
+        def failing_fetch(url):
+            calls.append(url)
+            raise FetchFailure("HTTP_503", True)
+        content, audit = recover_source(self.source, self.cache, failing_fetch,
+            sleeps.append, deadline=1.0, clock=lambda: 0.0)
+        self.assertIsNone(content)
+        self.assertEqual(len(calls), 1)
+        self.assertEqual(sleeps, [])
+        self.assertFalse(audit["fresh"])
+        self.assertIn("RETRY_BUDGET_EXHAUSTED",
+                      [row["category"] for row in audit["failures"]])
+
 if __name__ == "__main__":
     unittest.main()
