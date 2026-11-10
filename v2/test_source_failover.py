@@ -72,6 +72,19 @@ class FailoverTests(unittest.TestCase):
         results = execute_pipeline([self.source, good], self.cache, fetch, lambda _: None)
         self.assertEqual([r[2]["status"] for r in results], ["UNAVAILABLE", "PRIMARY_OK"])
 
+    def test_attempt_count_tracks_real_fetches_not_audit_failures(self):
+        def broken_set(source_id, content):
+            raise OSError("read-only cache")
+        self.cache.set = broken_set
+        calls = []
+        def fetch(url):
+            calls.append(url)
+            return "#EXTM3U\\n"
+        content, audit = recover_source(self.source, self.cache, fetch, lambda _: None)
+        self.assertEqual(audit["attempts"], 1)
+        self.assertEqual(len(calls), 1)
+        self.assertEqual(audit["failures"][0]["category"], "CACHE_WRITE_FAILED")
+
     def test_cache_write_failure_does_not_discard_fresh_source(self):
         def broken_set(source_id, content):
             raise OSError("read-only cache")
