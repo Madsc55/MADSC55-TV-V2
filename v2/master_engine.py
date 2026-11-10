@@ -357,7 +357,8 @@ def main():
             content = None
         else:
             status, response = run_bounded(
-                lambda: execute_pipeline([source], cache)[0], min(90, remaining))
+                lambda: execute_pipeline([source], cache,
+                    deadline=time.monotonic() + min(90, remaining))[0], min(90, remaining))
             if status == "ok":
                 _, content, result = response
             else:
