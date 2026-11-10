@@ -2348,3 +2348,8 @@ Kullanıcının açık talimatıyla #3, #4 ve #6 tarihî kurtarma görevleri art
 
 - İlk CI denemesi, eski 12-kaynak sınırını bekleyen regresyonu yakaladı. Test şimdi 13 ayrı kaynak kimliğinin tamamının çıktıda korunmasını doğrular. Yinelenen kimliklerin ayıklanması ve 101-kaynak reddi denetimleri sürer.
 - #14 için canlı Master #42867001878 raporundaki 4.955 kimliğin kayıpsız şifreli roundtrip kanıtı ledger'a eklendi. #13 bağımsız S3 restore gereksinimi açık tutuldu.
+
+### 11 Kasım — Aşama 2 kayıpsız tarihî URL birleştirme
+
+- Kurtarma bir URL'yi birden fazla tarihî kayıtta gördüğünde kaynak kimliklerini birleştiriyor, ancak sonraki kaydın ad, zaman ve gözlem geçmişini taşımıyordu. Her aday artık özgün kayıtların bağımsız kopyalarını `historical_records` içinde saklar. Önceki başarı işaretleri yalnız tarihî kanıt olarak tutulur; güncel yayın kabulü çıkarılmaz.
+- Yerelde 17 kurtarma testi geçti. Yinelenen kayıtlardaki gözlem geçmişi ve çağıranın sonradan yaptığı değişikliklerden bağımsızlık doğrulandı. Tam Actions regresyonu bu commit'te izlenir. #11'in #9 resmî kaynak kabulü ve #14'ün #13 bağımsız S3 restore bağımlılıkları açık kalır.

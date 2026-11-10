@@ -152,6 +152,25 @@ class HistoricalRecoveryTests(unittest.TestCase):
                 with self.assertRaisesRegex(ValueError, "requires object records"):
                     recover([], [bad])
 
+    def test_duplicate_rows_keep_complete_independent_historical_evidence(self):
+        import copy
+        original = [
+            {"url": "https://example.org/live.m3u8", "source_id": "#60",
+             "name": "first", "observations": [{"time": "old", "status": "working"}]},
+            {"url": "https://example.org/live.m3u8", "source_id": "#61",
+             "name": "alternate", "observations": [{"time": "later", "status": "timeout"}]},
+        ]
+        expected = copy.deepcopy(original)
+        recovered, report = recover(original, [])
+        self.assertEqual(len(recovered), 1)
+        self.assertEqual(recovered[0]["historical_records"], expected)
+        self.assertEqual(recovered[0]["source_ids"], ["#60", "#61"])
+        self.assertEqual(report["duplicate_historical_urls"], 1)
+        original[0]["observations"][0]["status"] = "changed"
+        original[1]["observations"].clear()
+        self.assertEqual(recovered[0]["historical_records"], expected)
+        self.assertFalse(recovered[0]["playback_verified"])
+
     def test_no_fabricated_urls(self):
         recovered, report = recover([{"anonymous_id": "4955"}], [])
         self.assertEqual(recovered, [])

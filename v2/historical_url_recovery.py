@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Offline historical URL recovery; never performs network scans or changes playlists."""
 import argparse
+import copy
 import json
 from pathlib import Path
 from urllib.parse import urlsplit
@@ -79,6 +80,7 @@ def recover(old_records, current_records):
         if url in indexed:
             duplicate_historical_urls += 1
             candidate = recovered[indexed[url]]
+            candidate["historical_records"].append(copy.deepcopy(row))
             sources = candidate.get("source_ids", [])
             sources = list(sources) if isinstance(sources, list) else ([sources] if isinstance(sources, str) and sources else [])
             candidate["source_ids"] = sources
@@ -93,6 +95,7 @@ def recover(old_records, current_records):
         indexed[url] = len(recovered)
         candidate = dict(row, recovery_status="HISTORICAL_NOT_REVERIFIED",
                          source_status="HISTORICAL_ARTIFACT")
+        candidate["historical_records"] = [copy.deepcopy(row)]
         # Keep original historical status as provenance, never as current playback acceptance.
         if "status" in row:
             candidate["historical_status"] = row["status"]
