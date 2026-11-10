@@ -94,7 +94,10 @@ def compare(previous, current, threshold=0.5):
                              "missing": len(missing)})
     return {"previous_sources": len(old), "current_sources": len(new),
             "candidate_audit": candidate_audit, "findings": findings,
-            "status": "REVIEW_REQUIRED" if findings else "NO_LARGE_REGRESSION"}
+            "status": ("REVIEW_REQUIRED" if findings else
+                       "SOURCE_COUNTS_OK_CANDIDATE_PROOF_MISSING" if
+                       candidate_audit["status"] == "NOT_COMPARABLE" else
+                       "NO_LARGE_REGRESSION")}
 
 def main():
     parser = argparse.ArgumentParser()
