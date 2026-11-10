@@ -164,6 +164,11 @@ def recover_source(source, cache, fetcher=fetch_once, sleep=time.sleep, *, deadl
                         cache.set(source_id, text)
                     except (OSError, ValueError, FetchFailure) as exc:
                         failures.append({"category": "CACHE_WRITE_FAILED", "reason": type(exc).__name__})
+                # Cache persistence can itself consume the remaining global budget.
+                # Never report a late write as fresh source evidence.
+                if deadline is not None and clock() >= deadline:
+                    failures.append({"category": "RETRY_BUDGET_EXHAUSTED"})
+                    break
                 # A substitute feed must never masquerade as the original source.
                 return text, {"id": source_id,
                               "status": "PRIMARY_OK" if index == 0 else "FALLBACK_OK",
