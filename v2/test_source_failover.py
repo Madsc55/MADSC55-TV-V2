@@ -143,6 +143,16 @@ class FailoverTests(unittest.TestCase):
         self.assertEqual(calls, [])
 
 
+    def test_pipeline_rejects_invalid_global_deadline_before_any_fetch(self):
+        import math
+        for deadline in (True, False, math.nan, math.inf, -math.inf, "tomorrow"):
+            calls = []
+            with self.subTest(deadline=deadline), self.assertRaises(ValueError):
+                execute_pipeline([self.source], self.cache,
+                    fetcher=lambda url: calls.append(url),
+                    deadline=deadline)
+            self.assertEqual(calls, [])
+
     def test_pipeline_propagates_expired_budget_to_every_source(self):
         from source_failover import execute_pipeline
         calls = []
