@@ -199,6 +199,9 @@ def collect(strict=True):
         record["stall_threshold_seconds"] = stall_threshold
         record["possibly_stalled"] = stalled_run(run, threshold_seconds=stall_threshold)
         record["automatic_retry_permitted"] = False
+        # A live Master success is a distinct signal from a green offline push.
+        # Do not infer it from the workflow conclusion alone.
+        record["live_master_job_passed"] = False if run["_workflow_file"] == "v2-master-engine.yml" else None
         record["head_branch"] = run.get("head_branch")
         record["run_event"] = run.get("event")
         record["same_development_branch"] = run.get("head_branch") == BRANCH
