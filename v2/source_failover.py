@@ -195,6 +195,12 @@ def execute_pipeline(sources, cache, fetcher=fetch_once, sleep=time.sleep, *, de
         raise ValueError("deadline must be a finite numeric timestamp")
     results = []
     for source in sources:
+        # A source-level exception must not hide a spent global retry budget.
+        if deadline is not None and clock() >= deadline:
+            results.append((source, None, {"id": source["id"],
+                "status": "BUDGET_EXHAUSTED", "fresh": False,
+                "failures": [{"category": "RETRY_BUDGET_EXHAUSTED"}]}))
+            continue
         try:
             content, audit = recover_source(source, cache, fetcher, sleep, deadline=deadline, clock=clock)
         except Exception as exc:
