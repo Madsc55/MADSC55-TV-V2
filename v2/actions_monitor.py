@@ -56,7 +56,11 @@ def stalled_run(run, now=None, threshold_seconds=7200):
     """
     if run.get("status") not in ("in_progress", "queued", "waiting", "pending", "requested"):
         return False
-    raw = run.get("run_started_at") or run.get("created_at")
+    # Queue age starts at creation, not at a later (or inconsistent) start time.
+    # Running jobs use their actual start to avoid flagging long queue waits.
+    raw = (run.get("created_at") if run.get("status") in
+           ("queued", "waiting", "pending", "requested") else
+           run.get("run_started_at") or run.get("created_at"))
     if not isinstance(raw, str):
         return None
     try:
