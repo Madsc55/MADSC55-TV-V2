@@ -27,6 +27,12 @@ class TaskEngineTests(unittest.TestCase):
             ledger["statuses"][task_id - 1]["status"] = "pending"
         return ledger
 
+    def test_deferred_scope_is_rejected(self):
+        manifest = copy.deepcopy(self.master)
+        manifest["tasks"][2]["scope"] = "deferred_optional"
+        with self.assertRaisesRegex(ValueError, "mandatory"):
+            e.validate(manifest, self.ledger, self.root)
+
     def test_all_34_registered_and_dependency_graph(self):
         tasks, rows = e.validate(self.master, self.ledger, self.root)
         self.assertEqual(len(tasks), 34)
@@ -47,7 +53,7 @@ class TaskEngineTests(unittest.TestCase):
         ledger = self.scenario_ledger()
         self.assertEqual(e.select(self.master, ledger, self.root), 1)
         ledger["statuses"][0]["status"] = "blocked"
-        self.assertNotIn(e.select(self.master, ledger, self.root), (3, 4, 6))
+        self.assertIn(e.select(self.master, ledger, self.root), (3, 4, 5, 9))
 
     def test_independent_work_after_p0_completion(self):
         ledger = self.scenario_ledger()
@@ -64,7 +70,7 @@ class TaskEngineTests(unittest.TestCase):
         self.assertNotIn(13, independent)
         self.assertIn(23, independent)  # An external archive blocker must not stop the motor work.
 
-    def test_user_directed_heavy_work_deferred_without_false_completion(self):
+    def test_all_historical_tasks_remain_mandatory(self):
         ledger = copy.deepcopy(self.ledger)
         # Stable fixture: future closures must not invalidate scheduler tests.
         ledger["statuses"][8]["status"] = "pending"
@@ -72,8 +78,8 @@ class TaskEngineTests(unittest.TestCase):
         # Task 5 is P0 and ready once tasks 7 and 8 are complete.
         self.assertEqual(e.select(self.master, ledger, self.root, defer_heavy=True), 5)
         ready = e.independent_ready(self.master, ledger, self.root, defer_heavy=True)
-        self.assertNotIn(3, ready)
-        self.assertNotIn(4, ready)
+        self.assertIn(3, ready)
+        self.assertIn(4, ready)
         self.assertIn(9, ready)
         self.assertEqual(ledger["statuses"][2]["status"], "in_progress")
         self.assertEqual(ledger["statuses"][3]["status"], "in_progress")
@@ -81,9 +87,9 @@ class TaskEngineTests(unittest.TestCase):
         for row in ledger["statuses"]:
             if row["id"] not in (1, 2, 3, 4, 8, 22):
                 row["status"] = "blocked"
-        self.assertIsNone(e.select(self.master, ledger, self.root, defer_heavy=True))
+        self.assertEqual(e.select(self.master, ledger, self.root, defer_heavy=True), 3)
 
-    def test_cli_defaults_to_deferred_heavy_tasks(self):
+    def test_cli_includes_all_mandatory_tasks(self):
         import contextlib
         import io
         from unittest.mock import patch
@@ -272,7 +278,7 @@ class TaskEngineTests(unittest.TestCase):
         self.assertTrue(e.issue34_ready(self.master, ledger, self.root, user_approved=True))
         for deferred_id in (3, 4, 6):
             ledger["statuses"][deferred_id - 1].update(status="pending", evidence_urls=[], last_checked_at=None)
-        self.assertTrue(e.issue34_ready(self.master, ledger, self.root, user_approved=True))
+        self.assertFalse(e.issue34_ready(self.master, ledger, self.root, user_approved=True))
         for task_id in (1, 32, 33):
             broken = copy.deepcopy(ledger)
             broken["statuses"][task_id - 1]["status"] = "pending"
