@@ -242,6 +242,7 @@ jobs:
           print("Durable live archive key resolved using " + source + "; historical archive keys unchanged")
           PY
       - name: Real master discovery and verification
+        timeout-minutes: 105
         shell: bash
         run: |
           set -euo pipefail
