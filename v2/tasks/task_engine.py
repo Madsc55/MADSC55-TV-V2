@@ -88,6 +88,9 @@ def select(master, ledger, root, defer_heavy=False):
     # Resume ongoing work first; blocked work is not silently marked successful.
     ready = [t for t in tasks.values() if t.get("scope") != OPTIONAL_SCOPE and rows[t["id"]]["status"] in ("pending", "in_progress")
              and all(rows[d]["status"] == "completed" for d in t["depends_on"])]
+    # #34 is always last: every other task must have evidence-backed completion.
+    if any(rows[i]["status"] != "completed" for i in range(1, 34)):
+        ready = [t for t in ready if t["id"] != 34]
     if defer_heavy and any(t["id"] not in DEFERRED_LAST for t in ready):
         ready = [t for t in ready if t["id"] not in DEFERRED_LAST]
     ready.sort(key=lambda t: (PRIORITY[t["priority"]], 0 if rows[t["id"]]["status"] == "in_progress" else 1, t["id"]))
@@ -206,6 +209,9 @@ def independent_ready(master, ledger, root, excluded=(), defer_heavy=False):
              if t["id"] not in excluded and t.get("scope") != OPTIONAL_SCOPE
              and rows[t["id"]]["status"] in ("pending", "in_progress")
              and all(rows[d]["status"] == "completed" for d in t["depends_on"])]
+    # #34 is always last: every other task must have evidence-backed completion.
+    if any(rows[i]["status"] != "completed" for i in range(1, 34)):
+        ready = [t for t in ready if t["id"] != 34]
     if defer_heavy and any(t["id"] not in DEFERRED_LAST for t in ready):
         ready = [t for t in ready if t["id"] not in DEFERRED_LAST]
     return [t["id"] for t in sorted(ready, key=lambda t: (PRIORITY[t["priority"]], t["id"]))]
