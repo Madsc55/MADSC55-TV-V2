@@ -94,6 +94,22 @@ class TaskEngineTests(unittest.TestCase):
                 row["status"] = "blocked"
         self.assertEqual(e.select(self.master, ledger, self.root, defer_heavy=True), 3)
 
+    def test_final_task_never_scheduled_while_historical_work_open(self):
+        ledger = copy.deepcopy(self.ledger)
+        for row in ledger["statuses"]:
+            row["status"] = "completed"
+            row["evidence_urls"] = ["https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/123"]
+            row["last_checked_at"] = "2026-11-08T00:00:00Z"
+        ledger["statuses"][31]["user_device_confirmation"] = True
+        ledger["statuses"][33]["status"] = "pending"
+        self.assertEqual(e.select(self.master, ledger, self.root), 34)
+        self.assertEqual(e.independent_ready(self.master, ledger, self.root), [34])
+        for historical_id in (3, 4, 6):
+            case = copy.deepcopy(ledger)
+            case["statuses"][historical_id - 1]["status"] = "pending"
+            self.assertNotEqual(e.select(self.master, case, self.root), 34)
+            self.assertNotIn(34, e.independent_ready(self.master, case, self.root))
+
     def test_cli_includes_all_mandatory_tasks(self):
         import contextlib
         import io
