@@ -35,6 +35,17 @@ class MonitorTests(unittest.TestCase):
         self.assertIn("V2 run 19 (v2-master-engine.yml): workflow_failure", output.getvalue())
         self.assertIn("V2 run 19 job 55 step 3 (Offline regressions): failure", output.getvalue())
 
+    def test_connection_error_retry_budget_is_bounded(self):
+        from unittest.mock import MagicMock
+        import urllib.request
+        with patch.object(actions_monitor, "TOKEN", "test-token"), patch.object(
+                urllib.request, "urlopen", side_effect=ConnectionError("reset")) as request, patch.object(
+                actions_monitor.time, "sleep") as sleep:
+            with self.assertRaisesRegex(RuntimeError, "transport failure after bounded retries"):
+                actions_monitor.api("/repos/example/actions/runs")
+        self.assertEqual(request.call_count, 3)
+        self.assertEqual(sleep.call_count, 2)
+
     def test_stalled_run_age_is_advisory_and_never_retries(self):
         now = datetime(2026, 11, 9, 12, 0, tzinfo=timezone.utc)
         old = (now - timedelta(hours=3)).isoformat()
