@@ -58,8 +58,13 @@ def recover(old_records, current_records):
         if url in current or url in seen:
             continue
         seen.add(url)
-        recovered.append(dict(row, recovery_status="HISTORICAL_NOT_REVERIFIED",
-                              source_status="HISTORICAL_ARTIFACT"))
+        candidate = dict(row, recovery_status="HISTORICAL_NOT_REVERIFIED",
+                         source_status="HISTORICAL_ARTIFACT")
+        # Historical success flags are not proof of current video+audio decoding.
+        for flag in ("av_verified", "device_verified", "video_verified", "audio_verified",
+                     "playback_verified", "ibo_device_verified"):
+            candidate[flag] = False
+        recovered.append(candidate)
     return recovered, {"historical_missing_real_url": missing_url,
                        "recoverable_real_urls": len(recovered),
                        "current_urls_excluded": len(current),
