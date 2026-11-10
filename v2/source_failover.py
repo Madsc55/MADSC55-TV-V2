@@ -193,7 +193,17 @@ def recover_source(source, cache, fetcher=fetch_once, sleep=time.sleep, *, deadl
             except Exception as exc:
                 failures.append({"url_sha256": hashlib.sha256(url.encode()).hexdigest(), "category": type(exc).__name__, "attempt": attempt + 1})
                 break
+    # A failed live fetch must not initiate potentially slow cache I/O after
+    # the global deadline has expired. Report the exhausted budget explicitly.
+    if deadline is not None and clock() >= deadline:
+        if not any(item.get("category") == "RETRY_BUDGET_EXHAUSTED" for item in failures):
+            failures.append({"category": "RETRY_BUDGET_EXHAUSTED"})
+        return None, {"id": source_id, "status": "UNAVAILABLE", "attempts": attempts, "failures": failures, "fresh": False}
     cached = cache.get(source_id)
+    if deadline is not None and clock() >= deadline:
+        if not any(item.get("category") == "RETRY_BUDGET_EXHAUSTED" for item in failures):
+            failures.append({"category": "RETRY_BUDGET_EXHAUSTED"})
+        cached = None
     return cached, {"id": source_id, "status": "CACHE_RECOVERED" if cached is not None else "UNAVAILABLE", "attempts": attempts, "failures": failures, "fresh": False}
 
 
