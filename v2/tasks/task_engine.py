@@ -11,7 +11,7 @@ BRANCH = "madsc/v2-discovery-bulk-20261031"
 PROTECTED = {"MADSC55_TV_IBO_CALISANLAR_TEST.m3u8"}
 PRIORITY = {"P0": 0, "P1": 1, "P2": 2, "P3": 3, "P4": 4}
 # User-directed scheduling only; does not change dependencies or completion criteria.
-DEFERRED_LAST = frozenset({3, 4, 6})
+DEFERRED_LAST = frozenset()
 OPTIONAL_SCOPE = "deferred_optional"
 
 
@@ -27,8 +27,8 @@ def validate(master, ledger, root):
         raise ValueError("Wrong task manifest target")
     by_id = {t["id"]: t for t in tasks}
     for t in tasks:
-        if (t.get("scope") == OPTIONAL_SCOPE) != (t["id"] in DEFERRED_LAST):
-            raise ValueError("Unexpected deferred task scope")
+        if t.get("scope") == OPTIONAL_SCOPE:
+            raise ValueError("All 34 tasks are mandatory; deferred scope is forbidden")
         if t["priority"] not in PRIORITY or not t["acceptance"] or not isinstance(t["evidence_urls"], list):
             raise ValueError("Incomplete task acceptance or priority")
         if any(d not in by_id or d == t["id"] for d in t["depends_on"]):
@@ -248,7 +248,7 @@ def main():
     p.add_argument("--root", type=Path, default=Path("state.json"))
     p.add_argument("--manifest", type=Path, default=Path("v2/tasks/master_tasks.json"))
     p.add_argument("--ledger", type=Path, default=Path("v2/tasks/state.json"))
-    p.add_argument("--include-heavy", action="store_true", help="Explicitly allow 45-channel, historical AV and 2643-address work before other ready tasks")
+    p.add_argument("--include-heavy", action="store_true", help="Compatibility flag; all 34 tasks are mandatory")
     args = p.parse_args()
     master, ledger, root = [json.loads(p.read_text(encoding="utf-8")) for p in (args.manifest, args.ledger, args.root)]
     print(json.dumps({"next_task_id": select(master, ledger, root, defer_heavy=not args.include_heavy), "policy": "READ_ONLY_NO_GITHUB_WRITES"}))
