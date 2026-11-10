@@ -247,6 +247,15 @@ def main():
             print("::warning::Potentially stalled Actions run %s workflow=%s; review manually, no automatic retry" % (run["id"], run["workflow_file"]))
         print("run_id=%s sha=%s status=%s conclusion=%s url=%s" % (
             run["id"], run["head_sha"], run["status"], run["conclusion"], run["html_url"]))
+        # Surface failed steps in the Actions console, not just the JSON artifact.
+        for reason in run["failure_reasons"]:
+            print("::warning::V2 run %s (%s): %s" % (
+                run["id"], run["workflow_file"], reason))
+        for job in run["jobs"]:
+            for step in job["failed_steps"]:
+                print("::warning::V2 run %s job %s step %s (%s): %s" % (
+                    run["id"], job["id"], step["number"],
+                    step["name"], step["conclusion"]))
     if len(result["runs"]) < 10:
         print("Only %d matching workflow runs returned by GitHub API" % len(result["runs"]))
 
