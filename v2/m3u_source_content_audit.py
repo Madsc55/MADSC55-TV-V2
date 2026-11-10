@@ -180,6 +180,8 @@ def audit_contents(sources, historical_hashes, fetcher=fetch_once, workers=8, pr
             len(historical_now - original_only) if primary_source_ids is not None else None,
         "historical_identifiers_absent_from_current_sources":
             len(original - historical_now),
+        "historical_identifiers_absent_sha256_full":
+            sorted(original - historical_now),
         "historical_identifiers_absent_sha256_sample":
             sorted(original - historical_now)[:30],
         "current_streams_playback_checked": 0,
