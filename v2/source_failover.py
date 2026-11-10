@@ -148,7 +148,14 @@ def recover_source(source, cache, fetcher=fetch_once, sleep=time.sleep, *, deadl
                 failures.append({'category': 'RETRY_BUDGET_EXHAUSTED'})
                 break
             try:
-                text = fetcher(url)
+                if fetcher is fetch_once and deadline is not None:
+                    remaining = deadline - clock()
+                    if remaining <= 0:
+                        failures.append({"category": "RETRY_BUDGET_EXHAUSTED"})
+                        break
+                    text = fetcher(url, timeout=min(12, remaining))
+                else:
+                    text = fetcher(url)
                 if index == 0:
                     try:
                         cache.set(source_id, text)
