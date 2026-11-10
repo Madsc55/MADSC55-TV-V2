@@ -139,6 +139,20 @@ def validate_workflow(path, source):
             for perm, value in _mapping(spec["permissions"], "job permissions").items():
                 if value == "write" and not (perm == "id-token" and name == "v2-independent-archive-restore"):
                     errors.append("UNEXPECTED_JOB_WRITE_PERMISSION:" + perm)
+    # #25: every mandatory ordered-preflight job must have a finite budget.
+    # Reject missing, invalid and excessively large limits before CI can
+    # report an unbounded acceptance path as safe.
+    if name == "v2-ordered-preflight":
+        budgets = {"compile": 15, "protect": 15, "discovery-tests": 60, "safety": 20}
+        for job_name, maximum in budgets.items():
+            spec = jobs.get(job_name)
+            raw = spec.get("timeout-minutes") if isinstance(spec, dict) else None
+            try:
+                minutes = int(raw) if isinstance(raw, str) and raw.isdecimal() else -1
+            except (TypeError, ValueError):
+                minutes = -1
+            if not 1 <= minutes <= maximum:
+                errors.append("UNBOUNDED_PREFLIGHT_JOB:" + job_name)
     has_push = "push" in events
     has_pr = "pull_request" in events
     if has_pr and name != "v2-ordered-preflight":
