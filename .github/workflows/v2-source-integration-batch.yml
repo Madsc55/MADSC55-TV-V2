@@ -94,8 +94,13 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Verify protected development IBO snapshot is immutable
-        run: test "$(git hash-object MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)" = '4b1c3cea4b5107a425abab60f62d41f9f81e05a7'
+      - name: Verify protected IBO and immutable 4955 historical baseline
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git hash-object MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)" = '4b1c3cea4b5107a425abab60f62d41f9f81e05a7'
+          test "$(sha256sum v2/history/stage3-4955-hash-only.jsonl | cut -d' ' -f1)" = 'ee00a844a028e3410715d411467a2d3306f5f5cc4565766140b6438e786cdd27'
+          test "$(wc -l < v2/history/stage3-4955-hash-only.jsonl)" -eq 4955
       - name: Install pinned encryption dependency for grouped offline acceptance tests
         run: python -m pip install cryptography==44.0.2
       - name: Run related source and handoff tests in one offline batch
