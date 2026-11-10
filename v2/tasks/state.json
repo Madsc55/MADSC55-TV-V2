@@ -239,7 +239,7 @@
     {
       "id": 23,
       "status": "in_progress",
-      "last_checked_at": "2026-11-10T14:12:00Z",
+      "last_checked_at": "2026-11-10T19:05:00Z",
       "evidence_urls": [
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42611524072",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42611524049",
@@ -248,10 +248,13 @@
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42611795555",
         "https://github.com/Madsc55/MADSC55-TV-V2/commit/934fa7c33bf36a037f74cf5565ef2ff1e25f59ce",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42704737745",
-        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42814432744"
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42814432744",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42867001878",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42874231734",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42881203132"
       ],
-      "blocker": "Live Master job succeeded, but its own summary reports approved=false, historical_raw_records_preserved=0, historical_loss_guard=null and device_verified=false. Verify complete historical baseline and acceptance criteria before closing #23.",
-      "reason": "Actual live master job 129824133621 and offline-tests job 129823772445 both completed success on commit fa18a6b3; real FFmpeg and archive-key steps passed. Run produced 7786 candidates, 803 TR/AZ decoded AV, 804 all-region decoded AV, and 16.4 MB artifact 13768268624. Live execution gate is resolved; end-to-end approval remains false."
+      "blocker": "Latest real live Master #42874231734 remains in progress; prior real live #42867001878 passed with historical_raw_records_preserved=4955, archive_restore_verified=true, verification_complete=true, media_decoded=750, approved=false and device_verified=false. Offline-only green #42881203132 skipped the master job and is not live acceptance.",
+      "reason": "Real live #42867001878 master and offline-tests jobs completed success; 7786 candidates checked, 750 decoded AV, 4955 historical identities preserved, archive roundtrip passed, protected playlist unchanged, no budget exhaustion. Await later live run and separate IBO device acceptance."
     },
     {
       "id": 24,
@@ -264,7 +267,7 @@
     {
       "id": 25,
       "status": "in_progress",
-      "last_checked_at": "2026-11-10T14:12:00Z",
+      "last_checked_at": "2026-11-10T19:05:00Z",
       "evidence_urls": [
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42612061352",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42612061310",
@@ -273,15 +276,18 @@
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42612061408",
         "https://github.com/Madsc55/MADSC55-TV-V2/commit/934fa7c33bf36a037f74cf5565ef2ff1e25f59ce",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42704737745",
-        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42814432744"
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42814432744",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42867001878",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42881202737",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42881203132"
       ],
-      "blocker": "Live Master finished within budget; a genuine timed-out/failed live run and bounded retry failure-path acceptance are not yet evidenced. Never induce a costly failure merely to close task.",
-      "reason": "Live master #42814432744 succeeded with verification_complete=true and budget_exhausted=false. Existing hard limits and offline hung-worker tests pass, but this successful run does not exercise a live timeout or retry failure path."
+      "blocker": "Offline bounded retry and deadline regressions pass, but actual live timeout/retry failure-path acceptance is not evidenced; do not manufacture failures or promote offline-only green to live proof.",
+      "reason": "Successful real live #42867001878 finished within 5400-second budget, verification_unfinished=0 and budget_exhausted=false. Latest #42881202737 and #42881203132 offline regressions passed; independent live failure-path evidence remains outstanding."
     },
     {
       "id": 26,
       "status": "in_progress",
-      "last_checked_at": "2026-11-10T14:12:00Z",
+      "last_checked_at": "2026-11-10T19:05:00Z",
       "evidence_urls": [
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42612061352",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42612061310",
@@ -292,10 +298,13 @@
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42704737745",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42703384931",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42704737959",
-        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42814432744"
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42814432744",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42880935339",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42881202976",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42881202737"
       ],
-      "blocker": "Live Master job/step success is verified, but full failure-report and safe-retry acceptance still depends on #25 failure-path evidence and final #23 approval.",
-      "reason": "Live Master #42814432744 shows both jobs completed success, all steps succeeded and artifact uploaded. Earlier failed-job reporting and no automatic unsafe retry regressions remain present; this run itself has no failed steps to exercise reporting."
+      "blocker": "Failure-step reporting and no-unsafe-retry regressions pass; end-to-end acceptance still depends on real live failure-path evidence and final #23 device approval.",
+      "reason": "Added Current Scanner Offline Gate to monitored workflow inventory; corrected acceptance-contract regression after failed runs #42880935339 and #42880935650. Commit 540c915a yielded green monitor #42881202976 and ordered preflight #42881202737. No false green for skipped live master."
     },
     {
       "id": 27,
