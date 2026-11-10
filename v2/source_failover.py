@@ -190,6 +190,9 @@ def recover_source(source, cache, fetcher=fetch_once, sleep=time.sleep, *, deadl
 
 
 def execute_pipeline(sources, cache, fetcher=fetch_once, sleep=time.sleep, *, deadline=None, clock=time.monotonic):
+    # Reject invalid global budgets before the per-source error handler can hide them.
+    if deadline is not None and (type(deadline) not in (int, float) or not __import__("math").isfinite(deadline)):
+        raise ValueError("deadline must be a finite numeric timestamp")
     results = []
     for source in sources:
         try:
