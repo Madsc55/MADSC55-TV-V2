@@ -67,6 +67,12 @@ class MasterTests(unittest.TestCase):
             [{"url": "https://example.org/a.m3u8",
               "verification_status": "CHECKED", "media_decoded": "true",
               "device_verified": False}],
+            [{"url": "https://example.org/a.m3u8",
+              "verification_status": "CHECKED", "media_decoded": True,
+              "device_verified": False, "network_status": "UNKNOWN_OR_FAILED"}],
+            [{"url": "https://example.org/a.m3u8",
+              "verification_status": "CHECKED", "media_decoded": True,
+              "device_verified": False, "network_status": "FORGED"}],
         ):
             with self.subTest(forged=forged):
                 rows = [{"url": "https://example.org/a.m3u8"}]
