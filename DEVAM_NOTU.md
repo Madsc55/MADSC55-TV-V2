@@ -1,3 +1,11 @@
+## 10 Kasım 2026 — Aşama 2 toplu iş kapsamı ve doğrulanmış Actions durumu
+
+- Kullanıcının güncel açık talimatı: #3, #4, #5, #9, #13 temel işleri paralel ele al; ardından #6, #11, #14 tamamla. Önceden ertelenmiş #3/#4/#6 bu aşamada yeniden kapsam içindedir; bunlar bitmiş sayılmaz. Sorunlu yayınlar açık kalabilir, bağımsız işleri durduramaz.
+- Canlı Source Integration Actions #42706126197 doğrudan job API ile yeniden kontrol edildi: 12/12 job completed/success; daha önce running görünen 129463381436 de completed/success. Bu sonuç tarihî 45 kimliğin veya 2.643 kayıp adresin tek tek AV kabulü değildir.
+- Bağımsız S3 restore #42688764100 job 129402597538 completed/failure. Kayıtlı engel: V2_S3_RESTORE_AWS_ACCESS_KEY_ID yetkili Actions secret eksik. Gizli değerler repoya yazılmayacak, S3 restore yapılmış gibi gösterilmeyecek.
+- Kanonik state.json (2026-11-08): #3/#4/#9/#11/#14 in_progress; #5/#13 blocked; #6 pending. #5 özgün üç bozuk satırın provenance kanıtı, #9 TRT Spor HTTP_403, #4 tarama snapshot farkları ve #14 gerçek 4.955 baseline/remote restore kanıtı açık.
+- Bu kayıt yalnızca doğrulanmış durum ve yeniden etkinleştirilmiş iş kapsamıdır; yeni FFmpeg çalışması, Actions dispatch, kod kabulü veya sekiz görevin kapanışı değildir. main, PR #9, ana İBO, kategori ve tarihî kimlikler değiştirilmedi.
+
 ## 9 Kasım 2026 — #16 gerçek tekrar denemesi ve canlı kabul takibi
 
 - #42706126197/job 129463381480: FFmpeg 89 geçici hata adayını yeniden denedi, önceki 3 başarılı kanıt korundu ve yeni başarı 0. Kanıt #16 görev kaydına eklendi. #14 tarihî envanter kabulü açık olduğu için #16 kapanmadı.
