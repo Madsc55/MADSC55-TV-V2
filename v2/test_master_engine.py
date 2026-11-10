@@ -454,5 +454,30 @@ class MasterTests(unittest.TestCase):
         self.assertEqual(items[0]["network_status"], "UNKNOWN_OR_FAILED")
         self.assertFalse(items[0]["device_verified"])
 
+
+class InvalidBudgetAcceptanceTests(unittest.TestCase):
+    def test_invalid_batch_budgets_rejected_without_worker_or_checkpoint(self):
+        from master_engine import verify_in_batches
+        import math
+        for kwargs in (
+            {"workers": 0, "deadline": 100.0, "batch_timeout": 2.0},
+            {"workers": True, "deadline": 100.0, "batch_timeout": 2.0},
+            {"workers": 33, "deadline": 100.0, "batch_timeout": 2.0},
+            {"workers": 1, "deadline": math.nan, "batch_timeout": 2.0},
+            {"workers": 1, "deadline": math.inf, "batch_timeout": 2.0},
+            {"workers": 1, "deadline": 100.0, "batch_timeout": math.nan},
+            {"workers": 1, "deadline": 100.0, "batch_timeout": 0},
+        ):
+            with self.subTest(kwargs=kwargs):
+                items = [{"url": "https://example.org/test.m3u8"}]
+                calls = []
+                with self.assertRaises(ValueError):
+                    verify_in_batches(items, lambda _: True, lambda _: True,
+                        checkpoint=lambda *_: calls.append("checkpoint"),
+                        runner=lambda *_: calls.append("worker"),
+                        clock=lambda: 1.0, **kwargs)
+                self.assertEqual(calls, [])
+                self.assertNotIn("verification_status", items[0])
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)
