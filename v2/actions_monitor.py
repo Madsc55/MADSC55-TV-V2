@@ -43,7 +43,7 @@ def api(path):
         except urllib.error.HTTPError as exc:
             if exc.code not in (408, 429, 500, 502, 503, 504) or attempt == 2:
                 raise RuntimeError("GitHub Actions API HTTP %d; check actions:read and repository access" % exc.code) from exc
-        except (urllib.error.URLError, TimeoutError) as exc:
+        except (urllib.error.URLError, TimeoutError, ConnectionError) as exc:
             if attempt == 2:
                 raise RuntimeError("GitHub Actions API transport failure after bounded retries") from exc
         time.sleep(min(2 ** attempt, 2))
