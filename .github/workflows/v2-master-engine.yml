@@ -249,6 +249,46 @@ jobs:
           set -euo pipefail
           mkdir -p v2/reports/master-run
           timeout --signal=TERM --kill-after=20s 6000s python v2/master_engine.py --archive v2/reports/master-run/inventory.enc --out v2/reports/master-run/output --limit 500 --max-seconds 5400
+      - name: Validate live Master evidence and publish acceptance gates
+        if: always()
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          import sys
+          path = Path("v2/reports/master-run/output/report.json")
+          if not path.is_file():
+              print("::error::Live Master report.json missing; no acceptance evidence")
+              sys.exit(1)
+          report = json.loads(path.read_text(encoding="utf-8"))
+          required = ("protected_playlist_unchanged", "verification_complete",
+                      "archive_restore_verified", "checkpoint_encrypted",
+                      "budget_exhausted", "approved", "acceptance_gates",
+                      "media_decoded", "historical_raw_records_preserved")
+          if any(k not in report for k in required):
+              print("::error::Incomplete live Master acceptance report")
+              sys.exit(1)
+          gates = report["acceptance_gates"]
+          if not isinstance(gates, dict) or any(type(v) is not bool for v in gates.values()):
+              print("::error::Invalid live Master acceptance gate evidence")
+              sys.exit(1)
+          with Path(__import__("os").environ["GITHUB_STEP_SUMMARY"]).open("a", encoding="utf-8") as out:
+              out.write("### Live Master evidence (not device approval)\\n")
+              for key in required:
+                  out.write(f"- {key}: {report[key]}\\n")
+          if not (report["protected_playlist_unchanged"] is True
+                  and report["verification_complete"] is True
+                  and report["archive_restore_verified"] is True
+                  and report["checkpoint_encrypted"] is True
+                  and report["budget_exhausted"] is False
+                  and type(report["media_decoded"]) is int
+                  and report["media_decoded"] > 0):
+              print("::error::Live Master evidence failed hard safety/AV gates")
+              sys.exit(1)
+          if report["approved"] is not True:
+              print("::warning::Live scan succeeded, but final historical/device approval is NOT established")
+          PY
       - name: Record master run identity
         if: always()
         run: |
