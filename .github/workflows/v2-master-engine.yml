@@ -13,11 +13,12 @@ on:
 permissions:
   contents: read
   actions: read
-# Serialize this workflow's runs on the development branch without canceling
-# an in-flight acceptance run. This is an Actions-run lock, not a Git writer lock.
+# Serialize live runs; independent read-only commits must not replace each
+# other's pending regressions. This is not a shared Git writer lock.
 concurrency:
-  group: v2-master-engine-${{ github.ref }}
+  group: ${{ ((github.event_name == 'workflow_dispatch' && inputs.run_live_master == true) || (github.event_name == 'push' && contains(github.event.head_commit.message, '[run-live-master]'))) && format('v2-master-engine-{0}', github.ref) || format('v2-master-offline-{0}-{1}', github.ref, github.sha) }}
   cancel-in-progress: false
+  queue: max
 jobs:
   offline-tests:
     runs-on: ubuntu-latest
