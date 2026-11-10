@@ -239,7 +239,7 @@
     {
       "id": 23,
       "status": "in_progress",
-      "last_checked_at": "2026-11-09T21:44:00Z",
+      "last_checked_at": "2026-11-10T14:12:00Z",
       "evidence_urls": [
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42611524072",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42611524049",
@@ -247,10 +247,11 @@
         "https://github.com/Madsc55/MADSC55-TV-V2/blob/madsc/v2-discovery-bulk-20261031/.github/workflows/v2-master-engine.yml",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42611795555",
         "https://github.com/Madsc55/MADSC55-TV-V2/commit/934fa7c33bf36a037f74cf5565ef2ff1e25f59ce",
-        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42704737745"
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42704737745",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42814432744"
       ],
-      "blocker": "Actual end-to-end live master acceptance still lacks a non-skipped run. Launch only a deliberate [run-live-master] development commit when archive secret readiness and bounded scan budget are verified; ordinary task-state commits must not start costly live scans. Grouped offline and Eight-Stage success is not sufficient to close #23.",
-      "reason": "Root cause confirmed from .github/workflows/v2-master-engine.yml: live 'master' job deliberately requires a development push whose HEAD commit message contains [run-live-master]; ordinary pushes run only offline-tests. This is a safety/expense guard, not an unexplained Actions failure. Latest #42611795555 completed success on offline path. Ordered Preflight live public audit is likewise conditional. Do not misrepresent skipped optional live jobs as failure or as proof of live master integration."
+      "blocker": "Live Master job succeeded, but its own summary reports approved=false, historical_raw_records_preserved=0, historical_loss_guard=null and device_verified=false. Verify complete historical baseline and acceptance criteria before closing #23.",
+      "reason": "Actual live master job 129824133621 and offline-tests job 129823772445 both completed success on commit fa18a6b3; real FFmpeg and archive-key steps passed. Run produced 7786 candidates, 803 TR/AZ decoded AV, 804 all-region decoded AV, and 16.4 MB artifact 13768268624. Live execution gate is resolved; end-to-end approval remains false."
     },
     {
       "id": 24,
@@ -263,7 +264,7 @@
     {
       "id": 25,
       "status": "in_progress",
-      "last_checked_at": "2026-11-09T21:44:00Z",
+      "last_checked_at": "2026-11-10T14:12:00Z",
       "evidence_urls": [
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42612061352",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42612061310",
@@ -271,15 +272,16 @@
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42612061331",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42612061408",
         "https://github.com/Madsc55/MADSC55-TV-V2/commit/934fa7c33bf36a037f74cf5565ef2ff1e25f59ce",
-        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42704737745"
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42704737745",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42814432744"
       ],
-      "blocker": "Remaining: verify timeout and bounded retry behaviour for actual long-running live master/source integration jobs; offline monitor tests alone do not establish all workflow timeout guarantees.",
-      "reason": "Implemented and CI-tested advisory Actions stalled-run age detection (2-hour threshold, timezone-aware, invalid/missing/future timestamps fail to unknown); bounded GitHub API retries already exist. Five grouped workflows completed success on 1ca8d2dc. This does not prove all live scan timeout and unsafe retry acceptance paths."
+      "blocker": "Live Master finished within budget; a genuine timed-out/failed live run and bounded retry failure-path acceptance are not yet evidenced. Never induce a costly failure merely to close task.",
+      "reason": "Live master #42814432744 succeeded with verification_complete=true and budget_exhausted=false. Existing hard limits and offline hung-worker tests pass, but this successful run does not exercise a live timeout or retry failure path."
     },
     {
       "id": 26,
       "status": "in_progress",
-      "last_checked_at": "2026-11-09T21:44:00Z",
+      "last_checked_at": "2026-11-10T14:12:00Z",
       "evidence_urls": [
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42612061352",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42612061310",
@@ -289,10 +291,11 @@
         "https://github.com/Madsc55/MADSC55-TV-V2/commit/934fa7c33bf36a037f74cf5565ef2ff1e25f59ce",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42704737745",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42703384931",
-        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42704737959"
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42704737959",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42814432744"
       ],
-      "blocker": "#23 live integration and #25 live timeout/retry acceptance dependencies remain incomplete; do not close solely on offline and monitor success.",
-      "reason": "Real failed Master/Eight-Stage/Ordered/Monitor job logs diagnosed and repaired together on 934fa7c. Monitor now preserves failed runs with zero jobs as negative evidence and continues collecting remaining runs; success with missing/truncated job evidence still rejected. New monitor job 129458449756 succeeded. Offline bounded retry and no unsafe automatic rerun regressions pass."
+      "blocker": "Live Master job/step success is verified, but full failure-report and safe-retry acceptance still depends on #25 failure-path evidence and final #23 approval.",
+      "reason": "Live Master #42814432744 shows both jobs completed success, all steps succeeded and artifact uploaded. Earlier failed-job reporting and no automatic unsafe retry regressions remain present; this run itself has no failed steps to exercise reporting."
     },
     {
       "id": 27,
