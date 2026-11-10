@@ -159,6 +159,7 @@ class MonitorTests(unittest.TestCase):
             "v2-ordered-preflight.yml": "V2 Sirali Hazirlik Testleri",
             "v2-actions-monitor.yml": "V2 Actions Status Monitor",
             "v2-turkish-m3u-source-coverage.yml": "V2 Turkish M3U Source Coverage and Historical Loss",
+            "v2-current-scanner-offline-gate.yml": "V2 Current Scanner Offline Gate",
         }
         self.assertEqual(actions_monitor.WORKFLOW_NAMES, expected)
         self.assertEqual(set(expected), set(actions_monitor.WORKFLOWS))
