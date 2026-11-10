@@ -47,12 +47,16 @@ def validate_url(value):
     return True
 
 def recover(old_records, current_records):
-    current = {row["url"] for row in current_records if validate_url(row.get("url"))}
+    current_rows = list(current_records)
+    historical_rows = list(old_records)
+    if any(not isinstance(row, dict) for row in current_rows + historical_rows):
+        raise ValueError("Historical recovery requires object records")
+    current = {row["url"] for row in current_rows if validate_url(row.get("url"))}
     recovered, indexed = [], {}
     missing_url = 0
     duplicate_historical_urls = 0
     duplicate_source_associations = 0
-    for row in old_records:
+    for row in historical_rows:
         url = row.get("url")
         if not validate_url(url):
             missing_url += 1
