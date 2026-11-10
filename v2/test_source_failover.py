@@ -97,6 +97,34 @@ class FailoverTests(unittest.TestCase):
         self.assertEqual(audit["status"], "PRIMARY_OK")
         self.assertEqual(audit["failures"][0]["category"], "CACHE_WRITE_FAILED")
 
+    def test_expired_budget_skips_cache_recovery_io(self):
+        calls = []
+        def cache_get(source_id):
+            calls.append(source_id)
+            raise AssertionError("cache must not be read after deadline")
+        self.cache.get = cache_get
+        content, audit = recover_source(self.source, self.cache,
+            fetcher=lambda url: (_ for _ in ()).throw(FetchFailure("HTTP_404")),
+            sleep=lambda _: None, deadline=0.0, clock=lambda: 0.0)
+        self.assertIsNone(content)
+        self.assertEqual(calls, [])
+        self.assertFalse(audit["fresh"])
+        self.assertEqual(audit["attempts"], 0)
+
+    def test_slow_cache_read_cannot_return_after_budget(self):
+        tick = [0.0]
+        def cache_get(source_id):
+            tick[0] = 2.0
+            return "#EXTM3U\\n"
+        self.cache.get = cache_get
+        content, audit = recover_source(self.source, self.cache,
+            fetcher=lambda url: (_ for _ in ()).throw(FetchFailure("HTTP_404")),
+            sleep=lambda _: None, deadline=1.0, clock=lambda: tick[0])
+        self.assertIsNone(content)
+        self.assertEqual(audit["status"], "UNAVAILABLE")
+        self.assertIn("RETRY_BUDGET_EXHAUSTED",
+            [item["category"] for item in audit["failures"]])
+
     def test_invalid_content_is_rejected(self):
         with self.assertRaises(FetchFailure):
             validate_m3u(b"<html>not a playlist</html>")
