@@ -49,6 +49,7 @@ jobs:
         run: python -m pip install cryptography==44.0.2 PyYAML==6.0.2
       - run: python v2/test_discovery_offline_regressions.py
       - run: python v2/test_source_provenance.py
+      - run: python v2/test_source_integrity.py
       - run: python v2/test_validate_export_m3u.py
       - run: python v2/test_public_metadata_redaction.py
       - run: python v2/test_source_inventory_contract.py
@@ -80,7 +81,7 @@ jobs:
       - run: python v2/test_encrypted_archive.py
       - run: python v2/test_archive_acceptance_gate.py
       - run: python v2/test_independent_s3_restore.py
-      - name: Verify canonical 33-task state and Actions evidence regressions
+      - name: Verify canonical 34-task state and Actions evidence regressions
         shell: bash
         run: |
           set -euo pipefail
