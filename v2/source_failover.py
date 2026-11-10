@@ -133,8 +133,8 @@ class SourceCache:
 
 
 def recover_source(source, cache, fetcher=fetch_once, sleep=time.sleep, *, deadline=None, clock=time.monotonic):
-    if deadline is not None and (not isinstance(deadline, (int, float)) or not __import__('math').isfinite(deadline)):
-        raise ValueError('deadline must be finite')
+    if deadline is not None and (type(deadline) not in (int, float) or not __import__('math').isfinite(deadline)):
+        raise ValueError('deadline must be a finite numeric timestamp')
     source_id = source["id"]
     urls = tuple(dict.fromkeys((source["url"], *ALTERNATIVES.get(source_id, ()))))
     failures = []
