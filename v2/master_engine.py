@@ -433,6 +433,13 @@ def main():
               "historical_raw_records_preserved": len(history),
               "archive_restore_verified": bool(archived_items) and restored == archived_items,
               "device_verified": False, "approved": False,
+              "acceptance_gates": {
+                  "source_fetch_complete": not bool(failures),
+                  "av_verification_complete": verification_complete,
+                  "historical_baseline_4955_present": len(history) == 4955,
+                  "encrypted_archive_roundtrip": bool(archived_items) and restored == archived_items,
+                  "ibo_device_verified": False,
+              },
               "verification_complete": verification_complete,
               "verification_unfinished": sum(item["verification_status"] != "CHECKED" for item in items),
               "max_seconds": args.max_seconds, "budget_exhausted": time.monotonic() >= deadline,
