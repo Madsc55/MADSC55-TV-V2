@@ -27,7 +27,8 @@ class HistoricalWorldAVBridgeTests(unittest.TestCase):
         current={"source_content_audit":{"historical_baseline_count":3,
             "historical_identifiers_present_in_current_sources":2,
             "historical_identifiers_absent_from_current_sources":1,
-            "historical_identifiers_absent_sha256_sample":[c]}}
+            "historical_identifiers_absent_sha256_sample":[c],
+            "historical_identifiers_absent_sha256_full":[c]}}
         return {a,b,c},world,current
 
     def test_hash_reconciliation_without_current_av_claims(self):
