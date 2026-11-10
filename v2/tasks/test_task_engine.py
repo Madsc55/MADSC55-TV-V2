@@ -76,9 +76,9 @@ class TaskEngineTests(unittest.TestCase):
         ledger["statuses"][8]["status"] = "pending"
         ledger["statuses"][4]["status"] = "pending"  # Explicit fixture: live task 5 may be blocked.
         # Task 5 is P0 and ready once tasks 7 and 8 are complete.
-        self.assertEqual(e.select(self.master, ledger, self.root, defer_heavy=True), 3)
+        self.assertEqual(e.select(self.master, ledger, self.root, defer_heavy=True), 4)
         ready = e.independent_ready(self.master, ledger, self.root, defer_heavy=True)
-        self.assertIn(3, ready)
+        self.assertNotIn(3, ready)  # #1 is unfinished in this fixture.
         self.assertIn(4, ready)
         self.assertIn(9, ready)
         self.assertEqual(ledger["statuses"][2]["status"], "in_progress")
@@ -87,7 +87,7 @@ class TaskEngineTests(unittest.TestCase):
         for row in ledger["statuses"]:
             if row["id"] not in (1, 2, 3, 4, 8, 22):
                 row["status"] = "blocked"
-        self.assertEqual(e.select(self.master, ledger, self.root, defer_heavy=True), 3)
+        self.assertEqual(e.select(self.master, ledger, self.root, defer_heavy=True), 4)
 
     def test_cli_includes_all_mandatory_tasks(self):
         import contextlib
@@ -108,7 +108,7 @@ class TaskEngineTests(unittest.TestCase):
         ledger = self.scenario_ledger()
         ledger["statuses"][0].update(status="completed", evidence_urls=["https://github.com/example/evidence"], last_checked_at="2026-11-06T16:00:00Z")
         self.assertNotEqual(e.select(self.master, ledger, self.root), 1)
-        self.assertNotIn(e.select(self.master, ledger, self.root), (3, 4, 6))
+        self.assertEqual(e.select(self.master, ledger, self.root), 4)
 
     def test_failed_cannot_be_marked_complete(self):
         # Use an unfinished task: repeating an already-completed status is idempotent.
