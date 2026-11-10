@@ -50,6 +50,24 @@ class ActionsTriggerProtectionTests(unittest.TestCase):
         self.assertLess(install, first_test)
         self.assertNotIn("cryptography>=42,<47", discovery)
 
+    def test_ordered_preflight_jobs_have_bounded_timeouts(self):
+        root = Path(__file__).resolve().parents[1] / ".github/workflows"
+        path = root / "v2-ordered-preflight.yml"
+        source = path.read_text(encoding="utf-8")
+        issues, _ = validate_workflow(path, source)
+        self.assertEqual(issues, [], issues)
+        for job in ("compile", "protect", "discovery-tests", "safety"):
+            import re
+            pattern = r"(?m)^  " + re.escape(job) + r":\\n(?:(?!^  [a-zA-Z-]+:).)*?^    timeout-minutes: [0-9]+$"
+            self.assertRegex(source, pattern, job)
+        for job in ("compile", "protect", "discovery-tests", "safety"):
+            import re
+            damaged = re.sub(r"(?m)(^  " + re.escape(job) + r":\\n(?:    [^\\n]*\\n)*?)    timeout-minutes: [0-9]+\\n",
+                             r"\\1", source, count=1)
+            self.assertNotEqual(damaged, source, job)
+            rejected, _ = validate_workflow(path, damaged)
+            self.assertIn("UNBOUNDED_PREFLIGHT_JOB:" + job, rejected)
+
     def test_playlist_invariant_changes_trigger_grouped_safety_ci(self):
         import yaml
         root = Path(__file__).resolve().parents[1] / ".github/workflows"
