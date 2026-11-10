@@ -72,13 +72,15 @@ def bridge(historical, world, current):
     if successes!=world.get("audio_video_decoded"):
         raise ValueError("World AV decoder total differs from published run")
     audit=current.get("source_content_audit",{})
-    absent=audit.get("historical_identifiers_absent_sha256_sample")
+    absent=audit.get("historical_identifiers_absent_sha256_full")
+    sample=audit.get("historical_identifiers_absent_sha256_sample")
     present=audit.get("historical_identifiers_present_in_current_sources")
     if (not isinstance(absent,list) or
             audit.get("historical_baseline_count")!=len(historical) or
             not isinstance(present,int) or present+len(absent)!=len(historical) or
             audit.get("historical_identifiers_absent_from_current_sources")!=len(absent) or
-            len(set(absent))!=len(absent) or not set(absent)<=historical):
+            len(set(absent))!=len(absent) or not set(absent)<=historical or
+            not isinstance(sample,list) or sample!=sorted(absent)[:30]):
         raise ValueError("Current 63-source historical readback inconsistent")
     historical_present=historical & set(by_hash)
     decoded={h for h in historical_present if by_hash[h][0]}
