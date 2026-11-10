@@ -78,7 +78,7 @@ class TaskEngineTests(unittest.TestCase):
         # Task 5 is P0 and ready once tasks 7 and 8 are complete.
         self.assertEqual(e.select(self.master, ledger, self.root, defer_heavy=True), 3)
         ready = e.independent_ready(self.master, ledger, self.root, defer_heavy=True)
-        self.assertNotIn(3, ready)  # #1 is unfinished in this fixture.
+        self.assertIn(3, ready)  # #3 remains mandatory and is ready once #1 is complete.
         self.assertIn(4, ready)
         self.assertIn(9, ready)
         self.assertEqual(ledger["statuses"][2]["status"], "in_progress")
