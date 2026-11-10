@@ -130,6 +130,13 @@ class HistoricalRecoveryTests(unittest.TestCase):
         self.assertEqual(recovered[0]["name"], "original")
         self.assertEqual(recovered[0]["status"], "HISTORICAL_NOT_REVERIFIED")
 
+    def test_single_string_source_ids_are_preserved_as_one_id(self):
+        old = [{"url": "https://example.org/live.m3u8", "source_ids": "#60"},
+               {"url": "https://example.org/live.m3u8", "source_id": "#61"}]
+        recovered, report = recover(old, [])
+        self.assertEqual(recovered[0]["source_ids"], ["#60", "#61"])
+        self.assertEqual(report["additional_source_associations_preserved"], 1)
+
     def test_non_object_historical_records_fail_closed(self):
         for bad in (None, "broken", ["not", "an", "object"], 123):
             with self.subTest(record=bad):
