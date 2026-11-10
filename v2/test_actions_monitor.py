@@ -146,7 +146,7 @@ class MonitorTests(unittest.TestCase):
             if "/workflows/" in path:
                 return {"workflow_runs":[run] if "v2-source-integration-batch" in path else []}
             if path.endswith("/78/jobs?per_page=100"):
-                return {"total_count":101,"jobs":[{"id":i,"status":"completed"} for i in range(100)]}
+                return {"total_count":101,"jobs":[{"id":i+1,"status":"completed"} for i in range(100)]}
             if path.endswith("/78/jobs?per_page=100&page=2"):
                 return {"total_count":101,"jobs":[{"id":101,"name":"AV scan","status":"in_progress"}]}
             raise AssertionError(path)
