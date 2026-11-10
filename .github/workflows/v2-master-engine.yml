@@ -25,6 +25,8 @@ jobs:
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
       - name: Verify current V2 continuation and canonical task files at startup
         shell: bash
         run: |
@@ -85,7 +87,7 @@ jobs:
           if before != after:
               raise SystemExit('Protected playlist SHA-256 mismatch')
           PY
-      - name: Verify permanent 33-task engine and fail-closed safety in one batch
+      - name: Verify canonical 34-task engine and fail-closed safety in one batch
         id: task_engine_tests
         continue-on-error: true
         shell: bash
@@ -192,6 +194,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.sha }}
+          persist-credentials: false
       - name: Verify current V2 continuation and canonical task files at startup
         shell: bash
         run: |
@@ -242,19 +245,24 @@ jobs:
               output.write("V2_ARCHIVE_KEY_HEX=" + key + "\n")
           print("Durable live archive key resolved using " + source + "; historical archive keys unchanged")
           PY
-      - name: Real master discovery and verification
+      - name: Real master discovery and verification with the immutable historical baseline
         timeout-minutes: 105
         shell: bash
         run: |
           set -euo pipefail
+          history=v2/history/stage3-4955-hash-only.jsonl
+          printf '%s  %s\n' 'ee00a844a028e3410715d411467a2d3306f5f5cc4565766140b6438e786cdd27' "$history" | sha256sum --check --status
           mkdir -p v2/reports/master-run
-          timeout --signal=TERM --kill-after=20s 6000s python v2/master_engine.py --archive v2/reports/master-run/inventory.enc --out v2/reports/master-run/output --limit 500 --max-seconds 5400
+          timeout --signal=TERM --kill-after=20s 6000s python v2/master_engine.py \
+            --history "$history" --archive v2/reports/master-run/inventory.enc \
+            --out v2/reports/master-run/output --archive-only --max-seconds 5400
       - name: Validate live Master evidence and publish acceptance gates
         if: always()
         shell: bash
         run: |
           python - <<'PY'
           import json
+          import os
           from pathlib import Path
           import sys
           path = Path("v2/reports/master-run/output/report.json")
@@ -266,6 +274,7 @@ jobs:
                       "archive_restore_verified", "checkpoint_encrypted",
                       "budget_exhausted", "approved", "acceptance_gates",
                       "media_decoded", "historical_raw_records_preserved",
+                      "historical_loss_guard", "plaintext_playlist_written",
                       "verification_unfinished", "device_verified")
           if any(k not in report for k in required):
               print("::error::Incomplete live Master acceptance report")
@@ -274,10 +283,13 @@ jobs:
           if not isinstance(gates, dict) or any(type(v) is not bool for v in gates.values()):
               print("::error::Invalid live Master acceptance gate evidence")
               sys.exit(1)
-          with Path(__import__("os").environ["GITHUB_STEP_SUMMARY"]).open("a", encoding="utf-8") as out:
-              out.write("### Live Master evidence (not device approval)\\n")
+          with Path(os.environ["GITHUB_STEP_SUMMARY"]).open("a", encoding="utf-8") as out:
+              out.write("### Live Master integration evidence\n")
               for key in required:
-                  out.write(f"- {key}: {report[key]}\\n")
+                  if key == "historical_loss_guard":
+                      continue
+                  out.write(f"- {key}: {report[key]}\n")
+          history = report["historical_loss_guard"]
           if not (report["protected_playlist_unchanged"] is True
                   and report["verification_complete"] is True
                   and report["archive_restore_verified"] is True
@@ -285,19 +297,23 @@ jobs:
                   and report["budget_exhausted"] is False
                   and type(report["verification_unfinished"]) is int
                   and report["verification_unfinished"] == 0
-                  and type(report["device_verified"]) is bool
+                  and report["plaintext_playlist_written"] is False
+                  and report["approved"] is False
+                  and report.get("device_verified") is False
+                  and gates.get("ibo_device_verified") is False
+                  and gates.get("source_fetch_complete") is True
+                  and gates.get("av_verification_complete") is True
+                  and gates.get("encrypted_archive_roundtrip") is True
+                  and gates.get("historical_baseline_4955_present") is True
+                  and report["historical_raw_records_preserved"] == 4955
+                  and isinstance(history, dict)
+                  and history.get("historical_unique_identities") == 4955
+                  and history.get("historical_preservation_verified") is True
                   and type(report["media_decoded"]) is int
                   and report["media_decoded"] > 0):
-              print("::error::Live Master evidence failed hard safety/AV gates")
+              print("::error::Live Master evidence failed safety, historical archive or AV gates")
               sys.exit(1)
-          if report["approved"] is True:
-              if (report["historical_raw_records_preserved"] != 4955
-                      or report.get("device_verified") is not True
-                      or gates.get("historical_baseline_4955_present") is not True):
-                  print("::error::False final approval: historical 4955/device evidence missing")
-                  sys.exit(1)
-          else:
-              print("::warning::Live scan succeeded, but final historical/device approval is NOT established")
+          print("Live Master integration verified; IBO device approval remains separate")
           PY
       - name: Record master run identity
         if: always()
@@ -311,7 +327,8 @@ jobs:
         with:
           name: v2-master-run-${{ github.run_id }}
           path: |
-            v2/reports/master-run/output/
+            v2/reports/master-run/output/report.json
+            v2/reports/master-run/output/checkpoint.enc
             v2/reports/master-run/inventory.enc
             v2/reports/master-run/run-identity.txt
           retention-days: 30

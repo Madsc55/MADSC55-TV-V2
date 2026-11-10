@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Read V2 Eight-Stage verification Actions runs, jobs and failed steps."""
+"""Read V2 verification runs, jobs and failed steps without mutating Actions."""
 import json
 import re
 from datetime import datetime, timezone
@@ -17,6 +17,11 @@ WORKFLOWS = ("v2-eight-stage-verification.yml", "v2-master-engine.yml",
              "v2-source-integration-batch.yml", "v2-ordered-preflight.yml",
              "v2-actions-monitor.yml", "v2-turkish-m3u-source-coverage.yml")
 BRANCH = "madsc/v2-discovery-bulk-20261031"
+MAX_API_RETRY_DELAY = 10
+JOBLESS_NEGATIVE_CONCLUSIONS = {
+    "action_required", "cancelled", "failure", "neutral", "skipped",
+    "stale", "startup_failure", "timed_out",
+}
 WORKFLOW_NAMES = {
     "v2-eight-stage-verification.yml": "V2 Eight-Stage Runner Verification",
     "v2-master-engine.yml": "V2 Master Engine",
@@ -38,16 +43,27 @@ def api(path):
     # Retry only bounded transient API failures. Never retry authorization or
     # malformed responses; the monitor must fail closed rather than show green.
     for attempt in range(3):
+        delay = 2 ** attempt
         try:
             with urllib.request.urlopen(req, timeout=30) as response:
                 return json.load(response)
         except urllib.error.HTTPError as exc:
             if exc.code not in (408, 429, 500, 502, 503, 504) or attempt == 2:
                 raise RuntimeError("GitHub Actions API HTTP %d; check actions:read and repository access" % exc.code) from exc
+            headers = exc.headers or {}
+            retry_after = headers.get("Retry-After", "").strip()
+            if (headers.get("X-RateLimit-Remaining") == "0" or
+                    (exc.code == 429 and not retry_after) or
+                    (retry_after and not (retry_after.isascii() and retry_after.isdecimal()))):
+                raise RuntimeError("GitHub Actions API HTTP %d; no safe retry within the monitor budget" % exc.code) from exc
+            if retry_after:
+                delay = max(delay, float(retry_after))
+            if delay > MAX_API_RETRY_DELAY:
+                raise RuntimeError("GitHub Actions API HTTP %d; Retry-After exceeds the monitor budget" % exc.code) from exc
         except (urllib.error.URLError, TimeoutError, ConnectionError) as exc:
             if attempt == 2:
                 raise RuntimeError("GitHub Actions API transport failure after bounded retries") from exc
-        time.sleep(min(2 ** attempt, 2))
+        time.sleep(delay)
 
 def stalled_run(run, now=None, threshold_seconds=7200):
     """Flag a running workflow whose creation time exceeds a bounded window.
@@ -77,7 +93,44 @@ def stalled_run(run, now=None, threshold_seconds=7200):
     return age >= threshold_seconds
 
 
-def collect():
+def job_inventory(base, run):
+    """Read every page for the observed run attempt, with identity checks."""
+    route = base + "/runs/%s" % run["id"]
+    attempt = run.get("run_attempt")
+    if attempt is not None:
+        if type(attempt) is not int or attempt <= 0:
+            raise ValueError("Invalid Actions run attempt")
+        route += "/attempts/%s" % attempt
+    route += "/jobs?per_page=100"
+    response = api(route)
+    total = response.get("total_count")
+    jobs = response.get("jobs")
+    if type(total) is not int or total < 0 or not isinstance(jobs, list):
+        raise ValueError("Invalid Actions job inventory")
+    if total > len(jobs):
+        jobs = list(jobs)
+        for page in range(2, (total + 99) // 100 + 1):
+            response = api(route + "&page=%s" % page)
+            chunk = response.get("jobs")
+            if (type(response.get("total_count")) is not int or
+                    response["total_count"] != total or not isinstance(chunk, list) or not chunk):
+                raise ValueError("Incomplete Actions job page")
+            jobs.extend(chunk)
+    if (total != len(jobs) or
+            any(not isinstance(job, dict) or type(job.get("id")) is not int or job["id"] <= 0
+                for job in jobs) or len({job["id"] for job in jobs}) != total):
+        raise ValueError("Incomplete or duplicate Actions job identities")
+    if attempt is not None and any(
+            job.get("run_id") != run["id"] or job.get("run_attempt") != attempt
+            or job.get("head_sha") != run["head_sha"] for job in jobs):
+        raise ValueError("Actions jobs belong to a different run attempt or commit")
+    if (not jobs and run.get("status") == "completed"
+            and run.get("conclusion") not in JOBLESS_NEGATIVE_CONCLUSIONS):
+        raise ValueError("Completed Actions run has no job evidence")
+    return jobs
+
+
+def collect(strict=True):
     base = "/repos/" + REPO + "/actions"
     q = urllib.parse.urlencode({"branch": BRANCH, "per_page": 10})
     # Query each required workflow independently: repo-wide pages may be dominated by monitor runs.
@@ -100,6 +153,7 @@ def collect():
            for run in runs):
         raise RuntimeError("GitHub API returned incomplete or untrusted workflow run identity")
     records = []
+    incomplete_run_ids = []
     for run in runs:
         record = {key: run.get(key) for key in (
             "id", "run_number", "run_attempt", "event", "head_sha",
@@ -133,95 +187,62 @@ def collect():
         record["jobs_total_count"] = None
         record["jobs_checked"] = False
         record["failure_reasons"] = []
-        if run.get("status") in ("in_progress","queued","waiting","pending","requested") and record["possibly_stalled"] is True:
-            # Inspect the active job without cancelling or retrying long AV scans.
-            active = api(base + "/runs/%s/jobs?per_page=100" % run["id"])
-            jobs = active.get("jobs")
-            total = active.get("total_count")
-            if type(total) is int and total>len(jobs or []) and isinstance(jobs,list):
-                all_jobs=list(jobs)
-                for page in range(2,(total+99)//100+1):
-                    part=api(base + "/runs/%s/jobs?per_page=100&page=%s" % (run["id"],page))
-                    chunk=part.get("jobs")
-                    if type(part.get("total_count")) is not int or part["total_count"]!=total or not isinstance(chunk,list) or not chunk:
-                        all_jobs=[]
-                        break
-                    all_jobs.extend(chunk)
-                jobs=all_jobs
-            if (type(total) is not int or not isinstance(jobs,list) or
-                    total != len(jobs) or
-                    any(type(job.get("id")) is not int or job["id"]<=0 for job in jobs if isinstance(job,dict)) or
-                    any(not isinstance(job,dict) for job in jobs) or
-                    len({job["id"] for job in jobs})!=len(jobs)):
-                record["active_job_evidence_complete"] = False
-                record["failure_reasons"].append("incomplete_active_job_inventory")
-            else:
+        completed = run.get("status") == "completed"
+        inspect_active = not completed and record["possibly_stalled"] is True
+        if completed or inspect_active:
+            try:
+                jobs = job_inventory(base, run)
+            except ValueError as exc:
+                if completed and strict:
+                    raise RuntimeError("Incomplete Actions job details for run %s" % run["id"]) from exc
+                record["acceptance_candidate"] = False
+                if completed:
+                    incomplete_run_ids.append(run["id"])
+                    record["failure_reasons"].append("incomplete_job_inventory")
+                else:
+                    record["active_job_evidence_complete"] = False
+                    record["failure_reasons"].append("incomplete_active_job_inventory")
+                jobs = None
+
+            if inspect_active and jobs is not None:
                 record["active_job_evidence_complete"] = True
                 record["active_jobs"] = [{
                     "id": job.get("id"), "name": job.get("name"),
                     "status": job.get("status"), "conclusion": job.get("conclusion"),
                     "started_at": job.get("started_at")
-                } for job in jobs if job.get("status") in ("in_progress","queued","waiting","pending","requested")]
-        if run.get("status") == "completed":
-            # GitHub paginates workflow jobs at 100 entries. Never classify a
-            # truncated first page as complete or drop evidence from later pages.
-            response = api(base + "/runs/%s/jobs?per_page=100" % run["id"])
-            jobs = response.get("jobs")
-            if (isinstance(jobs, list) and
-                    type(response.get("total_count")) is int and
-                    response["total_count"] > len(jobs)):
-                total = response["total_count"]
-                all_jobs = list(jobs)
-                for page in range(2, (total + 99) // 100 + 1):
-                    part = api(base + "/runs/%s/jobs?per_page=100&page=%s" %
-                               (run["id"], page))
-                    chunk = part.get("jobs")
-                    if (type(part.get("total_count")) is not int or
-                            part["total_count"] != total or
-                            not isinstance(chunk, list) or not chunk):
-                        raise RuntimeError("Incomplete Actions job details for run %s" % run["id"])
-                    all_jobs.extend(chunk)
-                response = dict(response, jobs=all_jobs)
-                jobs = all_jobs
-            # GitHub can finish a failed/cancelled run before creating any jobs.
-            # Preserve that negative evidence without aborting unrelated runs.
-            if (jobs == [] and type(response.get("total_count")) is int
-                    and response["total_count"] == 0
-                    and run.get("conclusion") in ("failure", "cancelled", "timed_out")):
-                record["acceptance_candidate"] = False
-                record["jobs_total_count"] = 0
-                record["failure_reasons"] = [
-                    "workflow_" + run["conclusion"], "no_jobs_created"]
-                records.append(record)
-                continue
-            if (not isinstance(jobs, list) or
-                    type(response.get("total_count")) is not int or
-                    response["total_count"] != len(jobs) or not jobs):
-                raise RuntimeError("Incomplete Actions job details for run %s" % run["id"])
-            record["jobs_checked"] = True
-            record["jobs_total_count"] = response["total_count"]
-            record["jobs"] = [{
-                "id": job.get("id"), "name": job.get("name"),
-                "status": job.get("status"), "conclusion": job.get("conclusion"),
-                "steps": [{"number": step.get("number"), "conclusion": step.get("conclusion")}
-                          for step in (job.get("steps") or [])],
-                "failed_steps": [{
-                    "number": step.get("number"), "name": step.get("name"),
-                    "conclusion": step.get("conclusion")
-                } for step in (job.get("steps") or []) if step.get("conclusion") in (
-                    "failure", "cancelled", "timed_out", "skipped", "neutral"
-                )]
-            } for job in jobs]
-            # A workflow-level green with no job evidence or skipped jobs is not AV acceptance.
-            record["acceptance_candidate"] = (record["acceptance_candidate"]
-                and bool(jobs) and response.get("total_count") == len(jobs)
-                and all(job.get("status") == "completed"
-                        and job.get("conclusion") == "success"
-                        and isinstance(job.get("steps"), list)
-                        and bool(job["steps"])
-                        and all(step.get("conclusion") == "success"
-                                for step in job["steps"])
-                        for job in jobs))
+                } for job in jobs if job.get("status") in
+                    ("in_progress", "queued", "waiting", "pending", "requested")]
+            if completed and jobs is not None:
+                record["jobs_total_count"] = len(jobs)
+                if not jobs:
+                    record["acceptance_candidate"] = False
+                    record["failure_reasons"] = [
+                        "workflow_" + run["conclusion"], "no_jobs_created"]
+                    records.append(record)
+                    continue
+                record["jobs_checked"] = True
+                record["jobs"] = [{
+                    "id": job["id"], "name": job.get("name"),
+                    "status": job.get("status"), "conclusion": job.get("conclusion"),
+                    "steps": [{"number": step.get("number"), "conclusion": step.get("conclusion")}
+                              for step in (job.get("steps") or [])],
+                    "failed_steps": [{
+                        "number": step.get("number"), "name": step.get("name"),
+                        "conclusion": step.get("conclusion")
+                    } for step in (job.get("steps") or []) if step.get("conclusion") in (
+                        "failure", "cancelled", "timed_out", "skipped", "neutral"
+                    )]
+                } for job in jobs]
+                # A workflow-level green without completed, unskipped job and step evidence
+                # cannot establish live acceptance.
+                record["acceptance_candidate"] = (record["acceptance_candidate"]
+                    and all(job.get("status") == "completed"
+                            and job.get("conclusion") == "success"
+                            and isinstance(job.get("steps"), list)
+                            and bool(job["steps"])
+                            and all(step.get("conclusion") == "success"
+                                    for step in job["steps"])
+                            for job in jobs))
         if run.get("status") != "completed":
             record["failure_reasons"].append("workflow_not_completed")
         elif run.get("conclusion") != "success":
@@ -240,10 +261,11 @@ def collect():
         records.append(record)
     return {"repository": REPO, "workflows": list(WORKFLOWS), "branch": BRANCH,
             "monitor_run_id": os.environ.get("GITHUB_RUN_ID"),
-            "monitor_sha": os.environ.get("GITHUB_SHA"), "runs": records}
+            "monitor_sha": os.environ.get("GITHUB_SHA"), "runs": records,
+            "incomplete_run_ids": incomplete_run_ids}
 
 def main():
-    result = collect()
+    result = collect(strict=False)
     path = Path(os.environ.get("ACTIONS_REPORT", "v2/reports/actions-last10.json"))
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(result, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
@@ -266,6 +288,9 @@ def main():
                     step["name"], step["conclusion"]))
     if len(result["runs"]) < 10:
         print("Only %d matching workflow runs returned by GitHub API" % len(result["runs"]))
+    if result.get("incomplete_run_ids"):
+        raise RuntimeError("Incomplete Actions job evidence; partial report preserved for run IDs %s" %
+                           ", ".join(map(str, result["incomplete_run_ids"])))
 
 if __name__ == "__main__":
     try:

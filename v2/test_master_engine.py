@@ -100,6 +100,54 @@ class MasterTests(unittest.TestCase):
         self.assertEqual(run_bounded(lambda: {"completed": True}, 2),
                          ("ok", {"completed": True}))
 
+    def test_partial_pipe_message_cannot_hold_worker_past_deadline(self):
+        import multiprocessing
+        import os
+        import struct
+        import time
+        from unittest.mock import patch
+        import master_engine as module
+
+        def worker(connection, _operation):
+            os.setsid()
+            connection.send(("ready", None))
+            os.write(connection.fileno(), struct.pack("!i", 4096) + b"x")
+            time.sleep(5)
+
+        before = {child.pid for child in multiprocessing.active_children()}
+        started = time.monotonic()
+        with patch.object(module, "_isolated_call", worker):
+            self.assertEqual(module.run_bounded(lambda: None, 0.5), ("timeout", None))
+        self.assertLess(time.monotonic() - started, 3)
+        self.assertEqual({child.pid for child in multiprocessing.active_children()}, before)
+
+    def test_callback_error_is_incomplete_and_keeps_successful_peer_evidence(self):
+        from master_engine import verify_in_batches
+
+        items = [{"id": "network-error"}, {"id": "decoder-error"}, {"id": "success"}]
+        saved = []
+
+        def checker(item):
+            if item["id"] == "network-error":
+                raise TimeoutError("private diagnostic")
+            return True
+
+        def decoder(item):
+            if item["id"] == "decoder-error":
+                raise RuntimeError("private diagnostic")
+            return True
+
+        self.assertFalse(verify_in_batches(
+            items, checker, decoder, workers=3, deadline=2, batch_timeout=1,
+            clock=lambda: 0, runner=lambda operation, _: ("ok", operation()),
+            checkpoint=lambda rows, stage: saved.extend(dict(row) for row in rows)))
+        self.assertEqual([row["verification_status"] for row in items],
+                         ["CHECK_ERROR", "CHECK_ERROR", "CHECKED"])
+        self.assertEqual([row["media_decoded"] for row in items], [False, False, True])
+        self.assertEqual([row.get("verification_error_type") for row in saved[-3:]],
+                         ["TimeoutError", "RuntimeError", None])
+        self.assertNotIn("private diagnostic", repr(saved))
+
     def test_source_fetch_spends_same_cli_budget_and_preserves_unchecked_history(self):
         import contextlib
         import io
@@ -216,6 +264,51 @@ class MasterTests(unittest.TestCase):
             self.assertTrue(any(block["kind"] == "inventory_before_verification" for block in checkpoint))
             self.assertNotIn(b"https://example.org", (output / "checkpoint.enc").read_bytes())
             self.assertTrue(report["archive_restore_verified"])
+
+    def test_archive_only_roundtrip_preserves_the_pinned_4955_rows(self):
+        import contextlib
+        import io
+        import json
+        from pathlib import Path
+        import sys
+        import tempfile
+        from unittest.mock import patch
+        import master_engine as module
+
+        history = module.ROOT / "v2/history/stage3-4955-hash-only.jsonl"
+        expected = list(module.read_records(history))
+        self.assertEqual(len(expected), 4955)
+        source = {"id": "fixture", "scope": "TR", "url": "https://example.org/source.m3u"}
+        payload = "#EXTM3U\n#EXTINF:-1,TRT 1\nhttps://example.org/test.m3u8\n"
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            config, archive, output = root / "sources.json", root / "inventory.enc", root / "out"
+            config.write_text(json.dumps({"sources": [source]}))
+            argv = ["master_engine.py", "--archive", str(archive), "--out", str(output),
+                    "--history", str(history), "--archive-only"]
+            with patch.dict("os.environ", {"V2_ARCHIVE_KEY_HEX": "ab" * 32}), \
+                    patch.object(sys, "argv", argv), patch.object(module, "ROOT", root), \
+                    patch.object(module, "SOURCES", config), \
+                    patch.object(module, "DYNAMIC", root / "absent.json"), \
+                    patch.object(module, "FORGE", root / "absent-forge.json"), \
+                    patch("source_failover.execute_pipeline", return_value=[(source, payload,
+                        {"id": "fixture", "fresh": True, "status": "PRIMARY_OK"})]), \
+                    patch.object(module, "hls_reachable", return_value=True), \
+                    patch.object(module, "decode_media", return_value=True), \
+                    contextlib.redirect_stdout(io.StringIO()):
+                module.main()
+                restored = module.restore(archive)
+            historical = [row for block in restored if block.get("kind") == "raw_historical_evidence"
+                          for row in block["records"]]
+            self.assertEqual(historical, expected)
+            report = json.loads((output / "report.json").read_text())
+            self.assertTrue(report["acceptance_gates"]["historical_baseline_4955_present"])
+            self.assertTrue(report["historical_loss_guard"]["historical_preservation_verified"])
+            self.assertEqual(report["media_decoded"], 1)
+            self.assertFalse(report["approved"])
+            self.assertFalse(report["plaintext_playlist_written"])
+            self.assertEqual(report["batch_count"], 0)
+            self.assertFalse(list(output.glob("*.m3u*")))
 
     def test_retired_source_remains_in_catalog_but_is_not_fetched(self):
         import json

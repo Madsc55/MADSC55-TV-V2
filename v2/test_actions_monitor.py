@@ -129,6 +129,28 @@ class MonitorTests(unittest.TestCase):
         self.assertEqual(opener.call_count, 1)
         sleep.assert_not_called()
 
+    def test_retry_after_is_honored_or_the_get_stops(self):
+        for headers, expected_delay in (({"Retry-After": "7"}, 7),
+                                        ({"Retry-After": "120"}, None),
+                                        ({"X-RateLimit-Remaining": "0", "Retry-After": "2"}, None),
+                                        ({}, None)):
+            with self.subTest(headers=headers):
+                limited = urllib.error.HTTPError("https://api.github.com", 429, "rate limited",
+                                                  headers, None)
+                with patch.object(actions_monitor, "TOKEN", "test"), patch.object(
+                        actions_monitor.urllib.request, "urlopen",
+                        side_effect=[limited, io.BytesIO(b"{}")]) as opener, patch.object(
+                        actions_monitor.time, "sleep") as sleep:
+                    if expected_delay is None:
+                        with self.assertRaisesRegex(RuntimeError, "HTTP 429"):
+                            actions_monitor.api("/test")
+                        self.assertEqual(opener.call_count, 1)
+                        sleep.assert_not_called()
+                    else:
+                        self.assertEqual(actions_monitor.api("/test"), {})
+                        self.assertEqual(opener.call_count, 2)
+                        sleep.assert_called_once_with(expected_delay)
+
     def test_monitor_names_match_grouped_acceptance_contract(self):
         expected = {
             "v2-eight-stage-verification.yml": "V2 Eight-Stage Runner Verification",
@@ -481,6 +503,46 @@ class MonitorTests(unittest.TestCase):
         with patch.object(actions_monitor, "api", return_value={"workflow_runs": [{"status": "completed", "conclusion": "success"}]}):
             with self.assertRaisesRegex(RuntimeError, "incomplete or untrusted workflow run identity"):
                 actions_monitor.collect()
+
+    def test_wrong_job_attempt_is_reported_without_losing_other_run_evidence(self):
+        import json
+        from pathlib import Path
+        import tempfile
+
+        sha = "a" * 40
+        runs = [{"id": number, "run_attempt": 2, "head_sha": sha,
+                 "head_branch": actions_monitor.BRANCH, "event": "push",
+                 "status": "completed", "conclusion": "success",
+                 "html_url": "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/" + str(number)}
+                for number in (123, 124)]
+
+        def fake_api(path):
+            if path.endswith("/123/attempts/2/jobs?per_page=100"):
+                return {"total_count": 1, "jobs": [{"id": 222, "run_id": 123,
+                    "run_attempt": 1, "head_sha": sha}]}
+            if path.endswith("/124/attempts/2/jobs?per_page=100"):
+                return {"total_count": 1, "jobs": [{"id": 223, "run_id": 124,
+                    "run_attempt": 2, "head_sha": sha, "status": "completed",
+                    "conclusion": "success", "steps": [{"number": 1, "conclusion": "success"}]}]}
+            if "/workflows/v2-master-engine.yml/" in path:
+                return {"workflow_runs": runs}
+            if "/workflows/" in path:
+                return {"workflow_runs": []}
+            raise AssertionError(path)
+
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / "actions.json"
+            with patch.dict("os.environ", {"GITHUB_SHA": sha, "ACTIONS_REPORT": str(output)}), \
+                    patch.object(actions_monitor, "api", side_effect=fake_api), redirect_stdout(io.StringIO()):
+                with self.assertRaisesRegex(RuntimeError, "partial report preserved for run IDs 123"):
+                    actions_monitor.main()
+            report = json.loads(output.read_text())
+        first, second = report["runs"]
+        self.assertEqual(report["incomplete_run_ids"], [123])
+        self.assertEqual(first["failure_reasons"], ["incomplete_job_inventory"])
+        self.assertFalse(first["acceptance_candidate"])
+        self.assertTrue(second["acceptance_candidate"])
+        self.assertTrue(all(not row["automatic_retry_permitted"] for row in report["runs"]))
 
 
     def test_completed_nonaccepted_run_emits_explicit_warning(self):

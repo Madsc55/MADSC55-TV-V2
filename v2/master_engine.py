@@ -7,7 +7,9 @@ import json
 import math
 import multiprocessing
 import os
+import queue
 import signal
+import threading
 import time
 from pathlib import Path
 from urllib.parse import urlsplit
@@ -61,20 +63,38 @@ def run_bounded(operation, seconds):
     process = context.Process(target=_isolated_call, args=(writer, operation))
     deadline = time.monotonic() + seconds
     ready = False
+    responses = queue.Queue()
+
+    def receive():
+        # poll() on a pipe can succeed when only a frame header is readable.
+        # Keep the blocking receive off the thread enforcing the deadline.
+        with reader:
+            try:
+                message = reader.recv()
+                responses.put_nowait(message)
+                if message[0] == "ready":
+                    responses.put_nowait(reader.recv())
+            except (EOFError, OSError):
+                responses.put_nowait(("error", "WorkerExited"))
+
+    receiver = threading.Thread(target=receive, daemon=True)
     process.start()
     writer.close()
     try:
+        receiver.start()
         while True:
             remaining = deadline - time.monotonic()
-            if remaining <= 0 or not reader.poll(remaining):
+            if remaining <= 0:
                 return "timeout", None
             try:
-                status, result = reader.recv()
-            except EOFError:
-                return "error", "WorkerExited"
+                status, result = responses.get(timeout=remaining)
+            except queue.Empty:
+                return "timeout", None
             if status == "ready":
                 ready = True
                 continue
+            if time.monotonic() >= deadline:
+                return "timeout", None
             return status, result
     finally:
         # A deadline can race the ready message. Verify the worker created its
@@ -93,7 +113,10 @@ def run_bounded(operation, seconds):
         elif process.is_alive():
             process.kill()
         process.join()
-        reader.close()
+        if receiver.ident is None:
+            reader.close()
+        else:
+            receiver.join(timeout=1)
         process.close()
 
 
@@ -106,8 +129,9 @@ def _verify_batch(batch, checker, media_checker):
             if checker(item) is True:
                 item["network_status"] = "HLS_MANIFEST_REACHABLE"
                 item["media_decoded"] = media_checker(item) is True
-        except Exception:
-            pass
+        except Exception as exc:
+            item["verification_status"] = "CHECK_ERROR"
+            item["verification_error_type"] = type(exc).__name__
         return item
     with concurrent.futures.ThreadPoolExecutor(max_workers=len(batch)) as pool:
         return list(pool.map(check, batch))
@@ -127,6 +151,8 @@ def verify_in_batches(items, checker, media_checker, *, workers, deadline,
     clock = time.monotonic if clock is None else clock
     runner = run_bounded if runner is None else runner
     for item in items:
+        item.pop("verification_error_type", None)
+        item.pop("decoder_diagnostic", None)
         item.update(network_status="UNTESTED", media_decoded=False,
                     device_verified=False, verification_status="UNTESTED")
     checkpoint(items, "inventory_before_verification")
@@ -142,7 +168,11 @@ def verify_in_batches(items, checker, media_checker, *, workers, deadline,
         valid = (status == "ok" and isinstance(results, list)
                  and len(results) == len(batch)
                  and all(isinstance(result, dict)
-                         and result.get("verification_status") == "CHECKED"
+                         and (result.get("verification_status") == "CHECKED"
+                              or (result.get("verification_status") == "CHECK_ERROR"
+                                  and result.get("media_decoded") is False
+                                  and isinstance(result.get("verification_error_type"), str)
+                                  and result["verification_error_type"].isidentifier()))
                          and type(result.get("media_decoded")) is bool
                          and result.get("device_verified") is False
                          and result.get("url") == item.get("url")
@@ -285,6 +315,8 @@ def main():
     p.add_argument("--workers", type=int, default=8)
     p.add_argument("--timeout", type=float, default=12)
     p.add_argument("--limit", type=int, default=500, help="M3U package size, not scan coverage")
+    p.add_argument("--archive-only", action="store_true",
+                   help="Keep encrypted evidence and a report without writing plaintext playlists")
     p.add_argument("--max-seconds", type=float, default=5400,
                    help="Total network/AV budget; reserve time for encrypted finalization")
     args = p.parse_args()
@@ -393,33 +425,38 @@ def main():
                 category += ":" + detail.get("stderr_category", "other")
             av_diagnostics[category] += 1
     incomplete = bool(failures) or not verification_complete
+    budget_exhausted = time.monotonic() >= deadline
     checkpoint([{"verification_complete": verification_complete,
                  "failed_sources": len(failures),
-                 "budget_exhausted": time.monotonic() >= deadline}], "checkpoint_summary")
+                 "budget_exhausted": budget_exhausted}], "checkpoint_summary")
     # The protected archive includes original historical rows even if they
     # are dead, duplicated, hash-only, or not classified as TR/AZ.
     protected_history = None
     if history:
         _, _, protected_history = reconcile(history, [{"url": x["url"]} for x in items])
         protected_history["expected_historical_records"] = 4955
-        protected_history["real_4955_baseline_present"] = len(history) == 4955
+        protected_history["real_4955_baseline_present"] = (
+            len(history) == protected_history["historical_unique_identities"] == 4955)
     archived_items = archive_records(items, history)
     for item in archived_items:
         append(args.archive, item)
     restored = restore(args.archive) if archived_items else []
     if restored != archived_items:
         raise RuntimeError("Encrypted archive restore mismatch")
+    if protected_history is not None:
+        protected_history["historical_preservation_verified"] = True
     verified = export_candidates(items)
     # A manifest check is not media decoding; never export it as a verified stream.
     # A partial source fetch cannot publish a new package as complete.
-    if not incomplete:
+    write_playlists = not incomplete and not args.archive_only and bool(verified)
+    if write_playlists:
         for n in range(0, len(verified), args.limit):
             batch = verified[n:n + args.limit]
             (args.out / f"ibo_part_{n // args.limit + 1:04}.m3u8").write_text(render_m3u(batch), encoding="utf-8")
     # Export each standard size only when enough independently media-decoded
     # candidates exist; never pad packages with fabricated or unverified URLs.
     standard_package_counts = {}
-    if not incomplete:
+    if write_playlists:
         for package_size in (500, 1000, 2000):
             full_packages = len(verified) // package_size
             standard_package_counts[str(package_size)] = full_packages
@@ -445,15 +482,20 @@ def main():
               "acceptance_gates": {
                   "source_fetch_complete": not bool(failures),
                   "av_verification_complete": verification_complete,
-                  "historical_baseline_4955_present": len(history) == 4955,
+                  "historical_baseline_4955_present": bool(
+                      protected_history and protected_history["real_4955_baseline_present"]),
                   "encrypted_archive_roundtrip": bool(archived_items) and restored == archived_items,
                   "ibo_device_verified": False,
               },
               "verification_complete": verification_complete,
               "verification_unfinished": sum(item["verification_status"] != "CHECKED" for item in items),
-              "max_seconds": args.max_seconds, "budget_exhausted": time.monotonic() >= deadline,
+              "verification_status_counts": dict(Counter(item["verification_status"] for item in items)),
+              "verification_error_counts": dict(Counter(item["verification_error_type"] for item in items
+                                                       if item["verification_status"] == "CHECK_ERROR")),
+              "max_seconds": args.max_seconds, "budget_exhausted": budget_exhausted,
               "checkpoint": str(checkpoint_path), "checkpoint_encrypted": True,
-              "standard_full_packages": standard_package_counts, "batch_count": (len(verified) + args.limit - 1) // args.limit if not incomplete else 0,
+              "plaintext_playlist_written": write_playlists,
+              "standard_full_packages": standard_package_counts, "batch_count": (len(verified) + args.limit - 1) // args.limit if write_playlists else 0,
               "status": "INCOMPLETE_VERIFICATION" if not verification_complete else ("PARTIAL_SOURCE_FAILURE" if failures else ("NO_CANDIDATES" if not items else ("NO_MEDIA_DECODED" if not verified else "COMPLETE_SOURCE_FETCH")))}
     (args.out / "report.json").write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     print(json.dumps({k: v for k, v in report.items() if k != "source_audit"}, ensure_ascii=False))
