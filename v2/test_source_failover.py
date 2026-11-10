@@ -97,6 +97,25 @@ class FailoverTests(unittest.TestCase):
         self.assertEqual(audit["status"], "PRIMARY_OK")
         self.assertEqual(audit["failures"][0]["category"], "CACHE_WRITE_FAILED")
 
+    def test_retry_sleep_exhausts_budget_without_extra_fetch_or_cache_io(self):
+        current = [0.0]
+        calls = []
+        def fetch(url):
+            calls.append(url)
+            raise FetchFailure("TIMEOUT", True)
+        def sleep(seconds):
+            current[0] += seconds + 1
+        def cache_get(source_id):
+            raise AssertionError("expired retry budget must not read cache")
+        self.cache.get = cache_get
+        content, audit = recover_source(self.source, self.cache, fetch, sleep,
+            deadline=2.5, clock=lambda: current[0])
+        self.assertIsNone(content)
+        self.assertEqual(len(calls), 1)
+        self.assertEqual(audit["status"], "UNAVAILABLE")
+        self.assertIn("RETRY_BUDGET_EXHAUSTED",
+            [item["category"] for item in audit["failures"]])
+
     def test_expired_budget_skips_cache_recovery_io(self):
         calls = []
         def cache_get(source_id):
