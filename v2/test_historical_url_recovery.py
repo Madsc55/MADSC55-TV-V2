@@ -43,10 +43,12 @@ class HistoricalRecoveryTests(unittest.TestCase):
     def test_malformed_dns_labels_are_rejected(self):
         for host in ("foo..example.org", "foo.-bar.example.org",
                      "foo.bar-.example.org", "a" * 64 + ".example.org",
-                     "a" * 250 + ".org", "example", "0x", "1.2.3.4"):
+                     "a" * 250 + ".org", "example", "0x"):
             with self.subTest(host=host):
                 self.assertFalse(validate_url(f"https://{host}/live.m3u8"))
         self.assertTrue(validate_url("https://cdn.example.org/live.m3u8"))
+        # A globally routable numeric IPv4 address is not a malformed DNS label.
+        self.assertTrue(validate_url("https://1.2.3.4/live.m3u8"))
 
     def test_malformed_ipv6_authority_is_rejected(self):
         self.assertFalse(validate_url("https://[broken/a.m3u8"))
