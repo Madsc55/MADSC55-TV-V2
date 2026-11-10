@@ -132,12 +132,17 @@ class SourceCache:
         atomic_write(meta_path, (json.dumps(meta, sort_keys=True) + "\n").encode("utf-8"))
 
 
-def recover_source(source, cache, fetcher=fetch_once, sleep=time.sleep):
+def recover_source(source, cache, fetcher=fetch_once, sleep=time.sleep, *, deadline=None, clock=time.monotonic):
+    if deadline is not None and (not isinstance(deadline, (int, float)) or not __import__('math').isfinite(deadline)):
+        raise ValueError('deadline must be finite')
     source_id = source["id"]
     urls = tuple(dict.fromkeys((source["url"], *ALTERNATIVES.get(source_id, ()))))
     failures = []
     for index, url in enumerate(urls):
         for attempt in range(len(DELAYS) + 1):
+            if deadline is not None and clock() >= deadline:
+                failures.append({'category': 'RETRY_BUDGET_EXHAUSTED'})
+                break
             try:
                 text = fetcher(url)
                 if index == 0:
@@ -156,7 +161,13 @@ def recover_source(source, cache, fetcher=fetch_once, sleep=time.sleep):
                 failures.append({"url_sha256": hashlib.sha256(url.encode()).hexdigest(), "category": exc.category, "attempt": attempt + 1})
                 if not exc.retryable or attempt == len(DELAYS):
                     break
-                sleep(DELAYS[attempt])
+                delay = DELAYS[attempt]
+                if deadline is not None:
+                    remaining = deadline - clock()
+                    if remaining <= 0 or delay > remaining:
+                        failures.append({'category': 'RETRY_BUDGET_EXHAUSTED'})
+                        break
+                sleep(delay)
             except Exception as exc:
                 failures.append({"url_sha256": hashlib.sha256(url.encode()).hexdigest(), "category": type(exc).__name__, "attempt": attempt + 1})
                 break
