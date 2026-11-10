@@ -104,5 +104,17 @@ class FailoverTests(unittest.TestCase):
         self.assertIn("RETRY_BUDGET_EXHAUSTED",
                       [row["category"] for row in audit["failures"]])
 
+
+    def test_expired_deadline_never_fetches_primary_or_fallback(self):
+        calls = []
+        content, audit = recover_source(self.source, self.cache,
+            lambda url: calls.append(url), lambda _: None,
+            deadline=0.0, clock=lambda: 0.0)
+        self.assertEqual(calls, [])
+        self.assertIsNone(content)
+        self.assertEqual(audit["status"], "UNAVAILABLE")
+        self.assertEqual([item["category"] for item in audit["failures"]],
+                         ["RETRY_BUDGET_EXHAUSTED"])
+
 if __name__ == "__main__":
     unittest.main()
