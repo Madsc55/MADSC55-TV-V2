@@ -279,6 +279,12 @@ class TaskEngineTests(unittest.TestCase):
         for deferred_id in (3, 4, 6):
             ledger["statuses"][deferred_id - 1].update(status="pending", evidence_urls=[], last_checked_at=None)
         self.assertFalse(e.issue34_ready(self.master, ledger, self.root, user_approved=True))
+        # Restore the valid all-completed baseline before testing independent failures.
+        for historical_id in (3, 4, 6):
+            ledger["statuses"][historical_id - 1].update(
+                status="completed",
+                evidence_urls=["https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/123"],
+                last_checked_at="2026-11-08T00:00:00Z")
         for task_id in (1, 32, 33):
             broken = copy.deepcopy(ledger)
             broken["statuses"][task_id - 1]["status"] = "pending"
