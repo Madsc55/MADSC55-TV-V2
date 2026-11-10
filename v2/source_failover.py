@@ -139,6 +139,10 @@ def recover_source(source, cache, fetcher=fetch_once, sleep=time.sleep, *, deadl
     urls = tuple(dict.fromkeys((source["url"], *ALTERNATIVES.get(source_id, ()))))
     failures = []
     for index, url in enumerate(urls):
+        if deadline is not None and clock() >= deadline:
+            if not failures or failures[-1].get("category") != "RETRY_BUDGET_EXHAUSTED":
+                failures.append({"category": "RETRY_BUDGET_EXHAUSTED"})
+            break
         for attempt in range(len(DELAYS) + 1):
             if deadline is not None and clock() >= deadline:
                 failures.append({'category': 'RETRY_BUDGET_EXHAUSTED'})
