@@ -154,6 +154,7 @@ class FailoverTests(unittest.TestCase):
             self.assertEqual(calls, [])
 
     def test_pipeline_stops_all_sources_when_global_budget_exhausted(self):
+        from source_failover import execute_pipeline
         first = dict(self.source)
         second = {"id": "next", "url": "https://example.org/next.m3u"}
         calls = []
