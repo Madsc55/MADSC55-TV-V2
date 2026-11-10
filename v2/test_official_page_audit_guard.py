@@ -43,6 +43,20 @@ class OfficialPageAuditGuardTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "must not claim playback"):
             verify(report)
 
+    def test_unknown_page_state_cannot_hide_a_failed_fetch(self):
+        report = copy.deepcopy(self.report)
+        page = next(p for p in report["pages"] if p["status"] != "FETCHED")
+        page["status"] = "IGNORED"
+        with self.assertRaisesRegex(ValueError, "Unknown official-page fetch status"):
+            verify(report)
+
+    def test_http_failure_must_preserve_error_reason(self):
+        report = copy.deepcopy(self.report)
+        page = next(p for p in report["pages"] if p["status"] != "FETCHED")
+        page.pop("error")
+        with self.assertRaisesRegex(ValueError, "missing explicit error provenance"):
+            verify(report)
+
     def test_http_403_without_references_remains_accounted_for(self):
         blocked = [p for p in self.report["pages"] if p["status"] != "FETCHED"]
         self.assertEqual(len(blocked), 1)
