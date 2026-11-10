@@ -58,6 +58,17 @@ class HistoricalRecoveryTests(unittest.TestCase):
         self.assertEqual(recovered[0]["recovery_status"], "HISTORICAL_NOT_REVERIFIED")
         self.assertIs(report["device_verified"], False)
 
+    def test_old_decoded_status_is_quarantined_but_source_is_preserved(self):
+        old = {"url": "https://example.org/historical.m3u8",
+               "status": "VIDEO_AUDIO_DECODED", "source": "#60",
+               "av_verified": True}
+        recovered, _ = recover([old], [])
+        self.assertEqual(recovered[0]["status"], "HISTORICAL_NOT_REVERIFIED")
+        self.assertEqual(recovered[0]["historical_status"], "VIDEO_AUDIO_DECODED")
+        self.assertEqual(recovered[0]["source"], "#60")
+        self.assertIs(recovered[0]["av_verified"], False)
+        self.assertEqual(old["status"], "VIDEO_AUDIO_DECODED")
+
     def test_no_fabricated_urls(self):
         recovered, report = recover([{"anonymous_id": "4955"}], [])
         self.assertEqual(recovered, [])
