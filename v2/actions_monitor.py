@@ -54,7 +54,7 @@ def stalled_run(run, now=None, threshold_seconds=7200):
     This is advisory only: never cancel, retry, or declare failure based on age.
     Invalid or missing timestamps fail closed to unknown (None).
     """
-    if run.get("status") not in ("in_progress", "queued", "waiting", "pending"):
+    if run.get("status") not in ("in_progress", "queued", "waiting", "pending", "requested"):
         return False
     raw = run.get("run_started_at") or run.get("created_at")
     if not isinstance(raw, str):
