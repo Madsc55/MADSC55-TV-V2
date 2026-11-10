@@ -36,8 +36,7 @@
       "evidence_urls": [],
       "last_checked_at": null,
       "owner": "automation_with_review",
-      "scope": "deferred_optional",
-      "deferred_reason": "User opted out of mandatory historical recovery; retain historical records and AV evidence without false completion."
+      "scope": "mandatory"
     },
     {
       "id": 4,
@@ -50,8 +49,7 @@
       "evidence_urls": [],
       "last_checked_at": null,
       "owner": "automation_with_review",
-      "scope": "deferred_optional",
-      "deferred_reason": "User opted out of mandatory historical recovery; retain historical records and AV evidence without false completion."
+      "scope": "mandatory"
     },
     {
       "id": 5,
@@ -78,8 +76,7 @@
       "evidence_urls": [],
       "last_checked_at": null,
       "owner": "automation_with_review",
-      "scope": "deferred_optional",
-      "deferred_reason": "User opted out of mandatory historical recovery; retain historical records and AV evidence without false completion."
+      "scope": "mandatory"
     },
     {
       "id": 7,
