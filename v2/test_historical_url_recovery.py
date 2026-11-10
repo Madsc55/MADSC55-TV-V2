@@ -31,6 +31,15 @@ class HistoricalRecoveryTests(unittest.TestCase):
             self.assertFalse(validate_url(f"https://{host}/live.m3u8"), host)
         self.assertTrue(validate_url("https://example.org/live.m3u8"))
 
+    def test_ambiguous_or_fragmented_urls_are_rejected(self):
+        for url in ("https://example.org/live.m3u8#fragment",
+                    "https://example.org/live.m3u8\\n",
+                    "https://example.org/live.m3u8\\t",
+                    "https://-bad.example.org/live.m3u8",
+                    "https://bad-.example.org/live.m3u8"):
+            with self.subTest(url=repr(url)):
+                self.assertFalse(validate_url(url))
+
     def test_malformed_ipv6_authority_is_rejected(self):
         self.assertFalse(validate_url("https://[broken/a.m3u8"))
         self.assertFalse(validate_url("https://[::1/a.m3u8"))
