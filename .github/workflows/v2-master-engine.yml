@@ -265,7 +265,8 @@ jobs:
           required = ("protected_playlist_unchanged", "verification_complete",
                       "archive_restore_verified", "checkpoint_encrypted",
                       "budget_exhausted", "approved", "acceptance_gates",
-                      "media_decoded", "historical_raw_records_preserved")
+                      "media_decoded", "historical_raw_records_preserved",
+                      "verification_unfinished", "device_verified")
           if any(k not in report for k in required):
               print("::error::Incomplete live Master acceptance report")
               sys.exit(1)
@@ -282,6 +283,9 @@ jobs:
                   and report["archive_restore_verified"] is True
                   and report["checkpoint_encrypted"] is True
                   and report["budget_exhausted"] is False
+                  and type(report["verification_unfinished"]) is int
+                  and report["verification_unfinished"] == 0
+                  and type(report["device_verified"]) is bool
                   and type(report["media_decoded"]) is int
                   and report["media_decoded"] > 0):
               print("::error::Live Master evidence failed hard safety/AV gates")
