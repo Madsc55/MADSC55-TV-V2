@@ -190,6 +190,10 @@ def recover_source(source, cache, fetcher=fetch_once, sleep=time.sleep, *, deadl
                         failures.append({'category': 'RETRY_BUDGET_EXHAUSTED'})
                         break
                 sleep(delay)
+                # A slow sleeper may consume the retry budget entirely.
+                if deadline is not None and clock() >= deadline:
+                    failures.append({"category": "RETRY_BUDGET_EXHAUSTED"})
+                    break
             except Exception as exc:
                 failures.append({"url_sha256": hashlib.sha256(url.encode()).hexdigest(), "category": type(exc).__name__, "attempt": attempt + 1})
                 break
