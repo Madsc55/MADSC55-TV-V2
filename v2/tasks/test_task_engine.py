@@ -106,7 +106,18 @@ class TaskEngineTests(unittest.TestCase):
         self.assertEqual(e.independent_ready(self.master, ledger, self.root), [34])
         for historical_id in (3, 4, 6):
             case = copy.deepcopy(ledger)
-            case["statuses"][historical_id - 1]["status"] = "pending"
+            # Keep the synthetic ledger dependency-consistent: a completed task
+            # cannot depend on the historical task we just reopened.
+            reopened = {historical_id}
+            changed = True
+            while changed:
+                changed = False
+                for task in self.master["tasks"]:
+                    if task["id"] not in reopened and any(dep in reopened for dep in task["depends_on"]):
+                        reopened.add(task["id"])
+                        changed = True
+            for task_id in reopened:
+                case["statuses"][task_id - 1]["status"] = "pending"
             self.assertNotEqual(e.select(self.master, case, self.root), 34)
             self.assertNotIn(34, e.independent_ready(self.master, case, self.root))
 
