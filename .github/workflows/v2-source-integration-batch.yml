@@ -49,6 +49,9 @@ on:
       - 'v2/run_forge_source_discovery.py'
       - 'v2/document_platform_discovery.py'
       - 'v2/run_live_page_discovery.py'
+      - 'v2/official_page_audit_guard.py'
+      - 'v2/test_official_page_audit_guard.py'
+      - 'v2/reports/official-page-http-audit-20261109.json'
       - 'v2/youtube_discovery.py'
       - 'v2/youtube_official_live_api.py'
       - 'v2/test_platform_verification_batch.py'
@@ -106,6 +109,7 @@ jobs:
             test_source_loss_audit \
             test_live_page_discovery \
             test_run_live_page_discovery \
+            test_official_page_audit_guard \
             test_run_webpage_playlist_discovery \
             test_github_source_approval \
             test_forge_source_review \
