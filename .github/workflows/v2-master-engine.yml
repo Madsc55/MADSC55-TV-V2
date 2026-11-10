@@ -286,7 +286,13 @@ jobs:
                   and report["media_decoded"] > 0):
               print("::error::Live Master evidence failed hard safety/AV gates")
               sys.exit(1)
-          if report["approved"] is not True:
+          if report["approved"] is True:
+              if (report["historical_raw_records_preserved"] != 4955
+                      or report.get("device_verified") is not True
+                      or gates.get("historical_baseline_4955_present") is not True):
+                  print("::error::False final approval: historical 4955/device evidence missing")
+                  sys.exit(1)
+          else:
               print("::warning::Live scan succeeded, but final historical/device approval is NOT established")
           PY
       - name: Record master run identity
