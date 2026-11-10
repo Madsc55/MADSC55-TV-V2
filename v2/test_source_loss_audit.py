@@ -78,6 +78,24 @@ class SourceLossTests(unittest.TestCase):
         self.assertEqual(result["candidate_audit"]["absent_from_current_candidates"], 1)
         self.assertEqual(result["findings"][0]["reason"], "HISTORICAL_CANDIDATES_ABSENT")
 
+    def test_source_counts_alone_do_not_prove_historical_candidate_survival(self):
+        before = report(("tr", "PARSED_NOT_PLAYBACK_VERIFIED", 12))
+        after = report(("tr", "PARSED_NOT_PLAYBACK_VERIFIED", 12))
+        result = compare(before, after)
+        self.assertEqual(result["candidate_audit"]["status"], "NOT_COMPARABLE")
+        self.assertEqual(result["status"], "SOURCE_COUNTS_OK_CANDIDATE_PROOF_MISSING")
+
+    def test_complete_candidate_inventory_can_prove_no_loss(self):
+        import hashlib
+        digest = hashlib.sha256(b"historical-url").hexdigest()
+        before = report(("tr", "PARSED_NOT_PLAYBACK_VERIFIED", 1))
+        after = report(("tr", "PARSED_NOT_PLAYBACK_VERIFIED", 1))
+        before["candidates"] = [{"url_sha256": digest}]
+        after["candidates"] = [{"url_sha256": digest}]
+        result = compare(before, after)
+        self.assertEqual(result["candidate_audit"]["status"], "NO_CANDIDATE_LOSS")
+        self.assertEqual(result["status"], "NO_LARGE_REGRESSION")
+
     def test_truncated_inventory_cannot_prove_absence(self):
         before = report(("tr", "PARSED_NOT_PLAYBACK_VERIFIED", 2))
         after = report(("tr", "PARSED_NOT_PLAYBACK_VERIFIED", 2))
