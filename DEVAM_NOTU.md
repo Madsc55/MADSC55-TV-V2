@@ -2310,3 +2310,10 @@ Kullanıcının açık talimatıyla #3, #4 ve #6 tarihî kurtarma görevleri art
 - #23 için geliştirme dalında `[run-live-master]` etiketli kontrollü push tetiklenir; canlı `master` işi çevrimdışı testleri geçerse çalışır.
 - Eksik arşiv anahtarı veya gerçek AV kanıtı varsa iş fail-closed durur. Sonuçlar doğrulanmadan #23, #25 veya #26 kapatılmaz.
 - Ana IBO playlist, `main` ve PR #9 değiştirilmez. Bu not bir yayın kabul kanıtı değildir.
+
+### 10 Kasım — Canlı Master gerçek sonuç ve Aşama 1 kanıtı
+
+- Canlı tetikleme commit `fa18a6b3c83bf77aae8cce0e3cf0e8e42321a32e`, [Actions #42814432744](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42814432744): `offline-tests` **success**, `master` **success**; canlı iş atlanmadı. Kalıcı arşiv anahtarı çözüldü, gerçek FFmpeg doğrulaması ve artifact yüklemesi başarılı.
+- Gerçek Master özeti: 7.786 benzersiz aday, 1.001 erişilebilir manifest, 803 TR/AZ dışa aktarıma uygun decoded AV, 804 tüm bölgelerde decoded AV; 6.785 unknown/failed. `verification_complete=true`, `budget_exhausted=false`, `archive_restore_verified=true` (bu, bağımsız S3 restore #13 kanıtı değildir). `approved=false`, `device_verified=false`, `historical_raw_records_preserved=0`, `historical_loss_guard=null`, 500'lü paket 1, 1000/2000 paket 0.
+- Canlı Master artifact ID `13768268624`, 16.431.523 bayt; offline artifact ID `13763628383`. Bu sonuçlar #23 canlı çalıştırma engelini giderir, ancak **tam #23/#25/#26 görev kabulünü otomatik olarak kapatmaz**: özellikle `approved=false` ve tarihî envanter/son paket kabulü eksik. Ledger durumları değiştirilmedi.
+- Bu canlı koşuda zaman aşımı yaşanmadı; #25 gerçek timeout/retry failure-path kabulü için ayrı kanıt gerekir. #26 job/step düzeyinde başarı doğrulandı; gerçek hata raporu/retry kabulü ayrı tutulur. Yeni canlı tarama gereksiz yere tekrar başlatılmamalı.
