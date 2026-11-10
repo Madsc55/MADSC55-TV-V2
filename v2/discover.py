@@ -192,7 +192,7 @@ def discover(source_texts, live_text, scopes):
             if e["url"] in existing_urls:
                 continue
             digest = hashlib.sha256(e["url"].encode()).hexdigest()
-            identity = public_metadata(e["tvg_id"])
+            identity = public_metadata(e["tvg_id"]).strip().casefold()
             if e["url"] in seen:
                 if identity and identity not in identity_provenance[digest]:
                     identity_provenance[digest].append(identity)
