@@ -187,6 +187,20 @@ class FailoverTests(unittest.TestCase):
             [f["category"] for f in results[0][2]["failures"]])
 
 
+    def test_cache_write_crossing_deadline_cannot_promote_fresh(self):
+        tick = [0.0]
+        def slow_cache_write(source_id, content):
+            tick[0] = 2.0
+        self.cache.set = slow_cache_write
+        content, audit = recover_source(self.source, self.cache,
+            fetcher=lambda url: "#EXTM3U\\n", sleep=lambda _: None,
+            deadline=1.0, clock=lambda: tick[0])
+        self.assertIsNone(content)
+        self.assertFalse(audit["fresh"])
+        self.assertEqual(audit["status"], "UNAVAILABLE")
+        self.assertIn("RETRY_BUDGET_EXHAUSTED",
+            [item["category"] for item in audit["failures"]])
+
     def test_late_success_cannot_be_promoted_to_fresh_cache(self):
         tick = [0.0]
         def late_fetch(url):
