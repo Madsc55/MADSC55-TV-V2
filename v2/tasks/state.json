@@ -157,13 +157,14 @@
     {
       "id": 14,
       "status": "in_progress",
-      "last_checked_at": "2026-11-09",
+      "last_checked_at": "2026-11-10T23:34:00Z",
       "evidence_urls": [
         "https://github.com/Madsc55/MADSC55-TV-V2/commit/1fe5c6b6d3e20c51362fb3673970a69e1ba0e1c9",
-        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42623941094"
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42623941094",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42867001878"
       ],
-      "blocker": "#13 encrypted remote restore acceptance and actual 4955-record baseline evidence remain outstanding.",
-      "reason": "4955-row synthetic regression preserves duplicate SHA records, original metadata and rejects missing/tampered records; grouped offline CI green. Real 4955 historical baseline and encrypted failure-path acceptance not yet verified."
+      "blocker": "#13 independent S3 restore remains blocked on authorized repository secrets; local 4955-record encrypted preservation is now verified.",
+      "reason": "Real live Master b99ce1b report proves all 4955 immutable historical identities survived encrypted archive roundtrip, with identity SHA256 e84cf1273ae54fc89de5d7edc3a46b4db78b91ddd7d6953dabdde30a6c3e0c83. Full task remains open until independent restore #13 passes."
     },
     {
       "id": 15,
