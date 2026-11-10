@@ -14,13 +14,15 @@ from pathlib import Path
 REPO = os.environ.get("GITHUB_REPOSITORY", "Madsc55/MADSC55-TV-V2")
 TOKEN = os.environ.get("GITHUB_TOKEN", "")
 WORKFLOWS = ("v2-eight-stage-verification.yml", "v2-master-engine.yml",
-             "v2-source-integration-batch.yml", "v2-ordered-preflight.yml")
+             "v2-source-integration-batch.yml", "v2-ordered-preflight.yml",
+             "v2-actions-monitor.yml")
 BRANCH = "madsc/v2-discovery-bulk-20261031"
 WORKFLOW_NAMES = {
     "v2-eight-stage-verification.yml": "V2 Eight-Stage Runner Verification",
     "v2-master-engine.yml": "V2 Master Engine",
     "v2-source-integration-batch.yml": "V2 Source Integration Batch",
     "v2-ordered-preflight.yml": "V2 Sirali Hazirlik Testleri",
+    "v2-actions-monitor.yml": "V2 Actions Status Monitor",
 }
 
 def api(path):
