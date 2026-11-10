@@ -153,7 +153,24 @@ class FailoverTests(unittest.TestCase):
                     deadline=deadline)
             self.assertEqual(calls, [])
 
-    def test_pipeline_propagates_expired_budget_to_every_source(self):
+    def test_pipeline_stops_all_sources_when_global_budget_exhausted(self):
+        first = dict(self.source)
+        second = {"id": "next", "url": "https://example.org/next.m3u"}
+        calls = []
+        tick = [0.0]
+        def fetch(url):
+            calls.append(url)
+            tick[0] = 5.0
+            return "#EXTM3U\\n"
+        results = execute_pipeline([first, second], self.cache,
+            fetcher=fetch, sleep=lambda _: None, deadline=1.0,
+            clock=lambda: tick[0])
+        self.assertEqual(len(calls), 1)
+        self.assertEqual([row[2]["fresh"] for row in results], [False, False])
+        self.assertEqual(results[1][2]["status"], "BUDGET_EXHAUSTED")
+        self.assertEqual(results[1][2]["failures"][0]["category"], "RETRY_BUDGET_EXHAUSTED")
+
+
         from source_failover import execute_pipeline
         calls = []
         results = execute_pipeline([self.source], self.cache,
