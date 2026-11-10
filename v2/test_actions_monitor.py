@@ -151,6 +151,29 @@ class MonitorTests(unittest.TestCase):
                         self.assertEqual(opener.call_count, 2)
                         sleep.assert_called_once_with(expected_delay)
 
+    def test_master_workflow_green_with_skipped_live_job_is_not_live_evidence(self):
+        run = {"id": 88, "head_sha": "a" * 40, "status": "completed",
+            "conclusion": "success", "head_branch": actions_monitor.BRANCH,
+            "event": "push", "run_attempt": 1,
+            "html_url": "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/88"}
+        def fake_api(path):
+            if "/workflows/" in path:
+                return {"workflow_runs": [run] if "v2-master-engine.yml" in path else []}
+            if "/88/attempts/1/jobs?" in path:
+                return {"total_count": 2, "jobs": [
+                    {"id": 1, "run_id": 88, "run_attempt": 1, "head_sha": "a" * 40,
+                     "name": "offline-tests", "status": "completed", "conclusion": "success",
+                     "steps": [{"number": 1, "conclusion": "success"}]},
+                    {"id": 2, "run_id": 88, "run_attempt": 1, "head_sha": "a" * 40,
+                     "name": "master", "status": "completed", "conclusion": "skipped",
+                     "steps": []}]}
+            raise AssertionError(path)
+        with patch.object(actions_monitor, "api", side_effect=fake_api):
+            row = actions_monitor.collect()["runs"][0]
+        self.assertFalse(row["live_master_job_passed"])
+        self.assertFalse(row["acceptance_candidate"])
+        self.assertIn("live_master_job_not_verified", row["failure_reasons"])
+
     def test_monitor_names_match_grouped_acceptance_contract(self):
         expected = {
             "v2-eight-stage-verification.yml": "V2 Eight-Stage Runner Verification",
