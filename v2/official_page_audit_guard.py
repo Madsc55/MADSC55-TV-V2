@@ -29,7 +29,7 @@ def verify(report):
         if not isinstance(page_id, str) or not page_id or page_id in ids:
             raise ValueError("Missing or duplicate page identity")
         ids.add(page_id)
-        refs = page.get("references")
+        refs = page.get("references", [])
         if not isinstance(refs, list) or any(not isinstance(x, str) or not SHA.fullmatch(x) for x in refs):
             raise ValueError("Invalid reference hashes")
         if len(refs) != len(set(refs)):
