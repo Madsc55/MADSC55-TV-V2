@@ -50,6 +50,8 @@ def recover(old_records, current_records):
     current = {row["url"] for row in current_records if validate_url(row.get("url"))}
     recovered, indexed = [], {}
     missing_url = 0
+    duplicate_historical_urls = 0
+    duplicate_source_associations = 0
     for row in old_records:
         url = row.get("url")
         if not validate_url(url):
@@ -58,6 +60,7 @@ def recover(old_records, current_records):
         if url in current:
             continue
         if url in indexed:
+            duplicate_historical_urls += 1
             candidate = recovered[indexed[url]]
             sources = candidate.setdefault("source_ids", [])
             for field in ("source_ids", "source_id", "source"):
@@ -66,6 +69,7 @@ def recover(old_records, current_records):
                 for source in values:
                     if isinstance(source, str) and source and source not in sources:
                         sources.append(source)
+                        duplicate_source_associations += 1
             continue
         indexed[url] = len(recovered)
         candidate = dict(row, recovery_status="HISTORICAL_NOT_REVERIFIED",
@@ -90,6 +94,8 @@ def recover(old_records, current_records):
     return recovered, {"historical_missing_real_url": missing_url,
                        "recoverable_real_urls": len(recovered),
                        "current_urls_excluded": len(current),
+                       "duplicate_historical_urls": duplicate_historical_urls,
+                       "additional_source_associations_preserved": duplicate_source_associations,
                        "device_verified": False}
 
 def main():
