@@ -116,6 +116,14 @@ def _verify_batch(batch, checker, media_checker):
 def verify_in_batches(items, checker, media_checker, *, workers, deadline,
                       batch_timeout, checkpoint, clock=None, runner=None):
     """Keep all candidates; submit at most one worker-sized batch at a time."""
+    # Reject invalid budgets before mutating inventory or starting any worker.
+    # NaN deadlines previously bypassed the <= 0 check and reached poll(NaN).
+    if type(workers) is not int or not 1 <= workers <= 32:
+        raise ValueError("workers must be an integer in 1..32")
+    if not isinstance(batch_timeout, (int, float)) or not math.isfinite(batch_timeout) or batch_timeout <= 0:
+        raise ValueError("batch_timeout must be finite and positive")
+    if not isinstance(deadline, (int, float)) or not math.isfinite(deadline):
+        raise ValueError("deadline must be finite")
     clock = time.monotonic if clock is None else clock
     runner = run_bounded if runner is None else runner
     for item in items:
