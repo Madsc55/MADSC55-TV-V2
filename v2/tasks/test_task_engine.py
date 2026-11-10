@@ -68,7 +68,10 @@ class TaskEngineTests(unittest.TestCase):
         ledger["statuses"][12]["status"] = "blocked"
         independent = e.independent_ready(self.master, ledger, self.root, excluded=(1,))
         self.assertNotIn(13, independent)
-        self.assertIn(23, independent)  # An external archive blocker must not stop the motor work.
+        # Completed motor work must not be scheduled again just because an
+        # unrelated external archive task is blocked.
+        self.assertEqual(ledger["statuses"][22]["status"], "completed")
+        self.assertNotIn(23, independent)
 
     def test_all_historical_tasks_remain_mandatory(self):
         ledger = self.scenario_ledger()
