@@ -44,6 +44,20 @@ class HistoricalRecoveryTests(unittest.TestCase):
         self.assertEqual(recovered[0]["name"], "original")
         self.assertEqual(report["recoverable_real_urls"], 1)
 
+    def test_historical_success_flags_do_not_become_new_av_proof(self):
+        flags = ("av_verified", "device_verified", "video_verified",
+                 "audio_verified", "playback_verified", "ibo_device_verified")
+        row = {"url": "https://example.org/old-live.m3u8", "source": "#60"}
+        row.update({flag: True for flag in flags})
+        recovered, report = recover([row], [])
+        self.assertEqual(len(recovered), 1)
+        for flag in flags:
+            self.assertIs(recovered[0][flag], False, flag)
+        self.assertTrue(all(row[flag] is True for flag in flags))
+        self.assertEqual(recovered[0]["source"], "#60")
+        self.assertEqual(recovered[0]["recovery_status"], "HISTORICAL_NOT_REVERIFIED")
+        self.assertIs(report["device_verified"], False)
+
     def test_no_fabricated_urls(self):
         recovered, report = recover([{"anonymous_id": "4955"}], [])
         self.assertEqual(recovered, [])
