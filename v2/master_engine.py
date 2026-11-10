@@ -129,12 +129,23 @@ def verify_in_batches(items, checker, media_checker, *, workers, deadline,
         batch = items[offset:offset + workers]
         status, results = runner(lambda: _verify_batch(batch, checker, media_checker),
                                  min(batch_timeout, remaining))
-        if status == "ok":
+        # A worker's success flag is insufficient: a truncated or malformed
+        # result must never promote part of a batch to verified evidence.
+        valid = (status == "ok" and isinstance(results, list)
+                 and len(results) == len(batch)
+                 and all(isinstance(result, dict)
+                         and result.get("verification_status") == "CHECKED"
+                         and type(result.get("media_decoded")) is bool
+                         and result.get("device_verified") is False
+                         and result.get("url") == item.get("url")
+                         for item, result in zip(batch, results)))
+        if valid:
             for item, result in zip(batch, results):
                 item.update(result)
         else:
+            reason = status.upper() if status != "ok" else "INVALID_RESULT"
             for item in batch:
-                item["verification_status"] = "UNTESTED_BATCH_" + status.upper()
+                item["verification_status"] = "UNTESTED_BATCH_" + reason
         checkpoint(batch, "verification_batch")
     return all(item["verification_status"] == "CHECKED" for item in items)
 
