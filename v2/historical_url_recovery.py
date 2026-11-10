@@ -36,7 +36,12 @@ def validate_url(value):
         # Reject non-canonical numeric IPv4 forms (127.1, 2130706433,
         # 0177.0.0.1, 0x7f000001) that resolvers may map to private IPs.
         labels = host.split(".")
-        if labels and all(label and (label.isdecimal() or label.startswith("0x") and all(c in "0123456789abcdef" for c in label[2:])) for label in labels):
+        if (not host or len(host) > 253 or len(labels) < 2
+                or any(not label or len(label) > 63 or label.startswith("-")
+                       or label.endswith("-") for label in labels)):
+            return False
+        if all(label.isdecimal() or (label.startswith("0x") and len(label) > 2
+                  and all(c in "0123456789abcdef" for c in label[2:])) for label in labels):
             return False
     # Refuse ambiguous authorities, control characters and URL fragments.
     # Fragments are client-side only and must not enter recovery artifacts.
