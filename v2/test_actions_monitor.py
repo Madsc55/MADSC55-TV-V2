@@ -65,6 +65,17 @@ class MonitorTests(unittest.TestCase):
         self.assertIsNone(actions_monitor.stalled_run(
             {"status": "in_progress", "created_at": (now + timedelta(hours=1)).isoformat()}, now=now))
 
+    def test_queued_stall_uses_creation_time_not_later_start(self):
+        now = datetime(2026, 11, 10, 12, 0, tzinfo=timezone.utc)
+        run = {"status": "queued",
+               "created_at": (now - timedelta(hours=4)).isoformat(),
+               "run_started_at": (now - timedelta(minutes=1)).isoformat()}
+        self.assertTrue(actions_monitor.stalled_run(
+            run, now=now, threshold_seconds=2 * 3600))
+        run["status"] = "in_progress"
+        self.assertFalse(actions_monitor.stalled_run(
+            run, now=now, threshold_seconds=2 * 3600))
+
     def test_requested_run_is_not_accepted_and_can_be_stalled(self):
         now = datetime(2026, 11, 9, 18, 0, tzinfo=timezone.utc)
         run = {"status": "requested", "created_at":
