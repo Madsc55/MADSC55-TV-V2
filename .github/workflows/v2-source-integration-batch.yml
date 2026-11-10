@@ -49,6 +49,8 @@ on:
       - 'v2/run_forge_source_discovery.py'
       - 'v2/document_platform_discovery.py'
       - 'v2/run_live_page_discovery.py'
+      - 'v2/historical_url_recovery.py'
+      - 'v2/test_historical_url_recovery.py'
       - 'v2/official_page_audit_guard.py'
       - 'v2/test_official_page_audit_guard.py'
       - 'v2/reports/official-page-http-audit-20261109.json'
@@ -110,6 +112,7 @@ jobs:
             test_live_page_discovery \
             test_run_live_page_discovery \
             test_official_page_audit_guard \
+            test_historical_url_recovery \
             test_run_webpage_playlist_discovery \
             test_github_source_approval \
             test_forge_source_review \
