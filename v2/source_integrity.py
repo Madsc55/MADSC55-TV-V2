@@ -43,7 +43,7 @@ def verify(source_texts, live_text, scopes, candidates, parser, predicate, known
                 or len(sources) != len(set(sources))
                 or not isinstance(identities, list)
                 or not all(isinstance(i, str) and i.strip() for i in identities)
-                or len({i.casefold() for i in identities}) != len(identities)):
+                or len({i.strip().casefold() for i in identities}) != len(identities)):
             malformed += 1
             continue
         if digest in observed:
