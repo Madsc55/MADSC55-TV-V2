@@ -481,5 +481,18 @@ class MonitorTests(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError, "incomplete or untrusted workflow run identity"):
                 actions_monitor.collect()
 
+
+    def test_completed_nonaccepted_run_emits_explicit_warning(self):
+        result = {"runs": [{"id": 123, "workflow_file": "v2-master-engine.yml",
+            "possibly_stalled": False, "head_sha": "a" * 40,
+            "status": "completed", "conclusion": "success",
+            "acceptance_candidate": False, "failure_reasons": [],
+            "jobs": [], "html_url": "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/123"}]}
+        output = io.StringIO()
+        with patch.object(actions_monitor, "collect", return_value=result), patch.object(
+                actions_monitor.Path, "write_text", return_value=None), redirect_stdout(output):
+            actions_monitor.main()
+        self.assertIn("NOT an acceptance candidate", output.getvalue())
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)
