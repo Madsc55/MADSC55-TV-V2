@@ -544,6 +544,61 @@ class MonitorTests(unittest.TestCase):
         self.assertTrue(second["acceptance_candidate"])
         self.assertTrue(all(not row["automatic_retry_permitted"] for row in report["runs"]))
 
+    def test_api_errors_preserve_other_runs_in_the_uploaded_report(self):
+        import json
+        from pathlib import Path
+        import tempfile
+
+        sha = "a" * 40
+        workflows = actions_monitor.WORKFLOWS[:2]
+        runs = [{"id": number, "run_attempt": 1, "head_sha": sha,
+                 "head_branch": actions_monitor.BRANCH, "event": "push",
+                 "status": "completed", "conclusion": conclusion,
+                 "html_url": "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/" + str(number)}
+                for number, conclusion in ((123, "failure"), (124, "success"))]
+
+        def fake_api(path):
+            if "/workflows/" + workflows[0] + "/" in path:
+                raise RuntimeError("GitHub Actions API HTTP 503")
+            if "/workflows/" + workflows[1] + "/" in path:
+                return {"workflow_runs": runs}
+            if path.endswith("/123/attempts/1/jobs?per_page=100"):
+                raise RuntimeError("GitHub Actions API HTTP 403")
+            if path.endswith("/124/attempts/1/jobs?per_page=100"):
+                return {"total_count": 1, "jobs": [{"id": 223, "run_id": 124,
+                    "run_attempt": 1, "head_sha": sha, "status": "completed",
+                    "conclusion": "success", "steps": [{"number": 1, "conclusion": "success"}]}]}
+            raise AssertionError(path)
+
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / "actions.json"
+            with patch.dict("os.environ", {"GITHUB_SHA": sha, "ACTIONS_REPORT": str(output)}), \
+                    patch.object(actions_monitor, "WORKFLOWS", workflows), \
+                    patch.object(actions_monitor, "api", side_effect=fake_api), redirect_stdout(io.StringIO()):
+                with self.assertRaisesRegex(RuntimeError, "partial report preserved"):
+                    actions_monitor.main()
+            report = json.loads(output.read_text())
+        failed, healthy = report["runs"]
+        self.assertEqual(report["workflow_inventory_errors"], {workflows[0]: "GitHub Actions API HTTP 503"})
+        self.assertEqual(report["incomplete_run_ids"], [123])
+        self.assertEqual(failed["job_inventory_error"], "GitHub Actions API HTTP 403")
+        self.assertIn("workflow_failure", failed["failure_reasons"])
+        self.assertFalse(failed["acceptance_candidate"])
+        self.assertTrue(healthy["acceptance_candidate"])
+
+    def test_monitor_budget_stops_starting_requests_and_keeps_run_metadata(self):
+        workflow = "v2-master-engine.yml"
+        run = {"id": 123, "head_sha": "a" * 40, "status": "completed", "conclusion": "failure",
+               "html_url": "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/123"}
+        with patch.object(actions_monitor, "WORKFLOWS", (workflow,)), \
+                patch.object(actions_monitor.time, "monotonic", side_effect=[0, 0, actions_monitor.COLLECTION_SECONDS]), \
+                patch.object(actions_monitor, "api", return_value={"workflow_runs": [run]}) as api:
+            report = actions_monitor.collect(strict=False)
+        api.assert_called_once()
+        self.assertEqual(report["incomplete_run_ids"], [123])
+        self.assertIn("budget exhausted", report["runs"][0]["job_inventory_error"])
+        self.assertIn("workflow_failure", report["runs"][0]["failure_reasons"])
+
 
     def test_completed_nonaccepted_run_emits_explicit_warning(self):
         result = {"runs": [{"id": 123, "workflow_file": "v2-master-engine.yml",

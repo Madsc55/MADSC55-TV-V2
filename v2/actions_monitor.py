@@ -18,6 +18,8 @@ WORKFLOWS = ("v2-eight-stage-verification.yml", "v2-master-engine.yml",
              "v2-actions-monitor.yml", "v2-turkish-m3u-source-coverage.yml")
 BRANCH = "madsc/v2-discovery-bulk-20261031"
 MAX_API_RETRY_DELAY = 10
+# Leave time in the 15-minute job for the final API request and artifact upload.
+COLLECTION_SECONDS = 600
 JOBLESS_NEGATIVE_CONCLUSIONS = {
     "action_required", "cancelled", "failure", "neutral", "skipped",
     "stale", "startup_failure", "timed_out",
@@ -93,7 +95,7 @@ def stalled_run(run, now=None, threshold_seconds=7200):
     return age >= threshold_seconds
 
 
-def job_inventory(base, run):
+def job_inventory(base, run, get):
     """Read every page for the observed run attempt, with identity checks."""
     route = base + "/runs/%s" % run["id"]
     attempt = run.get("run_attempt")
@@ -102,7 +104,9 @@ def job_inventory(base, run):
             raise ValueError("Invalid Actions run attempt")
         route += "/attempts/%s" % attempt
     route += "/jobs?per_page=100"
-    response = api(route)
+    response = get(route)
+    if not isinstance(response, dict):
+        raise ValueError("Invalid Actions job inventory")
     total = response.get("total_count")
     jobs = response.get("jobs")
     if type(total) is not int or total < 0 or not isinstance(jobs, list):
@@ -110,7 +114,9 @@ def job_inventory(base, run):
     if total > len(jobs):
         jobs = list(jobs)
         for page in range(2, (total + 99) // 100 + 1):
-            response = api(route + "&page=%s" % page)
+            response = get(route + "&page=%s" % page)
+            if not isinstance(response, dict):
+                raise ValueError("Invalid Actions job page")
             chunk = response.get("jobs")
             if (type(response.get("total_count")) is not int or
                     response["total_count"] != total or not isinstance(chunk, list) or not chunk):
@@ -124,6 +130,11 @@ def job_inventory(base, run):
             job.get("run_id") != run["id"] or job.get("run_attempt") != attempt
             or job.get("head_sha") != run["head_sha"] for job in jobs):
         raise ValueError("Actions jobs belong to a different run attempt or commit")
+    for job in jobs:
+        steps = job.get("steps")
+        if steps is not None and (not isinstance(steps, list) or
+                                  any(not isinstance(step, dict) for step in steps)):
+            raise ValueError("Invalid Actions job steps")
     if (not jobs and run.get("status") == "completed"
             and run.get("conclusion") not in JOBLESS_NEGATIVE_CONCLUSIONS):
         raise ValueError("Completed Actions run has no job evidence")
@@ -133,25 +144,41 @@ def job_inventory(base, run):
 def collect(strict=True):
     base = "/repos/" + REPO + "/actions"
     q = urllib.parse.urlencode({"branch": BRANCH, "per_page": 10})
+    deadline = time.monotonic() + COLLECTION_SECONDS
+
+    def get(path):
+        if time.monotonic() >= deadline:
+            raise RuntimeError("GitHub Actions API collection budget exhausted")
+        return api(path)
+
     # Query each required workflow independently: repo-wide pages may be dominated by monitor runs.
     runs = []
+    workflow_errors = {}
     for workflow in WORKFLOWS:
-        batch = api(base + "/workflows/" + workflow + "/runs?" + q)["workflow_runs"]
-        if not isinstance(batch, list):
-            raise RuntimeError("Invalid GitHub workflow runs response: " + workflow)
+        try:
+            response = get(base + "/workflows/" + workflow + "/runs?" + q)
+            if not isinstance(response, dict) or not isinstance(response.get("workflow_runs"), list):
+                raise ValueError("Invalid GitHub workflow runs response")
+            batch = response["workflow_runs"]
+        except (RuntimeError, ValueError) as exc:
+            if strict:
+                raise RuntimeError("Cannot read Actions workflow " + workflow) from exc
+            workflow_errors[workflow] = str(exc)
+            continue
         for run in batch:
-            run = dict(run)
-            run["_workflow_file"] = workflow
-            runs.append(run)
-    if not runs:
+            if (not isinstance(run, dict) or type(run.get("id")) is not int or run["id"] <= 0
+                    or not isinstance(run.get("head_sha"), str)
+                    or re.fullmatch(r"[0-9a-f]{40}", run["head_sha"]) is None
+                    or run.get("html_url") !=
+                    "https://github.com/" + REPO + "/actions/runs/" + str(run["id"])):
+                reason = "GitHub API returned incomplete or untrusted workflow run identity"
+                if strict:
+                    raise RuntimeError(reason)
+                workflow_errors[workflow] = reason
+                continue
+            runs.append(dict(run, _workflow_file=workflow))
+    if not runs and not workflow_errors:
         raise RuntimeError("GitHub API returned no V2 verification runs for the configured branch")
-    if any(type(run.get("id")) is not int or run["id"] <= 0
-           or not isinstance(run.get("head_sha"), str)
-           or re.fullmatch(r"[0-9a-f]{40}", run["head_sha"]) is None
-           or run.get("html_url") !=
-           "https://github.com/" + REPO + "/actions/runs/" + str(run["id"])
-           for run in runs):
-        raise RuntimeError("GitHub API returned incomplete or untrusted workflow run identity")
     records = []
     incomplete_run_ids = []
     for run in runs:
@@ -191,11 +218,12 @@ def collect(strict=True):
         inspect_active = not completed and record["possibly_stalled"] is True
         if completed or inspect_active:
             try:
-                jobs = job_inventory(base, run)
-            except ValueError as exc:
+                jobs = job_inventory(base, run, get)
+            except (RuntimeError, ValueError) as exc:
                 if completed and strict:
                     raise RuntimeError("Incomplete Actions job details for run %s" % run["id"]) from exc
                 record["acceptance_candidate"] = False
+                record["job_inventory_error"] = str(exc)
                 if completed:
                     incomplete_run_ids.append(run["id"])
                     record["failure_reasons"].append("incomplete_job_inventory")
@@ -262,13 +290,17 @@ def collect(strict=True):
     return {"repository": REPO, "workflows": list(WORKFLOWS), "branch": BRANCH,
             "monitor_run_id": os.environ.get("GITHUB_RUN_ID"),
             "monitor_sha": os.environ.get("GITHUB_SHA"), "runs": records,
-            "incomplete_run_ids": incomplete_run_ids}
+            "incomplete_run_ids": incomplete_run_ids,
+            "workflow_inventory_errors": workflow_errors}
 
 def main():
     result = collect(strict=False)
     path = Path(os.environ.get("ACTIONS_REPORT", "v2/reports/actions-last10.json"))
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(result, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    workflow_errors = result.get("workflow_inventory_errors", {})
+    for workflow, error in workflow_errors.items():
+        print("::warning::Cannot read Actions workflow %s: %s" % (workflow, error))
     for run in result["runs"]:
         if run["possibly_stalled"] is True:
             print("::warning::Potentially stalled Actions run %s workflow=%s; review manually, no automatic retry" % (run["id"], run["workflow_file"]))
@@ -281,6 +313,8 @@ def main():
         for reason in run.get("failure_reasons", []):
             print("::warning::V2 run %s (%s): %s" % (
                 run["id"], run["workflow_file"], reason))
+        if run.get("job_inventory_error"):
+            print("::warning::V2 run %s: %s" % (run["id"], run["job_inventory_error"]))
         for job in run.get("jobs", []):
             for step in job.get("failed_steps", []):
                 print("::warning::V2 run %s job %s step %s (%s): %s" % (
@@ -291,6 +325,9 @@ def main():
     if result.get("incomplete_run_ids"):
         raise RuntimeError("Incomplete Actions job evidence; partial report preserved for run IDs %s" %
                            ", ".join(map(str, result["incomplete_run_ids"])))
+    if workflow_errors:
+        raise RuntimeError("Incomplete Actions workflow evidence; partial report preserved for %s" %
+                           ", ".join(workflow_errors))
 
 if __name__ == "__main__":
     try:
