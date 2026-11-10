@@ -138,6 +138,13 @@ def verify_in_batches(items, checker, media_checker, *, workers, deadline,
                          and type(result.get("media_decoded")) is bool
                          and result.get("device_verified") is False
                          and result.get("url") == item.get("url")
+                         and all(result.get(key) == value for key, value in item.items()
+                                 if key not in ("network_status", "media_decoded",
+                                                "device_verified", "verification_status"))
+                         and result.get("network_status") in
+                             ("UNKNOWN_OR_FAILED", "HLS_MANIFEST_REACHABLE")
+                         and (not result["media_decoded"] or
+                              result["network_status"] == "HLS_MANIFEST_REACHABLE")
                          for item, result in zip(batch, results)))
         if valid:
             for item, result in zip(batch, results):
