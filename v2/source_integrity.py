@@ -26,6 +26,9 @@ def verify(source_texts, live_text, scopes, candidates, parser, predicate, known
     duplicates = 0
     malformed = 0
     for item in candidates:
+        if not isinstance(item, dict):
+            malformed += 1
+            continue
         digest = item.get("url_sha256")
         sources = item.get("source_ids")
         if (not isinstance(digest, str) or len(digest) != 64
@@ -42,7 +45,8 @@ def verify(source_texts, live_text, scopes, candidates, parser, predicate, known
     unexpected = set(observed) - set(expected)
     provenance_mismatch = {digest for digest in expected.keys() & observed.keys()
                            if expected[digest] != observed[digest]}
-    audit_failures = [row for row in source_audit if row.get("status") == "FETCH_FAILED"]
+    audit_failures = [row for row in source_audit
+                      if not isinstance(row, dict) or row.get("status") == "FETCH_FAILED"]
     verified = not (missing or unexpected or provenance_mismatch or duplicates or malformed or errors or audit_failures)
     return {
         "schema": 1,
