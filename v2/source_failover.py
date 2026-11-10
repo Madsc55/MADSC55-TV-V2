@@ -138,6 +138,7 @@ def recover_source(source, cache, fetcher=fetch_once, sleep=time.sleep, *, deadl
     source_id = source["id"]
     urls = tuple(dict.fromkeys((source["url"], *ALTERNATIVES.get(source_id, ()))))
     failures = []
+    attempts = 0
     for index, url in enumerate(urls):
         if deadline is not None and clock() >= deadline:
             if not failures or failures[-1].get("category") != "RETRY_BUDGET_EXHAUSTED":
@@ -153,8 +154,10 @@ def recover_source(source, cache, fetcher=fetch_once, sleep=time.sleep, *, deadl
                     if remaining <= 0:
                         failures.append({"category": "RETRY_BUDGET_EXHAUSTED"})
                         break
+                    attempts += 1
                     text = fetcher(url, timeout=min(12, remaining))
                 else:
+                    attempts += 1
                     text = fetcher(url)
                 if deadline is not None and clock() >= deadline:
                     failures.append({"category": "RETRY_BUDGET_EXHAUSTED"})
@@ -174,7 +177,7 @@ def recover_source(source, cache, fetcher=fetch_once, sleep=time.sleep, *, deadl
                               "status": "PRIMARY_OK" if index == 0 else "FALLBACK_OK",
                               "upstream_source_identity_preserved": index == 0,
                               "used_url_sha256": hashlib.sha256(url.encode()).hexdigest(),
-                              "attempts": len(failures) + 1,
+                              "attempts": attempts,
                               "failures": failures, "fresh": True}
             except FetchFailure as exc:
                 failures.append({"url_sha256": hashlib.sha256(url.encode()).hexdigest(), "category": exc.category, "attempt": attempt + 1})
@@ -191,7 +194,7 @@ def recover_source(source, cache, fetcher=fetch_once, sleep=time.sleep, *, deadl
                 failures.append({"url_sha256": hashlib.sha256(url.encode()).hexdigest(), "category": type(exc).__name__, "attempt": attempt + 1})
                 break
     cached = cache.get(source_id)
-    return cached, {"id": source_id, "status": "CACHE_RECOVERED" if cached is not None else "UNAVAILABLE", "attempts": len(failures), "failures": failures, "fresh": False}
+    return cached, {"id": source_id, "status": "CACHE_RECOVERED" if cached is not None else "UNAVAILABLE", "attempts": attempts, "failures": failures, "fresh": False}
 
 
 def execute_pipeline(sources, cache, fetcher=fetch_once, sleep=time.sleep, *, deadline=None, clock=time.monotonic):
