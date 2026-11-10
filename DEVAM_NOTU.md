@@ -2276,3 +2276,8 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - Önceki 9 Kasım sıralaması ve #3/#4/#6 erteleme kararı korunur; #34 son kapsamlı dünya/TR/AZ M3U/M3U8 taraması yalnız önceki zorunlu kabul tamamlandığında başlatılır. Prototip, sahte yayın, sahte yeşil test ve hedef sayıya ulaşmak için kanıtlanmamış kanal eklemek yasaktır.
 - Eşzamanlı Codex/sohbet/saatlik yürütücü çakışmalarını önle: her yazımda güncel HEAD ve blob SHA kontrolü, güvenli görev sahipliği/kilit; force-push veya başkasının işini ezme yok. main, PR #9, ana IBO listesi, korunan kategoriler ve tarihî kayıtlar değişmez.
 - Oturum/araç sınırına gelince gerçek tamamlanan görevleri ve sonraki bağımsız grubu kalıcı kayda geçir. Süresiz arka plan çalışması iddia etme. Nihai başarı ölçütü: kanıtlı kapanmış görevler ve gerçek üretim kabulü; yalnız rapor sayısı değil.
+
+
+## 2026-11-10 — Kullanıcı kapsam kararı: 34 görevin tamamı zorunlu
+
+Kullanıcının açık talimatıyla #3, #4 ve #6 tarihî kurtarma görevleri artık ertelenmiş/isteğe bağlı değildir. `v2/tasks/master_tasks.json` içinde üçü de `mandatory` kapsamına alınmıştır. **34/34 görev zorunlu kapsamda**; yalnız gerçek kabul kanıtıyla tamamlandı işaretlenecek. Tarihî 50 kimlik, 4.955 envanter, 2.643 kayıp adres, URL şifreleme ve gerçek FFmpeg görüntü+ses doğrulama şartları aynen korunur. #6 bağımlılıkları (#4 ve #5) karşılandığında işlenir. #34 en son yapılır. Daha eski notlardaki #3/#4/#6 erteleme ifadeleri bu kararla geçersizdir. S3 için gerçek yetkili AWS kimlik bilgisi, yayınlar için gerçek AV kanıtı, #32 için kullanıcı cihaz kabulü şartları kaldırılamaz. Bu kayıt görevlerin tamamlandığı iddiası değildir.
