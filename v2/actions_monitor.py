@@ -15,7 +15,8 @@ REPO = os.environ.get("GITHUB_REPOSITORY", "Madsc55/MADSC55-TV-V2")
 TOKEN = os.environ.get("GITHUB_TOKEN", "")
 WORKFLOWS = ("v2-eight-stage-verification.yml", "v2-master-engine.yml",
              "v2-source-integration-batch.yml", "v2-ordered-preflight.yml",
-             "v2-actions-monitor.yml", "v2-turkish-m3u-source-coverage.yml")
+             "v2-actions-monitor.yml", "v2-turkish-m3u-source-coverage.yml",
+             "v2-current-scanner-offline-gate.yml")
 BRANCH = "madsc/v2-discovery-bulk-20261031"
 MAX_API_RETRY_DELAY = 10
 # Leave time in the 15-minute job for the final API request and artifact upload.
@@ -31,6 +32,7 @@ WORKFLOW_NAMES = {
     "v2-ordered-preflight.yml": "V2 Sirali Hazirlik Testleri",
     "v2-actions-monitor.yml": "V2 Actions Status Monitor",
     "v2-turkish-m3u-source-coverage.yml": "V2 Turkish M3U Source Coverage and Historical Loss",
+    "v2-current-scanner-offline-gate.yml": "V2 Current Scanner Offline Gate",
 }
 
 def api(path):
