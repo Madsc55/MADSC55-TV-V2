@@ -48,16 +48,26 @@ def validate_url(value):
 
 def recover(old_records, current_records):
     current = {row["url"] for row in current_records if validate_url(row.get("url"))}
-    recovered, seen = [], set()
+    recovered, indexed = [], {}
     missing_url = 0
     for row in old_records:
         url = row.get("url")
         if not validate_url(url):
             missing_url += 1
             continue
-        if url in current or url in seen:
+        if url in current:
             continue
-        seen.add(url)
+        if url in indexed:
+            candidate = recovered[indexed[url]]
+            sources = candidate.setdefault("source_ids", [])
+            for field in ("source_ids", "source_id", "source"):
+                values = row.get(field)
+                values = values if isinstance(values, list) else [values]
+                for source in values:
+                    if isinstance(source, str) and source and source not in sources:
+                        sources.append(source)
+            continue
+        indexed[url] = len(recovered)
         candidate = dict(row, recovery_status="HISTORICAL_NOT_REVERIFIED",
                          source_status="HISTORICAL_ARTIFACT")
         # Keep original historical status as provenance, never as current playback acceptance.
@@ -68,6 +78,14 @@ def recover(old_records, current_records):
         for flag in ("av_verified", "device_verified", "video_verified", "audio_verified",
                      "playback_verified", "ibo_device_verified"):
             candidate[flag] = False
+        sources = candidate.get("source_ids", [])
+        sources = list(sources) if isinstance(sources, list) else []
+        for field in ("source_id", "source"):
+            value = candidate.get(field)
+            if isinstance(value, str) and value and value not in sources:
+                sources.append(value)
+        candidate["source_ids"] = list(dict.fromkeys(
+            x for x in sources if isinstance(x, str) and x))
         recovered.append(candidate)
     return recovered, {"historical_missing_real_url": missing_url,
                        "recoverable_real_urls": len(recovered),
