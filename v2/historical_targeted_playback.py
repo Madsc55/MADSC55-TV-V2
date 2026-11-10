@@ -34,8 +34,8 @@ def load_missing_report(path, historical_index):
     candidates = a.get("historical_identifiers_absent_sha256_sample", [])
     reported = a.get("historical_identifiers_absent_from_current_sources")
     if (not isinstance(candidates, list) or type(reported) is not int
-            or reported > 30 or reported != len(candidates)
-            or len(candidates) != len(set(candidates))
+            or reported < len(candidates) or reported > len(original)
+            or len(candidates) > 30 or len(candidates) != len(set(candidates))
             or not set(candidates) <= original):
         raise ValueError("Unverified or truncated absent-historical-URL report")
     return set(candidates)
