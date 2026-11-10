@@ -183,6 +183,7 @@ def discover(source_texts, live_text, scopes):
     known_ids = recognized_channel_ids(source_texts, scopes)
     candidates, seen = [], set()
     provenance = {}
+    identity_provenance = {}
     for source_id, content in source_texts:
         for e in entries(content):
             recognized = bool(e["tvg_id"].strip() and e["tvg_id"].strip().casefold() in known_ids)
@@ -191,14 +192,18 @@ def discover(source_texts, live_text, scopes):
             if e["url"] in existing_urls:
                 continue
             digest = hashlib.sha256(e["url"].encode()).hexdigest()
+            identity = public_metadata(e["tvg_id"])
             if e["url"] in seen:
+                if identity and identity not in identity_provenance[digest]:
+                    identity_provenance[digest].append(identity)
                 if source_id not in provenance[digest]:
                     provenance[digest].append(source_id)
                 continue
             seen.add(e["url"])
             provenance[digest] = [source_id]
+            identity_provenance[digest] = [identity] if identity else []
             # Do not persist stream URLs/tokens in public reports.
-            candidates.append({"name": public_metadata(e["name"]), "tvg_id": public_metadata(e["tvg_id"]), "group": public_metadata(e["group"]), "source": source_id, "source_ids": provenance[digest], "existing_channel_alternative": bool(e["tvg_id"] and key(e) in existing_keys), "url_sha256": hashlib.sha256(e["url"].encode()).hexdigest(), "logo": public_metadata(e["logo"])})
+            candidates.append({"name": public_metadata(e["name"]), "tvg_id": public_metadata(e["tvg_id"]), "group": public_metadata(e["group"]), "source": source_id, "source_ids": provenance[digest], "identity_ids": identity_provenance[digest], "existing_channel_alternative": bool(e["tvg_id"] and key(e) in existing_keys), "url_sha256": hashlib.sha256(e["url"].encode()).hexdigest(), "logo": public_metadata(e["logo"])})
     return candidates
 
 def main():
