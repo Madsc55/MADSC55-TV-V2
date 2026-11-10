@@ -273,6 +273,17 @@ def collect(strict=True):
                             and all(step.get("conclusion") == "success"
                                     for step in job["steps"])
                             for job in jobs))
+        # A green workflow with a skipped live master job proves offline
+        # regressions only. Expose this separately from workflow success.
+        if run["_workflow_file"] == "v2-master-engine.yml":
+            live_jobs = [job for job in record["jobs"] if job.get("name") == "master"]
+            record["live_master_job_passed"] = (record["jobs_checked"]
+                and len(live_jobs) == 1 and live_jobs[0]["status"] == "completed"
+                and live_jobs[0]["conclusion"] == "success"
+                and bool(live_jobs[0]["steps"])
+                and all(step["conclusion"] == "success" for step in live_jobs[0]["steps"]))
+            if not record["live_master_job_passed"]:
+                record["failure_reasons"].append("live_master_job_not_verified")
         if run.get("status") != "completed":
             record["failure_reasons"].append("workflow_not_completed")
         elif run.get("conclusion") != "success":
