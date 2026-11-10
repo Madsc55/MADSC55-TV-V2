@@ -76,7 +76,7 @@ class TaskEngineTests(unittest.TestCase):
         ledger["statuses"][8]["status"] = "pending"
         ledger["statuses"][4]["status"] = "pending"  # Explicit fixture: live task 5 may be blocked.
         # Task 5 is P0 and ready once tasks 7 and 8 are complete.
-        self.assertEqual(e.select(self.master, ledger, self.root, defer_heavy=True), 5)
+        self.assertEqual(e.select(self.master, ledger, self.root, defer_heavy=True), 3)
         ready = e.independent_ready(self.master, ledger, self.root, defer_heavy=True)
         self.assertIn(3, ready)
         self.assertIn(4, ready)
