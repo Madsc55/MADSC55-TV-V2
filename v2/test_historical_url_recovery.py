@@ -77,6 +77,8 @@ class HistoricalRecoveryTests(unittest.TestCase):
         ]
         recovered, report = recover(old, [])
         self.assertEqual(report["recoverable_real_urls"], 1)
+        self.assertEqual(report["duplicate_historical_urls"], 2)
+        self.assertEqual(report["additional_source_associations_preserved"], 2)
         self.assertEqual(recovered[0]["source_ids"], ["#60", "#61", "#62"])
         self.assertEqual(recovered[0]["name"], "original")
         self.assertEqual(recovered[0]["status"], "HISTORICAL_NOT_REVERIFIED")
