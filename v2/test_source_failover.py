@@ -124,10 +124,9 @@ class FailoverTests(unittest.TestCase):
         def fake_fetch(url, timeout=12):
             observed.append(timeout)
             raise FetchFailure("HTTP_503", True)
-        with patch("source_failover.fetch_once", side_effect=fake_fetch):
-            # Keep the canonical fetcher identity so production timeout routing applies.
+        with patch("source_failover.fetch_once", side_effect=fake_fetch) as mocked_fetch:
             content, audit = recover_source(self.source, self.cache,
-                fetcher=fetch_once, sleep=lambda _: None,
+                fetcher=mocked_fetch, sleep=lambda _: None,
                 deadline=1.5, clock=lambda: 0.0)
         self.assertIsNone(content)
         self.assertTrue(observed)
