@@ -31,6 +31,27 @@ def fixtures():
     return api,scan
 
 class GapCrosswalkTests(unittest.TestCase):
+
+    def test_all_validated_source_identities_survive_crosswalk(self):
+        for count in (13, 100):
+            with self.subTest(source_count=count):
+                api, scan = fixtures()
+                sources = ["source-%03d" % number for number in range(count)]
+                scan["candidates"][0]["source_ids"] = sources
+                report = reconcile(api, scan)
+                row = next(item for item in report["candidate_identities"]
+                           if item["channel_id"] == "Alpha.tr")
+                self.assertEqual(row["candidate_m3u_url_hashes"][0]["source_ids"], sources)
+                self.assertEqual(report["new_video_audio_verified"], 0)
+                self.assertFalse(report["source_scan_complete"])
+                self.assertFalse(report["ibo_device_verified"])
+
+    def test_source_inventory_size_limit_still_rejects_oversized_input(self):
+        api, scan = fixtures()
+        scan["candidates"][0]["source_ids"] = ["source-%03d" % number for number in range(101)]
+        with self.assertRaisesRegex(ValueError, "Invalid M3U source provenance"):
+            reconcile(api, scan)
+
     def test_exact_missing_id_and_hash_only_not_av(self):
         api,scan=fixtures()
         r=reconcile(api,scan)

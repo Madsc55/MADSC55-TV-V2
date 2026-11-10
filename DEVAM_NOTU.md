@@ -2338,3 +2338,10 @@ Kullanıcının açık talimatıyla #3, #4 ve #6 tarihî kurtarma görevleri art
 - İzleyici, workflow veya job API isteği başarısız olduğunda diğer koşulardan alınan kanıtı `actions-last10.json` içinde saklar. Eksik kanıt ve API nedeni rapora girer, izleyici kanıt eksikse başarısız çıkar. 10 dakikalık toplama bütçesi dolunca yeni istek açılmaz ve artefakt yükleme adımına süre bırakılır.
 - Yerelde 933 regresyon koşuldu (1 sabit AV artefaktı atlandı), 25 görev motoru testi ve playlist bütünlük kontrolü geçti. [Actions Monitor #42867002186](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42867002186) artefaktında önceki kırmızı Master ve Eight-Stage koşularının job ve adım nedenleri doğrulandı.
 - Tarihî envanterli [canlı Master #42867001878](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42867001878) kabulü sürüyor. Görev kayıtları canlı koşu ve görev kabulü doğrulandıktan sonra güncellenir.
+
+
+### 11 Kasım — Aşama 2 gerçek kaynak geçmişi kabul hatası
+
+- [Source Integration #42913862261](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42913862261) içinde unified source job 130171320112 gerçek 9.737 aday üretildikten sonra `Too many M3U source provenance identities` hatasıyla durdu. Girdi denetimi 100 kaynak kimliğini kabul ederken eşleştirme yalnız 12 kimliğe izin veriyordu.
+- Eşleştirme artık mevcut 100 kaynaklık girdi sınırı içindeki tüm doğrulanmış kaynak kimliklerini kayıpsız korur. 13 ve 100 kaynaklı geçerli girdiler ile 101 kaynaklı geçersiz girdi için regresyon eklendi. Kaynak kimliği biçimi, URL hash eşleşmesi, AV ve cihaz kanıtı kuralları korunur.
+- Bu commit yeni canlı tarama başlatmaz. Çalışan #42913862261 ve sıradaki #42922715651 eski kod SHA'larına aittir. Yeni kodun Master/Eight-Stage/Ordered test sonuçları ayrıca izlenir. Sekiz Aşama 2 görevi henüz tamamlandı sayılmaz. #13 gerçek S3 yetkilendirmesi ve #5 özgün üç kaynak kaydı açık dış engellerdir.

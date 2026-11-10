@@ -123,8 +123,6 @@ def reconcile(api,m3u):
         if cid is None: continue
         # Only stable source identifiers; strip uncontrolled URL-like metadata.
         refs_safe=sorted(set(provenance))
-        if len(refs_safe)>12:
-            raise ValueError("Too many M3U source provenance identities")
         previously_other=bool(api_by_hash.get(h) and cid.casefold() not in api_by_hash[h])
         possible[cid][h]={
            "url_sha256":h,"source_ids":refs_safe,
