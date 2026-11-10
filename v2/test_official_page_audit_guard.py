@@ -57,6 +57,20 @@ class OfficialPageAuditGuardTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "missing explicit error provenance"):
             verify(report)
 
+    def test_missing_fetched_page_digest_is_rejected(self):
+        report = copy.deepcopy(self.report)
+        page = next(p for p in report["pages"] if p["status"] == "FETCHED")
+        page.pop("html_sha256")
+        with self.assertRaisesRegex(ValueError, "missing content digest"):
+            verify(report)
+
+    def test_unfetched_page_cannot_claim_discovered_sources(self):
+        report = copy.deepcopy(self.report)
+        page = next(p for p in report["pages"] if p["status"] != "FETCHED")
+        page["references"] = ["0" * 64]
+        with self.assertRaisesRegex(ValueError, "Unfetched page"):
+            verify(report)
+
     def test_http_403_without_references_remains_accounted_for(self):
         blocked = [p for p in self.report["pages"] if p["status"] != "FETCHED"]
         self.assertEqual(len(blocked), 1)
