@@ -167,7 +167,8 @@ class MonitorTests(unittest.TestCase):
         self.assertEqual(set(actions_monitor.WORKFLOWS), {
             "v2-eight-stage-verification.yml", "v2-master-engine.yml",
             "v2-source-integration-batch.yml", "v2-ordered-preflight.yml",
-            "v2-actions-monitor.yml", "v2-turkish-m3u-source-coverage.yml"})
+            "v2-actions-monitor.yml", "v2-turkish-m3u-source-coverage.yml",
+            "v2-current-scanner-offline-gate.yml"})
 
     def test_stalled_job_inventory_paginates_all_jobs(self):
         run={"id":78,"head_sha":"a"*40,"status":"in_progress",
