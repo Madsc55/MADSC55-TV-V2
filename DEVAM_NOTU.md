@@ -2304,3 +2304,9 @@ Kullanıcının açık talimatıyla #3, #4 ve #6 tarihî kurtarma görevleri art
 - Master'ın `offline-tests` işi **129792450252 completed/success**; kuyrukta başka commit tarafından değiştirilmedi. Bu normal push canlı Master işini istemedi; #23 canlı kabulü veya yeni kanal AV/S3/cihaz kanıtı sayılmaz. Yukarıdaki 913 yerel test / 24 görev motoru testiyle birlikte kod ve çevrimdışı entegrasyon kabulü sağlandı; gerçek artifact eksikliği atlaması ayrı tutuldu.
 - Sonraki eşzamanlı geliştirme değişiklikleri `c727455` seviyesine kadar korunarak alındı. Yukarıdaki beş yeşil sonuç yalnız sabitlenmiş `5e38b23` koduna aittir; sonraki SHA'lar için başarı genellenmez. Bu son ek yalnız kabul kanıtının kalıcı kaydıdır; yeniden test/tarama tetiklemek veya görev sayısını artırmak için kullanılmaz.
 - Gerçek üretim paketleri için accepted API raporu, karşılık gelen sealed arşiv ve yetkili yerel RSA özel anahtarı hâlâ gerekli. #13'te kullanıcı tarafından doğrulanan eksik S3 yapılandırması, #32'de gerçek cihaz kanıtı ve diğer göreve özgü kabuller açık. Bu çalışma manifest/ledger kapsamını veya herhangi bir görevin completion durumunu değiştirmedi.
+
+### 10 Kasım — Tek seferlik canlı Master kabul tetiklemesi
+
+- #23 için geliştirme dalında `[run-live-master]` etiketli kontrollü push tetiklenir; canlı `master` işi çevrimdışı testleri geçerse çalışır.
+- Eksik arşiv anahtarı veya gerçek AV kanıtı varsa iş fail-closed durur. Sonuçlar doğrulanmadan #23, #25 veya #26 kapatılmaz.
+- Ana IBO playlist, `main` ve PR #9 değiştirilmez. Bu not bir yayın kabul kanıtı değildir.
