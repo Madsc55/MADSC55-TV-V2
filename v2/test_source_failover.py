@@ -172,6 +172,7 @@ class FailoverTests(unittest.TestCase):
         self.assertEqual(results[1][2]["failures"][0]["category"], "RETRY_BUDGET_EXHAUSTED")
 
 
+    def test_pipeline_propagates_expired_budget_to_every_source(self):
         from source_failover import execute_pipeline
         calls = []
         results = execute_pipeline([self.source], self.cache,
@@ -179,7 +180,7 @@ class FailoverTests(unittest.TestCase):
             deadline=0.0, clock=lambda: 0.0)
         self.assertEqual(calls, [])
         self.assertEqual(len(results), 1)
-        self.assertEqual(results[0][2]["status"], "UNAVAILABLE")
+        self.assertEqual(results[0][2]["status"], "BUDGET_EXHAUSTED")
         self.assertIn("RETRY_BUDGET_EXHAUSTED",
             [f["category"] for f in results[0][2]["failures"]])
 
