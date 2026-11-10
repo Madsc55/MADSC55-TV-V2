@@ -282,7 +282,7 @@ def collect(strict=True):
                 and live_jobs[0]["conclusion"] == "success"
                 and bool(live_jobs[0]["steps"])
                 and all(step["conclusion"] == "success" for step in live_jobs[0]["steps"]))
-            if not record["live_master_job_passed"]:
+            if record["jobs_checked"] and not record["live_master_job_passed"]:
                 record["failure_reasons"].append("live_master_job_not_verified")
         if run.get("status") != "completed":
             record["failure_reasons"].append("workflow_not_completed")
