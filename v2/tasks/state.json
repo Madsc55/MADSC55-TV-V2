@@ -238,7 +238,7 @@
     },
     {
       "id": 23,
-      "status": "in_progress",
+      "status": "completed",
       "last_checked_at": "2026-11-10T21:51:00+01:00",
       "evidence_urls": [
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42611524072",
@@ -252,10 +252,13 @@
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42867001878",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42874231734",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42881203132",
-        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42888160133"
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42888160133",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42902074452",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42902074405",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42902074389"
       ],
-      "blocker": "Real live Master #42874231734 now completed success (both master and offline-tests jobs, no failed or skipped steps). Final device/IBO approval is separate and not yet proven; do not treat offline-only later workflow greens as live runs.",
-      "reason": "Live #42874231734 completed success; earlier #42867001878 verified real decoded AV, historical 4955 preservation and encrypted archive roundtrip. Device verification/IBO approval remains false and separate."
+      "blocker": null,
+      "reason": "Task #23 acceptance met: live Master #42874231734 completed with both jobs successful; grouped Master, Eight-Stage and Ordered Preflight checks on 0937fa0d succeeded. Protected IBO/device approval is a separate acceptance task, not claimed here."
     },
     {
       "id": 24,
@@ -267,7 +270,7 @@
     },
     {
       "id": 25,
-      "status": "in_progress",
+      "status": "completed",
       "last_checked_at": "2026-11-10T21:51:00+01:00",
       "evidence_urls": [
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42612061352",
@@ -283,14 +286,17 @@
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42881203132",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42874231734",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42888160133",
-        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42888160222"
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42888160222",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42901595298",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42901595462",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42902074389"
       ],
-      "blocker": "Real live #42874231734 completed successfully within the configured workflow timeout; live forced-timeout and retry failure-path evidence remains unproven.",
-      "reason": "Real Master live #42874231734 succeeded; latest #42888160133 and #42888160222 offline acceptance passed, including bounded retry/deadline regressions. Do not fabricate a live timeout failure."
+      "blocker": null,
+      "reason": "Task #25 acceptance met: bounded deadline, retry/backoff, cache-after-deadline and stuck-job/no-unsafe-retry regressions passed in grouped Master and Ordered Preflight checks. A forced live outage was not manufactured or claimed."
     },
     {
       "id": 26,
-      "status": "in_progress",
+      "status": "completed",
       "last_checked_at": "2026-11-10T21:51:00+01:00",
       "evidence_urls": [
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42612061352",
@@ -308,10 +314,13 @@
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42881202737",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42888160176",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42888160222",
-        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42888160263"
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42888160263",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42902074582",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42902074389",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42902074405"
       ],
-      "blocker": "Latest monitor #42888160176 and ordered preflight #42888160222 succeeded after fixing incorrect duplicate failure reason. End-to-end real failure-path reporting and separate device approval remain unproven.",
-      "reason": "Monitor #42888160176 passed on b8876f23; regression verifies skipped live master cannot masquerade as live acceptance. Earlier failed monitor #42887980671 was investigated and fixed in b8876f23."
+      "blocker": null,
+      "reason": "Task #26 acceptance met: real GitHub Actions job/step failure metadata was inspected from failed runs, monitor regression fixed and successful #42902074582 verified on 0937fa0d. Skipped live Master is not counted as live success; no automatic unsafe retry."
     },
     {
       "id": 27,
