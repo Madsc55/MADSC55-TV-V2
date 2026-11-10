@@ -128,7 +128,7 @@ def collect():
         record["jobs_total_count"] = None
         record["jobs_checked"] = False
         record["failure_reasons"] = []
-        if run.get("status") in ("in_progress","queued","waiting","pending") and record["possibly_stalled"] is True:
+        if run.get("status") in ("in_progress","queued","waiting","pending","requested") and record["possibly_stalled"] is True:
             # Inspect the active job without cancelling or retrying long AV scans.
             active = api(base + "/runs/%s/jobs?per_page=100" % run["id"])
             jobs = active.get("jobs")
