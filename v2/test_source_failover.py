@@ -116,5 +116,23 @@ class FailoverTests(unittest.TestCase):
         self.assertEqual([item["category"] for item in audit["failures"]],
                          ["RETRY_BUDGET_EXHAUSTED"])
 
+
+    def test_http_fetch_timeout_is_limited_by_remaining_budget(self):
+        from unittest.mock import patch
+        from source_failover import fetch_once
+        observed = []
+        def fake_fetch(url, timeout=12):
+            observed.append(timeout)
+            raise FetchFailure("HTTP_503", True)
+        with patch("source_failover.fetch_once", side_effect=fake_fetch):
+            # Keep the canonical fetcher identity so production timeout routing applies.
+            content, audit = recover_source(self.source, self.cache,
+                fetcher=fetch_once, sleep=lambda _: None,
+                deadline=1.5, clock=lambda: 0.0)
+        self.assertIsNone(content)
+        self.assertTrue(observed)
+        self.assertTrue(all(0 < timeout <= 1.5 for timeout in observed))
+        self.assertFalse(audit["fresh"])
+
 if __name__ == "__main__":
     unittest.main()
