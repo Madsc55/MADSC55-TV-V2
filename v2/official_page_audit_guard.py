@@ -34,6 +34,12 @@ def verify(report):
             raise ValueError("Invalid reference hashes")
         if len(refs) != len(set(refs)):
             raise ValueError("Duplicate reference within a page")
+        if status not in ("FETCHED", "ERROR"):
+            raise ValueError("Unknown official-page fetch status")
+        if status == "ERROR" and (not isinstance(page.get("error"), str) or not page["error"]):
+            raise ValueError("Failed page missing explicit error provenance")
+        if status == "FETCHED" and page.get("error"):
+            raise ValueError("Fetched page cannot carry a failure error")
         if status == "FETCHED":
             fetched += 1
             if not isinstance(page.get("html_sha256"), str) or not SHA.fullmatch(page["html_sha256"]):
