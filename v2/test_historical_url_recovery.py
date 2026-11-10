@@ -54,6 +54,27 @@ class HistoricalRecoveryTests(unittest.TestCase):
         self.assertFalse(validate_url("https://[broken/a.m3u8"))
         self.assertFalse(validate_url("https://[::1/a.m3u8"))
 
+    def test_public_and_private_ip_literal_recovery_boundary(self):
+        # Real public IP sources remain candidates; local/private literals cannot
+        # be smuggled into the historical AV probing queue.
+        for url in ("https://1.2.3.4/live.m3u8",
+                    "https://[2606:4700:4700::1111]/live.m3u8"):
+            with self.subTest(public=url):
+                self.assertTrue(validate_url(url))
+        for url in ("http://192.168.1.1/live.m3u8",
+                    "http://169.254.169.254/latest/meta-data/",
+                    "https://[::1]/live.m3u8",
+                    "https://[fc00::1]/live.m3u8",
+                    "https://[::ffff:127.0.0.1]/live.m3u8"):
+            with self.subTest(private=url):
+                self.assertFalse(validate_url(url))
+        recovered, report = recover(
+            [{"url": "https://1.2.3.4/live.m3u8", "source_id": "historic"},
+             {"url": "http://169.254.169.254/latest/meta-data/"}], [])
+        self.assertEqual(len(recovered), 1)
+        self.assertEqual(report["historical_missing_real_url"], 1)
+        self.assertIs(recovered[0]["av_verified"], False)
+
     def test_historical_duplicates_are_not_reintroduced(self):
         old = [{"url": "https://example.org/a.m3u8", "name": "original"},
                {"url": "https://example.org/a.m3u8", "name": "duplicate"},
