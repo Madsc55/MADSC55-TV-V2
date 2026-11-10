@@ -38,6 +38,12 @@ def validate_url(value):
         labels = host.split(".")
         if labels and all(label and (label.isdecimal() or label.startswith("0x") and all(c in "0123456789abcdef" for c in label[2:])) for label in labels):
             return False
+    # Refuse ambiguous authorities, control characters and URL fragments.
+    # Fragments are client-side only and must not enter recovery artifacts.
+    if any(ord(c) < 33 or ord(c) == 127 for c in value) or parsed.fragment:
+        return False
+    if not parsed.netloc or parsed.hostname.startswith("-") or parsed.hostname.endswith("-"):
+        return False
     try:
         port = parsed.port
     except ValueError:
