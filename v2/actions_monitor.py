@@ -252,6 +252,9 @@ def main():
         print("run_id=%s sha=%s status=%s conclusion=%s url=%s" % (
             run["id"], run["head_sha"], run["status"], run["conclusion"], run["html_url"]))
         # Surface failed steps in the Actions console, not just the JSON artifact.
+        if run.get("status") == "completed" and run.get("acceptance_candidate") is False:
+            print("::warning::V2 run %s (%s) is NOT an acceptance candidate; status=%s conclusion=%s" % (
+                run["id"], run["workflow_file"], run["status"], run["conclusion"]))
         for reason in run.get("failure_reasons", []):
             print("::warning::V2 run %s (%s): %s" % (
                 run["id"], run["workflow_file"], reason))
