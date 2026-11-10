@@ -39,6 +39,14 @@ class MonitorTests(unittest.TestCase):
         self.assertIsNone(actions_monitor.stalled_run(
             {"status": "in_progress", "created_at": (now + timedelta(hours=1)).isoformat()}, now=now))
 
+    def test_requested_run_is_not_accepted_and_can_be_stalled(self):
+        now = datetime(2026, 11, 9, 18, 0, tzinfo=timezone.utc)
+        run = {"status": "requested", "created_at":
+               (now - timedelta(hours=4)).isoformat()}
+        self.assertTrue(actions_monitor.stalled_run(run, now=now))
+        run["created_at"] = (now - timedelta(minutes=5)).isoformat()
+        self.assertFalse(actions_monitor.stalled_run(run, now=now))
+
     def test_source_integration_stall_budget_is_longer_than_standard(self):
         now = datetime(2026, 11, 9, 18, 0, tzinfo=timezone.utc)
         started = (now - timedelta(hours=4)).isoformat()
