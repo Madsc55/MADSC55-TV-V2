@@ -20,6 +20,21 @@ class MonitorTests(unittest.TestCase):
         self.assertIn("::warning::Potentially stalled Actions run 17", output.getvalue())
         self.assertIn("no automatic retry", output.getvalue())
 
+    def test_main_emits_failed_step_details(self):
+        result = {"runs": [{"id": 19, "workflow_file": "v2-master-engine.yml",
+            "possibly_stalled": False, "head_sha": "b" * 40,
+            "status": "completed", "conclusion": "failure",
+            "html_url": "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/19",
+            "failure_reasons": ["workflow_failure"],
+            "jobs": [{"id": 55, "failed_steps": [{"number": 3,
+                "name": "Offline regressions", "conclusion": "failure"}]}]}]}
+        output = io.StringIO()
+        with patch.object(actions_monitor, "collect", return_value=result), patch.object(
+                actions_monitor.Path, "write_text", return_value=None), redirect_stdout(output):
+            actions_monitor.main()
+        self.assertIn("V2 run 19 (v2-master-engine.yml): workflow_failure", output.getvalue())
+        self.assertIn("V2 run 19 job 55 step 3 (Offline regressions): failure", output.getvalue())
+
     def test_stalled_run_age_is_advisory_and_never_retries(self):
         now = datetime(2026, 11, 9, 12, 0, tzinfo=timezone.utc)
         old = (now - timedelta(hours=3)).isoformat()
