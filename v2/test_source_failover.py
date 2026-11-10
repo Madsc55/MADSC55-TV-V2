@@ -168,6 +168,8 @@ class FailoverTests(unittest.TestCase):
             clock=lambda: tick[0])
         self.assertEqual(len(calls), 1)
         self.assertEqual([row[2]["fresh"] for row in results], [False, False])
+        self.assertEqual(results[0][2]["status"], "UNAVAILABLE")
+        self.assertEqual(results[1][1], None)
         self.assertEqual(results[1][2]["status"], "BUDGET_EXHAUSTED")
         self.assertEqual(results[1][2]["failures"][0]["category"], "RETRY_BUDGET_EXHAUSTED")
 
