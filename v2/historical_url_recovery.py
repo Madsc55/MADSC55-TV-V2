@@ -79,7 +79,9 @@ def recover(old_records, current_records):
         if url in indexed:
             duplicate_historical_urls += 1
             candidate = recovered[indexed[url]]
-            sources = candidate.setdefault("source_ids", [])
+            sources = candidate.get("source_ids", [])
+            sources = list(sources) if isinstance(sources, list) else ([sources] if isinstance(sources, str) and sources else [])
+            candidate["source_ids"] = sources
             for field in ("source_ids", "source_id", "source"):
                 values = row.get(field)
                 values = values if isinstance(values, list) else [values]
