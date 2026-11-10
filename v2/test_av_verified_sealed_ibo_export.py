@@ -21,6 +21,18 @@ def fixture(decoded=True,ids=None):
     return report,rows
 
 class SeparatePrivateExport(unittest.TestCase):
+    def test_existing_cli_hands_encrypted_batch_requests_to_offline_acceptance(self):
+        from unittest.mock import patch
+        import av_verified_sealed_ibo_export as exporter
+        argv=["exporter", "--private-key", "/tmp/key.pem", "--report", "/tmp/report.json",
+              "--sealed", "/tmp/proof.sealed", "--batch-out", "/tmp/private-batches"]
+        with patch("sys.argv", argv), patch("bulk_candidate_acceptance.main") as batch, \
+                patch.object(exporter,"validate_destination") as plaintext_destination:
+            exporter.main()
+        batch.assert_called_once_with(["--report", "/tmp/report.json", "--sealed", "/tmp/proof.sealed",
+                                       "--private-key", "/tmp/key.pem", "--out", "/tmp/private-batches"])
+        plaintext_destination.assert_not_called()
+
     def test_real_video_audio_and_exact_identity_exported(self):
         content,summary=select(*fixture())
         self.assertEqual(summary["verified_entries"],1)

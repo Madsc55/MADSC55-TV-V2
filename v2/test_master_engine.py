@@ -4,6 +4,191 @@ import unittest
 from master_engine import build, render_m3u, export_candidates
 
 class MasterTests(unittest.TestCase):
+    def test_all_approved_dynamic_sources_are_reviewed_without_position_cap(self):
+        import hashlib
+        from master_engine import approved_dynamic_sources
+        configured = [{"id": "base", "url": "https://raw.githubusercontent.com/fixture/repo/main/base.m3u"}]
+        rows = [{"url": f"https://raw.githubusercontent.com/fixture/repo/main/{i}.m3u"}
+                for i in range(321)]
+        approved = {hashlib.sha256(rows[i]["url"].encode()).hexdigest() for i in (0, 240, 320)}
+        rows += [{"url": "https://user:secret@raw.githubusercontent.com/fixture/repo/main/unsafe.m3u"},
+                 dict(rows[320])]
+        result = approved_dynamic_sources(configured, {"sources": rows}, approved)
+        self.assertEqual([row["url"] for row in result],
+                         [configured[0]["url"], *(rows[i]["url"] for i in (0, 240, 320))])
+        self.assertEqual(len(configured), 1)
+
+    def test_budget_stops_scheduling_and_checkpoints_all_unfinished_candidates(self):
+        from master_engine import verify_in_batches
+        import copy
+        current, calls, saved = [0.0], [], []
+        items = [{"url": f"https://example.org/{i}.m3u8"} for i in range(5)]
+        def check(item):
+            calls.append(item["url"])
+            return True
+        def runner(operation, seconds):
+            self.assertEqual(seconds, 1.0)
+            value = operation()
+            current[0] += 1
+            return "ok", value
+        complete = verify_in_batches(items, check, lambda _: True, workers=2,
+            deadline=2, batch_timeout=1, clock=lambda: current[0], runner=runner,
+            checkpoint=lambda rows, stage: saved.append((stage, copy.deepcopy(rows))))
+        self.assertFalse(complete)
+        self.assertEqual(len(calls), 4)
+        self.assertEqual(len(saved[0][1]), 5)
+        self.assertTrue(all(row["verification_status"] == "UNTESTED" for row in saved[0][1]))
+        self.assertEqual([len(rows) for _, rows in saved[1:]], [2, 2])
+        self.assertTrue(all(row["media_decoded"] is True for row in items[:4]))
+        self.assertEqual(items[4]["verification_status"], "UNTESTED")
+        self.assertTrue(all(row["device_verified"] is False for row in items))
+
+    def test_batch_timeout_is_incomplete_not_success_and_runner_budget_is_capped(self):
+        from master_engine import verify_in_batches
+        items = [{"url": "https://example.org/a.m3u8"}]
+        observed = []
+        def runner(operation, seconds):
+            observed.append(seconds)
+            return "timeout", None
+        self.assertFalse(verify_in_batches(items, lambda _: True, lambda _: True,
+            workers=1, deadline=3, batch_timeout=40, clock=lambda: 2,
+            runner=runner, checkpoint=lambda *args: None))
+        self.assertEqual(observed, [1])
+        self.assertEqual(items[0]["verification_status"], "UNTESTED_BATCH_TIMEOUT")
+        self.assertFalse(items[0]["media_decoded"])
+
+    def test_isolated_hung_callback_is_killed_and_worker_is_reaped(self):
+        import multiprocessing
+        import time
+        from master_engine import run_bounded
+        before = {child.pid for child in multiprocessing.active_children()}
+        def hang():
+            while True:
+                time.sleep(0.01)
+        started = time.monotonic()
+        self.assertEqual(run_bounded(hang, .15), ("timeout", None))
+        self.assertLess(time.monotonic() - started, 3)
+        self.assertEqual({child.pid for child in multiprocessing.active_children()}, before)
+        self.assertEqual(run_bounded(lambda: {"completed": True}, 2),
+                         ("ok", {"completed": True}))
+
+    def test_source_fetch_spends_same_cli_budget_and_preserves_unchecked_history(self):
+        import contextlib
+        import io
+        import json
+        import os
+        from pathlib import Path
+        import sys
+        import tempfile
+        from unittest.mock import patch
+        import master_engine as module
+        from encrypted_archive import restore
+        source = {"id": "fixture", "scope": "TR", "url": "https://example.org/source.m3u"}
+        payload = "#EXTM3U\n#EXTINF:-1,TRT 1\nhttps://example.org/a.m3u8\n"
+        current, calls = [0], []
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            live, config, history = [root / name for name in ("live.m3u", "sources.json", "history.jsonl")]
+            live.write_text("#EXTM3U\n")
+            config.write_text(json.dumps({"sources": [source]}))
+            old = {"url": "https://example.org/history.m3u8", "name": "TRT 2", "source": "old"}
+            history.write_text(json.dumps(old) + "\n")
+            archive, output = root / "inventory.enc", root / "out"
+            def runner(operation, seconds):
+                calls.append(seconds)
+                result = operation()
+                current[0] = 2
+                return "ok", result
+            argv = ["master_engine.py", "--archive", str(archive), "--out", str(output),
+                    "--history", str(history), "--max-seconds", "2"]
+            with patch.dict(os.environ, {"V2_ARCHIVE_KEY_HEX": "ab" * 32}), \
+                    patch.object(sys, "argv", argv), patch.object(module, "ROOT", root), \
+                    patch.object(module, "LIVE", live), patch.object(module, "SOURCES", config), \
+                    patch.object(module, "DYNAMIC", root / "absent.json"), \
+                    patch.object(module, "FORGE", root / "absent-forge.json"), \
+                    patch.object(module.time, "monotonic", side_effect=lambda: current[0]), \
+                    patch.object(module, "run_bounded", side_effect=runner), \
+                    patch("source_failover.execute_pipeline", return_value=[(source, payload,
+                        {"id": "fixture", "fresh": True, "status": "PRIMARY_OK"})]), \
+                    patch.object(module, "hls_reachable") as manifest, \
+                    patch.object(module, "decode_media") as decoder, \
+                    contextlib.redirect_stdout(io.StringIO()):
+                with self.assertRaisesRegex(SystemExit, "Verification incomplete"):
+                    module.main()
+                records = restore(archive)
+            self.assertEqual(calls, [2])
+            manifest.assert_not_called()
+            decoder.assert_not_called()
+            self.assertEqual(records[0]["records"], [old])
+            self.assertEqual(len(records), 3)
+            self.assertTrue(all(row["verification_status"] == "UNTESTED" for row in records[1:]))
+            report = json.loads((output / "report.json").read_text())
+            self.assertTrue(report["budget_exhausted"])
+            self.assertEqual(report["verification_unfinished"], 2)
+            self.assertEqual(list(output.glob("*.m3u*")), [])
+
+    def test_incomplete_cli_preserves_history_inventory_checkpoint_without_packages(self):
+        import contextlib
+        import io
+        import json
+        import os
+        from pathlib import Path
+        import sys
+        import tempfile
+        from unittest.mock import patch
+        import master_engine as module
+        from encrypted_archive import restore
+        source = {"id": "fixture", "scope": "TR", "url": "https://example.org/source.m3u"}
+        payload = ("#EXTM3U\n#EXTINF:-1,TRT 1\nhttps://example.org/a.m3u8\n"
+                   "#EXTINF:-1,TRT 2\nhttps://example.org/b.m3u8\n")
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            live, config, history = [root / name for name in ("live.m3u", "sources.json", "history.jsonl")]
+            live.write_text("#EXTM3U\n")
+            config.write_text(json.dumps({"sources": [source]}))
+            old = {"url_sha256": "f" * 64, "source": "historical"}
+            history.write_text(json.dumps(old) + "\n")
+            archive, output = root / "inventory.enc", root / "out"
+            count = [0]
+            def runner(operation, seconds):
+                count[0] += 1
+                if count[0] == 3:
+                    return "timeout", None
+                return "ok", operation()
+            argv = ["master_engine.py", "--archive", str(archive), "--out", str(output),
+                    "--history", str(history), "--workers", "1"]
+            with patch.dict(os.environ, {"V2_ARCHIVE_KEY_HEX": "ab" * 32}), \
+                    patch.object(sys, "argv", argv), patch.object(module, "ROOT", root), \
+                    patch.object(module, "LIVE", live), patch.object(module, "SOURCES", config), \
+                    patch.object(module, "DYNAMIC", root / "absent.json"), \
+                    patch.object(module, "FORGE", root / "absent-forge.json"), \
+                    patch.object(module, "run_bounded", side_effect=runner), \
+                    patch("source_failover.execute_pipeline", return_value=[(source, payload,
+                        {"id": "fixture", "fresh": True, "status": "PRIMARY_OK"})]), \
+                    patch.object(module, "hls_reachable", return_value=True), \
+                    patch.object(module, "decode_media", return_value=True), \
+                    contextlib.redirect_stdout(io.StringIO()):
+                with self.assertRaisesRegex(SystemExit, "Verification incomplete"):
+                    module.main()
+                records = restore(archive)
+                checkpoint = restore(output / "checkpoint.enc")
+            report = json.loads((output / "report.json").read_text())
+            self.assertEqual(report["status"], "INCOMPLETE_VERIFICATION")
+            self.assertFalse(report["approved"])
+            self.assertFalse(report["device_verified"])
+            self.assertFalse(report["verification_complete"])
+            self.assertEqual(report["verification_unfinished"], 1)
+            self.assertEqual(report["media_decoded"], 1)
+            self.assertEqual(report["batch_count"], 0)
+            self.assertEqual(list(output.glob("*.m3u*")), [])
+            self.assertEqual(records[0]["records"], [old])
+            self.assertEqual({row["url"] for row in records[1:]},
+                             {"https://example.org/a.m3u8", "https://example.org/b.m3u8"})
+            self.assertEqual(checkpoint[0]["records"], [old])
+            self.assertTrue(any(block["kind"] == "inventory_before_verification" for block in checkpoint))
+            self.assertNotIn(b"https://example.org", (output / "checkpoint.enc").read_bytes())
+            self.assertTrue(report["archive_restore_verified"])
+
     def test_retired_source_remains_in_catalog_but_is_not_fetched(self):
         import json
         from discover import SOURCES

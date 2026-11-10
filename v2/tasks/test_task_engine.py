@@ -63,7 +63,7 @@ class TaskEngineTests(unittest.TestCase):
         self.assertEqual(e.select(self.master, ledger, self.root), 1)
         independent = e.independent_ready(self.master, ledger, self.root, excluded=(1,))
         self.assertNotIn(2, independent)
-        self.assertEqual(independent[:4], [4, 7, 8, 9])
+        self.assertEqual(independent[:5], [4, 7, 8, 9, 10])
         self.assertIn(13, independent)
         ledger["statuses"][12]["status"] = "blocked"
         independent = e.independent_ready(self.master, ledger, self.root, excluded=(1,))
@@ -71,18 +71,23 @@ class TaskEngineTests(unittest.TestCase):
         self.assertIn(23, independent)  # An external archive blocker must not stop the motor work.
 
     def test_all_historical_tasks_remain_mandatory(self):
-        ledger = copy.deepcopy(self.ledger)
-        # Stable fixture: future closures must not invalidate scheduler tests.
+        ledger = self.scenario_ledger()
+        # #4 depends only on #2; #3 must wait while #1 is blocked.
+        ledger["statuses"][0]["status"] = "blocked"
+        ledger["statuses"][3]["status"] = "in_progress"
         ledger["statuses"][8]["status"] = "pending"
-        ledger["statuses"][4]["status"] = "pending"  # Explicit fixture: live task 5 may be blocked.
-        # Task 5 is P0 and ready once tasks 7 and 8 are complete.
-        self.assertEqual(e.select(self.master, ledger, self.root, defer_heavy=True), 3)
+        ledger["statuses"][4]["status"] = "pending"
+        self.assertEqual(e.select(self.master, ledger, self.root, defer_heavy=True), 4)
         ready = e.independent_ready(self.master, ledger, self.root, defer_heavy=True)
-        self.assertIn(3, ready)  # #3 remains mandatory and is ready once #1 is complete.
+        self.assertNotIn(3, ready)  # #1 is blocked in this explicit fixture.
         self.assertIn(4, ready)
         self.assertIn(9, ready)
         self.assertEqual(ledger["statuses"][2]["status"], "in_progress")
         self.assertEqual(ledger["statuses"][3]["status"], "in_progress")
+        # Preserve the concurrent regression: #3 becomes eligible when #1 completes.
+        ledger["statuses"][0]["status"] = "completed"
+        self.assertIn(3, e.independent_ready(self.master, ledger, self.root, defer_heavy=True))
+        self.assertEqual(e.select(self.master, ledger, self.root, defer_heavy=True), 3)
         # If all other work is blocked, heavy work must remain selectable.
         for row in ledger["statuses"]:
             if row["id"] not in (1, 2, 3, 4, 8, 22):

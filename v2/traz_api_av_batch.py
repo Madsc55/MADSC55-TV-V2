@@ -50,6 +50,9 @@ def summarize(unique,probes):
            "decoded":result["decoded"],"custom_headers_needed":lead["custom_headers"],
            "spoken_language_verified":False,"sweden_access_verified":False,
            "ibo_device_verified":False})
+        if "video_streams" in result:
+            items[-1].update(video_streams=result["video_streams"],
+                             video_measurement_origin=result["video_measurement_origin"])
     return {"schema":1,"kind":"TR_AZ_IPTV_API_REAL_FFMPEG_AV_ACCEPTANCE",
        "policy":"ANONYMOUS_HASH_ONLY_RSA_ENCRYPTED_URLS",
        "unique_url_candidates":len(items),"probed":len(probes),
@@ -113,6 +116,9 @@ def scan(workers=24,budget=3300):
            "channel_ids":sorted(item["channel_ids"]),
            "probe_status":result["status"],"video":result["video"],
            "audio":result["audio"],"decoded":result["decoded"]})
+        if "video_streams" in result:
+            sealed_rows[-1].update(video_streams=result["video_streams"],
+                                   video_measurement_origin=result["video_measurement_origin"])
     REPORT.parent.mkdir(parents=True,exist_ok=True)
     seal_rows(sealed_rows,RSA_PUBLIC,SEALED)
     public["encrypted_evidence"]={"sha256":sha(SEALED.read_bytes()),

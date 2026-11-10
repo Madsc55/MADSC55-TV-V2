@@ -247,7 +247,7 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p v2/reports/master-run
-          python v2/master_engine.py --archive v2/reports/master-run/inventory.enc --out v2/reports/master-run/output --limit 500
+          timeout --signal=TERM --kill-after=20s 6000s python v2/master_engine.py --archive v2/reports/master-run/inventory.enc --out v2/reports/master-run/output --limit 500 --max-seconds 5400
       - name: Record master run identity
         if: always()
         run: |

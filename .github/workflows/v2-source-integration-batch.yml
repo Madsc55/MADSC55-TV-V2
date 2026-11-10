@@ -65,6 +65,8 @@ on:
 permissions:
   contents: read
   actions: read
+# Ordinary pushes run offline acceptance only. Live jobs require manual dispatch
+# or a deliberate [run-source-acceptance] commit; never repeat a scan for test edits.
 # Serialize expensive AV scans without cancelling an active evidence-producing run.
 concurrency:
   group: v2-source-integration-bulk-${{ github.ref }}
@@ -151,7 +153,7 @@ jobs:
   live-source-handoff:
     name: Explicit live source reports and acceptance - no IBO playlist writes
     if: >-
-      (github.event_name == 'workflow_dispatch' || github.event_name == 'push') &&
+      (github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && contains(github.event.head_commit.message, '[run-source-acceptance]'))) &&
       github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
       github.repository == 'Madsc55/MADSC55-TV-V2'
     needs: offline-source-safety
@@ -333,7 +335,7 @@ jobs:
   platform-verification-batch:
     name: Public Scribd SlideShare and YouTube live evidence, one grouped run
     if: >-
-      (github.event_name == 'workflow_dispatch' || github.event_name == 'push') &&
+      (github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && contains(github.event.head_commit.message, '[run-source-acceptance]'))) &&
       github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
       github.repository == 'Madsc55/MADSC55-TV-V2'
     needs: offline-source-safety
@@ -425,7 +427,7 @@ jobs:
   unified-read-only-channel-search:
     name: Unified TR AZ source search - all adapters no IBO writes
     if: >-
-      (github.event_name == 'workflow_dispatch' || github.event_name == 'push') &&
+      (github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && contains(github.event.head_commit.message, '[run-source-acceptance]'))) &&
       github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
       github.repository == 'Madsc55/MADSC55-TV-V2'
     needs: offline-source-safety
@@ -517,7 +519,10 @@ jobs:
   traz-api-metadata-readonly:
     name: Worldwide TR AZ exact IPTV API and EPG source metadata
     needs: offline-source-safety
-    if: github.event_name == 'push' && github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031'
+    if: >-
+      (github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && contains(github.event.head_commit.message, '[run-source-acceptance]'))) &&
+      github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
+      github.repository == 'Madsc55/MADSC55-TV-V2'
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     permissions:
@@ -566,7 +571,7 @@ jobs:
     name: Reconcile TR AZ missing EPG, missing streams and real AV from two immutable run artifacts
     needs: offline-source-safety
     if: >-
-      (github.event_name == 'workflow_dispatch' || github.event_name == 'push') &&
+      (github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && contains(github.event.head_commit.message, '[run-source-acceptance]'))) &&
       github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
       github.repository == 'Madsc55/MADSC55-TV-V2'
     runs-on: ubuntu-24.04
@@ -651,7 +656,7 @@ jobs:
   traz-hls-codec-shortterm:
     name: Real FFmpeg HLS codecs and repeated short AV - read only
     if: >-
-      (github.event_name == 'workflow_dispatch' || github.event_name == 'push') &&
+      (github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && contains(github.event.head_commit.message, '[run-source-acceptance]'))) &&
       github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
       github.repository == 'Madsc55/MADSC55-TV-V2'
     needs: offline-source-safety
@@ -731,7 +736,7 @@ jobs:
   traz-missing-hash-real-av:
     name: Probe exact 84 newly matched TR AZ identities and preserve RSA evidence
     if: >-
-      (github.event_name == 'workflow_dispatch' || github.event_name == 'push') &&
+      (github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && contains(github.event.head_commit.message, '[run-source-acceptance]'))) &&
       github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
       github.repository == 'Madsc55/MADSC55-TV-V2'
     needs: offline-source-safety
@@ -816,7 +821,7 @@ jobs:
   traz-targeted-transient-av-retry:
     name: One bounded real AV retry for transient failures only
     if: >-
-      (github.event_name == 'workflow_dispatch' || github.event_name == 'push') &&
+      (github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && contains(github.event.head_commit.message, '[run-source-acceptance]'))) &&
       github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
       github.repository == 'Madsc55/MADSC55-TV-V2'
     needs: offline-source-safety
@@ -902,7 +907,7 @@ jobs:
   traz-official-feed-variant-av:
     name: Trusted IPTV org feed variant 217 missing ID source and AV recovery
     if: >-
-      (github.event_name == 'workflow_dispatch' || github.event_name == 'push') &&
+      (github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && contains(github.event.head_commit.message, '[run-source-acceptance]'))) &&
       github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
       github.repository == 'Madsc55/MADSC55-TV-V2'
     needs: offline-source-safety
@@ -1006,7 +1011,7 @@ jobs:
   traz-name-only-bounded-av:
     name: Real FFmpeg decode of 15 unconfirmed TR AZ name-only channel leads
     if: >-
-      (github.event_name == 'workflow_dispatch' || github.event_name == 'push') &&
+      (github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && contains(github.event.head_commit.message, '[run-source-acceptance]'))) &&
       github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
       github.repository == 'Madsc55/MADSC55-TV-V2'
     needs: offline-source-safety
@@ -1082,7 +1087,7 @@ jobs:
   traz-additional-xmltv-gap:
     name: Additional public TR AZ XMLTV source EPG gap review only
     if: >-
-      (github.event_name == 'workflow_dispatch' || github.event_name == 'push') &&
+      (github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && contains(github.event.head_commit.message, '[run-source-acceptance]'))) &&
       github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
       github.repository == 'Madsc55/MADSC55-TV-V2'
     needs: offline-source-safety

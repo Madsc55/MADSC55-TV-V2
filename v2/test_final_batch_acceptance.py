@@ -3,6 +3,23 @@ import unittest
 from final_batch_acceptance import route, sha, gitblob, report
 
 class FinalBatchAcceptanceTests(unittest.TestCase):
+    def test_probe_preserves_measured_dimensions_without_trusting_quality_names(self):
+        import json
+        from types import SimpleNamespace
+        from unittest.mock import patch
+        from final_batch_acceptance import probe
+        streams = [{"codec_type": "video", "codec_name": "h264", "width": 1280, "height": 720},
+                   {"codec_type": "audio", "codec_name": "aac"}]
+        with patch("final_batch_acceptance.public_dns", return_value=True), \
+                patch("final_batch_acceptance.subprocess.run", side_effect=[
+                    SimpleNamespace(returncode=0, stdout=json.dumps({"streams": streams}), stderr=""),
+                    SimpleNamespace(returncode=0)]) as run:
+            result = probe((sha("https://example.org/live"), "https://example.org/live"))
+        self.assertTrue(result["decoded"])
+        self.assertEqual(result["video_streams"], [{"width": 1280, "height": 720, "codec_name": "h264"}])
+        self.assertEqual(result["video_measurement_origin"], "FFPROBE_STREAM_METADATA")
+        self.assertIn("stream=codec_type,codec_name,width,height:stream_tags=language", run.call_args_list[0].args[0])
+
     def test_turkish_hint(self):
         self.assertEqual(route({"name": "TRT 1", "tvg_id": "TRT1.tr"}, {"world"}),
                          "TR_METADATA_HINT")
@@ -64,6 +81,22 @@ class FinalBatchAcceptanceTests(unittest.TestCase):
         reused = resume_checks(prior, inventory)
         self.assertEqual(set(reused), {good})
         self.assertEqual(reused[good]["evidence_origin"], "PRIOR_RUN_HASH_ONLY_NOT_FRESH")
+
+    def test_resume_preserves_measured_quality_as_prior_not_fresh_evidence(self):
+        from final_batch_acceptance import resume_checks
+        digest = sha("https://example.org/old-av")
+        measured = [{"width": 720, "height": 576, "codec_name": "h264"}]
+        prior = {"schema": 1, "kind": "V2_WORLDWIDE_READ_ONLY_FINAL_ACCEPTANCE",
+                 "unique_url_candidates": 1, "candidates": [
+                     {"url_sha256": digest, "status": "VIDEO_AUDIO_DECODED",
+                      "video": True, "audio": True, "decoded": True,
+                      "video_streams": measured, "video_measurement_origin": "FFPROBE_STREAM_METADATA"}]}
+        reused = resume_checks(prior, {digest: {}})[digest]
+        self.assertEqual(reused["video_streams"], measured)
+        self.assertEqual(reused["evidence_origin"], "PRIOR_RUN_HASH_ONLY_NOT_FRESH")
+        prior["candidates"][0]["video_streams"][0]["height"] = True
+        with self.assertRaises(ValueError):
+            resume_checks(prior, {digest: {}})
 
     def test_resume_reprobes_all_unconfirmed_av_statuses(self):
         from final_batch_acceptance import resume_checks

@@ -5,7 +5,10 @@ import concurrent.futures
 import hashlib
 import json
 import math
+import multiprocessing
 import os
+import signal
+import time
 from pathlib import Path
 from urllib.parse import urlsplit
 from discover import ROOT, LIVE, SOURCES, entries, turkish_candidate, fetch, approved_github_source, DYNAMIC, GITHUB_APPROVALS, FORGE, FORGE_APPROVALS
@@ -18,6 +21,123 @@ from media_decode import decode_media
 def active_sources(configured):
     """Keep retired sources in the catalog but never fetch them in live runs."""
     return [source for source in configured if source.get("enabled", True) is not False]
+
+
+def approved_dynamic_sources(configured, dynamic, approvals):
+    """Review every discovered source; position in a report is not approval."""
+    sources = list(configured)
+    seen = {source["url"] for source in sources}
+    for candidate in dynamic.get("sources", []):
+        url = candidate.get("url", "")
+        if approved_github_source(url, approvals) and url not in seen:
+            sources.append({"id": "github-auto-" + hashlib.sha256(url.encode()).hexdigest()[:20],
+                            "url": url, "scope": "candidate"})
+            seen.add(url)
+    return sources
+
+
+def _isolated_call(connection, operation):
+    # Each Linux worker owns its process group, including any FFmpeg children.
+    os.setsid()
+    try:
+        connection.send(("ready", None))
+        connection.send(("ok", operation()))
+    except BaseException as exc:
+        connection.send(("error", type(exc).__name__))
+    finally:
+        connection.close()
+
+
+def run_bounded(operation, seconds):
+    """Run one small batch with a hard wall deadline and reap its whole group.
+
+    Linux fork intentionally supports the existing checker closures. A blocked
+    socket or executor cannot keep the parent waiting after the batch deadline.
+    """
+    if seconds <= 0:
+        return "timeout", None
+    context = multiprocessing.get_context("fork")
+    reader, writer = context.Pipe(duplex=False)
+    process = context.Process(target=_isolated_call, args=(writer, operation))
+    deadline = time.monotonic() + seconds
+    ready = False
+    process.start()
+    writer.close()
+    try:
+        while True:
+            remaining = deadline - time.monotonic()
+            if remaining <= 0 or not reader.poll(remaining):
+                return "timeout", None
+            try:
+                status, result = reader.recv()
+            except EOFError:
+                return "error", "WorkerExited"
+            if status == "ready":
+                ready = True
+                continue
+            return status, result
+    finally:
+        # A deadline can race the ready message. Verify the worker created its
+        # own group even when that message has not yet reached the parent.
+        isolated = ready
+        if not isolated:
+            try:
+                isolated = os.getpgid(process.pid) == process.pid
+            except ProcessLookupError:
+                pass
+        if isolated:
+            try:
+                os.killpg(process.pid, signal.SIGKILL)
+            except ProcessLookupError:
+                pass
+        elif process.is_alive():
+            process.kill()
+        process.join()
+        reader.close()
+        process.close()
+
+
+def _verify_batch(batch, checker, media_checker):
+    def check(original):
+        item = dict(original)
+        item.update(network_status="UNKNOWN_OR_FAILED", media_decoded=False,
+                    device_verified=False, verification_status="CHECKED")
+        try:
+            if checker(item) is True:
+                item["network_status"] = "HLS_MANIFEST_REACHABLE"
+                item["media_decoded"] = media_checker(item) is True
+        except Exception:
+            pass
+        return item
+    with concurrent.futures.ThreadPoolExecutor(max_workers=len(batch)) as pool:
+        return list(pool.map(check, batch))
+
+
+def verify_in_batches(items, checker, media_checker, *, workers, deadline,
+                      batch_timeout, checkpoint, clock=None, runner=None):
+    """Keep all candidates; submit at most one worker-sized batch at a time."""
+    clock = time.monotonic if clock is None else clock
+    runner = run_bounded if runner is None else runner
+    for item in items:
+        item.update(network_status="UNTESTED", media_decoded=False,
+                    device_verified=False, verification_status="UNTESTED")
+    checkpoint(items, "inventory_before_verification")
+    for offset in range(0, len(items), workers):
+        remaining = deadline - clock()
+        if remaining <= 0:
+            break
+        batch = items[offset:offset + workers]
+        status, results = runner(lambda: _verify_batch(batch, checker, media_checker),
+                                 min(batch_timeout, remaining))
+        if status == "ok":
+            for item, result in zip(batch, results):
+                item.update(result)
+        else:
+            for item in batch:
+                item["verification_status"] = "UNTESTED_BATCH_" + status.upper()
+        checkpoint(batch, "verification_batch")
+    return all(item["verification_status"] == "CHECKED" for item in items)
+
 
 def build(source_texts, live_text, history=(), checker=None, workers=8, media_checker=None):
     """Pure integration boundary; source_texts contains actual fetched M3U contents."""
@@ -131,16 +251,22 @@ def render_m3u(batch):
     return "\n".join(lines) + "\n"
 
 def main():
+    started = time.monotonic()
     p = argparse.ArgumentParser()
     p.add_argument("--history", type=Path)
     p.add_argument("--archive", type=Path, required=True)
     p.add_argument("--out", type=Path, required=True)
     p.add_argument("--workers", type=int, default=8)
     p.add_argument("--timeout", type=float, default=12)
-    p.add_argument("--limit", type=int, default=500)
+    p.add_argument("--limit", type=int, default=500, help="M3U package size, not scan coverage")
+    p.add_argument("--max-seconds", type=float, default=5400,
+                   help="Total network/AV budget; reserve time for encrypted finalization")
     args = p.parse_args()
     if not 1 <= args.limit <= 2000 or not 1 <= args.workers <= 32 or not math.isfinite(args.timeout) or not 0 < args.timeout <= 120:
         p.error("limit 1..2000; workers 1..32; timeout >0 and <=120")
+    if not math.isfinite(args.max_seconds) or not 0 < args.max_seconds <= 5400:
+        p.error("max-seconds must be finite, >0 and <=5400")
+    deadline = started + args.max_seconds
     key_hex = os.environ.get("V2_ARCHIVE_KEY_HEX", "")
     if len(key_hex) != 64:
         p.error("V2_ARCHIVE_KEY_HEX must contain 64 hex characters")
@@ -159,10 +285,7 @@ def main():
     # Include only previously approved dynamic GitHub and forge sources.
     if DYNAMIC.exists() and GITHUB_APPROVALS.exists():
         approvals = set(json.loads(GITHUB_APPROVALS.read_text(encoding="utf-8")).get("approved_sha256", []))
-        for candidate in json.loads(DYNAMIC.read_text(encoding="utf-8")).get("sources", [])[:240]:
-            url = candidate.get("url", "")
-            if approved_github_source(url, approvals) and not any(s["url"] == url for s in sources):
-                sources.append({"id": "github-auto-" + hashlib.sha256(url.encode()).hexdigest()[:20], "url": url, "scope": "candidate"})
+        sources = approved_dynamic_sources(sources, json.loads(DYNAMIC.read_text(encoding="utf-8")), approvals)
     if FORGE.exists() and FORGE_APPROVALS.exists():
         from forge_source_review import approved_sources
         approvals = set(json.loads(FORGE_APPROVALS.read_text(encoding="utf-8")).get("approved_sha256", []))
@@ -189,37 +312,63 @@ def main():
     live_text = LIVE.read_text(encoding="utf-8-sig")
     from source_failover import SourceCache, execute_pipeline
     cache = SourceCache(ROOT / "cache" / "source-failover")
+    history = list(read_records(args.history)) if args.history else []
+    args.out.mkdir(parents=True)
+    args.archive.parent.mkdir(parents=True, exist_ok=True)
+    checkpoint_path = args.out / "checkpoint.enc"
+    def checkpoint(records, stage):
+        for block in _chunks(records, stage):
+            append(checkpoint_path, block)
+    # Protect raw history before the first network operation. Source metadata
+    # and every parsed candidate are checkpointed without plaintext URL output.
+    checkpoint(history, "raw_historical_evidence")
+    checkpoint(sources, "planned_sources")
     source_texts, failures, recovery_audit = [], [], []
-    for source, content, result in execute_pipeline(sources, cache):
+    for source in sources:
+        remaining = deadline - time.monotonic()
+        if remaining <= 0:
+            result = {"id": source["id"], "status": "BUDGET_EXHAUSTED", "fresh": False}
+            content = None
+        else:
+            status, response = run_bounded(
+                lambda: execute_pipeline([source], cache)[0], min(90, remaining))
+            if status == "ok":
+                _, content, result = response
+            else:
+                content = None
+                result = {"id": source["id"], "status": "SOURCE_" + status.upper(), "fresh": False}
         recovery_audit.append(result)
+        checkpoint([result], "source_fetch_result")
         if content is not None:
             source_texts.append((source, content))
+            parsed_items, _, _ = build([(source, content)], live_text)
+            checkpoint(parsed_items, "source_candidates")
         if not result["fresh"]:
             failures.append({"id": source["id"], "status": result["status"],
                              "reason": "Fresh source unavailable"})
-    history = list(read_records(args.history)) if args.history else []
     from collections import Counter
-    import threading
     av_diagnostics = Counter()
-    diagnostics_lock = threading.Lock()
     def probe_with_diagnostics(item):
         detail = {}
         ok = decode_media(item, args.timeout, diagnostic=detail)
-        category = detail.get("reason", "unknown")
-        if category == "ffmpeg_nonzero_exit":
-            category += ":" + detail.get("stderr_category", "other")
-        with diagnostics_lock:
-            av_diagnostics[category] += 1
+        item["decoder_diagnostic"] = detail
         return ok
-    items, audit, history_report = build(source_texts, live_text, history,
-                                         checker=lambda x: hls_reachable(x, args.timeout),
-                                         workers=args.workers,
-                                         media_checker=probe_with_diagnostics)
-    # Never silently publish a partial scan as complete.
-    args.out.mkdir(parents=True)
-    # The archive may be configured outside the output tree; create its parent
-    # only after all overwrite and nesting checks have passed.
-    args.archive.parent.mkdir(parents=True, exist_ok=True)
+    items, audit, history_report = build(source_texts, live_text, history)
+    verification_complete = verify_in_batches(
+        items, lambda x: hls_reachable(x, args.timeout), probe_with_diagnostics,
+        workers=args.workers, deadline=deadline, batch_timeout=2 * args.timeout + 10,
+        checkpoint=checkpoint)
+    for item in items:
+        detail = item.get("decoder_diagnostic")
+        if detail is not None:
+            category = detail.get("reason", "unknown")
+            if category == "ffmpeg_nonzero_exit":
+                category += ":" + detail.get("stderr_category", "other")
+            av_diagnostics[category] += 1
+    incomplete = bool(failures) or not verification_complete
+    checkpoint([{"verification_complete": verification_complete,
+                 "failed_sources": len(failures),
+                 "budget_exhausted": time.monotonic() >= deadline}], "checkpoint_summary")
     # The protected archive includes original historical rows even if they
     # are dead, duplicated, hash-only, or not classified as TR/AZ.
     protected_history = None
@@ -236,14 +385,14 @@ def main():
     verified = export_candidates(items)
     # A manifest check is not media decoding; never export it as a verified stream.
     # A partial source fetch cannot publish a new package as complete.
-    if not failures:
+    if not incomplete:
         for n in range(0, len(verified), args.limit):
             batch = verified[n:n + args.limit]
             (args.out / f"ibo_part_{n // args.limit + 1:04}.m3u8").write_text(render_m3u(batch), encoding="utf-8")
     # Export each standard size only when enough independently media-decoded
     # candidates exist; never pad packages with fabricated or unverified URLs.
     standard_package_counts = {}
-    if not failures:
+    if not incomplete:
         for package_size in (500, 1000, 2000):
             full_packages = len(verified) // package_size
             standard_package_counts[str(package_size)] = full_packages
@@ -265,10 +414,17 @@ def main():
               "historical": history_report, "historical_loss_guard": protected_history,
               "historical_raw_records_preserved": len(history),
               "archive_restore_verified": bool(archived_items) and restored == archived_items,
-              "device_verified": False, "standard_full_packages": standard_package_counts, "batch_count": (len(verified) + args.limit - 1) // args.limit if not failures else 0,
-              "status": "PARTIAL_SOURCE_FAILURE" if failures else ("NO_CANDIDATES" if not items else ("NO_MEDIA_DECODED" if not verified else "COMPLETE_SOURCE_FETCH"))}
+              "device_verified": False, "approved": False,
+              "verification_complete": verification_complete,
+              "verification_unfinished": sum(item["verification_status"] != "CHECKED" for item in items),
+              "max_seconds": args.max_seconds, "budget_exhausted": time.monotonic() >= deadline,
+              "checkpoint": str(checkpoint_path), "checkpoint_encrypted": True,
+              "standard_full_packages": standard_package_counts, "batch_count": (len(verified) + args.limit - 1) // args.limit if not incomplete else 0,
+              "status": "INCOMPLETE_VERIFICATION" if not verification_complete else ("PARTIAL_SOURCE_FAILURE" if failures else ("NO_CANDIDATES" if not items else ("NO_MEDIA_DECODED" if not verified else "COMPLETE_SOURCE_FETCH")))}
     (args.out / "report.json").write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     print(json.dumps({k: v for k, v in report.items() if k != "source_audit"}, ensure_ascii=False))
+    if not verification_complete:
+        raise SystemExit("Verification incomplete; encrypted inventory and checkpoint preserved, no packages exported")
     if failures:
         raise SystemExit("Partial source coverage; results preserved but run not successful")
     if not items:

@@ -120,7 +120,20 @@ def main():
     parser.add_argument("--sealed",type=Path,default=DEFAULT_SEALED)
     parser.add_argument("--report",type=Path,default=DEFAULT_REPORT)
     parser.add_argument("--out",type=Path,default=DEFAULT_OUT)
+    parser.add_argument("--batch-out",type=Path,
+                        help="Offline encrypted 1000/2000-record test packages; no plaintext playlist")
+    parser.add_argument("--xmltv",type=Path,help="Existing XMLTV snapshot for exact ID mapping audit")
     args=parser.parse_args()
+    if args.batch_out is not None:
+        from bulk_candidate_acceptance import main as batch_main
+        batch_args=["--report",str(args.report),"--sealed",str(args.sealed),
+                    "--private-key",str(args.private_key),"--out",str(args.batch_out)]
+        if args.xmltv is not None:
+            batch_args.extend(["--xmltv",str(args.xmltv)])
+        batch_main(batch_args)
+        return
+    if args.xmltv is not None:
+        parser.error("--xmltv requires --batch-out")
     out=validate_destination(args.out)
     for path in (args.report,args.sealed,args.private_key):
         if path.is_symlink() or not path.is_file():

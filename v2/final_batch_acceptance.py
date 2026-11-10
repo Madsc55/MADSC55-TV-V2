@@ -122,7 +122,7 @@ def probe(pair):
                    "-rw_timeout", "5000000", "-protocol_whitelist",
                    "http,https,tcp,tls,crypto", "-analyzeduration", "2000000",
                    "-probesize", "65536",
-                   "-show_entries", "stream=codec_type:stream_tags=language",
+                   "-show_entries", "stream=codec_type,codec_name,width,height:stream_tags=language",
                    "-of", "json", url]
         p = subprocess.run(command, capture_output=True, text=True,
                            stdin=subprocess.DEVNULL, timeout=16)
@@ -145,8 +145,16 @@ def probe(pair):
         status = ("VIDEO_AUDIO_DECODED" if decoded else
                   "VIDEO_AUDIO_STREAMS_ONLY" if video and audio else
                   "VIDEO_ONLY" if video else "AUDIO_ONLY" if audio else "NO_AV")
+        measured = [{"width": x["width"], "height": x["height"], "codec_name": x["codec_name"]}
+                    for x in streams if x.get("codec_type") == "video"
+                    and type(x.get("width")) is int and 0 < x["width"] <= 16384
+                    and type(x.get("height")) is int and 0 < x["height"] <= 16384
+                    and isinstance(x.get("codec_name"), str)
+                    and re.fullmatch(r"[A-Za-z0-9_]{1,40}", x["codec_name"])
+                    and x["codec_name"] != "unknown"]
         return {**failed, "status": status, "video": video,
-                "audio": audio, "decoded": decoded, "audio_lang_tags": lang}
+                "audio": audio, "decoded": decoded, "audio_lang_tags": lang,
+                "video_streams": measured, "video_measurement_origin": "FFPROBE_STREAM_METADATA"}
     except (OSError, ValueError, subprocess.TimeoutExpired, TypeError):
         return {**failed, "status": "PROBE_UNCONFIRMED"}
 
@@ -166,6 +174,9 @@ def report(source_results, inventory, checks, *, configured, historic, expired, 
             "evidence_origin": result.get("evidence_origin", "NOT_PROBED"),
             "video": result["video"], "audio": result["audio"],
             "decoded": result["decoded"], "ibo_player_verified": False})
+        if "video_streams" in result:
+            candidates[-1].update(video_streams=result["video_streams"],
+                                 video_measurement_origin=result["video_measurement_origin"])
     return {
         "schema": 1, "kind": "V2_WORLDWIDE_READ_ONLY_FINAL_ACCEPTANCE",
         "configured_source_count": configured, "original_run60_source_count": historic,
@@ -227,6 +238,13 @@ def resume_checks(prior, inventory):
                           "video": row["video"], "audio": row["audio"],
                           "decoded": row["decoded"], "audio_lang_tags": tags,
                           "evidence_origin": "PRIOR_RUN_HASH_ONLY_NOT_FRESH"}
+        if "video_streams" in row:
+            # Reused dimensions retain their original measurement provenance;
+            # absent legacy dimensions never become a guessed quality label.
+            from bulk_candidate_acceptance import measured_quality
+            measured_quality(row, row)
+            checks[digest].update(video_streams=row["video_streams"],
+                                  video_measurement_origin=row["video_measurement_origin"])
     return checks
 
 def write_checkpoint(path, outputs, inventory, checks, configured, historic, elapsed):
@@ -326,6 +344,9 @@ def main():
                 "metadata_route": route(item["meta"], item["scopes"]),
                 "video_stream": p["video"], "audio_stream": p["audio"],
                 "av_decode_verified": p["decoded"], "probe_status": p["status"]})
+            if "video_streams" in p:
+                rows[-1].update(video_streams=p["video_streams"],
+                                video_measurement_origin=p["video_measurement_origin"])
         path = REPORTS / ("final-worldwide-%03d.sealed" % i)
         seal_rows(rows, ROOT / "v2/config/stage5_recovery_public.pem", path)
         sealed.append({"name": path.name, "count": len(rows), "sha256": sha(path.read_bytes())})
