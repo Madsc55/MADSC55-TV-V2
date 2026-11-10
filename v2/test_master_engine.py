@@ -57,6 +57,28 @@ class MasterTests(unittest.TestCase):
         self.assertEqual(items[0]["verification_status"], "UNTESTED_BATCH_TIMEOUT")
         self.assertFalse(items[0]["media_decoded"])
 
+    def test_bounded_batch_rejects_truncated_or_forged_worker_results(self):
+        from master_engine import verify_in_batches
+        for forged in (
+            [],
+            [{"url": "https://example.org/other.m3u8",
+              "verification_status": "CHECKED", "media_decoded": True,
+              "device_verified": False}],
+            [{"url": "https://example.org/a.m3u8",
+              "verification_status": "CHECKED", "media_decoded": "true",
+              "device_verified": False}],
+        ):
+            with self.subTest(forged=forged):
+                rows = [{"url": "https://example.org/a.m3u8"}]
+                self.assertFalse(verify_in_batches(
+                    rows, lambda _: True, lambda _: True, workers=1,
+                    deadline=2, batch_timeout=1, clock=lambda: 0,
+                    runner=lambda operation, seconds: ("ok", forged),
+                    checkpoint=lambda *args: None))
+                self.assertEqual(rows[0]["verification_status"],
+                                 "UNTESTED_BATCH_INVALID_RESULT")
+                self.assertFalse(rows[0]["media_decoded"])
+
     def test_isolated_hung_callback_is_killed_and_worker_is_reaped(self):
         import multiprocessing
         import time
