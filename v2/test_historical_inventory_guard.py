@@ -317,5 +317,34 @@ class HistoricalInventoryGuardTests(unittest.TestCase):
         self.assertEqual(report["historical_records_preserved"], 3)
 
 
+    def test_stage2_2643_lost_address_candidates_preserve_every_source_record(self):
+        """#6: a bulk recovery queue must not lose duplicate provenance.
+
+        This is an offline invariant, NOT a real FFmpeg probe or recovery.
+        """
+        historical = [{"url_sha256": hashlib.sha256(b"historical").hexdigest(),
+                       "source_id": "immutable-history"}]
+        current = []
+        for index in range(2643):
+            url = "https://fixture.example.org/lost/%04d.m3u8" % index
+            current.append({"url": url, "source_id": "lost-address-%04d" % index})
+        duplicate = dict(current[0], source_id="second-source")
+        current.append(duplicate)
+        raw, candidates, report = reconcile(historical, current, 1)
+        self.assertEqual(raw[:1], historical)
+        self.assertEqual(raw[1:], current)
+        self.assertEqual(report["current_records_preserved"], 2644)
+        self.assertEqual(report["current_duplicate_url_rows"], 1)
+        self.assertEqual(report["unique_candidate_urls"], 2643)
+        self.assertEqual(candidates[0]["source_ids"],
+                         ["lost-address-0000", "second-source"])
+        self.assertTrue(all(row["status"] == "NOT_REVERIFIED"
+                            and row["av_verified"] is False
+                            and row["device_verified"] is False
+                            for row in candidates))
+        self.assertEqual(report["real_streams_reverified"], 0)
+        self.assertFalse(report["channel_playlist_modified"])
+
+
 if __name__ == "__main__":
     unittest.main()
