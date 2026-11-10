@@ -33,8 +33,8 @@ class HistoricalRecoveryTests(unittest.TestCase):
 
     def test_ambiguous_or_fragmented_urls_are_rejected(self):
         for url in ("https://example.org/live.m3u8#fragment",
-                    "https://example.org/live.m3u8\\n",
-                    "https://example.org/live.m3u8\\t",
+                    "https://example.org/live.m3u8\n",
+                    "https://example.org/live.m3u8\t",
                     "https://-bad.example.org/live.m3u8",
                     "https://bad-.example.org/live.m3u8"):
             with self.subTest(url=repr(url)):
