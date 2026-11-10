@@ -100,7 +100,7 @@ def recover(old_records, current_records):
                      "playback_verified", "ibo_device_verified"):
             candidate[flag] = False
         sources = candidate.get("source_ids", [])
-        sources = list(sources) if isinstance(sources, list) else []
+        sources = list(sources) if isinstance(sources, list) else ([sources] if isinstance(sources, str) and sources else [])
         for field in ("source_id", "source"):
             value = candidate.get(field)
             if isinstance(value, str) and value and value not in sources:
