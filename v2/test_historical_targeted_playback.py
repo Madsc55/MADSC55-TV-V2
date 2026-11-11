@@ -121,7 +121,7 @@ class HistoricalTargetedPlaybackTests(unittest.TestCase):
         def run(args, **kwargs):
             attempts.append((args, kwargs["timeout"]))
             if len(attempts) == 1:
-                return subprocess.CompletedProcess(args, 1, "", "HTTP error 403")
+                return subprocess.CompletedProcess(args, 1, "", "HTTP error 500")
             return subprocess.CompletedProcess(args, 0,
                 json.dumps({"streams": [{"codec_type": "video"}, {"codec_type": "audio"}]}), "")
         result = probe_one((sha(url), url), runner=run, resolver=lambda _: True)
