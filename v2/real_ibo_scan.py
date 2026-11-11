@@ -256,6 +256,7 @@ def main():
             if result is not None:
                 good.append(result)
     epg_ids = set()
+    epg_checked = args.epg is not None
     if args.epg is not None:
         # Parse local XMLTV only. Channel IDs are hints, not playback proof.
         if args.epg.stat().st_size > 100_000_000:
@@ -293,7 +294,8 @@ def main():
                           'url_sha256': url_sha256(candidate['url']),
                           'category': category(candidate),
                           'identity': normalized_identity({**previous, **candidate}),
-                          'epg_exact_match': bool(candidate.get('tvg_id') and candidate['tvg_id'].strip() in epg_ids and epg_match(candidate, {'channel': candidate['tvg_id'].strip()})),
+                          'epg_exact_match': (bool(candidate.get('tvg_id') and candidate['tvg_id'].strip() in epg_ids and epg_match(candidate, {'channel': candidate['tvg_id'].strip()})) if epg_checked else previous.get('epg_exact_match')),
+                          'epg_checked': epg_checked or previous.get('epg_checked', False),
                           'verified_quality': verified if verified.get('av_verified') else previous.get('verified_quality', {'av_verified': False, 'quality': 'UNVERIFIED'}),
                           'http_hls_status': new_status,
                           'ibo_device_tested': previous.get('ibo_device_tested', False),
