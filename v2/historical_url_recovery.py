@@ -105,7 +105,8 @@ def recover(old_records, current_records):
                         duplicate_source_associations += 1
             continue
         indexed[url] = len(recovered)
-        candidate = dict(row, recovery_status="HISTORICAL_NOT_REVERIFIED",
+        candidate = copy.deepcopy(row)
+        candidate.update(recovery_status="HISTORICAL_NOT_REVERIFIED",
                          source_status="HISTORICAL_ARTIFACT")
         candidate["historical_records"] = [copy.deepcopy(row)]
         # Keep original historical status as provenance, never as current playback acceptance.
