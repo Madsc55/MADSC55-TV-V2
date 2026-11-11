@@ -1,0 +1,122 @@
+#!/usr/bin/env python3
+"""Offline regression tests; no channel search or protected playlist changes."""
+import json
+import os
+import subprocess
+import sys
+import tempfile
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent
+
+def main():
+    with tempfile.TemporaryDirectory() as temp:
+        base = Path(temp)
+        first = base / "first.jsonl"
+        second = base / "second.jsonl"
+        first.write_text(json.dumps({"url": "https://example.org/a.m3u8",
+            "name": "Test channel", "source_ids": ["source-A"],
+            "http_hls_status": "AV_VERIFIED"}) + "\n", encoding="utf-8")
+        second.write_text(json.dumps({"url": "https://example.org/a.m3u8",
+            "source_ids": ["source-B"], "http_hls_status": "FAILED"}) + "\n" +
+            json.dumps({"url": "https://example.org/b.m3u8",
+            "name": "Another test", "source_ids": ["source-B"]}) + "\n", encoding="utf-8")
+        env = dict(os.environ, V2_ARCHIVE_PASSPHRASE="offline-test-passphrase-not-for-production")
+        output = base / "inventory.enc"
+        report = base / "report.json"
+        subprocess.run([sys.executable, str(ROOT / "consolidate_inventory.py"),
+                        "--input", str(first), "--input", str(second),
+                        "--encrypted-output", str(output), "--report", str(report)],
+                       env=env, check=True, capture_output=True, text=True)
+        info = json.loads(report.read_text(encoding="utf-8"))
+        assert info["unique_urls"] == 2
+        assert info["observations_preserved"] == 3
+        assert info["restore_test_passed"]
+        sys.path.insert(0, str(ROOT))
+        from secure_archive import decrypt
+        restored = [json.loads(line) for line in decrypt(output.read_bytes(),
+                    env["V2_ARCHIVE_PASSPHRASE"]).decode().splitlines()]
+        assert restored[0]["source_ids"] == ["source-A", "source-B"]
+        assert len(restored[0]["observations"]) == 2
+        assert restored[0]["name"] == "Test channel"
+        assert len(restored) == 2
+        roundtrip = base / "roundtrip.enc"
+        next_report = base / "next-report.json"
+        subprocess.run([sys.executable, str(ROOT / "consolidate_inventory.py"),
+                        "--encrypted-input", str(output),
+                        "--encrypted-output", str(roundtrip),
+                        "--report", str(next_report)],
+                       env=env, check=True, capture_output=True, text=True)
+        second_restore = [json.loads(line) for line in decrypt(roundtrip.read_bytes(),
+                          env["V2_ARCHIVE_PASSPHRASE"]).decode().splitlines()]
+        assert len(second_restore) == 2
+        assert second_restore[0]["source_ids"] == ["source-A", "source-B"]
+        assert len(second_restore[0]["observations"]) == 2
+        assert json.loads(next_report.read_text(encoding="utf-8"))["observations_preserved"] == 3
+        # Reject corrupted encrypted history instead of silently losing records.
+        corrupted = base / "corrupted.enc"
+        data = bytearray(output.read_bytes())
+        data[-1] ^= 1
+        corrupted.write_bytes(data)
+        failure = subprocess.run([sys.executable, str(ROOT / "consolidate_inventory.py"),
+                                  "--encrypted-input", str(corrupted),
+                                  "--encrypted-output", str(base / "should-not-exist.enc"),
+                                  "--report", str(base / "should-not-exist.json")],
+                                 env=env, capture_output=True, text=True)
+        assert failure.returncode != 0
+        assert not (base / "should-not-exist.enc").exists()
+        # Path aliases must not overwrite source data or double-count history.
+        same_path = subprocess.run([sys.executable, str(ROOT / "consolidate_inventory.py"),
+                                    "--encrypted-input", str(output),
+                                    "--encrypted-output", str(base / "." / "inventory.enc"),
+                                    "--report", str(base / "unsafe-report.json")],
+                                   env=env, capture_output=True, text=True)
+        assert same_path.returncode != 0
+        assert decrypt(output.read_bytes(), env["V2_ARCHIVE_PASSPHRASE"])
+        duplicate = subprocess.run([sys.executable, str(ROOT / "consolidate_inventory.py"),
+                                    "--input", str(first), "--input", str(base / "." / "first.jsonl"),
+                                    "--encrypted-output", str(base / "duplicate.enc"),
+                                    "--report", str(base / "duplicate.json")],
+                                   env=env, capture_output=True, text=True)
+        assert duplicate.returncode != 0
+        assert not (base / "duplicate.enc").exists()
+        overlapping_report = subprocess.run([sys.executable, str(ROOT / "consolidate_inventory.py"),
+                                             "--input", str(first),
+                                             "--encrypted-output", str(base / "overlap.enc"),
+                                             "--report", str(first)],
+                                            env=env, capture_output=True, text=True)
+        assert overlapping_report.returncode != 0
+        assert first.read_text(encoding="utf-8").startswith("{")
+        legacy = base / "legacy.jsonl"
+        legacy.write_text(json.dumps({"url": "https://example.org/legacy.m3u8",
+                                      "source_id": "historical-source",
+                                      "observations": [{"status": "AV_VERIFIED",
+                                                        "origin": "past-scan"}]}) + "\n",
+                          encoding="utf-8")
+        legacy_output = base / "legacy.enc"
+        subprocess.run([sys.executable, str(ROOT / "consolidate_inventory.py"),
+                        "--input", str(legacy),
+                        "--encrypted-output", str(legacy_output),
+                        "--report", str(base / "legacy-report.json")],
+                       env=env, check=True, capture_output=True, text=True)
+        legacy_restored = json.loads(decrypt(legacy_output.read_bytes(),
+                                             env["V2_ARCHIVE_PASSPHRASE"]).decode().strip())
+        assert legacy_restored["source_ids"] == ["historical-source"]
+        assert legacy_restored["observations"] == [{"status": "AV_VERIFIED",
+                                                     "origin": "past-scan"}]
+        invalid = base / "invalid.jsonl"
+        invalid.write_text(json.dumps({"url": "https://example.org/bad.m3u8",
+                                       "observations": ["invalid-history"]}) + "\n",
+                           encoding="utf-8")
+        bad_output = base / "bad-output.enc"
+        failed = subprocess.run([sys.executable, str(ROOT / "consolidate_inventory.py"),
+                                 "--input", str(invalid),
+                                 "--encrypted-output", str(bad_output),
+                                 "--report", str(base / "bad-report.json")],
+                                env=env, capture_output=True, text=True)
+        assert failed.returncode != 0
+        assert not bad_output.exists()
+        print("PASS: offline encrypted inventory merge, source retention, restore")
+
+if __name__ == "__main__":
+    main()
