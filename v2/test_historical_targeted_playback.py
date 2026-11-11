@@ -37,6 +37,17 @@ class HistoricalTargetedPlaybackTests(unittest.TestCase):
         self.assertNotIn(url, str(results))
         self.assertFalse(results["ibo_device_verified"])
 
+    def test_wrong_historical_hash_never_probed_or_credited(self):
+        url = "https://stream.example.org/live.m3u8"
+        def forbidden(*args, **kwargs):
+            self.fail("Hash mismatch must not reach DNS or FFprobe")
+        result = probe_one((sha("https://stream.example.org/other.m3u8"), url),
+                           runner=forbidden, resolver=forbidden)
+        self.assertEqual(result["status"], "HISTORICAL_SHA_MISMATCH")
+        self.assertFalse(result["video_stream"])
+        self.assertFalse(result["audio_stream"])
+        self.assertNotIn(url, str(result))
+
     def test_failed_probe_not_declared_dead(self):
         url = "https://stream.example.org/bad.m3u8"
         result = probe_one((sha(url), url),
