@@ -194,14 +194,15 @@
     {
       "id": 16,
       "status": "in_progress",
-      "last_checked_at": "2026-11-09",
+      "last_checked_at": "2026-11-11T12:54:04Z",
       "evidence_urls": [
         "https://github.com/Madsc55/MADSC55-TV-V2/commit/a5ff82a5f9ceded6de356ecb6827945f1a1a374d",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42623941094",
-        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42706126197/job/129463381480"
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42706126197/job/129463381480",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42989285004"
       ],
       "blocker": "Depends on #14 historical baseline and real transient-source failure acceptance.",
-      "reason": "Transient retry retains prior decoded AV channel IDs, rejects mismatched URL SHA/channel identity and forged FFmpeg status; grouped offline CI green. End-to-end prior AV evidence retention acceptance still pending. Real Actions job 129463381480 reprobed 89 selected transient URLs with FFmpeg, preserved 3 previous successes and recorded 0 fresh decodes. Historical baseline dependency remains open."
+      "reason": "Transient retry retains prior decoded AV channel IDs, rejects mismatched URL SHA/channel identity and forged FFmpeg status; grouped offline CI green. End-to-end prior AV evidence retention acceptance still pending. Real Actions job 129463381480 reprobed 89 selected transient URLs with FFmpeg, preserved 3 previous successes and recorded 0 fresh decodes. Historical baseline dependency remains open. Real run #42989285004 re-probed 89 original candidate hashes with matching broadcaster IDs. Prior FFmpeg AV for Cine1.tr, DMAX.tr and TLC.tr remained preserved, no new decoded evidence. Full baseline acceptance depends on #14."
     },
     {
       "id": 17,
@@ -214,26 +215,32 @@
     {
       "id": 18,
       "status": "pending",
-      "last_checked_at": null,
-      "evidence_urls": [],
+      "last_checked_at": "2026-11-11T12:54:04Z",
+      "evidence_urls": [
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42989285004"
+      ],
       "blocker": null,
-      "reason": null
+      "reason": "Pinned exact IPTV API evidence has 171 stream hashes, 168 decoded audio+video in both short FFmpeg samples. Identity review remains tied to #15."
     },
     {
       "id": 19,
       "status": "pending",
-      "last_checked_at": null,
-      "evidence_urls": [],
+      "last_checked_at": "2026-11-11T12:54:04Z",
+      "evidence_urls": [
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42989285004"
+      ],
       "blocker": null,
-      "reason": null
+      "reason": "Validated 29 exact XMLTV IDs, 8 with valid programme time ranges, 14 also present in the reviewed AV set. 303 EPG gaps remain. Final identity acceptance depends on #18."
     },
     {
       "id": 20,
       "status": "pending",
-      "last_checked_at": null,
-      "evidence_urls": [],
+      "last_checked_at": "2026-11-11T12:54:04Z",
+      "evidence_urls": [
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42989285004"
+      ],
       "blocker": null,
-      "reason": null
+      "reason": "167 exact URL hashes have positive measured video dimensions and two successful real AV samples. Provenance and counts in the linked report. Full recovery queue acceptance depends on #17."
     },
     {
       "id": 21,

@@ -1,0 +1,63 @@
+{
+  "schema": 1,
+  "kind": "V2_STAGE_3_PINNED_REAL_EVIDENCE_REVIEW",
+  "live_run_id": 42989285004,
+  "transient": {
+    "prior_run_id": 42043534038,
+    "prior_artifact_id": 13424301777,
+    "retry_artifact_id": 13841516071,
+    "exact_same_broadcaster_and_hash_reprobed": 89,
+    "prior_av_channel_ids_preserved": [
+      "Cine1.tr",
+      "DMAX.tr",
+      "TLC.tr"
+    ],
+    "fresh_av": 0,
+    "original_status_counts": {
+      "PROBE_FAILED_NETWORK_TIMEOUT": 58,
+      "UNSAFE_OR_UNRESOLVED_HOST": 22,
+      "PROBE_FAILED_HTTP_RESPONSE_ERROR": 4,
+      "VIDEO_ONLY": 1,
+      "PROBE_FAILED_UNKNOWN_NETWORK_OR_MEDIA_ERROR": 4
+    },
+    "retry_status_counts": {
+      "PROBE_FAILED_NETWORK_TIMEOUT": 53,
+      "UNSAFE_OR_UNRESOLVED_HOST": 22,
+      "PROBE_FAILED_HTTP_RESPONSE_ERROR": 9,
+      "PROBE_FAILED_AUTH_REQUIRED": 1,
+      "PROBE_FAILED_UNKNOWN_NETWORK_OR_MEDIA_ERROR": 4
+    }
+  },
+  "measurements": {
+    "artifact_id": 13840722439,
+    "exact_api_streams": 171,
+    "both_real_av_samples_decoded": 168,
+    "decoded_streams_with_measured_dimensions": 167,
+    "measured_dimensions": {
+      "426x240": 5,
+      "480x576": 1,
+      "640x360": 11,
+      "718x404": 1,
+      "720x576": 2,
+      "832x468": 1,
+      "852x480": 3,
+      "1024x576": 3,
+      "1080x720": 1,
+      "1280x720": 69,
+      "1920x1080": 68,
+      "2560x1440": 1,
+      "3840x2160": 1
+    }
+  },
+  "epg": {
+    "artifact_id": 13841351963,
+    "additional_candidate_ids": 32,
+    "exact_xmltv_ids": 29,
+    "exact_ids_with_valid_programme_time": 8,
+    "exact_xmltv_ids_also_in_reviewed_av": 14,
+    "remaining_missing_epg_ids": 303
+  },
+  "ibo_device_verified": false,
+  "protected_playlist_modified": false
+}
+
