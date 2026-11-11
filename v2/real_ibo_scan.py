@@ -15,6 +15,7 @@ import time
 import urllib.error
 import urllib.parse
 import urllib.request
+import xml.etree.ElementTree as ET
 from stream_probe import probe
 from stage3_identity_recovery import url_sha256
 from stage3_metadata_acceptance import quality_from_probe, category, normalized_identity, epg_match
@@ -253,6 +254,13 @@ def main():
             checked += 1
             if result is not None:
                 good.append(result)
+    epg_ids = set()
+    if args.epg is not None:
+        # Parse local XMLTV only. Channel IDs are hints, not playback proof.
+        for event, element in ET.iterparse(args.epg, events=('end',)):
+            if element.tag == 'channel' and element.get('id'):
+                epg_ids.add(element.get('id'))
+            element.clear()
     # Retain every discovered new URL, including candidates that failed HTTP/HLS.
     # Network checks are not device playback proof; never silently lose a candidate.
     good_urls = {item['url'] for item in good}
@@ -281,6 +289,7 @@ def main():
                       'url_sha256': url_sha256(candidate['url']),
                       'category': category(candidate),
                       'identity': normalized_identity({**previous, **candidate}),
+                      'epg_exact_match': any(epg_match(candidate, {'channel': epg_id}) for epg_id in (candidate.get('tvg_id'),) if epg_id in epg_ids),
                       'verified_quality': verified if verified.get('av_verified') else previous.get('verified_quality', {'av_verified': False, 'quality': 'UNVERIFIED'}),
                       'http_hls_status': new_status,
                       'ibo_device_tested': previous.get('ibo_device_tested', False),
