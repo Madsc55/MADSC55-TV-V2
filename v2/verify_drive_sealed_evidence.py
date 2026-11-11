@@ -14,6 +14,7 @@ from pathlib import Path
 from zipfile import ZipFile, BadZipFile
 
 from stage3_sealed_export import open_rows
+from production_full_stage5_archive import verify as verify_production_aes
 
 HERE = Path(__file__).resolve().parent
 MANIFEST = HERE / "history/offsite-sealed-drive-20261103.json"
@@ -112,8 +113,19 @@ def main():
     p.add_argument("--stage3", type=Path, required=True)
     p.add_argument("--orphan", type=Path, required=True)
     p.add_argument("--rsa-private-key", type=Path)
+    p.add_argument("--production-aes", type=Path)
+    p.add_argument("--production-aes-key", type=Path)
+    p.add_argument("--production-aes-sha256")
     a = p.parse_args()
     print(verify(a.stage3, a.orphan, a.rsa_private_key))
+    production_inputs = (a.production_aes, a.production_aes_key, a.production_aes_sha256)
+    if any(x is not None for x in production_inputs):
+        if not all(x is not None for x in production_inputs):
+            raise ValueError("Production AES acceptance requires archive, original key metadata and pinned SHA256 together")
+        result = verify_production_aes(*production_inputs)
+        if not result.get("full_aes_gcm_restore") or not result.get("exact_sha256_identities_verified"):
+            raise ValueError("Production AES independent restore acceptance failed")
+        print("DRIVE_PRODUCTION_AES_4955_PLUS_107_AUTHENTICATED_RESTORE_VERIFIED")
 
 if __name__ == "__main__":
     main()
