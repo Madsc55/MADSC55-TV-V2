@@ -53,19 +53,27 @@ def check(env=None):
         raise RuntimeError("Archive evidence missing required passed checks")
     if evidence.get("backup_scope") != "independent_remote_storage":
         raise RuntimeError("Local copy or expiring CI artifact is not an independent durable backup")
-    if evidence.get("retrieval_method") != "aws_s3api_versioned_get_object":
-        raise RuntimeError("No verified versioned remote retrieval method")
+    method = evidence.get("retrieval_method")
     location = evidence.get("backup_location")
-    if not isinstance(location, str):
-        raise RuntimeError("Missing remote backup location")
-    uri = urlsplit(location)
-    if (uri.scheme != "s3" or not uri.hostname or uri.username or uri.password
-            or uri.path in ("", "/") or uri.query or uri.fragment or uri.port is not None):
-        raise RuntimeError("Independent backup must be a versioned S3 object URI")
     version = evidence.get("remote_object_version")
-    if (not isinstance(version, str) or not 1 <= len(version) <= 255 or
-            version.lower() == "null" or any(ord(c) < 33 or ord(c) == 127 for c in version)):
-        raise RuntimeError("Missing immutable remote object version")
+    if method == "aws_s3api_versioned_get_object":
+        if not isinstance(location, str):
+            raise RuntimeError("Missing remote backup location")
+        uri = urlsplit(location)
+        if (uri.scheme != "s3" or not uri.hostname or uri.username or uri.password
+                or uri.path in ("", "/") or uri.query or uri.fragment or uri.port is not None):
+            raise RuntimeError("Independent backup must be a versioned S3 object URI")
+        if (not isinstance(version, str) or not 1 <= len(version) <= 255 or
+                version.lower() == "null" or any(ord(c) < 33 or ord(c) == 127 for c in version)):
+            raise RuntimeError("Missing immutable remote object version")
+    elif method == "google_drive_authenticated_version_checked_get":
+        if (not isinstance(location, str)
+                or re.fullmatch(r"gdrive://[A-Za-z0-9_-]{10,200}", location) is None
+                or not isinstance(version, str)
+                or re.fullmatch(r"[1-9][0-9]*", version) is None):
+            raise RuntimeError("Authenticated Drive file ID and checked revision required")
+    else:
+        raise RuntimeError("No verified independent remote retrieval method")
     if evidence.get("historical_record_count") != EXPECTED_HISTORY:
         raise RuntimeError("Evidence does not cover all 4955 historical identities")
 
