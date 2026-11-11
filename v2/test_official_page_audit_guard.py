@@ -31,6 +31,13 @@ class OfficialPageAuditGuardTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "counter mismatch"):
             verify(report)
 
+    def test_wrong_source_index_is_detected_when_counters_still_match(self):
+        report = copy.deepcopy(self.report)
+        shared = next(row for row in report["reference_sources"] if len(row["page_ids"]) > 1)
+        shared["page_ids"].pop()
+        with self.assertRaisesRegex(ValueError, "index disagrees with per-page evidence"):
+            verify(report)
+
     def test_duplicate_page_is_rejected(self):
         report = copy.deepcopy(self.report)
         report["pages"].append(copy.deepcopy(report["pages"][0]))

@@ -1,0 +1,65 @@
+{
+  "schema": 1,
+  "kind": "V2_OFFICIAL_SOURCE_PROVENANCE_AND_HISTORICAL_AV",
+  "direct_page_audit_sha256": "f82ce72f0877aae17c6bb63bde40a6fa6d940113a43b728d7bb7e7d7cf1c5a84",
+  "source_handoff_run_id": 41939434438,
+  "source_handoff_artifact_id": 13376500603,
+  "source_handoff_archive_sha256": "6192b61d771914e518002782aff2364ab62696abb8eaa8317c01a4d7417549ec",
+  "prior_av_artifact_id": 13366661937,
+  "prior_av_report_sha256": "d7245c4d74f536511b39395081e5c973d08a6243b62b286195a44c565faaafa6",
+  "exact_candidates": 8,
+  "prior_av_verified_count": 4,
+  "exact_overlaps": [
+    {
+      "url_sha256": "133ef70d15f1975a373355b8137f689ca233ddd3955a0a307c307b6e602d58c1",
+      "page_id": "benguturk-official",
+      "prior_status": "VIDEO_AUDIO_DECODED",
+      "decoded_av_in_prior_run": true
+    },
+    {
+      "url_sha256": "26833a99ba0e2944f6ed4b8c303d938942fdfa2afae57e0bea97e56bb92ac6bb",
+      "page_id": "benguturk-official",
+      "prior_status": "PROBE_FAILED_NETWORK_TIMEOUT",
+      "decoded_av_in_prior_run": false
+    },
+    {
+      "url_sha256": "770d38644d52bfad090e4fbcb5149a8d28dcd00fe2e51c473321ac7f63d51120",
+      "page_id": "tv100-official",
+      "prior_status": "UNSAFE_OR_UNRESOLVED_HOST",
+      "decoded_av_in_prior_run": false
+    },
+    {
+      "url_sha256": "9f49525cb29be4413770074f7b9b2a75079e00c18bff3f6922c345f604b50d22",
+      "page_id": "halk-tv-official",
+      "prior_status": "VIDEO_AUDIO_DECODED",
+      "decoded_av_in_prior_run": true
+    },
+    {
+      "url_sha256": "9f4960fa7af53816db5f02a5b9e95e3009c680d0ec392d0a09c2462dae864188",
+      "page_id": "trt-spor-official",
+      "prior_status": "UNSAFE_OR_UNRESOLVED_HOST",
+      "decoded_av_in_prior_run": false
+    },
+    {
+      "url_sha256": "c1ddfef920a0f7fe61cf09c6d5663d1bc713a491ab550b03399dd19a4fc87f0e",
+      "page_id": "halk-tv-official",
+      "prior_status": "VIDEO_AUDIO_DECODED",
+      "decoded_av_in_prior_run": true
+    },
+    {
+      "url_sha256": "cc351559509b967770be1e94a9f85820f6ce907ae3ab08621d30f419538e4926",
+      "page_id": "tv100-official",
+      "prior_status": "VIDEO_AUDIO_DECODED",
+      "decoded_av_in_prior_run": true
+    },
+    {
+      "url_sha256": "f4d30d62d59b04f381a3e2282ebad6421f2f4ffd7790dfe0bea83584431e08d5",
+      "page_id": "tv100-official",
+      "prior_status": "UNSAFE_OR_UNRESOLVED_HOST",
+      "decoded_av_in_prior_run": false
+    }
+  ],
+  "current_av_claimed": false,
+  "ibo_device_verified": false,
+  "protected_playlist_modified": false
+}

@@ -7,7 +7,7 @@ HTTP references are discovery evidence, never decoded video/audio proof.
 import argparse
 import json
 import re
-from collections import Counter
+from collections import Counter, defaultdict
 from pathlib import Path
 
 SHA = re.compile(r"[0-9a-f]{64}\Z")
@@ -22,6 +22,7 @@ def verify(report):
     if not isinstance(pages, list) or not pages:
         raise ValueError("Missing page provenance")
     ids, occurrences, fetched = set(), Counter(), 0
+    expected_sources = defaultdict(set)
     for page in pages:
         if not isinstance(page, dict):
             raise ValueError("Invalid page record")
@@ -47,6 +48,8 @@ def verify(report):
         elif refs:
             raise ValueError("Unfetched page cannot claim extracted references")
         occurrences.update(refs)
+        for digest in refs:
+            expected_sources[digest].add(page_id)
     expected = {
         "pages_checked": len(pages),
         "pages_fetched": fetched,
@@ -57,6 +60,22 @@ def verify(report):
     for key, value in expected.items():
         if type(report.get(key)) is not int or report[key] != value:
             raise ValueError("Official-page audit counter mismatch: " + key)
+    rows = report.get("reference_sources")
+    if not isinstance(rows, list):
+        raise ValueError("Missing reference source index")
+    observed_sources = {}
+    for row in rows:
+        if not isinstance(row, dict):
+            raise ValueError("Invalid reference source entry")
+        digest, page_ids = row.get("url_sha256"), row.get("page_ids")
+        if (not isinstance(digest, str) or not SHA.fullmatch(digest)
+                or digest in observed_sources or not isinstance(page_ids, list)
+                or any(not isinstance(page_id, str) for page_id in page_ids)
+                or len(page_ids) != len(set(page_ids))):
+            raise ValueError("Invalid or duplicate reference source association")
+        observed_sources[digest] = set(page_ids)
+    if observed_sources != expected_sources:
+        raise ValueError("Reference source index disagrees with per-page evidence")
     return expected
 
 

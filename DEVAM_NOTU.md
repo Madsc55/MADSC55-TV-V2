@@ -2364,3 +2364,8 @@ Kullanıcının açık talimatıyla #3, #4 ve #6 tarihî kurtarma görevleri art
 
 - [Sabit 55 kaynak satırı ve 50 kimlik](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42018761724) özgün SHA manifestine göre doğrulandı. 125 aday adresin şifreli kanıtı korundu. Her kimliğin aday hash'leri ve FFmpeg durumları [sonraki tam](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42539900333) ve [kısmi](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42913862261) koşularla karşılaştırıldı.
 - `v2/reports/stage2-orphan-investigation-20261111.json` dosyasında 4 kesin AV sonucu, adayları olup AV kanıtı bulunmayan 36 kimlik ve onaylı kaynak aramasında kesin adres bulunmayan 10 kimlik belgeleniyor. 46 yayının oynatım durumu açık. Önceki koşuların AV kayıtları korundu. #3 için araştırma ve engel belgeleme kabulü tamamlandı.
+
+### 11 Kasım — Aşama 2, #9 ve #11 kaynak kabulü
+
+- #9 kapsamındaki 27 onaylı sayfanın 26'sı erişilebilir. TRT Spor HTTP 403 sonucu kendi kaydında açık. [Kaynak aktarım arşivi](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/41939434438) içindeki 8 şifreli alternatif URL'nin hash'leri sabit FFmpeg raporuyla eşleşti. Dört URL daha önce görüntü ve sesle çözüldü. Bunlar Bengütürk, Halk TV ve TV100 için geçmiş alternatif yayın kanıtlarıdır. Güncel oynatım sonuçları açık. SHA değerleri ve ilişki kanıtı `v2/reports/stage2-official-source-evidence-20261111.json` içinde.
+- #11 için 68 benzersiz hash'in 83 sayfa ilişkisi ve 15 ortak referansı tek tek doğrulandı. Raporun ters kaynak indeksinde eksik veya farklı ilişki varsa toplamlar doğru olsa bile kabul durur. Tarihî URL birleştirmesinde özgün gözlem satırları korunur. Yerel kaynak koruma ve görev motoru testleri geçti.

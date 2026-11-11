@@ -23,8 +23,9 @@ class TaskEngineTests(unittest.TestCase):
         ledger["statuses"][1]["status"] = "completed"
         ledger["statuses"][2]["status"] = "in_progress"
         ledger["statuses"][3]["status"] = "pending"
+        ledger["statuses"][8]["status"] = "in_progress"
         # Preserve original baseline for deterministic historical ordering assertions.
-        for task_id in (7, 8, 10, 13):
+        for task_id in (7, 8, 10, 11, 13):
             ledger["statuses"][task_id - 1]["status"] = "pending"
         return ledger
 

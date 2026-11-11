@@ -103,16 +103,19 @@
     },
     {
       "id": 9,
-      "status": "in_progress",
-      "last_checked_at": "2026-11-09T21:49:15.073Z",
+      "status": "completed",
+      "last_checked_at": "2026-11-11T08:52:03Z",
       "evidence_urls": [
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42216075104",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42539900333",
         "https://github.com/Madsc55/MADSC55-TV-V2/blob/madsc/v2-discovery-bulk-20261031/v2/history/blocked-official-prior-real-av-sha.json",
-        "https://github.com/Madsc55/MADSC55-TV-V2/blob/madsc/v2-discovery-bulk-20261031/v2/reports/official-page-http-audit-20261109.json"
+        "https://github.com/Madsc55/MADSC55-TV-V2/blob/madsc/v2-discovery-bulk-20261031/v2/reports/official-page-http-audit-20261109.json",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/41939434438",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42925732323",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42989439329"
       ],
-      "blocker": "TRT Spor approved page returns HTTP_403 in current audit; no bypass. Exact official stream provenance and real AV acceptance still required. Prior GitHub runner source errors are not claimed globally resolved by this environment's HTTP check.",
-      "reason": "Bounded real HTTP audit of 27 existing approved publisher pages: 26 fetched, 1 TRT Spor HTTP_403. 68 unique reference hashes with 83 source-page associations; 15 references appear on both TRT1 and TRT pages. Discovery dedupe previously dropped those second-page identities; now all page_ids retained. HTTP references are not video/audio proof."
+      "blocker": null,
+      "reason": "Verified the approved official-page audit (27 checked, 26 fetched, TRT Spor HTTP 403), the eight exact alternate candidate hashes in sealed provenance, and four prior FFmpeg video+audio results for three channel identities. Accepted source review; current playback and blocked source outcomes remain individually open."
     },
     {
       "id": 10,
@@ -126,14 +129,17 @@
     },
     {
       "id": 11,
-      "status": "in_progress",
-      "last_checked_at": "2026-11-09",
+      "status": "completed",
+      "last_checked_at": "2026-11-11T08:52:03Z",
       "evidence_urls": [
         "https://github.com/Madsc55/MADSC55-TV-V2/commit/cd231eb861335f2fde9caa791489c47fe4e7b546",
-        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42623941094"
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42623941094",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/41939434438",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42925732323",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42989439329"
       ],
-      "blocker": "#9 official-source discovery and full provenance acceptance remain open.",
-      "reason": "Exact URL SHA deduplication, source lineage and no fabricated AV verified by offline regression; pending #9 official-source provenance dependency and complete acceptance."
+      "blocker": null,
+      "reason": "Validated all 83 page-reference associations across 68 unique SHA-256 hashes, including all 15 shared references. Historical duplicate recovery retains each original observation record. Provenance and AV claims were independently reconciled; source acceptance #9 satisfied."
     },
     {
       "id": 12,
