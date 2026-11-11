@@ -34,6 +34,15 @@ class HistoricalExactRealAVTests(unittest.TestCase):
         self.assertNotIn("https://",json.dumps(doc))
         self.assertFalse(doc["ibo_device_verified"])
 
+    def test_large_historical_set_does_not_fail_at_thirty(self):
+        missing={format(i,"064x") for i in range(31)}
+        report=grouped_decode(missing,{})
+        self.assertEqual(report["original_historical_url_hashes_requested"],31)
+        self.assertEqual(report["exact_git_history_url_hashes_found"],0)
+        self.assertEqual(len(report["not_in_git_history_sha256"]),31)
+        with self.assertRaises(ValueError):
+            grouped_decode({format(i,"064x") for i in range(4956)},{})
+
     def test_missing_or_mismatched_url_hash_is_not_reconstructed(self):
         missing,recovered=self.fixtures()
         recovered[next(iter(recovered))]="https://stream.example.org/invented.m3u8"
