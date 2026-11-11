@@ -16,6 +16,9 @@ import urllib.error
 import urllib.parse
 import urllib.request
 from stream_probe import probe
+from stage3_identity_recovery import url_sha256
+from stage3_metadata_acceptance import quality_from_probe, category
+from stage3_recovery_queue import build_recovery_queue
 from secure_archive import backup as encrypt_inventory, decrypt as decrypt_inventory
 import os
 
@@ -99,7 +102,7 @@ def check_hls(entry, timeout):
         if status in (200, 206) and hls:
             outcome = probe(url, timeout=timeout)
             if outcome['status'] == 'AV_VERIFIED':
-                return entry
+                return {**entry, 'verified_quality': quality_from_probe(outcome)}
     except (OSError, TimeoutError, urllib.error.URLError, ValueError,
             http.client.IncompleteRead, http.client.HTTPException):
         pass
@@ -251,6 +254,7 @@ def main():
     # Retain every discovered new URL, including candidates that failed HTTP/HLS.
     # Network checks are not device playback proof; never silently lose a candidate.
     good_urls = {item['url'] for item in good}
+    good_by_url = {item['url']: item for item in good}
     args.inventory.parent.mkdir(parents=True, exist_ok=True)
     inventory_tmp = args.inventory.with_suffix(args.inventory.suffix + '.tmp')
     # Restrict the temporary plaintext inventory before writing any URL tokens.
@@ -264,11 +268,24 @@ def main():
             if not old_observations and previous.get('http_hls_status'):
                 old_observations = [{'status': previous['http_hls_status'], 'origin': 'previous-inventory'}]
             new_status = 'AV_VERIFIED' if candidate['url'] in good_urls else 'UNVERIFIED_OR_FAILED'
+            verified = good_by_url.get(candidate['url'], {}).get('verified_quality', {})
             record = {**previous, **candidate,
+                      'url_sha256': url_sha256(candidate['url']),
+                      'category': category(candidate),
+                      'verified_quality': verified if verified.get('av_verified') else previous.get('verified_quality', {'av_verified': False, 'quality': 'UNVERIFIED'}),
                       'http_hls_status': new_status,
                       'ibo_device_tested': previous.get('ibo_device_tested', False),
                       'observations': old_observations + [{'status': new_status, 'origin': 'current-scan'}]}
             inventory_file.write(json.dumps(record, ensure_ascii=False) + '\n')
+    # Queue contains SHA identities only; no stream URL or token in public report.
+    recovery_records = []
+    for candidate in candidates.values():
+        prior = historical_records.get(candidate['url'], {})
+        recovery_records.append({'url': candidate['url'],
+                                 'last_http_status': 200 if candidate['url'] in good_urls else None,
+                                 'recovery_attempts': prior.get('recovery_attempts', 0),
+                                 'observations': prior.get('observations', [])})
+    recovery_queue = build_recovery_queue(recovery_records)
     # A failed source fetch must not overwrite the last complete encrypted baseline.
     encrypted_inventory = args.inventory.with_suffix(
         args.inventory.suffix + ('.pending.enc' if incomplete else '.enc'))
@@ -283,6 +300,7 @@ def main():
     report = {'source_count': len(sources), 'dynamic_source_count': dynamic_count, 'fetched_sources': len(source_counts),
               'failed_sources': failed, 'source_counts': source_counts, 'source_drops': source_drops, 'existing_main_urls': len(main_urls), 'excluded_foreign_archive_urls': len(foreign_urls), 'unique_new_candidates': len(candidates), 'recovered_from_previous_encrypted_inventory': recovered_from_archive,
               'http_checked': checked, 'http_hls_ok': len(good), 'av_verified': len(good),
+              'recovery_queue': recovery_queue,
               'candidate_inventory': str(encrypted_inventory), 'archive_restore_test_passed': archive_result['restore_test_passed'],
               'unverified_or_failed_candidates': len(candidates) - len(good),
               'multi_source_candidates': sum(len(item['source_ids']) > 1 for item in candidates.values()),
