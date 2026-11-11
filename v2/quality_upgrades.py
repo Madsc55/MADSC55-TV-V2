@@ -21,6 +21,11 @@ def height(text):
         return 720
     return None
 
+def valid_measured_height(value):
+    """Only positive integer pixel heights count as measured quality."""
+    return value if isinstance(value, int) and not isinstance(value, bool) and value > 0 else None
+
+
 def main():
     current = list(entries(LIVE.read_text(encoding="utf-8-sig")))
     by_id = {}
@@ -30,7 +35,7 @@ def main():
     catalog = json.loads(SOURCE.read_text(encoding="utf-8"))
     decoded_path = ROOT / "v2/reports/turkish-stream-decode.json"
     decoded = json.loads(decoded_path.read_text(encoding="utf-8")) if decoded_path.exists() else {"results": []}
-    measurements = {(x.get("channel_id"), x.get("url")): max((v.get("height") or 0 for v in x.get("video_streams", [])), default=0) for x in decoded.get("results", []) if x.get("status") == "SHORT_DECODE_VERIFIED"}
+    measurements = {(x.get("channel_id"), x.get("url")): max((valid_measured_height(v.get("height")) or 0 for v in x.get("video_streams", []) if isinstance(v, dict)), default=0) for x in decoded.get("results", []) if x.get("status") == "SHORT_DECODE_VERIFIED"}
     baseline_path = ROOT / "v2/reports/current-stream-resolution.json"
     baseline = json.loads(baseline_path.read_text(encoding="utf-8")) if baseline_path.exists() else {"results": []}
     measured_current = {}
@@ -38,7 +43,7 @@ def main():
         if sample.get("status") == "MEASURED" and sample.get("tvg_id"):
             k = sample["tvg_id"].split("@")[0].casefold()
             measured_height = sample.get("height")
-            if isinstance(measured_height, int) and not isinstance(measured_height, bool) and measured_height > 0:
+            if valid_measured_height(measured_height) is not None:
                 measured_current[k] = max(measured_current.get(k, 0), measured_height)
     items = []
     for c in catalog["candidates"]:
