@@ -18,6 +18,12 @@ class Stage3MetadataTests(unittest.TestCase):
         self.assertFalse(quality_from_probe({"status": "AV_VERIFIED", "video": True, "audio": True, "streams": [
             {"codec_type": "video", "width": 1920, "height": 1080}]})["av_verified"])
 
+    def test_boolean_dimensions_are_not_resolution_evidence(self):
+        result = quality_from_probe({'status': 'AV_VERIFIED', 'video': True, 'audio': True,
+            'streams': [{'codec_type': 'video', 'width': True, 'height': True},
+                        {'codec_type': 'audio', 'codec_name': 'aac'}]})
+        self.assertFalse(result['av_verified'])
+
     def test_real_av_quality(self):
         result = quality_from_probe({"status": "AV_VERIFIED", "video": True, "audio": True, "streams": [
             {"codec_type": "video", "width": 1280, "height": 720},
