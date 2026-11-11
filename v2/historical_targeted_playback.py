@@ -31,15 +31,26 @@ def load_missing_report(path, historical_index):
         raise ValueError("Incomplete original historical baseline")
     report = json.loads(Path(path).read_text(encoding="utf-8"))
     a = report.get("source_content_audit", {})
-    candidates = a.get("historical_identifiers_absent_sha256_sample", [])
+    full = a.get("historical_identifiers_absent_sha256_full")
+    sample = a.get("historical_identifiers_absent_sha256_sample", [])
     reported = a.get("historical_identifiers_absent_from_current_sources")
-    if (not isinstance(candidates, list) or type(reported) is not int
-            or (reported > 0 and not candidates)
-            or reported < len(candidates) or reported > len(original)
-            or len(candidates) > 30 or len(candidates) != len(set(candidates))
-            or not set(candidates) <= original):
-        raise ValueError("Unverified or truncated absent-historical-URL report")
-    return set(candidates)
+    if type(reported) is not int or not 0 <= reported <= len(original):
+        raise ValueError("Invalid absent historical identity count")
+    if full is not None:
+        if (not isinstance(full, list) or len(full) != reported
+                or len(full) != len(set(full))
+                or any(not isinstance(h, str) or len(h) != 64
+                       or any(c not in "0123456789abcdef" for c in h) for h in full)
+                or not set(full) <= original
+                or not isinstance(sample, list) or sample != sorted(full)[:30]):
+            raise ValueError("Incomplete or inconsistent full historical SHA coverage")
+        return set(full)
+    # Legacy reports contain only a sample; never treat it as full coverage.
+    if (not isinstance(sample, list) or (reported > 0 and not sample)
+            or len(sample) > 30 or len(sample) != len(set(sample))
+            or reported < len(sample) or not set(sample) <= original):
+        raise ValueError("Unverified legacy absent-historical-URL sample")
+    return set(sample)
 
 
 def find_exact_urls(missing):
