@@ -153,7 +153,7 @@ class RemoteRestoreTests(unittest.TestCase):
         def must_not_run(command, **kwargs):
             self.fail("Invalid bucket must not reach remote retrieval")
         invalid = ("abc..def", "abc.-def", "abc-.def", "192.168.1.1",
-                   "abc_def", "a" * 64)
+                   "abc_def", "a" * 64, "a" * 63 + ".b" * 1 + "b" * 63)
         with patch.dict(os.environ, {"V2_ARCHIVE_KEY_HEX": "ab" * 32}):
             for bucket in invalid:
                 with self.subTest(bucket=bucket):
