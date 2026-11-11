@@ -33,7 +33,7 @@ class ScannerStage3IntegrationTests(unittest.TestCase):
             def __exit__(self, *args):
                 return False
             def read(self, size):
-                return b"#EXTM3U\\n#EXT-X-VERSION:3\\n"
+                return b"#EXTM3U\n#EXT-X-VERSION:3\n"
         observed = {"status": "AV_VERIFIED", "video": True, "audio": True,
                     "streams": [{"codec_type": "video", "codec_name": "h264"},
                                 {"codec_type": "audio", "codec_name": "aac"}]}
