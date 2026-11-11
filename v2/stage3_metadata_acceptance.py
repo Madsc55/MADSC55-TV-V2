@@ -5,7 +5,6 @@ Names, country tags and EPG are discovery hints, never playback proof.
 """
 from __future__ import annotations
 
-import re
 
 
 def normalized_identity(record: dict) -> dict:
@@ -28,7 +27,7 @@ def epg_match(channel: dict, programme: dict) -> bool:
 
 def quality_from_probe(probe: dict) -> dict:
     """Require real probe evidence of both streams; avoid name-based resolution."""
-    if probe.get("real_probe") is not True:
+    if probe.get("status") != "AV_VERIFIED" or probe.get("video") is not True or probe.get("audio") is not True:
         return {"av_verified": False, "quality": "UNVERIFIED"}
     streams = probe.get("streams")
     if not isinstance(streams, list):
