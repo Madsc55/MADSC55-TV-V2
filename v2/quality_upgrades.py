@@ -37,7 +37,9 @@ def main():
     for sample in baseline.get("results", []):
         if sample.get("status") == "MEASURED" and sample.get("tvg_id"):
             k = sample["tvg_id"].split("@")[0].casefold()
-            measured_current[k] = max(measured_current.get(k, 0), sample["height"])
+            measured_height = sample.get("height")
+            if isinstance(measured_height, int) and not isinstance(measured_height, bool) and measured_height > 0:
+                measured_current[k] = max(measured_current.get(k, 0), measured_height)
     items = []
     for c in catalog["candidates"]:
         channel = c["channel_id"]
