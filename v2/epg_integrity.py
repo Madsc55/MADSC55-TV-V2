@@ -22,7 +22,11 @@ def parse_xmltv_time(value):
         raise ValueError("Invalid XMLTV timestamp")
     base = datetime.datetime.strptime(match.group(1), "%Y%m%d%H%M%S")
     if match.group(2):
-        minutes = int(match.group(3)) * 60 + int(match.group(4))
+        hours = int(match.group(3))
+        minute_part = int(match.group(4))
+        if hours > 23 or minute_part > 59:
+            raise ValueError("Invalid UTC offset")
+        minutes = hours * 60 + minute_part
         if minutes >= 24 * 60:
             raise ValueError("Invalid UTC offset")
         if match.group(2) == "-":
