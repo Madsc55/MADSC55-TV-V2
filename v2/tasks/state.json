@@ -64,13 +64,14 @@
     {
       "id": 5,
       "status": "blocked",
-      "last_checked_at": "2026-11-07T10:02:00Z",
+      "last_checked_at": "2026-11-11T17:25:00Z",
       "evidence_urls": [
         "https://github.com/Madsc55/MADSC55-TV-V2/commit/eaac39fb4afc4036e2db17f5c2e671b45274d820",
-        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42303308753"
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42303308753",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/41644493862"
       ],
-      "blocker": "Three ORIGINAL malformed source records cannot be identified from accessible provenance; generic malformed-record regression is not repair of those original rows. Latest grouped Actions run for CI filter change is not yet identified. Do not repeat text searches; proceed to independent tasks.",
-      "reason": "17 historical dynamic source identities and 8,449 old_only references accounted for in historical ledger, but original 3 source records not proven fixed. Historical Actions #42303308753 shows 190 offline tests passed and live AV job skipped; predates latest source-loss/CI commits."
+      "blocker": "Original 2026-11-03 run 41644493862 artifact 13233323845 identifies the THREE malformed M3U SOURCES exactly: free-tv-independent (6 unpaired EXTINF), discevisita-tr (19), onureroz-turk-karma (1), 26 total. Source-level identities are recovered; original exact line-level input and verified repairs are still required before acceptance. Preserve source history; do not infer 3 malformed rows from 3 source names.",
+      "reason": "Recovered original source-content audit JSON from GitHub Actions artifact 13233323845: 3 INCOMPLETE_EXTINF_PAIRS sources with 26 unpaired EXTINF lines. Continue with line-level source remediation and a single grouped CI run; do not mark complete from fixture tests alone."
     },
     {
       "id": 6,
