@@ -39,6 +39,12 @@ class ArchiveGateTests(unittest.TestCase):
                 "V2_ARCHIVE_EXPECTED_SHA256": self.sha,
                 "V2_ARCHIVE_KEY_HEX": "ab" * 32}
 
+    def test_null_version_aliases_cannot_pass_final_archive_acceptance(self):
+        for version in ("null", "NULL", "Null", "nUlL"):
+            with self.subTest(version=version):
+                with self.assertRaisesRegex(RuntimeError, "immutable remote object version"):
+                    check(self.prepared(remote_object_version=version))
+
     def test_actual_4955_history_roundtrip(self):
         self.assertTrue(check(self.prepared()))
 
