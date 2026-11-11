@@ -1,0 +1,151 @@
+{
+  "schema": 1,
+  "kind": "V2_TASK_4_EXACT_HISTORICAL_SHA_RECONCILIATION",
+  "baseline_sha256": "ee00a844a028e3410715d411467a2d3306f5f5cc4565766140b6438e786cdd27",
+  "identities_preserved": 4955,
+  "original_snapshot": {
+    "run_id": 42530040643,
+    "artifact_id": 13636454835,
+    "archive_sha256": "18d1fb6e7b7f86d1362de1d168cf95c491444edce33dde9af76911a62f316f17",
+    "matched": 4935,
+    "decoded": 3069,
+    "unproven": 1866,
+    "review_counts": {
+      "other_unproven": 5,
+      "partial_media": 1658,
+      "source_research": 173,
+      "transient_retry": 30
+    },
+    "missing": 20
+  },
+  "later_snapshots": [
+    {
+      "run_id": 42539900333,
+      "artifact_id": 13648975047,
+      "archive_sha256": "6981e10e090417ec83dfeff0d0d3da3a7dbcd95fe4437f2aa56c13742fe85e39",
+      "world_report_sha256": "d6542f52e09df7fc4be0a9bc9b541da894795674588b45f8c1c897f8630bd3ca",
+      "historical_matched": 4890,
+      "historical_decoded": 3042,
+      "historical_absent": 65,
+      "historical_unprobed": 0,
+      "world_unprobed": 0
+    },
+    {
+      "run_id": 42913862261,
+      "artifact_id": 13822434023,
+      "archive_sha256": "64ca38e34e87bab988cdb348a93db1fc2a073b361bfc10e8690b571fd5a76e77",
+      "world_report_sha256": "fda5b2ed838b1a4f12b4850caf3ffc4df405b31cba90643dcb8aa135090cfeb6",
+      "historical_matched": 4890,
+      "historical_decoded": 2816,
+      "historical_absent": 65,
+      "historical_unprobed": 362,
+      "world_unprobed": 3655
+    }
+  ],
+  "original_missing_rechecks": [
+    {
+      "url_sha256": "0bae765192289e07643c1d02f449564c4c2811273972b06a997a72eff35dc1be",
+      "complete_run_status": "ABSENT_FROM_REPORT",
+      "later_partial_run_status": "ABSENT_FROM_REPORT"
+    },
+    {
+      "url_sha256": "1e254bd45f52e8040ca7d720ccd126d1227d1b93550ffc2c638f7e9e7c993734",
+      "complete_run_status": "ABSENT_FROM_REPORT",
+      "later_partial_run_status": "ABSENT_FROM_REPORT"
+    },
+    {
+      "url_sha256": "21f7e2f5adbafa79b67f957188aa6a9169e816a82c2025fdca9f1ca19d6fefc3",
+      "complete_run_status": "ABSENT_FROM_REPORT",
+      "later_partial_run_status": "ABSENT_FROM_REPORT"
+    },
+    {
+      "url_sha256": "32adcd0f50b9a3317843dd473aa27e663df67d14d417bb25caa1c5d439f7a0b5",
+      "complete_run_status": "ABSENT_FROM_REPORT",
+      "later_partial_run_status": "ABSENT_FROM_REPORT"
+    },
+    {
+      "url_sha256": "332536d73b2bc6ee81ae3e03bab11e549aa15872af80c77466062c7f14bd0e1e",
+      "complete_run_status": "ABSENT_FROM_REPORT",
+      "later_partial_run_status": "ABSENT_FROM_REPORT"
+    },
+    {
+      "url_sha256": "38fe45500928758c35ed23823ead8c9b1189b0ea88b56ba45df2207518745da9",
+      "complete_run_status": "VIDEO_AUDIO_DECODED",
+      "later_partial_run_status": "VIDEO_AUDIO_DECODED"
+    },
+    {
+      "url_sha256": "39f38831a9c92703931a7a44a580cec1621210e3dd2ebf571168db460b59b806",
+      "complete_run_status": "ABSENT_FROM_REPORT",
+      "later_partial_run_status": "ABSENT_FROM_REPORT"
+    },
+    {
+      "url_sha256": "41b43ee5b49969b5704be474ec380248ce42e23254546aec52afefea89f6fcb5",
+      "complete_run_status": "ABSENT_FROM_REPORT",
+      "later_partial_run_status": "ABSENT_FROM_REPORT"
+    },
+    {
+      "url_sha256": "5f50e0bc25685e0a619e238d25ee2bec533791e782ae3d32881e3d1384337105",
+      "complete_run_status": "ABSENT_FROM_REPORT",
+      "later_partial_run_status": "ABSENT_FROM_REPORT"
+    },
+    {
+      "url_sha256": "6827d2ebeff66d70884ac64ac3fada37b08dcfa42c4b90d670f32e17a0b29ac0",
+      "complete_run_status": "ABSENT_FROM_REPORT",
+      "later_partial_run_status": "ABSENT_FROM_REPORT"
+    },
+    {
+      "url_sha256": "6bbd1c63e14c7692b690a7e31093d0ba939032d7bfb8500fe8fe51e7438d4c5a",
+      "complete_run_status": "ABSENT_FROM_REPORT",
+      "later_partial_run_status": "ABSENT_FROM_REPORT"
+    },
+    {
+      "url_sha256": "762836d5fca6f977ca2b1ba4c24ffbf55a1291d0a8a433208863796a08df3d58",
+      "complete_run_status": "ABSENT_FROM_REPORT",
+      "later_partial_run_status": "ABSENT_FROM_REPORT"
+    },
+    {
+      "url_sha256": "8ce6492cf2f65ac69663ec0f50aba717a9d6b2e47493c5d2a42794d718dfb252",
+      "complete_run_status": "ABSENT_FROM_REPORT",
+      "later_partial_run_status": "ABSENT_FROM_REPORT"
+    },
+    {
+      "url_sha256": "acb7f7de7b4385c11f762d9605886f28e2a551f6fd4c50c0af5e8fd8da4e89d8",
+      "complete_run_status": "ABSENT_FROM_REPORT",
+      "later_partial_run_status": "ABSENT_FROM_REPORT"
+    },
+    {
+      "url_sha256": "b3074a4129d00bb681da06b82528f70501a865bd6e6736580abd01286840de43",
+      "complete_run_status": "ABSENT_FROM_REPORT",
+      "later_partial_run_status": "ABSENT_FROM_REPORT"
+    },
+    {
+      "url_sha256": "dfb82c288ce5e9d1835e56fe0abc52006b3844298fa360b38a4706b59bb3f549",
+      "complete_run_status": "ABSENT_FROM_REPORT",
+      "later_partial_run_status": "ABSENT_FROM_REPORT"
+    },
+    {
+      "url_sha256": "ea8033e2f78a8a8ca81066ac16ef8589bc1b645eb9b3cf1f85cbc15cf80199c0",
+      "complete_run_status": "ABSENT_FROM_REPORT",
+      "later_partial_run_status": "ABSENT_FROM_REPORT"
+    },
+    {
+      "url_sha256": "eaca47751720561115c761ad245232e28696173a47278b253ccded6b72c79433",
+      "complete_run_status": "ABSENT_FROM_REPORT",
+      "later_partial_run_status": "ABSENT_FROM_REPORT"
+    },
+    {
+      "url_sha256": "f15e1f0733666502f63a6de7addc671e6d3d2e111ec39516488b06c8078f7ad3",
+      "complete_run_status": "ABSENT_FROM_REPORT",
+      "later_partial_run_status": "ABSENT_FROM_REPORT"
+    },
+    {
+      "url_sha256": "f94ca33a1174497a88850617a3a8a420672fd64ecd3a8cfb5517df524f8395bc",
+      "complete_run_status": "ABSENT_FROM_REPORT",
+      "later_partial_run_status": "ABSENT_FROM_REPORT"
+    }
+  ],
+  "original_missing_with_later_av": 1,
+  "historical_distinct_ids_with_av_across_three_snapshots": 3100,
+  "protected_playlist_modified": false,
+  "ibo_device_verified": false
+}

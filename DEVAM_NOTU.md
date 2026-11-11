@@ -2353,3 +2353,9 @@ Kullanıcının açık talimatıyla #3, #4 ve #6 tarihî kurtarma görevleri art
 
 - Kurtarma bir URL'yi birden fazla tarihî kayıtta gördüğünde kaynak kimliklerini birleştiriyor, ancak sonraki kaydın ad, zaman ve gözlem geçmişini taşımıyordu. Her aday artık özgün kayıtların bağımsız kopyalarını `historical_records` içinde saklar. Önceki başarı işaretleri yalnız tarihî kanıt olarak tutulur; güncel yayın kabulü çıkarılmaz.
 - Yerelde 17 kurtarma testi geçti. Yinelenen kayıtlardaki gözlem geçmişi ve çağıranın sonradan yaptığı değişikliklerden bağımsızlık doğrulandı. Tam Actions regresyonu bu commit'te izlenir. #11'in #9 resmî kaynak kabulü ve #14'ün #13 bağımsız S3 restore bağımlılıkları açık kalır.
+
+### 11 Kasım — Aşama 2, #4 tarihî envanter incelemesi tamamlandı
+
+- 4.955 özgün kimliğin SHA-256 listesi ve [ilk kabul arşivi](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42530040643) doğrulandı. 1.866 kanıtsız kayıt 1.658 kısmi medya, 173 kaynak araştırması, 30 geçici hata ve 5 diğer olarak kayıpsız ayrılmış.
+- İlk raporda bulunmayan 20 URL hash'i [tam koşu](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42539900333) ve [sonraki kısmi koşu](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42913862261) ile tek tek eşleştirildi. 1 hash iki koşuda da FFmpeg görüntü ve ses kanıtı taşıyor. 19 hash iki raporda da bulunmadığından araştırma kuyruğunda. Üç rapor birlikte 3.100 farklı tarihî hash için AV kanıtı içeriyor.
+- `v2/reports/stage2-historical-evidence-20261111.json` 20 inceleme sonucunu ve artefakt SHA-256 değerlerini saklar. #4 incelemesi ledger'da tamamlandı. #6'nın #5 bağımlılığı ve #14'ün bağımsız S3 restore bağımlılığı açık.

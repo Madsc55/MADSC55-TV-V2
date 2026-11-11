@@ -42,8 +42,8 @@
     },
     {
       "id": 4,
-      "status": "in_progress",
-      "last_checked_at": "2026-11-09T03:55:08Z",
+      "status": "completed",
+      "last_checked_at": "2026-11-11T08:42:01Z",
       "evidence_urls": [
         "https://github.com/Madsc55/MADSC55-TV-V2/commit/5d208cf40e9d99915963bb9f56c4aff0f591ed02",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42228674931",
@@ -52,10 +52,12 @@
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42530040643",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42530114705",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42530114713",
-        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42539900333"
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42539900333",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42913862261",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42988745906"
       ],
-      "blocker": "Latest worldwide snapshot has 1,848 matched historical identities without decoded AV and 65 absent; earlier snapshot had 1,866 matched without AV and 20 absent. Differences require source/identity provenance reconciliation, not silent acceptance.",
-      "reason": "Historical crosswalk from live Source Integration Batch #42539900333: 4,955 historical identities preserved, 4,890 exact SHA matches, 3,042 historical exact matches with video+audio decoded, 65 historical identities absent from this particular worldwide report. Earlier crosswalk #42530040643 reported 4,935 matches / 3,069 decoded / 20 absent, so do not replace baseline or claim recovery from differing run snapshots. Exact provenance reconciliation remains open."
+      "blocker": null,
+      "reason": "Verified all 4,955 immutable identities and the exact 1,866-row review partition (1,658 partial media, 173 source research, 30 transient retry, 5 other). Rechecked each of the original 20 absent URL hashes against a later complete and a later partial sealed Actions report. One exact hash has real AV proof in both later reports; 19 remain absent from both snapshots and remain research entries. See v2/reports/stage2-historical-evidence-20261111.json. No device approval."
     },
     {
       "id": 5,
