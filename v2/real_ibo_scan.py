@@ -259,6 +259,7 @@ def main():
     inventory_tmp = args.inventory.with_suffix(args.inventory.suffix + '.tmp')
     # Restrict the temporary plaintext inventory before writing any URL tokens.
     fd = os.open(inventory_tmp, os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o600)
+    recovery_records = []
     with os.fdopen(fd, 'w', encoding='utf-8') as inventory_file:
         for candidate in candidates.values():
             previous = historical_records.get(candidate['url'], {})
@@ -269,7 +270,12 @@ def main():
                 old_observations = [{'status': previous['http_hls_status'], 'origin': 'previous-inventory'}]
             new_status = 'AV_VERIFIED' if candidate['url'] in good_urls else 'UNVERIFIED_OR_FAILED'
             verified = good_by_url.get(candidate['url'], {}).get('verified_quality', {})
+            prior_attempts = previous.get('recovery_attempts', 0)
+            if type(prior_attempts) is not int or prior_attempts < 0:
+                raise ValueError('Invalid historical recovery attempts')
+            recovery_attempts = 0 if candidate['url'] in good_urls else prior_attempts + 1
             record = {**previous, **candidate,
+                      'recovery_attempts': recovery_attempts,
                       'url_sha256': url_sha256(candidate['url']),
                       'category': category(candidate),
                       'identity': normalized_identity({**previous, **candidate}),
@@ -278,16 +284,11 @@ def main():
                       'ibo_device_tested': previous.get('ibo_device_tested', False),
                       'observations': old_observations + [{'status': new_status, 'origin': 'current-scan'}]}
             inventory_file.write(json.dumps(record, ensure_ascii=False) + '\n')
+            if candidate['url'] not in good_urls:
+                recovery_records.append({'url': candidate['url'], 'last_http_status': None,
+                                         'recovery_attempts': recovery_attempts,
+                                         'observations': record['observations']})
     # Queue contains SHA identities only; no stream URL or token in public report.
-    recovery_records = []
-    for candidate in candidates.values():
-        if candidate['url'] in good_urls:
-            continue  # Verified candidates are not recovery failures.
-        prior = historical_records.get(candidate['url'], {})
-        recovery_records.append({'url': candidate['url'],
-                                 'last_http_status': None,
-                                 'recovery_attempts': prior.get('recovery_attempts', 0),
-                                 'observations': prior.get('observations', [])})
     recovery_queue = build_recovery_queue(recovery_records)
     # A failed source fetch must not overwrite the last complete encrypted baseline.
     encrypted_inventory = args.inventory.with_suffix(
