@@ -194,6 +194,24 @@ class HistoricalTargetedPlaybackTests(unittest.TestCase):
                 "historical_identifiers_absent_sha256_sample": identities[:30]}}))
             self.assertEqual(load_missing_report(report_path, baseline), set(identities[:30]))
 
+    def test_full_missing_report_loads_all_verified_hashes(self):
+        with tempfile.TemporaryDirectory() as folder:
+            baseline = Path(__file__).resolve().parent / "history/stage3-4955-hash-only.jsonl"
+            identities = sorted(json.loads(line)["url_sha256"]
+                                for line in baseline.read_text().splitlines() if line.strip())
+            report_path = Path(folder) / "report.json"
+            report_path.write_text(json.dumps({"source_content_audit": {
+                "historical_identifiers_absent_from_current_sources": 31,
+                "historical_identifiers_absent_sha256_full": identities[:31],
+                "historical_identifiers_absent_sha256_sample": identities[:30]}}))
+            self.assertEqual(load_missing_report(report_path, baseline), set(identities[:31]))
+            report_path.write_text(json.dumps({"source_content_audit": {
+                "historical_identifiers_absent_from_current_sources": 31,
+                "historical_identifiers_absent_sha256_full": identities[:30],
+                "historical_identifiers_absent_sha256_sample": identities[:30]}}))
+            with self.assertRaises(ValueError):
+                load_missing_report(report_path, baseline)
+
     def test_truncated_missing_report_rejected(self):
         with tempfile.TemporaryDirectory() as folder:
             report_path = Path(folder) / "report.json"
