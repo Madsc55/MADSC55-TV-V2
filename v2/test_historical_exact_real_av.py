@@ -49,6 +49,19 @@ class HistoricalExactRealAVTests(unittest.TestCase):
                 {"url_sha256":pair[0],"status":"VIDEO_AUDIO_DECODED","video":True,
                  "audio":True,"decoded":False})
 
+    def test_contradictory_decoder_evidence_is_rejected(self):
+        missing,recovered=self.fixtures()
+        for status,video,audio,decoded in (
+            ("VIDEO_AUDIO_DECODED",False,True,False),
+            ("VIDEO_AUDIO_DECODED",True,False,False),
+            ("VIDEO_AUDIO_STREAMS_ONLY",True,True,True),
+        ):
+            with self.subTest(status=status,video=video,audio=audio,decoded=decoded):
+                with self.assertRaises(ValueError):
+                    grouped_decode(missing,recovered,prober=lambda pair:
+                        {"url_sha256":pair[0],"status":status,
+                         "video":video,"audio":audio,"decoded":decoded})
+
     def test_prober_cannot_emit_url_or_wrong_identity(self):
         missing,recovered=self.fixtures()
         with self.assertRaises(ValueError):
