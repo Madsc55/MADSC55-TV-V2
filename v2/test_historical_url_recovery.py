@@ -178,6 +178,19 @@ class HistoricalRecoveryTests(unittest.TestCase):
         self.assertEqual(recovered[0]["historical_records"], expected)
         self.assertFalse(recovered[0]["playback_verified"])
 
+    def test_historical_url_sha_mismatch_fails_closed(self):
+        import hashlib
+        url = "https://example.org/historical.m3u8?token=one"
+        other = hashlib.sha256(b"https://example.org/historical.m3u8?token=two").hexdigest()
+        with self.assertRaisesRegex(ValueError, "SHA256 disagree"):
+            recover([{"url": url, "url_sha256": other}], [])
+        with self.assertRaisesRegex(ValueError, "SHA256 disagree"):
+            recover([], [{"url": url, "url_sha256": other}])
+        valid = hashlib.sha256(url.encode()).hexdigest()
+        rows, report = recover([{"url": url, "url_sha256": valid.upper()}], [])
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(report["recoverable_real_urls"], 1)
+
     def test_no_fabricated_urls(self):
         recovered, report = recover([{"anonymous_id": "4955"}], [])
         self.assertEqual(recovered, [])
