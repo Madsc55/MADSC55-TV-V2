@@ -280,9 +280,11 @@ def main():
     # Queue contains SHA identities only; no stream URL or token in public report.
     recovery_records = []
     for candidate in candidates.values():
+        if candidate['url'] in good_urls:
+            continue  # Verified candidates are not recovery failures.
         prior = historical_records.get(candidate['url'], {})
         recovery_records.append({'url': candidate['url'],
-                                 'last_http_status': 200 if candidate['url'] in good_urls else None,
+                                 'last_http_status': None,
                                  'recovery_attempts': prior.get('recovery_attempts', 0),
                                  'observations': prior.get('observations', [])})
     recovery_queue = build_recovery_queue(recovery_records)
