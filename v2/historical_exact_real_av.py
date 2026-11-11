@@ -28,7 +28,7 @@ SAFE_FAILURES = {"FFPROBE_OPTION_UNSUPPORTED","AUTH_REQUIRED","HTTP_FORBIDDEN",
 
 
 def grouped_decode(missing, recovered, *, prober=real_av_probe, workers=4):
-    if not isinstance(missing,set) or len(missing)>30 or not isinstance(recovered,dict):
+    if not isinstance(missing,set) or len(missing)>4955 or not isinstance(recovered,dict):
         raise ValueError("Unexpected historical missing hash scope")
     if not isinstance(workers,int) or not 1<=workers<=8:
         raise ValueError("Invalid AV worker size")
