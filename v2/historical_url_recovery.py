@@ -2,6 +2,7 @@
 """Offline historical URL recovery; never performs network scans or changes playlists."""
 import argparse
 import copy
+import hashlib
 import json
 from pathlib import Path
 from urllib.parse import urlsplit
@@ -69,6 +70,13 @@ def recover(old_records, current_records):
     historical_rows = list(old_records)
     if any(not isinstance(row, dict) for row in current_rows + historical_rows):
         raise ValueError("Historical recovery requires object records")
+    # A valid-looking URL must not be attributed to a different immutable SHA.
+    for row in current_rows + historical_rows:
+        url = row.get("url")
+        pinned = row.get("url_sha256")
+        if validate_url(url) and pinned is not None:
+            if not isinstance(pinned, str) or pinned.lower() != hashlib.sha256(url.encode("utf-8")).hexdigest():
+                raise ValueError("Historical URL and SHA256 disagree")
     current = {row["url"] for row in current_rows if validate_url(row.get("url"))}
     recovered, indexed = [], {}
     missing_url = 0
