@@ -257,6 +257,8 @@ def main():
     epg_ids = set()
     if args.epg is not None:
         # Parse local XMLTV only. Channel IDs are hints, not playback proof.
+        if args.epg.stat().st_size > 100_000_000:
+            ap.error('XMLTV input exceeds 100 MB limit')
         for event, element in ET.iterparse(args.epg, events=('end',)):
             if element.tag == 'channel' and element.get('id'):
                 epg_ids.add(element.get('id'))
@@ -289,7 +291,7 @@ def main():
                       'url_sha256': url_sha256(candidate['url']),
                       'category': category(candidate),
                       'identity': normalized_identity({**previous, **candidate}),
-                      'epg_exact_match': any(epg_match(candidate, {'channel': epg_id}) for epg_id in (candidate.get('tvg_id'),) if epg_id in epg_ids),
+                      'epg_exact_match': bool(candidate.get('tvg_id') and candidate['tvg_id'].strip() in epg_ids and epg_match(candidate, {'channel': candidate['tvg_id'].strip()})),
                       'verified_quality': verified if verified.get('av_verified') else previous.get('verified_quality', {'av_verified': False, 'quality': 'UNVERIFIED'}),
                       'http_hls_status': new_status,
                       'ibo_device_tested': previous.get('ibo_device_tested', False),
