@@ -277,7 +277,7 @@ def main():
         raise ValueError('Refusing symlinked plaintext inventory path')
     # Restrict the temporary plaintext inventory before writing any URL tokens.
     try:
-        fd = os.open(inventory_tmp, os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o600)
+        fd = os.open(inventory_tmp, os.O_WRONLY | os.O_CREAT | os.O_TRUNC | getattr(os, 'O_NOFOLLOW', 0), 0o600)
         recovery_records = []
         with os.fdopen(fd, 'w', encoding='utf-8') as inventory_file:
             for candidate in candidates.values():
