@@ -103,6 +103,10 @@ def classify_probe_failure(stderr):
 
 def probe_one(item, runner=subprocess.run, resolver=public_dns):
     digest, url = item
+    # Never attribute observations to a different immutable historical identity.
+    if not isinstance(url, str) or hashlib.sha256(url.encode("utf-8")).hexdigest() != digest:
+        return {"url_sha256": digest, "status": "HISTORICAL_SHA_MISMATCH",
+                "video_stream": False, "audio_stream": False}
     if not resolver(url):
         return {"url_sha256": digest, "status": "UNSAFE_OR_UNRESOLVABLE_HOST",
                 "video_stream": False, "audio_stream": False}
