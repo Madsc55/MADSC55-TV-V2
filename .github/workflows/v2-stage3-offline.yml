@@ -19,6 +19,6 @@ jobs:
         with:
           python-version: '3.12'
       - name: Compile Stage 3 and probe
-        run: python -m py_compile v2/stage3_identity_recovery.py v2/stage3_metadata_acceptance.py v2/stream_probe.py v2/test_stage3_identity_recovery.py v2/test_stage3_metadata_acceptance.py
+        run: python -m py_compile v2/stage3_identity_recovery.py v2/stage3_metadata_acceptance.py v2/stage3_recovery_queue.py v2/stream_probe.py v2/test_stage3_identity_recovery.py v2/test_stage3_metadata_acceptance.py
       - name: Offline identity and metadata regression
         run: python -m unittest discover -s v2 -p 'test_stage3_*.py' -v
