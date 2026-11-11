@@ -50,6 +50,10 @@ def validate_url(value):
     # Fragments are client-side only and must not enter recovery artifacts.
     if any(ord(c) < 33 or ord(c) == 127 for c in value) or parsed.fragment:
         return False
+    # URL parsers can normalize backslashes into authority/path boundaries in
+    # downstream clients. Reject ambiguous addresses before any live probe.
+    if "\\" in value or parsed.hostname.endswith("."):
+        return False
     if not parsed.netloc or parsed.hostname.startswith("-") or parsed.hostname.endswith("-"):
         return False
     try:
