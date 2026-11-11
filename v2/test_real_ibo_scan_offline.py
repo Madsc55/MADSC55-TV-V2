@@ -26,8 +26,9 @@ class ScannerOfflineTests(unittest.TestCase):
 
     def test_scope_is_not_language_proof(self):
         record = {"name": "Unspecified TV", "group": "", "tvg_id": ""}
-        self.assertTrue(scanner.tr_az(record, "TR"))
+        self.assertFalse(scanner.tr_az(record, "TR"))
         self.assertFalse(scanner.tr_az(record, "candidate"))
+        self.assertTrue(scanner.tr_az({"name": "TRT 1", "group": "", "tvg_id": ""}, "candidate"))
         self.assertFalse(scanner.tr_az({"name": "TRT World", "group": "", "tvg_id": ""}, "TR"))
 
     def test_invalid_hls_url_is_not_verified(self):

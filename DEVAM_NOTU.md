@@ -2376,3 +2376,5 @@ Kullanıcının açık talimatıyla #3, #4 ve #6 tarihî kurtarma görevleri art
 - #13 için [bağımsız S3 geri yükleme denemesi](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42688764100/job/130424619792) sürümlü nesneye ulaşmadan önce `V2_S3_RESTORE_AWS_ACCESS_KEY_ID` eksikliğiyle durdu. #13 ve ona bağlı #14 açık.
 
 - Aşama 2 kanıt commit'inde çevrimdışı envanter işi [#43022275252](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43022275252) eksik `secure_archive` modülünde durdu. Özgün AES-GCM arşiv modülü depo geçmişinden geri alındı. Yerel şifreli yedek/geri yükleme, bozulma ve yanlış anahtar reddi ile kaynak geçmişi korunarak envanter birleştirme testleri geçti.
+
+- Envanter kabulünün ikinci koşusunda eski tarayıcı testi ülke etiketini tek başına aday sayıyordu. Test mevcut adaylık kuralını doğrulayacak biçimde düzeltildi. Belirsiz yayın reddediliyor, açık TRT 1 metadata'sı aday olabiliyor ve TRT World dışarıda kalıyor. Beş yerel test geçti.
