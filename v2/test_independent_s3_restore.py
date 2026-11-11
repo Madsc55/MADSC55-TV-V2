@@ -92,6 +92,16 @@ class RemoteRestoreTests(unittest.TestCase):
                                    "version-one", self.sha, runner=timed_out)
         self.assertEqual(calls, [60])
 
+    def test_case_variant_null_s3_version_is_rejected_before_remote_access(self):
+        def must_not_run(command, **kwargs):
+            self.fail("Unversioned S3 object must never be fetched")
+        with patch.dict(os.environ, {"V2_ARCHIVE_KEY_HEX": "ab" * 32}):
+            for version in ("null", "NULL", "Null", "nUlL"):
+                with self.subTest(version=version):
+                    with self.assertRaisesRegex(ValueError, "immutable S3 object version"):
+                        restore_s3_version("versioned-bucket", "v2/archive.enc",
+                                           version, self.sha, runner=must_not_run)
+
     def test_missing_or_malformed_remote_version_metadata_is_rejected(self):
         for payload in ('{}', 'not-json', '[]', '{"VersionId": null}'):
             with self.subTest(payload=payload):
