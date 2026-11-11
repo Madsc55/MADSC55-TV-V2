@@ -17,7 +17,10 @@ class RecoveryQueueTests(unittest.TestCase):
             {"url": "https://example.org/a", "last_http_status": 503, "recovery_attempts": 3},
             {"url": "https://example.org/b", "last_http_status": 404},
         ]
-        self.assertEqual(build_recovery_queue(records), [])
+        queue = build_recovery_queue(records)
+        self.assertEqual(len(queue), 2)
+        self.assertTrue(all(item['action'] == 'REVIEW' for item in queue))
+        self.assertTrue(all(item['next_attempt'] is None for item in queue))
 
     def test_http_200_requires_av_check(self):
         queue = build_recovery_queue([{"url": "https://example.org/a", "last_http_status": 200}])
