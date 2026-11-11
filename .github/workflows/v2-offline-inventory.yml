@@ -12,6 +12,11 @@ on:
       - 'v2/**'
       - '.github/workflows/v2-offline-inventory.yml'
 
+# Prevent overlapping runs on the same branch from competing for acceptance evidence.
+concurrency:
+  group: v2-offline-inventory-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
 permissions:
   contents: read
 jobs:
