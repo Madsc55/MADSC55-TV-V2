@@ -1,0 +1,172 @@
+{
+  "schema": 1,
+  "original_run_id": 41644493862,
+  "original_artifact_id": 13233323845,
+  "snapshot_selection": "Latest upstream file commit at or before the original run start (2026-11-03T13:27:29Z)",
+  "evidence_limit": "Original artifact reports source-level counts. It does not identify individual EXTINF lines or provide original payload digests. These are pinned upstream snapshots, and count agreement alone does not prove original byte identity or repaired playback.",
+  "sources": [
+    {
+      "source_id": "free-tv-independent",
+      "upstream_file": "Free-TV/IPTV/playlist.m3u8",
+      "upstream_commit": "86f6ee049d1cec990ab93a0d82172cd73e8f15f0",
+      "retrieved_utf8_sha256": "1fed44ec17c365b78f74237bed9efdb2e7c73a2d15ffefbb973cde8e67ecdfbe",
+      "original_run_unpaired_count": 6,
+      "pinned_snapshot_unpaired_count": 6,
+      "pinned_snapshot_status": "PARSED_WITH_DECLARED_NO_PUBLIC_STREAM_PLACEHOLDERS",
+      "count_matches_original_run": true,
+      "reason_counts": {
+        "EXPLICIT_NO_PUBLIC_STREAM_PLACEHOLDER": 6
+      },
+      "pinned_snapshot_unpaired_evidence": [
+        {
+          "line_number": 2282,
+          "extinf_sha256": "eb9c99627a8a1401520c7992e1b71bd59fe637deb7c04d3d3202d37d4896c460",
+          "reason": "EXPLICIT_NO_PUBLIC_STREAM_PLACEHOLDER"
+        },
+        {
+          "line_number": 2284,
+          "extinf_sha256": "78b3aac84a270b34e22391396cd384965f1d284c567c81b652389bb20394d5e4",
+          "reason": "EXPLICIT_NO_PUBLIC_STREAM_PLACEHOLDER"
+        },
+        {
+          "line_number": 2286,
+          "extinf_sha256": "e4393b0bd2b749022f8ab3bc410cd9a0de213c1af8de2c89fbb675b093699e78",
+          "reason": "EXPLICIT_NO_PUBLIC_STREAM_PLACEHOLDER"
+        },
+        {
+          "line_number": 2288,
+          "extinf_sha256": "f99676959b70c0f7fde4ebebfd92760e6b2666ff5bc32f3d2e4cba56d44f3b6d",
+          "reason": "EXPLICIT_NO_PUBLIC_STREAM_PLACEHOLDER"
+        },
+        {
+          "line_number": 2290,
+          "extinf_sha256": "567f47376403bb9b1af71662e1e11fb1a10276dea323452f028fbb025e54a8c6",
+          "reason": "EXPLICIT_NO_PUBLIC_STREAM_PLACEHOLDER"
+        },
+        {
+          "line_number": 2292,
+          "extinf_sha256": "9d3d807250ee66dbed82c1ca12ddb0790bccaa3fc16edd77ca2e27d7655bcf31",
+          "reason": "EXPLICIT_NO_PUBLIC_STREAM_PLACEHOLDER"
+        }
+      ]
+    },
+    {
+      "source_id": "discevisita-tr",
+      "upstream_file": "discevisita/iptv/tr.m3u",
+      "upstream_commit": "3e601727731d6e0d97cd5708a6ea63af139deb45",
+      "retrieved_utf8_sha256": "84444bc4beb578cf64481f9557d11d648bd5f68a4e01a83df0d306f5d92c5bc8",
+      "original_run_unpaired_count": 19,
+      "pinned_snapshot_unpaired_count": 19,
+      "pinned_snapshot_status": "INCOMPLETE_EXTINF_PAIRS",
+      "count_matches_original_run": true,
+      "reason_counts": {
+        "MISSING_URI_BEFORE_NEXT_EXTINF": 19
+      },
+      "pinned_snapshot_unpaired_evidence": [
+        {
+          "line_number": 39,
+          "extinf_sha256": "4c310936e05c9f5ad9d235e0c7de064444e764186844249198b5d1d8753b4915",
+          "reason": "MISSING_URI_BEFORE_NEXT_EXTINF"
+        },
+        {
+          "line_number": 44,
+          "extinf_sha256": "e738f562b73e57c91d62cbb325e9c1289f70d6435b1a830807e9f484291d712e",
+          "reason": "MISSING_URI_BEFORE_NEXT_EXTINF"
+        },
+        {
+          "line_number": 77,
+          "extinf_sha256": "25740a900952697b6812168f47c5eb6e3ffdb442c78dde861b99daa6daa2f976",
+          "reason": "MISSING_URI_BEFORE_NEXT_EXTINF"
+        },
+        {
+          "line_number": 79,
+          "extinf_sha256": "c8400b26ecfddcc31cec58d4580d26fe472337df0293ee74e9ba806db13c8602",
+          "reason": "MISSING_URI_BEFORE_NEXT_EXTINF"
+        },
+        {
+          "line_number": 81,
+          "extinf_sha256": "2fc210f981912f168ebe6f49d348fbf8346c5b6e8c92652728ea0d1c082a7fc9",
+          "reason": "MISSING_URI_BEFORE_NEXT_EXTINF"
+        },
+        {
+          "line_number": 83,
+          "extinf_sha256": "b93864c630748237fe9d1213949433a9af71d126640b518f3d797bd323c0684c",
+          "reason": "MISSING_URI_BEFORE_NEXT_EXTINF"
+        },
+        {
+          "line_number": 85,
+          "extinf_sha256": "e4e6552fee859cc8363762e38bae67a71889e120d421c592d3cdafd58b98d2d9",
+          "reason": "MISSING_URI_BEFORE_NEXT_EXTINF"
+        },
+        {
+          "line_number": 87,
+          "extinf_sha256": "5116c4bf27a01d93213b8a58ae4172f61bf1c72352df065f633f7b8910cc33df",
+          "reason": "MISSING_URI_BEFORE_NEXT_EXTINF"
+        },
+        {
+          "line_number": 103,
+          "extinf_sha256": "c80b583affbb3aff53b33d1a7ef67a1dae1977dcfaf3e158adf756f55ea101b5",
+          "reason": "MISSING_URI_BEFORE_NEXT_EXTINF"
+        },
+        {
+          "line_number": 155,
+          "extinf_sha256": "83af85b8e1bcfcb1089af0b6f7c54fddcbdcf7b422f0e86caea4022140da2d48",
+          "reason": "MISSING_URI_BEFORE_NEXT_EXTINF"
+        },
+        {
+          "line_number": 213,
+          "extinf_sha256": "27f38f5df38214c26d1a23ad0b455343a9489e873ab84850c3d7b0a45649ffa3",
+          "reason": "MISSING_URI_BEFORE_NEXT_EXTINF"
+        },
+        {
+          "line_number": 215,
+          "extinf_sha256": "4381b3ec8a6aee723cda24915e2ada0690c410a1a2802e0663c50d353983a3e0",
+          "reason": "MISSING_URI_BEFORE_NEXT_EXTINF"
+        },
+        {
+          "line_number": 217,
+          "extinf_sha256": "961ac6809edd5214be0633f26448a216b8ccce401bc4bae030bbd78dae3cf624",
+          "reason": "MISSING_URI_BEFORE_NEXT_EXTINF"
+        },
+        {
+          "line_number": 219,
+          "extinf_sha256": "ae7596949625f98f43387bdf434b4e8fab22d25d3362d0c6645209543410a94e",
+          "reason": "MISSING_URI_BEFORE_NEXT_EXTINF"
+        },
+        {
+          "line_number": 221,
+          "extinf_sha256": "4f33338f399624dda08b516f60523b7cf0c8a8c407d53ad2c0294e948cbddb28",
+          "reason": "MISSING_URI_BEFORE_NEXT_EXTINF"
+        },
+        {
+          "line_number": 223,
+          "extinf_sha256": "b424aedb32d82c7609464a8485aa8af4f85a349e824369fbf01afa46ed146624",
+          "reason": "MISSING_URI_BEFORE_NEXT_EXTINF"
+        },
+        {
+          "line_number": 225,
+          "extinf_sha256": "ad47083319de94928ff6d9224b3cd729e822131fbf44638e221548c1dd219810",
+          "reason": "MISSING_URI_BEFORE_NEXT_EXTINF"
+        },
+        {
+          "line_number": 227,
+          "extinf_sha256": "fc95a908526a7c833edfddb7eea1a81afb7c9d51399ea95abe830b9a858c5495",
+          "reason": "MISSING_URI_BEFORE_NEXT_EXTINF"
+        },
+        {
+          "line_number": 229,
+          "extinf_sha256": "ff6973221fc726d3cad1d1a3f02f760cbc6b0dab0f53bf096b6d16830910237b",
+          "reason": "MISSING_URI_BEFORE_NEXT_EXTINF"
+        }
+      ]
+    }
+  ],
+  "unavailable_original_snapshots": [
+    {
+      "source_id": "onureroz-tr",
+      "original_run_unpaired_count": 1,
+      "status": "ORIGINAL_PAYLOAD_UNAVAILABLE"
+    }
+  ],
+  "kind": "V2_TASK_5_PINNED_SOURCE_RECONSTRUCTION"
+}
