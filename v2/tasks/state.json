@@ -160,16 +160,17 @@
     {
       "id": 13,
       "status": "blocked",
-      "last_checked_at": "2026-11-11T12:39:24Z",
+      "last_checked_at": "2026-11-11T16:00:00Z",
       "evidence_urls": [
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42610981885",
         "https://github.com/Madsc55/MADSC55-TV-V2/blob/madsc/v2-discovery-bulk-20261031/v2/independent_s3_restore.py",
         "https://github.com/Madsc55/MADSC55-TV-V2/blob/madsc/v2-discovery-bulk-20261031/v2/test_independent_s3_restore.py",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42688764100",
-        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42688764100/job/130424619792"
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42688764100/job/130424619792",
+        "https://github.com/Madsc55/MADSC55-TV-V2/commit/869571e9ce0045d879697ead404b21a412b817d3"
       ],
-      "blocker": "Independent S3 restore rerun attempt 2 failed in job 130424619792 before remote retrieval because V2_S3_RESTORE_AWS_ACCESS_KEY_ID is missing. Remaining secrets were not evaluated.",
-      "reason": "Grouped Master Engine run #42610981885 success on aa5f5a58. Reviewed independent_s3_restore.py: bounded real AWS S3 version retrieval, object version validation, pinned SHA256 and archive_acceptance_gate; test_independent_s3_restore.py exercises mocked remote retrieval only. archive_backup_restore_drill.py explicitly marks local separate-directory copy not independent storage. Task started without false remote acceptance or public secrets."
+      "blocker": "Original-key AES restore and independent Google Drive ciphertext copy authenticated restore passed for 4,955 historical + 107 orphan candidate rows (5,062 total), as documented in commit 869571e. GitHub Actions secure-secret-injected automatic restore acceptance is still unverified; prior S3 job failed for missing AWS_ACCESS_KEY_ID. Do not mark complete without a successful production acceptance run.",
+      "reason": "Verified GitHub commit 869571e and v2/history/task13-original-key-restore-verified-20261111.json record original-key AES decryption, SHA256 and ZIP integrity, and independent Drive copy restoration for 5,062 rows. No secret or IBO changes committed. Separate automated Actions acceptance still pending."
     },
     {
       "id": 14,
