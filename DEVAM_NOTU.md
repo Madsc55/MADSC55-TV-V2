@@ -1,3 +1,14 @@
+## 11 Kasım 2026 — Aşama 2 yeniden çalıştırılan toplu Actions ve devir kaydı
+
+- Kullanıcı talimatı: Aşama 2 #3/#4/#5/#9/#13 → #6/#11/#14, tekil denemeler yerine toplu test, gerçek hataları düzelt, yapılanları burada kaydet; ana İBO listesine dokunma.
+- [GitHub Actions #42867001878](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42867001878) yeniden çalıştırıldı; son doğrudan jobs kontrolünde **offline-tests completed/success** (job 130715797408), **master completed/success** (job 130716389179). Bu başarı yalnızca ilgili workflow işlerinin sonucudur, bütün Aşama 2 kabulü değildir.
+- Kanonik v2/tasks/state.json son okumasında #5 blocked, #6 in_progress, #13 blocked, #14 in_progress. Bu görevler bu turda tamamlandı diye işaretlenmedi; #3/#4/#9/#11 önceki kayıtlarına dokunulmadı.
+- #5: özgün Actions artifact 13233323845 içindeki üç bozuk kaynak (free-tv-independent, discevisita-tr, onureroz-turk-karma), toplam 26 eşleşmemiş EXTINF; satır düzeyi onarım ve doğrulama açık.
+- #6: özgün tarihî raporda 2.643 güncel kaynaklarda bulunmayan kimlik tespit edilmiş. Bu sayının bulunması yeniden yapılacak bir keşif değildir. İBO oynatma kontrolü kullanıcı tarafından yapılacak; sırf AV oynatma sonucu yok diye tarihî envanter koruma işi durdurulmayacak. 30 SHA256 örneğinin 9'unda gerçek AV kanıtı, 21'inde probe sonucu vardır; tam 2.643 üyelik kanıtı ayrıca doğrulanmalıdır.
+- #13: v2/history/task13-original-key-restore-verified-20261111.json ile özgün anahtarla AES-256-GCM ve bağımsız Google Drive şifreli kopya geri yüklemesi, SHA256, ZIP bütünlüğü, 4.955 tarihî + 107 orphan = 5.062 kayıt doğrulanmıştır. Buna rağmen bağımsız sürümlü S3 GitHub Actions kabulü için gerekli güvenli AWS/S3 girdileri bulunmadığından CI kabulü açık; sırlar repoya yazılmayacak.
+- #14: 4.955 tarihî kimlik canlı Master/local encrypted roundtrip içinde korunmuş; #13 otomatik kabulüne bağımlı son kapatma açık.
+- Bu devir kaydı yeni kod onarımı, yeni S3 restore veya yeni yayın AV kanıtı iddia etmez. Korunan ana İBO listesi, main, tarihî envanter ve gizli anahtarlar değiştirilmedi. Sonraki işlem: #5 kaynak onarımı, #6 tam kayıp kimlik kanıtı, #13 güvenli uzak otomatik kabul, #14 bağımlı toplu kabul; tek bir yeşil offline workflow bunların yerine geçirilmez.
+
 ## 10 Kasım 2026 — Aşama 2 toplu iş kapsamı ve doğrulanmış Actions durumu
 
 - Kullanıcının güncel açık talimatı: #3, #4, #5, #9, #13 temel işleri paralel ele al; ardından #6, #11, #14 tamamla. Önceden ertelenmiş #3/#4/#6 bu aşamada yeniden kapsam içindedir; bunlar bitmiş sayılmaz. Sorunlu yayınlar açık kalabilir, bağımsız işleri durduramaz.
