@@ -57,6 +57,13 @@ class HistoricalRecoveryTests(unittest.TestCase):
                 self.assertFalse(validate_url("https://" + host + "/live.m3u8"))
         self.assertTrue(validate_url("https://cdn-1.example.org/live.m3u8"))
 
+    def test_rejects_backslash_and_trailing_dot_authorities(self):
+        for url in ("https://example.org\\\\@127.0.0.1/live.m3u8",
+                    "https://example.org./live.m3u8",
+                    "https://example.org\\\\live.m3u8"):
+            with self.subTest(url=url):
+                self.assertFalse(validate_url(url))
+
     def test_malformed_ipv6_authority_is_rejected(self):
         self.assertFalse(validate_url("https://[broken/a.m3u8"))
         self.assertFalse(validate_url("https://[::1/a.m3u8"))
