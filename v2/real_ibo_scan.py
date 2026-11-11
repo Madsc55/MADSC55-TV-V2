@@ -17,7 +17,7 @@ import urllib.parse
 import urllib.request
 from stream_probe import probe
 from stage3_identity_recovery import url_sha256
-from stage3_metadata_acceptance import quality_from_probe, category
+from stage3_metadata_acceptance import quality_from_probe, category, normalized_identity
 from stage3_recovery_queue import build_recovery_queue
 from secure_archive import backup as encrypt_inventory, decrypt as decrypt_inventory
 import os
@@ -272,6 +272,7 @@ def main():
             record = {**previous, **candidate,
                       'url_sha256': url_sha256(candidate['url']),
                       'category': category(candidate),
+                      'identity': normalized_identity({**previous, **candidate}),
                       'verified_quality': verified if verified.get('av_verified') else previous.get('verified_quality', {'av_verified': False, 'quality': 'UNVERIFIED'}),
                       'http_hls_status': new_status,
                       'ibo_device_tested': previous.get('ibo_device_tested', False),
