@@ -175,14 +175,15 @@
     {
       "id": 14,
       "status": "in_progress",
-      "last_checked_at": "2026-11-10T23:34:00Z",
+      "last_checked_at": "2026-11-11T17:17:00Z",
       "evidence_urls": [
         "https://github.com/Madsc55/MADSC55-TV-V2/commit/1fe5c6b6d3e20c51362fb3673970a69e1ba0e1c9",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42623941094",
-        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42867001878"
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42867001878",
+        "https://github.com/Madsc55/MADSC55-TV-V2/commit/869571e9ce0045d879697ead404b21a412b817d3"
       ],
-      "blocker": "#13 independent S3 restore remains blocked on authorized repository secrets; local 4955-record encrypted preservation is now verified.",
-      "reason": "Real live Master b99ce1b report proves all 4955 immutable historical identities survived encrypted archive roundtrip, with identity SHA256 e84cf1273ae54fc89de5d7edc3a46b4db78b91ddd7d6953dabdde30a6c3e0c83. Full task remains open until independent restore #13 passes."
+      "blocker": "Authenticated original-key restore of 4,955 historical rows and 107 orphan candidates, plus an independent Drive ciphertext copy, is documented in commit 869571e. This establishes real archive recoverability, not a successful secure GitHub Actions production acceptance. #14 final automated acceptance still pending #13 CI success; do not rerun manual AES proof or falsely require new stream AV for archive preservation.",
+      "reason": "Live Master preserved all 4,955 historical identities in local encrypted roundtrip (run 42867001878); commit 869571e additionally verifies original AES restore and independent Google Drive copy SHA256, ZIP integrity and 5,062 restored records. Remaining step is successful reproducible GitHub Actions acceptance using authorized secrets; no IBO playlist changes."
     },
     {
       "id": 15,
