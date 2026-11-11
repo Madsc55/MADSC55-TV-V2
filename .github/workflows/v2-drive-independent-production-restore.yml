@@ -1,6 +1,11 @@
 name: V2 Drive Independent Production Restore
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - madsc/v2-discovery-bulk-20261031
+    paths:
+      - '.github/workflows/v2-drive-independent-production-restore.yml'
 permissions:
   contents: read
 jobs:
@@ -28,8 +33,9 @@ jobs:
           token=os.environ.get('DRIVE_TOKEN','')
           aes=os.environ.get('ORIGINAL_AES_KEY_B64','')
           rsa=os.environ.get('ORIGINAL_RSA_KEY_B64','')
-          if not token or not aes or not rsa:
-              raise SystemExit('BLOCKED: Drive OAuth token and original production AES/RSA private key secrets must be configured securely')
+          missing=[name for name,value in [('V2_DRIVE_RESTORE_ACCESS_TOKEN',token),('V2_PRODUCTION_AES_KEY_METADATA_B64',aes),('V2_HISTORY_RSA_PRIVATE_KEY_B64',rsa)] if not value]
+          if missing:
+              raise SystemExit('BLOCKED: missing required GitHub Actions secrets: '+', '.join(missing))
           expected=[
               ('1nSKpgpkHh_iNihtZBIEqF9YzNpWy6tUJ','production.enc','38db9b094c48e49eb0b5b1234ddc6a109f215d6d9fa732a1a4d0cf592673fe4c'),
               ('1fXVZCHU-3jgcCOf5BNkMMrP35Uegnj9d','stage3.zip','808152d71ae5bc81aaf594e151753272dadcdd3495c9231bb781598bd934a7b3'),
