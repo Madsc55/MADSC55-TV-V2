@@ -51,6 +51,8 @@ on:
       - 'v2/run_live_page_discovery.py'
       - 'v2/historical_url_recovery.py'
       - 'v2/test_historical_url_recovery.py'
+      - 'v2/historical_targeted_playback.py'
+      - 'v2/test_historical_targeted_playback.py'
       - 'v2/historical_inventory_guard.py'
       - 'v2/test_historical_inventory_guard.py'
       - 'v2/archive_acceptance_gate.py'
@@ -124,6 +126,7 @@ jobs:
             test_run_live_page_discovery \
             test_official_page_audit_guard \
             test_historical_url_recovery \
+            test_historical_targeted_playback \
             test_historical_inventory_guard \
             test_archive_acceptance_gate \
             test_independent_s3_restore \
