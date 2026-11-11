@@ -191,5 +191,20 @@ class HistoricalRecoveryTests(unittest.TestCase):
         self.assertEqual(row["historical_playback_status"], "OK")
         self.assertFalse(report["device_verified"])
 
+    def test_duplicate_historical_evidence_preserved_without_live_acceptance(self):
+        old = [
+            {"url": "https://example.org/stream.m3u8", "source_id": "old-a",
+             "status": "VIDEO_AUDIO_DECODED", "decoded": True},
+            {"url": "https://example.org/stream.m3u8", "source_id": "old-b",
+             "status": "FAILED", "decoded": False},
+        ]
+        recovered, report = recover(old, [])
+        self.assertEqual(len(recovered), 1)
+        self.assertEqual(report["duplicate_historical_urls"], 1)
+        self.assertEqual(recovered[0]["source_ids"], ["old-a", "old-b"])
+        self.assertEqual(recovered[0]["status"], "HISTORICAL_NOT_REVERIFIED")
+        self.assertFalse(recovered[0]["decoded"])
+        self.assertEqual(recovered[0]["historical_records"], old)
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)
