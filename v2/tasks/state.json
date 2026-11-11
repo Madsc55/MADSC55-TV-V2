@@ -74,11 +74,14 @@
     },
     {
       "id": 6,
-      "status": "pending",
-      "last_checked_at": null,
-      "evidence_urls": [],
-      "blocker": null,
-      "reason": null
+      "status": "in_progress",
+      "last_checked_at": "2026-11-11T00:00:00Z",
+      "evidence_urls": [
+        "https://github.com/Madsc55/MADSC55-TV-V2/blob/madsc/v2-discovery-bulk-20261031/v2/historical_url_recovery.py",
+        "https://github.com/Madsc55/MADSC55-TV-V2/blob/madsc/v2-discovery-bulk-20261031/v2/historical_targeted_playback.py"
+      ],
+      "blocker": "No verified complete real FFmpeg decoded video+audio run for all 2,643 lost historical addresses; existing targeted playback probes only a bounded absent-hash subset.",
+      "reason": "Independent historical URL recovery and bounded public-DNS FFprobe audit implementations exist in v2/historical_url_recovery.py and v2/historical_targeted_playback.py. Exact URL SHA matching and hash-only diagnostics are implemented; FFprobe stream metadata is not decoded video+audio acceptance. Task remains open pending complete real 2,643 lost-address probing and evidence reconciliation. Do not block this task on S3 credentials or the three malformed original rows."
     },
     {
       "id": 7,
