@@ -7,10 +7,6 @@ on:
     paths:
       - 'v2/**'
       - '.github/workflows/v2-offline-inventory.yml'
-  pull_request:
-    paths:
-      - 'v2/**'
-      - '.github/workflows/v2-offline-inventory.yml'
 
 # Prevent overlapping runs on the same branch from competing for acceptance evidence.
 concurrency:
