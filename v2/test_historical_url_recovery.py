@@ -176,5 +176,20 @@ class HistoricalRecoveryTests(unittest.TestCase):
         self.assertEqual(recovered, [])
         self.assertEqual(report["recoverable_real_urls"], 0)
 
+    def test_legacy_decoder_fields_never_become_current_av_proof(self):
+        old = [{"url": "https://example.org/old.m3u8", "decoded": True,
+                "video": True, "audio": True, "has_video": True, "has_audio": True,
+                "ffmpeg_status": "VIDEO_AUDIO_DECODED", "playback_status": "OK"}]
+        recovered, report = recover(old, [])
+        row = recovered[0]
+        for field in ("decoded", "video", "audio", "has_video", "has_audio"):
+            self.assertIs(row[field], False)
+            self.assertIs(row["historical_" + field], True)
+        self.assertEqual(row["ffmpeg_status"], "HISTORICAL_NOT_REVERIFIED")
+        self.assertEqual(row["historical_ffmpeg_status"], "VIDEO_AUDIO_DECODED")
+        self.assertEqual(row["playback_status"], "HISTORICAL_NOT_REVERIFIED")
+        self.assertEqual(row["historical_playback_status"], "OK")
+        self.assertFalse(report["device_verified"])
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)
