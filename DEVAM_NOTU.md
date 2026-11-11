@@ -2390,3 +2390,8 @@ Kullanıcının açık talimatıyla #3, #4 ve #6 tarihî kurtarma görevleri art
 - [Canlı kaynak koşusundaki](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42989285004) 89 yeniden deneme, [önceki sabit AV arşivi](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42043534038) ile URL hash'i ve yayıncı kimliği üzerinden birebir eşleştirildi. Üç önceden doğrulanmış kanalın kanıtı korundu. Yeni görüntü ve ses doğrulaması çıkmadı.
 - 171 kesin API yayınından 168'i iki kısa FFmpeg testinde görüntü ve ses verdi. Bunların 167'sinde ölçülen genişlik ve yükseklik mevcut. 29 kesin XMLTV kimliğinden 8'inde geçerli program zaman aralığı var. 14'ü incelenen AV kümesinde de bulunuyor, 303 EPG açığı sürüyor.
 - Arşiv özetleri, gerçek sonuç sayıları ve kalan boşluklar `v2/reports/stage3-live-evidence-20261111.json` içine kaydedildi. #16, #18, #19 ve #20 kanıtları güncellendi. Ön şartları ve kalan kabul işleri açık.
+
+### 11 Kasım — Aşama 5 paket denetimi
+
+- M3U doğrulayıcı geçersiz HTTP adreslerini ve bir EXTINF satırındaki yinelenen kategori etiketlerini reddeder. Tırnak içindeki ve kanal adındaki virgüller korunur. Şifreli paket raporu 1.000 ve 2.000 kayıt hedefini tam karşılayan paketleri ayrı sayar. Eksik son parçalar kendi gerçek sayılarıyla görünür.
+- 23 yerel paket ve M3U testi geçti. Test arşivinde şifreleme ve geri okuma doğrulandı. Gerçek IBO teslimi için #28–#31 ön şartları açık.

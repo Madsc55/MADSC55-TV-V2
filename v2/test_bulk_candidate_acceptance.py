@@ -60,6 +60,7 @@ class BulkArchiveAcceptanceTests(unittest.TestCase):
             counts = {}
             for package in result["packages"]:
                 counts.setdefault(package["batch_size"], []).append(package["records"])
+                self.assertEqual(package["full_size"], package["records"] == package["batch_size"])
                 rows = open_rows(root / "private-packages" / package["name"], inputs[2])
                 content = bulk.render(rows)
                 self.assertEqual(content.count("#EXTINF:"), package["records"])
@@ -67,6 +68,7 @@ class BulkArchiveAcceptanceTests(unittest.TestCase):
                 self.assertEqual(len({row["url_sha256"] for row in rows}), len(rows))
                 self.assertTrue(all(row["decoded"] is True and row["source_ids"] == ["fixture-api"] for row in rows))
             self.assertEqual(counts, {1000: [1000, 1000, 4], 2000: [2000, 4]})
+            self.assertEqual(result["full_packages_by_size"], {"1000": 2, "2000": 1})
             self.assertEqual(result["eligible_unique_av_urls"], 2004)
             self.assertFalse(result["metadata_acceptance_complete"])
             self.assertEqual([path.read_bytes() for path in inputs], before)

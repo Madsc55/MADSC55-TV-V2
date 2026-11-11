@@ -209,7 +209,7 @@ def export_batches(report_path, sealed_path, private_key, output, xmltv=None, re
                     "xmltv_snapshot_sha256": epg_sha, "network_requests": 0,
                     "prior_av_reused_not_fresh": True, "plaintext_playlist_written": False,
                     "protected_playlist_modified": False, "ibo_device_verified": False,
-                    "packages": []})
+                    "packages": [], "full_packages_by_size": {"1000": 0, "2000": 0}})
     # Build in an isolated sibling and publish the complete output directory once.
     # A readback/decryption verifies each package's real row count and exact M3U.
     with tempfile.TemporaryDirectory(prefix=".private-av-batches-", dir=output.parent) as temporary:
@@ -229,8 +229,10 @@ def export_batches(report_path, sealed_path, private_key, output, xmltv=None, re
                 opened = open_rows(path, private_key)
                 if opened != batch or render(opened) != content:
                     raise ValueError("Encrypted package restore mismatch")
+                full_size = len(batch) == size
+                summary["full_packages_by_size"][str(size)] += int(full_size)
                 summary["packages"].append({"name": path.name, "batch_size": size,
-                    "records": len(batch), "sealed_sha256": sha(path.read_bytes()),
+                    "records": len(batch), "full_size": full_size, "sealed_sha256": sha(path.read_bytes()),
                     "plaintext_m3u_sha256": sha(content.encode("utf-8")),
                     "restore_verified": True, "m3u_structure_verified": True})
         public_path.unlink()
@@ -257,7 +259,8 @@ def main(argv=None):
         # Never include exception text: parsers can echo private input contents.
         parser.exit(2, "Accepted archive batch validation failed: " + type(exc).__name__ + "\n")
     print(json.dumps({key: result[key] for key in ("status", "candidate_count", "eligible_unique_av_urls",
-        "classification_counts", "pending_counts", "packages", "plaintext_playlist_written")}, sort_keys=True))
+        "classification_counts", "pending_counts", "packages", "full_packages_by_size",
+        "plaintext_playlist_written")}, sort_keys=True))
 
 
 if __name__ == "__main__":

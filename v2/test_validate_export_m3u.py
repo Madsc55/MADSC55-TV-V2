@@ -43,6 +43,22 @@ class ExportM3UTests(unittest.TestCase):
         self.assertTrue(any("unsupported URL scheme" in e for e in
                             validate_m3u(playlist("file:///etc/passwd"))))
 
+    def test_reject_malformed_http_url(self):
+        for url in ("https://", "https://example.org:bogus/a", "https://example.org/a b"):
+            with self.subTest(url=url):
+                self.assertTrue(any("invalid or unsafe stream URL" in e
+                                    for e in validate_m3u(playlist(url))))
+
+    def test_group_title_must_be_unambiguous(self):
+        content = ('#EXTM3U\n#EXTINF:-1 group-title="One" group-title="Two",Channel\n'
+                   'https://example.org/a\n')
+        self.assertTrue(any("duplicate or empty group-title" in e for e in validate_m3u(content)))
+
+    def test_quoted_comma_in_metadata_and_channel_name(self):
+        content = ('#EXTM3U\n#EXTINF:-1 tvg-name="One, Two" group-title="TEST",One, Two\n'
+                   'https://example.org/a\n')
+        self.assertEqual(validate_m3u(content), [])
+
     def test_orphan_url(self):
         self.assertTrue(any("without EXTINF" in e for e in
                             validate_m3u("#EXTM3U\nhttps://example.org/a\n")))

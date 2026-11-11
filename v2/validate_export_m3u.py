@@ -8,9 +8,11 @@ import pathlib
 import re
 import sys
 
+from historical_url_recovery import validate_url
+
 HEADER = "#EXTM3U"
-GROUP = re.compile(r'group-title="([^"]+)"')
-ATTRIBUTE = re.compile(r'([\w-]+)="([^"]*)"')
+EXTINF = re.compile(r'#EXTINF:((?:[^",]|"[^"]*")*),(.*)')
+ATTRIBUTE = re.compile(r'(?:^|\s)([\w-]+)="([^"]*)"')
 
 
 def validate_m3u(text: str) -> list[str]:
@@ -25,11 +27,14 @@ def validate_m3u(text: str) -> list[str]:
             if pending is not None:
                 errors.append(f"line {number}: previous EXTINF has no URL")
             pending = number
-            match = GROUP.search(line)
-            if not match or not match.group(1).strip():
-                errors.append(f"line {number}: missing or empty group-title")
-            if "," not in line or not line.rsplit(",", 1)[-1].strip():
-                errors.append(f"line {number}: missing channel name")
+            metadata = EXTINF.fullmatch(line)
+            if metadata is None or not metadata[2].strip():
+                errors.append(f"line {number}: missing channel name or malformed EXTINF")
+                continue
+            groups = [value for key, value in ATTRIBUTE.findall(metadata[1])
+                      if key == "group-title"]
+            if len(groups) != 1 or not groups[0].strip():
+                errors.append(f"line {number}: missing, duplicate or empty group-title")
         elif line.startswith("#"):
             if pending is not None and line.startswith("#EXT-X-"):
                 errors.append(f"line {number}: HLS manifest directive in M3U channel list")
@@ -39,6 +44,8 @@ def validate_m3u(text: str) -> list[str]:
                 errors.append(f"line {number}: URL without EXTINF")
             if not line.startswith(("http://", "https://")):
                 errors.append(f"line {number}: unsupported URL scheme")
+            elif not validate_url(line):
+                errors.append(f"line {number}: invalid or unsafe stream URL")
             if line in seen:
                 errors.append(f"line {number}: duplicate stream URL")
             seen.add(line)
