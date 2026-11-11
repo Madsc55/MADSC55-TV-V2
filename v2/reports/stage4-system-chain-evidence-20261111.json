@@ -1,0 +1,40 @@
+{
+  "schema": 1,
+  "kind": "V2_TASK_24_REAL_CHAIN_COMPONENT_EVIDENCE",
+  "status": "INDEPENDENT_S3_RESTORE_PENDING",
+  "discovery_to_av": {
+    "run_id": 42539900333,
+    "discovery_artifact_id": 13644032397,
+    "discovery_artifact_sha256": "830f7bea93de441a23c4b7cf18622781c93a8ddf493ac05b3e25780bba3c859f",
+    "av_artifact_id": 13648975047,
+    "av_artifact_sha256": "6981e10e090417ec83dfeff0d0d3da3a7dbcd95fe4437f2aa56c13742fe85e39",
+    "discovery_hashes": 9030,
+    "exact_discovery_hashes_in_av_report": 9030,
+    "exact_discovery_hashes_with_real_av": 1056,
+    "discovery_hashes_outside_av_report": 0,
+    "total_world_hashes": 35542,
+    "probed_world_hashes": 35542,
+    "decoded_world_av": 14417,
+    "sealed_shards": 9,
+    "historical_exact_decoded": 3042,
+    "corrupted_ciphertext_rejected": true
+  },
+  "master_roundtrip": {
+    "run_id": 42874231734,
+    "artifact_id": 13798208540,
+    "artifact_sha256": "0d0fad4639de4f2d6c6ab8080a640823b9619b8d74c90dc406298a5b638a5b4a",
+    "identities": 4955,
+    "runner_reported_restore_verified": true
+  },
+  "independent_s3": {
+    "accepted": false,
+    "prerequisite_task_id": 13,
+    "attempt": 2,
+    "run_id": 42688764100,
+    "job_id": 130424619792,
+    "missing_secret": "V2_S3_RESTORE_AWS_ACCESS_KEY_ID"
+  },
+  "protected_playlist_modified": false,
+  "ibo_device_verified": false
+}
+

@@ -2378,3 +2378,9 @@ Kullanıcının açık talimatıyla #3, #4 ve #6 tarihî kurtarma görevleri art
 - Aşama 2 kanıt commit'inde çevrimdışı envanter işi [#43022275252](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43022275252) eksik `secure_archive` modülünde durdu. Özgün AES-GCM arşiv modülü depo geçmişinden geri alındı. Yerel şifreli yedek/geri yükleme, bozulma ve yanlış anahtar reddi ile kaynak geçmişi korunarak envanter birleştirme testleri geçti.
 
 - Envanter kabulünün ikinci koşusunda eski tarayıcı testi ülke etiketini tek başına aday sayıyordu. Test mevcut adaylık kuralını doğrulayacak biçimde düzeltildi. Belirsiz yayın reddediliyor, açık TRT 1 metadata'sı aday olabiliyor ve TRT World dışarıda kalıyor. Beş yerel test geçti.
+
+### 11 Kasım — Aşama 4, #24 sistem zinciri kanıtı
+
+- [Canlı Source Integration koşusunun](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42539900333) 12 işi başarılı. Aynı koşunun keşif ve AV artefaktları SHA-256 ile doğrulandı. 9.030 keşif hash'inin tamamı 35.542 kaydın işlendiği AV raporunda mevcut. Bunların 1.056'sında görüntü ve ses decode kanıtı var. 3.042 tarihî URL hash'inin AV kaydı birebir doğrulandı. Dokuz şifreli parçanın bütünlük kontrolü geçti ve bir baytı değiştirilen yerel kopya reddedildi.
+- [Canlı Master](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42874231734) 4.955 tarihî kimliğin şifreli arşivden birebir geri okunduğunu raporladı. Koşu ve artefakt özetleri `v2/reports/stage4-system-chain-evidence-20261111.json` içinde.
+- #24'ün keşif, AV ve şifreli kanıt adımları doğrulandı. Tam kapanış, #13'ün bağımsız sürümlü S3 geri yükleme kanıtını bekliyor. İkinci deneme AWS erişim anahtarı tanımlı olmadığı için nesneye ulaşamadı.

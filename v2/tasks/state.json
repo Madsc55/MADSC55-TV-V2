@@ -280,11 +280,15 @@
     },
     {
       "id": 24,
-      "status": "pending",
-      "last_checked_at": null,
-      "evidence_urls": [],
-      "blocker": null,
-      "reason": null
+      "status": "blocked",
+      "last_checked_at": "2026-11-11T12:47:45Z",
+      "evidence_urls": [
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42539900333",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42874231734",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42688764100"
+      ],
+      "blocker": "Full #24 acceptance depends on #13 independent versioned S3 restore. Rerun #42688764100 attempt 2 stopped before retrieval because V2_S3_RESTORE_AWS_ACCESS_KEY_ID is missing.",
+      "reason": "Verified same-run discovery to exact URL SHA and FFmpeg evidence: all 9,030 discovery hashes are in the AV artifact, 1,056 have decoded video+audio. Verified all nine sealed shard digests and rejection of a corrupted copy. Matched 3,042 exact historical AV hashes. The live Master artifact records encrypted restore of all 4,955 historical identities. See v2/reports/stage4-system-chain-evidence-20261111.json."
     },
     {
       "id": 25,
