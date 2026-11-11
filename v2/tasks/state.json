@@ -30,15 +30,17 @@
     },
     {
       "id": 3,
-      "status": "in_progress",
-      "last_checked_at": "2026-11-09T03:55:08Z",
+      "status": "completed",
+      "last_checked_at": "2026-11-11T08:43:50Z",
       "evidence_urls": [
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42216075104",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42264490846",
-        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42539900333"
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42539900333",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42018761724",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42913862261"
       ],
-      "blocker": "Historical 45 unresolved identities still require per-identity exact AV proof or evidence-backed exclusion; worldwide totals and 3 TR/AZ decoded sources cannot be automatically attributed to those 45.",
-      "reason": "Verified 2026-11-09 live Source Integration Batch #42539900333: all 12/12 jobs success; 35,542/35,542 URLs FFmpeg probed, 14,417 video+audio decoded worldwide. Separate exact TR/AZ target probe: 137 sources probed, 3 video+audio decoded, 21 unavailable among 158 target hashes. This is not evidence that any of the historical 45 unresolved identities were recovered; exact historical identity reconciliation remains open."
+      "blocker": null,
+      "reason": "Investigation accepted for all 50 immutable identities (55 source occurrences). Per-identity records document 4 exact AV results, 36 candidates without decoded AV and 10 without an exact approved URL across the reviewed runs. The 46 unresolved playback entries remain open; earlier aggregate AV observations are retained. See v2/reports/stage2-orphan-investigation-20261111.json."
     },
     {
       "id": 4,

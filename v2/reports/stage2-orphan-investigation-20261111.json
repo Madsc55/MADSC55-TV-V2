@@ -1,0 +1,1672 @@
+{
+  "schema": 1,
+  "kind": "V2_TASK_3_ORIGINAL_ORPHAN_INVESTIGATION",
+  "source_occurrences": 55,
+  "identities": 50,
+  "sources": [
+    {
+      "run_id": 42018761724,
+      "artifact_id": 13410752619,
+      "archive_sha256": "fe72cb33783e0e60a941f18458066167081e884622ae201cdb9c8f4fa14342f8"
+    },
+    {
+      "run_id": 42539900333,
+      "artifact_id": 13648975047,
+      "archive_sha256": "6981e10e090417ec83dfeff0d0d3da3a7dbcd95fe4437f2aa56c13742fe85e39"
+    },
+    {
+      "run_id": 42913862261,
+      "artifact_id": 13822434023,
+      "archive_sha256": "64ca38e34e87bab988cdb348a93db1fc2a073b361bfc10e8690b571fd5a76e77"
+    }
+  ],
+  "outcomes": {
+    "BLOCKED_PROBES_HAVE_NO_REAL_VIDEO_AND_AUDIO": 36,
+    "EXACT_CANDIDATE_AV_EVIDENCE_IN_REVIEWED_RUN": 4,
+    "BLOCKED_NO_EXACT_URL_IN_APPROVED_SOURCE_SEARCH": 10
+  },
+  "records": [
+    {
+      "original_extinf_sha256": "116a348bf1de86de29df8036db40dda672f9f40f5480d882331d3122a76b4f22",
+      "source_ids": [
+        "github-auto-24"
+      ],
+      "resolution": "BLOCKED_PROBES_HAVE_NO_REAL_VIDEO_AND_AUDIO",
+      "candidates": [
+        {
+          "url_sha256": "117faaa676ca0c86432d409efa957073b8effebde8d2e48a1e196224f00aa955",
+          "orphan_probe_statuses": [
+            "UNSAFE_OR_UNRESOLVED_HOST"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "2a50a9c43d1b5aa006fbe356509ffc8f1ce4e289e35d6e2fda67ca9efeeba132",
+          "orphan_probe_statuses": [
+            "UNSAFE_OR_UNRESOLVED_HOST"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "2ea3b6d75382a6ad6c2491e97436f46dba7324f05157995f23e8bda7fa521d06",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_MEDIA_FORMAT_UNSUPPORTED"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "304a0d90deae4c5616e07e9fba0f78e694b069368de7c04782a35884fb958d04",
+          "orphan_probe_statuses": [
+            "UNSAFE_OR_UNRESOLVED_HOST"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "3c53b34fa320b564cd8b5a82e814290f7a90c9f51876061b9c39479b689cfc33",
+          "orphan_probe_statuses": [
+            "UNSAFE_OR_UNRESOLVED_HOST"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "3e04b88f067f08ef3ec022f3342841e0ea64ad27713bdfdd5592508622f5801f",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_HTTP_RESPONSE_ERROR"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "4425c54d2bb4d1c8776e45c3785c7d23ae937a7a023d26a09af3232778af61a4",
+          "orphan_probe_statuses": [
+            "UNSAFE_OR_UNRESOLVED_HOST"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "4bc787aee9071f7f105481879406d9608cce67ccd6632058e350e4b8bfafc6fe",
+          "orphan_probe_statuses": [
+            "UNSAFE_OR_UNRESOLVED_HOST"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "6a625e8452eed75526f1aa8b90a64ca230b6dc56426f9b5c7a27c2205e3a1bd4",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_HTTP_RESPONSE_ERROR"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "74d299840e516a8c5ca3c06915528aa8d94fbf9634b922f6e05559a059b0ef4e",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_HTTP_RESPONSE_ERROR"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "7c0d3f9a3397f21a202f7ce436f8559c3cc7a60464d2065d73bd09104030e23d",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_HTTP_RESPONSE_ERROR"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "7f507605c331d2a04c219280dbbb28244ce9cfdf61752fdc6e178fb07a59db0c",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_HTTP_RESPONSE_ERROR"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "aa91051bd1655a583470fe63fc8c038c75f2c3c93563ab1bc14fa41b9ac7b34e",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_MEDIA_FORMAT_UNSUPPORTED"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "c1801736dfc42957394f2b0c0b98dff2999087084147b838c33c68136d3189f7",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_HTTP_RESPONSE_ERROR"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "d34b2651a4c09ed81a681087b84dcdf0a3bf1a62d22b2c4f44c7a929124d28d0",
+          "orphan_probe_statuses": [
+            "UNSAFE_OR_UNRESOLVED_HOST"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "d4132d1354421daf53407126a179c27494b924e44cf07694442ba8079dc3b643",
+          "orphan_probe_statuses": [
+            "UNSAFE_OR_UNRESOLVED_HOST"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "e197a5eae1ac1c05f4388a3a0be21c1217e1d6aaeb0be6aed1d3b3e45db68650",
+          "orphan_probe_statuses": [
+            "UNSAFE_OR_UNRESOLVED_HOST"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        }
+      ],
+      "orphan_diagnostics": [
+        "PROBE_FAILED_HTTP_RESPONSE_ERROR",
+        "PROBE_FAILED_MEDIA_FORMAT_UNSUPPORTED",
+        "UNSAFE_OR_UNRESOLVED_HOST"
+      ]
+    },
+    {
+      "original_extinf_sha256": "13b4fc9715124fee708a871845c11aac2bfc1d16a5780b781e667cc3adf0a321",
+      "source_ids": [
+        "github-auto-24"
+      ],
+      "resolution": "BLOCKED_PROBES_HAVE_NO_REAL_VIDEO_AND_AUDIO",
+      "candidates": [
+        {
+          "url_sha256": "c6afc520f5c97001540ba597a22dd7d13756cc2d05df78a7c7e84d9926b0cf09",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_HTTP_FORBIDDEN"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        }
+      ],
+      "orphan_diagnostics": [
+        "PROBE_FAILED_HTTP_FORBIDDEN"
+      ]
+    },
+    {
+      "original_extinf_sha256": "17325d320ad224a2b32e6ca85d700ccd3c2b5325dfe656c31dc0f41c422abe29",
+      "source_ids": [
+        "onureroz-turk-all",
+        "onureroz-turk-karma"
+      ],
+      "resolution": "BLOCKED_NO_EXACT_URL_IN_APPROVED_SOURCE_SEARCH",
+      "candidates": [],
+      "orphan_diagnostics": []
+    },
+    {
+      "original_extinf_sha256": "24d256e814353c2d37fac573a94be61e9df3adeff5f0fc402b9fb1ba6352e6da",
+      "source_ids": [
+        "github-auto-24"
+      ],
+      "resolution": "BLOCKED_PROBES_HAVE_NO_REAL_VIDEO_AND_AUDIO",
+      "candidates": [
+        {
+          "url_sha256": "cfc418766ef682db1688d074efe6c77c32fbd63d384c274124858e9977c92558",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_HTTP_FORBIDDEN"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        }
+      ],
+      "orphan_diagnostics": [
+        "PROBE_FAILED_HTTP_FORBIDDEN"
+      ]
+    },
+    {
+      "original_extinf_sha256": "25740a900952697b6812168f47c5eb6e3ffdb442c78dde861b99daa6daa2f976",
+      "source_ids": [
+        "discevisita-tr"
+      ],
+      "resolution": "BLOCKED_PROBES_HAVE_NO_REAL_VIDEO_AND_AUDIO",
+      "candidates": [
+        {
+          "url_sha256": "bf569a0c11ea92d27f52931f4bd241493fef3e7cd1845a68670e0300eaef4845",
+          "orphan_probe_statuses": [
+            "UNSAFE_OR_UNRESOLVED_HOST"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        }
+      ],
+      "orphan_diagnostics": [
+        "UNSAFE_OR_UNRESOLVED_HOST"
+      ]
+    },
+    {
+      "original_extinf_sha256": "27f38f5df38214c26d1a23ad0b455343a9489e873ab84850c3d7b0a45649ffa3",
+      "source_ids": [
+        "discevisita-tr"
+      ],
+      "resolution": "EXACT_CANDIDATE_AV_EVIDENCE_IN_REVIEWED_RUN",
+      "candidates": [
+        {
+          "url_sha256": "2b06a2c2dc7d4408001689d8b96e0d948faa03618c96f7ffeaa32a8c82da18d8",
+          "orphan_probe_statuses": [
+            "VIDEO_AUDIO_DECODED"
+          ],
+          "later_complete_run_status": "VIDEO_AUDIO_DECODED",
+          "later_partial_run_status": "VIDEO_AUDIO_DECODED"
+        },
+        {
+          "url_sha256": "2bd6cdfdb6b31094768c38c50f0894e8ad48112ab8905f6a8290604a8669e8be",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_HTTP_FORBIDDEN"
+          ],
+          "later_complete_run_status": "PROBE_FAILED_HTTP_FORBIDDEN",
+          "later_partial_run_status": "PROBE_FAILED_HTTP_FORBIDDEN"
+        },
+        {
+          "url_sha256": "2f31500c33d97be39475df9c930a1853af0b7af6ce5692e281863fbfd9e5cedc",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_HTTP_FORBIDDEN"
+          ],
+          "later_complete_run_status": "PROBE_FAILED_HTTP_FORBIDDEN",
+          "later_partial_run_status": "PROBE_FAILED_HTTP_FORBIDDEN"
+        }
+      ],
+      "orphan_diagnostics": [
+        "PROBE_FAILED_HTTP_FORBIDDEN"
+      ]
+    },
+    {
+      "original_extinf_sha256": "2fc210f981912f168ebe6f49d348fbf8346c5b6e8c92652728ea0d1c082a7fc9",
+      "source_ids": [
+        "discevisita-tr"
+      ],
+      "resolution": "BLOCKED_PROBES_HAVE_NO_REAL_VIDEO_AND_AUDIO",
+      "candidates": [
+        {
+          "url_sha256": "6298684a62bb2d43a9d3d4c7b6996cda5bfcaf6077181486d285f57f0d29831c",
+          "orphan_probe_statuses": [
+            "UNSAFE_OR_UNRESOLVED_HOST"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        }
+      ],
+      "orphan_diagnostics": [
+        "UNSAFE_OR_UNRESOLVED_HOST"
+      ]
+    },
+    {
+      "original_extinf_sha256": "31646334906ea2a50f529419627d732bf9f8e23ba1fb1fb9d231d0269f927f84",
+      "source_ids": [
+        "onureroz-turk-all",
+        "onureroz-turk-karma"
+      ],
+      "resolution": "BLOCKED_NO_EXACT_URL_IN_APPROVED_SOURCE_SEARCH",
+      "candidates": [],
+      "orphan_diagnostics": []
+    },
+    {
+      "original_extinf_sha256": "32d7a544f2695622c727a70a267cf85e2c3f8cb2bdc06f8392069f5316230e10",
+      "source_ids": [
+        "github-auto-24"
+      ],
+      "resolution": "BLOCKED_PROBES_HAVE_NO_REAL_VIDEO_AND_AUDIO",
+      "candidates": [
+        {
+          "url_sha256": "12fbca5c60fb33f1710fc88f5c8db5208ce0a8291151cd22f66f5c64e747560e",
+          "orphan_probe_statuses": [
+            "UNSAFE_OR_UNRESOLVED_HOST"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        }
+      ],
+      "orphan_diagnostics": [
+        "UNSAFE_OR_UNRESOLVED_HOST"
+      ]
+    },
+    {
+      "original_extinf_sha256": "34d108bf77e813ba615085dc219c05607d836899cb71a87035038c5b65d96c13",
+      "source_ids": [
+        "onureroz-turk-karma"
+      ],
+      "resolution": "BLOCKED_NO_EXACT_URL_IN_APPROVED_SOURCE_SEARCH",
+      "candidates": [],
+      "orphan_diagnostics": []
+    },
+    {
+      "original_extinf_sha256": "371ab1aafb1ecacbaf305caea9a612c64bb84ffa8b4e47fbf0695c0f789012eb",
+      "source_ids": [
+        "github-auto-24"
+      ],
+      "resolution": "BLOCKED_PROBES_HAVE_NO_REAL_VIDEO_AND_AUDIO",
+      "candidates": [
+        {
+          "url_sha256": "4b1e996d8250ef48b069a9377885e8764456dd921ca67a5d135122ee705ac3cd",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_HTTP_FORBIDDEN"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "516cfeb64dc111ccccd521dbb8652a8e81d393fba5516b76582339575af3bc83",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_HTTP_NOT_FOUND"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "9290a645f3c4a96e4f6b4a3924f43bf3136c986624b099968237fe02f3725598",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_HTTP_FORBIDDEN"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "aba1a785eb9013f417b53f83ea5e265a766e35905bfad9c94ef4a751208637c1",
+          "orphan_probe_statuses": [
+            "UNSAFE_OR_UNRESOLVED_HOST"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        }
+      ],
+      "orphan_diagnostics": [
+        "PROBE_FAILED_HTTP_FORBIDDEN",
+        "PROBE_FAILED_HTTP_NOT_FOUND",
+        "UNSAFE_OR_UNRESOLVED_HOST"
+      ]
+    },
+    {
+      "original_extinf_sha256": "3bbff951d208454d5f7541e044047d71652abc116dccacc8755b9dc92a36d522",
+      "source_ids": [
+        "github-auto-24"
+      ],
+      "resolution": "BLOCKED_PROBES_HAVE_NO_REAL_VIDEO_AND_AUDIO",
+      "candidates": [
+        {
+          "url_sha256": "0e8c24b74a9273080047bd00f2426f6a91e5192490e988e625f0d7683d027902",
+          "orphan_probe_statuses": [
+            "UNSAFE_OR_UNRESOLVED_HOST"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "8473e179c394aa53af741ba6703e2dec1c6527ff834ded501cf6db3e0bd085fb",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_HTTP_FORBIDDEN"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        }
+      ],
+      "orphan_diagnostics": [
+        "PROBE_FAILED_HTTP_FORBIDDEN",
+        "UNSAFE_OR_UNRESOLVED_HOST"
+      ]
+    },
+    {
+      "original_extinf_sha256": "4381b3ec8a6aee723cda24915e2ada0690c410a1a2802e0663c50d353983a3e0",
+      "source_ids": [
+        "discevisita-tr"
+      ],
+      "resolution": "EXACT_CANDIDATE_AV_EVIDENCE_IN_REVIEWED_RUN",
+      "candidates": [
+        {
+          "url_sha256": "46245d24c7b7c366eb953732b24c8df7d79325251ed79d8376c49ea751bb5a0f",
+          "orphan_probe_statuses": [
+            "VIDEO_AUDIO_DECODED"
+          ],
+          "later_complete_run_status": "VIDEO_AUDIO_DECODED",
+          "later_partial_run_status": "VIDEO_AUDIO_DECODED"
+        },
+        {
+          "url_sha256": "5e5a86b0e6e5f5873eaf697ccf9d76675f22462ad739d2184c5484b653c20426",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_HTTP_FORBIDDEN"
+          ],
+          "later_complete_run_status": "PROBE_FAILED_HTTP_FORBIDDEN",
+          "later_partial_run_status": "PROBE_FAILED_HTTP_FORBIDDEN"
+        },
+        {
+          "url_sha256": "9780defc39a841e5c91240d07522216a678b2eb4960f454c981a6cae61b24e35",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_HTTP_FORBIDDEN"
+          ],
+          "later_complete_run_status": "PROBE_FAILED_HTTP_FORBIDDEN",
+          "later_partial_run_status": "PROBE_FAILED_HTTP_FORBIDDEN"
+        }
+      ],
+      "orphan_diagnostics": [
+        "PROBE_FAILED_HTTP_FORBIDDEN"
+      ]
+    },
+    {
+      "original_extinf_sha256": "441bf8ee64bdc4854ee57d6b07756d38d20b13630eca27e73b686f8cfd3ea6be",
+      "source_ids": [
+        "github-auto-24"
+      ],
+      "resolution": "BLOCKED_PROBES_HAVE_NO_REAL_VIDEO_AND_AUDIO",
+      "candidates": [
+        {
+          "url_sha256": "01b4e55a7415fc9da0f1ece34268ad495d2ddc5f4678f510a6c1d92162c13841",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_HTTP_FORBIDDEN"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "85f23f3ff824056244e886febdb54e6f1155c49e5c51b33397eb99005994c42a",
+          "orphan_probe_statuses": [
+            "UNSAFE_OR_UNRESOLVED_HOST"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        }
+      ],
+      "orphan_diagnostics": [
+        "PROBE_FAILED_HTTP_FORBIDDEN",
+        "UNSAFE_OR_UNRESOLVED_HOST"
+      ]
+    },
+    {
+      "original_extinf_sha256": "49414bf6d887ee815159f6db7e377522d370ecef69a5bddb7699ca7e5b6d274b",
+      "source_ids": [
+        "github-auto-24"
+      ],
+      "resolution": "BLOCKED_PROBES_HAVE_NO_REAL_VIDEO_AND_AUDIO",
+      "candidates": [
+        {
+          "url_sha256": "1d3d3fea109ab948a16aa0eea0966ed46a8d3a32927552a907332ef3522b2162",
+          "orphan_probe_statuses": [
+            "UNSAFE_OR_UNRESOLVED_HOST"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "224db200fd4f5b202affb42be55e8a6ec726a66895d27a7eb15eb23c493be320",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_HTTP_RESPONSE_ERROR"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "4af0fb890e4ea0db2250bf0c55bf73165086b79921368d4d034d215fdfed5442",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_HTTP_RESPONSE_ERROR"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "4bc787aee9071f7f105481879406d9608cce67ccd6632058e350e4b8bfafc6fe",
+          "orphan_probe_statuses": [
+            "UNSAFE_OR_UNRESOLVED_HOST"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "4e8b3fbfd51f61d2e37b096f02c766f89515cb097c184d7dd94bb86dcc609180",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_HTTP_RESPONSE_ERROR"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "5322c210c99bc0855839be014b7cbcb283a7bde09ad9b96700305ca1aafce9f2",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_HTTP_RESPONSE_ERROR"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "5630c97f5bac128145ce33947002c2182b0e69f120fb2c171db45c4857b5fa56",
+          "orphan_probe_statuses": [
+            "UNSAFE_OR_UNRESOLVED_HOST"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "7aae04b5510e86a5fe5fe4a5897bdae6ac9016725a9a44156a65e8fe84f7686a",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_HTTP_RESPONSE_ERROR"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "aea06e5f8d74d4b48dd71e014c3fdfba95f0b13a63a2645cd9aaa17b5e5a47be",
+          "orphan_probe_statuses": [
+            "UNSAFE_OR_UNRESOLVED_HOST"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "bcd8bcab7a5ea495a119f1f1cb3cf673493d106fa997fec00ece33b2534fff8f",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_HTTP_RESPONSE_ERROR"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "c6e1e533f510cb3b47ab0405169adb0f5da6cb4904cc47b36401f7f37752ebea",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_HTTP_RESPONSE_ERROR"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "d2eed814c7201c27b69ea0fc5d1e678fda8fd4a32653174c540c18c5bdb96843",
+          "orphan_probe_statuses": [
+            "UNSAFE_OR_UNRESOLVED_HOST"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "dd7486417a232f858b91b86f80350c3f67016cdb368791ce4cbb941e8085d351",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_DNS_RESOLUTION_ERROR"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "e55fed04127ac96b4ce8c8163d6f1a14eefec19d9bc433aa5b07b1e41676c237",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_HTTP_RESPONSE_ERROR"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        }
+      ],
+      "orphan_diagnostics": [
+        "PROBE_FAILED_DNS_RESOLUTION_ERROR",
+        "PROBE_FAILED_HTTP_RESPONSE_ERROR",
+        "UNSAFE_OR_UNRESOLVED_HOST"
+      ]
+    },
+    {
+      "original_extinf_sha256": "4bc375377ee899fc7fe6ed1a3af53677d3cf1a08a2fa817a29dbb0d0fa5c8a9c",
+      "source_ids": [
+        "onureroz-turk-all",
+        "onureroz-turk-karma"
+      ],
+      "resolution": "BLOCKED_NO_EXACT_URL_IN_APPROVED_SOURCE_SEARCH",
+      "candidates": [],
+      "orphan_diagnostics": []
+    },
+    {
+      "original_extinf_sha256": "4c310936e05c9f5ad9d235e0c7de064444e764186844249198b5d1d8753b4915",
+      "source_ids": [
+        "discevisita-tr"
+      ],
+      "resolution": "BLOCKED_PROBES_HAVE_NO_REAL_VIDEO_AND_AUDIO",
+      "candidates": [
+        {
+          "url_sha256": "0f49335afaabed3d1ad93c9b1bf1c17953e785646f7700cd83ab390bbde15933",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_HTTP_NOT_FOUND"
+          ],
+          "later_complete_run_status": "PROBE_FAILED_HTTP_NOT_FOUND",
+          "later_partial_run_status": "PROBE_FAILED_HTTP_NOT_FOUND"
+        },
+        {
+          "url_sha256": "de6ad667bf17af9016788f70b9a3ce5047dcbe00adb9d91f52af5cc6ce4a75e6",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_HTTP_FORBIDDEN"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        }
+      ],
+      "orphan_diagnostics": [
+        "PROBE_FAILED_HTTP_FORBIDDEN",
+        "PROBE_FAILED_HTTP_NOT_FOUND"
+      ]
+    },
+    {
+      "original_extinf_sha256": "4f33338f399624dda08b516f60523b7cf0c8a8c407d53ad2c0294e948cbddb28",
+      "source_ids": [
+        "discevisita-tr"
+      ],
+      "resolution": "EXACT_CANDIDATE_AV_EVIDENCE_IN_REVIEWED_RUN",
+      "candidates": [
+        {
+          "url_sha256": "41797b4d5916de23ed9e80a16a48ad16d4c1c6d80cb192269fc22569092b67a4",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_HTTP_FORBIDDEN"
+          ],
+          "later_complete_run_status": "PROBE_FAILED_HTTP_FORBIDDEN",
+          "later_partial_run_status": "PROBE_FAILED_HTTP_FORBIDDEN"
+        },
+        {
+          "url_sha256": "5c7ed09dff893a69eac97dac1c0ee8da7fc3991a7cdea7c7c257a9d2b3855085",
+          "orphan_probe_statuses": [
+            "VIDEO_AUDIO_DECODED"
+          ],
+          "later_complete_run_status": "VIDEO_AUDIO_DECODED",
+          "later_partial_run_status": "VIDEO_AUDIO_DECODED"
+        }
+      ],
+      "orphan_diagnostics": [
+        "PROBE_FAILED_HTTP_FORBIDDEN"
+      ]
+    },
+    {
+      "original_extinf_sha256": "5116c4bf27a01d93213b8a58ae4172f61bf1c72352df065f633f7b8910cc33df",
+      "source_ids": [
+        "discevisita-tr"
+      ],
+      "resolution": "EXACT_CANDIDATE_AV_EVIDENCE_IN_REVIEWED_RUN",
+      "candidates": [
+        {
+          "url_sha256": "0ca958367de3a78e8d961b871130b896393b6bd0e264b20a3e4f882c36840bd1",
+          "orphan_probe_statuses": [
+            "UNSAFE_OR_UNRESOLVED_HOST"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "c36b83991c8b0aae9b36d4bed45920c8debdb10cdc75e0f31cf116bbefe451de",
+          "orphan_probe_statuses": [
+            "VIDEO_AUDIO_DECODED"
+          ],
+          "later_complete_run_status": "VIDEO_AUDIO_DECODED",
+          "later_partial_run_status": "VIDEO_AUDIO_DECODED"
+        }
+      ],
+      "orphan_diagnostics": [
+        "UNSAFE_OR_UNRESOLVED_HOST"
+      ]
+    },
+    {
+      "original_extinf_sha256": "522c77488108527db0a323ded89ec62ce024e876887403e713b1af26fb7ed5ec",
+      "source_ids": [
+        "onureroz-turk-karma"
+      ],
+      "resolution": "BLOCKED_NO_EXACT_URL_IN_APPROVED_SOURCE_SEARCH",
+      "candidates": [],
+      "orphan_diagnostics": []
+    },
+    {
+      "original_extinf_sha256": "54ae842869878954b358361410fd1da94cad244f73f9c3d4b2b52b00d29e15dc",
+      "source_ids": [
+        "github-auto-24"
+      ],
+      "resolution": "BLOCKED_PROBES_HAVE_NO_REAL_VIDEO_AND_AUDIO",
+      "candidates": [
+        {
+          "url_sha256": "16d4de17518e465c6298cf542ab3c9b4c80ca7715719a0137fa450b8f3d289cd",
+          "orphan_probe_statuses": [
+            "UNSAFE_OR_UNRESOLVED_HOST"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "87d970ffb11da54545b691f2f6120c43dc676fd519e5ad032aae9c18907983d6",
+          "orphan_probe_statuses": [
+            "UNSAFE_OR_UNRESOLVED_HOST"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "8cb63526b376de1243316408b26bc7323a1afed10d0ed6ee5d72bebc6285e6a8",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_MEDIA_FORMAT_UNSUPPORTED"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "8d88a326f0988f20afe84c7aace1ed2057e3b96f943948bc3cd01444068b50b6",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_MEDIA_FORMAT_UNSUPPORTED"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        }
+      ],
+      "orphan_diagnostics": [
+        "PROBE_FAILED_MEDIA_FORMAT_UNSUPPORTED",
+        "UNSAFE_OR_UNRESOLVED_HOST"
+      ]
+    },
+    {
+      "original_extinf_sha256": "55c6dccbcb6c958d20908383328e8b21ec310ccf55a4053baaa4d829e1c2196d",
+      "source_ids": [
+        "github-auto-24"
+      ],
+      "resolution": "BLOCKED_PROBES_HAVE_NO_REAL_VIDEO_AND_AUDIO",
+      "candidates": [
+        {
+          "url_sha256": "061d8f313016ccaa7d6b94dfda14d7fab2953b8600d1a76c123afd3eb4f6a5a5",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_NETWORK_TIMEOUT"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "664e34994e5bce5e14ab46170830d5024203ae6e1e2aa7d2a7cff56e0a53d9c1",
+          "orphan_probe_statuses": [
+            "UNSAFE_OR_UNRESOLVED_HOST"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "ce36b7f294e934ce3187706099cd744bec6a70b850c677f5bf3ec95a7b73cd17",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_NETWORK_TIMEOUT"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "eed57fefcc6f3291f3296b1dc39337a82d87155912354e052d361ee31fe47073",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_AUTH_REQUIRED"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        }
+      ],
+      "orphan_diagnostics": [
+        "PROBE_FAILED_AUTH_REQUIRED",
+        "PROBE_FAILED_NETWORK_TIMEOUT",
+        "UNSAFE_OR_UNRESOLVED_HOST"
+      ]
+    },
+    {
+      "original_extinf_sha256": "63de1ef1746fab495c3ff55389ca9951a73402abfc59cb22c7a758f3b0e5f1ca",
+      "source_ids": [
+        "github-auto-24"
+      ],
+      "resolution": "BLOCKED_PROBES_HAVE_NO_REAL_VIDEO_AND_AUDIO",
+      "candidates": [
+        {
+          "url_sha256": "37f3cc996af9ac0261a3accf75e2875fe3e217e943c03feaac5841687edbd198",
+          "orphan_probe_statuses": [
+            "UNSAFE_OR_UNRESOLVED_HOST"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "f8e6bfe32e9db74fbcc907d57d9434693377293eb928b4c2a5a18898ebc79cf1",
+          "orphan_probe_statuses": [
+            "UNSAFE_OR_UNRESOLVED_HOST"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        }
+      ],
+      "orphan_diagnostics": [
+        "UNSAFE_OR_UNRESOLVED_HOST"
+      ]
+    },
+    {
+      "original_extinf_sha256": "7ec641e341262390b3c054bfb90c812f4654231f9c0bcec6015b376821474b90",
+      "source_ids": [
+        "onureroz-turk-karma"
+      ],
+      "resolution": "BLOCKED_NO_EXACT_URL_IN_APPROVED_SOURCE_SEARCH",
+      "candidates": [],
+      "orphan_diagnostics": []
+    },
+    {
+      "original_extinf_sha256": "816fd2526161e8f642df82b05bb1fefe982b65d858f7ec64202d33936eeeb4ba",
+      "source_ids": [
+        "github-auto-24"
+      ],
+      "resolution": "BLOCKED_PROBES_HAVE_NO_REAL_VIDEO_AND_AUDIO",
+      "candidates": [
+        {
+          "url_sha256": "3a7b5b1246ca7a20e1ed50ebd6d06b69f3445cb1c35655c04083f50a2da06a70",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_HTTP_RESPONSE_ERROR"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "3f660629602aa089adc7ad842eac6758630ae1fe9cceb3b2b89c6d5d215d16fb",
+          "orphan_probe_statuses": [
+            "UNSAFE_OR_UNRESOLVED_HOST"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "4bc787aee9071f7f105481879406d9608cce67ccd6632058e350e4b8bfafc6fe",
+          "orphan_probe_statuses": [
+            "UNSAFE_OR_UNRESOLVED_HOST"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "624a615157a24c1d479eef90cfeca4e078cfd171159752e43bc76fc37cd8a9b3",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_HTTP_RESPONSE_ERROR"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "66161ffe12a29bf3f64d53974bae474ef4ea528eaa4ed9a044c4d1f42f3dfef7",
+          "orphan_probe_statuses": [
+            "UNSAFE_OR_UNRESOLVED_HOST"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "74bfc1ce9f7c0f58d8cd8f621e347f5d2d2e7d92ddd306fb7f7c7920a5895413",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_HTTP_RESPONSE_ERROR"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "a3efd2b28699dad2fbf210d7916f5268a2cae9527197d403cd3652d0d8e4934f",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_HTTP_RESPONSE_ERROR"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "e14c0acc51c13d56072bca3fe0fc423f959b3fc39042d50f4c695e1040e10b8c",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_HTTP_RESPONSE_ERROR"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "ea00d5928e7160c0a8534de4fc70ae2c6a99061599e2e8a3d3748e8860178371",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_HTTP_RESPONSE_ERROR"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "ed0beedf834a2a0c4009e23a1fdcd42f34dff2e4b9534d8817e7773894fefbe2",
+          "orphan_probe_statuses": [
+            "UNSAFE_OR_UNRESOLVED_HOST"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "f2f55355d2d6986e1a8b9f67ca4208053b161e1ae292f3d124c62a3e4f9670e4",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_HTTP_RESPONSE_ERROR"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "f5a21c4fa552f5d02d9fc08b1f2077809bbb3ee5cc68e3907bc7e70b4efc9e0f",
+          "orphan_probe_statuses": [
+            "UNSAFE_OR_UNRESOLVED_HOST"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        }
+      ],
+      "orphan_diagnostics": [
+        "PROBE_FAILED_HTTP_RESPONSE_ERROR",
+        "UNSAFE_OR_UNRESOLVED_HOST"
+      ]
+    },
+    {
+      "original_extinf_sha256": "83af85b8e1bcfcb1089af0b6f7c54fddcbdcf7b422f0e86caea4022140da2d48",
+      "source_ids": [
+        "discevisita-tr"
+      ],
+      "resolution": "BLOCKED_PROBES_HAVE_NO_REAL_VIDEO_AND_AUDIO",
+      "candidates": [
+        {
+          "url_sha256": "e1ded1eecc52e044de6a27536c3aebcecbc5fbb8f17f626e8e19e7d9c9de5d20",
+          "orphan_probe_statuses": [
+            "UNSAFE_OR_UNRESOLVED_HOST"
+          ],
+          "later_complete_run_status": "UNSAFE_OR_UNRESOLVED_HOST",
+          "later_partial_run_status": "UNSAFE_OR_UNRESOLVED_HOST"
+        }
+      ],
+      "orphan_diagnostics": [
+        "UNSAFE_OR_UNRESOLVED_HOST"
+      ]
+    },
+    {
+      "original_extinf_sha256": "8ed6746a1be812aa03e6ac084bbb65b717ac9fc05d94afb15980a78f2d38b70d",
+      "source_ids": [
+        "github-auto-24"
+      ],
+      "resolution": "BLOCKED_PROBES_HAVE_NO_REAL_VIDEO_AND_AUDIO",
+      "candidates": [
+        {
+          "url_sha256": "74799c44b29fbc367b0ca37298c62bb490480ad64a1d7403fd114fe5cee08f3b",
+          "orphan_probe_statuses": [
+            "UNSAFE_OR_UNRESOLVED_HOST"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "c8c270a6fd1d0e87bddcb7f22872944f5261b8e1197b14e5512f13d1f08a8a2a",
+          "orphan_probe_statuses": [
+            "UNSAFE_OR_UNRESOLVED_HOST"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        }
+      ],
+      "orphan_diagnostics": [
+        "UNSAFE_OR_UNRESOLVED_HOST"
+      ]
+    },
+    {
+      "original_extinf_sha256": "961ac6809edd5214be0633f26448a216b8ccce401bc4bae030bbd78dae3cf624",
+      "source_ids": [
+        "discevisita-tr"
+      ],
+      "resolution": "BLOCKED_PROBES_HAVE_NO_REAL_VIDEO_AND_AUDIO",
+      "candidates": [
+        {
+          "url_sha256": "b6b3b0a040844cb1b61ff9632cb3aa5e5c8fe731e3445b76fc960d08d110668f",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_HTTP_FORBIDDEN"
+          ],
+          "later_complete_run_status": "PROBE_FAILED_HTTP_FORBIDDEN",
+          "later_partial_run_status": "PROBE_FAILED_HTTP_FORBIDDEN"
+        }
+      ],
+      "orphan_diagnostics": [
+        "PROBE_FAILED_HTTP_FORBIDDEN"
+      ]
+    },
+    {
+      "original_extinf_sha256": "96dd696dfaaf3f25c4698d38347724fec32b7546cd16f2f3cad33fab0790b04d",
+      "source_ids": [
+        "github-auto-24"
+      ],
+      "resolution": "BLOCKED_PROBES_HAVE_NO_REAL_VIDEO_AND_AUDIO",
+      "candidates": [
+        {
+          "url_sha256": "71536f50a5a09ae3bd527817e9e8b7bf0c1b7f2a5b526bef81d2d2f1ac99c6b0",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_HTTP_RESPONSE_ERROR"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        }
+      ],
+      "orphan_diagnostics": [
+        "PROBE_FAILED_HTTP_RESPONSE_ERROR"
+      ]
+    },
+    {
+      "original_extinf_sha256": "98276f48a104a93c790c5930567b69450b31b640c6ed264f7baace4a148c622a",
+      "source_ids": [
+        "onureroz-turk-all"
+      ],
+      "resolution": "BLOCKED_NO_EXACT_URL_IN_APPROVED_SOURCE_SEARCH",
+      "candidates": [],
+      "orphan_diagnostics": []
+    },
+    {
+      "original_extinf_sha256": "9cdcfa53fd9e033f5e971ff3a95e39265ef25f7c54a1e2b12b4a7f25ff539e15",
+      "source_ids": [
+        "github-auto-24"
+      ],
+      "resolution": "BLOCKED_PROBES_HAVE_NO_REAL_VIDEO_AND_AUDIO",
+      "candidates": [
+        {
+          "url_sha256": "0a3719c6d802fce18d68d537b871fc031cc9c6b495a650c8747df000ca0d9209",
+          "orphan_probe_statuses": [
+            "UNSAFE_OR_UNRESOLVED_HOST"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "370e41a25cdfceb4c5e040d74dc8f8f71279cf5e2db11a9919f29e62e4a6f00a",
+          "orphan_probe_statuses": [
+            "UNSAFE_OR_UNRESOLVED_HOST"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "3e04b88f067f08ef3ec022f3342841e0ea64ad27713bdfdd5592508622f5801f",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_HTTP_RESPONSE_ERROR"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "4bc787aee9071f7f105481879406d9608cce67ccd6632058e350e4b8bfafc6fe",
+          "orphan_probe_statuses": [
+            "UNSAFE_OR_UNRESOLVED_HOST"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "5f5473685a10cb63f881f369cdb09ba1d887b41fcc89ee2b3f0ad9cc55c57a42",
+          "orphan_probe_statuses": [
+            "UNSAFE_OR_UNRESOLVED_HOST"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "654ab2e017ab2976eaf1312889c752f5b9cc608aad8038951470842790944bc1",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_HTTP_RESPONSE_ERROR"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "6c4720716695610ee16fee5754bbf5f302762b2ddf95606ac0154749deb4c6a8",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_HTTP_RESPONSE_ERROR"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "7455700ad1fab82cbd89df60d259db9cee6cfc6e0b0b65c6f30678a04aa850e8",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_HTTP_RESPONSE_ERROR"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "7568cd1dd0d7212fa52e0ddec5c5245701b338b52d531497c50cb361d358e416",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_DNS_RESOLUTION_ERROR"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "7c7b0c644ae33afb1480e2319526f33cf09d835ebd41913cb4d0e86a52161b9b",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_HTTP_RESPONSE_ERROR"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "e55fed04127ac96b4ce8c8163d6f1a14eefec19d9bc433aa5b07b1e41676c237",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_HTTP_RESPONSE_ERROR"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "f09ea0a8372ba56586fee126f598a4612e8574c4efde52ba6f7f0748d1db39e9",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_HTTP_RESPONSE_ERROR"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "f4de99ee9705db878522deea07a3109abc115add88cbdab73ed49393dde58da8",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_MEDIA_FORMAT_UNSUPPORTED"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "f557f9297ea57816aac00ebf5d823c56af63326429456f2c5179ea188b0c961d",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_HTTP_RESPONSE_ERROR"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        }
+      ],
+      "orphan_diagnostics": [
+        "PROBE_FAILED_DNS_RESOLUTION_ERROR",
+        "PROBE_FAILED_HTTP_RESPONSE_ERROR",
+        "PROBE_FAILED_MEDIA_FORMAT_UNSUPPORTED",
+        "UNSAFE_OR_UNRESOLVED_HOST"
+      ]
+    },
+    {
+      "original_extinf_sha256": "a13ebf22c51eb9f07b017e67a824be8da1bd141c19a93c933d283449fb0d5783",
+      "source_ids": [
+        "onureroz-turk-all",
+        "onureroz-turk-karma"
+      ],
+      "resolution": "BLOCKED_NO_EXACT_URL_IN_APPROVED_SOURCE_SEARCH",
+      "candidates": [],
+      "orphan_diagnostics": []
+    },
+    {
+      "original_extinf_sha256": "ad47083319de94928ff6d9224b3cd729e822131fbf44638e221548c1dd219810",
+      "source_ids": [
+        "discevisita-tr"
+      ],
+      "resolution": "BLOCKED_PROBES_HAVE_NO_REAL_VIDEO_AND_AUDIO",
+      "candidates": [
+        {
+          "url_sha256": "18341ee07587ec9cb4c90a7c1ed4b193726b3c86294a7f91102e3966f8315ef3",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_NETWORK_TIMEOUT"
+          ],
+          "later_complete_run_status": "PROBE_FAILED_NETWORK_TIMEOUT",
+          "later_partial_run_status": "PROBE_FAILED_NETWORK_TIMEOUT"
+        },
+        {
+          "url_sha256": "1d49cd161b69fd8a32743fe6bb5700aeb75511d9782a3aea01eeea138d354a44",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_NETWORK_TIMEOUT"
+          ],
+          "later_complete_run_status": "PROBE_FAILED_NETWORK_TIMEOUT",
+          "later_partial_run_status": "PROBE_FAILED_NETWORK_TIMEOUT"
+        },
+        {
+          "url_sha256": "c255001782e130f113808fbb6d588da006ff8bcb16f67f9dc64e1a26f1b09a42",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_HTTP_FORBIDDEN"
+          ],
+          "later_complete_run_status": "PROBE_FAILED_HTTP_FORBIDDEN",
+          "later_partial_run_status": "PROBE_FAILED_HTTP_FORBIDDEN"
+        },
+        {
+          "url_sha256": "f2ee58ffbbfff8487de27d2dc15e599199917fd765455be1c36d37d2127c3cbd",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_HTTP_FORBIDDEN"
+          ],
+          "later_complete_run_status": "PROBE_FAILED_HTTP_FORBIDDEN",
+          "later_partial_run_status": "NOT_PROBED_BUDGET"
+        }
+      ],
+      "orphan_diagnostics": [
+        "PROBE_FAILED_HTTP_FORBIDDEN",
+        "PROBE_FAILED_NETWORK_TIMEOUT"
+      ]
+    },
+    {
+      "original_extinf_sha256": "ae7596949625f98f43387bdf434b4e8fab22d25d3362d0c6645209543410a94e",
+      "source_ids": [
+        "discevisita-tr"
+      ],
+      "resolution": "BLOCKED_PROBES_HAVE_NO_REAL_VIDEO_AND_AUDIO",
+      "candidates": [
+        {
+          "url_sha256": "287f32b75a4bc19a605b311255f1344e1e136fdc17014e0c7087d827b8f84937",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_HTTP_FORBIDDEN"
+          ],
+          "later_complete_run_status": "PROBE_FAILED_HTTP_FORBIDDEN",
+          "later_partial_run_status": "PROBE_FAILED_HTTP_FORBIDDEN"
+        },
+        {
+          "url_sha256": "7f8932d9124016984b30221b5e999753935a412a135166b50643151d3d278a0c",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_HTTP_FORBIDDEN"
+          ],
+          "later_complete_run_status": "PROBE_FAILED_HTTP_FORBIDDEN",
+          "later_partial_run_status": "PROBE_FAILED_HTTP_FORBIDDEN"
+        }
+      ],
+      "orphan_diagnostics": [
+        "PROBE_FAILED_HTTP_FORBIDDEN"
+      ]
+    },
+    {
+      "original_extinf_sha256": "b424aedb32d82c7609464a8485aa8af4f85a349e824369fbf01afa46ed146624",
+      "source_ids": [
+        "discevisita-tr"
+      ],
+      "resolution": "BLOCKED_PROBES_HAVE_NO_REAL_VIDEO_AND_AUDIO",
+      "candidates": [
+        {
+          "url_sha256": "165226bcd6f91967790b9cf9e8b3846e07da02892969ba8621ba095242082c36",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_HTTP_FORBIDDEN"
+          ],
+          "later_complete_run_status": "PROBE_FAILED_HTTP_FORBIDDEN",
+          "later_partial_run_status": "PROBE_FAILED_HTTP_FORBIDDEN"
+        },
+        {
+          "url_sha256": "b6aab8861269af8e47cd84e7873a9a3f461b5cad7db17d81c220b620d247e03a",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_HTTP_FORBIDDEN"
+          ],
+          "later_complete_run_status": "PROBE_FAILED_HTTP_FORBIDDEN",
+          "later_partial_run_status": "PROBE_FAILED_HTTP_FORBIDDEN"
+        }
+      ],
+      "orphan_diagnostics": [
+        "PROBE_FAILED_HTTP_FORBIDDEN"
+      ]
+    },
+    {
+      "original_extinf_sha256": "b93864c630748237fe9d1213949433a9af71d126640b518f3d797bd323c0684c",
+      "source_ids": [
+        "discevisita-tr"
+      ],
+      "resolution": "BLOCKED_PROBES_HAVE_NO_REAL_VIDEO_AND_AUDIO",
+      "candidates": [
+        {
+          "url_sha256": "72aca3c6531c61bee377c37db7159328e0eaa0164c68eb0bf8d58735602a1e1e",
+          "orphan_probe_statuses": [
+            "UNSAFE_OR_UNRESOLVED_HOST"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        }
+      ],
+      "orphan_diagnostics": [
+        "UNSAFE_OR_UNRESOLVED_HOST"
+      ]
+    },
+    {
+      "original_extinf_sha256": "c06b448f653a6e5fb00d3701420f2725d7941febbc95738d48ce6d1616831fde",
+      "source_ids": [
+        "onureroz-turk-all",
+        "onureroz-turk-karma"
+      ],
+      "resolution": "BLOCKED_NO_EXACT_URL_IN_APPROVED_SOURCE_SEARCH",
+      "candidates": [],
+      "orphan_diagnostics": []
+    },
+    {
+      "original_extinf_sha256": "c80b583affbb3aff53b33d1a7ef67a1dae1977dcfaf3e158adf756f55ea101b5",
+      "source_ids": [
+        "discevisita-tr"
+      ],
+      "resolution": "BLOCKED_PROBES_HAVE_NO_REAL_VIDEO_AND_AUDIO",
+      "candidates": [
+        {
+          "url_sha256": "58945888e48c070df65148317471bb273f2c97b7d06d8e627784969ffb0676f6",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_AUTH_REQUIRED"
+          ],
+          "later_complete_run_status": "PROBE_FAILED_AUTH_REQUIRED",
+          "later_partial_run_status": "PROBE_FAILED_AUTH_REQUIRED"
+        },
+        {
+          "url_sha256": "c3559c7fa108a5eb1fb5a4ab1415061fe45272c094001606a0881250302b9a68",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_HTTP_FORBIDDEN"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        }
+      ],
+      "orphan_diagnostics": [
+        "PROBE_FAILED_AUTH_REQUIRED",
+        "PROBE_FAILED_HTTP_FORBIDDEN"
+      ]
+    },
+    {
+      "original_extinf_sha256": "c8400b26ecfddcc31cec58d4580d26fe472337df0293ee74e9ba806db13c8602",
+      "source_ids": [
+        "discevisita-tr"
+      ],
+      "resolution": "BLOCKED_PROBES_HAVE_NO_REAL_VIDEO_AND_AUDIO",
+      "candidates": [
+        {
+          "url_sha256": "f10c1dc001f138df57e096cfaa6f3c43720c74f95a5e3fe9265ec4c60db29316",
+          "orphan_probe_statuses": [
+            "UNSAFE_OR_UNRESOLVED_HOST"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        }
+      ],
+      "orphan_diagnostics": [
+        "UNSAFE_OR_UNRESOLVED_HOST"
+      ]
+    },
+    {
+      "original_extinf_sha256": "c8eb42336e63cf162d69c983f077abb0e9de895d117f414800453cf8a5092082",
+      "source_ids": [
+        "github-auto-24"
+      ],
+      "resolution": "BLOCKED_PROBES_HAVE_NO_REAL_VIDEO_AND_AUDIO",
+      "candidates": [
+        {
+          "url_sha256": "3a22c945de9664997b4eda1f119c14af444736efe2e583db9bca05f660c30f12",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_HTTP_NOT_FOUND"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "47b1f0b1f436f9771a374fe11ac12ef6606aef62c9a06e9070e181e38a8465c0",
+          "orphan_probe_statuses": [
+            "UNSAFE_OR_UNRESOLVED_HOST"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "634788ff0f09fdf9099f93f1e28d9b60814c211feae084e995a2e968dba3dc29",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_HTTP_FORBIDDEN"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "de1cd7f679dc8028ee50e7fcb396535ecbbcb37b2d061fd9a0e1ae87a22b61af",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_HTTP_FORBIDDEN"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        }
+      ],
+      "orphan_diagnostics": [
+        "PROBE_FAILED_HTTP_FORBIDDEN",
+        "PROBE_FAILED_HTTP_NOT_FOUND",
+        "UNSAFE_OR_UNRESOLVED_HOST"
+      ]
+    },
+    {
+      "original_extinf_sha256": "cf98d1832affc0b659dce7798841e13ee8bcf8b6b93eb34f66b5604fc589398e",
+      "source_ids": [
+        "github-auto-24"
+      ],
+      "resolution": "BLOCKED_PROBES_HAVE_NO_REAL_VIDEO_AND_AUDIO",
+      "candidates": [
+        {
+          "url_sha256": "0b3eea20d8882318b6107ddef85f28a04234a51a5b748be45b8d39c9c7e8b0f8",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_HTTP_FORBIDDEN"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "21eddae23f2fad638767ca3ef7414ef4d556bad908d2a063a6727231625e8dd3",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_NETWORK_TIMEOUT"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "b94194768fc059e3db23c0d1400a90dfbfcb6b1849429f0082d90a075a87b6d4",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_NETWORK_TIMEOUT"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        }
+      ],
+      "orphan_diagnostics": [
+        "PROBE_FAILED_HTTP_FORBIDDEN",
+        "PROBE_FAILED_NETWORK_TIMEOUT"
+      ]
+    },
+    {
+      "original_extinf_sha256": "d6aa7ab9eb3a12919f8429bb87f95ad0f51bfa89671d0e811a13e89d83038ac3",
+      "source_ids": [
+        "github-auto-24"
+      ],
+      "resolution": "BLOCKED_PROBES_HAVE_NO_REAL_VIDEO_AND_AUDIO",
+      "candidates": [
+        {
+          "url_sha256": "f9314b425dccc0341288b6cca6f052149d7fd14fbe978200fcd8e12917389992",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_HTTP_FORBIDDEN"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        }
+      ],
+      "orphan_diagnostics": [
+        "PROBE_FAILED_HTTP_FORBIDDEN"
+      ]
+    },
+    {
+      "original_extinf_sha256": "e27be8bdc9196b4372a42164df1c2fba6d42dbfeeaedafbf1c0583fbf0e2a0d3",
+      "source_ids": [
+        "github-auto-24"
+      ],
+      "resolution": "BLOCKED_PROBES_HAVE_NO_REAL_VIDEO_AND_AUDIO",
+      "candidates": [
+        {
+          "url_sha256": "dd281f776809936d10032b2f299c975a7037ba9aab73670ef1488866057096b0",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_NETWORK_TIMEOUT"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        }
+      ],
+      "orphan_diagnostics": [
+        "PROBE_FAILED_NETWORK_TIMEOUT"
+      ]
+    },
+    {
+      "original_extinf_sha256": "e4a6757a9e0c8d28c1f0aa1ba53cfee51215b04fccd33e724ef9dcb4297a5304",
+      "source_ids": [
+        "onureroz-turk-all"
+      ],
+      "resolution": "BLOCKED_NO_EXACT_URL_IN_APPROVED_SOURCE_SEARCH",
+      "candidates": [],
+      "orphan_diagnostics": []
+    },
+    {
+      "original_extinf_sha256": "e4e6552fee859cc8363762e38bae67a71889e120d421c592d3cdafd58b98d2d9",
+      "source_ids": [
+        "discevisita-tr"
+      ],
+      "resolution": "BLOCKED_PROBES_HAVE_NO_REAL_VIDEO_AND_AUDIO",
+      "candidates": [
+        {
+          "url_sha256": "02633d005a249f3bffbe0f1e2a7564451d2a9f93d9e3a24aaccd930bea3b2cdb",
+          "orphan_probe_statuses": [
+            "UNSAFE_OR_UNRESOLVED_HOST"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        }
+      ],
+      "orphan_diagnostics": [
+        "UNSAFE_OR_UNRESOLVED_HOST"
+      ]
+    },
+    {
+      "original_extinf_sha256": "e738f562b73e57c91d62cbb325e9c1289f70d6435b1a830807e9f484291d712e",
+      "source_ids": [
+        "discevisita-tr"
+      ],
+      "resolution": "BLOCKED_PROBES_HAVE_NO_REAL_VIDEO_AND_AUDIO",
+      "candidates": [
+        {
+          "url_sha256": "157159c3471b4877a3295ce1fff18a0900150cf9f2b1a84e87baeada0b8cde76",
+          "orphan_probe_statuses": [
+            "VIDEO_ONLY"
+          ],
+          "later_complete_run_status": "VIDEO_ONLY",
+          "later_partial_run_status": "VIDEO_ONLY"
+        },
+        {
+          "url_sha256": "673d2f29376ae7e353ab4acc97f8b6b7388925f0edeb3f35c13c39ce2eaa978d",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_HTTP_RESPONSE_ERROR"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "fb12cd2a2f622d2461ffc775ba23ac2be57afed2574ababdb8d7d43bd3f502d7",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_HTTP_FORBIDDEN"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        }
+      ],
+      "orphan_diagnostics": [
+        "PROBE_FAILED_HTTP_FORBIDDEN",
+        "PROBE_FAILED_HTTP_RESPONSE_ERROR",
+        "VIDEO_ONLY"
+      ]
+    },
+    {
+      "original_extinf_sha256": "e9e3898c1ae105a5af0042be906c93a527e2d55b01e9864f3de27a438e260c8c",
+      "source_ids": [
+        "github-auto-24"
+      ],
+      "resolution": "BLOCKED_PROBES_HAVE_NO_REAL_VIDEO_AND_AUDIO",
+      "candidates": [
+        {
+          "url_sha256": "05691805600968d312df0a0160325fe87dcc678d23121c36f11ccd50d22c80d0",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_HTTP_FORBIDDEN"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "b30da183608e2a28a8b2d96c2b273b44cdb0716370862710fc8d40eb025dfd57",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_NETWORK_TIMEOUT"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "c2daeafd081170e2b0d5002f474c8835bd82aff7366ff7c9c6a55b0def9d5317",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_NETWORK_TIMEOUT"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "f35efdc8c65b9cab5cec7a5bde9a1a07f722db585a90a940f699345378984206",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_NETWORK_TIMEOUT"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        }
+      ],
+      "orphan_diagnostics": [
+        "PROBE_FAILED_HTTP_FORBIDDEN",
+        "PROBE_FAILED_NETWORK_TIMEOUT"
+      ]
+    },
+    {
+      "original_extinf_sha256": "fc95a908526a7c833edfddb7eea1a81afb7c9d51399ea95abe830b9a858c5495",
+      "source_ids": [
+        "discevisita-tr"
+      ],
+      "resolution": "BLOCKED_PROBES_HAVE_NO_REAL_VIDEO_AND_AUDIO",
+      "candidates": [
+        {
+          "url_sha256": "a0c22be54a2faacfadc7f6704491975fd1e444e3c13605a598b4c5d87a90ec55",
+          "orphan_probe_statuses": [
+            "UNSAFE_OR_UNRESOLVED_HOST"
+          ],
+          "later_complete_run_status": "UNSAFE_OR_UNRESOLVED_HOST",
+          "later_partial_run_status": "UNSAFE_OR_UNRESOLVED_HOST"
+        }
+      ],
+      "orphan_diagnostics": [
+        "UNSAFE_OR_UNRESOLVED_HOST"
+      ]
+    },
+    {
+      "original_extinf_sha256": "fe15d8ccaecdcf3599426b76d5d279f618f8eaea1661dd73604d7543b886365c",
+      "source_ids": [
+        "github-auto-24"
+      ],
+      "resolution": "BLOCKED_PROBES_HAVE_NO_REAL_VIDEO_AND_AUDIO",
+      "candidates": [
+        {
+          "url_sha256": "27b3585e6a7aa0b49ae72ebb9beecdf435083c5cc44fe45b7d27180bc0d7d301",
+          "orphan_probe_statuses": [
+            "UNSAFE_OR_UNRESOLVED_HOST"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        },
+        {
+          "url_sha256": "2c72a5b112e4e8a7bbd9d942fcdfd9a1496a1dbac6bee0f352970a4275b975d7",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_HTTP_FORBIDDEN"
+          ],
+          "later_complete_run_status": "ABSENT_FROM_REPORT",
+          "later_partial_run_status": "ABSENT_FROM_REPORT"
+        }
+      ],
+      "orphan_diagnostics": [
+        "PROBE_FAILED_HTTP_FORBIDDEN",
+        "UNSAFE_OR_UNRESOLVED_HOST"
+      ]
+    },
+    {
+      "original_extinf_sha256": "ff6973221fc726d3cad1d1a3f02f760cbc6b0dab0f53bf096b6d16830910237b",
+      "source_ids": [
+        "discevisita-tr"
+      ],
+      "resolution": "BLOCKED_PROBES_HAVE_NO_REAL_VIDEO_AND_AUDIO",
+      "candidates": [
+        {
+          "url_sha256": "c180b7795fa5eb77b261ec623881581bdeaf88c3bd7d7748cdce11db8fb71a16",
+          "orphan_probe_statuses": [
+            "PROBE_FAILED_HTTP_FORBIDDEN"
+          ],
+          "later_complete_run_status": "PROBE_FAILED_HTTP_FORBIDDEN",
+          "later_partial_run_status": "PROBE_FAILED_HTTP_FORBIDDEN"
+        }
+      ],
+      "orphan_diagnostics": [
+        "PROBE_FAILED_HTTP_FORBIDDEN"
+      ]
+    }
+  ],
+  "ibo_device_verified": false,
+  "protected_playlist_modified": false
+}
