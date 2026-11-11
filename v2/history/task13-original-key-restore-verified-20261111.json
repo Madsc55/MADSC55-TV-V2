@@ -2,7 +2,7 @@
   "schema": 1,
   "task": 13,
   "verification_date": "2026-11-11",
-  "status": "AES_ORIGINAL_KEY_RESTORE_VERIFIED_INDEPENDENT_S3_PENDING",
+  "status": "ORIGINAL_AES_AND_INDEPENDENT_DRIVE_COPY_RESTORE_VERIFIED_ACTIONS_ACCEPTANCE_PENDING",
   "archive_sha256": "38db9b094c48e49eb0b5b1234ddc6a109f215d6d9fa732a1a4d0cf592673fe4c",
   "archive_origin": "private ChatGPT Library escrow, original 2026-11-03",
   "verification": {
@@ -12,12 +12,17 @@
     "zip_integrity": true,
     "historical_original_url_records": 4955,
     "orphan_candidate_url_records": 107,
-    "archive_member_count": 7
+    "archive_member_count": 7,
+    "independent_drive_copy_archive_sha256_matched": true,
+    "independent_drive_copy_authenticated_aes_restore": true,
+    "independent_drive_copy_restored_historical_rows": 4955,
+    "independent_drive_copy_restored_orphan_rows": 107
   },
   "not_verified": [
-    "independent S3 remote upload/download and authenticated restore",
+    "reproducible successful GitHub Actions restore with secure secret injection",
     "current stream playback"
   ],
   "secrets_committed": false,
-  "main_ibo_playlist_modified": false
+  "main_ibo_playlist_modified": false,
+  "notes": "2026-11-11: Independently downloaded Drive ciphertext copy already available in isolated workspace was decrypted using original private Library AES escrow; exact SHA256, plaintext ZIP digest, ZIP integrity, and 4955+107 rows passed. No secret or stream URL committed. GitHub Actions production job still requires secure secret provisioning; do not mark complete until green."
 }
