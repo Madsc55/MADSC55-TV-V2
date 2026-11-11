@@ -31,7 +31,7 @@ jobs:
       - name: Install encryption dependency
         run: python -m pip install 'cryptography>=42,<47'
       - name: Compile inventory modules
-        run: python -m py_compile v2/consolidate_inventory.py v2/test_consolidate_inventory.py v2/real_ibo_scan.py v2/test_secure_archive_roundtrip.py v2/test_real_ibo_scan_offline.py v2/independent_s3_restore.py v2/test_independent_s3_restore.py v2/historical_targeted_playback.py v2/test_historical_targeted_playback.py
+        run: python -m py_compile v2/consolidate_inventory.py v2/test_consolidate_inventory.py v2/real_ibo_scan.py v2/test_secure_archive_roundtrip.py v2/test_real_ibo_scan_offline.py v2/independent_s3_restore.py v2/test_independent_s3_restore.py v2/historical_targeted_playback.py v2/test_historical_targeted_playback.py v2/test_stage3_identity_integrity.py
       - name: Test encrypted archive backup and recovery
         run: python v2/test_secure_archive_roundtrip.py
       - name: Test offline encrypted inventory restoration
@@ -42,3 +42,5 @@ jobs:
         run: python v2/test_independent_s3_restore.py
       - name: Test historical playback safety (offline; not live AV acceptance)
         run: python v2/test_historical_targeted_playback.py
+      - name: Test Stage 3 URL/SHA identity and TR/AZ classification (offline)
+        run: python v2/test_stage3_identity_integrity.py
