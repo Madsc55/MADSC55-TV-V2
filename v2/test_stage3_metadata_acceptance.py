@@ -19,7 +19,7 @@ class Stage3MetadataTests(unittest.TestCase):
             {"codec_type": "video", "width": 1920, "height": 1080}]})["av_verified"])
 
     def test_real_av_quality(self):
-        result = quality_from_probe({"real_probe": True, "streams": [
+        result = quality_from_probe({"status": "AV_VERIFIED", "video": True, "audio": True, "streams": [
             {"codec_type": "video", "width": 1280, "height": 720},
             {"codec_type": "audio", "codec_name": "aac"}]})
         self.assertEqual(result["quality"], "720p")
