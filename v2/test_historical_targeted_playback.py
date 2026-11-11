@@ -48,6 +48,17 @@ class HistoricalTargetedPlaybackTests(unittest.TestCase):
         self.assertFalse(result["audio_stream"])
         self.assertNotIn(url, str(result))
 
+    def test_historical_ffprobe_never_follows_http_redirects(self):
+        url = "https://stream.example.org/live.m3u8"
+        calls = []
+        def runner(command, **kwargs):
+            calls.append(command)
+            return subprocess.CompletedProcess(command, 1, "", "HTTP 302 redirect")
+        probe_one((sha(url), url), runner=runner, resolver=lambda _: True)
+        self.assertEqual(len(calls), 1)
+        self.assertIn("-follow", calls[0])
+        self.assertEqual(calls[0][calls[0].index("-follow") + 1], "0")
+
     def test_failed_probe_not_declared_dead(self):
         url = "https://stream.example.org/bad.m3u8"
         result = probe_one((sha(url), url),
