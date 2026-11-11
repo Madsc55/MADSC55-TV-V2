@@ -1,10 +1,11 @@
-## 11 Kasım 2026 — #13 Google Drive otomatik geri yükleme kurulumu
+## 11 Kasım 2026 — #13 GitHub OIDC ile Google Drive geri yüklemesi
 
-- Kullanıcı kararı: S3'ü zorunlu kabul şartı olmaktan çıkar; önceden özgün AES anahtarıyla başarıyla doğrulanmış bağımsız Google Drive kopyasını otomatik kabulde kullan. S3 eski uyumluluk yolu olarak korunur.
-- v2/independent_drive_restore.py: Google servis hesabıyla salt-okunur Drive indirmesi, dosya kimliği/sürümü, indirme öncesi ve sonrası sürüm sabitliği, 1 GiB üst sınır, beklenen SHA-256, özel geçici dosya ve mevcut tam AES/4.955 kimlik kapısı.
-- v2/archive_acceptance_gate.py: hem gerçek sürümlü S3 hem de kimliği ve sürümü kontrol edilmiş yetkili Drive kanıtı kabul edilir; bütün AES, manifest, tarihî envanter ve sahte AV reddi kuralları aynen kalır.
-- .github/workflows/v2-independent-drive-restore.yml: ayrı otomatik CI işi eklendi. Gereken GitHub Actions secrets: V2_DRIVE_SERVICE_ACCOUNT_JSON (Drive dosyasına okuyucu erişimi olan servis hesabı), V2_DRIVE_ARCHIVE_FILE_ID, V2_ARCHIVE_KEY_HEX. Özgün arşiv SHA-256: 38db9b094c48e49eb0b5b1234ddc6a109f215d6d9fa732a1a4d0cf592673fe4c.
-- ÖNEMLİ: Kod ve workflow commit edildi; gerçek Actions kabulünün yeşil olduğu henüz doğrulanmadı. Secret'lar eksikse iş güvenli şekilde başarısız olur; #13 bu durumda kapanmaz. Servis hesabına bağımsız Drive arşiv dosyası için salt-okuma izni verilmelidir. Ana İBO listesi, anahtarlar ve main değiştirilmedi.
+- Kullanıcı #13 için bağımsız Google Drive kopyasının otomatik geri yüklemesini kabul kaynağı olarak belirledi. S3 uyumluluk yolu korunuyor.
+- Servis hesabının Drive yedek klasöründe ve şifreli üretim arşivinde `reader` izni doğrudan doğrulandı. Drive'dan yeniden indirilen 5.234.628 bayt özgün SHA-256 ile eşleşti. Özgün AES-256-GCM anahtarıyla 4.955 tarihî kayıt ve 107 ek aday kaynak bilgileriyle birlikte geri yüklendi.
+- `.github/workflows/v2-independent-drive-restore.yml` kısa ömürlü `drive.readonly` belirtecini GitHub OIDC üzerinden alır. İş `Madsc55/MADSC55-TV-V2` ve izinli dal referanslarıyla sınırlıdır. `v2/independent_drive_restore.py` indirme öncesi ve sonrası Drive dosya sürümünü karşılaştırır ve `production_full_stage5_archive.verify` ile özgün arşiv biçimini doğrular.
+- Google Cloud IAM erişimi bu oturumda sağlanamadı. `madsc55-v2-backup` projesindeki `madsc55-v2-github/github-actions` sağlayıcısında GitHub sahibi `263524426` ve depo `1435646455` koşulları doğrulanmalı. Sağlayıcıda `attribute.repository_id=assertion.repository_id` eşlemesi ve `madsc55-v2-drive-backup@madsc55-tv-v2-backup.iam.gserviceaccount.com` servis hesabı üzerinde `roles/iam.workloadIdentityUser` üyeliği `principalSet://iam.googleapis.com/projects/144234728376/locations/global/workloadIdentityPools/madsc55-v2-github/attribute.repository_id/1435646455` için gerekli.
+- GitHub Actions özgün AES anahtar metadatasını `V2_PRODUCTION_AES_KEY_METADATA_B64` sırrından alır. Önceki üretim koşusunda bu sır eksikti. #13, OIDC kimlik doğrulaması, Drive indirmesi ve gerçek AES geri yüklemesi aynı Actions koşusunda başarılı olana kadar açık. [Önceki üretim koşusu](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43043636173)
+- Yerel toplu kontrolde 995 test çalıştı, gerçek Actions girdisi gerektiren bir test atlandı. İş akışı koruması ve ana İBO liste bütünlüğü geçti.
 
 ## 11 Kasım 2026 — Aşama 2 yeniden çalıştırılan toplu Actions ve devir kaydı
 

@@ -1,78 +1,98 @@
 #!/usr/bin/env python3
-"""Independent Google Drive archive retrieval; never log tokens, keys or archive URLs."""
+"""Restore the original production archive using a short-lived Drive token."""
+import base64
 import hashlib
 import json
 import os
+from pathlib import Path
 import re
 import tempfile
-from pathlib import Path
+from urllib.error import HTTPError, URLError
+from urllib.parse import urlencode
+from urllib.request import Request, urlopen
+
+from production_full_stage5_archive import verify
+
+
+ATTESTATION = Path(__file__).resolve().parent / "history/stage5-production-acceptance-20261103.json"
+AES_SECRET = "V2_PRODUCTION_AES_KEY_METADATA_B64"
+
+
+def drive_get(file_id, token, params, timeout):
+    query = urlencode({"supportsAllDrives": "true", **params})
+    request = Request(f"https://www.googleapis.com/drive/v3/files/{file_id}?{query}")
+    request.add_unredirected_header("Authorization", f"Bearer {token}")
+    try:
+        return urlopen(request, timeout=timeout)
+    except HTTPError as exc:
+        exc.close()
+        raise RuntimeError(f"Google Drive API returned HTTP {exc.code}") from None
+    except URLError:
+        raise RuntimeError("Could not reach the Google Drive API") from None
+
+
+def drive_metadata(file_id, token, expected_size):
+    fields = {"fields": "id,mimeType,size,version,trashed"}
+    with drive_get(file_id, token, fields, timeout=60) as response:
+        info = json.load(response)
+    if (info.get("id") != file_id or info.get("trashed") is not False
+            or info.get("mimeType") != "application/octet-stream"
+            or str(info.get("size")) != str(expected_size)
+            or not re.fullmatch(r"[1-9][0-9]*", str(info.get("version")))):
+        raise RuntimeError("Google Drive archive identity, size or revision could not be verified")
+    return info
+
+
+def download_archive(file_id, token, destination, expected_size, expected_sha256):
+    digest = hashlib.sha256()
+    size = 0
+    with drive_get(file_id, token, {"alt": "media"}, timeout=120) as response:
+        with destination.open("xb") as output:
+            while chunk := response.read(1024 * 1024):
+                size += len(chunk)
+                if size > expected_size:
+                    raise RuntimeError("Google Drive download exceeded the pinned archive size")
+                digest.update(chunk)
+                output.write(chunk)
+    if size != expected_size or digest.hexdigest() != expected_sha256:
+        raise RuntimeError("Google Drive archive size or SHA-256 differs from the original")
+
 
 def restore_drive():
-    from google.oauth2 import service_account
-    from google.auth.transport.requests import AuthorizedSession
-    from archive_acceptance_gate import check
+    token = os.environ.get("V2_DRIVE_ACCESS_TOKEN")
+    if not token:
+        raise RuntimeError("GitHub OIDC did not provide a Google Drive access token")
+    attestation = json.loads(ATTESTATION.read_text(encoding="utf-8"))
+    file_id = attestation["independent_second_backup_file_id"]
+    expected_size = attestation["archive_bytes"]
+    expected_sha256 = attestation["archive_sha256"]
+    if (not re.fullmatch(r"[A-Za-z0-9_-]{10,200}", file_id)
+            or not re.fullmatch(r"[0-9a-f]{64}", expected_sha256)
+            or not 0 < expected_size <= 1024**3):
+        raise ValueError("Invalid pinned Google Drive archive metadata")
 
-    file_id = os.environ["V2_DRIVE_ARCHIVE_FILE_ID"]
-    expected = os.environ["V2_ARCHIVE_EXPECTED_SHA256"]
-    secret = json.loads(os.environ["V2_DRIVE_SERVICE_ACCOUNT_JSON"])
-    if not re.fullmatch(r"[A-Za-z0-9_-]{10,200}", file_id):
-        raise ValueError("Invalid Drive file identifier")
-    if not re.fullmatch(r"[0-9a-f]{64}", expected):
-        raise ValueError("Pinned archive SHA256 is required")
-    credentials = service_account.Credentials.from_service_account_info(
-        secret, scopes=["https://www.googleapis.com/auth/drive.readonly"])
-    session = AuthorizedSession(credentials)
-    endpoint = "https://www.googleapis.com/drive/v3/files/" + file_id
-    metadata = session.get(endpoint, params={"fields":"id,mimeType,size,md5Checksum,version,trashed",
-                                                "supportsAllDrives":"true"}, timeout=60)
-    metadata.raise_for_status()
-    info = metadata.json()
-    if info.get("id") != file_id or info.get("trashed") or not info.get("version"):
-        raise RuntimeError("Drive object identity/version not verified")
-    if info.get("mimeType") == "application/vnd.google-apps.folder":
-        raise RuntimeError("Drive object must be an encrypted binary file")
+    initial = drive_metadata(file_id, token, expected_size)
     with tempfile.TemporaryDirectory(prefix="v2-drive-restore-") as directory:
-        root = Path(directory)
-        root.chmod(0o700)
-        restored = root / "archive.enc"
-        response = session.get(endpoint, params={"alt":"media","supportsAllDrives":"true"},
-                               stream=True, timeout=120)
-        response.raise_for_status()
-        digest = hashlib.sha256()
-        size = 0
-        with restored.open("wb") as output:
-            for chunk in response.iter_content(chunk_size=1024*1024):
-                if chunk:
-                    size += len(chunk)
-                    if size > 1024*1024*1024:
-                        raise RuntimeError("Drive archive exceeds safe size limit")
-                    digest.update(chunk)
-                    output.write(chunk)
-        restored.chmod(0o600)
-        if digest.hexdigest() != expected or str(size) != str(info.get("size")):
-            raise RuntimeError("Drive archive digest/size mismatch")
-        # Reject objects that changed during download.
-        verify = session.get(endpoint, params={"fields":"id,version,size,trashed",
-                                                "supportsAllDrives":"true"}, timeout=60)
-        verify.raise_for_status()
-        latest = verify.json()
-        if latest.get("version") != info["version"] or str(latest.get("size")) != str(size) or latest.get("trashed"):
-            raise RuntimeError("Drive archive changed during retrieval")
-        evidence = root / "evidence.json"
-        evidence.write_text(json.dumps({
-            "encrypted":True,"durable":True,"restore_test_passed":True,
-            "integrity_verified":True,"backup_scope":"independent_remote_storage",
-            "retrieval_method":"google_drive_authenticated_version_checked_get",
-            "backup_location":"gdrive://" + file_id,
-            "remote_object_version":str(info["version"]),
-            "historical_record_count":4955,"restore_sha256":expected,
-            "restored_file":str(restored)
-        }), encoding="utf-8")
-        evidence.chmod(0o600)
-        env = dict(os.environ, V2_ARCHIVE_RESTORE_APPROVED="true",
-                   V2_ARCHIVE_RESTORE_EVIDENCE=str(evidence))
-        check(env)
-        print("PASS: independent Google Drive AES-GCM restore and 4955 historical identities")
+        archive = Path(directory) / "archive.enc"
+        download_archive(file_id, token, archive, expected_size, expected_sha256)
+        if drive_metadata(file_id, token, expected_size) != initial:
+            raise RuntimeError("Google Drive archive changed during retrieval")
+        print("PASS: Google Drive archive ID, version, size and SHA-256 verified", flush=True)
+
+        encoded_key = os.environ.get(AES_SECRET)
+        if not encoded_key:
+            raise RuntimeError(f"Missing original AES archive metadata secret {AES_SECRET}")
+        try:
+            key_metadata = base64.b64decode(encoded_key, validate=True)
+        except ValueError:
+            raise RuntimeError(f"Invalid base64 encoding for {AES_SECRET}") from None
+        with tempfile.NamedTemporaryFile(dir=directory) as key_file:
+            key_file.write(key_metadata)
+            key_file.flush()
+            result = verify(archive, key_file.name, expected_sha256)
+    print(f"PASS: original AES-256-GCM restored {result['historical_original_urls']} historical "
+          f"and {result['orphan_original_urls']} orphan records with source provenance")
+
 
 if __name__ == "__main__":
     restore_drive()

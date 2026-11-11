@@ -16,6 +16,11 @@ import yaml
 
 DEV = "madsc/v2-discovery-bulk-20261031"
 IBO = "MADSC55_TV_IBO_CALISANLAR_TEST.m3u8"
+DRIVE_RESTORE = "v2-independent-drive-restore"
+DRIVE_RESTORE_PUSH_PATHS = frozenset({
+    ".github/workflows/v2-independent-drive-restore.yml",
+    "v2/independent_drive_restore.py",
+})
 
 LOCKED_PUBLISHERS = frozenset({
     "alphabetize-yeni-turk",
@@ -74,6 +79,7 @@ SAFE_PUSH_CI = frozenset({
     "v2-current-scanner-offline-gate",
     "v2-offline-inventory",
     "v2-eight-stage-verification",
+    DRIVE_RESTORE,
     "v2-master-engine",
     "v2-ibo-parity",
     "v2-one-shot-final-contract",
@@ -139,7 +145,11 @@ def validate_workflow(path, source):
             continue
         if "permissions" in spec:
             for perm, value in _mapping(spec["permissions"], "job permissions").items():
-                if value == "write" and not (perm == "id-token" and name == "v2-independent-archive-restore"):
+                restore_oidc = perm == "id-token" and (
+                    name == "v2-independent-archive-restore"
+                    or (name == DRIVE_RESTORE and job == "drive-restore")
+                )
+                if value == "write" and not restore_oidc:
                     errors.append("UNEXPECTED_JOB_WRITE_PERMISSION:" + perm)
     # #25: every mandatory ordered-preflight job must have a finite budget.
     # Reject missing, invalid and excessively large limits before CI can
@@ -173,6 +183,10 @@ def validate_workflow(path, source):
                 errors.append("PREFLIGHT_MUST_BE_SCOPED_TO_MAIN_AND_DEV")
         elif branches != [DEV]:
             errors.append("PUSH_MUST_BE_SCOPED_TO_DEV")
+        if name == DRIVE_RESTORE:
+            paths = events["push"].get("paths") if isinstance(events["push"], dict) else None
+            if not isinstance(paths, list) or not paths or any(path not in DRIVE_RESTORE_PUSH_PATHS for path in paths):
+                errors.append("DRIVE_RESTORE_PUSH_PATHS_NOT_SCOPED")
     if name in LOCKED_PUBLISHERS:
         if set(events) != {"workflow_dispatch"} or permissions.get("contents") != "read":
             errors.append("LEGACY_PLAYLIST_PUBLISHER_NOT_LOCKED")

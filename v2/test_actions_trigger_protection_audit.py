@@ -118,6 +118,18 @@ class ActionsTriggerProtectionTests(unittest.TestCase):
         issues, _ = validate_workflow(Path("v2-epg.yml"), text)
         self.assertIn("UNEXPECTED_JOB_WRITE_PERMISSION:contents", issues)
 
+    def test_drive_restore_oidc_is_job_scoped_and_push_paths_are_narrow(self):
+        path = Path(__file__).resolve().parents[1] / ".github/workflows/v2-independent-drive-restore.yml"
+        source = path.read_text(encoding="utf-8")
+        issues, _ = validate_workflow(path, source)
+        self.assertEqual(issues, [])
+        renamed = source.replace("  drive-restore:\n", "  other-job:\n")
+        issues, _ = validate_workflow(path, renamed)
+        self.assertIn("UNEXPECTED_JOB_WRITE_PERMISSION:id-token", issues)
+        widened = source.replace("      - 'v2/independent_drive_restore.py'", "      - 'v2/**'")
+        issues, _ = validate_workflow(path, widened)
+        self.assertIn("DRIVE_RESTORE_PUSH_PATHS_NOT_SCOPED", issues)
+
     def test_persisted_explicit_credentials_rejected(self):
         text = fixture().replace("      - name: Run", "      - uses: actions/checkout@v4\n"
                                 "        with:\n          persist-credentials: true\n"

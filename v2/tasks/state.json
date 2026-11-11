@@ -163,17 +163,18 @@
     {
       "id": 13,
       "status": "blocked",
-      "last_checked_at": "2026-11-11T16:00:00Z",
+      "last_checked_at": "2026-11-11T23:02:51Z",
       "evidence_urls": [
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42610981885",
         "https://github.com/Madsc55/MADSC55-TV-V2/blob/madsc/v2-discovery-bulk-20261031/v2/independent_s3_restore.py",
         "https://github.com/Madsc55/MADSC55-TV-V2/blob/madsc/v2-discovery-bulk-20261031/v2/test_independent_s3_restore.py",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42688764100",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42688764100/job/130424619792",
-        "https://github.com/Madsc55/MADSC55-TV-V2/commit/869571e9ce0045d879697ead404b21a412b817d3"
+        "https://github.com/Madsc55/MADSC55-TV-V2/commit/869571e9ce0045d879697ead404b21a412b817d3",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43043636173"
       ],
-      "blocker": "Original-key AES restore and independent Google Drive ciphertext copy authenticated restore passed for 4,955 historical + 107 orphan candidate rows (5,062 total), as documented in commit 869571e. GitHub Actions secure-secret-injected automatic restore acceptance is still unverified; prior S3 job failed for missing AWS_ACCESS_KEY_ID. Do not mark complete without a successful production acceptance run.",
-      "reason": "Verified GitHub commit 869571e and v2/history/task13-original-key-restore-verified-20261111.json record original-key AES decryption, SHA256 and ZIP integrity, and independent Drive copy restoration for 5,062 rows. No secret or IBO changes committed. Separate automated Actions acceptance still pending."
+      "blocker": "GitHub Actions production acceptance requires verified Google Cloud Workload Identity service-account impersonation scoped to repository ID 1435646455 and the original AES metadata secret V2_PRODUCTION_AES_KEY_METADATA_B64. The IAM policy was not reachable and the prior Drive production run reported the secret missing. A successful OIDC, Drive download, and AES restore run is pending.",
+      "reason": "Verified the service account's reader ACL on the independent Drive backup. A fresh Drive download matched the pinned SHA-256 and the original AES-256-GCM verifier restored all 4,955 historical rows and 107 orphan candidates with exact identities and source provenance. GitHub Actions now uses a short-lived read-only Drive token and the original production verifier."
     },
     {
       "id": 14,
