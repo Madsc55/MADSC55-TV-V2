@@ -163,7 +163,7 @@
     {
       "id": 13,
       "status": "blocked",
-      "last_checked_at": "2026-11-11T23:02:51Z",
+      "last_checked_at": "2026-11-11T23:08:58Z",
       "evidence_urls": [
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42610981885",
         "https://github.com/Madsc55/MADSC55-TV-V2/blob/madsc/v2-discovery-bulk-20261031/v2/independent_s3_restore.py",
@@ -171,10 +171,12 @@
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42688764100",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42688764100/job/130424619792",
         "https://github.com/Madsc55/MADSC55-TV-V2/commit/869571e9ce0045d879697ead404b21a412b817d3",
-        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43043636173"
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43043636173",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43117212383",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43117212499"
       ],
-      "blocker": "GitHub Actions production acceptance requires verified Google Cloud Workload Identity service-account impersonation scoped to repository ID 1435646455 and the original AES metadata secret V2_PRODUCTION_AES_KEY_METADATA_B64. The IAM policy was not reachable and the prior Drive production run reported the secret missing. A successful OIDC, Drive download, and AES restore run is pending.",
-      "reason": "Verified the service account's reader ACL on the independent Drive backup. A fresh Drive download matched the pinned SHA-256 and the original AES-256-GCM verifier restored all 4,955 historical rows and 107 orphan candidates with exact identities and source provenance. GitHub Actions now uses a short-lived read-only Drive token and the original production verifier."
+      "blocker": "Actions run 43117212383 failed at Google Cloud service-account impersonation with iam.serviceAccounts.getAccessToken denied. Apply the Workload Identity User binding scoped to repository ID 1435646455, then rerun to verify the Drive download and original AES restore. Prior run 43043636173 also reported the original AES metadata secret V2_PRODUCTION_AES_KEY_METADATA_B64 missing.",
+      "reason": "Verified the service account's reader ACL on the independent Drive backup. A fresh Drive download matched the pinned SHA-256 and the original AES-256-GCM verifier restored all 4,955 historical rows and 107 orphan candidates with exact identities and source provenance. The GitHub OIDC restore workflow ran and reached Google's service-account token request. Its restore step was skipped after the IAM denial."
     },
     {
       "id": 14,
