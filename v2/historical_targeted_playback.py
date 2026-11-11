@@ -164,7 +164,7 @@ def probe_one(item, runner=subprocess.run, resolver=public_dns):
         "VIDEO_STREAM_OBSERVED", "AUDIO_ONLY_OBSERVED",
         "NO_AUDIO_VIDEO_STREAM_OBSERVED")
         or initial.get("diagnostic_category") in (
-            "HTTP_FORBIDDEN", "HTTP_RESPONSE_ERROR", "NETWORK_TIMEOUT",
+            "HTTP_RESPONSE_ERROR", "NETWORK_TIMEOUT",
             "MEDIA_FORMAT_UNSUPPORTED", "UNKNOWN_NETWORK_OR_MEDIA_ERROR"))
     if not retryable:
         return initial
