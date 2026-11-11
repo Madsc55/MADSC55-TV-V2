@@ -1,3 +1,11 @@
+## 11 Kasım 2026 — #13 Google Drive otomatik geri yükleme kurulumu
+
+- Kullanıcı kararı: S3'ü zorunlu kabul şartı olmaktan çıkar; önceden özgün AES anahtarıyla başarıyla doğrulanmış bağımsız Google Drive kopyasını otomatik kabulde kullan. S3 eski uyumluluk yolu olarak korunur.
+- v2/independent_drive_restore.py: Google servis hesabıyla salt-okunur Drive indirmesi, dosya kimliği/sürümü, indirme öncesi ve sonrası sürüm sabitliği, 1 GiB üst sınır, beklenen SHA-256, özel geçici dosya ve mevcut tam AES/4.955 kimlik kapısı.
+- v2/archive_acceptance_gate.py: hem gerçek sürümlü S3 hem de kimliği ve sürümü kontrol edilmiş yetkili Drive kanıtı kabul edilir; bütün AES, manifest, tarihî envanter ve sahte AV reddi kuralları aynen kalır.
+- .github/workflows/v2-independent-drive-restore.yml: ayrı otomatik CI işi eklendi. Gereken GitHub Actions secrets: V2_DRIVE_SERVICE_ACCOUNT_JSON (Drive dosyasına okuyucu erişimi olan servis hesabı), V2_DRIVE_ARCHIVE_FILE_ID, V2_ARCHIVE_KEY_HEX. Özgün arşiv SHA-256: 38db9b094c48e49eb0b5b1234ddc6a109f215d6d9fa732a1a4d0cf592673fe4c.
+- ÖNEMLİ: Kod ve workflow commit edildi; gerçek Actions kabulünün yeşil olduğu henüz doğrulanmadı. Secret'lar eksikse iş güvenli şekilde başarısız olur; #13 bu durumda kapanmaz. Servis hesabına bağımsız Drive arşiv dosyası için salt-okuma izni verilmelidir. Ana İBO listesi, anahtarlar ve main değiştirilmedi.
+
 ## 11 Kasım 2026 — Aşama 2 yeniden çalıştırılan toplu Actions ve devir kaydı
 
 - Kullanıcı talimatı: Aşama 2 #3/#4/#5/#9/#13 → #6/#11/#14, tekil denemeler yerine toplu test, gerçek hataları düzelt, yapılanları burada kaydet; ana İBO listesine dokunma.
