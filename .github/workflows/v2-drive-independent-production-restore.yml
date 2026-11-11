@@ -1,11 +1,6 @@
 name: V2 Drive Independent Production Restore
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - madsc/v2-discovery-bulk-20261031
-    paths:
-      - '.github/workflows/v2-drive-independent-production-restore.yml'
 permissions:
   contents: read
 jobs:
@@ -14,6 +9,8 @@ jobs:
     timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'

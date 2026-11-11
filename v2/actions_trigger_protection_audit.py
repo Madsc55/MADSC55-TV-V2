@@ -52,6 +52,7 @@ MANUAL_NETWORK_OR_MEDIA = frozenset({
     "v2-stage5-orphan-reseal",
     "v2-stage5-historical-reseal",
     "v2-independent-archive-restore",
+    "v2-drive-independent-production-restore",
     "v2-spoken-language-existing-snapshot",
     "v2-stage3-real-history",
     "v2-stage3-historical-inventory",

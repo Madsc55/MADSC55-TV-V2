@@ -2406,3 +2406,8 @@ Kullanıcının açık talimatıyla #3, #4 ve #6 tarihî kurtarma görevleri art
 
 - M3U doğrulayıcı geçersiz HTTP adreslerini ve bir EXTINF satırındaki yinelenen kategori etiketlerini reddeder. Tırnak içindeki ve kanal adındaki virgüller korunur. Şifreli paket raporu 1.000 ve 2.000 kayıt hedefini tam karşılayan paketleri ayrı sayar. Eksik son parçalar kendi gerçek sayılarıyla görünür.
 - 23 yerel paket ve M3U testi geçti. Test arşivinde şifreleme ve geri okuma doğrulandı. Gerçek IBO teslimi için #28–#31 ön şartları açık.
+
+### 11 Kasım — Bağımsız Drive geri yükleme tetikleyicisi
+
+- [Toplu kontrolde](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43067922444) Drive geri yüklemenin otomatik push tetikleyicisi reddedildi. İş akışı elle başlatılır ve salt okunur çalışır. Denetim artık Drive akışının otomatik başlatılmasını da açıkça reddeder.
+- [Özgün AES anahtarı ve bağımsız Drive kopyası](https://github.com/Madsc55/MADSC55-TV-V2/commit/869571e9ce0045d879697ead404b21a412b817d3) üzerinden 5.062 kaydın doğrulanmış geri yüklemesi korunuyor. GitHub Actions üretim kabulü için yetkili Drive ve özgün anahtar tanımları gerekir. #13/#14 açık.
