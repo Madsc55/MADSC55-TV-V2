@@ -75,13 +75,16 @@
     {
       "id": 6,
       "status": "in_progress",
-      "last_checked_at": "2026-11-11T00:00:00Z",
+      "last_checked_at": "2026-11-11T12:39:24Z",
       "evidence_urls": [
         "https://github.com/Madsc55/MADSC55-TV-V2/blob/madsc/v2-discovery-bulk-20261031/v2/historical_url_recovery.py",
-        "https://github.com/Madsc55/MADSC55-TV-V2/blob/madsc/v2-discovery-bulk-20261031/v2/historical_targeted_playback.py"
+        "https://github.com/Madsc55/MADSC55-TV-V2/blob/madsc/v2-discovery-bulk-20261031/v2/historical_targeted_playback.py",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/41644493862",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42539900333",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42913862261"
       ],
-      "blocker": "No verified complete real FFmpeg decoded video+audio run for all 2,643 lost historical addresses; existing targeted playback probes only a bounded absent-hash subset.",
-      "reason": "Independent historical URL recovery and bounded public-DNS FFprobe audit implementations exist in v2/historical_url_recovery.py and v2/historical_targeted_playback.py. Exact URL SHA matching and hash-only diagnostics are implemented; FFprobe stream metadata is not decoded video+audio acceptance. Task remains open pending complete real 2,643 lost-address probing and evidence reconciliation. Do not block this task on S3 credentials or the three malformed original rows."
+      "blocker": "The original 2,643-address count is supported, but the archived report exposes only 30 exact SHA-256 members. Evidence for those 30 is reconciled. A pinned full original membership list is needed to identify the other 2,613.",
+      "reason": "Original report #41644493862 identifies 30 exact SHA-256 sample entries. Each was joined to two pinned real FFmpeg archives: 9 with decoded video+audio and 21 with probe outcomes without decoded AV. See v2/reports/stage2-lost-address-sample-evidence-20261111.json. These are prior results; full #6 remains open."
     },
     {
       "id": 7,
@@ -157,14 +160,15 @@
     {
       "id": 13,
       "status": "blocked",
-      "last_checked_at": "2026-11-09T21:44:00Z",
+      "last_checked_at": "2026-11-11T12:39:24Z",
       "evidence_urls": [
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42610981885",
         "https://github.com/Madsc55/MADSC55-TV-V2/blob/madsc/v2-discovery-bulk-20261031/v2/independent_s3_restore.py",
         "https://github.com/Madsc55/MADSC55-TV-V2/blob/madsc/v2-discovery-bulk-20261031/v2/test_independent_s3_restore.py",
-        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42688764100"
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42688764100",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42688764100/job/130424619792"
       ],
-      "blocker": "Confirmed real S3 Actions job 129402597538 failed before retrieval: Required independent S3 restore secret missing: AWS_ACCESS_KEY_ID (repository secret V2_S3_RESTORE_AWS_ACCESS_KEY_ID). Remaining secrets not evaluated after first missing value; do not claim remote restore. User/admin must configure authorized S3 credentials and pinned object in protected Actions secrets.",
+      "blocker": "Independent S3 restore rerun attempt 2 failed in job 130424619792 before remote retrieval because V2_S3_RESTORE_AWS_ACCESS_KEY_ID is missing. Remaining secrets were not evaluated.",
       "reason": "Grouped Master Engine run #42610981885 success on aa5f5a58. Reviewed independent_s3_restore.py: bounded real AWS S3 version retrieval, object version validation, pinned SHA256 and archive_acceptance_gate; test_independent_s3_restore.py exercises mocked remote retrieval only. archive_backup_restore_drill.py explicitly marks local separate-directory copy not independent storage. Task started without false remote acceptance or public secrets."
     },
     {
