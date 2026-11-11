@@ -102,8 +102,9 @@ def check_hls(entry, timeout):
                'mpegurl' in content_type))
         if status in (200, 206) and hls:
             outcome = probe(url, timeout=timeout)
-            if outcome['status'] == 'AV_VERIFIED':
-                return {**entry, 'verified_quality': quality_from_probe(outcome)}
+            quality = quality_from_probe(outcome)
+            if quality['av_verified']:
+                return {**entry, 'verified_quality': quality}
     except (OSError, TimeoutError, urllib.error.URLError, ValueError,
             http.client.IncompleteRead, http.client.HTTPException):
         pass
