@@ -59,6 +59,19 @@ class HistoricalTargetedPlaybackTests(unittest.TestCase):
         self.assertIn("-follow", calls[0])
         self.assertEqual(calls[0][calls[0].index("-follow") + 1], "0")
 
+    def test_http_403_does_not_retry_or_claim_playback(self):
+        url = "https://stream.example.org/forbidden.m3u8"
+        calls = []
+        def runner(command, **kwargs):
+            calls.append(command)
+            return subprocess.CompletedProcess(command, 1, "", "HTTP error 403 Forbidden")
+        result = probe_one((sha(url), url), runner=runner, resolver=lambda _: True)
+        self.assertEqual(len(calls), 1)
+        self.assertEqual(result["diagnostic_category"], "HTTP_FORBIDDEN")
+        self.assertFalse(result["video_stream"])
+        self.assertFalse(result["audio_stream"])
+        self.assertNotIn(url, str(result))
+
     def test_failed_probe_not_declared_dead(self):
         url = "https://stream.example.org/bad.m3u8"
         result = probe_one((sha(url), url),
