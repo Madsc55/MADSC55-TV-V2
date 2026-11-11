@@ -35,7 +35,7 @@ class Stage3MetadataTests(unittest.TestCase):
         from unittest.mock import patch
         from stream_probe import probe
         from types import SimpleNamespace
-        for payload in ('{\"streams\": null}', '{\"streams\": [null]}', '{\"streams\": {}}'):
+        for payload in ('[]', 'null', '"unexpected"', '{\"streams\": null}', '{\"streams\": [null]}', '{\"streams\": {}}'):
             with self.subTest(payload=payload):
                 with patch('stream_probe.shutil.which', return_value='/usr/bin/ffprobe'), patch('stream_probe.subprocess.run', return_value=SimpleNamespace(returncode=0, stdout=payload)):
                     self.assertEqual(probe('https://example.org/test.m3u8')['status'], 'INVALID_PROBE_RESULT')
