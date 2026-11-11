@@ -56,8 +56,10 @@ def grouped_decode(missing, recovered, *, prober=real_av_probe, workers=4):
         video,audio,decoded=(row.get(x) is True for x in ("video","audio","decoded"))
         if decoded and (status!="VIDEO_AUDIO_DECODED" or not video or not audio):
             raise ValueError("False FFmpeg video/audio decode result")
-        if status=="VIDEO_AUDIO_DECODED" and not decoded:
-            raise ValueError("Decoder status cannot be granted by FFprobe alone")
+        if status=="VIDEO_AUDIO_DECODED" and (not decoded or not video or not audio):
+            raise ValueError("Decoder status requires genuine video and audio frames")
+        if status!="VIDEO_AUDIO_DECODED" and decoded:
+            raise ValueError("Decoded evidence requires the matching decoder status")
         evidence.append({"url_sha256":digest, "status":status,
                          "video_stream":video, "audio_stream":audio,
                          "ffmpeg_video_audio_decoded":decoded})
