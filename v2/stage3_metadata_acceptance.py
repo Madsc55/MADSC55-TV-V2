@@ -33,7 +33,7 @@ def quality_from_probe(probe: dict) -> dict:
     if not isinstance(streams, list):
         return {"av_verified": False, "quality": "UNVERIFIED"}
     videos = [s for s in streams if isinstance(s, dict) and s.get("codec_type") == "video"
-              and isinstance(s.get("width"), int) and isinstance(s.get("height"), int)
+              and type(s.get("width")) is int and type(s.get("height")) is int
               and s["width"] > 0 and s["height"] > 0]
     audio = [s for s in streams if isinstance(s, dict) and s.get("codec_type") == "audio"]
     if not videos or not audio:
