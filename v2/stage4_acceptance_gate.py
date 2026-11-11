@@ -53,8 +53,8 @@ def main():
         for error in errors:
             print(f"BLOCKED: {error}", file=sys.stderr)
         return 1
-    print("Evidence manifest structure verified; external run and artifact authenticity must also be independently checked.")
-    return 0
+    print("BLOCKED: manifest format alone cannot establish real video/audio, S3 restoration, or authentic Actions artifacts; independent evidence verification is required.", file=sys.stderr)
+    return 2
 
 if __name__ == "__main__":
     sys.exit(main())
