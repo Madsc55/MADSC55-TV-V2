@@ -180,12 +180,15 @@ def probe_one(item, runner=subprocess.run, resolver=public_dns):
 def audit(missing, recovered, *, runner=subprocess.run, resolver=public_dns, workers=4):
     if not 1 <= workers <= 8:
         raise ValueError("Invalid parallel probe size")
+    # Reject caller-supplied URLs whose SHA does not match the immutable identity.
+    # This prevents a fabricated mapping from being counted as recovered evidence.
     valid = [(digest, recovered[digest]) for digest in sorted(missing)
-             if digest in recovered]
+             if digest in recovered and isinstance(recovered[digest], str)
+             and hashlib.sha256(recovered[digest].encode("utf-8")).hexdigest() == digest]
     with ThreadPoolExecutor(max_workers=workers) as executor:
         results = list(executor.map(
             lambda item: probe_one(item, runner=runner, resolver=resolver), valid))
-    not_found = sorted(missing - set(recovered))
+    not_found = sorted(missing - {digest for digest, _ in valid})
     return {"schema": 1, "kind": "BOUNDED_HISTORICAL_ONLY_FFPROBE_NOT_IBO",
             "requested_historical_url_sha256": len(missing),
             "exact_git_history_urls_recovered": len(valid),
