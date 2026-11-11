@@ -49,7 +49,7 @@ def load_missing_report(path, historical_index):
     if (not isinstance(sample, list) or (reported > 0 and not sample)
             or len(sample) > 30 or len(sample) != len(set(sample))
             or reported < len(sample) or not set(sample) <= original):
-        raise ValueError("Unverified legacy absent-historical-URL sample")
+        raise ValueError("Unverified or truncated legacy absent-historical-URL sample")
     return set(sample)
 
 
