@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "task": 13,
+  "verification_date": "2026-11-11",
+  "status": "AES_ORIGINAL_KEY_RESTORE_VERIFIED_INDEPENDENT_S3_PENDING",
+  "archive_sha256": "38db9b094c48e49eb0b5b1234ddc6a109f215d6d9fa732a1a4d0cf592673fe4c",
+  "archive_origin": "private ChatGPT Library escrow, original 2026-11-03",
+  "verification": {
+    "aes_256_gcm_authenticated_decryption": true,
+    "original_private_key_metadata_matched_archive_sha256": true,
+    "plaintext_zip_sha256_matched": true,
+    "zip_integrity": true,
+    "historical_original_url_records": 4955,
+    "orphan_candidate_url_records": 107,
+    "archive_member_count": 7
+  },
+  "not_verified": [
+    "independent S3 remote upload/download and authenticated restore",
+    "current stream playback"
+  ],
+  "secrets_committed": false,
+  "main_ibo_playlist_modified": false
+}
