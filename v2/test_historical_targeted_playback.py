@@ -127,6 +127,18 @@ class HistoricalTargetedPlaybackTests(unittest.TestCase):
         self.assertEqual(result["status"], "UNSAFE_OR_UNRESOLVABLE_HOST")
         self.assertEqual(called, [])
 
+    def test_mismatched_recovered_url_is_not_counted_as_recovery(self):
+        expected = sha("https://stream.example.org/expected.m3u8")
+        wrong = "https://stream.example.org/wrong.m3u8"
+        def forbidden(*args, **kwargs):
+            self.fail("Mismatched recovered URL must not be probed")
+        report = audit({expected}, {expected: wrong},
+                       runner=forbidden, resolver=forbidden)
+        self.assertEqual(report["exact_git_history_urls_recovered"], 0)
+        self.assertEqual(report["not_found_sha256"], [expected])
+        self.assertEqual(report["results"], [])
+        self.assertNotIn(wrong, str(report))
+
     def test_missing_exact_git_identity_is_reported_without_guess(self):
         url = "https://stream.example.org/a.m3u8"
         identity = sha(url)
