@@ -17,7 +17,7 @@ import urllib.parse
 import urllib.request
 from stream_probe import probe
 from stage3_identity_recovery import url_sha256
-from stage3_metadata_acceptance import quality_from_probe, category, normalized_identity
+from stage3_metadata_acceptance import quality_from_probe, category, normalized_identity, epg_match
 from stage3_recovery_queue import build_recovery_queue
 from secure_archive import backup as encrypt_inventory, decrypt as decrypt_inventory
 import os
@@ -128,6 +128,8 @@ def main():
     ap.add_argument('--report', type=pathlib.Path, default=REPORT)
     ap.add_argument('--inventory', type=pathlib.Path, default=INVENTORY,
                     help='Durable full candidate inventory, including HTTP/HLS failures')
+    ap.add_argument('--epg', type=pathlib.Path, default=None,
+                    help='Optional trusted local XMLTV file for exact tvg-id matching')
     ap.add_argument('--workers', type=int, default=12)
     ap.add_argument('--timeout', type=float, default=12)
     ap.add_argument('--limit', type=int, default=500)
