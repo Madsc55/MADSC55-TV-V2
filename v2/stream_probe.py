@@ -31,6 +31,8 @@ def probe(url, timeout=25, ffprobe='ffprobe'):
         streams = json.loads(result.stdout).get('streams', [])
     except (ValueError, TypeError):
         return {'status': 'INVALID_PROBE_RESULT', 'video': False, 'audio': False}
+    if not isinstance(streams, list) or any(not isinstance(x, dict) for x in streams):
+        return {'status': 'INVALID_PROBE_RESULT', 'video': False, 'audio': False}
     video = any(x.get('codec_type') == 'video' and x.get('codec_name') not in (None, 'unknown') for x in streams)
     audio = any(x.get('codec_type') == 'audio' and x.get('codec_name') not in (None, 'unknown') for x in streams)
     return {'streams': streams, 'status': 'AV_VERIFIED' if video and audio else ('VIDEO_ONLY' if video else ('AUDIO_ONLY' if audio else 'NO_MEDIA')),
