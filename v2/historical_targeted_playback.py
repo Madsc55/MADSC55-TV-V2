@@ -115,6 +115,8 @@ def probe_one(item, runner=subprocess.run, resolver=public_dns):
     common = [
         "ffprobe", "-hide_banner", "-loglevel", "error",
         "-protocol_whitelist", "http,https,tcp,tls,crypto",
+        # Prevent HTTP redirects from bypassing the public-host preflight.
+        "-follow", "0",
     ]
     first = common + [
         "-rw_timeout", "5000000", "-analyzeduration", "2000000",
