@@ -15,7 +15,7 @@ class ScannerStage3IntegrationTests(unittest.TestCase):
             def __exit__(self, *args):
                 return False
             def read(self, size):
-                return b"#EXTM3U\\n#EXT-X-VERSION:3\\n"
+                return b"#EXTM3U\n#EXT-X-VERSION:3\n"
         observed = {"status": "AV_VERIFIED", "video": True, "audio": True,
                     "streams": [{"codec_type": "video", "width": 1280, "height": 720},
                                 {"codec_type": "audio", "codec_name": "aac"}]}
@@ -33,7 +33,7 @@ class ScannerStage3IntegrationTests(unittest.TestCase):
             def __exit__(self, *args):
                 return False
             def read(self, size):
-                return b"#EXTM3U\\n#EXT-X-VERSION:3\\n"
+                return b"#EXTM3U\n#EXT-X-VERSION:3\n"
         with patch.object(scanner.urllib.request, "urlopen", return_value=FakeResponse()), patch.object(scanner, "probe", return_value={"status": "VIDEO_ONLY", "video": True, "audio": False}):
             self.assertIsNone(scanner.check_hls(entry, 2))
 
