@@ -47,7 +47,7 @@ def fetch(url, timeout=18, limit=MAX_SOURCE):
                     raise ValueError('Source exceeded size limit')
                 return data
         except (urllib.error.URLError, TimeoutError, OSError, http.client.HTTPException) as exc:
-            if isinstance(exc, urllib.error.HTTPError) and exc.code not in (408, 429, 500, 502, 503, 504):
+            if isinstance(exc, urllib.error.HTTPError) and exc.code not in (408, 425, 429, 500, 502, 503, 504):
                 raise
             if attempt == 2:
                 raise
