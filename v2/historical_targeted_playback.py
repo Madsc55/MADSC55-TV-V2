@@ -50,6 +50,8 @@ def load_missing_report(path, historical_index):
             or len(sample) > 30 or len(sample) != len(set(sample))
             or reported < len(sample) or not set(sample) <= original):
         raise ValueError("Unverified or truncated legacy absent-historical-URL sample")
+    if reported != len(sample):
+        raise ValueError("Legacy sample is not full historical coverage; obtain a pinned full SHA report")
     return set(sample)
 
 
