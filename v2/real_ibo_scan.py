@@ -45,6 +45,9 @@ def fetch(url, timeout=18, limit=MAX_SOURCE):
                 data = response.read(limit + 1)
                 if len(data) > limit:
                     raise ValueError('Source exceeded size limit')
+                declared = response.headers.get('Content-Length')
+                if declared is not None and declared.isdecimal() and len(data) != int(declared):
+                    raise http.client.IncompleteRead(data, int(declared) - len(data))
                 return data
         except (urllib.error.URLError, TimeoutError, OSError, http.client.HTTPException) as exc:
             if isinstance(exc, urllib.error.HTTPError) and exc.code not in (408, 425, 429, 500, 502, 503, 504):
