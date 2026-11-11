@@ -1,0 +1,24 @@
+name: V2 Stage 3 Offline Acceptance
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'v2/stage3_*.py'
+      - 'v2/test_stage3_*.py'
+      - 'v2/stream_probe.py'
+      - '.github/workflows/v2-stage3-offline.yml'
+permissions:
+  contents: read
+jobs:
+  stage3:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compile Stage 3 and probe
+        run: python -m py_compile v2/stage3_identity_recovery.py v2/stage3_metadata_acceptance.py v2/stream_probe.py v2/test_stage3_identity_recovery.py v2/test_stage3_metadata_acceptance.py
+      - name: Offline identity and metadata regression
+        run: python -m unittest discover -s v2 -p 'test_stage3_*.py' -v
