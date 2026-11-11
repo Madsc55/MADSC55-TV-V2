@@ -191,6 +191,17 @@ class HistoricalRecoveryTests(unittest.TestCase):
         self.assertEqual(len(rows), 1)
         self.assertEqual(report["recoverable_real_urls"], 1)
 
+    def test_recovery_candidate_metadata_is_independent_of_original_history(self):
+        original = {"url": "https://example.org/old.m3u8",
+                    "metadata": {"tags": ["original"]},
+                    "source_ids": ["history"]}
+        recovered, _ = recover([original], [])
+        recovered[0]["metadata"]["tags"].append("recovered")
+        recovered[0]["source_ids"].append("new-source")
+        self.assertEqual(original["metadata"]["tags"], ["original"])
+        self.assertEqual(original["source_ids"], ["history"])
+        self.assertEqual(recovered[0]["historical_records"][0]["metadata"]["tags"], ["original"])
+
     def test_no_fabricated_urls(self):
         recovered, report = recover([{"anonymous_id": "4955"}], [])
         self.assertEqual(recovered, [])
