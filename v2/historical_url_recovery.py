@@ -104,6 +104,15 @@ def recover(old_records, current_records):
         for flag in ("av_verified", "device_verified", "video_verified", "audio_verified",
                      "playback_verified", "ibo_device_verified"):
             candidate[flag] = False
+        # Legacy decoder fields are provenance only, never current AV acceptance.
+        for field in ("decoded", "video", "audio", "has_video", "has_audio"):
+            if field in candidate:
+                candidate["historical_" + field] = candidate[field]
+                candidate[field] = False
+        for field in ("ffmpeg_status", "playback_status"):
+            if field in candidate:
+                candidate["historical_" + field] = candidate[field]
+                candidate[field] = "HISTORICAL_NOT_REVERIFIED"
         sources = candidate.get("source_ids", [])
         sources = list(sources) if isinstance(sources, list) else ([sources] if isinstance(sources, str) and sources else [])
         for field in ("source_id", "source"):
