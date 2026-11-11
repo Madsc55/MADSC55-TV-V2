@@ -15,7 +15,7 @@ class Stage3MetadataTests(unittest.TestCase):
 
     def test_no_quality_from_name_or_http(self):
         self.assertFalse(quality_from_probe({"name": "1440P HD", "http_status": 200})["av_verified"])
-        self.assertFalse(quality_from_probe({"real_probe": True, "streams": [
+        self.assertFalse(quality_from_probe({"status": "AV_VERIFIED", "video": True, "audio": True, "streams": [
             {"codec_type": "video", "width": 1920, "height": 1080}]})["av_verified"])
 
     def test_real_av_quality(self):
