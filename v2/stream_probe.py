@@ -28,7 +28,10 @@ def probe(url, timeout=25, ffprobe='ffprobe'):
     if result.returncode != 0:
         return {'status': 'PROBE_FAILED', 'video': False, 'audio': False}
     try:
-        streams = json.loads(result.stdout).get('streams', [])
+        payload = json.loads(result.stdout)
+        if not isinstance(payload, dict):
+            return {'status': 'INVALID_PROBE_RESULT', 'video': False, 'audio': False}
+        streams = payload.get('streams', [])
     except (ValueError, TypeError):
         return {'status': 'INVALID_PROBE_RESULT', 'video': False, 'audio': False}
     if not isinstance(streams, list) or any(not isinstance(x, dict) for x in streams):
