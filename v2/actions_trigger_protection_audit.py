@@ -71,6 +71,7 @@ MANUAL_NETWORK_OR_MEDIA = frozenset({
 SAFE_PUSH_CI = frozenset({
     "v2-actions-monitor",
     "v2-current-scanner-offline-gate",
+    "v2-offline-inventory",
     "v2-eight-stage-verification",
     "v2-master-engine",
     "v2-ibo-parity",
