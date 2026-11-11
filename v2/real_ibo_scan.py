@@ -271,6 +271,10 @@ def main():
     good_by_url = {item['url']: item for item in good}
     args.inventory.parent.mkdir(parents=True, exist_ok=True)
     inventory_tmp = args.inventory.with_suffix(args.inventory.suffix + '.tmp')
+    # Refuse to follow a symlink when creating the plaintext temporary file.
+    # A stale temporary file is removed only if it is an ordinary file.
+    if inventory_tmp.is_symlink():
+        raise ValueError('Refusing symlinked plaintext inventory path')
     # Restrict the temporary plaintext inventory before writing any URL tokens.
     try:
         fd = os.open(inventory_tmp, os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o600)
