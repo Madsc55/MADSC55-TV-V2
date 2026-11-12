@@ -1,6 +1,13 @@
 name: V2 IBO Package Infrastructure Offline
 on:
   workflow_dispatch:
+  pull_request:
+    paths:
+      - 'v2/ibo_package_acceptance.py'
+      - 'v2/test_ibo_package_acceptance.py'
+      - 'v2/ibo_final_acceptance.py'
+      - 'v2/test_ibo_final_acceptance.py'
+      - '.github/workflows/v2-ibo-package-infrastructure.yml'
   push:
     paths:
       - 'v2/ibo_package_acceptance.py'
