@@ -53,7 +53,7 @@ class DiscoveryMetadataTests(unittest.TestCase):
         import hashlib
         url = "https://example.org/live.m3u8?token=private"
         playlist = '#EXTM3U\n#EXTINF:-1 group-title="TR",Example TR\n' + url + '\n'
-        result = discover([("first", playlist), ("second", playlist)], "#EXTM3U\\n", {"first": "TR", "second": "TR"})
+        result = discover([("first", playlist), ("second", playlist)], "#EXTM3U\n", {"first": "TR", "second": "TR"})
         self.assertEqual(len(result), 1)
         self.assertEqual(result[0]["url_sha256"], hashlib.sha256(url.encode()).hexdigest())
         self.assertEqual(result[0]["source_ids"], ["first", "second"])
