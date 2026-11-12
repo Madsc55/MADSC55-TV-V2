@@ -1,0 +1,59 @@
+{
+  "schema": 1,
+  "kind": "V2_TASK_15_HISTORICAL_EXACT_API_IDENTITY_SAMPLE",
+  "artifacts": [
+    {
+      "run_id": 42228674931,
+      "artifact_id": 13507480461,
+      "zip_sha256": "78f4b2188696e159662a29bf6cab3530992bd39490367d7342c0fef9958c23fb"
+    },
+    {
+      "run_id": 42989285004,
+      "artifact_id": 13840642803,
+      "zip_sha256": "e93792fc8a7a71f42633c41b82098992195e1d8498b2a191c5fd76dcee43e845"
+    },
+    {
+      "run_id": 42989285004,
+      "artifact_id": 13840722439,
+      "zip_sha256": "d27158d69e195a0c76e98512be601672a401b88cf0b59409bd07c5da4bcb8074"
+    }
+  ],
+  "historical_identities": 4955,
+  "historical_report_exact_hash_matches": 4948,
+  "api_exact_url_and_channel_id_refs": 269,
+  "api_ffmpeg_rows_with_matching_id": 171,
+  "api_rows_with_two_decodes": 168,
+  "historic_api_ffmpeg_exact_rows": [
+    {
+      "url_sha256": "4d1a8e7b0e5677051d06affe6c5d42a3837c188c68079cb1fd362268814e29a6",
+      "channel_id": "AzStarTV.ca",
+      "historical_av_report_match": true,
+      "both_ffmpeg_samples_decode": true
+    },
+    {
+      "url_sha256": "807fe9db71f34d298a396d73b024e2facb65924ae19c8b6e4fbb812013aa9dc8",
+      "channel_id": "LoveNature.ca",
+      "historical_av_report_match": true,
+      "both_ffmpeg_samples_decode": true
+    },
+    {
+      "url_sha256": "b646ac2281c3dc28696e0bc3f25dcf11fc103aa2b13359c637d5d7480ff9102b",
+      "channel_id": "ELTV.az",
+      "historical_av_report_match": true,
+      "both_ffmpeg_samples_decode": true
+    },
+    {
+      "url_sha256": "e8904dc92d5f736636fa26cf7306221f354aa2c213b345b2c42d1315b94ffbaa",
+      "channel_id": "RTGTV.ru",
+      "historical_av_report_match": true,
+      "both_ffmpeg_samples_decode": true
+    },
+    {
+      "url_sha256": "ec7e099f0b494a77a8797dc1faba0e95a2efa31d390c963435e1c259b846b2e0",
+      "channel_id": "AzStarTV.ca",
+      "historical_av_report_match": true,
+      "both_ffmpeg_samples_decode": true
+    }
+  ],
+  "scope": "Only the five shared historical/API hashes have matching API channel IDs in these artifacts. The source association is IPTV-org API metadata. This evidence does not establish broadcaster identities for the rest of the historical inventory or official broadcaster ownership."
+}
