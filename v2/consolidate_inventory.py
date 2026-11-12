@@ -46,6 +46,7 @@ def merge_records(paths, encrypted_paths=(), passphrase=None):
                     raise ValueError(f"{path}:{number}: URL SHA-256 mismatch")
                 if url not in merged:
                     merged[url] = dict(record)
+                    merged[url]["url_sha256"] = digest
                     merged[url]["source_ids"] = []
                     merged[url]["observations"] = []
                 target = merged[url]
