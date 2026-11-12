@@ -56,7 +56,12 @@ def verify_local_artifacts(data, evidence_path):
         if not file_path.is_relative_to(root) or not file_path.is_file():
             errors.append(f"{key}: artifact not found within evidence directory")
             continue
-        digest = hashlib.sha256(file_path.read_bytes()).hexdigest()
+        # Hash in bounded chunks: an untrusted artifact must not exhaust runner RAM.
+        hasher = hashlib.sha256()
+        with file_path.open("rb") as stream:
+            for chunk in iter(lambda: stream.read(1024 * 1024), b""):
+                hasher.update(chunk)
+        digest = hasher.hexdigest()
         if digest.lower() != str(proof.get("artifact_sha256", "")).lower():
             errors.append(f"{key}: artifact bytes do not match declared SHA-256")
     return errors
