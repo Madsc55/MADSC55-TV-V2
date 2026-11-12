@@ -1,10 +1,6 @@
 name: V2 Stage 6 Grouped Offline Acceptance
 on:
   workflow_dispatch:
-  pull_request:
-    paths:
-      - '.github/workflows/v2-stage6-grouped-acceptance.yml'
-      - 'v2/**'
 permissions:
   contents: read
 jobs:
