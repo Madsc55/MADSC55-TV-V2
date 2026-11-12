@@ -1,3 +1,8 @@
+## 12 Kasım 2026 — #34 izinli kabul iş akışına bağlandı
+- Commit ab0066e6 için Production Security Gate run 43321317264 SUCCESS.
+- Yeni workflow eklemek güvenlik envanterini bozduğundan #34 çevrimdışı kabul adımları mevcut, izinli, salt-okunur v2-stage6-grouped-acceptance.yml iş akışına 1ab65026 commit'i ile eklendi. Workflow yalnızca workflow_dispatch ile çalışır; bu commit için henüz yeni #34 Actions kabul sonucu yoktur.
+- Codeberg canlı API isteği önceki testte HTTPError verdi; yeni başarılı canlı kabul kanıtı yoktur. #34 açık kalır. Ana İBO korunur.
+
 ## 12 Kasım 2026 — #34 güvenlik düzeltmesi doğrulandı
 - Production Security Gate run 43320335176: SUCCESS, commit 4019cb7c. Workflow envanteri ve korunan İBO dosyası kontrolü geçti.
 - Codeberg canlı sözleşme testinde HTTPError vardı; v2/discovery_34_live_contract.py hata HTTP durum kodunu raporlayacak şekilde iyileştirildi (1beaf556). Bu değişikliğin canlı kabul testi henüz yapılmadı.
