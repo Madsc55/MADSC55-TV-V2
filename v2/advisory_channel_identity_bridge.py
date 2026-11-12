@@ -30,6 +30,21 @@ def _read(path):
     return raw if isinstance(raw, dict) else None
 
 
+def link_or_defer(candidates, official_report, youtube_report, max_candidates=MAX_CANDIDATES):
+    """Keep large worldwide batches intact and explicitly defer advisory-only linkage."""
+    if not isinstance(candidates, list):
+        raise ValueError("Invalid candidate list")
+    if len(candidates) > max_candidates:
+        return {
+            "status": "DEFERRED_TOO_MANY_CANDIDATES",
+            "candidate_count": len(candidates),
+            "linkage_limit": max_candidates,
+            "av_verified": False,
+            "main_playlist_modified": False,
+        }
+    return link_advisory_identities(candidates, official_report, youtube_report)
+
+
 def link_advisory_identities(candidates, official_report, youtube_report):
     """Report only exact identity links; keep stream candidate objects intact."""
     if not isinstance(candidates, list) or len(candidates) > MAX_CANDIDATES:
