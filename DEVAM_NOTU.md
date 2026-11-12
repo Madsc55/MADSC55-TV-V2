@@ -2527,3 +2527,10 @@ Kullanıcının açık talimatıyla #3, #4 ve #6 tarihî kurtarma görevleri art
 3. **EN SON YENİ ADAY KABULÜ:** yalnız yeni keşfedilen ve özgün kanıtı olan akışlar için gerçek görüntü+ses, şifreli arşiv, bağımsız geri yükleme, İBO Player cihaz testi ve teslim; kanıt yoksa görev açık kalır.
 4. `main`, ana İBO listesi, YEDEKLER/YENİLER/FAVORİLER ve tarihî kimlikler değiştirilmeyecek. `v2/tasks/state.json` görevlerin kanıta dayalı tek yetkili kaydıdır; önceki 21/34 sonucu doğrulanmadan artırılmayacak.
 5. Eski revizyondaki `43299369197` tekrar koşusu başarısızdır; düzeltilmiş revizyon üzerinde kabul koşusu henüz yapılmadı. **Sistem hazırlığı kabul edilmeden yeni toplu keşif başlatılmayacak.**
+
+
+## 2026-11-12 — Sistem öncelikli sıra ve keşif öncesi durum kapısı
+- Kullanıcı kararı: önce 34 maddelik sistemin kurulum/otomasyon hazırlığı tamamlanacak; eski kanallara gerçek AV, arşiv, İBO paket veya cihaz kabulü uygulanmayacak. Ardından yeni geniş kapsamlı keşif, daha sonra yeni kanallarla #15/#17–21/#28–33 gerçek kabul işleri yapılacak. #34 keşif görevi olarak ayrı tutulur.
+- `v2/tasks/pre_discovery_readiness.py` ve `v2/tasks/test_pre_discovery_readiness.py` eklendi. Bu araç kayıtlı sistem görevi durumlarını keşif ve keşif sonrası kabulden ayırır; eksik sistem bağımlılıklarını raporlar. Salt okunurdur; hiçbir yayın araması veya playlist değişikliği yapmaz.
+- **Önemli:** 2026-11-08 state.json dosyasında 21 completed, 2 in_progress, 11 pending bulunuyor; bu tarihî kayıt canlı Actions başarısı veya tam sistem hazır oluş kanıtı değildir. Yeni araç `system_ready=false` döndürür; gerçek hazırlık son Actions/deployment kanıtıyla ayrıca doğrulanmalıdır.
+- Bu turda kod ve fixture testleri repoya yazıldı, fakat GitHub Actions koşusunun başarılı sonucu doğrulanmadı. Ana İBO ve korumalı listeler değiştirilmedi.
