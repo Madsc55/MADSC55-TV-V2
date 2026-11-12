@@ -73,7 +73,9 @@ def verify_decoded_av(url, timeout=25, ffmpeg='ffmpeg'):
             return {'decoded_av_verified': False, 'decode_status': 'DECODE_FAILED'}
         # framemd5 emits a non-comment CSV line only for an actual decoded frame.
         frames = [line for line in result.stdout.splitlines()
-                  if line.strip() and not line.lstrip().startswith('#')]
+                  if line.strip() and not line.lstrip().startswith('#')
+                  and len(line.split(',')) == 6
+                  and all(part.strip() for part in line.split(','))]
         if result.returncode != 0 or not frames:
             return {'decoded_av_verified': False, 'decode_status': 'NO_DECODED_FRAME'}
     return {'decoded_av_verified': True, 'decode_status': 'DECODED_AV'}
