@@ -19,6 +19,19 @@ class GateTests(unittest.TestCase):
                   "prerequisites": {k: {"status": "verified", "actions_run": "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/1"} for k in ("9", "13", "23")}}
         self.assertTrue(check(sample))
 
+    def test_artifact_hashing_uses_file_stream(self):
+        """Regression: acceptance must not call Path.read_bytes on artifact files."""
+        from unittest.mock import patch
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            artifact = root / "proof.bin"
+            artifact.write_bytes(b"proof" * 1000)
+            manifest = root / "manifest.json"
+            sample = {"discovery": {"artifact_file": "proof.bin",
+                                    "artifact_sha256": hashlib.sha256(artifact.read_bytes()).hexdigest()}}
+            with patch.object(Path, "read_bytes", side_effect=AssertionError("unbounded read")):
+                self.assertEqual(verify_local_artifacts(sample, manifest), [])
+
     def test_complete_looking_manifest_cannot_pass_without_independent_verification(self):
         run = "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/123"
         sample = {"repository": "Madsc55/MADSC55-TV-V2", "main_ibo_unchanged": True,
