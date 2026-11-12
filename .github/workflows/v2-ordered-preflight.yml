@@ -1,6 +1,11 @@
 name: V2 Sirali Hazirlik Testleri
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - stage3-identity-recovery-20261111
+    paths:
+      - '.github/workflows/v2-ordered-preflight.yml'
 permissions:
   contents: read
 concurrency:
