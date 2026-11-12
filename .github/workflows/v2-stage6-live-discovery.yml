@@ -32,18 +32,11 @@ jobs:
       - name: Verify approval and a successful system test on the exact source tree
         env:
           APPROVED: ${{ inputs.approve_live_discovery }}
-          PUSH_BASE: ${{ github.event.before }}
           GH_TOKEN: ${{ github.token }}
         run: |
+          test "$GITHUB_EVENT_NAME" = workflow_dispatch
+          test "$APPROVED" = true
           tested_sha="$GITHUB_SHA"
-          if [[ "$GITHUB_EVENT_NAME" == push ]]; then
-            [[ "$PUSH_BASE" =~ ^[0-9a-f]{40}$ ]]
-            test "$(git rev-parse HEAD^)" = "$PUSH_BASE"
-            git diff --quiet "$PUSH_BASE" HEAD
-            tested_sha="$PUSH_BASE"
-          else
-            test "$APPROVED" = true
-          fi
           python v2/tasks/task_engine.py --check-discovery-prerequisites --approve-live-discovery
           gh api --method GET "repos/$GITHUB_REPOSITORY/actions/workflows/v2-eight-stage-verification.yml/runs" \
             -f branch="$GITHUB_REF_NAME" -f head_sha="$tested_sha" -f status=success --jq '.workflow_runs | length' \
