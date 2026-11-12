@@ -55,6 +55,11 @@ jobs:
         run: python v2/test_stream_probe.py
       - name: Required verified 1000/2000 batch tests
         run: python v2/test_export_ibo_batches.py
+      - name: Required stage-4 offline package and M3U safety tests
+        run: |
+          python -m unittest discover -s v2 -p 'test_build_verified_ibo_packages.py' -v
+          python v2/test_ibo_production_guard.py
+          python v2/build_verified_ibo_packages.py --check-setup
   safety:
     needs: discovery-tests
     runs-on: ubuntu-latest
