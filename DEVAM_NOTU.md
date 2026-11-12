@@ -1,3 +1,10 @@
+## 12 Kasım 2026 — #24 canlı zincir sonucu
+
+- [İlk koşu](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43193930159) keşif, FFmpeg ve şifreleme işini geçti. Artefakt kimliğiyle indirme dosyaları bir alt dizine koyduğu için geri yükleme `receipt.json` dosyasını bulamadı. `3905016` indirme dizinini düzeltti.
+- [Düzeltilmiş toplu koşu](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43194979636) başarılı. 46 kaynak, 7.769 aday ve 803 gerçek görüntü ve ses sonucu (802 TR/AZ) raporlandı. Ayrı runner aynı arşivi Actions deposundan indirdi, SHA-256 ve AES-GCM bütünlüğünü doğruladı, 7.819 arşiv kaydını ve 4.955 özgün tarihî satırı doğrulayarak geri yükledi.
+- [Şifreli arşiv](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43194979636/artifacts/13934099792) ZIP SHA-256 `bbd8cc2357f216fd0053da56ff04ce2402189b02223cbc9ed567b541589b19a7`. [Geri yükleme kanıtı](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43194979636/artifacts/13934324379) ZIP SHA-256 `749ebcfdf929f9e13a060f9cc289497f6bd0d0b41300e643bb42c55d16332d41`. İki ZIP indirildi, özetler GitHub kaydıyla ve iç arşivin SHA-256 değeri kabul kaydıyla eşleşti.
+- **#24 açık.** Görev kaydında bulunan aynı koşuda Drive geri yükleme şartı sürüyor. Onaylı Drive klasöründe Actions servis hesabının erişimi okuyucu. Önceki #13 üretim Drive geri yüklemesi geçerli. Bu koşudaki yeni arşiv için doğrulanan dış depo GitHub Actions. Ana İBO blob'u `165c726cd9211f9f51c31f1c718e0911bab79e1b` ve main dalı değişmedi.
+
 ## 12 Kasım 2026 — #24 bağımsız kabul kod düzeltmesi (kapanış değil)
 - Dal: `stage4-24-independent-acceptance`. Kanıt dosyası SHA-256 hesabı artık parçalı okuma yapar; büyük artifact'ı tek seferde belleğe alma riski azaltıldı (commit `785063b2`).
 - `v2/test_stage4_acceptance_gate.py` dosyasına `Path.read_bytes` kullanıldığında hata veren regresyon testi eklendi (commit `ca7d3f4`).

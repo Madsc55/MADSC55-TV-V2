@@ -30,3 +30,9 @@ This report is committed only to `stage4-24-independent-acceptance`. No Stage 2/
 ## Independent ZIP integrity verification (2026-11-12)
 
 Downloaded artifacts 13282545632 and 13282561013 were inspected as ZIP files locally. Independently computed SHA-256 values exactly match the two GitHub artifact digests recorded above. The ZIP members contain `stage5-encrypted-archive-batch.log` (`Ran 38 tests ... OK`) and `stage5-final-archive-regressions.log` (`Ran 49 tests ... OK`) respectively. This verifies **artifact byte integrity and logged regression outcomes only**. No Stage 4 live run or offsite production restore was performed by this verification.
+
+## Live grouped result — 2026-11-12
+
+[Run 43194979636](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43194979636) passed on isolated commit `3905016b305ddf8a579d7bc2122a6af1591c355a`. The production gate and pinned request verified the protected IBO blob. The live Master discovered and checked 7769 candidates from 46 sources, with 803 true FFmpeg AV results. A separate Actions runner downloaded artifact 13934099792 and authenticated and restored 7819 encrypted entries, including all 4955 exact historical rows. The restore receipt is artifact 13934324379. Both ZIP digests and the inner archive digest were independently recomputed.
+
+The #9, #13 and #23 prerequisite Actions runs are confirmed. The new archive was restored from remote GitHub Actions artifact storage. Same-run Drive restoration of the new archive remains open under the current task ledger. The production Drive service account is a reader in the existing backup folder. #24 remains open.
