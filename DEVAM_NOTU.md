@@ -1,3 +1,10 @@
+## 12 Kasım 2026 — Aşama 1 bağımlılık denetimi (#14, #16, #5, #6)
+
+- #13'ün kabulü GitHub Actions run 43117212383, attempt 5, job 130915187450 üzerinden tekrar doğrulandı: OIDC, Drive arşiv bütünlüğü ve özgün AES geri yükleme adımları success. #13 kapalı; AWS/S3 başarısı iddia edilmiyor.
+- `v2/tasks/state.json` commit e03a89e8 ile #14 ve #16'nın eski #13 engeli güncellendi; #24'ün artık geçerli olmayan zorunlu S3 engeli Drive kabul yolu için düzeltildi. #14/#16/#24 kendi bütünleşik kabul testleri olmadan kapatılmadı.
+- #5: 26 özgün EXTINF sorunundan 25'i kaynak snapshot'larında gerekçelendirildi; 1 özgün satır ve 19 URI onarımı için doğrulanmış veri eksik. #6: 2.643 kayıp adresin yalnız 30 özgün SHA üyesi mevcut, diğer 2.613 üyelik için özgün tam liste gerekli. Kanıtsız kurtarma/başarı kaydı yapılmadı.
+- Bu güncellemede yeni toplu Actions koşusu tetiklenmedi; yalnızca kabul bağımlılıkları ve kanıt zinciri düzeltildi. Ana İBO listesi, favoriler ve korunan kanallar değiştirilmedi.
+
 ## 12 Kasım 2026 — #13 Google Drive Actions gerçek geri yükleme KABUL EDİLDİ
 
 - Kullanıcının kabul ettiği bağımsız Google Drive yedek yolunda GitHub Actions [run 43117212383](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43117212383) yeniden çalıştırıldı ve `drive-restore` job 130915187450 **success** oldu.
