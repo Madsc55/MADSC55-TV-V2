@@ -45,7 +45,7 @@ def probe(url, timeout=25, ffprobe='ffprobe'):
                   if type(w) is int and type(h) is int and 0 < w <= 16384 and 0 < h <= 16384]
     width, height = max(dimensions, key=lambda pair: pair[0] * pair[1]) if dimensions else (None, None)
     # ffprobe discovers declared streams, but does not prove decoded video frames or audible samples.
-    return {'streams': streams, 'status': 'AV_VERIFIED' if video and audio else ('VIDEO_ONLY' if video else ('AUDIO_ONLY' if audio else 'NO_MEDIA')),
+    return {'streams': streams, 'status': 'AV_STREAMS_PRESENT' if video and audio else ('VIDEO_ONLY' if video else ('AUDIO_ONLY' if audio else 'NO_MEDIA')),
             'evidence_level': 'ffprobe_stream_metadata', 'decoded_av_verified': False,
             'video': video, 'audio': audio, 'width': width, 'height': height,
             'resolution_verified': bool(video and width and height)}
@@ -87,6 +87,10 @@ def main():
     if not 1 <= args.timeout <= 120:
         parser.error('timeout must be 1..120 seconds')
     outcome = probe(args.url, args.timeout)
+    if outcome['status'] == 'AV_STREAMS_PRESENT':
+        outcome.update(verify_decoded_av(args.url, args.timeout))
+        if outcome['decoded_av_verified']:
+            outcome['status'] = 'AV_VERIFIED'
     print(json.dumps(outcome))
     if outcome['status'] != 'AV_VERIFIED':
         raise SystemExit(2)
