@@ -1,3 +1,10 @@
+## 12 Kasım 2026 — #24 bağımsız kabul kod düzeltmesi (kapanış değil)
+- Dal: `stage4-24-independent-acceptance`. Kanıt dosyası SHA-256 hesabı artık parçalı okuma yapar; büyük artifact'ı tek seferde belleğe alma riski azaltıldı (commit `785063b2`).
+- `v2/test_stage4_acceptance_gate.py` dosyasına `Path.read_bytes` kullanıldığında hata veren regresyon testi eklendi (commit `ca7d3f4`).
+- **Yeni GitHub Actions çalıştırması ve gerçek keşif → AV → şifreli arşiv → bağımsız S3 geri yükleme toplu kabulü bu oturumda doğrulanmadı.** Kod ve test commitleri gerçek kabul kanıtı değildir.
+- #24 **AÇIK** kalır. #9, #13, #23 kanıtları ve gerçek üretim artifact'ları bağımsız doğrulanmadan kapanış yapılmaz.
+- Ana İBO playlisti, favoriler, YEDEKLER ve arşiv içeriği değiştirilmedi.
+
 ## 12 Kasım 2026 — #24 tek koşuda canlı kabul
 
 - PR #11 üzerindeki izole `stage4-24-independent-acceptance` dalında canlı koşu başlatıldı. Ana üretim koruma işi önce çalışır. Sabit Master Engine commit'i gerçek kaynakları keşfeder, tarihî envanteri işler, FFmpeg ile görüntü ve ses doğrular ve şifreli arşivi Actions deposuna yükler.
