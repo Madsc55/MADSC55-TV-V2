@@ -32,6 +32,26 @@ class GateTests(unittest.TestCase):
             with patch.object(Path, "read_bytes", side_effect=AssertionError("unbounded read")):
                 self.assertEqual(verify_local_artifacts(sample, manifest), [])
 
+    def test_empty_artifact_is_rejected(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "empty.log").write_bytes(b"")
+            sample = {"discovery": {"artifact_file": "empty.log",
+                                    "artifact_sha256": hashlib.sha256(b"").hexdigest()}}
+            self.assertTrue(any("empty artifact" in e for e in
+                                verify_local_artifacts(sample, root / "manifest.json")))
+
+    def test_same_artifact_cannot_prove_two_stages(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            payload = b"real-file-bytes-are-not-independent-proof"
+            (root / "shared.log").write_bytes(payload)
+            proof = {"artifact_file": "shared.log",
+                     "artifact_sha256": hashlib.sha256(payload).hexdigest()}
+            sample = {"discovery": dict(proof), "recovery": dict(proof)}
+            self.assertTrue(any("reused" in e for e in
+                                verify_local_artifacts(sample, root / "manifest.json")))
+
     def test_complete_looking_manifest_cannot_pass_without_independent_verification(self):
         run = "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/123"
         sample = {"repository": "Madsc55/MADSC55-TV-V2", "main_ibo_unchanged": True,
