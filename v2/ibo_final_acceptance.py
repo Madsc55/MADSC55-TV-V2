@@ -15,6 +15,16 @@ def audit_archive(original, restored):
         raise ValueError("archive restore integrity mismatch")
     return {"status":"ROUNDTRIP_BYTES_MATCH","sha256":sha(original),"bytes":len(original)}
 
+def audit_encrypted_archive(original, ciphertext, passphrase):
+    from secure_archive import MAGIC, decrypt
+    if not ciphertext.startswith(MAGIC):
+        raise ValueError('not an authenticated encrypted V2 archive')
+    restored = decrypt(ciphertext, passphrase)
+    result = audit_archive(original, restored)
+    result['encrypted'] = True
+    result['external_restore_verified'] = False
+    return result
+
 def final_gate(package_report, archive_report, independent_restore=False, live_av=False):
     required=("target","records","sha256","status")
     if not all(k in package_report for k in required):
