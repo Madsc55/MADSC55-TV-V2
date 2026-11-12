@@ -8,6 +8,7 @@ import sys
 from pathlib import Path
 
 REQUIRED = ("9", "13", "23")
+PROOFS = ("discovery", "recovery", "real_video_audio", "encrypted_archive", "drive_restore", "end_to_end")
 SHA = re.compile(r"^[a-fA-F0-9]{64}$")
 RUN = re.compile(r"^https://github\.com/Madsc55/MADSC55-TV-V2/actions/runs/[0-9]+(?:/.*)?$")
 
@@ -27,7 +28,7 @@ def check(data):
             continue
         if not RUN.fullmatch(str(proof.get("actions_run", ""))):
             errors.append(f"#{task} missing Actions run URL")
-    for key in ("discovery", "recovery", "real_video_audio", "encrypted_archive", "s3_restore", "end_to_end"):
+    for key in PROOFS:
         proof = data.get(key)
         if not isinstance(proof, dict) or proof.get("status") != "verified":
             errors.append(f"{key}: no verified real-run proof")
@@ -45,7 +46,7 @@ def verify_local_artifacts(data, evidence_path):
     errors = []
     root = evidence_path.resolve().parent
     used_files = set()
-    for key in ("discovery", "recovery", "real_video_audio", "encrypted_archive", "s3_restore", "end_to_end"):
+    for key in PROOFS:
         proof = data.get(key, {})
         if not isinstance(proof, dict):
             continue
@@ -91,7 +92,7 @@ def main():
     for error in verify_local_artifacts(data, args.evidence):
         print(f"BLOCKED: {error}", file=sys.stderr)
         return 1
-    print("BLOCKED: manifest format alone cannot establish real video/audio, S3 restoration, or authentic Actions artifacts; independent evidence verification is required.", file=sys.stderr)
+    print("BLOCKED: manifest format alone cannot establish real video/audio, Drive restoration, or authentic Actions artifacts; independent evidence verification is required.", file=sys.stderr)
     return 2
 
 if __name__ == "__main__":

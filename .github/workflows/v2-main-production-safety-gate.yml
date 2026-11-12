@@ -24,7 +24,7 @@ jobs:
       - name: Install pinned YAML parser
         run: python -m pip install PyYAML==6.0.2
       - name: Grouped safety regression tests
-        run: PYTHONPATH=v2 python -m unittest -v test_main_actions_security_gate
+        run: PYTHONPATH=v2 python -m unittest -v test_main_actions_security_gate test_stage4_acceptance_gate test_stage4_drive_archive
       - name: Grouped FFprobe malformed-input regression tests
         run: PYTHONPATH=v2 python -m unittest -v test_stream_probe
       - name: Fail closed on changes to production trigger/write policy
@@ -38,6 +38,7 @@ jobs:
       github.event_name == 'pull_request' &&
       github.repository_id == '1435646455' &&
       github.event.pull_request.head.repo.id == github.event.repository.id &&
+      github.event.pull_request.number == 11 &&
       github.event.pull_request.head.ref == 'stage4-24-independent-acceptance'
     runs-on: ubuntu-24.04
     timeout-minutes: 5
@@ -59,14 +60,44 @@ jobs:
             echo 'run=true' >> "$GITHUB_OUTPUT"
           fi
 
-  stage4-discover-seal:
-    name: Live discovery, historical recovery, FFmpeg AV and encryption
+  stage4-drive-preflight:
+    name: Verify write access to the private acceptance file
     needs: [production-lock, stage4-request]
     if: needs.stage4-request.outputs.run == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+      - name: Authenticate the Drive writer with GitHub OIDC
+        id: drive-auth
+        uses: google-github-actions/auth@7c6bc770dae815cd3e89ee6cdf493a5fab2cc093
+        with:
+          workload_identity_provider: projects/144234728376/locations/global/workloadIdentityPools/madsc55-v2-github/providers/github-actions
+          service_account: madsc55-v2-drive-backup@madsc55-tv-v2-backup.iam.gserviceaccount.com
+          token_format: access_token
+          access_token_scopes: https://www.googleapis.com/auth/drive
+          access_token_lifetime: 600s
+          create_credentials_file: false
+          export_environment_variables: false
+      - name: Verify the exact private Drive file before discovery
+        env:
+          STAGE4_DRIVE_TOKEN: ${{ steps.drive-auth.outputs.access_token }}
+        run: python v2/stage4_drive_archive.py preflight
+
+  stage4-discover-seal:
+    name: Live discovery, historical recovery, FFmpeg AV and encryption
+    needs: stage4-drive-preflight
     runs-on: ubuntu-24.04
     timeout-minutes: 110
     outputs:
       receipt_digest: ${{ steps.live.outputs.receipt_digest }}
+      receipt_json: ${{ steps.live.outputs.receipt_json }}
       artifact_id: ${{ steps.upload.outputs.artifact-id }}
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
@@ -108,11 +139,53 @@ jobs:
           if-no-files-found: error
           retention-days: 30
 
-  stage4-restore:
-    name: Independently download and restore the same live archive
+  stage4-drive-publish:
+    name: Publish the sealed archive to private Google Drive
     needs: stage4-discover-seal
     runs-on: ubuntu-24.04
     timeout-minutes: 15
+    permissions:
+      contents: read
+      id-token: write
+    outputs:
+      version: ${{ steps.publish.outputs.version }}
+      revision: ${{ steps.publish.outputs.revision }}
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          artifact-ids: ${{ needs.stage4-discover-seal.outputs.artifact_id }}
+          merge-multiple: true
+          path: ${{ runner.temp }}/stage4-sealed
+      - name: Authenticate the Drive writer with GitHub OIDC
+        id: drive-auth
+        uses: google-github-actions/auth@7c6bc770dae815cd3e89ee6cdf493a5fab2cc093
+        with:
+          workload_identity_provider: projects/144234728376/locations/global/workloadIdentityPools/madsc55-v2-github/providers/github-actions
+          service_account: madsc55-v2-drive-backup@madsc55-tv-v2-backup.iam.gserviceaccount.com
+          token_format: access_token
+          access_token_scopes: https://www.googleapis.com/auth/drive
+          access_token_lifetime: 600s
+          create_credentials_file: false
+          export_environment_variables: false
+      - name: Upload and pin the original encrypted bytes
+        id: publish
+        env:
+          STAGE4_DRIVE_TOKEN: ${{ steps.drive-auth.outputs.access_token }}
+          EXPECTED_RECEIPT: ${{ needs.stage4-discover-seal.outputs.receipt_digest }}
+        run: python v2/stage4_drive_archive.py publish "$RUNNER_TEMP/stage4-sealed"
+
+  stage4-restore:
+    name: Independently download and restore the pinned Drive revision
+    needs: [stage4-discover-seal, stage4-drive-publish]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      id-token: write
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
         with:
@@ -127,17 +200,37 @@ jobs:
         with:
           python-version: '3.12'
       - run: python -m pip install cryptography==44.0.2
-      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+      - name: Authenticate the independent Drive reader with GitHub OIDC
+        id: drive-auth
+        uses: google-github-actions/auth@7c6bc770dae815cd3e89ee6cdf493a5fab2cc093
         with:
-          artifact-ids: ${{ needs.stage4-discover-seal.outputs.artifact_id }}
-          merge-multiple: true
-          path: ${{ runner.temp }}/stage4-restored
+          workload_identity_provider: projects/144234728376/locations/global/workloadIdentityPools/madsc55-v2-github/providers/github-actions
+          service_account: madsc55-v2-drive-backup@madsc55-tv-v2-backup.iam.gserviceaccount.com
+          token_format: access_token
+          access_token_scopes: https://www.googleapis.com/auth/drive.readonly
+          access_token_lifetime: 600s
+          create_credentials_file: false
+          export_environment_variables: false
+      - name: Download the exact Drive revision into an empty directory
+        env:
+          STAGE4_DRIVE_TOKEN: ${{ steps.drive-auth.outputs.access_token }}
+          STAGE4_DRIVE_REVISION: ${{ needs.stage4-drive-publish.outputs.revision }}
+          STAGE4_RECEIPT: ${{ needs.stage4-discover-seal.outputs.receipt_json }}
+          EXPECTED_RECEIPT: ${{ needs.stage4-discover-seal.outputs.receipt_digest }}
+        run: |
+          umask 077
+          mkdir "$RUNNER_TEMP/stage4-restored"
+          printf '%s\n' "$STAGE4_RECEIPT" > "$RUNNER_TEMP/stage4-restored/receipt.json"
+          python v2/stage4_drive_archive.py download "$RUNNER_TEMP/stage4-restored"
       - name: Verify original bytes, decrypt, and compare history and AV results
         working-directory: engine
         env:
           CONFIGURED_ARCHIVE_KEY: ${{ secrets.V2_ARCHIVE_KEY_HEX }}
           CONFIGURED_ARCHIVE_PASSPHRASE: ${{ secrets.V2_ARCHIVE_PASSPHRASE }}
           EXPECTED_RECEIPT: ${{ needs.stage4-discover-seal.outputs.receipt_digest }}
+          STAGE4_RESTORE_TRANSPORT: google-drive-independent-runner
+          STAGE4_DRIVE_REVISION: ${{ needs.stage4-drive-publish.outputs.revision }}
+          STAGE4_DRIVE_VERSION: ${{ needs.stage4-drive-publish.outputs.version }}
         shell: bash
         run: |
           set -euo pipefail

@@ -47,6 +47,36 @@ PERSISTED=re.compile(r"persist-credentials\s*:\s*(?:true|yes)\b",re.I)
 def mapping(v):
     return v if isinstance(v,dict) else {}
 
+STAGE4_REQUEST = (
+    "github.event_name == 'pull_request' && "
+    "github.repository_id == '1435646455' && "
+    "github.event.pull_request.head.repo.id == github.event.repository.id && "
+    "github.event.pull_request.number == 11 && "
+    "github.event.pull_request.head.ref == 'stage4-24-independent-acceptance'"
+)
+STAGE4_PREFLIGHT = (["production-lock", "stage4-request"], "needs.stage4-request.outputs.run == 'true'")
+STAGE4_OIDC = {
+    "stage4-drive-preflight": STAGE4_PREFLIGHT,
+    "stage4-drive-publish": ("stage4-discover-seal", None),
+    "stage4-restore": (["stage4-discover-seal", "stage4-drive-publish"], None),
+}
+
+
+def stage4_oidc_allowed(filename, name, jobs):
+    if filename != GATE or name not in STAGE4_OIDC:
+        return False
+    job = jobs[name]
+    preflight = mapping(jobs.get("stage4-drive-preflight"))
+    build = mapping(jobs.get("stage4-discover-seal"))
+    return (
+        job.get("permissions") == {"contents": "read", "id-token": "write"}
+        and (job.get("needs"), job.get("if")) == STAGE4_OIDC[name]
+        and mapping(jobs.get("stage4-request")).get("if") == STAGE4_REQUEST
+        and (preflight.get("needs"), preflight.get("if")) == STAGE4_PREFLIGHT
+        and build.get("needs") == "stage4-drive-preflight" and "if" not in build
+    )
+
+
 def audit_one(filename,source):
     problems=[]
     if not isinstance(source,str) or len(source)>200000:
@@ -86,11 +116,12 @@ def audit_one(filename,source):
     jobs=mapping(doc.get("jobs"))
     if not jobs:
         problems.append("NO_JOBS")
-    for job in jobs.values():
+    for name,job in jobs.items():
         if not isinstance(job,dict):
             problems.append("INVALID_JOB")
             continue
-        if any(v=="write" for v in mapping(job.get("permissions")).values()):
+        if (any(v=="write" for v in mapping(job.get("permissions")).values())
+                and not stage4_oidc_allowed(filename,name,jobs)):
             problems.append("JOB_HAS_WRITE_PERMISSION")
     if MUTATION.search(source):
         problems.append("GIT_MUTATION_COMMAND")

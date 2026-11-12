@@ -60,6 +60,7 @@ def build(target, key):
         "run_id": os.environ["GITHUB_RUN_ID"],
         "engine_commit": subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip(),
         "archive": archive_manifest(target / "inventory.enc", key),
+        "archive_bytes": (target / "inventory.enc").stat().st_size,
         "candidates": report["unique_candidates"],
         "all_regions_av": report["all_regions_media_decoded"],
         "tr_az_av": report["media_decoded"],
@@ -68,10 +69,12 @@ def build(target, key):
         "engine_playlist_sha256": report["protected_playlist_sha256_after"],
     }
     require(receipt["sources_fetched"] > 0, "No real sources fetched")
-    (target / "receipt.json").write_text(json.dumps(receipt, sort_keys=True) + "\n", encoding="utf-8")
+    receipt_json = json.dumps(receipt, sort_keys=True)
+    receipt_bytes = (receipt_json + "\n").encode("utf-8")
+    (target / "receipt.json").write_bytes(receipt_bytes)
     with Path(os.environ["GITHUB_OUTPUT"]).open("a", encoding="utf-8") as out:
-        digest = hashlib.sha256((target / "receipt.json").read_bytes()).hexdigest()
-        out.write(f"receipt_digest={digest}\n")
+        out.write(f"receipt_digest={hashlib.sha256(receipt_bytes).hexdigest()}\n")
+        out.write(f"receipt_json={receipt_json}\n")
 
 
 def verify(target, key):
@@ -102,8 +105,14 @@ def verify(target, key):
             and sum(row.get("region_candidate") in ("TR", "AZ") for row in decoded)
                 == receipt["tr_az_av"] > 0, "Restored AV evidence differs from Master results")
     transport = os.environ.get("STAGE4_RESTORE_TRANSPORT", "github-actions-artifact-independent-runner")
-    require(transport in ("github-actions-artifact-independent-runner", "s3-independent-runner"),
+    require(transport in ("github-actions-artifact-independent-runner", "s3-independent-runner",
+                          "google-drive-independent-runner"),
             "Unrecognized archive restore transport")
+    if transport == "google-drive-independent-runner":
+        receipt["drive"] = {
+            "version": os.environ["STAGE4_DRIVE_VERSION"],
+            "revision_sha256": hashlib.sha256(os.environ["STAGE4_DRIVE_REVISION"].encode()).hexdigest(),
+        }
     receipt["restored_from"] = transport
     receipt["restored_records"] = len(rows)
     (target / "accepted.json").write_text(json.dumps(receipt, sort_keys=True) + "\n", encoding="utf-8")
