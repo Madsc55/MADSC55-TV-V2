@@ -20,6 +20,6 @@ jobs:
           python-version: '3.11'
       - name: Compile and offline regression
         run: |
-          python -m py_compile v2/ibo_package_acceptance.py v2/test_ibo_package_acceptance.py
+          python -m py_compile v2/ibo_package_acceptance.py v2/test_ibo_package_acceptance.py v2/ibo_final_acceptance.py v2/test_ibo_final_acceptance.py
           python v2/test_ibo_package_acceptance.py
           python v2/test_ibo_final_acceptance.py
