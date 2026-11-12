@@ -4,6 +4,7 @@ on:
     branches:
       - main
       - madsc/v2-production-actions-lock-20261103
+      - stage4-24-independent-acceptance
   pull_request:
     branches: [main]
   workflow_dispatch:
@@ -35,11 +36,9 @@ jobs:
   stage4-request:
     name: Verify the isolated Stage 4 acceptance request
     if: >-
-      github.event_name == 'pull_request' &&
+      github.event_name == 'push' &&
       github.repository_id == '1435646455' &&
-      github.event.pull_request.head.repo.id == github.event.repository.id &&
-      github.event.pull_request.number == 11 &&
-      github.event.pull_request.head.ref == 'stage4-24-independent-acceptance'
+      github.ref == 'refs/heads/stage4-24-independent-acceptance'
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     outputs:
@@ -47,7 +46,7 @@ jobs:
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
         with:
-          ref: ${{ github.event.pull_request.head.sha }}
+          ref: ${{ github.sha }}
           persist-credentials: false
       - name: Pin request and verify the unchanged IBO blob
         id: request
@@ -72,7 +71,7 @@ jobs:
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
         with:
-          ref: ${{ github.event.pull_request.head.sha }}
+          ref: ${{ github.sha }}
           persist-credentials: false
       - name: Authenticate the Drive writer with GitHub OIDC
         id: drive-auth
@@ -102,7 +101,7 @@ jobs:
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
         with:
-          ref: ${{ github.event.pull_request.head.sha }}
+          ref: ${{ github.sha }}
           persist-credentials: false
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
         with:
@@ -153,7 +152,7 @@ jobs:
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
         with:
-          ref: ${{ github.event.pull_request.head.sha }}
+          ref: ${{ github.sha }}
           persist-credentials: false
       - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
         with:
@@ -189,7 +188,7 @@ jobs:
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
         with:
-          ref: ${{ github.event.pull_request.head.sha }}
+          ref: ${{ github.sha }}
           persist-credentials: false
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
         with:

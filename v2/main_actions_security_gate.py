@@ -47,12 +47,11 @@ PERSISTED=re.compile(r"persist-credentials\s*:\s*(?:true|yes)\b",re.I)
 def mapping(v):
     return v if isinstance(v,dict) else {}
 
+STAGE4_BRANCH = "stage4-24-independent-acceptance"
 STAGE4_REQUEST = (
-    "github.event_name == 'pull_request' && "
+    "github.event_name == 'push' && "
     "github.repository_id == '1435646455' && "
-    "github.event.pull_request.head.repo.id == github.event.repository.id && "
-    "github.event.pull_request.number == 11 && "
-    "github.event.pull_request.head.ref == 'stage4-24-independent-acceptance'"
+    f"github.ref == 'refs/heads/{STAGE4_BRANCH}'"
 )
 STAGE4_PREFLIGHT = (["production-lock", "stage4-request"], "needs.stage4-request.outputs.run == 'true'")
 STAGE4_OIDC = {
@@ -98,7 +97,7 @@ def audit_one(filename,source):
     if "push" in events:
         cfg=mapping(events["push"])
         if filename==GATE:
-            if set(cfg.get("branches",[]))!={"main",STAGING}:
+            if set(cfg.get("branches",[]))!={"main",STAGING,STAGE4_BRANCH}:
                 problems.append("MAIN_GATE_WRONG_PUSH_BRANCHES")
         elif filename==SAFETY:
             if "MADSC55_TV_IBO_CALISANLAR_TEST.m3u8" not in set(cfg.get("paths",[])):
