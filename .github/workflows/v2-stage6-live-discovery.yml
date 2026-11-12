@@ -15,7 +15,9 @@ jobs:
       - name: Install public metadata dependencies
         run: python -m pip install 'yt-dlp>=2025.1'
       - name: Read-only source coverage preflight
-        run: python v2/stage6_source_inventory.py > v2/reports/stage6-preflight.json
+        run: |
+          mkdir -p v2/reports
+          python v2/stage6_source_inventory.py > v2/reports/stage6-preflight.json
       - name: Probe live M3U sources and export candidates separately
         id: m3u
         continue-on-error: true
