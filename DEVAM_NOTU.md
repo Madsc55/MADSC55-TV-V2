@@ -2519,3 +2519,11 @@ Kullanıcının açık talimatıyla #3, #4 ve #6 tarihî kurtarma görevleri art
 
 - Actions run `43299369197`, job `131488422967`: `failure`. İlk altı adım başarılı, keşif adımı başarısız; korunan liste kontrolü ve artifact yükleme adımları başarılı. Logda yine `advisory_channel_identity_bridge.py:35 ValueError: Invalid candidate list` var.
 - Bu **eski commit üzerinde rerun** olduğu için düzeltme commit'i `90b4e82aa017428fc074f3d7bd2dfe9f32c8e8ab` test edilmedi. Güncel branch commit'i üzerinde yeni bir workflow koşusu zorunlu. #34 açık; AV ve İBO teslimi yapılmadı.
+
+## Kesin uygulama sırası — kullanıcı kararı (12 Kasım 2026)
+
+1. **ÖNCE SİSTEM:** 34 maddelik kayıt kapsamındaki kod, güvenlik, entegrasyon, Actions, kaynak keşif altyapısı ve kabul testlerinin *kanal gerektirmeyen* hazırlıkları tamamlanacak. Eski kanallara yeni tarama/AV/IBO kabulü uygulanmayacak.
+2. **SONRA TOPLU YENİ KEŞİF (#34 çalışma):** sistem hazırlığı doğrulandıktan sonra TR/AZ/dünya, GitHub/Gist/GitLab/Codeberg, YouTube canlı yayın metadata, resmî siteler ve M3U/M3U8 kaynakları topluca taranacak. Bu tarama bitmeden eski envanter üzerinden yeni teslim iddia edilmeyecek.
+3. **EN SON YENİ ADAY KABULÜ:** yalnız yeni keşfedilen ve özgün kanıtı olan akışlar için gerçek görüntü+ses, şifreli arşiv, bağımsız geri yükleme, İBO Player cihaz testi ve teslim; kanıt yoksa görev açık kalır.
+4. `main`, ana İBO listesi, YEDEKLER/YENİLER/FAVORİLER ve tarihî kimlikler değiştirilmeyecek. `v2/tasks/state.json` görevlerin kanıta dayalı tek yetkili kaydıdır; önceki 21/34 sonucu doğrulanmadan artırılmayacak.
+5. Eski revizyondaki `43299369197` tekrar koşusu başarısızdır; düzeltilmiş revizyon üzerinde kabul koşusu henüz yapılmadı. **Sistem hazırlığı kabul edilmeden yeni toplu keşif başlatılmayacak.**
