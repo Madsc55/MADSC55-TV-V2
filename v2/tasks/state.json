@@ -163,7 +163,7 @@
     {
       "id": 13,
       "status": "blocked",
-      "last_checked_at": "2026-11-12T01:14:12Z",
+      "last_checked_at": "2026-11-12T01:20:56Z",
       "evidence_urls": [
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42610981885",
         "https://github.com/Madsc55/MADSC55-TV-V2/blob/madsc/v2-discovery-bulk-20261031/v2/independent_s3_restore.py",
@@ -175,10 +175,11 @@
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43117212383",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43117212499",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43117212383/attempts/2",
-        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43117212383/attempts/3"
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43117212383/attempts/3",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43117212383/attempts/4"
       ],
-      "blocker": "Actions run 43117212383 attempts 1–3 failed at Google Cloud service-account impersonation with iam.serviceAccounts.getAccessToken denied. Apply the Workload Identity User binding scoped to repository ID 1435646455, then rerun to verify the Drive download and original AES restore. Prior run 43043636173 also reported the original AES metadata secret V2_PRODUCTION_AES_KEY_METADATA_B64 missing.",
-      "reason": "Verified the service account's reader ACL on the independent Drive backup. A fresh Drive download matched the pinned SHA-256 and the original AES-256-GCM verifier restored all 4,955 historical rows and 107 orphan candidates with exact identities and source provenance. The GitHub OIDC restore workflow ran and reached Google's service-account token request. Its restore step was skipped after the IAM denial."
+      "blocker": "GitHub Actions secret V2_PRODUCTION_AES_KEY_METADATA_B64 is missing. Provide the original private AES metadata as a GitHub Actions secret and verify that the original archive restore completes successfully in Actions.",
+      "reason": "Actions run 43117212383 attempt 4 successfully authenticated to Google Cloud using Workload Identity, downloaded the independent Drive archive as the service account, and verified archive ID, version, size, and SHA-256. The AES restore failed because its secret was missing. A separate fresh Drive download was decrypted with the original AES-256-GCM key and restored 4,955 historical rows and 107 orphan candidates with source provenance."
     },
     {
       "id": 14,
