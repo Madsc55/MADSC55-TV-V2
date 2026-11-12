@@ -13,7 +13,9 @@ jobs:
     if: >-
       github.repository_id == '1435646455' &&
       github.repository_owner_id == '263524426' &&
-      (github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' || github.ref == 'refs/heads/main')
+      (github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' || github.ref == 'refs/heads/main') &&
+      (github.event_name != 'push' ||
+       github.event.head_commit.message != 'ci(v2): run isolated #24 Drive acceptance')
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -48,3 +50,266 @@ jobs:
           set -o pipefail
           umask 077
           python v2/independent_drive_restore.py | tee -a "$GITHUB_STEP_SUMMARY"
+
+  production-lock:
+    name: Verify suspended publishers, no cron and immutable IBO
+    if: >-
+      github.event_name == 'push' &&
+      github.repository_id == '1435646455' &&
+      github.repository_owner_id == '263524426' &&
+      github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
+      github.event.head_commit.message == 'ci(v2): run isolated #24 Drive acceptance'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 158f77ecfed528101ffd35054b71e87a8fa449ad
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install pinned YAML parser
+        run: python -m pip install PyYAML==6.0.2
+      - name: Grouped safety regression tests
+        run: PYTHONPATH=v2 python -m unittest -v test_main_actions_security_gate test_stage4_acceptance_gate test_stage4_drive_archive
+      - name: Grouped FFprobe malformed-input regression tests
+        run: PYTHONPATH=v2 python -m unittest -v test_stream_probe
+      - name: Fail closed on changes to production trigger/write policy
+        run: PYTHONPATH=v2 python v2/main_actions_security_gate.py
+      - name: Preserve original IBO category and backup invariants
+        run: python v2/test_playlist_invariants.py
+
+  stage4-request:
+    name: Verify the isolated Stage 4 acceptance request
+    if: >-
+      github.event_name == 'push' &&
+      github.repository_id == '1435646455' &&
+      github.repository_owner_id == '263524426' &&
+      github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
+      github.event.head_commit.message == 'ci(v2): run isolated #24 Drive acceptance'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    outputs:
+      run: ${{ steps.request.outputs.run }}
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          ref: 158f77ecfed528101ffd35054b71e87a8fa449ad
+          persist-credentials: false
+      - name: Pin request and verify the unchanged IBO blob
+        id: request
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git hash-object MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)" = 165c726cd9211f9f51c31f1c718e0911bab79e1b
+          test "$(git rev-parse HEAD)" = '158f77ecfed528101ffd35054b71e87a8fa449ad'
+          echo 'run=true' >> "$GITHUB_OUTPUT"
+
+  stage4-drive-preflight:
+    name: Verify write access to the private acceptance file
+    if: >-
+      github.event_name == 'push' &&
+      github.repository_id == '1435646455' &&
+      github.repository_owner_id == '263524426' &&
+      github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
+      github.event.head_commit.message == 'ci(v2): run isolated #24 Drive acceptance' &&
+      needs.stage4-request.outputs.run == 'true'
+    needs: [production-lock, stage4-request]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          ref: 158f77ecfed528101ffd35054b71e87a8fa449ad
+          persist-credentials: false
+      - name: Authenticate the Drive writer with GitHub OIDC
+        id: drive-auth
+        uses: google-github-actions/auth@7c6bc770dae815cd3e89ee6cdf493a5fab2cc093
+        with:
+          workload_identity_provider: projects/144234728376/locations/global/workloadIdentityPools/madsc55-v2-github/providers/github-actions
+          service_account: madsc55-v2-drive-backup@madsc55-tv-v2-backup.iam.gserviceaccount.com
+          token_format: access_token
+          access_token_scopes: https://www.googleapis.com/auth/drive
+          access_token_lifetime: 600s
+          create_credentials_file: false
+          export_environment_variables: false
+      - name: Verify the exact private Drive file before discovery
+        env:
+          STAGE4_DRIVE_TOKEN: ${{ steps.drive-auth.outputs.access_token }}
+        run: python v2/stage4_drive_archive.py preflight
+
+  stage4-discover-seal:
+    name: Live discovery, historical recovery, FFmpeg AV and encryption
+    if: >-
+      github.event_name == 'push' &&
+      github.repository_id == '1435646455' &&
+      github.repository_owner_id == '263524426' &&
+      github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
+      github.event.head_commit.message == 'ci(v2): run isolated #24 Drive acceptance'
+    needs: stage4-drive-preflight
+    runs-on: ubuntu-24.04
+    timeout-minutes: 110
+    outputs:
+      receipt_digest: ${{ steps.live.outputs.receipt_digest }}
+      receipt_json: ${{ steps.live.outputs.receipt_json }}
+      artifact_id: ${{ steps.upload.outputs.artifact-id }}
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          ref: 158f77ecfed528101ffd35054b71e87a8fa449ad
+          persist-credentials: false
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          ref: 5a1766dfcd5e37eca0cfcaf9e10129116c67db2e
+          path: engine
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.12'
+      - name: Install AV and archive dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends ffmpeg
+          python -m pip install cryptography==44.0.2
+      - name: Execute the live Master and authenticate the archive
+        id: live
+        working-directory: engine
+        env:
+          CONFIGURED_ARCHIVE_KEY: ${{ secrets.V2_ARCHIVE_KEY_HEX }}
+          CONFIGURED_ARCHIVE_PASSPHRASE: ${{ secrets.V2_ARCHIVE_PASSPHRASE }}
+        run: |
+          umask 077
+          mkdir "$RUNNER_TEMP/stage4"
+          PYTHONPATH=v2 python ../v2/stage4_live_acceptance.py build "$RUNNER_TEMP/stage4"
+          git diff --exit-code -- MADSC55_TV_IBO_CALISANLAR_TEST.m3u8
+      - name: Upload the exact encrypted archive to remote Actions storage
+        id: upload
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: stage4-live-inventory-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            ${{ runner.temp }}/stage4/inventory.enc
+            ${{ runner.temp }}/stage4/receipt.json
+          if-no-files-found: error
+          retention-days: 30
+
+  stage4-drive-publish:
+    name: Publish the sealed archive to private Google Drive
+    if: >-
+      github.event_name == 'push' &&
+      github.repository_id == '1435646455' &&
+      github.repository_owner_id == '263524426' &&
+      github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
+      github.event.head_commit.message == 'ci(v2): run isolated #24 Drive acceptance'
+    needs: stage4-discover-seal
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      id-token: write
+    outputs:
+      version: ${{ steps.publish.outputs.version }}
+      revision: ${{ steps.publish.outputs.revision }}
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          ref: 158f77ecfed528101ffd35054b71e87a8fa449ad
+          persist-credentials: false
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          artifact-ids: ${{ needs.stage4-discover-seal.outputs.artifact_id }}
+          merge-multiple: true
+          path: ${{ runner.temp }}/stage4-sealed
+      - name: Authenticate the Drive writer with GitHub OIDC
+        id: drive-auth
+        uses: google-github-actions/auth@7c6bc770dae815cd3e89ee6cdf493a5fab2cc093
+        with:
+          workload_identity_provider: projects/144234728376/locations/global/workloadIdentityPools/madsc55-v2-github/providers/github-actions
+          service_account: madsc55-v2-drive-backup@madsc55-tv-v2-backup.iam.gserviceaccount.com
+          token_format: access_token
+          access_token_scopes: https://www.googleapis.com/auth/drive
+          access_token_lifetime: 600s
+          create_credentials_file: false
+          export_environment_variables: false
+      - name: Upload and pin the original encrypted bytes
+        id: publish
+        env:
+          STAGE4_DRIVE_TOKEN: ${{ steps.drive-auth.outputs.access_token }}
+          EXPECTED_RECEIPT: ${{ needs.stage4-discover-seal.outputs.receipt_digest }}
+        run: python v2/stage4_drive_archive.py publish "$RUNNER_TEMP/stage4-sealed"
+
+  stage4-restore:
+    name: Independently download and restore the pinned Drive revision
+    if: >-
+      github.event_name == 'push' &&
+      github.repository_id == '1435646455' &&
+      github.repository_owner_id == '263524426' &&
+      github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
+      github.event.head_commit.message == 'ci(v2): run isolated #24 Drive acceptance'
+    needs: [stage4-discover-seal, stage4-drive-publish]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          ref: 158f77ecfed528101ffd35054b71e87a8fa449ad
+          persist-credentials: false
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          ref: 5a1766dfcd5e37eca0cfcaf9e10129116c67db2e
+          path: engine
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.12'
+      - run: python -m pip install cryptography==44.0.2
+      - name: Authenticate the independent Drive reader with GitHub OIDC
+        id: drive-auth
+        uses: google-github-actions/auth@7c6bc770dae815cd3e89ee6cdf493a5fab2cc093
+        with:
+          workload_identity_provider: projects/144234728376/locations/global/workloadIdentityPools/madsc55-v2-github/providers/github-actions
+          service_account: madsc55-v2-drive-backup@madsc55-tv-v2-backup.iam.gserviceaccount.com
+          token_format: access_token
+          access_token_scopes: https://www.googleapis.com/auth/drive.readonly
+          access_token_lifetime: 600s
+          create_credentials_file: false
+          export_environment_variables: false
+      - name: Download the exact Drive revision into an empty directory
+        env:
+          STAGE4_DRIVE_TOKEN: ${{ steps.drive-auth.outputs.access_token }}
+          STAGE4_DRIVE_REVISION: ${{ needs.stage4-drive-publish.outputs.revision }}
+          STAGE4_RECEIPT: ${{ needs.stage4-discover-seal.outputs.receipt_json }}
+          EXPECTED_RECEIPT: ${{ needs.stage4-discover-seal.outputs.receipt_digest }}
+        run: |
+          umask 077
+          mkdir "$RUNNER_TEMP/stage4-restored"
+          printf '%s\n' "$STAGE4_RECEIPT" > "$RUNNER_TEMP/stage4-restored/receipt.json"
+          python v2/stage4_drive_archive.py download "$RUNNER_TEMP/stage4-restored"
+      - name: Verify original bytes, decrypt, and compare history and AV results
+        working-directory: engine
+        env:
+          CONFIGURED_ARCHIVE_KEY: ${{ secrets.V2_ARCHIVE_KEY_HEX }}
+          CONFIGURED_ARCHIVE_PASSPHRASE: ${{ secrets.V2_ARCHIVE_PASSPHRASE }}
+          EXPECTED_RECEIPT: ${{ needs.stage4-discover-seal.outputs.receipt_digest }}
+          STAGE4_RESTORE_TRANSPORT: google-drive-independent-runner
+          STAGE4_DRIVE_REVISION: ${{ needs.stage4-drive-publish.outputs.revision }}
+          STAGE4_DRIVE_VERSION: ${{ needs.stage4-drive-publish.outputs.version }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          umask 077
+          PYTHONPATH=v2 python ../v2/stage4_live_acceptance.py verify "$RUNNER_TEMP/stage4-restored" | tee -a "$GITHUB_STEP_SUMMARY"
+          test "$(git -C .. hash-object MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)" = 165c726cd9211f9f51c31f1c718e0911bab79e1b
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: stage4-verified-restore-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/stage4-restored/accepted.json
+          if-no-files-found: error
+          retention-days: 30

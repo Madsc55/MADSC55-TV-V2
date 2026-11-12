@@ -17,6 +17,19 @@ import yaml
 DEV = "madsc/v2-discovery-bulk-20261031"
 IBO = "MADSC55_TV_IBO_CALISANLAR_TEST.m3u8"
 DRIVE_RESTORE = "v2-independent-drive-restore"
+STAGE4_DRIVE_CONDITION = (
+    "github.event_name == 'push'" " && "
+    "github.repository_id == '1435646455'" " && "
+    "github.repository_owner_id == '263524426'" " && "
+    "github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031'" " && "
+    "github.event.head_commit.message == 'ci(v2): run isolated #24 Drive acceptance'"
+)
+STAGE4_DRIVE_JOBS = {
+    "stage4-drive-preflight": (["production-lock", "stage4-request"],
+                              STAGE4_DRIVE_CONDITION + " && needs.stage4-request.outputs.run == 'true'"),
+    "stage4-drive-publish": ("stage4-discover-seal", STAGE4_DRIVE_CONDITION),
+    "stage4-restore": (["stage4-discover-seal", "stage4-drive-publish"], STAGE4_DRIVE_CONDITION),
+}
 DRIVE_RESTORE_PUSH_PATHS = frozenset({
     ".github/workflows/v2-independent-drive-restore.yml",
     "v2/independent_drive_restore.py",
@@ -149,6 +162,11 @@ def validate_workflow(path, source):
                 restore_oidc = perm == "id-token" and (
                     name == "v2-independent-archive-restore"
                     or (name == DRIVE_RESTORE and job == "drive-restore")
+                    or (name == DRIVE_RESTORE and job in STAGE4_DRIVE_JOBS
+                        and (spec.get("needs"), spec.get("if")) == STAGE4_DRIVE_JOBS[job]
+                        and spec["permissions"] == {"contents": "read", "id-token": "write"}
+                        and isinstance(jobs.get("stage4-discover-seal"), dict)
+                        and jobs["stage4-discover-seal"].get("needs") == "stage4-drive-preflight")
                 )
                 if value == "write" and not restore_oidc:
                     errors.append("UNEXPECTED_JOB_WRITE_PERMISSION:" + perm)

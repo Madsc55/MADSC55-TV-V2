@@ -126,6 +126,11 @@ class ActionsTriggerProtectionTests(unittest.TestCase):
         renamed = source.replace("  drive-restore:\n", "  other-job:\n")
         issues, _ = validate_workflow(path, renamed)
         self.assertIn("UNEXPECTED_JOB_WRITE_PERMISSION:id-token", issues)
+        unscoped = source.replace(
+            "github.event.head_commit.message == 'ci(v2): run isolated #24 Drive acceptance'",
+            "true",
+        )
+        self.assertIn("UNEXPECTED_JOB_WRITE_PERMISSION:id-token", validate_workflow(path, unscoped)[0])
         widened = source.replace("      - 'v2/independent_drive_restore.py'", "      - 'v2/**'")
         issues, _ = validate_workflow(path, widened)
         self.assertIn("DRIVE_RESTORE_PUSH_PATHS_NOT_SCOPED", issues)
