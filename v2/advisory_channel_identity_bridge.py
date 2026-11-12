@@ -11,6 +11,7 @@ import re
 from pathlib import Path
 
 MAX_ROWS = 50000
+MAX_CANDIDATES = 150000
 MAX_BYTES = 15_000_000
 
 
@@ -31,7 +32,7 @@ def _read(path):
 
 def link_advisory_identities(candidates, official_report, youtube_report):
     """Report only exact identity links; keep stream candidate objects intact."""
-    if not isinstance(candidates, list) or len(candidates) > MAX_ROWS:
+    if not isinstance(candidates, list) or len(candidates) > MAX_CANDIDATES:
         raise ValueError("Invalid candidate list")
     official = _read(official_report)
     youtube = _read(youtube_report)
