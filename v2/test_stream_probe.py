@@ -16,7 +16,7 @@ class StreamProbeTests(unittest.TestCase):
             {'codec_type': 'video', 'codec_name': 'h264'},
             {'codec_type': 'audio', 'codec_name': 'aac'}]}), '')
         result = probe('https://example.org/live.m3u8')
-        self.assertEqual(result['status'], 'AV_VERIFIED')
+        self.assertEqual(result['status'], 'AV_STREAMS_PRESENT')
         self.assertTrue(result['video'] and result['audio'])
         self.assertNotIn('example.org', str(result))
 
@@ -34,7 +34,7 @@ class StreamProbeTests(unittest.TestCase):
             {'codec_type': 'video', 'codec_name': 'h264', 'width': 1920, 'height': 1080},
             {'codec_type': 'audio', 'codec_name': 'aac'}]}), '')
         result = probe('https://example.org/live.m3u8')
-        self.assertEqual(result['status'], 'AV_VERIFIED')
+        self.assertEqual(result['status'], 'AV_STREAMS_PRESENT')
         self.assertEqual((result['width'], result['height']), (1920, 1080))
         self.assertTrue(result['resolution_verified'])
         self.assertEqual(result['evidence_level'], 'ffprobe_stream_metadata')
@@ -49,10 +49,32 @@ class StreamProbeTests(unittest.TestCase):
                     {'codec_type': 'video', 'codec_name': 'h264', 'width': width, 'height': height},
                     {'codec_type': 'audio', 'codec_name': 'aac'}]}), '')
                 result = probe('https://example.org/live.m3u8')
-                self.assertEqual(result['status'], 'AV_VERIFIED')
+                self.assertEqual(result['status'], 'AV_STREAMS_PRESENT')
                 self.assertIsNone(result['width'])
                 self.assertIsNone(result['height'])
                 self.assertFalse(result['resolution_verified'])
+
+    @patch('stream_probe.verify_decoded_av',
+           return_value={'decoded_av_verified': True, 'decode_status': 'DECODED_AV'})
+    @patch('stream_probe.probe', return_value={'status': 'AV_STREAMS_PRESENT'})
+    def test_cli_accepts_only_decoded_av(self, mocked_probe, mocked_decode):
+        from stream_probe import main
+        from unittest.mock import patch as patch_arg
+        with patch_arg('sys.argv', ['stream_probe.py', 'https://example.org/live.m3u8']):
+            with patch_arg('builtins.print'):
+                main()
+
+    @patch('stream_probe.verify_decoded_av',
+           return_value={'decoded_av_verified': False, 'decode_status': 'NO_DECODED_FRAME'})
+    @patch('stream_probe.probe', return_value={'status': 'AV_STREAMS_PRESENT'})
+    def test_cli_rejects_metadata_only(self, mocked_probe, mocked_decode):
+        from stream_probe import main
+        from unittest.mock import patch as patch_arg
+        with patch_arg('sys.argv', ['stream_probe.py', 'https://example.org/live.m3u8']):
+            with patch_arg('builtins.print'):
+                with self.assertRaises(SystemExit) as cm:
+                    main()
+        self.assertEqual(cm.exception.code, 2)
 
     @patch('stream_probe.shutil.which', return_value='/usr/bin/ffmpeg')
     @patch('stream_probe.subprocess.run')
