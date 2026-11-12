@@ -12,6 +12,9 @@ def filled():
     tasks["33"]["final_archive_sha256"] = "a" * 64
     tasks["31"]["discovery_batch_id"] = "new-batch-fixture"
     tasks["32"]["user_approval"] = True
+    tasks["31"]["real_world_checks_passed"] = True
+    tasks["32"]["device_test_confirmed_by_user"] = True
+    tasks["33"]["archive_restore_verified"] = True
     return {"tasks": tasks}
 
 def main():
@@ -41,6 +44,12 @@ def main():
     bad_hash = filled()
     bad_hash["tasks"]["33"]["final_archive_sha256"] = "not-a-sha256"
     assert not evaluate(bad_hash)["tasks"]["33"]["accepted"]
+    for number, flag in (("31", "real_world_checks_passed"),
+                         ("32", "device_test_confirmed_by_user"),
+                         ("33", "archive_restore_verified")):
+        no_proof = filled()
+        no_proof["tasks"][number][flag] = False
+        assert not evaluate(no_proof)["tasks"][number]["accepted"]
     print("Stage 5 offline acceptance gate regressions: PASS (fixture only)")
 
 if __name__ == "__main__":
