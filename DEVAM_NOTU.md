@@ -803,3 +803,9 @@ Bu dalda yapılanlar:
 - `v2/test_stage5_acceptance_gate.py`: sentetik fixture ile olumlu/olumsuz kapı senaryoları; commit `58c5f8b3`.
 
 **Kabul durumu:** #31, #32, #33 nihai olarak AÇIK. Bu oturumda yeni Actions koşusunun başarılı sonucu veya gerçek İBO Player cihaz kanıtı doğrulanmadı. Sentetik fixture testinin geçmesi gerçek cihaz/yayın kanıtı değildir. İlgili workflow tetiklenmiş olabilir, ancak koşu sonucu teyit edilmedi. Nihai kabul için #34 sonrası yeni toplu keşif, gerçek AV, bağımsız arşiv geri yüklemesi, gerçek kullanıcı cihaz onayı ve toplu Actions kanıtları gerekir.
+
+
+### 2026-11-12 — Aşama 5 kabul kapısı sıkılaştırması
+- `771579a6`: Kanıt URL alanları artık HTTPS ve geçerli host biçimi gerektiriyor; örnek/yerel hostlar reddediliyor. Nihai arşiv SHA-256 alanı 64 hex karakter gerektiriyor.
+- `29e5b6ab`: Geçersiz URL ve hash için negatif regresyon vakaları eklendi. Bu biçimsel doğrulama URL'nin içeriğinin veya gerçek cihaz kanıtının doğrulandığı anlamına gelmez.
+- Kullanıcı kararı sürüyor: eski kanallara yeni kabul uygulanmaz; gerçek AV, cihaz ve arşiv kabulü #34 sonrası yeni toplu keşifle yapılır. #31–#33 gerçek kabulü açık. GitHub Actions sonucunun yeşil olduğu bu turda doğrulanmadı.
