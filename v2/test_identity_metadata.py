@@ -49,6 +49,10 @@ class IdentityMetadataTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "DTD and entities"):
             verify_epg_ids([], malicious)
 
+    def test_oversized_xmltv_is_rejected_before_parse(self):
+        with self.assertRaisesRegex(ValueError, "safe size limit"):
+            verify_epg_ids([], " " * 25_000_001)
+
     def test_invalid_xmltv_fails_closed(self):
         with self.assertRaises(ValueError):
             verify_epg_ids([], '<invalid/>')
