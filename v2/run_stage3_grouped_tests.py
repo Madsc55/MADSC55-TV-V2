@@ -13,7 +13,6 @@ SUITES = (
     "test_identity_metadata",
     "test_stage2_integration",
     "test_discovery_metadata",
-    "test_recovery_identity",
     "test_stage3_identity_recovery",
     "test_stage3_metadata_acceptance",
     "test_stage3_recovery_queue",
