@@ -1,4 +1,6 @@
 import json
+import subprocess
+import sys
 import pathlib
 import tempfile
 import unittest
@@ -9,6 +11,31 @@ def fixture(url):
             "av_evidence":{"url":url,"video":True,"audio":True,"sha256":"a"*64,"captured_at":"2026-11-12T12:00:00Z"}}
 
 class PackageAcceptance(unittest.TestCase):
+    def test_setup_check_does_not_need_inventory_or_publish_packages(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = pathlib.Path(d)
+            script = pathlib.Path(__file__).with_name("build_verified_ibo_packages.py")
+            proc = subprocess.run(
+                [sys.executable, str(script), "--check-setup"],
+                cwd=root, capture_output=True, text=True, check=True,
+            )
+            report = json.loads(proc.stdout)
+            self.assertEqual(report["package_targets"], [1000, 2000])
+            self.assertFalse(report["production_packages_created"])
+            self.assertEqual(report["final_av_acceptance"], "DEFERRED_UNTIL_POST_34_DISCOVERY")
+            self.assertEqual(list(root.iterdir()), [])
+
+    def test_missing_inventory_fails_without_publishing(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = pathlib.Path(d)
+            script = pathlib.Path(__file__).with_name("build_verified_ibo_packages.py")
+            proc = subprocess.run(
+                [sys.executable, str(script)], cwd=root,
+                capture_output=True, text=True,
+            )
+            self.assertNotEqual(proc.returncode, 0)
+            self.assertEqual(list(root.iterdir()), [])
+
     def test_marked_fixture_rejected(self):
         row = fixture("https://example.org/test.m3u8")
         row["fixture"] = True
