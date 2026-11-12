@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Read-only official Turkish broadcaster directory; no scraping of protected streams."""
+"""Read-only worldwide broadcaster directory; no scraping of protected streams."""
 import datetime
 import json
 import pathlib
@@ -12,13 +12,15 @@ OUT = ROOT / "v2/reports/official-tv-sites.json"
 URL = "https://iptv-org.github.io/api/channels.json"
 MAX_BYTES = 30_000_000
 
-def collect_official_sites(catalog):
+def collect_official_sites(catalog, countries=None):
     if not isinstance(catalog, list):
         raise ValueError("Official channel catalog must be a list")
     sites = []
     seen = set()
     for item in catalog:
-        if not isinstance(item, dict) or item.get("country") != "TR" or item.get("is_nsfw") or item.get("closed"):
+        if not isinstance(item, dict) or item.get("is_nsfw") or item.get("closed"):
+            continue
+        if countries is not None and item.get("country") not in countries:
             continue
         channel_id = item.get("id")
         if not isinstance(channel_id, str) or not channel_id.strip():
@@ -36,7 +38,8 @@ def collect_official_sites(catalog):
             continue
         seen.add(key)
         sites.append({"channel_id": channel_id, "name": str(item.get("name") or ""),
-                      "official_site": url, "domain": parsed.hostname.lower(),
+                      "country": item.get("country"), "official_site": url,
+                      "domain": parsed.hostname.lower(),
                       "status": "DIRECTORY_REFERENCE_ONLY_NOT_STREAM_VERIFIED"})
     return sites
 
@@ -51,9 +54,11 @@ def main():
     sites = collect_official_sites(catalog)
     report = {"created_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
               "source": URL, "policy": "READ_ONLY_NO_PLAYLIST_CHANGES_NO_DRM_BYPASS",
-              "count": len(sites), "channels": sites}
+              "count": len(sites), "country_counts": {country: sum(x["country"] == country for x in sites)
+              for country in sorted({x["country"] for x in sites if isinstance(x["country"], str)})},
+              "channels": sites}
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print("Official Turkish TV sites discovered:", len(sites))
+    print("Worldwide official TV site references discovered:", len(sites))
 if __name__ == "__main__":
     main()
