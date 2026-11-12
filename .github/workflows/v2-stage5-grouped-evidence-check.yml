@@ -39,6 +39,7 @@ jobs:
           python v2/test_stream_probe.py
           python v2/test_export_ibo_batches.py
           python v2/test_unified_safety_contract.py
+          python v2/test_stage5_acceptance_gate.py
       - name: Run grouped encrypted archive regressions
         run: |
           set -euo pipefail
