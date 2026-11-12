@@ -300,7 +300,8 @@ def main():
                 prior_attempts = previous.get('recovery_attempts', 0)
                 if type(prior_attempts) is not int or prior_attempts < 0:
                     raise ValueError('Invalid historical recovery attempts')
-                recovery_attempts = 0 if candidate['url'] in good_urls else prior_attempts + 1
+                # Preserve capped retry state: exhausted records remain REVIEW-only.
+                recovery_attempts = 0 if candidate['url'] in good_urls else min(prior_attempts + 1, 3)
                 record = {**previous, **candidate,
                           'recovery_attempts': recovery_attempts,
                           'url_sha256': url_sha256(candidate['url']),
