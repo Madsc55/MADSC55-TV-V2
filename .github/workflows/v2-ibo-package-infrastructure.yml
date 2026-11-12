@@ -5,6 +5,8 @@ on:
     paths:
       - 'v2/ibo_package_acceptance.py'
       - 'v2/test_ibo_package_acceptance.py'
+      - 'v2/ibo_final_acceptance.py'
+      - 'v2/test_ibo_final_acceptance.py'
       - '.github/workflows/v2-ibo-package-infrastructure.yml'
 jobs:
   offline-gates:
@@ -20,3 +22,4 @@ jobs:
         run: |
           python -m py_compile v2/ibo_package_acceptance.py v2/test_ibo_package_acceptance.py
           python v2/test_ibo_package_acceptance.py
+          python v2/test_ibo_final_acceptance.py
