@@ -1,3 +1,11 @@
+## 12 Kasım 2026 — Aşama 2 (#15, #17, #18, #19, #20, #21) kabul durumu
+- Geliştirme dalı: `stage3-identity-recovery-20261111`. Ana İBO playlisti değiştirilmedi.
+- URL/SHA uyuşmazlığı kurtarma kuyruğunda reddedilir; geçici hatalar sınırlı yeniden denemeye alınır. TR/AZ, kategori ve EPG için doğrulanmamış aday işaretleri kesin kimlik sayılmaz.
+- XMLTV eşleşmesi benzersiz kanal kimliğine dayanır; program varlığı ayrıca raporlanır. XMLTV DTD/entity ve aşırı büyük içerik reddedilir.
+- FFprobe akış metaverisi gerçek ses/görüntü çözümleme kanıtı sayılmaz. `v2/stream_probe.py` CLI yalnızca FFmpeg video+ses frame-MD5 çıktıları doğrulanınca başarılı çıkar; kurtarma kabulü `decoded_av_verified=True` ister. Boş/uygunsuz frame çıktısı reddedilir (486646f).
+- GitHub'a kod ve regresyon testleri commit edildi. Bu oturumda toplu Actions çalıştırmasının başarılı sonucu, canlı TR/AZ kanalları için gerçek FFmpeg kanıtı veya toplu görev kabulü doğrulanmadı. **Altı görev açık; kabul yapılmadı.**
+- Kabul için: Actions toplu testinin yeşil run URL'si, canlı kaynakların çözülmüş ses+görüntü kanıtları, EPG/kimlik/kategori eşleşme raporu ve bunların kanıt bağlantıları gerekir.
+
 ## 2 Kasım 2026 — kaynak kimliği bütünlüğü ve 500'lük varsayılan paket (yeni çalışma)
 - `v2/consolidate_inventory.py` eski `source_id` ile yeni `source_ids` aynı kayıtta bulunduğunda ikisini de saklar (59d594e). Regresyon testi eklendi (9e44e86).
 - `v2/real_ibo_scan.py` geçmiş arşivden okunan her iki kaynak kimliği biçimini kayıpsız birleştirir ve varsayılan paket boyutu son kullanıcı kararıyla 500'dür (401d194). Offline regresyon testi eklendi (28c97fa).
