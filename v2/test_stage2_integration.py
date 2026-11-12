@@ -33,11 +33,11 @@ class Stage2IntegrationTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             root = pathlib.Path(directory)
             source = root / "observations.json"
-            output = root / "result.json"
+            output = root / "v2" / "reports" / "result.json"
             source.write_text(json.dumps({"records": [
                 {"url": "https://example.invalid/stream", "status": "TIMEOUT"}]}),
                 encoding="utf-8")
-            with patch("sys.argv", ["real_ibo_scan.py", "--stage2-offline-input",
+            with patch.object(real_ibo_scan, "ROOT", root), patch("sys.argv", ["real_ibo_scan.py", "--stage2-offline-input",
                                     str(source), "--stage2-offline-output", str(output)]):
                 with patch.object(real_ibo_scan, "fetch",
                                   side_effect=AssertionError("network access forbidden")):
@@ -48,6 +48,26 @@ class Stage2IntegrationTests(unittest.TestCase):
             self.assertEqual(report["mode"], "offline-no-channel-search")
             self.assertEqual(len(report["recovery"]["retry"]), 1)
             self.assertNotIn("https://example.invalid/stream", output.read_text())
+
+    def test_offline_report_refuses_playlist_overwrite(self):
+        import json
+        import pathlib
+        import tempfile
+        from unittest.mock import patch
+        import real_ibo_scan
+        with tempfile.TemporaryDirectory() as directory:
+            root = pathlib.Path(directory)
+            source = root / "observations.json"
+            source.write_text(json.dumps({"records": [{"url": "https://example.invalid/a"}]}))
+            protected = root / "MADSC55_TV_IBO_CALISANLAR_TEST.m3u8"
+            protected.write_text("PROTECTED")
+            with patch.object(real_ibo_scan, "ROOT", root), patch("sys.argv", [
+                "real_ibo_scan.py", "--stage2-offline-input", str(source),
+                "--stage2-offline-output", str(protected)]):
+                with self.assertRaises(SystemExit):
+                    real_ibo_scan.main()
+            self.assertEqual(protected.read_text(), "PROTECTED")
+
 
     def test_no_false_av_acceptance(self):
         url = "https://example.invalid/channel"
