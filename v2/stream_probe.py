@@ -38,8 +38,15 @@ def probe(url, timeout=25, ffprobe='ffprobe'):
         return {'status': 'INVALID_PROBE_RESULT', 'video': False, 'audio': False}
     video = any(x.get('codec_type') == 'video' and x.get('codec_name') not in (None, 'unknown') for x in streams)
     audio = any(x.get('codec_type') == 'audio' and x.get('codec_name') not in (None, 'unknown') for x in streams)
+    # Resolution is measured only from ffprobe video-stream metadata, never from a channel label.
+    dimensions = [(s.get('width'), s.get('height')) for s in streams
+                  if s.get('codec_type') == 'video' and s.get('codec_name') not in (None, 'unknown')]
+    dimensions = [(w, h) for w, h in dimensions
+                  if type(w) is int and type(h) is int and 0 < w <= 16384 and 0 < h <= 16384]
+    width, height = max(dimensions, key=lambda pair: pair[0] * pair[1]) if dimensions else (None, None)
     return {'streams': streams, 'status': 'AV_VERIFIED' if video and audio else ('VIDEO_ONLY' if video else ('AUDIO_ONLY' if audio else 'NO_MEDIA')),
-            'video': video, 'audio': audio}
+            'video': video, 'audio': audio, 'width': width, 'height': height,
+            'resolution_verified': bool(video and width and height)}
 
 def main():
     parser = argparse.ArgumentParser()
