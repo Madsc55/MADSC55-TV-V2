@@ -1,3 +1,124 @@
+## 12 Kasım 2026 — Aşama 3 / #24 karar kaydı: altyapı kabulü tamam, yeni kanal taraması #34 sonrasına ertelendi
+- Kullanıcı kararı: #24 için mevcut/sistemde bulunan kanallarda yeni keşif, FFmpeg görüntü/ses taraması, kurtarma veya İBO üretimi yapılmayacak. Geniş kapsamlı toplu kanal araması #34 keşif sistemi kurulduktan sonra yapılacak; yayınların toplu gerçek görüntü/ses doğrulaması ve paket üretimi o aşamayı izleyecek.
+- #24 altyapı kabul kanıtı: [Actions #43241168321](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43241168321) — canlı keşif/AV, AES-GCM arşiv, Google Drive'a gerçek yükleme ve ayrı runner'da Drive sürümünden indirme/çözme/7.819 kayıt karşılaştırması başarılı. Bu geçmiş kabul testi tekrar tarama yetkisi sayılmaz.
+- #24, [kanonik görev kaydında](https://github.com/Madsc55/MADSC55-TV-V2/blob/madsc/v2-discovery-bulk-20261031/v2/tasks/state.json) `completed` durumunda. [Kabul denetimi](v2/stage4-evidence-audit.md) aynı koşunun altı başarılı işini ve artefakt özetlerini gösterir. [PR #11](https://github.com/Madsc55/MADSC55-TV-V2/pull/11) taslak olarak açık. Ana İBO blob'u doğrulandı.
+
+## 12 Kasım 2026 — #24 uçtan uca kabul başarılı
+
+- [Actions 43241168321](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43241168321) tek koşuda canlı keşif, tarihî envanter, FFmpeg görüntü ve ses doğrulaması, şifreleme, özel Google Drive yükleme ve bağımsız runner'da gerçek geri yükleme adımlarını tamamladı. Altı kabul işi başarılı.
+- 46/46 kaynak ve 7.769 tekil aday işlendi. 801 yayında gerçek görüntü ve ses doğrulandı, bunların 800'ü TR/AZ. Sonuçlandırılmamış AV kontrolü 0.
+- Ayrı runner sabitlenmiş Drive sürümü `4` üzerinden 7.832.688 baytı indirdi. Arşiv SHA-256 `29f5498c3173b39afe5c4bee824e4423cc8229961fb5f7cbf26e402d449f4241`. AES-GCM ve özgün tarihî satır karşılaştırmasıyla 7.819 arşiv kaydı, 4.955 tarihî satır dahil geri yüklendi.
+- [Şifreli arşiv](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43241168321/artifacts/13957249280) ZIP SHA-256 `92766f43a713de6363577b6c179d9669e3d14ae3131e8e0efccd5f6c8007f369`. [Drive geri yükleme makbuzu](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43241168321/artifacts/13958867734) ZIP SHA-256 `b84546022f16e1c1e6583ec132e650f80c09c3ba5ade4e547cba4c086200427c`. Her iki ZIP ve iç arşiv özeti bağımsız olarak hesaplandı, kaynak ve geri yükleme makbuzları eşleşti.
+- Kabul kodu `stage4-24-independent-acceptance` dalındaki `158f77ec` commit'ine sabitlendi. Çalıştırma `madsc/v2-discovery-bulk-20261031` dalından `12c0dc6d` commit'iyle #13'ün mevcut Google Drive iş akışında başlatıldı. `main` ucu `9fc8c286`, `main` ve #24 dalındaki ana İBO blob'u `165c726cd9211f9f51c31f1c718e0911bab79e1b` olarak doğrulandı.
+- Ayrı geliştirme dalı iş akışı denetiminde [önceden var olan Aşama 6 otomatik tetikleme hatası](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43241168754) sürüyor. #24'e ait üretim güvenlik kontrolü ve toplu kabul başarılı.
+
+## 12 Kasım 2026 — #24 tek koşuda Google Drive geri yüklemesi
+
+- `e1a57ba0` yeni şifreli arşivi bu görev için ayrılmış özel Drive dosyasına yükleyip sürümü sabitliyor. Ayrı Actions runner yalnızca o Drive sürümünü indiriyor ve boyut, SHA-256, AES-GCM, tarihî satırlar ve gerçek FFmpeg AV kayıtlarını doğruluyor. GitHub depo izinleri salt okunur.
+- `aea73070` canlı tetiklemeyi yalnızca `stage4-24-independent-acceptance` dalına yapılan işaretli push'larla sınırlandırdı. Yerelde 27 test, üretim workflow kilidi ve ana İBO kontrolü geçti.
+- [PR koşusu 43237551922](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43237551922) ve [push koşusu 43238025090](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43238025090) güvenlik ve İBO koruma adımlarını geçti. Her iki koşuda Google OIDC, `iam.serviceAccounts.getAccessToken` iznini reddetti. [Push iş günlüğü](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43238025090/job/131250668794). Canlı işler ön denetimden sonra atlandı.
+- [Aynı push koşusunun ikinci denemesi](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43238025090/attempts/2) yeniden çalıştırıldı. Güvenlik ve ana İBO kontrolleri geçti, ancak Google OIDC aynı `IAM_PERMISSION_DENIED` hatasını verdi. [Yetki hatası](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43238025090/job/131252987178).
+- **#24 açık.** Sıradaki işlem `madsc55-v2-drive-backup` servis hesabı için yalnızca izole push dalının Workload Identity kimliğine `roles/iam.workloadIdentityUser` yetkisi vermek ve 43238025090 koşusunun başarısız işlerini yeniden çalıştırmaktır. #13'ün ayrı başarılı koşusu bu dalın yetkisini kanıtlamaz.
+- `main` ucu `9fc8c286`, iki daldaki ana İBO dosyasının blob'u `165c726cd9211f9f51c31f1c718e0911bab79e1b` olarak doğrulandı.
+
+## 12 Kasım 2026 — #24 S3 gerçek restore kaynak koşu kimliği hatası düzeltildi
+- S3 workflow'u `GITHUB_RUN_ID` sistem değişkenini kaynak koşunun ID'siyle değiştirmeye çalışıyordu. GitHub varsayılan `GITHUB_*` değişkenleri güvenilir biçimde override edilemez; farklı restore runner koşusunda AES/HMAC anahtarı yanlış türetilebilir.
+- `v2/stage4_live_acceptance.py` artık doğrulama anahtarını ve makbuzun run ID kontrolünü `STAGE4_SOURCE_RUN_ID` üzerinden yapabilir; normal canlı Actions restore davranışı değişmez. `.github/workflows/v2-stage4-s3-restore.yml` bu açık kaynak kimliğini iletir.
+- Commitler: `b8407dcc`, `9fda850c`. **Bu düzeltmelerin Actions sonuçları henüz doğrulanmadı.** S3 workflow'unun `workflow_dispatch` tetiklenmesi, S3 secrets ve gerçek bağımsız AES restore kanıtı hâlâ gereklidir. #24 açık, ana İBO korunuyor.
+
+## 12 Kasım 2026 — #24 yeni arşiv Google Drive'a gerçekten aktarıldı ve geri indirildi
+- GitHub Actions run 43220496123, artifact 13949375384 içindeki gerçek şifreli `inventory.enc` + `receipt.json` paketi, [MADSC55-TV-V2 Independent Encrypted Recovery Archive](https://drive.google.com/drive/folders/1cqEo3ZTfnIsVglQ51s0lXMEjcxkqRqPe) klasörüne [Drive dosyası 1Eyw84kfC5LNksbwsRK27z2qxwWbCewb8](https://drive.google.com/file/d/1Eyw84kfC5LNksbwsRK27z2qxwWbCewb8/view) olarak yüklendi.
+- Drive dosyası bağımsız olarak geri indirildi ve yerel SHA-256 hesaplandı: ZIP `81e35b84eb22a9ea04c9ff73f86c674689d9ec1a730f61163c48e5942b4acb17` (GitHub artifact SHA ile eşit); ZIP içindeki `inventory.enc` SHA-256 `5be3e93559d3a946ae2265e5a960873b26940e4605966ef872b0b8b7ab1dbff0` (önceki gerçek restore makbuzuyla eşit); `receipt.json` SHA-256 `0fa0a90d403c8390d4721ab62bd505386f539a6e6c14e81d3dce509195c852fc` (Actions receipt digest ile eşit).
+- **Önemli sınır:** Drive'a yazma ve Drive'dan geri indirme ile tam byte bütünlüğü **kanıtlandı**. Drive'dan indirilmiş kopyanın gerçek AES çözümü/7.819 kayıt geri yüklemesi GitHub Actions içinde **ayrıca çalıştırılmadı**; önceki Actions geri yüklemesi GitHub artifact kopyasını kullanıyordu. Bu nedenle #24 harici depo bağımsız Actions restore şartı henüz açık. Ana İBO değiştirilmedi.
+
+## 12 Kasım 2026 — Güvenlik kapısı regresyonu düzeltildi
+- Actions https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43230283047 başarısız: 10/10 birim testi başarılı, ancak `WORKFLOW_INVENTORY.unexpected=["v2-stage4-s3-restore.yml"]` nedeniyle üretim kapısı reddetti. Canlı test/restore atlandı; playlist değişmedi.
+- Kök neden: S3 workflow dosyası fail-closed beklenen dosya listesinde yoktu. `f4e0ece4` commit'i yeni **yalnızca elle tetiklenen, read-only** workflow adını açıkça listeye ekledi; cron, push, yazma yetkileri ve IBO hash denetimleri korunuyor.
+- Bu düzeltmenin GitHub Actions sonucu ayrıca doğrulanmadan başarılı kabul edilmeyecek. Gerçek S3 çalışması ve #24 kapanışı bekliyor.
+
+## 12 Kasım 2026 — Bağımsız S3 restore yolu eklendi, kabul bekliyor
+- Canlı Actions #43221425954: 4/4 job success, restore kaynak türü GitHub Actions artifact, **S3 değil**. Şifreli arşiv ve restore artifact kanıtları bir önceki kayıt altında.
+- Yeni `.github/workflows/v2-stage4-s3-restore.yml` yalnızca elle `workflow_dispatch` ile tetiklenir; read-only GitHub izinleri kullanır. Kaynak canlı run ID + SHA256 receipt gerekir. Önce Actions arşivini S3'e aktarır, sonra **ayrı runner** S3'ten indirip SHA256, şifre çözme, 4955 tarihî kayıt ve AV kayıt bütünlüğünü doğrular. S3 bucket/region/erişim bilgileri ile arşiv anahtarı GitHub Actions secrets üzerinden gerekir; eksikse fail-closed.
+- `stage4_live_acceptance.py` geri yükleme kaynağını Actions artifact / S3 olarak ayırır. Workflow kullanıcı girdilerini shell'e doğrudan gömmek yerine environment değişkenlerinden okur.
+- İlgili kod commit'leri: `6a7b580b`, `7228aecf`, `e0321d2a`, `5a9b09d8`. **Yeni S3 Actions run sonucu henüz yok; #24 kapatılmadı.** Ana İBO değişmedi.
+
+## 12 Kasım 2026 — #24 canlı kabul sonucu (doğrulanmış)
+- GitHub Actions run https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43221425954: **4/4 job success** (production-lock, stage4-request, stage4-discover-seal, stage4-restore).
+- Ayrı restore işinin gerçek log çıktısı: `sources_fetched=46`, `candidates=7769`, `historical_records=4955`, `tr_az_av=792`, `all_regions_av=793`, `restored_records=7819`; motor commit `5a1766dfcd5e37eca0cfcaf9e10129116c67db2e`. Bunlar bu koşunun raporladığı sayılardır; 1000/2000 İBO cihaz kabulü değildir.
+- Şifreli arşiv SHA256 `684c660acbe92f30bd606e9c81d19edbb7a17e36eba0c87cec02c6da380b08a5`, `record_count=7819`. Actions artifacts: https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43221425954/artifacts/13949781016 ve restore kanıtı https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43221425954/artifacts/13949321817 .
+- Restore logu açıkça `restored_from=github-actions-artifact-independent-runner` diyor. **S3 restore doğrulanmadı**. #24 S3 kabul şartı devam ediyorsa kapanmamalı. Ana İBO playlisti değişmedi.
+
+## 12 Kasım 2026 — #24 güncel commit canlı Actions zinciri BAŞARILI (harici depo kabulü açık)
+- [Actions #43220496123](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43220496123), tetikleyen commit `ab520452553034bb959ff426c12281c93a53de4c`: dört işin tamamı **success** (stage4-request, production-lock, stage4-discover-seal, stage4-restore).
+- Canlı tarama: 46/46 kaynak, 7.769 tekil aday, FFmpeg ile 798 görüntü+ses doğrulaması (797 TR/AZ); `verification_unfinished=0`. Bu koşudaki sayılar eski koşunun 803/802 sayılarının yerine geçer.
+- Bağımsız runner, **GitHub Actions artifact deposundan** aynı arşivi indirip AES çözme/bütünlük ve envanter kontrolünü başarıyla gerçekleştirdi: 7.819 geri yüklenen kayıt, 4.955 tarihî kayıt. İç arşiv SHA-256 `5be3e93559d3a946ae2265e5a960873b26940e4605966ef872b0b8b7ab1dbff0`.
+- [Şifreli arşiv artifact #13949375384](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43220496123/artifacts/13949375384), ZIP SHA-256 `81e35b84eb22a9ea04c9ff73f86c674689d9ec1a730f61163c48e5942b4acb17`; bağımsız runner indirmesinde aynı SHA doğrulandı.
+- [Kabul raporu artifact #13947883316](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43220496123/artifacts/13947883316), ZIP SHA-256 `ad3274f25e79bf3e09070bcbf153da51156b5fc840e2b844bb0c7633ff380094`.
+- Ana İBO değişmezlik testi ve üretim güvenlik kilidi **success**. **Bu koşu S3 veya Drive üzerinde harici bağımsız geri yükleme yapmadı.** #24'ün harici depo kabul şartı ve son bağımsız doğrulaması tamamlanmadan #24 **AÇIK**; PR merge edilmedi. Ana İBO listesi değiştirilmedi.
+
+## 12 Kasım 2026 — #24 canlı toplu Actions kabulü doğrulandı (harici S3/Drive bekliyor)
+- [GitHub Actions #43220496123](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43220496123), head `ab520452553034bb959ff426c12281c93a53de4c`: izole istek, güvenlik/İBO değişmezliği, canlı keşif + FFmpeg AV + şifreleme ve ayrı runner üzerinde aynı arşivi indirme/çözme/doğrulama işlerinin **dördü de success**. Önceki çalıştırmanın `in_progress` durumu bu kontrolle tamamlandı.
+- [Şifreli arşiv artifact #13949375384](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43220496123/artifacts/13949375384), ZIP SHA-256 `81e35b84eb22a9ea04c9ff73f86c674689d9ec1a730f61163c48e5942b4acb17`; [ayrı runner geri yükleme kanıtı #13947883316](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43220496123/artifacts/13947883316), ZIP SHA-256 `ad3274f25e79bf3e09070bcbf153da51156b5fc840e2b844bb0c7633ff380094`. SHA-256 değerleri GitHub artifact metadata kayıtlarından alındı.
+- **Kabul sınırı:** Bu koşunun harici depo kanıtı GitHub Actions artifact deposudur; aynı arşivin bağımsız S3/Drive geri yüklemesi bu koşuda doğrulanmadı. #24 bu nedenle **AÇIK** kalır. Ana İBO listesine dokunulmadı.
+
+## 12 Kasım 2026 — #24 gerçek kabul koşusu talebi
+- Üretim güvenlik kapısı run https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43217349481 **success**; sonrasında run https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43219934841 de **success** olarak raporlandı.
+- `.github/workflows/v2-main-production-safety-gate.yml` incelendi: gerçek keşif/FFmpeg AV/şifreleme ve ayrı işte Actions artifact geri yükleme ancak PR head commit mesajında `[run-stage4-24]` bulunursa çalışıyor. Bu commit ile bu kabul koşusu talep ediliyor.
+- **Önemli:** Workflow ayrı Actions artifact indirip geri yüklüyor; bağımsız **S3** bucket restore değildir. S3 kabulü için ayrıca gerçek S3 kanıtı gerekir. Yeşil güvenlik kontrolü veya Actions artifact geri yüklemesi #24'ü tek başına kapatmaz.
+- Ana İBO değişmezliği korunmalı, sonuçlar gelmeden görev kapatılmamalıdır.
+
+## 12 Kasım 2026 — #24 güncel dalda canlı kabul yeniden tetiklendi
+- Önceki 43217133634 koşusunun yeniden denenmesi eski commit üzerinde güvenlik kapısında kaldı; güncel dalda workflow yalnız `workflow_dispatch` kullandığı için eski koşu güncel düzeltmeyi sınamadı.
+- PR #11'in güncel dalında güvenlik kapısı daha önce 43217349481 koşusunda başarılı oldu. Bu commit'in `[run-stage4-24]` işareti yeni PR Actions koşusunda canlı keşif/FFmpeg/şifreleme ve ayrı runner geri yükleme işlerini başlatmak içindir.
+- Bu kayıt **kabul kanıtı değildir**. Yeni Actions sonuçları, bağımsız harici S3/Drive geri yüklemesi ve değişmez İBO kanıtı doğrulanmadan #24 açık kalır. Ana İBO listesi değiştirilmedi.
+
+## 12 Kasım 2026 — CI düzeltmesi bağımsız doğrulandı
+- Önceki `UNAPPROVED_TRIGGER` / `UNAPPROVED_PUSH` düzeltmesinden sonra PR Actions run https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43217349481 **success**.
+- `Verify the isolated Stage 4 acceptance request` ve `Verify suspended publishers, no cron and immutable IBO` işleri başarılı. Ana İBO değişmezlik güvenlik adımı geçti.
+- Aynı run içinde `Live discovery, historical recovery, FFmpeg AV and encryption` ve `Independently download and restore the same live archive` işleri **skipped**. Bu nedenle gerçek #24 kabulü başarılmış değildir; #24 ve Aşama 1–6 kapanışı açık kalır.
+
+## 12 Kasım 2026 — GitHub Actions üretim güvenlik kapısı hatası düzeltmesi
+- PR #11 için Actions run https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43217133634 **failure**. `Verify suspended publishers, no cron and immutable IBO` işinde 10/10 güvenlik regresyonu geçti, ardından `main_actions_security_gate.py` `v2-offline-inventory.yml` için `UNAPPROVED_TRIGGER` ve `UNAPPROVED_PUSH` verdi. Gerçek keşif/AV/arşiv/restore işleri **skipped**.
+- Kök neden: `7b37940d` commit'inde eklenen push tetikleyicisi, üretim workflow kilidiyle çakışıyordu. Güvenlik kilidi gevşetilmeden workflow yeniden yalnızca `workflow_dispatch` olarak değiştirildi (commit `6202ae4c`).
+- **Yeni Actions koşusu başarılı olarak doğrulanmadı.** #24 açık; Aşama 1–6'nın tamamlandığı iddia edilmiyor. Ana İBO playlisti değiştirilmedi.
+
+## 12 Kasım 2026 — Aşama 1–6 toplu denetim ve CI tetikleme düzeltmesi
+- **Uygulanan:** `.github/workflows/v2-offline-inventory.yml` artık `stage4-24-independent-acceptance` dalında ilgili test/kod dosyaları değiştiğinde push ile otomatik toplu çevrimdışı regresyonu tetikler (commit `7b37940d`). Önceki sürüm yalnızca `workflow_dispatch` içeriyordu.
+- **CI doğrulama sınırı:** Bu değişikliğin tetiklediği push Actions koşusunun gerçek run ID/job sonuçları bu oturumda okunup teyit edilemedi; başarılı test olarak yazılmamalıdır.
+- **Aşama 1 (#14/#16/#5/#6):** gerçek tarihî URL, kaynak satırları ve harici arşiv kanıtları açık.
+- **Aşama 2 (#15/#17–#21):** URL/SHA, TR/AZ kimlik, EPG/çözünürlük/kategori için toplu gerçek veri kabulü açık.
+- **Aşama 3 (#24):** keşif → FFmpeg video/ses → şifreli arşiv → bağımsız S3 restore aynı gerçek Actions run'ında doğrulanmadı; açık.
+- **Aşama 4 (#28–#30):** 1000/2000 gerçek AV doğrulanmış kanal paketleri kanıtlanmadı; sahte sayı eklenmedi.
+- **Aşama 5 (#31–#33):** toplu son kabul, gerçek İBO Player cihaz ve son arşiv kanıtları açık.
+- **Aşama 6 (#34):** geniş kapsamlı gerçek kaynak taraması ve kanıtlı raporu açık; son sırada tutulur.
+- Ana İBO playlisti, YEDEKLER, favoriler ve arşiv verileri değiştirilmedi. Hiçbir görev yeni kanıt olmadan kapatılmadı.
+
+## 12 Kasım 2026 — #24 kanıt doğrulama ek korumaları (açık)
+- `v2/stage4_acceptance_gate.py`: boş artifact ve iki farklı kabul aşamasında aynı dosyanın yeniden kullanılmasını reddetme eklendi (commit `a6a95cc7`).
+- `v2/test_stage4_acceptance_gate.py`: iki durum için çevrimdışı regresyon testi eklendi (commit `3a9953c7`).
+- Bunlar GitHub'a yazılmış kod değişiklikleridir; **bu oturumda yeni Actions sonucu, gerçek AV kanıtı veya bağımsız S3 geri yükleme sonucu doğrulanmadı**. #24 ve diğer aşamalar kabul edilmiş sayılmaz.
+- Ana İBO playlisti, YEDEKLER, favoriler ve arşiv değiştirilmedi.
+
+## 12 Kasım 2026 — #24 canlı zincir sonucu
+
+- [İlk koşu](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43193930159) keşif, FFmpeg ve şifreleme işini geçti. Artefakt kimliğiyle indirme dosyaları bir alt dizine koyduğu için geri yükleme `receipt.json` dosyasını bulamadı. `3905016` indirme dizinini düzeltti.
+- [Düzeltilmiş toplu koşu](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43194979636) başarılı. 46 kaynak, 7.769 aday ve 803 gerçek görüntü ve ses sonucu (802 TR/AZ) raporlandı. Ayrı runner aynı arşivi Actions deposundan indirdi, SHA-256 ve AES-GCM bütünlüğünü doğruladı, 7.819 arşiv kaydını ve 4.955 özgün tarihî satırı doğrulayarak geri yükledi.
+- [Şifreli arşiv](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43194979636/artifacts/13934099792) ZIP SHA-256 `bbd8cc2357f216fd0053da56ff04ce2402189b02223cbc9ed567b541589b19a7`. [Geri yükleme kanıtı](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43194979636/artifacts/13934324379) ZIP SHA-256 `749ebcfdf929f9e13a060f9cc289497f6bd0d0b41300e643bb42c55d16332d41`. İki ZIP indirildi, özetler GitHub kaydıyla ve iç arşivin SHA-256 değeri kabul kaydıyla eşleşti.
+- **#24 açık.** Görev kaydında bulunan aynı koşuda Drive geri yükleme şartı sürüyor. Onaylı Drive klasöründe Actions servis hesabının erişimi okuyucu. Önceki #13 üretim Drive geri yüklemesi geçerli. Bu koşudaki yeni arşiv için doğrulanan dış depo GitHub Actions. Ana İBO blob'u `165c726cd9211f9f51c31f1c718e0911bab79e1b` ve main dalı değişmedi.
+
+## 12 Kasım 2026 — #24 bağımsız kabul kod düzeltmesi (kapanış değil)
+- Dal: `stage4-24-independent-acceptance`. Kanıt dosyası SHA-256 hesabı artık parçalı okuma yapar; büyük artifact'ı tek seferde belleğe alma riski azaltıldı (commit `785063b2`).
+- `v2/test_stage4_acceptance_gate.py` dosyasına `Path.read_bytes` kullanıldığında hata veren regresyon testi eklendi (commit `ca7d3f4`).
+- **Yeni GitHub Actions çalıştırması ve gerçek keşif → AV → şifreli arşiv → bağımsız S3 geri yükleme toplu kabulü bu oturumda doğrulanmadı.** Kod ve test commitleri gerçek kabul kanıtı değildir.
+- #24 **AÇIK** kalır. #9, #13, #23 kanıtları ve gerçek üretim artifact'ları bağımsız doğrulanmadan kapanış yapılmaz.
+- Ana İBO playlisti, favoriler, YEDEKLER ve arşiv içeriği değiştirilmedi.
+
+## 12 Kasım 2026 — #24 tek koşuda canlı kabul
+
+- PR #11 üzerindeki izole `stage4-24-independent-acceptance` dalında canlı koşu başlatıldı. Ana üretim koruma işi önce çalışır. Sabit Master Engine commit'i gerçek kaynakları keşfeder, tarihî envanteri işler, FFmpeg ile görüntü ve ses doğrular ve şifreli arşivi Actions deposuna yükler.
+- Ayrı runner aynı arşivi artefakt kimliğiyle indirir, kaynak koşunun özetini ve arşiv SHA-256 değerini karşılaştırır, AES ile geri yükler ve 4.955 özgün tarihî kaydı ve AV sonuç sayılarını denetler. Son kabul raporu yalnız doğrulama tamamlanırsa yüklenir.
+- Doğrulanan ön şart koşuları [#9](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/41939434438), [#13 Drive](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43117212383/attempts/5) ve [#23](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42874231734). #24 koşusunun geri yükleme deposu GitHub Actions artefaktlarıdır. #24 canlı koşu sonucu görülene kadar açık.
+
 ## 2 Kasım 2026 — kaynak kimliği bütünlüğü ve 500'lük varsayılan paket (yeni çalışma)
 - `v2/consolidate_inventory.py` eski `source_id` ile yeni `source_ids` aynı kayıtta bulunduğunda ikisini de saklar (59d594e). Regresyon testi eklendi (9e44e86).
 - `v2/real_ibo_scan.py` geçmiş arşivden okunan her iki kaynak kimliği biçimini kayıpsız birleştirir ve varsayılan paket boyutu son kullanıcı kararıyla 500'dür (401d194). Offline regresyon testi eklendi (28c97fa).

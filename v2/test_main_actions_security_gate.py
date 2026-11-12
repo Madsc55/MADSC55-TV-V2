@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Grouped no-network tests for GitHub main safety lock."""
 import unittest
-from main_actions_security_gate import audit_one,GATE,WRITER_SUSPENDED
+from main_actions_security_gate import audit_one,GATE,WORKFLOWS,WRITER_SUSPENDED
 
 def fixture(events="  workflow_dispatch:\n", perms="  contents: read\n",
             job="    runs-on: ubuntu-latest\n    steps:\n      - run: echo safe\n"):
@@ -37,5 +37,15 @@ class MainActionsGateTests(unittest.TestCase):
         self.assertIn("MAIN_GATE_WRONG_PUSH_BRANCHES",audit_one(GATE,text))
     def test_invalid_yaml_rejected(self):
         self.assertIn("UNPARSEABLE_YAML",audit_one("v2-world-discovery.yml","on: [bad"))
+    def test_drive_oidc_requires_the_isolated_push_and_preflight(self):
+        text = (WORKFLOWS / GATE).read_text(encoding="utf-8")
+        self.assertEqual(audit_one(GATE, text), [])
+        for target, replacement in (
+            ("github.ref == 'refs/heads/stage4-24-independent-acceptance'", "github.ref == 'refs/heads/main'"),
+            ("needs: stage4-drive-preflight", "needs: production-lock"),
+            ("id-token: write", "contents: write"),
+        ):
+            with self.subTest(target=target):
+                self.assertIn("JOB_HAS_WRITE_PERMISSION", audit_one(GATE, text.replace(target, replacement, 1)))
 if __name__=="__main__":
     unittest.main()
