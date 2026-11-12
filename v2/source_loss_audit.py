@@ -84,6 +84,7 @@ def compare(previous, current, threshold=0.5):
             "same_identities": len(previous_hashes & current_hashes),
             "absent_from_current_candidates": len(missing),
             "new_candidate_identities": len(current_hashes - previous_hashes),
+            "absent_sha256_full": sorted(missing),
             "absent_sha256_sample": sorted(missing)[:100],
             "note": "Absent from current discovery is not proof of a dead stream; a channel may move to the live playlist.",
         }
