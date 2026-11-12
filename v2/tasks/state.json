@@ -201,14 +201,15 @@
     {
       "id": 15,
       "status": "in_progress",
-      "last_checked_at": "2026-11-12T09:24:50Z",
+      "last_checked_at": "2026-11-12T15:49:07Z",
       "evidence_urls": [
         "https://github.com/Madsc55/MADSC55-TV-V2/blob/madsc/v2-discovery-bulk-20261031/v2/reports/task15-historical-api-identity-evidence-20261112.json",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42228674931",
-        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42989285004"
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42989285004",
+        "https://github.com/Madsc55/MADSC55-TV-V2/blob/madsc/v2-discovery-bulk-20261031/v2/reports/task15-iptv-org-exact-crosswalk-20261112.json"
       ],
-      "blocker": "The historical crosswalk records 4,948 exact URL hash matches without broadcaster identity verification. Only five hashes also join to an exact IPTV-org channel ID and two decoded samples in the inspected artifacts. Remaining identity and source provenance coverage has not been verified.",
-      "reason": "Three archived Actions reports joined by SHA-256 and channel ID. Of 269 API references, all 171 tested streams join to matching API channel IDs and 168 decoded both samples. Five historical URL hashes join to four channel IDs and all five have prior and two-sample AV evidence."
+      "blocker": "3,178 of 4,955 historical hashes lack a current IPTV-org catalog match. Exact catalog provenance for the other 1,777 is established, but broadcaster attribution still needs direct publisher or independently authenticated source evidence where it is missing.",
+      "reason": "Pinned IPTV-org streams.json and channels.json to ca2dc7e7bcc89def37e55202a3ad108db46a7ccf. Matched 1,777 exact URL SHA-256 identities to unambiguous catalog channel IDs, reproduced all five prior exact IDs, and found 57 catalog site hostname correlations. The report includes no plaintext stream URLs. Catalog hostname correlation is not independent broadcaster proof."
     },
     {
       "id": 16,

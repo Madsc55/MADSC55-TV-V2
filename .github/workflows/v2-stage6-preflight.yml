@@ -31,7 +31,9 @@ jobs:
           python -m unittest discover -s v2 -p 'test_stage6_world_selection.py' -v
           python -m unittest discover -s v2 -p 'test_stage6_official_sites.py' -v
       - name: Validate source coverage without changing IBO
-        run: python v2/stage6_source_inventory.py --strict > stage6-preflight.json
+        run: |
+          python v2/stage6_source_inventory.py --validate-config > stage6-preflight.json
+          cat stage6-preflight.json >> "$GITHUB_STEP_SUMMARY"
       - name: Upload offline readiness report (not AV evidence)
         if: always()
         uses: actions/upload-artifact@v4

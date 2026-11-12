@@ -21,11 +21,12 @@ class OfficialSitesTests(unittest.TestCase):
                 {"country": "TR", "id": "closed", "closed": True, "website": "https://example.org"},
                 {"country": "TR", "id": "valid.tr", "name": "Valid TV", "website": "https://example.org/live"},
                 {"country": "TR", "id": "valid.tr", "name": "Duplicate", "website": "https://example.org/another"}]
-        found = collect_official_sites(rows)
+        found = collect_official_sites(rows, {"TR"})
         self.assertEqual(len(found), 1)
         self.assertEqual(found[0]["channel_id"], "valid.tr")
         self.assertNotIn("secret", str(found))
         self.assertEqual(found[0]["status"], "DIRECTORY_REFERENCE_ONLY_NOT_STREAM_VERIFIED")
+        self.assertEqual({row["channel_id"] for row in collect_official_sites(rows)}, {"valid.tr", "other"})
 
 
 if __name__ == "__main__":

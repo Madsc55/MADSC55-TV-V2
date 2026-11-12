@@ -59,19 +59,23 @@ def evaluate(sources, statuses):
 
 def main():
     parser = argparse.ArgumentParser()
+    parser.add_argument("--validate-config", action="store_true",
+                        help="validate source configuration and report live scan blockers")
     parser.add_argument("--strict", action="store_true",
-                        help="fail when source configuration is invalid")
+                        help="require valid configuration and all live scan prerequisites")
     args = parser.parse_args()
     sources = json.loads(SOURCES.read_text(encoding="utf-8"))["sources"]
     statuses = json.loads(STATE.read_text(encoding="utf-8"))["statuses"]
     report = evaluate(sources, statuses)
     print(json.dumps(report, ensure_ascii=False, indent=2))
-    if args.strict and any(report[k] for k in (
+    if (args.strict or args.validate_config) and any(report[k] for k in (
         "missing_required_scopes", "invalid_https_source_ids",
         "duplicate_source_ids", "duplicate_active_urls")):
         raise SystemExit("Source configuration failed validation")
     if args.strict and report["unfinished_predecessor_ids"]:
         raise SystemExit("Stage 6 blocked: unfinished tasks 1-33; see report")
+    if args.strict and report["missing_required_platforms"]:
+        raise SystemExit("Stage 6 blocked: missing required source platforms; see report")
 
 if __name__ == "__main__":
     main()

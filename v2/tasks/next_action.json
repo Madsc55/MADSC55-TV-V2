@@ -2,7 +2,7 @@
   "schema": 1,
   "selected_task_id": 15,
   "parallel_ready_task_ids": [],
-  "reason": "#16 real FFmpeg retention evidence accepted. #15 is next; #17 needs #15 and #16. #24 needs integrated live acceptance, and #5/#6 retain original evidence gaps.",
+  "reason": "#24 passed single-run Drive acceptance and is completed. #15 remains next after 1,777 exact catalog ID matches; continue direct source attribution and the 3,178 unmatched hashes. #17 needs #15 and #16. #5/#6 retain original evidence gaps.",
   "observed_run": "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42989285004",
   "verified_grouped_tests": [
     "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43139744799",
