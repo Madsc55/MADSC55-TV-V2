@@ -30,6 +30,20 @@ class IdentityMetadataTests(unittest.TestCase):
         self.assertEqual([row["epg_verified"] for row in rows], [True, False, False])
         self.assertEqual(rows[0]["epg_match_type"], "exact_xmltv_channel_id")
 
+    def test_duplicate_xmltv_ids_fail_closed(self):
+        xmltv = '<tv><channel id="Station.tr"/><channel id="Station.tr"/></tv>'
+        rows = verify_epg_ids([{"epg_id_candidate": "Station.tr"}], xmltv)
+        self.assertFalse(rows[0]["epg_verified"])
+        self.assertFalse(rows[0]["epg_programme_available"])
+
+    def test_epg_programmes_require_matching_channel_and_start(self):
+        xmltv = ('<tv><channel id="Station.tr"/>'
+                 '<programme channel="Station.tr" start="20261112120000 +0000"/>'
+                 '</tv>')
+        rows = verify_epg_ids([{"epg_id_candidate": "Station.tr"}], xmltv)
+        self.assertTrue(rows[0]["epg_verified"])
+        self.assertTrue(rows[0]["epg_programme_available"])
+
     def test_invalid_xmltv_fails_closed(self):
         with self.assertRaises(ValueError):
             verify_epg_ids([], '<invalid/>')
