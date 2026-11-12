@@ -3,7 +3,7 @@ import tempfile
 import unittest
 from pathlib import Path
 from argparse import Namespace
-from stage5_evidence_export import entries, run
+from stage5_evidence_export import entries, run, media_has_audio_video
 
 class Stage5Acceptance(unittest.TestCase):
     def test_no_synthetic_or_unverified_delivery(self):
@@ -29,6 +29,12 @@ class Stage5Acceptance(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "INSUFFICIENT_REAL_EVIDENCE: 0/1000"):
                 run(args)
             self.assertFalse(output.exists())
+
+    def test_non_media_proof_is_rejected(self):
+        with tempfile.TemporaryDirectory() as d:
+            path = Path(d) / "not-video.mp4"
+            path.write_bytes(b"not an audio or video stream")
+            self.assertFalse(media_has_audio_video(path))
 
     def test_reject_malformed_m3u(self):
         with tempfile.TemporaryDirectory() as d:
