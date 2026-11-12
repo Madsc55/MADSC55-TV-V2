@@ -2475,3 +2475,9 @@ Kullanıcının açık talimatıyla #3, #4 ve #6 tarihî kurtarma görevleri art
 
 - [Kaynak kaybı karşılaştırıcısı](https://github.com/Madsc55/MADSC55-TV-V2/commit/f8ce83128ebd48463c6bf6f903b954654470fba2) artık yalnızca ilk 100 SHA-256 örneğini değil, `candidate_audit.absent_sha256_full` altında bütün kayıp URL SHA-256 kimliklerini saklıyor. [Regresyon testi](https://github.com/Madsc55/MADSC55-TV-V2/commit/d02f6a2670d63e01369611e6934785506e06188b) tam envanteri ve örneği birlikte doğruluyor. Bu gelecekteki kanıt kaybını önler; eski 2.613 özgün kimliğin geriye dönük bulunduğu anlamına gelmez.
 - #5 için özgün eksik 19 URI ve onureroz kaynağının bir satırı doğrulanmadan kapatma yok. #6 için özgün 2.643 kimliğin tam üyelik kanıtı hâlâ açık. Ana İBO listesine dokunulmadı.
+
+### 12 Kasım — Kullanıcı kararıyla Aşama 1 #5/#6 kapsam kapanışı
+
+- Kullanıcı eski kayıp kanal aramasının sistem kurulumu bitene kadar durdurulmasını, bu aramanın son geniş kapsamlı keşif #34 sırasında yapılmasını ve #5/#6'nın mevcut aşamadan kapatılmasını açıkça istedi.
+- [Görev kapsamı değişikliği](https://github.com/Madsc55/MADSC55-TV-V2/commit/788f23723a09850911e8d318561b1860e4af7d94) ve [durum kaydı](https://github.com/Madsc55/MADSC55-TV-V2/commit/3aeed7714fd9c5285a78e745f412758911544bd3) ile #5 ve #6 **yalnızca idari kapsam kapanışı** olarak tamamlandı. Bu, eksik URI'lerin onarıldığı veya 2.643 tarihî URL'nin FFmpeg ile test edildiği anlamına **gelmez**. Kanıtlar, 26 satırlık kaynak raporu, 30 özgün URL SHA örneği ve ayrı 4.955 kimlik temel listesi korunur.
+- #34 en son yapılacak; tarihî eksik yayınların araştırması bu aşamaya ertelendi. Ana İBO listesi değiştirilmedi.
