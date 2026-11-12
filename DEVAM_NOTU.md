@@ -805,3 +805,5 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - Önceki ara taramaların raporlanan 4.098 AV adayı, #34 sonrası nihai kanıtla eşdeğer sayılmayacak; korunacak ama bu aşamada yeniden taranmayacak.
 - Ana İBO playlisti, YEDEKLER/YENİLER/FAVORİLER değiştirilmeyecek. Testlerin başarılı GitHub Actions sonucu ayrıca doğrulanmadan 'CI geçti' yazılmayacak.
 - Durum ayrımı: #28/#29/#30 kurulum kapsamı ile nihai üretim kabulü ayrı takip edilecek; yalnızca kanıtlı kabul koşulları sağlandığında ilgili issue kapatılacak.
+
+- Aşama 4 kurulum ilerlemesi (2026-11-12): `3648548` bağımsız `--check-setup` modu; `4f6abbc` Actions kurulum kontrol adımı; `d93de8f` kurulumun envanter olmadan ve çıktı üretmeden çalışmasını, eksik argümanlarda güvenli durmasını sınayan regresyon testleri. Bunlar nihai 1.000/2.000 AV kabulü değildir. Actions başarılı sonucu ayrıca doğrulanmalıdır.
