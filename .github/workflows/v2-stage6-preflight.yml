@@ -1,6 +1,15 @@
 name: V2 Stage 6 Read-only Discovery Preflight
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - madsc/v2-discovery-bulk-20261031
+    paths:
+      - 'v2/stage6_source_inventory.py'
+      - 'v2/test_stage6_source_inventory.py'
+      - 'v2/config/sources.json'
+      - 'v2/tasks/state.json'
+      - '.github/workflows/v2-stage6-preflight.yml'
 permissions:
   contents: read
 jobs:
