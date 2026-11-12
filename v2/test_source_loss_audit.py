@@ -76,6 +76,8 @@ class SourceLossTests(unittest.TestCase):
                                {"url_sha256": digest("new-c")}]
         result = compare(before, after)
         self.assertEqual(result["candidate_audit"]["absent_from_current_candidates"], 1)
+        self.assertEqual(result["candidate_audit"]["absent_sha256_full"], [digest("old-b")])
+        self.assertEqual(result["candidate_audit"]["absent_sha256_sample"], [digest("old-b")])
         self.assertEqual(result["findings"][0]["reason"], "HISTORICAL_CANDIDATES_ABSENT")
 
     def test_source_counts_alone_do_not_prove_historical_candidate_survival(self):
