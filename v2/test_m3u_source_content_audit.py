@@ -29,6 +29,8 @@ class FullM3UCoverageTests(unittest.TestCase):
         self.assertEqual(result["union_unique_url_sha256"], 2)
         self.assertEqual(result["historical_identifiers_present_in_current_sources"], 1)
         self.assertEqual(result["historical_identifiers_absent_from_current_sources"], 1)
+        self.assertEqual(result["historical_identifiers_absent_sha256_full"], [digest(old[0])])
+        self.assertEqual(result["historical_identifiers_absent_sha256_sample"], [digest(old[0])])
         self.assertEqual(result["status"], "COMPLETE_SOURCE_CONTENT_PARSED")
         self.assertEqual(result["current_streams_playback_checked"], 0)
 
