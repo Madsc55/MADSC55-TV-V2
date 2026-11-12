@@ -23,7 +23,7 @@ jobs:
         continue-on-error: true
         run: |
           python v2/real_ibo_scan.py --help
-          python v2/real_ibo_scan.py
+          python v2/real_ibo_scan.py --include-world --max-candidates 10000
       - name: Discover YouTube live page candidates (not M3U streams)
         id: youtube
         continue-on-error: true
