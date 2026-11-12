@@ -52,7 +52,7 @@ class DiscoveryMetadataTests(unittest.TestCase):
     def test_url_sha256_is_stable_and_not_plaintext(self):
         import hashlib
         url = "https://example.org/live.m3u8?token=private"
-        playlist = '#EXTM3U\\n#EXTINF:-1 group-title="TR",Example TR\\n' + url + '\\n'
+        playlist = '#EXTM3U\n#EXTINF:-1 group-title="TR",Example TR\n' + url + '\n'
         result = discover([("first", playlist), ("second", playlist)], "#EXTM3U\\n", {"first": "TR", "second": "TR"})
         self.assertEqual(len(result), 1)
         self.assertEqual(result[0]["url_sha256"], hashlib.sha256(url.encode()).hexdigest())
