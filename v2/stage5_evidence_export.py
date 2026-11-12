@@ -3,6 +3,7 @@
 import argparse
 import hashlib
 import json
+import subprocess
 from pathlib import Path
 from urllib.parse import urlsplit
 
@@ -25,6 +26,19 @@ def entries(path):
     if pending is not None:
         raise ValueError("Dangling EXTINF")
     return result
+
+def media_has_audio_video(path):
+    """Check the actual proof media streams, not just claimed JSON flags."""
+    try:
+        result = subprocess.run(
+            ["ffprobe", "-v", "error", "-show_entries", "stream=codec_type",
+             "-of", "json", str(path)],
+            capture_output=True, text=True, timeout=30, check=True)
+        streams = json.loads(result.stdout).get("streams", [])
+        kinds = {item.get("codec_type") for item in streams}
+        return {"video", "audio"} <= kinds
+    except (OSError, subprocess.SubprocessError, ValueError, TypeError):
+        return False
 
 def run(args):
     source = entries(args.source)
@@ -55,6 +69,8 @@ def run(args):
         if not proof_path.is_relative_to(evidence_dir) or not proof_path.is_file():
             continue
         if hashlib.sha256(proof_path.read_bytes()).hexdigest() != digest.lower():
+            continue
+        if not media_has_audio_video(proof_path):
             continue
         if url in approved:
             raise ValueError("Duplicate evidence URL")
