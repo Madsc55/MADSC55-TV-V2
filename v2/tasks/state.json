@@ -186,15 +186,16 @@
     {
       "id": 14,
       "status": "in_progress",
-      "last_checked_at": "2026-11-11T17:17:00Z",
+      "last_checked_at": "2026-11-12T02:15:00Z",
       "evidence_urls": [
         "https://github.com/Madsc55/MADSC55-TV-V2/commit/1fe5c6b6d3e20c51362fb3673970a69e1ba0e1c9",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42623941094",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42867001878",
-        "https://github.com/Madsc55/MADSC55-TV-V2/commit/869571e9ce0045d879697ead404b21a412b817d3"
+        "https://github.com/Madsc55/MADSC55-TV-V2/commit/869571e9ce0045d879697ead404b21a412b817d3",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43117212383/attempts/5"
       ],
-      "blocker": "Authenticated original-key restore of 4,955 historical rows and 107 orphan candidates, plus an independent Drive ciphertext copy, is documented in commit 869571e. This establishes real archive recoverability, not a successful secure GitHub Actions production acceptance. #14 final automated acceptance still pending #13 CI success; do not rerun manual AES proof or falsely require new stream AV for archive preservation.",
-      "reason": "Live Master preserved all 4,955 historical identities in local encrypted roundtrip (run 42867001878); commit 869571e additionally verifies original AES restore and independent Google Drive copy SHA256, ZIP integrity and 5,062 restored records. Remaining step is successful reproducible GitHub Actions acceptance using authorized secrets; no IBO playlist changes."
+      "blocker": "Independent Drive production restore (#13) now passed in Actions. Remaining #14 acceptance: re-run the historical preservation/secure restore integration checks on the accepted production path; do not infer full #14 completion from #13 alone.",
+      "reason": "#13 production Drive OIDC, SHA-256 and original AES restore accepted (4955 historical + 107 orphan records). Previous historical baseline and encrypted roundtrip evidence retained. Final #14 grouped integration acceptance still requires fresh verified run."
     },
     {
       "id": 15,
@@ -207,14 +208,15 @@
     {
       "id": 16,
       "status": "in_progress",
-      "last_checked_at": "2026-11-11T12:54:04Z",
+      "last_checked_at": "2026-11-12T02:15:00Z",
       "evidence_urls": [
         "https://github.com/Madsc55/MADSC55-TV-V2/commit/a5ff82a5f9ceded6de356ecb6827945f1a1a374d",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42623941094",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42706126197/job/129463381480",
-        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42989285004"
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42989285004",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43117212383/attempts/5"
       ],
-      "blocker": "Depends on #14 historical baseline and real transient-source failure acceptance.",
+      "blocker": "Historical archive baseline #13 is restored and verified. #14 integrated historical preservation acceptance and real transient-source failure/retention acceptance still pending.",
       "reason": "Transient retry retains prior decoded AV channel IDs, rejects mismatched URL SHA/channel identity and forged FFmpeg status; grouped offline CI green. End-to-end prior AV evidence retention acceptance still pending. Real Actions job 129463381480 reprobed 89 selected transient URLs with FFmpeg, preserved 3 previous successes and recorded 0 fresh decodes. Historical baseline dependency remains open. Real run #42989285004 re-probed 89 original candidate hashes with matching broadcaster IDs. Prior FFmpeg AV for Cine1.tr, DMAX.tr and TLC.tr remained preserved, no new decoded evidence. Full baseline acceptance depends on #14."
     },
     {
@@ -301,14 +303,15 @@
     {
       "id": 24,
       "status": "blocked",
-      "last_checked_at": "2026-11-11T12:47:45Z",
+      "last_checked_at": "2026-11-12T02:15:00Z",
       "evidence_urls": [
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42539900333",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42874231734",
-        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42688764100"
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42688764100",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43117212383/attempts/5"
       ],
-      "blocker": "Full #24 acceptance depends on #13 independent versioned S3 restore. Rerun #42688764100 attempt 2 stopped before retrieval because V2_S3_RESTORE_AWS_ACCESS_KEY_ID is missing.",
-      "reason": "Verified same-run discovery to exact URL SHA and FFmpeg evidence: all 9,030 discovery hashes are in the AV artifact, 1,056 have decoded video+audio. Verified all nine sealed shard digests and rejection of a corrupted copy. Matched 3,042 exact historical AV hashes. The live Master artifact records encrypted restore of all 4,955 historical identities. See v2/reports/stage4-system-chain-evidence-20261111.json."
+      "blocker": "The prior missing S3 credential is not a blocker for the user-approved Google Drive replacement path: #13 succeeded. #24 still requires a single integrated discovery → AV evidence → sealed archive → Drive restore acceptance run; prior separate runs alone do not prove this combined acceptance.",
+      "reason": "Previous exact-hash AV and sealed shard checks retained; #13 Drive restore success now satisfies independent restore prerequisite on approved Drive path, not AWS/S3. Integrated #24 run remains unverified."
     },
     {
       "id": 25,
