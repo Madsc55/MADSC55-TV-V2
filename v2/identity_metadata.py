@@ -24,9 +24,19 @@ def identity_metadata(entry, scope):
         match = COUNTRY_SUFFIX.search(tvg_id)
         if match:
             country = match.group(1).upper()
-    normalized = re.sub(r"\\s+", " ", group.casefold()).strip()
+    normalized = re.sub(r"\s+", " ", group.casefold()).strip()
     category = CATEGORY_MAP.get(normalized, "unclassified")
+    name = entry.get("name", "")
+    if not isinstance(name, str):
+        raise ValueError("Invalid channel name")
+    # Labels describe source metadata, not measured video dimensions.
+    resolution = None
+    label = re.search(r"(?i)(?<![a-z0-9])(?:2160p|1440p|1080p|720p|576p|480p)(?![a-z0-9])", name)
+    if label:
+        resolution = label.group(0).lower()
     return {
+        "resolution_hint": resolution,
+        "resolution_verified": False,
         "country_hint": country,
         "country_verified": False,
         "epg_id_candidate": tvg_id or None,
