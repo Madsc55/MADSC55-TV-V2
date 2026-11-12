@@ -88,9 +88,12 @@ def main():
     ap.add_argument('--workers', type=int, default=12)
     ap.add_argument('--timeout', type=float, default=12)
     ap.add_argument('--limit', type=int, default=2000)
+    ap.add_argument('--include-world', action='store_true', help='include world source entries in candidate discovery')
+    ap.add_argument('--max-candidates', type=int, default=10000, help='bound network checks')
     ap.add_argument('--live', type=pathlib.Path, default=LIVE)
     args = ap.parse_args()
     if (not 1 <= args.workers <= 32 or not 1 <= args.limit <= 10000 or
+            not 1 <= args.max_candidates <= 100000 or
             not math.isfinite(args.timeout) or
             not 0 < args.timeout <= 120):
         ap.error('workers must be 1..32 and limit 1..10000')
@@ -123,11 +126,15 @@ def main():
             records = list(parse_m3u(fetch(url, args.timeout)))
             source_counts[sid] = len(records)
             for entry in records:
-                if tr_az(entry, source.get('scope', 'candidate')):
+                if (tr_az(entry, source.get('scope', 'candidate')) or
+                        (args.include_world and source.get('scope') == 'world')):
                     if entry['url'] not in existing:
                         candidates.setdefault(entry['url'], entry)
         except (OSError, ValueError, UnicodeError, socket.timeout) as exc:
             failed.append({'id': sid, 'error': type(exc).__name__})
+    total_candidates = len(candidates)
+    if len(candidates) > args.max_candidates:
+        candidates = dict(list(candidates.items())[:args.max_candidates])
     checked = 0
     good = []
     with concurrent.futures.ThreadPoolExecutor(max_workers=args.workers) as pool:
@@ -138,9 +145,11 @@ def main():
     # Source outages are reported; a working subset can still be tested.
     # A network outage must not turn a previously valid export into an empty replacement.
     # Never modify the protected main playlist.
-    source_coverage_complete = not failed and len(source_counts) == len(sources)
+    source_coverage_complete = (not failed and len(source_counts) == len(sources) and
+                                total_candidates <= args.max_candidates)
     report = {'source_count': len(sources), 'fetched_sources': len(source_counts),
-              'failed_sources': failed, 'existing_main_urls': len(existing), 'unique_new_candidates': len(candidates),
+              'failed_sources': failed, 'existing_main_urls': len(existing), 'unique_new_candidates': total_candidates, 'candidate_check_limit': args.max_candidates,
+              'candidate_checks_truncated': total_candidates > args.max_candidates,
               'http_checked': checked, 'http_hls_ok': len(good), 'exported_part1': min(len(good), args.limit),
               'part_count': (len(good) + args.limit - 1) // args.limit,
               'source_coverage_complete': source_coverage_complete,
