@@ -2,6 +2,8 @@
 """Stage 5 evidence gate: validates post-discovery acceptance without scanning channels."""
 import argparse
 import json
+import re
+from urllib.parse import urlsplit
 from pathlib import Path
 
 REQUIRED = {
@@ -13,12 +15,29 @@ REQUIRED = {
            "final_report_url"),
 }
 
+def _valid_evidence_url(value):
+    if not isinstance(value, str) or not value.strip():
+        return False
+    try:
+        parsed = urlsplit(value)
+        return (parsed.scheme == "https" and bool(parsed.hostname)
+                and parsed.hostname not in {"example.org", "example.com", "localhost"}
+                and not parsed.username and not parsed.password)
+    except ValueError:
+        return False
+
+
 def evaluate(record):
     tasks = record.get("tasks", {})
     result = {}
     for number, fields in REQUIRED.items():
         data = tasks.get(number, {})
         missing = [key for key in fields if not data.get(key)]
+        for key in fields:
+            if key.endswith("_url") and key not in missing and not _valid_evidence_url(data[key]):
+                missing.append(key + "_invalid_https")
+        if number == "33" and not re.fullmatch(r"[a-fA-F0-9]{64}", str(data.get("final_archive_sha256", ""))):
+            missing.append("final_archive_sha256_invalid")
         if number == "31" and data.get("discovery_batch_id") == "legacy":
             missing.append("new_discovery_batch_required")
         if number == "32" and data.get("user_approval") is not True:
