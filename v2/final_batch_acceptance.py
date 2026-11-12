@@ -268,6 +268,31 @@ def prioritized_pending(entries_, inventory, checks):
         pair[0]))
     return pending
 
+def candidate_hashes(report):
+    if not isinstance(report, dict) or not isinstance(report.get("candidates"), list):
+        raise ValueError("Expected a hash-only candidate report")
+    hashes = set()
+    for row in report["candidates"]:
+        digest = row.get("url_sha256") if isinstance(row, dict) else None
+        if (not isinstance(digest, str) or re.fullmatch(r"[0-9a-f]{64}", digest) is None
+                or digest in hashes or any(k in row for k in ("url", "raw_url", "stream_url"))):
+            raise ValueError("Invalid, duplicate or plaintext candidate identity")
+        hashes.add(digest)
+    return hashes
+
+
+def fresh_candidates(report, known_hashes):
+    if (not isinstance(report, dict) or report.get("schema") != 1 or report.get("mode") != "read-only"
+            or report.get("coverage_status") not in ("COMPLETE_SOURCE_FETCH", "PARTIAL_SOURCE_FETCH")
+            or report.get("playback_verified") is not False
+            or report.get("candidate_status") != "UNVERIFIED"):
+        raise ValueError("Expected a real, hash-only discovery report before AV")
+    discovered = candidate_hashes(report)
+    existing_alternatives = {row["url_sha256"] for row in report["candidates"]
+                             if row.get("existing_channel_alternative") is True}
+    return discovered - known_hashes - existing_alternatives
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--workers", type=int, default=24)
@@ -276,11 +301,31 @@ def main():
     parser.add_argument("--checkpoint", type=Path, help="Atomic hash-only progress snapshot")
     parser.add_argument("--require-public-sources", action="store_true",
                         help="Fail rather than silently skip reviewed dynamic source reports")
+    parser.add_argument("--fresh-discovery-report", type=Path,
+                        help="Only decode hashes from a specific new discovery report")
+    parser.add_argument("--exclude-known-report", type=Path, action="append", default=[],
+                        help="Exclude all candidate hashes in a prior hash-only report")
     a = parser.parse_args()
+    if bool(a.fresh_discovery_report) != bool(a.exclude_known_report):
+        parser.error("New discovery and prior exclusion reports must be supplied together")
+    if a.fresh_discovery_report and a.reuse_report:
+        parser.error("Fresh discovery requires new AV checks")
     if not 1 <= a.workers <= 32 or not 60 <= a.budget_seconds <= 14400:
         parser.error("Unsafe scan limits")
     if sha(HISTORY.read_bytes()) != HISTORY_SHA or gitblob(LIVE.read_bytes()) != LIVE_BLOB:
         raise SystemExit("Protected data fingerprint differs")
+    wanted = None
+    if a.fresh_discovery_report:
+        known = {sha(row["url"]) for row in entries(LIVE.read_text(encoding="utf-8-sig"))}
+        known.update(json.loads(line)["url_sha256"] for line in HISTORY.read_text().splitlines() if line)
+        for path in a.exclude_known_report:
+            prior = candidate_hashes(json.loads(path.read_text(encoding="utf-8")))
+            if not prior:
+                parser.error("Prior exclusion report is empty")
+            known.update(prior)
+        wanted = fresh_candidates(json.loads(a.fresh_discovery_report.read_text(encoding="utf-8")), known)
+        if not wanted:
+            parser.error("No new candidate hashes remain after exclusions")
     t0 = time.monotonic()
     all_sources, configured, historic = sources(require_public_reports=a.require_public_sources)
     with ThreadPoolExecutor(max_workers=12) as executor:
@@ -292,6 +337,8 @@ def main():
         for row in rows:
             url = row["url"]
             digest = sha(url)
+            if wanted is not None and digest not in wanted:
+                continue
             old = inventory.setdefault(digest, {"url": url, "meta": row,
                                                  "source_ids": set(), "scopes": set()})
             if old["url"] != url: raise ValueError("Hash collision")
@@ -352,6 +399,10 @@ def main():
         sealed.append({"name": path.name, "count": len(rows), "sha256": sha(path.read_bytes())})
     result = report(outputs, inventory, checks, configured=configured,
                     historic=historic, expired=expired, elapsed=time.monotonic()-t0)
+    if wanted is not None:
+        result.update(kind="V2_NEW_DISCOVERY_READ_ONLY_AV",
+                      requested_new_candidate_count=len(wanted),
+                      unresolved_new_candidate_count=len(wanted - inventory.keys()))
     result["sealed_url_count"] = sum(x["count"] for x in sealed)
     result["sealed_artifacts"] = sealed
     path = REPORTS / "final-worldwide-acceptance.json"
@@ -360,6 +411,8 @@ def main():
         if k not in ("candidates", "failed_source_ids", "sealed_artifacts")}, ensure_ascii=False))
     if result["sealed_url_count"] != len(inventory):
         raise SystemExit("Missing encrypted candidate identities")
+    if wanted is not None and (expired or wanted - inventory.keys()):
+        raise SystemExit("Fresh AV evidence is incomplete; see hash-only report")
 
 if __name__ == "__main__":
     main()

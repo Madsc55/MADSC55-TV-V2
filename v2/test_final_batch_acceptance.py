@@ -1,8 +1,22 @@
 #!/usr/bin/env python3
 import unittest
-from final_batch_acceptance import route, sha, gitblob, report
+from final_batch_acceptance import candidate_hashes, fresh_candidates, route, sha, gitblob, report
 
 class FinalBatchAcceptanceTests(unittest.TestCase):
+    def test_fresh_discovery_excludes_known_hashes_and_rejects_non_discovery(self):
+        known, new, alternative = "a" * 64, "b" * 64, "c" * 64
+        report = {
+            "schema": 1, "mode": "read-only", "coverage_status": "COMPLETE_SOURCE_FETCH",
+            "playback_verified": False, "candidate_status": "UNVERIFIED",
+            "candidates": [{"url_sha256": known}, {"url_sha256": new},
+                           {"url_sha256": alternative, "existing_channel_alternative": True}],
+        }
+        self.assertEqual(fresh_candidates(report, {known}), {new})
+        with self.assertRaises(ValueError):
+            fresh_candidates(dict(report, coverage_status="OFFLINE_NO_NETWORK"), {known})
+        with self.assertRaises(ValueError):
+            candidate_hashes({"candidates": [{"url_sha256": known, "url": "https://example.org/a"}]})
+
     def test_probe_preserves_measured_dimensions_without_trusting_quality_names(self):
         import json
         from types import SimpleNamespace

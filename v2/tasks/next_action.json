@@ -2,12 +2,10 @@
   "schema": 1,
   "selected_task_id": 34,
   "parallel_ready_task_ids": [],
-  "reason": "Finish grouped offline system verification first. #34 live discovery follows only with an explicit request. #15 and its dependent channel, package and delivery work wait for the new discovery results.",
-  "observed_run": "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42989285004",
+  "reason": "Track #34 source discovery. Once evidence is available, run FFmpeg only against newly discovered hashes, excluding known channel records, and verify encrypted archival before closing #34.",
+  "observed_run": "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43299369197",
   "verified_grouped_tests": [
-    "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43139744799",
-    "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43139744816",
-    "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43139745432"
+    "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43299056099"
   ],
   "last_checked_at": "2026-11-12",
   "selection_requires_fresh_state": true

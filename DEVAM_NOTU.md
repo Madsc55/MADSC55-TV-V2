@@ -1,3 +1,9 @@
+## 12 Kasım 2026 — #34 keşif koşusu ve yeni yayın AV kapsamı
+
+- [Toplu çevrimdışı Actions #43299056099](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43299056099) iki işi başarıyla tamamladı. Aynı kaynak ağacında [#34 kaynak keşfi](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43299369197) başladı; ön koşul, kaynak envanteri ve bağımlılık adımları geçti. Gerçek kaynak keşfi bu kayıt sırasında sürüyor.
+- Yeni AV doğrulaması için son kabul tarayıcısına `--fresh-discovery-report` ve `--exclude-known-report` eklendi. Bu mod ana İBO adreslerini, 4.955 tarihî hash'i, bilinen aday raporlarını ve ana listedeki kanalların alternatiflerini FFmpeg öncesinde dışlar. 39 çevrimdışı regresyon geçti. Bu adımda yeni aday AV veya paket kabulü yapılmadı.
+- Önceki otomatik tarihî kontrol tamamlandı. Sonraki geliştirme push’larında bu iş akışı devreye girmez. Ana İBO blob'u `4b1c3cea4b5107a425abab60f62d41f9f81e05a7` doğrulandı.
+
 ## 12 Kasım 2026 — #34 çalıştırma ve eski yayın kontrolü koruması
 
 - Yeni keşif, toplu Actions testinden geçmiş aynı kaynak ağacına açık bir çalıştırma isteği geldiğinde çalışır. GitHub/Gist, GitLab/Codeberg ve dünya kapsamı için sorgular gerçek keşif koordinatörüne bağlandı. Ana İBO listesi korundu.
