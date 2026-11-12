@@ -113,9 +113,9 @@ jobs:
           echo '### Read-only system readiness' >> "$GITHUB_STEP_SUMMARY"
           echo 'This does not scan channels or certify real playback.' >> "$GITHUB_STEP_SUMMARY"
           echo 'Recorded task status exit code: ' "$code" >> "$GITHUB_STEP_SUMMARY"
-          echo '\`\`\`json' >> "$GITHUB_STEP_SUMMARY"
+          echo '```json' >> "$GITHUB_STEP_SUMMARY"
           cat readiness.json >> "$GITHUB_STEP_SUMMARY"
-          echo '\`\`\`' >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
           exit 0
 
   safety:
