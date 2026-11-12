@@ -3,6 +3,7 @@
 import json
 import sys
 import urllib.error
+import urllib.request
 from discovery_34 import search_url, fetch_json, repository_candidates
 
 def probe(source, query="turkish-iptv"):
@@ -11,7 +12,7 @@ def probe(source, query="turkish-iptv"):
         payload = fetch_json(url)
         return {"status": "ok", "candidates": len(repository_candidates(source, payload))}
     except urllib.error.HTTPError as exc:
-        return {"status": "error", "reason": "HTTP_" + str(exc.code)}
+        return {"status": "error", "reason": "HTTP_" + str(exc.code), "retryable": exc.code in (429, 500, 502, 503, 504), "provider": source}
     except (OSError, ValueError, KeyError, TypeError, json.JSONDecodeError) as exc:
         return {"status": "error", "reason": type(exc).__name__}
 
