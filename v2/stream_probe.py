@@ -2,12 +2,15 @@
 """Probe actual stream audio/video codecs using ffprobe; HTTP 200 is not proof."""
 import argparse
 import json
+import math
 import os
 import shutil
 import subprocess
 from urllib.parse import urlsplit
 
 def probe(url, timeout=25, ffprobe='ffprobe'):
+    if not isinstance(url, str) or not isinstance(timeout, (int, float)) or not math.isfinite(timeout) or not 1 <= timeout <= 120:
+        return {'status': 'INVALID_INPUT', 'video': False, 'audio': False}
     parsed = urlsplit(url)
     if parsed.scheme not in ('http', 'https') or not parsed.hostname or parsed.username or parsed.password:
         return {'status': 'INVALID_URL', 'video': False, 'audio': False}
@@ -28,7 +31,12 @@ def probe(url, timeout=25, ffprobe='ffprobe'):
     if result.returncode != 0:
         return {'status': 'PROBE_FAILED', 'video': False, 'audio': False}
     try:
-        streams = json.loads(result.stdout).get('streams', [])
+        payload = json.loads(result.stdout)
+        if not isinstance(payload, dict) or not isinstance(payload.get('streams'), list):
+            raise ValueError('ffprobe returned an invalid stream collection')
+        streams = payload['streams']
+        if not all(isinstance(item, dict) for item in streams):
+            raise ValueError('ffprobe returned a non-object stream')
     except (ValueError, TypeError):
         return {'status': 'INVALID_PROBE_RESULT', 'video': False, 'audio': False}
     video = any(x.get('codec_type') == 'video' and x.get('codec_name') not in (None, 'unknown') for x in streams)
@@ -41,7 +49,7 @@ def main():
     parser.add_argument('url')
     parser.add_argument('--timeout', type=float, default=25)
     args = parser.parse_args()
-    if not 1 <= args.timeout <= 120:
+    if not math.isfinite(args.timeout) or not 1 <= args.timeout <= 120:
         parser.error('timeout must be 1..120 seconds')
     outcome = probe(args.url, args.timeout)
     print(json.dumps(outcome))
