@@ -2534,3 +2534,9 @@ Kullanıcının açık talimatıyla #3, #4 ve #6 tarihî kurtarma görevleri art
 - `v2/tasks/pre_discovery_readiness.py` ve `v2/tasks/test_pre_discovery_readiness.py` eklendi. Bu araç kayıtlı sistem görevi durumlarını keşif ve keşif sonrası kabulden ayırır; eksik sistem bağımlılıklarını raporlar. Salt okunurdur; hiçbir yayın araması veya playlist değişikliği yapmaz.
 - **Önemli:** 2026-11-08 state.json dosyasında 21 completed, 2 in_progress, 11 pending bulunuyor; bu tarihî kayıt canlı Actions başarısı veya tam sistem hazır oluş kanıtı değildir. Yeni araç `system_ready=false` döndürür; gerçek hazırlık son Actions/deployment kanıtıyla ayrıca doğrulanmalıdır.
 - Bu turda kod ve fixture testleri repoya yazıldı, fakat GitHub Actions koşusunun başarılı sonucu doğrulanmadı. Ana İBO ve korumalı listeler değiştirilmedi.
+
+
+### 2026-11-12 — Kurulum raporu Actions entegrasyonu
+- `.github/workflows/v2-ordered-preflight.yml` içine salt-okunur `system-readiness-report` işi eklendi (`c7e74fc6`, Markdown çıktı düzeltmesi `29f46a95`). Bu iş `v2/tasks/pre_discovery_readiness.py` çalıştırır ve kayıtlı sistem görevlerinin eksiklerini Actions özetine yazar. Yeni kanal keşfi, gerçek AV veya İBO kabulü başlatmaz.
+- Bu raporun başarılı olması **sistemin tam kurulduğu anlamına gelmez**; gerçek testlerin başarı durumu ayrıca teyit edilmelidir. İş akışı çalıştırma sonucu bu turda doğrulanmadı.
+- Kullanıcı sırası değişmedi: önce kurulum, sonra yeni geniş keşif, en son gerçek AV/İBO/arşiv kabulü. Eski kanallara işlem yapılmaz, ana İBO korunur.
