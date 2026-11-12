@@ -8,7 +8,9 @@ Bu belge gerçek kabul kanıtı yerine geçmez. Ana IBO listesi, YEDEKLER, favor
 - CI tanımı: `.github/workflows/v2-stage6-grouped-acceptance.yml`.
 - PR: https://github.com/Madsc55/MADSC55-TV-V2/pull/14 (taslak).
 - Kapsam: playlist değişmezleri, şifreli arşiv roundtrip, envanter geri yükleme regresyonu, çevrimdışı tarayıcı regresyonu.
-- Kanıt: başarılı GitHub Actions run URL'si **henüz yok**. Bu kontroller tek başına canlı yayın veya bağımsız bulut geri yüklemesini kanıtlamaz.
+- Doğrulanmış toplu çevrimdışı kabul: https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43127461813 — success (önceki commit c8c3c779 için).
+- Doğrulanmış üretim güvenlik kapısı: https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43127894437 — success (commit 3cc6ff37).
+- Bu iki farklı koşu birlikte tüm son kabulü kanıtlamaz. Son commit için Stage 6 toplu koşu ve gerçek canlı yayın/bağımsız bulut geri yükleme kanıtları eksiktir.
 - Kabul: toplu koşu başarılı + önceki aşamaların bağımsız gerçek kanıtları doğrulanmış olmalı.
 
 ## #32 — Fiziksel IBO Player kabulü
