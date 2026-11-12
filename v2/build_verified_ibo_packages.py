@@ -52,14 +52,18 @@ def make(inventory, outdir):
         lines = ["#EXTM3U"]
         for row in accepted[:target]:
             name = str(row.get("name") or row.get("tvg_id")).replace("\n", " ").replace("\r", " ").replace(",", " ")
-            identity = row.get("tvg_id") or row["channel_id"]
+            identity = str(row.get("tvg_id") or row["channel_id"]).replace('"', " ").replace("\\n", " ").replace("\\r", " ")
             group = str(row.get("group", "")).replace('"', "").replace("\n", " ")
             lines += [f'#EXTINF:-1 tvg-id="{identity}" group-title="{group}",{name}', row["url"]]
         payload = "\n".join(lines) + "\n"
         # Validate the generated playlist before publishing it.
         actual = payload.splitlines()
-        assert actual[0] == "#EXTM3U" and len(actual) == 1 + target * 2
-        assert len(set(actual[2::2])) == target
+        if actual[0] != "#EXTM3U" or len(actual) != 1 + target * 2:
+            raise ValueError("Invalid M3U header or entry count")
+        if len(set(actual[2::2])) != target:
+            raise ValueError("Duplicate M3U URLs")
+        if not all(line.startswith("#EXTINF:-1 ") and line.count(",") == 1 for line in actual[1::2]):
+            raise ValueError("Malformed EXTINF records")
         outdir.mkdir(parents=True, exist_ok=True)
         destination = outdir / f"IBO_AV_VERIFIED_{target}.m3u8"
         destination.write_text(payload, encoding="utf-8")
