@@ -1,3 +1,10 @@
+## 12 Kasım 2026 — Aşama 1 #14 kabulü ve toplu testler
+
+- #13 bağımsız Drive OIDC/SHA-256/AES gerçek geri yükleme kabulü [run 43117212383 attempt 5](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43117212383/attempts/5) ile korunuyor.
+- Aynı commit `1cb20f98` üzerinde [Master Engine 43139744799](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43139744799), [Sıralı Hazırlık 43139744816](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43139744816), [Sekiz Aşama 43139745432](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43139745432), [58 workflow koruması 43139744855](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43139744855) ve [Actions Monitor 43139744839](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43139744839) başarılı.
+- Önceki başarısız test, tamamlanmış #13'ü açık sanan `test_failed_cannot_be_marked_complete` fixture'ından kaynaklandı; `1cb20f98` commit'inde testin açık #14 kullanması sağlandı. Başarılı yeniden testlerden sonra #14, `2d856d82` commit'inde completed oldu. Canlı Master job atlandığından canlı Master kabulü iddia edilmiyor.
+- #16 gerçek geçici kaynak koruma kabulü, #5 özgün eksik M3U kayıtları ve #6 eksik 2.613 adresin tam kaynak üyelik kanıtı henüz açık; sahte adres oluşturulmadı. Ana İBO listesi değiştirilmedi.
+
 ## 12 Kasım 2026 — Aşama 1 bağımlılık denetimi (#14, #16, #5, #6)
 
 - #13'ün kabulü GitHub Actions run 43117212383, attempt 5, job 130915187450 üzerinden tekrar doğrulandı: OIDC, Drive arşiv bütünlüğü ve özgün AES geri yükleme adımları success. #13 kapalı; AWS/S3 başarısı iddia edilmiyor.
