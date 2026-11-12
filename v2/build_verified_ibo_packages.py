@@ -23,6 +23,8 @@ def eligible(row):
         return False
     if not isinstance(proof.get("captured_at"), str) or not proof.get("captured_at", "").strip():
         return False
+    if row.get("fixture") is True or proof.get("fixture") is True:
+        return False
     url = row.get("url", "")
     p = urllib.parse.urlsplit(url) if isinstance(url, str) else urllib.parse.urlsplit("")
     return p.scheme in ("https", "http") and bool(p.hostname) and not (p.username or p.password)
