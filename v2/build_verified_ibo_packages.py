@@ -78,7 +78,8 @@ def main():
     ap.add_argument("--check-setup", action="store_true", help="Validate stage-4 package setup without scanning or publishing channels")
     args = ap.parse_args()
     if args.check_setup:
-        print(json.dumps({"stage": 4, "package_targets": [1000, 2000], "m3u_integrity_checks": True, "production_packages_created": False, "final_av_acceptance": "DEFERRED_UNTIL_POST_34_DISCOVERY"}, indent=2))
+        # Setup-only mode must not claim that production AV or M3U checks ran.
+        print(json.dumps({"stage": 4, "package_targets": [1000, 2000], "m3u_integrity_checks": "CONFIGURED_NOT_EXECUTED", "production_packages_created": False, "final_av_acceptance": "DEFERRED_UNTIL_POST_34_DISCOVERY"}, indent=2))
         return
     if args.inventory is None or args.outdir is None:
         ap.error("--inventory and --outdir are required unless --check-setup is used")
