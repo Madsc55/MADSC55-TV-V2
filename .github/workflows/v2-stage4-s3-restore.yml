@@ -93,7 +93,7 @@ jobs:
           CONFIGURED_ARCHIVE_PASSPHRASE: ${{ secrets.V2_ARCHIVE_PASSPHRASE }}
           EXPECTED_RECEIPT: ${{ inputs.receipt_sha256 }}
           STAGE4_RESTORE_TRANSPORT: s3-independent-runner
-          GITHUB_RUN_ID: ${{ inputs.source_run_id }}
+          STAGE4_SOURCE_RUN_ID: ${{ inputs.source_run_id }}
         run: |
           set -euo pipefail
           umask 077
