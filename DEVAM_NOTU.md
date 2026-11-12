@@ -1,3 +1,8 @@
+## 12 Kasım 2026 — #34 toplu çevrimdışı kabul PASS
+- Commit 574d5d69, GitHub Actions run 43322841131: SUCCESS. Production Security Gate, IBO invariants ve "Discovery 34 offline adapter and integration acceptance" adımı SUCCESS.
+- Altı adaptörün offline birim/entegrasyon kabulü tamamlandı. Bu sonuç canlı Codeberg API erişimini veya gerçek FFmpeg AV kanıtını doğrulamaz.
+- Codeberg canlı API HTTPError nedeniyle #34 tam canlı kabul açık. Ana İBO değiştirilmedi.
+
 ## 12 Kasım 2026 — #34 izinli kabul iş akışına bağlandı
 - Commit ab0066e6 için Production Security Gate run 43321317264 SUCCESS.
 - Yeni workflow eklemek güvenlik envanterini bozduğundan #34 çevrimdışı kabul adımları mevcut, izinli, salt-okunur v2-stage6-grouped-acceptance.yml iş akışına 1ab65026 commit'i ile eklendi. Workflow yalnızca workflow_dispatch ile çalışır; bu commit için henüz yeni #34 Actions kabul sonucu yoktur.
