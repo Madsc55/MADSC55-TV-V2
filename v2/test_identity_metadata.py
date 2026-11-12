@@ -18,6 +18,14 @@ class IdentityMetadataTests(unittest.TestCase):
         self.assertEqual(data["category_hint"], "news")
         self.assertFalse(data["category_verified"])
 
+    def test_resolution_label_is_unverified_hint(self):
+        data = identity_metadata({"name": "TRT 1 1440P QHD", "group": "Haber"}, "TR")
+        self.assertEqual(data["resolution_hint"], "1440p")
+        self.assertFalse(data["resolution_verified"])
+        unknown = identity_metadata({"name": "TRT 1", "group": "Haber"}, "TR")
+        self.assertIsNone(unknown["resolution_hint"])
+        self.assertFalse(unknown["resolution_verified"])
+
     def test_missing_epg_or_unknown_category_not_invented(self):
         data = identity_metadata({"tvg_id": "", "group": "Unmapped"}, "TR")
         self.assertIsNone(data["epg_id_candidate"])
