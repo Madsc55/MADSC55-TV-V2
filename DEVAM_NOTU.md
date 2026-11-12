@@ -1,3 +1,8 @@
+## 12 Kasım 2026 — #24 canlı toplu Actions kabulü doğrulandı (harici S3/Drive bekliyor)
+- [GitHub Actions #43220496123](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43220496123), head `ab520452553034bb959ff426c12281c93a53de4c`: izole istek, güvenlik/İBO değişmezliği, canlı keşif + FFmpeg AV + şifreleme ve ayrı runner üzerinde aynı arşivi indirme/çözme/doğrulama işlerinin **dördü de success**. Önceki çalıştırmanın `in_progress` durumu bu kontrolle tamamlandı.
+- [Şifreli arşiv artifact #13949375384](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43220496123/artifacts/13949375384), ZIP SHA-256 `81e35b84eb22a9ea04c9ff73f86c674689d9ec1a730f61163c48e5942b4acb17`; [ayrı runner geri yükleme kanıtı #13947883316](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43220496123/artifacts/13947883316), ZIP SHA-256 `ad3274f25e79bf3e09070bcbf153da51156b5fc840e2b844bb0c7633ff380094`. SHA-256 değerleri GitHub artifact metadata kayıtlarından alındı.
+- **Kabul sınırı:** Bu koşunun harici depo kanıtı GitHub Actions artifact deposudur; aynı arşivin bağımsız S3/Drive geri yüklemesi bu koşuda doğrulanmadı. #24 bu nedenle **AÇIK** kalır. Ana İBO listesine dokunulmadı.
+
 ## 12 Kasım 2026 — #24 gerçek kabul koşusu talebi
 - Üretim güvenlik kapısı run https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43217349481 **success**; sonrasında run https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43219934841 de **success** olarak raporlandı.
 - `.github/workflows/v2-main-production-safety-gate.yml` incelendi: gerçek keşif/FFmpeg AV/şifreleme ve ayrı işte Actions artifact geri yükleme ancak PR head commit mesajında `[run-stage4-24]` bulunursa çalışıyor. Bu commit ile bu kabul koşusu talep ediliyor.
