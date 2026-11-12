@@ -809,3 +809,9 @@ Bu dalda yapılanlar:
 - `771579a6`: Kanıt URL alanları artık HTTPS ve geçerli host biçimi gerektiriyor; örnek/yerel hostlar reddediliyor. Nihai arşiv SHA-256 alanı 64 hex karakter gerektiriyor.
 - `29e5b6ab`: Geçersiz URL ve hash için negatif regresyon vakaları eklendi. Bu biçimsel doğrulama URL'nin içeriğinin veya gerçek cihaz kanıtının doğrulandığı anlamına gelmez.
 - Kullanıcı kararı sürüyor: eski kanallara yeni kabul uygulanmaz; gerçek AV, cihaz ve arşiv kabulü #34 sonrası yeni toplu keşifle yapılır. #31–#33 gerçek kabulü açık. GitHub Actions sonucunun yeşil olduğu bu turda doğrulanmadı.
+
+
+### 2026-11-12 — Aşama 5 gerçek kabul bayrakları
+- `fcc2601c`: #31 gerçek dünya kontrolleri, #32 gerçek kullanıcı cihaz onayı ve #33 gerçek arşiv geri yüklemesi için ayrı zorunlu boolean kabul kapıları eklendi. Sadece URL alanlarını doldurmak kabul için yeterli değildir.
+- `5472ad0d`: Eksik/false doğrulama bayraklarını reddeden çevrimdışı regresyon testleri eklendi.
+- **Bu kontroller yalnızca sunulan kaydın biçimini ve işaretlerini doğrular; harici kanıtın gerçekliğini otomatik olarak kanıtlamaz.** Gerçek yayın ve cihaz testleri #34 sonrası yeni toplu keşfe ertelidir. Actions başarılı koşu sonucu bu turda doğrulanmadı. #31/#32/#33 açık tutulur.
