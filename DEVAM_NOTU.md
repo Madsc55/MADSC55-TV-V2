@@ -1,3 +1,9 @@
+## 12 Kasım 2026 — #24 gerçek kabul koşusu talebi
+- Üretim güvenlik kapısı run https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43217349481 **success**; sonrasında run https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43219934841 de **success** olarak raporlandı.
+- `.github/workflows/v2-main-production-safety-gate.yml` incelendi: gerçek keşif/FFmpeg AV/şifreleme ve ayrı işte Actions artifact geri yükleme ancak PR head commit mesajında `[run-stage4-24]` bulunursa çalışıyor. Bu commit ile bu kabul koşusu talep ediliyor.
+- **Önemli:** Workflow ayrı Actions artifact indirip geri yüklüyor; bağımsız **S3** bucket restore değildir. S3 kabulü için ayrıca gerçek S3 kanıtı gerekir. Yeşil güvenlik kontrolü veya Actions artifact geri yüklemesi #24'ü tek başına kapatmaz.
+- Ana İBO değişmezliği korunmalı, sonuçlar gelmeden görev kapatılmamalıdır.
+
 ## 12 Kasım 2026 — #24 güncel dalda canlı kabul yeniden tetiklendi
 - Önceki 43217133634 koşusunun yeniden denenmesi eski commit üzerinde güvenlik kapısında kaldı; güncel dalda workflow yalnız `workflow_dispatch` kullandığı için eski koşu güncel düzeltmeyi sınamadı.
 - PR #11'in güncel dalında güvenlik kapısı daha önce 43217349481 koşusunda başarılı oldu. Bu commit'in `[run-stage4-24]` işareti yeni PR Actions koşusunda canlı keşif/FFmpeg/şifreleme ve ayrı runner geri yükleme işlerini başlatmak içindir.
