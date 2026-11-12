@@ -27,7 +27,8 @@ def build_queue(records, max_attempts=3):
             raise ValueError("Invalid attempt count")
         status = item.get("status", "UNVERIFIED")
         row = {"url_sha256": digest, "status": status, "attempts": attempts}
-        if status == VERIFIED and item.get("video") is True and item.get("audio") is True:
+        if (status == VERIFIED and item.get("video") is True and item.get("audio") is True
+                and item.get("decoded_av_verified") is True):
             accepted.append(row)
         elif status in TRANSIENT and attempts < max_attempts:
             queue.append({**row, "next_attempt": attempts + 1})
