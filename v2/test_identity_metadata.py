@@ -44,6 +44,11 @@ class IdentityMetadataTests(unittest.TestCase):
         self.assertTrue(rows[0]["epg_verified"])
         self.assertTrue(rows[0]["epg_programme_available"])
 
+    def test_xmltv_external_entity_declarations_rejected(self):
+        malicious = '<!DOCTYPE tv [<!ENTITY xxe SYSTEM "file:///etc/passwd">]><tv/>'
+        with self.assertRaisesRegex(ValueError, "DTD and entities"):
+            verify_epg_ids([], malicious)
+
     def test_invalid_xmltv_fails_closed(self):
         with self.assertRaises(ValueError):
             verify_epg_ids([], '<invalid/>')
