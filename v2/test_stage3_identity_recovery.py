@@ -28,6 +28,10 @@ class Stage3IdentityTests(unittest.TestCase):
             self.assertFalse(decision["remove_from_inventory"])
             self.assertFalse(decision["av_verified"])
 
+    def test_http_425_is_transient(self):
+        self.assertEqual(classify_failure(425), "RETRY")
+        self.assertTrue(recovery_decision({"url": "https://example.org/a"}, 425)["preserve_history"])
+
     def test_http_success_not_av_proof(self):
         self.assertEqual(classify_failure(200), "CHECK_AV")
         self.assertEqual(classify_failure(404), "REVIEW")
