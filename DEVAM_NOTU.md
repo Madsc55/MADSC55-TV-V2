@@ -1,3 +1,8 @@
+## 12 Kasım 2026 — CI düzeltmesi bağımsız doğrulandı
+- Önceki `UNAPPROVED_TRIGGER` / `UNAPPROVED_PUSH` düzeltmesinden sonra PR Actions run https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43217349481 **success**.
+- `Verify the isolated Stage 4 acceptance request` ve `Verify suspended publishers, no cron and immutable IBO` işleri başarılı. Ana İBO değişmezlik güvenlik adımı geçti.
+- Aynı run içinde `Live discovery, historical recovery, FFmpeg AV and encryption` ve `Independently download and restore the same live archive` işleri **skipped**. Bu nedenle gerçek #24 kabulü başarılmış değildir; #24 ve Aşama 1–6 kapanışı açık kalır.
+
 ## 12 Kasım 2026 — GitHub Actions üretim güvenlik kapısı hatası düzeltmesi
 - PR #11 için Actions run https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43217133634 **failure**. `Verify suspended publishers, no cron and immutable IBO` işinde 10/10 güvenlik regresyonu geçti, ardından `main_actions_security_gate.py` `v2-offline-inventory.yml` için `UNAPPROVED_TRIGGER` ve `UNAPPROVED_PUSH` verdi. Gerçek keşif/AV/arşiv/restore işleri **skipped**.
 - Kök neden: `7b37940d` commit'inde eklenen push tetikleyicisi, üretim workflow kilidiyle çakışıyordu. Güvenlik kilidi gevşetilmeden workflow yeniden yalnızca `workflow_dispatch` olarak değiştirildi (commit `6202ae4c`).
