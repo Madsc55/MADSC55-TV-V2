@@ -21,6 +21,13 @@ class Discovery34Tests(unittest.TestCase):
         for url in ("file:///tmp/a", "https://localhost/a", "https://user:pass@site.org/a", "http://127.0.0.1/a", "http://192.168.1.1/a", "http://[::1]/a"):
             with self.assertRaises(ValueError):
                 identity("m3u", url)
+    def test_provider_host_boundaries(self):
+        for source, url in (("github", "https://github.com.evil.example/a"),
+                            ("gitlab", "http://gitlab.com/a"),
+                            ("codeberg", "https://example.org/a"),
+                            ("youtube", "https://youtu.be/AbCdEf12345")):
+            with self.assertRaises(ValueError):
+                identity(source, url)
     def test_official_and_m3u(self):
         for source in ("official", "m3u"):
             self.assertEqual(len(curated_candidates(source, [{"url": "https://example.org/live.m3u8"}])), 1)
