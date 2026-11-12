@@ -28,6 +28,31 @@ class StreamProbeTests(unittest.TestCase):
         self.assertEqual(probe('https://example.org/live.m3u8')['status'], 'VIDEO_ONLY')
 
     @patch('stream_probe.shutil.which', return_value='/usr/bin/ffprobe')
+    @patch('stream_probe.subprocess.run')
+    def test_measured_resolution_and_audio(self, run, which):
+        run.return_value = subprocess.CompletedProcess([], 0, json.dumps({'streams': [
+            {'codec_type': 'video', 'codec_name': 'h264', 'width': 1920, 'height': 1080},
+            {'codec_type': 'audio', 'codec_name': 'aac'}]}), '')
+        result = probe('https://example.org/live.m3u8')
+        self.assertEqual(result['status'], 'AV_VERIFIED')
+        self.assertEqual((result['width'], result['height']), (1920, 1080))
+        self.assertTrue(result['resolution_verified'])
+
+    @patch('stream_probe.shutil.which', return_value='/usr/bin/ffprobe')
+    @patch('stream_probe.subprocess.run')
+    def test_missing_or_invalid_dimensions_are_not_verified(self, run, which):
+        for width, height in ((None, None), (0, 1080), ('1920', 1080), (99999, 1080)):
+            with self.subTest(width=width, height=height):
+                run.return_value = subprocess.CompletedProcess([], 0, json.dumps({'streams': [
+                    {'codec_type': 'video', 'codec_name': 'h264', 'width': width, 'height': height},
+                    {'codec_type': 'audio', 'codec_name': 'aac'}]}), '')
+                result = probe('https://example.org/live.m3u8')
+                self.assertEqual(result['status'], 'AV_VERIFIED')
+                self.assertIsNone(result['width'])
+                self.assertIsNone(result['height'])
+                self.assertFalse(result['resolution_verified'])
+
+    @patch('stream_probe.shutil.which', return_value='/usr/bin/ffprobe')
     @patch('stream_probe.subprocess.run', side_effect=subprocess.TimeoutExpired('ffprobe', 5))
     def test_timeout(self, run, which):
         self.assertEqual(probe('https://example.org/live.m3u8')['status'], 'TIMEOUT')
