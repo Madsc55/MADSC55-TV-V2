@@ -22,3 +22,8 @@ jobs:
         run: python v2/test_consolidate_inventory.py
       - name: Test scanner behavior without network
         run: python v2/test_real_ibo_scan_offline.py
+      - name: Test IBO packaging and final acceptance offline
+        run: |
+          python -m py_compile v2/ibo_package_acceptance.py v2/test_ibo_package_acceptance.py v2/ibo_final_acceptance.py v2/test_ibo_final_acceptance.py
+          python v2/test_ibo_package_acceptance.py
+          python v2/test_ibo_final_acceptance.py
