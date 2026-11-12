@@ -1,3 +1,10 @@
+## 12 Kasım 2026 — Sistem kurulumu, toplu test ve yeni keşif sırası
+
+- 34 görevlik kurulumun toplu testi çevrimdışıdır. Mevcut kanallarda yeniden tarama, FFmpeg yayın doğrulaması, kurtarma veya İBO paketi üretimi bu adımda yapılmaz.
+- #34 yeni keşif, altyapı ön koşulları ve aynı commit için başarılı Eight-Stage Actions testi tamamlandıktan sonra açık onayla başlatılır. Eski sıra, #34’ü #33’e bağladığı için yeni keşiften sonra yapılacak paket ve cihaz kabulünü keşfin önüne koyuyordu.
+- GitHub/Gist, GitLab/Codeberg, resmî siteler, YouTube ve M3U/M3U8 keşfi mevcut salt okunur koordinatöre bağlandı. #34’ün gerçek AV ve arşiv kabulü, bulunan yeni kanallar üzerinde sonraki aşamada doğrulanır. #15, #17–#21 ve #28–#33 için mevcut kabul kanıtları korunur ve açık kayıtlar kanıt geldikçe kapatılır.
+- Kanonik görev kaydında 21/34 tamamlanmış görev var. Ana İBO listesi korunur.
+
 ## 12 Kasım 2026 — Aşama 1 #14 kabulü ve toplu testler
 
 - #13 bağımsız Drive OIDC/SHA-256/AES gerçek geri yükleme kabulü [run 43117212383 attempt 5](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43117212383/attempts/5) ile korunuyor.

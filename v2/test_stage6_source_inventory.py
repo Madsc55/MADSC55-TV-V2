@@ -9,7 +9,7 @@ class Stage6InventoryTests(unittest.TestCase):
             {"id": "tr", "url": "https://example.org/tr.m3u", "scope": "TR"},
             {"id": "az", "url": "https://example.org/az.m3u", "scope": "AZ"},
             {"id": "world", "url": "https://example.org/world.m3u", "scope": "world"},
-        ], [{"id": 33, "status": "completed"}, {"id": 34, "status": "pending"}])
+        ], [{"id": 24, "status": "completed"}, {"id": 33, "status": "pending"}], [24])
         self.assertEqual(report["missing_required_scopes"], [])
         self.assertEqual(report["unfinished_predecessor_ids"], [])
         self.assertFalse(report["ffmpeg_video_audio_verified"])
@@ -19,10 +19,10 @@ class Stage6InventoryTests(unittest.TestCase):
         report = evaluate([
             {"id": "same", "url": "http://example.org/a", "scope": "TR"},
             {"id": "same", "url": "http://example.org/a", "scope": "TR"},
-        ], [{"id": 33, "status": "pending"}, {"id": 34, "status": "pending"}])
+        ], [{"id": 24, "status": "pending"}, {"id": 34, "status": "pending"}], [24])
         self.assertEqual(report["duplicate_source_ids"], ["same"])
         self.assertEqual(report["duplicate_active_urls"], ["http://example.org/a"])
-        self.assertEqual(report["unfinished_predecessor_ids"], [33])
+        self.assertEqual(report["unfinished_predecessor_ids"], [24])
         self.assertEqual(report["missing_required_scopes"], ["AZ", "world"])
         self.assertEqual(report["invalid_https_source_ids"], ["same", "same"])
 
@@ -31,13 +31,13 @@ class Stage6InventoryTests(unittest.TestCase):
         self.assertEqual(source_platform("https://raw.githubusercontent.com/x/y/main/a.m3u"), "github")
         self.assertEqual(source_platform("https://iptv-org.gitlab.io/a.m3u"), "gitlab")
         self.assertEqual(source_platform("https://codeberg.org/x/y/raw/branch/main/a.m3u"), "codeberg")
-        report = evaluate([{"id": "github", "url": "https://raw.githubusercontent.com/x/y/a.m3u", "scope": "world"}], [])
-        self.assertIn("codeberg", report["missing_required_platforms"])
+        report = evaluate([{"id": "github", "url": "https://raw.githubusercontent.com/x/y/a.m3u", "scope": "world"}], [], [])
+        self.assertIn("codeberg", report["platforms_without_configured_feeds"])
 
     def test_disabled_source_not_live(self):
         report = evaluate([
             {"id": "disabled", "url": "http://example.org", "scope": "TR", "enabled": False}
-        ], [{"id": 34, "status": "pending"}])
+        ], [{"id": 34, "status": "pending"}], [])
         self.assertEqual(report["enabled_sources"], 0)
         self.assertEqual(report["invalid_https_source_ids"], [])
 

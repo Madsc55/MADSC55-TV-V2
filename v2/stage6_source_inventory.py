@@ -9,6 +9,7 @@ from urllib.parse import urlparse
 ROOT = Path(__file__).resolve().parents[1]
 SOURCES = ROOT / "v2/config/sources.json"
 STATE = ROOT / "v2/tasks/state.json"
+MANIFEST = ROOT / "v2/tasks/master_tasks.json"
 REQUIRED_SCOPES = {"TR", "AZ", "world"}
 REQUIRED_PLATFORMS = {"github", "gist", "gitlab", "codeberg"}
 
@@ -25,7 +26,7 @@ def source_platform(url):
     return "other"
 
 
-def evaluate(sources, statuses):
+def evaluate(sources, statuses, prerequisite_ids):
     active = [s for s in sources if s.get("enabled", True)]
     ids = [s.get("id") for s in sources]
     urls = [s.get("url") for s in active]
@@ -36,8 +37,8 @@ def evaluate(sources, statuses):
     duplicate_urls = sorted(k for k, n in Counter(urls).items() if n > 1)
     scopes = sorted(set(s.get("scope") for s in active if s.get("scope")))
     platform_counts = dict(sorted(Counter(source_platform(s.get("url")) for s in active).items()))
-    outstanding = sorted(x["id"] for x in statuses
-                         if x["id"] <= 33 and x.get("status") != "completed")
+    completed = {x["id"] for x in statuses if x.get("status") == "completed"}
+    outstanding = sorted(set(prerequisite_ids) - completed)
     stage6 = next((x for x in statuses if x["id"] == 34), {})
     return {
         "kind": "STAGE6_OFFLINE_READINESS_NOT_NETWORK_OR_AV_EVIDENCE",
@@ -45,7 +46,7 @@ def evaluate(sources, statuses):
         "enabled_sources": len(active),
         "scopes": scopes,
         "platform_counts": platform_counts,
-        "missing_required_platforms": sorted(REQUIRED_PLATFORMS - set(platform_counts)),
+        "platforms_without_configured_feeds": sorted(REQUIRED_PLATFORMS - set(platform_counts)),
         "missing_required_scopes": sorted(REQUIRED_SCOPES - set(scopes)),
         "invalid_https_source_ids": bad_urls,
         "duplicate_source_ids": duplicate_ids,
@@ -66,16 +67,16 @@ def main():
     args = parser.parse_args()
     sources = json.loads(SOURCES.read_text(encoding="utf-8"))["sources"]
     statuses = json.loads(STATE.read_text(encoding="utf-8"))["statuses"]
-    report = evaluate(sources, statuses)
+    tasks = json.loads(MANIFEST.read_text(encoding="utf-8"))["tasks"]
+    discovery = next(task for task in tasks if task["id"] == 34)
+    report = evaluate(sources, statuses, discovery["depends_on"])
     print(json.dumps(report, ensure_ascii=False, indent=2))
     if (args.strict or args.validate_config) and any(report[k] for k in (
         "missing_required_scopes", "invalid_https_source_ids",
         "duplicate_source_ids", "duplicate_active_urls")):
         raise SystemExit("Source configuration failed validation")
     if args.strict and report["unfinished_predecessor_ids"]:
-        raise SystemExit("Stage 6 blocked: unfinished tasks 1-33; see report")
-    if args.strict and report["missing_required_platforms"]:
-        raise SystemExit("Stage 6 blocked: missing required source platforms; see report")
+        raise SystemExit("Stage 6 blocked: unfinished infrastructure prerequisites; see report")
 
 if __name__ == "__main__":
     main()

@@ -1,8 +1,8 @@
 {
   "schema": 1,
-  "selected_task_id": 15,
+  "selected_task_id": 34,
   "parallel_ready_task_ids": [],
-  "reason": "#24 passed single-run Drive acceptance and is completed. #15 remains next after 1,777 exact catalog ID matches; continue direct source attribution and the 3,178 unmatched hashes. #17 needs #15 and #16. #5/#6 retain original evidence gaps.",
+  "reason": "Finish grouped offline system verification first. #34 live discovery follows only with an explicit request. #15 and its dependent channel, package and delivery work wait for the new discovery results.",
   "observed_run": "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42989285004",
   "verified_grouped_tests": [
     "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43139744799",

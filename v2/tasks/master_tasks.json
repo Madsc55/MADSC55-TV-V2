@@ -190,7 +190,8 @@
       "priority": "P1",
       "depends_on": [
         11,
-        14
+        14,
+        34
       ],
       "acceptance": "Exact hash-to-URL and broadcaster identity crosswalk backed by source provenance, no name-only claim",
       "evidence_urls": [],
@@ -439,9 +440,16 @@
       "title": "Son genel kanal keşfi ve Türkiye M3U/M3U8 kapsamlı taraması",
       "priority": "P4",
       "depends_on": [
-        33
+        3,
+        6,
+        11,
+        16,
+        22,
+        24,
+        26,
+        27
       ],
-      "acceptance": "All preceding mandatory tasks accepted; comprehensive worldwide/TR/AZ official and public M3U/M3U8 discovery executed once with bounded source coverage, archived results and real FFmpeg AV evidence; unverified references remain candidates; protected playlist unchanged",
+      "acceptance": "After grouped offline system verification, explicitly approved comprehensive worldwide/TR/AZ discovery records bounded source coverage and archives new results with real FFmpeg AV evidence; unverified references remain candidates; the protected playlist stays unchanged. Final packages, device verification and delivery follow discovery.",
       "evidence_urls": [],
       "last_checked_at": null,
       "owner": "automation_with_review"

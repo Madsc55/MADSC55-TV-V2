@@ -40,8 +40,12 @@ jobs:
           assert hashlib.sha256(expected).digest() == hashlib.sha256(actual).digest(), 'Protected playlist modified'
           print('protected_playlist_sha256=' + hashlib.sha256(actual).hexdigest())
           PY
-      - name: Verify permanent 33-task engine and fail-closed safety in one batch
+      - name: Verify the 34-task engine and fail-closed safety in one batch
         run: PYTHONPATH=v2/tasks python -m unittest discover -s v2/tasks -p 'test_*.py' -v
+      - name: Check all workflow triggers and source coverage offline
+        run: |
+          python v2/actions_trigger_protection_audit.py --output "$RUNNER_TEMP/actions-trigger-protection.json"
+          python v2/stage6_source_inventory.py --validate-config
       - name: Compile modules
         run: python -m compileall -q v2
       - name: Run independent offline regressions with separate logs

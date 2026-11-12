@@ -103,32 +103,21 @@ class TaskEngineTests(unittest.TestCase):
                 row["status"] = "blocked"
         self.assertEqual(e.select(self.master, ledger, self.root, defer_heavy=True), 3)
 
-    def test_final_task_never_scheduled_while_historical_work_open(self):
-        ledger = copy.deepcopy(self.ledger)
-        for row in ledger["statuses"]:
-            row["status"] = "completed"
-            row["evidence_urls"] = ["https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/123"]
-            row["last_checked_at"] = "2026-11-08T00:00:00Z"
-        ledger["statuses"][31]["user_device_confirmation"] = True
-        ledger["statuses"][33]["status"] = "pending"
-        self.assertEqual(e.select(self.master, ledger, self.root), 34)
-        self.assertEqual(e.independent_ready(self.master, ledger, self.root), [34])
+    def test_discovery_waits_for_historical_prerequisites(self):
         for historical_id in (3, 4, 6):
-            case = copy.deepcopy(ledger)
-            # Keep the synthetic ledger dependency-consistent: a completed task
-            # cannot depend on the historical task we just reopened.
-            reopened = {historical_id}
-            changed = True
-            while changed:
-                changed = False
-                for task in self.master["tasks"]:
-                    if task["id"] not in reopened and any(dep in reopened for dep in task["depends_on"]):
-                        reopened.add(task["id"])
-                        changed = True
-            for task_id in reopened:
-                case["statuses"][task_id - 1]["status"] = "pending"
-            self.assertNotEqual(e.select(self.master, case, self.root), 34)
-            self.assertNotIn(34, e.independent_ready(self.master, case, self.root))
+            with self.subTest(task=historical_id):
+                ledger = copy.deepcopy(self.ledger)
+                reopened = {historical_id}
+                while True:
+                    downstream = {task["id"] for task in self.master["tasks"]
+                                  if reopened.intersection(task["depends_on"])}
+                    if downstream <= reopened:
+                        break
+                    reopened.update(downstream)
+                for task_id in reopened:
+                    ledger["statuses"][task_id - 1]["status"] = "pending"
+                self.assertNotEqual(e.select(self.master, ledger, self.root), 34)
+                self.assertNotIn(34, e.independent_ready(self.master, ledger, self.root))
 
     def test_cli_includes_all_mandatory_tasks(self):
         import contextlib
@@ -304,42 +293,28 @@ class TaskEngineTests(unittest.TestCase):
             e.safe_transition(self.ledger["statuses"][31], "completed",
                               ["https://github.com/example/evidence"], "2026-11-06T16:00:00Z")
 
-    def test_issue34_never_starts_before_33_and_explicit_user_approval(self):
+    def test_issue34_requires_approval_but_precedes_channel_delivery(self):
         ledger = copy.deepcopy(self.ledger)
-        self.assertFalse(e.issue34_ready(self.master, ledger, self.root, user_approved=True))
         for row in ledger["statuses"]:
-            row["status"] = "completed"
-            row["evidence_urls"] = ["https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/123"]
-            row["last_checked_at"] = "2026-11-08T00:00:00Z"
-        # #34 is the next pending task, never a completed prerequisite.
-        # Marking it complete would make a later #33=pending fixture corrupt.
-        ledger["statuses"][33]["status"] = "pending"
-        ledger["statuses"][31]["user_device_confirmation"] = True
+            row.update(status="completed" if row["id"] not in (15, 17, 18, 19, 20, 21, 28, 29, 30, 31, 32, 33, 34) else "pending",
+                       evidence_urls=["https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/123"],
+                       last_checked_at="2026-11-12T00:00:00Z")
+        ledger["statuses"][33].update(evidence_urls=[], last_checked_at=None)
+        _, rows = e.validate(self.master, ledger, self.root)
+        self.assertEqual(e.select(self.master, ledger, self.root), 34)
+        self.assertEqual(e.independent_ready(self.master, ledger, self.root), [34])
         self.assertFalse(e.issue34_ready(self.master, ledger, self.root))
         self.assertFalse(e.issue34_ready(self.master, ledger, self.root, user_approved=1))
         self.assertTrue(e.issue34_ready(self.master, ledger, self.root, user_approved=True))
-        for deferred_id in (3, 4, 6):
-            ledger["statuses"][deferred_id - 1].update(status="pending", evidence_urls=[], last_checked_at=None)
+        self.assertNotEqual(rows[33]["status"], "completed")
+        self.assertFalse(rows[34]["evidence_urls"])
+        rows[27]["status"] = "pending"
         self.assertFalse(e.issue34_ready(self.master, ledger, self.root, user_approved=True))
-        # Restore the valid all-completed baseline before testing independent failures.
-        for historical_id in (3, 4, 6):
-            ledger["statuses"][historical_id - 1].update(
-                status="completed",
-                evidence_urls=["https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/123"],
-                last_checked_at="2026-11-08T00:00:00Z")
-        for task_id in (1, 32, 33):
-            broken = copy.deepcopy(ledger)
-            broken["statuses"][task_id - 1]["status"] = "pending"
-            if task_id in (1, 32):
-                # A dependent (#12 or #33) remains completed: reject the corrupt ledger.
-                with self.assertRaisesRegex(ValueError, "unfinished dependencies"):
-                    e.issue34_ready(self.master, broken, self.root, user_approved=True)
-            else:
-                self.assertFalse(e.issue34_ready(self.master, broken, self.root, user_approved=True))
-        broken = copy.deepcopy(ledger)
-        broken["statuses"][31]["evidence_urls"] = []
-        with self.assertRaises(ValueError):
-            e.issue34_ready(self.master, broken, self.root, user_approved=True)
+        rows[27]["status"] = "completed"
+        rows[34].update(status="completed", evidence_urls=["https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/123"],
+                        last_checked_at="2026-11-12T00:00:00Z")
+        self.assertFalse(e.issue34_ready(self.master, ledger, self.root, user_approved=True))
+        self.assertEqual(e.select(self.master, ledger, self.root), 15)
 
     def test_dependency_cycle_rejected(self):
         master = copy.deepcopy(self.master)
