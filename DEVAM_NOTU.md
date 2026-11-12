@@ -1,3 +1,8 @@
+## 12 Kasım 2026 — #34 güvenlik düzeltmesi doğrulandı
+- Production Security Gate run 43320335176: SUCCESS, commit 4019cb7c. Workflow envanteri ve korunan İBO dosyası kontrolü geçti.
+- Codeberg canlı sözleşme testinde HTTPError vardı; v2/discovery_34_live_contract.py hata HTTP durum kodunu raporlayacak şekilde iyileştirildi (1beaf556). Bu değişikliğin canlı kabul testi henüz yapılmadı.
+- #34 kapatılmadı: Codeberg canlı sözleşme kabulü ve onaylı workflow altında altı adaptörün uçtan uca kabulü açık.
+
 ## 12 Kasım 2026 — #34 güvenlik ve canlı API hata analizi
 - Actions run 43319831631: offline-acceptance PASS; live-contract FAIL. GitHub API 20 aday, GitLab API 0 aday/başarılı yanıt, Codeberg HTTPError.
 - Actions run 43319830482: güvenlik kilidi, yeni v2-discovery-34-offline.yml dosyasını beklenmeyen workflow saydı. Kilidi değiştirmeden bu yeni workflow dosyası efddbdd4 commit'inde kaldırıldı. Test kodları dalda korundu.
