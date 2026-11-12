@@ -22,6 +22,7 @@ def _valid_evidence_url(value):
         parsed = urlsplit(value)
         return (parsed.scheme == "https" and bool(parsed.hostname)
                 and parsed.hostname not in {"example.org", "example.com", "localhost"}
+                and not parsed.hostname.endswith((".invalid", ".test", ".example", ".localhost"))
                 and not parsed.username and not parsed.password)
     except ValueError:
         return False
