@@ -27,7 +27,7 @@ def compare(previous, current, threshold=0.5):
             findings.append({"source": source, "reason": "SOURCE_MISSING", "previous": prior, "current": None})
             continue
         if after.get("status") in ("FETCH_FAILED", "TIMEOUT", "RATE_LIMITED", "HTTP_ERROR", "PARSE_FAILED"):
-            findings.append({"source": source, "reason": "SOURCE_UNAVAILABLE",
+            findings.append({"source": source, "reason": "FETCH_FAILED" if after["status"] == "FETCH_FAILED" else "SOURCE_UNAVAILABLE",
                              "source_status": after["status"], "previous": prior, "current": None})
             continue
         now = after.get("distinct_stream_urls", after.get("entries", 0))
