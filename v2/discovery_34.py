@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """#34: read-only source discovery; offline by default. No playlist writes."""
 import argparse
+import ipaddress
 import json
 import re
 import urllib.parse
@@ -17,8 +18,16 @@ def identity(source, url):
         raise ValueError("Invalid public URL")
     if p.username or p.password:
         raise ValueError("Credential-bearing URL")
-    if p.hostname.lower() in ("localhost",) or p.hostname.endswith((".local", ".internal")):
+    host = p.hostname.lower().rstrip(".")
+    if host == "localhost" or host.endswith((".localhost", ".local", ".internal")):
         raise ValueError("Private hostname")
+    try:
+        address = ipaddress.ip_address(host)
+    except ValueError:
+        pass
+    else:
+        if not address.is_global:
+            raise ValueError("Non-public IP address")
     if source not in SOURCES:
         raise ValueError("Unknown adapter")
     return {"source": source, "source_id": source + ":" + p.hostname.lower() + p.path, "url": url, "verified_av": False}
@@ -56,7 +65,11 @@ def repository_candidates(source, payload):
     else:
         raise ValueError("Not a repository adapter")
     results = []
+    if not isinstance(items, list):
+        raise ValueError("Invalid repository response")
     for item in items:
+        if not isinstance(item, dict):
+            continue
         url = item.get(url_key, "")
         try:
             results.append(identity(source, url))
