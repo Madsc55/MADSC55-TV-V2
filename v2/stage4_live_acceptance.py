@@ -23,7 +23,7 @@ def require(condition, message):
 def acceptance_key():
     key, _ = resolve_key(os.environ.pop("CONFIGURED_ARCHIVE_KEY", ""),
                          os.environ.pop("CONFIGURED_ARCHIVE_PASSPHRASE", ""))
-    context = f"stage4-24:{os.environ['GITHUB_REPOSITORY_ID']}:{os.environ['GITHUB_RUN_ID']}"
+    context = f"stage4-24:{os.environ['GITHUB_REPOSITORY_ID']}:{os.environ.get('STAGE4_SOURCE_RUN_ID', os.environ['GITHUB_RUN_ID'])}"
     return hmac.new(bytes.fromhex(key), context.encode(), hashlib.sha256).hexdigest()
 
 
@@ -79,7 +79,7 @@ def verify(target, key):
     require(hashlib.sha256(receipt_bytes).hexdigest() == os.environ["EXPECTED_RECEIPT"],
             "Downloaded receipt differs from producer receipt")
     receipt = json.loads(receipt_bytes)
-    require(receipt["run_id"] == os.environ["GITHUB_RUN_ID"], "Archive belongs to another Actions run")
+    require(receipt["run_id"] == os.environ.get("STAGE4_SOURCE_RUN_ID", os.environ["GITHUB_RUN_ID"]), "Archive belongs to another Actions run")
     archive = target / "inventory.enc"
     archive.chmod(0o600)
     rows = restore_verified(archive, receipt["archive"], key)
