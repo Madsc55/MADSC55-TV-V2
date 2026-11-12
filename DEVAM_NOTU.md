@@ -815,3 +815,9 @@ Bu dalda yapılanlar:
 - `fcc2601c`: #31 gerçek dünya kontrolleri, #32 gerçek kullanıcı cihaz onayı ve #33 gerçek arşiv geri yüklemesi için ayrı zorunlu boolean kabul kapıları eklendi. Sadece URL alanlarını doldurmak kabul için yeterli değildir.
 - `5472ad0d`: Eksik/false doğrulama bayraklarını reddeden çevrimdışı regresyon testleri eklendi.
 - **Bu kontroller yalnızca sunulan kaydın biçimini ve işaretlerini doğrular; harici kanıtın gerçekliğini otomatik olarak kanıtlamaz.** Gerçek yayın ve cihaz testleri #34 sonrası yeni toplu keşfe ertelidir. Actions başarılı koşu sonucu bu turda doğrulanmadı. #31/#32/#33 açık tutulur.
+
+
+### 2026-11-12 — Aşama 5 sahte alan adı koruması
+- `0f951e8f`: `.invalid`, `.test`, `.example`, `.localhost` örnek alan adlarının kanıt URL'si olarak kabul edilmesi engellendi.
+- `9dc0d4b9`: Test fikstürü URL'si düzenlendi, ayrılmış alan adı reddi için regresyon testi eklendi.
+- **Durum:** Bu commit'lerin Actions sonucu henüz doğrulanmadı. #31/#32/#33 nihai gerçek kabulü #34 sonrası toplu yeni keşif, AV kanıtı, kullanıcı cihaz onayı ve bağımsız arşiv geri yüklemesine bağlı; kapatılmadı. Eski kanallara işlem yok; ana İBO korunuyor.
