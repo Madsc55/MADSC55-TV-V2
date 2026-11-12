@@ -41,6 +41,8 @@ jobs:
         run: python v2/test_discovery_metadata.py
       - name: Required test_source_provenance.py
         run: python v2/test_source_provenance.py
+      - name: Required Stage 2 recovery identity and URL digest tests
+        run: python v2/test_recovery_identity.py
       - name: Required test_source_inventory_contract.py
         run: python v2/test_source_inventory_contract.py
       - name: Required test_source_loss_audit.py
