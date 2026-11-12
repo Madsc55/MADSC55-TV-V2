@@ -108,7 +108,9 @@ def main():
     if not existing:
         ap.error('Protected main playlist contains no stream URLs; refusing unfiltered export')
     doc = json.loads(args.sources.read_text(encoding='utf-8'))
-    sources = doc['sources'] if isinstance(doc, dict) else doc
+    all_sources = doc['sources'] if isinstance(doc, dict) else doc
+    # Retired upstream feeds are historical inventory, not live scan failures.
+    sources = [source for source in all_sources if source.get('enabled', True)]
     # Do not export incomplete results as a successful production list.
     candidates = {}
     failed = []
