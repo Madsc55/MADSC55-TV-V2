@@ -9,6 +9,11 @@ def fixture(url):
             "av_evidence":{"url":url,"video":True,"audio":True,"sha256":"a"*64,"captured_at":"2026-11-12T12:00:00Z"}}
 
 class PackageAcceptance(unittest.TestCase):
+    def test_marked_fixture_rejected(self):
+        row = fixture("https://example.org/test.m3u8")
+        row["fixture"] = True
+        self.assertFalse(eligible(row))
+
     def test_untraceable_flags_rejected(self):
         self.assertFalse(eligible({"status":"AV_VERIFIED","video_proven":True,"audio_proven":True,"url":"https://example.org/a.m3u8"}))
 
