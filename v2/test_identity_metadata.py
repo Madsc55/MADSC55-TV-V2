@@ -13,6 +13,11 @@ class IdentityMetadataTests(unittest.TestCase):
         self.assertFalse(data["country_verified"])
         self.assertFalse(data["category_verified"])
 
+    def test_category_whitespace_normalization(self):
+        data = identity_metadata({"tvg_id": "Station.tr", "group": "  HABER  "}, "TR")
+        self.assertEqual(data["category_hint"], "news")
+        self.assertFalse(data["category_verified"])
+
     def test_missing_epg_or_unknown_category_not_invented(self):
         data = identity_metadata({"tvg_id": "", "group": "Unmapped"}, "TR")
         self.assertIsNone(data["epg_id_candidate"])
