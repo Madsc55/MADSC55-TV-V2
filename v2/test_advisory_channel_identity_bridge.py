@@ -68,6 +68,16 @@ class AdvisoryBridgeTests(unittest.TestCase):
         self.assertFalse(report["av_verified"])
         self.assertFalse(report["main_playlist_modified"])
 
+    def test_real_worldwide_limit_fails_closed(self):
+        # One repeated reference keeps this an offline, memory-light boundary test.
+        oversized = [self.candidates[0]] * (MAX_CANDIDATES + 1)
+        report = link_or_defer(oversized, self.official, self.youtube)
+        self.assertEqual(report["status"], "DEFERRED_TOO_MANY_CANDIDATES")
+        self.assertEqual(report["candidate_count"], MAX_CANDIDATES + 1)
+        self.assertEqual(report["linkage_limit"], MAX_CANDIDATES)
+        self.assertFalse(report["av_verified"])
+        self.assertFalse(report["main_playlist_modified"])
+
     def test_bad_candidate_digest_is_rejected(self):
         with self.assertRaisesRegex(ValueError,"hash"):
             link_advisory_identities([dict(self.candidates[0],url_sha256="bad")],self.official,self.youtube)
