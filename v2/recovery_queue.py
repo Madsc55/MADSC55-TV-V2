@@ -16,6 +16,9 @@ def build_queue(records, max_attempts=3):
         digest = item.get("url_sha256")
         if not isinstance(digest, str) or len(digest) != 64 or any(c not in "0123456789abcdef" for c in digest):
             raise ValueError("Missing or invalid URL SHA-256")
+        url = item.get("url")
+        if url is not None and sha_for_url(url) != digest:
+            raise ValueError("Recovery URL SHA-256 mismatch")
         if digest in seen:
             raise ValueError("Duplicate recovery URL digest")
         seen.add(digest)
