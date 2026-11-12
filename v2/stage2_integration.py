@@ -30,9 +30,8 @@ def integrate(records, *, scopes=None, xmltv_text=None, max_attempts=3):
             raise ValueError("URL or URL SHA-256 required")
         scope = scopes.get(row.get("source"), "candidate")
         hints = identity_metadata(row, scope)
-        for key, value in hints.items():
-            if key not in row:
-                row[key] = value
+        # Canonical metadata must not be overridden by untrusted input flags or hints.
+        row.update(hints)
         # Do not allow a caller's unverified metadata flags to become verified.
         row["country_verified"] = False
         row["category_verified"] = False
