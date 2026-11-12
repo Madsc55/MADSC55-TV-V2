@@ -1,5 +1,5 @@
 import unittest
-from identity_metadata import identity_metadata
+from identity_metadata import identity_metadata, verify_epg_ids
 from discover import discover
 
 
@@ -18,6 +18,21 @@ class IdentityMetadataTests(unittest.TestCase):
         self.assertIsNone(data["epg_id_candidate"])
         self.assertEqual(data["category_hint"], "unclassified")
         self.assertFalse(data["epg_verified"])
+
+    def test_exact_xmltv_epg_verification(self):
+        candidates = [
+            {"epg_id_candidate": "TRT1.tr", "epg_verified": False},
+            {"epg_id_candidate": "TRT1", "epg_verified": False},
+            {"epg_id_candidate": None, "epg_verified": False},
+        ]
+        xmltv = '<tv><channel id="TRT1.tr"><display-name>TRT 1</display-name></channel></tv>'
+        rows = verify_epg_ids(candidates, xmltv)
+        self.assertEqual([row["epg_verified"] for row in rows], [True, False, False])
+        self.assertEqual(rows[0]["epg_match_type"], "exact_xmltv_channel_id")
+
+    def test_invalid_xmltv_fails_closed(self):
+        with self.assertRaises(ValueError):
+            verify_epg_ids([], '<invalid/>')
 
     def test_discovery_report_keeps_private_url_out(self):
         url = "https://example.invalid/live.m3u8?secret=hidden"
