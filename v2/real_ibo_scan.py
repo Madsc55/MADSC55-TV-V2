@@ -135,9 +135,11 @@ def historical_source_ids(record):
 
 
 def main():
-    # Load AES-GCM only for live scans; offline scanner contract tests need no crypto.
-    from secure_archive import backup as encrypt_inventory, decrypt as decrypt_inventory
     ap = argparse.ArgumentParser()
+    ap.add_argument('--stage2-offline-input', type=pathlib.Path, default=None,
+                    help='Integrate existing observations without channel discovery or playback')
+    ap.add_argument('--stage2-offline-output', type=pathlib.Path, default=None,
+                    help='Optional offline JSON report output; no stream URLs')
     ap.add_argument('--sources', type=pathlib.Path, default=SOURCES)
     ap.add_argument('--dynamic-sources', type=pathlib.Path, default=None,
                     help='Optional GitHub discovery report; only parsed HTTPS M3U sources are included')
@@ -152,6 +154,23 @@ def main():
     ap.add_argument('--limit', type=int, default=500)
     ap.add_argument('--live', type=pathlib.Path, default=LIVE)
     args = ap.parse_args()
+    if args.stage2_offline_input is not None:
+        from stage2_integration import integrate
+        payload = json.loads(args.stage2_offline_input.read_text(encoding='utf-8'))
+        if not isinstance(payload, dict) or not isinstance(payload.get('records'), list):
+            ap.error('Stage 2 offline input requires a records list')
+        xmltv = args.epg.read_text(encoding='utf-8') if args.epg else None
+        result = integrate(payload['records'], scopes=payload.get('scopes'),
+                           xmltv_text=xmltv)
+        rendered = json.dumps(result, ensure_ascii=False, indent=2) + '\\n'
+        if args.stage2_offline_output:
+            args.stage2_offline_output.parent.mkdir(parents=True, exist_ok=True)
+            args.stage2_offline_output.write_text(rendered, encoding='utf-8')
+        else:
+            print(rendered, end='')
+        return
+    # Live mode retains all existing protected-playlist and archive safety gates.
+    from secure_archive import backup as encrypt_inventory, decrypt as decrypt_inventory
     if len(os.environ.get('V2_ARCHIVE_PASSPHRASE', '')) < 16:
         ap.error('V2_ARCHIVE_PASSPHRASE must contain at least 16 characters')
     if not 1 <= args.workers <= 32 or not 1 <= args.limit <= 10000:
