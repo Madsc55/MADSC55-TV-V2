@@ -1,3 +1,8 @@
+## 12 Kasım 2026 — #24 S3 gerçek restore kaynak koşu kimliği hatası düzeltildi
+- S3 workflow'u `GITHUB_RUN_ID` sistem değişkenini kaynak koşunun ID'siyle değiştirmeye çalışıyordu. GitHub varsayılan `GITHUB_*` değişkenleri güvenilir biçimde override edilemez; farklı restore runner koşusunda AES/HMAC anahtarı yanlış türetilebilir.
+- `v2/stage4_live_acceptance.py` artık doğrulama anahtarını ve makbuzun run ID kontrolünü `STAGE4_SOURCE_RUN_ID` üzerinden yapabilir; normal canlı Actions restore davranışı değişmez. `.github/workflows/v2-stage4-s3-restore.yml` bu açık kaynak kimliğini iletir.
+- Commitler: `b8407dcc`, `9fda850c`. **Bu düzeltmelerin Actions sonuçları henüz doğrulanmadı.** S3 workflow'unun `workflow_dispatch` tetiklenmesi, S3 secrets ve gerçek bağımsız AES restore kanıtı hâlâ gereklidir. #24 açık, ana İBO korunuyor.
+
 ## 12 Kasım 2026 — #24 yeni arşiv Google Drive'a gerçekten aktarıldı ve geri indirildi
 - GitHub Actions run 43220496123, artifact 13949375384 içindeki gerçek şifreli `inventory.enc` + `receipt.json` paketi, [MADSC55-TV-V2 Independent Encrypted Recovery Archive](https://drive.google.com/drive/folders/1cqEo3ZTfnIsVglQ51s0lXMEjcxkqRqPe) klasörüne [Drive dosyası 1Eyw84kfC5LNksbwsRK27z2qxwWbCewb8](https://drive.google.com/file/d/1Eyw84kfC5LNksbwsRK27z2qxwWbCewb8/view) olarak yüklendi.
 - Drive dosyası bağımsız olarak geri indirildi ve yerel SHA-256 hesaplandı: ZIP `81e35b84eb22a9ea04c9ff73f86c674689d9ec1a730f61163c48e5942b4acb17` (GitHub artifact SHA ile eşit); ZIP içindeki `inventory.enc` SHA-256 `5be3e93559d3a946ae2265e5a960873b26940e4605966ef872b0b8b7ab1dbff0` (önceki gerçek restore makbuzuyla eşit); `receipt.json` SHA-256 `0fa0a90d403c8390d4721ab62bd505386f539a6e6c14e81d3dce509195c852fc` (Actions receipt digest ile eşit).
