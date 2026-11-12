@@ -162,7 +162,7 @@ def main():
         xmltv = args.epg.read_text(encoding='utf-8') if args.epg else None
         result = integrate(payload['records'], scopes=payload.get('scopes'),
                            xmltv_text=xmltv)
-        rendered = json.dumps(result, ensure_ascii=False, indent=2) + '\\n'
+        rendered = json.dumps(result, ensure_ascii=False, indent=2) + chr(10)
         if args.stage2_offline_output:
             args.stage2_offline_output.parent.mkdir(parents=True, exist_ok=True)
             args.stage2_offline_output.write_text(rendered, encoding='utf-8')
