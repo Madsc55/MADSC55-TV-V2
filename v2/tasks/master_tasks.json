@@ -59,10 +59,14 @@
         7,
         8
       ],
-      "acceptance": "Three malformed source records repaired and 17 historical dynamic sources accounted for; grouped adapter regression passes",
+      "acceptance": "User-approved administrative closure: pinned malformed EXTINF evidence retained; historical missing-stream repair explicitly deferred to #34; no invented URLs or AV evidence.",
       "evidence_urls": [],
       "last_checked_at": null,
-      "owner": "automation_with_review"
+      "owner": "automation_with_review",
+      "original_acceptance": "Three malformed source records repaired and 17 historical dynamic sources accounted for; grouped adapter regression passes",
+      "scope": "mandatory",
+      "deferred_historical_recovery_to": 34,
+      "scope_change_reason": "User explicitly removed old missing-channel recovery from current mandatory build on 2026-11-12; archival evidence retained; no claim of repaired playback."
     },
     {
       "id": 6,
@@ -72,11 +76,14 @@
         4,
         5
       ],
-      "acceptance": "2,643 candidate hashes each have a bounded safe real FFmpeg video+audio probe result or explicit justified exclusion; encrypted URLs retained",
+      "acceptance": "User-approved administrative closure: original 2643 lost-address evidence and bounded historical probe results retained; further old-stream recovery explicitly deferred to #34; no claim that all 2643 were tested.",
       "evidence_urls": [],
       "last_checked_at": null,
       "owner": "automation_with_review",
-      "scope": "mandatory"
+      "scope": "mandatory",
+      "original_acceptance": "2,643 candidate hashes each have a bounded safe real FFmpeg video+audio probe result or explicit justified exclusion; encrypted URLs retained",
+      "deferred_historical_recovery_to": 34,
+      "scope_change_reason": "User explicitly removed old missing-channel recovery from current mandatory build on 2026-11-12; archival evidence retained; no claim of repaired playback."
     },
     {
       "id": 7,
