@@ -93,7 +93,8 @@ def tr_az(entry, scope):
     return bool(re.search(r'türk|turk|trt (?:1|2|3|cocuk|çocuk|spor|muzik|müzik|eba)|azer|azər|azərbaycan|azerbaijan|(?:^|[ ._-])(?:tr|az)(?:$|[ ._-])', value))
 
 
-def check_hls(entry, timeout):
+def check_hls(entry, timeout, diagnostics=None):
+    """Return AV-verified stream or capture observed HTTP failure for recovery."""
     url = entry['url']
     parsed = urllib.parse.urlsplit(url)
     if parsed.scheme not in ('https', 'http') or not parsed.hostname:
@@ -102,6 +103,8 @@ def check_hls(entry, timeout):
         req = urllib.request.Request(url, headers={'User-Agent': UA, 'Range': 'bytes=0-4095'})
         with urllib.request.urlopen(req, timeout=timeout) as res:
             status = res.status
+            if diagnostics is not None:
+                diagnostics['last_http_status'] = status
             content_type = res.headers.get('Content-Type', '').lower()
             sample = res.read(4096)
         hls = (b'#EXTM3U' in sample and (b'#EXT-X-' in sample or
@@ -111,9 +114,13 @@ def check_hls(entry, timeout):
             quality = quality_from_probe(outcome)
             if quality['av_verified']:
                 return {**entry, 'verified_quality': quality}
+    except urllib.error.HTTPError as exc:
+        if diagnostics is not None:
+            diagnostics['last_http_status'] = exc.code
     except (OSError, TimeoutError, urllib.error.URLError, ValueError,
             http.client.IncompleteRead, http.client.HTTPException):
-        pass
+        if diagnostics is not None:
+            diagnostics['last_timeout'] = True
     return None
 
 
@@ -258,9 +265,15 @@ def main():
             recovered_from_archive += 1
     checked = 0
     good = []
+    diagnostics_by_url = {}
+    def inspect_candidate(candidate):
+        diagnostics = {}
+        result = check_hls(candidate, args.timeout, diagnostics)
+        return candidate['url'], result, diagnostics
     with concurrent.futures.ThreadPoolExecutor(max_workers=args.workers) as pool:
-        for result in pool.map(lambda x: check_hls(x, args.timeout), candidates.values()):
+        for url, result, diagnostics in pool.map(inspect_candidate, candidates.values()):
             checked += 1
+            diagnostics_by_url[url] = diagnostics
             if result is not None:
                 good.append(result)
     epg_ids = set()
@@ -315,7 +328,9 @@ def main():
                           'observations': old_observations + [{'status': new_status, 'origin': 'current-scan'}]}
                 inventory_file.write(json.dumps(record, ensure_ascii=False) + '\n')
                 if candidate['url'] not in good_urls:
-                    recovery_records.append({'url': candidate['url'], 'last_http_status': None,
+                    recovery_records.append({'url': candidate['url'],
+                                             'last_http_status': diagnostics_by_url.get(candidate['url'], {}).get('last_http_status'),
+                                             'last_timeout': diagnostics_by_url.get(candidate['url'], {}).get('last_timeout', False),
                                              'recovery_attempts': recovery_attempts,
                                              'observations': record['observations']})
         # Queue contains SHA identities only; no stream URL or token in public report.
