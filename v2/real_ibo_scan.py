@@ -164,8 +164,14 @@ def main():
                            xmltv_text=xmltv)
         rendered = json.dumps(result, ensure_ascii=False, indent=2) + chr(10)
         if args.stage2_offline_output:
-            args.stage2_offline_output.parent.mkdir(parents=True, exist_ok=True)
-            args.stage2_offline_output.write_text(rendered, encoding='utf-8')
+            destination = args.stage2_offline_output.resolve()
+            reports_dir = (ROOT / 'v2/reports').resolve()
+            if destination.suffix.lower() != '.json' or reports_dir not in destination.parents:
+                ap.error('Offline report must be a .json file inside v2/reports')
+            if destination == args.stage2_offline_input.resolve():
+                ap.error('Offline report must not overwrite its input')
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            destination.write_text(rendered, encoding='utf-8')
         else:
             print(rendered, end='')
         return
