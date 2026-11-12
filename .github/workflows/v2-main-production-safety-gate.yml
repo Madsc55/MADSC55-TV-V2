@@ -29,3 +29,9 @@ jobs:
         run: PYTHONPATH=v2 python v2/main_actions_security_gate.py
       - name: Preserve original IBO category and backup invariants
         run: python v2/test_playlist_invariants.py
+      - name: Discovery 34 offline adapter and integration acceptance
+        run: |
+          PYTHONPATH=v2 python -m unittest -v test_discovery_34 test_discovery_34_integrate
+          python -m py_compile v2/discovery_34.py v2/discovery_34_integrate.py v2/discovery_34_live_contract.py
+          PYTHONPATH=v2 python v2/discovery_34.py --output /tmp/discovery-34-offline.json
+          PYTHONPATH=v2 python v2/discovery_34_integrate.py --output /tmp/discovery-34-integrated.json

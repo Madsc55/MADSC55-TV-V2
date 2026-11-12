@@ -1,0 +1,38 @@
+name: V2 Stage 6 Grouped Offline Acceptance
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  grouped-acceptance:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install encrypted archive test dependency
+        run: python -m pip install 'cryptography>=42,<47'
+      - name: Compile acceptance modules
+        run: python -m py_compile v2/test_playlist_invariants.py v2/consolidate_inventory.py v2/test_consolidate_inventory.py v2/real_ibo_scan.py v2/test_secure_archive_roundtrip.py v2/test_real_ibo_scan_offline.py
+      - name: Playlist and protected archive invariants
+        run: python v2/test_playlist_invariants.py
+      - name: Encrypted archive roundtrip regression
+        run: python v2/test_secure_archive_roundtrip.py
+      - name: Inventory restoration regression
+        run: python v2/test_consolidate_inventory.py
+      - name: Offline discovery regression
+        run: python v2/test_real_ibo_scan_offline.py
+      - name: Explain acceptance boundary
+        run: |
+          echo 'Offline checks are NOT proof of live AV, IBO Player playback, cloud restore, or production delivery.'
+          echo 'Stage 6 #31-#33 remain open until independent real-world evidence is attached.'
+      - name: Stage 7 #34 discovery adapters offline acceptance
+        run: |
+          PYTHONPATH=v2 python -m unittest -v test_discovery_34 test_discovery_34_integrate
+          PYTHONPATH=v2 python v2/discovery_34.py --output /tmp/discovery-34-offline.json
+          PYTHONPATH=v2 python v2/discovery_34_integrate.py --output /tmp/discovery-34-integrated.json
+          python -m py_compile v2/discovery_34.py v2/discovery_34_integrate.py v2/discovery_34_live_contract.py
+      - name: Stage 7 #34 live repository API contract (fail closed)
+        run: PYTHONPATH=v2 python v2/discovery_34_live_contract.py

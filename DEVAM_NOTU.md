@@ -1,3 +1,37 @@
+## 13 Kasım 2026 — #34 son güvenlik regresyonu PASS
+- Commit bb52eac0, GitHub Actions 43327990827: SUCCESS; discovery offline acceptance, source-host restrictions, production security and IBO invariants PASS.
+- Codeberg canlı API kabulü hâlâ ayrıca doğrulanmalı; workflow_dispatch ile çalışan canlı sözleşme adımı henüz yürütülmedi. #34 nihai kabul açık; playlist değiştirilmedi.
+
+## 12 Kasım 2026 — #34 toplu çevrimdışı kabul PASS
+- Commit 574d5d69, GitHub Actions run 43322841131: SUCCESS. Production Security Gate, IBO invariants ve "Discovery 34 offline adapter and integration acceptance" adımı SUCCESS.
+- Altı adaptörün offline birim/entegrasyon kabulü tamamlandı. Bu sonuç canlı Codeberg API erişimini veya gerçek FFmpeg AV kanıtını doğrulamaz.
+- Codeberg canlı API HTTPError nedeniyle #34 tam canlı kabul açık. Ana İBO değiştirilmedi.
+
+## 12 Kasım 2026 — #34 izinli kabul iş akışına bağlandı
+- Commit ab0066e6 için Production Security Gate run 43321317264 SUCCESS.
+- Yeni workflow eklemek güvenlik envanterini bozduğundan #34 çevrimdışı kabul adımları mevcut, izinli, salt-okunur v2-stage6-grouped-acceptance.yml iş akışına 1ab65026 commit'i ile eklendi. Workflow yalnızca workflow_dispatch ile çalışır; bu commit için henüz yeni #34 Actions kabul sonucu yoktur.
+- Codeberg canlı API isteği önceki testte HTTPError verdi; yeni başarılı canlı kabul kanıtı yoktur. #34 açık kalır. Ana İBO korunur.
+
+## 12 Kasım 2026 — #34 güvenlik düzeltmesi doğrulandı
+- Production Security Gate run 43320335176: SUCCESS, commit 4019cb7c. Workflow envanteri ve korunan İBO dosyası kontrolü geçti.
+- Codeberg canlı sözleşme testinde HTTPError vardı; v2/discovery_34_live_contract.py hata HTTP durum kodunu raporlayacak şekilde iyileştirildi (1beaf556). Bu değişikliğin canlı kabul testi henüz yapılmadı.
+- #34 kapatılmadı: Codeberg canlı sözleşme kabulü ve onaylı workflow altında altı adaptörün uçtan uca kabulü açık.
+
+## 12 Kasım 2026 — #34 güvenlik ve canlı API hata analizi
+- Actions run 43319831631: offline-acceptance PASS; live-contract FAIL. GitHub API 20 aday, GitLab API 0 aday/başarılı yanıt, Codeberg HTTPError.
+- Actions run 43319830482: güvenlik kilidi, yeni v2-discovery-34-offline.yml dosyasını beklenmeyen workflow saydı. Kilidi değiştirmeden bu yeni workflow dosyası efddbdd4 commit'inde kaldırıldı. Test kodları dalda korundu.
+- #34 nihai kabul açık: Codeberg erişim sorunu ve izinli Actions kabul yolu çözülmeli. Başarısız testler tamamlandı sayılmadı. Ana İBO değişmedi.
+
+## 12 Kasım 2026 — #34 güncel kabul
+- Entegre çevrimdışı kabul başarılı: GitHub Actions run 43318458059 (success), commit 9b04bff570602ce31520e70dd03429f06cf95a0f.
+- Gerçek GitHub/GitLab/Codeberg API uçlarının uçtan uca üretim doğrulaması henüz yapılmadı; #34 nihai kabulü açık. Kanal taraması ve İBO değişikliği yok.
+
+## 12 Kasım 2026 — #34 keşif adaptörleri (geliştirme dalı)
+- Dal: stage7-34-discovery-adapters-20261112. v2/discovery_34.py: GitHub/GitLab/Codeberg arama API adaptörleri; official/youtube/m3u aday kimliği normalizasyonu; salt-okunur, ağ erişimi yalnızca --network ile.
+- v2/test_discovery_34.py: çevrimdışı birim testleri. .github/workflows/v2-discovery-34-offline.yml: compile, unit test, offline smoke acceptance.
+- Gerçek kaynak taraması yapılmadı; yeni AV kanıtı üretilmedi; ana İBO/YEDEKLER/EPG değiştirilmedi.
+- #34 henüz kabul edilmedi: yeni Actions koşusunun yeşil sonucu ve adaptörlerin gerçek servis yanıtları doğrulanmalı; official/youtube/m3u mevcut keşif modülleriyle üretim entegrasyonu tamamlanmalı.
+
 ## 2 Kasım 2026 — kaynak kimliği bütünlüğü ve 500'lük varsayılan paket (yeni çalışma)
 - `v2/consolidate_inventory.py` eski `source_id` ile yeni `source_ids` aynı kayıtta bulunduğunda ikisini de saklar (59d594e). Regresyon testi eklendi (9e44e86).
 - `v2/real_ibo_scan.py` geçmiş arşivden okunan her iki kaynak kimliği biçimini kayıpsız birleştirir ve varsayılan paket boyutu son kullanıcı kararıyla 500'dür (401d194). Offline regresyon testi eklendi (28c97fa).
