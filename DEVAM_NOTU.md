@@ -1,3 +1,10 @@
+## 12 Kasım 2026 — #13 Google Drive Actions gerçek geri yükleme KABUL EDİLDİ
+
+- Kullanıcının kabul ettiği bağımsız Google Drive yedek yolunda GitHub Actions [run 43117212383](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43117212383) yeniden çalıştırıldı ve `drive-restore` job 130915187450 **success** oldu.
+- Job günlüğü: `PASS: Google Drive archive ID, version, size and SHA-256 verified`; `PASS: original AES-256-GCM restored 4955 historical and 107 orphan records with source provenance`.
+- `V2_PRODUCTION_AES_KEY_METADATA_B64` repository secret kullanıldı; gizli anahtar repoya/rapora yazılmadı. #13 kanonik `v2/tasks/state.json` içinde **completed** kaydedildi.
+- Bu kanıt **Google Drive tabanlı bağımsız otomatik geri yükleme** kabulüdür; eski AWS/S3 restore koşusu başarılı sayılmadı. #14/#24 ve diğer görevler kendi bağımsız önkoşulları tamamlanmadan kapatılmayacak. Ana İBO listesi değiştirilmedi.
+
 ## 11 Kasım 2026 — #13 GitHub OIDC ile Google Drive geri yüklemesi
 
 - Kullanıcı #13 için bağımsız Google Drive kopyasının otomatik geri yüklemesini kabul kaynağı olarak belirledi. S3 uyumluluk yolu korunuyor.
