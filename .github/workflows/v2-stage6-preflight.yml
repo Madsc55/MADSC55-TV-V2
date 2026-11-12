@@ -7,6 +7,8 @@ on:
     paths:
       - 'v2/stage6_source_inventory.py'
       - 'v2/test_stage6_source_inventory.py'
+      - 'v2/test_stage6_world_selection.py'
+      - 'v2/real_ibo_scan.py'
       - 'v2/config/sources.json'
       - 'v2/tasks/state.json'
       - '.github/workflows/v2-stage6-preflight.yml'
@@ -22,7 +24,9 @@ jobs:
         with:
           python-version: '3.12'
       - name: Run grouped source inventory regressions
-        run: python -m unittest discover -s v2 -p 'test_stage6_source_inventory.py' -v
+        run: |
+          python -m unittest discover -s v2 -p 'test_stage6_source_inventory.py' -v
+          python -m unittest discover -s v2 -p 'test_stage6_world_selection.py' -v
       - name: Validate source coverage without changing IBO
         run: python v2/stage6_source_inventory.py --strict > stage6-preflight.json
       - name: Upload offline readiness report (not AV evidence)
