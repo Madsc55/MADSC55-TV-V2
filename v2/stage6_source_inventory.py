@@ -52,7 +52,9 @@ def main():
     if args.strict and any(report[k] for k in (
         "missing_required_scopes", "invalid_https_source_ids",
         "duplicate_source_ids", "duplicate_active_urls")):
-        raise SystemExit(1)
+        raise SystemExit("Source configuration failed validation")
+    if args.strict and report["unfinished_predecessor_ids"]:
+        raise SystemExit("Stage 6 blocked: unfinished tasks 1-33; see report")
 
 if __name__ == "__main__":
     main()
