@@ -63,31 +63,35 @@
     },
     {
       "id": 5,
-      "status": "blocked",
-      "last_checked_at": "2026-11-11T19:44:35Z",
+      "status": "completed",
+      "last_checked_at": "2026-11-12T17:43:00Z",
       "evidence_urls": [
         "https://github.com/Madsc55/MADSC55-TV-V2/commit/eaac39fb4afc4036e2db17f5c2e671b45274d820",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42303308753",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/41644493862",
         "https://github.com/Madsc55/MADSC55-TV-V2/blob/madsc/v2-discovery-bulk-20261031/v2/reports/stage2-pinned-m3u-source-evidence-20261111.json",
-        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43089497868"
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43089497868",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43253973152",
+        "https://github.com/Madsc55/MADSC55-TV-V2/commit/788f23723a09850911e8d318561b1860e4af7d94"
       ],
-      "blocker": "Original run 41644493862 reported 26 unpaired EXTINF records. Pinned pre-run snapshots reproduce six explicit no-public-stream placeholders for free-tv-independent and 19 missing URIs for discevisita-tr. The original onureroz-turk-karma payload for one record and verified repairs for the 19 missing URIs are unavailable. The original artifact has no payload hashes for byte-level confirmation.",
-      "reason": "Recorded line numbers, SHA-256 values and reasons for 25 records in pinned upstream snapshots. Grouped CI passed on f1af58e. Playback repair acceptance is still pending."
+      "blocker": null,
+      "reason": "ADMINISTRATIVE SCOPE CLOSURE ONLY, NOT STREAM REPAIR. 26 unpaired EXTINF reviewed; 6 no-public-stream placeholders, 19 missing URIs, 1 unavailable original. User waived legacy recovery for current system delivery; further historical stream search deferred to #34. No IBO playlist mutation or fabricated AV evidence."
     },
     {
       "id": 6,
-      "status": "in_progress",
-      "last_checked_at": "2026-11-11T12:39:24Z",
+      "status": "completed",
+      "last_checked_at": "2026-11-12T17:43:00Z",
       "evidence_urls": [
         "https://github.com/Madsc55/MADSC55-TV-V2/blob/madsc/v2-discovery-bulk-20261031/v2/historical_url_recovery.py",
         "https://github.com/Madsc55/MADSC55-TV-V2/blob/madsc/v2-discovery-bulk-20261031/v2/historical_targeted_playback.py",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/41644493862",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42539900333",
-        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42913862261"
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42913862261",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43253973152",
+        "https://github.com/Madsc55/MADSC55-TV-V2/commit/788f23723a09850911e8d318561b1860e4af7d94"
       ],
-      "blocker": "The original 2,643-address count is supported, but the archived report exposes only 30 exact SHA-256 members. Evidence for those 30 is reconciled. A pinned full original membership list is needed to identify the other 2,613.",
-      "reason": "Original report #41644493862 identifies 30 exact SHA-256 sample entries. Each was joined to two pinned real FFmpeg archives: 9 with decoded video+audio and 21 with probe outcomes without decoded AV. See v2/reports/stage2-lost-address-sample-evidence-20261111.json. These are prior results; full #6 remains open."
+      "blocker": null,
+      "reason": "ADMINISTRATIVE SCOPE CLOSURE ONLY, NOT 2643 RECOVERIES. Original 2643 count, 30 original hashes and separate 4955 baseline preserved. User waived legacy recovery for current system delivery; further historical stream search deferred to #34. No IBO playlist mutation or fabricated AV evidence."
     },
     {
       "id": 7,
