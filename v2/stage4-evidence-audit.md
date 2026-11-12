@@ -26,3 +26,7 @@ The Stage 4 gate currently rejects even structurally complete manifests until in
 ## Separation and safety
 
 This report is committed only to `stage4-24-independent-acceptance`. No Stage 2/3 branches, production playlist, secrets, or protected branch are changed.
+
+## Independent ZIP integrity verification (2026-11-12)
+
+Downloaded artifacts 13282545632 and 13282561013 were inspected as ZIP files locally. Independently computed SHA-256 values exactly match the two GitHub artifact digests recorded above. The ZIP members contain `stage5-encrypted-archive-batch.log` (`Ran 38 tests ... OK`) and `stage5-final-archive-regressions.log` (`Ran 49 tests ... OK`) respectively. This verifies **artifact byte integrity and logged regression outcomes only**. No Stage 4 live run or offsite production restore was performed by this verification.
