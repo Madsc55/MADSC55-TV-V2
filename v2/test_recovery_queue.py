@@ -25,6 +25,13 @@ class RecoveryQueueTests(unittest.TestCase):
                "status": "AV_VERIFIED", "video": True, "audio": True}
         self.assertEqual(len(build_queue([row])["verified"]), 1)
 
+    def test_url_digest_mismatch_is_rejected(self):
+        row = {"url": "https://example.invalid/actual",
+               "url_sha256": sha_for_url("https://example.invalid/other"),
+               "status": "TIMEOUT"}
+        with self.assertRaisesRegex(ValueError, "SHA-256 mismatch"):
+            build_queue([row])
+
     def test_duplicate_and_invalid_digests_rejected(self):
         row = {"url_sha256": sha_for_url("https://example.invalid/live")}
         with self.assertRaises(ValueError):
