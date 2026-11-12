@@ -1,0 +1,21 @@
+name: V2 IBO 1000-2000 Package Safety
+on:
+  push:
+    branches:
+      - v2/ibo-packages-28-30-validation
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  package-safety:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compile package builder and acceptance tests
+        run: python -m py_compile v2/build_verified_ibo_packages.py v2/test_build_verified_ibo_packages.py
+      - name: Verify fail-closed package safety
+        run: python v2/test_build_verified_ibo_packages.py
