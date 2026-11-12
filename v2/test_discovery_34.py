@@ -18,7 +18,7 @@ class Discovery34Tests(unittest.TestCase):
         items = curated_candidates("youtube", [{"video_id": "AbCdEf12345"}])
         self.assertEqual(items[0]["source_id"], "youtube:AbCdEf12345")
     def test_invalid(self):
-        for url in ("file:///tmp/a", "https://localhost/a", "https://user:pass@site.org/a"):
+        for url in ("file:///tmp/a", "https://localhost/a", "https://user:pass@site.org/a", "http://127.0.0.1/a", "http://192.168.1.1/a", "http://[::1]/a"):
             with self.assertRaises(ValueError):
                 identity("m3u", url)
     def test_official_and_m3u(self):
