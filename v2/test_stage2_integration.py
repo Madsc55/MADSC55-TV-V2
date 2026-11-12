@@ -24,6 +24,31 @@ class Stage2IntegrationTests(unittest.TestCase):
         self.assertEqual(result["recovery"]["retry"][0]["next_attempt"], 1)
         self.assertNotIn(url, str(result))
 
+    def test_existing_scanner_offline_entrypoint_never_fetches_or_scans(self):
+        import json
+        import pathlib
+        import tempfile
+        from unittest.mock import patch
+        import real_ibo_scan
+        with tempfile.TemporaryDirectory() as directory:
+            root = pathlib.Path(directory)
+            source = root / "observations.json"
+            output = root / "result.json"
+            source.write_text(json.dumps({"records": [
+                {"url": "https://example.invalid/stream", "status": "TIMEOUT"}]}),
+                encoding="utf-8")
+            with patch("sys.argv", ["real_ibo_scan.py", "--stage2-offline-input",
+                                    str(source), "--stage2-offline-output", str(output)]):
+                with patch.object(real_ibo_scan, "fetch",
+                                  side_effect=AssertionError("network access forbidden")):
+                    with patch.object(real_ibo_scan, "check_hls",
+                                      side_effect=AssertionError("playback forbidden")):
+                        real_ibo_scan.main()
+            report = json.loads(output.read_text(encoding="utf-8"))
+            self.assertEqual(report["mode"], "offline-no-channel-search")
+            self.assertEqual(len(report["recovery"]["retry"]), 1)
+            self.assertNotIn("https://example.invalid/stream", output.read_text())
+
     def test_no_false_av_acceptance(self):
         url = "https://example.invalid/channel"
         row = {"url": url, "status": "AV_VERIFIED",
