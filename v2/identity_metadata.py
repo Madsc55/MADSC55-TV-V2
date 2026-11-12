@@ -34,3 +34,21 @@ def identity_metadata(entry, scope):
         "category_hint": category,
         "category_verified": False,
     }
+
+
+def verify_epg_ids(candidates, xmltv_text):
+    """Match XMLTV channel IDs exactly; programme availability is not implied."""
+    import xml.etree.ElementTree as ET
+    if not isinstance(xmltv_text, str):
+        raise ValueError("XMLTV content must be text")
+    root = ET.fromstring(xmltv_text)
+    if root.tag != "tv":
+        raise ValueError("Expected XMLTV tv root")
+    ids = {node.get("id") for node in root.findall("channel") if node.get("id")}
+    output = []
+    for row in candidates:
+        candidate = row.get("epg_id_candidate")
+        matched = isinstance(candidate, str) and candidate in ids
+        output.append({**row, "epg_verified": bool(matched),
+                       "epg_match_type": "exact_xmltv_channel_id" if matched else None})
+    return output
