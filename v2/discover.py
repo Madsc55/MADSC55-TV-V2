@@ -502,19 +502,8 @@ def main():
     result["auxiliary_discovery_coverage"] = auxiliary
     # Real metadata-only connection to the same M3U candidate identities.
     # No YouTube URL or official website URL is ever a media candidate.
-    from advisory_channel_identity_bridge import link_advisory_identities, MAX_CANDIDATES
-    if len(result["candidates"]) > MAX_CANDIDATES:
-        # Keep every source candidate intact; do not silently sample or
-        # claim full advisory linkage for an oversized worldwide batch.
-        result["advisory_channel_identity_handoff"] = {
-            "status": "DEFERRED_TOO_MANY_CANDIDATES",
-            "candidate_count": len(result["candidates"]),
-            "linkage_limit": MAX_CANDIDATES,
-            "av_verified": False,
-            "main_playlist_modified": False,
-        }
-    else:
-        result["advisory_channel_identity_handoff"] = link_advisory_identities(
+    from advisory_channel_identity_bridge import link_or_defer
+    result["advisory_channel_identity_handoff"] = link_or_defer(
         result["candidates"],
         ROOT / "v2/reports/official-tv-sites.json",
         ROOT / "v2/reports/youtube-live-candidates.json")
