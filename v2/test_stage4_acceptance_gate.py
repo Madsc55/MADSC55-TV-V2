@@ -2,11 +2,12 @@
 """Stage 4 gate regression tests; fixture evidence is NEVER production proof."""
 import unittest
 import json
+import hashlib
 import subprocess
 import sys
 import tempfile
 from pathlib import Path
-from stage4_acceptance_gate import check
+from stage4_acceptance_gate import check, verify_local_artifacts
 
 class GateTests(unittest.TestCase):
     def test_missing_proof_fails_closed(self):
@@ -27,6 +28,20 @@ class GateTests(unittest.TestCase):
         self.assertEqual(check(sample), [])
         with tempfile.TemporaryDirectory() as directory:
             manifest = Path(directory) / "manifest.json"
+            manifest.write_text(json.dumps(sample), encoding="utf-8")
+            for key in ("discovery", "recovery", "real_video_audio", "encrypted_archive", "s3_restore", "end_to_end"):
+                sample[key]["artifact_file"] = key + ".log"
+                payload = ("fixture-" + key).encode()
+                (Path(directory) / (key + ".log")).write_bytes(payload)
+                sample[key]["artifact_sha256"] = hashlib.sha256(payload).hexdigest()
+            manifest.write_text(json.dumps(sample), encoding="utf-8")
+            self.assertEqual(verify_local_artifacts(sample, manifest), [])
+            sample["s3_restore"]["artifact_file"] = "../escape.log"
+            self.assertTrue(verify_local_artifacts(sample, manifest))
+            sample["s3_restore"]["artifact_file"] = "s3_restore.log"
+            sample["s3_restore"]["artifact_sha256"] = "a" * 64
+            self.assertTrue(verify_local_artifacts(sample, manifest))
+            sample["s3_restore"]["artifact_sha256"] = hashlib.sha256(b"fixture-s3_restore").hexdigest()
             manifest.write_text(json.dumps(sample), encoding="utf-8")
             process = subprocess.run([sys.executable, str(Path(__file__).with_name("stage4_acceptance_gate.py")), str(manifest)], capture_output=True, text=True)
             self.assertEqual(process.returncode, 2)
