@@ -24,6 +24,14 @@ class RecoveryIdentityTests(unittest.TestCase):
             self.assertEqual(records[url]["source_ids"], ["source-1", "source-2"])
             self.assertEqual(records[url]["url_sha256"], digest)
 
+    def test_legacy_record_gets_canonical_digest(self):
+        url = "https://example.invalid/legacy.m3u8"
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "legacy.jsonl"
+            path.write_text(json.dumps({"url": url, "source_id": "historic"}) + "\n")
+            records, _ = merge_records([path])
+            self.assertEqual(records[url]["url_sha256"], hashlib.sha256(url.encode()).hexdigest())
+
     def test_mismatched_digest_fails_closed(self):
         with tempfile.TemporaryDirectory() as tmp:
             path = Path(tmp) / "bad.jsonl"
