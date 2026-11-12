@@ -21,4 +21,8 @@ jobs:
         run: python -m unittest discover -s v2 -p 'test_*ibo*package*.py' -v && python v2/test_ibo_production_guard.py
 
       - name: Confirm stage-4 setup without scanning old channels
-        run: python v2/build_verified_ibo_packages.py --check-setup
+        run: |
+          python v2/build_verified_ibo_packages.py --check-setup > /tmp/v2-stage4-setup.json
+          python -c 'import json; r=json.load(open("/tmp/v2-stage4-setup.json")); assert r["package_targets"] == [1000, 2000]; assert r["m3u_integrity_checks"] == "CONFIGURED_NOT_EXECUTED"; assert r["production_packages_created"] is False; assert r["final_av_acceptance"] == "DEFERRED_UNTIL_POST_34_DISCOVERY"'
+          test ! -e IBO_AV_VERIFIED_1000.m3u8
+          test ! -e IBO_AV_VERIFIED_2000.m3u8
