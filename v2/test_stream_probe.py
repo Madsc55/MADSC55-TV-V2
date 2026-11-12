@@ -85,6 +85,8 @@ class StreamProbeTests(unittest.TestCase):
         self.assertEqual(run.call_count, 2)
         run.return_value = subprocess.CompletedProcess([], 0, '# header only\n', '')
         self.assertFalse(verify_decoded_av('https://example.org/live.m3u8')['decoded_av_verified'])
+        run.return_value = subprocess.CompletedProcess([], 0, 'not a frame', '')
+        self.assertFalse(verify_decoded_av('https://example.org/live.m3u8')['decoded_av_verified'])
         run.return_value = subprocess.CompletedProcess([], 1, '', 'failed')
         self.assertFalse(verify_decoded_av('https://example.org/live.m3u8')['decoded_av_verified'])
 
