@@ -310,16 +310,17 @@
     },
     {
       "id": 24,
-      "status": "blocked",
-      "last_checked_at": "2026-11-12T02:15:00Z",
+      "status": "completed",
+      "last_checked_at": "2026-11-12T15:36:11Z",
       "evidence_urls": [
-        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42539900333",
-        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42874231734",
-        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42688764100",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43241168321",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43241168321/artifacts/13957249280",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43241168321/artifacts/13958867734",
+        "https://github.com/Madsc55/MADSC55-TV-V2/commit/9f020d5881f37b936176bdfd2b14d4ddf345f777",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43117212383/attempts/5"
       ],
-      "blocker": "The prior missing S3 credential is not a blocker for the user-approved Google Drive replacement path: #13 succeeded. #24 still requires a single integrated discovery → AV evidence → sealed archive → Drive restore acceptance run; prior separate runs alone do not prove this combined acceptance.",
-      "reason": "Previous exact-hash AV and sealed shard checks retained; #13 Drive restore success now satisfies independent restore prerequisite on approved Drive path, not AWS/S3. Integrated #24 run remains unverified."
+      "blocker": null,
+      "reason": "Integrated #24 acceptance passed in Actions 43241168321 at 12c0dc6d with Stage 4 code pinned to 158f77ec. All six acceptance jobs passed: protected playlist, pinned request, Drive access, live discovery and FFmpeg AV with authenticated sealing, Drive publication, and independent Drive revision 4 download and AES-GCM restore. 46 sources, 7,769 candidates, 801 real video and audio results (800 TR/AZ), 7,819 restored archive records including 4,955 historical rows. Source and restore artifacts, ZIP hashes and the inner encrypted archive SHA-256 were independently matched. The main IBO blob is unchanged."
     },
     {
       "id": 25,
