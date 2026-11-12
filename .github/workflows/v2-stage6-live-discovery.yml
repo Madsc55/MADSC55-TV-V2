@@ -1,6 +1,11 @@
 name: V2 Stage 6 Live Discovery Evidence (Read Only)
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - madsc/v2-discovery-bulk-20261031
+    paths:
+      - '.github/workflows/v2-stage6-live-discovery.yml'
 concurrency:
   group: stage6-live-discovery-${{ github.ref }}
   cancel-in-progress: false
@@ -26,15 +31,15 @@ jobs:
         continue-on-error: true
         run: |
           python v2/real_ibo_scan.py --help
-          python v2/real_ibo_scan.py --include-world --max-candidates 10000
+          timeout 50m python v2/real_ibo_scan.py --include-world --max-candidates 2000
       - name: Discover YouTube live page candidates (not M3U streams)
         id: youtube
         continue-on-error: true
-        run: python v2/youtube_discovery.py
+        run: timeout 20m python v2/youtube_discovery.py
       - name: Discover official broadcaster sites (not stream verification)
         id: official
         continue-on-error: true
-        run: python v2/official_sites_discovery.py
+        run: timeout 2m python v2/official_sites_discovery.py
       - name: Write honest run status
         if: always()
         env:
