@@ -1,3 +1,9 @@
+## 12 Kasım 2026 — #24 yetkili Google Drive bağlantısıyla toplu kabul başladı
+
+- [Actions koşusu 43241168321](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43241168321), #13'ün mevcut Google Drive iş akışından, `madsc/v2-discovery-bulk-20261031` dalında [12c0dc6d](https://github.com/Madsc55/MADSC55-TV-V2/commit/12c0dc6d3fd41de49a2f86c6b1eb3e975573a3e3) ile başlatıldı. #24 test kodu `stage4-24-independent-acceptance` dalındaki `158f77ec` commit'ine sabitlendi.
+- Üretim güvenlik, ana İBO ve özel Drive dosyası erişim kontrolleri başarılı. Google Cloud IAM ayarları değiştirilmeden mevcut bağlantı kimlik doğrulamasını geçti. Canlı keşif → gerçek FFmpeg görüntü ve ses → şifreli arşiv → ayrı runner'dan Drive geri yüklemesi aynı koşuda devam ediyor.
+- **#24 açık.** Son işin başarı sonucu ve geri yükleme makbuzu gelince görev kaydı güncellenecek.
+
 ## 12 Kasım 2026 — #24 tek koşuda Google Drive geri yüklemesi
 
 - `e1a57ba0` yeni şifreli arşivi bu görev için ayrılmış özel Drive dosyasına yükleyip sürümü sabitliyor. Ayrı Actions runner yalnızca o Drive sürümünü indiriyor ve boyut, SHA-256, AES-GCM, tarihî satırlar ve gerçek FFmpeg AV kayıtlarını doğruluyor. GitHub depo izinleri salt okunur.
