@@ -5,6 +5,22 @@ import real_ibo_scan as scanner
 
 
 class ScannerStage3IntegrationTests(unittest.TestCase):
+    def test_truncated_source_is_retried_before_parsing(self):
+        from unittest.mock import MagicMock
+        import http.client
+        class Response:
+            headers = {'Content-Length': '100'}
+            def __enter__(self):
+                return self
+            def __exit__(self, *args):
+                return False
+            def read(self, limit):
+                return b'#EXTM3U\\n'
+        with patch.object(scanner.urllib.request, 'urlopen', return_value=Response()) as opener, patch.object(scanner.time, 'sleep'):
+            with self.assertRaises(http.client.IncompleteRead):
+                scanner.fetch('https://example.org/source.m3u', timeout=1)
+        self.assertEqual(opener.call_count, 3)
+
     def test_verified_probe_quality_is_carried_forward(self):
         entry = {"url": "https://example.org/stream.m3u8", "name": "Example", "group": "News"}
         class FakeResponse:
