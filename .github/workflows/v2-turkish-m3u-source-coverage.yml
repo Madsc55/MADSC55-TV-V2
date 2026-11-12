@@ -124,15 +124,16 @@ jobs:
           from pathlib import Path
           full=json.loads(Path("v2/reports/ci/turkish-m3u-source-loss.json").read_text())
           probe=json.loads(Path("v2/reports/ci/historical-current-missing-ffprobe-anonymous.json").read_text())
+          missing=full["source_content_audit"]["historical_identifiers_absent_sha256_full"]
           sample=full["source_content_audit"]["historical_identifiers_absent_sha256_sample"]
-          assert len(sample)<=full["source_content_audit"]["historical_identifiers_absent_from_current_sources"]
-          assert len(sample)<=30
-          assert probe["requested_historical_url_sha256"]==len(sample)
-          assert probe["exact_git_history_urls_recovered"]+probe["not_found_in_git_history_count"]==len(sample)
+          assert len(missing)==full["source_content_audit"]["historical_identifiers_absent_from_current_sources"]
+          assert sample==sorted(missing)[:30]
+          assert probe["requested_historical_url_sha256"]==len(missing)
+          assert probe["exact_git_history_urls_recovered"]+probe["not_found_in_git_history_count"]==len(missing)
           assert probe["no_plaintext_stream_urls"]
           assert probe["main_playlist_modified"] is False and probe["ibo_device_verified"] is False
           print("HISTORICAL_EXACT_CURRENT_MISSING",json.dumps({
-            "missing_hashes":len(sample),
+            "missing_hashes":len(missing),
             "actual_exact_git_urls":probe["exact_git_history_urls_recovered"],
             "unrecoverable_from_local_history":probe["not_found_in_git_history_count"],
             "ffprobe_statuses":probe["status_counts"]},sort_keys=True))
