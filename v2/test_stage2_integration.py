@@ -84,6 +84,12 @@ class Stage2IntegrationTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             integrate([{"url": url}, {"url": url}])
 
+    def test_resolution_hint_is_propagated_without_self_verification(self):
+        result = integrate([{"url_sha256": sha_for_url("https://example.invalid/a"),
+                             "name": "Station 1080P", "resolution_verified": True}])
+        self.assertEqual(result["observations"][0]["resolution_hint"], "1080p")
+        self.assertFalse(result["observations"][0]["resolution_verified"])
+
     def test_metadata_cannot_self_certify(self):
         result = integrate([{"url_sha256": sha_for_url("https://example.invalid/a"),
                              "country_verified": True, "category_verified": True,
