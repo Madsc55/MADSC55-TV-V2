@@ -796,3 +796,12 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - Ancak bundan sonra nihai geniş AV doğrulaması, şifreli arşiv/geri yükleme ve 2000'lik gerçek İBO test paketleri üretilir. Mevcut ara tarama kanıtları ve doğrulanmış adaylar kaybedilmez.
 - Koruma: yalnızca MADSC55-TV-V2; ana MADSC55_TV_IBO_CALISANLAR_TEST.m3u8, YEDEKLER, YENİLER, FAVORİLER ve cihaz favorileri değiştirilmez. YEDEKLER ilk iki sıra TRT 1 1440P QHD ve DHA CANLI 720P HD korunur. PR #9 izinsiz birleştirilmez. İBO Player cihaz testlerini kullanıcı yapar.
 - 2026-11-01 başarılı önceki ara tarama: 12.148 yeni URL adayı, 4.098 ffprobe AV doğrulanmış aday, 3 adet 2000 sınırına göre M3U parçası; bu sonuçlar nihai kapsam kanıtı değildir.
+
+
+## 2026-11-12 — Aşama 4 #28/#29/#30: sistem kurulumu ile nihai kanal kabulünü ayır
+- Kullanıcı kararı: Aşama 4 sırasında mevcut/ara taramadaki kanallar üzerinde yeni 1.000/2.000'lik üretim kabulü veya kapsamlı kanal taraması YAPILMAYACAK. Nihai geniş kapsamlı keşif #34 tamamlandıktan sonra çalıştırılacak.
+- ŞİMDİKİ KAPSAM: #28 1.000 kanal paketleme altyapısı; #29 2.000 kanal paketleme altyapısı; #30 M3U biçimi, benzersiz kimlik/URL, sahte/kanıtsız kayıt engeli ve toplu test altyapısı. `v2/build_verified_ibo_packages.py`, test dosyaları ve `v2-ibo-package-safety.yml` bu kurulumun parçalarıdır.
+- #34 SONRASI: yeni geniş kapsamlı tarama → gerçek FFmpeg görüntü+ses kanıtlarının doğrulanması → 1.000 ve ardından 2.000 benzersiz kanalın nihai üretim paketleri → gerçek M3U ve İBO cihaz kabulü. 1.000/2.000 kanalın üretildiği veya kabul edildiği şimdiden iddia edilmeyecek.
+- Önceki ara taramaların raporlanan 4.098 AV adayı, #34 sonrası nihai kanıtla eşdeğer sayılmayacak; korunacak ama bu aşamada yeniden taranmayacak.
+- Ana İBO playlisti, YEDEKLER/YENİLER/FAVORİLER değiştirilmeyecek. Testlerin başarılı GitHub Actions sonucu ayrıca doğrulanmadan 'CI geçti' yazılmayacak.
+- Durum ayrımı: #28/#29/#30 kurulum kapsamı ile nihai üretim kabulü ayrı takip edilecek; yalnızca kanıtlı kabul koşulları sağlandığında ilgili issue kapatılacak.
