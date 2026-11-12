@@ -1,9 +1,6 @@
 name: V2 Sirali Hazirlik Testleri
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - stage3-identity-recovery-20261111
 permissions:
   contents: read
 concurrency:
