@@ -4,7 +4,14 @@ import tempfile
 import unittest
 from build_verified_ibo_packages import eligible, make
 
+def fixture(url):
+    return {"status":"AV_VERIFIED","video_proven":True,"audio_proven":True,"url":url,
+            "av_evidence":{"url":url,"video":True,"audio":True,"sha256":"a"*64,"captured_at":"2026-11-12T12:00:00Z"}}
+
 class PackageAcceptance(unittest.TestCase):
+    def test_untraceable_flags_rejected(self):
+        self.assertFalse(eligible({"status":"AV_VERIFIED","video_proven":True,"audio_proven":True,"url":"https://example.org/a.m3u8"}))
+
     def test_unproven_rejected(self):
         self.assertFalse(eligible({"status":"AV_VERIFIED","video_proven":True,"audio_proven":False,"url":"https://example.org/a.m3u8"}))
 
@@ -12,7 +19,7 @@ class PackageAcceptance(unittest.TestCase):
         with tempfile.TemporaryDirectory() as d:
             root=pathlib.Path(d)
             source=root/"evidence.jsonl"
-            source.write_text(json.dumps({"status":"AV_VERIFIED","video_proven":True,"audio_proven":True,"url":"https://example.org/a.m3u8","tvg_id":"channel-a","name":"Test"})+"\n")
+            source.write_text(json.dumps({**fixture("https://example.org/a.m3u8"),"tvg_id":"channel-a","name":"Test"})+"\n")
             report=make(source,root/"out")
             self.assertEqual(report["verified_unique_channels"],1)
             self.assertEqual(report["packages"]["1000"],"BLOCKED_INSUFFICIENT_AV_EVIDENCE")
@@ -22,7 +29,7 @@ class PackageAcceptance(unittest.TestCase):
     def test_duplicate_identity_rejected(self):
         with tempfile.TemporaryDirectory() as d:
             root=pathlib.Path(d)
-            rows=[{"status":"AV_VERIFIED","video_proven":True,"audio_proven":True,"url":f"https://example.org/{i}.m3u8","tvg_id":"same","name":"Test"} for i in range(2)]
+            rows=[{**fixture(f"https://example.org/{i}.m3u8"),"tvg_id":"same","name":"Test"} for i in range(2)]
             source=root/"evidence.jsonl"
             source.write_text("\n".join(json.dumps(r) for r in rows)+"\n")
             self.assertEqual(make(source,root/"out")["verified_unique_channels"],1)
@@ -32,8 +39,7 @@ class PackageAcceptance(unittest.TestCase):
         with tempfile.TemporaryDirectory() as d:
             root=pathlib.Path(d)
             source=root/"fixture.jsonl"
-            rows=[{"status":"AV_VERIFIED","video_proven":True,"audio_proven":True,
-                   "url":f"https://example.org/{i}.m3u8","tvg_id":f"test-{i}",
+            rows=[{**fixture(f"https://example.org/{i}.m3u8"),"tvg_id":f"test-{i}",
                    "name":f"Fixture {i}","group":"Tests"} for i in range(2000)]
             source.write_text("\n".join(json.dumps(r) for r in rows)+"\n")
             result=make(source,root/"out")
