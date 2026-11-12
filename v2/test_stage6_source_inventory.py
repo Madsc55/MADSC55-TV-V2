@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Offline regression tests for the Stage 6 inventory preflight."""
 import unittest
-from stage6_source_inventory import evaluate
+from stage6_source_inventory import evaluate, source_platform
 
 class Stage6InventoryTests(unittest.TestCase):
     def test_valid_sources_and_finished_dependencies(self):
@@ -25,6 +25,14 @@ class Stage6InventoryTests(unittest.TestCase):
         self.assertEqual(report["unfinished_predecessor_ids"], [33])
         self.assertEqual(report["missing_required_scopes"], ["AZ", "world"])
         self.assertEqual(report["invalid_https_source_ids"], ["same", "same"])
+
+    def test_platform_classification_and_missing_codeberg(self):
+        self.assertEqual(source_platform("https://gist.githubusercontent.com/x/raw/a.m3u"), "gist")
+        self.assertEqual(source_platform("https://raw.githubusercontent.com/x/y/main/a.m3u"), "github")
+        self.assertEqual(source_platform("https://iptv-org.gitlab.io/a.m3u"), "gitlab")
+        self.assertEqual(source_platform("https://codeberg.org/x/y/raw/branch/main/a.m3u"), "codeberg")
+        report = evaluate([{"id": "github", "url": "https://raw.githubusercontent.com/x/y/a.m3u", "scope": "world"}], [])
+        self.assertIn("codeberg", report["missing_required_platforms"])
 
     def test_disabled_source_not_live(self):
         report = evaluate([
