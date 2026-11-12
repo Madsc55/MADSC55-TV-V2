@@ -2,7 +2,7 @@ import json
 import subprocess
 import unittest
 from unittest.mock import patch
-from stream_probe import probe
+from stream_probe import probe, verify_decoded_av
 
 class StreamProbeTests(unittest.TestCase):
     def test_invalid_url(self):
@@ -53,6 +53,19 @@ class StreamProbeTests(unittest.TestCase):
                 self.assertIsNone(result['width'])
                 self.assertIsNone(result['height'])
                 self.assertFalse(result['resolution_verified'])
+
+    @patch('stream_probe.shutil.which', return_value='/usr/bin/ffmpeg')
+    @patch('stream_probe.subprocess.run')
+    def test_decode_requires_successful_ffmpeg_exit(self, run, which):
+        run.return_value = subprocess.CompletedProcess([], 0, '', '')
+        self.assertTrue(verify_decoded_av('https://example.org/live.m3u8')['decoded_av_verified'])
+        run.return_value = subprocess.CompletedProcess([], 1, '', 'failed')
+        self.assertFalse(verify_decoded_av('https://example.org/live.m3u8')['decoded_av_verified'])
+
+    @patch('stream_probe.shutil.which', return_value='/usr/bin/ffmpeg')
+    @patch('stream_probe.subprocess.run', side_effect=subprocess.TimeoutExpired('ffmpeg', 5))
+    def test_decode_timeout_fails_closed(self, run, which):
+        self.assertFalse(verify_decoded_av('https://example.org/live.m3u8')['decoded_av_verified'])
 
     @patch('stream_probe.shutil.which', return_value='/usr/bin/ffprobe')
     @patch('stream_probe.subprocess.run', side_effect=subprocess.TimeoutExpired('ffprobe', 5))
