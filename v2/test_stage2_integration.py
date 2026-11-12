@@ -84,6 +84,16 @@ class Stage2IntegrationTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             integrate([{"url": url}, {"url": url}])
 
+    def test_untrusted_metadata_hints_cannot_override_canonical_values(self):
+        result = integrate([{"url_sha256": sha_for_url("https://example.invalid/a"),
+                             "name": "Station 1080P", "group": "Haber",
+                             "category_hint": "sports", "resolution_hint": "2160p",
+                             "epg_id_candidate": "spoofed"}])
+        row = result["observations"][0]
+        self.assertEqual(row["category_hint"], "news")
+        self.assertEqual(row["resolution_hint"], "1080p")
+        self.assertIsNone(row["epg_id_candidate"])
+
     def test_resolution_hint_is_propagated_without_self_verification(self):
         result = integrate([{"url_sha256": sha_for_url("https://example.invalid/a"),
                              "name": "Station 1080P", "resolution_verified": True}])
