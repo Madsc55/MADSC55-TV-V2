@@ -1,7 +1,7 @@
 ## 12 Kasım 2026 — Aşama 3 / #24 karar kaydı: altyapı kabulü tamam, yeni kanal taraması #34 sonrasına ertelendi
 - Kullanıcı kararı: #24 için mevcut/sistemde bulunan kanallarda yeni keşif, FFmpeg görüntü/ses taraması, kurtarma veya İBO üretimi yapılmayacak. Geniş kapsamlı toplu kanal araması #34 keşif sistemi kurulduktan sonra yapılacak; yayınların toplu gerçek görüntü/ses doğrulaması ve paket üretimi o aşamayı izleyecek.
 - #24 altyapı kabul kanıtı: [Actions #43241168321](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43241168321) — canlı keşif/AV, AES-GCM arşiv, Google Drive'a gerçek yükleme ve ayrı runner'da Drive sürümünden indirme/çözme/7.819 kayıt karşılaştırması başarılı. Bu geçmiş kabul testi tekrar tarama yetkisi sayılmaz.
-- Ana İBO listesi değiştirilmeyecek. [PR #11](https://github.com/Madsc55/MADSC55-TV-V2/pull/11) hâlen açık/draft; teknik kabul başarısı PR merge edildiği veya GitHub issue #24 kapandığı anlamına gelmez. Yeni kanalların nihai toplu kabulü #34 sonrasına ayrıdır.
+- #24, [kanonik görev kaydında](https://github.com/Madsc55/MADSC55-TV-V2/blob/madsc/v2-discovery-bulk-20261031/v2/tasks/state.json) `completed` durumunda. [Kabul denetimi](v2/stage4-evidence-audit.md) aynı koşunun altı başarılı işini ve artefakt özetlerini gösterir. [PR #11](https://github.com/Madsc55/MADSC55-TV-V2/pull/11) taslak olarak açık. Ana İBO blob'u doğrulandı.
 
 ## 12 Kasım 2026 — #24 uçtan uca kabul başarılı
 
