@@ -1,3 +1,8 @@
+## 12 Kasım 2026 — GitHub Actions üretim güvenlik kapısı hatası düzeltmesi
+- PR #11 için Actions run https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43217133634 **failure**. `Verify suspended publishers, no cron and immutable IBO` işinde 10/10 güvenlik regresyonu geçti, ardından `main_actions_security_gate.py` `v2-offline-inventory.yml` için `UNAPPROVED_TRIGGER` ve `UNAPPROVED_PUSH` verdi. Gerçek keşif/AV/arşiv/restore işleri **skipped**.
+- Kök neden: `7b37940d` commit'inde eklenen push tetikleyicisi, üretim workflow kilidiyle çakışıyordu. Güvenlik kilidi gevşetilmeden workflow yeniden yalnızca `workflow_dispatch` olarak değiştirildi (commit `6202ae4c`).
+- **Yeni Actions koşusu başarılı olarak doğrulanmadı.** #24 açık; Aşama 1–6'nın tamamlandığı iddia edilmiyor. Ana İBO playlisti değiştirilmedi.
+
 ## 12 Kasım 2026 — Aşama 1–6 toplu denetim ve CI tetikleme düzeltmesi
 - **Uygulanan:** `.github/workflows/v2-offline-inventory.yml` artık `stage4-24-independent-acceptance` dalında ilgili test/kod dosyaları değiştiğinde push ile otomatik toplu çevrimdışı regresyonu tetikler (commit `7b37940d`). Önceki sürüm yalnızca `workflow_dispatch` içeriyordu.
 - **CI doğrulama sınırı:** Bu değişikliğin tetiklediği push Actions koşusunun gerçek run ID/job sonuçları bu oturumda okunup teyit edilemedi; başarılı test olarak yazılmamalıdır.
