@@ -1,3 +1,9 @@
+## 12 Kasım 2026 — #24 tek koşuda canlı kabul
+
+- PR #11 üzerindeki izole `stage4-24-independent-acceptance` dalında canlı koşu başlatıldı. Ana üretim koruma işi önce çalışır. Sabit Master Engine commit'i gerçek kaynakları keşfeder, tarihî envanteri işler, FFmpeg ile görüntü ve ses doğrular ve şifreli arşivi Actions deposuna yükler.
+- Ayrı runner aynı arşivi artefakt kimliğiyle indirir, kaynak koşunun özetini ve arşiv SHA-256 değerini karşılaştırır, AES ile geri yükler ve 4.955 özgün tarihî kaydı ve AV sonuç sayılarını denetler. Son kabul raporu yalnız doğrulama tamamlanırsa yüklenir.
+- Doğrulanan ön şart koşuları [#9](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/41939434438), [#13 Drive](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43117212383/attempts/5) ve [#23](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42874231734). #24 koşusunun geri yükleme deposu GitHub Actions artefaktlarıdır. #24 canlı koşu sonucu görülene kadar açık.
+
 ## 2 Kasım 2026 — kaynak kimliği bütünlüğü ve 500'lük varsayılan paket (yeni çalışma)
 - `v2/consolidate_inventory.py` eski `source_id` ile yeni `source_ids` aynı kayıtta bulunduğunda ikisini de saklar (59d594e). Regresyon testi eklendi (9e44e86).
 - `v2/real_ibo_scan.py` geçmiş arşivden okunan her iki kaynak kimliği biçimini kayıpsız birleştirir ve varsayılan paket boyutu son kullanıcı kararıyla 500'dür (401d194). Offline regresyon testi eklendi (28c97fa).
