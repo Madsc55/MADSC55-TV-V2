@@ -32,6 +32,9 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Compile discovery modules without running channel searches
+        run: |
+          python -m py_compile v2/discover.py v2/run_all_discovery.py v2/stage6_platform_search.py v2/stage6_search_plan.py v2/advisory_channel_identity_bridge.py v2/youtube_discovery.py v2/official_sites_discovery.py
       - name: Run grouped source inventory regressions
         run: |
           python -m unittest discover -s v2 -p 'test_stage6_source_inventory.py' -v
