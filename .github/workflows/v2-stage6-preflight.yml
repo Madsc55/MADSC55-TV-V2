@@ -1,0 +1,26 @@
+name: V2 Stage 6 Read-only Discovery Preflight
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  stage6-preflight:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run grouped source inventory regressions
+        run: python -m unittest discover -s v2 -p 'test_stage6_source_inventory.py' -v
+      - name: Validate source coverage without changing IBO
+        run: python v2/stage6_source_inventory.py --strict > stage6-preflight.json
+      - name: Upload offline readiness report (not AV evidence)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v2-stage6-offline-readiness
+          path: stage6-preflight.json
+          if-no-files-found: warn
+          retention-days: 30
