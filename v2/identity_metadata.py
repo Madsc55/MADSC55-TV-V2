@@ -1,0 +1,36 @@
+"""Conservative IPTV metadata identity: hints are never verified channel or EPG claims."""
+import re
+
+COUNTRY_SUFFIX = re.compile(r"(?:^|[. _-])(tr|az)(?:[. _-]|$)", re.I)
+CATEGORY_MAP = {
+    "news": "news", "haber": "news", "xəbər": "news",
+    "sport": "sports", "spor": "sports", "idman": "sports",
+    "music": "music", "müzik": "music", "musiqi": "music",
+    "kids": "kids", "çocuk": "kids", "uşaq": "kids",
+    "documentary": "documentary", "belgesel": "documentary", "sənədli": "documentary",
+}
+
+
+def identity_metadata(entry, scope):
+    if not isinstance(entry, dict):
+        raise ValueError("Entry must be an object")
+    tvg_id = entry.get("tvg_id", "")
+    group = entry.get("group", "")
+    if not isinstance(tvg_id, str) or not isinstance(group, str):
+        raise ValueError("Invalid identity metadata")
+    tvg_id = tvg_id.strip()
+    country = scope if scope in ("TR", "AZ") else "unknown"
+    if country == "unknown":
+        match = COUNTRY_SUFFIX.search(tvg_id)
+        if match:
+            country = match.group(1).upper()
+    normalized = group.casefold().strip()
+    category = CATEGORY_MAP.get(normalized, "unclassified")
+    return {
+        "country_hint": country,
+        "country_verified": False,
+        "epg_id_candidate": tvg_id or None,
+        "epg_verified": False,
+        "category_hint": category,
+        "category_verified": False,
+    }
