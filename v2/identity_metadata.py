@@ -24,7 +24,7 @@ def identity_metadata(entry, scope):
         match = COUNTRY_SUFFIX.search(tvg_id)
         if match:
             country = match.group(1).upper()
-    normalized = group.casefold().strip()
+    normalized = re.sub(r"\\s+", " ", group.casefold()).strip()
     category = CATEGORY_MAP.get(normalized, "unclassified")
     return {
         "country_hint": country,
