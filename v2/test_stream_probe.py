@@ -37,6 +37,8 @@ class StreamProbeTests(unittest.TestCase):
         self.assertEqual(result['status'], 'AV_VERIFIED')
         self.assertEqual((result['width'], result['height']), (1920, 1080))
         self.assertTrue(result['resolution_verified'])
+        self.assertEqual(result['evidence_level'], 'ffprobe_stream_metadata')
+        self.assertFalse(result['decoded_av_verified'])
 
     @patch('stream_probe.shutil.which', return_value='/usr/bin/ffprobe')
     @patch('stream_probe.subprocess.run')
