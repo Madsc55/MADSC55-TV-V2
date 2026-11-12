@@ -18,15 +18,19 @@ class TaskEngineTests(unittest.TestCase):
     def scenario_ledger(self):
         """Synthetic baseline: tests must not depend on live task completion."""
         ledger = copy.deepcopy(self.ledger)
-        ledger["statuses"][0]["status"] = "in_progress"
-        ledger["statuses"][11]["status"] = "pending"  # #12 depends on #1
-        ledger["statuses"][1]["status"] = "completed"
-        ledger["statuses"][2]["status"] = "in_progress"
-        ledger["statuses"][3]["status"] = "pending"
-        ledger["statuses"][8]["status"] = "in_progress"
-        # Preserve original baseline for deterministic historical ordering assertions.
-        for task_id in (7, 8, 10, 11, 13):
-            ledger["statuses"][task_id - 1]["status"] = "pending"
+        statuses = {
+            1: "in_progress",
+            2: "completed",
+            3: "in_progress",
+            9: "in_progress",
+            22: "completed",
+            23: "completed",
+            25: "completed",
+            26: "completed",
+            27: "completed",
+        }
+        for row in ledger["statuses"]:
+            row["status"] = statuses.get(row["id"], "pending")
         return ledger
 
     def test_deferred_scope_is_rejected(self):

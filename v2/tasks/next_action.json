@@ -1,19 +1,16 @@
 {
   "schema": 1,
-  "selected_task_id": 9,
+  "selected_task_id": 16,
   "parallel_ready_task_ids": [
-    13,
-    23
+    15
   ],
-  "reason": "User deferred historical recovery #3/#4/#6 (deferred_optional); mandatory scheduler selects #9 official/live broadcaster source provenance and AV separation. #11 depends on #9 and must not be marked complete early. #13 S3 restore and #23 live Master Engine remain independent. #34 only after 30 mandatory tasks including user IBO #32; no AV/device proof is inferred from CI success.",
-  "observed_run": "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42610015392",
+  "reason": "Current ledger: #13 independent Drive and #14 historical preservation completed. Task engine selects #16; #15 is independently ready. #5 is blocked and #6 awaits #5 and original membership evidence. #24 needs integrated live acceptance.",
+  "observed_run": "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43117212383/attempts/5",
   "verified_grouped_tests": [
-    "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42610015411",
-    "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42610015533",
-    "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42610015392",
-    "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42610015523",
-    "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42610015394"
+    "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43139744799",
+    "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43139744816",
+    "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43139745432"
   ],
-  "last_checked_at": "2026-11-09",
+  "last_checked_at": "2026-11-12",
   "selection_requires_fresh_state": true
 }
