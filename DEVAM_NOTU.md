@@ -1,5 +1,13 @@
 ## 12 Kasım 2026 — #34 keşif koşusu ve yeni yayın AV kapsamı
 
+## 12 Kasım 2026 — #34 canlı keşif hatası ve kod düzeltmesi
+
+- Actions #43299369197 `discover` işi `failure`: `v2/advisory_channel_identity_bridge.py` aday sınırı 50.000 iken `run_all_discovery.py` kısmi snapshot güvenlik sınırı 150.000 idi. `ValueError: Invalid candidate list` nedeniyle `candidates.json` yazılmadan `Partial source snapshot missing or unsafe` ikincil hatası oluştu.
+- Commit `90b4e82aa017428fc074f3d7bd2dfe9f32c8e8ab` ile yalnız M3U aday köprüsü sınırı 150.000'e eşitlendi; resmî/YouTube katalog sınırı 50.000 olarak korundu. Bu düzeltme henüz canlı Actions kabulünden geçmedi; #34 ve diğer bağımlı işler açık.
+- #43299056099 offline regressions ve FFmpeg guard işleri success. #43299369197 hata öncesi kaynak denetimi 46/46 erişilebilir, GitHub 183 depo/126 ayrıştırılmış yeni kaynak, YouTube 241 metadata kaydı bildirdi; hiçbiri gerçek AV veya cihaz onayı sayılmadı.
+- Eski kanallara yeniden işlem uygulanmayacak. `main`, ana İBO listesi, tarihî envanter ve cihaz favorileri korunacak. Sonraki iş: yeni commit üzerinde gerçek keşif koşusunu çalıştırıp sonuç artifact'lerini doğrulamak, ardından yalnız yeni adayların AV/arşiv/IBO kabulünü yapmak.
+
+
 - [Toplu çevrimdışı Actions #43299056099](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43299056099) iki işi başarıyla tamamladı. Aynı kaynak ağacında [#34 kaynak keşfi](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43299369197) başladı; ön koşul, kaynak envanteri ve bağımlılık adımları geçti. Gerçek kaynak keşfi bu kayıt sırasında sürüyor.
 - Yeni AV doğrulaması için son kabul tarayıcısına `--fresh-discovery-report` ve `--exclude-known-report` eklendi. Bu mod ana İBO adreslerini, 4.955 tarihî hash'i, bilinen aday raporlarını ve ana listedeki kanalların alternatiflerini FFmpeg öncesinde dışlar. 39 çevrimdışı regresyon geçti. Bu adımda yeni aday AV veya paket kabulü yapılmadı.
 - Önceki otomatik tarihî kontrol tamamlandı. Sonraki geliştirme push’larında bu iş akışı devreye girmez. Ana İBO blob'u `4b1c3cea4b5107a425abab60f62d41f9f81e05a7` doğrulandı.
