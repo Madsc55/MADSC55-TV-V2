@@ -1,3 +1,9 @@
+## 12 Kasım 2026 — #34 keşif adaptörleri (geliştirme dalı)
+- Dal: stage7-34-discovery-adapters-20261112. v2/discovery_34.py: GitHub/GitLab/Codeberg arama API adaptörleri; official/youtube/m3u aday kimliği normalizasyonu; salt-okunur, ağ erişimi yalnızca --network ile.
+- v2/test_discovery_34.py: çevrimdışı birim testleri. .github/workflows/v2-discovery-34-offline.yml: compile, unit test, offline smoke acceptance.
+- Gerçek kaynak taraması yapılmadı; yeni AV kanıtı üretilmedi; ana İBO/YEDEKLER/EPG değiştirilmedi.
+- #34 henüz kabul edilmedi: yeni Actions koşusunun yeşil sonucu ve adaptörlerin gerçek servis yanıtları doğrulanmalı; official/youtube/m3u mevcut keşif modülleriyle üretim entegrasyonu tamamlanmalı.
+
 ## 2 Kasım 2026 — kaynak kimliği bütünlüğü ve 500'lük varsayılan paket (yeni çalışma)
 - `v2/consolidate_inventory.py` eski `source_id` ile yeni `source_ids` aynı kayıtta bulunduğunda ikisini de saklar (59d594e). Regresyon testi eklendi (9e44e86).
 - `v2/real_ibo_scan.py` geçmiş arşivden okunan her iki kaynak kimliği biçimini kayıpsız birleştirir ve varsayılan paket boyutu son kullanıcı kararıyla 500'dür (401d194). Offline regresyon testi eklendi (28c97fa).
