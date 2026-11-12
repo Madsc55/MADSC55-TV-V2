@@ -27,7 +27,8 @@ def eligible(row):
         return False
     url = row.get("url", "")
     p = urllib.parse.urlsplit(url) if isinstance(url, str) else urllib.parse.urlsplit("")
-    return p.scheme in ("https", "http") and bool(p.hostname) and not (p.username or p.password)
+    return (p.scheme in ("https", "http") and bool(p.hostname) and not (p.username or p.password)
+            and not any(ord(c) < 32 or ord(c) == 127 for c in url))
 
 def make(inventory, outdir):
     rows = [json.loads(line) for line in inventory.read_text(encoding="utf-8").splitlines() if line.strip()]
@@ -52,8 +53,8 @@ def make(inventory, outdir):
         lines = ["#EXTM3U"]
         for row in accepted[:target]:
             name = str(row.get("name") or row.get("tvg_id")).replace("\n", " ").replace("\r", " ").replace(",", " ")
-            identity = str(row.get("tvg_id") or row["channel_id"]).replace('"', " ").replace("\\n", " ").replace("\\r", " ")
-            group = str(row.get("group", "")).replace('"', "").replace("\n", " ")
+            identity = str(row.get("tvg_id") or row["channel_id"]).replace('"', " ").replace("\n", " ").replace("\r", " ")
+            group = str(row.get("group", "")).replace('"', "").replace("\n", " ").replace("\r", " ")
             lines += [f'#EXTINF:-1 tvg-id="{identity}" group-title="{group}",{name}', row["url"]]
         payload = "\n".join(lines) + "\n"
         # Validate the generated playlist before publishing it.
