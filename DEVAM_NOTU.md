@@ -1,3 +1,14 @@
+## 12 Kasım 2026 — Aşama 1–6 toplu denetim ve CI tetikleme düzeltmesi
+- **Uygulanan:** `.github/workflows/v2-offline-inventory.yml` artık `stage4-24-independent-acceptance` dalında ilgili test/kod dosyaları değiştiğinde push ile otomatik toplu çevrimdışı regresyonu tetikler (commit `7b37940d`). Önceki sürüm yalnızca `workflow_dispatch` içeriyordu.
+- **CI doğrulama sınırı:** Bu değişikliğin tetiklediği push Actions koşusunun gerçek run ID/job sonuçları bu oturumda okunup teyit edilemedi; başarılı test olarak yazılmamalıdır.
+- **Aşama 1 (#14/#16/#5/#6):** gerçek tarihî URL, kaynak satırları ve harici arşiv kanıtları açık.
+- **Aşama 2 (#15/#17–#21):** URL/SHA, TR/AZ kimlik, EPG/çözünürlük/kategori için toplu gerçek veri kabulü açık.
+- **Aşama 3 (#24):** keşif → FFmpeg video/ses → şifreli arşiv → bağımsız S3 restore aynı gerçek Actions run'ında doğrulanmadı; açık.
+- **Aşama 4 (#28–#30):** 1000/2000 gerçek AV doğrulanmış kanal paketleri kanıtlanmadı; sahte sayı eklenmedi.
+- **Aşama 5 (#31–#33):** toplu son kabul, gerçek İBO Player cihaz ve son arşiv kanıtları açık.
+- **Aşama 6 (#34):** geniş kapsamlı gerçek kaynak taraması ve kanıtlı raporu açık; son sırada tutulur.
+- Ana İBO playlisti, YEDEKLER, favoriler ve arşiv verileri değiştirilmedi. Hiçbir görev yeni kanıt olmadan kapatılmadı.
+
 ## 12 Kasım 2026 — #24 kanıt doğrulama ek korumaları (açık)
 - `v2/stage4_acceptance_gate.py`: boş artifact ve iki farklı kabul aşamasında aynı dosyanın yeniden kullanılmasını reddetme eklendi (commit `a6a95cc7`).
 - `v2/test_stage4_acceptance_gate.py`: iki durum için çevrimdışı regresyon testi eklendi (commit `3a9953c7`).
