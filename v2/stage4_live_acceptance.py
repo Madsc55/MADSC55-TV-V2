@@ -101,7 +101,10 @@ def verify(target, key):
             and len(decoded) == receipt["all_regions_av"]
             and sum(row.get("region_candidate") in ("TR", "AZ") for row in decoded)
                 == receipt["tr_az_av"] > 0, "Restored AV evidence differs from Master results")
-    receipt["restored_from"] = "github-actions-artifact-independent-runner"
+    transport = os.environ.get("STAGE4_RESTORE_TRANSPORT", "github-actions-artifact-independent-runner")
+    require(transport in ("github-actions-artifact-independent-runner", "s3-independent-runner"),
+            "Unrecognized archive restore transport")
+    receipt["restored_from"] = transport
     receipt["restored_records"] = len(rows)
     (target / "accepted.json").write_text(json.dumps(receipt, sort_keys=True) + "\n", encoding="utf-8")
     print(json.dumps(receipt, sort_keys=True))
