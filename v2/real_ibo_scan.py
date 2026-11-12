@@ -317,6 +317,8 @@ def main():
                 recovery_attempts = 0 if candidate['url'] in good_urls else min(prior_attempts + 1, 3)
                 record = {**previous, **candidate,
                           'recovery_attempts': recovery_attempts,
+                          'last_http_status': diagnostics_by_url.get(candidate['url'], {}).get('last_http_status'),
+                          'last_timeout': diagnostics_by_url.get(candidate['url'], {}).get('last_timeout', False),
                           'url_sha256': url_sha256(candidate['url']),
                           'category': category(candidate) if category(candidate) != 'UNCATEGORIZED' else previous.get('category', 'UNCATEGORIZED'),
                           'identity': normalized_identity({**previous, **candidate}),
