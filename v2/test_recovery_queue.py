@@ -22,8 +22,11 @@ class RecoveryQueueTests(unittest.TestCase):
 
     def test_both_media_streams_required(self):
         row = {"url_sha256": sha_for_url("https://example.invalid/live"),
-               "status": "AV_VERIFIED", "video": True, "audio": True}
+               "status": "AV_VERIFIED", "video": True, "audio": True,
+               "decoded_av_verified": True}
         self.assertEqual(len(build_queue([row])["verified"]), 1)
+        self.assertEqual(build_queue([{**row, "decoded_av_verified": False}])["verified"], [])
+        self.assertEqual(build_queue([{k: v for k, v in row.items() if k != "decoded_av_verified"}])["verified"], [])
 
     def test_url_digest_mismatch_is_rejected(self):
         row = {"url": "https://example.invalid/actual",
