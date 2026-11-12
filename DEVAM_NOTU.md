@@ -1,3 +1,10 @@
+## 12 Kasım 2026 — Aşama 4 (#28, #29, #30) üretim kabul durumu
+- İBO üretim paketleyicisi ve sentetik veri reddi testleri ayrı geliştirme dalında: `v2/ibo-packages-28-30-validation`.
+- Paket bütünlüğü ile üretim güvenliği testleri aynı Actions işine bağlandı (988103de). Başarılı Actions sonucu henüz doğrulanmadı.
+- 1.000 ve 2.000 benzersiz gerçek görüntü+ses kanıtlı kanal için doğrulanmış üretim envanteri sunulmadı. **Her iki üretim paketi de teslim edilmedi; #28/#29/#30 kapatılmadı.**
+- Örnek URL'ler ve sentetik test kayıtları gerçek yayın kanıtı değildir. Mevcut SHA-256 alanının biçim kontrolü, bağımsız medya dosyası bütünlüğü kontrolü yerine geçmez.
+- Ana İBO listesi, YEDEKLER, EPG ve favoriler değiştirilmedi.
+
 ## 2 Kasım 2026 — kaynak kimliği bütünlüğü ve 500'lük varsayılan paket (yeni çalışma)
 - `v2/consolidate_inventory.py` eski `source_id` ile yeni `source_ids` aynı kayıtta bulunduğunda ikisini de saklar (59d594e). Regresyon testi eklendi (9e44e86).
 - `v2/real_ibo_scan.py` geçmiş arşivden okunan her iki kaynak kimliği biçimini kayıpsız birleştirir ve varsayılan paket boyutu son kullanıcı kararıyla 500'dür (401d194). Offline regresyon testi eklendi (28c97fa).
