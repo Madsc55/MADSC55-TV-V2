@@ -1,7 +1,5 @@
 name: V2 Stage 6 Live Discovery Evidence (Read Only)
 on:
-  push:
-    branches: [madsc/v2-discovery-bulk-20261031]
   workflow_dispatch:
     inputs:
       approve_live_discovery:
@@ -19,8 +17,8 @@ jobs:
     if: >-
       github.repository_id == '1435646455' &&
       github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' &&
-      ((github.event_name == 'workflow_dispatch' && inputs.approve_live_discovery == true) ||
-      (github.event_name == 'push' && github.event.head_commit.message == 'ci(v2): start approved #34 discovery'))
+      github.event_name == 'workflow_dispatch' &&
+      inputs.approve_live_discovery == true
     runs-on: ubuntu-latest
     timeout-minutes: 90
     steps:
