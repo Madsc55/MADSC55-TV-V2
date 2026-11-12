@@ -3,7 +3,6 @@
 import json
 import sys
 import urllib.error
-import urllib.request
 from discovery_34 import search_url, fetch_json, repository_candidates
 
 def probe(source, query="turkish-iptv"):
