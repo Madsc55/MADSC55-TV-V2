@@ -149,7 +149,7 @@ class TaskEngineTests(unittest.TestCase):
 
     def test_failed_cannot_be_marked_complete(self):
         # Use an unfinished task: repeating an already-completed status is idempotent.
-        row = copy.deepcopy(self.ledger["statuses"][12])
+        row = copy.deepcopy(self.ledger["statuses"][13])  # #14 is open; #13 now has real Drive acceptance
         self.assertNotEqual(row["status"], "completed")
         with self.assertRaisesRegex(ValueError, "No completion"):
             e.safe_transition(row, "completed")
