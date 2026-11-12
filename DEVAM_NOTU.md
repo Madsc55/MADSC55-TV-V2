@@ -1,8 +1,11 @@
-## 12 Kasım 2026 — #24 yetkili Google Drive bağlantısıyla toplu kabul başladı
+## 12 Kasım 2026 — #24 uçtan uca kabul başarılı
 
-- [Actions koşusu 43241168321](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43241168321), #13'ün mevcut Google Drive iş akışından, `madsc/v2-discovery-bulk-20261031` dalında [12c0dc6d](https://github.com/Madsc55/MADSC55-TV-V2/commit/12c0dc6d3fd41de49a2f86c6b1eb3e975573a3e3) ile başlatıldı. #24 test kodu `stage4-24-independent-acceptance` dalındaki `158f77ec` commit'ine sabitlendi.
-- Üretim güvenlik, ana İBO ve özel Drive dosyası erişim kontrolleri başarılı. Google Cloud IAM ayarları değiştirilmeden mevcut bağlantı kimlik doğrulamasını geçti. Canlı keşif → gerçek FFmpeg görüntü ve ses → şifreli arşiv → ayrı runner'dan Drive geri yüklemesi aynı koşuda devam ediyor.
-- **#24 açık.** Son işin başarı sonucu ve geri yükleme makbuzu gelince görev kaydı güncellenecek.
+- [Actions 43241168321](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43241168321) tek koşuda canlı keşif, tarihî envanter, FFmpeg görüntü ve ses doğrulaması, şifreleme, özel Google Drive yükleme ve bağımsız runner'da gerçek geri yükleme adımlarını tamamladı. Altı kabul işi başarılı.
+- 46/46 kaynak ve 7.769 tekil aday işlendi. 801 yayında gerçek görüntü ve ses doğrulandı, bunların 800'ü TR/AZ. Sonuçlandırılmamış AV kontrolü 0.
+- Ayrı runner sabitlenmiş Drive sürümü `4` üzerinden 7.832.688 baytı indirdi. Arşiv SHA-256 `29f5498c3173b39afe5c4bee824e4423cc8229961fb5f7cbf26e402d449f4241`. AES-GCM ve özgün tarihî satır karşılaştırmasıyla 7.819 arşiv kaydı, 4.955 tarihî satır dahil geri yüklendi.
+- [Şifreli arşiv](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43241168321/artifacts/13957249280) ZIP SHA-256 `92766f43a713de6363577b6c179d9669e3d14ae3131e8e0efccd5f6c8007f369`. [Drive geri yükleme makbuzu](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43241168321/artifacts/13958867734) ZIP SHA-256 `b84546022f16e1c1e6583ec132e650f80c09c3ba5ade4e547cba4c086200427c`. Her iki ZIP ve iç arşiv özeti bağımsız olarak hesaplandı, kaynak ve geri yükleme makbuzları eşleşti.
+- Kabul kodu `stage4-24-independent-acceptance` dalındaki `158f77ec` commit'ine sabitlendi. Çalıştırma `madsc/v2-discovery-bulk-20261031` dalından `12c0dc6d` commit'iyle #13'ün mevcut Google Drive iş akışında başlatıldı. `main` ucu `9fc8c286`, `main` ve #24 dalındaki ana İBO blob'u `165c726cd9211f9f51c31f1c718e0911bab79e1b` olarak doğrulandı.
+- Ayrı geliştirme dalı iş akışı denetiminde [önceden var olan Aşama 6 otomatik tetikleme hatası](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43241168754) sürüyor. #24'e ait üretim güvenlik kontrolü ve toplu kabul başarılı.
 
 ## 12 Kasım 2026 — #24 tek koşuda Google Drive geri yüklemesi
 
