@@ -1,3 +1,10 @@
+## 12 Kasım 2026 — Kullanıcı kararı: Aşama 2 altyapı kabulü, canlı kanal taraması ertelendi
+- Kullanıcı, yeni kanal keşfi ile mevcut kanalların tekrar canlı görüntü/ses taramasını sistem tamamlandıktan sonraki toplu #34 aşamasına erteledi. Aşama 2 bu taramaları zorunlu tutmadan **çevrimdışı entegrasyon** olarak yürütülecek. Canlı yayın kabulü yapılmış gibi gösterilmeyecek.
+- `v2/stage2_integration.py`: mevcut gözlemlerden URL SHA256, kaynak kapsamına göre TR/AZ ülke adayı, kategori adayı, kesin XMLTV EPG ID eşleşmesi ve sınırlı kurtarma kuyruğu kararlarını tek bir offline giriş noktasında birleştirir. URL ve sırlar rapora çıkmaz; metadata tek başına yayın kanıtı değildir. Ana İBO listesi değiştirilmez.
+- `v2/test_stage2_integration.py`: URL/SHA uyuşmazlığı, yinelenen URL, TR/EPG/kategori/kuyruk zinciri, sahte doğrulama bayrakları ve AV kabul koşulları için çevrimdışı regresyon.
+- `.github/workflows/v2-ordered-preflight.yml` toplu teste yeni entegrasyon testi eklendi. **Bu commitlerin Actions sonucunun başarılı olduğu henüz doğrulanmadı.** Canlı motorun tamamının bu köprüyü kullandığı da ayrıca doğrulanmalı; bu nedenle görevleri tamamlandı diye kapatma.
+- Önceki güvenlik kapısı yeşil: [run 43254390602](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43254390602). Bu run yeni entegrasyon commitlerinden öncedir ve onların kabul kanıtı değildir.
+
 ## 12 Kasım 2026 — Actions güvenlik kapısı doğrulandı
 - Commit `daad2e0367abf18d8fd416cd48ef15c1f2298f30` sonrası **V2 Main Production Security Gate** run [43254390602](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43254390602) **success**; iş `Verify suspended publishers, no cron and immutable IBO` başarılı. Önceki `UNAPPROVED_TRIGGER` / `UNAPPROVED_PUSH` engeli kaldırıldı.
 - Bu başarı **tam Aşama 2 kabulü değildir**: canlı TR/AZ yayınlarında çözümlenmiş görüntü/ses kanıtları, kurtarma motoruna uçtan uca entegrasyon ve Aşama 2 toplu kabul run'ı ayrıca doğrulanmalı. #15, #17, #18, #19, #20, #21 kanıtsız kapatılmadı. Ana İBO listesi değiştirilmedi.
