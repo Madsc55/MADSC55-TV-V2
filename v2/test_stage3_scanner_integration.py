@@ -5,6 +5,30 @@ import real_ibo_scan as scanner
 
 
 class ScannerStage3IntegrationTests(unittest.TestCase):
+    def test_http_404_is_recorded_for_review(self):
+        import urllib.error
+        from stage3_recovery_queue import build_recovery_queue
+        entry = {"url": "https://example.org/missing.m3u8"}
+        diagnostics = {}
+        failure = urllib.error.HTTPError(entry["url"], 404, "Not Found", {}, None)
+        with patch.object(scanner.urllib.request, "urlopen", side_effect=failure):
+            self.assertIsNone(scanner.check_hls(entry, 2, diagnostics))
+        self.assertEqual(diagnostics["last_http_status"], 404)
+        queue = build_recovery_queue([{**entry, **diagnostics, "recovery_attempts": 1}])
+        self.assertEqual(queue[0]["action"], "REVIEW")
+
+    def test_http_503_is_recorded_for_retry(self):
+        import urllib.error
+        from stage3_recovery_queue import build_recovery_queue
+        entry = {"url": "https://example.org/busy.m3u8"}
+        diagnostics = {}
+        failure = urllib.error.HTTPError(entry["url"], 503, "Unavailable", {}, None)
+        with patch.object(scanner.urllib.request, "urlopen", side_effect=failure):
+            self.assertIsNone(scanner.check_hls(entry, 2, diagnostics))
+        self.assertEqual(diagnostics["last_http_status"], 503)
+        queue = build_recovery_queue([{**entry, **diagnostics, "recovery_attempts": 1}])
+        self.assertEqual(queue[0]["action"], "RETRY")
+
     def test_truncated_source_is_retried_before_parsing(self):
         import http.client
         class Response:
