@@ -37,5 +37,12 @@ class MainActionsGateTests(unittest.TestCase):
         self.assertIn("MAIN_GATE_WRONG_PUSH_BRANCHES",audit_one(GATE,text))
     def test_invalid_yaml_rejected(self):
         self.assertIn("UNPARSEABLE_YAML",audit_one("v2-world-discovery.yml","on: [bad"))
+class Stage3GroupedRegressionGate(unittest.TestCase):
+    def test_stage3_all_offline_contracts(self):
+        """Execute the complete Stage 3 group in the existing approved gate."""
+        from run_stage3_grouped_tests import main
+        self.assertEqual(main(), 0)
+
+
 if __name__=="__main__":
     unittest.main()
