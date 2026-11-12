@@ -15,6 +15,14 @@ class ProductionGuard(unittest.TestCase):
                               "audio":True,"sha256":"fake","captured_at":"2026-11-12"}}
         self.assertFalse(eligible(row))
 
+    def test_control_character_url_rejected(self):
+        row = {"status":"AV_VERIFIED","video_proven":True,"audio_proven":True,
+               "url":"https://example.org/live.m3u8\\n#EXTINF:evil",
+               "av_evidence":{"url":"https://example.org/live.m3u8\\n#EXTINF:evil",
+                              "video":True,"audio":True,"sha256":"a"*64,
+                              "captured_at":"2026-11-12"}}
+        self.assertFalse(eligible(row))
+
     def test_explicit_fixture_rejected(self):
         row = {"status":"AV_VERIFIED","video_proven":True,"audio_proven":True,
                "url":"https://example.org/live.m3u8","tvg_id":"demo",
