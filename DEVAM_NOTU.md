@@ -1,3 +1,9 @@
+## 12 Kasım 2026 — #24 canlı kabul sonucu (doğrulanmış)
+- GitHub Actions run https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43221425954: **4/4 job success** (production-lock, stage4-request, stage4-discover-seal, stage4-restore).
+- Ayrı restore işinin gerçek log çıktısı: `sources_fetched=46`, `candidates=7769`, `historical_records=4955`, `tr_az_av=792`, `all_regions_av=793`, `restored_records=7819`; motor commit `5a1766dfcd5e37eca0cfcaf9e10129116c67db2e`. Bunlar bu koşunun raporladığı sayılardır; 1000/2000 İBO cihaz kabulü değildir.
+- Şifreli arşiv SHA256 `684c660acbe92f30bd606e9c81d19edbb7a17e36eba0c87cec02c6da380b08a5`, `record_count=7819`. Actions artifacts: https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43221425954/artifacts/13949781016 ve restore kanıtı https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43221425954/artifacts/13949321817 .
+- Restore logu açıkça `restored_from=github-actions-artifact-independent-runner` diyor. **S3 restore doğrulanmadı**. #24 S3 kabul şartı devam ediyorsa kapanmamalı. Ana İBO playlisti değişmedi.
+
 ## 12 Kasım 2026 — #24 güncel commit canlı Actions zinciri BAŞARILI (harici depo kabulü açık)
 - [Actions #43220496123](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43220496123), tetikleyen commit `ab520452553034bb959ff426c12281c93a53de4c`: dört işin tamamı **success** (stage4-request, production-lock, stage4-discover-seal, stage4-restore).
 - Canlı tarama: 46/46 kaynak, 7.769 tekil aday, FFmpeg ile 798 görüntü+ses doğrulaması (797 TR/AZ); `verification_unfinished=0`. Bu koşudaki sayılar eski koşunun 803/802 sayılarının yerine geçer.
