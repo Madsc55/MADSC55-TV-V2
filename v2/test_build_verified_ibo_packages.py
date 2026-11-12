@@ -35,7 +35,7 @@ class PackageAcceptance(unittest.TestCase):
             rows=[{"status":"AV_VERIFIED","video_proven":True,"audio_proven":True,
                    "url":f"https://example.org/{i}.m3u8","tvg_id":f"test-{i}",
                    "name":f"Fixture {i}","group":"Tests"} for i in range(2000)]
-            source.write_text("\\n".join(json.dumps(r) for r in rows)+"\\n")
+            source.write_text("\n".join(json.dumps(r) for r in rows)+"\n")
             result=make(source,root/"out")
             self.assertEqual(result["verified_unique_channels"],2000)
             for count in (1000,2000):
