@@ -1,3 +1,10 @@
+## 12 Kasım 2026 — Kesin sıra: önce 34 maddelik sistem, sonra toplu kanal araması
+- Kullanıcı kararı: mevcut/eski kanallar üzerinde yeniden keşif, görüntü/ses denemesi, arşiv kabulü veya İBO üretimi yapılmayacak. Ana İBO listesi değiştirilmeyecek.
+- Şimdi: 34 maddelik sistemin eksik altyapısı, modül bağlantıları, çevrimdışı birim/entegrasyon testleri ve güvenli Actions otomasyonu hazırlanacak. Bu testler gerçek yayın taraması başlatmayacak.
+- Sistem hazır olduktan sonra: #34 geniş kapsamlı keşif topluca çalıştırılacak; bulunan yeni adaylara gerçek görüntü/ses kanıtı, şifreli arşiv/geri yükleme, 1000/2000 İBO üretimi, cihaz kabulü ve son rapor uygulanacak. Kanıt gerektiren işler test edilmeden kapatılmayacak.
+- Aşama 2 #15/#17/#18/#19/#20/#21 için şimdi yalnızca çevrimdışı altyapı kabulü; canlı yayın kanıtı sonraki toplu aşamaya ait.
+- Son doğrulanan güvenlik sonucu: https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43285080150 (success). Ayrı toplu preflight testinin başarısı henüz doğrulanmadı.
+
 ## 12 Kasım 2026 — Son tarayıcı entegrasyonu güvenlik kapısı yeşil
 - `bb7368c45788ea613e9d7ee3a924d671c6c597aa` commit'i için [V2 Main Production Security Gate #176](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43281826409) **success**. Bu, üretim güvenlik kilidi kabulüdür; `v2-ordered-preflight.yml` içindeki Aşama 2 toplu testlerinin çalıştığı anlamına gelmez.
 - `real_ibo_scan.py --stage2-offline-input <JSON> --stage2-offline-output <JSON>` mevcut kayıtları canlı taramaya girmeden `stage2_integration.integrate` üzerinden işler. `v2/test_stage2_integration.py` bu giriş yolunu da ağ ve playback mock engelleriyle sınar.
