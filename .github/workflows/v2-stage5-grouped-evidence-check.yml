@@ -1,0 +1,53 @@
+name: V2 Stage 5 Grouped Evidence Check
+on:
+  push:
+    branches:
+      - stage5-evidence-gated-ibo-20261112
+    paths:
+      - '.github/workflows/v2-stage5-grouped-evidence-check.yml'
+      - 'v2/**'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: v2-stage5-evidence-check-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  grouped-offline-evidence:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install archive dependency
+        run: python -m pip install 'cryptography>=42,<47'
+      - name: Compile V2
+        run: python -m compileall -q v2
+      - name: Protect immutable main IBO playlist
+        run: python v2/test_playlist_invariants.py
+      - name: Run grouped source and AV regressions
+        run: |
+          set -euo pipefail
+          python v2/test_discovery_offline_regressions.py
+          python v2/test_discovery_metadata.py
+          python v2/test_source_provenance.py
+          python v2/test_source_inventory_contract.py
+          python v2/test_source_loss_audit.py
+          python v2/test_archive_acceptance_gate.py
+          python v2/test_stream_probe.py
+          python v2/test_export_ibo_batches.py
+          python v2/test_unified_safety_contract.py
+      - name: Run grouped encrypted archive regressions
+        run: |
+          set -euo pipefail
+          python v2/test_secure_archive.py
+          python v2/test_secure_archive_roundtrip.py
+          python v2/test_consolidate_inventory.py
+      - name: State the acceptance boundary
+        if: always()
+        run: |
+          echo 'This run covers OFFLINE code and fixture checks only.' >> "$GITHUB_STEP_SUMMARY"
+          echo 'It does not establish production decoded AV, independent remote archive restore, or real IBO Player device approval.' >> "$GITHUB_STEP_SUMMARY"
+          echo 'Tasks #31, #32, #33 must remain open until their separate real-world acceptance evidence is verified.' >> "$GITHUB_STEP_SUMMARY"
