@@ -52,27 +52,32 @@ def probe(url, timeout=25, ffprobe='ffprobe'):
 
 
 def verify_decoded_av(url, timeout=25, ffmpeg='ffmpeg'):
-    """Decode both media types, bounded by process timeout; no raw media is persisted."""
+    """Require at least one actually decoded frame from both video and audio."""
     parsed = urlsplit(url)
     if parsed.scheme not in ('http', 'https') or not parsed.hostname or parsed.username or parsed.password:
         return {'decoded_av_verified': False, 'decode_status': 'INVALID_URL'}
     executable = shutil.which(ffmpeg)
     if not executable:
         return {'decoded_av_verified': False, 'decode_status': 'DECODER_UNAVAILABLE'}
-    # A successful decode of both mapped streams is stronger than ffprobe metadata alone.
-    command = [executable, '-nostdin', '-hide_banner', '-v', 'error',
-               '-rw_timeout', str(int(timeout * 1000000)), '-i', url,
-               '-map', '0:v:0', '-map', '0:a:0',
-               '-t', '3', '-f', 'null', '-']
-    try:
-        result = subprocess.run(command, capture_output=True, text=True,
-                                timeout=timeout + 5, check=False)
-    except subprocess.TimeoutExpired:
-        return {'decoded_av_verified': False, 'decode_status': 'TIMEOUT'}
-    except OSError:
-        return {'decoded_av_verified': False, 'decode_status': 'DECODE_FAILED'}
-    return {'decoded_av_verified': result.returncode == 0,
-            'decode_status': 'DECODED_AV' if result.returncode == 0 else 'DECODE_FAILED'}
+    for selector in ('v:0', 'a:0'):
+        command = [executable, '-nostdin', '-hide_banner', '-v', 'error',
+                   '-rw_timeout', str(int(timeout * 1000000)), '-i', url,
+                   '-map', '0:' + selector, '-frames:' + selector[0], '1',
+                   '-f', 'framemd5', '-']
+        try:
+            result = subprocess.run(command, capture_output=True, text=True,
+                                    timeout=timeout + 5, check=False)
+        except subprocess.TimeoutExpired:
+            return {'decoded_av_verified': False, 'decode_status': 'TIMEOUT'}
+        except OSError:
+            return {'decoded_av_verified': False, 'decode_status': 'DECODE_FAILED'}
+        # framemd5 emits a non-comment CSV line only for an actual decoded frame.
+        frames = [line for line in result.stdout.splitlines()
+                  if line.strip() and not line.lstrip().startswith('#')]
+        if result.returncode != 0 or not frames:
+            return {'decoded_av_verified': False, 'decode_status': 'NO_DECODED_FRAME'}
+    return {'decoded_av_verified': True, 'decode_status': 'DECODED_AV'}
+
 
 def main():
     parser = argparse.ArgumentParser()
