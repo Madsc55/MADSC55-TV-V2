@@ -20,13 +20,14 @@ def check(state, tasks):
         if unmet:
             blocked[str(i)] = unmet
     return {
-        "system_ready": not unfinished and not unknown,
+        "recorded_system_tasks_complete": not unfinished and not unknown,
+        "system_ready": False,
         "system_tasks": len(system_ids),
         "system_unfinished": unfinished,
         "blocked_by_system_dependencies": blocked,
         "post_discovery_or_discovery_tasks": sorted(POST_DISCOVERY & set(specs)),
         "task_id_mismatch": unknown,
-        "note": "Read-only readiness assessment, not evidence of completed discovery, real AV, IBO device or archive acceptance."
+        "note": "Recorded statuses alone cannot establish system readiness: latest grouped Actions and deployment evidence must be checked separately. No discovery, real AV, device or archive acceptance is claimed."
     }
 
 def main():
@@ -37,7 +38,7 @@ def main():
     result = check(json.loads(args.state.read_text(encoding="utf-8")),
                    json.loads(args.tasks.read_text(encoding="utf-8")))
     print(json.dumps(result, ensure_ascii=False, indent=2))
-    raise SystemExit(0 if result["system_ready"] else 2)
+    raise SystemExit(0 if result["recorded_system_tasks_complete"] else 2)
 
 if __name__ == "__main__":
     main()
