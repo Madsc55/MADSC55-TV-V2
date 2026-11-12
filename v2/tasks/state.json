@@ -162,8 +162,8 @@
     },
     {
       "id": 13,
-      "status": "blocked",
-      "last_checked_at": "2026-11-12T01:20:56Z",
+      "status": "completed",
+      "last_checked_at": "2026-11-12T01:50:01Z",
       "evidence_urls": [
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42610981885",
         "https://github.com/Madsc55/MADSC55-TV-V2/blob/madsc/v2-discovery-bulk-20261031/v2/independent_s3_restore.py",
@@ -176,10 +176,12 @@
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43117212499",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43117212383/attempts/2",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43117212383/attempts/3",
-        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43117212383/attempts/4"
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43117212383/attempts/4",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43117212383/attempts/5",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43117212383/job/130915187450"
       ],
-      "blocker": "GitHub Actions secret V2_PRODUCTION_AES_KEY_METADATA_B64 is missing. Provide the original private AES metadata as a GitHub Actions secret and verify that the original archive restore completes successfully in Actions.",
-      "reason": "Actions run 43117212383 attempt 4 successfully authenticated to Google Cloud using Workload Identity, downloaded the independent Drive archive as the service account, and verified archive ID, version, size, and SHA-256. The AES restore failed because its secret was missing. A separate fresh Drive download was decrypted with the original AES-256-GCM key and restored 4,955 historical rows and 107 orphan candidates with source provenance."
+      "blocker": null,
+      "reason": "User-authorized Google Drive replacement acceptance: GitHub Actions run 43117212383 latest rerun completed successfully on 2026-11-12. Job 130915187450 authenticated via OIDC, verified independent Drive archive ID/version/size/SHA-256, and logged PASS: original AES-256-GCM restored 4955 historical and 107 orphan records with source provenance. Legacy independent S3 path is not claimed to have passed; no AWS/S3 credentials or restore were used. Main IBO playlist unchanged."
     },
     {
       "id": 14,
