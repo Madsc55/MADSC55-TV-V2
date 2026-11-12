@@ -10,6 +10,8 @@ on:
       - 'v2/stage6_platform_search.py'
       - 'v2/test_stage6_platform_search.py'
       - 'v2/test_stage6_advisory_limit.py'
+      - 'v2/test_stage6_no_premature_discovery.py'
+      - '.github/workflows/v2-stage6-live-discovery.yml'
       - 'v2/advisory_channel_identity_bridge.py'
       - 'v2/discover.py'
       - 'v2/test_stage6_search_plan.py'
@@ -43,6 +45,7 @@ jobs:
           python -m unittest discover -s v2 -p 'test_stage6_search_plan.py' -v
           python -m unittest discover -s v2 -p 'test_stage6_platform_search.py' -v
           python -m unittest discover -s v2 -p 'test_stage6_advisory_limit.py' -v
+          python -m unittest discover -s v2 -p 'test_stage6_no_premature_discovery.py' -v
       - name: Validate source coverage without changing IBO
         run: |
           python v2/stage6_source_inventory.py --validate-config > stage6-preflight.json
