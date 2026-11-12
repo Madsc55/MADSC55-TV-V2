@@ -1,0 +1,28 @@
+name: V2 Discovery 34 Offline Acceptance
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - stage7-34-discovery-adapters-20261112
+    paths:
+      - 'v2/discovery_34.py'
+      - 'v2/test_discovery_34.py'
+      - '.github/workflows/v2-discovery-34-offline.yml'
+jobs:
+  offline-acceptance:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Compile and offline unit tests
+        run: |
+          python -m py_compile v2/discovery_34.py v2/test_discovery_34.py
+          PYTHONPATH=v2 python -m unittest -v test_discovery_34
+      - name: Offline smoke test (no network)
+        run: |
+          python v2/discovery_34.py --output /tmp/discovery-34.json
+          python -c 'import json; d=json.load(open("/tmp/discovery-34.json")); assert d["mode"]=="offline" and d["av_verified"]==0'
