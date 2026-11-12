@@ -1,3 +1,8 @@
+## 12 Kasım 2026 — Güvenlik kapısı regresyonu düzeltildi
+- Actions https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43230283047 başarısız: 10/10 birim testi başarılı, ancak `WORKFLOW_INVENTORY.unexpected=["v2-stage4-s3-restore.yml"]` nedeniyle üretim kapısı reddetti. Canlı test/restore atlandı; playlist değişmedi.
+- Kök neden: S3 workflow dosyası fail-closed beklenen dosya listesinde yoktu. `f4e0ece4` commit'i yeni **yalnızca elle tetiklenen, read-only** workflow adını açıkça listeye ekledi; cron, push, yazma yetkileri ve IBO hash denetimleri korunuyor.
+- Bu düzeltmenin GitHub Actions sonucu ayrıca doğrulanmadan başarılı kabul edilmeyecek. Gerçek S3 çalışması ve #24 kapanışı bekliyor.
+
 ## 12 Kasım 2026 — Bağımsız S3 restore yolu eklendi, kabul bekliyor
 - Canlı Actions #43221425954: 4/4 job success, restore kaynak türü GitHub Actions artifact, **S3 değil**. Şifreli arşiv ve restore artifact kanıtları bir önceki kayıt altında.
 - Yeni `.github/workflows/v2-stage4-s3-restore.yml` yalnızca elle `workflow_dispatch` ile tetiklenir; read-only GitHub izinleri kullanır. Kaynak canlı run ID + SHA256 receipt gerekir. Önce Actions arşivini S3'e aktarır, sonra **ayrı runner** S3'ten indirip SHA256, şifre çözme, 4955 tarihî kayıt ve AV kayıt bütünlüğünü doğrular. S3 bucket/region/erişim bilgileri ile arşiv anahtarı GitHub Actions secrets üzerinden gerekir; eksikse fail-closed.
