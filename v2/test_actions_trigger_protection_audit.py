@@ -91,6 +91,17 @@ class ActionsTriggerProtectionTests(unittest.TestCase):
                      "orphan-46-live-recovery"):
             self.assertEqual(jobs[name].get("if"), "${{ false }}", name)
 
+    def test_stage6_discovery_rejects_a_push_without_the_approval_guard(self):
+        path = Path(__file__).resolve().parents[1] / ".github/workflows/v2-stage6-live-discovery.yml"
+        source = path.read_text(encoding="utf-8")
+        self.assertEqual(validate_workflow(path, source)[0], [])
+        unguarded = source.replace(
+            "github.event.head_commit.message == 'ci(v2): start approved #34 discovery'",
+            "true",
+        )
+        self.assertIn("STAGE6_DISCOVERY_REQUIRES_EXPLICIT_REQUEST",
+                      validate_workflow(path, unguarded)[0])
+
     def test_unknown_automatic_push_is_rejected(self):
         text = fixture("  push:\n    branches: [" + DEV + "]\n")
         issues, _ = validate_workflow(Path("unreviewed-discovery.yml"), text)

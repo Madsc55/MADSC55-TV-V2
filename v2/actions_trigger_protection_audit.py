@@ -16,6 +16,13 @@ import yaml
 
 DEV = "madsc/v2-discovery-bulk-20261031"
 IBO = "MADSC55_TV_IBO_CALISANLAR_TEST.m3u8"
+STAGE6_DISCOVERY = "v2-stage6-live-discovery"
+STAGE6_REQUEST = (
+    "github.repository_id == '1435646455' && "
+    "github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' && "
+    "((github.event_name == 'workflow_dispatch' && inputs.approve_live_discovery == true) || "
+    "(github.event_name == 'push' && github.event.head_commit.message == 'ci(v2): start approved #34 discovery'))"
+)
 DRIVE_RESTORE = "v2-independent-drive-restore"
 STAGE4_DRIVE_CONDITION = (
     "github.event_name == 'push'" " && "
@@ -84,7 +91,7 @@ MANUAL_NETWORK_OR_MEDIA = frozenset({
     "v2-postscan-triage",
     "v2-manual-source-audit",
     "v2-targeted-tr-az-av",
-    "v2-stage6-live-discovery",
+    STAGE6_DISCOVERY,
 })
 # These are existing read-only regression / source-feed coverage checks. The
 # whitelist is explicit so a newly added workflow cannot opt into push scans.
@@ -100,6 +107,7 @@ SAFE_PUSH_CI = frozenset({
     "v2-ordered-preflight",
     "v2-playlist-safety",
     "v2-stage6-preflight",
+    STAGE6_DISCOVERY,
     "v2-source-adapter-batch",
     "v2-source-integration-batch",
     "v2-stage5-archive-acceptance",
@@ -214,7 +222,12 @@ def validate_workflow(path, source):
             errors.append("LEGACY_PUBLISHER_MISSING_READONLY_LOCK")
         if "4b1c3cea4b5107a425abab60f62d41f9f81e05a7" not in source:
             errors.append("LEGACY_PUBLISHER_MISSING_PLAYLIST_HASH")
-    if name in MANUAL_NETWORK_OR_MEDIA | MANUAL_ARTIFACT_ONLY and set(events) != {"workflow_dispatch"}:
+    if name == STAGE6_DISCOVERY:
+        if (set(events) != {"workflow_dispatch", "push"} or set(jobs) != {"discover"}
+                or not isinstance(jobs["discover"], dict)
+                or jobs["discover"].get("if") != STAGE6_REQUEST):
+            errors.append("STAGE6_DISCOVERY_REQUIRES_EXPLICIT_REQUEST")
+    elif name in MANUAL_NETWORK_OR_MEDIA | MANUAL_ARTIFACT_ONLY and set(events) != {"workflow_dispatch"}:
         errors.append("NETWORK_OR_MEDIA_NOT_MANUAL_ONLY")
     if name in MANUAL_NETWORK_OR_MEDIA and name not in LOCKED_PUBLISHERS:
         if permissions.get("contents") != "read":

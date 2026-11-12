@@ -15,7 +15,10 @@ from discover import ROOT, entries, fetch
 
 CONFIG = ROOT / "v2/config/sources.json"
 OUT = ROOT / "v2/reports/github-source-discovery.json"
+from stage6_search_plan import TERMS as STAGE6_TERMS
+
 QUERIES = ["turkish iptv m3u", "turkiye m3u", "tr iptv playlist", "turkish tv playlist", "türkçe canlı tv m3u", "turk kanallari m3u", "turkish channels iptv", "iptv tr m3u8", "türk televizyon m3u", "turkish live tv playlist", "azerbaijan iptv m3u", "azerbaycan tv m3u", "azeri iptv playlist", "turk azeri iptv", "free turkish tv m3u", "turkish live channels m3u8", "türk iptv ücretsiz", "canlı tv izle m3u", "turkish diaspora iptv", "tr az channels playlist", "güneş tv canlı yayın m3u", "rec tv canlı yayın m3u", "gopik tv canlı yayın m3u", "azerbaycan türkçe canlı tv m3u", "turkish television germany m3u", "turkish tv netherlands m3u"]
+QUERIES = list(dict.fromkeys([*QUERIES, *STAGE6_TERMS]))
 MAX_REPOS = 320
 MAX_FILES = 320
 GITHUB_SEARCH_PAGE_SIZE = 100  # REST search/repositories permits up to 100 per page

@@ -8,10 +8,11 @@ import json
 import re
 from urllib.parse import quote, urlsplit
 from webpage_source_discovery import candidate_url
+from stage6_search_plan import TERMS as STAGE6_TERMS
 
 GITLAB_API = "https://gitlab.com/api/v4/projects"
 CODEBERG_API = "https://codeberg.org/api/v1/repos/search"
-TERMS = ("iptv tr", "turkish iptv", "azerbaijan iptv", "m3u turk")
+TERMS = ("iptv tr", "turkish iptv", "azerbaijan iptv", "m3u turk", *STAGE6_TERMS)
 MAX_PROJECTS = 12
 MAX_PATHS = 30
 
