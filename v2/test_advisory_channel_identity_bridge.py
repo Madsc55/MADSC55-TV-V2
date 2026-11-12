@@ -4,7 +4,7 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
-from advisory_channel_identity_bridge import link_advisory_identities
+from advisory_channel_identity_bridge import link_advisory_identities, link_or_defer, MAX_CANDIDATES
 
 def h(value):
     return hashlib.sha256(value.encode()).hexdigest()
@@ -55,6 +55,19 @@ class AdvisoryBridgeTests(unittest.TestCase):
                                         self.youtube.with_name("missing2.json"))
         self.assertEqual(report["links"],[])
         self.assertEqual(report["official_catalog_status"],"MISSING_OR_INVALID")
+    def test_worldwide_candidate_boundary_is_consistent(self):
+        self.assertEqual(MAX_CANDIDATES, 150000)
+        report = link_or_defer([], self.official, self.youtube, max_candidates=0)
+        self.assertFalse(report["av_verified"])
+        self.assertEqual(report["linked_m3u_candidates"], 0)
+
+    def test_over_limit_defers_without_claiming_av_or_writing_playlist(self):
+        report = link_or_defer([{}], self.official, self.youtube, max_candidates=0)
+        self.assertEqual(report["status"], "DEFERRED_TOO_MANY_CANDIDATES")
+        self.assertEqual(report["candidate_count"], 1)
+        self.assertFalse(report["av_verified"])
+        self.assertFalse(report["main_playlist_modified"])
+
     def test_bad_candidate_digest_is_rejected(self):
         with self.assertRaisesRegex(ValueError,"hash"):
             link_advisory_identities([dict(self.candidates[0],url_sha256="bad")],self.official,self.youtube)
