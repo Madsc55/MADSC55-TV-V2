@@ -23,7 +23,9 @@ PROTECTED_PLAYLIST_BLOB = "4b1c3cea4b5107a425abab60f62d41f9f81e05a7"
 PROTECTED_HISTORY_SHA256 = "ee00a844a028e3410715d411467a2d3306f5f5cc4565766140b6438e786cdd27"
 
 ROOT = pathlib.Path(__file__).resolve().parent
-def plan(archive=None, previous_report=None, include_youtube=True, source_only=False):
+def plan(archive=None, previous_report=None, include_youtube=True, source_only=False, *, include_world=False):
+    if include_world and not source_only:
+        raise ValueError("Worldwide discovery requires source-only mode")
     steps = [
         [sys.executable, str(ROOT / "source_availability_audit.py"), "--audit-public-sources"],
         [sys.executable, str(ROOT / "github_source_discovery.py")],
@@ -49,6 +51,8 @@ def plan(archive=None, previous_report=None, include_youtube=True, source_only=F
         steps[-3].extend(["--encrypted-archive", str(archive)])
     if include_youtube:
         steps.insert(-3, [sys.executable, str(ROOT / "youtube_discovery.py")])
+    if include_world:
+        steps[-3].append("--include-world")
     if previous_report:
         steps[-3].extend(["--previous-report", str(previous_report)])
     return steps
@@ -174,13 +178,17 @@ def main():
                         help="Read-only complete adapter search, no archive or playlist writes; candidates are not durably backed up")
     parser.add_argument("--previous-report", type=pathlib.Path)
     parser.add_argument("--skip-youtube", action="store_true", help="Skip YouTube advisory scan; coverage is partial")
+    parser.add_argument("--include-world", action="store_true")
     args = parser.parse_args()
     if args.source_only == bool(args.encrypted_archive):
         parser.error("Select exactly one of --source-only or --encrypted-archive")
+    if args.include_world and not args.source_only:
+        parser.error("--include-world requires --source-only")
     include_youtube = not args.skip_youtube
     preflight(args.encrypted_archive, include_youtube, source_only=args.source_only)
     execute(plan(args.encrypted_archive, args.previous_report, include_youtube,
-                 source_only=args.source_only), allow_readonly_partial=args.source_only)
+                 source_only=args.source_only, include_world=args.include_world),
+            allow_readonly_partial=args.source_only)
     print("Source discovery stages finished; check each report for PARTIAL coverage.")
     if args.source_only:
         print("SOURCE_ONLY: no new candidates written to a durable encrypted archive.")

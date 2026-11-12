@@ -173,7 +173,7 @@ def recognized_channel_ids(source_texts, scopes):
                     known.add(item["tvg_id"].strip().casefold())
     return known
 
-def discover(source_texts, live_text, scopes):
+def discover(source_texts, live_text, scopes, *, include_world=False):
     existing_urls = {e["url"] for e in entries(live_text)}
     existing_keys = {key(e) for e in entries(live_text) if e["tvg_id"]}
     # TR/AZ and Turkish-language playlists supply reliable cross-source identities.
@@ -187,7 +187,7 @@ def discover(source_texts, live_text, scopes):
     for source_id, content in source_texts:
         for e in entries(content):
             recognized = bool(e["tvg_id"].strip() and e["tvg_id"].strip().casefold() in known_ids)
-            if not (turkish_candidate(e, scopes.get(source_id, 'candidate')) or recognized):
+            if not (include_world or turkish_candidate(e, scopes.get(source_id, 'candidate')) or recognized):
                 continue
             if e["url"] in existing_urls:
                 continue
@@ -219,7 +219,11 @@ def main():
                    help="Read-only bounded parsing of public GitHub/Gist and GitLab/Codeberg M3U source references")
     p.add_argument("--include-approved-live-page-indexes", action="store_true",
                    help="Check approved broadcaster HTML pages for real M3U channel-list links only")
+    p.add_argument("--include-world", action="store_true",
+                   help="Include worldwide source candidates in the read-only hash report")
     args = p.parse_args()
+    if args.include_world and args.encrypted_archive:
+        p.error("--include-world is supported for read-only discovery only")
     if args.limit < 0:
         p.error("--limit must be zero or positive")
     if args.snapshot_output:
@@ -439,7 +443,7 @@ def main():
         restored = restore(args.encrypted_archive)
         if archived and not archived.issubset({x["url"] for x in restored}):
             raise SystemExit("Encrypted archive restore verification failed")
-    result = {"schema": 1, "mode": "read-only", "configured_and_discovered_sources": len(sources), "configured_inventory_total": len(configured), "retired_configured_source_ids": [item["id"] for item in retired_sources], "source_count": len(loaded), "errors": errors, "source_audit": source_audit, "candidates": discover(loaded, live, scopes)}
+    result = {"schema": 1, "mode": "read-only", "configured_and_discovered_sources": len(sources), "configured_inventory_total": len(configured), "retired_configured_source_ids": [item["id"] for item in retired_sources], "source_count": len(loaded), "errors": errors, "source_audit": source_audit, "candidates": discover(loaded, live, scopes, include_world=args.include_world)}
     result["coverage_status"] = ("OFFLINE_NO_NETWORK" if args.offline else
                                  "NO_SOURCES_ACCESSIBLE" if not loaded else
                                  "COMPLETE_SOURCE_FETCH" if not errors else "PARTIAL_SOURCE_FETCH")

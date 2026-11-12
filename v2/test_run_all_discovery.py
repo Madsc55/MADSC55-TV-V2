@@ -63,6 +63,21 @@ class RunnerTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             plan()
 
+    def test_worldwide_scope_is_opt_in_and_excludes_existing_playlist_urls(self):
+        from discover import discover
+        old = "#EXTINF:-1,Known\nhttps://example.org/known.m3u8\n"
+        new = "#EXTINF:-1,New\nhttps://example.org/new.m3u8\n"
+        sources = [("world", "#EXTM3U\n" + old + new)]
+        scopes = {"world": "world"}
+        self.assertEqual(discover(sources, old, scopes), [])
+        rows = discover(sources, old, scopes, include_world=True)
+        self.assertEqual([row["name"] for row in rows], ["New"])
+        self.assertNotIn("url", rows[0])
+        self.assertIn("--include-world", plan(source_only=True, include_world=True)[-3])
+        self.assertNotIn("--include-world", plan(source_only=True)[-3])
+        with self.assertRaises(ValueError):
+            plan(pathlib.Path("/tmp/private.enc"), include_world=True)
+
     def test_source_only_checks_protected_hashes_without_cryptographic_bypass(self):
         from run_all_discovery import check_immutable_read_only_baseline
         check_immutable_read_only_baseline()

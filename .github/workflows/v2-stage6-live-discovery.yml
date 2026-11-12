@@ -60,7 +60,7 @@ jobs:
         timeout-minutes: 75
         env:
           GITHUB_TOKEN: ${{ github.token }}
-        run: python v2/run_all_discovery.py --run-all --source-only
+        run: python v2/run_all_discovery.py --run-all --source-only --include-world
       - name: Check protected playlist and history
         if: always()
         run: |
