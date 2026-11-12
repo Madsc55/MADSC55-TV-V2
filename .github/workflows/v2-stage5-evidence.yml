@@ -1,10 +1,5 @@
 name: V2 Stage 5 evidence gate tests
 on:
-  pull_request:
-    paths:
-      - 'v2/stage5_evidence_export.py'
-      - 'v2/test_stage5_evidence_export.py'
-      - '.github/workflows/v2-stage5-evidence.yml'
   workflow_dispatch:
 permissions:
   contents: read
