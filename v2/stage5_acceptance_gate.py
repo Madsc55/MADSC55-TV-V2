@@ -38,6 +38,12 @@ def evaluate(record):
                 missing.append(key + "_invalid_https")
         if number == "33" and not re.fullmatch(r"[a-fA-F0-9]{64}", str(data.get("final_archive_sha256", ""))):
             missing.append("final_archive_sha256_invalid")
+        if number == "31" and data.get("real_world_checks_passed") is not True:
+            missing.append("real_world_checks_passed_required")
+        if number == "32" and data.get("device_test_confirmed_by_user") is not True:
+            missing.append("device_test_confirmed_by_user_required")
+        if number == "33" and data.get("archive_restore_verified") is not True:
+            missing.append("archive_restore_verified_required")
         if number == "31" and data.get("discovery_batch_id") == "legacy":
             missing.append("new_discovery_batch_required")
         if number == "32" and data.get("user_approval") is not True:
