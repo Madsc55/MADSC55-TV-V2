@@ -1,3 +1,11 @@
+## 12 Kasım 2026 — #24 tek koşuda Google Drive geri yüklemesi
+
+- `e1a57ba0` yeni şifreli arşivi bu görev için ayrılmış özel Drive dosyasına yükleyip sürümü sabitliyor. Ayrı Actions runner yalnızca o Drive sürümünü indiriyor ve boyut, SHA-256, AES-GCM, tarihî satırlar ve gerçek FFmpeg AV kayıtlarını doğruluyor. GitHub depo izinleri salt okunur.
+- `aea73070` canlı tetiklemeyi yalnızca `stage4-24-independent-acceptance` dalına yapılan işaretli push'larla sınırlandırdı. Yerelde 27 test, üretim workflow kilidi ve ana İBO kontrolü geçti.
+- [PR koşusu 43237551922](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43237551922) ve [push koşusu 43238025090](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43238025090) güvenlik ve İBO koruma adımlarını geçti. Her iki koşuda Google OIDC, `iam.serviceAccounts.getAccessToken` iznini reddetti. [Push iş günlüğü](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43238025090/job/131250668794). Canlı işler ön denetimden sonra atlandı.
+- **#24 açık.** Sıradaki işlem `madsc55-v2-drive-backup` servis hesabı için yalnızca izole push dalının Workload Identity kimliğine `roles/iam.workloadIdentityUser` yetkisi vermek ve 43238025090 koşusunun başarısız işlerini yeniden çalıştırmaktır. #13'ün ayrı başarılı koşusu bu dalın yetkisini kanıtlamaz.
+- `main` ucu `9fc8c286`, iki daldaki ana İBO dosyasının blob'u `165c726cd9211f9f51c31f1c718e0911bab79e1b` olarak doğrulandı.
+
 ## 12 Kasım 2026 — #24 S3 gerçek restore kaynak koşu kimliği hatası düzeltildi
 - S3 workflow'u `GITHUB_RUN_ID` sistem değişkenini kaynak koşunun ID'siyle değiştirmeye çalışıyordu. GitHub varsayılan `GITHUB_*` değişkenleri güvenilir biçimde override edilemez; farklı restore runner koşusunda AES/HMAC anahtarı yanlış türetilebilir.
 - `v2/stage4_live_acceptance.py` artık doğrulama anahtarını ve makbuzun run ID kontrolünü `STAGE4_SOURCE_RUN_ID` üzerinden yapabilir; normal canlı Actions restore davranışı değişmez. `.github/workflows/v2-stage4-s3-restore.yml` bu açık kaynak kimliğini iletir.
