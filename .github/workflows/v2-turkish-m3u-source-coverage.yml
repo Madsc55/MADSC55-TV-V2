@@ -1,41 +1,5 @@
 name: V2 Turkish M3U Source Coverage and Historical Loss
 on:
-  push:
-    branches: [madsc/v2-discovery-bulk-20261031]
-    paths:
-      - 'v2/source_loss_audit.py'
-      - 'v2/test_source_loss_audit.py'
-      - 'v2/turkish_m3u_source_audit.py'
-      - 'v2/test_turkish_m3u_source_audit.py'
-      - 'v2/config/sources.json'
-      - 'v2/source_failover.py'
-      - 'v2/test_source_failover.py'
-      - 'v2/historical_targeted_playback.py'
-      - 'v2/test_historical_targeted_playback.py'
-      - 'v2/historical_exact_real_av.py'
-      - 'v2/discover.py'
-      - 'v2/m3u_source_content_audit.py'
-      - 'v2/test_m3u_source_content_audit.py'
-      - 'v2/history/run60-dynamic-source-ledger.json'
-      - 'v2/run60_source_ledger.py'
-      - 'v2/test_run60_source_ledger.py'
-      - 'v2/test_run60_source_discovery.py'
-      - 'v2/historical_exact_real_av.py'
-      - 'v2/test_historical_exact_real_av.py'
-      - 'v2/historical_world_av_bridge.py'
-      - 'v2/test_historical_world_av_bridge.py'
-      - 'v2/orphan_world_av_bridge.py'
-      - 'v2/test_orphan_world_av_bridge.py'
-      - 'v2/orphan_evidence_triage.py'
-      - 'v2/test_orphan_evidence_triage.py'
-      - 'v2/orphan_curated_traz_sources.py'
-      - 'v2/test_orphan_curated_traz_sources.py'
-      - 'v2/orphan_curated_traz_batch.py'
-      - 'v2/test_orphan_curated_traz_batch.py'
-      - 'v2/orphan_m3u_recovery.py'
-      - 'v2/test_orphan_m3u_recovery.py'
-      - '.github/workflows/v2-world-discovery.yml'
-      - '.github/workflows/v2-turkish-m3u-source-coverage.yml'
   workflow_dispatch:
 
 permissions:

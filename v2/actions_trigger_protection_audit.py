@@ -73,6 +73,7 @@ MANUAL_NETWORK_OR_MEDIA = frozenset({
     "v2-youtube-discovery",
     "v2-historical-recovery",
     "v2-historical-targeted-playback",
+    "v2-turkish-m3u-source-coverage",
     "v2-orphan-m3u-recovery",
     "v2-stage5-orphan-reseal",
     "v2-stage5-historical-reseal",
@@ -112,7 +113,6 @@ SAFE_PUSH_CI = frozenset({
     "v2-source-integration-batch",
     "v2-stage5-archive-acceptance",
     "v2-stage5-final-production-archive",
-    "v2-turkish-m3u-source-coverage",
     "v2-actions-trigger-protection",
     "v2-traz-av-evidence-union",
 })

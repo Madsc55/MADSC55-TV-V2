@@ -1,3 +1,9 @@
+## 12 Kasım 2026 — #34 çalıştırma ve eski yayın kontrolü koruması
+
+- Yeni keşif, toplu Actions testinden geçmiş aynı kaynak ağacına açık bir çalıştırma isteği geldiğinde çalışır. GitHub/Gist, GitLab/Codeberg ve dünya kapsamı için sorgular gerçek keşif koordinatörüne bağlandı. Ana İBO listesi korundu.
+- Dünya kapsamı güncellemesinde eski [tarihî yayın kontrolü](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43298820658) push ile istemeden tetiklendi. Bu iş akışı elle tetiklemeye alındı; sonuçları #34’ün yeni kanal kanıtı sayılmaz.
+- #34, gerçek yeni keşif, AV ve arşiv kanıtları tamamlanana kadar açık.
+
 ## 12 Kasım 2026 — Sistem kurulumu, toplu test ve yeni keşif sırası
 
 - 34 görevlik kurulumun toplu testi çevrimdışıdır. Mevcut kanallarda yeniden tarama, FFmpeg yayın doğrulaması, kurtarma veya İBO paketi üretimi bu adımda yapılmaz.
