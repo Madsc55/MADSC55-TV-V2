@@ -1,3 +1,10 @@
+## 12 Kasım 2026 — Birinci iş #15 ve #17–#21: çevrimdışı kabul kanıtı
+- `2d745c6b27beca77c22714227aabdab8dacf1f03` için V2 Main Production Security Gate #230 **success**: https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43321329335
+- Onaylı güvenlik kapısında Stage 2/3 grubunun **50 testi** (kimlik, kaynak, XMLTV/EPG, kategori, çözünürlük ipucu, entegrasyon) ve kapının **11 testi** başarılı. Kaynak URL özeti ve sahte metadata reddi sınandı. Bu **çevrimdışı altyapı kabulüdür**, canlı AV kanıtı değildir.
+- Önceki kırmızı koşuların nedenleri giderildi: Azerice `İdman` için Unicode dotted-I normalizasyonu, izinsiz PR workflow tetikleyicisinin geri alınması ve bağımlılığı olmayan güvenlik kapısına `cryptography` gerektiren testin eklenmemesi.
+- `v2-ordered-preflight.yml` ayrı `workflow_dispatch` zincirinin yeşil sonucu **henüz doğrulanmadı**. Bu nedenle altı görev **nihai kapalı olarak işaretlenmedi**. `v2/tasks/state.json` bu dalda mevcut değil; uydurma görev durumu yazılmadı.
+- Ana İBO listesi değiştirilmedi; kapsamlı kanal taraması yapılmadı.
+
 ## 12 Kasım 2026 — Kesin sıra: önce 34 maddelik sistem, sonra toplu kanal araması
 - Kullanıcı kararı: mevcut/eski kanallar üzerinde yeniden keşif, görüntü/ses denemesi, arşiv kabulü veya İBO üretimi yapılmayacak. Ana İBO listesi değiştirilmeyecek.
 - Şimdi: 34 maddelik sistemin eksik altyapısı, modül bağlantıları, çevrimdışı birim/entegrasyon testleri ve güvenli Actions otomasyonu hazırlanacak. Bu testler gerçek yayın taraması başlatmayacak.
