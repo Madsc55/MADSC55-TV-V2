@@ -8,7 +8,7 @@ def filled():
     for number, fields in REQUIRED.items():
         for field in fields:
             if field.endswith("_url"):
-                tasks[number][field] = "https://evidence.invalid/test"
+                tasks[number][field] = "https://github.com/example/fixture-only"
     tasks["33"]["final_archive_sha256"] = "a" * 64
     tasks["31"]["discovery_batch_id"] = "new-batch-fixture"
     tasks["32"]["user_approval"] = True
@@ -41,6 +41,9 @@ def main():
     bad_url = filled()
     bad_url["tasks"]["31"]["real_av_evidence_url"] = "fixture-only"
     assert not evaluate(bad_url)["tasks"]["31"]["accepted"]
+    reserved_domain = filled()
+    reserved_domain["tasks"]["31"]["real_av_evidence_url"] = "https://evidence.invalid/test"
+    assert not evaluate(reserved_domain)["tasks"]["31"]["accepted"]
     bad_hash = filled()
     bad_hash["tasks"]["33"]["final_archive_sha256"] = "not-a-sha256"
     assert not evaluate(bad_hash)["tasks"]["33"]["accepted"]
