@@ -36,3 +36,13 @@ Downloaded artifacts 13282545632 and 13282561013 were inspected as ZIP files loc
 [Run 43194979636](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43194979636) passed on isolated commit `3905016b305ddf8a579d7bc2122a6af1591c355a`. The production gate and pinned request verified the protected IBO blob. The live Master discovered and checked 7769 candidates from 46 sources, with 803 true FFmpeg AV results. A separate Actions runner downloaded artifact 13934099792 and authenticated and restored 7819 encrypted entries, including all 4955 exact historical rows. The restore receipt is artifact 13934324379. Both ZIP digests and the inner archive digest were independently recomputed.
 
 The #9, #13 and #23 prerequisite Actions runs are confirmed. The new archive was restored from remote GitHub Actions artifact storage. Same-run Drive restoration of the new archive remains open under the current task ledger. The production Drive service account is a reader in the existing backup folder. #24 remains open.
+
+## Current grouped live result — 2026-11-12, run 43220496123
+
+[Run 43220496123](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43220496123) completed all four jobs successfully on commit `ab520452553034bb959ff426c12281c93a53de4c`. Production security and protected IBO invariant passed. The live engine fetched 46/46 sources, examined 7,769 candidates, and reported 798 FFmpeg video+audio verifications (797 TR/AZ), with zero unfinished checks. An independent Actions runner restored 7,819 records, including 4,955 historical records, from the exact encrypted Actions artifact.
+
+- [Encrypted archive artifact 13949375384](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43220496123/artifacts/13949375384), ZIP SHA-256 `81e35b84eb22a9ea04c9ff73f86c674689d9ec1a730f61163c48e5942b4acb17`; matching digest logged by downloader.
+- [Independent restore receipt artifact 13947883316](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43220496123/artifacts/13947883316), ZIP SHA-256 `ad3274f25e79bf3e09070bcbf153da51156b5fc840e2b844bb0c7633ff380094`.
+- Inner encrypted archive SHA-256 `5be3e93559d3a946ae2265e5a960873b26940e4605966ef872b0b8b7ab1dbff0`.
+
+**Acceptance boundary:** This confirms remote GitHub Actions artifact restoration, not S3 or Drive restoration of this exact archive. Do not treat the previous external backup prerequisite #13 as proof that this new archive was restored offsite. #24 stays open until the required independent offsite storage restore and all ledger gates are verified. Do not modify the main IBO playlist.
