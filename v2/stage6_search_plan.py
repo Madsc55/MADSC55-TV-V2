@@ -2,6 +2,7 @@
 """Offline-only stage 6 search plan. Never performs network requests or edits playlists."""
 import json
 from pathlib import Path
+from urllib.parse import urlencode
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "v2/reports/stage6-search-plan.json"
@@ -19,12 +20,26 @@ TERMS = (
 REGIONS = ("TR", "AZ", "world")
 CHANNELS = ("repository", "gist", "official_broadcaster", "youtube_live", "m3u_m3u8")
 
+def search_url(platform, term):
+    if platform == 'github':
+        return PLATFORMS[platform] + '?' + urlencode({'q': term, 'type': 'repositories'})
+    if platform == 'gist':
+        return PLATFORMS[platform] + '?' + urlencode({'q': term})
+    if platform == 'gitlab':
+        return PLATFORMS[platform] + '?' + urlencode({'search': term, 'scope': 'projects'})
+    if platform == 'codeberg':
+        return PLATFORMS[platform] + '?' + urlencode({'q': term})
+    raise ValueError('Unsupported platform')
+
+
 def make_plan():
     return {
         "kind": "STAGE6_OFFLINE_SEARCH_PLAN_NO_LIVE_SCAN",
         "regions": list(REGIONS),
         "platforms": PLATFORMS,
         "queries": list(TERMS),
+        "platform_search_urls": {platform: [search_url(platform, term) for term in TERMS]
+                                 for platform in PLATFORMS},
         "discovery_channels": list(CHANNELS),
         "rules": {
             "main_ibo_read_only": True,
