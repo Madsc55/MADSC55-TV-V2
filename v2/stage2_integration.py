@@ -36,6 +36,7 @@ def integrate(records, *, scopes=None, xmltv_text=None, max_attempts=3):
         # Do not allow a caller's unverified metadata flags to become verified.
         row["country_verified"] = False
         row["category_verified"] = False
+        row["resolution_verified"] = False
         row["epg_verified"] = False
         enriched.append(row)
     if xmltv_text is not None:
@@ -45,6 +46,7 @@ def integrate(records, *, scopes=None, xmltv_text=None, max_attempts=3):
     safe = [{key: value for key, value in row.items()
              if key in ("url_sha256", "name", "source", "country_hint",
                         "country_verified", "category_hint", "category_verified",
+                        "resolution_hint", "resolution_verified",
                         "epg_id_candidate", "epg_verified",
                         "epg_programme_available", "epg_match_type", "status")}
             for row in enriched]
