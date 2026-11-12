@@ -8,6 +8,8 @@ on:
       - 'v2/stage6_source_inventory.py'
       - 'v2/test_stage6_source_inventory.py'
       - 'v2/test_stage6_world_selection.py'
+      - 'v2/test_stage6_official_sites.py'
+      - 'v2/official_sites_discovery.py'
       - 'v2/real_ibo_scan.py'
       - 'v2/config/sources.json'
       - 'v2/tasks/state.json'
@@ -27,6 +29,7 @@ jobs:
         run: |
           python -m unittest discover -s v2 -p 'test_stage6_source_inventory.py' -v
           python -m unittest discover -s v2 -p 'test_stage6_world_selection.py' -v
+          python -m unittest discover -s v2 -p 'test_stage6_official_sites.py' -v
       - name: Validate source coverage without changing IBO
         run: python v2/stage6_source_inventory.py --strict > stage6-preflight.json
       - name: Upload offline readiness report (not AV evidence)
