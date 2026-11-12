@@ -1,3 +1,9 @@
+## 12 Kasım 2026 — Bağımsız S3 restore yolu eklendi, kabul bekliyor
+- Canlı Actions #43221425954: 4/4 job success, restore kaynak türü GitHub Actions artifact, **S3 değil**. Şifreli arşiv ve restore artifact kanıtları bir önceki kayıt altında.
+- Yeni `.github/workflows/v2-stage4-s3-restore.yml` yalnızca elle `workflow_dispatch` ile tetiklenir; read-only GitHub izinleri kullanır. Kaynak canlı run ID + SHA256 receipt gerekir. Önce Actions arşivini S3'e aktarır, sonra **ayrı runner** S3'ten indirip SHA256, şifre çözme, 4955 tarihî kayıt ve AV kayıt bütünlüğünü doğrular. S3 bucket/region/erişim bilgileri ile arşiv anahtarı GitHub Actions secrets üzerinden gerekir; eksikse fail-closed.
+- `stage4_live_acceptance.py` geri yükleme kaynağını Actions artifact / S3 olarak ayırır. Workflow kullanıcı girdilerini shell'e doğrudan gömmek yerine environment değişkenlerinden okur.
+- İlgili kod commit'leri: `6a7b580b`, `7228aecf`, `e0321d2a`, `5a9b09d8`. **Yeni S3 Actions run sonucu henüz yok; #24 kapatılmadı.** Ana İBO değişmedi.
+
 ## 12 Kasım 2026 — #24 canlı kabul sonucu (doğrulanmış)
 - GitHub Actions run https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43221425954: **4/4 job success** (production-lock, stage4-request, stage4-discover-seal, stage4-restore).
 - Ayrı restore işinin gerçek log çıktısı: `sources_fetched=46`, `candidates=7769`, `historical_records=4955`, `tr_az_av=792`, `all_regions_av=793`, `restored_records=7819`; motor commit `5a1766dfcd5e37eca0cfcaf9e10129116c67db2e`. Bunlar bu koşunun raporladığı sayılardır; 1000/2000 İBO cihaz kabulü değildir.
