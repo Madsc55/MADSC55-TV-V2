@@ -1,3 +1,9 @@
+## 12 Kasım 2026 — Kullanıcı kararı: önce 34 görevlik altyapı, ardından tek toplu yeni kanal keşfi
+
+- Öncelik: tüm 34 görev için kanal bağımsız kod, workflow, güvenlik, kaynak bağlayıcıları, çevrimdışı regresyon ve hazırlık kontrollerini tamamlamak. Hazırlık tamamlanmadan geniş kapsamlı yeni kanal taraması veya mevcut/eski yayınların yeniden FFmpeg AV kontrolü başlatılmayacak.
+- #24'ün önceden doğrulanmış altyapı kabul kanıtı korunur; geçmiş kabul testinin eski kanallarda tekrarlanması istenmiyor. #28–#33 için gerçek 1.000/2.000 yayın paketleri, M3U bütünlük, cihaz ve son arşiv kabulü ancak sistem kurulduktan sonra yapılacak tek toplu keşifte bulunan ve gerçek görüntü/ses kanıtı olan yeni yayınlarla tamamlanır. Kanıt olmadan görevler completed yapılmaz.
+- #34 için önceden başlamış Actions keşif koşusunun hatası ve düzeltmesi kayıtlıdır; yeni canlı keşif kullanıcı tarafından belirlenen sistem kurulum sırası tamamlanmadan yeniden tetiklenmeyecek. Ana İBO, tarihî kayıtlar, YEDEKLER/YENİLER/FAVORİLER ve cihaz favorileri değiştirilmeyecek.
+
 ## 12 Kasım 2026 — #34 keşif koşusu ve yeni yayın AV kapsamı
 
 ## 12 Kasım 2026 — #34 canlı keşif hatası ve kod düzeltmesi
