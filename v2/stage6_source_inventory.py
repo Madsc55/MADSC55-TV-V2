@@ -10,6 +10,20 @@ ROOT = Path(__file__).resolve().parents[1]
 SOURCES = ROOT / "v2/config/sources.json"
 STATE = ROOT / "v2/tasks/state.json"
 REQUIRED_SCOPES = {"TR", "AZ", "world"}
+REQUIRED_PLATFORMS = {"github", "gist", "gitlab", "codeberg"}
+
+def source_platform(url):
+    host = (urlparse(url or "").hostname or "").lower()
+    if host == "gist.githubusercontent.com" or host == "gist.github.com":
+        return "gist"
+    if host in ("github.com", "raw.githubusercontent.com") or host.endswith(".github.io"):
+        return "github"
+    if host == "gitlab.com" or host.endswith(".gitlab.io") or host.endswith(".gitlab.com"):
+        return "gitlab"
+    if host == "codeberg.org" or host.endswith(".codeberg.page"):
+        return "codeberg"
+    return "other"
+
 
 def evaluate(sources, statuses):
     active = [s for s in sources if s.get("enabled", True)]
@@ -21,6 +35,7 @@ def evaluate(sources, statuses):
     duplicate_ids = sorted(k for k, n in Counter(ids).items() if n > 1)
     duplicate_urls = sorted(k for k, n in Counter(urls).items() if n > 1)
     scopes = sorted(set(s.get("scope") for s in active if s.get("scope")))
+    platform_counts = dict(sorted(Counter(source_platform(s.get("url")) for s in active).items()))
     outstanding = sorted(x["id"] for x in statuses
                          if x["id"] <= 33 and x.get("status") != "completed")
     stage6 = next((x for x in statuses if x["id"] == 34), {})
@@ -29,6 +44,8 @@ def evaluate(sources, statuses):
         "configured_sources": len(sources),
         "enabled_sources": len(active),
         "scopes": scopes,
+        "platform_counts": platform_counts,
+        "missing_required_platforms": sorted(REQUIRED_PLATFORMS - set(platform_counts)),
         "missing_required_scopes": sorted(REQUIRED_SCOPES - set(scopes)),
         "invalid_https_source_ids": bad_urls,
         "duplicate_source_ids": duplicate_ids,
