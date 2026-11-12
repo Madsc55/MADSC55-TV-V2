@@ -30,6 +30,9 @@ def identity(source, url):
             raise ValueError("Non-public IP address")
     if source not in SOURCES:
         raise ValueError("Unknown adapter")
+    expected_hosts = {"github": "github.com", "gitlab": "gitlab.com", "codeberg": "codeberg.org", "youtube": "www.youtube.com"}
+    if source in expected_hosts and (p.scheme != "https" or host != expected_hosts[source]):
+        raise ValueError("Unexpected source host or insecure scheme")
     return {"source": source, "source_id": source + ":" + p.hostname.lower() + p.path, "url": url, "verified_av": False}
 
 def search_url(source, query):
