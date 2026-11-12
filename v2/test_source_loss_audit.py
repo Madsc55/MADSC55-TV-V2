@@ -23,6 +23,16 @@ class SourceLossTests(unittest.TestCase):
         self.assertEqual([x["reason"] for x in compare(before, after)["findings"]],
                          ["FETCH_FAILED", "SOURCE_MISSING"])
 
+    def test_transient_failures_are_not_accepted_as_empty_sources(self):
+        previous = report(("a", "PARSED_NOT_PLAYBACK_VERIFIED", 100))
+        for status in ("TIMEOUT", "RATE_LIMITED", "HTTP_ERROR", "PARSE_FAILED"):
+            with self.subTest(status=status):
+                current = report(("a", status, 0))
+                finding = compare(previous, current)["findings"][0]
+                self.assertEqual(finding["reason"], "SOURCE_UNAVAILABLE")
+                self.assertEqual(finding["source_status"], status)
+                self.assertIsNone(finding["current"])
+
     def test_source_drop_at_boundary(self):
         before = report(("a", "PARSED_NOT_PLAYBACK_VERIFIED", 100))
         exact_half = report(("a", "PARSED_NOT_PLAYBACK_VERIFIED", 50))
