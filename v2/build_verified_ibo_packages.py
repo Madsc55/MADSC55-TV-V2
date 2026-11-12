@@ -12,6 +12,17 @@ def eligible(row):
     # Require explicit, independently recorded audio and video proof.
     if row.get("video_proven") is not True or row.get("audio_proven") is not True:
         return False
+    # Require independently recorded, traceable A/V evidence metadata.
+    proof = row.get("av_evidence")
+    if not isinstance(proof, dict):
+        return False
+    if proof.get("url") != row.get("url") or proof.get("video") is not True or proof.get("audio") is not True:
+        return False
+    digest = proof.get("sha256")
+    if not isinstance(digest, str) or len(digest) != 64 or any(c not in "0123456789abcdef" for c in digest.lower()):
+        return False
+    if not isinstance(proof.get("captured_at"), str) or not proof["captured_at"].strip():
+        return False
     url = row.get("url", "")
     p = urllib.parse.urlsplit(url) if isinstance(url, str) else urllib.parse.urlsplit("")
     return p.scheme in ("https", "http") and bool(p.hostname) and not (p.username or p.password)
