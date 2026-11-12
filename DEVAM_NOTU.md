@@ -1,3 +1,9 @@
+## 12 Kasım 2026 — #24 kanıt doğrulama ek korumaları (açık)
+- `v2/stage4_acceptance_gate.py`: boş artifact ve iki farklı kabul aşamasında aynı dosyanın yeniden kullanılmasını reddetme eklendi (commit `a6a95cc7`).
+- `v2/test_stage4_acceptance_gate.py`: iki durum için çevrimdışı regresyon testi eklendi (commit `3a9953c7`).
+- Bunlar GitHub'a yazılmış kod değişiklikleridir; **bu oturumda yeni Actions sonucu, gerçek AV kanıtı veya bağımsız S3 geri yükleme sonucu doğrulanmadı**. #24 ve diğer aşamalar kabul edilmiş sayılmaz.
+- Ana İBO playlisti, YEDEKLER, favoriler ve arşiv değiştirilmedi.
+
 ## 12 Kasım 2026 — #24 canlı zincir sonucu
 
 - [İlk koşu](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43193930159) keşif, FFmpeg ve şifreleme işini geçti. Artefakt kimliğiyle indirme dosyaları bir alt dizine koyduğu için geri yükleme `receipt.json` dosyasını bulamadı. `3905016` indirme dizinini düzeltti.
