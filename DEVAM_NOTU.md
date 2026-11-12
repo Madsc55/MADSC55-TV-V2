@@ -1,3 +1,8 @@
+## 12 Kasım 2026 — Son tarayıcı entegrasyonu güvenlik kapısı yeşil
+- `bb7368c45788ea613e9d7ee3a924d671c6c597aa` commit'i için [V2 Main Production Security Gate #176](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43281826409) **success**. Bu, üretim güvenlik kilidi kabulüdür; `v2-ordered-preflight.yml` içindeki Aşama 2 toplu testlerinin çalıştığı anlamına gelmez.
+- `real_ibo_scan.py --stage2-offline-input <JSON> --stage2-offline-output <JSON>` mevcut kayıtları canlı taramaya girmeden `stage2_integration.integrate` üzerinden işler. `v2/test_stage2_integration.py` bu giriş yolunu da ağ ve playback mock engelleriyle sınar.
+- **Bekleyen:** `v2-ordered-preflight.yml` için gerçek `workflow_dispatch` çalıştırması ve yeşil sonucu. Bu oturumdaki GitHub bağlayıcısı workflow dispatch işlemini sunmuyor. Testin çalışmadığı durumda başarı iddia edilmedi; #15/#17/#18/#19/#20/#21 kapatılmadı. Yeni/mevcut kanal taraması #34'e ertelendi.
+
 ## 12 Kasım 2026 — Kullanıcı kararı: Aşama 2 altyapı kabulü, canlı kanal taraması ertelendi
 - Kullanıcı, yeni kanal keşfi ile mevcut kanalların tekrar canlı görüntü/ses taramasını sistem tamamlandıktan sonraki toplu #34 aşamasına erteledi. Aşama 2 bu taramaları zorunlu tutmadan **çevrimdışı entegrasyon** olarak yürütülecek. Canlı yayın kabulü yapılmış gibi gösterilmeyecek.
 - `v2/stage2_integration.py`: mevcut gözlemlerden URL SHA256, kaynak kapsamına göre TR/AZ ülke adayı, kategori adayı, kesin XMLTV EPG ID eşleşmesi ve sınırlı kurtarma kuyruğu kararlarını tek bir offline giriş noktasında birleştirir. URL ve sırlar rapora çıkmaz; metadata tek başına yayın kanıtı değildir. Ana İBO listesi değiştirilmez.
