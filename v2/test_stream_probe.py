@@ -57,8 +57,12 @@ class StreamProbeTests(unittest.TestCase):
     @patch('stream_probe.shutil.which', return_value='/usr/bin/ffmpeg')
     @patch('stream_probe.subprocess.run')
     def test_decode_requires_successful_ffmpeg_exit(self, run, which):
-        run.return_value = subprocess.CompletedProcess([], 0, '', '')
+        frame = '0, 0, 0, 1, 1, abcdef0123456789\\n'
+        run.return_value = subprocess.CompletedProcess([], 0, frame, '')
         self.assertTrue(verify_decoded_av('https://example.org/live.m3u8')['decoded_av_verified'])
+        self.assertEqual(run.call_count, 2)
+        run.return_value = subprocess.CompletedProcess([], 0, '# header only\\n', '')
+        self.assertFalse(verify_decoded_av('https://example.org/live.m3u8')['decoded_av_verified'])
         run.return_value = subprocess.CompletedProcess([], 1, '', 'failed')
         self.assertFalse(verify_decoded_av('https://example.org/live.m3u8')['decoded_av_verified'])
 
