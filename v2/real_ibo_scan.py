@@ -20,7 +20,6 @@ from stream_probe import probe
 from stage3_identity_recovery import url_sha256
 from stage3_metadata_acceptance import quality_from_probe, category, normalized_identity, epg_match
 from stage3_recovery_queue import build_recovery_queue
-from secure_archive import backup as encrypt_inventory, decrypt as decrypt_inventory
 import os
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
@@ -129,6 +128,8 @@ def historical_source_ids(record):
 
 
 def main():
+    # Load AES-GCM only for live scans; offline scanner contract tests need no crypto.
+    from secure_archive import backup as encrypt_inventory, decrypt as decrypt_inventory
     ap = argparse.ArgumentParser()
     ap.add_argument('--sources', type=pathlib.Path, default=SOURCES)
     ap.add_argument('--dynamic-sources', type=pathlib.Path, default=None,
