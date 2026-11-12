@@ -1,3 +1,8 @@
+## 12 Kasım 2026 — #24 güncel dalda canlı kabul yeniden tetiklendi
+- Önceki 43217133634 koşusunun yeniden denenmesi eski commit üzerinde güvenlik kapısında kaldı; güncel dalda workflow yalnız `workflow_dispatch` kullandığı için eski koşu güncel düzeltmeyi sınamadı.
+- PR #11'in güncel dalında güvenlik kapısı daha önce 43217349481 koşusunda başarılı oldu. Bu commit'in `[run-stage4-24]` işareti yeni PR Actions koşusunda canlı keşif/FFmpeg/şifreleme ve ayrı runner geri yükleme işlerini başlatmak içindir.
+- Bu kayıt **kabul kanıtı değildir**. Yeni Actions sonuçları, bağımsız harici S3/Drive geri yüklemesi ve değişmez İBO kanıtı doğrulanmadan #24 açık kalır. Ana İBO listesi değiştirilmedi.
+
 ## 12 Kasım 2026 — CI düzeltmesi bağımsız doğrulandı
 - Önceki `UNAPPROVED_TRIGGER` / `UNAPPROVED_PUSH` düzeltmesinden sonra PR Actions run https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43217349481 **success**.
 - `Verify the isolated Stage 4 acceptance request` ve `Verify suspended publishers, no cron and immutable IBO` işleri başarılı. Ana İBO değişmezlik güvenlik adımı geçti.
