@@ -34,6 +34,7 @@ def run(args):
     if not isinstance(evidence, list):
         raise ValueError("Evidence must be a JSON array")
     approved = {}
+    evidence_dir = args.evidence.resolve().parent
     for row in evidence:
         if not isinstance(row, dict):
             raise ValueError("Invalid evidence row")
@@ -44,6 +45,16 @@ def run(args):
             or row.get("ibo_playback_verified") is not True
             or not isinstance(row.get("evidence_ref"), str) or not row["evidence_ref"].strip()
             or not isinstance(row.get("channel_id"), str) or not row["channel_id"].strip()):
+            continue
+        # A bare boolean or an invented reference is not playback evidence.
+        proof = row.get("evidence_file")
+        digest = row.get("evidence_sha256")
+        if not isinstance(proof, str) or not proof or not isinstance(digest, str) or len(digest) != 64:
+            continue
+        proof_path = (evidence_dir / proof).resolve()
+        if not proof_path.is_relative_to(evidence_dir) or not proof_path.is_file():
+            continue
+        if hashlib.sha256(proof_path.read_bytes()).hexdigest() != digest.lower():
             continue
         if url in approved:
             raise ValueError("Duplicate evidence URL")
