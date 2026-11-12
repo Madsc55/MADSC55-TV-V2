@@ -6,6 +6,8 @@ on:
       - madsc/v2-discovery-bulk-20261031
     paths:
       - 'v2/stage6_source_inventory.py'
+      - 'v2/stage6_search_plan.py'
+      - 'v2/test_stage6_search_plan.py'
       - 'v2/test_stage6_source_inventory.py'
       - 'v2/test_stage6_world_selection.py'
       - 'v2/test_stage6_official_sites.py'
@@ -30,15 +32,19 @@ jobs:
           python -m unittest discover -s v2 -p 'test_stage6_source_inventory.py' -v
           python -m unittest discover -s v2 -p 'test_stage6_world_selection.py' -v
           python -m unittest discover -s v2 -p 'test_stage6_official_sites.py' -v
+          python -m unittest discover -s v2 -p 'test_stage6_search_plan.py' -v
       - name: Validate source coverage without changing IBO
         run: |
           python v2/stage6_source_inventory.py --validate-config > stage6-preflight.json
+          python v2/stage6_search_plan.py
           cat stage6-preflight.json >> "$GITHUB_STEP_SUMMARY"
       - name: Upload offline readiness report (not AV evidence)
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: v2-stage6-offline-readiness
-          path: stage6-preflight.json
+          path: |
+            stage6-preflight.json
+            v2/reports/stage6-search-plan.json
           if-no-files-found: warn
           retention-days: 30
