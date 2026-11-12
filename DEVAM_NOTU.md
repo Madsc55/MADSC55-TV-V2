@@ -789,3 +789,17 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - Ancak bundan sonra nihai geniş AV doğrulaması, şifreli arşiv/geri yükleme ve 2000'lik gerçek İBO test paketleri üretilir. Mevcut ara tarama kanıtları ve doğrulanmış adaylar kaybedilmez.
 - Koruma: yalnızca MADSC55-TV-V2; ana MADSC55_TV_IBO_CALISANLAR_TEST.m3u8, YEDEKLER, YENİLER, FAVORİLER ve cihaz favorileri değiştirilmez. YEDEKLER ilk iki sıra TRT 1 1440P QHD ve DHA CANLI 720P HD korunur. PR #9 izinsiz birleştirilmez. İBO Player cihaz testlerini kullanıcı yapar.
 - 2026-11-01 başarılı önceki ara tarama: 12.148 yeni URL adayı, 4.098 ffprobe AV doğrulanmış aday, 3 adet 2000 sınırına göre M3U parçası; bu sonuçlar nihai kapsam kanıtı değildir.
+
+
+## 2026-11-12 — Aşama 5 (#31 → #32 → #33) keşif sonrası kabul altyapısı
+
+Kullanıcı kararı: Eski/sistemdeki kanalları yeniden tarama veya eski kayıp kanallara kabul uygulama. Önce #34 geniş kapsamlı keşif altyapısı, ardından tek toplu kanal keşfi; yeni bulunan kanallara gerçek AV/İBO cihaz/arşiv kabulü uygulanacak. Ana İBO playlisti ve YEDEKLER/YENİLER/FAVORİLER değişmeyecek.
+
+Bu dalda yapılanlar:
+- `v2/reports/stage5-post-discovery-acceptance-policy.md`: kabul sırası ve erteleme politikası; commit `13979813`.
+- `v2/reports/stage5-acceptance-evidence-audit-20261112.md`: önceki Actions işlerinin doğrulanmış sonuçları ve atlanan canlı kanıt işleri; commit `db77305c`.
+- `.github/workflows/v2-stage5-grouped-evidence-check.yml`: toplu çevrimdışı regresyon iş akışı; commit `7aa3c486`, ardından yeni kabul kapısı testi eklendi (`3ba94cd3`).
+- `v2/stage5_acceptance_gate.py`: #31 gerçek AV/yeni keşif/arşiv/restore, #32 kullanıcı cihaz onayı, #33 nihai arşiv kanıtı için bağımlı kabul kapısı; commit `3612be41`.
+- `v2/test_stage5_acceptance_gate.py`: sentetik fixture ile olumlu/olumsuz kapı senaryoları; commit `58c5f8b3`.
+
+**Kabul durumu:** #31, #32, #33 nihai olarak AÇIK. Bu oturumda yeni Actions koşusunun başarılı sonucu veya gerçek İBO Player cihaz kanıtı doğrulanmadı. Sentetik fixture testinin geçmesi gerçek cihaz/yayın kanıtı değildir. İlgili workflow tetiklenmiş olabilir, ancak koşu sonucu teyit edilmedi. Nihai kabul için #34 sonrası yeni toplu keşif, gerçek AV, bağımsız arşiv geri yüklemesi, gerçek kullanıcı cihaz onayı ve toplu Actions kanıtları gerekir.
