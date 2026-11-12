@@ -2508,3 +2508,8 @@ Kullanıcının açık talimatıyla #3, #4 ve #6 tarihî kurtarma görevleri art
 - Kullanıcı eski kayıp kanal aramasının sistem kurulumu bitene kadar durdurulmasını, bu aramanın son geniş kapsamlı keşif #34 sırasında yapılmasını ve #5/#6'nın mevcut aşamadan kapatılmasını açıkça istedi.
 - [Görev kapsamı değişikliği](https://github.com/Madsc55/MADSC55-TV-V2/commit/788f23723a09850911e8d318561b1860e4af7d94) ve [durum kaydı](https://github.com/Madsc55/MADSC55-TV-V2/commit/3aeed7714fd9c5285a78e745f412758911544bd3) ile #5 ve #6 **yalnızca idari kapsam kapanışı** olarak tamamlandı. Bu, eksik URI'lerin onarıldığı veya 2.643 tarihî URL'nin FFmpeg ile test edildiği anlamına **gelmez**. Kanıtlar, 26 satırlık kaynak raporu, 30 özgün URL SHA örneği ve ayrı 4.955 kimlik temel listesi korunur.
 - #34 en son yapılacak; tarihî eksik yayınların araştırması bu aşamaya ertelendi. Ana İBO listesi değiştirilmedi.
+
+### #34 tekrar koşusu — doğrulanmış sonuç
+
+- Actions run `43299369197`, job `131488422967`: `failure`. İlk altı adım başarılı, keşif adımı başarısız; korunan liste kontrolü ve artifact yükleme adımları başarılı. Logda yine `advisory_channel_identity_bridge.py:35 ValueError: Invalid candidate list` var.
+- Bu **eski commit üzerinde rerun** olduğu için düzeltme commit'i `90b4e82aa017428fc074f3d7bd2dfe9f32c8e8ab` test edilmedi. Güncel branch commit'i üzerinde yeni bir workflow koşusu zorunlu. #34 açık; AV ve İBO teslimi yapılmadı.
