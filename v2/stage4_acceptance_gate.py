@@ -44,6 +44,7 @@ def verify_local_artifacts(data, evidence_path):
     """Verify supplied bytes; never equate a checksum match with live acceptance."""
     errors = []
     root = evidence_path.resolve().parent
+    used_files = set()
     for key in ("discovery", "recovery", "real_video_audio", "encrypted_archive", "s3_restore", "end_to_end"):
         proof = data.get(key, {})
         if not isinstance(proof, dict):
@@ -55,6 +56,13 @@ def verify_local_artifacts(data, evidence_path):
         file_path = (root / name).resolve()
         if not file_path.is_relative_to(root) or not file_path.is_file():
             errors.append(f"{key}: artifact not found within evidence directory")
+            continue
+        if file_path in used_files:
+            errors.append(f"{key}: artifact reused for multiple acceptance stages")
+            continue
+        used_files.add(file_path)
+        if file_path.stat().st_size == 0:
+            errors.append(f"{key}: empty artifact cannot prove acceptance")
             continue
         # Hash in bounded chunks: an untrusted artifact must not exhaust runner RAM.
         hasher = hashlib.sha256()
