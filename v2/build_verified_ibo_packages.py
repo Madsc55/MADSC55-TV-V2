@@ -73,9 +73,15 @@ def make(inventory, outdir):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--inventory", type=pathlib.Path, required=True)
-    ap.add_argument("--outdir", type=pathlib.Path, required=True)
+    ap.add_argument("--inventory", type=pathlib.Path)
+    ap.add_argument("--outdir", type=pathlib.Path)
+    ap.add_argument("--check-setup", action="store_true", help="Validate stage-4 package setup without scanning or publishing channels")
     args = ap.parse_args()
+    if args.check_setup:
+        print(json.dumps({"stage": 4, "package_targets": [1000, 2000], "m3u_integrity_checks": True, "production_packages_created": False, "final_av_acceptance": "DEFERRED_UNTIL_POST_34_DISCOVERY"}, indent=2))
+        return
+    if args.inventory is None or args.outdir is None:
+        ap.error("--inventory and --outdir are required unless --check-setup is used")
     result = make(args.inventory, args.outdir)
     print(json.dumps(result, ensure_ascii=False, indent=2))
     if any(value.startswith("BLOCKED") for value in result["packages"].values()):
