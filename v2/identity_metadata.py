@@ -44,11 +44,16 @@ def verify_epg_ids(candidates, xmltv_text):
     root = ET.fromstring(xmltv_text)
     if root.tag != "tv":
         raise ValueError("Expected XMLTV tv root")
-    ids = {node.get("id") for node in root.findall("channel") if node.get("id")}
+    from collections import Counter
+    ids = Counter(node.get("id") for node in root.findall("channel") if node.get("id"))
+    programme_ids = {node.get("channel") for node in root.findall("programme")
+                     if node.get("channel") and node.get("start")}
     output = []
     for row in candidates:
         candidate = row.get("epg_id_candidate")
-        matched = isinstance(candidate, str) and candidate in ids
+        matched = isinstance(candidate, str) and ids[candidate] == 1
+        programme = bool(matched and candidate in programme_ids)
         output.append({**row, "epg_verified": bool(matched),
+                       "epg_programme_available": programme,
                        "epg_match_type": "exact_xmltv_channel_id" if matched else None})
     return output
