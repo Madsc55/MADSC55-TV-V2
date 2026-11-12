@@ -60,6 +60,11 @@ def tr_az(entry, scope):
     return bool(re.search(r'türk|turk|trt (?:1|2|3|cocuk|çocuk|spor|muzik|müzik|eba)|azer|azər|azərbaycan|azerbaijan|(?:^|[ ._-])(?:tr|az)(?:$|[ ._-])', value)) and not any(x in value for x in ("trt arabi", "trt world", "young turks", "trt (greece)", "trt (venezuela)"))
 
 
+def include_candidate(entry, scope, include_world=False):
+    """Keep TR/AZ matches and optionally all entries from world feeds."""
+    return tr_az(entry, scope) or (include_world and scope == 'world')
+
+
 def check_hls(entry, timeout):
     url = entry['url']
     parsed = urllib.parse.urlsplit(url)
@@ -126,8 +131,7 @@ def main():
             records = list(parse_m3u(fetch(url, args.timeout)))
             source_counts[sid] = len(records)
             for entry in records:
-                if (tr_az(entry, source.get('scope', 'candidate')) or
-                        (args.include_world and source.get('scope') == 'world')):
+                if include_candidate(entry, source.get('scope', 'candidate'), args.include_world):
                     if entry['url'] not in existing:
                         candidates.setdefault(entry['url'], entry)
         except (OSError, ValueError, UnicodeError, socket.timeout) as exc:
