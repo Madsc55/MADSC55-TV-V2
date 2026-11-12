@@ -1,11 +1,9 @@
 {
   "schema": 1,
-  "selected_task_id": 16,
-  "parallel_ready_task_ids": [
-    15
-  ],
-  "reason": "Current ledger: #13 independent Drive and #14 historical preservation completed. Task engine selects #16; #15 is independently ready. #5 is blocked and #6 awaits #5 and original membership evidence. #24 needs integrated live acceptance.",
-  "observed_run": "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43117212383/attempts/5",
+  "selected_task_id": 15,
+  "parallel_ready_task_ids": [],
+  "reason": "#16 real FFmpeg retention evidence accepted. #15 is next; #17 needs #15 and #16. #24 needs integrated live acceptance, and #5/#6 retain original evidence gaps.",
+  "observed_run": "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42989285004",
   "verified_grouped_tests": [
     "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43139744799",
     "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43139744816",
