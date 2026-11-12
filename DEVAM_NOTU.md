@@ -807,3 +807,11 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - Durum ayrımı: #28/#29/#30 kurulum kapsamı ile nihai üretim kabulü ayrı takip edilecek; yalnızca kanıtlı kabul koşulları sağlandığında ilgili issue kapatılacak.
 
 - Aşama 4 kurulum ilerlemesi (2026-11-12): `3648548` bağımsız `--check-setup` modu; `4f6abbc` Actions kurulum kontrol adımı; `d93de8f` kurulumun envanter olmadan ve çıktı üretmeden çalışmasını, eksik argümanlarda güvenli durmasını sınayan regresyon testleri. Bunlar nihai 1.000/2.000 AV kabulü değildir. Actions başarılı sonucu ayrıca doğrulanmalıdır.
+
+
+## 2026-11-12 — Kesin sıra: 34 görev sistem kurulumu, sonra yeni keşif ve üretim kabulü
+- Kullanıcı talimatı: eski/ara tarama kanalları üzerinden #28/#29/#30 nihai 1000/2000 M3U üretimi ve gerçek yayın kabulü YAPMA. Yeni sistem tüm bileşenleriyle hazır olana kadar kanal araması da başlatma.
+- Öncelik: 34 görev listesindeki keşif öncesi yazılım, otomasyon, güvenlik, kaynak bağlantısı ve test kurulumlarını tamamlamak; her birinin kanıtını Actions ve commit ile doğrulamak. Geçmemiş testleri tamamlandı sayma.
+- Sistem hazır olduktan sonra #34 geniş kapsamlı yeni kanal keşfini çalıştır. Ancak yeni keşif sonuçları gerçek FFmpeg görüntü+ses kanıtı ve benzersiz kanal kimliğiyle doğrulandıktan sonra #28 (1000), #29 (2000) ve #30 (nihai M3U bütünlüğü) üretim kabulünü yap.
+- Bu ayrım, #28-30 için yazılmış mevcut paketleyici ve güvenlik testlerini silmez. Bunlar hazırlık olarak kalır; üretim kanıtı sayılmaz.
+- Ana İBO listesi ve YEDEKLER/YENİLER/FAVORİLER korunur. Eski kanalları doldurma amaçlı kullanma, sentetik veriyi gerçek üretime aktarma.
