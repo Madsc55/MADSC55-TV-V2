@@ -1,0 +1,68 @@
+name: V2 Stage 6 Live Discovery Evidence (Read Only)
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install public metadata dependencies
+        run: python -m pip install 'yt-dlp>=2025.1'
+      - name: Read-only source coverage preflight
+        run: python v2/stage6_source_inventory.py > v2/reports/stage6-preflight.json
+      - name: Probe live M3U sources and export candidates separately
+        id: m3u
+        continue-on-error: true
+        run: |
+          python v2/real_ibo_scan.py --help
+          python v2/real_ibo_scan.py
+      - name: Discover YouTube live page candidates (not M3U streams)
+        id: youtube
+        continue-on-error: true
+        run: python v2/youtube_discovery.py
+      - name: Discover official broadcaster sites (not stream verification)
+        id: official
+        continue-on-error: true
+        run: python v2/official_sites_discovery.py
+      - name: Write honest run status
+        if: always()
+        env:
+          M3U: ${{ steps.m3u.outcome }}
+          YOUTUBE: ${{ steps.youtube.outcome }}
+          OFFICIAL: ${{ steps.official.outcome }}
+        run: |
+          python - <<'PY'
+          import json,os,pathlib
+          p=pathlib.Path('v2/reports/stage6-live-discovery-status.json')
+          p.parent.mkdir(parents=True,exist_ok=True)
+          p.write_text(json.dumps({'kind':'DISCOVERY_ONLY_NOT_AV_ACCEPTANCE','m3u':os.getenv('M3U'),'youtube':os.getenv('YOUTUBE'),'official':os.getenv('OFFICIAL'),'ffmpeg_av_proof':False,'ibo_modified':False},indent=2)+'\n')
+          PY
+      - name: Upload discovery reports only (exclude candidate URLs playlist)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v2-stage6-live-discovery-reports
+          path: |
+            v2/reports/stage6-preflight.json
+            v2/reports/stage6-live-discovery-status.json
+            v2/reports/ibo-real-scan-report.json
+            v2/reports/youtube-live-candidates.json
+            v2/reports/official-tv-sites.json
+          if-no-files-found: warn
+          retention-days: 14
+      - name: Do not accept partial discovery as success
+        if: always()
+        env:
+          M3U: ${{ steps.m3u.outcome }}
+          YOUTUBE: ${{ steps.youtube.outcome }}
+          OFFICIAL: ${{ steps.official.outcome }}
+        run: |
+          test "$M3U" = success
+          test "$YOUTUBE" = success
+          test "$OFFICIAL" = success
