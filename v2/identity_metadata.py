@@ -41,6 +41,8 @@ def verify_epg_ids(candidates, xmltv_text):
     import xml.etree.ElementTree as ET
     if not isinstance(xmltv_text, str):
         raise ValueError("XMLTV content must be text")
+    if len(xmltv_text) > 25_000_000:
+        raise ValueError("XMLTV content exceeds safe size limit")
     if "<!DOCTYPE" in xmltv_text.upper() or "<!ENTITY" in xmltv_text.upper():
         raise ValueError("XMLTV DTD and entities are not permitted")
     root = ET.fromstring(xmltv_text)
