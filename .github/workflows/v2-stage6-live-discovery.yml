@@ -1,11 +1,6 @@
 name: V2 Stage 6 Live Discovery Evidence (Read Only)
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - madsc/v2-discovery-bulk-20261031
-    paths:
-      - '.github/workflows/v2-stage6-live-discovery.yml'
 concurrency:
   group: stage6-live-discovery-${{ github.ref }}
   cancel-in-progress: false
