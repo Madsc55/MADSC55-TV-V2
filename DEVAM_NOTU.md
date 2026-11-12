@@ -821,3 +821,12 @@ Bu dalda yapılanlar:
 - `0f951e8f`: `.invalid`, `.test`, `.example`, `.localhost` örnek alan adlarının kanıt URL'si olarak kabul edilmesi engellendi.
 - `9dc0d4b9`: Test fikstürü URL'si düzenlendi, ayrılmış alan adı reddi için regresyon testi eklendi.
 - **Durum:** Bu commit'lerin Actions sonucu henüz doğrulanmadı. #31/#32/#33 nihai gerçek kabulü #34 sonrası toplu yeni keşif, AV kanıtı, kullanıcı cihaz onayı ve bağımsız arşiv geri yüklemesine bağlı; kapatılmadı. Eski kanallara işlem yok; ana İBO korunuyor.
+
+
+### 2026-11-12 — Kullanıcı tarafından kesinleştirilen iş sırası
+1. **Önce 34 sistem görevinin kod, otomasyon, kaynak hazırlığı ve altyapı eksikleri tamamlanacak.** Sistem kurulmadan eski/mevcut kanallara yeni AV kabulü, eski kayıp kanal kurtarma, İBO üretim paketi veya arşiv kabulü uygulanmayacak.
+2. Sistem hazır olduktan sonra **tek geniş kapsamlı yeni kanal keşfi** (#34) yürütülecek. GitHub/Gist/GitLab/Codeberg, resmî yayınlar, YouTube canlı ve TR/AZ/dünya M3U/M3U8 kaynakları kapsama alınacak; bulunan adaylar gerçek AV kanıtı olmadan kabul edilmeyecek.
+3. Yalnızca yeni keşfin ardından gerçek görüntü+ses, bağımsız şifreli arşiv geri yükleme, #28–#33 gerçek İBO üretimi, toplu kabul, kullanıcı cihaz testi ve nihai rapor yapılacak.
+4. Ana İBO playlisti, YEDEKLER/YENİLER/FAVORİLER ve cihaz favorileri korunacak. Testler başarılı olmadan işler kapatılmayacak.
+
+**Aşama 5 altyapı durumu:** `v2/stage5_acceptance_gate.py`, regresyon testi ve `.github/workflows/v2-stage5-grouped-evidence-check.yml` repoda mevcut. Bu turda Actions koşusunun başarı sonucu doğrulanmadı. #31–#33 nihai kabulü yeni kanal keşfi ve gerçek kanıtlara bağlı olduğu için açık kalıyor. Bu karar eski kanallara işlem yapılmasını önler.
