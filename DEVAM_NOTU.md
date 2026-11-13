@@ -898,3 +898,10 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - PR #71 için Production Security Gate run `43455192478`: SUCCESS. Görev defteri bütünlüğü, güvenlik kilidi, korunan İBO invariantları, Stage 6 offline paket/arşiv, Stage 2/3 offline kimlik-EPG-kurtarma ve #34 offline adaptör testleri PASS.
 - Bu run dokümantasyon ve defter bütünlüğü kabulüdür; canlı #34 API sözleşmesi, gerçek yayın AV, yeni kanal taraması veya gerçek 1000/2000 paket üretimi değildir.
 - Ana dalın bu kayıt güncellemesinden sonraki gözlenen commit'i `02e5792c209149e98ec4e14d77c087f9d8faf49b`. Görev defterinde 34 görev: 21 completed, 13 in_progress; açık işlere completed statüsü verilmedi.
+
+
+## 13 Kasım 2026 — #34 canlı API hata kaynağı ayrıştırıldı
+- Önceki gerçek Actions canlı sözleşme koşusu `43319831631` iş kayıtları incelendi: GitHub API `ok` ve 20 aday, GitLab API `ok` fakat 0 aday, Codeberg API `HTTPError` nedeniyle başarısız. Bu sonuç tüm üç kaynağın canlı kabulü değildir.
+- Güncel `main` üzerindeki `v2/discovery_34_live_contract.py`, HTTP durum kodunu `HTTP_<code>` biçiminde, sağlayıcı ve endpoint host ile raporlar; 408/425/429/5xx için en fazla üç deneme uygular. 403 kalıcı erişim/izin engeli olarak tekrar denenerek başarıya çevrilmez. `v2/discovery_34.py` Codeberg için Forgejo `/api/v1/repos/search` yolunu ve `data` yanıt listesini bekler.
+- Harici API dokümantasyonu Forgejo/Codeberg repository-search endpoint'inin `/api/v1/repos/search` olduğunu ve `data` alanlı yanıt kullandığını doğruluyor; dolayısıyla mevcut kanıt, endpoint/JSON şema hatasından çok CI çıkışının Codeberg tarafından 403 ile reddedilmesiyle uyumlu. Bu, Codeberg'in kendi tarafında kalıcı arıza olduğu anlamına gelmez.
+- Güncel main üzerinde canlı sözleşme yeniden çalıştırılmadı; mevcut GitHub bağlantısı workflow_dispatch başlatma yetkisi sağlamıyor. Bu nedenle #34 canlı kabulü açık bırakıldı; hata gizlenmedi, Codeberg başarısızlığı başarı sayılmadı. Yeni kanal taraması ve playlist değişikliği yapılmadı.
