@@ -59,6 +59,29 @@ class Discovery34Tests(unittest.TestCase):
                     identity(source, url)
             self.assertEqual(curated_candidates(source, [{"url": "https://example.org/a\n#EXTINF"}]), [])
 
+    def test_signed_and_port_specific_stream_urls_keep_unique_safe_ids(self):
+        for source in ("official", "m3u"):
+            a = identity(source, "https://example.org/live.m3u8?token=SECRET_A")
+            b = identity(source, "https://example.org/live.m3u8?token=SECRET_B")
+            self.assertNotEqual(a["source_id"], b["source_id"])
+            self.assertNotIn("SECRET_A", a["source_id"])
+            self.assertNotIn("SECRET_B", b["source_id"])
+            self.assertFalse(a["verified_av"])
+        standard = identity("m3u", "https://example.org/live.m3u8")
+        alternate = identity("m3u", "https://example.org:8443/live.m3u8")
+        self.assertNotEqual(standard["source_id"], alternate["source_id"])
+        self.assertIn(":8443", alternate["source_id"])
+
+    def test_malformed_port_fail_closed_without_dropping_valid_candidates(self):
+        for url in ("https://example.org:99999/live.m3u8", "https://example.org:bad/live.m3u8"):
+            with self.subTest(url=url), self.assertRaisesRegex(ValueError, "Invalid URL port"):
+                identity("m3u", url)
+        records = [{"url": "https://example.org:99999/live.m3u8"},
+                   {"url": "https://example.org/live.m3u8?token=VALID"}]
+        result = curated_candidates("m3u", records)
+        self.assertEqual(len(result), 1)
+        self.assertNotIn("VALID", result[0]["source_id"])
+
     def test_official_and_m3u(self):
         for source in ("official", "m3u"):
             self.assertEqual(len(curated_candidates(source, [{"url": "https://example.org/live.m3u8"}])), 1)

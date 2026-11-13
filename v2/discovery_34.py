@@ -21,6 +21,10 @@ def identity(source, url):
         raise ValueError("Invalid public URL")
     if p.username or p.password:
         raise ValueError("Credential-bearing URL")
+    try:
+        port = p.port
+    except ValueError as exc:
+        raise ValueError("Invalid URL port") from exc
     host = p.hostname.lower().rstrip(".")
     if host == "localhost" or host.endswith((".localhost", ".local", ".internal")):
         raise ValueError("Private hostname")
@@ -36,7 +40,12 @@ def identity(source, url):
     expected_hosts = {"github": "github.com", "gitlab": "gitlab.com", "codeberg": "codeberg.org", "youtube": "www.youtube.com"}
     if source in expected_hosts and (p.scheme != "https" or host != expected_hosts[source]):
         raise ValueError("Unexpected source host or insecure scheme")
-    return {"source": source, "source_id": source + ":" + p.hostname.lower() + p.path, "url": url, "verified_av": False}
+    authority = ("[" + host + "]" if ":" in host else host) + (":" + str(port) if port is not None else "")
+    source_id = source + ":" + authority + p.path
+    if source in ("official", "m3u") and p.query:
+        import hashlib
+        source_id += "?sha256=" + hashlib.sha256(p.query.encode("utf-8")).hexdigest()
+    return {"source": source, "source_id": source_id, "url": url, "verified_av": False}
 
 def search_url(source, query):
     q = urllib.parse.quote(query, safe="")
