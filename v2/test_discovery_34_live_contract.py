@@ -94,6 +94,28 @@ class LiveContractRetryTests(unittest.TestCase):
         self.assertEqual(len(calls), 3)
         self.assertEqual(sleeps, [1, 2])
 
+    def test_socket_timeout_recovers_with_bounded_retry(self):
+        attempts = []
+        sleeps = []
+        def fetch(_url):
+            attempts.append(1)
+            if len(attempts) == 1:
+                raise TimeoutError("socket timed out")
+            return {"data": []}
+        result = probe("codeberg", fetch=fetch, sleep=sleeps.append)
+        self.assertEqual(result["status"], "ok")
+        self.assertEqual(result["attempts"], 2)
+        self.assertEqual(sleeps, [1])
+
+    def test_connection_reset_exhaustion_fails_closed(self):
+        result = probe("codeberg",
+                       fetch=lambda _: (_ for _ in ()).throw(ConnectionResetError("reset")),
+                       sleep=lambda _: None)
+        self.assertEqual(result["status"], "error")
+        self.assertEqual(result["reason"], "ConnectionResetError")
+        self.assertEqual(result["attempts"], 3)
+        self.assertTrue(result["retryable"])
+
     def test_exhaustion_fails_closed(self):
         result = probe("codeberg", fetch=lambda _: (_ for _ in ()).throw(http_error(429)), sleep=lambda _: None)
         self.assertEqual(result["status"], "error")
