@@ -35,6 +35,13 @@ class AcceptanceTests(unittest.TestCase):
                             dict(archive, bytes=-1)):
             with self.subTest(archive=bad_archive), self.assertRaises(ValueError):
                 final_gate(valid, bad_archive, True, True)
+    def test_rejects_non_boolean_acceptance_flags(self):
+        p={"target":1000,"records":1000,"sha256":"a"*64,"status":"EVIDENCE_GATED"}
+        a={"status":"ROUNDTRIP_BYTES_MATCH","sha256":"b"*64,"bytes":128}
+        for restore, av in (("false", True), (True, "false"), (1, True), (True, 0), (None, True)):
+            with self.subTest(restore=restore, av=av), self.assertRaises(ValueError):
+                final_gate(p, a, restore, av)
+
     def test_no_false_production_acceptance(self):
         p={"target":1000,"records":1000,"sha256":"a"*64,"status":"EVIDENCE_GATED"}
         a={"status":"ROUNDTRIP_BYTES_MATCH","sha256":"b"*64,"bytes":128}
