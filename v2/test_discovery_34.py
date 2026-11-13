@@ -60,6 +60,13 @@ class Discovery34Tests(unittest.TestCase):
             with self.subTest(source=source):
                 self.assertEqual(repository_candidates(source, payload), [])
 
+    def test_malformed_curated_records_are_skipped(self):
+        for source in ("official", "youtube", "m3u"):
+            with self.subTest(source=source):
+                records = [None, "invalid", {"url": None}, {"url": 123},
+                           {"video_id": None}, {"video_id": 123}]
+                self.assertEqual(curated_candidates(source, records), [])
+
     def test_youtube(self):
         items = curated_candidates("youtube", [{"video_id": "AbCdEf12345"}])
         self.assertEqual(items[0]["source_id"], "youtube:AbCdEf12345")
