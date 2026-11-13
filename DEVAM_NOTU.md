@@ -1,3 +1,10 @@
+## 13 Kasım 2026 — #34 keşif kanıtı üzerine yazma koruması
+- Güncel main üzerinde PR #157 squash merge `b0ed1797e31e9953125473adca9be56b06dd4484`; eski PR #152 main ile çakıştığı için merge edilmeden kapatıldı.
+- `v2/discovery_34.py` ve `v2/discovery_34_integrate.py` raporları artık yalnız `open("x")` ile yazar; önceden mevcut aday veya entegre raporu asla üzerine yazmaz.
+- İki CLI için regresyon testleri mevcut raporun byte içeriğini koruduğunu ve işlem kodunun başarısız döndüğünü doğrular.
+- PR head `5161a4263faada3376fbd9e9fae64d243f748a97` için Actions run `43479914354`: SUCCESS. Production Security Gate, Stage 2/3, Stage 5/6, #34 offline entegrasyon ve korunan İBO invariantları PASS.
+- Bu sadece kod ve çevrimdışı kabul kanıtıdır. Canlı Codeberg, yeni gerçek AV, 1000/2000 gerçek İBO paketleri ve bağımsız geri yükleme doğrulaması açık. Yeni toplu kanal taraması ve korunan liste değişikliği yapılmadı.
+
 ## 13 Kasım 2026 — PR #106 güncel ana dal kabul testi başarılı
 - PR #106 (`integrate-stage6-28-33-current-main-20261113`) için Actions run `43457997079` completed / success.
 - Tüm adımlar SUCCESS: grouped safety regression tests; production trigger/write policy; original IBO category/backup invariants; historical task ledger; Stage 2 identity recovery metadata; Stage 6 offline package/archive regressions; Stage 2/3 offline identity, EPG and recovery; Discovery #34 offline adapter/integration acceptance.
