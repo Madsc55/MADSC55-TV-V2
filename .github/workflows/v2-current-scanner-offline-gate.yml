@@ -31,7 +31,7 @@ jobs:
         shell: bash
         run: |
           failed=0
-          for test in historical_url_recovery playlist_invariants discovery_offline_regressions source_inventory_contract source_loss_audit archive_acceptance_gate archive_backup_restore_drill partial_scan_fail_closed partial_source_coverage public_metadata_redaction source_integrity webpage_source_discovery forge_source_discovery live_page_discovery; do
+          for test in advisory_channel_identity_bridge historical_url_recovery playlist_invariants discovery_offline_regressions source_inventory_contract source_loss_audit archive_acceptance_gate archive_backup_restore_drill partial_scan_fail_closed partial_source_coverage public_metadata_redaction source_integrity webpage_source_discovery forge_source_discovery live_page_discovery; do
             echo "::group::${test}"
             if python "v2/test_${test}.py"; then
               echo "PASS ${test}"
