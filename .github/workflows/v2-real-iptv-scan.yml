@@ -31,6 +31,19 @@ jobs:
       - name: Discover new GitHub M3U sources before AV scanning
         run: |
           python v2/github_source_discovery.py
+      - name: Install YouTube discovery dependency
+        run: python -m pip install 'yt-dlp>=2026.1'
+      - name: Discover worldwide repository metadata from GitHub GitLab Codeberg
+        continue-on-error: true
+        run: python v2/discovery_34.py --network
+      - name: Discover official broadcaster directory references
+        continue-on-error: true
+        run: python v2/official_sites_discovery.py
+      - name: Discover YouTube Live candidates and verify live metadata
+        continue-on-error: true
+        run: python v2/youtube_discovery.py
+      - name: Integrate six discovery adapters into unified candidate report
+        run: python v2/discovery_34_integrate.py
       - name: Real network discovery and AV probe including discovered sources
         run: |
           python v2/real_ibo_scan.py --workers 12 --timeout 12 --limit 2000 --dynamic-sources v2/reports/github-source-discovery.json
@@ -45,6 +58,10 @@ jobs:
           path: |
             v2/reports/ibo-real-scan-report.json
             v2/reports/github-source-discovery.json
+            v2/reports/discovery-34-candidates.json
+            v2/reports/discovery-34-integrated.json
+            v2/reports/official-tv-sites.json
+            v2/reports/youtube-live-candidates.json
             v2/reports/ibo-candidate-inventory.jsonl.enc
             v2/reports/ibo-candidate-inventory.jsonl.pending.enc
             v2/reports/IBO_AV_VERIFIED_*_PART*.m3u8
