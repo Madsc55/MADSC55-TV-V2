@@ -62,7 +62,7 @@ jobs:
           PYTHONPATH=v2 python v2/discovery_34_integrate.py --output /tmp/discovery-34-integrated.json
 
   live-discovery-diagnostic:
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '#34 live probe')
+    if: github.event_name == 'pull_request' || (github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '#34 live probe'))
     continue-on-error: true
     runs-on: ubuntu-24.04
     timeout-minutes: 12
