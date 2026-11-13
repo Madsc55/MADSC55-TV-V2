@@ -883,3 +883,11 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - `v2/test_discovery_34_integrate.py`: karışık bozuk/geçerli satırlar ve geçersiz koleksiyon tipleri için regresyon eklendi.
 - PR #46 merge commit `06a26a6aff41ded43cb1e3e78abe14080cc6fb9e`; Actions run `43449834934` SUCCESS; #34 offline adapter/integration acceptance ve Stage 6 paket/arşiv regresyon adımları SUCCESS.
 - Bu yalnızca mevcut rapor dosyalarının çevrimdışı normalizasyon kabulüdür; canlı API, her sağlayıcının gerçek yayın URL'sine çözülmesi, FFmpeg AV, logo/EPG üretim eşlemesi veya nihai dünya taraması değildir. #34 ve gerçek yayın gerektiren görevler açık kalır. Korunan listelere dokunulmadı.
+
+
+## 13 Kasım 2026 — Güncel main üzerinde Aşama 2/3 offline kimlik ve kurtarma entegrasyonu kabul edildi
+- PR #70 squash merge `8a2abf3f74073a5ea6a34c949260ac0c26556b80`.
+- Main üzerinde Stage 2/3 modülleri: `identity_metadata.py`, `recovery_queue.py`, `stage2_integration.py`, `stage3_identity_recovery.py`, `stage3_metadata_acceptance.py`, `stage3_recovery_queue.py`; `discover.py` metadata ipuçlarını rapora ekler, `consolidate_inventory.py` sunulan URL SHA-256 değerini doğrular, `real_ibo_scan.py` ve `stream_probe.py` scanner/probe sözleşmesine bağlanır.
+- Mevcut onaylı Production Security Gate'e Stage 2/3 offline regresyon grubu eklendi. Actions run `43454977935` ve `43454976797`: SUCCESS. Her ikisinde güvenlik kilidi, playlist invariants, task-ledger integrity, Stage 6 offline paket/arşiv, Stage 2/3 kimlik/EPG/kurtarma ve #34 offline entegrasyon adımları PASS.
+- İlk denemede bulunan uyumsuzluklar (main scanner dynamic source validator kaybı, bozuk FFprobe JSON türleri, Stage 3 scanner test sözleşmesi) düzeltilip tam gate yeniden çalıştırıldı.
+- Bu kabul offline kod/entegrasyon kabulüdür. Canlı yayınlarda yeni FFmpeg görüntü+ses kanıtı, gerçek dış kaynak API doğrulaması, bağımsız harici arşiv geri yüklemesi ve gerçek 1000/2000 İBO üretimi değildir. #15/#17–#21, #28–#34 nihai kabulü açık tutulur. Yeni kanal taraması yapılmadı; ana İBO, YEDEKLER, YENİLER ve FAVORİLER değiştirilmedi.
