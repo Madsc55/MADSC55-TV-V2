@@ -1,3 +1,8 @@
+## 13 Kasım 2026 — M3U güvenlik test fikstürü düzeltmesi
+- d74f32ef: test_ibo_package_acceptance.py içindeki sahte başlık ve URL credential regresyonlarının satır ayırıcıları gerçek \\n escape olarak düzeltildi; önceki yanlış çift kaçışlar giderildi.
+- PR #23 üzerinde commit mevcut. GitHub Actions kabul sonucu henüz yok; test başarı iddiası veya görev kapanışı yapılmadı.
+- Ana İBO ve YEDEKLER/YENİLER/FAVORİLER değiştirilmedi; yeni tarama yapılmadı.
+
 ## 13 Kasım 2026 — #31–#33 son kabul raporu biçim denetimi
 - 1659a191: ibo_final_acceptance.final_gate() kabul raporu türlerini, hedef/sayı türlerini ve 64 haneli küçük harf SHA-256 biçimini fail-closed doğrular.
 - 86c2a8f5: geçersiz SHA-256, bool hedef/sayı ve bozuk rapor türü regresyonları eklendi; mevcut sentetik test raporu geçerli SHA-256 biçimine düzeltildi.
