@@ -122,5 +122,16 @@ class LiveContractRetryTests(unittest.TestCase):
         self.assertEqual(result["attempts"], 3)
         self.assertTrue(result["retryable"])
 
+    def test_retry_after_header_is_honored_and_capped(self):
+        calls, sleeps = [], []
+        def fetch(_url):
+            calls.append(1)
+            raise urllib.error.HTTPError("https://codeberg.org/api/v1/repos/search", 429, "rate limited", {"Retry-After": "45"}, None)
+        result = probe("codeberg", fetch=fetch, sleep=sleeps.append)
+        self.assertEqual(result["status"], "error")
+        self.assertEqual(result["attempts"], 4)
+        self.assertEqual(len(calls), 4)
+        self.assertEqual(sleeps, [30, 30, 30])
+
 if __name__ == "__main__":
     unittest.main()
