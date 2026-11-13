@@ -1,3 +1,8 @@
+## 13 Kasım 2026 — #34 entegre rapor üzerine yazma koruması
+- 3df58653: discovery_34_integrate.py de raporu exclusive create (open("x")) ile yazar; önceden var olan dosyayı değiştirmez.
+- 6537c510: entegre CLI'nin mevcut rapor içeriğini koruduğunu sınayan regresyon testi eklendi.
+- PR #22 açık. Bu commitlerin Actions kabul sonucu henüz doğrulanmadı; #34 kapatılmadı. Yeni toplu tarama veya ana İBO değişikliği yapılmadı.
+
 ## 13 Kasım 2026 — #34 keşif raporu üzerine yazma koruması
 - 2adc28a0: discovery_34.py rapor çıktısı mevcutsa işlemi reddeder; exclusive create (open("x")) ile yazılır. Önceden oluşmuş raporlar üzerine yazılmaz.
 - 2a429c66: mevcut raporun byte içeriğinin CLI çağrısından sonra korunmasını doğrulayan çevrimdışı regresyon testi eklendi.
