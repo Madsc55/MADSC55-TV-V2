@@ -1,3 +1,10 @@
+## 13 Kasım 2026 — İlk tam çevrimdışı GitHub Actions kabulü BAŞARILI
+- Workflow run `43454415699` (`push`, commit `b5dc604e83c0dcb61606296e75c7ae6691bef996`) completed SUCCESS.
+- `inventory` job SUCCESS; adımların tamamı SUCCESS: Python modüllerinin derlenmesi, korunan IBO playlist invariant testleri, şifreli arşiv backup/restore testi, çevrimdışı envanter restore testi, ağsız tarayıcı testi, IBO paketleme ve final acceptance testleri.
+- Bu sonuç `b5dc604e` commitindeki kod/test durumunu kapsar. Sonraki `DEVAM_NOTU.md` değişikliği `d2dc48ea` yalnızca kayıt güncellemesidir; `v2/**` kodu değiştirmemiştir.
+- Bu başarı çevrimdışı altyapı kabulüdür; gerçek FFmpeg görüntü/ses, gerçek harici depodan bağımsız geri yükleme ve üretim kanal paketleri kabulü değildir. PR #23 ana dala göre diverged/mergeable=false; 123 commit ahead, 86 behind olarak son karşılaştırıldı. Birleştirme yapılmadı.
+- Ana İBO, YEDEKLER, YENİLER ve FAVORİLER korunmuştur; kanal taraması başlatılmamıştır.
+
 ## 13 Kasım 2026 — Offline kabulün otomatik tetiklenmesi
 - b5dc604e: `.github/workflows/v2-offline-inventory.yml` için yalnızca `stage6-28-33-infrastructure-20261112` dalındaki `v2/**` ve workflow dosyası push'larında tam çevrimdışı kabul paketini çalıştıran push tetikleyicisi eklendi; manuel `workflow_dispatch` korundu. `pull_request` tetikleyicisi eklenmedi.
 - Bu değişiklik GitHub'a kaydedildi. Mevcut bağlantı aracı push-triggered run listesini göstermediğinden run ID/sonuç henüz doğrulanamadı; PASS iddiası yok. Gerçek AV, harici arşiv kaynağı ve PR #23 birleştirme çakışmaları açık.
