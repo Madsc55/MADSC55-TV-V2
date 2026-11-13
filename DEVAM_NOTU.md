@@ -2599,3 +2599,12 @@ Kullanıcının açık talimatıyla #3, #4 ve #6 tarihî kurtarma görevleri art
 - Actions Status Monitor run `43457264085` success.
 - Bu sonuçlar 98b1fb2 kaynak ağacındaki çevrimdışı regresyon ve korunan playlist guard'larını doğrular; gerçek canlı keşif, #15 yayıncı kimliği provenansı, #17 kurtarma kuyruğu nihai kabulü, #28–33 gerçek paket/cihaz teslimini kanıtlamaz. Görev statüleri bu nedenle değiştirilmedi.
 - Yeni canlı tarama/probe başlatılmadı. Ana İBO, YEDEKLER, YENİLER, FAVORİLER ve tarihî baseline değiştirilmedi.
+
+
+## 13 Kasım 2026 — #17 tarihî kurtarma kuyruğu negatif senaryoları
+
+- Commit `473fcd1a334aa8a97ed6d6be4862002ddc5b3712`: Stage 3 historical source recovery için iki çevrimdışı regresyon testi eklendi.
+- Birinci test: 4.955 tarihî hash'in hiçbiri kaynakta bulunmadığında raporun 0 eşleşme + 4.955 eşleşmemiş kayıt şeklinde eksiksiz bölümlemesini, aday üretmemesini ve ana playlist/yeni keşif/URL loglaması yapmamasını doğrular.
+- İkinci test: kaynak erişim hatasının exception metnindeki gizli token'ı rapora sızdırmadığını ve tüm 4.955 kaydın unresolved sayıldığını doğrular.
+- Bu testler #17'nin kayıp kayıtları sessizce düşürmemesi ve gizli URL/token sızdırmaması yönündeki korumayı güçlendirir. Gerçek tarihî kaynak kurtarma sonuçlarının kendisi değildir; #15 bağımlılığı açık olduğundan #17 kapatılmaz.
+- Yeni canlı tarama, eski yayın probu veya playlist değişikliği yapılmadı.
