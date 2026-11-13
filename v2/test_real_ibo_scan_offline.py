@@ -64,6 +64,51 @@ class ScannerOfflineTests(unittest.TestCase):
         self.assertEqual(accepted[0]["url"], "https://example.org/a.m3u")
         self.assertEqual(len(rejected), 5)
 
+    def test_public_source_intake_refuses_private_and_malformed_hosts(self):
+        invalid = (
+            "https://localhost/list.m3u",
+            "https://host.internal/list.m3u",
+            "https://10.2.3.4/list.m3u",
+            "https://127.0.0.1/list.m3u",
+            "https://169.254.169.254/latest/meta-data/",
+            "https://[::1]/list.m3u",
+            "https://[invalid/list.m3u",
+            "https://example.org:bad/list.m3u",
+            "https://user:secret@example.org/list.m3u",
+            "https://example.org/list.m3u#fragment",
+            "https://example.org/list.m3u\\nInjected: true",
+            "http://example.org/list.m3u",
+        )
+        for url in invalid:
+            with self.subTest(url=url):
+                self.assertFalse(scanner.public_https_m3u_feed(url))
+        self.assertTrue(scanner.public_https_m3u_feed("https://example.org/list.m3u?sig=opaque"))
+
+    def test_untrusted_dynamic_and_integrated_feeds_fail_closed(self):
+        status = "SOURCE_PARSED_STREAMS_NOT_PLAYBACK_VERIFIED"
+        invalid = ["https://localhost/list.m3u", "https://10.0.0.1/a.m3u",
+                   "https://[broken/a.m3u", "https://user:pw@example.org/a.m3u"]
+        existing = [{"id": "already", "url": "https://example.org/already.m3u"}]
+        dynamic = {"sources": ([{"url": url, "status": status} for url in invalid]
+                               + [{"url": "https://example.org/already.m3u", "status": status}])}
+        accepted, rejected = scanner.normalize_dynamic_sources(dynamic, existing)
+        self.assertEqual(accepted, [])
+        self.assertEqual(len(rejected), len(invalid) + 1)
+        integrated = {"candidates": [{"source": "m3u", "url": url, "verified_av": False}
+                                      for url in invalid]}
+        accepted, rejected = scanner.normalize_integrated_m3u_sources(integrated, [])
+        self.assertEqual(accepted, [])
+        self.assertEqual(len(rejected), len(invalid))
+
+    def test_private_stream_never_reaches_http_probe(self):
+        for url in ("http://127.0.0.1/live.m3u8", "https://localhost/live.m3u8",
+                    "https://169.254.169.254/latest/meta-data/"):
+            with self.subTest(url=url):
+                with patch.object(scanner.urllib.request, "urlopen") as mocked:
+                    self.assertIsNone(scanner.check_hls({"url": url}, 1))
+                    mocked.assert_not_called()
+        self.assertTrue(scanner.public_http_stream_url("http://example.org/live.m3u8"))
+
     def test_dynamic_source_report_rejects_invalid_root(self):
         for value in (None, [], {"sources": {}}, {"sources": None}):
             with self.assertRaises(ValueError):
