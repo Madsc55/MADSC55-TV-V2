@@ -31,7 +31,28 @@ QUERIES = [
     "Rec TV canlı yayın resmi",
     "Gopik TV canlı yayın resmi",
     "Güneş TV canlı yayın resmi",
+    "official live TV channel stream worldwide",
+    "official international news TV live stream",
+    "African television live stream official",
+    "Asian television live stream official",
+    "European television live stream official",
+    "Latin American television live stream official",
+    "Arabic TV live stream official",
+    "Hindi television live stream official",
+    "Spanish TV live stream official",
+    "French TV live stream official",
+    "Portuguese television live stream official",
+    "Japanese Korean TV live stream official",
 ]
+def query_region(query):
+    value = str(query).casefold()
+    if any(token in value for token in ("azərbaycan", "azerbaycan", "azərbaycanca")):
+        return "AZ"
+    if any(token in value for token in ("türkiye", "türk", "turk", "trt")):
+        return "TR"
+    return "WORLD"
+
+
 def search(query):
     command = ["yt-dlp", "--flat-playlist", "--dump-single-json", "--no-warnings",
                "--socket-timeout", "10", f"ytsearch15:{query}"]
@@ -50,6 +71,7 @@ def search(query):
             found.append({"video_id": video_id, "title": str(item.get("title") or "")[:200],
                           "channel": str(item.get("channel") or item.get("uploader") or "")[:120],
                           "url": f"https://www.youtube.com/watch?v={video_id}",
+                          "region": query_region(query),
                           "status": "DISCOVERED_NOT_LIVE_VERIFIED"})
         return found, None
     except (OSError, ValueError, subprocess.TimeoutExpired):
