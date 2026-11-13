@@ -10,7 +10,7 @@ from contextlib import redirect_stdout
 from unittest.mock import patch
 from pathlib import Path
 from argparse import Namespace
-from stage5_evidence_export import entries, run, media_has_audio_video
+from stage5_evidence_export import entries, run, media_has_audio_video, valid_private_destination
 
 class Stage5Acceptance(unittest.TestCase):
     def test_no_synthetic_or_unverified_delivery(self):
@@ -124,6 +124,15 @@ class Stage5Acceptance(unittest.TestCase):
             with patch("stage5_evidence_export.media_has_audio_video", return_value=True):
                 with self.assertRaisesRegex(ValueError, "INSUFFICIENT_REAL_EVIDENCE"):
                     run(args)
+            self.assertFalse(args.output.exists())
+
+    def test_private_stream_export_never_targets_repository_reports(self):
+        with tempfile.TemporaryDirectory() as d:
+            args = self._one_stream_fixture(Path(d))
+            # Do not create this file: merely prove the destination is refused.
+            args.output = Path(__file__).resolve().parents[1] / "v2/reports/private-stage5-never-write-fixture.m3u8"
+            with self.assertRaisesRegex(ValueError, "isolated location"):
+                valid_private_destination(args.output, args.source, args.protected)
             self.assertFalse(args.output.exists())
 
     def test_private_only_output_name_is_required(self):
