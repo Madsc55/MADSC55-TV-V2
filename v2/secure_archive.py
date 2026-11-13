@@ -23,6 +23,8 @@ def _key(passphrase, salt):
     return Scrypt(salt=salt, length=32, n=2**15, r=8, p=1).derive(passphrase.encode())
 
 def encrypt(data, passphrase):
+    if type(data) is not bytes:
+        raise ValueError("Archive input must be bytes")
     if len(data) > MAX_INPUT:
         raise ValueError('Archive input exceeds maximum size')
     salt, nonce = secrets.token_bytes(16), secrets.token_bytes(12)
@@ -30,6 +32,8 @@ def encrypt(data, passphrase):
     return header + AESGCM(_key(passphrase, salt)).encrypt(nonce, data, header)
 
 def decrypt(blob, passphrase):
+    if type(blob) is not bytes:
+        raise ValueError("Encrypted archive must be bytes")
     minimum = len(MAGIC) + 16 + 12 + 16
     if len(blob) < minimum or len(blob) > MAX_INPUT + minimum or not blob.startswith(MAGIC):
         raise ValueError('Invalid encrypted archive format')
