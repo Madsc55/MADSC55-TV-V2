@@ -126,6 +126,38 @@ class Stage5Acceptance(unittest.TestCase):
                     run(args)
             self.assertFalse(args.output.exists())
 
+    def test_rejects_one_proof_reused_for_different_channel_ids(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            args = self._one_stream_fixture(root)
+            first_url = "https://cdn.example.net/one.m3u8"
+            second_url = "https://cdn.example.net/two.m3u8"
+            # Two distinct filenames with identical bytes are not independent AV proof.
+            (root / "copy-proof.mp4").write_bytes((root / "proof.mp4").read_bytes())
+            args.source.write_text(
+                '#EXTM3U\n#EXTINF:-1 tvg-id="one",One\n' + first_url
+                + '\n#EXTINF:-1 tvg-id="two",Two\n' + second_url + '\n')
+            evidence = json.loads(args.evidence.read_text())
+            duplicate = dict(evidence[0], url=second_url, channel_id="two",
+                             evidence_ref="second-channel-same-media",
+                             evidence_file="copy-proof.mp4")
+            evidence.append(duplicate)
+            args.evidence.write_text(json.dumps(evidence))
+            args.target = 2  # Small offline fixture; production CLI is 1000/2000.
+            with patch("stage5_evidence_export.media_has_audio_video", return_value=True):
+                with self.assertRaisesRegex(ValueError, "INSUFFICIENT_REAL_EVIDENCE: 1/2"):
+                    run(args)
+            self.assertFalse(args.output.exists())
+
+    def test_invalid_library_targets_fail_closed(self):
+        with tempfile.TemporaryDirectory() as d:
+            args = self._one_stream_fixture(Path(d))
+            for target in (0, -1, True, 2001, "1000"):
+                args.target = target
+                with self.subTest(target=target), self.assertRaisesRegex(ValueError, "Invalid package target"):
+                    run(args)
+            self.assertFalse(args.output.exists())
+
     def test_private_only_output_name_is_required(self):
         with tempfile.TemporaryDirectory() as d:
             args = self._one_stream_fixture(Path(d))

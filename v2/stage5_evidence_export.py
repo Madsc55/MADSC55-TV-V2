@@ -86,6 +86,8 @@ def valid_private_destination(path, source, protected):
         raise ValueError("Output must be a new private .m3u8 in an isolated location")
 
 def run(args):
+    if type(args.target) is not int or not 1 <= args.target <= 2000:
+        raise ValueError("Invalid package target")
     valid_private_destination(args.output, args.source, args.protected)
     source = entries(args.source)
     protected = args.protected.read_bytes()
@@ -94,6 +96,7 @@ def run(args):
     if not isinstance(evidence, list):
         raise ValueError("Evidence must be a JSON array")
     approved = {}
+    used_proof_digests = set()
     evidence_dir = args.evidence.resolve().parent
     for row in evidence:
         if not isinstance(row, dict):
@@ -118,12 +121,18 @@ def run(args):
         if (requested_proof.is_symlink() or not proof_path.is_relative_to(evidence_dir)
                 or not proof_path.is_file()):
             continue
-        if proof_digest(proof_path) != digest.lower():
+        checked_digest = proof_digest(proof_path)
+        if checked_digest != digest.lower():
+            continue
+        # One identical proof clip cannot certify distinct channels.
+        # Preserve fail-closed duplicate URL detection in the next block.
+        if checked_digest in used_proof_digests and url not in approved:
             continue
         if not media_has_audio_video(proof_path):
             continue
         if url in approved:
             raise ValueError("Duplicate evidence URL")
+        used_proof_digests.add(checked_digest)
         approved[url] = row
     selected, ids, urls = [], set(), set()
     for extinf, url in source:
