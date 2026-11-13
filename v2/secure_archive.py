@@ -18,8 +18,10 @@ MAGIC = b'MADSC55-V2-ARCHIVE\x01'
 MAX_INPUT = 512 * 1024 * 1024
 
 def _key(passphrase, salt):
-    if not isinstance(passphrase, str) or len(passphrase) < 16:
+    if type(passphrase) is not str or len(passphrase) < 16:
         raise ValueError('Archive passphrase must contain at least 16 characters')
+    if not passphrase.strip():
+        raise ValueError('Archive passphrase must not be blank')
     return Scrypt(salt=salt, length=32, n=2**15, r=8, p=1).derive(passphrase.encode())
 
 def encrypt(data, passphrase):
