@@ -1,3 +1,9 @@
+## 13 Kasım 2026 — #34 canlı API yeniden deneme ve ek regresyon kapsamı
+- GitHub Actions run 43319831631 başarısız live-contract işi yeniden çalıştırıldı; yeniden çalıştırma da FAILURE. Logda GitHub 20 aday/OK, GitLab 0 aday/OK, Codeberg HTTPError görülüyor. Bu run eski commit üzerinde çalıştığından güncel kodun kabul kanıtı değildir.
+- Geliştirme dalı commit 90552082741d7571a59186c46afd6b8e23a41eb7: Codeberg HTTP 404'te yeniden denememe ve HTTP 500'de en fazla 3 denemeyle fail-closed davranışına iki yeni regresyon testi eklendi.
+- Bu commit için pull-request-triggered Actions sorgusunda run bulunmadı; yeni testlerin CI başarısı doğrulanmadı. Codeberg canlı sözleşmesi ve #34 nihai kabulü AÇIK.
+- Yeni toplu kanal taraması başlatılmadı. Ana İBO/YEDEKLER/YENİLER/FAVORİLER değiştirilmedi.
+
 ## 13 Kasım 2026 — #34 çevrimdışı kürasyon adaptörleri CLI bağlantısı
 - 31d17efb: discovery_34.py --curated-input JSON seçeneği eklendi; official/youtube/m3u kayıtları artık keşif raporuna çevrimdışı alınabiliyor. Geçersiz adaptör anahtarları reddediliyor, bozuk kayıt türleri atlanıyor.
 - 8da3ecbf: üç adaptörün CLI üzerinden raporlanmasını, offline modunu, AV=0 ayrımını ve geçersiz girdi reddini sınayan testler eklendi.
