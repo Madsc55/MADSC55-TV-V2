@@ -54,6 +54,14 @@ class PackageTests(unittest.TestCase):
             with self.subTest(url=url), self.assertRaises(ValueError):
                 parse("#EXTM3U\n#EXTINF:-1,Name\n" + url + "\n")
 
+    def test_same_url_under_different_names_is_not_two_channels(self):
+        records = [
+            ('#EXTINF:-1 tvg-id="one",First', 'https://example.org/shared.m3u8'),
+            ('#EXTINF:-1 tvg-id="two",Second', 'https://example.org/shared.m3u8'),
+        ]
+        with self.assertRaises(ValueError):
+            validate(records)
+
     def test_duplicate(self):
         text,_=fixture(1)
         with self.assertRaises(ValueError):
