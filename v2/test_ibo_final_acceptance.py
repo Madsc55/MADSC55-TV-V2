@@ -29,7 +29,7 @@ class AcceptanceTests(unittest.TestCase):
 
     def test_invalid_final_reports_fail_closed(self):
         valid={"target":1000,"records":1000,"sha256":"a"*64,"status":"EVIDENCE_GATED"}
-        archive={"status":"ROUNDTRIP_BYTES_MATCH","sha256":"a"*64,"bytes":128}
+        archive={"status":"ROUNDTRIP_BYTES_MATCH","sha256":"a"*64,"bytes":128,"external_restore_verified":True}
         for report in (None, [], "EVIDENCE_GATED",
                        dict(valid, sha256="abc"),
                        dict(valid, sha256="z"*64),
@@ -49,27 +49,35 @@ class AcceptanceTests(unittest.TestCase):
                 final_gate(valid, bad_archive, True, True)
     def test_rejects_archive_from_different_package(self):
         package={"target":1000,"records":1000,"sha256":"a"*64,"status":"EVIDENCE_GATED"}
-        archive={"status":"ROUNDTRIP_BYTES_MATCH","sha256":"b"*64,"bytes":128}
+        archive={"status":"ROUNDTRIP_BYTES_MATCH","sha256":"b"*64,"bytes":128,"external_restore_verified":True}
         with self.assertRaisesRegex(ValueError, "do not match"):
             final_gate(package, archive, True, True)
 
     def test_rejects_non_boolean_acceptance_flags(self):
         p={"target":1000,"records":1000,"sha256":"a"*64,"status":"EVIDENCE_GATED"}
-        a={"status":"ROUNDTRIP_BYTES_MATCH","sha256":"a"*64,"bytes":128}
+        a={"status":"ROUNDTRIP_BYTES_MATCH","sha256":"a"*64,"bytes":128,"external_restore_verified":True}
         for restore, av in (("false", True), (True, "false"), (1, True), (True, 0), (None, True)):
             with self.subTest(restore=restore, av=av), self.assertRaises(ValueError):
                 final_gate(p, a, restore, av)
 
     def test_rejects_plaintext_archive_for_production_review(self):
         p={"target":1000,"records":1000,"sha256":"a"*64,"status":"EVIDENCE_GATED"}
-        a={"status":"ROUNDTRIP_BYTES_MATCH","sha256":"a"*64,"bytes":128}
+        a={"status":"ROUNDTRIP_BYTES_MATCH","sha256":"a"*64,"bytes":128,"external_restore_verified":True}
         for encrypted in (None, False, "true", 1):
             with self.subTest(encrypted=encrypted), self.assertRaises(ValueError):
                 final_gate(p, dict(a, encrypted=encrypted), True, True)
 
+    def test_rejects_unverified_independent_restore(self):
+        p={"target":1000,"records":1000,"sha256":"a"*64,"status":"EVIDENCE_GATED"}
+        a={"status":"ROUNDTRIP_BYTES_MATCH","sha256":"a"*64,"bytes":128,"encrypted":True}
+        for flag in (None, False, "true", 1):
+            with self.subTest(flag=flag), self.assertRaisesRegex(ValueError, "external restore"):
+                final_gate(p, dict(a, external_restore_verified=flag), True, True)
+        self.assertFalse(final_gate(p, dict(a, external_restore_verified=True), True, True)["production_accepted"])
+
     def test_no_false_production_acceptance(self):
         p={"target":1000,"records":1000,"sha256":"a"*64,"status":"EVIDENCE_GATED"}
-        a={"status":"ROUNDTRIP_BYTES_MATCH","sha256":"a"*64,"bytes":128}
+        a={"status":"ROUNDTRIP_BYTES_MATCH","sha256":"a"*64,"bytes":128,"external_restore_verified":True}
         self.assertFalse(final_gate(p,a)["production_accepted"])
         with self.assertRaisesRegex(ValueError, "encrypted archive"):
             final_gate(p,a,True,True)
