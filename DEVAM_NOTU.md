@@ -1,3 +1,8 @@
+## 13 Kasım 2026 — #31–#33 arşiv hedef dosya koruması
+- 5fce1882: `secure_archive.atomic_write` mevcut hedefi `os.replace` ile ezmek yerine `os.link` ile atomik ve üzerine yazmasız oluşturur; hedef mevcutsa FileExistsError verir.
+- ed067cb9: hem backup hem restore için önceden mevcut hedef dosyanın korunmasını sınayan çevrimdışı regresyon eklendi.
+- Bu commitler için tam çevrimdışı test ve GitHub Actions kabulü henüz doğrulanmadı; gerçek yayın AV/bağımsız harici geri yükleme ve PR çakışmaları açık. Ana İBO/YEDEKLER/YENİLER/FAVORİLER değiştirilmedi, tarama başlatılmadı.
+
 ## 13 Kasım 2026 — arşiv parola testindeki kaçış karakteri düzeltmesi
 - 492b40f: boşluk-parola regresyon testinde yanlışlıkla yazılan literal `\\t` ve `\\n` yerine gerçek tab ve satır sonu karakterleri kullanıldı. Böylece testin yanlış pozitif üretmesi engellendi.
 - Değişiklik henüz güncel GitHub Actions koşusunda doğrulanmadı. Nihai gerçek AV ve bağımsız harici geri yükleme kabulü açık; korunan listeler değiştirilmedi.
