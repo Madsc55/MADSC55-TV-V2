@@ -1,3 +1,8 @@
+## 13 Kasım 2026 — #28–#33 M3U geçersiz port koruması
+- Commit 98dc2f9: IBO paket ayrıştırıcısı bozuk veya sınır dışı URL portlarını reddeder.
+- Commit fd3a731: bozuk ve 65535 üzeri port senaryoları için çevrimdışı regresyon testi eklendi.
+- Yeni Actions kabulü henüz doğrulanmadı; gerçek AV, harici geri yükleme ve nihai görev kapanışı AÇIK. Kapsamlı tarama yapılmadı, ana İBO/YEDEKLER/YENİLER/FAVORİLER değiştirilmedi.
+
 ## 13 Kasım 2026 — #28–#33 M3U iç başlık güvenlik kontrolü
 - 0ae1568c: ayrıştırıcı yalnızca ilk satırdaki #EXTM3U başlığını kabul edecek şekilde düzeltildi; dosya içindeki tekrar veya sahte başlık reddediliyor.
 - 7d4233d5: ikinci başlık için çevrimdışı regresyon testi ve satır sonu düzeltmesi kaydedildi.
