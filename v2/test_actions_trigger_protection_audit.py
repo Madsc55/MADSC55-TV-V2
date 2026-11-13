@@ -96,7 +96,7 @@ class ActionsTriggerProtectionTests(unittest.TestCase):
         source = path.read_text(encoding="utf-8")
         self.assertEqual(validate_workflow(path, source)[0], [])
         unguarded = source.replace(
-            "github.event.head_commit.message == 'ci(v2): start approved #34 discovery'",
+            "inputs.approve_live_discovery == true",
             "true",
         )
         self.assertIn("STAGE6_DISCOVERY_REQUIRES_EXPLICIT_REQUEST",
