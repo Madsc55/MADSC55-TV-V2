@@ -22,6 +22,16 @@ class Discovery34Tests(unittest.TestCase):
         for url in ("file:///tmp/a", "https://localhost/a", "https://user:pass@site.org/a", "http://127.0.0.1/a", "http://192.168.1.1/a", "http://[::1]/a"):
             with self.assertRaises(ValueError):
                 identity("m3u", url)
+    def test_backslash_urls_fail_closed(self):
+        for source, url in (
+            ("m3u", "https://example.org\\\\@localhost/live.m3u8"),
+            ("official", "https://example.org/live\\\\stream.m3u8"),
+            ("github", "https://github.com\\\\@evil.example/repo"),
+        ):
+            with self.subTest(source=source, url=url), self.assertRaises(ValueError):
+                identity(source, url)
+        self.assertEqual(curated_candidates("m3u", [{"url": "https://example.org/live\\\\stream.m3u8"}]), [])
+
     def test_provider_host_boundaries(self):
         for source, url in (("github", "https://github.com.evil.example/a"),
                             ("gitlab", "http://gitlab.com/a"),
