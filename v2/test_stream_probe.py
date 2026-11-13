@@ -5,6 +5,10 @@ from unittest.mock import patch
 from stream_probe import probe
 
 class StreamProbeTests(unittest.TestCase):
+    def test_malformed_url_types(self):
+        for value in (None, 7, [], {}, "", "   "):
+            self.assertEqual(probe(value)["status"], "INVALID_URL")
+
     def test_invalid_url(self):
         self.assertEqual(probe('file:///etc/passwd')['status'], 'INVALID_URL')
         self.assertEqual(probe('https://u:p@example.com/x')['status'], 'INVALID_URL')
