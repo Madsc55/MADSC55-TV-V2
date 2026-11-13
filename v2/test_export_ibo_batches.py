@@ -134,5 +134,19 @@ class BatchTests(unittest.TestCase):
         self.assertNotIn('tvg-logo=', output)
         self.assertIn('https://example.invalid/good', output)
 
+    def test_unicode_line_separators_cannot_create_fake_channels(self):
+        for separator in ("\u0085", "\u2028", "\u2029"):
+            with self.subTest(separator=repr(separator)):
+                record = {
+                    "url": "https://example.invalid/safe.m3u8",
+                    "name": "News" + separator + "#EXTINF:-1,FAKE",
+                    "group": "TR" + separator + "#EXTINF:-1,FAKE",
+                }
+                output = render([record]).decode("utf-8")
+                self.assertEqual(len(output.splitlines()), 3)
+                self.assertEqual(sum(line.startswith("#EXTINF:") for line in output.splitlines()), 1)
+                self.assertEqual(output.splitlines()[2], record["url"])
+
+
 if __name__ == '__main__':
     unittest.main()
