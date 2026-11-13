@@ -62,6 +62,18 @@ class IntegrationTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 normalize(source, {key: "invalid"})
 
+    def test_integrated_cli_preserves_existing_discovery_report(self):
+        import subprocess
+        import sys
+        with tempfile.TemporaryDirectory() as d:
+            output = Path(d) / "original.json"
+            output.write_text("KEEP_EXISTING_REPORT", encoding="utf-8")
+            proc = subprocess.run([sys.executable,
+                str(Path(__file__).with_name("discovery_34_integrate.py")),
+                "--output", str(output)], capture_output=True, text=True)
+            self.assertNotEqual(proc.returncode, 0)
+            self.assertEqual(output.read_text(encoding="utf-8"), "KEEP_EXISTING_REPORT")
+
     def test_missing_report_is_reported(self):
         result = integrate({"youtube": Path("/nonexistent/discovery34.json")})
         self.assertEqual(len(result["errors"]), 1)
