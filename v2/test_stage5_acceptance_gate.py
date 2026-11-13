@@ -64,7 +64,7 @@ def main():
                 "https://host.internal/proof", "https://host.local/proof",
                 "https://github.com:bad/proof", "https://github.com:99999/proof",
                 "https://user:password@github.com/proof",
-                "https://github.com/proof\\nforged"):
+                "https://github.com/proof\nforged"):
         invalid = filled()
         invalid["tasks"]["31"]["real_av_evidence_url"] = url
         assert not evaluate(invalid)["tasks"]["31"]["accepted"], url
