@@ -1,3 +1,8 @@
+## 13 Kasım 2026 — #31–#33 şifreli arşiv girdi tür koruması
+- be71d936: audit_encrypted_archive(), çözme işleminden önce original/ciphertext girdilerini bytes olarak zorunlu tutar.
+- f072a51d: string, bytearray ve None girdileri için çevrimdışı regresyon testleri eklendi.
+- Yeni Actions kabulü henüz doğrulanmadı. Gerçek yayın AV ve harici bağımsız geri yükleme hâlâ açık; korunan listelere dokunulmadı, kanal taraması yapılmadı.
+
 ## 13 Kasım 2026 — #31–#33 paket/arşiv SHA-256 zinciri
 - 05fd93ef: final_gate arşiv SHA-256 değerini kabul edilmiş IBO paketinin SHA-256 değeriyle eşleştirir; farklı paketin arşivi artık kabul edilmez.
 - 2d11ceeb: eşleşen sentetik test raporları güncellendi ve farklı paket arşivi için negatif regresyon eklendi.
