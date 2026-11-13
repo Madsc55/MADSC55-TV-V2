@@ -6,7 +6,7 @@ import time
 import urllib.error
 from discovery_34 import search_url, fetch_json, repository_candidates
 
-RETRYABLE_HTTP = frozenset((429, 500, 502, 503, 504))
+RETRYABLE_HTTP = frozenset((408, 425, 429, 500, 502, 503, 504))
 MAX_ATTEMPTS = 3
 
 def probe(source, query="turkish-iptv", fetch=fetch_json, sleep=time.sleep):
@@ -29,7 +29,8 @@ def probe(source, query="turkish-iptv", fetch=fetch_json, sleep=time.sleep):
                 sleep(attempt)
                 continue
             return {"status": "error", "reason": "HTTP_" + str(exc.code),
-                    "retryable": retryable, "provider": source, "attempts": attempt}
+                    "retryable": retryable, "provider": source, "attempts": attempt,
+                    "endpoint_host": "codeberg.org" if source == "codeberg" else ("api.github.com" if source == "github" else "gitlab.com") }
         except urllib.error.URLError as exc:
             # Temporary DNS/connection failures may recover; never mark them successful.
             if attempt < MAX_ATTEMPTS:
