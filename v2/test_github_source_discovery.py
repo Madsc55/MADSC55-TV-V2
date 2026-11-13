@@ -1,4 +1,10 @@
+import json
+import pathlib
+import tempfile
 import unittest
+from unittest.mock import patch
+
+import github_source_discovery as discovery
 from github_source_discovery import discover_gists
 
 class GistDiscoveryTests(unittest.TestCase):
@@ -53,6 +59,28 @@ class GistDiscoveryTests(unittest.TestCase):
         self.assertEqual(rows, [])
         self.assertEqual(errors, [])
         self.assertEqual(checked, 1)
+
+
+class DiscoveryOutputTests(unittest.TestCase):
+    def test_main_writes_single_json_document_with_real_line_ending(self):
+        """The real scan must parse this report with json.loads."""
+        with tempfile.TemporaryDirectory() as temp:
+            report = pathlib.Path(temp) / "github-source-discovery.json"
+            config = pathlib.Path(temp) / "sources.json"
+            config.write_text('{"sources": []}', encoding="utf-8")
+            with (
+                patch.object(discovery, "OUT", report),
+                patch.object(discovery, "CONFIG", config),
+                patch.object(discovery, "QUERIES", []),
+                patch.object(discovery, "discover_gists", return_value=([], [], 0)),
+            ):
+                discovery.main()
+            raw = report.read_text(encoding="utf-8")
+            self.assertTrue(raw.endswith("\n"))
+            self.assertFalse(raw.endswith("\\n"))
+            parsed = json.loads(raw)
+            self.assertEqual(parsed["sources"], [])
+            self.assertEqual(parsed["errors"], [])
 
 if __name__ == "__main__":
     unittest.main()
