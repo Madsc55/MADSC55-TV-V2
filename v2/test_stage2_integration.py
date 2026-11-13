@@ -8,7 +8,7 @@ class Stage2IntegrationTests(unittest.TestCase):
     def test_retry_identity_epg_category_together(self):
         url = "https://example.invalid/channel"
         xml = ('<tv><channel id="news.tr"></channel>'
-               '<programme channel="news.tr" start="20261112190000 +0000"/>'
+               '<programme channel="news.tr" start="20261112190000 +0000" stop="20261112200000 +0000"/>'
                '</tv>')
         result = integrate([{"url": url, "source": "tr-source", "name": "Example",
                              "tvg_id": "news.tr", "group": "Haber",
