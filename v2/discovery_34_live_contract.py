@@ -8,6 +8,18 @@ from discovery_34 import search_url, fetch_json, repository_candidates
 
 RETRYABLE_HTTP = frozenset((408, 425, 429, 500, 502, 503, 504))
 MAX_ATTEMPTS = 3
+MAX_RETRY_AFTER_SECONDS = 60
+
+def retry_delay(exc, attempt):
+    """Honor a bounded numeric Retry-After; otherwise back off more for 429."""
+    headers = getattr(exc, "headers", None)
+    raw = headers.get("Retry-After") if headers is not None else None
+    try:
+        if raw is not None:
+            return min(MAX_RETRY_AFTER_SECONDS, max(0, int(raw.strip())))
+    except (AttributeError, TypeError, ValueError):
+        pass
+    return min(MAX_RETRY_AFTER_SECONDS, (5 if getattr(exc, "code", None) == 429 else 1) * (2 ** (attempt - 1)))
 
 def probe(source, query="turkish-iptv", fetch=fetch_json, sleep=time.sleep):
     url = search_url(source, query)
@@ -26,7 +38,7 @@ def probe(source, query="turkish-iptv", fetch=fetch_json, sleep=time.sleep):
         except urllib.error.HTTPError as exc:
             retryable = exc.code in RETRYABLE_HTTP
             if retryable and attempt < MAX_ATTEMPTS:
-                sleep(attempt)
+                sleep(retry_delay(exc, attempt))
                 continue
             return {"status": "error", "reason": "HTTP_" + str(exc.code),
                     "retryable": retryable, "provider": source, "attempts": attempt,
