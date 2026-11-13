@@ -23,6 +23,18 @@ class IntegrationTests(unittest.TestCase):
             self.assertEqual(len(result["candidates"]), 3)
             self.assertEqual(result["verified_av"], 0)
             self.assertEqual(result["errors"], [])
+    def test_malformed_rows_do_not_discard_valid_candidates(self):
+        fixtures = [("official", "channels", "official_site", "https://example.org"),
+                    ("youtube", "results", "video_id", "AbCdEf12345"),
+                    ("m3u", "sources", "url", "https://example.org/tr.m3u")]
+        for source, key, field, value in fixtures:
+            good = {field: value}
+            if source == "m3u":
+                good["kind"] = "m3u"
+            self.assertEqual(len(normalize(source, {key: [None, 17, [], good]})), 1)
+            with self.assertRaises(ValueError):
+                normalize(source, {key: "invalid"})
+
     def test_missing_report_is_reported(self):
         result = integrate({"youtube": Path("/nonexistent/discovery34.json")})
         self.assertEqual(len(result["errors"]), 1)
