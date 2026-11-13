@@ -24,7 +24,8 @@ def valid_stream_url(value):
 
 def clean_attribute(value):
     """Keep untrusted source metadata on its original EXTINF line."""
-    return "".join(" " if ord(char) < 32 or ord(char) == 127 else char
+    return "".join(" " if (ord(char) < 32 or 127 <= ord(char) <= 159
+                           or char in ("\\u2028", "\\u2029")) else char
                    for char in str(value or "")).replace('"', "")
 
 
@@ -48,6 +49,8 @@ def export(archive, passphrase, destination, sizes=(1000, 2000), existing=()):
         if not line.strip():
             continue
         record = json.loads(line)
+        if not isinstance(record, dict):
+            continue
         url = record.get('url')
         if not valid_stream_url(url) or url in seen:
             continue
