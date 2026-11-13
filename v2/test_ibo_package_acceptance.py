@@ -56,6 +56,13 @@ class PackageTests(unittest.TestCase):
         for text in ("#EXTM3U\n#EXTINF:-1,Name\n", "#EXTM3U\nhttps://x.org/a", "#EXTM3U\n#EXTINF:-1,Name\nfile:///tmp/x"):
             with self.assertRaises(ValueError):
                 parse(text)
+    def test_rejects_invalid_extinf_durations(self):
+        for duration in ("abc", "NaN", "inf", "--1", "-2", "1.2.3"):
+            with self.subTest(duration=duration), self.assertRaises(ValueError):
+                parse(f"#EXTM3U\\n#EXTINF:{duration},Name\\nhttps://example.org/live.m3u8\\n")
+        valid = parse("#EXTM3U\\n#EXTINF:12.5 tvg-id=\\"id\\",Name\\nhttps://example.org/live.m3u8\\n")
+        self.assertEqual(len(valid), 1)
+
     def test_rejects_malformed_extinf_directives(self):
         for directive in ("#EXTINF-1,Name", "#EXTINF ,Name", "#EXTINF"):
             with self.subTest(directive=directive), self.assertRaises(ValueError):
