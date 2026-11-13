@@ -6,6 +6,7 @@ import json
 import os
 import re
 import urllib.parse
+import urllib.error
 import urllib.request
 from pathlib import Path
 
@@ -141,11 +142,25 @@ def main():
     candidates, errors = [], []
     if args.network:
         for source in ("github", "gitlab", "codeberg"):
-            for query in QUERIES:
+            for index, query in enumerate(QUERIES):
                 try:
                     candidates.extend(repository_candidates(source, fetch_json(search_url(source, query))))
                 except (ValueError, OSError, KeyError, TypeError, json.JSONDecodeError) as exc:
-                    errors.append({"source": source, "query": query, "error": type(exc).__name__})
+                    error = {"source": source, "query": query, "error": type(exc).__name__}
+                    if isinstance(exc, urllib.error.HTTPError):
+                        error["http_status"] = exc.code
+                    errors.append(error)
+                    # Provider-wide rate limits must not trigger five more API calls.
+                    # Preserve skipped terms as incomplete rather than empty results.
+                    if isinstance(exc, urllib.error.HTTPError) and exc.code in (429, 403):
+                        headers = getattr(exc, "headers", None)
+                        remaining = headers.get("X-RateLimit-Remaining") if headers is not None else None
+                        limited = exc.code == 429 or remaining == "0" or "rate limit" in str(exc.reason).lower()
+                        if limited:
+                            errors.extend({"source": source, "query": term,
+                                           "error": "provider_rate_limit_skipped"}
+                                          for term in QUERIES[index + 1:])
+                            break
     unique = {item["source_id"]: item for item in candidates}
     output = Path(args.output)
     output.parent.mkdir(parents=True, exist_ok=True)

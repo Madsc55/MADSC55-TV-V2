@@ -28,6 +28,31 @@ class Discovery34Tests(unittest.TestCase):
         self.assertEqual(repository_candidates("gitlab", []), [])
         self.assertEqual(repository_candidates("codeberg", {"data": []}), [])
 
+    def test_network_cli_stops_codeberg_fanout_after_429(self):
+        import io
+        import json
+        import tempfile
+        import urllib.error
+        from unittest.mock import patch
+        from pathlib import Path
+        import discovery_34
+        calls = []
+        def fake_fetch(url):
+            calls.append(url)
+            if "codeberg.org" in url:
+                raise urllib.error.HTTPError(url, 429, "Too Many Requests", {}, io.BytesIO())
+            return [] if "gitlab.com" in url else {"items": []}
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / "candidates.json"
+            with patch.object(discovery_34, "fetch_json", side_effect=fake_fetch), \
+                 patch("sys.argv", ["discovery_34.py", "--network", "--output", str(output)]):
+                discovery_34.main()
+            report = json.loads(output.read_text())
+        self.assertEqual(sum("codeberg.org" in url for url in calls), 1)
+        self.assertEqual(len(report["errors"]), len(QUERIES))
+        self.assertEqual(sum(row["error"] == "provider_rate_limit_skipped" for row in report["errors"]), len(QUERIES) - 1)
+        self.assertEqual(report["av_verified"], 0)
+
     def test_youtube(self):
         items = curated_candidates("youtube", [{"video_id": "AbCdEf12345"}])
         self.assertEqual(items[0]["source_id"], "youtube:AbCdEf12345")
