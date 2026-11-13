@@ -75,6 +75,8 @@ def repository_candidates(source, payload):
     results = []
     if not isinstance(items, list):
         raise ValueError("Invalid repository response")
+    if source in ("github", "codeberg") and (("items" if source == "github" else "data") not in payload):
+        raise ValueError("Missing repository result field")
     for item in items:
         if not isinstance(item, dict):
             continue
