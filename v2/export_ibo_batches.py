@@ -3,16 +3,36 @@
 import argparse
 import json
 import os
+import re
 from pathlib import Path
+from urllib.parse import urlsplit
 from secure_archive import decrypt, atomic_write
+
+def _valid_http_url(value):
+    """Prevent invalid, credentialed or multiline URLs in published M3U rows."""
+    if (type(value) is not str or not value
+            or any(ch.isspace() or ord(ch) < 32 or ord(ch) == 127 for ch in value)):
+        return False
+    try:
+        parsed = urlsplit(value)
+        return (parsed.scheme in ("http", "https") and bool(parsed.hostname)
+                and parsed.username is None and parsed.password is None
+                and parsed.port != 0)
+    except ValueError:
+        return False
+
+
+def _clean_m3u_text(value):
+    return re.sub(r"[\x00-\x1f\x7f\x85\u2028\u2029]", " ", str(value))
+
 
 def render(records):
     lines = ['#EXTM3U']
     for record in records:
-        name = str(record.get('name') or 'UNKNOWN').replace('\n', ' ').replace('\r', ' ').replace(',', ' ')
-        group = str(record.get('group') or 'TR-AZ ADAY').replace('"', '').replace('\n', ' ')
-        logo = str(record.get('logo') or '')
-        logo_attr = f' tvg-logo="{logo}"' if logo.startswith(('https://', 'http://')) and '"' not in logo else ''
+        name = _clean_m3u_text(record.get('name') or 'UNKNOWN').replace(',', ' ')
+        group = _clean_m3u_text(record.get('group') or 'TR-AZ ADAY').replace('"', '')
+        logo = record.get('logo') or ''
+        logo_attr = f' tvg-logo="{logo}"' if _valid_http_url(logo) and '"' not in logo else ''
         lines.extend([f'#EXTINF:-1{logo_attr} group-title="{group}",{name}', record['url']])
     return ('\n'.join(lines) + '\n').encode('utf-8')
 
@@ -24,7 +44,7 @@ def export(archive, passphrase, destination, sizes=(1000, 2000), existing=()):
             continue
         record = json.loads(line)
         url = record.get('url')
-        if not isinstance(url, str) or not url.startswith(('http://', 'https://')) or url in seen:
+        if not _valid_http_url(url) or url in seen:
             continue
         if record.get('http_hls_status') != 'AV_VERIFIED':
             continue
