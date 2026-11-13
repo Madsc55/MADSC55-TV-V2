@@ -1,3 +1,13 @@
+## 13 Kasım 2026 — #28–#33 çevrimdışı paketleme ve şifreli arşiv altyapısı main'e alındı
+- PR #99, güncel main tabanına yalnızca altı Stage 6 kod/test dosyasını taşıdı; tarihî dalın üretim workflow push tetikleyicisi alınmadı. PR squash ile birleştirildi: `637537812044f2923edee28c154a15e86d761450`.
+- Head `9872645e543e86838df693eb696d60f8ffe03f55` için Production Security Gate Actions #43457835857 SUCCESS. Üretim tetikleyici/write policy, korunan IBO invariantları, historical task ledger, Stage 2/3, Stage 6 paketleme/şifreli arşiv ve #34 offline test adımlarının tamamı geçti.
+- Entegre edilenler: M3U paket doğrulama, paket/archive SHA-256 bağlama, authenticated encrypted archive backup/restore, no-clobber ve fail-closed final acceptance testleri.
+- Bu yalnızca #28–#33 offline altyapı kabulüdür. Gerçek FFmpeg görüntü/ses, bağımsız harici depodan üretim arşiv restore ve gerçek 1000/2000 kayıtlı paket kanıtları olmadan görevler kapatılmaz. Ana İBO/YEDEKLER/YENİLER/FAVORİLER değiştirilmedi; tarama başlatılmadı.
+
+## 13 Kasım 2026 — #34 HTTP-date Retry-After regresyon testleri
+- Main üzerindeki sağlayıcı probe zaten numeric ve HTTP-date Retry-After parsing içeriyor. PR #102, future HTTP-date için 60 saniye cap ve past date için sıfır bekleme davranışını doğrulayan iki offline regresyon testi ekliyor; full configured multi-query matrix ve rate-limit diagnostics korunuyor.
+- PR #102 Actions sonucu bekleniyor; #34 canlı Codeberg API 429 kabulü ve gerçek yeni AV kanıtı olmadan açık kalır.
+
 ## 13 Kasım 2026 — Aşama 2 (#15, #17–#21) çevrimdışı kabul kapısı ana dala alındı
 - PR #72 squash merge `e333adca5c0497de6c021e021d74b3369571276d`; ana Production Security Gate Actions `43455393756` SUCCESS.
 - Başarılı adımlar: Stage 2 identity/recovery/metadata integration acceptance; Stage 2/3 offline identity, EPG and recovery acceptance; Stage 6 offline package/archive; #34 offline adapter/integration; production security and protected IBO invariants.
