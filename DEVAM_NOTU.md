@@ -1,3 +1,8 @@
+## 13 Kasım 2026 — #34 keşif raporu üzerine yazma koruması
+- 2adc28a0: discovery_34.py rapor çıktısı mevcutsa işlemi reddeder; exclusive create (open("x")) ile yazılır. Önceden oluşmuş raporlar üzerine yazılmaz.
+- 2a429c66: mevcut raporun byte içeriğinin CLI çağrısından sonra korunmasını doğrulayan çevrimdışı regresyon testi eklendi.
+- PR #22 açık; son commitlerin Actions kabul sonucu henüz görünmedi. #34 nihai kabulü yapılmadı; kapsamlı tarama veya korunan İBO değişikliği yok.
+
 ## 13 Kasım 2026 — #34 canlı API yeniden deneme ve ek regresyon kapsamı
 - GitHub Actions run 43319831631 başarısız live-contract işi yeniden çalıştırıldı; yeniden çalıştırma da FAILURE. Logda GitHub 20 aday/OK, GitLab 0 aday/OK, Codeberg HTTPError görülüyor. Bu run eski commit üzerinde çalıştığından güncel kodun kabul kanıtı değildir.
 - Geliştirme dalı commit 90552082741d7571a59186c46afd6b8e23a41eb7: Codeberg HTTP 404'te yeniden denememe ve HTTP 500'de en fazla 3 denemeyle fail-closed davranışına iki yeni regresyon testi eklendi.
