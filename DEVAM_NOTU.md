@@ -1,3 +1,10 @@
+## 13 Kasım 2026 — #28–#33 son IBO ayrıştırıcı ve kanıt doğrulama düzeltmeleri
+- e18f564e, 7beb8029: yayın URL'sinde iç kontrol/boşluk ve kenar boşlukları reddediliyor; 235d3942 ve 49d4af7c regresyon testleri eklendi/düzeltildi.
+- 3d0b539f ve e9d9c241: bozuk port ve EXTINF testlerinin yanlış kaçışlı satır sonları düzeltildi.
+- 363b129a: görüntü/ses kanıt alanları için boş olmayan string zorunluluğu; 3e238dcb regresyon testi.
+- Bu commitlerin tamamı için güncel GitHub Actions kabulü doğrulanmadı. Yerel tam depo testinin PASS kanıtı yok. Gerçek FFmpeg görüntü/ses, harici şifreli geri yükleme, PR #23 çakışma çözümü ve nihai görev kapanışları AÇIK.
+- Kapsamlı kanal taraması başlatılmadı. Ana İBO, YEDEKLER, YENİLER, FAVORİLER değiştirilmedi.
+
 ## 13 Kasım 2026 — #31–#33 son kabul bayrağı tür güvenliği
 - f667ac31: final_gate bağımsız geri yükleme ve canlı AV bayraklarını yalnızca gerçek bool olarak kabul eder; metin/sayı truthy değerleri kabul aşamasını atlatamaz.
 - 42b528d3: string, sayı ve None bayrakları için çevrimdışı regresyon testi eklendi.
