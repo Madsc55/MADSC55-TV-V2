@@ -13,14 +13,22 @@ REPORTS = {
 }
 
 def normalize(source, data):
+    if not isinstance(data, dict):
+        raise ValueError("Invalid discovery report")
     if source == "official":
-        rows = [{"url": x.get("official_site", "")} for x in data.get("channels", [])]
+        key, field = "channels", "official_site"
     elif source == "youtube":
-        rows = [{"video_id": x.get("video_id", "")} for x in data.get("results", [])]
+        key, field = "results", "video_id"
     elif source == "m3u":
-        rows = [{"url": x.get("url", "")} for x in data.get("sources", []) if x.get("kind") == "m3u"]
+        key, field = "sources", "url"
     else:
         raise ValueError("Unknown source")
+    items = data.get(key, [])
+    if not isinstance(items, list):
+        raise ValueError("Invalid discovery rows")
+    rows = [{("video_id" if source == "youtube" else "url"): item.get(field, "")}
+            for item in items if isinstance(item, dict) and
+            (source != "m3u" or item.get("kind") == "m3u")]
     return curated_candidates(source, rows)
 
 def integrate(reports=REPORTS):
