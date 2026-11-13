@@ -161,6 +161,22 @@ class LiveContractRetryTests(unittest.TestCase):
         self.assertEqual(result["attempts"], 2)
         self.assertEqual(sleeps, [17])
 
+    def test_http_429_honors_http_date_retry_after(self):
+        from datetime import datetime, timedelta, timezone
+        from email.utils import format_datetime
+        retry_at = datetime.now(timezone.utc) + timedelta(seconds=35)
+        header = format_datetime(retry_at, usegmt=True)
+        sleeps = []
+        def fetch(_url):
+            raise urllib.error.HTTPError("https://codeberg.org/api/v1/repos/search", 429,
+                                         "rate limited", {"Retry-After": header}, None)
+        result = probe("codeberg", fetch=fetch, sleep=sleeps.append)
+        self.assertEqual(result["reason"], "HTTP_429")
+        self.assertEqual(result["attempts"], 3)
+        self.assertEqual(len(sleeps), 2)
+        self.assertTrue(all(0 <= delay <= 35 for delay in sleeps))
+        self.assertTrue(all(delay >= 30 for delay in sleeps))
+
     def test_http_429_retry_after_is_capped(self):
         calls, sleeps = [], []
         def fetch(_url):
