@@ -49,6 +49,7 @@ jobs:
           python -m py_compile v2/real_ibo_scan.py v2/consolidate_inventory.py v2/ibo_package_acceptance.py v2/ibo_final_acceptance.py
           python v2/test_ibo_package_acceptance.py
           python v2/test_ibo_final_acceptance.py
+          PYTHONPATH=v2 python -m unittest -v test_export_ibo_batches
       - name: Stage 2 and Stage 3 offline identity, EPG and recovery acceptance
         run: |
           echo 'Stage 2/3 grouped acceptance includes current-main scanner and probe integration'
