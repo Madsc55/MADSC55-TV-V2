@@ -15,12 +15,9 @@ def valid_stream_url(value):
         return False
     try:
         parsed = urlsplit(value)
+        _ = parsed.port
         return (parsed.scheme in ("http", "https") and bool(parsed.hostname)
-                and parsed.username is None and parsed.password is None
-                and parsed.port is not None or
-                parsed.scheme in ("http", "https") and bool(parsed.hostname)
-                and parsed.username is None and parsed.password is None
-                and parsed.port is None)
+                and parsed.username is None and parsed.password is None)
     except ValueError:
         return False
 
