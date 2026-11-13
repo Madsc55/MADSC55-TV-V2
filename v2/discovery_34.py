@@ -79,13 +79,19 @@ def fetch_json(url):
 
 def repository_candidates(source, payload):
     if source == "github":
-        items = payload.get("items", [])
+        if not isinstance(payload, dict) or not isinstance(payload.get("items"), list):
+            raise ValueError("Invalid GitHub repository API response")
+        items = payload["items"]
         url_key = "html_url"
     elif source == "gitlab":
+        if not isinstance(payload, list):
+            raise ValueError("Invalid GitLab repository API response")
         items = payload
         url_key = "web_url"
     elif source == "codeberg":
-        items = payload.get("data", [])
+        if not isinstance(payload, dict) or not isinstance(payload.get("data"), list):
+            raise ValueError("Invalid Codeberg repository API response")
+        items = payload["data"]
         url_key = "html_url"
     else:
         raise ValueError("Not a repository adapter")
