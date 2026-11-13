@@ -1,3 +1,8 @@
+## 13 Kasım 2026 — #28–#33 güvenlik kontrolü doğrulaması
+- GitHub Actions run 43444008561 (stage6-28-33-infrastructure-20261112): SUCCESS. Grouped safety regression, production trigger/write policy, protected IBO invariants ve Discovery 34 offline adapter/integration adımları PASS.
+- Bu koşu **Stage 6 grouped offline acceptance workflow_dispatch** değildir; #28–#33 paketleme/arşiv testlerinin yeni kodla tam toplu kabulü, gerçek AV, harici geri yükleme ve nihai kabul hâlâ AÇIK.
+- Ana İBO, YEDEKLER, YENİLER ve FAVORİLER değiştirilmedi. Yeni kanal taraması yapılmadı.
+
 ## 13 Kasım 2026 — Güvenlik kuralı ile CI tetikleyicisi uyumu
 - stage3 DEVAM_NOTU geçmişinde yetkisiz pull_request workflow tetikleyicisinin UNAPPROVED_TRIGGER hatasına neden olduğu doğrulandı. Stage6 iş akışına sonradan eklenen PR tetikleyicisi bu nedenle b8f5c3db ile geri alındı; workflow_dispatch, korunan İBO invariants ve offline kabul testleri korundu.
 - Stage6 offline kabulün yeni kodlarla yeşil sonucu yok; GitHub Actions workflow_dispatch çalıştırması ve bağımsız kabul halen bekliyor. Başarı veya görev kapanışı iddia edilmiyor.
