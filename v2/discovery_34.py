@@ -99,6 +99,8 @@ def curated_candidates(source, records):
         raise ValueError("Not a curated adapter")
     out = []
     for item in records:
+        if not isinstance(item, dict):
+            continue
         url = item.get("url", "")
         if source == "youtube":
             video_id = item.get("video_id", "")
@@ -118,8 +120,17 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--network", action="store_true", help="Explicit opt-in repository metadata queries")
     parser.add_argument("--output", default="v2/reports/discovery-34-candidates.json")
+    parser.add_argument("--curated-input", type=Path, help="Offline JSON mapping of official/youtube/m3u candidates")
     args = parser.parse_args()
     candidates, errors = [], []
+    if args.curated_input is not None:
+        curated = json.loads(args.curated_input.read_text(encoding="utf-8"))
+        if not isinstance(curated, dict) or any(
+                key not in ("official", "youtube", "m3u") or not isinstance(value, list)
+                for key, value in curated.items()):
+            parser.error("curated input must map official/youtube/m3u to arrays")
+        for source, records in curated.items():
+            candidates.extend(curated_candidates(source, records))
     if args.network:
         for source in ("github", "gitlab", "codeberg"):
             for query in QUERIES:
