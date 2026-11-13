@@ -16,7 +16,7 @@ class Stage5Acceptance(unittest.TestCase):
     def test_no_synthetic_or_unverified_delivery(self):
         with tempfile.TemporaryDirectory() as d:
             p = Path(d)
-            source, protected, evidence, output = (p/x for x in ("source.m3u8","protected.m3u8","evidence.json","out.m3u8"))
+            source, protected, evidence, output = (p/x for x in ("source.m3u8","protected.m3u8","evidence.json","private-out.m3u8"))
             source.write_text("#EXTM3U\n#EXTINF:-1,One\nhttps://example.org/one.m3u8\n")
             protected.write_text("#EXTM3U\n#EXTINF:-1,Original\nhttps://example.org/original.m3u8\n")
             evidence.write_text(json.dumps([{"url":"https://example.org/one.m3u8","video_verified":True,"audio_verified":True,"ibo_playback_verified":False,"evidence_ref":"fixture-not-real","channel_id":"one"}]))
@@ -28,7 +28,7 @@ class Stage5Acceptance(unittest.TestCase):
     def test_fake_boolean_evidence_does_not_pass(self):
         with tempfile.TemporaryDirectory() as d:
             p = Path(d)
-            source, protected, evidence, output = (p/x for x in ("source.m3u8","protected.m3u8","evidence.json","out.m3u8"))
+            source, protected, evidence, output = (p/x for x in ("source.m3u8","protected.m3u8","evidence.json","private-out.m3u8"))
             source.write_text("#EXTM3U\n#EXTINF:-1,One\nhttps://example.org/one.m3u8\n")
             protected.write_text("#EXTM3U\n#EXTINF:-1,Original\nhttps://example.org/original.m3u8\n")
             evidence.write_text(json.dumps([{"url":"https://example.org/one.m3u8","video_verified":True,"audio_verified":True,"ibo_playback_verified":True,"evidence_ref":"invented","channel_id":"one","evidence_file":"nonexistent.mp4","evidence_sha256":"0"*64}]))
