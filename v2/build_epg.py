@@ -56,6 +56,9 @@ def ingest_xmltv_feed(root, channels, schedules, ambiguous_ids):
     collisions = {cid for cid, n in declarations.items()
                   if n != 1 or cid in channels}
     ambiguous_ids.update(collisions)
+    for cid in collisions:
+        channels.pop(cid, None)
+        schedules.pop(cid, None)
     unique = {cid for cid, n in declarations.items()
               if n == 1 and cid not in ambiguous_ids}
     for channel in root.findall("channel"):
@@ -117,7 +120,9 @@ def main():
             counts = ingest_xmltv_feed(root, feed_channels, schedules, ambiguous_ids)
             results.append({"source": url, "status": "ok", **counts})
         except Exception as exc:
-            results.append({"source": url, "status": "failed", "reason": str(exc)[:180]})
+            # Avoid printing signed feed URLs or confidential query tokens.
+            results.append({"source": url.split("?")[0], "status": "failed",
+                            "error_type": type(exc).__name__})
     # The first feed's observations become untrusted if another feed later
     # claims the same ID; exclude both before all matching and exports.
     for cid in ambiguous_ids:
