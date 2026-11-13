@@ -34,6 +34,15 @@ def select(report, decrypted):
             or not isinstance(decrypted,list)):
         raise ValueError("Invalid AV report or authenticated rows")
     references=report.get("streams")
+    # Detect replayed sealed evidence explicitly before the batch-size gate.
+    # A duplicated hash must never count as another independently AV-proven stream.
+    sealed_hashes=set()
+    for row in decrypted:
+        if isinstance(row,dict) and isinstance(row.get("url_sha256"),str):
+            digest=row["url_sha256"]
+            if digest in sealed_hashes:
+                raise ValueError("Duplicate authenticated URL hash")
+            sealed_hashes.add(digest)
     if (not isinstance(references,list)
             or len(references)!=report.get("unique_url_candidates")
             or len(decrypted)!=len(references)):
