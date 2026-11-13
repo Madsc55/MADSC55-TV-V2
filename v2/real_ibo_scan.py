@@ -157,6 +157,8 @@ def main():
     doc = json.loads(args.sources.read_text(encoding='utf-8'))
     sources = list(doc['sources'] if isinstance(doc, dict) else doc)
     dynamic_count = 0
+    dynamic_source_ids = set()
+    rejected_dynamic_sources = []
     if args.dynamic_sources is not None:
         dynamic = json.loads(args.dynamic_sources.read_text(encoding='utf-8'))
         if not isinstance(dynamic.get('sources'), list):
@@ -173,6 +175,7 @@ def main():
                             'url': url, 'scope': 'candidate'})
             seen_source_urls.add(url)
             dynamic_count += 1
+            dynamic_source_ids.add('github-auto-' + hashlib.sha256(url.encode()).hexdigest()[:20])
     # Do not export incomplete results as a successful production list.
     candidates = {}
     failed = []
@@ -193,6 +196,10 @@ def main():
                         elif sid not in found['source_ids']:
                             found['source_ids'].append(sid)
         except (OSError, ValueError, UnicodeError, socket.timeout) as exc:
+            if sid in dynamic_source_ids:
+                rejected_dynamic_sources.append({'id': sid, 'url': url, 'error': type(exc).__name__, 'detail': str(exc)[:300]})
+                print(f'::warning title=Invalid optional discovered source::{sid}: {type(exc).__name__}: {str(exc)[:180]}', flush=True)
+                continue
             failed.append({'id': sid, 'url': url, 'error': type(exc).__name__, 'detail': str(exc)[:300]})
             print(f'::warning title=IPTV source fetch failed::{sid}: {type(exc).__name__}: {str(exc)[:180]}', flush=True)
     # Compare source yields with the last complete scan before replacing its baseline.
@@ -285,7 +292,7 @@ def main():
     # Source outages are reported; a working subset can still be tested.
     # Never modify the protected main playlist.
     report = {'source_count': len(sources), 'dynamic_source_count': dynamic_count, 'fetched_sources': len(source_counts),
-              'failed_sources': failed, 'source_counts': source_counts, 'source_drops': source_drops, 'existing_main_urls': len(main_urls), 'excluded_foreign_archive_urls': len(foreign_urls), 'unique_new_candidates': len(candidates), 'recovered_from_previous_encrypted_inventory': recovered_from_archive,
+              'failed_sources': failed, 'rejected_dynamic_sources': rejected_dynamic_sources, 'source_counts': source_counts, 'source_drops': source_drops, 'existing_main_urls': len(main_urls), 'excluded_foreign_archive_urls': len(foreign_urls), 'unique_new_candidates': len(candidates), 'recovered_from_previous_encrypted_inventory': recovered_from_archive,
               'http_checked': checked, 'http_hls_ok': len(good), 'av_verified': len(good),
               'candidate_inventory': str(encrypted_inventory), 'archive_restore_test_passed': archive_result['restore_test_passed'],
               'unverified_or_failed_candidates': len(candidates) - len(good),
