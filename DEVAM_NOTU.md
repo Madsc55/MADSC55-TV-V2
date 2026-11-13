@@ -857,3 +857,11 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - `v2/test_discovery_34.py`: bozuk dış URL alanları için çevrimdışı regresyon eklendi.
 - PR #31 merge commit `0ba9dd81b3ef8007e03a9efdcc392bf4d2d551c2`. Actions run `43448805524`: Production Security Gate, stage 6 offline acceptance ve Discovery 34 offline acceptance iş adımları SUCCESS.
 - Bu sonuç canlı Codeberg API, tüm kaynakların FFmpeg girişine bağlanması, gerçek AV kanıtı veya nihai dünya taraması kabulü değildir. #34 açık kalır. Ana İBO, YEDEKLER, YENİLER, FAVORİLER değiştirilmedi.
+
+
+## 13 Kasım 2026 — PR #49 ve #46 güncel main'e alındı
+- PR #49 görev defteri bütünlük testleri: squash merge `382344d436486a5261047756a001ea0dcfeff2c2`; head CI run `43449884347` SUCCESS.
+- PR #46 #34 bozuk rapor satırı entegrasyonu: squash merge `06a26a6aff41ded43cb1e3e78abe14080cc6fb9e`; head CI run `43449834934` SUCCESS.
+- PR #47 kontrol karakteri regresyonu run `43449878222` FAILED (5 test failure); düzeltilip yeniden test edilmeden birleştirilmedi.
+- PR #12 ve #23 mergeability/conflict ve güncel-head kabul koşulları nedeniyle açık. PR #48 dokümantasyon dalı güncel main ile çakıştığı için birleştirilmedi.
+- Bu değişiklikler görev #15–#21, #28–#34'ü kapatmaz. Yeni kanal taraması yapılmadı; ana İBO, YEDEKLER, YENİLER ve FAVORİLER değiştirilmedi.
