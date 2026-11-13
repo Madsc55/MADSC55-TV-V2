@@ -10,7 +10,7 @@ from discovery_34 import QUERIES, search_url, fetch_json, repository_candidates
 
 RETRYABLE_HTTP = frozenset((408, 425, 429, 500, 502, 503, 504))
 MAX_ATTEMPTS = 3
-MAX_RETRY_AFTER_SECONDS = 60
+MAX_RETRY_AFTER_SECONDS = 120
 
 def retry_delay(exc, attempt):
     """Honor numeric or HTTP-date Retry-After, capped to avoid unbounded waits."""
@@ -54,6 +54,7 @@ def probe(source, query="turkish-iptv", fetch=fetch_json, sleep=time.sleep):
                     "http_status": exc.code, "http_reason": str(getattr(exc, "reason", ""))[:120],
                     "retry_after": headers.get("Retry-After") if headers is not None else None,
                     "rate_limit_remaining": (headers.get("X-RateLimit-Remaining") or headers.get("x-ratelimit-remaining")) if headers is not None else None,
+                    "rate_limit_reset": (headers.get("X-RateLimit-Reset") or headers.get("x-ratelimit-reset")) if headers is not None else None,
                     "retryable": retryable, "provider": source, "attempts": attempt,
                     "endpoint_host": {"github": "api.github.com", "gitlab": "gitlab.com", "codeberg": "codeberg.org"}[source]}
         except urllib.error.URLError as exc:
@@ -74,16 +75,28 @@ def probe(source, query="turkish-iptv", fetch=fetch_json, sleep=time.sleep):
                     "provider": source, "attempts": attempt}
 
 def probe_queries(source, queries=QUERIES, fetch=fetch_json, sleep=time.sleep):
-    """Probe every configured discovery term; preserve per-query failures."""
+    """Probe terms sequentially and stop immediately when a provider rate-limits."""
+    terms = list(queries)
     results = []
-    for query in queries:
+    for index, query in enumerate(terms):
         row = probe(source, query=query, fetch=fetch, sleep=sleep)
         results.append({"query": query, **row})
-    failed = [row for row in results if row["status"] != "ok"]
-    return {"status": "error" if failed else "ok",
-            "queries_checked": len(results),
-            "queries_ok": len(results) - len(failed),
+        if row.get("http_status") == 429:
+            # 429 is provider-wide pressure, not a query-specific failure.
+            # Do not turn one rate-limit response into repeated provider requests.
+            results.extend({"query": skipped, "status": "skipped",
+                            "reason": "PROVIDER_RATE_LIMIT_COOLDOWN",
+                            "provider": source, "attempts": 0}
+                           for skipped in terms[index + 1:])
+            break
+    failed = [row for row in results if row["status"] == "error"]
+    skipped = [row for row in results if row["status"] == "skipped"]
+    return {"status": "error" if failed or skipped else "ok",
+            "queries_total": len(terms),
+            "queries_checked": len(results) - len(skipped),
+            "queries_ok": sum(row["status"] == "ok" for row in results),
             "queries_failed": len(failed),
+            "queries_skipped": len(skipped),
             "query_results": results}
 
 
