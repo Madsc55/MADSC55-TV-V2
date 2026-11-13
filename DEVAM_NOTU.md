@@ -2619,3 +2619,10 @@ Kullanıcının açık talimatıyla #3, #4 ve #6 tarihî kurtarma görevleri art
 - Actions Status Monitor run `43457874988` success.
 - Bu sonuçlar kurtarma kodunun kayıp/erişilemeyen kaynakları eksiksiz unresolved saymasını ve hata metninden sır sızdırmamasını doğrular; gerçek tarihî URL'lerin bulunması veya #17 nihai arşiv/kabul şartlarının tamamlanması değildir. #15 bağımlılığı ve gerçek kaynak eşleştirme engeli sürdüğünden #17 statüsü değiştirilmedi.
 - `state.json` 21 completed / 2 in_progress / 11 pending olarak korunur. Canlı tarama, eski yayın probu veya korunan playlist değişikliği yapılmadı.
+
+
+## 13 Kasım 2026 — #28 özel İBO paket güvenliği regresyonları
+
+- Commit `9aa034fe247b65983079b221cc4520fec745eb28`: özel, ayrı IBO test paketi üreticisine üç offline regresyon testi eklendi.
+- Aynı URL SHA256 kanıtının iki kez sunulması reddedilir; eksik şifreli/kimliği doğrulanmış batch fail-closed olur; AV kanıtı olmayan sıfır kayıtlı durumda hedef 1.000/2.000 sayısına sentetik kanal doldurulmaz ve çıktı `NO_VERIFIED_STREAM_TO_EXPORT` olarak kalır.
+- Bunlar #28 paket güvenliği altyapısını doğrular, gerçek 1.000 AV-kanıtlı kanal paketi oluşturmaz. Ana İBO'ya terfi veya playlist yazımı yoktur. Yeni Actions koşusu bekleniyor.
