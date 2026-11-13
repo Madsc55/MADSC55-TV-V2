@@ -1,10 +1,15 @@
 import unittest
 import urllib.error
-from federated_m3u_source_discovery import discover_provider
+from federated_m3u_source_discovery import FEDERATED_QUERIES, discover_provider
 
 PLAYLIST = "#EXTM3U\n#EXTINF:-1,TRT Haber\nhttps://cdn.example/live.m3u8\n"
 
 class FederatedM3UDiscoveryTests(unittest.TestCase):
+    def test_federated_queries_include_generic_playlist_terms(self):
+        for term in ("turkiye.m3u", "tr.m3u8", "turkish-iptv", "iptv",
+                     "m3u", "m3u8", "playlist", "live tv", "television"):
+            self.assertIn(term, FEDERATED_QUERIES)
+        self.assertEqual(len(FEDERATED_QUERIES), len(set(FEDERATED_QUERIES)))
     def test_gitlab_project_tree_and_raw_m3u_are_discovered(self):
         calls, fetched = [], []
         def api(url):
