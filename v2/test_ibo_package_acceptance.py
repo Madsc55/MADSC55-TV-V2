@@ -53,6 +53,11 @@ class PackageTests(unittest.TestCase):
             with self.subTest(text=text), self.assertRaises(ValueError):
                 parse(text)
 
+    def test_rejects_nested_m3u_headers(self):
+        for body in ("#EXTM3U\\n", "#EXTINF:-1,Name\\n#EXTM3U\\nhttps://example.org/live\\n"):
+            with self.subTest(body=body), self.assertRaises(ValueError):
+                parse("#EXTM3U\\n" + body)
+
     def test_rejects_credentials_in_stream_url(self):
         for url in ("https://user:password@example.org/live.m3u8",
                     "https://user@example.org/live.m3u8"):
