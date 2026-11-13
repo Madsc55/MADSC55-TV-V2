@@ -1,3 +1,8 @@
+## 13 Kasım 2026 — #28/#29 IBO çıktı dosyası üzerine yazma koruması
+- e5352741: ibo_package_acceptance.py çıktı dosyasını exclusive create (open("x")) ile yazar; ön kontrol ile yazma arasındaki mevcut dosya overwrite yarışını engeller.
+- 4f2ff08e: CLI'nin önceden mevcut çıktı dosyasını değiştirmediğini doğrulayan çevrimdışı regresyon testi eklendi.
+- Son commitler için Actions kabul sonucu henüz doğrulanmadı; görevler kapatılmadı. Ana İBO, YEDEKLER/YENİLER/FAVORİLER değişmedi ve tarama başlatılmadı.
+
 ## 13 Kasım 2026 — #28–#33 güvenlik kontrolü doğrulaması
 - GitHub Actions run 43444008561 (stage6-28-33-infrastructure-20261112): SUCCESS. Grouped safety regression, production trigger/write policy, protected IBO invariants ve Discovery 34 offline adapter/integration adımları PASS.
 - Bu koşu **Stage 6 grouped offline acceptance workflow_dispatch** değildir; #28–#33 paketleme/arşiv testlerinin yeni kodla tam toplu kabulü, gerçek AV, harici geri yükleme ve nihai kabul hâlâ AÇIK.
