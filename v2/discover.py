@@ -6,6 +6,7 @@ import json
 import pathlib
 import re
 import urllib.request
+from identity_metadata import identity_metadata
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 LIVE = ROOT / "MADSC55_TV_IBO_CALISANLAR_TEST.m3u8"
@@ -113,7 +114,7 @@ def discover(source_texts, live_text, scopes):
             seen.add(e["url"])
             provenance[digest] = [source_id]
             # Do not persist stream URLs/tokens in public reports.
-            candidates.append({"name": e["name"], "tvg_id": e["tvg_id"], "group": e["group"], "source": source_id, "source_ids": provenance[digest], "existing_channel_alternative": bool(e["tvg_id"] and key(e) in existing_keys), "language_hint": candidate_language_hint(e, scopes.get(source_id, "candidate")), "language_verified": False, "url_sha256": hashlib.sha256(e["url"].encode()).hexdigest(), "logo": e["logo"]})
+            candidates.append({"name": e["name"], "tvg_id": e["tvg_id"], "group": e["group"], "source": source_id, "source_ids": provenance[digest], "existing_channel_alternative": bool(e["tvg_id"] and key(e) in existing_keys), "language_hint": candidate_language_hint(e, scopes.get(source_id, "candidate")), "language_verified": False, "url_sha256": hashlib.sha256(e["url"].encode()).hexdigest(), "logo": e["logo"], **identity_metadata(e, scopes.get(source_id, "candidate"))})
     return candidates
 
 def main():

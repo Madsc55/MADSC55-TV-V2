@@ -28,13 +28,58 @@ def probe(url, timeout=25, ffprobe='ffprobe'):
     if result.returncode != 0:
         return {'status': 'PROBE_FAILED', 'video': False, 'audio': False}
     try:
-        streams = json.loads(result.stdout).get('streams', [])
+        payload = json.loads(result.stdout)
+        if not isinstance(payload, dict):
+            return {'status': 'INVALID_PROBE_RESULT', 'video': False, 'audio': False}
+        streams = payload.get('streams', [])
     except (ValueError, TypeError):
+        return {'status': 'INVALID_PROBE_RESULT', 'video': False, 'audio': False}
+    if not isinstance(streams, list) or any(not isinstance(x, dict) for x in streams):
         return {'status': 'INVALID_PROBE_RESULT', 'video': False, 'audio': False}
     video = any(x.get('codec_type') == 'video' and x.get('codec_name') not in (None, 'unknown') for x in streams)
     audio = any(x.get('codec_type') == 'audio' and x.get('codec_name') not in (None, 'unknown') for x in streams)
-    return {'status': 'AV_VERIFIED' if video and audio else ('VIDEO_ONLY' if video else ('AUDIO_ONLY' if audio else 'NO_MEDIA')),
-            'video': video, 'audio': audio}
+    # Resolution is measured only from ffprobe video-stream metadata, never from a channel label.
+    dimensions = [(s.get('width'), s.get('height')) for s in streams
+                  if s.get('codec_type') == 'video' and s.get('codec_name') not in (None, 'unknown')]
+    dimensions = [(w, h) for w, h in dimensions
+                  if type(w) is int and type(h) is int and 0 < w <= 16384 and 0 < h <= 16384]
+    width, height = max(dimensions, key=lambda pair: pair[0] * pair[1]) if dimensions else (None, None)
+    # ffprobe discovers declared streams, but does not prove decoded video frames or audible samples.
+    return {'streams': streams, 'status': 'AV_STREAMS_PRESENT' if video and audio else ('VIDEO_ONLY' if video else ('AUDIO_ONLY' if audio else 'NO_MEDIA')),
+            'evidence_level': 'ffprobe_stream_metadata', 'decoded_av_verified': False,
+            'video': video, 'audio': audio, 'width': width, 'height': height,
+            'resolution_verified': bool(video and width and height)}
+
+
+def verify_decoded_av(url, timeout=25, ffmpeg='ffmpeg'):
+    """Require at least one actually decoded frame from both video and audio."""
+    parsed = urlsplit(url)
+    if parsed.scheme not in ('http', 'https') or not parsed.hostname or parsed.username or parsed.password:
+        return {'decoded_av_verified': False, 'decode_status': 'INVALID_URL'}
+    executable = shutil.which(ffmpeg)
+    if not executable:
+        return {'decoded_av_verified': False, 'decode_status': 'DECODER_UNAVAILABLE'}
+    for selector in ('v:0', 'a:0'):
+        command = [executable, '-nostdin', '-hide_banner', '-v', 'error',
+                   '-rw_timeout', str(int(timeout * 1000000)), '-i', url,
+                   '-map', '0:' + selector, '-frames:' + selector[0], '1',
+                   '-f', 'framemd5', '-']
+        try:
+            result = subprocess.run(command, capture_output=True, text=True,
+                                    timeout=timeout + 5, check=False)
+        except subprocess.TimeoutExpired:
+            return {'decoded_av_verified': False, 'decode_status': 'TIMEOUT'}
+        except OSError:
+            return {'decoded_av_verified': False, 'decode_status': 'DECODE_FAILED'}
+        # framemd5 emits a non-comment CSV line only for an actual decoded frame.
+        frames = [line for line in result.stdout.splitlines()
+                  if line.strip() and not line.lstrip().startswith('#')
+                  and len(line.split(',')) == 6
+                  and all(part.strip() for part in line.split(','))]
+        if result.returncode != 0 or not frames:
+            return {'decoded_av_verified': False, 'decode_status': 'NO_DECODED_FRAME'}
+    return {'decoded_av_verified': True, 'decode_status': 'DECODED_AV'}
+
 
 def main():
     parser = argparse.ArgumentParser()
@@ -44,6 +89,10 @@ def main():
     if not 1 <= args.timeout <= 120:
         parser.error('timeout must be 1..120 seconds')
     outcome = probe(args.url, args.timeout)
+    if outcome['status'] == 'AV_STREAMS_PRESENT':
+        outcome.update(verify_decoded_av(args.url, args.timeout))
+        if outcome['decoded_av_verified']:
+            outcome['status'] = 'AV_VERIFIED'
     print(json.dumps(outcome))
     if outcome['status'] != 'AV_VERIFIED':
         raise SystemExit(2)
