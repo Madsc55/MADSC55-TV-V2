@@ -51,11 +51,34 @@ class IdentityMetadataTests(unittest.TestCase):
 
     def test_epg_programmes_require_matching_channel_and_start(self):
         xmltv = ('<tv><channel id="Station.tr"/>'
-                 '<programme channel="Station.tr" start="20261112120000 +0000"/>'
+                 '<programme channel="Station.tr" start="20261112120000 +0000" stop="20261112130000 +0000"/>'
                  '</tv>')
         rows = verify_epg_ids([{"epg_id_candidate": "Station.tr"}], xmltv)
         self.assertTrue(rows[0]["epg_verified"])
         self.assertTrue(rows[0]["epg_programme_available"])
+
+    def test_invalid_programme_times_do_not_count_as_epg_evidence(self):
+        malformed = [
+            ('20261112120000 +0000', ''),
+            ('20261112120000 +1460', '20261112130000 +1460'),
+            ('20261112130000 +0000', '20261112120000 +0000'),
+            ('20261112120000 +0000', '20261112120000 +0000'),
+        ]
+        for start, stop in malformed:
+            with self.subTest(start=start, stop=stop):
+                xml = ('<tv><channel id="Station.tr"/>'
+                       f'<programme channel="Station.tr" start="{start}" stop="{stop}"/>'
+                       '</tv>')
+                row = verify_epg_ids([{"epg_id_candidate": "Station.tr"}], xml)[0]
+                self.assertTrue(row["epg_verified"])
+                self.assertFalse(row["epg_programme_available"])
+
+    def test_programme_evidence_uses_valid_timezone_adjusted_interval(self):
+        xml = ('<tv><channel id="Station.tr"/>'
+               '<programme channel="Station.tr" start="20261113120000 +0300"'
+               ' stop="20261113130000 +0300"/></tv>')
+        row = verify_epg_ids([{"epg_id_candidate": "Station.tr"}], xml)[0]
+        self.assertTrue(row["epg_programme_available"])
 
     def test_xmltv_external_entity_declarations_rejected(self):
         malicious = '<!DOCTYPE tv [<!ENTITY xxe SYSTEM "file:///etc/passwd">]><tv/>'
