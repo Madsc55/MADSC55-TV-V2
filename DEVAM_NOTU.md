@@ -1,3 +1,9 @@
+## 13 Kasım 2026 — Stage 2/3 entegre offline kabul kanıtı
+- PR #70 merge edildi (main commit 8a2abf3f74073a5ea6a34c949260ac0c26556b80). Stage 2 offline identity + URL SHA-256 + EPG eşleştirme + bounded recovery entegrasyonu; Stage 3 scanner/probe entegrasyonu ve gruplu regresyonlar eklendi.
+- Main Production Security Gate: run 43454977935 SUCCESS ve run 43454976797 SUCCESS. Her ikisinde de "Verify suspended publishers, no cron and immutable IBO" işi SUCCESS.
+- Testler offline kabul niteliğindedir; canlı tarama, yeni FFmpeg AV kanıtı, dış depodan gerçek arşiv geri yükleme veya cihaz kabulü değildir. #15 hâlâ 3.178/4.955 hash için güncel IPTV-org katalog eşleşmesi bulamıyor; #17–#21 ve #28–#33 nihai gerçek kanıt kapılarını bekliyor; #34 keşif sonucu ve yeni aday AV/arşiv kabulünü bekliyor.
+- Yeni toplu kanal taraması yapılmadı. Ana İBO, YEDEKLER, YENİLER ve FAVORİLER değiştirilmedi.
+
 ## 13 Kasım 2026 — PR #53 kontrol karakteri regresyonu ve CI kabulü
 - PR #53 düzeltmesi: `v2/test_discovery_34.py` gerçek newline/CR/NUL/DEL karakterlerini Python string kaçışlarıyla test eder; önceki hatalı fixture nedeniyle başarısız testin kendisi düzeltildi. Üretim URL reddetme kontrolü PR #45 ile ana dala alınmıştı.
 - GitHub Actions run `43451905845`: SUCCESS. Ana güvenlik kapısı, görev defteri bütünlüğü, Stage 6 offline paket/arşiv ve #34 offline keşif testlerinin tüm adımları PASS.
