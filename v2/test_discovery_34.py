@@ -59,6 +59,19 @@ class Discovery34Tests(unittest.TestCase):
                     identity(source, url)
             self.assertEqual(curated_candidates(source, [{"url": "https://example.org/a\n#EXTINF"}]), [])
 
+    def test_signed_query_and_nondefault_port_identities_do_not_collide(self):
+        for source in ("official", "m3u"):
+            a = identity(source, "https://example.org/live.m3u8?token=SECRET_A")
+            b = identity(source, "https://example.org/live.m3u8?token=SECRET_B")
+            self.assertNotEqual(a["source_id"], b["source_id"])
+            self.assertNotIn("SECRET_A", a["source_id"])
+            self.assertNotIn("SECRET_B", b["source_id"])
+            self.assertFalse(a["verified_av"])
+        default = identity("m3u", "https://example.org/live.m3u8")
+        alternate = identity("m3u", "https://example.org:8443/live.m3u8")
+        self.assertNotEqual(default["source_id"], alternate["source_id"])
+        self.assertIn(":8443", alternate["source_id"])
+
     def test_official_and_m3u(self):
         for source in ("official", "m3u"):
             self.assertEqual(len(curated_candidates(source, [{"url": "https://example.org/live.m3u8"}])), 1)
