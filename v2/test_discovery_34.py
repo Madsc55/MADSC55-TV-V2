@@ -22,6 +22,13 @@ class Discovery34Tests(unittest.TestCase):
         for url in ("file:///tmp/a", "https://localhost/a", "https://user:pass@site.org/a", "http://127.0.0.1/a", "http://192.168.1.1/a", "http://[::1]/a"):
             with self.assertRaises(ValueError):
                 identity("m3u", url)
+    def test_ambiguous_backslashes_and_unicode_whitespace_rejected(self):
+        for source in ("github", "gitlab", "codeberg", "official", "m3u"):
+            host = {"github": "github.com", "gitlab": "gitlab.com", "codeberg": "codeberg.org"}.get(source, "example.org")
+            for suffix in ("/a\\\\evil", "/a\\u0085b", "/a\\u2028b", "/a\\u2029b", "/a b", "/a\\tb"):
+                with self.subTest(source=source, suffix=repr(suffix)), self.assertRaises(ValueError):
+                    identity(source, "https://" + host + suffix)
+
     def test_provider_host_boundaries(self):
         for source, url in (("github", "https://github.com.evil.example/a"),
                             ("gitlab", "http://gitlab.com/a"),
