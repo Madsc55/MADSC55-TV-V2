@@ -85,8 +85,6 @@ def probe_queries(source, queries=QUERIES, fetch=fetch_json, sleep=time.sleep):
     for index, query in enumerate(terms):
         row = probe(source, query=query, fetch=fetch, sleep=sleep)
         results.append({"query": query, **row})
-        # A 429 is provider-wide pressure, not a query-specific failure.
-        # Record remaining terms as skipped rather than amplifying the rate limit.
         if row.get("http_status") == 429:
             results.extend({"query": skipped, "status": "skipped",
                             "reason": "provider_rate_limit_circuit_open",
