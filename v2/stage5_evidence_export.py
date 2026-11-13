@@ -6,6 +6,7 @@ import json
 import subprocess
 from pathlib import Path
 from urllib.parse import urlsplit
+from secure_archive import atomic_write
 
 def entries(path):
     lines = path.read_text(encoding="utf-8-sig").splitlines()
@@ -27,20 +28,42 @@ def entries(path):
         raise ValueError("Dangling EXTINF")
     return result
 
+MAX_PROOF_BYTES = 256 * 1024 * 1024
+
 def media_has_audio_video(path):
-    """Check the actual proof media streams, not just claimed JSON flags."""
+    """Require decoded video AND audio frames, not just ffprobe stream metadata."""
     try:
         result = subprocess.run(
             ["ffprobe", "-v", "error", "-show_entries", "stream=codec_type",
              "-of", "json", str(path)],
             capture_output=True, text=True, timeout=30, check=True)
-        streams = json.loads(result.stdout).get("streams", [])
-        kinds = {item.get("codec_type") for item in streams}
-        return {"video", "audio"} <= kinds
-    except (OSError, subprocess.SubprocessError, ValueError, TypeError):
+        payload = json.loads(result.stdout)
+        streams = payload.get("streams", []) if isinstance(payload, dict) else []
+        if not isinstance(streams, list):
+            return False
+        kinds = {item.get("codec_type") for item in streams if isinstance(item, dict)}
+        if not {"video", "audio"} <= kinds:
+            return False
+        for selector in ("v:0", "a:0"):
+            decoded = subprocess.run(
+                ["ffmpeg", "-nostdin", "-hide_banner", "-v", "error", "-xerror",
+                 "-i", str(path), "-map", "0:" + selector,
+                 "-frames:" + selector[0], "1", "-f", "framemd5", "-"],
+                capture_output=True, text=True, timeout=30, check=False)
+            # An actual decoded frame appears as a six-field framemd5 CSV line.
+            frames = [line for line in decoded.stdout.splitlines()
+                      if line.strip() and not line.lstrip().startswith("#")
+                      and len(line.split(",")) == 6
+                      and all(field.strip() for field in line.split(","))]
+            if decoded.returncode != 0 or not frames:
+                return False
+        return True
+    except (OSError, subprocess.SubprocessError, ValueError, TypeError, AttributeError):
         return False
 
 def run(args):
+    if type(args.target) is not int or args.target not in (1000, 2000):
+        raise ValueError("Unsupported real IBO target")
     source = entries(args.source)
     protected = args.protected.read_bytes()
     before = hashlib.sha256(protected).hexdigest()
@@ -48,6 +71,7 @@ def run(args):
     if not isinstance(evidence, list):
         raise ValueError("Evidence must be a JSON array")
     approved = {}
+    used_proof_digests = set()
     evidence_dir = args.evidence.resolve().parent
     for row in evidence:
         if not isinstance(row, dict):
@@ -68,12 +92,20 @@ def run(args):
         proof_path = (evidence_dir / proof).resolve()
         if not proof_path.is_relative_to(evidence_dir) or not proof_path.is_file():
             continue
-        if hashlib.sha256(proof_path.read_bytes()).hexdigest() != digest.lower():
+        # Hash in bounded chunks; never read untrusted proof media into memory.
+        if proof_path.stat().st_size > MAX_PROOF_BYTES:
+            continue
+        checksum = hashlib.sha256()
+        with proof_path.open("rb") as media:
+            for chunk in iter(lambda: media.read(1024 * 1024), b""):
+                checksum.update(chunk)
+        if checksum.hexdigest() != digest.lower() or digest.lower() in used_proof_digests:
             continue
         if not media_has_audio_video(proof_path):
             continue
         if url in approved:
             raise ValueError("Duplicate evidence URL")
+        used_proof_digests.add(digest.lower())
         approved[url] = row
     selected, ids, urls = [], set(), set()
     for extinf, url in source:
@@ -88,11 +120,11 @@ def run(args):
     if len(selected) < args.target:
         raise ValueError(f"INSUFFICIENT_REAL_EVIDENCE: {len(selected)}/{args.target}")
     selected = selected[:args.target]
-    if args.output.resolve() == args.protected.resolve() or args.output.resolve() == args.source.resolve():
+    if args.output.resolve() in {args.protected.resolve(), args.source.resolve(), args.evidence.resolve()}:
         raise ValueError("Refusing to overwrite protected/source playlist")
     output = "#EXTM3U\n" + "".join(f"{meta}\n{url}\n" for meta, url in selected)
     args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_text(output, encoding="utf-8")
+    atomic_write(args.output, output.encode("utf-8"))
     if len(entries(args.output)) != args.target:
         raise ValueError("Output M3U integrity check failed")
     if hashlib.sha256(args.protected.read_bytes()).hexdigest() != before:
