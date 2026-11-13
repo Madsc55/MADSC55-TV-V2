@@ -175,5 +175,42 @@ class Stage5Acceptance(unittest.TestCase):
                 run(args)
             self.assertFalse(args.output.exists())
 
+    def test_source_m3u_url_validation_blocks_invalid_authorities_and_credentials(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            source = Path(tmp) / "unsafe.m3u8"
+            bad_urls = (
+                "https://",
+                "http://",
+                "https://example.org:99999/live.m3u8",
+                "https://example.org:invalid/live.m3u8",
+                "https://user:password@example.org/live.m3u8",
+                "https://example.org/live path.m3u8",
+                "https://example.org/live.m3u8#private-fragment",
+                "https://[invalid/live.m3u8",
+                "https://example.org/live.m3u8\\tother",
+            )
+            for url in bad_urls:
+                with self.subTest(url=url):
+                    source.write_text('#EXTM3U\\n#EXTINF:-1 tvg-id="one",One\\n' + url + '\\n', encoding="utf-8")
+                    with self.assertRaisesRegex(ValueError, "Malformed M3U entry"):
+                        entries(source)
+
+    def test_source_m3u_rejects_stripped_url_whitespace(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            source = Path(tmp) / "whitespace.m3u8"
+            for url in (" https://example.org/live.m3u8", "https://example.org/live.m3u8 "):
+                with self.subTest(url=url):
+                    source.write_text('#EXTM3U\\n#EXTINF:-1 tvg-id="one",One\\n' + url + '\\n', encoding="utf-8")
+                    with self.assertRaisesRegex(ValueError, "Malformed M3U entry"):
+                        entries(source)
+
+    def test_source_m3u_keeps_valid_signed_url_for_private_review(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            source = Path(tmp) / "valid.m3u8"
+            url = "https://example.org:8443/live.m3u8?sig=sample%2Ftoken"
+            source.write_text('#EXTM3U\\n#EXTINF:-1 tvg-id="one",One\\n' + url + '\\n', encoding="utf-8")
+            self.assertEqual(entries(source)[0][1], url)
+
+
 if __name__ == "__main__":
     unittest.main()
