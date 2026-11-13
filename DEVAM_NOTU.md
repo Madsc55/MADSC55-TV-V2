@@ -917,3 +917,11 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - PR #79 squash merge `2d2bd9193cf06fbd81077912e4e4d434316e7c5e`.
 - Actions `43455836114`: SUCCESS. Güvenlik, playlist invariants, görev defteri, Stage 6 offline paket/arşiv, Stage 2/3 kimlik-EPG-kurtarma ve #34 offline adaptör adımları PASS.
 - Bu koşu canlı Codeberg API çağrısı değildir. #34 açık: önceki canlı koşuda Codeberg HTTPError; güncel main canlı API tekrar çalıştırılmadı. GitHub Actions bağlantısı workflow_dispatch başlatma sağlamıyor.
+
+
+## 2026-11-13 — PR #89 encrypted archive restore size bound
+- Found a restore-side resource-bound gap: `encrypt` and `backup` enforced `MAX_INPUT`, but `decrypt`/`restore` did not reject an oversized encrypted blob before AES-GCM processing.
+- Added a strict encrypted-blob upper bound equal to format magic + salt + nonce + `MAX_INPUT` plaintext + GCM tag. Oversized blobs fail closed with `ValueError`.
+- Added `test_decrypt_enforces_archive_size_limit` using a patched small limit; existing malformed/truncated, tamper, round-trip, same-path and file-mode tests remain in the suite.
+- PR #89 merged: `207f5c3f4a83cc1bb716deddf1344cf8c1f36e16`; head `3396cb0806da203aae336d3b3b3083bc198632a5`; Production Security Gate run `43457399513` SUCCESS. All steps passed, including Stage 2 identity metadata, Stage 6 archive/package regressions, Stage 2/3 offline identity/EPG/recovery, Discovery 34 offline adapter acceptance and protected IBO invariants.
+- This is offline/security acceptance only. It does not close #28–#33 real production package/independent restore gates, #15 unmatched historical identities, #17–#21 final mapping/live evidence, or #34 live provider/AV/archive gate. No channel scan or playlist write occurred; main IBO, YEDEKLER, YENILER and FAVORILER remain untouched.
