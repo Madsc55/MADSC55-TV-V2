@@ -51,6 +51,15 @@ class LiveContractRetryTests(unittest.TestCase):
         self.assertEqual(result["reason"], "URLError")
         self.assertEqual(result["attempts"], 3)
 
+    def test_malformed_provider_payload_fails_closed(self):
+        for provider, malformed in (("github", []), ("gitlab", {}), ("codeberg", None)):
+            with self.subTest(provider=provider):
+                result = probe(provider, fetch=lambda _url, value=malformed: value,
+                               sleep=lambda _: self.fail("unexpected sleep"))
+                self.assertEqual(result["status"], "error")
+                self.assertEqual(result["reason"], "ValueError")
+                self.assertEqual(result["attempts"], 1)
+
     def test_exhaustion_fails_closed(self):
         result = probe("codeberg", fetch=lambda _: (_ for _ in ()).throw(http_error(429)), sleep=lambda _: None)
         self.assertEqual(result["status"], "error")
