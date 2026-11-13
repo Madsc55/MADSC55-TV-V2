@@ -1,3 +1,10 @@
+## 13 Kasım 2026 — GitHub Actions tam çevrimdışı kabul sonucu doğrulandı
+- Push workflow run `43454415699`, event `push`, commit `b5dc604e83c0dcb61606296e75c7ae6691bef996`: `completed / success`.
+- Job `inventory`: `success`. Adım bazında PASS: Python compile; protected playlist invariant; encrypted archive backup/recovery; offline encrypted inventory restore; offline scanner; IBO package and final acceptance tests.
+- Bu run, `v2/**` kodundaki son ilgili değişiklikler `837c146b` ve `cdae4461` dahil, `b5dc604e` ağacını çalıştırmıştır. Run URL: https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43454415699
+- Bu, #28–#33 için çevrimdışı altyapı testlerinin başarılı kanıtıdır; gerçek yayın AV, gerçek harici depodan geri yükleme ve üretim İBO paketi kanıtı değildir.
+- PR #23 hâlâ `mergeable=false`; compare sonucu diverged (123 ahead / 48 behind). Otomatik birleştirme yapılmadı; değişiklikleri ana dala güvenle taşımak için ayrıştırılmış entegrasyon gerekiyor.
+
 ## 13 Kasım 2026 — #28–#33 toplu çevrimdışı Actions kabulü
 - GitHub Actions run `43454415699` (`V2 Offline Inventory Integrity`, push, commit `b5dc604e83c0dcb61606296e75c7ae6691bef996`) SUCCESS.
 - `inventory` işi ve tüm adımlar başarılı: Python derleme, korunan İBO/backup invariant testi, şifreli arşiv backup/restore, çevrimdışı envanter geri yükleme, ağsız tarayıcı testi, M3U paketleme ve final-gate testleri.
