@@ -4,6 +4,7 @@ import argparse
 import hashlib
 import json
 import pathlib
+import re
 
 def sha(data):
     return hashlib.sha256(data).hexdigest()
@@ -26,10 +27,17 @@ def audit_encrypted_archive(original, ciphertext, passphrase):
     return result
 
 def final_gate(package_report, archive_report, independent_restore=False, live_av=False):
+    if not isinstance(package_report, dict) or not isinstance(archive_report, dict):
+        raise ValueError("invalid acceptance report type")
     required=("target","records","sha256","status")
     if not all(k in package_report for k in required):
         raise ValueError("incomplete package evidence")
-    if package_report["target"] not in (1000,2000) or package_report["records"] != package_report["target"] or package_report["status"] != "EVIDENCE_GATED":
+    if (type(package_report["target"]) is not int or type(package_report["records"]) is not int
+            or package_report["target"] not in (1000,2000)
+            or package_report["records"] != package_report["target"]
+            or package_report["status"] != "EVIDENCE_GATED"
+            or not isinstance(package_report["sha256"], str)
+            or re.fullmatch(r"[0-9a-f]{64}", package_report["sha256"]) is None):
         raise ValueError("package acceptance incomplete")
     if archive_report.get("status") != "ROUNDTRIP_BYTES_MATCH":
         raise ValueError("archive integrity incomplete")
