@@ -17,6 +17,18 @@ class PackageTests(unittest.TestCase):
             out,report=package(text,target,proof)
             self.assertEqual(len(parse(out)),target)
             self.assertEqual(report["records"],target)
+    def test_rejects_invalid_targets_at_api_boundary(self):
+        text, proof = fixture(2000)
+        for target in (0, -1, 1, 999, 1001, 2001, True, "1000"):
+            with self.subTest(target=target), self.assertRaises(ValueError):
+                package(text, target, proof)
+
+    def test_rejects_invalid_evidence_mapping(self):
+        text, _ = fixture(1000)
+        for evidence in (None, [], "AV_VERIFIED"):
+            with self.subTest(evidence=evidence), self.assertRaises(ValueError):
+                package(text, 1000, evidence)
+
     def test_shortage(self):
         text,proof=fixture(2)
         with self.assertRaises(ValueError):
