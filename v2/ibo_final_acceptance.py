@@ -30,6 +30,22 @@ def audit_encrypted_archive(original, ciphertext, passphrase):
     result['external_restore_verified'] = False
     return result
 
+def audit_external_restore(original, external_ciphertext, external_restored, passphrase):
+    """Verify bytes restored from a separately retrieved encrypted archive."""
+    from secure_archive import MAGIC, decrypt
+    if type(original) is not bytes or type(external_ciphertext) is not bytes or type(external_restored) is not bytes:
+        raise ValueError("external restore inputs must be bytes")
+    if not external_ciphertext.startswith(MAGIC):
+        raise ValueError("external archive is not an authenticated V2 archive")
+    decrypted = decrypt(external_ciphertext, passphrase)
+    if decrypted != external_restored:
+        raise ValueError("external restore bytes do not match decrypted archive")
+    result = audit_archive(original, external_restored)
+    result["encrypted"] = True
+    result["external_restore_verified"] = True
+    result["external_archive_sha256"] = sha(external_ciphertext)
+    return result
+
 def final_gate(package_report, archive_report, independent_restore=False, live_av=False):
     if not isinstance(package_report, dict) or not isinstance(archive_report, dict):
         raise ValueError("invalid acceptance report type")
