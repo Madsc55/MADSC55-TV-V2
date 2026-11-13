@@ -5,6 +5,12 @@ class AcceptanceTests(unittest.TestCase):
     def test_archive_roundtrip(self):
         self.assertEqual(audit_archive(b"ciphertext",b"ciphertext")["status"],"ROUNDTRIP_BYTES_MATCH")
         with self.assertRaises(ValueError): audit_archive(b"a",b"b")
+    def test_rejects_non_byte_archive_inputs(self):
+        for original, restored in (("same", "same"), (bytearray(b"same"), b"same"),
+                                   (b"same", memoryview(b"same")), (None, b"same")):
+            with self.subTest(original=type(original).__name__, restored=type(restored).__name__), self.assertRaises(ValueError):
+                audit_archive(original, restored)
+
     def test_authenticated_archive(self):
         raw=b'private test inventory'
         cipher=encrypt(raw,'offline-test-passphrase-2026')
