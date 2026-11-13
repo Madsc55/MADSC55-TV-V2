@@ -1,3 +1,8 @@
+## 13 Kasım 2026 — #34 çevrimdışı kürasyon adaptörleri CLI bağlantısı
+- 31d17efb: discovery_34.py --curated-input JSON seçeneği eklendi; official/youtube/m3u kayıtları artık keşif raporuna çevrimdışı alınabiliyor. Geçersiz adaptör anahtarları reddediliyor, bozuk kayıt türleri atlanıyor.
+- 8da3ecbf: üç adaptörün CLI üzerinden raporlanmasını, offline modunu, AV=0 ayrımını ve geçersiz girdi reddini sınayan testler eklendi.
+- PR #22 açık; yeni commitlerin Actions sonucu henüz doğrulanmadı. Kapsamlı kanal taraması veya canlı yayın doğrulaması başlatılmadı, ana İBO ve korunan listeler değiştirilmedi.
+
 ## 13 Kasım 2026 — #34 URL kimliği güvenliği ek düzeltme
 - Commit c9297b8: geçersiz URL portları fail-closed reddedilir; sondaki noktalı hostname kaynak kimliği için kanonikleştirilir.
 - Commit e386c1f: geçersiz port ve eşdeğer hostname için regresyon testleri eklendi.
