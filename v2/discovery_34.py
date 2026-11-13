@@ -17,7 +17,11 @@ def identity(source, url):
     if not isinstance(url, str) or any(ord(ch) < 32 or ord(ch) == 127 for ch in url):
         raise ValueError("Invalid URL characters")
     p = urllib.parse.urlsplit(url)
-    if p.scheme not in ("https", "http") or not p.hostname:
+    try:
+        hostname = p.hostname
+    except ValueError as exc:
+        raise ValueError("Invalid URL hostname") from exc
+    if p.scheme not in ("https", "http") or not hostname:
         raise ValueError("Invalid public URL")
     if p.username or p.password:
         raise ValueError("Credential-bearing URL")
