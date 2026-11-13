@@ -238,5 +238,37 @@ class LiveContractRetryTests(unittest.TestCase):
         self.assertEqual(result["attempts"], 3)
         self.assertEqual(sleeps, [5, 10])
 
+    def test_http_date_retry_after_is_honored_and_capped(self):
+        from datetime import datetime, timedelta, timezone
+        from email.utils import format_datetime
+        calls, sleeps = [], []
+        future = format_datetime(datetime.now(timezone.utc) + timedelta(seconds=180), usegmt=True)
+        def fetch(_url):
+            calls.append(1)
+            if len(calls) == 1:
+                raise urllib.error.HTTPError("https://codeberg.org/api/v1/repos/search", 429,
+                                             "rate limited", {"Retry-After": future}, None)
+            return {"data": []}
+        result = probe("codeberg", fetch=fetch, sleep=sleeps.append)
+        self.assertEqual(result["status"], "ok")
+        self.assertEqual(result["attempts"], 2)
+        self.assertEqual(sleeps, [60])
+
+    def test_past_http_date_retry_after_does_not_sleep(self):
+        from datetime import datetime, timedelta, timezone
+        from email.utils import format_datetime
+        calls, sleeps = [], []
+        past = format_datetime(datetime.now(timezone.utc) - timedelta(seconds=30), usegmt=True)
+        def fetch(_url):
+            calls.append(1)
+            if len(calls) == 1:
+                raise urllib.error.HTTPError("https://codeberg.org/api/v1/repos/search", 429,
+                                             "rate limited", {"Retry-After": past}, None)
+            return {"data": []}
+        result = probe("codeberg", fetch=fetch, sleep=sleeps.append)
+        self.assertEqual(result["status"], "ok")
+        self.assertEqual(result["attempts"], 2)
+        self.assertEqual(sleeps, [0])
+
 if __name__ == "__main__":
     unittest.main()
