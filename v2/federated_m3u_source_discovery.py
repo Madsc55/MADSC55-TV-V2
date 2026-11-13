@@ -66,10 +66,15 @@ def _raw_fetch(url, expected_host):
 
 
 def _project_items(provider, payload):
+    """Reject HTTP 200 API error objects instead of treating them as zero results."""
     if provider == "gitlab":
-        return payload if isinstance(payload, list) else []
+        if not isinstance(payload, list):
+            raise ValueError("Invalid GitLab project search response")
+        return payload
     if provider == "codeberg":
-        return payload.get("data", []) if isinstance(payload, dict) else []
+        if not isinstance(payload, dict) or not isinstance(payload.get("data"), list):
+            raise ValueError("Invalid Codeberg project search response")
+        return payload["data"]
     raise ValueError("Unsupported provider")
 
 
@@ -143,8 +148,9 @@ def discover_provider(provider, fetch_json_fn=fetch_json, fetch_text_fn=_raw_fet
                                      for skipped in queries[index + 1:])
                 break
             continue
-        rows = _project_items(provider, payload)
-        if not isinstance(rows, list):
+        try:
+            rows = _project_items(provider, payload)
+        except (ValueError, TypeError):
             query_results.append({"query": query, "status": "error", "reason": "InvalidResponse"})
             continue
         query_results.append({"query": query, "status": "ok", "projects": len(rows)})
