@@ -73,7 +73,7 @@ class ScannerStage3IntegrationTests(unittest.TestCase):
                 return False
             def read(self, size):
                 return b"#EXTM3U\n#EXT-X-VERSION:3\n"
-        observed = {"status": "AV_VERIFIED", "video": True, "audio": True,
+        observed = {"status": "AV_STREAMS_PRESENT", "video": True, "audio": True,
                     "streams": [{"codec_type": "video", "codec_name": "h264"},
                                 {"codec_type": "audio", "codec_name": "aac"}]}
         with patch.object(scanner.urllib.request, "urlopen", return_value=FakeResponse()), patch.object(scanner, "probe", return_value=observed), patch.object(scanner, "verify_decoded_av", return_value={"decoded_av_verified": True, "decode_status": "DECODED_AV"}):
