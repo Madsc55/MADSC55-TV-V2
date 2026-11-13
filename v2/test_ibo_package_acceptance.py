@@ -69,6 +69,11 @@ class PackageTests(unittest.TestCase):
             with self.subTest(url=url), self.assertRaises(ValueError):
                 parse("#EXTM3U\n#EXTINF:-1,Name\n" + url + "\n")
 
+    def test_rejects_malformed_stream_ports(self):
+        for url in ("https://example.org:bad/live.m3u8", "https://example.org:99999/live.m3u8"):
+            with self.subTest(url=url), self.assertRaises(ValueError):
+                parse("#EXTM3U\\n#EXTINF:-1,Name\\n" + url + "\\n")
+
     def test_rejects_credentials_in_stream_url(self):
         for url in ("https://user:password@example.org/live.m3u8",
                     "https://user@example.org/live.m3u8"):
