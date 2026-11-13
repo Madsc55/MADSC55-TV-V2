@@ -1,3 +1,11 @@
+## 13 Kasım 2026 — Güncel görev defteri ve PR #48 kabul kanıtı
+- `v2/tasks/state.json` doğrulandı (GitHub Contents API): 34 kayıt; 21 completed, 11 pending, 2 in_progress. Bu sayım yalnızca defter statüsüdür; idari kapanışlar gerçek yayın onarımı/AV kanıtı anlamına gelmez.
+- #15 in_progress: 1.777/4.955 tarihî hash IPTV-org kataloğuyla eşleşti; 3.178 hash için güncel katalog eşleşmesi yok, eksik yayıncı atıfları ayrıca doğrulanmalı.
+- #34 in_progress: çevrimdışı sistem doğrulaması başarılı; keşif sonucu, yeni adayların AV doğrulaması ve arşiv kanıtı bekleniyor.
+- #17, #18, #19, #20, #21 ve #28–#33 pending. #18/#19/#20 bazı kısmi ölçüm kanıtlarına sahip; bağımlı görevlerin nihai kabulü henüz tamamlanmadı.
+- PR #48 merge commit `f82156e7c36612f0e05c373706ab436608779ca8`; PR head `3a8b4cc1fbe47e0b8f495585d5111f26c7bf72b3` için Actions `43449878648` SUCCESS: güvenlik, korunan İBO, Stage 6 offline paket/arşiv ve #34 offline keşif adımları PASS.
+- Canlı #34 API sözleşmesi ve yeni aday AV/arşiv kabulü bu koşuda yapılmadı. Ana İBO, YEDEKLER, YENİLER, FAVORİLER değiştirilmedi; kapsamlı yeni tarama başlatılmadı.
+
 ## 13 Kasım 2026 — #34 PR #37 birleşimi ve doğrulanmış CI kanıtı
 - PR #37 squash merge `b981b139cfaae6a1a83b9d31db268f12cd60e636`: HTTP 408/425 retry, API host tanılaması ve iki regresyon testi `main` dalında.
 - PR baş commit `d2756c804a384a9f72e4aec2b7d19217cb381bf0` için GitHub Actions `43449222459` SUCCESS; güvenlik, İBO koruması, Stage 6 offline paket/arşiv ve #34 offline keşif PASS.
