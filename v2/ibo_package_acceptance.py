@@ -12,9 +12,9 @@ def parse(text):
         raise ValueError("missing EXTM3U header")
     pending = None
     records = []
-    for line in text.splitlines():
+    for line_number, line in enumerate(text.splitlines()):
         line = line.strip()
-        if line == "#EXTM3U" and records == [] and pending is None:
+        if line_number == 0 and line == "#EXTM3U":
             continue
         if line.startswith("#EXTM3U"):
             raise ValueError("unexpected M3U header inside playlist")
