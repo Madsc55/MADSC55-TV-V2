@@ -950,3 +950,12 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - Stage 6 (#28–#33) offline paketleme, M3U doğrulama, şifreli arşiv/geri-yükleme regresyonları; Stage 2/3; #34 offline adapter ve güvenlik/invariant kapıları PASS. Gerçek FFmpeg AV, bağımsız harici depodan restore veya gerçek 1000/2000 kanal paketi değildir.
 - Görev defteri 21 completed / 13 in_progress olarak korundu; gerçek yayın kanıtı, bağımsız harici geri yükleme ve gerçek paket kanıtları olmadan görev kapatılmadı.
 - Yeni kapsamlı kanal taraması yapılmadı. Ana İBO, YEDEKLER, YENİLER ve FAVORİLER değiştirilmedi.
+
+
+## 13 Kasım 2026 — canlı keşif ve gerçek AV kanıtlarının yeniden denetimi
+- PR #128 birleştirildi (`e0d533e5f17996c02f614b33cbf9a3966e7611f7`). Güncel Production Security Gate ve Stage 2/3 + Stage 6 + #34 çevrimdışı kabulü run `43459603986` içinde PASS.
+- Aynı run'ın tek seferlik canlı metadata tanılama işi: GitHub altı sorgunun tamamında geçerli yanıt verdi; ham sonuç sayıları `11, 20, 20, 20, 12, 19` (toplam 102 ham eşleşme; sorgular arası tekilleştirme yapılmadı). GitLab altı sorguda da geçerli boş listeler döndürdü. Codeberg `turkiye.m3u` sorgusunda üç sınırlı denemeden sonra HTTP 429 verdi; devre kesici kalan beş terimi atladı. 30/60 saniyelik geri çekilme Codeberg sınırını kaldırmadı. Bu canlı iş non-blocking olarak başarısız; ana güvenlik işi başarılı.
+- #34 kodu tüm altı terimi kapsıyor, HTTP 429 sonrası sağlayıcıya tekrar tekrar yüklenmiyor; Codeberg canlı kabulü açık. Tam kanal taraması yapılmadı, playlist değişmedi.
+- Eski gerçek dünya AV raporu run `42216075104`, artifact `13524765368`: 35.327 aday, 13.884 mevcut-run FFmpeg video+ses decode, 9 RSA-sealed shard. Aynı rapor tarihî 4.955 hash'in 4.949'unu worldwide raporla eşleştiriyor; 3.080 tarihî hash için AV decode kanıtı var. Ancak `historical_broadcaster_identity_verified=false` olduğu için #15 kapanmaz.
+- Ayrı #24 run `43241168321` restore receipt: 801 AV sonuç (800 TR/AZ), 7.819 arşiv kaydı geri yüklendi. Bu rapor ile worldwide raporun hash örtüşmesi henüz hesaplanmadı; sayılar toplanmadı.
+- 1000/2000 gerçek paketler henüz üretilmedi. Worldwide URL shard'ları RSA-3072 alıcı public key ile mühürlü; açma işlemi kullanıcıya ait private key gerektiriyor ve bu private key depoda bulunmuyor. Ana İBO/YEDEKLER/YENİLER/FAVORİLER korunuyor. Sentetik paketler gerçek teslim sayılmadı.
