@@ -2563,3 +2563,13 @@ Kullanıcının açık talimatıyla #3, #4 ve #6 tarihî kurtarma görevleri art
 - Commit `579b38d61b538422b8965c60a7c6d1bf5f3b73eb`: `v2/test_actions_trigger_protection_audit.py` içindeki negatif test eski, kaldırılmış push-approval ifadesini değiştiriyordu; artık gerçek manuel onay ifadesi `inputs.approve_live_discovery == true` kaldırıldığında denetimin `STAGE6_DISCOVERY_REQUIRES_EXPLICIT_REQUEST` hatası vermesini sınar.
 - Önceki güvenlik denetimi başarısızlığının tek test hatası bu eski mutasyon beklentisiydi. Workflow manuel onay-only kalır; push tetikleyicisi eklenmedi.
 - Yeni commit Actions sonucu bekleniyor. #34 ve görev kapanışları kabul tamamlanana kadar açık. Canlı tarama yok; korunan listeler değişmedi.
+
+
+## 13 Kasım 2026 — Stage 6 güvenlik kapısı regresyonu geçti
+
+- Commit `579b38d61b538422b8965c60a7c6d1bf5f3b73eb` içindeki güncel manuel-onay mutasyon testi, sonraki commit `5622c6efb44f88c42f6c57a6608b99e3bc244faa` üzerindeki denetimle uyumlu hale getirildi; test değişikliği `579b38d` üzerinde doğrulandı.
+- Güncel sistem kabul commit'i `5622c6efb44f88c42f6c57a6608b99e3bc244faa` için Eight-Stage Runner Verification başarılı: FFmpeg gerçek yerel video/ses guard ve Offline regressions/protected playlist işleri success.
+- Aynı commit için Master Engine offline-tests success; master işi beklenen şekilde skipped (offline-only koşu). Actions Status Monitor success.
+- Güvenlik gate commit `579b38d` için success; Stage 6 canlı keşif ve diğer canlı tarama işleri onay verilmediği için skipped. Yeni canlı keşif başlatılmadı.
+- Bu kanıtlar altyapı/regresyon kontrollerinin başarılı olduğunu gösterir; #34 canlı keşif, #15 kaynak provenansı, #17–21 nihai veri kabulleri ve #28–33 üretim/cihaz teslimini kapatmaz. Görev durumları bu sebeple değiştirilmedi.
+- Ana İBO, YEDEKLER, YENİLER, FAVORİLER ve tarihî ana envanter değiştirilmedi.
