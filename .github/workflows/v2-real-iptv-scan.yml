@@ -39,7 +39,7 @@ jobs:
         run: python v2/discovery_34.py --network
       - name: Discover official broadcaster directory references
         continue-on-error: true
-        run: python v2/official_sites_discovery.py
+        run: python v2/official_sites_discovery.py --worldwide
       - name: Discover YouTube Live candidates and verify live metadata
         continue-on-error: true
         run: python v2/youtube_discovery.py
@@ -48,9 +48,11 @@ jobs:
         run: python v2/federated_m3u_source_discovery.py
       - name: Integrate six discovery adapters into unified candidate report
         run: python v2/discovery_34_integrate.py
+      - name: Resolve official and YouTube live pages to encrypted direct HLS candidates
+        run: python v2/direct_stream_resolver.py --input v2/reports/discovery-34-integrated.json --output v2/reports/resolved-direct-streams.jsonl.enc
       - name: Real network discovery and AV probe including discovered sources
         run: |
-          python v2/real_ibo_scan.py --worldwide --workers 12 --timeout 12 --limit 2000 --dynamic-sources v2/reports/github-source-discovery.json --integrated-candidates v2/reports/discovery-34-integrated.json
+          python v2/real_ibo_scan.py --worldwide --workers 12 --timeout 12 --limit 2000 --dynamic-sources v2/reports/github-source-discovery.json --integrated-candidates v2/reports/discovery-34-integrated.json --resolved-streams v2/reports/resolved-direct-streams.jsonl.enc
       - name: Export 1000 and 2000 real verified new URL batches
         run: |
           python v2/export_ibo_batches.py v2/reports/ibo-candidate-inventory.jsonl.enc v2/reports --live MADSC55_TV_IBO_CALISANLAR_TEST.m3u8
@@ -66,6 +68,7 @@ jobs:
             v2/reports/codeberg-m3u-source-discovery.json
             v2/reports/discovery-34-candidates.json
             v2/reports/discovery-34-integrated.json
+            v2/reports/resolved-direct-streams.jsonl.enc
             v2/reports/official-tv-sites.json
             v2/reports/youtube-live-candidates.json
             v2/reports/ibo-candidate-inventory.jsonl.enc

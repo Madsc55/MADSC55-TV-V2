@@ -114,6 +114,35 @@ class ScannerStage3IntegrationTests(unittest.TestCase):
             self.assertIsNone(scanner.check_hls(entry, 2, diagnostics))
             self.assertEqual(diagnostics["decode_status"], "NO_DECODED_FRAME")
 
+    def test_resolved_direct_streams_require_live_metadata_and_https_hls(self):
+        report = {"candidates": [
+            {"source": "youtube", "source_id": "youtube:abcdefghijk",
+             "url": "https://cdn.example/live.m3u8", "name": "Live News",
+             "status": "RESOLVED_DIRECT_HLS_NOT_AV_VERIFIED",
+             "live_metadata_verified": True, "verified_av": False},
+            {"source": "official", "source_id": "official:example.org/live",
+             "url": "http://cdn.example/live.m3u8", "status": "RESOLVED_DIRECT_HLS_NOT_AV_VERIFIED",
+             "live_metadata_verified": True, "verified_av": False},
+            {"source": "youtube", "source_id": "youtube:zyxwvutsrqp",
+             "url": "https://cdn.example/not-live.m3u8", "status": "RESOLVED_DIRECT_HLS_NOT_AV_VERIFIED",
+             "live_metadata_verified": False, "verified_av": False},
+        ]}
+        accepted, rejected = scanner.normalize_resolved_streams(report, set())
+        self.assertEqual(len(accepted), 1)
+        self.assertEqual(accepted[0]["source_ids"], ["youtube:abcdefghijk"])
+        self.assertEqual(len(rejected), 2)
+
+    def test_resolved_direct_streams_dedupe_against_protected_urls(self):
+        url = "https://cdn.example/live.m3u8"
+        report = {"candidates": [
+            {"source": "youtube", "source_id": "youtube:abcdefghijk", "url": url,
+             "status": "RESOLVED_DIRECT_HLS_NOT_AV_VERIFIED",
+             "live_metadata_verified": True, "verified_av": False},
+        ]}
+        accepted, rejected = scanner.normalize_resolved_streams(report, {url})
+        self.assertEqual(accepted, [])
+        self.assertEqual(len(rejected), 1)
+
 
 if __name__ == "__main__":
     unittest.main()
