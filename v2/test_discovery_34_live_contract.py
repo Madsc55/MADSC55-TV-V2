@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Offline regression for bounded #34 live metadata retries."""
 import unittest
+from datetime import datetime, timedelta, timezone
+from email.utils import format_datetime
 import urllib.error
 from discovery_34_live_contract import probe, probe_queries
 
@@ -237,6 +239,24 @@ class LiveContractRetryTests(unittest.TestCase):
         self.assertEqual(result["reason"], "HTTP_429")
         self.assertEqual(result["attempts"], 3)
         self.assertEqual(sleeps, [5, 10])
+
+
+    def test_http_date_retry_after_is_parsed(self):
+        value = format_datetime(datetime.now(timezone.utc) + timedelta(seconds=20), usegmt=True)
+        error = urllib.error.HTTPError("https://codeberg.org/api/v1/repos/search", 429, "limited", {"Retry-After": value}, None)
+        delay = retry_delay(error, 1)
+        self.assertGreaterEqual(delay, 0)
+        self.assertLessEqual(delay, 20)
+
+    def test_http_date_retry_after_is_capped(self):
+        value = format_datetime(datetime.now(timezone.utc) + timedelta(hours=2), usegmt=True)
+        error = urllib.error.HTTPError("https://gitlab.com/api/v4/projects", 429, "limited", {"Retry-After": value}, None)
+        self.assertEqual(retry_delay(error, 1), 60)
+
+    def test_past_http_date_retries_immediately(self):
+        value = format_datetime(datetime.now(timezone.utc) - timedelta(seconds=10), usegmt=True)
+        error = urllib.error.HTTPError("https://codeberg.org/api/v1/repos/search", 429, "limited", {"Retry-After": value}, None)
+        self.assertEqual(retry_delay(error, 1), 0)
 
 if __name__ == "__main__":
     unittest.main()
