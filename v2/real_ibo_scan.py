@@ -134,6 +134,32 @@ def historical_source_ids(record):
     return list(dict.fromkeys(x for x in values if isinstance(x, str) and x)) or ['historical-archive']
 
 
+def normalize_dynamic_sources(dynamic, existing_sources):
+    """Validate optional discovery report rows before admitting HTTPS M3U feeds."""
+    if not isinstance(dynamic, dict) or not isinstance(dynamic.get('sources'), list):
+        raise ValueError('Dynamic discovery report must be an object with a sources list')
+    seen = {item.get('url') for item in existing_sources if isinstance(item, dict)}
+    accepted, rejected = [], []
+    for index, item in enumerate(dynamic['sources']):
+        if not isinstance(item, dict):
+            rejected.append({'index': index, 'error': 'InvalidRecord'})
+            continue
+        url = item.get('url')
+        if not isinstance(url, str):
+            rejected.append({'index': index, 'error': 'InvalidURLType'})
+            continue
+        parsed = urllib.parse.urlsplit(url)
+        if (item.get('status') != 'SOURCE_PARSED_STREAMS_NOT_PLAYBACK_VERIFIED'
+                or parsed.scheme != 'https' or not parsed.hostname
+                or parsed.username or parsed.password or url in seen):
+            rejected.append({'index': index, 'error': 'RejectedSource'})
+            continue
+        sid = 'github-auto-' + hashlib.sha256(url.encode()).hexdigest()[:20]
+        accepted.append({'id': sid, 'url': url, 'scope': 'candidate'})
+        seen.add(url)
+    return accepted, rejected
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--stage2-offline-input', type=pathlib.Path, default=None,
