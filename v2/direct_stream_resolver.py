@@ -62,7 +62,7 @@ def resolve_candidate(item, runner=subprocess.run):
         return None, "INVALID_DIRECT_URL"
     parsed = urllib.parse.urlsplit(direct_url)
     protocol = str(metadata.get("protocol") or "").lower()
-    is_hls = protocol.startswith("m3u8") or parsed.path.lower().endswith((".m3u8", ".mpd"))
+    is_hls = protocol.startswith("m3u8") or parsed.path.lower().endswith(".m3u8")
     if parsed.scheme != "https" or not is_hls or direct_url == page_url:
         return None, "NOT_DIRECT_HTTPS_HLS"
     source_id = item.get("source_id")
