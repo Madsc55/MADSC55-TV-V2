@@ -36,6 +36,10 @@ def parse(text):
             if (parts.scheme not in ("http", "https") or not parts.hostname
                     or parts.username is not None or parts.password is not None):
                 raise ValueError("invalid stream URL")
+            try:
+                _ = parts.port
+            except ValueError as exc:
+                raise ValueError("invalid stream URL port") from exc
             records.append((pending[0], line))
             pending = None
     if pending:
