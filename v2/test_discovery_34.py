@@ -22,7 +22,7 @@ class Discovery34Tests(unittest.TestCase):
             @property
             def url(self): return self.geturl()
             def read(self, n): return b'{"data":[]}'
-         def opener(handler):
+        def opener(handler):
             self.assertIsInstance(handler, _NoRedirect)
             return FakeOpener()
         # Capture test assertion in the outer scope.
