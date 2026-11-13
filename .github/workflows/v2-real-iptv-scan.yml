@@ -46,7 +46,7 @@ jobs:
         run: python v2/discovery_34_integrate.py
       - name: Real network discovery and AV probe including discovered sources
         run: |
-          python v2/real_ibo_scan.py --workers 12 --timeout 12 --limit 2000 --dynamic-sources v2/reports/github-source-discovery.json
+          python v2/real_ibo_scan.py --worldwide --workers 12 --timeout 12 --limit 2000 --dynamic-sources v2/reports/github-source-discovery.json
       - name: Export 1000 and 2000 real verified new URL batches
         run: |
           python v2/export_ibo_batches.py v2/reports/ibo-candidate-inventory.jsonl.enc v2/reports --live MADSC55_TV_IBO_CALISANLAR_TEST.m3u8
