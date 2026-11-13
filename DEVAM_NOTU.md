@@ -1,3 +1,8 @@
+## 13 Kasım 2026 — #31–#33 son kabul bayrağı tür güvenliği
+- f667ac31: final_gate bağımsız geri yükleme ve canlı AV bayraklarını yalnızca gerçek bool olarak kabul eder; metin/sayı truthy değerleri kabul aşamasını atlatamaz.
+- 42b528d3: string, sayı ve None bayrakları için çevrimdışı regresyon testi eklendi.
+- Son commitlerin Actions kabulü henüz doğrulanmadı. Gerçek AV ve harici geri yükleme nihai kanıtları açık; ana İBO/YEDEKLER/YENİLER/FAVORİLER değiştirilmedi, kanal taraması başlatılmadı.
+
 ## 13 Kasım 2026 — #28–#33 bozuk EXTINF reddi
 - 730895b: geçersiz #EXTINF yönergeleri M3U ayrıştırıcısında açık hata üretir; sessiz atlama engellendi.
 - 4cc6fa2: bozuk EXTINF biçimleri için çevrimdışı regresyon testi eklendi.
