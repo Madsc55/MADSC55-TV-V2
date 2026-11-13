@@ -1,3 +1,8 @@
+## 13 Kasım 2026 — PR #53 kontrol karakteri regresyonu ve CI kabulü
+- PR #53 düzeltmesi: `v2/test_discovery_34.py` gerçek newline/CR/NUL/DEL karakterlerini Python string kaçışlarıyla test eder; önceki hatalı fixture nedeniyle başarısız testin kendisi düzeltildi. Üretim URL reddetme kontrolü PR #45 ile ana dala alınmıştı.
+- GitHub Actions run `43451905845`: SUCCESS. Ana güvenlik kapısı, görev defteri bütünlüğü, Stage 6 offline paket/arşiv ve #34 offline keşif testlerinin tüm adımları PASS.
+- Bu koşu canlı GitHub/GitLab/Codeberg API erişimini, yeni adayların FFmpeg ses/görüntü kanıtını veya bağımsız arşiv geri yüklemesini doğrulamaz. #34 ve #28–#33 gerçek kanıt kabulleri açık. Kapsamlı tarama yapılmadı; ana İBO, YEDEKLER, YENİLER ve FAVORİLER değiştirilmedi.
+
 ## 13 Kasım 2026 — Güncel görev defteri ve PR #48 kabul kanıtı
 - `v2/tasks/state.json` doğrulandı (GitHub Contents API): 34 kayıt; 21 completed, 11 pending, 2 in_progress. Bu sayım yalnızca defter statüsüdür; idari kapanışlar gerçek yayın onarımı/AV kanıtı anlamına gelmez.
 - #15 in_progress: 1.777/4.955 tarihî hash IPTV-org kataloğuyla eşleşti; 3.178 hash için güncel katalog eşleşmesi yok, eksik yayıncı atıfları ayrıca doğrulanmalı.
