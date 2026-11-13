@@ -22,6 +22,26 @@ class LiveContractRetryTests(unittest.TestCase):
         self.assertEqual(result["attempts"], 3)
         self.assertEqual(sleeps, [1, 2])
 
+    def test_http_200_error_objects_fail_closed(self):
+        for source, payload in (("github", {"message": "rate limited"}),
+                                ("gitlab", {"message": "forbidden"}),
+                                ("codeberg", {"message": "error"})):
+            with self.subTest(source=source):
+                result = probe(source, fetch=lambda _, p=payload: p,
+                               sleep=lambda _: self.fail("unexpected retry"))
+                self.assertEqual(result["status"], "error")
+                self.assertEqual(result["reason"], "ValueError")
+                self.assertEqual(result["attempts"], 1)
+
+    def test_empty_valid_repository_lists_are_allowed(self):
+        for source, payload in (("github", {"items": []}),
+                                ("gitlab", []), ("codeberg", {"data": []})):
+            with self.subTest(source=source):
+                result = probe(source, fetch=lambda _, p=payload: p,
+                               sleep=lambda _: self.fail("unexpected retry"))
+                self.assertEqual(result["status"], "ok")
+                self.assertEqual(result["candidates"], 0)
+
     def test_non_retryable_failure(self):
         calls = []
         def fetch(_url):
