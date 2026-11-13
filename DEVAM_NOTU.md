@@ -1,3 +1,9 @@
+## 13 Kasım 2026 — #34 federated API yanıtı güvenliği (kanıtlı entegrasyon)
+- PR #151 squash merge `171a3c50`: GitLab/Codeberg M3U kaynak aramasına genel terimler eklendi; önceki TR/AZ terimleri ve bounded/project limits korundu. Main Actions `43479368483` SUCCESS.
+- PR #154 squash merge `4e50de45`: HTTP 200 API hata nesnelerinin başarılı boş depo araması olarak kaydedilmesi engellendi. 5 negatif çevrimdışı regresyon testi eklendi; PR Actions `43479623350` ve main Actions `43479774992` SUCCESS.
+- PR #160 squash merge `1c76c9a8`: HTTP 200 hatalı GitLab/Codeberg depo-ağacı yanıtlarının başarılı boş sonuç sayılması engellendi. 4 negatif çevrimdışı regresyon testi eklendi; PR Actions `43479941927` ve main Actions `43480100836` SUCCESS.
+- Bu entegrasyonlar **yalnızca çevrimdışı altyapı/safety kabulü**dür. Canlı Codeberg 429 engeli; gerçek worldwide FFmpeg görüntü/ses kabulü; gerçek 1000/2000 İBO paketleri; bağımsız harici şifreli restore halen açıktır. #34 görev kaydı kapatılmadı. Yeni kapsamlı kanal taraması başlatılmadı; ana İBO/YEDEKLER/YENİLER/FAVORİLER değiştirilmedi.
+
 ## 13 Kasım 2026 — #34 keşif kanıtı üzerine yazma koruması
 - Güncel main üzerinde PR #157 squash merge `b0ed1797e31e9953125473adca9be56b06dd4484`; eski PR #152 main ile çakıştığı için merge edilmeden kapatıldı.
 - `v2/discovery_34.py` ve `v2/discovery_34_integrate.py` raporları artık yalnız `open("x")` ile yazar; önceden mevcut aday veya entegre raporu asla üzerine yazmaz.
