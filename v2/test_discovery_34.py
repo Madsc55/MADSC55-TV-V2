@@ -1,7 +1,39 @@
 import unittest
+from unittest.mock import patch
+import urllib.request
 from discovery_34 import QUERIES, SOURCES, identity, search_url, repository_candidates, curated_candidates
 
 class Discovery34Tests(unittest.TestCase):
+    def test_redirect_rejected_before_following(self):
+        from discovery_34 import _NoRedirect
+        handler = _NoRedirect()
+        request = urllib.request.Request("https://codeberg.org/api/v1/repos/search")
+        with self.assertRaisesRegex(ValueError, "Redirect refused"):
+            handler.redirect_request(request, None, 302, "Found",
+                                     {"Location": "http://127.0.0.1/private"},
+                                     "http://127.0.0.1/private")
+
+    def test_fetch_uses_no_redirect_handler(self):
+        from discovery_34 import fetch_json, _NoRedirect
+        class FakeResponse:
+            def __enter__(self): return self
+            def __exit__(self, *args): return False
+            def geturl(self): return "https://codeberg.org/api/v1/repos/search"
+            @property
+            def url(self): return self.geturl()
+            def read(self, n): return b'{"data":[]}'
+         def opener(handler):
+            self.assertIsInstance(handler, _NoRedirect)
+            return FakeOpener()
+        # Capture test assertion in the outer scope.
+        outer = self
+        class FakeOpener:
+            def open(self, req, timeout):
+                outer.assertEqual(timeout, 15)
+                return FakeResponse()
+        with patch("discovery_34.urllib.request.build_opener", side_effect=opener):
+            self.assertEqual(fetch_json("https://codeberg.org/api/v1/repos/search"), {"data": []})
+
     def test_sources(self):
         self.assertEqual(len(SOURCES), 6)
         self.assertIn("tr.m3u8", QUERIES)
