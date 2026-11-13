@@ -324,5 +324,23 @@ class LiveContractRetryTests(unittest.TestCase):
         self.assertEqual(result["attempts"], 2)
         self.assertEqual(sleeps, [0])
 
+    def test_github_403_rate_limit_opens_provider_circuit(self):
+        calls, sleeps = [], []
+        def fetch(url):
+            calls.append(url)
+            raise urllib.error.HTTPError(
+                "https://api.github.com/search/repositories", 403, "rate limit exceeded",
+                {"X-RateLimit-Remaining": "0", "X-RateLimit-Reset": "1794586200"}, None)
+        terms = ("turkiye.m3u", "tr.m3u8", "turkish-iptv", "canli-tv")
+        result = probe_queries("github", queries=terms, fetch=fetch, sleep=sleeps.append)
+        self.assertEqual(result["status"], "error")
+        self.assertEqual(result["queries_total"], 4)
+        self.assertEqual(result["queries_checked"], 1)
+        self.assertEqual(result["queries_failed"], 1)
+        self.assertEqual(result["queries_skipped"], 3)
+        self.assertTrue(result["rate_limited"])
+        self.assertEqual(len(calls), 1)
+        self.assertEqual(sleeps, [])
+
 if __name__ == "__main__":
     unittest.main()

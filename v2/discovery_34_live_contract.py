@@ -78,6 +78,17 @@ def probe(source, query="turkish-iptv", fetch=fetch_json, sleep=time.sleep):
             return {"status": "error", "reason": type(exc).__name__,
                     "provider": source, "attempts": attempt}
 
+def provider_rate_limited(row):
+    """Recognize HTTP 429 and GitHub-style 403 rate-limit exhaustion."""
+    if row.get("http_status") == 429:
+        return True
+    if row.get("http_status") != 403:
+        return False
+    reason = str(row.get("http_reason", "")).casefold()
+    remaining = str(row.get("rate_limit_remaining", "")).strip()
+    return remaining == "0" or "rate limit" in reason
+
+
 def probe_queries(source, queries=QUERIES, fetch=fetch_json, sleep=time.sleep):
     """Probe terms sequentially; stop provider fanout after an exhausted HTTP 429."""
     terms = list(queries)
@@ -87,7 +98,7 @@ def probe_queries(source, queries=QUERIES, fetch=fetch_json, sleep=time.sleep):
         results.append({"query": query, **row})
         # A 429 is provider-wide pressure, not a query-specific failure.
         # Record remaining terms as skipped rather than amplifying the rate limit.
-        if row.get("http_status") == 429:
+        if provider_rate_limited(row):
             results.extend({"query": skipped, "status": "skipped",
                             "reason": "provider_rate_limit_circuit_open",
                             "provider": source, "attempts": 0}
@@ -101,7 +112,7 @@ def probe_queries(source, queries=QUERIES, fetch=fetch_json, sleep=time.sleep):
             "queries_ok": sum(row["status"] == "ok" for row in results),
             "queries_failed": len(failed),
             "queries_skipped": len(skipped),
-            "rate_limited": any(row.get("http_status") == 429 for row in failed),
+            "rate_limited": any(provider_rate_limited(row) for row in failed),
             "query_results": results}
 
 def main():
