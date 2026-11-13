@@ -1,3 +1,7 @@
+## 13 Kasım 2026 — Offline kabulün otomatik tetiklenmesi
+- b5dc604e: `.github/workflows/v2-offline-inventory.yml` için yalnızca `stage6-28-33-infrastructure-20261112` dalındaki `v2/**` ve workflow dosyası push'larında tam çevrimdışı kabul paketini çalıştıran push tetikleyicisi eklendi; manuel `workflow_dispatch` korundu. `pull_request` tetikleyicisi eklenmedi.
+- Bu değişiklik GitHub'a kaydedildi. Mevcut bağlantı aracı push-triggered run listesini göstermediğinden run ID/sonuç henüz doğrulanamadı; PASS iddiası yok. Gerçek AV, harici arşiv kaynağı ve PR #23 birleştirme çakışmaları açık.
+
 ## 13 Kasım 2026 — güncel PR #23 kabul kontrolü
 - PR #23 açık; head `2c4a497d2e826f4b9f5a41af0273d627e58640f9`, base `main`; GitHub `mergeable=false` bildiriyor. Birleştirme yapılmadı.
 - Head commit için combined status boş ve PR workflow run listesi boş; güncel Actions başarısı kanıtlanmış değil.
