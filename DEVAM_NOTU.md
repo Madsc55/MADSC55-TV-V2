@@ -1042,3 +1042,9 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - `v2/test_stage5_evidence_export.py`: iki farklı dosya adıyla aynı medya baytlarını yeniden kullanan iki kanal kimliği için fail-closed regresyon eklendi; testler gerçek kanal delili değildir.
 - Eşzamanlı oturumların ana dala aldığı daha güçlü Stage 5 korumaları (yerel FFmpeg protocol whitelist, tvg-id/channel-id eşlemesi, private-*.m3u8, O_EXCL/O_NOFOLLOW ve 0600) korunmuştur. Eski kodu geri getirecek PR #165 ve PR #169 birleştirilmeden kapatıldı.
 - Gerçek 1000/2000 AV/doğrulama paketi, harici bağımsız şifreli geri yükleme ve IBO cihaz kabulü hâlâ eksik. #31–#33 nihai kabul açık; 34 görevde 21 completed ve 13 in_progress. Ana İBO, YEDEKLER, YENİLER, FAVORİLER değiştirilmedi ve yeni kanal taraması yapılmadı.
+
+
+## 13 Kasım 2026 — Stage 5 yerel FFmpeg video+ses çözümleme testi zorunlu CI kabulü
+- PR #177 squash merge `aa6b5b3f18b89c28a994a6f90484e18f879b14c1`. PR Actions `43481199861` SUCCESS; main Actions `43481413229` SUCCESS.
+- GitHub Ubuntu runner'ında FFmpeg/FFprobe eksikse paketler kurulur. Yerel testte 1 saniyelik sentetik test medyası üretip gerçek decode üzerinden hem video frame hem ses örneği doğrulanır. `test_local_ffmpeg_decodes_both_real_fixture_tracks ... ok` ile bu kez atlanmadan geçti.
+- Yalnızca test aracı için üretilen sentetik medya gerçek yayın veya gerçek İBO paketi kabul edilmedi. #31–#33 ve diğer gerçek yayın kanıtı bekleyen görevler açık. Yeni kapsamlı kanal taraması yapılmadı; ana İBO/YEDEKLER/YENİLER/FAVORİLER'e dokunulmadı.
