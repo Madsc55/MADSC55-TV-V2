@@ -53,6 +53,8 @@ def final_gate(package_report, archive_report, independent_restore=False, live_a
         raise ValueError("archived bytes do not match accepted IBO package digest")
     if type(independent_restore) is not bool or type(live_av) is not bool:
         raise ValueError("invalid acceptance flag types")
+    if independent_restore and live_av and archive_report.get("encrypted") is not True:
+        raise ValueError("authenticated encrypted archive evidence required for production review")
     if not independent_restore or not live_av:
         return {"status":"INFRASTRUCTURE_ONLY","production_accepted":False,"reason":"independent external restore and real AV production acceptance pending"}
     return {"status":"READY_FOR_MANUAL_PRODUCTION_REVIEW","production_accepted":False}
