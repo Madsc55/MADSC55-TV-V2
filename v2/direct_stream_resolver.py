@@ -83,10 +83,15 @@ def resolve_report(report, runner=subprocess.run, limit=MAX_RESOLVE):
     if not isinstance(report, dict) or not isinstance(report.get("candidates"), list):
         raise ValueError("Integrated discovery report requires a candidates list")
     candidates, errors = [], []
-    eligible = [item for item in report["candidates"]
-                if isinstance(item, dict) and item.get("source") in ("official", "youtube")]
+    youtube = [item for item in report["candidates"]
+               if isinstance(item, dict) and item.get("source") == "youtube"
+               and item.get("status") == "LIVE_METADATA_VERIFIED"]
+    official = [item for item in report["candidates"]
+                if isinstance(item, dict) and item.get("source") == "official"]
+    per_source_limit = max(0, limit // 2)
+    eligible = youtube[:per_source_limit] + official[:per_source_limit]
     attempted = 0
-    for item in eligible[:max(0, limit)]:
+    for item in eligible:
         attempted += 1
         resolved, error = resolve_candidate(item, runner=runner)
         if resolved is not None:
@@ -97,7 +102,7 @@ def resolve_report(report, runner=subprocess.run, limit=MAX_RESOLVE):
         "policy": "CANDIDATES_ONLY_ENCRYPTED_DIRECT_URLS_NO_PLAYLIST_WRITES",
         "attempted": attempted,
         "eligible": len(eligible),
-        "skipped_by_limit": max(0, len(eligible) - attempted),
+        "skipped_by_limit": max(0, len(youtube) - per_source_limit) + max(0, len(official) - per_source_limit),
         "resolved": len(candidates),
         "verified_av": 0,
         "candidates": candidates,
