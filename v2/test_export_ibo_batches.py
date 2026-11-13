@@ -3,7 +3,7 @@ import tempfile
 import unittest
 from pathlib import Path
 from secure_archive import encrypt
-from export_ibo_batches import export
+from export_ibo_batches import export, render, valid_stream_url
 
 SECRET = 'test-only-archive-password-12345'
 
@@ -93,6 +93,46 @@ class BatchTests(unittest.TestCase):
                 export(archive, SECRET, link, sizes=(1000,))
             self.assertEqual(list(protected.iterdir()), [])
 
+
+    def test_untrusted_stream_urls_cannot_inject_m3u_entries(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            bad_urls = (
+                "https://example.invalid/live\n#EXTINF:-1,INJECTED\nhttps://bad.invalid/injected",
+                "https://example.invalid/live\r#EXTINF:-1,INJECTED",
+                "https://example.invalid/live\tother",
+                "https://example.invalid:99999/live",
+                "https://user:secret@example.invalid/live",
+                "https://[broken/path",
+                "https://example.invalid/live path",
+            )
+            records = [{'url': url, 'name': 'Bad', 'group': 'TR',
+                        'http_hls_status': 'AV_VERIFIED'} for url in bad_urls]
+            records.append({'url': 'https://example.invalid/good', 'name': 'Good',
+                            'group': 'TR', 'http_hls_status': 'AV_VERIFIED'})
+            for bad in bad_urls:
+                self.assertFalse(valid_stream_url(bad))
+                with self.assertRaises(ValueError):
+                    render([{'url': bad, 'name': 'Bad'}])
+            archive = root / 'inventory.enc'
+            archive.write_bytes(encrypt(('\n'.join(json.dumps(x) for x in records) + '\n').encode(), SECRET))
+            result = export(archive, SECRET, root / 'out', sizes=(1000,))
+            self.assertEqual(result['av_verified_unique'], 1)
+            out = Path(result['packages'][0]['path']).read_text()
+            self.assertEqual(out.count('#EXTINF:'), 1)
+            self.assertNotIn('INJECTED', out)
+            self.assertIn('https://example.invalid/good', out)
+
+    def test_metadata_controls_do_not_create_fake_m3u_rows(self):
+        records = [{'url': 'https://example.invalid/good',
+                    'name': 'News\n#EXTINF:-1,Fake',
+                    'group': 'TR\r\n#EXTINF:-1,Fake',
+                    'logo': 'https://example.invalid/logo.png\n#EXTINF:-1,Fake'}]
+        output = render(records).decode()
+        self.assertEqual(sum(line.startswith('#EXTINF:') for line in output.splitlines()), 1)
+        self.assertEqual(len(output.splitlines()), 3)
+        self.assertNotIn('tvg-logo=', output)
+        self.assertIn('https://example.invalid/good', output)
 
 if __name__ == '__main__':
     unittest.main()
