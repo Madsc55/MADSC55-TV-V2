@@ -1,3 +1,9 @@
+## 13 Kasım 2026 — #28–#33 şifreli arşiv boyut koruması
+- 3c27080f: decrypt() ve restore() şifreli dosya üst boyut sınırını uygular; restore() aşırı büyük dosyayı belleğe okumadan reddeder.
+- d928b151: şifreli blob ve restore için sınır aşımı regresyonları eklendi; başarısız geri yüklemenin çıktı üretmemesi sınanır.
+- PR #23 açık. Yeni commitler için Actions kabulü henüz doğrulanmadı; gerçek harici depolama, bağımsız geri yükleme, gerçek AV ve İBO cihaz kabulü açık. Bu kayıt testlerin başarıyla çalıştığı iddiası değildir.
+- Ana İBO ve YEDEKLER/YENİLER/FAVORİLER korunuyor; yeni tarama yapılmadı.
+
 ## 13 Kasım 2026 — #28–#33 PR #23 güvenlik kontrolü PASS
 - https://github.com/Madsc55/MADSC55-TV-V2/pull/23 açıldı, taslak; main'e birleştirilmedi.
 - Commit 7076396f7c113df80c0825ef138900791af05e80 için Production Security Gate run 43444008561 SUCCESS: grouped safety, üretim tetikleyici/yazma güvenliği, korunan İBO invariantları, Discovery 34 offline acceptance PASS.
