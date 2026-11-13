@@ -94,5 +94,39 @@ class BatchTests(unittest.TestCase):
             self.assertEqual(list(protected.iterdir()), [])
 
 
+    def test_malformed_urls_and_metadata_cannot_inject_m3u_rows(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            valid_url = "https://cdn.example.invalid:8443/live.m3u8?token=abc%2Fdef"
+            bad_urls = [
+                "https://cdn.example.invalid/live.m3u8\n#EXTINF:-1,FAKE\nhttps://evil.example.invalid/live",
+                "https://cdn.example.invalid/live.m3u8\rINJECTED",
+                "https://cdn.example.invalid/live.m3u8\tINJECTED",
+                "https://user:password@cdn.example.invalid/live.m3u8",
+                "https://cdn.example.invalid:99999/live.m3u8",
+                "https://",
+                "ftp://cdn.example.invalid/live.m3u8",
+            ]
+            rows = [
+                {"url": valid_url, "name": "Good\n#EXTINF:-1,FAKE",
+                 "group": "TR\"\n#EXTINF:-1,FAKE",
+                 "logo": "https://logo.example.invalid/logo.png\n#EXTINF:-1,FAKE",
+                 "http_hls_status": "AV_VERIFIED"}
+            ]
+            rows.extend({"url": url, "name": "BAD", "group": "TR",
+                         "http_hls_status": "AV_VERIFIED"} for url in bad_urls)
+            archive = root / "inventory.enc"
+            archive.write_bytes(encrypt(("\n".join(json.dumps(row) for row in rows)+"\n").encode(), SECRET))
+            result = export(archive, SECRET, root / "out", sizes=(1000,))
+            self.assertEqual(result["av_verified_unique"], 1)
+            text = Path(result["packages"][0]["path"]).read_text()
+            lines = text.splitlines()
+            self.assertEqual(len(lines), 3)
+            self.assertEqual(lines[0], "#EXTM3U")
+            self.assertTrue(lines[1].startswith("#EXTINF:-1"))
+            self.assertEqual(lines[2], valid_url)
+            self.assertNotIn("tvg-logo=", lines[1])
+
+
 if __name__ == '__main__':
     unittest.main()
