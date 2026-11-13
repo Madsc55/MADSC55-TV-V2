@@ -30,6 +30,8 @@ def parse(text):
         elif line and not line.startswith("#"):
             if pending is None:
                 raise ValueError("URL without EXTINF")
+            if any(ord(char) <= 32 or ord(char) == 127 for char in line):
+                raise ValueError("control or whitespace in stream URL")
             parts = urllib.parse.urlsplit(line)
             if (parts.scheme not in ("http", "https") or not parts.hostname
                     or parts.username is not None or parts.password is not None):
