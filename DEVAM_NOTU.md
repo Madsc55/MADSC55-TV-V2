@@ -1,3 +1,8 @@
+## 13 Kasım 2026 — Stage 6 temiz PR CI kabulü
+- PR #27, commit cd24cc65ded9be6c5b2e242d31c20ed8cb515553: GitHub Actions 43448236664 SUCCESS. `Stage 6 offline package and archive acceptance regressions` adımı PASS; güvenlik kilidi, ana İBO koruma ve #34 offline entegrasyon adımları da PASS.
+- Bu sonuç çevrimdışı test kanıtıdır. Gerçek yayın görüntü/ses, bağımsız harici arşiv geri yükleme ve nihai cihaz/kanal kabulü henüz kanıtlanmadığından #28–#33 nihai görevleri kapatılmadı.
+- Ana İBO, YEDEKLER, YENİLER, FAVORİLER değiştirilmedi; kapsamlı tarama başlatılmadı.
+
 ## 13 Kasım 2026 — #34 canlı API retry düzeltmesi ana dalda; nihai kabul açık
 - PR #24 squash merge: 313a9abe6f44af1635523823ac69e17b74f0ea54. Canlı API geçici hatalarında en çok üç deneme, beş regresyon testi ve mevcut grouped acceptance iş akışına test çağrısı eklendi.
 - PR baş commit'i c4f204d4 için Production Security Gate Actions 43447044630: SUCCESS; güvenlik, İBO invariants ve offline discovery başarılı. Bu koşu yeni retry testlerinin veya canlı Codeberg API kabulünün başarılı çalıştığına kanıt değildir.
