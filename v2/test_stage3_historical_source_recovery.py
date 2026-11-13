@@ -53,6 +53,42 @@ class Stage3HistoricalSourceTests(unittest.TestCase):
         self.assertFalse(report["device_playback_verified"])
         self.assertEqual(candidates[0]["url"], url)
 
+    def test_all_unmatched_hashes_are_retained_when_source_is_readable_but_has_no_match(self):
+        history = [{"url_sha256": sha("historic-%d" % n)} for n in range(4955)]
+        snapshot = {"sources": [
+            {"repository": "example/public", "path": "old.m3u", "entries": 1}
+        ]}
+        feed = "#EXTM3U\\n#EXTINF:-1,Unrelated\\nhttps://other.example/live.m3u8\\n"
+        with patch("stage3_historical_source_recovery.historical_commit",
+                   return_value="b" * 40), patch(
+                       "stage3_historical_source_recovery._read",
+                       return_value=feed.encode()):
+            report, candidates = audit(history, snapshot)
+        self.assertEqual(report["real_4955_original_identities"], 4955)
+        self.assertEqual(report["historical_source_files_read"], 1)
+        self.assertEqual(report["source_files_unavailable"], 0)
+        self.assertEqual(report["exact_original_url_hashes_recovered"], 0)
+        self.assertEqual(report["original_url_hashes_still_unmatched"], 4955)
+        self.assertEqual(report["matched_hashes"], [])
+        self.assertEqual(candidates, [])
+        self.assertFalse(report["main_playlist_modified"])
+        self.assertFalse(report["new_channel_discovery"])
+        self.assertFalse(report["plaintext_urls_logged"])
+
+    def test_source_failure_does_not_leak_exception_text_or_secret(self):
+        secret = "fixture-secret-token-should-never-be-logged"
+        history = [{"url_sha256": sha("historic-%d" % n)} for n in range(4955)]
+        snapshot = {"sources": [
+            {"repository": "example/private", "path": "old.m3u", "entries": 1}
+        ]}
+        with patch("stage3_historical_source_recovery.historical_commit",
+                   side_effect=RuntimeError("request failed " + secret)):
+            report, candidates = audit(history, snapshot)
+        self.assertEqual(report["source_files_unavailable"], 1)
+        self.assertEqual(report["original_url_hashes_still_unmatched"], 4955)
+        self.assertNotIn(secret, str(report))
+        self.assertEqual(candidates, [])
+
     def test_invalid_source_identity_fails_closed_without_network(self):
         history = [{"url_sha256": sha("h-%d" % n)} for n in range(4955)]
         snapshot = {"sources": [{"repository": "../private",
