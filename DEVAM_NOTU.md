@@ -1,3 +1,9 @@
+## 13 Kasım 2026 — PR #69 Stage 2/3 kimlik, EPG ve geri kazanım entegrasyonu main'e alındı
+- PR #69 `feat(stage2): integrate offline identity EPG and bounded recovery on main` squash ile başarıyla main'e birleştirildi: merge commit `4413ed804163e31c6f6b4fe8f629cc6975afc7a9`. Head `208869431c1b8f320d20c0bd962e2188a824fb93` değişmeden doğrulandı.
+- Head commit için Production Security Gate Actions #43454976797, #43454977935 ve #43455017585 başarılıydı; sekiz Stage 2/3 offline identity, metadata, recovery ve scanner integration testi ile derleme adımları geçti.
+- Entegrasyon: konservatif kanal kimlik ipuçları, XMLTV exact-ID EPG doğrulama, URL SHA-256 kontrolü, bounded recovery queue ve scanner/discovery rapor entegrasyonu. Kaynak metadata ipuçları verified sayılmaz; gerçek EPG programı ve FFmpeg AV kanıtı olmadan nihai kanal kabulü yoktur.
+- Bu entegrasyon #15/#17–#21 için altyapı ilerlemesidir; görevleri topluca kapatmaz. Ana İBO/YEDEKLER/YENİLER/FAVORİLER'e yazılmadı, kapsamlı kanal taraması yapılmadı.
+
 ## 13 Kasım 2026 — Aşama 2 (#15, #17–#21) çevrimdışı kabul kapısı ana dala alındı
 - PR #72 squash merge `e333adca5c0497de6c021e021d74b3369571276d`; ana Production Security Gate Actions `43455393756` SUCCESS.
 - Başarılı adımlar: Stage 2 identity/recovery/metadata integration acceptance; Stage 2/3 offline identity, EPG and recovery acceptance; Stage 6 offline package/archive; #34 offline adapter/integration; production security and protected IBO invariants.
