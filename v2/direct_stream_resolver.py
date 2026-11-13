@@ -136,7 +136,7 @@ def resolve_report(report, runner=subprocess.run, limit=MAX_RESOLVE):
         {"TR": tr_quota, "AZ": az_quota, "WORLD": world_quota})
     selected_official = _balanced_limit(
         official, official_limit, lambda item: item.get("country") or "UNKNOWN",
-        {key: 2 for key in sorted({item.get("country") or "UNKNOWN" for item in official})})
+        {key: 1 for key in sorted({item.get("country") or "UNKNOWN" for item in official})})
     eligible_total = len(youtube) + len(official)
     eligible = selected_youtube + selected_official
     attempted = 0
