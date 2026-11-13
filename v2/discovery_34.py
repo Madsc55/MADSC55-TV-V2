@@ -40,7 +40,8 @@ def identity(source, url):
     expected_hosts = {"github": "github.com", "gitlab": "gitlab.com", "codeberg": "codeberg.org", "youtube": "www.youtube.com"}
     if source in expected_hosts and (p.scheme != "https" or host != expected_hosts[source]):
         raise ValueError("Unexpected source host or insecure scheme")
-    source_id = source + ":" + host + p.path
+    authority = host + (":" + str(p.port) if p.port is not None else "")
+    source_id = source + ":" + authority + p.path
     if source in ("official", "m3u") and p.query:
         # Distinguish signed stream variants without exposing query secrets in IDs.
         source_id += "?sha256=" + hashlib.sha256(p.query.encode("utf-8")).hexdigest()
