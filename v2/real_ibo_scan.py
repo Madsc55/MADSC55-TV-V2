@@ -16,7 +16,7 @@ import urllib.error
 import urllib.parse
 import urllib.request
 import xml.etree.ElementTree as ET
-from stream_probe import probe
+from stream_probe import probe, verify_decoded_av
 from stage3_identity_recovery import url_sha256
 from stage3_metadata_acceptance import quality_from_probe, category, normalized_identity, epg_match
 from stage3_recovery_queue import build_recovery_queue
@@ -143,9 +143,21 @@ def check_hls(entry, timeout, diagnostics=None):
                'mpegurl' in content_type))
         if status in (200, 206) and hls:
             outcome = probe(url, timeout=timeout)
-            quality = quality_from_probe(outcome)
+            if (outcome.get('status') != 'AV_STREAMS_PRESENT'
+                    or outcome.get('video') is not True
+                    or outcome.get('audio') is not True):
+                return None
+            decoded = verify_decoded_av(url, timeout=timeout)
+            if decoded.get('decoded_av_verified') is not True:
+                if diagnostics is not None:
+                    diagnostics['decode_status'] = decoded.get('decode_status', 'DECODE_NOT_VERIFIED')
+                return None
+            verified_outcome = {**outcome, 'status': 'AV_VERIFIED'}
+            quality = quality_from_probe(verified_outcome)
             if quality['av_verified']:
-                return {**entry, 'verified_quality': quality}
+                return {**entry, 'verified_quality': quality,
+                        'decoded_av_verified': True,
+                        'decode_status': decoded.get('decode_status', 'DECODED_AV')}
     except urllib.error.HTTPError as exc:
         if diagnostics is not None:
             diagnostics['last_http_status'] = exc.code

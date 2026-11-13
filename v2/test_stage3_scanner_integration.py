@@ -55,10 +55,10 @@ class ScannerStage3IntegrationTests(unittest.TestCase):
                 return False
             def read(self, size):
                 return b"#EXTM3U\n#EXT-X-VERSION:3\n"
-        observed = {"status": "AV_VERIFIED", "video": True, "audio": True,
+        observed = {"status": "AV_STREAMS_PRESENT", "video": True, "audio": True,
                     "streams": [{"codec_type": "video", "width": 1280, "height": 720},
                                 {"codec_type": "audio", "codec_name": "aac"}]}
-        with patch.object(scanner.urllib.request, "urlopen", return_value=FakeResponse()), patch.object(scanner, "probe", return_value=observed):
+        with patch.object(scanner.urllib.request, "urlopen", return_value=FakeResponse()), patch.object(scanner, "probe", return_value=observed), patch.object(scanner, "verify_decoded_av", return_value={"decoded_av_verified": True, "decode_status": "DECODED_AV"}):
             result = scanner.check_hls(entry, 2)
         self.assertEqual(result["verified_quality"]["quality"], "720p")
 
@@ -73,10 +73,10 @@ class ScannerStage3IntegrationTests(unittest.TestCase):
                 return False
             def read(self, size):
                 return b"#EXTM3U\n#EXT-X-VERSION:3\n"
-        observed = {"status": "AV_VERIFIED", "video": True, "audio": True,
+        observed = {"status": "AV_STREAMS_PRESENT", "video": True, "audio": True,
                     "streams": [{"codec_type": "video", "codec_name": "h264"},
                                 {"codec_type": "audio", "codec_name": "aac"}]}
-        with patch.object(scanner.urllib.request, "urlopen", return_value=FakeResponse()), patch.object(scanner, "probe", return_value=observed):
+        with patch.object(scanner.urllib.request, "urlopen", return_value=FakeResponse()), patch.object(scanner, "probe", return_value=observed), patch.object(scanner, "verify_decoded_av", return_value={"decoded_av_verified": True, "decode_status": "DECODED_AV"}):
             self.assertIsNone(scanner.check_hls(entry, 2))
 
     def test_http_success_without_av_is_not_exported(self):
@@ -92,6 +92,27 @@ class ScannerStage3IntegrationTests(unittest.TestCase):
                 return b"#EXTM3U\n#EXT-X-VERSION:3\n"
         with patch.object(scanner.urllib.request, "urlopen", return_value=FakeResponse()), patch.object(scanner, "probe", return_value={"status": "VIDEO_ONLY", "video": True, "audio": False}):
             self.assertIsNone(scanner.check_hls(entry, 2))
+
+    def test_stream_metadata_without_decoded_av_is_not_exported(self):
+        entry = {"url": "https://example.org/stream.m3u8"}
+        class FakeResponse:
+            status = 200
+            headers = {"Content-Type": "application/vnd.apple.mpegurl"}
+            def __enter__(self):
+                return self
+            def __exit__(self, *args):
+                return False
+            def read(self, size):
+                return b"#EXTM3U\\n#EXT-X-VERSION:3\\n"
+        observed = {"status": "AV_STREAMS_PRESENT", "video": True, "audio": True,
+                    "streams": [{"codec_type": "video", "codec_name": "h264", "width": 1280, "height": 720},
+                                {"codec_type": "audio", "codec_name": "aac"}]}
+        with patch.object(scanner.urllib.request, "urlopen", return_value=FakeResponse()), \
+             patch.object(scanner, "probe", return_value=observed), \
+             patch.object(scanner, "verify_decoded_av", return_value={"decoded_av_verified": False, "decode_status": "NO_DECODED_FRAME"}):
+            diagnostics = {}
+            self.assertIsNone(scanner.check_hls(entry, 2, diagnostics))
+            self.assertEqual(diagnostics["decode_status"], "NO_DECODED_FRAME")
 
 
 if __name__ == "__main__":
