@@ -148,5 +148,37 @@ class BatchTests(unittest.TestCase):
                 self.assertEqual(output.splitlines()[2], record["url"])
 
 
+
+    def test_unhandled_unicode_c1_and_format_controls_are_rejected(self):
+        for dangerous in ("\u0081", "\u0085", "\u2028", "\u2029", "\u2066"):
+            with self.subTest(char=hex(ord(dangerous))):
+                url = "https://example.invalid/live" + dangerous + "fake"
+                self.assertFalse(valid_stream_url(url))
+                with self.assertRaises(ValueError):
+                    render([{"url": url, "name": "bad"}])
+                playlist = render([{
+                    "url": "https://example.invalid/safe",
+                    "name": "News" + dangerous + "#EXTINF:-1,FAKE",
+                    "group": "TR" + dangerous + ' group-title="INJECTED"',
+                }]).decode("utf-8")
+                self.assertEqual(len(playlist.splitlines()), 3)
+                self.assertEqual(sum(line.startswith("#EXTINF:") for line in playlist.splitlines()), 1)
+                self.assertNotIn(dangerous, playlist)
+
+    def test_non_object_encrypted_inventory_rows_are_ignored(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            good = {"url": "https://example.invalid/good.m3u8", "name": "GOOD",
+                    "group": "TR", "http_hls_status": "AV_VERIFIED"}
+            jsonl = "\n".join(json.dumps(row) for row in (
+                None, [], "string", 123, good)) + "\n"
+            archive = root / "inventory.enc"
+            archive.write_bytes(encrypt(jsonl.encode(), SECRET))
+            result = export(archive, SECRET, root / "out", sizes=(1000,))
+            self.assertEqual(result["av_verified_unique"], 1)
+            playlist = Path(result["packages"][0]["path"]).read_text()
+            self.assertIn("https://example.invalid/good.m3u8", playlist)
+            self.assertEqual(playlist.count("#EXTINF:"), 1)
+
 if __name__ == '__main__':
     unittest.main()
