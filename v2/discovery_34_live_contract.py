@@ -14,6 +14,10 @@ def probe(source, query="turkish-iptv", fetch=fetch_json, sleep=time.sleep):
     for attempt in range(1, MAX_ATTEMPTS + 1):
         try:
             payload = fetch(url)
+            if source in ("github", "codeberg") and not isinstance(payload, dict):
+                raise ValueError("Invalid repository API payload")
+            if source == "gitlab" and not isinstance(payload, list):
+                raise ValueError("Invalid repository API payload")
             return {"status": "ok", "candidates": len(repository_candidates(source, payload)), "attempts": attempt}
         except urllib.error.HTTPError as exc:
             retryable = exc.code in RETRYABLE_HTTP
