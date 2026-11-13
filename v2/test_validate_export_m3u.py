@@ -39,6 +39,21 @@ class ExportM3UTests(unittest.TestCase):
                    '#EXT-X-STREAM-INF:BANDWIDTH=1000000\nhttps://example.org/a.m3u8\n')
         self.assertTrue(any("HLS manifest directive" in e for e in validate_m3u(content)))
 
+    def test_hls_manifest_directive_before_extinf_is_rejected(self):
+        content = ('#EXTM3U\n#EXT-X-TARGETDURATION:10\n'
+                   '#EXTINF:-1 group-title="TEST",Channel\n'
+                   'https://example.org/a.m3u8\n')
+        self.assertTrue(any("HLS manifest directive" in issue
+                            for issue in validate_m3u(content)))
+
+    def test_hls_manifest_directive_between_entries_is_rejected(self):
+        content = (playlist("https://example.org/a.m3u8")
+                   + '#EXT-X-VERSION:3\n'
+                   + '#EXTINF:-1 group-title="TEST",Channel 2\n'
+                   + 'https://example.org/b.m3u8\n')
+        self.assertTrue(any("HLS manifest directive" in issue
+                            for issue in validate_m3u(content)))
+
     def test_invalid_scheme(self):
         self.assertTrue(any("unsupported URL scheme" in e for e in
                             validate_m3u(playlist("file:///etc/passwd"))))
