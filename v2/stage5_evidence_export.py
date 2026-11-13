@@ -9,19 +9,33 @@ import subprocess
 from pathlib import Path
 from urllib.parse import urlsplit
 
+def valid_stream_url(url):
+    """Require a parseable HTTP(S) URL with no whitespace or embedded credentials."""
+    if not isinstance(url, str) or not url or any(
+            ord(char) < 32 or ord(char) == 127 or char.isspace() for char in url):
+        return False
+    try:
+        parsed = urlsplit(url)
+        _ = parsed.port  # A malformed or out-of-range port must fail closed.
+        return (parsed.scheme in ("http", "https") and bool(parsed.hostname)
+                and parsed.username is None and parsed.password is None
+                and not parsed.fragment)
+    except ValueError:
+        return False
+
 def entries(path):
     lines = path.read_text(encoding="utf-8-sig").splitlines()
     if not lines or lines[0].strip() != "#EXTM3U":
         raise ValueError("Invalid M3U header")
     result, pending = [], None
-    for line in lines[1:]:
-        line = line.strip()
+    for raw_line in lines[1:]:
+        line = raw_line.strip()
         if line.startswith("#EXTINF:"):
             if pending is not None:
                 raise ValueError("Missing stream URL")
             pending = line
         elif line and not line.startswith("#"):
-            if pending is None or urlsplit(line).scheme not in ("https", "http"):
+            if pending is None or line != raw_line or not valid_stream_url(line):
                 raise ValueError("Malformed M3U entry")
             result.append((pending, line))
             pending = None
