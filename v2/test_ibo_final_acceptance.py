@@ -32,6 +32,10 @@ class AcceptanceTests(unittest.TestCase):
             audit_external_restore(raw, cipher, b"different restored bytes", "offline-test-passphrase-2026")
         with self.assertRaises(ValueError):
             audit_external_restore(raw, raw, raw, "offline-test-passphrase-2026")
+        with self.assertRaises(Exception):
+            audit_external_restore(raw, cipher, raw, "wrong-offline-passphrase-2026")
+        with self.assertRaises(ValueError):
+            audit_external_restore(b"different original", cipher, raw, "offline-test-passphrase-2026")
 
     def test_rejects_non_byte_encrypted_archive_inputs(self):
         for original, ciphertext in (("raw", b"encrypted"), (b"raw", "encrypted"),
