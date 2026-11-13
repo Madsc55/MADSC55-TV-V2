@@ -48,6 +48,8 @@ def export(archive, passphrase, destination, sizes=(1000, 2000), existing=()):
         if not line.strip():
             continue
         record = json.loads(line)
+        if not isinstance(record, dict):
+            continue
         url = record.get('url')
         if not valid_stream_url(url) or url in seen:
             continue
