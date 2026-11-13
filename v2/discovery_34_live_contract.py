@@ -41,21 +41,21 @@ def probe(source, query="turkish-iptv", fetch=fetch_json, sleep=time.sleep):
         except urllib.error.HTTPError as exc:
             retryable = exc.code in RETRYABLE_HTTP
             if retryable and attempt < MAX_ATTEMPTS:
-                sleep(attempt)
+                sleep(retry_delay(exc, attempt))
                 continue
             return {"status": "error", "reason": "HTTP_" + str(exc.code),
                     "retryable": retryable, "provider": source, "attempts": attempt}
         except urllib.error.URLError as exc:
             # Temporary DNS/connection failures may recover; never mark them successful.
             if attempt < MAX_ATTEMPTS:
-                sleep(attempt)
+                sleep(retry_delay(exc, attempt))
                 continue
             return {"status": "error", "reason": "URLError",
                     "retryable": True, "provider": source, "attempts": attempt}
         except (TimeoutError, ConnectionResetError, ConnectionAbortedError) as exc:
             # Bounded retry for transient socket failures; never imply acceptance.
             if attempt < MAX_ATTEMPTS:
-                sleep(attempt)
+                sleep(retry_delay(exc, attempt))
                 continue
             return {"status": "error", "reason": type(exc).__name__,
                     "retryable": True, "provider": source, "attempts": attempt}
