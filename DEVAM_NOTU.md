@@ -947,3 +947,10 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - Codeberg için Retry-After sayısal ve HTTP-date biçimlerini 60 saniye üst sınırıyla ele alan kod ve offline regresyonlar main üzerinde mevcut; canlı 429 yanıtı nedeniyle sağlayıcı kabulü yine de geçmedi.
 - Görev defteri 21 completed / 13 in_progress olarak korundu; canlı yayın kanıtı, bağımsız harici geri yükleme ve gerçek 1000/2000 kanal paketleri olmadan görev kapatılmadı.
 - Yeni kapsamlı kanal taraması yapılmadı. Ana İBO, YEDEKLER, YENİLER ve FAVORİLER değiştirilmedi.
+
+
+
+## 13 Kasım 2026 — Stage 6 (#28–#33) güncel main üzerine güvenli aktarım
+- Stage 6 offline paketleme/arşiv regresyonları current-main Production Security Gate run 43457983342 ve 43458443836 üzerinde PASS.
+- Gerçek AV, gerçek 1.000/2.000 kanal paketleri, bağımsız dış geri yükleme ve cihaz kabulü olmadan #28–#33 kapatılmayacak.
+- Ana İBO ve YEDEKLER/YENİLER/FAVORİLER korunmuştur; kapsamlı kanal taraması yapılmamıştır.
