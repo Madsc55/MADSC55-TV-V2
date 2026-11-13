@@ -274,5 +274,23 @@ class LiveContractRetryTests(unittest.TestCase):
         self.assertEqual(result["attempts"], 2)
         self.assertEqual(sleeps, [0])
 
+
+    def test_retry_delay_http_date_future_is_bounded(self):
+        value = format_datetime(datetime.now(timezone.utc) + timedelta(seconds=20), usegmt=True)
+        error = urllib.error.HTTPError("https://codeberg.org/api/v1/repos/search", 429, "limited", {"Retry-After": value}, None)
+        delay = retry_delay(error, 1)
+        self.assertGreaterEqual(delay, 0)
+        self.assertLessEqual(delay, 20)
+
+    def test_retry_delay_http_date_is_capped(self):
+        value = format_datetime(datetime.now(timezone.utc) + timedelta(hours=2), usegmt=True)
+        error = urllib.error.HTTPError("https://gitlab.com/api/v4/projects", 429, "limited", {"Retry-After": value}, None)
+        self.assertEqual(retry_delay(error, 1), 60)
+
+    def test_retry_delay_past_http_date_is_zero(self):
+        value = format_datetime(datetime.now(timezone.utc) - timedelta(seconds=10), usegmt=True)
+        error = urllib.error.HTTPError("https://codeberg.org/api/v1/repos/search", 429, "limited", {"Retry-After": value}, None)
+        self.assertEqual(retry_delay(error, 1), 0)
+
 if __name__ == "__main__":
     unittest.main()
