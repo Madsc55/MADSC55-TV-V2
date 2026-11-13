@@ -27,6 +27,10 @@ def parse(text):
                 raise ValueError("unpaired EXTINF")
             if "," not in line:
                 raise ValueError("missing channel name")
+            duration_field = line[len("#EXTINF:"):].split(",", 1)[0].strip()
+            duration = duration_field.split(None, 1)[0] if duration_field else ""
+            if re.fullmatch(r"-1|[0-9]+(?:\\.[0-9]+)?", duration) is None:
+                raise ValueError("invalid EXTINF duration")
             pending = (line, line.rsplit(",", 1)[1].strip())
             if not pending[1]:
                 raise ValueError("empty channel name")
