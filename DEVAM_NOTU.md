@@ -1,3 +1,8 @@
+## 13 Kasım 2026 — Harici arşiv doğrulayıcı negatif testleri
+- 1ae3bb99: `audit_external_restore` yanlış parola ve özgün paket baytlarıyla uyuşmayan orijinal girdi için negatif regresyonlarla genişletildi.
+- Önceki testler şifreli arşivin çözümlenmesini, geri yüklenen baytlarla eşleşmesini ve bozuk/şifresiz arşivin reddini kapsar.
+- Bunlar test fixture'larıdır; GitHub Actions çalıştırması ve gerçek harici depodan indirme kanıtı değildir. Actions dispatch aracı bu bağlantıda mevcut değil; run sonucu üretildiği iddia edilmiyor. PR #23 mergeable=false kalıyor.
+
 ## 13 Kasım 2026 — #31–#33 bağımsız şifreli geri yükleme kanıtı üreticisi
 - 837c146b: `audit_external_restore` eklendi. Ayrı kaynaktan alınan V2 şifreli arşivi AES-GCM ile açar, harici geri yükleme baytlarıyla ve asıl paketle birebir karşılaştırır; yalnızca tüm eşleşmelerde `encrypted=True` ve `external_restore_verified=True` üretir.
 - cdae4461: başarılı eşleşme, değiştirilmiş geri yükleme verisi ve şifreli olmayan arşiv için regresyon testleri eklendi.
