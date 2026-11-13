@@ -97,7 +97,7 @@ class BatchTests(unittest.TestCase):
             ]
             encrypted = root / "historical.enc"
             encrypted.write_bytes(encrypt(
-                ("\\n".join(json.dumps(row) for row in rows) + "\\n").encode(), SECRET))
+                ("\n".join(json.dumps(row) for row in rows) + "\n").encode(), SECRET))
             output = root / "packages"
             result = export(encrypted, SECRET, output, sizes=(1000,))
             self.assertEqual(result["av_verified_unique"], 0)
