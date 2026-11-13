@@ -1,8 +1,8 @@
 {
   "schema": 1,
   "canonical_state": "state.json",
-  "generated_at": "2026-11-13T16:25:00Z",
-  "observed_commit": "ec02cb3993f54d42d3b3a4a71670eb50c87c6adc",
+  "generated_at": "2026-11-13T16:12:00Z",
+  "observed_commit": "93dd751b31bbe5829f51e2c5f3a49cb5d9279251",
   "statuses": [
     {
       "id": 1,
@@ -213,10 +213,12 @@
         "https://github.com/Madsc55/MADSC55-TV-V2/blob/madsc/v2-discovery-bulk-20261031/v2/reports/task15-iptv-org-exact-crosswalk-20261112.json",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43454977935",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43454976797",
-        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43455192478"
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43455192478",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42216075104",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/artifacts/13524765368"
       ],
       "blocker": "3,178 of 4,955 historical hashes lack a current IPTV-org catalog match. Exact catalog provenance for the other 1,777 is established, but broadcaster attribution still needs direct publisher or independently authenticated source evidence where it is missing.",
-      "reason": "Pinned IPTV-org streams.json and channels.json to ca2dc7e7bcc89def37e55202a3ad108db46a7ccf. Matched 1,777 exact URL SHA-256 identities to unambiguous catalog channel IDs, reproduced all five prior exact IDs, and found 57 catalog site hostname correlations. The report includes no plaintext stream URLs. Catalog hostname correlation is not independent broadcaster proof. 13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open."
+      "reason": "Pinned IPTV-org streams.json and channels.json to ca2dc7e7bcc89def37e55202a3ad108db46a7ccf. Matched 1,777 exact URL SHA-256 identities to unambiguous catalog channel IDs, reproduced all five prior exact IDs, and found 57 catalog site hostname correlations. The report includes no plaintext stream URLs. Catalog hostname correlation is not independent broadcaster proof. 13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open. Historical worldwide evidence inspected 13 Nov: run 42216075104 artifact 13524765368 contains 35,327 candidate hashes, 13,884 current-run FFmpeg video+audio decodes, and exact-hash crosswalk of 4,949/4,955 historical rows, with 3,080 historical hashes AV-decoded. The same report explicitly says historical broadcaster identity is not verified; #15 remains open for independently authenticated publisher attribution."
     },
     {
       "id": 16,
@@ -420,10 +422,13 @@
       "evidence_urls": [
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43454977935",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43454976797",
-        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43455192478"
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43455192478",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42216075104",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43241168321",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/artifacts/13958867734"
       ],
       "blocker": null,
-      "reason": "13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open."
+      "reason": "13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open. Historical real evidence inspected 13 Nov: worldwide run 42216075104 has 13,884 FFmpeg video+audio decodes from 35,327 candidates in nine RSA-sealed shards; 501 AV rows have TR/AZ metadata hints. Later independent #24 run 43241168321 reports 801 AV (800 TR/AZ) and 7,819 restored archive records. Cross-run URL-hash overlap is not yet reconciled, so counts are not added. The RSA-sealed worldwide URL shards require the recipient private key, which is not in the repository; no 1000/2000 real packages have been emitted. Task remains open."
     },
     {
       "id": 29,
@@ -432,10 +437,13 @@
       "evidence_urls": [
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43454977935",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43454976797",
-        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43455192478"
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43455192478",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42216075104",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43241168321",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/artifacts/13958867734"
       ],
       "blocker": null,
-      "reason": "13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open."
+      "reason": "13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open. Historical real evidence inspected 13 Nov: worldwide run 42216075104 has 13,884 FFmpeg video+audio decodes from 35,327 candidates in nine RSA-sealed shards; 501 AV rows have TR/AZ metadata hints. Later independent #24 run 43241168321 reports 801 AV (800 TR/AZ) and 7,819 restored archive records. Cross-run URL-hash overlap is not yet reconciled, so counts are not added. The RSA-sealed worldwide URL shards require the recipient private key, which is not in the repository; no 1000/2000 real packages have been emitted. Task remains open."
     },
     {
       "id": 30,
@@ -444,10 +452,12 @@
       "evidence_urls": [
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43454977935",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43454976797",
-        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43455192478"
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43455192478",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43459603986",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43241168321"
       ],
       "blocker": null,
-      "reason": "13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open."
+      "reason": "13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open. Additional verified evidence 13 Nov: current-main grouped offline regressions passed in run 43459603986; #24 Drive restore receipt confirms 7,819 records restored and archive SHA/revision matched. Offline M3U/archive tests do not prove a real 1000/2000 package or IBO device playback; task remains open."
     },
     {
       "id": 31,
@@ -456,10 +466,12 @@
       "evidence_urls": [
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43454977935",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43454976797",
-        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43455192478"
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43455192478",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43459603986",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43241168321"
       ],
       "blocker": null,
-      "reason": "13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open."
+      "reason": "13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open. Additional verified evidence 13 Nov: current-main grouped offline regressions passed in run 43459603986; #24 Drive restore receipt confirms 7,819 records restored and archive SHA/revision matched. Offline M3U/archive tests do not prove a real 1000/2000 package or IBO device playback; task remains open."
     },
     {
       "id": 32,
@@ -468,10 +480,12 @@
       "evidence_urls": [
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43454977935",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43454976797",
-        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43455192478"
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43455192478",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43459603986",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43241168321"
       ],
       "blocker": null,
-      "reason": "13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open."
+      "reason": "13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open. Additional verified evidence 13 Nov: current-main grouped offline regressions passed in run 43459603986; #24 Drive restore receipt confirms 7,819 records restored and archive SHA/revision matched. Offline M3U/archive tests do not prove a real 1000/2000 package or IBO device playback; task remains open."
     },
     {
       "id": 33,
@@ -480,10 +494,12 @@
       "evidence_urls": [
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43454977935",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43454976797",
-        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43455192478"
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43455192478",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43459603986",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43241168321"
       ],
       "blocker": null,
-      "reason": "13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open."
+      "reason": "13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open. Additional verified evidence 13 Nov: current-main grouped offline regressions passed in run 43459603986; #24 Drive restore receipt confirms 7,819 records restored and archive SHA/revision matched. Offline M3U/archive tests do not prove a real 1000/2000 package or IBO device playback; task remains open."
     },
     {
       "id": 34,
@@ -497,10 +513,13 @@
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43455192478",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43455836114",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43457308527",
-        "https://github.com/Madsc55/MADSC55-TV-V2/pull/86"
+        "https://github.com/Madsc55/MADSC55-TV-V2/pull/86",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43458069505",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43459603986",
+        "https://github.com/Madsc55/MADSC55-TV-V2/pull/128"
       ],
-      "blocker": "Prior live Actions run 43319831631: GitHub API ok (20 candidates), GitLab API ok (0 candidates), Codeberg API returned HTTPError. Current-main live contract has not yet been rerun; #34 live acceptance and subsequent AV/archive evidence remain open.",
-      "reason": "The grouped offline system verification passed. #34 source discovery is running on the exact tested source tree. Fresh AV, encryption and final acceptance remain open. 13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open. 13 Nov 2026: inspected prior live job logs; Codeberg failed at HTTP layer, not candidate parser. Current code reports HTTP status/provider/host and retries transient statuses; 403 is fail-closed. No live rerun or channel scan performed. Codeberg blocker diagnosis and offline-only follow-up recorded in PR #79; run 43455836114 passed offline gate, not live API. PR #86 merged; six configured discovery terms are now included in live-contract test matrix and offline tests passed in run 43457308527. This is not live API acceptance; #34 remains open."
+      "blocker": "Current live contract: GitHub 6/6 configured queries returned valid responses (raw hits 11,20,20,20,12,19 = 102; not deduplicated); GitLab 6/6 returned valid empty lists; Codeberg first query returned HTTP 429 after 3 bounded attempts, so the circuit breaker skipped the remaining 5 queries. A 30/60-second cooldown did not clear the provider throttle. #34 live Codeberg acceptance remains open.",
+      "reason": "The grouped offline system verification passed. #34 source discovery is running on the exact tested source tree. Fresh AV, encryption and final acceptance remain open. 13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open. 13 Nov 2026: inspected prior live job logs; Codeberg failed at HTTP layer, not candidate parser. Current code reports HTTP status/provider/host and retries transient statuses; 403 is fail-closed. No live rerun or channel scan performed. Codeberg blocker diagnosis and offline-only follow-up recorded in PR #79; run 43455836114 passed offline gate, not live API. PR #86 merged; six configured discovery terms are now included in live-contract test matrix and offline tests passed in run 43457308527. This is not live API acceptance; #34 remains open. 13 Nov: live run 43458069505 established GitHub/GitLab results and Codeberg 429; PR #128 added rate-limit reset handling and provider circuit breaker. Follow-up main run 43459603986: offline production gate PASS; live diagnostic still returned Codeberg HTTP_429 after 3 attempts and skipped 5 sibling queries, while GitHub 6/6 and GitLab 6/6 remained successful. No full channel scan or playlist writes performed. #34 remains open."
     }
   ],
   "allowed_statuses": [
