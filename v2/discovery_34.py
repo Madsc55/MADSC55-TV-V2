@@ -20,6 +20,10 @@ def identity(source, url):
         raise ValueError("Invalid public URL")
     if p.username or p.password:
         raise ValueError("Credential-bearing URL")
+    try:
+        port = p.port
+    except ValueError as exc:
+        raise ValueError("Invalid URL port") from exc
     host = p.hostname.lower().rstrip(".")
     if host == "localhost" or host.endswith((".localhost", ".local", ".internal")):
         raise ValueError("Private hostname")
