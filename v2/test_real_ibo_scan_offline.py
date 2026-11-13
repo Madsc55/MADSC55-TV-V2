@@ -110,6 +110,35 @@ class ScannerOfflineTests(unittest.TestCase):
                     mocked.assert_not_called()
         self.assertTrue(scanner.public_http_stream_url("http://example.org/live.m3u8"))
 
+    def test_main_dynamic_report_validation_runs_before_any_network(self):
+        """Exercise the production CLI intake, not just its helper, offline."""
+        import os
+        import sys
+        with tempfile.TemporaryDirectory() as tmp:
+            root = pathlib.Path(tmp)
+            archive = root / "v2/arsiv/yabanci_yedekler_2026-11-02_3964.m3u8"
+            archive.parent.mkdir(parents=True)
+            archive.write_bytes(b"offline-fixture")
+            live = root / "protected.m3u8"
+            live.write_text("#EXTM3U\\n#EXTINF:-1,Protected\\nhttps://example.org/main.m3u8\\n")
+            sources = root / "sources.json"
+            sources.write_text(json.dumps({"sources": []}))
+            dynamic = root / "dynamic.json"
+            dynamic.write_text(json.dumps({"sources": {}}))
+            records = [{"url": f"https://example.org/historical/{i}"} for i in range(3964)]
+            argv = ["real_ibo_scan.py", "--live", str(live),
+                    "--sources", str(sources), "--dynamic-sources", str(dynamic)]
+            with (patch.object(scanner, "ROOT", root),
+                  patch.object(scanner, "parse_m3u", return_value=iter(records)),
+                  patch.object(scanner, "fetch") as fetch,
+                  patch.object(sys, "argv", argv),
+                  patch.dict(os.environ, {"V2_ARCHIVE_PASSPHRASE": "offline-only-secret-12345"}),
+                  patch("sys.stderr", new_callable=io.StringIO)):
+                with self.assertRaises(SystemExit) as failure:
+                    scanner.main()
+                self.assertEqual(failure.exception.code, 2)
+                fetch.assert_not_called()
+
     def test_dynamic_source_report_rejects_invalid_root(self):
         for value in (None, [], {"sources": {}}, {"sources": None}):
             with self.assertRaises(ValueError):
