@@ -1,3 +1,12 @@
+## 13 Kasım 2026 — Son doğrulanan Stage 2/3 ve Stage 6 entegrasyonları
+- PR #69: Stage 2/3 kimlik, EPG ve bounded recovery entegrasyonu main'e alındı; merge commit `4413ed804163e31c6f6b4fe8f629cc6975afc7a9`. Main üzerindeki grouped offline Production Security Gate başarılıydı.
+- PR #99: Stage 6 M3U paket kabulü, SHA-256 paket/arşiv eşlemesi, authenticated encrypted archive backup/restore ve no-clobber regresyonları main'e alındı; merge commit `637537812044f2923edee28c154a15e86d761450`. Production Security Gate run `43457835857` SUCCESS; main merge sonrası run `43457995256` SUCCESS.
+- PR #119: Codeberg 429 yanıtında Retry-After başlığı yoksa 30/60 saniyelik bounded backoff (en fazla üç deneme, 60 saniye üst sınır) eklendi; merge commit `88647529697f2153ae6c4c5ee6652ef3290ded87`. Offline Production Security Gate run `43458782365` SUCCESS. Bu yalnızca retry davranışını doğrular; Codeberg canlı arama kabulü değildir.
+- Main canlı diagnostic run `43458069505`: GitHub ve GitLab altı sorguda da HTTP/API sözleşmesi açısından başarılı; GitLab sorguları 0 aday döndürdü. Codeberg altı sorgunun tamamında HTTP 429 (3 deneme/sorgu, Retry-After header yok) verdi; Codeberg başarısız ve #34 açık kaldı.
+- Bir sonraki canlı tanı koşusu main commit mesajında `#34 live probe` ifadesiyle tetiklenecek; yeni backoff ile Codeberg'i yeniden kontrol edecek. Bu koşu kapsamlı kanal taraması değildir.
+- Görev defteri değişmedi: 21/34 completed, 13 in_progress. #15, #17–#21 ve #28–#34 için gerçek yayın/AV, harici restore, gerçek paket ve cihaz kabul kanıtları gereken maddeler açık kalır.
+- Ana İBO, YEDEKLER, YENİLER ve FAVORİLER'e yazılmadı; geniş kapsamlı kanal taraması başlatılmadı.
+
 ## 13 Kasım 2026 — PR #106 güncel ana dal kabul testi başarılı
 - PR #106 (`integrate-stage6-28-33-current-main-20261113`) için Actions run `43457997079` completed / success.
 - Tüm adımlar SUCCESS: grouped safety regression tests; production trigger/write policy; original IBO category/backup invariants; historical task ledger; Stage 2 identity recovery metadata; Stage 6 offline package/archive regressions; Stage 2/3 offline identity, EPG and recovery; Discovery #34 offline adapter/integration acceptance.
