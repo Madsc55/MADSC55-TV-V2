@@ -1081,3 +1081,9 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - Aynı XMLTV channel ID birden fazla feed'de veya tek feed içinde birden fazla kez bildirilirse kanaldaki programlar eşleştirmeden çıkarılır. Bildirilmeyen program id'leri, XML DTD/ENTITY ve signed feed hata sorgu parametreleri reddedilir/redakte edilir. Yeni çevrimdışı regresyonlar PASS.
 - Aynı PR'da #28–30'un eski test fixture'ındaki eksik `decoded_av_verified` ve `decode_status` alanları güncellendi; üretim kanıt standardı düşürülmedi.
 - Gerçek EPG kaynak yayını taranmadı. 303 önceki EPG boşluğu ve bağımsız yayıncı kimliği kanıtı hâlâ açık. #19 completed yapılmadı. Ana İBO/YEDEKLER/YENİLER/FAVORİLER değişmedi.
+
+## 13 Kasım 2026 — #19 ve Stage 6 kabul düzeltmeleri (son Actions)
+- #19 EPG güvenliği: PR #172 merge `eb827b9c0bc4fe7eef507b8637ef37284be91dbd`; geçerli program aralığı/tekil XMLTV kimlik kanıtı ile ham EPG eşleşmesi ayrı raporlanır, DTD/ENTITY engellenir. PR Actions `43480892500`, main Actions `43481012343`: SUCCESS. 303 gerçek EPG açığı kaldı; #19 açık.
+- Stage 6/M3U: PR #194 merge `8dff642a1e3d3dbf6b4aa133b323fc7bdfdfb7b6`, Unicode C1/format ayırıcılarla sahte M3U satır enjeksiyonunu ve şifreli JSONL envanterde bozuk türlerin paketi çökertmesini engeller. PR Actions `43483502608` SUCCESS.
+- Ana dal run `43483992949` eşzamanlı yeni `decoded_av_verified + DECODED_AV` kabul kuralı nedeniyle geçersiz test fixture'ı üzerinden FAILED. Üretim kuralı gevşetilmeden PR #203 merge `70a6925566c37fdd7e31b85a3b7903790aacb1c0` ile test kanıtı düzeltildi; PR run `43484486032` ve main run `43484653370` SUCCESS.
+- Kaydedilmiş gerçek 4.301 URL'lik M3U paket parçaları ve yapısal SHA/EXTINF denetimi, bütün kanalların güncel ses+görüntü/kimlik ve IBO cihaz kabulü değildir. #28–#33 açık. Kapsamlı yeni tarama ve ana İBO, YEDEKLER, YENİLER, FAVORİLER üzerinde yazma yapılmadı.
