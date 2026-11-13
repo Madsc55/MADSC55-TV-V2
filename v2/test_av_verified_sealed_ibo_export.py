@@ -80,7 +80,7 @@ class SeparatePrivateExport(unittest.TestCase):
         content,summary=select(report,rows)
         self.assertEqual(summary["verified_entries"],0)
         self.assertEqual(summary["status"],"NO_VERIFIED_STREAM_TO_EXPORT")
-        self.assertEqual(content,"#EXTM3U\\n")
+        self.assertEqual(content,"#EXTM3U\n")
         self.assertFalse(summary["protected_main_playlist_modified"])
 
     def test_cannot_target_main_or_existing_file(self):
