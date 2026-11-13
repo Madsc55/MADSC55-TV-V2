@@ -14,7 +14,8 @@ class BatchTests(unittest.TestCase):
             rows = []
             for i in range(2005):
                 rows.append({'url': f'https://example.invalid/stream/{i}', 'name': f'Channel {i}',
-                             'group': 'TR', 'http_hls_status': 'AV_VERIFIED'})
+                             'group': 'TR', 'http_hls_status': 'AV_VERIFIED',
+                             'decoded_av_verified': True, 'decode_status': 'DECODED_AV'})
             rows.append({'url': 'https://example.invalid/failed', 'name': 'Failed',
                          'http_hls_status': 'UNVERIFIED_OR_FAILED'})
             rows.append(dict(rows[0]))
@@ -37,7 +38,8 @@ class BatchTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             row = {'url': 'https://example.invalid/stream/1', 'name': 'One',
-                   'group': 'TR', 'http_hls_status': 'AV_VERIFIED'}
+                   'group': 'TR', 'http_hls_status': 'AV_VERIFIED',
+                             'decoded_av_verified': True, 'decode_status': 'DECODED_AV'}
             archive = root / 'inventory.enc'
             archive.write_bytes(encrypt((json.dumps(row)+'\n').encode(), SECRET))
             output = root / 'out'
@@ -59,7 +61,8 @@ class BatchTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             rows = [{'url': f'https://example.invalid/stream/{i}', 'name': str(i),
-                     'group': 'TR', 'http_hls_status': 'AV_VERIFIED'}
+                     'group': 'TR', 'http_hls_status': 'AV_VERIFIED',
+                             'decoded_av_verified': True, 'decode_status': 'DECODED_AV'}
                     for i in range(2)]
             archive = root / 'inventory.enc'
             archive.write_bytes(encrypt(('\n'.join(json.dumps(x) for x in rows)+'\n').encode(), SECRET))
@@ -78,11 +81,35 @@ class BatchTests(unittest.TestCase):
                 with self.subTest(size=size), self.assertRaises(ValueError):
                     export(archive, SECRET, output, sizes=(size,))
 
+    def test_legacy_metadata_only_av_record_cannot_be_reexported(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            # The old scanner marked codec headers as AV_VERIFIED without decoding.
+            rows = [
+                {"url": "https://example.invalid/legacy", "name": "Legacy",
+                 "http_hls_status": "AV_VERIFIED"},
+                {"url": "https://example.invalid/string-flag", "name": "Spoof",
+                 "http_hls_status": "AV_VERIFIED",
+                 "decoded_av_verified": "true", "decode_status": "DECODED_AV"},
+                {"url": "https://example.invalid/no-decode", "name": "Not decoded",
+                 "http_hls_status": "AV_VERIFIED",
+                 "decoded_av_verified": True, "decode_status": "NOT_DECODED_THIS_RUN"},
+            ]
+            encrypted = root / "historical.enc"
+            encrypted.write_bytes(encrypt(
+                ("\\n".join(json.dumps(row) for row in rows) + "\\n").encode(), SECRET))
+            output = root / "packages"
+            result = export(encrypted, SECRET, output, sizes=(1000,))
+            self.assertEqual(result["av_verified_unique"], 0)
+            self.assertEqual(result["packages"], [])
+            self.assertFalse(list(output.glob("*.m3u8")))
+
     def test_symlink_output_directory_rejected(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             row = {'url': 'https://example.invalid/stream/1', 'name': 'One',
-                   'group': 'TR', 'http_hls_status': 'AV_VERIFIED'}
+                   'group': 'TR', 'http_hls_status': 'AV_VERIFIED',
+                             'decoded_av_verified': True, 'decode_status': 'DECODED_AV'}
             archive = root / 'inventory.enc'
             archive.write_bytes(encrypt((json.dumps(row)+'\n').encode(), SECRET))
             protected = root / 'protected'
@@ -107,9 +134,11 @@ class BatchTests(unittest.TestCase):
                 "https://example.invalid/live path",
             )
             records = [{'url': url, 'name': 'Bad', 'group': 'TR',
-                        'http_hls_status': 'AV_VERIFIED'} for url in bad_urls]
+                        'http_hls_status': 'AV_VERIFIED',
+                             'decoded_av_verified': True, 'decode_status': 'DECODED_AV'} for url in bad_urls]
             records.append({'url': 'https://example.invalid/good', 'name': 'Good',
-                            'group': 'TR', 'http_hls_status': 'AV_VERIFIED'})
+                            'group': 'TR', 'http_hls_status': 'AV_VERIFIED',
+                             'decoded_av_verified': True, 'decode_status': 'DECODED_AV'})
             for bad in bad_urls:
                 self.assertFalse(valid_stream_url(bad))
                 with self.assertRaises(ValueError):
