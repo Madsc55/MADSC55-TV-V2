@@ -1,6 +1,10 @@
 name: V2 Offline Inventory Integrity
 on:
   workflow_dispatch:
+  pull_request:
+    paths:
+      - 'v2/**'
+      - '.github/workflows/v2-offline-inventory.yml'
 permissions:
   contents: read
 jobs:
