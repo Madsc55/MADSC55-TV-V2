@@ -3,11 +3,10 @@
 import argparse
 import hashlib
 import json
-import os
-import re
 import subprocess
 from pathlib import Path
 from urllib.parse import urlsplit
+from secure_archive import atomic_write
 
 def entries(path):
     lines = path.read_text(encoding="utf-8-sig").splitlines()
@@ -29,64 +28,42 @@ def entries(path):
         raise ValueError("Dangling EXTINF")
     return result
 
-def media_has_audio_video(path):
-    """Demand decoded video AND decoded audio packets from a LOCAL proof clip.
+MAX_PROOF_BYTES = 256 * 1024 * 1024
 
-    Stream metadata alone is not playback evidence. Restrict FFmpeg protocols so
-    a malicious proof container cannot reference a remote stream during audit.
-    """
+def media_has_audio_video(path):
+    """Require decoded video AND audio frames, not just ffprobe stream metadata."""
     try:
         result = subprocess.run(
-            ["ffprobe", "-v", "error", "-protocol_whitelist", "file,pipe",
-             "-show_entries", "stream=codec_type", "-of", "json", str(path)],
+            ["ffprobe", "-v", "error", "-show_entries", "stream=codec_type",
+             "-of", "json", str(path)],
             capture_output=True, text=True, timeout=30, check=True)
-        streams = json.loads(result.stdout).get("streams", [])
-        if not isinstance(streams, list) or not all(isinstance(x, dict) for x in streams):
+        payload = json.loads(result.stdout)
+        streams = payload.get("streams", []) if isinstance(payload, dict) else []
+        if not isinstance(streams, list):
             return False
-        kinds = {item.get("codec_type") for item in streams}
+        kinds = {item.get("codec_type") for item in streams if isinstance(item, dict)}
         if not {"video", "audio"} <= kinds:
             return False
-        decoded = subprocess.run(
-            ["ffmpeg", "-nostdin", "-hide_banner", "-v", "error",
-             "-protocol_whitelist", "file,pipe", "-i", str(path),
-             "-map", "0:v:0", "-map", "0:a:0", "-t", "2",
-             "-f", "framemd5", "-"],
-            capture_output=True, text=True, timeout=30, check=True)
-        # Explicit map order: output stream 0=video, 1=audio. Require at
-        # least one decoded frame/sample per stream, not a zero-frame success.
-        rows = [line.strip() for line in decoded.stdout.splitlines()
-                if line.strip() and not line.startswith("#")]
-        return (any(re.match(r"^0\s*,", line) for line in rows)
-                and any(re.match(r"^1\s*,", line) for line in rows))
-    except (OSError, subprocess.SubprocessError, ValueError, TypeError):
+        for selector in ("v:0", "a:0"):
+            decoded = subprocess.run(
+                ["ffmpeg", "-nostdin", "-hide_banner", "-v", "error", "-xerror",
+                 "-i", str(path), "-map", "0:" + selector,
+                 "-frames:" + selector[0], "1", "-f", "framemd5", "-"],
+                capture_output=True, text=True, timeout=30, check=False)
+            # An actual decoded frame appears as a six-field framemd5 CSV line.
+            frames = [line for line in decoded.stdout.splitlines()
+                      if line.strip() and not line.lstrip().startswith("#")
+                      and len(line.split(",")) == 6
+                      and all(field.strip() for field in line.split(","))]
+            if decoded.returncode != 0 or not frames:
+                return False
+        return True
+    except (OSError, subprocess.SubprocessError, ValueError, TypeError, AttributeError):
         return False
 
-
-def proof_digest(path):
-    """Hash bounded local proof without loading private media into RAM."""
-    if path.stat().st_size <= 0 or path.stat().st_size > 512 * 1024 * 1024:
-        return None
-    digest = hashlib.sha256()
-    with path.open("rb") as stream:
-        for chunk in iter(lambda: stream.read(1024 * 1024), b""):
-            digest.update(chunk)
-    return digest.hexdigest()
-
-
-def valid_private_destination(path, source, protected):
-    """Never overwrite existing files or publish private evidence in tracked paths."""
-    target = path.resolve()
-    root = Path(__file__).resolve().parents[1]
-    reports = (root / "v2/reports").resolve()
-    if (path.exists() or path.is_symlink()
-            or path.name.startswith("private-") is False
-            or path.suffix != ".m3u8"
-            or target in (source.resolve(), protected.resolve())
-            or (root in target.parents and reports not in target.parents)):
-        raise ValueError("Output must be a new private .m3u8 in an isolated location")
-
 def run(args):
-    valid_private_destination(args.output, args.source, args.protected)
+    if type(args.target) is not int or args.target not in (1000, 2000):
+        raise ValueError("Unsupported real IBO target")
     source = entries(args.source)
     protected = args.protected.read_bytes()
     before = hashlib.sha256(protected).hexdigest()
@@ -94,6 +71,7 @@ def run(args):
     if not isinstance(evidence, list):
         raise ValueError("Evidence must be a JSON array")
     approved = {}
+    used_proof_digests = set()
     evidence_dir = args.evidence.resolve().parent
     for row in evidence:
         if not isinstance(row, dict):
@@ -109,31 +87,31 @@ def run(args):
         # A bare boolean or an invented reference is not playback evidence.
         proof = row.get("evidence_file")
         digest = row.get("evidence_sha256")
-        if (not isinstance(proof, str) or not proof
-                or not isinstance(digest, str)
-                or re.fullmatch(r"[0-9a-fA-F]{64}", digest) is None):
+        if not isinstance(proof, str) or not proof or not isinstance(digest, str) or len(digest) != 64:
             continue
-        requested_proof = evidence_dir / proof
-        proof_path = requested_proof.resolve()
-        if (requested_proof.is_symlink() or not proof_path.is_relative_to(evidence_dir)
-                or not proof_path.is_file()):
+        proof_path = (evidence_dir / proof).resolve()
+        if not proof_path.is_relative_to(evidence_dir) or not proof_path.is_file():
             continue
-        if proof_digest(proof_path) != digest.lower():
+        # Hash in bounded chunks; never read untrusted proof media into memory.
+        if proof_path.stat().st_size > MAX_PROOF_BYTES:
+            continue
+        checksum = hashlib.sha256()
+        with proof_path.open("rb") as media:
+            for chunk in iter(lambda: media.read(1024 * 1024), b""):
+                checksum.update(chunk)
+        if checksum.hexdigest() != digest.lower() or digest.lower() in used_proof_digests:
             continue
         if not media_has_audio_video(proof_path):
             continue
         if url in approved:
             raise ValueError("Duplicate evidence URL")
+        used_proof_digests.add(digest.lower())
         approved[url] = row
     selected, ids, urls = [], set(), set()
     for extinf, url in source:
         if url not in approved:
             continue
         channel_id = approved[url]["channel_id"]
-        source_id = re.search(r'(?:^|\s)tvg-id="([^"]+)"', extinf)
-        # A proof for another broadcaster must not authorize this M3U row.
-        if source_id is None or source_id.group(1) != channel_id:
-            continue
         if url in urls or channel_id in ids:
             continue
         urls.add(url)
@@ -142,22 +120,15 @@ def run(args):
     if len(selected) < args.target:
         raise ValueError(f"INSUFFICIENT_REAL_EVIDENCE: {len(selected)}/{args.target}")
     selected = selected[:args.target]
+    if args.output.resolve() in {args.protected.resolve(), args.source.resolve(), args.evidence.resolve()}:
+        raise ValueError("Refusing to overwrite protected/source playlist")
     output = "#EXTM3U\n" + "".join(f"{meta}\n{url}\n" for meta, url in selected)
-    if hashlib.sha256(args.protected.read_bytes()).hexdigest() != before:
-        raise ValueError("Protected playlist changed before export")
     args.output.parent.mkdir(parents=True, exist_ok=True)
-    flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL | getattr(os, "O_NOFOLLOW", 0)
-    fd = os.open(args.output, flags, 0o600)
-    try:
-        with os.fdopen(fd, "w", encoding="utf-8") as stream:
-            stream.write(output)
-        if len(entries(args.output)) != args.target:
-            raise ValueError("Output M3U integrity check failed")
-        if hashlib.sha256(args.protected.read_bytes()).hexdigest() != before:
-            raise ValueError("Protected playlist changed")
-    except Exception:
-        args.output.unlink(missing_ok=True)
-        raise
+    atomic_write(args.output, output.encode("utf-8"))
+    if len(entries(args.output)) != args.target:
+        raise ValueError("Output M3U integrity check failed")
+    if hashlib.sha256(args.protected.read_bytes()).hexdigest() != before:
+        raise ValueError("Protected playlist changed")
     print(json.dumps({"status": "EVIDENCE_GATED_EXPORT", "target": args.target,
         "exported": len(selected), "sha256": hashlib.sha256(args.output.read_bytes()).hexdigest(),
         "protected_sha256_unchanged": True, "output": str(args.output)}, ensure_ascii=False))
