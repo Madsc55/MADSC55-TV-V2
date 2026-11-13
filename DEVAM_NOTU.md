@@ -1,3 +1,8 @@
+## 13 Kasım 2026 — #34 ikinci CI regresyonu düzeltmesi
+- İlk düzeltme sonrası Actions #43452139209, commit `0b63e2efb`: 39 Stage 7 testi içinde 3 fail. Test sözleşmesi, tamamen bozuk sağlayıcı listelerinin fail-closed olmasını da gerektiriyor.
+- `v2/discovery_34_integrate.py` şimdi karma listelerde bozuk satırları atlayıp geçerlileri tutar; liste dolu ama hiçbir geçerli nesne yoksa ValueError ile fail-closed kalır. Commit `9b0d5ac85af31545abe1db6f0ecd22ccea2e94bb`.
+- Güncel Stage 6 grouped offline Actions #43452246381 kuyruğa alındı. Sonuç bekleniyor; #34 açık, canlı sağlayıcı sözleşmesi ve yeni yayın AV kanıtı olmadan kabul yok.
+
 ## 13 Kasım 2026 — #34 offline kabul hataları düzeltildi, CI sonucu bekleniyor
 - PR #22 Actions #43451138767, commit `1da42f1f9`, Stage 7 testlerinde 8 assertion + 3 error ile başarısız oldu. Kök nedenler: entegrasyon normalizer'ı tek bozuk satırda tüm kaynağı reddediyordu (test sözleşmesi bozuk satırı atlayıp geçerli satırı tutmak); kontrol karakteri testleri gerçek newline/CR/NUL/DEL yerine çift kaçışlı literal backslash dizileri gönderiyordu.
 - `v2/discovery_34_integrate.py` düzeltildi: official/YouTube/M3U listelerinde dict olmayan bozuk satırlar atlanır, geçerli kayıtlar korunur; üst seviye rapor yapısı/list tipi bozuksa fail-closed ValueError sürer. Commit `6c8d9fea5c8b1405b231891883bc55fd91dac4a7`.
