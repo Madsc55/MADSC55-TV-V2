@@ -2548,3 +2548,11 @@ Kullanıcının açık talimatıyla #3, #4 ve #6 tarihî kurtarma görevleri art
 - Commit 726258388e013bf558beecfe40722eb401a4f732 ile `.github/workflows/v2-current-scanner-offline-gate.yml` test döngüsüne `advisory_channel_identity_bridge` eklendi. Commit diff'i yalnızca bu test listesindeki eklemeyi içeriyor.
 - Workflow dosyası ve test dosyası geliştirme dalında tekrar okundu; test adı ve dosya eşleşmesi doğrulandı. Bu commit için Actions koşusu henüz doğrulanmadı; dolayısıyla regresyon kabulü ve #34 kapanışı beklemede.
 - #34 için yeni canlı keşif veya eski yayın taraması tetiklenmedi. Ana İBO, YEDEKLER, YENİLER ve FAVORİLER değiştirilmedi.
+
+
+## 13 Kasım 2026 — Stage 6 tetikleyici denetimi düzeltmesi
+
+- Commit `fc0b3f8acdb7cee17b1b861df79afc95b552cb69`: `v2/actions_trigger_protection_audit.py` içindeki Stage 6 denetim koşulu gerçek workflow ile hizalandı.
+- Gerçek workflow yalnızca `workflow_dispatch` ve `approve_live_discovery=true` ile çalışacak şekilde korunuyor. Denetleyicinin eski beklentisi ayrıca push tetikleyicisi aradığı için güvenlik kapısı hatalı olarak `STAGE6_DISCOVERY_REQUIRES_EXPLICIT_REQUEST` veriyordu. Push tetikleyicisi eklenmedi; denetim doğru manuel-onay koşulunu bekleyecek şekilde düzeltildi.
+- Önceki koşuda 25 task-engine testi başarılıydı; Actions trigger protection audit bu yanlış beklenti nedeniyle başarısız oldu. Master offline suite ayrıca forge/Gist erişim hataları ve sıfır yeni aday sonucu raporladı; bu durum canlı keşif kabulü değildir.
+- Bu commit için yeni Actions sonucu bekleniyor. #34 ve ilgili görevler yeni kabul kanıtı oluşana kadar açık kalır. Ana İBO ve korunan listeler değiştirilmedi; yeni canlı tarama başlatılmadı.
