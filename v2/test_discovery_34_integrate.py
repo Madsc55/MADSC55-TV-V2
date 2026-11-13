@@ -23,6 +23,11 @@ class IntegrationTests(unittest.TestCase):
             self.assertEqual(len(result["candidates"]), 3)
             self.assertEqual(result["verified_av"], 0)
             self.assertEqual(result["errors"], [])
+    def test_missing_required_report_arrays_are_errors(self):
+        for source in ("official", "youtube", "m3u"):
+            with self.subTest(source=source), self.assertRaises(ValueError):
+                normalize(source, {})
+
     def test_missing_report_is_reported(self):
         result = integrate({"youtube": Path("/nonexistent/discovery34.json")})
         self.assertEqual(len(result["errors"]), 1)
