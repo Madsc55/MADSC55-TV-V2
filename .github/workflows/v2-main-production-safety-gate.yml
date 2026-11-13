@@ -58,6 +58,14 @@ jobs:
           PYTHONPATH=v2 python -m unittest -v test_official_sites_discovery test_direct_stream_resolver test_youtube_discovery
           python -m py_compile v2/official_sites_discovery.py v2/direct_stream_resolver.py v2/test_official_sites_discovery.py v2/test_direct_stream_resolver.py v2/youtube_discovery.py v2/test_youtube_discovery.py
           python -m py_compile v2/identity_metadata.py v2/recovery_queue.py v2/stage2_integration.py v2/stage3_identity_recovery.py v2/stage3_metadata_acceptance.py v2/stage3_recovery_queue.py v2/real_ibo_scan.py v2/discover.py v2/consolidate_inventory.py
+      - name: Ensure FFmpeg is available for real local decoded-media regression
+        run: |
+          if ! command -v ffmpeg >/dev/null || ! command -v ffprobe >/dev/null; then
+            sudo apt-get update -qq
+            sudo apt-get install -y --no-install-recommends ffmpeg
+          fi
+          command -v ffprobe
+          command -v ffmpeg
       - name: Stage 5 evidence-gated export and final acceptance regressions
         run: |
           python -m py_compile v2/stage5_acceptance_gate.py v2/stage5_evidence_export.py v2/test_stage5_acceptance_gate.py v2/test_stage5_evidence_export.py
