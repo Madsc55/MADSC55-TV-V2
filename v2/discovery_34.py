@@ -146,8 +146,11 @@ def main():
                     errors.append({"source": source, "query": query, "error": type(exc).__name__})
     unique = {item["source_id"]: item for item in candidates}
     output = Path(args.output)
+    if output.exists():
+        parser.error("refusing to overwrite existing discovery report")
     output.parent.mkdir(parents=True, exist_ok=True)
-    output.write_text(json.dumps({"mode": "network" if args.network else "offline", "candidates": list(unique.values()), "errors": errors, "av_verified": 0}, indent=2) + "\n", encoding="utf-8")
+    with output.open("x", encoding="utf-8") as report:
+        report.write(json.dumps({"mode": "network" if args.network else "offline", "candidates": list(unique.values()), "errors": errors, "av_verified": 0}, indent=2) + "\n")
     print("Candidate identities:", len(unique), "Errors:", len(errors))
 
 if __name__ == "__main__":
