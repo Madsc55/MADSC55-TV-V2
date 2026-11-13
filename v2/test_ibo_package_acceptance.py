@@ -53,6 +53,12 @@ class PackageTests(unittest.TestCase):
             with self.subTest(text=text), self.assertRaises(ValueError):
                 parse(text)
 
+    def test_accepts_utf8_bom_only_at_start(self):
+        playlist = "\ufeff#EXTM3U\n#EXTINF:-1,Name\nhttps://example.org/live.m3u8\n"
+        self.assertEqual(len(parse(playlist)), 1)
+        with self.assertRaises(ValueError):
+            parse("#EXTM3U\n\ufeff#EXTM3U\n")
+
     def test_rejects_nested_m3u_headers(self):
         for body in ("#EXTM3U\n", "#EXTINF:-1,Name\n#EXTM3U\nhttps://example.org/live\n"):
             with self.subTest(body=body), self.assertRaises(ValueError):
