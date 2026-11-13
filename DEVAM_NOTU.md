@@ -1,3 +1,9 @@
+## 13 Kasım 2026 — #34 yönlendirme öncesi ağ güvenliği düzeltmesi (CI bekliyor)
+- Commit 11176e51: discovery_34.fetch_json artık HTTP yönlendirmesini ikinci ağa çıkmadan reddeden _NoRedirect kullanıyor. Önceki yalnızca son URL'yi denetleyen kontrol korunuyor.
+- Commit 4324b674 ve da843902: yönlendirmeyi engelleme ve fetch_json için engelleyici opener kullanımı offline regresyon testleri eklendi/düzeltildi.
+- PR #22 açık. Bu yeni commitlerin Actions sonucu henüz doğrulanmadı; #34 canlı Codeberg kabulü ve nihai kapanışı açık.
+- Ana İBO/YEDEKLER/YENİLER/FAVORİLER değiştirilmedi; kapsamlı tarama başlatılmadı.
+
 ## 13 Kasım 2026 — #34 yeni PR güvenlik kabulü PASS
 - PR #22 (stage7-34-discovery-adapters-20261112 → main) incelemeye hazır; birleştirilmedi.
 - Commit 0812af12d78e83c2088a39752ce8fe9c15dd6122 için V2 Main Production Security Gate Actions run 43441093990 **SUCCESS**. Grouped safety regression, üretim tetikleyici/yazma güvenliği, korunan İBO invariantları ve Discovery 34 offline adapter/integration adımı PASS.
