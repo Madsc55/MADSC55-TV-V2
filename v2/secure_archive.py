@@ -31,7 +31,7 @@ def encrypt(data, passphrase):
 
 def decrypt(blob, passphrase):
     minimum = len(MAGIC) + 16 + 12 + 16
-    if len(blob) < minimum or not blob.startswith(MAGIC):
+    if len(blob) < minimum or len(blob) > MAX_INPUT + minimum or not blob.startswith(MAGIC):
         raise ValueError('Invalid encrypted archive format')
     offset = len(MAGIC)
     salt = blob[offset:offset + 16]
@@ -81,6 +81,8 @@ def restore(source, destination, passphrase):
     source, destination = Path(source), Path(destination)
     if source.resolve() == destination.resolve():
         raise ValueError('Source and destination must differ')
+    if source.stat().st_size > MAX_INPUT + len(MAGIC) + 16 + 12 + 16:
+        raise ValueError('Encrypted archive exceeds maximum size')
     raw = decrypt(source.read_bytes(), passphrase)
     atomic_write(destination, raw)
     return hashlib.sha256(Path(destination).read_bytes()).hexdigest()
