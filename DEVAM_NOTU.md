@@ -823,3 +823,11 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - Ancak bundan sonra nihai geniş AV doğrulaması, şifreli arşiv/geri yükleme ve 2000'lik gerçek İBO test paketleri üretilir. Mevcut ara tarama kanıtları ve doğrulanmış adaylar kaybedilmez.
 - Koruma: yalnızca MADSC55-TV-V2; ana MADSC55_TV_IBO_CALISANLAR_TEST.m3u8, YEDEKLER, YENİLER, FAVORİLER ve cihaz favorileri değiştirilmez. YEDEKLER ilk iki sıra TRT 1 1440P QHD ve DHA CANLI 720P HD korunur. PR #9 izinsiz birleştirilmez. İBO Player cihaz testlerini kullanıcı yapar.
 - 2026-11-01 başarılı önceki ara tarama: 12.148 yeni URL adayı, 4.098 ffprobe AV doğrulanmış aday, 3 adet 2000 sınırına göre M3U parçası; bu sonuçlar nihai kapsam kanıtı değildir.
+
+
+## 2026-11-13 — Zorunlu düzeltme: nihai taramadan önce entegrasyon kabulü
+- Kullanıcı teyidi: #34 kaynak adaptörleri, dünya kapsamı, resmî yayıncılar, YouTube Live, M3U/M3U8, logo ve EPG eşleştirmesi tam bağlanıp kabul edilmeden yeni tarama **nihai/toplu dünya taraması** olarak sunulmayacak.
+- 2026-11-13 run 43412576224: 13.735 yeni URL adayı, 4.301 FFmpeg AV doğrulanmış URL, 88 başarılı kaynak; bu **ARA TARAMA** kanıtıdır, benzersiz kanal veya dünya çapında eksiksiz kapsam kanıtı değildir.
+- PR #19 merge 6cd8dbc: GitHub/GitLab/Codeberg/official/YouTube/M3U aday keşfi workflow'a eklendi; metadata adayları AV kanıtı değildir. GitLab/Codeberg/official/YouTube çıktıları henüz gerçek FFmpeg taramasına tümüyle aktarılmadı.
+- Kabul için kalanlar: dünya kaynaklarının akış URL'lerine çözülmesi ve FFmpeg'e verilmesi; kaynak başına başarı/hata ve ülke kapsam raporu; YouTube canlı metadata ile oynatılabilir yayın ayrımı; kanal kimliği/logo/EPG eşleştirme kanıtı; zorunlu entegrasyon testleri; en son tam tarama, şifreli yedek/geri yükleme, gerçek İBO test paketleri.
+- Hiçbir ara test tamamlanmış nihai kabul sayılmayacak. Ana İBO listesi, YEDEKLER/YENİLER/FAVORİLER korunacak.
