@@ -24,6 +24,17 @@ def main():
         recovered = root / "restored.jsonl"
         assert restore(encrypted, recovered, secret) == hashlib.sha256(payload).hexdigest()
         assert recovered.read_bytes() == payload
+        # Existing destinations must never be replaced by backup or restore.
+        for operation, source in ((backup, original), (restore, encrypted)):
+            protected = root / ("protected-backup.enc" if operation is backup else "protected-restore.jsonl")
+            protected.write_bytes(b"DO_NOT_OVERWRITE")
+            try:
+                operation(source, protected, secret)
+            except FileExistsError:
+                pass
+            else:
+                raise AssertionError("Existing archive destination was overwritten")
+            assert protected.read_bytes() == b"DO_NOT_OVERWRITE"
         # Reject malformed API input types before cryptographic processing.
         for value in ("text", bytearray(b"data"), None):
             for operation in (encrypt, decrypt):
