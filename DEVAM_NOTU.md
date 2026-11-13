@@ -1,3 +1,8 @@
+## 13 Kasım 2026 — #34 HTTP 408/404 regresyonları ana dala alındı
+- PR #50 squash merge edildi: 4845b13550306a016671fa524fcdbd0ec2ad59d7. Güncel main üzerinde HTTP 408 geçici yanıt kurtarma ve Codeberg HTTP 404'ün yeniden denenmemesi regresyonları eklendi.
+- PR commit 3b881ca için GitHub Actions 43450854780 SUCCESS: üretim güvenlik kapısı, korunan İBO invariantları, Stage 6 çevrimdışı paket/arşiv regresyonları ve #34 offline adapter/entegrasyon kabulü PASS.
+- Bu CI sonucu canlı Codeberg API kabulü değildir. Eski Codeberg canlı testi HTTPError ile başarısız kalmıştır; #34 açık. Yeni toplu kanal taraması yapılmadı, ana İBO/YEDEKLER/YENİLER/FAVORİLER değiştirilmedi.
+
 ## 13 Kasım 2026 — #34 güncel main üzerinde API tanılama düzeltmesi
 - Güncel `main` tabanlı `fix-34-api-diagnostics-current-main-20261113` dalında HTTP 408/425 retry ve API host tanılaması (`584b476`) ile iki regresyon testi (`eaea679`) eklendi. Var olan yanıt şeması ve bağlantı kesintisi kontrolleri korundu.
 - CI ve canlı Codeberg API kabulü bekleniyor; #34 açık. Ana İBO ve YEDEKLER/YENİLER/FAVORİLER değişmedi; kanal taraması yapılmadı.
