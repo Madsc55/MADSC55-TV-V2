@@ -1,3 +1,10 @@
+## 13 Kasım 2026 — #28–#33 M3U iç başlık güvenlik kontrolü
+- 0ae1568c: ayrıştırıcı yalnızca ilk satırdaki #EXTM3U başlığını kabul edecek şekilde düzeltildi; dosya içindeki tekrar veya sahte başlık reddediliyor.
+- 7d4233d5: ikinci başlık için çevrimdışı regresyon testi ve satır sonu düzeltmesi kaydedildi.
+- 91651c25: manuel offline kabul iş akışına aynı ref için çakışmayan çalışma grubu eklendi; 85480344 ile checkout kimlik bilgisi kalıcılığı kapatıldı.
+- Son commit 7d4233d5 için GitHub Actions PR koşusu bulunamadı. Manuel workflow_dispatch kabulü, PR #23 çakışma çözümü, gerçek AV ve bağımsız harici geri yükleme halen açık. Bu kayıt PASS veya görev kapanışı değildir.
+- Yeni kanal taraması başlatılmadı; ana İBO, YEDEKLER, YENİLER ve FAVORİLER değiştirilmedi.
+
 ## 13 Kasım 2026 — #28/#29 IBO çıktı dosyası üzerine yazma koruması
 - e5352741: ibo_package_acceptance.py çıktı dosyasını exclusive create (open("x")) ile yazar; ön kontrol ile yazma arasındaki mevcut dosya overwrite yarışını engeller.
 - 4f2ff08e: CLI'nin önceden mevcut çıktı dosyasını değiştirmediğini doğrulayan çevrimdışı regresyon testi eklendi.
