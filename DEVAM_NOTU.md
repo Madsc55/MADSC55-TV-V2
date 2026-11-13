@@ -1,3 +1,9 @@
+## 13 Kasım 2026 — #34 PR #37 birleşimi ve doğrulanmış CI kanıtı
+- PR #37 squash merge `b981b139cfaae6a1a83b9d31db268f12cd60e636`: HTTP 408/425 retry, API host tanılaması ve iki regresyon testi `main` dalında.
+- PR baş commit `d2756c804a384a9f72e4aec2b7d19217cb381bf0` için GitHub Actions `43449222459` SUCCESS; güvenlik, İBO koruması, Stage 6 offline paket/arşiv ve #34 offline keşif PASS.
+- Canlı API sözleşmesi ve gerçek FFmpeg görüntü/ses kabulü bu çalışmayla kanıtlanmadı; #34 ve gerçek kanıt isteyen #28–#33 açık. Kapsamlı tarama ve korunan listelerde değişiklik yok.
+- `v2/tasks/state.json` istenen yolda 404; mevcut olmayan dosyada görev kapanışı yapılmadı.
+
 ## 13 Kasım 2026 — #34 güncel main üzerinde API tanılama düzeltmesi
 - Güncel `main` tabanlı `fix-34-api-diagnostics-current-main-20261113` dalında HTTP 408/425 retry ve API host tanılaması (`584b476`) ile iki regresyon testi (`eaea679`) eklendi. Var olan yanıt şeması ve bağlantı kesintisi kontrolleri korundu.
 - CI ve canlı Codeberg API kabulü bekleniyor; #34 açık. Ana İBO ve YEDEKLER/YENİLER/FAVORİLER değişmedi; kanal taraması yapılmadı.
