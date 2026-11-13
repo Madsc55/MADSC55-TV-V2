@@ -1,3 +1,9 @@
+## 13 Kasım 2026 — #31–#33 paket/arşiv SHA-256 zinciri
+- 05fd93ef: final_gate arşiv SHA-256 değerini kabul edilmiş IBO paketinin SHA-256 değeriyle eşleştirir; farklı paketin arşivi artık kabul edilmez.
+- 2d11ceeb: eşleşen sentetik test raporları güncellendi ve farklı paket arşivi için negatif regresyon eklendi.
+- GitHub Actions run 43444008561 yalnızca `Verify suspended publishers, no cron and immutable IBO` işinin SUCCESS olduğunu gösterir; bu yeni commitlerin tam test veya üretim kabulü değildir.
+- Bu değişikliklerin tam test ve Actions kabulü henüz doğrulanmadı. Gerçek yayın AV, bağımsız harici geri yükleme ve PR #23 çakışmaları açık. Korunan İBO listelerine dokunulmadı, yeni tarama yapılmadı.
+
 ## 13 Kasım 2026 — #31–#33 arşiv giriş tür doğrulaması
 - 1e4f6b3: audit_archive() yalnızca bytes girişlerini kabul eder; diğer türler ValueError ile reddedilir.
 - 40b1377: metin, bytearray, memoryview ve None için çevrimdışı regresyon testleri eklendi.
