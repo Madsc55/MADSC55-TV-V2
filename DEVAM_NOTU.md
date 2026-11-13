@@ -1,3 +1,9 @@
+## 13 Kasım 2026 — #28/#29 IBO paket API kanıt kapısı sıkılaştırıldı
+- 9d990394: ibo_package_acceptance.package() doğrudan API çağrılarında da yalnızca 1000/2000 hedefini ve sözlük türünde kanıt eşlemesini kabul eder. 0/negatif hedefle boş paket üretme yolu kapatıldı.
+- 17684105: geçersiz hedef ve kanıt türü regresyonları eklendi. PR #23 açık.
+- Bu commitler için GitHub Actions sonucu henüz alınmadı. Sentetik offline fixture gerçek kanal veya FFmpeg AV kanıtı sayılmaz. Gerçek paket, bağımsız arşiv geri yükleme ve cihaz kabulü açık.
+- Ana İBO ve korunan YEDEKLER/YENİLER/FAVORİLER değişmedi; kanal taraması başlatılmadı.
+
 ## 13 Kasım 2026 — #28–#33 şifreli arşiv boyut koruması
 - 3c27080f: decrypt() ve restore() şifreli dosya üst boyut sınırını uygular; restore() aşırı büyük dosyayı belleğe okumadan reddeder.
 - d928b151: şifreli blob ve restore için sınır aşımı regresyonları eklendi; başarısız geri yüklemenin çıktı üretmemesi sınanır.
