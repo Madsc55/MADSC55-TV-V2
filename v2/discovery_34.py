@@ -6,6 +6,7 @@ import json
 import os
 import re
 import urllib.parse
+import urllib.error
 import urllib.request
 from pathlib import Path
 
@@ -138,6 +139,11 @@ def main():
             for query in QUERIES:
                 try:
                     candidates.extend(repository_candidates(source, fetch_json(search_url(source, query))))
+                except urllib.error.HTTPError as exc:
+                    errors.append({"source": source, "query": query, "error": "HTTPError", "status": exc.code})
+                    # Do not repeatedly hit a provider after rate limiting or service outage.
+                    if exc.code in (429, 503):
+                        break
                 except (ValueError, OSError, KeyError, TypeError, json.JSONDecodeError) as exc:
                     errors.append({"source": source, "query": query, "error": type(exc).__name__})
     unique = {item["source_id"]: item for item in candidates}
