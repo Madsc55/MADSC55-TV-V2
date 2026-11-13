@@ -2582,3 +2582,11 @@ Kullanıcının açık talimatıyla #3, #4 ve #6 tarihî kurtarma görevleri art
 - #17 altyapısı denetlendi: `historical_inventory_guard.reconcile` bütün ham tarihî satırları korur, aday görünümünü tam URL SHA256 ile tekilleştirir, hash-only kayıtları URL adayı yapmaz ve eski AV bayraklarını yeni kanıt saymaz. AES-GCM arşiv round-trip testleri mevcut; Stage 3 manifesti 4.955/4.955 tarihî satır, 4.955 tekil aday ve roundtrip doğrulaması bildiriyor. Ancak #17'nin zorunlu #15 ve #16 bağımlılıkları kapanmadığı için görev kabulü yapılamaz.
 - #18 mevcut kanıtı: 171 stream hash; 168 kısa FFmpeg örneğinde görüntü+ses. #19: 29 XMLTV ID, 8 geçerli program zaman aralığı, 303 EPG boşluğu. #20: 167 URL hash için ölçülmüş video boyutu ve iki gerçek A/V örneği. Bunlar kısmi kanıttır; #15/#17 bağımlılıkları nedeniyle nihai kabul değildir.
 - #17/#18/#19/#20/#21 görev statüleri değiştirilmedi. Ana İBO, YEDEKLER, YENİLER, FAVORİLER ve tarihî baseline değişmedi. Yeni canlı tarama/probe başlatılmadı.
+
+
+## 13 Kasım 2026 — Görev bağımlılığı sicil düzeltmesi
+
+- Kanonik görev tanımlarına göre #16 `completed` durumundadır; #17'nin önkoşulları #15 ve #16'dır. #16 engel değildir; #15 tek açık görev bağımlılığıdır.
+- #15'in kendi bağımlılıkları #11, #14 ve #34'tür. #11 ve #14 tamamlanmış; #34 henüz son keşif/nihai iş olarak açık tutulmuştur. Bu nedenle #15'in nihai kabulü #34 sonrasına bağlıdır. Önceki notlarda #17 için #15 yanında #16'nın da açık bağımlılık olduğu izlenimi veren ifade düzeltilmiştir.
+- #17 arşiv kodu ve AES-GCM round-trip regresyonları hazır olsa da #15 tamamlanmadan görev kabulü yapılamaz. #18, #19 ve #20'nin mevcut ölçümleri kısmi kanıt olarak kalır.
+- Bu kayıt yalnızca görev bağımlılığı açıklamasıdır; `state.json` durumları ve korunan listeler değiştirilmedi. Yeni tarama yapılmadı.
