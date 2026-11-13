@@ -56,6 +56,11 @@ class PackageTests(unittest.TestCase):
         for text in ("#EXTM3U\n#EXTINF:-1,Name\n", "#EXTM3U\nhttps://x.org/a", "#EXTM3U\n#EXTINF:-1,Name\nfile:///tmp/x"):
             with self.assertRaises(ValueError):
                 parse(text)
+    def test_rejects_malformed_extinf_directives(self):
+        for directive in ("#EXTINF-1,Name", "#EXTINF ,Name", "#EXTINF"):
+            with self.subTest(directive=directive), self.assertRaises(ValueError):
+                parse("#EXTM3U\\n" + directive + "\\nhttps://example.org/live.m3u8\\n")
+
     def test_rejects_spoofed_m3u_header(self):
         for text in ("#EXTM3U-FAKE\n#EXTINF:-1,Name\nhttps://example.org/live",
                      "#EXTM3U garbage\n#EXTINF:-1,Name\nhttps://example.org/live"):
