@@ -1,3 +1,7 @@
+## 13 Kasım 2026 — #34 canlı sözleşme regresyonları CI PASS
+- Commit 59de8fcf72e1cfee2451d05c12ff93d74f4ab336, Actions run 43447269008: SUCCESS. Production Security Gate içinde test_discovery_34_live_contract dahil offline keşif ve hata/retry regresyonları, üretim güvenlik kilidi ve korunan İBO invariantları PASS.
+- Bu testler sahte ağ yanıtlarıyla çevrimdışı yürütüldü; gerçek GitHub/GitLab/Codeberg canlı API kabulü ve gerçek yayın AV kanıtı hâlâ AÇIK. #34 kapatılmadı; playlist ve korunan kategoriler değiştirilmedi.
+
 ## 13 Kasım 2026 — #34 API hata yanıtı regresyonu PASS
 - Commit 2b110048: GitHub/Codeberg API yanıtlarında beklenen items/data alanı yoksa yanlış başarıyı engelle.
 - Commit af061bfd: hata nesnesi regresyon testleri eklendi.
