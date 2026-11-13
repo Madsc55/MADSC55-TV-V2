@@ -1,3 +1,8 @@
+## 13 Kasım 2026 — #34 API hata tanılama geliştirme dalı (kabul açık)
+- Dal: `fix-34-live-api-diagnostics-20261113`; commitler `9b0ffc4`, `dd75710`.
+- HTTP 408/425 geçici durumları yeniden deneme listesine eklendi; HTTP hatalarında API host tanılaması eklendi. İki regresyon testi yazıldı.
+- Bu değişiklikler henüz GitHub Actions canlı kabulünden geçmedi; #34 açık. Yeni tarama yok, korunan İBO/YEDEKLER/YENİLER/FAVORİLER değiştirilmedi.
+
 ## 13 Kasım 2026 — #34 canlı API retry düzeltmesi ana dalda; nihai kabul açık
 - PR #24 squash merge: 313a9abe6f44af1635523823ac69e17b74f0ea54. Canlı API geçici hatalarında en çok üç deneme, beş regresyon testi ve mevcut grouped acceptance iş akışına test çağrısı eklendi.
 - PR baş commit'i c4f204d4 için Production Security Gate Actions 43447044630: SUCCESS; güvenlik, İBO invariants ve offline discovery başarılı. Bu koşu yeni retry testlerinin veya canlı Codeberg API kabulünün başarılı çalıştığına kanıt değildir.
