@@ -10,6 +10,27 @@ class FederatedM3UDiscoveryTests(unittest.TestCase):
                      "m3u", "m3u8", "playlist", "live tv", "television"):
             self.assertIn(term, FEDERATED_QUERIES)
         self.assertEqual(len(FEDERATED_QUERIES), len(set(FEDERATED_QUERIES)))
+    def test_http_200_provider_error_objects_fail_closed(self):
+        cases = (("gitlab", {"message": "rate limit exceeded"}),
+                 ("gitlab", None),
+                 ("codeberg", {"message": "rate limit exceeded"}),
+                 ("codeberg", {"data": {"message": "error"}}),
+                 ("codeberg", []))
+        for provider, payload in cases:
+            with self.subTest(provider=provider, payload=payload):
+                result = discover_provider(
+                    provider,
+                    fetch_json_fn=lambda _url, p=payload: p,
+                    fetch_text_fn=lambda *_: self.fail("invalid search must not fetch files"),
+                    sleep_fn=lambda _: self.fail("invalid response must not retry"),
+                    queries=("iptv",))
+                self.assertEqual(result["status"], "error")
+                self.assertEqual(result["queries_checked"], 1)
+                self.assertEqual(result["queries_failed"], 1)
+                self.assertEqual(result["projects_discovered"], 0)
+                self.assertEqual(result["sources_found"], 0)
+                self.assertEqual(result["query_results"][0]["reason"], "InvalidResponse")
+
     def test_gitlab_project_tree_and_raw_m3u_are_discovered(self):
         calls, fetched = [], []
         def api(url):
