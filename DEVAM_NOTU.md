@@ -1,3 +1,8 @@
+## 13 Kasım 2026 — #31–#33 bağımsız şifreli geri yükleme kanıtı üreticisi
+- 837c146b: `audit_external_restore` eklendi. Ayrı kaynaktan alınan V2 şifreli arşivi AES-GCM ile açar, harici geri yükleme baytlarıyla ve asıl paketle birebir karşılaştırır; yalnızca tüm eşleşmelerde `encrypted=True` ve `external_restore_verified=True` üretir.
+- cdae4461: başarılı eşleşme, değiştirilmiş geri yükleme verisi ve şifreli olmayan arşiv için regresyon testleri eklendi.
+- Test yalnızca yerel sentetik fixture'dır; gerçek harici depodan indirme/geri yükleme kanıtı değildir. Tam GitHub Actions kabulü ve gerçek FFmpeg AV kanıtı açık. PR #23 mergeable=false. Korunan listeler değiştirilmedi, tarama yapılmadı.
+
 ## 13 Kasım 2026 — #31–#33 atomik yazıcı no-clobber regresyonu
 - 120bd98d: `atomic_write` doğrudan mevcut normal dosya ve sembolik bağ üzerinde çalıştırılarak `FileExistsError` vermesi ve hedefin/hedef dosyanın değişmeden kalması sınanıyor.
 - 5fce1882 ve ed067cb9 ile gelen üzerine yazmama davranışının alt seviye regresyon kapsamı genişletildi.
