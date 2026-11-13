@@ -77,6 +77,7 @@ class ScannerOfflineTests(unittest.TestCase):
             "https://user:secret@example.org/list.m3u",
             "https://example.org/list.m3u#fragment",
             "https://example.org/list.m3u\\nInjected: true",
+            "https://example.org/list.m3u" + chr(10) + "Injected: true",
             "http://example.org/list.m3u",
         )
         for url in invalid:
