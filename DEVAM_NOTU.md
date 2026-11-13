@@ -1034,3 +1034,11 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - Kanıt dosyası yalnızca ffprobe akış başlıklarını taşımasıyla kabul edilmiyor: yerel FFmpeg framemd5 çıktısında hem görüntü kareleri hem ses örneklerinin gerçekten decode edilmesi gerekiyor. Kimlikte `tvg-id` ile `channel_id` eşitliği aranıyor.
 - Dışa aktarım sadece yeni `private-*.m3u8` dosyasına, O_EXCL/O_NOFOLLOW + 0600 ile yapılır; korunan ana İBO, YEDEKLER, YENİLER, FAVORİLER üzerine yazma yok.
 - Yanlış kimlik, sahte kanıt, çakışan dosya ve yalnız görüntü akışı regresyonları PASS. GitHub runner'da FFmpeg bulunmadığı için yerel klip entegrasyon testi SKIPPED; çevrimdışı mock regresyonları PASS. Gerçek 1.000/2.000 kanal paketleri veya cihaz AV kabulü yapılmadı; #31–#33 açık.
+
+
+## 13 Kasım 2026 — Stage 5 (#31–#33) medya kanıtı tekilliği ve kabul
+- PR #176 squash merge `1951340476326f5812072b1161b8795e2c5f04a2`; PR Actions run `43481008490` SUCCESS; merge sonrası main Production Security Gate run `43481158009` SUCCESS (Stage 5 regresyonları, Stage 2/3/6, #34 offline ve korunan İBO kontrolleri).
+- `v2/stage5_evidence_export.py`: ayrı kanal kimlikleri aynı SHA-256 medya kanıtını iki kez kullanamaz. Geçersiz kütüphane hedef değerleri (0, negatif, boolean, >2000, metin) reddedilir. Üretim CLI hedefleri yalnızca 1000 ve 2000 olarak kalır.
+- `v2/test_stage5_evidence_export.py`: iki farklı dosya adıyla aynı medya baytlarını yeniden kullanan iki kanal kimliği için fail-closed regresyon eklendi; testler gerçek kanal delili değildir.
+- Eşzamanlı oturumların ana dala aldığı daha güçlü Stage 5 korumaları (yerel FFmpeg protocol whitelist, tvg-id/channel-id eşlemesi, private-*.m3u8, O_EXCL/O_NOFOLLOW ve 0600) korunmuştur. Eski kodu geri getirecek PR #165 ve PR #169 birleştirilmeden kapatıldı.
+- Gerçek 1000/2000 AV/doğrulama paketi, harici bağımsız şifreli geri yükleme ve IBO cihaz kabulü hâlâ eksik. #31–#33 nihai kabul açık; 34 görevde 21 completed ve 13 in_progress. Ana İBO, YEDEKLER, YENİLER, FAVORİLER değiştirilmedi ve yeni kanal taraması yapılmadı.
