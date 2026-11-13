@@ -1,3 +1,7 @@
+## 13 Kasım 2026 — #28–#33 symlink hedef koruma regresyonu
+- 2ea986b: şifreli backup/restore işlemlerinin mevcut symlink hedefini değiştirmediğini ve linki üzerine yazmadığını kontrol eden çevrimdışı test eklendi.
+- Bu bir test kodu değişikliğidir; güncel Actions kabulü ve gerçek yayın/bağımsız harici geri yükleme henüz doğrulanmadı. Korunan İBO listelerine dokunulmadı.
+
 ## 13 Kasım 2026 — #31–#33 arşiv hedef dosya koruması
 - 5fce1882: `secure_archive.atomic_write` mevcut hedefi `os.replace` ile ezmek yerine `os.link` ile atomik ve üzerine yazmasız oluşturur; hedef mevcutsa FileExistsError verir.
 - ed067cb9: hem backup hem restore için önceden mevcut hedef dosyanın korunmasını sınayan çevrimdışı regresyon eklendi.
