@@ -8,7 +8,7 @@ import re
 import urllib.parse
 
 def parse(text):
-    if not text.lstrip("\ufeff").startswith("#EXTM3U"):
+    if not text.lstrip("\ufeff").splitlines() or text.lstrip("\ufeff").splitlines()[0].strip() != "#EXTM3U":
         raise ValueError("missing EXTM3U header")
     pending = None
     records = []
@@ -26,7 +26,8 @@ def parse(text):
             if pending is None:
                 raise ValueError("URL without EXTINF")
             parts = urllib.parse.urlsplit(line)
-            if parts.scheme not in ("http", "https") or not parts.hostname:
+            if (parts.scheme not in ("http", "https") or not parts.hostname
+                    or parts.username is not None or parts.password is not None):
                 raise ValueError("invalid stream URL")
             records.append((pending[0], line))
             pending = None
