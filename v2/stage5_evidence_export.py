@@ -12,7 +12,7 @@ from urllib.parse import urlsplit
 def valid_stream_url(url):
     """Fail closed on malformed, padded or credential-bearing HTTP(S) URLs."""
     if not isinstance(url, str) or not url or any(
-            ord(char) < 32 or ord(char) == 127 or char.isspace() for char in url):
+            ord(char) < 32 or ord(char) == 127 or char.isspace() or char == "\\" for char in url):
         return False
     try:
         parts = urlsplit(url)
