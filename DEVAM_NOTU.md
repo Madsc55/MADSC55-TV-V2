@@ -846,3 +846,10 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - PR #19 merge 6cd8dbc: GitHub/GitLab/Codeberg/official/YouTube/M3U aday keşfi workflow'a eklendi; metadata adayları AV kanıtı değildir. GitLab/Codeberg/official/YouTube çıktıları henüz gerçek FFmpeg taramasına tümüyle aktarılmadı.
 - Kabul için kalanlar: dünya kaynaklarının akış URL'lerine çözülmesi ve FFmpeg'e verilmesi; kaynak başına başarı/hata ve ülke kapsam raporu; YouTube canlı metadata ile oynatılabilir yayın ayrımı; kanal kimliği/logo/EPG eşleştirme kanıtı; zorunlu entegrasyon testleri; en son tam tarama, şifreli yedek/geri yükleme, gerçek İBO test paketleri.
 - Hiçbir ara test tamamlanmış nihai kabul sayılmayacak. Ana İBO listesi, YEDEKLER/YENİLER/FAVORİLER korunacak.
+
+
+## 2026-11-13 — #34 bozuk aday URL regresyonu (PR #31)
+- `v2/discovery_34.py`: GitHub/GitLab/Codeberg ve curated adaylarda null, sayı, liste veya nesne URL alanları güvenli biçimde atlanır; keşif döngüsü çökmez.
+- `v2/test_discovery_34.py`: bozuk dış URL alanları için çevrimdışı regresyon eklendi.
+- PR #31 merge commit `0ba9dd81b3ef8007e03a9efdcc392bf4d2d551c2`. Actions run `43448805524`: Production Security Gate, stage 6 offline acceptance ve Discovery 34 offline acceptance iş adımları SUCCESS.
+- Bu sonuç canlı Codeberg API, tüm kaynakların FFmpeg girişine bağlanması, gerçek AV kanıtı veya nihai dünya taraması kabulü değildir. #34 açık kalır. Ana İBO, YEDEKLER, YENİLER, FAVORİLER değiştirilmedi.
