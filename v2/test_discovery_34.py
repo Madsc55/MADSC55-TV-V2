@@ -125,6 +125,18 @@ class Discovery34Tests(unittest.TestCase):
             self.assertNotEqual(result.returncode, 0)
             self.assertFalse(output.exists())
 
+    def test_curated_cli_does_not_overwrite_existing_report(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = pathlib.Path(directory)
+            output = root / "protected-report.json"
+            output.write_text("DO_NOT_OVERWRITE", encoding="utf-8")
+            result = subprocess.run(
+                [sys.executable, str(pathlib.Path(__file__).with_name("discovery_34.py")),
+                 "--output", str(output)],
+                capture_output=True, text=True)
+            self.assertNotEqual(result.returncode, 0)
+            self.assertEqual(output.read_text(encoding="utf-8"), "DO_NOT_OVERWRITE")
+
     def test_official_and_m3u(self):
         for source in ("official", "m3u"):
             self.assertEqual(len(curated_candidates(source, [{"url": "https://example.org/live.m3u8"}])), 1)
