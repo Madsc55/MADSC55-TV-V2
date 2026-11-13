@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "canonical_state": "state.json",
-  "generated_at": "2026-11-13T18:12:39.883Z",
+  "generated_at": "2026-11-13T18:20:49.257Z",
   "observed_commit": "ee2471b28804fb7c2c212f83f62d73d06566bed9",
   "statuses": [
     {
@@ -265,7 +265,7 @@
     {
       "id": 19,
       "status": "in_progress",
-      "last_checked_at": "2026-11-13T18:10:00Z",
+      "last_checked_at": "2026-11-13T18:16:00Z",
       "evidence_urls": [
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42989285004",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43454977935",
@@ -273,10 +273,12 @@
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43455192478",
         "https://github.com/Madsc55/MADSC55-TV-V2/pull/156",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43480044886",
-        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43480208051"
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43480208051",
+        "https://github.com/Madsc55/MADSC55-TV-V2/pull/172",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43480892500"
       ],
       "blocker": null,
-      "reason": "Validated 29 exact XMLTV IDs, 8 with valid programme time ranges, 14 also present in the reviewed AV set. 303 EPG gaps remain. Final identity acceptance depends on #18. 13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open. 13 Nov 2026: PR #156 merged as 5842d47a3617ccd3bc523632144e0c0eaffc0b9d. XMLTV programme availability now requires a unique channel ID and a parseable, strictly increasing start/stop interval, including UTC offset validation. Original Stage 2 fixture without stop failed first CI; fixture was corrected and PR run 43480044886 passed all groups. Main push security gate 43480208051 passed. Offline evidence only; live EPG gaps and final identity/EPG approval remain open."
+      "reason": "Validated 29 exact XMLTV IDs, 8 with valid programme time ranges, 14 also present in the reviewed AV set. 303 EPG gaps remain. Final identity acceptance depends on #18. 13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open. 13 Nov 2026: PR #156 merged as 5842d47a3617ccd3bc523632144e0c0eaffc0b9d. XMLTV programme availability now requires a unique channel ID and a parseable, strictly increasing start/stop interval, including UTC offset validation. Original Stage 2 fixture without stop failed first CI; fixture was corrected and PR run 43480044886 passed all groups. Main push security gate 43480208051 passed. Offline evidence only; live EPG gaps and final identity/EPG approval remain open. 13 Nov 2026: PR #172 merged as eb827b9c0bc4fe7eef507b8637ef37284be91dbd; read-only EPG audit now distinguishes valid/current schedule counts from raw matches and rejects DTD/ENTITY; Actions 43480892500 SUCCESS. This is offline-only, 303 live EPG gaps remain."
     },
     {
       "id": 20,
