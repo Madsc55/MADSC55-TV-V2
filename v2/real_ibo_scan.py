@@ -479,7 +479,11 @@ def main():
                 if not old_observations and previous.get('http_hls_status'):
                     old_observations = [{'status': previous['http_hls_status'], 'origin': 'previous-inventory'}]
                 new_status = 'AV_VERIFIED' if candidate['url'] in good_urls else 'UNVERIFIED_OR_FAILED'
-                verified = good_by_url.get(candidate['url'], {}).get('verified_quality', {})
+                current_av = good_by_url.get(candidate['url'], {})
+                verified = current_av.get('verified_quality', {})
+                decoded_this_run = (new_status == 'AV_VERIFIED'
+                                    and current_av.get('decoded_av_verified') is True
+                                    and current_av.get('decode_status') == 'DECODED_AV')
                 prior_attempts = previous.get('recovery_attempts', 0)
                 if type(prior_attempts) is not int or prior_attempts < 0:
                     raise ValueError('Invalid historical recovery attempts')
@@ -496,6 +500,8 @@ def main():
                           'epg_checked': epg_checked or previous.get('epg_checked', False),
                           'verified_quality': verified if verified.get('av_verified') else previous.get('verified_quality', {'av_verified': False, 'quality': 'UNVERIFIED'}),
                           'http_hls_status': new_status,
+                          'decoded_av_verified': decoded_this_run,
+                          'decode_status': 'DECODED_AV' if decoded_this_run else 'NOT_DECODED_THIS_RUN',
                           'ibo_device_tested': previous.get('ibo_device_tested', False),
                           'observations': old_observations + [{'status': new_status, 'origin': 'current-scan'}]}
                 inventory_file.write(json.dumps(record, ensure_ascii=False) + '\n')
