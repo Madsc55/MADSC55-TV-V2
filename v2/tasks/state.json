@@ -1,8 +1,8 @@
 {
   "schema": 1,
   "canonical_state": "state.json",
-  "generated_at": "2026-11-08T00:00:00Z",
-  "observed_commit": "c36083b8e9551a0a6795c6b2c0cf0350662440a6",
+  "generated_at": "2026-11-13T15:42:00Z",
+  "observed_commit": "8a2abf3f74073a5ea6a34c949260ac0c26556b80",
   "statuses": [
     {
       "id": 1,
@@ -210,10 +210,12 @@
         "https://github.com/Madsc55/MADSC55-TV-V2/blob/madsc/v2-discovery-bulk-20261031/v2/reports/task15-historical-api-identity-evidence-20261112.json",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42228674931",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42989285004",
-        "https://github.com/Madsc55/MADSC55-TV-V2/blob/madsc/v2-discovery-bulk-20261031/v2/reports/task15-iptv-org-exact-crosswalk-20261112.json"
+        "https://github.com/Madsc55/MADSC55-TV-V2/blob/madsc/v2-discovery-bulk-20261031/v2/reports/task15-iptv-org-exact-crosswalk-20261112.json",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43454977935",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43454976797"
       ],
       "blocker": "3,178 of 4,955 historical hashes lack a current IPTV-org catalog match. Exact catalog provenance for the other 1,777 is established, but broadcaster attribution still needs direct publisher or independently authenticated source evidence where it is missing.",
-      "reason": "Pinned IPTV-org streams.json and channels.json to ca2dc7e7bcc89def37e55202a3ad108db46a7ccf. Matched 1,777 exact URL SHA-256 identities to unambiguous catalog channel IDs, reproduced all five prior exact IDs, and found 57 catalog site hostname correlations. The report includes no plaintext stream URLs. Catalog hostname correlation is not independent broadcaster proof."
+      "reason": "Pinned IPTV-org streams.json and channels.json to ca2dc7e7bcc89def37e55202a3ad108db46a7ccf. Matched 1,777 exact URL SHA-256 identities to unambiguous catalog channel IDs, reproduced all five prior exact IDs, and found 57 catalog site hostname correlations. The report includes no plaintext stream URLs. Catalog hostname correlation is not independent broadcaster proof. 13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open."
     },
     {
       "id": 16,
@@ -234,49 +236,61 @@
     },
     {
       "id": 17,
-      "status": "pending",
+      "status": "in_progress",
       "last_checked_at": null,
-      "evidence_urls": [],
+      "evidence_urls": [
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43454977935",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43454976797"
+      ],
       "blocker": null,
-      "reason": null
+      "reason": "13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open."
     },
     {
       "id": 18,
-      "status": "pending",
+      "status": "in_progress",
       "last_checked_at": "2026-11-11T12:54:04Z",
       "evidence_urls": [
-        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42989285004"
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42989285004",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43454977935",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43454976797"
       ],
       "blocker": null,
-      "reason": "Pinned exact IPTV API evidence has 171 stream hashes, 168 decoded audio+video in both short FFmpeg samples. Identity review remains tied to #15."
+      "reason": "Pinned exact IPTV API evidence has 171 stream hashes, 168 decoded audio+video in both short FFmpeg samples. Identity review remains tied to #15. 13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open."
     },
     {
       "id": 19,
-      "status": "pending",
+      "status": "in_progress",
       "last_checked_at": "2026-11-11T12:54:04Z",
       "evidence_urls": [
-        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42989285004"
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42989285004",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43454977935",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43454976797"
       ],
       "blocker": null,
-      "reason": "Validated 29 exact XMLTV IDs, 8 with valid programme time ranges, 14 also present in the reviewed AV set. 303 EPG gaps remain. Final identity acceptance depends on #18."
+      "reason": "Validated 29 exact XMLTV IDs, 8 with valid programme time ranges, 14 also present in the reviewed AV set. 303 EPG gaps remain. Final identity acceptance depends on #18. 13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open."
     },
     {
       "id": 20,
-      "status": "pending",
+      "status": "in_progress",
       "last_checked_at": "2026-11-11T12:54:04Z",
       "evidence_urls": [
-        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42989285004"
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42989285004",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43454977935",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43454976797"
       ],
       "blocker": null,
-      "reason": "167 exact URL hashes have positive measured video dimensions and two successful real AV samples. Provenance and counts in the linked report. Full recovery queue acceptance depends on #17."
+      "reason": "167 exact URL hashes have positive measured video dimensions and two successful real AV samples. Provenance and counts in the linked report. Full recovery queue acceptance depends on #17. 13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open."
     },
     {
       "id": 21,
-      "status": "pending",
+      "status": "in_progress",
       "last_checked_at": null,
-      "evidence_urls": [],
+      "evidence_urls": [
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43454977935",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43454976797"
+      ],
       "blocker": null,
-      "reason": null
+      "reason": "13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open."
     },
     {
       "id": 22,
@@ -395,51 +409,69 @@
     },
     {
       "id": 28,
-      "status": "pending",
+      "status": "in_progress",
       "last_checked_at": null,
-      "evidence_urls": [],
+      "evidence_urls": [
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43454977935",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43454976797"
+      ],
       "blocker": null,
-      "reason": null
+      "reason": "13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open."
     },
     {
       "id": 29,
-      "status": "pending",
+      "status": "in_progress",
       "last_checked_at": null,
-      "evidence_urls": [],
+      "evidence_urls": [
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43454977935",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43454976797"
+      ],
       "blocker": null,
-      "reason": null
+      "reason": "13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open."
     },
     {
       "id": 30,
-      "status": "pending",
+      "status": "in_progress",
       "last_checked_at": null,
-      "evidence_urls": [],
+      "evidence_urls": [
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43454977935",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43454976797"
+      ],
       "blocker": null,
-      "reason": null
+      "reason": "13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open."
     },
     {
       "id": 31,
-      "status": "pending",
+      "status": "in_progress",
       "last_checked_at": null,
-      "evidence_urls": [],
+      "evidence_urls": [
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43454977935",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43454976797"
+      ],
       "blocker": null,
-      "reason": null
+      "reason": "13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open."
     },
     {
       "id": 32,
-      "status": "pending",
+      "status": "in_progress",
       "last_checked_at": null,
-      "evidence_urls": [],
+      "evidence_urls": [
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43454977935",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43454976797"
+      ],
       "blocker": null,
-      "reason": null
+      "reason": "13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open."
     },
     {
       "id": 33,
-      "status": "pending",
+      "status": "in_progress",
       "last_checked_at": null,
-      "evidence_urls": [],
+      "evidence_urls": [
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43454977935",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43454976797"
+      ],
       "blocker": null,
-      "reason": null
+      "reason": "13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open."
     },
     {
       "id": 34,
@@ -447,10 +479,12 @@
       "last_checked_at": "2026-11-12T20:21:33Z",
       "evidence_urls": [
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43299056099",
-        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43299369197"
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43299369197",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43454977935",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43454976797"
       ],
       "blocker": "Waiting for the discovery result and then scoped new-candidate AV and archive evidence.",
-      "reason": "The grouped offline system verification passed. #34 source discovery is running on the exact tested source tree. Fresh AV, encryption and final acceptance remain open."
+      "reason": "The grouped offline system verification passed. #34 source discovery is running on the exact tested source tree. Fresh AV, encryption and final acceptance remain open. 13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open."
     }
   ],
   "allowed_statuses": [
