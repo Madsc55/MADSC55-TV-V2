@@ -1,3 +1,8 @@
+## 13 Kasım 2026 — #31–#33 son kabul raporu biçim denetimi
+- 1659a191: ibo_final_acceptance.final_gate() kabul raporu türlerini, hedef/sayı türlerini ve 64 haneli küçük harf SHA-256 biçimini fail-closed doğrular.
+- 86c2a8f5: geçersiz SHA-256, bool hedef/sayı ve bozuk rapor türü regresyonları eklendi; mevcut sentetik test raporu geçerli SHA-256 biçimine düzeltildi.
+- PR #23 açık; yeni commitlerin Actions sonucu henüz doğrulanmadı. Bu yalnızca altyapı kontrolüdür; gerçek yayın AV, harici şifreli geri yükleme ve cihaz kabulü henüz doğrulanmadı. Korunan İBO kategorileri değiştirilmedi, tarama başlatılmadı.
+
 ## 13 Kasım 2026 — #28–#33 M3U ayrıştırıcı güvenliği
 - f6883e01: ibo_package_acceptance.parse() artık EXTM3U başlığını tam eşitlikle denetler; yayın URL'sinde gömülü kullanıcı adı/parola varsa reddeder.
 - 88f2b0fc: sahte M3U başlığı ve URL kimlik bilgisi regresyon testleri eklendi.
