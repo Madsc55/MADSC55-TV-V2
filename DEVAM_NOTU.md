@@ -1074,3 +1074,11 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - PR #184 merge commit `c400b1f3aff3744c65f110e41629cabc5ed90596`; Actions run `43481525275` SUCCESS. Stage 2/3 kimlik/EPG, Stage 5 yerel FFmpeg video+ses decode, Stage 6 paket/arşiv, #34 offline ve ana İBO güvenlik kapıları geçti.
 - Daha önce birleştirilen farklı kanalın aynı kanıt SHA-256'sını yeniden kullanamaması kuralı korunarak eşzamanlı Stage 5 değişiklikleriyle çakışma giderildi; PR #180 zorla birleştirilmeden kapatıldı.
 - Bu altyapı güvenlik kabulü, mevcut 4.301 URL'lik M3U parçaları için gerçek cihaz oynatımı, bütün kanalların bağımsız AV/kimlik kabulü veya harici üretim geri yüklemesi anlamına gelmez. #28–#33 açık kalır. Yeni toplu tarama veya korunan İBO/YEDEKLER/YENİLER/FAVORİLER dosyası değişikliği yapılmadı.
+
+
+## 13 Kasım 2026 — #28–#30 eski artifact'in decode kanıtı yeniden değerlendirildi
+- Run `43412576224` artifact `14033805492`, gerçek ZIP SHA-256 `139c8a0868f35d4b64cd55a17bcbd56325d8e3c87b5d07295028bb4d56e832a6` yeniden indirildi ve bayt bazında doğrulandı; 1000'lik 1000+1000+1000+1000+301, 2000'lik 2000+2000+301 dosya; her grupta 4301 tekil URL, gruplar arası URL dizisi aynı, biçim ve çiftleme hatası/URL tekrarı yok.
+- **Önemli yanlış kabul riski:** Eski run commit `e4917753174d16b7c2e1f1abe38ad804f069e58a` içindeki `stream_probe.py`, FFprobe codec metadata'sından `AV_VERIFIED` üretiyordu; gerçek FFmpeg video/audio frame decode yapmıyordu. Dolayısıyla önceki rapordaki 4301 `AV_VERIFIED` sayısı **gerçek decode edilen yayın kanıtı değildir**. Paketlerin yapı bütünlüğü kanıtlı ama canlı AV/provenance, cihaz ve bağımsız restore açık.
+- PR #197 merge `e06065aa2ffd7b897e3f715a513b8efef3cb5978`, Actions `43483524794` SUCCESS: yeni scanner, decoded AV sonucunu envantere açık alanlar olarak yazar; paketleyici eski sadece `AV_VERIFIED` satırlarını reddeder. Önceki artifact geriye dönük kanıtlı AV hâline gelmez.
+- `v2/reports/IBO_4301_DECODE_PROVENANCE_AUDIT_2026-11-13.md` yeni bağımsız denetimi içerir; eski bütünlük raporuna düzeltme notu eklendi. `v2/tasks/state.json` #28–#30 blocker/reason/evidence güncellendi, **hiçbir görev kapatılmadı** (21 completed / 13 in_progress).
+- Bu çalışmada yeni kapsamlı kanal taraması başlatılmadı ve Ana İBO, YEDEKLER, YENİLER, FAVORİLER değiştirilmedi.
