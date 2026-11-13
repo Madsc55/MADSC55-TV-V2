@@ -20,8 +20,8 @@ STAGE6_DISCOVERY = "v2-stage6-live-discovery"
 STAGE6_REQUEST = (
     "github.repository_id == '1435646455' && "
     "github.ref == 'refs/heads/madsc/v2-discovery-bulk-20261031' && "
-    "((github.event_name == 'workflow_dispatch' && inputs.approve_live_discovery == true) || "
-    "(github.event_name == 'push' && github.event.head_commit.message == 'ci(v2): start approved #34 discovery'))"
+    "github.event_name == 'workflow_dispatch' && "
+    "inputs.approve_live_discovery == true"
 )
 DRIVE_RESTORE = "v2-independent-drive-restore"
 STAGE4_DRIVE_CONDITION = (
@@ -223,7 +223,7 @@ def validate_workflow(path, source):
         if "4b1c3cea4b5107a425abab60f62d41f9f81e05a7" not in source:
             errors.append("LEGACY_PUBLISHER_MISSING_PLAYLIST_HASH")
     if name == STAGE6_DISCOVERY:
-        if (set(events) != {"workflow_dispatch", "push"} or set(jobs) != {"discover"}
+        if (set(events) != {"workflow_dispatch"} or set(jobs) != {"discover"}
                 or not isinstance(jobs["discover"], dict)
                 or jobs["discover"].get("if") != STAGE6_REQUEST):
             errors.append("STAGE6_DISCOVERY_REQUIRES_EXPLICIT_REQUEST")
