@@ -1,3 +1,9 @@
+## 13 Kasım 2026 — #31–#33 Stage 5 güvenlik düzeltmesi main kabulü
+- PR #181 başarıyla squash merge edildi: `a04ca3e8bb7e4148efdab1d6cddb00a11427328f`. Kaynak PR: https://github.com/Madsc55/MADSC55-TV-V2/pull/181
+- Güncel main tabanlı PR commit'i `643c19d9819ab34247b823451557bfaf4a132005` için Production Security Gate Actions https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43481305204: SUCCESS. Korunan İBO invariants, görev defteri, Stage 2/3, Stage 5, Stage 6 ve #34 çevrimdışı kabul adımları PASS.
+- Stage 5 kanıt URL'lerinde özel/yerel IP, bozuk port, saklı kullanıcı bilgileri, kontrol karakterleri ve .local/.internal gibi yerel ana makine alanları reddedilir; bozuk JSON şeması fail-closed, mevcut kabul çıktısı exclusive create ile korunur. Negatif regresyon testleri main'de doğrulandı.
+- Bunlar sadece çevrimdışı güvenlik/altyapı kabulüdür. Gerçek FFmpeg görüntü/ses, harici şifreli geri yükleme, gerçek 1000/2000 İBO paketleri ve cihaz kabulü doğrulanmadı. #31–#33 nihai kapatılmadı, task ledger değiştirilmedi; ana İBO/YEDEKLER/YENİLER/FAVORİLER korunuyor ve kapsamlı tarama başlatılmadı.
+
 ## 13 Kasım 2026 — #19 sahte EPG kabul işareti engellendi (PR #161)
 - PR #161 squash merge: `a715a612facf325322e2b911366b8d5f45a173a5`. Stage 2 entegrasyonu, XMLTV doğrulama kaynağı olmadan gelen `epg_programme_available=True` ve sahte `epg_match_type` değerlerini sıfırlıyor.
 - PR baş commit `5615599e06196d77e6daa1937074e292b27cf17d` için Production Security Gate Actions `43480580074` SUCCESS; gerçek logda `test_untrusted_xmltv_programme_claims_are_not_promoted` PASS, Stage 2/3 grup testleri PASS.
