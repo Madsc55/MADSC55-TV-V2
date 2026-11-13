@@ -1060,3 +1060,11 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - PR #177 squash merge `aa6b5b3f18b89c28a994a6f90484e18f879b14c1`. PR Actions `43481199861` SUCCESS; main Actions `43481413229` SUCCESS.
 - GitHub Ubuntu runner'ında FFmpeg/FFprobe eksikse paketler kurulur. Yerel testte 1 saniyelik sentetik test medyası üretip gerçek decode üzerinden hem video frame hem ses örneği doğrulanır. `test_local_ffmpeg_decodes_both_real_fixture_tracks ... ok` ile bu kez atlanmadan geçti.
 - Yalnızca test aracı için üretilen sentetik medya gerçek yayın veya gerçek İBO paketi kabul edilmedi. #31–#33 ve diğer gerçek yayın kanıtı bekleyen görevler açık. Yeni kapsamlı kanal taraması yapılmadı; ana İBO/YEDEKLER/YENİLER/FAVORİLER'e dokunulmadı.
+
+
+## 13 Kasım 2026 — Stage 5 özel M3U çıktı koruması (PR #184)
+- `v2/stage5_evidence_export.py` özel veya signed gerçek yayın URL'lerini içerebilen M3U test dosyalarının Git deposu içine, `v2/reports` dâhil, yazılmasını reddeder. Yalnızca depo dışındaki `private-*.m3u8` hedefler kabul edilir; `O_EXCL/O_NOFOLLOW` ve `0600` korumaları değişmedi.
+- `v2/test_stage5_evidence_export.py` repo içindeki hedefin hiçbir dosya yaratılmadan reddedildiğini kontrol eder.
+- PR #184 merge commit `c400b1f3aff3744c65f110e41629cabc5ed90596`; Actions run `43481525275` SUCCESS. Stage 2/3 kimlik/EPG, Stage 5 yerel FFmpeg video+ses decode, Stage 6 paket/arşiv, #34 offline ve ana İBO güvenlik kapıları geçti.
+- Daha önce birleştirilen farklı kanalın aynı kanıt SHA-256'sını yeniden kullanamaması kuralı korunarak eşzamanlı Stage 5 değişiklikleriyle çakışma giderildi; PR #180 zorla birleştirilmeden kapatıldı.
+- Bu altyapı güvenlik kabulü, mevcut 4.301 URL'lik M3U parçaları için gerçek cihaz oynatımı, bütün kanalların bağımsız AV/kimlik kabulü veya harici üretim geri yüklemesi anlamına gelmez. #28–#33 açık kalır. Yeni toplu tarama veya korunan İBO/YEDEKLER/YENİLER/FAVORİLER dosyası değişikliği yapılmadı.
