@@ -92,7 +92,7 @@ class LiveContractRetryTests(unittest.TestCase):
         self.assertEqual(result["reason"], "HTTP_500")
         self.assertEqual(result["attempts"], 4)
         self.assertEqual(len(calls), 4)
-        self.assertEqual(sleeps, [1, 2, 3])
+        self.assertEqual(sleeps, [1, 2, 4])
 
     def test_socket_timeout_recovers_with_bounded_retry(self):
         attempts = []
