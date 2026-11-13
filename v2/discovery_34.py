@@ -45,9 +45,14 @@ def search_url(source, query):
         return "https://codeberg.org/api/v1/repos/search?q=" + q + "&limit=20"
     raise ValueError("Adapter uses curated identifiers, not repository search")
 
+class _NoRedirect(urllib.request.HTTPRedirectHandler):
+    """Block redirects before any follow-up request can be sent."""
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        raise ValueError("Redirect refused")
+
 def fetch_json(url):
     req = urllib.request.Request(url, headers={"User-Agent": "MADSC55-V2-Discovery/1.0", "Accept": "application/json"})
-    with urllib.request.urlopen(req, timeout=15) as res:
+    with urllib.request.build_opener(_NoRedirect).open(req, timeout=15) as res:
         if urllib.parse.urlsplit(res.url).hostname != urllib.parse.urlsplit(url).hostname:
             raise ValueError("Cross-host redirect refused")
         data = res.read(MAX_BYTES + 1)
