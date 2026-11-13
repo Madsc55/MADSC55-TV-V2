@@ -1,3 +1,8 @@
+## 13 Kasım 2026 — #31–#33 atomik yazıcı no-clobber regresyonu
+- 120bd98d: `atomic_write` doğrudan mevcut normal dosya ve sembolik bağ üzerinde çalıştırılarak `FileExistsError` vermesi ve hedefin/hedef dosyanın değişmeden kalması sınanıyor.
+- 5fce1882 ve ed067cb9 ile gelen üzerine yazmama davranışının alt seviye regresyon kapsamı genişletildi.
+- Bu test henüz GitHub Actions üzerinde çalıştırılmadı; manuel workflow_dispatch çalıştırması gerekiyor. PR #23 hâlâ mergeable=false; tam test ve gerçek AV/harici restore kabulleri açık. Korunan listeler değiştirilmedi, tarama yapılmadı.
+
 ## 13 Kasım 2026 — #28–#33 symlink hedef koruma regresyonu
 - 2ea986b: şifreli backup/restore işlemlerinin mevcut symlink hedefini değiştirmediğini ve linki üzerine yazmadığını kontrol eden çevrimdışı test eklendi.
 - Bu bir test kodu değişikliğidir; güncel Actions kabulü ve gerçek yayın/bağımsız harici geri yükleme henüz doğrulanmadı. Korunan İBO listelerine dokunulmadı.
