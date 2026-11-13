@@ -146,7 +146,7 @@ class BatchTests(unittest.TestCase):
                      'name': 'Real', 'group': 'TR',
                      'http_hls_status': 'AV_VERIFIED'}]
             encrypted = root / 'inventory.enc'
-            encrypted.write_bytes(encrypt(('\\n'.join(json.dumps(x) for x in rows) + '\\n').encode(), SECRET))
+            encrypted.write_bytes(encrypt((chr(10).join(json.dumps(x) for x in rows) + chr(10)).encode(), SECRET))
             result = export(encrypted, SECRET, root / 'out', sizes=(1000,))
             self.assertEqual(result['av_verified_unique'], 1)
             self.assertEqual(result['packages'][0]['count'], 1)
