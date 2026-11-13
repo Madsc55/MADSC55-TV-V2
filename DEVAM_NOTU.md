@@ -990,3 +990,11 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - Manuel worldwide scan workflow'u 3.000 aday tavanıyla hazırdır; `workflow_dispatch` dışında tetiklenmez ve henüz çalıştırılmamıştır.
 - Son canlı sağlayıcı tanısı `43464785708`: GitHub token ile 6/6 başarılı ve 102 ham eşleşme; GitLab 6/6 geçerli boş sonuç; Codeberg ilk sorguda HTTP 429, kalan beş sorgu circuit breaker ile atlandı. Codeberg canlı kabulü açık kaldı.
 - Görev defteri 21 completed / 13 in_progress; #15, #17–#21, #28–#34 gerçek yayın, paket, bağımsız restore ve cihaz kanıtları bekliyor. Ana İBO/YEDEKLER/YENİLER/FAVORİLER değişmedi; yeni tarama ve playlist yazımı yok.
+
+
+## 13 Kasım 2026 — #19 EPG yanlış kimlik ataması ve program zamanı koruması (PR #155)
+- `v2/build_epg.py` artık yalnızca bire bir `tvg-id` eşleşmesini veya tek anlamlı normalize edilmiş EPG isim eşleşmesini kullanıyor. Aynı ada birden çok XMLTV kaynağı karşılık gelirse önceki gibi en çok programa sahip kaynağı seçip yanlış rehber atamıyor; eşleşme atlanıyor ve `ambiguous_entries_skipped` ile raporlanıyor.
+- Rehber dışa aktarımında zaman damgaları `epg_integrity.parse_xmltv_time` ile ayrıştırılıyor. Geçersiz UTC ofseti, eksik/ters başlangıç-bitiş ve sıfır süreli programlar dışa alınmıyor; gerçek +0300 saat farkı göz önüne alınıyor.
+- `v2/test_build_epg.py` yeni çevrimdışı testleri ve `.github/workflows/v2-main-production-safety-gate.yml` içinde zorunlu kabul bağlantısı eklendi.
+- PR #155 merge commit `5ec41d2e98930f6610c592ccf458b6bcf8c694e9`; head `49dab604eae5a57640157512d2994818c58f392c`; Actions run `43479698309` SUCCESS. Stage 2/3 kimlik/EPG/kurtarma, Stage 5/6 paket ve arşiv, #34 çevrimdışı keşif ve ana İBO güvenlik korumaları SUCCESS.
+- Bu yalnızca çevrimdışı EPG eşleştirme/yayınlama doğrulamasıdır; 303 EPG boşluğunun giderildiği, gerçek EPG kaynaklarının tamamının güncel olduğu veya #19 nihai kabulünün geçtiği anlamına gelmez. #19 açık kalır. Yeni kanal taraması yapılmadı; ana İBO, YEDEKLER, YENİLER ve FAVORİLER değiştirilmedi.
