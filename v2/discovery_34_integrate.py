@@ -36,7 +36,24 @@ def normalize(source, data):
             (source != "m3u" or item.get("kind") == "m3u") and
             (source not in ("github_m3u", "gitlab_m3u", "codeberg_m3u") or item.get("status") == "SOURCE_PARSED_STREAMS_NOT_PLAYBACK_VERIFIED")]
     identity_source = "m3u" if source in ("github_m3u", "gitlab_m3u", "codeberg_m3u") else source
-    return curated_candidates(identity_source, rows)
+    candidates = curated_candidates(identity_source, rows)
+    if source == "official":
+        by_url = {item.get("official_site"): item for item in items if isinstance(item, dict)}
+        for candidate in candidates:
+            metadata = by_url.get(candidate["url"], {})
+            candidate["name"] = str(metadata.get("name") or "")
+            candidate["tvg_id"] = str(metadata.get("channel_id") or "")
+            candidate["country"] = str(metadata.get("country") or "")
+            candidate["status"] = str(metadata.get("status") or "DIRECTORY_REFERENCE_ONLY_NOT_STREAM_VERIFIED")
+    elif source == "youtube":
+        by_id = {item.get("video_id"): item for item in items if isinstance(item, dict)}
+        for candidate in candidates:
+            video_id = candidate.get("source_id", "").split(":", 1)[-1]
+            metadata = by_id.get(video_id, {})
+            candidate["name"] = str(metadata.get("title") or "")
+            candidate["group"] = str(metadata.get("channel") or "")
+            candidate["status"] = str(metadata.get("status") or "DISCOVERED_NOT_LIVE_VERIFIED")
+    return candidates
 
 def integrate(reports=REPORTS):
     records, errors = {}, []
