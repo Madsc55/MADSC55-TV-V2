@@ -35,6 +35,20 @@ def main():
             else:
                 raise AssertionError("Existing archive destination was overwritten")
             assert protected.read_bytes() == b"DO_NOT_OVERWRITE"
+        # Symlink destinations must also be refused without changing their targets.
+        symlink_target = root / "protected-target.bin"
+        symlink_target.write_bytes(b"SYMLINK_TARGET_UNCHANGED")
+        for operation, source in ((backup, original), (restore, encrypted)):
+            link = root / ("backup-link.enc" if operation is backup else "restore-link.jsonl")
+            link.symlink_to(symlink_target)
+            try:
+                operation(source, link, secret)
+            except FileExistsError:
+                pass
+            else:
+                raise AssertionError("Symlink destination was overwritten")
+            assert link.is_symlink()
+            assert symlink_target.read_bytes() == b"SYMLINK_TARGET_UNCHANGED"
         # Reject malformed API input types before cryptographic processing.
         for value in ("text", bytearray(b"data"), None):
             for operation in (encrypt, decrypt):
