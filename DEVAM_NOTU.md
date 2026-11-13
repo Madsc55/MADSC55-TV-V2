@@ -941,9 +941,10 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 
 
 ## 13 Kasım 2026 — Güncel main Production Security Gate ve canlı #34 teşhisi
-- Main commit: `478aba262b0b37c39019a85bcc3abfc812b04208`; Actions run `43458337072`: SUCCESS.
-- Güncel main üzerindeki Stage 6 (#28–#33) çevrimdışı paketleme, M3U doğrulama, şifreli arşiv ve geri-yükleme regresyonları; Stage 2/3; #34 offline adapter ve güvenlik/invariant kapıları PASS.
-- Aynı committe ayrı `live-discovery-diagnostic` işi başarısız: GitHub ve GitLab sorguları sonuçlandı; Codeberg altı sorgunun tamamında HTTP 429 döndürdü (her sorguda 3 deneme). Bu nedenle #34 canlı sağlayıcı kabulü başarısız/açık; HTTP 429 başarı olarak işaretlenmedi.
-- Codeberg için Retry-After sayısal ve HTTP-date biçimlerini 60 saniye üst sınırıyla ele alan kod ve offline regresyonlar main üzerinde mevcut; canlı 429 yanıtı nedeniyle sağlayıcı kabulü yine de geçmedi.
-- Görev defteri 21 completed / 13 in_progress olarak korundu; canlı yayın kanıtı, bağımsız harici geri yükleme ve gerçek 1000/2000 kanal paketleri olmadan görev kapatılmadı.
+- Main commit `478aba262b0b37c39019a85bcc3abfc812b04208` için Actions run `43458337072`: SUCCESS. Bu koşuda ayrı `live-discovery-diagnostic` işi SKIPPED idi; bu run canlı sağlayıcı kanıtı değildir.
+- Canlı altı-terim denetimi ayrı olarak main commit `436d5492b71394a2958b08cc8895156f5c111ed0` üzerindeki Actions run `43458069505` ile yapıldı. Ana Production Security Gate SUCCESS; ayrı `live-discovery-diagnostic` işi Codeberg HTTP 429 nedeniyle FAILURE oldu (iş `continue-on-error` olduğundan ana gate başarılı kaldı).
+- Canlı denetimde GitHub altı sorgunun tamamında başarılı yanıt verdi ve sorgu başına 11, 20, 20, 20, 12, 19 aday kaydı döndürdü (toplam 102 kayıt; benzersiz kanal sayısı değildir). GitLab altı sorguda başarılı yanıt verdi fakat 0 aday döndürdü. Codeberg altı sorgunun tamamında HTTP 429 / Too Many Requests verdi; her sorgu üç denemeyle sınırlandı, yanıt Retry-After ve rate-limit kalan başlığı içermedi.
+- Sonuç: #34 canlı sağlayıcı kabulü AÇIK. Codeberg HTTP 429 başarı sayılmadı. Numeric ve HTTP-date Retry-After desteği ile offline regresyonlar main üzerinde mevcut; fakat canlı API kabulü henüz geçmedi.
+- Güncel main Production Security Gate içinde Stage 6 (#28–#33) offline paketleme, M3U doğrulama, şifreli arşiv/geri-yükleme regresyonları; Stage 2/3; #34 offline adapter ve güvenlik/invariant kapıları PASS. Bu, gerçek FFmpeg AV, bağımsız harici depodan restore veya gerçek 1000/2000 kanal paketi değildir.
+- Görev defteri 21 completed / 13 in_progress olarak korundu; gerçek yayın kanıtı, bağımsız harici geri yükleme ve gerçek paket kanıtları olmadan görev kapatılmadı.
 - Yeni kapsamlı kanal taraması yapılmadı. Ana İBO, YEDEKLER, YENİLER ve FAVORİLER değiştirilmedi.
