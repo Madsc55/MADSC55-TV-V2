@@ -64,5 +64,14 @@ class ScannerOfflineTests(unittest.TestCase):
         self.assertEqual(len(entries), 2)
         self.assertEqual(len({x["url"] for x in entries}), 1)
 
+    def test_worldwide_mode_includes_entries_without_tr_az_hints(self):
+        record = {"name": "International News", "group": "World", "tvg_id": "news.int"}
+        self.assertFalse(scanner.eligible_entry(record, "candidate", worldwide=False))
+        self.assertTrue(scanner.eligible_entry(record, "candidate", worldwide=True))
+        # Explicit TR/AZ exclusions remain active only in the default filtered mode.
+        excluded = {"name": "TRT World", "group": "", "tvg_id": ""}
+        self.assertFalse(scanner.eligible_entry(excluded, "TR", worldwide=False))
+        self.assertTrue(scanner.eligible_entry(excluded, "TR", worldwide=True))
+
 if __name__ == "__main__":
     unittest.main()

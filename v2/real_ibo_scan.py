@@ -93,6 +93,11 @@ def tr_az(entry, scope):
     return bool(re.search(r'türk|turk|trt (?:1|2|3|cocuk|çocuk|spor|muzik|müzik|eba)|azer|azər|azərbaycan|azerbaijan|(?:^|[ ._-])(?:tr|az)(?:$|[ ._-])', value))
 
 
+def eligible_entry(entry, scope, worldwide=False):
+    """Apply source scope unless explicit worldwide discovery is selected."""
+    return bool(worldwide) or tr_az(entry, scope)
+
+
 def check_hls(entry, timeout, diagnostics=None):
     """Return AV-verified stream or capture observed HTTP failure for recovery."""
     url = entry['url']
@@ -178,6 +183,7 @@ def main():
     ap.add_argument('--workers', type=int, default=12)
     ap.add_argument('--timeout', type=float, default=12)
     ap.add_argument('--limit', type=int, default=500)
+    ap.add_argument('--worldwide', action='store_true', help='Include all public source entries instead of TR/AZ metadata filtering')
     ap.add_argument('--live', type=pathlib.Path, default=LIVE)
     args = ap.parse_args()
     if args.stage2_offline_input is not None:
@@ -258,7 +264,7 @@ def main():
             records = list(parse_m3u(fetch(url, args.timeout)))
             source_counts[sid] = len(records)
             for entry in records:
-                if tr_az(entry, source.get('scope', 'candidate')):
+                if eligible_entry(entry, source.get('scope', 'candidate'), args.worldwide):
                     if entry['url'] not in existing:
                         found = candidates.get(entry['url'])
                         if found is None:
@@ -398,7 +404,7 @@ def main():
     # Never retain plaintext URL/token inventory in the GitHub working tree.
     # Source outages are reported; a working subset can still be tested.
     # Never modify the protected main playlist.
-    report = {'source_count': len(sources), 'dynamic_source_count': dynamic_count, 'fetched_sources': len(source_counts),
+    report = {'scan_scope': 'WORLDWIDE_ALL_SOURCE_ENTRIES' if args.worldwide else 'TR_AZ_METADATA_CANDIDATES', 'source_count': len(sources), 'dynamic_source_count': dynamic_count, 'fetched_sources': len(source_counts),
               'failed_sources': failed, 'source_counts': source_counts, 'source_drops': source_drops, 'existing_main_urls': len(main_urls), 'excluded_foreign_archive_urls': len(foreign_urls), 'unique_new_candidates': len(candidates), 'recovered_from_previous_encrypted_inventory': recovered_from_archive,
               'http_checked': checked, 'http_hls_ok': len(good), 'av_verified': len(good),
               'recovery_queue': recovery_queue,
