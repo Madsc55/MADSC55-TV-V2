@@ -1,3 +1,9 @@
+## 13 Kasım 2026 — güncel PR #23 kabul kontrolü
+- PR #23 açık; head `2c4a497d2e826f4b9f5a41af0273d627e58640f9`, base `main`; GitHub `mergeable=false` bildiriyor. Birleştirme yapılmadı.
+- Head commit için combined status boş ve PR workflow run listesi boş; güncel Actions başarısı kanıtlanmış değil.
+- `v2-main-production-safety-gate.yml` PR'larda main hedefiyle tetiklenir; `v2-offline-inventory.yml` yalnızca workflow_dispatch ile tetiklenir. Mevcut GitHub araç erişiminde workflow dispatch başlatma eylemi yok.
+- Gerçek FFmpeg AV ve bağımsız harici şifreli geri yükleme kanıtları yok; #28–#33 nihai kabul açık. Korunan listeler değiştirilmedi.
+
 ## 13 Kasım 2026 — #28–#33 EXTINF süre sınır testleri
 - 9b25a1a: EXTINF sürelerinde -1, 0, pozitif tamsayı ve ondalık değer kabulü; +1, -0.5, bilimsel gösterim, eksik basamak ve boş değer reddi için sınır testleri eklendi.
 - b6d86e5: test fixture satır sonları Python kaynak kodunda gerçek `\\n` kaçışları olacak şekilde düzeltildi.
