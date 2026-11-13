@@ -54,7 +54,7 @@ class _NoRedirect(urllib.request.HTTPRedirectHandler):
 
 def fetch_json(url):
     req = urllib.request.Request(url, headers={"User-Agent": "MADSC55-V2-Discovery/1.0", "Accept": "application/json"})
-    with urllib.request.build_opener(_NoRedirect).open(req, timeout=15) as res:
+    with urllib.request.build_opener(_NoRedirect).open(req, timeout=8) as res:
         if urllib.parse.urlsplit(res.url).hostname != urllib.parse.urlsplit(url).hostname:
             raise ValueError("Cross-host redirect refused")
         data = res.read(MAX_BYTES + 1)

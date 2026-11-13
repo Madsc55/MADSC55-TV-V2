@@ -60,3 +60,18 @@ jobs:
           python -m py_compile v2/discovery_34.py v2/discovery_34_integrate.py v2/discovery_34_live_contract.py
           PYTHONPATH=v2 python v2/discovery_34.py --output /tmp/discovery-34-offline.json
           PYTHONPATH=v2 python v2/discovery_34_integrate.py --output /tmp/discovery-34-integrated.json
+
+  live-discovery-diagnostic:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '#34 live probe')
+    continue-on-error: true
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Probe all six discovery terms on GitHub, GitLab and Codeberg
+        run: PYTHONPATH=v2 python v2/discovery_34_live_contract.py
