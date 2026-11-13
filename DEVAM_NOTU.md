@@ -1,3 +1,7 @@
+## 13 Kasım 2026 — PR #23 korunan oynatma listesi kabul kapısı
+- bf12ee38: main dalında bulunan v2/test_playlist_invariants.py derleme ve çalışma adımları, stage6 v2-offline-inventory.yml kabul iş akışına yeniden eklendi. Böylece YEDEKLER/YENİLER/FAVORİLER ve ana İBO koruma denetimi offline arşiv ve paket testleriyle birlikte tutulur.
+- GitHub Actions sonucu bu commit için henüz görünmedi; kabul başarısı ve görev kapanışı ilan edilmedi. Tarama yapılmadı, korunan liste değiştirilmedi.
+
 ## 13 Kasım 2026 — #28–#33 otomatik PR kabul tetikleyicisi
 - 5b57cd09: .github/workflows/v2-offline-inventory.yml iş akışına pull_request (v2/** ve workflow dosyası) tetikleyicisi eklendi. Önceden yalnızca workflow_dispatch bulunduğundan commit/PR güncellemesi offline kabulü kendiliğinden başlatmıyordu.
 - PR #23 açık. Commit sonrası GitHub Actions çalışması henüz görünmedi; workflow'un default branch görünürlüğü/izinleri ve kabul sonucu doğrulanmadan test başarılı sayılmayacak.
