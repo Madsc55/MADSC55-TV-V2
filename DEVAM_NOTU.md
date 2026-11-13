@@ -2573,3 +2573,12 @@ Kullanıcının açık talimatıyla #3, #4 ve #6 tarihî kurtarma görevleri art
 - Güvenlik gate commit `579b38d` için success; Stage 6 canlı keşif ve diğer canlı tarama işleri onay verilmediği için skipped. Yeni canlı keşif başlatılmadı.
 - Bu kanıtlar altyapı/regresyon kontrollerinin başarılı olduğunu gösterir; #34 canlı keşif, #15 kaynak provenansı, #17–21 nihai veri kabulleri ve #28–33 üretim/cihaz teslimini kapatmaz. Görev durumları bu sebeple değiştirilmedi.
 - Ana İBO, YEDEKLER, YENİLER, FAVORİLER ve tarihî ana envanter değiştirilmedi.
+
+
+## 13 Kasım 2026 — #15–#20 bağımlılık ve arşiv kanıtı yeniden denetimi
+
+- Kanonik `v2/tasks/master_tasks.json` ve `v2/tasks/state.json` tekrar okundu; 34 görev kaydı ve mevcut durumlar değiştirilmedi.
+- #15: 4.955 tarihî URL SHA kimliğinin 1.777'si sabitlenmiş IPTV-org `streams.json` + `channels.json` commit'iyle kesin kanal ID eşleşmesine sahip. 3.178 hash için bu katalogda eşleşme yok; 57 hostname korelasyonu yayıncı sahipliği kanıtı değildir. #15 açık kalır.
+- #17 altyapısı denetlendi: `historical_inventory_guard.reconcile` bütün ham tarihî satırları korur, aday görünümünü tam URL SHA256 ile tekilleştirir, hash-only kayıtları URL adayı yapmaz ve eski AV bayraklarını yeni kanıt saymaz. AES-GCM arşiv round-trip testleri mevcut; Stage 3 manifesti 4.955/4.955 tarihî satır, 4.955 tekil aday ve roundtrip doğrulaması bildiriyor. Ancak #17'nin zorunlu #15 ve #16 bağımlılıkları kapanmadığı için görev kabulü yapılamaz.
+- #18 mevcut kanıtı: 171 stream hash; 168 kısa FFmpeg örneğinde görüntü+ses. #19: 29 XMLTV ID, 8 geçerli program zaman aralığı, 303 EPG boşluğu. #20: 167 URL hash için ölçülmüş video boyutu ve iki gerçek A/V örneği. Bunlar kısmi kanıttır; #15/#17 bağımlılıkları nedeniyle nihai kabul değildir.
+- #17/#18/#19/#20/#21 görev statüleri değiştirilmedi. Ana İBO, YEDEKLER, YENİLER, FAVORİLER ve tarihî baseline değişmedi. Yeni canlı tarama/probe başlatılmadı.
