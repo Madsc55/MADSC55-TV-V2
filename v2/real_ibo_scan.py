@@ -213,6 +213,12 @@ def check_hls(entry, timeout, diagnostics=None):
     return None
 
 
+def current_decode_confirmed(current_av, status):
+    """Only fresh successful frame decoding can certify an AV inventory row."""
+    return (status == 'AV_VERIFIED' and isinstance(current_av, dict)
+            and current_av.get('decoded_av_verified') is True
+            and current_av.get('decode_status') == 'DECODED_AV')
+
 def historical_source_ids(record):
     """Keep both legacy and current source identifiers without duplicates."""
     ids = record.get('source_ids', [])
@@ -481,9 +487,7 @@ def main():
                 new_status = 'AV_VERIFIED' if candidate['url'] in good_urls else 'UNVERIFIED_OR_FAILED'
                 current_av = good_by_url.get(candidate['url'], {})
                 verified = current_av.get('verified_quality', {})
-                decoded_this_run = (new_status == 'AV_VERIFIED'
-                                    and current_av.get('decoded_av_verified') is True
-                                    and current_av.get('decode_status') == 'DECODED_AV')
+                decoded_this_run = current_decode_confirmed(current_av, new_status)
                 prior_attempts = previous.get('recovery_attempts', 0)
                 if type(prior_attempts) is not int or prior_attempts < 0:
                     raise ValueError('Invalid historical recovery attempts')
