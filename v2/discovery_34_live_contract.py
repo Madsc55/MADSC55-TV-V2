@@ -10,7 +10,7 @@ from discovery_34 import QUERIES, search_url, fetch_json, repository_candidates
 
 RETRYABLE_HTTP = frozenset((408, 425, 429, 500, 502, 503, 504))
 MAX_ATTEMPTS = 3
-MAX_RETRY_AFTER_SECONDS = 60
+MAX_RETRY_AFTER_SECONDS = 120
 
 def retry_delay(exc, attempt):
     """Honor numeric or HTTP-date Retry-After, capped to avoid unbounded waits."""
@@ -25,6 +25,10 @@ def retry_delay(exc, attempt):
                 if retry_at.tzinfo is None:
                     retry_at = retry_at.replace(tzinfo=timezone.utc)
                 seconds = int((retry_at - datetime.now(timezone.utc)).total_seconds())
+            return min(MAX_RETRY_AFTER_SECONDS, max(0, seconds))
+        reset = (headers.get("X-RateLimit-Reset") or headers.get("x-ratelimit-reset")) if headers is not None else None
+        if reset is not None and getattr(exc, "code", None) == 429:
+            seconds = int(reset) - int(time.time())
             return min(MAX_RETRY_AFTER_SECONDS, max(0, seconds))
     except (AttributeError, TypeError, ValueError):
         pass
@@ -54,6 +58,7 @@ def probe(source, query="turkish-iptv", fetch=fetch_json, sleep=time.sleep):
                     "http_status": exc.code, "http_reason": str(getattr(exc, "reason", ""))[:120],
                     "retry_after": headers.get("Retry-After") if headers is not None else None,
                     "rate_limit_remaining": (headers.get("X-RateLimit-Remaining") or headers.get("x-ratelimit-remaining")) if headers is not None else None,
+                    "rate_limit_reset": (headers.get("X-RateLimit-Reset") or headers.get("x-ratelimit-reset")) if headers is not None else None,
                     "retryable": retryable, "provider": source, "attempts": attempt,
                     "endpoint_host": {"github": "api.github.com", "gitlab": "gitlab.com", "codeberg": "codeberg.org"}[source]}
         except urllib.error.URLError as exc:
