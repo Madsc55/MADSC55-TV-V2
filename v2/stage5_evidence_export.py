@@ -3,6 +3,7 @@
 import argparse
 import hashlib
 import json
+import re
 import subprocess
 from pathlib import Path
 from urllib.parse import urlsplit
@@ -36,7 +37,18 @@ def media_has_audio_video(path):
             capture_output=True, text=True, timeout=30, check=True)
         streams = json.loads(result.stdout).get("streams", [])
         kinds = {item.get("codec_type") for item in streams}
-        return {"video", "audio"} <= kinds
+        if not {"video", "audio"} <= kinds:
+            return False
+        # Codec metadata is not proof that decoders produced actual frames.
+        for kind, marker in (("v", "frame"), ("a", "out_time_us")):
+            decoded = subprocess.run(
+                ["ffmpeg", "-nostdin", "-hide_banner", "-loglevel", "error",
+                 "-i", str(path), "-map", "0:" + kind + ":0", "-frames:" + kind, "1",
+                 "-progress", "pipe:1", "-f", "null", "-"],
+                capture_output=True, text=True, timeout=30, check=True)
+            if not re.search(r"(?m)^" + marker + r"=\\s*([1-9][0-9]*)\\s*$", decoded.stdout):
+                return False
+        return True
     except (OSError, subprocess.SubprocessError, ValueError, TypeError):
         return False
 
