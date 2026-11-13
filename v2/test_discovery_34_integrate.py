@@ -12,6 +12,21 @@ class IntegrationTests(unittest.TestCase):
         self.assertEqual(len(normalize("github_m3u", {"sources": [{"status": "SOURCE_PARSED_STREAMS_NOT_PLAYBACK_VERIFIED", "url": "https://raw.githubusercontent.com/a/b/main/tr.m3u"}]})), 1)
         for provider in ("gitlab_m3u", "codeberg_m3u"):
             self.assertEqual(len(normalize(provider, {"sources": [{"status": "SOURCE_PARSED_STREAMS_NOT_PLAYBACK_VERIFIED", "url": "https://example.org/tr.m3u"}]})), 1)
+    def test_official_and_youtube_metadata_survive_integration(self):
+        official = normalize("official", {"channels": [{
+            "official_site": "https://tv.example/live", "name": "Example TV",
+            "channel_id": "example.tv", "country": "GB",
+            "status": "DIRECTORY_REFERENCE_ONLY_NOT_STREAM_VERIFIED"}]})[0]
+        youtube = normalize("youtube", {"results": [{
+            "video_id": "AbCdEf12345", "title": "Live News",
+            "channel": "News Channel", "status": "LIVE_METADATA_VERIFIED"}]})[0]
+        self.assertEqual(official["name"], "Example TV")
+        self.assertEqual(official["tvg_id"], "example.tv")
+        self.assertEqual(official["country"], "GB")
+        self.assertEqual(youtube["name"], "Live News")
+        self.assertEqual(youtube["group"], "News Channel")
+        self.assertEqual(youtube["status"], "LIVE_METADATA_VERIFIED")
+
     def test_integrated_and_deduplicated(self):
         with tempfile.TemporaryDirectory() as d:
             reports = {}
