@@ -79,31 +79,30 @@ def probe(source, query="turkish-iptv", fetch=fetch_json, sleep=time.sleep):
                     "provider": source, "attempts": attempt}
 
 def probe_queries(source, queries=QUERIES, fetch=fetch_json, sleep=time.sleep):
-    """Probe every configured discovery term; preserve per-query failures."""
+    """Probe terms sequentially; stop provider fanout after an exhausted HTTP 429."""
+    terms = list(queries)
     results = []
-    rate_limited = False
-    for query in queries:
-        if rate_limited:
-            results.append({"query": query, "status": "skipped",
-                            "reason": "provider_rate_limit_circuit_open",
-                            "provider": source, "attempts": 0})
-            continue
+    for index, query in enumerate(terms):
         row = probe(source, query=query, fetch=fetch, sleep=sleep)
         results.append({"query": query, **row})
-        # One exhausted 429 proves this provider is throttling this runner.
-        # Stop issuing sibling queries instead of amplifying the rate limit.
+        # A 429 is provider-wide pressure, not a query-specific failure.
+        # Record remaining terms as skipped rather than amplifying the rate limit.
         if row.get("http_status") == 429:
-            rate_limited = True
+            results.extend({"query": skipped, "status": "skipped",
+                            "reason": "provider_rate_limit_circuit_open",
+                            "provider": source, "attempts": 0}
+                           for skipped in terms[index + 1:])
+            break
     failed = [row for row in results if row["status"] == "error"]
     skipped = [row for row in results if row["status"] == "skipped"]
     return {"status": "error" if failed or skipped else "ok",
-            "queries_checked": len(results),
-            "queries_ok": len(results) - len(failed) - len(skipped),
+            "queries_total": len(terms),
+            "queries_checked": len(results) - len(skipped),
+            "queries_ok": sum(row["status"] == "ok" for row in results),
             "queries_failed": len(failed),
             "queries_skipped": len(skipped),
-            "rate_limited": rate_limited,
+            "rate_limited": any(row.get("http_status") == 429 for row in failed),
             "query_results": results}
-
 
 def main():
     results = {source: probe_queries(source) for source in ("github", "gitlab", "codeberg")}
