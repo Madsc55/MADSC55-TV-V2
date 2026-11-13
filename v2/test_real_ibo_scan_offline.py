@@ -134,7 +134,7 @@ class ScannerOfflineTests(unittest.TestCase):
                   patch.object(scanner, "fetch") as fetch,
                   patch.object(sys, "argv", argv),
                   patch.dict(os.environ, {"V2_ARCHIVE_PASSPHRASE": "offline-only-secret-12345"}),
-                  patch("sys.stderr", new_callable=io.StringIO) as error_output:
+                  patch("sys.stderr", new_callable=io.StringIO) as error_output):
                 with self.assertRaises(SystemExit) as failure:
                     scanner.main()
                 self.assertEqual(failure.exception.code, 2)
