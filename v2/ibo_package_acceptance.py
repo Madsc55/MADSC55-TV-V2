@@ -87,7 +87,8 @@ def main():
     evidence=json.loads(args.evidence.read_text(encoding="utf-8"))
     content,report=package(text,args.target,evidence)
     args.output.parent.mkdir(parents=True,exist_ok=True)
-    args.output.write_text(content,encoding="utf-8")
+    with args.output.open("x", encoding="utf-8") as output:
+        output.write(content)
     print(json.dumps(report,ensure_ascii=False))
 if __name__=="__main__":
     main()
