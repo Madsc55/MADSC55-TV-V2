@@ -1074,3 +1074,11 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - PR #184 merge commit `c400b1f3aff3744c65f110e41629cabc5ed90596`; Actions run `43481525275` SUCCESS. Stage 2/3 kimlik/EPG, Stage 5 yerel FFmpeg video+ses decode, Stage 6 paket/arşiv, #34 offline ve ana İBO güvenlik kapıları geçti.
 - Daha önce birleştirilen farklı kanalın aynı kanıt SHA-256'sını yeniden kullanamaması kuralı korunarak eşzamanlı Stage 5 değişiklikleriyle çakışma giderildi; PR #180 zorla birleştirilmeden kapatıldı.
 - Bu altyapı güvenlik kabulü, mevcut 4.301 URL'lik M3U parçaları için gerçek cihaz oynatımı, bütün kanalların bağımsız AV/kimlik kabulü veya harici üretim geri yüklemesi anlamına gelmez. #28–#33 açık kalır. Yeni toplu tarama veya korunan İBO/YEDEKLER/YENİLER/FAVORİLER dosyası değişikliği yapılmadı.
+
+
+## 13 Kasım 2026 — #19 çapraz XMLTV kaynak kimliği çakışmaları fail-closed
+- PR #202 squash merge `e5a233b8c281208b5ebc4662f741968002819d38`. PR CI `43484557050` SUCCESS; main Production Security Gate `43484812015` SUCCESS.
+- Birden fazla EPG sağlayıcısı aynı XMLTV channel id bildirirse iki sağlayıcının programları birleştirilmez; çakışan id'ler tüm kaynaklardan kaldırılır. Kaynağın kendisinde yinelenen channel id ve bildirimi olmayan programme/channel id de reddedilir; mevcut benzersiz kaynaklar korunur.
+- XMLTV DTD/ENTITY bildirimleri parse edilmeden engellenir. Hata raporunda signed EPG kaynak sorgu parametreleri ve gizli URL içerikleri yazılmaz. Yeni çevrimdışı regresyonlar EPG güvenlik kapısına dahil; canlı EPG download ya da toplu kanal taraması yapılmadı.
+- Aynı PR'da #28–#30 için eski bir regresyon fixture'ına gerçek `decoded_av_verified=true` ve `decode_status=DECODED_AV` alanları eklenerek önceden başarısız test, üretim kanıt koşulları gevşetilmeden düzeltildi.
+- #19 hâlâ açık: güncel yayın rehberi boşlukları, gerçek bağımsız yayıncı kimliği ve canlı kabul kanıtı tamamlanmış değil. Ana İBO, YEDEKLER, YENİLER, FAVORİLER dosyaları değişmedi.
