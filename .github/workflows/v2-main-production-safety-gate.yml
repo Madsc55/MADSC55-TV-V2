@@ -60,3 +60,7 @@ jobs:
           python -m py_compile v2/discovery_34.py v2/discovery_34_integrate.py v2/discovery_34_live_contract.py
           PYTHONPATH=v2 python v2/discovery_34.py --output /tmp/discovery-34-offline.json
           PYTHONPATH=v2 python v2/discovery_34_integrate.py --output /tmp/discovery-34-integrated.json
+      - name: Bounded live GitHub GitLab Codeberg metadata contract
+        env:
+          PYTHONPATH: v2
+        run: python v2/discovery_34_live_contract.py
