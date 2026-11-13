@@ -60,8 +60,23 @@ def verify_epg_ids(candidates, xmltv_text):
         raise ValueError("Expected XMLTV tv root")
     from collections import Counter
     ids = Counter(node.get("id") for node in root.findall("channel") if node.get("id"))
-    programme_ids = {node.get("channel") for node in root.findall("programme")
-                     if node.get("channel") and node.get("start")}
+    # An XMLTV programme name/ID alone is not evidence of usable schedule data.
+    # Require both parseable endpoints, an increasing interval, and one unique
+    # declaration for the referenced channel before reporting availability.
+    from epg_integrity import parse_xmltv_time
+    programme_ids = set()
+    for programme in root.findall("programme"):
+        channel = programme.get("channel")
+        if not channel or ids[channel] != 1:
+            continue
+        start, stop = programme.get("start"), programme.get("stop")
+        if not start or not stop:
+            continue
+        try:
+            if parse_xmltv_time(stop) > parse_xmltv_time(start):
+                programme_ids.add(channel)
+        except (ValueError, TypeError, AttributeError):
+            continue
     output = []
     for row in candidates:
         candidate = row.get("epg_id_candidate")
