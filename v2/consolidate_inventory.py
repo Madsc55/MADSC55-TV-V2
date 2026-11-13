@@ -40,6 +40,10 @@ def merge_records(paths, encrypted_paths=(), passphrase=None):
                 if not isinstance(record, dict) or not valid_url(record.get("url")):
                     raise ValueError(f"{path}:{number}: invalid candidate URL")
                 url = record["url"]
+                digest = hashlib.sha256(url.encode("utf-8")).hexdigest()
+                if "url_sha256" in record and record["url_sha256"] != digest:
+                    raise ValueError(f"{path}:{number}: URL SHA-256 mismatch")
+                record["url_sha256"] = digest
                 if url not in merged:
                     merged[url] = dict(record)
                     merged[url]["source_ids"] = []
