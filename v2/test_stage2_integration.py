@@ -94,6 +94,23 @@ class Stage2IntegrationTests(unittest.TestCase):
         self.assertEqual(row["resolution_hint"], "1080p")
         self.assertIsNone(row["epg_id_candidate"])
 
+    def test_sha_only_recovery_record_keeps_private_url_out(self):
+        url = "https://example.invalid/live.m3u8?token=private"
+        digest = sha_for_url(url)
+        result = integrate([{"url_sha256": digest, "status": "TIMEOUT",
+                             "attempts": 2}], max_attempts=3)
+        self.assertEqual(result["recovery"]["retry"][0]["next_attempt"], 3)
+        self.assertEqual(result["observations"][0]["url_sha256"], digest)
+        self.assertNotIn(url, str(result))
+
+    def test_retry_limit_holds_transient_record_without_false_acceptance(self):
+        digest = sha_for_url("https://example.invalid/retry-limit")
+        result = integrate([{"url_sha256": digest, "status": "TIMEOUT",
+                             "attempts": 3}], max_attempts=3)
+        self.assertEqual(result["recovery"]["retry"], [])
+        self.assertEqual(result["recovery"]["verified"], [])
+        self.assertEqual(len(result["recovery"]["hold"]), 1)
+
     def test_resolution_hint_is_propagated_without_self_verification(self):
         result = integrate([{"url_sha256": sha_for_url("https://example.invalid/a"),
                              "name": "Station 1080P", "resolution_verified": True}])
