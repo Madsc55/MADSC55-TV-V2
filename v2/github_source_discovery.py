@@ -15,6 +15,9 @@ QUERIES = ["turkish iptv m3u", "turkiye m3u", "tr iptv playlist", "turkish tv pl
 MAX_REPOS = 320
 MAX_FILES = 320
 MAX_BYTES = 2_000_000
+MAX_GIST_PAGES = 10
+GIST_PAGE_SIZE = 20
+MAX_GIST_SOURCES = 200
 
 def api(url):
     headers = {"User-Agent": "MADSC55-TV-V2-Discovery/1.0", "Accept": "application/vnd.github+json"}
@@ -23,6 +26,66 @@ def api(url):
         headers["Authorization"] = "Bearer " + token
     with urllib.request.urlopen(urllib.request.Request(url, headers=headers), timeout=18) as r:
         return json.loads(r.read(MAX_BYTES).decode("utf-8"))
+
+
+def discover_gists(api_fn=api, fetch_fn=fetch, configured_urls=None):
+    """Inspect a bounded recent window of public Gists for parseable M3U/M3U8 files."""
+    seen = set(configured_urls or ())
+    found, errors = [], []
+    checked = 0
+    for page in range(1, MAX_GIST_PAGES + 1):
+        endpoint = ("https://api.github.com/gists/public?" +
+                    urllib.parse.urlencode({"per_page": GIST_PAGE_SIZE, "page": page}))
+        try:
+            payload = api_fn(endpoint)
+            if not isinstance(payload, list):
+                raise ValueError("Invalid public Gist response")
+            if not payload:
+                break
+            for gist in payload:
+                checked += 1
+                if not isinstance(gist, dict):
+                    continue
+                gist_id = gist.get("id")
+                files = gist.get("files")
+                if not isinstance(gist_id, str) or not isinstance(files, dict):
+                    continue
+                for filename, item in files.items():
+                    if len(found) >= MAX_GIST_SOURCES:
+                        return found, errors, checked
+                    if not isinstance(filename, str) or not filename.lower().endswith((".m3u", ".m3u8", ".txt")):
+                        continue
+                    if not isinstance(item, dict):
+                        continue
+                    raw = item.get("raw_url")
+                    parsed = urllib.parse.urlsplit(raw) if isinstance(raw, str) else None
+                    if (parsed is None or parsed.scheme != "https"
+                            or parsed.hostname != "gist.githubusercontent.com"
+                            or parsed.username or parsed.password or raw in seen):
+                        continue
+                    seen.add(raw)
+                    try:
+                        sample = list(entries(fetch_fn(raw)))
+                        if not sample:
+                            continue
+                        found.append({
+                            "repository": "gist:" + gist_id,
+                            "path": filename,
+                            "url": raw,
+                            "entries": len(sample),
+                            "tr_name_hints": sum(bool(re.search(
+                                r"(?i)\\b(trt|türk|turk|kanal|haber)\\b", row["name"]))
+                                for row in sample),
+                            "status": "SOURCE_PARSED_STREAMS_NOT_PLAYBACK_VERIFIED",
+                        })
+                    except Exception as exc:
+                        errors.append({"gist": gist_id, "file": filename,
+                                       "error": type(exc).__name__})
+        except Exception as exc:
+            errors.append({"gist_page": page, "error": type(exc).__name__})
+            break
+    return found, errors, checked
+
 
 def main():
     configured = {x["url"] for x in json.loads(CONFIG.read_text())["sources"]}
@@ -59,11 +122,16 @@ def main():
                     errors.append({"repository": name, "path": path, "error": type(exc).__name__})
         except Exception as exc:
             errors.append({"repository": name, "error": type(exc).__name__})
+    gist_sources, gist_errors, gists_checked = discover_gists(
+        api_fn=api, fetch_fn=fetch, configured_urls=configured)
+    found.extend(gist_sources)
+    errors.extend(gist_errors)
     found.sort(key=lambda item: (item["repository"].casefold(), item["path"].casefold()))
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps({"created_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
        "policy": "READ_ONLY_NO_AUTOMATIC_SOURCE_OR_PLAYLIST_IMPORT", "repositories_discovered": len(repos),
-       "sources_found": len(found), "sources": found, "errors": errors}, ensure_ascii=False, indent=2) + "\n")
+       "gists_checked": gists_checked, "gist_sources_found": len(gist_sources),
+       "sources_found": len(found), "sources": found, "errors": errors}, ensure_ascii=False, indent=2) + "\\n")
     print("Repositories:", len(repos), "parsed new sources:", len(found), "errors:", len(errors))
 
 if __name__ == "__main__":
