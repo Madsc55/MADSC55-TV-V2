@@ -236,7 +236,7 @@ class LiveContractRetryTests(unittest.TestCase):
         terms = ("turkiye.m3u", "tr.m3u8", "turkish-iptv", "canli-tv")
         result = probe_queries("codeberg", queries=terms, fetch=fetch, sleep=sleeps.append)
         self.assertEqual(result["status"], "error")
-        self.assertEqual(result["queries_checked"], 4)
+        self.assertEqual(result["queries_checked"], 1)
         self.assertEqual(result["queries_failed"], 1)
         self.assertEqual(result["queries_skipped"], 3)
         self.assertTrue(result["rate_limited"])
@@ -245,6 +245,23 @@ class LiveContractRetryTests(unittest.TestCase):
                          ["error", "skipped", "skipped", "skipped"])
         self.assertTrue(all(row.get("reason") == "provider_rate_limit_circuit_open"
                             for row in result["query_results"][1:]))
+
+
+    def test_http_429_uses_rate_limit_reset_header(self):
+        import time
+        calls, sleeps = [], []
+        reset = str(int(time.time()) + 45)
+        def fetch(_url):
+            calls.append(1)
+            if len(calls) == 1:
+                raise urllib.error.HTTPError("https://codeberg.org/api/v1/repos/search", 429,
+                                             "rate limited", {"X-RateLimit-Reset": reset}, None)
+            return {"data": []}
+        result = probe("codeberg", fetch=fetch, sleep=sleeps.append)
+        self.assertEqual(result["status"], "ok")
+        self.assertEqual(result["attempts"], 2)
+        self.assertEqual(len(calls), 2)
+        self.assertTrue(0 <= sleeps[0] <= 45)
 
     def test_http_429_without_header_uses_exponential_backoff(self):
         calls, sleeps = [], []
