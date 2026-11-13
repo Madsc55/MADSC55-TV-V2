@@ -6,12 +6,17 @@ permissions:
 concurrency:
   group: v2-offline-inventory-${{ github.ref }}
   cancel-in-progress: false
+concurrency:
+  group: v2-offline-inventory-${{ github.ref }}
+  cancel-in-progress: false
 jobs:
   inventory:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
         with:
           persist-credentials: false
       - uses: actions/setup-python@v5
