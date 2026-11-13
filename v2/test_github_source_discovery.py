@@ -31,8 +31,10 @@ class GistDiscoveryTests(unittest.TestCase):
 
     def test_configured_gist_url_is_not_added_twice(self):
         url = "https://gist.githubusercontent.com/gist-1/raw/turkiye.m3u"
-        def api(_):
-            return [{"id": "gist-1", "files": {"turkiye.m3u": {"raw_url": url}}}]
+        def api(endpoint):
+            if "page=1" in endpoint:
+                return [{"id": "gist-1", "files": {"turkiye.m3u": {"raw_url": url}}}]
+            return []
         rows, errors, checked = discover_gists(api_fn=api, fetch_fn=lambda _: self.fail("duplicate fetch"),
                                                 configured_urls={url})
         self.assertEqual(rows, [])
@@ -40,11 +42,13 @@ class GistDiscoveryTests(unittest.TestCase):
         self.assertEqual(checked, 1)
 
     def test_non_gist_hosts_and_non_playlist_files_are_ignored(self):
-        def api(_):
-            return [{"id": "gist-2", "files": {
-                "readme.md": {"raw_url": "https://gist.githubusercontent.com/gist-2/raw/readme.md"},
-                "bad.m3u": {"raw_url": "https://example.com/bad.m3u"},
-            }}]
+        def api(endpoint):
+            if "page=1" in endpoint:
+                return [{"id": "gist-2", "files": {
+                    "readme.md": {"raw_url": "https://gist.githubusercontent.com/gist-2/raw/readme.md"},
+                    "bad.m3u": {"raw_url": "https://example.com/bad.m3u"},
+                }}]
+            return []
         rows, errors, checked = discover_gists(api_fn=api, fetch_fn=lambda _: self.fail("must not fetch"))
         self.assertEqual(rows, [])
         self.assertEqual(errors, [])
