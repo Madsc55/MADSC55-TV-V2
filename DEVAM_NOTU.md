@@ -878,3 +878,10 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - `v2/test_discovery_34_integrate.py`: karışık bozuk/geçerli satırlar ve geçersiz koleksiyon tipleri için regresyon eklendi.
 - PR #46 merge commit `06a26a6aff41ded43cb1e3e78abe14080cc6fb9e`; Actions run `43449834934` SUCCESS; #34 offline adapter/integration acceptance ve Stage 6 paket/arşiv regresyon adımları SUCCESS.
 - Bu yalnızca mevcut rapor dosyalarının çevrimdışı normalizasyon kabulüdür; canlı API, her sağlayıcının gerçek yayın URL'sine çözülmesi, FFmpeg AV, logo/EPG üretim eşlemesi veya nihai dünya taraması değildir. #34 ve gerçek yayın gerektiren görevler açık kalır. Korunan listelere dokunulmadı.
+
+
+## 13 Kasım 2026 — #34 URL kontrol karakteri regresyonu düzeltildi ve main'de kabul edildi
+- PR #53 squash merge commit: `70dae8c5e74135a1b07809afe5e828a5bee0b06d`.
+- GitHub Actions run `43451905845` (Production Security Gate, run 318): SUCCESS. Güvenlik kilidi, korunan IBO invariantları, tarihî görev defteri bütünlüğü, Stage 6 çevrimdışı paket/arşiv ve #34 çevrimdışı keşif entegrasyon adımları tamamı PASS.
+- Düzeltme, test URL'lerinde gerçek LF/CR/NUL/DEL karakterleri kullanılmasını sağladı; önceki test fixture'ları literal ters eğik çizgi dizileri içeriyordu.
+- Bu çevrimdışı CI sonucu canlı API, gerçek FFmpeg görüntü/ses, bağımsız harici geri yükleme veya cihaz kabulü değildir. #15/#17–#21 ve #28–#34 nihai kabulleri açık kalır. Yeni tarama yapılmadı; ana İBO, YEDEKLER, YENİLER ve FAVORİLER değiştirilmedi.
