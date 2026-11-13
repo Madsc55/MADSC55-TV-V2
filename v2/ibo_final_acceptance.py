@@ -20,6 +20,8 @@ def audit_archive(original, restored):
 
 def audit_encrypted_archive(original, ciphertext, passphrase):
     from secure_archive import MAGIC, decrypt
+    if type(original) is not bytes or type(ciphertext) is not bytes:
+        raise ValueError("encrypted archive inputs must be bytes")
     if not ciphertext.startswith(MAGIC):
         raise ValueError('not an authenticated encrypted V2 archive')
     restored = decrypt(ciphertext, passphrase)
