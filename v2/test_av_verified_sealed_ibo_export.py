@@ -83,6 +83,19 @@ class SeparatePrivateExport(unittest.TestCase):
         self.assertEqual(content,"#EXTM3U\n")
         self.assertFalse(summary["protected_main_playlist_modified"])
 
+    def test_conflicting_sealed_av_status_is_rejected(self):
+        report,rows=fixture()
+        rows[0]["status"]="PROBE_FAILED_TIMEOUT"
+        with self.assertRaisesRegex(ValueError,"Conflicting authenticated AV status"):
+            select(report,rows)
+
+    def test_consistent_legacy_sealed_av_status_is_allowed(self):
+        report,rows=fixture()
+        rows[0]["status"]="VIDEO_AUDIO_DECODED"
+        content,summary=select(report,rows)
+        self.assertEqual(summary["verified_entries"],1)
+        self.assertIn('tvg-id="TestTV.tr"',content)
+
     def test_cannot_target_main_or_existing_file(self):
         with tempfile.TemporaryDirectory() as tmp:
             path=Path(tmp)/"MADSC55_TV_IBO_CALISANLAR_TEST.m3u8"
