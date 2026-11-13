@@ -1,3 +1,10 @@
+## 13 Kasım 2026 — #34 Retry-After HTTP-date desteği
+- Main commit `3a6222df8afe6d3362c2f0b0412dfdcb7905395e`: sayısal Retry-After yanında HTTP-date biçimi de ayrıştırılır; bekleme 0–60 saniye aralığında sınırlandırılır.
+- Aynı committe HTTP-date regresyonu eklendi. Offline kabul PR #86 run `43457308527` SUCCESS; bu koşu altı arama terimi sözleşme matrisinin çevrimdışı testini kapsar.
+- Bu kanıt Codeberg canlı API erişimi değildir. Codeberg için son canlı gözlem HTTP 429; HTTP-date backoff düzeltmesinden sonra canlı yeniden çalıştırma kanıtı henüz yok.
+- Grup kabul workflow'u güvenlik politikası gereği `workflow_dispatch` ile manuel çalıştırılır; PR/push tetikleyicisi eklenmedi. Canlı sözleşme koşusu ayrıca manuel olarak başlatılmalıdır.
+- #34 açık; AV ses/görüntü ve gerçek İBO paket kabulü yapılmadı. Korunan listelere dokunulmadı, geniş tarama başlatılmadı.
+
 ## 13 Kasım 2026 — Aşama 2 (#15, #17–#21) çevrimdışı kabul kapısı ana dala alındı
 - PR #72 squash merge `e333adca5c0497de6c021e021d74b3369571276d`; ana Production Security Gate Actions `43455393756` SUCCESS.
 - Başarılı adımlar: Stage 2 identity/recovery/metadata integration acceptance; Stage 2/3 offline identity, EPG and recovery acceptance; Stage 6 offline package/archive; #34 offline adapter/integration; production security and protected IBO invariants.
