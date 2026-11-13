@@ -98,7 +98,7 @@ def curated_candidates(source, records):
         url = item.get("url", "")
         if source == "youtube":
             video_id = item.get("video_id", "")
-            if not re.fullmatch(r"[A-Za-z0-9_-]{11}", video_id):
+            if not isinstance(video_id, str) or not re.fullmatch(r"[A-Za-z0-9_-]{11}", video_id):
                 continue
             url = "https://www.youtube.com/watch?v=" + video_id
         try:
