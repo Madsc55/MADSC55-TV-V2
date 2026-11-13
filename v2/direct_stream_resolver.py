@@ -113,7 +113,7 @@ def resolve_report(report, runner=subprocess.run, limit=MAX_RESOLVE):
 
 
 def write_encrypted_report(report, destination, passphrase):
-    raw = (json.dumps(report, ensure_ascii=False, separators=(",", ":")) + "\\n").encode("utf-8")
+    raw = json.dumps(report, ensure_ascii=False, separators=(",", ":")).encode("utf-8") + bytes([10])
     blob = encrypt(raw, passphrase)
     atomic_write(destination, blob)
     return {"encrypted": True, "bytes": len(blob), "resolved": report["resolved"]}
