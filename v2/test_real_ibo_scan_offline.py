@@ -73,5 +73,32 @@ class ScannerOfflineTests(unittest.TestCase):
         self.assertFalse(scanner.eligible_entry(excluded, "TR", worldwide=False))
         self.assertTrue(scanner.eligible_entry(excluded, "TR", worldwide=True))
 
+    def test_integrated_discovery_admits_only_new_https_m3u_sources(self):
+        report = {"candidates": [
+            {"source": "m3u", "url": "https://lists.example.net/world.m3u", "verified_av": False},
+            {"source": "m3u", "url": "http://lists.example.net/insecure.m3u", "verified_av": False},
+            {"source": "youtube", "url": "https://www.youtube.com/watch?v=abcdefghijk", "verified_av": False},
+            {"source": "m3u", "url": "https://lists.example.net/world.m3u", "verified_av": False},
+            None,
+        ]}
+        existing = [{"id": "configured", "url": "https://lists.example.net/already.m3u"}]
+        accepted, rejected = scanner.normalize_integrated_m3u_sources(report, existing)
+        self.assertEqual(len(accepted), 1)
+        self.assertEqual(accepted[0]["url"], "https://lists.example.net/world.m3u")
+        self.assertEqual(accepted[0]["scope"], "candidate")
+        self.assertEqual(len(rejected), 3)
+
+    def test_integrated_discovery_rejects_invalid_root_and_verified_claims(self):
+        for report in (None, [], {"candidates": {}}, {"candidates": None}):
+            with self.assertRaises(ValueError):
+                scanner.normalize_integrated_m3u_sources(report, [])
+        report = {"candidates": [
+            {"source": "m3u", "url": "https://lists.example.net/a.m3u", "verified_av": True},
+            {"source": "m3u", "url": "https://user:pass@lists.example.net/b.m3u", "verified_av": False},
+        ]}
+        accepted, rejected = scanner.normalize_integrated_m3u_sources(report, [])
+        self.assertEqual(accepted, [])
+        self.assertEqual(len(rejected), 2)
+
 if __name__ == "__main__":
     unittest.main()
