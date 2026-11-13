@@ -2,7 +2,9 @@
 """Offline EPG mapping acceptance: no guessed programme ownership."""
 import unittest
 from collections import defaultdict
-from build_epg import norm, select_epg_source
+from datetime import datetime, timezone
+import xml.etree.ElementTree as ET
+from build_epg import norm, select_epg_source, programme_in_window
 
 
 class EPGBuilderMatchingTests(unittest.TestCase):
@@ -27,6 +29,26 @@ class EPGBuilderMatchingTests(unittest.TestCase):
     def test_unknown_name_remains_unmatched(self):
         self.assertEqual(select_epg_source("", "Unknown", "Unknown",
                                            self.names, self.schedules), (None, False))
+
+    def test_guide_export_uses_real_utc_offset(self):
+        p = ET.Element("programme", start="20261113120000 +0300", stop="20261113130000 +0300")
+        begin = datetime(2026, 11, 13, 8, 0, tzinfo=timezone.utc)
+        end = datetime(2026, 11, 13, 10, 0, tzinfo=timezone.utc)
+        self.assertTrue(programme_in_window(p, begin, end))
+
+    def test_guide_export_rejects_invalid_intervals(self):
+        begin = datetime(2026, 11, 13, 0, 0, tzinfo=timezone.utc)
+        end = datetime(2026, 11, 14, 0, 0, tzinfo=timezone.utc)
+        invalid = [
+            ("20261113120000 +1460", "20261113130000 +1460"),
+            ("20261113130000 +0000", "20261113120000 +0000"),
+            ("20261113120000 +0000", "20261113120000 +0000"),
+            ("20261113120000 +0000", ""),
+        ]
+        for start, stop in invalid:
+            with self.subTest(start=start, stop=stop):
+                p = ET.Element("programme", start=start, stop=stop)
+                self.assertFalse(programme_in_window(p, begin, end))
 
     def test_conflicting_tvg_name_and_display_are_ambiguous(self):
         self.assertEqual(select_epg_source("", "Unique Station", "Shared TV",
