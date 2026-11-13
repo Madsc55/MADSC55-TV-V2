@@ -31,6 +31,9 @@ def encrypt(data, passphrase):
 
 def decrypt(blob, passphrase):
     minimum = len(MAGIC) + 16 + 12 + 16
+    maximum = len(MAGIC) + 16 + 12 + MAX_INPUT + 16
+    if len(blob) > maximum:
+        raise ValueError('Encrypted archive exceeds maximum size')
     if len(blob) < minimum or not blob.startswith(MAGIC):
         raise ValueError('Invalid encrypted archive format')
     offset = len(MAGIC)
