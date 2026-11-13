@@ -1,3 +1,8 @@
+## 13 Kasım 2026 — #28–#33 EXTINF süre sınır testleri
+- 9b25a1a: EXTINF sürelerinde -1, 0, pozitif tamsayı ve ondalık değer kabulü; +1, -0.5, bilimsel gösterim, eksik basamak ve boş değer reddi için sınır testleri eklendi.
+- b6d86e5: test fixture satır sonları Python kaynak kodunda gerçek `\\n` kaçışları olacak şekilde düzeltildi.
+- Workflow `v2-offline-inventory.yml` yalnızca workflow_dispatch ile tetikleniyor; mevcut GitHub entegrasyonunda workflow dispatch çağrısı bulunmadığından bu commit için Actions çalışması başlatılamadı. Nihai gerçek AV/harici geri yükleme açık; korunan listeler değiştirilmedi.
+
 ## 13 Kasım 2026 — #28–#33 M3U EXTINF süre doğrulaması
 - 9e1e2d8 / aa0e815: paket ayrıştırıcısı EXTINF süre alanını doğrular; yalnızca -1 veya sıfır/pozitif tamsayı/ondalık süre kabul edilir. Regex ondalık ayıracı düzeltildi.
 - e8c8da8 / 462bd6a: bozuk süreler reddedilir, ondalık süre ve nitelik içeren geçerli satır kabul edilir; Python fixture kaçışları düzeltildi.
