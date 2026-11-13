@@ -1,3 +1,8 @@
+## 13 Kasım 2026 — #34 geçici soket hataları için geliştirme dalı düzeltmesi
+- Commit c25ab190: TimeoutError, ConnectionResetError ve ConnectionAbortedError için en fazla üç kontrollü deneme eklendi. Hata devam ederse fail-closed; canlı API kabulü olarak işaretlenmez.
+- Commit 1f04dbcd: soket zaman aşımı kurtarma ve bağlantı sıfırlama tükenmesi için iki çevrimdışı regresyon testi eklendi.
+- Bu commitlerin GitHub Actions sonucu ve Codeberg canlı API kabulü henüz doğrulanmadı. #34 AÇIK. Yeni kapsamlı tarama yapılmadı; ana İBO/YEDEKLER/YENİLER/FAVORİLER değiştirilmedi.
+
 ## 13 Kasım 2026 — #34 entegre rapor üzerine yazma koruması
 - 3df58653: discovery_34_integrate.py de raporu exclusive create (open("x")) ile yazar; önceden var olan dosyayı değiştirmez.
 - 6537c510: entegre CLI'nin mevcut rapor içeriğini koruduğunu sınayan regresyon testi eklendi.
