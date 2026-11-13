@@ -82,6 +82,38 @@ class Discovery34Tests(unittest.TestCase):
         self.assertEqual(len(result), 1)
         self.assertNotIn("VALID", result[0]["source_id"])
 
+    def test_signed_url_queries_have_distinct_nonsecret_identities(self):
+        first = identity("m3u", "https://example.org/live.m3u8?token=alpha")
+        second = identity("m3u", "https://example.org/live.m3u8?token=beta")
+        self.assertNotEqual(first["source_id"], second["source_id"])
+        self.assertNotIn("alpha", first["source_id"])
+        self.assertNotIn("beta", second["source_id"])
+        self.assertEqual(identity("m3u", "https://example.org/live.m3u8")["source_id"],
+                         "m3u:example.org/live.m3u8")
+
+    def test_nondefault_ports_and_invalid_ports(self):
+        plain = identity("m3u", "https://example.org/live.m3u8")["source_id"]
+        port = identity("m3u", "https://example.org:8443/live.m3u8")["source_id"]
+        self.assertNotEqual(plain, port)
+        self.assertIn(":8443", port)
+        for url in ("https://example.org:bad/live.m3u8", "https://example.org:99999/live.m3u8"):
+            with self.subTest(url=url), self.assertRaises(ValueError):
+                identity("m3u", url)
+
+    def test_cli_preserves_existing_discovery_report(self):
+        import pathlib
+        import subprocess
+        import sys
+        import tempfile
+        with tempfile.TemporaryDirectory() as d:
+            output = pathlib.Path(d) / "original.json"
+            output.write_text("KEEP_EXISTING_REPORT", encoding="utf-8")
+            proc = subprocess.run([sys.executable,
+                str(pathlib.Path(__file__).with_name("discovery_34.py")),
+                "--output", str(output)], capture_output=True, text=True)
+            self.assertNotEqual(proc.returncode, 0)
+            self.assertEqual(output.read_text(encoding="utf-8"), "KEEP_EXISTING_REPORT")
+
     def test_official_and_m3u(self):
         for source in ("official", "m3u"):
             self.assertEqual(len(curated_candidates(source, [{"url": "https://example.org/live.m3u8"}])), 1)
