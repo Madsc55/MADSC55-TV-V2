@@ -38,7 +38,44 @@ def download(url):
             data = stream.read(120_000_001)
     if len(data) > 120_000_000:
         raise ValueError("expanded feed too large")
+    # Reject entity declarations before XML parsing, including gzipped feeds.
+    # This guide builder must not be a weaker entry point than epg_integrity.
+    if b"<!DOCTYPE" in data.upper() or b"<!ENTITY" in data.upper():
+        raise ValueError("XMLTV DTD and ENTITY declarations are not allowed")
     return ET.fromstring(data)
+
+def ingest_xmltv_feed(root, channels, schedules, ambiguous_ids):
+    """Merge declarations only when a channel ID belongs to one feed.
+
+    Two unrelated publishers can reuse the same XMLTV ID. Never concatenate
+    their programme schedules or use an undeclared programme channel as proof
+    of a broadcaster identity. Ambiguous IDs are removed after all feeds.
+    """
+    declarations = Counter(node.get("id") for node in root.findall("channel")
+                           if node.get("id"))
+    collisions = {cid for cid, n in declarations.items()
+                  if n != 1 or cid in channels}
+    ambiguous_ids.update(collisions)
+    for cid in collisions:
+        channels.pop(cid, None)
+        schedules.pop(cid, None)
+    unique = {cid for cid, n in declarations.items()
+              if n == 1 and cid not in ambiguous_ids}
+    for channel in root.findall("channel"):
+        cid = channel.get("id")
+        if cid in unique and cid not in channels:
+            channels[cid] = channel
+    accepted = rejected = 0
+    for programme in root.findall("programme"):
+        cid = programme.get("channel")
+        if cid in unique:
+            schedules[cid].append(programme)
+            accepted += 1
+        else:
+            rejected += 1
+    return {"accepted_programmes": accepted, "rejected_programmes": rejected,
+            "conflicting_ids": len(collisions)}
+
 
 def select_epg_source(tvgid, tvgname, display, names, schedules):
     """Only exact IDs or unambiguous name matches may supply programmes."""
@@ -74,26 +111,25 @@ def main():
     feed_channels = {}
     schedules = defaultdict(list)
     results = []
+    ambiguous_ids = set()
     for url in sources:
         try:
             root = download(url)
             if root.tag != "tv":
                 raise ValueError("not XMLTV")
-            for channel in root.findall("channel"):
-                cid = channel.get("id")
-                if cid and cid not in feed_channels:
-                    feed_channels[cid] = channel
-            count = 0
-            for programme in root.findall("programme"):
-                cid = programme.get("channel")
-                if cid:
-                    schedules[cid].append(programme)
-                    count += 1
-            results.append({"source": url, "status": "ok", "programmes": count})
+            counts = ingest_xmltv_feed(root, feed_channels, schedules, ambiguous_ids)
+            results.append({"source": url, "status": "ok", **counts})
         except Exception as exc:
-            results.append({"source": url, "status": "failed", "reason": str(exc)[:180]})
+            # Avoid printing signed feed URLs or confidential query tokens.
+            results.append({"source": url.split("?")[0], "status": "failed",
+                            "error_type": type(exc).__name__})
+    # The first feed's observations become untrusted if another feed later
+    # claims the same ID; exclude both before all matching and exports.
+    for cid in ambiguous_ids:
+        feed_channels.pop(cid, None)
+        schedules.pop(cid, None)
     if not schedules:
-        raise SystemExit("No EPG source provided programmes: " + json.dumps(results))
+        raise SystemExit("No unambiguous EPG source provided programmes: " + json.dumps(results))
     names = defaultdict(set)
     for cid, ch in feed_channels.items():
         if cid not in schedules:
@@ -146,7 +182,9 @@ def main():
     ET.parse(temp)
     temp.replace(OUT)
     report = {"playlist_entries": len(entries), "matched_entries": matched,
-              "ambiguous_entries_skipped": ambiguous, "channels": len(used),
+              "ambiguous_entries_skipped": ambiguous,
+              "conflicting_xmltv_channel_ids_rejected": len(ambiguous_ids),
+              "channels": len(used),
               "programmes": written, "epg_bytes": OUT.stat().st_size, "sources": results}
     (ROOT / "v2/epg-report.json").write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n")
     print(json.dumps(report, ensure_ascii=False))
