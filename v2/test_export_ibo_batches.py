@@ -91,7 +91,7 @@ class BatchTests(unittest.TestCase):
         ]
         playlist = render(records).decode('utf-8')
         self.assertEqual(len(playlist.splitlines()), 5)
-        self.assertEqual(playlist.count('#EXTINF:-1'), 2)
+        self.assertEqual(sum(line.startswith('#EXTINF:-1') for line in playlist.splitlines()), 2)
         self.assertEqual(playlist.count('tvg-logo='), 1)
         self.assertIn('group-title="Haber #EXTINF:-1', playlist)
         self.assertTrue(playlist.endswith('https://example.invalid/live/two.m3u8\n'))
