@@ -74,7 +74,7 @@ def discover_gists(api_fn=api, fetch_fn=fetch, configured_urls=None):
                             "url": raw,
                             "entries": len(sample),
                             "tr_name_hints": sum(bool(re.search(
-                                r"(?i)\\b(trt|türk|turk|kanal|haber)\\b", row["name"]))
+                                r"(?i)\b(trt|türk|turk|kanal|haber)\b", row["name"]))
                                 for row in sample),
                             "status": "SOURCE_PARSED_STREAMS_NOT_PLAYBACK_VERIFIED",
                         })
