@@ -19,13 +19,14 @@ class IntegrationTests(unittest.TestCase):
             "status": "DIRECTORY_REFERENCE_ONLY_NOT_STREAM_VERIFIED"}]})[0]
         youtube = normalize("youtube", {"results": [{
             "video_id": "AbCdEf12345", "title": "Live News",
-            "channel": "News Channel", "status": "LIVE_METADATA_VERIFIED"}]})[0]
+            "channel": "News Channel", "region": "WORLD", "status": "LIVE_METADATA_VERIFIED"}]})[0]
         self.assertEqual(official["name"], "Example TV")
         self.assertEqual(official["tvg_id"], "example.tv")
         self.assertEqual(official["country"], "GB")
         self.assertEqual(youtube["name"], "Live News")
         self.assertEqual(youtube["group"], "News Channel")
         self.assertEqual(youtube["status"], "LIVE_METADATA_VERIFIED")
+        self.assertEqual(youtube["region"], "WORLD")
 
     def test_integrated_and_deduplicated(self):
         with tempfile.TemporaryDirectory() as d:
