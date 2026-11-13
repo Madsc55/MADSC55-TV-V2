@@ -59,6 +59,11 @@ class Discovery34Tests(unittest.TestCase):
                     identity(source, url)
             self.assertEqual(curated_candidates(source, [{"url": "https://example.org/a\n#EXTINF"}]), [])
 
+    def test_invalid_url_ports_are_rejected_cleanly(self):
+        for url in ("https://example.org:bad/live.m3u8", "https://example.org:99999/live.m3u8"):
+            with self.subTest(url=url), self.assertRaisesRegex(ValueError, "Invalid URL port"):
+                identity("m3u", url)
+
     def test_official_and_m3u(self):
         for source in ("official", "m3u"):
             self.assertEqual(len(curated_candidates(source, [{"url": "https://example.org/live.m3u8"}])), 1)
