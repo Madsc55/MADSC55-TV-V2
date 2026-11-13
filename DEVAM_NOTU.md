@@ -1,3 +1,9 @@
+## 13 Kasım 2026 — #34 retry assertion son hatası düzeltildi
+- Actions #43455356015: çevrimdışı keşif, arşiv ve inventory testleri geçti; Stage 7'de yalnız `test_codeberg_http_500_retries_then_fails_closed` başarısızdı. Uygulamanın exponential backoff dizisi `[1, 2, 4]`; test yanlışlıkla `[1, 2, 3]` bekliyordu.
+- Test beklentisi doğru sözleşmeye `[1, 2, 4]` olarak düzeltildi. Commit `0fe7c811ae636451fecbe2848dcb426fa1a83350`.
+- Yeni Actions #43455441568: derleme, korunan playlist invariantları, şifreli arşiv roundtrip, inventory restore regression, offline discovery ve Stage 7 test adımı **success**. İkinci Stage 7 canlı sağlayıcı sözleşme adımı henüz sonuçlanmadı; job tamamlanmadan #34 kabul edilmez.
+- Ana İBO/YEDEKLER/YENİLER/FAVORİLER değişmedi. Yeni kapsamlı tarama yapılmadı; kullanıcı sırasına göre altyapı tamamlanana kadar beklemede.
+
 ## 13 Kasım 2026 — #34 retry test regresyonu bulundu ve düzeltildi
 - Grouped offline run #43452859774 tüm ön kontrolleri geçti; Stage 7'nin 39 testinde 5 assertion hatası retry sayısı/backoff test beklentilerinin güncel dört denemeli sözleşmeyle uyuşmamasından kaynaklandı. Kodda ayrıca retry_delay fonksiyonu eklenmiş olmasına rağmen probe içinde eski `sleep(attempt)` çağrıları kalmıştı.
 - `v2/discovery_34_live_contract.py`: HTTP 429/5xx ve geçici bağlantı hataları artık Retry-After / X-RateLimit-Reset başlıklarını dikkate alan, 30 saniye üst sınırına sahip exponential backoff kullanıyor. Commit `85028594e3d03e92d8b45313eec744333f874d45`.
