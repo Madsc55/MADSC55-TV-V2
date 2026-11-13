@@ -134,7 +134,9 @@ def main():
     unique = {item["source_id"]: item for item in candidates}
     output = Path(args.output)
     output.parent.mkdir(parents=True, exist_ok=True)
-    output.write_text(json.dumps({"mode": "network" if args.network else "offline", "candidates": list(unique.values()), "errors": errors, "av_verified": 0}, indent=2) + "\n", encoding="utf-8")
+    # A previous discovery report is evidence and must never be overwritten.
+    with output.open("x", encoding="utf-8") as report:
+        report.write(json.dumps({"mode": "network" if args.network else "offline", "candidates": list(unique.values()), "errors": errors, "av_verified": 0}, indent=2) + "\n")
     print("Candidate identities:", len(unique), "Errors:", len(errors))
 
 if __name__ == "__main__":
