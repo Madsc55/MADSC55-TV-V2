@@ -51,6 +51,15 @@ class Discovery34Tests(unittest.TestCase):
                  ("codeberg", {"data": [{"html_url": "https://codeberg.org/a/b"}]})]
         for source, payload in cases:
             self.assertFalse(repository_candidates(source, payload)[0]["verified_av"])
+    def test_non_string_repository_url_is_skipped(self):
+        for source, payload in (
+            ("github", {"items": [{"html_url": None}, {"html_url": 123}]}),
+            ("gitlab", [{"web_url": None}, {"web_url": ["bad"]}]),
+            ("codeberg", {"data": [{"html_url": {"bad": "url"}}]}),
+        ):
+            with self.subTest(source=source):
+                self.assertEqual(repository_candidates(source, payload), [])
+
     def test_youtube(self):
         items = curated_candidates("youtube", [{"video_id": "AbCdEf12345"}])
         self.assertEqual(items[0]["source_id"], "youtube:AbCdEf12345")
