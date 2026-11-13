@@ -191,7 +191,7 @@ class Stage5Acceptance(unittest.TestCase):
             )
             for url in bad_urls:
                 with self.subTest(url=url):
-                    source.write_text('#EXTM3U\\n#EXTINF:-1 tvg-id="one",One\\n' + url + '\\n', encoding="utf-8")
+                    source.write_text('#EXTM3U\n#EXTINF:-1 tvg-id="one",One\n' + url + '\n', encoding="utf-8")
                     with self.assertRaisesRegex(ValueError, "Malformed M3U entry"):
                         entries(source)
 
@@ -200,7 +200,7 @@ class Stage5Acceptance(unittest.TestCase):
             source = Path(tmp) / "whitespace.m3u8"
             for url in (" https://example.org/live.m3u8", "https://example.org/live.m3u8 "):
                 with self.subTest(url=url):
-                    source.write_text('#EXTM3U\\n#EXTINF:-1 tvg-id="one",One\\n' + url + '\\n', encoding="utf-8")
+                    source.write_text('#EXTM3U\n#EXTINF:-1 tvg-id="one",One\n' + url + '\n', encoding="utf-8")
                     with self.assertRaisesRegex(ValueError, "Malformed M3U entry"):
                         entries(source)
 
@@ -208,7 +208,7 @@ class Stage5Acceptance(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             source = Path(tmp) / "valid.m3u8"
             url = "https://example.org:8443/live.m3u8?sig=sample%2Ftoken"
-            source.write_text('#EXTM3U\\n#EXTINF:-1 tvg-id="one",One\\n' + url + '\\n', encoding="utf-8")
+            source.write_text('#EXTM3U\n#EXTINF:-1 tvg-id="one",One\n' + url + '\n', encoding="utf-8")
             self.assertEqual(entries(source)[0][1], url)
 
 
