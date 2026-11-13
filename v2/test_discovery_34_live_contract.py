@@ -77,5 +77,21 @@ class LiveContractRetryTests(unittest.TestCase):
         self.assertEqual(result["attempts"], 3)
         self.assertTrue(result["retryable"])
 
+    def test_timeout_http_408_retries(self):
+        attempts = []
+        def fetch(_url):
+            attempts.append(1)
+            if len(attempts) == 1:
+                raise http_error(408)
+            return {"data": []}
+        result = probe("codeberg", fetch=fetch, sleep=lambda _: None)
+        self.assertEqual(result["status"], "ok")
+        self.assertEqual(result["attempts"], 2)
+
+    def test_non_retryable_reports_endpoint(self):
+        result = probe("codeberg", fetch=lambda _: (_ for _ in ()).throw(http_error(403)), sleep=lambda _: None)
+        self.assertEqual(result["reason"], "HTTP_403")
+        self.assertEqual(result["endpoint_host"], "codeberg.org")
+
 if __name__ == "__main__":
     unittest.main()
