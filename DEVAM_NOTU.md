@@ -932,3 +932,10 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - `v2/discovery_34_live_contract.py` artık yalnızca `turkish-iptv` örnek terimini değil, `QUERIES` içindeki altı terimin tamamını GitHub/GitLab/Codeberg için ayrı ayrı kontrol ediyor. Sağlayıcı ve sorgu bazında başarısızlıkları görünür kılıyor; HTTP status/reason, Retry-After ve rate-limit kalan sayısını güvenli biçimde raporluyor; response body veya gizli veri yazmıyor.
 - Yeni offline testler altı terim kapsamını ve Codeberg 403 tanılamasını doğruladı. Bu Actions koşusu canlı sağlayıcı çağrısı değildir; Codeberg canlı API sonucu henüz alınmadı. #34 açık kaldı.
 - Yeni kapsamlı kanal taraması yapılmadı; ana İBO, YEDEKLER, YENİLER ve FAVORİLER değiştirilmedi.
+
+
+
+## 13 Kasım 2026 — Stage 6 (#28–#33) güncel main üzerine güvenli aktarım
+- Stage 6 çevrimdışı paket, M3U bütünlük, final kabul ve şifreli arşiv/no-clobber regresyonları eski PR dalından doğrudan birleştirilmedi; yedi altyapı dosyası güncel main tabanlı `integrate-stage6-current-main-20261113` dalına ayrı ayrı aktarıldı.
+- Kaynak dalın offline inventory Actions run `43454415699` işi SUCCESS idi. Bu kaynak dal kanıtı güncel main üzerine aktarılan yeni commitlerin kabulü değildir; yeni PR üzerinde güncel Production Security Gate sonucu bekleniyor.
+- Ana İBO playlisti, YEDEKLER, YENİLER ve FAVORİLER değiştirilmedi. Yeni kanal taraması yapılmadı. #28–#33 açık kalır; gerçek AV, 1.000/2.000 kanal paketi, bağımsız dış geri yükleme ve cihaz kabulü ayrıca gerekir.
