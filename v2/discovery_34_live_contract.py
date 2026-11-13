@@ -4,6 +4,8 @@ import json
 import sys
 import time
 import urllib.error
+from datetime import datetime, timezone
+from email.utils import parsedate_to_datetime
 from discovery_34 import QUERIES, search_url, fetch_json, repository_candidates
 
 RETRYABLE_HTTP = frozenset((408, 425, 429, 500, 502, 503, 504))
@@ -14,11 +16,18 @@ def retry_delay(exc, attempt):
     """Honor a bounded numeric Retry-After; otherwise back off more for 429."""
     headers = getattr(exc, "headers", None)
     raw = headers.get("Retry-After") if headers is not None else None
-    try:
-        if raw is not None:
+    if raw is not None:
+        try:
             return min(MAX_RETRY_AFTER_SECONDS, max(0, int(raw.strip())))
-    except (AttributeError, TypeError, ValueError):
-        pass
+        except (AttributeError, TypeError, ValueError):
+            try:
+                retry_at = parsedate_to_datetime(raw)
+                if retry_at.tzinfo is None:
+                    retry_at = retry_at.replace(tzinfo=timezone.utc)
+                seconds = (retry_at - datetime.now(timezone.utc)).total_seconds()
+                return min(MAX_RETRY_AFTER_SECONDS, max(0, int(seconds)))
+            except (TypeError, ValueError, OverflowError):
+                pass
     return min(MAX_RETRY_AFTER_SECONDS, (5 if getattr(exc, "code", None) == 429 else 1) * (2 ** (attempt - 1)))
 
 def probe(source, query="turkish-iptv", fetch=fetch_json, sleep=time.sleep):
