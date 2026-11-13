@@ -1,3 +1,8 @@
+## 13 Kasım 2026 — #31–#33 arşiv giriş tür doğrulaması
+- 1e4f6b3: audit_archive() yalnızca bytes girişlerini kabul eder; diğer türler ValueError ile reddedilir.
+- 40b1377: metin, bytearray, memoryview ve None için çevrimdışı regresyon testleri eklendi.
+- Güncel Actions kabulü henüz doğrulanmadı; gerçek FFmpeg AV ve bağımsız harici geri yükleme açık. Korunan İBO listelerine dokunulmadı, yeni tarama yapılmadı.
+
 ## 13 Kasım 2026 — #28–#33 son IBO ayrıştırıcı ve kanıt doğrulama düzeltmeleri
 - e18f564e, 7beb8029: yayın URL'sinde iç kontrol/boşluk ve kenar boşlukları reddediliyor; 235d3942 ve 49d4af7c regresyon testleri eklendi/düzeltildi.
 - 3d0b539f ve e9d9c241: bozuk port ve EXTINF testlerinin yanlış kaçışlı satır sonları düzeltildi.
