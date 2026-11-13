@@ -77,6 +77,20 @@ class Discovery34Tests(unittest.TestCase):
             self.assertFalse(first["verified_av"])
             self.assertFalse(second["verified_av"])
 
+    def test_integrated_reports_skip_malformed_rows_but_keep_valid(self):
+        from discovery_34_integrate import normalize
+        fixtures = (
+            ("official", {"channels": [None, {"official_site": "https://example.org/tv"}]}),
+            ("youtube", {"results": [42, {"video_id": "AbCdEf12345"}]}),
+            ("m3u", {"sources": ["invalid", {"kind": "m3u", "url": "https://example.org/a.m3u"}]}),
+        )
+        for source, data in fixtures:
+            with self.subTest(source=source):
+                self.assertEqual(len(normalize(source, data)), 1)
+        for source, key in (("official", "channels"), ("youtube", "results"), ("m3u", "sources")):
+            with self.subTest(source=source), self.assertRaises(ValueError):
+                normalize(source, {key: {"bad": "rows"}})
+
     def test_youtube(self):
         items = curated_candidates("youtube", [{"video_id": "AbCdEf12345"}])
         self.assertEqual(items[0]["source_id"], "youtube:AbCdEf12345")
