@@ -2645,3 +2645,19 @@ Kullanıcının açık talimatıyla #3, #4 ve #6 tarihî kurtarma görevleri art
   - `43479977666` — Actions Status Monitor success.
 - Bu çalışma çevrimdışı sistem ve özel test paketi **altyapısını** iyileştirir. #28/#29 için 1000/2000 adet ayrı ayrı güncel FFmpeg A/V kanıtı oluşturulmadı; gerçek paket/cihaz/nihai arşiv kabulü yapılmadı. Dolayısıyla `v2/tasks/state.json` 21 completed, 2 in_progress, 11 pending olarak kaldı. #15, #17–21, #28–34 nihai kabulleri bekler.
 - Yeni dünya/TR/AZ taraması veya geçmiş yayınları yeniden tarama yapılmadı; ana İBO, YEDEKLER, YENİLER, FAVORİLER ve 4955 hash baseline değişmedi.
+
+
+## 13 Kasım 2026 — #30 M3U birleştirme ve HLS karışımına karşı kabul
+
+- Commit `e67c984246f25aa7ab93e22b672e2e2639fdb49b`: `v2/validate_export_m3u.py` artık `#EXT-X-...` HLS manifesto satırlarını yalnızca bir EXTINF çiftinin içinde değil, kanal listesinde nerede bulunursa bulunsun reddeder. Canlı prob ya da liste yayını yapılmadı.
+- Commit `6d4b481fda9298bc7550874a14e4b9f4e26e75bc`: HLS satırlarının ilk kanaldan önce veya kayıtlar arasında yer alması için iki offline negatif regresyon testi eklendi.
+- Commit `2db3a3f8a319479233f4d93101875fbdf3c61e3d`: birleştirilmiş M3U paketinin ortasındaki tekrar `#EXTM3U` başlığı reddedilir.
+- Commit `334b625107e1bf9b936bdc14f0f6e6249ee372c2`: tekrar başlık senaryosu için offline regresyon testi eklendi.
+- Tam olarak `334b625107e1bf9b936bdc14f0f6e6249ee372c2` kaynak ağacında başarılı GitHub Actions:
+  - Eight-Stage Runner Verification `43485356740` **success**. Offline regressions and protected playlist success, FFmpeg real local video and audio-only guard success. Offline test logu **1.032 test** gösteriyor; yeni `test_hls_manifest_directive_before_extinf_is_rejected`, `test_hls_manifest_directive_between_entries_is_rejected` ve `test_concatenated_m3u_headers_cannot_pass_package_integrity` testleri açıkça **ok**.
+  - Master Engine `43485356618` **success**; offline-tests success, canlı master işi offline senaryo gereği skipped.
+  - Ordered Preflight `43485356628` **success**; live public audit işine geçilmedi.
+  - Current Scanner Offline Gate `43485357080` **success**.
+  - Actions Status Monitor `43485356655` **success**.
+- Bu kabul `#30` için M3U bütünlük altyapı kontrolünü güçlendirir; gerçek ve güncel FFmpeg AV-kanıtlı `ibo_1000.m3u` ve `ibo_2000.m3u` teslimleri henüz yoktur. #28–30 nihai görev statüleri değiştirilmedi.
+- Korunan ana İBO, YEDEKLER, YENİLER, FAVORİLER, 4.955 tarihî hash temeli ve `v2/tasks/state.json` değişmedi. Dünya/TR/AZ canlı kanal taraması veya eski yayın yeniden probu yapılmadı.
