@@ -10,7 +10,7 @@ from contextlib import redirect_stdout
 from unittest.mock import patch
 from pathlib import Path
 from argparse import Namespace
-from stage5_evidence_export import entries, run, media_has_audio_video
+from stage5_evidence_export import entries, run, media_has_audio_video, valid_private_destination
 
 class Stage5Acceptance(unittest.TestCase):
     def test_no_synthetic_or_unverified_delivery(self):
@@ -156,6 +156,15 @@ class Stage5Acceptance(unittest.TestCase):
                 args.target = target
                 with self.subTest(target=target), self.assertRaisesRegex(ValueError, "Invalid package target"):
                     run(args)
+            self.assertFalse(args.output.exists())
+
+    def test_private_exports_reject_repository_reports_destination(self):
+        with tempfile.TemporaryDirectory() as directory:
+            args = self._one_stream_fixture(Path(directory))
+            # Validation only: never create or write a file inside the repository.
+            args.output = Path(__file__).resolve().parents[1] / "v2/reports/private-stage5-never-write-fixture.m3u8"
+            with self.assertRaisesRegex(ValueError, "isolated location"):
+                valid_private_destination(args.output, args.source, args.protected)
             self.assertFalse(args.output.exists())
 
     def test_private_only_output_name_is_required(self):
