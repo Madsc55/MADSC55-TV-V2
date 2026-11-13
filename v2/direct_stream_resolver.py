@@ -28,8 +28,12 @@ def resolve_candidate(item, runner=subprocess.run):
         identity(source, page_url)
     except (ValueError, TypeError):
         return None, "INVALID_PAGE_URL"
+    if item.get("verified_av") is not False:
+        return None, "INVALID_EVIDENCE_STATE"
     if source == "youtube" and item.get("status") != "LIVE_METADATA_VERIFIED":
         return None, "YOUTUBE_NOT_LIVE_VERIFIED"
+    if source == "official" and item.get("status") != "DIRECTORY_REFERENCE_ONLY_NOT_STREAM_VERIFIED":
+        return None, "OFFICIAL_DIRECTORY_STATE_INVALID"
     command = [
         "yt-dlp", "--no-warnings", "--no-playlist", "--skip-download",
         "--format", "best[protocol^=m3u8]/best",
