@@ -1,3 +1,7 @@
+## 13 Kasım 2026 — #34 PR #29 çakışması için güncel ana daldan yeniden hazırlık
+- `fix-34-api-diagnostics-rebased-20261113` dalında HTTP 408/425 retry ve API host hata tanılaması güncel ana dalın API yanıt doğrulaması korunarak uygulandı (`5120911`); iki regresyon testi eklendi (`c556ce1`).
+- PR #29 merge çakışması nedeniyle birleştirilmedi. Yeni dalın CI ve canlı API kabulü doğrulanana kadar #34 açık; tarama ve korunan listelerde değişiklik yok.
+
 ## 13 Kasım 2026 — Stage 6 temiz PR CI kabulü
 - PR #27, commit cd24cc65ded9be6c5b2e242d31c20ed8cb515553: GitHub Actions 43448236664 SUCCESS. `Stage 6 offline package and archive acceptance regressions` adımı PASS; güvenlik kilidi, ana İBO koruma ve #34 offline entegrasyon adımları da PASS.
 - Bu sonuç çevrimdışı test kanıtıdır. Gerçek yayın görüntü/ses, bağımsız harici arşiv geri yükleme ve nihai cihaz/kanal kabulü henüz kanıtlanmadığından #28–#33 nihai görevleri kapatılmadı.
