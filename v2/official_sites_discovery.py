@@ -59,7 +59,7 @@ def main():
               "policy": "READ_ONLY_NO_PLAYLIST_CHANGES_NO_DRM_BYPASS",
               "count": len(sites), "channels": sites}
     OUT.parent.mkdir(parents=True, exist_ok=True)
-    OUT.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\\n", encoding="utf-8")
+    OUT.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print("Official TV sites discovered:", len(sites), "scope:", report["scope"])
 
 
