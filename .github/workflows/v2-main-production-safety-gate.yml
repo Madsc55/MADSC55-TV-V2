@@ -36,6 +36,7 @@ jobs:
           python -m pip install 'cryptography>=42,<47'
           python v2/test_secure_archive_roundtrip.py
           python v2/test_consolidate_inventory.py
+          echo 'Recheck Stage 3 scanner dynamic-source validation'
           python v2/test_real_ibo_scan_offline.py
           python -m py_compile v2/real_ibo_scan.py v2/consolidate_inventory.py v2/ibo_package_acceptance.py v2/ibo_final_acceptance.py
           python v2/test_ibo_package_acceptance.py
