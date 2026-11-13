@@ -83,6 +83,37 @@ def resolve_candidate(item, runner=subprocess.run):
     }, None
 
 
+def _balanced_limit(items, limit, group_key, initial_quotas=None):
+    groups = {}
+    for item in items:
+        key = group_key(item) or "UNKNOWN"
+        groups.setdefault(key, []).append(item)
+    keys = sorted(groups)
+    positions = {key: 0 for key in keys}
+    selected = []
+    for key, quota in (initial_quotas or {}).items():
+        if key not in groups:
+            continue
+        take = min(max(0, quota), len(groups[key]), max(0, limit - len(selected)))
+        selected.extend(groups[key][:take])
+        positions[key] = take
+        if len(selected) >= limit:
+            return selected
+    while len(selected) < limit:
+        progressed = False
+        for key in keys:
+            index = positions[key]
+            if index < len(groups[key]):
+                selected.append(groups[key][index])
+                positions[key] += 1
+                progressed = True
+                if len(selected) >= limit:
+                    break
+        if not progressed:
+            break
+    return selected
+
+
 def resolve_report(report, runner=subprocess.run, limit=MAX_RESOLVE):
     if not isinstance(report, dict) or not isinstance(report.get("candidates"), list):
         raise ValueError("Integrated discovery report requires a candidates list")
@@ -94,8 +125,18 @@ def resolve_report(report, runner=subprocess.run, limit=MAX_RESOLVE):
                 if isinstance(item, dict) and item.get("source") == "official"]
     youtube_limit = max(0, (limit + 1) // 2)
     official_limit = max(0, limit // 2)
+    tr_quota = (youtube_limit + 2) // 3
+    az_quota = youtube_limit // 6
+    world_quota = max(0, youtube_limit - tr_quota - az_quota)
+    selected_youtube = _balanced_limit(
+        youtube, youtube_limit,
+        lambda item: item.get("region") if item.get("region") in ("TR", "AZ") else "WORLD",
+        {"TR": tr_quota, "AZ": az_quota, "WORLD": world_quota})
+    selected_official = _balanced_limit(
+        official, official_limit, lambda item: item.get("country") or "UNKNOWN",
+        {key: 2 for key in sorted({item.get("country") or "UNKNOWN" for item in official})})
     eligible_total = len(youtube) + len(official)
-    eligible = youtube[:youtube_limit] + official[:official_limit]
+    eligible = selected_youtube + selected_official
     attempted = 0
     for item in eligible:
         attempted += 1
