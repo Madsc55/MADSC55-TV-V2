@@ -25,7 +25,7 @@ def valid_stream_url(value):
 def clean_attribute(value):
     """Keep untrusted source metadata on its original EXTINF line."""
     return "".join(" " if (ord(char) < 32 or 127 <= ord(char) <= 159
-                           or char in ("\\u2028", "\\u2029")) else char
+                           or ord(char) in (0x2028, 0x2029)) else char
                    for char in str(value or "")).replace('"', "")
 
 
