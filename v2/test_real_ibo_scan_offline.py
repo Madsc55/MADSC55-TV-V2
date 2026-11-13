@@ -120,7 +120,8 @@ class ScannerOfflineTests(unittest.TestCase):
             archive.parent.mkdir(parents=True)
             archive.write_bytes(b"offline-fixture")
             live = root / "protected.m3u8"
-            live.write_text("#EXTM3U\\n#EXTINF:-1,Protected\\nhttps://example.org/main.m3u8\\n")
+            live.write_text(chr(10).join(["#EXTM3U", "#EXTINF:-1,Protected",
+                                           "https://example.org/main.m3u8"]) + chr(10))
             sources = root / "sources.json"
             sources.write_text(json.dumps({"sources": []}))
             dynamic = root / "dynamic.json"
@@ -133,10 +134,11 @@ class ScannerOfflineTests(unittest.TestCase):
                   patch.object(scanner, "fetch") as fetch,
                   patch.object(sys, "argv", argv),
                   patch.dict(os.environ, {"V2_ARCHIVE_PASSPHRASE": "offline-only-secret-12345"}),
-                  patch("sys.stderr", new_callable=io.StringIO)):
+                  patch("sys.stderr", new_callable=io.StringIO) as error_output:
                 with self.assertRaises(SystemExit) as failure:
                     scanner.main()
                 self.assertEqual(failure.exception.code, 2)
+                self.assertIn("Dynamic discovery report", error_output.getvalue())
                 fetch.assert_not_called()
 
     def test_dynamic_source_report_rejects_invalid_root(self):
