@@ -56,9 +56,9 @@ class Stage5Acceptance(unittest.TestCase):
             "source.m3u8", "protected.m3u8", "evidence.json", "private-output.m3u8"))
         url = "https://cdn.example.net/one.m3u8"
         source.write_text(
-            '#EXTM3U\\n#EXTINF:-1 tvg-id="' + metadata_id + '",One\\n' + url + '\\n',
+            '#EXTM3U\n#EXTINF:-1 tvg-id="' + metadata_id + '",One\n' + url + '\n',
             encoding="utf-8")
-        protected.write_text("#EXTM3U\\n#EXTINF:-1,Protected\\nhttps://example.net/protected.m3u8\\n")
+        protected.write_text("#EXTM3U\n#EXTINF:-1,Protected\nhttps://example.net/protected.m3u8\n")
         proof = root / "proof.mp4"
         proof.write_bytes(b"local-offline-fixture-only")
         evidence.write_text(json.dumps([{
@@ -74,7 +74,7 @@ class Stage5Acceptance(unittest.TestCase):
         probe = subprocess.CompletedProcess(["ffprobe"], 0, stdout=json.dumps(
             {"streams": [{"codec_type": "video"}, {"codec_type": "audio"}]}))
         no_audio = subprocess.CompletedProcess(["ffmpeg"], 0,
-                                                stdout="#format: frame checksums\\n0, 0, 0\\n")
+                                                stdout="#format: frame checksums\n0, 0, 0\n")
         with patch("stage5_evidence_export.subprocess.run", side_effect=[probe, no_audio]) as mocked:
             self.assertFalse(media_has_audio_video(Path("fake-offline.mp4")))
             self.assertEqual(mocked.call_count, 2)
@@ -83,7 +83,7 @@ class Stage5Acceptance(unittest.TestCase):
             self.assertIn("file,pipe", args)
         with patch("stage5_evidence_export.subprocess.run", side_effect=[
             probe, subprocess.CompletedProcess(["ffmpeg"], 0,
-            stdout="#format: frame checksums\\n0, 0, 0\\n1, 0, 0\\n")]):
+            stdout="#format: frame checksums\n0, 0, 0\n1, 0, 0\n")]):
             self.assertTrue(media_has_audio_video(Path("fake-offline.mp4")))
 
     def test_local_ffmpeg_decodes_both_real_fixture_tracks(self):
