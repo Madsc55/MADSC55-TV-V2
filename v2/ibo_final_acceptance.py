@@ -39,7 +39,11 @@ def final_gate(package_report, archive_report, independent_restore=False, live_a
             or not isinstance(package_report["sha256"], str)
             or re.fullmatch(r"[0-9a-f]{64}", package_report["sha256"]) is None):
         raise ValueError("package acceptance incomplete")
-    if archive_report.get("status") != "ROUNDTRIP_BYTES_MATCH":
+    if (archive_report.get("status") != "ROUNDTRIP_BYTES_MATCH"
+            or not isinstance(archive_report.get("sha256"), str)
+            or re.fullmatch(r"[0-9a-f]{64}", archive_report["sha256"]) is None
+            or type(archive_report.get("bytes")) is not int
+            or archive_report["bytes"] <= 0):
         raise ValueError("archive integrity incomplete")
     if not independent_restore or not live_av:
         return {"status":"INFRASTRUCTURE_ONLY","production_accepted":False,"reason":"independent external restore and real AV production acceptance pending"}
