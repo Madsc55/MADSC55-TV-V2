@@ -49,13 +49,55 @@ class IdentityMetadataTests(unittest.TestCase):
         self.assertFalse(rows[0]["epg_verified"])
         self.assertFalse(rows[0]["epg_programme_available"])
 
-    def test_epg_programmes_require_matching_channel_and_start(self):
+    def test_epg_programmes_require_matching_channel_and_valid_interval(self):
         xmltv = ('<tv><channel id="Station.tr"/>'
-                 '<programme channel="Station.tr" start="20261112120000 +0000"/>'
+                 '<programme channel="Station.tr" start="20261112120000 +0000"'
+                 ' stop="20261112130000 +0000"/>'
                  '</tv>')
         rows = verify_epg_ids([{"epg_id_candidate": "Station.tr"}], xmltv)
         self.assertTrue(rows[0]["epg_verified"])
         self.assertTrue(rows[0]["epg_programme_available"])
+
+    def test_epg_missing_stop_does_not_prove_programme_availability(self):
+        xmltv = ('<tv><channel id="Station.tr"/>'
+                 '<programme channel="Station.tr" start="20261112120000 +0000"/>'
+                 '</tv>')
+        row = verify_epg_ids([{"epg_id_candidate": "Station.tr"}], xmltv)[0]
+        self.assertTrue(row["epg_verified"])
+        self.assertFalse(row["epg_programme_available"])
+
+    def test_epg_invalid_and_reverse_intervals_fail_closed(self):
+        invalid_intervals = (
+            ("20261112120000 +0000", "20261112110000 +0000"),
+            ("20261112120000 +1500", "20261112130000 +1500"),
+            ("not-a-date", "20261112130000 +0000"),
+            ("20261112120000 +0000", "20261112120000 +0000"),
+            ("20261112120000 +0200", "20261112110000 +0000"),
+        )
+        for start, stop in invalid_intervals:
+            with self.subTest(start=start, stop=stop):
+                xmltv = ('<tv><channel id="Station.tr"/>'
+                         f'<programme channel="Station.tr" start="{start}" stop="{stop}"/>'
+                         '</tv>')
+                row = verify_epg_ids([{"epg_id_candidate": "Station.tr"}], xmltv)[0]
+                self.assertTrue(row["epg_verified"])
+                self.assertFalse(row["epg_programme_available"])
+
+    def test_epg_rejects_programme_for_missing_or_duplicated_channel(self):
+        xmltv = ('<tv><channel id="Station.tr"/><channel id="Duplicate.tr"/>'
+                 '<channel id="Duplicate.tr"/>'
+                 '<programme channel="Missing.tr" start="20261112120000 +0000"'
+                 ' stop="20261112130000 +0000"/>'
+                 '<programme channel="Duplicate.tr" start="20261112120000 +0000"'
+                 ' stop="20261112130000 +0000"/>'
+                 '</tv>')
+        rows = verify_epg_ids([
+            {"epg_id_candidate": "Station.tr"},
+            {"epg_id_candidate": "Duplicate.tr"},
+        ], xmltv)
+        self.assertFalse(rows[0]["epg_programme_available"])
+        self.assertFalse(rows[1]["epg_verified"])
+        self.assertFalse(rows[1]["epg_programme_available"])
 
     def test_xmltv_external_entity_declarations_rejected(self):
         malicious = '<!DOCTYPE tv [<!ENTITY xxe SYSTEM "file:///etc/passwd">]><tv/>'
