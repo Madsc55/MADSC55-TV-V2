@@ -60,9 +60,18 @@ class AcceptanceTests(unittest.TestCase):
             with self.subTest(restore=restore, av=av), self.assertRaises(ValueError):
                 final_gate(p, a, restore, av)
 
+    def test_rejects_plaintext_archive_for_production_review(self):
+        p={"target":1000,"records":1000,"sha256":"a"*64,"status":"EVIDENCE_GATED"}
+        a={"status":"ROUNDTRIP_BYTES_MATCH","sha256":"a"*64,"bytes":128}
+        for encrypted in (None, False, "true", 1):
+            with self.subTest(encrypted=encrypted), self.assertRaises(ValueError):
+                final_gate(p, dict(a, encrypted=encrypted), True, True)
+
     def test_no_false_production_acceptance(self):
         p={"target":1000,"records":1000,"sha256":"a"*64,"status":"EVIDENCE_GATED"}
         a={"status":"ROUNDTRIP_BYTES_MATCH","sha256":"a"*64,"bytes":128}
         self.assertFalse(final_gate(p,a)["production_accepted"])
-        self.assertFalse(final_gate(p,a,True,True)["production_accepted"])
+        with self.assertRaisesRegex(ValueError, "encrypted archive"):
+            final_gate(p,a,True,True)
+        self.assertFalse(final_gate(p,dict(a, encrypted=True),True,True)["production_accepted"])
 if __name__=="__main__": unittest.main()
