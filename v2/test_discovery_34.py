@@ -67,6 +67,16 @@ class Discovery34Tests(unittest.TestCase):
                            {"video_id": None}, {"video_id": 123}]
                 self.assertEqual(curated_candidates(source, records), [])
 
+    def test_signed_stream_query_variants_have_distinct_private_ids(self):
+        for source in ("official", "m3u"):
+            first = identity(source, "https://example.org/live.m3u8?token=SECRET_A")
+            second = identity(source, "https://example.org/live.m3u8?token=SECRET_B")
+            self.assertNotEqual(first["source_id"], second["source_id"])
+            self.assertNotIn("SECRET_A", first["source_id"])
+            self.assertNotIn("SECRET_B", second["source_id"])
+            self.assertFalse(first["verified_av"])
+            self.assertFalse(second["verified_av"])
+
     def test_youtube(self):
         items = curated_candidates("youtube", [{"video_id": "AbCdEf12345"}])
         self.assertEqual(items[0]["source_id"], "youtube:AbCdEf12345")
