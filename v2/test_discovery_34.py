@@ -82,6 +82,23 @@ class Discovery34Tests(unittest.TestCase):
         self.assertEqual(len(result), 1)
         self.assertNotIn("VALID", result[0]["source_id"])
 
+    def test_discovery_cli_preserves_existing_report_bytes(self):
+        import subprocess
+        import sys
+        import tempfile
+        from pathlib import Path
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / "protected-discovery.json"
+            original = b"DO_NOT_OVERWRITE_DISCOVERY_REPORT"
+            output.write_bytes(original)
+            script = Path(__file__).with_name("discovery_34.py")
+            result = subprocess.run(
+                [sys.executable, str(script), "--output", str(output)],
+                capture_output=True, text=True, timeout=30
+            )
+            self.assertNotEqual(result.returncode, 0)
+            self.assertEqual(output.read_bytes(), original)
+
     def test_official_and_m3u(self):
         for source in ("official", "m3u"):
             self.assertEqual(len(curated_candidates(source, [{"url": "https://example.org/live.m3u8"}])), 1)
