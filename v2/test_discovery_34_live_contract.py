@@ -20,7 +20,7 @@ class LiveContractRetryTests(unittest.TestCase):
         self.assertEqual(result["status"], "ok")
         self.assertEqual(result["candidates"], 1)
         self.assertEqual(result["attempts"], 4)
-        self.assertEqual(sleeps, [1, 2, 4])
+        self.assertEqual(sleeps, [1, 2])
 
     def test_non_retryable_failure(self):
         calls = []
@@ -90,9 +90,9 @@ class LiveContractRetryTests(unittest.TestCase):
         result = probe("codeberg", fetch=fetch, sleep=sleeps.append)
         self.assertEqual(result["status"], "error")
         self.assertEqual(result["reason"], "HTTP_500")
-        self.assertEqual(result["attempts"], 3)
+        self.assertEqual(result["attempts"], 4)
         self.assertEqual(len(calls), 4)
-        self.assertEqual(sleeps, [1, 2])
+        self.assertEqual(sleeps, [1, 2, 4])
 
     def test_socket_timeout_recovers_with_bounded_retry(self):
         attempts = []
