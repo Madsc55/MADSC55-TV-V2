@@ -1,3 +1,8 @@
+## 13 Kasım 2026 — #34 API regresyonu ana güvenlik kapısında doğrulandı
+- PR #32: GitHub Actions 43448883009 SUCCESS; Stage 6 çevrimdışı paket/arşiv, İBO invariants, üretim güvenliği ve #34 çevrimdışı API regresyonu başarılı.
+- PR #32 squash merge: 5369b0983039f6ce4b765f11031b58261d8a2477. `test_discovery_34_live_contract` artık ana PR güvenlik kapısında zorunlu.
+- Bu yalnızca çevrimdışı kabul kanıtıdır; canlı GitHub/GitLab/Codeberg API sözleşmesi, gerçek görüntü/ses, harici geri yükleme ve nihai İBO kabulü açık. Kapsamlı kanal taraması yapılmadı; ana İBO, YEDEKLER, YENİLER, FAVORİLER korunuyor.
+
 ## 13 Kasım 2026 — Stage 6 temiz PR CI kabulü
 - PR #27, commit cd24cc65ded9be6c5b2e242d31c20ed8cb515553: GitHub Actions 43448236664 SUCCESS. `Stage 6 offline package and archive acceptance regressions` adımı PASS; güvenlik kilidi, ana İBO koruma ve #34 offline entegrasyon adımları da PASS.
 - Bu sonuç çevrimdışı test kanıtıdır. Gerçek yayın görüntü/ses, bağımsız harici arşiv geri yükleme ve nihai cihaz/kanal kabulü henüz kanıtlanmadığından #28–#33 nihai görevleri kapatılmadı.
