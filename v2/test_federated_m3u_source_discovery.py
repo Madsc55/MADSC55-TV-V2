@@ -53,6 +53,29 @@ class FederatedM3UDiscoveryTests(unittest.TestCase):
         self.assertEqual(fetched[0][1], "gitlab.com")
         self.assertEqual(result["queries_checked"], 2)
 
+    def test_http_200_repository_tree_error_objects_fail_closed(self):
+        for provider, bad_tree in (("gitlab", {"message": "rate limited"}),
+                                   ("gitlab", None),
+                                   ("codeberg", {"message": "blocked"}),
+                                   ("codeberg", {"tree": {"message": "rate limited"}})):
+            with self.subTest(provider=provider, bad_tree=bad_tree):
+                def api(url):
+                    if "/repository/tree?" in url or "/git/trees/" in url:
+                        return bad_tree
+                    if provider == "gitlab":
+                        return [{"id": 123, "path_with_namespace": "team/tv-list",
+                                 "default_branch": "main"}]
+                    return {"data": [{"full_name": "team/tv-list",
+                                      "default_branch": "main"}]}
+                result = discover_provider(
+                    provider, fetch_json_fn=api,
+                    fetch_text_fn=lambda *_: self.fail("invalid tree must not read raw files"),
+                    sleep_fn=lambda _: self.fail("invalid 200 must not retry"),
+                    queries=("iptv",))
+                self.assertEqual(result["status"], "error")
+                self.assertEqual(result["sources_found"], 0)
+                self.assertEqual(result["errors"][0]["error"], "InvalidTreeResponse")
+
     def test_codeberg_repo_tree_and_raw_m3u_are_discovered(self):
         calls, fetched = [], []
         def api(url):
