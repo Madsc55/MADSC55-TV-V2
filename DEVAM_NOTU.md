@@ -1005,3 +1005,8 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - `v2/test_build_epg.py` yeni çevrimdışı testleri ve `.github/workflows/v2-main-production-safety-gate.yml` içinde zorunlu kabul bağlantısı eklendi.
 - PR #155 merge commit `5ec41d2e98930f6610c592ccf458b6bcf8c694e9`; head `49dab604eae5a57640157512d2994818c58f392c`; Actions run `43479698309` SUCCESS. Stage 2/3 kimlik/EPG/kurtarma, Stage 5/6 paket ve arşiv, #34 çevrimdışı keşif ve ana İBO güvenlik korumaları SUCCESS.
 - Bu yalnızca çevrimdışı EPG eşleştirme/yayınlama doğrulamasıdır; 303 EPG boşluğunun giderildiği, gerçek EPG kaynaklarının tamamının güncel olduğu veya #19 nihai kabulünün geçtiği anlamına gelmez. #19 açık kalır. Yeni kanal taraması yapılmadı; ana İBO, YEDEKLER, YENİLER ve FAVORİLER değiştirilmedi.
+
+## 13 Kasım 2026 — #19 XMLTV program aralığı kabulü (PR #156)
+- PR #156 squash merge `5842d47a3617ccd3bc523632144e0c0eaffc0b9d` ile `identity_metadata.verify_epg_ids` program uygunluğu için tekil XMLTV channel ID, iki geçerli UTC tarih/saat alanı ve `stop > start` şartlarını zorunlu kılar. EPG ID tam eşleşmesi ile geçerli program aralığı ayrı kanıtlar olarak tutulur.
+- Eksik `stop`, geçersiz saat/ofset, ters/sıfır süreli aralık ve duplicate channel regresyonları eklendi. İlk PR denemesi Stage 2 test fixture'ında eksik `stop` nedeniyle FAIL oldu; fixture gerçek zaman aralığıyla düzeltildi. Son PR Actions `43480044886`: SUCCESS; ilgili Stage 2, Stage 3, Stage 5/6, #34 ve ana İBO korumalarının tamamı PASS. Merge sonrası ana dal run `43480208051`: SUCCESS.
+- Gerçek XMLTV kaynaklarındaki 303 eksik eşleşme giderilmiş sayılmaz ve #19 görevi gerçek kaynak/kanal kanıtı olmadan kapatılmadı. Yeni tarama yok; ana İBO, YEDEKLER, YENİLER, FAVORİLER değiştirilmedi.
