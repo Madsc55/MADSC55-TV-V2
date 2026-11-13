@@ -79,7 +79,9 @@ def package(text, target, evidence):
     for extinf, url in selected:
         key = hashlib.sha256((extinf + "\n" + url).encode()).hexdigest()
         proof = evidence.get(key)
-        if not isinstance(proof, dict) or proof.get("status") != "AV_VERIFIED" or not proof.get("video") or not proof.get("audio"):
+        if (not isinstance(proof, dict) or proof.get("status") != "AV_VERIFIED"
+                or not isinstance(proof.get("video"), str) or not proof["video"].strip()
+                or not isinstance(proof.get("audio"), str) or not proof["audio"].strip()):
             raise ValueError("missing real video/audio evidence for selected record")
     result = "#EXTM3U\n" + "".join(a + "\n" + b + "\n" for a,b in selected)
     return result, {"target":target,"records":len(selected),"sha256":hashlib.sha256(result.encode()).hexdigest(),"status":"EVIDENCE_GATED"}
