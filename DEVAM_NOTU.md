@@ -911,3 +911,10 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - PR #79 squash merge `2d2bd9193cf06fbd81077912e4e4d434316e7c5e`.
 - Actions `43455836114`: SUCCESS. Güvenlik, playlist invariants, görev defteri, Stage 6 offline paket/arşiv, Stage 2/3 kimlik-EPG-kurtarma ve #34 offline adaptör adımları PASS.
 - Bu koşu canlı Codeberg API çağrısı değildir. #34 açık: önceki canlı koşuda Codeberg HTTPError; güncel main canlı API tekrar çalıştırılmadı. GitHub Actions bağlantısı workflow_dispatch başlatma sağlamıyor.
+
+
+## 2026-11-13 — PR #68 and grouped offline acceptance (current main)
+- PR #68 merged as `e05db6eb30e6ecd486186092a90d9cbb02ea9fb6`; head `802a1a97cccccbdaa21f6bb65ac98273777a22e20`; Production Security Gate run `43454582523` SUCCESS. Safety, protected trigger/write policy, original IBO invariants, task ledger integrity, Stage 6 package/archive regressions and Discovery 34 offline acceptance passed.
+- Stream and logo/EPG probe functions now reject empty/non-string URL values safely; offline regressions cover malformed inputs. Read-only; no playlist writes.
+- Grouped offline runs `43454977935` and `43454976797` both SUCCESS: Stage 2/3 identity, EPG and recovery; Stage 6 package/archive; Discovery 34 adapters/integration; ledger and protected IBO checks all passed.
+- No tasks are closed by these offline-only results. #15 still has 3,178/4,955 unmatched historical hashes; #17–#21 require remaining exact identity/EPG/logo/resolution and real AV evidence; #28–#33 require real package/restore and acceptance evidence; #34 requires fresh discovery, AV and encrypted archive evidence. No new scan run; main IBO and YEDEKLER/YENILER/FAVORILER unchanged.
