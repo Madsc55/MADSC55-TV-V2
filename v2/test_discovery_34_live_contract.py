@@ -148,5 +148,39 @@ class LiveContractRetryTests(unittest.TestCase):
         self.assertEqual(result["reason"], "HTTP_403")
         self.assertEqual(result["endpoint_host"], "codeberg.org")
 
+    def test_http_429_honors_bounded_retry_after(self):
+        calls, sleeps = [], []
+        def fetch(_url):
+            calls.append(1)
+            if len(calls) == 1:
+                raise urllib.error.HTTPError("https://codeberg.org/api/v1/repos/search", 429,
+                                             "rate limited", {"Retry-After": "17"}, None)
+            return {"data": []}
+        result = probe("codeberg", fetch=fetch, sleep=sleeps.append)
+        self.assertEqual(result["status"], "ok")
+        self.assertEqual(result["attempts"], 2)
+        self.assertEqual(sleeps, [17])
+
+    def test_http_429_retry_after_is_capped(self):
+        calls, sleeps = [], []
+        def fetch(_url):
+            calls.append(1)
+            raise urllib.error.HTTPError("https://gitlab.com/api/v4/projects", 429,
+                                         "rate limited", {"Retry-After": "9999"}, None)
+        result = probe("gitlab", fetch=fetch, sleep=sleeps.append)
+        self.assertEqual(result["reason"], "HTTP_429")
+        self.assertEqual(result["attempts"], 3)
+        self.assertEqual(sleeps, [60, 60])
+
+    def test_http_429_without_header_uses_exponential_backoff(self):
+        calls, sleeps = [], []
+        def fetch(_url):
+            calls.append(1)
+            raise http_error(429)
+        result = probe("codeberg", fetch=fetch, sleep=sleeps.append)
+        self.assertEqual(result["reason"], "HTTP_429")
+        self.assertEqual(result["attempts"], 3)
+        self.assertEqual(sleeps, [5, 10])
+
 if __name__ == "__main__":
     unittest.main()
