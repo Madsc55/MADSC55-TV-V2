@@ -30,6 +30,18 @@ class ScannerOfflineTests(unittest.TestCase):
         self.assertFalse(scanner.tr_az(record, "candidate"))
         self.assertFalse(scanner.tr_az({"name": "TRT World", "group": "", "tvg_id": ""}, "TR"))
 
+    def test_only_fresh_decoded_av_is_accepted_as_inventory_proof(self):
+        accepted = {"decoded_av_verified": True, "decode_status": "DECODED_AV"}
+        self.assertTrue(scanner.current_decode_confirmed(accepted, "AV_VERIFIED"))
+        for row, status in (
+                ({}, "AV_VERIFIED"),
+                ({"decoded_av_verified": "true", "decode_status": "DECODED_AV"}, "AV_VERIFIED"),
+                ({"decoded_av_verified": True, "decode_status": "NO_DECODED_FRAME"}, "AV_VERIFIED"),
+                (accepted, "UNVERIFIED_OR_FAILED"),
+                (None, "AV_VERIFIED")):
+            with self.subTest(row=row, status=status):
+                self.assertFalse(scanner.current_decode_confirmed(row, status))
+
     def test_invalid_hls_url_is_not_verified(self):
         self.assertIsNone(scanner.check_hls({"url": "file:///tmp/mock.m3u8"}, 1))
 
