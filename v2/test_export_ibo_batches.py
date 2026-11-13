@@ -104,6 +104,23 @@ class BatchTests(unittest.TestCase):
             self.assertEqual(result["packages"], [])
             self.assertFalse(list(output.glob("*.m3u8")))
 
+    def test_nonobject_archive_rows_do_not_abort_verified_export(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            rows = [None, 17, [], "invalid",
+                    {"url": "https://example.invalid/verified",
+                     "name": "Valid", "group": "TR",
+                     "http_hls_status": "AV_VERIFIED"}]
+            encrypted = root / "inventory.enc"
+            data = chr(10).join(json.dumps(x) for x in rows) + chr(10)
+            encrypted.write_bytes(encrypt(data.encode(), SECRET))
+            result = export(encrypted, SECRET, root / "out", sizes=(1000,))
+            self.assertEqual(result["av_verified_unique"], 1)
+            self.assertEqual(result["packages"][0]["count"], 1)
+            playlist = Path(result["packages"][0]["path"]).read_text()
+            self.assertEqual(sum(line.startswith("#EXTINF:") for line in playlist.splitlines()), 1)
+            self.assertIn("https://example.invalid/verified", playlist)
+
     def test_symlink_output_directory_rejected(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
