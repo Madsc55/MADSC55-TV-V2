@@ -24,5 +24,41 @@ class XMLTVIntegrityTests(unittest.TestCase):
         self.assertEqual(result["invalid_programme_intervals"], 1)
         self.assertEqual(result["current_programme_intervals"], 0)
 
+    def test_programme_evidence_requires_valid_intervals_and_unique_xmltv_id(self):
+        xml = (
+            b'<tv><channel id="valid"/><channel id="invalid"/><channel id="duplicate"/>'
+            b'<channel id="duplicate"/>'
+            b'<programme channel="valid" start="20261113100000 +0000" stop="20261113110000 +0000"/>'
+            b'<programme channel="invalid" start="20261113130000 +0000" stop="20261113120000 +0000"/>'
+            b'<programme channel="duplicate" start="20261113100000 +0000" stop="20261113110000 +0000"/>'
+            b'<programme channel="undeclared" start="20261113100000 +0000" stop="20261113110000 +0000"/>'
+            b'</tv>'
+        )
+        class Response(io.BytesIO):
+            def __enter__(self): return self
+            def __exit__(self, *args): self.close()
+        with patch("epg_integrity.urllib.request.urlopen", return_value=Response(xml)):
+            result = epg_integrity.inspect(
+                "https://example.org/epg.xml", {"valid", "invalid", "duplicate", "undeclared"}
+            )
+        self.assertEqual(result["status"], "XMLTV_VALID")
+        # Legacy raw count remains available, but cannot be used as proof.
+        self.assertEqual(result["matched_programme_channel_ids"], 4)
+        self.assertEqual(result["valid_matched_programme_channel_ids"], 1)
+        self.assertEqual(result["duplicate_channel_ids"], 1)
+        self.assertEqual(result["invalid_programme_intervals"], 1)
+        self.assertLessEqual(result["current_matched_programme_channel_ids"],
+                             result["valid_matched_programme_channel_ids"])
+
+    def test_epg_dtd_and_entity_declarations_are_rejected(self):
+        xml = (b'<!DOCTYPE tv [<!ENTITY xxe SYSTEM "file:///etc/passwd">]>'
+               b'<tv><channel id="x"/></tv>')
+        class Response(io.BytesIO):
+            def __enter__(self): return self
+            def __exit__(self, *args): self.close()
+        with patch("epg_integrity.urllib.request.urlopen", return_value=Response(xml)):
+            result = epg_integrity.inspect("https://example.org/epg.xml", {"x"})
+        self.assertEqual(result["status"], "XMLTV_DTD_REJECTED")
+
 if __name__ == "__main__":
     unittest.main()
