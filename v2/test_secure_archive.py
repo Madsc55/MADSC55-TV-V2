@@ -32,6 +32,20 @@ class SecureArchiveTests(unittest.TestCase):
             restore(archive, restored, SECRET)
             self.assertEqual(source.read_bytes(), restored.read_bytes())
 
+    def test_malformed_and_truncated_archives_rejected(self):
+        for blob in (b'', b'not-an-archive', b'MADSC55-V2-ARCHIVE\\x01'):
+            with self.assertRaises(ValueError):
+                decrypt(blob, SECRET)
+
+    def test_backup_and_restore_refuse_same_path(self):
+        with tempfile.TemporaryDirectory() as directory:
+            source = Path(directory) / 'same.bin'
+            source.write_bytes(b'private')
+            with self.assertRaises(ValueError):
+                backup(source, source, SECRET)
+            with self.assertRaises(ValueError):
+                restore(source, source, SECRET)
+
     def test_short_secret_rejected(self):
         with self.assertRaises(ValueError):
             encrypt(b'abc', 'short')
