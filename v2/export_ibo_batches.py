@@ -3,18 +3,49 @@
 import argparse
 import json
 import os
+import urllib.parse
 from pathlib import Path
 from secure_archive import decrypt, atomic_write
+
+def _safe_http_url(url):
+    """Reject malformed or multiline URLs before writing an M3U record."""
+    if not isinstance(url, str) or not url or any(
+        ch.isspace() or ord(ch) < 32 or 127 <= ord(ch) <= 159 or ch == '"'
+        for ch in url
+    ):
+        return False
+    try:
+        parsed = urllib.parse.urlsplit(url)
+        if parsed.scheme not in ('http', 'https') or not parsed.hostname:
+            return False
+        if parsed.username is not None or parsed.password is not None:
+            return False
+        _ = parsed.port
+        return True
+    except ValueError:
+        return False
+
+
+def _safe_metadata(value, fallback):
+    """Prevent line separators and quoted attribute breakouts in EXTINF."""
+    text = str(value or fallback)
+    text = ''.join(' ' if (
+        ch.isspace() and ch not in (' ',) or ord(ch) < 32
+        or 127 <= ord(ch) <= 159 or ch in ('\u2028', '\u2029')
+    ) else ch for ch in text)
+    return text.replace('"', '').strip() or fallback
+
 
 def render(records):
     lines = ['#EXTM3U']
     for record in records:
-        name = str(record.get('name') or 'UNKNOWN').replace('\n', ' ').replace('\r', ' ').replace(',', ' ')
-        group = str(record.get('group') or 'TR-AZ ADAY').replace('"', '').replace('\n', ' ')
-        logo = str(record.get('logo') or '')
-        logo_attr = f' tvg-logo="{logo}"' if logo.startswith(('https://', 'http://')) and '"' not in logo else ''
+        name = _safe_metadata(record.get('name'), 'UNKNOWN').replace(',', ' ')
+        group = _safe_metadata(record.get('group'), 'TR-AZ ADAY')
+        logo = record.get('logo')
+        logo_attr = f' tvg-logo="{logo}"' if _safe_http_url(logo) else ''
         lines.extend([f'#EXTINF:-1{logo_attr} group-title="{group}",{name}', record['url']])
     return ('\n'.join(lines) + '\n').encode('utf-8')
+
 
 def export(archive, passphrase, destination, sizes=(1000, 2000), existing=()):
     raw = decrypt(Path(archive).read_bytes(), passphrase)
@@ -23,8 +54,10 @@ def export(archive, passphrase, destination, sizes=(1000, 2000), existing=()):
         if not line.strip():
             continue
         record = json.loads(line)
+        if not isinstance(record, dict):
+            continue
         url = record.get('url')
-        if not isinstance(url, str) or not url.startswith(('http://', 'https://')) or url in seen:
+        if not _safe_http_url(url) or url in seen:
             continue
         if record.get('http_hls_status') != 'AV_VERIFIED':
             continue
