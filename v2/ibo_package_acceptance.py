@@ -8,26 +8,47 @@ import re
 import urllib.parse
 
 def parse(text):
-    if not text.lstrip("\ufeff").startswith("#EXTM3U"):
+    text = text.lstrip("\ufeff")
+    if not text.splitlines() or text.splitlines()[0].strip() != "#EXTM3U":
         raise ValueError("missing EXTM3U header")
     pending = None
     records = []
-    for line in text.splitlines():
+    for line_number, line in enumerate(text.splitlines()):
+        raw_line = line
         line = line.strip()
+        if line_number == 0 and line == "#EXTM3U":
+            continue
+        if line.startswith("#EXTM3U"):
+            raise ValueError("unexpected M3U header inside playlist")
+        if line.startswith("#EXTINF") and not line.startswith("#EXTINF:"):
+            raise ValueError("malformed EXTINF directive")
         if line.startswith("#EXTINF:"):
             if pending is not None:
                 raise ValueError("unpaired EXTINF")
             if "," not in line:
                 raise ValueError("missing channel name")
+            duration_field = line[len("#EXTINF:"):].split(",", 1)[0].strip()
+            duration = duration_field.split(None, 1)[0] if duration_field else ""
+            if re.fullmatch(r"-1|[0-9]+(?:\.[0-9]+)?", duration) is None:
+                raise ValueError("invalid EXTINF duration")
             pending = (line, line.rsplit(",", 1)[1].strip())
             if not pending[1]:
                 raise ValueError("empty channel name")
         elif line and not line.startswith("#"):
+            if raw_line != line:
+                raise ValueError("leading or trailing whitespace in stream URL")
             if pending is None:
                 raise ValueError("URL without EXTINF")
+            if any(ord(char) <= 32 or ord(char) == 127 for char in line):
+                raise ValueError("control or whitespace in stream URL")
             parts = urllib.parse.urlsplit(line)
-            if parts.scheme not in ("http", "https") or not parts.hostname:
+            if (parts.scheme not in ("http", "https") or not parts.hostname
+                    or parts.username is not None or parts.password is not None):
                 raise ValueError("invalid stream URL")
+            try:
+                _ = parts.port
+            except ValueError as exc:
+                raise ValueError("invalid stream URL port") from exc
             records.append((pending[0], line))
             pending = None
     if pending:
@@ -38,14 +59,22 @@ def validate(records):
     if not records:
         raise ValueError("empty playlist")
     exact = set()
+    urls = set()
     for extinf, url in records:
         pair = (extinf, url)
         if pair in exact:
             raise ValueError("duplicate identical record")
         exact.add(pair)
+        if url in urls:
+            raise ValueError("duplicate stream URL under multiple channel entries")
+        urls.add(url)
     return True
 
 def package(text, target, evidence):
+    if type(target) is not int or target not in (1000, 2000):
+        raise ValueError("unsupported IBO package target")
+    if not isinstance(evidence, dict):
+        raise ValueError("invalid evidence mapping")
     records = parse(text)
     validate(records)
     if len(records) < target:
@@ -56,7 +85,9 @@ def package(text, target, evidence):
     for extinf, url in selected:
         key = hashlib.sha256((extinf + "\n" + url).encode()).hexdigest()
         proof = evidence.get(key)
-        if not isinstance(proof, dict) or proof.get("status") != "AV_VERIFIED" or not proof.get("video") or not proof.get("audio"):
+        if (not isinstance(proof, dict) or proof.get("status") != "AV_VERIFIED"
+                or not isinstance(proof.get("video"), str) or not proof["video"].strip()
+                or not isinstance(proof.get("audio"), str) or not proof["audio"].strip()):
             raise ValueError("missing real video/audio evidence for selected record")
     result = "#EXTM3U\n" + "".join(a + "\n" + b + "\n" for a,b in selected)
     return result, {"target":target,"records":len(selected),"sha256":hashlib.sha256(result.encode()).hexdigest(),"status":"EVIDENCE_GATED"}
@@ -74,7 +105,8 @@ def main():
     evidence=json.loads(args.evidence.read_text(encoding="utf-8"))
     content,report=package(text,args.target,evidence)
     args.output.parent.mkdir(parents=True,exist_ok=True)
-    args.output.write_text(content,encoding="utf-8")
+    with args.output.open("x", encoding="utf-8") as output:
+        output.write(content)
     print(json.dumps(report,ensure_ascii=False))
 if __name__=="__main__":
     main()
