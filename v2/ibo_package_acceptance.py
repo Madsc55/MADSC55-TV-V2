@@ -8,7 +8,8 @@ import re
 import urllib.parse
 
 def parse(text):
-    if not text.lstrip("\ufeff").splitlines() or text.lstrip("\ufeff").splitlines()[0].strip() != "#EXTM3U":
+    text = text.lstrip("\ufeff")
+    if not text.splitlines() or text.splitlines()[0].strip() != "#EXTM3U":
         raise ValueError("missing EXTM3U header")
     pending = None
     records = []
