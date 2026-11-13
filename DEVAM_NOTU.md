@@ -1,3 +1,8 @@
+## 13 Kasım 2026 — #31–#33 şifreli arşiv kabul şartı
+- 94c1eb6d: bağımsız geri yükleme ve gerçek AV bayraklarıyla üretim incelemesine geçmeden önce `archive_report.encrypted is True` zorunlu; şifresiz veya sahte bayraklı arşiv kabul edilmez.
+- e51bf22a: şifresiz, string/sayı ve eksik şifreleme bayrakları için regresyon eklendi; olumlu inceleme testi şifreli rapora uyarlandı.
+- Tam depo/Actions kabulü bu commitler için henüz doğrulanmadı; gerçek AV ve bağımsız harici geri yükleme açık. Ana İBO/YEDEKLER/YENİLER/FAVORİLER değiştirilmedi, yeni tarama yapılmadı.
+
 ## 13 Kasım 2026 — #31–#33 şifreli arşiv girdi tür koruması
 - be71d936: audit_encrypted_archive(), çözme işleminden önce original/ciphertext girdilerini bytes olarak zorunlu tutar.
 - f072a51d: string, bytearray ve None girdileri için çevrimdışı regresyon testleri eklendi.
