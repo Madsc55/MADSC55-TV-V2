@@ -1,3 +1,11 @@
+## 13 Kasım 2026 — #34 HTTP-date Retry-After desteği ana dala alındı
+- PR #88 squash merge: 3a6222df8afe6d3362c2f0b0412dfdcb7905395e.
+- PR baş commit aef35fdd0601723d995ff61fa635a0b5c19c973a için Production Security Gate run 43457366381 SUCCESS; tek güvenlik/invariant işi SUCCESS.
+- Canlı sözleşme istemcisi artık Retry-After sayısal saniye ve HTTP-date biçimlerini okur; geçmiş tarih 0'a, gelecek bekleme mevcut 60 saniye üst sınırına kırpılır; toplam deneme 3 ile sınırlıdır. Offline regresyon testi eklendi.
+- Bu CI canlı Codeberg API kabulü değildir. #34 canlı Codeberg, gerçek AV, şifreli arşiv/restore kabulü açık kalır.
+- #15: 4.955 tarihî hash içinde 1.777 kesin IPTV-org katalog eşleşmesi; 3.178 katalog eşleşmesi yok. Katalog host eşleşmesi resmi yayıncı sahipliği kanıtı değildir. #17–#21 ve #28–#33 gerçek üretim/AV/restore kabulü bekler.
+- Yeni toplu tarama yapılmadı; ana İBO, YEDEKLER, YENİLER ve FAVORİLER değiştirilmedi.
+
 ## 13 Kasım 2026 — PR #106 güncel ana dal kabul testi başarılı
 - PR #106 (`integrate-stage6-28-33-current-main-20261113`) için Actions run `43457997079` completed / success.
 - Tüm adımlar SUCCESS: grouped safety regression tests; production trigger/write policy; original IBO category/backup invariants; historical task ledger; Stage 2 identity recovery metadata; Stage 6 offline package/archive regressions; Stage 2/3 offline identity, EPG and recovery; Discovery #34 offline adapter/integration acceptance.
