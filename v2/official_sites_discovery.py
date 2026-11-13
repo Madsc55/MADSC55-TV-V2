@@ -23,9 +23,11 @@ def select_official_sites(catalog, worldwide=False):
             continue
         url = item.get("website") or ""
         parsed = urllib.parse.urlsplit(url)
-        if parsed.scheme != "https" or not parsed.hostname:
+        if (parsed.scheme != "https" or not parsed.hostname
+                or parsed.username or parsed.password):
             continue
-        if parsed.hostname.lower() in ("localhost",) or parsed.hostname.endswith((".local", ".internal")):
+        host = parsed.hostname.lower().rstrip(".")
+        if host == "localhost" or host.endswith((".localhost", ".local", ".internal")):
             continue
         key = (item.get("id"), parsed.hostname.lower())
         if key in seen:
