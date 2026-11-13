@@ -1,3 +1,9 @@
+## 13 Kasım 2026 — #28–#33 PR #23 güvenlik kontrolü PASS
+- https://github.com/Madsc55/MADSC55-TV-V2/pull/23 açıldı, taslak; main'e birleştirilmedi.
+- Commit 7076396f7c113df80c0825ef138900791af05e80 için Production Security Gate run 43444008561 SUCCESS: grouped safety, üretim tetikleyici/yazma güvenliği, korunan İBO invariantları, Discovery 34 offline acceptance PASS.
+- Bu güvenlik kapısı #28–#33'ün şifreli arşiv roundtrip, 1000/2000 gerçek AV paketleri, bağımsız geri yükleme ve cihaz kabulünün geçtiği anlamına gelmez. Nihai görevler açık tutuldu.
+- Yeni kanal taraması yapılmadı; ana İBO, YEDEKLER, YENİLER, FAVORİLER korunuyor.
+
 ## 2 Kasım 2026 — kaynak kimliği bütünlüğü ve 500'lük varsayılan paket (yeni çalışma)
 - `v2/consolidate_inventory.py` eski `source_id` ile yeni `source_ids` aynı kayıtta bulunduğunda ikisini de saklar (59d594e). Regresyon testi eklendi (9e44e86).
 - `v2/real_ibo_scan.py` geçmiş arşivden okunan her iki kaynak kimliği biçimini kayıpsız birleştirir ve varsayılan paket boyutu son kullanıcı kararıyla 500'dür (401d194). Offline regresyon testi eklendi (28c97fa).
