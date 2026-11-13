@@ -46,8 +46,8 @@ class Stage5Acceptance(unittest.TestCase):
             if command[0] == "ffprobe":
                 return subprocess.CompletedProcess(command, 0, '{"streams":[{"codec_type":"video"},{"codec_type":"audio"}]}', "")
             if "0:v:0" in command:
-                return subprocess.CompletedProcess(command, 0, "frame=1\\nprogress=end\\n", "")
-            return subprocess.CompletedProcess(command, 0, "out_time_us=0\\nprogress=end\\n", "")
+                return subprocess.CompletedProcess(command, 0, "frame=1\nprogress=end\n", "")
+            return subprocess.CompletedProcess(command, 0, "out_time_us=0\nprogress=end\n", "")
         with patch("stage5_evidence_export.subprocess.run", side_effect=fake_run):
             self.assertFalse(media_has_audio_video(Path("metadata-only-fixture.mp4")))
         self.assertEqual(calls, ["ffprobe", "ffmpeg", "ffmpeg"])
@@ -59,9 +59,9 @@ class Stage5Acceptance(unittest.TestCase):
             if command[0] == "ffprobe":
                 text = '{"streams":[{"codec_type":"video"},{"codec_type":"audio"}]}'
             elif "0:v:0" in command:
-                text = "frame=1\\nprogress=end\\n"
+                text = "frame=1\nprogress=end\n"
             else:
-                text = "out_time_us=128000\\nprogress=end\\n"
+                text = "out_time_us=128000\nprogress=end\n"
             return subprocess.CompletedProcess(command, 0, text, "")
         with patch("stage5_evidence_export.subprocess.run", side_effect=fake_run):
             self.assertTrue(media_has_audio_video(Path("decoded-fixture.mp4")))
