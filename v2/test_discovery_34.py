@@ -104,6 +104,11 @@ class Discovery34Tests(unittest.TestCase):
         self.assertNotEqual(default["source_id"], alternate["source_id"])
         self.assertIn(":8443", alternate["source_id"])
 
+    def test_malformed_ipv6_authority_is_rejected(self):
+        for url in ("https://[invalid]/live.m3u8", "https://[::1/live.m3u8"):
+            with self.subTest(url=url), self.assertRaises(ValueError):
+                identity("m3u", url)
+
     def test_youtube(self):
         items = curated_candidates("youtube", [{"video_id": "AbCdEf12345"}])
         self.assertEqual(items[0]["source_id"], "youtube:AbCdEf12345")
