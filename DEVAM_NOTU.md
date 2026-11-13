@@ -1027,3 +1027,10 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - PR #156 squash merge `5842d47a3617ccd3bc523632144e0c0eaffc0b9d` ile `identity_metadata.verify_epg_ids` program uygunluğu için tekil XMLTV channel ID, iki geçerli UTC tarih/saat alanı ve `stop > start` şartlarını zorunlu kılar. EPG ID tam eşleşmesi ile geçerli program aralığı ayrı kanıtlar olarak tutulur.
 - Eksik `stop`, geçersiz saat/ofset, ters/sıfır süreli aralık ve duplicate channel regresyonları eklendi. İlk PR denemesi Stage 2 test fixture'ında eksik `stop` nedeniyle FAIL oldu; fixture gerçek zaman aralığıyla düzeltildi. Son PR Actions `43480044886`: SUCCESS; ilgili Stage 2, Stage 3, Stage 5/6, #34 ve ana İBO korumalarının tamamı PASS. Merge sonrası ana dal run `43480208051`: SUCCESS.
 - Gerçek XMLTV kaynaklarındaki 303 eksik eşleşme giderilmiş sayılmaz ve #19 görevi gerçek kaynak/kanal kanıtı olmadan kapatılmadı. Yeni tarama yok; ana İBO, YEDEKLER, YENİLER, FAVORİLER değiştirilmedi.
+
+
+## 13 Kasım 2026 — Stage 5 FFmpeg decode kanıtı ve özel İBO koruması (PR #162)
+- PR #162 squash merge `86fe138f793ff42148a34faa6b4ca249dc6ee65f`, ana dal güvenlik kapısı Actions `43480354832` SUCCESS; PR kabul koşusu `43480221367` SUCCESS.
+- Kanıt dosyası yalnızca ffprobe akış başlıklarını taşımasıyla kabul edilmiyor: yerel FFmpeg framemd5 çıktısında hem görüntü kareleri hem ses örneklerinin gerçekten decode edilmesi gerekiyor. Kimlikte `tvg-id` ile `channel_id` eşitliği aranıyor.
+- Dışa aktarım sadece yeni `private-*.m3u8` dosyasına, O_EXCL/O_NOFOLLOW + 0600 ile yapılır; korunan ana İBO, YEDEKLER, YENİLER, FAVORİLER üzerine yazma yok.
+- Yanlış kimlik, sahte kanıt, çakışan dosya ve yalnız görüntü akışı regresyonları PASS. GitHub runner'da FFmpeg bulunmadığı için yerel klip entegrasyon testi SKIPPED; çevrimdışı mock regresyonları PASS. Gerçek 1.000/2.000 kanal paketleri veya cihaz AV kabulü yapılmadı; #31–#33 açık.
