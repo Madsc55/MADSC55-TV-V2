@@ -938,3 +938,12 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - PR #89 merged as `207f5c3f4a83cc1bb716deddf1344cf8c1f36e16`; head `3396cb0806da203aae336d3b3b3083bc198632a5`; Production Security Gate run `43457399513` SUCCESS. All grouped steps passed, including Stage 2 identity metadata, Stage 6 archive/package regressions, Stage 2/3 offline identity/EPG/recovery, Discovery 34 offline adapters and protected IBO invariants.
 - `v2/secure_archive.py`: `decrypt` now rejects encrypted blobs larger than the format header + MAX_INPUT plaintext + AES-GCM tag before decryption. `v2/test_secure_archive.py` covers the upper bound in addition to malformed/truncated, tamper, round-trip and same-path cases.
 - Offline/security acceptance only. Does not close #28–#33 real production package/independent restore gates, #15 unmatched historical identities, #17–#21 final mapping/live evidence, or #34 live provider/AV/archive gate. No scan or playlist write; protected lists unchanged.
+
+
+## 13 Kasım 2026 — Güncel main Production Security Gate ve canlı #34 teşhisi
+- Main commit: `478aba262b0b37c39019a85bcc3abfc812b04208`; Actions run `43458337072`: SUCCESS.
+- Güncel main üzerindeki Stage 6 (#28–#33) çevrimdışı paketleme, M3U doğrulama, şifreli arşiv ve geri-yükleme regresyonları; Stage 2/3; #34 offline adapter ve güvenlik/invariant kapıları PASS.
+- Aynı committe ayrı `live-discovery-diagnostic` işi başarısız: GitHub ve GitLab sorguları sonuçlandı; Codeberg altı sorgunun tamamında HTTP 429 döndürdü (her sorguda 3 deneme). Bu nedenle #34 canlı sağlayıcı kabulü başarısız/açık; HTTP 429 başarı olarak işaretlenmedi.
+- Codeberg için Retry-After sayısal ve HTTP-date biçimlerini 60 saniye üst sınırıyla ele alan kod ve offline regresyonlar main üzerinde mevcut; canlı 429 yanıtı nedeniyle sağlayıcı kabulü yine de geçmedi.
+- Görev defteri 21 completed / 13 in_progress olarak korundu; canlı yayın kanıtı, bağımsız harici geri yükleme ve gerçek 1000/2000 kanal paketleri olmadan görev kapatılmadı.
+- Yeni kapsamlı kanal taraması yapılmadı. Ana İBO, YEDEKLER, YENİLER ve FAVORİLER değiştirilmedi.
