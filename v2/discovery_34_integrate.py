@@ -42,7 +42,8 @@ def main():
     result = integrate()
     path = Path(args.output)
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    with path.open("x", encoding="utf-8") as output:
+        output.write(json.dumps(result, ensure_ascii=False, indent=2) + "\n")
     print("Integrated candidate identities:", len(result["candidates"]), "Missing/invalid inputs:", len(result["errors"]))
 
 if __name__ == "__main__":
