@@ -63,6 +63,15 @@ class PackageTests(unittest.TestCase):
         valid = parse("#EXTM3U\n#EXTINF:12.5 tvg-id=\"id\",Name\nhttps://example.org/live.m3u8\n")
         self.assertEqual(len(valid), 1)
 
+    def test_extinf_duration_boundaries(self):
+        for duration in ("-1", "0", "1", "12.5"):
+            with self.subTest(valid_duration=duration):
+                text = f"#EXTM3U\\n#EXTINF:{duration},Name\\nhttps://example.org/live.m3u8\\n"
+                self.assertEqual(len(parse(text)), 1)
+        for duration in ("+1", "-0.5", "1e3", ".5", "1.", "  "):
+            with self.subTest(invalid_duration=duration), self.assertRaises(ValueError):
+                parse(f"#EXTM3U\\n#EXTINF:{duration},Name\\nhttps://example.org/live.m3u8\\n")
+
     def test_rejects_malformed_extinf_directives(self):
         for directive in ("#EXTINF-1,Name", "#EXTINF ,Name", "#EXTINF"):
             with self.subTest(directive=directive), self.assertRaises(ValueError):
