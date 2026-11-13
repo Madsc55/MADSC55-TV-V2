@@ -1,3 +1,8 @@
+## 13 Kasım 2026 — #34 URL kimliği güvenliği ek düzeltme
+- Commit c9297b8: geçersiz URL portları fail-closed reddedilir; sondaki noktalı hostname kaynak kimliği için kanonikleştirilir.
+- Commit e386c1f: geçersiz port ve eşdeğer hostname için regresyon testleri eklendi.
+- Bu commit'ler için yeni Actions kabul sonucu henüz doğrulanmadı; canlı Codeberg API ve #34 nihai kabulü AÇIK. Ana İBO/YEDEKLER/YENİLER/FAVORİLER değiştirilmedi; kanal taraması yapılmadı.
+
 ## 13 Kasım 2026 — #34 canlı sözleşme regresyonları CI PASS
 - Commit 59de8fcf72e1cfee2451d05c12ff93d74f4ab336, Actions run 43447269008: SUCCESS. Production Security Gate içinde test_discovery_34_live_contract dahil offline keşif ve hata/retry regresyonları, üretim güvenlik kilidi ve korunan İBO invariantları PASS.
 - Bu testler sahte ağ yanıtlarıyla çevrimdışı yürütüldü; gerçek GitHub/GitLab/Codeberg canlı API kabulü ve gerçek yayın AV kanıtı hâlâ AÇIK. #34 kapatılmadı; playlist ve korunan kategoriler değiştirilmedi.
