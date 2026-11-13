@@ -116,6 +116,32 @@ def historical_source_ids(record):
     return list(dict.fromkeys(x for x in values if isinstance(x, str) and x)) or ['historical-archive']
 
 
+def normalize_dynamic_sources(dynamic, existing_sources):
+    """Validate optional discovery report rows before admitting HTTPS M3U feeds."""
+    if not isinstance(dynamic, dict) or not isinstance(dynamic.get('sources'), list):
+        raise ValueError('Dynamic discovery report must be an object with a sources list')
+    seen = {item.get('url') for item in existing_sources if isinstance(item, dict)}
+    accepted, rejected = [], []
+    for index, item in enumerate(dynamic['sources']):
+        if not isinstance(item, dict):
+            rejected.append({'index': index, 'error': 'InvalidRecord'})
+            continue
+        url = item.get('url')
+        if not isinstance(url, str):
+            rejected.append({'index': index, 'error': 'InvalidURLType'})
+            continue
+        parsed = urllib.parse.urlsplit(url)
+        if (item.get('status') != 'SOURCE_PARSED_STREAMS_NOT_PLAYBACK_VERIFIED'
+                or parsed.scheme != 'https' or not parsed.hostname
+                or parsed.username or parsed.password or url in seen):
+            rejected.append({'index': index, 'error': 'RejectedSource'})
+            continue
+        sid = 'github-auto-' + hashlib.sha256(url.encode()).hexdigest()[:20]
+        accepted.append({'id': sid, 'url': url, 'scope': 'candidate'})
+        seen.add(url)
+    return accepted, rejected
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--sources', type=pathlib.Path, default=SOURCES)
@@ -161,21 +187,13 @@ def main():
     rejected_dynamic_sources = []
     if args.dynamic_sources is not None:
         dynamic = json.loads(args.dynamic_sources.read_text(encoding='utf-8'))
-        if not isinstance(dynamic.get('sources'), list):
-            ap.error('Dynamic discovery report has no sources list')
-        seen_source_urls = {item['url'] for item in sources}
-        for item in dynamic['sources']:
-            url = item.get('url', '')
-            parsed = urllib.parse.urlsplit(url)
-            if (item.get('status') != 'SOURCE_PARSED_STREAMS_NOT_PLAYBACK_VERIFIED'
-                    or parsed.scheme != 'https' or not parsed.hostname or parsed.username
-                    or parsed.password or url in seen_source_urls):
-                continue
-            sources.append({'id': 'github-auto-' + hashlib.sha256(url.encode()).hexdigest()[:20],
-                            'url': url, 'scope': 'candidate'})
-            seen_source_urls.add(url)
-            dynamic_count += 1
-            dynamic_source_ids.add('github-auto-' + hashlib.sha256(url.encode()).hexdigest()[:20])
+        try:
+            accepted_dynamic, rejected_dynamic_sources = normalize_dynamic_sources(dynamic, sources)
+        except ValueError as exc:
+            ap.error(str(exc))
+        sources.extend(accepted_dynamic)
+        dynamic_count = len(accepted_dynamic)
+        dynamic_source_ids = {item['id'] for item in accepted_dynamic}
     # Do not export incomplete results as a successful production list.
     candidates = {}
     failed = []
