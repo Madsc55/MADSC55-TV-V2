@@ -110,8 +110,17 @@ def _tree_url(provider, key, namespace, branch):
 
 
 def _tree_paths(provider, payload):
-    rows = payload if provider == "gitlab" and isinstance(payload, list) else (
-        payload.get("tree", []) if provider == "codeberg" and isinstance(payload, dict) else [])
+    """A 200 API error body is not an empty repository tree."""
+    if provider == "gitlab":
+        if not isinstance(payload, list):
+            raise ValueError("Invalid GitLab repository tree response")
+        rows = payload
+    elif provider == "codeberg":
+        if not isinstance(payload, dict) or not isinstance(payload.get("tree"), list):
+            raise ValueError("Invalid Codeberg repository tree response")
+        rows = payload["tree"]
+    else:
+        raise ValueError("Unsupported provider")
     return sorted({row.get("path") for row in rows
                    if isinstance(row, dict) and row.get("type") in ("blob", "file")
                    and isinstance(row.get("path"), str)
@@ -177,7 +186,12 @@ def discover_provider(provider, fetch_json_fn=fetch_json, fetch_text_fn=_raw_fet
                 rate_limited = True
                 break
             continue
-        for path in _tree_paths(provider, tree_payload)[:8]:
+        try:
+            paths = _tree_paths(provider, tree_payload)[:8]
+        except (ValueError, TypeError):
+            errors.append({"project": namespace, "error": "InvalidTreeResponse"})
+            continue
+        for path in paths:
             if len(sources) >= MAX_FILES:
                 break
             raw = _raw_url(provider, namespace, branch, path)
