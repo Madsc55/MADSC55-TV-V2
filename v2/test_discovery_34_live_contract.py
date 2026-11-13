@@ -236,7 +236,7 @@ class LiveContractRetryTests(unittest.TestCase):
         result = probe("codeberg", fetch=fetch, sleep=sleeps.append)
         self.assertEqual(result["reason"], "HTTP_429")
         self.assertEqual(result["attempts"], 3)
-        self.assertEqual(sleeps, [5, 10])
+        self.assertEqual(sleeps, [30, 60])
 
 
     def test_http_date_retry_after_is_honored_and_capped(self):

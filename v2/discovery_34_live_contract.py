@@ -28,7 +28,7 @@ def retry_delay(exc, attempt):
             return min(MAX_RETRY_AFTER_SECONDS, max(0, seconds))
     except (AttributeError, TypeError, ValueError):
         pass
-    return min(MAX_RETRY_AFTER_SECONDS, (5 if getattr(exc, "code", None) == 429 else 1) * (2 ** (attempt - 1)))
+    return min(MAX_RETRY_AFTER_SECONDS, (30 if getattr(exc, "code", None) == 429 else 1) * (2 ** (attempt - 1)))
 
 def probe(source, query="turkish-iptv", fetch=fetch_json, sleep=time.sleep):
     url = search_url(source, query)
