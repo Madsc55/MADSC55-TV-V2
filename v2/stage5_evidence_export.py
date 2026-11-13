@@ -77,12 +77,13 @@ def valid_private_destination(path, source, protected):
     """Never overwrite existing files or publish private evidence in tracked paths."""
     target = path.resolve()
     root = Path(__file__).resolve().parents[1]
-    reports = (root / "v2/reports").resolve()
+    # Signed stream URLs must never be saved inside a Git-tracked tree,
+    # including v2/reports (an otherwise easy accidental disclosure).
     if (path.exists() or path.is_symlink()
             or path.name.startswith("private-") is False
             or path.suffix != ".m3u8"
             or target in (source.resolve(), protected.resolve())
-            or (root in target.parents and reports not in target.parents)):
+            or target == root or root in target.parents):
         raise ValueError("Output must be a new private .m3u8 in an isolated location")
 
 def run(args):
