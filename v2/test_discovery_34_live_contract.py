@@ -69,6 +69,31 @@ class LiveContractRetryTests(unittest.TestCase):
                 self.assertEqual(result["reason"], "ValueError")
                 self.assertEqual(result["attempts"], 1)
 
+    def test_codeberg_http_404_is_not_retried_or_accepted(self):
+        calls = []
+        def fetch(_url):
+            calls.append(1)
+            raise http_error(404)
+        result = probe("codeberg", fetch=fetch,
+                       sleep=lambda _: self.fail("unexpected sleep"))
+        self.assertEqual(result["status"], "error")
+        self.assertEqual(result["reason"], "HTTP_404")
+        self.assertEqual(result["attempts"], 1)
+        self.assertEqual(len(calls), 1)
+
+    def test_codeberg_http_500_retries_then_fails_closed(self):
+        calls = []
+        sleeps = []
+        def fetch(_url):
+            calls.append(1)
+            raise http_error(500)
+        result = probe("codeberg", fetch=fetch, sleep=sleeps.append)
+        self.assertEqual(result["status"], "error")
+        self.assertEqual(result["reason"], "HTTP_500")
+        self.assertEqual(result["attempts"], 3)
+        self.assertEqual(len(calls), 3)
+        self.assertEqual(sleeps, [1, 2])
+
     def test_exhaustion_fails_closed(self):
         result = probe("codeberg", fetch=lambda _: (_ for _ in ()).throw(http_error(429)), sleep=lambda _: None)
         self.assertEqual(result["status"], "error")
