@@ -1,8 +1,8 @@
 {
   "schema": 1,
   "canonical_state": "state.json",
-  "generated_at": "2026-11-13T18:12:39.883Z",
-  "observed_commit": "ee2471b28804fb7c2c212f83f62d73d06566bed9",
+  "generated_at": "2026-11-13T18:42:44Z",
+  "observed_commit": "841fb1cc466f843f4b11fe10787e643eb7ca3d8c",
   "statuses": [
     {
       "id": 1,
@@ -531,7 +531,7 @@
     {
       "id": 34,
       "status": "in_progress",
-      "last_checked_at": "2026-11-13T16:09:47Z",
+      "last_checked_at": "2026-11-13T18:42:44Z",
       "evidence_urls": [
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43299056099",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43299369197",
@@ -546,10 +546,12 @@
         "https://github.com/Madsc55/MADSC55-TV-V2/pull/128",
         "https://github.com/Madsc55/MADSC55-TV-V2/commit/e0d533e5f17996c02f614b33cbf9a3966e7611f7",
         "https://github.com/Madsc55/MADSC55-TV-V2/commit/ee2471b28804fb7c2c212f83f62d73d06566bed9",
-        "https://github.com/Madsc55/MADSC55-TV-V2/pull/132"
+        "https://github.com/Madsc55/MADSC55-TV-V2/pull/132",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43485149854",
+        "https://github.com/Madsc55/MADSC55-TV-V2/pull/201"
       ],
       "blocker": "Current live contract (run 43459603986): GitHub 6/6 configured queries returned valid responses (102 raw candidate rows, not deduplicated); GitLab 6/6 returned valid empty lists; Codeberg's first query returned HTTP 429 after 3 bounded attempts, so 5 sibling queries were skipped by the circuit breaker. Actual provider probes: 1 of 6 Codeberg terms. No Retry-After or reset header was returned. #34 live Codeberg acceptance remains open.",
-      "reason": "The grouped offline system verification passed. #34 source discovery is running on the exact tested source tree. Fresh AV, encryption and final acceptance remain open. 13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open. 13 Nov 2026: inspected prior live job logs; Codeberg failed at HTTP layer, not candidate parser. Current code reports HTTP status/provider/host and retries transient statuses; 403 is fail-closed. No live rerun or channel scan performed. Codeberg blocker diagnosis and offline-only follow-up recorded in PR #79; run 43455836114 passed offline gate, not live API. PR #86 merged; six configured discovery terms are now included in live-contract test matrix and offline tests passed in run 43457308527. This is not live API acceptance; #34 remains open. 13 Nov: live run 43458069505 established GitHub/GitLab results and Codeberg 429; PR #128 added rate-limit reset handling and provider circuit breaker. Follow-up main run 43459603986: offline production gate PASS; live diagnostic still returned Codeberg HTTP_429 after 3 attempts and skipped 5 sibling queries, while GitHub 6/6 and GitLab 6/6 remained successful. No full channel scan or playlist writes performed. #34 remains open. 13 Nov 2026: PR #132 merged as ee2471b28804fb7c2c212f83f62d73d06566bed9; queries_checked now counts actual requests, with queries_total and queries_skipped separately reported. The observed live run 43459603986 made one Codeberg query (three bounded attempts) and skipped five; this reporting fix has offline CI PASS, but no second live probe after the metrics fix is claimed."
+      "reason": "The grouped offline system verification passed. #34 source discovery is running on the exact tested source tree. Fresh AV, encryption and final acceptance remain open. 13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open. 13 Nov 2026: inspected prior live job logs; Codeberg failed at HTTP layer, not candidate parser. Current code reports HTTP status/provider/host and retries transient statuses; 403 is fail-closed. No live rerun or channel scan performed. Codeberg blocker diagnosis and offline-only follow-up recorded in PR #79; run 43455836114 passed offline gate, not live API. PR #86 merged; six configured discovery terms are now included in live-contract test matrix and offline tests passed in run 43457308527. This is not live API acceptance; #34 remains open. 13 Nov: live run 43458069505 established GitHub/GitLab results and Codeberg 429; PR #128 added rate-limit reset handling and provider circuit breaker. Follow-up main run 43459603986: offline production gate PASS; live diagnostic still returned Codeberg HTTP_429 after 3 attempts and skipped 5 sibling queries, while GitHub 6/6 and GitLab 6/6 remained successful. No full channel scan or playlist writes performed. #34 remains open. 13 Nov 2026: PR #132 merged as ee2471b28804fb7c2c212f83f62d73d06566bed9; queries_checked now counts actual requests, with queries_total and queries_skipped separately reported. The observed live run 43459603986 made one Codeberg query (three bounded attempts) and skipped five; this reporting fix has offline CI PASS, but no second live probe after the metrics fix is claimed. 13 Nov 2026: PR #201 merged as 841fb1cc466f843f4b11fe10787e643eb7ca3d8c; Production Security Gate 43485149854 SUCCESS. Main scanner now uses validated dynamic-source normalization before network access, and validates integrated M3U and candidate streams against private/localhost/malformed URL input. Includes offline CLI regression; live Codeberg, fresh AV and device/restore gates are not closed."
     }
   ],
   "allowed_statuses": [
