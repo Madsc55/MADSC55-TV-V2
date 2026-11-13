@@ -75,6 +75,8 @@ def verify_epg_ids(candidates, xmltv_text):
             programme_ids.add(cid)
     output = []
     for row in candidates:
+        if not isinstance(row, dict):
+            raise ValueError("Invalid EPG candidate record")
         candidate = row.get("epg_id_candidate")
         matched = isinstance(candidate, str) and ids[candidate] == 1
         programme = bool(matched and candidate in programme_ids)
