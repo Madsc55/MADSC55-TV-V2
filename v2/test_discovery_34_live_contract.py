@@ -2,7 +2,7 @@
 """Offline regression for bounded #34 live metadata retries."""
 import unittest
 import urllib.error
-from discovery_34_live_contract import probe
+from discovery_34_live_contract import probe, probe_queries
 
 def http_error(code):
     return urllib.error.HTTPError("https://codeberg.org/api/v1/repos/search", code, "test", {}, None)
@@ -147,6 +147,46 @@ class LiveContractRetryTests(unittest.TestCase):
         result = probe("codeberg", fetch=lambda _: (_ for _ in ()).throw(http_error(403)), sleep=lambda _: None)
         self.assertEqual(result["reason"], "HTTP_403")
         self.assertEqual(result["endpoint_host"], "codeberg.org")
+
+    def test_all_discovery_queries_are_checked(self):
+        from urllib.parse import urlsplit, parse_qs
+        seen = []
+        def fetch(url):
+            query = parse_qs(urlsplit(url).query).get("q", [""])[0]
+            seen.append(query)
+            return {"items": []}
+        terms = ("turkiye.m3u", "tr.m3u8", "turkish-iptv")
+        result = probe_queries("github", queries=terms, fetch=fetch,
+                               sleep=lambda _: self.fail("unexpected retry"))
+        self.assertEqual(result["status"], "ok")
+        self.assertEqual(result["queries_checked"], 3)
+        self.assertEqual(result["queries_ok"], 3)
+        self.assertEqual(seen, list(terms))
+
+    def test_query_matrix_preserves_provider_failures(self):
+        calls = []
+        def fetch(url):
+            calls.append(url)
+            if "tr.m3u8" in url:
+                raise http_error(403)
+            return {"data": []}
+        result = probe_queries("codeberg", queries=("turkiye.m3u", "tr.m3u8", "canli-tv"),
+                               fetch=fetch, sleep=lambda _: self.fail("403 must not retry"))
+        self.assertEqual(result["status"], "error")
+        self.assertEqual(result["queries_checked"], 3)
+        self.assertEqual(result["queries_failed"], 1)
+        self.assertEqual(result["query_results"][1]["http_status"], 403)
+        self.assertEqual(result["query_results"][1]["endpoint_host"], "codeberg.org")
+        self.assertEqual(len(calls), 3)
+
+    def test_http_error_exposes_safe_rate_limit_diagnostics(self):
+        exc = urllib.error.HTTPError("https://codeberg.org/api/v1/repos/search", 403,
+                                     "Forbidden", {"X-RateLimit-Remaining": "0"}, None)
+        result = probe("codeberg", fetch=lambda _: (_ for _ in ()).throw(exc),
+                       sleep=lambda _: self.fail("unexpected retry"))
+        self.assertEqual(result["http_status"], 403)
+        self.assertEqual(result["http_reason"], "Forbidden")
+        self.assertEqual(result["rate_limit_remaining"], "0")
 
     def test_http_429_honors_bounded_retry_after(self):
         calls, sleeps = [], []
