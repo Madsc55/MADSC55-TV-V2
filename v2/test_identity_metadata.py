@@ -72,7 +72,7 @@ class IdentityMetadataTests(unittest.TestCase):
             ("20261112120000 +1500", "20261112130000 +1500"),
             ("not-a-date", "20261112130000 +0000"),
             ("20261112120000 +0000", "20261112120000 +0000"),
-            ("20261112120000 +0200", "20261112110000 +0000"),
+            ("20261112120000 +0000", "20261112130000 +0200"),
         )
         for start, stop in invalid_intervals:
             with self.subTest(start=start, stop=stop):
