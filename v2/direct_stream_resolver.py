@@ -14,7 +14,7 @@ from discovery_34 import identity
 from secure_archive import atomic_write, encrypt
 
 MAX_RESOLVE = 120
-TIMEOUT_SECONDS = 65
+TIMEOUT_SECONDS = 55
 
 
 def resolve_candidate(item, runner=subprocess.run):
