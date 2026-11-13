@@ -1,3 +1,8 @@
+## 13 Kasım 2026 — Gerçek İBO 4.301 AV paketinin bağımsız ZIP/M3U denetimi
+- Gerçek Actions run `43412576224` SUCCESS; artifact `14033805492`, ZIP SHA-256 `139c8a0868f35d4b64cd55a17bcbd56325d8e3c87b5d07295028bb4d56e832a6` kontrol edildi.
+- ZIP içindeki 1000'lik parçalar 1000+1000+1000+1000+301, 2000'lik parçalar 2000+2000+301; her ikisi tam 4301 farklı URL, birebir aynı sıra, sıfır URL tekrarı, sıfır eşleşmemiş EXTINF. Rapor: 13735 yeni aday, 4301 AV, 9434 doğrulanmamış; mock=false, arşiv roundtrip=true (rapor beyanı), cihaz playback=false.
+- Bağımsız paket bütünlüğü raporu: `v2/reports/IBO_REAL_BATCH_INTEGRITY_2026-11-13.md`. Bu iş yeni tarama yapmadı, şifreli envanteri çözmedi, fiziksel cihaz veya bağımsız bulut geri yükleme kanıtı üretmedi. #28–#33 statüleri kanıt sınırları nedeniyle değiştirilmedi. Ana İBO/YEDEKLER/YENİLER/FAVORİLER değişmedi.
+
 ## 13 Kasım 2026 — #34 federated API yanıtı güvenliği (kanıtlı entegrasyon)
 - PR #151 squash merge `171a3c50`: GitLab/Codeberg M3U kaynak aramasına genel terimler eklendi; önceki TR/AZ terimleri ve bounded/project limits korundu. Main Actions `43479368483` SUCCESS.
 - PR #154 squash merge `4e50de45`: HTTP 200 API hata nesnelerinin başarılı boş depo araması olarak kaydedilmesi engellendi. 5 negatif çevrimdışı regresyon testi eklendi; PR Actions `43479623350` ve main Actions `43479774992` SUCCESS.
