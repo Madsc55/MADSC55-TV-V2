@@ -36,3 +36,9 @@
 5. Salt okunur denetim; ana İBO, YEDEKLER, YENİLER, FAVORİLER veya arşiv kayıtlarına yazma yok.
 
 **Kabul sınırı:** Bu kanıt #28–#30 için gerçek paket oluşumu ve M3U biçim/bütünlük denetimine güçlü kanıttır; #31–#33 nihai kabulü için ayrı bağımsız gerçek ortam/cihaz/teslim kanıtları ve ilgili onay kapıları zorunludur. Görev statüleri otomatik değiştirilmedi.
+
+## Sonradan doğrulanan decode-provenance uyarısı
+
+**Düzeltme (13 Kasım 2026):** Bu rapordaki `4.301 AV doğrulanan` sayısı, tarama commit'i `e4917753174d16b7c2e1f1abe38ad804f069e58a` için yalnızca FFprobe codec/akış metadatası tespitini ifade eder. Bu sürüm gerçek FFmpeg görüntü+ses kare çözümleme kontrolü kullanmıyordu. Dolayısıyla **4.301 decode edilmiş ve gerçek oynatımı doğrulanmış kanal** anlamına gelmez. Paket baytlarının yapısal doğrulaması geçerlidir; gerçek AV ve cihaz kabulü açık kalır.
+
+Bağımsız yeniden ZIP SHA/M3U sıra/bütünlük denetimi ve bu ayrımın teknik kanıtı: [IBO_4301_DECODE_PROVENANCE_AUDIT_2026-11-13.md](IBO_4301_DECODE_PROVENANCE_AUDIT_2026-11-13.md). Güncel scanner ve paketleyici [PR #197](https://github.com/Madsc55/MADSC55-TV-V2/pull/197) ile bu tarihî salt-metadata AV etiketlerinin gelecekte yanlış kabulünü engeller. Hiçbir görev bu düzeltmeyle otomatik kapatılmadı.
