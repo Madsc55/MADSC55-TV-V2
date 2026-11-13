@@ -103,7 +103,7 @@ class BatchTests(unittest.TestCase):
                 "https://example.invalid/live\tother",
                 "https://example.invalid:99999/live",
                 "https://user:secret@example.invalid/live",
-                "https://example.invalid/[broken",
+                "https://[broken/path",
                 "https://example.invalid/live path",
             )
             records = [{'url': url, 'name': 'Bad', 'group': 'TR',
