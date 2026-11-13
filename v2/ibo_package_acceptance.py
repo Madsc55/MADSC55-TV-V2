@@ -46,6 +46,10 @@ def validate(records):
     return True
 
 def package(text, target, evidence):
+    if type(target) is not int or target not in (1000, 2000):
+        raise ValueError("unsupported IBO package target")
+    if not isinstance(evidence, dict):
+        raise ValueError("invalid evidence mapping")
     records = parse(text)
     validate(records)
     if len(records) < target:
