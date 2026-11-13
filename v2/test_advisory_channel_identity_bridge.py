@@ -78,6 +78,20 @@ class AdvisoryBridgeTests(unittest.TestCase):
         self.assertFalse(report["av_verified"])
         self.assertFalse(report["main_playlist_modified"])
 
+    def test_non_list_candidate_input_fails_closed(self):
+        for invalid in (None, {}, "not-a-candidate-list"):
+            with self.subTest(invalid=invalid):
+                with self.assertRaisesRegex(ValueError, "Invalid candidate list"):
+                    link_or_defer(invalid, self.official, self.youtube)
+
+    def test_exact_limit_keeps_identity_linking(self):
+        report = link_or_defer(self.candidates, self.official, self.youtube,
+                               max_candidates=len(self.candidates))
+        self.assertEqual(report["status"], "METADATA_LINKS_ONLY_NOT_PLAYBACK_VERIFIED")
+        self.assertEqual(report["linked_m3u_candidates"], 1)
+        self.assertFalse(report["av_verified"])
+        self.assertFalse(report["main_playlist_modified"])
+
     def test_bad_candidate_digest_is_rejected(self):
         with self.assertRaisesRegex(ValueError,"hash"):
             link_advisory_identities([dict(self.candidates[0],url_sha256="bad")],self.official,self.youtube)
