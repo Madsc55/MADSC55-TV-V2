@@ -93,6 +93,8 @@ def curated_candidates(source, records):
         raise ValueError("Not a curated adapter")
     out = []
     for item in records:
+        if not isinstance(item, dict):
+            continue
         url = item.get("url", "")
         if source == "youtube":
             video_id = item.get("video_id", "")
