@@ -94,7 +94,7 @@ def tr_az(entry, scope):
 
 
 def eligible_entry(entry, scope, worldwide=False):
-    \"\"\"Apply source scope unless explicit worldwide discovery is selected.\"\"\"
+    """Apply source scope unless explicit worldwide discovery is selected."""
     return bool(worldwide) or tr_az(entry, scope)
 
 
