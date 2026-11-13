@@ -62,6 +62,8 @@ jobs:
           path: |
             v2/reports/ibo-real-scan-report.json
             v2/reports/github-source-discovery.json
+            v2/reports/gitlab-m3u-source-discovery.json
+            v2/reports/codeberg-m3u-source-discovery.json
             v2/reports/discovery-34-candidates.json
             v2/reports/discovery-34-integrated.json
             v2/reports/official-tv-sites.json
