@@ -41,6 +41,22 @@ class ScannerOfflineTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             scanner.historical_source_ids({"source_ids": "invalid"})
 
+    def test_dynamic_source_report_skips_malformed_rows_and_deduplicates(self):
+        status = "SOURCE_PARSED_STREAMS_NOT_PLAYBACK_VERIFIED"
+        dynamic = {"sources": [None, 3, {"url": None, "status": status},
+                              {"url": "http://example.org/a.m3u", "status": status},
+                              {"url": "https://example.org/a.m3u", "status": status},
+                              {"url": "https://example.org/a.m3u", "status": status}]}
+        accepted, rejected = scanner.normalize_dynamic_sources(dynamic, [])
+        self.assertEqual(len(accepted), 1)
+        self.assertEqual(accepted[0]["url"], "https://example.org/a.m3u")
+        self.assertEqual(len(rejected), 5)
+
+    def test_dynamic_source_report_rejects_invalid_root(self):
+        for value in (None, [], {"sources": {}}, {"sources": None}):
+            with self.assertRaises(ValueError):
+                scanner.normalize_dynamic_sources(value, [])
+
     def test_archive_entry_count_not_unique_url_count(self):
         sample = (b'#EXTM3U\n#EXTINF:-1,One\nhttps://example.org/same.m3u8\n'
                   b'#EXTINF:-1,Two\nhttps://example.org/same.m3u8\n')
