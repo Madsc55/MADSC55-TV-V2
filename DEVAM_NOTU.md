@@ -2540,3 +2540,11 @@ Kullanıcının açık talimatıyla #3, #4 ve #6 tarihî kurtarma görevleri art
 - `.github/workflows/v2-ordered-preflight.yml` içine salt-okunur `system-readiness-report` işi eklendi (`c7e74fc6`, Markdown çıktı düzeltmesi `29f46a95`). Bu iş `v2/tasks/pre_discovery_readiness.py` çalıştırır ve kayıtlı sistem görevlerinin eksiklerini Actions özetine yazar. Yeni kanal keşfi, gerçek AV veya İBO kabulü başlatmaz.
 - Bu raporun başarılı olması **sistemin tam kurulduğu anlamına gelmez**; gerçek testlerin başarı durumu ayrıca teyit edilmelidir. İş akışı çalıştırma sonucu bu turda doğrulanmadı.
 - Kullanıcı sırası değişmedi: önce kurulum, sonra yeni geniş keşif, en son gerçek AV/İBO/arşiv kabulü. Eski kanallara işlem yapılmaz, ana İBO korunur.
+
+
+## 13 Kasım 2026 — #34 çevrimdışı regresyon kapsamı düzeltmesi
+
+- Commit 0327ec060b6bb15a42230d7fbcafdc8088e02efe ile advisory identity bridge için geçersiz aday tipi ve tam aday sınırı regresyon testleri eklendi (11 test metodu mevcut).
+- Commit 726258388e013bf558beecfe40722eb401a4f732 ile `.github/workflows/v2-current-scanner-offline-gate.yml` test döngüsüne `advisory_channel_identity_bridge` eklendi. Commit diff'i yalnızca bu test listesindeki eklemeyi içeriyor.
+- Workflow dosyası ve test dosyası geliştirme dalında tekrar okundu; test adı ve dosya eşleşmesi doğrulandı. Bu commit için Actions koşusu henüz doğrulanmadı; dolayısıyla regresyon kabulü ve #34 kapanışı beklemede.
+- #34 için yeni canlı keşif veya eski yayın taraması tetiklenmedi. Ana İBO, YEDEKLER, YENİLER ve FAVORİLER değiştirilmedi.
