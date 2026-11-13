@@ -1,3 +1,8 @@
+## 13 Kasım 2026 — #28–#33 arşiv parola kontrolü
+- 50967176: boşluk/tab/satır sonundan oluşan uzun parola değerleri şifreleme anahtarı olarak reddedilir.
+- 09125822: yalnızca boşluk karakterlerinden oluşan parolalar için çevrimdışı regresyonlar eklendi.
+- Yeni Actions kabulü henüz doğrulanmadı; gerçek AV ve bağımsız harici geri yükleme açık. Korunan İBO listelerine dokunulmadı, tarama yapılmadı.
+
 ## 13 Kasım 2026 — #28–#33 şifreleme API giriş türü
 - 4460564: secure_archive.encrypt/decrypt yalnızca bytes türünü kabul eder; geçersiz türler ValueError üretir.
 - 6539509: str, bytearray ve None girdileri için çevrimdışı şifreleme/çözme regresyonları eklendi.
