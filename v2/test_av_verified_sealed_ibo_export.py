@@ -66,7 +66,7 @@ class SeparatePrivateExport(unittest.TestCase):
     def test_duplicate_authenticated_hash_cannot_be_exported_twice(self):
         report,rows=fixture()
         rows.append(dict(rows[0]))
-        with self.assertRaisesRegex(ValueError,"duplicate"):
+        with self.assertRaisesRegex(ValueError,"Duplicate authenticated URL hash"):
             select(report,rows)
 
     def test_incomplete_authenticated_batch_fails_closed(self):
