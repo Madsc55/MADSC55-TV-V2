@@ -13,12 +13,23 @@ REPORTS = {
 }
 
 def normalize(source, data):
+    if not isinstance(data, dict):
+        raise ValueError("Invalid source report")
     if source == "official":
-        rows = [{"url": x.get("official_site", "")} for x in data.get("channels", [])]
+        entries = data.get("channels", [])
+        if not isinstance(entries, list):
+            raise ValueError("Invalid channel entries")
+        rows = [{"url": x.get("official_site", "")} for x in entries if isinstance(x, dict)]
     elif source == "youtube":
-        rows = [{"video_id": x.get("video_id", "")} for x in data.get("results", [])]
+        entries = data.get("results", [])
+        if not isinstance(entries, list):
+            raise ValueError("Invalid video entries")
+        rows = [{"video_id": x.get("video_id", "")} for x in entries if isinstance(x, dict)]
     elif source == "m3u":
-        rows = [{"url": x.get("url", "")} for x in data.get("sources", []) if x.get("kind") == "m3u"]
+        entries = data.get("sources", [])
+        if not isinstance(entries, list):
+            raise ValueError("Invalid M3U entries")
+        rows = [{"url": x.get("url", "")} for x in entries if isinstance(x, dict) and x.get("kind") == "m3u"]
     else:
         raise ValueError("Unknown source")
     return curated_candidates(source, rows)
