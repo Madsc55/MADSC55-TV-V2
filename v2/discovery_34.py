@@ -103,8 +103,6 @@ def curated_candidates(source, records):
     for item in records:
         if not isinstance(item, dict):
             continue
-        if not isinstance(item, dict):
-            continue
         url = item.get("url", "")
         if source == "youtube":
             video_id = item.get("video_id", "")
