@@ -46,7 +46,7 @@ def media_has_audio_video(path):
                  "-i", str(path), "-map", "0:" + kind + ":0", "-frames:" + kind, "1",
                  "-progress", "pipe:1", "-f", "null", "-"],
                 capture_output=True, text=True, timeout=30, check=True)
-            if not re.search(r"(?m)^" + marker + r"=\\s*([1-9][0-9]*)\\s*$", decoded.stdout):
+            if not re.search(r"(?m)^" + marker + r"=[ ]*([1-9][0-9]*)[ ]*$", decoded.stdout):
                 return False
         return True
     except (OSError, subprocess.SubprocessError, ValueError, TypeError):
