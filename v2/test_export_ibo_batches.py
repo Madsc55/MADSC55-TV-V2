@@ -123,6 +123,36 @@ class BatchTests(unittest.TestCase):
             self.assertNotIn('INJECTED', out)
             self.assertIn('https://example.invalid/good', out)
 
+    def test_unicode_line_separators_cannot_inject_m3u_records(self):
+        for separator in (chr(0x85), chr(0x2028), chr(0x2029)):
+            with self.subTest(codepoint=ord(separator)):
+                row = {
+                    'url': 'https://example.invalid/valid',
+                    'name': 'One' + separator + '#EXTINF:-1,FAKE',
+                    'group': 'TR' + separator + '#EXTINF:-1,FAKE',
+                    'logo': 'https://example.invalid/logo.png' + separator + '#EXTINF:-1,FAKE'
+                }
+                output = render([row]).decode('utf-8')
+                lines = output.splitlines()
+                self.assertEqual(len(lines), 3)
+                self.assertEqual(sum(line.startswith('#EXTINF:') for line in lines), 1)
+                self.assertNotIn('tvg-logo=', output)
+
+    def test_nonobject_encrypted_rows_do_not_abort_valid_ibo_export(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            rows = [None, 17, [], 'unexpected',
+                    {'url': 'https://example.invalid/good',
+                     'name': 'Real', 'group': 'TR',
+                     'http_hls_status': 'AV_VERIFIED'}]
+            encrypted = root / 'inventory.enc'
+            encrypted.write_bytes(encrypt(('\\n'.join(json.dumps(x) for x in rows) + '\\n').encode(), SECRET))
+            result = export(encrypted, SECRET, root / 'out', sizes=(1000,))
+            self.assertEqual(result['av_verified_unique'], 1)
+            self.assertEqual(result['packages'][0]['count'], 1)
+            playlist = Path(result['packages'][0]['path']).read_text()
+            self.assertIn('https://example.invalid/good', playlist)
+
     def test_metadata_controls_do_not_create_fake_m3u_rows(self):
         records = [{'url': 'https://example.invalid/good',
                     'name': 'News\n#EXTINF:-1,Fake',
