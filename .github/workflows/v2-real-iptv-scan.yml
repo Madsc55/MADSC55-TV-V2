@@ -43,6 +43,9 @@ jobs:
       - name: Discover YouTube Live candidates and verify live metadata
         continue-on-error: true
         run: python v2/youtube_discovery.py
+      - name: Discover parsed M3U files in GitLab and Codeberg repositories
+        continue-on-error: true
+        run: python v2/federated_m3u_source_discovery.py
       - name: Integrate six discovery adapters into unified candidate report
         run: python v2/discovery_34_integrate.py
       - name: Real network discovery and AV probe including discovered sources
