@@ -1,3 +1,9 @@
+## 13 Kasım 2026 — #34 yeni regresyon ve Actions doğrulaması
+- Commit c071490e: GitHub/GitLab/Codeberg canlı API yanıtlarında kök veri tipi kontrolü eklendi; hatalı payload başarı olarak işaretlenmez.
+- Commit 9950b96a: üç sağlayıcı için hatalı payload regresyon testleri eklendi.
+- GitHub Actions 43446948602: SUCCESS; production security, protected IBO invariants ve #34 offline adapter/integration acceptance adımları PASS.
+- Bu sonuç canlı Codeberg API sözleşme kabulü veya gerçek FFmpeg görüntü/ses kanıtı değildir. #34 nihai kabulü açık. Yeni toplu tarama başlatılmadı, ana İBO/YEDEKLER/YENİLER/FAVORİLER değiştirilmedi.
+
 ## 13 Kasım 2026 — #34 geçici ağ hatası düzeltmesi ve güvenlik kabulü
 - Commit a255432f: canlı API sözleşmesinde geçici URLError için en fazla 3 denemelik kontrollü yeniden deneme eklendi; başarısızlık açıkça raporlanır.
 - Commit 07b05a1b: bağlantı kurtarma ve deneme sınırı regresyon testleri eklendi.
