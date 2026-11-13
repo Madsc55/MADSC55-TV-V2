@@ -49,6 +49,28 @@ def main():
                 raise AssertionError("Symlink destination was overwritten")
             assert link.is_symlink()
             assert symlink_target.read_bytes() == b"SYMLINK_TARGET_UNCHANGED"
+        # The low-level atomic writer must also fail closed for files and symlinks.
+        direct_target = root / "direct-existing.bin"
+        direct_target.write_bytes(b"KEEP")
+        try:
+            secure_archive.atomic_write(direct_target, b"REPLACE")
+        except FileExistsError:
+            pass
+        else:
+            raise AssertionError("atomic_write replaced an existing file")
+        assert direct_target.read_bytes() == b"KEEP"
+        symlink_target = root / "symlink-target.bin"
+        symlink_target.write_bytes(b"TARGET-KEEP")
+        symlink_path = root / "existing-link.bin"
+        symlink_path.symlink_to(symlink_target)
+        try:
+            secure_archive.atomic_write(symlink_path, b"SYMLINK-REPLACE")
+        except FileExistsError:
+            pass
+        else:
+            raise AssertionError("atomic_write replaced an existing symlink")
+        assert symlink_path.is_symlink()
+        assert symlink_target.read_bytes() == b"TARGET-KEEP"
         # Reject malformed API input types before cryptographic processing.
         for value in ("text", bytearray(b"data"), None):
             for operation in (encrypt, decrypt):
