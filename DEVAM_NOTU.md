@@ -1,3 +1,10 @@
+## 13 Kasım 2026 — #34 gerçek tarayıcı dinamik kaynak hatası düzeltildi
+- Önceki run 43299369197 eski keşif ağacında `advisory_channel_identity_bridge.link_advisory_identities` için `Invalid candidate list` ve devamında eksik partial snapshot hatası verdi. Bu eski-run sonucu güncel main kabulü değildir.
+- Güncel main'de PR #59 (merge commit 1cc6eec973eefba97412734c3894815757290175) gerçek tarayıcı `v2/real_ibo_scan.py` dinamik kaynak raporunu satır bazında doğruluyor; bozuk kayıtları reddediyor, geçerli HTTPS M3U kaynaklarını koruyor ve yinelenenleri ayıklıyor. Regresyon testleri PR #59 içinde eklendi.
+- PR test commit d2d68f217285c556497ff4de5398cf6cb785dd7e için Main Production Security Gate run 43452551871 SUCCESS. Korunan İBO güvenlik kapısı geçti.
+- Bu kanıt offline/dinamik kaynak girdi doğrulamasıdır; canlı geniş tarama, Codeberg canlı API, yeni aday FFmpeg görüntü/ses ve şifreli arşiv/restore kabulü değildir. #34 nihai kabul açık; #15 ve #17–#21, #28–#33 açık.
+- Yeni kapsamlı kanal taraması yapılmadı. Ana İBO, YEDEKLER, YENİLER ve FAVORİLER değiştirilmedi.
+
 ## 13 Kasım 2026 — PR #53 kontrol karakteri regresyonu ve CI kabulü
 - PR #53 düzeltmesi: `v2/test_discovery_34.py` gerçek newline/CR/NUL/DEL karakterlerini Python string kaçışlarıyla test eder; önceki hatalı fixture nedeniyle başarısız testin kendisi düzeltildi. Üretim URL reddetme kontrolü PR #45 ile ana dala alınmıştı.
 - GitHub Actions run `43451905845`: SUCCESS. Ana güvenlik kapısı, görev defteri bütünlüğü, Stage 6 offline paket/arşiv ve #34 offline keşif testlerinin tüm adımları PASS.
