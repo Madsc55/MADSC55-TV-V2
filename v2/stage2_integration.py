@@ -37,6 +37,9 @@ def integrate(records, *, scopes=None, xmltv_text=None, max_attempts=3):
         row["category_verified"] = False
         row["resolution_verified"] = False
         row["epg_verified"] = False
+        # An untrusted observation cannot certify an XMLTV programme or match.
+        row["epg_programme_available"] = False
+        row["epg_match_type"] = None
         enriched.append(row)
     if xmltv_text is not None:
         enriched = verify_epg_ids(enriched, xmltv_text)
