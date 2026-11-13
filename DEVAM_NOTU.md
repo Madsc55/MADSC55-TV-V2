@@ -1,3 +1,9 @@
+## 13 Kasım 2026 — #31–#33 bağımsız geri yükleme kanıtı
+- 764732c3: final_gate bağımsız geri yükleme istendiğinde arşiv raporundaki `external_restore_verified` alanının tam olarak `True` olmasını zorunlu kılar.
+- 4bba2e79: eksik, False, string ve sayı bayrakları için regresyon eklendi; mevcut sentetik rapor testleri yeni gereksinime uyarlandı.
+- Bu alanın True olması tek başına gerçek dış sistem geri yüklemesinin yapıldığını ispatlamaz; harici kanıt ve gerçek AV halen gerekli. Yeni commitler için tam GitHub Actions kabulü doğrulanmadı; görevler açık.
+- Ana İBO, YEDEKLER, YENİLER ve FAVORİLER değiştirilmedi. Kanal taraması başlatılmadı.
+
 ## 13 Kasım 2026 — #28–#33 arşiv parola kontrolü
 - 50967176: boşluk/tab/satır sonundan oluşan uzun parola değerleri şifreleme anahtarı olarak reddedilir.
 - 09125822: yalnızca boşluk karakterlerinden oluşan parolalar için çevrimdışı regresyonlar eklendi.
