@@ -1,3 +1,7 @@
+## 13 Kasım 2026 — #34 güncel main üzerinde API tanılama düzeltmesi
+- Güncel `main` tabanlı `fix-34-api-diagnostics-current-main-20261113` dalında HTTP 408/425 retry ve API host tanılaması (`584b476`) ile iki regresyon testi (`eaea679`) eklendi. Var olan yanıt şeması ve bağlantı kesintisi kontrolleri korundu.
+- CI ve canlı Codeberg API kabulü bekleniyor; #34 açık. Ana İBO ve YEDEKLER/YENİLER/FAVORİLER değişmedi; kanal taraması yapılmadı.
+
 ## 13 Kasım 2026 — güncel main tabanlı #34 PR #30 güvenlik işi PASS
 - Dal fix/v2-34-socket-retries-20261113, PR #30: commit f950fb09 ile geçici socket hataları için en fazla üç deneme; commit 7a294735 ile dört HTTP/socket regresyon testi.
 - GitHub Actions run 43448792241: "Verify suspended publishers, no cron and immutable IBO" işi SUCCESS. Güvenlik regresyonları, İBO invariants, Stage 6 çevrimdışı paket/arşiv ve #34 offline adapter/entegrasyon adımları SUCCESS.
