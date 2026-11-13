@@ -99,6 +99,23 @@ def eligible_entry(entry, scope, worldwide=False):
     return bool(worldwide) or tr_az(entry, scope)
 
 
+def public_http_stream_url(url):
+    """Allow only parseable public HTTP(S) streams; never trust feed-supplied hosts."""
+    if not isinstance(url, str) or "\\" in url:
+        return False
+    try:
+        identity("m3u", url)
+        parsed = urllib.parse.urlsplit(url)
+        return parsed.scheme in ("http", "https") and not parsed.fragment
+    except (ValueError, TypeError, AttributeError):
+        return False
+
+
+def public_https_m3u_feed(url):
+    """Only publicly addressable HTTPS endpoints may become source feeds."""
+    return public_http_stream_url(url) and urllib.parse.urlsplit(url).scheme == "https"
+
+
 def normalize_integrated_m3u_sources(report, existing_sources):
     """Admit only candidate-only HTTPS M3U feed URLs from the unified discovery report."""
     if not isinstance(report, dict) or not isinstance(report.get("candidates"), list):
@@ -115,9 +132,7 @@ def normalize_integrated_m3u_sources(report, existing_sources):
         if (not isinstance(url, str) or item.get("verified_av") is not False):
             rejected.append({"index": index, "error": "InvalidCandidate"})
             continue
-        parsed = urllib.parse.urlsplit(url)
-        if (parsed.scheme != "https" or not parsed.hostname
-                or parsed.username or parsed.password or url in seen):
+        if not public_https_m3u_feed(url) or url in seen:
             rejected.append({"index": index, "error": "RejectedSource"})
             continue
         sid = "integrated-m3u-" + hashlib.sha256(url.encode()).hexdigest()[:20]
@@ -172,9 +187,8 @@ def normalize_resolved_streams(report, existing_urls):
 
 def check_hls(entry, timeout, diagnostics=None):
     """Return AV-verified stream or capture observed HTTP failure for recovery."""
-    url = entry['url']
-    parsed = urllib.parse.urlsplit(url)
-    if parsed.scheme not in ('https', 'http') or not parsed.hostname:
+    url = entry.get('url') if isinstance(entry, dict) else None
+    if not public_http_stream_url(url):
         return None
     try:
         req = urllib.request.Request(url, headers={'User-Agent': UA, 'Range': 'bytes=0-4095'})
@@ -243,10 +257,8 @@ def normalize_dynamic_sources(dynamic, existing_sources):
         if not isinstance(url, str):
             rejected.append({'index': index, 'error': 'InvalidURLType'})
             continue
-        parsed = urllib.parse.urlsplit(url)
         if (item.get('status') != 'SOURCE_PARSED_STREAMS_NOT_PLAYBACK_VERIFIED'
-                or parsed.scheme != 'https' or not parsed.hostname
-                or parsed.username or parsed.password or url in seen):
+                or not public_https_m3u_feed(url) or url in seen):
             rejected.append({'index': index, 'error': 'RejectedSource'})
             continue
         sid = 'github-auto-' + hashlib.sha256(url.encode()).hexdigest()[:20]
@@ -337,35 +349,29 @@ def main():
         integrated_sources, rejected_integrated_m3u = normalize_integrated_m3u_sources(integrated_report, sources)
         sources.extend(integrated_sources)
         integrated_m3u_count = len(integrated_sources)
+    rejected_dynamic_sources = []
     if args.dynamic_sources is not None:
         dynamic = json.loads(args.dynamic_sources.read_text(encoding='utf-8'))
-        if not isinstance(dynamic.get('sources'), list):
-            ap.error('Dynamic discovery report has no sources list')
-        seen_source_urls = {item['url'] for item in sources}
-        for item in dynamic['sources']:
-            url = item.get('url', '')
-            parsed = urllib.parse.urlsplit(url)
-            if (item.get('status') != 'SOURCE_PARSED_STREAMS_NOT_PLAYBACK_VERIFIED'
-                    or parsed.scheme != 'https' or not parsed.hostname or parsed.username
-                    or parsed.password or url in seen_source_urls):
-                continue
-            sources.append({'id': 'github-auto-' + hashlib.sha256(url.encode()).hexdigest()[:20],
-                            'url': url, 'scope': 'candidate'})
-            seen_source_urls.add(url)
-            dynamic_count += 1
+        try:
+            accepted_dynamic, rejected_dynamic_sources = normalize_dynamic_sources(dynamic, sources)
+        except ValueError as exc:
+            ap.error(str(exc))
+        sources.extend(accepted_dynamic)
+        dynamic_count = len(accepted_dynamic)
     # Do not export incomplete results as a successful production list.
     candidates = {}
     failed = []
     source_counts = {}
     for source in sources:
         sid, url = source['id'], source['url']
-        if urllib.parse.urlsplit(url).scheme != 'https':
-            failed.append({'id': sid, 'error': 'NonHTTPS source'}); continue
+        if not public_https_m3u_feed(url):
+            failed.append({'id': sid, 'error': 'InvalidPublicHTTPSSource'}); continue
         try:
             records = list(parse_m3u(fetch(url, args.timeout)))
             source_counts[sid] = len(records)
             for entry in records:
-                if eligible_entry(entry, source.get('scope', 'candidate'), args.worldwide):
+                if (eligible_entry(entry, source.get('scope', 'candidate'), args.worldwide)
+                        and public_http_stream_url(entry['url'])):
                     if entry['url'] not in existing:
                         found = candidates.get(entry['url'])
                         if found is None:
@@ -527,7 +533,7 @@ def main():
     # Never retain plaintext URL/token inventory in the GitHub working tree.
     # Source outages are reported; a working subset can still be tested.
     # Never modify the protected main playlist.
-    report = {'scan_scope': 'WORLDWIDE_ALL_SOURCE_ENTRIES' if args.worldwide else 'TR_AZ_METADATA_CANDIDATES', 'source_count': len(sources), 'dynamic_source_count': dynamic_count, 'integrated_m3u_source_count': integrated_m3u_count, 'rejected_integrated_m3u_sources': rejected_integrated_m3u,
+    report = {'scan_scope': 'WORLDWIDE_ALL_SOURCE_ENTRIES' if args.worldwide else 'TR_AZ_METADATA_CANDIDATES', 'source_count': len(sources), 'dynamic_source_count': dynamic_count, 'rejected_dynamic_sources': rejected_dynamic_sources, 'integrated_m3u_source_count': integrated_m3u_count, 'rejected_integrated_m3u_sources': rejected_integrated_m3u,
               'resolved_direct_candidate_count': resolved_direct_count, 'rejected_resolved_direct_candidates': rejected_resolved_direct, 'fetched_sources': len(source_counts),
               'failed_sources': failed, 'source_counts': source_counts, 'source_drops': source_drops, 'existing_main_urls': len(main_urls), 'excluded_foreign_archive_urls': len(foreign_urls), 'unique_new_candidates': len(candidates), 'recovered_from_previous_encrypted_inventory': recovered_from_archive,
               'http_checked': checked, 'http_hls_ok': len(good), 'av_verified': len(good),
