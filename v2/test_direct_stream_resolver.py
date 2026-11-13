@@ -58,6 +58,35 @@ class DirectStreamResolverTests(unittest.TestCase):
         self.assertIsNone(resolved)
         self.assertEqual(error, "LIVE_STATUS_NOT_VERIFIED")
 
+    def test_global_resolution_budget_preserves_tr_az_and_world_regions(self):
+        candidates = []
+        for region in ("TR", "AZ", "WORLD"):
+            for index in range(10):
+                candidates.append({
+                    "source": "youtube", "source_id": f"youtube:{region.lower()}{index:09d}",
+                    "url": "https://www.youtube.com/watch?v=abcdefghijk",
+                    "name": "Live", "region": region,
+                    "status": "LIVE_METADATA_VERIFIED", "verified_av": False,
+                })
+        for country in ("US", "GB", "FR", "DE"):
+            for index in range(5):
+                candidates.append({
+                    "source": "official", "source_id": f"official:{country.lower()}{index}.example",
+                    "url": f"https://{country.lower()}{index}.example/live",
+                    "country": country, "status": "DIRECTORY_REFERENCE_ONLY_NOT_STREAM_VERIFIED",
+                    "verified_av": False,
+                })
+        runner = self.run_meta({"is_live": True, "url": "https://cdn.example/live.m3u8",
+                                "protocol": "m3u8_native"})
+        report = resolve_report({"candidates": candidates}, runner=runner, limit=12)
+        youtube = [item for item in report["candidates"] if item["source"] == "youtube"]
+        official = [item for item in report["candidates"] if item["source"] == "official"]
+        self.assertEqual(report["attempted"], 12)
+        self.assertEqual({key: sum(item["region"] == key for item in youtube)
+                          for key in ("TR", "AZ", "WORLD")}, {"TR": 2, "AZ": 1, "WORLD": 3})
+        self.assertEqual({key: sum(item["country"] == key for item in official)
+                          for key in ("US", "GB", "FR", "DE")}, {"US": 2, "GB": 2, "FR": 0, "DE": 0})
+
     def test_encrypted_report_round_trip_hides_direct_url(self):
         direct_url = "https://cdn.example/live.m3u8?token=secret"
         report = {"resolved": 1, "candidates": [{"url": direct_url}]}
