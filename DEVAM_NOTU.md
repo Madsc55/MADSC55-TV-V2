@@ -1,3 +1,9 @@
+## 13 Kasım 2026 — PR #65 URL port doğrulaması CI PASS
+- PR #65 head `fee0ec2af1617d43ac54abb44edb0bcf17aee54b`; GitHub Actions run `43454391587` SUCCESS.
+- Adımlar PASS: grouped safety regression, production trigger/write policy, immutable IBO invariants, historical task ledger integrity, Stage 6 offline package/archive acceptance, Discovery 34 offline adapter/integration acceptance.
+- #34 canlı API sözleşme adımı bu run çıktısında ayrı kanıtlanmadı; gerçek AV görüntü/ses, Codeberg canlı API ve gerçek arşiv geri yükleme kabulü açık. #34/#28-#33 kapatılmadı.
+- PR #65 hâlâ açık; otomatik birleştirme yapılmadı. Ana İBO/YEDEKLER/YENİLER/FAVORİLER'e dokunulmadı; kapsamlı tarama başlatılmadı.
+
 ## 13 Kasım 2026 — PR #53 kontrol karakteri regresyonu ve CI kabulü
 - PR #53 düzeltmesi: `v2/test_discovery_34.py` gerçek newline/CR/NUL/DEL karakterlerini Python string kaçışlarıyla test eder; önceki hatalı fixture nedeniyle başarısız testin kendisi düzeltildi. Üretim URL reddetme kontrolü PR #45 ile ana dala alınmıştı.
 - GitHub Actions run `43451905845`: SUCCESS. Ana güvenlik kapısı, görev defteri bütünlüğü, Stage 6 offline paket/arşiv ve #34 offline keşif testlerinin tüm adımları PASS.
