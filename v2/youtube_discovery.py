@@ -57,7 +57,7 @@ def search(query):
     command = ["yt-dlp", "--flat-playlist", "--dump-single-json", "--no-warnings",
                "--socket-timeout", "10", f"ytsearch15:{query}"]
     try:
-        p = subprocess.run(command, capture_output=True, text=True, timeout=65)
+        p = subprocess.run(command, capture_output=True, text=True, timeout=45)
         if p.returncode != 0:
             return [], "SEARCH_FAILED"
         data = json.loads(p.stdout)
