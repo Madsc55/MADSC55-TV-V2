@@ -1,6 +1,13 @@
 name: V2 Stage 6 Grouped Offline Acceptance
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - stage7-34-discovery-adapters-20261112
+    paths:
+      - 'v2/discovery_34*.py'
+      - 'v2/test_discovery_34*.py'
+      - '.github/workflows/v2-stage6-grouped-acceptance.yml'
 permissions:
   contents: read
 jobs:
