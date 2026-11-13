@@ -2626,3 +2626,22 @@ Kullanıcının açık talimatıyla #3, #4 ve #6 tarihî kurtarma görevleri art
 - Commit `9aa034fe247b65983079b221cc4520fec745eb28`: özel, ayrı IBO test paketi üreticisine üç offline regresyon testi eklendi.
 - Aynı URL SHA256 kanıtının iki kez sunulması reddedilir; eksik şifreli/kimliği doğrulanmış batch fail-closed olur; AV kanıtı olmayan sıfır kayıtlı durumda hedef 1.000/2.000 sayısına sentetik kanal doldurulmaz ve çıktı `NO_VERIFIED_STREAM_TO_EXPORT` olarak kalır.
 - Bunlar #28 paket güvenliği altyapısını doğrular, gerçek 1.000 AV-kanıtlı kanal paketi oluşturmaz. Ana İBO'ya terfi veya playlist yazımı yoktur. Yeni Actions koşusu bekleniyor.
+
+
+## 13 Kasım 2026 — #28–30 şifreli İBO kabul testleri düzeltildi ve doğrulandı
+
+- Önceki commit `137a87b687269d34267d4a06a408590ff7ec3e6f` üzerinde Actions run `43458724468`, `43458724441` ve `43458698095` başarısızlığı araştırıldı. Neden yeni İBO paket testlerinin iki yanlış varsayımıydı: mükerrer sealed hash'in boyut kontrolü nedeniyle genel hata mesajı üretmesi ve boş M3U beklentisinde satır sonunun yanlış kaçışla yazılması.
+- Commit `8917b63e4a52dca203b513e00bde9a4384189fd1`: `v2/av_verified_sealed_ibo_export.py` gerçek mükerrer şifreli SHA256 kaydını, batch boyutundan önce açık hata ile reddeder.
+- Commit `7e4dcb785efb182a4f6728f132105a304bfc7783`: boş M3U karşılaştırması gerçek LF satır sonunu bekler.
+- Commit `7d732d387acecb834e0dab6a18ff7be60b35433d`: duplicate-hash testinde hata metni tam ve büyük/küçük harfe uygun doğrulanır.
+- Kod denetiminde eski `pass` yolu, sealed kayıttaki `status` ile `probe_status` çeliştiğinde eksik doğrulama bırakıyordu. Commit `cc95d8a54069c5ac6a1e31e3edc91c8ecdf81922` artık bu çelişkiyi `ValueError` ile reddeder.
+- Commit `9515d892b35d74b43b1512d9e2fa23f8fca94289`: başarısız eski sealed-status kaydının kabul edilmemesini ve tutarlı geçmiş statünün kabulünü test eder.
+- Son kod commit'i `9515d892b35d74b43b1512d9e2fa23f8fca94289` üzerinde aynı SHA ile **başarılı** gerçek GitHub Actions koşuları:
+  - `43479977904` — Source Integration Batch success: 407 grouped source/IBO regressions; duplicate, no-padding, conflicting status testleri geçti. Canlı source/AV işleri açık tarama talimatı olmadığı için skipped.
+  - `43479977066` — Master Engine success: offline-tests success; master canlı işi skipped.
+  - `43479976990` — Eight-Stage Runner Verification success: FFmpeg local guard success, offline regressions/protected playlist success.
+  - `43479977065` — Current Scanner Offline Gate success.
+  - `43479977021` — Ordered Preflight success: compile, protect, discovery-tests, task read-only ve safety success; canlı public audit skipped.
+  - `43479977666` — Actions Status Monitor success.
+- Bu çalışma çevrimdışı sistem ve özel test paketi **altyapısını** iyileştirir. #28/#29 için 1000/2000 adet ayrı ayrı güncel FFmpeg A/V kanıtı oluşturulmadı; gerçek paket/cihaz/nihai arşiv kabulü yapılmadı. Dolayısıyla `v2/tasks/state.json` 21 completed, 2 in_progress, 11 pending olarak kaldı. #15, #17–21, #28–34 nihai kabulleri bekler.
+- Yeni dünya/TR/AZ taraması veya geçmiş yayınları yeniden tarama yapılmadı; ana İBO, YEDEKLER, YENİLER, FAVORİLER ve 4955 hash baseline değişmedi.
