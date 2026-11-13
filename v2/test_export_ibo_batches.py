@@ -198,7 +198,8 @@ class BatchTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             good = {"url": "https://example.invalid/good.m3u8", "name": "GOOD",
-                    "group": "TR", "http_hls_status": "AV_VERIFIED"}
+                    "group": "TR", "http_hls_status": "AV_VERIFIED",
+                    "decoded_av_verified": True, "decode_status": "DECODED_AV"}
             jsonl = "\n".join(json.dumps(row) for row in (
                 None, [], "string", 123, good)) + "\n"
             archive = root / "inventory.enc"
