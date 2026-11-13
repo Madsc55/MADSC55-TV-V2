@@ -1,3 +1,8 @@
+## 13 Kasım 2026 — #28–#33 M3U ayrıştırıcı güvenliği
+- f6883e01: ibo_package_acceptance.parse() artık EXTM3U başlığını tam eşitlikle denetler; yayın URL'sinde gömülü kullanıcı adı/parola varsa reddeder.
+- 88f2b0fc: sahte M3U başlığı ve URL kimlik bilgisi regresyon testleri eklendi.
+- PR #23 açık, henüz birleştirilmedi. Son commitin GitHub Actions sonucu henüz doğrulanmadı; gerçek AV ve harici arşiv geri yükleme kabulü açık. Ana İBO ve korunan kategorilere dokunulmadı; tarama başlatılmadı.
+
 ## 13 Kasım 2026 — #28/#29 IBO paket API kanıt kapısı sıkılaştırıldı
 - 9d990394: ibo_package_acceptance.package() doğrudan API çağrılarında da yalnızca 1000/2000 hedefini ve sözlük türünde kanıt eşlemesini kabul eder. 0/negatif hedefle boş paket üretme yolu kapatıldı.
 - 17684105: geçersiz hedef ve kanıt türü regresyonları eklendi. PR #23 açık.
