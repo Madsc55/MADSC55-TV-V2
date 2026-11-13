@@ -1,3 +1,9 @@
+## 13 Kasım 2026 — #28–#30 gerçek İBO paketlerinin silinmeden korunması: CI KABULÜ
+- PR #183 squash merge `c108fafe1915e9c9b3c1863184a1a1cbdc23d216`: `v2/export_ibo_batches.py` önceki `IBO_AV_VERIFIED_*_PART*.m3u8` paketlerini silen işlemi kaldırdı. Yeni paketler tüm hedef dosya adları için ön kontrol yaparak mevcut dosyayı, sembolik bağlantıyı veya yinelemeli hedefleri reddediyor; klasör sembolik bağlantıları reddediliyor.
+- Koruma regresyonları `v2/test_export_ibo_batches.py` içine eklendi; ana Production Security Gate Stage 6 adımına test çağrısı bağlandı.
+- PR Actions run `43481457491` SUCCESS; merge sonrası main Actions run `43481721700` SUCCESS. Kanıt: https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43481721700
+- Bu, **sistem güvenliği/çevrimdışı test kabulü**dür; gerçek cihazda yayın, bağımsız harici arşiv restore veya nihai 1000/2000 İBO paket teslimi kabulü değildir. #28–#33 statüleri değiştirilmedi; ana İBO, YEDEKLER, YENİLER, FAVORİLER ve kapsamlı tarama korunuyor.
+
 ## 13 Kasım 2026 — #31–#33 Stage 5 güvenlik düzeltmesi main kabulü
 - PR #181 başarıyla squash merge edildi: `a04ca3e8bb7e4148efdab1d6cddb00a11427328f`. Kaynak PR: https://github.com/Madsc55/MADSC55-TV-V2/pull/181
 - Güncel main tabanlı PR commit'i `643c19d9819ab34247b823451557bfaf4a132005` için Production Security Gate Actions https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43481305204: SUCCESS. Korunan İBO invariants, görev defteri, Stage 2/3, Stage 5, Stage 6 ve #34 çevrimdışı kabul adımları PASS.
