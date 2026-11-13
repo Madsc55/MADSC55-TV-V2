@@ -2,6 +2,7 @@
 """Offline encryption and restore regression tests."""
 import tempfile
 import unittest
+from unittest.mock import patch
 from pathlib import Path
 from cryptography.exceptions import InvalidTag
 from secure_archive import encrypt, decrypt, backup, restore
@@ -45,6 +46,12 @@ class SecureArchiveTests(unittest.TestCase):
                 backup(source, source, SECRET)
             with self.assertRaises(ValueError):
                 restore(source, source, SECRET)
+
+    def test_decrypt_enforces_archive_size_limit(self):
+        blob = encrypt(b'four', SECRET)
+        with patch('secure_archive.MAX_INPUT', 3):
+            with self.assertRaisesRegex(ValueError, 'exceeds maximum size'):
+                decrypt(blob, SECRET)
 
     def test_short_secret_rejected(self):
         with self.assertRaises(ValueError):
