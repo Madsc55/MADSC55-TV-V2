@@ -1,3 +1,12 @@
+## 13 Kasım 2026 — Kullanıcı talimatı: toplu çalışma ve sohbetler arası çakışmasız koordinasyon
+
+- Kanonik kayıt: `v2/tasks/state.json`; son okunan durum 34 görev: 21 completed, 13 in_progress (#15, #17–#21, #28–#34). Bu sayı yeni gerçek yayın kabulü değildir.
+- İş grupları: A (#15, #17–#21) kaynak kimliği, EPG, kurtarma ve gerçek FFmpeg AV; B (#28–#30) 1000/2000 gerçek M3U, ZIP ve bütünlük; C (#31–#33) cihaz, bağımsız üretim geri yüklemesi ve son kabul; D (#34) canlı API hataları, GitHub/GitLab/Codeberg, resmî yayın, YouTube ve M3U/M3U8 keşfi, gerçek AV ve şifreli arşiv.
+- Kullanıcı diğer işleri başka sohbetlerde yürütüyor. Bu sohbet diğer oturumların sahipliğini devralmadan güncel commit, PR, Actions ve görev defteri üzerinden izlemeli; aynı dosyaya/dala paralel yazmamalı, ortak çalışmayı tekrarlamamalı. Diğer sohbetlerin sonuçları yalnızca GitHub üzerinde doğrulanırsa kabul edilmeli.
+- Öncelik A → B → C → D; bağımsız test ve güvenli keşif hazırlığı paralel ilerleyebilir. #34 nihai kapanış en sonda.
+- Başarısız Actions/test kapatılmaz. Çevrimdışı başarı gerçek görüntü+ses, cihaz veya harici geri yükleme yerine geçmez. Ana İBO, YEDEKLER, YENİLER, FAVORİLER, TRT 1/DHA sırası ve tarihî kimlikler korunur. Kanıt olmadan çalışan yayın veya tamamlanan görev sayısı artırılmaz.
+- Bu not koordinasyon amaçlıdır; kendisi yeni tarama, AV kabulü, cihaz kabulü veya görev kapanışı değildir.
+
 ## 13 Kasım 2026 — #28–#30 Unicode M3U satır bütünlüğü KABULÜ
 - PR #193 squash merge `8ea0c66296788dda207d75279e44f3db725fd984`: `export_ibo_batches.py` içindeki metadata temizleyici, ASCII CR/LF yanı sıra Unicode NEL (U+0085), LINE SEPARATOR (U+2028), PARAGRAPH SEPARATOR (U+2029) karakterlerini de tek satırlı güvenli boşlukla değiştirir. Yeni regresyon her üçünde tam 3 satır/tek EXTINF üretimini doğrular.
 - PR Actions `43482907222` SUCCESS; main Actions `43483112580` SUCCESS: Stage 6 offline kabul, korunan İBO invariants ve üretim tetikleyici güvenlik kontrolleri geçti.
