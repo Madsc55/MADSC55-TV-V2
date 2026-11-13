@@ -226,7 +226,7 @@ class LiveContractRetryTests(unittest.TestCase):
         result = probe("gitlab", fetch=fetch, sleep=sleeps.append)
         self.assertEqual(result["reason"], "HTTP_429")
         self.assertEqual(result["attempts"], 3)
-        self.assertEqual(sleeps, [60, 60])
+        self.assertEqual(sleeps, [120, 120])
 
     def test_query_matrix_opens_circuit_after_provider_429(self):
         calls, sleeps = [], []
@@ -245,6 +245,23 @@ class LiveContractRetryTests(unittest.TestCase):
                          ["error", "skipped", "skipped", "skipped"])
         self.assertTrue(all(row.get("reason") == "provider_rate_limit_circuit_open"
                             for row in result["query_results"][1:]))
+
+    def test_http_429_uses_rate_limit_reset_header(self):
+        import time
+        calls, sleeps = [], []
+        reset = str(int(time.time()) + 45)
+        def fetch(_url):
+            calls.append(1)
+            if len(calls) == 1:
+                raise urllib.error.HTTPError("https://codeberg.org/api/v1/repos/search", 429,
+                                             "rate limited", {"X-RateLimit-Reset": reset}, None)
+            return {"data": []}
+        result = probe("codeberg", fetch=fetch, sleep=sleeps.append)
+        self.assertEqual(result["status"], "ok")
+        self.assertEqual(result["attempts"], 2)
+        self.assertEqual(len(calls), 2)
+        self.assertEqual(len(sleeps), 1)
+        self.assertTrue(0 <= sleeps[0] <= 45)
 
     def test_http_429_without_header_uses_exponential_backoff(self):
         calls, sleeps = [], []
@@ -272,7 +289,7 @@ class LiveContractRetryTests(unittest.TestCase):
         self.assertEqual(result["status"], "ok")
         self.assertEqual(result["attempts"], 2)
         self.assertEqual(len(calls), 2)
-        self.assertEqual(sleeps, [60])
+        self.assertEqual(sleeps, [120])
 
     def test_past_http_date_retry_after_does_not_sleep(self):
         from datetime import datetime, timedelta, timezone
