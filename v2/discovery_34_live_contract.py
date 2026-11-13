@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Bounded live metadata contracts. Fail closed for required provider errors."""
 import json
+from datetime import datetime, timezone
+from email.utils import parsedate_to_datetime
 import sys
 import time
 import urllib.error
@@ -11,13 +13,21 @@ MAX_ATTEMPTS = 3
 MAX_RETRY_AFTER_SECONDS = 60
 
 def retry_delay(exc, attempt):
-    """Honor a bounded numeric Retry-After; otherwise back off more for 429."""
+    """Honor bounded delta-seconds or HTTP-date Retry-After values."""
     headers = getattr(exc, "headers", None)
     raw = headers.get("Retry-After") if headers is not None else None
     try:
         if raw is not None:
-            return min(MAX_RETRY_AFTER_SECONDS, max(0, int(raw.strip())))
-    except (AttributeError, TypeError, ValueError):
+            value = raw.strip()
+            try:
+                seconds = int(value)
+            except ValueError:
+                retry_at = parsedate_to_datetime(value)
+                if retry_at.tzinfo is None:
+                    retry_at = retry_at.replace(tzinfo=timezone.utc)
+                seconds = int((retry_at - datetime.now(timezone.utc)).total_seconds())
+            return min(MAX_RETRY_AFTER_SECONDS, max(0, seconds))
+    except (AttributeError, TypeError, ValueError, OverflowError):
         pass
     return min(MAX_RETRY_AFTER_SECONDS, (5 if getattr(exc, "code", None) == 429 else 1) * (2 ** (attempt - 1)))
 
