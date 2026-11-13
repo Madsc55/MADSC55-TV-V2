@@ -1081,3 +1081,10 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - Aynı XMLTV channel ID birden fazla feed'de veya tek feed içinde birden fazla kez bildirilirse kanaldaki programlar eşleştirmeden çıkarılır. Bildirilmeyen program id'leri, XML DTD/ENTITY ve signed feed hata sorgu parametreleri reddedilir/redakte edilir. Yeni çevrimdışı regresyonlar PASS.
 - Aynı PR'da #28–30'un eski test fixture'ındaki eksik `decoded_av_verified` ve `decode_status` alanları güncellendi; üretim kanıt standardı düşürülmedi.
 - Gerçek EPG kaynak yayını taranmadı. 303 önceki EPG boşluğu ve bağımsız yayıncı kimliği kanıtı hâlâ açık. #19 completed yapılmadı. Ana İBO/YEDEKLER/YENİLER/FAVORİLER değişmedi.
+
+
+## 13 Kasım 2026 — #34 gerçek scanner kaynak kabul yolu düzeltmesi
+- PR #201 merge `841fb1cc466f843f4b11fe10787e643eb7ca3d8c`; Production Security Gate `43485149854` SUCCESS. Ana İBO korumaları, Stage 2/3/5/6 ve #34 offline testleri geçti.
+- `v2/real_ibo_scan.py` gerçek çalışma akışında eski dinamik URL döngüsü `normalize_dynamic_sources` güvenlik kontrolünü atlıyordu. Bypass kaldırıldı; hatalı kaynak raporları ağ başlamadan reddediliyor. Dinamik ve birleşik M3U kaynakları ile yayın adaylarında özel ağ/localhost, bozuk IPv6/port, credential, fragment ve yanıltıcı backslash/control URL girişleri eleniyor. Reddedilen dinamik kaynaklarda URL yerine indeks/hata türü kayıt altına alınıyor.
+- `v2/test_real_ibo_scan_offline.py` özel IP/hostname örneklerini, bozuk URL'leri, yinelenen kaynakları ve gerçek CLI girişinin ağ çağrısı öncesi reddini denetliyor. Önceki başarısız CI testleri kabul edilmeyip düzeltilerek başarılı koşu esas alındı.
+- Bu güvenlik ve offline altyapı kabulü **yeni kanal taraması, Codeberg HTTP429 engelinin kalkması, FFmpeg canlı AV kabulü, cihaz oynatımı veya harici şifreli restore** anlamına gelmez; #34 `in_progress` tutuldu. Ana İBO, YEDEKLER, YENİLER ve FAVORİLER değiştirilmedi.
