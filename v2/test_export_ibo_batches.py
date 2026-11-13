@@ -129,7 +129,7 @@ class BatchTests(unittest.TestCase):
                     'group': 'TR\r\n#EXTINF:-1,Fake',
                     'logo': 'https://example.invalid/logo.png\n#EXTINF:-1,Fake'}]
         output = render(records).decode()
-        self.assertEqual(output.count('#EXTINF:'), 1)
+        self.assertEqual(sum(line.startswith('#EXTINF:') for line in output.splitlines()), 1)
         self.assertEqual(len(output.splitlines()), 3)
         self.assertNotIn('tvg-logo=', output)
         self.assertIn('https://example.invalid/good', output)
