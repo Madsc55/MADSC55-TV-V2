@@ -78,6 +78,8 @@ class LiveContractRetryTests(unittest.TestCase):
             raise http_error(404)
         result = probe("codeberg", fetch=fetch, sleep=lambda _: self.fail("unexpected retry"))
         self.assertEqual(result["reason"], "HTTP_404")
+        self.assertFalse(result["retryable"])
+        self.assertEqual(result["provider"], "codeberg")
         self.assertEqual(result["attempts"], 1)
         self.assertEqual(len(calls), 1)
 
