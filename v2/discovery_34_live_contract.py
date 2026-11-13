@@ -80,7 +80,7 @@ def probe(source, query="turkish-iptv", fetch=fetch_json, sleep=time.sleep):
 
 def provider_rate_limited(row):
     """Recognize HTTP 429 and GitHub-style 403 rate-limit exhaustion."""
-    if provider_rate_limited(row):
+    if row.get("http_status") == 429:
         return True
     if row.get("http_status") != 403:
         return False
