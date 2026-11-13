@@ -70,10 +70,12 @@ def select(report, decrypted):
             raise ValueError("URL/hash or record mismatch")
         matched.add(digest)
         proof=expected[digest]
-        if (item.get("status") not in (None,"VIDEO_AUDIO_DECODED")
-                and item.get("probe_status")!="VIDEO_AUDIO_DECODED"):
-            # Unsuccessful evidence can be retained but cannot be exported.
-            pass
+        # When legacy sealed rows also carry a status, it must agree with
+        # their authenticated probe status. Contradictory failures cannot be
+        # promoted into verified playback by a successful probe_status alone.
+        if (item.get("status") is not None
+                and item["status"] != item.get("probe_status")):
+            raise ValueError("Conflicting authenticated AV status")
         for field in ("video","audio","decoded"):
             if item.get(field) is True and proof.get(field) is not True:
                 raise ValueError("Decrypted AV evidence exceeds public proof")
