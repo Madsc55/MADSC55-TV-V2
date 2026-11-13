@@ -55,7 +55,9 @@ def atomic_write(path, data):
             output.write(data)
             output.flush()
             os.fsync(output.fileno())
-        os.replace(temporary, path)
+        # Atomic no-clobber publication: never replace a playlist, archive or symlink.
+        os.link(temporary, path)
+        os.unlink(temporary)
         directory_fd = os.open(path.parent, os.O_RDONLY)
         try:
             os.fsync(directory_fd)
