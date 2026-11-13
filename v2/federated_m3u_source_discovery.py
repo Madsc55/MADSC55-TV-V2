@@ -20,6 +20,9 @@ MAX_PROJECTS = 60
 MAX_FILES = 160
 MAX_FILE_BYTES = 2_000_000
 MAX_ATTEMPTS = 3
+FEDERATED_QUERIES = tuple(dict.fromkeys(QUERIES + (
+    "iptv", "m3u", "m3u8", "playlist", "live tv", "television",
+)))
 UA = "MADSC55-TV-V2-Discovery/1.0"
 
 
@@ -122,7 +125,7 @@ def _raw_url(provider, namespace, branch, path):
 
 
 def discover_provider(provider, fetch_json_fn=fetch_json, fetch_text_fn=_raw_fetch,
-                      sleep_fn=None, queries=QUERIES, configured_urls=None):
+                      sleep_fn=None, queries=FEDERATED_QUERIES, configured_urls=None):
     if provider not in ("gitlab", "codeberg"):
         raise ValueError("provider must be gitlab or codeberg")
     configured = set(configured_urls or ())
