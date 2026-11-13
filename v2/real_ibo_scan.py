@@ -193,7 +193,8 @@ def main():
                         elif sid not in found['source_ids']:
                             found['source_ids'].append(sid)
         except (OSError, ValueError, UnicodeError, socket.timeout) as exc:
-            failed.append({'id': sid, 'error': type(exc).__name__})
+            failed.append({'id': sid, 'url': url, 'error': type(exc).__name__, 'detail': str(exc)[:300]})
+            print(f'::warning title=IPTV source fetch failed::{sid}: {type(exc).__name__}: {str(exc)[:180]}', flush=True)
     # Compare source yields with the last complete scan before replacing its baseline.
     source_drops = []
     if args.report.exists():
@@ -206,6 +207,9 @@ def main():
                         source_drops.append({'id': sid, 'previous': prior, 'current': current})
         except (OSError, ValueError, TypeError):
             pass
+    for drop in source_drops:
+        print(f"::warning title=IPTV source count collapse::{drop['id']}: {drop['previous']} -> {drop['current']}", flush=True)
+    print(f'Source audit: {len(source_counts)}/{len(sources)} fetched; {len(failed)} failures; {len(source_drops)} count drops', flush=True)
     incomplete = bool(failed or source_drops)
     # Carry forward historical candidates from the last encrypted inventory.
     # Missing streams are retained for rechecking, never silently dropped.
