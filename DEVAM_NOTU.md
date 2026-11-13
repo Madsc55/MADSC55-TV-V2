@@ -1,3 +1,8 @@
+## 13 Kasım 2026 — #28–#33 M3U EXTINF süre doğrulaması
+- 9e1e2d8 / aa0e815: paket ayrıştırıcısı EXTINF süre alanını doğrular; yalnızca -1 veya sıfır/pozitif tamsayı/ondalık süre kabul edilir. Regex ondalık ayıracı düzeltildi.
+- e8c8da8 / 462bd6a: bozuk süreler reddedilir, ondalık süre ve nitelik içeren geçerli satır kabul edilir; Python fixture kaçışları düzeltildi.
+- Bu değişiklikler için Actions çalışması henüz doğrulanmadı. Gerçek FFmpeg AV ve bağımsız harici geri yükleme kabulleri açık; ana İBO ve korunan listeler değiştirilmedi.
+
 ## 13 Kasım 2026 — Harici arşiv doğrulayıcı negatif testleri
 - 1ae3bb99: `audit_external_restore` yanlış parola ve özgün paket baytlarıyla uyuşmayan orijinal girdi için negatif regresyonlarla genişletildi.
 - Önceki testler şifreli arşivin çözümlenmesini, geri yüklenen baytlarla eşleşmesini ve bozuk/şifresiz arşivin reddini kapsar.
