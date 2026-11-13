@@ -74,6 +74,8 @@ def resolve_candidate(item, runner=subprocess.run):
         "source_page": page_url,
         "url": direct_url,
         "name": str(item.get("name") or source_id)[:200],
+        "region": str(item.get("region") or "WORLD")[:20],
+        "country": str(item.get("country") or "")[:8],
         "group": str(item.get("group") or "")[:120],
         "tvg_id": str(item.get("tvg_id") or "")[:200],
         "logo": str(item.get("logo") or "")[:1000],
