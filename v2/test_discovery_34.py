@@ -25,7 +25,7 @@ class Discovery34Tests(unittest.TestCase):
     def test_ambiguous_backslashes_and_unicode_whitespace_rejected(self):
         for source in ("github", "gitlab", "codeberg", "official", "m3u"):
             host = {"github": "github.com", "gitlab": "gitlab.com", "codeberg": "codeberg.org"}.get(source, "example.org")
-            for suffix in ("/a\\\\evil", "/a\\u0085b", "/a\\u2028b", "/a\\u2029b", "/a b", "/a\\tb"):
+            for suffix in ("/a\\evil", "/a\u0085b", "/a\u2028b", "/a\u2029b", "/a b", "/a\tb"):
                 with self.subTest(source=source, suffix=repr(suffix)), self.assertRaises(ValueError):
                     identity(source, "https://" + host + suffix)
 
