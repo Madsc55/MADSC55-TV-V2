@@ -16,6 +16,8 @@ def normalize(source, data):
     if not isinstance(data, dict):
         raise ValueError("Invalid source report")
     if source == "official":
+        if "channels" not in data:
+            raise ValueError("Missing channels entries")
         entries = data.get("channels", [])
         if not isinstance(entries, list):
             raise ValueError("Invalid channel entries")
