@@ -81,7 +81,7 @@ def repository_candidates(source, payload):
         url = item.get(url_key, "")
         try:
             results.append(identity(source, url))
-        except ValueError:
+        except (ValueError, TypeError, AttributeError):
             continue
     return results
 
@@ -104,7 +104,7 @@ def curated_candidates(source, records):
             if source == "youtube":
                 candidate["source_id"] = "youtube:" + video_id
             out.append(candidate)
-        except ValueError:
+        except (ValueError, TypeError, AttributeError):
             continue
     return out
 
