@@ -26,6 +26,10 @@ def retry_delay(exc, attempt):
                     retry_at = retry_at.replace(tzinfo=timezone.utc)
                 seconds = int((retry_at - datetime.now(timezone.utc)).total_seconds())
             return min(MAX_RETRY_AFTER_SECONDS, max(0, seconds))
+        reset = (headers.get("X-RateLimit-Reset") or headers.get("x-ratelimit-reset")) if headers is not None else None
+        if reset is not None and getattr(exc, "code", None) == 429:
+            seconds = int(reset) - int(time.time())
+            return min(MAX_RETRY_AFTER_SECONDS, max(0, seconds))
     except (AttributeError, TypeError, ValueError):
         pass
     return min(MAX_RETRY_AFTER_SECONDS, (30 if getattr(exc, "code", None) == 429 else 1) * (2 ** (attempt - 1)))
