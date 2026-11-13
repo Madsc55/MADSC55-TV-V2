@@ -54,6 +54,14 @@ class ExportM3UTests(unittest.TestCase):
         self.assertTrue(any("HLS manifest directive" in issue
                             for issue in validate_m3u(content)))
 
+    def test_concatenated_m3u_headers_cannot_pass_package_integrity(self):
+        content = (playlist("https://example.org/a.m3u8")
+                   + '#EXTM3U\n'
+                   + '#EXTINF:-1 group-title="TEST",Channel 2\n'
+                   + 'https://example.org/b.m3u8\n')
+        self.assertTrue(any("duplicate or misplaced M3U header" in issue
+                            for issue in validate_m3u(content)))
+
     def test_invalid_scheme(self):
         self.assertTrue(any("unsupported URL scheme" in e for e in
                             validate_m3u(playlist("file:///etc/passwd"))))
