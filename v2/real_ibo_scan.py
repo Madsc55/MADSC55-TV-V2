@@ -17,6 +17,7 @@ import urllib.parse
 import urllib.request
 import xml.etree.ElementTree as ET
 from stream_probe import probe, verify_decoded_av
+from discovery_34 import identity
 from stage3_identity_recovery import url_sha256
 from stage3_metadata_acceptance import quality_from_probe, category, normalized_identity, epg_match
 from stage3_recovery_queue import build_recovery_queue
@@ -125,6 +126,48 @@ def normalize_integrated_m3u_sources(report, existing_sources):
     return accepted, rejected
 
 
+def normalize_resolved_streams(report, existing_urls):
+    """Admit only encrypted, live-metadata-confirmed direct HLS candidates."""
+    if not isinstance(report, dict) or not isinstance(report.get("candidates"), list):
+        raise ValueError("Resolved stream report requires a candidates list")
+    seen = set(existing_urls)
+    accepted, rejected = [], []
+    for index, item in enumerate(report["candidates"]):
+        if not isinstance(item, dict):
+            rejected.append({"index": index, "error": "InvalidRecord"})
+            continue
+        source = item.get("source")
+        source_id = item.get("source_id")
+        url = item.get("url")
+        if (source not in ("official", "youtube")
+                or not isinstance(source_id, str)
+                or not source_id.startswith(source + ":")
+                or item.get("status") != "RESOLVED_DIRECT_HLS_NOT_AV_VERIFIED"
+                or item.get("live_metadata_verified") is not True
+                or item.get("verified_av") is not False):
+            rejected.append({"index": index, "error": "InvalidEvidenceState"})
+            continue
+        try:
+            identity("m3u", url)
+        except (ValueError, TypeError, AttributeError):
+            rejected.append({"index": index, "error": "InvalidDirectURL"})
+            continue
+        parsed = urllib.parse.urlsplit(url)
+        if parsed.scheme != "https" or url in seen:
+            rejected.append({"index": index, "error": "RejectedDirectURL"})
+            continue
+        seen.add(url)
+        accepted.append({
+            "url": url,
+            "name": str(item.get("name") or source_id)[:200],
+            "group": str(item.get("group") or "")[:120],
+            "tvg_id": str(item.get("tvg_id") or "")[:200],
+            "logo": str(item.get("logo") or "")[:1000],
+            "source_ids": [source_id],
+        })
+    return accepted, rejected
+
+
 def check_hls(entry, timeout, diagnostics=None):
     """Return AV-verified stream or capture observed HTTP failure for recovery."""
     url = entry['url']
@@ -215,6 +258,8 @@ def main():
                     help='Optional GitHub/Gist discovery report; only parsed HTTPS M3U sources are included')
     ap.add_argument('--integrated-candidates', type=pathlib.Path, default=None,
                     help='Optional unified discovery report; only candidate-only M3U feed URLs are admitted')
+    ap.add_argument('--resolved-streams', type=pathlib.Path, default=None,
+                    help='Optional authenticated encrypted direct HLS candidates from official/YouTube resolvers')
     ap.add_argument('--output', type=pathlib.Path, default=OUT)
     ap.add_argument('--report', type=pathlib.Path, default=REPORT)
     ap.add_argument('--inventory', type=pathlib.Path, default=INVENTORY,
@@ -321,6 +366,24 @@ def main():
                             found['source_ids'].append(sid)
         except (OSError, ValueError, UnicodeError, socket.timeout) as exc:
             failed.append({'id': sid, 'error': type(exc).__name__})
+    resolved_direct_count = 0
+    rejected_resolved_direct = []
+    if args.resolved_streams is not None:
+        encrypted_direct = args.resolved_streams.read_bytes()
+        direct_report = json.loads(decrypt_inventory(
+            encrypted_direct, os.environ["V2_ARCHIVE_PASSPHRASE"]))
+        direct_candidates, rejected_resolved_direct = normalize_resolved_streams(
+            direct_report, existing)
+        for item in direct_candidates:
+            url = item["url"]
+            current = candidates.get(url)
+            if current is None:
+                candidates[url] = item
+            else:
+                for source_id in item["source_ids"]:
+                    if source_id not in current["source_ids"]:
+                        current["source_ids"].append(source_id)
+        resolved_direct_count = len(direct_candidates)
     # Compare source yields with the last complete scan before replacing its baseline.
     source_drops = []
     if args.report.exists():
@@ -452,7 +515,8 @@ def main():
     # Never retain plaintext URL/token inventory in the GitHub working tree.
     # Source outages are reported; a working subset can still be tested.
     # Never modify the protected main playlist.
-    report = {'scan_scope': 'WORLDWIDE_ALL_SOURCE_ENTRIES' if args.worldwide else 'TR_AZ_METADATA_CANDIDATES', 'source_count': len(sources), 'dynamic_source_count': dynamic_count, 'integrated_m3u_source_count': integrated_m3u_count, 'rejected_integrated_m3u_sources': rejected_integrated_m3u, 'fetched_sources': len(source_counts),
+    report = {'scan_scope': 'WORLDWIDE_ALL_SOURCE_ENTRIES' if args.worldwide else 'TR_AZ_METADATA_CANDIDATES', 'source_count': len(sources), 'dynamic_source_count': dynamic_count, 'integrated_m3u_source_count': integrated_m3u_count, 'rejected_integrated_m3u_sources': rejected_integrated_m3u,
+              'resolved_direct_candidate_count': resolved_direct_count, 'rejected_resolved_direct_candidates': rejected_resolved_direct, 'fetched_sources': len(source_counts),
               'failed_sources': failed, 'source_counts': source_counts, 'source_drops': source_drops, 'existing_main_urls': len(main_urls), 'excluded_foreign_archive_urls': len(foreign_urls), 'unique_new_candidates': len(candidates), 'recovered_from_previous_encrypted_inventory': recovered_from_archive,
               'http_checked': checked, 'http_hls_ok': len(good), 'av_verified': len(good),
               'recovery_queue': recovery_queue,
