@@ -1,3 +1,10 @@
+## 13 Kasım 2026 — #34 geçici API hata toleransı (kabul bekliyor)
+- Geliştirme dalında commit 034cb296: canlı GitHub/GitLab/Codeberg sözleşme kontrolüne 429 ve 5xx için en fazla üç denemelik sınırlı retry eklendi. 403 ve diğer kalıcı hatalar yeniden denenmez; nihai hata kabulü başarısız kalır.
+- Commit cb2a7438: başarıyla toparlanma, kalıcı 403 ve 429 deneme sınırı için offline regresyon testleri eklendi.
+- Commit 67bfc60f: bu testler mevcut izinli v2-stage6-grouped-acceptance.yml kabul iş akışına bağlandı.
+- Bu commitler için yeni Actions sonucu henüz doğrulanmadı; Codeberg canlı sözleşmesi ve #34 nihai kabul açık. #15/#17-21 ve #28-33 nihai durumları ayrıca doğrulanmalı.
+- Ağ taraması, gerçek FFmpeg kanıtı ve playlist/YEDEKLER/YENİLER/FAVORİLER değişikliği yapılmadı.
+
 ## 13 Kasım 2026 — #34 son güvenlik regresyonu PASS
 - Commit bb52eac0, GitHub Actions 43327990827: SUCCESS; discovery offline acceptance, source-host restrictions, production security and IBO invariants PASS.
 - Codeberg canlı API kabulü hâlâ ayrıca doğrulanmalı; workflow_dispatch ile çalışan canlı sözleşme adımı henüz yürütülmedi. #34 nihai kabul açık; playlist değiştirilmedi.
