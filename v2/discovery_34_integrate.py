@@ -21,17 +21,27 @@ def normalize(source, data):
         entries = data.get("channels", [])
         if not isinstance(entries, list):
             raise ValueError("Invalid channel entries")
-        rows = [{"url": x.get("official_site", "")} for x in entries if isinstance(x, dict)]
+        if any(not isinstance(x, dict) for x in entries):
+            raise ValueError("Invalid official channel record")
+        rows = [{"url": x.get("official_site", "")} for x in entries]
     elif source == "youtube":
-        entries = data.get("results", [])
+        if "results" not in data:
+            raise ValueError("Missing video entries")
+        entries = data["results"]
         if not isinstance(entries, list):
             raise ValueError("Invalid video entries")
-        rows = [{"video_id": x.get("video_id", "")} for x in entries if isinstance(x, dict)]
+        if any(not isinstance(x, dict) for x in entries):
+            raise ValueError("Invalid video record")
+        rows = [{"video_id": x.get("video_id", "")} for x in entries]
     elif source == "m3u":
-        entries = data.get("sources", [])
+        if "sources" not in data:
+            raise ValueError("Missing M3U source entries")
+        entries = data["sources"]
         if not isinstance(entries, list):
             raise ValueError("Invalid M3U entries")
-        rows = [{"url": x.get("url", "")} for x in entries if isinstance(x, dict) and x.get("kind") == "m3u"]
+        if any(not isinstance(x, dict) for x in entries):
+            raise ValueError("Invalid M3U source record")
+        rows = [{"url": x.get("url", "")} for x in entries if x.get("kind") == "m3u"]
     else:
         raise ValueError("Unknown source")
     return curated_candidates(source, rows)
