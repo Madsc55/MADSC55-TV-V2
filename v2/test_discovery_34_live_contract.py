@@ -32,6 +32,25 @@ class LiveContractRetryTests(unittest.TestCase):
         self.assertEqual(result["attempts"], 1)
         self.assertEqual(len(calls), 1)
 
+    def test_connection_error_recovers(self):
+        attempts = []
+        sleeps = []
+        def fetch(_url):
+            attempts.append(1)
+            if len(attempts) == 1:
+                raise urllib.error.URLError("temporary network failure")
+            return {"data": []}
+        result = probe("codeberg", fetch=fetch, sleep=sleeps.append)
+        self.assertEqual(result["status"], "ok")
+        self.assertEqual(result["attempts"], 2)
+        self.assertEqual(sleeps, [1])
+
+    def test_connection_error_exhaustion_fails_closed(self):
+        result = probe("codeberg", fetch=lambda _: (_ for _ in ()).throw(urllib.error.URLError("offline")), sleep=lambda _: None)
+        self.assertEqual(result["status"], "error")
+        self.assertEqual(result["reason"], "URLError")
+        self.assertEqual(result["attempts"], 3)
+
     def test_exhaustion_fails_closed(self):
         result = probe("codeberg", fetch=lambda _: (_ for _ in ()).throw(http_error(429)), sleep=lambda _: None)
         self.assertEqual(result["status"], "error")
