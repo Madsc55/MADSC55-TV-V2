@@ -39,6 +39,21 @@ def download(url):
         raise ValueError("expanded feed too large")
     return ET.fromstring(data)
 
+def select_epg_source(tvgid, tvgname, display, names, schedules):
+    """Only exact IDs or unambiguous name matches may supply programmes."""
+    if tvgid and tvgid in schedules:
+        return tvgid, False
+    candidates = set()
+    for label in (tvgid, tvgname, display):
+        key = norm(label)
+        if key:
+            candidates.update(names.get(key, ()))
+    candidates.intersection_update(schedules)
+    if len(candidates) == 1:
+        return next(iter(candidates)), False
+    return None, len(candidates) > 1
+
+
 def main():
     entries = []
     for line in PLAYLIST.read_text(encoding="utf-8-sig").splitlines():
@@ -78,16 +93,13 @@ def main():
                 names[key].add(cid)
     mapping = defaultdict(set)
     matched = 0
+    ambiguous = 0
     for index, (tvgid, tvgname, display) in enumerate(entries):
-        candidates = set()
-        if tvgid in schedules:
-            candidates.add(tvgid)
-        if not candidates:
-            for label in (tvgid, tvgname, display):
-                candidates.update(names.get(norm(label), set()))
-        if not candidates:
+        source_id, is_ambiguous = select_epg_source(tvgid, tvgname, display, names, schedules)
+        if is_ambiguous:
+            ambiguous += 1
+        if not source_id:
             continue
-        source_id = max(candidates, key=lambda cid: (len(schedules[cid]), cid))
         target = tvgid or "madsc-v2-" + str(index)
         mapping[source_id].add(target)
         matched += 1
@@ -131,7 +143,9 @@ def main():
     ET.ElementTree(result).write(temp, encoding="utf-8", xml_declaration=True)
     ET.parse(temp)
     temp.replace(OUT)
-    report = {"playlist_entries": len(entries), "matched_entries": matched, "channels": len(used), "programmes": written, "epg_bytes": OUT.stat().st_size, "sources": results}
+    report = {"playlist_entries": len(entries), "matched_entries": matched,
+              "ambiguous_entries_skipped": ambiguous, "channels": len(used),
+              "programmes": written, "epg_bytes": OUT.stat().st_size, "sources": results}
     (ROOT / "v2/epg-report.json").write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n")
     print(json.dumps(report, ensure_ascii=False))
 
