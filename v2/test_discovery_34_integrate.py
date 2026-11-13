@@ -62,6 +62,21 @@ class IntegrationTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 normalize(source, {key: "invalid"})
 
+    def test_integrated_cli_refuses_to_overwrite_existing_evidence(self):
+        import subprocess
+        import sys
+        with tempfile.TemporaryDirectory() as d:
+            output = Path(d) / "existing-discovery-evidence.json"
+            original = b"DO_NOT_OVERWRITE\\n"
+            output.write_bytes(original)
+            script = Path(__file__).with_name("discovery_34_integrate.py")
+            result = subprocess.run(
+                [sys.executable, str(script), "--output", str(output)],
+                capture_output=True, text=True, timeout=30
+            )
+            self.assertNotEqual(result.returncode, 0)
+            self.assertEqual(output.read_bytes(), original)
+
     def test_missing_report_is_reported(self):
         result = integrate({"youtube": Path("/nonexistent/discovery34.json")})
         self.assertEqual(len(result["errors"]), 1)
