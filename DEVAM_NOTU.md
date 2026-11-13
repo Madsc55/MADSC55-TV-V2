@@ -1,3 +1,12 @@
+## 13 Kasım 2026 — #34 canlı sağlayıcı tanılaması (Actions 43458069505)
+- Ana güvenlik/çevrimdışı kabul işi SUCCESS; ayrı `live-discovery-diagnostic` işi FAIL oldu.
+- GitHub: 6/6 arama terimi API yanıtı başarılı; sonuç aday sayıları sırasıyla 11, 20, 20, 20, 12, 19 (toplam 102 ham aday kaydı; benzersiz/doğrulanmış kanal sayısı değildir).
+- GitLab: 6/6 API yanıtı başarılı; 0 aday döndü.
+- Codeberg: ilk terimde HTTP 429; mevcut tanılama altı terimin tümünü üçer deneme ile sorgulamaya devam etti ve 6/6 başarısız oldu. Retry-After başlığı yoktu.
+- Takip düzeltmesi PR #117: ilk tükenmiş 429 sonrasında sağlayıcı devre kesici açılır; kalan sorgular atlanır ve başarısızlık gizlenmez. PR/Actions sonucu henüz bekliyor.
+- Bu koşu yalnızca depo arama API metadata sözleşmesidir; yayın URL'si, gerçek kanal, AV görüntü/ses, logo veya EPG doğrulaması değildir.
+- Toplu tarama başlatılmadı; Ana İBO, YEDEKLER, YENİLER, FAVORİLER değiştirilmedi. #34 açık.
+
 ## 13 Kasım 2026 — PR #106 güncel ana dal kabul testi başarılı
 - PR #106 (`integrate-stage6-28-33-current-main-20261113`) için Actions run `43457997079` completed / success.
 - Tüm adımlar SUCCESS: grouped safety regression tests; production trigger/write policy; original IBO category/backup invariants; historical task ledger; Stage 2 identity recovery metadata; Stage 6 offline package/archive regressions; Stage 2/3 offline identity, EPG and recovery; Discovery #34 offline adapter/integration acceptance.
