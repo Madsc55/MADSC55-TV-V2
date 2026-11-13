@@ -878,3 +878,11 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - `v2/test_discovery_34_integrate.py`: karışık bozuk/geçerli satırlar ve geçersiz koleksiyon tipleri için regresyon eklendi.
 - PR #46 merge commit `06a26a6aff41ded43cb1e3e78abe14080cc6fb9e`; Actions run `43449834934` SUCCESS; #34 offline adapter/integration acceptance ve Stage 6 paket/arşiv regresyon adımları SUCCESS.
 - Bu yalnızca mevcut rapor dosyalarının çevrimdışı normalizasyon kabulüdür; canlı API, her sağlayıcının gerçek yayın URL'sine çözülmesi, FFmpeg AV, logo/EPG üretim eşlemesi veya nihai dünya taraması değildir. #34 ve gerçek yayın gerektiren görevler açık kalır. Korunan listelere dokunulmadı.
+
+
+## 2026-11-13 — #34 scanner intake and #28–#33 archive regressions
+- PR #59 merged `1cc6eec973eefba97412734c3894815757290175`; head `d2d68f217285c556497ff4de5398cf6cb785dd7e`; Actions run `43452551871` SUCCESS. Production Security Gate steps passed, including Stage 6 offline package/archive regressions, Discovery 34 offline adapter/integration acceptance, and protected IBO invariants.
+- `v2/real_ibo_scan.py`: dynamic discovery report root/row types are validated before URL parsing; malformed rows, non-HTTPS, wrong-status and duplicate sources are rejected; valid HTTPS parsed-feed candidates are retained. Offline tests cover malformed rows, invalid roots and deduplication.
+- PR #63 merged `280c2d079bfede353f4a31d3daae49ca2de9330a`; head `a2fa20bb0393bf37d8bcb46b1607505f8bacb349`; Actions run `43452746517` SUCCESS. Stage 6 offline package/archive regressions and protected IBO checks passed.
+- `v2/test_secure_archive.py` adds fail-closed tests for malformed/truncated archives and same-path backup/restore overwrite protection. No archive payload or playlist was modified.
+- These are offline/security regression acceptances, not external-storage restore, live FFmpeg AV, device playback, complete logo/EPG coverage, or final world scan. Tasks #15/#17–#21 and #28–#34 remain governed by their specific evidence gates; no status promoted solely from these tests. Main IBO, YEDEKLER, YENILER and FAVORILER unchanged; no new scan run.
