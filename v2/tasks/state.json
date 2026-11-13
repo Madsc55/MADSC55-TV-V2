@@ -1,0 +1,463 @@
+{
+  "schema": 1,
+  "canonical_state": "state.json",
+  "generated_at": "2026-11-08T00:00:00Z",
+  "observed_commit": "c36083b8e9551a0a6795c6b2c0cf0350662440a6",
+  "statuses": [
+    {
+      "id": 1,
+      "status": "completed",
+      "last_checked_at": "2026-11-06T17:38:56Z",
+      "evidence_urls": [
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42216075104",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42169373371"
+      ],
+      "blocker": null,
+      "reason": "Source Integration Batch #42216075104 completed successfully: 12/12 jobs and 13 artifacts including v2-grouped-av-evidence-42216075104 (artifact 13524765368). Prior worldwide baseline #42169373371 successful and not rerun. Source acceptance only; does not certify historical recovery, Sweden playback, language speech or IBO device."
+    },
+    {
+      "id": 2,
+      "status": "completed",
+      "last_checked_at": "2026-11-06T16:15:00Z",
+      "evidence_urls": [
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42250095219",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42250095240",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42250095447",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42250095305"
+      ],
+      "blocker": null,
+      "reason": "Four grouped workflows succeeded on identical head commit 3cec2d44597b8e89e8be543806c3054a86204237; task engine regressions included; this is code acceptance, not stream AV proof."
+    },
+    {
+      "id": 3,
+      "status": "completed",
+      "last_checked_at": "2026-11-11T08:43:50Z",
+      "evidence_urls": [
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42216075104",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42264490846",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42539900333",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42018761724",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42913862261"
+      ],
+      "blocker": null,
+      "reason": "Investigation accepted for all 50 immutable identities (55 source occurrences). Per-identity records document 4 exact AV results, 36 candidates without decoded AV and 10 without an exact approved URL across the reviewed runs. The 46 unresolved playback entries remain open; earlier aggregate AV observations are retained. See v2/reports/stage2-orphan-investigation-20261111.json."
+    },
+    {
+      "id": 4,
+      "status": "completed",
+      "last_checked_at": "2026-11-11T08:42:01Z",
+      "evidence_urls": [
+        "https://github.com/Madsc55/MADSC55-TV-V2/commit/5d208cf40e9d99915963bb9f56c4aff0f591ed02",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42228674931",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42503692984",
+        "https://github.com/Madsc55/MADSC55-TV-V2/commit/c36083b8e9551a0a6795c6b2c0cf0350662440a6",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42530040643",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42530114705",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42530114713",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42539900333",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42913862261",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42988745906"
+      ],
+      "blocker": null,
+      "reason": "Verified all 4,955 immutable identities and the exact 1,866-row review partition (1,658 partial media, 173 source research, 30 transient retry, 5 other). Rechecked each of the original 20 absent URL hashes against a later complete and a later partial sealed Actions report. One exact hash has real AV proof in both later reports; 19 remain absent from both snapshots and remain research entries. See v2/reports/stage2-historical-evidence-20261111.json. No device approval."
+    },
+    {
+      "id": 5,
+      "status": "completed",
+      "last_checked_at": "2026-11-12T17:43:00Z",
+      "evidence_urls": [
+        "https://github.com/Madsc55/MADSC55-TV-V2/commit/eaac39fb4afc4036e2db17f5c2e671b45274d820",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42303308753",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/41644493862",
+        "https://github.com/Madsc55/MADSC55-TV-V2/blob/madsc/v2-discovery-bulk-20261031/v2/reports/stage2-pinned-m3u-source-evidence-20261111.json",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43089497868",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43253973152",
+        "https://github.com/Madsc55/MADSC55-TV-V2/commit/788f23723a09850911e8d318561b1860e4af7d94"
+      ],
+      "blocker": null,
+      "reason": "ADMINISTRATIVE SCOPE CLOSURE ONLY, NOT STREAM REPAIR. 26 unpaired EXTINF reviewed; 6 no-public-stream placeholders, 19 missing URIs, 1 unavailable original. User waived legacy recovery for current system delivery; further historical stream search deferred to #34. No IBO playlist mutation or fabricated AV evidence."
+    },
+    {
+      "id": 6,
+      "status": "completed",
+      "last_checked_at": "2026-11-12T17:43:00Z",
+      "evidence_urls": [
+        "https://github.com/Madsc55/MADSC55-TV-V2/blob/madsc/v2-discovery-bulk-20261031/v2/historical_url_recovery.py",
+        "https://github.com/Madsc55/MADSC55-TV-V2/blob/madsc/v2-discovery-bulk-20261031/v2/historical_targeted_playback.py",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/41644493862",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42539900333",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42913862261",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43253973152",
+        "https://github.com/Madsc55/MADSC55-TV-V2/commit/788f23723a09850911e8d318561b1860e4af7d94"
+      ],
+      "blocker": null,
+      "reason": "ADMINISTRATIVE SCOPE CLOSURE ONLY, NOT 2643 RECOVERIES. Original 2643 count, 30 original hashes and separate 4955 baseline preserved. User waived legacy recovery for current system delivery; further historical stream search deferred to #34. No IBO playlist mutation or fabricated AV evidence."
+    },
+    {
+      "id": 7,
+      "status": "completed",
+      "last_checked_at": "2026-11-07T00:23:00+01:00",
+      "evidence_urls": [
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42216075104",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42250095447"
+      ],
+      "blocker": null,
+      "reason": "GitHub Actions #42216075104 independently rechecked: all 12 source integration batch jobs succeeded, including all-source-adapter regressions and unified source search. #42250095447 discovery-tests, compile, protect and safety succeeded. Offline GitHub/Gist approval test and GitLab/Codeberg forge-source normalization, dedupe and provenance/approval tests exist. Read-only source discovery accepted; does not claim all sources accessible or AV/IBO verified."
+    },
+    {
+      "id": 8,
+      "status": "completed",
+      "last_checked_at": "2026-11-07T00:23:00+01:00",
+      "evidence_urls": [
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/41723036558"
+      ],
+      "blocker": null,
+      "reason": "Rechecked actual GitHub Actions run #41723036558 jobs: compile, protect, discovery-tests, safety and read-only live public Scribd/SlideShare/Internet Archive audit all completed with success. Historical audit reported 2 validated public Archive M3U sources, 18,035 raw EXTINF entries; Scribd/SlideShare yielded no validated M3U. Source discovery is not AV/device proof. Existing document_platform_discovery.py and grouped test_document_platform_discovery.py cover all three platforms."
+    },
+    {
+      "id": 9,
+      "status": "completed",
+      "last_checked_at": "2026-11-11T08:52:03Z",
+      "evidence_urls": [
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42216075104",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42539900333",
+        "https://github.com/Madsc55/MADSC55-TV-V2/blob/madsc/v2-discovery-bulk-20261031/v2/history/blocked-official-prior-real-av-sha.json",
+        "https://github.com/Madsc55/MADSC55-TV-V2/blob/madsc/v2-discovery-bulk-20261031/v2/reports/official-page-http-audit-20261109.json",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/41939434438",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42925732323",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42989439329"
+      ],
+      "blocker": null,
+      "reason": "Verified the approved official-page audit (27 checked, 26 fetched, TRT Spor HTTP 403), the eight exact alternate candidate hashes in sealed provenance, and four prior FFmpeg video+audio results for three channel identities. Accepted source review; current playback and blocked source outcomes remain individually open."
+    },
+    {
+      "id": 10,
+      "status": "completed",
+      "last_checked_at": "2026-11-07T00:45:00+01:00",
+      "evidence_urls": [
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42216075104"
+      ],
+      "blocker": null,
+      "reason": "Verified all jobs success in source integration batch #42216075104, including 'Worldwide TR AZ exact IPTV API and EPG source metadata', 'Trusted IPTV org feed variant 217 missing ID source and AV recovery', and exact-identity TR/AZ probing. Closes feed/identity matching acceptance only; name-only leads and unverified AV remain unpromoted, historic #4/#15/#18 remain pending."
+    },
+    {
+      "id": 11,
+      "status": "completed",
+      "last_checked_at": "2026-11-11T08:52:03Z",
+      "evidence_urls": [
+        "https://github.com/Madsc55/MADSC55-TV-V2/commit/cd231eb861335f2fde9caa791489c47fe4e7b546",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42623941094",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/41939434438",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42925732323",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42989439329"
+      ],
+      "blocker": null,
+      "reason": "Validated all 83 page-reference associations across 68 unique SHA-256 hashes, including all 15 shared references. Historical duplicate recovery retains each original observation record. Provenance and AV claims were independently reconciled; source acceptance #9 satisfied."
+    },
+    {
+      "id": 12,
+      "status": "completed",
+      "last_checked_at": "2026-11-07T10:40:00Z",
+      "evidence_urls": [
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42228674931"
+      ],
+      "blocker": null,
+      "reason": "Verified real GitHub Actions job 127928618610: FINAL_WORLDWIDE_REPORT_GATE COMPLETE_AV_COVERAGE_EVIDENCE, 34209/34209 probed, 0 unprobed, 12968 VIDEO_AUDIO_DECODED, 9 sealed artifacts, 23 regression tests OK. v2/final_worldwide_report_gate.py validates every candidate against explicit known statuses and error categories, consistent video/audio/decoded flags, all status totals and encrypted manifest integrity; unknown outcomes fail closed. This closes classification of the sealed worldwide report, NOT recovery of 45 identities, 2643 live retests, or IBO device playback."
+    },
+    {
+      "id": 13,
+      "status": "completed",
+      "last_checked_at": "2026-11-12T01:50:01Z",
+      "evidence_urls": [
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42610981885",
+        "https://github.com/Madsc55/MADSC55-TV-V2/blob/madsc/v2-discovery-bulk-20261031/v2/independent_s3_restore.py",
+        "https://github.com/Madsc55/MADSC55-TV-V2/blob/madsc/v2-discovery-bulk-20261031/v2/test_independent_s3_restore.py",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42688764100",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42688764100/job/130424619792",
+        "https://github.com/Madsc55/MADSC55-TV-V2/commit/869571e9ce0045d879697ead404b21a412b817d3",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43043636173",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43117212383",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43117212499",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43117212383/attempts/2",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43117212383/attempts/3",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43117212383/attempts/4",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43117212383/attempts/5",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43117212383/job/130915187450"
+      ],
+      "blocker": null,
+      "reason": "User-authorized Google Drive replacement acceptance: GitHub Actions run 43117212383 latest rerun completed successfully on 2026-11-12. Job 130915187450 authenticated via OIDC, verified independent Drive archive ID/version/size/SHA-256, and logged PASS: original AES-256-GCM restored 4955 historical and 107 orphan records with source provenance. Legacy independent S3 path is not claimed to have passed; no AWS/S3 credentials or restore were used. Main IBO playlist unchanged."
+    },
+    {
+      "id": 14,
+      "status": "completed",
+      "last_checked_at": "2026-11-12T02:35:00Z",
+      "evidence_urls": [
+        "https://github.com/Madsc55/MADSC55-TV-V2/commit/1fe5c6b6d3e20c51362fb3673970a69e1ba0e1c9",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42623941094",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42867001878",
+        "https://github.com/Madsc55/MADSC55-TV-V2/commit/869571e9ce0045d879697ead404b21a412b817d3",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43117212383/attempts/5",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43139744799"
+      ],
+      "blocker": null,
+      "reason": "Accepted #13 independent Google Drive OIDC SHA-256 original AES-256-GCM production restore run 43117212383 attempt 5, plus fresh same-commit Master Engine grouped historical archive, transient AV and canonical 34-task offline acceptance run 43139744799 (offline-tests success), and Ordered Preflight 43139744816 success. Historical 4955 and orphan 107 records restored; preservation regression accepted. Does not assert AWS/S3 restore or live Master/device acceptance."
+    },
+    {
+      "id": 15,
+      "status": "in_progress",
+      "last_checked_at": "2026-11-12T15:49:07Z",
+      "evidence_urls": [
+        "https://github.com/Madsc55/MADSC55-TV-V2/blob/madsc/v2-discovery-bulk-20261031/v2/reports/task15-historical-api-identity-evidence-20261112.json",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42228674931",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42989285004",
+        "https://github.com/Madsc55/MADSC55-TV-V2/blob/madsc/v2-discovery-bulk-20261031/v2/reports/task15-iptv-org-exact-crosswalk-20261112.json"
+      ],
+      "blocker": "3,178 of 4,955 historical hashes lack a current IPTV-org catalog match. Exact catalog provenance for the other 1,777 is established, but broadcaster attribution still needs direct publisher or independently authenticated source evidence where it is missing.",
+      "reason": "Pinned IPTV-org streams.json and channels.json to ca2dc7e7bcc89def37e55202a3ad108db46a7ccf. Matched 1,777 exact URL SHA-256 identities to unambiguous catalog channel IDs, reproduced all five prior exact IDs, and found 57 catalog site hostname correlations. The report includes no plaintext stream URLs. Catalog hostname correlation is not independent broadcaster proof."
+    },
+    {
+      "id": 16,
+      "status": "completed",
+      "last_checked_at": "2026-11-12T09:22:52Z",
+      "evidence_urls": [
+        "https://github.com/Madsc55/MADSC55-TV-V2/commit/a5ff82a5f9ceded6de356ecb6827945f1a1a374d",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42623941094",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42706126197/job/129463381480",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42989285004",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43117212383/attempts/5",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43139744799",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42043534038/artifacts/13424301777",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42989285004/artifacts/13841516071"
+      ],
+      "blocker": null,
+      "reason": "Compared original run 42043534038 artifact 13424301777 and real retry run 42989285004 artifact 13841516071. All 89 retry rows joined to the original by exact channel ID and URL SHA-256. Three previous AV identities (Cine1.tr, DMAX.tr, TLC.tr) remained in the retry report, and their decoded video and audio evidence is retained in the original sealed archive. DMAX had one new timeout and TLC had three timeouts and one authentication failure on candidate URLs. Retry produced zero fresh AV results. Grouped transient AV regression and #14 prerequisite passed."
+    },
+    {
+      "id": 17,
+      "status": "pending",
+      "last_checked_at": null,
+      "evidence_urls": [],
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "id": 18,
+      "status": "pending",
+      "last_checked_at": "2026-11-11T12:54:04Z",
+      "evidence_urls": [
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42989285004"
+      ],
+      "blocker": null,
+      "reason": "Pinned exact IPTV API evidence has 171 stream hashes, 168 decoded audio+video in both short FFmpeg samples. Identity review remains tied to #15."
+    },
+    {
+      "id": 19,
+      "status": "pending",
+      "last_checked_at": "2026-11-11T12:54:04Z",
+      "evidence_urls": [
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42989285004"
+      ],
+      "blocker": null,
+      "reason": "Validated 29 exact XMLTV IDs, 8 with valid programme time ranges, 14 also present in the reviewed AV set. 303 EPG gaps remain. Final identity acceptance depends on #18."
+    },
+    {
+      "id": 20,
+      "status": "pending",
+      "last_checked_at": "2026-11-11T12:54:04Z",
+      "evidence_urls": [
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42989285004"
+      ],
+      "blocker": null,
+      "reason": "167 exact URL hashes have positive measured video dimensions and two successful real AV samples. Provenance and counts in the linked report. Full recovery queue acceptance depends on #17."
+    },
+    {
+      "id": 21,
+      "status": "pending",
+      "last_checked_at": null,
+      "evidence_urls": [],
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "id": 22,
+      "status": "completed",
+      "last_checked_at": "2026-11-07T00:23:00+01:00",
+      "evidence_urls": [
+        "https://github.com/Madsc55/MADSC55-TV-V2/blob/madsc/v2-discovery-bulk-20261031/MADSC55_TV_IBO_CALISANLAR_TEST.m3u8",
+        "https://github.com/Madsc55/MADSC55-TV-V2/commit/4672356dcb85b0c7d2c2a3444062485f8a640aaf"
+      ],
+      "blocker": null,
+      "reason": "Verified live GitHub dev-branch protected playlist blob 4b1c3cea4b5107a425abab60f62d41f9f81e05a7, and exact first two YEDEKLER entries TRT 1 1440P QHD, DHA CANLI 720P HD. Regression in v2/test_playlist_invariants.py asserts exact order. No playlist write or IBO device-playback claim."
+    },
+    {
+      "id": 23,
+      "status": "completed",
+      "last_checked_at": "2026-11-10T21:51:00+01:00",
+      "evidence_urls": [
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42611524072",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42611524049",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42611524123",
+        "https://github.com/Madsc55/MADSC55-TV-V2/blob/madsc/v2-discovery-bulk-20261031/.github/workflows/v2-master-engine.yml",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42611795555",
+        "https://github.com/Madsc55/MADSC55-TV-V2/commit/934fa7c33bf36a037f74cf5565ef2ff1e25f59ce",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42704737745",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42814432744",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42867001878",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42874231734",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42881203132",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42888160133",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42902074452",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42902074405",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42902074389"
+      ],
+      "blocker": null,
+      "reason": "Task #23 acceptance met: live Master #42874231734 completed with both jobs successful; grouped Master, Eight-Stage and Ordered Preflight checks on 0937fa0d succeeded. Protected IBO/device approval is a separate acceptance task, not claimed here."
+    },
+    {
+      "id": 24,
+      "status": "completed",
+      "last_checked_at": "2026-11-12T15:36:11Z",
+      "evidence_urls": [
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43241168321",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43241168321/artifacts/13957249280",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43241168321/artifacts/13958867734",
+        "https://github.com/Madsc55/MADSC55-TV-V2/commit/9f020d5881f37b936176bdfd2b14d4ddf345f777",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43117212383/attempts/5"
+      ],
+      "blocker": null,
+      "reason": "Integrated #24 acceptance passed in Actions 43241168321 at 12c0dc6d with Stage 4 code pinned to 158f77ec. All six acceptance jobs passed: protected playlist, pinned request, Drive access, live discovery and FFmpeg AV with authenticated sealing, Drive publication, and independent Drive revision 4 download and AES-GCM restore. 46 sources, 7,769 candidates, 801 real video and audio results (800 TR/AZ), 7,819 restored archive records including 4,955 historical rows. Source and restore artifacts, ZIP hashes and the inner encrypted archive SHA-256 were independently matched. The main IBO blob is unchanged."
+    },
+    {
+      "id": 25,
+      "status": "completed",
+      "last_checked_at": "2026-11-10T21:51:00+01:00",
+      "evidence_urls": [
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42612061352",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42612061310",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42612061433",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42612061331",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42612061408",
+        "https://github.com/Madsc55/MADSC55-TV-V2/commit/934fa7c33bf36a037f74cf5565ef2ff1e25f59ce",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42704737745",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42814432744",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42867001878",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42881202737",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42881203132",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42874231734",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42888160133",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42888160222",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42901595298",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42901595462",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42902074389"
+      ],
+      "blocker": null,
+      "reason": "Task #25 acceptance met: bounded deadline, retry/backoff, cache-after-deadline and stuck-job/no-unsafe-retry regressions passed in grouped Master and Ordered Preflight checks. A forced live outage was not manufactured or claimed."
+    },
+    {
+      "id": 26,
+      "status": "completed",
+      "last_checked_at": "2026-11-10T21:51:00+01:00",
+      "evidence_urls": [
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42612061352",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42612061310",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42612061433",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42612061331",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42612061408",
+        "https://github.com/Madsc55/MADSC55-TV-V2/commit/934fa7c33bf36a037f74cf5565ef2ff1e25f59ce",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42704737745",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42703384931",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42704737959",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42814432744",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42880935339",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42881202976",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42881202737",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42888160176",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42888160222",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42888160263",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42902074582",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42902074389",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42902074405"
+      ],
+      "blocker": null,
+      "reason": "Task #26 acceptance met: real GitHub Actions job/step failure metadata was inspected from failed runs, monitor regression fixed and successful #42902074582 verified on 0937fa0d. Skipped live Master is not counted as live success; no automatic unsafe retry."
+    },
+    {
+      "id": 27,
+      "status": "completed",
+      "last_checked_at": "2026-11-07T16:00:00Z",
+      "evidence_urls": [
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42391685418",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42391685379",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42391685458"
+      ],
+      "blocker": null,
+      "reason": "Task #27 canonical root/ledger reconciliation and SHA concurrency fail-closed regressions in v2/tasks/test_task_engine.py passed in real Master Engine offline-tests job for exact commit 90f195b010df2e1992b2d39bbdc43beb06ba9d98, run 42391685418; Eight-Stage both jobs success run 42391685379; monitor job success run 42391685458. Tests cover root links, same-commit GitHub run identity, stale root observations, SHA mismatch rejection, unauthorized device evidence, and protected writes. Read-only reconciliation does not claim live master execution: conditional master job skipped by design."
+    },
+    {
+      "id": 28,
+      "status": "pending",
+      "last_checked_at": null,
+      "evidence_urls": [],
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "id": 29,
+      "status": "pending",
+      "last_checked_at": null,
+      "evidence_urls": [],
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "id": 30,
+      "status": "pending",
+      "last_checked_at": null,
+      "evidence_urls": [],
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "id": 31,
+      "status": "pending",
+      "last_checked_at": null,
+      "evidence_urls": [],
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "id": 32,
+      "status": "pending",
+      "last_checked_at": null,
+      "evidence_urls": [],
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "id": 33,
+      "status": "pending",
+      "last_checked_at": null,
+      "evidence_urls": [],
+      "blocker": null,
+      "reason": null
+    },
+    {
+      "id": 34,
+      "status": "in_progress",
+      "last_checked_at": "2026-11-12T20:21:33Z",
+      "evidence_urls": [
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43299056099",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43299369197"
+      ],
+      "blocker": "Waiting for the discovery result and then scoped new-candidate AV and archive evidence.",
+      "reason": "The grouped offline system verification passed. #34 source discovery is running on the exact tested source tree. Fresh AV, encryption and final acceptance remain open."
+    }
+  ],
+  "allowed_statuses": [
+    "pending",
+    "in_progress",
+    "blocked",
+    "completed"
+  ],
+  "note": "Derived task ledger, not independent source of truth. Root state.json is canonical; this snapshot must be reconciled by hash/commit before mutation. No task completed without evidence. Imported unchanged task statuses from madsc/v2-discovery-bulk-20261031 on 2026-11-13; generated_at and observed_commit are historical. Later CI evidence is recorded in DEVAM_NOTU.md; no task status is automatically promoted by this import."
+}
