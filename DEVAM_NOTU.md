@@ -1,3 +1,9 @@
+## 13 Kasım 2026 — #34 geçici ağ hatası düzeltmesi ve güvenlik kabulü
+- Commit a255432f: canlı API sözleşmesinde geçici URLError için en fazla 3 denemelik kontrollü yeniden deneme eklendi; başarısızlık açıkça raporlanır.
+- Commit 07b05a1b: bağlantı kurtarma ve deneme sınırı regresyon testleri eklendi.
+- GitHub Actions run 43446719258: Production Security Gate SUCCESS (commit 07b05a1b). Bu sonuç canlı API sözleşmesi veya yeni regresyon testlerinin çalıştığı anlamına gelmez.
+- Canlı Codeberg API kabulü, Stage 7 nihai kabulü ve gerçek yayın AV doğrulaması AÇIK. Yeni kanal taraması yapılmadı; korunan İBO/YEDEKLER/YENİLER/FAVORİLER değiştirilmedi.
+
 ## 13 Kasım 2026 — #34 yönlendirme güvenliği Actions PASS
 - Commit b0e2c00fdd512f319e72c65b4670d87f582f28d7 için GitHub Actions run 43442079652: SUCCESS.
 - Production Security Gate: grouped safety, production trigger/write policy, korunan İBO invariantları ve Discovery 34 offline adapter/integration acceptance adımlarının tümü PASS.
