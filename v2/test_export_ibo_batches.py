@@ -110,7 +110,8 @@ class BatchTests(unittest.TestCase):
             rows = [None, 17, [], "invalid",
                     {"url": "https://example.invalid/verified",
                      "name": "Valid", "group": "TR",
-                     "http_hls_status": "AV_VERIFIED"}]
+                     "http_hls_status": "AV_VERIFIED",
+                     "decoded_av_verified": True, "decode_status": "DECODED_AV"}]
             encrypted = root / "inventory.enc"
             data = chr(10).join(json.dumps(x) for x in rows) + chr(10)
             encrypted.write_bytes(encrypt(data.encode(), SECRET))
