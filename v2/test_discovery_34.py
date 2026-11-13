@@ -59,6 +59,23 @@ class Discovery34Tests(unittest.TestCase):
                     identity(source, url)
             self.assertEqual(curated_candidates(source, [{"url": "https://example.org/a\n#EXTINF"}]), [])
 
+    def test_discovery_cli_refuses_to_overwrite_existing_evidence(self):
+        import subprocess
+        import sys
+        import tempfile
+        from pathlib import Path
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / "existing-discovery-evidence.json"
+            original = b"PROTECTED_REPORT_CONTENT"
+            output.write_bytes(original)
+            script = Path(__file__).with_name("discovery_34.py")
+            result = subprocess.run(
+                [sys.executable, str(script), "--output", str(output)],
+                capture_output=True, text=True, timeout=30
+            )
+            self.assertNotEqual(result.returncode, 0)
+            self.assertEqual(output.read_bytes(), original)
+
     def test_official_and_m3u(self):
         for source in ("official", "m3u"):
             self.assertEqual(len(curated_candidates(source, [{"url": "https://example.org/live.m3u8"}])), 1)
