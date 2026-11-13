@@ -91,6 +91,13 @@ class Discovery34Tests(unittest.TestCase):
             with self.subTest(source=source), self.assertRaises(ValueError):
                 normalize(source, {key: {"bad": "rows"}})
 
+    def test_control_characters_and_invalid_url_types_rejected(self):
+        for source in ("official", "m3u"):
+            for url in ("https://example.org/a.m3u8\\n#EXTINF", "https://example.org/a\\rnext",
+                        "https://example.org/a\\x00", "https://example.org/a\\x7f", None, 123):
+                with self.subTest(source=source, url=url), self.assertRaises(ValueError):
+                    identity(source, url)
+
     def test_youtube(self):
         items = curated_candidates("youtube", [{"video_id": "AbCdEf12345"}])
         self.assertEqual(items[0]["source_id"], "youtube:AbCdEf12345")
