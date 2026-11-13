@@ -11,6 +11,7 @@ import urllib.request
 import xml.etree.ElementTree as ET
 from collections import Counter, defaultdict
 from datetime import datetime, timedelta, timezone
+from epg_integrity import parse_xmltv_time
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 PLAYLIST = ROOT / "MADSC55_TV_IBO_CALISANLAR_TEST.m3u8"
@@ -52,6 +53,16 @@ def select_epg_source(tvgid, tvgname, display, names, schedules):
     if len(candidates) == 1:
         return next(iter(candidates)), False
     return None, len(candidates) > 1
+
+
+def programme_in_window(programme, start_limit, end_limit):
+    """Require valid XMLTV timezone and positive programme duration before export."""
+    try:
+        start = parse_xmltv_time(programme.get("start", ""))
+        stop = parse_xmltv_time(programme.get("stop", ""))
+    except (ValueError, TypeError, AttributeError):
+        return False
+    return stop > start and start_limit <= start <= end_limit
 
 
 def main():
@@ -117,16 +128,7 @@ def main():
     written = 0
     for cid, targets in mapping.items():
         for prog in schedules[cid]:
-            stamp = prog.get("start", "")
-            try:
-                dt = datetime.strptime(stamp[:14], "%Y%m%d%H%M%S").replace(tzinfo=timezone.utc)
-                tz = re.search(r"([+-])(\d{2})(\d{2})$", stamp.strip())
-                if tz:
-                    shift = timedelta(hours=int(tz.group(2)), minutes=int(tz.group(3)))
-                    dt += -shift if tz.group(1) == "+" else shift
-                if not start_limit <= dt <= end_limit:
-                    continue
-            except ValueError:
+            if not programme_in_window(prog, start_limit, end_limit):
                 continue
             for target in targets:
                 key = (target, prog.get("start"), prog.get("stop"), prog.findtext("title"))
