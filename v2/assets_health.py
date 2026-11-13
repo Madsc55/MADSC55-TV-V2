@@ -12,6 +12,9 @@ from discover import ROOT, LIVE, entries
 OUTPUT = ROOT / "v2" / "reports" / "assets-health.json"
 
 def probe(url):
+    if not isinstance(url, str) or not url.strip():
+        return {"status": "INVALID_URL"}
+    url = url.strip()
     if not url.startswith("https://"):
         return {"status": "SKIPPED_NON_HTTPS"}
     try:

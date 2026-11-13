@@ -8,7 +8,9 @@ import subprocess
 from urllib.parse import urlsplit
 
 def probe(url, timeout=25, ffprobe='ffprobe'):
-    parsed = urlsplit(url)
+    if not isinstance(url, str) or not url.strip():
+        return {'status': 'INVALID_URL', 'video': False, 'audio': False}
+    parsed = urlsplit(url.strip())
     if parsed.scheme not in ('http', 'https') or not parsed.hostname or parsed.username or parsed.password:
         return {'status': 'INVALID_URL', 'video': False, 'audio': False}
     executable = shutil.which(ffprobe)
