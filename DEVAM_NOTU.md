@@ -1,3 +1,9 @@
+## 13 Kasım 2026 — #34 yeni PR güvenlik kabulü PASS
+- PR #22 (stage7-34-discovery-adapters-20261112 → main) incelemeye hazır; birleştirilmedi.
+- Commit 0812af12d78e83c2088a39752ce8fe9c15dd6122 için V2 Main Production Security Gate Actions run 43441093990 **SUCCESS**. Grouped safety regression, üretim tetikleyici/yazma güvenliği, korunan İBO invariantları ve Discovery 34 offline adapter/integration adımı PASS.
+- 429/5xx sınırlı retry için üç yeni regresyon testi yerel izolasyon kontrolünde PASS; bu ayrı bir canlı API kanıtı değildir.
+- workflow_dispatch canlı GitHub/GitLab/Codeberg API sözleşmesi henüz başarılı doğrulanmadı. #34 nihai kabul açık. #15/#17-21 ve #28-33 kabul durumları ayrıca doğrulanmalı. Gerçek kanal taraması ve korunan liste değişikliği yapılmadı.
+
 ## 13 Kasım 2026 — #34 geçici API hata toleransı (kabul bekliyor)
 - Geliştirme dalında commit 034cb296: canlı GitHub/GitLab/Codeberg sözleşme kontrolüne 429 ve 5xx için en fazla üç denemelik sınırlı retry eklendi. 403 ve diğer kalıcı hatalar yeniden denenmez; nihai hata kabulü başarısız kalır.
 - Commit cb2a7438: başarıyla toparlanma, kalıcı 403 ve 429 deneme sınırı için offline regresyon testleri eklendi.
