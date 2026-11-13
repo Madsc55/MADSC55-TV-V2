@@ -53,6 +53,16 @@ class Discovery34Tests(unittest.TestCase):
         for url in ("file:///tmp/a", "https://localhost/a", "https://user:pass@site.org/a", "http://127.0.0.1/a", "http://192.168.1.1/a", "http://[::1]/a"):
             with self.assertRaises(ValueError):
                 identity("m3u", url)
+    def test_malformed_port_rejected(self):
+        for url in ("https://example.org:bad/live.m3u8", "https://example.org:99999/live.m3u8"):
+            with self.subTest(url=url), self.assertRaises(ValueError):
+                identity("m3u", url)
+
+    def test_trailing_dot_hostname_canonical_identity(self):
+        normal = identity("m3u", "https://example.org/live.m3u8")
+        dotted = identity("m3u", "https://example.org./live.m3u8")
+        self.assertEqual(normal["source_id"], dotted["source_id"])
+
     def test_provider_host_boundaries(self):
         for source, url in (("github", "https://github.com.evil.example/a"),
                             ("gitlab", "http://gitlab.com/a"),
