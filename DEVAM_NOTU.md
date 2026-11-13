@@ -1,3 +1,7 @@
+## 13 Kasım 2026 — Güvenlik kuralı ile CI tetikleyicisi uyumu
+- stage3 DEVAM_NOTU geçmişinde yetkisiz pull_request workflow tetikleyicisinin UNAPPROVED_TRIGGER hatasına neden olduğu doğrulandı. Stage6 iş akışına sonradan eklenen PR tetikleyicisi bu nedenle b8f5c3db ile geri alındı; workflow_dispatch, korunan İBO invariants ve offline kabul testleri korundu.
+- Stage6 offline kabulün yeni kodlarla yeşil sonucu yok; GitHub Actions workflow_dispatch çalıştırması ve bağımsız kabul halen bekliyor. Başarı veya görev kapanışı iddia edilmiyor.
+
 ## 13 Kasım 2026 — #28/#29 kanal sayısı tekilleştirme
 - 0eafcc8a: IBO paketleme doğrulaması, farklı kanal adı altında yinelenen aynı yayın URL'sini artık reddeder. Tek URL'nin birden fazla gerçek kanal sayılmasının önüne geçilir.
 - 77325384: farklı EXTINF ve aynı URL senaryosuna regresyon testi eklendi.
