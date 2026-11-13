@@ -3,6 +3,7 @@
 import argparse
 import json
 import os
+import unicodedata
 from pathlib import Path
 from urllib.parse import urlsplit
 from secure_archive import decrypt, atomic_write
@@ -10,7 +11,9 @@ from secure_archive import decrypt, atomic_write
 def valid_stream_url(value):
     """Reject malformed URLs before any untrusted inventory is rendered as M3U."""
     if not isinstance(value, str) or not value or any(
-            ord(char) < 32 or ord(char) == 127 or char.isspace()
+            ord(char) < 32 or 127 <= ord(char) <= 159
+            or char.isspace() or unicodedata.category(char) in ("Cf", "Zl", "Zp")
+            or char in ('"', "'")
             for char in value):
         return False
     try:
@@ -24,8 +27,10 @@ def valid_stream_url(value):
 
 def clean_attribute(value):
     """Keep untrusted source metadata on its original EXTINF line."""
-    return "".join(" " if ord(char) < 32 or ord(char) == 127 or char in "\u0085\u2028\u2029" else char
-                   for char in str(value or "")).replace('"', "")
+    text = str(value or "")
+    return "".join(" " if (char.isspace() and char != " ")
+                   or unicodedata.category(char) in ("Cc", "Cf", "Zl", "Zp")
+                   else char for char in text).replace('"', "").strip()
 
 
 def render(records):
@@ -48,6 +53,9 @@ def export(archive, passphrase, destination, sizes=(1000, 2000), existing=()):
         if not line.strip():
             continue
         record = json.loads(line)
+        if not isinstance(record, dict):
+            # Ignore invalid JSONL types without dropping valid neighboring rows.
+            continue
         url = record.get('url')
         if not valid_stream_url(url) or url in seen:
             continue
