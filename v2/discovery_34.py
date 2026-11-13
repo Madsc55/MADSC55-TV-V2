@@ -14,7 +14,7 @@ SOURCES = ("github", "gitlab", "codeberg", "official", "youtube", "m3u")
 MAX_BYTES = 2_000_000
 
 def identity(source, url):
-    if not isinstance(url, str) or any(ord(char) < 32 or ord(char) == 127 for char in url):
+    if not isinstance(url, str) or any(char.isspace() or ord(char) < 32 or ord(char) == 127 or char == "\\" for char in url):
         raise ValueError("Invalid URL characters")
     p = urllib.parse.urlsplit(url)
     if p.scheme not in ("https", "http") or not p.hostname:
