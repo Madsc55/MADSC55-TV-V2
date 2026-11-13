@@ -2556,3 +2556,10 @@ Kullanıcının açık talimatıyla #3, #4 ve #6 tarihî kurtarma görevleri art
 - Gerçek workflow yalnızca `workflow_dispatch` ve `approve_live_discovery=true` ile çalışacak şekilde korunuyor. Denetleyicinin eski beklentisi ayrıca push tetikleyicisi aradığı için güvenlik kapısı hatalı olarak `STAGE6_DISCOVERY_REQUIRES_EXPLICIT_REQUEST` veriyordu. Push tetikleyicisi eklenmedi; denetim doğru manuel-onay koşulunu bekleyecek şekilde düzeltildi.
 - Önceki koşuda 25 task-engine testi başarılıydı; Actions trigger protection audit bu yanlış beklenti nedeniyle başarısız oldu. Master offline suite ayrıca forge/Gist erişim hataları ve sıfır yeni aday sonucu raporladı; bu durum canlı keşif kabulü değildir.
 - Bu commit için yeni Actions sonucu bekleniyor. #34 ve ilgili görevler yeni kabul kanıtı oluşana kadar açık kalır. Ana İBO ve korunan listeler değiştirilmedi; yeni canlı tarama başlatılmadı.
+
+
+## 13 Kasım 2026 — Stage 6 güvenlik regresyon testinin güncellenmesi
+
+- Commit `579b38d61b538422b8965c60a7c6d1bf5f3b73eb`: `v2/test_actions_trigger_protection_audit.py` içindeki negatif test eski, kaldırılmış push-approval ifadesini değiştiriyordu; artık gerçek manuel onay ifadesi `inputs.approve_live_discovery == true` kaldırıldığında denetimin `STAGE6_DISCOVERY_REQUIRES_EXPLICIT_REQUEST` hatası vermesini sınar.
+- Önceki güvenlik denetimi başarısızlığının tek test hatası bu eski mutasyon beklentisiydi. Workflow manuel onay-only kalır; push tetikleyicisi eklenmedi.
+- Yeni commit Actions sonucu bekleniyor. #34 ve görev kapanışları kabul tamamlanana kadar açık. Canlı tarama yok; korunan listeler değişmedi.
