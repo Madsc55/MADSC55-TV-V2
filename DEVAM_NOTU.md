@@ -2,7 +2,7 @@
 - PR #106 (`integrate-stage6-28-33-current-main-20261113`) için Actions run `43457997079` completed / success.
 - Tüm adımlar SUCCESS: grouped safety regression tests; production trigger/write policy; original IBO category/backup invariants; historical task ledger; Stage 2 identity recovery metadata; Stage 6 offline package/archive regressions; Stage 2/3 offline identity, EPG and recovery; Discovery #34 offline adapter/integration acceptance.
 - Bu, PR #106'nın merge test ağacında çevrimdışı ve güvenlik kabulüdür. Gerçek FFmpeg AV, gerçek harici bağımsız restore ve üretim kanal paketi kanıtı yerine geçmez.
-- PR #87 kapatıldı ve PR #106 ile değiştirildi. PR #106 henüz birleştirilmedi; ana dal PR açıldıktan sonra yeniden ilerlediği için güncel base ile son entegrasyon kontrolü gereklidir.
+- PR #87 kapatıldı; PR #106 güncel main tabanına alındı ve squash merge commit `478aba262b0b37c39019a85bcc3abfc812b04208` ile birleştirildi. PR #106 merge test ağacı Actions run `43457997079`: SUCCESS.
 - Ana İBO, YEDEKLER, YENİLER, FAVORİLER değiştirilmedi; kanal taraması başlatılmadı.
 
 ## 13 Kasım 2026 — Aşama 2 (#15, #17–#21) çevrimdışı kabul kapısı ana dala alındı
