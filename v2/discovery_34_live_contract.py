@@ -22,6 +22,13 @@ def probe(source, query="turkish-iptv", fetch=fetch_json, sleep=time.sleep):
                 continue
             return {"status": "error", "reason": "HTTP_" + str(exc.code),
                     "retryable": retryable, "provider": source, "attempts": attempt}
+        except urllib.error.URLError as exc:
+            # Temporary DNS/connection failures may recover; never mark them successful.
+            if attempt < MAX_ATTEMPTS:
+                sleep(attempt)
+                continue
+            return {"status": "error", "reason": "URLError",
+                    "retryable": True, "provider": source, "attempts": attempt}
         except (OSError, ValueError, KeyError, TypeError) as exc:
             return {"status": "error", "reason": type(exc).__name__,
                     "provider": source, "attempts": attempt}
