@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 """Offline regression for bounded #34 live metadata retries."""
 import unittest
+from datetime import datetime, timedelta, timezone
+from email.utils import format_datetime
 import urllib.error
-from discovery_34_live_contract import probe, probe_queries
+from discovery_34_live_contract import probe, probe_queries, retry_delay
 
 def http_error(code):
     return urllib.error.HTTPError("https://codeberg.org/api/v1/repos/search", code, "test", {}, None)
