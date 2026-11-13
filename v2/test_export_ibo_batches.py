@@ -197,6 +197,7 @@ class BatchTests(unittest.TestCase):
     def test_non_object_encrypted_inventory_rows_are_ignored(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
+            # Current-run decoded AV is required; metadata-only legacy rows stay rejected.
             good = {"url": "https://example.invalid/good.m3u8", "name": "GOOD",
                     "group": "TR", "http_hls_status": "AV_VERIFIED", "decoded_av_verified": True, "decode_status": "DECODED_AV"}
             jsonl = "\n".join(json.dumps(row) for row in (
