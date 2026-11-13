@@ -11,6 +11,7 @@ import urllib.request
 import xml.etree.ElementTree as ET
 from collections import Counter, defaultdict
 from datetime import datetime, timedelta, timezone
+from epg_integrity import parse_xmltv_time
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 PLAYLIST = ROOT / "MADSC55_TV_IBO_CALISANLAR_TEST.m3u8"
@@ -38,6 +39,31 @@ def download(url):
     if len(data) > 120_000_000:
         raise ValueError("expanded feed too large")
     return ET.fromstring(data)
+
+def select_epg_source(tvgid, tvgname, display, names, schedules):
+    """Only exact IDs or unambiguous name matches may supply programmes."""
+    if tvgid and tvgid in schedules:
+        return tvgid, False
+    candidates = set()
+    for label in (tvgid, tvgname, display):
+        key = norm(label)
+        if key:
+            candidates.update(names.get(key, ()))
+    candidates.intersection_update(schedules)
+    if len(candidates) == 1:
+        return next(iter(candidates)), False
+    return None, len(candidates) > 1
+
+
+def programme_in_window(programme, start_limit, end_limit):
+    """Require valid XMLTV timezone and positive programme duration before export."""
+    try:
+        start = parse_xmltv_time(programme.get("start", ""))
+        stop = parse_xmltv_time(programme.get("stop", ""))
+    except (ValueError, TypeError, AttributeError):
+        return False
+    return stop > start and start_limit <= start <= end_limit
+
 
 def main():
     entries = []
@@ -78,16 +104,13 @@ def main():
                 names[key].add(cid)
     mapping = defaultdict(set)
     matched = 0
+    ambiguous = 0
     for index, (tvgid, tvgname, display) in enumerate(entries):
-        candidates = set()
-        if tvgid in schedules:
-            candidates.add(tvgid)
-        if not candidates:
-            for label in (tvgid, tvgname, display):
-                candidates.update(names.get(norm(label), set()))
-        if not candidates:
+        source_id, is_ambiguous = select_epg_source(tvgid, tvgname, display, names, schedules)
+        if is_ambiguous:
+            ambiguous += 1
+        if not source_id:
             continue
-        source_id = max(candidates, key=lambda cid: (len(schedules[cid]), cid))
         target = tvgid or "madsc-v2-" + str(index)
         mapping[source_id].add(target)
         matched += 1
@@ -105,16 +128,7 @@ def main():
     written = 0
     for cid, targets in mapping.items():
         for prog in schedules[cid]:
-            stamp = prog.get("start", "")
-            try:
-                dt = datetime.strptime(stamp[:14], "%Y%m%d%H%M%S").replace(tzinfo=timezone.utc)
-                tz = re.search(r"([+-])(\d{2})(\d{2})$", stamp.strip())
-                if tz:
-                    shift = timedelta(hours=int(tz.group(2)), minutes=int(tz.group(3)))
-                    dt += -shift if tz.group(1) == "+" else shift
-                if not start_limit <= dt <= end_limit:
-                    continue
-            except ValueError:
+            if not programme_in_window(prog, start_limit, end_limit):
                 continue
             for target in targets:
                 key = (target, prog.get("start"), prog.get("stop"), prog.findtext("title"))
@@ -131,7 +145,9 @@ def main():
     ET.ElementTree(result).write(temp, encoding="utf-8", xml_declaration=True)
     ET.parse(temp)
     temp.replace(OUT)
-    report = {"playlist_entries": len(entries), "matched_entries": matched, "channels": len(used), "programmes": written, "epg_bytes": OUT.stat().st_size, "sources": results}
+    report = {"playlist_entries": len(entries), "matched_entries": matched,
+              "ambiguous_entries_skipped": ambiguous, "channels": len(used),
+              "programmes": written, "epg_bytes": OUT.stat().st_size, "sources": results}
     (ROOT / "v2/epg-report.json").write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n")
     print(json.dumps(report, ensure_ascii=False))
 
