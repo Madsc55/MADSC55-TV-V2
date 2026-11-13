@@ -4,6 +4,8 @@ import hashlib
 import os
 import tempfile
 from pathlib import Path
+from unittest.mock import patch
+import secure_archive
 from secure_archive import backup, restore, decrypt, encrypt
 
 def main():
@@ -31,6 +33,21 @@ def main():
             else:
                 raise AssertionError("Same-path archive operation accepted")
         assert decrypt(encrypted.read_bytes(), secret) == payload
+        # Reject oversized encrypted input before loading it into memory.
+        with patch.object(secure_archive, "MAX_INPUT", 1):
+            try:
+                decrypt(encrypted.read_bytes(), secret)
+            except ValueError:
+                pass
+            else:
+                raise AssertionError("Oversized encrypted blob accepted")
+            try:
+                restore(encrypted, root / "oversized-restored.jsonl", secret)
+            except ValueError:
+                pass
+            else:
+                raise AssertionError("Oversized archive restore accepted")
+        assert not (root / "oversized-restored.jsonl").exists()
         damaged = bytearray(encrypted.read_bytes())
         damaged[-1] ^= 1
         bad = root / "bad.enc"
