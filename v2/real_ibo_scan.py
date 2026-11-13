@@ -101,7 +101,7 @@ def eligible_entry(entry, scope, worldwide=False):
 
 def public_http_stream_url(url):
     """Allow only parseable public HTTP(S) streams; never trust feed-supplied hosts."""
-    if not isinstance(url, str):
+    if not isinstance(url, str) or "\\" in url:
         return False
     try:
         identity("m3u", url)
