@@ -43,8 +43,8 @@ class PackageTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 parse(text)
     def test_rejects_spoofed_m3u_header(self):
-        for text in ("#EXTM3U-FAKE\\n#EXTINF:-1,Name\\nhttps://example.org/live",
-                     "#EXTM3U garbage\\n#EXTINF:-1,Name\\nhttps://example.org/live"):
+        for text in ("#EXTM3U-FAKE\n#EXTINF:-1,Name\nhttps://example.org/live",
+                     "#EXTM3U garbage\n#EXTINF:-1,Name\nhttps://example.org/live"):
             with self.subTest(text=text), self.assertRaises(ValueError):
                 parse(text)
 
@@ -52,7 +52,7 @@ class PackageTests(unittest.TestCase):
         for url in ("https://user:password@example.org/live.m3u8",
                     "https://user@example.org/live.m3u8"):
             with self.subTest(url=url), self.assertRaises(ValueError):
-                parse("#EXTM3U\\n#EXTINF:-1,Name\\n" + url + "\\n")
+                parse("#EXTM3U\n#EXTINF:-1,Name\n" + url + "\n")
 
     def test_duplicate(self):
         text,_=fixture(1)
