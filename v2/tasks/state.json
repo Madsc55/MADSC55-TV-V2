@@ -273,10 +273,13 @@
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43455192478",
         "https://github.com/Madsc55/MADSC55-TV-V2/pull/156",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43480044886",
-        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43480208051"
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43480208051",
+        "https://github.com/Madsc55/MADSC55-TV-V2/pull/202",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43484557050",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43484812015"
       ],
       "blocker": null,
-      "reason": "Validated 29 exact XMLTV IDs, 8 with valid programme time ranges, 14 also present in the reviewed AV set. 303 EPG gaps remain. Final identity acceptance depends on #18. 13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open. 13 Nov 2026: PR #156 merged as 5842d47a3617ccd3bc523632144e0c0eaffc0b9d. XMLTV programme availability now requires a unique channel ID and a parseable, strictly increasing start/stop interval, including UTC offset validation. Original Stage 2 fixture without stop failed first CI; fixture was corrected and PR run 43480044886 passed all groups. Main push security gate 43480208051 passed. Offline evidence only; live EPG gaps and final identity/EPG approval remain open."
+      "reason": "Validated 29 exact XMLTV IDs, 8 with valid programme time ranges, 14 also present in the reviewed AV set. 303 EPG gaps remain. Final identity acceptance depends on #18. 13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open. 13 Nov 2026: PR #156 merged as 5842d47a3617ccd3bc523632144e0c0eaffc0b9d. XMLTV programme availability now requires a unique channel ID and a parseable, strictly increasing start/stop interval, including UTC offset validation. Original Stage 2 fixture without stop failed first CI; fixture was corrected and PR run 43480044886 passed all groups. Main push security gate 43480208051 passed. Offline evidence only; live EPG gaps and final identity/EPG approval remain open. 13 Nov 2026: PR #202 merged e5a233b8c281208b5ebc4662f741968002819d38, main run 43484812015 SUCCESS; cross-provider/duplicate XMLTV IDs and undeclared programmes rejected; XML DTD/ENTITY blocked. Offline unit acceptance only. 303 EPG gaps and live broadcaster identity remain unverified; #19 stays in_progress."
     },
     {
       "id": 20,
