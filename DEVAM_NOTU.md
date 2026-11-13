@@ -959,3 +959,11 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - Eski gerçek dünya AV raporu run `42216075104`, artifact `13524765368`: 35.327 aday, 13.884 mevcut-run FFmpeg video+ses decode, 9 RSA-sealed shard. Aynı rapor tarihî 4.955 hash'in 4.949'unu worldwide raporla eşleştiriyor; 3.080 tarihî hash için AV decode kanıtı var. Ancak `historical_broadcaster_identity_verified=false` olduğu için #15 kapanmaz.
 - Ayrı #24 run `43241168321` restore receipt: 801 AV sonuç (800 TR/AZ), 7.819 arşiv kaydı geri yüklendi. Bu rapor ile worldwide raporun hash örtüşmesi henüz hesaplanmadı; sayılar toplanmadı.
 - 1000/2000 gerçek paketler henüz üretilmedi. Worldwide URL shard'ları RSA-3072 alıcı public key ile mühürlü; açma işlemi kullanıcıya ait private key gerektiriyor ve bu private key depoda bulunmuyor. Ana İBO/YEDEKLER/YENİLER/FAVORİLER korunuyor. Sentetik paketler gerçek teslim sayılmadı.
+
+## 13 Kasım 2026 — Stage 5 kanıt kapısı ve #34 sorgu ölçümü güncellemesi
+- PR #134 Stage 5 evidence-gated IBO export/final-acceptance code and offline regressions squash merge 917dcddaff863ae56f9099a0539d63b6f85765c9; main Production Security Gate run 43460202117 SUCCESS, including Stage 5 evidence-gate tests.
+- Bu kabul yalnızca kanıt kapısının ve dışa aktarma doğrulama kodunun çevrimdışı testidir. Gerçek 1.000/2.000 kanal paketi, FFmpeg AV, IBO cihaz oynatımı veya kullanıcı onayı yerine geçmez; #31–#33 açık kalır.
+- PR #132 sorgu sayımı düzeltmesi squash merge ee2471b28804fb7c2c212f83f62d73d06566bed9; offline Production Security Gate run 43460164276 SUCCESS. queries_checked gerçek ağ çağrılarını sayar; queries_total ve queries_skipped ayrıdır.
+- Canlı run 43459603986 sonucu: GitHub 6/6 geçerli, 102 ham aday satırı; GitLab 6/6 geçerli boş liste; Codeberg ilk sorguda HTTP 429/3 deneme, kalan beş sorgu atlandı. Codeberg için başarılı canlı kabul yok; #34 açık.
+- Worldwide tarama kapsamı seçeneği --worldwide mevcut main'de etkinleştirilebilir; offline kapsam testi geçti. Bu seçenekle yeni tarama başlatılmadı.
+- Ana İBO, YEDEKLER, YENİLER ve FAVORİLER değiştirilmedi; yeni kapsamlı kanal taraması yapılmadı.
