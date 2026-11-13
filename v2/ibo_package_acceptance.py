@@ -14,6 +14,10 @@ def parse(text):
     records = []
     for line in text.splitlines():
         line = line.strip()
+        if line == "#EXTM3U" and records == [] and pending is None:
+            continue
+        if line.startswith("#EXTM3U"):
+            raise ValueError("unexpected M3U header inside playlist")
         if line.startswith("#EXTINF:"):
             if pending is not None:
                 raise ValueError("unpaired EXTINF")
