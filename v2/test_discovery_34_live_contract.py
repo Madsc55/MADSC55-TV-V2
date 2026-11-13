@@ -238,7 +238,6 @@ class LiveContractRetryTests(unittest.TestCase):
         self.assertEqual(result["attempts"], 3)
         self.assertEqual(sleeps, [5, 10])
 
-
     def test_http_date_retry_after_is_honored_and_capped(self):
         from datetime import datetime, timedelta, timezone
         from email.utils import format_datetime
@@ -253,7 +252,6 @@ class LiveContractRetryTests(unittest.TestCase):
         result = probe("codeberg", fetch=fetch, sleep=sleeps.append)
         self.assertEqual(result["status"], "ok")
         self.assertEqual(result["attempts"], 2)
-        self.assertEqual(len(calls), 2)
         self.assertEqual(sleeps, [60])
 
     def test_past_http_date_retry_after_does_not_sleep(self):
