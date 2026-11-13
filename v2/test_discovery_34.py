@@ -15,6 +15,19 @@ class Discovery34Tests(unittest.TestCase):
                  ("codeberg", {"data": [{"html_url": "https://codeberg.org/a/b"}]})]
         for source, payload in cases:
             self.assertFalse(repository_candidates(source, payload)[0]["verified_av"])
+    def test_repository_api_error_objects_fail_closed(self):
+        cases = (("github", {"message": "API rate limit exceeded"}),
+                 ("github", {}),
+                 ("gitlab", {"message": "Too Many Requests"}),
+                 ("codeberg", {"message": "rate limit"}),
+                 ("codeberg", {}))
+        for source, payload in cases:
+            with self.subTest(source=source, payload=payload), self.assertRaises(ValueError):
+                repository_candidates(source, payload)
+        self.assertEqual(repository_candidates("github", {"items": []}), [])
+        self.assertEqual(repository_candidates("gitlab", []), [])
+        self.assertEqual(repository_candidates("codeberg", {"data": []}), [])
+
     def test_youtube(self):
         items = curated_candidates("youtube", [{"video_id": "AbCdEf12345"}])
         self.assertEqual(items[0]["source_id"], "youtube:AbCdEf12345")
