@@ -1,3 +1,9 @@
+## 13 Kasım 2026 — #34 retry test regresyonu bulundu ve düzeltildi
+- Grouped offline run #43452859774 tüm ön kontrolleri geçti; Stage 7'nin 39 testinde 5 assertion hatası retry sayısı/backoff test beklentilerinin güncel dört denemeli sözleşmeyle uyuşmamasından kaynaklandı. Kodda ayrıca retry_delay fonksiyonu eklenmiş olmasına rağmen probe içinde eski `sleep(attempt)` çağrıları kalmıştı.
+- `v2/discovery_34_live_contract.py`: HTTP 429/5xx ve geçici bağlantı hataları artık Retry-After / X-RateLimit-Reset başlıklarını dikkate alan, 30 saniye üst sınırına sahip exponential backoff kullanıyor. Commit `85028594e3d03e92d8b45313eec744333f874d45`.
+- `v2/test_discovery_34_live_contract.py`: 4 deneme sözleşmesine göre assertion'lar düzeltildi; Retry-After=45 için 30 saniyede sınırlandırma testi eklendi. Commit `d2e6dfa00b5a32c108466d62bc33eeb3582b0c84`.
+- Run #43454293106, kaynak commit `85028594e`, hâlen çalışıyor; test güncel son test commit'i `d2e6dfa` için henüz görünmüyor. Bu nedenle düzeltme henüz CI'da yeşil değil. Canlı Codeberg #429 kabulü ve gerçek AV kanıtı bekliyor. #34 açık; PR #22 merge edilmedi. Ana İBO ve korunan listeler değiştirilmedi.
+
 ## 13 Kasım 2026 — #34 grouped offline acceptance yeşil; Codeberg rate limit ayrıştırıldı
 - Actions #43452246381: tüm offline kabul bölümleri başarılı (envanter/playlist, şifreli arşiv, restore regresyonları, #34 39 test, compile ve offline discovery/integration). Son adım canlı Codeberg API 429 rate-limit nedeniyle exit 1 verdi; GitHub 20 aday, GitLab 0 aday fakat API sözleşmesi ok, Codeberg 3 denemede HTTP_429. Bu gerçek sağlayıcı kabulü değildir.
 - Workflow `.github/workflows/v2-stage6-grouped-acceptance.yml` güncellendi: canlı sağlayıcı probe artık offline kabulü bloklamayan, ayrı raporlanan adım. 429/5xx fail-closed raporu korunur; #34 canlı sağlayıcı kabulü ve gerçek yeni AV kanıtı olmadan kapanmaz. Commit `32a778806c7b516809d2862d6d3ef0480b36fb6a`.
