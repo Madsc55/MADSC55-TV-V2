@@ -1,3 +1,9 @@
+## 13 Kasım 2026 — #34 kaynak raporu şema doğrulaması
+- cacf124b: discovery_34_integrate.normalize() official.channels, youtube.results ve m3u.sources alanlarının tümünü zorunlu kılar; liste dışı veya nesne olmayan kayıtları sessizce atlamak yerine hata üretir.
+- 1da42f1f: üç adaptörde eksik dizi ve bozuk kayıt türleri için regresyon testleri eklendi.
+- v2-stage6-grouped-acceptance.yml bu test modülünü unittest adımında çalıştırıyor ve #34 canlı repository API sözleşmesini fail-closed adımında deniyor. Ancak yeni commitler için GitHub Actions run kaydı henüz görünmüyor; test sonucu PASS olarak raporlanamaz.
+- Kapsamlı tarama başlatılmadı; playlist ve korunan İBO listelerine dokunulmadı.
+
 ## 13 Kasım 2026 — #34 geçici soket hataları için geliştirme dalı düzeltmesi
 - Commit c25ab190: TimeoutError, ConnectionResetError ve ConnectionAbortedError için en fazla üç kontrollü deneme eklendi. Hata devam ederse fail-closed; canlı API kabulü olarak işaretlenmez.
 - Commit 1f04dbcd: soket zaman aşımı kurtarma ve bağlantı sıfırlama tükenmesi için iki çevrimdışı regresyon testi eklendi.
