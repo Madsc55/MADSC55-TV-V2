@@ -160,6 +160,8 @@ def normalize_resolved_streams(report, existing_urls):
         accepted.append({
             "url": url,
             "name": str(item.get("name") or source_id)[:200],
+            "region": str(item.get("region") or "WORLD")[:20],
+            "country": str(item.get("country") or "")[:8],
             "group": str(item.get("group") or "")[:120],
             "tvg_id": str(item.get("tvg_id") or "")[:200],
             "logo": str(item.get("logo") or "")[:1000],

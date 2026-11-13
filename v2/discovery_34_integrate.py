@@ -53,6 +53,7 @@ def normalize(source, data):
             candidate["name"] = str(metadata.get("title") or "")
             candidate["group"] = str(metadata.get("channel") or "")
             candidate["status"] = str(metadata.get("status") or "DISCOVERED_NOT_LIVE_VERIFIED")
+            candidate["region"] = str(metadata.get("region") or "WORLD")
     return candidates
 
 def integrate(reports=REPORTS):
