@@ -36,6 +36,12 @@ class Discovery34Tests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "Redirect refused"):
             handler.redirect_request(request, None, 302, "Found", {}, "https://example.org/redirect")
 
+    def test_malformed_external_candidate_urls_are_skipped(self):
+        for source, payload in (("github", {"items": [{"html_url": None}, {"html_url": 123}, {"html_url": "https://github.com/a/b"}]}), ("gitlab", [{"web_url": []}, {"web_url": "https://gitlab.com/a/b"}]), ("codeberg", {"data": [{"html_url": {}}, {"html_url": "https://codeberg.org/a/b"}]})):
+            self.assertEqual(len(repository_candidates(source, payload)), 1)
+        for source in ("official", "m3u"):
+            self.assertEqual(len(curated_candidates(source, [{"url": None}, {"url": 123}, {"url": "https://example.org/live.m3u8"}])), 1)
+
     def test_official_and_m3u(self):
         for source in ("official", "m3u"):
             self.assertEqual(len(curated_candidates(source, [{"url": "https://example.org/live.m3u8"}])), 1)
