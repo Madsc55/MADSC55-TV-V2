@@ -1,3 +1,7 @@
+## 13 Kasım 2026 — arşiv parola testindeki kaçış karakteri düzeltmesi
+- 492b40f: boşluk-parola regresyon testinde yanlışlıkla yazılan literal `\\t` ve `\\n` yerine gerçek tab ve satır sonu karakterleri kullanıldı. Böylece testin yanlış pozitif üretmesi engellendi.
+- Değişiklik henüz güncel GitHub Actions koşusunda doğrulanmadı. Nihai gerçek AV ve bağımsız harici geri yükleme kabulü açık; korunan listeler değiştirilmedi.
+
 ## 13 Kasım 2026 — #31–#33 bağımsız geri yükleme kanıtı
 - 764732c3: final_gate bağımsız geri yükleme istendiğinde arşiv raporundaki `external_restore_verified` alanının tam olarak `True` olmasını zorunlu kılar.
 - 4bba2e79: eksik, False, string ve sayı bayrakları için regresyon eklendi; mevcut sentetik rapor testleri yeni gereksinime uyarlandı.
