@@ -1,3 +1,17 @@
+## 13 Kasım 2026 — #34 ek kaynak kimliği ve rapor şeması sağlamlaştırması
+- 93062cfb: official/M3U URL sorgu parametreleri kaynak kimliğinde ham token açığa çıkarmadan SHA-256 özetiyle ayırt edilir.
+- cdf6e901: farklı imzalı URL'lerin kimlik çakışması ve AV=0 durumu için regresyon testi.
+- 3b7dc6b5: curated adapter içindeki yinelenen kayıt tipi kontrolü kaldırıldı.
+- 799ad8f8: entegrasyon raporlarında bozuk satırlar geçerli adayları düşürmeden ele alınır.
+- 1061d281: official/YouTube/M3U karışık bozuk kayıt testi eklendi.
+- ed0d5ab5: Stage 6/7 grouped acceptance workflow'u yalnız stage7 geliştirme dalındaki ilgili dosya değişikliklerinde push ile tetiklenecek şekilde genişletildi.
+- 5b9b3c5d ve c4a89406: URL kontrol karakterleri ve geçersiz URL türleri reddedilir; regresyon testleri eklendi.
+- 50ab4097 ve 87fc4b6a: varsayılan dışı portlar kaynak kimliğinde korunur; kimlik çakışması testi eklendi.
+- d753f36a ve 6287fdbc: hatalı IPv6 authority değerleri kontrollü reddedilir; regresyon testi eklendi.
+- 550382e7 ve 590244d5: official.channels, youtube.results ve m3u.sources zorunlu rapor dizileri; eksik alanlar entegrasyon hatasıdır ve test edilir.
+- Bu commitler için fetch_commit_workflow_runs sorgusu boş döndü. Bu araç PR-tetiklemeli koşuları filtrelediğinden, boş sonuç tek başına workflow'un çalışmadığını kanıtlamaz. Actions sonucu henüz bağımsız olarak doğrulanmadı; PASS iddiası yok.
+- #34 açık. Canlı Codeberg API kabulü, gerçek FFmpeg görüntü+ses kanıtı ve nihai toplu tarama yapılmadı. Ana İBO/YEDEKLER/YENİLER/FAVORİLER'e dokunulmadı.
+
 ## 13 Kasım 2026 — #34 kaynak raporu şema doğrulaması
 - cacf124b: discovery_34_integrate.normalize() official.channels, youtube.results ve m3u.sources alanlarının tümünü zorunlu kılar; liste dışı veya nesne olmayan kayıtları sessizce atlamak yerine hata üretir.
 - 1da42f1f: üç adaptörde eksik dizi ve bozuk kayıt türleri için regresyon testleri eklendi.
