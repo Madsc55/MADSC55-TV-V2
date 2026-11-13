@@ -4,16 +4,44 @@ import argparse
 import json
 import os
 from pathlib import Path
+from urllib.parse import urlsplit
 from secure_archive import decrypt, atomic_write
+
+def valid_stream_url(value):
+    """Reject malformed URLs before any untrusted inventory is rendered as M3U."""
+    if not isinstance(value, str) or not value or any(
+            ord(char) < 32 or ord(char) == 127 or char.isspace()
+            for char in value):
+        return False
+    try:
+        parsed = urlsplit(value)
+        return (parsed.scheme in ("http", "https") and bool(parsed.hostname)
+                and parsed.username is None and parsed.password is None
+                and parsed.port is not None or
+                parsed.scheme in ("http", "https") and bool(parsed.hostname)
+                and parsed.username is None and parsed.password is None
+                and parsed.port is None)
+    except ValueError:
+        return False
+
+
+def clean_attribute(value):
+    """Keep untrusted source metadata on its original EXTINF line."""
+    return "".join(" " if ord(char) < 32 or ord(char) == 127 else char
+                   for char in str(value or "")).replace('"', "")
+
 
 def render(records):
     lines = ['#EXTM3U']
     for record in records:
-        name = str(record.get('name') or 'UNKNOWN').replace('\n', ' ').replace('\r', ' ').replace(',', ' ')
-        group = str(record.get('group') or 'TR-AZ ADAY').replace('"', '').replace('\n', ' ')
-        logo = str(record.get('logo') or '')
-        logo_attr = f' tvg-logo="{logo}"' if logo.startswith(('https://', 'http://')) and '"' not in logo else ''
-        lines.extend([f'#EXTINF:-1{logo_attr} group-title="{group}",{name}', record['url']])
+        url = record['url']
+        if not valid_stream_url(url):
+            raise ValueError("Invalid source URL in IBO package")
+        name = clean_attribute(record.get('name') or 'UNKNOWN').replace(',', ' ')
+        group = clean_attribute(record.get('group') or 'TR-AZ ADAY')
+        logo = record.get('logo') or ''
+        logo_attr = f' tvg-logo="{logo}"' if valid_stream_url(logo) and '"' not in logo else ''
+        lines.extend([f'#EXTINF:-1{logo_attr} group-title="{group}",{name}', url])
     return ('\n'.join(lines) + '\n').encode('utf-8')
 
 def export(archive, passphrase, destination, sizes=(1000, 2000), existing=()):
@@ -24,7 +52,7 @@ def export(archive, passphrase, destination, sizes=(1000, 2000), existing=()):
             continue
         record = json.loads(line)
         url = record.get('url')
-        if not isinstance(url, str) or not url.startswith(('http://', 'https://')) or url in seen:
+        if not valid_stream_url(url) or url in seen:
             continue
         if record.get('http_hls_status') != 'AV_VERIFIED':
             continue
