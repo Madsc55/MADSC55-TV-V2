@@ -1,6 +1,5 @@
 import unittest
 import urllib.request
-from unittest.mock import patch
 from discovery_34 import QUERIES, SOURCES, identity, search_url, repository_candidates, curated_candidates
 
 class Discovery34Tests(unittest.TestCase):
@@ -31,21 +30,11 @@ class Discovery34Tests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 identity(source, url)
     def test_api_redirect_is_refused_before_followup_request(self):
-        from discovery_34 import fetch_json, _NoRedirect
-        with patch("urllib.request.build_opener") as opener:
-            def reject_redirect(handler):
-                self.assertIsInstance(handler, _NoRedirect)
-                class FakeOpener:
-                    def open(self, req, timeout):
-                        self.assertIsNotNone(req)
-                        raise ValueError("Redirect refused")
-                    def assertIsNotNone(self, req):
-                        if req is None:
-                            raise AssertionError("Missing request")
-                return FakeOpener()
-            opener.side_effect = reject_redirect
-            with self.assertRaisesRegex(ValueError, "Redirect refused"):
-                fetch_json("https://api.github.com/search/repositories?q=test")
+        from discovery_34 import _NoRedirect
+        handler = _NoRedirect()
+        request = urllib.request.Request("https://api.github.com/search/repositories?q=test")
+        with self.assertRaisesRegex(ValueError, "Redirect refused"):
+            handler.redirect_request(request, None, 302, "Found", {}, "https://example.org/redirect")
 
     def test_official_and_m3u(self):
         for source in ("official", "m3u"):
