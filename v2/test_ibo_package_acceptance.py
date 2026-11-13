@@ -64,6 +64,11 @@ class PackageTests(unittest.TestCase):
             with self.subTest(body=body), self.assertRaises(ValueError):
                 parse("#EXTM3U\n" + body)
 
+    def test_rejects_url_edge_whitespace(self):
+        for url in (" https://example.org/live.m3u8", "https://example.org/live.m3u8 "):
+            with self.subTest(url=url), self.assertRaises(ValueError):
+                parse("#EXTM3U\n#EXTINF:-1,Name\n" + url + "\n")
+
     def test_rejects_embedded_url_whitespace_and_controls(self):
         for url in ("https://example.org/a b.m3u8", "https://example.org/a\tb.m3u8", "https://example.org/a\rb.m3u8"):
             with self.subTest(url=url), self.assertRaises(ValueError):
