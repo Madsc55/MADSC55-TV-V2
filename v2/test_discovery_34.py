@@ -42,6 +42,12 @@ class Discovery34Tests(unittest.TestCase):
         for source in ("official", "m3u"):
             self.assertEqual(len(curated_candidates(source, [{"url": None}, {"url": 123}, {"url": "https://example.org/live.m3u8"}])), 1)
 
+    def test_malformed_curated_records_are_skipped(self):
+        for source in ("official", "m3u", "youtube"):
+            records = [None, 7, [], "not-a-record"]
+            records.append({"video_id": "AbCdEf12345"} if source == "youtube" else {"url": "https://example.org/live.m3u8"})
+            self.assertEqual(len(curated_candidates(source, records)), 1)
+
     def test_official_and_m3u(self):
         for source in ("official", "m3u"):
             self.assertEqual(len(curated_candidates(source, [{"url": "https://example.org/live.m3u8"}])), 1)
