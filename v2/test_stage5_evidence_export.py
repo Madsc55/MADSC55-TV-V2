@@ -36,6 +36,36 @@ class Stage5Acceptance(unittest.TestCase):
             path.write_bytes(b"not an audio or video stream")
             self.assertFalse(media_has_audio_video(path))
 
+    def test_ffprobe_stream_headers_alone_are_not_decoded_av_proof(self):
+        import subprocess
+        from unittest.mock import patch
+        calls = []
+        def fake_run(command, **kwargs):
+            self.assertTrue(kwargs.get("check"))
+            calls.append(command[0])
+            if command[0] == "ffprobe":
+                return subprocess.CompletedProcess(command, 0, '{"streams":[{"codec_type":"video"},{"codec_type":"audio"}]}', "")
+            if "0:v:0" in command:
+                return subprocess.CompletedProcess(command, 0, "frame=1\\nprogress=end\\n", "")
+            return subprocess.CompletedProcess(command, 0, "out_time_us=0\\nprogress=end\\n", "")
+        with patch("stage5_evidence_export.subprocess.run", side_effect=fake_run):
+            self.assertFalse(media_has_audio_video(Path("metadata-only-fixture.mp4")))
+        self.assertEqual(calls, ["ffprobe", "ffmpeg", "ffmpeg"])
+
+    def test_decoded_video_and_audio_progress_required(self):
+        import subprocess
+        from unittest.mock import patch
+        def fake_run(command, **kwargs):
+            if command[0] == "ffprobe":
+                text = '{"streams":[{"codec_type":"video"},{"codec_type":"audio"}]}'
+            elif "0:v:0" in command:
+                text = "frame=1\\nprogress=end\\n"
+            else:
+                text = "out_time_us=128000\\nprogress=end\\n"
+            return subprocess.CompletedProcess(command, 0, text, "")
+        with patch("stage5_evidence_export.subprocess.run", side_effect=fake_run):
+            self.assertTrue(media_has_audio_video(Path("decoded-fixture.mp4")))
+
     def test_reject_malformed_m3u(self):
         with tempfile.TemporaryDirectory() as d:
             p = Path(d)/"bad.m3u8"
