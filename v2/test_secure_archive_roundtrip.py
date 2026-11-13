@@ -34,7 +34,7 @@ def main():
                 else:
                     raise AssertionError("Non-byte encryption input accepted")
         # A passphrase consisting only of whitespace must not encrypt data.
-        for weak_secret in (" " * 16, "\\t" * 20, "\\n" * 20):
+        for weak_secret in (" " * 16, "\t" * 20, "\n" * 20):
             try:
                 encrypt(payload, weak_secret)
             except ValueError:
