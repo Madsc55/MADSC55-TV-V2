@@ -228,6 +228,24 @@ class LiveContractRetryTests(unittest.TestCase):
         self.assertEqual(result["attempts"], 3)
         self.assertEqual(sleeps, [60, 60])
 
+    def test_query_matrix_opens_circuit_after_provider_429(self):
+        calls, sleeps = [], []
+        def fetch(url):
+            calls.append(url)
+            raise http_error(429)
+        terms = ("turkiye.m3u", "tr.m3u8", "turkish-iptv", "canli-tv")
+        result = probe_queries("codeberg", queries=terms, fetch=fetch, sleep=sleeps.append)
+        self.assertEqual(result["status"], "error")
+        self.assertEqual(result["queries_checked"], 4)
+        self.assertEqual(result["queries_failed"], 1)
+        self.assertEqual(result["queries_skipped"], 3)
+        self.assertTrue(result["rate_limited"])
+        self.assertEqual(len(calls), 3)  # only the first term's bounded retry budget
+        self.assertEqual([row["status"] for row in result["query_results"]],
+                         ["error", "skipped", "skipped", "skipped"])
+        self.assertTrue(all(row.get("reason") == "provider_rate_limit_circuit_open"
+                            for row in result["query_results"][1:]))
+
     def test_http_429_without_header_uses_exponential_backoff(self):
         calls, sleeps = [], []
         def fetch(_url):
