@@ -1,3 +1,8 @@
+## 2026-11-13 — PR #87 üretim güvenlik kapısı düzeltmesi
+- PR #87 ilk Actions run `43457355879` başarısız oldu: 10 güvenlik birim testi geçti; `main_actions_security_gate.py` Stage 6 offline workflow içindeki izin verilmeyen `push` tetikleyicisini `UNAPPROVED_TRIGGER` ve `UNAPPROVED_PUSH` olarak reddetti.
+- `2a2750b2`: PR #87 entegrasyon dalındaki `.github/workflows/v2-offline-inventory.yml` içinden bu push tetikleyicisi kaldırıldı; `workflow_dispatch` korundu. Böylece ana dalın üretim tetikleyici politikasıyla uyumlu hale getirildi.
+- Yeni PR Actions sonucu henüz oluşmadı/doğrulanmadı. Önceki başarısız run PASS değildir. PR #87 birleştirilmedi. Ana İBO listeleri değiştirilmedi; tarama başlatılmadı.
+
 ## 13 Kasım 2026 — #34 son güvenlik regresyonu PASS
 - Commit bb52eac0, GitHub Actions 43327990827: SUCCESS; discovery offline acceptance, source-host restrictions, production security and IBO invariants PASS.
 - Codeberg canlı API kabulü hâlâ ayrıca doğrulanmalı; workflow_dispatch ile çalışan canlı sözleşme adımı henüz yürütülmedi. #34 nihai kabul açık; playlist değiştirilmedi.
