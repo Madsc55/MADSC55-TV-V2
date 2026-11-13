@@ -1,3 +1,8 @@
+## 13 Kasım 2026 — Son kabul arşiv bütünlük kanıtı
+- 6f3a1a95: final_gate arşiv raporunda yalnızca ROUNDTRIP_BYTES_MATCH durumunu değil, 64 haneli SHA-256 ve pozitif tam sayı bytes alanını da zorunlu tutar.
+- 2289082b: eksik/geçersiz arşiv SHA-256, sıfır/negatif/bool bytes regresyonları eklendi; geçerli test raporları tamamlandı.
+- PR #23 açık. Bu commitlerin Actions sonucu henüz doğrulanmadı. Gerçek harici geri yükleme, FFmpeg AV ve İBO cihaz kabulü ayrıca açık; korunan oynatma listelerine dokunulmadı.
+
 ## 13 Kasım 2026 — PR #23 korunan oynatma listesi kabul kapısı
 - bf12ee38: main dalında bulunan v2/test_playlist_invariants.py derleme ve çalışma adımları, stage6 v2-offline-inventory.yml kabul iş akışına yeniden eklendi. Böylece YEDEKLER/YENİLER/FAVORİLER ve ana İBO koruma denetimi offline arşiv ve paket testleriyle birlikte tutulur.
 - GitHub Actions sonucu bu commit için henüz görünmedi; kabul başarısı ve görev kapanışı ilan edilmedi. Tarama yapılmadı, korunan liste değiştirilmedi.
