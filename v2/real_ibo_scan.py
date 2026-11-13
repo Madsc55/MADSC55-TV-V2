@@ -125,6 +125,7 @@ def main():
     ap.add_argument('--report', type=pathlib.Path, default=REPORT)
     ap.add_argument('--inventory', type=pathlib.Path, default=INVENTORY,
                     help='Durable full candidate inventory, including HTTP/HLS failures')
+    ap.add_argument('--worldwide', action='store_true', help='Include worldwide playlist entries instead of filtering TR/AZ hints')
     ap.add_argument('--workers', type=int, default=12)
     ap.add_argument('--timeout', type=float, default=12)
     ap.add_argument('--limit', type=int, default=500)
@@ -188,7 +189,7 @@ def main():
             records = list(parse_m3u(fetch(url, args.timeout)))
             source_counts[sid] = len(records)
             for entry in records:
-                if tr_az(entry, source.get('scope', 'candidate')):
+                if args.worldwide or tr_az(entry, source.get('scope', 'candidate')):
                     if entry['url'] not in existing:
                         found = candidates.get(entry['url'])
                         if found is None:
@@ -291,7 +292,7 @@ def main():
     # Never retain plaintext URL/token inventory in the GitHub working tree.
     # Source outages are reported; a working subset can still be tested.
     # Never modify the protected main playlist.
-    report = {'source_count': len(sources), 'dynamic_source_count': dynamic_count, 'fetched_sources': len(source_counts),
+    report = {'scan_scope': 'WORLDWIDE_ALL_SOURCE_ENTRIES' if args.worldwide else 'TR_AZ_METADATA_CANDIDATES', 'source_count': len(sources), 'dynamic_source_count': dynamic_count, 'fetched_sources': len(source_counts),
               'failed_sources': failed, 'rejected_dynamic_sources': rejected_dynamic_sources, 'source_counts': source_counts, 'source_drops': source_drops, 'existing_main_urls': len(main_urls), 'excluded_foreign_archive_urls': len(foreign_urls), 'unique_new_candidates': len(candidates), 'recovered_from_previous_encrypted_inventory': recovered_from_archive,
               'http_checked': checked, 'http_hls_ok': len(good), 'av_verified': len(good),
               'candidate_inventory': str(encrypted_inventory), 'archive_restore_test_passed': archive_result['restore_test_passed'],
