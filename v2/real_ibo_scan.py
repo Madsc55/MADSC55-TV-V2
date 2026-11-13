@@ -98,6 +98,33 @@ def eligible_entry(entry, scope, worldwide=False):
     return bool(worldwide) or tr_az(entry, scope)
 
 
+def normalize_integrated_m3u_sources(report, existing_sources):
+    """Admit only candidate-only HTTPS M3U feed URLs from the unified discovery report."""
+    if not isinstance(report, dict) or not isinstance(report.get("candidates"), list):
+        raise ValueError("Integrated discovery report requires a candidates list")
+    seen = {item.get("url") for item in existing_sources if isinstance(item, dict)}
+    accepted, rejected = [], []
+    for index, item in enumerate(report["candidates"]):
+        if not isinstance(item, dict):
+            rejected.append({"index": index, "error": "InvalidRecord"})
+            continue
+        if item.get("source") != "m3u":
+            continue
+        url = item.get("url")
+        if (not isinstance(url, str) or item.get("verified_av") is not False):
+            rejected.append({"index": index, "error": "InvalidCandidate"})
+            continue
+        parsed = urllib.parse.urlsplit(url)
+        if (parsed.scheme != "https" or not parsed.hostname
+                or parsed.username or parsed.password or url in seen):
+            rejected.append({"index": index, "error": "RejectedSource"})
+            continue
+        sid = "integrated-m3u-" + hashlib.sha256(url.encode()).hexdigest()[:20]
+        accepted.append({"id": sid, "url": url, "scope": "candidate"})
+        seen.add(url)
+    return accepted, rejected
+
+
 def check_hls(entry, timeout, diagnostics=None):
     """Return AV-verified stream or capture observed HTTP failure for recovery."""
     url = entry['url']
@@ -173,7 +200,9 @@ def main():
                     help='Optional offline JSON report output; no stream URLs')
     ap.add_argument('--sources', type=pathlib.Path, default=SOURCES)
     ap.add_argument('--dynamic-sources', type=pathlib.Path, default=None,
-                    help='Optional GitHub discovery report; only parsed HTTPS M3U sources are included')
+                    help='Optional GitHub/Gist discovery report; only parsed HTTPS M3U sources are included')
+    ap.add_argument('--integrated-candidates', type=pathlib.Path, default=None,
+                    help='Optional unified discovery report; only candidate-only M3U feed URLs are admitted')
     ap.add_argument('--output', type=pathlib.Path, default=OUT)
     ap.add_argument('--report', type=pathlib.Path, default=REPORT)
     ap.add_argument('--inventory', type=pathlib.Path, default=INVENTORY,
@@ -236,6 +265,13 @@ def main():
     doc = json.loads(args.sources.read_text(encoding='utf-8'))
     sources = list(doc['sources'] if isinstance(doc, dict) else doc)
     dynamic_count = 0
+    integrated_m3u_count = 0
+    rejected_integrated_m3u = []
+    if args.integrated_candidates is not None:
+        integrated_report = json.loads(args.integrated_candidates.read_text(encoding='utf-8'))
+        integrated_sources, rejected_integrated_m3u = normalize_integrated_m3u_sources(integrated_report, sources)
+        sources.extend(integrated_sources)
+        integrated_m3u_count = len(integrated_sources)
     if args.dynamic_sources is not None:
         dynamic = json.loads(args.dynamic_sources.read_text(encoding='utf-8'))
         if not isinstance(dynamic.get('sources'), list):
@@ -404,7 +440,7 @@ def main():
     # Never retain plaintext URL/token inventory in the GitHub working tree.
     # Source outages are reported; a working subset can still be tested.
     # Never modify the protected main playlist.
-    report = {'scan_scope': 'WORLDWIDE_ALL_SOURCE_ENTRIES' if args.worldwide else 'TR_AZ_METADATA_CANDIDATES', 'source_count': len(sources), 'dynamic_source_count': dynamic_count, 'fetched_sources': len(source_counts),
+    report = {'scan_scope': 'WORLDWIDE_ALL_SOURCE_ENTRIES' if args.worldwide else 'TR_AZ_METADATA_CANDIDATES', 'source_count': len(sources), 'dynamic_source_count': dynamic_count, 'integrated_m3u_source_count': integrated_m3u_count, 'rejected_integrated_m3u_sources': rejected_integrated_m3u, 'fetched_sources': len(source_counts),
               'failed_sources': failed, 'source_counts': source_counts, 'source_drops': source_drops, 'existing_main_urls': len(main_urls), 'excluded_foreign_archive_urls': len(foreign_urls), 'unique_new_candidates': len(candidates), 'recovered_from_previous_encrypted_inventory': recovered_from_archive,
               'http_checked': checked, 'http_hls_ok': len(good), 'av_verified': len(good),
               'recovery_queue': recovery_queue,
