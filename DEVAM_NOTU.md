@@ -1042,3 +1042,7 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - `v2/test_stage5_evidence_export.py`: iki farklı dosya adıyla aynı medya baytlarını yeniden kullanan iki kanal kimliği için fail-closed regresyon eklendi; testler gerçek kanal delili değildir.
 - Eşzamanlı oturumların ana dala aldığı daha güçlü Stage 5 korumaları (yerel FFmpeg protocol whitelist, tvg-id/channel-id eşlemesi, private-*.m3u8, O_EXCL/O_NOFOLLOW ve 0600) korunmuştur. Eski kodu geri getirecek PR #165 ve PR #169 birleştirilmeden kapatıldı.
 - Gerçek 1000/2000 AV/doğrulama paketi, harici bağımsız şifreli geri yükleme ve IBO cihaz kabulü hâlâ eksik. #31–#33 nihai kabul açık; 34 görevde 21 completed ve 13 in_progress. Ana İBO, YEDEKLER, YENİLER, FAVORİLER değiştirilmedi ve yeni kanal taraması yapılmadı.
+
+## 13 Kasım 2026 — #19 geçerli EPG program kanıtı ayrıştırıldı (PR #172)
+- PR #172 squash merge `eb827b9c0bc4fe7eef507b8637ef37284be91dbd`; yeni `valid_matched_programme_channel_ids`, `current_matched_programme_channel_ids`, duplicate XMLTV kimlik ölçümleri ham program sayısından ayrılmıştır. Geçerli kanal ve pozitif başlangıç-bitiş süresi gerekir.
+- `DOCTYPE`/`ENTITY` reddi ve yanlış zaman aralığı regresyonları Actions `43480892500` PASS. Çevrimdışı testtir; gerçek EPG boşluğu (303), #19 final kabul ve yeni tarama kapatılmamıştır. Ana İBO/YEDEKLER/YENİLER/FAVORİLER korunur.
