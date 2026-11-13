@@ -153,6 +153,9 @@ def discover_provider(provider, fetch_json_fn=fetch_json, fetch_text_fn=_raw_fet
                 key, namespace, branch = identity
                 projects[key] = (namespace, branch)
         if len(projects) >= MAX_PROJECTS:
+            query_results.extend({"query": skipped, "status": "skipped",
+                                  "reason": "project_limit_reached"}
+                                 for skipped in queries[index + 1:])
             break
 
     for key, (namespace, branch) in list(sorted(projects.items(), key=lambda pair: pair[0].casefold()))[:MAX_PROJECTS]:
@@ -203,14 +206,16 @@ def discover_provider(provider, fetch_json_fn=fetch_json, fetch_text_fn=_raw_fet
         if rate_limited or len(sources) >= MAX_FILES:
             break
 
-    checked = sum(row["status"] == "ok" for row in query_results)
+    checked = sum(row["status"] in ("ok", "error") for row in query_results)
     skipped = sum(row["status"] == "skipped" for row in query_results)
+    failed = sum(row["status"] == "error" for row in query_results)
     return {
         "provider": provider,
         "status": "error" if errors or rate_limited or any(x["status"] == "error" for x in query_results) else "ok",
         "queries_total": len(queries),
         "queries_checked": checked,
         "queries_skipped": skipped,
+        "queries_failed": failed,
         "rate_limited": rate_limited,
         "projects_discovered": len(projects),
         "sources_found": len(sources),
