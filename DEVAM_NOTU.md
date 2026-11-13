@@ -1,3 +1,8 @@
+## 13 Kasım 2026 — #28/#29 kanal sayısı tekilleştirme
+- 0eafcc8a: IBO paketleme doğrulaması, farklı kanal adı altında yinelenen aynı yayın URL'sini artık reddeder. Tek URL'nin birden fazla gerçek kanal sayılmasının önüne geçilir.
+- 77325384: farklı EXTINF ve aynı URL senaryosuna regresyon testi eklendi.
+- PR #23 açık, son commitlerin Actions sonucu henüz doğrulanmadı. Gerçek AV ve harici geri yükleme kanıtı yoksa nihai kabul kapatılmaz. Ana İBO ve korunan kategoriler değişmedi, tarama yapılmadı.
+
 ## 13 Kasım 2026 — Son kabul arşiv bütünlük kanıtı
 - 6f3a1a95: final_gate arşiv raporunda yalnızca ROUNDTRIP_BYTES_MATCH durumunu değil, 64 haneli SHA-256 ve pozitif tam sayı bytes alanını da zorunlu tutar.
 - 2289082b: eksik/geçersiz arşiv SHA-256, sıfır/negatif/bool bytes regresyonları eklendi; geçerli test raporları tamamlandı.
