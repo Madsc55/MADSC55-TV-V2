@@ -1,3 +1,9 @@
+## 13 Kasım 2026 — #28–#33 toplu çevrimdışı Actions kabulü
+- GitHub Actions run `43454415699` (`V2 Offline Inventory Integrity`, push, commit `b5dc604e83c0dcb61606296e75c7ae6691bef996`) SUCCESS.
+- `inventory` işi ve tüm adımlar başarılı: Python derleme, korunan İBO/backup invariant testi, şifreli arşiv backup/restore, çevrimdışı envanter geri yükleme, ağsız tarayıcı testi, M3U paketleme ve final-gate testleri.
+- PR #23'in güncel head'i `d2dc48ea21aca45cb9142415f2863a0ec000b6bb`; b5dc604 sonrası tek commit yalnızca DEVAM_NOTU.md güncellemesidir. Bu nedenle çalışan kod/test ağacı başarılı koşuyla aynıdır; son fark dokümantasyondur.
+- PR #23 GitHub mergeable=false bildiriyor; birleştirilmedi. Gerçek FFmpeg AV kanıtı ve bağımsız harici şifreli geri yükleme kanıtı hâlâ yok; #28–#33 nihai üretim kabulü açık. Ana İBO/YEDEKLER/YENİLER/FAVORİLER değiştirilmedi, kapsamlı kanal taraması yapılmadı.
+
 ## 13 Kasım 2026 — İlk tam çevrimdışı GitHub Actions kabulü BAŞARILI
 - Workflow run `43454415699` (`push`, commit `b5dc604e83c0dcb61606296e75c7ae6691bef996`) completed SUCCESS.
 - `inventory` job SUCCESS; adımların tamamı SUCCESS: Python modüllerinin derlenmesi, korunan IBO playlist invariant testleri, şifreli arşiv backup/restore testi, çevrimdışı envanter restore testi, ağsız tarayıcı testi, IBO paketleme ve final acceptance testleri.
