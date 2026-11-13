@@ -1,3 +1,8 @@
+## 13 Kasım 2026 — #28–#33 otomatik PR kabul tetikleyicisi
+- 5b57cd09: .github/workflows/v2-offline-inventory.yml iş akışına pull_request (v2/** ve workflow dosyası) tetikleyicisi eklendi. Önceden yalnızca workflow_dispatch bulunduğundan commit/PR güncellemesi offline kabulü kendiliğinden başlatmıyordu.
+- PR #23 açık. Commit sonrası GitHub Actions çalışması henüz görünmedi; workflow'un default branch görünürlüğü/izinleri ve kabul sonucu doğrulanmadan test başarılı sayılmayacak.
+- Ana İBO ve YEDEKLER/YENİLER/FAVORİLER değişmedi; kanal taraması başlatılmadı.
+
 ## 13 Kasım 2026 — M3U güvenlik test fikstürü düzeltmesi
 - d74f32ef: test_ibo_package_acceptance.py içindeki sahte başlık ve URL credential regresyonlarının satır ayırıcıları gerçek \\n escape olarak düzeltildi; önceki yanlış çift kaçışlar giderildi.
 - PR #23 üzerinde commit mevcut. GitHub Actions kabul sonucu henüz yok; test başarı iddiası veya görev kapanışı yapılmadı.
