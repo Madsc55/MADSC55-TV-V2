@@ -59,9 +59,20 @@ def verify_epg_ids(candidates, xmltv_text):
     if root.tag != "tv":
         raise ValueError("Expected XMLTV tv root")
     from collections import Counter
+    from epg_integrity import parse_xmltv_time
     ids = Counter(node.get("id") for node in root.findall("channel") if node.get("id"))
-    programme_ids = {node.get("channel") for node in root.findall("programme")
-                     if node.get("channel") and node.get("start")}
+    programme_ids = set()
+    for node in root.findall("programme"):
+        cid = node.get("channel")
+        if not cid or ids[cid] != 1:
+            continue
+        try:
+            start = parse_xmltv_time(node.get("start", ""))
+            stop = parse_xmltv_time(node.get("stop", ""))
+        except (ValueError, AttributeError, TypeError):
+            continue
+        if stop > start:
+            programme_ids.add(cid)
     output = []
     for row in candidates:
         candidate = row.get("epg_id_candidate")
