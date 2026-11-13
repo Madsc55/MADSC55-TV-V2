@@ -99,16 +99,21 @@ def eligible_entry(entry, scope, worldwide=False):
     return bool(worldwide) or tr_az(entry, scope)
 
 
-def public_https_m3u_feed(url):
-    """Fail closed on private, malformed, credentialed or non-HTTPS feed URLs."""
+def public_http_stream_url(url):
+    """Allow only parseable public HTTP(S) streams; never trust feed-supplied hosts."""
     if not isinstance(url, str):
         return False
     try:
         identity("m3u", url)
         parsed = urllib.parse.urlsplit(url)
-        return parsed.scheme == "https" and not parsed.fragment
+        return parsed.scheme in ("http", "https") and not parsed.fragment
     except (ValueError, TypeError, AttributeError):
         return False
+
+
+def public_https_m3u_feed(url):
+    """Only publicly addressable HTTPS endpoints may become source feeds."""
+    return public_http_stream_url(url) and urllib.parse.urlsplit(url).scheme == "https"
 
 
 def normalize_integrated_m3u_sources(report, existing_sources):
@@ -182,9 +187,8 @@ def normalize_resolved_streams(report, existing_urls):
 
 def check_hls(entry, timeout, diagnostics=None):
     """Return AV-verified stream or capture observed HTTP failure for recovery."""
-    url = entry['url']
-    parsed = urllib.parse.urlsplit(url)
-    if parsed.scheme not in ('https', 'http') or not parsed.hostname:
+    url = entry.get('url') if isinstance(entry, dict) else None
+    if not public_http_stream_url(url):
         return None
     try:
         req = urllib.request.Request(url, headers={'User-Agent': UA, 'Range': 'bytes=0-4095'})
@@ -360,13 +364,14 @@ def main():
     source_counts = {}
     for source in sources:
         sid, url = source['id'], source['url']
-        if urllib.parse.urlsplit(url).scheme != 'https':
-            failed.append({'id': sid, 'error': 'NonHTTPS source'}); continue
+        if not public_https_m3u_feed(url):
+            failed.append({'id': sid, 'error': 'InvalidPublicHTTPSSource'}); continue
         try:
             records = list(parse_m3u(fetch(url, args.timeout)))
             source_counts[sid] = len(records)
             for entry in records:
-                if eligible_entry(entry, source.get('scope', 'candidate'), args.worldwide):
+                if (eligible_entry(entry, source.get('scope', 'candidate'), args.worldwide)
+                        and public_http_stream_url(entry['url'])):
                     if entry['url'] not in existing:
                         found = candidates.get(entry['url'])
                         if found is None:
