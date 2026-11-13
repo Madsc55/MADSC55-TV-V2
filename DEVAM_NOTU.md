@@ -1,3 +1,9 @@
+## 13 Kasım 2026 — #28–#30 Unicode M3U satır bütünlüğü KABULÜ
+- PR #193 squash merge `8ea0c66296788dda207d75279e44f3db725fd984`: `export_ibo_batches.py` içindeki metadata temizleyici, ASCII CR/LF yanı sıra Unicode NEL (U+0085), LINE SEPARATOR (U+2028), PARAGRAPH SEPARATOR (U+2029) karakterlerini de tek satırlı güvenli boşlukla değiştirir. Yeni regresyon her üçünde tam 3 satır/tek EXTINF üretimini doğrular.
+- PR Actions `43482907222` SUCCESS; main Actions `43483112580` SUCCESS: Stage 6 offline kabul, korunan İBO invariants ve üretim tetikleyici güvenlik kontrolleri geçti.
+- Önceki URL/metadata filtrelemesi başka bir eşzamanlı PR ile ana dala alındığından çakışan PR #192 kapatıldı; güncel uygulama üzerine yalnızca Unicode ek koruması taşındı.
+- Bu kanıt çevrimdışı kod/CI kabulüdür; #28–#33 için gerçek cihaz kabulü, yeni yayın FFmpeg AV ve bağımsız harici geri yükleme açık kalır. Kanıt olmadan görev kapatılmadı. Ana İBO, YEDEKLER, YENİLER ve FAVORİLER değiştirilmedi; kapsamlı tarama başlatılmadı.
+
 ## 13 Kasım 2026 — #28–#30 gerçek İBO paketlerinin silinmeden korunması: CI KABULÜ
 - PR #183 squash merge `c108fafe1915e9c9b3c1863184a1a1cbdc23d216`: `v2/export_ibo_batches.py` önceki `IBO_AV_VERIFIED_*_PART*.m3u8` paketlerini silen işlemi kaldırdı. Yeni paketler tüm hedef dosya adları için ön kontrol yaparak mevcut dosyayı, sembolik bağlantıyı veya yinelemeli hedefleri reddediyor; klasör sembolik bağlantıları reddediliyor.
 - Koruma regresyonları `v2/test_export_ibo_batches.py` içine eklendi; ana Production Security Gate Stage 6 adımına test çağrısı bağlandı.
