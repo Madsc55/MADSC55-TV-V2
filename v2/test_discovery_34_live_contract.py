@@ -342,5 +342,43 @@ class LiveContractRetryTests(unittest.TestCase):
         self.assertEqual(len(calls), 1)
         self.assertEqual(sleeps, [])
 
+    def test_github_fetch_uses_readonly_token_when_available(self):
+        import os
+        from unittest.mock import patch
+        from discovery_34 import fetch_json
+        class Response:
+            url = "https://api.github.com/search/repositories?q=turkish"
+            def __enter__(self):
+                return self
+            def __exit__(self, *args):
+                return False
+            def read(self, limit):
+                return b'{"items":[]}'
+        with patch.dict(os.environ, {"GITHUB_TOKEN": "read-only-test-token"}), \
+             patch("discovery_34.urllib.request.build_opener") as build:
+            build.return_value.open.return_value = Response()
+            fetch_json("https://api.github.com/search/repositories?q=turkish")
+            request = build.return_value.open.call_args.args[0]
+            self.assertEqual(request.get_header("Authorization"), "Bearer read-only-test-token")
+
+    def test_github_token_is_not_sent_to_other_hosts(self):
+        import os
+        from unittest.mock import patch
+        from discovery_34 import fetch_json
+        class Response:
+            url = "https://gitlab.com/api/v4/projects?search=turkish"
+            def __enter__(self):
+                return self
+            def __exit__(self, *args):
+                return False
+            def read(self, limit):
+                return b'[]'
+        with patch.dict(os.environ, {"GITHUB_TOKEN": "read-only-test-token"}), \
+             patch("discovery_34.urllib.request.build_opener") as build:
+            build.return_value.open.return_value = Response()
+            fetch_json("https://gitlab.com/api/v4/projects?search=turkish")
+            request = build.return_value.open.call_args.args[0]
+            self.assertIsNone(request.get_header("Authorization"))
+
 if __name__ == "__main__":
     unittest.main()

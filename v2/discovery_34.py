@@ -3,6 +3,7 @@
 import argparse
 import ipaddress
 import json
+import os
 import re
 import urllib.parse
 import urllib.request
@@ -53,7 +54,12 @@ class _NoRedirect(urllib.request.HTTPRedirectHandler):
         raise ValueError("Redirect refused")
 
 def fetch_json(url):
-    req = urllib.request.Request(url, headers={"User-Agent": "MADSC55-V2-Discovery/1.0", "Accept": "application/json"})
+    headers = {"User-Agent": "MADSC55-V2-Discovery/1.0", "Accept": "application/json"}
+    if urllib.parse.urlsplit(url).hostname == "api.github.com":
+        token = os.getenv("GITHUB_TOKEN", "")
+        if token:
+            headers["Authorization"] = "Bearer " + token
+    req = urllib.request.Request(url, headers=headers)
     with urllib.request.build_opener(_NoRedirect).open(req, timeout=8) as res:
         if urllib.parse.urlsplit(res.url).hostname != urllib.parse.urlsplit(url).hostname:
             raise ValueError("Cross-host redirect refused")
