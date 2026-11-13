@@ -18,11 +18,15 @@ MAGIC = b'MADSC55-V2-ARCHIVE\x01'
 MAX_INPUT = 512 * 1024 * 1024
 
 def _key(passphrase, salt):
-    if not isinstance(passphrase, str) or len(passphrase) < 16:
+    if type(passphrase) is not str or len(passphrase) < 16:
         raise ValueError('Archive passphrase must contain at least 16 characters')
+    if not passphrase.strip():
+        raise ValueError('Archive passphrase must not be blank')
     return Scrypt(salt=salt, length=32, n=2**15, r=8, p=1).derive(passphrase.encode())
 
 def encrypt(data, passphrase):
+    if type(data) is not bytes:
+        raise ValueError("Archive input must be bytes")
     if len(data) > MAX_INPUT:
         raise ValueError('Archive input exceeds maximum size')
     salt, nonce = secrets.token_bytes(16), secrets.token_bytes(12)
@@ -30,11 +34,10 @@ def encrypt(data, passphrase):
     return header + AESGCM(_key(passphrase, salt)).encrypt(nonce, data, header)
 
 def decrypt(blob, passphrase):
+    if type(blob) is not bytes:
+        raise ValueError("Encrypted archive must be bytes")
     minimum = len(MAGIC) + 16 + 12 + 16
-    maximum = len(MAGIC) + 16 + 12 + MAX_INPUT + 16
-    if len(blob) > maximum:
-        raise ValueError('Encrypted archive exceeds maximum size')
-    if len(blob) < minimum or not blob.startswith(MAGIC):
+    if len(blob) < minimum or len(blob) > MAX_INPUT + minimum or not blob.startswith(MAGIC):
         raise ValueError('Invalid encrypted archive format')
     offset = len(MAGIC)
     salt = blob[offset:offset + 16]
@@ -52,7 +55,9 @@ def atomic_write(path, data):
             output.write(data)
             output.flush()
             os.fsync(output.fileno())
-        os.replace(temporary, path)
+        # Atomic no-clobber publication: never replace a playlist, archive or symlink.
+        os.link(temporary, path)
+        os.unlink(temporary)
         directory_fd = os.open(path.parent, os.O_RDONLY)
         try:
             os.fsync(directory_fd)
@@ -84,6 +89,8 @@ def restore(source, destination, passphrase):
     source, destination = Path(source), Path(destination)
     if source.resolve() == destination.resolve():
         raise ValueError('Source and destination must differ')
+    if source.stat().st_size > MAX_INPUT + len(MAGIC) + 16 + 12 + 16:
+        raise ValueError('Encrypted archive exceeds maximum size')
     raw = decrypt(source.read_bytes(), passphrase)
     atomic_write(destination, raw)
     return hashlib.sha256(Path(destination).read_bytes()).hexdigest()
