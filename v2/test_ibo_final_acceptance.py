@@ -1,5 +1,5 @@
 import unittest
-from ibo_final_acceptance import audit_archive,audit_encrypted_archive,final_gate
+from ibo_final_acceptance import audit_archive,audit_encrypted_archive,audit_external_restore,final_gate
 from secure_archive import encrypt
 class AcceptanceTests(unittest.TestCase):
     def test_archive_roundtrip(self):
@@ -21,6 +21,18 @@ class AcceptanceTests(unittest.TestCase):
             audit_encrypted_archive(raw,cipher,'wrong-test-passphrase-2026')
         with self.assertRaises(ValueError):
             audit_encrypted_archive(raw,raw,'offline-test-passphrase-2026')
+    def test_independent_encrypted_restore_evidence(self):
+        raw=b"production-like offline archive fixture"
+        cipher=encrypt(raw, "offline-test-passphrase-2026")
+        report=audit_external_restore(raw, cipher, raw, "offline-test-passphrase-2026")
+        self.assertTrue(report["encrypted"])
+        self.assertTrue(report["external_restore_verified"])
+        self.assertEqual(report["sha256"], __import__("hashlib").sha256(raw).hexdigest())
+        with self.assertRaises(ValueError):
+            audit_external_restore(raw, cipher, b"different restored bytes", "offline-test-passphrase-2026")
+        with self.assertRaises(ValueError):
+            audit_external_restore(raw, raw, raw, "offline-test-passphrase-2026")
+
     def test_rejects_non_byte_encrypted_archive_inputs(self):
         for original, ciphertext in (("raw", b"encrypted"), (b"raw", "encrypted"),
                                      (bytearray(b"raw"), b"encrypted"), (b"raw", None)):
