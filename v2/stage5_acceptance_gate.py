@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Stage 5 evidence gate: validates post-discovery acceptance without scanning channels."""
 import argparse
+import ipaddress
 import json
 import re
 from urllib.parse import urlsplit
@@ -16,23 +17,41 @@ REQUIRED = {
 }
 
 def _valid_evidence_url(value):
-    if not isinstance(value, str) or not value.strip():
+    if (not isinstance(value, str) or not value.strip()
+            or any(ord(c) <= 32 or ord(c) == 127 for c in value)):
         return False
     try:
         parsed = urlsplit(value)
-        return (parsed.scheme == "https" and bool(parsed.hostname)
-                and parsed.hostname not in {"example.org", "example.com", "localhost"}
-                and not parsed.hostname.endswith((".invalid", ".test", ".example", ".localhost"))
-                and not parsed.username and not parsed.password)
+        host = parsed.hostname
+        _ = parsed.port
+        if (parsed.scheme != "https" or not host or parsed.username is not None
+                or parsed.password is not None):
+            return False
+        host = host.lower().rstrip(".")
+        if (host in {"example.org", "example.com", "localhost"}
+                or host.endswith((".invalid", ".test", ".example", ".localhost",
+                                  ".local", ".internal"))):
+            return False
+        try:
+            address = ipaddress.ip_address(host)
+        except ValueError:
+            return True
+        return address.is_global
     except ValueError:
         return False
 
 
 def evaluate(record):
+    if not isinstance(record, dict):
+        raise ValueError("Invalid acceptance report")
     tasks = record.get("tasks", {})
+    if not isinstance(tasks, dict):
+        raise ValueError("Invalid acceptance tasks mapping")
     result = {}
     for number, fields in REQUIRED.items():
         data = tasks.get(number, {})
+        if not isinstance(data, dict):
+            raise ValueError("Invalid acceptance task entry " + number)
         missing = [key for key in fields if not data.get(key)]
         for key in fields:
             if key.endswith("_url") and key not in missing and not _valid_evidence_url(data[key]):
@@ -64,7 +83,8 @@ def main():
     result = evaluate(json.loads(args.evidence.read_text(encoding="utf-8")))
     rendered = json.dumps(result, ensure_ascii=False, indent=2)
     if args.output:
-        args.output.write_text(rendered + "\n", encoding="utf-8")
+        with args.output.open("x", encoding="utf-8") as output:
+            output.write(rendered + "\n")
     print(rendered)
     raise SystemExit(0 if result["all_accepted"] else 2)
 
