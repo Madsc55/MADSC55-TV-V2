@@ -69,6 +69,33 @@ class Stage2IntegrationTests(unittest.TestCase):
             self.assertEqual(protected.read_text(), "PROTECTED")
 
 
+    def test_untrusted_xmltv_programme_claims_are_not_promoted(self):
+        row = {
+            "url_sha256": sha_for_url("https://example.invalid/epg"),
+            "tvg_id": "Station.tr",
+            "epg_verified": True,
+            "epg_programme_available": True,
+            "epg_match_type": "forged"
+        }
+        without_xmltv = integrate([row])["observations"][0]
+        self.assertFalse(without_xmltv["epg_verified"])
+        self.assertFalse(without_xmltv["epg_programme_available"])
+        self.assertIsNone(without_xmltv["epg_match_type"])
+
+        invalid_interval = ('<tv><channel id="Station.tr"/>'
+                            '<programme channel="Station.tr" start="20261113120000 +0000"'
+                            ' stop="20261113110000 +0000"/></tv>')
+        with_invalid_xmltv = integrate([row], xmltv_text=invalid_interval)["observations"][0]
+        self.assertTrue(with_invalid_xmltv["epg_verified"])
+        self.assertFalse(with_invalid_xmltv["epg_programme_available"])
+        self.assertEqual(with_invalid_xmltv["epg_match_type"], "exact_xmltv_channel_id")
+
+        valid_interval = ('<tv><channel id="Station.tr"/>'
+                          '<programme channel="Station.tr" start="20261113120000 +0200"'
+                          ' stop="20261113110000 +0000"/></tv>')
+        with_valid_xmltv = integrate([row], xmltv_text=valid_interval)["observations"][0]
+        self.assertTrue(with_valid_xmltv["epg_programme_available"])
+
     def test_no_false_av_acceptance(self):
         url = "https://example.invalid/channel"
         row = {"url": url, "status": "AV_VERIFIED",
