@@ -1,3 +1,9 @@
+## 13 Kasım 2026 — #34 HTTP retry regresyonları ve güncel CI kanıtı
+- PR #50 squash merge edildi: 4845b13550306a016671fa524fcdbd0ec2ad59d7. Güncel main'e HTTP 408/425 geçici yanıt retry ve Codeberg HTTP 404 non-retryable regresyonları alındı.
+- PR baş commit 3b881ca65726a7db66e17e009fec0b06cb01407b için Actions 43450854780 SUCCESS: üretim güvenlik kapısı, korunan İBO invariantları, Stage 6 offline paket/arşiv regresyonları ve #34 offline adapter/entegrasyon kabulü PASS.
+- Önceki live-contract yeniden çalıştırması eski commit 5f9c4c58 üzerinde HTTPError ile FAIL; bu sonuç güncel main'in canlı kabulü değildir. Canlı Codeberg kabulü ve #34 nihai kapanışı AÇIK.
+- Yeni toplu kanal taraması yapılmadı; ana İBO/YEDEKLER/YENİLER/FAVORİLER değiştirilmedi.
+
 ## 13 Kasım 2026 — #34 güncel main üzerinde API tanılama düzeltmesi
 - Güncel `main` tabanlı `fix-34-api-diagnostics-current-main-20261113` dalında HTTP 408/425 retry ve API host tanılaması (`584b476`) ile iki regresyon testi (`eaea679`) eklendi. Var olan yanıt şeması ve bağlantı kesintisi kontrolleri korundu.
 - CI ve canlı Codeberg API kabulü bekleniyor; #34 açık. Ana İBO ve YEDEKLER/YENİLER/FAVORİLER değişmedi; kanal taraması yapılmadı.
