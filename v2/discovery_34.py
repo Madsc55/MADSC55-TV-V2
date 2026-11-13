@@ -85,6 +85,8 @@ def repository_candidates(source, payload):
         if not isinstance(item, dict):
             continue
         url = item.get(url_key, "")
+        if not isinstance(url, str):
+            continue
         try:
             results.append(identity(source, url))
         except ValueError:
