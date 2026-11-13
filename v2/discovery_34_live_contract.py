@@ -76,14 +76,27 @@ def probe(source, query="turkish-iptv", fetch=fetch_json, sleep=time.sleep):
 def probe_queries(source, queries=QUERIES, fetch=fetch_json, sleep=time.sleep):
     """Probe every configured discovery term; preserve per-query failures."""
     results = []
+    rate_limited = False
     for query in queries:
+        if rate_limited:
+            results.append({"query": query, "status": "skipped",
+                            "reason": "provider_rate_limit_circuit_open",
+                            "provider": source, "attempts": 0})
+            continue
         row = probe(source, query=query, fetch=fetch, sleep=sleep)
         results.append({"query": query, **row})
-    failed = [row for row in results if row["status"] != "ok"]
-    return {"status": "error" if failed else "ok",
+        # One exhausted 429 proves this provider is throttling this runner.
+        # Stop issuing sibling queries instead of amplifying the rate limit.
+        if row.get("http_status") == 429:
+            rate_limited = True
+    failed = [row for row in results if row["status"] == "error"]
+    skipped = [row for row in results if row["status"] == "skipped"]
+    return {"status": "error" if failed or skipped else "ok",
             "queries_checked": len(results),
-            "queries_ok": len(results) - len(failed),
+            "queries_ok": len(results) - len(failed) - len(skipped),
             "queries_failed": len(failed),
+            "queries_skipped": len(skipped),
+            "rate_limited": rate_limited,
             "query_results": results}
 
 
