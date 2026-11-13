@@ -1,3 +1,8 @@
+## 13 Kasım 2026 — #34 grouped offline acceptance yeşil; Codeberg rate limit ayrıştırıldı
+- Actions #43452246381: tüm offline kabul bölümleri başarılı (envanter/playlist, şifreli arşiv, restore regresyonları, #34 39 test, compile ve offline discovery/integration). Son adım canlı Codeberg API 429 rate-limit nedeniyle exit 1 verdi; GitHub 20 aday, GitLab 0 aday fakat API sözleşmesi ok, Codeberg 3 denemede HTTP_429. Bu gerçek sağlayıcı kabulü değildir.
+- Workflow `.github/workflows/v2-stage6-grouped-acceptance.yml` güncellendi: canlı sağlayıcı probe artık offline kabulü bloklamayan, ayrı raporlanan adım. 429/5xx fail-closed raporu korunur; #34 canlı sağlayıcı kabulü ve gerçek yeni AV kanıtı olmadan kapanmaz. Commit `32a778806c7b516809d2862d6d3ef0480b36fb6a`.
+- Yeni commit üzerinde toplu offline Actions yeniden tetikleniyor. Ana İBO ve YEDEKLER/YENİLER/FAVORİLER değişmedi; kapsamlı keşif başlatılmadı.
+
 ## 13 Kasım 2026 — #34 ikinci CI regresyonu düzeltmesi
 - İlk düzeltme sonrası Actions #43452139209, commit `0b63e2efb`: 39 Stage 7 testi içinde 3 fail. Test sözleşmesi, tamamen bozuk sağlayıcı listelerinin fail-closed olmasını da gerektiriyor.
 - `v2/discovery_34_integrate.py` şimdi karma listelerde bozuk satırları atlayıp geçerlileri tutar; liste dolu ama hiçbir geçerli nesne yoksa ValueError ile fail-closed kalır. Commit `9b0d5ac85af31545abe1db6f0ecd22ccea2e94bb`.
