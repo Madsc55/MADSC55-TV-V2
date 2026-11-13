@@ -28,6 +28,21 @@ class IntegrationTests(unittest.TestCase):
             with self.subTest(source=source), self.assertRaises(ValueError):
                 normalize(source, {})
 
+    def test_malformed_provider_records_fail_closed(self):
+        cases = [
+            ("official", {"channels": ["not-an-object"]}),
+            ("youtube", {"results": ["not-an-object"]}),
+            ("m3u", {"sources": ["not-an-object"]}),
+        ]
+        for source, payload in cases:
+            with self.subTest(source=source), self.assertRaises(ValueError):
+                normalize(source, payload)
+
+    def test_missing_provider_arrays_fail_closed(self):
+        for source in ("official", "youtube", "m3u"):
+            with self.subTest(source=source), self.assertRaises(ValueError):
+                normalize(source, {})
+
     def test_missing_report_is_reported(self):
         result = integrate({"youtube": Path("/nonexistent/discovery34.json")})
         self.assertEqual(len(result["errors"]), 1)
