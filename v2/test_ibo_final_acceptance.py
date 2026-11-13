@@ -17,7 +17,7 @@ class AcceptanceTests(unittest.TestCase):
             audit_encrypted_archive(raw,raw,'offline-test-passphrase-2026')
     def test_invalid_final_reports_fail_closed(self):
         valid={"target":1000,"records":1000,"sha256":"a"*64,"status":"EVIDENCE_GATED"}
-        archive={"status":"ROUNDTRIP_BYTES_MATCH"}
+        archive={"status":"ROUNDTRIP_BYTES_MATCH","sha256":"b"*64,"bytes":128}
         for report in (None, [], "EVIDENCE_GATED",
                        dict(valid, sha256="abc"),
                        dict(valid, sha256="z"*64),
@@ -28,9 +28,16 @@ class AcceptanceTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             final_gate(valid, None, True, True)
 
+        for bad_archive in ({"status":"ROUNDTRIP_BYTES_MATCH"},
+                            dict(archive, sha256="invalid"),
+                            dict(archive, bytes=0),
+                            dict(archive, bytes=True),
+                            dict(archive, bytes=-1)):
+            with self.subTest(archive=bad_archive), self.assertRaises(ValueError):
+                final_gate(valid, bad_archive, True, True)
     def test_no_false_production_acceptance(self):
         p={"target":1000,"records":1000,"sha256":"a"*64,"status":"EVIDENCE_GATED"}
-        a={"status":"ROUNDTRIP_BYTES_MATCH"}
+        a={"status":"ROUNDTRIP_BYTES_MATCH","sha256":"b"*64,"bytes":128}
         self.assertFalse(final_gate(p,a)["production_accepted"])
         self.assertFalse(final_gate(p,a,True,True)["production_accepted"])
 if __name__=="__main__": unittest.main()
