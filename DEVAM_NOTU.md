@@ -2608,3 +2608,14 @@ Kullanıcının açık talimatıyla #3, #4 ve #6 tarihî kurtarma görevleri art
 - İkinci test: kaynak erişim hatasının exception metnindeki gizli token'ı rapora sızdırmadığını ve tüm 4.955 kaydın unresolved sayıldığını doğrular.
 - Bu testler #17'nin kayıp kayıtları sessizce düşürmemesi ve gizli URL/token sızdırmaması yönündeki korumayı güçlendirir. Gerçek tarihî kaynak kurtarma sonuçlarının kendisi değildir; #15 bağımlılığı açık olduğundan #17 kapatılmaz.
 - Yeni canlı tarama, eski yayın probu veya playlist değişikliği yapılmadı.
+
+
+## 13 Kasım 2026 — #17 kuyruk regresyonu ve toplu çevrimdışı kabul sonuçları
+
+- Commit `473fcd1a334aa8a97ed6d6be4862002ddc5b3712` için Eight-Stage Runner Verification run `43457875068`: FFmpeg yerel guard success; korunan playlist/offline regressions success. İlgili offline logunda 1.024 test OK; Stage 3 recovery suite 14 test OK ve iki yeni test (`test_all_unmatched_hashes_are_retained_when_source_is_readable_but_has_no_match`, `test_source_failure_does_not_leak_exception_text_or_secret`) açıkça çalışıp geçti.
+- Current Scanner Offline Gate run `43457875120`: scanner offline regressions 8 test OK; branch offline regressions success.
+- Master Engine run `43457874963`: offline-tests success; master işi offline-only tasarım gereği skipped.
+- Sıralı hazırlık run `43457874980`: compile, protect, discovery-tests, read-only task-installation status ve safety işleri success; canlı kamu kaynakları audit işi skipped.
+- Actions Status Monitor run `43457874988` success.
+- Bu sonuçlar kurtarma kodunun kayıp/erişilemeyen kaynakları eksiksiz unresolved saymasını ve hata metninden sır sızdırmamasını doğrular; gerçek tarihî URL'lerin bulunması veya #17 nihai arşiv/kabul şartlarının tamamlanması değildir. #15 bağımlılığı ve gerçek kaynak eşleştirme engeli sürdüğünden #17 statüsü değiştirilmedi.
+- `state.json` 21 completed / 2 in_progress / 11 pending olarak korunur. Canlı tarama, eski yayın probu veya korunan playlist değişikliği yapılmadı.
