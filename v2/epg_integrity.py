@@ -22,9 +22,10 @@ def parse_xmltv_time(value):
         raise ValueError("Invalid XMLTV timestamp")
     base = datetime.datetime.strptime(match.group(1), "%Y%m%d%H%M%S")
     if match.group(2):
-        minutes = int(match.group(3)) * 60 + int(match.group(4))
-        if minutes >= 24 * 60:
+        hours, remainder = int(match.group(3)), int(match.group(4))
+        if remainder >= 60 or hours > 14 or (hours == 14 and remainder != 0):
             raise ValueError("Invalid UTC offset")
+        minutes = hours * 60 + remainder
         if match.group(2) == "-":
             minutes = -minutes
         return base.replace(tzinfo=datetime.timezone(datetime.timedelta(minutes=minutes)))
@@ -56,6 +57,7 @@ def inspect(url, playlist_ids):
         now = datetime.datetime.now(datetime.timezone.utc)
         programmes = 0
         current_programmes = 0
+        invalid_programme_intervals = 0
         matched_programme_ids = set()
         for node in root.iter("programme"):
             programmes += 1
@@ -66,14 +68,18 @@ def inspect(url, playlist_ids):
             try:
                 start_at = parse_xmltv_time(start)
                 stop_at = parse_xmltv_time(stop)
+                if stop_at <= start_at:
+                    invalid_programme_intervals += 1
+                    continue
                 if start_at <= now <= stop_at:
                     current_programmes += 1
             except ValueError:
-                pass
+                invalid_programme_intervals += 1
         result.update(status="XMLTV_VALID", channels=len(channels), programmes=programmes,
                       playlist_id_matches=len(channels & playlist_ids),
                       matched_programme_channel_ids=len(matched_programme_ids),
                       current_programme_intervals=current_programmes,
+                      invalid_programme_intervals=invalid_programme_intervals,
                       playlist_id_match_rate=round(len(channels & playlist_ids) / len(playlist_ids), 4) if playlist_ids else None)
     except (OSError, ValueError, ET.ParseError, EOFError, gzip.BadGzipFile, MemoryError) as exc:
         result.update(status="EPG_UNVERIFIED", error_type=type(exc).__name__)
