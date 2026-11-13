@@ -1011,3 +1011,12 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - `v2/test_build_epg.py` yeni çevrimdışı testleri ve `.github/workflows/v2-main-production-safety-gate.yml` içinde zorunlu kabul bağlantısı eklendi.
 - PR #155 merge commit `5ec41d2e98930f6610c592ccf458b6bcf8c694e9`; head `49dab604eae5a57640157512d2994818c58f392c`; Actions run `43479698309` SUCCESS. Stage 2/3 kimlik/EPG/kurtarma, Stage 5/6 paket ve arşiv, #34 çevrimdışı keşif ve ana İBO güvenlik korumaları SUCCESS.
 - Bu yalnızca çevrimdışı EPG eşleştirme/yayınlama doğrulamasıdır; 303 EPG boşluğunun giderildiği, gerçek EPG kaynaklarının tamamının güncel olduğu veya #19 nihai kabulünün geçtiği anlamına gelmez. #19 açık kalır. Yeni kanal taraması yapılmadı; ana İBO, YEDEKLER, YENİLER ve FAVORİLER değiştirilmedi.
+
+
+## 13 Kasım 2026 — Stage 5 gerçek AV kanıtı ve güvenli özel İBO dışa aktarımı (PR #162)
+- PR #162 squash merge `86fe138f793ff42148a34faa6b4ca249dc6ee65f`; current-main Production Security Gate run `43480354832` SUCCESS. PR test run `43480221367` SUCCESS.
+- `v2/stage5_evidence_export.py`: FFprobe stream metadata'sı tek başına kabul edilmiyor. Yalnızca yerel dosya/pipe protokollerine izin verilen FFmpeg `framemd5` ile hem gerçek video frame hem gerçek audio frame üretilmesi şart. Bir akışın yalnız başlık taşıyıp sıfır frame vermesi reddediliyor.
+- `tvg-id` ile kanıtın `channel_id` değeri bire bir eşleşmezse kaynak satırı dışa alınmıyor. Kanıt dosyası SHA-256 sınaması streaming ve dosya boyutu tavanıyla yapılıyor.
+- Dışa aktarma sadece yeni `private-*.m3u8` dosyasına, özel dosya konumunda, O_EXCL/O_NOFOLLOW ve 0600 moduyla yapılır; mevcut dosya, ana İBO veya repo içinde korunan liste üzerine yazılamaz.
+- Çevrimdışı testlerde yanlış ID, sahte bayrak, eksik gerçek dosya, sıfır ses frame, var olan dosyayı ezme ve korunan isimler reddedildi. FFmpeg paketleri bulunmayan GitHub runner'da gerçek yerel klip üretim testi SKIPPED olarak işaretlendi; decoderın canlı yayın erişimi veya cihazda oynatma doğrulanmış sayılmaz.
+- #31–#33 görevleri nihai kanıt ve kullanıcı cihaz kabulü eksik olduğu için açık kaldı. Yeni kanal taraması veya gerçek 1000/2000 paket teslimi yapılmadı. Ana İBO, YEDEKLER, YENİLER, FAVORİLER değiştirilmedi.
