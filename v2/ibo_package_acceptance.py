@@ -39,11 +39,15 @@ def validate(records):
     if not records:
         raise ValueError("empty playlist")
     exact = set()
+    urls = set()
     for extinf, url in records:
         pair = (extinf, url)
         if pair in exact:
             raise ValueError("duplicate identical record")
         exact.add(pair)
+        if url in urls:
+            raise ValueError("duplicate stream URL under multiple channel entries")
+        urls.add(url)
     return True
 
 def package(text, target, evidence):
