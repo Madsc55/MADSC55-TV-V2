@@ -53,6 +53,9 @@ def export(archive, passphrase, destination, sizes=(1000, 2000), existing=()):
             continue
         if record.get('http_hls_status') != 'AV_VERIFIED':
             continue
+        if (record.get('decoded_av_verified') is not True
+                or record.get('decode_status') != 'DECODED_AV'):
+            continue
         seen.add(url)
         records.append(record)
     destination = Path(destination)
