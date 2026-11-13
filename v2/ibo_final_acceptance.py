@@ -47,6 +47,8 @@ def final_gate(package_report, archive_report, independent_restore=False, live_a
             or type(archive_report.get("bytes")) is not int
             or archive_report["bytes"] <= 0):
         raise ValueError("archive integrity incomplete")
+    if archive_report["sha256"] != package_report["sha256"]:
+        raise ValueError("archived bytes do not match accepted IBO package digest")
     if type(independent_restore) is not bool or type(live_av) is not bool:
         raise ValueError("invalid acceptance flag types")
     if not independent_restore or not live_av:
