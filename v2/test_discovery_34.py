@@ -93,8 +93,8 @@ class Discovery34Tests(unittest.TestCase):
 
     def test_control_characters_and_invalid_url_types_rejected(self):
         for source in ("official", "m3u"):
-            for url in ("https://example.org/a.m3u8\\n#EXTINF", "https://example.org/a\\rnext",
-                        "https://example.org/a\\x00", "https://example.org/a\\x7f", None, 123):
+            for url in ("https://example.org/a.m3u8\n#EXTINF", "https://example.org/a\rnext",
+                        "https://example.org/a\x00", "https://example.org/a\x7f", None, 123):
                 with self.subTest(source=source, url=url), self.assertRaises(ValueError):
                     identity(source, url)
 
