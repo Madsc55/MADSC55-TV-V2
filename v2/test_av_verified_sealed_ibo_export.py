@@ -63,6 +63,26 @@ class SeparatePrivateExport(unittest.TestCase):
         report["streams"][0]["audio"]=False
         with self.assertRaises(ValueError):select(report,rows)
 
+    def test_duplicate_authenticated_hash_cannot_be_exported_twice(self):
+        report,rows=fixture()
+        rows.append(dict(rows[0]))
+        with self.assertRaisesRegex(ValueError,"duplicate"):
+            select(report,rows)
+
+    def test_incomplete_authenticated_batch_fails_closed(self):
+        report,rows=fixture()
+        rows.clear()
+        with self.assertRaisesRegex(ValueError,"disagree"):
+            select(report,rows)
+
+    def test_zero_verified_candidates_never_pads_target_package(self):
+        report,rows=fixture(decoded=False)
+        content,summary=select(report,rows)
+        self.assertEqual(summary["verified_entries"],0)
+        self.assertEqual(summary["status"],"NO_VERIFIED_STREAM_TO_EXPORT")
+        self.assertEqual(content,"#EXTM3U\\n")
+        self.assertFalse(summary["protected_main_playlist_modified"])
+
     def test_cannot_target_main_or_existing_file(self):
         with tempfile.TemporaryDirectory() as tmp:
             path=Path(tmp)/"MADSC55_TV_IBO_CALISANLAR_TEST.m3u8"
