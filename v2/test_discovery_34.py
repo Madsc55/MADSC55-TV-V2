@@ -1,3 +1,8 @@
+import json
+import pathlib
+import subprocess
+import sys
+import tempfile
 import unittest
 from unittest.mock import patch
 import urllib.request
@@ -70,6 +75,40 @@ class Discovery34Tests(unittest.TestCase):
                             ("youtube", "https://youtu.be/AbCdEf12345")):
             with self.assertRaises(ValueError):
                 identity(source, url)
+    def test_curated_cli_offline_all_three_adapters(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = pathlib.Path(directory)
+            source = root / "curated.json"
+            output = root / "candidates.json"
+            source.write_text(json.dumps({
+                "official": [{"url": "https://example.org/official"}],
+                "youtube": [{"video_id": "AbCdEf12345"}],
+                "m3u": [{"url": "https://example.org/channels.m3u"}]
+            }), encoding="utf-8")
+            result = subprocess.run(
+                [sys.executable, str(pathlib.Path(__file__).with_name("discovery_34.py")),
+                 "--curated-input", str(source), "--output", str(output)],
+                capture_output=True, text=True)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            report = json.loads(output.read_text(encoding="utf-8"))
+            self.assertEqual({c["source"] for c in report["candidates"]},
+                             {"official", "youtube", "m3u"})
+            self.assertEqual(report["mode"], "offline")
+            self.assertEqual(report["av_verified"], 0)
+
+    def test_curated_cli_rejects_unrecognized_adapters(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = pathlib.Path(directory)
+            source = root / "invalid.json"
+            output = root / "candidates.json"
+            source.write_text('{"unexpected": []}', encoding="utf-8")
+            result = subprocess.run(
+                [sys.executable, str(pathlib.Path(__file__).with_name("discovery_34.py")),
+                 "--curated-input", str(source), "--output", str(output)],
+                capture_output=True, text=True)
+            self.assertNotEqual(result.returncode, 0)
+            self.assertFalse(output.exists())
+
     def test_official_and_m3u(self):
         for source in ("official", "m3u"):
             self.assertEqual(len(curated_candidates(source, [{"url": "https://example.org/live.m3u8"}])), 1)
