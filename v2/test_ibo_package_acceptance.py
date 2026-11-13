@@ -1,6 +1,11 @@
 #!/usr/bin/env python3
 """Synthetic offline regression only; not production channel acceptance."""
 import hashlib
+import json
+import pathlib
+import subprocess
+import sys
+import tempfile
 import unittest
 from ibo_package_acceptance import parse,validate,package
 
@@ -61,6 +66,22 @@ class PackageTests(unittest.TestCase):
         ]
         with self.assertRaises(ValueError):
             validate(records)
+
+    def test_cli_refuses_existing_output_without_overwrite(self):
+        text, proof = fixture(1000)
+        with tempfile.TemporaryDirectory() as directory:
+            root = pathlib.Path(directory)
+            playlist, evidence, output = (root / name for name in ("input.m3u", "proof.json", "existing.m3u"))
+            playlist.write_text(text, encoding="utf-8")
+            evidence.write_text(json.dumps(proof), encoding="utf-8")
+            output.write_text("DO_NOT_OVERWRITE", encoding="utf-8")
+            result = subprocess.run(
+                [sys.executable, str(pathlib.Path(__file__).with_name("ibo_package_acceptance.py")),
+                 "--playlist", str(playlist), "--evidence", str(evidence),
+                 "--target", "1000", "--output", str(output)],
+                capture_output=True, text=True)
+            self.assertNotEqual(result.returncode, 0)
+            self.assertEqual(output.read_text(encoding="utf-8"), "DO_NOT_OVERWRITE")
 
     def test_duplicate(self):
         text,_=fixture(1)
