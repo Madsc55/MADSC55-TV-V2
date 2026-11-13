@@ -24,6 +24,15 @@ def main():
         recovered = root / "restored.jsonl"
         assert restore(encrypted, recovered, secret) == hashlib.sha256(payload).hexdigest()
         assert recovered.read_bytes() == payload
+        # Reject malformed API input types before cryptographic processing.
+        for value in ("text", bytearray(b"data"), None):
+            for operation in (encrypt, decrypt):
+                try:
+                    operation(value, secret)
+                except ValueError:
+                    pass
+                else:
+                    raise AssertionError("Non-byte encryption input accepted")
         # Direct API calls must not overwrite their own input.
         for operation in (backup, restore):
             try:
