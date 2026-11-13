@@ -1,3 +1,8 @@
+## 13 Kasım 2026 — #28–#33 şifreleme API giriş türü
+- 4460564: secure_archive.encrypt/decrypt yalnızca bytes türünü kabul eder; geçersiz türler ValueError üretir.
+- 6539509: str, bytearray ve None girdileri için çevrimdışı şifreleme/çözme regresyonları eklendi.
+- Güncel GitHub Actions kabulü henüz doğrulanmadı; gerçek AV ve bağımsız harici geri yükleme açık. Korunan oynatma listelerine dokunulmadı, tarama yapılmadı.
+
 ## 13 Kasım 2026 — #31–#33 şifreli arşiv kabul şartı
 - 94c1eb6d: bağımsız geri yükleme ve gerçek AV bayraklarıyla üretim incelemesine geçmeden önce `archive_report.encrypted is True` zorunlu; şifresiz veya sahte bayraklı arşiv kabul edilmez.
 - e51bf22a: şifresiz, string/sayı ve eksik şifreleme bayrakları için regresyon eklendi; olumlu inceleme testi şifreli rapora uyarlandı.
