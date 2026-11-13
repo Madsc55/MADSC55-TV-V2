@@ -4,6 +4,8 @@ import hashlib
 import os
 import tempfile
 from pathlib import Path
+from unittest.mock import patch
+import secure_archive
 from secure_archive import backup, restore, decrypt, encrypt
 
 def main():
@@ -22,6 +24,70 @@ def main():
         recovered = root / "restored.jsonl"
         assert restore(encrypted, recovered, secret) == hashlib.sha256(payload).hexdigest()
         assert recovered.read_bytes() == payload
+        # Existing destinations must never be replaced by backup or restore.
+        for operation, source in ((backup, original), (restore, encrypted)):
+            protected = root / ("protected-backup.enc" if operation is backup else "protected-restore.jsonl")
+            protected.write_bytes(b"DO_NOT_OVERWRITE")
+            try:
+                operation(source, protected, secret)
+            except FileExistsError:
+                pass
+            else:
+                raise AssertionError("Existing archive destination was overwritten")
+            assert protected.read_bytes() == b"DO_NOT_OVERWRITE"
+        # Symlink destinations must also be refused without changing their targets.
+        symlink_target = root / "protected-target.bin"
+        symlink_target.write_bytes(b"SYMLINK_TARGET_UNCHANGED")
+        for operation, source in ((backup, original), (restore, encrypted)):
+            link = root / ("backup-link.enc" if operation is backup else "restore-link.jsonl")
+            link.symlink_to(symlink_target)
+            try:
+                operation(source, link, secret)
+            except FileExistsError:
+                pass
+            else:
+                raise AssertionError("Symlink destination was overwritten")
+            assert link.is_symlink()
+            assert symlink_target.read_bytes() == b"SYMLINK_TARGET_UNCHANGED"
+        # The low-level atomic writer must also fail closed for files and symlinks.
+        direct_target = root / "direct-existing.bin"
+        direct_target.write_bytes(b"KEEP")
+        try:
+            secure_archive.atomic_write(direct_target, b"REPLACE")
+        except FileExistsError:
+            pass
+        else:
+            raise AssertionError("atomic_write replaced an existing file")
+        assert direct_target.read_bytes() == b"KEEP"
+        symlink_target = root / "symlink-target.bin"
+        symlink_target.write_bytes(b"TARGET-KEEP")
+        symlink_path = root / "existing-link.bin"
+        symlink_path.symlink_to(symlink_target)
+        try:
+            secure_archive.atomic_write(symlink_path, b"SYMLINK-REPLACE")
+        except FileExistsError:
+            pass
+        else:
+            raise AssertionError("atomic_write replaced an existing symlink")
+        assert symlink_path.is_symlink()
+        assert symlink_target.read_bytes() == b"TARGET-KEEP"
+        # Reject malformed API input types before cryptographic processing.
+        for value in ("text", bytearray(b"data"), None):
+            for operation in (encrypt, decrypt):
+                try:
+                    operation(value, secret)
+                except ValueError:
+                    pass
+                else:
+                    raise AssertionError("Non-byte encryption input accepted")
+        # A passphrase consisting only of whitespace must not encrypt data.
+        for weak_secret in (" " * 16, "\t" * 20, "\n" * 20):
+            try:
+                encrypt(payload, weak_secret)
+            except ValueError:
+                pass
+            else:
+                raise AssertionError("Whitespace-only archive passphrase accepted")
         # Direct API calls must not overwrite their own input.
         for operation in (backup, restore):
             try:
@@ -31,6 +97,21 @@ def main():
             else:
                 raise AssertionError("Same-path archive operation accepted")
         assert decrypt(encrypted.read_bytes(), secret) == payload
+        # Reject oversized encrypted input before loading it into memory.
+        with patch.object(secure_archive, "MAX_INPUT", 1):
+            try:
+                decrypt(encrypted.read_bytes(), secret)
+            except ValueError:
+                pass
+            else:
+                raise AssertionError("Oversized encrypted blob accepted")
+            try:
+                restore(encrypted, root / "oversized-restored.jsonl", secret)
+            except ValueError:
+                pass
+            else:
+                raise AssertionError("Oversized archive restore accepted")
+        assert not (root / "oversized-restored.jsonl").exists()
         damaged = bytearray(encrypted.read_bytes())
         damaged[-1] ^= 1
         bad = root / "bad.enc"
