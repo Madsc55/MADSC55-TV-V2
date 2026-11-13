@@ -13,7 +13,7 @@ def valid_stream_url(value):
     if not isinstance(value, str) or not value or any(
             ord(char) < 32 or 127 <= ord(char) <= 159
             or char.isspace() or unicodedata.category(char) in ("Cf", "Zl", "Zp")
-            or char in ('"', "'")
+            or char in ('"', "'", '\\')
             for char in value):
         return False
     try:
