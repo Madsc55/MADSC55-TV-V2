@@ -7,7 +7,26 @@ import urllib.error
 from discovery_34 import search_url, fetch_json, repository_candidates
 
 RETRYABLE_HTTP = frozenset((429, 500, 502, 503, 504))
-MAX_ATTEMPTS = 4\nMAX_RETRY_DELAY_SECONDS = 30\n\ndef retry_delay(exc, attempt):\n    """Honor provider backoff hints, with a bounded exponential fallback."""\n    headers = getattr(exc, "headers", None)\n    if headers is not None:\n        value = headers.get("Retry-After")\n        if value is not None:\n            try:\n                return min(MAX_RETRY_DELAY_SECONDS, max(0, int(value)))\n            except (TypeError, ValueError):\n                pass\n        reset = headers.get("X-RateLimit-Reset")\n        if reset is not None:\n            try:\n                return min(MAX_RETRY_DELAY_SECONDS, max(0, int(reset) - int(time.time())))\n            except (TypeError, ValueError):\n                pass\n    return min(MAX_RETRY_DELAY_SECONDS, 2 ** (attempt - 1))
+MAX_ATTEMPTS = 4
+MAX_RETRY_DELAY_SECONDS = 30
+
+def retry_delay(exc, attempt):
+    """Honor provider backoff hints, with a bounded exponential fallback."""
+    headers = getattr(exc, "headers", None)
+    if headers is not None:
+        value = headers.get("Retry-After")
+        if value is not None:
+            try:
+                return min(MAX_RETRY_DELAY_SECONDS, max(0, int(value)))
+            except (TypeError, ValueError):
+                pass
+        reset = headers.get("X-RateLimit-Reset")
+        if reset is not None:
+            try:
+                return min(MAX_RETRY_DELAY_SECONDS, max(0, int(reset) - int(time.time())))
+            except (TypeError, ValueError):
+                pass
+    return min(MAX_RETRY_DELAY_SECONDS, 2 ** (attempt - 1))
 
 def probe(source, query="turkish-iptv", fetch=fetch_json, sleep=time.sleep):
     url = search_url(source, query)
