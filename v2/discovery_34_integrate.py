@@ -11,6 +11,8 @@ REPORTS = {
     "youtube": ROOT / "v2/reports/youtube-live-candidates.json",
     "m3u": ROOT / "v2/config/sources.json",
     "github_m3u": ROOT / "v2/reports/github-source-discovery.json",
+    "gitlab_m3u": ROOT / "v2/reports/gitlab-m3u-source-discovery.json",
+    "codeberg_m3u": ROOT / "v2/reports/codeberg-m3u-source-discovery.json",
 }
 
 def normalize(source, data):
@@ -22,7 +24,7 @@ def normalize(source, data):
         key, field = "results", "video_id"
     elif source == "m3u":
         key, field = "sources", "url"
-    elif source == "github_m3u":
+    elif source in ("github_m3u", "gitlab_m3u", "codeberg_m3u"):
         key, field = "sources", "url"
     else:
         raise ValueError("Unknown source")
@@ -32,8 +34,8 @@ def normalize(source, data):
     rows = [{("video_id" if source == "youtube" else "url"): item.get(field, "")}
             for item in items if isinstance(item, dict) and
             (source != "m3u" or item.get("kind") == "m3u") and
-            (source != "github_m3u" or item.get("status") == "SOURCE_PARSED_STREAMS_NOT_PLAYBACK_VERIFIED")]
-    identity_source = "m3u" if source == "github_m3u" else source
+            (source not in ("github_m3u", "gitlab_m3u", "codeberg_m3u") or item.get("status") == "SOURCE_PARSED_STREAMS_NOT_PLAYBACK_VERIFIED")]
+    identity_source = "m3u" if source in ("github_m3u", "gitlab_m3u", "codeberg_m3u") else source
     return curated_candidates(identity_source, rows)
 
 def integrate(reports=REPORTS):
