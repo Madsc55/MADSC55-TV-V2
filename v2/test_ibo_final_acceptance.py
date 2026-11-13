@@ -21,6 +21,12 @@ class AcceptanceTests(unittest.TestCase):
             audit_encrypted_archive(raw,cipher,'wrong-test-passphrase-2026')
         with self.assertRaises(ValueError):
             audit_encrypted_archive(raw,raw,'offline-test-passphrase-2026')
+    def test_rejects_non_byte_encrypted_archive_inputs(self):
+        for original, ciphertext in (("raw", b"encrypted"), (b"raw", "encrypted"),
+                                     (bytearray(b"raw"), b"encrypted"), (b"raw", None)):
+            with self.subTest(original=type(original).__name__, ciphertext=type(ciphertext).__name__), self.assertRaises(ValueError):
+                audit_encrypted_archive(original, ciphertext, "offline-test-passphrase-2026")
+
     def test_invalid_final_reports_fail_closed(self):
         valid={"target":1000,"records":1000,"sha256":"a"*64,"status":"EVIDENCE_GATED"}
         archive={"status":"ROUNDTRIP_BYTES_MATCH","sha256":"a"*64,"bytes":128}
