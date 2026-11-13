@@ -39,7 +39,7 @@ class BatchTests(unittest.TestCase):
             row = {'url': 'https://example.invalid/stream/1', 'name': 'One',
                    'group': 'TR', 'http_hls_status': 'AV_VERIFIED'}
             archive = root / 'inventory.enc'
-            archive.write_bytes(encrypt((json.dumps(row)+'\\n').encode(), SECRET))
+            archive.write_bytes(encrypt((json.dumps(row)+'\n').encode(), SECRET))
             output = root / 'out'
             output.mkdir()
             exact = output / 'IBO_AV_VERIFIED_1000_PART1.m3u8'
@@ -62,7 +62,7 @@ class BatchTests(unittest.TestCase):
                      'group': 'TR', 'http_hls_status': 'AV_VERIFIED'}
                     for i in range(2)]
             archive = root / 'inventory.enc'
-            archive.write_bytes(encrypt(('\\n'.join(json.dumps(x) for x in rows)+'\\n').encode(), SECRET))
+            archive.write_bytes(encrypt(('\n'.join(json.dumps(x) for x in rows)+'\n').encode(), SECRET))
             output = root / 'out'
             output.mkdir()
             blocked = output / 'IBO_AV_VERIFIED_2000_PART1.m3u8'
@@ -84,7 +84,7 @@ class BatchTests(unittest.TestCase):
             row = {'url': 'https://example.invalid/stream/1', 'name': 'One',
                    'group': 'TR', 'http_hls_status': 'AV_VERIFIED'}
             archive = root / 'inventory.enc'
-            archive.write_bytes(encrypt((json.dumps(row)+'\\n').encode(), SECRET))
+            archive.write_bytes(encrypt((json.dumps(row)+'\n').encode(), SECRET))
             protected = root / 'protected'
             protected.mkdir()
             link = root / 'out-link'
