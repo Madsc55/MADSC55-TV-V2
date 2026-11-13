@@ -1,3 +1,9 @@
+## 13 Kasım 2026 — #34 API hata yanıtı regresyonu PASS
+- Commit 2b110048: GitHub/Codeberg API yanıtlarında beklenen items/data alanı yoksa yanlış başarıyı engelle.
+- Commit af061bfd: hata nesnesi regresyon testleri eklendi.
+- GitHub Actions 43447185204: SUCCESS. Production Security Gate, IBO koruma ve Discovery 34 offline adapter/integration acceptance PASS.
+- Bu çevrimdışı kabul canlı Codeberg API sözleşmesini doğrulamaz; #34 nihai kabulü açık. Yeni toplu kanal taraması veya korunan playlist değişikliği yapılmadı.
+
 ## 13 Kasım 2026 — #34 yeni regresyon ve Actions doğrulaması
 - Commit c071490e: GitHub/GitLab/Codeberg canlı API yanıtlarında kök veri tipi kontrolü eklendi; hatalı payload başarı olarak işaretlenmez.
 - Commit 9950b96a: üç sağlayıcı için hatalı payload regresyon testleri eklendi.
