@@ -10,6 +10,8 @@ def sha(data):
     return hashlib.sha256(data).hexdigest()
 
 def audit_archive(original, restored):
+    if not isinstance(original, bytes) or not isinstance(restored, bytes):
+        raise ValueError("archive inputs must be bytes")
     if not original or not restored:
         raise ValueError("missing archive or restored bytes")
     if original != restored:
