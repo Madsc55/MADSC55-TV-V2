@@ -2,7 +2,7 @@
 - PR #106 (`integrate-stage6-28-33-current-main-20261113`) için Actions run `43457997079` completed / success.
 - Tüm adımlar SUCCESS: grouped safety regression tests; production trigger/write policy; original IBO category/backup invariants; historical task ledger; Stage 2 identity recovery metadata; Stage 6 offline package/archive regressions; Stage 2/3 offline identity, EPG and recovery; Discovery #34 offline adapter/integration acceptance.
 - Bu, PR #106'nın merge test ağacında çevrimdışı ve güvenlik kabulüdür. Gerçek FFmpeg AV, gerçek harici bağımsız restore ve üretim kanal paketi kanıtı yerine geçmez.
-- PR #87 kapatıldı ve PR #106 ile değiştirildi. PR #106 henüz birleştirilmedi; ana dal PR açıldıktan sonra yeniden ilerlediği için güncel base ile son entegrasyon kontrolü gereklidir.
+- PR #87 kapatıldı; PR #106 squash merge commit `478aba262b0b37c39019a85bcc3abfc812b04208` ile birleştirildi. PR #106 merge test ağacı Actions run `43457997079`: SUCCESS.
 - Ana İBO, YEDEKLER, YENİLER, FAVORİLER değiştirilmedi; kanal taraması başlatılmadı.
 
 ## 13 Kasım 2026 — Aşama 2 (#15, #17–#21) çevrimdışı kabul kapısı ana dala alındı
@@ -941,9 +941,12 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 
 
 ## 13 Kasım 2026 — Güncel main Production Security Gate ve canlı #34 teşhisi
-- Main commit: `478aba262b0b37c39019a85bcc3abfc812b04208`; Actions run `43458337072`: SUCCESS.
-- Güncel main üzerindeki Stage 6 (#28–#33) çevrimdışı paketleme, M3U doğrulama, şifreli arşiv ve geri-yükleme regresyonları; Stage 2/3; #34 offline adapter ve güvenlik/invariant kapıları PASS.
-- Aynı committe ayrı `live-discovery-diagnostic` işi başarısız: GitHub ve GitLab sorguları sonuçlandı; Codeberg altı sorgunun tamamında HTTP 429 döndürdü (her sorguda 3 deneme). Bu nedenle #34 canlı sağlayıcı kabulü başarısız/açık; HTTP 429 başarı olarak işaretlenmedi.
-- Codeberg için Retry-After sayısal ve HTTP-date biçimlerini 60 saniye üst sınırıyla ele alan kod ve offline regresyonlar main üzerinde mevcut; canlı 429 yanıtı nedeniyle sağlayıcı kabulü yine de geçmedi.
-- Görev defteri 21 completed / 13 in_progress olarak korundu; canlı yayın kanıtı, bağımsız harici geri yükleme ve gerçek 1000/2000 kanal paketleri olmadan görev kapatılmadı.
+- Main commit `478aba262b0b37c39019a85bcc3abfc812b04208` için Actions run `43458337072`: offline Production Security Gate SUCCESS; ayrı `live-discovery-diagnostic` işi SKIPPED. Bu run canlı sağlayıcı kanıtı değildir.
+- Canlı altı-terim denetimi ayrı olarak main commit `436d5492b71394a2958b08cc8895156f5c111ed0` üzerindeki Actions run `43458069505` ile yapıldı. Ana Production Security Gate SUCCESS; ayrı canlı diagnostic işi Codeberg HTTP 429 nedeniyle FAILURE oldu (iş `continue-on-error` olduğundan offline ana gate başarılı kaldı).
+- GitHub: altı sorgunun tamamı başarılı; aday kayıtları sırasıyla 11, 20, 20, 20, 12, 19 (toplam 102 ham kayıt; benzersiz kanal sayısı değildir). GitLab: altı sorgunun tamamı başarılı, 0 aday. Codeberg: altı sorgunun tamamında HTTP 429; her sorgu üç denemeye kadar sürdü, Retry-After/rate-limit kalan başlığı yoktu.
+- PR #117 squash merge `eda23b30c3cc05a019e79e42235234488110d4f1`; Actions run `43458662138` SUCCESS. İlk tükenmiş 429 sonrasında sağlayıcı devre kesicisi açılır, kalan sorgulara istek gönderilmez; sorgular skipped olarak raporlanır ve genel durum error kalır.
+- Codeberg için sayısal ve HTTP-date Retry-After desteği 60 saniye üst sınırıyla main'de mevcut. Devre kesici düzeltmesiyle yeni tek seferlik canlı doğrulama bu dokümantasyon commitinden sonra tetiklenecek; Codeberg başarılı yanıt vermeden #34 kapatılmaz.
+- PR #130 squash merge `3fc54210d22d6dd52bf97c85dae2fe7576102bf7`; Actions run `43459495298` SUCCESS. XMLTV timezone offset sınırları ve geçersiz programme start/stop aralıkları için üç yeni test PASS; EPG bütün kaynaklarının gerçek içerik kabulü değildir.
+- Stage 6 (#28–#33) offline paketleme, M3U doğrulama, şifreli arşiv/geri-yükleme regresyonları; Stage 2/3; #34 offline adapter ve güvenlik/invariant kapıları PASS. Gerçek FFmpeg AV, bağımsız harici depodan restore veya gerçek 1000/2000 kanal paketi değildir.
+- Görev defteri 21 completed / 13 in_progress olarak korundu; gerçek yayın kanıtı, bağımsız harici geri yükleme ve gerçek paket kanıtları olmadan görev kapatılmadı.
 - Yeni kapsamlı kanal taraması yapılmadı. Ana İBO, YEDEKLER, YENİLER ve FAVORİLER değiştirilmedi.
