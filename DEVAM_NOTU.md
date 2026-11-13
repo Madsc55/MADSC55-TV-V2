@@ -981,3 +981,12 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - Tarama workflow'u yalnızca `workflow_dispatch` ile başlar ve bu değişiklikler sırasında çalıştırılmadı. Yeni kapsamlı kanal taraması yapılmadı. M3U kaynaklarının bulunması/ayrıştırılması playback kabulü değildir; YouTube/official resolver adayları da FFmpeg decode öncesi verified sayılmaz.
 - Görev defteri 21 completed / 13 in_progress olarak kaldı: #15, #17–#21, #28–#34 açık. #15 tarihî yayıncı kimliği; #17–#21 nihai metadata/EPG/kategori/çözünürlük ve gerçek yayın kanıtı; #28–#33 gerçek paket, harici restore ve cihaz kabul kanıtı; #34 Codeberg canlı API ve tüm kaynakların gerçek AV kabulini bekler.
 - Ana İBO, YEDEKLER, YENİLER ve FAVORİLER'e yazılmadı; hiçbir görev gerçek kanıt olmadan kapatılmadı.
+
+
+## 13 Kasım 2026 — YouTube Live worldwide sorgu ve bölge dağılımı
+- PR #149 squash merge `2d828e24805bcd41900c4e9212fb5d134068a7dc`. YouTube Live arama kümesi 18 TR/AZ sorgusunu koruyarak 12 dünya sorgusu ekledi (Afrika, Asya, Avrupa, Latin Amerika, Arapça, Hintçe, İspanyolca, Fransızca, Portekizce, Japonca/Korece ve uluslararası haber/TV). Her aday TR/AZ/WORLD bölge etiketi taşır; birleşik rapor ve şifreli doğrudan HLS resolver bu etiketi korur.
+- Resolver bütçesi bounded ve dengeli: en çok 60 YouTube live adayı (TR/AZ/WORLD için 20/10/30 başlangıç kotası) ve en çok 60 official site adayı (ülke başına önce bir aday, kalan bütçe round-robin). Direct URL'ler authenticated encrypted dosyada saklanır; FFmpeg gerçek video frame + audio frame decode olmadan AV verified sayılmaz.
+- Main Production Security Gate run `43466178239` SUCCESS; YouTube sorgu bölgesi, resolver bütçesi, encrypted round-trip ve scanner intake offline regresyonları PASS. Canlı YouTube keşfi veya geniş kanal taraması bu gate içinde çalıştırılmadı.
+- Manuel worldwide scan workflow'u 3.000 aday tavanıyla hazırdır; `workflow_dispatch` dışında tetiklenmez ve henüz çalıştırılmamıştır.
+- Son canlı sağlayıcı tanısı `43464785708`: GitHub token ile 6/6 başarılı ve 102 ham eşleşme; GitLab 6/6 geçerli boş sonuç; Codeberg ilk sorguda HTTP 429, kalan beş sorgu circuit breaker ile atlandı. Codeberg canlı kabulü açık kaldı.
+- Görev defteri 21 completed / 13 in_progress; #15, #17–#21, #28–#34 gerçek yayın, paket, bağımsız restore ve cihaz kanıtları bekliyor. Ana İBO/YEDEKLER/YENİLER/FAVORİLER değişmedi; yeni tarama ve playlist yazımı yok.
