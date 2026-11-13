@@ -15,8 +15,11 @@ import time
 import urllib.error
 import urllib.parse
 import urllib.request
+import xml.etree.ElementTree as ET
 from stream_probe import probe
-from secure_archive import backup as encrypt_inventory, decrypt as decrypt_inventory
+from stage3_identity_recovery import url_sha256
+from stage3_metadata_acceptance import quality_from_probe, category, normalized_identity, epg_match
+from stage3_recovery_queue import build_recovery_queue
 import os
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
@@ -41,9 +44,16 @@ def fetch(url, timeout=18, limit=MAX_SOURCE):
                 data = response.read(limit + 1)
                 if len(data) > limit:
                     raise ValueError('Source exceeded size limit')
+                declared = response.headers.get('Content-Length')
+                if declared is not None and declared.isdecimal():
+                    expected = int(declared)
+                    if len(data) < expected:
+                        raise http.client.IncompleteRead(data, expected - len(data))
+                    if len(data) > expected:
+                        raise ValueError('Source length exceeds declared Content-Length')
                 return data
         except (urllib.error.URLError, TimeoutError, OSError, http.client.HTTPException) as exc:
-            if isinstance(exc, urllib.error.HTTPError) and exc.code not in (408, 429, 500, 502, 503, 504):
+            if isinstance(exc, urllib.error.HTTPError) and exc.code not in (408, 425, 429, 500, 502, 503, 504):
                 raise
             if attempt == 2:
                 raise
@@ -83,7 +93,8 @@ def tr_az(entry, scope):
     return bool(re.search(r'türk|turk|trt (?:1|2|3|cocuk|çocuk|spor|muzik|müzik|eba)|azer|azər|azərbaycan|azerbaijan|(?:^|[ ._-])(?:tr|az)(?:$|[ ._-])', value))
 
 
-def check_hls(entry, timeout):
+def check_hls(entry, timeout, diagnostics=None):
+    """Return AV-verified stream or capture observed HTTP failure for recovery."""
     url = entry['url']
     parsed = urllib.parse.urlsplit(url)
     if parsed.scheme not in ('https', 'http') or not parsed.hostname:
@@ -92,17 +103,24 @@ def check_hls(entry, timeout):
         req = urllib.request.Request(url, headers={'User-Agent': UA, 'Range': 'bytes=0-4095'})
         with urllib.request.urlopen(req, timeout=timeout) as res:
             status = res.status
+            if diagnostics is not None:
+                diagnostics['last_http_status'] = status
             content_type = res.headers.get('Content-Type', '').lower()
             sample = res.read(4096)
         hls = (b'#EXTM3U' in sample and (b'#EXT-X-' in sample or
                'mpegurl' in content_type))
         if status in (200, 206) and hls:
             outcome = probe(url, timeout=timeout)
-            if outcome['status'] == 'AV_VERIFIED':
-                return entry
+            quality = quality_from_probe(outcome)
+            if quality['av_verified']:
+                return {**entry, 'verified_quality': quality}
+    except urllib.error.HTTPError as exc:
+        if diagnostics is not None:
+            diagnostics['last_http_status'] = exc.code
     except (OSError, TimeoutError, urllib.error.URLError, ValueError,
             http.client.IncompleteRead, http.client.HTTPException):
-        pass
+        if diagnostics is not None:
+            diagnostics['last_timeout'] = True
     return None
 
 
@@ -116,34 +134,12 @@ def historical_source_ids(record):
     return list(dict.fromkeys(x for x in values if isinstance(x, str) and x)) or ['historical-archive']
 
 
-def normalize_dynamic_sources(dynamic, existing_sources):
-    """Validate optional discovery report rows before admitting HTTPS M3U feeds."""
-    if not isinstance(dynamic, dict) or not isinstance(dynamic.get('sources'), list):
-        raise ValueError('Dynamic discovery report must be an object with a sources list')
-    seen = {item.get('url') for item in existing_sources if isinstance(item, dict)}
-    accepted, rejected = [], []
-    for index, item in enumerate(dynamic['sources']):
-        if not isinstance(item, dict):
-            rejected.append({'index': index, 'error': 'InvalidRecord'})
-            continue
-        url = item.get('url')
-        if not isinstance(url, str):
-            rejected.append({'index': index, 'error': 'InvalidURLType'})
-            continue
-        parsed = urllib.parse.urlsplit(url)
-        if (item.get('status') != 'SOURCE_PARSED_STREAMS_NOT_PLAYBACK_VERIFIED'
-                or parsed.scheme != 'https' or not parsed.hostname
-                or parsed.username or parsed.password or url in seen):
-            rejected.append({'index': index, 'error': 'RejectedSource'})
-            continue
-        sid = 'github-auto-' + hashlib.sha256(url.encode()).hexdigest()[:20]
-        accepted.append({'id': sid, 'url': url, 'scope': 'candidate'})
-        seen.add(url)
-    return accepted, rejected
-
-
 def main():
     ap = argparse.ArgumentParser()
+    ap.add_argument('--stage2-offline-input', type=pathlib.Path, default=None,
+                    help='Integrate existing observations without channel discovery or playback')
+    ap.add_argument('--stage2-offline-output', type=pathlib.Path, default=None,
+                    help='Optional offline JSON report output; no stream URLs')
     ap.add_argument('--sources', type=pathlib.Path, default=SOURCES)
     ap.add_argument('--dynamic-sources', type=pathlib.Path, default=None,
                     help='Optional GitHub discovery report; only parsed HTTPS M3U sources are included')
@@ -151,11 +147,36 @@ def main():
     ap.add_argument('--report', type=pathlib.Path, default=REPORT)
     ap.add_argument('--inventory', type=pathlib.Path, default=INVENTORY,
                     help='Durable full candidate inventory, including HTTP/HLS failures')
+    ap.add_argument('--epg', type=pathlib.Path, default=None,
+                    help='Optional trusted local XMLTV file for exact tvg-id matching')
     ap.add_argument('--workers', type=int, default=12)
     ap.add_argument('--timeout', type=float, default=12)
     ap.add_argument('--limit', type=int, default=500)
     ap.add_argument('--live', type=pathlib.Path, default=LIVE)
     args = ap.parse_args()
+    if args.stage2_offline_input is not None:
+        from stage2_integration import integrate
+        payload = json.loads(args.stage2_offline_input.read_text(encoding='utf-8'))
+        if not isinstance(payload, dict) or not isinstance(payload.get('records'), list):
+            ap.error('Stage 2 offline input requires a records list')
+        xmltv = args.epg.read_text(encoding='utf-8') if args.epg else None
+        result = integrate(payload['records'], scopes=payload.get('scopes'),
+                           xmltv_text=xmltv)
+        rendered = json.dumps(result, ensure_ascii=False, indent=2) + chr(10)
+        if args.stage2_offline_output:
+            destination = args.stage2_offline_output.resolve()
+            reports_dir = (ROOT / 'v2/reports').resolve()
+            if destination.suffix.lower() != '.json' or reports_dir not in destination.parents:
+                ap.error('Offline report must be a .json file inside v2/reports')
+            if destination == args.stage2_offline_input.resolve():
+                ap.error('Offline report must not overwrite its input')
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            destination.write_text(rendered, encoding='utf-8')
+        else:
+            print(rendered, end='')
+        return
+    # Live mode retains all existing protected-playlist and archive safety gates.
+    from secure_archive import backup as encrypt_inventory, decrypt as decrypt_inventory
     if len(os.environ.get('V2_ARCHIVE_PASSPHRASE', '')) < 16:
         ap.error('V2_ARCHIVE_PASSPHRASE must contain at least 16 characters')
     if not 1 <= args.workers <= 32 or not 1 <= args.limit <= 10000:
@@ -183,17 +204,22 @@ def main():
     doc = json.loads(args.sources.read_text(encoding='utf-8'))
     sources = list(doc['sources'] if isinstance(doc, dict) else doc)
     dynamic_count = 0
-    dynamic_source_ids = set()
-    rejected_dynamic_sources = []
     if args.dynamic_sources is not None:
         dynamic = json.loads(args.dynamic_sources.read_text(encoding='utf-8'))
-        try:
-            accepted_dynamic, rejected_dynamic_sources = normalize_dynamic_sources(dynamic, sources)
-        except ValueError as exc:
-            ap.error(str(exc))
-        sources.extend(accepted_dynamic)
-        dynamic_count = len(accepted_dynamic)
-        dynamic_source_ids = {item['id'] for item in accepted_dynamic}
+        if not isinstance(dynamic.get('sources'), list):
+            ap.error('Dynamic discovery report has no sources list')
+        seen_source_urls = {item['url'] for item in sources}
+        for item in dynamic['sources']:
+            url = item.get('url', '')
+            parsed = urllib.parse.urlsplit(url)
+            if (item.get('status') != 'SOURCE_PARSED_STREAMS_NOT_PLAYBACK_VERIFIED'
+                    or parsed.scheme != 'https' or not parsed.hostname or parsed.username
+                    or parsed.password or url in seen_source_urls):
+                continue
+            sources.append({'id': 'github-auto-' + hashlib.sha256(url.encode()).hexdigest()[:20],
+                            'url': url, 'scope': 'candidate'})
+            seen_source_urls.add(url)
+            dynamic_count += 1
     # Do not export incomplete results as a successful production list.
     candidates = {}
     failed = []
@@ -214,12 +240,7 @@ def main():
                         elif sid not in found['source_ids']:
                             found['source_ids'].append(sid)
         except (OSError, ValueError, UnicodeError, socket.timeout) as exc:
-            if sid in dynamic_source_ids:
-                rejected_dynamic_sources.append({'id': sid, 'url': url, 'error': type(exc).__name__, 'detail': str(exc)[:300]})
-                print(f'::warning title=Invalid optional discovered source::{sid}: {type(exc).__name__}: {str(exc)[:180]}', flush=True)
-                continue
-            failed.append({'id': sid, 'url': url, 'error': type(exc).__name__, 'detail': str(exc)[:300]})
-            print(f'::warning title=IPTV source fetch failed::{sid}: {type(exc).__name__}: {str(exc)[:180]}', flush=True)
+            failed.append({'id': sid, 'error': type(exc).__name__})
     # Compare source yields with the last complete scan before replacing its baseline.
     source_drops = []
     if args.report.exists():
@@ -232,9 +253,6 @@ def main():
                         source_drops.append({'id': sid, 'previous': prior, 'current': current})
         except (OSError, ValueError, TypeError):
             pass
-    for drop in source_drops:
-        print(f"::warning title=IPTV source count collapse::{drop['id']}: {drop['previous']} -> {drop['current']}", flush=True)
-    print(f'Source audit: {len(source_counts)}/{len(sources)} fetched; {len(failed)} failures; {len(source_drops)} count drops', flush=True)
     incomplete = bool(failed or source_drops)
     # Carry forward historical candidates from the last encrypted inventory.
     # Missing streams are retained for rechecking, never silently dropped.
@@ -272,36 +290,81 @@ def main():
             recovered_from_archive += 1
     checked = 0
     good = []
+    diagnostics_by_url = {}
+    def inspect_candidate(candidate):
+        diagnostics = {}
+        result = check_hls(candidate, args.timeout, diagnostics)
+        return candidate['url'], result, diagnostics
     with concurrent.futures.ThreadPoolExecutor(max_workers=args.workers) as pool:
-        for result in pool.map(lambda x: check_hls(x, args.timeout), candidates.values()):
+        for url, result, diagnostics in pool.map(inspect_candidate, candidates.values()):
             checked += 1
+            diagnostics_by_url[url] = diagnostics
             if result is not None:
                 good.append(result)
+    epg_ids = set()
+    epg_checked = args.epg is not None
+    if args.epg is not None:
+        # Parse local XMLTV only. Channel IDs are hints, not playback proof.
+        if args.epg.stat().st_size > 100_000_000:
+            ap.error('XMLTV input exceeds 100 MB limit')
+        for event, element in ET.iterparse(args.epg, events=('end',)):
+            if element.tag == 'channel' and element.get('id'):
+                epg_ids.add(element.get('id'))
+            element.clear()
     # Retain every discovered new URL, including candidates that failed HTTP/HLS.
     # Network checks are not device playback proof; never silently lose a candidate.
     good_urls = {item['url'] for item in good}
+    good_by_url = {item['url']: item for item in good}
     args.inventory.parent.mkdir(parents=True, exist_ok=True)
     inventory_tmp = args.inventory.with_suffix(args.inventory.suffix + '.tmp')
+    # Refuse to follow a symlink when creating the plaintext temporary file.
+    # A stale temporary file is removed only if it is an ordinary file.
+    if inventory_tmp.is_symlink():
+        raise ValueError('Refusing symlinked plaintext inventory path')
     # Restrict the temporary plaintext inventory before writing any URL tokens.
-    fd = os.open(inventory_tmp, os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o600)
-    with os.fdopen(fd, 'w', encoding='utf-8') as inventory_file:
-        for candidate in candidates.values():
-            previous = historical_records.get(candidate['url'], {})
-            old_observations = previous.get('observations', [])
-            if not isinstance(old_observations, list):
-                old_observations = []
-            if not old_observations and previous.get('http_hls_status'):
-                old_observations = [{'status': previous['http_hls_status'], 'origin': 'previous-inventory'}]
-            new_status = 'AV_VERIFIED' if candidate['url'] in good_urls else 'UNVERIFIED_OR_FAILED'
-            record = {**previous, **candidate,
-                      'http_hls_status': new_status,
-                      'ibo_device_tested': previous.get('ibo_device_tested', False),
-                      'observations': old_observations + [{'status': new_status, 'origin': 'current-scan'}]}
-            inventory_file.write(json.dumps(record, ensure_ascii=False) + '\n')
-    # A failed source fetch must not overwrite the last complete encrypted baseline.
-    encrypted_inventory = args.inventory.with_suffix(
-        args.inventory.suffix + ('.pending.enc' if incomplete else '.enc'))
     try:
+        fd = os.open(inventory_tmp, os.O_WRONLY | os.O_CREAT | os.O_TRUNC | getattr(os, 'O_NOFOLLOW', 0), 0o600)
+        recovery_records = []
+        with os.fdopen(fd, 'w', encoding='utf-8') as inventory_file:
+            for candidate in candidates.values():
+                previous = historical_records.get(candidate['url'], {})
+                old_observations = previous.get('observations', [])
+                if not isinstance(old_observations, list):
+                    old_observations = []
+                if not old_observations and previous.get('http_hls_status'):
+                    old_observations = [{'status': previous['http_hls_status'], 'origin': 'previous-inventory'}]
+                new_status = 'AV_VERIFIED' if candidate['url'] in good_urls else 'UNVERIFIED_OR_FAILED'
+                verified = good_by_url.get(candidate['url'], {}).get('verified_quality', {})
+                prior_attempts = previous.get('recovery_attempts', 0)
+                if type(prior_attempts) is not int or prior_attempts < 0:
+                    raise ValueError('Invalid historical recovery attempts')
+                # Preserve capped retry state: exhausted records remain REVIEW-only.
+                recovery_attempts = 0 if candidate['url'] in good_urls else min(prior_attempts + 1, 3)
+                record = {**previous, **candidate,
+                          'recovery_attempts': recovery_attempts,
+                          'last_http_status': diagnostics_by_url.get(candidate['url'], {}).get('last_http_status'),
+                          'last_timeout': diagnostics_by_url.get(candidate['url'], {}).get('last_timeout', False),
+                          'url_sha256': url_sha256(candidate['url']),
+                          'category': category(candidate) if category(candidate) != 'UNCATEGORIZED' else previous.get('category', 'UNCATEGORIZED'),
+                          'identity': normalized_identity({**previous, **candidate}),
+                          'epg_exact_match': (bool(candidate.get('tvg_id') and candidate['tvg_id'].strip() in epg_ids and epg_match(candidate, {'channel': candidate['tvg_id'].strip()})) if epg_checked else previous.get('epg_exact_match')),
+                          'epg_checked': epg_checked or previous.get('epg_checked', False),
+                          'verified_quality': verified if verified.get('av_verified') else previous.get('verified_quality', {'av_verified': False, 'quality': 'UNVERIFIED'}),
+                          'http_hls_status': new_status,
+                          'ibo_device_tested': previous.get('ibo_device_tested', False),
+                          'observations': old_observations + [{'status': new_status, 'origin': 'current-scan'}]}
+                inventory_file.write(json.dumps(record, ensure_ascii=False) + '\n')
+                if candidate['url'] not in good_urls:
+                    recovery_records.append({'url': candidate['url'],
+                                             'last_http_status': diagnostics_by_url.get(candidate['url'], {}).get('last_http_status'),
+                                             'last_timeout': diagnostics_by_url.get(candidate['url'], {}).get('last_timeout', False),
+                                             'recovery_attempts': recovery_attempts,
+                                             'observations': record['observations']})
+        # Queue contains SHA identities only; no stream URL or token in public report.
+        recovery_queue = build_recovery_queue(recovery_records)
+        # A failed source fetch must not overwrite the last complete encrypted baseline.
+        encrypted_inventory = args.inventory.with_suffix(
+            args.inventory.suffix + ('.pending.enc' if incomplete else '.enc'))
         archive_result = encrypt_inventory(inventory_tmp, encrypted_inventory,
                                            os.environ['V2_ARCHIVE_PASSPHRASE'])
     finally:
@@ -310,8 +373,12 @@ def main():
     # Source outages are reported; a working subset can still be tested.
     # Never modify the protected main playlist.
     report = {'source_count': len(sources), 'dynamic_source_count': dynamic_count, 'fetched_sources': len(source_counts),
-              'failed_sources': failed, 'rejected_dynamic_sources': rejected_dynamic_sources, 'source_counts': source_counts, 'source_drops': source_drops, 'existing_main_urls': len(main_urls), 'excluded_foreign_archive_urls': len(foreign_urls), 'unique_new_candidates': len(candidates), 'recovered_from_previous_encrypted_inventory': recovered_from_archive,
+              'failed_sources': failed, 'source_counts': source_counts, 'source_drops': source_drops, 'existing_main_urls': len(main_urls), 'excluded_foreign_archive_urls': len(foreign_urls), 'unique_new_candidates': len(candidates), 'recovered_from_previous_encrypted_inventory': recovered_from_archive,
               'http_checked': checked, 'http_hls_ok': len(good), 'av_verified': len(good),
+              'recovery_queue': recovery_queue,
+              'recovery_retry_count': sum(item['action'] == 'RETRY' for item in recovery_queue),
+              'recovery_av_check_count': sum(item['action'] == 'CHECK_AV' for item in recovery_queue),
+              'recovery_manual_review_count': sum(item['action'] == 'REVIEW' for item in recovery_queue),
               'candidate_inventory': str(encrypted_inventory), 'archive_restore_test_passed': archive_result['restore_test_passed'],
               'unverified_or_failed_candidates': len(candidates) - len(good),
               'multi_source_candidates': sum(len(item['source_ids']) > 1 for item in candidates.values()),
