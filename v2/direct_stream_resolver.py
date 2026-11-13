@@ -88,8 +88,10 @@ def resolve_report(report, runner=subprocess.run, limit=MAX_RESOLVE):
                and item.get("status") == "LIVE_METADATA_VERIFIED"]
     official = [item for item in report["candidates"]
                 if isinstance(item, dict) and item.get("source") == "official"]
-    per_source_limit = max(0, limit // 2)
-    eligible = youtube[:per_source_limit] + official[:per_source_limit]
+    youtube_limit = max(0, (limit + 1) // 2)
+    official_limit = max(0, limit // 2)
+    eligible_total = len(youtube) + len(official)
+    eligible = youtube[:youtube_limit] + official[:official_limit]
     attempted = 0
     for item in eligible:
         attempted += 1
@@ -101,8 +103,8 @@ def resolve_report(report, runner=subprocess.run, limit=MAX_RESOLVE):
     return {
         "policy": "CANDIDATES_ONLY_ENCRYPTED_DIRECT_URLS_NO_PLAYLIST_WRITES",
         "attempted": attempted,
-        "eligible": len(eligible),
-        "skipped_by_limit": max(0, len(youtube) - per_source_limit) + max(0, len(official) - per_source_limit),
+        "eligible": eligible_total,
+        "skipped_by_limit": max(0, len(youtube) - youtube_limit) + max(0, len(official) - official_limit),
         "resolved": len(candidates),
         "verified_av": 0,
         "candidates": candidates,
