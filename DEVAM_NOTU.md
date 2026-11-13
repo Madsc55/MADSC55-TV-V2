@@ -1,3 +1,8 @@
+## 13 Kasım 2026 — main üzerinde Stage 6 + #34 CI kanıtı
+- Stage 6 PR #27 squash merge 0fe0d759729ea6623ee7dbab610e7ceeaf303ecf; main Actions run 43448714398 SUCCESS. `Stage 6 offline package and archive acceptance regressions`, `Preserve original IBO category and backup invariants`, `Discovery 34 offline adapter and integration acceptance` adımları PASS.
+- #34 API sözleşmesi regresyonları PR #33 (37f58d6238d7124c799b4134b891dff8ccf1943f) Actions 43448889276 SUCCESS; squash merge f7d5ee1f60dd4c95c32e10d63f4b1997effd3a87; main Actions 43449060854 SUCCESS.
+- Bu kanıtlar çevrimdışı otomatik testleri doğrular. Gerçek canlı API uçları, gerçek yayın görüntü/ses, bağımsız arşiv geri yükleme ve gerçek İBO nihai kabulü kanıtlanmadı; ilgili görevler açık kalır. Kapsamlı kanal taraması ve korunan playlist değişikliği yapılmadı.
+
 ## 13 Kasım 2026 — güncel main tabanlı #34 PR #30 güvenlik işi PASS
 - Dal fix/v2-34-socket-retries-20261113, PR #30: commit f950fb09 ile geçici socket hataları için en fazla üç deneme; commit 7a294735 ile dört HTTP/socket regresyon testi.
 - GitHub Actions run 43448792241: "Verify suspended publishers, no cron and immutable IBO" işi SUCCESS. Güvenlik regresyonları, İBO invariants, Stage 6 çevrimdışı paket/arşiv ve #34 offline adapter/entegrasyon adımları SUCCESS.
