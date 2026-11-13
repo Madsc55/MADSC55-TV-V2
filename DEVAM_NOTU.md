@@ -1,3 +1,9 @@
+## 13 Kasım 2026 — #34 yönlendirme güvenliği Actions PASS
+- Commit b0e2c00fdd512f319e72c65b4670d87f582f28d7 için GitHub Actions run 43442079652: SUCCESS.
+- Production Security Gate: grouped safety, production trigger/write policy, korunan İBO invariantları ve Discovery 34 offline adapter/integration acceptance adımlarının tümü PASS.
+- Önceki run 43441966323'te yeni testteki assertIsInstance(class) hatası bulundu; b0e2c00f ile assertIs(class) düzeltildi ve tekrar testte yeşil doğrulandı.
+- Bu çevrimdışı kabul, canlı Codeberg API ve gerçek yayın AV kanıtı değildir; #34 nihai kabul açık. PR #22 henüz main'e birleştirilmedi. Ana İBO/YEDEKLER/YENİLER/FAVORİLER değişmedi.
+
 ## 13 Kasım 2026 — #34 yönlendirme öncesi ağ güvenliği düzeltmesi (CI bekliyor)
 - Commit 11176e51: discovery_34.fetch_json artık HTTP yönlendirmesini ikinci ağa çıkmadan reddeden _NoRedirect kullanıyor. Önceki yalnızca son URL'yi denetleyen kontrol korunuyor.
 - Commit 4324b674 ve da843902: yönlendirmeyi engelleme ve fetch_json için engelleyici opener kullanımı offline regresyon testleri eklendi/düzeltildi.
