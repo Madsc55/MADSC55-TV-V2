@@ -42,6 +42,7 @@ jobs:
           python v2/test_ibo_final_acceptance.py
       - name: Stage 2 and Stage 3 offline identity, EPG and recovery acceptance
         run: |
+          echo 'Stage 2/3 grouped acceptance includes current-main scanner and probe integration'
           PYTHONPATH=v2 python -m unittest -v test_identity_metadata test_recovery_identity test_recovery_queue test_stage2_integration test_stage3_identity_recovery test_stage3_metadata_acceptance test_stage3_recovery_queue test_stage3_scanner_integration
           python -m py_compile v2/identity_metadata.py v2/recovery_queue.py v2/stage2_integration.py v2/stage3_identity_recovery.py v2/stage3_metadata_acceptance.py v2/stage3_recovery_queue.py v2/real_ibo_scan.py v2/discover.py v2/consolidate_inventory.py
       - name: Discovery 34 offline adapter and integration acceptance
