@@ -1,3 +1,8 @@
+## 13 Kasım 2026 — #28–#33 bozuk EXTINF reddi
+- 730895b: geçersiz #EXTINF yönergeleri M3U ayrıştırıcısında açık hata üretir; sessiz atlama engellendi.
+- 4cc6fa2: bozuk EXTINF biçimleri için çevrimdışı regresyon testi eklendi.
+- Bu değişiklikler için yeni Actions sonucu henüz doğrulanmadı; nihai AV ve harici geri yükleme kabulleri AÇIK. Ana İBO/YEDEKLER/YENİLER/FAVORİLER korunuyor; yeni kanal taraması yapılmadı.
+
 ## 13 Kasım 2026 — #28–#33 M3U geçersiz port koruması
 - Commit 98dc2f9: IBO paket ayrıştırıcısı bozuk veya sınır dışı URL portlarını reddeder.
 - Commit fd3a731: bozuk ve 65535 üzeri port senaryoları için çevrimdışı regresyon testi eklendi.
