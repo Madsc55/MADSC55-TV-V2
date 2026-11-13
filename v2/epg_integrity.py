@@ -49,16 +49,24 @@ def inspect(url, playlist_ids):
         if len(data) > 120_000_000:
             result["status"] = "DECOMPRESSED_TOO_LARGE"
             return result
+        # Keep external entity declarations out of XMLTV inspection even when
+        # the input passed compressed and uncompressed size limits.
+        if b"<!DOCTYPE" in data.upper() or b"<!ENTITY" in data.upper():
+            result["status"] = "XMLTV_DTD_REJECTED"
+            return result
         root = ET.fromstring(data)
         if root.tag != "tv":
             result["status"] = "NOT_XMLTV"
             return result
-        channels = {node.get("id") for node in root.iter("channel") if node.get("id")}
+        channel_counts = Counter(node.get("id") for node in root.iter("channel") if node.get("id"))
+        channels = set(channel_counts)
         now = datetime.datetime.now(datetime.timezone.utc)
         programmes = 0
         current_programmes = 0
         invalid_programme_intervals = 0
         matched_programme_ids = set()
+        valid_matched_programme_ids = set()
+        current_matched_programme_ids = set()
         for node in root.iter("programme"):
             programmes += 1
             channel_id = node.get("channel")
@@ -71,13 +79,24 @@ def inspect(url, playlist_ids):
                 if stop_at <= start_at:
                     invalid_programme_intervals += 1
                     continue
+                # Only unique XMLTV channel declarations and valid time ranges
+                # qualify for the stricter evidence counts. The legacy raw
+                # matched-programme count is retained for compatibility.
+                matching_unique = channel_id in playlist_ids and channel_counts[channel_id] == 1
+                if matching_unique:
+                    valid_matched_programme_ids.add(channel_id)
                 if start_at <= now <= stop_at:
                     current_programmes += 1
+                    if matching_unique:
+                        current_matched_programme_ids.add(channel_id)
             except ValueError:
                 invalid_programme_intervals += 1
         result.update(status="XMLTV_VALID", channels=len(channels), programmes=programmes,
                       playlist_id_matches=len(channels & playlist_ids),
                       matched_programme_channel_ids=len(matched_programme_ids),
+                      valid_matched_programme_channel_ids=len(valid_matched_programme_ids),
+                      current_matched_programme_channel_ids=len(current_matched_programme_ids),
+                      duplicate_channel_ids=sum(count > 1 for count in channel_counts.values()),
                       current_programme_intervals=current_programmes,
                       invalid_programme_intervals=invalid_programme_intervals,
                       playlist_id_match_rate=round(len(channels & playlist_ids) / len(playlist_ids), 4) if playlist_ids else None)
