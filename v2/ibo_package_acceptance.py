@@ -14,6 +14,7 @@ def parse(text):
     pending = None
     records = []
     for line_number, line in enumerate(text.splitlines()):
+        raw_line = line
         line = line.strip()
         if line_number == 0 and line == "#EXTM3U":
             continue
@@ -28,6 +29,8 @@ def parse(text):
             if not pending[1]:
                 raise ValueError("empty channel name")
         elif line and not line.startswith("#"):
+            if raw_line != line:
+                raise ValueError("leading or trailing whitespace in stream URL")
             if pending is None:
                 raise ValueError("URL without EXTINF")
             if any(ord(char) <= 32 or ord(char) == 127 for char in line):
