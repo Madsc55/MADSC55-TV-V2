@@ -103,12 +103,16 @@ def curated_candidates(source, records):
     for item in records:
         if not isinstance(item, dict):
             continue
+        if not isinstance(item, dict):
+            continue
         url = item.get("url", "")
         if source == "youtube":
             video_id = item.get("video_id", "")
             if not re.fullmatch(r"[A-Za-z0-9_-]{11}", video_id):
                 continue
             url = "https://www.youtube.com/watch?v=" + video_id
+        if not isinstance(url, str):
+            continue
         try:
             candidate = identity(source, url)
             if source == "youtube":
