@@ -1,3 +1,9 @@
+## 13 Kasım 2026 — #34 canlı keşif başarısız koşu incelemesi
+- İncelenen eski keşif dalı `madsc/v2-discovery-bulk-20261031`, Actions run `43299369197`, job `131488422967`, head `72754172533a541a4968691c24c63f5c56f72ffb`; sonuç FAILURE. Bu koşu `main` kabulü değildir.
+- Kaynak erişim özeti: 46/46 kaynak erişilebilir; GitHub araması 5 HTTP 403, GitLab/Codeberg 17 HTTP 429 (14 Codeberg, 3 GitLab); resmi site referansları 22.951, yalnızca 15 eşleşme ve 22.936 inceleme; canlı sayfa 68 referans/5 HTTP 403; YouTube 233 sonuç, 44 canlı metadata doğrulandı, 107 bot challenge, resmi API anahtarı yapılandırılmamış.
+- Fatal hata: `v2/discover.py:506` -> `advisory_channel_identity_bridge.link_or_defer(...)` -> `ValueError: Invalid candidate list`; ardından `run_all_discovery.py` kısmi kaynak anlık görüntüsünü güvenli bulmadı ve durdu. Bu nedenle koşu aday üretimi/entegrasyonunu tamamlamadı; artifact `13984134723` yalnızca 511 bayt preflight kanıtı.
+- Korunan playlist/history diff kontrolü başarılı. Bu başarısız koşu gerçek AV, arşiv veya kanal kabulü olarak sayılamaz. #34 açık; #15 ve #17–#21 ile #28–#33 mevcut defter durumları korunuyor. Hiçbir görev kapatılmadı ve korunan listeler değiştirilmedi.
+
 ## 13 Kasım 2026 — PR #53 kontrol karakteri regresyonu ve CI kabulü
 - PR #53 düzeltmesi: `v2/test_discovery_34.py` gerçek newline/CR/NUL/DEL karakterlerini Python string kaçışlarıyla test eder; önceki hatalı fixture nedeniyle başarısız testin kendisi düzeltildi. Üretim URL reddetme kontrolü PR #45 ile ana dala alınmıştı.
 - GitHub Actions run `43451905845`: SUCCESS. Ana güvenlik kapısı, görev defteri bütünlüğü, Stage 6 offline paket/arşiv ve #34 offline keşif testlerinin tüm adımları PASS.
