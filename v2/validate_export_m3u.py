@@ -36,6 +36,8 @@ def validate_m3u(text: str) -> list[str]:
             if len(groups) != 1 or not groups[0].strip():
                 errors.append(f"line {number}: missing, duplicate or empty group-title")
         elif line.startswith("#"):
+            if line.startswith("#EXTM3U"):
+                errors.append(f"line {number}: duplicate or misplaced M3U header")
             # HLS manifest directives must not appear in a channel export,
             # even before the first EXTINF. Previously the position of an
             # EXT-X directive could hide a mixed playlist/manifest document.
