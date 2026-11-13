@@ -1,3 +1,9 @@
+## 13 Kasım 2026 — Aşama 2 (#15, #17–#21) çevrimdışı kabul kapısı ana dala alındı
+- PR #72 squash merge `e333adca5c0497de6c021e021d74b3369571276d`; ana Production Security Gate Actions `43455393756` SUCCESS.
+- Başarılı adımlar: Stage 2 identity/recovery/metadata integration acceptance; Stage 2/3 offline identity, EPG and recovery acceptance; Stage 6 offline package/archive; #34 offline adapter/integration; production security and protected IBO invariants.
+- Bu kanıt mevcut gözlemler üzerinde çevrimdışı entegrasyon içindir. Canlı motorun tüm üretim girdilerinde devreye alındığı, gerçek yayın AV, logo/EPG varlığı veya 1.000/2.000 gerçek İBO paketleri kanıtlanmış değildir. #15/#17–#21 ve #28–#33 görevleri bu sebeple otomatik kapatılmadı.
+- Yeni kapsamlı kanal taraması yapılmadı; ana İBO, YEDEKLER, YENİLER ve FAVORİLER değiştirilmedi.
+
 ## 13 Kasım 2026 — PR #53 kontrol karakteri regresyonu ve CI kabulü
 - PR #53 düzeltmesi: `v2/test_discovery_34.py` gerçek newline/CR/NUL/DEL karakterlerini Python string kaçışlarıyla test eder; önceki hatalı fixture nedeniyle başarısız testin kendisi düzeltildi. Üretim URL reddetme kontrolü PR #45 ile ana dala alınmıştı.
 - GitHub Actions run `43451905845`: SUCCESS. Ana güvenlik kapısı, görev defteri bütünlüğü, Stage 6 offline paket/arşiv ve #34 offline keşif testlerinin tüm adımları PASS.
