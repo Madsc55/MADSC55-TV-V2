@@ -98,6 +98,12 @@ class Discovery34Tests(unittest.TestCase):
                 with self.subTest(source=source, url=url), self.assertRaises(ValueError):
                     identity(source, url)
 
+    def test_public_nondefault_ports_have_distinct_source_ids(self):
+        default = identity("m3u", "https://example.org/live.m3u8")
+        alternate = identity("m3u", "https://example.org:8443/live.m3u8")
+        self.assertNotEqual(default["source_id"], alternate["source_id"])
+        self.assertIn(":8443", alternate["source_id"])
+
     def test_youtube(self):
         items = curated_candidates("youtube", [{"video_id": "AbCdEf12345"}])
         self.assertEqual(items[0]["source_id"], "youtube:AbCdEf12345")
