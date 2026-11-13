@@ -1,6 +1,11 @@
 #!/usr/bin/env python3
 """Offline Stage 5 gate regressions. No network, channel scans, or playlist edits."""
 from stage5_acceptance_gate import REQUIRED, evaluate
+import json
+import subprocess
+import sys
+import tempfile
+from pathlib import Path
 
 def filled():
     tasks = {number: {field: "fixture-only" for field in fields}
@@ -53,6 +58,39 @@ def main():
         no_proof = filled()
         no_proof["tasks"][number][flag] = False
         assert not evaluate(no_proof)["tasks"][number]["accepted"]
+    # External evidence links must not target private, reserved or malformed hosts.
+    for url in ("https://127.0.0.1/proof", "https://192.168.1.1/proof",
+                "https://169.254.169.254/latest/meta-data", "https://[::1]/proof",
+                "https://host.internal/proof", "https://host.local/proof",
+                "https://github.com:bad/proof", "https://github.com:99999/proof",
+                "https://user:password@github.com/proof",
+                "https://github.com/proof\\nforged"):
+        invalid = filled()
+        invalid["tasks"]["31"]["real_av_evidence_url"] = url
+        assert not evaluate(invalid)["tasks"]["31"]["accepted"], url
+    # Malformed JSON schemas must fail closed rather than being treated as accepted.
+    for invalid_report in (None, [], {"tasks": []},
+                           {"tasks": {"31": []}}, {"tasks": {"32": True}},
+                           {"tasks": {"33": "invalid"}}):
+        try:
+            evaluate(invalid_report)
+        except ValueError:
+            pass
+        else:
+            raise AssertionError("Invalid acceptance JSON structure accepted")
+    # CLI must preserve an existing acceptance artifact, even for valid fixtures.
+    with tempfile.TemporaryDirectory() as d:
+        root = Path(d)
+        evidence = root / "fixture.json"
+        output = root / "protected-report.json"
+        evidence.write_text(json.dumps(filled()), encoding="utf-8")
+        output.write_bytes(b"DO_NOT_OVERWRITE_STAGE5_ACCEPTANCE")
+        result = subprocess.run(
+            [sys.executable, str(Path(__file__).with_name("stage5_acceptance_gate.py")),
+             "--evidence", str(evidence), "--output", str(output)],
+            capture_output=True, text=True, timeout=30)
+        assert result.returncode != 0
+        assert output.read_bytes() == b"DO_NOT_OVERWRITE_STAGE5_ACCEPTANCE"
     print("Stage 5 offline acceptance gate regressions: PASS (fixture only)")
 
 if __name__ == "__main__":
