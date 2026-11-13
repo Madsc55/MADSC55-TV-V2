@@ -905,3 +905,9 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - Güncel `main` üzerindeki `v2/discovery_34_live_contract.py`, HTTP durum kodunu `HTTP_<code>` biçiminde, sağlayıcı ve endpoint host ile raporlar; 408/425/429/5xx için en fazla üç deneme uygular. 403 kalıcı erişim/izin engeli olarak tekrar denenerek başarıya çevrilmez. `v2/discovery_34.py` Codeberg için Forgejo `/api/v1/repos/search` yolunu ve `data` yanıt listesini bekler.
 - Harici API dokümantasyonu Forgejo/Codeberg repository-search endpoint'inin `/api/v1/repos/search` olduğunu ve `data` alanlı yanıt kullandığını doğruluyor; dolayısıyla mevcut kanıt, endpoint/JSON şema hatasından çok CI çıkışının Codeberg tarafından 403 ile reddedilmesiyle uyumlu. Bu, Codeberg'in kendi tarafında kalıcı arıza olduğu anlamına gelmez.
 - Güncel main üzerinde canlı sözleşme yeniden çalıştırılmadı; mevcut GitHub bağlantısı workflow_dispatch başlatma yetkisi sağlamıyor. Bu nedenle #34 canlı kabulü açık bırakıldı; hata gizlenmedi, Codeberg başarısızlığı başarı sayılmadı. Yeni kanal taraması ve playlist değişikliği yapılmadı.
+
+
+## 13 Kasım 2026 — #34 Codeberg blocker kaydı ana dala alındı
+- PR #79 squash merge `2d2bd9193cf06fbd81077912e4e4d434316e7c5e`.
+- Actions `43455836114`: SUCCESS. Güvenlik, playlist invariants, görev defteri, Stage 6 offline paket/arşiv, Stage 2/3 kimlik-EPG-kurtarma ve #34 offline adaptör adımları PASS.
+- Bu koşu canlı Codeberg API çağrısı değildir. #34 açık: önceki canlı koşuda Codeberg HTTPError; güncel main canlı API tekrar çalıştırılmadı. GitHub Actions bağlantısı workflow_dispatch başlatma sağlamıyor.
