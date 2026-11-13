@@ -81,4 +81,6 @@ jobs:
         with:
           python-version: '3.12'
       - name: Probe all six discovery terms on GitHub, GitLab and Codeberg
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         run: PYTHONPATH=v2 python v2/discovery_34_live_contract.py
