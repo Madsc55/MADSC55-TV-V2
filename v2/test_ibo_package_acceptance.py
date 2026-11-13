@@ -43,6 +43,15 @@ class PackageTests(unittest.TestCase):
         proof.pop(next(iter(proof)))
         with self.assertRaises(ValueError):
             package(text,1000,proof)
+    def test_rejects_boolean_or_blank_av_descriptors(self):
+        text, proofs = fixture(1000)
+        first_key = next(iter(proofs))
+        for field, invalid in (("video", True), ("audio", False), ("video", "  "), ("audio", None)):
+            altered = dict(proofs)
+            altered[first_key] = dict(proofs[first_key], **{field: invalid})
+            with self.subTest(field=field, invalid=invalid), self.assertRaises(ValueError):
+                package(text, 1000, altered)
+
     def test_malformed(self):
         for text in ("#EXTM3U\n#EXTINF:-1,Name\n", "#EXTM3U\nhttps://x.org/a", "#EXTM3U\n#EXTINF:-1,Name\nfile:///tmp/x"):
             with self.assertRaises(ValueError):
