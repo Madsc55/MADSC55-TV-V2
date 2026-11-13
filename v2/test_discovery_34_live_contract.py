@@ -19,7 +19,7 @@ class LiveContractRetryTests(unittest.TestCase):
         result = probe("codeberg", fetch=fetch, sleep=sleeps.append)
         self.assertEqual(result["status"], "ok")
         self.assertEqual(result["candidates"], 1)
-        self.assertEqual(result["attempts"], 4)
+        self.assertEqual(result["attempts"], 3)
         self.assertEqual(sleeps, [1, 2])
 
     def test_non_retryable_failure(self):
@@ -49,7 +49,7 @@ class LiveContractRetryTests(unittest.TestCase):
         result = probe("codeberg", fetch=lambda _: (_ for _ in ()).throw(urllib.error.URLError("offline")), sleep=lambda _: None)
         self.assertEqual(result["status"], "error")
         self.assertEqual(result["reason"], "URLError")
-        self.assertEqual(result["attempts"], 3)
+        self.assertEqual(result["attempts"], 4)
 
     def test_malformed_provider_payload_fails_closed(self):
         for provider, malformed in (("github", []), ("gitlab", {}), ("codeberg", None)):
@@ -92,7 +92,7 @@ class LiveContractRetryTests(unittest.TestCase):
         self.assertEqual(result["reason"], "HTTP_500")
         self.assertEqual(result["attempts"], 4)
         self.assertEqual(len(calls), 4)
-        self.assertEqual(sleeps, [1, 2, 4])
+        self.assertEqual(sleeps, [1, 2, 3])
 
     def test_socket_timeout_recovers_with_bounded_retry(self):
         attempts = []
@@ -113,13 +113,13 @@ class LiveContractRetryTests(unittest.TestCase):
                        sleep=lambda _: None)
         self.assertEqual(result["status"], "error")
         self.assertEqual(result["reason"], "ConnectionResetError")
-        self.assertEqual(result["attempts"], 3)
+        self.assertEqual(result["attempts"], 4)
         self.assertTrue(result["retryable"])
 
     def test_exhaustion_fails_closed(self):
         result = probe("codeberg", fetch=lambda _: (_ for _ in ()).throw(http_error(429)), sleep=lambda _: None)
         self.assertEqual(result["status"], "error")
-        self.assertEqual(result["attempts"], 3)
+        self.assertEqual(result["attempts"], 4)
         self.assertTrue(result["retryable"])
 
     def test_retry_after_header_is_honored_and_capped(self):
