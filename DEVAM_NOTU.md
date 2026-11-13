@@ -2590,3 +2590,12 @@ Kullanıcının açık talimatıyla #3, #4 ve #6 tarihî kurtarma görevleri art
 - #15'in kendi bağımlılıkları #11, #14 ve #34'tür. #11 ve #14 tamamlanmış; #34 henüz son keşif/nihai iş olarak açık tutulmuştur. Bu nedenle #15'in nihai kabulü #34 sonrasına bağlıdır. Önceki notlarda #17 için #15 yanında #16'nın da açık bağımlılık olduğu izlenimi veren ifade düzeltilmiştir.
 - #17 arşiv kodu ve AES-GCM round-trip regresyonları hazır olsa da #15 tamamlanmadan görev kabulü yapılamaz. #18, #19 ve #20'nin mevcut ölçümleri kısmi kanıt olarak kalır.
 - Bu kayıt yalnızca görev bağımlılığı açıklamasıdır; `state.json` durumları ve korunan listeler değiştirilmedi. Yeni tarama yapılmadı.
+
+
+## 13 Kasım 2026 — Commit 98b1fb2 kabul koşuları tamamlandı
+
+- Eight-Stage Runner Verification run `43457264027` tamamlandı: `Offline regressions and protected playlist` success; `FFmpeg real local video and audio-only guard` success.
+- Master Engine run `43457264135` tamamlandı: `offline-tests` success; `master` işi offline-only koşu tasarımı gereği skipped.
+- Actions Status Monitor run `43457264085` success.
+- Bu sonuçlar 98b1fb2 kaynak ağacındaki çevrimdışı regresyon ve korunan playlist guard'larını doğrular; gerçek canlı keşif, #15 yayıncı kimliği provenansı, #17 kurtarma kuyruğu nihai kabulü, #28–33 gerçek paket/cihaz teslimini kanıtlamaz. Görev statüleri bu nedenle değiştirilmedi.
+- Yeni canlı tarama/probe başlatılmadı. Ana İBO, YEDEKLER, YENİLER, FAVORİLER ve tarihî baseline değiştirilmedi.
