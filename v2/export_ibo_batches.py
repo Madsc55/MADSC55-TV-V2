@@ -31,17 +31,28 @@ def export(archive, passphrase, destination, sizes=(1000, 2000), existing=()):
         seen.add(url)
         records.append(record)
     destination = Path(destination)
-    destination.mkdir(parents=True, exist_ok=True)
-    # Never leave older, larger exports that could be mistaken for this run.
-    for stale in destination.glob('IBO_AV_VERIFIED_*_PART*.m3u8'):
-        stale.unlink()
-    result = {'av_verified_unique': len(records), 'packages': []}
+    if destination.is_symlink():
+        raise ValueError('Package output directory must not be a symlink')
+    # Plan every output before writing any: never delete or replace older
+    # packages, even if a different historical batch size is requested.
+    planned = []
     for size in sizes:
+        if type(size) is not int or size <= 0:
+            raise ValueError('Invalid IBO batch size')
         for part, offset in enumerate(range(0, len(records), size), 1):
             batch = records[offset:offset + size]
             path = destination / f'IBO_AV_VERIFIED_{size}_PART{part}.m3u8'
-            atomic_write(path, render(batch))
-            result['packages'].append({'path': str(path), 'count': len(batch), 'batch_size': size})
+            planned.append((path, batch, size))
+    paths = [path for path, _, _ in planned]
+    if len(paths) != len(set(paths)):
+        raise ValueError('Duplicate output package paths')
+    if any(path.exists() or path.is_symlink() for path in paths):
+        raise FileExistsError('Existing IBO package must not be replaced or deleted')
+    destination.mkdir(parents=True, exist_ok=True)
+    result = {'av_verified_unique': len(records), 'packages': []}
+    for path, batch, size in planned:
+        atomic_write(path, render(batch))
+        result['packages'].append({'path': str(path), 'count': len(batch), 'batch_size': size})
     return result
 
 def main():
