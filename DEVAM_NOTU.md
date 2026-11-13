@@ -1,3 +1,11 @@
+## 13 Kasım 2026 — Güncel main tabanlı #34 kaynak kimliği ve çıktı güvenliği
+- PR #159: https://github.com/Madsc55/MADSC55-TV-V2/pull/159
+- a50311e0: discovery_34.py farklı query token'lı official/M3U URL'leri SHA-256 sorgu özetiyle ayrı source_id olarak tanımlar; değerleri kimliğe düz yazmaz. Varsayılan dışı URL portları kimlikten düşmez, bozuk portlar reddedilir. Keşif raporu yalnız yeni dosyaya yazılır; var olan rapor/IBO üzerine yazılmaz.
+- 19f5c239: discovery_34_integrate.py rapor çıktısında da exclusive create kullanır.
+- 44ed985a ve 7e43178d: imzalı URL, bozuk port ve her iki CLI için mevcut dosyanın korunması regresyonları.
+- Yeni kod baş commit'i 7e43178d üzerinde V2 Main Production Security Gate run https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43479925970 SUCCESS. Tüm güvenlik, korunan IBO, görev defteri, Stage 2/3, Stage 5, Stage 6 ve #34 offline kabul adımları SUCCESS. PR dokümantasyon commit'i ayrı olduğu için bu koşu onun sonrası için yeni CI kanıtı değildir.
+- Canlı Codeberg API #34 sağlayıcı limitini (HTTP 429), gerçek FFmpeg ses/görüntü kanıtını, harici geri yüklemeyi ve 1000/2000 gerçek İBO paket kabulünü bu çevrimdışı test sağlamaz. Görevleri kanıtsız kapatma. Toplu kanal taraması başlatılmadı, ana İBO, YEDEKLER, YENİLER, FAVORİLER değiştirilmedi.
+
 ## 13 Kasım 2026 — PR #106 güncel ana dal kabul testi başarılı
 - PR #106 (`integrate-stage6-28-33-current-main-20261113`) için Actions run `43457997079` completed / success.
 - Tüm adımlar SUCCESS: grouped safety regression tests; production trigger/write policy; original IBO category/backup invariants; historical task ledger; Stage 2 identity recovery metadata; Stage 6 offline package/archive regressions; Stage 2/3 offline identity, EPG and recovery; Discovery #34 offline adapter/integration acceptance.
