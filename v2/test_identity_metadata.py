@@ -80,6 +80,11 @@ class IdentityMetadataTests(unittest.TestCase):
         row = verify_epg_ids([{"epg_id_candidate": "Station.tr"}], xml)[0]
         self.assertTrue(row["epg_programme_available"])
 
+    def test_malformed_candidate_rows_fail_closed(self):
+        xml = '<tv><channel id="Station.tr"/></tv>'
+        with self.assertRaisesRegex(ValueError, "Invalid EPG candidate"):
+            verify_epg_ids([None], xml)
+
     def test_xmltv_external_entity_declarations_rejected(self):
         malicious = '<!DOCTYPE tv [<!ENTITY xxe SYSTEM "file:///etc/passwd">]><tv/>'
         with self.assertRaisesRegex(ValueError, "DTD and entities"):
