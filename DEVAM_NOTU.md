@@ -1,3 +1,18 @@
+## 15 Kasım 2026 — Kanonik bitirme akışı (kapanış kanıtı zorunlu)
+
+**Kanonik durum:** `v2/tasks/state.json`: 21 completed / 13 in_progress. Açıklar: #15, #17, #18, #19, #20, #21, #28, #29, #30, #31, #32, #33, #34. Bu kayıt hiçbir görevi tamamlandı yapmaz.
+
+1. **Aşama A — önce:** #15 tarihî kimlik ve 6 eksik hash / bağımsız yayıncı kanıtı; #17 kurtarma kuyruğu; #18 güncel gerçek ses+görüntü; #19 kesin EPG-ID ve 303 boşluk; #20 kurtarma kanıt zinciri; #21 TR/AZ/dünya/YouTube canlı kaynak devam testleri. Son canlı koşu #43608247496: 103/103 uygun M3U, 28.845 aday, 8.573 AV (8.540 eski + 33 yeni), 20.272 kanıtsız, 300 gerçek tekrar deneme. Altı görev açık.
+2. **Aşama B:** #28 gerçek kanıtlı 1000 İBO, #29 gerçek kanıtlı 2000 İBO, #30 EXTINF/URL, ZIP, manifest, SHA-256. Sentetik paket nihai teslim değildir.
+3. **Aşama C:** #31 gerçek cihaz görüntü/ses; #32 bağımsız haricî şifreli restore; #33 üretim kabulü. Önceki #13 Drive restore #32 kabulü yerine geçmez.
+4. **Aşama D — en son:** #34 Türkiye/Azerbaycan/dünya, GitHub/Gist/GitLab/Codeberg/YouTube/resmî yayıncı M3U/M3U8 kapsamlı tarama.
+
+**Her görev kapanışı:** kanonik state ve son commit/PR/Actions/artifact incele → eksikliği gider → offline ve gerekli gerçek canlı testleri yap → kanıt/başarı ölçütünü doğrula → yalnız o zaman `state.json` completed, tarih ve kanıt URL'leriyle güncelle → `DEVAM_NOTU.md` içine sonuç/engel/run/commit kaydet → sıradakine geç. Kanıtsız kapanış yok.
+
+**Koruma:** Ana İBO, YEDEKLER, YENİLER, FAVORİLER, EPG ve eski MADSC-TV ayrı tutulur. Eşzamanlı PR körlemesine merge edilmez. Manuel canlı tarama ve üretim yayımlaması kendiliğinden başlatılmaz.
+
+---
+
 ## 14 Kasım 2026 — Aşama A gerçek koşu #43608247496: başarı, ancak 6 nihai kabul görevi açık
 
 **Gerçek kanıt:** https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43608247496 — Actions SUCCESS, artifact ID 14119727053, 103/103 uygun M3U kaynağı, 28.845 aday, 8.573 AV (8.540 önceki şifreli checkpoint + 33 bu koşu gerçek FFmpeg AV), 20.272 doğrulanmamış; gerçek yeniden deneme 300, geri kazanılan AV 33, yeniden kullanılabilen eski kontrol 28.545. 15.462 uygun başarısız tekrar adayı var; bunların tamamı yeniden denenmedi. Kurtarma kuyrukları 12.883 RETRY / 2.546 CHECK_AV / 4.843 REVIEW. Korunan ana İBO değiştirilmedi; cihaz oynatma kabulü false.
