@@ -66,7 +66,7 @@ def validate_report(report):
     parts = report.get("written_parts")
     if (not isinstance(parts, list) or not parts
             or any(not isinstance(part, str) or not part.endswith(".m3u8")
-                   or not part.strip() or "\\x00" in part for part in parts)
+                   or not part.strip() or chr(0) in part for part in parts)
             or len(parts) != len(set(parts))):
         raise ScanIncomplete("Missing, malformed or duplicate candidate test M3U parts")
     if report.get("playback_verified_on_device") is not False:
