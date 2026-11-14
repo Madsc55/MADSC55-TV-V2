@@ -305,6 +305,28 @@ def normalize_dynamic_sources(dynamic, existing_sources):
     return accepted, rejected
 
 
+def classify_source_failures(failed, source_drops, configured_ids, *,
+                             tolerate_discovery_errors=False):
+    """Separate mandatory configured source outages from untrusted discoveries.
+
+    Optional discovered feed outages are never silently accepted: their IDs
+    stay in the public report as incomplete discovery. The full-discovery
+    acceptance gate must remain open, even when configured-source AV testing
+    can proceed safely.
+    """
+    if not isinstance(configured_ids, set):
+        raise ValueError("Configured source identities must be a set")
+    mandatory_failed, optional_failed = [], []
+    mandatory_drops, optional_drops = [], []
+    for record in failed:
+        (optional_failed if tolerate_discovery_errors
+         and record["id"] not in configured_ids else mandatory_failed).append(record)
+    for record in source_drops:
+        (optional_drops if tolerate_discovery_errors
+         and record["id"] not in configured_ids else mandatory_drops).append(record)
+    return mandatory_failed, optional_failed, mandatory_drops, optional_drops
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--stage2-offline-input', type=pathlib.Path, default=None,
@@ -324,6 +346,8 @@ def main():
                     help='Seal encrypted progress after this many candidate observations')
     ap.add_argument('--fail-fast-source-errors', action='store_true',
                     help='Stop before hours of AV probing if any mandatory M3U source failed')
+    ap.add_argument('--tolerate-optional-discovery-failures', action='store_true',
+                    help='Quarantine inaccessible discovered feeds; report incomplete discovery without treating them as mandatory configured sources')
     ap.add_argument('--output', type=pathlib.Path, default=OUT)
     ap.add_argument('--report', type=pathlib.Path, default=REPORT)
     ap.add_argument('--inventory', type=pathlib.Path, default=INVENTORY,
@@ -385,6 +409,7 @@ def main():
 
     doc = json.loads(args.sources.read_text(encoding='utf-8'))
     sources = list(doc['sources'] if isinstance(doc, dict) else doc)
+    configured_source_ids = {item['id'] for item in sources}
     dynamic_count = 0
     integrated_m3u_count = 0
     rejected_integrated_m3u = []
@@ -454,7 +479,16 @@ def main():
                         source_drops.append({'id': sid, 'previous': prior, 'current': current})
         except (OSError, ValueError, TypeError):
             pass
-    incomplete = bool(failed or source_drops)
+    (mandatory_failed_sources, optional_failed_sources,
+     mandatory_source_drops, optional_source_drops) = classify_source_failures(
+        failed, source_drops, configured_source_ids,
+        tolerate_discovery_errors=args.tolerate_optional_discovery_failures)
+    # Configured-source completeness is a hard gate. Dynamically discovered
+    # feeds are untrusted candidates that can disappear between API discovery
+    # and fetch. Their failures are recorded separately and cannot certify
+    # complete discovery or publisher provenance.
+    incomplete = bool(mandatory_failed_sources or mandatory_source_drops)
+    discovery_partial = bool(optional_failed_sources or optional_source_drops)
     if incomplete and args.fail_fast_source_errors:
         # Full acceptance is impossible without all mandatory sources.
         # Report the source problem now rather than spending hours on AV probes
@@ -466,7 +500,12 @@ def main():
             'scan_scope': 'WORLDWIDE_ALL_SOURCE_ENTRIES' if args.worldwide else 'TR_AZ_METADATA_CANDIDATES',
             'source_count': len(sources), 'source_counts': source_counts,
             'fetched_sources': len(source_counts), 'failed_sources': failed,
-            'source_drops': source_drops, 'unique_new_candidates': len(candidates),
+            'mandatory_failed_sources': mandatory_failed_sources,
+            'optional_failed_discovered_sources': optional_failed_sources,
+            'source_drops': source_drops, 'mandatory_source_drops': mandatory_source_drops,
+            'optional_discovery_source_drops': optional_source_drops,
+            'discovery_partial': discovery_partial,
+            'unique_new_candidates': len(candidates),
             'http_checked': 0, 'av_verified': 0,
             'playback_verified_on_device': False, 'mock_data_used': False,
             'no_new_av_probes_because_source_incomplete': True,
@@ -637,7 +676,7 @@ def main():
             raise
         # A failed source fetch must not overwrite the last complete encrypted baseline.
         encrypted_inventory = args.inventory.with_suffix(
-            args.inventory.suffix + ('.pending.enc' if incomplete else '.enc'))
+            args.inventory.suffix + ('.pending.enc' if (incomplete or discovery_partial) else '.enc'))
         archive_result = encrypt_inventory(inventory_tmp, encrypted_inventory,
                                            os.environ['V2_ARCHIVE_PASSPHRASE'])
     finally:
@@ -647,7 +686,15 @@ def main():
     # Never modify the protected main playlist.
     report = {'scan_scope': 'WORLDWIDE_ALL_SOURCE_ENTRIES' if args.worldwide else 'TR_AZ_METADATA_CANDIDATES', 'source_count': len(sources), 'dynamic_source_count': dynamic_count, 'rejected_dynamic_sources': rejected_dynamic_sources, 'integrated_m3u_source_count': integrated_m3u_count, 'rejected_integrated_m3u_sources': rejected_integrated_m3u,
               'resolved_direct_candidate_count': resolved_direct_count, 'rejected_resolved_direct_candidates': rejected_resolved_direct, 'fetched_sources': len(source_counts),
-              'failed_sources': failed, 'source_counts': source_counts, 'source_drops': source_drops, 'existing_main_urls': len(main_urls), 'excluded_foreign_archive_urls': len(foreign_urls), 'unique_new_candidates': len(candidates), 'recovered_from_previous_encrypted_inventory': recovered_from_archive,
+              'failed_sources': failed, 'source_counts': source_counts, 'source_drops': source_drops,
+              'mandatory_failed_sources': mandatory_failed_sources,
+              'optional_failed_discovered_sources': optional_failed_sources,
+              'mandatory_source_drops': mandatory_source_drops,
+              'optional_discovery_source_drops': optional_source_drops,
+              'discovery_partial': discovery_partial,
+              'configured_sources_complete': not incomplete,
+              'full_discovery_acceptance': not (incomplete or discovery_partial),
+              'existing_main_urls': len(main_urls), 'excluded_foreign_archive_urls': len(foreign_urls), 'unique_new_candidates': len(candidates), 'recovered_from_previous_encrypted_inventory': recovered_from_archive,
               'http_checked': checked, 'http_checked_this_run': checked - len(resumed_urls),
               'resumed_checkpoint_observations': len(resumed_urls),
               'resumed_decoded_av_evidence': len(resumed_verified_urls),
@@ -664,9 +711,27 @@ def main():
               'exported_part1': min(len(good), args.limit),
               'part_count': (len(good) + args.limit - 1) // args.limit,
               'playback_verified_on_device': False, 'mock_data_used': False,
-              'status': 'READY_FOR_DEVICE_TEST' if good else 'NO_VERIFIED_CANDIDATES'}
+              'status': ('PARTIAL_DISCOVERY_READY_FOR_DEVICE_TEST' if good else 'PARTIAL_DISCOVERY_NO_VERIFIED_CANDIDATES') if discovery_partial
+                        else ('READY_FOR_DEVICE_TEST' if good else 'NO_VERIFIED_CANDIDATES')}
     args.report.parent.mkdir(parents=True, exist_ok=True)
     args.report.write_text(json.dumps(report, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
+    if discovery_partial and not incomplete:
+        # Keep all real observations encrypted, but do not promote partial
+        # discovery into a complete baseline or M3U package. The next run
+        # can resume from the sealed per-URL checkpoint.
+        report['status'] = 'PARTIAL_DISCOVERY_EVIDENCE_ONLY'
+        report['written_parts'] = []
+        report['part_count'] = 0
+        report['exported_part1'] = 0
+        args.report.write_text(json.dumps(report, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
+        print(json.dumps({'status': report['status'],
+                          'configured_sources_complete': True,
+                          'optional_failed_discovered_sources': optional_failed_sources,
+                          'http_checked': checked,
+                          'av_verified': len(good),
+                          'full_discovery_acceptance': False},
+                         ensure_ascii=False))
+        return
     if incomplete:
         report['status'] = 'INCOMPLETE_SOURCE_FETCH_OR_DROP'
         report['written_parts'] = []

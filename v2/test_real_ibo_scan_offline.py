@@ -175,6 +175,80 @@ class ScannerOfflineTests(unittest.TestCase):
                     mocked.assert_not_called()
         self.assertTrue(scanner.public_http_stream_url("http://example.org/live.m3u8"))
 
+    def test_discovery_source_failures_are_explicit_and_not_mandatory(self):
+        mandatory = {"configured-tr", "configured-world"}
+        failed = [
+            {"id": "configured-tr", "error": "HTTPError"},
+            {"id": "integrated-m3u-untrusted", "error": "ValueError"},
+            {"id": "github-auto-untrusted", "error": "HTTPError"},
+        ]
+        dropped = [
+            {"id": "configured-world", "previous": 100, "current": 1},
+            {"id": "integrated-m3u-small", "previous": 100, "current": 2},
+        ]
+        strict = scanner.classify_source_failures(
+            failed, dropped, mandatory, tolerate_discovery_errors=False)
+        self.assertEqual(len(strict[0]), 3)
+        self.assertEqual(len(strict[1]), 0)
+        self.assertEqual(len(strict[2]), 2)
+        self.assertEqual(len(strict[3]), 0)
+        required, optional, required_drops, optional_drops = scanner.classify_source_failures(
+            failed, dropped, mandatory, tolerate_discovery_errors=True)
+        self.assertEqual([item["id"] for item in required], ["configured-tr"])
+        self.assertEqual([item["id"] for item in optional],
+                         ["integrated-m3u-untrusted", "github-auto-untrusted"])
+        self.assertEqual(required_drops[0]["id"], "configured-world")
+        self.assertEqual(optional_drops[0]["id"], "integrated-m3u-small")
+
+    def test_optional_bad_feed_does_not_fake_complete_discovery(self):
+        """Keep discovery incomplete and AV unverified, without blocking mandatory intake."""
+        import os
+        import sys
+        with tempfile.TemporaryDirectory() as temp:
+            root = pathlib.Path(temp)
+            archive = root / "v2/arsiv/yabanci_yedekler_2026-11-02_3964.m3u8"
+            archive.parent.mkdir(parents=True)
+            archive.write_bytes(b"offline-fixture")
+            protected = root / "protected.m3u8"
+            protected.write_text(
+                "#EXTM3U\n#EXTINF:-1,Protected\nhttps://example.org/protected.m3u8\n")
+            sources_path = root / "sources.json"
+            sources_path.write_text(json.dumps({"sources": []}))
+            integrated = root / "integrated.json"
+            integrated.write_text(json.dumps({"candidates": [{
+                "source": "m3u", "url": "https://example.org/nonplaylist.m3u",
+                "verified_av": False,
+            }]}))
+            report = root / "report.json"
+            inventory = root / "v2/reports/ibo-candidate-inventory.jsonl"
+            historic = [{"url": f"https://example.org/old/{i}"} for i in range(3964)]
+            argv = [
+                "real_ibo_scan.py", "--worldwide", "--live", str(protected),
+                "--sources", str(sources_path), "--integrated-candidates", str(integrated),
+                "--fail-fast-source-errors", "--tolerate-optional-discovery-failures",
+                "--report", str(report), "--inventory", str(inventory),
+            ]
+            with (patch.object(scanner, "ROOT", root),
+                  patch.object(scanner, "parse_m3u", return_value=iter(historic)),
+                  patch.object(scanner, "fetch", side_effect=ValueError("Not M3U")) as fetch,
+                  patch.object(scanner, "check_hls") as av_probe,
+                  patch.object(sys, "argv", argv),
+                  patch.dict(os.environ, {"V2_ARCHIVE_PASSPHRASE": "offline-passphrase-123456"})):
+                scanner.main()
+                fetch.assert_called_once()
+                av_probe.assert_not_called()
+            result = json.loads(report.read_text())
+            self.assertTrue(result["configured_sources_complete"])
+            self.assertTrue(result["discovery_partial"])
+            self.assertFalse(result["full_discovery_acceptance"])
+            self.assertEqual(len(result["optional_failed_discovered_sources"]), 1)
+            self.assertEqual(result["mandatory_failed_sources"], [])
+            self.assertEqual(result["status"], "PARTIAL_DISCOVERY_EVIDENCE_ONLY")
+            self.assertEqual(result["av_verified"], 0)
+            self.assertTrue(inventory.with_suffix(".jsonl.pending.enc").exists())
+            self.assertFalse(inventory.with_suffix(".jsonl.enc").exists())
+            self.assertFalse((root / "v2/reports/IBO_YENI_ADAYLAR_PART1.m3u8").exists())
+
     def test_failed_source_does_not_trigger_three_hour_av_scan(self):
         """A mandatory-source error must yield a truthful report before probes."""
         import os
