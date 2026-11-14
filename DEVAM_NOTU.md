@@ -1,3 +1,9 @@
+## 14 Kasım 2026 — Aşama A #21: YouTube canlı metadata hata kategorileri
+- Son gerçek koşu 43598617218 YouTube sonuçlarında 349 video kimliği buldu fakat LIVE_METADATA_VERIFIED 0 idi; raporda arama hatası 0 yazması, 349 video doğrulamasının başarılı olduğu anlamına gelmez. Tümü UNVERIFIED oldu.
+- v2/youtube_discovery.py yeni sürümünde hata/engel sebebini yalnız güvenli kategori olarak raporlar: UPSTREAM_RATE_LIMITED, UPSTREAM_ACCESS_DENIED, SIGN_IN_REQUIRED, VIDEO_UNAVAILABLE, YTDLP_METADATA_FAILED, METADATA_TIMEOUT, LIVE_STATUS_MISSING, INVALID_METADATA. Ham stderr, URL belirteci ve özel bilgileri genel rapora dökmez.
+- Yalnız yt-dlp gerçekten canlı metadata doğrularsa LIVE_METADATA_VERIFIED yazılır. 'İzleyiciye açık' başlık veya 'LIVE' sözcüğü AV kanıtı değildir. Yeni bu hata sınıflandırması offline CI'da test edildiğinde #21 canlı kabulü tamamlanmış sayılmaz; gerçek YouTube/official resolver/live FFmpeg kanıtı halen gerekir.
+
+---
 ## 14 Kasım 2026 — Aşama A #17/#20: gerçek kurtarma denemesi ve kanıt sınırları
 - Son gerçek koşu: https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43598617218 — 28.845 kanal adayı, 8.510 FFmpeg AV kanıtı (8.509 önceki checkpoint, yalnız 1 yeni); 20.335 doğrulanamayan kayıt; 12.871 RETRY, 2.624 CHECK_AV, 4.840 REVIEW kararları. Bu kuyruk kararları *gerçek yeniden denemenin yapıldığı* anlamına gelmez.
 - Aşama A kurtarma düzeltmesi: önceki checkpoint'ten kullanılan başarısız URL için recovery_attempts artırılmaz; yalnız yeni check_hls çağrısı sayılır. Şifreli checkpoint içinde gerçek deneme sayısı taşınır, eski envanterden ilk geri alma da sayacı saklar; tekrar kullanılan observations kökeni resumed-checkpoint olur, current-scan olmaz. Bu değişiklik #17/#20 için doğru kanıt üretir, ancak gerçek canlı tekrar denemeleri bitmiş sayılmaz.
