@@ -28,7 +28,10 @@ def normalize(source, data):
         key, field = "sources", "url"
     else:
         raise ValueError("Unknown source")
-    items = data.get(key, [])
+    # Missing rows are an invalid report, not evidence of zero candidates.
+    if key not in data:
+        raise ValueError("Discovery report missing required rows")
+    items = data[key]
     if not isinstance(items, list):
         raise ValueError("Invalid discovery rows")
     rows = [{("video_id" if source == "youtube" else "url"): item.get(field, "")}
