@@ -62,6 +62,18 @@ class IntegrationTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 normalize(source, {key: "invalid"})
 
+    def test_unhashable_metadata_identifiers_do_not_discard_valid_rows(self):
+        official = normalize("official", {"channels": [
+            {"official_site": ["bad"], "name": "Bad"},
+            {"official_site": "https://example.org/live", "name": "Valid"}]})
+        self.assertEqual(len(official), 1)
+        self.assertEqual(official[0]["name"], "Valid")
+        youtube = normalize("youtube", {"results": [
+            {"video_id": {"bad": "id"}, "title": "Bad"},
+            {"video_id": "AbCdEf12345", "title": "Valid"}]})
+        self.assertEqual(len(youtube), 1)
+        self.assertEqual(youtube[0]["name"], "Valid")
+
     def test_integrated_cli_preserves_existing_report_bytes(self):
         import subprocess
         import sys
