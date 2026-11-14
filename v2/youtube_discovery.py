@@ -77,17 +77,47 @@ def search(query):
     except (OSError, ValueError, subprocess.TimeoutExpired):
         return [], "SEARCH_TIMEOUT_OR_ERROR"
 
-def verify(item):
+def verify_detailed(item, runner=None):
+    """Distinguish upstream metadata failures from truly non-live broadcasts.
+
+    Never include raw yt-dlp stderr, stream URLs or tokens in public reports.
+    A search result title saying "LIVE" is not proof of a live broadcast.
+    """
+    runner = subprocess.run if runner is None else runner
     try:
-        p = subprocess.run(["yt-dlp", "--skip-download", "--dump-single-json", "--no-warnings",
-                            "--socket-timeout", "8", item["url"]],
-                           capture_output=True, text=True, timeout=24)
+        p = runner(["yt-dlp", "--skip-download", "--dump-single-json", "--no-warnings",
+                    "--socket-timeout", "8", item["url"]],
+                   capture_output=True, text=True, timeout=24)
         if p.returncode != 0:
-            return "UNVERIFIED"
+            error = str(getattr(p, "stderr", "") or "").casefold()
+            if ("429" in error or "too many requests" in error
+                    or "rate limit" in error):
+                return "UNVERIFIED", "UPSTREAM_RATE_LIMITED"
+            if "403" in error or "forbidden" in error:
+                return "UNVERIFIED", "UPSTREAM_ACCESS_DENIED"
+            if "sign in" in error or "login" in error or "cookies" in error:
+                return "UNVERIFIED", "SIGN_IN_REQUIRED"
+            if "unavailable" in error or "private video" in error:
+                return "UNVERIFIED", "VIDEO_UNAVAILABLE"
+            return "UNVERIFIED", "YTDLP_METADATA_FAILED"
         meta = json.loads(p.stdout)
-        return "LIVE_METADATA_VERIFIED" if meta.get("is_live") is True or meta.get("live_status") == "is_live" else "NOT_CURRENTLY_LIVE"
-    except (OSError, ValueError, subprocess.TimeoutExpired):
-        return "UNVERIFIED"
+        if not isinstance(meta, dict):
+            return "UNVERIFIED", "INVALID_METADATA"
+        if meta.get("is_live") is True or meta.get("live_status") == "is_live":
+            return "LIVE_METADATA_VERIFIED", None
+        if (meta.get("is_live") is False
+                or meta.get("live_status") in ("not_live", "was_live", "post_live", "upcoming")):
+            return "NOT_CURRENTLY_LIVE", None
+        return "UNVERIFIED", "LIVE_STATUS_MISSING"
+    except subprocess.TimeoutExpired:
+        return "UNVERIFIED", "METADATA_TIMEOUT"
+    except (OSError, ValueError, TypeError):
+        return "UNVERIFIED", "METADATA_READ_ERROR"
+
+
+def verify(item):
+    """Compatibility wrapper for callers only needing the status."""
+    return verify_detailed(item)[0]
 
 def main():
     if not shutil.which("yt-dlp"):
@@ -106,14 +136,21 @@ def main():
     # Verify the full deduplicated discovery set, not an arbitrary first-40 slice.
     # Bounded concurrency avoids serial per-video waits on slow upstream responses.
     with concurrent.futures.ThreadPoolExecutor(max_workers=8) as pool:
-        statuses = list(pool.map(verify, results))
-    for item, status in zip(results, statuses):
+        verification = list(pool.map(verify_detailed, results))
+    verification_counts, failure_categories = {}, {}
+    for item, (status, reason) in zip(results, verification):
         item["status"] = status
+        verification_counts[status] = verification_counts.get(status, 0) + 1
+        if reason is not None:
+            failure_categories[reason] = failure_categories.get(reason, 0) + 1
     report = {"created_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
               "policy": "ADVISORY_ONLY_NO_PLAYLIST_WRITES_NO_AUTOMATIC_IBO_IMPORT",
               "queries": QUERIES, "errors": errors, "results": results,
-              "live_verified": sum(x["status"] == "LIVE_METADATA_VERIFIED" for x in results),
+              "live_verified": verification_counts.get("LIVE_METADATA_VERIFIED", 0),
               "videos_checked": len(results),
+              "verification_counts": verification_counts,
+              "verification_failure_categories": failure_categories,
+              "metadata_verification_complete": verification_counts.get("UNVERIFIED", 0) == 0,
               "verified_live_pages": [x for x in results if x["status"] == "LIVE_METADATA_VERIFIED"]}
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
