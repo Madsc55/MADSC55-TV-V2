@@ -42,6 +42,31 @@ class ScannerOfflineTests(unittest.TestCase):
             with self.subTest(row=row, status=status):
                 self.assertFalse(scanner.current_decode_confirmed(row, status))
 
+    def test_nonstandard_network_http_status_does_not_crash_recovery(self):
+        """Real feeds can respond with proxy-specific codes such as 999."""
+        from stage3_recovery_queue import build_recovery_queue
+        url = "https://example.org/unverified.m3u8"
+        for raw in (0, 600, 999, -1, "503", True, {}, None):
+            with self.subTest(http_status=raw):
+                normalized = scanner.recovery_http_status(raw)
+                self.assertIsNone(normalized)
+                queue = build_recovery_queue([{
+                    "url": url,
+                    "last_http_status": normalized,
+                    "recovery_attempts": 0,
+                    "observations": [{"status": "UNVERIFIED_OR_FAILED"}],
+                }])
+                self.assertEqual(queue[0]["action"], "RETRY")
+                self.assertTrue(queue[0]["preserve_history"])
+        for valid in (100, 200, 206, 404, 503, 599):
+            self.assertEqual(scanner.recovery_http_status(valid), valid)
+        queue = build_recovery_queue([{
+            "url": url,
+            "last_http_status": scanner.recovery_http_status(999),
+            "recovery_attempts": 3,
+        }])
+        self.assertEqual(queue[0]["action"], "REVIEW")
+
     def test_invalid_hls_url_is_not_verified(self):
         self.assertIsNone(scanner.check_hls({"url": "file:///tmp/mock.m3u8"}, 1))
 
