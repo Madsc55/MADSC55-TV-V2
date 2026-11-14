@@ -81,9 +81,13 @@ jobs:
       - name: Real network discovery and AV probe including discovered sources
         run: |
           python v2/real_ibo_scan.py --worldwide --workers 12 --timeout 12 --limit 3000 --fail-fast-source-errors --tolerate-optional-discovery-failures --checkpoint-every 100 --resume-checkpoint v2/reports/ibo-scan-resume.enc --dynamic-sources v2/reports/github-source-discovery.json --integrated-candidates v2/reports/discovery-34-integrated.json --resolved-streams v2/reports/resolved-direct-streams.jsonl.enc
-      - name: Export 1000 and 2000 real verified new URL batches
+      - name: Export 1000 and 2000 real verified new URL batches only when discovery is complete
         run: |
-          python v2/export_ibo_batches.py v2/reports/ibo-candidate-inventory.jsonl.enc v2/reports --live MADSC55_TV_IBO_CALISANLAR_TEST.m3u8
+          if python -c 'import json,sys; d=json.load(open("v2/reports/ibo-real-scan-report.json", encoding="utf-8")); sys.exit(0 if d.get("full_discovery_acceptance") is True else 1)'; then
+            python v2/export_ibo_batches.py v2/reports/ibo-candidate-inventory.jsonl.enc v2/reports --live MADSC55_TV_IBO_CALISANLAR_TEST.m3u8
+          else
+            echo "::warning::Optional discovered feeds incomplete; accepted 1000/2000 packages intentionally withheld"
+          fi
       - name: Upload reports and encrypted inventory even on scan failure
         if: always()
         uses: actions/upload-artifact@v4
