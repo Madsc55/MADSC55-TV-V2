@@ -145,6 +145,11 @@ def main():
             for index, query in enumerate(QUERIES):
                 try:
                     candidates.extend(repository_candidates(source, fetch_json(search_url(source, query))))
+                except urllib.error.HTTPError as exc:
+                    errors.append({"source": source, "query": query, "error": "HTTPError", "status": exc.code})
+                    # Do not repeatedly hit a provider after rate limiting or service outage.
+                    if exc.code in (429, 503):
+                        break
                 except (ValueError, OSError, KeyError, TypeError, json.JSONDecodeError) as exc:
                     error = {"source": source, "query": query, "error": type(exc).__name__}
                     if isinstance(exc, urllib.error.HTTPError):

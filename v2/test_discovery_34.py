@@ -139,6 +139,32 @@ class Discovery34Tests(unittest.TestCase):
             self.assertNotEqual(result.returncode, 0)
             self.assertEqual(output.read_bytes(), original)
 
+    def test_rate_limited_provider_skips_sibling_queries(self):
+        import io
+        import json
+        import tempfile
+        import urllib.error
+        from pathlib import Path
+        from unittest.mock import patch
+        import discovery_34
+        calls = []
+        def fake_fetch(url):
+            calls.append(url)
+            if "codeberg.org" in url:
+                raise urllib.error.HTTPError(url, 429, "rate limited", {}, io.BytesIO())
+            return {"items": []} if "github.com" in url else []
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / "candidates.json"
+            with patch.object(discovery_34, "fetch_json", side_effect=fake_fetch), patch(
+                "sys.argv", ["discovery_34.py", "--network", "--output", str(output)]
+            ):
+                discovery_34.main()
+            report = json.loads(output.read_text())
+        self.assertEqual(sum("codeberg.org" in url for url in calls), 1)
+        self.assertEqual(len(calls), len(discovery_34.QUERIES) * 2 + 1)
+        self.assertEqual(report["errors"][-1]["status"], 429)
+        self.assertEqual(report["av_verified"], 0)
+
     def test_official_and_m3u(self):
         for source in ("official", "m3u"):
             self.assertEqual(len(curated_candidates(source, [{"url": "https://example.org/live.m3u8"}])), 1)
