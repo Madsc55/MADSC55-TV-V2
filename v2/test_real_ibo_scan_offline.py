@@ -17,7 +17,7 @@ class ScannerOfflineTests(unittest.TestCase):
         headers['Retry-After'] = '120'
         limited = urllib.error.HTTPError('https://example.org/list.m3u', 429,
                                         'rate limited', headers, None)
-        with patch.object(scanner.urllib.request, 'urlopen', side_effect=[limited, limited, limited]) as request, \\
+        with patch.object(scanner.urllib.request, 'urlopen', side_effect=[limited, limited, limited]) as request, \
                 patch.object(scanner.time, 'sleep') as sleep:
             with self.assertRaises(urllib.error.HTTPError):
                 scanner.fetch('https://example.org/list.m3u')
@@ -31,7 +31,7 @@ class ScannerOfflineTests(unittest.TestCase):
         headers['Retry-After'] = 'not-a-delay'
         limited = urllib.error.HTTPError('https://example.org/list.m3u', 429,
                                         'rate limited', headers, None)
-        with patch.object(scanner.urllib.request, 'urlopen', side_effect=[limited, limited, limited]), \\
+        with patch.object(scanner.urllib.request, 'urlopen', side_effect=[limited, limited, limited]), \
                 patch.object(scanner.time, 'sleep') as sleep:
             with self.assertRaises(urllib.error.HTTPError):
                 scanner.fetch('https://example.org/list.m3u')
