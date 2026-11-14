@@ -41,7 +41,8 @@ class ScanCheckpointTests(unittest.TestCase):
             {"url": failed_url, "url_sha256": url_sha256(failed_url),
              "http_hls_status": "UNVERIFIED_OR_FAILED", "decoded_av_verified": False,
              "decode_status": "NOT_DECODED_THIS_RUN",
-             "last_http_status": 999, "last_timeout": False},
+             "last_http_status": 999, "last_timeout": False,
+             "recovery_attempts": 2},
         ]
         payload = "".join(json.dumps(x) + "\n" for x in rows).encode()
         pending.write_bytes(encrypt(payload, self.secret))
@@ -64,6 +65,7 @@ class ScanCheckpointTests(unittest.TestCase):
         self.assertEqual(len(saved), 2)
         self.assertTrue(saved[self.url]["result"]["decoded_av_verified"])
         self.assertIsNone(saved[failed_url]["result"])
+        self.assertEqual(saved[failed_url]["recovery_attempts"], 2)
         # A report claiming unobserved success must never become a checkpoint.
         report_data["av_verified"] = 2
         report.write_text(json.dumps(report_data))
@@ -107,13 +109,14 @@ class ScanCheckpointTests(unittest.TestCase):
         # A later checkpoint replaces only the dedicated progress file.
         second_url = "https://example.org/failed.m3u8"
         second = checkpoint_row(
-            second_url, None, {"last_http_status": 404})
+            second_url, None, {"last_http_status": 404}, recovery_attempts=2)
         save_progress(self.path, self.secret, worldwide=True,
                       rows={self.url: original, second_url: second})
         rows = load_progress(self.path, self.secret, worldwide=True)
         self.assertEqual(len(rows), 2)
         self.assertIsNone(rows[second_url]["result"])
         self.assertEqual(rows[second_url]["diagnostics"]["last_http_status"], 404)
+        self.assertEqual(rows[second_url]["recovery_attempts"], 2)
 
     def test_stale_observations_do_not_renew_themselves(self):
         now = time.time()
@@ -164,6 +167,20 @@ class ScanCheckpointTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             save_progress(baseline, self.secret, worldwide=True,
                           rows={self.url: row})
+
+    def test_checkpoint_recovery_attempts_cannot_be_forged(self):
+        for invalid in (-1, 4, True, False, "2", 1.2):
+            with self.subTest(invalid=invalid):
+                with self.assertRaises(ValueError):
+                    checkpoint_row(self.url, None, {}, recovery_attempts=invalid)
+        row = checkpoint_row(self.url, None, {}, recovery_attempts=2)
+        save_progress(self.path, self.secret, worldwide=True, rows={self.url: row})
+        self.assertEqual(load_progress(self.path, self.secret, worldwide=True)[
+            self.url]["recovery_attempts"], 2)
+        row["recovery_attempts"] = 4
+        save_progress(self.path, self.secret, worldwide=True, rows={self.url: row})
+        with self.assertRaises(ValueError):
+            load_progress(self.path, self.secret, worldwide=True)
 
     def test_symlinked_checkpoint_is_refused(self):
         target = self.root / "protected.m3u8"

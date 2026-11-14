@@ -63,7 +63,9 @@ def load_progress(path, passphrase, *, worldwide, now=None):
                 or type(checked_at) not in (int, float)
                 or not math.isfinite(checked_at)
                 or not isinstance(item.get("diagnostics"), dict)
-                or not _valid_result(item.get("result"))):
+                or not _valid_result(item.get("result"))
+                or type(item.get("recovery_attempts", 0)) is not int
+                or not 0 <= item.get("recovery_attempts", 0) <= 3):
             raise ValueError("Invalid checkpoint observation")
         if url in accepted:
             raise ValueError("Duplicate checkpoint URL")
@@ -110,8 +112,10 @@ def save_progress(path, passphrase, *, worldwide, rows):
     return {"saved": len(rows), "encrypted": True}
 
 
-def checkpoint_row(url, result, diagnostics, *, checked_at=None):
+def checkpoint_row(url, result, diagnostics, *, checked_at=None, recovery_attempts=0):
     """Retain the exact URL and actual decoded-video+audio evidence privately."""
+    if type(recovery_attempts) is not int or not 0 <= recovery_attempts <= 3:
+        raise ValueError("Recovery attempt count must be a nonnegative integer, capped at 3")
     compact_result = None
     if result is not None:
         if not _valid_result(result):
@@ -127,6 +131,7 @@ def checkpoint_row(url, result, diagnostics, *, checked_at=None):
         "checked_at": time.time() if checked_at is None else checked_at,
         "result": compact_result,
         "diagnostics": dict(diagnostics),
+        "recovery_attempts": recovery_attempts,
     }
 
 
@@ -206,7 +211,10 @@ def bootstrap_from_pending_inventory(inventory_path, report_path, destination,
             raise ValueError("Unexpected legacy candidate evidence state")
         diagnostics = {"last_http_status": record.get("last_http_status"),
                        "last_timeout": record.get("last_timeout") is True}
-        rows[url] = checkpoint_row(url, result, diagnostics, checked_at=started)
+        prior_attempts = record.get("recovery_attempts", 0)
+        rows[url] = checkpoint_row(
+            url, result, diagnostics, checked_at=started,
+            recovery_attempts=prior_attempts)
     if (len(rows) != report["http_checked"]
             or decoded != report["av_verified"]):
         raise ValueError("Legacy encrypted inventory does not match real scan counts")
