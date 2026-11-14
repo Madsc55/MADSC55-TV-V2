@@ -1,3 +1,22 @@
+## 14 Kasım 2026 — V2 devam kontrolü: 13 açık görev, gerçek tarama kanıtı, A→B→C→D
+
+**Güncel 34 görev:** tasks/state.json içinde 21 completed, 13 in_progress. Açıklar: #15 #17 #18 #19 #20 #21 #28 #29 #30 #31 #32 #33 #34. Başarısız/eksik kanıt için done işareti verilmez. Diğer sohbetlerdeki paralel PR ve işler ile çakışma kontrolü yapılır.
+
+**Son gerçek tarama:** https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43598617218 (Actions success ama rapor PARTIAL_DISCOVERY_EVIDENCE_ONLY; artifact 14114764986). 105 kaynak listesinden 103 başarılı. Zorunlu kaynak hatası 0; 2 isteğe bağlı kaynağın kimliği ve hataları: integrated-m3u-2b5507d6e11114287bcd / ValueError, integrated-m3u-888758216b11cb003dde / HTTPError. 28.845 aday: 28.844 checkpoint tekrar kullanıldı, 1 yeni AV kontrolü; 8.510 AV kanıtı (8.509 eski, yalnız 1 bu koşuda yeni). 20.335 doğrulanmamış/hatalı aday. Kurtarma: 12.871 RETRY, 2.624 CHECK_AV, 4.840 REVIEW. Şifreli envanter pending.enc olarak tutuldu; archive_restore_test_passed true; cihaz AV kabulü false; yeni 1.000/2.000 paket ihracı 0. Bu başarılı üretim veya tam kanal keşfi kabulü DEĞİLDİR.
+
+**Kaldığı yerden devam kanıtı:** PR #226 per-URL encrypted checkpoint, PR #240 pre-checkpoint eski gerçek envanterden güvenli resume, PR #241 zorunlu ve isteğe bağlı kaynak ayrımı. Eski 28.845 gözlem geri yüklenebildi. Yalnız eski AV yeni FFmpeg kanıtı olarak gösterilmez; 18 saatlik geçerlilik ve URL kimlik kontrolü uygulanır. Çalışma hatalarında checkpoint korunur, runner'ın tamamen kaybolmasında otomatik yükleme garantisi yoktur.
+
+**Yeni düzeltme:** Yeşil Actions koşusuna rağmen partial raporun geçerli görünmesini engelleyecek v2/validate_real_scan_acceptance.py CI kapısı eklenecek. Tam kaynak keşfi, gerçek ve tutarlı decode sayıları, tam şifreli envanter ve M3U test parçaları yoksa iş FAIL olmalı. Bu yalnızca tarama işinin doğrulanmasıdır; nihai A/B/C/D veya cihaz kabulü değildir.
+
+**Bitirme sırası ve kalanlar:**
+1. A (#15 #17 #18 #19 #20 #21): #15 bağımsız yayıncı/kaynak kimliği, tarihî 4.955 kayıttan 6 hash eksik; #17/#20 gerçek kurtarma kuyruğu; #18 taze ses+görüntü FFmpeg kanıtı; #19 gerçek XMLTV ile 303 EPG boşluğu; #21 canlı TR/AZ/dünya kaynak kapsamı. YouTube canlı metadata 0, direct HLS 0/120. Fail kaynaklar önce teşhis; eksik yayınlar gerçek gözlemle tekrar ölçülmeli.
+2. B (#28 #29 #30): yalnız gerçek AV ve kaynak kanıtıyla 1.000/2.000 M3U, ZIP, manifest, SHA-256, EXTINF/URL birlikteliği, bağımsız cihaz paketi. Eski 4.301 M3U yapısal kanıtı bu koşunun yeni AV kabulü değildir.
+3. C (#31 #32 #33): Android/oynatıcı gerçek ses+görüntü, bağımsız haricî şifreli arşiv geri yükleme, nihai üretim kabulü. Offline CI veya yalnız dosya varlığı final kanıtı değildir. C dal ve PR'leriyle çatışma yaratılmayacak.
+4. D (#34) EN SON: GitHub/Gist/GitLab/Codeberg/YouTube/resmî yayıncı, dünya ve TR/AZ geniş kaynak keşfi. Canlı Codeberg 429, GitLab API hata ve YouTube/live direct HLS boşlukları çözülmeden done değil.
+
+**Koruma:** Ana İBO, YEDEKLER, YENİLER, FAVORİLER, korumalı üretim tetikleyicileri değişmez. Mevcut kanıt korunur; hatalı kaynaklar sessizce tam keşif olarak kabul edilmez. Birbiriyle yarışan testler ve eski pull request'ler körlemesine birleştirilmez. Manuel kanal taraması kullanıcı talebi olmadan yeniden başlatılmaz.
+
+---
 ## 13 Kasım 2026 — #28–#30 Unicode M3U satır bütünlüğü KABULÜ
 - PR #193 squash merge `8ea0c66296788dda207d75279e44f3db725fd984`: `export_ibo_batches.py` içindeki metadata temizleyici, ASCII CR/LF yanı sıra Unicode NEL (U+0085), LINE SEPARATOR (U+2028), PARAGRAPH SEPARATOR (U+2029) karakterlerini de tek satırlı güvenli boşlukla değiştirir. Yeni regresyon her üçünde tam 3 satır/tek EXTINF üretimini doğrular.
 - PR Actions `43482907222` SUCCESS; main Actions `43483112580` SUCCESS: Stage 6 offline kabul, korunan İBO invariants ve üretim tetikleyici güvenlik kontrolleri geçti.
