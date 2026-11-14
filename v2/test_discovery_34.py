@@ -46,7 +46,9 @@ class Discovery34Tests(unittest.TestCase):
             output = Path(directory) / "candidates.json"
             with patch.object(discovery_34, "fetch_json", side_effect=fake_fetch), \
                  patch("sys.argv", ["discovery_34.py", "--network", "--output", str(output)]):
-                discovery_34.main()
+                with self.assertRaises(SystemExit) as exit_result:
+                    discovery_34.main()
+                self.assertEqual(exit_result.exception.code, 1)
             report = json.loads(output.read_text())
         self.assertEqual(sum("codeberg.org" in url for url in calls), 1)
         self.assertEqual(len(report["errors"]), len(QUERIES))

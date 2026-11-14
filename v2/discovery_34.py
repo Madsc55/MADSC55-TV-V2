@@ -168,6 +168,9 @@ def main():
     with output.open("x", encoding="utf-8") as report:
         report.write(json.dumps({"mode": "network" if args.network else "offline", "candidates": list(unique.values()), "errors": errors, "av_verified": 0}, indent=2) + "\n")
     print("Candidate identities:", len(unique), "Errors:", len(errors))
+    # Persist partial evidence, but never report a failed live scan as success.
+    if errors:
+        raise SystemExit(1)
 
 if __name__ == "__main__":
     main()
