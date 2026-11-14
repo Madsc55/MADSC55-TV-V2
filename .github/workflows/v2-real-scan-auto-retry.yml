@@ -1,0 +1,30 @@
+name: V2 Real Scan Bounded Auto Retry
+on:
+  workflow_run:
+    workflows:
+      - V2 Real IPTV Scan
+    types: [completed]
+
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  retry-once:
+    if: >-
+      ${{ github.event.workflow_run.event == 'workflow_dispatch' &&
+          github.event.workflow_run.head_branch == 'main' &&
+          github.event.workflow_run.conclusion == 'failure' &&
+          github.event.workflow_run.run_attempt == 1 }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Retry failed scan job once with its encrypted artifact checkpoint
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RUN_ID: ${{ github.event.workflow_run.id }}
+        run: |
+          set -euo pipefail
+          gh run rerun "$RUN_ID" --failed --repo "$GH_REPO"
+          echo "Requested one bounded retry of failed scan $RUN_ID"
+          echo "Scanner must authenticate and validate any restored checkpoint."
