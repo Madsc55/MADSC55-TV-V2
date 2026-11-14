@@ -44,7 +44,14 @@ def probe(url):
             if p.returncode==0:
                 streams=json.loads(p.stdout).get('streams',[])
                 types={s.get('codec_type') for s in streams}
-                if 'audio' in types and 'video' in types: return [url,'AV_OK',i,'']
+                if 'audio' in types and 'video' in types:
+                    # A second independent sample is required; a single probe is insufficient.
+                    try:
+                        second=subprocess.run(['ffprobe','-v','error','-show_streams','-of','json','-rw_timeout','30000000',url],capture_output=True,text=True,timeout=45)
+                        second_types={s.get('codec_type') for s in json.loads(second.stdout).get('streams',[])} if second.returncode==0 else set()
+                        if {'audio','video'} <= second_types: return [url,'AV_OK',i,'two independent AV probes']
+                        errors.append('second AV probe failed')
+                    except Exception as e: errors.append('second AV probe: '+str(e))
                 errors.append('missing audio/video: '+','.join(sorted(str(x) for x in types)))
             else: errors.append(p.stderr[-400:].replace('\n',' '))
         except Exception as e: errors.append(str(e))
@@ -85,7 +92,7 @@ programme_ids &= xmlids
 with (ev/'epg_gap.csv').open('w',newline='') as f:
     w=csv.writer(f);w.writerow(['tvg_id']);w.writerows((x,) for x in sorted(ids-(xmlids & programme_ids)))
 with (ev/'input_sha256.json').open('w') as f: json.dump(input_hashes,f,indent=2)
-status='PASS' if urls and not xml_errors and len(results)==len(urls) and all(r[1]=='AV_OK' for r in results) and not (ids-(xmlids & programme_ids)) and bool(xmlids) and bool(programme_ids) else 'BLOCKED'
+status='PASS' if urls and not xml_errors and len(results)==len(urls) and all(r[1]=='AV_OK' for r in results) and not (ids-(xmlids & programme_ids)) and bool(ids) and bool(xmlids) and bool(programme_ids) else 'BLOCKED'
 report=f'''# Stage A acceptance\n\nDate: {stamp}\nStatus: {status}\nM3U source files: {len(sources)}\nXMLTV source files: {len(xmlpaths)}\nUnique URLs: {len(urls)}\nAV_OK: {sum(r[1]=='AV_OK' for r in results)}\nNO_AV: {sum(r[1]!='AV_OK' for r in results)}\nEPG gaps: {len(ids-(xmlids & programme_ids))}\nXML parse errors: {len(xml_errors)}\n\nPASS requires all URLs to have video and audio and all tvg-id entries to have declared XMLTV channels with valid programmes. This report does not certify individual tasks or physical playback.\n'''
 (ev/'stage_A_acceptance.md').write_text(report)
 (ev/'stage_A_errors.log').write_text(('No input M3U files\n' if not urls else '')+'\n'.join(xml_errors)+'\n')
