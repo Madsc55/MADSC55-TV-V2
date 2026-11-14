@@ -38,10 +38,10 @@ def load_progress(path, passphrase, *, worldwide, now=None):
     Rows older than the freshness window are not reused.
     """
     path = Path(path)
-    if not path.exists():
-        return {}
     if path.is_symlink():
         raise ValueError("Symlinked scan checkpoint refused")
+    if not path.exists():
+        return {}
     raw = decrypt(path.read_bytes(), passphrase)
     report = json.loads(raw)
     if (not isinstance(report, dict)
