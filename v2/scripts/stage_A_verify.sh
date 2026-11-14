@@ -72,7 +72,7 @@ for path in xmlpaths:
                 start=element.get('start',''); stop=element.get('stop','')
                 # XMLTV dates require valid increasing timestamps, not merely a channel declaration.
                 def xmltv_date(s):
-                    m=re.fullmatch(r'(\\d{14})\\s+([+-]\\d{4})',s)
+                    m=re.fullmatch(r'(\d{14})\s+([+-]\d{4})',s)
                     if not m: return None
                     try:
                         return datetime.datetime.strptime(m.group(1)+m.group(2),'%Y%m%d%H%M%S%z')
