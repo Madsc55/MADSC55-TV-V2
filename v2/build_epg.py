@@ -202,6 +202,8 @@ def main():
                 ET.ElementTree(result).write(
                     output, encoding="utf-8", xml_declaration=True)
             ET.parse(temp)
+            if temp.stat().st_size > 100_000_000:
+                raise ValueError("Candidate XMLTV exceeds scanner's 100 MB input limit")
             os.link(temp, destination)
         finally:
             temp.unlink(missing_ok=True)
