@@ -33,6 +33,7 @@ class ScannerOfflineTests(unittest.TestCase):
     def test_only_fresh_decoded_av_is_accepted_as_inventory_proof(self):
         accepted = {"decoded_av_verified": True, "decode_status": "DECODED_AV"}
         self.assertTrue(scanner.current_decode_confirmed(accepted, "AV_VERIFIED"))
+        self.assertFalse(scanner.current_decode_confirmed(accepted, "AV_VERIFIED", reused=True))
         for row, status in (
                 ({}, "AV_VERIFIED"),
                 ({"decoded_av_verified": "true", "decode_status": "DECODED_AV"}, "AV_VERIFIED"),
