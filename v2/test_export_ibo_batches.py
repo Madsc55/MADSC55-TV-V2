@@ -132,6 +132,8 @@ class BatchTests(unittest.TestCase):
                 "https://user:secret@example.invalid/live",
                 "https://[broken/path",
                 "https://example.invalid/live path",
+                "https://example.invalid\\\\@private.invalid/live",
+                "https://example.invalid/live\\\\segment",
             )
             records = [{'url': url, 'name': 'Bad', 'group': 'TR',
                         'http_hls_status': 'AV_VERIFIED',
