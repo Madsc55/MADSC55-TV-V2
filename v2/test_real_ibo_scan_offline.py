@@ -215,6 +215,59 @@ class ScannerOfflineTests(unittest.TestCase):
                     mocked.assert_not_called()
         self.assertTrue(scanner.public_http_stream_url("http://example.org/live.m3u8"))
 
+    def test_bounded_retries_skip_stale_permanent_and_success_evidence(self):
+        entries = {
+            "https://example.org/check-av.m3u8": {
+                "result": None, "recovery_attempts": 0,
+                "diagnostics": {"last_http_status": 200}},
+            "https://example.org/timeout.m3u8": {
+                "result": None, "recovery_attempts": 0,
+                "diagnostics": {"last_timeout": True}},
+            "https://example.org/transient.m3u8": {
+                "result": None, "recovery_attempts": 1,
+                "diagnostics": {"last_http_status": 503}},
+            "https://example.org/permanent.m3u8": {
+                "result": None, "recovery_attempts": 0,
+                "diagnostics": {"last_http_status": 403}},
+            "https://example.org/exhausted.m3u8": {
+                "result": None, "recovery_attempts": 3,
+                "diagnostics": {"last_http_status": 503}},
+            "https://example.org/success.m3u8": {
+                "result": {"decoded_av_verified": True}, "recovery_attempts": 0,
+                "diagnostics": {"last_http_status": 200}},
+        }
+        current = {key: {} for key in entries}
+        selected, eligible = scanner.select_checkpoint_retry_urls(
+            entries, current, 2)
+        self.assertEqual(eligible, 3)
+        self.assertEqual(selected, {
+            "https://example.org/check-av.m3u8",
+            "https://example.org/timeout.m3u8",
+        })
+        self.assertEqual(scanner.select_checkpoint_retry_urls(
+            entries, current, 0), (set(), 3))
+        self.assertEqual(scanner.select_checkpoint_retry_urls(
+            entries, current, 2000)[0],
+            {"https://example.org/check-av.m3u8",
+             "https://example.org/timeout.m3u8",
+             "https://example.org/transient.m3u8"})
+        for invalid in (-1, 2001, "300", True):
+            with self.subTest(invalid=invalid):
+                with self.assertRaises(ValueError):
+                    scanner.select_checkpoint_retry_urls(
+                        entries, current, invalid)
+
+    def test_retries_respect_current_candidate_inventory(self):
+        prior = {"https://example.org/old.m3u8": {
+            "result": None, "recovery_attempts": 0,
+            "diagnostics": {"last_timeout": True}}}
+        self.assertEqual(scanner.select_checkpoint_retry_urls(
+            prior, {}, 100), (set(), 0))
+        prior["https://example.org/old.m3u8"]["recovery_attempts"] = 4
+        with self.assertRaises(ValueError):
+            scanner.select_checkpoint_retry_urls(
+                prior, {"https://example.org/old.m3u8": {}}, 100)
+
     def test_replayed_checkpoint_never_spends_an_unexecuted_recovery_attempt(self):
         for prior in range(4):
             with self.subTest(prior=prior):
