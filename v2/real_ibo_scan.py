@@ -322,6 +322,8 @@ def main():
                     help='Optional encrypted prior progress from a failed real AV scan')
     ap.add_argument('--checkpoint-every', type=int, default=100,
                     help='Seal encrypted progress after this many candidate observations')
+    ap.add_argument('--fail-fast-source-errors', action='store_true',
+                    help='Stop before hours of AV probing if any mandatory M3U source failed')
     ap.add_argument('--output', type=pathlib.Path, default=OUT)
     ap.add_argument('--report', type=pathlib.Path, default=REPORT)
     ap.add_argument('--inventory', type=pathlib.Path, default=INVENTORY,
@@ -453,6 +455,25 @@ def main():
         except (OSError, ValueError, TypeError):
             pass
     incomplete = bool(failed or source_drops)
+    if incomplete and args.fail_fast_source_errors:
+        # Full acceptance is impossible without all mandatory sources.
+        # Report the source problem now rather than spending hours on AV probes
+        # that cannot be exported. A separately downloaded prior checkpoint is
+        # still included in the always-uploaded evidence artifact.
+        args.report.parent.mkdir(parents=True, exist_ok=True)
+        early_report = {
+            'status': 'INCOMPLETE_SOURCE_FETCH_EARLY',
+            'scan_scope': 'WORLDWIDE_ALL_SOURCE_ENTRIES' if args.worldwide else 'TR_AZ_METADATA_CANDIDATES',
+            'source_count': len(sources), 'source_counts': source_counts,
+            'fetched_sources': len(source_counts), 'failed_sources': failed,
+            'source_drops': source_drops, 'unique_new_candidates': len(candidates),
+            'http_checked': 0, 'av_verified': 0,
+            'playback_verified_on_device': False, 'mock_data_used': False,
+            'no_new_av_probes_because_source_incomplete': True,
+        }
+        args.report.write_text(json.dumps(early_report, indent=2, ensure_ascii=False) + '\n',
+                               encoding='utf-8')
+        raise SystemExit('Incomplete mandatory source fetch: stopped before expensive AV probing')
     # Carry forward historical candidates from the last encrypted inventory.
     # Missing streams are retained for rechecking, never silently dropped.
     previous_encrypted = args.inventory.with_suffix(args.inventory.suffix + '.enc')
