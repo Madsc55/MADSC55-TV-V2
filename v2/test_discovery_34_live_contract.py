@@ -380,5 +380,28 @@ class LiveContractRetryTests(unittest.TestCase):
             request = build.return_value.open.call_args.args[0]
             self.assertIsNone(request.get_header("Authorization"))
 
+class LiveDiagnosticReportTests(unittest.TestCase):
+    def test_report_written_exclusively_and_fail_closed(self):
+        import tempfile
+        import json
+        from pathlib import Path
+        from unittest.mock import patch
+        import discovery_34_live_contract as module
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / "diagnostic.json"
+            failing = {"status": "error", "query_results": []}
+            with patch.object(module, "probe_queries", return_value=failing), patch("sys.argv", ["probe", "--output", str(output)]):
+                with self.assertRaises(SystemExit) as error:
+                    module.main()
+            self.assertEqual(error.exception.code, 1)
+            report = json.loads(output.read_text())
+            self.assertEqual(report["verified_av"], 0)
+            self.assertEqual(set(report["providers"]), {"github", "gitlab", "codeberg"})
+            original = output.read_bytes()
+            with patch.object(module, "probe_queries", return_value=failing), patch("sys.argv", ["probe", "--output", str(output)]):
+                with self.assertRaises(FileExistsError):
+                    module.main()
+            self.assertEqual(output.read_bytes(), original)
+
 if __name__ == "__main__":
     unittest.main()
