@@ -1,3 +1,18 @@
+## 14 Kasım 2026 — Aşama A gerçek koşu #43608247496: başarı, ancak 6 nihai kabul görevi açık
+
+**Gerçek kanıt:** https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43608247496 — Actions SUCCESS, artifact ID 14119727053, 103/103 uygun M3U kaynağı, 28.845 aday, 8.573 AV (8.540 önceki şifreli checkpoint + 33 bu koşu gerçek FFmpeg AV), 20.272 doğrulanmamış; gerçek yeniden deneme 300, geri kazanılan AV 33, yeniden kullanılabilen eski kontrol 28.545. 15.462 uygun başarısız tekrar adayı var; bunların tamamı yeniden denenmedi. Kurtarma kuyrukları 12.883 RETRY / 2.546 CHECK_AV / 4.843 REVIEW. Korunan ana İBO değiştirilmedi; cihaz oynatma kabulü false.
+
+**EPG #19:** Beş XMLTV kaynağı yapısal olarak geçerli, fakat orijinal playlist TVG-ID ile kesin eşleşme 0. Salt-okunur EPG adayı 876 playlist girdisinden 89 isme dayalı eşleşme, 54 ad-hint kanalı ve 1.838 program üretti. Bunlar kesin yayıncı/kanal kimliği değildir. `madsc-epg.xml` korunur. Geçmiş 303 EPG boşluğu bağımsız kesin kaynak doğrulamasıyla henüz kapanmadı.
+
+**Keşif #21:** GitLab 10/12 sorgu (rate-limited, 2 atlandı), Codeberg 1/12 (rate-limited, 11 atlandı), YouTube 353 video adayı ve 353 SIGN_IN_REQUIRED, 0 canlı metadata, 0 doğrudan HLS çözümü/120 giriş. Bu ayrı adapter sonuçları, 103/103 uygun M3U kaynağının başarılı olmasına karşın dünya keşfi kabulünün tamamlandığı anlamına gelmez. GitHub/GitLab/Codeberg provider kısıtları göz ardı edilemez.
+
+**Açık A görevleri güncellendi:** #15 bağımsız yayıncı kimliği + eski 4.955 tarihî hash'ten 6 eşleşmeyen; #17 geri yükleme kuyruğu; #18 tüm gerekli yayınların güncel görüntü+ses kimlik kanıtı; #19 kesin EPG-ID ve 303 boşluk; #20 kurtarma kanıt zinciri; #21 dünya kaynak/YouTube/resmî yayın doğrulaması. `v2/tasks/state.json` altı maddeyi de `in_progress` tuttu ve gerçek run kanıtını ekledi. Hiçbiri `completed` sayılmadı.
+
+**Yeni denetim:** `v2/stage_a_evidence_review.py` altı görevin ayrı kanıt/kısıt raporunu her gerçek Actions taramasına eklemek için hazırlanmıştır. `READY_FOR_DEVICE_TEST` olan başarıyla taranmış kaynaklar = Aşama A tam üretim/cihaz/EPG/kaynak kabulü değildir. Rapor şifreli URL envanteri açmaz, korunan yayın listelerine yazmaz, kabul durumunu taklit etmez.
+
+**Sıra:** Başka işlerin sürmesine engel olmadan A açık kanıtlar; sonra B #28–30, C #31–33, D #34 en son. Aynı anda çalışan diğer PR dallarını körlemesine birleştirme; otomatik cron/korunan üretim yayımlaması açma.
+
+---
 ## 14 Kasım 2026 — Aşama A #19: XMLTV ad ipuçları kesin TVG kimliği değildir
 - Gerçek koşu #43605095525 (artifakt 14118620647) EPG audit: beş XMLTV akışı geçerli. Her beş akışta korumalı playlist'teki mevcut tvg-id ile birebir kaynak kanal ID eşleşmesi **0**; ayrı aday builder 876 ana liste girdisinden 89'unu ad ipuçlarıyla eşleştirerek 54 sentetik hedef kanal ve 1.879 gerçek zaman pencereli program üretti. Bu eşleşme asıl XMLTV kaynağının doğruladığı `tvg-id` ya da yayıncı sahipliği değildir.
 - Önceki scanner sentetik yeni XMLTV içindeki adla yeniden yazılmış hedef ID'yi tam tvg-id kanıtı sayabiliyordu. Bu, #19 kanıtını olduğundan güçlü gösterir. Artık builder `<channel madsc-match-method="name-hint">` ile hedefin kanıtsız ad eşlemesini etiketler, yalnız kaynak TVG-ID birebir ve tek kanaldan geldiyse `exact-id` yazar. Scanner name-hint kanalları EPG exact-match kesin kanıt kümesine eklemez; gerçek programların görüntülenmesine yönelik aday XMLTV korunur.

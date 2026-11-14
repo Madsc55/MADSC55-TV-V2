@@ -120,6 +120,24 @@ jobs:
           # Partial discovery intentionally remains red even if the scanner
           # preserved its AES-authenticated observations successfully.
           python v2/validate_real_scan_acceptance.py --report v2/reports/ibo-real-scan-report.json
+      - name: Audit remaining A-stage acceptance blockers separately from green scan
+        if: always()
+        run: |
+          if [ -f v2/reports/ibo-real-scan-report.json ]; then
+            # This never updates task statuses or any protected M3U. Even a
+            # successful core scan must not imply source-ownership/EPG/device
+            # and worldwide discovery adapter acceptance.
+            python v2/stage_a_evidence_review.py \
+              --scan v2/reports/ibo-real-scan-report.json \
+              --epg v2/reports/stage-a-epg-build-report.json \
+              --epg-integrity v2/reports/epg-integrity.json \
+              --youtube v2/reports/youtube-live-candidates.json \
+              --gitlab v2/reports/gitlab-m3u-source-discovery.json \
+              --codeberg v2/reports/codeberg-m3u-source-discovery.json \
+              --output v2/reports/stage-a-evidence-review.json
+          else
+            echo "::warning::No actual scan report available; A-stage acceptance remains open"
+          fi
       - name: Upload reports and encrypted inventory even on scan failure
         if: always()
         uses: actions/upload-artifact@v4
@@ -129,6 +147,7 @@ jobs:
             v2/reports/epg-integrity.json
             v2/reports/stage-a-epg-candidate.xml
             v2/reports/stage-a-epg-build-report.json
+            v2/reports/stage-a-evidence-review.json
             v2/reports/ibo-real-scan-report.json
             v2/reports/github-source-discovery.json
             v2/reports/gitlab-m3u-source-discovery.json

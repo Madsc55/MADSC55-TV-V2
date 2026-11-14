@@ -205,7 +205,7 @@
     {
       "id": 15,
       "status": "in_progress",
-      "last_checked_at": "2026-11-12T15:49:07Z",
+      "last_checked_at": "2026-11-14T15:24:27Z",
       "evidence_urls": [
         "https://github.com/Madsc55/MADSC55-TV-V2/blob/madsc/v2-discovery-bulk-20261031/v2/reports/task15-historical-api-identity-evidence-20261112.json",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42228674931",
@@ -215,10 +215,11 @@
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43454976797",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43455192478",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42216075104",
-        "https://github.com/Madsc55/MADSC55-TV-V2/actions/artifacts/13524765368"
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/artifacts/13524765368",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43608247496"
       ],
-      "blocker": "The IPTV-org-only join remains 1,777/4,955, but the independent worldwide exact-hash crosswalk is broader: 4,949/4,955 hashes matched and 3,080 have current-run FFmpeg AV decode. Neither report independently verifies broadcaster ownership; six historical hashes are absent from the worldwide report and 1,869 matched historical rows lack AV decode. Direct publisher/source identity evidence is still required.",
-      "reason": "Pinned IPTV-org streams.json and channels.json to ca2dc7e7bcc89def37e55202a3ad108db46a7ccf. Matched 1,777 exact URL SHA-256 identities to unambiguous catalog channel IDs, reproduced all five prior exact IDs, and found 57 catalog site hostname correlations. The report includes no plaintext stream URLs. Catalog hostname correlation is not independent broadcaster proof. 13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open. Historical worldwide evidence inspected 13 Nov: run 42216075104 artifact 13524765368 contains 35,327 candidate hashes, 13,884 current-run FFmpeg video+audio decodes, and exact-hash crosswalk of 4,949/4,955 historical rows, with 3,080 historical hashes AV-decoded. The same report explicitly says historical broadcaster identity is not verified; #15 remains open for independently authenticated publisher attribution."
+      "blocker": "6 historical URL hashes still absent from the 4,949/4,955 worldwide crosswalk; direct publisher ownership is not independently proven. A green IPTV source scan cannot authenticate ownership.",
+      "reason": "Pinned IPTV-org streams.json and channels.json to ca2dc7e7bcc89def37e55202a3ad108db46a7ccf. Matched 1,777 exact URL SHA-256 identities to unambiguous catalog channel IDs, reproduced all five prior exact IDs, and found 57 catalog site hostname correlations. The report includes no plaintext stream URLs. Catalog hostname correlation is not independent broadcaster proof. 13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open. Historical worldwide evidence inspected 13 Nov: run 42216075104 artifact 13524765368 contains 35,327 candidate hashes, 13,884 current-run FFmpeg video+audio decodes, and exact-hash crosswalk of 4,949/4,955 historical rows, with 3,080 historical hashes AV-decoded. The same report explicitly says historical broadcaster identity is not verified; #15 remains open for independently authenticated publisher attribution.\n14 Nov live scan #43608247496: 103/103 admissible M3U feeds read, 28,845 stream candidates and 8,573 total AV observations. Publisher attribution remains separately unverified; neither catalog correlation nor AV decode closes #15."
     },
     {
       "id": 16,
@@ -240,32 +241,34 @@
     {
       "id": 17,
       "status": "in_progress",
-      "last_checked_at": null,
+      "last_checked_at": "2026-11-14T15:24:27Z",
       "evidence_urls": [
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43454977935",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43454976797",
-        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43455192478"
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43455192478",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43608247496"
       ],
-      "blocker": null,
-      "reason": "13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open."
+      "blocker": "20,272 stream candidates still lack verified decoded audio+video. Recovery is partial: 300 genuinely retried, 33 recovered, not the full 15,462 eligible backlog.",
+      "reason": "13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open.\n14 Nov live scan #43608247496: encrypted resume reused 28,545 observations, performed 300 real new AV checks, recovered 33 previously failed streams, and kept the recovery queue. Real progress verified but full restoration is not complete."
     },
     {
       "id": 18,
       "status": "in_progress",
-      "last_checked_at": "2026-11-11T12:54:04Z",
+      "last_checked_at": "2026-11-14T15:24:27Z",
       "evidence_urls": [
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42989285004",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43454977935",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43454976797",
-        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43455192478"
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43455192478",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43608247496"
       ],
-      "blocker": null,
-      "reason": "Pinned exact IPTV API evidence has 171 stream hashes, 168 decoded audio+video in both short FFmpeg samples. Identity review remains tied to #15. 13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open."
+      "blocker": "8,573 stream URL records have decoded AV evidence, but 8,540 results are inherited prior-checkpoint evidence and just 33 were freshly decoded this run. Broadcaster identity and full current-run acceptance remain open.",
+      "reason": "Pinned exact IPTV API evidence has 171 stream hashes, 168 decoded audio+video in both short FFmpeg samples. Identity review remains tied to #15. 13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open.\n14 Nov live scan #43608247496: exact real FFmpeg AV counts balance: 8,540 previous checkpoint + 33 this run = 8,573, with 20,272 still without AV proof. A green scan is not complete current playback acceptance."
     },
     {
       "id": 19,
       "status": "in_progress",
-      "last_checked_at": "2026-11-13T18:10:00Z",
+      "last_checked_at": "2026-11-14T15:24:27Z",
       "evidence_urls": [
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42989285004",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43454977935",
@@ -276,35 +279,38 @@
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43480208051",
         "https://github.com/Madsc55/MADSC55-TV-V2/pull/202",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43484557050",
-        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43484812015"
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43484812015",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43608247496"
       ],
-      "blocker": null,
-      "reason": "Validated 29 exact XMLTV IDs, 8 with valid programme time ranges, 14 also present in the reviewed AV set. 303 EPG gaps remain. Final identity acceptance depends on #18. 13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open. 13 Nov 2026: PR #156 merged as 5842d47a3617ccd3bc523632144e0c0eaffc0b9d. XMLTV programme availability now requires a unique channel ID and a parseable, strictly increasing start/stop interval, including UTC offset validation. Original Stage 2 fixture without stop failed first CI; fixture was corrected and PR run 43480044886 passed all groups. Main push security gate 43480208051 passed. Offline evidence only; live EPG gaps and final identity/EPG approval remain open. 13 Nov: PR #202 merged e5a233b8c281208b5ebc4662f741968002819d38. Main Actions 43484812015 SUCCESS. Offline crossfeed duplicate XMLTV ID rejection, undeclared programme rejection, DTD/ENTITY blocking proven. Live EPG and publisher identity acceptance remain open."
+      "blocker": "5 structurally valid XMLTV source files, but zero verified exact publisher XMLTV-to-playlist IDs; 54 name-only guide hints/1,838 candidate programmes cannot close the 303 pre-existing EPG gaps. Protected madsc-epg.xml remains unchanged.",
+      "reason": "Validated 29 exact XMLTV IDs, 8 with valid programme time ranges, 14 also present in the reviewed AV set. 303 EPG gaps remain. Final identity acceptance depends on #18. 13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open. 13 Nov 2026: PR #156 merged as 5842d47a3617ccd3bc523632144e0c0eaffc0b9d. XMLTV programme availability now requires a unique channel ID and a parseable, strictly increasing start/stop interval, including UTC offset validation. Original Stage 2 fixture without stop failed first CI; fixture was corrected and PR run 43480044886 passed all groups. Main push security gate 43480208051 passed. Offline evidence only; live EPG gaps and final identity/EPG approval remain open. 13 Nov: PR #202 merged e5a233b8c281208b5ebc4662f741968002819d38. Main Actions 43484812015 SUCCESS. Offline crossfeed duplicate XMLTV ID rejection, undeclared programme rejection, DTD/ENTITY blocking proven. Live EPG and publisher identity acceptance remain open.\n14 Nov live scan #43608247496: read-only XMLTV audit 5 valid feeds; builder mapped 89 playlist entries via names into 54 review-only IDs and 1,838 programmes, explicitly 0 exact IDs. PR #255 safeguards name hints from automatic exact acceptance."
     },
     {
       "id": 20,
       "status": "in_progress",
-      "last_checked_at": "2026-11-11T12:54:04Z",
+      "last_checked_at": "2026-11-14T15:24:27Z",
       "evidence_urls": [
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42989285004",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43454977935",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43454976797",
-        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43455192478"
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43455192478",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43608247496"
       ],
-      "blocker": null,
-      "reason": "167 exact URL hashes have positive measured video dimensions and two successful real AV samples. Provenance and counts in the linked report. Full recovery queue acceptance depends on #17. 13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open."
+      "blocker": "Recovery result is not a fully accepted live playlist/device package: 12,883 RETRY, 2,546 CHECK_AV and 4,843 REVIEW decisions remain; only 33 AV recoveries from 300 real probes.",
+      "reason": "167 exact URL hashes have positive measured video dimensions and two successful real AV samples. Provenance and counts in the linked report. Full recovery queue acceptance depends on #17. 13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open.\n14 Nov live scan #43608247496: deterministic checkpoint replay and retry accounting evidenced. Retry-state and evidence archived, but independent full recovery/real playback signoff is absent."
     },
     {
       "id": 21,
       "status": "in_progress",
-      "last_checked_at": null,
+      "last_checked_at": "2026-11-14T15:24:27Z",
       "evidence_urls": [
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43454977935",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43454976797",
-        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43455192478"
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43455192478",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43608247496"
       ],
-      "blocker": null,
-      "reason": "13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open. 13 Nov 2026: opt-in worldwide source scope is present in current-main scanner (--worldwide) with offline regression coverage; this only enables future worldwide scans and does not mean a scan was run."
+      "blocker": "Core configured/eligible M3U feeds pass (103/103), but worldwide adapter coverage does not: GitLab 10/12 queries rate-limited, Codeberg 1/12 queries rate-limited, 353 YouTube metadata checks all SIGN_IN_REQUIRED and zero resolved official/YouTube direct HLS. The discovery scope is not globally accepted.",
+      "reason": "13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open. 13 Nov 2026: opt-in worldwide source scope is present in current-main scanner (--worldwide) with offline regression coverage; this only enables future worldwide scans and does not mean a scan was run.\n14 Nov live scan #43608247496: 103/103 admissible M3U feeds accepted and 28,845 candidates read. Separate GitLab/Codeberg adapters incomplete; YouTube 353/353 unverified, direct HLS 0/120, so global sources must not be treated as verified."
     },
     {
       "id": 22,
