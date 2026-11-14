@@ -28,6 +28,17 @@ class ScannerOfflineTests(unittest.TestCase):
         self.assertEqual(scanner.validated_xmltv_programme_ids(xmltv, now=now),
                          {"match.tr"})
 
+    def test_name_mapped_xmltv_is_not_exact_guide_evidence(self):
+        now = datetime(2026, 11, 14, 12, tzinfo=timezone.utc)
+        xmltv = (b'<tv><channel id="name.hint" madsc-match-method="name-hint"/>'
+                 b'<channel id="exact.tr" madsc-match-method="exact-id"/>'
+                 b'<programme channel="name.hint" start="20261114110000 +0000" '
+                 b'stop="20261114120000 +0000"><title>Guess</title></programme>'
+                 b'<programme channel="exact.tr" start="20261114110000 +0000" '
+                 b'stop="20261114120000 +0000"><title>Proven</title></programme></tv>')
+        self.assertEqual(scanner.validated_xmltv_programme_ids(
+            xmltv, now=now), {"exact.tr"})
+
     def test_xmltv_rejects_dtd_invalid_root_and_wrong_time_intervals(self):
         now = datetime(2026, 11, 14, 12, tzinfo=timezone.utc)
         bad = (
