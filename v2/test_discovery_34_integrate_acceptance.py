@@ -8,6 +8,17 @@ import discovery_34_integrate as module
 
 
 class IntegrationAcceptanceTests(unittest.TestCase):
+    def test_missing_required_rows_are_not_treated_as_empty_success(self):
+        for source in ("official", "youtube", "m3u", "github_m3u", "gitlab_m3u", "codeberg_m3u"):
+            with self.subTest(source=source), self.assertRaisesRegex(ValueError, "missing required rows"):
+                module.normalize(source, {})
+
+    def test_empty_but_well_formed_rows_are_allowed(self):
+        for source in ("official", "youtube", "m3u", "github_m3u", "gitlab_m3u", "codeberg_m3u"):
+            key = "channels" if source == "official" else "results" if source == "youtube" else "sources"
+            with self.subTest(source=source):
+                self.assertEqual(module.normalize(source, {key: []}), [])
+
     def test_missing_source_keeps_partial_candidates_and_fails(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
