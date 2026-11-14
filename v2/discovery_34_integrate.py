@@ -41,7 +41,7 @@ def normalize(source, data):
     identity_source = "m3u" if source in ("github_m3u", "gitlab_m3u", "codeberg_m3u") else source
     candidates = curated_candidates(identity_source, rows)
     if source == "official":
-        by_url = {item.get("official_site"): item for item in items if isinstance(item, dict)}
+        by_url = {item["official_site"]: item for item in items if isinstance(item, dict) and isinstance(item.get("official_site"), str)}
         for candidate in candidates:
             metadata = by_url.get(candidate["url"], {})
             candidate["name"] = str(metadata.get("name") or "")
@@ -49,7 +49,7 @@ def normalize(source, data):
             candidate["country"] = str(metadata.get("country") or "")
             candidate["status"] = str(metadata.get("status") or "DIRECTORY_REFERENCE_ONLY_NOT_STREAM_VERIFIED")
     elif source == "youtube":
-        by_id = {item.get("video_id"): item for item in items if isinstance(item, dict)}
+        by_id = {item["video_id"]: item for item in items if isinstance(item, dict) and isinstance(item.get("video_id"), str)}
         for candidate in candidates:
             video_id = candidate.get("source_id", "").split(":", 1)[-1]
             metadata = by_id.get(video_id, {})
