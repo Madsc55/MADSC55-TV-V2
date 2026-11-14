@@ -56,7 +56,7 @@ with (ev/'av_report.csv').open('w',newline='') as f:
     w=csv.writer(f);w.writerow(['url','status','attempts','error']);w.writerows(results)
 with (ev/'recovery.csv').open('w',newline='') as f:
     w=csv.writer(f);w.writerow(['url','status','attempts','error']);w.writerows(r for r in results if r[1]!='AV_OK')
-xmlids=set();xml_errors=[]
+xmlids=set();programme_ids=set();xml_errors=[]
 xmlpaths=sorted(inp.glob('*.xml')) if inp.is_dir() else []
 explicit_xml=os.environ.get('STAGE_A_XMLTV')
 if explicit_xml:
@@ -67,13 +67,25 @@ for path in xmlpaths:
     try:
         for _,element in ET.iterparse(path,events=('end',)):
             if element.tag=='channel' and element.get('id'): xmlids.add(element.get('id'))
+            if element.tag=='programme':
+                channel=element.get('channel')
+                start=element.get('start',''); stop=element.get('stop','')
+                # XMLTV dates require valid increasing timestamps, not merely a channel declaration.
+                def xmltv_date(s):
+                    m=re.fullmatch(r'(\\d{14})\\s+([+-]\\d{4})',s)
+                    if not m: return None
+                    try:
+                        return datetime.datetime.strptime(m.group(1)+m.group(2),'%Y%m%d%H%M%S%z')
+                    except ValueError: return None
+                a,b=xmltv_date(start),xmltv_date(stop)
+                if channel and a and b and a<b: programme_ids.add(channel)
             element.clear()
     except Exception as e: xml_errors.append(f'{path}: {e}')
 with (ev/'epg_gap.csv').open('w',newline='') as f:
-    w=csv.writer(f);w.writerow(['tvg_id']);w.writerows((x,) for x in sorted(ids-xmlids))
+    w=csv.writer(f);w.writerow(['tvg_id']);w.writerows((x,) for x in sorted(ids-(xmlids & programme_ids)))
 with (ev/'input_sha256.json').open('w') as f: json.dump(input_hashes,f,indent=2)
-status='PASS' if urls and not xml_errors and len(results)==len(urls) and all(r[1]=='AV_OK' for r in results) and not (ids-xmlids) and bool(xmlids) else 'BLOCKED'
-report=f'''# Stage A acceptance\n\nDate: {stamp}\nStatus: {status}\nM3U source files: {len(sources)}\nXMLTV source files: {len(xmlpaths)}\nUnique URLs: {len(urls)}\nAV_OK: {sum(r[1]=='AV_OK' for r in results)}\nNO_AV: {sum(r[1]!='AV_OK' for r in results)}\nEPG gaps: {len(ids-xmlids)}\nXML parse errors: {len(xml_errors)}\n\nPASS requires all URLs to have video and audio and all tvg-id entries to exist in XMLTV. This report does not certify individual tasks or physical playback.\n'''
+status='PASS' if urls and not xml_errors and len(results)==len(urls) and all(r[1]=='AV_OK' for r in results) and not (ids-(xmlids & programme_ids)) and bool(xmlids) and bool(programme_ids) else 'BLOCKED'
+report=f'''# Stage A acceptance\n\nDate: {stamp}\nStatus: {status}\nM3U source files: {len(sources)}\nXMLTV source files: {len(xmlpaths)}\nUnique URLs: {len(urls)}\nAV_OK: {sum(r[1]=='AV_OK' for r in results)}\nNO_AV: {sum(r[1]!='AV_OK' for r in results)}\nEPG gaps: {len(ids-(xmlids & programme_ids))}\nXML parse errors: {len(xml_errors)}\n\nPASS requires all URLs to have video and audio and all tvg-id entries to have declared XMLTV channels with valid programmes. This report does not certify individual tasks or physical playback.\n'''
 (ev/'stage_A_acceptance.md').write_text(report)
 (ev/'stage_A_errors.log').write_text(('No input M3U files\n' if not urls else '')+'\n'.join(xml_errors)+'\n')
 print(report)
