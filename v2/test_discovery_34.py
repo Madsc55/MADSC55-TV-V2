@@ -73,6 +73,7 @@ class Discovery34Tests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             output = Path(directory) / "candidates.json"
             with patch.object(discovery_34, "fetch_json", side_effect=fake_fetch), \
+                 patch.object(discovery_34.time, "sleep", return_value=None), \
                  patch("sys.argv", ["discovery_34.py", "--network", "--output", str(output)]):
                 with self.assertRaises(SystemExit) as exit_result:
                     discovery_34.main()
