@@ -227,6 +227,16 @@ def check_hls(entry, timeout, diagnostics=None):
     return None
 
 
+def recovery_http_status(status):
+    """Normalize nonstandard network status codes at the strict recovery boundary.
+
+    Keep the original HTTP observation in the encrypted inventory. A missing,
+    malformed or out-of-range status remains UNKNOWN for recovery decisions,
+    and never serves as evidence of successful AV playback.
+    """
+    return status if type(status) is int and 100 <= status <= 599 else None
+
+
 def current_decode_confirmed(current_av, status):
     """Only fresh successful frame decoding can certify an AV inventory row."""
     return (status == 'AV_VERIFIED' and isinstance(current_av, dict)
@@ -482,6 +492,7 @@ def main():
     try:
         fd = os.open(inventory_tmp, os.O_WRONLY | os.O_CREAT | os.O_TRUNC | getattr(os, 'O_NOFOLLOW', 0), 0o600)
         recovery_records = []
+        nonstandard_http_status_count = 0
         with os.fdopen(fd, 'w', encoding='utf-8') as inventory_file:
             for candidate in candidates.values():
                 previous = historical_records.get(candidate['url'], {})
@@ -516,8 +527,12 @@ def main():
                           'observations': old_observations + [{'status': new_status, 'origin': 'current-scan'}]}
                 inventory_file.write(json.dumps(record, ensure_ascii=False) + '\n')
                 if candidate['url'] not in good_urls:
+                    raw_http_status = diagnostics_by_url.get(candidate['url'], {}).get('last_http_status')
+                    queue_http_status = recovery_http_status(raw_http_status)
+                    if raw_http_status is not None and queue_http_status is None:
+                        nonstandard_http_status_count += 1
                     recovery_records.append({'url': candidate['url'],
-                                             'last_http_status': diagnostics_by_url.get(candidate['url'], {}).get('last_http_status'),
+                                             'last_http_status': queue_http_status,
                                              'last_timeout': diagnostics_by_url.get(candidate['url'], {}).get('last_timeout', False),
                                              'recovery_attempts': recovery_attempts,
                                              'observations': record['observations']})
@@ -541,6 +556,7 @@ def main():
               'recovery_retry_count': sum(item['action'] == 'RETRY' for item in recovery_queue),
               'recovery_av_check_count': sum(item['action'] == 'CHECK_AV' for item in recovery_queue),
               'recovery_manual_review_count': sum(item['action'] == 'REVIEW' for item in recovery_queue),
+              'recovery_nonstandard_http_status_count': nonstandard_http_status_count,
               'candidate_inventory': str(encrypted_inventory), 'archive_restore_test_passed': archive_result['restore_test_passed'],
               'unverified_or_failed_candidates': len(candidates) - len(good),
               'multi_source_candidates': sum(len(item['source_ids']) > 1 for item in candidates.values()),
