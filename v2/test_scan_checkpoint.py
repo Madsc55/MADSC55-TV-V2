@@ -23,6 +23,75 @@ class ScanCheckpointTests(unittest.TestCase):
             "verified_quality": {"av_verified": True, "quality": "HD"},
         }
 
+    def test_bootstrap_real_pending_inventory_from_pre_checkpoint_run(self):
+        """Preserve all tested records without calling FFmpeg or upgrading old proof."""
+        from datetime import datetime, timezone
+        from scan_checkpoint import bootstrap_from_pending_inventory
+        from secure_archive import encrypt
+        from stage3_identity_recovery import url_sha256
+
+        pending = self.root / "ibo-candidate-inventory.jsonl.pending.enc"
+        report = self.root / "ibo-real-scan-report.json"
+        failed_url = "https://example.org/failed.m3u8"
+        rows = [
+            {"url": self.url, "url_sha256": url_sha256(self.url),
+             "http_hls_status": "AV_VERIFIED", "decoded_av_verified": True,
+             "decode_status": "DECODED_AV", "verified_quality": self.good["verified_quality"],
+             "last_http_status": 200, "last_timeout": False},
+            {"url": failed_url, "url_sha256": url_sha256(failed_url),
+             "http_hls_status": "UNVERIFIED_OR_FAILED", "decoded_av_verified": False,
+             "decode_status": "NOT_DECODED_THIS_RUN",
+             "last_http_status": 999, "last_timeout": False},
+        ]
+        payload = "".join(json.dumps(x) + "\n" for x in rows).encode()
+        pending.write_bytes(encrypt(payload, self.secret))
+        report_data = {
+            "status": "INCOMPLETE_SOURCE_FETCH_OR_DROP",
+            "scan_scope": "WORLDWIDE_ALL_SOURCE_ENTRIES",
+            "archive_restore_test_passed": True, "mock_data_used": False,
+            "candidate_inventory": "/runner/v2/reports/ibo-candidate-inventory.jsonl.pending.enc",
+            "unique_new_candidates": 2, "http_checked": 2,
+            "av_verified": 1, "failed_sources": [{"id": "bad-feed"}],
+        }
+        report.write_text(json.dumps(report_data))
+        started = datetime.now(timezone.utc).isoformat()
+        result = bootstrap_from_pending_inventory(
+            pending, report, self.path, self.secret, observed_at=started)
+        self.assertEqual(result["resumed_rows"], 2)
+        self.assertEqual(result["prior_decoded_av"], 1)
+        self.assertTrue(result["last_scan_was_incomplete"])
+        saved = load_progress(self.path, self.secret, worldwide=True)
+        self.assertEqual(len(saved), 2)
+        self.assertTrue(saved[self.url]["result"]["decoded_av_verified"])
+        self.assertIsNone(saved[failed_url]["result"])
+        # A report claiming unobserved success must never become a checkpoint.
+        report_data["av_verified"] = 2
+        report.write_text(json.dumps(report_data))
+        with self.assertRaises(ValueError):
+            bootstrap_from_pending_inventory(
+                pending, report, self.path, self.secret, observed_at=started)
+        self.assertEqual(len(load_progress(self.path, self.secret, worldwide=True)), 2)
+        # Observations without a current-run decode may never be promoted.
+        rows[0]["decoded_av_verified"] = False
+        report_data["av_verified"] = 1
+        report.write_text(json.dumps(report_data))
+        pending.write_bytes(encrypt(
+            "".join(json.dumps(x) + "\n" for x in rows).encode(), self.secret))
+        with self.assertRaises(ValueError):
+            bootstrap_from_pending_inventory(
+                pending, report, self.path, self.secret, observed_at=started)
+        self.assertEqual(len(load_progress(self.path, self.secret, worldwide=True)), 2)
+
+    def test_bootstrap_rejects_expired_prior_run(self):
+        from datetime import datetime, timezone
+        from scan_checkpoint import bootstrap_from_pending_inventory
+        with self.assertRaises(ValueError):
+            bootstrap_from_pending_inventory(
+                self.root / "ibo-candidate-inventory.jsonl.pending.enc",
+                self.root / "ibo-real-scan-report.json", self.path,
+                self.secret, observed_at="2026-01-01T00:00:00Z",
+                now=datetime(2026, 2, 1, tzinfo=timezone.utc).timestamp())
+
     def test_encrypted_round_trip_and_atomic_checkpoint_replacement(self):
         original = checkpoint_row(
             self.url, self.good, {"last_http_status": 200})
