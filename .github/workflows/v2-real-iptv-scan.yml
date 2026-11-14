@@ -51,6 +51,16 @@ jobs:
         run: python v2/discovery_34_integrate.py
       - name: Resolve official and YouTube live pages to encrypted direct HLS candidates
         run: python v2/direct_stream_resolver.py --input v2/reports/discovery-34-integrated.json --output v2/reports/resolved-direct-streams.jsonl.enc
+      - name: Read-only live EPG source and schedule integrity audit
+        continue-on-error: true
+        run: |
+          # Advisory evidence only: this never modifies madsc-epg.xml.
+          python v2/epg_integrity.py
+      - name: Generate separate EPG candidate from actual XMLTV feeds for review
+        continue-on-error: true
+        run: |
+          # Save in v2/reports; the protected root EPG remains untouched.
+          timeout --signal=TERM 180s python v2/build_epg.py --candidate-only
       - name: Restore authenticated progress from the latest completed real scan
         env:
           GH_TOKEN: ${{ github.token }}
@@ -90,7 +100,14 @@ jobs:
           # prior AV or mark an untested stream as verified.
       - name: Real network discovery and AV probe including discovered sources
         run: |
-          python v2/real_ibo_scan.py --worldwide --workers 12 --timeout 12 --limit 3000 --fail-fast-source-errors --tolerate-optional-discovery-failures --checkpoint-every 100 --resume-checkpoint v2/reports/ibo-scan-resume.enc --dynamic-sources v2/reports/github-source-discovery.json --integrated-candidates v2/reports/discovery-34-integrated.json --resolved-streams v2/reports/resolved-direct-streams.jsonl.enc
+          CMD=(python v2/real_ibo_scan.py --worldwide --workers 12 --timeout 12 --limit 3000 --fail-fast-source-errors --tolerate-optional-discovery-failures --checkpoint-every 100 --resume-checkpoint v2/reports/ibo-scan-resume.enc --dynamic-sources v2/reports/github-source-discovery.json --integrated-candidates v2/reports/discovery-34-integrated.json --resolved-streams v2/reports/resolved-direct-streams.jsonl.enc)
+          if [ -s v2/reports/stage-a-epg-candidate.xml ]; then
+            CMD+=(--epg v2/reports/stage-a-epg-candidate.xml)
+            echo "Real XMLTV candidate provided; only unique IDs with valid programmes can match"
+          else
+            echo "::warning::No current EPG candidate; #19 EPG acceptance remains open"
+          fi
+          "${CMD[@]}"
       - name: Export 1000 and 2000 real verified new URL batches only when discovery is complete
         run: |
           if python -c 'import json,sys; d=json.load(open("v2/reports/ibo-real-scan-report.json", encoding="utf-8")); sys.exit(0 if d.get("full_discovery_acceptance") is True else 1)'; then
@@ -109,6 +126,9 @@ jobs:
         with:
           name: v2-real-scan-evidence
           path: |
+            v2/reports/epg-integrity.json
+            v2/reports/stage-a-epg-candidate.xml
+            v2/reports/stage-a-epg-build-report.json
             v2/reports/ibo-real-scan-report.json
             v2/reports/github-source-discovery.json
             v2/reports/gitlab-m3u-source-discovery.json
