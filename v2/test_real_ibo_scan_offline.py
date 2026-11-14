@@ -93,7 +93,7 @@ class ScannerOfflineTests(unittest.TestCase):
                 "url": stream_url,
                 "decoded_av_verified": False,
                 "http_hls_status": "UNVERIFIED_OR_FAILED",
-            }).encode() + b"\\n"
+            }).encode() + b"\n"
             plaintext.write_bytes(payload)
             secret = "offline-acceptance-secret-only"
             result = scanner.preserve_failed_recovery_evidence(
