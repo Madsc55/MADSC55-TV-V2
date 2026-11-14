@@ -76,14 +76,14 @@ jobs:
           PYTHONPATH=v2 python -m unittest -v test_stage5_evidence_export
       - name: Discovery 34 offline adapter and integration acceptance
         run: |
-          PYTHONPATH=v2 python -m unittest -v test_discovery_34 test_discovery_34_integrate test_discovery_34_live_contract
+          PYTHONPATH=v2 python -m unittest -v test_discovery_34 test_discovery_34_integrate test_discovery_34_integrate_acceptance test_discovery_34_live_contract
           PYTHONPATH=v2 python -m unittest -v test_github_source_discovery
           PYTHONPATH=v2 python -m unittest -v test_federated_m3u_source_discovery
           python -m py_compile v2/federated_m3u_source_discovery.py v2/test_federated_m3u_source_discovery.py
           python -m py_compile v2/github_source_discovery.py v2/test_github_source_discovery.py
           python -m py_compile v2/discovery_34.py v2/discovery_34_integrate.py v2/discovery_34_live_contract.py
           PYTHONPATH=v2 python v2/discovery_34.py --output /tmp/discovery-34-offline.json
-          PYTHONPATH=v2 python v2/discovery_34_integrate.py --output /tmp/discovery-34-integrated.json
+          # The checked-in inputs are intentionally incomplete; preserve the partial report,\n          # and assert the CLI fails closed rather than treating missing sources as success.\n          if PYTHONPATH=v2 python v2/discovery_34_integrate.py --output /tmp/discovery-34-integrated.json; then\n            python -c 'import json; d=json.load(open("/tmp/discovery-34-integrated.json")); assert not d["errors"], "Unexpected success with missing sources"'\n          else\n            python -c 'import json; d=json.load(open("/tmp/discovery-34-integrated.json")); assert d["errors"] and d["verified_av"] == 0, "Failed CLI must preserve missing-source evidence"'\n          fi
 
   live-discovery-diagnostic:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '#34 live probe')
