@@ -81,8 +81,12 @@ def ingest_xmltv_feed(root, channels, schedules, ambiguous_ids):
 
 def select_epg_source(tvgid, tvgname, display, names, schedules):
     """Only exact IDs or unambiguous name matches may supply programmes."""
-    if tvgid and tvgid in schedules:
-        return tvgid, False
+    if tvgid:
+        # A declared playlist ID is authoritative: a different publisher ID
+        # found by a similar display name is not a safe replacement.
+        # Keep it unresolved rather than exporting programmes under the
+        # original ID with a misleading identity association.
+        return (tvgid, False) if tvgid in schedules else (None, False)
     candidates = set()
     for label in (tvgid, tvgname, display):
         key = norm(label)
