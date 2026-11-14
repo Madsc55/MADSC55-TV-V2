@@ -79,8 +79,10 @@ def fetch_json(url):
         raise ValueError("Response too large")
     return json.loads(data)
 
-def fetch_with_retry(url, fetch=fetch_json, sleep=time.sleep):
+def fetch_with_retry(url, fetch=None, sleep=None):
     """Bounded transient retry for the actual candidate collection CLI."""
+    fetch = fetch or fetch_json
+    sleep = sleep or time.sleep
     from discovery_34_live_contract import MAX_ATTEMPTS, RETRYABLE_HTTP, retry_delay
     for attempt in range(1, MAX_ATTEMPTS + 1):
         try:
