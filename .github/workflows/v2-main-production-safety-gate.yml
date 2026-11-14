@@ -47,7 +47,9 @@ jobs:
           echo 'Recheck Stage 3 scanner dynamic-source validation'
           python v2/test_real_ibo_scan_offline.py
           PYTHONPATH=v2 python -m unittest -v test_scan_checkpoint
+          PYTHONPATH=v2 python -m unittest -v test_validate_real_scan_acceptance
           python -m py_compile v2/scan_checkpoint.py v2/bootstrap_pending_checkpoint.py v2/test_scan_checkpoint.py
+          python -m py_compile v2/validate_real_scan_acceptance.py v2/test_validate_real_scan_acceptance.py
           python -m py_compile v2/real_ibo_scan.py v2/consolidate_inventory.py v2/ibo_package_acceptance.py v2/ibo_final_acceptance.py
           python v2/test_ibo_package_acceptance.py
           python v2/test_ibo_final_acceptance.py
