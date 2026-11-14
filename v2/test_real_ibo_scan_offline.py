@@ -294,6 +294,47 @@ class ScannerOfflineTests(unittest.TestCase):
             scanner.next_recovery_attempts(
                 0, reused="yes", av_verified=False)
 
+    def test_discovered_test_fixture_is_not_a_broadcast_source(self):
+        fixture = ("https://gitlab.com/glab-forks/debian/python-team/"
+                   "packages/python-m3u8/-/raw/gitlab%2Fmcr%2Fmain/"
+                   "tests/playlists/simple-playlist.m3u8")
+        self.assertTrue(scanner.is_nonbroadcast_m3u_fixture(fixture))
+        self.assertFalse(scanner.is_nonbroadcast_m3u_fixture(
+            "https://example.org/live/official-channels.m3u"))
+        document = {"candidates": [
+            {"source": "m3u", "url": fixture, "verified_av": False},
+            {"source": "m3u", "url": "https://example.org/legitimate.m3u",
+             "verified_av": False},
+        ]}
+        accepted, rejected = scanner.normalize_integrated_m3u_sources(
+            document, [])
+        self.assertEqual(len(accepted), 1)
+        self.assertEqual(accepted[0]["url"],
+                         "https://example.org/legitimate.m3u")
+        self.assertEqual(rejected, [
+            {"index": 0, "error": "NonBroadcastTestFixture"}])
+
+    def test_only_proven_invalid_optional_m3u_is_quarantined(self):
+        check = scanner.quarantinable_invalid_discovery
+        configured = {"mandatory-world"}
+        self.assertTrue(check(
+            ValueError("Not an M3U playlist"), "integrated-m3u-abc",
+            configured, tolerate_optional=True))
+        for error in (ValueError("Source exceeded size limit"),
+                      ValueError("Source length exceeds declared Content-Length"),
+                      ValueError("Malformed input"),
+                      OSError("HTTP 404")):
+            with self.subTest(error=repr(error)):
+                self.assertFalse(check(
+                    error, "integrated-m3u-abc",
+                    configured, tolerate_optional=True))
+        self.assertFalse(check(ValueError("Not an M3U playlist"),
+                               "mandatory-world", configured,
+                               tolerate_optional=True))
+        self.assertFalse(check(ValueError("Not an M3U playlist"),
+                               "integrated-m3u-abc", configured,
+                               tolerate_optional=False))
+
     def test_discovery_source_failures_are_explicit_and_not_mandatory(self):
         mandatory = {"configured-tr", "configured-world"}
         failed = [

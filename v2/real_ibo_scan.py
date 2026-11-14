@@ -118,6 +118,33 @@ def public_https_m3u_feed(url):
     return public_http_stream_url(url) and urllib.parse.urlsplit(url).scheme == "https"
 
 
+def is_nonbroadcast_m3u_fixture(url):
+    """Exclude repository test fixtures from live broadcast feed discovery.
+
+    The rejection is explicit in the report; this is not a working stream,
+    nor an inaccessible mandatory source.
+    """
+    if not isinstance(url, str):
+        return False
+    path = urllib.parse.unquote(urllib.parse.urlsplit(url).path).casefold()
+    parts = path.split("/")
+    return any(parts[i] in ("tests", "test", "fixtures", "fixture")
+               and i + 1 < len(parts) and parts[i + 1] == "playlists"
+               for i in range(len(parts) - 1))
+
+
+def quarantinable_invalid_discovery(exc, source_id, configured_source_ids,
+                                    *, tolerate_optional):
+    """Only a proven non-M3U document may be rejected as an invalid candidate.
+
+    Never silently disregard HTTP outages, oversize feeds, truncated sources,
+    mandatory configured feeds or unknown parser exceptions.
+    """
+    return (tolerate_optional and source_id not in configured_source_ids
+            and type(exc) is ValueError
+            and str(exc) == "Not an M3U playlist")
+
+
 def normalize_integrated_m3u_sources(report, existing_sources):
     """Admit only candidate-only HTTPS M3U feed URLs from the unified discovery report."""
     if not isinstance(report, dict) or not isinstance(report.get("candidates"), list):
@@ -136,6 +163,9 @@ def normalize_integrated_m3u_sources(report, existing_sources):
             continue
         if not public_https_m3u_feed(url) or url in seen:
             rejected.append({"index": index, "error": "RejectedSource"})
+            continue
+        if is_nonbroadcast_m3u_fixture(url):
+            rejected.append({"index": index, "error": "NonBroadcastTestFixture"})
             continue
         sid = "integrated-m3u-" + hashlib.sha256(url.encode()).hexdigest()[:20]
         accepted.append({"id": sid, "url": url, "scope": "candidate"})
@@ -522,6 +552,7 @@ def main():
     candidates = {}
     failed = []
     source_counts = {}
+    quarantined_invalid_discovery_sources = []
     for source in sources:
         sid, url = source['id'], source['url']
         if not public_https_m3u_feed(url):
@@ -539,6 +570,15 @@ def main():
                         elif sid not in found['source_ids']:
                             found['source_ids'].append(sid)
         except (OSError, ValueError, UnicodeError, socket.timeout) as exc:
+            if quarantinable_invalid_discovery(
+                    exc, sid, configured_source_ids,
+                    tolerate_optional=args.tolerate_optional_discovery_failures):
+                # A fetched document lacking #EXTM3U is provably not a
+                # valid playlist. Quarantine without treating it as an unseen
+                # mandatory source or silently promoting its channels.
+                quarantined_invalid_discovery_sources.append({
+                    "id": sid, "reason": "INVALID_M3U_FORMAT"})
+                continue
             # Preserve actionable, non-sensitive failure classification in the
             # uploaded report. Never include exception text: it may contain
             # authenticated URLs or credentials from a discovered feed.
@@ -583,6 +623,9 @@ def main():
                         source_drops.append({'id': sid, 'previous': prior, 'current': current})
         except (OSError, ValueError, TypeError):
             pass
+    # Every discovered URL was attempted or explicitly excluded as invalid.
+    # The accepted-source count excludes proven invalid *optional* documents.
+    eligible_source_count = len(sources) - len(quarantined_invalid_discovery_sources)
     (mandatory_failed_sources, optional_failed_sources,
      mandatory_source_drops, optional_source_drops) = classify_source_failures(
         failed, source_drops, configured_source_ids,
@@ -602,7 +645,10 @@ def main():
         early_report = {
             'status': 'INCOMPLETE_SOURCE_FETCH_EARLY',
             'scan_scope': 'WORLDWIDE_ALL_SOURCE_ENTRIES' if args.worldwide else 'TR_AZ_METADATA_CANDIDATES',
-            'source_count': len(sources), 'source_counts': source_counts,
+            'source_count': eligible_source_count,
+            'sources_attempted_including_invalid_discoveries': len(sources),
+            'quarantined_invalid_discovery_sources': quarantined_invalid_discovery_sources,
+            'source_counts': source_counts,
             'fetched_sources': len(source_counts), 'failed_sources': failed,
             'mandatory_failed_sources': mandatory_failed_sources,
             'optional_failed_discovered_sources': optional_failed_sources,
@@ -798,7 +844,9 @@ def main():
     # Never retain plaintext URL/token inventory in the GitHub working tree.
     # Source outages are reported; a working subset can still be tested.
     # Never modify the protected main playlist.
-    report = {'scan_scope': 'WORLDWIDE_ALL_SOURCE_ENTRIES' if args.worldwide else 'TR_AZ_METADATA_CANDIDATES', 'source_count': len(sources), 'dynamic_source_count': dynamic_count, 'rejected_dynamic_sources': rejected_dynamic_sources, 'integrated_m3u_source_count': integrated_m3u_count, 'rejected_integrated_m3u_sources': rejected_integrated_m3u,
+    report = {'scan_scope': 'WORLDWIDE_ALL_SOURCE_ENTRIES' if args.worldwide else 'TR_AZ_METADATA_CANDIDATES', 'source_count': eligible_source_count, 'sources_attempted_including_invalid_discoveries': len(sources),
+              'quarantined_invalid_discovery_sources': quarantined_invalid_discovery_sources,
+              'dynamic_source_count': dynamic_count, 'rejected_dynamic_sources': rejected_dynamic_sources, 'integrated_m3u_source_count': integrated_m3u_count, 'rejected_integrated_m3u_sources': rejected_integrated_m3u,
               'resolved_direct_candidate_count': resolved_direct_count, 'rejected_resolved_direct_candidates': rejected_resolved_direct, 'fetched_sources': len(source_counts),
               'failed_sources': failed, 'source_counts': source_counts, 'source_drops': source_drops,
               'mandatory_failed_sources': mandatory_failed_sources,
