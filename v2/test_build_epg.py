@@ -1,7 +1,13 @@
 #!/usr/bin/env python3
 """Offline EPG mapping acceptance: no guessed programme ownership."""
 import io
+import json
+import sys
+import tempfile
 import unittest
+from pathlib import Path
+from datetime import timedelta
+import build_epg
 from collections import defaultdict
 from unittest.mock import patch
 from datetime import datetime, timezone
@@ -15,6 +21,70 @@ class EPGBuilderMatchingTests(unittest.TestCase):
         self.names[norm("Shared TV")].update({"channel.tr", "channel.az"})
         self.names[norm("Unique Station")].add("unique.tr")
         self.schedules = {"channel.tr": [1, 2, 3], "channel.az": [1], "unique.tr": [1]}
+
+    def test_candidate_epg_is_separate_and_preserves_protected_epg(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            (root / "v2").mkdir()
+            (root / "v2/epg_sources.json").write_text(json.dumps({
+                "sources": ["https://epg.example.org/guide.xml?private=do-not-publish"]
+            }))
+            live = root / "live.m3u8"
+            live.write_text('#EXTM3U\n#EXTINF:-1 tvg-id="unique.tr" tvg-name="Unique Station",Unique Station\nhttps://example.org/live.m3u8\n')
+            protected = root / "madsc-epg.xml"
+            protected.write_bytes(b"PROTECTED-EMPTY-BASELINE")
+            now = datetime.now(timezone.utc)
+            fmt = lambda t: t.strftime("%Y%m%d%H%M%S") + " +0000"
+            xml = ET.Element("tv")
+            channel = ET.SubElement(xml, "channel", id="unique.tr")
+            ET.SubElement(channel, "display-name").text = "Unique Station"
+            programme = ET.SubElement(xml, "programme", channel="unique.tr",
+                                      start=fmt(now-timedelta(minutes=30)),
+                                      stop=fmt(now+timedelta(minutes=30)))
+            ET.SubElement(programme, "title").text = "Real guide fixture"
+            with (patch.object(build_epg, "ROOT", root),
+                  patch.object(build_epg, "OUT", protected),
+                  patch.object(build_epg, "PLAYLIST", live),
+                  patch.object(build_epg, "download", return_value=xml) as download,
+                  patch.object(sys, "argv", ["build_epg.py", "--candidate-only"])):
+                build_epg.main()
+                self.assertEqual(download.call_count, 1)
+                candidate = root / "v2/reports/stage-a-epg-candidate.xml"
+                self.assertEqual(protected.read_bytes(), b"PROTECTED-EMPTY-BASELINE")
+                self.assertEqual(len(ET.parse(candidate).findall("programme")), 1)
+                report = json.loads((root / "v2/reports/stage-a-epg-build-report.json").read_text())
+                self.assertTrue(report["candidate_only"])
+                self.assertEqual(report["status"], "EPG_CANDIDATE_FOR_REVIEW")
+                self.assertNotIn("private=do-not-publish", json.dumps(report))
+                # Exclusive candidate creation must never overwrite evidence.
+                prior = candidate.read_bytes()
+                with self.assertRaises(SystemExit):
+                    build_epg.main()
+                self.assertEqual(candidate.read_bytes(), prior)
+
+    def test_candidate_epg_fails_closed_without_current_programmes(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            (root / "v2").mkdir()
+            (root / "v2/epg_sources.json").write_text(json.dumps({
+                "sources": ["https://epg.example.org/guide.xml"]}))
+            live = root / "live.m3u8"
+            live.write_text('#EXTM3U\n#EXTINF:-1 tvg-id="unique.tr",Unique Station\nhttps://example.org/live.m3u8\n')
+            protected = root / "madsc-epg.xml"
+            protected.write_bytes(b"PROTECTED")
+            xml = ET.Element("tv")
+            ET.SubElement(xml, "channel", id="unique.tr")
+            ET.SubElement(xml, "programme", channel="unique.tr",
+                          start="20200101000000 +0000", stop="20200101010000 +0000")
+            with (patch.object(build_epg, "ROOT", root),
+                  patch.object(build_epg, "OUT", protected),
+                  patch.object(build_epg, "PLAYLIST", live),
+                  patch.object(build_epg, "download", return_value=xml),
+                  patch.object(sys, "argv", ["build_epg.py", "--candidate-only"])):
+                with self.assertRaises(SystemExit):
+                    build_epg.main()
+            self.assertEqual(protected.read_bytes(), b"PROTECTED")
+            self.assertFalse((root / "v2/reports/stage-a-epg-candidate.xml").exists())
 
     def test_ambiguous_normalized_name_is_not_assigned(self):
         self.assertEqual(select_epg_source("", "Shared TV", "Shared TV", self.names, self.schedules),
