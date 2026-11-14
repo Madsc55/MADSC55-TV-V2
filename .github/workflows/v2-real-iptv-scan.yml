@@ -88,6 +88,11 @@ jobs:
           else
             echo "::warning::Optional discovered feeds incomplete; accepted 1000/2000 packages intentionally withheld"
           fi
+      - name: Require complete discovered-source evidence before green workflow status
+        run: |
+          # Partial discovery intentionally remains red even if the scanner
+          # preserved its AES-authenticated observations successfully.
+          python v2/validate_real_scan_acceptance.py --report v2/reports/ibo-real-scan-report.json
       - name: Upload reports and encrypted inventory even on scan failure
         if: always()
         uses: actions/upload-artifact@v4
