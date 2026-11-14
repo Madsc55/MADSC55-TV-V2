@@ -175,6 +175,32 @@ class ScannerOfflineTests(unittest.TestCase):
                     mocked.assert_not_called()
         self.assertTrue(scanner.public_http_stream_url("http://example.org/live.m3u8"))
 
+    def test_replayed_checkpoint_never_spends_an_unexecuted_recovery_attempt(self):
+        for prior in range(4):
+            with self.subTest(prior=prior):
+                self.assertEqual(
+                    scanner.next_recovery_attempts(
+                        prior, reused=True, av_verified=False), prior)
+                self.assertEqual(
+                    scanner.next_recovery_attempts(
+                        prior, reused=False, av_verified=False),
+                    min(prior + 1, 3))
+                self.assertEqual(
+                    scanner.next_recovery_attempts(
+                        prior, reused=True, av_verified=True), 0)
+        self.assertEqual(scanner.observation_origin(reused=True),
+                         "resumed-checkpoint")
+        self.assertEqual(scanner.observation_origin(reused=False),
+                         "current-scan")
+        for invalid in (-1, 4, True, False, "1"):
+            with self.subTest(invalid=invalid):
+                with self.assertRaises(ValueError):
+                    scanner.next_recovery_attempts(
+                        invalid, reused=False, av_verified=False)
+        with self.assertRaises(ValueError):
+            scanner.next_recovery_attempts(
+                0, reused="yes", av_verified=False)
+
     def test_discovery_source_failures_are_explicit_and_not_mandatory(self):
         mandatory = {"configured-tr", "configured-world"}
         failed = [
