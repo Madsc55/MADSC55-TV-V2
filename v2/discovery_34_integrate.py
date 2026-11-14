@@ -79,6 +79,9 @@ def main():
     with path.open("x", encoding="utf-8") as output:
         output.write(json.dumps(result, ensure_ascii=False, indent=2) + "\n")
     print("Integrated candidate identities:", len(result["candidates"]), "Missing/invalid inputs:", len(result["errors"]))
+    # Preserve the partial report but never accept missing source inputs as success.
+    if result["errors"]:
+        raise SystemExit(1)
 
 if __name__ == "__main__":
     main()
