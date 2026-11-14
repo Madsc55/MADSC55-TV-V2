@@ -3,12 +3,52 @@
 import io
 import json
 import pathlib
+from datetime import datetime, timezone
 import tempfile
 import unittest
 from unittest.mock import patch
 import real_ibo_scan as scanner
 
 class ScannerOfflineTests(unittest.TestCase):
+    def test_xmltv_epg_is_not_satisfied_by_channel_declaration_only(self):
+        now = datetime(2026, 11, 14, 12, tzinfo=timezone.utc)
+        xmltv = (b'<tv><channel id="match.tr"/><channel id="empty.tr"/>'
+                 b'<channel id="dup.tr"/><channel id="dup.tr"/>'
+                 b'<channel id="old.tr"/><channel id="untitled.tr"/>'
+                 b'<programme channel="match.tr" start="20261114100000 +0000" '
+                 b'stop="20261114110000 +0000"><title>News</title></programme>'
+                 b'<programme channel="dup.tr" start="20261114100000 +0000" '
+                 b'stop="20261114110000 +0000"><title>Fake</title></programme>'
+                 b'<programme channel="undeclared.tr" start="20261114100000 +0000" '
+                 b'stop="20261114110000 +0000"><title>Fake</title></programme>'
+                 b'<programme channel="old.tr" start="20200101000000 +0000" '
+                 b'stop="20200101010000 +0000"><title>Old</title></programme>'
+                 b'<programme channel="untitled.tr" start="20261114100000 +0000" '
+                 b'stop="20261114110000 +0000"/></tv>')
+        self.assertEqual(scanner.validated_xmltv_programme_ids(xmltv, now=now),
+                         {"match.tr"})
+
+    def test_xmltv_rejects_dtd_invalid_root_and_wrong_time_intervals(self):
+        now = datetime(2026, 11, 14, 12, tzinfo=timezone.utc)
+        bad = (
+            b'<!DOCTYPE tv [<!ENTITY xxe SYSTEM "file:///etc/passwd">]><tv></tv>',
+            b'<something />',
+        )
+        for payload in bad:
+            with self.subTest(payload=payload[:15]):
+                with self.assertRaises(ValueError):
+                    scanner.validated_xmltv_programme_ids(payload, now=now)
+        self.assertEqual(scanner.validated_xmltv_programme_ids(
+            b'<tv><channel id="x"/>'
+            b'<programme channel="x" start="20261114120000 +0000" '
+            b'stop="20261114110000 +0000"><title>Bad</title></programme></tv>',
+            now=now), set())
+        self.assertEqual(scanner.validated_xmltv_programme_ids(
+            b'<tv><channel id="x"/>'
+            b'<programme channel="x" start="20261114120000 +1500" '
+            b'stop="20261114130000 +1500"><title>Bad</title></programme></tv>',
+            now=now), set())
+
     def test_m3u_metadata_and_dedup_source(self):
         payload = (b'#EXTM3U\n'
                    b'#EXTINF:-1 tvg-id="trt1.tr" tvg-logo="https://example.org/logo.png" group-title="Haber",TRT 1\n'

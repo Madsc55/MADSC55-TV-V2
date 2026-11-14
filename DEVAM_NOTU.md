@@ -1,3 +1,10 @@
+## 14 Kasım 2026 — Aşama A #19: korunan EPG'ye dokunmadan gerçek XMLTV kanıtı üretme
+- Tespit: Depodaki `madsc-epg.xml` 0 bayt; `v2/epg_sources.json` beş harici XMLTV kaynağı içeriyor. Önceki gerçek IPTV Actions taraması kaynakları `epg_integrity.py` ile denetlemiyor, `build_epg.py` çalıştırmıyor ve tarayıcıya `--epg` vermiyordu. #19 eksik kabulü bununla kendiliğinden kapanamaz.
+- Yeni manuel tarama entegrasyonu: `epg_integrity.py` internetten beş EPG kaynağını salt-okunur denetleyecek; `build_epg.py --candidate-only` gerçek XMLTV'den ayrı `v2/reports/stage-a-epg-candidate.xml` oluşturmayı deneyecek. Gerekli kaynak/gerçek zamanlı program yoksa aday oluşmaz ve #19 açık kalır. Korumalı kök `madsc-epg.xml` değişmez. Yeni aday yalnızca Actions artifact'ına kanıt olarak yüklenir, otomatik yayımlanmaz.
+- Scanner EPG kabulünde salt `<channel>` id'sini yeterli bulamaz: benzersiz XMLTV kanal bildirimi, tarih aralığı, geçerli UTC offset, pozitif program süresi ve dolu başlık gerekir. Geçerli kaynak ID'leri yine yalnız kesin tvg-id metadata ipucudur; yayıncı sahipliği veya AV kanıtı değildir. Yeni XMLTV eski/boş/geçersiz ise kabul artışı üretilemez.
+- Bu değişiklik CI regresyonu ile doğrulandıktan sonra üretim kodu olacaktır; canlı dış kaynak erişimi ve geçmişteki 303 EPG boşluğunun kapanması ancak yeni gerçek koşu/artifact incelemesi ile teyit edilebilir. #15/#17/#18/#19/#20/#21 açık, henüz A bitmedi. Korunan ana İBO, YEDEKLER, YENİLER, FAVORİLER değişmedi.
+
+---
 ## 14 Kasım 2026 — Aşama A #21: YouTube canlı metadata hata kategorileri
 - Son gerçek koşu 43598617218 YouTube sonuçlarında 349 video kimliği buldu fakat LIVE_METADATA_VERIFIED 0 idi; raporda arama hatası 0 yazması, 349 video doğrulamasının başarılı olduğu anlamına gelmez. Tümü UNVERIFIED oldu.
 - v2/youtube_discovery.py yeni sürümünde hata/engel sebebini yalnız güvenli kategori olarak raporlar: UPSTREAM_RATE_LIMITED, UPSTREAM_ACCESS_DENIED, SIGN_IN_REQUIRED, VIDEO_UNAVAILABLE, YTDLP_METADATA_FAILED, METADATA_TIMEOUT, LIVE_STATUS_MISSING, INVALID_METADATA. Ham stderr, URL belirteci ve özel bilgileri genel rapora dökmez.
