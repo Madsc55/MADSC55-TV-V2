@@ -110,4 +110,12 @@ jobs:
       - name: Probe all six discovery terms on GitHub, GitLab and Codeberg
         env:
           GITHUB_TOKEN: ${{ github.token }}
-        run: PYTHONPATH=v2 python v2/discovery_34_live_contract.py
+        run: PYTHONPATH=v2 python v2/discovery_34_live_contract.py --output /tmp/v2-discovery-34-live-diagnostic.json
+      - name: Upload read-only provider diagnostic evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v2-discovery-34-live-diagnostic
+          path: /tmp/v2-discovery-34-live-diagnostic.json
+          if-no-files-found: warn
+          retention-days: 14
