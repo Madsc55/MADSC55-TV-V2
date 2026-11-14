@@ -28,6 +28,34 @@ class Discovery34Tests(unittest.TestCase):
         self.assertEqual(repository_candidates("gitlab", []), [])
         self.assertEqual(repository_candidates("codeberg", {"data": []}), [])
 
+    def test_candidate_fetch_retries_transient_http_then_succeeds(self):
+        import io
+        import urllib.error
+        from discovery_34 import fetch_with_retry
+        attempts, waits = [], []
+        def fetch(url):
+            attempts.append(url)
+            if len(attempts) < 3:
+                raise urllib.error.HTTPError(url, 503, "Unavailable", {}, io.BytesIO())
+            return {"items": []}
+        self.assertEqual(fetch_with_retry("https://api.github.com/search/repositories",
+                                          fetch=fetch, sleep=waits.append), {"items": []})
+        self.assertEqual(len(attempts), 3)
+        self.assertEqual(len(waits), 2)
+
+    def test_candidate_fetch_does_not_retry_nontransient_http(self):
+        import io
+        import urllib.error
+        from discovery_34 import fetch_with_retry
+        attempts = []
+        def fetch(url):
+            attempts.append(url)
+            raise urllib.error.HTTPError(url, 401, "Unauthorized", {}, io.BytesIO())
+        with self.assertRaises(urllib.error.HTTPError):
+            fetch_with_retry("https://api.github.com/search/repositories",
+                             fetch=fetch, sleep=lambda seconds: self.fail("unexpected sleep"))
+        self.assertEqual(len(attempts), 1)
+
     def test_network_cli_stops_codeberg_fanout_after_429(self):
         import io
         import json
