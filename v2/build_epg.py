@@ -151,6 +151,12 @@ def main():
             if key:
                 names[key].add(cid)
     mapping = defaultdict(set)
+    # A source feed's exact tvg-id and a fuzzy name-hint are different
+    # evidence classes. Never relabel name-only guesses as exact identity.
+    target_origins = defaultdict(set)
+    target_methods = defaultdict(set)
+    exact_id_matched_entries = 0
+    name_hint_matched_entries = 0
     matched = 0
     ambiguous = 0
     for index, (tvgid, tvgname, display) in enumerate(entries):
@@ -161,13 +167,27 @@ def main():
             continue
         target = tvgid or "madsc-v2-" + str(index)
         mapping[source_id].add(target)
+        target_origins[target].add(source_id)
+        method = "exact-id" if tvgid and tvgid == source_id else "name-hint"
+        target_methods[target].add(method)
+        if method == "exact-id":
+            exact_id_matched_entries += 1
+        else:
+            name_hint_matched_entries += 1
         matched += 1
     result = ET.Element("tv", {"generator-info-name": "MADSC55-TV-V2"})
     used = set()
     for index, (tvgid, tvgname, display) in enumerate(entries):
         target = tvgid or "madsc-v2-" + str(index)
         if target not in used and any(target in targets for targets in mapping.values()):
-            channel = ET.SubElement(result, "channel", {"id": target})
+            method = ("exact-id"
+                      if target_methods[target] == {"exact-id"}
+                      and len(target_origins[target]) == 1
+                      else "name-hint")
+            channel = ET.SubElement(result, "channel", {
+                "id": target,
+                "madsc-match-method": method,
+            })
             ET.SubElement(channel, "display-name").text = tvgname or display
             used.add(target)
     now = datetime.now(timezone.utc)
@@ -213,6 +233,14 @@ def main():
         ET.parse(temp)
         temp.replace(destination)
     report = {"playlist_entries": len(entries), "matched_entries": matched,
+              "exact_id_matched_entries": exact_id_matched_entries,
+              "name_hint_matched_entries": name_hint_matched_entries,
+              "verified_exact_id_channels": sum(
+                  1 for channel in result.findall("channel")
+                  if channel.get("madsc-match-method") == "exact-id"),
+              "name_hint_channels_not_exact_evidence": sum(
+                  1 for channel in result.findall("channel")
+                  if channel.get("madsc-match-method") == "name-hint"),
               "ambiguous_entries_skipped": ambiguous,
               "conflicting_xmltv_channel_ids_rejected": len(ambiguous_ids),
               "channels": len(used),
