@@ -11,6 +11,7 @@ import pathlib
 import shutil
 import tempfile
 import zipfile
+import stat
 
 def digest(path):
     h = hashlib.sha256()
@@ -41,7 +42,7 @@ def audit(archive, expected_sha, expected_count, report_path):
                     destination = (root / info.filename).resolve()
                     if not destination.is_relative_to(root):
                         raise ValueError("unsafe ZIP member path")
-                    if info.is_symlink() if hasattr(info, "is_symlink") else False:
+                    if stat.S_ISLNK(info.external_attr >> 16):
                         raise ValueError("ZIP symlink forbidden")
                 bad = z.testzip()
                 if bad:
@@ -78,7 +79,7 @@ def main():
     a = p.parse_args()
     print(json.dumps(audit(a.archive, a.expected_sha256, a.expected_file_count, a.report),
                      ensure_ascii=False))
-    return 0 if a.report.exists() else 1
+    return 0 if a.report.exists() and json.loads(a.report.read_text()).get("independent_restore") is True else 1
 
 if __name__ == "__main__":
     raise SystemExit(main())
