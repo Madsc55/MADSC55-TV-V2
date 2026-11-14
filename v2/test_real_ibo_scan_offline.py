@@ -175,6 +175,50 @@ class ScannerOfflineTests(unittest.TestCase):
                     mocked.assert_not_called()
         self.assertTrue(scanner.public_http_stream_url("http://example.org/live.m3u8"))
 
+    def test_failed_source_does_not_trigger_three_hour_av_scan(self):
+        """A mandatory-source error must yield a truthful report before probes."""
+        import os
+        import sys
+        with tempfile.TemporaryDirectory() as temp:
+            root = pathlib.Path(temp)
+            archive = root / "v2/arsiv/yabanci_yedekler_2026-11-02_3964.m3u8"
+            archive.parent.mkdir(parents=True)
+            archive.write_bytes(b"offline-archive-fixture")
+            live = root / "protected.m3u8"
+            live.write_text(
+                "#EXTM3U\n#EXTINF:-1,Protected\nhttps://example.org/protected.m3u8\n")
+            sources = root / "sources.json"
+            sources.write_text(json.dumps({"sources": [
+                {"id": "unavailable", "url": "https://example.org/missing.m3u",
+                 "scope": "candidate"},
+            ]}))
+            report_path = root / "early-report.json"
+            historical = [{"url": f"https://example.org/archived/{i}"} for i in range(3964)]
+            args = [
+                "real_ibo_scan.py", "--worldwide",
+                "--fail-fast-source-errors", "--live", str(live),
+                "--sources", str(sources), "--report", str(report_path),
+                "--inventory", str(root / "ibo-candidate-inventory.jsonl"),
+            ]
+            with (patch.object(scanner, "ROOT", root),
+                  patch.object(scanner, "parse_m3u", return_value=iter(historical)),
+                  patch.object(scanner, "fetch", side_effect=ValueError("Not an M3U")) as fetch,
+                  patch.object(scanner, "check_hls") as av_probe,
+                  patch.object(sys, "argv", args),
+                  patch.dict(os.environ, {"V2_ARCHIVE_PASSPHRASE": "offline-passphrase-123456"})):
+                with self.assertRaises(SystemExit) as stopped:
+                    scanner.main()
+                self.assertIn("Incomplete mandatory source fetch", str(stopped.exception))
+                fetch.assert_called_once()
+                av_probe.assert_not_called()
+            result = json.loads(report_path.read_text())
+            self.assertEqual(result["status"], "INCOMPLETE_SOURCE_FETCH_EARLY")
+            self.assertEqual(result["failed_sources"][0]["id"], "unavailable")
+            self.assertEqual(result["http_checked"], 0)
+            self.assertEqual(result["av_verified"], 0)
+            self.assertTrue(result["no_new_av_probes_because_source_incomplete"])
+            self.assertFalse((root / "ibo-candidate-inventory.jsonl.enc").exists())
+
     def test_main_dynamic_report_validation_runs_before_any_network(self):
         """Exercise the production CLI intake, not just its helper, offline."""
         import os
