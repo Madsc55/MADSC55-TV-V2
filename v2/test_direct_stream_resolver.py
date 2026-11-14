@@ -87,6 +87,59 @@ class DirectStreamResolverTests(unittest.TestCase):
         self.assertEqual({key: sum(item["country"] == key for item in official)
                           for key in ("US", "GB", "FR")}, {"US": 2, "GB": 2, "FR": 2})
 
+    def test_official_only_live_directory_reuses_unused_youtube_budget(self):
+        """When no YouTube live metadata exists, spend the full bounded budget on official pages."""
+        official = [
+            {"source": "official", "source_id": f"official:tv{i}.example",
+             "url": f"https://tv{i}.example/live", "country": f"C{i:03d}",
+             "status": "DIRECTORY_REFERENCE_ONLY_NOT_STREAM_VERIFIED",
+             "verified_av": False}
+            for i in range(70)
+        ]
+        for country in ("TR", "AZ"):
+            official.append({
+                "source": "official", "source_id": f"official:{country.lower()}.example",
+                "url": f"https://{country.lower()}.example/live",
+                "country": country,
+                "status": "DIRECTORY_REFERENCE_ONLY_NOT_STREAM_VERIFIED",
+                "verified_av": False,
+            })
+        runner = self.run_meta({
+            "is_live": True, "url": "https://cdn.example/live.m3u8",
+            "protocol": "m3u8_native",
+        })
+        report = resolve_report({"candidates": official}, runner=runner, limit=8)
+        self.assertEqual(report["attempted"], 8)
+        self.assertEqual(report["skipped_by_limit"], len(official) - 8)
+        self.assertEqual(report["resolved"], 8)
+        self.assertEqual(report["verified_av"], 0)
+        self.assertTrue(all(not item["verified_av"] for item in report["candidates"]))
+        covered = {item["country"] for item in report["candidates"]}
+        self.assertTrue({"TR", "AZ"}.issubset(covered))
+
+    def test_youtube_reuses_spare_official_budget(self):
+        candidates = [
+            {"source": "youtube", "source_id": f"youtube:abcdefghi{i:02d}",
+             "url": "https://www.youtube.com/watch?v=abcdefghijk",
+             "region": "TR", "status": "LIVE_METADATA_VERIFIED",
+             "verified_av": False}
+            for i in range(10)
+        ]
+        candidates.append({
+            "source": "official", "source_id": "official:tr.example",
+            "url": "https://tr.example/live", "country": "TR",
+            "status": "DIRECTORY_REFERENCE_ONLY_NOT_STREAM_VERIFIED",
+            "verified_av": False,
+        })
+        runner = self.run_meta({
+            "is_live": True, "url": "https://cdn.example/live.m3u8",
+            "protocol": "m3u8_native",
+        })
+        report = resolve_report({"candidates": candidates}, runner=runner, limit=8)
+        self.assertEqual(report["attempted"], 8)
+        self.assertEqual(sum(row["source"] == "youtube" for row in report["candidates"]), 7)
+        self.assertEqual(sum(row["source"] == "official" for row in report["candidates"]), 1)
+
     def test_encrypted_report_round_trip_hides_direct_url(self):
         direct_url = "https://cdn.example/live.m3u8?token=secret"
         report = {"resolved": 1, "candidates": [{"url": direct_url}]}
