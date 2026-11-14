@@ -91,7 +91,7 @@ class RealScanAcceptanceTests(unittest.TestCase):
 
     def test_malformed_or_duplicate_test_parts_fail(self):
         for parts in ([""], [None], [123], ["not-a-playlist.txt"],
-                      ["a.m3u8", "a.m3u8"], ["bad\\x00.m3u8"]):
+                      ["a.m3u8", "a.m3u8"], ["bad" + chr(0) + ".m3u8"]):
             with self.subTest(parts=parts):
                 payload = complete_report()
                 payload["written_parts"] = parts
