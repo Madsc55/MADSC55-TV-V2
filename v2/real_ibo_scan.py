@@ -5,6 +5,8 @@ No mock data, no invented URLs. HTTP/HLS checks are not playback proof.
 """
 import argparse
 import concurrent.futures
+from collections import Counter
+from datetime import datetime, timedelta, timezone
 import hashlib
 import http.client
 import json
@@ -242,6 +244,44 @@ def next_recovery_attempts(prior_attempts, *, reused, av_verified):
 
 def observation_origin(*, reused):
     return 'resumed-checkpoint' if reused else 'current-scan'
+
+
+def validated_xmltv_programme_ids(payload, *, now=None):
+    """Accept EPG IDs only with one declaration and a real current programme.
+
+    A <channel> declaration alone is not EPG schedule proof. The programme
+    needs a title and a valid time interval in our 4-day candidate horizon.
+    XMLTV remains an identity hint, not publisher ownership or AV evidence.
+    """
+    from epg_integrity import parse_xmltv_time
+    if not isinstance(payload, bytes) or len(payload) > 100_000_000:
+        raise ValueError("Invalid or oversized XMLTV input")
+    if b"<!DOCTYPE" in payload.upper() or b"<!ENTITY" in payload.upper():
+        raise ValueError("XMLTV DTD/entity declarations refused")
+    root = ET.fromstring(payload)
+    if root.tag != "tv":
+        raise ValueError("XMLTV root must be tv")
+    declared = Counter(node.get("id") for node in root.findall("channel")
+                       if isinstance(node.get("id"), str) and node.get("id").strip())
+    now = datetime.now(timezone.utc) if now is None else now
+    if not isinstance(now, datetime) or now.tzinfo is None:
+        raise ValueError("A timezone-aware clock is required")
+    valid = set()
+    for programme in root.findall("programme"):
+        cid = programme.get("channel")
+        if not cid or declared[cid] != 1:
+            continue
+        title = programme.findtext("title") or ""
+        if not title.strip():
+            continue
+        try:
+            start = parse_xmltv_time(programme.get("start", ""))
+            stop = parse_xmltv_time(programme.get("stop", ""))
+        except (ValueError, TypeError, AttributeError):
+            continue
+        if stop > start and now - timedelta(hours=12) <= start <= now + timedelta(days=4):
+            valid.add(cid)
+    return valid
 
 
 def recovery_http_status(status):
@@ -615,13 +655,13 @@ def main():
     epg_ids = set()
     epg_checked = args.epg is not None
     if args.epg is not None:
-        # Parse local XMLTV only. Channel IDs are hints, not playback proof.
+        # A mere XMLTV channel declaration is NOT evidence of EPG availability.
+        # Verify a unique channel declaration, valid timed programme and title.
+        if args.epg.is_symlink() or not args.epg.is_file():
+            ap.error('Refusing missing or symlinked XMLTV candidate')
         if args.epg.stat().st_size > 100_000_000:
             ap.error('XMLTV input exceeds 100 MB limit')
-        for event, element in ET.iterparse(args.epg, events=('end',)):
-            if element.tag == 'channel' and element.get('id'):
-                epg_ids.add(element.get('id'))
-            element.clear()
+        epg_ids = validated_xmltv_programme_ids(args.epg.read_bytes())
     # Retain every discovered new URL, including candidates that failed HTTP/HLS.
     # Network checks are not device playback proof; never silently lose a candidate.
     good_urls = {item['url'] for item in good}
@@ -716,6 +756,8 @@ def main():
               'discovery_partial': discovery_partial,
               'configured_sources_complete': not incomplete,
               'full_discovery_acceptance': not (incomplete or discovery_partial),
+              'epg_checked': epg_checked,
+              'epg_valid_programme_channel_ids': len(epg_ids),
               'existing_main_urls': len(main_urls), 'excluded_foreign_archive_urls': len(foreign_urls), 'unique_new_candidates': len(candidates), 'recovered_from_previous_encrypted_inventory': recovered_from_archive,
               'http_checked': checked, 'http_checked_this_run': checked - len(resumed_urls),
               'resumed_checkpoint_observations': len(resumed_urls),
