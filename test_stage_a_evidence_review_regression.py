@@ -1,7 +1,10 @@
 """Regression checks for the read-only Stage A acceptance gate."""
 import copy
 import unittest
-from v2.stage_a_evidence_review import audit, InvalidEvidence
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parent / 'v2'))
+from stage_a_evidence_review import audit, InvalidEvidence
 
 
 def evidence():
