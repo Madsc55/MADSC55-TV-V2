@@ -89,6 +89,15 @@ class RealScanAcceptanceTests(unittest.TestCase):
                 with self.assertRaises(ScanIncomplete):
                     validate_report(payload)
 
+    def test_malformed_or_duplicate_test_parts_fail(self):
+        for parts in ([""], [None], [123], ["not-a-playlist.txt"],
+                      ["a.m3u8", "a.m3u8"], ["bad\\x00.m3u8"]):
+            with self.subTest(parts=parts):
+                payload = complete_report()
+                payload["written_parts"] = parts
+                with self.assertRaises(ScanIncomplete):
+                    validate_report(payload)
+
     def test_corrupt_or_boolean_counts_fail(self):
         for report in (None, [], {}, {"status": "READY_FOR_DEVICE_TEST"}):
             with self.assertRaises(ScanIncomplete):

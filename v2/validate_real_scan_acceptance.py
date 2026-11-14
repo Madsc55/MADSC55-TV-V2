@@ -63,8 +63,12 @@ def validate_report(report):
     if (not isinstance(inventory, str)
             or not inventory.endswith("/ibo-candidate-inventory.jsonl.enc")):
         raise ScanIncomplete("Only the complete authenticated inventory is acceptable")
-    if not isinstance(report.get("written_parts"), list) or not report["written_parts"]:
-        raise ScanIncomplete("No complete candidate test M3U parts were written")
+    parts = report.get("written_parts")
+    if (not isinstance(parts, list) or not parts
+            or any(not isinstance(part, str) or not part.endswith(".m3u8")
+                   or not part.strip() or "\\x00" in part for part in parts)
+            or len(parts) != len(set(parts))):
+        raise ScanIncomplete("Missing, malformed or duplicate candidate test M3U parts")
     if report.get("playback_verified_on_device") is not False:
         raise ScanIncomplete("Real scan cannot assert unverified physical-device playback")
     return {
