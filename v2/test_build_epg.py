@@ -69,7 +69,7 @@ class EPGBuilderMatchingTests(unittest.TestCase):
             (root / "v2/epg_sources.json").write_text(json.dumps({
                 "sources": ["https://epg.example.org/tr.xml"]}))
             live = root / "live.m3u8"
-            live.write_text('#EXTM3U\n#EXTINF:-1 tvg-id="unconfirmed.tr" tvg-name="Unique Station",Unique Station\nhttps://example.org/stream.m3u8\n')
+            live.write_text('#EXTM3U\n#EXTINF:-1 tvg-name="Unique Station",Unique Station\nhttps://example.org/stream.m3u8\n')
             protected = root / "madsc-epg.xml"
             protected.write_bytes(b"DO_NOT_WRITE")
             now = datetime.now(timezone.utc)
@@ -89,7 +89,7 @@ class EPGBuilderMatchingTests(unittest.TestCase):
                 build_epg.main()
             candidate = ET.parse(root / "v2/reports/stage-a-epg-candidate.xml")
             channel = candidate.find("channel")
-            self.assertEqual(channel.get("id"), "unconfirmed.tr")
+            self.assertEqual(channel.get("id"), "madsc-v2-0")
             self.assertEqual(channel.get("madsc-match-method"), "name-hint")
             report = json.loads((root / "v2/reports/stage-a-epg-build-report.json").read_text())
             self.assertEqual(report["exact_id_matched_entries"], 0)
