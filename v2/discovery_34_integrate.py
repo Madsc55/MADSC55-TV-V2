@@ -74,8 +74,14 @@ def integrate(reports=REPORTS):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", default="v2/reports/discovery-34-integrated.json")
+    parser.add_argument("--reports-dir", type=Path, help="Directory containing retrieved discovery reports; m3u remains configured locally")
     args = parser.parse_args()
-    result = integrate()
+    reports = dict(REPORTS)
+    if args.reports_dir is not None:
+        for source in reports:
+            if source != "m3u":
+                reports[source] = args.reports_dir / REPORTS[source].name
+    result = integrate(reports)
     path = Path(args.output)
     path.parent.mkdir(parents=True, exist_ok=True)
     # Preserve earlier integrated evidence; never truncate an existing report.
