@@ -11,6 +11,13 @@ import pathlib,subprocess,json,csv,re,concurrent.futures,time,datetime,xml.etree
 root=pathlib.Path('v2'); ev=root/'evidence'; inp=root/'input'; ev.mkdir(exist_ok=True)
 stamp=datetime.datetime.now(datetime.timezone.utc).isoformat()
 sources=sorted([*inp.glob('*.m3u'),*inp.glob('*.m3u8')]) if inp.is_dir() else []
+# Explicit read-only source override; never modify the production IBO playlist.
+import os
+explicit=os.environ.get('STAGE_A_PLAYLIST')
+if explicit:
+    source=pathlib.Path(explicit)
+    if not source.is_file(): raise SystemExit('STAGE_A_PLAYLIST does not exist')
+    sources=[source]
 pairs=[]; ids=set(); input_hashes={}
 for path in sources:
     data=path.read_bytes()
@@ -47,7 +54,13 @@ with (ev/'av_report.csv').open('w',newline='') as f:
 with (ev/'recovery.csv').open('w',newline='') as f:
     w=csv.writer(f);w.writerow(['url','status','attempts','error']);w.writerows(r for r in results if r[1]!='AV_OK')
 xmlids=set();xml_errors=[]
-for path in sorted(inp.glob('*.xml')) if inp.is_dir() else []:
+xmlpaths=sorted(inp.glob('*.xml')) if inp.is_dir() else []
+explicit_xml=os.environ.get('STAGE_A_XMLTV')
+if explicit_xml:
+    xmlpath=pathlib.Path(explicit_xml)
+    if not xmlpath.is_file(): raise SystemExit('STAGE_A_XMLTV does not exist')
+    xmlpaths=[xmlpath]
+for path in xmlpaths:
     try:
         for _,element in ET.iterparse(path,events=('end',)):
             if element.tag=='channel' and element.get('id'): xmlids.add(element.get('id'))
@@ -57,7 +70,7 @@ with (ev/'epg_gap.csv').open('w',newline='') as f:
     w=csv.writer(f);w.writerow(['tvg_id']);w.writerows((x,) for x in sorted(ids-xmlids))
 with (ev/'input_sha256.json').open('w') as f: json.dump(input_hashes,f,indent=2)
 status='PASS' if urls and not xml_errors and len(results)==len(urls) and all(r[1]=='AV_OK' for r in results) and not (ids-xmlids) and bool(xmlids) else 'BLOCKED'
-report=f'''# Stage A acceptance\n\nDate: {stamp}\nStatus: {status}\nM3U source files: {len(sources)}\nUnique URLs: {len(urls)}\nAV_OK: {sum(r[1]=='AV_OK' for r in results)}\nNO_AV: {sum(r[1]!='AV_OK' for r in results)}\nEPG gaps: {len(ids-xmlids)}\nXML parse errors: {len(xml_errors)}\n\nPASS requires all URLs to have video and audio and all tvg-id entries to exist in XMLTV. This report does not certify individual tasks or physical playback.\n'''
+report=f'''# Stage A acceptance\n\nDate: {stamp}\nStatus: {status}\nM3U source files: {len(sources)}\nXMLTV source files: {len(xmlpaths)}\nUnique URLs: {len(urls)}\nAV_OK: {sum(r[1]=='AV_OK' for r in results)}\nNO_AV: {sum(r[1]!='AV_OK' for r in results)}\nEPG gaps: {len(ids-xmlids)}\nXML parse errors: {len(xml_errors)}\n\nPASS requires all URLs to have video and audio and all tvg-id entries to exist in XMLTV. This report does not certify individual tasks or physical playback.\n'''
 (ev/'stage_A_acceptance.md').write_text(report)
 (ev/'stage_A_errors.log').write_text(('No input M3U files\n' if not urls else '')+'\n'.join(xml_errors)+'\n')
 print(report)
