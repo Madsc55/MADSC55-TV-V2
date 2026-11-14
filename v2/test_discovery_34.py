@@ -28,6 +28,34 @@ class Discovery34Tests(unittest.TestCase):
         self.assertEqual(repository_candidates("gitlab", []), [])
         self.assertEqual(repository_candidates("codeberg", {"data": []}), [])
 
+    def test_candidate_fetch_retries_transient_http_then_succeeds(self):
+        import io
+        import urllib.error
+        from discovery_34 import fetch_with_retry
+        attempts, waits = [], []
+        def fetch(url):
+            attempts.append(url)
+            if len(attempts) < 3:
+                raise urllib.error.HTTPError(url, 503, "Unavailable", {}, io.BytesIO())
+            return {"items": []}
+        self.assertEqual(fetch_with_retry("https://api.github.com/search/repositories",
+                                          fetch=fetch, sleep=waits.append), {"items": []})
+        self.assertEqual(len(attempts), 3)
+        self.assertEqual(len(waits), 2)
+
+    def test_candidate_fetch_does_not_retry_nontransient_http(self):
+        import io
+        import urllib.error
+        from discovery_34 import fetch_with_retry
+        attempts = []
+        def fetch(url):
+            attempts.append(url)
+            raise urllib.error.HTTPError(url, 401, "Unauthorized", {}, io.BytesIO())
+        with self.assertRaises(urllib.error.HTTPError):
+            fetch_with_retry("https://api.github.com/search/repositories",
+                             fetch=fetch, sleep=lambda seconds: self.fail("unexpected sleep"))
+        self.assertEqual(len(attempts), 1)
+
     def test_network_cli_stops_codeberg_fanout_after_429(self):
         import io
         import json
@@ -45,12 +73,13 @@ class Discovery34Tests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             output = Path(directory) / "candidates.json"
             with patch.object(discovery_34, "fetch_json", side_effect=fake_fetch), \
+                 patch.object(discovery_34.time, "sleep", return_value=None), \
                  patch("sys.argv", ["discovery_34.py", "--network", "--output", str(output)]):
                 with self.assertRaises(SystemExit) as exit_result:
                     discovery_34.main()
                 self.assertEqual(exit_result.exception.code, 1)
             report = json.loads(output.read_text())
-        self.assertEqual(sum("codeberg.org" in url for url in calls), 1)
+        self.assertEqual(sum("codeberg.org" in url for url in calls), 3)
         self.assertEqual(len(report["errors"]), len(QUERIES))
         self.assertEqual(sum(row["error"] == "provider_rate_limit_skipped" for row in report["errors"]), len(QUERIES) - 1)
         self.assertEqual(report["av_verified"], 0)

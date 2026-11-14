@@ -5,6 +5,7 @@ import ipaddress
 import json
 import os
 import re
+import time
 import urllib.parse
 import urllib.error
 import urllib.request
@@ -78,6 +79,23 @@ def fetch_json(url):
         raise ValueError("Response too large")
     return json.loads(data)
 
+def fetch_with_retry(url, fetch=None, sleep=None):
+    """Bounded transient retry for the actual candidate collection CLI."""
+    fetch = fetch or fetch_json
+    sleep = sleep or time.sleep
+    from discovery_34_live_contract import MAX_ATTEMPTS, RETRYABLE_HTTP, retry_delay
+    for attempt in range(1, MAX_ATTEMPTS + 1):
+        try:
+            return fetch(url)
+        except urllib.error.HTTPError as exc:
+            if exc.code not in RETRYABLE_HTTP or attempt == MAX_ATTEMPTS:
+                raise
+            sleep(retry_delay(exc, attempt))
+        except (urllib.error.URLError, TimeoutError, ConnectionResetError, ConnectionAbortedError):
+            if attempt == MAX_ATTEMPTS:
+                raise
+            sleep(attempt)
+
 def repository_candidates(source, payload):
     if source == "github":
         if not isinstance(payload, dict) or not isinstance(payload.get("items"), list):
@@ -144,7 +162,7 @@ def main():
         for source in ("github", "gitlab", "codeberg"):
             for index, query in enumerate(QUERIES):
                 try:
-                    candidates.extend(repository_candidates(source, fetch_json(search_url(source, query))))
+                    candidates.extend(repository_candidates(source, fetch_with_retry(search_url(source, query))))
                 except (ValueError, OSError, KeyError, TypeError, json.JSONDecodeError) as exc:
                     error = {"source": source, "query": query, "error": type(exc).__name__}
                     if isinstance(exc, urllib.error.HTTPError):
