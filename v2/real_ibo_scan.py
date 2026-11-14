@@ -676,7 +676,7 @@ def main():
             raise
         # A failed source fetch must not overwrite the last complete encrypted baseline.
         encrypted_inventory = args.inventory.with_suffix(
-            args.inventory.suffix + ('.pending.enc' if incomplete else '.enc'))
+            args.inventory.suffix + ('.pending.enc' if (incomplete or discovery_partial) else '.enc'))
         archive_result = encrypt_inventory(inventory_tmp, encrypted_inventory,
                                            os.environ['V2_ARCHIVE_PASSPHRASE'])
     finally:
@@ -715,6 +715,23 @@ def main():
                         else ('READY_FOR_DEVICE_TEST' if good else 'NO_VERIFIED_CANDIDATES')}
     args.report.parent.mkdir(parents=True, exist_ok=True)
     args.report.write_text(json.dumps(report, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
+    if discovery_partial and not incomplete:
+        # Keep all real observations encrypted, but do not promote partial
+        # discovery into a complete baseline or M3U package. The next run
+        # can resume from the sealed per-URL checkpoint.
+        report['status'] = 'PARTIAL_DISCOVERY_EVIDENCE_ONLY'
+        report['written_parts'] = []
+        report['part_count'] = 0
+        report['exported_part1'] = 0
+        args.report.write_text(json.dumps(report, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
+        print(json.dumps({'status': report['status'],
+                          'configured_sources_complete': True,
+                          'optional_failed_discovered_sources': optional_failed_sources,
+                          'http_checked': checked,
+                          'av_verified': len(good),
+                          'full_discovery_acceptance': False},
+                         ensure_ascii=False))
+        return
     if incomplete:
         report['status'] = 'INCOMPLETE_SOURCE_FETCH_OR_DROP'
         report['written_parts'] = []
