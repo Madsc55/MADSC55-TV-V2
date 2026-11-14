@@ -19,6 +19,20 @@ class IntegrationAcceptanceTests(unittest.TestCase):
             with self.subTest(source=source):
                 self.assertEqual(module.normalize(source, {key: []}), [])
 
+    def test_reports_dir_uses_retrieved_reports_without_replacing_local_m3u(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            output = root / "integrated.json"
+            with patch.object(module, "integrate", return_value={"candidates": [], "errors": [], "verified_av": 0}) as integrate_mock, patch("sys.argv", ["discovery_34_integrate.py", "--reports-dir", str(root), "--output", str(output)]):
+                module.main()
+            selected = integrate_mock.call_args.args[0]
+            self.assertEqual(selected["official"], root / "official-tv-sites.json")
+            self.assertEqual(selected["youtube"], root / "youtube-live-candidates.json")
+            self.assertEqual(selected["github_m3u"], root / "github-source-discovery.json")
+            self.assertEqual(selected["gitlab_m3u"], root / "gitlab-m3u-source-discovery.json")
+            self.assertEqual(selected["codeberg_m3u"], root / "codeberg-m3u-source-discovery.json")
+            self.assertEqual(selected["m3u"], module.REPORTS["m3u"])
+
     def test_missing_source_keeps_partial_candidates_and_fails(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
