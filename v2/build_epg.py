@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 """Independent XMLTV guide builder. Never writes to the protected playlist."""
+import argparse
 import copy
 import gzip
 import io
 import json
+import os
 import pathlib
 import re
 import unicodedata
@@ -103,6 +105,16 @@ def programme_in_window(programme, start_limit, end_limit):
 
 
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--candidate-only", action="store_true",
+        help="Produce a separate read-only review candidate under v2/reports; do not overwrite madsc-epg.xml")
+    args = parser.parse_args()
+    # A candidate can be audited before any change to the protected XMLTV.
+    destination = (ROOT / "v2/reports/stage-a-epg-candidate.xml"
+                   if args.candidate_only else OUT)
+    if args.candidate_only and (destination.exists() or destination.is_symlink()):
+        parser.error("Refusing to overwrite an existing EPG candidate")
     entries = []
     for line in PLAYLIST.read_text(encoding="utf-8-sig").splitlines():
         if line.startswith("#EXTINF"):
@@ -118,7 +130,7 @@ def main():
             if root.tag != "tv":
                 raise ValueError("not XMLTV")
             counts = ingest_xmltv_feed(root, feed_channels, schedules, ambiguous_ids)
-            results.append({"source": url, "status": "ok", **counts})
+            results.append({"source": url.split("?")[0], "status": "ok", **counts})
         except Exception as exc:
             # Avoid printing signed feed URLs or confidential query tokens.
             results.append({"source": url.split("?")[0], "status": "failed",
@@ -177,16 +189,42 @@ def main():
                 written += 1
     if written == 0:
         raise SystemExit("No matching programmes in current date window: " + json.dumps(results))
-    temp = ROOT / "madsc-epg.xml.tmp"
-    ET.ElementTree(result).write(temp, encoding="utf-8", xml_declaration=True)
-    ET.parse(temp)
-    temp.replace(OUT)
+    temp = destination.with_suffix(destination.suffix + ".tmp")
+    if args.candidate_only:
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        if temp.exists() or temp.is_symlink():
+            parser.error("Refusing to overwrite an existing EPG temporary file")
+        try:
+            # Exclusive create prevents a stale/symlinked temp file. An atomic
+            # hardlink commits only if the candidate target is still absent.
+            with temp.open("xb") as output:
+                os.chmod(temp, 0o600)
+                ET.ElementTree(result).write(
+                    output, encoding="utf-8", xml_declaration=True)
+            ET.parse(temp)
+            os.link(temp, destination)
+        finally:
+            temp.unlink(missing_ok=True)
+    else:
+        ET.ElementTree(result).write(
+            temp, encoding="utf-8", xml_declaration=True)
+        ET.parse(temp)
+        temp.replace(destination)
     report = {"playlist_entries": len(entries), "matched_entries": matched,
               "ambiguous_entries_skipped": ambiguous,
               "conflicting_xmltv_channel_ids_rejected": len(ambiguous_ids),
               "channels": len(used),
-              "programmes": written, "epg_bytes": OUT.stat().st_size, "sources": results}
-    (ROOT / "v2/epg-report.json").write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n")
+              "programmes": written, "epg_bytes": destination.stat().st_size,
+              "candidate_only": args.candidate_only,
+              "status": "EPG_CANDIDATE_FOR_REVIEW" if args.candidate_only else "EPG_GENERATED",
+              "sources": results}
+    report_path = (ROOT / "v2/reports/stage-a-epg-build-report.json"
+                   if args.candidate_only else ROOT / "v2/epg-report.json")
+    if args.candidate_only:
+        with report_path.open("x", encoding="utf-8") as output:
+            output.write(json.dumps(report, ensure_ascii=False, indent=2) + "\n")
+    else:
+        report_path.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n")
     print(json.dumps(report, ensure_ascii=False))
 
 if __name__ == "__main__":
