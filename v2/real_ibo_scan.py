@@ -60,7 +60,14 @@ def fetch(url, timeout=18, limit=MAX_SOURCE):
                 raise
             if attempt == 2:
                 raise
-            time.sleep(1 + attempt * 2)
+            # Respect bounded server backoff for rate-limited feeds. Never
+            # sleep indefinitely or interpret malformed Retry-After headers.
+            delay = 1 + attempt * 2
+            if isinstance(exc, urllib.error.HTTPError) and exc.code == 429:
+                raw_retry = exc.headers.get('Retry-After') if exc.headers else None
+                if raw_retry is not None and raw_retry.strip().isdecimal():
+                    delay = min(15, max(delay, int(raw_retry.strip())))
+            time.sleep(delay)
 
 
 def parse_m3u(data):

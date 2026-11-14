@@ -10,6 +10,33 @@ from unittest.mock import patch
 import real_ibo_scan as scanner
 
 class ScannerOfflineTests(unittest.TestCase):
+    def test_rate_limited_feed_honors_bounded_retry_after(self):
+        import urllib.error
+        from email.message import Message
+        headers = Message()
+        headers['Retry-After'] = '120'
+        limited = urllib.error.HTTPError('https://example.org/list.m3u', 429,
+                                        'rate limited', headers, None)
+        with patch.object(scanner.urllib.request, 'urlopen', side_effect=[limited, limited, limited]) as request, \
+                patch.object(scanner.time, 'sleep') as sleep:
+            with self.assertRaises(urllib.error.HTTPError):
+                scanner.fetch('https://example.org/list.m3u')
+        self.assertEqual(request.call_count, 3)
+        self.assertEqual([call.args[0] for call in sleep.call_args_list], [15, 15])
+
+    def test_rate_limited_feed_ignores_invalid_retry_after(self):
+        import urllib.error
+        from email.message import Message
+        headers = Message()
+        headers['Retry-After'] = 'not-a-delay'
+        limited = urllib.error.HTTPError('https://example.org/list.m3u', 429,
+                                        'rate limited', headers, None)
+        with patch.object(scanner.urllib.request, 'urlopen', side_effect=[limited, limited, limited]), \
+                patch.object(scanner.time, 'sleep') as sleep:
+            with self.assertRaises(urllib.error.HTTPError):
+                scanner.fetch('https://example.org/list.m3u')
+        self.assertEqual([call.args[0] for call in sleep.call_args_list], [1, 3])
+
     def test_xmltv_epg_is_not_satisfied_by_channel_declaration_only(self):
         now = datetime(2026, 11, 14, 12, tzinfo=timezone.utc)
         xmltv = (b'<tv><channel id="match.tr"/><channel id="empty.tr"/>'
