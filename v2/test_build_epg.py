@@ -62,6 +62,41 @@ class EPGBuilderMatchingTests(unittest.TestCase):
                     build_epg.main()
                 self.assertEqual(candidate.read_bytes(), prior)
 
+    def test_name_only_epg_link_stays_review_hint_not_exact_id(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            (root / "v2").mkdir()
+            (root / "v2/epg_sources.json").write_text(json.dumps({
+                "sources": ["https://epg.example.org/tr.xml"]}))
+            live = root / "live.m3u8"
+            live.write_text('#EXTM3U\n#EXTINF:-1 tvg-id="unconfirmed.tr" tvg-name="Unique Station",Unique Station\nhttps://example.org/stream.m3u8\n')
+            protected = root / "madsc-epg.xml"
+            protected.write_bytes(b"DO_NOT_WRITE")
+            now = datetime.now(timezone.utc)
+            fmt = lambda t: t.strftime("%Y%m%d%H%M%S") + " +0000"
+            xml = ET.Element("tv")
+            ch = ET.SubElement(xml, "channel", id="official.tr")
+            ET.SubElement(ch, "display-name").text = "Unique Station"
+            p = ET.SubElement(xml, "programme", channel="official.tr",
+                              start=fmt(now-timedelta(minutes=30)),
+                              stop=fmt(now+timedelta(minutes=30)))
+            ET.SubElement(p, "title").text = "Valid schedule, unproven identity"
+            with (patch.object(build_epg, "ROOT", root),
+                  patch.object(build_epg, "OUT", protected),
+                  patch.object(build_epg, "PLAYLIST", live),
+                  patch.object(build_epg, "download", return_value=xml),
+                  patch.object(sys, "argv", ["build_epg.py", "--candidate-only"])):
+                build_epg.main()
+            candidate = ET.parse(root / "v2/reports/stage-a-epg-candidate.xml")
+            channel = candidate.find("channel")
+            self.assertEqual(channel.get("id"), "unconfirmed.tr")
+            self.assertEqual(channel.get("madsc-match-method"), "name-hint")
+            report = json.loads((root / "v2/reports/stage-a-epg-build-report.json").read_text())
+            self.assertEqual(report["exact_id_matched_entries"], 0)
+            self.assertEqual(report["name_hint_matched_entries"], 1)
+            self.assertEqual(report["verified_exact_id_channels"], 0)
+            self.assertEqual(protected.read_bytes(), b"DO_NOT_WRITE")
+
     def test_candidate_epg_fails_closed_without_current_programmes(self):
         with tempfile.TemporaryDirectory() as d:
             root = Path(d)
