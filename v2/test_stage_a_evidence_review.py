@@ -105,7 +105,8 @@ class StageAEvidenceReviewTests(unittest.TestCase):
         data = copy.deepcopy(evidence())
         data[0]["unverified_or_failed_candidates"] = 0
         data[0]["av_verified"] = data[0]["http_checked"]
-        data[0]["resumed_decoded_av_evidence"] = data[0]["http_checked"] - 33
+        data[0]["av_verified_this_run"] = 300
+        data[0]["resumed_decoded_av_evidence"] = data[0]["http_checked"] - 300
         data[0]["resumed_checkpoint_observations"] = data[0]["http_checked"] - 300
         data[3]["metadata_verification_complete"] = True
         data[3]["live_verified"] = 1
