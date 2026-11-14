@@ -81,6 +81,7 @@ for path in xmlpaths:
                 if channel and a and b and a<b: programme_ids.add(channel)
             element.clear()
     except Exception as e: xml_errors.append(f'{path}: {e}')
+programme_ids &= xmlids
 with (ev/'epg_gap.csv').open('w',newline='') as f:
     w=csv.writer(f);w.writerow(['tvg_id']);w.writerows((x,) for x in sorted(ids-(xmlids & programme_ids)))
 with (ev/'input_sha256.json').open('w') as f: json.dump(input_hashes,f,indent=2)
