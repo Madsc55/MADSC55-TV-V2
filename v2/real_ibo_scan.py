@@ -227,6 +227,12 @@ def check_hls(entry, timeout, diagnostics=None):
     return None
 
 
+def recovery_http_status(diagnostics):
+    """Accept only valid HTTP codes; preserve failures as unknown, never AV success."""
+    status = diagnostics.get('last_http_status')
+    return status if type(status) is int and 100 <= status <= 599 else None
+
+
 def current_decode_confirmed(current_av, status):
     """Only fresh successful frame decoding can certify an AV inventory row."""
     return (status == 'AV_VERIFIED' and isinstance(current_av, dict)
@@ -501,7 +507,7 @@ def main():
                 recovery_attempts = 0 if candidate['url'] in good_urls else min(prior_attempts + 1, 3)
                 record = {**previous, **candidate,
                           'recovery_attempts': recovery_attempts,
-                          'last_http_status': diagnostics_by_url.get(candidate['url'], {}).get('last_http_status'),
+                          'last_http_status': recovery_http_status(diagnostics_by_url.get(candidate['url'], {})),
                           'last_timeout': diagnostics_by_url.get(candidate['url'], {}).get('last_timeout', False),
                           'url_sha256': url_sha256(candidate['url']),
                           'category': category(candidate) if category(candidate) != 'UNCATEGORIZED' else previous.get('category', 'UNCATEGORIZED'),
@@ -517,7 +523,7 @@ def main():
                 inventory_file.write(json.dumps(record, ensure_ascii=False) + '\n')
                 if candidate['url'] not in good_urls:
                     recovery_records.append({'url': candidate['url'],
-                                             'last_http_status': diagnostics_by_url.get(candidate['url'], {}).get('last_http_status'),
+                                             'last_http_status': recovery_http_status(diagnostics_by_url.get(candidate['url'], {})),
                                              'last_timeout': diagnostics_by_url.get(candidate['url'], {}).get('last_timeout', False),
                                              'recovery_attempts': recovery_attempts,
                                              'observations': record['observations']})
