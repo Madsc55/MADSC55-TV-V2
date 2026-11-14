@@ -26,6 +26,14 @@ class RecoveryQueueTests(unittest.TestCase):
         queue = build_recovery_queue([{"url": "https://example.org/a", "last_http_status": 200}])
         self.assertEqual(queue[0]["action"], "CHECK_AV")
 
+    def test_actionable_before_review(self):
+        records = [{"url": "https://example.org/review", "last_http_status": 404},
+                   {"url": "https://example.org/check", "last_http_status": 200, "recovery_attempts": 2},
+                   {"url": "https://example.org/retry", "last_http_status": 503, "recovery_attempts": 1}]
+        queue = build_recovery_queue(records)
+        self.assertEqual([item["action"] for item in queue], ["RETRY", "CHECK_AV", "REVIEW"])
+        self.assertEqual(len(queue), len(records))
+
     def test_duplicate_url_rejected(self):
         with self.assertRaises(ValueError):
             build_recovery_queue([{"url": "https://example.org/a"}, {"url": "https://example.org/a"}])

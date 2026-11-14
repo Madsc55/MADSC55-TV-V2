@@ -36,4 +36,5 @@ def build_recovery_queue(records: list[dict], *, max_attempts: int = 3) -> list[
             queue.append({"url_sha256": sha, "action": action,
                           "attempts": attempts, "next_attempt": (attempts + 1 if action != "REVIEW" else None),
                           "preserve_history": True})
-    return sorted(queue, key=lambda item: (item["attempts"], item["url_sha256"]))
+    priority = {"RETRY": 0, "CHECK_AV": 1, "REVIEW": 2}
+    return sorted(queue, key=lambda item: (priority[item["action"]], item["attempts"], item["url_sha256"]))
