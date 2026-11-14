@@ -20,7 +20,7 @@ import urllib.request
 import xml.etree.ElementTree as ET
 from stream_probe import probe, verify_decoded_av
 from discovery_34 import identity
-from stage3_identity_recovery import url_sha256
+from stage3_identity_recovery import classify_failure, url_sha256
 from stage3_metadata_acceptance import quality_from_probe, category, normalized_identity, epg_match
 from stage3_recovery_queue import build_recovery_queue
 import os
@@ -229,6 +229,38 @@ def check_hls(entry, timeout, diagnostics=None):
     return None
 
 
+def select_checkpoint_retry_urls(previous, candidates, budget):
+    """Pick a bounded set of *actual* network retries from sealed observations.
+
+    Never spend network time on already decoded successes or exhausted/permanent
+    failures. Stable SHA order and attempt count make retries reproducible.
+    Failed observations still remain in the inventory and REVIEW queue.
+    """
+    if type(budget) is not int or not 0 <= budget <= 2000:
+        raise ValueError("Retry budget must be an integer from 0 to 2000")
+    eligible = []
+    for url, row in previous.items():
+        if url not in candidates or row.get("result") is not None:
+            continue
+        attempts = row.get("recovery_attempts", 0)
+        if type(attempts) is not int or not 0 <= attempts <= 3:
+            raise ValueError("Invalid authenticated retry count")
+        if attempts >= 3:
+            continue
+        diagnostics = row.get("diagnostics")
+        if not isinstance(diagnostics, dict):
+            raise ValueError("Invalid retry diagnostics")
+        status = recovery_http_status(diagnostics.get("last_http_status"))
+        action = classify_failure(
+            status, timeout=diagnostics.get("last_timeout") is True)
+        if action not in ("RETRY", "CHECK_AV"):
+            continue
+        eligible.append((attempts, 0 if action == "CHECK_AV" else 1,
+                         url_sha256(url), url))
+    eligible.sort()
+    return {row[-1] for row in eligible[:budget]}, len(eligible)
+
+
 def next_recovery_attempts(prior_attempts, *, reused, av_verified):
     """Count only newly executed network checks, never checkpoint replays.
 
@@ -401,6 +433,8 @@ def main():
                     help='Optional encrypted prior progress from a failed real AV scan')
     ap.add_argument('--checkpoint-every', type=int, default=100,
                     help='Seal encrypted progress after this many candidate observations')
+    ap.add_argument('--retry-failed-limit', type=int, default=0,
+                    help='Actually re-probe up to this many eligible failed checkpoint URLs per run (0..2000)')
     ap.add_argument('--fail-fast-source-errors', action='store_true',
                     help='Stop before hours of AV probing if any mandatory M3U source failed')
     ap.add_argument('--tolerate-optional-discovery-failures', action='store_true',
@@ -442,8 +476,8 @@ def main():
     from secure_archive import backup as encrypt_inventory, decrypt as decrypt_inventory
     if len(os.environ.get('V2_ARCHIVE_PASSPHRASE', '')) < 16:
         ap.error('V2_ARCHIVE_PASSPHRASE must contain at least 16 characters')
-    if not 1 <= args.workers <= 32 or not 1 <= args.limit <= 10000 or not 1 <= args.checkpoint_every <= 1000:
-        ap.error('workers must be 1..32, limit 1..10000, checkpoint-every 1..1000')
+    if not 1 <= args.workers <= 32 or not 1 <= args.limit <= 10000 or not 1 <= args.checkpoint_every <= 1000 or not 0 <= args.retry_failed_limit <= 2000:
+        ap.error('workers must be 1..32, limit 1..10000, checkpoint-every 1..1000, retry-failed-limit 0..2000')
     if not args.live.is_file():
         ap.error('Protected V2 main playlist not found; refusing unfiltered export')
     live_text = args.live.read_text(encoding='utf-8-sig', errors='replace')
@@ -612,16 +646,19 @@ def main():
     prior_progress = (load_progress(
         args.resume_checkpoint, os.environ['V2_ARCHIVE_PASSPHRASE'],
         worldwide=args.worldwide) if args.resume_checkpoint is not None else {})
+    retry_urls, eligible_retries = select_checkpoint_retry_urls(
+        prior_progress, candidates, args.retry_failed_limit)
     progress_rows = {}
     resumed_urls = set()
     resumed_verified_urls = set()
+    successfully_retried_urls = set()
     checked = 0
     good = []
     diagnostics_by_url = {}
     def inspect_candidate(candidate):
         url = candidate['url']
         prior = prior_progress.get(url)
-        if prior is not None:
+        if prior is not None and url not in retry_urls:
             previous = prior['result']
             result = ({**candidate, **previous} if previous is not None else None)
             return url, result, prior['diagnostics'], True, prior['checked_at']
@@ -635,6 +672,8 @@ def main():
             diagnostics_by_url[url] = diagnostics
             if result is not None:
                 good.append(result)
+                if url in retry_urls:
+                    successfully_retried_urls.add(url)
             if reused:
                 resumed_urls.add(url)
                 if result is not None:
@@ -761,6 +800,10 @@ def main():
               'existing_main_urls': len(main_urls), 'excluded_foreign_archive_urls': len(foreign_urls), 'unique_new_candidates': len(candidates), 'recovered_from_previous_encrypted_inventory': recovered_from_archive,
               'http_checked': checked, 'http_checked_this_run': checked - len(resumed_urls),
               'resumed_checkpoint_observations': len(resumed_urls),
+              'eligible_failed_checkpoint_retries': eligible_retries,
+              'retried_failed_checkpoint_urls': len(retry_urls),
+              'recovered_av_from_failed_checkpoint': len(successfully_retried_urls),
+              'retry_budget': args.retry_failed_limit,
               'resumed_decoded_av_evidence': len(resumed_verified_urls),
               'av_verified_this_run': len(good) - len(resumed_verified_urls),
               'http_hls_ok': len(good), 'av_verified': len(good),
