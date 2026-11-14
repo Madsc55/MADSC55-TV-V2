@@ -227,6 +227,23 @@ def check_hls(entry, timeout, diagnostics=None):
     return None
 
 
+def next_recovery_attempts(prior_attempts, *, reused, av_verified):
+    """Count only newly executed network checks, never checkpoint replays.
+
+    Reopening a sealed scan must not exhaust the three-attempt queue without
+    actually retrying the stream. Actual AV success resets the counter.
+    """
+    if type(prior_attempts) is not int or prior_attempts < 0 or prior_attempts > 3:
+        raise ValueError('Invalid historical recovery attempts')
+    if type(reused) is not bool or type(av_verified) is not bool:
+        raise ValueError('Invalid recovery evidence flags')
+    return 0 if av_verified else min(prior_attempts + (0 if reused else 1), 3)
+
+
+def observation_origin(*, reused):
+    return 'resumed-checkpoint' if reused else 'current-scan'
+
+
 def recovery_http_status(status):
     """Normalize nonstandard network status codes at the strict recovery boundary.
 
@@ -582,8 +599,13 @@ def main():
                 resumed_urls.add(url)
                 if result is not None:
                     resumed_verified_urls.add(url)
+            previous_attempts = prior_progress.get(url, {}).get(
+                'recovery_attempts', historical_records.get(url, {}).get('recovery_attempts', 0))
+            next_attempts = next_recovery_attempts(
+                previous_attempts, reused=reused, av_verified=result is not None)
             progress_rows[url] = checkpoint_row(
-                url, result, diagnostics, checked_at=checked_at)
+                url, result, diagnostics, checked_at=checked_at,
+                recovery_attempts=next_attempts)
             if checked % args.checkpoint_every == 0:
                 save_progress(checkpoint_path, os.environ['V2_ARCHIVE_PASSPHRASE'],
                               worldwide=args.worldwide, rows=progress_rows)
@@ -628,11 +650,9 @@ def main():
                 verified = current_av.get('verified_quality', {})
                 decoded_this_run = current_decode_confirmed(
                     current_av, new_status, reused=candidate['url'] in resumed_urls)
-                prior_attempts = previous.get('recovery_attempts', 0)
-                if type(prior_attempts) is not int or prior_attempts < 0:
-                    raise ValueError('Invalid historical recovery attempts')
-                # Preserve capped retry state: exhausted records remain REVIEW-only.
-                recovery_attempts = 0 if candidate['url'] in good_urls else min(prior_attempts + 1, 3)
+                # The checkpoint already reflects the actual probe (or no probe
+                # when reused). Do not increment recovery attempts a second time.
+                recovery_attempts = progress_rows[candidate['url']]['recovery_attempts']
                 record = {**previous, **candidate,
                           'recovery_attempts': recovery_attempts,
                           'last_http_status': diagnostics_by_url.get(candidate['url'], {}).get('last_http_status'),
@@ -649,7 +669,9 @@ def main():
                                             'DECODED_AV_PRIOR_CHECKPOINT' if candidate['url'] in resumed_verified_urls else
                                             'NOT_DECODED_THIS_RUN'),
                           'ibo_device_tested': previous.get('ibo_device_tested', False),
-                          'observations': old_observations + [{'status': new_status, 'origin': 'current-scan'}]}
+                          'observations': old_observations + [{
+                              'status': new_status, 'origin': observation_origin(
+                                  reused=candidate['url'] in resumed_urls)}]}
                 inventory_file.write(json.dumps(record, ensure_ascii=False) + '\n')
                 if candidate['url'] not in good_urls:
                     raw_http_status = diagnostics_by_url.get(candidate['url'], {}).get('last_http_status')
