@@ -100,7 +100,7 @@ jobs:
           # prior AV or mark an untested stream as verified.
       - name: Real network discovery and AV probe including discovered sources
         run: |
-          CMD=(python v2/real_ibo_scan.py --worldwide --workers 12 --timeout 12 --limit 3000 --fail-fast-source-errors --tolerate-optional-discovery-failures --checkpoint-every 100 --resume-checkpoint v2/reports/ibo-scan-resume.enc --dynamic-sources v2/reports/github-source-discovery.json --integrated-candidates v2/reports/discovery-34-integrated.json --resolved-streams v2/reports/resolved-direct-streams.jsonl.enc)
+          CMD=(python v2/real_ibo_scan.py --worldwide --workers 12 --timeout 12 --limit 3000 --fail-fast-source-errors --tolerate-optional-discovery-failures --checkpoint-every 100 --retry-failed-limit 300 --resume-checkpoint v2/reports/ibo-scan-resume.enc --dynamic-sources v2/reports/github-source-discovery.json --integrated-candidates v2/reports/discovery-34-integrated.json --resolved-streams v2/reports/resolved-direct-streams.jsonl.enc)
           if [ -s v2/reports/stage-a-epg-candidate.xml ]; then
             CMD+=(--epg v2/reports/stage-a-epg-candidate.xml)
             echo "Real XMLTV candidate provided; only unique IDs with valid programmes can match"

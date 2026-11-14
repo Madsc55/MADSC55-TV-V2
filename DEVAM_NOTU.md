@@ -1,3 +1,9 @@
+## 14 Kasım 2026 — Aşama A #17/#20: 18 saatlik checkpoint içindeki başarısız yayınları kontrollü gerçek yeniden dene
+- Önceki 43598617218 taraması 28.844 eski gözlemi tekrar kullandı, sadece 1 yeni AV denemesi yaptı. Başarısız URL'ler de 18 saat içinde yeniden denenmeden atlandığı için kurtarma kuyruğunun canlı kapanışı ilerlemiyordu.
+- Yeni `select_checkpoint_retry_urls` yalnız mevcut aday kümesindeki, AV başarısı olmayan, recovery_attempts 0..2 ve HTTP RETRY/CHECK_AV uygun durumlarını seçer. 403/404, tüketilmiş 3 deneme ve şifreli önceki AV başarıları gerçek probe'a gönderilmez; her koşuda en fazla 300 başarısız aday yeniden `check_hls` ile denenir. Gerçek probe yapılmadan sayaç artırılmaz, başarılı ses+görüntü yeni kanıt olarak sayılır. Toplam eligible, retried ve recovered AV sayıları gizli URL içermeyen rapora eklenir.
+- Bu kod/CI hazırlığı A #17/#20 için somut bir onarımdır, ancak gerçek 300 probe henüz çalıştırılmamıştır. Ana İBO/YEDEKLER/YENİLER/FAVORİLER değişmez; üretim paketleri yalnız gerçek tam keşif ve güncel AV kanıtıyla kabul edilir. #15/#17/#18/#19/#20/#21 nihai kabulü hâlâ açık.
+
+---
 ## 14 Kasım 2026 — Aşama A #19: korunan EPG'ye dokunmadan gerçek XMLTV kanıtı üretme
 - Tespit: Depodaki `madsc-epg.xml` 0 bayt; `v2/epg_sources.json` beş harici XMLTV kaynağı içeriyor. Önceki gerçek IPTV Actions taraması kaynakları `epg_integrity.py` ile denetlemiyor, `build_epg.py` çalıştırmıyor ve tarayıcıya `--epg` vermiyordu. #19 eksik kabulü bununla kendiliğinden kapanamaz.
 - Yeni manuel tarama entegrasyonu: `epg_integrity.py` internetten beş EPG kaynağını salt-okunur denetleyecek; `build_epg.py --candidate-only` gerçek XMLTV'den ayrı `v2/reports/stage-a-epg-candidate.xml` oluşturmayı deneyecek. Gerekli kaynak/gerçek zamanlı program yoksa aday oluşmaz ve #19 açık kalır. Korumalı kök `madsc-epg.xml` değişmez. Yeni aday yalnızca Actions artifact'ına kanıt olarak yüklenir, otomatik yayımlanmaz.
