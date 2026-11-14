@@ -78,7 +78,7 @@ class Discovery34Tests(unittest.TestCase):
                     discovery_34.main()
                 self.assertEqual(exit_result.exception.code, 1)
             report = json.loads(output.read_text())
-        self.assertEqual(sum("codeberg.org" in url for url in calls), 1)
+        self.assertEqual(sum("codeberg.org" in url for url in calls), 3)
         self.assertEqual(len(report["errors"]), len(QUERIES))
         self.assertEqual(sum(row["error"] == "provider_rate_limit_skipped" for row in report["errors"]), len(QUERIES) - 1)
         self.assertEqual(report["av_verified"], 0)
