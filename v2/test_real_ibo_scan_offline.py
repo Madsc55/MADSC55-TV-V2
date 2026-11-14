@@ -243,9 +243,11 @@ class ScannerOfflineTests(unittest.TestCase):
             self.assertFalse(result["full_discovery_acceptance"])
             self.assertEqual(len(result["optional_failed_discovered_sources"]), 1)
             self.assertEqual(result["mandatory_failed_sources"], [])
-            self.assertEqual(result["status"], "PARTIAL_DISCOVERY_NO_VERIFIED_CANDIDATES")
+            self.assertEqual(result["status"], "PARTIAL_DISCOVERY_EVIDENCE_ONLY")
             self.assertEqual(result["av_verified"], 0)
-            self.assertTrue(inventory.with_suffix(".jsonl.enc").exists())
+            self.assertTrue(inventory.with_suffix(".jsonl.pending.enc").exists())
+            self.assertFalse(inventory.with_suffix(".jsonl.enc").exists())
+            self.assertFalse((root / "v2/reports/IBO_YENI_ADAYLAR_PART1.m3u8").exists())
 
     def test_failed_source_does_not_trigger_three_hour_av_scan(self):
         """A mandatory-source error must yield a truthful report before probes."""
