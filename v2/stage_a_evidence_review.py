@@ -44,6 +44,7 @@ def audit(scan, epg, epg_integrity, youtube, gitlab, codeberg):
     recovered = number(scan, "recovered_av_from_failed_checkpoint")
     if (verified != current_av + previous_av or checked != rechecked + resumed
             or verified + unverified != checked or retried > rechecked
+            or previous_av > resumed or current_av > rechecked
             or recovered > retried or recovered > current_av):
         raise InvalidEvidence("AV recovery and checkpoint counts do not balance")
 
