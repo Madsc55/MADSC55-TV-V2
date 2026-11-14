@@ -125,8 +125,16 @@ def resolve_report(report, runner=subprocess.run, limit=MAX_RESOLVE):
                and item.get("status") == "LIVE_METADATA_VERIFIED"]
     official = [item for item in report["candidates"]
                 if isinstance(item, dict) and item.get("source") == "official"]
-    youtube_limit = max(0, (limit + 1) // 2)
-    official_limit = max(0, limit // 2)
+    # Reuse spare budget rather than discarding half the attempts when, for
+    # example, no YouTube pages have proven current live metadata.
+    youtube_limit = min(len(youtube), max(0, (limit + 1) // 2))
+    official_limit = min(len(official), max(0, limit // 2))
+    spare = max(0, limit - youtube_limit - official_limit)
+    extra_official = min(spare, len(official) - official_limit)
+    official_limit += extra_official
+    spare -= extra_official
+    youtube_limit += min(spare, len(youtube) - youtube_limit)
+
     tr_quota = (youtube_limit + 2) // 3
     az_quota = youtube_limit // 6
     world_quota = max(0, youtube_limit - tr_quota - az_quota)
@@ -134,9 +142,14 @@ def resolve_report(report, runner=subprocess.run, limit=MAX_RESOLVE):
         youtube, youtube_limit,
         lambda item: item.get("region") if item.get("region") in ("TR", "AZ") else "WORLD",
         {"TR": tr_quota, "AZ": az_quota, "WORLD": world_quota})
+    # A worldwide directory has more countries than the official resolution
+    # budget. Alphabetical allocation alone can omit all Turkish channels.
+    official_countries = sorted({item.get("country") or "UNKNOWN" for item in official})
+    priority_countries = [key for key in ("TR", "AZ") if key in official_countries]
+    remaining_countries = [key for key in official_countries if key not in priority_countries]
     selected_official = _balanced_limit(
         official, official_limit, lambda item: item.get("country") or "UNKNOWN",
-        {key: 1 for key in sorted({item.get("country") or "UNKNOWN" for item in official})})
+        {key: 1 for key in priority_countries + remaining_countries})
     eligible_total = len(youtube) + len(official)
     eligible = selected_youtube + selected_official
     attempted = 0
