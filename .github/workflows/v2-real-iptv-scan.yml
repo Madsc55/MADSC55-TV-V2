@@ -62,17 +62,22 @@ jobs:
           # Current running/queued jobs must never be selected as resume input.
           PREVIOUS_RUNS="$(gh run list --workflow v2-real-iptv-scan.yml --branch main --limit 12 --json databaseId,status --jq '.[] | select(.status == "completed") | .databaseId' || true)"
           for PREVIOUS_RUN in $PREVIOUS_RUNS; do
-            if ! gh run download "$PREVIOUS_RUN" --name v2-real-scan-evidence --dir /tmp/v2-resume 2>/dev/null; then
+            RESUME_DIR="/tmp/v2-resume/$PREVIOUS_RUN"
+            mkdir -p "$RESUME_DIR"
+            if ! gh run download "$PREVIOUS_RUN" --name v2-real-scan-evidence --dir "$RESUME_DIR" 2>/dev/null; then
               continue
             fi
-            if [ -f /tmp/v2-resume/ibo-scan-progress.enc ] && [ ! -L /tmp/v2-resume/ibo-scan-progress.enc ]; then
-              install -m 600 /tmp/v2-resume/ibo-scan-progress.enc v2/reports/ibo-scan-resume.enc
+            if [ -f "$RESUME_DIR/ibo-scan-progress.enc" ] && [ ! -L "$RESUME_DIR/ibo-scan-progress.enc" ]; then
+              install -m 600 "$RESUME_DIR/ibo-scan-progress.enc" v2/reports/ibo-scan-resume.enc
               echo "Encrypted checkpoint recovered from completed run $PREVIOUS_RUN; scanner checks identity and freshness."
               break
             fi
-            if [ -f /tmp/v2-resume/ibo-candidate-inventory.jsonl.pending.enc ] && [ ! -L /tmp/v2-resume/ibo-candidate-inventory.jsonl.pending.enc ] && [ -f /tmp/v2-resume/ibo-real-scan-report.json ]; then
-              STARTED_AT="$(gh run view "$PREVIOUS_RUN" --json createdAt --jq '.createdAt')"
-              if python v2/bootstrap_pending_checkpoint.py --inventory /tmp/v2-resume/ibo-candidate-inventory.jsonl.pending.enc --report /tmp/v2-resume/ibo-real-scan-report.json --observed-at "$STARTED_AT" --output v2/reports/ibo-scan-progress.enc; then
+            if [ -f "$RESUME_DIR/ibo-candidate-inventory.jsonl.pending.enc" ] && [ ! -L "$RESUME_DIR/ibo-candidate-inventory.jsonl.pending.enc" ] && [ -f "$RESUME_DIR/ibo-real-scan-report.json" ]; then
+              if ! STARTED_AT="$(gh run view "$PREVIOUS_RUN" --json createdAt --jq '.createdAt')"; then
+                echo "::warning::Cannot verify previous run creation time; skipping candidate."
+                continue
+              fi
+              if python v2/bootstrap_pending_checkpoint.py --inventory "$RESUME_DIR/ibo-candidate-inventory.jsonl.pending.enc" --report "$RESUME_DIR/ibo-real-scan-report.json" --observed-at "$STARTED_AT" --output v2/reports/ibo-scan-progress.enc; then
                 install -m 600 v2/reports/ibo-scan-progress.enc v2/reports/ibo-scan-resume.enc
                 echo "Legacy encrypted inventory converted from completed run $PREVIOUS_RUN."
                 break
