@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """Bounded live metadata contracts. Fail closed for required provider errors."""
+import argparse
 import json
 import sys
+from pathlib import Path
 from datetime import datetime, timezone
 from email.utils import parsedate_to_datetime
 import time
@@ -116,8 +118,17 @@ def probe_queries(source, queries=QUERIES, fetch=fetch_json, sleep=time.sleep):
             "query_results": results}
 
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--output", type=Path, help="Write read-only diagnostic JSON using exclusive creation")
+    args = parser.parse_args()
     results = {source: probe_queries(source) for source in ("github", "gitlab", "codeberg")}
-    print(json.dumps(results, indent=2))
+    report = {"policy": "METADATA_ONLY_NOT_AV_VERIFIED", "verified_av": 0, "providers": results}
+    payload = json.dumps(report, indent=2) + "\n"
+    if args.output is not None:
+        args.output.parent.mkdir(parents=True, exist_ok=True)
+        with args.output.open("x", encoding="utf-8") as output:
+            output.write(payload)
+    print(payload, end="")
     if any(row["status"] != "ok" for row in results.values()):
         sys.exit(1)
 
