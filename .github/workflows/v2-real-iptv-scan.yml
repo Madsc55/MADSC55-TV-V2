@@ -63,13 +63,24 @@ jobs:
             if gh run download "$PREVIOUS_RUN" --name v2-real-scan-evidence --dir /tmp/v2-resume 2>/dev/null; then
               if [ -f /tmp/v2-resume/ibo-scan-progress.enc ] && [ ! -L /tmp/v2-resume/ibo-scan-progress.enc ]; then
                 install -m 600 /tmp/v2-resume/ibo-scan-progress.enc v2/reports/ibo-scan-resume.enc
-                echo "Encrypted progress recovered; scanner checks authenticity and freshness."
+                echo "Encrypted checkpoint recovered; scanner checks authenticity and freshness."
+              elif [ -f /tmp/v2-resume/ibo-candidate-inventory.jsonl.pending.enc ] && [ -f /tmp/v2-resume/ibo-real-scan-report.json ]; then
+                # Pre-checkpoint real scans saved authenticated pending inventory.
+                # Import only a fully counted real AV inventory; never mark a
+                # source-incomplete scan complete or promote its old AV as new.
+                STARTED_AT="$(gh run view "$PREVIOUS_RUN" --json createdAt --jq '.createdAt')"
+                if python v2/bootstrap_pending_checkpoint.py --inventory /tmp/v2-resume/ibo-candidate-inventory.jsonl.pending.enc --report /tmp/v2-resume/ibo-real-scan-report.json --observed-at "$STARTED_AT" --output v2/reports/ibo-scan-progress.enc; then
+                  install -m 600 v2/reports/ibo-scan-progress.enc v2/reports/ibo-scan-resume.enc
+                  echo "Legacy encrypted inventory safely converted to resumable progress."
+                else
+                  echo "::warning::Previous pending scan evidence not eligible for resume; new AV observations required."
+                fi
               fi
             fi
           fi
       - name: Real network discovery and AV probe including discovered sources
         run: |
-          python v2/real_ibo_scan.py --worldwide --workers 12 --timeout 12 --limit 3000 --checkpoint-every 100 --resume-checkpoint v2/reports/ibo-scan-resume.enc --dynamic-sources v2/reports/github-source-discovery.json --integrated-candidates v2/reports/discovery-34-integrated.json --resolved-streams v2/reports/resolved-direct-streams.jsonl.enc
+          python v2/real_ibo_scan.py --worldwide --workers 12 --timeout 12 --limit 3000 --fail-fast-source-errors --checkpoint-every 100 --resume-checkpoint v2/reports/ibo-scan-resume.enc --dynamic-sources v2/reports/github-source-discovery.json --integrated-candidates v2/reports/discovery-34-integrated.json --resolved-streams v2/reports/resolved-direct-streams.jsonl.enc
       - name: Export 1000 and 2000 real verified new URL batches
         run: |
           python v2/export_ibo_batches.py v2/reports/ibo-candidate-inventory.jsonl.enc v2/reports --live MADSC55_TV_IBO_CALISANLAR_TEST.m3u8
