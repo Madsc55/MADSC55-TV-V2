@@ -2,7 +2,7 @@ name: V2 Real Scan Bounded Auto Retry
 on:
   workflow_run:
     workflows:
-      - V2 Real IPTV Scan
+      - V2 Gercek IPTV Tarama ve IBO Paketleri
     types: [completed]
 
 permissions:
