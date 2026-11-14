@@ -24,6 +24,10 @@ jobs:
         run: python v2/test_consolidate_inventory.py
       - name: Offline discovery regression
         run: python v2/test_real_ibo_scan_offline.py
+      - name: Stage A encrypted checkpoint restart and evidence regression
+        run: |
+          python -m py_compile v2/scan_checkpoint.py v2/test_scan_checkpoint.py
+          PYTHONPATH=v2 python -m unittest -v test_scan_checkpoint
       - name: Explain acceptance boundary
         run: |
           echo 'Offline checks are NOT proof of live AV, IBO Player playback, cloud restore, or production delivery.'
