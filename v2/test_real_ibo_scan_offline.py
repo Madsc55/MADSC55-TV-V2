@@ -78,6 +78,45 @@ class ScannerOfflineTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             scanner.historical_source_ids({"source_ids": "invalid"})
 
+    def test_failed_recovery_queue_preserves_encrypted_av_evidence_and_baseline(self):
+        """A recovery failure must not discard a multi-hour AV scan."""
+        from secure_archive import decrypt
+        with tempfile.TemporaryDirectory() as temp:
+            root = pathlib.Path(temp)
+            inventory = root / "inventory.jsonl"
+            plaintext = root / "inventory.jsonl.tmp"
+            report = root / "failure.json"
+            baseline = root / "inventory.jsonl.enc"
+            baseline.write_bytes(b"PROTECTED_PRIOR_BASELINE")
+            stream_url = "https://example.org/private-token/live.m3u8"
+            payload = json.dumps({
+                "url": stream_url,
+                "decoded_av_verified": False,
+                "http_hls_status": "UNVERIFIED_OR_FAILED",
+            }).encode() + b"\n"
+            plaintext.write_bytes(payload)
+            secret = "offline-acceptance-secret-only"
+            result = scanner.preserve_failed_recovery_evidence(
+                plaintext, inventory, report, secret,
+                error_type="ValueError", checked=1,
+                decoded_av_count=0, candidate_count=1)
+            pending = root / "inventory.jsonl.pending.enc"
+            self.assertEqual(decrypt(pending.read_bytes(), secret), payload)
+            self.assertEqual(baseline.read_bytes(), b"PROTECTED_PRIOR_BASELINE")
+            public = report.read_text(encoding="utf-8")
+            self.assertNotIn(stream_url, public)
+            self.assertNotIn(secret, public)
+            self.assertEqual(result["status"], "RECOVERY_QUEUE_FAILED")
+            self.assertEqual(result["decoded_av_verified_this_run"], 0)
+            self.assertFalse(result["playback_verified_on_device"])
+            self.assertTrue(result["archive_restore_test_passed"])
+            with self.assertRaises(FileExistsError):
+                scanner.preserve_failed_recovery_evidence(
+                    plaintext, inventory, report, secret,
+                    error_type="ValueError", checked=1,
+                    decoded_av_count=0, candidate_count=1)
+            self.assertEqual(baseline.read_bytes(), b"PROTECTED_PRIOR_BASELINE")
+
     def test_dynamic_source_report_skips_malformed_rows_and_deduplicates(self):
         status = "SOURCE_PARSED_STREAMS_NOT_PLAYBACK_VERIFIED"
         dynamic = {"sources": [None, 3, {"url": None, "status": status},

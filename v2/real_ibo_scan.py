@@ -237,6 +237,34 @@ def recovery_http_status(status):
     return status if type(status) is int and 100 <= status <= 599 else None
 
 
+def preserve_failed_recovery_evidence(plaintext_inventory, inventory_path, report_path,
+                                      passphrase, *, error_type, checked,
+                                      decoded_av_count, candidate_count):
+    """Seal real scan observations before propagating a recovery-queue failure.
+
+    Do not replace the last complete encrypted baseline. The pending archive
+    contains private URLs; the public failure report contains only aggregates.
+    """
+    from secure_archive import backup
+    pending = inventory_path.with_suffix(inventory_path.suffix + '.pending.enc')
+    archive = backup(plaintext_inventory, pending, passphrase)
+    failure_report = {
+        'status': 'RECOVERY_QUEUE_FAILED',
+        'failed_stage': 'build_recovery_queue',
+        'error_type': error_type,
+        'http_checked': checked,
+        'decoded_av_verified_this_run': decoded_av_count,
+        'unique_new_candidates': candidate_count,
+        'candidate_inventory': str(pending),
+        'archive_restore_test_passed': archive['restore_test_passed'],
+        'playback_verified_on_device': False,
+    }
+    report_path.parent.mkdir(parents=True, exist_ok=True)
+    report_path.write_text(json.dumps(failure_report, sort_keys=True, indent=2) + '\n',
+                           encoding='utf-8')
+    return failure_report
+
+
 def current_decode_confirmed(current_av, status):
     """Only fresh successful frame decoding can certify an AV inventory row."""
     return (status == 'AV_VERIFIED' and isinstance(current_av, dict)
@@ -537,7 +565,18 @@ def main():
                                              'recovery_attempts': recovery_attempts,
                                              'observations': record['observations']})
         # Queue contains SHA identities only; no stream URL or token in public report.
-        recovery_queue = build_recovery_queue(recovery_records)
+        try:
+            recovery_queue = build_recovery_queue(recovery_records)
+        except (ValueError, TypeError, KeyError) as exc:
+            # A long real AV scan must never lose its observations just because
+            # downstream queue validation failed. Preserve only an encrypted
+            # PENDING artifact; keep the last complete baseline untouched.
+            preserve_failed_recovery_evidence(
+                inventory_tmp, args.inventory, args.report,
+                os.environ['V2_ARCHIVE_PASSPHRASE'],
+                error_type=type(exc).__name__, checked=checked,
+                decoded_av_count=len(good), candidate_count=len(candidates))
+            raise
         # A failed source fetch must not overwrite the last complete encrypted baseline.
         encrypted_inventory = args.inventory.with_suffix(
             args.inventory.suffix + ('.pending.enc' if incomplete else '.enc'))
