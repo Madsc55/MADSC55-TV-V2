@@ -18,6 +18,9 @@ if explicit:
     source=pathlib.Path(explicit)
     if not source.is_file(): raise SystemExit('STAGE_A_PLAYLIST does not exist')
     sources=[source]
+elif not sources:
+    production=pathlib.Path('MADSC55_TV_IBO_CALISANLAR_TEST.m3u8')
+    if production.is_file(): sources=[production]
 pairs=[]; ids=set(); input_hashes={}
 for path in sources:
     data=path.read_bytes()
