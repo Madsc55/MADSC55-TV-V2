@@ -325,13 +325,19 @@ def validated_xmltv_programme_ids(payload, *, now=None):
         raise ValueError("XMLTV root must be tv")
     declared = Counter(node.get("id") for node in root.findall("channel")
                        if isinstance(node.get("id"), str) and node.get("id").strip())
+    # The EPG builder may remap an external channel by a *similar name*.
+    # Such a channel can be offered as a review candidate but is not an
+    # authentic XMLTV exact tvg-id match; exclude it from automatic proof.
+    non_exact_ids = {
+        node.get("id") for node in root.findall("channel")
+        if node.get("madsc-match-method") == "name-hint"}
     now = datetime.now(timezone.utc) if now is None else now
     if not isinstance(now, datetime) or now.tzinfo is None:
         raise ValueError("A timezone-aware clock is required")
     valid = set()
     for programme in root.findall("programme"):
         cid = programme.get("channel")
-        if not cid or declared[cid] != 1:
+        if not cid or declared[cid] != 1 or cid in non_exact_ids:
             continue
         title = programme.findtext("title") or ""
         if not title.strip():
