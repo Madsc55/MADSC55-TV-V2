@@ -1,3 +1,8 @@
+## 14 Kasım 2026 — Aşama A devam arşivi: son tamamlanan başarılı/kısmi koşuyu da geri al
+- 43598617218 koşusu GitHub Actions tarafında success, tarama raporunda PARTIAL_DISCOVERY_EVIDENCE_ONLY idi. 28.845 kayıttan 28.844 eski gözlem + 1 yeni FFmpeg AV; 8.510 toplam AV kanıtı. Önceki workflow yalnız '--status failure' koşularını aradığından, sonraki taramada bu daha güncel başarıyla yüklenmiş checkpoint atlanabilirdi.
+- Onarım: son tamamlanan main gerçek tarama koşularını, sonuç SUCCESS veya FAILURE ayrımı yapmadan listeler; aktif/queued koşuları atlar. Her run artifaktı kendi geçici dizinine indirilir, ilk uygun şifreli checkpoint/legacy envanter alınır. Kimlik/18 saat/şifre anahtarı kontrolleri tarayıcı tarafında korunur. Gerçek A son kabulü hâlâ açık; kod ve offline CI kanıtı canlı resume yerine geçmez.
+
+---
 ## 14 Kasım 2026 — V2 devam kontrolü: 13 açık görev, gerçek tarama kanıtı, A→B→C→D
 
 **Güncel 34 görev:** tasks/state.json içinde 21 completed, 13 in_progress. Açıklar: #15 #17 #18 #19 #20 #21 #28 #29 #30 #31 #32 #33 #34. Başarısız/eksik kanıt için done işareti verilmez. Diğer sohbetlerdeki paralel PR ve işler ile çakışma kontrolü yapılır.
