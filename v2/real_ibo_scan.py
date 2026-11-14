@@ -318,6 +318,10 @@ def main():
                     help='Optional unified discovery report; only candidate-only M3U feed URLs are admitted')
     ap.add_argument('--resolved-streams', type=pathlib.Path, default=None,
                     help='Optional authenticated encrypted direct HLS candidates from official/YouTube resolvers')
+    ap.add_argument('--resume-checkpoint', type=pathlib.Path, default=None,
+                    help='Optional encrypted prior progress from a failed real AV scan')
+    ap.add_argument('--checkpoint-every', type=int, default=100,
+                    help='Seal encrypted progress after this many candidate observations')
     ap.add_argument('--output', type=pathlib.Path, default=OUT)
     ap.add_argument('--report', type=pathlib.Path, default=REPORT)
     ap.add_argument('--inventory', type=pathlib.Path, default=INVENTORY,
@@ -355,8 +359,8 @@ def main():
     from secure_archive import backup as encrypt_inventory, decrypt as decrypt_inventory
     if len(os.environ.get('V2_ARCHIVE_PASSPHRASE', '')) < 16:
         ap.error('V2_ARCHIVE_PASSPHRASE must contain at least 16 characters')
-    if not 1 <= args.workers <= 32 or not 1 <= args.limit <= 10000:
-        ap.error('workers must be 1..32 and limit 1..10000')
+    if not 1 <= args.workers <= 32 or not 1 <= args.limit <= 10000 or not 1 <= args.checkpoint_every <= 1000:
+        ap.error('workers must be 1..32, limit 1..10000, checkpoint-every 1..1000')
     if not args.live.is_file():
         ap.error('Protected V2 main playlist not found; refusing unfiltered export')
     live_text = args.live.read_text(encoding='utf-8-sig', errors='replace')
@@ -483,19 +487,49 @@ def main():
             candidates[url]['url'] = url
             candidates[url]['source_ids'] = historical_source_ids(record)
             recovered_from_archive += 1
+    # Resume is bound to the exact stream URL, authentic AES ciphertext and a
+    # short evidence lifetime. Previous AV proof remains tagged as previous-run
+    # evidence; it is never labeled as a new FFmpeg decode in this invocation.
+    from scan_checkpoint import checkpoint_row, load_progress, save_progress
+    checkpoint_path = args.inventory.parent / 'ibo-scan-progress.enc'
+    prior_progress = (load_progress(
+        args.resume_checkpoint, os.environ['V2_ARCHIVE_PASSPHRASE'],
+        worldwide=args.worldwide) if args.resume_checkpoint is not None else {})
+    progress_rows = {}
+    resumed_urls = set()
+    resumed_verified_urls = set()
     checked = 0
     good = []
     diagnostics_by_url = {}
     def inspect_candidate(candidate):
+        url = candidate['url']
+        prior = prior_progress.get(url)
+        if prior is not None:
+            previous = prior['result']
+            result = ({**candidate, **previous} if previous is not None else None)
+            return url, result, prior['diagnostics'], True, prior['checked_at']
         diagnostics = {}
         result = check_hls(candidate, args.timeout, diagnostics)
-        return candidate['url'], result, diagnostics
+        return url, result, diagnostics, False, time.time()
     with concurrent.futures.ThreadPoolExecutor(max_workers=args.workers) as pool:
-        for url, result, diagnostics in pool.map(inspect_candidate, candidates.values()):
+        for url, result, diagnostics, reused, checked_at in pool.map(
+                inspect_candidate, candidates.values()):
             checked += 1
             diagnostics_by_url[url] = diagnostics
             if result is not None:
                 good.append(result)
+            if reused:
+                resumed_urls.add(url)
+                if result is not None:
+                    resumed_verified_urls.add(url)
+            progress_rows[url] = checkpoint_row(
+                url, result, diagnostics, checked_at=checked_at)
+            if checked % args.checkpoint_every == 0:
+                save_progress(checkpoint_path, os.environ['V2_ARCHIVE_PASSPHRASE'],
+                              worldwide=args.worldwide, rows=progress_rows)
+    # Seal the last partial batch before XMLTV, recovery queue, or export.
+    save_progress(checkpoint_path, os.environ['V2_ARCHIVE_PASSPHRASE'],
+                  worldwide=args.worldwide, rows=progress_rows)
     epg_ids = set()
     epg_checked = args.epg is not None
     if args.epg is not None:
@@ -532,7 +566,8 @@ def main():
                 new_status = 'AV_VERIFIED' if candidate['url'] in good_urls else 'UNVERIFIED_OR_FAILED'
                 current_av = good_by_url.get(candidate['url'], {})
                 verified = current_av.get('verified_quality', {})
-                decoded_this_run = current_decode_confirmed(current_av, new_status)
+                decoded_this_run = (candidate['url'] not in resumed_urls
+                                    and current_decode_confirmed(current_av, new_status))
                 prior_attempts = previous.get('recovery_attempts', 0)
                 if type(prior_attempts) is not int or prior_attempts < 0:
                     raise ValueError('Invalid historical recovery attempts')
@@ -550,7 +585,9 @@ def main():
                           'verified_quality': verified if verified.get('av_verified') else previous.get('verified_quality', {'av_verified': False, 'quality': 'UNVERIFIED'}),
                           'http_hls_status': new_status,
                           'decoded_av_verified': decoded_this_run,
-                          'decode_status': 'DECODED_AV' if decoded_this_run else 'NOT_DECODED_THIS_RUN',
+                          'decode_status': ('DECODED_AV' if decoded_this_run else
+                                            'DECODED_AV_PRIOR_CHECKPOINT' if candidate['url'] in resumed_verified_urls else
+                                            'NOT_DECODED_THIS_RUN'),
                           'ibo_device_tested': previous.get('ibo_device_tested', False),
                           'observations': old_observations + [{'status': new_status, 'origin': 'current-scan'}]}
                 inventory_file.write(json.dumps(record, ensure_ascii=False) + '\n')
@@ -590,7 +627,11 @@ def main():
     report = {'scan_scope': 'WORLDWIDE_ALL_SOURCE_ENTRIES' if args.worldwide else 'TR_AZ_METADATA_CANDIDATES', 'source_count': len(sources), 'dynamic_source_count': dynamic_count, 'rejected_dynamic_sources': rejected_dynamic_sources, 'integrated_m3u_source_count': integrated_m3u_count, 'rejected_integrated_m3u_sources': rejected_integrated_m3u,
               'resolved_direct_candidate_count': resolved_direct_count, 'rejected_resolved_direct_candidates': rejected_resolved_direct, 'fetched_sources': len(source_counts),
               'failed_sources': failed, 'source_counts': source_counts, 'source_drops': source_drops, 'existing_main_urls': len(main_urls), 'excluded_foreign_archive_urls': len(foreign_urls), 'unique_new_candidates': len(candidates), 'recovered_from_previous_encrypted_inventory': recovered_from_archive,
-              'http_checked': checked, 'http_hls_ok': len(good), 'av_verified': len(good),
+              'http_checked': checked, 'http_checked_this_run': checked - len(resumed_urls),
+              'resumed_checkpoint_observations': len(resumed_urls),
+              'resumed_decoded_av_evidence': len(resumed_verified_urls),
+              'av_verified_this_run': len(good) - len(resumed_verified_urls),
+              'http_hls_ok': len(good), 'av_verified': len(good),
               'recovery_queue': recovery_queue,
               'recovery_retry_count': sum(item['action'] == 'RETRY' for item in recovery_queue),
               'recovery_av_check_count': sum(item['action'] == 'CHECK_AV' for item in recovery_queue),
