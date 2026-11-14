@@ -505,7 +505,20 @@ def main():
                         elif sid not in found['source_ids']:
                             found['source_ids'].append(sid)
         except (OSError, ValueError, UnicodeError, socket.timeout) as exc:
-            failed.append({'id': sid, 'error': type(exc).__name__})
+            # Preserve actionable, non-sensitive failure classification in the
+            # uploaded report. Never include exception text: it may contain
+            # authenticated URLs or credentials from a discovered feed.
+            failure = {'id': sid, 'error': type(exc).__name__}
+            if isinstance(exc, urllib.error.HTTPError):
+                failure['http_status'] = exc.code
+            elif isinstance(exc, ValueError):
+                if str(exc) == 'Not an M3U playlist':
+                    failure['reason'] = 'INVALID_M3U_FORMAT'
+                elif str(exc) == 'Source exceeded size limit':
+                    failure['reason'] = 'SOURCE_SIZE_LIMIT'
+                elif str(exc) == 'Source length exceeds declared Content-Length':
+                    failure['reason'] = 'CONTENT_LENGTH_MISMATCH'
+            failed.append(failure)
     resolved_direct_count = 0
     rejected_resolved_direct = []
     if args.resolved_streams is not None:
