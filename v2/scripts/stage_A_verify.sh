@@ -56,8 +56,8 @@ for path in sorted(inp.glob('*.xml')) if inp.is_dir() else []:
 with (ev/'epg_gap.csv').open('w',newline='') as f:
     w=csv.writer(f);w.writerow(['tvg_id']);w.writerows((x,) for x in sorted(ids-xmlids))
 with (ev/'input_sha256.json').open('w') as f: json.dump(input_hashes,f,indent=2)
-status='PASS' if urls and not xml_errors and len(results)==len(urls) else 'BLOCKED'
-report=f'''# Stage A acceptance\n\nDate: {stamp}\nStatus: {status}\nM3U source files: {len(sources)}\nUnique URLs: {len(urls)}\nAV_OK: {sum(r[1]=='AV_OK' for r in results)}\nNO_AV: {sum(r[1]!='AV_OK' for r in results)}\nEPG gaps: {len(ids-xmlids)}\nXML parse errors: {len(xml_errors)}\n\nThis report is evidence of scanning only; it does not certify individual tasks or physical playback.\n'''
+status='PASS' if urls and not xml_errors and len(results)==len(urls) and all(r[1]=='AV_OK' for r in results) and not (ids-xmlids) and bool(xmlids) else 'BLOCKED'
+report=f'''# Stage A acceptance\n\nDate: {stamp}\nStatus: {status}\nM3U source files: {len(sources)}\nUnique URLs: {len(urls)}\nAV_OK: {sum(r[1]=='AV_OK' for r in results)}\nNO_AV: {sum(r[1]!='AV_OK' for r in results)}\nEPG gaps: {len(ids-xmlids)}\nXML parse errors: {len(xml_errors)}\n\nPASS requires all URLs to have video and audio and all tvg-id entries to exist in XMLTV. This report does not certify individual tasks or physical playback.\n'''
 (ev/'stage_A_acceptance.md').write_text(report)
 (ev/'stage_A_errors.log').write_text(('No input M3U files\n' if not urls else '')+'\n'.join(xml_errors)+'\n')
 print(report)
