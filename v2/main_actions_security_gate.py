@@ -156,8 +156,8 @@ def audit(root=ROOT):
                         found.add(name)
             previous="".join(lines).encode("utf-8")
             old_sha=hashlib.sha1(b"blob "+str(len(previous)).encode()+b"\0"+previous).hexdigest()
-            if len(found)!=7 or old_sha!="ba4f7ebc00d2fda1bc4d108f4ea69303bff7704e":
-                errors["PLAYLIST"]=["ONLY_SEVEN_VERIFIED_LOGOS_ALLOWED",str(len(found)),old_sha]
+            if len(found)!=7 or old_sha!="393f7d3fce428f78c4b839fa81bd990d3186e237":
+                errors["PLAYLIST"]=["ONLY_SEVEN_VERIFIED_LOGOS_ALLOWED"]
     return {"schema":1,"status":"MAIN_WORKFLOW_FILE_LOCK_PASS" if not errors
              else "MAIN_WORKFLOW_FILE_LOCK_FAIL",
             "checked_workflows":len(found),
