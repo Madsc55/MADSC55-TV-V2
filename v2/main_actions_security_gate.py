@@ -133,41 +133,25 @@ def audit(root=ROOT):
         b=path.read_bytes()
         blob=hashlib.sha1(b"blob "+str(len(b)).encode()+b"\0"+b).hexdigest()
         if blob!=EXPECTED_BLOB:
-            # Permit only seven logo URL replacements at exact backup positions.
-            old={
-                46:"http://assets.tvcdn.net/1045ea2f-2453-451d-a55f-ba17539641dd.png",
-                47:"http://assets.tvcdn.net/1045ea2f-2453-451d-a55f-ba17539641dd.png",
-                48:"http://assets.tvcdn.net/9d873881-bb5e-40f0-88db-8c47aa215e5a.png",
-                49:"http://assets.tvcdn.net/a06096dc-fd5e-4103-bfb4-83e612df23ec.png",
-                75:"https://m.yilmaztv.cc/logo/trt-eba-tv-ortaokul.jpg?t=1696715174",
-                76:"https://m.yilmaztv.cc/logo/kanal-d.jpg?t=1696693881",
-                78:"https://m.yilmaztv.cc/logo/kent-turk-tv.jpg?t=1696665170",
-            }
-            new={
-                46:"https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/turkey/trt-1-tr.png",
-                47:"https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/turkey/trt-1-tr.png",
-                48:"https://d3ckc0u56niq67.cloudfront.net/conf/images/show_tv_SpJ.png",
-                49:"https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/turkey/kanal-d-tr.png",
-                75:"https://i.imgur.com/yfPTvRx.png",
-                76:"https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/turkey/kanal-d-tr.png",
-                78:"https://i.imgur.com/FQKPjsm.png",
-            }
+            # Only allow stable partition: 58 existing sports entries moved to backup tail.
+            original_positions=[3,12,197,254,255,256,260,261,338,343,344,371,405,454,499,529,530,531,543,544,545,546,547,548,549,550,551,552,553,573,576,577,578,579,580,581,582,583,584,585,606,614,618,629,645,646,740,810,848,852,853,854,898,903,1036,1045,1046,1047]
             lines=b.decode("utf-8").splitlines(keepends=True)
-            n=0
-            seen=set()
-            for i,line in enumerate(lines):
-                if not line.startswith("#EXTINF:") or "YEDEKLER" not in line:
-                    continue
-                n+=1
-                if n in old:
-                    token='tvg-logo="'+new[n]+'"'
-                    if token in line:
-                        lines[i]=line.replace(token,'tvg-logo="'+old[n]+'"',1)
-                        seen.add(n)
-            previous="".join(lines).encode("utf-8")
-            old_sha=hashlib.sha1(b"blob "+str(len(previous)).encode()+b"\0"+previous).hexdigest()
-            if seen!=set(old) or old_sha!="5e17d60055755fbf01bcc5325347b8c4b5f44646":
-                errors["PLAYLIST"]=["ONLY_SEVEN_LOGO_URL_FIXES_ALLOWED"]
+            backup_indices=[i for i,line in enumerate(lines) if line.startswith("#EXTINF:") and "YEDEKLER" in line]
+            entries=[(lines[i],lines[i+1]) for i in backup_indices]
+            count=len(original_positions)
+            if len(entries)!=1087 or len(set(original_positions))!=count or count!=58:
+                errors["PLAYLIST"]=["INVALID_SPORTS_PARTITION"]
+            else:
+                ordinary=iter(entries[:-count])
+                sports=iter(entries[-count:])
+                sports_positions=set(original_positions)
+                restored=[next(sports) if i in sports_positions else next(ordinary) for i in range(1,len(entries)+1)]
+                for index,entry in zip(backup_indices,restored):
+                    lines[index],lines[index+1]=entry
+                previous="".join(lines).encode("utf-8")
+                old_sha=hashlib.sha1(b"blob "+str(len(previous)).encode()+b"\0"+previous).hexdigest()
+                if old_sha!="eedef5764389a37563ce1a693e92c6d5e4d9f798":
+                    errors["PLAYLIST"]=["ONLY_STABLE_SPORTS_REORDER_ALLOWED"]
     return {"schema":1,"status":"MAIN_WORKFLOW_FILE_LOCK_PASS" if not errors
              else "MAIN_WORKFLOW_FILE_LOCK_FAIL",
             "checked_workflows":len(found),

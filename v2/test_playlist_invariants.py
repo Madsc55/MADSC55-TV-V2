@@ -39,7 +39,7 @@ def main():
     assert [x["name"] for x in backups[:2]] == [
         "TRT 1 1440P QHD", "DHA CANLI 720P HD"
     ], "TRT 1 and DHA must permanently occupy YEDEKLER positions 1 and 2"
-    assert [x["name"] for x in backups[2:5]] == ["EUROSPORT 1 HD TR", "24", "ADA TV (1080P)"], "Approved positions 3-5 changed"
+    assert [x["name"] for x in backups[2:5]] == ["24", "ADA TV (1080P)", "CARTOON NETWORK (TURKİYE)"], "Non-sports backup order changed"
     assert sum(x["name"] == "TRT 1 1440P QHD" for x in backups) == 1, "Duplicate or missing TRT 1"
     assert sum(x["name"] == "DHA CANLI 720P HD" for x in backups) == 1, "Duplicate or missing DHA"
     # Positions 39-4002 were safely moved to the foreign archive.
