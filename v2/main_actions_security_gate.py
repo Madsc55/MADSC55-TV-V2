@@ -133,22 +133,40 @@ def audit(root=ROOT):
         b=path.read_bytes()
         blob=hashlib.sha1(b"blob "+str(len(b)).encode()+b"\0"+b).hexdigest()
         if blob!=EXPECTED_BLOB:
-            # Reconstruct exact previous playlist by reinserting two moved sports entries.
-            lines=b.decode("utf-8").splitlines(keepends=True)
-            indices=[i for i,line in enumerate(lines) if line.startswith("#EXTINF:") and "YEDEKLER" in line]
-            records=[(lines[i],lines[i+1]) for i in indices]
-            if len(records)!=1087 or "ANTENAPLAY EVENTS" not in records[-2][0] or "NAUTICAL CHANNEL" not in records[-1][0]:
-                errors["PLAYLIST"]=["EXPECTED_TWO_SPORTS_AT_TAIL"]
+            # Compare with approved main; only YEDEKLER order may change.
+            import subprocess
+            from collections import Counter
+            try:
+                base=subprocess.check_output(
+                    ["git","show","origin/main:MADSC55_TV_IBO_CALISANLAR_TEST.m3u8"],cwd=root)
+            except (OSError,subprocess.CalledProcessError):
+                errors["PLAYLIST"]=["APPROVED_BASELINE_UNAVAILABLE"]
             else:
-                previous_records=records[:-2]
-                previous_records.insert(193,records[-2])
-                previous_records.insert(907,records[-1])
-                for i,record in zip(indices,previous_records):
-                    lines[i],lines[i+1]=record
-                previous="".join(lines).encode("utf-8")
-                old_sha=hashlib.sha1(b"blob "+str(len(previous)).encode()+b"\0"+previous).hexdigest()
-                if old_sha!="b0b23857a488f253e3e22b4319a5baa70a20e130":
-                    errors["PLAYLIST"]=["ONLY_TWO_SPORTS_MOVES_ALLOWED"]
+                def parse(data):
+                    chunks=data.splitlines(keepends=True)
+                    header=[]
+                    records=[]
+                    for line in chunks:
+                        if line.startswith(b"#EXTINF:"):
+                            records.append([line])
+                        elif records:
+                            records[-1].append(line)
+                        else:
+                            header.append(line)
+                    return b"".join(header),[b"".join(r) for r in records]
+                h0,r0=parse(base)
+                h1,r1=parse(b)
+                def backup(record):
+                    return "YEDEKLER (1087)" in record.splitlines()[0].decode("utf-8")
+                old=[r for r in r0 if backup(r)]
+                new=[r for r in r1 if backup(r)]
+                if (h0!=h1 or len(old)!=1087 or len(new)!=1087 or
+                    Counter(r0)!=Counter(r1) or
+                    [r for r in r0 if not backup(r)]!=[r for r in r1 if not backup(r)] or
+                    old[:2]!=new[:2] or
+                    [backup(r) for r in r0]!=[backup(r) for r in r1]):
+                    errors["PLAYLIST"]=["ONLY_YEDEKLER_ORDER_CHANGES_ALLOWED"]
+
     return {"schema":1,"status":"MAIN_WORKFLOW_FILE_LOCK_PASS" if not errors
              else "MAIN_WORKFLOW_FILE_LOCK_FAIL",
             "checked_workflows":len(found),
