@@ -2061,8 +2061,6 @@ https://livestream.a3sv.ro/master.m3u8
 https://live77cdn2.antenaplay.ro/live2_sdi06/live2_sdi06.m3u8
 #EXTINF:-1 tvg-logo="https://static.wikia.nocookie.net/logopedia/images/7/7e/A_Stars_2022.png/revision/latest/scale-to-width-down/300" group-title="🗂️ YEDEKLER (1087)",ANTENA STARS HD (1080I)
 https://live77cdn2.antenaplay.ro/live2_aws4_sdi10/live2_aws4_sdi10_5000k.m3u8
-#EXTINF:-1 tvg-logo="https://static.wikia.nocookie.net/logopedia/images/8/87/Antena_Play_symbol_white_2022.svg/revision/latest/scale-to-width-down/1000?cb=20251128201145" group-title="🗂️ YEDEKLER (1087)",ANTENAPLAY EVENTS (576I) [NOT 24/7]
-https://live77cdn2.antenaplay.ro/live2_sport07/live2_sport07_3500k.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/kkm7VqV.png" group-title="🗂️ YEDEKLER (1087)",ANTIQUES ROAD TRIP (1080P)
 https://amg02333-pbs-amg02333c1-samsung-au-1253.playouts.now.amagi.tv/PBSD-AntiquesRoadTripSF-samsung/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/rKWLv48.png" group-title="🗂️ YEDEKLER (1087)",ANTIQUES ROADSHOW UK (1080P)
@@ -3489,8 +3487,6 @@ https://bamusa-naturetime-emea-eng-rakuten.amagi.tv/playlist.m3u8
 https://jmp2.uk/plu-681ba2729624e6275efe0044.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/72JmyjM.png" group-title="🗂️ YEDEKLER (1087)",NATURETIME UK (1080P)
 https://amg01515-amg01515c43-samsung-gb-9038.playouts.now.amagi.tv/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/2ByDyzL.png" group-title="🗂️ YEDEKLER (1087)",NAUTICAL CHANNEL (720P)
-https://a-cdn.klowdtv.com/live2/nautical_720p/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/nxY84W5.png" group-title="🗂️ YEDEKLER (1087)",NBC KNTV (1080P)
 https://d368vp0qqzvkid.cloudfront.net/11603/88889711/hls/master.m3u8?ads.xumo_channelId=88889711a&ads.xumo_ifaType=&ads.xumo_providerId=3822&ads.xumo_providerName=NBCNBA
 #EXTINF:-1 tvg-logo="https://i.imgur.com/nxY84W5.png" group-title="🗂️ YEDEKLER (1087)",NBC KRIS-TV (1080P)
@@ -3849,3 +3845,7 @@ https://live-evg10.tv360.bitel.com.pe/bitel/bicolorpremium2_abr/playlist.m3u8
 https://live-evg10.tv360.bitel.com.pe/bitel/bicolorpremium3_abr/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://img-evg3.tv360.bitel.com.pe/peru-image/2026/09/24/00/1790183086681/1dff7002a22a_640_360.png" group-title="🗂️ YEDEKLER (1087)",BICOLOR+ PREMIUM [GEO-BLOCKED]
 https://live-evg10.tv360.bitel.com.pe/bitel/bicolorpremium_abr/bitel/bicolorpremium_720p/chunks.m3u8
+#EXTINF:-1 tvg-logo="https://static.wikia.nocookie.net/logopedia/images/8/87/Antena_Play_symbol_white_2022.svg/revision/latest/scale-to-width-down/1000?cb=20251128201145" group-title="🗂️ YEDEKLER (1087)",ANTENAPLAY EVENTS (576I) [NOT 24/7]
+https://live77cdn2.antenaplay.ro/live2_sport07/live2_sport07_3500k.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/2ByDyzL.png" group-title="🗂️ YEDEKLER (1087)",NAUTICAL CHANNEL (720P)
+https://a-cdn.klowdtv.com/live2/nautical_720p/playlist.m3u8
