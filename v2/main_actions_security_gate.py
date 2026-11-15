@@ -159,7 +159,7 @@ def audit(root=ROOT):
                 else:
                     cnn=backups.pop(38)
                     drama=backups.pop(38)
-                    backups.insert(361,cnn)
+                    backups.insert(362,cnn)
                     backups.insert(723,drama)
                     for i,record in zip(backup_idx,backups):
                         records[i]=record
