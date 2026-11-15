@@ -133,39 +133,40 @@ def audit(root=ROOT):
         b=path.read_bytes()
         blob=hashlib.sha1(b"blob "+str(len(b)).encode()+b"\0"+b).hexdigest()
         if blob!=EXPECTED_BLOB:
-            # Authorize exactly two batches of 500 in ONE YEDEKLER category.
-            # Undo only group-label changes in the pre-existing 1376 records,
-            # then compare their complete byte content to the approved prior blob.
-            lines=b.splitlines(keepends=True)
-            markers=[i for i,line in enumerate(lines) if line.startswith(b"#EXTINF:")]
-            if len(markers)!=1876:
-                errors["PLAYLIST"]=["EXPECTED_876_PLUS_1000_ENTRIES"]
+            # Permit ONLY repositioning two previously discovered Turkish records.
+            # No URL, metadata, category, original 38, or non-backup change.
+            text=b.decode("utf-8")
+            lines=text.splitlines(keepends=True)
+            header=lines[0]
+            records=[]
+            i=1
+            while i<len(lines):
+                if lines[i].startswith("#EXTINF:"):
+                    records.append((lines[i],lines[i+1]))
+                    i+=2
+                else:
+                    if lines[i].strip():
+                        errors["PLAYLIST"]=["UNEXPECTED_PLAYLIST_LINE"]
+                    i+=1
+            backup_idx=[i for i,r in enumerate(records) if 'group-title="🗂️ YEDEKLER (1038)"' in r[0]]
+            if len(records)!=1876 or len(backup_idx)!=1038:
+                errors["PLAYLIST"]=["EXPECTED_1876_AND_1038_BACKUPS"]
             else:
-                cut=sum(len(line) for line in lines[:markers[1376]])
-                previous=b[:cut]
-                normalized=(previous.replace('group-title="🗂️ YEDEKLER (1038)"'.encode(),
-                    'group-title="🗂️ YEDEKLER (38)"'.encode(),38))
-                # The other 500 original candidate labels were '500 YENİ'.
-                lines_prev=normalized.splitlines(keepends=True)
-                seen_backup=0
-                for i,line in enumerate(lines_prev):
-                    if line.startswith(b"#EXTINF:") and b"YEDEKLER" in line:
-                        seen_backup+=1
-                        if seen_backup>38:
-                            lines_prev[i]=line.replace('group-title="🗂️ YEDEKLER (1038)"'.encode(),
-                                'group-title="🗂️ YEDEKLER (500 YENİ)"'.encode())
-                normalized=b"".join(lines_prev)
-                old_blob=hashlib.sha1(b"blob "+str(len(normalized)).encode()+b"\0"+normalized).hexdigest()
-                appended=lines[markers[1376]:]
-                entries=[line for line in appended if line.startswith(b"#EXTINF:")]
-                urls=[line.strip() for line in appended if line.strip() and not line.startswith(b"#")]
-                existing_urls={line.strip() for line in lines[:markers[1376]] if line.strip() and not line.startswith(b"#")}
-                if (old_blob!="da8dcb36c96bfe97da9105d4892bff41ef71a2a1"
-                    or len(entries)!=500 or len(urls)!=500 or len(set(urls))!=500
-                    or bool(existing_urls.intersection(urls))
-                    or any('group-title="🗂️ YEDEKLER (1038)"'.encode() not in line for line in entries)
-                    or sum('group-title="🗂️ YEDEKLER (1038)"'.encode() in line for line in lines if line.startswith(b"#EXTINF:"))!=1038):
-                    errors["PLAYLIST"]=["UNIFIED_1038_YEDEKLER_INVARIANT_FAIL"]
+                backups=[records[i] for i in backup_idx]
+                if (not backups[38][0].rstrip().endswith(",CNN TURK (1080P)")
+                    or not backups[39][0].rstrip().endswith(",KANAL D DRAMA (1080P)")):
+                    errors["PLAYLIST"]=["TURKISH_PRIORITY_WRONG"]
+                else:
+                    cnn=backups.pop(38)
+                    drama=backups.pop(38)
+                    backups.insert(362,cnn)
+                    backups.insert(723,drama)
+                    for i,record in zip(backup_idx,backups):
+                        records[i]=record
+                    reconstructed=(header+"".join(meta+url for meta,url in records)).encode("utf-8")
+                    previous_sha=hashlib.sha1(b"blob "+str(len(reconstructed)).encode()+b"\0"+reconstructed).hexdigest()
+                    if previous_sha!="40c56b06689a30073d7b0377edee840584bf5db3":
+                        errors["PLAYLIST"]=["NOT_EXACTLY_AUTHORIZED_TURKISH_REORDER"]
     return {"schema":1,"status":"MAIN_WORKFLOW_FILE_LOCK_PASS" if not errors
              else "MAIN_WORKFLOW_FILE_LOCK_FAIL",
             "checked_workflows":len(found),
