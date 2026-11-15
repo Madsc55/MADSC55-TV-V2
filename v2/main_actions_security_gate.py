@@ -133,31 +133,41 @@ def audit(root=ROOT):
         b=path.read_bytes()
         blob=hashlib.sha1(b"blob "+str(len(b)).encode()+b"\0"+b).hexdigest()
         if blob!=EXPECTED_BLOB:
-            # Only seven verified logo additions; all stream URLs and records unchanged.
-            logos={
-                "RIZE TURK HD":"https://www.nettv.live/uploads/allimg/23/1-2302251353000-L.jpg",
-                "SHOW TV":"https://d3ckc0u56niq67.cloudfront.net/conf/images/show_tv_SpJ.png",
-                "KANAL D PO SCTE":"https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/turkey/kanal-d-tr.png",
-                "TR: ATV HD":"https://gbzottvsc25.tvplus.com.tr:33207/CPS/images/universal/film/logo/202506/20250623/71/0916028009315eb88428_op_0_XL.webp",
-                "TR: TIVI6 HD":"https://i.imgur.com/Mbi0jbz.png",
-                "TR: CINE5":"https://commons.wikimedia.org/wiki/Special:Redirect/file/Cine5_logo.png",
-                "NEWS STATE PUNJAB HARYANA HIMACHAL (1080P)":"https://ltsk-cdn.s3.eu-west-1.amazonaws.com/jumpstart/Temp_Live/cdn/HLS/Channel/transparentImages/NewsStatePunjabHaryanaHimachal2000x1125-transparent.png",
+            # Permit only seven logo URL replacements at exact backup positions.
+            old={
+                46:"http://assets.tvcdn.net/1045ea2f-2453-451d-a55f-ba17539641dd.png",
+                47:"http://assets.tvcdn.net/1045ea2f-2453-451d-a55f-ba17539641dd.png",
+                48:"http://assets.tvcdn.net/9d873881-bb5e-40f0-88db-8c47aa215e5a.png",
+                49:"http://assets.tvcdn.net/a06096dc-fd5e-4103-bfb4-83e612df23ec.png",
+                75:"https://m.yilmaztv.cc/logo/trt-eba-tv-ortaokul.jpg?t=1696715174",
+                76:"https://m.yilmaztv.cc/logo/kanal-d.jpg?t=1696693881",
+                78:"https://m.yilmaztv.cc/logo/kent-turk-tv.jpg?t=1696665170",
+            }
+            new={
+                46:"https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/turkey/trt-1-tr.png",
+                47:"https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/turkey/trt-1-tr.png",
+                48:"https://d3ckc0u56niq67.cloudfront.net/conf/images/show_tv_SpJ.png",
+                49:"https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/turkey/kanal-d-tr.png",
+                75:"https://i.imgur.com/yfPTvRx.png",
+                76:"https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/turkey/kanal-d-tr.png",
+                78:"https://i.imgur.com/FQKPjsm.png",
             }
             lines=b.decode("utf-8").splitlines(keepends=True)
-            found=set()
+            n=0
+            seen=set()
             for i,line in enumerate(lines):
                 if not line.startswith("#EXTINF:") or "YEDEKLER" not in line:
                     continue
-                name=line.rstrip().split(",")[-1].strip()
-                if name in logos and name not in found:
-                    token=' tvg-logo="'+logos[name]+'"'
+                n+=1
+                if n in old:
+                    token='tvg-logo="'+new[n]+'"'
                     if token in line:
-                        lines[i]=line.replace(token,"",1)
-                        found.add(name)
+                        lines[i]=line.replace(token,'tvg-logo="'+old[n]+'"',1)
+                        seen.add(n)
             previous="".join(lines).encode("utf-8")
             old_sha=hashlib.sha1(b"blob "+str(len(previous)).encode()+b"\0"+previous).hexdigest()
-            if len(found)!=7 or old_sha!="393f7d3fce428f78c4b839fa81bd990d3186e237":
-                errors["PLAYLIST"]=["ONLY_SEVEN_VERIFIED_LOGOS_ALLOWED"]
+            if seen!=set(old) or old_sha!="5e17d60055755fbf01bcc5325347b8c4b5f44646":
+                errors["PLAYLIST"]=["ONLY_SEVEN_LOGO_URL_FIXES_ALLOWED"]
     return {"schema":1,"status":"MAIN_WORKFLOW_FILE_LOCK_PASS" if not errors
              else "MAIN_WORKFLOW_FILE_LOCK_FAIL",
             "checked_workflows":len(found),
