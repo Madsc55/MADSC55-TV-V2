@@ -1759,7 +1759,7 @@ http://190.93.224.42/KANAL-D-DRAMA/index.m3u8
 https://raw.githubusercontent.com/yaskar661-lgtm/stream/refs/heads/main/filbox/szchd.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/JgUzRH8.png" group-title="🗂️ YEDEKLER (1087)",TRT MUZIK
 https://stream8.cinerama.uz/1208/tracks-v1a1/mono.m3u8
-#EXTINF:-1 group-title="🗂️ YEDEKLER (1087)",RIZE TURK HD
+#EXTINF:-1 tvg-logo="https://www.nettv.live/uploads/allimg/23/1-2302251353000-L.jpg" group-title="🗂️ YEDEKLER (1087)",RIZE TURK HD
 https://yayin.rizeturk.com:3777/hybrid/play.m3u8
 #EXTINF:-1 tvg-logo="https://i.ibb.co/F5K5xs9/powerturk-taptaze.png" group-title="🗂️ YEDEKLER (1087)",POWER TURK TAPTAZE
 http://livetv.powerapp.com.tr/pturktaptaze/taptaze.smil/playlist.m3u8
@@ -1817,7 +1817,7 @@ https://live.euromediacenter.com/balkanturktv/index.m3u8
 https://ciner.daioncdn.net/bloomberght/bloomberght.m3u8?app=web&ce=3
 #EXTINF:-1 tvg-logo="https://i.ibb.co/4SsJS4R/dreamturk.png" group-title="🗂️ YEDEKLER (1087)",DREAM TÜRK
 http://live.duhnet.tv/S2/HLS_LIVE/dreamturknp/playlist.m3u8
-#EXTINF:-1 group-title="🗂️ YEDEKLER (1087)",SHOW TV
+#EXTINF:-1 tvg-logo="https://d3ckc0u56niq67.cloudfront.net/conf/images/show_tv_SpJ.png" group-title="🗂️ YEDEKLER (1087)",SHOW TV
 https://ciner.daioncdn.net/showtv/showtv.m3u8?app=showtv_web
 #EXTINF:-1 tvg-logo="https://i.ibb.co/HXMLHcS/lalegul.jpg" group-title="🗂️ YEDEKLER (1087)",LALEGÜL TV
 https://lbl.netmedya.net/hls/lalegultv.m3u8?checkedby:iptvcat.net
@@ -1833,7 +1833,7 @@ https://yayin.rizeturk.com:3777/multi_web/play.m3u8
 https://live.artidijitalmedya.com/artidijital_kentturktv/kentturktv/chunks.m3u8
 #EXTINF:-1 tvg-logo="https://m.yilmaztv.cc/logo/olay-turk-kayseri-tv.jpg?t=1696665170" group-title="🗂️ YEDEKLER (1087)",OLAY TÜRK KAYSERİ TV  KAYSERİ
 https://live.artidijitalmedya.com/artidijital_olayturk/olayturk/supersatforum_chunks.m3u8
-#EXTINF:-1 group-title="🗂️ YEDEKLER (1087)",KANAL D PO SCTE
+#EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/turkey/kanal-d-tr.png" group-title="🗂️ YEDEKLER (1087)",KANAL D PO SCTE
 https://live.duhnet.tv/S2/HLS_LIVE/kanalddainp/track_4_1250/playlist.m3u8
 #EXTINF:-1 tvg-logo="http://2.bp.blogspot.com/-TfR0buPRv8E/Xk15IVF3BAI/AAAAAAAAYEs/3a917DuF23kDxvp8B4948f6Hllbelp97QCLcBGAsYHQ/s1600/powerturk.jpg" group-title="🗂️ YEDEKLER (1087)",POWER TURK HD
 https://livetv.powerapp.com.tr/powerturkTV/powerturkhd.smil/playist.m3u8
@@ -1845,11 +1845,11 @@ https://tv-trtmuzik.medya.trt.com.tr/master_1080.m3u8
 https://tv-trtavaz.medya.trt.com.tr/master_1080.m3u8
 #EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/kuz3-orange/TurkishIPTV-Claude/main/logos/trtturk.png" group-title="🗂️ YEDEKLER (1087)",TRT TÜRK
 https://tv-trtturk.medya.trt.com.tr/master_1080.m3u8
-#EXTINF:-1 group-title="🗂️ YEDEKLER (1087)",TR: ATV HD
+#EXTINF:-1 tvg-logo="https://gbzottvsc25.tvplus.com.tr:33207/CPS/images/universal/film/logo/202506/20250623/71/0916028009315eb88428_op_0_XL.webp" group-title="🗂️ YEDEKLER (1087)",TR: ATV HD
 https://rnttwmjcin.turknet.ercdn.net/lcpmvefbyo/atv/atv.m3u8?hash=793f943c7f90674dd16bc87ad3a3d50c
-#EXTINF:-1 group-title="🗂️ YEDEKLER (1087)",TR: TIVI6 HD
+#EXTINF:-1 tvg-logo="https://i.imgur.com/Mbi0jbz.png" group-title="🗂️ YEDEKLER (1087)",TR: TIVI6 HD
 https://live.artidijitalmedya.com/artidijital_tivi6/tivi6/chunks.m3u8
-#EXTINF:-1 group-title="🗂️ YEDEKLER (1087)",TR: CINE5
+#EXTINF:-1 tvg-logo="https://commons.wikimedia.org/wiki/Special:Redirect/file/Cine5_logo.png" group-title="🗂️ YEDEKLER (1087)",TR: CINE5
 https://host.onlineradyotv.net:8081/cine5tv/index.m3u8
 #EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/tv-logo/tv-logos/refs/heads/main/countries/turkey/tvnet-tr.png" group-title="🗂️ YEDEKLER (1087)",TVNET
 https://tvnet-live.lg.mncdn.com/tvnet-live/tvnet/playlist.m3u8
@@ -3717,7 +3717,7 @@ https://newsonly.kableone.com/newsonly/master.m3u8
 https://prasarbharti-nn.vidgyor.com/nntv/nnbrjh/index.m3u8
 #EXTINF:-1 tvg-logo="https://xstreamcp-assets-msp.streamready.in/assets/LIVETV/LIVECHANNEL/LIVETV_LIVETVCHANNEL_NEWS_STATE_MADHYA_PRADESH_CHHATTISGARH/images/LOGO_HD/image.png" group-title="🗂️ YEDEKLER (1087)",NEWS STATE MP & CHG (1080P)
 https://jmp2.uk/stvp-IN4000012ML
-#EXTINF:-1 group-title="🗂️ YEDEKLER (1087)",NEWS STATE PUNJAB HARYANA HIMACHAL (1080P)
+#EXTINF:-1 tvg-logo="https://ltsk-cdn.s3.eu-west-1.amazonaws.com/jumpstart/Temp_Live/cdn/HLS/Channel/transparentImages/NewsStatePunjabHaryanaHimachal2000x1125-transparent.png" group-title="🗂️ YEDEKLER (1087)",NEWS STATE PUNJAB HARYANA HIMACHAL (1080P)
 https://jmp2.uk/stvp-IN300083R1
 #EXTINF:-1 tvg-logo="https://xstreamcp-assets-msp.streamready.in/assets/LIVETV/LIVECHANNEL/LIVETV_LIVETVCHANNEL_NEWS_STATE_UP_UK/images/LOGO_HD/image.png" group-title="🗂️ YEDEKLER (1087)",NEWS STATE UP & UK (1080P)
 https://jmp2.uk/stvp-IN3000846P
