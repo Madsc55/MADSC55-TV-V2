@@ -155,7 +155,7 @@ def audit(root=ROOT):
                             lines_prev[i]=line.replace('group-title="🗂️ YEDEKLER (1038)"'.encode(),
                                 'group-title="🗂️ YEDEKLER (500 YENİ)"'.encode())
                 normalized=b"".join(lines_prev)
-                old_blob=hashlib.sha1(b"blob "+str(len(normalized)).encode()+b"\\0"+normalized).hexdigest()
+                old_blob=hashlib.sha1(b"blob "+str(len(normalized)).encode()+b"\0"+normalized).hexdigest()
                 appended=lines[markers[1376]:]
                 entries=[line for line in appended if line.startswith(b"#EXTINF:")]
                 urls=[line.strip() for line in appended if line.strip() and not line.startswith(b"#")]
