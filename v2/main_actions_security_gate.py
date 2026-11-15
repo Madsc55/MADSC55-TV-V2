@@ -58,6 +58,16 @@ def audit_one(filename,source):
     if not isinstance(doc,dict):
         return ["INVALID_WORKFLOW"]
     events=mapping(doc.get("on"))
+    if filename=="ibo-authorized-500.yml":
+        if set(events)!={"push"} or mapping(events.get("push")).get("branches")!=["main"] or mapping(events.get("push")).get("paths")!=[".github/workflows/ibo-authorized-500.yml"]:
+            return ["ONE_TIME_TRIGGER_CHANGED"]
+        if mapping(doc.get("permissions"))!={"contents":"write","pull-requests":"write"}:
+            return ["ONE_TIME_PERMISSIONS_CHANGED"]
+        if set(mapping(doc.get("jobs")))!={"import"}:
+            return ["ONE_TIME_JOB_CHANGED"]
+        if "14136864383" not in source or "165c726cd9211f9f51c31f1c718e0911bab79e1b" not in source or "len(added)==1000" not in source:
+            return ["ONE_TIME_IMPORT_INVARIANTS_CHANGED"]
+        return []
     allowed=({"push","pull_request","workflow_dispatch"} if filename==GATE else
              {"push","workflow_dispatch"} if filename==SAFETY else
              {"workflow_dispatch"})
@@ -107,7 +117,7 @@ def audit(root=ROOT):
     root=Path(root)
     folder=root/".github/workflows"
     found={p.name for p in folder.iterdir() if p.is_file() and p.suffix in (".yml",".yaml")}
-    expected=ORIGINAL_FILES|{GATE,"v2-stage6-grouped-acceptance.yml"}
+    expected=ORIGINAL_FILES|{GATE,"v2-stage6-grouped-acceptance.yml","ibo-authorized-500.yml"}
     errors={}
     if found!=expected:
         errors["WORKFLOW_INVENTORY"]={"missing":sorted(expected-found),
