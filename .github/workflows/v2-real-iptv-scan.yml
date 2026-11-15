@@ -115,7 +115,9 @@ jobs:
           else
             echo "::warning::Optional discovered feeds incomplete; accepted 1000/2000 packages intentionally withheld"
           fi
-      - name: Prepare encrypted 500-channel review backups (never publish to main IBO)\n        run: python v2/create_ibo_500_review_backup.py\n      - name: Require complete discovered-source evidence before green workflow status
+      - name: Prepare encrypted 500-channel review backups (never publish to main IBO)
+        run: python v2/create_ibo_500_review_backup.py
+      - name: Require complete discovered-source evidence before green workflow status
         run: |
           # Partial discovery intentionally remains red even if the scanner
           # preserved its AES-authenticated observations successfully.
@@ -159,7 +161,8 @@ jobs:
             v2/reports/youtube-live-candidates.json
             v2/reports/ibo-candidate-inventory.jsonl.enc
             v2/reports/ibo-candidate-inventory.jsonl.pending.enc
-            v2/reports/ibo-scan-progress.enc\n            v2/reports/ibo-500-review-backup.zip.enc
+            v2/reports/ibo-scan-progress.enc
+            v2/reports/ibo-500-review-backup.zip.enc
             v2/reports/IBO_AV_VERIFIED_*_PART*.m3u8
             v2/reports/IBO_YENI_ADAYLAR_PART*.m3u8
           if-no-files-found: warn
