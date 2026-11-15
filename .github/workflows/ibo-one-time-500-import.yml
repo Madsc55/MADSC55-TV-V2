@@ -1,0 +1,61 @@
+name: One-time authorized 500 YEDEKLER import
+on:
+  push:
+    paths:
+      - '.github/workflows/ibo-one-time-500-import.yml'
+permissions:
+  contents: write
+jobs:
+  import:
+    if: github.ref == 'refs/heads/ibo-500-yedekler-20261115'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Download successful scan artifact
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          curl --fail --location --silent --show-error --retry 3 \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/Madsc55/MADSC55-TV-V2/actions/artifacts/14136864383/zip" -o /tmp/scan.zip
+          unzip -p /tmp/scan.zip IBO_YENI_ADAYLAR_PART1.m3u8 > /tmp/candidates.m3u8
+      - name: Preserve original 876 and append unique 500 in YEDEKLER
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re,hashlib
+          target=Path('MADSC55_TV_IBO_CALISANLAR_TEST.m3u8')
+          original=target.read_bytes()
+          assert hashlib.sha1(b'blob '+str(len(original)).encode()+b'\0'+original).hexdigest()=='165c726cd9211f9f51c31f1c718e0911bab79e1b'
+          source=Path('/tmp/candidates.m3u8').read_text(encoding='utf-8-sig')
+          lines=source.splitlines()
+          current_urls={line.strip() for line in original.decode('utf-8-sig').splitlines() if line.strip() and not line.startswith('#')}
+          seen=set(current_urls)
+          added=[]
+          for i,line in enumerate(lines[:-1]):
+              if not line.startswith('#EXTINF:'):continue
+              url=lines[i+1].strip()
+              if not url.startswith(('http://','https://')) or url in seen:continue
+              seen.add(url)
+              if 'group-title="' in line:
+                  line=re.sub(r'group-title="[^"]*"', 'group-title="🗂️ YEDEKLER (500 YENİ)"',line)
+              else:
+                  line=line.replace(',', ' group-title="🗂️ YEDEKLER (500 YENİ)",',1)
+              added.extend((line,url))
+              if len(added)==1000:break
+          assert len(added)==1000, f'Only {len(added)//2} unique candidates'
+          assert original.endswith(b'\n')
+          new=original+('\n'.join(added)+'\n').encode()
+          assert new.count(b'#EXTINF:')==1376
+          target.write_bytes(new)
+          PY
+      - name: Commit only playlist to authorized PR branch
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- MADSC55_TV_IBO_CALISANLAR_TEST.m3u8
+          git commit -m 'Append 500 scanned unique channels to IBO YEDEKLER'
+          git push origin HEAD:ibo-500-yedekler-20261115
