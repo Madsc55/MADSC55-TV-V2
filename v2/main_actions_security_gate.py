@@ -133,22 +133,22 @@ def audit(root=ROOT):
         b=path.read_bytes()
         blob=hashlib.sha1(b"blob "+str(len(b)).encode()+b"\0"+b).hexdigest()
         if blob!=EXPECTED_BLOB:
-            # Only four Bicolor+ football records may move to the end.
+            # Reconstruct exact previous playlist by reinserting two moved sports entries.
             lines=b.decode("utf-8").splitlines(keepends=True)
             indices=[i for i,line in enumerate(lines) if line.startswith("#EXTINF:") and "YEDEKLER" in line]
             records=[(lines[i],lines[i+1]) for i in indices]
-            if len(records)!=1087 or len(records[-4:])!=4 or not all("BICOLOR+" in item[0] for item in records[-4:]):
-                errors["PLAYLIST"]=["FOUR_BICOLOR_RECORDS_REQUIRED"]
+            if len(records)!=1087 or "ANTENAPLAY EVENTS" not in records[-2][0] or "NAUTICAL CHANNEL" not in records[-1][0]:
+                errors["PLAYLIST"]=["EXPECTED_TWO_SPORTS_AT_TAIL"]
             else:
-                prior=records[:-4]
-                for pos,record in zip((265,266,267,268),records[-4:]):
-                    prior.insert(pos-1,record)
-                for i,record in zip(indices,prior):
+                previous_records=records[:-2]
+                previous_records.insert(193,records[-2])
+                previous_records.insert(907,records[-1])
+                for i,record in zip(indices,previous_records):
                     lines[i],lines[i+1]=record
                 previous="".join(lines).encode("utf-8")
                 old_sha=hashlib.sha1(b"blob "+str(len(previous)).encode()+b"\0"+previous).hexdigest()
-                if old_sha!="fd2b9e598f656a16af6b425d851af6e81554d094":
-                    errors["PLAYLIST"]=["ONLY_FOUR_BICOLOR_MOVES_ALLOWED"]
+                if old_sha!="b0b23857a488f253e3e22b4319a5baa70a20e130":
+                    errors["PLAYLIST"]=["ONLY_TWO_SPORTS_MOVES_ALLOWED"]
     return {"schema":1,"status":"MAIN_WORKFLOW_FILE_LOCK_PASS" if not errors
              else "MAIN_WORKFLOW_FILE_LOCK_FAIL",
             "checked_workflows":len(found),
