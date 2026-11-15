@@ -1751,6 +1751,10 @@ http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ
 http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6786/index.m3u8
 #EXTINF:-1 tvg-logo="http://epg.one/img/88056.png" group-title="🗂️ YEDEKLER (1038)",UZMAN FİLMCİLİK HD TR
 http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6872/index.m3u8
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/CNN_T%C3%BCrk_logo.svg/960px-CNN_T%C3%BCrk_logo.svg.png" group-title="🗂️ YEDEKLER (1038)",CNN TURK (1080P)
+http://85.117.61.84/cnnturk/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/WIeZMKT.png" group-title="🗂️ YEDEKLER (1038)",KANAL D DRAMA (1080P)
+http://190.93.224.42/KANAL-D-DRAMA/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/fhQFLEl.png" group-title="🗂️ YEDEKLER (1038)",2X2 (576P)
 http://176.118.197.101/2x2/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/Na0UCV7.png" group-title="🗂️ YEDEKLER (1038)",4E (1080P)
@@ -2399,8 +2403,6 @@ https://tvsen6.aynaott.com/cnn/index.m3u8
 http://168.228.44.241:9997/play/a073/index.m3u8
 #EXTINF:-1 tvg-logo="https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b8/CNN-International-Logo.svg/960px-CNN-International-Logo.svg.png" group-title="🗂️ YEDEKLER (1038)",CNN INTERNATIONAL NORTH AMERICA (1080P)
 https://d2sybdl23b9psq.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-bocx3i7bjz0dg/CNNFAST_GB.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/CNN_T%C3%BCrk_logo.svg/960px-CNN_T%C3%BCrk_logo.svg.png" group-title="🗂️ YEDEKLER (1038)",CNN TURK (1080P)
-http://85.117.61.84/cnnturk/index.m3u8
 #EXTINF:-1 tvg-logo="https://imgur.com/DbjywI3.png" group-title="🗂️ YEDEKLER (1038)",CODIGO TV (1080P) [NOT 24/7]
 https://edge.essastream.com/codigotv/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/mowSfj6.png" group-title="🗂️ YEDEKLER (1038)",COLD CASE FILES (1080P)
@@ -3121,8 +3123,6 @@ https://mumt01.tangotv.in/O5aw8Zn3WETV/index.m3u8
 https://yuppmedtaorire.akamaized.net/v1/master/a0d007312bfd99c47f76b77ae26b1ccdaae76cb1/murasu_nim_https/050522/murasu/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Kan11Logo.svg/960px-Kan11Logo.svg.png" group-title="🗂️ YEDEKLER (1038)",KAN 11 (1080P)
 https://kancdn.medonecdn.net/livehls/oil/kancdn-live/live/kan11/live.livx/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/WIeZMKT.png" group-title="🗂️ YEDEKLER (1038)",KANAL D DRAMA (1080P)
-http://190.93.224.42/KANAL-D-DRAMA/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/cCFxyIp.jpg" group-title="🗂️ YEDEKLER (1038)",KANDELATV (480P)
 https://streamtv.intervenhosting.net:3718/live/kandelamedioslive.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/HEVo2Gc.png" group-title="🗂️ YEDEKLER (1038)",KANTIPUR TV
