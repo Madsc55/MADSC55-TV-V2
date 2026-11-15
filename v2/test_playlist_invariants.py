@@ -15,15 +15,17 @@ def main():
     current = LIVE.read_bytes()
     text = current.decode("utf-8-sig")
     channels_pre = list(entries(text))
-    assert len(channels_pre) == 876, "Expected 838 protected channels and 38 approved backups"
+    assert len(channels_pre) == 1376, "Expected original 876 channels plus 500 new backups"
     non_backup = [x for x in channels_pre if "YEDEKLER" not in x["group"]]
     assert len(non_backup) == 838, "Protected non-YEDEKLER categories changed in size"
     backup_count = sum("YEDEKLER" in x["group"] for x in channels_pre)
     backup_group = f"🗂️ YEDEKLER ({backup_count})"
-    assert backup_count == 38, "YEDEKLER must contain exactly the approved first 38 channels"
+    assert backup_count == 538, "YEDEKLER must contain 38 original plus 500 new channels"
     backup_names = [x["name"] for x in channels_pre if "YEDEKLER" in x["group"]]
     assert len(backup_names) == backup_count
-    assert all(x["group"] == backup_group for x in channels_pre if "YEDEKLER" in x["group"]), "YEDEKLER counter inconsistent"
+    assert all(x["group"] == "🗂️ YEDEKLER (38)" for x in channels_pre if x["group"] == "🗂️ YEDEKLER (38)")
+    assert sum(x["group"] == "🗂️ YEDEKLER (38)" for x in channels_pre) == 38
+    assert sum(x["group"] == "🗂️ YEDEKLER (500 YENİ)" for x in channels_pre) == 500
     urls = [x["url"] for x in channels_pre]
     # Original playlist repeats URLs across categories intentionally.
     backup_urls = [x["url"] for x in channels_pre if "YEDEKLER" in x["group"]]
@@ -33,7 +35,7 @@ def main():
     assert text.startswith("#EXTM3U"), "Missing M3U header"
     assert len(channels) >= 840, "Playlist shrank below the verified post-deduplication baseline"
     backups = [x for x in channels if "YEDEKLER" in x["group"]]
-    assert len(backups) == 38, "YEDEKLER must contain exactly 38 channels"
+    assert len(backups) == 538, "YEDEKLER must contain original 38 and new 500 channels"
     assert any(x["name"] == "TRT 1 1440P QHD" for x in backups), "Original TRT 1 backup missing"
     assert any(x["name"] == "DHA CANLI 720P HD" for x in backups), "Original DHA backup missing"
     assert [x["name"] for x in backups[:2]] == [
@@ -54,8 +56,8 @@ def main():
     # Do not fail preservation tests merely because historical records share an address.
     assert all(x["name"].strip() for x in archived), "Archived channel name missing"
 
-    assert len(backups) + len(archived) == 4002, "Backup/archive total changed"
-    assert not (set(x["url"] for x in backups) & set(x["url"] for x in archived)), "Archive and backups overlap"
+    assert len(backups[:38]) + len(archived) == 4002, "Original backup/archive total changed"
+    assert not (set(x["url"] for x in backups[:38]) & set(x["url"] for x in archived)), "Original archive and backups overlap"
 
     assert not any(x["name"].startswith(("TRT Arabi", "TRT World")) for x in channels), "Unwanted foreign-language trials remain"
     for name in ("Aras TV (576p) [Not 24/7]", "Haber61 TV (720p) [Not 24/7]", "TV Den (576p) [Not 24/7]", "YOL TV"):
@@ -66,6 +68,9 @@ def main():
     category_counts = Counter(x["group"] for x in channels)
     for group, count in category_counts.items():
         import re
+        if group == "🗂️ YEDEKLER (500 YENİ)":
+            assert count == 500
+            continue
         match = re.search(r"\((\d+)\)$", group)
         assert match, f"Missing category counter: {group}"
         assert int(match.group(1)) == count, f"Category count mismatch: {group}, actual {count}"
