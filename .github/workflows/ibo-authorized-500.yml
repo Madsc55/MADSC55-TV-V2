@@ -1,0 +1,56 @@
+name: One-time authorized IBO 500 YEDEKLER transfer
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/ibo-authorized-500.yml']
+permissions:
+  contents: write
+  pull-requests: write
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download scan artifact
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          curl -fLsS --retry 3 -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" "https://api.github.com/repos/Madsc55/MADSC55-TV-V2/actions/artifacts/14136864383/zip" -o /tmp/scan.zip
+          unzip -p /tmp/scan.zip IBO_YENI_ADAYLAR_PART1.m3u8 > /tmp/candidates.m3u8
+      - name: Add 500 distinct channels to YEDEKLER
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import hashlib,re
+          p=Path('MADSC55_TV_IBO_CALISANLAR_TEST.m3u8')
+          original=p.read_bytes()
+          assert hashlib.sha1(b'blob '+str(len(original)).encode()+b'\0'+original).hexdigest()=='165c726cd9211f9f51c31f1c718e0911bab79e1b'
+          src=Path('/tmp/candidates.m3u8').read_text(encoding='utf-8-sig').splitlines()
+          seen={x.strip() for x in original.decode('utf-8-sig').splitlines() if x.strip() and not x.startswith('#')}
+          added=[]
+          for i,meta in enumerate(src[:-1]):
+              if not meta.startswith('#EXTINF:'):continue
+              url=src[i+1].strip()
+              if not url.startswith(('https://','http://')) or url in seen:continue
+              seen.add(url)
+              if 'group-title="' in meta:meta=re.sub(r'group-title="[^"]*"', 'group-title="🗂️ YEDEKLER (500 YENİ)"',meta)
+              else:meta=meta.replace(',', ' group-title="🗂️ YEDEKLER (500 YENİ)",',1)
+              added.extend((meta,url))
+              if len(added)==1000:break
+          assert len(added)==1000
+          assert original.endswith(b'\n')
+          p.write_bytes(original+('\n'.join(added)+'\n').encode())
+          assert p.read_bytes().count(b'#EXTINF:')==1376
+          PY
+      - name: Create protected-branch PR
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git checkout -b ibo-500-import-${{ github.run_id }}
+          git add MADSC55_TV_IBO_CALISANLAR_TEST.m3u8
+          git commit -m 'Append 500 scan channels to IBO YEDEKLER'
+          git push -u origin HEAD
+          gh pr create --base main --head ibo-500-import-${{ github.run_id }} --title 'IBO: Append 500 new YEDEKLER channels' --body 'Preserve all original 876 channels byte for byte. 500 unique candidates in YEDEKLER.'
