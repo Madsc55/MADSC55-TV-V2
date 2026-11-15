@@ -133,25 +133,22 @@ def audit(root=ROOT):
         b=path.read_bytes()
         blob=hashlib.sha1(b"blob "+str(len(b)).encode()+b"\0"+b).hexdigest()
         if blob!=EXPECTED_BLOB:
-            # Only allow stable partition: 58 existing sports entries moved to backup tail.
-            original_positions=[3,12,197,254,255,256,260,261,338,343,344,371,405,454,499,529,530,531,543,544,545,546,547,548,549,550,551,552,553,573,576,577,578,579,580,581,582,583,584,585,606,614,618,629,645,646,740,810,848,852,853,854,898,903,1036,1045,1046,1047]
+            # Only four Bicolor+ football records may move to the end.
             lines=b.decode("utf-8").splitlines(keepends=True)
-            backup_indices=[i for i,line in enumerate(lines) if line.startswith("#EXTINF:") and "YEDEKLER" in line]
-            entries=[(lines[i],lines[i+1]) for i in backup_indices]
-            count=len(original_positions)
-            if len(entries)!=1087 or len(set(original_positions))!=count or count!=58:
-                errors["PLAYLIST"]=["INVALID_SPORTS_PARTITION"]
+            indices=[i for i,line in enumerate(lines) if line.startswith("#EXTINF:") and "YEDEKLER" in line]
+            records=[(lines[i],lines[i+1]) for i in indices]
+            if len(records)!=1087 or len(records[-4:])!=4 or not all("BICOLOR+" in item[0] for item in records[-4:]):
+                errors["PLAYLIST"]=["FOUR_BICOLOR_RECORDS_REQUIRED"]
             else:
-                ordinary=iter(entries[:-count])
-                sports=iter(entries[-count:])
-                sports_positions=set(original_positions)
-                restored=[next(sports) if i in sports_positions else next(ordinary) for i in range(1,len(entries)+1)]
-                for index,entry in zip(backup_indices,restored):
-                    lines[index],lines[index+1]=entry
+                prior=records[:-4]
+                for pos,record in zip((265,266,267,268),records[-4:]):
+                    prior.insert(pos-1,record)
+                for i,record in zip(indices,prior):
+                    lines[i],lines[i+1]=record
                 previous="".join(lines).encode("utf-8")
                 old_sha=hashlib.sha1(b"blob "+str(len(previous)).encode()+b"\0"+previous).hexdigest()
-                if old_sha!="eedef5764389a37563ce1a693e92c6d5e4d9f798":
-                    errors["PLAYLIST"]=["ONLY_STABLE_SPORTS_REORDER_ALLOWED"]
+                if old_sha!="fd2b9e598f656a16af6b425d851af6e81554d094":
+                    errors["PLAYLIST"]=["ONLY_FOUR_BICOLOR_MOVES_ALLOWED"]
     return {"schema":1,"status":"MAIN_WORKFLOW_FILE_LOCK_PASS" if not errors
              else "MAIN_WORKFLOW_FILE_LOCK_FAIL",
             "checked_workflows":len(found),
