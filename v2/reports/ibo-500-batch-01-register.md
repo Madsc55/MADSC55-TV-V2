@@ -8,3 +8,10 @@
 - İlk 500 test paketi, sonraki partilerde tekrar seçilmemeli. SHA-256 ile karşılaştırılmalı.
 - Durum: GitHub protected main ve immutable IBO kontrolü nedeniyle ana İBO'ya aktarım YAPILMADI; cihazda çalıştığı iddia edilmez.
 - Önceki otomasyon PR: #266, engelli. İBO'ya otomatik yayın izni olmadan dokunulmaz.
+
+## Kullanıcının açık yayımlama izni — 15 Kasım 2026
+- Yalnızca mevcut MADSC55 TV V2 ana IBO playlistinin YEDEKLER grubuna, bulunan kaynaklardan **500 kanal** eklenmesine açık izin verilmiştir.
+- Bundan sonraki paketler de yalnızca kullanıcı her paket için talimat verdiğinde, 500'er kanal halinde eklenebilir.
+- Mevcut 876 kanal, FAVORİLER, diğer gruplar ve ana playlist bağlantısı aynen korunacaktır; yeni ana playlist oluşturulmayacaktır.
+- YEDEKLER'den sonraki taşıma, silme, seçme ve üretim kararları yalnızca kullanıcının ayrıca verdiği talimatla yapılır.
+- Bu izin, GitHub branch protection / required status check mekanizmalarını devre dışı bırakmaz; değişiklik koruma denetiminden geçmelidir.
