@@ -1,3 +1,11 @@
+## 15 Kasım 2026 — ÖNCELİKLİ: kullanıcı onaylı İBO düzenleme kapısı
+
+Kullanıcının kurduğu esas iş akışı: kanal keşfi → ayrı adaylar → açık onayla YEDEKLER → cihazda gerçek görüntü/ses testi → çalışan kanalları kullanıcının talimatıyla ULUSAL-HEPSİ/HABER/SPOR/BELGESEL/SİNEMA vb. kategorilere kopyalama/taşıma → istenirse kanal ve kategori sırasını değiştirme. YEDEKLER'de kaynak kullanıcı aksini istemedikçe kalır. Ana listeye izinsiz otomatik yazma kesinlikle yasak. Kullanıcının açık talimatıyla yapılan kategori düzenlemeleri ise teknik olarak mümkün olmalıdır.
+
+AÇIK TEKNİK ENGEL: `v2/main_actions_security_gate.py` yalnız YEDEKLER içi reorder kabul ediyor. PR üzerinden somut işlem onayı + değişiklik öncesi/sonrası kayıt denetimi + tam snapshot/rollback + regresyon testleri hazırlanmalı; güvenlik kapısı bu doğrulanmış onayları kabul etmeli, yetkisiz otomasyonları reddetmeli. Bu tamamlanmadan 'çözüldü' yazma. Eski MADSC-TV deposuna ve ana listeye bu notla hiçbir değişiklik yapılmaz.
+
+---
+
 ## 15 Kasım 2026 — Kanonik bitirme akışı (kapanış kanıtı zorunlu)
 
 **Kanonik durum:** `v2/tasks/state.json`: 21 completed / 13 in_progress. Açıklar: #15, #17, #18, #19, #20, #21, #28, #29, #30, #31, #32, #33, #34. Bu kayıt hiçbir görevi tamamlandı yapmaz.

@@ -160,12 +160,37 @@ def audit(root=ROOT):
                     return "YEDEKLER (1087)" in record.splitlines()[0].decode("utf-8")
                 old=[r for r in r0 if backup(r)]
                 new=[r for r in r1 if backup(r)]
-                if (h0!=h1 or len(old)!=1087 or len(new)!=1087 or
-                    Counter(r0)!=Counter(r1) or
-                    [r for r in r0 if not backup(r)]!=[r for r in r1 if not backup(r)] or
-                    old[:2]!=new[:2] or
-                    [backup(r) for r in r0]!=[backup(r) for r in r1]):
-                    errors["PLAYLIST"]=["ONLY_YEDEKLER_ORDER_CHANGES_ALLOWED"]
+                reorder_ok=(h0==h1 and len(old)==1087 and len(new)==1087 and
+                    Counter(r0)==Counter(r1) and
+                    [r for r in r0 if not backup(r)]==[r for r in r1 if not backup(r)] and
+                    old[:2]==new[:2] and
+                    [backup(r) for r in r0]==[backup(r) for r in r1])
+                if not reorder_ok:
+                    # An explicitly requested category operation must carry a
+                    # one-change, exact-hash manifest in the same reviewed PR.
+                    # No workflow or discovery job receives write permission.
+                    manifest=root/"v2/ibo_authorized_change.json"
+                    try:
+                        spec=json.loads(manifest.read_text(encoding="utf-8"))
+                        allowed={"reorder","copy","move","add","remove","rename","category"}
+                        valid=(isinstance(spec,dict) and
+                            set(spec)=={"base_sha256","result_sha256","operation","request","channels"} and
+                            spec["base_sha256"]==hashlib.sha256(base).hexdigest() and
+                            spec["result_sha256"]==hashlib.sha256(b).hexdigest() and
+                            spec["operation"] in allowed and
+                            isinstance(spec["request"],str) and len(spec["request"].strip())>=12 and
+                            isinstance(spec["channels"],list) and 0<len(spec["channels"])<=2000 and
+                            all(isinstance(x,str) and x.strip() for x in spec["channels"]) and
+                            h0==h1 and len(r1)>0 and
+                            all(x.startswith(b"#EXTINF:") and
+                                any(line.startswith((b"http://",b"https://")) for line in x.splitlines()[1:])
+                                for x in r1) and
+                            all(x in Counter(r1) for x in Counter(r0) if spec["operation"] not in {"remove","move","rename","category"}))
+                    except (OSError,ValueError,TypeError,KeyError):
+                        valid=False
+                    if not valid:
+                        errors["PLAYLIST"]=["USER_AUTHORIZED_CHANGE_MANIFEST_REQUIRED"]
+
 
     return {"schema":1,"status":"MAIN_WORKFLOW_FILE_LOCK_PASS" if not errors
              else "MAIN_WORKFLOW_FILE_LOCK_FAIL",
