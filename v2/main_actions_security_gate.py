@@ -132,7 +132,7 @@ def audit(root=ROOT):
             else:
                 cut=sum(len(line) for line in lines[:markers[876]])
                 original=b[:cut]
-                original_blob=hashlib.sha1(b"blob "+str(len(original)).encode()+b"\\0"+original).hexdigest()
+                original_blob=hashlib.sha1(b"blob "+str(len(original)).encode()+b"\0"+original).hexdigest()
                 appended=lines[markers[876]:]
                 entries=[line for line in appended if line.startswith(b"#EXTINF:")]
                 urls=[line.strip() for line in appended if line.strip() and not line.startswith(b"#")]
