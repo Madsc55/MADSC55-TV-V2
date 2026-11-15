@@ -22,3 +22,11 @@ Bu dosya bir politika kaydıdır; GitHub dal koruması veya teknik yazma engeli 
 - Kullanıcı açıkça ekleme talimatı vermedikçe **ana playlistin YEDEKLER kategorisine bile otomatik ekleme yapılmaz**. Önce ayrı aday/test listesinde sunulur.
 - Kullanıcı açıkça eklenmesini istediğinde yalnızca onayladığı adaylar YEDEKLER'e eklenir; diğer kategorilere ve mevcut kayıtlara dokunulmaz.
 - Test sonucu ve sonrasındaki taşıma/silme işlemleri de ayrıca kullanıcı onayı gerektirir.
+
+## Kullanıcı talimatıyla düzenleme — 15 Kasım 2026
+
+Bu koruma, kullanıcının **açık ve somut talimatıyla** yapılan değişiklikleri yasaklamaz. Kullanıcı kanal sıralaması, kategori sırası, kategori ekleme/silme, kanalın birden fazla kategoriye kopyalanması veya YEDEKLER'den onaylı çalışan kanalların ilgili kategorilere aktarılması talimatı verebilir. Talimat yalnızca adı geçen kanal/kategori ve istenen işlemi kapsar; genel otomatik yazma izni değildir.
+
+Zorunlu işlem sırası: (1) kullanıcı talimatını ve kapsamını kaydet, (2) ana listenin değişiklik öncesi SHA-256 yedeğini al, (3) aynı isimli farklı akışları URL/tvg-id/logo ile ayırt et, (4) yalnız onaylanan değişikliği PR dalında yap, (5) kayıtların, diğer kategorilerin ve URL'lerin korunmasını otomatik test et, (6) GitHub koruma kontrolleri başarılı olursa PR üzerinden birleştir, (7) cihazda oynatma kabulünü ayrıca doğrula. Otomatik keşif bu yetkiyi kullanamaz.
+
+**Teknik durum:** Mevcut güvenlik kapısı yalnız YEDEKLER içi yeniden sıralamaya izin veriyor. Kullanıcı onaylı kategori/kanal düzenlemeleri için dar kapsamlı, denetlenebilir PR onay mekanizması geliştirilip test edilene kadar bu metin tek başına teknik engeli kaldırmaz.
