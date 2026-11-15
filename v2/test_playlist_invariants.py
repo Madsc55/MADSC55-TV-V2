@@ -73,6 +73,20 @@ def main():
     assert len(sources) >= 3, "Discovery sources missing"
     note = ROOT / "DEVAM_NOTU.md"
     assert note.exists(), "Canonical continuation note missing"
+    # Exercise lossless archive/restore against the real playlist in a temporary directory.
+    import tempfile
+    from ibo_archive_verify import archive as save_archive, restore as restore_archive
+    with tempfile.TemporaryDirectory() as tempdir:
+        backup_path = pathlib.Path(tempdir) / "ibo-snapshot.json"
+        recovered_path = pathlib.Path(tempdir) / "ibo-recovered.m3u8"
+        assert save_archive(LIVE, backup_path) == len(channels)
+        assert restore_archive(backup_path, recovered_path) == len(channels)
+        assert recovered_path.read_bytes() == current, "Restore differs byte-for-byte"
+        try:
+            restore_archive(backup_path, recovered_path)
+            raise AssertionError("Restore overwrote an existing file")
+        except FileExistsError:
+            pass
     print("PASS:", len(channels), "channels;", len(backups), "backups;", len(category_counts), "categories;", len(sources), "discovery sources; one continuation note")
 if __name__ == "__main__":
     main()
