@@ -1681,8 +1681,6 @@ https://tv-trt1.medya.trt.com.tr/master.m3u8
 https://603c568fccdf5.streamlock.net/live/dhaweb1_C5efC/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.ibb.co/tHQpWvn/24.png" group-title="🗂️ YEDEKLER (1087)",24
 https://turkmedya-live.ercdn.net/tv24/tv24_720p.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/LPQfdz2.png" group-title="🗂️ YEDEKLER (1087)",ADA TV (1080P)
-https://live-evg10.tv360.bitel.com.pe/bitel/alasdeaguilaSRT/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Cartoon_Network_2010_logo.svg/960px-Cartoon_Network_2010_logo.svg.png" group-title="🗂️ YEDEKLER (1087)",CARTOON NETWORK (TURKİYE)
 http://176.65.153.40:6002/play/a013/index.m3u8
 #EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/turkey/kanal-7-tr.png" group-title="🗂️ YEDEKLER (1087)",KANAL 7
@@ -1691,66 +1689,12 @@ https://kanal7-live.daioncdn.net/kanal7/kanal7.m3u8
 https://kanal7-live.daioncdn.net/kanal7/kanal7_1080p.m3u8
 #EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/turkey/kanal-7-tr.png" group-title="🗂️ YEDEKLER (1087)",KANAL 7 AVRUPA
 https://livetv.radyotvonline.net/kanal7live/kanal7avr/chunklist.m3u8
-#EXTINF:-1 tvg-logo="http://epg.one/img/3958.png" group-title="🗂️ YEDEKLER (1087)",KANAL 7 AVRUPA HD TR
-http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6905/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/vj2L2L2.png" group-title="🗂️ YEDEKLER (1087)",TRT EBA LİSE (720P)
-https://tv-e-okul02.medya.trt.com.tr/master.m3u8
-#EXTINF:-1 tvg-logo="http://epg.one/img/3964.png" group-title="🗂️ YEDEKLER (1087)",360 TV HD TR
-http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/2320/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/WIeZMKT.png" group-title="🗂️ YEDEKLER (1087)",KANAL D DRAMA (1080P)
-https://cdn-uw2-prod.tsv2.amagi.tv/linear/amg01602-themahqfrance-vivekanald-samsungspain/playlist.m3u8
-#EXTINF:-1 tvg-logo="http://epg.one/img/3825.png" group-title="🗂️ YEDEKLER (1087)",KARDELEN TV TR
-http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6763/index.m3u8
-#EXTINF:-1 tvg-logo="http://epg.one/img/3849.png" group-title="🗂️ YEDEKLER (1087)",LALEGUL TV TR
-http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6790/index.m3u8
-#EXTINF:-1 tvg-logo="http://epg.one/img/3822.png" group-title="🗂️ YEDEKLER (1087)",LİNE TV BURSA TR
-http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6759/index.m3u8
-#EXTINF:-1 tvg-logo="http://epg.one/img/3943.png" group-title="🗂️ YEDEKLER (1087)",SHOW MAX TR
-http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6890/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/i2AP0hp.png" group-title="🗂️ YEDEKLER (1087)",ANİ (576P)
-http://stream.mcquack.net/306/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/pllIMGi.png" group-title="🗂️ YEDEKLER (1087)",EBS PLUS 2 (360P)
-https://ebsonair.ebs.co.kr/plus2familypc/familypc1m/playlist.m3u8
-#EXTINF:-1 tvg-logo="http://epg.one/img/3828.png" group-title="🗂️ YEDEKLER (1087)",KANAL AVRUPA TR
-http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6766/index.m3u8
 #EXTINF:-1 tvg-logo="https://d3ckc0u56niq67.cloudfront.net/conf/images/show_tv_SpJ.png" group-title="🗂️ YEDEKLER (1087)",SHOW TV
 https://rmtftbjlne.turknet.ercdn.net/bpeytmnqyp/showtv/showtv.m3u8
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/TRT_%C3%87ocuk_logo_%282021%29.svg/960px-TRT_%C3%87ocuk_logo_%282021%29.svg.png" group-title="🗂️ YEDEKLER (1087)",TRT COCUK (1440P)
 https://tv-trtcocuk.medya.trt.com.tr/master.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/CRBfZi4.png" group-title="🗂️ YEDEKLER (1087)",TRT EBA ILKOKUL (720P)
-https://tv-e-okul00.medya.trt.com.tr/master.m3u8
-#EXTINF:-1 tvg-logo="http://epg.one/img/2951.png" group-title="🗂️ YEDEKLER (1087)",TRT TURK TR
-http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6798/index.m3u8
-#EXTINF:-1 tvg-logo="http://epg.one/img/3988.png" group-title="🗂️ YEDEKLER (1087)",A NEWS HD TR
-http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6937/index.m3u8
-#EXTINF:-1 tvg-logo="https://gbzottvsc25.tvplus.com.tr:33207/CPS/images/universal/film/logo/202506/20250623/71/0916028009315eb88428_op_0_XL.webp" group-title="🗂️ YEDEKLER (1087)",ATV (1080P)
-http://stream.mcquack.net/36/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.tmgrup.com.tr/aav/site/v1/i/atv-avrupa-logo.png" group-title="🗂️ YEDEKLER (1087)",ATV AVRUPA (576P)
-https://flask-api-hls-atvavrupahdtrkvz-live.onrender.com/hls_stream/master.m3u8
-#EXTINF:-1 tvg-logo="http://epg.one/img/2613.png" group-title="🗂️ YEDEKLER (1087)",BLOOMBERG HT TR
-http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/2317/index.m3u8
-#EXTINF:-1 tvg-logo="http://epg.one/img/3835.png" group-title="🗂️ YEDEKLER (1087)",BRTV TR
-http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6776/index.m3u8
-#EXTINF:-1 tvg-logo="http://epg.one/img/3852.png" group-title="🗂️ YEDEKLER (1087)",DOST TV TR
-http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6793/index.m3u8
 #EXTINF:-1 tvg-logo="http://epg.one/img/3829.png" group-title="🗂️ YEDEKLER (1087)",ER TV TR
 http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6768/index.m3u8
-#EXTINF:-1 tvg-logo="http://epg.one/img/3947.png" group-title="🗂️ YEDEKLER (1087)",EUROSTAR TR
-http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6894/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/15ILp0P.png" group-title="🗂️ YEDEKLER (1087)",KANAL D (720P)
-https://stream1.kanald.ro/iphone/knd-live.m3u8
-#EXTINF:-1 tvg-logo="http://epg.one/img/3851.png" group-title="🗂️ YEDEKLER (1087)",MELTEM TV TR
-http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6792/index.m3u8
-#EXTINF:-1 tvg-logo="http://epg.one/img/3818.png" group-title="🗂️ YEDEKLER (1087)",TV 41 TR
-http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6752/index.m3u8
-#EXTINF:-1 tvg-logo="http://epg.one/img/3845.png" group-title="🗂️ YEDEKLER (1087)",TV KAYSERİ TR
-http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6786/index.m3u8
-#EXTINF:-1 tvg-logo="http://epg.one/img/88056.png" group-title="🗂️ YEDEKLER (1087)",UZMAN FİLMCİLİK HD TR
-http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6872/index.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/CNN_T%C3%BCrk_logo.svg/960px-CNN_T%C3%BCrk_logo.svg.png" group-title="🗂️ YEDEKLER (1087)",CNN TURK (1080P)
-http://85.117.61.84/cnnturk/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/WIeZMKT.png" group-title="🗂️ YEDEKLER (1087)",KANAL D DRAMA (1080P)
-http://190.93.224.42/KANAL-D-DRAMA/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/BxpdvsG.png" group-title="🗂️ YEDEKLER (1087)",SOZCU TV (1080P)
 https://raw.githubusercontent.com/yaskar661-lgtm/stream/refs/heads/main/filbox/szchd.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/JgUzRH8.png" group-title="🗂️ YEDEKLER (1087)",TRT MUZIK
@@ -1771,8 +1715,6 @@ http://ciner.daioncdn.net/showtv/showtv_1080p.m3u8?app=showtv_web
 https://demiroren.daioncdn.net/kanald/kanald_1080p.m3u8?app=kanald_web
 #EXTINF:-1 tvg-logo="https://i.ibb.co/DVRzygX/bloomberg.jpg" group-title="🗂️ YEDEKLER (1087)",BLOOMBERG HT
 https://ciner.daioncdn.net/bloomberght/bloomberght_720p.m3u8
-#EXTINF:-1 tvg-logo="https://i.ibb.co/1X8nWHc/ahaber.png" group-title="🗂️ YEDEKLER (1087)",A HABER
-https://trkvz-live.ercdn.net/ahaberhd/ahaberhd.m3u8
 #EXTINF:-1 tvg-logo="https://i.ibb.co/Bt6frts/trthaber.png" group-title="🗂️ YEDEKLER (1087)",TRT HABER (BACKUP)
 https://tv.ensonhaber.com/trthaber/trthaber.m3u8
 #EXTINF:-1 tvg-logo="https://i.ibb.co/wdwm0fn/haberturk.png" group-title="🗂️ YEDEKLER (1087)",HABER TÜRK (BACKUP)
@@ -1849,6 +1791,64 @@ https://live.artidijitalmedya.com/artidijital_tivi6/tivi6/chunks.m3u8
 https://host.onlineradyotv.net:8081/cine5tv/index.m3u8
 #EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/tv-logo/tv-logos/refs/heads/main/countries/turkey/tvnet-tr.png" group-title="🗂️ YEDEKLER (1087)",TVNET
 https://tvnet-live.lg.mncdn.com/tvnet-live/tvnet/playlist.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/LPQfdz2.png" group-title="🗂️ YEDEKLER (1087)",ADA TV (1080P)
+https://live-evg10.tv360.bitel.com.pe/bitel/alasdeaguilaSRT/playlist.m3u8
+#EXTINF:-1 tvg-logo="http://epg.one/img/3958.png" group-title="🗂️ YEDEKLER (1087)",KANAL 7 AVRUPA HD TR
+http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6905/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/vj2L2L2.png" group-title="🗂️ YEDEKLER (1087)",TRT EBA LİSE (720P)
+https://tv-e-okul02.medya.trt.com.tr/master.m3u8
+#EXTINF:-1 tvg-logo="http://epg.one/img/3964.png" group-title="🗂️ YEDEKLER (1087)",360 TV HD TR
+http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/2320/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/WIeZMKT.png" group-title="🗂️ YEDEKLER (1087)",KANAL D DRAMA (1080P)
+https://cdn-uw2-prod.tsv2.amagi.tv/linear/amg01602-themahqfrance-vivekanald-samsungspain/playlist.m3u8
+#EXTINF:-1 tvg-logo="http://epg.one/img/3825.png" group-title="🗂️ YEDEKLER (1087)",KARDELEN TV TR
+http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6763/index.m3u8
+#EXTINF:-1 tvg-logo="http://epg.one/img/3849.png" group-title="🗂️ YEDEKLER (1087)",LALEGUL TV TR
+http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6790/index.m3u8
+#EXTINF:-1 tvg-logo="http://epg.one/img/3822.png" group-title="🗂️ YEDEKLER (1087)",LİNE TV BURSA TR
+http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6759/index.m3u8
+#EXTINF:-1 tvg-logo="http://epg.one/img/3943.png" group-title="🗂️ YEDEKLER (1087)",SHOW MAX TR
+http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6890/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/i2AP0hp.png" group-title="🗂️ YEDEKLER (1087)",ANİ (576P)
+http://stream.mcquack.net/306/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/pllIMGi.png" group-title="🗂️ YEDEKLER (1087)",EBS PLUS 2 (360P)
+https://ebsonair.ebs.co.kr/plus2familypc/familypc1m/playlist.m3u8
+#EXTINF:-1 tvg-logo="http://epg.one/img/3828.png" group-title="🗂️ YEDEKLER (1087)",KANAL AVRUPA TR
+http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6766/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/CRBfZi4.png" group-title="🗂️ YEDEKLER (1087)",TRT EBA ILKOKUL (720P)
+https://tv-e-okul00.medya.trt.com.tr/master.m3u8
+#EXTINF:-1 tvg-logo="http://epg.one/img/2951.png" group-title="🗂️ YEDEKLER (1087)",TRT TURK TR
+http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6798/index.m3u8
+#EXTINF:-1 tvg-logo="http://epg.one/img/3988.png" group-title="🗂️ YEDEKLER (1087)",A NEWS HD TR
+http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6937/index.m3u8
+#EXTINF:-1 tvg-logo="https://gbzottvsc25.tvplus.com.tr:33207/CPS/images/universal/film/logo/202506/20250623/71/0916028009315eb88428_op_0_XL.webp" group-title="🗂️ YEDEKLER (1087)",ATV (1080P)
+http://stream.mcquack.net/36/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.tmgrup.com.tr/aav/site/v1/i/atv-avrupa-logo.png" group-title="🗂️ YEDEKLER (1087)",ATV AVRUPA (576P)
+https://flask-api-hls-atvavrupahdtrkvz-live.onrender.com/hls_stream/master.m3u8
+#EXTINF:-1 tvg-logo="http://epg.one/img/2613.png" group-title="🗂️ YEDEKLER (1087)",BLOOMBERG HT TR
+http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/2317/index.m3u8
+#EXTINF:-1 tvg-logo="http://epg.one/img/3835.png" group-title="🗂️ YEDEKLER (1087)",BRTV TR
+http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6776/index.m3u8
+#EXTINF:-1 tvg-logo="http://epg.one/img/3852.png" group-title="🗂️ YEDEKLER (1087)",DOST TV TR
+http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6793/index.m3u8
+#EXTINF:-1 tvg-logo="http://epg.one/img/3947.png" group-title="🗂️ YEDEKLER (1087)",EUROSTAR TR
+http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6894/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/15ILp0P.png" group-title="🗂️ YEDEKLER (1087)",KANAL D (720P)
+https://stream1.kanald.ro/iphone/knd-live.m3u8
+#EXTINF:-1 tvg-logo="http://epg.one/img/3851.png" group-title="🗂️ YEDEKLER (1087)",MELTEM TV TR
+http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6792/index.m3u8
+#EXTINF:-1 tvg-logo="http://epg.one/img/3818.png" group-title="🗂️ YEDEKLER (1087)",TV 41 TR
+http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6752/index.m3u8
+#EXTINF:-1 tvg-logo="http://epg.one/img/3845.png" group-title="🗂️ YEDEKLER (1087)",TV KAYSERİ TR
+http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6786/index.m3u8
+#EXTINF:-1 tvg-logo="http://epg.one/img/88056.png" group-title="🗂️ YEDEKLER (1087)",UZMAN FİLMCİLİK HD TR
+http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6872/index.m3u8
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/CNN_T%C3%BCrk_logo.svg/960px-CNN_T%C3%BCrk_logo.svg.png" group-title="🗂️ YEDEKLER (1087)",CNN TURK (1080P)
+http://85.117.61.84/cnnturk/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/WIeZMKT.png" group-title="🗂️ YEDEKLER (1087)",KANAL D DRAMA (1080P)
+http://190.93.224.42/KANAL-D-DRAMA/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.ibb.co/1X8nWHc/ahaber.png" group-title="🗂️ YEDEKLER (1087)",A HABER
+https://trkvz-live.ercdn.net/ahaberhd/ahaberhd.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/fhQFLEl.png" group-title="🗂️ YEDEKLER (1087)",2X2 (576P)
 http://176.118.197.101/2x2/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/Na0UCV7.png" group-title="🗂️ YEDEKLER (1087)",4E (1080P)
