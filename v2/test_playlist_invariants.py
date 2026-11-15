@@ -23,7 +23,8 @@ def main():
     assert backup_count == 1038, "YEDEKLER must contain 38 original plus 1000 new channels"
     backup_names = [x["name"] for x in channels_pre if "YEDEKLER" in x["group"]]
     assert len(backup_names) == backup_count
-    assert all(x["group"] == "🗂️ YEDEKLER (1038)" for x in channels_pre if "YEDEKLER" in x["group"]), "All backups must share one category"\n    urls = [x["url"] for x in channels_pre]
+    assert all(x["group"] == "🗂️ YEDEKLER (1038)" for x in channels_pre if "YEDEKLER" in x["group"]), "All backups must share one category"
+    urls = [x["url"] for x in channels_pre]
     # Original playlist repeats URLs across categories intentionally.
     backup_urls = [x["url"] for x in channels_pre if "YEDEKLER" in x["group"]]
     assert len(backup_urls) == len(set(backup_urls)), "Duplicate YEDEKLER stream URLs"
