@@ -143,14 +143,14 @@ def audit(root=ROOT):
             else:
                 records=[(lines[i],lines[i+1]) for i in markers]
                 if (len(records)!=1925 or len(lines)!=1+1925*2
-                    or lines[0]!=b"#EXTM3U\\n"):
+                    or lines[0]!=b"#EXTM3U\n"):
                     errors["PLAYLIST"]=["INVALID_M3U_STRUCTURE"]
                 else:
                     original=records[:878]+records[927:]
                     added=records[878:927]
                     normalized=[(m.replace('group-title="🗂️ YEDEKLER (1087)"'.encode(),
                         'group-title="🗂️ YEDEKLER (1038)"'.encode()),u) for m,u in original]
-                    previous=b"#EXTM3U\\n"+b"".join(m+u for m,u in normalized)
+                    previous=b"#EXTM3U\n"+b"".join(m+u for m,u in normalized)
                     previous_sha=hashlib.sha1(b"blob "+str(len(previous)).encode()+b"\0"+previous).hexdigest()
                     old_urls={u.strip() for m,u in original}
                     new_urls=[u.strip() for m,u in added]
