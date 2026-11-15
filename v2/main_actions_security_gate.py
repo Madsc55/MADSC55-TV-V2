@@ -133,40 +133,34 @@ def audit(root=ROOT):
         b=path.read_bytes()
         blob=hashlib.sha1(b"blob "+str(len(b)).encode()+b"\0"+b).hexdigest()
         if blob!=EXPECTED_BLOB:
-            # Permit ONLY repositioning two previously discovered Turkish records.
-            # No URL, metadata, category, original 38, or non-backup change.
-            text=b.decode("utf-8")
-            lines=text.splitlines(keepends=True)
-            header=lines[0]
-            records=[]
-            i=1
-            while i<len(lines):
-                if lines[i].startswith("#EXTINF:"):
-                    records.append((lines[i],lines[i+1]))
-                    i+=2
-                else:
-                    if lines[i].strip():
-                        errors["PLAYLIST"]=["UNEXPECTED_PLAYLIST_LINE"]
-                    i+=1
-            backup_idx=[i for i,r in enumerate(records) if 'group-title="🗂️ YEDEKLER (1038)"' in r[0]]
-            if len(records)!=1876 or len(backup_idx)!=1038:
-                errors["PLAYLIST"]=["EXPECTED_1876_AND_1038_BACKUPS"]
+            # Verify exact preservation of the previous 1876 records.
+            # Only 49 unique scan-sourced Turkish candidates are inserted
+            # after the original 40 backup records; all backups share one group.
+            lines=b.splitlines(keepends=True)
+            markers=[i for i,line in enumerate(lines) if line.startswith(b"#EXTINF:")]
+            if len(markers)!=1925:
+                errors["PLAYLIST"]=["EXPECTED_1876_PLUS_49_ENTRIES"]
             else:
-                backups=[records[i] for i in backup_idx]
-                if (not backups[38][0].rstrip().endswith(",CNN TURK (1080P)")
-                    or not backups[39][0].rstrip().endswith(",KANAL D DRAMA (1080P)")):
-                    errors["PLAYLIST"]=["TURKISH_PRIORITY_WRONG"]
+                records=[(lines[i],lines[i+1]) for i in markers]
+                if (len(records)!=1925 or len(lines)!=1+1925*2
+                    or lines[0]!=b"#EXTM3U\\n"):
+                    errors["PLAYLIST"]=["INVALID_M3U_STRUCTURE"]
                 else:
-                    cnn=backups.pop(38)
-                    drama=backups.pop(38)
-                    backups.insert(362,cnn)
-                    backups.insert(723,drama)
-                    for i,record in zip(backup_idx,backups):
-                        records[i]=record
-                    reconstructed=(header+"".join(meta+url for meta,url in records)).encode("utf-8")
-                    previous_sha=hashlib.sha1(b"blob "+str(len(reconstructed)).encode()+b"\0"+reconstructed).hexdigest()
-                    if previous_sha!="40c56b06689a30073d7b0377edee840584bf5db3":
-                        errors["PLAYLIST"]=["NOT_EXACTLY_AUTHORIZED_TURKISH_REORDER"]
+                    original=records[:878]+records[927:]
+                    added=records[878:927]
+                    normalized=[(m.replace('group-title="🗂️ YEDEKLER (1087)"'.encode(),
+                        'group-title="🗂️ YEDEKLER (1038)"'.encode()),u) for m,u in original]
+                    previous=b"#EXTM3U\\n"+b"".join(m+u for m,u in normalized)
+                    previous_sha=hashlib.sha1(b"blob "+str(len(previous)).encode()+b"\0"+previous).hexdigest()
+                    old_urls={u.strip() for m,u in original}
+                    new_urls=[u.strip() for m,u in added]
+                    if (previous_sha!="ad256732adc5620e5c8b12b66060c9f4f4123a5b"
+                        or len(set(new_urls))!=49
+                        or bool(old_urls.intersection(new_urls))
+                        or any('group-title="🗂️ YEDEKLER (1087)"'.encode() not in m for m,u in added)
+                        or not records[838][0].rstrip().endswith(b",TRT 1 1440P QHD")
+                        or not records[839][0].rstrip().endswith(b",DHA CANLI 720P HD")):
+                        errors["PLAYLIST"]=["SCAN_TURKISH_APPEND_INVARIANT_FAIL"]
     return {"schema":1,"status":"MAIN_WORKFLOW_FILE_LOCK_PASS" if not errors
              else "MAIN_WORKFLOW_FILE_LOCK_FAIL",
             "checked_workflows":len(found),
