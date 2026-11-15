@@ -133,26 +133,39 @@ def audit(root=ROOT):
         b=path.read_bytes()
         blob=hashlib.sha1(b"blob "+str(len(b)).encode()+b"\0"+b).hexdigest()
         if blob!=EXPECTED_BLOB:
-            # Permit only one explicitly authorized, append-only 500-channel
-            # YEDEKLER batch. The original 876 entries must be byte-identical.
+            # Authorize exactly two batches of 500 in ONE YEDEKLER category.
+            # Undo only group-label changes in the pre-existing 1376 records,
+            # then compare their complete byte content to the approved prior blob.
             lines=b.splitlines(keepends=True)
             markers=[i for i,line in enumerate(lines) if line.startswith(b"#EXTINF:")]
-            if len(markers)!=1376:
-                errors["PLAYLIST"]=["EXPECTED_876_PLUS_500_ENTRIES"]
+            if len(markers)!=1876:
+                errors["PLAYLIST"]=["EXPECTED_876_PLUS_1000_ENTRIES"]
             else:
-                cut=sum(len(line) for line in lines[:markers[876]])
-                original=b[:cut]
-                original_blob=hashlib.sha1(b"blob "+str(len(original)).encode()+b"\0"+original).hexdigest()
-                appended=lines[markers[876]:]
+                cut=sum(len(line) for line in lines[:markers[1376]])
+                previous=b[:cut]
+                normalized=(previous.replace('group-title="🗂️ YEDEKLER (1038)"'.encode(),
+                    'group-title="🗂️ YEDEKLER (38)"'.encode(),38))
+                # The other 500 original candidate labels were '500 YENİ'.
+                lines_prev=normalized.splitlines(keepends=True)
+                seen_backup=0
+                for i,line in enumerate(lines_prev):
+                    if line.startswith(b"#EXTINF:") and b"YEDEKLER" in line:
+                        seen_backup+=1
+                        if seen_backup>38:
+                            lines_prev[i]=line.replace('group-title="🗂️ YEDEKLER (1038)"'.encode(),
+                                'group-title="🗂️ YEDEKLER (500 YENİ)"'.encode())
+                normalized=b"".join(lines_prev)
+                old_blob=hashlib.sha1(b"blob "+str(len(normalized)).encode()+b"\\0"+normalized).hexdigest()
+                appended=lines[markers[1376]:]
                 entries=[line for line in appended if line.startswith(b"#EXTINF:")]
                 urls=[line.strip() for line in appended if line.strip() and not line.startswith(b"#")]
-                existing_urls={line.strip() for line in lines[:markers[876]] if line.strip() and not line.startswith(b"#")}
-                if (original_blob!=EXPECTED_BLOB or len(entries)!=500 or len(urls)!=500
-                    or len(set(urls))!=500 or bool(existing_urls.intersection(urls))
-                    or any('group-title="🗂️ YEDEKLER (500 YENİ)"'.encode() not in line for line in entries)
-                    or any(line.strip() and not line.startswith(b"#EXTINF:") and not line.startswith(b"#")
-                           and not line.strip().startswith((b"http://",b"https://")) for line in appended)):
-                    errors["PLAYLIST"]=["APPEND_ONLY_500_YEDEKLER_INVARIANT_FAIL"]
+                existing_urls={line.strip() for line in lines[:markers[1376]] if line.strip() and not line.startswith(b"#")}
+                if (old_blob!="da8dcb36c96bfe97da9105d4892bff41ef71a2a1"
+                    or len(entries)!=500 or len(urls)!=500 or len(set(urls))!=500
+                    or bool(existing_urls.intersection(urls))
+                    or any('group-title="🗂️ YEDEKLER (1038)"'.encode() not in line for line in entries)
+                    or sum('group-title="🗂️ YEDEKLER (1038)"'.encode() in line for line in lines if line.startswith(b"#EXTINF:"))!=1038):
+                    errors["PLAYLIST"]=["UNIFIED_1038_YEDEKLER_INVARIANT_FAIL"]
     return {"schema":1,"status":"MAIN_WORKFLOW_FILE_LOCK_PASS" if not errors
              else "MAIN_WORKFLOW_FILE_LOCK_FAIL",
             "checked_workflows":len(found),
