@@ -1,4 +1,4 @@
-name: One-time authorized IBO earlier scan remainder transfer
+name: One-time authorized IBO all archives old and V2 transfer
 on:
   push:
     branches: [main]
@@ -25,7 +25,8 @@ jobs:
           mkdir -p /tmp/all-scan/earlier
           curl -fLsS --retry 3 -H "Authorization: Bearer ${{ github.token }}" -H "Accept: application/vnd.github+json" "https://api.github.com/repos/Madsc55/MADSC55-TV-V2/actions/artifacts/14033805492/zip" -o /tmp/earlier-scan.zip
           unzip -j /tmp/earlier-scan.zip 'IBO_YENI_ADAYLAR*.m3u8' -d /tmp/all-scan/earlier
-          python3 v2/import_all_available_candidates.py --scan-dir /tmp/all-scan
+          git clone --depth 1 https://github.com/Madsc55/madsc-tv.git /tmp/old-madsc-tv
+          python3 v2/import_every_archive_both_systems.py --old-repo /tmp/old-madsc-tv --scan-dir /tmp/all-scan
           python3 v2/test_playlist_invariants.py
           python3 v2/main_actions_security_gate.py
       - name: Create protected-branch PR
@@ -34,8 +35,8 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git checkout -b ibo-earlier-import-${{ github.run_id }}
+          git checkout -b ibo-every-archive-import-${{ github.run_id }}
           git add MADSC55_TV_IBO_CALISANLAR_TEST.m3u8 v2/test_playlist_invariants.py v2/ibo_authorized_change.json
           git commit -m 'Import all accessible scan and legacy candidates to YEDEKLER'
           git push -u origin HEAD
-          gh pr create --base main --head ibo-1000-import-${{ github.run_id }} --title 'IBO: Import all remaining accessible YEDEKLER candidates' --body 'Preserve 838 protected channels and 1285 existing backups; exclude archived and duplicate URLs; import all accessible scan and legacy candidates.'
+          gh pr create --base main --head ibo-every-archive-import-${{ github.run_id }} --title 'IBO: Import old and V2 archives into YEDEKLER' --body 'Preserve 838 main channels, 12225 existing backups and all source archives; append all unique archive and old-repository URLs.'
