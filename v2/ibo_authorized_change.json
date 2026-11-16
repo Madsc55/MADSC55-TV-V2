@@ -1,9 +1,9 @@
 {
-  "base_sha256": "eebbf52de37f28eb27efd67aa2f78f76be944cbeb84709dba76097fadfd29fe0",
+  "base_sha256": "74d911ef81fa5ff074b6e3dca52550d53335aae2a6467ff4a78fd841021b0115",
   "result_sha256": "74d911ef81fa5ff074b6e3dca52550d53335aae2a6467ff4a78fd841021b0115",
   "operation": "move",
-  "request": "User authorized moving foreign backup entries into the single archive and restoring 3904 distinct historic archive URLs into YEDEKLER for playback testing, keeping the 838 protected channels unchanged.",
+  "request": "User requested removal of obsolete 3964-channel foreign archive only; the approved IBO playlist and 4110 YEDEKLER channels are unchanged.",
   "channels": [
-    "Restore 3904 unique historical foreign archive channels to YEDEKLER; 60 URLs already present"
+    "No playlist changes: retain 4110 existing YEDEKLER channels"
   ]
 }
