@@ -1,11 +1,9 @@
 {
-  "base_sha256": "721d808f08951a3aa27773b44f0b9ba174fa1c32212b9ee8e31032c3e1ee3647",
-  "result_sha256": "8e37dc5e5a9c57370277678aebbdf3d301f9dff613d25ff887b3e8b30292525e",
+  "base_sha256": "8e37dc5e5a9c57370277678aebbdf3d301f9dff613d25ff887b3e8b30292525e",
+  "result_sha256": "95a9e12aef9955285d1859713b1ac18a169a07497a72c945713604e0b58e0ffb",
   "operation": "move",
-  "request": "User explicitly requests moving AUTO PLUS, ESTRELLA GAMES, GAME+ to backup position 94 and rechecking sports channel names. Main IBO 838 unchanged; 4110 backup entries preserved.",
+  "request": "Remove .BLACK (1080P), a non-sports channel, from backup sports block to final backup position 4110. Preserve user-accepted sports channels at 94-96 and all 838 main IBO channels.",
   "channels": [
-    "AUTO PLUS backup 899 to 94",
-    "ESTRELLA GAMES (1080P) backup 2332 to 95",
-    "GAME+ (720P) backup 2568 to 96"
+    ".BLACK (1080P) backup 286 to 4110"
   ]
 }
