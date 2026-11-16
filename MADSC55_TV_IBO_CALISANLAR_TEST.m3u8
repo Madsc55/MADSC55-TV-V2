@@ -2001,6 +2001,8 @@ https://a-cdn.klowdtv.com/live2/horsetv_720p/playlist.m3u8
 http://45.162.64.114/FISH_TV/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/qrn6tUO.png" group-title="🗂️ YEDEKLER (4110)",ITALIAN FISHING TV (1080P)
 https://fms.premio.link/fishingtv/playlist.m3u8
+#EXTINF:-1 tvg-logo="https://image.roku.com/developer_channels/prod/b2a80f0a20fc338f22a8289f23d20d19d958470ff1b8df3845c57cbc54ec1245.png" group-title="🗂️ YEDEKLER (4110)",DUCK HUNTİNG TV (1080P)
+https://main.duckhunting.playout.vju.tv/duckhuntingtv/main.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/nCAt3QN.png" group-title="🗂️ YEDEKLER (4110)",CANAL MOTOR (1080P)
 https://digicom.hls.iptvdc.com/motorstv/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/JLSHiTp.png" group-title="🗂️ YEDEKLER (4110)",CARS.TV (720P)
@@ -6005,8 +6007,6 @@ https://rrr.sz.xlcdn.com/?account=dtvmaasland&file=dtv3&output=playlist.m3u8&pro
 https://rrr.sz.xlcdn.com/?account=dtvmaasland&file=dtv1&output=playlist.m3u8&protocol=https&service=wowza&type=live
 #EXTINF:-1 tvg-logo="https://i.imgur.com/vMcSlwm.png" group-title="🗂️ YEDEKLER (4110)",DUCK DYNASTY (1080P)
 https://aegis-cloudfront-1.tubi.video/ae3cd8ce-3c41-452b-92a0-78fdb3c5b855/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://image.roku.com/developer_channels/prod/b2a80f0a20fc338f22a8289f23d20d19d958470ff1b8df3845c57cbc54ec1245.png" group-title="🗂️ YEDEKLER (4110)",DUCK HUNTİNG TV (1080P)
-https://main.duckhunting.playout.vju.tv/duckhuntingtv/main.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/gRFQ35W.png" group-title="🗂️ YEDEKLER (4110)",DUCKTV (720P)
 https://stream.ads.ottera.tv/playlist.m3u8?network_id=13168
 #EXTINF:-1 tvg-logo="https://i.imgur.com/RFhxfOx.png" group-title="🗂️ YEDEKLER (4110)",DUCKTV PLUS
