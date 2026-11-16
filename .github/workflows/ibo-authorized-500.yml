@@ -26,8 +26,11 @@ jobs:
           mkdir -p /tmp/all-scan/earlier
           curl -fLsS --retry 3 -H "Authorization: Bearer ${{ github.token }}" -H "Accept: application/vnd.github+json" "https://api.github.com/repos/Madsc55/MADSC55-TV-V2/actions/artifacts/14033805492/zip" -o /tmp/earlier-scan.zip
           unzip -j -o /tmp/earlier-scan.zip 'IBO_YENI_ADAYLAR*.m3u8' -d /tmp/all-scan/earlier || echo 'Earlier scan artifact contains no matching playlist'
-          git clone --depth 1 https://github.com/Madsc55/madsc-tv.git /tmp/old-madsc-tv
-          test -d /tmp/old-madsc-tv/.git
+          if ! git clone --depth 1 https://github.com/Madsc55/madsc-tv.git /tmp/old-madsc-tv; then
+            echo 'Legacy repository unavailable; preserving current V2 and scan imports'
+            mkdir -p /tmp/old-madsc-tv
+          fi
+          test -d /tmp/old-madsc-tv
           find /tmp/all-scan -type f -name '*.m3u8' -printf '%p %s bytes\n'
           python3 v2/import_every_archive_both_systems.py --old-repo /tmp/old-madsc-tv --scan-dir /tmp/all-scan
           python3 -m pip install --disable-pip-version-check PyYAML==6.0.2
