@@ -44,6 +44,10 @@ jobs:
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git checkout -b ibo-every-archive-import-${{ github.run_id }}
           git add MADSC55_TV_IBO_CALISANLAR_TEST.m3u8 v2/test_playlist_invariants.py v2/ibo_authorized_change.json
+          if git diff --cached --quiet; then
+            echo 'All accessible channel URLs already imported; no new PR needed.'
+            exit 0
+          fi
           git commit -m 'Import all accessible scan and legacy candidates to YEDEKLER'
           git push -u origin HEAD
           echo 'Branch pushed; pull request is created by authorized maintainer after CI review.'
