@@ -1,9 +1,31 @@
 {
-  "base_sha256": "85099bbb09ca283fac16b4e47b423b9a2181858a9ac6ddb8a7e9eef1925c5c13",
-  "result_sha256": "b3cd26708ea1692c66de4f3130bdf8e15dfa9ba9e591baadb9f61dde06187ce0",
+  "base_sha256": "b3cd26708ea1692c66de4f3130bdf8e15dfa9ba9e591baadb9f61dde06187ce0",
+  "result_sha256": "eebbf52de37f28eb27efd67aa2f78f76be944cbeb84709dba76097fadfd29fe0",
   "operation": "reorder",
-  "request": "User requested all identifiable Turkish channels among 1182 backups be moved immediately below position 86. DA VINCI HD TR explicitly identified at old backup position 860 and moved to 87, with all URLs and other entries unchanged.",
+  "request": "User explicitly requests all 23 sports candidates identified in prior review be moved immediately after backup channel 88. Preserve all 1182 backups, all 838 other channels, all original URLs, metadata and relative ordering of unaffected records.",
   "channels": [
-    "DA VİNCİ HD TR"
+    "CANAL MOTOR",
+    "CARS.TV",
+    "CBS SPORTS GOLAZO NETWORK",
+    "CBS SPORTS HQ",
+    "CCTV-5+",
+    "CCTV-GOLF & TENNİS",
+    "CCTV-STORM FOOTBALL",
+    "CDN DEPORTES",
+    "CHAMPİON TV",
+    "CLARO SPORTS",
+    "CRTV SPORTS AND ENTERTAİNMENT",
+    "CT SPORT",
+    "DAZN 3",
+    "DAZN 4",
+    "DAZN 5",
+    "DAZN COMBAT",
+    "DAZN DARTS X PLUTO TV",
+    "DAZN HELDİNNEN X PLUTO TV",
+    "DD SPORTS",
+    "DEPORTES TVC",
+    "DEPORTV",
+    "DİVİSPORT",
+    "DYNAMO KYIV TV"
   ]
 }
