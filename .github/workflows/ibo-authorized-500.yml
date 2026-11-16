@@ -18,14 +18,14 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           curl -fLsS --retry 3 -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" "https://api.github.com/repos/Madsc55/MADSC55-TV-V2/actions/artifacts/14136864383/zip" -o /tmp/scan.zip
-          unzip -p /tmp/scan.zip IBO_YENI_ADAYLAR_PART1.m3u8 > /tmp/candidates.m3u8
+          unzip -l /tmp/scan.zip | tail -n 5
       - name: Extract all scan candidates and import legacy archive
         run: |
           mkdir -p /tmp/all-scan
-          unzip -j /tmp/scan.zip 'IBO_YENI_ADAYLAR*.m3u8' -d /tmp/all-scan
+          unzip -j -o /tmp/scan.zip 'IBO_YENI_ADAYLAR*.m3u8' -d /tmp/all-scan || echo 'Latest scan artifact contains no matching playlist'
           mkdir -p /tmp/all-scan/earlier
           curl -fLsS --retry 3 -H "Authorization: Bearer ${{ github.token }}" -H "Accept: application/vnd.github+json" "https://api.github.com/repos/Madsc55/MADSC55-TV-V2/actions/artifacts/14033805492/zip" -o /tmp/earlier-scan.zip
-          unzip -j /tmp/earlier-scan.zip 'IBO_YENI_ADAYLAR*.m3u8' -d /tmp/all-scan/earlier
+          unzip -j -o /tmp/earlier-scan.zip 'IBO_YENI_ADAYLAR*.m3u8' -d /tmp/all-scan/earlier || echo 'Earlier scan artifact contains no matching playlist'
           git clone --depth 1 https://github.com/Madsc55/madsc-tv.git /tmp/old-madsc-tv
           test -d /tmp/old-madsc-tv/.git
           python3 v2/import_every_archive_both_systems.py --old-repo /tmp/old-madsc-tv --scan-dir /tmp/all-scan
