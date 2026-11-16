@@ -1,9 +1,9 @@
 {
   "base_sha256": "d26f98083a16549639df147c03e00f69dad34782089c6a632fe5fdf05ad4c14f",
-  "result_sha256": "7548dc2a2d0faed14a74432842934c6a34f971bddc96b69f48a8714ad010a454",
+  "result_sha256": "9fb16e2d7485cd897f6dfc6c2790d79c82322902ffd2cbaf1754cd4106dabe5f",
   "operation": "reorder",
   "request": "User explicitly requests identification of Turkish channels among all 18122 YEDEKLER and placement immediately after backup position 94 without altering 838 protected channels.",
   "channels": [
-    "Move 933 metadata/name identified Turkish candidates from YEDEKLER positions 95-18122 immediately after position 94; preserve original 94, all other records and all stream URLs; classification is metadata-based, not verified audio language."
+    "Move 915 Turkish metadata/name identified candidates after YEDEKLER position 94, excluding explicit foreign country and foreign-language names; retain all 18122 backups and 838 protected main channels."
   ]
 }
