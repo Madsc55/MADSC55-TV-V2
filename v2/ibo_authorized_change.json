@@ -1,9 +1,9 @@
 {
-  "base_sha256": "56084ba77cc03bcdbe0236e186dc15a23ebc3218005465c6b73c18e178fda8b4",
-  "result_sha256": "d26f98083a16549639df147c03e00f69dad34782089c6a632fe5fdf05ad4c14f",
-  "operation": "category",
-  "request": "User authorized all old and V2 playlists including all archives in YEDEKLER without deleting original archive files or protected 838 channels.",
+  "base_sha256": "d26f98083a16549639df147c03e00f69dad34782089c6a632fe5fdf05ad4c14f",
+  "result_sha256": "dbb8a84665c28afca76d5db22fc51b9a115a78e13b5065495eac7c6becf57dd0",
+  "operation": "reorder",
+  "request": "User explicitly requests identification of Turkish channels among all 18122 YEDEKLER and placement immediately after backup position 94 without altering 838 protected channels.",
   "channels": [
-    "1131 additional unique URLs from 39 playlist files; 4 invalid records skipped; AV not assumed"
+    "Move 915 Turkish metadata/name identified candidates after YEDEKLER position 94, excluding explicit foreign country and foreign-language names; retain all 18122 backups and 838 protected main channels."
   ]
 }
