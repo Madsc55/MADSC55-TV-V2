@@ -50,6 +50,7 @@ def main():
     ap.add_argument("--output", required=True)
     ap.add_argument("--batch-size", type=int, default=500)
     ap.add_argument("--timeout", type=int, default=10)
+    ap.add_argument("--start-index", type=int, default=None)
     args = ap.parse_args()
     if args.batch_size != 500:
         raise SystemExit("Only approved 500-channel batches permitted")
@@ -57,7 +58,14 @@ def main():
     state_file = Path(args.state)
     state = json.loads(state_file.read_text()) if state_file.is_file() else {"next_index": 0, "results": []}
     start = state["next_index"]
-    if start != len(state["results"]) or not 0 <= start <= len(all_items):
+    if args.start_index is not None:
+        if state_file.exists():
+            raise RuntimeError("Explicit start index must not reuse an existing checkpoint")
+        if args.start_index not in range(0, 7650, 500):
+            raise RuntimeError("Invalid batch start")
+        start = args.start_index
+        state["next_index"] = start
+    if (args.start_index is None and start != len(state["results"])) or not 0 <= start <= len(all_items):
         raise RuntimeError("Checkpoint inconsistent; refusing to skip channels")
     end = min(start + args.batch_size, len(all_items))
     for idx in range(start, end):
