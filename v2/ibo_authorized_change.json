@@ -1,26 +1,11 @@
 {
   "base_sha256": "343318c4884c475ee7e01c1c9845dca9322c2dca63ff33ec7fde2dbdc730725f",
-  "result_sha256": "343318c4884c475ee7e01c1c9845dca9322c2dca63ff33ec7fde2dbdc730725f",
-  "operation": "remove",
-  "request": "User explicitly requested adding a reusable one-command archive utility only; current IBO playlist remains unchanged in this PR.",
+  "result_sha256": "dc69d1e372fd5d713205ba31e3f7c8e849e8c03ef3ea498920cc6b1026d2c19e",
+  "operation": "reorder",
+  "request": "User explicitly requested Turkish channels found after YEDEKLER position 83 to be placed directly below position 83, retaining all other channels and metadata.",
   "channels": [
-    "NICKELODEON TEEN (720P)",
-    "NICKELODEON TOONS (720P)",
-    "NICKELODEON TOONS LATAM (720P)",
-    "NICKTOONS 90S [GEO-BLOCKED]",
-    "NICKTOONS (CZECH REPUBLIC)",
-    "NICKTOONS (POLAND) (576I)",
-    "NICKTOONS (UNITED STATES) (720P)",
-    "NICKTOONS (UNITED STATES) CA",
-    "NICKTOONS CIS (1080P)",
-    "NICOYATV (720P) [NOT 24/7]",
-    "NIDAE ALISLAM RADIO (1080P)",
-    "NIEDERBAYERN TV (720P)",
-    "NIEDERBAYERN TV DEGGENDORF & STRAUBING (1080P)",
-    "NIEDERBAYERN TV LANDSHUT (1080P)",
-    "NIEDERBAYERN TV PASSAU (1080P)",
-    "NIGBATI (720P) [NOT 24/7]",
-    "NIKA TV (576P) [NOT 24/7]",
-    "NIKI JUNIOR (1080P)"
+    "EUROSPORT 1 HD TR",
+    "BEIN MOVİES PREMİERE 2 HD TR",
+    "BEIN SERİES DRAMA HD TR"
   ]
 }
