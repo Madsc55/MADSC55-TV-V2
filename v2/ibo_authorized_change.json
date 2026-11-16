@@ -1,9 +1,9 @@
 {
-  "base_sha256": "f459b8abb6a803992a81b9a25e728eb2e5ea6fde0bb0dadbe542e64084786727",
-  "result_sha256": "2f83cd9ea9e8756c17141737aecdeb5902a6c5b9cd8eee980f401e9b4362e25c",
+  "base_sha256": "2f83cd9ea9e8756c17141737aecdeb5902a6c5b9cd8eee980f401e9b4362e25c",
+  "result_sha256": "56084ba77cc03bcdbe0236e186dc15a23ebc3218005465c6b73c18e178fda8b4",
   "operation": "category",
-  "request": "User authorized import of all accessible scan and legacy candidates excluding archived, existing and protected channels; do not change 838 protected entries.",
+  "request": "Restore all 4766 distinct archived foreign channel stream URLs into YEDEKLER, preserve 838 protected main entries and all existing 12225 backups.",
   "channels": [
-    "129 distinct scan and legacy URL candidates imported for testing; AV status not assumed"
+    "Append 4766 archived unique URLs without modifying original 838 main channels or existing 12225 backup order."
   ]
 }
