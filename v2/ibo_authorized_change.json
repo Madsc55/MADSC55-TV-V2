@@ -1,31 +1,9 @@
 {
-  "base_sha256": "b3cd26708ea1692c66de4f3130bdf8e15dfa9ba9e591baadb9f61dde06187ce0",
-  "result_sha256": "eebbf52de37f28eb27efd67aa2f78f76be944cbeb84709dba76097fadfd29fe0",
-  "operation": "reorder",
-  "request": "User explicitly requests all 23 sports candidates identified in prior review be moved immediately after backup channel 88. Preserve all 1182 backups, all 838 other channels, all original URLs, metadata and relative ordering of unaffected records.",
+  "base_sha256": "eebbf52de37f28eb27efd67aa2f78f76be944cbeb84709dba76097fadfd29fe0",
+  "result_sha256": "74d911ef81fa5ff074b6e3dca52550d53335aae2a6467ff4a78fd841021b0115",
+  "operation": "add",
+  "request": "User explicitly requested restoring historical foreign archive channels into YEDEKLER for playback testing, while preserving protected categories.",
   "channels": [
-    "CANAL MOTOR",
-    "CARS.TV",
-    "CBS SPORTS GOLAZO NETWORK",
-    "CBS SPORTS HQ",
-    "CCTV-5+",
-    "CCTV-GOLF & TENNİS",
-    "CCTV-STORM FOOTBALL",
-    "CDN DEPORTES",
-    "CHAMPİON TV",
-    "CLARO SPORTS",
-    "CRTV SPORTS AND ENTERTAİNMENT",
-    "CT SPORT",
-    "DAZN 3",
-    "DAZN 4",
-    "DAZN 5",
-    "DAZN COMBAT",
-    "DAZN DARTS X PLUTO TV",
-    "DAZN HELDİNNEN X PLUTO TV",
-    "DD SPORTS",
-    "DEPORTES TVC",
-    "DEPORTV",
-    "DİVİSPORT",
-    "DYNAMO KYIV TV"
+    "Restore 3904 unique historical foreign archive channels to YEDEKLER; 60 URLs already present"
   ]
 }
