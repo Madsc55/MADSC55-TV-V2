@@ -1,13 +1,9 @@
 {
-  "base_sha256": "8d98de520fbfd15465a26264e5a0047379cec474e469445cdb6ada47610b9259",
-  "result_sha256": "81a76f13d3c5b2088c983b8ad83e931814cab1fc06f923ce27ddb3b124dc22f3",
+  "base_sha256": "81a76f13d3c5b2088c983b8ad83e931814cab1fc06f923ce27ddb3b124dc22f3",
+  "result_sha256": "721d808f08951a3aa27773b44f0b9ba174fa1c32212b9ee8e31032c3e1ee3647",
   "operation": "move",
-  "request": "User requested detailed recheck of 4110 backup channels and consolidation of additional sports/outdoor sports entries at position 95 without modifying the 838 main IBO entries.",
+  "request": "User asked for detailed recheck for overlooked sports channels. Move second distinct NAUTICAL CHANNEL backup entry from 4018 to 284. Main 838 unchanged; all 4110 backups preserved.",
   "channels": [
-    "65 additional sports channels",
-    "2 equestrian channels",
-    "3 outdoor sports (Duck Hunting TV, Fish TV, Italian Fishing TV)",
-    "Existing 119 sports block channels remain grouped",
-    "All 4110 backup entries retained"
+    "NAUTICAL CHANNEL (720P), source streams2.sofast.tv/vglive-sk-231198, backup position 4018 to 284"
   ]
 }
