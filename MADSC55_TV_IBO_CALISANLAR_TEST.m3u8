@@ -1861,6 +1861,10 @@ http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ
 http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6777/index.m3u8
 #EXTINF:-1 tvg-logo="http://epg.one/img/3848.png" group-title="🗂️ YEDEKLER (4110)",FM TV TR
 http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6789/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.ibb.co/Ln92Dj2/Ekoltv.png" group-title="🗂️ YEDEKLER (4110)",EKOL TV
+https://ekoltv-live.ercdn.net/ekoltv/ekoltv.m3u8
+#EXTINF:-1 tvg-logo="https://www.tvlogo.org/turkey/kral-pop-tr.png" group-title="🗂️ YEDEKLER (4110)",KRAL POP TV (720P)
+https://dogus-live.daioncdn.net/kralpoptv/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://cdn.as.ro/wp-content/themes/antenasport/images/icons-as/as.svg" group-title="🗂️ YEDEKLER (4110)",ANTENASPORT
 https://stream1.antenaplay.ro/as/AS.ro/chunklist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/nCAt3QN.png" group-title="🗂️ YEDEKLER (4110)",CANAL MOTOR (1080P)
@@ -5993,8 +5997,6 @@ https://video.streams.ovh:1936/egnatiatv/egnatiatv/index.m3u8
 https://live.ekamraott.com/bharat/bharat/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/WovATGb.png" group-title="🗂️ YEDEKLER (4110)",EKO TV (720P)
 https://ext.cdn.nashnet.tv/228.0.1.60/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.ibb.co/Ln92Dj2/Ekoltv.png" group-title="🗂️ YEDEKLER (4110)",EKOL TV
-https://ekoltv-live.ercdn.net/ekoltv/ekoltv.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/lRpkGHj.png" group-title="🗂️ YEDEKLER (4110)",EKUSHEY TV (480P)
 https://ekusheyserver.com/etvlivesn.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/KvsrWyE.png" group-title="🗂️ YEDEKLER (4110)",EL 3 DE CONCE (1080P)
@@ -8171,8 +8173,6 @@ https://cloud.tvomix.com/KPOPMIX/index.m3u8
 https://giatv.bozztv.com/giatv/giatv-kpoptvplay/kpoptvplay/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/dGoQ88j.png" group-title="🗂️ YEDEKLER (4110)",KPVM-LD 25.1 (720P)
 https://2-fss-1.streamhoster.com/pl_122/206858-4405346-1/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://www.tvlogo.org/turkey/kral-pop-tr.png" group-title="🗂️ YEDEKLER (4110)",KRAL POP TV (720P)
-https://dogus-live.daioncdn.net/kralpoptv/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/8c9Uqks.jpeg" group-title="🗂️ YEDEKLER (4110)",KRC TV
 https://channels.ad-ug.com/live/ch03/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/kTh2jgF.png" group-title="🗂️ YEDEKLER (4110)",KRGV-TV 5.2 (720P)
