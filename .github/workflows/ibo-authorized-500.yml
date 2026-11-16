@@ -25,7 +25,8 @@ jobs:
           mkdir -p /tmp/all-scan/earlier
           curl -fLsS --retry 3 -H "Authorization: Bearer ${{ github.token }}" -H "Accept: application/vnd.github+json" "https://api.github.com/repos/Madsc55/MADSC55-TV-V2/actions/artifacts/14033805492/zip" -o /tmp/earlier-scan.zip
           unzip -j /tmp/earlier-scan.zip 'IBO_YENI_ADAYLAR*.m3u8' -d /tmp/all-scan/earlier
-          git clone --depth 1 https://github.com/Madsc55/madsc-tv.git /tmp/old-madsc-tv\n          test -d /tmp/old-madsc-tv/.git
+          git clone --depth 1 https://github.com/Madsc55/madsc-tv.git /tmp/old-madsc-tv
+          test -d /tmp/old-madsc-tv/.git
           python3 v2/import_every_archive_both_systems.py --old-repo /tmp/old-madsc-tv --scan-dir /tmp/all-scan
           python3 v2/test_playlist_invariants.py
           python3 v2/main_actions_security_gate.py
