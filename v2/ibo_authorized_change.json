@@ -1,9 +1,9 @@
 {
-  "base_sha256": "8e37dc5e5a9c57370277678aebbdf3d301f9dff613d25ff887b3e8b30292525e",
-  "result_sha256": "95a9e12aef9955285d1859713b1ac18a169a07497a72c945713604e0b58e0ffb",
+  "base_sha256": "95a9e12aef9955285d1859713b1ac18a169a07497a72c945713604e0b58e0ffb",
+  "result_sha256": "6f90b23c87556fdc2caaec9617aef3f911658c0bfcebcea19ac1417d871589e4",
   "operation": "move",
-  "request": "Remove .BLACK (1080P), a non-sports channel, from backup sports block to final backup position 4110. Preserve user-accepted sports channels at 94-96 and all 838 main IBO channels.",
+  "request": "User-authorized: archive every backup channel below ANTENAPLAY EVENTS (576P), including .BLACK, into the existing 2881-channel foreign archive; keep first 285 backups and all 838 main channels unchanged.",
   "channels": [
-    ".BLACK (1080P) backup 286 to 4110"
+    "Backup positions 286-4110: 3825 foreign entries, including .BLACK (1080P); archive verified 4768 unique URLs"
   ]
 }
