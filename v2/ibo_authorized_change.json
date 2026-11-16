@@ -1,9 +1,9 @@
 {
-  "base_sha256": "dfcf77cd6147b0907b17db862364dee98f51d7d4013174bbedfc83f6e2ade82d",
-  "result_sha256": "5644b8220fa3fbfecb1b1ebfff63686a00cd5332644b5ce29b5ba2591dfa1a01",
+  "base_sha256": "5644b8220fa3fbfecb1b1ebfff63686a00cd5332644b5ce29b5ba2591dfa1a01",
+  "result_sha256": "f459b8abb6a803992a81b9a25e728eb2e5ea6fde0bb0dadbe542e64084786727",
   "operation": "category",
-  "request": "User-authorized: add 1000 unique scan candidates to YEDEKLER for IBO Player review; retain 838 protected channels and 285 existing backups in order.",
+  "request": "User authorized import of all accessible scan and legacy candidates excluding archived, existing and protected channels; do not change 838 protected entries.",
   "channels": [
-    "Scan review candidates: 1000 new unique stream URLs; playback not assumed verified"
+    "10811 distinct scan and legacy URL candidates imported for testing; AV status not assumed"
   ]
 }
