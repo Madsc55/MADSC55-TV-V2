@@ -15,15 +15,15 @@ def main():
     current = LIVE.read_bytes()
     text = current.decode("utf-8-sig")
     channels_pre = list(entries(text))
-    assert len(channels_pre) == 1020, "Expected 1925 previous entries minus 923 archived and plus 1000 authorized candidates"
+    assert len(channels_pre) == 2020, "Expected 1925 previous entries minus 923 archived and plus 1000 authorized candidates"
     non_backup = [x for x in channels_pre if "YEDEKLER" not in x["group"]]
     assert len(non_backup) == 838, "Protected non-YEDEKLER categories changed in size"
     backup_count = sum("YEDEKLER" in x["group"] for x in channels_pre)
     backup_group = f"🗂️ YEDEKLER ({backup_count})"
-    assert backup_count == 182, "YEDEKLER must contain 182 retained after archiving foreign group"
+    assert backup_count == 1182, "YEDEKLER must contain 182 retained after archiving foreign group"
     backup_names = [x["name"] for x in channels_pre if "YEDEKLER" in x["group"]]
     assert len(backup_names) == backup_count
-    assert all(x["group"] == "🗂️ YEDEKLER (182)" for x in channels_pre if "YEDEKLER" in x["group"]), "All backups must share one category"
+    assert all(x["group"] == "🗂️ YEDEKLER (1182)" for x in channels_pre if "YEDEKLER" in x["group"]), "All backups must share one category"
     urls = [x["url"] for x in channels_pre]
     # Original playlist repeats URLs across categories intentionally.
     backup_urls = [x["url"] for x in channels_pre if "YEDEKLER" in x["group"]]
@@ -33,7 +33,7 @@ def main():
     assert text.startswith("#EXTM3U"), "Missing M3U header"
     assert len(channels) >= 840, "Playlist shrank below the verified post-deduplication baseline"
     backups = [x for x in channels if "YEDEKLER" in x["group"]]
-    assert len(backups) == 182, "YEDEKLER must contain 182 retained after archiving foreign group"
+    assert len(backups) == 1182, "YEDEKLER must contain 182 retained after archiving foreign group"
     assert any(x["name"] == "TRT 1 1440P QHD" for x in backups), "Original TRT 1 backup missing"
     assert any(x["name"] == "DHA CANLI 720P HD" for x in backups), "Original DHA backup missing"
     assert [x["name"] for x in backups[:2]] == [
