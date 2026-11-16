@@ -15,12 +15,12 @@ def main():
     current = LIVE.read_bytes()
     text = current.decode("utf-8-sig")
     channels_pre = list(entries(text))
-    assert len(channels_pre) == 4948, "Expected 838 protected channels and 4110 test backups"
+    assert len(channels_pre) == 1123, "Expected 838 protected channels and 285 retained backups"
     non_backup = [x for x in channels_pre if "YEDEKLER" not in x["group"]]
     assert len(non_backup) == 838, "Protected non-YEDEKLER categories changed in size"
     backup_count = sum("YEDEKLER" in x["group"] for x in channels_pre)
     backup_group = f"🗂️ YEDEKLER ({backup_count})"
-    assert backup_count == 4110, "YEDEKLER must contain 4110 test channels"
+    assert backup_count == 285, "YEDEKLER must contain 285 retained channels"
     backup_names = [x["name"] for x in channels_pre if "YEDEKLER" in x["group"]]
     assert len(backup_names) == backup_count
     assert all(x["group"] == backup_group for x in channels_pre if "YEDEKLER" in x["group"]), "All backups must share one category"
@@ -33,7 +33,7 @@ def main():
     assert text.startswith("#EXTM3U"), "Missing M3U header"
     assert len(channels) >= 840, "Playlist shrank below the verified post-deduplication baseline"
     backups = [x for x in channels if "YEDEKLER" in x["group"]]
-    assert len(backups) == 4110, "YEDEKLER must contain 4110 test channels"
+    assert len(backups) == 285, "YEDEKLER must contain 285 retained channels"
     assert any(x["name"] == "TRT 1 1440P QHD" for x in backups), "Original TRT 1 backup missing"
     assert any(x["name"] == "DHA CANLI 720P HD" for x in backups), "Original DHA backup missing"
     assert [x["name"] for x in backups[:2]] == [
@@ -46,8 +46,8 @@ def main():
     archive = ROOT / "v2" / "arsiv" / "yabanci_kanallar_2026-11-16_2881.m3u8"
     assert archive.exists(), "Consolidated foreign archive is missing"
     archived = list(entries(archive.read_text(encoding="utf-8-sig")))
-    assert len(archived) == 2881, "Consolidated foreign archive lost channels"
-    assert len({x["url"] for x in archived}) == 2881, "Duplicate foreign archive stream URLs"
+    assert len(archived) == 4768, "Consolidated foreign archive count mismatch"
+    assert len({x["url"] for x in archived}) == 4768, "Duplicate foreign archive stream URLs"
     assert all(x["url"].startswith(("https://", "http://")) and x["name"].strip() for x in archived), "Invalid foreign archive record"
     assert not (ROOT / "v2" / "arsiv" / "yabanci_yedekler_2026-11-02_3964.m3u8").exists(), "Old foreign archive must not be retained"
 
