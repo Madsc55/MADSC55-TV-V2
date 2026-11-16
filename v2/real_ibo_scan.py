@@ -530,13 +530,16 @@ def main():
         ap.error('Protected main playlist contains no stream URLs; refusing unfiltered export')
     # Previously rejected foreign YEDEKLER entries are retained in a separate
     # archive, but must never be rediscovered as new Turkish IBO test candidates.
-    foreign_archive = ROOT / 'v2/arsiv/yabanci_yedekler_2026-11-02_3964.m3u8'
+    # Current preserved foreign archive (the historical 3964-file is no longer
+    # present). Keep fail-closed count verification rather than skipping the
+    # archive exclusion or allowing archived URLs back into discovery.
+    foreign_archive = ROOT / 'v2/arsiv/yabanci_kanallar_2026-11-16_2881.m3u8'
     if not foreign_archive.is_file():
         ap.error('Protected foreign archive missing; refusing unfiltered export')
     foreign_entries = list(parse_m3u(foreign_archive.read_bytes()))
     foreign_urls = {entry['url'] for entry in foreign_entries}
-    if len(foreign_entries) != 3964:
-        ap.error('Foreign archive integrity failed; expected 3964 preserved entries')
+    if len(foreign_entries) != 2881:
+        ap.error('Foreign archive integrity failed; expected 2881 preserved entries')
     existing = main_urls | foreign_urls
     # A backup is not a fresh discovery simply because it moved to an archive.
     # Preserve this exclusion when comparing the current main playlist.

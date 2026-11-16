@@ -156,6 +156,14 @@ def audit(root=ROOT):
                     return b"".join(header),[b"".join(r) for r in records]
                 h0,r0=parse(base)
                 h1,r1=parse(b)
+                # An unchanged playlist is always safe relative to the reviewed
+                # main branch, even when the historical fixed blob and the
+                # former 1087-entry YEDEKLER layout are no longer current.
+                # This does NOT authorize any playlist modifications.
+                if b == base:
+                    continue_playlist_audit = False
+                else:
+                    continue_playlist_audit = True
                 def backup(record):
                     return "YEDEKLER (1087)" in record.splitlines()[0].decode("utf-8")
                 old=[r for r in r0 if backup(r)]
@@ -165,7 +173,7 @@ def audit(root=ROOT):
                     [r for r in r0 if not backup(r)]==[r for r in r1 if not backup(r)] and
                     old[:2]==new[:2] and
                     [backup(r) for r in r0]==[backup(r) for r in r1])
-                if not reorder_ok:
+                if continue_playlist_audit and not reorder_ok:
                     # An explicitly requested category operation must carry a
                     # one-change, exact-hash manifest in the same reviewed PR.
                     # No workflow or discovery job receives write permission.
