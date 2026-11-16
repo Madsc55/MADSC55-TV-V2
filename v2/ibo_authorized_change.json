@@ -1,8 +1,8 @@
 {
-  "base_sha256": "f789f5cc81da5a8369c3c3c68c4dfcafdcb81d580338c6db8aea789dc25194ac",
+  "base_sha256": "d2ed2e82253d1062346c9d671b9031d1048652b5c60e7741a1d895b0cda3bba7",
   "result_sha256": "d2ed2e82253d1062346c9d671b9031d1048652b5c60e7741a1d895b0cda3bba7",
   "operation": "move",
-  "request": "User explicitly ordered: archive YEDEKLER positions 84-1006 and replace with 1000 never-added archived candidates in the existing main IBO playlist; preserve all other categories and backups.",
+  "request": "User requested archive-only append of 18 foreign backup channels to the existing 923-channel foreign archive; main IBO playlist must remain unchanged.",
   "channels": [
     ".BLACK (1080P)",
     "00S REPLAY",
