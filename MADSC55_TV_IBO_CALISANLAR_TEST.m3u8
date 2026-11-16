@@ -2241,6 +2241,8 @@ https://xumo-drct-ch812-n4996.fast.nbcuni.com/live/master.m3u8
 https://live4dai.antenaplay.ro/live2_sdi09/live2_sdi09_600k.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/Q4A6ci4.png" group-title="🗂️ YEDEKLER (4110)",.BLACK (1080P)
 http://stream.mcquack.net/263/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/2ByDyzL.png" group-title="🗂️ YEDEKLER (4110)",NAUTICAL CHANNEL (720P)
+https://streams2.sofast.tv/vglive-sk-231198/index.m3u8
 #EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/62ba60f059624e000781c436/colorLogoPNG.png" group-title="🗂️ YEDEKLER (4110)",00S REPLAY
 https://jmp2.uk/plu-62ba60f059624e000781c436.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/LOY0rtp.png" group-title="🗂️ YEDEKLER (4110)",1+1 INTERNATİONAL (720P)
@@ -9709,8 +9711,6 @@ https://bamusa-naturetime-emea-fra-rakuten.amagi.tv/playlist.m3u8
 http://stream.mcquack.net/125/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/ClGdZCe.png" group-title="🗂️ YEDEKLER (4110)",NAUKA (576P)
 http://stream.mcquack.net/403/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/2ByDyzL.png" group-title="🗂️ YEDEKLER (4110)",NAUTICAL CHANNEL (720P)
-https://streams2.sofast.tv/vglive-sk-231198/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/YteKXJy.png" group-title="🗂️ YEDEKLER (4110)",NAVAHANG TV (720P)
 https://hls.navahang.live/hls/stream.m3u8
 #EXTINF:-1 tvg-logo="https://dominicanchannels.com/wp-content/uploads/navarrete.png" group-title="🗂️ YEDEKLER (4110)",NAVARRETE TELEVISION (1080P)
