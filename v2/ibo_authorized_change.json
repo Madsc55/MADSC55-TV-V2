@@ -1,5 +1,5 @@
 {
-  "base_sha256": "52da1d9bcefbbf6c4e741063b27d10deeb2313910175076c98733a9dbf3dfac1",
+  "base_sha256": "9a6b0cf23242b0fc86a823ef6e2fbd9aff297823f3ba00434e5be662899db02c",
   "result_sha256": "38c2a3ee2fad2ddb03dd7c9696a245e1d2bd07e8fad95e81de08294e34ae0f3c",
   "operation": "remove",
   "request": "User explicitly approved temporary isolation of the 48 exact test_001 channels shown in IBO Player screenshots; archive all 48 in v2/archives/test_001_48_isolated_20261116.m3u8, preserve protected 838 main channels and RTA Sport, and test whether phantom category disappears.",
