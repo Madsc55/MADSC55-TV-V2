@@ -1,0 +1,31 @@
+name: IBO all categories read-only channel audit
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'v2/tools/audit_ibo_playlist.py'
+      - '.github/workflows/ibo-full-channel-audit.yml'
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install FFmpeg
+        run: sudo apt-get update -qq && sudo apt-get install -y ffmpeg
+      - name: Verify every category including backups and test_001
+        run: |
+          python3 v2/tools/audit_ibo_playlist.py \
+            --playlist MADSC55_TV_IBO_CALISANLAR_TEST.m3u8 \
+            --output v2/archives/channel_audit_20261116 \
+            --workers 96 --timeout 18 --retries 2
+      - name: Publish evidence and non-destructive separated playlists
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ibo-full-category-channel-audit
+          path: v2/archives/channel_audit_20261116/
+          if-no-files-found: warn
+          retention-days: 30
