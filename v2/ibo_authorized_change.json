@@ -1,9 +1,9 @@
 {
-  "base_sha256": "5644b8220fa3fbfecb1b1ebfff63686a00cd5332644b5ce29b5ba2591dfa1a01",
-  "result_sha256": "f459b8abb6a803992a81b9a25e728eb2e5ea6fde0bb0dadbe542e64084786727",
+  "base_sha256": "f459b8abb6a803992a81b9a25e728eb2e5ea6fde0bb0dadbe542e64084786727",
+  "result_sha256": "2f83cd9ea9e8756c17141737aecdeb5902a6c5b9cd8eee980f401e9b4362e25c",
   "operation": "category",
   "request": "User authorized import of all accessible scan and legacy candidates excluding archived, existing and protected channels; do not change 838 protected entries.",
   "channels": [
-    "10811 distinct scan and legacy URL candidates imported for testing; AV status not assumed"
+    "129 distinct scan and legacy URL candidates imported for testing; AV status not assumed"
   ]
 }
