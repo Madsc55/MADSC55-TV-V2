@@ -1,5 +1,6 @@
 name: One-time authorized IBO complete old and V2 archives transfer
 on:
+  workflow_dispatch:
   push:
     branches: [main]
     paths: ['.github/workflows/ibo-authorized-500.yml']
