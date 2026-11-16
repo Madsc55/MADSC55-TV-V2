@@ -24,7 +24,7 @@ def main():
     original=PLAY.read_bytes(); header,current=blocks(original.decode("utf-8-sig"))
     protected=[x for x in current if "YEDEKLER" not in x.splitlines()[0]]
     existing=[x for x in current if "YEDEKLER" in x.splitlines()[0]]
-    if len(protected)!=838 or len(existing)!=1285 or current!=protected+existing:
+    if len(protected)!=838 or len(existing)!=12096 or current!=protected+existing:
         raise SystemExit("Protected playlist or existing backups changed")
     _,archived=blocks(ARCHIVE.read_text(encoding="utf-8-sig"))
     seen={u for x in current+archived if (u:=url(x))}
@@ -52,7 +52,7 @@ def main():
     _,after=blocks(result)
     if after[:838]!=protected or len(after)!=838+new_count:
         raise SystemExit("Protected channel invariant failed")
-    if [url(x) for x in after[838:838+1285]] != [url(x) for x in existing]:
+    if [url(x) for x in after[838:838+12096]] != [url(x) for x in existing]:
         raise SystemExit("Existing backups changed")
     if len({url(x) for x in after[838:]})!=new_count:
         raise SystemExit("Duplicate backup URL")
