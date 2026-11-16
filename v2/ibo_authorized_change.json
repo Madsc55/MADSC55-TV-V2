@@ -1,10 +1,13 @@
 {
-  "base_sha256": "bbdd10884b67118ec7dfb5b77e66519d6b45c00416a66b871b2a8ff0bf176c7d",
-  "result_sha256": "8d98de520fbfd15465a26264e5a0047379cec474e469445cdb6ada47610b9259",
+  "base_sha256": "8d98de520fbfd15465a26264e5a0047379cec474e469445cdb6ada47610b9259",
+  "result_sha256": "81a76f13d3c5b2088c983b8ad83e931814cab1fc06f923ce27ddb3b124dc22f3",
   "operation": "move",
-  "request": "User explicitly requested moving YEDEKLER positions 71 and 89 to the end of backup list, preserving all channels and leaving 838 main IBO entries unchanged.",
+  "request": "User requested detailed recheck of 4110 backup channels and consolidation of additional sports/outdoor sports entries at position 95 without modifying the 838 main IBO entries.",
   "channels": [
-    "KANAL D (720P) — original backup position 71",
-    "TRT 3 (720P) — original backup position 89"
+    "65 additional sports channels",
+    "2 equestrian channels",
+    "3 outdoor sports (Duck Hunting TV, Fish TV, Italian Fishing TV)",
+    "Existing 119 sports block channels remain grouped",
+    "All 4110 backup entries retained"
   ]
 }
