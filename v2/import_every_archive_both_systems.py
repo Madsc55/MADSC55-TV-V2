@@ -52,7 +52,7 @@ def main():
         n=0
         for block in parse(p):
             u=url(block)
-            if not u:invalid+=1;continue
+            if not u or not u.startswith(("http://","https://")):invalid+=1;continue
             if u in seen:continue
             if not GROUP.search(block.splitlines()[0]):
                 block=block.replace(block.splitlines()[0],block.splitlines()[0].rstrip("\r\n")+' group-title="🗂️ YEDEKLER"\n',1)
@@ -63,7 +63,11 @@ def main():
         return
     total=len(existing)+len(added);label=f'group-title="🗂️ YEDEKLER ({total})"'
     def rewrite(block):
-        lines=block.splitlines(keepends=True);lines[0]=GROUP.sub(lambda _:label,lines[0],count=1)
+        lines=block.splitlines(keepends=True)
+        if GROUP.search(lines[0]):
+            lines[0]=GROUP.sub(lambda _:label,lines[0],count=1)
+        else:
+            lines[0]=lines[0].rstrip("\r\n")+" "+label+"\n"
         return "".join(lines)
     result=header+"".join(protected)+"".join(map(rewrite,existing+added))
     if len(parse_text(result))!=838+total:raise SystemExit("Output entry count mismatch")
