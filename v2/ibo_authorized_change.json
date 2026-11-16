@@ -1,8 +1,8 @@
 {
   "base_sha256": "d9d4a646afb2182b03ea631cbdb42f7d5b8701f45310b2559df8d0f25fcd1ac4",
   "result_sha256": "85099bbb09ca283fac16b4e47b423b9a2181858a9ac6ddb8a7e9eef1925c5c13",
-  "operation": "add",
-  "request": "User authorized adding 1000 new candidate channels to YEDEKLER for testing. Selected 1000 distinct stream URLs from 3964-source archive, excluding current playlist and previously archived 1905 records; no stream functionality claim. Preserve first 182 backup entries and 838 other categories.",
+  "operation": "category",
+  "request": "User authorized adding 1000 new candidate channels to YEDEKLER for testing. Selected 1000 distinct stream URLs from 3964-source archive, excluding current playlist and previously archived 1905 records; no stream functionality claim. Preserve first 182 backup entries and 838 other categories. Group count metadata is necessarily updated from 182 to 1182, so this is an authorized category-plus-add change.",
   "channels": [
     "CANADA ONE (720P)",
     "CANAF54 TV (480P)",
