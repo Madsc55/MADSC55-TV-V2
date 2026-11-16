@@ -1,9 +1,9 @@
 {
-  "base_sha256": "d26f98083a16549639df147c03e00f69dad34782089c6a632fe5fdf05ad4c14f",
-  "result_sha256": "dbb8a84665c28afca76d5db22fc51b9a115a78e13b5065495eac7c6becf57dd0",
-  "operation": "reorder",
-  "request": "User explicitly requests identification of Turkish channels among all 18122 YEDEKLER and placement immediately after backup position 94 without altering 838 protected channels.",
+  "base_sha256": "dbb8a84665c28afca76d5db22fc51b9a115a78e13b5065495eac7c6becf57dd0",
+  "result_sha256": "52da1d9bcefbbf6c4e741063b27d10deeb2313910175076c98733a9dbf3dfac1",
+  "operation": "category",
+  "request": "User authorizes repair of 111 malformed EXTINF group-title fields and removal of separator blank lines in the 18,960-channel IBO playlist to investigate the test_001 category, preserving 838 main and 18,122 backup channel entries.",
   "channels": [
-    "Move 915 Turkish metadata/name identified candidates after YEDEKLER position 94, excluding explicit foreign country and foreign-language names; retain all 18122 backups and 838 protected main channels."
+    "111 malformed EXTINF records with misplaced group-title metadata; no channel URLs or group memberships intentionally removed"
   ]
 }
