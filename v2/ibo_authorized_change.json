@@ -1,9 +1,15 @@
 {
   "base_sha256": "74d911ef81fa5ff074b6e3dca52550d53335aae2a6467ff4a78fd841021b0115",
-  "result_sha256": "74d911ef81fa5ff074b6e3dca52550d53335aae2a6467ff4a78fd841021b0115",
+  "result_sha256": "cc28a084e3c610c60151d424ce9e97b1d2c7da633cd233f9434c0fbc58e50744",
   "operation": "move",
-  "request": "User requested removal of obsolete 3964-channel foreign archive only; the approved IBO playlist and 4110 YEDEKLER channels are unchanged.",
+  "request": "User authorized moving Turkish channels to YEDEKLER position 87 onward, without changing 838 main IBO channels or deleting any of 4110 backups.",
   "channels": [
-    "No playlist changes: retain 4110 existing YEDEKLER channels"
+    "DA VİNCİ HD TR",
+    "BBC FİRST TURKİYE",
+    "TRT 3 (720P)",
+    "BRTV (720P)",
+    "TV 2000 TR",
+    "AS TV BURSA TR",
+    "FM TV TR"
   ]
 }
