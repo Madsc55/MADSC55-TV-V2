@@ -1861,6 +1861,12 @@ http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ
 https://ekoltv-live.ercdn.net/ekoltv/ekoltv.m3u8
 #EXTINF:-1 tvg-logo="https://www.tvlogo.org/turkey/kral-pop-tr.png" group-title="🗂️ YEDEKLER (4110)",KRAL POP TV (720P)
 https://dogus-live.daioncdn.net/kralpoptv/playlist.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/sVc8cFt.png" group-title="🗂️ YEDEKLER (4110)",AUTO PLUS
+https://stream8.cinerama.uz/1036/tracks-v1a1/mono.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/Z52nEnH.png" group-title="🗂️ YEDEKLER (4110)",ESTRELLA GAMES (1080P)
+https://amg00567-amg00567c1-firetv-us-4124.playouts.now.amagi.tv/playlist.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/Lj69WbR.png" group-title="🗂️ YEDEKLER (4110)",GAME+ (720P)
+https://a-cdn.klowdtv.com/live2/fntsy_720p/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://cdn.as.ro/wp-content/themes/antenasport/images/icons-as/as.svg" group-title="🗂️ YEDEKLER (4110)",ANTENASPORT
 https://stream1.antenaplay.ro/as/AS.ro/chunklist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/AOu4FXH.png" group-title="🗂️ YEDEKLER (4110)",ELEVEN SPORTS 1
@@ -3471,8 +3477,6 @@ https://9e754fa707344ccca6d84955c8fcaf36.mediatailor.us-east-1.amazonaws.com/v1/
 https://cb0c87cc605942ff9766a4e6744bbadc.mediatailor.us-east-1.amazonaws.com/v1/master/44f73ba4d03e9607dcd9bebdcb8494d86964f1d8/RlaxxTV-eu_AutenticTravel/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/bEJK3RN.png" group-title="🗂️ YEDEKLER (4110)",AUTENTİCA TELEVİSİON (720P)
 https://live.obslivestream.com/autenticatvmux/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/sVc8cFt.png" group-title="🗂️ YEDEKLER (4110)",AUTO PLUS
-https://stream8.cinerama.uz/1036/tracks-v1a1/mono.m3u8
 #EXTINF:-1 tvg-logo="https://i.ibb.co/tqkV2sn/irflag.png" group-title="🗂️ YEDEKLER (4110)",AVA FAMİLY
 https://familyhls.avatv.live/hls/stream.m3u8
 #EXTINF:-1 tvg-logo="https://github.com/user-attachments/assets/a9259f18-b9f2-4aa0-86f0-8fba1f343e69" group-title="🗂️ YEDEKLER (4110)",AVA MEDİA (1080P)
@@ -6337,8 +6341,6 @@ https://v4.tustreaming.cl/limachemovil/index.m3u8
 https://unlimited1-cl-isp.dps.live/supersonikatv/supersonikatv.smil/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/rMAB720.png" group-title="🗂️ YEDEKLER (4110)",ESTEPONA TELEVISION (720P)
 https://cloudvideo.servers10.com:8081/8022/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/Z52nEnH.png" group-title="🗂️ YEDEKLER (4110)",ESTRELLA GAMES (1080P)
-https://amg00567-amg00567c1-firetv-us-4124.playouts.now.amagi.tv/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/HRrkhLq.png" group-title="🗂️ YEDEKLER (4110)",ESTRELLA NEWS (1080P)
 https://estrellanews-roku.amagi.tv/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Estrella_TV_Logo_2020.png/500px-Estrella_TV_Logo_2020.png" group-title="🗂️ YEDEKLER (4110)",ESTRELLA TV (1080P)
@@ -6809,8 +6811,6 @@ https://jmp2.uk/plu-6971fc07c945e6e4e5bc46bf.m3u8
 https://jmp2.uk/plu-5e54187aae660e00093561d6.m3u8
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Game_Show_Network_2018.svg/960px-Game_Show_Network_2018.svg.png" group-title="🗂️ YEDEKLER (4110)",GAME SHOW NETWORK (720P)
 https://a-cdn.klowdtv.com/live2/gsn_720p/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/Lj69WbR.png" group-title="🗂️ YEDEKLER (4110)",GAME+ (720P)
-https://a-cdn.klowdtv.com/live2/fntsy_720p/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/tr/b/b6/Gametoon_HD_logo.png" group-title="🗂️ YEDEKLER (4110)",GAMETOON (720P)
 https://webtvstream.bhtelecom.ba/gametoon.m3u8
 #EXTINF:-1 tvg-logo="https://jiotvimages.cdn.jio.com/dare_images/images/Gangaur.png" group-title="🗂️ YEDEKLER (4110)",GANGAUR TV (576P)
