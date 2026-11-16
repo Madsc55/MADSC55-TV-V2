@@ -1,9 +1,9 @@
 {
-  "base_sha256": "2f83cd9ea9e8756c17141737aecdeb5902a6c5b9cd8eee980f401e9b4362e25c",
-  "result_sha256": "56084ba77cc03bcdbe0236e186dc15a23ebc3218005465c6b73c18e178fda8b4",
+  "base_sha256": "56084ba77cc03bcdbe0236e186dc15a23ebc3218005465c6b73c18e178fda8b4",
+  "result_sha256": "d26f98083a16549639df147c03e00f69dad34782089c6a632fe5fdf05ad4c14f",
   "operation": "category",
-  "request": "Restore all 4766 distinct archived foreign channel stream URLs into YEDEKLER, preserve 838 protected main entries and all existing 12225 backups.",
+  "request": "User authorized all old and V2 playlists including all archives in YEDEKLER without deleting original archive files or protected 838 channels.",
   "channels": [
-    "Append 4766 archived unique URLs without modifying original 838 main channels or existing 12225 backup order."
+    "1131 additional unique URLs from 39 playlist files; 4 invalid records skipped; AV not assumed"
   ]
 }
