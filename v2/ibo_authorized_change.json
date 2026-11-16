@@ -1,22 +1,11 @@
 {
-  "base_sha256": "6155b009afdf3f29cd82c03541552be965da931a6ed01322669dc112d5267b11",
-  "result_sha256": "991dfb286e1228d3cb4e6d0df3e03b6b67e1d42f4182b3ed37358c11ed27f182",
+  "base_sha256": "991dfb286e1228d3cb4e6d0df3e03b6b67e1d42f4182b3ed37358c11ed27f182",
+  "result_sha256": "74c455a5a2a979f337b9b68792742e88fd653cea8d1b26dd83536a5e2838721d",
   "operation": "reorder",
-  "request": "User requested a second full review of YEDEKLER for missed sports channels and to add discovered sports entries to the contiguous sports block immediately below position 87. Preserve first 87, all 1146 backups and all non-backup entries.",
+  "request": "User explicitly requested a thorough third pass across all 1146 YEDEKLER entries to move every identifiable sports and sports-competition channel immediately after position 87. Move overlooked AKC TV, American Ninja Warrior, Antenaplay Events into existing sports block. Preserve all records and first 87 positions.",
   "channels": [
-    "ACC DİGİTAL NETWORK (1080P)",
-    "ACC NETWORK (720P)",
-    "ARRYADİA (720P)",
-    "ARSENAL (576P)",
-    "ATG LİVE (1080P)",
-    "BALLCASTERZ (1080P)",
-    "BELARUS-5 (1080P)",
-    "BELLATOR MMA",
-    "BİG TEN NETWORK (1080P)",
-    "BİLLİARD TV (1080P)",
-    "BNT 3 (1080P)",
-    "BOKS TV (576P)",
-    "BRONDBY TV",
-    "CACCİA E PESCA (720P)"
+    "AKC TV (1080P)",
+    "AMERİCAN NİNJA WARRİOR (1080P)",
+    "ANTENAPLAY EVENTS (576P)"
   ]
 }
