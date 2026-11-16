@@ -2245,8 +2245,6 @@ https://install.akctvcontrol.com/speed/broadcast/138/desktop-playlist.m3u8
 https://xumo-drct-ch812-n4996.fast.nbcuni.com/live/master.m3u8
 #EXTINF:-1 tvg-logo="https://static.wikia.nocookie.net/logopedia/images/8/87/Antena_Play_symbol_white_2022.svg/revision/latest/scale-to-width-down/1000?cb=20251128201145" group-title="🗂️ YEDEKLER (4110)",ANTENAPLAY EVENTS (576P)
 https://live4dai.antenaplay.ro/live2_sdi09/live2_sdi09_600k.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/Q4A6ci4.png" group-title="🗂️ YEDEKLER (4110)",.BLACK (1080P)
-http://stream.mcquack.net/263/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/2ByDyzL.png" group-title="🗂️ YEDEKLER (4110)",NAUTICAL CHANNEL (720P)
 https://streams2.sofast.tv/vglive-sk-231198/index.m3u8
 #EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/62ba60f059624e000781c436/colorLogoPNG.png" group-title="🗂️ YEDEKLER (4110)",00S REPLAY
@@ -9895,3 +9893,5 @@ http://88.212.7.14/live/test_atv_hungary_1200_atk/playlist.m3u8
 https://stream1.kanald.ro/iphone/knd-live.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/JrWFwBd.png" group-title="🗂️ YEDEKLER (4110)",TRT 3 (720P)
 https://tv-trt3.live.trt.com.tr/master.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/Q4A6ci4.png" group-title="🗂️ YEDEKLER (4110)",.BLACK (1080P)
+http://stream.mcquack.net/263/index.m3u8
