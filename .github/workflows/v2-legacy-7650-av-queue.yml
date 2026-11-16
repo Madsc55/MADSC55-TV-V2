@@ -1,0 +1,46 @@
+name: V2 Legacy 7650 Automatic AV Queue
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 * * * *'
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: v2-legacy-7650-av-queue
+  cancel-in-progress: false
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 340
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install audio/video tools
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y ffmpeg
+      - name: Restore last successful queue checkpoint
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p v2/reports/legacy-queue
+          for id in $(gh run list --workflow v2-legacy-7650-av-queue.yml --branch main --limit 30 --json databaseId,status,conclusion --jq '.[] | select(.status == "completed" and .conclusion == "success") | .databaseId'); do
+            if gh run download "$id" --name v2-legacy-7650-checkpoint --dir /tmp/legacy-checkpoint 2>/dev/null && test -s /tmp/legacy-checkpoint/state.json; then
+              cp /tmp/legacy-checkpoint/state.json v2/reports/legacy-queue/state.json
+              echo "Recovered checkpoint from run $id"
+              break
+            fi
+          done
+      - name: Verify next 500 candidate URLs
+        run: |
+          python v2/verify_legacy_7650_queue.py --state v2/reports/legacy-queue/state.json --output v2/reports/legacy-queue/summary.json
+      - name: Preserve checkpoint even if verification fails
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v2-legacy-7650-checkpoint
+          path: |
+            v2/reports/legacy-queue/state.json
+            v2/reports/legacy-queue/summary.json
+          retention-days: 90
+          if-no-files-found: warn
