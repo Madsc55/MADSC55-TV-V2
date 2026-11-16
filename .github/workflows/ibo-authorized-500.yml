@@ -28,6 +28,7 @@ jobs:
           unzip -j -o /tmp/earlier-scan.zip 'IBO_YENI_ADAYLAR*.m3u8' -d /tmp/all-scan/earlier || echo 'Earlier scan artifact contains no matching playlist'
           git clone --depth 1 https://github.com/Madsc55/madsc-tv.git /tmp/old-madsc-tv
           test -d /tmp/old-madsc-tv/.git
+          find /tmp/all-scan -type f -name '*.m3u8' -printf '%p %s bytes\n'
           python3 v2/import_every_archive_both_systems.py --old-repo /tmp/old-madsc-tv --scan-dir /tmp/all-scan
           python3 -m pip install --disable-pip-version-check PyYAML==6.0.2
           python3 v2/test_playlist_invariants.py
