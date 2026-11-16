@@ -2005,6 +2005,34 @@ https://bein-xtra-xumo.amagi.tv/playlist.m3u8
 https://aegis-cloudfront-1.tubi.video/01f6c149-449b-4248-8bda-2278799205ec/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/1l3t5jd.png" group-title="🗂️ YEDEKLER (1146)",BEK SPORTS (720P)
 https://cdn3.wowza.com/5/ZWQ1K2NYTmpFbGsr/BEK-WOWZA-1/smil:BEKPRIMEW.smil/playlist.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/V6Kaqha.png" group-title="🗂️ YEDEKLER (1146)",ACC DİGİTAL NETWORK (1080P)
+https://raycom-accdn-firetv.amagi.tv/playlist.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/TpCkbkT.png" group-title="🗂️ YEDEKLER (1146)",ACC NETWORK (720P)
+http://23.239.31.26:8989/accnetwork/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/XjzK3gZ.png" group-title="🗂️ YEDEKLER (1146)",ARRYADİA (720P)
+http://149.100.11.252:8000/play/a065/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/DBpVeb0.png" group-title="🗂️ YEDEKLER (1146)",ARSENAL (576P)
+https://stream8.cinerama.uz/1414/tracks-v1a1/mono.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/bPWFXkL.png" group-title="🗂️ YEDEKLER (1146)",ATG LİVE (1080P)
+https://kanal75xto-llhls.akamaized.net/live/Data/atg-kanal-15-02a-rr/HLS-Legacy-HL/atg-kanal-15-02a-rr.m3u8
+#EXTINF:-1 tvg-logo="https://web02.antik.sk/assets/img/channels/59cd3407a28c122f4abbc7b01eff7a0c.svg" group-title="🗂️ YEDEKLER (1146)",BALLCASTERZ (1080P)
+http://antik.streaming.tivio.studio/channels/yXDwkH0CbFfkhU7ZnHlT/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/NJsRFud.png" group-title="🗂️ YEDEKLER (1146)",BELARUS-5 (1080P)
+http://stream.mcquack.net/33/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/VBKoLHk.png" group-title="🗂️ YEDEKLER (1146)",BELLATOR MMA
+https://jmp2.uk/plu-5ebc8688f3697d00072f7cf8.m3u8
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/en/thumb/3/39/Big_Ten_Network_Logo.svg/960px-Big_Ten_Network_Logo.svg.png" group-title="🗂️ YEDEKLER (1146)",BİG TEN NETWORK (1080P)
+http://23.237.104.106:8080/USA_BTN/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/BZijfKh.png" group-title="🗂️ YEDEKLER (1146)",BİLLİARD TV (1080P)
+https://pb-wm04vonaerv0k.akamaized.net/billi.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/pPpSJ4u.png" group-title="🗂️ YEDEKLER (1146)",BNT 3 (1080P)
+https://shift03.isp.bg/BNT3_HD/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/R1UjyfX.png" group-title="🗂️ YEDEKLER (1146)",BOKS TV (576P)
+http://stream.mcquack.net/154/index.m3u8
+#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/685029cda1e091e16ff57fc8/colorLogoPNG_1750246109707.png" group-title="🗂️ YEDEKLER (1146)",BRONDBY TV
+https://jmp2.uk/plu-685029cda1e091e16ff57fc8.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/uZr0cXB.png" group-title="🗂️ YEDEKLER (1146)",CACCİA E PESCA (720P)
+http://102.129.186.182:81/cacciapesca/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/Q4A6ci4.png" group-title="🗂️ YEDEKLER (1146)",.BLACK (1080P)
 http://stream.mcquack.net/263/index.m3u8
 #EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/62ba60f059624e000781c436/colorLogoPNG.png" group-title="🗂️ YEDEKLER (1146)",00S REPLAY
@@ -2423,10 +2451,6 @@ https://live-evg8.tv360.bitel.com.pe/bitel/abctelevisionSRT/playlist.m3u8
 https://videostream.shockmedia.com.ar/hls/abtvbariloche/abtvbariloche.m3u8
 #EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/61a52615cbef2500072876e2/colorLogoPNG_1756972226445.png" group-title="🗂️ YEDEKLER (1146)",ACAPULCO SHORE
 https://jmp2.uk/plu-64dab1f835425100080e1e7b.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/V6Kaqha.png" group-title="🗂️ YEDEKLER (1146)",ACC DİGİTAL NETWORK (1080P)
-https://raycom-accdn-firetv.amagi.tv/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/TpCkbkT.png" group-title="🗂️ YEDEKLER (1146)",ACC NETWORK (720P)
-http://23.239.31.26:8989/accnetwork/index.m3u8
 #EXTINF:-1 tvg-logo="https://assets.antenaplay.ro/2026/05/07/BBOXtLtkSKfKAK5pSBag.png" group-title="🗂️ YEDEKLER (1146)",ACCES DİRECT (576P)
 https://live77cdn2.antenaplay.ro/live2_fast/ch6/stream.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/tJl43uM.png" group-title="🗂️ YEDEKLER (1146)",ACCESS HUMBOLDT (1080P)
@@ -3101,10 +3125,6 @@ http://stream.mcquack.net/175/index.m3u8
 http://195.54.52.40/test/index.m3u8
 #EXTINF:-1 tvg-logo="https://arputharyesutv.net/wp-content/uploads/2022/07/AR-LOGO-PNG.png" group-title="🗂️ YEDEKLER (1146)",ARPUTHAR YESU TV (576P)
 https://account33.livebox.co.in/jesushelpshls/live.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/XjzK3gZ.png" group-title="🗂️ YEDEKLER (1146)",ARRYADİA (720P)
-http://149.100.11.252:8000/play/a065/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/DBpVeb0.png" group-title="🗂️ YEDEKLER (1146)",ARSENAL (576P)
-https://stream8.cinerama.uz/1414/tracks-v1a1/mono.m3u8
 #EXTINF:-1 tvg-logo="https://optim.tildacdn.com/tild3134-3836-4338-a138-666666653363/-/format/webp/__.png.webp" group-title="🗂️ YEDEKLER (1146)",ART (576P)
 http://185.23.80.23:8080/ART/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/ecXMjNl.png" group-title="🗂️ YEDEKLER (1146)",ARTE
@@ -3187,8 +3207,6 @@ https://takeoff.jetstre.am/?account=atvijf&file=live&output=playlist.m3u8&protoc
 https://v2.tustreaming.cl/atacamanoticias/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/Y2BqP9m.png" group-title="🗂️ YEDEKLER (1146)",ATFAL & MAWAHEB TV (1080P)
 https://5d658d7e9f562.streamlock.net/atfal1.com/atfal2/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/bPWFXkL.png" group-title="🗂️ YEDEKLER (1146)",ATG LİVE (1080P)
-https://kanal75xto-llhls.akamaized.net/live/Data/atg-kanal-15-02a-rr/HLS-Legacy-HL/atg-kanal-15-02a-rr.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/s4fqNMt.png" group-title="🗂️ YEDEKLER (1146)",ATL 26
 https://securestream11.champds.com/LIVE/AtlantaGALIVE/AtlantaGALIVE.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/MOGQAns.png" group-title="🗂️ YEDEKLER (1146)",ATLANTA CHANNEL (720P)
@@ -3397,8 +3415,6 @@ https://balapantv-stream.qazcdn.com/balapantv/balapantv/playlist.m3u8
 https://stream.iptvservice.eu/hls/balatontv.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/P3whqna.png" group-title="🗂️ YEDEKLER (1146)",BALİKPAPAN TV (720P)
 http://122.248.43.242:1935/BALIKPAPANTV/_definst_/myStream/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://web02.antik.sk/assets/img/channels/59cd3407a28c122f4abbc7b01eff7a0c.svg" group-title="🗂️ YEDEKLER (1146)",BALLCASTERZ (1080P)
-http://antik.streaming.tivio.studio/channels/yXDwkH0CbFfkhU7ZnHlT/index.m3u8
 #EXTINF:-1 tvg-logo="https://jiotvimages.cdn.jio.com/dare_images/images/Balle_Balle_TV.png" group-title="🗂️ YEDEKLER (1146)",BALLE BALLE (1080P)
 https://mcncdndigital.com/worldpunjabitv/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/35tm57M.png" group-title="🗂️ YEDEKLER (1146)",BALTİCUM TV (576P)
@@ -3513,14 +3529,10 @@ https://ngtrk.dc.beltelecom.by/ngtrk/smil:belarus2.smil/playlist.m3u8
 https://ngtrk.dc.beltelecom.by/ngtrk/smil:belarus24.smil/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/JkcDycn.png" group-title="🗂️ YEDEKLER (1146)",BELARUS-3 (1080P)
 https://ngtrk.dc.beltelecom.by/ngtrk/smil:belarus3.smil/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/NJsRFud.png" group-title="🗂️ YEDEKLER (1146)",BELARUS-5 (1080P)
-http://stream.mcquack.net/33/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/EEirvyx.png" group-title="🗂️ YEDEKLER (1146)",BELGOROD 24 (1080P)
 https://belnovosti.cdn.easyhoster.ru:8443/stream.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/bORM4rt.png" group-title="🗂️ YEDEKLER (1146)",BELLA ABANQUİNA TV (1080P)
 https://live-evg8.tv360.bitel.com.pe/bitel/bellaabanquinaSRT/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/VBKoLHk.png" group-title="🗂️ YEDEKLER (1146)",BELLATOR MMA
-https://jmp2.uk/plu-5ebc8688f3697d00072f7cf8.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/XqQ3kCs.png" group-title="🗂️ YEDEKLER (1146)",BELLAVİSİON (1080P)
 https://fox.hostlagarto.com:8081/bellavision8hd/tracks-v1a1/mono.m3u8
 #EXTINF:-1 tvg-logo="https://bemmaistv.com.br/wp-content/uploads/2025/08/0LASAmOtt4-150x150.jpg" group-title="🗂️ YEDEKLER (1146)",BEM MAİS TV (1080P)
@@ -3641,8 +3653,6 @@ https://bibeltv03.iptv-playoutcenter.de/bibeltv03/bibeltv03.stream_1/playlist.m3
 http://live-bigasia.cdnvideo.ru/bigasia/bigasia.smil/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/6661f11a41af6400080e90d8/colorLogoPNG.png" group-title="🗂️ YEDEKLER (1146)",BİG BROTHER
 https://jmp2.uk/plu-6661f11a41af6400080e90d8.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/en/thumb/3/39/Big_Ten_Network_Logo.svg/960px-Big_Ten_Network_Logo.svg.png" group-title="🗂️ YEDEKLER (1146)",BİG TEN NETWORK (1080P)
-http://23.237.104.106:8080/USA_BTN/index.m3u8
 #EXTINF:-1 tvg-logo="https://shahid.mbc.net/mediaObject/4e042cb6-500b-4e4c-a8ca-21a5a7a7a71b" group-title="🗂️ YEDEKLER (1146)",BİG TİME PLUS (1080P)
 https://shd-gcp-live.edgenextcdn.net/live/bitmovin-big-time-plus/924283f994779a311c1389698ff7e736/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.postimg.cc/rpHrRxR5/big_tv_malayalam.png" group-title="🗂️ YEDEKLER (1146)",BİG TV 24X7 (1080P)
@@ -3653,8 +3663,6 @@ https://103f01c3ff79408e83c9212f8a374ecc.mediatailor.us-east-1.amazonaws.com/v1/
 http://stream.mcquack.net/340/index.m3u8
 #EXTINF:-1 tvg-logo="https://static.wikia.nocookie.net/logopedia/images/d/d8/Bihortvlogo.png/revision/latest/scale-to-width-down/1000?cb=20241223065621" group-title="🗂️ YEDEKLER (1146)",BİHOR TV (576P)
 https://bihor-tv.ro/hls/bihortv.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/BZijfKh.png" group-title="🗂️ YEDEKLER (1146)",BİLLİARD TV (1080P)
-https://pb-wm04vonaerv0k.akamaized.net/billi.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/iTH9Z0j.png" group-title="🗂️ YEDEKLER (1146)",BİLYONARYO NEWS CHANNEL (1080P)
 https://amg19223-amg19223c11-amgplt0352.playout.now3.amagi.tv/playlist/amg19223-amg19223c11-amgplt0352/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/kEETRln.png" group-title="🗂️ YEDEKLER (1146)",BİNGE (720P)
@@ -3701,8 +3709,6 @@ https://live-evg8.tv360.bitel.com.pe/bitel/bnbSRT/playlist.m3u8
 https://bnr-cache-cdp.triple-it.nl/studio/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/7JU9b5j.png" group-title="🗂️ YEDEKLER (1146)",BNT 1 (1080P)
 https://shift03.isp.bg/BNT1_HD/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/pPpSJ4u.png" group-title="🗂️ YEDEKLER (1146)",BNT 3 (1080P)
-https://shift03.isp.bg/BNT3_HD/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/Lw8b3yu.png" group-title="🗂️ YEDEKLER (1146)",BNT 4 (1080P)
 https://shift03.isp.bg/BNT4_HD/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/ZqhizdP.png" group-title="🗂️ YEDEKLER (1146)",BOAS NOVAS (1080P)
@@ -3721,8 +3727,6 @@ http://88.212.15.50/live/test_bober/playlist.m3u8
 https://fox.hostlagarto.com:8081/bocachicatv/tracks-v1a1/mono.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/rabKj9i.png" group-title="🗂️ YEDEKLER (1146)",BOİNG (720P)
 https://boing.akamaized.net/6380392800112/eu-central-1/6284318116001/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJob3N0Ijoib3dwbnN1LmVncmVzcy5haGc3NmwiLCJhY2NvdW50X2lkIjoiNjI4NDMxODExNjAwMSIsImVobiI6ImJvaW5nLmFrYW1haXplZC5uZXQiLCJpc3MiOiJibGl2ZS1wbGF5YmFjay1zb3VyY2UtYXBpIiwic3ViIjoicGF0aG1hcHRva2VuIiwiYXVkIjpbIjYyODQzMTgxMTYwMDEiXSwianRpIjoiNjM4MDM5MjgwMDExMiJ9.0RWQ0yZrauU0cHSnbpBYhgyRPeq1Lyw6nOn_fo7_cg0/playlist-hls.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/R1UjyfX.png" group-title="🗂️ YEDEKLER (1146)",BOKS TV (576P)
-http://stream.mcquack.net/154/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/mcNjuuO.png" group-title="🗂️ YEDEKLER (1146)",BOKTV (720P)
 https://livestream2.bokradio.co.za/hls/Bok5c.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/eajSRFo.png" group-title="🗂️ YEDEKLER (1146)",BOL ENTERTAİNMENT (720P)
@@ -3831,8 +3835,6 @@ https://jmp2.uk/plu-638e11951177840007fdd6b2.m3u8
 https://mumt03.tangotv.in/Dsly5z3HBRKNEWS/index.m3u8
 #EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/65cba73611ced700082123bc/colorLogoPNG.png" group-title="🗂️ YEDEKLER (1146)",BROAD CİTY
 https://jmp2.uk/plu-65cba73611ced700082123bc.m3u8
-#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/685029cda1e091e16ff57fc8/colorLogoPNG_1750246109707.png" group-title="🗂️ YEDEKLER (1146)",BRONDBY TV
-https://jmp2.uk/plu-685029cda1e091e16ff57fc8.m3u8
 #EXTINF:-1 tvg-logo="https://i.ibb.co/QFmyjZN/unnamed-1.png" group-title="🗂️ YEDEKLER (1146)",BRUNO MASİ TV (1080P)
 https://rds3.desdeparaguay.net/brunomasitv/brunomasitv/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/IDotHmQ.png" group-title="🗂️ YEDEKLER (1146)",BST (1080P)
@@ -3905,8 +3907,6 @@ https://tv.ctvcamau.vn/live/tv/tv.m3u8
 https://stream.arcast.com.ar/casse/casse/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/FfhOGR9.png" group-title="🗂️ YEDEKLER (1146)",CABLENOTİCİAS (1080P)
 http://181.78.211.244:8005/play/a09u/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/uZr0cXB.png" group-title="🗂️ YEDEKLER (1146)",CACCİA E PESCA (720P)
-http://102.129.186.182:81/cacciapesca/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/lafmmRa.jpeg" group-title="🗂️ YEDEKLER (1146)",CAD TV
 https://videoserver.tmcreativos.com:19360/dcsajkpvrh/dcsajkpvrh.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/BxQPPAA.png" group-title="🗂️ YEDEKLER (1146)",CADENA A (720P)
