@@ -1,6 +1,6 @@
 {
   "base_sha256": "95a9e12aef9955285d1859713b1ac18a169a07497a72c945713604e0b58e0ffb",
-  "result_sha256": "6f90b23c87556fdc2caaec9617aef3f911658c0bfcebcea19ac1417d871589e4",
+  "result_sha256": "dfcf77cd6147b0907b17db862364dee98f51d7d4013174bbedfc83f6e2ade82d",
   "operation": "move",
   "request": "User-authorized: archive every backup channel below ANTENAPLAY EVENTS (576P), including .BLACK, into the existing 2881-channel foreign archive; keep first 285 backups and all 838 main channels unchanged.",
   "channels": [
