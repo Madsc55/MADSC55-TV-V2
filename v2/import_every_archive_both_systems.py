@@ -69,7 +69,7 @@ def main():
         raise SystemExit("Existing backup order changed")
     tests=TEST.read_text(encoding="utf-8")
     if tests.count("17829")!=1 or tests.count("16991")<3:raise SystemExit("Unexpected test baseline")
-    tests=tests.replace("17829",str(838+total)).replace("16991",str(total)
+    tests=tests.replace("17829",str(838+total)).replace("16991",str(total))
     manifest={"base_sha256":hashlib.sha256(original).hexdigest(),"result_sha256":hashlib.sha256(result.encode()).hexdigest(),"operation":"category","request":"User authorized all old and V2 playlists including all archives in YEDEKLER without deleting original archive files or protected 838 channels.","channels":[f"{len(added)} additional unique URLs from {len(sources)} playlist files; {invalid} invalid records skipped; AV not assumed"]}
     PLAY.write_text(result,encoding="utf-8");TEST.write_text(tests,encoding="utf-8")
     MANIFEST.write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
