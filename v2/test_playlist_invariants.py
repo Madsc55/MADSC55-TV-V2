@@ -42,19 +42,15 @@ def main():
     # YEDEKLER is a user-controlled review area; its internal order may change.
     assert sum(x["name"] == "TRT 1 1440P QHD" for x in backups) == 1, "Duplicate or missing TRT 1"
     assert sum(x["name"] == "DHA CANLI 720P HD" for x in backups) == 1, "Duplicate or missing DHA"
-    # Positions 39-4002 were safely moved to the foreign archive.
-    archive = ROOT / "v2" / "arsiv" / "yabanci_yedekler_2026-11-02_3964.m3u8"
-    assert archive.exists(), "Foreign archive is missing"
+    # The sole retained foreign archive is the consolidated 2881-channel archive.
+    archive = ROOT / "v2" / "arsiv" / "yabanci_kanallar_2026-11-16_2881.m3u8"
+    assert archive.exists(), "Consolidated foreign archive is missing"
     archived = list(entries(archive.read_text(encoding="utf-8-sig")))
-    assert len(archived) == 3964, "Foreign archive lost channels"
-    # Protect exact original archive records and their order across future changes.
-    # Stream URL alone is insufficient: names, logos and metadata must survive.
-    assert all(x["url"].startswith(("https://", "http://")) for x in archived), "Invalid archived stream URL"
-    # Historical archive may intentionally contain repeated URLs with different metadata.
-    # Do not fail preservation tests merely because historical records share an address.
-    assert all(x["name"].strip() for x in archived), "Archived channel name missing"
+    assert len(archived) == 2881, "Consolidated foreign archive lost channels"
+    assert len({x["url"] for x in archived}) == 2881, "Duplicate foreign archive stream URLs"
+    assert all(x["url"].startswith(("https://", "http://")) and x["name"].strip() for x in archived), "Invalid foreign archive record"
+    assert not (ROOT / "v2" / "arsiv" / "yabanci_yedekler_2026-11-02_3964.m3u8").exists(), "Old foreign archive must not be retained"
 
-    assert len(archived) == 3964, "Historical foreign archive must remain intact"
     # The approved-baseline safety gate verifies every backup record is retained.
 
     assert not any(x["name"].startswith(("TRT Arabi", "TRT World")) for x in channels), "Unwanted foreign-language trials remain"
