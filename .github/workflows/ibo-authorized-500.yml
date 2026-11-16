@@ -33,4 +33,4 @@ jobs:
           git add MADSC55_TV_IBO_CALISANLAR_TEST.m3u8 v2/test_playlist_invariants.py v2/ibo_authorized_change.json
           git commit -m 'Append 1000 scan candidates to IBO YEDEKLER'
           git push -u origin HEAD
-          gh pr create --base main --head ibo-500-import-${{ github.run_id }} --title 'IBO: Append 1000 new YEDEKLER candidates' --body 'Preserve 838 protected channels and 285 existing YEDEKLER entries; append 1000 unique untested candidates.'
+          gh pr create --base main --head ibo-1000-import-${{ github.run_id }} --title 'IBO: Append 1000 new YEDEKLER candidates' --body 'Preserve 838 protected channels and 285 existing YEDEKLER entries; append 1000 unique untested candidates.'
