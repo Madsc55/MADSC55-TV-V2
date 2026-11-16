@@ -1675,573 +1675,573 @@ http://b01c02nl.mediatriple.net/videoonlylive/mtisvwurbfcyslive/broadcast_58d915
 https://b01c02nl.mediatriple.net/videoonlylive/mtisvwurbfcyslive/broadcast_58d915bd40efc.smil/mt_0.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="VAV TV" tvg-logo="https://i.imgur.com/jw0gB8L.png" group-title="🕌 DİNİ (17)",VAV TV 1080P FHD
 https://playlist.fasttvcdn.com/pl/rfrk9821hdy9dayo8wfyha/kltr-sanat-tv/playlist.m3u8
-#EXTINF:-1 tvg-id="af0zo9et4xguwsk" tvg-name="TRT 1" tvg-logo="https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/turkey/trt-1-tr.png" group-title="🗂️ YEDEKLER (4110)",TRT 1 1440P QHD
+#EXTINF:-1 tvg-id="af0zo9et4xguwsk" tvg-name="TRT 1" tvg-logo="https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/turkey/trt-1-tr.png" group-title="🗂️ YEDEKLER (285)",TRT 1 1440P QHD
 https://tv-trt1.medya.trt.com.tr/master.m3u8
-#EXTINF:-1 tvg-id="" tvg-name="DHA CANLI" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/9/9a/DHA_logo.png" group-title="🗂️ YEDEKLER (4110)",DHA CANLI 720P HD
+#EXTINF:-1 tvg-id="" tvg-name="DHA CANLI" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/9/9a/DHA_logo.png" group-title="🗂️ YEDEKLER (285)",DHA CANLI 720P HD
 https://603c568fccdf5.streamlock.net/live/dhaweb1_C5efC/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/TRT_Spor_Y%C4%B1ld%C4%B1z_Logo.svg/960px-TRT_Spor_Y%C4%B1ld%C4%B1z_Logo.svg.png" group-title="🗂️ YEDEKLER (4110)",TRT SPOR YİLDİZ (1440P) [GEO-BLOCKED]
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/TRT_Spor_Y%C4%B1ld%C4%B1z_Logo.svg/960px-TRT_Spor_Y%C4%B1ld%C4%B1z_Logo.svg.png" group-title="🗂️ YEDEKLER (285)",TRT SPOR YİLDİZ (1440P) [GEO-BLOCKED]
 https://trt.daioncdn.net/trtspor-yildiz/master.m3u8?app=web&platform=trtspor
-#EXTINF:-1 tvg-logo="https://i.ibb.co/tHQpWvn/24.png" group-title="🗂️ YEDEKLER (4110)",24
+#EXTINF:-1 tvg-logo="https://i.ibb.co/tHQpWvn/24.png" group-title="🗂️ YEDEKLER (285)",24
 https://turkmedya-live.ercdn.net/tv24/tv24_720p.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Cartoon_Network_2010_logo.svg/960px-Cartoon_Network_2010_logo.svg.png" group-title="🗂️ YEDEKLER (4110)",CARTOON NETWORK (TURKİYE)
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Cartoon_Network_2010_logo.svg/960px-Cartoon_Network_2010_logo.svg.png" group-title="🗂️ YEDEKLER (285)",CARTOON NETWORK (TURKİYE)
 http://176.65.153.40:6002/play/a013/index.m3u8
-#EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/turkey/kanal-7-tr.png" group-title="🗂️ YEDEKLER (4110)",KANAL 7
+#EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/turkey/kanal-7-tr.png" group-title="🗂️ YEDEKLER (285)",KANAL 7
 https://kanal7-live.daioncdn.net/kanal7/kanal7.m3u8
-#EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/turkey/kanal-7-tr.png" group-title="🗂️ YEDEKLER (4110)",KANAL 7
+#EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/turkey/kanal-7-tr.png" group-title="🗂️ YEDEKLER (285)",KANAL 7
 https://kanal7-live.daioncdn.net/kanal7/kanal7_1080p.m3u8
-#EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/turkey/kanal-7-tr.png" group-title="🗂️ YEDEKLER (4110)",KANAL 7 AVRUPA
+#EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/turkey/kanal-7-tr.png" group-title="🗂️ YEDEKLER (285)",KANAL 7 AVRUPA
 https://livetv.radyotvonline.net/kanal7live/kanal7avr/chunklist.m3u8
-#EXTINF:-1 tvg-logo="https://d3ckc0u56niq67.cloudfront.net/conf/images/show_tv_SpJ.png" group-title="🗂️ YEDEKLER (4110)",SHOW TV
+#EXTINF:-1 tvg-logo="https://d3ckc0u56niq67.cloudfront.net/conf/images/show_tv_SpJ.png" group-title="🗂️ YEDEKLER (285)",SHOW TV
 https://rmtftbjlne.turknet.ercdn.net/bpeytmnqyp/showtv/showtv.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/TRT_%C3%87ocuk_logo_%282021%29.svg/960px-TRT_%C3%87ocuk_logo_%282021%29.svg.png" group-title="🗂️ YEDEKLER (4110)",TRT COCUK (1440P)
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/TRT_%C3%87ocuk_logo_%282021%29.svg/960px-TRT_%C3%87ocuk_logo_%282021%29.svg.png" group-title="🗂️ YEDEKLER (285)",TRT COCUK (1440P)
 https://tv-trtcocuk.medya.trt.com.tr/master.m3u8
-#EXTINF:-1 tvg-logo="http://epg.one/img/3829.png" group-title="🗂️ YEDEKLER (4110)",ER TV TR
+#EXTINF:-1 tvg-logo="http://epg.one/img/3829.png" group-title="🗂️ YEDEKLER (285)",ER TV TR
 http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6768/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/BxpdvsG.png" group-title="🗂️ YEDEKLER (4110)",SOZCU TV (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/BxpdvsG.png" group-title="🗂️ YEDEKLER (285)",SOZCU TV (1080P)
 https://raw.githubusercontent.com/yaskar661-lgtm/stream/refs/heads/main/filbox/szchd.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/JgUzRH8.png" group-title="🗂️ YEDEKLER (4110)",TRT MUZIK
+#EXTINF:-1 tvg-logo="https://i.imgur.com/JgUzRH8.png" group-title="🗂️ YEDEKLER (285)",TRT MUZIK
 https://stream8.cinerama.uz/1208/tracks-v1a1/mono.m3u8
-#EXTINF:-1 tvg-logo="https://www.nettv.live/uploads/allimg/23/1-2302251353000-L.jpg" group-title="🗂️ YEDEKLER (4110)",RIZE TURK HD
+#EXTINF:-1 tvg-logo="https://www.nettv.live/uploads/allimg/23/1-2302251353000-L.jpg" group-title="🗂️ YEDEKLER (285)",RIZE TURK HD
 https://yayin.rizeturk.com:3777/hybrid/play.m3u8
-#EXTINF:-1 tvg-logo="https://i.ibb.co/F5K5xs9/powerturk-taptaze.png" group-title="🗂️ YEDEKLER (4110)",POWER TURK TAPTAZE
+#EXTINF:-1 tvg-logo="https://i.ibb.co/F5K5xs9/powerturk-taptaze.png" group-title="🗂️ YEDEKLER (285)",POWER TURK TAPTAZE
 http://livetv.powerapp.com.tr/pturktaptaze/taptaze.smil/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.ibb.co/0JcxnSL/trt-2.png" group-title="🗂️ YEDEKLER (4110)",TRT 2
+#EXTINF:-1 tvg-logo="https://i.ibb.co/0JcxnSL/trt-2.png" group-title="🗂️ YEDEKLER (285)",TRT 2
 https://tv-trt2.medya.trt.com.tr/master_720.m3u8
-#EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/turkey/trt-1-tr.png" group-title="🗂️ YEDEKLER (4110)",TRT 1
+#EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/turkey/trt-1-tr.png" group-title="🗂️ YEDEKLER (285)",TRT 1
 https://trt.daioncdn.net/trt-1/master.m3u8?app=web
-#EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/turkey/trt-1-tr.png" group-title="🗂️ YEDEKLER (4110)",TRT 1
+#EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/turkey/trt-1-tr.png" group-title="🗂️ YEDEKLER (285)",TRT 1
 https://tv-trt1.medya.trt.com.tr/master_480.m3u8
-#EXTINF:-1 tvg-logo="https://d3ckc0u56niq67.cloudfront.net/conf/images/show_tv_SpJ.png" group-title="🗂️ YEDEKLER (4110)",SHOW TV
+#EXTINF:-1 tvg-logo="https://d3ckc0u56niq67.cloudfront.net/conf/images/show_tv_SpJ.png" group-title="🗂️ YEDEKLER (285)",SHOW TV
 http://ciner.daioncdn.net/showtv/showtv_1080p.m3u8?app=showtv_web
-#EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/turkey/kanal-d-tr.png" group-title="🗂️ YEDEKLER (4110)",KANAL D
+#EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/turkey/kanal-d-tr.png" group-title="🗂️ YEDEKLER (285)",KANAL D
 https://demiroren.daioncdn.net/kanald/kanald_1080p.m3u8?app=kanald_web
-#EXTINF:-1 tvg-logo="https://i.ibb.co/DVRzygX/bloomberg.jpg" group-title="🗂️ YEDEKLER (4110)",BLOOMBERG HT
+#EXTINF:-1 tvg-logo="https://i.ibb.co/DVRzygX/bloomberg.jpg" group-title="🗂️ YEDEKLER (285)",BLOOMBERG HT
 https://ciner.daioncdn.net/bloomberght/bloomberght_720p.m3u8
-#EXTINF:-1 tvg-logo="https://i.ibb.co/Bt6frts/trthaber.png" group-title="🗂️ YEDEKLER (4110)",TRT HABER (BACKUP)
+#EXTINF:-1 tvg-logo="https://i.ibb.co/Bt6frts/trthaber.png" group-title="🗂️ YEDEKLER (285)",TRT HABER (BACKUP)
 https://tv.ensonhaber.com/trthaber/trthaber.m3u8
-#EXTINF:-1 tvg-logo="https://i.ibb.co/wdwm0fn/haberturk.png" group-title="🗂️ YEDEKLER (4110)",HABER TÜRK (BACKUP)
+#EXTINF:-1 tvg-logo="https://i.ibb.co/wdwm0fn/haberturk.png" group-title="🗂️ YEDEKLER (285)",HABER TÜRK (BACKUP)
 https://ciner.daioncdn.net/haberturktv/haberturktv.m3u8?app=c98ab0b0-50cc-495b-bb37-778e91f5ff5b
-#EXTINF:-1 tvg-logo="https://i.ibb.co/wdwm0fn/haberturk.png" group-title="🗂️ YEDEKLER (4110)",HABER TÜRK (BACKUP)
+#EXTINF:-1 tvg-logo="https://i.ibb.co/wdwm0fn/haberturk.png" group-title="🗂️ YEDEKLER (285)",HABER TÜRK (BACKUP)
 https://ensonhaber-live.ercdn.net/haberturk/haberturk.m3u8
-#EXTINF:-1 tvg-logo="https://i.ibb.co/BtYMK4q/halk21a.png" group-title="🗂️ YEDEKLER (4110)",HALK TV (BACKUP)
+#EXTINF:-1 tvg-logo="https://i.ibb.co/BtYMK4q/halk21a.png" group-title="🗂️ YEDEKLER (285)",HALK TV (BACKUP)
 https://halktv.daioncdn.net/halktv/halktv.m3u8?app=c86957d3-74a7-44da-9ad2-dc358c769609
-#EXTINF:-1 tvg-logo="https://i.ibb.co/s9mVqWH/kanald.png" group-title="🗂️ YEDEKLER (4110)",KANAL D
+#EXTINF:-1 tvg-logo="https://i.ibb.co/s9mVqWH/kanald.png" group-title="🗂️ YEDEKLER (285)",KANAL D
 https://live.duhnet.tv/S2/HLS_LIVE/kanalddainp/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.ibb.co/d6c87Km/trt122.png" group-title="🗂️ YEDEKLER (4110)",TRT 1 (BACKUP)
+#EXTINF:-1 tvg-logo="https://i.ibb.co/d6c87Km/trt122.png" group-title="🗂️ YEDEKLER (285)",TRT 1 (BACKUP)
 https://tv-trt1-esdai.medya.trt.com.tr/master.m3u8
-#EXTINF:-1 tvg-logo="https://i.ibb.co/d6c87Km/trt122.png" group-title="🗂️ YEDEKLER (4110)",TRT 1 (BACKUP)
+#EXTINF:-1 tvg-logo="https://i.ibb.co/d6c87Km/trt122.png" group-title="🗂️ YEDEKLER (285)",TRT 1 (BACKUP)
 https://trt.daioncdn.net/trt-1/master.m3u8?app=ed3904e8-737b-4a5e-856a-1b0d7a0a94e2
-#EXTINF:-1 tvg-logo="https://i.ibb.co/d6c87Km/trt122.png" group-title="🗂️ YEDEKLER (4110)",TRT 1 (BACKUP)
+#EXTINF:-1 tvg-logo="https://i.ibb.co/d6c87Km/trt122.png" group-title="🗂️ YEDEKLER (285)",TRT 1 (BACKUP)
 https://trt.daioncdn.net/trt-1/master.m3u8?app=e435840d-2653-45a3-afef-082d4ea998f3
-#EXTINF:-1 tvg-logo="https://i.ibb.co/d6c87Km/trt122.png" group-title="🗂️ YEDEKLER (4110)",TRT 1 (BACKUP)
+#EXTINF:-1 tvg-logo="https://i.ibb.co/d6c87Km/trt122.png" group-title="🗂️ YEDEKLER (285)",TRT 1 (BACKUP)
 http://89.187.191.41/TRT-1-HD-TR/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.ibb.co/B6N9KsN/powerturk22.png" group-title="🗂️ YEDEKLER (4110)",POWER TÜRK
+#EXTINF:-1 tvg-logo="https://i.ibb.co/B6N9KsN/powerturk22.png" group-title="🗂️ YEDEKLER (285)",POWER TÜRK
 http://livetv.powerapp.com.tr/powerturkTV/powerturkhd.smil/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.ibb.co/rZxNWKv/pslow.png" group-title="🗂️ YEDEKLER (4110)",POWER TÜRK SLOW
+#EXTINF:-1 tvg-logo="https://i.ibb.co/rZxNWKv/pslow.png" group-title="🗂️ YEDEKLER (285)",POWER TÜRK SLOW
 http://livetv.powerapp.com.tr/pturkslow/slow.smil/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.ibb.co/FgCW885/pturkakustik.png" group-title="🗂️ YEDEKLER (4110)",POWER TÜRK AKUSTİK
+#EXTINF:-1 tvg-logo="https://i.ibb.co/FgCW885/pturkakustik.png" group-title="🗂️ YEDEKLER (285)",POWER TÜRK AKUSTİK
 http://livetv.powerapp.com.tr/pturkakustik/akustik.smil/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.ibb.co/jJWLsCQ/nr1ask.jpg" group-title="🗂️ YEDEKLER (4110)",NUMBER ONE TÜRK ASK
+#EXTINF:-1 tvg-logo="https://i.ibb.co/jJWLsCQ/nr1ask.jpg" group-title="🗂️ YEDEKLER (285)",NUMBER ONE TÜRK ASK
 https://b01c02nl.mediatriple.net/videoonlylive/mtkgeuihrlfwlive/broadcast_5c9e18f9c54e6.smil/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.ibb.co/824MwJ6/nr1damar.jpg" group-title="🗂️ YEDEKLER (4110)",NUMBER ONE TÜRK DAMAR
+#EXTINF:-1 tvg-logo="https://i.ibb.co/824MwJ6/nr1damar.jpg" group-title="🗂️ YEDEKLER (285)",NUMBER ONE TÜRK DAMAR
 https://b01c02nl.mediatriple.net/videoonlylive/mtkgeuihrlfwlive/broadcast_5c9e19877b340.smil/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.ibb.co/LR5v10B/nr1dance.jpg" group-title="🗂️ YEDEKLER (4110)",NUMBER ONE TÜRK DANCE
+#EXTINF:-1 tvg-logo="https://i.ibb.co/LR5v10B/nr1dance.jpg" group-title="🗂️ YEDEKLER (285)",NUMBER ONE TÜRK DANCE
 https://b01c02nl.mediatriple.net/videoonlylive/mtkgeuihrlfwlive/broadcast_5c9e2aa89e721.smil/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.ibb.co/mHt7rQf/Tryerel.png" group-title="🗂️ YEDEKLER (4110)",ETV KAYSERİ
+#EXTINF:-1 tvg-logo="https://i.ibb.co/mHt7rQf/Tryerel.png" group-title="🗂️ YEDEKLER (285)",ETV KAYSERİ
 https://live.artidijitalmedya.com/artidijital_etv/etv/chunks.m3u8
-#EXTINF:-1 tvg-logo="https://i.ibb.co/mHt7rQf/Tryerel.png" group-title="🗂️ YEDEKLER (4110)",BRÜKSEL TÜRK
+#EXTINF:-1 tvg-logo="https://i.ibb.co/mHt7rQf/Tryerel.png" group-title="🗂️ YEDEKLER (285)",BRÜKSEL TÜRK
 https://live.euromediacenter.com/brukselturk/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.ibb.co/mHt7rQf/Tryerel.png" group-title="🗂️ YEDEKLER (4110)",BALKAN TÜRK
+#EXTINF:-1 tvg-logo="https://i.ibb.co/mHt7rQf/Tryerel.png" group-title="🗂️ YEDEKLER (285)",BALKAN TÜRK
 https://live.euromediacenter.com/balkanturktv/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.ibb.co/HXKrJRC/blght22.png" group-title="🗂️ YEDEKLER (4110)",BLOOMBERG HT
+#EXTINF:-1 tvg-logo="https://i.ibb.co/HXKrJRC/blght22.png" group-title="🗂️ YEDEKLER (285)",BLOOMBERG HT
 https://ciner.daioncdn.net/bloomberght/bloomberght.m3u8?app=web&ce=3
-#EXTINF:-1 tvg-logo="https://i.ibb.co/4SsJS4R/dreamturk.png" group-title="🗂️ YEDEKLER (4110)",DREAM TÜRK
+#EXTINF:-1 tvg-logo="https://i.ibb.co/4SsJS4R/dreamturk.png" group-title="🗂️ YEDEKLER (285)",DREAM TÜRK
 http://live.duhnet.tv/S2/HLS_LIVE/dreamturknp/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://d3ckc0u56niq67.cloudfront.net/conf/images/show_tv_SpJ.png" group-title="🗂️ YEDEKLER (4110)",SHOW TV
+#EXTINF:-1 tvg-logo="https://d3ckc0u56niq67.cloudfront.net/conf/images/show_tv_SpJ.png" group-title="🗂️ YEDEKLER (285)",SHOW TV
 https://ciner.daioncdn.net/showtv/showtv.m3u8?app=showtv_web
-#EXTINF:-1 tvg-logo="https://i.ibb.co/HXMLHcS/lalegul.jpg" group-title="🗂️ YEDEKLER (4110)",LALEGÜL TV
+#EXTINF:-1 tvg-logo="https://i.ibb.co/HXMLHcS/lalegul.jpg" group-title="🗂️ YEDEKLER (285)",LALEGÜL TV
 https://lbl.netmedya.net/hls/lalegultv.m3u8?checkedby:iptvcat.net
-#EXTINF:-1 tvg-logo="https://i.imgur.com/e9ca6gc.png" group-title="🗂️ YEDEKLER (4110)",OLAYTÜRK KAYSERI (720P) [GEO-BLOCKED]
+#EXTINF:-1 tvg-logo="https://i.imgur.com/e9ca6gc.png" group-title="🗂️ YEDEKLER (285)",OLAYTÜRK KAYSERI (720P) [GEO-BLOCKED]
 https://live.artidijitalmedya.com/artidijital_olayturk/olayturk/playlist.m3u8?checkedby:iptvcat.net
-#EXTINF:-1 tvg-logo="https://i.imgur.com/yfPTvRx.png" group-title="🗂️ YEDEKLER (4110)",TRT EBA TV ORTAOKUL  ULUSAL
+#EXTINF:-1 tvg-logo="https://i.imgur.com/yfPTvRx.png" group-title="🗂️ YEDEKLER (285)",TRT EBA TV ORTAOKUL  ULUSAL
 https://tv-e-okul01.medya.trt.com.tr/master_720.m3u8
-#EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/turkey/kanal-d-tr.png" group-title="🗂️ YEDEKLER (4110)",KANAL D HD  EKSTRA
+#EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/turkey/kanal-d-tr.png" group-title="🗂️ YEDEKLER (285)",KANAL D HD  EKSTRA
 https://demiroren.daioncdn.net/kanald/kanald_1080p.m3u8?app=da2109ea-5dfe-4107-89ab-23593336ed61&ce=3
-#EXTINF:-1 tvg-logo="https://m.yilmaztv.cc/logo/rize-turk.jpg?t=1696693881" group-title="🗂️ YEDEKLER (4110)",RIZE TÜRK  EKSTRA
+#EXTINF:-1 tvg-logo="https://m.yilmaztv.cc/logo/rize-turk.jpg?t=1696693881" group-title="🗂️ YEDEKLER (285)",RIZE TÜRK  EKSTRA
 https://yayin.rizeturk.com:3777/multi_web/play.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/FQKPjsm.png" group-title="🗂️ YEDEKLER (4110)",KENT TÜRK TV  KAYSERİ
+#EXTINF:-1 tvg-logo="https://i.imgur.com/FQKPjsm.png" group-title="🗂️ YEDEKLER (285)",KENT TÜRK TV  KAYSERİ
 https://live.artidijitalmedya.com/artidijital_kentturktv/kentturktv/chunks.m3u8
-#EXTINF:-1 tvg-logo="https://m.yilmaztv.cc/logo/olay-turk-kayseri-tv.jpg?t=1696665170" group-title="🗂️ YEDEKLER (4110)",OLAY TÜRK KAYSERİ TV  KAYSERİ
+#EXTINF:-1 tvg-logo="https://m.yilmaztv.cc/logo/olay-turk-kayseri-tv.jpg?t=1696665170" group-title="🗂️ YEDEKLER (285)",OLAY TÜRK KAYSERİ TV  KAYSERİ
 https://live.artidijitalmedya.com/artidijital_olayturk/olayturk/supersatforum_chunks.m3u8
-#EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/turkey/kanal-d-tr.png" group-title="🗂️ YEDEKLER (4110)",KANAL D PO SCTE
+#EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/turkey/kanal-d-tr.png" group-title="🗂️ YEDEKLER (285)",KANAL D PO SCTE
 https://live.duhnet.tv/S2/HLS_LIVE/kanalddainp/track_4_1250/playlist.m3u8
-#EXTINF:-1 tvg-logo="http://2.bp.blogspot.com/-TfR0buPRv8E/Xk15IVF3BAI/AAAAAAAAYEs/3a917DuF23kDxvp8B4948f6Hllbelp97QCLcBGAsYHQ/s1600/powerturk.jpg" group-title="🗂️ YEDEKLER (4110)",POWER TURK HD
+#EXTINF:-1 tvg-logo="http://2.bp.blogspot.com/-TfR0buPRv8E/Xk15IVF3BAI/AAAAAAAAYEs/3a917DuF23kDxvp8B4948f6Hllbelp97QCLcBGAsYHQ/s1600/powerturk.jpg" group-title="🗂️ YEDEKLER (285)",POWER TURK HD
 https://livetv.powerapp.com.tr/powerturkTV/powerturkhd.smil/playist.m3u8
-#EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/kuz3-orange/TurkishIPTV-Claude/main/logos/trthaber.png" group-title="🗂️ YEDEKLER (4110)",TRT HABER
+#EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/kuz3-orange/TurkishIPTV-Claude/main/logos/trthaber.png" group-title="🗂️ YEDEKLER (285)",TRT HABER
 https://tv-trthaber.medya.trt.com.tr/master_1080.m3u8
-#EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/kuz3-orange/TurkishIPTV-Claude/main/logos/trtmuzik.png" group-title="🗂️ YEDEKLER (4110)",TRT MÜZIK
+#EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/kuz3-orange/TurkishIPTV-Claude/main/logos/trtmuzik.png" group-title="🗂️ YEDEKLER (285)",TRT MÜZIK
 https://tv-trtmuzik.medya.trt.com.tr/master_1080.m3u8
-#EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/kuz3-orange/TurkishIPTV-Claude/main/logos/trtavaz.png" group-title="🗂️ YEDEKLER (4110)",TRT AVAZ
+#EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/kuz3-orange/TurkishIPTV-Claude/main/logos/trtavaz.png" group-title="🗂️ YEDEKLER (285)",TRT AVAZ
 https://tv-trtavaz.medya.trt.com.tr/master_1080.m3u8
-#EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/kuz3-orange/TurkishIPTV-Claude/main/logos/trtturk.png" group-title="🗂️ YEDEKLER (4110)",TRT TÜRK
+#EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/kuz3-orange/TurkishIPTV-Claude/main/logos/trtturk.png" group-title="🗂️ YEDEKLER (285)",TRT TÜRK
 https://tv-trtturk.medya.trt.com.tr/master_1080.m3u8
-#EXTINF:-1 tvg-logo="https://gbzottvsc25.tvplus.com.tr:33207/CPS/images/universal/film/logo/202506/20250623/71/0916028009315eb88428_op_0_XL.webp" group-title="🗂️ YEDEKLER (4110)",TR: ATV HD
+#EXTINF:-1 tvg-logo="https://gbzottvsc25.tvplus.com.tr:33207/CPS/images/universal/film/logo/202506/20250623/71/0916028009315eb88428_op_0_XL.webp" group-title="🗂️ YEDEKLER (285)",TR: ATV HD
 https://rnttwmjcin.turknet.ercdn.net/lcpmvefbyo/atv/atv.m3u8?hash=793f943c7f90674dd16bc87ad3a3d50c
-#EXTINF:-1 tvg-logo="https://i.imgur.com/Mbi0jbz.png" group-title="🗂️ YEDEKLER (4110)",TR: TIVI6 HD
+#EXTINF:-1 tvg-logo="https://i.imgur.com/Mbi0jbz.png" group-title="🗂️ YEDEKLER (285)",TR: TIVI6 HD
 https://live.artidijitalmedya.com/artidijital_tivi6/tivi6/chunks.m3u8
-#EXTINF:-1 tvg-logo="https://commons.wikimedia.org/wiki/Special:Redirect/file/Cine5_logo.png" group-title="🗂️ YEDEKLER (4110)",TR: CINE5
+#EXTINF:-1 tvg-logo="https://commons.wikimedia.org/wiki/Special:Redirect/file/Cine5_logo.png" group-title="🗂️ YEDEKLER (285)",TR: CINE5
 https://host.onlineradyotv.net:8081/cine5tv/index.m3u8
-#EXTINF:-1 tvg-logo="http://epg.one/img/3958.png" group-title="🗂️ YEDEKLER (4110)",KANAL 7 AVRUPA HD TR
+#EXTINF:-1 tvg-logo="http://epg.one/img/3958.png" group-title="🗂️ YEDEKLER (285)",KANAL 7 AVRUPA HD TR
 http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6905/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/vj2L2L2.png" group-title="🗂️ YEDEKLER (4110)",TRT EBA LİSE (720P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/vj2L2L2.png" group-title="🗂️ YEDEKLER (285)",TRT EBA LİSE (720P)
 https://tv-e-okul02.medya.trt.com.tr/master.m3u8
-#EXTINF:-1 tvg-logo="http://epg.one/img/3825.png" group-title="🗂️ YEDEKLER (4110)",KARDELEN TV TR
+#EXTINF:-1 tvg-logo="http://epg.one/img/3825.png" group-title="🗂️ YEDEKLER (285)",KARDELEN TV TR
 http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6763/index.m3u8
-#EXTINF:-1 tvg-logo="http://epg.one/img/3849.png" group-title="🗂️ YEDEKLER (4110)",LALEGUL TV TR
+#EXTINF:-1 tvg-logo="http://epg.one/img/3849.png" group-title="🗂️ YEDEKLER (285)",LALEGUL TV TR
 http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6790/index.m3u8
-#EXTINF:-1 tvg-logo="http://epg.one/img/3822.png" group-title="🗂️ YEDEKLER (4110)",LİNE TV BURSA TR
+#EXTINF:-1 tvg-logo="http://epg.one/img/3822.png" group-title="🗂️ YEDEKLER (285)",LİNE TV BURSA TR
 http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6759/index.m3u8
-#EXTINF:-1 tvg-logo="http://epg.one/img/3828.png" group-title="🗂️ YEDEKLER (4110)",KANAL AVRUPA TR
+#EXTINF:-1 tvg-logo="http://epg.one/img/3828.png" group-title="🗂️ YEDEKLER (285)",KANAL AVRUPA TR
 http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6766/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/CRBfZi4.png" group-title="🗂️ YEDEKLER (4110)",TRT EBA ILKOKUL (720P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/CRBfZi4.png" group-title="🗂️ YEDEKLER (285)",TRT EBA ILKOKUL (720P)
 https://tv-e-okul00.medya.trt.com.tr/master.m3u8
-#EXTINF:-1 tvg-logo="http://epg.one/img/2951.png" group-title="🗂️ YEDEKLER (4110)",TRT TURK TR
+#EXTINF:-1 tvg-logo="http://epg.one/img/2951.png" group-title="🗂️ YEDEKLER (285)",TRT TURK TR
 http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6798/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.tmgrup.com.tr/aav/site/v1/i/atv-avrupa-logo.png" group-title="🗂️ YEDEKLER (4110)",ATV AVRUPA (576P)
+#EXTINF:-1 tvg-logo="https://i.tmgrup.com.tr/aav/site/v1/i/atv-avrupa-logo.png" group-title="🗂️ YEDEKLER (285)",ATV AVRUPA (576P)
 https://flask-api-hls-atvavrupahdtrkvz-live.onrender.com/hls_stream/master.m3u8
-#EXTINF:-1 tvg-logo="http://epg.one/img/2613.png" group-title="🗂️ YEDEKLER (4110)",BLOOMBERG HT TR
+#EXTINF:-1 tvg-logo="http://epg.one/img/2613.png" group-title="🗂️ YEDEKLER (285)",BLOOMBERG HT TR
 http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/2317/index.m3u8
-#EXTINF:-1 tvg-logo="http://epg.one/img/3835.png" group-title="🗂️ YEDEKLER (4110)",BRTV TR
+#EXTINF:-1 tvg-logo="http://epg.one/img/3835.png" group-title="🗂️ YEDEKLER (285)",BRTV TR
 http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6776/index.m3u8
-#EXTINF:-1 tvg-logo="http://epg.one/img/3852.png" group-title="🗂️ YEDEKLER (4110)",DOST TV TR
+#EXTINF:-1 tvg-logo="http://epg.one/img/3852.png" group-title="🗂️ YEDEKLER (285)",DOST TV TR
 http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6793/index.m3u8
-#EXTINF:-1 tvg-logo="http://epg.one/img/3851.png" group-title="🗂️ YEDEKLER (4110)",MELTEM TV TR
+#EXTINF:-1 tvg-logo="http://epg.one/img/3851.png" group-title="🗂️ YEDEKLER (285)",MELTEM TV TR
 http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6792/index.m3u8
-#EXTINF:-1 tvg-logo="http://epg.one/img/3818.png" group-title="🗂️ YEDEKLER (4110)",TV 41 TR
+#EXTINF:-1 tvg-logo="http://epg.one/img/3818.png" group-title="🗂️ YEDEKLER (285)",TV 41 TR
 http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6752/index.m3u8
-#EXTINF:-1 tvg-logo="http://epg.one/img/3845.png" group-title="🗂️ YEDEKLER (4110)",TV KAYSERİ TR
+#EXTINF:-1 tvg-logo="http://epg.one/img/3845.png" group-title="🗂️ YEDEKLER (285)",TV KAYSERİ TR
 http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6786/index.m3u8
-#EXTINF:-1 tvg-logo="http://epg.one/img/88056.png" group-title="🗂️ YEDEKLER (4110)",UZMAN FİLMCİLİK HD TR
+#EXTINF:-1 tvg-logo="http://epg.one/img/88056.png" group-title="🗂️ YEDEKLER (285)",UZMAN FİLMCİLİK HD TR
 http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6872/index.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/CNN_T%C3%BCrk_logo.svg/960px-CNN_T%C3%BCrk_logo.svg.png" group-title="🗂️ YEDEKLER (4110)",CNN TURK (1080P)
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/CNN_T%C3%BCrk_logo.svg/960px-CNN_T%C3%BCrk_logo.svg.png" group-title="🗂️ YEDEKLER (285)",CNN TURK (1080P)
 http://85.117.61.84/cnnturk/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/WIeZMKT.png" group-title="🗂️ YEDEKLER (4110)",KANAL D DRAMA (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/WIeZMKT.png" group-title="🗂️ YEDEKLER (285)",KANAL D DRAMA (1080P)
 http://190.93.224.42/KANAL-D-DRAMA/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.ibb.co/1X8nWHc/ahaber.png" group-title="🗂️ YEDEKLER (4110)",A HABER
+#EXTINF:-1 tvg-logo="https://i.ibb.co/1X8nWHc/ahaber.png" group-title="🗂️ YEDEKLER (285)",A HABER
 https://trkvz-live.ercdn.net/ahaberhd/ahaberhd.m3u8
-#EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/tv-logo/tv-logos/refs/heads/main/countries/turkey/tvnet-tr.png" group-title="🗂️ YEDEKLER (4110)",TVNET
+#EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/tv-logo/tv-logos/refs/heads/main/countries/turkey/tvnet-tr.png" group-title="🗂️ YEDEKLER (285)",TVNET
 https://tvnet-live.lg.mncdn.com/tvnet-live/tvnet/playlist.m3u8
-#EXTINF:-1 tvg-logo="http://epg.one/img/3964.png" group-title="🗂️ YEDEKLER (4110)",360 TV HD TR
+#EXTINF:-1 tvg-logo="http://epg.one/img/3964.png" group-title="🗂️ YEDEKLER (285)",360 TV HD TR
 http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/2320/index.m3u8
-#EXTINF:-1 tvg-logo="http://epg.one/img/3943.png" group-title="🗂️ YEDEKLER (4110)",SHOW MAX TR
+#EXTINF:-1 tvg-logo="http://epg.one/img/3943.png" group-title="🗂️ YEDEKLER (285)",SHOW MAX TR
 http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6890/index.m3u8
-#EXTINF:-1 tvg-logo="http://epg.one/img/3988.png" group-title="🗂️ YEDEKLER (4110)",A NEWS HD TR
+#EXTINF:-1 tvg-logo="http://epg.one/img/3988.png" group-title="🗂️ YEDEKLER (285)",A NEWS HD TR
 http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6937/index.m3u8
-#EXTINF:-1 tvg-logo="http://epg.one/img/3947.png" group-title="🗂️ YEDEKLER (4110)",EUROSTAR TR
+#EXTINF:-1 tvg-logo="http://epg.one/img/3947.png" group-title="🗂️ YEDEKLER (285)",EUROSTAR TR
 http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6894/index.m3u8
-#EXTINF:-1 tvg-logo="http://epg.one/img/3885.png" group-title="🗂️ YEDEKLER (4110)",EUROSPORT 1 HD TR
+#EXTINF:-1 tvg-logo="http://epg.one/img/3885.png" group-title="🗂️ YEDEKLER (285)",EUROSPORT 1 HD TR
 http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6829/index.m3u8
-#EXTINF:-1 tvg-logo="http://epg.one/img/3934.png" group-title="🗂️ YEDEKLER (4110)",BEIN MOVİES PREMİERE 2 HD TR
+#EXTINF:-1 tvg-logo="http://epg.one/img/3934.png" group-title="🗂️ YEDEKLER (285)",BEIN MOVİES PREMİERE 2 HD TR
 http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6879/index.m3u8
-#EXTINF:-1 tvg-logo="http://epg.one/img/3937.png" group-title="🗂️ YEDEKLER (4110)",BEIN SERİES DRAMA HD TR
+#EXTINF:-1 tvg-logo="http://epg.one/img/3937.png" group-title="🗂️ YEDEKLER (285)",BEIN SERİES DRAMA HD TR
 http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6882/index.m3u8
-#EXTINF:-1 tvg-logo="http://epg.one/img/3912.png" group-title="🗂️ YEDEKLER (4110)",DA VİNCİ HD TR
+#EXTINF:-1 tvg-logo="http://epg.one/img/3912.png" group-title="🗂️ YEDEKLER (285)",DA VİNCİ HD TR
 http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6857/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/UBoBYUI.png" group-title="🗂️ YEDEKLER (4110)",BBC FİRST TURKİYE
+#EXTINF:-1 tvg-logo="https://i.imgur.com/UBoBYUI.png" group-title="🗂️ YEDEKLER (285)",BBC FİRST TURKİYE
 http://88.212.7.14/live/bbc_first/index.m3u8
-#EXTINF:-1 tvg-logo="https://www.tvlogo.org/turkey/brtv-tr.png" group-title="🗂️ YEDEKLER (4110)",BRTV (720P)
+#EXTINF:-1 tvg-logo="https://www.tvlogo.org/turkey/brtv-tr.png" group-title="🗂️ YEDEKLER (285)",BRTV (720P)
 https://5bf7b725107e5.streamlock.net/brtv/brtv/playlist.m3u8
-#EXTINF:-1 tvg-logo="http://epg.one/img/3850.png" group-title="🗂️ YEDEKLER (4110)",TV 2000 TR
+#EXTINF:-1 tvg-logo="http://epg.one/img/3850.png" group-title="🗂️ YEDEKLER (285)",TV 2000 TR
 http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6791/index.m3u8
-#EXTINF:-1 tvg-logo="http://epg.one/img/3836.png" group-title="🗂️ YEDEKLER (4110)",AS TV BURSA TR
+#EXTINF:-1 tvg-logo="http://epg.one/img/3836.png" group-title="🗂️ YEDEKLER (285)",AS TV BURSA TR
 http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6777/index.m3u8
-#EXTINF:-1 tvg-logo="http://epg.one/img/3848.png" group-title="🗂️ YEDEKLER (4110)",FM TV TR
+#EXTINF:-1 tvg-logo="http://epg.one/img/3848.png" group-title="🗂️ YEDEKLER (285)",FM TV TR
 http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6789/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.ibb.co/Ln92Dj2/Ekoltv.png" group-title="🗂️ YEDEKLER (4110)",EKOL TV
+#EXTINF:-1 tvg-logo="https://i.ibb.co/Ln92Dj2/Ekoltv.png" group-title="🗂️ YEDEKLER (285)",EKOL TV
 https://ekoltv-live.ercdn.net/ekoltv/ekoltv.m3u8
-#EXTINF:-1 tvg-logo="https://www.tvlogo.org/turkey/kral-pop-tr.png" group-title="🗂️ YEDEKLER (4110)",KRAL POP TV (720P)
+#EXTINF:-1 tvg-logo="https://www.tvlogo.org/turkey/kral-pop-tr.png" group-title="🗂️ YEDEKLER (285)",KRAL POP TV (720P)
 https://dogus-live.daioncdn.net/kralpoptv/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/sVc8cFt.png" group-title="🗂️ YEDEKLER (4110)",AUTO PLUS
+#EXTINF:-1 tvg-logo="https://i.imgur.com/sVc8cFt.png" group-title="🗂️ YEDEKLER (285)",AUTO PLUS
 https://stream8.cinerama.uz/1036/tracks-v1a1/mono.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/Z52nEnH.png" group-title="🗂️ YEDEKLER (4110)",ESTRELLA GAMES (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/Z52nEnH.png" group-title="🗂️ YEDEKLER (285)",ESTRELLA GAMES (1080P)
 https://amg00567-amg00567c1-firetv-us-4124.playouts.now.amagi.tv/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/Lj69WbR.png" group-title="🗂️ YEDEKLER (4110)",GAME+ (720P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/Lj69WbR.png" group-title="🗂️ YEDEKLER (285)",GAME+ (720P)
 https://a-cdn.klowdtv.com/live2/fntsy_720p/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://cdn.as.ro/wp-content/themes/antenasport/images/icons-as/as.svg" group-title="🗂️ YEDEKLER (4110)",ANTENASPORT
+#EXTINF:-1 tvg-logo="https://cdn.as.ro/wp-content/themes/antenasport/images/icons-as/as.svg" group-title="🗂️ YEDEKLER (285)",ANTENASPORT
 https://stream1.antenaplay.ro/as/AS.ro/chunklist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/AOu4FXH.png" group-title="🗂️ YEDEKLER (4110)",ELEVEN SPORTS 1
+#EXTINF:-1 tvg-logo="https://i.imgur.com/AOu4FXH.png" group-title="🗂️ YEDEKLER (285)",ELEVEN SPORTS 1
 http://92.114.85.87:8002/play/a00e/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/bTIRgqG.png" group-title="🗂️ YEDEKLER (4110)",ELEVEN SPORTS 2 (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/bTIRgqG.png" group-title="🗂️ YEDEKLER (285)",ELEVEN SPORTS 2 (1080P)
 http://92.114.85.87:8002/play/a00f/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/bWjGol4.png" group-title="🗂️ YEDEKLER (4110)",ELEVEN SPORTS 3 (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/bWjGol4.png" group-title="🗂️ YEDEKLER (285)",ELEVEN SPORTS 3 (1080P)
 http://92.114.85.87:8002/play/a00g/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/SEKXaAW.png" group-title="🗂️ YEDEKLER (4110)",ELEVEN SPORTS 4 (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/SEKXaAW.png" group-title="🗂️ YEDEKLER (285)",ELEVEN SPORTS 4 (1080P)
 http://92.114.85.87:8002/play/a00h/index.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/ESPN_wordmark.svg/960px-ESPN_wordmark.svg.png" group-title="🗂️ YEDEKLER (4110)",ESPN (1080P)
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/ESPN_wordmark.svg/960px-ESPN_wordmark.svg.png" group-title="🗂️ YEDEKLER (285)",ESPN (1080P)
 http://181.78.197.59:8000/play/a07z/index.m3u8
-#EXTINF:-1 tvg-logo="https://images.fubo.tv/channel-config-ui/station-logos/on-white/espn4k_color_1440x1440.png" group-title="🗂️ YEDEKLER (4110)",ESPN (1080P)
+#EXTINF:-1 tvg-logo="https://images.fubo.tv/channel-config-ui/station-logos/on-white/espn4k_color_1440x1440.png" group-title="🗂️ YEDEKLER (285)",ESPN (1080P)
 http://212.5.144.156:8080/espn/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/00tsvjE.png" group-title="🗂️ YEDEKLER (4110)",ESPN 2 (720P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/00tsvjE.png" group-title="🗂️ YEDEKLER (285)",ESPN 2 (720P)
 http://85.237.89.160:9590/usa-s/ESPN-2-HD/index.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/ESPN2_logo.svg/960px-ESPN2_logo.svg.png" group-title="🗂️ YEDEKLER (4110)",ESPN 2 LATIN AMERICA (1080P)
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/ESPN2_logo.svg/960px-ESPN2_logo.svg.png" group-title="🗂️ YEDEKLER (285)",ESPN 2 LATIN AMERICA (1080P)
 http://190.61.47.54:8000/play/a005/index.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/ESPN3_Logo.png/960px-ESPN3_Logo.png" group-title="🗂️ YEDEKLER (4110)",ESPN 3 (720P)
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/ESPN3_Logo.png/960px-ESPN3_Logo.png" group-title="🗂️ YEDEKLER (285)",ESPN 3 (720P)
 http://181.78.197.59:8000/play/a081/index.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/ESPN_4_logo.svg/960px-ESPN_4_logo.svg.png" group-title="🗂️ YEDEKLER (4110)",ESPN 4 (1080P)
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/ESPN_4_logo.svg/960px-ESPN_4_logo.svg.png" group-title="🗂️ YEDEKLER (285)",ESPN 4 (1080P)
 http://181.78.197.59:8000/play/a07n/index.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/ESPN_4_logo.svg/960px-ESPN_4_logo.svg.png" group-title="🗂️ YEDEKLER (4110)",ESPN 4 LATIN AMERICA (1080P)
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/ESPN_4_logo.svg/960px-ESPN_4_logo.svg.png" group-title="🗂️ YEDEKLER (285)",ESPN 4 LATIN AMERICA (1080P)
 https://barinaslive1.boldmss.com/ESPN_4/ESPN_4.isml/ESPN_4.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/ESPN_wordmark.svg/960px-ESPN_wordmark.svg.png" group-title="🗂️ YEDEKLER (4110)",ESPN 6 LATIN AMERICA (1080P)
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/ESPN_wordmark.svg/960px-ESPN_wordmark.svg.png" group-title="🗂️ YEDEKLER (285)",ESPN 6 LATIN AMERICA (1080P)
 https://barinaslive1.boldmss.com/ESPN_6/ESPN_6.isml/ESPN_6.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/ESPN_wordmark.svg/960px-ESPN_wordmark.svg.png" group-title="🗂️ YEDEKLER (4110)",ESPN 7 LATIN AMERICA (1080P)
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/ESPN_wordmark.svg/960px-ESPN_wordmark.svg.png" group-title="🗂️ YEDEKLER (285)",ESPN 7 LATIN AMERICA (1080P)
 https://barinaslive1.boldmss.com/ESPN_7/ESPN_7.isml/ESPN_7.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/ESPN_wordmark.svg/960px-ESPN_wordmark.svg.png" group-title="🗂️ YEDEKLER (4110)",ESPN LATIN AMERICA (1080P)
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/ESPN_wordmark.svg/960px-ESPN_wordmark.svg.png" group-title="🗂️ YEDEKLER (285)",ESPN LATIN AMERICA (1080P)
 http://190.61.47.54:8000/play/a004/index.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/ESPN_Premium_logo.svg/960px-ESPN_Premium_logo.svg.png" group-title="🗂️ YEDEKLER (4110)",ESPN PREMIUM (1080P)
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/ESPN_Premium_logo.svg/960px-ESPN_Premium_logo.svg.png" group-title="🗂️ YEDEKLER (285)",ESPN PREMIUM (1080P)
 http://158.172.155.130:8000/play/a0ao/index.m3u8
-#EXTINF:-1 tvg-logo="https://images.fubo.tv/channel-config-ui/station-logos/on-dark/espn_8_the_ocho_bw.png" group-title="🗂️ YEDEKLER (4110)",ESPN8: THE OCHO (1080P)
+#EXTINF:-1 tvg-logo="https://images.fubo.tv/channel-config-ui/station-logos/on-dark/espn_8_the_ocho_bw.png" group-title="🗂️ YEDEKLER (285)",ESPN8: THE OCHO (1080P)
 https://d3b6q2ou5kp8ke.cloudfront.net/ESPNTheOcho.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/HiBrysh.png" group-title="🗂️ YEDEKLER (4110)",ESPNU (720P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/HiBrysh.png" group-title="🗂️ YEDEKLER (285)",ESPNU (720P)
 http://85.237.89.160:9590/usa-s/ESPN-U-HD/index.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Esport3.svg/960px-Esport3.svg.png" group-title="🗂️ YEDEKLER (4110)",ESPORT3 (1080P)
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Esport3.svg/960px-Esport3.svg.png" group-title="🗂️ YEDEKLER (285)",ESPORT3 (1080P)
 https://directes-tv-int.3catdirectes.cat/live-content/esport3-hls/master.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/OprRgQN.png" group-title="🗂️ YEDEKLER (4110)",ESPORTS MAX TV (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/OprRgQN.png" group-title="🗂️ YEDEKLER (285)",ESPORTS MAX TV (1080P)
 https://cdnlive.klicgo.net/esportsmax/live/playlist_dvr.m3u8
-#EXTINF:-1 tvg-logo="https://xstreamcp-assets-msp.streamready.in/assets/LIVETV/LIVECHANNEL/LIVETV_LIVETVCHANNEL_EUROSPORT_HD/images/LOGO_HD/image.png" group-title="🗂️ YEDEKLER (4110)",EUROSPORT (720P)
+#EXTINF:-1 tvg-logo="https://xstreamcp-assets-msp.streamready.in/assets/LIVETV/LIVECHANNEL/LIVETV_LIVETVCHANNEL_EUROSPORT_HD/images/LOGO_HD/image.png" group-title="🗂️ YEDEKLER (285)",EUROSPORT (720P)
 https://drk6xq0vhn.gpcdn.net/live/euro_sports_hd_abr/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/olQJgm7.png" group-title="🗂️ YEDEKLER (4110)",EUROSPORT 1 (576P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/olQJgm7.png" group-title="🗂️ YEDEKLER (285)",EUROSPORT 1 (576P)
 http://45.134.141.161:2200/ARG/Eurosport_1_HD/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/0o3zjC7.png" group-title="🗂️ YEDEKLER (4110)",EUROSPORT 4K CZECHIA
+#EXTINF:-1 tvg-logo="https://i.imgur.com/0o3zjC7.png" group-title="🗂️ YEDEKLER (285)",EUROSPORT 4K CZECHIA
 http://88.212.15.50/live/esp_4k_atk/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/FIFA%2B_(2025).svg/960px-FIFA%2B_(2025).svg.png" group-title="🗂️ YEDEKLER (4110)",FIFA+ (720P)
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/FIFA%2B_(2025).svg/960px-FIFA%2B_(2025).svg.png" group-title="🗂️ YEDEKLER (285)",FIFA+ (720P)
 https://jmp2.uk/plu-660bfc032433010008def35a.m3u8
-#EXTINF:-1 tvg-logo="https://i.ibb.co/LhpwRm8V/GB3800009-F0-20251028-T010335-SQUARE.png" group-title="🗂️ YEDEKLER (4110)",FIFA+ WOMEN (720P)
+#EXTINF:-1 tvg-logo="https://i.ibb.co/LhpwRm8V/GB3800009-F0-20251028-T010335-SQUARE.png" group-title="🗂️ YEDEKLER (285)",FIFA+ WOMEN (720P)
 https://cffda8ff.wurl.com/master/f36d25e7e52f1ba8d7e56eb859c636563214f541/U2Ftc3VuZy1nYl9GSUZBUGx1c3dvbWVuX0hMUw/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/vlKPZHR.png" group-title="🗂️ YEDEKLER (4110)",FIGHT NETWORK (720P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/vlKPZHR.png" group-title="🗂️ YEDEKLER (285)",FIGHT NETWORK (720P)
 https://a-cdn.klowdtv.com/live2/fight_720p/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/mRsnztA.png" group-title="🗂️ YEDEKLER (4110)",FIGHTBOX (720P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/mRsnztA.png" group-title="🗂️ YEDEKLER (285)",FIGHTBOX (720P)
 https://webtvstream.bhtelecom.ba/fightbox.m3u8
-#EXTINF:-1 tvg-logo="https://images.fubo.tv/channel-config-ui/station-logos/on-dark/flohockey-white.png" group-title="🗂️ YEDEKLER (4110)",FLOHOCKEY (1080P)
+#EXTINF:-1 tvg-logo="https://images.fubo.tv/channel-config-ui/station-logos/on-dark/flohockey-white.png" group-title="🗂️ YEDEKLER (285)",FLOHOCKEY (1080P)
 https://amg02278-amg02278c2-flosports-worldwide-9916.playouts.now.amagi.tv/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://images.fubo.tv/channel-config-ui/station-logos/on-dark/floracing-white.png" group-title="🗂️ YEDEKLER (4110)",FLORACING (1080P)
+#EXTINF:-1 tvg-logo="https://images.fubo.tv/channel-config-ui/station-logos/on-dark/floracing-white.png" group-title="🗂️ YEDEKLER (285)",FLORACING (1080P)
 https://amg02278-amg02278c1-flosports-worldwide-7592.playouts.now.amagi.tv/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/fsqBn8G.png" group-title="🗂️ YEDEKLER (4110)",FORMULA (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/fsqBn8G.png" group-title="🗂️ YEDEKLER (285)",FORMULA (1080P)
 https://c4635.cdn.xsg.ge/c4635/TVFormula/index.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/FOX_Deportes_logo.png/960px-FOX_Deportes_logo.png" group-title="🗂️ YEDEKLER (4110)",FOX DEPORTES (720P)
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/FOX_Deportes_logo.png/960px-FOX_Deportes_logo.png" group-title="🗂️ YEDEKLER (285)",FOX DEPORTES (720P)
 https://live-manifest.production-public.tubi.io/live/d906efca-1302-4e29-b0d9-9a1d7a305d69/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/FOX_Sports_logo.svg/960px-FOX_Sports_logo.svg.png" group-title="🗂️ YEDEKLER (4110)",FOX SPORTS (1080P)
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/FOX_Sports_logo.svg/960px-FOX_Sports_logo.svg.png" group-title="🗂️ YEDEKLER (285)",FOX SPORTS (1080P)
 http://158.172.155.130:8000/play/a09x/index.m3u8
-#EXTINF:-1 tvg-logo="https://images.fubo.tv/channel-config-ui/station-logos/on-white/fs1_logo_2015_blue-4k_2.png" group-title="🗂️ YEDEKLER (4110)",FOX SPORTS 1 (720P)
+#EXTINF:-1 tvg-logo="https://images.fubo.tv/channel-config-ui/station-logos/on-white/fs1_logo_2015_blue-4k_2.png" group-title="🗂️ YEDEKLER (285)",FOX SPORTS 1 (720P)
 http://85.237.89.160:9590/usa-s/FOX-SPORTS-1/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/FhMQrJk.png" group-title="🗂️ YEDEKLER (4110)",FOX SPORTS NEWS (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/FhMQrJk.png" group-title="🗂️ YEDEKLER (285)",FOX SPORTS NEWS (1080P)
 https://skynewsau-live-premium.akamaized.net/hls/live/2105307/foxsportsnews/live_1080p.m3u8
-#EXTINF:-1 tvg-logo="https://m.media-amazon.com/images/I/41snSzsafFL.png" group-title="🗂️ YEDEKLER (4110)",FTF SPORTS (1080P)
+#EXTINF:-1 tvg-logo="https://m.media-amazon.com/images/I/41snSzsafFL.png" group-title="🗂️ YEDEKLER (285)",FTF SPORTS (1080P)
 https://1593604785.rsc.cdn77.org/FTF/FTF_SCTE.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Fubo_Sports_Network_2023_Logo.webp/960px-Fubo_Sports_Network_2023_Logo.webp.png" group-title="🗂️ YEDEKLER (4110)",FUBO SPORTS NETWORK (1080P)
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Fubo_Sports_Network_2023_Logo.webp/960px-Fubo_Sports_Network_2023_Logo.webp.png" group-title="🗂️ YEDEKLER (285)",FUBO SPORTS NETWORK (1080P)
 https://dnf08l6u6uxnz.cloudfront.net/master.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/RngmCDn.png" group-title="🗂️ YEDEKLER (4110)",FUTBOL (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/RngmCDn.png" group-title="🗂️ YEDEKLER (285)",FUTBOL (1080P)
 http://185.121.1.163:8083/FootballHD/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.ibb.co/h1gQSkbB/Futbol-TV.png" group-title="🗂️ YEDEKLER (4110)",FUTBOL TV (1080P)
+#EXTINF:-1 tvg-logo="https://i.ibb.co/h1gQSkbB/Futbol-TV.png" group-title="🗂️ YEDEKLER (285)",FUTBOL TV (1080P)
 http://stream3.cinerama.uz/1010/tracks-v1a1/mono.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/tS7Ub7i.png" group-title="🗂️ YEDEKLER (4110)",GLORY KICKBOXING (720P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/tS7Ub7i.png" group-title="🗂️ YEDEKLER (285)",GLORY KICKBOXING (720P)
 https://6f972d29.wurl.com/master/f36d25e7e52f1ba8d7e56eb859c636563214f541/UmFrdXRlblRWLWV1X0dsb3J5S2lja2JveGluZ19ITFM/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://www.sms.cz/kategorie/televize/bmp/loga/velka/golfchannel.png" group-title="🗂️ YEDEKLER (4110)",GOLF CHANNEL
+#EXTINF:-1 tvg-logo="https://www.sms.cz/kategorie/televize/bmp/loga/velka/golfchannel.png" group-title="🗂️ YEDEKLER (285)",GOLF CHANNEL
 https://dash4.antik.sk/live/test_golf_channel/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Golf_Channel_Logo_2018.png/960px-Golf_Channel_Logo_2018.png" group-title="🗂️ YEDEKLER (4110)",GOLF CHANNEL LATIN AMERICA (1080P)
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Golf_Channel_Logo_2018.png/960px-Golf_Channel_Logo_2018.png" group-title="🗂️ YEDEKLER (285)",GOLF CHANNEL LATIN AMERICA (1080P)
 http://15.204.246.24:8080/GolfChannelHD/index.m3u8
-#EXTINF:-1 tvg-logo="https://images-1.rakuten.tv/storage/global-live-channel/translation/artwork/13b0a6c7-4307-4c8d-9fc4-df2a4f8e8b38-hard-knocks-fighting-1602077398-width200-quality90.jpeg" group-title="🗂️ YEDEKLER (4110)",HARD KNOCKS FIGHTING CHAMPIONSHIP (720P)
+#EXTINF:-1 tvg-logo="https://images-1.rakuten.tv/storage/global-live-channel/translation/artwork/13b0a6c7-4307-4c8d-9fc4-df2a4f8e8b38-hard-knocks-fighting-1602077398-width200-quality90.jpeg" group-title="🗂️ YEDEKLER (285)",HARD KNOCKS FIGHTING CHAMPIONSHIP (720P)
 https://d39g1vxj2ef6in.cloudfront.net/v1/master/3fec3e5cac39a52b2132f9c66c83dae043dc17d4/prod-rakuten-stitched/master.m3u8?ads.xumo_channelId=88883037
-#EXTINF:-1 tvg-logo="https://i.imgur.com/TY6sx5W.png" group-title="🗂️ YEDEKLER (4110)",HBCU-GO SPORTS (720P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/TY6sx5W.png" group-title="🗂️ YEDEKLER (285)",HBCU-GO SPORTS (720P)
 https://a-cdn.klowdtv.com/live3/hbcugo_720p/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://iili.io/J1kV1Bn.png" group-title="🗂️ YEDEKLER (4110)",ITV DEPORTES (720P)
+#EXTINF:-1 tvg-logo="https://iili.io/J1kV1Bn.png" group-title="🗂️ YEDEKLER (285)",ITV DEPORTES (720P)
 https://jmp2.uk/plu-63f7e3f9dff38e00082a57af.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/2EmrZPQ.png" group-title="🗂️ YEDEKLER (4110)",JORDAN SPORT (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/2EmrZPQ.png" group-title="🗂️ YEDEKLER (285)",JORDAN SPORT (1080P)
 https://jrtv-live.ercdn.net/jordansporthd/jordansporthd.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/R1hGX1d.png" group-title="🗂️ YEDEKLER (4110)",KTV SPORT (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/R1hGX1d.png" group-title="🗂️ YEDEKLER (285)",KTV SPORT (1080P)
 https://kwtspta.cdn.mangomolo.com/sp/smil:sp.stream.smil/chunklist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/l4oX0gf.png" group-title="🗂️ YEDEKLER (4110)",KTV SPORT PLUS (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/l4oX0gf.png" group-title="🗂️ YEDEKLER (285)",KTV SPORT PLUS (1080P)
 https://kwtsplta.cdn.mangomolo.com/spl/smil:spl.stream.smil/chunklist.m3u8
-#EXTINF:-1 tvg-logo="https://msports.pk/wp-content/uploads/2026/02/m-sports-300.png" group-title="🗂️ YEDEKLER (4110)",M SPORTS (1080P)
+#EXTINF:-1 tvg-logo="https://msports.pk/wp-content/uploads/2026/02/m-sports-300.png" group-title="🗂️ YEDEKLER (285)",M SPORTS (1080P)
 https://cdn.rabta.stream/M-Sports/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/TQ4uJZk.png" group-title="🗂️ YEDEKLER (4110)",M4 SPORT (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/TQ4uJZk.png" group-title="🗂️ YEDEKLER (285)",M4 SPORT (1080P)
 http://88.212.7.14/live/uatlmvixrr/index.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/5/57/Maincast_%28HD_Logo%29_2024.png" group-title="🗂️ YEDEKLER (4110)",MAINCAST CYBERSPORT (1080P)
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/5/57/Maincast_%28HD_Logo%29_2024.png" group-title="🗂️ YEDEKLER (285)",MAINCAST CYBERSPORT (1080P)
 http://stream.mcquack.net/487/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/udTzwzu.png" group-title="🗂️ YEDEKLER (4110)",MATCH! ARENA (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/udTzwzu.png" group-title="🗂️ YEDEKLER (285)",MATCH! ARENA (1080P)
 http://stream.mcquack.net/163/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/GQPyHYK.png" group-title="🗂️ YEDEKLER (4110)",MATCH! PREMIER (576P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/GQPyHYK.png" group-title="🗂️ YEDEKLER (285)",MATCH! PREMIER (576P)
 http://185.23.80.23:8080/MATCH_PREMIER/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/X02s2UE.png" group-title="🗂️ YEDEKLER (4110)",MATCH! STRANA (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/X02s2UE.png" group-title="🗂️ YEDEKLER (285)",MATCH! STRANA (1080P)
 http://stream.mcquack.net/143/index.m3u8
-#EXTINF:-1 tvg-logo="https://www.kartina.tv/media/news/images/News/SEO/kanal-match-ultra.jpg" group-title="🗂️ YEDEKLER (4110)",MATCH! ULTRA (1080P)
+#EXTINF:-1 tvg-logo="https://www.kartina.tv/media/news/images/News/SEO/kanal-match-ultra.jpg" group-title="🗂️ YEDEKLER (285)",MATCH! ULTRA (1080P)
 http://stream.mcquack.net/169/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/hzexBLX.png" group-title="🗂️ YEDEKLER (4110)",MATCH4 (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/hzexBLX.png" group-title="🗂️ YEDEKLER (285)",MATCH4 (1080P)
 http://141.94.193.53:80/Match4_HD/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/5JmT4mW.png" group-title="🗂️ YEDEKLER (4110)",MEGOGO SPORT (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/5JmT4mW.png" group-title="🗂️ YEDEKLER (285)",MEGOGO SPORT (1080P)
 http://5.188.159.128:8070/megogo_sport/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/ym3su2J.png" group-title="🗂️ YEDEKLER (4110)",MLB (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/ym3su2J.png" group-title="🗂️ YEDEKLER (285)",MLB (1080P)
 https://aegis-cloudfront-1.tubi.video/36ef2f9d-7100-4c4d-b41a-dbf41ab7e461/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/QhdxNsB.png" group-title="🗂️ YEDEKLER (4110)",MMA-TV.COM (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/QhdxNsB.png" group-title="🗂️ YEDEKLER (285)",MMA-TV.COM (1080P)
 https://streams2.sofast.tv/vglive-sk-462904/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/z854PC3.png" group-title="🗂️ YEDEKLER (4110)",MNB SPORT (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/z854PC3.png" group-title="🗂️ YEDEKLER (285)",MNB SPORT (1080P)
 https://live.mnb.mn/hls/mnb_sport.stream.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/SLrjImc.png" group-title="🗂️ YEDEKLER (4110)",MORE THAN SPORTS TV (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/SLrjImc.png" group-title="🗂️ YEDEKLER (285)",MORE THAN SPORTS TV (1080P)
 https://mts1.iptv-playoutcenter.de/mts/mts-web/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/v4kj8pI.png" group-title="🗂️ YEDEKLER (4110)",MOTORVISION (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/v4kj8pI.png" group-title="🗂️ YEDEKLER (285)",MOTORVISION (1080P)
 https://stream.ads.ottera.tv/playlist.m3u8?network_id=535
-#EXTINF:-1 tvg-logo="https://i.imgur.com/cFTR4kC.png" group-title="🗂️ YEDEKLER (4110)",MRTV SPORTS (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/cFTR4kC.png" group-title="🗂️ YEDEKLER (285)",MRTV SPORTS (1080P)
 https://mrtvott.com/cache/MRTV-SPORT/master.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/en/thumb/d/d2/NBA_TV.svg/960px-NBA_TV.svg.png" group-title="🗂️ YEDEKLER (4110)",NBA TV (1080P)
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/en/thumb/d/d2/NBA_TV.svg/960px-NBA_TV.svg.png" group-title="🗂️ YEDEKLER (285)",NBA TV (1080P)
 http://23.237.104.106:8080/USA_NBA/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/EzNf2Yx.png" group-title="🗂️ YEDEKLER (4110)",NBC SPORTS NOW (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/EzNf2Yx.png" group-title="🗂️ YEDEKLER (285)",NBC SPORTS NOW (1080P)
 https://d4whmvwm0rdvi.cloudfront.net/10007/99993008/hls/master.m3u8?ads.xumo_channelId=99993008
-#EXTINF:-1 tvg-logo="https://i.imgur.com/ELXmaqg.png" group-title="🗂️ YEDEKLER (4110)",TR SPORT (480P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/ELXmaqg.png" group-title="🗂️ YEDEKLER (285)",TR SPORT (480P)
 https://livetr.teleromagna.it/mia/live/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/n6vITLu.png" group-title="🗂️ YEDEKLER (4110)",TURKMENİSTAN SPORT (406P) [NOT 24/7]
+#EXTINF:-1 tvg-logo="https://i.imgur.com/n6vITLu.png" group-title="🗂️ YEDEKLER (285)",TURKMENİSTAN SPORT (406P) [NOT 24/7]
 https://alpha.tv.online.tm/hls/ch004.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/1x6zYZr.png" group-title="🗂️ YEDEKLER (4110)",HORSE & COUNTRY TV (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/1x6zYZr.png" group-title="🗂️ YEDEKLER (285)",HORSE & COUNTRY TV (1080P)
 https://hnc-free-viewlift.amagi.tv/HNC_AUSTRALIA.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/nK4UUX4.png" group-title="🗂️ YEDEKLER (4110)",HORSE TV (720P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/nK4UUX4.png" group-title="🗂️ YEDEKLER (285)",HORSE TV (720P)
 https://a-cdn.klowdtv.com/live2/horsetv_720p/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://www.fishtv.com/public/site/images/logos/fishtv.svg" group-title="🗂️ YEDEKLER (4110)",FISH TV (720P)
+#EXTINF:-1 tvg-logo="https://www.fishtv.com/public/site/images/logos/fishtv.svg" group-title="🗂️ YEDEKLER (285)",FISH TV (720P)
 http://45.162.64.114/FISH_TV/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/qrn6tUO.png" group-title="🗂️ YEDEKLER (4110)",ITALIAN FISHING TV (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/qrn6tUO.png" group-title="🗂️ YEDEKLER (285)",ITALIAN FISHING TV (1080P)
 https://fms.premio.link/fishingtv/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://image.roku.com/developer_channels/prod/b2a80f0a20fc338f22a8289f23d20d19d958470ff1b8df3845c57cbc54ec1245.png" group-title="🗂️ YEDEKLER (4110)",DUCK HUNTİNG TV (1080P)
+#EXTINF:-1 tvg-logo="https://image.roku.com/developer_channels/prod/b2a80f0a20fc338f22a8289f23d20d19d958470ff1b8df3845c57cbc54ec1245.png" group-title="🗂️ YEDEKLER (285)",DUCK HUNTİNG TV (1080P)
 https://main.duckhunting.playout.vju.tv/duckhuntingtv/main.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/nCAt3QN.png" group-title="🗂️ YEDEKLER (4110)",CANAL MOTOR (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/nCAt3QN.png" group-title="🗂️ YEDEKLER (285)",CANAL MOTOR (1080P)
 https://digicom.hls.iptvdc.com/motorstv/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/JLSHiTp.png" group-title="🗂️ YEDEKLER (4110)",CARS.TV (720P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/JLSHiTp.png" group-title="🗂️ YEDEKLER (285)",CARS.TV (720P)
 https://a-cdn.klowdtv.com/live2/carstv_720p/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/eMjutHS.png" group-title="🗂️ YEDEKLER (4110)",CBS SPORTS GOLAZO NETWORK (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/eMjutHS.png" group-title="🗂️ YEDEKLER (285)",CBS SPORTS GOLAZO NETWORK (1080P)
 https://dai.google.com/linear/hls/event/7f3Wv6f7QEKfQna22jHqLQ/master.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/q8BENJg.png" group-title="🗂️ YEDEKLER (4110)",CBS SPORTS HQ (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/q8BENJg.png" group-title="🗂️ YEDEKLER (285)",CBS SPORTS HQ (1080P)
 https://propee33f9c2.airspace-cdn.cbsivideo.com/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/OK8mdJV.png" group-title="🗂️ YEDEKLER (4110)",CCTV-5+ (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/OK8mdJV.png" group-title="🗂️ YEDEKLER (285)",CCTV-5+ (1080P)
 https://php.jdshipin.com/TVOD/iptv.php?id=cctv5p
-#EXTINF:-1 tvg-logo="https://i.imgur.com/iqJJTmH.png" group-title="🗂️ YEDEKLER (4110)",CCTV-GOLF & TENNİS (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/iqJJTmH.png" group-title="🗂️ YEDEKLER (285)",CCTV-GOLF & TENNİS (1080P)
 http://38.75.136.137:98/gslb/dsdqpub/gefwq.m3u8?auth=testpub
-#EXTINF:-1 tvg-logo="https://i.imgur.com/Fy6HkX0.png" group-title="🗂️ YEDEKLER (4110)",CCTV-STORM FOOTBALL (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/Fy6HkX0.png" group-title="🗂️ YEDEKLER (285)",CCTV-STORM FOOTBALL (1080P)
 http://38.75.136.137:98/gslb/dsdqpub/fyzq.m3u8?auth=testpub
-#EXTINF:-1 tvg-logo="https://i.imgur.com/yU5LqTL.png" group-title="🗂️ YEDEKLER (4110)",CDN DEPORTES (720P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/yU5LqTL.png" group-title="🗂️ YEDEKLER (285)",CDN DEPORTES (720P)
 https://hls.tvabierta.net/hls/036.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/WjHSrHN.png" group-title="🗂️ YEDEKLER (4110)",CHAMPİON TV
+#EXTINF:-1 tvg-logo="https://i.imgur.com/WjHSrHN.png" group-title="🗂️ YEDEKLER (285)",CHAMPİON TV
 https://stream.berosat.live/hls/champion-tv/champion-tv.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/n0kd17r.png" group-title="🗂️ YEDEKLER (4110)",CLARO SPORTS (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/n0kd17r.png" group-title="🗂️ YEDEKLER (285)",CLARO SPORTS (1080P)
 http://168.196.127.137:6001/play/a08r/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/DiIei9F.png" group-title="🗂️ YEDEKLER (4110)",CRTV SPORTS AND ENTERTAİNMENT (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/DiIei9F.png" group-title="🗂️ YEDEKLER (285)",CRTV SPORTS AND ENTERTAİNMENT (1080P)
 https://live1.acangroup.org:1929/publiclive/crtv_sport/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/%C4%8CT_sport_logo.png/960px-%C4%8CT_sport_logo.png" group-title="🗂️ YEDEKLER (4110)",CT SPORT (720P)
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/%C4%8CT_sport_logo.png/960px-%C4%8CT_sport_logo.png" group-title="🗂️ YEDEKLER (285)",CT SPORT (720P)
 http://88.212.15.50/live/test_ctsport_25p/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/2rXsq2m.png" group-title="🗂️ YEDEKLER (4110)",DAZN 3 (720P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/2rXsq2m.png" group-title="🗂️ YEDEKLER (285)",DAZN 3 (720P)
 http://23.237.104.106:8080/DAZN_3/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/m7ga8bU.png" group-title="🗂️ YEDEKLER (4110)",DAZN 4 (576P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/m7ga8bU.png" group-title="🗂️ YEDEKLER (285)",DAZN 4 (576P)
 http://23.237.104.106:8080/DAZN_4/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/HD2XaeS.png" group-title="🗂️ YEDEKLER (4110)",DAZN 5 (720P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/HD2XaeS.png" group-title="🗂️ YEDEKLER (285)",DAZN 5 (720P)
 http://23.237.104.106:8080/DAZN_5/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.postimg.cc/VsW3Jsrz/logo-DAZN-Combat.png" group-title="🗂️ YEDEKLER (4110)",DAZN COMBAT (684P)
+#EXTINF:-1 tvg-logo="https://i.postimg.cc/VsW3Jsrz/logo-DAZN-Combat.png" group-title="🗂️ YEDEKLER (285)",DAZN COMBAT (684P)
 https://jmp2.uk/plu-64d626ac9b414d000820e2fc.m3u8
-#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/64b67f0424ade50008a3be17/colorLogoPNG.png" group-title="🗂️ YEDEKLER (4110)",DAZN DARTS X PLUTO TV
+#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/64b67f0424ade50008a3be17/colorLogoPNG.png" group-title="🗂️ YEDEKLER (285)",DAZN DARTS X PLUTO TV
 https://jmp2.uk/plu-64b67f0424ade50008a3be17.m3u8
-#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/64afe50c5dc16600087f3227/colorLogoPNG.png" group-title="🗂️ YEDEKLER (4110)",DAZN HELDİNNEN X PLUTO TV
+#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/64afe50c5dc16600087f3227/colorLogoPNG.png" group-title="🗂️ YEDEKLER (285)",DAZN HELDİNNEN X PLUTO TV
 https://jmp2.uk/plu-64afe50c5dc16600087f3227.m3u8
-#EXTINF:-1 tvg-logo="https://dtil.tmsimg.com/assets/s158255_ld_h15_aa.png?lock=720x540" group-title="🗂️ YEDEKLER (4110)",DD SPORTS (1080P)
+#EXTINF:-1 tvg-logo="https://dtil.tmsimg.com/assets/s158255_ld_h15_aa.png?lock=720x540" group-title="🗂️ YEDEKLER (285)",DD SPORTS (1080P)
 https://cdn.pishow.tv/ott/live/1161/master.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/Y1t8xkL.png" group-title="🗂️ YEDEKLER (4110)",DEPORTES TVC (720P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/Y1t8xkL.png" group-title="🗂️ YEDEKLER (285)",DEPORTES TVC (720P)
 http://190.61.101.11:7050/play/a06t/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/THk9ARS.png" group-title="🗂️ YEDEKLER (4110)",DEPORTV (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/THk9ARS.png" group-title="🗂️ YEDEKLER (285)",DEPORTV (1080P)
 http://158.172.155.130:8000/play/a09y/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.logos-download.com/114030/29915-s5120-904df224e4c030fefcc45adda448b6e8.png/DiviSport_Logo_2023-s5120.png" group-title="🗂️ YEDEKLER (4110)",DİVİSPORT (1080P)
+#EXTINF:-1 tvg-logo="https://i.logos-download.com/114030/29915-s5120-904df224e4c030fefcc45adda448b6e8.png/DiviSport_Logo_2023-s5120.png" group-title="🗂️ YEDEKLER (285)",DİVİSPORT (1080P)
 http://stream.mcquack.net/457/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/ymxmyyG.png" group-title="🗂️ YEDEKLER (4110)",DYNAMO KYIV TV (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/ymxmyyG.png" group-title="🗂️ YEDEKLER (285)",DYNAMO KYIV TV (1080P)
 http://stream.mcquack.net/396/index.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/BeIN_Sports_logo_%28vertical_version%29.svg/500px-BeIN_Sports_logo_%28vertical_version%29.svg.png" group-title="🗂️ YEDEKLER (4110)",BEIN SPORTS USA (576P)
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/BeIN_Sports_logo_%28vertical_version%29.svg/500px-BeIN_Sports_logo_%28vertical_version%29.svg.png" group-title="🗂️ YEDEKLER (285)",BEIN SPORTS USA (576P)
 https://tvsen6.aynaott.com/beinsports/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.ibb.co/HT49GPmB/XTRA-2.png" group-title="🗂️ YEDEKLER (4110)",BEIN SPORTS XTRA (1080P)
+#EXTINF:-1 tvg-logo="https://i.ibb.co/HT49GPmB/XTRA-2.png" group-title="🗂️ YEDEKLER (285)",BEIN SPORTS XTRA (1080P)
 https://bein-xtra-bein.amagi.tv/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/V562tpO.png" group-title="🗂️ YEDEKLER (4110)",BEIN SPORTS XTRA EN ESPANOL (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/V562tpO.png" group-title="🗂️ YEDEKLER (285)",BEIN SPORTS XTRA EN ESPANOL (1080P)
 https://dc1644a9jazgj.cloudfront.net/beIN_Sports_Xtra_Espanol.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/NJsRFud.png" group-title="🗂️ YEDEKLER (4110)",BELARUS-5 (1080P) [NOT 24/7]
+#EXTINF:-1 tvg-logo="https://i.imgur.com/NJsRFud.png" group-title="🗂️ YEDEKLER (285)",BELARUS-5 (1080P) [NOT 24/7]
 https://ngtrk.dc.beltelecom.by/ngtrk/smil:belarus5.smil/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/NJsRFud.png" group-title="🗂️ YEDEKLER (4110)",BELARUS-5 HD (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/NJsRFud.png" group-title="🗂️ YEDEKLER (285)",BELARUS-5 HD (1080P)
 http://178.124.179.122:8080/BT5/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/nCAt3QN.png" group-title="🗂️ YEDEKLER (4110)",CANAL MOTOR (720P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/nCAt3QN.png" group-title="🗂️ YEDEKLER (285)",CANAL MOTOR (720P)
 https://digicom.hls.iptvdc.com/canalmotor/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/0L9tW3Z.png" group-title="🗂️ YEDEKLER (4110)",CANAL SHOWSPORT (720P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/0L9tW3Z.png" group-title="🗂️ YEDEKLER (285)",CANAL SHOWSPORT (720P)
 https://livestream.lumpentv.com.ar/hls/lumpen.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/EOXnU15.png" group-title="🗂️ YEDEKLER (4110)",CANAL+ SPORT (FRANCE) (1080P) [GEO-BLOCKED]
+#EXTINF:-1 tvg-logo="https://i.imgur.com/EOXnU15.png" group-title="🗂️ YEDEKLER (285)",CANAL+ SPORT (FRANCE) (1080P) [GEO-BLOCKED]
 http://tv.streambox.fr/live/testlivestream/testlivestream/31.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/q8BENJg.png" group-title="🗂️ YEDEKLER (4110)",CBS SPORTS HQ (720P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/q8BENJg.png" group-title="🗂️ YEDEKLER (285)",CBS SPORTS HQ (720P)
 https://jmp2.uk/plu-5e9f2c05172a0f0007db4786.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/n0kd17r.png" group-title="🗂️ YEDEKLER (4110)",CLARO SPORTS (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/n0kd17r.png" group-title="🗂️ YEDEKLER (285)",CLARO SPORTS (1080P)
 http://45.171.64.30:6060/play/a00w/index.m3u8
-#EXTINF:-1 tvg-logo="https://dtil.tmsimg.com/assets/s158255_ld_h15_aa.png?lock=720x540" group-title="🗂️ YEDEKLER (4110)",DD SPORTS (1080P)
+#EXTINF:-1 tvg-logo="https://dtil.tmsimg.com/assets/s158255_ld_h15_aa.png?lock=720x540" group-title="🗂️ YEDEKLER (285)",DD SPORTS (1080P)
 https://d3qs3d2rkhfqrt.cloudfront.net/out/v1/b17adfe543354fdd8d189b110617cddd/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/SFYhgrt.png" group-title="🗂️ YEDEKLER (4110)",DRAFTKINGS NETWORK (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/SFYhgrt.png" group-title="🗂️ YEDEKLER (285)",DRAFTKINGS NETWORK (1080P)
 https://na.linear.zype.com/e0bd0e23-a958-4e43-8164-4f2fef8876a8/fd3614bd-90bf-4530-a277-65ae3a1720c8-zype/live.m3u8
-#EXTINF:-1 tvg-logo="https://imgx.fubo.tv/station_logos/espn-hd_c.png" group-title="🗂️ YEDEKLER (4110)",ESPN (UNITED STATES) HD (720P)
+#EXTINF:-1 tvg-logo="https://imgx.fubo.tv/station_logos/espn-hd_c.png" group-title="🗂️ YEDEKLER (285)",ESPN (UNITED STATES) HD (720P)
 http://85.237.89.160:9590/usa-s/ESPN-HD/index.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/ESPN_wordmark.svg/960px-ESPN_wordmark.svg.png" group-title="🗂️ YEDEKLER (4110)",ESPN LATIN AMERICA MEXICO (1080P)
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/ESPN_wordmark.svg/960px-ESPN_wordmark.svg.png" group-title="🗂️ YEDEKLER (285)",ESPN LATIN AMERICA MEXICO (1080P)
 http://168.228.44.241:9997/play/a06p/index.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/ESPN_Premium_logo.svg/960px-ESPN_Premium_logo.svg.png" group-title="🗂️ YEDEKLER (4110)",ESPN PREMIUM
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/ESPN_Premium_logo.svg/960px-ESPN_Premium_logo.svg.png" group-title="🗂️ YEDEKLER (285)",ESPN PREMIUM
 http://45.134.141.161:2200/ARG/ESPN_Premium_Argentina_HD/tracks-v1a1/mono.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/olQJgm7.png" group-title="🗂️ YEDEKLER (4110)",EUROSPORT 1
+#EXTINF:-1 tvg-logo="https://i.imgur.com/olQJgm7.png" group-title="🗂️ YEDEKLER (285)",EUROSPORT 1
 https://r.eu.cdn-redge.media/livehls/oeu/mt/live/eurosport_1/live.livx/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/olQJgm7.png" group-title="🗂️ YEDEKLER (4110)",EUROSPORT 1 GERMANY
+#EXTINF:-1 tvg-logo="https://i.imgur.com/olQJgm7.png" group-title="🗂️ YEDEKLER (285)",EUROSPORT 1 GERMANY
 http://90.183.52.46:4000/play/a06v/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/olQJgm7.png" group-title="🗂️ YEDEKLER (4110)",EUROSPORT 1 PORTUGAL
+#EXTINF:-1 tvg-logo="https://i.imgur.com/olQJgm7.png" group-title="🗂️ YEDEKLER (285)",EUROSPORT 1 PORTUGAL
 http://185.228.163.146:8000/play/a03z/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/olQJgm7.png" group-title="🗂️ YEDEKLER (4110)",EUROSPORT 1 RUSSIA (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/olQJgm7.png" group-title="🗂️ YEDEKLER (285)",EUROSPORT 1 RUSSIA (1080P)
 https://s7.iptv-24.net/1439/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/olQJgm7.png" group-title="🗂️ YEDEKLER (4110)",EUROSPORT 1 UK (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/olQJgm7.png" group-title="🗂️ YEDEKLER (285)",EUROSPORT 1 UK (1080P)
 http://85.117.37.43/eurosport1/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/f56dHgR.png" group-title="🗂️ YEDEKLER (4110)",EUROSPORT 2 (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/f56dHgR.png" group-title="🗂️ YEDEKLER (285)",EUROSPORT 2 (1080P)
 https://r.eu.cdn-redge.media/livehls/oeu/mt/live/eurosport_2/live.livx/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/f56dHgR.png" group-title="🗂️ YEDEKLER (4110)",EUROSPORT 2 GERMANY
+#EXTINF:-1 tvg-logo="https://i.imgur.com/f56dHgR.png" group-title="🗂️ YEDEKLER (285)",EUROSPORT 2 GERMANY
 http://46.244.99.71:8181/stream/74/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/f56dHgR.png" group-title="🗂️ YEDEKLER (4110)",EUROSPORT 2 PORTUGAL
+#EXTINF:-1 tvg-logo="https://i.imgur.com/f56dHgR.png" group-title="🗂️ YEDEKLER (285)",EUROSPORT 2 PORTUGAL
 http://185.228.163.146:8000/play/a048/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/f56dHgR.png" group-title="🗂️ YEDEKLER (4110)",EUROSPORT 2 RUSSIA (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/f56dHgR.png" group-title="🗂️ YEDEKLER (285)",EUROSPORT 2 RUSSIA (1080P)
 https://s7.iptv-24.net/1452/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/f56dHgR.png" group-title="🗂️ YEDEKLER (4110)",EUROSPORT 2 SPAIN (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/f56dHgR.png" group-title="🗂️ YEDEKLER (285)",EUROSPORT 2 SPAIN (1080P)
 http://45.134.141.161:2200/ARG/Eurosport_2_HD/index.m3u8
-#EXTINF:-1 tvg-logo="https://dtil.tmsimg.com/assets/GNLZZGG002E9LQS.png?lock=720x540" group-title="🗂️ YEDEKLER (4110)",EUROSPORT (INDIA) HD (1080P)
+#EXTINF:-1 tvg-logo="https://dtil.tmsimg.com/assets/GNLZZGG002E9LQS.png?lock=720x540" group-title="🗂️ YEDEKLER (285)",EUROSPORT (INDIA) HD (1080P)
 https://livetv.shamon-cable.net:8443/Eurosport-HD/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/VmaYUcq.png" group-title="🗂️ YEDEKLER (4110)",FAST SPORTS (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/VmaYUcq.png" group-title="🗂️ YEDEKLER (285)",FAST SPORTS (1080P)
 http://s7.merlive.am/Fastsports/index.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/FIFA%2B_(2025).svg/960px-FIFA%2B_(2025).svg.png" group-title="🗂️ YEDEKLER (4110)",FIFA+ (720P)
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/FIFA%2B_(2025).svg/960px-FIFA%2B_(2025).svg.png" group-title="🗂️ YEDEKLER (285)",FIFA+ (720P)
 https://jmp2.uk/plu-660c29b5aec9680008f5b4a4.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/FIFA%2B_(2025).svg/960px-FIFA%2B_(2025).svg.png" group-title="🗂️ YEDEKLER (4110)",FIFA+ FRENCH (720P)
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/FIFA%2B_(2025).svg/960px-FIFA%2B_(2025).svg.png" group-title="🗂️ YEDEKLER (285)",FIFA+ FRENCH (720P)
 https://37b4c228.wurl.com/master/f36d25e7e52f1ba8d7e56eb859c636563214f541/UmFrdXRlblRWLWZyX0ZJRkFQbHVzRnJlbmNoX0hMUw/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/FIFA%2B_(2025).svg/960px-FIFA%2B_(2025).svg.png" group-title="🗂️ YEDEKLER (4110)",FIFA+ GERMAN (720P)
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/FIFA%2B_(2025).svg/960px-FIFA%2B_(2025).svg.png" group-title="🗂️ YEDEKLER (285)",FIFA+ GERMAN (720P)
 https://4397879b.wurl.com/master/f36d25e7e52f1ba8d7e56eb859c636563214f541/UmFrdXRlblRWLWRlX0ZJRkFQbHVzR2VybWFuX0hMUw/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/FIFA%2B_(2025).svg/960px-FIFA%2B_(2025).svg.png" group-title="🗂️ YEDEKLER (4110)",FIFA+ HISPANIC AMERICA (720P)
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/FIFA%2B_(2025).svg/960px-FIFA%2B_(2025).svg.png" group-title="🗂️ YEDEKLER (285)",FIFA+ HISPANIC AMERICA (720P)
 https://6c849fb3.wurl.com/master/f36d25e7e52f1ba8d7e56eb859c636563214f541/TEctbXhfRklGQVBsdXNTcGFuaXNoLTFfSExT/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/FIFA%2B_(2025).svg/960px-FIFA%2B_(2025).svg.png" group-title="🗂️ YEDEKLER (4110)",FIFA+ ITALY (720P)
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/FIFA%2B_(2025).svg/960px-FIFA%2B_(2025).svg.png" group-title="🗂️ YEDEKLER (285)",FIFA+ ITALY (720P)
 https://5d95f7d7.wurl.com/master/f36d25e7e52f1ba8d7e56eb859c636563214f541/UmFrdXRlblRWLWl0X0ZJRkFQbHVzSXRhbGlhbl9ITFM/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/FIFA%2B_(2025).svg/960px-FIFA%2B_(2025).svg.png" group-title="🗂️ YEDEKLER (4110)",FIFA+ PORTUGUESE (720P)
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/FIFA%2B_(2025).svg/960px-FIFA%2B_(2025).svg.png" group-title="🗂️ YEDEKLER (285)",FIFA+ PORTUGUESE (720P)
 https://e3be9ac5.wurl.com/master/f36d25e7e52f1ba8d7e56eb859c636563214f541/TEctYnJfRklGQVBsdXNQb3J0dWd1ZXNlX0hMUw/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/FIFA%2B_(2025).svg/960px-FIFA%2B_(2025).svg.png" group-title="🗂️ YEDEKLER (4110)",FIFA+ SPAIN (720P)
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/FIFA%2B_(2025).svg/960px-FIFA%2B_(2025).svg.png" group-title="🗂️ YEDEKLER (285)",FIFA+ SPAIN (720P)
 https://d63fabad.wurl.com/master/f36d25e7e52f1ba8d7e56eb859c636563214f541/UmFrdXRlblRWLWVzX0ZJRkFQbHVzU3BhbmlzaF9ITFM/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/FIFA%2B_(2025).svg/960px-FIFA%2B_(2025).svg.png" group-title="🗂️ YEDEKLER (4110)",FIFA+ UNITED STATES (720P)
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/FIFA%2B_(2025).svg/960px-FIFA%2B_(2025).svg.png" group-title="🗂️ YEDEKLER (285)",FIFA+ UNITED STATES (720P)
 https://d2w9q46ikgrcwx.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-of5cbk3sav3w5/v1/sysdata_s_p_a_fifa_7/samsungheadend_us/latest/main/hls/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/mRsnztA.png" group-title="🗂️ YEDEKLER (4110)",FIGHTBOX HD
+#EXTINF:-1 tvg-logo="https://i.imgur.com/mRsnztA.png" group-title="🗂️ YEDEKLER (285)",FIGHTBOX HD
 https://nosignal1.antenaplay.ro/hls/fightbox-hd/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/mRsnztA.png" group-title="🗂️ YEDEKLER (4110)",FIGHTBOX POLAND (576I)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/mRsnztA.png" group-title="🗂️ YEDEKLER (285)",FIGHTBOX POLAND (576I)
 http://92.114.85.87:8003/play/a00b/index.m3u8
-#EXTINF:-1 tvg-logo="https://assets.antenaplay.ro/2024/02/23/XUKfJwir4MxNeP4nHtG7.png" group-title="🗂️ YEDEKLER (4110)",FORMULA 1 ANTENAPLAY (576I) [NOT 24/7]
+#EXTINF:-1 tvg-logo="https://assets.antenaplay.ro/2024/02/23/XUKfJwir4MxNeP4nHtG7.png" group-title="🗂️ YEDEKLER (285)",FORMULA 1 ANTENAPLAY (576I) [NOT 24/7]
 https://stream1.antenaplay.ro/promo/formula-1-las-vegas-20-2211/chunklist.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/FOX_Sports_logo.svg/960px-FOX_Sports_logo.svg.png" group-title="🗂️ YEDEKLER (4110)",FOX SPORTS (1080P)
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/FOX_Sports_logo.svg/960px-FOX_Sports_logo.svg.png" group-title="🗂️ YEDEKLER (285)",FOX SPORTS (1080P)
 http://138.59.227.20:8000/play/a085/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/I8mviBy.png" group-title="🗂️ YEDEKLER (4110)",FUEL TV US (1080P) [GEO-BLOCKED]
+#EXTINF:-1 tvg-logo="https://i.imgur.com/I8mviBy.png" group-title="🗂️ YEDEKLER (285)",FUEL TV US (1080P) [GEO-BLOCKED]
 https://amg01074-fueltv-amg01074c1-firetv-us-3150.playouts.now.amagi.tv/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/0eZa0qh.png" group-title="🗂️ YEDEKLER (4110)",GO3 SPORT 1 (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/0eZa0qh.png" group-title="🗂️ YEDEKLER (285)",GO3 SPORT 1 (1080P)
 http://stream.mcquack.net/416/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/WHnddkg.png" group-title="🗂️ YEDEKLER (4110)",GOLF + (1080P) [GEO-BLOCKED]
+#EXTINF:-1 tvg-logo="https://i.imgur.com/WHnddkg.png" group-title="🗂️ YEDEKLER (285)",GOLF + (1080P) [GEO-BLOCKED]
 http://tv.streambox.fr/live/testlivestream/testlivestream/49.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/Lgux6Ik.png" group-title="🗂️ YEDEKLER (4110)",GOLF CHANNEL (UNITED STATES) (576P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/Lgux6Ik.png" group-title="🗂️ YEDEKLER (285)",GOLF CHANNEL (UNITED STATES) (576P)
 https://tvsen6.aynaott.com/golfchannel/index.m3u8
-#EXTINF:-1 tvg-logo="https://iili.io/J1kV1Bn.png" group-title="🗂️ YEDEKLER (4110)",ITV DEPORTES (720P)
+#EXTINF:-1 tvg-logo="https://iili.io/J1kV1Bn.png" group-title="🗂️ YEDEKLER (285)",ITV DEPORTES (720P)
 https://thm-it-roku.otteravision.com/thm/it/it.m3u8
-#EXTINF:-1 tvg-logo="https://yt3.googleusercontent.com/ytc/AIdro_m_xSJFydxZ9QBU-85OuchjmzS0Bo0_Tukmk7to8hBfyl8=s512-c-k-c0x00ffffff-no-rj" group-title="🗂️ YEDEKLER (4110)",LACROSSE TV (720P)
+#EXTINF:-1 tvg-logo="https://yt3.googleusercontent.com/ytc/AIdro_m_xSJFydxZ9QBU-85OuchjmzS0Bo0_Tukmk7to8hBfyl8=s512-c-k-c0x00ffffff-no-rj" group-title="🗂️ YEDEKLER (285)",LACROSSE TV (720P)
 https://a-cdn.klowdtv.com/live2/lsn_720p/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Marquee_Sports_Network_Logo.svg/960px-Marquee_Sports_Network_Logo.svg.png" group-title="🗂️ YEDEKLER (4110)",MARQUEE SPORTS NETWORK (576P)
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Marquee_Sports_Network_Logo.svg/960px-Marquee_Sports_Network_Logo.svg.png" group-title="🗂️ YEDEKLER (285)",MARQUEE SPORTS NETWORK (576P)
 https://tvsen6.aynaott.com/MarqueeSportsNetwork/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/hzexBLX.png" group-title="🗂️ YEDEKLER (4110)",MATCH4 (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/hzexBLX.png" group-title="🗂️ YEDEKLER (285)",MATCH4 (1080P)
 http://141.94.193.53/Match4_HD/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/DogOkA4.png" group-title="🗂️ YEDEKLER (4110)",MATCH! BOETS (576P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/DogOkA4.png" group-title="🗂️ YEDEKLER (285)",MATCH! BOETS (576P)
 http://stream.mcquack.net/112/index.m3u8
-#EXTINF:-1 tvg-logo="https://www.kartina.tv/media/news/images/News/SEO/kanal-match-ultra.jpg" group-title="🗂️ YEDEKLER (4110)",MATCH! ULTRA (1080P)
+#EXTINF:-1 tvg-logo="https://www.kartina.tv/media/news/images/News/SEO/kanal-match-ultra.jpg" group-title="🗂️ YEDEKLER (285)",MATCH! ULTRA (1080P)
 http://31.148.5.241/kanal_3/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/ym3su2J.png" group-title="🗂️ YEDEKLER (4110)",MLB (720P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/ym3su2J.png" group-title="🗂️ YEDEKLER (285)",MLB (720P)
 https://jmp2.uk/plu-5e66968a70f34c0007d050be.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/v4kj8pI.png" group-title="🗂️ YEDEKLER (4110)",MOTORVISION (1080I)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/v4kj8pI.png" group-title="🗂️ YEDEKLER (285)",MOTORVISION (1080I)
 https://mvg-mv.otteravision.com/mvg/mv/mv_1080p.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/mPGtwAP.png" group-title="🗂️ YEDEKLER (4110)",NFL CHANNEL (720P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/mPGtwAP.png" group-title="🗂️ YEDEKLER (285)",NFL CHANNEL (720P)
 https://jmp2.uk/plu-5ced7d5df64be98e07ed47b6.m3u8
-#EXTINF:-1 tvg-logo="https://assets.antenaplay.ro/2024/10/25/SN0nevshXwKDcZ2Tw1jm.png" group-title="🗂️ YEDEKLER (4110)",NHL ANTENAPLAY (576I) [NOT 24/7]
+#EXTINF:-1 tvg-logo="https://assets.antenaplay.ro/2024/10/25/SN0nevshXwKDcZ2Tw1jm.png" group-title="🗂️ YEDEKLER (285)",NHL ANTENAPLAY (576I) [NOT 24/7]
 https://stream1.antenaplay.ro/promo/nhl-12-1411/chunklist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/UNZ8bef.png" group-title="🗂️ YEDEKLER (4110)",NHL NETWORK (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/UNZ8bef.png" group-title="🗂️ YEDEKLER (285)",NHL NETWORK (1080P)
 https://nhl-firetv.amagi.tv/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/jZgcm4k.png" group-title="🗂️ YEDEKLER (4110)",NHRA TV (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/jZgcm4k.png" group-title="🗂️ YEDEKLER (285)",NHRA TV (1080P)
 https://d265y4sk8257lt.cloudfront.net/nh.m3u8
-#EXTINF:-1 tvg-logo="https://img-evg3.tv360.bitel.com.pe/peru-image/2026/09/24/00/1790182833200/6a8e1eb7f5d6_640_360.png" group-title="🗂️ YEDEKLER (4110)",BICOLOR+ (720P)
+#EXTINF:-1 tvg-logo="https://img-evg3.tv360.bitel.com.pe/peru-image/2026/09/24/00/1790182833200/6a8e1eb7f5d6_640_360.png" group-title="🗂️ YEDEKLER (285)",BICOLOR+ (720P)
 https://live-evg10.tv360.bitel.com.pe/bitel/bicolorfree_abr/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://img-evg3.tv360.bitel.com.pe/peru-image/2026/09/24/03/1790194132371/1e57475a9a6b_640_360.png" group-title="🗂️ YEDEKLER (4110)",BICOLOR+ PREMIUM 2 (720P)
+#EXTINF:-1 tvg-logo="https://img-evg3.tv360.bitel.com.pe/peru-image/2026/09/24/03/1790194132371/1e57475a9a6b_640_360.png" group-title="🗂️ YEDEKLER (285)",BICOLOR+ PREMIUM 2 (720P)
 https://live-evg10.tv360.bitel.com.pe/bitel/bicolorpremium2_abr/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://img-evg3.tv360.bitel.com.pe/peru-image/2026/09/24/03/1790194198636/d91910da3254_640_360.png" group-title="🗂️ YEDEKLER (4110)",BICOLOR+ PREMIUM 3 (720P)
+#EXTINF:-1 tvg-logo="https://img-evg3.tv360.bitel.com.pe/peru-image/2026/09/24/03/1790194198636/d91910da3254_640_360.png" group-title="🗂️ YEDEKLER (285)",BICOLOR+ PREMIUM 3 (720P)
 https://live-evg10.tv360.bitel.com.pe/bitel/bicolorpremium3_abr/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://img-evg3.tv360.bitel.com.pe/peru-image/2026/09/24/00/1790183086681/1dff7002a22a_640_360.png" group-title="🗂️ YEDEKLER (4110)",BICOLOR+ PREMIUM [GEO-BLOCKED]
+#EXTINF:-1 tvg-logo="https://img-evg3.tv360.bitel.com.pe/peru-image/2026/09/24/00/1790183086681/1dff7002a22a_640_360.png" group-title="🗂️ YEDEKLER (285)",BICOLOR+ PREMIUM [GEO-BLOCKED]
 https://live-evg10.tv360.bitel.com.pe/bitel/bicolorpremium_abr/bitel/bicolorpremium_720p/chunks.m3u8
-#EXTINF:-1 tvg-logo="https://static.wikia.nocookie.net/logopedia/images/8/87/Antena_Play_symbol_white_2022.svg/revision/latest/scale-to-width-down/1000?cb=20251128201145" group-title="🗂️ YEDEKLER (4110)",ANTENAPLAY EVENTS (576I) [NOT 24/7]
+#EXTINF:-1 tvg-logo="https://static.wikia.nocookie.net/logopedia/images/8/87/Antena_Play_symbol_white_2022.svg/revision/latest/scale-to-width-down/1000?cb=20251128201145" group-title="🗂️ YEDEKLER (285)",ANTENAPLAY EVENTS (576I) [NOT 24/7]
 https://live77cdn2.antenaplay.ro/live2_sport07/live2_sport07_3500k.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/2ByDyzL.png" group-title="🗂️ YEDEKLER (4110)",NAUTICAL CHANNEL (720P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/2ByDyzL.png" group-title="🗂️ YEDEKLER (285)",NAUTICAL CHANNEL (720P)
 https://a-cdn.klowdtv.com/live2/nautical_720p/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/Lv53nh4.png" group-title="🗂️ YEDEKLER (4110)",30A GOLF KİNGDOM (720P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/Lv53nh4.png" group-title="🗂️ YEDEKLER (285)",30A GOLF KİNGDOM (720P)
 https://30a-tv.com/feeds/vidaa/golf.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/U8cHMOt.png" group-title="🗂️ YEDEKLER (4110)",ACI SPORT TV (720P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/U8cHMOt.png" group-title="🗂️ YEDEKLER (285)",ACI SPORT TV (720P)
 https://webstream.multistream.it/memfs/e2cb3629-c1a2-495b-b43a-9eb386f04ed8.m3u8
-#EXTINF:-1 tvg-logo="https://i0.wp.com/africa24tv.com/wp-content/uploads/2023/12/LOGO-AFRICASPORT-4-HD-sans-fond.png?fit=512%2C107&ssl=1" group-title="🗂️ YEDEKLER (4110)",AFRİCA 24 SPORT (1080P)
+#EXTINF:-1 tvg-logo="https://i0.wp.com/africa24tv.com/wp-content/uploads/2023/12/LOGO-AFRICASPORT-4-HD-sans-fond.png?fit=512%2C107&ssl=1" group-title="🗂️ YEDEKLER (285)",AFRİCA 24 SPORT (1080P)
 https://africa24.vedge.infomaniak.com/livecast/ik:africa24sport/manifest.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/DrrlxTO.png" group-title="🗂️ YEDEKLER (4110)",AL IRAQIA SPORT (720P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/DrrlxTO.png" group-title="🗂️ YEDEKLER (285)",AL IRAQIA SPORT (720P)
 https://imn-live.esite-lab.com/hls/iraqia-sports-1.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/2qf67zW.png" group-title="🗂️ YEDEKLER (4110)",ARENA SPORT 1
+#EXTINF:-1 tvg-logo="https://i.imgur.com/2qf67zW.png" group-title="🗂️ YEDEKLER (285)",ARENA SPORT 1
 http://88.212.15.50/live/test_arenasport/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/Yq3Jf19.png" group-title="🗂️ YEDEKLER (4110)",ARENA SPORT 2
+#EXTINF:-1 tvg-logo="https://i.imgur.com/Yq3Jf19.png" group-title="🗂️ YEDEKLER (285)",ARENA SPORT 2
 http://88.212.15.50/live/test_arenasport_dva/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/uAaQDr6.png" group-title="🗂️ YEDEKLER (4110)",ARENA4
+#EXTINF:-1 tvg-logo="https://i.imgur.com/uAaQDr6.png" group-title="🗂️ YEDEKLER (285)",ARENA4
 http://88.212.7.14/live/arena4/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.ibb.co/bRmGbsyV/A3-SPORTTV.jpg" group-title="🗂️ YEDEKLER (4110)",AS3 SPORT TV (1080P)
+#EXTINF:-1 tvg-logo="https://i.ibb.co/bRmGbsyV/A3-SPORTTV.jpg" group-title="🗂️ YEDEKLER (285)",AS3 SPORT TV (1080P)
 https://streamtv.as3sport.online:3394/hybrid/play.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/BKaEtqL.png" group-title="🗂️ YEDEKLER (4110)",ASTRAHAN.RU SPORT (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/BKaEtqL.png" group-title="🗂️ YEDEKLER (285)",ASTRAHAN.RU SPORT (1080P)
 https://streaming.astrakhan.ru/astrakhanrusporthd/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/yu3Bpbd.png" group-title="🗂️ YEDEKLER (4110)",AYM SPORTS (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/yu3Bpbd.png" group-title="🗂️ YEDEKLER (285)",AYM SPORTS (1080P)
 http://168.196.127.137:6001/play/a06v/index.m3u8
-#EXTINF:-1 tvg-logo="https://match-images.icdb.tv/5913207f2494844101287828e87625eb.jpg" group-title="🗂️ YEDEKLER (4110)",AZTECA DEPORTES NETWORK (720P)
+#EXTINF:-1 tvg-logo="https://match-images.icdb.tv/5913207f2494844101287828e87625eb.jpg" group-title="🗂️ YEDEKLER (285)",AZTECA DEPORTES NETWORK (720P)
 https://live-manifest.production-public.tubi.io/live/6bf131c3-d664-424c-93c9-49188a788980/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/fBpLsbC.png" group-title="🗂️ YEDEKLER (4110)",BAHRAİN SPORTS 1 (720P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/fBpLsbC.png" group-title="🗂️ YEDEKLER (285)",BAHRAİN SPORTS 1 (720P)
 https://5c7b683162943.streamlock.net/live/ngrp:sportsone_all/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/ZkuZmIo.png" group-title="🗂️ YEDEKLER (4110)",BAHRAİN SPORTS 2 (720P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/ZkuZmIo.png" group-title="🗂️ YEDEKLER (285)",BAHRAİN SPORTS 2 (720P)
 https://5c7b683162943.streamlock.net/live/ngrp:bahrainsportstwo_all/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/EuPvzJe.png" group-title="🗂️ YEDEKLER (4110)",BAND SPORTS (720P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/EuPvzJe.png" group-title="🗂️ YEDEKLER (285)",BAND SPORTS (720P)
 http://45.162.64.114/BAND_SPORTS/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.ibb.co/HT49GPmB/XTRA-2.png" group-title="🗂️ YEDEKLER (4110)",BEIN SPORTS XTRA (1080P)
+#EXTINF:-1 tvg-logo="https://i.ibb.co/HT49GPmB/XTRA-2.png" group-title="🗂️ YEDEKLER (285)",BEIN SPORTS XTRA (1080P)
 https://bein-xtra-xumo.amagi.tv/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/V562tpO.png" group-title="🗂️ YEDEKLER (4110)",BEIN SPORTS XTRA EN ESPANOL (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/V562tpO.png" group-title="🗂️ YEDEKLER (285)",BEIN SPORTS XTRA EN ESPANOL (1080P)
 https://aegis-cloudfront-1.tubi.video/01f6c149-449b-4248-8bda-2278799205ec/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/1l3t5jd.png" group-title="🗂️ YEDEKLER (4110)",BEK SPORTS (720P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/1l3t5jd.png" group-title="🗂️ YEDEKLER (285)",BEK SPORTS (720P)
 https://cdn3.wowza.com/5/ZWQ1K2NYTmpFbGsr/BEK-WOWZA-1/smil:BEKPRIMEW.smil/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/V6Kaqha.png" group-title="🗂️ YEDEKLER (4110)",ACC DİGİTAL NETWORK (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/V6Kaqha.png" group-title="🗂️ YEDEKLER (285)",ACC DİGİTAL NETWORK (1080P)
 https://raycom-accdn-firetv.amagi.tv/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/TpCkbkT.png" group-title="🗂️ YEDEKLER (4110)",ACC NETWORK (720P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/TpCkbkT.png" group-title="🗂️ YEDEKLER (285)",ACC NETWORK (720P)
 http://23.239.31.26:8989/accnetwork/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/XjzK3gZ.png" group-title="🗂️ YEDEKLER (4110)",ARRYADİA (720P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/XjzK3gZ.png" group-title="🗂️ YEDEKLER (285)",ARRYADİA (720P)
 http://149.100.11.252:8000/play/a065/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/DBpVeb0.png" group-title="🗂️ YEDEKLER (4110)",ARSENAL (576P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/DBpVeb0.png" group-title="🗂️ YEDEKLER (285)",ARSENAL (576P)
 https://stream8.cinerama.uz/1414/tracks-v1a1/mono.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/bPWFXkL.png" group-title="🗂️ YEDEKLER (4110)",ATG LİVE (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/bPWFXkL.png" group-title="🗂️ YEDEKLER (285)",ATG LİVE (1080P)
 https://kanal75xto-llhls.akamaized.net/live/Data/atg-kanal-15-02a-rr/HLS-Legacy-HL/atg-kanal-15-02a-rr.m3u8
-#EXTINF:-1 tvg-logo="https://web02.antik.sk/assets/img/channels/59cd3407a28c122f4abbc7b01eff7a0c.svg" group-title="🗂️ YEDEKLER (4110)",BALLCASTERZ (1080P)
+#EXTINF:-1 tvg-logo="https://web02.antik.sk/assets/img/channels/59cd3407a28c122f4abbc7b01eff7a0c.svg" group-title="🗂️ YEDEKLER (285)",BALLCASTERZ (1080P)
 http://antik.streaming.tivio.studio/channels/yXDwkH0CbFfkhU7ZnHlT/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/NJsRFud.png" group-title="🗂️ YEDEKLER (4110)",BELARUS-5 (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/NJsRFud.png" group-title="🗂️ YEDEKLER (285)",BELARUS-5 (1080P)
 http://stream.mcquack.net/33/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/VBKoLHk.png" group-title="🗂️ YEDEKLER (4110)",BELLATOR MMA
+#EXTINF:-1 tvg-logo="https://i.imgur.com/VBKoLHk.png" group-title="🗂️ YEDEKLER (285)",BELLATOR MMA
 https://jmp2.uk/plu-5ebc8688f3697d00072f7cf8.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/en/thumb/3/39/Big_Ten_Network_Logo.svg/960px-Big_Ten_Network_Logo.svg.png" group-title="🗂️ YEDEKLER (4110)",BİG TEN NETWORK (1080P)
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/en/thumb/3/39/Big_Ten_Network_Logo.svg/960px-Big_Ten_Network_Logo.svg.png" group-title="🗂️ YEDEKLER (285)",BİG TEN NETWORK (1080P)
 http://23.237.104.106:8080/USA_BTN/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/BZijfKh.png" group-title="🗂️ YEDEKLER (4110)",BİLLİARD TV (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/BZijfKh.png" group-title="🗂️ YEDEKLER (285)",BİLLİARD TV (1080P)
 https://pb-wm04vonaerv0k.akamaized.net/billi.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/pPpSJ4u.png" group-title="🗂️ YEDEKLER (4110)",BNT 3 (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/pPpSJ4u.png" group-title="🗂️ YEDEKLER (285)",BNT 3 (1080P)
 https://shift03.isp.bg/BNT3_HD/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/R1UjyfX.png" group-title="🗂️ YEDEKLER (4110)",BOKS TV (576P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/R1UjyfX.png" group-title="🗂️ YEDEKLER (285)",BOKS TV (576P)
 http://stream.mcquack.net/154/index.m3u8
-#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/685029cda1e091e16ff57fc8/colorLogoPNG_1750246109707.png" group-title="🗂️ YEDEKLER (4110)",BRONDBY TV
+#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/685029cda1e091e16ff57fc8/colorLogoPNG_1750246109707.png" group-title="🗂️ YEDEKLER (285)",BRONDBY TV
 https://jmp2.uk/plu-685029cda1e091e16ff57fc8.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/uZr0cXB.png" group-title="🗂️ YEDEKLER (4110)",CACCİA E PESCA (720P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/uZr0cXB.png" group-title="🗂️ YEDEKLER (285)",CACCİA E PESCA (720P)
 http://102.129.186.182:81/cacciapesca/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/XRTfoSp.png" group-title="🗂️ YEDEKLER (4110)",AKC TV (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/XRTfoSp.png" group-title="🗂️ YEDEKLER (285)",AKC TV (1080P)
 https://install.akctvcontrol.com/speed/broadcast/138/desktop-playlist.m3u8
-#EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/RoqueDJ/iptv-svg/main/1792421696158.png" group-title="🗂️ YEDEKLER (4110)",AMERİCAN NİNJA WARRİOR (1080P)
+#EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/RoqueDJ/iptv-svg/main/1792421696158.png" group-title="🗂️ YEDEKLER (285)",AMERİCAN NİNJA WARRİOR (1080P)
 https://xumo-drct-ch812-n4996.fast.nbcuni.com/live/master.m3u8
-#EXTINF:-1 tvg-logo="https://static.wikia.nocookie.net/logopedia/images/8/87/Antena_Play_symbol_white_2022.svg/revision/latest/scale-to-width-down/1000?cb=20251128201145" group-title="🗂️ YEDEKLER (4110)",ANTENAPLAY EVENTS (576P)
+#EXTINF:-1 tvg-logo="https://static.wikia.nocookie.net/logopedia/images/8/87/Antena_Play_symbol_white_2022.svg/revision/latest/scale-to-width-down/1000?cb=20251128201145" group-title="🗂️ YEDEKLER (285)",ANTENAPLAY EVENTS (576P)
 https://live4dai.antenaplay.ro/live2_sdi09/live2_sdi09_600k.m3u8
