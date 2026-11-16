@@ -29,6 +29,7 @@ jobs:
           git clone --depth 1 https://github.com/Madsc55/madsc-tv.git /tmp/old-madsc-tv
           test -d /tmp/old-madsc-tv/.git
           python3 v2/import_every_archive_both_systems.py --old-repo /tmp/old-madsc-tv --scan-dir /tmp/all-scan
+          python3 -m pip install --disable-pip-version-check PyYAML==6.0.2
           python3 v2/test_playlist_invariants.py
           python3 v2/main_actions_security_gate.py
       - name: Create protected-branch PR
