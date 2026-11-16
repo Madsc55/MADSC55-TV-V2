@@ -58,7 +58,9 @@ def main():
                 block=block.replace(block.splitlines()[0],block.splitlines()[0].rstrip("\r\n")+' group-title="🗂️ YEDEKLER"\n',1)
             seen.add(u);added.append(block);n+=1
         counts[(str(p.relative_to(ROOT)) if p.is_relative_to(ROOT) else "old/"+str(p.relative_to(args.old_repo)) if p.is_relative_to(args.old_repo) else "scan/"+str(p.relative_to(args.scan_dir)) if p.is_relative_to(args.scan_dir) else str(p))]=n
-    if not added:raise SystemExit("No new unique channels")
+    if not added:
+        print(json.dumps({"added":0,"backups":len(existing),"source_files":len(sources),"invalid_records":invalid,"status":"already_imported"},ensure_ascii=False))
+        return
     total=len(existing)+len(added);label=f'group-title="🗂️ YEDEKLER ({total})"'
     def rewrite(block):
         lines=block.splitlines(keepends=True);lines[0]=GROUP.sub(lambda _:label,lines[0],count=1)
