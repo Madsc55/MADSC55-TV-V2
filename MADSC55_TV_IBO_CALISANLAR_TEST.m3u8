@@ -1997,14 +1997,10 @@ https://alpha.tv.online.tm/hls/ch004.m3u8
 https://hnc-free-viewlift.amagi.tv/HNC_AUSTRALIA.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/nK4UUX4.png" group-title="🗂️ YEDEKLER (4110)",HORSE TV (720P)
 https://a-cdn.klowdtv.com/live2/horsetv_720p/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/2ByDyzL.png" group-title="🗂️ YEDEKLER (4110)",NAUTICAL CHANNEL (720P)
-https://a-cdn.klowdtv.com/live2/nautical_720p/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://www.fishtv.com/public/site/images/logos/fishtv.svg" group-title="🗂️ YEDEKLER (4110)",FISH TV (720P)
 http://45.162.64.114/FISH_TV/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/qrn6tUO.png" group-title="🗂️ YEDEKLER (4110)",ITALIAN FISHING TV (1080P)
 https://fms.premio.link/fishingtv/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/2ByDyzL.png" group-title="🗂️ YEDEKLER (4110)",NAUTICAL CHANNEL (720P)
-https://streams2.sofast.tv/vglive-sk-231198/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/nCAt3QN.png" group-title="🗂️ YEDEKLER (4110)",CANAL MOTOR (1080P)
 https://digicom.hls.iptvdc.com/motorstv/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/JLSHiTp.png" group-title="🗂️ YEDEKLER (4110)",CARS.TV (720P)
@@ -2171,6 +2167,8 @@ https://live-evg10.tv360.bitel.com.pe/bitel/bicolorpremium3_abr/playlist.m3u8
 https://live-evg10.tv360.bitel.com.pe/bitel/bicolorpremium_abr/bitel/bicolorpremium_720p/chunks.m3u8
 #EXTINF:-1 tvg-logo="https://static.wikia.nocookie.net/logopedia/images/8/87/Antena_Play_symbol_white_2022.svg/revision/latest/scale-to-width-down/1000?cb=20251128201145" group-title="🗂️ YEDEKLER (4110)",ANTENAPLAY EVENTS (576I) [NOT 24/7]
 https://live77cdn2.antenaplay.ro/live2_sport07/live2_sport07_3500k.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/2ByDyzL.png" group-title="🗂️ YEDEKLER (4110)",NAUTICAL CHANNEL (720P)
+https://a-cdn.klowdtv.com/live2/nautical_720p/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/Lv53nh4.png" group-title="🗂️ YEDEKLER (4110)",30A GOLF KİNGDOM (720P)
 https://30a-tv.com/feeds/vidaa/golf.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/U8cHMOt.png" group-title="🗂️ YEDEKLER (4110)",ACI SPORT TV (720P)
@@ -9711,6 +9709,8 @@ https://bamusa-naturetime-emea-fra-rakuten.amagi.tv/playlist.m3u8
 http://stream.mcquack.net/125/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/ClGdZCe.png" group-title="🗂️ YEDEKLER (4110)",NAUKA (576P)
 http://stream.mcquack.net/403/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/2ByDyzL.png" group-title="🗂️ YEDEKLER (4110)",NAUTICAL CHANNEL (720P)
+https://streams2.sofast.tv/vglive-sk-231198/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/YteKXJy.png" group-title="🗂️ YEDEKLER (4110)",NAVAHANG TV (720P)
 https://hls.navahang.live/hls/stream.m3u8
 #EXTINF:-1 tvg-logo="https://dominicanchannels.com/wp-content/uploads/navarrete.png" group-title="🗂️ YEDEKLER (4110)",NAVARRETE TELEVISION (1080P)
