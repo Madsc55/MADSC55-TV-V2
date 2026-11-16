@@ -1,15 +1,10 @@
 {
-  "base_sha256": "74d911ef81fa5ff074b6e3dca52550d53335aae2a6467ff4a78fd841021b0115",
-  "result_sha256": "cc28a084e3c610c60151d424ce9e97b1d2c7da633cd233f9434c0fbc58e50744",
+  "base_sha256": "cc28a084e3c610c60151d424ce9e97b1d2c7da633cd233f9434c0fbc58e50744",
+  "result_sha256": "bbdd10884b67118ec7dfb5b77e66519d6b45c00416a66b871b2a8ff0bf176c7d",
   "operation": "move",
-  "request": "User authorized moving Turkish channels to YEDEKLER position 87 onward, without changing 838 main IBO channels or deleting any of 4110 backups.",
+  "request": "User authorized thorough scan of all 4110 backup channels and moving missed Turkish channels to the section beginning at position 87, without changing 838 main IBO channels.",
   "channels": [
-    "DA VİNCİ HD TR",
-    "BBC FİRST TURKİYE",
-    "TRT 3 (720P)",
-    "BRTV (720P)",
-    "TV 2000 TR",
-    "AS TV BURSA TR",
-    "FM TV TR"
+    "EKOL TV",
+    "KRAL POP TV (720P)"
   ]
 }
