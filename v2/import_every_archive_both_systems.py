@@ -28,7 +28,7 @@ def main():
     header=original_text[:first];records=parse(PLAY)
     protected=[b for b in records if "YEDEKLER" not in b.splitlines()[0]]
     existing=[b for b in records if "YEDEKLER" in b.splitlines()[0]]
-    if len(protected)!=838 or len(existing)!=12225 or records!=protected+existing:
+    if len(protected)!=838 or len(existing)!=16991 or records!=protected+existing:
         raise SystemExit("Main or backups changed unexpectedly")
     seen={u for b in existing if (u:=url(b))}
     sources=[]
@@ -65,11 +65,11 @@ def main():
         return "".join(lines)
     result=header+"".join(protected)+"".join(map(rewrite,existing+added))
     if len(parse_text(result))!=838+total:raise SystemExit("Output entry count mismatch")
-    if [url(b) for b in parse_text(result)[838:838+12225]] != [url(b) for b in existing]:
+    if [url(b) for b in parse_text(result)[838:838+16991]] != [url(b) for b in existing]:
         raise SystemExit("Existing backup order changed")
     tests=TEST.read_text(encoding="utf-8")
-    if tests.count("13063")!=1 or tests.count("12225")<3:raise SystemExit("Unexpected test baseline")
-    tests=tests.replace("13063",str(838+total)).replace("12225",str(total))
+    if tests.count("17829")!=1 or tests.count("16991")<3:raise SystemExit("Unexpected test baseline")
+    tests=tests.replace("17829",str(838+total)).replace("16991",str(total)
     manifest={"base_sha256":hashlib.sha256(original).hexdigest(),"result_sha256":hashlib.sha256(result.encode()).hexdigest(),"operation":"category","request":"User authorized all old and V2 playlists including all archives in YEDEKLER without deleting original archive files or protected 838 channels.","channels":[f"{len(added)} additional unique URLs from {len(sources)} playlist files; {invalid} invalid records skipped; AV not assumed"]}
     PLAY.write_text(result,encoding="utf-8");TEST.write_text(tests,encoding="utf-8")
     MANIFEST.write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
