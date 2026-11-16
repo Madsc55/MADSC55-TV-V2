@@ -24,34 +24,6 @@ jobs:
           sudo apt-get update -qq
           sudo apt-get install -y ffmpeg
           python -m pip install 'cryptography>=42,<47'
-      - name: Restore legacy 7650 queue checkpoint from previous completed scan
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          mkdir -p v2/reports/legacy-queue
-          for id in $(gh run list --workflow v2-real-iptv-scan.yml --branch main --limit 30 --json databaseId,status --jq '.[] | select(.status == "completed") | .databaseId'); do
-            mkdir -p "/tmp/legacy-queue-$id"
-            if gh run download "$id" --name v2-legacy-7650-checkpoint --dir "/tmp/legacy-queue-$id" 2>/dev/null && test -s "/tmp/legacy-queue-$id/state.json"; then
-              cp "/tmp/legacy-queue-$id/state.json" v2/reports/legacy-queue/state.json
-              echo "Legacy AV queue checkpoint recovered from $id"
-              break
-            fi
-          done
-      - name: Test next 500 legacy candidates (read-only)
-        continue-on-error: true
-        timeout-minutes: 145
-        run: |
-          python v2/verify_legacy_7650_queue.py --state v2/reports/legacy-queue/state.json --output v2/reports/legacy-queue/summary.json
-      - name: Preserve legacy queue progress independently
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: v2-legacy-7650-checkpoint
-          path: |
-            v2/reports/legacy-queue/state.json
-            v2/reports/legacy-queue/summary.json
-          retention-days: 90
-          if-no-files-found: warn
       - name: Require encrypted archive key
         run: |
           if [ -z "$V2_ARCHIVE_PASSPHRASE" ]; then
@@ -195,3 +167,37 @@ jobs:
             v2/reports/IBO_YENI_ADAYLAR_PART*.m3u8
           if-no-files-found: warn
           retention-days: 30
+
+  legacy-verify:
+    name: Legacy AV batch ${{ matrix.batch }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    strategy:
+      fail-fast: false
+      max-parallel: 8
+      matrix:
+        batch: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install ffmpeg
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y ffmpeg
+      - name: Test this 500-channel batch with video and audio decoding
+        env:
+          BATCH: ${{ matrix.batch }}
+        run: |
+          python v2/verify_legacy_7650_queue.py --start-index "$(( BATCH * 500 ))" --state "v2/reports/legacy-queue/state-$BATCH.json" --output "v2/reports/legacy-queue/summary-$BATCH.json"
+      - name: Upload batch evidence and checkpoint
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v2-legacy-7650-batch-${{ matrix.batch }}
+          path: |
+            v2/reports/legacy-queue/state-*.json
+            v2/reports/legacy-queue/summary-*.json
+          retention-days: 90
+          if-no-files-found: warn
