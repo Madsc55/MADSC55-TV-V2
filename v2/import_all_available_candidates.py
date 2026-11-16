@@ -28,7 +28,7 @@ def main():
         raise SystemExit("Protected playlist or existing backups changed")
     _,archived=blocks(ARCHIVE.read_text(encoding="utf-8-sig"))
     seen={u for x in current+archived if (u:=url(x))}
-    files=sorted(args.scan_dir.glob("IBO_YENI_ADAYLAR*.m3u8"))
+    files=sorted(args.scan_dir.rglob("IBO_YENI_ADAYLAR*.m3u8"))
     files+=sorted((ROOT/"v2/arsiv").glob("eski_sistem_aktarim_adaylari_2026-11-16_parca_*.m3u8"))
     if len(files)<7: raise SystemExit(f"Expected 3 scan and 4 legacy sources, got {len(files)}")
     added=[]; per_file={}
