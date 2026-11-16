@@ -40,6 +40,14 @@ def main():
     sources=sorted(set(sources),key=str)
     if len(sources)<10:raise SystemExit("Too few source playlists")
     added=[];counts={};invalid=0
+    # User requested the protected main channels also appear as backup copies.
+    # Preserve the original 838 main records byte-for-byte.
+    for block in protected:
+        u=url(block)
+        if u and u not in seen:
+            seen.add(u)
+            added.append(block)
+    counts["protected_main_copies"]=len(added)
     for p in sources:
         n=0
         for block in parse(p):
