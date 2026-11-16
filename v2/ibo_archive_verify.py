@@ -22,9 +22,19 @@ def inventory(data):
     records = []
     for i, line in enumerate(lines):
         if line.startswith("#EXTINF:"):
-            if i + 1 >= len(lines) or not lines[i + 1].strip() or lines[i + 1].startswith("#"):
-                raise ValueError("Missing stream URL")
-            records.append({"name": line.rsplit(",", 1)[-1], "metadata": line, "url": lines[i + 1], "line": i + 1})
+            url = None
+            for candidate in lines[i + 1:]:
+                candidate = candidate.strip()
+                if candidate.startswith("#EXTINF:"):
+                    break
+                if not candidate or candidate.startswith("#"):
+                    continue
+                if candidate.startswith(("http://", "https://")):
+                    url = candidate
+                break
+            if url is None:
+                raise ValueError(f"Missing stream URL after EXTINF at line {i + 1}")
+            records.append({"name": line.rsplit(",", 1)[-1], "metadata": line, "url": url, "line": i + 1})
     return records
 
 def archive(source, target):
