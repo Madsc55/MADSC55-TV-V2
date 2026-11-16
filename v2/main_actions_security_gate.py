@@ -65,7 +65,7 @@ def audit_one(filename,source):
             return ["ONE_TIME_PERMISSIONS_CHANGED"]
         if set(mapping(doc.get("jobs")))!={"import"}:
             return ["ONE_TIME_JOB_CHANGED"]
-        if "14136864383" not in source or "165c726cd9211f9f51c31f1c718e0911bab79e1b" not in source or "len(added)==1000" not in source:
+        if ("14136864383" not in source or "python3 v2/import_scan_backup_batch.py --source /tmp/candidates.m3u8 --count 1000" not in source or "python3 v2/test_playlist_invariants.py" not in source or "v2/ibo_authorized_change.json" not in source):
             return ["ONE_TIME_IMPORT_INVARIANTS_CHANGED"]
         return []
     allowed=({"push","pull_request","workflow_dispatch"} if filename==GATE else
