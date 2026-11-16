@@ -3463,50 +3463,35 @@ http://46.32.176.50/NationalGeographicHD/index.m3u8
 https://amg01314-amg01314c8-distrotv-us-10218.playouts.now.amagi.tv/playlist/amg01314-cgtn-cgtndiscoveringchina-distrotvus/playlist.m3u8
 #EXTINF:-1 tvg-id="FX.tr" tvg-logo="https://i.ibb.co/8gcyRP1Y/Ekran-g-r-nt-s-2026-07-25-163750.jpg" group-title="🗂️ YEDEKLER (18122)", FX TV HD
 https://saran-live.ercdn.net/fx/index.m3u8
-#EXTINF:-1 tvg-id="ATVAlanya.tr@SD",ATV Alanya (720p) [Not 24/7] group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-id="ATVAlanya.tr@SD" group-title="🗂️ YEDEKLER (18122)",ATV Alanya (720p) [Not 24/7]
 http://stream2.taksimbilisim.com:1935/alanyatv/alanyatv.smil/playlist.m3u8
-#EXTINF:-1 tvg-id="BeyazTV.tr@SD",Beyaz TV (720p) [Not 24/7] group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-id="BeyazTV.tr@SD" group-title="🗂️ YEDEKLER (18122)",Beyaz TV (720p) [Not 24/7]
 https://mn-nl.mncdn.com/blutv_beyaztv2/live.m3u8
-#EXTINF:-1 tvg-id="Kanal7.tr@SD",Kanal 7 (720p) group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-id="Kanal7.tr@SD" group-title="🗂️ YEDEKLER (18122)",Kanal 7 (720p)
 https://kanal7.blutv.com/blutv_kanal7_live/live.m3u8
-#EXTINF:-1 tvg-id="KanalDDrama.tr@SD",Kanal D Drama (1080p) group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-id="KanalDDrama.tr@SD" group-title="🗂️ YEDEKLER (18122)",Kanal D Drama (1080p)
 http://bantel-cdn1.iptvperu.tv:1935/btnscrtn/KanalD.stream/playlist.m3u8
-#EXTINF:-1 tvg-id="KanalDDrama.tr@SD",Kanal D Drama (1080p) group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-id="KanalDDrama.tr@SD" group-title="🗂️ YEDEKLER (18122)",Kanal D Drama (1080p)
 http://bantel-cdn1.iptvperu.tv:1935/btnscrtn/KanalD_principal_SRT/playlist.m3u8
-#EXTINF:-1 tvg-id="KentTurk.tr@SD",Kent Türk TV (720p) [Not 24/7] group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-id="KentTurk.tr@SD" group-title="🗂️ YEDEKLER (18122)",Kent Türk TV (720p) [Not 24/7]
 https://live.artidijitalmedya.com/artidijital_38kenttv/38kenttv/playlist.m3u8
-#EXTINF:-1 tvg-id="MovieSmartTurk.tr@SD",MovieSmart Turk (576p) group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-id="MovieSmartTurk.tr@SD" group-title="🗂️ YEDEKLER (18122)",MovieSmart Turk (576p)
 http://playhdnewjj.xyz:8080/recc121412/KVqfhtdJ2nQ7/174
-#EXTINF:-1 tvg-id="PowerTurkTV.tr@SD",Power Turk (720p) [Not 24/7] group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-id="PowerTurkTV.tr@SD" group-title="🗂️ YEDEKLER (18122)",Power Turk (720p) [Not 24/7]
 https://mn-nl.mncdn.com/blutv_powerturk/smil:powerturk_sd.smil/playlist.m3u8
-#EXTINF:-1 tvg-id="TGRTHaber.tr@SD",TGRT Haber (360p) [Not 24/7] group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-id="TGRTHaber.tr@SD" group-title="🗂️ YEDEKLER (18122)",TGRT Haber (360p) [Not 24/7]
 https://b01c02nl.mediatriple.net/videoonlylive/mtsxxkzwwuqtglive/broadcast_5fe4598be8e5d.smil/playlist.m3u8
-#EXTINF:-1 tvg-id="UlkeTV.tr@SD",Ulke TV group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-id="UlkeTV.tr@SD" group-title="🗂️ YEDEKLER (18122)",Ulke TV
 http://217.174.229.138:8000/play/a0el
-#EXTINF:-1 tvg-id="TRTSpor.tr@SD",TRT Spor (720p) group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-id="TRTSpor.tr@SD" group-title="🗂️ YEDEKLER (18122)",TRT Spor (720p)
 https://corestream.siteyaptim.live/trt-spor/index.m3u8
-#EXTINF:-1 tvg-id="beINMoviesTurk.tr@SD",beIN Movies Turk group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-id="beINMoviesTurk.tr@SD" group-title="🗂️ YEDEKLER (18122)",beIN Movies Turk
 https://nord.ayakkabiparti.lol/bsturk/index.m3u8
-#EXTINF:-1 tvg-id="ShowTurk.tr@SD",Show Turk (1080p) group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-id="ShowTurk.tr@SD" group-title="🗂️ YEDEKLER (18122)",Show Turk (1080p)
 https://raw.githubusercontent.com/bnyusuf67-crypto/streams/refs/heads/main/streams/shturk.m3u8
-#EXTINF:-1 tvg-id="TRTBelgesel.tr@SD",TRT Belgesel (1080p) group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-id="TRTBelgesel.tr@SD" group-title="🗂️ YEDEKLER (18122)",TRT Belgesel (1080p)
 http://hls127.freeott.top:8080/TRT_BELGESEL_TR/video.m3u8
-#EXTINF:-1 tvg-id="DreamTurk.tr@SD",Dream Turk group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-id="DreamTurk.tr@SD" group-title="🗂️ YEDEKLER (18122)",Dream Turk
 https://xyktmobile00.s.gy/TICK_90055
 #EXTINF:-1 tvg-logo="https://i.ibb.co/4ntLXmKw/N5-EVE5b0-SFu6-Uwcg-AJVxxw.webp" tvg-name="TRT Türkü" group-title="🗂️ YEDEKLER (18122)",TRT Türkü
 https://rd-trtturku.medya.trt.com.tr/master_128.m3u8
@@ -3522,88 +3507,61 @@ https://raw.githubusercontent.com/rideordie16/YouTube/main/ch/showmax.m3u8
 https://akittv-live.ercdn.net/akittv/akittv_720p.m3u8
 #EXTINF:-1 tvg-name="TATLISES TV" tvg-id="Tatlıses.Tv.tr" tvg-logo="https://i.ibb.co/yRy9zwt/tatlises-tv.png" group-title="🗂️ YEDEKLER (18122)",TATLISES TV
 https://live.artidijitalmedya.com/artidijital_tatlisestv/tatlisestv/chunks.m3u8
-#EXTINF:-1 tvg-id="AkitTV.tr",Akit TV (720p) group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-id="AkitTV.tr" group-title="🗂️ YEDEKLER (18122)",Akit TV (720p)
 https://akittv-live.ercdn.net/akittv/akittv.m3u8
-#EXTINF:-1 tvg-id="BirTV.tr",Bir TV (720p) group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-id="BirTV.tr" group-title="🗂️ YEDEKLER (18122)",Bir TV (720p)
 https://live.artidijitalmedya.com/artidijital_birtv/birtv/playlist.m3u8
-#EXTINF:-1 tvg-id="CanTV.tr",Can TV (720p) group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-id="CanTV.tr" group-title="🗂️ YEDEKLER (18122)",Can TV (720p)
 http://canbroadcast.com:7000/canlican/tv.m3u8
-#EXTINF:-1 tvg-id="GRT.tr",GRT (900p) group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-id="GRT.tr" group-title="🗂️ YEDEKLER (18122)",GRT (900p)
 https://live.artidijitalmedya.com/artidijital_grt/grt1/playlist.m3u8
-#EXTINF:-1 tvg-id="GZT.tr",GZT (1080p) group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-id="GZT.tr" group-title="🗂️ YEDEKLER (18122)",GZT (1080p)
 https://mn-nl.mncdn.com/gzttv/gzttv/playlist.m3u8
-#EXTINF:-1 tvg-id="HelwaTV.tr",Helwa TV (1080p) group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-id="HelwaTV.tr" group-title="🗂️ YEDEKLER (18122)",Helwa TV (1080p)
 https://raw.githubusercontent.com/ipstreet312/freeiptv/master/ressources/dzflix/helwa.m3u8
-#EXTINF:-1 tvg-id="Kanal68.tr",Kanal 68 (720p) [Not 24/7] group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-id="Kanal68.tr" group-title="🗂️ YEDEKLER (18122)",Kanal 68 (720p) [Not 24/7]
 https://live.artidijitalmedya.com/artidijital_kanal68/kanal68/playlist.m3u8
-#EXTINF:-1 tvg-id="KanalZ.tr",Kanal Z (1080p) [Geo-blocked] group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-id="KanalZ.tr" group-title="🗂️ YEDEKLER (18122)",Kanal Z (1080p) [Geo-blocked]
 https://live.artidijitalmedya.com/artidijital_kanalz/kanalz/playlist.m3u8
-#EXTINF:-1 tvg-id="KayTV.tr",Kay TV (900p) [Geo-blocked] group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-id="KayTV.tr" group-title="🗂️ YEDEKLER (18122)",Kay TV (900p) [Geo-blocked]
 https://live.artidijitalmedya.com/artidijital_kaytv/kaytv1/playlist.m3u8
-#EXTINF:-1 tvg-id="NationalGeographicWild.tr",National Geographic Wild group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-id="NationalGeographicWild.tr" group-title="🗂️ YEDEKLER (18122)",National Geographic Wild
 https://tv.arectv13.sbs/live/natgeowild.m3u8
-#EXTINF:-1 tvg-id="On6.tr",On 6 (1080p) group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-id="On6.tr" group-title="🗂️ YEDEKLER (18122)",On 6 (1080p)
 https://live.artidijitalmedya.com/artidijital_kanal16/kanal16/playlist.m3u8
-#EXTINF:-1 tvg-id="TatlisesTV.tr",Tatlises TV (1080p) [Not 24/7] group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-id="TatlisesTV.tr" group-title="🗂️ YEDEKLER (18122)",Tatlises TV (1080p) [Not 24/7]
 https://live.artidijitalmedya.com/artidijital_tatlisestv/tatlisestv/playlist.m3u8
-#EXTINF:-1 tvg-id="TMB.tr",TMB group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-id="TMB.tr" group-title="🗂️ YEDEKLER (18122)",TMB
 https://raw.githubusercontent.com/UzunMuhalefet/streams/main/myvideo-az/tmb-tv.m3u8
-#EXTINF:-1 tvg-id="TrakyaTurk.tr",Trakya Türk TV (720p) group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-id="TrakyaTurk.tr" group-title="🗂️ YEDEKLER (18122)",Trakya Türk TV (720p)
 https://live.artidijitalmedya.com/artidijital_trakyaturk/trakyaturk/playlist.m3u8
-#EXTINF:-1 tvg-id="TYTTurk.tr",TYT Turk group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-id="TYTTurk.tr" group-title="🗂️ YEDEKLER (18122)",TYT Turk
 https://cdn-tytturk.yayin.com.tr/tytturk/index.m3u8
-#EXTINF:-1 tvg-id="UUTV2.tr",ÜÜ TV Üsküdar Üniversitesi TV (1080p) [Not 24/7] group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-id="UUTV2.tr" group-title="🗂️ YEDEKLER (18122)",ÜÜ TV Üsküdar Üniversitesi TV (1080p) [Not 24/7]
 https://uskudarunv.mediatriple.net/uskudarunv/uskudar2/playlist.m3u8
-#EXTINF:-1 tvg-id="Vizyon58TV.tr",Vizyon 58 TV (720p) [Geo-blocked] group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-id="Vizyon58TV.tr" group-title="🗂️ YEDEKLER (18122)",Vizyon 58 TV (720p) [Geo-blocked]
 https://live.artidijitalmedya.com/artidijital_vizyon58/vizyon58/playlist.m3u8
-#EXTINF:-1 tvg-id="SportsTV.tr",Sports TV (720p) [Geo-blocked] group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-id="SportsTV.tr" group-title="🗂️ YEDEKLER (18122)",Sports TV (720p) [Geo-blocked]
 https://live.sportstv.com.tr/hls/low/sportstv.m3u8
-#EXTINF:-1 tvg-id="CGTNDocumentary.tr",CGTN Documentary group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-id="CGTNDocumentary.tr" group-title="🗂️ YEDEKLER (18122)",CGTN Documentary
 https://mn-nl.mncdn.com/dogusdyg_drone/cgtn/playlist.m3u8
 
 # --- EK RESMİ/FTA YEDEKLER ---
-#EXTINF:-1,TRT 2 group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 group-title="🗂️ YEDEKLER (18122)",TRT 2
 https://tv-trt2-ts.live.trt.com.tr/master.m3u8
-#EXTINF:-1,TRT AVAZ group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 group-title="🗂️ YEDEKLER (18122)",TRT AVAZ
 https://tv-trtavaz.live.trt.com.tr/master.m3u8
-#EXTINF:-1,TRT KURDİ group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 group-title="🗂️ YEDEKLER (18122)",TRT KURDİ
 https://tv-trtkurdi.live.trt.com.tr/master.m3u8
-#EXTINF:-1,TRT TÜRK group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 group-title="🗂️ YEDEKLER (18122)",TRT TÜRK
 https://tv-trtturk.live.trt.com.tr/master.m3u8
-#EXTINF:-1,TRT SPOR group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 group-title="🗂️ YEDEKLER (18122)",TRT SPOR
 https://tv-trtspor1.live.trt.com.tr/master.m3u8
-#EXTINF:-1,TRT SPOR YILDIZ group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 group-title="🗂️ YEDEKLER (18122)",TRT SPOR YILDIZ
 https://tv-trtspor2.live.trt.com.tr/master.m3u8
-#EXTINF:-1,TH TURK HABER TV group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 group-title="🗂️ YEDEKLER (18122)",TH TURK HABER TV
 https://edge1.socialsmart.tv/turkhaber/bant1/chunks.m3u8
-#EXTINF:-1,MUGLA TÜRK TV group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 group-title="🗂️ YEDEKLER (18122)",MUGLA TÜRK TV
 https://edge1.socialsmart.tv/muglaturk/bant1/chunks.m3u8
 #EXTINF:-1 tvg-name="SHOW TURK" tvg-id="ShowTurk.tr" tvg-logo="https://i.ibb.co/rtCJSqm/show-turk.png" group-title="🗂️ YEDEKLER (18122)",SHOW TURK
 https://raw.githubusercontent.com/rideordie16/YouTube/main/ch/showturk.m3u8
@@ -3732,16 +3690,13 @@ https://turkuvaz-live.daioncdn.net/atv/atv.m3u8
 https://live.duhnet.tv/S2/HLS_LIVE/cnnturknp/track_4_1000/playlist.m3u8
 #EXTINF:-1 tvg-name="FLASH HABER" group-title="🗂️ YEDEKLER (18122)",FLASH HABER YENI YEDEK ADAY
 https://stream.guventechnology.com:19360/flashtv/flashtv.m3u8
-#EXTINF:-1,DREAM TÜRK group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 group-title="🗂️ YEDEKLER (18122)",DREAM TÜRK
 https://mn-nl.mncdn.com/blutv_dreamturk/smil:dreamturk_sd.smil/playlist.m3u8
 
-#EXTINF:-1,NR1 TÜRK TV group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 group-title="🗂️ YEDEKLER (18122)",NR1 TÜRK TV
 https://n10101m.mediatriple.net/videoonlylive/mtkgeuihrlfwlive/broadcast_5c9e187770143.smil/playlist.m3u8
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/MGO87pe.png",TRT BELGESEL group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-logo="https://i.imgur.com/MGO87pe.png" group-title="🗂️ YEDEKLER (18122)",TRT BELGESEL
 https://tv-trtbelgesel-dai.medya.trt.com.tr/master.m3u8
 
 #EXTINF:-1 group-title="🗂️ YEDEKLER (18122)" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/TRT_%C3%87ocuk_logo_%282021%29.svg/512px-TRT_%C3%87ocuk_logo_%282021%29.svg.png",TRT Diyanet Çocuk
@@ -37118,125 +37073,85 @@ https://amg00056-amg00056c9-rakuten-fr-3243.playouts.now.amagi.tv/playlist/amg00
 https://amg00056-amg00056c9-rakuten-fr-3243.playouts.now.amagi.tv/ts-eu-w1-n2/playlist/amg00056-vevotvfast-vevopopfr-rakutenfr/playlist.m3u8?ads_amagi_channel=920
 #EXTINF:-1 tvg-logo="https://i.ibb.co/WFQ0NCF/vevohprb.png" group-title="🗂️ YEDEKLER (18122)",VEVO HP RB
 https://amg00056-amg00056c14-rakuten-fr-3244.playouts.now.amagi.tv/playlist/amg00056-vevotvfast-vevohiphopandrbfr-rakutenfr/playlist.m3u8?ads_amagi_channel=916
-#EXTINF:-1 tvg-id="AfroturkTV.tr@SD",Afroturk TV (1080p) group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-id="AfroturkTV.tr@SD" group-title="🗂️ YEDEKLER (18122)",Afroturk TV (1080p)
 https://edge.socialsmart.tv/naturaltv/bant1/playlist.m3u8
-#EXTINF:-1 tvg-id="BenguturkTV.tr@SD",Benguturk TV (1080p) group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-id="BenguturkTV.tr@SD" group-title="🗂️ YEDEKLER (18122)",Benguturk TV (1080p)
 http://185.234.111.229:8000/play/a05u
-#EXTINF:-1 tvg-id="BloombergHT.tr@SD",BloombergHT (720p) group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-id="BloombergHT.tr@SD" group-title="🗂️ YEDEKLER (18122)",BloombergHT (720p)
 https://ciner-live.daioncdn.net/bloomberght/bloomberght.m3u8
-#EXTINF:-1 tvg-id="ASTV.tr@SD",Bursa AS TV (720p) [Geo-blocked] group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-id="ASTV.tr@SD" group-title="🗂️ YEDEKLER (18122)",Bursa AS TV (720p) [Geo-blocked]
 https://waw2.artiyerelmedya.net/astv/bant1/playlist.m3u8
-#EXTINF:-1 tvg-id="BursaTV.tr@SD",Bursa TV (720p) [Not 24/7] group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-id="BursaTV.tr@SD" group-title="🗂️ YEDEKLER (18122)",Bursa TV (720p) [Not 24/7]
 https://win1.yayin.com.tr/bursatv/bursatv/playlist.m3u8
-#EXTINF:-1 tvg-id="CekmekoyTV.tr@SD",Cekmeköy TV (1080p) group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-id="CekmekoyTV.tr@SD" group-title="🗂️ YEDEKLER (18122)",Cekmeköy TV (1080p)
 https://cdn-cekmekoybeltv.yayin.com.tr/cekmekoybeltv/cekmekoybeltv_1080p/playlist.m3u8
-#EXTINF:-1 tvg-id="DisneyJr.tr@SD",Disney Jr. (1080p) [Geo-blocked] group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-id="DisneyJr.tr@SD" group-title="🗂️ YEDEKLER (18122)",Disney Jr. (1080p) [Geo-blocked]
 https://saran-live.ercdn.net/disneyjunior/index.m3u8
-#EXTINF:-1 tvg-id="HunatTV.tr@SD",Hunat TV (480p) [Not 24/7] group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-id="HunatTV.tr@SD" group-title="🗂️ YEDEKLER (18122)",Hunat TV (480p) [Not 24/7]
 https://59cba4d34b678.streamlock.net/canlitv/hunattv/playlist.m3u8
-#EXTINF:-1 tvg-id="Kanal3.tr@SD",Kanal 3 (1080p) [Not 24/7] group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-id="Kanal3.tr@SD" group-title="🗂️ YEDEKLER (18122)",Kanal 3 (1080p) [Not 24/7]
 https://waw2.artiyerelmedya.net/kanal3/bant1/playlist.m3u8
-#EXTINF:-1 tvg-id="Kanal3.tr@SD",Kanal 3 (720p) [Not 24/7] group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-id="Kanal3.tr@SD" group-title="🗂️ YEDEKLER (18122)",Kanal 3 (720p) [Not 24/7]
 http://stream.taksimbilisim.com:1935/kanal3/bant1/playlist.m3u8
-#EXTINF:-1 tvg-id="Kanal3.tr@SD",Kanal 3 (720p) [Not 24/7] group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-id="Kanal3.tr@SD" group-title="🗂️ YEDEKLER (18122)",Kanal 3 (720p) [Not 24/7]
 https://live.artidijitalmedya.com/artidijital_kanal3/kanal3guncel/playlist.m3u8
-#EXTINF:-1 tvg-id="Kanal34.tr@SD",Kanal 34 (720p) [Not 24/7] group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-id="Kanal34.tr@SD" group-title="🗂️ YEDEKLER (18122)",Kanal 34 (720p) [Not 24/7]
 https://vdo.digitalbox.xyz:3266/live/kanal34tvlive.m3u8
-#EXTINF:-1 tvg-id="LalegulTV.tr@SD",Lalegül TV (720p) [Not 24/7] group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-id="LalegulTV.tr@SD" group-title="🗂️ YEDEKLER (18122)",Lalegül TV (720p) [Not 24/7]
 http://lalegultv.netmedya.net/hls/lalegultv.m3u8
-#EXTINF:-1 tvg-id="LalegulTV.tr@SD",Lalegül TV (720p) [Not 24/7] group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-id="LalegulTV.tr@SD" group-title="🗂️ YEDEKLER (18122)",Lalegül TV (720p) [Not 24/7]
 http://lalegultv.netmedya.net/lalegul-tv/lalegultv.stream/playlist.m3u8
-#EXTINF:-1 tvg-id="NationalGeographic.tr@SD",National Geographic (1080p) [Geo-blocked] group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-id="NationalGeographic.tr@SD" group-title="🗂️ YEDEKLER (18122)",National Geographic (1080p) [Geo-blocked]
 https://saran-live.ercdn.net/natgeohd/index.m3u8
-#EXTINF:-1 tvg-id="NationalGeographicWild.tr@SD",National Geographic Wild (1080p) [Geo-blocked] group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-id="NationalGeographicWild.tr@SD" group-title="🗂️ YEDEKLER (18122)",National Geographic Wild (1080p) [Geo-blocked]
 https://saran-live.ercdn.net/natgeowild/index.m3u8
-#EXTINF:-1 tvg-id="NaturalTV.tr@SD",Natural TV (720p) [Not 24/7] group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-id="NaturalTV.tr@SD" group-title="🗂️ YEDEKLER (18122)",Natural TV (720p) [Not 24/7]
 http://broadcasttr.com:1935/naturaltv/bant1/playlist.m3u8
-#EXTINF:-1 tvg-id="NaturalTV.tr@SD",Natural TV (720p) [Not 24/7] group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-id="NaturalTV.tr@SD" group-title="🗂️ YEDEKLER (18122)",Natural TV (720p) [Not 24/7]
 https://edge1.socialsmart.tv/naturaltv/bant1/playlist.m3u8
-#EXTINF:-1 tvg-id="NOWTV.tr@SD",NOW TV group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-id="NOWTV.tr@SD" group-title="🗂️ YEDEKLER (18122)",NOW TV
 http://116.202.238.88/FOXTV_TR/index.m3u8
-#EXTINF:-1 tvg-id="Number1TV.tr@SD",Number 1 TV (720p) group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-id="Number1TV.tr@SD" group-title="🗂️ YEDEKLER (18122)",Number 1 TV (720p)
 https://mn-nl.mncdn.com/blutv_nr12/live.m3u8
-#EXTINF:-1 tvg-id="On4TV.tr@SD",On4 TV (1080p) group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-id="On4TV.tr@SD" group-title="🗂️ YEDEKLER (18122)",On4 TV (1080p)
 https://edge1.socialsmart.tv/on4/bant1/playlist.m3u8
-#EXTINF:-1 tvg-id="PowerTurkTV.tr@SD",PowerTurk TV group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-id="PowerTurkTV.tr@SD" group-title="🗂️ YEDEKLER (18122)",PowerTurk TV
 https://powerturk.blutv.com/blutv_powerturk/powerturk_sd.smil/playlist.m3u8
-#EXTINF:-1 tvg-id="QafTV.tr@SD",Qaf TV (1080p) group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-id="QafTV.tr@SD" group-title="🗂️ YEDEKLER (18122)",Qaf TV (1080p)
 https://customer-9vqui33qma2rownb.cloudflarestream.com/7792e558fe54e23bdd4b462ec275cdba/manifest/video.m3u8
-#EXTINF:-1 tvg-id="SSport.tr@SD",S Sport (720p) group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-id="SSport.tr@SD" group-title="🗂️ YEDEKLER (18122)",S Sport (720p)
 https://corestream.siteyaptim.live/s-sport/index.m3u8
-#EXTINF:-1 tvg-id="SSport2.tr@SD",S Sport 2 (720p) group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-id="SSport2.tr@SD" group-title="🗂️ YEDEKLER (18122)",S Sport 2 (720p)
 https://corestream.siteyaptim.live/s-sport2/index.m3u8
-#EXTINF:-1 tvg-id="SSport2.tr@SD",S Sport 2 group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-id="SSport2.tr@SD" group-title="🗂️ YEDEKLER (18122)",S Sport 2
 https://bcovlive-a.akamaihd.net/29c60f23ea4840ba8726925a77fcfd0b/eu-central-1/6415845530001/profile_0/chunklist.m3u8
-#EXTINF:-1 tvg-id="SunRTV.tr@SD",Sun RTV (720p) [Not 24/7] group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-id="SunRTV.tr@SD" group-title="🗂️ YEDEKLER (18122)",Sun RTV (720p) [Not 24/7]
 https://tr.socialsmart.tv/suntv/bant1/chunks.m3u8
-#EXTINF:-1 tvg-id="",Torba TV (720p) [Not 24/7] group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-id="" group-title="🗂️ YEDEKLER (18122)",Torba TV (720p) [Not 24/7]
 https://59cba4d34b678.streamlock.net/canlitv/torbatv/playlist.m3u8
-#EXTINF:-1 tvg-id="TV8.tr@SD",TV 8 (1080p) [Not 24/7] group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-id="TV8.tr@SD" group-title="🗂️ YEDEKLER (18122)",TV 8 (1080p) [Not 24/7]
 https://tv8-live.daioncdn.net/tv8/tv8.m3u8
-#EXTINF:-1 tvg-id="TV41.tr@SD",TV 41 (720p) [Not 24/7] group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-id="TV41.tr@SD" group-title="🗂️ YEDEKLER (18122)",TV 41 (720p) [Not 24/7]
 http://stream.taksimbilisim.com:1935/tv41/bant1/TV41.m3u8
-#EXTINF:-1 tvg-id="TV41.tr@SD",TV 41 (720p) [Not 24/7] group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-id="TV41.tr@SD" group-title="🗂️ YEDEKLER (18122)",TV 41 (720p) [Not 24/7]
 http://stream.taksimbilisim.com:1935/tv41/smil:tv41.smil/playlist.m3u8
-#EXTINF:-1 tvg-id="TV42.tr@SD",TV 42 group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-id="TV42.tr@SD" group-title="🗂️ YEDEKLER (18122)",TV 42
 https://canli.tv42.com.tr/memfs/d936e417-c4bd-4d42-89a2-02f289892d1d.m3u8
-#EXTINF:-1 tvg-id="TV100.tr@SD",TV 100 group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-id="TV100.tr@SD" group-title="🗂️ YEDEKLER (18122)",TV 100
 https://7nyaler.streamhostingcdn.top/stream/46/index.m3u8
-#EXTINF:-1 tvg-id="ViasatHistory.tr@SD",Viasat History (720p) group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-id="ViasatHistory.tr@SD" group-title="🗂️ YEDEKLER (18122)",Viasat History (720p)
 https://nord.ayakkabiparti.lol/viasathistory/index.m3u8
-#EXTINF:-1 tvg-id="NationalGeographic.tr@SD",National Geographic group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-id="NationalGeographic.tr@SD" group-title="🗂️ YEDEKLER (18122)",National Geographic
 https://nord.ayakkabiparti.lol/natgeo/index.m3u8
-#EXTINF:-1 tvg-id="NationalGeographicWild.tr@SD",National Geographic Wild group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-id="NationalGeographicWild.tr@SD" group-title="🗂️ YEDEKLER (18122)",National Geographic Wild
 https://nord.ayakkabiparti.lol/natgeowild/index.m3u8
-#EXTINF:-1 tvg-id="beINMoviesStars.tr@SD",beIN Movies Stars group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-id="beINMoviesStars.tr@SD" group-title="🗂️ YEDEKLER (18122)",beIN Movies Stars
 https://nord.ayakkabiparti.lol/bsaction1/index.m3u8
-#EXTINF:-1 tvg-id="beINBoxOffice1.tr@SD",beIN Box Office 1 group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-id="beINBoxOffice1.tr@SD" group-title="🗂️ YEDEKLER (18122)",beIN Box Office 1
 https://nord.ayakkabiparti.lol/box1/index.m3u8
-#EXTINF:-1 tvg-id="beINBoxOffice2.tr@SD",beIN Box Office 2 group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-id="beINBoxOffice2.tr@SD" group-title="🗂️ YEDEKLER (18122)",beIN Box Office 2
 https://nord.ayakkabiparti.lol/box2/index.m3u8
-#EXTINF:-1 tvg-id="beINBoxOffice3.tr@SD",beIN Box Office 3 group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-id="beINBoxOffice3.tr@SD" group-title="🗂️ YEDEKLER (18122)",beIN Box Office 3
 https://nord.ayakkabiparti.lol/box3/index.m3u8
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Show_MAX_logo.svg/2048px-Show_MAX_logo.svg.png" tvg-name="Show Max" group-title="🗂️ YEDEKLER (18122)",Show Max
 https://github.com/rideordie16/YouTube/raw/main/ch/showmax.m3u8
@@ -37372,55 +37287,39 @@ https://service-stitcher.clusters.pluto.tv/v1/stitch/embed/hls/channel/5d93b635b
 https://live.artidijitalmedya.com/artidijital_dimtv/dimtv/playlist.m3u8
 #EXTINF:-1 tvg-name="Kanal B" group-title="🗂️ YEDEKLER (18122)",Kanal B
 https://baskentaudiovideo.xyz/LiveApp/streams/mUE22idl26lA1683879097431.m3u8
-#EXTINF:-1,TBMM TV group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 group-title="🗂️ YEDEKLER (18122)",TBMM TV
 https://mecliscanlitv-lh.akamaihd.net/i/MECLISTV_1@127503/master.m3u8
 
 # --- EK AÇIK ULUSAL HABER SPOR TEMATİK ADAYLARI ---
-#EXTINF:-1,SLOW KARADENIZ TV group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 group-title="🗂️ YEDEKLER (18122)",SLOW KARADENIZ TV
 https://yayin.slowkaradeniztv.com:3390/multi_web/play.m3u8
-#EXTINF:-1,ASPOR group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 group-title="🗂️ YEDEKLER (18122)",ASPOR
 https://trkvz-live.daioncdn.net/aspor/aspor.m3u8
-#EXTINF:-1,TiViTURK group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 group-title="🗂️ YEDEKLER (18122)",TiViTURK
 https://stream.tiviturk.de/live/tiviturk.m3u8
-#EXTINF:-1,SEMERKAND TV WAY group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 group-title="🗂️ YEDEKLER (18122)",SEMERKAND TV WAY
 https://b01c02nl.mediatriple.net/videoonlylive/mtisvwurbfcyslive/broadcast_6409fdaa68111.smil/playlist.m3u8
-#EXTINF:-1,KANAL ON 4 TV group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 group-title="🗂️ YEDEKLER (18122)",KANAL ON 4 TV
 https://edge1.socialsmart.tv/on4/bant1/chunks.m3u8
-#EXTINF:-1,Al QURAN KAREEM - KABE CANLI group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 group-title="🗂️ YEDEKLER (18122)",Al QURAN KAREEM - KABE CANLI
 https://al-ekhbaria-prod-dub.shahid.net/out/v1/9885cab0a3ec4008b53bae57a27ca76b/index.m3u8
-#EXTINF:-1,BİR TV group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 group-title="🗂️ YEDEKLER (18122)",BİR TV
 https://edge1.socialsmart.tv/birtv/bant1/chunks.m3u8
-#EXTINF:-1,BODRUM KENT TV group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 group-title="🗂️ YEDEKLER (18122)",BODRUM KENT TV
 https://edge1.socialsmart.tv/bodrumkenttv/bant1/chunks.m3u8
-#EXTINF:-1,BURSA LiNE TV group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 group-title="🗂️ YEDEKLER (18122)",BURSA LiNE TV
 https://edge1.socialsmart.tv/linetv/bant1/chunks.m3u8
-#EXTINF:-1,DİM TV group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 group-title="🗂️ YEDEKLER (18122)",DİM TV
 https://live.artidijitalmedya.com/artidijital_dimtv/dimtv/chunks.m3u8
-#EXTINF:-1,METROPOL TV group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 group-title="🗂️ YEDEKLER (18122)",METROPOL TV
 https://edge1.socialsmart.tv/metropoltv/smil/metropoltv/bant1/chunks.m3u8?app=supersatforum
-#EXTINF:-1,TV 48 group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 group-title="🗂️ YEDEKLER (18122)",TV 48
 https://ajansplay.com:5443/LiveApp/streams/tv48.m3u8
-#EXTINF:-1,TOKAT TV group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 group-title="🗂️ YEDEKLER (18122)",TOKAT TV
 https://cdn-tokattv.yayin.com.tr/tokattv/tokattv/chunklist.m3u8
-#EXTINF:-1,VAN GOLU TV group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 group-title="🗂️ YEDEKLER (18122)",VAN GOLU TV
 https://cdn1-vangolutv.yayin.com.tr/vangolutv/amlst:vangolutv/playlist.m3u8
-#EXTINF:-1,BELEMTÜRK group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 group-title="🗂️ YEDEKLER (18122)",BELEMTÜRK
 https://edge.socialsmart.tv/belemturktv/bant1/chunks.m3u8
 #EXTINF:-1 tvg-name="CINE5 TV" tvg-id="" tvg-logo="https://i.ibb.co/7vNbSyP/cine5.png" group-title="🗂️ YEDEKLER (18122)",CINE5 TV
 https://cdn-cine5tv.yayin.com.tr/cine5tv/cine5tv/playlist.m3u8
@@ -37690,44 +37589,34 @@ https://live.artidijitalmedya.com/artidijital_tva/tva/playlist.m3u8
 #EXTINF:-1 tvg-name="ORT TV" group-title="🗂️ YEDEKLER (18122)",ORT TV
 https://edge1.socialsmart.tv/orttv/bant1/playlist.m3u8
 
-#EXTINF:-1,TV5 group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 group-title="🗂️ YEDEKLER (18122)",TV5
 https://tv5-live.ercdn.net/tv5/tv5.m3u8
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/gOPAi2c.png",BRT 1 group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-logo="https://i.imgur.com/gOPAi2c.png" group-title="🗂️ YEDEKLER (18122)",BRT 1
 https://sc-kuzeykibrissmarttv.ercdn.net/brt1hd/bant1/playlist.m3u8
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/t5kbIuj.png",BRT 2 group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-logo="https://i.imgur.com/t5kbIuj.png" group-title="🗂️ YEDEKLER (18122)",BRT 2
 https://sc-kuzeykibrissmarttv.ercdn.net/brt2hd/bant1/playlist.m3u8
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/LPQfdz2.png",ADA TV group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-logo="https://i.imgur.com/LPQfdz2.png" group-title="🗂️ YEDEKLER (18122)",ADA TV
 https://sc-kuzeykibrissmarttv.ercdn.net/adatv/bant1/playlist.m3u8
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/eBdQn9h.png",GENÇ TV group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-logo="https://i.imgur.com/eBdQn9h.png" group-title="🗂️ YEDEKLER (18122)",GENÇ TV
 https://sc-kuzeykibrissmarttv.ercdn.net/kibrisgenctv/bant1/playlist.m3u8
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/4bA4pXT.png",KANAL T group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-logo="https://i.imgur.com/4bA4pXT.png" group-title="🗂️ YEDEKLER (18122)",KANAL T
 https://sc-kuzeykibrissmarttv.ercdn.net/kanalt/bantp1/playlist.m3u8
 
-#EXTINF:-1 tvg-logo="https://i.imgur.com/5MJZPTo.png",KIBRIS TV group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 tvg-logo="https://i.imgur.com/5MJZPTo.png" group-title="🗂️ YEDEKLER (18122)",KIBRIS TV
 https://sc-kuzeykibrissmarttv.ercdn.net/kibristv/bant1/playlist.m3u8
 
-#EXTINF:-1,TAY TV group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 group-title="🗂️ YEDEKLER (18122)",TAY TV
 https://mn-nl.mncdn.com/blutv_taytv/smil:taytv_sd.smil/playlist.m3u8
 
-#EXTINF:-1,MINIKA GO group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 group-title="🗂️ YEDEKLER (18122)",MINIKA GO
 https://trkvz-live.daioncdn.net/minikago/minikago_720p.m3u8
 
-#EXTINF:-1,KANAL URFA group-title="🗂️ YEDEKLER (18122)"
-
+#EXTINF:-1 group-title="🗂️ YEDEKLER (18122)",KANAL URFA
 https://broadcasttr.com:446/kanalurfa/bant1/chunklist_w1125528664.m3u8
 #EXTINF:-1 group-title="🗂️ YEDEKLER (18122)" tvg-logo="",TV 264
 https://b01c02nl.mediatriple.net/videoonlylive/mtdxkkitgbrckilive/broadcast_5ee244263fd6d.smil/playlist.m3u8#all
