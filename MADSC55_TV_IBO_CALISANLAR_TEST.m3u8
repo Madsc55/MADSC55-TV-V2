@@ -1993,6 +1993,10 @@ https://d4whmvwm0rdvi.cloudfront.net/10007/99993008/hls/master.m3u8?ads.xumo_cha
 https://livetr.teleromagna.it/mia/live/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/n6vITLu.png" group-title="🗂️ YEDEKLER (4110)",TURKMENİSTAN SPORT (406P) [NOT 24/7]
 https://alpha.tv.online.tm/hls/ch004.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/1x6zYZr.png" group-title="🗂️ YEDEKLER (4110)",HORSE & COUNTRY TV (1080P)
+https://hnc-free-viewlift.amagi.tv/HNC_AUSTRALIA.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/nK4UUX4.png" group-title="🗂️ YEDEKLER (4110)",HORSE TV (720P)
+https://a-cdn.klowdtv.com/live2/horsetv_720p/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/nCAt3QN.png" group-title="🗂️ YEDEKLER (4110)",CANAL MOTOR (1080P)
 https://digicom.hls.iptvdc.com/motorstv/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/JLSHiTp.png" group-title="🗂️ YEDEKLER (4110)",CARS.TV (720P)
@@ -7371,10 +7375,6 @@ https://ext.cdn.nashnet.tv/228.0.0.172/index.m3u8
 https://cdn.pishow.tv/ott/live/1463/master.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/ZbOqfy4.png" group-title="🗂️ YEDEKLER (4110)",HOROSHEE KINO (1080P)
 https://live-rian.cdnvideo.ru/rian/rus-radio/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/1x6zYZr.png" group-title="🗂️ YEDEKLER (4110)",HORSE & COUNTRY TV (1080P)
-https://hnc-free-viewlift.amagi.tv/HNC_AUSTRALIA.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/nK4UUX4.png" group-title="🗂️ YEDEKLER (4110)",HORSE TV (720P)
-https://a-cdn.klowdtv.com/live2/horsetv_720p/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/VYorU1L.png" group-title="🗂️ YEDEKLER (4110)",HOSANNA TV (720P)
 https://yuppnimresmum.akamaized.net/28072023/smil:hosanna.smil/playlist.m3u8?hdnts=st=1735898689~exp=1835898688~acl=*~hmac=f5fe24724fe05481e3841f9eb5ab8efdee0a3dd83645ae9dcf45703f525bab7b
 #EXTINF:-1 tvg-logo="https://i.imgur.com/v0tc51l.png" group-title="🗂️ YEDEKLER (4110)",HOSANNA VISION (720P)
