@@ -1,12 +1,13 @@
 {
   "base_sha256": "8d98de520fbfd15465a26264e5a0047379cec474e469445cdb6ada47610b9259",
-  "result_sha256": "0f6b4b8a4d33d37734c03c8d9d1b67d5270d67acccc4cf8f1387c887901bef82",
+  "result_sha256": "81a76f13d3c5b2088c983b8ad83e931814cab1fc06f923ce27ddb3b124dc22f3",
   "operation": "move",
-  "request": "User requested full recheck of all 4110 backup channels for missed sports channels, moving additional channels into sports section starting at position 95. Keep all 838 main and 4110 backup channels unchanged except backup order.",
+  "request": "User requested detailed recheck of 4110 backup channels and consolidation of additional sports/outdoor sports entries at position 95 without modifying the 838 main IBO entries.",
   "channels": [
-    "65 scattered sports channels moved to positions 95-159",
-    "2 overlooked equestrian sports channels moved to positions 160-161",
-    "Previously grouped sports channels retained at positions 162-279",
-    "All 4110 backup entries preserved"
+    "65 additional sports channels",
+    "2 equestrian channels",
+    "3 outdoor sports (Duck Hunting TV, Fish TV, Italian Fishing TV)",
+    "Existing 119 sports block channels remain grouped",
+    "All 4110 backup entries retained"
   ]
 }
