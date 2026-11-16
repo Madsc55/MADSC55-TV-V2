@@ -1,4 +1,4 @@
-name: One-time authorized IBO all archives old and V2 transfer
+name: One-time authorized IBO complete old and V2 archives transfer
 on:
   push:
     branches: [main]
@@ -9,7 +9,7 @@ permissions:
 jobs:
   import:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 50
     steps:
       - uses: actions/checkout@v4
       - name: Download scan artifact
