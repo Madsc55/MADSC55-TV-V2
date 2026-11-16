@@ -24,13 +24,13 @@ def main():
     original=PLAY.read_bytes(); header,current=blocks(original.decode("utf-8-sig"))
     protected=[x for x in current if "YEDEKLER" not in x.splitlines()[0]]
     existing=[x for x in current if "YEDEKLER" in x.splitlines()[0]]
-    if len(protected)!=838 or len(existing)!=1285 or current!=protected+existing:
+    if len(protected)!=838 or len(existing)!=12096 or current!=protected+existing:
         raise SystemExit("Protected playlist or existing backups changed")
     _,archived=blocks(ARCHIVE.read_text(encoding="utf-8-sig"))
     seen={u for x in current+archived if (u:=url(x))}
-    files=sorted(args.scan_dir.glob("IBO_YENI_ADAYLAR*.m3u8"))
+    files=sorted(args.scan_dir.rglob("IBO_YENI_ADAYLAR*.m3u8"))
     files+=sorted((ROOT/"v2/arsiv").glob("eski_sistem_aktarim_adaylari_2026-11-16_parca_*.m3u8"))
-    if len(files)<7: raise SystemExit(f"Expected 3 scan and 4 legacy sources, got {len(files)}")
+    if len(files)<10: raise SystemExit(f"Expected 6 scan and 4 legacy sources, got {len(files)}")
     added=[]; per_file={}
     for path in files:
         _,candidates=blocks(path.read_text(encoding="utf-8-sig"))
@@ -52,14 +52,14 @@ def main():
     _,after=blocks(result)
     if after[:838]!=protected or len(after)!=838+new_count:
         raise SystemExit("Protected channel invariant failed")
-    if [url(x) for x in after[838:838+1285]] != [url(x) for x in existing]:
+    if [url(x) for x in after[838:838+12096]] != [url(x) for x in existing]:
         raise SystemExit("Existing backups changed")
     if len({url(x) for x in after[838:]})!=new_count:
         raise SystemExit("Duplicate backup URL")
     tests=TEST.read_text(encoding="utf-8")
-    if tests.count("2123")!=1 or tests.count("1285")<3:
+    if tests.count("12934")!=1 or tests.count("12096")<3:
         raise SystemExit("Unexpected invariant test layout")
-    tests=tests.replace("2123",str(838+new_count)).replace("1285",str(new_count))
+    tests=tests.replace("12934",str(838+new_count)).replace("12096",str(new_count))
     manifest={"base_sha256":hashlib.sha256(original).hexdigest(),
       "result_sha256":hashlib.sha256(result.encode("utf-8")).hexdigest(),
       "operation":"category",

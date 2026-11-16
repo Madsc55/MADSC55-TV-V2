@@ -1,4 +1,4 @@
-name: One-time authorized IBO all remaining candidates transfer
+name: One-time authorized IBO earlier scan remainder transfer
 on:
   push:
     branches: [main]
@@ -22,6 +22,9 @@ jobs:
         run: |
           mkdir -p /tmp/all-scan
           unzip -j /tmp/scan.zip 'IBO_YENI_ADAYLAR*.m3u8' -d /tmp/all-scan
+          mkdir -p /tmp/all-scan/earlier
+          curl -fLsS --retry 3 -H "Authorization: Bearer ${{ github.token }}" -H "Accept: application/vnd.github+json" "https://api.github.com/repos/Madsc55/MADSC55-TV-V2/actions/artifacts/14033805492/zip" -o /tmp/earlier-scan.zip
+          unzip -j /tmp/earlier-scan.zip 'IBO_YENI_ADAYLAR*.m3u8' -d /tmp/all-scan/earlier
           python3 v2/import_all_available_candidates.py --scan-dir /tmp/all-scan
           python3 v2/test_playlist_invariants.py
           python3 v2/main_actions_security_gate.py
@@ -31,7 +34,7 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git checkout -b ibo-all-import-${{ github.run_id }}
+          git checkout -b ibo-earlier-import-${{ github.run_id }}
           git add MADSC55_TV_IBO_CALISANLAR_TEST.m3u8 v2/test_playlist_invariants.py v2/ibo_authorized_change.json
           git commit -m 'Import all accessible scan and legacy candidates to YEDEKLER'
           git push -u origin HEAD
