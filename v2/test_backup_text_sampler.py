@@ -1,6 +1,6 @@
 import unittest
 from unittest.mock import patch
-from v2.backup_text_sampler import sample
+from v2.backup_text_sampler import sample, valid_url
 
 class SamplerTests(unittest.TestCase):
     def test_invalid_url_rejected(self):
@@ -9,6 +9,16 @@ class SamplerTests(unittest.TestCase):
     def test_embedded_credentials_rejected(self):
         with self.assertRaises(ValueError):
             sample("https://user:pass@example.com/live")
+    def test_private_and_local_addresses_rejected(self):
+        for url in ("http://127.0.0.1/live","http://10.0.0.1/live",
+                    "http://169.254.169.254/latest","http://[::1]/live",
+                    "https://localhost/live","https://test.localhost/live"):
+            with self.subTest(url=url):
+                self.assertFalse(valid_url(url))
+
+    def test_public_url_allowed(self):
+        self.assertTrue(valid_url("https://example.org/live"))
+
     def test_invalid_duration_rejected(self):
         with self.assertRaises(ValueError):
             sample("https://example.com/live",99)
