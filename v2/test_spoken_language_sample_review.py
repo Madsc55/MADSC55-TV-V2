@@ -23,6 +23,13 @@ class SpeechSampleSafetyTests(unittest.TestCase):
                     run()
             self.assertEqual(out.read_text(),"PROTECTED")
 
+    def test_speech_workflow_checks_current_playlist_not_stale_sha(self):
+        source=(Path(__file__).resolve().parents[1] /
+                ".github/workflows/v2-spoken-language-existing-snapshot.yml").read_text(encoding="utf-8")
+        self.assertIn("git rev-parse HEAD:MADSC55_TV_IBO_CALISANLAR_TEST.m3u8", source)
+        self.assertIn("persist-credentials: false", source)
+        self.assertNotIn("4b1c3cea4b5107a425abab60f62d41f9f81e05a7", source)
+
     def test_rejects_snapshot_playback_identity_mismatch(self):
         with TemporaryDirectory() as directory:
             p=Path(directory)
