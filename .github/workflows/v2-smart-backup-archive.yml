@@ -1,0 +1,25 @@
+name: V2 Smart Backup Archive Offline Tests
+on:
+  pull_request:
+    paths:
+      - 'v2/backup_smart_archive.py'
+      - 'v2/backup_evidence_adapter.py'
+      - 'v2/backup_text_evidence.py'
+      - 'v2/test_backup_*'
+      - '.github/workflows/v2-smart-backup-archive.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  offline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Compile and run isolated offline regressions
+        run: |
+          python -m compileall -q v2/backup_smart_archive.py v2/backup_evidence_adapter.py v2/backup_text_evidence.py
+          python -m unittest -v v2.test_backup_smart_archive v2.test_backup_evidence_adapter v2.test_backup_text_evidence
