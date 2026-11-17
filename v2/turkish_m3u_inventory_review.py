@@ -89,6 +89,12 @@ def inventory_review(playlist, output, evidence_path=None):
                 if sampler_hints is not None:
                     triage["sampler_spoken_turkish_hint"] = sampler_hints["spoken_turkish_hint"]
                     triage["sampler_subtitle_turkish_hint"] = sampler_hints["subtitle_turkish_hint"]
+                    # Surface foreign-name channels with ASR or subtitle hints,
+                    # without converting unverified hints into certified language.
+                    if sampler_hints["spoken_turkish_hint"]:
+                        triage["category"] = "ASR_TURKISH_HINT_REVIEW"
+                    elif sampler_hints["subtitle_turkish_hint"] and triage["category"] == "UNCLASSIFIED_REVIEW":
+                        triage["category"] = "SUBTITLE_TURKISH_HINT_REVIEW"
                 rows.append({"playlist_ordinal": len(rows) + 1,
                              "source_group": group,
                              "title": title,
