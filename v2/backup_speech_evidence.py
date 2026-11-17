@@ -13,6 +13,8 @@ def import_speech_hints(report, expected_ids=None):
         raise ValueError("Invalid speech report")
     if report.get("policy") != "READ_ONLY_SAMPLED_ASR_HINTS_REQUIRE_REVIEW":
         raise ValueError("Unrecognized speech evidence policy")
+    if len(report["results"]) > 16:
+        raise ValueError("Speech sample batch exceeds 16 samples")
     allowed = set(expected_ids) if expected_ids is not None else None
     output = {}
     for item in report["results"]:
