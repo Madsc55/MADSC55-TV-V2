@@ -36,6 +36,18 @@ class SamplerTests(unittest.TestCase):
             self.assertEqual(result["status"], "SECURE_EGRESS_NOT_CONFIRMED")
             proc.assert_not_called()
 
+
+    @patch.dict("os.environ", {"MADSC55_SECURE_EGRESS_CONFIRMED":"1"})
+    @patch("v2.backup_text_sampler.shutil.which", return_value="/usr/bin/ffmpeg")
+    def test_subtitle_extraction_uses_protocol_whitelist(self, _which):
+        with patch("v2.backup_text_sampler.execute", return_value="") as execute:
+            sample("https://example.org/live", include_subtitles=True)
+        self.assertEqual(execute.call_count, 2)
+        subtitle_command = execute.call_args_list[1].args[0]
+        self.assertIn("-protocol_whitelist", subtitle_command)
+        index = subtitle_command.index("-protocol_whitelist")
+        self.assertEqual(subtitle_command[index + 1], "file,http,https,tcp,tls,crypto")
+
     def test_malformed_dns_labels_rejected(self):
         for url in ("https://bad..example.org/live", "https://-bad.example.org/live",
                     "https://bad-.example.org/live", "https://bad_host.example.org/live"):
