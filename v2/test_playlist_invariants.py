@@ -38,7 +38,14 @@ def main():
     assert [(x["name"], x["url"]) for x in active_entries] == [(x["name"], x["url"]) for x in source_entries[:2500]], "First batch changed"
     assert [(x["name"], x["url"]) for x in queued_entries] == [(x["name"], x["url"]) for x in source_entries[2500:]], "Queued archive lost or reordered records"
     assert len({x["url"] for x in source_entries}) == 18074, "Source has duplicate URLs"
-    assert len(state["status"]) == 2500 and all(state["status"].get(str(i)) == "TEST" for i in range(1,2501))
+    assert len(state["status"]) == 2500
+    assert all(state["status"].get(str(i)) == ("TURK" if 112 <= i <= 486 else "TEST") for i in range(1, 2501))
+    turk_entries = list(entries((ROOT / "v2/yedekler_batch/TURK_ARSIV.m3u8").read_text(encoding="utf-8-sig")))
+    remaining_entries = list(entries((ROOT / "v2/yedekler_batch/YEDEKLER_KALAN_2125.m3u8").read_text(encoding="utf-8-sig")))
+    assert len(turk_entries) == 375 and len(remaining_entries) == 2125
+    assert [(x["name"], x["url"]) for x in turk_entries] == [(x["name"], x["url"]) for x in active_entries[111:486]]
+    assert [(x["name"], x["url"]) for x in remaining_entries] == [(x["name"], x["url"]) for x in active_entries[:111] + active_entries[486:]]
+    assert len({x["url"] for x in turk_entries + remaining_entries}) == 2500
     # Fail closed on any reintroduction of the 48 channels that caused test_001.
     quarantine = json.loads((ROOT / "v2/archives/test001_quarantined_48.json").read_text(encoding="utf-8"))
     forbidden = {(r["name"].strip().casefold(), r["url"].strip()) for r in quarantine["entries"]}
