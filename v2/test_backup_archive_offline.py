@@ -26,6 +26,17 @@ class OfflineTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 run(p,p,p,p,1)
 
+    def test_refuses_existing_output_without_changing_it(self):
+        with TemporaryDirectory() as d:
+            p=Path(d)
+            original=p/"report.json"
+            original.write_text("PROTECTED",encoding="utf-8")
+            for name in ("inventory.json","playback.json","language.json"):
+                (p/name).write_text("{}",encoding="utf-8")
+            with self.assertRaisesRegex(ValueError,"overwrite"):
+                run(p/"inventory.json",p/"playback.json",p/"language.json",original,1)
+            self.assertEqual(original.read_text(encoding="utf-8"),"PROTECTED")
+
     def test_direct_cli_import_works(self):
         script=Path(__file__).with_name("backup_archive_offline.py")
         result=subprocess.run([sys.executable,str(script),"--help"],
