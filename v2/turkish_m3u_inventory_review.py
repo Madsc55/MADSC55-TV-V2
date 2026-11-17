@@ -17,6 +17,7 @@ except ImportError:
 MAX_CHANNELS = 25000
 MAX_BYTES = 32 * 1024 * 1024
 EVIDENCE_FIELDS = {"origin_country", "spoken_language", "subtitle_language", "video_decoded", "audio_decoded", "stream_checked"}
+SAMPLER_FIELDS = {"url_sha256", "status", "video_decoded", "audio_decoded", "asr_status", "spoken_turkish_hint", "ocr_turkish_hint", "subtitle_turkish_hint"}
 
 def load_evidence(path):
     if path is None:
@@ -27,12 +28,24 @@ def load_evidence(path):
             if len(line) > 8192 or len(evidence) >= MAX_CHANNELS:
                 raise ValueError("Evidence limit exceeded")
             item = json.loads(line)
-            if not isinstance(item, dict) or set(item) - (EVIDENCE_FIELDS | {"playlist_ordinal"}):
+            if not isinstance(item, dict) or set(item) - (EVIDENCE_FIELDS | {"playlist_ordinal", "sample_report"}):
                 raise ValueError("Unexpected evidence fields")
             ordinal = item.get("playlist_ordinal")
             if type(ordinal) is not int or ordinal < 1 or ordinal in evidence:
                 raise ValueError("Invalid or duplicate playlist ordinal")
+            sampler = item.get("sample_report")
+            if sampler is not None:
+                if not isinstance(sampler, dict) or not isinstance(sampler.get("url_sha256"), str) or len(sampler["url_sha256"]) != 64:
+                    raise ValueError("Invalid sampler report")
+                if any(type(sampler.get(k)) is not bool for k in ("video_decoded", "audio_decoded", "spoken_turkish_hint", "subtitle_turkish_hint")):
+                    raise ValueError("Invalid sampler booleans")
+                item["video_decoded"] = sampler["video_decoded"]
+                item["audio_decoded"] = sampler["audio_decoded"]
+                item["stream_checked"] = sampler.get("status") in ("AV_SAMPLED_REVIEW_REQUIRED", "AV_INCOMPLETE")
+                # ASR/subtitle observations are hints, never verified languages.
             evidence[ordinal] = {k: v for k, v in item.items() if k in EVIDENCE_FIELDS}
+            if sampler is not None:
+                evidence[ordinal]["_sampler_hints"] = {"spoken_turkish_hint": sampler["spoken_turkish_hint"], "subtitle_turkish_hint": sampler["subtitle_turkish_hint"]}
     return evidence
 
 GROUP_RE = re.compile(r'group-title="([^"]{0,256})"')
@@ -64,7 +77,12 @@ def inventory_review(playlist, output, evidence_path=None):
                 pending = None
                 if len(rows) >= MAX_CHANNELS:
                     raise ValueError("Channel limit exceeded")
-                triage = classify_channel(title, **evidence.get(len(rows) + 1, {}))
+                supplied = dict(evidence.get(len(rows) + 1, {}))
+                sampler_hints = supplied.pop("_sampler_hints", None)
+                triage = classify_channel(title, **supplied)
+                if sampler_hints is not None:
+                    triage["sampler_spoken_turkish_hint"] = sampler_hints["spoken_turkish_hint"]
+                    triage["sampler_subtitle_turkish_hint"] = sampler_hints["subtitle_turkish_hint"]
                 rows.append({"playlist_ordinal": len(rows) + 1,
                              "source_group": group,
                              "title": title,
