@@ -1,0 +1,39 @@
+name: YEDEKLER read-only inventory and Turkish triage
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'v2/turkish_channel_evidence_collect.py'
+      - 'v2/test_turkish_channel_evidence_collect.py'
+      - 'v2/turkish_m3u_inventory_review.py'
+      - '.github/workflows/yedekler-readonly-review.yml'
+permissions:
+  contents: read
+jobs:
+  offline-review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Offline collector and inventory tests
+        run: |
+          python -m unittest discover -s v2 -p 'test_turkish_channel_evidence_collect.py' -v
+          python -m unittest discover -s v2 -p 'test_turkish_m3u_inventory_review.py' -v
+      - name: Inventory only - no stream connections, no playlist changes
+        run: |
+          test -s YEDEKLER_PLAYLISTESI.m3u8
+          python v2/turkish_m3u_inventory_review.py --playlist YEDEKLER_PLAYLISTESI.m3u8 --output "$RUNNER_TEMP/yedekler_review.jsonl"
+          python - "$RUNNER_TEMP/yedekler_review.jsonl" <<'PY'
+          import json,sys,collections
+          counts=collections.Counter()
+          with open(sys.argv[1],encoding="utf-8") as f:
+              for line in f:
+                  row=json.loads(line)
+                  counts[row["category"]]+=1
+          print(json.dumps({"inventory_rows":sum(counts.values()),"categories":dict(counts),"real_streams_tested":0,"playlist_modified":False},ensure_ascii=False))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: yedekler-offline-review
+          path: ${{ runner.temp }}/yedekler_review.jsonl
+          retention-days: 7
