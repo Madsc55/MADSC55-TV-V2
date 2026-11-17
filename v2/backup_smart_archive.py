@@ -29,11 +29,11 @@ def classify(row):
     health = row.get("health", "UNKNOWN")
     if language not in LANGUAGES or health not in HEALTH:
         raise ValueError("Unsupported evidence state")
-    if language != "UNKNOWN" and not row.get("language_evidence_verified", False):
+    if language != "UNKNOWN" and row.get("language_evidence_verified") is not True:
         language = "UNKNOWN"
-    if health == "WORKING" and not row.get("decoded_av_verified", False):
+    if health == "WORKING" and row.get("decoded_av_verified") is not True:
         health = "UNKNOWN"
-    if health == "NOT_WORKING" and not row.get("retries_exhausted", False):
+    if health == "NOT_WORKING" and row.get("retries_exhausted") is not True:
         health = "UNKNOWN"
     category = CATEGORIES.get((language, health), "UNCERTAIN")
     return {"url_sha256": key, "language": language, "health": health,
