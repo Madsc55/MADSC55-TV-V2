@@ -1,3 +1,13 @@
+## 17 Kasım 2026 — Offline CLI import hatası giderildi
+
+**Doğrulandı:** OCR/altyazı örnekleyicisi ve 32 yazılmış testin bulunduğu commit `585a55bb4d1a5823a9068e499fce013019513d67` için GitHub `V2 Main Production Security Gate` run **44096050377** = **success**. Bu güvenlik kapısı 32 offline testin çalıştığını **kanıtlamaz**.
+
+**Düzeltildi:** `v2/backup_archive_offline.py` doğrudan CLI olarak çalıştırıldığında `backup_evidence_adapter.py` içindeki yalnız göreli `from .backup_smart_archive` importu paket bağlamı olmadığı için hata veriyordu. Adaptör artık hem `python -m v2.backup_archive_offline` hem `python v2/backup_archive_offline.py` çağrılarına uyumlu (commit `60d96a50d06621ec3085b3923c7d1ff3bdc370f4`). Doğrudan CLI `--help` smoke test eklendi (commit `72d342ec46d4f4d0ff18b15c45bf5787fa9d2059`). Toplam yazılmış offline test **33**; son değişikliklerin CI sonucu henüz doğrulanmadı.
+
+**Eksikler:** 18.074 gerçek envanter girdisinin erişimi, kanıt şeması eşleştirmesi, OCR/altyazı ve konuşma örnekleyicilerinin kontrollü toplu yürütümü, 33 offline testin gerçekten koşulması ve kabul, PR merge. İBO ve YEDEKLER değiştirilmedi.
+
+---
+
 ## 17 Kasım 2026 — İstenen gerçek OCR ve altyazı örnekleyicisi
 
 **Yapıldı:** `v2/backup_text_sampler.py` tek bir açıkça seçilmiş HTTP(S) akışından en çok 2–15 saniyelik sınırlı FFmpeg işlemiyle tek video karesi çıkarıp yerel Tesseract OCR (`tur+eng`) denemesi ve ilk altyazı akışını SRT olarak örnekleme denemesi yapar. Her iki kaynak `backup_text_evidence.inspect_text_observations` içine girer; raporda ham OCR/altyazı metni veya URL bulunmaz, yalnız inceleme ipucu bulunur; `language_evidence_verified=False`, `review_approved=False` sabittir. Eksik FFmpeg, eksik OCR modeli, altyazısız akış veya başarısız örnekleme hiçbir zaman Türkçe doğrulaması sayılmaz. Kod commit `fe4dfbab5da3de7fbdba21f10da98e8cd61d9138`; dört offline test commit `c29922611d9d1379131843bf5a77d6557dd6fada`. Yazılmış toplam test senaryosu **32**.
