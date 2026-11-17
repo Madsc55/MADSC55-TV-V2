@@ -14,6 +14,7 @@ MODULES = (
     "v2.test_backup_playback_import",
     "v2.test_backup_archive_integration",
     "v2.test_backup_speech_evidence",
+    "v2.test_backup_text_hint_import",
 )
 
 def main():
