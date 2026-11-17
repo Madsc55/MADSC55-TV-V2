@@ -8,6 +8,7 @@ from pathlib import Path
 
 PLAYLIST = Path("MADSC55_TV_IBO_CALISANLAR_TEST.m3u8")
 REPORT = Path("backup_logo_report.json")
+UNMATCHED = Path("backup_logo_unmatched.json")
 HEADERS = {"User-Agent": "MADSC55-TV-V2-logo-audit/1.0"}
 def fetch(url):
     req = urllib.request.Request(url, headers=HEADERS)
@@ -43,6 +44,7 @@ for item in logos:
 original = PLAYLIST.read_text(encoding="utf-8")
 lines = original.splitlines(keepends=True)
 candidates = {}
+unmatched = []
 ambiguous = 0
 missing = 0
 for i, line in enumerate(lines):
@@ -58,10 +60,13 @@ for i, line in enumerate(lines):
         ids = by_name_global.get(norm(name),set())
     if len(ids)!=1:
         ambiguous += 1
+        unmatched.append({"name":name,"tvg_id":tvgid.group(1) if tvgid else "", "reason":"no_unique_channel_id", "matches":len(ids)})
         continue
     options = set().union(*(logo_by_id.get(cid,set()) for cid in ids))
     if len(options)==1: candidates[i] = next(iter(options))
-    else: ambiguous += 1
+    else:
+        ambiguous += 1
+        unmatched.append({"name":name,"tvg_id":tvgid.group(1) if tvgid else "", "reason":"no_unique_logo_url", "matches":len(options)})
 
 urls = sorted(set(candidates.values()))
 with concurrent.futures.ThreadPoolExecutor(max_workers=16) as pool:
@@ -102,4 +107,5 @@ assert len(output.splitlines())==len(original.splitlines())
 assert all(a==b for a,b in zip(original.splitlines(),output.splitlines()) if 'group-title="🗂️ YEDEKLER' not in a)
 if added: PLAYLIST.write_text(output,encoding="utf-8")
 REPORT.write_text(json.dumps({"missing_before":missing,"added":added,"reused_exact_tvg_id":reused,"missing_after":missing-added,"ambiguous_or_unmatched":ambiguous,"invalid_logo_urls":sum(not results[u] for u in urls)},ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+UNMATCHED.write_text(json.dumps(unmatched,ensure_ascii=False,indent=2)+"\\n",encoding="utf-8")
 print(REPORT.read_text())
