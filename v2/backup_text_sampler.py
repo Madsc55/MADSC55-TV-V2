@@ -8,6 +8,7 @@ import argparse
 import ipaddress
 import json
 import os
+import re
 import shutil
 import subprocess
 import tempfile
@@ -29,6 +30,10 @@ def valid_url(url):
         if p.port is not None and not 1 <= p.port <= 65535:
             return False
         normalized_host = host.lower().rstrip(".")
+        if not re.fullmatch(r"[a-z0-9.-]+", normalized_host):
+            return False
+        if any(not label or label.startswith("-") or label.endswith("-") for label in normalized_host.split(".")):
+            return False
         if normalized_host in ("localhost", "localhost.localdomain") or normalized_host.endswith((".localhost", ".local", ".internal")):
             return False
         try:
