@@ -1,3 +1,11 @@
+## 17 Kasım 2026 — PR #365 kırmızı güvenlik testinin kök nedeni ve düzeltme
+
+**Doğrulanan CI:** Commit `f47defdd54a3927e0956699beab5c843e77c011b` için GitHub Actions `V2 Smart Backup Archive Offline Tests` run **44094082917 SUCCESS**; `V2 Main Production Security Gate` run **44094082828 FAILURE**. Güvenlik işinin logunda `MAIN_WORKFLOW_FILE_LOCK_FAIL` / `WORKFLOW_INVENTORY unexpected: v2-smart-backup-archive.yml` görüldü; ana İBO playlist değişikliği `false`, güvenlik testindeki 10 unittest geçti. Sorun yeni ve henüz onaylanmamış workflow dosyasıdır; sınıflandırıcı test başarısızlığı değildir.
+
+**Düzeltme:** Güvenlik envanterini gevşetmek yerine yeni `.github/workflows/v2-smart-backup-archive.yml` dosyası PR dalından kaldırıldı (commit `e858a9436fabea5c3d923ef7698c57e5ccf9bdd8`). Önceki 19 offline testin Python dosyaları korundu. **Düzeltmeden sonraki güvenlik CI sonucu henüz yeniden doğrulanmadı.** Yeni workflow ancak ayrı güvenlik onay süreciyle eklenebilir; şimdilik mevcut izinli test mekanizması kullanılmalı. PR #365 birleşmedi, 18.074 canlı tarama yapılmadı. Devam: son commit CI güvenlik sonucunu kontrol et, 19 offline testin güncel kodla yürütülmesini doğrula; sonra gerçek rapor dönüştürücü ve kontrollü tarama işçisi geliştir.
+
+---
+
 ## 17 Kasım 2026 — Akıllı arşiv: salt-okunur rapor çalıştırıcısı
 
 **Gerçekleşen:** `v2/backup_archive_offline.py` üç ayrı JSON kanıt girdisi (envanter, AV, incelenmiş dil) üzerinden `backup_evidence_adapter.join_evidence` kullanarak tek salt-okunur arşiv raporu üretir; varsayılan tam kapsam beklentisi 18.074, girdi dosyalarının üzerine yazma reddedilir, raporda kaynak URL/kanal adı bulunmaz. `v2/test_backup_archive_offline.py` iki yeni test senaryosu ve ayrı CI workflow'unda yeni testlerin çağrılması eklendi. Toplam yazılmış offline senaryo sayısı **19**. Commitler `fac4bb78d36400d28f3f1e323c4f4ca39ef0c57b`, `12d783baaf96dbe227aae8fadc0ca41d0ad6337a`, `4a382c7b588827642eea8fd6ba4b543e71b974f9`.
