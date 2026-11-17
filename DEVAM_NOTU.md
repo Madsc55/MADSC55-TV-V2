@@ -1,3 +1,10 @@
+## 17 Kasım 2026 — Test öncesi kurulum: M3U envanter inceleme
+- `v2/turkish_m3u_inventory_review.py` eklendi: mevcut M3U/M3U8 dosyasını çevrimdışı ve salt-okunur inceler, 1 tabanlı EXTINF sıra numarası, grup ve ad üzerinden inceleme kategorisi üretir. Çıktıya URL yazmaz, dosyayı yeniden sıralamaz, canlı kanalı onaylamaz.
+- `v2/test_turkish_m3u_inventory_review.py` iki senaryo ve Production Security Gate bağlantısı eklendi. Kod henüz çalıştırılıp PASS doğrulanmadı; kullanıcının talimatına göre gerçek kanal testleri bütün kurulumdan sonra yapılacak.
+- Kalan kurulum: kaynak kimliği/provenance birleştirme, ASR/OCR/WebVTT kanıtlarının toplu değerlendirme hattına güvenli bağlanması, bağımsız egress denetimi, gerçek medya ve cihaz kabulü. 18.074 kanalın gerçek taraması ve PR #365 birleştirmesi henüz yapılmadı. Korunan ana İBO playlisti değişmedi.
+
+---
+
 ## 17 Kasım 2026 — Türk kanalı çoklu kanıt sınıflandırması (kod eklendi; canlı kabul açık)
 - `v2/turkish_channel_triage.py` eklendi: kanal adı, kaynak ülke, konuşma dili, altyazı dili ve sağlanan AV test bayrakları ayrı tutulur. Yabancı ülkeden Türkçe konuşan, Türkiye kaynaklı İngilizce konuşan, Türkçe altyazılı yabancı, Azerbaycan/Türkmenistan Türkî dil örnekleri yanlış birleştirilmez.
 - `v2/test_turkish_channel_triage.py` ile 8 regresyon senaryosu eklendi; Production Security Gate workflow'una test adımı bağlandı. HEAD `26d94d9ae145dd60b56e46e592ce7fb40947c485` için Actions koşusu sorgulandığında henüz koşu dönmedi. Testler PASS ilan edilmedi.
