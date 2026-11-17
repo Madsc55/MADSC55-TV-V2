@@ -1,0 +1,19 @@
+name: Temporary playlist hash verification
+on:
+  push:
+    branches:
+      - audit/turkish-cyprus-missed-channels-20261117
+permissions:
+  contents: read
+jobs:
+  hashes:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Print exact UTF-8 file hashes
+        run: |
+          sha256sum MADSC55_TV_IBO_CALISANLAR_TEST.m3u8
+          git show origin/main:MADSC55_TV_IBO_CALISANLAR_TEST.m3u8 | sha256sum
