@@ -15,7 +15,7 @@ class BatchTests(unittest.TestCase):
             self.assertEqual(len(json.loads(out.read_text())["results"]),1)
             self.assertNotIn("https://",out.read_text())
             with self.assertRaises(ValueError):
-                run(src,out,1,2)
+                run(src,out,1,2,True)
     def test_sampler_failure_isolated_and_next_channel_processed(self):
         with TemporaryDirectory() as d:
             p=Path(d); src=p/"snapshot.json"; out=p/"out.json"
