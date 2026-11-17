@@ -37,8 +37,20 @@ def run(snapshot_path, output_path, limit=8, seconds=8, allow_network=False):
         if digest in seen:
             continue
         seen.add(digest)
-        result=sample(url,seconds)
-        results.append({"url_sha256":digest,**result})
+        try:
+            result=sample(url,seconds)
+            if not isinstance(result,dict):
+                raise ValueError("Invalid sampler result")
+        except (ValueError, RuntimeError, OSError) as exc:
+            result={"status":"SAMPLE_ERROR","error_type":type(exc).__name__,
+                    "language_evidence_verified":False,"review_approved":False}
+        # Never let an unexpected sampler field leak raw text or stream URLs.
+        safe={k:result[k] for k in ("status","observation_count","ocr_hint",
+              "subtitle_hint","language_evidence_verified","review_approved","error_type")
+              if k in result}
+        safe["language_evidence_verified"]=False
+        safe["review_approved"]=False
+        results.append({"url_sha256":digest,**safe})
         if len(results)>=limit:
             break
     report={"policy":"READ_ONLY_HINTS_ONLY_NO_AUTO_APPROVAL",
