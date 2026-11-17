@@ -30,6 +30,32 @@ class SpeechSampleSafetyTests(unittest.TestCase):
         self.assertIn("persist-credentials: false", source)
         self.assertNotIn("4b1c3cea4b5107a425abab60f62d41f9f81e05a7", source)
 
+    def test_unsafe_dns_rejected_before_asr_model_load(self):
+        import hashlib
+        import types
+        from unittest.mock import Mock
+        with TemporaryDirectory() as directory:
+            p=Path(directory)
+            url="https://example.org/live"
+            digest=hashlib.sha256(url.encode("utf-8")).hexdigest()
+            snapshot=p/"snapshot.json"
+            playback=p/"playback.json"
+            output=p/"new.json"
+            snapshot.write_text(json.dumps({"candidates":[{"url":url}]}))
+            playback.write_text(json.dumps({"coverage_complete":True,
+                "channel_results":[{"url_sha256":digest,"playback":"VIDEO_DECODED",
+                                    "audio":"AUDIO_DECODED"}]}))
+            model=Mock(side_effect=AssertionError("Model must not load"))
+            with patch.dict("os.environ", {"MADSC55_SECURE_EGRESS_CONFIRMED":"1"}):
+                with patch("v2.spoken_language_sample_review.public_dns_for_url",return_value=False):
+                    with patch.dict(sys.modules,{"faster_whisper":types.SimpleNamespace(WhisperModel=model)}):
+                        with patch.object(sys,"argv",["speech","--snapshot",str(snapshot),
+                            "--playback",str(playback),"--output",str(output)]):
+                            with self.assertRaisesRegex(SystemExit,"Unsafe or unresolvable DNS"):
+                                run()
+            model.assert_not_called()
+            self.assertFalse(output.exists())
+
     def test_rejects_snapshot_playback_identity_mismatch(self):
         with TemporaryDirectory() as directory:
             p=Path(directory)
