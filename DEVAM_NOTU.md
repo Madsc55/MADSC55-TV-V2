@@ -118,7 +118,6 @@ Yeni `v2/backup_text_hint_import.py`, mevcut `backup_text_batch.py` raporundaki 
 
 ## 17 Kasım 2026 — Mevcut gerçek ASR çalışma yolu tespit edildi
 `.github/workflows/v2-spoken-language-existing-snapshot.yml` ana dalda zaten mevcut ve manuel `workflow_dispatch` ile çalışıyor. Önceki Actions çalışması 40948768782'nin oynatma ve özel snapshot artifact'larını indiriyor; 16 akıştan 15'er saniyelik `faster-whisper` konuşma örneklemesi yapıp `existing-snapshot-spoken-language-evidence` adlı anonimleştirilmiş artifact yayımlamayı hedefliyor. Bu workflow'un geçmiş artifact'larının hâlâ indirilebilirliği, gerçekten başarılı çalışması ve güncel 18.074 envanteri kapsaması **doğrulanmadı**. Bu yol tüm envanterin kabulü değildir. GitHub DNS bağlantısı bu oturumdaki yerel shell'de başarısız; burada Python regresyonları çalıştırılmadı. DNS/redirect egress riskleri açık; normal yayın alan adlarını bütünüyle kapatacak geçici kod değişikliği geri alındı. Sonraki adım: uygun GitHub Actions çalışma/kanıt yoluyla 57 offline testin gerçek PASS çıktısı ve ardından sınırlı gerçek ASR+OCR+altyazı kabulü. Ana playlist/YEDEKLER değişmedi.
-
 ---
 
 ## 17 Kasım 2026 — Rapor koruması ve test çalıştırma engeli
@@ -237,7 +236,6 @@ Yeni `v2/backup_speech_evidence.py`: mevcut ASR raporundaki hash temelli dil tah
 
 **Yapıldı:** `backup_smart_archive.py` doğrulanmış dil, gerçek AV decode ve tükenmiş tekrarlar için truthy değer yerine yalnız Python `True` kabul edecek şekilde düzeltildi (commit `036b7cb2fd07eaf2ec3ef1b09ed977efab05e5c1`). JSON'daki `"true"` metni yanlışlıkla doğrulama sayılmayacak. Üç regresyon testi eklendi (commit `d9f64e93a75560340f7b893a0e7b40d019aecaf9`). Yazılmış toplam offline test **28**. Önceki güvenlik run `44094943848` kontrol anında in_progress idi; son commitler için PASS kanıtı yok. Gerçek 18.074 kanal taraması, OCR/ASR canlı entegrasyonu, batch, PR merge eksik; İBO ve YEDEKLER değişmedi.
 ---
-
 ## 17 Kasım 2026 — Akıllı arşiv: kimlik doğrulama sertleştirmesi
 
 **Yapıldı:** `backup_evidence_adapter.py` envanter kimliklerinin küme işleminden ÖNCE 64 karakter küçük harf SHA-256 metni olmasını zorunlu kılıyor. Böylece bozuk liste/nesne kimlikleri beklenmeyen `TypeError` üretmek yerine açık `ValueError` ile reddediliyor. Commit `987e7ae401b7e1fae137204598ea9db739229db6`. İki regresyon testi eklendi: liste kimlik ve geçersiz hash reddi (commit `565aab1e3aeec74989b937db6f0753d65d4af725`). Toplam yazılmış offline test **25**. Önceki commit `9146ece...` güvenlik run `44094763759` kontrol anında devam ediyordu; son commitlerin CI sonucu henüz doğrulanmadı. Gerçek 18.074 kanal taraması ve PR merge hâlâ yapılmadı; ana arşiv/İBO değişmedi.
@@ -349,3 +347,13 @@ AÇIK TEKNİK ENGEL: `v2/main_actions_security_gate.py` yalnız YEDEKLER içi re
 - OCR ve altyazı örnekleyici kodu mevcut; fakat gerçek yayın karelerinden OCR, gerçek HLS altyazı çıkarımı, ASR ile birlikte sınırlı izinli gerçek yayınlarda uçtan uca kabul henüz yapılmadı. ASR dil modeli çıktısı, OCR ve altyazı sonuçları inceleme ipucudur; otomatik Türkçe onayı değildir.
 - **Sıradaki adım:** özel workflow'un gerçek Actions koşusunu elde edip 71 testin her birinin sonucunu incelemek; başarısızları düzeltmek. Sonra DNS/redirect/SSRF engelleyen gerçek egress katmanını kurup ayrı güvenlik testleriyle kanıtlamak; ardından sınırlı izinli gerçek yayınlarda AV+ASR+OCR+altyazı uçtan uca örnek kabulü yapmak.
 - Ana İBO playlisti, YEDEKLER, YENİLER, FAVORİLER, EPG ve görev durumları değiştirilmedi. 18.074 kanal taraması başlatılmadı. PR #365 birleştirilmedi.
+
+---
+
+## 17 Kasım 2026 — OCR/altyazı FFmpeg protokol whitelist düzeltmesi
+
+- Kod incelemesinde OCR kare çıkarma çağrısında `-protocol_whitelist file,http,https,tcp,tls,crypto` bulunduğu, fakat aynı örnekleyicideki ayrı altyazı çıkarma FFmpeg çağrısında eksik olduğu tespit edildi. Altyazı çağrısına da aynı açık whitelist eklendi.
+- Yeni regresyon testi `test_subtitle_extraction_uses_protocol_whitelist`, gerçek altyazı komutunun whitelist bayrağını ve tam protokol listesini taşıdığını doğrulayacak şekilde eklendi. Kod commit: `6ea7214fa4eb7c21c50aa6b0077be0c73474bf58`; test commit: `06462990f58b095e0e38b16da3cfb5f4a9dd2960`.
+- Test henüz çalıştırılmadı; test sayısı **72 yazılı senaryo** (önceki 71 + bu regresyon) olarak güncellendi, PASS iddiası yok. Özel offline Actions workflow'unun bu son commitlerde gerçekten tetiklenip tetiklenmediği ayrıca doğrulanmalı.
+- Bu whitelist yalnız FFmpeg protokol yüzeyini sınırlar; DNS rebinding/HTTP redirect sonrası özel IP erişimini önleyen ağ katmanı egress koruması değildir. Güvenli egress doğrulanmadan gerçek yayın örneklemesi başlatılmayacak.
+- Ana İBO playlisti, YEDEKLER ve diğer korunan listeler değişmedi; 18.074 kanal taraması başlatılmadı.
