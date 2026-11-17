@@ -2005,6 +2005,9 @@ http://europlayiptv.de/live/alinihsan/da9Cmdy3n2/6ff6a2e9-372a-40fe-a4c8-20a0e91
 http://europlayiptv.de/live/alinihsan/da9Cmdy3n2/6a9f295e-2899-4aad-ac72-fd45d8848a10.m3u
 #EXTINF:-1 tvg-name="TR:A2 HD" group-title="🗂️ YEDEKLER (18074)",TR:A2 HD
 http://europlayiptv.de/live/alinihsan/da9Cmdy3n2/b20484c4-742b-4024-992c-0ecbdaad70ea.m3u
+#EXTINF:-1 group-title="🗂️ YEDEKLER (18074)",BENGÜTÜRK YOUTUBE
+https://www.youtube.com/@tvbenguturk/live
+
 #EXTINF:-1 tvg-name="TR:A2 UHD" group-title="🗂️ YEDEKLER (18074)",TR:A2 UHD
 http://europlayiptv.de/live/alinihsan/da9Cmdy3n2/2b0a4153-c9c8-4715-a9e0-c3ef48e7e2eb.m3u
 #EXTINF:-1 tvg-name="TR:ADA TV (KIBRIS)" group-title="🗂️ YEDEKLER (18074)",TR:ADA TV (KIBRIS)
@@ -4574,9 +4577,6 @@ https://www.youtube.com/@HaberturkTV/live
 
 #EXTINF:-1 group-title="🗂️ YEDEKLER (18074)",ÜLKE TV YOUTUBE
 https://www.youtube.com/@ulketv/live
-
-#EXTINF:-1 group-title="🗂️ YEDEKLER (18074)",BENGÜTÜRK YOUTUBE
-https://www.youtube.com/@tvbenguturk/live
 
 #EXTINF:-1 group-title="🗂️ YEDEKLER (18074)",DIYANET TV
 http://eustr73.mediatriple.net/videoonlylive/mtikoimxnztxlive/broadcast_5e3bf95a47e07.smil/playlist.m3u8?checkedby:iptvcat.net
