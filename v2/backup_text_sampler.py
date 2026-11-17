@@ -7,6 +7,7 @@ Requires local ffmpeg and tesseract; subtitle extraction is optional.
 import argparse
 import ipaddress
 import json
+import os
 import shutil
 import subprocess
 import tempfile
@@ -51,6 +52,9 @@ def sample(url, seconds=8, include_subtitles=True):
         raise ValueError("Invalid stream URL")
     if not isinstance(seconds, int) or not 2 <= seconds <= 15:
         raise ValueError("seconds must be 2..15")
+    if os.environ.get("MADSC55_SECURE_EGRESS_CONFIRMED") != "1":
+        return {"status":"SECURE_EGRESS_NOT_CONFIRMED","language_evidence_verified":False,
+                "review_approved":False}
     if not shutil.which("ffmpeg"):
         return {"status":"FFMPEG_UNAVAILABLE","language_evidence_verified":False}
     observations = []
