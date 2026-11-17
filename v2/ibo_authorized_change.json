@@ -2,7 +2,7 @@
   "base_sha256": "a08edf7c82e9b70965f8ac8f021d3b088e6d6cbaf69fdf39a9febd69b1de9256",
   "result_sha256": "68ec20ffbc4955b8e5d46cb62ca11dbfd277578a0c06ad962eb55b13f7f9fdd1",
   "operation": "reorder",
-  "request": "Kullanıcı talimatı: güncel ana İBO playlistindeki 18.074 YEDEKLER kaydının Türk kanallarını 1003. sıradan sonra alt alta sırala; kaldırılan 48 engelli kanalı geri getirme. Ek tarama: Kıbrıs Türk kanalları ve yerel Türk kanalları için ikinci denetimde kalan kayıtlar aynı YEDEKLER grubundan 1003 sonrası bloğa eklendi; 48 engelli kanal dahil edilmedi.",
+  "request": "Kullanıcı talimatı: güncel ana İBO playlistindeki 18.074 YEDEKLER kaydının Türk kanallarını 1003. sıradan sonra alt alta sırala; kaldırılan 48 engelli kanalı geri getirme. Ek tarama: Kıbrıs Türk kanalları ve yerel Türk kanalları için ikinci denetimde kalan kayıtlar aynı YEDEKLER grubundan 1003 sonrası bloğa eklendi; 48 engelli kanal dahil edilmedi. Hash manifest was recalculated using UTF-8 bytes after playlist generation; playlist SHA values remain unchanged.",
   "channels": [
     "TR:A2 UHD",
     "TR:ADA TV (KIBRIS)",
