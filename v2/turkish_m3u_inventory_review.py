@@ -16,9 +16,28 @@ except ImportError:
 
 MAX_CHANNELS = 25000
 MAX_BYTES = 32 * 1024 * 1024
+EVIDENCE_FIELDS = {"origin_country", "spoken_language", "subtitle_language", "video_decoded", "audio_decoded", "stream_checked"}
+
+def load_evidence(path):
+    if path is None:
+        return {}
+    evidence = {}
+    with Path(path).open(encoding="utf-8") as stream:
+        for line in stream:
+            if len(line) > 8192 or len(evidence) >= MAX_CHANNELS:
+                raise ValueError("Evidence limit exceeded")
+            item = json.loads(line)
+            if not isinstance(item, dict) or set(item) - (EVIDENCE_FIELDS | {"playlist_ordinal"}):
+                raise ValueError("Unexpected evidence fields")
+            ordinal = item.get("playlist_ordinal")
+            if type(ordinal) is not int or ordinal < 1 or ordinal in evidence:
+                raise ValueError("Invalid or duplicate playlist ordinal")
+            evidence[ordinal] = {k: v for k, v in item.items() if k in EVIDENCE_FIELDS}
+    return evidence
+
 GROUP_RE = re.compile(r'group-title="([^"]{0,256})"')
 
-def inventory_review(playlist, output):
+def inventory_review(playlist, output, evidence_path=None):
     playlist, output = Path(playlist), Path(output)
     if playlist.resolve() == output.resolve():
         raise ValueError("Output cannot replace input")
@@ -26,6 +45,7 @@ def inventory_review(playlist, output):
         raise FileExistsError("Review output already exists")
     if playlist.stat().st_size > MAX_BYTES:
         raise ValueError("Playlist too large")
+    evidence = load_evidence(evidence_path)
     rows = []
     pending = None
     with playlist.open(encoding="utf-8-sig", errors="replace") as stream:
@@ -44,13 +64,15 @@ def inventory_review(playlist, output):
                 pending = None
                 if len(rows) >= MAX_CHANNELS:
                     raise ValueError("Channel limit exceeded")
-                triage = classify_channel(title)
+                triage = classify_channel(title, **evidence.get(len(rows) + 1, {}))
                 rows.append({"playlist_ordinal": len(rows) + 1,
                              "source_group": group,
                              "title": title,
                              **triage})
     if pending is not None:
         raise ValueError("Unpaired final EXTINF entry")
+    if any(i > len(rows) for i in evidence):
+        raise ValueError("Evidence refers to a missing channel")
     output.parent.mkdir(parents=True, exist_ok=True)
     with output.open("x", encoding="utf-8") as stream:
         for row in rows:
@@ -61,8 +83,9 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--playlist", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--evidence", type=Path, help="Optional trusted per-ordinal JSONL evidence")
     args = parser.parse_args()
-    print(json.dumps(inventory_review(args.playlist, args.output)))
+    print(json.dumps(inventory_review(args.playlist, args.output, args.evidence)))
 
 if __name__ == "__main__":
     main()
