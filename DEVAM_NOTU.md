@@ -1221,3 +1221,9 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - Güncel `v2/arsiv/yabanci_kanallar_2026-11-16_2881.m3u8` dosyası adı tarihî 2881 değerini taşısa da içeriğinde 4768 farklı URL ve 4768 EXTINF vardır. `v2/real_ibo_scan.py` hâlâ 2881 beklediği için yeni çalışmada da bütünlük kontrolünden geçemeyecektir.
 - Ayrı düzeltme dalında gerçek 4768 benzersiz arşiv girdisi için fail-closed doğrulama güncellendi. **Arşiv içeriği, ana İBO listesi ve YEDEKLER değiştirilmedi.**
 - Kabul şartı: PR birleştirmesi, güncel main üzerinde yeni workflow_dispatch scan, gerçek log ve raporlarla başarı; ayrıca 16 batch artifact'ındaki AV sonuçlarının toplu denetimi. **AÇIK — yeni scan yeşil doğrulanmadan tamamlandı sayılmayacak.**
+
+
+## 17 Kasım 2026 — PR #374 Stage 6 kırmızı test düzeltmesi (CI kabulü bekliyor)
+- Stage 6 hata çıktısının kök nedeni: `v2/real_ibo_scan.py` korunan yabancı arşiv için 4.768 kayıt + 4.768 benzersiz URL şartına güncellenmişti; `v2/test_real_ibo_scan_offline.py` içindeki üç CLI regresyon senaryosu ise sahte tarihî arşiv envanterini hâlâ 2.881 kayıtla kuruyordu. Scanner test başında fail-closed arşiv sayımında durduğu için senaryoların asıl zorunlu-kaynak/dinamik-rapor davranışlarına ulaşamıyordu.
+- PR #374 dalında üç offline fixture `range(2881)` → `range(4768)` olarak hizalandı. Commit: `037b53654b8ff56a24da212955508fd7a4190948` (`test(scan): align offline archive fixtures with 4768-entry invariant`). Üretim scanner kodu, korunan arşiv, ana İBO ve YEDEKLER değiştirilmedi.
+- Kabul durumu: düzeltme commit'i PR dalına yazıldı; bu commit için Actions koşusu/yeşil Stage 6 sonucu henüz doğrulanmadı. PR birleştirilmeyecek ve genel scan başlatılmayacak; CI kanıtı bekleniyor.
