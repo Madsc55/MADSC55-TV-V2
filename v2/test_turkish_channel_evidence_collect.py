@@ -45,8 +45,7 @@ class EvidenceCollectorTests(unittest.TestCase):
         report = {"url_sha256":"a"*64, "status":"AV_INCOMPLETE",
                   "video_decoded":False, "audio_decoded":False,
                   "spoken_turkish_hint":False, "subtitle_turkish_hint":False}
-        with patch.dict("os.environ", {"MADSC55_SECURE_EGRESS_CONFIRMED": "1"}), patch(
-                collector.review_one", return_value=report):
+        with patch.dict("os.environ", {"MADSC55_SECURE_EGRESS_CONFIRMED": "1"}), patch.object(collector, "review_one", return_value=report):
             result = collect(self.playlist, self.output, [1004], source_authorized=True)
         self.assertEqual(result["sampled"],1)
         self.assertEqual(json.loads(self.output.read_text())["playlist_ordinal"],1004)
