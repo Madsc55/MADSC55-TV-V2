@@ -26,9 +26,9 @@ def join_evidence(inventory, playback, language_evidence, expected_count=None):
         lang = language_evidence.get(key, {})
         if not isinstance(av, dict) or not isinstance(lang, dict):
             raise ValueError("Invalid evidence record")
-        video = av.get("playback") == "VIDEO_DECODED"
-        audio = str(av.get("audio", "")).upper() in AUDIO_OK
-        decoded = av.get("decoded_av_verified") is True and video and audio
+        video = av.get("playback") == "VIDEO_DECODED" or av.get("status") == "AV_VERIFIED"
+        audio = str(av.get("audio", "")).upper() in AUDIO_OK or av.get("audio") is True
+        decoded = av.get("decoded_av_verified") is True and video and audio and (av.get("decode_status") in (None, "DECODED_AV"))
         # A single failure, timeout, or geo-block never proves a dead channel.
         exhausted = av.get("retries_exhausted") is True and av.get("terminal_failure_verified") is True
         health = "WORKING" if decoded else ("NOT_WORKING" if exhausted else "UNKNOWN")
