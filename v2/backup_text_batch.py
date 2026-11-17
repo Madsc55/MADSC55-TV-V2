@@ -12,7 +12,9 @@ try:
 except ImportError:
     from backup_text_sampler import sample, valid_url
 
-def run(snapshot_path, output_path, limit=8, seconds=8):
+def run(snapshot_path, output_path, limit=8, seconds=8, allow_network=False):
+    if allow_network is not True:
+        raise ValueError("Network sampling requires explicit opt-in")
     if not isinstance(limit,int) or not 1 <= limit <= 16:
         raise ValueError("limit must be 1..16")
     if not isinstance(seconds,int) or not 2 <= seconds <= 15:
@@ -52,8 +54,9 @@ def main():
     parser.add_argument("--output",required=True,type=Path)
     parser.add_argument("--limit",type=int,default=8)
     parser.add_argument("--seconds",type=int,default=8)
+    parser.add_argument("--allow-network",action="store_true",help="Explicitly permit bounded stream requests")
     args=parser.parse_args()
-    print(json.dumps(run(args.snapshot,args.output,args.limit,args.seconds)))
+    print(json.dumps(run(args.snapshot,args.output,args.limit,args.seconds,args.allow_network)))
 
 if __name__=="__main__":
     main()
