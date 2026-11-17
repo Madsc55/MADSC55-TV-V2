@@ -46,13 +46,20 @@ class SamplerTests(unittest.TestCase):
         subtitle_command = execute.call_args_list[1].args[0]
         self.assertIn("-protocol_whitelist", subtitle_command)
         index = subtitle_command.index("-protocol_whitelist")
-        self.assertEqual(subtitle_command[index + 1], "file,http,https,tcp,tls,crypto")
+        self.assertEqual(subtitle_command[index + 1], "http,https,tcp,tls,crypto")
 
     def test_malformed_dns_labels_rejected(self):
         for url in ("https://bad..example.org/live", "https://-bad.example.org/live",
                     "https://bad-.example.org/live", "https://bad_host.example.org/live"):
             with self.subTest(url=url):
                 self.assertFalse(valid_url(url))
+
+    def test_untrusted_stream_whitelist_excludes_local_file_protocol(self):
+        from v2.backup_text_sampler import STREAM_PROTOCOL_WHITELIST
+        from v2.spoken_language_sample_review import STREAM_PROTOCOL_WHITELIST as speech_protocols
+        self.assertEqual(STREAM_PROTOCOL_WHITELIST, speech_protocols)
+        self.assertNotIn("file", STREAM_PROTOCOL_WHITELIST.split(","))
+        self.assertNotIn("concat", STREAM_PROTOCOL_WHITELIST.split(","))
 
     def test_legacy_ipv4_numeric_aliases_rejected(self):
         for url in ("http://127.1/live", "http://0x7f.0.0.1/live",
