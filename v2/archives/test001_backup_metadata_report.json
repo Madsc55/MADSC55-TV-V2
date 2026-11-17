@@ -1,0 +1,26 @@
+{
+  "source": "MADSC55_TV_IBO_CALISANLAR_TEST.m3u8",
+  "output": "MADSC55_TV_IBO_CALISANLAR_TEST.m3u8",
+  "total": 18960,
+  "backups": 18122,
+  "main": 838,
+  "modified_backup_records": 0,
+  "nested_headers": [],
+  "issues": [],
+  "original_groups": {
+    "group-title=\"⭐ FAVORİLER (66)\"": 66,
+    "group-title=\"⭐ FAVORİLER 1 (62)\"": 62,
+    "group-title=\"⭐ FAVORİLER 2 (1)\"": 1,
+    "group-title=\"🇹🇷 ULUSAL-HEPSİ (415)\"": 415,
+    "group-title=\"🎬 SİNEMA (12)\"": 12,
+    "group-title=\"📺 HABER (73)\"": 73,
+    "group-title=\"⚽️ SPOR (28)\"": 28,
+    "group-title=\"🌍 BELGESEL (19)\"": 19,
+    "group-title=\"🧸 ÇOCUK (29)\"": 29,
+    "group-title=\"🎧 MÜZİK (41)\"": 41,
+    "group-title=\"📍 YEREL (75)\"": 75,
+    "group-title=\"🕌 DİNİ (17)\"": 17,
+    "group-title=\"🗂️ YEDEKLER (18122)\"": 18122
+  },
+  "original_source_edited_on_review_branch": true
+}
