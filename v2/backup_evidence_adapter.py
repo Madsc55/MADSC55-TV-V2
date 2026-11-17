@@ -12,7 +12,11 @@ def join_evidence(inventory, playback, language_evidence, expected_count=None):
         raise ValueError("Invalid evidence inputs")
     if any(not isinstance(x, dict) for x in inventory):
         raise ValueError("Invalid inventory record")
-    if len(inventory) != len({x.get("url_sha256") for x in inventory}):
+    for item in inventory:
+        key = item.get("url_sha256")
+        if not isinstance(key, str) or len(key) != 64 or any(ch not in "0123456789abcdef" for ch in key):
+            raise ValueError("Invalid inventory identity")
+    if len(inventory) != len({x["url_sha256"] for x in inventory}):
         raise ValueError("Duplicate inventory IDs")
     ids = {x["url_sha256"] for x in inventory}
     if expected_count is not None and len(ids) != expected_count:
