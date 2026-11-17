@@ -6,6 +6,7 @@ from unittest.mock import patch
 from urllib.parse import urlsplit
 from v2.safe_hls_prefetch import (
     UnsafeMediaSource, public_endpoints, fetch_pinned, prefetch_hls,
+    subtitle_observations,
     MAX_SEGMENT_BYTES, MAX_MANIFEST_BYTES
 )
 
@@ -90,6 +91,45 @@ class SafeHLSPrefetchTests(unittest.TestCase):
             prefetch_hls("https://example.org/live.m3u8", tmp, getter=getter)
             with self.assertRaises(FileExistsError):
                 prefetch_hls("https://example.org/live.m3u8", tmp, getter=getter)
+
+    def test_turkish_webvtt_track_is_review_hint_only(self):
+        master = (b'#EXTM3U\n#EXT-X-MEDIA:TYPE=SUBTITLES,GROUP-ID="sub",'
+                  b'LANGUAGE="tr",URI="tur.m3u8"\n'
+                  b'#EXT-X-STREAM-INF:BANDWIDTH=1000000,SUBTITLES="sub"\nvideo.m3u8\n')
+        tracks = b'#EXTM3U\n#EXTINF:5,\npart.vtt\n'
+        cues = b'WEBVTT\n\n00:00:00.000 --> 00:00:05.000\nT\xc3\xbcrkiye haberleri\n'
+        def get(url, limit):
+            if url.endswith("live.m3u8"): return master
+            if url.endswith("tur.m3u8"): return tracks
+            if url.endswith("part.vtt"): return cues
+            raise AssertionError("Unexpected network URL")
+        result = subtitle_observations("https://example.org/live.m3u8", getter=get)
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0]["kind"], "SUBTITLE")
+        self.assertEqual(result[0]["language_tag"], "tr")
+        self.assertIn("Türkiye", result[0]["text"])
+
+    def test_private_webvtt_track_is_rejected_before_media_download(self):
+        master = (b'#EXTM3U\n#EXT-X-MEDIA:TYPE=SUBTITLES,'
+                  b'LANGUAGE="tr",URI="http://127.0.0.1/sub.m3u8"\n')
+        def get(url, limit):
+            if url == "https://example.org/live.m3u8": return master
+            public_endpoints(url)
+            raise AssertionError("Private URL must not be fetched")
+        with self.assertRaises(UnsafeMediaSource):
+            subtitle_observations("https://example.org/live.m3u8", getter=get)
+
+    def test_webvtt_requires_cue_text_not_header_only(self):
+        master = (b'#EXTM3U\n#EXT-X-MEDIA:TYPE=SUBTITLES,'
+                  b'LANGUAGE="tr",URI="subs.m3u8"\n')
+        track = b'#EXTM3U\n#EXTINF:5,\nseg.vtt\n'
+        def get(url, limit):
+            if url.endswith("live.m3u8"): return master
+            if url.endswith("subs.m3u8"): return track
+            if url.endswith("seg.vtt"): return b"WEBVTT\n"
+            raise AssertionError("Unexpected URL")
+        self.assertEqual(subtitle_observations("https://example.org/live.m3u8",
+                                                getter=get), [])
 
     def test_bad_or_oversized_segment_fails_closed(self):
         manifest = b"#EXTM3U\n#EXTINF:6,\nseg.ts\n"
