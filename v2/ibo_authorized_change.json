@@ -1,15 +1,26 @@
 {
-  "base_sha256": "6965960fbbfccc3100fdb394ba2bf2d66dfd6bb85aefde7f14ec9e106f3cb2d6",
-  "result_sha256": "58741a971444405ba879c4641136caba3098a45065d937477cc4ede080b06956",
+  "base_sha256": "58741a971444405ba879c4641136caba3098a45065d937477cc4ede080b06956",
+  "result_sha256": "09be0f52c96b23f4db4a28c8f78d5e4b5a4c395001c21abeb9b2becdf97fcd3e",
   "operation": "reorder",
-  "request": "17 Kasım 2026 kullanıcı talimatı: YEDEKLER içindeki Türkmenistan ve Azerbaycan dahil Türkî kanalları 1003 sonrasında kesintisiz topla; Yunan TRT'yi blok dışına al; hiçbir EXTINF/URL ve yorum satırını kaybetme.",
+  "request": "17 Kasım 2026 kullanıcı açık talimatı: YEDEKLER içindeki kaçırılan Türk, Türkçe, KKTC ve Azerbaycan kanallarını ilk 1003 kanal sonrasına taşı, aradaki yabancı TRT yayınlarını çıkar; kayıtları koru.",
   "channels": [
-    "TURKMENİSTAN SPORT (406P) [NOT 24/7]",
-    "TURKMENISTAN (406P)",
-    "TURKMEN OWAZY (406P)",
-    "TURKMENISTAN SPORT (406P)",
-    "TURKMEN OWAZY (406P) [NOT 24/7]",
-    "TURKMENİSTAN (406P) [NOT 24/7]",
-    "TRT (GREECE) (720P)"
+    "Kanal 7 Türknet",
+    "Karadeniz TV",
+    "PowerTurk Akustik",
+    "PowerTurk Slow",
+    "PowerTurk Taptaze",
+    "PowerTurk TV",
+    "TurkHaber TV",
+    "HABER GLOBAL YOUTUBE",
+    "A2 Dizi Sinema",
+    "CNBC-e",
+    "Haber 61",
+    "Haber Global",
+    "PLAYERFILMAZERBAYCAN-TV",
+    "AZERI-RETRO FILMLER",
+    "A2 (576p)",
+    "CNBC-e (Youtube)",
+    "TRT (VENEZUELA)",
+    "TRT ARABI"
   ]
 }
