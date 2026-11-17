@@ -25,13 +25,16 @@ def valid_url(url):
         host = p.hostname
         if p.scheme not in ("http", "https") or not host or p.username or p.password or p.fragment:
             return False
+        if p.port is not None and not 1 <= p.port <= 65535:
+            return False
         normalized_host = host.lower().rstrip(".")
         if normalized_host in ("localhost", "localhost.localdomain") or normalized_host.endswith((".localhost", ".local", ".internal")):
             return False
         try:
             address = ipaddress.ip_address(host)
         except ValueError:
-            return True  # DNS must additionally be restricted at network egress.
+            # DNS/redirect egress restrictions are still required at runtime.
+            return bool(normalized_host and "." in normalized_host and not normalized_host.endswith(".invalid"))
         return address.is_global
     except ValueError:
         return False
