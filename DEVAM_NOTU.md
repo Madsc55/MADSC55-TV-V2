@@ -1,3 +1,10 @@
+## 17 Kasım 2026 — YEDEKLER dördüncü tarama ve üçüncü tur kapanışı
+- PR #383 birleştirildi (merge `89db7b84c0d8bd7b6dff64647d55f2ba6bf9f6ed`): 6 Türkmenistan kaydı Türkî bloğa taşındı, TRT (GREECE) blok dışına alındı. 18.912 toplam ve 18.074 YEDEKLER korundu; ilgili GitHub security gate başarıyla geçti. Bu, canlı ses/görüntü kanıtı değildir.
+- Güncel ana playlist blob `dda1881e8884a9ded54cb44e0d7cd924967b1df1` üzerinden dördüncü tarama yapıldı. Türkiye ve Azerbaycan kaynaklı olabilecek ilave kayıtlar ile yabancı adaşlar `v2/reports/turkic-fourth-pass-review-20261117.md` dosyasında tek tek kaydedildi.
+- Dördüncü taramadaki adayların yayın dili ve canlılık doğrulaması henüz yoktur; bu aşamada playlist değiştirilmedi. Sonraki işlem yalnız açıkça seçilen kayıtları tam bütünlük/SHA256 manifesti ve güvenlik testi ile yeniden sıralamak; başarısız testleri tamamlandı saymamak.
+
+---
+
 ## 17 Kasım 2026 — Türkî YEDEKLER üçüncü tarama (açık)
 - Güncel İBO blob `843a2216ab08873ce0d3281e64bcb4fdd20a05d4`: 18.912 toplam, 18.074 YEDEKLER, 1003 sonrası mevcut 1.395 blok.
 - Blokta yabancı TRT (GREECE) sıra 1752 bulundu. Blok dışında altı Türkmenistan yayın kaydı saptandı; kullanıcı Türkmenistan ve Azerbaycan'ı da Türkî gruba dahil etmeyi açıkça istedi.
