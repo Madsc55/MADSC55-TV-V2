@@ -3545,8 +3545,6 @@ https://live.artidijitalmedya.com/artidijital_vizyon58/vizyon58/playlist.m3u8
 https://live.sportstv.com.tr/hls/low/sportstv.m3u8
 #EXTINF:-1 tvg-id="CGTNDocumentary.tr" group-title="🗂️ YEDEKLER (18122)",CGTN Documentary
 https://mn-nl.mncdn.com/dogusdyg_drone/cgtn/playlist.m3u8
-
-# --- EK RESMİ/FTA YEDEKLER ---
 #EXTINF:-1 group-title="🗂️ YEDEKLER (18122)",TRT 2
 https://tv-trt2-ts.live.trt.com.tr/master.m3u8
 #EXTINF:-1 group-title="🗂️ YEDEKLER (18122)",TRT AVAZ
@@ -3601,8 +3599,6 @@ https://livetv.powerapp.com.tr/powerTV/powerhd.smil/chunklist_b2650000_sltur.m3u
 https://listen.powerapp.com.tr/pturkakustik/akustik.smil/chunklist_b1028000_sltur.m3u8
 #EXTINF:-1 tvg-name="POWER TURK SLOW" tvg-id="" tvg-logo="https://i.ibb.co/R4pcKqK/powerturk-slow.png" group-title="🗂️ YEDEKLER (18122)",POWER TURK SLOW
 https://listen.powerapp.com.tr/pturkslow/slow.smil/chunklist_b1028000_sltur.m3u8
-
-# --- EK YEREL TEMATİK VE AÇIK KANAL ADAYLARI ---
 #EXTINF:-1 tvg-id="ATurk.tr@SD" tvg-logo="https://i.imgur.com/je5wQ3G.png" group-title="🗂️ YEDEKLER (18122)",A Türk Izmir (360p)
 https://vdo.digitalbox.xyz:3807/stream/play.m3u8
 #EXTINF:-1 tvg-id="ATVAvrupa.tr@SD" tvg-logo="https://i.tmgrup.com.tr/aav/site/v1/i/atv-avrupa-logo.png" group-title="🗂️ YEDEKLER (18122)",ATV Avrupa (576p) [Not 24/7]
@@ -3641,28 +3637,20 @@ https://www.youtube.com/watch?v=eqxFPKDlloo
 https://www.youtube.com/watch?v=bdDfLLy9Y5k
 #EXTINF:-1 group-title="🗂️ YEDEKLER (18122)",HALK TV YOUTUBE
 https://www.youtube.com/watch?v=yMri7_r6Wc8
-
 #EXTINF:-1 group-title="🗂️ YEDEKLER (18122)",A HABER YOUTUBE
 https://www.youtube.com/@ahaber/live
-
 #EXTINF:-1 group-title="🗂️ YEDEKLER (18122)",HABERTÜRK YOUTUBE
 https://www.youtube.com/@HaberturkTV/live
-
 #EXTINF:-1 group-title="🗂️ YEDEKLER (18122)",ÜLKE TV YOUTUBE
 https://www.youtube.com/@ulketv/live
-
 #EXTINF:-1 group-title="🗂️ YEDEKLER (18122)",TELE1 YOUTUBE
 https://www.youtube.com/@tele1comtr/live
-
 #EXTINF:-1 group-title="🗂️ YEDEKLER (18122)",BENGÜTÜRK YOUTUBE
 https://www.youtube.com/@tvbenguturk/live
-
 #EXTINF:-1 group-title="🗂️ YEDEKLER (18122)",TGRT HABER YOUTUBE
 https://www.youtube.com/@tgrthabertv/live
-
 #EXTINF:-1 group-title="🗂️ YEDEKLER (18122)",CNN TÜRK YOUTUBE
 https://www.youtube.com/user/cnnturk/live
-
 #EXTINF:-1 group-title="🗂️ YEDEKLER (18122)",KANAL D
 http://mfe.cliptv.az/dash/Kanal_D_HD.ism/playlist.mpd
 #EXTINF:-1 group-title="🗂️ YEDEKLER (18122)",SHOW TV
@@ -3681,7 +3669,6 @@ https://yayin30.haber100.com/live/finansturk/chunklist_w513642373.m3u8
 https://cdn-kanals.yayin.com.tr/kanals/kanals/chunklist.m3u8
 #EXTINF:-1 tvg-name="KANAL 7 AVRUPA" group-title="🗂️ YEDEKLER (18122)",KANAL 7 AVRUPA GLOBAL ADAY
 https://live.kanal7.com/live/kanal7AvrupaLive/index.m3u8
-
 #EXTINF:-1 tvg-name="TRT SPOR YILDIZ" group-title="🗂️ YEDEKLER (18122)",TRT SPOR YILDIZ YENI YEDEK ADAY
 https://tv-trtsporyildiz.medya.trt.com.tr/master.m3u8
 #EXTINF:-1 tvg-name="ATV" group-title="🗂️ YEDEKLER (18122)",ATV YENI YEDEK ADAY
@@ -3692,13 +3679,10 @@ https://live.duhnet.tv/S2/HLS_LIVE/cnnturknp/track_4_1000/playlist.m3u8
 https://stream.guventechnology.com:19360/flashtv/flashtv.m3u8
 #EXTINF:-1 group-title="🗂️ YEDEKLER (18122)",DREAM TÜRK
 https://mn-nl.mncdn.com/blutv_dreamturk/smil:dreamturk_sd.smil/playlist.m3u8
-
 #EXTINF:-1 group-title="🗂️ YEDEKLER (18122)",NR1 TÜRK TV
 https://n10101m.mediatriple.net/videoonlylive/mtkgeuihrlfwlive/broadcast_5c9e187770143.smil/playlist.m3u8
-
 #EXTINF:-1 tvg-logo="https://i.imgur.com/MGO87pe.png" group-title="🗂️ YEDEKLER (18122)",TRT BELGESEL
 https://tv-trtbelgesel-dai.medya.trt.com.tr/master.m3u8
-
 #EXTINF:-1 group-title="🗂️ YEDEKLER (18122)" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/TRT_%C3%87ocuk_logo_%282021%29.svg/512px-TRT_%C3%87ocuk_logo_%282021%29.svg.png",TRT Diyanet Çocuk
 https://tv-trtdiyanetcocuk.medya.trt.com.tr/master.m3u8#all
 #EXTINF:-1 group-title="🗂️ YEDEKLER (18122)" tvg-logo="",TRT Genc
@@ -37289,8 +37273,6 @@ https://live.artidijitalmedya.com/artidijital_dimtv/dimtv/playlist.m3u8
 https://baskentaudiovideo.xyz/LiveApp/streams/mUE22idl26lA1683879097431.m3u8
 #EXTINF:-1 group-title="🗂️ YEDEKLER (18122)",TBMM TV
 https://mecliscanlitv-lh.akamaihd.net/i/MECLISTV_1@127503/master.m3u8
-
-# --- EK AÇIK ULUSAL HABER SPOR TEMATİK ADAYLARI ---
 #EXTINF:-1 group-title="🗂️ YEDEKLER (18122)",SLOW KARADENIZ TV
 https://yayin.slowkaradeniztv.com:3390/multi_web/play.m3u8
 #EXTINF:-1 group-title="🗂️ YEDEKLER (18122)",ASPOR
@@ -37417,8 +37399,6 @@ https://a8.radyotelekom.com.tr:3232/stream/play.m3u8
 https://ip100.radyotelekomtv.com:3274/hybrid/play.m3u8
 #EXTINF:-1 group-title="🗂️ YEDEKLER (18122)",FİX TV
 https://yayin.venomlink.com/live/mystream/main_stream.m3u8
-
-# --- EK KÜRESEL FTA VE TÜRKÇE ADAYLAR ---
 #EXTINF:-1 tvg-logo="https://i.postimg.cc/6qDg2JN8/rtasport.png" group-title="🗂️ YEDEKLER (18122)",RTA Sport
 https://rtatv.akamaized.net/Content/HLS/Live/channel(RTA3)/index.m3u8
 #EXTINF:-1 tvg-name="Panorama TV" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Panorama_logo.svg/500px-Panorama_logo.svg.png" tvg-id="PanoramaTV.al" tvg-country="AL" group-title="🗂️ YEDEKLER (18122)",Panorama TV Ⓢ
@@ -37505,28 +37485,20 @@ https://streaming.televizor-24-tochka.ru/live/14.m3u8
 https://vod.tv7.fi/tv7-ru/tv7-ru.smil/playlist.m3u8
 #EXTINF:-1 tvg-name="Dacwa TV" tvg-logo="https://i.imgur.com/rMqrLzV.png" tvg-id="DacwaTV.so" tvg-country="SO" group-title="🗂️ YEDEKLER (18122)",Dacwa TV Ⓢ
 https://ap02.iqplay.tv:8082/iqb8002/d13w1/playlist.m3u8
-
-# --- RESMİ YOUTUBE CANLI YEDEKLERİ ---
 #EXTINF:-1 group-title="🗂️ YEDEKLER (18122)",HABER GLOBAL YOUTUBE
 https://www.youtube.com/watch?v=6BX-NUzBSp8
 #EXTINF:-1 group-title="🗂️ YEDEKLER (18122)",SÖZCÜ TV YOUTUBE
 https://www.youtube.com/@Sozcutelevizyonu/live
-
 #EXTINF:-1 group-title="🗂️ YEDEKLER (18122)",A SPOR YOUTUBE
 https://www.youtube.com/@ASpor/live
-
 #EXTINF:-1 group-title="🗂️ YEDEKLER (18122)",TV100 YOUTUBE
 https://www.youtube.com/@tv100/live
-
 #EXTINF:-1 group-title="🗂️ YEDEKLER (18122)",BLOOMBERG HT YOUTUBE
 https://www.youtube.com/@BloombergHT/live
-
 #EXTINF:-1 group-title="🗂️ YEDEKLER (18122)",TVNET YOUTUBE
 https://www.youtube.com/@tvnet/live
-
 #EXTINF:-1 group-title="🗂️ YEDEKLER (18122)",A PARA YOUTUBE
 https://www.youtube.com/channel/UCzrGg6iyRDuUSnO0cQ5oLcA/live
-
 #EXTINF:-1 group-title="🗂️ YEDEKLER (18122)",BLOOMBERG HT YOUTUBE
 https://www.youtube.com/user/BloombergHT/live
 #EXTINF:-1 group-title="🗂️ YEDEKLER (18122)",NTV
@@ -37549,37 +37521,24 @@ https://ahr7chck.rocketcdn.com/sifirtv.stream/chunklist.m3u8
 https://trkvz-live.ercdn.net/vavtv/vavtv.m3u8
 #EXTINF:-1 group-title="🗂️ YEDEKLER (18122)",AYAZ TV
 https://janya-ayaztv.vgcdn.net/ptnr-Vipo%20TV/title-Ayaz_TV/v1/vglive-sk-934820/AyazTV_1500k.m3u8
-
 #EXTINF:-1 tvg-name="KON TV" group-title="🗂️ YEDEKLER (18122)",KON TV
 https://kontv.blutv.com/blutv_kontv2/live.m3u8
-
 #EXTINF:-1 tvg-name="KANAL 56" group-title="🗂️ YEDEKLER (18122)",KANAL 56
 https://cdn-kanal56tv.yayin.com.tr/kanal56tv/kanal56tv/chunklist_w559405215.m3u8
 #EXTINF:-1 tvg-name="SAMSUN CANLI HABER TV 1" group-title="🗂️ YEDEKLER (18122)",SAMSUN CANLI HABER TV 1
 https://cdn-samsuncanlihabertv.yayin.com.tr/samsuncanlihabertv/samsuncanlihabertv/playlist.m3u8
-
-# Global acik IPTV taramasi - test adaylari
-
 #EXTINF:-1 tvg-name="NOW" group-title="🗂️ YEDEKLER (18122)",NOW GLOBAL ADAY
 https://streams.uzunmuhalefet.com/stream/f9368c57-16e5-44a2-a559-46377a476b04.m3u8
-
 #EXTINF:-1 tvg-name="NOW" group-title="🗂️ YEDEKLER (18122)",NOW GLOBAL ADAY
 http://66.160.192.241:80/foxturk/playlist.m3u8
-
-# Global tarama - yeni dogrudan test adaylari
-
 #EXTINF:-1 tvg-name="TLC" group-title="🗂️ YEDEKLER (18122)",TLC YENI YEDEK ADAY
 https://dogus-live.daioncdn.net/tlc/tlc.m3u8
 #EXTINF:-1 tvg-name="NTV" group-title="🗂️ YEDEKLER (18122)",NTV YENI YEDEK ADAY
 https://dogus-live.daioncdn.net/ntv/playlist.m3u8
-
-# Yeni global/yerel adaylar
 #EXTINF:-1 tvg-name="KAÇKAR TV" group-title="🗂️ YEDEKLER (18122)",KAÇKAR TV GLOBAL ADAY
 https://kackartv.ozelip.com:3898/hybrid/play.m3u8
 #EXTINF:-1 tvg-name="AGRO TV" group-title="🗂️ YEDEKLER (18122)",AGRO TV GLOBAL ADAY
 https://yayin30.haber100.com/live/agrotv/playlist.m3u8
-
-# 2026-10-06 global ve yerel yeni adaylar
 #EXTINF:-1 tvg-name="DİYAR TV" group-title="🗂️ YEDEKLER (18122)",DİYAR TV
 https://yayin30.haber100.com/live/diyartv/playlist.m3u8
 #EXTINF:-1 tvg-name="ER TV" group-title="🗂️ YEDEKLER (18122)",ER TV
@@ -37588,34 +37547,24 @@ https://live.artidijitalmedya.com/artidijital_ertv/ertv/playlist.m3u8
 https://live.artidijitalmedya.com/artidijital_tva/tva/playlist.m3u8
 #EXTINF:-1 tvg-name="ORT TV" group-title="🗂️ YEDEKLER (18122)",ORT TV
 https://edge1.socialsmart.tv/orttv/bant1/playlist.m3u8
-
 #EXTINF:-1 group-title="🗂️ YEDEKLER (18122)",TV5
 https://tv5-live.ercdn.net/tv5/tv5.m3u8
-
 #EXTINF:-1 tvg-logo="https://i.imgur.com/gOPAi2c.png" group-title="🗂️ YEDEKLER (18122)",BRT 1
 https://sc-kuzeykibrissmarttv.ercdn.net/brt1hd/bant1/playlist.m3u8
-
 #EXTINF:-1 tvg-logo="https://i.imgur.com/t5kbIuj.png" group-title="🗂️ YEDEKLER (18122)",BRT 2
 https://sc-kuzeykibrissmarttv.ercdn.net/brt2hd/bant1/playlist.m3u8
-
 #EXTINF:-1 tvg-logo="https://i.imgur.com/LPQfdz2.png" group-title="🗂️ YEDEKLER (18122)",ADA TV
 https://sc-kuzeykibrissmarttv.ercdn.net/adatv/bant1/playlist.m3u8
-
 #EXTINF:-1 tvg-logo="https://i.imgur.com/eBdQn9h.png" group-title="🗂️ YEDEKLER (18122)",GENÇ TV
 https://sc-kuzeykibrissmarttv.ercdn.net/kibrisgenctv/bant1/playlist.m3u8
-
 #EXTINF:-1 tvg-logo="https://i.imgur.com/4bA4pXT.png" group-title="🗂️ YEDEKLER (18122)",KANAL T
 https://sc-kuzeykibrissmarttv.ercdn.net/kanalt/bantp1/playlist.m3u8
-
 #EXTINF:-1 tvg-logo="https://i.imgur.com/5MJZPTo.png" group-title="🗂️ YEDEKLER (18122)",KIBRIS TV
 https://sc-kuzeykibrissmarttv.ercdn.net/kibristv/bant1/playlist.m3u8
-
 #EXTINF:-1 group-title="🗂️ YEDEKLER (18122)",TAY TV
 https://mn-nl.mncdn.com/blutv_taytv/smil:taytv_sd.smil/playlist.m3u8
-
 #EXTINF:-1 group-title="🗂️ YEDEKLER (18122)",MINIKA GO
 https://trkvz-live.daioncdn.net/minikago/minikago_720p.m3u8
-
 #EXTINF:-1 group-title="🗂️ YEDEKLER (18122)",KANAL URFA
 https://broadcasttr.com:446/kanalurfa/bant1/chunklist_w1125528664.m3u8
 #EXTINF:-1 group-title="🗂️ YEDEKLER (18122)" tvg-logo="",TV 264
