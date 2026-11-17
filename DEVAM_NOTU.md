@@ -1,3 +1,10 @@
+## 17 Kasım 2026 — YEDEKLER TÜRK/YABANCI toplu atama kodu eklendi (henüz üretim kabulü değil)
+- `v2/ibo_yedekler_assign.py`: yalnız ana İBO'daki YEDEKLER 18.074 yerel sıra numarası için 1-tabanlı başlangıç/bitiş aralığı ve TÜRK/YABANCI ataması; kaynak SHA256 kilidi, değişiklik önizlemesi (varsayılan dry-run), açık `--apply` ile yalnız YENİ bağımsız JSON ledger, işlem geçmişi ve son atamayı geri alma. Kaynak İBO'ya veya diğer kategorilere yazmaz. Mevcut ledger'ı üzerine yazmaz; yeni dosya yolu gerekir.
+- `v2/test_ibo_yedekler_assign.py` salt çevrimdışı birim testleri eklendi (aralık, sınır, stale source, yeniden atama, geri alma). Bu testler henüz GitHub Actions PASS doğrulanmadı. Gerçek 18.074 envanterde doğrulama, URL/HTTP bağlantı dedup kapısı, GitHub CI entegrasyonu ve kullanıcı komutundan otomatik çalıştırma hâlâ AÇIK. Kullanıcıya otomatik üretim taşıması hazır denmeyecek.
+- Şimdilik yalnız TÜRK ve YABANCI sınıfları; çalışan/çalışmayan/ölü yayın testleri sistem kurulumu sonrasında. Ana İBO ve ayrı YEDEKLER playlisti değiştirilmedi.
+
+---
+
 ## 17 Kasım 2026 — KESİN ARŞİV KAPSAMI: ŞİMDİ SADECE TÜRK / YABANCI
 - Kullanıcı güncel talimatı: ana İBO playlistindeki YEDEKLER 18.074 kayıt için V2 arşiv sınıflandırması şu an yalnız iki hedef: TÜRK ve YABANCI. Henüz atanmadıysa UNASSIGNED envanterde kalır; üçüncü kullanıcı hedef kategorisi değildir. Çalışan/çalışmayan/ölü sınıfları, gerçek görüntü/ses/altyazı testleri ve buna göre yer değiştirme BÜTÜN SİSTEM BİTİNCE yapılacak.
 - Kullanıcı açıkça “şu kanalları Türk'e at” veya “Yabancı'ya at” dediğinde yalnız seçilen kanallar topluca atanacak; önce plan ve bütünlük kontrolü, onaylanan işlem, geri alma geçmişi. Varsayılan otomatik taşıma veya ana İBO yazma yok. Ana İBO'nun diğer kategorileri ve ilk 1003 kayıt korunur. Ayrı YEDEKLER_PLAYLISTESI.m3u8 bu arşiv işlemi dışında.
