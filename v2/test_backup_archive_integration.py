@@ -53,5 +53,34 @@ class IntegrationTests(unittest.TestCase):
             self.assertFalse(report["speech_review_hints"][0]["language_evidence_verified"])
             self.assertNotIn("https://",(p/"out.json").read_text())
 
+    def test_all_four_signals_in_single_readonly_report(self):
+        k=key(4)
+        with TemporaryDirectory() as d:
+            p=Path(d)
+            (p/"inventory.json").write_text(json.dumps({"channels":[{"url_sha256":k}]}))
+            (p/"playback.json").write_text(json.dumps({"by_url_sha256":{k:{
+                "status":"AV_VERIFIED","audio":True,"decoded_av_verified":True,
+                "decode_status":"DECODED_AV"}}}))
+            (p/"language.json").write_text(json.dumps({"by_url_sha256":{}}))
+            (p/"speech.json").write_text(json.dumps({
+                "policy":"READ_ONLY_SAMPLED_ASR_HINTS_REQUIRE_REVIEW",
+                "results":[{"url_sha256":k,"status":"LANGUAGE_MODEL_HINT_ONLY",
+                            "detected_language":"tr","speech_detected":True,
+                            "language_probability":0.95}]}))
+            (p/"text.json").write_text(json.dumps({
+                "policy":"READ_ONLY_HINTS_ONLY_NO_AUTO_APPROVAL",
+                "results":[{"url_sha256":k,"ocr_hint":True,
+                            "subtitle_hint":True,"raw_text":"PRIVATE"}]}))
+            result=run(p/"inventory.json",p/"playback.json",p/"language.json",
+                       p/"out.json",1,p/"speech.json",p/"text.json")
+            report=json.loads((p/"out.json").read_text())
+            self.assertEqual(result["counts"],{"UNCERTAIN":1})
+            self.assertEqual(report["speech_review_hint_count"],1)
+            self.assertEqual(report["ocr_review_hint_count"],1)
+            self.assertEqual(report["subtitle_review_hint_count"],1)
+            self.assertFalse(report["text_review_hints"][0]["review_approved"])
+            self.assertNotIn("PRIVATE",(p/"out.json").read_text())
+            self.assertNotIn("https://",(p/"out.json").read_text())
+
 if __name__=="__main__":
     unittest.main()
