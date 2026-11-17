@@ -419,7 +419,7 @@ class ScannerOfflineTests(unittest.TestCase):
             }]}))
             report = root / "report.json"
             inventory = root / "v2/reports/ibo-candidate-inventory.jsonl"
-            historic = [{"url": f"https://example.org/old/{i}"} for i in range(2881)]
+            historic = [{"url": f"https://example.org/old/{i}"} for i in range(4768)]
             argv = [
                 "real_ibo_scan.py", "--worldwide", "--live", str(protected),
                 "--sources", str(sources_path), "--integrated-candidates", str(integrated),
@@ -465,7 +465,7 @@ class ScannerOfflineTests(unittest.TestCase):
                  "scope": "candidate"},
             ]}))
             report_path = root / "early-report.json"
-            historical = [{"url": f"https://example.org/archived/{i}"} for i in range(2881)]
+            historical = [{"url": f"https://example.org/archived/{i}"} for i in range(4768)]
             args = [
                 "real_ibo_scan.py", "--worldwide",
                 "--fail-fast-source-errors", "--live", str(live),
@@ -507,7 +507,7 @@ class ScannerOfflineTests(unittest.TestCase):
             sources.write_text(json.dumps({"sources": []}))
             dynamic = root / "dynamic.json"
             dynamic.write_text(json.dumps({"sources": {}}))
-            records = [{"url": f"https://example.org/historical/{i}"} for i in range(2881)]
+            records = [{"url": f"https://example.org/historical/{i}"} for i in range(4768)]
             argv = ["real_ibo_scan.py", "--live", str(live),
                     "--sources", str(sources), "--dynamic-sources", str(dynamic)]
             with (patch.object(scanner, "ROOT", root),
