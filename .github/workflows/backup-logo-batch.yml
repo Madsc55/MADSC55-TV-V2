@@ -27,7 +27,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add MADSC55_TV_IBO_CALISANLAR_TEST.m3u8 backup_logo_report.json
+          git add MADSC55_TV_IBO_CALISANLAR_TEST.m3u8 backup_logo_report.json backup_logo_unmatched.json
           if ! git diff --cached --quiet; then
             git commit -m "YEDEKLER: apply verified batch original logos"
             git push origin HEAD:fix/backup-original-logos-20261117
@@ -35,4 +35,4 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: backup-logo-report
-          path: backup_logo_report.json
+          path: |\n            backup_logo_report.json\n            backup_logo_unmatched.json
