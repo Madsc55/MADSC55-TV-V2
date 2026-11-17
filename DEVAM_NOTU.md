@@ -1,3 +1,9 @@
+## 17 Kasım 2026 — ASR ipucu offline kabul hattına bağlandı
+
+`v2/backup_archive_offline.py` artık isteğe bağlı `--speech` parametresiyle mevcut `spoken_language_sample_review.py` ASR raporunu `backup_speech_evidence.import_speech_hints` üzerinden alır; URL/metin rapora yazılmaz; ASR Türkçe tahmini tek başına Türk kanalını **asla onaylamaz**. `v2/test_backup_archive_integration.py` yeni uçtan uca negatif kabul senaryosu eklendi. **56 yazılı test**; yerel/CI Python test çalıştırması henüz kanıtlanmadı. GitHub güvenlik koşusu `44102300785` önceki committe SUCCESS idi; yeni HEAD için ayrı kontrol gereklidir. **Eksik:** gerçek ASR/AV/OCR/altyazı örneklemesi, test koşum kanıtı, DNS/redirect egress güvenliği. Kullanıcı isteği gereği YEDEKLER 18.074 ve ana İBO playlisti değiştirilmedi.
+
+---
+
 ## 17 Kasım 2026 — ASR bağlantısı ve devam kaydı
 
 Kullanıcı önceliği: **önce görüntü/ses, Türkçe konuşma, OCR ve altyazı entegrasyonunu bitir, sonra YEDEKLER'deki 18.074 kanalı tara; ana İBO listesine dokunma.** Mevcut `v2/spoken_language_sample_review.py` faster-whisper ASR örnekleyicisi keşfedildi; sıfırdan ASR kurulumu gerekmiyor. Ancak örnekleyici bağımsızdı ve tahminleri otomatik kabul etmemelidir.
