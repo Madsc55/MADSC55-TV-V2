@@ -58,16 +58,17 @@ def collect(playlist, output, ordinals, *, source_authorized=False, model_dir=No
         raise ValueError("Selected channel missing or malformed")
     output.parent.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory(prefix="v2-turkish-evidence-") as tmp:
-        # Stream evidence rows directly: do not accumulate 18k reports in RAM.
-        rows = []
-        for ordinal in selected:
-            sample = review_one(records[ordinal], Path(tmp) / f"{ordinal}.json",
-                                source_authorized=True, model_dir=model_dir)
-            rows.append({"playlist_ordinal": ordinal, "sample_report": sample})
-        with output.open("x", encoding="utf-8") as dest:
-            for row in rows:
-                dest.write(json.dumps(row, ensure_ascii=False) + "\n")
-    return {"sampled": len(rows), "playlist_modified": False, "approved": 0}
+        # Write only after all samples succeed; a failed sample never leaves a partial output.
+        staging = Path(tmp) / "evidence.jsonl"
+        with staging.open("x", encoding="utf-8") as dest:
+            for ordinal in selected:
+                sample = review_one(records[ordinal], Path(tmp) / f"{ordinal}.json",
+                                    source_authorized=True, model_dir=model_dir)
+                dest.write(json.dumps({"playlist_ordinal": ordinal, "sample_report": sample}, ensure_ascii=False) + "\n")
+        with output.open("xb") as dest, staging.open("rb") as source:
+            import shutil
+            shutil.copyfileobj(source, dest)
+    return {"sampled": len(selected), "playlist_modified": False, "approved": 0}
 
 def main():
     p = argparse.ArgumentParser(description=__doc__)
