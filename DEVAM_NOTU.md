@@ -1,3 +1,10 @@
+## 17 Kasım 2026 — Türkî YEDEKLER dördüncü taşıma (test bekliyor)
+- Kullanıcının açık talimatıyla ilk 1003 kanalın arkasındaki Türkî blokta yeni 18 Türkiye/Azerbaycan kaynak kaydı bir araya getirildi; TRT (VENEZUELA) ve üç TRT ARABI kaydı Türkçe yayın bloğu dışına taşındı. Yunan TRT zaten önceki turda blok dışındaydı.
+- 18.912 toplam EXTINF ve 18.074 YEDEKLER kayıt sayısı korunmuştur; tam eski/yeni SHA256 değerleri `v2/ibo_authorized_change.json` dosyasındadır.
+- Teknik test işaretli kayıtlar, YouTube ve Azerbaycan film kaynakları gerçek görüntü/ses ve canlı yayın olarak henüz doğrulanmamıştır. GitHub güvenlik testi başarılı olmadan tamamlandı/merge edildi sayılmayacak.
+
+---
+
 ## 17 Kasım 2026 — YEDEKLER dördüncü tarama ve üçüncü tur kapanışı
 - PR #383 birleştirildi (merge `89db7b84c0d8bd7b6dff64647d55f2ba6bf9f6ed`): 6 Türkmenistan kaydı Türkî bloğa taşındı, TRT (GREECE) blok dışına alındı. 18.912 toplam ve 18.074 YEDEKLER korundu; ilgili GitHub security gate başarıyla geçti. Bu, canlı ses/görüntü kanıtı değildir.
 - Güncel ana playlist blob `dda1881e8884a9ded54cb44e0d7cd924967b1df1` üzerinden dördüncü tarama yapıldı. Türkiye ve Azerbaycan kaynaklı olabilecek ilave kayıtlar ile yabancı adaşlar `v2/reports/turkic-fourth-pass-review-20261117.md` dosyasında tek tek kaydedildi.
