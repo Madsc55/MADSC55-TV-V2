@@ -23,6 +23,12 @@ class SamplerTests(unittest.TestCase):
             with self.subTest(url=url):
                 self.assertFalse(valid_url(url))
 
+    def test_malformed_ports_and_single_label_hosts_rejected(self):
+        for url in ("https://example.org:bad/live", "http://example.org:99999/live",
+                    "https://intranet/live", "https://example.invalid/live"):
+            with self.subTest(url=url):
+                self.assertFalse(valid_url(url))
+
     def test_public_url_allowed(self):
         self.assertTrue(valid_url("https://example.org/live"))
 
