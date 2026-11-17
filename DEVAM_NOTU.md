@@ -1,3 +1,9 @@
+## 17 Kasım 2026 — Güvenli ağ çıkışı teyidi yoksa örnekleme durduruluyor
+
+OCR/altyazı örnekleyicisi ve gerçek ASR örnekleyicisi, `MADSC55_SECURE_EGRESS_CONFIRMED=1` açıkça verilmedikçe güvenilmeyen URL'leri ffmpeg'e aktarmıyor. OCR yolu `SECURE_EGRESS_NOT_CONFIRMED` ile kanıtsız döner, ASR yolu çalışmayı durdurur. Yeni offline test eklendi: **70 yazılı test**, çalıştırılmış PASS sonucu henüz yok. **Bu ortam değişkeni ağ izolasyonunu kendi başına sağlamaz**; yalnızca güvenli proxy/egress kurulduktan ve doğrulandıktan sonra yetkili operatör tarafından ayarlanmalıdır. DNS rebinding/redirect için gerçek ağ seviyesi koruma ve uçtan uca yayın kabulü açık kalıyor. Yerel shell `github.com` DNS çözemediği için tüm testler burada henüz çalıştırılamadı. Ana İBO/YEDEKLER değişmedi.
+
+---
+
 ## 17 Kasım 2026 — Yayın URL giriş kontrolü ek sertleştirme
 
 Ortak `v2/backup_text_sampler.valid_url` denetimi artık geçersiz/taşan portları, tek etiketli iç ağ benzeri DNS adlarını ve `.invalid` uçlarını reddeder; ASR ve OCR/altyazı örnekleyicileri aynı kontrolü paylaşır. Bir yeni regresyon testi eklendi: **69 yazılı test**, çalıştırılmış PASS kanıtı henüz yok. DNS rebinding ve HTTP redirect kaynaklı SSRF riskleri yalnızca URL sözdizimiyle çözülemez: ffmpeg için ağ seviyesinde güvenli egress veya güvenilir proxy zorunlu. Ana İBO ve YEDEKLER'e dokunulmadı. Önce bu koruma ve gerçek test/AV-ASR-OCR-altyazı kabulü, sonra 18.074 tarama.
