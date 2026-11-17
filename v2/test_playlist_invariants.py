@@ -48,11 +48,13 @@ def main():
     # YEDEKLER is a user-controlled review area; its internal order may change.
     assert sum(x["name"] == "TRT 1 1440P QHD" for x in backups) == 1, "Duplicate or missing TRT 1"
     assert sum(x["name"] == "DHA CANLI 720P HD" for x in backups) == 1, "Duplicate or missing DHA"
-    # The sole retained foreign archive is the consolidated 2881-channel archive.
-    archive = ROOT / "v2" / "arsiv" / "yabanci_kanallar_2026-11-16_2881.m3u8"
-    assert archive.exists(), "Consolidated foreign archive is missing"
-    archived = list(entries(archive.read_text(encoding="utf-8-sig")))
-    assert len(archived) == 4768, "Consolidated foreign archive count mismatch"
+    # The consolidated playlist retains all seven original source blocks in order.
+    archive = ROOT / "YEDEKLER_PLAYLISTESI.m3u8"
+    assert archive.exists(), "Unified YEDEKLER playlist is missing"
+    merged = list(entries(archive.read_text(encoding="utf-8-sig")))
+    assert len(merged) == 32488, "Unified YEDEKLER playlist count mismatch"
+    archived = merged[18960 + 1110:18960 + 1110 + 4768]
+    assert len(archived) == 4768, "Foreign archive section count mismatch"
     assert len({x["url"] for x in archived}) == 4768, "Duplicate foreign archive stream URLs"
     assert all(x["url"].startswith(("https://", "http://")) and x["name"].strip() for x in archived), "Invalid foreign archive record"
     assert not (ROOT / "v2" / "arsiv" / "yabanci_yedekler_2026-11-02_3964.m3u8").exists(), "Old foreign archive must not be retained"
