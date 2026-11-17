@@ -1227,3 +1227,11 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - Stage 6 hata çıktısının kök nedeni: `v2/real_ibo_scan.py` korunan yabancı arşiv için 4.768 kayıt + 4.768 benzersiz URL şartına güncellenmişti; `v2/test_real_ibo_scan_offline.py` içindeki üç CLI regresyon senaryosu ise sahte tarihî arşiv envanterini hâlâ 2.881 kayıtla kuruyordu. Scanner test başında fail-closed arşiv sayımında durduğu için senaryoların asıl zorunlu-kaynak/dinamik-rapor davranışlarına ulaşamıyordu.
 - PR #374 dalında üç offline fixture `range(2881)` → `range(4768)` olarak hizalandı. Commit: `037b53654b8ff56a24da212955508fd7a4190948` (`test(scan): align offline archive fixtures with 4768-entry invariant`). Üretim scanner kodu, korunan arşiv, ana İBO ve YEDEKLER değiştirilmedi.
 - Kabul durumu: düzeltme commit'i PR dalına yazıldı; bu commit için Actions koşusu/yeşil Stage 6 sonucu henüz doğrulanmadı. PR birleştirilmeyecek ve genel scan başlatılmayacak; CI kanıtı bekleniyor.
+
+
+## 17 Kasım 2026 — PR #374 düzeltildi, ana dala alındı ve CI kabulü geçti
+- Stage 6 kök neden: scanner 4768 korunan arşiv kaydı beklerken üç offline CLI regresyon fixture'ı 2881 kayıt üretiyordu; testler asıl kaynak/rapor kontrollerine ulaşmadan arşiv bütünlük kapısında kalıyordu.
+- Üç fixture `range(2881)` → `range(4768)` olarak düzeltildi. PR #374 squash merge edildi; ana dal commit'i `e63b248c2c4348205d4f7451e1d51d50b08a38a7`.
+- PR baş commit'inde Stage 6 offline kabul testi PASS. Merge sonrası main push run `44121030837` (`V2 Main Production Security Gate`) SUCCESS: ana İBO koruma, task ledger, Stage 2, Stage 6, Stage 2/3, FFmpeg, Stage 5 ve Discovery 34 adımları PASS. `live-discovery-diagnostic` koşul gereği SKIPPED; bu canlı keşif kabulü değildir.
+- Ana İBO playlisti, YEDEKLER ve korunan yabancı arşiv değiştirilmedi.
+- **AÇIK:** Genel gerçek ağ taraması ayrı `workflow_dispatch` gerektirir. `.github/workflows/v2-real-iptv-scan.yml` bu turda başlatılmadı; mevcut GitHub araç bağlantısı workflow dispatch/POST çalıştırmıyor. Gerçek kaynak/AV raporu ve 7.650 URL artifact değerlendirmesi olmadan genel scan işi tamamlandı sayılmayacak.
