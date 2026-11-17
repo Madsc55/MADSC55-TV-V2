@@ -15,7 +15,7 @@ def fetch(url):
         return json.load(res)
 def norm(s):
     s = s.casefold().replace("ı","i")
-    s = re.sub(r"(?i)\\b(?:tr|turkey|turkiye|hd|sd|fhd|uhd|4k|1080p|720p|576p|live|canli)\\b", " ", s)
+    s = re.sub(r"(?i)\b(?:tr|turkey|turkiye|hd|sd|fhd|uhd|4k|1080p|720p|576p|live|canli)\b", " ", s)
     return re.sub(r"[^a-z0-9]+", "", s)
 def valid(url):
     if not url.startswith("https://"): return False
