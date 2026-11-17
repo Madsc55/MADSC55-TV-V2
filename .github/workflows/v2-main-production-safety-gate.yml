@@ -28,6 +28,8 @@ jobs:
         run: PYTHONPATH=v2 python -m unittest -v test_main_actions_security_gate
       - name: Fail closed on changes to production trigger/write policy
         run: PYTHONPATH=v2 python v2/main_actions_security_gate.py
+      - name: V2 backup archive, ASR, OCR and subtitle offline regressions
+        run: python v2/run_backup_archive_tests.py --verbose
       - name: Preserve original IBO category and backup invariants
         run: python v2/test_playlist_invariants.py
       - name: Historical task ledger integrity
@@ -76,6 +78,21 @@ jobs:
           fi
           command -v ffprobe
           command -v ffmpeg
+      - name: Local-only FFmpeg video and audio HLS decode acceptance
+        run: PYTHONPATH=v2 python -m unittest -v test_safe_hls_ffmpeg_local
+      - name: Public Apple HLS pinned transport smoke diagnostic (not IPTV discovery)
+        if: github.event_name == 'pull_request' && github.head_ref == 'plan/18074-kanal-akilli-test-arsiv-20261117'
+        continue-on-error: true
+        run: python -m v2.diagnose_pinned_public_hls
+      - name: Ensure Turkish OCR engine for real local recognition test
+        run: |
+          if ! command -v tesseract >/dev/null || ! tesseract --list-langs 2>/dev/null | grep -qx tur; then
+            sudo apt-get update -qq
+            sudo apt-get install -y --no-install-recommends tesseract-ocr tesseract-ocr-tur tesseract-ocr-eng fonts-dejavu-core
+          fi
+          tesseract --list-langs | grep -qx tur
+      - name: Local Turkish OCR actual Tesseract recognition acceptance
+        run: PYTHONPATH=v2 python -m unittest -v test_safe_hls_ocr_local
       - name: Stage 5 evidence-gated export and final acceptance regressions
         run: |
           python -m py_compile v2/stage5_acceptance_gate.py v2/stage5_evidence_export.py v2/test_stage5_acceptance_gate.py v2/test_stage5_evidence_export.py

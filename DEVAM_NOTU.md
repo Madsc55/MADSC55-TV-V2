@@ -1257,3 +1257,123 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - URL düzeyinde karşılaştırma: 7.650/7.650 eski adayın tamamı ve 1.110/1.110 eski küçük liste kaydı ana İBO'nun YEDEKLER kategorisinde zaten var. Eksik URL sıfır. Bu nedenle 18.074 mevcut YEDEKLER'e yeniden kopyalama yapılsaydı 8.760 gereksiz tekrar oluşacaktı; ana playlistin tek bir baytı değiştirilmedi. Eski küçük listedeki aynı URL'ye ait bazı ad/metadata farklılıkları arşivlenmiş Git geçmişinde korunur; bu karşılaştırma kanal kimliği/AV kabulü değildir.
 - 18.122 YEDEKLER içeren alternatif test playlisti ana dosyaya göre +48 farklı URL taşıyor; bu 48 URL, `v2/archives/test001_quarantined_48.json` içindeki koruma altına alınan 48 kaydın aynısı. Bu test dosyası ana İBO yerine geçmez ve 48 kanal otomatik geri alınmaz.
 - Kullanıcının silme talimatı uyarınca tek eski `MADSC55_IBO_NEWLISTTR_YEDEKLER_TEST.m3u8` dosyası **ayrı PR dalından kaldırıldı**; eski sürümü Git commit geçmişinden geri yüklemek mümkün. Ana İBO, diğer yedi M3U ve tüm kategori satırları değiştirilmedi. Güvenlik kontrolleri ve PR kabulü doğrulanmadan tamamlandı denmez.
+
+---
+
+## 17 Kasım 2026 — PR #365 son durum / merge engeli
+
+- Son denetimde PR #365 HEAD `2499e21ec7716d21ef3a5b118b2300a76522d4c4`; ana dal HEAD `e63b248c2c4348205d4f7451e1d51d50b08a38a7`; ortak taban `6410397c399f0f3917a5684f4e9442d3deca5b92`. Dal ana daldan **6 commit geride**, 125 commit ileride ve compare durumu `diverged`; GitHub PR `mergeable=false`. Bu nedenle rebase/merge yapılmadı; ana dala ait 6 commitin etkisi ayrıca incelenmeden birleştirme yok.
+- PR #365'in değişen dosyaları 24: DEVAM_NOTU, 11 üretim/yardımcı modül, 11 test modülü ve ayrı offline test workflow'u. Ana İBO/YEDEKLER playlist dosyaları değişen dosyalar listesinde yok. DEVAM_NOTU güncellemesinde ana dalın mevcut tüm geçmişi korunarak PR #365 devir/geliştirme kayıtları ek bölüm olarak taşındı; ana geçmişin silinmesi düzeltilmiş oldu.
+- Son HEAD `2499e21ec7716d21ef3a5b118b2300a76522d4c4` için GitHub Actions workflow run listesi boş. Dolayısıyla özel offline workflow henüz koşmamış; 72 testin PASS/FAIL sonucu hâlâ bilinmiyor. Yerel GitHub clone da DNS hatasıyla engellendi.
+- **Durdurma:** PR #365'i merge etme; 18.074 kanal taraması yapma. Önce branch divergence/6 commit geriliği güvenli şekilde çözülmeli, offline 72 test gerçek Actions koşusunda PASS olmalı, DNS/redirect SSRF'yi önleyen gerçek egress izolasyonu kanıtlanmalı ve sınırlı izinli gerçek yayın AV+ASR+OCR+altyazı kabulü yapılmalı.
+- Korunan ana İBO, YEDEKLER, YENİLER, FAVORİLER ve EPG değişmedi. Kanonik görev durumları değiştirilmedi.
+
+---
+
+## 17 Kasım 2026 — 71 gerçek PASS kanıtı, güvenlik CI envanter onarımı ve kontrollü dal birleştirmesi
+
+- **Gerçek test kanıtı:** GitHub Actions `44121070207`, eski HEAD `f1b7b7fdd0903f2b2e087cf79bf47d13677e0028`, `offline-regressions` SUCCESS. İş logunda `Ran 71 tests in 0.039s` ve `OK` yer alıyor; tüm 71 offline senaryo gerçekten PASS. Ancak bu koşu sonraki yeni altyazı whitelist regresyonunu **içermiyor**. Güncel yazılı sayı 72, güncel HEAD için toplu PASS **henüz kanıtlanmadı**.
+- **Bulunan hatalı güvenlik CI:** Aynı eski HEAD üzerinde `44121068557` Production Security Gate FAILURE verdi. Logda `MAIN_WORKFLOW_FILE_LOCK_FAIL`, `WORKFLOW_INVENTORY.unexpected=["v2-backup-archive-offline-tests.yml"]` kesin sebep olarak doğrulandı. Yeni workflow'u güvenlik envanterine körlemesine eklemek yerine, onaysız ek workflow silindi (`eef59e29ca15771ad25f7655e117812aa1a852a5`). Offline test runner adımı zaten izinli `.github/workflows/v2-main-production-safety-gate.yml` içindeki mevcut güvenlik kapısına eklendi (`a6b9e2c1582c850ee8f02248c6935c128a736ed7`). Üretim tetikleyicileri, güvenlik gate'in izinli workflow listesi, yazma izinleri ve playlist kuralı gevşetilmedi.
+- **Dal tutarlılığı:** Main'den gelen 6 commitin değişen dosyaları incelendi. Ana İBO ve YEDEKLER içeriği yazılarak yeniden düzenlenmedi: feature dalı mevcut main ağacından oluşturulup sadece özelliğe ait 24 dosyanın blobları eklendi; iki ebeveynli `60e08265ae2848e0d222b18306496d21b7b59bad` feature merge commit'i kaydedildi. Bu kontrol anında feature ve main korunan `MADSC55_TV_IBO_CALISANLAR_TEST.m3u8` dosyasının blob SHA'sı ikisinde de `d5291424da8c273d48395b0c261feb87ae1ebf72`: **tamamen aynı**. PR main'e merge edilmedi.
+- **Eşzamanlı ana dal değişikliği:** Feature dalı birleştirme sonrasında main'e yeni bir commit daha geldi (DEVAM_NOTU ek kaydı ve başka bir test playlistinin silinmesi). Main ile feature arasındaki fark yeniden kontrol edilmeli; kullanıcı istemediği hiçbir playlist içeriği feature tarafından değiştirilmedi. Başka paralel işleri ezmek için force push yapılmadı.
+- **Güvenli egress durumu:** DNS rebinding, özel IP yönlendirmesi ve HTTP redirect sonrası erişimi **gerçek ağ katmanında** engelleyen egress kanıtı yok. Sadece env bayrağı ve protokol whitelist güvenli canlı tarama için yeterli değil. Bu doğrulanana kadar gerçek AV/ASR/OCR/altyazı örneklemesi ve 18.074 YEDEKLER taraması başlamayacak.
+- **Kalan kabul:** Yeni 72. testin güncel HEAD Actions PASS koşusu; ana Production Security Gate'in tüm adımlarla yeniden SUCCESS olması; gerçek izole egress; sınırlı izinli gerçek yayında AV+ASR+OCR+altyazı uçtan uca kanıt. Hiçbir görev kanıtsız kapatılmadı.
+
+---
+
+## 17 Kasım 2026 — Numeric IPv4 SSRF sertleştirmesi, test sayısı 73 ve canlı tetik engeli
+
+- Yeni risk: `valid_url` önce `ipaddress.ip_address()` ile standart literal IP'yi reddetse de, `127.1`, `0x7f.0.0.1` ve `0177.0.0.1` gibi libc tarafından loopback'e çözülebilen eski IPv4 gösterimlerini hatalı olarak DNS adı sanıp kabul ediyordu. İlgili `v2/backup_text_sampler.py` URL kontrolü tüm etiketleri sayısal/hex olan bu eski gösterimleri fail-closed reddedecek biçimde güncellendi. Kod commit `063a448b2f76a8b43d7e6d1e8f934c1a658254ad`.
+- `v2/test_backup_text_sampler.py` içinde `test_legacy_ipv4_numeric_aliases_rejected` regresyonu eklendi: `127.1`, hex, octal ve sona nokta koyulmuş loopback literal URL'leri reddedilmeli. Test commit `d77d59bff345b3af361f24f45831d4432cbdc1cd`. Böylece **73 yazılı offline test** var: 71'i `44121070207` eski commitinde gerçekten PASS; sonradan eklenen altyazı protokol testi ve numeric IPv4 regresyonu için güncel HEAD'de CI PASS kanıtı halen yok.
+- Yetkili workflow envanteri ve Production Security Gate korunmuş halde; ayrı izin dışı offline workflow silindi, runner `.github/workflows/v2-main-production-safety-gate.yml` mevcut güvenlik adımlarına bağlandı. GitHub Actions `44124548197` V2 Playlist Safety Invariants run SUCCESS, HEAD `60e08265ae2848e0d222b18306496d21b7b59bad`; bu tek başına 73 Python testinin PASS olduğu anlamına gelmez.
+- Güncel HEAD'in PR Actions tetiklemesini doğrulamak amacıyla geçici test dalı ve PR #379 açıldı, aynı HEAD'e ilerletildi, ancak bu test PR'si için GitHub Actions run görünmedi; PR #379 **merge edilmeden kapatıldı**. Asıl geliştirme PR #365 açık. Bu deneme yeni workflow'un veya güvenlik testinin PASS olduğunu kanıtlamıyor.
+- **Kalan:** 73 testin tamamına ait güncel Actions PASS logu, ana Production Security Gate tam SUCCESS, DNS/redirect ve tüm özel IP aralıklarına çıkışı engelleyen doğrulanmış ağ seviyesi izolasyon, gerçek izinli yayınlarda AV decode/ASR Türkçe konuşma/OCR/altyazı örnek kabulü. Yalnızca env bayrağı, URL sözdizimi veya protokol whitelist ile egress kabul edilmez.
+- Korunan ana İBO/YEDEKLER içeriği değiştirilmedi. 18.074 kanal taraması başlamadı. Kanonik görev defterindeki açık görevler kapatılmadı. PR #365 main'e merge edilmedi.
+
+---
+
+## 17 Kasım 2026 — Yeni devam: salt-okunur medya güvenliği, 80 yazılı test, açık kabul engelleri
+
+**Bu oturumda gerçekten kaydedilen değişiklikler (yalnız PR #365 özellik dalı):**
+- `v2/backup_smart_archive.py` rapor üretimi `write_text` ile var olan dosyayı ezebiliyordu. Exclusive `open("x")` ile mevcut rapor/playlist üzerine yazma engellendi; var olan dosyanın değişmeden kaldığını doğrulayan negatif regresyon eklendi. Kod düzeltme commit `c9b1023aec4b31ed0e1f12e4ac5be97b63350edd`, test commit `46ba88a41a2bb83af156d65ff04013ad15acf0aa`.
+- OCR, altyazı ve ASR için ortak `STREAM_PROTOCOL_WHITELIST = "http,https,tcp,tls,crypto"` sınırı kullanılıyor; güvenilmeyen HTTP/HLS girişinin `file:` protokolüne başvurması açılmıyor. İlgili commitler `c8570cab9db07810ab8e8aca50f206f3736470d6`, `9e40d7dc9c408263ffe3d1dd6eef2fe0340cc055`, test `359c114ff45d0227586b497d21ac63f4c0f52a25`. Bu HLS uyumluluğunun canlı kanıtı değildir.
+- `v2/backup_text_batch.py` raporuna `blocked_count`, `error_count`, `text_hint_count`, `verified_language_count=0` ayrımı eklendi. Eski `sampled` değeri yalnızca seçilmiş aday sayısıdır, gerçek medya/ASR/OCR kabulü değildir. Ağ çıkışı engellenen örnek için negatif regresyon yazıldı. Kod `289519b923352407d60e9518138cac652f2a054d`, test `7767ab952c981a3890c2f5c2047e95d4cdc84d16`.
+- Önceden bulunan `.github/workflows/v2-spoken-language-existing-snapshot.yml` eski, artık geçersiz `4b1c3cea...` ana playlist Git blob değerine sabitti. Bu sabit değer kaldırıldı; iş, oynatma listesinin kontrol edilen HEAD commit'iyle birebir aynı olduğunu doğrular ve eski playlist koruma testlerini yürütür. Read-only checkout için `persist-credentials: false` eklendi. Kod `18d74a094c5d7816845d12ae078017462d953c82` ve `95210f2e8ea6592530f36b7df3b6ed8042204c5e`, regresyon `8a1d8ae50dcc319e45f515e950f0baf1be01907d`.
+- Ortak `public_dns_for_url` ön kontrolü tüm DNS çözümleme adreslerinin public/global olmasını ister; karma public+private cevap, özel IP ve DNS çözümleme hataları fail-closed döner. OCR/altyazı örnekleyicisi ve ASR modeli yükleme öncesi buna bağlıdır. Kod `4bd3939fe53a9faad909c970a36d65416d0f1221` ve `378b7dc861ed066bbf1440e30f318b258e08bf43`, test `9ea050348e1db373511d15bc0e9bab6db5ea2324`, ayrıca ASR DNS-model yüklememe testi `015b5b7205f6e9b721a395fd498be0c98702e6de`. Kaynağın Python satır sonu yazımındaki geçici kusur `7180cbc3757cfdd6da5c428abeb8b235367b2784` ile düzeltildi.
+- GitHub'dan 11 test modülündeki `test_*` metodları yeniden sayıldı: **80 yazılı otomatik senaryo**. Bunların yalnızca eski commit `f1b7b7fdd0903f2b2e087cf79bf47d13677e0028` üzerinde 71'inin gerçek PASS çıktısı var (Actions `44121070207`, `Ran 71 tests`, `OK`). **Güncel 80 senaryonun PASS kanıtı henüz YOK.** Son üretim güvenlik gate'i yeni HEAD'de yeniden çalışmadı; önceki run `44121068557` eski yeni-workflow envanter hatasıyla FAIL idi; bu hata için ayrı izinsiz workflow silinip testler izinli güvenlik işine bağlandı ancak yeniden PASS doğrulanmadı.
+
+**Güncel korunma / birleşme engeli:** Özellik dalı ile main karşılaştırmasında dal 3 commit geride ve PR #365 mergeable=false. Bu oturum içinde ana dalda eşzamanlı değişiklik yapılmış görünüyor: ana playlist Git blob SHA main `843a2216ab08873ce0d3281e64bcb4fdd20a05d4`, özellik dalında `d5291424da8c273d48395b0c261feb87ae1ebf72`. Bu nedenle eski feature playlist blobu üzerine main'i körlemesine merge etmek korunan listeyi geri alma riski yaratır. **Ana İBO, YEDEKLER ve başka korunan playlistlere bu oturumda hiçbir yazma yapılmadı; PR birleştirilmedi ve zorla güncellenmedi.**
+
+**Açık güvenlik ve medya kabul engeli:** DNS ön çözümleme tek başına DNS rebinding, HTTP redirect ve HLS iç içe bağlantılarının SSRF riskini kapatmaz. Ağ katmanında güvenilir deny-private egress/proxy izolasyonu kurulu ve testli değil. Ortam bayrağı tek başına izolasyon değildir; gerçek izinli yayınlarda FFmpeg görüntü+ses, ASR Türkçe konuşma, OCR ve altyazı birleşik kabulü yapılmadı. Bu ön koşullar ve 80/80 güncel Actions PASS olmadan 18.074 YEDEKLER taraması başlatılmayacak; görevler kanıtsız completed yapılmayacak.
+
+---
+
+## 17 Kasım 2026 — Yeni sohbet, ana dal uzlaştırma ve güvenlik kontrolü
+
+- Kullanıcı talimatı: PR #365'ten devam; 80 senaryoyu güncel kodda doğrula; DNS/redirect/SSRF güvenlik kabulü ve gerçek AV+ASR+OCR+altyazı testlerini kanıtla. Ana İBO ve YEDEKLER'e yazma yok; 18.074 taraması ön koşulsuz başlamayacak.
+- Özellik dalı ve main arasında 3 ana dal commit farkı tespit edildi. Korunan ana İBO blob SHA: main `843a2216ab08873ce0d3281e64bcb4fdd20a05d4`; önceki özellik dalı `d5291424da8c273d48395b0c261feb87ae1ebf72`. Özellik dalındaki eski playlist verisi kullanılamaz; dalı main'in güncel Git ağacı üzerinde yalnız özellik dosyalarını ekleyerek uzlaştırma ve iki ebeveynli commit oluşturma yöntemi seçildi. Playlist/YEDEKLER doğrudan değiştirilmez.
+- Geçmiş Actions `44121070207` yalnız eski `f1b7b7f` commitindeki **71/71 unittest PASS** kanıtıdır; güncel 80 test ve tam Production Security Gate için henüz başarı kanıtı yok. Önceki güvenlik red sebebi envantere girmeyen workflow idi; ayrı dosya kaldırılarak test çağrısı izinli güvenlik gate'ine taşındı.
+- DNS ön çözümleme, FFmpeg protokol beyaz listesi ve yalnız env bayrağı bütün redirect/rebinding/HLS alt-isteklerini ağ katmanında engellemez. Güvenli izole egress ve gerçek yayın AV/ASR/OCR/altyazı kabulü bu oturumda da tamamlanmadı. Bunlar tamamlanmadan `MADSC55_SECURE_EGRESS_CONFIRMED` etkinleştirilmez, yeni canlı tarama başlatılmaz.
+- DEVAM_NOTU.md'nin main'deki son kullanıcı/playlist/başka PR kayıtları korunmalı, PR #365'e ait geçmiş kayıtlar ayrı ek bölümde saklanmalı. Kanonik görev durumları değişmez.
+
+---
+
+## 17 Kasım 2026 — PR #365 güncel kabul: 94 offline PASS, yerel gerçek FFmpeg ve Türkçe Tesseract OCR
+
+**Gerçek GitHub Actions PASS kanıtı:**
+- `44129902023` feature HEAD `8051c501b54537b04b9bd0c51124e50f9a3416a7`: Production Security Gate SUCCESS, akıllı arşiv 80/80 unittest PASS; playlist güvenlik koşusu `44129888122` SUCCESS. Bu tarihte PR feature ağacı ana dalın o anki playlistine eşitlendi, ana İBO/YEDEKLER'e doğrudan yazılmadı.
+- `44131355645`: güvenli HLS prefetch sekiz ek offline testi dahil **88/88 PASS** ve tam Production Security Gate SUCCESS.
+- `44131656040`: gerçek FFmpeg'e uzak stream URL'si vermeyen OCR/ASR yerel HLS bağlantıları dahil **90/90 offline test PASS** ve gate SUCCESS.
+- `44131990978`: **90/90 PASS** ve ayrı zorunlu `test_safe_hls_ffmpeg_local` gerçek yerel FFmpeg görüntü karesi + ses decode testi PASS (3 saniyelik sentetik yerel HLS medyası). Gerçek TV yayını veya gerçek cihaz kabulü değildir.
+- `44132717209`: güvenli WebVTT altyazı ve gizlilik regresyonları dahil **94/94 offline test PASS**, Production Security Gate SUCCESS.
+- `44132942708`: **94/94 offline PASS**, `Local-only FFmpeg video and audio HLS decode acceptance` PASS, `Local Turkish OCR actual Tesseract recognition acceptance` PASS. GitHub runner gerçek Tesseract `tur+eng` motoruyla sentetik karedeki `TÜRKİYE HABERLERİ CANLI` yazısını tanıdı; hiçbir gerçek yayın kanıtı üretilmedi.
+
+**Yeni teknik kod:**
+- `v2/safe_hls_prefetch.py` ilk HLS manifesti, variant manifesti, TS medya segmentleri ve WebVTT yan altyazılarını her aşamada yeniden public-IP kontrolüyle ve çözümlenen *sayısal* IP'ye sabitlenmiş HTTP/HTTPS bağlantısıyla alır; HTTPS sertifika/hostname kontrolü korunur, yönlendirmeler kabul edilmez. Gövde/segment sayısı sınırları var; 8 segment/20MB genel, 2 WebVTT segmenti sınırı. Oluşturduğu yerel `review-sample.m3u8` içinde dış URL bulunmaz. AES-128 şifreli, byterange, fMP4-map ve diğer desteklenmeyen formatlar fail-closed; çalışmıyor/ölü kanıtı sayılmaz.
+- `v2/backup_text_sampler.py` OCR ve altyazı FFmpeg girişine sadece yerel güvenli prefetch manifesti verir; `v2/spoken_language_sample_review.py` ASR ses çözümlemesinde aynı yerel manifesti kullanır. Ortak FFmpeg protokol whitelist artık sadece `file,crypto`; doğrudan internet URL'si FFmpeg'e geçmez.
+- WebVTT ayrı altyazı track incelemesi en fazla iki izole metin örneği taşır; yalnızca Türkçe **inceleme ipucu** olabilir, kanal vatandaşlığı, dilin kesinliği veya operatör onayı değildir. Ham transkript, WebVTT ve OCR metni yayınlanan JSON'a yazılmaz.
+- Yeni test modülleri `v2/test_safe_hls_prefetch.py` (11 senaryo), `v2/test_safe_hls_ffmpeg_local.py` (1 sentetik decode) ve `v2/test_safe_hls_ocr_local.py` (1 sentetik gerçek OCR). Runner'da 94 unittest; sentetik FFmpeg/OCR testleri ayrıca zorunlu CI adımıdır. Başarısız test completed sayılmayacak.
+
+**Hâlen açık kabul ve koruma:**
+- Bu güvenli prefetch yaklaşımı HTTP/HLS seviyesinde private IP/redirect ve FFmpeg kaynaklı ağa çıkış riskini azaltır, ama gerçek üretim runner'ı ağ izolasyonu ve dış kaynak uçtan uca testlerle **bağımsız biçimde doğrulanmış değildir**. Ortam bayrağını sırf offline test geçti diye açmayacağız.
+- Gerçek izinli yayınlarda **güncel görüntü+ses+Türkçe konuşma ASR+ekran OCR+WebVTT altyazı** tek kanıt zincirinde henüz doğrulanmadı. Tüm 18.074 YEDEKLER taraması yapılmadı; ana İBO, YEDEKLER ve kanonik görev defteri değiştirilmedi.
+- Bu kontrol sırasında main'e eşzamanlı playlist değişikliği geldi: `MADSC55_TV_IBO_CALISANLAR_TEST.m3u8` main blob SHA `dda1881e8884a9ded54cb44e0d7cd924967b1df1`, PR feature dalı SHA `843a2216ab08873ce0d3281e64bcb4fdd20a05d4`. Kullanıcı işi kapsamında bu dosyalara **dokunulmadı**. Main ile feature farklıyken PR #365 körlemesine merge edilmeyecek; mevcut ana dal playlist sürümü önceliklidir.
+
+---
+
+## 17 Kasım 2026 — 94 gerçek PASS ve Apple HLS smoke CLI düzeltmesi
+
+- `44133814828` (PR dalı `7ccf512a...`) Production Security Gate SUCCESS, `Ran 94 tests` offline PASS, yerel gerçek FFmpeg AV decode PASS, yerel Tesseract Türkçe OCR PASS. Ancak tek izinli Apple örnek HLS smoke adımı `continue-on-error: true` nedeniyle gate yeşil görünürken **FAILED** oldu. Logun kesin hatası `ModuleNotFoundError: No module named 'v2'` idi; bu akış `python v2/diagnose_pinned_public_hls.py` diye çağrılmıştı ve **gerçek internet akışı doğrulanmamıştı**.
+- Bu CLI başlangıç hatası `.github/workflows/v2-main-production-safety-gate.yml` içinde `python -m v2.diagnose_pinned_public_hls` şeklinde düzeltildi, commit `a0df16861549de0094c2aa7469257400c575b1a8`. Yeni smoke testte ağ/medya indirme/yerel decode sonucu görülmeden PASS raporlanmayacak. `continue-on-error` sonuç alanını yorumlarken **step conclusion değil job logundaki gerçek process exit code** esas alınır.
+- Ana dal kullanıcı talimatlı yeni Türk/TR/YEDEKLER listesi düzenlemeleriyle değişti. Özellik dalı ana daldan yeniden geride kaldı; PR feature ağacına main'in yeni playlist ve diğer M3U/rapor değişiklikleri **birebir korunarak** entegre edilmeli. PR #365 henüz merge edilmedi; ana İBO, YEDEKLER, YENİLER, FAVORİLER üzerinde bu çalışma hiçbir satırı yazmıyor.
+- **Kalan:** Apple halka açık sentetik HLS smoke tanısı gerçek PASS logu, gerçek yetkili Türk yayın akışında AV/ASR/OCR/WebVTT birleşik inceleme kanıtı, tüm bağlantı zinciri güvenlik kabulü, sonra 18.074 adaylı YEDEKLER değerlendirmesi. Testleri yeşil diye gerçek yayın veya görev tamamlandı işaretlenmez.
+
+---
+
+## 17 Kasım 2026 — 95/95 offline PASS ve gerçek internet Mux HLS tanısı
+
+- `v2/safe_hls_prefetch.py`: I-frame trick-play metadata içindeki URL **hiç çağrılmadan** yok sayılıyor; `#EXT-X-KEY`, `#EXT-X-BYTERANGE`, `#EXT-X-MAP` gibi desteklenmeyen medya biçimleri fail-closed kalıyor. Düzeltme `6a377307b86ec8c7df010bab42848330dbe7cbe4`, özel `127.0.0.1` I-frame URL'sine erişilmediğini doğrulayan test `6b5b728e689d7b3f471978871ed875ef984f4e36`.
+- GitHub Actions `44134725863` Production Security Gate SUCCESS; **95/95 offline unittest PASS**; sentetik yerel gerçek FFmpeg ses+görüntü decode ve Türkçe Tesseract OCR PASS. Apple kamuya açık HLS tanısı `UNVERIFIED` / `Unsupported HLS directive #EXT-X-BYTERANGE`: isteğe bağlı tanı adımındaki FAIL, gate'in `continue-on-error` yeşil sonucuyla karıştırılmamalı.
+- `v2/diagnose_pinned_public_hls.py` ikinci, sabit ve halka açık Mux HLS örneğini (kullanıcı playlisti değil) güvenli sınırlı smoke tanısına ekledi: `d71dbe19a43ef3a4c71573c6d304c600d8e34ea3`. GitHub Actions **`44134875591` SUCCESS**, `Ran 95 tests` ve `OK`; tanı logu **`PUBLIC_HLS_PINNED_AV_OK`, `sample_id=mux`**. Pinned public-IP HLS transferi ve FFmpeg'in yalnız yerel dosyadan video+ses çözümlemesi gerçek internet üzerinden doğrulandı. `playlist_modified=false`, `real_turkish_channel_verified=false`, `device_accepted=false`.
+- Eşzamanlı main çalışmalarından sonra PR #365 HEAD `f3def7a7bf3300adf7818f636b53c1aa6a69bce8` olarak yeniden uzlaştırılmış görünüyor: bu kontrol anında main'den 0 commit geride, korunan ana İBO playlisti iki dalda aynı blob `dda1881e8884a9ded54cb44e0d7cd924967b1df1`. Bu çalışma PR'ı **birleştirmedi** ve korunan playlist/YEDEKLER kayıtlarını değiştirmedi.
+- **Açık:** Gerçek yetkili Türk canlı yayında görüntü+ses, `faster-whisper` Türkçe konuşma, ekrandan OCR, varsa WebVTT altyazı ve gerçek cihaz kabulü; üretim ağ izolasyonunun bağımsız denetimi. Yalnızca demo HLS PASS nihai kabul değildir; `MADSC55_SECURE_EGRESS_CONFIRMED=1` otomatik açılmadı, 18.074 YEDEKLER taraması başlamadı, `state.json` görevleri tamamlandı yapılmadı.
+
+---
+
+## 17 Kasım 2026 — 95 PASS, gerçek halka açık HLS transport kabulü ve ana dal parity
+
+- Apple örnek HLS kaynakta EXT-X-BYTERANGE bulunduğundan fail-closed reddedildi (Actions 44134669621 / 44134725863); güvenlik kuralı gevşetilmedi. CLI ModuleNotFoundError düzeltildi ve tanı Python modülü olarak çağrıldı.
+- Halka açık Mux örnek HLS kaynağı sayısal public IP sabitleme, TLS sertifika ve DNS hedef kontrolü, yönlendirme reddi üzerinden indirildi. FFmpeg yalnızca güvenli yerel HLS manifestinden gerçek görüntü karesi ve sesi çözümledi. Actions 44134875591 iş logu: PUBLIC_HLS_PINNED_AV_OK, sample_id=mux, network_ffmpeg_protocols=false, playlist_modified=false, real_turkish_channel_verified=false, device_accepted=false. Aynı Actions işinde 95/95 offline unittest PASS ve Production Security Gate SUCCESS.
+- Bu gerçek ağdan medya aktarımıdır, fakat gerçek Türk yayıncısı, dilin ASR ile onaylanması, ekranda OCR, WebVTT, IBO cihazı veya bütün 18.074 kanalın kabulü değildir. Test örneği tarama envanterine eklenmedi; ana playlist yazılmadı.
+- Main dalındaki yeni kullanıcı onaylı oynatma/arşiv değişiklikleri feature dalına koruyarak getirildi: feature merge HEAD f3def7a7bf3300adf7818f636b53c1aa6a69bce8, main parent 3f626372d341c07ba7ee63ed99d53f3e8326b4b6, behind=0 ve korunan ana IBO playlist blobu her iki dalda dda1881e8884a9ded54cb44e0d7cd924967b1df1. PR #365 açık ve main'e birleştirilmedi.
+- Kalan kritik kabul: izinli gerçek Türk yayınında AV+ASR Türkçe konuşma+OCR+WebVTT aynı kanıt zinciri, bağımsız ağ güvenliği doğrulaması. Bunlar olmadan 18.074 YEDEKLER toplu taraması başlatılmayacak; state.json tamamlandı yapılmayacak.
+
+---
+
+## 17 Kasım 2026 — Tek kanal birleşik kanıt aracı: 101/101 GitHub PASS
+
+- Üretim koduna v2/single_channel_evidence_review.py eklendi; yalnız açık izinli tek URL ve haricen doğrulanmış güvenli çıkış ayarıyla çalışır. Güvenli public-IP sabitlenmiş HLS ön indirme, FFmpeg ile yalnız yerel video karesi/ses çıkarımı, Tesseract OCR, WebVTT inceleme ipuçları, tercihe bağlı daha önce yerel yüklenmiş faster-whisper modeli ile Türkçe ASR tahmini aynı URL-SHA256 kimlikli raporda birleştirilir. Model indirmesi, ana playlist yazması veya otomatik Türkçe onayı yok.
+- Rapor ham yayın URL'sini, transkripti ve OCR/WebVTT metinlerini saklamaz. language_evidence_verified=false, review_approved=false, real_turkish_broadcaster_verified=false, device_accepted=false. Eksik AV ve model başarısızlığı fail-closed/kararsızdır; var olan çıktılar exclusive open(x) ile korunur.
+- v2/test_single_channel_evidence_review.py içinde izin zorunluluğu, güvenli çıkış, özel IP reddi, mevcut playlist üzerine yazmama, yönlendirme/başarısız prefetch ve dört sinyalin tek raporda otomatik onay üretmemesi için 6 test eklendi. Runner v2/run_backup_archive_tests.py artık 13 modül üzerinden test yapıyor.
+- **GitHub gerçek PASS:** Actions run 44135969174, kod HEAD fa6b99f225635d2425d564ca4124a8c32e54f30a; Production Security Gate SUCCESS, iş logu Ran 101 tests in 0.131s ve OK. Aynı çalışma gerçek halka açık Mux HLS için PUBLIC_HLS_PINNED_AV_OK (sample_id=mux, real_turkish_channel_verified=false), yerel FFmpeg AV ve Türkçe Tesseract OCR sentetik kabulü PASS. Bu, test altyapısı kabulüdür; gerçek Türk TV kanalının onayı değildir.
+- **Kalan:** Kullanıcıca izinli gerçek Türk kaynakta AV+ASR konuşma+ekran OCR+varsa WebVTT ile uçtan uca bağımsız gözlemlenmiş kanıt, ağ çıkış güvenliği bağımsız doğrulama. Ana dal kullanıcı yetkili playlist güncellemeleriyle feature dalından tekrar ilerlemiş olabilir; PR #365 main'e birleştirilmeden önce yeniden parite ve güvenlik kontrolü şart. Ana İBO, YEDEKLER, YENİLER, FAVORİLER, kanonik state.json değiştirilmedi; 18.074 toplu tarama başlamadı.
