@@ -1,0 +1,24 @@
+name: IBO YEDEKLER archive offline verification
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'v2/ibo_yedekler_archive.py'
+      - 'v2/ibo_yedekler_assign.py'
+      - 'v2/ibo_archive_url_dedup.py'
+      - 'v2/test_ibo_yedekler_assign.py'
+      - 'v2/test_ibo_archive_url_dedup.py'
+      - '.github/workflows/ibo-yedekler-archive-offline.yml'
+permissions:
+  contents: read
+jobs:
+  offline-unit-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify offline ledger and URL guard
+        run: python -m unittest discover -s v2 -p 'test_ibo_*py' -v
