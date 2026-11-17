@@ -1,3 +1,10 @@
+## 17 Kasım 2026 — ANA İBO YEDEKLER (18.074) ÖZEL ARŞİV KURULUMU
+- Kullanıcının kapsam sınırı KESİN: yalnız `MADSC55_TV_IBO_CALISANLAR_TEST.m3u8` içindeki `group-title="YEDEKLER"` 18.074 kayıt. Ayrı `YEDEKLER_PLAYLISTESI.m3u8` bu işlemde KAPSAM DIŞI. Diğer tüm ana kategoriler, ilk 1003 kayıt ve kalıcı çıkarılmış 48 kanal korunacak; izinsiz ana playlist değişikliği yok.
+- `v2/ibo_yedekler_archive.py` ilk salt-okunur arşiv çıkarma kodu eklendi. YEDEKLER kayıtlarının özgün EXTINF/URL bloklarını ayrı arşiv dosyasına kopyalar, kaynak SHA256 ve arşiv SHA256 manifesti üretir, beklenen 18.074 sayısı uyuşmazsa işlemi reddeder. Bu kod henüz çalıştırılmadı; gerçek arşiv oluşturuldu veya test PASS denmiyor.
+- Sıradaki kurulum: özgün konum/metadata/URL'yi kayıpsız koruyan arşiv; Türk/yabancı/çalışan/çalışmayan/kesin ölü/doğrulanamayan gruplar; kullanıcının açık onayına dayalı toplu taşıma planı, önce-sonra SHA256 ve snapshot; atomik geri alma; denetim günlüğü; korunan kategoriler için otomatik fark kapısı. Gerçek AV/ASR/OCR/WebVTT yayın testleri en son.
+
+---
+
 ## 17 Kasım 2026 — KULLANICI TALİMATI: Türk kanalı tanıma ve beş sınıflı YEDEKLER test sistemi (KURULUM ÖNCELİĞİ)
 - Kapsam: ayrı `YEDEKLER_PLAYLISTESI.m3u8` (önceki sayım 32.488 EXTINF kaydı, 18.122 benzersiz URL; yeniden doğrulama bekliyor). Ana İBO içindeki 18.074 YEDEKLER kategorisiyle karıştırma; ana `MADSC55_TV_IBO_CALISANLAR_TEST.m3u8`, ilk 1003 kayıt ve kalıcı çıkarılan 48 kanal korunur. İzinsiz ana playlist değişikliği YOK.
 - Türk kanal adayı keşfi: kanal adı ve `tvg-name`, `tvg-id`, `group-title`, kaynak provenansı ve URL ipuçları; Türkçe karakterler `ç ğ ı İ ö ş ü` (büyük/küçük), Türk/Turkiye/Türkiye/Turk/Turkish/TR, KKTC/Kıbrıs, 🇹🇷, Türkiye il/ilçe/yerel kanal adları; yalnız isimden kesin kimlik hükmü verme. Yabancı adaşları yanlış Türk ilan etme. Türkiye, Azerbaycan, Türkmenistan ve Türkî dil/ülke bilgilerini ayrı alanlarda tut.
