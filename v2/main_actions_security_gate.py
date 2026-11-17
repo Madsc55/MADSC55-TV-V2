@@ -173,7 +173,31 @@ def audit(root=ROOT):
                     [r for r in r0 if not backup(r)]==[r for r in r1 if not backup(r)] and
                     old[:2]==new[:2] and
                     [backup(r) for r in r0]==[backup(r) for r in r1])
-                if continue_playlist_audit and not reorder_ok:
+                # User-authorized logo enrichment: accept only newly added HTTPS
+                # tvg-logo attributes on YEDEKLER records. Preserve every other
+                # byte, stream URL, channel position, and all non-backup entries.
+                def strip_new_backup_logo(record):
+                    first, sep, rest = record.partition(b"\\n")
+                    if b'group-title="\\xf0\\x9f\\x97\\x82' not in first:
+                        return record, False
+                    logo_match = re.search(rb' tvg-logo="(https://[^"\\r\\n]+)"', first)
+                    if not logo_match:
+                        return record, False
+                    return first[:logo_match.start()] + first[logo_match.end():] + sep + rest, True
+                logo_only_ok = False
+                if h0 == h1 and len(r0) == len(r1):
+                    enriched = 0
+                    logo_only_ok = True
+                    for old_record, new_record in zip(r0, r1):
+                        if old_record == new_record:
+                            continue
+                        normalized, removed = strip_new_backup_logo(new_record)
+                        if not removed or normalized != old_record:
+                            logo_only_ok = False
+                            break
+                        enriched += 1
+                    logo_only_ok = logo_only_ok and enriched > 0
+                if continue_playlist_audit and not reorder_ok and not logo_only_ok:
                     # An explicitly requested category operation must carry a
                     # one-change, exact-hash manifest in the same reviewed PR.
                     # No workflow or discovery job receives write permission.
