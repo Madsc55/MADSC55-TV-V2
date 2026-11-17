@@ -4,9 +4,15 @@ import unittest
 from pathlib import Path
 from tempfile import TemporaryDirectory
 from unittest.mock import patch
-from v2.spoken_language_sample_review import run
+from v2.spoken_language_sample_review import run, valid_url
 
 class SpeechSampleSafetyTests(unittest.TestCase):
+    def test_rejects_local_and_embedded_credential_urls(self):
+        for url in ("http://127.0.0.1/live", "http://169.254.169.254/latest",
+                    "https://user:pass@example.org/live", "file:///etc/passwd"):
+            with self.subTest(url=url):
+                self.assertFalse(valid_url(url))
+
     def test_refuses_existing_output_before_model_loading(self):
         with TemporaryDirectory() as directory:
             p=Path(directory)
