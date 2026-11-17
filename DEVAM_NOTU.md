@@ -1,3 +1,9 @@
+## 17 Kasım 2026 — ASR ipuçlarının raporda korunması
+
+Önceki offline entegrasyonda ASR ipuçları içe alınıyor ama sonuç raporuna taşınmıyordu. `v2/backup_archive_offline.py` düzeltildi: isteğe bağlı `--speech` raporundan yalnızca `url_sha256`, `spoken_turkish_hint` ve **false** `language_evidence_verified` alanları ile `speech_review_hint_count` çıkar; ham URL, konuşma metni ve otomatik dil onayı yok. `v2/test_backup_archive_integration.py` bu çıktıyı doğrulayan assert'lerle genişletildi. **56 yazılı test**, koşulmuş PASS kanıtı henüz yok. Ana playlist ve YEDEKLER değişmedi. Öncelik: gerçek test koşumu, ASR+OCR+altyazı+AV kabulü, ardından 18.074 taraması.
+
+---
+
 ## 17 Kasım 2026 — ASR ipucu offline kabul hattına bağlandı
 
 `v2/backup_archive_offline.py` artık isteğe bağlı `--speech` parametresiyle mevcut `spoken_language_sample_review.py` ASR raporunu `backup_speech_evidence.import_speech_hints` üzerinden alır; URL/metin rapora yazılmaz; ASR Türkçe tahmini tek başına Türk kanalını **asla onaylamaz**. `v2/test_backup_archive_integration.py` yeni uçtan uca negatif kabul senaryosu eklendi. **56 yazılı test**; yerel/CI Python test çalıştırması henüz kanıtlanmadı. GitHub güvenlik koşusu `44102300785` önceki committe SUCCESS idi; yeni HEAD için ayrı kontrol gereklidir. **Eksik:** gerçek ASR/AV/OCR/altyazı örneklemesi, test koşum kanıtı, DNS/redirect egress güvenliği. Kullanıcı isteği gereği YEDEKLER 18.074 ve ana İBO playlisti değiştirilmedi.
