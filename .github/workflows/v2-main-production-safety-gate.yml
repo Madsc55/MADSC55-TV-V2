@@ -80,6 +80,15 @@ jobs:
           command -v ffmpeg
       - name: Local-only FFmpeg video and audio HLS decode acceptance
         run: PYTHONPATH=v2 python -m unittest -v test_safe_hls_ffmpeg_local
+      - name: Ensure Turkish OCR engine for real local recognition test
+        run: |
+          if ! command -v tesseract >/dev/null || ! tesseract --list-langs 2>/dev/null | grep -qx tur; then
+            sudo apt-get update -qq
+            sudo apt-get install -y --no-install-recommends tesseract-ocr tesseract-ocr-tur tesseract-ocr-eng fonts-dejavu-core
+          fi
+          tesseract --list-langs | grep -qx tur
+      - name: Local Turkish OCR actual Tesseract recognition acceptance
+        run: PYTHONPATH=v2 python -m unittest -v test_safe_hls_ocr_local
       - name: Stage 5 evidence-gated export and final acceptance regressions
         run: |
           python -m py_compile v2/stage5_acceptance_gate.py v2/stage5_evidence_export.py v2/test_stage5_acceptance_gate.py v2/test_stage5_evidence_export.py
