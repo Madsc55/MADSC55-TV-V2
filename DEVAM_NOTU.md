@@ -1,3 +1,11 @@
+## 17 Kasım 2026 — KESİN ARŞİV KAPSAMI: ŞİMDİ SADECE TÜRK / YABANCI
+- Kullanıcı güncel talimatı: ana İBO playlistindeki YEDEKLER 18.074 kayıt için V2 arşiv sınıflandırması şu an yalnız iki hedef: TÜRK ve YABANCI. Henüz atanmadıysa UNASSIGNED envanterde kalır; üçüncü kullanıcı hedef kategorisi değildir. Çalışan/çalışmayan/ölü sınıfları, gerçek görüntü/ses/altyazı testleri ve buna göre yer değiştirme BÜTÜN SİSTEM BİTİNCE yapılacak.
+- Kullanıcı açıkça “şu kanalları Türk'e at” veya “Yabancı'ya at” dediğinde yalnız seçilen kanallar topluca atanacak; önce plan ve bütünlük kontrolü, onaylanan işlem, geri alma geçmişi. Varsayılan otomatik taşıma veya ana İBO yazma yok. Ana İBO'nun diğer kategorileri ve ilk 1003 kayıt korunur. Ayrı YEDEKLER_PLAYLISTESI.m3u8 bu arşiv işlemi dışında.
+- Gelecekteki keşif ve yeni kanal eklemede URL/HTTP bağlantısı birebir aynı olanı mevcut ana liste ve V2 arşiv envanteri karşısında tekilleştir; URL normalizasyonu yanlış eşleşme üretmemeli, token/parametreleri keyfi atma. Aynı isim farklı URL ise ayrı aday olarak incele. Arşivde mevcut olan aynı URL yeniden sisteme alınmaz. Orijinal kayıt, kaynak, SHA256, taşıma ve geri alma günlüğü korunur.
+- Henüz arşiv çalıştırılmadı; Türk/Yabancı taşıma ve keşif dedup kapısı kurulup doğrulanmadı. `state.json` kanıtsız güncellenmez.
+
+---
+
 ## 17 Kasım 2026 — ANA İBO YEDEKLER (18.074) ÖZEL ARŞİV KURULUMU
 - Kullanıcının kapsam sınırı KESİN: yalnız `MADSC55_TV_IBO_CALISANLAR_TEST.m3u8` içindeki `group-title="YEDEKLER"` 18.074 kayıt. Ayrı `YEDEKLER_PLAYLISTESI.m3u8` bu işlemde KAPSAM DIŞI. Diğer tüm ana kategoriler, ilk 1003 kayıt ve kalıcı çıkarılmış 48 kanal korunacak; izinsiz ana playlist değişikliği yok.
 - `v2/ibo_yedekler_archive.py` ilk salt-okunur arşiv çıkarma kodu eklendi. YEDEKLER kayıtlarının özgün EXTINF/URL bloklarını ayrı arşiv dosyasına kopyalar, kaynak SHA256 ve arşiv SHA256 manifesti üretir, beklenen 18.074 sayısı uyuşmazsa işlemi reddeder. Bu kod henüz çalıştırılmadı; gerçek arşiv oluşturuldu veya test PASS denmiyor.
