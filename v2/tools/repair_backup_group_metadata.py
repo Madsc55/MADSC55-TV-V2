@@ -47,6 +47,7 @@ for idx,(line_no,metadata,url) in enumerate(entries,1):
     if "test_001" in "\n".join(metadata).lower():
         issues.append({"position":idx,"line":line_no,"reason":"test_001 literal in metadata"})
 assert backups==18122,(backups,groups)
+assert changed>0 or issues, "NO_EFFECTIVE_CATEGORY_REPAIR: 18122 backups already have expected group metadata; do not publish a no-op as a fix"
 assert len(entries)-backups==838
 target.write_text("\n".join(output)+"\n",encoding="utf-8")
 report.parent.mkdir(parents=True,exist_ok=True)
