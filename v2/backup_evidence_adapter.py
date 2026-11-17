@@ -4,7 +4,10 @@
 Only verified language evidence is promoted; metadata and model hints remain
 review signals. No raw stream URLs are emitted.
 """
-from .backup_smart_archive import build_report
+try:
+    from .backup_smart_archive import build_report
+except ImportError:
+    from backup_smart_archive import build_report
 
 AUDIO_OK = {"AUDIO_DECODED", "AUDIO_PRESENT", "PRESENT", "YES", "TRUE"}
 def join_evidence(inventory, playback, language_evidence, expected_count=None):
