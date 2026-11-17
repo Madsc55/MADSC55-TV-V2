@@ -1,3 +1,13 @@
+## 17 Kasım 2026 — Öncelik sırası düzeltmesi: önce AV/ses dili/OCR/altyazı
+
+**Kullanıcı talimatı:** Mevcut playlistin 18.074 kanallık YEDEKLER bölümü henüz işlenmeyecek. Önce görüntü/ses decode, konuşulan Türkçe, OCR ekran yazısı ve altyazı örnekleme sistemi bitirilecek ve gerçek test kanıtlarıyla kabul edilecek. Ana İBO ve YEDEKLER'e dokunulmayacak. Google Drive bu aşamanın kaynağı değil.
+
+**Kontrol:** PR #365 HEAD `ced9c55b551fffb2104433a9d967da671de3eaec` security gate run **44100472265 SUCCESS**; job `Verify suspended publishers, no cron and immutable IBO` SUCCESS, `live-discovery-diagnostic` SKIPPED. Bu, 48 offline Python testinin ve gerçek AV/OCR/ASR örneklerinin PASS kanıtı değildir.
+
+**Düzeltme:** `v2/backup_text_sampler.py` URL denetimi kontrol karakterlerini ve `.local` / `.internal` özel DNS son eklerini de reddeder (commit `3381eaa1296ccb9ac1d58aec49edf019613bf0c2`). Yeni negatif test (commit `9f23388339673ef463749ed0d7610d4021787149`). **49 yazılmış offline test**; son HEAD için gerçek çalıştırma PASS kanıtı yok. DNS rebinding ve redirect koruması ayrıca gereklidir. Bir sonraki zorunlu iş: sekiz offline test modülünü çalıştırıp raporlamak; örnek yayınlarda video+audio decode, ASR konuşma, OCR ve altyazı için bağımsız kanıt toplayıp kabul etmek; sonra 18.074 YEDEKLER taramasına geçmek. PR henüz merge edilmedi.
+
+---
+
 ## 17 Kasım 2026 — Akıllı arşiv offline test çalıştırıcısı
 
 **Yapıldı:** `v2/run_backup_archive_tests.py` eklendi (commit `76693c776a4a84d60cc6a06496779fb5c821b1c0`). Depo kökünden `python v2/run_backup_archive_tests.py --verbose` komutu sekiz akıllı arşiv test modülünü tek seferde `unittest` ile çalıştırır ve hata kodunu korur. Yeni `.github/workflows` eklenmedi, production güvenlik kilidi değiştirilmedi. Bu komutun CI'da çalıştırıldığına dair kanıt henüz yoktur; 48 test **yazılmıştır, geçmiş sayılmamıştır**. Önceki HEAD `95b43252d87bbe5539f52020b28e5ab51fa743b6` için run `44100276639` kontrol anında `in_progress` idi; mevcut güvenlik job'ı kendi regresyon adımlarını çalıştırır, yeni sekiz modülü çalıştırdığını göstermiyor. 18.074 kanal taraması ve PR merge yapılmadı; İBO/YEDEKLER korunuyor.
