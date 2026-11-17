@@ -1,0 +1,59 @@
+#!/usr/bin/env python3
+"""Bounded, explicit opt-in batch OCR/subtitle sampling of a local snapshot.
+
+Never writes playlists or input files; output contains hashes and review hints only.
+"""
+import argparse
+import hashlib
+import json
+from pathlib import Path
+try:
+    from .backup_text_sampler import sample, valid_url
+except ImportError:
+    from backup_text_sampler import sample, valid_url
+
+def run(snapshot_path, output_path, limit=8, seconds=8):
+    if not isinstance(limit,int) or not 1 <= limit <= 16:
+        raise ValueError("limit must be 1..16")
+    if not isinstance(seconds,int) or not 2 <= seconds <= 15:
+        raise ValueError("seconds must be 2..15")
+    if snapshot_path.resolve() == output_path.resolve() or output_path.exists():
+        raise ValueError("Refusing to overwrite source or existing report")
+    data=json.loads(snapshot_path.read_text(encoding="utf-8"))
+    candidates=data.get("candidates") if isinstance(data,dict) else None
+    if not isinstance(candidates,list):
+        raise ValueError("Expected candidates list")
+    seen=set()
+    results=[]
+    for item in candidates:
+        if not isinstance(item,dict):
+            raise ValueError("Invalid candidate")
+        url=item.get("url")
+        if not valid_url(url):
+            continue
+        digest=hashlib.sha256(url.encode("utf-8")).hexdigest()
+        if digest in seen:
+            continue
+        seen.add(digest)
+        result=sample(url,seconds)
+        results.append({"url_sha256":digest,**result})
+        if len(results)>=limit:
+            break
+    report={"policy":"READ_ONLY_HINTS_ONLY_NO_AUTO_APPROVAL",
+            "sampled":len(results),"limit":limit,"results":results}
+    output_path.parent.mkdir(parents=True,exist_ok=True)
+    with output_path.open("x",encoding="utf-8") as f:
+        json.dump(report,f,ensure_ascii=False,indent=2)
+    return {"sampled":len(results)}
+
+def main():
+    parser=argparse.ArgumentParser()
+    parser.add_argument("--snapshot",required=True,type=Path)
+    parser.add_argument("--output",required=True,type=Path)
+    parser.add_argument("--limit",type=int,default=8)
+    parser.add_argument("--seconds",type=int,default=8)
+    args=parser.parse_args()
+    print(json.dumps(run(args.snapshot,args.output,args.limit,args.seconds)))
+
+if __name__=="__main__":
+    main()
