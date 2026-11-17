@@ -1,3 +1,9 @@
+## 17 Kasım 2026 — Gerçek stream_probe şeması bağlantısı
+
+**Yapıldı:** Mevcut `v2/stream_probe.py` gerçek çıktı şeması incelendi: başarılı FFmpeg decode sonucu `status=AV_VERIFIED`, `audio=true`, `decoded_av_verified=true`, `decode_status=DECODED_AV`; salt ffprobe meta sonucu `AV_STREAMS_PRESENT` ve `decoded_av_verified=false`. `backup_evidence_adapter.py` bu gerçek şemayı destekleyecek biçimde güncellendi (commit `f561ff5f753a38cb38caf846963424d9cd2351cb`). İki regresyon testi eklendi: gerçek decode kabul, metadata-only ret (commit `69abf55886f834adef1bf07e220cb15ea551b628`). Toplam yazılmış offline senaryo **23**. Önceki güvenlik run `44094555802` kontrol anında devam ediyordu. **Yeni commitlerin CI PASS kanıtı henüz yoktur.** Gerçek 18.074 tarama, dil OCR/ASR gerçek entegrasyonu, batch ve PR merge eksik. İBO ve YEDEKLER değiştirilmedi.
+
+---
+
 ## 17 Kasım 2026 — PR #365 güvenlik doğrulaması ve bozuk envanter koruması
 
 **Gözlem:** Güvenlik workflow'u önceki düzeltme commit'i `7bf43fa9baea6cd5f0909d6964edaca2a290c22b` için run **44094366504** olarak `in_progress` görüldü; başarı sonucu henüz yoktu. Sonraki kod değişiklikleri için CI yeniden kontrol edilmeli. `backup_evidence_adapter.py` bozuk/null envanter satırını açık `ValueError` ile reddedecek biçimde sertleştirildi (commit `6b6296b1d368a6e825bbaf031322938d206722b5`). İki yeni offline regresyon senaryosu eklendi (commit `8039bbe2e643b8459dec83e1033243e9c486f3f0`): bozuk envanter ve eksik playback. Toplam yazılmış offline senaryo **21**. Başarı koşusu henüz kanıtlanmadı.
