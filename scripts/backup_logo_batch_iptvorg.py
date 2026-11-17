@@ -72,9 +72,34 @@ for i,url in candidates.items():
     line=lines[i]
     lines[i]=line.replace(' group-title=', ' tvg-logo="'+url+'" group-title=',1)
     added+=1
+# Reuse independently verified logos already present for the exact same tvg-id.
+# Do not infer identity from similar names or channel numbers.
+id_logos = defaultdict(set)
+for line in lines:
+    if not line.startswith("#EXTINF"): continue
+    lid = re.search(r'tvg-id="([^"]+)"', line)
+    logo = re.search(r'tvg-logo="([^"]+)"', line)
+    if lid and lid.group(1) and logo and logo.group(1).startswith("https://"):
+        id_logos[lid.group(1)].add(logo.group(1))
+reuse_candidates = {}
+for i, line in enumerate(lines):
+    if not line.startswith("#EXTINF") or 'group-title="🗂️ YEDEKLER' not in line or re.search(r'tvg-logo="[^"]+"',line): continue
+    lid = re.search(r'tvg-id="([^"]+)"',line)
+    if not lid or not lid.group(1): continue
+    options = id_logos.get(lid.group(1),set())
+    if len(options)==1: reuse_candidates[i] = next(iter(options))
+extra_urls = sorted(set(reuse_candidates.values()))
+with concurrent.futures.ThreadPoolExecutor(max_workers=16) as pool:
+    extra_results = dict(zip(extra_urls, pool.map(valid, extra_urls)))
+reused=0
+for i,url in reuse_candidates.items():
+    if extra_results[url]:
+        lines[i]=lines[i].replace(' group-title=', ' tvg-logo="'+url+'" group-title=',1)
+        reused+=1
+added+=reused
 output="".join(lines)
 assert len(output.splitlines())==len(original.splitlines())
 assert all(a==b for a,b in zip(original.splitlines(),output.splitlines()) if 'group-title="🗂️ YEDEKLER' not in a)
 if added: PLAYLIST.write_text(output,encoding="utf-8")
-REPORT.write_text(json.dumps({"missing_before":missing,"added":added,"missing_after":missing-added,"ambiguous_or_unmatched":ambiguous,"invalid_logo_urls":sum(not results[u] for u in urls)},ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+REPORT.write_text(json.dumps({"missing_before":missing,"added":added,"reused_exact_tvg_id":reused,"missing_after":missing-added,"ambiguous_or_unmatched":ambiguous,"invalid_logo_urls":sum(not results[u] for u in urls)},ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
 print(REPORT.read_text())
