@@ -8,7 +8,10 @@ import json
 import subprocess
 import tempfile
 from pathlib import Path
-from v2.safe_hls_prefetch import prefetch_hls, UnsafeMediaSource, LOCAL_PROTOCOLS
+try:
+    from .safe_hls_prefetch import prefetch_hls, UnsafeMediaSource, LOCAL_PROTOCOLS
+except ImportError:
+    from safe_hls_prefetch import prefetch_hls, UnsafeMediaSource, LOCAL_PROTOCOLS
 
 PUBLIC_SAMPLE = (
     "https://devstreaming-cdn.apple.com/videos/streaming/examples/"
