@@ -47,6 +47,15 @@ for idx,(line_no,metadata,url) in enumerate(entries,1):
     if "test_001" in "\n".join(metadata).lower():
         issues.append({"position":idx,"line":line_no,"reason":"test_001 literal in metadata"})
 assert backups==18122,(backups,groups)
+ids=collections.defaultdict(list)
+urls=collections.defaultdict(list)
+for idx,(line_no,metadata,url) in enumerate(entries,1):
+    m=re.search(r'tvg-id\\s*=\\s*"([^"]*)"',metadata[0],re.I)
+    if m and m.group(1).strip(): ids[m.group(1).strip()].append(idx)
+    urls[url.strip()].append(idx)
+diagnostic={"duplicate_tvg_ids":{k:v[:20] for k,v in ids.items() if len(v)>1},"duplicate_urls":{k[:160]:v[:20] for k,v in urls.items() if len(v)>1}}
+report.parent.mkdir(parents=True,exist_ok=True)
+report.write_text(json.dumps({"total":len(entries),"backups":backups,"modified_backup_records":changed,"issues":issues,"diagnostic":diagnostic},ensure_ascii=False,indent=2),encoding="utf-8")
 assert changed>0 or issues, "NO_EFFECTIVE_CATEGORY_REPAIR: 18122 backups already have expected group metadata; do not publish a no-op as a fix"
 assert len(entries)-backups==838
 target.write_text("\n".join(output)+"\n",encoding="utf-8")
