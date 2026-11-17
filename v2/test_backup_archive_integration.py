@@ -46,6 +46,11 @@ class IntegrationTests(unittest.TestCase):
             result=run(p/"inventory.json",p/"playback.json",p/"language.json",
                        p/"out.json",1,p/"speech.json")
             self.assertEqual(result["counts"],{"UNCERTAIN":1})
+            report=json.loads((p/"out.json").read_text())
+            self.assertEqual(report["speech_review_hint_count"],1)
+            self.assertEqual(report["speech_review_hints"][0]["url_sha256"],k)
+            self.assertTrue(report["speech_review_hints"][0]["spoken_turkish_hint"])
+            self.assertFalse(report["speech_review_hints"][0]["language_evidence_verified"])
             self.assertNotIn("https://",(p/"out.json").read_text())
 
 if __name__=="__main__":
