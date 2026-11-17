@@ -10,6 +10,7 @@ import json
 import os
 import re
 import shutil
+import socket
 import subprocess
 import tempfile
 from pathlib import Path
@@ -51,6 +52,26 @@ except ImportError:
     except ValueError:
         return False
 
+def public_dns_for_url(url):
+    """Additional public-address check. External egress must independently
+    prevent DNS rebinding, redirects and unsafe nested HLS requests.
+    """
+    if not valid_url(url):
+        return False
+    p = urlsplit(url)
+    try:
+        addresses = socket.getaddrinfo(
+            p.hostname, p.port or (443 if p.scheme == "https" else 80),
+            type=socket.SOCK_STREAM)
+    except (OSError, ValueError):
+        return False
+    if not addresses:
+        return False
+    try:
+        return all(ipaddress.ip_address(item[4][0]).is_global for item in addresses)
+    except (IndexError, TypeError, ValueError):
+        return False
+
 def execute(cmd, timeout):
     try:
         p = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout, check=False)
@@ -65,6 +86,9 @@ def sample(url, seconds=8, include_subtitles=True):
         raise ValueError("seconds must be 2..15")
     if os.environ.get("MADSC55_SECURE_EGRESS_CONFIRMED") != "1":
         return {"status":"SECURE_EGRESS_NOT_CONFIRMED","language_evidence_verified":False,
+                "review_approved":False}
+    if not public_dns_for_url(url):
+        return {"status":"UNSAFE_DNS_TARGET","language_evidence_verified":False,
                 "review_approved":False}
     if not shutil.which("ffmpeg"):
         return {"status":"FFMPEG_UNAVAILABLE","language_evidence_verified":False}
