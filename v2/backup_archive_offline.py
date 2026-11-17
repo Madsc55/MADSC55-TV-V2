@@ -40,6 +40,16 @@ def run(inventory_path, playback_path, language_path, output_path, expected_coun
                 raise ValueError("Invalid language record")
             current["spoken_turkish_hint"] = hint["spoken_turkish_hint"]
     report = join_evidence(inventory, playback, language, expected_count)
+    if speech_path is not None:
+        # Expose only review queue hints, never a verified-language verdict.
+        report["speech_review_hints"] = [
+            {"url_sha256": key, "spoken_turkish_hint": hint["spoken_turkish_hint"],
+             "language_evidence_verified": False}
+            for key, hint in sorted(speech.items())
+        ]
+        report["speech_review_hint_count"] = sum(
+            item["spoken_turkish_hint"] for item in report["speech_review_hints"]
+        )
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     return {"total": report["total"], "counts": report["counts"]}
