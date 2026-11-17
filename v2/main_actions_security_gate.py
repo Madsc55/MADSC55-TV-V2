@@ -177,10 +177,10 @@ def audit(root=ROOT):
                 # tvg-logo attributes on YEDEKLER records. Preserve every other
                 # byte, stream URL, channel position, and all non-backup entries.
                 def strip_new_backup_logo(record):
-                    first, sep, rest = record.partition(b"\\n")
-                    if b'group-title="\\xf0\\x9f\\x97\\x82' not in first:
+                    first, sep, rest = record.partition(b"\n")
+                    if b'group-title="\xf0\x9f\x97\x82' not in first:
                         return record, False
-                    logo_match = re.search(rb' tvg-logo="(https?://[^"\\r\\n]+)"', first)
+                    logo_match = re.search(rb' tvg-logo="(https?://[^"\r\n]+)"', first)
                     if not logo_match:
                         return record, False
                     return first[:logo_match.start()] + first[logo_match.end():] + sep + rest, True
