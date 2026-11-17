@@ -28,6 +28,19 @@ class BatchTests(unittest.TestCase):
             self.assertFalse(result[1]["language_evidence_verified"])
             self.assertNotIn("SECRET",out.read_text())
 
+    def test_blocked_egress_cannot_count_as_verified_media(self):
+        with TemporaryDirectory() as d:
+            p=Path(d); src=p/"snapshot.json"; out=p/"out.json"
+            src.write_text(json.dumps({"candidates":[{"url":"https://example.org/live"}]}))
+            blocked={"status":"SECURE_EGRESS_NOT_CONFIRMED",
+                     "language_evidence_verified":False,"review_approved":False}
+            with patch("v2.backup_text_batch.sample", return_value=blocked):
+                self.assertEqual(run(src,out,1,8,True)["sampled"],1)
+            report=json.loads(out.read_text())
+            self.assertEqual(report["blocked_count"],1)
+            self.assertEqual(report["text_hint_count"],0)
+            self.assertEqual(report["verified_language_count"],0)
+
     def test_network_requires_opt_in(self):
         with TemporaryDirectory() as d:
             p=Path(d)
