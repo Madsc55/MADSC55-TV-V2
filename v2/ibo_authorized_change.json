@@ -1,10 +1,9 @@
 {
-  "base_sha256": "9a6b0cf23242b0fc86a823ef6e2fbd9aff297823f3ba00434e5be662899db02c",
-  "result_sha256": "bd670cb7d94f4551f0398f37ab8037bd4e782171994186630a169304078e76a5",
-  "operation": "remove",
-  "request": "User explicitly authorized removing the 48 channels identified in the test_001 backup category from the main playlist.",
+  "base_sha256": "bd670cb7d94f4551f0398f37ab8037bd4e782171994186630a169304078e76a5",
+  "result_sha256": "4bed68671edc9a59a329275a8e05ceb3e67f4ab4093f0d731b99a274a4c33867",
+  "operation": "reorder",
+  "request": "Kullanıcının açık talimatı: YEDEKLER içindeki Türk adı veya Türkiye işareti geçen tüm kanalları 1003. Halk TV kanalından hemen sonraya taşı; diğer kanalları ve sıralama ön ekini koru.",
   "channels": [
-    "positions 1811-1816 (6 backup channels)",
-    "positions 18702-18743 (42 backup channels)"
+    "YEDEKLER içindeki Türk adı ve Türkiye işareti bulunan kanal kayıtlarının 1004. sıradan başlayacak şekilde taşınması"
   ]
 }
