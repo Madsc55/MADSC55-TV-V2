@@ -78,8 +78,7 @@ def main():
     args.output.parent.mkdir(parents=True, exist_ok=True)
     # Exclusive creation: an existing report or protected playlist can never be replaced.
     with args.output.open("x", encoding="utf-8") as destination:
-        destination.write(json.dumps(report, ensure_ascii=False, indent=2) + "
-")
+        destination.write(json.dumps(report, ensure_ascii=False, indent=2) + "\n")
     print(json.dumps({"total": report["total"], "counts": report["counts"]}))
 
 if __name__ == "__main__":
