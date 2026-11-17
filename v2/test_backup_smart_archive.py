@@ -1,6 +1,11 @@
 import hashlib
+import json
+import sys
 import unittest
-from v2.backup_smart_archive import build_report
+from pathlib import Path
+from tempfile import TemporaryDirectory
+from unittest.mock import patch
+from v2.backup_smart_archive import build_report, main
 
 def row(n, **kwargs):
     return {"url_sha256": hashlib.sha256(str(n).encode()).hexdigest(), **kwargs}
@@ -42,6 +47,20 @@ class SmartArchiveTests(unittest.TestCase):
     def test_string_true_is_not_verified_av(self):
         result = build_report([row(1, health="WORKING", decoded_av_verified="true")], 1)["channels"][0]
         self.assertEqual(result["health"], "UNKNOWN")
+
+    def test_existing_report_is_never_overwritten(self):
+        with TemporaryDirectory() as folder:
+            evidence = Path(folder) / "evidence.json"
+            protected = Path(folder) / "existing.m3u8"
+            evidence.write_text(json.dumps({"channels":[row(1)]}), encoding="utf-8")
+            protected.write_text("KEEP_ORIGINAL_PLAYLIST", encoding="utf-8")
+            with patch.object(sys, "argv", [
+                "archive", "--evidence", str(evidence), "--output", str(protected),
+                "--expected-count", "1"
+            ]):
+                with self.assertRaises(FileExistsError):
+                    main()
+            self.assertEqual(protected.read_text(encoding="utf-8"), "KEEP_ORIGINAL_PLAYLIST")
 
     def test_string_true_does_not_exhaust_retries(self):
         result = build_report([row(1, health="NOT_WORKING", retries_exhausted="true")], 1)["channels"][0]
