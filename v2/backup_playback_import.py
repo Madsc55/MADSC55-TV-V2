@@ -14,7 +14,9 @@ def convert(inventory, aggregate):
     if aggregate.get("coverage_complete") is not True:
         raise ValueError("Playback coverage incomplete")
     ids=[r.get("url_sha256") for r in candidates if isinstance(r,dict)]
-    if len(ids)!=len(candidates) or len(ids)!=len(set(ids)):
+    if len(ids)!=len(candidates) or any(not isinstance(k,str) or len(k)!=64 or any(ch not in "0123456789abcdef" for ch in k) for k in ids):
+        raise ValueError("Invalid inventory identity")
+    if len(ids)!=len(set(ids)):
         raise ValueError("Invalid or duplicate inventory IDs")
     results={}
     for row in rows:
