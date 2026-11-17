@@ -12,9 +12,9 @@ import subprocess
 import tempfile
 from pathlib import Path
 try:
-    from .backup_text_sampler import valid_url
+    from .backup_text_sampler import valid_url, STREAM_PROTOCOL_WHITELIST
 except ImportError:
-    from backup_text_sampler import valid_url
+    from backup_text_sampler import valid_url, STREAM_PROTOCOL_WHITELIST
 
 REPORTS = Path(__file__).resolve().parent / "reports"
 
@@ -63,7 +63,7 @@ def run():
         with tempfile.TemporaryDirectory() as directory:
             wav = Path(directory) / "sample.wav"
             command = ["ffmpeg", "-nostdin", "-hide_banner", "-loglevel", "error",
-                       "-protocol_whitelist", "file,http,https,tcp,tls,crypto",
+                       "-protocol_whitelist", STREAM_PROTOCOL_WHITELIST,
                        "-rw_timeout", "8000000", "-i", url, "-t", str(args.seconds),
                        "-vn", "-ac", "1", "-ar", "16000", "-y", str(wav)]
             try:
