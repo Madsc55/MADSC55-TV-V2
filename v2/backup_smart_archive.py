@@ -76,7 +76,10 @@ def main():
         parser.error("Expected JSON object with channels array")
     report = build_report(payload["channels"], args.expected_count)
     args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    # Exclusive creation: an existing report or protected playlist can never be replaced.
+    with args.output.open("x", encoding="utf-8") as destination:
+        destination.write(json.dumps(report, ensure_ascii=False, indent=2) + "
+")
     print(json.dumps({"total": report["total"], "counts": report["counts"]}))
 
 if __name__ == "__main__":
