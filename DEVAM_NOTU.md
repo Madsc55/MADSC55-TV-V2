@@ -1,3 +1,9 @@
+## 17 Kasım 2026 — Güvenlik CI gerçek sonuç teyidi
+
+GitHub Actions **44108249163** (V2 Main Production Security Gate), commit `274a8604ab6e305fdbb571752cdbaff45fa00af3` için **completed/success**. `Verify suspended publishers, no cron and immutable IBO` işi başarılı, `live-discovery-diagnostic` işi skipped. Bu koşum, yeni 67 backup-archive Python testinin tamamını çalıştırdığını kanıtlamaz; onlar için `python v2/run_backup_archive_tests.py --verbose` çalıştırılıp gerçek PASS çıktısı saklanmalı. Mevcut playlistler değiştirilmedi. Gerçek yayın kabulü ve güvenli egress tamamlanmadan 18.074 YEDEKLER taşıması yapılmayacak.
+
+---
+
 ## 17 Kasım 2026 — ASR/OCR/altyazı veri alımı sınırları
 
 ASR ve OCR/altyazı kanıt içe alma köprüleri artık tek raporda **en fazla 16 örnek** kabul ediyor; örnekleyicilerin mevcut 1–16 güvenlik sınırıyla uyumlu. İki taşma regresyon testi eklendi. **67 yazılı test**; çalıştırılmış PASS kanıtı hâlâ yok. 18.074 envanter taraması bu sınırla karıştırılmamalı: 16 sınırı gerçek yayın örneklemesinin *tek partisi* içindir, tüm envanter sayısı değildir. GitHub PR #365 üzerinde, ana İBO/YEDEKLER değiştirilmedi. Öncelik: gerçek Python test koşumu, güvenli ağ çıkışı, gerçek AV/ASR/OCR/altyazı kabulü, sonra tarama.
