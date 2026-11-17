@@ -18,7 +18,8 @@ class SamplerTests(unittest.TestCase):
 
     def test_local_domains_and_control_characters_rejected(self):
         for url in ("https://server.local/live", "http://host.internal/live",
-                    "https://example.org/live\n", "https://example.org/live\x00"):
+                    "https://example.org/live\n", "https://example.org/live\x00",
+                    "https://example.org/a b", "https://example.org/live#fragment"):
             with self.subTest(url=url):
                 self.assertFalse(valid_url(url))
 
