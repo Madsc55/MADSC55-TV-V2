@@ -1,3 +1,11 @@
+## 17 Kasım 2026 — Akıllı arşiv: OCR/altyazı kanıt ipuçları ve bağımsız CI
+
+**Bu oturumda eklendi:** `v2/backup_text_evidence.py` OCR ve altyazıdan gelen haricî gözlemleri sınırlı ve güvenli biçimde alır, Türkçe karakter/dil etiketi üzerinden yalnız inceleme ipucu üretir. OCR motoru veya altyazı indirme/çözme bu adımda YOKTUR. Ham yazı çıktı raporuna konmaz; dil doğrulandı veya kullanıcı onayladı şeklinde sahte kabul üretilmez. `v2/test_backup_text_evidence.py` altı yeni regresyon senaryosu; `.github/workflows/v2-smart-backup-archive.yml` üç yeni modülün compile + toplam 17 offline testini PR değişiminde koşturacak ayrı CI workflow'u. Commitler: `cb32a7c8d94e881c6e15d08086917c3f03a982a1`, `b656ce682c2e716b7383860327dfcb6a136d980f`, `5e1ace810bdfab594e4de7381dd7a8ea976f149a`.
+
+**Kritik sınır:** Bunlar geliştirme dalında; test dosyalarının eklenmesi PASS demek değildir. CI koşusu ve başarısı ayrıca kontrol edilmeli. OCR gerçek video kareleri üzerinden, altyazı gerçek akış üzerinden henüz entegre edilmedi; toplu AV/ASR tarama işçisi, veri sözleşmesi ve gerçek 18.074 kapsama doğrulaması da eksik. Sıradaki adım PR #365 CI sonucunu denetlemek, varsa test sorunlarını düzeltmek, gerçek OCR/altyazı ve kuyruk entegrasyonunu tamamlamak. `DEVAM_NOTU.md` ve PR #365 başka sohbetten ilk okunacak yerlerdir. Ana İBO, YEDEKLER ve state.json değişmedi.
+
+---
+
 ## 17 Kasım 2026 — Akıllı arşiv devamı: kanıt birleştirme adaptörü
 
 **Yapıldı (yalnız PR #365 geliştirme dalı):** `v2/backup_evidence_adapter.py` ve `v2/test_backup_evidence_adapter.py` eklendi. Ayrı envanter, AV ve dil kanıtlarını URL hash kimliği üzerinden eşleştiren salt-okunur katman; mükerrer kimliği, eksik kapsamı ve bilinmeyen kanıt kimliklerini reddeder. Gerçek decode video+ses birlikte doğrulanmadıkça çalışan saymaz; yalnız kontrollü tekrar ve doğrulanmış terminal hata ile çalışmayan der. Türkçe/yabancı sınıfı için bağımsız dil kanıtı ve inceleme onayı birlikte gerekir; salt ASR ipucu/isim/metadata yetmez. Beş adaptör regresyon senaryosu yazıldı. Commitler: `d6276e35c0624dc462df8443d14a3b7b3fe51d1a`, `544bcdf4cf8ceb721d81f2711e8b4aa164171e1e`.
