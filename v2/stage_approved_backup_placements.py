@@ -44,7 +44,7 @@ def main():
         target=item.get("target")
         if target not in TARGETS or not isinstance(name,str) or len(backup[name])!=1:
             raise SystemExit("Ambiguous/missing backup or unsupported category: "+str(item))
-        if item.get("av_verified") is not True:
+        if item.get("av_verified") is not True or not isinstance(item.get("av_evidence"),str) or not item["av_evidence"].startswith("https://"):
             raise SystemExit("Real AV confirmation required for "+name)
         b=backup[name][0]
         matches=[(i,meta(r)[1]) for i,r in enumerate(records) if meta(r)[1].split(" (")[0].endswith(target)]
@@ -54,9 +54,6 @@ def main():
         group=matches[0][1]
         if any(g!=group for _,g in matches):
             raise SystemExit("Ambiguous target category")
-        prefix=re.escape(group.rsplit(" (",1)[0])
-        old_count=int(re.search(r"\((\d+)\)$",group).group(1))
-        new_group=group.rsplit(" (",1)[0]+" ("+str(old_count+1)+")"
         line=b.splitlines()[0]
         bcopy=b.replace(line,line.replace('group-title="'+meta(b)[1]+'"','group-title="'+new_group+'"'),1)
         additions.append((target,bcopy))
