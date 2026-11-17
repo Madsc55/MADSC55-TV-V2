@@ -1,3 +1,11 @@
+## 17 Kasım 2026 — İstenen gerçek OCR ve altyazı örnekleyicisi
+
+**Yapıldı:** `v2/backup_text_sampler.py` tek bir açıkça seçilmiş HTTP(S) akışından en çok 2–15 saniyelik sınırlı FFmpeg işlemiyle tek video karesi çıkarıp yerel Tesseract OCR (`tur+eng`) denemesi ve ilk altyazı akışını SRT olarak örnekleme denemesi yapar. Her iki kaynak `backup_text_evidence.inspect_text_observations` içine girer; raporda ham OCR/altyazı metni veya URL bulunmaz, yalnız inceleme ipucu bulunur; `language_evidence_verified=False`, `review_approved=False` sabittir. Eksik FFmpeg, eksik OCR modeli, altyazısız akış veya başarısız örnekleme hiçbir zaman Türkçe doğrulaması sayılmaz. Kod commit `fe4dfbab5da3de7fbdba21f10da98e8cd61d9138`; dört offline test commit `c29922611d9d1379131843bf5a77d6557dd6fada`. Yazılmış toplam test senaryosu **32**.
+
+**Önemli eksik:** Bu tek-akış örnekleyicisi henüz 18.074 kanal batch sistemine bağlanmadı, gerçek kanal üzerinde çalıştırılmadı, CI PASS doğrulanmadı. OCR için Tesseract tur+eng dil verileri, FFmpeg ve ses için mevcut `spoken_language_sample_review.py` faster-whisper gerekir; bunların runner'da kurulu olduğu doğrulanmadı. Altyazı türüne göre SRT çıkarma başarısız olabilir; başarısızlık belirsiz kalır. Ana İBO/YEDEKLER değişmedi. Sonraki adım test sonuçlarını kontrol etmek ve kontrollü/manuel tetiklenen, limitli batch entegrasyonu geliştirmek. PR #365 henüz merge edilmedi.
+
+---
+
 ## 17 Kasım 2026 — Kanıt tipleri güvenlik düzeltmesi
 
 **Yapıldı:** `backup_smart_archive.py` doğrulanmış dil, gerçek AV decode ve tükenmiş tekrarlar için truthy değer yerine yalnız Python `True` kabul edecek şekilde düzeltildi (commit `036b7cb2fd07eaf2ec3ef1b09ed977efab05e5c1`). JSON'daki `"true"` metni yanlışlıkla doğrulama sayılmayacak. Üç regresyon testi eklendi (commit `d9f64e93a75560340f7b893a0e7b40d019aecaf9`). Yazılmış toplam offline test **28**. Önceki güvenlik run `44094943848` kontrol anında in_progress idi; son commitler için PASS kanıtı yok. Gerçek 18.074 kanal taraması, OCR/ASR canlı entegrasyonu, batch, PR merge eksik; İBO ve YEDEKLER değişmedi.
