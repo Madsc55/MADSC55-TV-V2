@@ -44,7 +44,7 @@ def main():
     assert len(state["status"]) == 2500
     assert all(state["status"].get(str(i)) == ("TURK" if 112 <= i <= 486 or i in SELECTED_SOURCE_POSITIONS else "TEST") for i in range(1, 2501))
     turk_entries = list(entries((ROOT / "v2/yedekler_batch/TURK_ARSIV.m3u8").read_text(encoding="utf-8-sig")))
-    remaining_entries = list(entries((ROOT / "v2/yedekler_batch/YEDEKLER_KALAN_2076.m3u8").read_text(encoding="utf-8-sig")))
+    remaining_entries = list(entries((ROOT / "v2/yedekler_batch/YEDEKLER_KALAN_2125.m3u8").read_text(encoding="utf-8-sig")))
     assert len(turk_entries) == 424 and len(remaining_entries) == 2076
     assert [(x["name"], x["url"]) for x in turk_entries] == [(x["name"], x["url"]) for x in source_entries[111:486] + [source_entries[i - 1] for i in sorted(SELECTED_SOURCE_POSITIONS)]]
     assert [(x["name"], x["url"]) for x in remaining_entries] == [(x["name"], x["url"]) for x in active_entries]
