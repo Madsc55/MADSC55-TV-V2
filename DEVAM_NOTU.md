@@ -1,3 +1,9 @@
+## 17 Kasım 2026 — Rapor koruması ve test çalıştırma engeli
+
+`v2/backup_archive_offline.py` mevcut sonuç raporunu artık **asla üzerine yazmaz**; `open("x")` kullanır. `v2/test_backup_archive_offline.py` mevcut raporun içeriğinin korunduğunu doğrulayan yeni test içerir. Toplam **57 yazılı test** (49 temel + 6 ASR + 1 entegrasyon + 1 rapor koruması). GitHub güvenlik CI başarısı bu 57 Python testinin PASS olduğu anlamına gelmez. Bu oturumdaki yerel ortam GitHub DNS erişimi sağlamıyor; testler bu ortamda henüz çalıştırılmadı. Eksik: güvenilir Python test çalıştırması, gerçek yayınlarda AV+ASR+OCR+altyazı kabulü, güvenli DNS/redirect egress, ardından 18.074 YEDEKLER taraması. Ana İBO ve YEDEKLER'e dokunulmadı.
+
+---
+
 ## 17 Kasım 2026 — ASR ipuçlarının raporda korunması
 
 Önceki offline entegrasyonda ASR ipuçları içe alınıyor ama sonuç raporuna taşınmıyordu. `v2/backup_archive_offline.py` düzeltildi: isteğe bağlı `--speech` raporundan yalnızca `url_sha256`, `spoken_turkish_hint` ve **false** `language_evidence_verified` alanları ile `speech_review_hint_count` çıkar; ham URL, konuşma metni ve otomatik dil onayı yok. `v2/test_backup_archive_integration.py` bu çıktıyı doğrulayan assert'lerle genişletildi. **56 yazılı test**, koşulmuş PASS kanıtı henüz yok. Ana playlist ve YEDEKLER değişmedi. Öncelik: gerçek test koşumu, ASR+OCR+altyazı+AV kabulü, ardından 18.074 taraması.
