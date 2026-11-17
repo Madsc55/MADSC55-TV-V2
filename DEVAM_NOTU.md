@@ -1,3 +1,9 @@
+## 17 Kasım 2026 — ASR giriş doğrulamasını model yüklemesinden öne alma
+
+`v2/spoken_language_sample_review.py` artık snapshot/playback hash kümesi, tekillik ve yayın seçimi kontrollerini **faster-whisper modelini yüklemeden önce** yapıyor. Hatalı raporlarla gereksiz model yüklenmiyor; mevcut `test_spoken_language_sample_review.py` uyumsuz kimlik reddini kapsıyor. Yerel ortamda `github.com` DNS çözümlenemedi; **68 testin PASS kanıtı henüz yok**. Ağ egress ve gerçek yayın kabulü hâlâ açık. Ana İBO/YEDEKLER değiştirilmedi.
+
+---
+
 ## 17 Kasım 2026 — Kullanıcının kesin iş sırası ve durdurma koşulu
 
 **ÖNCELİK DEĞİŞMEZ:** (1) DNS rebinding/redirect ve ffmpeg ağ çıkışı güvenliğini gerçekten kapat ve test et; (2) `python v2/run_backup_archive_tests.py --verbose` ile **68 yazılı testin** tamamını çalıştır, hata varsa düzelt, PASS kanıtını sakla; (3) gerçek yayınlardan ses/görüntü decode, Türkçe konuşma ASR, OCR ve altyazı kanıtlarını birleştirerek gerçek uçtan uca kabul yap. **Bu üç iş PASS olmadan** 18.074 YEDEKLER kanal taramasına, Türk kanalı sıralamasına, ilk 1003 kanalı izleyen liste yerleştirmesine veya ana İBO playlist mutasyonuna geçme. Otomatik güvenlik CI'nin başarısı 68 testin PASS olduğu anlamına gelmez. Yapılan tüm değişiklikleri ve kalan engelleri bu dosyada tut; başarısız/çalıştırılmamış testleri bitmiş gösterme.
