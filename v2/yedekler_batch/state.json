@@ -2,7 +2,7 @@
   "schema": 1,
   "source_sha256": "f291bc33a5a0dbcf949f94d7f8f45b8ebdacf9f59cc4f0729c7c4b9a03a96d6d",
   "total": 18074,
-  "default_batch_size": 1500,
+  "default_batch_size": 2500,
   "status": {},
   "history": []
 }
