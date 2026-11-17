@@ -1,3 +1,9 @@
+## 17 Kasım 2026 — Gerçek ASR örnekleyicisinde kritik tutarlılık düzeltmesi
+
+`v2/spoken_language_sample_review.py` mevcut snapshot ve playback kayıtlarını önceden **yalnızca sayıyla** karşılaştırıyordu; aynı sayıda ama farklı kanallara ait raporlar yanlış eşleşebilirdi. Artık URL SHA256 kümelerinin tam eşleşmesi ve tekilliği zorunlu. Ayrıca mevcut ASR raporunun üzerine yazma engellendi (`open("x")`). `v2/test_spoken_language_sample_review.py` iki güvenlik regresyonu eklendi ve test çalıştırıcısına bağlandı. **65 yazılı test**; henüz çalıştırılmış PASS kanıtı yok. GitHub branch PR #365, ana playlist ve YEDEKLER'e dokunulmadı. Gerçek AV/ASR/OCR/altyazı kabulü, ağ egress güvenliği ve test çalıştırması sırada.
+
+---
+
 ## 17 Kasım 2026 — Dört sinyalin birleşik entegrasyon testi
 
 `v2/test_backup_archive_integration.py` içine yeni uçtan uca test eklendi: aynı kanalda AV doğrulaması + ASR Türkçe ipucu + OCR Türkçe ipucu + altyazı Türkçe ipucu tek anonim raporda birleşir, ancak operatörce doğrulanmadığı için `UNCERTAIN` kalır. Ham metin ve URL rapora sızmaz. **63 yazılı test**; gerçek PASS sonucu henüz yok. Yerel shell `github.com` DNS çözemediği için repo klonlanıp burada test edilemedi. Önce 63 Python testini gerçek koşumla doğrula, sonra gerçek yayın AV/ASR/OCR/altyazı kabulü ve ağ egress güvenliği, sonra 18.074 YEDEKLER taraması. Ana İBO ve YEDEKLER değişmedi.
