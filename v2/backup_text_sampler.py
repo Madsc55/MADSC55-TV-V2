@@ -5,6 +5,7 @@ No playlist mutation, no auto-language approval, and no raw text in output.
 Requires local ffmpeg and tesseract; subtitle extraction is optional.
 """
 import argparse
+import ipaddress
 import json
 import shutil
 import subprocess
@@ -19,8 +20,20 @@ except ImportError:
 def valid_url(url):
     if not isinstance(url, str) or len(url) > 4096:
         return False
-    p = urlsplit(url)
-    return p.scheme in ("http", "https") and bool(p.hostname) and not p.username and not p.password
+    try:
+        p = urlsplit(url)
+        host = p.hostname
+        if p.scheme not in ("http", "https") or not host or p.username or p.password:
+            return False
+        if host.lower().rstrip(".") in ("localhost", "localhost.localdomain") or host.lower().endswith(".localhost"):
+            return False
+        try:
+            address = ipaddress.ip_address(host)
+        except ValueError:
+            return True  # DNS must additionally be restricted at network egress.
+        return address.is_global
+    except ValueError:
+        return False
 
 def execute(cmd, timeout):
     try:
