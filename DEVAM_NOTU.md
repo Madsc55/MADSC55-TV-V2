@@ -1,3 +1,10 @@
+## 17 Kasım 2026 — YEDEKLER otomatik atama: yeni kod ve gerçek durum
+- Yeni `v2/ibo_archive_url_dedup.py`: keşif adaylarının URL'lerini ana IBO ve arşiv URL'leriyle tam metin (query dahil) SHA256 karşılaştırmasıyla salt-okunur önizler; tekrarları raporlar, otomatik kanal ekleme akışına henüz bağlanmadı.
+- `v2/test_ibo_archive_url_dedup.py` çevrimdışı test ve `.github/workflows/ibo-yedekler-archive-offline.yml` PR/manual birim test iş akışı eklendi. GitHub Actions sonucu henüz gözlemlenmedi.
+- Mevcut `v2/ibo_yedekler_assign.py` toplu aralık atama ve ledger geçmişi üretebilir ancak kullanıcı komutundan GitHub üzerinde otomatik çalıştırma, kalıcı ledger saklama, uçtan uca gerçek 18.074 kanal envanteri doğrulaması, geri alma kabulü ve PR birleştirme hâlâ AÇIK. Üretimde hazır denmeyecek. Gerçek kanal yayın testleri yapılmayacak; ilk 1003 ve diğer ana kategoriler değiştirilmeyecek.
+
+---
+
 ## 17 Kasım 2026 — YEDEKLER TÜRK/YABANCI toplu atama kodu eklendi (henüz üretim kabulü değil)
 - `v2/ibo_yedekler_assign.py`: yalnız ana İBO'daki YEDEKLER 18.074 yerel sıra numarası için 1-tabanlı başlangıç/bitiş aralığı ve TÜRK/YABANCI ataması; kaynak SHA256 kilidi, değişiklik önizlemesi (varsayılan dry-run), açık `--apply` ile yalnız YENİ bağımsız JSON ledger, işlem geçmişi ve son atamayı geri alma. Kaynak İBO'ya veya diğer kategorilere yazmaz. Mevcut ledger'ı üzerine yazmaz; yeni dosya yolu gerekir.
 - `v2/test_ibo_yedekler_assign.py` salt çevrimdışı birim testleri eklendi (aralık, sınır, stale source, yeniden atama, geri alma). Bu testler henüz GitHub Actions PASS doğrulanmadı. Gerçek 18.074 envanterde doğrulama, URL/HTTP bağlantı dedup kapısı, GitHub CI entegrasyonu ve kullanıcı komutundan otomatik çalıştırma hâlâ AÇIK. Kullanıcıya otomatik üretim taşıması hazır denmeyecek.
