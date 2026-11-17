@@ -53,8 +53,15 @@ def run(snapshot_path, output_path, limit=8, seconds=8, allow_network=False):
         results.append({"url_sha256":digest,**safe})
         if len(results)>=limit:
             break
+    # sampled is a historical count of selected candidates, NOT proof that
+    # FFmpeg ran, media decoded or language was verified.
     report={"policy":"READ_ONLY_HINTS_ONLY_NO_AUTO_APPROVAL",
-            "sampled":len(results),"limit":limit,"results":results}
+            "sampled":len(results),"limit":limit,
+            "blocked_count":sum(x.get("status") == "SECURE_EGRESS_NOT_CONFIRMED" for x in results),
+            "error_count":sum(x.get("status") == "SAMPLE_ERROR" for x in results),
+            "text_hint_count":sum(x.get("status") == "HINTS_ONLY" for x in results),
+            "verified_language_count":0,
+            "results":results}
     output_path.parent.mkdir(parents=True,exist_ok=True)
     with output_path.open("x",encoding="utf-8") as f:
         json.dump(report,f,ensure_ascii=False,indent=2)
