@@ -1,3 +1,10 @@
+## 17 Kasım 2026 — Türk kanalı çoklu kanıt sınıflandırması (kod eklendi; canlı kabul açık)
+- `v2/turkish_channel_triage.py` eklendi: kanal adı, kaynak ülke, konuşma dili, altyazı dili ve sağlanan AV test bayrakları ayrı tutulur. Yabancı ülkeden Türkçe konuşan, Türkiye kaynaklı İngilizce konuşan, Türkçe altyazılı yabancı, Azerbaycan/Türkmenistan Türkî dil örnekleri yanlış birleştirilmez.
+- `v2/test_turkish_channel_triage.py` ile 8 regresyon senaryosu eklendi; Production Security Gate workflow'una test adımı bağlandı. HEAD `26d94d9ae145dd60b56e46e592ce7fb40947c485` için Actions koşusu sorgulandığında henüz koşu dönmedi. Testler PASS ilan edilmedi.
+- Sınıflandırıcı salt metadata incelemesidir: canlı yayın, gerçek kaynak ülke, konuşma dili veya cihaz kabulü doğrulamaz; gerçek 18.074 YEDEKLER taraması yapılmadı. Otomatik playlist taşıma/kanal onayı YOK. Bağımsız egress ve gerçek Türkçe yayın AV+ASR+OCR+WebVTT kabulü AÇIK.
+
+---
+
 ## 17 Kasım 2026 — PR #365 devam güvenlik denetimi (kapanış değil)
 - GitHub PR HEAD `205f29f71c56a5140ef2967b47bea875352c2372` için Production Security Gate run `44136415958` SUCCESS (offline 101 test önceki koşu kaydı). Canlı keşif job SKIPPED; bu gerçek Türk yayın kabulü değildir.
 - Güncel `main` feature dalından 1 commit ileride; farklar `DEVAM_NOTU.md`, `MADSC55_TV_IBO_CALISANLAR_TEST.m3u8`, `v2/ibo_authorized_change.json`. Geliştirme dalında 183 ayrı commit var. Kör merge/playlist overwrite YASAK.
