@@ -6,6 +6,7 @@ Each EXTINF record receives a stable 1-based ordinal, including non-Turkish
 channels. Source title/group are *hints*, never verified country/language.
 """
 import argparse
+import hashlib
 import json
 import re
 from pathlib import Path
@@ -45,6 +46,7 @@ def load_evidence(path):
                 # ASR/subtitle observations are hints, never verified languages.
             evidence[ordinal] = {k: v for k, v in item.items() if k in EVIDENCE_FIELDS}
             if sampler is not None:
+                evidence[ordinal]["_url_sha256"] = sampler["url_sha256"]
                 evidence[ordinal]["_sampler_hints"] = {"spoken_turkish_hint": sampler["spoken_turkish_hint"], "subtitle_turkish_hint": sampler["subtitle_turkish_hint"]}
     return evidence
 
@@ -75,10 +77,14 @@ def inventory_review(playlist, output, evidence_path=None):
             elif line and not line.startswith("#") and pending is not None:
                 title, group = pending
                 pending = None
+                supplied_check = evidence.get(len(rows) + 1, {})
+                if "_url_sha256" in supplied_check and hashlib.sha256(line.encode("utf-8")).hexdigest() != supplied_check["_url_sha256"]:
+                    raise ValueError("Sampler URL hash does not match playlist entry")
                 if len(rows) >= MAX_CHANNELS:
                     raise ValueError("Channel limit exceeded")
                 supplied = dict(evidence.get(len(rows) + 1, {}))
                 sampler_hints = supplied.pop("_sampler_hints", None)
+                supplied.pop("_url_sha256", None)
                 triage = classify_channel(title, **supplied)
                 if sampler_hints is not None:
                     triage["sampler_spoken_turkish_hint"] = sampler_hints["spoken_turkish_hint"]
