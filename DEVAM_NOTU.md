@@ -1,3 +1,9 @@
+## 17 Kasım 2026 — Yayın URL giriş kontrolü ek sertleştirme
+
+Ortak `v2/backup_text_sampler.valid_url` denetimi artık geçersiz/taşan portları, tek etiketli iç ağ benzeri DNS adlarını ve `.invalid` uçlarını reddeder; ASR ve OCR/altyazı örnekleyicileri aynı kontrolü paylaşır. Bir yeni regresyon testi eklendi: **69 yazılı test**, çalıştırılmış PASS kanıtı henüz yok. DNS rebinding ve HTTP redirect kaynaklı SSRF riskleri yalnızca URL sözdizimiyle çözülemez: ffmpeg için ağ seviyesinde güvenli egress veya güvenilir proxy zorunlu. Ana İBO ve YEDEKLER'e dokunulmadı. Önce bu koruma ve gerçek test/AV-ASR-OCR-altyazı kabulü, sonra 18.074 tarama.
+
+---
+
 ## 17 Kasım 2026 — ASR giriş doğrulamasını model yüklemesinden öne alma
 
 `v2/spoken_language_sample_review.py` artık snapshot/playback hash kümesi, tekillik ve yayın seçimi kontrollerini **faster-whisper modelini yüklemeden önce** yapıyor. Hatalı raporlarla gereksiz model yüklenmiyor; mevcut `test_spoken_language_sample_review.py` uyumsuz kimlik reddini kapsıyor. Yerel ortamda `github.com` DNS çözümlenemedi; **68 testin PASS kanıtı henüz yok**. Ağ egress ve gerçek yayın kabulü hâlâ açık. Ana İBO/YEDEKLER değiştirilmedi.
