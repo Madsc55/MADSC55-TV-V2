@@ -83,7 +83,7 @@ jobs:
       - name: Public Apple HLS pinned transport smoke diagnostic (not IPTV discovery)
         if: github.event_name == 'pull_request' && github.head_ref == 'plan/18074-kanal-akilli-test-arsiv-20261117'
         continue-on-error: true
-        run: python v2/diagnose_pinned_public_hls.py
+        run: python -m v2.diagnose_pinned_public_hls
       - name: Ensure Turkish OCR engine for real local recognition test
         run: |
           if ! command -v tesseract >/dev/null || ! tesseract --list-langs 2>/dev/null | grep -qx tur; then
