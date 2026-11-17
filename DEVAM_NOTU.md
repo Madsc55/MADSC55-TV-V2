@@ -1,3 +1,9 @@
+## 17 Kasım 2026 — Akıllı arşiv offline test çalıştırıcısı
+
+**Yapıldı:** `v2/run_backup_archive_tests.py` eklendi (commit `76693c776a4a84d60cc6a06496779fb5c821b1c0`). Depo kökünden `python v2/run_backup_archive_tests.py --verbose` komutu sekiz akıllı arşiv test modülünü tek seferde `unittest` ile çalıştırır ve hata kodunu korur. Yeni `.github/workflows` eklenmedi, production güvenlik kilidi değiştirilmedi. Bu komutun CI'da çalıştırıldığına dair kanıt henüz yoktur; 48 test **yazılmıştır, geçmiş sayılmamıştır**. Önceki HEAD `95b43252d87bbe5539f52020b28e5ab51fa743b6` için run `44100276639` kontrol anında `in_progress` idi; mevcut güvenlik job'ı kendi regresyon adımlarını çalıştırır, yeni sekiz modülü çalıştırdığını göstermiyor. 18.074 kanal taraması ve PR merge yapılmadı; İBO/YEDEKLER korunuyor.
+
+---
+
 ## 17 Kasım 2026 — Playback aktarımındaki doğrulama alanı düzeltmesi
 
 **Doğrulandı:** PR #365 önceki HEAD `962d055aa29bf70ac40e6ac06dc234c4b2627c68` için GitHub `V2 Main Production Security Gate` run **44099552093 SUCCESS**. Bu güvenlik gate'i tüm Python testlerini çalıştırmaz.
