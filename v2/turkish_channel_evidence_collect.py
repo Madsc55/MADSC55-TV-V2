@@ -5,6 +5,8 @@ Requires independent secure egress attestation and source authorization.
 Only explicitly selected 1-based playlist ordinals are sampled.
 """
 import argparse
+import os
+import re
 import json
 import tempfile
 from pathlib import Path
@@ -18,8 +20,10 @@ def collect(playlist, output, ordinals, *, source_authorized=False, model_dir=No
     selected = list(ordinals)
     if not source_authorized:
         raise ValueError("Source authorization required")
-    if not selected or len(selected) > 10 or len(set(selected)) != len(selected):
-        raise ValueError("Select 1..10 unique ordinals per batch")
+    if not selected or len(selected) > 18074 or len(set(selected)) != len(selected):
+        raise ValueError("Select 1..18074 unique ordinals")
+    if os.environ.get("MADSC55_SECURE_EGRESS_CONFIRMED") != "1":
+        raise ValueError("Independent secure egress attestation required")
     if any(type(i) is not int or i <= 1003 for i in selected):
         raise ValueError("Protected first 1003 channels cannot be sampled here")
     if output.exists() or playlist.resolve() == output.resolve():
@@ -68,11 +72,25 @@ def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--playlist", type=Path, required=True)
     p.add_argument("--output", type=Path, required=True)
-    p.add_argument("--ordinal", type=int, action="append", required=True)
+    p.add_argument("--ordinal", type=int, action="append")
+    p.add_argument("--all-yedekler", action="store_true")
     p.add_argument("--reviewed-sources-authorized", action="store_true")
     p.add_argument("--local-asr-model", type=Path)
     a = p.parse_args()
-    print(json.dumps(collect(a.playlist, a.output, a.ordinal,
+    if bool(a.ordinal) == a.all_yedekler:
+        p.error("Choose either --ordinal or --all-yedekler")
+    ordinals = a.ordinal
+    if a.all_yedekler:
+        ordinals = []
+        with a.playlist.open(encoding="utf-8-sig", errors="replace") as stream:
+            index = 0
+            for line in stream:
+                if line.startswith("#EXTINF:"):
+                    index += 1
+                    match = re.search(r\x27group-title="([^"]*)"\x27, line)
+                    if index > 1003 and match and match.group(1) == "YEDEKLER":
+                        ordinals.append(index)
+    print(json.dumps(collect(a.playlist, a.output, ordinals,
                              source_authorized=a.reviewed_sources_authorized,
                              model_dir=a.local_asr_model)))
 
