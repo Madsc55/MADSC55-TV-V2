@@ -3335,7 +3335,7 @@ https://tv.arectv13.sbs/live/natgeowild.m3u8
 https://live.artidijitalmedya.com/artidijital_kanal16/kanal16/playlist.m3u8
 #EXTINF:-1 tvg-id="TatlisesTV.tr" group-title="🗂️ YEDEKLER (2500)",Tatlises TV (1080p) [Not 24/7]
 https://live.artidijitalmedya.com/artidijital_tatlisestv/tatlisestv/playlist.m3u8
-#EXTINF:-1 tvg-id="TMB.tr" group-title="🗂️ YEDEKLER (2500)",TMB
+#EXTINF:-1 tvg-logo="https://i.imgur.com/28AyWHe.png" tvg-id="TMB.tr" group-title="🗂️ YEDEKLER (2500)",TMB
 https://raw.githubusercontent.com/UzunMuhalefet/streams/main/myvideo-az/tmb-tv.m3u8
 #EXTINF:-1 tvg-id="TrakyaTurk.tr" group-title="🗂️ YEDEKLER (2500)",Trakya Türk TV (720p)
 https://live.artidijitalmedya.com/artidijital_trakyaturk/trakyaturk/playlist.m3u8
@@ -3769,7 +3769,7 @@ https://vdo.digitalbox.xyz:3266/live/kanal34tvlive.m3u8
 http://lalegultv.netmedya.net/hls/lalegultv.m3u8
 #EXTINF:-1 tvg-logo="https://d3ckc0u56niq67.cloudfront.net/conf/images/lalegul_gcW.png" tvg-id="LalegulTV.tr@SD" group-title="🗂️ YEDEKLER (2500)",Lalegül TV (720p) [Not 24/7]
 http://lalegultv.netmedya.net/lalegul-tv/lalegultv.stream/playlist.m3u8
-#EXTINF:-1 tvg-id="NationalGeographic.tr@SD" group-title="🗂️ YEDEKLER (2500)",National Geographic (1080p) [Geo-blocked]
+#EXTINF:-1 tvg-logo="https://i.ibb.co/h17BsfgY/Ekran-g-r-nt-s-2026-07-25-103937.jpg" tvg-id="NationalGeographic.tr@SD" group-title="🗂️ YEDEKLER (2500)",National Geographic (1080p) [Geo-blocked]
 https://saran-live.ercdn.net/natgeohd/index.m3u8
 #EXTINF:-1 tvg-id="NationalGeographicWild.tr@SD" group-title="🗂️ YEDEKLER (2500)",National Geographic Wild (1080p) [Geo-blocked]
 https://saran-live.ercdn.net/natgeowild/index.m3u8
@@ -3801,7 +3801,7 @@ http://stream.taksimbilisim.com:1935/tv41/smil:tv41.smil/playlist.m3u8
 https://canli.tv42.com.tr/memfs/d936e417-c4bd-4d42-89a2-02f289892d1d.m3u8
 #EXTINF:-1 tvg-id="ViasatHistory.tr@SD" group-title="🗂️ YEDEKLER (2500)",Viasat History (720p)
 https://nord.ayakkabiparti.lol/viasathistory/index.m3u8
-#EXTINF:-1 tvg-id="NationalGeographic.tr@SD" group-title="🗂️ YEDEKLER (2500)",National Geographic
+#EXTINF:-1 tvg-logo="https://i.ibb.co/h17BsfgY/Ekran-g-r-nt-s-2026-07-25-103937.jpg" tvg-id="NationalGeographic.tr@SD" group-title="🗂️ YEDEKLER (2500)",National Geographic
 https://nord.ayakkabiparti.lol/natgeo/index.m3u8
 #EXTINF:-1 tvg-id="NationalGeographicWild.tr@SD" group-title="🗂️ YEDEKLER (2500)",National Geographic Wild
 https://nord.ayakkabiparti.lol/natgeowild/index.m3u8
