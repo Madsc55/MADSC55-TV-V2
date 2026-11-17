@@ -1,3 +1,9 @@
+## 17 Kasım 2026 — Dört sinyalin birleşik entegrasyon testi
+
+`v2/test_backup_archive_integration.py` içine yeni uçtan uca test eklendi: aynı kanalda AV doğrulaması + ASR Türkçe ipucu + OCR Türkçe ipucu + altyazı Türkçe ipucu tek anonim raporda birleşir, ancak operatörce doğrulanmadığı için `UNCERTAIN` kalır. Ham metin ve URL rapora sızmaz. **63 yazılı test**; gerçek PASS sonucu henüz yok. Yerel shell `github.com` DNS çözemediği için repo klonlanıp burada test edilemedi. Önce 63 Python testini gerçek koşumla doğrula, sonra gerçek yayın AV/ASR/OCR/altyazı kabulü ve ağ egress güvenliği, sonra 18.074 YEDEKLER taraması. Ana İBO ve YEDEKLER değişmedi.
+
+---
+
 ## 17 Kasım 2026 — OCR + altyazı entegrasyonu tamamlanan kod bağlantısı
 
 Yeni `v2/backup_text_hint_import.py`, mevcut `backup_text_batch.py` raporundaki OCR ve Türkçe altyazı ipuçlarını URL SHA256 ile güvenli biçimde içe alır. `v2/backup_archive_offline.py` yeni isteğe bağlı `--text-hints` argümanıyla AV, ASR, OCR ve altyazı inceleme ipuçlarını **tek JSON raporunda** sunar; ham URL/metin taşınmaz ve hiçbir ipucu otomatik Türkçe onayı vermez. `v2/test_backup_text_hint_import.py` beş negatif/pozitif senaryo eklendi; test çalıştırıcısına bağlandı. **62 yazılı test** (57+5); PASS henüz kanıtlanmadı. Birleştirme kodu hazır olsa da gerçek yayın örneklemesi, model kabulü, güvenli ağ egress'i ve 18.074 kanal taraması henüz yapılmadı. Ana İBO/YEDEKLER değişmedi.
