@@ -25,9 +25,16 @@ def run():
         manifest_dir.mkdir()
         try:
             local = prefetch_hls(PUBLIC_SAMPLE, manifest_dir, seconds=6)
-        except (UnsafeMediaSource, OSError, ValueError):
+        except UnsafeMediaSource as exc:
             print(json.dumps({"status":"PUBLIC_HLS_UNVERIFIED",
                               "stage":"PINNED_FETCH",
+                              "reason":str(exc)[:100],
+                              "playlist_modified":False}))
+            raise SystemExit(1)
+        except (OSError, ValueError) as exc:
+            print(json.dumps({"status":"PUBLIC_HLS_UNVERIFIED",
+                              "stage":"PINNED_FETCH",
+                              "reason":type(exc).__name__,
                               "playlist_modified":False}))
             raise SystemExit(1)
         outputs = [
