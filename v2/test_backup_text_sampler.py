@@ -1,6 +1,7 @@
 import unittest
 from unittest.mock import patch
 from v2.backup_text_sampler import sample, valid_url, public_dns_for_url
+from v2.safe_hls_prefetch import UnsafeMediaSource
 
 class SamplerTests(unittest.TestCase):
     def test_invalid_url_rejected(self):
@@ -41,13 +42,28 @@ class SamplerTests(unittest.TestCase):
     @patch("v2.backup_text_sampler.shutil.which", return_value="/usr/bin/ffmpeg")
     def test_subtitle_extraction_uses_protocol_whitelist(self, _which):
         with patch("v2.backup_text_sampler.public_dns_for_url", return_value=True):
-            with patch("v2.backup_text_sampler.execute", return_value="") as execute:
-                sample("https://example.org/live", include_subtitles=True)
+            with patch("v2.backup_text_sampler.prefetch_hls", return_value="/tmp/review-sample.m3u8"):
+                with patch("v2.backup_text_sampler.execute", return_value="") as execute:
+                    sample("https://example.org/live", include_subtitles=True)
         self.assertEqual(execute.call_count, 2)
         subtitle_command = execute.call_args_list[1].args[0]
         self.assertIn("-protocol_whitelist", subtitle_command)
         index = subtitle_command.index("-protocol_whitelist")
-        self.assertEqual(subtitle_command[index + 1], "http,https,tcp,tls,crypto")
+        self.assertEqual(subtitle_command[index + 1], "file,crypto")
+        self.assertEqual(subtitle_command[subtitle_command.index("-i") + 1],
+                         "/tmp/review-sample.m3u8")
+        self.assertNotIn("https://example.org/live", subtitle_command)
+
+    @patch.dict("os.environ", {"MADSC55_SECURE_EGRESS_CONFIRMED":"1"})
+    def test_prefetch_failure_never_runs_ffmpeg(self):
+        with patch("v2.backup_text_sampler.public_dns_for_url", return_value=True):
+            with patch("v2.backup_text_sampler.shutil.which", return_value="/usr/bin/ffmpeg"):
+                with patch("v2.backup_text_sampler.prefetch_hls",
+                           side_effect=UnsafeMediaSource("Unsafe source")):
+                    with patch("v2.backup_text_sampler.execute") as run:
+                        result=sample("https://example.org/live")
+        self.assertEqual(result["status"],"SECURE_PREFETCH_FAILED")
+        run.assert_not_called()
 
     def test_malformed_dns_labels_rejected(self):
         for url in ("https://bad..example.org/live", "https://-bad.example.org/live",
@@ -55,12 +71,13 @@ class SamplerTests(unittest.TestCase):
             with self.subTest(url=url):
                 self.assertFalse(valid_url(url))
 
-    def test_untrusted_stream_whitelist_excludes_local_file_protocol(self):
+    def test_sanitized_local_stream_whitelist_excludes_network(self):
         from v2.backup_text_sampler import STREAM_PROTOCOL_WHITELIST
         from v2.spoken_language_sample_review import STREAM_PROTOCOL_WHITELIST as speech_protocols
         self.assertEqual(STREAM_PROTOCOL_WHITELIST, speech_protocols)
-        self.assertNotIn("file", STREAM_PROTOCOL_WHITELIST.split(","))
-        self.assertNotIn("concat", STREAM_PROTOCOL_WHITELIST.split(","))
+        self.assertIn("file", STREAM_PROTOCOL_WHITELIST.split(","))
+        for protocol in ("http", "https", "tcp", "tls", "concat"):
+            self.assertNotIn(protocol, STREAM_PROTOCOL_WHITELIST.split(","))
 
     def test_legacy_ipv4_numeric_aliases_rejected(self):
         for url in ("http://127.1/live", "http://0x7f.0.0.1/live",
