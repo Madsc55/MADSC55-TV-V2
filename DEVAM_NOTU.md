@@ -1,3 +1,9 @@
+## 17 Kasım 2026 — Toplu OCR/altyazı ağ erişimi için açık izin
+
+**Yapıldı:** `v2/backup_text_batch.py` artık ağ üzerinden akış örneklemesi başlatmak için açık `--allow-network` bayrağı gerektiriyor; varsayılan çalıştırma ağ erişimini reddediyor (commit `d34a88b8ac53a2ab70b54ec83cd9ab3ff7e96a3e`). Üç mevcut test bu açık izne uyarlandı; yeni test varsayılan ağ reddini doğrular (commit `3bc041be942c683e3893ae1ef8fdd88ef232fe3b`). Hazırlanan toplam offline senaryo **36**. Önceki HEAD `35399ce...` security gate run **44097151792** kontrol anında in_progress idi. Bu yeni HEAD için PASS doğrulanmadı. Gerçek 18.074 kanallık tarama veya merge yapılmadı; İBO ve YEDEKLER korunuyor.
+
+---
+
 ## 17 Kasım 2026 — Sınırlı OCR/altyazı toplu örnekleme bağlantısı
 
 **Doğrulandı:** PR #365 önceki HEAD `585a55bb4d1a5823a9068e499fce013019513d67` için GitHub `V2 Main Production Security Gate` run **44096050377 SUCCESS**. Bu güvenlik kontrolüdür; tüm Python unit testlerinin koştuğunu kanıtlamaz.
