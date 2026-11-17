@@ -62,6 +62,7 @@ def sample(url, seconds=8, include_subtitles=True):
         frame = str(Path(d) / "frame.png")
         # Fixed single frame, no playlist writes, network work bounded by timeout.
         cmd = ["ffmpeg","-nostdin","-hide_banner","-loglevel","error",
+               "-protocol_whitelist","file,http,https,tcp,tls,crypto",
                "-rw_timeout","8000000","-i",url,"-t",str(seconds),
                "-frames:v","1","-y",frame]
         execute(cmd,seconds+12)
