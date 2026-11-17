@@ -1,0 +1,50 @@
+{
+  "date": "2026-11-17",
+  "source_blob_sha": "843a2216ab08873ce0d3281e64bcb4fdd20a05d4",
+  "current_counts": {
+    "total": 18912,
+    "backups": 18074,
+    "turkic_block": 1395
+  },
+  "confirmed_foreign_in_block": [
+    {
+      "position": 1752,
+      "name": "TRT (GREECE) (720P)",
+      "host": "av.hellasnet.tv"
+    }
+  ],
+  "turkmenistan_outside_block": [
+    {
+      "position": 2410,
+      "name": "TURKMENİSTAN SPORT (406P) [NOT 24/7]"
+    },
+    {
+      "position": 2472,
+      "name": "TURKMENISTAN (406P)"
+    },
+    {
+      "position": 2473,
+      "name": "TURKMEN OWAZY (406P)"
+    },
+    {
+      "position": 2493,
+      "name": "TURKMENISTAN SPORT (406P)"
+    },
+    {
+      "position": 2632,
+      "name": "TURKMEN OWAZY (406P) [NOT 24/7]"
+    },
+    {
+      "position": 2633,
+      "name": "TURKMENİSTAN (406P) [NOT 24/7]"
+    }
+  ],
+  "review_needed": [
+    "TurkHaber TV",
+    "PowerTurk TV",
+    "Kanal 7 Türknet",
+    "PLAYERFILMAZERBAYCAN-TV",
+    "AZERI-RETRO FILMLER"
+  ],
+  "note": "This is a read-only audit; no channel reordering has been applied. The playlist contains non-EXTINF comment lines that must be preserved by any safe reorder. No stream AV verification performed."
+}

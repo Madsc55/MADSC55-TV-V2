@@ -533,10 +533,20 @@ def main():
     # Keep fail-closed count verification aligned with the preserved archive.
     # The archive now contains 4768 unique stream URLs; never truncate it
     # to an older historical count or allow archived URLs into discovery.
-    foreign_archive = ROOT / 'v2/arsiv/yabanci_kanallar_2026-11-16_2881.m3u8'
-    if not foreign_archive.is_file():
-        ap.error('Protected foreign archive missing; refusing unfiltered export')
-    foreign_entries = list(parse_m3u(foreign_archive.read_bytes()))
+    foreign_archive = ROOT / 'YEDEKLER_PLAYLISTESI.m3u8'
+    if foreign_archive.is_file():
+        merged_entries = list(parse_m3u(foreign_archive.read_bytes()))
+        if len(merged_entries) != 32488:
+            ap.error('Consolidated backup playlist integrity failed; expected 32488 records')
+        # Source blocks retained in original order, including all metadata.
+        foreign_entries = merged_entries[18960 + 1110:18960 + 1110 + 4768]
+    else:
+        # Compatibility with existing isolated scanner test fixtures. Production
+        # has the consolidated playlist; missing both sources fails closed.
+        legacy_archive = ROOT / 'v2/arsiv/yabanci_kanallar_2026-11-16_2881.m3u8'
+        if not legacy_archive.is_file():
+            ap.error('Protected consolidated backup playlist missing; refusing unfiltered export')
+        foreign_entries = list(parse_m3u(legacy_archive.read_bytes()))
     foreign_urls = {entry['url'] for entry in foreign_entries}
     if len(foreign_entries) != 4768 or len(foreign_urls) != 4768:
         ap.error('Foreign archive integrity failed; expected 4768 unique preserved entries')

@@ -1,3 +1,18 @@
+## 17 Kasım 2026 — YEDEKLER dördüncü tarama ve üçüncü tur kapanışı
+- PR #383 birleştirildi (merge `89db7b84c0d8bd7b6dff64647d55f2ba6bf9f6ed`): 6 Türkmenistan kaydı Türkî bloğa taşındı, TRT (GREECE) blok dışına alındı. 18.912 toplam ve 18.074 YEDEKLER korundu; ilgili GitHub security gate başarıyla geçti. Bu, canlı ses/görüntü kanıtı değildir.
+- Güncel ana playlist blob `dda1881e8884a9ded54cb44e0d7cd924967b1df1` üzerinden dördüncü tarama yapıldı. Türkiye ve Azerbaycan kaynaklı olabilecek ilave kayıtlar ile yabancı adaşlar `v2/reports/turkic-fourth-pass-review-20261117.md` dosyasında tek tek kaydedildi.
+- Dördüncü taramadaki adayların yayın dili ve canlılık doğrulaması henüz yoktur; bu aşamada playlist değiştirilmedi. Sonraki işlem yalnız açıkça seçilen kayıtları tam bütünlük/SHA256 manifesti ve güvenlik testi ile yeniden sıralamak; başarısız testleri tamamlandı saymamak.
+
+---
+
+## 17 Kasım 2026 — Türkî YEDEKLER üçüncü tarama (açık)
+- Güncel İBO blob `843a2216ab08873ce0d3281e64bcb4fdd20a05d4`: 18.912 toplam, 18.074 YEDEKLER, 1003 sonrası mevcut 1.395 blok.
+- Blokta yabancı TRT (GREECE) sıra 1752 bulundu. Blok dışında altı Türkmenistan yayın kaydı saptandı; kullanıcı Türkmenistan ve Azerbaycan'ı da Türkî gruba dahil etmeyi açıkça istedi.
+- Ayrıntı `v2/reports/turkic-third-pass-review-20261117.json`. Playlist içindeki serbest yorum satırları da korunmalı; bütünlük ve güvenlik kapısı geçmeden reorder yapılmadı. Teknik test ve VOD adayları kimlik incelemesinde.
+- Bu kayıt tamamlanmış uygulama veya başarılı yayın testi değildir; sonraki adım güvenli reorder + yetkili SHA256 kayıt + Actions + merge.
+
+---
+
 ## 15 Kasım 2026 — ÖNCELİKLİ: kullanıcı onaylı İBO düzenleme kapısı
 
 Kullanıcının kurduğu esas iş akışı: kanal keşfi → ayrı adaylar → açık onayla YEDEKLER → cihazda gerçek görüntü/ses testi → çalışan kanalları kullanıcının talimatıyla ULUSAL-HEPSİ/HABER/SPOR/BELGESEL/SİNEMA vb. kategorilere kopyalama/taşıma → istenirse kanal ve kategori sırasını değiştirme. YEDEKLER'de kaynak kullanıcı aksini istemedikçe kalır. Ana listeye izinsiz otomatik yazma kesinlikle yasak. Kullanıcının açık talimatıyla yapılan kategori düzenlemeleri ise teknik olarak mümkün olmalıdır.
@@ -1316,3 +1331,13 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - Bu güvenli prefetch yaklaşımı HTTP/HLS seviyesinde private IP/redirect ve FFmpeg kaynaklı ağa çıkış riskini azaltır, ama gerçek üretim runner'ı ağ izolasyonu ve dış kaynak uçtan uca testlerle **bağımsız biçimde doğrulanmış değildir**. Ortam bayrağını sırf offline test geçti diye açmayacağız.
 - Gerçek izinli yayınlarda **güncel görüntü+ses+Türkçe konuşma ASR+ekran OCR+WebVTT altyazı** tek kanıt zincirinde henüz doğrulanmadı. Tüm 18.074 YEDEKLER taraması yapılmadı; ana İBO, YEDEKLER ve kanonik görev defteri değiştirilmedi.
 - Bu kontrol sırasında main'e eşzamanlı playlist değişikliği geldi: `MADSC55_TV_IBO_CALISANLAR_TEST.m3u8` main blob SHA `dda1881e8884a9ded54cb44e0d7cd924967b1df1`, PR feature dalı SHA `843a2216ab08873ce0d3281e64bcb4fdd20a05d4`. Kullanıcı işi kapsamında bu dosyalara **dokunulmadı**. Main ile feature farklıyken PR #365 körlemesine merge edilmeyecek; mevcut ana dal playlist sürümü önceliklidir.
+
+---
+
+## 17 Kasım 2026 — 94 gerçek PASS ve Apple HLS smoke CLI düzeltmesi
+
+- `44133814828` (PR dalı `7ccf512a...`) Production Security Gate SUCCESS, `Ran 94 tests` offline PASS, yerel gerçek FFmpeg AV decode PASS, yerel Tesseract Türkçe OCR PASS. Ancak tek izinli Apple örnek HLS smoke adımı `continue-on-error: true` nedeniyle gate yeşil görünürken **FAILED** oldu. Logun kesin hatası `ModuleNotFoundError: No module named 'v2'` idi; bu akış `python v2/diagnose_pinned_public_hls.py` diye çağrılmıştı ve **gerçek internet akışı doğrulanmamıştı**.
+- Bu CLI başlangıç hatası `.github/workflows/v2-main-production-safety-gate.yml` içinde `python -m v2.diagnose_pinned_public_hls` şeklinde düzeltildi, commit `a0df16861549de0094c2aa7469257400c575b1a8`. Yeni smoke testte ağ/medya indirme/yerel decode sonucu görülmeden PASS raporlanmayacak. `continue-on-error` sonuç alanını yorumlarken **step conclusion değil job logundaki gerçek process exit code** esas alınır.
+- Ana dal kullanıcı talimatlı yeni Türk/TR/YEDEKLER listesi düzenlemeleriyle değişti. Özellik dalı ana daldan yeniden geride kaldı; PR feature ağacına main'in yeni playlist ve diğer M3U/rapor değişiklikleri **birebir korunarak** entegre edilmeli. PR #365 henüz merge edilmedi; ana İBO, YEDEKLER, YENİLER, FAVORİLER üzerinde bu çalışma hiçbir satırı yazmıyor.
+- **Kalan:** Apple halka açık sentetik HLS smoke tanısı gerçek PASS logu, gerçek yetkili Türk yayın akışında AV/ASR/OCR/WebVTT birleşik inceleme kanıtı, tüm bağlantı zinciri güvenlik kabulü, sonra 18.074 adaylı YEDEKLER değerlendirmesi. Testleri yeşil diye gerçek yayın veya görev tamamlandı işaretlenmez.
+
