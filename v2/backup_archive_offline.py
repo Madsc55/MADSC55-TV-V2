@@ -23,8 +23,8 @@ def run(inventory_path, playback_path, language_path, output_path, expected_coun
     inputs = [p.resolve() for p in (inventory_path, playback_path, language_path)]
     if speech_path is not None:
         inputs.append(speech_path.resolve())
-    if output_path.resolve() in inputs:
-        raise ValueError("Refusing to overwrite evidence inputs")
+    if output_path.resolve() in inputs or output_path.exists():
+        raise ValueError("Refusing to overwrite evidence inputs or existing report")
     inventory = load(inventory_path).get("channels")
     playback = load(playback_path).get("by_url_sha256")
     language = load(language_path).get("by_url_sha256")
@@ -51,7 +51,8 @@ def run(inventory_path, playback_path, language_path, output_path, expected_coun
             item["spoken_turkish_hint"] for item in report["speech_review_hints"]
         )
     output_path.parent.mkdir(parents=True, exist_ok=True)
-    output_path.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    with output_path.open("x", encoding="utf-8") as destination:
+        destination.write(json.dumps(report, ensure_ascii=False, indent=2) + "\n")
     return {"total": report["total"], "counts": report["counts"]}
 
 def main():
