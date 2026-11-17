@@ -1,3 +1,11 @@
+## 17 Kasım 2026 — PR #365 güvenlik doğrulaması ve bozuk envanter koruması
+
+**Gözlem:** Güvenlik workflow'u önceki düzeltme commit'i `7bf43fa9baea6cd5f0909d6964edaca2a290c22b` için run **44094366504** olarak `in_progress` görüldü; başarı sonucu henüz yoktu. Sonraki kod değişiklikleri için CI yeniden kontrol edilmeli. `backup_evidence_adapter.py` bozuk/null envanter satırını açık `ValueError` ile reddedecek biçimde sertleştirildi (commit `6b6296b1d368a6e825bbaf031322938d206722b5`). İki yeni offline regresyon senaryosu eklendi (commit `8039bbe2e643b8459dec83e1033243e9c486f3f0`): bozuk envanter ve eksik playback. Toplam yazılmış offline senaryo **21**. Başarı koşusu henüz kanıtlanmadı.
+
+**Sırada:** Son PR commit'inin security gate sonucunu ve test kapsamını doğrula; CI yeşil olmadan merge yapma. Gerçek rapor şema adaptörleri, güvenli batch tarama, gerçek OCR/altyazı çıkarımı ve 18.074 kapsama kabulü henüz yapılmadı. Ana İBO ve YEDEKLER değiştirilmedi.
+
+---
+
 ## 17 Kasım 2026 — PR #365 kırmızı güvenlik testinin kök nedeni ve düzeltme
 
 **Doğrulanan CI:** Commit `f47defdd54a3927e0956699beab5c843e77c011b` için GitHub Actions `V2 Smart Backup Archive Offline Tests` run **44094082917 SUCCESS**; `V2 Main Production Security Gate` run **44094082828 FAILURE**. Güvenlik işinin logunda `MAIN_WORKFLOW_FILE_LOCK_FAIL` / `WORKFLOW_INVENTORY unexpected: v2-smart-backup-archive.yml` görüldü; ana İBO playlist değişikliği `false`, güvenlik testindeki 10 unittest geçti. Sorun yeni ve henüz onaylanmamış workflow dosyasıdır; sınıflandırıcı test başarısızlığı değildir.
