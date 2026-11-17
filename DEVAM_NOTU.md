@@ -1,3 +1,9 @@
+## 17 Kasım 2026 — URL DNS etiket doğrulaması ve IPv6 koruması
+
+Ortak URL denetiminde boş DNS etiketleri, tire ile başlayan/biten etiketler ve alt çizgi gibi geçersiz karakterler reddediliyor. IPv6 adreslerinin iki noktalı sözdizimi ayrıca korunuyor. Yeni regresyon testi eklendi: **71 yazılı test**, PASS doğrulaması yok. Bu oturumda `git ls-remote` yeniden denendi, `Could not resolve host: github.com` hatası alındı. Bu nedenle gerçek test koşumu ve gerçek yayın kabulü hâlâ açık. DNS rebinding/redirect için ağ seviyesi izolasyon hâlâ zorunlu. Ana İBO ve YEDEKLER değiştirilmedi.
+
+---
+
 ## 17 Kasım 2026 — ffmpeg protokol sınırı
 
 `backup_text_sampler.py` (OCR ve altyazı) ile `spoken_language_sample_review.py` (ASR) ffmpeg çağrılarına `-protocol_whitelist file,http,https,tcp,tls,crypto` eklendi; diğer protokoller bu iki örnekleyicide varsayılan olarak açılmıyor. **Bu, DNS/HTTP redirect SSRF korumasının yerini tutmaz** ve bazı HLS kaynakları ek protokol gerektirdiğinde başarısız olabilir; başarısızlık kanıt olarak kabul edilmeyecek. Ortamda GitHub DNS çözümlemesi tekrar başarısız olduğundan 70 offline test hâlâ çalıştırılamadı; gerçek yayın kabulü de yapılmadı. Ana İBO/YEDEKLER değişmedi.
