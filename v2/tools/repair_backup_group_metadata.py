@@ -56,6 +56,13 @@ for idx,(line_no,metadata,url) in enumerate(entries,1):
 diagnostic={"duplicate_tvg_ids":{k:v[:20] for k,v in ids.items() if len(v)>1},"duplicate_urls":{k[:160]:v[:20] for k,v in urls.items() if len(v)>1}}
 report.parent.mkdir(parents=True,exist_ok=True)
 report.write_text(json.dumps({"total":len(entries),"backups":backups,"modified_backup_records":changed,"issues":issues,"diagnostic":diagnostic},ensure_ascii=False,indent=2),encoding="utf-8")
+# Precisely isolate the 48 channels visible in the IBO Player test_001 category.
+suspects=set(range(1811,1817))|set(range(18702,18744))
+assert len(suspects)==48
+assert all(i>838 for i in suspects)
+suspect_rows=[{"position":idx,"name":metadata[0].rsplit(",",1)[-1],"url":url} for idx,(line_no,metadata,url) in enumerate(entries,1) if idx in suspects]
+assert len(suspect_rows)==48
+report.write_text(json.dumps({"total":len(entries),"main":838,"backups":backups,"suspect_count":48,"suspects":suspect_rows,"duplicate_identity_diagnostic":diagnostic,"source_modified":False},ensure_ascii=False,indent=2),encoding="utf-8")
 assert changed>0 or issues, "NO_EFFECTIVE_CATEGORY_REPAIR: 18122 backups already have expected group metadata; do not publish a no-op as a fix"
 assert len(entries)-backups==838
 target.write_text("\n".join(output)+"\n",encoding="utf-8")
