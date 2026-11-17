@@ -131,6 +131,26 @@ class SafeHLSPrefetchTests(unittest.TestCase):
         self.assertEqual(subtitle_observations("https://example.org/live.m3u8",
                                                 getter=get), [])
 
+    def test_unfetched_iframe_metadata_cannot_trigger_private_fetch(self):
+        master = (b'#EXTM3U\n'
+                  b'#EXT-X-I-FRAME-STREAM-INF:BANDWIDTH=500000,'
+                  b'URI="http://127.0.0.1/iframe.m3u8"\n'
+                  b'#EXT-X-STREAM-INF:BANDWIDTH=1000000\nvideo.m3u8\n')
+        variant = b'#EXTM3U\n#EXTINF:6,\nsegment.ts\n'
+        requested=[]
+        def get(url, limit):
+            requested.append(url)
+            if url.endswith("master.m3u8"): return master
+            if url.endswith("video.m3u8"): return variant
+            if url.endswith("segment.ts"): return b"LOCAL_SEGMENT"
+            raise AssertionError("Unexpected remote URL requested")
+        with TemporaryDirectory() as tmp:
+            local=prefetch_hls("https://example.org/master.m3u8",
+                               tmp, seconds=5, getter=get)
+            self.assertTrue(local.exists())
+        self.assertEqual(len(requested), 3)
+        self.assertFalse(any("127.0.0.1" in item for item in requested))
+
     def test_bad_or_oversized_segment_fails_closed(self):
         manifest = b"#EXTM3U\n#EXTINF:6,\nseg.ts\n"
         def getter(url, limit):
