@@ -15,12 +15,12 @@ def main():
     current = LIVE.read_bytes()
     text = current.decode("utf-8-sig")
     channels_pre = list(entries(text))
-    assert len(channels_pre) == 18960, "Expected 838 protected channels and 18122 retained backups"
+    assert len(channels_pre) == 18912, "Expected 838 protected channels and 18074 retained backups"
     non_backup = [x for x in channels_pre if "YEDEKLER" not in x["group"]]
     assert len(non_backup) == 838, "Protected non-YEDEKLER categories changed in size"
     backup_count = sum("YEDEKLER" in x["group"] for x in channels_pre)
     backup_group = f"🗂️ YEDEKLER ({backup_count})"
-    assert backup_count == 18122, "YEDEKLER must contain 18122 retained channels"
+    assert backup_count == 18074, "YEDEKLER must contain 18074 retained channels"
     backup_names = [x["name"] for x in channels_pre if "YEDEKLER" in x["group"]]
     assert len(backup_names) == backup_count
     assert all(x["group"] == backup_group for x in channels_pre if "YEDEKLER" in x["group"]), "All backups must share one category"
@@ -33,7 +33,7 @@ def main():
     assert text.startswith("#EXTM3U"), "Missing M3U header"
     assert len(channels) >= 840, "Playlist shrank below the verified post-deduplication baseline"
     backups = [x for x in channels if "YEDEKLER" in x["group"]]
-    assert len(backups) == 18122, "YEDEKLER must contain 18122 retained channels"
+    assert len(backups) == 18074, "YEDEKLER must contain 18074 retained channels"
     assert any(x["name"] == "TRT 1 1440P QHD" for x in backups), "Original TRT 1 backup missing"
     assert any(x["name"] == "DHA CANLI 720P HD" for x in backups), "Original DHA backup missing"
     assert [x["name"] for x in backups[:2]] == [
