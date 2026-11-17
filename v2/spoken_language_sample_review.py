@@ -7,6 +7,7 @@ Requires faster-whisper and ffmpeg installed by an explicit review job.
 import argparse
 import hashlib
 import json
+import os
 import subprocess
 import tempfile
 from pathlib import Path
@@ -53,6 +54,8 @@ def run():
             break
     if not selected:
         raise SystemExit("No eligible video+audio streams for speech sampling")
+    if os.environ.get("MADSC55_SECURE_EGRESS_CONFIRMED") != "1":
+        raise SystemExit("Secure network egress not confirmed; refusing untrusted ffmpeg streams")
     from faster_whisper import WhisperModel
     model = WhisperModel("tiny", device="cpu", compute_type="int8")
     results = []
