@@ -87,6 +87,13 @@ def main():
     out.parent.mkdir(parents=True,exist_ok=True)
     out.write_text(json.dumps(report,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     if args.apply:
+        # The user explicitly excluded 48 blocked/error entries from the 18,122
+        # YEDEKLER pool. Never reorder them until they can be identified precisely.
+        if len(backup) != 18074:
+            raise SystemExit(
+                f"BLOCKED: found {len(backup)} YEDEKLER entries, expected exactly 18074 eligible. "
+                "Identify and exclude the 48 blocked/error entries before any move."
+            )
         if not selected: raise SystemExit("No strong candidates: refusing no-op")
         # Reorder intact EXTINF+URL pairs immediately after protected 1003 entries.
         selected_set=set(selected)
