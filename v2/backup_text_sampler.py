@@ -21,9 +21,9 @@ except ImportError:
     from backup_text_evidence import inspect_text_observations
 
 try:
-    from .safe_hls_prefetch import prefetch_hls, UnsafeMediaSource, LOCAL_PROTOCOLS
+    from .safe_hls_prefetch import prefetch_hls, UnsafeMediaSource, LOCAL_PROTOCOLS, subtitle_observations
 except ImportError:
-    from safe_hls_prefetch import prefetch_hls, UnsafeMediaSource, LOCAL_PROTOCOLS
+    from safe_hls_prefetch import prefetch_hls, UnsafeMediaSource, LOCAL_PROTOCOLS, subtitle_observations
 
 # Only a sanitized local media playlist may reach FFmpeg; no network protocols.
 STREAM_PROTOCOL_WHITELIST = LOCAL_PROTOCOLS
@@ -128,6 +128,13 @@ def sample(url, seconds=8, include_subtitles=True):
             p=Path(subtitle)
             if p.exists() and p.stat().st_size:
                 observations.append({"kind":"SUBTITLE","text":p.read_text(encoding="utf-8",errors="replace")[:4096]})
+            # HLS subtitles are usually independent WebVTT playlists; never
+            # follow their URLs inside FFmpeg. Each cue is pinned/downloaded
+            # with the same private-IP and no-redirect rules as the AV sample.
+            try:
+                observations.extend(subtitle_observations(url))
+            except (UnsafeMediaSource, OSError):
+                pass  # Unavailable subtitles are inconclusive, never "foreign".
     report=inspect_text_observations(observations)
     return {"status":"HINTS_ONLY" if observations else "NO_TEXT_EVIDENCE",
             "observation_count":len(observations),
