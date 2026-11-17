@@ -78,6 +78,8 @@ jobs:
           fi
           command -v ffprobe
           command -v ffmpeg
+      - name: Local-only FFmpeg video and audio HLS decode acceptance
+        run: PYTHONPATH=v2 python -m unittest -v test_safe_hls_ffmpeg_local
       - name: Stage 5 evidence-gated export and final acceptance regressions
         run: |
           python -m py_compile v2/stage5_acceptance_gate.py v2/stage5_evidence_export.py v2/test_stage5_acceptance_gate.py v2/test_stage5_evidence_export.py
