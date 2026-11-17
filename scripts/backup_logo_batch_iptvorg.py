@@ -30,9 +30,12 @@ channels = fetch("https://iptv-org.github.io/api/channels.json")
 logos = fetch("https://iptv-org.github.io/api/logos.json")
 by_id = {c["id"]:c for c in channels if c.get("id")}
 by_name = defaultdict(set)
+by_name_global = defaultdict(set)
 for c in channels:
-    if c.get("id") and c.get("name") and c.get("country") == "TR":
-        by_name[norm(c["name"])].add(c["id"])
+    if c.get("id") and c.get("name"):
+        by_name_global[norm(c["name"])].add(c["id"])
+        if c.get("country") == "TR":
+            by_name[norm(c["name"])].add(c["id"])
 logo_by_id = defaultdict(set)
 for item in logos:
     if item.get("channel") and item.get("url") and item["url"].startswith("https://"):
@@ -49,7 +52,10 @@ for i, line in enumerate(lines):
     tvgid = re.search(r'tvg-id="([^"]+)"',line)
     ids = set()
     if tvgid and tvgid.group(1) in by_id: ids.add(tvgid.group(1))
-    if not ids: ids = by_name.get(norm(name),set())
+    if not ids:
+        ids = by_name.get(norm(name),set())
+    if not ids:
+        ids = by_name_global.get(norm(name),set())
     if len(ids)!=1:
         ambiguous += 1
         continue
