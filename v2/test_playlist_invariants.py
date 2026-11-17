@@ -15,15 +15,30 @@ def main():
     current = LIVE.read_bytes()
     text = current.decode("utf-8-sig")
     channels_pre = list(entries(text))
-    assert len(channels_pre) == 18912, "Expected 838 protected channels and 18074 retained backups"
+    assert len(channels_pre) == 3338, "Expected 838 protected channels and 2500 active backups"
     non_backup = [x for x in channels_pre if "YEDEKLER" not in x["group"]]
     assert len(non_backup) == 838, "Protected non-YEDEKLER categories changed in size"
     backup_count = sum("YEDEKLER" in x["group"] for x in channels_pre)
     backup_group = f"🗂️ YEDEKLER ({backup_count})"
-    assert backup_count == 18074, "YEDEKLER must contain 18074 retained channels"
+    assert backup_count == 2500, "YEDEKLER must contain the first 2500 channels"
     backup_names = [x["name"] for x in channels_pre if "YEDEKLER" in x["group"]]
     assert len(backup_names) == backup_count
     assert all(x["group"] == backup_group for x in channels_pre if "YEDEKLER" in x["group"]), "All backups must share one category"
+    # Exact batch conservation: 2500 active + 15574 queued = 18074 immutable sources.
+    source_path = ROOT / "v2/yedekler_batch/YEDEKLER_ARCHIVE.m3u8"
+    queued_path = ROOT / "v2/yedekler_batch/ANA_ARSIV.m3u8"
+    state = json.loads((ROOT / "v2/yedekler_batch/state.json").read_text(encoding="utf-8"))
+    source_bytes = source_path.read_bytes()
+    assert hashlib.sha256(source_bytes).hexdigest() == state["source_sha256"]
+    assert state["total"] == 18074 and state["default_batch_size"] == 2500
+    source_entries = list(entries(source_bytes.decode("utf-8-sig")))
+    queued_entries = list(entries(queued_path.read_text(encoding="utf-8-sig")))
+    active_entries = [x for x in channels_pre if "YEDEKLER" in x["group"]]
+    assert len(source_entries) == 18074 and len(queued_entries) == 15574
+    assert [(x["name"], x["url"]) for x in active_entries] == [(x["name"], x["url"]) for x in source_entries[:2500]], "First batch changed"
+    assert [(x["name"], x["url"]) for x in queued_entries] == [(x["name"], x["url"]) for x in source_entries[2500:]], "Queued archive lost or reordered records"
+    assert len({x["url"] for x in source_entries}) == 18074, "Source has duplicate URLs"
+    assert len(state["status"]) == 2500 and all(state["status"].get(str(i)) == "TEST" for i in range(1,2501))
     # Fail closed on any reintroduction of the 48 channels that caused test_001.
     quarantine = json.loads((ROOT / "v2/archives/test001_quarantined_48.json").read_text(encoding="utf-8"))
     forbidden = {(r["name"].strip().casefold(), r["url"].strip()) for r in quarantine["entries"]}
@@ -39,7 +54,7 @@ def main():
     assert text.startswith("#EXTM3U"), "Missing M3U header"
     assert len(channels) >= 840, "Playlist shrank below the verified post-deduplication baseline"
     backups = [x for x in channels if "YEDEKLER" in x["group"]]
-    assert len(backups) == 18074, "YEDEKLER must contain 18074 retained channels"
+    assert len(backups) == 2500, "YEDEKLER must contain 2500 channels"
     assert any(x["name"] == "TRT 1 1440P QHD" for x in backups), "Original TRT 1 backup missing"
     assert any(x["name"] == "DHA CANLI 720P HD" for x in backups), "Original DHA backup missing"
     assert [x["name"] for x in backups[:2]] == [
