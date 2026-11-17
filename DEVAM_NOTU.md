@@ -1,3 +1,11 @@
+## 17 Kasım 2026 — Akıllı arşiv devamı: kanıt birleştirme adaptörü
+
+**Yapıldı (yalnız PR #365 geliştirme dalı):** `v2/backup_evidence_adapter.py` ve `v2/test_backup_evidence_adapter.py` eklendi. Ayrı envanter, AV ve dil kanıtlarını URL hash kimliği üzerinden eşleştiren salt-okunur katman; mükerrer kimliği, eksik kapsamı ve bilinmeyen kanıt kimliklerini reddeder. Gerçek decode video+ses birlikte doğrulanmadıkça çalışan saymaz; yalnız kontrollü tekrar ve doğrulanmış terminal hata ile çalışmayan der. Türkçe/yabancı sınıfı için bağımsız dil kanıtı ve inceleme onayı birlikte gerekir; salt ASR ipucu/isim/metadata yetmez. Beş adaptör regresyon senaryosu yazıldı. Commitler: `d6276e35c0624dc462df8443d14a3b7b3fe51d1a`, `544bcdf4cf8ceb721d81f2711e8b4aa164171e1e`.
+
+**Henüz yapılmadı:** Testler CI'da koşturulup PASS kanıtı alınmadı; mevcut canlı rapor formatlarına gerçek dönüştürücü, OCR, altyazı, batch tarama/yeniden deneme ve 18.074 kanallık kapsama kabulü eksik. Bu modül henüz mevcut workflow'a bağlı değildir; PR merge edilmedi. Bir sonraki oturum önce PR #365 ve DEVAM_NOTU'yu kontrol etsin, gerçek rapor şemalarıyla adaptörü bağlasın, offline test/CI koştursun; sonra OCR/altyazı eklesin. Ana İBO/YEDEKLER/ana arşiv ve kanonik görev durumları değişmedi.
+
+---
+
 ## 17 Kasım 2026 — 18.074 akıllı arşiv geliştirmesi: ilk kod adımı (PR #365)
 
 **Gerçekleşen:** `v2/backup_smart_archive.py` salt-okunur kanıt tabanlı sınıflandırma ve JSON raporlayıcı eklendi; `v2/test_backup_smart_archive.py` altı offline regresyon senaryosu eklendi. Kanallar TR/FOREIGN/UNKNOWN dil ve WORKING/NOT_WORKING/UNKNOWN durumlarından Türk çalışan, Türk çalışmayan, yabancı çalışan, yabancı çalışmayan, belirsiz kategorilerine ayrılır. Eksik dil kanıtı Türk/yabancı diye atanmaz; gerçek AV decode olmadan çalışan denmez; tekrarsız başarısızlıkta çalışmayan denmez. Tam envanter sayımı ve mükerrer kimlik kontrolü var. Sınıflandırıcı oynatma listesi yazmaz ve ağ taraması yapmaz.
