@@ -23,12 +23,14 @@ def convert(inventory, aggregate):
         if not isinstance(row,dict):
             raise ValueError("Invalid playback row")
         key=row.get("url_sha256")
-        if not isinstance(key,str) or key in results:
+        if not isinstance(key,str) or len(key)!=64 or any(ch not in "0123456789abcdef" for ch in key) or key in results:
             raise ValueError("Invalid or duplicate playback identity")
         # Existing aggregate reports alone do not attest decoded AV; require
         # an explicit independently verified decode flag to promote status.
         results[key]={
             "playback":row.get("playback"),
+            "status":row.get("status"),
+            "decode_status":row.get("decode_status"),
             "audio":row.get("audio"),
             "decoded_av_verified":row.get("decoded_av_verified") is True,
             "retries_exhausted":row.get("retries_exhausted") is True,
