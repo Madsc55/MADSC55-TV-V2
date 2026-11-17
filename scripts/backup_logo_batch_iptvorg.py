@@ -23,7 +23,21 @@ def valid(url):
     try:
         req = urllib.request.Request(url, headers=HEADERS, method="HEAD")
         with urllib.request.urlopen(req, timeout=8) as r:
-            return 200 <= r.status < 400 and r.headers.get("Content-Type","").split(";")[0].lower().startswith(("image/","application/octet-stream"))
+            if 200 <= r.status < 400 and r.headers.get("Content-Type","").split(";")[0].lower().startswith(("image/","application/octet-stream")):
+                return True
+    except Exception:
+        pass
+    # Many logo CDNs reject HEAD but serve actual image data via GET.
+    try:
+        req = urllib.request.Request(url, headers={**HEADERS,"Range":"bytes=0-1023"})
+        with urllib.request.urlopen(req, timeout=8) as r:
+            content_type = r.headers.get("Content-Type","").split(";")[0].lower()
+            first = r.read(24)
+            return 200 <= r.status < 400 and (
+                content_type.startswith("image/") or
+                first.startswith((b"\\x89PNG\\r\\n\\x1a\\n", b"\\xff\\xd8\\xff", b"GIF87a", b"GIF89a", b"RIFF")) or
+                b"<svg" in first.lower()
+            )
     except Exception:
         return False
 
