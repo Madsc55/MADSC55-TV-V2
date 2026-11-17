@@ -10,6 +10,10 @@ import json
 import subprocess
 import tempfile
 from pathlib import Path
+try:
+    from .backup_text_sampler import valid_url
+except ImportError:
+    from backup_text_sampler import valid_url
 
 REPORTS = Path(__file__).resolve().parent / "reports"
 
@@ -44,7 +48,7 @@ def run():
         url = item.get("url", "")
         digest = hashlib.sha256(url.encode()).hexdigest()
         match = tested.get(digest)
-        if match and match.get("playback") == "VIDEO_DECODED" and str(match.get("audio", "")).upper() in ("TRUE", "YES", "PRESENT", "AUDIO_PRESENT", "AUDIO_DECODED") and url.startswith(("https://", "http://")):
+        if match and match.get("playback") == "VIDEO_DECODED" and str(match.get("audio", "")).upper() in ("TRUE", "YES", "PRESENT", "AUDIO_PRESENT", "AUDIO_DECODED") and valid_url(url):
             selected.append((digest, url))
         if len(selected) >= args.limit:
             break
