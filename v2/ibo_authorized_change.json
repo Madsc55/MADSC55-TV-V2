@@ -1,8 +1,8 @@
 {
   "base_sha256": "a08edf7c82e9b70965f8ac8f021d3b088e6d6cbaf69fdf39a9febd69b1de9256",
-  "result_sha256": "29ced17461a0884e309a966c5f7cda69906d0192e6d69c1901ab6d2d565d42c9",
+  "result_sha256": "6965960fbbfccc3100fdb394ba2bf2d66dfd6bb85aefde7f14ec9e106f3cb2d6",
   "operation": "reorder",
-  "request": "17 Kasım 2026 kullanıcı açık talimatı: yalnız güncel MADSC55_TV_IBO_CALISANLAR_TEST.m3u8 listesindeki 18074 YEDEKLER kaydında atlanan Türk, Türkçe, Türkiye ve Kuzey Kıbrıs kanallarını ilk 1003'ün hemen altındaki mevcut 967 Türk kanalı bloğuyla bir araya topla. Tam 18912/18074 sayıyı, ilk 1003 kanalı ve 48 karantinaya alınmış yayının dışarıda kalmasını koru; Güney Kıbrıs/Yunan/Şili/Peru ve teknik olarak doğrulanmamış test girdilerini yanlışlıkla seçme.",
+  "request": "17 Kasım 2026 kullanıcı açık talimatı: yalnız güncel MADSC55_TV_IBO_CALISANLAR_TEST.m3u8 listesindeki 18074 YEDEKLER kaydında atlanan Türk, Türkçe, Türkiye ve Kuzey Kıbrıs kanallarını ilk 1003'ün hemen altındaki mevcut 967 Türk kanalı bloğuyla bir araya topla. Tam 18912/18074 sayıyı, ilk 1003 kanalı ve 48 karantinaya alınmış yayının dışarıda kalmasını koru; Güney Kıbrıs/Yunan/Şili/Peru ve teknik olarak doğrulanmamış test girdilerini yanlışlıkla seçme. Son denetimde Doğuş/Blutv NTV kaynakları, A2, Mavi Karadeniz, Power TV Akustik ve Kuzey Kıbrıs Kanal T gibi 11 ek özgün kayıt da önceki bloğa eklendi; aynı isimli yabancı NTV Albania ve Fildişi Sahili kaynakları dışarıda bırakıldı.",
   "channels": [
     "beIN Box Office 2 HD TR",
     "Nat Geo HD TR",
@@ -420,6 +420,17 @@
     "360",
     "NOW",
     "360",
-    "24 TV"
+    "24 TV",
+    "NTV",
+    "NTV (BACKUP)",
+    "NTV (BACKUP)",
+    "MAVIKARADENIZ (720P) [NOT 24/7]",
+    "NTV",
+    "A2",
+    "A2",
+    "POWER TV AKUSTIK",
+    "KANAL ON 4 TV",
+    "KANAL 56",
+    "KANAL T"
   ]
 }
