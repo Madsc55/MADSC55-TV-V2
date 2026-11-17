@@ -41,5 +41,18 @@ def main():
   if not ids:raise SystemExit("Bekleyen kanal yok")
   change(s,ids,"TEST","batch");print(len(ids),"kanal TEST havuzuna alındı");return
  if not 1<=x.start<=x.end<=s["total"]:raise SystemExit("Geçersiz aralık")
- change(s,list(range(x.start,x.end+1)),x.to,"assign");print("Atama tamamlandı")
+ ids=list(range(x.start,x.end+1))
+ if x.to in ("TURK","YABANCI"):
+  if any(s["status"].get(str(i))!="TEST" for i in ids):raise SystemExit("REFUSED: yalnız TEST kanalları taşınabilir")
+  pending=[i for i in range(1,s["total"]+1) if s["status"].get(str(i),"ANA_ARSIV")=="ANA_ARSIV"]
+  if len(pending)<len(ids):raise SystemExit("REFUSED: yeni paket için yeterli kanal yok")
+  replacements=pending[:len(ids)]
+  before={str(i):s["status"].get(str(i),"ANA_ARSIV") for i in ids+replacements}
+  for i in ids:s["status"][str(i)]=x.to
+  for i in replacements:s["status"][str(i)]="TEST"
+  s["history"].append({"action":"assign-and-refill","before":before,"after":x.to,"moved":ids,"refilled":replacements})
+  save(s)
+  print(len(ids),"kanal",x.to,"arşivine taşındı;",len(replacements),"yeni kanal TEST havuzuna alındı")
+ else:
+  change(s,ids,x.to,"assign");print("Atama tamamlandı")
 if __name__=="__main__":main()
