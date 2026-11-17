@@ -3333,7 +3333,7 @@ https://live.artidijitalmedya.com/artidijital_kaytv/kaytv1/playlist.m3u8
 https://tv.arectv13.sbs/live/natgeowild.m3u8
 #EXTINF:-1 tvg-id="On6.tr" tvg-logo="https://i.imgur.com/k7rS2gC.png" group-title="🗂️ YEDEKLER (2500)",On 6 (1080p)
 https://live.artidijitalmedya.com/artidijital_kanal16/kanal16/playlist.m3u8
-#EXTINF:-1 tvg-id="TatlisesTV.tr" group-title="🗂️ YEDEKLER (2500)",Tatlises TV (1080p) [Not 24/7]
+#EXTINF:-1 tvg-logo="https://i.ibb.co/yRy9zwt/tatlises-tv.png" tvg-id="TatlisesTV.tr" group-title="🗂️ YEDEKLER (2500)",Tatlises TV (1080p) [Not 24/7]
 https://live.artidijitalmedya.com/artidijital_tatlisestv/tatlisestv/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/28AyWHe.png" tvg-id="TMB.tr" group-title="🗂️ YEDEKLER (2500)",TMB
 https://raw.githubusercontent.com/UzunMuhalefet/streams/main/myvideo-az/tmb-tv.m3u8
@@ -3757,11 +3757,11 @@ https://ciner-live.daioncdn.net/bloomberght/bloomberght.m3u8
 https://cdn-cekmekoybeltv.yayin.com.tr/cekmekoybeltv/cekmekoybeltv_1080p/playlist.m3u8
 #EXTINF:-1 tvg-id="DisneyJr.tr@SD" group-title="🗂️ YEDEKLER (2500)",Disney Jr. (1080p) [Geo-blocked]
 https://saran-live.ercdn.net/disneyjunior/index.m3u8
-#EXTINF:-1 tvg-id="Kanal3.tr@SD" group-title="🗂️ YEDEKLER (2500)",Kanal 3 (1080p) [Not 24/7]
+#EXTINF:-1 tvg-logo="https://i.imgur.com/eXErSv0.png" tvg-id="Kanal3.tr@SD" group-title="🗂️ YEDEKLER (2500)",Kanal 3 (1080p) [Not 24/7]
 https://waw2.artiyerelmedya.net/kanal3/bant1/playlist.m3u8
-#EXTINF:-1 tvg-id="Kanal3.tr@SD" group-title="🗂️ YEDEKLER (2500)",Kanal 3 (720p) [Not 24/7]
+#EXTINF:-1 tvg-logo="https://i.imgur.com/eXErSv0.png" tvg-id="Kanal3.tr@SD" group-title="🗂️ YEDEKLER (2500)",Kanal 3 (720p) [Not 24/7]
 http://stream.taksimbilisim.com:1935/kanal3/bant1/playlist.m3u8
-#EXTINF:-1 tvg-id="Kanal3.tr@SD" group-title="🗂️ YEDEKLER (2500)",Kanal 3 (720p) [Not 24/7]
+#EXTINF:-1 tvg-logo="https://i.imgur.com/eXErSv0.png" tvg-id="Kanal3.tr@SD" group-title="🗂️ YEDEKLER (2500)",Kanal 3 (720p) [Not 24/7]
 https://live.artidijitalmedya.com/artidijital_kanal3/kanal3guncel/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/SIaI6Sj.png" tvg-id="Kanal34.tr@SD" group-title="🗂️ YEDEKLER (2500)",Kanal 34 (720p) [Not 24/7]
 https://vdo.digitalbox.xyz:3266/live/kanal34tvlive.m3u8
@@ -3953,7 +3953,7 @@ http://missing
 http://stream.tvcdn.net/cocuk-egitim/minika-cocuk.m3u8
 #EXTINF:-1 tvg-name="Minika Çocuk" tvg-logo="https://i.imgur.com/VCywMTv.png" group-title="🗂️ YEDEKLER (2500)",Minika Çocuk
 https://antalya.tvizlehd.com/live/minikacocuk.m3u8
-#EXTINF:-1 tvg-name="beIN Box Office 2 HD TR" group-title="🗂️ YEDEKLER (2500)",beIN Box Office 2 HD TR
+#EXTINF:-1 tvg-logo="http://epg.one/img/3812.png" tvg-name="beIN Box Office 2 HD TR" group-title="🗂️ YEDEKLER (2500)",beIN Box Office 2 HD TR
 http://unreal.eztv4you.xyz:25461/98392023/224vpw99f7/432167
 #EXTINF:-1 tvg-name="Nat Geo HD TR" group-title="🗂️ YEDEKLER (2500)",Nat Geo HD TR
 http://unreal.eztv4you.xyz:25461/98392023/224vpw99f7/432433
