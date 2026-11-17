@@ -35,5 +35,17 @@ class SmartArchiveTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             build_report([row(1, language="MAYBE")], 1)
 
+    def test_string_true_is_not_verified_language(self):
+        result = build_report([row(1, language="TR", language_evidence_verified="true")], 1)["channels"][0]
+        self.assertEqual(result["language"], "UNKNOWN")
+
+    def test_string_true_is_not_verified_av(self):
+        result = build_report([row(1, health="WORKING", decoded_av_verified="true")], 1)["channels"][0]
+        self.assertEqual(result["health"], "UNKNOWN")
+
+    def test_string_true_does_not_exhaust_retries(self):
+        result = build_report([row(1, health="NOT_WORKING", retries_exhausted="true")], 1)["channels"][0]
+        self.assertEqual(result["health"], "UNKNOWN")
+
 if __name__ == "__main__":
     unittest.main()
