@@ -40,5 +40,19 @@ class AdapterTests(unittest.TestCase):
         self.assertEqual(r["health"], "UNKNOWN")
         self.assertTrue(r["retry"])
 
+    def test_real_stream_probe_verified_schema(self):
+        k=key(1)
+        av={k:{"status":"AV_VERIFIED","audio":True,"video":True,
+               "decoded_av_verified":True,"decode_status":"DECODED_AV"}}
+        r=join_evidence([{"url_sha256":k}],av,{},1)["channels"][0]
+        self.assertEqual(r["health"],"WORKING")
+
+    def test_ffprobe_metadata_only_not_working(self):
+        k=key(1)
+        av={k:{"status":"AV_STREAMS_PRESENT","audio":True,"video":True,
+               "decoded_av_verified":False}}
+        r=join_evidence([{"url_sha256":k}],av,{},1)["channels"][0]
+        self.assertEqual(r["health"],"UNKNOWN")
+
 if __name__ == "__main__":
     unittest.main()
