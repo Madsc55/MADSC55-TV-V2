@@ -58,6 +58,7 @@ def collect(playlist, output, ordinals, *, source_authorized=False, model_dir=No
         raise ValueError("Selected channel missing or malformed")
     output.parent.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory(prefix="v2-turkish-evidence-") as tmp:
+        # Stream evidence rows directly: do not accumulate 18k reports in RAM.
         rows = []
         for ordinal in selected:
             sample = review_one(records[ordinal], Path(tmp) / f"{ordinal}.json",
@@ -87,7 +88,7 @@ def main():
             for line in stream:
                 if line.startswith("#EXTINF:"):
                     index += 1
-                    match = re.search(r\x27group-title="([^"]*)"\x27, line)
+                    match = re.search(r'group-title="([^"]*)"', line)
                     if index > 1003 and match and match.group(1) == "YEDEKLER":
                         ordinals.append(index)
     print(json.dumps(collect(a.playlist, a.output, ordinals,
