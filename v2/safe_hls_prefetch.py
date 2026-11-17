@@ -7,6 +7,7 @@ features fail closed, never silently read arbitrary remote or local URLs.
 import http.client
 import ipaddress
 import math
+import re
 from pathlib import Path
 import socket
 import ssl
@@ -80,7 +81,7 @@ def _media_segments(text, base_url, remaining_depth, getter):
         raise UnsafeMediaSource("Not a bounded HLS playlist")
     forbidden = ("#EXT-X-KEY", "#EXT-X-SESSION-KEY", "#EXT-X-MAP",
                  "#EXT-X-BYTERANGE", "#EXT-X-I-FRAME-STREAM-INF",
-                 "#EXT-X-MEDIA:", "#EXT-X-PART", "#EXT-X-PRELOAD-HINT")
+                 "#EXT-X-PART", "#EXT-X-PRELOAD-HINT")
     if any(line.startswith(forbidden) for line in lines):
         raise UnsafeMediaSource("Unsupported or encrypted HLS feature")
     if any(line.startswith("#EXT-X-STREAM-INF") for line in lines):
@@ -157,3 +158,91 @@ def prefetch_hls(url, output_dir, seconds=8, getter=fetch_pinned):
     with path.open("x", encoding="utf-8") as destination:
         destination.write("\n".join(lines) + "\n")
     return path
+
+
+MAX_SUBTITLE_BYTES = 128 * 1024
+MAX_SUBTITLE_SEGMENTS = 2
+
+def subtitle_observations(url, getter=fetch_pinned):
+    """Safely fetch at most two WebVTT subtitle cues from a named HLS track.
+
+    Only transient text is returned to the caller's review-hint classifier.
+    The fetcher pins public IPs and refuses redirects at each nested request.
+    """
+    master_bytes = getter(url, MAX_MANIFEST_BYTES)
+    if len(master_bytes) > MAX_MANIFEST_BYTES:
+        raise UnsafeMediaSource("Subtitle master manifest exceeds byte limit")
+    try:
+        master = master_bytes.decode("utf-8-sig")
+    except UnicodeDecodeError as exc:
+        raise UnsafeMediaSource("Invalid HLS subtitle manifest encoding") from exc
+    if not master.startswith("#EXTM3U"):
+        raise UnsafeMediaSource("Not an HLS subtitle master")
+    entries = []
+    for line in master.splitlines():
+        if not line.startswith("#EXT-X-MEDIA:"):
+            continue
+        attributes = dict(
+            (key.upper(), value.strip('"'))
+            for key, value in re.findall(r'([A-Za-z0-9-]+)=("[^"]*"|[^,]*)',
+                                          line.partition(":")[2])
+        )
+        if attributes.get("TYPE") != "SUBTITLES" or not attributes.get("URI"):
+            continue
+        tag = attributes.get("LANGUAGE", "")
+        if len(tag) > 32 or any(ord(ch) < 33 or ord(ch) > 126 for ch in tag):
+            raise UnsafeMediaSource("Invalid subtitle language tag")
+        entries.append((tag, urljoin(url, attributes["URI"])))
+    # Prioritize the Turkish track only as a sampling hint; never approval.
+    entries.sort(key=lambda pair: not pair[0].lower().startswith("tr"))
+    found = []
+    for tag, playlist_url in entries[:2]:
+        body = getter(playlist_url, MAX_MANIFEST_BYTES)
+        if len(body) > MAX_MANIFEST_BYTES:
+            raise UnsafeMediaSource("Subtitle playlist too large")
+        try:
+            playlist = body.decode("utf-8-sig")
+        except UnicodeDecodeError as exc:
+            raise UnsafeMediaSource("Invalid subtitle playlist encoding") from exc
+        lines = [line.strip() for line in playlist.splitlines() if line.strip()]
+        if not lines or lines[0] != "#EXTM3U" or len(lines) > 1000:
+            raise UnsafeMediaSource("Invalid WebVTT media playlist")
+        if any(line.startswith(("#EXT-X-KEY", "#EXT-X-MAP", "#EXT-X-BYTERANGE",
+                                "#EXT-X-PART", "#EXT-X-PRELOAD-HINT"))
+               for line in lines):
+            raise UnsafeMediaSource("Unsupported WebVTT playlist feature")
+        segments = []
+        for index, line in enumerate(lines):
+            if not line.startswith("#EXTINF:"):
+                continue
+            if index + 1 >= len(lines) or lines[index + 1].startswith("#"):
+                raise UnsafeMediaSource("Malformed WebVTT segment")
+            ref = urljoin(playlist_url, lines[index + 1])
+            if not urlsplit(ref).path.lower().endswith((".vtt", ".webvtt")):
+                raise UnsafeMediaSource("Unsupported subtitle segment format")
+            segments.append(ref)
+        if not segments:
+            continue
+        cue_text = []
+        for ref in segments[:MAX_SUBTITLE_SEGMENTS]:
+            media = getter(ref, MAX_SUBTITLE_BYTES)
+            if len(media) > MAX_SUBTITLE_BYTES:
+                raise UnsafeMediaSource("WebVTT payload exceeds limit")
+            try:
+                vtt = media.decode("utf-8-sig")
+            except UnicodeDecodeError as exc:
+                raise UnsafeMediaSource("Invalid WebVTT encoding") from exc
+            if not vtt.startswith("WEBVTT") or "-->" not in vtt:
+                continue
+            # Avoid treating the header alone as evidence of actual subtitles.
+            lines_text = [line for line in vtt.splitlines()
+                          if line.strip() and "-->" not in line and
+                          line.strip() not in ("WEBVTT", "STYLE", "REGION") and
+                          not line.strip().isdigit() and
+                          not line.lstrip().startswith(("NOTE", "X-TIMESTAMP-MAP"))]
+            if any(any(ch.isalpha() for ch in line) for line in lines_text):
+                cue_text.append("\n".join(lines_text))
+        if cue_text:
+            found.append({"kind": "SUBTITLE", "text": "\n".join(cue_text)[:4096],
+                          "language_tag": tag})
+    return found
