@@ -43,8 +43,9 @@ class SamplerTests(unittest.TestCase):
     def test_subtitle_extraction_uses_protocol_whitelist(self, _which):
         with patch("v2.backup_text_sampler.public_dns_for_url", return_value=True):
             with patch("v2.backup_text_sampler.prefetch_hls", return_value="/tmp/review-sample.m3u8"):
-                with patch("v2.backup_text_sampler.execute", return_value="") as execute:
-                    sample("https://example.org/live", include_subtitles=True)
+                with patch("v2.backup_text_sampler.subtitle_observations", return_value=[]):
+                    with patch("v2.backup_text_sampler.execute", return_value="") as execute:
+                        sample("https://example.org/live", include_subtitles=True)
         self.assertEqual(execute.call_count, 2)
         subtitle_command = execute.call_args_list[1].args[0]
         self.assertIn("-protocol_whitelist", subtitle_command)
@@ -53,6 +54,21 @@ class SamplerTests(unittest.TestCase):
         self.assertEqual(subtitle_command[subtitle_command.index("-i") + 1],
                          "/tmp/review-sample.m3u8")
         self.assertNotIn("https://example.org/live", subtitle_command)
+
+    @patch.dict("os.environ", {"MADSC55_SECURE_EGRESS_CONFIRMED":"1"})
+    @patch("v2.backup_text_sampler.shutil.which", return_value="/usr/bin/ffmpeg")
+    def test_turkish_webvtt_is_only_review_hint(self, _which):
+        cues=[{"kind":"SUBTITLE","text":"Merhaba Türkiye","language_tag":"tr"}]
+        with patch("v2.backup_text_sampler.public_dns_for_url", return_value=True):
+            with patch("v2.backup_text_sampler.prefetch_hls", return_value="/tmp/review.m3u8"):
+                with patch("v2.backup_text_sampler.subtitle_observations",return_value=cues):
+                    with patch("v2.backup_text_sampler.execute", return_value=""):
+                        result=sample("https://example.org/live.m3u8")
+        self.assertTrue(result["subtitle_hint"])
+        self.assertFalse(result["language_evidence_verified"])
+        self.assertFalse(result["review_approved"])
+        self.assertNotIn("text", result)
+        self.assertNotIn("Merhaba", str(result))
 
     @patch.dict("os.environ", {"MADSC55_SECURE_EGRESS_CONFIRMED":"1"})
     def test_prefetch_failure_never_runs_ffmpeg(self):
