@@ -1,8 +1,8 @@
 {
-  "base_sha256": "1d5b9096d914589bf8f6a4133074248125841b03120f2ada7c723e5ac804b71d",
-  "result_sha256": "a08edf7c82e9b70965f8ac8f021d3b088e6d6cbaf69fdf39a9febd69b1de9256",
+  "base_sha256": "6a592ae1993dec22e33ce45206e9babb35b9c0221d458c9be46d5a2744f586a9",
+  "result_sha256": "9b9630dbafeb2b8d75744e27c9197650e85eaca08a5033f3b5b40753910143f2",
   "operation": "reorder",
-  "request": "Kullanıcı talimatı: güncel ana İBO playlistindeki 18.074 YEDEKLER kaydının Türk kanallarını 1003. sıradan sonra alt alta sırala; kaldırılan 48 engelli kanalı geri getirme.",
+  "request": "Kullanıcı talimatı: güncel ana İBO playlistindeki 18.074 YEDEKLER kaydının Türk kanallarını 1003. sıradan sonra alt alta sırala; kaldırılan 48 engelli kanalı geri getirme. Ek tarama: Kıbrıs Türk kanalları ve yerel Türk kanalları için ikinci denetimde kalan kayıtlar aynı YEDEKLER grubundan 1003 sonrası bloğa eklendi; 48 engelli kanal dahil edilmedi.",
   "channels": [
     "TR:A2 UHD",
     "TR:ADA TV (KIBRIS)",
@@ -970,6 +970,29 @@
     "MINIKA COCUK (576P)",
     "Minika Go",
     "Minika Çocuk",
-    "Minika Çocuk"
+    "Minika Çocuk",
+    "Tele 1",
+    "Tele 1",
+    "06.KanalD Drama",
+    "KIBRIS TV",
+    "KIBRIS TV",
+    "AKSU TV  KAHRAMANMARAŞ",
+    "TV 264 SAKARYA",
+    "HABER 61 TV",
+    "HABER 61",
+    "KANAL 26  ESKİŞEHİR",
+    "HABER 61 TV",
+    "KANAL T",
+    "TV 100 (BACKUP)",
+    "HABER 61",
+    "ES TV  ESKİŞEHİR",
+    "MERCAN TV  ADIYAMAN",
+    "TV 8.5",
+    "KARABÜK DERİN TV",
+    "ADA TV 1080P FHD",
+    "ADA TV",
+    "GENÇ TV",
+    "ADA TV (720P)",
+    "ADA TV (1080P)"
   ]
 }
