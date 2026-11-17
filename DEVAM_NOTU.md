@@ -1,3 +1,11 @@
+## 17 Kasım 2026 — ASR bağlantısı ve devam kaydı
+
+Kullanıcı önceliği: **önce görüntü/ses, Türkçe konuşma, OCR ve altyazı entegrasyonunu bitir, sonra YEDEKLER'deki 18.074 kanalı tara; ana İBO listesine dokunma.** Mevcut `v2/spoken_language_sample_review.py` faster-whisper ASR örnekleyicisi keşfedildi; sıfırdan ASR kurulumu gerekmiyor. Ancak örnekleyici bağımsızdı ve tahminleri otomatik kabul etmemelidir.
+
+Yeni `v2/backup_speech_evidence.py`: mevcut ASR raporundaki hash temelli dil tahminlerini güvenli, ham URL/metin içermeyen **yalnızca inceleme ipucu** biçimine çevirir; kanıtlanmış Türkçe olarak işaretlemez. `v2/test_backup_speech_evidence.py` altı regresyon senaryosu eklendi, `v2/run_backup_archive_tests.py` içine bağlandı. Toplam **55 yazılı test**; bunların çalıştırıldığına ilişkin PASS kanıtı henüz yok. Gerçek örnek ses+video decode, OCR, altyazı ve ASR testleri ile operatör onayı hâlâ eksik. Bu değişiklikler PR #365 özellik dalında, merge edilmedi.
+
+---
+
 ## 17 Kasım 2026 — Öncelik sırası düzeltmesi: önce AV/ses dili/OCR/altyazı
 
 **Kullanıcı talimatı:** Mevcut playlistin 18.074 kanallık YEDEKLER bölümü henüz işlenmeyecek. Önce görüntü/ses decode, konuşulan Türkçe, OCR ekran yazısı ve altyazı örnekleme sistemi bitirilecek ve gerçek test kanıtlarıyla kabul edilecek. Ana İBO ve YEDEKLER'e dokunulmayacak. Google Drive bu aşamanın kaynağı değil.
