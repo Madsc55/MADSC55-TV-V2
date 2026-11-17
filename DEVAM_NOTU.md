@@ -1,3 +1,11 @@
+## 17 Kasım 2026 — Türkî YEDEKLER üçüncü tarama (açık)
+- Güncel İBO blob `843a2216ab08873ce0d3281e64bcb4fdd20a05d4`: 18.912 toplam, 18.074 YEDEKLER, 1003 sonrası mevcut 1.395 blok.
+- Blokta yabancı TRT (GREECE) sıra 1752 bulundu. Blok dışında altı Türkmenistan yayın kaydı saptandı; kullanıcı Türkmenistan ve Azerbaycan'ı da Türkî gruba dahil etmeyi açıkça istedi.
+- Ayrıntı `v2/reports/turkic-third-pass-review-20261117.json`. Playlist içindeki serbest yorum satırları da korunmalı; bütünlük ve güvenlik kapısı geçmeden reorder yapılmadı. Teknik test ve VOD adayları kimlik incelemesinde.
+- Bu kayıt tamamlanmış uygulama veya başarılı yayın testi değildir; sonraki adım güvenli reorder + yetkili SHA256 kayıt + Actions + merge.
+
+---
+
 ## 15 Kasım 2026 — ÖNCELİKLİ: kullanıcı onaylı İBO düzenleme kapısı
 
 Kullanıcının kurduğu esas iş akışı: kanal keşfi → ayrı adaylar → açık onayla YEDEKLER → cihazda gerçek görüntü/ses testi → çalışan kanalları kullanıcının talimatıyla ULUSAL-HEPSİ/HABER/SPOR/BELGESEL/SİNEMA vb. kategorilere kopyalama/taşıma → istenirse kanal ve kategori sırasını değiştirme. YEDEKLER'de kaynak kullanıcı aksini istemedikçe kalır. Ana listeye izinsiz otomatik yazma kesinlikle yasak. Kullanıcının açık talimatıyla yapılan kategori düzenlemeleri ise teknik olarak mümkün olmalıdır.
