@@ -1214,3 +1214,13 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - **Ana 838 kanal, mevcut YEDEKLER, 2.881 kanallık `v2/arsiv/yabanci_kanallar_2026-11-16_2881.m3u8` değiştirilmeyecek.** AV doğrulamasından geçenler tekrar/kimlik kontrolünden sonra kullanıcı onaylı güvenli YEDEKLER aktarımına aday; otomatik listeye yazma şu an etkin değil.
 - Otomatik yeni-run tetikleme (`workflow_run`, cron vb.) mevcut güvenlik kapısınca yasak; koruma değiştirilmedi. Bu nedenle iki tarama bitince yeni çalışmayı kendiliğinden başlatma **kurulmuş değil**. Kullanıcıya haber verilip birlikte başlatılacak.
 - Kabul şartı: 16 batch artifact'ı ve 7.650 benzersiz URL için sonuçlar; çalışanların gerçek AV kanıtı; korunan liste SHA/parite kontrolleri; ardından kontrollü YEDEKLER aktarımı. **AÇIK — tamamlandı işaretlenmeyecek.**
+
+
+## 17 Kasım 2026 — Türkçe konuşma ve ekran yazısı tespiti (YENİ İŞ / AÇIK)
+- Kullanıcı talebi: Kanal arama ve AV testlerinde kanal adı/ülke/TR-AZ etiketine ek olarak **gerçek yayındaki Türkçe konuşmayı** ve **görüntüdeki Türkçe yazıları** tespit edebilmek.
+- Ses: gerçek yayın örneklerinden dil tanıma / konuşma algılama; sessiz, müzikli, çok dilli veya düşük güvenli yayınları yanlış kesinleştirmeden belirsiz olarak işaretle.
+- Görüntü: yayından alınan örnek karelerde OCR ile Türkçe metin ve karakter tespiti; logo/altyazı/ekran yazısı kanıtını kaydet; tek kareden kesin dil kararı verme.
+- Kanal adı, tvg-id, grup, TR/AZ kaynak etiketi yalnızca **aday işareti** olarak kullanılacak; Türkçe ses ve Türkçe yazı kanıtından ayrı raporlanacak. Yanlış pozitif/negatifler, kanıt dosyaları, güven puanı ve örnekleme maliyeti test edilecek.
+- Öncelik: devam eden 7.650 eski sistem AV yeniden testini **kesmeden**, sonuçlar tamamlandıktan sonra geliştirme ve doğrulama. Var olan AV testi şu anda konuşma dili/OCR doğrulaması yapmıyor.
+- Koruma: Ana İBO playlistine, mevcut YEDEKLER sırasına ve korumalı yabancı arşive otomatik müdahale yok. Kanallar ancak doğrulanmış sonuçlar ve kullanıcı onaylı güvenli aktarım süreciyle taşınabilir.
+- Kabul: örnek Türkçe/yabancı/çok dilli yayınlarla ses+OCR testleri, kanıtlı sınıflandırma raporu, CI başarısı, korunmuş dosyaların parite/SHA kontrolü. **AÇIK — uygulanmış veya tamamlanmış sayılmayacak.**
