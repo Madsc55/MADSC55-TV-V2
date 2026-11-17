@@ -1,3 +1,9 @@
+## 17 Kasım 2026 — OCR + altyazı entegrasyonu tamamlanan kod bağlantısı
+
+Yeni `v2/backup_text_hint_import.py`, mevcut `backup_text_batch.py` raporundaki OCR ve Türkçe altyazı ipuçlarını URL SHA256 ile güvenli biçimde içe alır. `v2/backup_archive_offline.py` yeni isteğe bağlı `--text-hints` argümanıyla AV, ASR, OCR ve altyazı inceleme ipuçlarını **tek JSON raporunda** sunar; ham URL/metin taşınmaz ve hiçbir ipucu otomatik Türkçe onayı vermez. `v2/test_backup_text_hint_import.py` beş negatif/pozitif senaryo eklendi; test çalıştırıcısına bağlandı. **62 yazılı test** (57+5); PASS henüz kanıtlanmadı. Birleştirme kodu hazır olsa da gerçek yayın örneklemesi, model kabulü, güvenli ağ egress'i ve 18.074 kanal taraması henüz yapılmadı. Ana İBO/YEDEKLER değişmedi.
+
+---
+
 ## 17 Kasım 2026 — Mevcut gerçek ASR çalışma yolu tespit edildi
 
 `.github/workflows/v2-spoken-language-existing-snapshot.yml` ana dalda zaten mevcut ve manuel `workflow_dispatch` ile çalışıyor. Önceki Actions çalışması 40948768782'nin oynatma ve özel snapshot artifact'larını indiriyor; 16 akıştan 15'er saniyelik `faster-whisper` konuşma örneklemesi yapıp `existing-snapshot-spoken-language-evidence` adlı anonimleştirilmiş artifact yayımlamayı hedefliyor. Bu workflow'un geçmiş artifact'larının hâlâ indirilebilirliği, gerçekten başarılı çalışması ve güncel 18.074 envanteri kapsaması **doğrulanmadı**. Bu yol tüm envanterin kabulü değildir. GitHub DNS bağlantısı bu oturumdaki yerel shell'de başarısız; burada Python regresyonları çalıştırılmadı. DNS/redirect egress riskleri açık; normal yayın alan adlarını bütünüyle kapatacak geçici kod değişikliği geri alındı. Sonraki adım: uygun GitHub Actions çalışma/kanıt yoluyla 57 offline testin gerçek PASS çıktısı ve ardından sınırlı gerçek ASR+OCR+altyazı kabulü. Ana playlist/YEDEKLER değişmedi.
