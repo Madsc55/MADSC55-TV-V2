@@ -1,9 +1,9 @@
 {
-  "base_sha256": "bd670cb7d94f4551f0398f37ab8037bd4e782171994186630a169304078e76a5",
-  "result_sha256": "4bed68671edc9a59a329275a8e05ceb3e67f4ab4093f0d731b99a274a4c33867",
+  "base_sha256": "4bed68671edc9a59a329275a8e05ceb3e67f4ab4093f0d731b99a274a4c33867",
+  "result_sha256": "0088f131f7bb6bc503bf5a8642d20f92e176466bb749b10183e87c6779742aee",
   "operation": "reorder",
-  "request": "Kullanıcının açık talimatı: YEDEKLER içindeki Türk adı veya Türkiye işareti geçen tüm kanalları 1003. Halk TV kanalından hemen sonraya taşı; diğer kanalları ve sıralama ön ekini koru.",
+  "request": "Kullanıcının açık talimatı: 18.074 YEDEKLER içinde kaçırılan Türk kanallarını kapsamlı yeniden tara ve bulduklarını 1034. kanalın altına sırala.",
   "channels": [
-    "YEDEKLER içindeki Türk adı ve Türkiye işareti bulunan kanal kayıtlarının 1004. sıradan başlayacak şekilde taşınması"
+    "İkinci taramada bulunan 81 Türk adı/ülke işaretli YEDEKLER kanal kaydı; 1035. sıradan itibaren taşındı"
   ]
 }
