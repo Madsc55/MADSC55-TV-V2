@@ -82,6 +82,10 @@ def rollback(ledger):
     if not ledger["history"]:
         raise ValueError("Nothing to undo")
     result = json.loads(json.dumps(ledger))
+    while result["history"] and "undo_of_revision" in result["history"][-1]:
+        result["history"].pop()
+    if not result["history"]:
+        raise ValueError("Nothing to undo")
     last = result["history"].pop()
     for change in reversed(last["changes"]):
         key = str(change["local_ordinal"])
