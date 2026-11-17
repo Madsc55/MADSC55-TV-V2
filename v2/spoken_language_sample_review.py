@@ -12,9 +12,9 @@ import subprocess
 import tempfile
 from pathlib import Path
 try:
-    from .backup_text_sampler import valid_url, STREAM_PROTOCOL_WHITELIST
+    from .backup_text_sampler import valid_url, STREAM_PROTOCOL_WHITELIST, public_dns_for_url
 except ImportError:
-    from backup_text_sampler import valid_url, STREAM_PROTOCOL_WHITELIST
+    from backup_text_sampler import valid_url, STREAM_PROTOCOL_WHITELIST, public_dns_for_url
 
 REPORTS = Path(__file__).resolve().parent / "reports"
 
@@ -56,6 +56,8 @@ def run():
         raise SystemExit("No eligible video+audio streams for speech sampling")
     if os.environ.get("MADSC55_SECURE_EGRESS_CONFIRMED") != "1":
         raise SystemExit("Secure network egress not confirmed; refusing untrusted ffmpeg streams")
+    if any(not public_dns_for_url(url) for _, url in selected):
+        raise SystemExit("Unsafe or unresolvable DNS target; refusing stream sampling")
     from faster_whisper import WhisperModel
     model = WhisperModel("tiny", device="cpu", compute_type="int8")
     results = []
