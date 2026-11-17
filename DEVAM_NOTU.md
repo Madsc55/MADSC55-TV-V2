@@ -1,3 +1,11 @@
+## 17 Kasım 2026 — Toplu OCR/altyazı hata yalıtımı ve çıktı gizliliği
+
+**Doğrulandı:** Önceki HEAD `34f9b38b56340214b2a92ad7dd139178cc917f6b` için `V2 Main Production Security Gate` run **44097374984 SUCCESS**. Bu sonuç yeni değişikliklerin unit test kabulü değildir.
+
+**Yapıldı:** `v2/backup_text_batch.py` tek kanalın OCR/altyazı örnekleme hatasında tüm batch'i düşürmeden `SAMPLE_ERROR` olarak devam eder; çıktı yalnız açıkça izinli alanları içerir, örnekleyicinin beklenmedik ham metin/URL alanları dışarı sızamaz; örnekleyiciden gelen doğrulama bayrağı `True` olsa dahi otomatik dil onayı `False` kalır (commit `31f305886cbec3de6c394761511a881753211785`). Yeni regresyon testi hata izolasyonu, ham metin reddi ve otomatik dil onayı reddini kontrol eder (commit `f8b8932c09fcbfba9453637132618c6f6739da58`). Toplam yazılmış offline test senaryosu **37**. Son HEAD'in CI sonucu henüz doğrulanmadı. Gerçek 18.074 tarama, canlı OCR/ASR ve merge yapılmadı. Ana İBO ve YEDEKLER değiştirilmedi.
+
+---
+
 ## 17 Kasım 2026 — Toplu OCR/altyazı ağ erişimi için açık izin
 
 **Yapıldı:** `v2/backup_text_batch.py` artık ağ üzerinden akış örneklemesi başlatmak için açık `--allow-network` bayrağı gerektiriyor; varsayılan çalıştırma ağ erişimini reddediyor (commit `d34a88b8ac53a2ab70b54ec83cd9ab3ff7e96a3e`). Üç mevcut test bu açık izne uyarlandı; yeni test varsayılan ağ reddini doğrular (commit `3bc041be942c683e3893ae1ef8fdd88ef232fe3b`). Hazırlanan toplam offline senaryo **36**. Önceki HEAD `35399ce...` security gate run **44097151792** kontrol anında in_progress idi. Bu yeni HEAD için PASS doğrulanmadı. Gerçek 18.074 kanallık tarama veya merge yapılmadı; İBO ve YEDEKLER korunuyor.
