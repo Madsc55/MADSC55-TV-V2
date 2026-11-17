@@ -4611,6 +4611,243 @@ https://live.artidijitalmedya.com/artidijital_etv/etv/playlist.m3u8
 https://cdn-time35tv.yayin.com.tr/time35tv/time35tv/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.ibb.co/mHt7rQf/Tryerel.png" group-title="🗂️ YEDEKLER (18074)",KANAL 23 ELAZIĞ
 https://cdn13-kanal23.yayin.com.tr/kanal23/kanal23/playlist.m3u8
+#EXTINF:-1 group-title="🗂️ YEDEKLER (18074)",HABER 61 TV
+https://cdn-haber61tv.yayin.com.tr/haber61tv/smil:haber61tv.smil/index.m3u8?checkedby:iptvcat.net
+#EXTINF:-1 tvg-logo="https://i.imgur.com/RhPIYKu.jpg" group-title="🗂️ YEDEKLER (18074)",HABER 61
+https://win8.yayin.com.tr/haber61tv/smil:haber61tv.smil/playlist.m3u8?checkedby:iptvcat.net
+#EXTINF:-1 tvg-logo="https://m.yilmaztv.cc/logo/kanal-26.jpg?t=1696665170" group-title="🗂️ YEDEKLER (18074)",KANAL 26  ESKİŞEHİR
+https://live.artidijitalmedya.com/artidijital_kanal26/kanal26/supersatforum_chunks.m3u8
+#EXTINF:-1 tvg-logo="https://m.yilmaztv.cc/logo/kanal-3.jpg?t=1696665170" group-title="🗂️ YEDEKLER (18074)",KANAL 3  AFYONKARAHİSAR
+https://live.artidijitalmedya.com/artidijital_kanal3/kanal3/supersatforum_chunks.m3u8
+#EXTINF:-1 tvg-logo="http://1.bp.blogspot.com/-VBFvcTD3wLY/VqnKIdk5l1I/AAAAAAAAPP4/nIcnwtkkCeY/s1600/haber61.jpg" group-title="🗂️ YEDEKLER (18074)",HABER 61 TV
+https://cdn-haber61tv.yayin.com.tr/haber61tv/smil:haber61tv.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="Tivi6.tr@SD" tvg-name="TİVİ 6 720P" tvg-logo="https://i.imgur.com/Mbi0jbz.png" group-title="🗂️ YEDEKLER (18074)",TİVİ 6 720P
+https://live.artidijitalmedya.com/artidijital_tivi6/tivi6/playlist.m3u8
+#EXTINF:-1 tvg-id="ZarokTV.tr@SD" tvg-name="ZAROK TV 720P" tvg-logo="https://i.imgur.com/o0eevnb.png" group-title="🗂️ YEDEKLER (18074)",ZAROK TV 720P
+https://zindikurmanci.zaroktv.com.tr/hls/stream.m3u8
+#EXTINF:-1 tvg-id="Number1Ask.tr@SD" tvg-name="NUMBER 1 ASK 720P" tvg-logo="https://i.imgur.com/slwbux7.png" group-title="🗂️ YEDEKLER (18074)",NUMBER 1 ASK 720P
+https://b01c02nl.mediatriple.net/videoonlylive/mtkgeuihrlfwlive/u_stream_5c9e18f9cea15_1/playlist.m3u8
+#EXTINF:-1 tvg-id="Number1Damar.tr@SD" tvg-name="NUMBER 1 DAMAR 720P" tvg-logo="https://i.imgur.com/rYtbAGZ.png" group-title="🗂️ YEDEKLER (18074)",NUMBER 1 DAMAR 720P
+https://b01c02nl.mediatriple.net/videoonlylive/mtkgeuihrlfwlive/u_stream_5c9e198784bdc_1/playlist.m3u8
+#EXTINF:-1 tvg-id="Number1Dance.tr@SD" tvg-name="NUMBER 1 DANCE 720P" tvg-logo="https://i.imgur.com/ZM4PSyq.png" group-title="🗂️ YEDEKLER (18074)",NUMBER 1 DANCE 720P
+https://b01c02nl.mediatriple.net/videoonlylive/mtkgeuihrlfwlive/u_stream_5c9e2aa8acf44_1/playlist.m3u8
+#EXTINF:-1 tvg-id="Number1TV.tr@SD" tvg-name="NUMBER1 TV 1" tvg-logo="https://i.imgur.com/02cDIBi.png" group-title="🗂️ YEDEKLER (18074)",NUMBER1 TV 1 720P HD
+https://b01c02nl.mediatriple.net/videoonlylive/mtkgeuihrlfwlive/broadcast_5c9e17cd59e8b.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="Number1TV.tr@SD" tvg-name="NUMBER1 TV 2" tvg-logo="https://i.imgur.com/02cDIBi.png" group-title="🗂️ YEDEKLER (18074)",NUMBER1 TV 2 720P HD
+https://b01c02nl.mediatriple.net/videoonlylive/mtkgeuihrlfwlive/u_stream_5c9e17cd6360b_1/playlist.m3u8
+#EXTINF:-1 tvg-id="Number1TV.tr@SD" tvg-name="NUMBER1 TV" tvg-logo="https://i.imgur.com/02cDIBi.png" group-title="🗂️ YEDEKLER (18074)",NUMBER1 TV 720P HD
+https://b01c02nl.mediatriple.net/videoonlylive/mtkgeuihrlfwlive/broadcast_5c9e17cd59e8b.smil/chunklist_b400000.m3u8
+#EXTINF:-1 tvg-id="AltasTV.tr@SD" tvg-name="ALTAS TV 1080P" tvg-logo="https://i.imgur.com/XaJ7fp6.png" group-title="🗂️ YEDEKLER (18074)",ALTAS TV 1080P
+https://edge1.socialsmart.tv/altastv/bant1/playlist.m3u8
+#EXTINF:-1 tvg-id="DenizPostasiTV.tr@SD" tvg-logo="https://raw.githubusercontent.com/Madsc55/madsc-tv/main/logos/resmi-deniz-20261012.png" group-title="🗂️ YEDEKLER (18074)",DENİZ POSTASI TV 720P
+https://live.artidijitalmedya.com/artidijital_denizpostasi/denizpostasi/playlist.m3u8
+#EXTINF:-1 tvg-id="ERTV.tr@SD" tvg-name="ER TV 1080P" tvg-logo="https://i.imgur.com/VDGEPrD.png" group-title="🗂️ YEDEKLER (18074)",ER TV 1080P
+https://live.artidijitalmedya.com/artidijital_ertv_new/ertv/playlist.m3u8
+#EXTINF:-1 tvg-id="KanalHayat.tr@SD" tvg-name="KANAL HAYAT 1080P" tvg-logo="https://i.imgur.com/eikZj19.png" group-title="🗂️ YEDEKLER (18074)",KANAL HAYAT 1080P
+https://tbn02a.ltnschedule.com/hls/nx21i.m3u8
+#EXTINF:-1 tvg-id="LalegulTV.tr@SD" tvg-name="LALEGÜL TV" tvg-logo="https://d3ckc0u56niq67.cloudfront.net/conf/images/lalegul_gcW.png" group-title="🗂️ YEDEKLER (18074)",LALEGÜL TV 720P HD
+https://lbl.netmedya.net/hls/lalegultv.m3u8
+#EXTINF:-1 tvg-id="ETVManisa.tr@SD" tvg-name="ETV MANİSA 1080P" tvg-logo="https://i.ibb.co/QKXtdkz/sOd3INg.png" group-title="🗂️ YEDEKLER (18074)",ETV MANİSA 1080P
+https://edge1.socialsmart.tv/manisaetv/bant1/playlist.m3u8
+#EXTINF:-1 tvg-id="GuneydoguTV.tr@SD" tvg-name="GUNEYDOGU TV 720P" tvg-logo="https://i.imgur.com/JT5pp3Y.png" group-title="🗂️ YEDEKLER (18074)",GUNEYDOGU TV 720P
+https://edge1.socialsmart.tv/gtv/bant1/playlist.m3u8
+#EXTINF:-1 tvg-id="IcelTV.tr@SD" tvg-name="ICEL TV 720P" tvg-logo="https://i.imgur.com/CGwImKv.png" group-title="🗂️ YEDEKLER (18074)",ICEL TV 720P
+https://edge1.socialsmart.tv/iceltv/bant1/playlist.m3u8
+#EXTINF:-1 tvg-id="KanalFirat.tr@SD" tvg-name="KANAL FİRAT 720P" tvg-logo="https://i.imgur.com/3o8Rokp.png" group-title="🗂️ YEDEKLER (18074)",KANAL FİRAT 720P
+https://live.artidijitalmedya.com/artidijital_kanalfirat/kanalfirat/playlist.m3u8
+#EXTINF:-1 tvg-id="KanalV.tr@SD" tvg-name="KANAL V 720P" tvg-logo="https://i.imgur.com/7RNjTno.png" group-title="🗂️ YEDEKLER (18074)",KANAL V 720P
+https://live.artidijitalmedya.com/artidijital_kanalv/kanalv/playlist.m3u8
+#EXTINF:-1 tvg-id="LifeTV.tr@SD" tvg-name="LİFE TV 720P" tvg-logo="https://i.imgur.com/lWeJxm0.png" group-title="🗂️ YEDEKLER (18074)",LİFE TV 720P
+https://live.artidijitalmedya.com/artidijital_lifetv/lifetv/playlist.m3u8
+#EXTINF:-1 tvg-id="LineTV.tr@SD" tvg-name="LİNE TV 720P" tvg-logo="https://i.imgur.com/6GNp7f8.png" group-title="🗂️ YEDEKLER (18074)",LİNE TV 720P
+https://edge1.socialsmart.tv/linetv/bant1/playlist.m3u8
+#EXTINF:-1 tvg-id="MedMuzik.tr@SD" tvg-logo="https://i.imgur.com/gtUFmCD.png" group-title="🗂️ YEDEKLER (18074)",MED MUZİK 1080P
+http://54.36.110.140/live3/live3.m3u8
+#EXTINF:-1 tvg-id="TBMMTV.tr@SD" tvg-name="TBMM TV" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/TBMM_TV_logo.svg/960px-TBMM_TV_logo.svg.png" group-title="🗂️ YEDEKLER (18074)",TBMM TV 720P HD
+https://meclistv-live.ercdn.net/meclistv/meclistv.m3u8
+#EXTINF:-1 tvg-id="SercemTV.tr@HD" tvg-name="SERCEM TV 1080P" tvg-logo="https://wsrv.nl/?url=raw.githubusercontent.com%2FMadsc55%2Fmadsc-tv%2Fmain%2Flogos%2Fsercem-tv.svg&output=png" group-title="🗂️ YEDEKLER (18074)",SERCEM TV 1080P
+https://canli.sercemtv.com.tr/hls/0/stream.m3u8
+#EXTINF:-1 tvg-id="SunRTV.tr@SD" tvg-name="SUN RTV 720P" tvg-logo="https://i.imgur.com/64tph9N.png" group-title="🗂️ YEDEKLER (18074)",SUN RTV 720P
+https://live.artidijitalmedya.com/artidijital_sunrtv/sunrtv/playlist.m3u8
+#EXTINF:-1 tvg-id="TV41.tr@SD" tvg-logo="https://raw.githubusercontent.com/Madsc55/madsc-tv/main/logos/yayinci-20261012-tv41.png" group-title="🗂️ YEDEKLER (18074)",TV 41 720P
+https://live.artidijitalmedya.com/artidijital_tv41/tv41/playlist.m3u8
+#EXTINF:-1 tvg-id="UrfaNatikTV.tr@SD" tvg-name="URFA NATİK TV 720P" tvg-logo="https://wsrv.nl/?url=raw.githubusercontent.com%2FMadsc55%2Fmadsc-tv%2Fmain%2Flogos%2Furfa-natik-tv.svg&output=png" group-title="🗂️ YEDEKLER (18074)",URFA NATİK TV 720P
+https://live.artidijitalmedya.com/artidijital_urfanatiktv/urfanatiktv/playlist.m3u8
+#EXTINF:-1 tvg-id="Van65TV.tr@SD" tvg-name="VAN 65 TV" tvg-logo="https://raw.githubusercontent.com/Madsc55/madsc-tv/main/logos/yayinci-20261012-van65.png" group-title="🗂️ YEDEKLER (18074)",VAN 65 TV
+https://live.artidijitalmedya.com/artidijital_van65/van65/playlist.m3u8
+#EXTINF:-1 tvg-id="ArasTV.tr@SD" tvg-logo="https://i.imgur.com/JsDCyWG.png" group-title="🗂️ YEDEKLER (18074)",Aras TV (576p) [Not 24/7]
+http://1.rtmp.org/tv217/yayin.stream/playlist.m3u8
+#EXTINF:-1 tvg-id="Haber61TV.tr@SD" tvg-logo="https://i.imgur.com/2a2XUKl.png" group-title="🗂️ YEDEKLER (18074)",Haber61 TV (720p) [Not 24/7]
+https://cdn-haber61tv.yayin.com.tr/haber61tv/smil:haber61tv.smil/index.m3u8
+#EXTINF:-1 tvg-id="TVDen.tr@SD" tvg-logo="https://i.imgur.com/Uhg95Ze.png" group-title="🗂️ YEDEKLER (18074)",TV Den (576p) [Not 24/7]
+http://canli.tvden.com.tr/hls/live.m3u8
+#EXTINF:-1 tvg-id="BloombergHT.tr@SD" group-title="🗂️ YEDEKLER (18074)",BloombergHT (720p)
+https://ciner-live.daioncdn.net/bloomberght/bloomberght.m3u8
+#EXTINF:-1 tvg-id="CekmekoyTV.tr@SD" group-title="🗂️ YEDEKLER (18074)",Cekmeköy TV (1080p)
+https://cdn-cekmekoybeltv.yayin.com.tr/cekmekoybeltv/cekmekoybeltv_1080p/playlist.m3u8
+#EXTINF:-1 tvg-id="DisneyJr.tr@SD" group-title="🗂️ YEDEKLER (18074)",Disney Jr. (1080p) [Geo-blocked]
+https://saran-live.ercdn.net/disneyjunior/index.m3u8
+#EXTINF:-1 tvg-id="Kanal3.tr@SD" group-title="🗂️ YEDEKLER (18074)",Kanal 3 (1080p) [Not 24/7]
+https://waw2.artiyerelmedya.net/kanal3/bant1/playlist.m3u8
+#EXTINF:-1 tvg-id="Kanal3.tr@SD" group-title="🗂️ YEDEKLER (18074)",Kanal 3 (720p) [Not 24/7]
+http://stream.taksimbilisim.com:1935/kanal3/bant1/playlist.m3u8
+#EXTINF:-1 tvg-id="Kanal3.tr@SD" group-title="🗂️ YEDEKLER (18074)",Kanal 3 (720p) [Not 24/7]
+https://live.artidijitalmedya.com/artidijital_kanal3/kanal3guncel/playlist.m3u8
+#EXTINF:-1 tvg-id="Kanal34.tr@SD" group-title="🗂️ YEDEKLER (18074)",Kanal 34 (720p) [Not 24/7]
+https://vdo.digitalbox.xyz:3266/live/kanal34tvlive.m3u8
+#EXTINF:-1 tvg-id="LalegulTV.tr@SD" group-title="🗂️ YEDEKLER (18074)",Lalegül TV (720p) [Not 24/7]
+http://lalegultv.netmedya.net/hls/lalegultv.m3u8
+#EXTINF:-1 tvg-id="LalegulTV.tr@SD" group-title="🗂️ YEDEKLER (18074)",Lalegül TV (720p) [Not 24/7]
+http://lalegultv.netmedya.net/lalegul-tv/lalegultv.stream/playlist.m3u8
+#EXTINF:-1 tvg-id="NationalGeographic.tr@SD" group-title="🗂️ YEDEKLER (18074)",National Geographic (1080p) [Geo-blocked]
+https://saran-live.ercdn.net/natgeohd/index.m3u8
+#EXTINF:-1 tvg-id="NationalGeographicWild.tr@SD" group-title="🗂️ YEDEKLER (18074)",National Geographic Wild (1080p) [Geo-blocked]
+https://saran-live.ercdn.net/natgeowild/index.m3u8
+#EXTINF:-1 tvg-id="NaturalTV.tr@SD" group-title="🗂️ YEDEKLER (18074)",Natural TV (720p) [Not 24/7]
+http://broadcasttr.com:1935/naturaltv/bant1/playlist.m3u8
+#EXTINF:-1 tvg-id="NaturalTV.tr@SD" group-title="🗂️ YEDEKLER (18074)",Natural TV (720p) [Not 24/7]
+https://edge1.socialsmart.tv/naturaltv/bant1/playlist.m3u8
+#EXTINF:-1 tvg-id="NOWTV.tr@SD" group-title="🗂️ YEDEKLER (18074)",NOW TV
+http://116.202.238.88/FOXTV_TR/index.m3u8
+#EXTINF:-1 tvg-id="Number1TV.tr@SD" group-title="🗂️ YEDEKLER (18074)",Number 1 TV (720p)
+https://mn-nl.mncdn.com/blutv_nr12/live.m3u8
+#EXTINF:-1 tvg-id="On4TV.tr@SD" group-title="🗂️ YEDEKLER (18074)",On4 TV (1080p)
+https://edge1.socialsmart.tv/on4/bant1/playlist.m3u8
+#EXTINF:-1 tvg-id="QafTV.tr@SD" group-title="🗂️ YEDEKLER (18074)",Qaf TV (1080p)
+https://customer-9vqui33qma2rownb.cloudflarestream.com/7792e558fe54e23bdd4b462ec275cdba/manifest/video.m3u8
+#EXTINF:-1 tvg-id="SSport.tr@SD" group-title="🗂️ YEDEKLER (18074)",S Sport (720p)
+https://corestream.siteyaptim.live/s-sport/index.m3u8
+#EXTINF:-1 tvg-id="SSport2.tr@SD" group-title="🗂️ YEDEKLER (18074)",S Sport 2 (720p)
+https://corestream.siteyaptim.live/s-sport2/index.m3u8
+#EXTINF:-1 tvg-id="SSport2.tr@SD" group-title="🗂️ YEDEKLER (18074)",S Sport 2
+https://bcovlive-a.akamaihd.net/29c60f23ea4840ba8726925a77fcfd0b/eu-central-1/6415845530001/profile_0/chunklist.m3u8
+#EXTINF:-1 tvg-id="SunRTV.tr@SD" group-title="🗂️ YEDEKLER (18074)",Sun RTV (720p) [Not 24/7]
+https://tr.socialsmart.tv/suntv/bant1/chunks.m3u8
+#EXTINF:-1 tvg-id="TV41.tr@SD" group-title="🗂️ YEDEKLER (18074)",TV 41 (720p) [Not 24/7]
+http://stream.taksimbilisim.com:1935/tv41/bant1/TV41.m3u8
+#EXTINF:-1 tvg-id="TV41.tr@SD" group-title="🗂️ YEDEKLER (18074)",TV 41 (720p) [Not 24/7]
+http://stream.taksimbilisim.com:1935/tv41/smil:tv41.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="TV42.tr@SD" group-title="🗂️ YEDEKLER (18074)",TV 42
+https://canli.tv42.com.tr/memfs/d936e417-c4bd-4d42-89a2-02f289892d1d.m3u8
+#EXTINF:-1 tvg-id="ViasatHistory.tr@SD" group-title="🗂️ YEDEKLER (18074)",Viasat History (720p)
+https://nord.ayakkabiparti.lol/viasathistory/index.m3u8
+#EXTINF:-1 tvg-id="NationalGeographic.tr@SD" group-title="🗂️ YEDEKLER (18074)",National Geographic
+https://nord.ayakkabiparti.lol/natgeo/index.m3u8
+#EXTINF:-1 tvg-id="NationalGeographicWild.tr@SD" group-title="🗂️ YEDEKLER (18074)",National Geographic Wild
+https://nord.ayakkabiparti.lol/natgeowild/index.m3u8
+#EXTINF:-1 tvg-id="beINMoviesStars.tr@SD" group-title="🗂️ YEDEKLER (18074)",beIN Movies Stars
+https://nord.ayakkabiparti.lol/bsaction1/index.m3u8
+#EXTINF:-1 tvg-id="beINBoxOffice1.tr@SD" group-title="🗂️ YEDEKLER (18074)",beIN Box Office 1
+https://nord.ayakkabiparti.lol/box1/index.m3u8
+#EXTINF:-1 tvg-id="beINBoxOffice2.tr@SD" group-title="🗂️ YEDEKLER (18074)",beIN Box Office 2
+https://nord.ayakkabiparti.lol/box2/index.m3u8
+#EXTINF:-1 tvg-id="beINBoxOffice3.tr@SD" group-title="🗂️ YEDEKLER (18074)",beIN Box Office 3
+https://nord.ayakkabiparti.lol/box3/index.m3u8
+#EXTINF:-1 tvg-id="24TV.tr@SD" tvg-logo="https://i.imgur.com/8FO41es.png" group-title="🗂️ YEDEKLER (18074)" user-agent="Mozilla/5.0 Macintosh; Intel Mac OS X 10_14_5 AppleWebKit/537.36 KHTML, like Gecko Chrome/76.0.3809.25 Safari/537.36",24 TV (1080p)
+https://mn-nl.mncdn.com/kanal24/smil:kanal24.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="AnadoluAgency.tr@SD" tvg-logo="https://i.imgur.com/dWElJll.png" group-title="🗂️ YEDEKLER (18074)",AA Live (720p) [Not 24/7]
+https://mtulqxgomrllive.mediatriple.net/mtulqxgomrllive/broadcast_59f9c0c785b88.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="beINSportsHaber.tr@SD" tvg-logo="https://i.imgur.com/QWo0x7S.jpg" group-title="🗂️ YEDEKLER (18074)",beIN Sports Haber (720p)
+https://1nyaler.streamhostingcdn.top/stream/23/index.m3u8
+#EXTINF:-1 tvg-id="BeratTV.tr@SD" tvg-logo="https://i.imgur.com/BxxH8wE.png" group-title="🗂️ YEDEKLER (18074)",Berat TV (720p) [Not 24/7]
+https://cdn-berattv.yayin.com.tr/berattv/berattv/playlist.m3u8
+#EXTINF:-1 tvg-id="BizimevTV.tr@SD" tvg-logo="https://i.imgur.com/eJa6sFY.png" group-title="🗂️ YEDEKLER (18074)",Bizimev TV (720p)
+https://mn-nl.mncdn.com/blutv_bizimev/bizimev_sd.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="CekmekoyTV.tr@SD" tvg-logo="https://i.imgur.com/sjAGFWu.png" group-title="🗂️ YEDEKLER (18074)",Cekmeköy TV (1080p)
+https://cdn-cekmekoybeltv.yayin.com.tr/cekmekoybeltv/cekmekoybeltv/playlist.m3u8
+#EXTINF:-1 tvg-id="CiftciTV.tr@SD" tvg-logo="https://i.imgur.com/CLzP4vL.png" group-title="🗂️ YEDEKLER (18074)",Çiftçi TV (1080p) [Not 24/7]
+http://stream.taksimbilisim.com:1935/ciftcitv/smil:ciftcitv.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="FlashTV.tr@SD" tvg-logo="https://i.imgur.com/L0NHKBM.png" group-title="🗂️ YEDEKLER (18074)",Flash TV (720p)
+https://mn-nl.mncdn.com/blutv_flashtv/live.m3u8
+#EXTINF:-1 tvg-id="GEMPixel.tr@SD" tvg-logo="https://i.ibb.co/Q3tkbPrn/icon-27.png" group-title="🗂️ YEDEKLER (18074)",GEM Pixel
+https://glserver1.tamashaland.com/live/aBCH96886YznRbGOiqTnnQ__/stream_0.m3u8
+#EXTINF:-1 tvg-id="GEMSport.tr@SD" tvg-logo="https://www.gemgroup.tv/assets/images/channels/icon_34.png" group-title="🗂️ YEDEKLER (18074)",GEM Sport
+https://steep-wildflower-284d.nhhwkiszzzvcuojxdo.workers.dev/?url=https://gg.hls2.xyz/live/IR+-+GEM+Sport/chunks.m3u8
+#EXTINF:-1 tvg-id="IBBTV.tr@SD" tvg-logo="https://i.imgur.com/aXxAz84.png" group-title="🗂️ YEDEKLER (18074)",IBB TV (1080p) [Not 24/7]
+https://npserver1.ibb.gov.tr/webtv/webtv_wowza1/playlist.m3u8
+#EXTINF:-1 tvg-id="IcelTV.tr@SD" tvg-logo="https://i.imgur.com/CGwImKv.png" group-title="🗂️ YEDEKLER (18074)",Icel TV (720p) [Not 24/7]
+http://stream.taksimbilisim.com:1935/iceltv/bant1/playlist.m3u8
+#EXTINF:-1 tvg-id="Kanal33.tr@SD" tvg-logo="https://i.imgur.com/5WYaoFZ.png" group-title="🗂️ YEDEKLER (18074)",Kanal 33 (720p) [Not 24/7]
+http://stream.taksimbilisim.com:1935/kanal33/bant1/playlist.m3u8
+#EXTINF:-1 tvg-id="Kanal34.tr@SD" tvg-logo="https://i.imgur.com/SIaI6Sj.png" group-title="🗂️ YEDEKLER (18074)",Kanal 34 (720p)
+https://5be5d840359c6.streamlock.net/kanal34tv/kanal34tv/playlist.m3u8
+#EXTINF:-1 tvg-id="Kanal38.tr@SD" tvg-logo="https://i.imgur.com/WvtZ7Xd.png" group-title="🗂️ YEDEKLER (18074)",Kanal 38 (540p) [Not 24/7]
+http://yayin3.canlitv.com:1935/live/kanal38/playlist.m3u8
+#EXTINF:-1 tvg-id="KanalAvrupa.tr@SD" tvg-logo="https://i.imgur.com/bIGk6RN.png" group-title="🗂️ YEDEKLER (18074)",Kanal Avrupa (1080p)
+http://51.15.2.151/hls/kanalavrupa.m3u8
+#EXTINF:-1 tvg-id="KudusTV.tr@SD" tvg-logo="https://i.imgur.com/lwRA84B.png" group-title="🗂️ YEDEKLER (18074)",Kudüs TV (480p) [Geo-blocked]
+https://yayin.kudustv.com/981680400/kudustv/playlist.m3u8
+#EXTINF:-1 tvg-id="SSport.tr@SD" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/a/a9/S_Sport_logo1.png" group-title="🗂️ YEDEKLER (18074)",S Sport
+https://bcovlive-a.akamaihd.net/540fcb034b144b848e7ff887f61a293a/eu-central-1/6415845530001/profile_0/chunklist.m3u8
+#EXTINF:-1 tvg-id="TabiiSpor6.tr@SD" tvg-logo="https://cms-tabii-public-image.tabii.com/int/w300/43020.jpeg" group-title="🗂️ YEDEKLER (18074)",Tabii Spor 6 (720p) [Geo-blocked]
+https://vbtob9hyq58eiophct5qctxr2.medya.trt.com.tr/master.m3u8
+#EXTINF:-1 tvg-id="TarihTV.tr@SD" tvg-logo="https://i.imgur.com/HbIGZUt.png" group-title="🗂️ YEDEKLER (18074)",Tarih TV
+https://tv1.arectv30.sbs/live/tarihtv.m3u8
+#EXTINF:-1 tvg-id="TMB.tr@SD" tvg-logo="https://i.imgur.com/28AyWHe.png" group-title="🗂️ YEDEKLER (18074)",TMB TV
+https://raw.githubusercontent.com/UzunMuhalefet/streams/refs/heads/main/myvideo-az/tmb-azerbaycan.m3u8
+#EXTINF:-1 tvg-id="ToprakTV.tr@SD" tvg-logo="https://i.imgur.com/JGnS0qs.png" group-title="🗂️ YEDEKLER (18074)",Toprak TV (720p) [Not 24/7]
+https://59cba4d34b678.streamlock.net/canlitv/topraktv/playlist.m3u8
+#EXTINF:-1 tvg-id="TV38.tr@SD" tvg-logo="https://i.imgur.com/KDBXLqn.png" group-title="🗂️ YEDEKLER (18074)",TV 38 (360p) [Not 24/7]
+https://59cba4d34b678.streamlock.net/live/tv38/playlist.m3u8
+#EXTINF:-1 tvg-id="TV41.tr@SD" tvg-logo="https://i.imgur.com/6T472LM.png" group-title="🗂️ YEDEKLER (18074)",TV 41 (720p) [Not 24/7]
+http://stream.taksimbilisim.com:1935/tv41/bant1/playlist.m3u8
+#EXTINF:-1 tvg-id="TV52.tr@SD" tvg-logo="https://i.imgur.com/k4R5CzO.png" group-title="🗂️ YEDEKLER (18074)",TV 52 (720p) [Not 24/7]
+http://stream.taksimbilisim.com:1935/tv52/smil:tv52.smil/playlist.m3u8
+#EXTINF:-1 tvg-id="UniversiteTV.tr@SD" tvg-logo="https://i.imgur.com/KeauaSh.png" group-title="🗂️ YEDEKLER (18074)",Üniversite TV (720p) [Not 24/7]
+https://vdo.digitalbox.xyz:3986/live/unitvlive.m3u8
+#EXTINF:-1 tvg-id="VTV.tr@SD" tvg-logo="https://www.vtv.net.tr/uploads/logo/sitelogo_4.jpg" group-title="🗂️ YEDEKLER (18074)" referrer="https://www.vtv.net.tr/",V TV (720p)
+https://serdar.tiviplayer.com/player/m3u8/65aae71c9b93f0965aaed3a92660d98b/65aae71c9b93f0965aaed3a92660d98b.m3u8
+#EXTINF:-1 tvg-id="ViasatExplore.tr@SD" tvg-logo="https://i.imgur.com/DyT5pKB.png" group-title="🗂️ YEDEKLER (18074)",Viasat Explore
+https://tv.arectv29.sbs/live/viasathistory.m3u8
+#EXTINF:-1 group-title="🗂️ YEDEKLER (18074)",KANAL URFA
+https://broadcasttr.com:446/kanalurfa/bant1/chunklist_w1125528664.m3u8
+#EXTINF:-1 tvg-name="SÖZCÜ TV" group-title="🗂️ YEDEKLER (18074)" tvg-logo="https://i.hizliresim.com/s7aygkq.",SÖZCÜ TV
+https://b.fulltvizle.com/sozcu/tracks-v1a1/mono.m3u8
+#EXTINF:-1 tvg-name="SÖZCÜ TV" group-title="🗂️ YEDEKLER (18074)",SÖZCÜ TV
+https://izle.canlitvapp.com/sozcu/index.m3u8
+#EXTINF:-1 tvg-name="SÖZCÜ TV" group-title="🗂️ YEDEKLER (18074)",SÖZCÜ TV
+https://trn03.tulix.tv/gt-sozcu-tv/playlist.m3u8
+#EXTINF:-1 tvg-name="SÖZCÜ TV" group-title="🗂️ YEDEKLER (18074)" tvg-logo="https://d3ckc0u56niq67.cloudfront.net/conf/images/sozcu_tv_KPX.png",SÖZCÜ TV
+https://goldvod.org/live/hpgdiscoo/123456/108.m3u8
+#EXTINF:-1 tvg-name="SÖZCÜ TV" group-title="🗂️ YEDEKLER (18074)" tvg-logo="https://d3ckc0u56niq67.cloudfront.net/conf/images/sozcu_tv_KPX.png",SÖZCÜ TV
+https://goldvod.org/live/hpgdiscoo/123456/287.m3u8
+#EXTINF:-1 group-title="🗂️ YEDEKLER (18074)",SÖZCÜ TV YOUTUBE
+https://www.youtube.com/@Sozcutelevizyonu/live
+
+#EXTINF:-1 tvg-name="SÖZCÜ TV TEST 2" group-title="🗂️ YEDEKLER (18074)",SÖZCÜ TV TEST 2
+http://5.178.103.239:55/yt1/szctv.m3u8
+#EXTINF:-1 tvg-logo="https://i.ibb.co/bLpTdYZ/tv100.png" group-title="🗂️ YEDEKLER (18074)",TV 100 (BACKUP)
+https://tv.ensonhaber.com/tv100/tv100.m3u8
+#EXTINF:-1 tvg-logo="https://i.ibb.co/dgj3MTh/tv85.png" group-title="🗂️ YEDEKLER (18074)",TV8 BUÇUK
+https://tv8.daioncdn.net/tv8bucuk/tv8bucuk.m3u8?app=tv8bucuk_web
+#EXTINF:-1 tvg-name="TV 100" group-title="🗂️ YEDEKLER (18074)",TV 100
+https://tv100.blutv.com/blutv_tv100_live/live.m3u8
+#EXTINF:-1 tvg-logo="https://i.ibb.co/dgj3MTh/tv85.png" group-title="🗂️ YEDEKLER (18074)",TV8 BUÇUK (BACKUP)
+https://tv8.daioncdn.net/tv8bucuk/tv8bucuk.m3u8?app=bf58ab52-4865-4c81-b223-26b41009801e
+#EXTINF:-1 group-title="🗂️ YEDEKLER (18074)",HABER 61
+http://win8.yayin.com.tr/haber61tv/smil:haber61tv.smil/playlist.m3u8
+#EXTINF:-1 group-title="🗂️ YEDEKLER (18074)",KANAL AVRUPA
+https://api-tv27.yayin.com.tr/kanalavrupa/index.m3u8
+#EXTINF:-1 tvg-logo="https://m.yilmaztv.cc/logo/es-tv.jpg?t=1696665170" group-title="🗂️ YEDEKLER (18074)",ES TV  ESKİŞEHİR
+https://live.artidijitalmedya.com/artidijital_estv/estv/supersatforum_chunks.m3u8
+#EXTINF:-1 group-title="🗂️ YEDEKLER (18074)",TBMM TV
+https://mecliscanlitv-lh.akamaihd.net/i/MECLISTV_1@127503/master.m3u8
+
+# --- EK AÇIK ULUSAL HABER SPOR TEMATİK ADAYLARI ---
+#EXTINF:-1 group-title="🗂️ YEDEKLER (18074)" tvg-logo="https://upload.wikimedia.org/wikipedia/tr/thumb/8/87/Zarok_TV_logosu.png/512px-Zarok_TV_logosu.png",Zarok TV
+https://zindikurmanci.zaroktv.com.tr/hls/stream.m3u8#all
+#EXTINF:-1 group-title="🗂️ YEDEKLER (18074)" tvg-logo="",Van 65 TV
+https://live.artidijitalmedya.com/artidijital_van65/van65/playlist.m3u8#all
+#EXTINF:-1 tvg-name="HABER61 TV" tvg-logo="https://raw.githubusercontent.com/Madsc55/madsc-tv/main/logos/duzeltilmis-haber61.png" group-title="🗂️ YEDEKLER (18074)",HABER61 TV
+https://cdn-haber61tv.yayin.com.tr/haber61tv/haber61tv/playlist.m3u8
+#EXTINF:-1 tvg-name="LALEGÜL TV" group-title="🗂️ YEDEKLER (18074)" tvg-logo="https://d3ckc0u56niq67.cloudfront.net/conf/images/lalegul_gcW.png",LALEGÜL TV
+https://goldvod.org/live/hpgdiscoo/123456/186.m3u8
+#EXTINF:-1 tvg-name="LALEGÜL TV" group-title="🗂️ YEDEKLER (18074)" tvg-logo="https://d3ckc0u56niq67.cloudfront.net/conf/images/lalegul_gcW.png",LALEGÜL TV
+https://goldvod.org/live/hpgdiscoo/123456/300.m3u8
+#EXTINF:-1 group-title="🗂️ YEDEKLER (18074)" tvg-logo="",Urfa Natik TV
+https://live.artidijitalmedya.com/artidijital_urfanatiktv/urfanatiktv/playlist.m3u8#all
+#EXTINF:-1 tvg-logo="https://i.imgur.com/2a2XUKl.png" group-title="🗂️ YEDEKLER (18074)",HABER61 TV (720P)
+https://win8.yayin.com.tr/haber61tv/smil:haber61tv.smil/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.postimg.cc/VsW3Jsrz/logo-DAZN-Combat.png" group-title="🗂️ YEDEKLER (18074)",DAZN COMBAT (684P)
 https://jmp2.uk/plu-64d626ac9b414d000820e2fc.m3u8
 #EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/64b67f0424ade50008a3be17/colorLogoPNG.png" group-title="🗂️ YEDEKLER (18074)",DAZN DARTS X PLUTO TV
@@ -5425,10 +5662,6 @@ https://live.artidijitalmedya.com/artidijital_sunrtv/sunrtv/chunks.m3u8
 http://mc1.mediatriple.net/videoonlylive/mtdxkkitgbrckilive/broadcast_5ee244263fd6d.smil/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.ibb.co/mHt7rQf/Tryerel.png" group-title="🗂️ YEDEKLER (18074)",TV 41 KOCAELİ
 https://live.artidijitalmedya.com/artidijital_tv41/tv41/chunks.m3u8
-#EXTINF:-1 group-title="🗂️ YEDEKLER (18074)",HABER 61 TV
-https://cdn-haber61tv.yayin.com.tr/haber61tv/smil:haber61tv.smil/index.m3u8?checkedby:iptvcat.net
-#EXTINF:-1 tvg-logo="https://i.imgur.com/RhPIYKu.jpg" group-title="🗂️ YEDEKLER (18074)",HABER 61
-https://win8.yayin.com.tr/haber61tv/smil:haber61tv.smil/playlist.m3u8?checkedby:iptvcat.net
 #EXTINF:-1 tvg-logo="https://i.imgur.com/wb1Cdc9.png" group-title="🗂️ YEDEKLER (18074)",KANAL 15 (720P) [NOT 24/7]
 https://live.artidijitalmedya.com/artidijital_kanal15/kanal15/playlist.m3u8?checkedby:iptvcat.net
 #EXTINF:-1 tvg-logo="https://wmxznm9feqh3.merlincdn.net/assets/2b180329-c2f1-4d32-815f-e095815bf5ad.png" group-title="🗂️ YEDEKLER (18074)",KANAL 23
@@ -5439,14 +5672,8 @@ https://live.artidijitalmedya.com/artidijital_kanal23/kanal23/playlist.m3u8?chec
 https://live.artidijitalmedya.com/artidijital_kanal26/kanal26/playlist.m3u8?checkedby:iptvcat.net
 #EXTINF:-1 tvg-logo="https://m.yilmaztv.cc/logo/kanal-23.jpg?t=1696693881" group-title="🗂️ YEDEKLER (18074)",KANAL 23  EKSTRA
 https://cdn13-kanal23.yayin.com.tr/kanal23/ngrp:kanal23/tracks-v1a1/mono.m3u8
-#EXTINF:-1 tvg-logo="https://m.yilmaztv.cc/logo/kanal-26.jpg?t=1696665170" group-title="🗂️ YEDEKLER (18074)",KANAL 26  ESKİŞEHİR
-https://live.artidijitalmedya.com/artidijital_kanal26/kanal26/supersatforum_chunks.m3u8
-#EXTINF:-1 tvg-logo="https://m.yilmaztv.cc/logo/kanal-3.jpg?t=1696665170" group-title="🗂️ YEDEKLER (18074)",KANAL 3  AFYONKARAHİSAR
-https://live.artidijitalmedya.com/artidijital_kanal3/kanal3/supersatforum_chunks.m3u8
 #EXTINF:-1 group-title="🗂️ YEDEKLER (18074)",HRT AKDENIZ
 https://vod02.cdn.web.tv/cn/ov/cnovvu97lqw_,240,360,480,.mp4.urlset/playlist-f3-v1-a1.m3u8
-#EXTINF:-1 tvg-logo="http://1.bp.blogspot.com/-VBFvcTD3wLY/VqnKIdk5l1I/AAAAAAAAPP4/nIcnwtkkCeY/s1600/haber61.jpg" group-title="🗂️ YEDEKLER (18074)",HABER 61 TV
-https://cdn-haber61tv.yayin.com.tr/haber61tv/smil:haber61tv.smil/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://tvpnlogopus.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/US2700004DX_20260421T142008SQUARE.png" group-title="🗂️ YEDEKLER (18074)",BEIN SPORTS XTRA Ñ
 https://jmp2.uk/stvp-US2700004DX
 #EXTINF:-1 tvg-logo="https://tvpnlogopus.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/USBA3000043LH_20260907T200450SQUARE.png" group-title="🗂️ YEDEKLER (18074)",SAMSUNG WILD LIFE
@@ -5615,42 +5842,10 @@ http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ
 http://nrttn172.kesintisizyayin.com:29010/lidertv/lidertv/sec-f5-v1-a1.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="KANAL AVRUPA 1" tvg-logo="https://i.imgur.com/bIGk6RN.png" group-title="🗂️ YEDEKLER (18074)",KANAL AVRUPA 1 1080P FHD
 http://cdn-kanalavrupa.yayin.com.tr/kanalavrupa/index.m3u8
-#EXTINF:-1 tvg-id="Tivi6.tr@SD" tvg-name="TİVİ 6 720P" tvg-logo="https://i.imgur.com/Mbi0jbz.png" group-title="🗂️ YEDEKLER (18074)",TİVİ 6 720P
-https://live.artidijitalmedya.com/artidijital_tivi6/tivi6/playlist.m3u8
-#EXTINF:-1 tvg-id="ZarokTV.tr@SD" tvg-name="ZAROK TV 720P" tvg-logo="https://i.imgur.com/o0eevnb.png" group-title="🗂️ YEDEKLER (18074)",ZAROK TV 720P
-https://zindikurmanci.zaroktv.com.tr/hls/stream.m3u8
-#EXTINF:-1 tvg-id="Number1Ask.tr@SD" tvg-name="NUMBER 1 ASK 720P" tvg-logo="https://i.imgur.com/slwbux7.png" group-title="🗂️ YEDEKLER (18074)",NUMBER 1 ASK 720P
-https://b01c02nl.mediatriple.net/videoonlylive/mtkgeuihrlfwlive/u_stream_5c9e18f9cea15_1/playlist.m3u8
-#EXTINF:-1 tvg-id="Number1Damar.tr@SD" tvg-name="NUMBER 1 DAMAR 720P" tvg-logo="https://i.imgur.com/rYtbAGZ.png" group-title="🗂️ YEDEKLER (18074)",NUMBER 1 DAMAR 720P
-https://b01c02nl.mediatriple.net/videoonlylive/mtkgeuihrlfwlive/u_stream_5c9e198784bdc_1/playlist.m3u8
-#EXTINF:-1 tvg-id="Number1Dance.tr@SD" tvg-name="NUMBER 1 DANCE 720P" tvg-logo="https://i.imgur.com/ZM4PSyq.png" group-title="🗂️ YEDEKLER (18074)",NUMBER 1 DANCE 720P
-https://b01c02nl.mediatriple.net/videoonlylive/mtkgeuihrlfwlive/u_stream_5c9e2aa8acf44_1/playlist.m3u8
-#EXTINF:-1 tvg-id="Number1TV.tr@SD" tvg-name="NUMBER1 TV 1" tvg-logo="https://i.imgur.com/02cDIBi.png" group-title="🗂️ YEDEKLER (18074)",NUMBER1 TV 1 720P HD
-https://b01c02nl.mediatriple.net/videoonlylive/mtkgeuihrlfwlive/broadcast_5c9e17cd59e8b.smil/playlist.m3u8
-#EXTINF:-1 tvg-id="Number1TV.tr@SD" tvg-name="NUMBER1 TV 2" tvg-logo="https://i.imgur.com/02cDIBi.png" group-title="🗂️ YEDEKLER (18074)",NUMBER1 TV 2 720P HD
-https://b01c02nl.mediatriple.net/videoonlylive/mtkgeuihrlfwlive/u_stream_5c9e17cd6360b_1/playlist.m3u8
-#EXTINF:-1 tvg-id="Number1TV.tr@SD" tvg-name="NUMBER1 TV" tvg-logo="https://i.imgur.com/02cDIBi.png" group-title="🗂️ YEDEKLER (18074)",NUMBER1 TV 720P HD
-https://b01c02nl.mediatriple.net/videoonlylive/mtkgeuihrlfwlive/broadcast_5c9e17cd59e8b.smil/chunklist_b400000.m3u8
-#EXTINF:-1 tvg-id="AltasTV.tr@SD" tvg-name="ALTAS TV 1080P" tvg-logo="https://i.imgur.com/XaJ7fp6.png" group-title="🗂️ YEDEKLER (18074)",ALTAS TV 1080P
-https://edge1.socialsmart.tv/altastv/bant1/playlist.m3u8
-#EXTINF:-1 tvg-id="DenizPostasiTV.tr@SD" tvg-logo="https://raw.githubusercontent.com/Madsc55/madsc-tv/main/logos/resmi-deniz-20261012.png" group-title="🗂️ YEDEKLER (18074)",DENİZ POSTASI TV 720P
-https://live.artidijitalmedya.com/artidijital_denizpostasi/denizpostasi/playlist.m3u8
-#EXTINF:-1 tvg-id="ERTV.tr@SD" tvg-name="ER TV 1080P" tvg-logo="https://i.imgur.com/VDGEPrD.png" group-title="🗂️ YEDEKLER (18074)",ER TV 1080P
-https://live.artidijitalmedya.com/artidijital_ertv_new/ertv/playlist.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="POWER TV 1" tvg-logo="https://i.ibb.co/JrXDQJy/power-tv.png" group-title="🗂️ YEDEKLER (18074)",POWER TV 1 1080P FHD
 https://livetv.powerapp.com.tr/powerTV/powerhd.smil/playlist.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="POWER TV" tvg-logo="https://i.ibb.co/JrXDQJy/power-tv.png" group-title="🗂️ YEDEKLER (18074)",POWER TV 1080P FHD
 https://live.artidijitalmedya.com/artidijital_powertv/powertv/playlist.m3u8
-#EXTINF:-1 tvg-id="KanalHayat.tr@SD" tvg-name="KANAL HAYAT 1080P" tvg-logo="https://i.imgur.com/eikZj19.png" group-title="🗂️ YEDEKLER (18074)",KANAL HAYAT 1080P
-https://tbn02a.ltnschedule.com/hls/nx21i.m3u8
-#EXTINF:-1 tvg-id="LalegulTV.tr@SD" tvg-name="LALEGÜL TV" tvg-logo="https://d3ckc0u56niq67.cloudfront.net/conf/images/lalegul_gcW.png" group-title="🗂️ YEDEKLER (18074)",LALEGÜL TV 720P HD
-https://lbl.netmedya.net/hls/lalegultv.m3u8
-#EXTINF:-1 tvg-id="ETVManisa.tr@SD" tvg-name="ETV MANİSA 1080P" tvg-logo="https://i.ibb.co/QKXtdkz/sOd3INg.png" group-title="🗂️ YEDEKLER (18074)",ETV MANİSA 1080P
-https://edge1.socialsmart.tv/manisaetv/bant1/playlist.m3u8
-#EXTINF:-1 tvg-id="GuneydoguTV.tr@SD" tvg-name="GUNEYDOGU TV 720P" tvg-logo="https://i.imgur.com/JT5pp3Y.png" group-title="🗂️ YEDEKLER (18074)",GUNEYDOGU TV 720P
-https://edge1.socialsmart.tv/gtv/bant1/playlist.m3u8
-#EXTINF:-1 tvg-id="IcelTV.tr@SD" tvg-name="ICEL TV 720P" tvg-logo="https://i.imgur.com/CGwImKv.png" group-title="🗂️ YEDEKLER (18074)",ICEL TV 720P
-https://edge1.socialsmart.tv/iceltv/bant1/playlist.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="KANAL 3 1080P" tvg-logo="https://i.imgur.com/eXErSv0.png" group-title="🗂️ YEDEKLER (18074)",KANAL 3 1080P
 https://live.artidijitalmedya.com/artidijital_kanal3/kanal3/playlist.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="KANAL 12 720P" tvg-logo="https://i.imgur.com/51xCkXG.png" group-title="🗂️ YEDEKLER (18074)",KANAL 12 720P
@@ -5669,38 +5864,10 @@ https://edge1.socialsmart.tv/kanal32/bant1/playlist.m3u8
 https://edge1.socialsmart.tv/kanal32/bant1/chunks.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="KANAL 33 720P" tvg-logo="https://i.imgur.com/5WYaoFZ.png" group-title="🗂️ YEDEKLER (18074)",KANAL 33 720P
 https://edge1.socialsmart.tv/kanal33/bant1/playlist.m3u8
-#EXTINF:-1 tvg-id="KanalFirat.tr@SD" tvg-name="KANAL FİRAT 720P" tvg-logo="https://i.imgur.com/3o8Rokp.png" group-title="🗂️ YEDEKLER (18074)",KANAL FİRAT 720P
-https://live.artidijitalmedya.com/artidijital_kanalfirat/kanalfirat/playlist.m3u8
-#EXTINF:-1 tvg-id="KanalV.tr@SD" tvg-name="KANAL V 720P" tvg-logo="https://i.imgur.com/7RNjTno.png" group-title="🗂️ YEDEKLER (18074)",KANAL V 720P
-https://live.artidijitalmedya.com/artidijital_kanalv/kanalv/playlist.m3u8
-#EXTINF:-1 tvg-id="LifeTV.tr@SD" tvg-name="LİFE TV 720P" tvg-logo="https://i.imgur.com/lWeJxm0.png" group-title="🗂️ YEDEKLER (18074)",LİFE TV 720P
-https://live.artidijitalmedya.com/artidijital_lifetv/lifetv/playlist.m3u8
-#EXTINF:-1 tvg-id="LineTV.tr@SD" tvg-name="LİNE TV 720P" tvg-logo="https://i.imgur.com/6GNp7f8.png" group-title="🗂️ YEDEKLER (18074)",LİNE TV 720P
-https://edge1.socialsmart.tv/linetv/bant1/playlist.m3u8
-#EXTINF:-1 tvg-id="MedMuzik.tr@SD" tvg-logo="https://i.imgur.com/gtUFmCD.png" group-title="🗂️ YEDEKLER (18074)",MED MUZİK 1080P
-http://54.36.110.140/live3/live3.m3u8
-#EXTINF:-1 tvg-id="TBMMTV.tr@SD" tvg-name="TBMM TV" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/TBMM_TV_logo.svg/960px-TBMM_TV_logo.svg.png" group-title="🗂️ YEDEKLER (18074)",TBMM TV 720P HD
-https://meclistv-live.ercdn.net/meclistv/meclistv.m3u8
 #EXTINF:-1 tvg-name="ORDU BEL TV" tvg-logo="https://raw.githubusercontent.com/Madsc55/madsc-tv/main/logos/obb-tv-resmi-20261012-v2.png" group-title="🗂️ YEDEKLER (18074)",ORDU BEL TV
 https://cdn1-ordubeltv.yayin.com.tr/ordubeltv/ordubeltv/playlist.m3u8
-#EXTINF:-1 tvg-id="SercemTV.tr@HD" tvg-name="SERCEM TV 1080P" tvg-logo="https://wsrv.nl/?url=raw.githubusercontent.com%2FMadsc55%2Fmadsc-tv%2Fmain%2Flogos%2Fsercem-tv.svg&output=png" group-title="🗂️ YEDEKLER (18074)",SERCEM TV 1080P
-https://canli.sercemtv.com.tr/hls/0/stream.m3u8
-#EXTINF:-1 tvg-id="SunRTV.tr@SD" tvg-name="SUN RTV 720P" tvg-logo="https://i.imgur.com/64tph9N.png" group-title="🗂️ YEDEKLER (18074)",SUN RTV 720P
-https://live.artidijitalmedya.com/artidijital_sunrtv/sunrtv/playlist.m3u8
-#EXTINF:-1 tvg-id="TV41.tr@SD" tvg-logo="https://raw.githubusercontent.com/Madsc55/madsc-tv/main/logos/yayinci-20261012-tv41.png" group-title="🗂️ YEDEKLER (18074)",TV 41 720P
-https://live.artidijitalmedya.com/artidijital_tv41/tv41/playlist.m3u8
-#EXTINF:-1 tvg-id="UrfaNatikTV.tr@SD" tvg-name="URFA NATİK TV 720P" tvg-logo="https://wsrv.nl/?url=raw.githubusercontent.com%2FMadsc55%2Fmadsc-tv%2Fmain%2Flogos%2Furfa-natik-tv.svg&output=png" group-title="🗂️ YEDEKLER (18074)",URFA NATİK TV 720P
-https://live.artidijitalmedya.com/artidijital_urfanatiktv/urfanatiktv/playlist.m3u8
-#EXTINF:-1 tvg-id="Van65TV.tr@SD" tvg-name="VAN 65 TV" tvg-logo="https://raw.githubusercontent.com/Madsc55/madsc-tv/main/logos/yayinci-20261012-van65.png" group-title="🗂️ YEDEKLER (18074)",VAN 65 TV
-https://live.artidijitalmedya.com/artidijital_van65/van65/playlist.m3u8
 #EXTINF:-1 tvg-name="KANAL S" tvg-logo="https://raw.githubusercontent.com/songwenhui239/Songwenhui239/refs/heads/main/Kanal%20S.png" group-title="🗂️ YEDEKLER (18074)",KANAL S 1080P FHD
 https://lives.atv.az:5443/KANAL-S/streams/kanals.m3u8
-#EXTINF:-1 tvg-id="ArasTV.tr@SD" tvg-logo="https://i.imgur.com/JsDCyWG.png" group-title="🗂️ YEDEKLER (18074)",Aras TV (576p) [Not 24/7]
-http://1.rtmp.org/tv217/yayin.stream/playlist.m3u8
-#EXTINF:-1 tvg-id="Haber61TV.tr@SD" tvg-logo="https://i.imgur.com/2a2XUKl.png" group-title="🗂️ YEDEKLER (18074)",Haber61 TV (720p) [Not 24/7]
-https://cdn-haber61tv.yayin.com.tr/haber61tv/smil:haber61tv.smil/index.m3u8
-#EXTINF:-1 tvg-id="TVDen.tr@SD" tvg-logo="https://i.imgur.com/Uhg95Ze.png" group-title="🗂️ YEDEKLER (18074)",TV Den (576p) [Not 24/7]
-http://canli.tvden.com.tr/hls/live.m3u8
 #EXTINF:-1 tvg-id="YOLTV.de@SD" tvg-logo="https://i.imgur.com/rTBX6lS.png" group-title="🗂️ YEDEKLER (18074)",YOL TV
 https://live.yoltv.com/hls/stream.m3u8
 #EXTINF:-1 tvg-id="3894" tvg-logo="http://epg.one/img/3894.png" group-title="🗂️ YEDEKLER (18074)",NBA TV USA HD TR
@@ -5733,68 +5900,6 @@ https://goldvod.org/live/hpgdiscoo/123456/131.m3u8
 https://izle.canlitvapp.com/aspor/index.m3u8
 #EXTINF:-1 tvg-name="A SPOR" group-title="🗂️ YEDEKLER (18074)" tvg-logo="https://i.ibb.co/rwnrgFV/a-spor.png",A SPOR
 https://c.fulltvizle.com/aspor/index.m3u8
-#EXTINF:-1 tvg-id="BloombergHT.tr@SD" group-title="🗂️ YEDEKLER (18074)",BloombergHT (720p)
-https://ciner-live.daioncdn.net/bloomberght/bloomberght.m3u8
-#EXTINF:-1 tvg-id="CekmekoyTV.tr@SD" group-title="🗂️ YEDEKLER (18074)",Cekmeköy TV (1080p)
-https://cdn-cekmekoybeltv.yayin.com.tr/cekmekoybeltv/cekmekoybeltv_1080p/playlist.m3u8
-#EXTINF:-1 tvg-id="DisneyJr.tr@SD" group-title="🗂️ YEDEKLER (18074)",Disney Jr. (1080p) [Geo-blocked]
-https://saran-live.ercdn.net/disneyjunior/index.m3u8
-#EXTINF:-1 tvg-id="Kanal3.tr@SD" group-title="🗂️ YEDEKLER (18074)",Kanal 3 (1080p) [Not 24/7]
-https://waw2.artiyerelmedya.net/kanal3/bant1/playlist.m3u8
-#EXTINF:-1 tvg-id="Kanal3.tr@SD" group-title="🗂️ YEDEKLER (18074)",Kanal 3 (720p) [Not 24/7]
-http://stream.taksimbilisim.com:1935/kanal3/bant1/playlist.m3u8
-#EXTINF:-1 tvg-id="Kanal3.tr@SD" group-title="🗂️ YEDEKLER (18074)",Kanal 3 (720p) [Not 24/7]
-https://live.artidijitalmedya.com/artidijital_kanal3/kanal3guncel/playlist.m3u8
-#EXTINF:-1 tvg-id="Kanal34.tr@SD" group-title="🗂️ YEDEKLER (18074)",Kanal 34 (720p) [Not 24/7]
-https://vdo.digitalbox.xyz:3266/live/kanal34tvlive.m3u8
-#EXTINF:-1 tvg-id="LalegulTV.tr@SD" group-title="🗂️ YEDEKLER (18074)",Lalegül TV (720p) [Not 24/7]
-http://lalegultv.netmedya.net/hls/lalegultv.m3u8
-#EXTINF:-1 tvg-id="LalegulTV.tr@SD" group-title="🗂️ YEDEKLER (18074)",Lalegül TV (720p) [Not 24/7]
-http://lalegultv.netmedya.net/lalegul-tv/lalegultv.stream/playlist.m3u8
-#EXTINF:-1 tvg-id="NationalGeographic.tr@SD" group-title="🗂️ YEDEKLER (18074)",National Geographic (1080p) [Geo-blocked]
-https://saran-live.ercdn.net/natgeohd/index.m3u8
-#EXTINF:-1 tvg-id="NationalGeographicWild.tr@SD" group-title="🗂️ YEDEKLER (18074)",National Geographic Wild (1080p) [Geo-blocked]
-https://saran-live.ercdn.net/natgeowild/index.m3u8
-#EXTINF:-1 tvg-id="NaturalTV.tr@SD" group-title="🗂️ YEDEKLER (18074)",Natural TV (720p) [Not 24/7]
-http://broadcasttr.com:1935/naturaltv/bant1/playlist.m3u8
-#EXTINF:-1 tvg-id="NaturalTV.tr@SD" group-title="🗂️ YEDEKLER (18074)",Natural TV (720p) [Not 24/7]
-https://edge1.socialsmart.tv/naturaltv/bant1/playlist.m3u8
-#EXTINF:-1 tvg-id="NOWTV.tr@SD" group-title="🗂️ YEDEKLER (18074)",NOW TV
-http://116.202.238.88/FOXTV_TR/index.m3u8
-#EXTINF:-1 tvg-id="Number1TV.tr@SD" group-title="🗂️ YEDEKLER (18074)",Number 1 TV (720p)
-https://mn-nl.mncdn.com/blutv_nr12/live.m3u8
-#EXTINF:-1 tvg-id="On4TV.tr@SD" group-title="🗂️ YEDEKLER (18074)",On4 TV (1080p)
-https://edge1.socialsmart.tv/on4/bant1/playlist.m3u8
-#EXTINF:-1 tvg-id="QafTV.tr@SD" group-title="🗂️ YEDEKLER (18074)",Qaf TV (1080p)
-https://customer-9vqui33qma2rownb.cloudflarestream.com/7792e558fe54e23bdd4b462ec275cdba/manifest/video.m3u8
-#EXTINF:-1 tvg-id="SSport.tr@SD" group-title="🗂️ YEDEKLER (18074)",S Sport (720p)
-https://corestream.siteyaptim.live/s-sport/index.m3u8
-#EXTINF:-1 tvg-id="SSport2.tr@SD" group-title="🗂️ YEDEKLER (18074)",S Sport 2 (720p)
-https://corestream.siteyaptim.live/s-sport2/index.m3u8
-#EXTINF:-1 tvg-id="SSport2.tr@SD" group-title="🗂️ YEDEKLER (18074)",S Sport 2
-https://bcovlive-a.akamaihd.net/29c60f23ea4840ba8726925a77fcfd0b/eu-central-1/6415845530001/profile_0/chunklist.m3u8
-#EXTINF:-1 tvg-id="SunRTV.tr@SD" group-title="🗂️ YEDEKLER (18074)",Sun RTV (720p) [Not 24/7]
-https://tr.socialsmart.tv/suntv/bant1/chunks.m3u8
-#EXTINF:-1 tvg-id="TV41.tr@SD" group-title="🗂️ YEDEKLER (18074)",TV 41 (720p) [Not 24/7]
-http://stream.taksimbilisim.com:1935/tv41/bant1/TV41.m3u8
-#EXTINF:-1 tvg-id="TV41.tr@SD" group-title="🗂️ YEDEKLER (18074)",TV 41 (720p) [Not 24/7]
-http://stream.taksimbilisim.com:1935/tv41/smil:tv41.smil/playlist.m3u8
-#EXTINF:-1 tvg-id="TV42.tr@SD" group-title="🗂️ YEDEKLER (18074)",TV 42
-https://canli.tv42.com.tr/memfs/d936e417-c4bd-4d42-89a2-02f289892d1d.m3u8
-#EXTINF:-1 tvg-id="ViasatHistory.tr@SD" group-title="🗂️ YEDEKLER (18074)",Viasat History (720p)
-https://nord.ayakkabiparti.lol/viasathistory/index.m3u8
-#EXTINF:-1 tvg-id="NationalGeographic.tr@SD" group-title="🗂️ YEDEKLER (18074)",National Geographic
-https://nord.ayakkabiparti.lol/natgeo/index.m3u8
-#EXTINF:-1 tvg-id="NationalGeographicWild.tr@SD" group-title="🗂️ YEDEKLER (18074)",National Geographic Wild
-https://nord.ayakkabiparti.lol/natgeowild/index.m3u8
-#EXTINF:-1 tvg-id="beINMoviesStars.tr@SD" group-title="🗂️ YEDEKLER (18074)",beIN Movies Stars
-https://nord.ayakkabiparti.lol/bsaction1/index.m3u8
-#EXTINF:-1 tvg-id="beINBoxOffice1.tr@SD" group-title="🗂️ YEDEKLER (18074)",beIN Box Office 1
-https://nord.ayakkabiparti.lol/box1/index.m3u8
-#EXTINF:-1 tvg-id="beINBoxOffice2.tr@SD" group-title="🗂️ YEDEKLER (18074)",beIN Box Office 2
-https://nord.ayakkabiparti.lol/box2/index.m3u8
-#EXTINF:-1 tvg-id="beINBoxOffice3.tr@SD" group-title="🗂️ YEDEKLER (18074)",beIN Box Office 3
-https://nord.ayakkabiparti.lol/box3/index.m3u8
 #EXTINF:-1 tvg-logo="https://www.lyngsat.com/logo/tv/ff/flash-haber-tv-tr.png" tvg-name="FLASH TV" group-title="🗂️ YEDEKLER (18074)",FLASH TV
 https://flashhaber-live.ercdn.net/flashhaber/flashhaber_1080p.m3u8
 #EXTINF:-1 tvg-name="Annem Ankara" group-title="🗂️ YEDEKLER (18074)",Annem Ankara
@@ -5811,62 +5916,6 @@ https://andro.evrenesoglu99.click/checklist/androstreamlivebs3.m3u8
 https://edge1.socialsmart.tv/on4/bant1/chunks.m3u8
 #EXTINF:-1 tvg-name="CINE5 TV" tvg-id="" tvg-logo="https://i.ibb.co/7vNbSyP/cine5.png" group-title="🗂️ YEDEKLER (18074)",CINE5 TV
 https://cdn-cine5tv.yayin.com.tr/cine5tv/cine5tv/playlist.m3u8
-#EXTINF:-1 tvg-id="24TV.tr@SD" tvg-logo="https://i.imgur.com/8FO41es.png" group-title="🗂️ YEDEKLER (18074)" user-agent="Mozilla/5.0 Macintosh; Intel Mac OS X 10_14_5 AppleWebKit/537.36 KHTML, like Gecko Chrome/76.0.3809.25 Safari/537.36",24 TV (1080p)
-https://mn-nl.mncdn.com/kanal24/smil:kanal24.smil/playlist.m3u8
-#EXTINF:-1 tvg-id="AnadoluAgency.tr@SD" tvg-logo="https://i.imgur.com/dWElJll.png" group-title="🗂️ YEDEKLER (18074)",AA Live (720p) [Not 24/7]
-https://mtulqxgomrllive.mediatriple.net/mtulqxgomrllive/broadcast_59f9c0c785b88.smil/playlist.m3u8
-#EXTINF:-1 tvg-id="beINSportsHaber.tr@SD" tvg-logo="https://i.imgur.com/QWo0x7S.jpg" group-title="🗂️ YEDEKLER (18074)",beIN Sports Haber (720p)
-https://1nyaler.streamhostingcdn.top/stream/23/index.m3u8
-#EXTINF:-1 tvg-id="BeratTV.tr@SD" tvg-logo="https://i.imgur.com/BxxH8wE.png" group-title="🗂️ YEDEKLER (18074)",Berat TV (720p) [Not 24/7]
-https://cdn-berattv.yayin.com.tr/berattv/berattv/playlist.m3u8
-#EXTINF:-1 tvg-id="BizimevTV.tr@SD" tvg-logo="https://i.imgur.com/eJa6sFY.png" group-title="🗂️ YEDEKLER (18074)",Bizimev TV (720p)
-https://mn-nl.mncdn.com/blutv_bizimev/bizimev_sd.smil/playlist.m3u8
-#EXTINF:-1 tvg-id="CekmekoyTV.tr@SD" tvg-logo="https://i.imgur.com/sjAGFWu.png" group-title="🗂️ YEDEKLER (18074)",Cekmeköy TV (1080p)
-https://cdn-cekmekoybeltv.yayin.com.tr/cekmekoybeltv/cekmekoybeltv/playlist.m3u8
-#EXTINF:-1 tvg-id="CiftciTV.tr@SD" tvg-logo="https://i.imgur.com/CLzP4vL.png" group-title="🗂️ YEDEKLER (18074)",Çiftçi TV (1080p) [Not 24/7]
-http://stream.taksimbilisim.com:1935/ciftcitv/smil:ciftcitv.smil/playlist.m3u8
-#EXTINF:-1 tvg-id="FlashTV.tr@SD" tvg-logo="https://i.imgur.com/L0NHKBM.png" group-title="🗂️ YEDEKLER (18074)",Flash TV (720p)
-https://mn-nl.mncdn.com/blutv_flashtv/live.m3u8
-#EXTINF:-1 tvg-id="GEMPixel.tr@SD" tvg-logo="https://i.ibb.co/Q3tkbPrn/icon-27.png" group-title="🗂️ YEDEKLER (18074)",GEM Pixel
-https://glserver1.tamashaland.com/live/aBCH96886YznRbGOiqTnnQ__/stream_0.m3u8
-#EXTINF:-1 tvg-id="GEMSport.tr@SD" tvg-logo="https://www.gemgroup.tv/assets/images/channels/icon_34.png" group-title="🗂️ YEDEKLER (18074)",GEM Sport
-https://steep-wildflower-284d.nhhwkiszzzvcuojxdo.workers.dev/?url=https://gg.hls2.xyz/live/IR+-+GEM+Sport/chunks.m3u8
-#EXTINF:-1 tvg-id="IBBTV.tr@SD" tvg-logo="https://i.imgur.com/aXxAz84.png" group-title="🗂️ YEDEKLER (18074)",IBB TV (1080p) [Not 24/7]
-https://npserver1.ibb.gov.tr/webtv/webtv_wowza1/playlist.m3u8
-#EXTINF:-1 tvg-id="IcelTV.tr@SD" tvg-logo="https://i.imgur.com/CGwImKv.png" group-title="🗂️ YEDEKLER (18074)",Icel TV (720p) [Not 24/7]
-http://stream.taksimbilisim.com:1935/iceltv/bant1/playlist.m3u8
-#EXTINF:-1 tvg-id="Kanal33.tr@SD" tvg-logo="https://i.imgur.com/5WYaoFZ.png" group-title="🗂️ YEDEKLER (18074)",Kanal 33 (720p) [Not 24/7]
-http://stream.taksimbilisim.com:1935/kanal33/bant1/playlist.m3u8
-#EXTINF:-1 tvg-id="Kanal34.tr@SD" tvg-logo="https://i.imgur.com/SIaI6Sj.png" group-title="🗂️ YEDEKLER (18074)",Kanal 34 (720p)
-https://5be5d840359c6.streamlock.net/kanal34tv/kanal34tv/playlist.m3u8
-#EXTINF:-1 tvg-id="Kanal38.tr@SD" tvg-logo="https://i.imgur.com/WvtZ7Xd.png" group-title="🗂️ YEDEKLER (18074)",Kanal 38 (540p) [Not 24/7]
-http://yayin3.canlitv.com:1935/live/kanal38/playlist.m3u8
-#EXTINF:-1 tvg-id="KanalAvrupa.tr@SD" tvg-logo="https://i.imgur.com/bIGk6RN.png" group-title="🗂️ YEDEKLER (18074)",Kanal Avrupa (1080p)
-http://51.15.2.151/hls/kanalavrupa.m3u8
-#EXTINF:-1 tvg-id="KudusTV.tr@SD" tvg-logo="https://i.imgur.com/lwRA84B.png" group-title="🗂️ YEDEKLER (18074)",Kudüs TV (480p) [Geo-blocked]
-https://yayin.kudustv.com/981680400/kudustv/playlist.m3u8
-#EXTINF:-1 tvg-id="SSport.tr@SD" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/a/a9/S_Sport_logo1.png" group-title="🗂️ YEDEKLER (18074)",S Sport
-https://bcovlive-a.akamaihd.net/540fcb034b144b848e7ff887f61a293a/eu-central-1/6415845530001/profile_0/chunklist.m3u8
-#EXTINF:-1 tvg-id="TabiiSpor6.tr@SD" tvg-logo="https://cms-tabii-public-image.tabii.com/int/w300/43020.jpeg" group-title="🗂️ YEDEKLER (18074)",Tabii Spor 6 (720p) [Geo-blocked]
-https://vbtob9hyq58eiophct5qctxr2.medya.trt.com.tr/master.m3u8
-#EXTINF:-1 tvg-id="TarihTV.tr@SD" tvg-logo="https://i.imgur.com/HbIGZUt.png" group-title="🗂️ YEDEKLER (18074)",Tarih TV
-https://tv1.arectv30.sbs/live/tarihtv.m3u8
-#EXTINF:-1 tvg-id="TMB.tr@SD" tvg-logo="https://i.imgur.com/28AyWHe.png" group-title="🗂️ YEDEKLER (18074)",TMB TV
-https://raw.githubusercontent.com/UzunMuhalefet/streams/refs/heads/main/myvideo-az/tmb-azerbaycan.m3u8
-#EXTINF:-1 tvg-id="ToprakTV.tr@SD" tvg-logo="https://i.imgur.com/JGnS0qs.png" group-title="🗂️ YEDEKLER (18074)",Toprak TV (720p) [Not 24/7]
-https://59cba4d34b678.streamlock.net/canlitv/topraktv/playlist.m3u8
-#EXTINF:-1 tvg-id="TV38.tr@SD" tvg-logo="https://i.imgur.com/KDBXLqn.png" group-title="🗂️ YEDEKLER (18074)",TV 38 (360p) [Not 24/7]
-https://59cba4d34b678.streamlock.net/live/tv38/playlist.m3u8
-#EXTINF:-1 tvg-id="TV41.tr@SD" tvg-logo="https://i.imgur.com/6T472LM.png" group-title="🗂️ YEDEKLER (18074)",TV 41 (720p) [Not 24/7]
-http://stream.taksimbilisim.com:1935/tv41/bant1/playlist.m3u8
-#EXTINF:-1 tvg-id="TV52.tr@SD" tvg-logo="https://i.imgur.com/k4R5CzO.png" group-title="🗂️ YEDEKLER (18074)",TV 52 (720p) [Not 24/7]
-http://stream.taksimbilisim.com:1935/tv52/smil:tv52.smil/playlist.m3u8
-#EXTINF:-1 tvg-id="UniversiteTV.tr@SD" tvg-logo="https://i.imgur.com/KeauaSh.png" group-title="🗂️ YEDEKLER (18074)",Üniversite TV (720p) [Not 24/7]
-https://vdo.digitalbox.xyz:3986/live/unitvlive.m3u8
-#EXTINF:-1 tvg-id="VTV.tr@SD" tvg-logo="https://www.vtv.net.tr/uploads/logo/sitelogo_4.jpg" group-title="🗂️ YEDEKLER (18074)" referrer="https://www.vtv.net.tr/",V TV (720p)
-https://serdar.tiviplayer.com/player/m3u8/65aae71c9b93f0965aaed3a92660d98b/65aae71c9b93f0965aaed3a92660d98b.m3u8
-#EXTINF:-1 tvg-id="ViasatExplore.tr@SD" tvg-logo="https://i.imgur.com/DyT5pKB.png" group-title="🗂️ YEDEKLER (18074)",Viasat Explore
-https://tv.arectv29.sbs/live/viasathistory.m3u8
 #EXTINF:-1 group-title="🗂️ YEDEKLER (18074)",HABER GLOBAL YOUTUBE
 https://www.youtube.com/watch?v=6BX-NUzBSp8
 #EXTINF:-1 group-title="🗂️ YEDEKLER (18074)",A SPOR YOUTUBE
@@ -5886,8 +5935,6 @@ https://cdn-kanal56tv.yayin.com.tr/kanal56tv/kanal56tv/chunklist_w559405215.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/4bA4pXT.png" group-title="🗂️ YEDEKLER (18074)",KANAL T
 https://sc-kuzeykibrissmarttv.ercdn.net/kanalt/bantp1/playlist.m3u8
 
-#EXTINF:-1 group-title="🗂️ YEDEKLER (18074)",KANAL URFA
-https://broadcasttr.com:446/kanalurfa/bant1/chunklist_w1125528664.m3u8
 #EXTINF:-1 group-title="🗂️ YEDEKLER (18074)" tvg-logo="",Z.BEIN sports extra
 https://bein-esp-xumo.amagi.tv/playlistR1080p.m3u8
 #EXTINF:-1 group-title="🗂️ YEDEKLER (18074)" tvg-logo="https://netspor-amp.xyz/logo.png",v.Bein Sport 1 NetSpor
@@ -6066,29 +6113,6 @@ https://tjktv-live.tjk.org/tjktv.m3u8#all
 https://canli.tvden.com.tr/hls/live.m3u8
 #EXTINF:-1 group-title="🗂️ YEDEKLER (18074)",YOL TV [TEKNIK TEST - KANAL KIMLIGI DOGRULANMADI]
 https://live.yoltv.com/hls/stream.m3u8#all
-#EXTINF:-1 tvg-name="SÖZCÜ TV" group-title="🗂️ YEDEKLER (18074)" tvg-logo="https://i.hizliresim.com/s7aygkq.",SÖZCÜ TV
-https://b.fulltvizle.com/sozcu/tracks-v1a1/mono.m3u8
-#EXTINF:-1 tvg-name="SÖZCÜ TV" group-title="🗂️ YEDEKLER (18074)",SÖZCÜ TV
-https://izle.canlitvapp.com/sozcu/index.m3u8
-#EXTINF:-1 tvg-name="SÖZCÜ TV" group-title="🗂️ YEDEKLER (18074)",SÖZCÜ TV
-https://trn03.tulix.tv/gt-sozcu-tv/playlist.m3u8
-#EXTINF:-1 tvg-name="SÖZCÜ TV" group-title="🗂️ YEDEKLER (18074)" tvg-logo="https://d3ckc0u56niq67.cloudfront.net/conf/images/sozcu_tv_KPX.png",SÖZCÜ TV
-https://goldvod.org/live/hpgdiscoo/123456/108.m3u8
-#EXTINF:-1 tvg-name="SÖZCÜ TV" group-title="🗂️ YEDEKLER (18074)" tvg-logo="https://d3ckc0u56niq67.cloudfront.net/conf/images/sozcu_tv_KPX.png",SÖZCÜ TV
-https://goldvod.org/live/hpgdiscoo/123456/287.m3u8
-#EXTINF:-1 group-title="🗂️ YEDEKLER (18074)",SÖZCÜ TV YOUTUBE
-https://www.youtube.com/@Sozcutelevizyonu/live
-
-#EXTINF:-1 tvg-name="SÖZCÜ TV TEST 2" group-title="🗂️ YEDEKLER (18074)",SÖZCÜ TV TEST 2
-http://5.178.103.239:55/yt1/szctv.m3u8
-#EXTINF:-1 tvg-logo="https://i.ibb.co/bLpTdYZ/tv100.png" group-title="🗂️ YEDEKLER (18074)",TV 100 (BACKUP)
-https://tv.ensonhaber.com/tv100/tv100.m3u8
-#EXTINF:-1 tvg-logo="https://i.ibb.co/dgj3MTh/tv85.png" group-title="🗂️ YEDEKLER (18074)",TV8 BUÇUK
-https://tv8.daioncdn.net/tv8bucuk/tv8bucuk.m3u8?app=tv8bucuk_web
-#EXTINF:-1 tvg-name="TV 100" group-title="🗂️ YEDEKLER (18074)",TV 100
-https://tv100.blutv.com/blutv_tv100_live/live.m3u8
-#EXTINF:-1 tvg-logo="https://i.ibb.co/dgj3MTh/tv85.png" group-title="🗂️ YEDEKLER (18074)",TV8 BUÇUK (BACKUP)
-https://tv8.daioncdn.net/tv8bucuk/tv8bucuk.m3u8?app=bf58ab52-4865-4c81-b223-26b41009801e
 #EXTINF:-1 tvg-name="TV100" group-title="🗂️ YEDEKLER (18074)" tvg-logo="https://i.ibb.co/zZnBCWt/tv100.png",TV100
 https://tv100.daioncdn.net/tv100/tv100_1080p.m3u8?app=web
 #EXTINF:-1 tvg-name="TV100" group-title="🗂️ YEDEKLER (18074)" tvg-logo="https://d3ckc0u56niq67.cloudfront.net/conf/images/tv100_FRE.png",TV100
@@ -6098,16 +6122,12 @@ https://goldvod.org/live/hpgdiscoo/123456/286.m3u8
 #EXTINF:-1 group-title="🗂️ YEDEKLER (18074)",TV100 YOUTUBE
 https://www.youtube.com/@tv100/live
 
-#EXTINF:-1 group-title="🗂️ YEDEKLER (18074)",HABER 61
-http://win8.yayin.com.tr/haber61tv/smil:haber61tv.smil/playlist.m3u8
 #EXTINF:-1 group-title="🗂️ YEDEKLER (18074)",KANAL 19
 https://live.euromediacenter.com/kanal19/tracks-v1a1/mono.m3u8
 #EXTINF:-1 group-title="🗂️ YEDEKLER (18074)",KANAL 34
 https://live.euromediacenter.com/kanal34/tracks-v1a1/mono.m3u8
 #EXTINF:-1 group-title="🗂️ YEDEKLER (18074)",KANAL 53
 https://kanal53.ozelip.com:3448/hybrid/play.m3u8
-#EXTINF:-1 group-title="🗂️ YEDEKLER (18074)",KANAL AVRUPA
-https://api-tv27.yayin.com.tr/kanalavrupa/index.m3u8
 #EXTINF:-1 group-title="🗂️ YEDEKLER (18074)",MERCAN TV
 https://live.artidijitalmedya.com/artidijital_mercantv/mercantv/chunks.m3u8
 #EXTINF:-1 tvg-logo="https://i.ibb.co/0Yt6jbg/tjk.png" group-title="🗂️ YEDEKLER (18074)",TJK TV [GEO-BLOCKED]
@@ -6122,8 +6142,6 @@ https://ekoltv-live.ercdn.net/ekolsport/ekolsport.m3u8
 https://b01c02nl.mediatriple.net/videoonlylive/mtkgeuihrlfwlive/u_stream_5c9e198784bdc_1/playlist.m3u8?checkedby:iptvcat.net
 #EXTINF:-1 tvg-logo="https://i.imgur.com/ZM4PSyq.png" group-title="🗂️ YEDEKLER (18074)",NUMBER 1 DANCE
 https://b01c02nl.mediatriple.net/videoonlylive/mtkgeuihrlfwlive/u_stream_5c9e2aa8acf44_1/playlist.m3u8?checkedby:iptvcat.net
-#EXTINF:-1 tvg-logo="https://m.yilmaztv.cc/logo/es-tv.jpg?t=1696665170" group-title="🗂️ YEDEKLER (18074)",ES TV  ESKİŞEHİR
-https://live.artidijitalmedya.com/artidijital_estv/estv/supersatforum_chunks.m3u8
 #EXTINF:-1 tvg-logo="https://m.yilmaztv.cc/logo/mercan-tv.jpg?t=1696665170" group-title="🗂️ YEDEKLER (18074)",MERCAN TV  ADIYAMAN
 https://live.artidijitalmedya.com/artidijital_mercantv/mercantv/supersatforum_chunks.m3u8
 #EXTINF:-1 group-title="🗂️ YEDEKLER (18074)",TV 8.5
@@ -6140,18 +6158,12 @@ https://tjktv-live.tjk.org/tjktv2/tjktv2_1080p.m3u8
 https://ekoltv-live.ercdn.net/ekolsport/ekolsport_1080p.m3u8
 #EXTINF:-1 tvg-name="EKOL SPORTS" group-title="🗂️ YEDEKLER (18074)",EKOL SPORTS
 https://ekoltv-live.ercdn.net/ekolsport/ekolsport_1080p.m3u8?autoplay=1
-#EXTINF:-1 group-title="🗂️ YEDEKLER (18074)",TBMM TV
-https://mecliscanlitv-lh.akamaihd.net/i/MECLISTV_1@127503/master.m3u8
-
-# --- EK AÇIK ULUSAL HABER SPOR TEMATİK ADAYLARI ---
 #EXTINF:-1 group-title="🗂️ YEDEKLER (18074)",CAN TV
 https://canmedia.live/can-tv/video.m3u8
 #EXTINF:-1 group-title="🗂️ YEDEKLER (18074)" tvg-logo="",Tivi 6
 https://live.artidijitalmedya.com/artidijital_tivi6/tivi6/playlist.m3u8#all
 #EXTINF:-1 group-title="🗂️ YEDEKLER (18074)" tvg-logo="",Ton TV
 https://live.artidijitalmedya.com/artidijital_tontv/tontv/playlist.m3u8#all
-#EXTINF:-1 group-title="🗂️ YEDEKLER (18074)" tvg-logo="https://upload.wikimedia.org/wikipedia/tr/thumb/8/87/Zarok_TV_logosu.png/512px-Zarok_TV_logosu.png",Zarok TV
-https://zindikurmanci.zaroktv.com.tr/hls/stream.m3u8#all
 #EXTINF:-1 group-title="🗂️ YEDEKLER (18074)",NTV [TEKNIK TEST - KANAL KIMLIGI DOGRULANMADI]
 https://dogus.daioncdn.net/ntv/ntv_720p.m3u8#all
 #EXTINF:-1 tvg-logo="https://i.ibb.co/mHt7rQf/Tryerel.png" group-title="🗂️ YEDEKLER (18074)",BRTV KARABÜK
@@ -6170,8 +6182,6 @@ https://api-tv3.yayin.com.tr/postatv/postatv/playlist.m3u8
 https://cdn-tokattv.yayin.com.tr/tokattv/tokattv/chunklist.m3u8
 #EXTINF:-1 group-title="🗂️ YEDEKLER (18074)",VAN GOLU TV
 https://cdn1-vangolutv.yayin.com.tr/vangolutv/amlst:vangolutv/playlist.m3u8
-#EXTINF:-1 group-title="🗂️ YEDEKLER (18074)" tvg-logo="",Van 65 TV
-https://live.artidijitalmedya.com/artidijital_van65/van65/playlist.m3u8#all
 #EXTINF:-1 tvg-id="" tvg-name="TV4" tvg-logo="https://i.postimg.cc/FKkHW8KK/tv4.png" group-title="🗂️ YEDEKLER (18074)",TV4 1080P FHD
 https://turkmedya-live.ercdn.net/tv4/tv4_1080p.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="TV4 2" tvg-logo="https://i.postimg.cc/FKkHW8KK/tv4.png" group-title="🗂️ YEDEKLER (18074)",TV4 2 720P HD
@@ -6266,8 +6276,6 @@ http://live.al-zahratv.com/live/playlist.m3u8
 https://live.artidijitalmedya.com/artidijital_estv/estv/playlist.m3u8
 #EXTINF:-1 tvg-name="GURME TV" tvg-logo="https://raw.githubusercontent.com/Madsc55/madsc-tv/main/logos/duzeltilmis-gurme.png" group-title="🗂️ YEDEKLER (18074)",GURME TV
 https://live.euromediacenter.com/gurmetv/index.m3u8
-#EXTINF:-1 tvg-name="HABER61 TV" tvg-logo="https://raw.githubusercontent.com/Madsc55/madsc-tv/main/logos/duzeltilmis-haber61.png" group-title="🗂️ YEDEKLER (18074)",HABER61 TV
-https://cdn-haber61tv.yayin.com.tr/haber61tv/haber61tv/playlist.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="BIR TV" tvg-logo="https://i.ibb.co/dDdPMWq/birtv.png" group-title="🗂️ YEDEKLER (18074)",BIR TV 720P HD
 https://edge.taksimbilisim.com/birtv/bant1/playlist.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="MELTEM TV 1080P" tvg-logo="https://i.imgur.com/C3m6w5S.png" group-title="🗂️ YEDEKLER (18074)",MELTEM TV 1080P
@@ -6362,10 +6370,6 @@ https://goldvod.org/live/hpgdiscoo/123456/187.m3u8
 https://goldvod.org/live/hpgdiscoo/123456/185.m3u8
 #EXTINF:-1 tvg-name="SEMERKAND TV" group-title="🗂️ YEDEKLER (18074)" tvg-logo="https://d3ckc0u56niq67.cloudfront.net/conf/images/semerkand_tv_Kjy.png",SEMERKAND TV
 https://goldvod.org/live/hpgdiscoo/123456/299.m3u8
-#EXTINF:-1 tvg-name="LALEGÜL TV" group-title="🗂️ YEDEKLER (18074)" tvg-logo="https://d3ckc0u56niq67.cloudfront.net/conf/images/lalegul_gcW.png",LALEGÜL TV
-https://goldvod.org/live/hpgdiscoo/123456/186.m3u8
-#EXTINF:-1 tvg-name="LALEGÜL TV" group-title="🗂️ YEDEKLER (18074)" tvg-logo="https://d3ckc0u56niq67.cloudfront.net/conf/images/lalegul_gcW.png",LALEGÜL TV
-https://goldvod.org/live/hpgdiscoo/123456/300.m3u8
 #EXTINF:-1 tvg-name="DOST TV" group-title="🗂️ YEDEKLER (18074)" tvg-logo="https://d3ckc0u56niq67.cloudfront.net/conf/images/dost_tv_rsq.png",DOST TV
 https://goldvod.org/live/hpgdiscoo/123456/188.m3u8
 #EXTINF:-1 tvg-name="DOST TV" group-title="🗂️ YEDEKLER (18074)" tvg-logo="https://d3ckc0u56niq67.cloudfront.net/conf/images/dost_tv_rsq.png",DOST TV
@@ -6546,8 +6550,6 @@ https://b01c02nl.mediatriple.net/videoonlylive/mtdxkkitgbrckilive/broadcast_5ee2
 https://canli.tvden.com.tr/hls/live.m3u8#all
 #EXTINF:-1 group-title="🗂️ YEDEKLER (18074)" tvg-logo="",Tempo TV
 https://live.artidijitalmedya.com/artidijital_tempotv/tempotv/playlist.m3u8#all
-#EXTINF:-1 group-title="🗂️ YEDEKLER (18074)" tvg-logo="",Urfa Natik TV
-https://live.artidijitalmedya.com/artidijital_urfanatiktv/urfanatiktv/playlist.m3u8#all
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/TV8_logo.svg/500px-TV8_logo.svg.png" group-title="🗂️ YEDEKLER (18074)",TV8 (ITALY) (720P)
 http://102.129.186.182:81/tv8/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/9g3wknl.png" group-title="🗂️ YEDEKLER (18074)",TV8 (LITHUANIA) (576P)
@@ -13526,8 +13528,6 @@ https://service-stitcher.clusters.pluto.tv/v1/stitch/embed/hls/channel/63c923944
 https://service-stitcher.clusters.pluto.tv/v1/stitch/embed/hls/channel/6536608b4f123d000876b78b/master.m3u8?deviceId=channel&deviceModel=web&deviceVersion=1.0&appVersion=1.0&deviceType=rokuChannel&deviceMake=rokuChannel&deviceDNT=1&advertisingId=channel&embedPartner=rokuChannel&appName=rokuchannel&is_lat=1&bmodel=bm1&content=channel&platform=web&tags=ROKU_CONTENT_TAGS&coppa=false&content_type=livefeed&rdid=channel&genre=ROKU_ADS_CONTENT_GENRE&content_rating=ROKU_ADS_CONTENT_RATING&studio_id=viacom&channel_id=channel
 #EXTINF:-1 tvg-logo="https://i.imgur.com/nngMFi5.png" group-title="🗂️ YEDEKLER (18074)",LE VITE DEGLI ALTRI – PLUTO TV
 https://service-stitcher.clusters.pluto.tv/v1/stitch/embed/hls/channel/653660b4295b840008a70ba3/master.m3u8?deviceId=channel&deviceModel=web&deviceVersion=1.0&appVersion=1.0&deviceType=rokuChannel&deviceMake=rokuChannel&deviceDNT=1&advertisingId=channel&embedPartner=rokuChannel&appName=rokuchannel&is_lat=1&bmodel=bm1&content=channel&platform=web&tags=ROKU_CONTENT_TAGS&coppa=false&content_type=livefeed&rdid=channel&genre=ROKU_ADS_CONTENT_GENRE&content_rating=ROKU_ADS_CONTENT_RATING&studio_id=viacom&channel_id=channel
-#EXTINF:-1 tvg-logo="https://i.imgur.com/2a2XUKl.png" group-title="🗂️ YEDEKLER (18074)",HABER61 TV (720P)
-https://win8.yayin.com.tr/haber61tv/smil:haber61tv.smil/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/VSTgXsh.png" group-title="🗂️ YEDEKLER (18074)",12TV (1080P)
 https://cloud.streamingconnect.tv/hls/12tv/12tv2.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/CKCtZo7.png" group-title="🗂️ YEDEKLER (18074)",30A INVESTMENT PITCH (720P)
