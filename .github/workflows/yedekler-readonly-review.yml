@@ -1,6 +1,13 @@
 name: YEDEKLER read-only inventory and Turkish triage
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - plan/18074-kanal-akilli-test-arsiv-20261117
+    paths:
+      - 'v2/yedekler_live_sample.py'
+      - 'v2/single_channel_evidence_review.py'
+      - '.github/workflows/yedekler-readonly-review.yml'
   pull_request:
     paths:
       - 'v2/turkish_channel_evidence_collect.py'
