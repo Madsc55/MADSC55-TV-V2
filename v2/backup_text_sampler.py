@@ -39,7 +39,13 @@ def valid_url(url):
         try:
             address = ipaddress.ip_address(host)
         except ValueError:
-            # DNS/redirect egress restrictions are still required at runtime.
+            # Reject libc's legacy numeric IPv4 forms such as 127.1,
+            # 0x7f.0.0.1 and 0177.0.0.1; these are not DNS names.
+            labels = normalized_host.split(".")
+            if all(re.fullmatch(r"(?:0x[0-9a-f]+|[0-9]+)", label) for label in labels):
+                return False
+            # Runtime DNS resolution, redirects and network egress must still
+            # be constrained outside FFmpeg; lexical validation is not enough.
             return bool(normalized_host and "." in normalized_host and not normalized_host.endswith(".invalid"))
         return address.is_global
     except ValueError:
