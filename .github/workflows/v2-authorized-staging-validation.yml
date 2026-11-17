@@ -1,0 +1,28 @@
+name: Authorized playlist staging validation
+on:
+  pull_request:
+    paths:
+      - 'v2/prepare_authorized_turkish_backups.py'
+      - 'v2/stage_approved_backup_placements.py'
+      - 'v2/test_authorized_playlist_staging.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Verify staging without publishing
+        run: |
+          python v2/test_authorized_playlist_staging.py
+          python v2/test_playlist_invariants.py
+      - name: Assert protected playlist untouched
+        run: |
+          test "$(git hash-object MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)" = "165c726cd9211f9f51c31f1c718e0911bab79e1b"
