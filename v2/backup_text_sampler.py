@@ -19,7 +19,7 @@ try:
 except ImportError:
     from backup_text_evidence import inspect_text_observations
 
-def valid_url(url):
+# Untrusted HTTP/HLS input must not be able to open local file: URLs.\nSTREAM_PROTOCOL_WHITELIST = "http,https,tcp,tls,crypto"\n\ndef valid_url(url):
     if not isinstance(url, str) or not url or len(url) > 4096 or any(ord(ch) < 33 or ord(ch) == 127 for ch in url):
         return False
     try:
@@ -73,7 +73,7 @@ def sample(url, seconds=8, include_subtitles=True):
         frame = str(Path(d) / "frame.png")
         # Fixed single frame, no playlist writes, network work bounded by timeout.
         cmd = ["ffmpeg","-nostdin","-hide_banner","-loglevel","error",
-               "-protocol_whitelist","file,http,https,tcp,tls,crypto",
+               "-protocol_whitelist",STREAM_PROTOCOL_WHITELIST,
                "-rw_timeout","8000000","-i",url,"-t",str(seconds),
                "-frames:v","1","-y",frame]
         execute(cmd,seconds+12)
@@ -84,7 +84,7 @@ def sample(url, seconds=8, include_subtitles=True):
         if include_subtitles:
             subtitle = str(Path(d) / "subtitle.srt")
             cmd = ["ffmpeg","-nostdin","-hide_banner","-loglevel","error",
-                   "-protocol_whitelist","file,http,https,tcp,tls,crypto",
+                   "-protocol_whitelist",STREAM_PROTOCOL_WHITELIST,
                    "-rw_timeout","8000000","-i",url,"-map","0:s:0?",
                    "-t",str(seconds),"-f","srt","-y",subtitle]
             execute(cmd,seconds+12)
