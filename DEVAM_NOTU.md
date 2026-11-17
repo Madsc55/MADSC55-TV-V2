@@ -1,3 +1,13 @@
+## 17 Kasım 2026 — 18.074 akıllı arşiv geliştirmesi: ilk kod adımı (PR #365)
+
+**Gerçekleşen:** `v2/backup_smart_archive.py` salt-okunur kanıt tabanlı sınıflandırma ve JSON raporlayıcı eklendi; `v2/test_backup_smart_archive.py` altı offline regresyon senaryosu eklendi. Kanallar TR/FOREIGN/UNKNOWN dil ve WORKING/NOT_WORKING/UNKNOWN durumlarından Türk çalışan, Türk çalışmayan, yabancı çalışan, yabancı çalışmayan, belirsiz kategorilerine ayrılır. Eksik dil kanıtı Türk/yabancı diye atanmaz; gerçek AV decode olmadan çalışan denmez; tekrarsız başarısızlıkta çalışmayan denmez. Tam envanter sayımı ve mükerrer kimlik kontrolü var. Sınıflandırıcı oynatma listesi yazmaz ve ağ taraması yapmaz.
+
+**Kanıt/commit:** kod `85d98ccadf486588bf722c4c52c822748939c447`, test `d1b18e16abe905a66078bddba1c92320d54bf760`; PR https://github.com/Madsc55/MADSC55-TV-V2/pull/365. Test dosyası yazıldı, ancak Actions veya gerçek test koşusu başarı kanıtı henüz alınmadı. Kod yalnız geliştirme dalında, main'e birleşmedi.
+
+**Sıradaki adım:** mevcut `stream_probe.py`, `spoken_language_sample_review.py` ve `turkish_language_evidence.py` sonuçlarını doğrulanmış ve şeması kontrol edilen tek kanıt sözleşmesine bağlamak; OCR ve altyazı tespitini ayrıca geliştirmek; URL ve özel veriyi rapora sızdırmadan güvenlik testleri; küçük offline fikstür testleri; ardından CI/PR denetimi. 18.074 canlı tarama ve otomatik yayın başlatılmayacak. Başka sohbet devamı için önce bu notu ve PR #365'in son durumunu oku, başka paralel PR'lerle çakışma kontrolü yap. Ana İBO/YEDEKLER ve state.json değişmedi; tamamlandı diye işaretleme.
+
+---
+
 ## 17 Kasım 2026 — YAPILACAK: YEDEKLER 18.074 kanal toplu AV, Türkçe tanıma ve akıllı arşiv
 
 **Durum: PLANLANDI / UYGULANMADI.** Kullanıcı isteği: YEDEKLER kategorisindeki 18.074 kanalı kayıpsız toplu denetlemek; Türk kanallarını isim/ülke/TR etiketi yanında gerçek Türkçe konuşma, ekrandaki Türkçe yazı ve Türkçe altyazı kanıtlarıyla mümkün olduğunca eksiksiz bulmak; çalışan/çalışmayan ve Türk/yabancı/belirsiz sınıflarına ayırmak. Sayı işlem başlangıcında gerçek envanterden yeniden doğrulanacak.
