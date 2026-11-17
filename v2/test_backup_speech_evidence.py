@@ -41,5 +41,10 @@ class SpeechEvidenceTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             import_speech_hints({"policy": "AUTO_APPROVED", "results": []})
 
+    def test_excessive_batch_rejected(self):
+        with self.assertRaisesRegex(ValueError, "exceeds"):
+            import_speech_hints({"policy": "READ_ONLY_SAMPLED_ASR_HINTS_REQUIRE_REVIEW",
+                                 "results": [{"url_sha256": format(i, "064x")} for i in range(17)]})
+
 if __name__ == "__main__":
     unittest.main()
