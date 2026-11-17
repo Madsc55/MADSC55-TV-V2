@@ -7,13 +7,13 @@ import re
 from pathlib import Path
 
 PLAY = "MADSC55_TV_IBO_CALISANLAR_TEST.m3u8"
-TR_NAME = re.compile(r"^(?:TR[: |\\-]|TURKEY[: |\\-]|TÜRKİYE[: |\\-])|(?:\\bTRT\\b|\\bKANAL [D7]\\b|\\bSHOW TV\\b|\\bATV\\b|\\bSTAR TV\\b|\\bHABER\\b|\\bTÜRK\\b|\\bTURK\\b|\\bULUSAL\\b|\\bYEREL\\b|\\bSPOR\\b|\\bÇOCUK\\b|\\bCOCUK\\b|\\bDİYANET\\b|\\bDIYANET\\b|\\bSÖZCÜ\\b|\\bSOZCU\\b|\\bHALK TV\\b|\\bTELE1\\b|\\bTV8\\b|\\bA HABER\\b|\\bBEYAZ TV\\b|\\bTGRT\\b|\\bKRT\\b|\\bNTV\\b|\\bCNN TÜRK\\b|\\bFLASH TV\\b|\\bÜLKE TV\\b|\\bVAV TV\\b|\\bDHA\\b|\\bRİZE\\b|\\bRIZE\\b|\\bTRABZON\\b|\\bKARADENİZ\\b|\\bKARADENIZ\\b)", re.I)
+TR_NAME = re.compile(r"^(?:TR[: |\-]|TURKEY[: |\-]|TÜRKİYE[: |\-])|(?:\bTRT\b|\bKANAL [D7]\b|\bSHOW TV\b|\bATV\b|\bSTAR TV\b|\bHABER\b|\bTÜRK\b|\bTURK\b|\bULUSAL\b|\bYEREL\b|\bSPOR\b|\bÇOCUK\b|\bCOCUK\b|\bDİYANET\b|\bDIYANET\b|\bSÖZCÜ\b|\bSOZCU\b|\bHALK TV\b|\bTELE1\b|\bTV8\b|\bA HABER\b|\bBEYAZ TV\b|\bTGRT\b|\bKRT\b|\bNTV\b|\bCNN TÜRK\b|\bFLASH TV\b|\bÜLKE TV\b|\bVAV TV\b|\bDHA\b|\bRİZE\b|\bRIZE\b|\bTRABZON\b|\bKARADENİZ\b|\bKARADENIZ\b)", re.I)
 NOT_TR = re.compile(r"TRT WORLD|TRT ARABI|TRT ARABIC", re.I)
 
 def split(data):
     start = data.index("#EXTINF:")
     header = data[:start]
-    blocks = re.findall(r"^#EXTINF:[\\s\\S]*?(?=^#EXTINF:|\\Z)", data[start:], re.M)
+    blocks = re.findall(r"^#EXTINF:[\s\S]*?(?=^#EXTINF:|\Z)", data[start:], re.M)
     return header, blocks
 
 def candidate(block):
