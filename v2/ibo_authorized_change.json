@@ -1,9 +1,9 @@
 {
-  "base_sha256": "452715014e61cd7c8edbf675473928cf65d08cafc2153ed05b7d8da1bd21003b",
-  "result_sha256": "70496304fb68fed780865e220179ac556b1a2b8ebe5683e1b45d7dd857fcf2c6",
+  "base_sha256": "70496304fb68fed780865e220179ac556b1a2b8ebe5683e1b45d7dd857fcf2c6",
+  "result_sha256": "25aa832951afb1cc2c9838252f6acf22eec788ab0d12c4e206293b44aa9708cd",
   "operation": "reorder",
-  "request": "18.074 YEDEKLER kaydında mevcut 1207 Türk/TR aday bloğundan kaçmış 20 açık isim/yerellik adayı 1003 sonrasındaki Türk bloğuna ekle; ilk 2210 yedek kaydı koru",
+  "request": "18.074 YEDEKLER içinde genişletilmiş ad taraması: mevcut 1227 aday bloğu ve ilk 1003 kayıt korunarak 179 yeni Türkçe kanal/program adayı bloğun sonuna taşındı",
   "channels": [
-    "İlk 1003 YEDEKLER ve mevcut 1207 aday korunur; 20 ek aday mevcut bloğun sonuna taşınır; tüm 18074 yedek ve 838 diğer kayıt aynen korunur; kimlik/AV kanıtı olmayan kayıtlar yalnız adaydır."
+    "İlk 1003 YEDEKLER ve mevcut 1227 aday aynen korunur; 179 ek isim adayı, yayın dili ve AV doğrulanmadan aday olarak gruplanır; 18074 YEDEKLER ve 838 diğer kayıt korunur."
   ]
 }
