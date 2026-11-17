@@ -5,9 +5,11 @@ import unittest
 from pathlib import Path
 from unittest.mock import patch
 try:
-    from .turkish_channel_evidence_collect import collect
+    from . import turkish_channel_evidence_collect as collector
+    collect = collector.collect
 except ImportError:
-    from turkish_channel_evidence_collect import collect
+    import turkish_channel_evidence_collect as collector
+    collect = collector.collect
 
 class EvidenceCollectorTests(unittest.TestCase):
     def setUp(self):
@@ -44,7 +46,7 @@ class EvidenceCollectorTests(unittest.TestCase):
                   "video_decoded":False, "audio_decoded":False,
                   "spoken_turkish_hint":False, "subtitle_turkish_hint":False}
         with patch.dict("os.environ", {"MADSC55_SECURE_EGRESS_CONFIRMED": "1"}), patch(
-                "v2.turkish_channel_evidence_collect.review_one", return_value=report):
+                collector.review_one", return_value=report):
             result = collect(self.playlist, self.output, [1004], source_authorized=True)
         self.assertEqual(result["sampled"],1)
         self.assertEqual(json.loads(self.output.read_text())["playlist_ordinal"],1004)
