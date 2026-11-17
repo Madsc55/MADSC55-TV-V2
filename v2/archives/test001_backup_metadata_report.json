@@ -1,6 +1,6 @@
 {
   "source": "MADSC55_TV_IBO_CALISANLAR_TEST.m3u8",
-  "output": "MADSC55_TV_IBO_YEDEKLER_DUZELTILMIS_TEST.m3u8",
+  "output": "MADSC55_TV_IBO_CALISANLAR_TEST.m3u8",
   "total": 18960,
   "backups": 18122,
   "main": 838,
@@ -22,5 +22,5 @@
     "group-title=\"🕌 DİNİ (17)\"": 17,
     "group-title=\"🗂️ YEDEKLER (18122)\"": 18122
   },
-  "source_untouched": true
+  "original_source_edited_on_review_branch": true
 }
