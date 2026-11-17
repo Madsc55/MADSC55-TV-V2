@@ -1,3 +1,9 @@
+## 17 Kasım 2026 — ASR örnekleme URL giriş koruması
+
+Gerçek konuşma örnekleyicisi `v2/spoken_language_sample_review.py` artık yalnızca `http` öneki kontrolü yapmak yerine ortak `backup_text_sampler.valid_url` denetimini kullanıyor: yerel/özel IP adresleri, localhost, gömülü kullanıcı/parola, kontrol karakterleri ve `file:` URL'leri reddediliyor. Yeni güvenlik testi eklendi: **68 yazılı test**, henüz PASS koşumu yok. **Önemli:** DNS adı yeniden çözümleme ve HTTP yönlendirme yoluyla özel ağlara erişim riski hâlâ tamamen kapatılmış değil; güvenli ağ egress'i olmadan güvenilmeyen yayınlarda ffmpeg çalıştırılmamalı. Yerel shell GitHub DNS çözümlemesi yine başarısız oldu. Ana İBO/YEDEKLER değişmedi.
+
+---
+
 ## 17 Kasım 2026 — Güvenlik CI gerçek sonuç teyidi
 
 GitHub Actions **44108249163** (V2 Main Production Security Gate), commit `274a8604ab6e305fdbb571752cdbaff45fa00af3` için **completed/success**. `Verify suspended publishers, no cron and immutable IBO` işi başarılı, `live-discovery-diagnostic` işi skipped. Bu koşum, yeni 67 backup-archive Python testinin tamamını çalıştırdığını kanıtlamaz; onlar için `python v2/run_backup_archive_tests.py --verbose` çalıştırılıp gerçek PASS çıktısı saklanmalı. Mevcut playlistler değiştirilmedi. Gerçek yayın kabulü ve güvenli egress tamamlanmadan 18.074 YEDEKLER taşıması yapılmayacak.
