@@ -34,6 +34,11 @@ class TurkishChannelTriageTests(unittest.TestCase):
         self.assertFalse(r["working_channel_verified"])
         self.assertFalse(r["review_approved"])
         self.assertFalse(r["playlist_modified"])
+    def test_turkish_script_title_without_keyword(self):
+        r = classify("Güneş Haber")
+        self.assertEqual(r["category"], "TURKISH_NAME_REVIEW")
+        self.assertFalse(r["turkish_spoken_hint"])
+        self.assertFalse(r["review_approved"])
     def test_reject_invalid_inputs(self):
         with self.assertRaises(ValueError):
             classify("")
