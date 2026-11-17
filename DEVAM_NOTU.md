@@ -1,3 +1,12 @@
+## 17 Kasım 2026 — Kullanıcı kararı: gerçek YEDEKLER testleri EN SON
+- Kullanıcı canlı kanal testi, FFmpeg görüntü/ses, Whisper konuşma dili, OCR ve WebVTT altyazı testlerini bütün sistem kurulum işleri bittikten sonraya erteledi. Test başlatma veya başarılı kabul iddiası YOK.
+- Ayrı `YEDEKLER_PLAYLISTESI.m3u8` (önceki envanter: 32.488 kayıt, 18.122 benzersiz URL) ile ana `MADSC55_TV_IBO_CALISANLAR_TEST.m3u8` (18.912 kayıt; YEDEKLER kategorisi 18.074) kesinlikle karıştırılmayacak. Sayılar yeni canlı envanterle yeniden doğrulanmadı.
+- Kurulum işleri: (1) kaynak provenansı ve kanal kimliği, (2) ayrı YEDEKLER için ölçeklenebilir deduplikasyon/iş kuyruğu, checkpoint ve güvenli tekrar deneme, (3) gerçek kamuya açık kaynaklarla sınırlı bağımsız egress denetimi, (4) FFmpeg AV + yerel Whisper ASR + OCR + WebVTT toplu kanıt birleştirme, (5) dil/ülke ayrık sınıflandırması ve beş sonuç sınıfı, (6) redakte rapor, SHA256, artifact ve cihaz kabulü. Bunlar bitmeden canlı toplu test YOK.
+- Otomatik push tetikleyicisi `.github/workflows/yedekler-readonly-review.yml` içinden kaldırıldı. `workflow_dispatch` ve PR kapsamı durur; kullanıcı kararı gereği test tetiklenmez. Canlı pilot opt-in kalır, bağımsız egress denetimi eksiktir.
+- Önceki kanonik açık görevler #15, #17–21, #28–34 kapanmış sayılmaz. #34 en son; canlı testler kurulumdan sonra. Ana İBO, eski MADSC-TV ve arşivler değiştirilmedi. PR #365 henüz birleştirilmedi.
+
+---
+
 ## 17 Kasım 2026 — Test öncesi kurulum: M3U envanter inceleme
 - `v2/turkish_m3u_inventory_review.py` eklendi: mevcut M3U/M3U8 dosyasını çevrimdışı ve salt-okunur inceler, 1 tabanlı EXTINF sıra numarası, grup ve ad üzerinden inceleme kategorisi üretir. Çıktıya URL yazmaz, dosyayı yeniden sıralamaz, canlı kanalı onaylamaz.
 - `v2/test_turkish_m3u_inventory_review.py` iki senaryo ve Production Security Gate bağlantısı eklendi. Kod henüz çalıştırılıp PASS doğrulanmadı; kullanıcının talimatına göre gerçek kanal testleri bütün kurulumdan sonra yapılacak.
