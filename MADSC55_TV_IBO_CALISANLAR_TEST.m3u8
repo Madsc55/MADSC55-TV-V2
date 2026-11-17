@@ -3762,8 +3762,6 @@ https://panel.5gtvhosting.com/hls/karadeniztv/karadeniztv.m3u8
 https://alpha.tv.online.tm/hls/ch004.m3u8
 #EXTINF:-1 tvg-logo="https://i.ibb.co/8HZyRDN/Ekran-g-r-nt-s-2026-07-25-103937.jpg" group-title="🗂️ YEDEKLER (18074)",MEDYAHABER TV
 https://hlspackager.akamaized.net/live/DB/MEDYA_HABER/HLS/MEDYA_HABER.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Daystar_(2008%E2%80%93present)_unmodified_logo.svg/960px-Daystar_(2008%E2%80%93present)_unmodified_logo.svg.png" group-title="🗂️ YEDEKLER (18074)",DAYSTAR TV ESPANOL (720P)
-https://live-mcl.cdn01.net/smarttv/64wj6m6d8/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.ibb.co/bLpTdYZ/tv100.png" group-title="🗂️ YEDEKLER (18074)",TV 100 (BACKUP)
 https://tv.ensonhaber.com/tv100/tv100.m3u8
 #EXTINF:-1 tvg-logo="https://i.ibb.co/1Z22dCY/teve2.png" group-title="🗂️ YEDEKLER (18074)",TEVE 2
@@ -3772,8 +3770,6 @@ https://live.duhnet.tv/S2/HLS_LIVE/teve2np/playlist.m3u8
 https://tv8.daioncdn.net/tv8bucuk/tv8bucuk.m3u8?app=tv8bucuk_web
 #EXTINF:-1 tvg-logo="https://i.ibb.co/1Z22dCY/teve2.png" group-title="🗂️ YEDEKLER (18074)",TEVE 2 (BACKUP)
 https://demiroren.daioncdn.net/teve2/teve2.m3u8?app=6aab838a-437e-4a1b-bbd0-e30f79cdbbbd
-#EXTINF:-1 tvg-logo="https://i.ibb.co/3T2TS2p/tvestar.jpg" group-title="🗂️ YEDEKLER (18074)",STAR TVE
-https://rtvelivestream-rtveplayplus.rtve.es/rtvesec/int/star_main_720.m3u8
 #EXTINF:-1 tvg-logo="https://i.ibb.co/1Z22dCY/teve2.png" group-title="🗂️ YEDEKLER (18074)",TEVE 2 (BACKUP)
 http://demiroren.daioncdn.net/teve2/teve2.m3u8?app=web
 #EXTINF:-1 tvg-logo="https://dunyatv.az/logo.png" group-title="🗂️ YEDEKLER (18074)",DÜNYA TV
@@ -3786,8 +3782,6 @@ https://v2.catcast.tv/content/48591/index.m3u8?token=57a5b53a15d229ca5a1dab2cf30
 https://i.ibb.co/YZG9MRS/turktv.png
 #EXTINF:-1 tvg-name="TV 100" group-title="🗂️ YEDEKLER (18074)",TV 100
 https://tv100.blutv.com/blutv_tv100_live/live.m3u8
-#EXTINF:-1 tvg-name="Zaracay TV (1080p)" group-title="🗂️ YEDEKLER (18074)",Zaracay TV (1080p)
-https://video2.makrodigital.com/zaracay/zaracay/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.ibb.co/dgj3MTh/tv85.png" group-title="🗂️ YEDEKLER (18074)",TV8 BUÇUK (BACKUP)
 https://tv8.daioncdn.net/tv8bucuk/tv8bucuk.m3u8?app=bf58ab52-4865-4c81-b223-26b41009801e
 #EXTINF:-1 tvg-logo="https://i.imgur.com/driabBO.png" group-title="🗂️ YEDEKLER (18074)",POWERTURK AKUSTIK
@@ -3800,14 +3794,6 @@ http://livetv.powerapp.com.tr/pturktaptaze/taptaze.smil/playlist.m3u8#all
 https://livetv.powerapp.com.tr/powerturkTV/powerturkhd.smil/playlists.m3u8#all
 #EXTINF:-1 tvg-logo="https://i.ibb.co/xXcBD2C/powerturk.png" group-title="🗂️ YEDEKLER (18074)",POWERTURK TV
 https://livetv.powerapp.com.tr/powerturkTV/powerturkhd.smil/playlists.m3u8#top50
-#EXTINF:-1 tvg-logo="https://i.imgur.com/uVdKHMG.png" group-title="🗂️ YEDEKLER (18074)",DAYSTAR TV WSLF-LD (720P)
-https://content.uplynk.com/channel/1992858a34c3423dbdad491d07ae6f75.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/di3XX5L.png" group-title="🗂️ YEDEKLER (18074)",AZSTARTV
-http://live.azstartv.com/azstar/smil:azstar.smil/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/uVdKHMG.png" group-title="🗂️ YEDEKLER (18074)",DAYSTAR TV (1080P)
-https://live-mcl.cdn01.net/smarttv/48vy43564/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Daystar_(2008%E2%80%93present)_unmodified_logo.svg/960px-Daystar_(2008%E2%80%93present)_unmodified_logo.svg.png" group-title="🗂️ YEDEKLER (18074)",DAYSTAR TV ESPANOL (1080P)
-http://167.249.23.102:8000/play/a0ev/index.m3u8
 #EXTINF:-1 tvg-id="rjxdtygyec6mqjz" tvg-name="ULUSAL KANAL" tvg-logo="https://d3ckc0u56niq67.cloudfront.net/conf/images/ulusal_Mja.png" group-title="🗂️ YEDEKLER (18074)",ULUSAL KANAL 576P SD
 http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6931/index.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="TÜRKMENELİ TV" tvg-logo="https://i.imgur.com/o09LkXK.png" group-title="🗂️ YEDEKLER (18074)",TÜRKMENELİ TV 720P HD
@@ -3854,8 +3840,6 @@ https://stream.tiviturk.de/live/tiviturk.m3u8
 https://edge.socialsmart.tv/belemturktv/bant1/chunks.m3u8
 #EXTINF:-1 tvg-id="BursaTV.tr@SD" tvg-logo="https://i.imgur.com/9cl1MR8.png" group-title="🗂️ YEDEKLER (18074)",Bursa TV (720p) [Not 24/7]
 https://cdn-bursatv.yayin.com.tr/bursatv/bursatv/playlist.m3u8
-#EXTINF:-1 tvg-id="EuroStar.tr@SD" tvg-logo="https://i.imgur.com/kb165Ot.png" group-title="🗂️ YEDEKLER (18074)",EuroStar TV (1080p)
-https://canlitvulusal.xyz/live/eurostar/index.m3u8
 #EXTINF:-1 tvg-id="OnMedyaTV.tr@SD" tvg-logo="https://i.imgur.com/thvk3Py.png" group-title="🗂️ YEDEKLER (18074)",ON Medya Haber (720p) [Geo-blocked]
 http://live.arkumedia.com:1935/marmaratv/marmaratv/playlist.m3u8
 #EXTINF:-1 tvg-id="TV100.tr@SD" tvg-logo="https://upload.wikimedia.org/wikipedia/tr/thumb/0/0f/TV100_logo.png/960px-TV100_logo.png" group-title="🗂️ YEDEKLER (18074)",TV 100 (1080p)
@@ -4096,6 +4080,8 @@ https://h5cul1yar48um3t.wcetv.com/hls/yunnantv.m3u8
 http://dygvideo.dygdigital.com/live/hls/ntv4puhu?m3u8
 #EXTINF:-1 group-title="🗂️ YEDEKLER (18074)",TRT WORLD (576P)
 https://fta.ektv.in/live/416/master.m3u8
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Daystar_(2008%E2%80%93present)_unmodified_logo.svg/960px-Daystar_(2008%E2%80%93present)_unmodified_logo.svg.png" group-title="🗂️ YEDEKLER (18074)",DAYSTAR TV ESPANOL (720P)
+https://live-mcl.cdn01.net/smarttv/64wj6m6d8/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/xNatV8K.png" group-title="🗂️ YEDEKLER (18074)",ESPRESO TV (1080P)
 https://dash2.antik.sk/live/test_espresso/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/xNatV8K.png" group-title="🗂️ YEDEKLER (18074)",ESPRESO TV
@@ -4144,6 +4130,8 @@ http://dogus.daioncdn.net/ntv/ntv.m3u8?ce=3&&app=7c4bb802-0c41-409e-8cd2-7999849
 http://dygvideo.dygdigital.com/live/hls/puhuntvdai?m3u8
 #EXTINF:-1 tvg-logo="https://i.ibb.co/FVnG3Zr/360tv.png" group-title="🗂️ YEDEKLER (18074)",360
 https://tv.ensonhaber.com/tv360/tv360.m3u8
+#EXTINF:-1 tvg-logo="https://i.ibb.co/3T2TS2p/tvestar.jpg" group-title="🗂️ YEDEKLER (18074)",STAR TVE
+https://rtvelivestream-rtveplayplus.rtve.es/rtvesec/int/star_main_720.m3u8
 #EXTINF:-1 tvg-logo="https://i.ibb.co/Pt5ThHQ/andatv.png" group-title="🗂️ YEDEKLER (18074)",SUR 2 ANDALUCÍA
 https://cdnlive.codev8.net/rtvalive/channel22.smil/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.ibb.co/BrGNZJ4/showtv.png" group-title="🗂️ YEDEKLER (18074)",SHOW (BACKUP)
@@ -4272,6 +4260,8 @@ https://streamer01.myvideoplace.tv/streamer02/hls/ATV_DIRECT_EV_111018.m3u8
 http://bantel-cdn1.iptvperu.tv:1935/btnscrtn/vivatv.stream/playlist.m3u8
 #EXTINF:-1 tvg-name="WiseHumanTv (1080p)" group-title="🗂️ YEDEKLER (18074)",WiseHumanTv (1080p)
 https://avr.host247.net/live/WiseHumanTv/playlist.m3u8
+#EXTINF:-1 tvg-name="Zaracay TV (1080p)" group-title="🗂️ YEDEKLER (18074)",Zaracay TV (1080p)
+https://video2.makrodigital.com/zaracay/zaracay/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/fa/d/df/Quarntvlogo.png" group-title="🗂️ YEDEKLER (18074)",QURAN TV (1080P)
 https://ncdn.telewebion.ir/quran/live/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://iatv.tmgrup.com.tr/site/v2/a2tv/i/a2tv-logo.png" group-title="🗂️ YEDEKLER (18074)",A2
@@ -4290,6 +4280,8 @@ https://5b33b873179a2.streamlock.net:1443/mastertv/livestream/playlist.m3u8
 https://183.giatvcdn.com/ssh101/ssh101/ctv8hd/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://ukrtvr.org/images/%D0%A1%D1%83%D0%BF%D1%83%D1%82%D0%BD%D0%B8%D0%BA%D0%BE%D0%B2%D0%B5/CTV%20-%20Dla%20Ciebie%20TV.png" group-title="🗂️ YEDEKLER (18074)",CTV DLA CIEBIE TV
 http://90.183.52.46:4000/play/a065/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/uVdKHMG.png" group-title="🗂️ YEDEKLER (18074)",DAYSTAR TV WSLF-LD (720P)
+https://content.uplynk.com/channel/1992858a34c3423dbdad491d07ae6f75.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/6lvQ3Xz.png" group-title="🗂️ YEDEKLER (18074)",DELLATV (720P)
 https://183.giatvcdn.com/giatvplayout7/giatv-211474/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/cCFxyIp.jpg" group-title="🗂️ YEDEKLER (18074)",KANDELATV (480P)
@@ -4318,6 +4310,8 @@ http://181.78.8.199:8000/play/a0fo/index.m3u8
 https://hgmtv.com:2020/hls/asthalive/asthalive.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/pwM5txv.png" group-title="🗂️ YEDEKLER (18074)",ATVSAT (1080P)
 https://stream.atvsat.com/atvsatlive/smil:atvsatlive.smil/playlist.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/di3XX5L.png" group-title="🗂️ YEDEKLER (18074)",AZSTARTV
+http://live.azstartv.com/azstar/smil:azstar.smil/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://cdn2-static.ntv.ru/home/promo/24740/balabol_vse.jpg" group-title="🗂️ YEDEKLER (18074)",BALABOL (720P)
 https://cdn-dvr.ntv.ru/Balabol/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/eDoJqtg.png" group-title="🗂️ YEDEKLER (18074)",BATV EDUCATİONAL CHANNEL (1080P)
@@ -4340,6 +4334,10 @@ https://d2p4mrcwl6ly4.cloudfront.net/out/v1/8d50f69fdbbf411a8d302743e4263716/CGN
 https://live20.bozztv.com/akamaissh101/ssh101/ctv8hd/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/Bnjj29f.png" group-title="🗂️ YEDEKLER (18074)",CREALATV (1080P)
 https://stream.crealatv.com/live.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/uVdKHMG.png" group-title="🗂️ YEDEKLER (18074)",DAYSTAR TV (1080P)
+https://live-mcl.cdn01.net/smarttv/48vy43564/playlist.m3u8
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Daystar_(2008%E2%80%93present)_unmodified_logo.svg/960px-Daystar_(2008%E2%80%93present)_unmodified_logo.svg.png" group-title="🗂️ YEDEKLER (18074)",DAYSTAR TV ESPANOL (1080P)
+http://167.249.23.102:8000/play/a0ev/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/6lvQ3Xz.png" group-title="🗂️ YEDEKLER (18074)",DELLATV (720P)
 https://live20.bozztv.com/giatvplayout7/giatv-211474/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/crttwAR.png" group-title="🗂️ YEDEKLER (18074)",DELTATV
@@ -4442,6 +4440,8 @@ https://arrafidain.tvplayer.online/arrafidaintv/source/playlist.m3u8
 https://livetv.canbroadcast.com:7443/canlican/tv.m3u8
 #EXTINF:-1 tvg-id="DehaTV.tr@SD" tvg-logo="https://i.imgur.com/Dlsm9XP.png" group-title="🗂️ YEDEKLER (18074)",Deha TV (720p) [Geo-blocked]
 https://live.artidijitalmedya.com/artidijital_dehatv/dehatv/playlist.m3u8
+#EXTINF:-1 tvg-id="EuroStar.tr@SD" tvg-logo="https://i.imgur.com/kb165Ot.png" group-title="🗂️ YEDEKLER (18074)",EuroStar TV (1080p)
+https://canlitvulusal.xyz/live/eurostar/index.m3u8
 #EXTINF:-1 tvg-id="WomanTV.tr@SD" tvg-logo="https://i.imgur.com/f2zGoV3.png" group-title="🗂️ YEDEKLER (18074)",Woman TV (1080p)
 https://embedlp.becdn.net/womantv.m3u8
 #EXTINF:-1 group-title="🗂️ YEDEKLER (18074)",NTV
