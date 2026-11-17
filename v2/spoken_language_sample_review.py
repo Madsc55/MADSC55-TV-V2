@@ -63,6 +63,7 @@ def run():
         with tempfile.TemporaryDirectory() as directory:
             wav = Path(directory) / "sample.wav"
             command = ["ffmpeg", "-nostdin", "-hide_banner", "-loglevel", "error",
+                       "-protocol_whitelist", "file,http,https,tcp,tls,crypto",
                        "-rw_timeout", "8000000", "-i", url, "-t", str(args.seconds),
                        "-vn", "-ac", "1", "-ar", "16000", "-y", str(wav)]
             try:
