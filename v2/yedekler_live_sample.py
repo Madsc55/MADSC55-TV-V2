@@ -19,6 +19,8 @@ def main():
     if out.exists() or source.resolve()==out.resolve():
         p.error("Output exists or overwrites playlist")
     out.parent.mkdir(parents=True,exist_ok=True)
+    if a.model_dir and not pathlib.Path(a.model_dir).is_dir():
+        p.error("ASR model directory not found")
     entries=[]; pending=None
     for line in source.open(encoding="utf-8-sig",errors="replace"):
         line=line.strip()
