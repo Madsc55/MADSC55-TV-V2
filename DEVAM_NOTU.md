@@ -1,3 +1,18 @@
+## 17 Kasım 2026 — YAPILACAK: YEDEKLER 18.074 kanal toplu AV, Türkçe tanıma ve akıllı arşiv
+
+**Durum: PLANLANDI / UYGULANMADI.** Kullanıcı isteği: YEDEKLER kategorisindeki 18.074 kanalı kayıpsız toplu denetlemek; Türk kanallarını isim/ülke/TR etiketi yanında gerçek Türkçe konuşma, ekrandaki Türkçe yazı ve Türkçe altyazı kanıtlarıyla mümkün olduğunca eksiksiz bulmak; çalışan/çalışmayan ve Türk/yabancı/belirsiz sınıflarına ayırmak. Sayı işlem başlangıcında gerçek envanterden yeniden doğrulanacak.
+
+**Uygulama planı:**
+1. Ana arşiv ve YEDEKLER'in değişmez snapshot, kanal kimliği, kaynak URL referansı, sıra ve sayımını al; tekrar eden kayıtları ayrı raporla, kayıt silme veya kayıp yok.
+2. 18.074 kaydı kuyruk/batch ve sınırlı paralellikle test et: erişim, gerçek FFmpeg video decode, ses akışı ve duyulabilir ses; HTTP/timeout/DRM/geo-block gibi engelleri ayrı kodla. Tek başarısız ölçüm kalıcı ölü hükmü değildir; kontrollü tekrar dene.
+3. Türkçe tespitini birleştir: ad/metadata (TR/TUR/Türkiye ve bilinen yayıncılar), ses üzerinden konuşma/dil tanıma, video karelerinden OCR ile Türkçe ekran yazısı, mevcut altyazı parçalarından dil tanıma. Türkçe kanıtı bulunmaması yabancı olduğunun kanıtı değildir. Sessiz, kısa örnekli, erişim engelli veya karışık dilli yayınlar belirsiz/inceleme kuyruğuna alınır; kanıt ve güven seviyesi kaydedilir.
+4. Ana arşiv üzerinde silmeden mantıksal depolar oluştur: Türk çalışan, Türk çalışmayan, yabancı çalışan, yabancı çalışmayan, belirsiz; geçici arızalar için yeniden test kuyruğu. Dil sınıfı ile çalışma durumu ayrı alanlar olsun; sınıflar kanıta göre güncellensin. Kullanıcının istemediği kanallar aktif görünümden ayrılabilsin, ana arşivde kalsın.
+5. Sonuç raporu: toplam/tekil/test edilen, AV doğrulanan, görüntü-ses eksik, erişilemeyen, TR konuşma/OCR/altyazı kanıtı, her depo sayısı, belirsizler, tekrar denemeler ve örnek kanıt referansları. Yanlış pozitif/negatif örnekleriyle kabul testi yap.
+
+**Güvenlik ve kabul:** Ana İBO listesine, YEDEKLER'in özgün kayıtlarına/sırasına, YENİLER/FAVORİLER/EPG'ye ve eski MADSC-TV'ye izinsiz yazma yok. Sınıflandırma ayrı metadata/indeks katmanında; istenirse onaylı işlemle kategoriye taşıma/kopyalama. Mevcut #18/#31 AV kanıt altyapısı tekrar kullanılsın ama ses dili/OCR/altyazı gerçekten uygulanıp test edilmeden var sayılmasın. Tam 18.074 kapsamı ve rapor doğrulanmadan 'tamamlandı' işaretlenmesin. Mevcut #34 en son yapılacak kuralı ve kanonik görev durumları değiştirilmesin; bu not yeni plan kaydıdır, görev numarası atamaz.
+
+---
+
 ## 15 Kasım 2026 — ÖNCELİKLİ: kullanıcı onaylı İBO düzenleme kapısı
 
 Kullanıcının kurduğu esas iş akışı: kanal keşfi → ayrı adaylar → açık onayla YEDEKLER → cihazda gerçek görüntü/ses testi → çalışan kanalları kullanıcının talimatıyla ULUSAL-HEPSİ/HABER/SPOR/BELGESEL/SİNEMA vb. kategorilere kopyalama/taşıma → istenirse kanal ve kategori sırasını değiştirme. YEDEKLER'de kaynak kullanıcı aksini istemedikçe kalır. Ana listeye izinsiz otomatik yazma kesinlikle yasak. Kullanıcının açık talimatıyla yapılan kategori düzenlemeleri ise teknik olarak mümkün olmalıdır.
