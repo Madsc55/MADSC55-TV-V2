@@ -1,5 +1,6 @@
 """Offline tests for authorized YEDEKLER evidence collector."""
 import json
+import hashlib
 import tempfile
 import unittest
 from pathlib import Path
@@ -42,7 +43,7 @@ class EvidenceCollectorTests(unittest.TestCase):
 
     def test_evidence_without_playlist_mutation(self):
         before = self.playlist.read_bytes()
-        report = {"url_sha256":"a"*64, "status":"AV_INCOMPLETE",
+        report = {"url_sha256":hashlib.sha256(b"https://example.com/1004.m3u8").hexdigest(), "status":"AV_INCOMPLETE",
                   "video_decoded":False, "audio_decoded":False,
                   "spoken_turkish_hint":False, "subtitle_turkish_hint":False}
         with patch.dict("os.environ", {"MADSC55_SECURE_EGRESS_CONFIRMED": "1"}), patch.object(collector, "review_one", return_value=report):
