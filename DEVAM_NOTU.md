@@ -1,3 +1,9 @@
+## 17 Kasım 2026 — Kullanıcının kesin iş sırası ve durdurma koşulu
+
+**ÖNCELİK DEĞİŞMEZ:** (1) DNS rebinding/redirect ve ffmpeg ağ çıkışı güvenliğini gerçekten kapat ve test et; (2) `python v2/run_backup_archive_tests.py --verbose` ile **68 yazılı testin** tamamını çalıştır, hata varsa düzelt, PASS kanıtını sakla; (3) gerçek yayınlardan ses/görüntü decode, Türkçe konuşma ASR, OCR ve altyazı kanıtlarını birleştirerek gerçek uçtan uca kabul yap. **Bu üç iş PASS olmadan** 18.074 YEDEKLER kanal taramasına, Türk kanalı sıralamasına, ilk 1003 kanalı izleyen liste yerleştirmesine veya ana İBO playlist mutasyonuna geçme. Otomatik güvenlik CI'nin başarısı 68 testin PASS olduğu anlamına gelmez. Yapılan tüm değişiklikleri ve kalan engelleri bu dosyada tut; başarısız/çalıştırılmamış testleri bitmiş gösterme.
+
+---
+
 ## 17 Kasım 2026 — ASR örnekleme URL giriş koruması
 
 Gerçek konuşma örnekleyicisi `v2/spoken_language_sample_review.py` artık yalnızca `http` öneki kontrolü yapmak yerine ortak `backup_text_sampler.valid_url` denetimini kullanıyor: yerel/özel IP adresleri, localhost, gömülü kullanıcı/parola, kontrol karakterleri ve `file:` URL'leri reddediliyor. Yeni güvenlik testi eklendi: **68 yazılı test**, henüz PASS koşumu yok. **Önemli:** DNS adı yeniden çözümleme ve HTTP yönlendirme yoluyla özel ağlara erişim riski hâlâ tamamen kapatılmış değil; güvenli ağ egress'i olmadan güvenilmeyen yayınlarda ffmpeg çalıştırılmamalı. Yerel shell GitHub DNS çözümlemesi yine başarısız oldu. Ana İBO/YEDEKLER değişmedi.
