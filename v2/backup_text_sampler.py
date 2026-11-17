@@ -31,7 +31,7 @@ def valid_url(url):
         try:
             address = ipaddress.ip_address(host)
         except ValueError:
-            return True  # DNS must additionally be restricted at network egress.
+            return False  # DNS names require an enforced network egress policy.
         return address.is_global
     except ValueError:
         return False
