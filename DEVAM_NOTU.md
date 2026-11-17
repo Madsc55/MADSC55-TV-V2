@@ -1,3 +1,49 @@
+## 17 Kasım 2026 — SOHBET DEVİR / KALDIĞIMIZ YER (YENİ SOHBETTE İLK OKUNACAK KAYIT)
+
+### Proje ve kesin kullanıcı talimatı
+- Yalnızca **MADSC55 TV V2**. Kullanıcı bu sohbeti sadece V2 soru/işleri için kullanıyor.
+- Ana İBO playlistine, mevcut canlı listeye ve YEDEKLER kategorisine **dokunma**. 18.074 YEDEKLER kanalını henüz tarama, taşıma, sıralama veya silme.
+- Kullanıcının istediği yeni sistem: YEDEKLER'deki kanalları daha sonra toplu analiz etmek; ses/görüntü çalışıyor mu, Türkçe konuşma var mı, ekranda Türkçe yazı/OCR var mı, Türkçe altyazı var mı tespit etmek; sonuçları Türkçe çalışan / yabancı çalışan / çalışmayan / belirsiz gibi inceleme depolarında sınıflamak. Ana arşiv tüm kanalları tutmaya devam edecek. Otomatik tahminler kanalı kendiliğinden onaylamamalı.
+- **Sıkı iş sırası:** (1) güvenli DNS/redirect/egress tasarımı ve doğrulaması; (2) otomatik testleri gerçek ortamda çalıştırıp tüm hataları düzeltmek ve PASS kanıtını saklamak; (3) gerçek yayınlarda AV decode + ASR Türkçe konuşma + OCR + altyazı örneklemesi ve tek raporda uçtan uca kabul; ancak bunlardan sonra 18.074 YEDEKLER taraması. İlk 1003 ana kanal korunacak. Başarısız veya çalıştırılmamış testleri tamamlandı sayma.
+
+### GitHub çalışma konumu
+- Repo: `Madsc55/MADSC55-TV-V2`
+- Geliştirme dalı: `plan/18074-kanal-akilli-test-arsiv-20261117`
+- PR: #365 — https://github.com/Madsc55/MADSC55-TV-V2/pull/365
+- Ana çalışma notu: bu dosya, `DEVAM_NOTU.md`.
+- Bu geliştirmeler özellik dalında tutuldu; PR merge edildiği doğrulanmadı. Yeni sohbette önce PR head, branch ve Actions durumunu yeniden kontrol et.
+
+### Bu sohbette kaydedilen teknik ilerlemeler
+- `v2/backup_speech_evidence.py`: ASR dil tahminlerini yalnızca hash temelli inceleme ipucu olarak içeri alır; otomatik Türkçe onayı vermez.
+- `v2/backup_text_hint_import.py`: OCR ve altyazı ipuçlarını güvenli şekilde içeri alır; ham metni saklamaz, otomatik onay vermez.
+- `v2/backup_archive_offline.py`: AV, ASR, OCR ve altyazı ipuçlarını tek offline raporda birleştirmek için `--speech` ve `--text-hints` seçenekleri eklendi. Mevcut raporların üzerine yazma engellendi.
+- `v2/spoken_language_sample_review.py`: faster-whisper tabanlı ASR örnekleyicisi; snapshot ve playback hash kimlikleri birebir eşleşmeli, tekrarlı kimlikler reddedilir; bu doğrulama ağır model yüklenmeden önce yapılır; ortak URL doğrulaması kullanır; rapor üzerine yazılmaz.
+- `v2/backup_text_sampler.py` ve `v2/backup_text_batch.py`: OCR/altyazı örneklemesi; URL kontrolleri, örnek sınırları, rapor güvenliği; FFmpeg protokol whitelist eklendi.
+- ASR/OCR ipuçları en çok 16 örneklik batch olarak içeri alınır. Bu yalnızca tek örnekleme paketi sınırıdır; 18.074 envanter hedefini azaltmaz.
+- ASR ve OCR örnekleyicileri `MADSC55_SECURE_EGRESS_CONFIRMED=1` olmadan ffmpeg çağırmayı reddedecek şekilde fail-closed düzenlendi. Bu değişken tek başına ağ izolasyonu sağlamaz; yalnızca gerçek, doğrulanmış egress/proxy kurulduktan sonra ayarlanmalı.
+- FFmpeg protokol whitelist: `file,http,https,tcp,tls,crypto`. Bu DNS rebinding ve HTTP redirect SSRF riskini tek başına çözmez; bazı HLS kaynaklarında protokol uyumluluğu testi gerekir.
+- Ortak URL doğrulaması yerel/özel IP, localhost, kimlik bilgisi, kontrol karakteri, fragment, hatalı port, tek etiketli iç host ve bozuk DNS label reddi içerir; IPv6 literal desteği korunmuştur. DNS rebinding ve yönlendirme riskleri hâlâ ağ seviyesinde egress kısıtı gerektirir.
+- Son kaydedilen güvenlik/URL düzeltme commitleri: `f65629e592c0cdb78e5e3044a77bf8da174859fd`, test `f33a57e83ef8aa6fbca9cc1271dcdb77e278dd03`, IPv6 uyum düzeltmesi `8e86f590c27ccc6c26c4a73a330f3bf4b19de12b`; son not commit'i `1707dd607d631675ed279079f164ec459f25c24f`. Daha yeni değişiklikler olabilir; yeni sohbette branch HEAD'i doğrula.
+
+### Test ve CI durumu — önemli ayrım
+- En son kayıtta **71 yazılı otomatik test senaryosu** olduğu belirtiliyor. Bu sayı yalnızca yazılmış testleri ifade eder; testlerin çalıştırıldığı veya geçtiği anlamına gelmez. Yeni sohbette test listesi ve test runner'dan gerçek sayıyı doğrula.
+- Yerel çalışma ortamında `github.com` DNS çözümleme hatası görüldü (`Could not resolve host: github.com`); bu nedenle 71 testin yerel PASS koşumu elde edilmedi.
+- GitHub Actions run `44108249163`, commit `274a8604ab6e305fdbb571752cdbaff45fa00af3` için **completed/success** idi. Bu yalnızca V2 Main Production Security Gate; `Verify suspended publishers, no cron and immutable IBO` başarılı, `live-discovery-diagnostic` skipped. Bu run 71 yeni offline testin PASS olduğunu kanıtlamaz.
+- Bir önceki güvenlik run `44102300785` de SUCCESS olarak raporlandı; aynı şekilde yeni testlerin tümünü çalıştırdığına dair kanıt değil.
+- Gerçek yayınlarda AV/ASR/OCR/altyazı uçtan uca kabulü henüz tamamlanmadı. Örnek ASR workflow'unun mevcut olması tüm 18.074 kanalı test ettiği anlamına gelmez.
+
+### Yeni sohbette ilk yapılacaklar
+1. Bu devir notunu ve PR #365'in güncel head/merge durumunu oku; son commitleri ve branch'i doğrula.
+2. `v2/run_backup_archive_tests.py --verbose` komutunun tüm test modüllerini gerçekten topladığına bak; eksik/bozuk test importlarını düzelt.
+3. Repo için güvenilir GitHub Actions test workflow'u kullanarak tüm offline testleri çalıştır; log ve test sayısını kaydet. Güvenlik gate'i bu testlerin yerine sayma.
+4. Ağ güvenliğini gerçekçi şekilde çöz: ffmpeg'in DNS çözümleme ve redirect sonrası özel IP'ye ulaşmasını ağ katmanında engelleyen güvenilir egress/proxy veya izole runner kur; yalnızca env bayrağına güvenme. SSRF/DNS rebinding/redirect testleri ekle.
+5. Sınırlı, izinli gerçek yayın örnekleriyle AV decode, ASR, OCR, altyazı ve birleşik rapor kabulünü çalıştır; kanıtları anonim hash ile kaydet. Ses/video başarıları ve dil ipuçlarını birbirinden ayır; otomatik kesin Türkçe onayı verme.
+6. Her aşamanın sonucunu bu dosyaya ekle. Tüm ön koşullar PASS olmadan 18.074 YEDEKLER taramasına geçme.
+
+**Kullanıcıya açık durum:** Geliştirme kodları GitHub özellik dalına kaydedildi. Sistem henüz bitmiş veya kabul edilmiş değil. Ana İBO ve YEDEKLER'e dokunulmadı. Yeni sohbet bu kayıttan devam etmeli; kullanıcıdan aynı bilgileri tekrar isteme.
+
+---
+
 ## 17 Kasım 2026 — URL DNS etiket doğrulaması ve IPv6 koruması
 
 Ortak URL denetiminde boş DNS etiketleri, tire ile başlayan/biten etiketler ve alt çizgi gibi geçersiz karakterler reddediliyor. IPv6 adreslerinin iki noktalı sözdizimi ayrıca korunuyor. Yeni regresyon testi eklendi: **71 yazılı test**, PASS doğrulaması yok. Bu oturumda `git ls-remote` yeniden denendi, `Could not resolve host: github.com` hatası alındı. Bu nedenle gerçek test koşumu ve gerçek yayın kabulü hâlâ açık. DNS rebinding/redirect için ağ seviyesi izolasyon hâlâ zorunlu. Ana İBO ve YEDEKLER değiştirilmedi.
