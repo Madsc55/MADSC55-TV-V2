@@ -34,5 +34,10 @@ class TextHintImportTests(unittest.TestCase):
         self.assertFalse(rows[KEY]["ocr_turkish_hint"])
         self.assertFalse(rows[KEY]["subtitle_turkish_hint"])
 
+    def test_excessive_batch_rejected(self):
+        with self.assertRaisesRegex(ValueError, "exceeds"):
+            import_text_hints({"policy": POLICY, "results": [
+                {"url_sha256": format(i, "064x")} for i in range(17)]})
+
 if __name__ == "__main__":
     unittest.main()
