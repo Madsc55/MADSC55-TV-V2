@@ -5,6 +5,7 @@ Requires independent secure egress attestation and source authorization.
 Only explicitly selected 1-based playlist ordinals are sampled.
 """
 import argparse
+import hashlib
 import os
 import re
 import json
@@ -64,6 +65,9 @@ def collect(playlist, output, ordinals, *, source_authorized=False, model_dir=No
             for ordinal in selected:
                 sample = review_one(records[ordinal], Path(tmp) / f"{ordinal}.json",
                                     source_authorized=True, model_dir=model_dir)
+                expected = hashlib.sha256(records[ordinal].encode("utf-8")).hexdigest()
+                if not isinstance(sample, dict) or sample.get("url_sha256") != expected:
+                    raise ValueError("Sample evidence does not match playlist URL hash")
                 dest.write(json.dumps({"playlist_ordinal": ordinal, "sample_report": sample}, ensure_ascii=False) + "\n")
         with output.open("xb") as dest, staging.open("rb") as source:
             import shutil
