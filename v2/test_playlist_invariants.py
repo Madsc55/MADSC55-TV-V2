@@ -43,8 +43,8 @@ def main():
     turk_entries = list(entries((ROOT / "v2/yedekler_batch/TURK_ARSIV.m3u8").read_text(encoding="utf-8-sig")))
     remaining_entries = list(entries((ROOT / "v2/yedekler_batch/YEDEKLER_KALAN_2125.m3u8").read_text(encoding="utf-8-sig")))
     assert len(turk_entries) == 375 and len(remaining_entries) == 2125
-    assert [(x["name"], x["url"]) for x in turk_entries] == [(x["name"], x["url"]) for x in active_entries[111:486]]
-    assert [(x["name"], x["url"]) for x in remaining_entries] == [(x["name"], x["url"]) for x in active_entries[:111] + active_entries[486:]]
+    assert [(x["name"], x["url"]) for x in turk_entries] == [(x["name"], x["url"]) for x in source_entries[111:486]]
+    assert [(x["name"], x["url"]) for x in remaining_entries] == [(x["name"], x["url"]) for x in active_entries]
     assert len({x["url"] for x in turk_entries + remaining_entries}) == 2500
     # Fail closed on any reintroduction of the 48 channels that caused test_001.
     quarantine = json.loads((ROOT / "v2/archives/test001_quarantined_48.json").read_text(encoding="utf-8"))
