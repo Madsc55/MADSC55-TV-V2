@@ -15,6 +15,14 @@ jobs:
       - uses: actions/checkout@v4
       - name: Install FFmpeg
         run: sudo apt-get update -qq && sudo apt-get install -y ffmpeg
+      - name: Download previous audit evidence
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        uses: actions/download-artifact@v4
+        with:
+          name: ibo-full-category-channel-audit
+          run-id: 43969719236
+          github-token: ${{ github.token }}
+          path: v2/archives/previous_audit
       - name: Verify every category including backups and test_001
         run: |
           python3 v2/tools/audit_ibo_playlist.py \
