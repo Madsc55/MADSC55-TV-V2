@@ -20,7 +20,10 @@ try:
 except ImportError:
     from backup_text_evidence import inspect_text_observations
 
-# Untrusted HTTP/HLS input must not be able to open local file: URLs.\nSTREAM_PROTOCOL_WHITELIST = "http,https,tcp,tls,crypto"\n\ndef valid_url(url):
+# Untrusted HTTP/HLS input must not be able to open local file: URLs.
+STREAM_PROTOCOL_WHITELIST = "http,https,tcp,tls,crypto"
+
+def valid_url(url):
     if not isinstance(url, str) or not url or len(url) > 4096 or any(ord(ch) < 33 or ord(ch) == 127 for ch in url):
         return False
     try:
