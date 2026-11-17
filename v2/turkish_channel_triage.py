@@ -36,6 +36,8 @@ def classify_channel(name, origin_country=None, spoken_language=None,
     spoken = (spoken_language or "").strip().lower()
     subtitle = (subtitle_language or "").strip().lower()
     title_hint = bool(NAME_MARKERS.search(name.upper()) or TURKISH_SCRIPT_HINT.search(name))
+    # Keep each independent facet even when category priority picks only one.
+    # Turkish subtitles do not establish spoken Turkish; AV is not device proof.
     origin_tr = origin in TR_COUNTRIES or origin in TR_CYPRUS
     origin_turkic = origin in TURKIC
     spoken_tr = spoken in TR_LANGUAGE
@@ -61,6 +63,8 @@ def classify_channel(name, origin_country=None, spoken_language=None,
     return {
         "category": category,
         "turkish_name_hint": title_hint,
+        "turkish_script_name_hint": bool(TURKISH_SCRIPT_HINT.search(name)),
+        "turkish_keyword_name_hint": bool(NAME_MARKERS.search(name.upper())),
         "turkish_origin_hint": origin_tr,
         "other_turkic_origin_hint": origin_turkic,
         "turkish_spoken_hint": spoken_tr,
