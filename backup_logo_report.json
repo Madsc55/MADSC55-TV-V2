@@ -1,7 +1,7 @@
 {
-  "missing_before": 4027,
-  "added": 136,
-  "missing_after": 3891,
-  "ambiguous_or_unmatched": 3815,
-  "invalid_logo_urls": 25
+  "missing_before": 3891,
+  "added": 2021,
+  "missing_after": 1870,
+  "ambiguous_or_unmatched": 1604,
+  "invalid_logo_urls": 189
 }
