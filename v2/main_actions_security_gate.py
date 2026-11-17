@@ -173,7 +173,43 @@ def audit(root=ROOT):
                     [r for r in r0 if not backup(r)]==[r for r in r1 if not backup(r)] and
                     old[:2]==new[:2] and
                     [backup(r) for r in r0]==[backup(r) for r in r1])
-                if continue_playlist_audit and not reorder_ok:
+                # Exact, user-authorized 2500/15574 batch migration. This is not
+                # a general exemption: verify the immutable source, preserved
+                # non-backup records, ordered first batch and queued remainder.
+                def batch_migration_ok():
+                    try:
+                        source=(root/"v2/yedekler_batch/YEDEKLER_ARCHIVE.m3u8").read_bytes()
+                        archive=(root/"v2/yedekler_batch/ANA_ARSIV.m3u8").read_bytes()
+                        state=json.loads((root/"v2/yedekler_batch/state.json").read_text(encoding="utf-8"))
+                        hs,rs=parse(source)
+                        ha,ra=parse(archive)
+                        def is_backup(rec):
+                            return b'group-title="\\xf0\\x9f\\x97\\x82\\xef\\xb8\\x8f YEDEKLER (18074)"' in rec.splitlines()[0]
+                        def relabel(rec, old_label, new_label):
+                            return rec.replace(old_label, new_label, 1)
+                        old_label='🗂️ YEDEKLER (18074)'.encode()
+                        new_label='🗂️ YEDEKLER (2500)'.encode()
+                        archive_label='🗄️ ANA ARŞİV (15574)'.encode()
+                        originals=[rec for rec in r0 if old_label in rec.splitlines()[0]]
+                        expected_first=[relabel(rec,old_label,new_label) for rec in rs[:2500]]
+                        expected_archive=[relabel(rec,old_label,archive_label) for rec in rs[2500:]]
+                        return (hashlib.sha1(b"blob "+str(len(base)).encode()+b"\0"+base).hexdigest()=="710070b4bc93c74eb9a753849449c03a0b40d9d0"
+                            and hashlib.sha1(b"blob "+str(len(b)).encode()+b"\0"+b).hexdigest()=="7e2b996e2c7eb286d196750f28e0e6ec155f89fc"
+                            and hashlib.sha256(source).hexdigest()=="d72ac1e6bf27982862e23e06957222a9abaf7b03f0fab01edc2147144b50be5c"
+                            and state.get("source_sha256")==hashlib.sha256(source).hexdigest()
+                            and state.get("total")==18074
+                            and len(rs)==18074 and len(originals)==18074 and originals==rs
+                            and len(ra)==15574 and ra==expected_archive
+                            and h0==h1 and hs==ha==h0
+                            and len(r1)==3338
+                            and [rec for rec in r1 if new_label in rec.splitlines()[0]]==expected_first
+                            and [rec for rec in r1 if new_label not in rec.splitlines()[0]]==[rec for rec in r0 if old_label not in rec.splitlines()[0]]
+                            and len(state.get("status",{}))==2500
+                            and all(state["status"].get(str(i))=="TEST" for i in range(1,2501)))
+                    except (OSError,ValueError,TypeError,KeyError):
+                        return False
+                batch_ok=continue_playlist_audit and batch_migration_ok()
+                if continue_playlist_audit and not reorder_ok and not batch_ok:
                     # An explicitly requested category operation must carry a
                     # one-change, exact-hash manifest in the same reviewed PR.
                     # No workflow or discovery job receives write permission.
