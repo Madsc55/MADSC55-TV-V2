@@ -54,5 +54,13 @@ class AdapterTests(unittest.TestCase):
         r=join_evidence([{"url_sha256":k}],av,{},1)["channels"][0]
         self.assertEqual(r["health"],"UNKNOWN")
 
+    def test_unhashable_identity_rejected(self):
+        with self.assertRaises(ValueError):
+            join_evidence([{"url_sha256":[]}], {}, {}, 1)
+
+    def test_invalid_identity_rejected(self):
+        with self.assertRaises(ValueError):
+            join_evidence([{"url_sha256":"not-a-sha256"}], {}, {}, 1)
+
 if __name__ == "__main__":
     unittest.main()
