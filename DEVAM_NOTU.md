@@ -1294,3 +1294,25 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - DNS ön çözümleme, FFmpeg protokol beyaz listesi ve yalnız env bayrağı bütün redirect/rebinding/HLS alt-isteklerini ağ katmanında engellemez. Güvenli izole egress ve gerçek yayın AV/ASR/OCR/altyazı kabulü bu oturumda da tamamlanmadı. Bunlar tamamlanmadan `MADSC55_SECURE_EGRESS_CONFIRMED` etkinleştirilmez, yeni canlı tarama başlatılmaz.
 - DEVAM_NOTU.md'nin main'deki son kullanıcı/playlist/başka PR kayıtları korunmalı, PR #365'e ait geçmiş kayıtlar ayrı ek bölümde saklanmalı. Kanonik görev durumları değişmez.
 
+---
+
+## 17 Kasım 2026 — PR #365 güncel kabul: 94 offline PASS, yerel gerçek FFmpeg ve Türkçe Tesseract OCR
+
+**Gerçek GitHub Actions PASS kanıtı:**
+- `44129902023` feature HEAD `8051c501b54537b04b9bd0c51124e50f9a3416a7`: Production Security Gate SUCCESS, akıllı arşiv 80/80 unittest PASS; playlist güvenlik koşusu `44129888122` SUCCESS. Bu tarihte PR feature ağacı ana dalın o anki playlistine eşitlendi, ana İBO/YEDEKLER'e doğrudan yazılmadı.
+- `44131355645`: güvenli HLS prefetch sekiz ek offline testi dahil **88/88 PASS** ve tam Production Security Gate SUCCESS.
+- `44131656040`: gerçek FFmpeg'e uzak stream URL'si vermeyen OCR/ASR yerel HLS bağlantıları dahil **90/90 offline test PASS** ve gate SUCCESS.
+- `44131990978`: **90/90 PASS** ve ayrı zorunlu `test_safe_hls_ffmpeg_local` gerçek yerel FFmpeg görüntü karesi + ses decode testi PASS (3 saniyelik sentetik yerel HLS medyası). Gerçek TV yayını veya gerçek cihaz kabulü değildir.
+- `44132717209`: güvenli WebVTT altyazı ve gizlilik regresyonları dahil **94/94 offline test PASS**, Production Security Gate SUCCESS.
+- `44132942708`: **94/94 offline PASS**, `Local-only FFmpeg video and audio HLS decode acceptance` PASS, `Local Turkish OCR actual Tesseract recognition acceptance` PASS. GitHub runner gerçek Tesseract `tur+eng` motoruyla sentetik karedeki `TÜRKİYE HABERLERİ CANLI` yazısını tanıdı; hiçbir gerçek yayın kanıtı üretilmedi.
+
+**Yeni teknik kod:**
+- `v2/safe_hls_prefetch.py` ilk HLS manifesti, variant manifesti, TS medya segmentleri ve WebVTT yan altyazılarını her aşamada yeniden public-IP kontrolüyle ve çözümlenen *sayısal* IP'ye sabitlenmiş HTTP/HTTPS bağlantısıyla alır; HTTPS sertifika/hostname kontrolü korunur, yönlendirmeler kabul edilmez. Gövde/segment sayısı sınırları var; 8 segment/20MB genel, 2 WebVTT segmenti sınırı. Oluşturduğu yerel `review-sample.m3u8` içinde dış URL bulunmaz. AES-128 şifreli, byterange, fMP4-map ve diğer desteklenmeyen formatlar fail-closed; çalışmıyor/ölü kanıtı sayılmaz.
+- `v2/backup_text_sampler.py` OCR ve altyazı FFmpeg girişine sadece yerel güvenli prefetch manifesti verir; `v2/spoken_language_sample_review.py` ASR ses çözümlemesinde aynı yerel manifesti kullanır. Ortak FFmpeg protokol whitelist artık sadece `file,crypto`; doğrudan internet URL'si FFmpeg'e geçmez.
+- WebVTT ayrı altyazı track incelemesi en fazla iki izole metin örneği taşır; yalnızca Türkçe **inceleme ipucu** olabilir, kanal vatandaşlığı, dilin kesinliği veya operatör onayı değildir. Ham transkript, WebVTT ve OCR metni yayınlanan JSON'a yazılmaz.
+- Yeni test modülleri `v2/test_safe_hls_prefetch.py` (11 senaryo), `v2/test_safe_hls_ffmpeg_local.py` (1 sentetik decode) ve `v2/test_safe_hls_ocr_local.py` (1 sentetik gerçek OCR). Runner'da 94 unittest; sentetik FFmpeg/OCR testleri ayrıca zorunlu CI adımıdır. Başarısız test completed sayılmayacak.
+
+**Hâlen açık kabul ve koruma:**
+- Bu güvenli prefetch yaklaşımı HTTP/HLS seviyesinde private IP/redirect ve FFmpeg kaynaklı ağa çıkış riskini azaltır, ama gerçek üretim runner'ı ağ izolasyonu ve dış kaynak uçtan uca testlerle **bağımsız biçimde doğrulanmış değildir**. Ortam bayrağını sırf offline test geçti diye açmayacağız.
+- Gerçek izinli yayınlarda **güncel görüntü+ses+Türkçe konuşma ASR+ekran OCR+WebVTT altyazı** tek kanıt zincirinde henüz doğrulanmadı. Tüm 18.074 YEDEKLER taraması yapılmadı; ana İBO, YEDEKLER ve kanonik görev defteri değiştirilmedi.
+- Bu kontrol sırasında main'e eşzamanlı playlist değişikliği geldi: `MADSC55_TV_IBO_CALISANLAR_TEST.m3u8` main blob SHA `dda1881e8884a9ded54cb44e0d7cd924967b1df1`, PR feature dalı SHA `843a2216ab08873ce0d3281e64bcb4fdd20a05d4`. Kullanıcı işi kapsamında bu dosyalara **dokunulmadı**. Main ile feature farklıyken PR #365 körlemesine merge edilmeyecek; mevcut ana dal playlist sürümü önceliklidir.
