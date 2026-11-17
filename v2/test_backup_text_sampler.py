@@ -36,6 +36,12 @@ class SamplerTests(unittest.TestCase):
             self.assertEqual(result["status"], "SECURE_EGRESS_NOT_CONFIRMED")
             proc.assert_not_called()
 
+    def test_malformed_dns_labels_rejected(self):
+        for url in ("https://bad..example.org/live", "https://-bad.example.org/live",
+                    "https://bad-.example.org/live", "https://bad_host.example.org/live"):
+            with self.subTest(url=url):
+                self.assertFalse(valid_url(url))
+
     def test_public_url_allowed(self):
         self.assertTrue(valid_url("https://example.org/live"))
 
