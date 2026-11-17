@@ -30,5 +30,15 @@ class AdapterTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             join_evidence([{"url_sha256":key(1)},{"url_sha256":key(1)}],{},{},2)
 
+    def test_malformed_inventory_rejected(self):
+        with self.assertRaises(ValueError):
+            join_evidence([None], {}, {}, 1)
+
+    def test_missing_playback_remains_unknown(self):
+        k=key(1)
+        r=join_evidence([{"url_sha256":k}], {}, {}, 1)["channels"][0]
+        self.assertEqual(r["health"], "UNKNOWN")
+        self.assertTrue(r["retry"])
+
 if __name__ == "__main__":
     unittest.main()
