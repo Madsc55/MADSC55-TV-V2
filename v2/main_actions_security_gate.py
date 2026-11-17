@@ -193,8 +193,8 @@ def audit(root=ROOT):
                         originals=[rec for rec in r0 if old_label in rec.splitlines()[0]]
                         expected_first=[relabel(rec,old_label,new_label) for rec in rs[:2500]]
                         expected_archive=[relabel(rec,old_label,archive_label) for rec in rs[2500:]]
-                        return (hashlib.sha1(b"blob "+str(len(base)).encode()+b"\\0"+base).hexdigest()=="710070b4bc93c74eb9a753849449c03a0b40d9d0"
-                            and hashlib.sha1(b"blob "+str(len(b)).encode()+b"\\0"+b).hexdigest()=="7e2b996e2c7eb286d196750f28e0e6ec155f89fc"
+                        return (hashlib.sha1(b"blob "+str(len(base)).encode()+b"\0"+base).hexdigest()=="710070b4bc93c74eb9a753849449c03a0b40d9d0"
+                            and hashlib.sha1(b"blob "+str(len(b)).encode()+b"\0"+b).hexdigest()=="7e2b996e2c7eb286d196750f28e0e6ec155f89fc"
                             and hashlib.sha256(source).hexdigest()=="d72ac1e6bf27982862e23e06957222a9abaf7b03f0fab01edc2147144b50be5c"
                             and state.get("source_sha256")==hashlib.sha256(source).hexdigest()
                             and state.get("total")==18074
