@@ -1,7 +1,8 @@
 {
-  "missing_before": 3891,
-  "added": 2021,
-  "missing_after": 1870,
+  "missing_before": 1870,
+  "added": 10,
+  "reused_exact_tvg_id": 0,
+  "missing_after": 1860,
   "ambiguous_or_unmatched": 1604,
-  "invalid_logo_urls": 189
+  "invalid_logo_urls": 182
 }
