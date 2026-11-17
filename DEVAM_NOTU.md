@@ -1,3 +1,9 @@
+## 17 Kasım 2026 — ffmpeg protokol sınırı
+
+`backup_text_sampler.py` (OCR ve altyazı) ile `spoken_language_sample_review.py` (ASR) ffmpeg çağrılarına `-protocol_whitelist file,http,https,tcp,tls,crypto` eklendi; diğer protokoller bu iki örnekleyicide varsayılan olarak açılmıyor. **Bu, DNS/HTTP redirect SSRF korumasının yerini tutmaz** ve bazı HLS kaynakları ek protokol gerektirdiğinde başarısız olabilir; başarısızlık kanıt olarak kabul edilmeyecek. Ortamda GitHub DNS çözümlemesi tekrar başarısız olduğundan 70 offline test hâlâ çalıştırılamadı; gerçek yayın kabulü de yapılmadı. Ana İBO/YEDEKLER değişmedi.
+
+---
+
 ## 17 Kasım 2026 — Güvenli ağ çıkışı teyidi yoksa örnekleme durduruluyor
 
 OCR/altyazı örnekleyicisi ve gerçek ASR örnekleyicisi, `MADSC55_SECURE_EGRESS_CONFIRMED=1` açıkça verilmedikçe güvenilmeyen URL'leri ffmpeg'e aktarmıyor. OCR yolu `SECURE_EGRESS_NOT_CONFIRMED` ile kanıtsız döner, ASR yolu çalışmayı durdurur. Yeni offline test eklendi: **70 yazılı test**, çalıştırılmış PASS sonucu henüz yok. **Bu ortam değişkeni ağ izolasyonunu kendi başına sağlamaz**; yalnızca güvenli proxy/egress kurulduktan ve doğrulandıktan sonra yetkili operatör tarafından ayarlanmalıdır. DNS rebinding/redirect için gerçek ağ seviyesi koruma ve uçtan uca yayın kabulü açık kalıyor. Yerel shell `github.com` DNS çözemediği için tüm testler burada henüz çalıştırılamadı. Ana İBO/YEDEKLER değişmedi.
