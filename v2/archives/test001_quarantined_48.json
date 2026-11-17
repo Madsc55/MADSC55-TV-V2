@@ -1,0 +1,248 @@
+{
+  "schema": 1,
+  "reason": "IBO Player test_001 disappeared after removal of 48 backup records",
+  "source_pr": 353,
+  "policy": "Do not automatically reimport these 48 exact records",
+  "entries": [
+    {
+      "position": 1811,
+      "name": "TV8 Ⓖ",
+      "url": "https://hlslive-web-gcdn-skycdn-it.akamaized.net/TACT/11223/tv8web/master.m3u8?hdnts=st=1764666351~exp=1829466206~acl=/*~hmac=b0e9165b6c55027903ad103c8219f363d8765eb300c0d9a339e9767fc3509556"
+    },
+    {
+      "position": 1812,
+      "name": "Umbria+ TRT",
+      "url": "https://diretta.teleterni.it:8080//show/show.m3u8"
+    },
+    {
+      "position": 1813,
+      "name": "Video Star Tv Sicilia",
+      "url": "https://stream9.xdevel.com/video0s976556-1321/stream/playlist.m3u8"
+    },
+    {
+      "position": 1814,
+      "name": "TV8 HD",
+      "url": "https://cdn4.skygo.mn/live/disk1/TV8HD/HLSv3-FTA/TV8HD.m3u8"
+    },
+    {
+      "position": 1815,
+      "name": "Star TV",
+      "url": "https://cdn4.skygo.mn/live/disk1/Star/HLSv3-FTA/Star.m3u8"
+    },
+    {
+      "position": 1816,
+      "name": "ATV+ Noticias Ⓨ",
+      "url": "https://www.youtube.com/c/ATVNoticiasOficial/live"
+    },
+    {
+      "position": 18702,
+      "name": "Panorama TV Ⓢ",
+      "url": "http://198.244.188.94/panorama/livestream/playlist.m3u8"
+    },
+    {
+      "position": 18703,
+      "name": "Crónica TV Ⓨ",
+      "url": "https://www.youtube.com/c/cronicatv/live"
+    },
+    {
+      "position": 18704,
+      "name": "Barricada TV",
+      "url": "https://www.youtube.com/channel/UC6YundoLrEuBJaPp_oEPWaA/live"
+    },
+    {
+      "position": 18705,
+      "name": "Comarca TV",
+      "url": "https://www.youtube.com/c/ComarcaTV/live"
+    },
+    {
+      "position": 18706,
+      "name": "Federalna televizija (FTV) Ⓢ",
+      "url": "http://94.250.2.6:7374/play/a02s/index.m3u8"
+    },
+    {
+      "position": 18707,
+      "name": "Nova TV",
+      "url": "http://213.91.179.28:8000/play/a03l"
+    },
+    {
+      "position": 18708,
+      "name": "NTV",
+      "url": "http://152.89.62.111:8080/nXyAiP3DNp/QgOuvocpGv/223012"
+    },
+    {
+      "position": 18709,
+      "name": "NTV Ⓖ",
+      "url": "https://cdn1tlinkgo.tlink.cl/ntvhd/mono.m3u8"
+    },
+    {
+      "position": 18710,
+      "name": "Nova TV",
+      "url": "http://176.61.157.250/NovaTV/index.m3u8"
+    },
+    {
+      "position": 18711,
+      "name": "Sportska televizija Ⓖ",
+      "url": "https://stream.agatin.hr:3087/live/sptvlive.m3u8"
+    },
+    {
+      "position": 18712,
+      "name": "TapahtumaTV Eveo",
+      "url": "https://live-fi.tvkaista.net/tapahtumatv-eveo/live.m3u8?src=freetv"
+    },
+    {
+      "position": 18713,
+      "name": "DION",
+      "url": "https://www.youtube.com/@diontileorash/live"
+    },
+    {
+      "position": 18714,
+      "name": "TV 100",
+      "url": "https://panel.gwebstream.eu:19360/tv100skg/tv100skg.m3u8"
+    },
+    {
+      "position": 18715,
+      "name": "Thessalia",
+      "url": "https://www.youtube.com/c/thessaliatv1/live"
+    },
+    {
+      "position": 18716,
+      "name": "Duna TV Ⓖ",
+      "url": "http://88.212.15.19/live/duna_hun/index.m3u8"
+    },
+    {
+      "position": 18717,
+      "name": "Izaura TV",
+      "url": "http://88.212.15.19/live/izaura/index.m3u8"
+    },
+    {
+      "position": 18718,
+      "name": "India TV Ⓨ",
+      "url": "https://www.youtube.com/watch?v=e1FIApIafWE"
+    },
+    {
+      "position": 18719,
+      "name": "TV9 Bharatvarsh Ⓨ",
+      "url": "https://www.youtube.com/watch?v=nSpwwcHVp80"
+    },
+    {
+      "position": 18720,
+      "name": "Al-Hurra Iraq",
+      "url": "https://mbnvvideoingest-i.akamaihd.net/hls/live/1004674/MBNV_ALHURRA_IRAQ/playlist.m3u8"
+    },
+    {
+      "position": 18721,
+      "name": "Al-Rafidain",
+      "url": "https://cdg8.edge.technocdn.com/arrafidaintv/abr_live/playlist.m3u8"
+    },
+    {
+      "position": 18722,
+      "name": "Turkmeneli TV",
+      "url": "https://137840.global.ssl.fastly.net/edge/live_6b7c6e205afb11ebb010f5a331abaf98/playlist.m3u8"
+    },
+    {
+      "position": 18723,
+      "name": "News24 City",
+      "url": "https://dc3.telesveva.com:4433/news24.mp4"
+    },
+    {
+      "position": 18724,
+      "name": "BS日テレ",
+      "url": "https://naori-test.netgenx.site/pxx.php?shk_cid=bs03#.m3u8"
+    },
+    {
+      "position": 18725,
+      "name": "日テレNEWS",
+      "url": "https://cdn-apne1.tsv2.amagi.tv/linear/amg01287-rakutentvjapan-news1hlscmaf-rakutenjp/playlist.m3u8"
+    },
+    {
+      "position": 18726,
+      "name": "Citizen TV",
+      "url": "https://citizentv.co.ke/live"
+    },
+    {
+      "position": 18727,
+      "name": "NTV Kenya Ⓨ",
+      "url": "https://www.youtube.com/c/NTVKenyaOnline/live"
+    },
+    {
+      "position": 18728,
+      "name": "KNN TV",
+      "url": "http://211.220.195.200:1935/live/mp4:KnnTV.sdp/playlist.m3u8"
+    },
+    {
+      "position": 18729,
+      "name": "OBS TV",
+      "url": "https://allanf181.github.io/adaptive-streams/streams/kr/OBSGyeonginTV.m3u8"
+    },
+    {
+      "position": 18730,
+      "name": "TV Jūrmala",
+      "url": "https://air.star.lv/TV_Jurmala_multistream/index.m3u8"
+    },
+    {
+      "position": 18731,
+      "name": "LTV1",
+      "url": "https://ltvlive3167.bstrm.net/ltvlive/_definst_/ltvlive_ltv06_ltv1_g_x44_43186_default_1326_hls.smil/chunklist.m3u8"
+    },
+    {
+      "position": 18732,
+      "name": "LTV7 Ⓖ",
+      "url": "https://ltvlive3167.bstrm.net/ltvlive/_definst_/ltvlive_ltv07_ltv7_g_eb0_43187_default_1327_hls.smil/chunklist.m3u8"
+    },
+    {
+      "position": 18733,
+      "name": "Estrella TV",
+      "url": "https://cdn-uw2-prod.tsv2.amagi.tv/linear/amg00567-estrellamedia-estrellatv-estrellamedia/playlist.m3u8"
+    },
+    {
+      "position": 18734,
+      "name": "NTV",
+      "url": "https://cdn4.skygo.mn/live/disk1/NTVHD/HLSv3-FTA/NTVHD.m3u8"
+    },
+    {
+      "position": 18735,
+      "name": "N Sports",
+      "url": "https://cdn4.skygo.mn/live/disk1/ONTV/HLSv3-FTA/ONTV.m3u8"
+    },
+    {
+      "position": 18736,
+      "name": "Malchin TV",
+      "url": "https://cdn4.skygo.mn/live/disk1/Malchin/HLSv3-FTA/Malchin.m3u8"
+    },
+    {
+      "position": 18737,
+      "name": "Superscreen TV",
+      "url": "https://video1.getstreamhosting.com:1936/8398/8398/playlist.m3u8"
+    },
+    {
+      "position": 18738,
+      "name": "Ryongnamsan TV",
+      "url": "https://kctv.koryofront.org/stream/ryongnamsan/index.m3u8"
+    },
+    {
+      "position": 18739,
+      "name": "România TV Ⓖ",
+      "url": "https://livestream.romaniatv.net/clients/romaniatv/playlist.m3u8"
+    },
+    {
+      "position": 18740,
+      "name": "НТВ Ⓢ",
+      "url": "http://ott-cdn.ucom.am/s17/index.m3u8"
+    },
+    {
+      "position": 18741,
+      "name": "Рен ТВ Ⓢ",
+      "url": "https://streaming.televizor-24-tochka.ru/live/14.m3u8"
+    },
+    {
+      "position": 18742,
+      "name": "Небеса ТВ7 Ⓢ",
+      "url": "https://vod.tv7.fi/tv7-ru/tv7-ru.smil/playlist.m3u8"
+    },
+    {
+      "position": 18743,
+      "name": "Dacwa TV Ⓢ",
+      "url": "https://ap02.iqplay.tv:8082/iqb8002/d13w1/playlist.m3u8"
+    }
+  ]
+}
