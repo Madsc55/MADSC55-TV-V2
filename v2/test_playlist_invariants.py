@@ -24,6 +24,12 @@ def main():
     backup_names = [x["name"] for x in channels_pre if "YEDEKLER" in x["group"]]
     assert len(backup_names) == backup_count
     assert all(x["group"] == backup_group for x in channels_pre if "YEDEKLER" in x["group"]), "All backups must share one category"
+    # Fail closed on any reintroduction of the 48 channels that caused test_001.
+    quarantine = json.loads((ROOT / "v2/archives/test001_quarantined_48.json").read_text(encoding="utf-8"))
+    forbidden = {(r["name"].strip().casefold(), r["url"].strip()) for r in quarantine["entries"]}
+    assert len(quarantine["entries"]) == len(forbidden) == 48, "Invalid quarantine inventory"
+    reintroduced = [(x["name"], x["url"]) for x in channels_pre if (x["name"].strip().casefold(), x["url"].strip()) in forbidden]
+    assert not reintroduced, f"test_001 quarantined channels reintroduced: {reintroduced[:10]}"
     urls = [x["url"] for x in channels_pre]
     # Original playlist repeats URLs across categories intentionally.
     backup_urls = [x["url"] for x in channels_pre if "YEDEKLER" in x["group"]]
