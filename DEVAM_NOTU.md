@@ -1214,3 +1214,10 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - **Ana 838 kanal, mevcut YEDEKLER, 2.881 kanallık `v2/arsiv/yabanci_kanallar_2026-11-16_2881.m3u8` değiştirilmeyecek.** AV doğrulamasından geçenler tekrar/kimlik kontrolünden sonra kullanıcı onaylı güvenli YEDEKLER aktarımına aday; otomatik listeye yazma şu an etkin değil.
 - Otomatik yeni-run tetikleme (`workflow_run`, cron vb.) mevcut güvenlik kapısınca yasak; koruma değiştirilmedi. Bu nedenle iki tarama bitince yeni çalışmayı kendiliğinden başlatma **kurulmuş değil**. Kullanıcıya haber verilip birlikte başlatılacak.
 - Kabul şartı: 16 batch artifact'ı ve 7.650 benzersiz URL için sonuçlar; çalışanların gerçek AV kanıtı; korunan liste SHA/parite kontrolleri; ardından kontrollü YEDEKLER aktarımı. **AÇIK — tamamlandı işaretlenmeyecek.**
+
+
+## 17 Kasım 2026 — Genel scan korumalı yabancı arşiv sayısı uyumsuzluğu (AÇIK)
+- 7.650 eski sistem adayının 16/16 AV yeniden test job'u başarılı; bu tüm kanalların oynatılabilir olduğu anlamına gelmez. Ayrı genel `scan` job'u eski commit üzerinde başarısız kalmıştır.
+- Güncel `v2/arsiv/yabanci_kanallar_2026-11-16_2881.m3u8` dosyası adı tarihî 2881 değerini taşısa da içeriğinde 4768 farklı URL ve 4768 EXTINF vardır. `v2/real_ibo_scan.py` hâlâ 2881 beklediği için yeni çalışmada da bütünlük kontrolünden geçemeyecektir.
+- Ayrı düzeltme dalında gerçek 4768 benzersiz arşiv girdisi için fail-closed doğrulama güncellendi. **Arşiv içeriği, ana İBO listesi ve YEDEKLER değiştirilmedi.**
+- Kabul şartı: PR birleştirmesi, güncel main üzerinde yeni workflow_dispatch scan, gerçek log ve raporlarla başarı; ayrıca 16 batch artifact'ındaki AV sonuçlarının toplu denetimi. **AÇIK — yeni scan yeşil doğrulanmadan tamamlandı sayılmayacak.**
