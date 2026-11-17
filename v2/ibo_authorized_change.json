@@ -1,9 +1,9 @@
 {
   "base_sha256": "4bed68671edc9a59a329275a8e05ceb3e67f4ab4093f0d731b99a274a4c33867",
-  "result_sha256": "e85287fe33050a23e472a5d431ba3ef11a4b62ac4df5d40a89e48f19e4c822b9",
+  "result_sha256": "2583c350f9c4864853b79d59ca68809031dcb020a19bb97d673caad514636fab",
   "operation": "reorder",
-  "request": "Kullanıcının açık talimatı: YEDEKLER kategorisindeki 18.074 kanalı yeniden tara; Türk kanallarını YEDEKLER'in 1003. kanalının hemen altına, özgün kayıtları koruyarak yerleştir.",
+  "request": "Kullanıcı talimatı: 18.074 YEDEKLER kaydını yeniden tara; Türk, Türkçe ve TR kimlikli kanalları 1003. kaydın hemen arkasına sırala; kayıtları ve URL'leri koru.",
   "channels": [
-    "YEDEKLER 1003 sonrası Türkçe/TR kimlikli kanalların sıralama değişikliği; kayıt sayısı ve URL'ler korunur"
+    "YEDEKLER 1003. kayıt sabit; Türk/TR isim ve metadata eşleşen 1160 kayıt 1004. sıradan itibaren yeniden sıralandı"
   ]
 }
