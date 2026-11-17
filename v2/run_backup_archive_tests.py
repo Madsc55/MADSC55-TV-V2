@@ -17,6 +17,7 @@ MODULES = (
     "v2.test_backup_text_hint_import",
     "v2.test_spoken_language_sample_review",
     "v2.test_safe_hls_prefetch",
+    "v2.test_single_channel_evidence_review",
 )
 
 def main():
