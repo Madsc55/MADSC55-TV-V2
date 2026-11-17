@@ -1,3 +1,11 @@
+## 17 Kasım 2026 — OCR/altyazı akış URL güvenlik kontrolü
+
+**Doğrulandı:** PR #365 önceki HEAD `363e90e547fe326fe875e97fef2906200c43368a` için security gate run **44098139164 SUCCESS**. Güvenlik gate'i 42 Python testinin tamamının çalıştırıldığı anlamına gelmez.
+
+**Yapıldı:** `v2/backup_text_sampler.py` yerel/özel/metadata IP literal adreslerini ve `localhost` alan adlarını reddediyor; bozuk URL ayrıştırma istisnalarını da güvenli biçimde reddediyor (commit `3cfb146e440bfb82c9119f7d06c5d091cc5f4ece`). `v2/test_backup_text_sampler.py` içine iki test eklendi (commit `521b94d57c3ebe9097e2e9d34a8408488d888917`). Toplam yazılmış offline test senaryosu **44**. **Sınır:** DNS üzerinden özel IP'ye çözümlenen alan adları ve yönlendirmeler için ağ çıkışında ayrıca koruma gerekir; kodun mevcut URL kontrolü tam SSRF önlemi değildir. Son HEAD için CI ve 44 Python testinin geçişi henüz doğrulanmadı. 18.074 gerçek kanal taraması yapılmadı; ana İBO ve YEDEKLER korunuyor, merge yok.
+
+---
+
 ## 17 Kasım 2026 — Mevcut playback aggregate veri köprüsü
 
 **Yapıldı:** `v2/backup_playback_import.py` mevcut `all-source-playback-aggregate.json` formatındaki `channel_results` verilerini akıllı arşivin `by_url_sha256` formatına salt okunur dönüştürür. Envanter kimlikleri tam eşleşmeli, tekrarlar ve eksik `coverage_complete` reddedilir. Kaynak aggregate yalnız `VIDEO_DECODED`/`AUDIO_DECODED` yazıyorsa gerçek decode kanıtı otomatik uydurulmaz; `decoded_av_verified` sadece açıkça `True` ise taşınır. Kaynak dosyalar ve mevcut çıktı üzerine yazılmaz. Kod commit `28585215dde3b2895e87b5607f99f8946e05bdc4`, kimlik sertleştirmesi `defe894301c35c313614c7e3d3308d53a1a3f76e`. Dört yeni offline test commit `6491757e40cba5caad0deaca61d4fe772b966614`. Toplam yazılmış offline senaryo **42**. Önceki HEAD `7f89c65a166ed5acf40a6c05db89e278ee1f105f` security run `44097911777` kontrol anında `in_progress` idi. Son commit için CI PASS henüz doğrulanmadı. Gerçek 18.074 kanalın envanter ve aggregate dosyaları bu işlemde okunup çalıştırılmadı. Ana İBO/YEDEKLER korunuyor, PR merge edilmedi.
