@@ -1,3 +1,9 @@
+## 17 Kasım 2026 — Mevcut gerçek ASR çalışma yolu tespit edildi
+
+`.github/workflows/v2-spoken-language-existing-snapshot.yml` ana dalda zaten mevcut ve manuel `workflow_dispatch` ile çalışıyor. Önceki Actions çalışması 40948768782'nin oynatma ve özel snapshot artifact'larını indiriyor; 16 akıştan 15'er saniyelik `faster-whisper` konuşma örneklemesi yapıp `existing-snapshot-spoken-language-evidence` adlı anonimleştirilmiş artifact yayımlamayı hedefliyor. Bu workflow'un geçmiş artifact'larının hâlâ indirilebilirliği, gerçekten başarılı çalışması ve güncel 18.074 envanteri kapsaması **doğrulanmadı**. Bu yol tüm envanterin kabulü değildir. GitHub DNS bağlantısı bu oturumdaki yerel shell'de başarısız; burada Python regresyonları çalıştırılmadı. DNS/redirect egress riskleri açık; normal yayın alan adlarını bütünüyle kapatacak geçici kod değişikliği geri alındı. Sonraki adım: uygun GitHub Actions çalışma/kanıt yoluyla 57 offline testin gerçek PASS çıktısı ve ardından sınırlı gerçek ASR+OCR+altyazı kabulü. Ana playlist/YEDEKLER değişmedi.
+
+---
+
 ## 17 Kasım 2026 — Rapor koruması ve test çalıştırma engeli
 
 `v2/backup_archive_offline.py` mevcut sonuç raporunu artık **asla üzerine yazmaz**; `open("x")` kullanır. `v2/test_backup_archive_offline.py` mevcut raporun içeriğinin korunduğunu doğrulayan yeni test içerir. Toplam **57 yazılı test** (49 temel + 6 ASR + 1 entegrasyon + 1 rapor koruması). GitHub güvenlik CI başarısı bu 57 Python testinin PASS olduğu anlamına gelmez. Bu oturumdaki yerel ortam GitHub DNS erişimi sağlamıyor; testler bu ortamda henüz çalıştırılmadı. Eksik: güvenilir Python test çalıştırması, gerçek yayınlarda AV+ASR+OCR+altyazı kabulü, güvenli DNS/redirect egress, ardından 18.074 YEDEKLER taraması. Ana İBO ve YEDEKLER'e dokunulmadı.
