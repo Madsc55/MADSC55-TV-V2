@@ -1,9 +1,9 @@
 {
-  "base_sha256": "25aa832951afb1cc2c9838252f6acf22eec788ab0d12c4e206293b44aa9708cd",
-  "result_sha256": "97a9d70b482503ba67586b2dc64a7243362d060bcdc4524e2a861e19d8fd3d38",
+  "base_sha256": "97a9d70b482503ba67586b2dc64a7243362d060bcdc4524e2a861e19d8fd3d38",
+  "result_sha256": "1d5b9096d914589bf8f6a4133074248125841b03120f2ada7c723e5ac804b71d",
   "operation": "reorder",
-  "request": "Kullanıcı talimatı: 18.074 YEDEKLER kaydındaki ilave Türk/Türkçe/TR kanal adaylarını ilk 1003 ve mevcut 1406 Türk aday bloğu korunarak 1003 sonrası Türk bloğuna sırala",
+  "request": "Kullanıcı talimatı: 18.074 YEDEKLER içindeki ek Türk kanallarını 1003 sonrası Türk bloğuna taşı",
   "channels": [
-    "46 ilave açık Türk/Türkiye yerel kanal isimli aday; ilk 1003 ve mevcut 1406 kayıt sabit; tüm 18.074 YEDEKLER ve 838 diğer kanal, tüm EXTINF/URL kayıtları korunur. Canlı yayın dili doğrulanmadı."
+    "5 ek kayıt: AS TV BURSA, ETV KAYSERİ (2), İZMİR TIME 35 TV, KANAL 23 ELAZIĞ; 18.074 YEDEKLER, ilk 1452, 838 diğer kanal, EXTINF/URL kayıtları korunur. Yalnız sıra değişikliği; yayın dili kanıtı değildir."
   ]
 }
