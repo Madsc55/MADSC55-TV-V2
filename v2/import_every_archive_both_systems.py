@@ -20,6 +20,17 @@ def parse(path):
     return blocks
 def url(b):
     return next((line.strip() for line in b.splitlines()[1:] if line.strip().startswith(("http://","https://"))),None)
+
+QUARANTINE=ROOT/"v2/archives/test001_quarantined_48.json"
+def blocked_records():
+    records=json.loads(QUARANTINE.read_text(encoding="utf-8"))["entries"]
+    if len(records)!=48:raise SystemExit("Invalid test_001 quarantine")
+    keys={(r["name"].strip().casefold(),r["url"].strip()) for r in records}
+    if len(keys)!=48:raise SystemExit("Duplicate test_001 quarantine identity")
+    return keys
+def identity(block):
+    return (block.splitlines()[0].rsplit(",",1)[-1].strip().casefold(),(url(block) or "").strip())
+
 def main():
     ap=argparse.ArgumentParser();ap.add_argument("--old-repo",type=Path,required=True);ap.add_argument("--scan-dir",type=Path,required=True);args=ap.parse_args()
     original=PLAY.read_bytes();original_text=original.decode("utf-8-sig")
@@ -30,6 +41,8 @@ def main():
     existing=[b for b in records if "YEDEKLER" in b.splitlines()[0]]
     if len(protected)!=838 or len(existing)!=16991 or records!=protected+existing:
         raise SystemExit("Main or backups changed unexpectedly")
+    blocked=blocked_records()
+    if any(identity(b) in blocked for b in records):raise SystemExit("Quarantined channel found in current playlist")
     seen={u for b in existing if (u:=url(b))}
     sources=[]
     for base in (args.old_repo,ROOT/"v2/arsiv",args.scan_dir):
@@ -44,7 +57,7 @@ def main():
     # Preserve the original 838 main records byte-for-byte.
     for block in protected:
         u=url(block)
-        if u and u not in seen:
+        if u and u not in seen and identity(block) not in blocked:
             seen.add(u)
             added.append(block)
     counts["protected_main_copies"]=len(added)
@@ -53,6 +66,7 @@ def main():
         for block in parse(p):
             u=url(block)
             if not u or not u.startswith(("http://","https://")):invalid+=1;continue
+            if identity(block) in blocked:continue
             if u in seen:continue
             if not GROUP.search(block.splitlines()[0]):
                 block=block.replace(block.splitlines()[0],block.splitlines()[0].rstrip("\r\n")+' group-title="🗂️ YEDEKLER"\n',1)
