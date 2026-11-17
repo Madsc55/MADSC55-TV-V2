@@ -16,6 +16,18 @@ class BatchTests(unittest.TestCase):
             self.assertNotIn("https://",out.read_text())
             with self.assertRaises(ValueError):
                 run(src,out,1,2)
+    def test_sampler_failure_isolated_and_next_channel_processed(self):
+        with TemporaryDirectory() as d:
+            p=Path(d); src=p/"snapshot.json"; out=p/"out.json"
+            src.write_text(json.dumps({"candidates":[{"url":"https://example.org/a"},{"url":"https://example.org/b"}]}))
+            with patch("v2.backup_text_batch.sample",side_effect=[RuntimeError("bad"),{"status":"HINTS_ONLY","raw_text":"SECRET","language_evidence_verified":True}]):
+                self.assertEqual(run(src,out,2,2,True)["sampled"],2)
+            result=json.loads(out.read_text())["results"]
+            self.assertEqual(result[0]["status"],"SAMPLE_ERROR")
+            self.assertEqual(result[1]["status"],"HINTS_ONLY")
+            self.assertFalse(result[1]["language_evidence_verified"])
+            self.assertNotIn("SECRET",out.read_text())
+
     def test_network_requires_opt_in(self):
         with TemporaryDirectory() as d:
             p=Path(d)
