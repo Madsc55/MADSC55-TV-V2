@@ -1,9 +1,0 @@
-{
-  "base_sha256": "52da1d9bcefbbf6c4e741063b27d10deeb2313910175076c98733a9dbf3dfac1",
-  "result_sha256": "9a6b0cf23242b0fc86a823ef6e2fbd9aff297823f3ba00434e5be662899db02c",
-  "operation": "rename",
-  "request": "User repeatedly requests playlist-specific repair of phantom test_001 category; remove embedded legacy group-title from one backup channel name while preserving all 18,960 channel URLs and group assignments.",
-  "channels": [
-    "4K Travel TV (backup entry with embedded legacy group-title='01.KIL-BELGESEL')"
-  ]
-}
