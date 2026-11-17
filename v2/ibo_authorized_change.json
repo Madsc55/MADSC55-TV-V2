@@ -1,6 +1,6 @@
 {
-  "base_sha256": "6a592ae1993dec22e33ce45206e9babb35b9c0221d458c9be46d5a2744f586a9",
-  "result_sha256": "9b9630dbafeb2b8d75744e27c9197650e85eaca08a5033f3b5b40753910143f2",
+  "base_sha256": "a08edf7c82e9b70965f8ac8f021d3b088e6d6cbaf69fdf39a9febd69b1de9256",
+  "result_sha256": "68ec20ffbc4955b8e5d46cb62ca11dbfd277578a0c06ad962eb55b13f7f9fdd1",
   "operation": "reorder",
   "request": "Kullanıcı talimatı: güncel ana İBO playlistindeki 18.074 YEDEKLER kaydının Türk kanallarını 1003. sıradan sonra alt alta sırala; kaldırılan 48 engelli kanalı geri getirme. Ek tarama: Kıbrıs Türk kanalları ve yerel Türk kanalları için ikinci denetimde kalan kayıtlar aynı YEDEKLER grubundan 1003 sonrası bloğa eklendi; 48 engelli kanal dahil edilmedi.",
   "channels": [
