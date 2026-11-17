@@ -1,3 +1,11 @@
+## 17 Kasım 2026 — Akıllı arşiv: salt-okunur rapor çalıştırıcısı
+
+**Gerçekleşen:** `v2/backup_archive_offline.py` üç ayrı JSON kanıt girdisi (envanter, AV, incelenmiş dil) üzerinden `backup_evidence_adapter.join_evidence` kullanarak tek salt-okunur arşiv raporu üretir; varsayılan tam kapsam beklentisi 18.074, girdi dosyalarının üzerine yazma reddedilir, raporda kaynak URL/kanal adı bulunmaz. `v2/test_backup_archive_offline.py` iki yeni test senaryosu ve ayrı CI workflow'unda yeni testlerin çağrılması eklendi. Toplam yazılmış offline senaryo sayısı **19**. Commitler `fac4bb78d36400d28f3f1e323c4f4ca39ef0c57b`, `12d783baaf96dbe227aae8fadc0ca41d0ad6337a`, `4a382c7b588827642eea8fd6ba4b543e71b974f9`.
+
+**Henüz tamamlanmadı:** Bu JSON girdi sözleşmesi gerçek tarama/ASR/OCR raporlarından otomatik üretilmiyor; gerçek OCR/altyazı çıkarma, 18.074 kanal AV kuyruğu, canlı kapsama kabulü, CI PASS doğrulaması ve PR birleştirmesi eksik. CI workflow dosyası yazılmış olsa da başarılı koştuğu iddia edilmez. Bir sonraki sohbet PR #365 ve bu notla başlamalı; önce CI hatalarını kontrol et, sonra gerçek kaynak şeması adaptörlerini ve bounded batch pipeline'ı ekle. Ana İBO/YEDEKLER korunmuştur.
+
+---
+
 ## 17 Kasım 2026 — Akıllı arşiv: OCR/altyazı kanıt ipuçları ve bağımsız CI
 
 **Bu oturumda eklendi:** `v2/backup_text_evidence.py` OCR ve altyazıdan gelen haricî gözlemleri sınırlı ve güvenli biçimde alır, Türkçe karakter/dil etiketi üzerinden yalnız inceleme ipucu üretir. OCR motoru veya altyazı indirme/çözme bu adımda YOKTUR. Ham yazı çıktı raporuna konmaz; dil doğrulandı veya kullanıcı onayladı şeklinde sahte kabul üretilmez. `v2/test_backup_text_evidence.py` altı yeni regresyon senaryosu; `.github/workflows/v2-smart-backup-archive.yml` üç yeni modülün compile + toplam 17 offline testini PR değişiminde koşturacak ayrı CI workflow'u. Commitler: `cb32a7c8d94e881c6e15d08086917c3f03a982a1`, `b656ce682c2e716b7383860327dfcb6a136d980f`, `5e1ace810bdfab594e4de7381dd7a8ea976f149a`.
