@@ -21,6 +21,8 @@ def run():
     parser.add_argument("--limit", type=int, default=8)
     parser.add_argument("--seconds", type=int, default=20)
     args = parser.parse_args()
+    if args.output.resolve() in (args.snapshot.resolve(), args.playback.resolve()) or args.output.exists():
+        parser.error("Refusing to overwrite input or existing speech report")
     if not 1 <= args.limit <= 16 or not 5 <= args.seconds <= 30:
         parser.error("Safety bounds: 1-16 streams, 5-30 seconds")
     from faster_whisper import WhisperModel
@@ -31,8 +33,12 @@ def run():
     tested = {x["url_sha256"]: x for x in playback["channel_results"]}
     if len(tested) != len(playback["channel_results"]):
         raise SystemExit("Duplicate playback hashes")
-    if len(snapshot.get("candidates", [])) != len(tested):
+    candidates = snapshot.get("candidates", [])
+    if len(candidates) != len(tested):
         raise SystemExit("Snapshot and playback candidate count mismatch")
+    snapshot_hashes = [hashlib.sha256(x["url"].encode("utf-8")).hexdigest() for x in candidates]
+    if len(set(snapshot_hashes)) != len(snapshot_hashes) or set(snapshot_hashes) != set(tested):
+        raise SystemExit("Snapshot/playback identity mismatch or duplicate URLs")
     selected = []
     for item in snapshot["candidates"]:
         url = item.get("url", "")
@@ -70,7 +76,8 @@ def run():
               "limitations": "Language detection is probabilistic; silence, music and multilingual streams can mislead. No automatic verification or promotion.",
               "results": results}
     args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_text(json.dumps(output, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    with args.output.open("x", encoding="utf-8") as destination:
+        destination.write(json.dumps(output, ensure_ascii=False, indent=2) + "\n")
     print(json.dumps({"sampled": len(results), "turkish_hints": sum(x.get("detected_language") == "tr" and x.get("speech_detected", False) for x in results)}))
 
 if __name__ == "__main__":
