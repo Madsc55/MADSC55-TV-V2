@@ -1,0 +1,35 @@
+name: YEDEKLER archive integrity (read-only)
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'v2/yedekler_batch/**'
+      - '.github/workflows/yedekler-archive-integrity.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify source snapshot and archive
+        shell: bash
+        run: |
+          set -euo pipefail
+          python v2/yedekler_batch/arsiv_hazirla.py MADSC55_TV_IBO_CALISANLAR_TEST.m3u8
+          cd v2/yedekler_batch
+          python yonet.py status
+          python yonet.py batch --count 2500
+          python yonet.py assign --start 1 --end 20 --to TURK
+          python yonet.py undo
+          python yonet.py undo
+          python - <<'PY'
+          import json
+          s=json.load(open('state.json'))
+          assert not s['status'] and not s['history']
+          assert s['total']==18074 and s['default_batch_size']==2500
+          print('PASS: archive SHA and count, 2500 batch, assign and undo')
+          PY
