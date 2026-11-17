@@ -1,3 +1,13 @@
+## 17 Kasım 2026 — Sınırlı OCR/altyazı toplu örnekleme bağlantısı
+
+**Doğrulandı:** PR #365 önceki HEAD `585a55bb4d1a5823a9068e499fce013019513d67` için GitHub `V2 Main Production Security Gate` run **44096050377 SUCCESS**. Bu güvenlik kontrolüdür; tüm Python unit testlerinin koştuğunu kanıtlamaz.
+
+**Yapıldı:** `v2/backup_text_batch.py` yerel JSON snapshot `candidates` kayıtlarından URL hash'ine göre tekilleştirerek manuel tetiklenen, 1–16 kanal ve kanal başına 2–15 saniye limitli OCR/altyazı örneklemesi yapar. `backup_text_sampler.sample` kullanır; ham URL, altyazı, OCR metni rapora yazılmaz; sadece inceleme ipuçları. Var olan çıktı dosyasını ve kaynak dosyasını üzerine yazmayı reddeder. Kod commit `9aff105f1b8d6364fb62a1fa19c740b10eef24b1`, 3 yeni offline test commit `2aa8dae601a531df367286c942f0b63753c6508c`. Yazılmış toplam test senaryosu **35**.
+
+**Eksik ve sınır:** 18.074 kanalın tam taraması yapılmadı; bu yalnız küçük partili manuel opt-in örnekleme. Son commit CI sonucu, gerçek yayın doğrulaması, OCR/altyazı dil paketleri, tam ASR+AV+OCR/altyazı orkestrasyonu ve kabul testleri bekliyor. İBO ve YEDEKLER değişmedi; PR merge edilmedi.
+
+---
+
 ## 17 Kasım 2026 — Offline CLI import hatası giderildi
 
 **Doğrulandı:** OCR/altyazı örnekleyicisi ve 32 yazılmış testin bulunduğu commit `585a55bb4d1a5823a9068e499fce013019513d67` için GitHub `V2 Main Production Security Gate` run **44096050377** = **success**. Bu güvenlik kapısı 32 offline testin çalıştığını **kanıtlamaz**.
