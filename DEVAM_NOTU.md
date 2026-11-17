@@ -1,3 +1,9 @@
+## 17 Kasım 2026 — Kanıt tipleri güvenlik düzeltmesi
+
+**Yapıldı:** `backup_smart_archive.py` doğrulanmış dil, gerçek AV decode ve tükenmiş tekrarlar için truthy değer yerine yalnız Python `True` kabul edecek şekilde düzeltildi (commit `036b7cb2fd07eaf2ec3ef1b09ed977efab05e5c1`). JSON'daki `"true"` metni yanlışlıkla doğrulama sayılmayacak. Üç regresyon testi eklendi (commit `d9f64e93a75560340f7b893a0e7b40d019aecaf9`). Yazılmış toplam offline test **28**. Önceki güvenlik run `44094943848` kontrol anında in_progress idi; son commitler için PASS kanıtı yok. Gerçek 18.074 kanal taraması, OCR/ASR canlı entegrasyonu, batch, PR merge eksik; İBO ve YEDEKLER değişmedi.
+
+---
+
 ## 17 Kasım 2026 — Akıllı arşiv: kimlik doğrulama sertleştirmesi
 
 **Yapıldı:** `backup_evidence_adapter.py` envanter kimliklerinin küme işleminden ÖNCE 64 karakter küçük harf SHA-256 metni olmasını zorunlu kılıyor. Böylece bozuk liste/nesne kimlikleri beklenmeyen `TypeError` üretmek yerine açık `ValueError` ile reddediliyor. Commit `987e7ae401b7e1fae137204598ea9db739229db6`. İki regresyon testi eklendi: liste kimlik ve geçersiz hash reddi (commit `565aab1e3aeec74989b937db6f0753d65d4af725`). Toplam yazılmış offline test **25**. Önceki commit `9146ece...` güvenlik run `44094763759` kontrol anında devam ediyordu; son commitlerin CI sonucu henüz doğrulanmadı. Gerçek 18.074 kanal taraması ve PR merge hâlâ yapılmadı; ana arşiv/İBO değişmedi.
