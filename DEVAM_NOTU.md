@@ -1,3 +1,9 @@
+## 17 Kasım 2026 — Akıllı arşiv: kimlik doğrulama sertleştirmesi
+
+**Yapıldı:** `backup_evidence_adapter.py` envanter kimliklerinin küme işleminden ÖNCE 64 karakter küçük harf SHA-256 metni olmasını zorunlu kılıyor. Böylece bozuk liste/nesne kimlikleri beklenmeyen `TypeError` üretmek yerine açık `ValueError` ile reddediliyor. Commit `987e7ae401b7e1fae137204598ea9db739229db6`. İki regresyon testi eklendi: liste kimlik ve geçersiz hash reddi (commit `565aab1e3aeec74989b937db6f0753d65d4af725`). Toplam yazılmış offline test **25**. Önceki commit `9146ece...` güvenlik run `44094763759` kontrol anında devam ediyordu; son commitlerin CI sonucu henüz doğrulanmadı. Gerçek 18.074 kanal taraması ve PR merge hâlâ yapılmadı; ana arşiv/İBO değişmedi.
+
+---
+
 ## 17 Kasım 2026 — Gerçek stream_probe şeması bağlantısı
 
 **Yapıldı:** Mevcut `v2/stream_probe.py` gerçek çıktı şeması incelendi: başarılı FFmpeg decode sonucu `status=AV_VERIFIED`, `audio=true`, `decoded_av_verified=true`, `decode_status=DECODED_AV`; salt ffprobe meta sonucu `AV_STREAMS_PRESENT` ve `decoded_av_verified=false`. `backup_evidence_adapter.py` bu gerçek şemayı destekleyecek biçimde güncellendi (commit `f561ff5f753a38cb38caf846963424d9cd2351cb`). İki regresyon testi eklendi: gerçek decode kabul, metadata-only ret (commit `69abf55886f834adef1bf07e220cb15ea551b628`). Toplam yazılmış offline senaryo **23**. Önceki güvenlik run `44094555802` kontrol anında devam ediyordu. **Yeni commitlerin CI PASS kanıtı henüz yoktur.** Gerçek 18.074 tarama, dil OCR/ASR gerçek entegrasyonu, batch ve PR merge eksik. İBO ve YEDEKLER değiştirilmedi.
