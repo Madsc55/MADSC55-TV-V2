@@ -29,6 +29,13 @@ class SamplerTests(unittest.TestCase):
             with self.subTest(url=url):
                 self.assertFalse(valid_url(url))
 
+    @patch.dict("os.environ", {}, clear=True)
+    def test_secure_egress_required_before_ffmpeg(self):
+        with patch("v2.backup_text_sampler.subprocess.run") as proc:
+            result = sample("https://example.org/live")
+            self.assertEqual(result["status"], "SECURE_EGRESS_NOT_CONFIRMED")
+            proc.assert_not_called()
+
     def test_public_url_allowed(self):
         self.assertTrue(valid_url("https://example.org/live"))
 
