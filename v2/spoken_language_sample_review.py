@@ -29,7 +29,6 @@ def run():
         parser.error("Refusing to overwrite input or existing speech report")
     if not 1 <= args.limit <= 16 or not 5 <= args.seconds <= 30:
         parser.error("Safety bounds: 1-16 streams, 5-30 seconds")
-    from faster_whisper import WhisperModel
     snapshot = json.loads(args.snapshot.read_text(encoding="utf-8"))
     playback = json.loads(args.playback.read_text(encoding="utf-8"))
     if not playback.get("coverage_complete"):
@@ -54,6 +53,7 @@ def run():
             break
     if not selected:
         raise SystemExit("No eligible video+audio streams for speech sampling")
+    from faster_whisper import WhisperModel
     model = WhisperModel("tiny", device="cpu", compute_type="int8")
     results = []
     for digest, url in selected:
