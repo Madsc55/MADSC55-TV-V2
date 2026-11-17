@@ -79,11 +79,14 @@ def _media_segments(text, base_url, remaining_depth, getter):
     lines = [line.strip() for line in text.splitlines() if line.strip()]
     if not lines or lines[0] != "#EXTM3U" or len(lines) > 5000:
         raise UnsafeMediaSource("Not a bounded HLS playlist")
+    # I-FRAME-STREAM-INF describes an alternate trick-play rendition.
+    # We neither fetch nor copy it into the sanitized local manifest.
     forbidden = ("#EXT-X-KEY", "#EXT-X-SESSION-KEY", "#EXT-X-MAP",
-                 "#EXT-X-BYTERANGE", "#EXT-X-I-FRAME-STREAM-INF",
-                 "#EXT-X-PART", "#EXT-X-PRELOAD-HINT")
-    if any(line.startswith(forbidden) for line in lines):
-        raise UnsafeMediaSource("Unsupported or encrypted HLS feature")
+                 "#EXT-X-BYTERANGE", "#EXT-X-PART", "#EXT-X-PRELOAD-HINT")
+    for line in lines:
+        for tag in forbidden:
+            if line.startswith(tag):
+                raise UnsafeMediaSource("Unsupported HLS directive " + tag)
     if any(line.startswith("#EXT-X-STREAM-INF") for line in lines):
         if remaining_depth <= 0:
             raise UnsafeMediaSource("Nested HLS depth exceeded")
