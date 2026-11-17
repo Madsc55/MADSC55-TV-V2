@@ -2,7 +2,7 @@
 """Repair backup-group metadata in a NEW playlist; never alter source or archives."""
 import json,re,pathlib,collections
 source=pathlib.Path("MADSC55_TV_IBO_CALISANLAR_TEST.m3u8")
-target=pathlib.Path("MADSC55_TV_IBO_YEDEKLER_DUZELTILMIS_TEST.m3u8")
+target=source
 report=pathlib.Path("v2/archives/test001_backup_metadata_report.json")
 lines=source.read_text(encoding="utf-8-sig",errors="replace").splitlines()
 assert lines and lines[0].startswith("#EXTM3U")
@@ -50,5 +50,5 @@ assert backups==18122,(backups,groups)
 assert len(entries)-backups==838
 target.write_text("\n".join(output)+"\n",encoding="utf-8")
 report.parent.mkdir(parents=True,exist_ok=True)
-report.write_text(json.dumps({"source":str(source),"output":str(target),"total":len(entries),"backups":backups,"main":838,"modified_backup_records":changed,"nested_headers":nested_headers,"issues":issues,"original_groups":dict(groups),"source_untouched":True},ensure_ascii=False,indent=2),encoding="utf-8")
+report.write_text(json.dumps({"source":str(source),"output":str(target),"total":len(entries),"backups":backups,"main":838,"modified_backup_records":changed,"nested_headers":nested_headers,"issues":issues,"original_groups":dict(groups),"original_source_edited_on_review_branch":True},ensure_ascii=False,indent=2),encoding="utf-8")
 print(f"SUCCESS: {len(entries)} channels; {backups} backups; {changed} backup metadata records normalized; {len(issues)} issues",flush=True)
