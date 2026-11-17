@@ -22,6 +22,28 @@ class M3UInventoryReviewTests(unittest.TestCase):
             self.assertFalse(rows[0]["review_approved"])
             with self.assertRaises(FileExistsError):
                 inventory_review(src, out)
+    def test_foreign_name_with_turkish_speech_and_subtitles(self):
+        with tempfile.TemporaryDirectory() as d:
+            src, out, evidence = (Path(d) / n for n in ("in.m3u8", "out.jsonl", "evidence.jsonl"))
+            src.write_text("#EXTM3U\n#EXTINF:-1,Global Network\nhttps://example.com/live\n")
+            evidence.write_text(json.dumps({"playlist_ordinal": 1, "spoken_language": "tr",
+                                            "subtitle_language": "tr", "stream_checked": True,
+                                            "video_decoded": True, "audio_decoded": True}) + "\n")
+            inventory_review(src, out, evidence)
+            row = json.loads(out.read_text().strip())
+            self.assertEqual(row["category"], "TURKISH_SPOKEN_REVIEW")
+            self.assertTrue(row["turkish_subtitle_hint"])
+            self.assertTrue(row["av_decoded_in_supplied_check"])
+            self.assertFalse(row["working_channel_verified"])
+    def test_reject_duplicate_evidence(self):
+        with tempfile.TemporaryDirectory() as d:
+            src, out, evidence = (Path(d) / n for n in ("in.m3u8", "out.jsonl", "evidence.jsonl"))
+            src.write_text("#EXTM3U\n#EXTINF:-1,TV\nhttps://example.com/live\n")
+            row = json.dumps({"playlist_ordinal": 1, "spoken_language": "tr"}) + "\n"
+            evidence.write_text(row + row)
+            with self.assertRaises(ValueError):
+                inventory_review(src, out, evidence)
+            self.assertFalse(out.exists())
     def test_unpaired_entry_fails_closed(self):
         with tempfile.TemporaryDirectory() as d:
             src, out = Path(d) / "in.m3u8", Path(d) / "out.jsonl"
