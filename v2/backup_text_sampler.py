@@ -18,12 +18,12 @@ except ImportError:
     from backup_text_evidence import inspect_text_observations
 
 def valid_url(url):
-    if not isinstance(url, str) or not url or len(url) > 4096 or any(ord(ch) < 32 or ord(ch) == 127 for ch in url):
+    if not isinstance(url, str) or not url or len(url) > 4096 or any(ord(ch) < 33 or ord(ch) == 127 for ch in url):
         return False
     try:
         p = urlsplit(url)
         host = p.hostname
-        if p.scheme not in ("http", "https") or not host or p.username or p.password:
+        if p.scheme not in ("http", "https") or not host or p.username or p.password or p.fragment:
             return False
         normalized_host = host.lower().rstrip(".")
         if normalized_host in ("localhost", "localhost.localdomain") or normalized_host.endswith((".localhost", ".local", ".internal")):
