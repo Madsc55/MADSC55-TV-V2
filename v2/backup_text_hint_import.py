@@ -7,6 +7,8 @@ POLICY = "READ_ONLY_HINTS_ONLY_NO_AUTO_APPROVAL"
 def import_text_hints(report, expected_ids=None):
     if not isinstance(report, dict) or report.get("policy") != POLICY or not isinstance(report.get("results"), list):
         raise ValueError("Invalid OCR/subtitle batch report")
+    if len(report["results"]) > 16:
+        raise ValueError("OCR/subtitle batch exceeds 16 samples")
     allowed = set(expected_ids) if expected_ids is not None else None
     result = {}
     for row in report["results"]:
