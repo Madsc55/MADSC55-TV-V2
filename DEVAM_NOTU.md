@@ -1,3 +1,11 @@
+## 17 Kasım 2026 — PR #365 devam güvenlik denetimi (kapanış değil)
+- GitHub PR HEAD `205f29f71c56a5140ef2967b47bea875352c2372` için Production Security Gate run `44136415958` SUCCESS (offline 101 test önceki koşu kaydı). Canlı keşif job SKIPPED; bu gerçek Türk yayın kabulü değildir.
+- Güncel `main` feature dalından 1 commit ileride; farklar `DEVAM_NOTU.md`, `MADSC55_TV_IBO_CALISANLAR_TEST.m3u8`, `v2/ibo_authorized_change.json`. Geliştirme dalında 183 ayrı commit var. Kör merge/playlist overwrite YASAK.
+- Kod incelemesi: `single_channel_evidence_review.py` yalnız `MADSC55_SECURE_EGRESS_CONFIRMED=1` ortam değişkenine bakıyor. Bu tek başına bağımsız ağ izolasyonu veya izinli kaynak attestation kanıtı değildir. Gerçek medya testi ve merge öncesi bağımsız ağ çıkış incelemesi, gerçek izinli Türk yayınında AV+ASR+OCR+varsa WebVTT kanıtı şart.
+- PR #365 güvenlik bulgusu: https://github.com/Madsc55/MADSC55-TV-V2/pull/365#issuecomment-6955696429. Bu not test başlatıldığı, canlı kaynak tarandığı veya güvenlik açığının giderildiği anlamına gelmez. Ana playlist, arşivler ve `v2/tasks/state.json` değiştirilmedi; görevler AÇIK.
+
+---
+
 ## 17 Kasım 2026 — YEDEKLER dördüncü tarama ve üçüncü tur kapanışı
 - PR #383 birleştirildi (merge `89db7b84c0d8bd7b6dff64647d55f2ba6bf9f6ed`): 6 Türkmenistan kaydı Türkî bloğa taşındı, TRT (GREECE) blok dışına alındı. 18.912 toplam ve 18.074 YEDEKLER korundu; ilgili GitHub security gate başarıyla geçti. Bu, canlı ses/görüntü kanıtı değildir.
 - Güncel ana playlist blob `dda1881e8884a9ded54cb44e0d7cd924967b1df1` üzerinden dördüncü tarama yapıldı. Türkiye ve Azerbaycan kaynaklı olabilecek ilave kayıtlar ile yabancı adaşlar `v2/reports/turkic-fourth-pass-review-20261117.md` dosyasında tek tek kaydedildi.
