@@ -10,6 +10,8 @@ AUDIO_OK = {"AUDIO_DECODED", "AUDIO_PRESENT", "PRESENT", "YES", "TRUE"}
 def join_evidence(inventory, playback, language_evidence, expected_count=None):
     if not isinstance(inventory, list) or not isinstance(playback, dict) or not isinstance(language_evidence, dict):
         raise ValueError("Invalid evidence inputs")
+    if any(not isinstance(x, dict) for x in inventory):
+        raise ValueError("Invalid inventory record")
     if len(inventory) != len({x.get("url_sha256") for x in inventory}):
         raise ValueError("Duplicate inventory IDs")
     ids = {x["url_sha256"] for x in inventory}
