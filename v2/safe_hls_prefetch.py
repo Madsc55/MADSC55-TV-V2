@@ -92,6 +92,8 @@ def _media_segments(text, base_url, remaining_depth, getter):
                     raise UnsafeMediaSource("Invalid HLS variant")
                 url = urljoin(base_url, lines[i + 1])
                 data = getter(url, MAX_MANIFEST_BYTES)
+                if len(data) > MAX_MANIFEST_BYTES:
+                    raise UnsafeMediaSource("Oversized HLS variant")
                 try:
                     child = data.decode("utf-8-sig")
                 except UnicodeDecodeError as exc:
@@ -126,6 +128,8 @@ def prefetch_hls(url, output_dir, seconds=8, getter=fetch_pinned):
     if not output_dir.is_dir() or output_dir.is_symlink():
         raise UnsafeMediaSource("Unsafe local destination")
     manifest_bytes = getter(url, MAX_MANIFEST_BYTES)
+    if len(manifest_bytes) > MAX_MANIFEST_BYTES:
+        raise UnsafeMediaSource("Oversized HLS manifest")
     try:
         manifest = manifest_bytes.decode("utf-8-sig")
     except UnicodeDecodeError as exc:
@@ -137,7 +141,7 @@ def prefetch_hls(url, output_dir, seconds=8, getter=fetch_pinned):
     for i, (duration, remote) in enumerate(segments[:MAX_SEGMENTS]):
         data = getter(remote, MAX_SEGMENT_BYTES)
         count_bytes += len(data)
-        if not data or count_bytes > MAX_TOTAL_BYTES:
+        if not data or len(data) > MAX_SEGMENT_BYTES or count_bytes > MAX_TOTAL_BYTES:
             raise UnsafeMediaSource("Empty or oversized HLS media")
         filename = f"segment-{i:02d}.ts"
         with (output_dir / filename).open("xb") as destination:
