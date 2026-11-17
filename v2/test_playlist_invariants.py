@@ -15,12 +15,12 @@ def main():
     current = LIVE.read_bytes()
     text = current.decode("utf-8-sig")
     channels_pre = list(entries(text))
-    assert len(channels_pre) == 3338, "Expected 838 protected channels and 2500 active backups"
+    assert len(channels_pre) == 2963, "Expected 838 protected channels and 2125 active backups"
     non_backup = [x for x in channels_pre if "YEDEKLER" not in x["group"]]
     assert len(non_backup) == 838, "Protected non-YEDEKLER categories changed in size"
     backup_count = sum("YEDEKLER" in x["group"] for x in channels_pre)
     backup_group = f"🗂️ YEDEKLER ({backup_count})"
-    assert backup_count == 2500, "YEDEKLER must contain the first 2500 channels"
+    assert backup_count == 2125, "YEDEKLER must contain 2125 channels after approved move"
     backup_names = [x["name"] for x in channels_pre if "YEDEKLER" in x["group"]]
     assert len(backup_names) == backup_count
     assert all(x["group"] == backup_group for x in channels_pre if "YEDEKLER" in x["group"]), "All backups must share one category"
@@ -35,7 +35,7 @@ def main():
     queued_entries = list(entries(queued_path.read_text(encoding="utf-8-sig")))
     active_entries = [x for x in channels_pre if "YEDEKLER" in x["group"]]
     assert len(source_entries) == 18074 and len(queued_entries) == 15574
-    assert [(x["name"], x["url"]) for x in active_entries] == [(x["name"], x["url"]) for x in source_entries[:2500]], "First batch changed"
+    assert [(x["name"], x["url"]) for x in active_entries] == [(x["name"], x["url"]) for x in source_entries[:111] + source_entries[486:2500]], "Remaining reviewed batch changed"
     assert [(x["name"], x["url"]) for x in queued_entries] == [(x["name"], x["url"]) for x in source_entries[2500:]], "Queued archive lost or reordered records"
     assert len({x["url"] for x in source_entries}) == 18074, "Source has duplicate URLs"
     assert len(state["status"]) == 2500
@@ -61,7 +61,7 @@ def main():
     assert text.startswith("#EXTM3U"), "Missing M3U header"
     assert len(channels) >= 840, "Playlist shrank below the verified post-deduplication baseline"
     backups = [x for x in channels if "YEDEKLER" in x["group"]]
-    assert len(backups) == 2500, "YEDEKLER must contain 2500 channels"
+    assert len(backups) == 2125, "YEDEKLER must contain 2125 channels"
     assert any(x["name"] == "TRT 1 1440P QHD" for x in backups), "Original TRT 1 backup missing"
     assert any(x["name"] == "DHA CANLI 720P HD" for x in backups), "Original DHA backup missing"
     assert [x["name"] for x in backups[:2]] == [
