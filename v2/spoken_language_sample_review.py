@@ -15,6 +15,10 @@ try:
     from .backup_text_sampler import valid_url, STREAM_PROTOCOL_WHITELIST, public_dns_for_url
 except ImportError:
     from backup_text_sampler import valid_url, STREAM_PROTOCOL_WHITELIST, public_dns_for_url
+try:
+    from .safe_hls_prefetch import prefetch_hls, UnsafeMediaSource
+except ImportError:
+    from safe_hls_prefetch import prefetch_hls, UnsafeMediaSource
 
 REPORTS = Path(__file__).resolve().parent / "reports"
 
@@ -63,10 +67,16 @@ def run():
     results = []
     for digest, url in selected:
         with tempfile.TemporaryDirectory() as directory:
+            try:
+                local_hls = prefetch_hls(url, Path(directory), seconds=args.seconds)
+            except (UnsafeMediaSource, OSError, FileExistsError):
+                results.append({"url_sha256": digest, "status": "SECURE_PREFETCH_FAILED",
+                                "approved": False, "spoken_turkish_verified": False})
+                continue
             wav = Path(directory) / "sample.wav"
             command = ["ffmpeg", "-nostdin", "-hide_banner", "-loglevel", "error",
                        "-protocol_whitelist", STREAM_PROTOCOL_WHITELIST,
-                       "-rw_timeout", "8000000", "-i", url, "-t", str(args.seconds),
+                       "-rw_timeout", "8000000", "-i", str(local_hls), "-t", str(args.seconds),
                        "-vn", "-ac", "1", "-ar", "16000", "-y", str(wav)]
             try:
                 completed = subprocess.run(command, capture_output=True, timeout=45, check=False)
