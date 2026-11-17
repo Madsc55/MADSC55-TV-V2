@@ -1,3 +1,9 @@
+## 17 Kasım 2026 — ASR/OCR/altyazı veri alımı sınırları
+
+ASR ve OCR/altyazı kanıt içe alma köprüleri artık tek raporda **en fazla 16 örnek** kabul ediyor; örnekleyicilerin mevcut 1–16 güvenlik sınırıyla uyumlu. İki taşma regresyon testi eklendi. **67 yazılı test**; çalıştırılmış PASS kanıtı hâlâ yok. 18.074 envanter taraması bu sınırla karıştırılmamalı: 16 sınırı gerçek yayın örneklemesinin *tek partisi* içindir, tüm envanter sayısı değildir. GitHub PR #365 üzerinde, ana İBO/YEDEKLER değiştirilmedi. Öncelik: gerçek Python test koşumu, güvenli ağ çıkışı, gerçek AV/ASR/OCR/altyazı kabulü, sonra tarama.
+
+---
+
 ## 17 Kasım 2026 — Gerçek ASR örnekleyicisinde kritik tutarlılık düzeltmesi
 
 `v2/spoken_language_sample_review.py` mevcut snapshot ve playback kayıtlarını önceden **yalnızca sayıyla** karşılaştırıyordu; aynı sayıda ama farklı kanallara ait raporlar yanlış eşleşebilirdi. Artık URL SHA256 kümelerinin tam eşleşmesi ve tekilliği zorunlu. Ayrıca mevcut ASR raporunun üzerine yazma engellendi (`open("x")`). `v2/test_spoken_language_sample_review.py` iki güvenlik regresyonu eklendi ve test çalıştırıcısına bağlandı. **65 yazılı test**; henüz çalıştırılmış PASS kanıtı yok. GitHub branch PR #365, ana playlist ve YEDEKLER'e dokunulmadı. Gerçek AV/ASR/OCR/altyazı kabulü, ağ egress güvenliği ve test çalıştırması sırada.
