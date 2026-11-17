@@ -1,6 +1,6 @@
 import unittest
 from unittest.mock import patch
-from v2.backup_text_sampler import sample, valid_url
+from v2.backup_text_sampler import sample, valid_url, public_dns_for_url
 
 class SamplerTests(unittest.TestCase):
     def test_invalid_url_rejected(self):
@@ -40,8 +40,9 @@ class SamplerTests(unittest.TestCase):
     @patch.dict("os.environ", {"MADSC55_SECURE_EGRESS_CONFIRMED":"1"})
     @patch("v2.backup_text_sampler.shutil.which", return_value="/usr/bin/ffmpeg")
     def test_subtitle_extraction_uses_protocol_whitelist(self, _which):
-        with patch("v2.backup_text_sampler.execute", return_value="") as execute:
-            sample("https://example.org/live", include_subtitles=True)
+        with patch("v2.backup_text_sampler.public_dns_for_url", return_value=True):
+            with patch("v2.backup_text_sampler.execute", return_value="") as execute:
+                sample("https://example.org/live", include_subtitles=True)
         self.assertEqual(execute.call_count, 2)
         subtitle_command = execute.call_args_list[1].args[0]
         self.assertIn("-protocol_whitelist", subtitle_command)
@@ -66,6 +67,29 @@ class SamplerTests(unittest.TestCase):
                     "http://0177.0.0.1/live", "https://127.0.0.1./live"):
             with self.subTest(url=url):
                 self.assertFalse(valid_url(url))
+
+    def test_public_dns_preflight_rejects_private_and_mixed_answers(self):
+        import socket
+        def answer(ip):
+            family=socket.AF_INET6 if ":" in ip else socket.AF_INET
+            return (family, socket.SOCK_STREAM, 6, "", (ip, 443))
+        with patch("v2.backup_text_sampler.socket.getaddrinfo",
+                   return_value=[answer("8.8.8.8"),answer("127.0.0.1")]):
+            self.assertFalse(public_dns_for_url("https://example.org/live"))
+        with patch("v2.backup_text_sampler.socket.getaddrinfo",
+                   return_value=[answer("8.8.8.8")]):
+            self.assertTrue(public_dns_for_url("https://example.org/live"))
+        with patch("v2.backup_text_sampler.socket.getaddrinfo",
+                   side_effect=socket.gaierror("No DNS")):
+            self.assertFalse(public_dns_for_url("https://example.org/live"))
+
+    @patch.dict("os.environ", {"MADSC55_SECURE_EGRESS_CONFIRMED":"1"})
+    def test_unsafe_dns_target_stops_before_ffmpeg(self):
+        with patch("v2.backup_text_sampler.public_dns_for_url", return_value=False):
+            with patch("v2.backup_text_sampler.execute") as execute:
+                result=sample("https://example.org/live")
+        self.assertEqual(result["status"],"UNSAFE_DNS_TARGET")
+        execute.assert_not_called()
 
     def test_public_url_allowed(self):
         self.assertTrue(valid_url("https://example.org/live"))
