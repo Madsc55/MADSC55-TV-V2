@@ -9,18 +9,21 @@ from discover import ROOT, LIVE, SOURCES, entries
 
 TURKISH_BACKUP_PRIORITY = ("BBC FİRST TURKİYE", "CARTOON NETWORK (TURKİYE)", "KANAL 7", "KANAL 7 AVRUPA", "KANAL 7 AVRUPA HD TR", "KANAL AVRUPA TR", "SHOW TV", "TRT 3 (720P)", "TRT COCUK (1440P)", "TRT EBA ILKOKUL (720P)", "TRT EBA LİSE (720P)", "TRT SPOR YİLDİZ (1440P) [GEO-BLOCKED]", "TRT TURK TR")
 
+SELECTED_BACKUP_POSITIONS = set([3,11,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,79,80,81,82,83,84,85,86,88,89,90,91,92,93,100,104,105,117,119,126,135,157,170,171,172,173,177,181])
+SELECTED_SOURCE_POSITIONS = {n if n <= 111 else n + 375 for n in SELECTED_BACKUP_POSITIONS}
+
 def main():
     # Preserve the original 838 non-backup channels in their exact order.
     # YEDEKLER is intentionally sorted, so it cannot be compared as an append-only prefix.
     current = LIVE.read_bytes()
     text = current.decode("utf-8-sig")
     channels_pre = list(entries(text))
-    assert len(channels_pre) == 2963, "Expected 838 protected channels and 2125 active backups"
+    assert len(channels_pre) == 2914, "Expected 838 protected channels and 2076 active backups"
     non_backup = [x for x in channels_pre if "YEDEKLER" not in x["group"]]
     assert len(non_backup) == 838, "Protected non-YEDEKLER categories changed in size"
     backup_count = sum("YEDEKLER" in x["group"] for x in channels_pre)
     backup_group = f"🗂️ YEDEKLER ({backup_count})"
-    assert backup_count == 2125, "YEDEKLER must contain 2125 channels after approved move"
+    assert backup_count == 2076, "YEDEKLER must contain 2076 channels after approved move"
     backup_names = [x["name"] for x in channels_pre if "YEDEKLER" in x["group"]]
     assert len(backup_names) == backup_count
     assert all(x["group"] == backup_group for x in channels_pre if "YEDEKLER" in x["group"]), "All backups must share one category"
@@ -35,15 +38,15 @@ def main():
     queued_entries = list(entries(queued_path.read_text(encoding="utf-8-sig")))
     active_entries = [x for x in channels_pre if "YEDEKLER" in x["group"]]
     assert len(source_entries) == 18074 and len(queued_entries) == 15574
-    assert [(x["name"], x["url"]) for x in active_entries] == [(x["name"], x["url"]) for x in source_entries[:111] + source_entries[486:2500]], "Remaining reviewed batch changed"
+    assert [(x["name"], x["url"]) for x in active_entries] == [(x["name"], x["url"]) for x in [x for i, x in enumerate(source_entries[:111] + source_entries[486:2500], 1) if i not in SELECTED_BACKUP_POSITIONS]], "Remaining reviewed batch changed"
     assert [(x["name"], x["url"]) for x in queued_entries] == [(x["name"], x["url"]) for x in source_entries[2500:]], "Queued archive lost or reordered records"
     assert len({x["url"] for x in source_entries}) == 18074, "Source has duplicate URLs"
     assert len(state["status"]) == 2500
-    assert all(state["status"].get(str(i)) == ("TURK" if 112 <= i <= 486 else "TEST") for i in range(1, 2501))
+    assert all(state["status"].get(str(i)) == ("TURK" if 112 <= i <= 486 or i in SELECTED_SOURCE_POSITIONS else "TEST") for i in range(1, 2501))
     turk_entries = list(entries((ROOT / "v2/yedekler_batch/TURK_ARSIV.m3u8").read_text(encoding="utf-8-sig")))
-    remaining_entries = list(entries((ROOT / "v2/yedekler_batch/YEDEKLER_KALAN_2125.m3u8").read_text(encoding="utf-8-sig")))
-    assert len(turk_entries) == 375 and len(remaining_entries) == 2125
-    assert [(x["name"], x["url"]) for x in turk_entries] == [(x["name"], x["url"]) for x in source_entries[111:486]]
+    remaining_entries = list(entries((ROOT / "v2/yedekler_batch/YEDEKLER_KALAN_2076.m3u8").read_text(encoding="utf-8-sig")))
+    assert len(turk_entries) == 424 and len(remaining_entries) == 2076
+    assert [(x["name"], x["url"]) for x in turk_entries] == [(x["name"], x["url"]) for x in source_entries[111:486] + [source_entries[i - 1] for i in sorted(SELECTED_SOURCE_POSITIONS)]]
     assert [(x["name"], x["url"]) for x in remaining_entries] == [(x["name"], x["url"]) for x in active_entries]
     assert len({x["url"] for x in turk_entries + remaining_entries}) == 2500
     # Fail closed on any reintroduction of the 48 channels that caused test_001.
@@ -61,7 +64,7 @@ def main():
     assert text.startswith("#EXTM3U"), "Missing M3U header"
     assert len(channels) >= 840, "Playlist shrank below the verified post-deduplication baseline"
     backups = [x for x in channels if "YEDEKLER" in x["group"]]
-    assert len(backups) == 2125, "YEDEKLER must contain 2125 channels"
+    assert len(backups) == 2076, "YEDEKLER must contain 2076 channels"
     assert any(x["name"] == "TRT 1 1440P QHD" for x in backups), "Original TRT 1 backup missing"
     assert any(x["name"] == "DHA CANLI 720P HD" for x in backups), "Original DHA backup missing"
     assert [x["name"] for x in backups[:2]] == [
