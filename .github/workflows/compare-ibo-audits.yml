@@ -1,0 +1,39 @@
+name: Compare two IBO audit runs
+on:
+  pull_request:
+    paths:
+      - 'v2/tools/compare_ibo_audits.py'
+      - '.github/workflows/compare-ibo-audits.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  compare:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download first audit
+        uses: actions/download-artifact@v4
+        with:
+          name: ibo-full-category-channel-audit
+          run-id: 43969719236
+          github-token: ${{ github.token }}
+          path: v2/archives/first_audit
+      - name: Download second audit
+        uses: actions/download-artifact@v4
+        with:
+          name: ibo-full-category-channel-audit
+          run-id: 44035767655
+          github-token: ${{ github.token }}
+          path: v2/archives/second_audit
+      - name: Compare 18960 entries without modifying source
+        run: python3 v2/tools/compare_ibo_audits.py
+      - name: Save persistent comparison evidence
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ibo-two-audit-comparison
+          path: v2/archives/compared_audits_20261117/
+          if-no-files-found: error
+          retention-days: 90
