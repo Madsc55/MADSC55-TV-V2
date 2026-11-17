@@ -11,6 +11,9 @@ TR_CYPRUS = {"KKTC", "NORTHERN CYPRUS"}
 TURKIC = {"AZ", "AZE", "AZERBAIJAN", "AZERBAYCAN", "TM", "TKM", "TURKMENISTAN"}
 NAME_MARKERS = re.compile(r"(?<![A-Z0-9])(?:TÜRK(?:İYE|ÇE)?|TURK(?:IYE|ISH)?|TRT|KKTC|KIBRIS|AZƏRBAYCAN|AZERBAYCAN)(?![A-Z0-9])", re.I)
 TR_LANGUAGE = {"tr", "tr-tr"}
+# Title-only evidence is intentionally weak: common Turkish letters help surface
+# channels without explicit TURK/TRT markers, but never prove spoken language.
+TURKISH_SCRIPT_HINT = re.compile(r"[ÇĞİÖŞÜçğıöşü]")
 OTHER_TURKIC_LANGUAGES = {"az", "az-az", "tk", "tk-tm"}
 
 def classify_channel(name, origin_country=None, spoken_language=None,
@@ -32,7 +35,7 @@ def classify_channel(name, origin_country=None, spoken_language=None,
     origin = (origin_country or "").strip().upper()
     spoken = (spoken_language or "").strip().lower()
     subtitle = (subtitle_language or "").strip().lower()
-    title_hint = bool(NAME_MARKERS.search(name.upper()))
+    title_hint = bool(NAME_MARKERS.search(name.upper()) or TURKISH_SCRIPT_HINT.search(name))
     origin_tr = origin in TR_COUNTRIES or origin in TR_CYPRUS
     origin_turkic = origin in TURKIC
     spoken_tr = spoken in TR_LANGUAGE
