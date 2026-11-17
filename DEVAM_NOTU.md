@@ -1,3 +1,11 @@
+## 17 Kasım 2026 — Playback aktarımındaki doğrulama alanı düzeltmesi
+
+**Doğrulandı:** PR #365 önceki HEAD `962d055aa29bf70ac40e6ac06dc234c4b2627c68` için GitHub `V2 Main Production Security Gate` run **44099552093 SUCCESS**. Bu güvenlik gate'i tüm Python testlerini çalıştırmaz.
+
+**Yapıldı:** `v2/backup_playback_import.py` gerçek `stream_probe` kayıtlarının `status=AV_VERIFIED` ve `decode_status=DECODED_AV` alanlarını da aktarır; böylece `backup_evidence_adapter.join_evidence` kanıtı kaybetmeden doğrulanmış AV'yi değerlendirebilir. Bozuk playback hash'leri reddedilir. Kod commit `8be2b0dc9b15d24b315667ac3071480af375697a`, iki test commit `6b83fa2fe9bc10b29d52f24b7418eb7a3c971a3b`, iki modüller arası uçtan uca sınıflandırma testi commit `0a9790e69cf49aeeef53749f72b98f21f5b8b801`. Toplam **48 yazılmış offline test senaryosu**. Yeni HEAD için test ve CI PASS henüz doğrulanmadı. 18.074 gerçek kanalın tam taraması ve PR merge yapılmadı. Ana İBO/YEDEKLER korunuyor.
+
+---
+
 ## 17 Kasım 2026 — OCR/altyazı akış URL güvenlik kontrolü
 
 **Doğrulandı:** PR #365 önceki HEAD `363e90e547fe326fe875e97fef2906200c43368a` için security gate run **44098139164 SUCCESS**. Güvenlik gate'i 42 Python testinin tamamının çalıştırıldığı anlamına gelmez.
