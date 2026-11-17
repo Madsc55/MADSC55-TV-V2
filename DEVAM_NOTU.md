@@ -1,3 +1,9 @@
+## 17 Kasım 2026 — Test envanteri denetimi ve güvenlik kontrolü
+
+**Doğrulama:** Önceki HEAD `34f9b38b56340214b2a92ad7dd139178cc917f6b` için GitHub security gate run **44097374984 SUCCESS**. Sonraki HEAD `56ed4a671e028180243e26fd63a5a7d1e27f4c05` için run **44097756792** kontrol anında `in_progress` idi. `v2/test_backup_*.py` altı modülün test metotları tek tek sayıldı: smart archive **9**, adapter **11**, text evidence **6**, offline CLI **3**, text sampler **4**, batch **5** = **38 test senaryosu** (önceki notlarda 37 yazılmıştı; sayı düzeltilmiştir). Yazılmış olmak PASS anlamına gelmez. Batch testinde overwrite koruması ağ izni reddi ile karışmasın diye `run(src,out,1,2,True)` olarak düzeltildi (commit `95f75d68e45e332bad0fc080e3e7cac94692a8a1`). Bu testlerin tamamı GitHub Actions'ta henüz kanıtlı olarak koşturulmadı. Gerçek 18.074 yayın taraması ve PR merge eksik; ana İBO/YEDEKLER korunuyor.
+
+---
+
 ## 17 Kasım 2026 — Toplu OCR/altyazı hata yalıtımı ve çıktı gizliliği
 
 **Doğrulandı:** Önceki HEAD `34f9b38b56340214b2a92ad7dd139178cc917f6b` için `V2 Main Production Security Gate` run **44097374984 SUCCESS**. Bu sonuç yeni değişikliklerin unit test kabulü değildir.
