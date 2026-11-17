@@ -30,6 +30,39 @@ class SpeechSampleSafetyTests(unittest.TestCase):
         self.assertIn("persist-credentials: false", source)
         self.assertNotIn("4b1c3cea4b5107a425abab60f62d41f9f81e05a7", source)
 
+    def test_speech_uses_local_manifest_not_remote_url(self):
+        import hashlib
+        import types
+        from unittest.mock import Mock
+        with TemporaryDirectory() as directory:
+            base=Path(directory)
+            url="https://example.org/live.m3u8"
+            digest=hashlib.sha256(url.encode()).hexdigest()
+            snapshot=base/"snapshot.json"; playback=base/"playback.json"
+            output=base/"speech.json"
+            snapshot.write_text(json.dumps({"candidates":[{"url":url}]}))
+            playback.write_text(json.dumps({"coverage_complete":True,
+                "channel_results":[{"url_sha256":digest,"playback":"VIDEO_DECODED",
+                                    "audio":"AUDIO_DECODED"}]}))
+            fake_model=Mock()
+            with patch.dict("os.environ", {"MADSC55_SECURE_EGRESS_CONFIRMED":"1"}):
+                with patch("v2.spoken_language_sample_review.public_dns_for_url", return_value=True):
+                    with patch("v2.spoken_language_sample_review.prefetch_hls",
+                               return_value=base/"local.m3u8"):
+                        with patch("v2.spoken_language_sample_review.subprocess.run") as command_run:
+                            command_run.return_value.returncode=1
+                            with patch.dict(sys.modules, {"faster_whisper":
+                                 types.SimpleNamespace(WhisperModel=lambda *a,**k: fake_model)}):
+                                with patch.object(sys,"argv",["speech","--snapshot",str(snapshot),
+                                    "--playback",str(playback),"--output",str(output)]):
+                                    run()
+            cmd=command_run.call_args.args[0]
+            self.assertEqual(cmd[cmd.index("-i")+1],str(base/"local.m3u8"))
+            self.assertNotIn(url, cmd)
+            self.assertEqual(cmd[cmd.index("-protocol_whitelist")+1],"file,crypto")
+            self.assertEqual(json.loads(output.read_text())["results"][0]["status"],
+                             "AUDIO_SAMPLE_UNAVAILABLE")
+
     def test_unsafe_dns_rejected_before_asr_model_load(self):
         import hashlib
         import types
