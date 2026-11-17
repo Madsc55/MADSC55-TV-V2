@@ -31,7 +31,7 @@ jobs:
       - name: V2 backup archive, ASR, OCR and subtitle offline regressions
         run: python v2/run_backup_archive_tests.py --verbose
       - name: Turkish channel speech, subtitle, origin and name triage regressions
-        run: python -m unittest -v v2.test_turkish_channel_triage v2.test_turkish_channel_batch_review
+        run: python -m unittest -v v2.test_turkish_channel_triage v2.test_turkish_channel_batch_review v2.test_turkish_m3u_inventory_review
       - name: Preserve original IBO category and backup invariants
         run: python v2/test_playlist_invariants.py
       - name: Historical task ledger integrity
