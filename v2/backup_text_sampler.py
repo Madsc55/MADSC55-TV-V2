@@ -20,8 +20,13 @@ try:
 except ImportError:
     from backup_text_evidence import inspect_text_observations
 
-# Untrusted HTTP/HLS input must not be able to open local file: URLs.
-STREAM_PROTOCOL_WHITELIST = "http,https,tcp,tls,crypto"
+try:
+    from .safe_hls_prefetch import prefetch_hls, UnsafeMediaSource, LOCAL_PROTOCOLS
+except ImportError:
+    from safe_hls_prefetch import prefetch_hls, UnsafeMediaSource, LOCAL_PROTOCOLS
+
+# Only a sanitized local media playlist may reach FFmpeg; no network protocols.
+STREAM_PROTOCOL_WHITELIST = LOCAL_PROTOCOLS
 
 def valid_url(url):
     if not isinstance(url, str) or not url or len(url) > 4096 or any(ord(ch) < 33 or ord(ch) == 127 for ch in url):
@@ -97,11 +102,16 @@ def sample(url, seconds=8, include_subtitles=True):
         return {"status":"FFMPEG_UNAVAILABLE","language_evidence_verified":False}
     observations = []
     with tempfile.TemporaryDirectory() as d:
+        try:
+            local_hls = prefetch_hls(url, Path(d), seconds=seconds)
+        except (UnsafeMediaSource, OSError, FileExistsError):
+            return {"status":"SECURE_PREFETCH_FAILED",
+                    "language_evidence_verified":False,"review_approved":False}
         frame = str(Path(d) / "frame.png")
         # Fixed single frame, no playlist writes, network work bounded by timeout.
         cmd = ["ffmpeg","-nostdin","-hide_banner","-loglevel","error",
                "-protocol_whitelist",STREAM_PROTOCOL_WHITELIST,
-               "-rw_timeout","8000000","-i",url,"-t",str(seconds),
+               "-rw_timeout","8000000","-i",str(local_hls),"-t",str(seconds),
                "-frames:v","1","-y",frame]
         execute(cmd,seconds+12)
         if Path(frame).exists() and shutil.which("tesseract"):
@@ -112,7 +122,7 @@ def sample(url, seconds=8, include_subtitles=True):
             subtitle = str(Path(d) / "subtitle.srt")
             cmd = ["ffmpeg","-nostdin","-hide_banner","-loglevel","error",
                    "-protocol_whitelist",STREAM_PROTOCOL_WHITELIST,
-                   "-rw_timeout","8000000","-i",url,"-map","0:s:0?",
+                   "-rw_timeout","8000000","-i",str(local_hls),"-map","0:s:0?",
                    "-t",str(seconds),"-f","srt","-y",subtitle]
             execute(cmd,seconds+12)
             p=Path(subtitle)
