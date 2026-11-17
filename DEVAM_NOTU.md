@@ -298,6 +298,7 @@ AÇIK TEKNİK ENGEL: `v2/main_actions_security_gate.py` yalnız YEDEKLER içi re
 - Bu iki playlist **ayrı GitHub depolarındadır**. V2'yi güncellemek İBO'nun mevcut adresini otomatik güncellemez. Asıl İBO dosyasına geçmeden önce güvenli karşılaştırma, koruma ve son doğrulama yapılmalı.
 - Orijinal favoriler, kategoriler, yayın URL'leri ve EPG korunacak. YEDEKLER'deki **TRT 1 1440P QHD** ve **DHA CANLI 720P HD** kesinlikle silinmeyecek.
 - İBO uyumluluğu teyit edilmemiş YouTube sayfa URL'lerini doğrudan M3U yayını gibi ekleme. Telif, yayın hakkı, DRM, erişim anahtarı ve coğrafi kısıtlamaları atlatma.
+
 ## Tamamlanan ve doğrulanan
 1. V2 ana playlisti kullanıcı talebiyle **1047 kayıt** oldu; YEDEKLER yeniden yalnızca **2 orijinal kanaldan** oluşuyor. Son değişiklik commit 60a98365deae3ba1b7c0fc8894a640a8ea3662fe.
 2. TRT Arabi ve TRT World yabancı dil nedeniyle V2 listesinden çıkarıldı. Aras TV, Haber61 TV, TV Den ve YOL TV, YEDEKLER'den alınıp hem **📍 YEREL (74)** hem **📺 HEPSİ (378)** kategorilerine eklendi. Orijinal TRT 1 ve DHA CANLI YEDEKLER (2) içinde korundu. Yeni kanalların İBO Player'da uzun süreli oynatımı henüz kanıtlanmadı.
@@ -597,6 +598,7 @@ KALAN ISLER: GitLab/Codeberg/benzeri kaynak kesfi, resmi yayin siteleri ve YouTu
 
 Bu kayit onceki tum hedef-repo referanslarindan ONCELIKLIDIR. Yeni sohbet yalnizca MADSC55-TV-V2 ile devam edecek.
 
+
 ## 2026-10-30 DEVAM - KAYNAK KESFI SIRALAMA DUZELTMESI
 - Yalnizca V2 main dalinda `v2/github_source_discovery.py` degistirildi; commit `b113e9c7ff93198b2c82ed07f9a36f202ab5b7fd`.
 - GitHub depolari ve depo ici M3U dosyalari casefold sirali seciliyor; bulunan kaynak raporu da sabit sirali yaziliyor. Amac: kaynak kesfi secimindeki degisken siralama etkisini azaltmak. GitHub API arama sonucunun ve kota/limitlerin kapsami hala degisebilir; #60 kayip URL kurtarma garantisi degildir.
@@ -895,7 +897,8 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - Yeni Actions PASS henüz görülmedi; compile/protect/discovery-tests/safety sonucun kontrolü sıradaki iş. Ana playlist ve YEDEKLER değiştirilmedi.
 
 
-## 2026-11-01 — Logo Backup #5 push çakışması- Kullanıcının paylaştığı #5 `backup` logunda `git push` `main -> main (fetch first)` nedeniyle exit 1; indirme adımı değil, eşzamanlı main ilerlemesi kaynaklı non-fast-forward reddi.
+## 2026-11-01 — Logo Backup #5 push çakışması
+- Kullanıcının paylaştığı #5 `backup` logunda `git push` `main -> main (fetch first)` nedeniyle exit 1; indirme adımı değil, eşzamanlı main ilerlemesi kaynaklı non-fast-forward reddi.
 - `.github/workflows/v2-logo-backup.yml` commit `c83dd91`: logo commitinden sonra `git fetch origin main`, `git rebase origin/main`, `git push origin HEAD:main`; yarış halinde en fazla 5 güvenli deneme. Rebase çakışmasında abort ve kırmızı sonuç, asla force push yok.
 - #5 eski run başarılı hale gelmez; sonraki logo backup run sonucunu ayrıca doğrulamak gerekir. Bu değişiklik mevcut playlist/YEDEKLER/cihaz favorilerini değiştirmez.
 
@@ -1196,6 +1199,43 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - Bu turda doğrulanmamış şüpheli kanallar taşınmadı. Bu kayıt açık takip olarak kalır; kullanıcı istemeden tamamlandı işaretlenmez.
 
 
+## 15 Kasım 2026 — YEDEKLER kullanıcı inceleme / arşiv geri yükleme doğrulaması
+- Kullanıcı iş akışı: YEDEKLER geçici deneme alanı; TRT 1 1440P QHD ve DHA CANLI 720P HD ilk iki sabit kanal. Kullanıcı İBO Player'da dener; çalışan Türk kanallarını onayladığı ana kategorilere, çalışmayanları ve yabancıları kayıpsız arşive ayırmak ister. Kullanıcının seçmediği kanallar kaybolmamalı ve talep üzerine YEDEKLER'e yeniden yüklenebilmeli. Tarihî 38 kanalın özgün kayıtları korunacak; 38 ayrı ve güncel 1.087 toplamın dışında ek bir sayı olarak yorumlanmayacak.
+- Mevcut `v2/ibo_parity.py` sadece okuma/karşılaştırma yapıyor. Mevcut tarihî keşif arşivleri, YEDEKLER'den seçili kanal çıkarma ve isteğe göre birebir geri yükleme mekanizmasının doğrulandığı anlamına gelmez.
+- İlk güvenli doğrulama için `v2/ibo_archive_verify.py` eklendi: gerçek M3U dosyasını ham baytlarıyla SHA-256 korumalı kayıpsız arşivler, yeni hedef dosyaya geri yükler, var olan hedefin üstüne yazmaz. `v2/test_playlist_invariants.py` içinde gerçek playlist üzerinde geçici dizinde birebir geri yükleme testi var. Üretim playlisti değiştirilmiyor.
+- **AÇIK**: Seçilen 30/1000 gibi kanal bazlı sınıflandırma, arşivden kısmi geri yükleme, kalıcı bağımsız depo ve İBO Player canlı senkronizasyonu henüz uygulanmış/doğrulanmış değil. Bunlar geçmeden YEDEKLER'den toplu silme veya taşıma yapılmayacak. CI yeşil olsa bile sadece kayıpsız tam dosya geri yükleme testini kanıtlar.
+
+
+## 16 Kasım 2026 — 7.650 eski sistem adayı / iki tarama sonrası devam (AÇIK)
+- Kullanıcı kararı: Şu anda başlatılmış iki tarama bitsin; ardından 7.650 aday için yeni sürümde **tek kez** `v2-real-iptv-scan.yml` manuel `Run workflow` başlatılacak. Kullanıcıya iki taramanın tamamlandığı bildirilecek; kullanıcı başlatmayı onaylayacak.
+- İzlenecek taramalar: **#43787744310** (ilk tarama; eski revizyon), **#43788739181** (ikinci tarama; önceki 500'lük kuyruk revizyonu). Her ikisinin de terminal statüsü kontrol edilmeli; başarısızlık varsa ayrıca raporlanmalı. Eski iki tarama 7.650 adayın tümünü test etmiş sayılmaz.
+- **PR #304** ile 7.650 benzersiz aday 4 arşiv parçasına alındı; **PR #305** ile `v2/verify_legacy_7650_queue.py` eklendi; **PR #306** ile tek-500 kuyruk bağlandı; **PR #307** ile izinli gerçek tarama workflow'una 16 ayrı batch matrix işi eklendi. Son değişiklik ana dalda; önceki iki tarama eski commitlerden çalıştığı için matrix'i içermez.
+- Yeni sürümde 16 batch × en çok 500 kanal (sonuncu 150) ffprobe + ffmpeg görüntü/ses çözümleme testinden geçirir; sonuçları `v2-legacy-7650-batch-*` artifact'larına kaydeder. **Henüz gerçek testlerin tamamlandığı veya 7.650 kanalın çalıştığı doğrulanmadı.** Paralel işlerin GitHub Actions süresi ve başarısızlıkları denetlenecek.
+- **Ana 838 kanal, mevcut YEDEKLER, 2.881 kanallık `v2/arsiv/yabanci_kanallar_2026-11-16_2881.m3u8` değiştirilmeyecek.** AV doğrulamasından geçenler tekrar/kimlik kontrolünden sonra kullanıcı onaylı güvenli YEDEKLER aktarımına aday; otomatik listeye yazma şu an etkin değil.
+- Otomatik yeni-run tetikleme (`workflow_run`, cron vb.) mevcut güvenlik kapısınca yasak; koruma değiştirilmedi. Bu nedenle iki tarama bitince yeni çalışmayı kendiliğinden başlatma **kurulmuş değil**. Kullanıcıya haber verilip birlikte başlatılacak.
+- Kabul şartı: 16 batch artifact'ı ve 7.650 benzersiz URL için sonuçlar; çalışanların gerçek AV kanıtı; korunan liste SHA/parite kontrolleri; ardından kontrollü YEDEKLER aktarımı. **AÇIK — tamamlandı işaretlenmeyecek.**
+
+
+## 17 Kasım 2026 — Genel scan korumalı yabancı arşiv sayısı uyumsuzluğu (AÇIK)
+- 7.650 eski sistem adayının 16/16 AV yeniden test job'u başarılı; bu tüm kanalların oynatılabilir olduğu anlamına gelmez. Ayrı genel `scan` job'u eski commit üzerinde başarısız kalmıştır.
+- Güncel `v2/arsiv/yabanci_kanallar_2026-11-16_2881.m3u8` dosyası adı tarihî 2881 değerini taşısa da içeriğinde 4768 farklı URL ve 4768 EXTINF vardır. `v2/real_ibo_scan.py` hâlâ 2881 beklediği için yeni çalışmada da bütünlük kontrolünden geçemeyecektir.
+- Ayrı düzeltme dalında gerçek 4768 benzersiz arşiv girdisi için fail-closed doğrulama güncellendi. **Arşiv içeriği, ana İBO listesi ve YEDEKLER değiştirilmedi.**
+- Kabul şartı: PR birleştirmesi, güncel main üzerinde yeni workflow_dispatch scan, gerçek log ve raporlarla başarı; ayrıca 16 batch artifact'ındaki AV sonuçlarının toplu denetimi. **AÇIK — yeni scan yeşil doğrulanmadan tamamlandı sayılmayacak.**
+
+
+## 17 Kasım 2026 — PR #374 Stage 6 kırmızı test düzeltmesi (CI kabulü bekliyor)
+- Stage 6 hata çıktısının kök nedeni: `v2/real_ibo_scan.py` korunan yabancı arşiv için 4.768 kayıt + 4.768 benzersiz URL şartına güncellenmişti; `v2/test_real_ibo_scan_offline.py` içindeki üç CLI regresyon senaryosu ise sahte tarihî arşiv envanterini hâlâ 2.881 kayıtla kuruyordu. Scanner test başında fail-closed arşiv sayımında durduğu için senaryoların asıl zorunlu-kaynak/dinamik-rapor davranışlarına ulaşamıyordu.
+- PR #374 dalında üç offline fixture `range(2881)` → `range(4768)` olarak hizalandı. Commit: `037b53654b8ff56a24da212955508fd7a4190948` (`test(scan): align offline archive fixtures with 4768-entry invariant`). Üretim scanner kodu, korunan arşiv, ana İBO ve YEDEKLER değiştirilmedi.
+- Kabul durumu: düzeltme commit'i PR dalına yazıldı; bu commit için Actions koşusu/yeşil Stage 6 sonucu henüz doğrulanmadı. PR birleştirilmeyecek ve genel scan başlatılmayacak; CI kanıtı bekleniyor.
+
+
+## 17 Kasım 2026 — Kullanıcı onaylı eski 1.110 listesi kaldırma ve tüm M3U envanteri
+- Kullanıcının açık talimatı: `MADSC55_IBO_NEWLISTTR_YEDEKLER_TEST.m3u8` (1.110 kayıt) ile dört parçalı eski sistem arşiv adayları (7.650 kayıt) ana `MADSC55_TV_IBO_CALISANLAR_TEST.m3u8` dosyasının `🗂️ YEDEKLER` kategorisinde bulunsun; tekrar dosyası kaldırılsın; diğer M3U listeleri sayılsın.
+- `main` üzerindeki M3U envanteri okundu (8 dosya): ana İBO 18.912 toplam / 18.074 YEDEKLER; `MADSC55_TV_IBO_YEDEKLER_DUZELTILMIS_TEST.m3u8` 18.960 toplam / 18.122 YEDEKLER; eski `MADSC55_IBO_NEWLISTTR_YEDEKLER_TEST.m3u8` 1.110 toplam / 65 YEDEKLER (443 benzersiz URL); yabancı arşiv 4.768; dört eski aday parçası sırasıyla 2.000, 2.000, 2.000, 1.650 (7.650 benzersiz URL).
+- URL düzeyinde karşılaştırma: 7.650/7.650 eski adayın tamamı ve 1.110/1.110 eski küçük liste kaydı ana İBO'nun YEDEKLER kategorisinde zaten var. Eksik URL sıfır. Bu nedenle 18.074 mevcut YEDEKLER'e yeniden kopyalama yapılsaydı 8.760 gereksiz tekrar oluşacaktı; ana playlistin tek bir baytı değiştirilmedi. Eski küçük listedeki aynı URL'ye ait bazı ad/metadata farklılıkları arşivlenmiş Git geçmişinde korunur; bu karşılaştırma kanal kimliği/AV kabulü değildir.
+- 18.122 YEDEKLER içeren alternatif test playlisti ana dosyaya göre +48 farklı URL taşıyor; bu 48 URL, `v2/archives/test001_quarantined_48.json` içindeki koruma altına alınan 48 kaydın aynısı. Bu test dosyası ana İBO yerine geçmez ve 48 kanal otomatik geri alınmaz.
+- Kullanıcının silme talimatı uyarınca tek eski `MADSC55_IBO_NEWLISTTR_YEDEKLER_TEST.m3u8` dosyası **ayrı PR dalından kaldırıldı**; eski sürümü Git commit geçmişinden geri yüklemek mümkün. Ana İBO, diğer yedi M3U ve tüm kategori satırları değiştirilmedi. Güvenlik kontrolleri ve PR kabulü doğrulanmadan tamamlandı denmez.
+
 ---
 
 ## 17 Kasım 2026 — PR #365 son durum / merge engeli
@@ -1243,3 +1283,14 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 **Güncel korunma / birleşme engeli:** Özellik dalı ile main karşılaştırmasında dal 3 commit geride ve PR #365 mergeable=false. Bu oturum içinde ana dalda eşzamanlı değişiklik yapılmış görünüyor: ana playlist Git blob SHA main `843a2216ab08873ce0d3281e64bcb4fdd20a05d4`, özellik dalında `d5291424da8c273d48395b0c261feb87ae1ebf72`. Bu nedenle eski feature playlist blobu üzerine main'i körlemesine merge etmek korunan listeyi geri alma riski yaratır. **Ana İBO, YEDEKLER ve başka korunan playlistlere bu oturumda hiçbir yazma yapılmadı; PR birleştirilmedi ve zorla güncellenmedi.**
 
 **Açık güvenlik ve medya kabul engeli:** DNS ön çözümleme tek başına DNS rebinding, HTTP redirect ve HLS iç içe bağlantılarının SSRF riskini kapatmaz. Ağ katmanında güvenilir deny-private egress/proxy izolasyonu kurulu ve testli değil. Ortam bayrağı tek başına izolasyon değildir; gerçek izinli yayınlarda FFmpeg görüntü+ses, ASR Türkçe konuşma, OCR ve altyazı birleşik kabulü yapılmadı. Bu ön koşullar ve 80/80 güncel Actions PASS olmadan 18.074 YEDEKLER taraması başlatılmayacak; görevler kanıtsız completed yapılmayacak.
+
+---
+
+## 17 Kasım 2026 — Yeni sohbet, ana dal uzlaştırma ve güvenlik kontrolü
+
+- Kullanıcı talimatı: PR #365'ten devam; 80 senaryoyu güncel kodda doğrula; DNS/redirect/SSRF güvenlik kabulü ve gerçek AV+ASR+OCR+altyazı testlerini kanıtla. Ana İBO ve YEDEKLER'e yazma yok; 18.074 taraması ön koşulsuz başlamayacak.
+- Özellik dalı ve main arasında 3 ana dal commit farkı tespit edildi. Korunan ana İBO blob SHA: main `843a2216ab08873ce0d3281e64bcb4fdd20a05d4`; önceki özellik dalı `d5291424da8c273d48395b0c261feb87ae1ebf72`. Özellik dalındaki eski playlist verisi kullanılamaz; dalı main'in güncel Git ağacı üzerinde yalnız özellik dosyalarını ekleyerek uzlaştırma ve iki ebeveynli commit oluşturma yöntemi seçildi. Playlist/YEDEKLER doğrudan değiştirilmez.
+- Geçmiş Actions `44121070207` yalnız eski `f1b7b7f` commitindeki **71/71 unittest PASS** kanıtıdır; güncel 80 test ve tam Production Security Gate için henüz başarı kanıtı yok. Önceki güvenlik red sebebi envantere girmeyen workflow idi; ayrı dosya kaldırılarak test çağrısı izinli güvenlik gate'ine taşındı.
+- DNS ön çözümleme, FFmpeg protokol beyaz listesi ve yalnız env bayrağı bütün redirect/rebinding/HLS alt-isteklerini ağ katmanında engellemez. Güvenli izole egress ve gerçek yayın AV/ASR/OCR/altyazı kabulü bu oturumda da tamamlanmadı. Bunlar tamamlanmadan `MADSC55_SECURE_EGRESS_CONFIRMED` etkinleştirilmez, yeni canlı tarama başlatılmaz.
+- DEVAM_NOTU.md'nin main'deki son kullanıcı/playlist/başka PR kayıtları korunmalı, PR #365'e ait geçmiş kayıtlar ayrı ek bölümde saklanmalı. Kanonik görev durumları değişmez.
+
