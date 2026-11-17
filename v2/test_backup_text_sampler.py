@@ -54,6 +54,12 @@ class SamplerTests(unittest.TestCase):
             with self.subTest(url=url):
                 self.assertFalse(valid_url(url))
 
+    def test_legacy_ipv4_numeric_aliases_rejected(self):
+        for url in ("http://127.1/live", "http://0x7f.0.0.1/live",
+                    "http://0177.0.0.1/live", "https://127.0.0.1./live"):
+            with self.subTest(url=url):
+                self.assertFalse(valid_url(url))
+
     def test_public_url_allowed(self):
         self.assertTrue(valid_url("https://example.org/live"))
 
