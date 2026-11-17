@@ -44,6 +44,30 @@ class M3UInventoryReviewTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 inventory_review(src, out, evidence)
             self.assertFalse(out.exists())
+    def test_sampler_asr_hint_foreign_name_and_url_binding(self):
+        import hashlib
+        with tempfile.TemporaryDirectory() as d:
+            src, out, evidence = (Path(d) / n for n in ("in.m3u8", "out.jsonl", "evidence.jsonl"))
+            url = "https://example.com/live"
+            src.write_text("#EXTM3U\n#EXTINF:-1,Global Network\n" + url + "\n")
+            sample = {"url_sha256": hashlib.sha256(url.encode()).hexdigest(),
+                      "status": "AV_SAMPLED_REVIEW_REQUIRED", "video_decoded": True,
+                      "audio_decoded": True, "spoken_turkish_hint": True,
+                      "subtitle_turkish_hint": False}
+            evidence.write_text(json.dumps({"playlist_ordinal": 1, "sample_report": sample}) + "\n")
+            inventory_review(src, out, evidence)
+            row = json.loads(out.read_text())
+            self.assertEqual(row["category"], "ASR_TURKISH_HINT_REVIEW")
+            self.assertTrue(row["sampler_spoken_turkish_hint"])
+            self.assertFalse(row["language_evidence_verified"])
+            self.assertFalse(row["working_channel_verified"])
+            self.assertNotIn(url, out.read_text())
+            out.unlink()
+            sample["url_sha256"] = "0" * 64
+            evidence.write_text(json.dumps({"playlist_ordinal": 1, "sample_report": sample}) + "\n")
+            with self.assertRaises(ValueError):
+                inventory_review(src, out, evidence)
+            self.assertFalse(out.exists())
     def test_unpaired_entry_fails_closed(self):
         with tempfile.TemporaryDirectory() as d:
             src, out = Path(d) / "in.m3u8", Path(d) / "out.jsonl"
