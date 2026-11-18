@@ -15,6 +15,9 @@ def evaluate_observation(name, observation):
     source, language, text = (observation[k] for k in ("source", "language", "text"))
     if source not in SOURCES or not isinstance(language, str) or not 2 <= len(language) <= 16:
         raise ValueError("Invalid observation source or language")
+    import re
+    if not re.fullmatch(r"[a-zA-Z]{2,3}(?:-[a-zA-Z]{2,8})?", language):
+        raise ValueError("Invalid language tag")
     if not isinstance(text, str) or not text.strip() or len(text) > MAX_TEXT:
         raise ValueError("Missing or oversized observation text")
     if any(ord(c) < 32 and c not in "\n\t" for c in text):
@@ -32,5 +35,6 @@ def evaluate_observation(name, observation):
     result["observed_language_is_verified"] = False
     result["observation_provenance"] = source
     result["observed_text_length"] = len(text)
+    result["observation_text_retained"] = False
     result["ocr_text_is_not_subtitle_or_speech"] = source == "ocr"
     return result
