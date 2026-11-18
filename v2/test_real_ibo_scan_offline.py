@@ -306,6 +306,93 @@ class ScannerOfflineTests(unittest.TestCase):
             scanner.select_checkpoint_retry_urls(
                 prior, {"https://example.org/old.m3u8": {}}, 100)
 
+    def test_scanner_holds_unselected_archived_failures_through_periodic_saves(self):
+        import time
+        import scan_checkpoint
+        from secure_archive import decrypt
+
+        secret = "offline-checkpoint-passphrase-123"
+        names = ("check-av", "timeout", "review", "exhausted", "recent-av", "expired-av", "new")
+        urls = {name: f"https://example.org/{name}.m3u8" for name in names}
+        manifest = "#EXTM3U\n" + "".join(f"#EXTINF:-1,{name}\n{url}\n" for name, url in urls.items())
+        good = {"decoded_av_verified": True, "decode_status": "DECODED_AV",
+                "verified_quality": {"av_verified": True}}
+        recent = time.time()
+        old = recent - scan_checkpoint.MAX_AGE_SECONDS - 300
+        failures = {"check-av": (200, 1), "timeout": (503, 2), "review": (404, 0),
+                    "exhausted": (503, 3)}
+        rows = {urls[name]: scan_checkpoint.checkpoint_row(
+            urls[name], None, {"last_http_status": status}, checked_at=old, recovery_attempts=attempts)
+                for name, (status, attempts) in failures.items()}
+        for name, stamp in (("recent-av", recent), ("expired-av", old)):
+            rows[urls[name]] = scan_checkpoint.checkpoint_row(urls[name], good, {}, checked_at=stamp)
+
+        def probe(entry, timeout, diagnostics):
+            diagnostics["last_http_status"] = 200
+            return {**entry, **good} if entry["url"] == urls["check-av"] else None
+
+        for budget in (0, 1):
+            with self.subTest(budget=budget), tempfile.TemporaryDirectory() as tmp:
+                root = pathlib.Path(tmp)
+                live = root / "live.m3u8"
+                live.write_text("#EXTM3U\n#EXTINF:-1,Protected\nhttps://example.org/protected\n")
+                archive = root / "v2/arsiv/yabanci_kanallar_2026-11-16_2881.m3u8"
+                archive.parent.mkdir(parents=True)
+                archive.write_text("#EXTM3U\n" + "".join(
+                    f"#EXTINF:-1,Archived\nhttps://example.org/archive/{i}\n" for i in range(4768)))
+                source = root / "sources.json"
+                source.write_text(json.dumps([{"id": "test", "url": "https://example.org/tr.m3u", "scope": "TR"}]))
+                report, inventory, output = root / "report.json", root / "inventory.jsonl", root / "out.m3u8"
+                output.write_text("prior export")
+                resume = root / "prior/ibo-scan-progress.enc"
+                scan_checkpoint.save_progress(resume, secret, worldwide=False, rows=rows)
+                saved = []
+                real_save = scan_checkpoint.save_progress
+
+                def capture_save(path, passphrase, *, worldwide, rows):
+                    if not saved:
+                        saved.append(rows.copy())
+                    return real_save(path, passphrase, worldwide=worldwide, rows=rows)
+
+                args = ["scan", "--live", str(live), "--sources", str(source), "--workers", "1",
+                        "--resume-checkpoint", str(resume), "--retry-failed-limit", str(budget),
+                        "--checkpoint-every", "1", "--inventory", str(inventory),
+                        "--output", str(output), "--report", str(report)]
+                with (patch.object(scanner, "ROOT", root), patch("sys.argv", args),
+                      patch.dict("os.environ", {"V2_ARCHIVE_PASSPHRASE": secret}),
+                      patch.object(scanner, "fetch", return_value=manifest.encode()),
+                      patch.object(scanner, "check_hls", side_effect=probe) as network,
+                      patch.object(scan_checkpoint, "save_progress", side_effect=capture_save)):
+                    scanner.main()
+                expected = [urls["expired-av"], urls["new"]]
+                if budget:
+                    expected.append(urls["check-av"])
+                self.assertCountEqual([call.args[0]["url"] for call in network.call_args_list], expected)
+                self.assertEqual(saved[0][urls["timeout"]], rows[urls["timeout"]])
+                self.assertEqual(saved[0][urls["recent-av"]], rows[urls["recent-av"]])
+                result = json.loads(report.read_text())
+                self.assertEqual(result["http_checked_this_run"], len(expected))
+                self.assertEqual(result["resumed_checkpoint_observations"], 1)
+                self.assertEqual(result["http_checked"], len(expected) + 1)
+                self.assertEqual(result["deferred_archived_failures"], 4 - budget)
+                self.assertEqual(result["av_verified_this_run"], budget)
+                self.assertEqual(result["resumed_decoded_av_evidence"], 1)
+                self.assertEqual(result["retried_failed_checkpoint_urls"], budget)
+                self.assertFalse(result["full_discovery_acceptance"])
+                self.assertEqual(result["status"], "DEFERRED_ARCHIVED_FAILURES")
+                self.assertEqual(result["written_parts"], [])
+                self.assertEqual(output.read_text(), "prior export")
+                self.assertFalse(inventory.with_suffix(".jsonl.enc").exists())
+                pending = decrypt(inventory.with_suffix(".jsonl.pending.enc").read_bytes(), secret)
+                records = {item["url"]: item for item in map(json.loads, pending.splitlines())}
+                self.assertEqual(set(records), set(urls.values()))
+                for name in ("timeout", "review", "exhausted"):
+                    record = records[urls[name]]
+                    self.assertFalse(record["decoded_av_verified"])
+                    self.assertEqual(record["observations"][-1]["checked_at"], old)
+                    self.assertEqual(record["observations"][-1]["origin"], "deferred-archived-failure")
+                    self.assertEqual(record["recovery_attempts"], failures[name][1])
+
     def test_replayed_checkpoint_never_spends_an_unexecuted_recovery_attempt(self):
         for prior in range(4):
             with self.subTest(prior=prior):

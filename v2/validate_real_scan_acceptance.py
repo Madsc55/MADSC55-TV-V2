@@ -29,6 +29,9 @@ def validate_report(report):
         raise ScanIncomplete("Invalid scan report")
     if report.get("mock_data_used") is not False:
         raise ScanIncomplete("Real scan cannot claim mock or missing evidence")
+    deferred = report.get("deferred_archived_failures", 0)
+    if type(deferred) is not int or deferred != 0:
+        raise ScanIncomplete("Archived failures remain unchecked or their count is invalid")
     if report.get("full_discovery_acceptance") is not True:
         raise ScanIncomplete("Discovery is incomplete; scanned evidence preserved, full acceptance blocked")
     if report.get("configured_sources_complete") is not True:

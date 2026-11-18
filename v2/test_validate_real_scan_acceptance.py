@@ -31,6 +31,12 @@ def complete_report():
 
 
 class RealScanAcceptanceTests(unittest.TestCase):
+    def test_deferred_failures_prevent_acceptance_even_with_balanced_totals(self):
+        for count in (1, -1, False, "0", None):
+            with self.subTest(count=count), self.assertRaises(ScanIncomplete):
+                validate_report({**complete_report(), "deferred_archived_failures": count})
+        validate_report({**complete_report(), "deferred_archived_failures": 0})
+
     def test_complete_real_scan_is_not_final_device_approval(self):
         result = validate_report(complete_report())
         self.assertEqual(result["status"], "COMPLETE_REAL_SCAN_NOT_FINAL_DEVICE_ACCEPTANCE")

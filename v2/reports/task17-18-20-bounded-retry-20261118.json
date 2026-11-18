@@ -1,0 +1,382 @@
+{
+  "schema": 1,
+  "tasks": [
+    17,
+    18,
+    20
+  ],
+  "observed_commit": "a196801c0b1b8c1e1f317d1c7e45417c13284cfb",
+  "source_run_id": 43608247496,
+  "source_artifact_id": 14135417421,
+  "source_archive_sha256": "3442c6feb99772265a852d95232b97600702790aba8ae8db8bd715fa4f9a5da9",
+  "source_report_sha256": "d5f382fe8116f0cd0d11f171a016f834195becefb51270f3564f4d6257f5191f",
+  "historical_queue_rows": 20148,
+  "lookup_playlists": {
+    "MADSC55_TV_IBO_CALISANLAR_TEST.m3u8": {
+      "file_sha256": "313166c8bf1543cc981ff2de0345523d755d08386b838399a0712b7b1901c380",
+      "unique_queue_hashes_matched": 333
+    },
+    "YEDEKLER_PLAYLISTESI.m3u8": {
+      "file_sha256": "8075fdef649bf27429bd28c204a5b35ec3928ca3c9e33dcbc9324a2978bad7a4",
+      "unique_queue_hashes_matched": 3781
+    }
+  },
+  "distinct_matching_queue_hashes": 3781,
+  "matching_prior_actions": {
+    "CHECK_AV": 689,
+    "RETRY": 1339,
+    "REVIEW": 1753
+  },
+  "selection": "Exact pending URL hashes from the archived queue in the two current playlists. Public HTTPS under trt.com.tr, kanal7.com and cbsnews.com, excluding credentialed, query, quarantine and geo-blocked entries. Redirects and HLS media requests restricted to the same broadcaster domain. Single segment, no external FFmpeg protocols.",
+  "method": "First pass used a 12-second network budget per URL. Only its two timeouts were retried, with up to 12 seconds per network request. Unencrypted media segments stayed in memory. FFmpeg 7.1.5 decoded each track separately to framemd5 with a 17-second process timeout. Both positive frame sizes and both successful process exits were required.",
+  "first_attempt_utc": "2026-11-18T18:33:32+00:00",
+  "last_attempt_utc": "2026-11-18T18:35:26+00:00",
+  "unique_urls_attempted": 15,
+  "attempts_this_batch": 17,
+  "latest_outcomes": {
+    "AV_SAMPLE_VERIFIED": 1,
+    "RETRY_HTTP_503": 6,
+    "REVIEW_HTTP_404": 8
+  },
+  "device_tested": false,
+  "sealed_checkpoint_updated": false,
+  "observations": [
+    {
+      "url_sha256": "02b20d4d0d152b34c1308eac66c9485f693bbacc4a7b64a96db186fed16cc6eb",
+      "playlist_label": "CBS News New York (720p)",
+      "publisher_domain": "cbsnews.com",
+      "prior_action": "CHECK_AV",
+      "prior_attempts": 1,
+      "attempts": [
+        {
+          "started_at_utc": "2026-11-18T18:33:32+00:00",
+          "video_frame_decoded": false,
+          "audio_frame_decoded": false,
+          "phase": "manifest",
+          "manifest_http_status": 200,
+          "manifest_http_date": "Wed, 18 Nov 2026 18:33:39 GMT",
+          "outcome": "NETWORK_TIMEOUT",
+          "finished_at_utc": "2026-11-18T18:33:44+00:00"
+        },
+        {
+          "started_at_utc": "2026-11-18T18:35:14+00:00",
+          "video_frame_decoded": false,
+          "audio_frame_decoded": false,
+          "phase": "variant",
+          "manifest_http_status": 200,
+          "manifest_http_date": "Wed, 18 Nov 2026 18:35:20 GMT",
+          "outcome": "HTTP_ERROR",
+          "variant_http_status": 404,
+          "finished_at_utc": "2026-11-18T18:35:24+00:00"
+        }
+      ],
+      "latest_disposition": "REVIEW_HTTP_404",
+      "recovery_attempts_after_batch": 3
+    },
+    {
+      "url_sha256": "18dff9b329a7d4c45a9d3a554fe9a5fd03ee7e951a8e09dddaef6e48c8c142de",
+      "playlist_label": "TRT KURDÎ",
+      "publisher_domain": "trt.com.tr",
+      "prior_action": "CHECK_AV",
+      "prior_attempts": 1,
+      "attempts": [
+        {
+          "started_at_utc": "2026-11-18T18:33:32+00:00",
+          "video_frame_decoded": false,
+          "audio_frame_decoded": false,
+          "phase": "segment",
+          "manifest_http_status": 200,
+          "manifest_http_date": "Wed, 18 Nov 2026 18:33:39 GMT",
+          "outcome": "NETWORK_TIMEOUT",
+          "finished_at_utc": "2026-11-18T18:33:44+00:00"
+        },
+        {
+          "started_at_utc": "2026-11-18T18:35:14+00:00",
+          "video_frame_decoded": true,
+          "audio_frame_decoded": true,
+          "phase": "decode",
+          "manifest_http_status": 200,
+          "manifest_http_date": "Wed, 18 Nov 2026 18:35:20 GMT",
+          "segment_http_status": 200,
+          "segment_sha256": "3f092ba12584b6aed911b3ff53f1cf1c2ea3857413ecb496e2b52b78ddc385d5",
+          "segment_bytes": 4610700,
+          "manifest_program_time_hint": "2026-11-18T18:34:07.440Z",
+          "video_frame_md5": "b7e92e74692878765050bdd61b5d8579",
+          "audio_frame_md5": "4f8b61aefe70f029dbfaebe675b0e81a",
+          "outcome": "DECODED_AV_SAMPLE",
+          "finished_at_utc": "2026-11-18T18:35:26+00:00"
+        }
+      ],
+      "latest_disposition": "AV_SAMPLE_VERIFIED",
+      "recovery_attempts_after_batch": 0
+    },
+    {
+      "url_sha256": "3944de44bb67a5667facbe2e6b25e8d40b279a4b8f3d49fd7c80a568f8f79e9d",
+      "playlist_label": "KANAL 7 AVRUPA GLOBAL ADAY",
+      "publisher_domain": "kanal7.com",
+      "prior_action": "RETRY",
+      "prior_attempts": 0,
+      "attempts": [
+        {
+          "started_at_utc": "2026-11-18T18:33:32+00:00",
+          "video_frame_decoded": false,
+          "audio_frame_decoded": false,
+          "phase": "manifest",
+          "outcome": "HTTP_ERROR",
+          "manifest_http_status": 503,
+          "finished_at_utc": "2026-11-18T18:33:45+00:00"
+        }
+      ],
+      "latest_disposition": "RETRY_HTTP_503",
+      "recovery_attempts_after_batch": 1
+    },
+    {
+      "url_sha256": "39895853360fff0b89fd9bd50336b5cd34823fcb1323a0b35157a5207cdb8f12",
+      "playlist_label": "CBS News Minnesota (720p)",
+      "publisher_domain": "cbsnews.com",
+      "prior_action": "CHECK_AV",
+      "prior_attempts": 1,
+      "attempts": [
+        {
+          "started_at_utc": "2026-11-18T18:33:44+00:00",
+          "video_frame_decoded": false,
+          "audio_frame_decoded": false,
+          "phase": "manifest",
+          "manifest_http_status": 404,
+          "manifest_http_date": "Wed, 18 Nov 2026 18:33:49 GMT",
+          "outcome": "HTTP_ERROR",
+          "finished_at_utc": "2026-11-18T18:33:55+00:00"
+        }
+      ],
+      "latest_disposition": "REVIEW_HTTP_404",
+      "recovery_attempts_after_batch": 2
+    },
+    {
+      "url_sha256": "42e4f4de81592b388bf941523a279b53eae1e8ba6ebea32b398e237c95a10bd5",
+      "playlist_label": "TRT AVAZ",
+      "publisher_domain": "trt.com.tr",
+      "prior_action": "RETRY",
+      "prior_attempts": 0,
+      "attempts": [
+        {
+          "started_at_utc": "2026-11-18T18:33:44+00:00",
+          "video_frame_decoded": false,
+          "audio_frame_decoded": false,
+          "phase": "manifest",
+          "outcome": "HTTP_ERROR",
+          "manifest_http_status": 503,
+          "finished_at_utc": "2026-11-18T18:33:50+00:00"
+        }
+      ],
+      "latest_disposition": "RETRY_HTTP_503",
+      "recovery_attempts_after_batch": 1
+    },
+    {
+      "url_sha256": "74296d67886c459ea92c05f1133c97314651c463f186b50f10cc95962c241da6",
+      "playlist_label": "CBS News Pittsburgh (720p)",
+      "publisher_domain": "cbsnews.com",
+      "prior_action": "CHECK_AV",
+      "prior_attempts": 1,
+      "attempts": [
+        {
+          "started_at_utc": "2026-11-18T18:33:45+00:00",
+          "video_frame_decoded": false,
+          "audio_frame_decoded": false,
+          "phase": "manifest",
+          "manifest_http_status": 404,
+          "manifest_http_date": "Wed, 18 Nov 2026 18:33:50 GMT",
+          "outcome": "HTTP_ERROR",
+          "finished_at_utc": "2026-11-18T18:33:55+00:00"
+        }
+      ],
+      "latest_disposition": "REVIEW_HTTP_404",
+      "recovery_attempts_after_batch": 2
+    },
+    {
+      "url_sha256": "7cd738376c9bea8502dd0dd03dfaba21f198cac32159646e69297d07cbe5f2a2",
+      "playlist_label": "CBS News Colorado (720p)",
+      "publisher_domain": "cbsnews.com",
+      "prior_action": "CHECK_AV",
+      "prior_attempts": 1,
+      "attempts": [
+        {
+          "started_at_utc": "2026-11-18T18:33:50+00:00",
+          "video_frame_decoded": false,
+          "audio_frame_decoded": false,
+          "phase": "manifest",
+          "manifest_http_status": 404,
+          "manifest_http_date": "Wed, 18 Nov 2026 18:33:55 GMT",
+          "outcome": "HTTP_ERROR",
+          "finished_at_utc": "2026-11-18T18:34:00+00:00"
+        }
+      ],
+      "latest_disposition": "REVIEW_HTTP_404",
+      "recovery_attempts_after_batch": 2
+    },
+    {
+      "url_sha256": "a79b7699dea4f4b8c93e21dc21959a59436237aeb86533a84eb141224518939c",
+      "playlist_label": "CBS News Chicago (720p)",
+      "publisher_domain": "cbsnews.com",
+      "prior_action": "CHECK_AV",
+      "prior_attempts": 1,
+      "attempts": [
+        {
+          "started_at_utc": "2026-11-18T18:33:55+00:00",
+          "video_frame_decoded": false,
+          "audio_frame_decoded": false,
+          "phase": "manifest",
+          "manifest_http_status": 404,
+          "manifest_http_date": "Wed, 18 Nov 2026 18:34:00 GMT",
+          "outcome": "HTTP_ERROR",
+          "finished_at_utc": "2026-11-18T18:34:05+00:00"
+        }
+      ],
+      "latest_disposition": "REVIEW_HTTP_404",
+      "recovery_attempts_after_batch": 2
+    },
+    {
+      "url_sha256": "a9e39f09407870be6f0fb49ac326e9bcaf29fd61cf0196d6822e05ac43ff4ef4",
+      "playlist_label": "CBS News Los Angeles (720p)",
+      "publisher_domain": "cbsnews.com",
+      "prior_action": "CHECK_AV",
+      "prior_attempts": 1,
+      "attempts": [
+        {
+          "started_at_utc": "2026-11-18T18:33:55+00:00",
+          "video_frame_decoded": false,
+          "audio_frame_decoded": false,
+          "phase": "manifest",
+          "manifest_http_status": 404,
+          "manifest_http_date": "Wed, 18 Nov 2026 18:34:01 GMT",
+          "outcome": "HTTP_ERROR",
+          "finished_at_utc": "2026-11-18T18:34:05+00:00"
+        }
+      ],
+      "latest_disposition": "REVIEW_HTTP_404",
+      "recovery_attempts_after_batch": 2
+    },
+    {
+      "url_sha256": "b07bf40995cc802b5602f534c337a8c90422899ac791510af95eec15a30e7bab",
+      "playlist_label": "CBS News Detroit (720p)",
+      "publisher_domain": "cbsnews.com",
+      "prior_action": "CHECK_AV",
+      "prior_attempts": 1,
+      "attempts": [
+        {
+          "started_at_utc": "2026-11-18T18:34:00+00:00",
+          "video_frame_decoded": false,
+          "audio_frame_decoded": false,
+          "phase": "manifest",
+          "manifest_http_status": 404,
+          "manifest_http_date": "Wed, 18 Nov 2026 18:34:05 GMT",
+          "outcome": "HTTP_ERROR",
+          "finished_at_utc": "2026-11-18T18:34:10+00:00"
+        }
+      ],
+      "latest_disposition": "REVIEW_HTTP_404",
+      "recovery_attempts_after_batch": 2
+    },
+    {
+      "url_sha256": "b094be93f98a22c1fc32260c4ebaebf56781e8259f558ccbcbecee655cc43eef",
+      "playlist_label": "TRT BELGESEL",
+      "publisher_domain": "trt.com.tr",
+      "prior_action": "RETRY",
+      "prior_attempts": 0,
+      "attempts": [
+        {
+          "started_at_utc": "2026-11-18T18:34:05+00:00",
+          "video_frame_decoded": false,
+          "audio_frame_decoded": false,
+          "phase": "manifest",
+          "manifest_http_status": 503,
+          "manifest_http_date": "Wed, 18 Nov 2026 18:34:10 GMT",
+          "outcome": "HTTP_ERROR",
+          "finished_at_utc": "2026-11-18T18:34:14+00:00"
+        }
+      ],
+      "latest_disposition": "RETRY_HTTP_503",
+      "recovery_attempts_after_batch": 1
+    },
+    {
+      "url_sha256": "c0272766fa3cca10c6fcae213f8298328a57551b0d85cf8429c53eddce199ee0",
+      "playlist_label": "TRT TÜRK",
+      "publisher_domain": "trt.com.tr",
+      "prior_action": "RETRY",
+      "prior_attempts": 0,
+      "attempts": [
+        {
+          "started_at_utc": "2026-11-18T18:34:05+00:00",
+          "video_frame_decoded": false,
+          "audio_frame_decoded": false,
+          "phase": "manifest",
+          "outcome": "HTTP_ERROR",
+          "manifest_http_status": 503,
+          "finished_at_utc": "2026-11-18T18:34:12+00:00"
+        }
+      ],
+      "latest_disposition": "RETRY_HTTP_503",
+      "recovery_attempts_after_batch": 1
+    },
+    {
+      "url_sha256": "cdaaa1cc524d174897d60bba195aaafd6bd25ee686448ddfebcf3d33c8bfa333",
+      "playlist_label": "Kanal 7",
+      "publisher_domain": "kanal7.com",
+      "prior_action": "RETRY",
+      "prior_attempts": 0,
+      "attempts": [
+        {
+          "started_at_utc": "2026-11-18T18:34:10+00:00",
+          "video_frame_decoded": false,
+          "audio_frame_decoded": false,
+          "phase": "manifest",
+          "outcome": "HTTP_ERROR",
+          "manifest_http_status": 503,
+          "finished_at_utc": "2026-11-18T18:34:20+00:00"
+        }
+      ],
+      "latest_disposition": "RETRY_HTTP_503",
+      "recovery_attempts_after_batch": 1
+    },
+    {
+      "url_sha256": "d3f09c407d8db0b1c580e5500cfc908a7d3f91ab48b6734e5c5a102014694134",
+      "playlist_label": "CBS News Boston (720p)",
+      "publisher_domain": "cbsnews.com",
+      "prior_action": "CHECK_AV",
+      "prior_attempts": 0,
+      "attempts": [
+        {
+          "started_at_utc": "2026-11-18T18:34:12+00:00",
+          "video_frame_decoded": false,
+          "audio_frame_decoded": false,
+          "phase": "manifest",
+          "manifest_http_status": 404,
+          "manifest_http_date": "Wed, 18 Nov 2026 18:34:16 GMT",
+          "outcome": "HTTP_ERROR",
+          "finished_at_utc": "2026-11-18T18:34:22+00:00"
+        }
+      ],
+      "latest_disposition": "REVIEW_HTTP_404",
+      "recovery_attempts_after_batch": 1
+    },
+    {
+      "url_sha256": "f9f0966eb4399f138ab9a07ea3ae70c37f24f36771d726a123d8c84cd688c1f0",
+      "playlist_label": "TRT KURDİ",
+      "publisher_domain": "trt.com.tr",
+      "prior_action": "RETRY",
+      "prior_attempts": 0,
+      "attempts": [
+        {
+          "started_at_utc": "2026-11-18T18:34:14+00:00",
+          "video_frame_decoded": false,
+          "audio_frame_decoded": false,
+          "phase": "manifest",
+          "outcome": "HTTP_ERROR",
+          "manifest_http_status": 503,
+          "finished_at_utc": "2026-11-18T18:34:19+00:00"
+        }
+      ],
+      "latest_disposition": "RETRY_HTTP_503",
+      "recovery_attempts_after_batch": 1
+    }
+  ]
+}
