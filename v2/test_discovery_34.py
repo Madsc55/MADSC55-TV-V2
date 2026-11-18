@@ -147,6 +147,28 @@ class Discovery34Tests(unittest.TestCase):
         self.assertEqual(sum(row["error"] == "provider_rate_limit_skipped" for row in report["errors"]), len(QUERIES) - 1)
         self.assertEqual(report["av_verified"], 0)
 
+    def test_resume_rejects_unknown_failure_queries_and_duplicate_completions(self):
+        import json
+        import tempfile
+        from pathlib import Path
+        from discovery_34 import QUERIES, REPOSITORY_SOURCES, load_resume
+        plan = {source: list(QUERIES) for source in REPOSITORY_SOURCES}
+        base = {"mode": "network", "av_verified": 0, "candidates": [],
+                "errors": [], "query_plan": plan,
+                "completed_queries": {source: [] for source in plan}}
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "resume.json"
+            bad_query = json.loads(json.dumps(base))
+            bad_query["errors"] = [{"source": "github", "query": "not-in-plan", "error": "HTTPError"}]
+            path.write_text(json.dumps(bad_query))
+            with self.assertRaisesRegex(ValueError, "outside discovery plan"):
+                load_resume(path, plan)
+            duplicates = json.loads(json.dumps(base))
+            duplicates["completed_queries"]["github"] = [QUERIES[0], QUERIES[0]]
+            path.write_text(json.dumps(duplicates))
+            with self.assertRaisesRegex(ValueError, "Invalid completed-query"):
+                load_resume(path, plan)
+
     def test_youtube(self):
         items = curated_candidates("youtube", [{"video_id": "AbCdEf12345"}])
         self.assertEqual(items[0]["source_id"], "youtube:AbCdEf12345")
