@@ -43,7 +43,7 @@ def capture(url, destination, *, seconds=4, timeout=17, runner=subprocess.run, w
     cmd = [executable, "-nostdin", "-hide_banner", "-loglevel", "error",
            "-rw_timeout", str(timeout * 1000000), "-i", url, "-t", str(seconds),
            "-map", "0:v:0?", "-map", "0:a:0?", "-c:v", "mpeg4", "-q:v", "12",
-           "-c:a", "aac", "-b:a", "48k", "-y", str(dest)]
+           "-c:a", "aac", "-b:a", "48k", "-n", str(dest)]
     try:
         result = runner(cmd, capture_output=True, timeout=timeout, check=False)
         size = dest.stat().st_size if dest.is_file() else 0
