@@ -61,7 +61,7 @@ class PreScanGateTests(unittest.TestCase):
         from pathlib import Path
         with tempfile.TemporaryDirectory() as tmp:
             output = str(Path(tmp) / "offline.json")
-            with patch("sys.argv", ["discovery_34.py", "--output", output]), \\
+            with patch("sys.argv", ["discovery_34.py", "--output", output]), \
                  patch("discovery_34.fetch_with_retry") as fetch:
                 discovery_34.main()
                 fetch.assert_not_called()
