@@ -2,7 +2,7 @@
   "schema": 1,
   "kind": "V2_TASK_15_HISTORICAL_URL_SHA256_RECOVERY",
   "checked_on": "2026-11-18",
-  "repository_commit_at_check": "272084591df556c115eed273cecfa880760f2fcf",
+  "repository_commit_at_check": "4cd14c305b1933ee4bacb220a0fc139af540b1d2",
   "hash_algorithm": "sha256 over the UTF-8 stream address without surrounding whitespace",
   "historical_aggregate_artifact_ids": [
     12844533683,
@@ -11,8 +11,8 @@
   "worldwide_crosswalk_artifact_id": 13524765368,
   "historical_hashes": 4955,
   "prior_worldwide_exact_matches": 4949,
-  "additional_exact_matches": 4,
-  "unmatched_after_audit": 2,
+  "additional_exact_matches": 6,
+  "unmatched_after_audit": 0,
   "current_stream_playback_measured": false,
   "task_status": "in_progress",
   "records": [
@@ -20,7 +20,38 @@
       "name": "Xinjiang TV 3",
       "historical_source_id": "dearbulut-online",
       "url_sha256": "21f7e2f5adbafa79b67f957188aa6a9169e816a82c2025fdca9f1ca19d6fefc3",
-      "exact_match_sources": []
+      "exact_match_sources": [
+        {
+          "kind": "catalog_snapshot",
+          "source": "https://raw.githubusercontent.com/iptv-org/api/f8d596e4c41cb5c4d81707f6d27c4b6163c202cb/streams.json",
+          "utf8_feed_sha256": "dc6af40ab656f87d864fb7527dadaa2eda2455f9c58fd82eef0afcf34057461c",
+          "channel_id_in_source": "XinjiangTV3.cn"
+        },
+        {
+          "kind": "catalog_snapshot",
+          "source": "https://raw.githubusercontent.com/iptv-org/api/9de8ebcbde3e73f9cbd2e28259e003b91070c450/streams.json",
+          "utf8_feed_sha256": "b93be5ec6bfe02c780a7cdb0d608e6166f1fd0dfe90be0153c84a8dd67acd6be",
+          "channel_id_in_source": "XinjiangTV3.cn"
+        },
+        {
+          "kind": "country_playlist",
+          "source": "https://raw.githubusercontent.com/iptv-org/iptv/81c6cc4c31dfc913c1a2d47fb7da2aceb147e8de/streams/cn.m3u",
+          "utf8_feed_sha256": "d22b25771b6426816364f6fb2a9523e06d8d301d33e0b77a0368fbb1a0496d8c",
+          "channel_id_in_source": "XinjiangTV3.cn@SD"
+        },
+        {
+          "kind": "country_playlist",
+          "source": "https://raw.githubusercontent.com/iptv-org/iptv/aa593ec1416df8e24b0cb4d88dc7940eafcf234e/streams/cn.m3u",
+          "utf8_feed_sha256": "d22b25771b6426816364f6fb2a9523e06d8d301d33e0b77a0368fbb1a0496d8c",
+          "channel_id_in_source": "XinjiangTV3.cn@SD"
+        }
+      ],
+      "publisher_evidence": {
+        "license_reference": "https://gdj.xinjiang.gov.cn/xjgdj/gkxzxk/202306/7ccf18130a3543bfa72447c6baca764a.shtml",
+        "schedule_reference": "https://www.xjpcsc.gov.cn/article/ca79eb48b4f745d88d378380817b9266",
+        "observation": "The regional regulator identifies the broadcaster’s licensed site. A February 2026 schedule credited to the broadcaster names XJTV-3. Neither reference identifies the historical numeric stream address.",
+        "exact_address_verified_by_publisher": false
+      }
     },
     {
       "name": "HTV Sports (1080i)",
@@ -32,7 +63,12 @@
           "source": "https://raw.githubusercontent.com/iptv-org/iptv/d3ce1f14b78328402fcccef539febc7ee4ec0104/index.m3u",
           "utf8_feed_sha256": "f67d60e9aa5cc442095672fc13dc9df23c169a9f79e57cdcc61d1061cf083c5c"
         }
-      ]
+      ],
+      "publisher_evidence": {
+        "channel_reference": "https://htvc.vn/nhom-kenh-dac-sac/htv-the-thao",
+        "observation": "The HTV cable service lists the sports channel. Historical stream host attribution remains open.",
+        "exact_address_verified_by_publisher": false
+      }
     },
     {
       "name": "Arica TV",
@@ -70,7 +106,38 @@
       "name": "American Ninja Warrior (1080p)",
       "historical_source_id": "dearbulut-online",
       "url_sha256": "5f50e0bc25685e0a619e238d25ee2bec533791e782ae3d32881e3d1384337105",
-      "exact_match_sources": []
+      "exact_match_sources": [
+        {
+          "kind": "catalog_snapshot",
+          "source": "https://raw.githubusercontent.com/iptv-org/api/f8d596e4c41cb5c4d81707f6d27c4b6163c202cb/streams.json",
+          "utf8_feed_sha256": "dc6af40ab656f87d864fb7527dadaa2eda2455f9c58fd82eef0afcf34057461c",
+          "channel_id_in_source": "AmericanNinjaWarrior.us"
+        },
+        {
+          "kind": "catalog_snapshot",
+          "source": "https://raw.githubusercontent.com/iptv-org/api/9de8ebcbde3e73f9cbd2e28259e003b91070c450/streams.json",
+          "utf8_feed_sha256": "b93be5ec6bfe02c780a7cdb0d608e6166f1fd0dfe90be0153c84a8dd67acd6be",
+          "channel_id_in_source": "AmericanNinjaWarrior.us"
+        },
+        {
+          "kind": "country_playlist",
+          "source": "https://raw.githubusercontent.com/iptv-org/iptv/81c6cc4c31dfc913c1a2d47fb7da2aceb147e8de/streams/us.m3u",
+          "utf8_feed_sha256": "8de81578c993b4fed87e4de0f46b1533675b4c17b671a1c2694d47d42052ffd0",
+          "channel_id_in_source": "AmericanNinjaWarrior.us@SD"
+        },
+        {
+          "kind": "country_playlist",
+          "source": "https://raw.githubusercontent.com/iptv-org/iptv/aa593ec1416df8e24b0cb4d88dc7940eafcf234e/streams/us.m3u",
+          "utf8_feed_sha256": "8a83b5184fbbb5964700e9b080ee0d7419170e8565e1a8a6978231f4d1427f2a",
+          "channel_id_in_source": "AmericanNinjaWarrior.us@SD"
+        }
+      ],
+      "publisher_evidence": {
+        "program_reference": "https://www.nbc.com/american-ninja-warrior",
+        "distribution_reference": "https://www.samsungtvplus.com/assets/STVP_Channel-List.pdf",
+        "observation": "NBC lists the programme. The September 2026 Samsung US channel lineup lists the linear channel at 2718. The historical CDN address has no direct publisher attribution in these references.",
+        "exact_address_verified_by_publisher": false
+      }
     },
     {
       "name": "Tooncast (1080p)",
@@ -97,7 +164,12 @@
           "source": "https://raw.githubusercontent.com/iptv-org/iptv/d3ce1f14b78328402fcccef539febc7ee4ec0104/index.m3u",
           "utf8_feed_sha256": "f67d60e9aa5cc442095672fc13dc9df23c169a9f79e57cdcc61d1061cf083c5c"
         }
-      ]
+      ],
+      "publisher_evidence": {
+        "regulatory_reference": "https://www.gov.br/ancine/pt-br/oca/publicacoes/mercado-audiovisual-brasileiro/vod/panorama-vod-2025r.pdf",
+        "observation": "The Brazilian regulator’s 2025 report groups Tooncast with Warner channels. The report does not identify the historical stream endpoint.",
+        "exact_address_verified_by_publisher": false
+      }
     },
     {
       "name": "Bir TV",
@@ -109,7 +181,38 @@
           "source": "https://raw.githubusercontent.com/YosemiteSam6/turkiye-iptv-m3u-m3u8/d9434294ead2e0ef722abb780fb2302d24258513/kanallar.m3u",
           "utf8_feed_sha256": "51c6fb78c5425724c98de7982a4cc804fcf2b79fa2b2a83066ccc5efb9a69c05"
         }
-      ]
+      ],
+      "publisher_evidence": {
+        "official_live_page": "https://birtv.tv/canli-yayin",
+        "official_page_sha256": "715a7318b8ad92507e6d8aa3e0ddbfaeec9e8ae342a3d170fd480bc38f32f367",
+        "officially_embedded_player": "https://player.taksimbilisim.com/birtv",
+        "player_page_sha256": "d0a73aec4f2e13144d8e3e3367771ee28f80c02caed9a18dfbf1caa29bb450a2",
+        "published_hls_sha256": "0c7c350f9ef0db9b9e553826c03b50035c6ca8b783edb0f74c43360966f1cc2d",
+        "recorded_http_resource_sha256": "0c7c350f9ef0db9b9e553826c03b50035c6ca8b783edb0f74c43360966f1cc2d",
+        "http_resource_matches_publisher_player": true,
+        "exact_raw_url_sha256_matches_player": false,
+        "method": "The historical URL includes a fragment. Removing only the fragment produces the exact HLS address embedded by the broadcaster’s player. The original record retains its full URL hash.",
+        "uri_reference": "https://www.rfc-editor.org/rfc/rfc3986#section-3.5"
+      }
     }
-  ]
+  ],
+  "first_audit_commit": "272084591df556c115eed273cecfa880760f2fcf",
+  "verified_baseline": {
+    "url": "https://raw.githubusercontent.com/Madsc55/MADSC55-TV-V2/062cf6ae9783803bb45b06efd4e877bcb6333f8e/v2/history/stage3-4955-hash-only.jsonl",
+    "file_sha256": "ee00a844a028e3410715d411467a2d3306f5f5cc4565766140b6438e786cdd27",
+    "count": 4955,
+    "exact_unique_baseline_union": true,
+    "checked_set_sha256": "73c216aed696016e099fe7e5cfcba7f1c95485cb2b729ae31277fd57128e8d04"
+  },
+  "total_exact_hashes": 4955,
+  "catalog_crosscheck": {
+    "source": "https://raw.githubusercontent.com/iptv-org/api/f8d596e4c41cb5c4d81707f6d27c4b6163c202cb/",
+    "stream_file_sha256": "dc6af40ab656f87d864fb7527dadaa2eda2455f9c58fd82eef0afcf34057461c",
+    "channels_file_sha256": "8f1c9f889c474894e2c7c1e905ae412645ae0888121c0c1e77ee1b747995ef54",
+    "historical_ids": 4955,
+    "exact_url_hashes": 2013,
+    "one_listed_catalog_channel_id": 1825,
+    "multiple_catalog_ids": 0,
+    "method": "Exact UTF-8 URL hashes in the 28 October streams.json, joined by channel ID to channels.json from the same commit. Catalog IDs identify database entries. Independent publisher evidence is recorded separately on each reviewed row."
+  }
 }

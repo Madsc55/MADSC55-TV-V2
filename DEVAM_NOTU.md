@@ -1,3 +1,9 @@
+## 18 Kasım 2026 — #15 tarihsel adres eşleştirmesi tamamlandı
+
+- Özgün 4.955 satırlık dosyanın SHA-256 değeri doğrulandı. Önceki 4.949 eşleşme ve geri kazanılan altı benzersiz adres birlikte özgün kümenin tamamına eşit. Son iki kayıt, Xinjiang TV 3 ile American Ninja Warrior, hem 28–29 Ekim API dosyalarında hem de aynı günlere ait Çin ve ABD kanal listelerinde birebir bulundu. [Kaynak sürümleri ve özetler](v2/reports/task15-historical-url-hash-recovery-20261118.json).
+- Bir TV'nin kendi canlı yayın sayfasına gömdüğü oynatıcı, tarihsel kayıttaki HTTP kaynağına işaret ediyor. Tarihsel adresin sonundaki `#` bölümü özgün kayıtta korundu. Diğer beş kayıt için yayıncı, dağıtıcı veya düzenleyici kaynakların hangi bilgiyi doğruladığı rapora yazıldı. #15 kalan yayın adreslerinin yayıncıya aidiyeti için açık. [Görev defteri](v2/tasks/state.json).
+- [PR #420](https://github.com/Madsc55/MADSC55-TV-V2/pull/420), `cf166ee25a080e11d75d68799806af7b4461b271` ile birleşti. [PR güvenlik çalışması](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44372344270) ve [ana dal güvenlik çalışması](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44372697378) başarılı. 154 yerel test geçti. 15 adresin canlı sonuçları aşağıdaki ayrı kayıtta yer alıyor.
+
 ## 18 Kasım 2026 — #17, #18 ve #20 için sınırlı canlı tekrar testi
 
 - [PR #418](https://github.com/Madsc55/MADSC55-TV-V2/pull/418) ana dala `a196801c0b1b8c1e1f317d1c7e45417c13284cfb` ile alındı. [PR güvenlik çalışması](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44367475775) ve [birleştirme sonrası ana dal çalışması](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44370392930) başarılı.
