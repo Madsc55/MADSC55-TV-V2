@@ -3,7 +3,7 @@
 import copy
 import unittest
 
-from validate_real_scan_acceptance import ScanIncomplete, validate_report
+from validate_real_scan_acceptance import ScanIncomplete, require_complete_adapters, validate_report
 
 
 def complete_report():
@@ -106,6 +106,29 @@ class RealScanAcceptanceTests(unittest.TestCase):
         payload["av_verified"] = True
         with self.assertRaises(ScanIncomplete):
             validate_report(payload)
+
+    def test_adapter_evidence_is_required_even_for_a_complete_core_scan(self):
+        provider = {"status": "ok", "rate_limited": False, "errors": [],
+                    "queries_total": 12, "queries_checked": 12,
+                    "queries_failed": 0, "queries_skipped": 0}
+        reports = {
+            "repositories": {"mode": "network", "candidates": [], "errors": []},
+            "github_m3u": {"sources": [], "errors": []},
+            "gitlab": dict(provider),
+            "codeberg": dict(provider),
+            "official": {"scope": "WORLDWIDE", "channels": [{"name": "Example"}]},
+            "youtube": {"metadata_verification_complete": True, "errors": [],
+                        "videos_checked": 3, "live_verified": 1},
+        }
+        scan = {**complete_report(), "resolved_direct_candidate_count": 1}
+        require_complete_adapters(scan, reports)
+        reports["codeberg"].update(status="error", rate_limited=True,
+                                   queries_checked=1, queries_failed=1, queries_skipped=11)
+        reports["youtube"].update(metadata_verification_complete=False, live_verified=0)
+        scan["resolved_direct_candidate_count"] = 0
+        validate_report(scan)
+        with self.assertRaisesRegex(ScanIncomplete, "codeberg, YouTube .*direct streams"):
+            require_complete_adapters(scan, reports)
 
 
 if __name__ == "__main__":

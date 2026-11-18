@@ -427,6 +427,7 @@ class ScannerOfflineTests(unittest.TestCase):
                 "--report", str(report), "--inventory", str(inventory),
             ]
             with (patch.object(scanner, "ROOT", root),
+                  patch("prescan_readiness_gate.inspect", return_value={"ready": True}),
                   patch.object(scanner, "parse_m3u", return_value=iter(historic)),
                   patch.object(scanner, "fetch", side_effect=ValueError("Not M3U")) as fetch,
                   patch.object(scanner, "check_hls") as av_probe,
@@ -473,6 +474,7 @@ class ScannerOfflineTests(unittest.TestCase):
                 "--inventory", str(root / "ibo-candidate-inventory.jsonl"),
             ]
             with (patch.object(scanner, "ROOT", root),
+                  patch("prescan_readiness_gate.inspect", return_value={"ready": True}),
                   patch.object(scanner, "parse_m3u", return_value=iter(historical)),
                   patch.object(scanner, "fetch", side_effect=ValueError("Not an M3U")) as fetch,
                   patch.object(scanner, "check_hls") as av_probe,
@@ -490,6 +492,14 @@ class ScannerOfflineTests(unittest.TestCase):
             self.assertEqual(result["av_verified"], 0)
             self.assertTrue(result["no_new_av_probes_because_source_incomplete"])
             self.assertFalse((root / "ibo-candidate-inventory.jsonl.enc").exists())
+
+    def test_worldwide_scan_checks_readiness_before_loading_or_fetching_sources(self):
+        with (patch("sys.argv", ["real_ibo_scan.py", "--worldwide"]),
+              patch("prescan_readiness_gate.inspect", return_value={"ready": False}),
+              patch.object(scanner, "fetch") as fetch):
+            with self.assertRaisesRegex(SystemExit, "before any new worldwide scan"):
+                scanner.main()
+            fetch.assert_not_called()
 
     def test_main_dynamic_report_validation_runs_before_any_network(self):
         """Exercise the production CLI intake, not just its helper, offline."""

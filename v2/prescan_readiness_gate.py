@@ -24,11 +24,12 @@ def inspect(state):
     return {"ready": not missing and not pending, "missing": missing, "pending": pending,
             "state_generated_at": state.get("generated_at")}
 
-def main():
+def require_readiness():
     report = inspect(json.loads(STATE.read_text(encoding="utf-8")))
     print(json.dumps(report, ensure_ascii=False, indent=2))
     if not report["ready"]:
         raise SystemExit("BLOCKED: complete and independently verify open tasks before any new worldwide scan")
 
+
 if __name__ == "__main__":
-    main()
+    require_readiness()

@@ -12,6 +12,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Verify worldwide scan prerequisites
+        run: python v2/prescan_readiness_gate.py
       - name: Discover without changing playlist
         run: python v2/discover.py
       - name: Upload candidate report

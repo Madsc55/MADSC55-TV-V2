@@ -8,7 +8,21 @@ concurrency:
   group: v2-real-network-scan
   cancel-in-progress: false
 jobs:
+  readiness:
+    name: Verify worldwide scan prerequisites
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python v2/prescan_readiness_gate.py
+
   scan:
+    needs: readiness
     runs-on: ubuntu-latest
     timeout-minutes: 340
     env:
@@ -108,20 +122,12 @@ jobs:
             echo "::warning::No current EPG candidate; #19 EPG acceptance remains open"
           fi
           "${CMD[@]}"
-      - name: Export 1000 and 2000 real verified new URL batches only when discovery is complete
-        run: |
-          if python -c 'import json,sys; d=json.load(open("v2/reports/ibo-real-scan-report.json", encoding="utf-8")); sys.exit(0 if d.get("full_discovery_acceptance") is True else 1)'; then
-            python v2/export_ibo_batches.py v2/reports/ibo-candidate-inventory.jsonl.enc v2/reports --live MADSC55_TV_IBO_CALISANLAR_TEST.m3u8
-          else
-            echo "::warning::Optional discovered feeds incomplete; accepted 1000/2000 packages intentionally withheld"
-          fi
       - name: Prepare encrypted 500-channel review backups (never publish to main IBO)
         run: python v2/create_ibo_500_review_backup.py
-      - name: Require complete discovered-source evidence before green workflow status
-        run: |
-          # Partial discovery intentionally remains red even if the scanner
-          # preserved its AES-authenticated observations successfully.
-          python v2/validate_real_scan_acceptance.py --report v2/reports/ibo-real-scan-report.json
+      - name: Require complete scan and worldwide adapter evidence
+        run: python v2/validate_real_scan_acceptance.py --report v2/reports/ibo-real-scan-report.json --discovery-reports-dir v2/reports
+      - name: Export 1000 and 2000 real verified new URL batches
+        run: python v2/export_ibo_batches.py v2/reports/ibo-candidate-inventory.jsonl.enc v2/reports --live MADSC55_TV_IBO_CALISANLAR_TEST.m3u8
       - name: Audit remaining A-stage acceptance blockers separately from green scan
         if: always()
         run: |
@@ -169,6 +175,7 @@ jobs:
           retention-days: 30
 
   legacy-verify:
+    needs: readiness
     name: Legacy AV batch ${{ matrix.batch }}
     runs-on: ubuntu-latest
     timeout-minutes: 180

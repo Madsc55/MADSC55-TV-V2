@@ -515,6 +515,9 @@ def main():
         else:
             print(rendered, end='')
         return
+    if args.worldwide:
+        from prescan_readiness_gate import require_readiness
+        require_readiness()
     # Live mode retains all existing protected-playlist and archive safety gates.
     from secure_archive import backup as encrypt_inventory, decrypt as decrypt_inventory
     if len(os.environ.get('V2_ARCHIVE_PASSPHRASE', '')) < 16:
