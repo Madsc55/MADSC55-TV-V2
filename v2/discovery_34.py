@@ -159,6 +159,12 @@ def main():
     args = parser.parse_args()
     candidates, errors = [], []
     if args.network:
+        # Fail closed before the first network request; offline mode stays available.
+        from prescan_readiness_gate import inspect, STATE
+        readiness = inspect(json.loads(STATE.read_text(encoding="utf-8")))
+        if not readiness["ready"]:
+            print(json.dumps({"prescan_readiness": readiness}, ensure_ascii=False))
+            raise SystemExit("BLOCKED: discovery prerequisites incomplete")
         for source in ("github", "gitlab", "codeberg"):
             for index, query in enumerate(QUERIES):
                 try:
