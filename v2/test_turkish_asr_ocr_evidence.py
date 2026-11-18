@@ -12,6 +12,9 @@ class ASROCREvidenceTests(unittest.TestCase):
         self.assertFalse(r["turkish_spoken_hint"])
         self.assertFalse(r["turkish_subtitle_hint"])
         self.assertTrue(r["ocr_text_is_not_subtitle_or_speech"])
+        self.assertEqual(r["observation_provenance"], "ocr")
+        self.assertFalse(r["observed_language_is_verified"])
+        self.assertFalse(r["playlist_modified"])
     def test_unknown_source_rejected(self):
         with self.assertRaises(ValueError):
             evaluate_observation("TV", {"source": "title", "language": "tr", "text": "TV"})
