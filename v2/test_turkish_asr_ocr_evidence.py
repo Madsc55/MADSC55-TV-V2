@@ -15,6 +15,18 @@ class ASROCREvidenceTests(unittest.TestCase):
         self.assertEqual(r["observation_provenance"], "ocr")
         self.assertFalse(r["observed_language_is_verified"])
         self.assertFalse(r["playlist_modified"])
+    def test_language_tag_injection_rejected(self):
+        for tag in ("tr\\napproved", "tr;approved", "tr ", "tr--TR", "1", "x"*17):
+            with self.subTest(tag=tag), self.assertRaises(ValueError):
+                evaluate_observation("TV", {"source": "asr", "language": tag, "text": "Merhaba"})
+    def test_no_transcript_text_in_output(self):
+        r = evaluate_observation("TV", {"source": "asr", "language": "tr", "text": "PRIVATE_TEST_PHRASE"})
+        self.assertNotIn("PRIVATE_TEST_PHRASE", str(r))
+        self.assertFalse(r["observation_text_retained"])
+    def test_other_turkic_language_kept_separate(self):
+        r = evaluate_observation("TV", {"source": "asr", "language": "az", "text": "Salam"})
+        self.assertEqual(r["category"], "OTHER_TURKIC_SPOKEN_REVIEW")
+        self.assertFalse(r["review_approved"])
     def test_unknown_source_rejected(self):
         with self.assertRaises(ValueError):
             evaluate_observation("TV", {"source": "title", "language": "tr", "text": "TV"})
