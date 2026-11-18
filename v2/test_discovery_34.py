@@ -20,6 +20,7 @@ class Discovery34Tests(unittest.TestCase):
                  ("github", {}),
                  ("gitlab", {"message": "Too Many Requests"}),
                  ("codeberg", {"message": "rate limit"}),
+                 ("codeberg", {"ok": False, "data": []}),
                  ("codeberg", {}))
         for source, payload in cases:
             with self.subTest(source=source, payload=payload), self.assertRaises(ValueError):
@@ -129,7 +130,9 @@ class Discovery34Tests(unittest.TestCase):
         def fake_fetch(url):
             calls.append(url)
             if "api.github.com" in url:
-                raise urllib.error.HTTPError(url, 403, "Abuse detection mechanism triggered", {}, io.BytesIO())
+                raise urllib.error.HTTPError(
+                    url, 403, "Forbidden", {},
+                    io.BytesIO(b'{"message":"You have exceeded a secondary rate limit."}'))
             return [] if "gitlab.com" in url else {"data": []}
         with tempfile.TemporaryDirectory() as directory:
             output = Path(directory) / "candidates.json"

@@ -10,6 +10,10 @@ import urllib.parse
 import urllib.error
 import urllib.request
 from pathlib import Path
+from discovery_provider_requests import (
+    MAX_ATTEMPTS, REQUEST_ERRORS, RETRYABLE_CONNECTION, http_error_details, provider_rate_limited,
+    retry_delay,
+)
 
 QUERIES = ("turkiye.m3u", "tr.m3u8", "turkish-iptv", "canli-tv", "yerel-tv", "iptv-turkiye")
 SOURCES = ("github", "gitlab", "codeberg", "official", "youtube", "m3u")
@@ -83,40 +87,38 @@ def fetch_with_retry(url, fetch=None, sleep=None):
     """Bounded transient retry for the actual candidate collection CLI."""
     fetch = fetch or fetch_json
     sleep = sleep or time.sleep
-    from discovery_34_live_contract import MAX_ATTEMPTS, RETRYABLE_HTTP, retry_delay
     for attempt in range(1, MAX_ATTEMPTS + 1):
         try:
             return fetch(url)
-        except urllib.error.HTTPError as exc:
-            if exc.code not in RETRYABLE_HTTP or attempt == MAX_ATTEMPTS:
+        except RETRYABLE_CONNECTION as exc:
+            delay = retry_delay(exc, attempt)
+            if delay is None or attempt == MAX_ATTEMPTS:
                 raise
-            sleep(retry_delay(exc, attempt))
-        except (urllib.error.URLError, TimeoutError, ConnectionResetError, ConnectionAbortedError):
-            if attempt == MAX_ATTEMPTS:
-                raise
-            sleep(attempt)
+            if isinstance(exc, urllib.error.HTTPError):
+                exc.close()
+            sleep(delay)
 
-def repository_candidates(source, payload):
+def repository_items(source, payload):
     if source == "github":
         if not isinstance(payload, dict) or not isinstance(payload.get("items"), list):
             raise ValueError("Invalid GitHub repository API response")
-        items = payload["items"]
-        url_key = "html_url"
-    elif source == "gitlab":
+        return payload["items"]
+    if source == "gitlab":
         if not isinstance(payload, list):
             raise ValueError("Invalid GitLab repository API response")
-        items = payload
-        url_key = "web_url"
-    elif source == "codeberg":
-        if not isinstance(payload, dict) or not isinstance(payload.get("data"), list):
+        return payload
+    if source == "codeberg":
+        if (not isinstance(payload, dict) or payload.get("ok", True) is not True
+                or not isinstance(payload.get("data"), list)):
             raise ValueError("Invalid Codeberg repository API response")
-        items = payload["data"]
-        url_key = "html_url"
-    else:
-        raise ValueError("Not a repository adapter")
+        return payload["data"]
+    raise ValueError("Not a repository adapter")
+
+
+def repository_candidates(source, payload):
+    items = repository_items(source, payload)
+    url_key = "web_url" if source == "gitlab" else "html_url"
     results = []
-    if not isinstance(items, list):
-        raise ValueError("Invalid repository response")
     for item in items:
         if not isinstance(item, dict):
             continue
@@ -126,6 +128,11 @@ def repository_candidates(source, payload):
         except (ValueError, TypeError, AttributeError):
             continue
     return results
+
+
+def incomplete_repository_response(source, payload):
+    return source == "github" and payload.get("incomplete_results", False) is not False
+
 
 def curated_candidates(source, records):
     """Official broadcaster URLs, YouTube watch IDs, and public M3U URLs.
@@ -168,23 +175,25 @@ def main():
         for source in ("github", "gitlab", "codeberg"):
             for index, query in enumerate(QUERIES):
                 try:
-                    candidates.extend(repository_candidates(source, fetch_with_retry(search_url(source, query))))
-                except (ValueError, OSError, KeyError, TypeError, json.JSONDecodeError) as exc:
+                    payload = fetch_with_retry(search_url(source, query))
+                    candidates.extend(repository_candidates(source, payload))
+                    if incomplete_repository_response(source, payload):
+                        errors.append({"source": source, "query": query, "error": "incomplete_repository_response"})
+                except REQUEST_ERRORS as exc:
                     error = {"source": source, "query": query, "error": type(exc).__name__}
+                    limited = False
                     if isinstance(exc, urllib.error.HTTPError):
-                        error["http_status"] = exc.code
+                        details = http_error_details(exc)
+                        error["http_status"] = details["http_status"]
+                        limited = provider_rate_limited(details)
                     errors.append(error)
                     # Provider-wide rate limits must not trigger five more API calls.
                     # Preserve skipped terms as incomplete rather than empty results.
-                    if isinstance(exc, urllib.error.HTTPError) and exc.code in (429, 403):
-                        headers = getattr(exc, "headers", None)
-                        remaining = headers.get("X-RateLimit-Remaining") if headers is not None else None
-                        limited = exc.code == 429 or remaining == "0" or any(phrase in str(exc.reason).casefold() for phrase in ("rate limit", "abuse detection", "too many requests"))
-                        if limited:
-                            errors.extend({"source": source, "query": term,
-                                           "error": "provider_rate_limit_skipped"}
-                                          for term in QUERIES[index + 1:])
-                            break
+                    if limited:
+                        errors.extend({"source": source, "query": term,
+                                       "error": "provider_rate_limit_skipped"}
+                                      for term in QUERIES[index + 1:])
+                        break
     unique = {item["source_id"]: item for item in candidates}
     output = Path(args.output)
     output.parent.mkdir(parents=True, exist_ok=True)

@@ -25,7 +25,8 @@ class LiveContractRetryTests(unittest.TestCase):
     def test_http_200_error_objects_fail_closed(self):
         for source, payload in (("github", {"message": "rate limited"}),
                                 ("gitlab", {"message": "forbidden"}),
-                                ("codeberg", {"message": "error"})):
+                                ("codeberg", {"message": "error"}),
+                                ("codeberg", {"ok": False, "data": []})):
             with self.subTest(source=source):
                 result = probe(source, fetch=lambda _, p=payload: p,
                                sleep=lambda _: self.fail("unexpected retry"))
@@ -234,16 +235,19 @@ class LiveContractRetryTests(unittest.TestCase):
         self.assertTrue(all(0 <= delay <= 35 for delay in sleeps))
         self.assertTrue(all(delay >= 30 for delay in sleeps))
 
-    def test_http_429_retry_after_is_capped(self):
+    def test_retry_after_beyond_budget_opens_circuit_without_early_retry(self):
         calls, sleeps = [], []
         def fetch(_url):
             calls.append(1)
             raise urllib.error.HTTPError("https://gitlab.com/api/v4/projects", 429,
                                          "rate limited", {"Retry-After": "9999"}, None)
-        result = probe("gitlab", fetch=fetch, sleep=sleeps.append)
-        self.assertEqual(result["reason"], "HTTP_429")
-        self.assertEqual(result["attempts"], 3)
-        self.assertEqual(sleeps, [120, 120])
+        result = probe_queries("gitlab", queries=("first", "second"), fetch=fetch, sleep=sleeps.append)
+        self.assertTrue(result["rate_limited"])
+        self.assertEqual(len(calls), 1)
+        self.assertEqual(sleeps, [])
+        self.assertEqual(result["query_results"][0]["reason"], "HTTP_429")
+        self.assertEqual(result["query_results"][0]["attempts"], 1)
+        self.assertEqual(result["queries_skipped"], 1)
 
     def test_query_matrix_opens_circuit_after_provider_429(self):
         calls, sleeps = [], []
@@ -291,7 +295,7 @@ class LiveContractRetryTests(unittest.TestCase):
         self.assertEqual(sleeps, [30, 60])
 
 
-    def test_http_date_retry_after_is_honored_and_capped(self):
+    def test_http_date_beyond_budget_leaves_query_incomplete(self):
         from datetime import datetime, timedelta, timezone
         from email.utils import format_datetime
         calls, sleeps = [], []
@@ -303,10 +307,10 @@ class LiveContractRetryTests(unittest.TestCase):
                                              "rate limited", {"Retry-After": future}, None)
             return {"data": []}
         result = probe("codeberg", fetch=fetch, sleep=sleeps.append)
-        self.assertEqual(result["status"], "ok")
-        self.assertEqual(result["attempts"], 2)
-        self.assertEqual(len(calls), 2)
-        self.assertEqual(sleeps, [120])
+        self.assertEqual(result["status"], "error")
+        self.assertEqual(result["attempts"], 1)
+        self.assertEqual(len(calls), 1)
+        self.assertEqual(sleeps, [])
 
     def test_past_http_date_retry_after_does_not_sleep(self):
         from datetime import datetime, timedelta, timezone
@@ -355,6 +359,30 @@ class LiveContractRetryTests(unittest.TestCase):
         self.assertEqual(result["queries_checked"], 1)
         self.assertEqual(result["queries_skipped"], 2)
         self.assertEqual(len(calls), 1)
+
+    def test_generic_403_checks_the_api_message_without_disclosing_it(self):
+        from io import BytesIO
+        calls = []
+        def fetch(url):
+            calls.append(url)
+            raise urllib.error.HTTPError(
+                url, 403, "Forbidden", {},
+                BytesIO(b'{"message":"You exceeded a secondary rate limit. Internal response detail."}'))
+        result = probe_queries("github", queries=("first", "second"), fetch=fetch,
+                               sleep=lambda _: self.fail("403 must not retry"))
+        self.assertTrue(result["rate_limited"])
+        self.assertEqual(len(calls), 1)
+        self.assertEqual(result["queries_skipped"], 1)
+        self.assertNotIn("Internal response detail", str(result))
+
+    def test_incomplete_github_search_retains_partial_count_and_fails(self):
+        result = probe("github", fetch=lambda _: {
+            "incomplete_results": True,
+            "items": [{"html_url": "https://github.com/example/channels"}],
+        })
+        self.assertEqual(result["status"], "error")
+        self.assertEqual(result["reason"], "incomplete_repository_response")
+        self.assertEqual(result["candidates"], 1)
 
     def test_github_fetch_uses_readonly_token_when_available(self):
         import os

@@ -14,6 +14,7 @@ class FederatedM3UDiscoveryTests(unittest.TestCase):
         cases = (("gitlab", {"message": "rate limit exceeded"}),
                  ("gitlab", None),
                  ("codeberg", {"message": "rate limit exceeded"}),
+                 ("codeberg", {"ok": False, "data": []}),
                  ("codeberg", {"data": {"message": "error"}}),
                  ("codeberg", []))
         for provider, payload in cases:
@@ -131,6 +132,46 @@ class FederatedM3UDiscoveryTests(unittest.TestCase):
         self.assertEqual(result["queries_checked"], 1)
         self.assertEqual(result["queries_skipped"], 1)
         self.assertEqual(len(calls), 1)
+
+    def test_circuit_does_not_read_a_project_discovered_before_throttling(self):
+        calls = []
+        def api(url):
+            calls.append(url)
+            if len(calls) == 1:
+                return {"ok": True, "data": [{"full_name": "team/channels"}]}
+            if len(calls) == 2:
+                raise urllib.error.HTTPError(url, 429, "Throttled", {"Retry-After": "600"}, None)
+            self.fail("throttled provider must not receive tree or search requests")
+        result = discover_provider("codeberg", fetch_json_fn=api,
+                                   fetch_text_fn=lambda *_: self.fail("must not read raw files"),
+                                   sleep_fn=lambda _: self.fail("must not retry before Retry-After"),
+                                   queries=("first", "second", "third"))
+        self.assertEqual(result["projects_discovered"], 1)
+        self.assertEqual(result["queries_skipped"], 1)
+        self.assertEqual(result["status"], "error")
+        self.assertTrue(result["rate_limited"])
+
+    def test_transient_tree_and_raw_failures_recover_in_budget(self):
+        tree_calls, raw_calls, sleeps = [], [], []
+        def api(url):
+            if "/api/v1/repos/search?" in url:
+                return {"ok": True, "data": [{"full_name": "team/channels"}]}
+            tree_calls.append(url)
+            if len(tree_calls) == 1:
+                raise urllib.error.URLError("temporary connection failure")
+            return {"tree": [{"type": "blob", "path": "tr.m3u8"}]}
+        def raw(url, _host):
+            raw_calls.append(url)
+            if len(raw_calls) == 1:
+                raise urllib.error.HTTPError(url, 503, "Unavailable", {}, None)
+            return PLAYLIST
+        result = discover_provider("codeberg", fetch_json_fn=api, fetch_text_fn=raw,
+                                   sleep_fn=sleeps.append, queries=("first",))
+        self.assertEqual(result["status"], "ok")
+        self.assertEqual(result["sources_found"], 1)
+        self.assertEqual(len(tree_calls), 2)
+        self.assertEqual(len(raw_calls), 2)
+        self.assertEqual(sleeps, [1, 1])
 
 if __name__ == "__main__":
     unittest.main()

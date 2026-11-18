@@ -13,42 +13,27 @@ import urllib.request
 from pathlib import Path
 
 from discover import ROOT, entries
-from discovery_34 import QUERIES, fetch_json, search_url, _NoRedirect
-from discovery_34_live_contract import provider_rate_limited, retry_delay
+from discovery_34 import QUERIES, fetch_json, fetch_with_retry, repository_items, search_url, _NoRedirect
+from discovery_provider_requests import REQUEST_ERRORS, http_error_details, provider_rate_limited
 
 MAX_PROJECTS = 60
 MAX_FILES = 160
 MAX_FILE_BYTES = 2_000_000
-MAX_ATTEMPTS = 3
 FEDERATED_QUERIES = tuple(dict.fromkeys(QUERIES + (
     "iptv", "m3u", "m3u8", "playlist", "live tv", "television",
 )))
 UA = "MADSC55-TV-V2-Discovery/1.0"
 
 
-def _request_json(url, provider, fetch_json_fn=fetch_json, sleep_fn=None):
-    import time
-    sleep_fn = sleep_fn or time.sleep
-    for attempt in range(1, MAX_ATTEMPTS + 1):
-        try:
-            return fetch_json_fn(url), None
-        except urllib.error.HTTPError as exc:
-            row = {
-                "http_status": exc.code,
-                "http_reason": str(getattr(exc, "reason", "")),
-                "rate_limit_remaining": (exc.headers.get("X-RateLimit-Remaining")
-                                         or exc.headers.get("x-ratelimit-remaining"))
-                                        if exc.headers else None,
-            }
-            if exc.code == 429 and attempt < MAX_ATTEMPTS:
-                sleep_fn(retry_delay(exc, attempt))
-                continue
-            if provider_rate_limited(row):
-                return None, "RATE_LIMITED"
-            return None, "HTTP_" + str(exc.code)
-        except (OSError, TimeoutError, ValueError, TypeError) as exc:
-            return None, type(exc).__name__
-    return None, "RETRY_EXHAUSTED"
+def _request_json(url, fetch_json_fn, sleep_fn):
+    try:
+        return fetch_with_retry(url, fetch=fetch_json_fn, sleep=sleep_fn), None
+    except urllib.error.HTTPError as exc:
+        if provider_rate_limited(http_error_details(exc)):
+            return None, "RATE_LIMITED"
+        return None, "HTTP_" + str(exc.code)
+    except REQUEST_ERRORS as exc:
+        return None, type(exc).__name__
 
 
 def _raw_fetch(url, expected_host):
@@ -63,19 +48,6 @@ def _raw_fetch(url, expected_host):
     if len(data) > MAX_FILE_BYTES:
         raise ValueError("Playlist file too large")
     return data.decode("utf-8-sig", errors="replace")
-
-
-def _project_items(provider, payload):
-    """Reject HTTP 200 API error objects instead of treating them as zero results."""
-    if provider == "gitlab":
-        if not isinstance(payload, list):
-            raise ValueError("Invalid GitLab project search response")
-        return payload
-    if provider == "codeberg":
-        if not isinstance(payload, dict) or not isinstance(payload.get("data"), list):
-            raise ValueError("Invalid Codeberg project search response")
-        return payload["data"]
-    raise ValueError("Unsupported provider")
 
 
 def _project_identity(provider, item):
@@ -146,7 +118,7 @@ def discover_provider(provider, fetch_json_fn=fetch_json, fetch_text_fn=_raw_fet
     projects, sources, errors, query_results = {}, [], [], []
     rate_limited = False
     for index, query in enumerate(queries):
-        payload, error = _request_json(search_url(provider, query), provider,
+        payload, error = _request_json(search_url(provider, query),
                                       fetch_json_fn=fetch_json_fn, sleep_fn=sleep_fn)
         if error:
             query_results.append({"query": query, "status": "error", "reason": error})
@@ -158,7 +130,7 @@ def discover_provider(provider, fetch_json_fn=fetch_json, fetch_text_fn=_raw_fet
                 break
             continue
         try:
-            rows = _project_items(provider, payload)
+            rows = repository_items(provider, payload)
         except (ValueError, TypeError):
             query_results.append({"query": query, "status": "error", "reason": "InvalidResponse"})
             continue
@@ -177,9 +149,10 @@ def discover_provider(provider, fetch_json_fn=fetch_json, fetch_text_fn=_raw_fet
             break
 
     for key, (namespace, branch) in list(sorted(projects.items(), key=lambda pair: pair[0].casefold()))[:MAX_PROJECTS]:
+        if rate_limited or len(sources) >= MAX_FILES:
+            break
         tree_payload, error = _request_json(_tree_url(provider, key, namespace, branch),
-                                            provider, fetch_json_fn=fetch_json_fn,
-                                            sleep_fn=sleep_fn)
+                                           fetch_json_fn=fetch_json_fn, sleep_fn=sleep_fn)
         if error:
             errors.append({"project": namespace, "error": error})
             if error == "RATE_LIMITED":
@@ -198,7 +171,8 @@ def discover_provider(provider, fetch_json_fn=fetch_json, fetch_text_fn=_raw_fet
             if raw in configured:
                 continue
             try:
-                content = fetch_text_fn(raw, provider + (".com" if provider == "gitlab" else ".org"))
+                host = "gitlab.com" if provider == "gitlab" else "codeberg.org"
+                content = fetch_with_retry(raw, fetch=lambda url: fetch_text_fn(url, host), sleep=sleep_fn)
                 sample = list(entries(content))
                 if not sample:
                     continue
@@ -214,21 +188,12 @@ def discover_provider(provider, fetch_json_fn=fetch_json, fetch_text_fn=_raw_fet
             except urllib.error.HTTPError as exc:
                 reason = "HTTP_" + str(exc.code)
                 errors.append({"project": namespace, "path": path, "error": reason})
-                if provider_rate_limited({
-                    "http_status": exc.code,
-                    "http_reason": str(getattr(exc, "reason", "")),
-                    "rate_limit_remaining": (exc.headers.get("X-RateLimit-Remaining")
-                                             or exc.headers.get("x-ratelimit-remaining"))
-                                            if exc.headers else None,
-                }):
+                if provider_rate_limited(http_error_details(exc)):
                     rate_limited = True
                     break
-            except (OSError, ValueError, TypeError) as exc:
+            except REQUEST_ERRORS as exc:
                 errors.append({"project": namespace, "path": path,
                                "error": type(exc).__name__})
-        if rate_limited or len(sources) >= MAX_FILES:
-            break
-
     checked = sum(row["status"] in ("ok", "error") for row in query_results)
     skipped = sum(row["status"] == "skipped" for row in query_results)
     failed = sum(row["status"] == "error" for row in query_results)
