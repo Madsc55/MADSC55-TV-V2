@@ -1,0 +1,58 @@
+name: V2 Existing Evidence Checkpoint Reconciliation (no discovery)
+on:
+  workflow_dispatch:
+    inputs:
+      apply:
+        description: "Write reconciled encrypted checkpoint artifact (never modify playlists)"
+        required: true
+        type: boolean
+        default: false
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: v2-existing-evidence-reconcile
+  cancel-in-progress: false
+jobs:
+  reconcile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      V2_ARCHIVE_PASSPHRASE: ${{ secrets.V2_ARCHIVE_PASSPHRASE }}
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install checkpoint crypto dependency
+        run: python -m pip install 'cryptography>=42,<47'
+      - name: Require secret and retrieve existing sealed checkpoint
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "$V2_ARCHIVE_PASSPHRASE" || { echo "::error::Missing checkpoint secret"; exit 1; }
+          mkdir -p /tmp/v2-existing-evidence
+          gh run download 43608247496 --repo "${{ github.repository }}" --name v2-real-scan-evidence --dir /tmp/v2-existing-evidence
+          test -f /tmp/v2-existing-evidence/ibo-scan-progress.enc || { echo "::error::Original authenticated checkpoint not present"; exit 1; }
+          test ! -L /tmp/v2-existing-evidence/ibo-scan-progress.enc
+          install -m 600 /tmp/v2-existing-evidence/ibo-scan-progress.enc /tmp/v2-existing-evidence/ibo-scan-progress.original.enc
+      - name: Reconcile only the 15 existing observations (dry-run or apply)
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ "${{ inputs.apply }}" = "true" ]; then
+            python v2/merge_bounded_retry_checkpoint.py --checkpoint /tmp/v2-existing-evidence/ibo-scan-progress.enc --report v2/reports/task17-18-20-bounded-retry-20261118.json --apply
+          else
+            python v2/merge_bounded_retry_checkpoint.py --checkpoint /tmp/v2-existing-evidence/ibo-scan-progress.enc --report v2/reports/task17-18-20-bounded-retry-20261118.json
+          fi
+      - name: Upload authenticated checkpoint only on explicit apply
+        if: ${{ success() && inputs.apply }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: v2-existing-evidence-reconciled-checkpoint
+          path: /tmp/v2-existing-evidence/ibo-scan-progress.enc
+          retention-days: 30
+          if-no-files-found: error
