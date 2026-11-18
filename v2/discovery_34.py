@@ -186,6 +186,8 @@ def load_resume(path, plan):
                 or not isinstance(error.get("query"), str) or not isinstance(error.get("error"), str)):
             raise ValueError("Invalid failure in resume report")
         source = error["source"]
+        if error["query"] not in plan[source]:
+            raise ValueError("Failure query outside discovery plan")
         failures.add((source, error["query"]))
         deadline = error.get("retry_not_before", 0)
         if type(deadline) is not int or deadline < 0:
@@ -197,7 +199,9 @@ def load_resume(path, plan):
         if not isinstance(checked, dict) or checked.keys() != plan.keys():
             raise ValueError("Invalid completed-query record")
         for source, entries in checked.items():
-            if not isinstance(entries, list) or any(query not in plan[source] for query in entries):
+            if (not isinstance(entries, list)
+                    or any(not isinstance(query, str) or query not in plan[source] for query in entries)
+                    or len(entries) != len(set(entries))):
                 raise ValueError("Invalid completed-query record")
             completed.update((source, query) for query in entries)
         if completed & failures:
