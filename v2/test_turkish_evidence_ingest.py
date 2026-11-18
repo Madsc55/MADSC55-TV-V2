@@ -21,6 +21,15 @@ class EvidenceIngestTests(unittest.TestCase):
     def test_av_requires_decoder(self):
         with self.assertRaises(ValueError):
             evaluate_record({"name": "TV", "video_decoded": True})
+    def test_ffprobe_alone_cannot_claim_decoded_video(self):
+        with self.assertRaises(ValueError):
+            evaluate_record({"name": "TV", "video_decoded": True, "evidence_sources": ["ffprobe"]})
+    def test_ffprobe_alone_cannot_claim_decoded_audio(self):
+        with self.assertRaises(ValueError):
+            evaluate_record({"name": "TV", "audio_decoded": True, "evidence_sources": ["ffprobe"]})
+    def test_ffprobe_can_report_metadata_only(self):
+        r = evaluate_record({"name": "TV", "stream_checked": True, "evidence_sources": ["ffprobe"]})
+        self.assertFalse(r["av_decoded_in_supplied_check"])
     def test_unknown_fields_fail_closed(self):
         with self.assertRaises(ValueError):
             evaluate_record({"name": "TV", "review_approved": True})

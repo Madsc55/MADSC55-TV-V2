@@ -29,10 +29,10 @@ def evaluate_record(record):
         raise ValueError("Spoken language requires ASR provenance")
     if record.get("subtitle_language") and not ({"webvtt", "ocr"} & set(sources)):
         raise ValueError("Subtitle language requires WebVTT/OCR provenance")
-    if any(record.get(k, False) for k in ("video_decoded", "audio_decoded", "stream_checked")) and not (
-        {"ffmpeg", "ffprobe"} & set(sources)
-    ):
-        raise ValueError("AV flags require decoder provenance")
+    if (record.get("video_decoded") or record.get("audio_decoded")) and "ffmpeg" not in sources:
+        raise ValueError("Decoded frames require FFmpeg provenance")
+    if record.get("stream_checked") and not ({"ffmpeg", "ffprobe"} & set(sources)):
+        raise ValueError("Stream check requires probe provenance")
     result = classify_channel(**{k: record[k] for k in ALLOWED - {"evidence_sources"} if k in record})
     return {"name": record["name"], "evidence_sources": sorted(sources), **result}
 
