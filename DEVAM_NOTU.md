@@ -1,3 +1,8 @@
+## 18 Kasım 2026 — Türkçe kanal kanıt zinciri ve süre kararı
+- [PR #405](https://github.com/Madsc55/MADSC55-TV-V2/pull/405) kaynak sorgu planı kayması koruması; [PR #406](https://github.com/Madsc55/MADSC55-TV-V2/pull/406) önceki Türkçe kanal sınıflandırıcısı ve 8 regresyon testinin geri getirilmesi; [PR #407](https://github.com/Madsc55/MADSC55-TV-V2/pull/407) ASR/OCR/WebVTT/FFmpeg kaynaklı kanıt kayıtlarını salt-okunur, fail-closed toplu inceleme modülüne alma. Üçü de güvenlik onayından sonra main'e birleştirildi. #407 güvenlik koşusu 44326853217 SUCCESS.
+- Kullanıcı kararı: 20–30 saniyelik zorunlu ses/görüntü izleme eklenmeyecek. Mevcut scanner varsayılan timeout=12s ve ffmpeg/ffprobe subprocess timeout+5s sınırı korunacak; bu 17 saniye sürekli dinleme anlamına GELMEZ. ASR/OCR için yeterli medya kanıtı yoksa inceleme açık kalır, Türk/yabancı otomatik onayı ve playlist taşıma yapılmaz.
+- Açık işler: gerçek yayınlardan ASR/OCR/WebVTT kanıtının güvenilir toplanması ve kayıtlarla ilişkilendirilmesi, 18.074 YEDEKLER kanalı için gerçek medya kanıtlı toplu inceleme, 13 açık sistem görevinin ayrı tamamlanması. Ana IBO playlisti, arşivler ve EPG korunacak; 2500'lük İBO Player arşiv döngüsü bu çalışmadan ayrı tutulacak.
+
 ## 18 Kasım 2026 — Kaynak doğrulama ve açık görev kanıtları
 
 - [#398 ana dal güvenlik testi](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44305739868) ve [#399 ana dal güvenlik testi](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44308192475) başarılı. [#400](https://github.com/Madsc55/MADSC55-TV-V2/pull/400) genişletilmiş 403/429 korumasını, [#401](https://github.com/Madsc55/MADSC55-TV-V2/pull/401) 13 görev ön koşulunu ve paket dışa aktarımından önce sağlayıcı kanıtı denetimini ana dala aldı.
