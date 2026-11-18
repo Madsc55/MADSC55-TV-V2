@@ -1302,3 +1302,9 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - `v2/turkish_media_sample_capture.py` FFmpeg komutuna `-fs MAX_BYTES` sınırı eklendi; mevcut sonradan boyut denetimi korundu. `v2/test_turkish_media_sample_capture.py` komut sınırı ve fazla büyük çıktının reddedilip temizlenmesi için regresyon içerir.
 - **Kapsam sınırı:** FFmpeg `-fs` bir işlem-içi çıktı sınırı önlemidir; güvenilmeyen ağ hedeflerini güvenli hale getirmez, gerçek AV/Türkçe dil kanıtı veya İBO Player kabulü sağlamaz. 13 prescan görevi kapanmış sayılmaz. Gerçek ASR/OCR, hostname güvenliği, canlı kaynak keşfi, EPG/kimlik ve cihaz kabulü AÇIK.
 - **Koruma:** Ana İBO, YEDEKLER, ANA/TURK/YABANCI arşivleri, EPG ve 48 engelli kanal değiştirilmedi; 1003 kuralı kullanılmadı. Sonraki değişiklikler güvenlik SUCCESS olmadan main'e birleştirilmeyecek.
+
+
+## 18 Kasım 2026 — #15 önceki altı hash denetimi ZATEN YAPILMIŞ (tekrar etmeyin)
+- Mevcut main raporu: `v2/reports/task15-historical-url-hash-recovery-20261118.json`. Eski `6 eşleşmeyen` ifadesi **güncelliğini yitirmiştir**: 6 tarihî kimliğin adı ve SHA-256 değeri belirlenmiş; Arica TV, HTV Sports, Tooncast, Bir TV için 4 birebir tarihî adres eşleşmesi bulunmuş; Xinjiang TV 3 ve American Ninja Warrior için 2 birebir adres eşleşmesi açık. Eski dünya raporundaki 4.949 + ayrı arşiv/kaynaklarda doğrulanmış 4 = 4.953/4.955 **kanıt kapsamı**, ancak tek dünya raporunun kendi 4.949 sayısı değişmez.
+- Arica TV resmî canlı sayfasında akış sunucusuna bağlantı görüldü; sayfada aynı tam adres gözlenmedi. Bu, yayıncı sahipliği için kesin kanıt değildir. Dört eşleşmeyi tekrar araştırma veya kanal araması başlatma.
+- #15 **in_progress** kalır: iki exact-hash eşleşmesi ve bağımsız yayıncı sahipliği kanıtı eksik. Kullanıcı açıkça sistem tamamlanmadan yeni kanal araması/AV taraması yapılmamasını istedi. Kanal taraması gerektiren adımlar SON FAZA ertelendi. Ana İBO, YEDEKLER, arşiv ve EPG değiştirilmedi.
