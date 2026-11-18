@@ -2,6 +2,7 @@ import json
 import pathlib
 import tempfile
 import unittest
+import urllib.error
 from unittest.mock import patch
 
 import github_source_discovery as discovery
@@ -81,6 +82,41 @@ class DiscoveryOutputTests(unittest.TestCase):
             parsed = json.loads(raw)
             self.assertEqual(parsed["sources"], [])
             self.assertEqual(parsed["errors"], [])
+
+    def test_throttled_tree_keeps_earlier_playlists_and_skips_remaining_requests(self):
+        calls = []
+        def api(url):
+            calls.append(url)
+            if "/search/repositories" in url:
+                return {"items": [{"full_name": "team/first"}, {"full_name": "team/second"},
+                                  {"full_name": "team/third"}]}
+            if "/first/git/trees/" in url:
+                return {"tree": [{"path": "tr.m3u", "type": "blob"}]}
+            if "/second/git/trees/" in url:
+                raise urllib.error.HTTPError(url, 429, "Throttled", {"Retry-After": "600"}, None)
+            self.fail("throttled provider must not receive additional requests")
+
+        with tempfile.TemporaryDirectory() as temp:
+            report = pathlib.Path(temp) / "github-source-discovery.json"
+            config = pathlib.Path(temp) / "sources.json"
+            config.write_text('{"sources": []}', encoding="utf-8")
+            with (patch.object(discovery, "OUT", report),
+                  patch.object(discovery, "CONFIG", config),
+                  patch.object(discovery, "QUERIES", ["tr"]),
+                  patch.object(discovery, "api", side_effect=api),
+                  patch.object(discovery, "fetch", return_value=(
+                      "#EXTM3U\n#EXTINF:-1,TRT Haber\nhttps://cdn.example/live.m3u8\n")),
+                  patch.object(discovery, "discover_gists") as gists):
+                with self.assertRaises(SystemExit) as failed:
+                    discovery.main()
+                self.assertEqual(failed.exception.code, 1)
+                gists.assert_not_called()
+            data = json.loads(report.read_text(encoding="utf-8"))
+        self.assertEqual(len(calls), 3)
+        self.assertEqual(data["status"], "error")
+        self.assertEqual(data["errors"], [{"repository": "team/second", "error": "RATE_LIMITED"}])
+        self.assertEqual(data["sources_found"], 1)
+        self.assertEqual(data["sources"][0]["repository"], "team/first")
 
 if __name__ == "__main__":
     unittest.main()

@@ -231,6 +231,80 @@ class Discovery34Tests(unittest.TestCase):
             self.assertNotEqual(result.returncode, 0)
             self.assertEqual(output.read_bytes(), original)
 
+    def test_resume_preserves_candidates_and_only_retries_incomplete_queries(self):
+        import json
+        import sys
+        import tempfile
+        from pathlib import Path
+        from unittest.mock import patch
+        import discovery_34
+
+        def first_fetch(url):
+            if "github.com" in url:
+                return {"items": [{"html_url": "https://github.com/example/channels"}],
+                        "incomplete_results": "turkiye.m3u" in url}
+            return [] if "gitlab.com" in url else {"data": []}
+
+        with tempfile.TemporaryDirectory() as directory:
+            original = Path(directory) / "original.json"
+            output = Path(directory) / "resumed.json"
+            options = ["discovery_34.py", "--network"]
+            with patch("prescan_readiness_gate.inspect", return_value={"ready": True}):
+                with (patch.object(sys, "argv", options + ["--output", str(original)]),
+                      patch.object(discovery_34, "fetch_with_retry", side_effect=first_fetch)):
+                    with self.assertRaises(SystemExit) as failed:
+                        discovery_34.main()
+                    self.assertEqual(failed.exception.code, 1)
+                original_data = original.read_bytes()
+                self.assertEqual(len(json.loads(original_data)["candidates"]), 1)
+                with (patch.object(sys, "argv", options + ["--resume", str(original), "--output", str(output)]),
+                      patch.object(discovery_34, "fetch_with_retry", return_value={"items": []}) as fetch):
+                    discovery_34.main()
+                    fetch.assert_called_once_with(search_url("github", "turkiye.m3u"))
+                report = json.loads(output.read_text())
+                self.assertEqual(original.read_bytes(), original_data)
+        self.assertEqual(report["queries_reused"], 17)
+        self.assertEqual(report["queries_attempted_this_run"], 1)
+        self.assertEqual(len(report["candidates"]), 1)
+        self.assertEqual(report["errors"], [])
+        self.assertEqual(report["av_verified"], 0)
+
+    def test_resume_honors_provider_wait_recorded_in_previous_report(self):
+        import json
+        import sys
+        import tempfile
+        import urllib.error
+        from pathlib import Path
+        from unittest.mock import patch
+        import discovery_34
+
+        def first_fetch(url):
+            if "codeberg.org" in url:
+                raise urllib.error.HTTPError(url, 429, "Too Many Requests", {"Retry-After": "600"}, None)
+            return [] if "gitlab.com" in url else {"items": []}
+
+        with tempfile.TemporaryDirectory() as directory:
+            original = Path(directory) / "original.json"
+            output = Path(directory) / "resumed.json"
+            options = ["discovery_34.py", "--network"]
+            with (patch("prescan_readiness_gate.inspect", return_value={"ready": True}),
+                  patch.object(discovery_34.time, "time", return_value=1000)):
+                with (patch.object(sys, "argv", options + ["--output", str(original)]),
+                      patch.object(discovery_34, "fetch_with_retry", side_effect=first_fetch)):
+                    with self.assertRaises(SystemExit):
+                        discovery_34.main()
+                with (patch.object(sys, "argv", options + ["--resume", str(original), "--output", str(output)]),
+                      patch.object(discovery_34, "fetch_with_retry") as fetch):
+                    with self.assertRaises(SystemExit) as failed:
+                        discovery_34.main()
+                    self.assertEqual(failed.exception.code, 1)
+                    fetch.assert_not_called()
+                report = json.loads(output.read_text())
+        self.assertEqual(report["queries_reused"], 12)
+        self.assertEqual(report["queries_attempted_this_run"], 0)
+        self.assertEqual(len(report["errors"]), 6)
+        self.assertTrue(all(row["retry_not_before"] == 1600 for row in report["errors"]))
+
     def test_official_and_m3u(self):
         for source in ("official", "m3u"):
             self.assertEqual(len(curated_candidates(source, [{"url": "https://example.org/live.m3u8"}])), 1)

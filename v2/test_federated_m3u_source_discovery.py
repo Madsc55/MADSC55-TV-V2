@@ -1,5 +1,10 @@
 import unittest
 import urllib.error
+import json
+import tempfile
+from pathlib import Path
+from unittest.mock import patch
+import federated_m3u_source_discovery as discovery
 from federated_m3u_source_discovery import FEDERATED_QUERIES, discover_provider
 
 PLAYLIST = "#EXTM3U\n#EXTINF:-1,TRT Haber\nhttps://cdn.example/live.m3u8\n"
@@ -172,6 +177,25 @@ class FederatedM3UDiscoveryTests(unittest.TestCase):
         self.assertEqual(len(tree_calls), 2)
         self.assertEqual(len(raw_calls), 2)
         self.assertEqual(sleeps, [1, 1])
+
+    def test_cli_persists_both_reports_and_fails_on_partial_discovery(self):
+        reports = [
+            {"status": "ok", "projects_discovered": 0, "sources_found": 0, "sources": []},
+            {"status": "error", "projects_discovered": 0, "sources_found": 0, "sources": []},
+        ]
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            with (patch.object(discovery, "ROOT", root),
+                  patch.object(discovery, "discover_provider", side_effect=reports) as discover):
+                with self.assertRaises(SystemExit) as failed:
+                    discovery.main()
+                self.assertEqual(failed.exception.code, 1)
+                with self.assertRaisesRegex(SystemExit, "already exists"):
+                    discovery.main()
+                self.assertEqual(discover.call_count, 2)
+            for provider, expected in zip(("gitlab", "codeberg"), reports):
+                path = root / "v2/reports" / f"{provider}-m3u-source-discovery.json"
+                self.assertEqual(json.loads(path.read_text(encoding="utf-8"))["status"], expected["status"])
 
 if __name__ == "__main__":
     unittest.main()
