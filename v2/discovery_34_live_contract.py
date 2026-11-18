@@ -4,95 +4,45 @@ import argparse
 import json
 import sys
 from pathlib import Path
-from datetime import datetime, timezone
-from email.utils import parsedate_to_datetime
 import time
 import urllib.error
-from discovery_34 import QUERIES, search_url, fetch_json, repository_candidates
-
-RETRYABLE_HTTP = frozenset((408, 425, 429, 500, 502, 503, 504))
-MAX_ATTEMPTS = 3
-MAX_RETRY_AFTER_SECONDS = 120
-
-def retry_delay(exc, attempt):
-    """Honor numeric or HTTP-date Retry-After, capped to avoid unbounded waits."""
-    headers = getattr(exc, "headers", None)
-    raw = headers.get("Retry-After") if headers is not None else None
-    try:
-        if raw is not None:
-            try:
-                seconds = int(raw.strip())
-            except (AttributeError, TypeError, ValueError):
-                retry_at = parsedate_to_datetime(raw)
-                if retry_at.tzinfo is None:
-                    retry_at = retry_at.replace(tzinfo=timezone.utc)
-                seconds = int((retry_at - datetime.now(timezone.utc)).total_seconds())
-            return min(MAX_RETRY_AFTER_SECONDS, max(0, seconds))
-        reset = (headers.get("X-RateLimit-Reset") or headers.get("x-ratelimit-reset")) if headers is not None else None
-        if reset is not None and getattr(exc, "code", None) == 429:
-            seconds = int(reset) - int(time.time())
-            return min(MAX_RETRY_AFTER_SECONDS, max(0, seconds))
-    except (AttributeError, TypeError, ValueError):
-        pass
-    return min(MAX_RETRY_AFTER_SECONDS, (30 if getattr(exc, "code", None) == 429 else 1) * (2 ** (attempt - 1)))
+import urllib.parse
+from discovery_34 import (
+    QUERIES, search_url, fetch_json, repository_candidates, incomplete_repository_response,
+)
+from discovery_provider_requests import (
+    MAX_ATTEMPTS, REQUEST_ERRORS, http_error_details, provider_rate_limited,
+    retry_delay,
+)
 
 def probe(source, query="turkish-iptv", fetch=fetch_json, sleep=time.sleep):
     url = search_url(source, query)
     for attempt in range(1, MAX_ATTEMPTS + 1):
         try:
             payload = fetch(url)
-            # A 200 response with an API error object is not successful discovery.
-            if source == "gitlab":
-                valid = isinstance(payload, list)
-            else:
-                key = "items" if source == "github" else "data"
-                valid = isinstance(payload, dict) and isinstance(payload.get(key), list)
-            if not valid:
-                raise ValueError("Invalid repository API response shape")
-            return {"status": "ok", "candidates": len(repository_candidates(source, payload)), "attempts": attempt}
-        except urllib.error.HTTPError as exc:
-            retryable = exc.code in RETRYABLE_HTTP
-            if retryable and attempt < MAX_ATTEMPTS:
-                sleep(retry_delay(exc, attempt))
+            candidates = len(repository_candidates(source, payload))
+            if incomplete_repository_response(source, payload):
+                return {"status": "error", "reason": "incomplete_repository_response",
+                        "candidates": candidates, "attempts": attempt}
+            return {"status": "ok", "candidates": candidates, "attempts": attempt}
+        except REQUEST_ERRORS as exc:
+            delay = retry_delay(exc, attempt)
+            if delay is not None and attempt < MAX_ATTEMPTS:
+                if isinstance(exc, urllib.error.HTTPError):
+                    exc.close()
+                sleep(delay)
                 continue
-            headers = getattr(exc, "headers", None)
-            return {"status": "error", "reason": "HTTP_" + str(exc.code),
-                    "http_status": exc.code, "http_reason": str(getattr(exc, "reason", ""))[:120],
-                    "retry_after": headers.get("Retry-After") if headers is not None else None,
-                    "rate_limit_remaining": (headers.get("X-RateLimit-Remaining") or headers.get("x-ratelimit-remaining")) if headers is not None else None,
-                    "rate_limit_reset": (headers.get("X-RateLimit-Reset") or headers.get("x-ratelimit-reset")) if headers is not None else None,
-                    "retryable": retryable, "provider": source, "attempts": attempt,
-                    "endpoint_host": {"github": "api.github.com", "gitlab": "gitlab.com", "codeberg": "codeberg.org"}[source]}
-        except urllib.error.URLError as exc:
-            # Temporary DNS/connection failures may recover; never mark them successful.
-            if attempt < MAX_ATTEMPTS:
-                sleep(attempt)
-                continue
-            return {"status": "error", "reason": "URLError",
-                    "retryable": True, "provider": source, "attempts": attempt}
-        except (TimeoutError, ConnectionResetError, ConnectionAbortedError) as exc:
-            if attempt < MAX_ATTEMPTS:
-                sleep(attempt)
-                continue
-            return {"status": "error", "reason": type(exc).__name__,
-                    "retryable": True, "provider": source, "attempts": attempt}
-        except (OSError, ValueError, KeyError, TypeError) as exc:
-            return {"status": "error", "reason": type(exc).__name__,
-                    "provider": source, "attempts": attempt}
-
-def provider_rate_limited(row):
-    """Recognize HTTP 429 and GitHub-style 403 rate-limit exhaustion."""
-    if row.get("http_status") == 429:
-        return True
-    if row.get("http_status") != 403:
-        return False
-    reason = str(row.get("http_reason", "")).casefold()
-    remaining = str(row.get("rate_limit_remaining", "")).strip()
-    return remaining == "0" or any(phrase in reason for phrase in ("rate limit", "abuse detection", "too many requests"))
+            result = {"status": "error", "reason": type(exc).__name__, "provider": source,
+                      "attempts": attempt, "retryable": delay is not None}
+            if isinstance(exc, urllib.error.HTTPError):
+                result.update(http_error_details(exc))
+                result["reason"] = "HTTP_" + str(exc.code)
+                result["endpoint_host"] = urllib.parse.urlsplit(url).hostname
+            return result
 
 
 def probe_queries(source, queries=QUERIES, fetch=fetch_json, sleep=time.sleep):
-    """Probe terms sequentially; stop provider fanout after an exhausted HTTP 429."""
+    """Probe terms sequentially and stop provider fanout when throttled."""
     terms = list(queries)
     results = []
     for index, query in enumerate(terms):
