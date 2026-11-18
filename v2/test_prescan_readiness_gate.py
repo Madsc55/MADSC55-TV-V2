@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Offline tests for the read-only pre-scan readiness decision."""
 import unittest
+from unittest.mock import patch
 from prescan_readiness_gate import REQUIRED, inspect
 
 
@@ -36,6 +37,15 @@ class PreScanGateTests(unittest.TestCase):
     def test_noncanonical_state_blocks(self):
         self.assertEqual(inspect({})["error"], "INVALID_STATE_SCHEMA")
         self.assertEqual(inspect(None)["error"], "INVALID_STATE_SCHEMA")
+
+    def test_live_discovery_blocked_before_network(self):
+        import discovery_34
+        with patch("sys.argv", ["discovery_34.py", "--network"]), \
+             patch("prescan_readiness_gate.inspect", return_value={"ready": False, "pending": [34]}), \
+             patch("discovery_34.fetch_with_retry") as fetch:
+            with self.assertRaises(SystemExit):
+                discovery_34.main()
+            fetch.assert_not_called()
 
     def test_unknown_status_blocks(self):
         entries = [{"id": i, "status": "completed"} for i in REQUIRED]
