@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "kind": "V2_TASK15_HISTORICAL_CROSSWALK_DELTA_AUDIT",
+  "scope": "Hash-only audit; no broadcaster authentication, plaintext URLs, or playlist changes",
+  "older_run_id": 42228674931,
+  "newer_run_id": 42216075104,
+  "older_exact_matches": 4948,
+  "newer_exact_matches": 4949,
+  "historical_identities": 4955,
+  "newly_matched_url_sha256": [
+    "28d0f3888014b5508c269b2ea84699b8182717ed3c58faa2144d0b6a139c8593"
+  ],
+  "remaining_unmatched_count": 6,
+  "older_av_decoded": 3062,
+  "newer_av_decoded": 3080,
+  "broadcaster_identity_verified": false,
+  "next_required_evidence": "Original historical hash inventory for six missing hashes and independent broadcaster ownership proof"
+}
