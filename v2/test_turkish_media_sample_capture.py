@@ -28,16 +28,16 @@ class CaptureTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             capture("http://8.8.8.8/live", "/tmp/unused.mkv", seconds=13)
         with self.assertRaises(ValueError):
-            capture("https://example.com/live", "/tmp/unused.mkv", timeout=18)
+            capture("http://8.8.8.8/live", "/tmp/unused.mkv", timeout=18)
     def test_no_ffmpeg_is_not_success(self):
-        r = capture("https://example.com/live", "/tmp/unused.mkv", which=lambda _: None)
+        r = capture("http://8.8.8.8/live", "/tmp/unused.mkv", which=lambda _: None)
         self.assertEqual(r["status"], "FFMPEG_UNAVAILABLE")
     def test_no_overwrite(self):
         with tempfile.TemporaryDirectory() as d:
             p = Path(d)/"sample.mkv"
             p.write_bytes(b"existing")
             with self.assertRaises(ValueError):
-                capture("https://example.com/live", p, which=lambda _: "/usr/bin/ffmpeg")
+                capture("http://8.8.8.8/live", p, which=lambda _: "/usr/bin/ffmpeg")
             self.assertEqual(p.read_bytes(), b"existing")
     def test_success_is_not_language_proof(self):
         with tempfile.TemporaryDirectory() as d:
@@ -46,7 +46,7 @@ class CaptureTests(unittest.TestCase):
                 self.assertLessEqual(kwargs["timeout"], 17)
                 p.write_bytes(b"sample")
                 return SimpleNamespace(returncode=0)
-            r = capture("https://example.com/live", p, runner=runner, which=lambda _: "/usr/bin/ffmpeg")
+            r = capture("http://8.8.8.8/live", p, runner=runner, which=lambda _: "/usr/bin/ffmpeg")
             self.assertEqual(r["status"], "SAMPLE_CAPTURED_UNVERIFIED")
             self.assertFalse(r["language_verified"])
             self.assertFalse(r["asr_completed"])
@@ -57,7 +57,7 @@ class CaptureTests(unittest.TestCase):
             def runner(cmd, **kwargs):
                 p.write_bytes(b"partial")
                 return SimpleNamespace(returncode=1)
-            r = capture("https://example.com/live", p, runner=runner, which=lambda _: "/usr/bin/ffmpeg")
+            r = capture("http://8.8.8.8/live", p, runner=runner, which=lambda _: "/usr/bin/ffmpeg")
             self.assertEqual(r["status"], "CAPTURE_FAILED")
             self.assertFalse(p.exists())
 
