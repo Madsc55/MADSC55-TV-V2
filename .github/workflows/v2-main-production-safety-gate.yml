@@ -85,6 +85,7 @@ jobs:
         run: |
           python -m py_compile v2/turkish_channel_triage.py v2/test_turkish_channel_triage.py
           python -m unittest -v v2.test_turkish_channel_triage
+          python -m unittest -v v2.test_turkish_evidence_ingest
       - name: Discovery 34 offline adapter and integration acceptance
         run: |
           PYTHONPATH=v2 python -m unittest -v test_discovery_34 test_discovery_34_integrate test_discovery_34_integrate_acceptance test_discovery_34_live_contract
