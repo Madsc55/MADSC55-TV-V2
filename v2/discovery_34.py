@@ -179,7 +179,7 @@ def main():
                     if isinstance(exc, urllib.error.HTTPError) and exc.code in (429, 403):
                         headers = getattr(exc, "headers", None)
                         remaining = headers.get("X-RateLimit-Remaining") if headers is not None else None
-                        limited = exc.code == 429 or remaining == "0" or "rate limit" in str(exc.reason).lower()
+                        limited = exc.code == 429 or remaining == "0" or any(phrase in str(exc.reason).casefold() for phrase in ("rate limit", "abuse detection", "too many requests"))
                         if limited:
                             errors.extend({"source": source, "query": term,
                                            "error": "provider_rate_limit_skipped"}
