@@ -37,18 +37,29 @@ def load_progress(path, passphrase, *, worldwide, now=None):
     checkpoint data fail closed instead of silently asserting old AV proof.
     Rows older than the freshness window are not reused.
     """
-    rows = _read_progress_rows(path, passphrase, worldwide=worldwide)
-    now = time.time() if now is None else now
-    return {url: item for url, item in rows.items()
-            if -60 <= now - item["checked_at"] <= MAX_AGE_SECONDS}
+    recent, _ = load_resume_history(path, passphrase, worldwide=worldwide, now=now)
+    return recent
 
 
 def load_failed_retry_candidates(path, passphrase, *, worldwide, now=None):
     """Return past failures for fresh probes without reusing playback evidence."""
+    recent, expired_failures = load_resume_history(path, passphrase, worldwide=worldwide, now=now)
+    fresh_failures = {url: row for url, row in recent.items() if row["result"] is None}
+    return expired_failures | fresh_failures
+
+
+def load_resume_history(path, passphrase, *, worldwide, now=None):
+    """Read one authenticated snapshot, separating current evidence from retry history."""
     rows = _read_progress_rows(path, passphrase, worldwide=worldwide)
     now = time.time() if now is None else now
-    return {url: item for url, item in rows.items()
-            if item.get("result") is None and item["checked_at"] <= now + 60}
+    recent, expired_failures = {}, {}
+    for url, row in rows.items():
+        age = now - row["checked_at"]
+        if -60 <= age <= MAX_AGE_SECONDS:
+            recent[url] = row
+        elif age > MAX_AGE_SECONDS and row["result"] is None:
+            expired_failures[url] = row
+    return recent, expired_failures
 
 
 def _read_progress_rows(path, passphrase, *, worldwide):

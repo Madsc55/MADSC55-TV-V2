@@ -1,3 +1,11 @@
+## 18 Kasım 2026 — #17, #18 ve #20 için sınırlı canlı tekrar testi
+
+- [PR #418](https://github.com/Madsc55/MADSC55-TV-V2/pull/418) ana dala `a196801c0b1b8c1e1f317d1c7e45417c13284cfb` ile alındı. [PR güvenlik çalışması](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44367475775) ve [birleştirme sonrası ana dal çalışması](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44370392930) başarılı.
+- [14 Kasım arşivindeki](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43608247496/artifacts/14135417421) 20.148 bekleyen adresin 3.781'i, iki mevcut listede SHA-256 ile birebir eşleşti. Arşivde bunların 1.339'u RETRY, 689'u CHECK_AV ve 1.753'ü REVIEW durumundaydı.
+- TRT, Kanal 7 ve CBS yayın alanlarında ölçütlere uyan 15 adres denendi. İlk turda zaman aşımına uğrayan iki adres ikinci defa denendi. TRT Kurdî'nin bir adresinde aynı HLS parçasından ses ve görüntü çözüldü. Son denemede sekiz adres HTTP 404, altı adres HTTP 503 verdi. [17 denemenin saatleri, adres ve medya özetleri](v2/reports/task17-18-20-bounded-retry-20261118.json).
+- Süresi dolmuş başarısız kayıtlar için yeniden deneme sınırı tarayıcının asıl girişinde uygulandı. Ertelenen kayıtlar, önceki zaman damgası ve deneme sayısıyla saklanıyor. Yarım kalan koşuların ara kaydı, henüz sırası gelmeyen geçerli geçmiş satırları da içeriyor.
+- Devam ederken kayıtları rapordaki tam adres özetiyle eşleştir. Sekiz 404 adresi kaynak incelemesinde, altı 503 adresi sonraki yeniden denemede ele alınacak. Arşivin şifreli checkpoint'ine bu bağımsız gözlemler henüz işlenmedi. Diğer 3.766 eşleşmenin ve bu iki listede karşılığı olmayan 16.367 adresin durumu açık. [Görev defteri](v2/tasks/state.json).
+
 ## 18 Kasım 2026 — Arşivden kurtarma kuyruğuna devam
 
 - 14 Kasım arşivinin ZIP hash’i ve şifreli checkpoint dosyası doğrulandı. Son deneme 300 tekrar içinde 28 yeni görüntü ve ses doğrulaması kaydetti. 20.148 kayıt açık kaldı. [Actions kanıtı](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43608247496/artifacts/14135417421)

@@ -729,20 +729,19 @@ def main():
     # Resume is bound to the exact stream URL, authentic AES ciphertext and a
     # short evidence lifetime. Previous AV proof remains tagged as previous-run
     # evidence; it is never labeled as a new FFmpeg decode in this invocation.
-    from scan_checkpoint import checkpoint_row, load_failed_retry_candidates, load_progress, save_progress
+    from scan_checkpoint import checkpoint_row, load_resume_history, save_progress
     checkpoint_path = args.inventory.parent / 'ibo-scan-progress.enc'
-    prior_progress = (load_progress(
-        args.resume_checkpoint, os.environ['V2_ARCHIVE_PASSPHRASE'],
-        worldwide=args.worldwide) if args.resume_checkpoint is not None else {})
-    retry_history = prior_progress
-    if args.resume_checkpoint is not None and args.retry_failed_limit:
-        older_failures = load_failed_retry_candidates(
+    recent, expired_failures = {}, {}
+    if args.resume_checkpoint is not None:
+        recent, expired_failures = load_resume_history(
             args.resume_checkpoint, os.environ['V2_ARCHIVE_PASSPHRASE'],
             worldwide=args.worldwide)
-        retry_history = {**older_failures, **prior_progress}
+    retry_history = {**expired_failures, **recent}
     retry_urls, eligible_retries = select_checkpoint_retry_urls(
         retry_history, candidates, args.retry_failed_limit)
-    progress_rows = {}
+    deferred_urls = (expired_failures.keys() & candidates.keys()) - retry_urls
+    # A periodic save must also retain inherited rows that the pool has yet to visit.
+    progress_rows = {url: row for url, row in retry_history.items() if url in candidates}
     resumed_urls = set()
     resumed_verified_urls = set()
     successfully_retried_urls = set()
@@ -751,7 +750,7 @@ def main():
     diagnostics_by_url = {}
     def inspect_candidate(candidate):
         url = candidate['url']
-        prior = prior_progress.get(url)
+        prior = retry_history.get(url)
         if prior is not None and url not in retry_urls:
             previous = prior['result']
             result = ({**candidate, **previous} if previous is not None else None)
@@ -785,6 +784,8 @@ def main():
     # Seal the last partial batch before XMLTV, recovery queue, or export.
     save_progress(checkpoint_path, os.environ['V2_ARCHIVE_PASSPHRASE'],
                   worldwide=args.worldwide, rows=progress_rows)
+    covered = checked - len(deferred_urls)
+    partial = incomplete or discovery_partial or bool(deferred_urls)
     epg_ids = set()
     epg_checked = args.epg is not None
     if args.epg is not None:
@@ -826,6 +827,14 @@ def main():
                 # The checkpoint already reflects the actual probe (or no probe
                 # when reused). Do not increment recovery attempts a second time.
                 recovery_attempts = progress_rows[candidate['url']]['recovery_attempts']
+                observation = {
+                    'status': new_status,
+                    'origin': ('deferred-archived-failure' if candidate['url'] in deferred_urls
+                               else observation_origin(reused=candidate['url'] in resumed_urls)),
+                    'checked_at': progress_rows[candidate['url']]['checked_at'],
+                }
+                if not old_observations or old_observations[-1] != observation:
+                    old_observations = old_observations + [observation]
                 record = {**previous, **candidate,
                           'recovery_attempts': recovery_attempts,
                           'last_http_status': diagnostics_by_url.get(candidate['url'], {}).get('last_http_status'),
@@ -842,9 +851,7 @@ def main():
                                             'DECODED_AV_PRIOR_CHECKPOINT' if candidate['url'] in resumed_verified_urls else
                                             'NOT_DECODED_THIS_RUN'),
                           'ibo_device_tested': previous.get('ibo_device_tested', False),
-                          'observations': old_observations + [{
-                              'status': new_status, 'origin': observation_origin(
-                                  reused=candidate['url'] in resumed_urls)}]}
+                          'observations': old_observations}
                 inventory_file.write(json.dumps(record, ensure_ascii=False) + '\n')
                 if candidate['url'] not in good_urls:
                     raw_http_status = diagnostics_by_url.get(candidate['url'], {}).get('last_http_status')
@@ -866,12 +873,12 @@ def main():
             preserve_failed_recovery_evidence(
                 inventory_tmp, args.inventory, args.report,
                 os.environ['V2_ARCHIVE_PASSPHRASE'],
-                error_type=type(exc).__name__, checked=checked,
-                decoded_av_count=len(good), candidate_count=len(candidates))
+                error_type=type(exc).__name__, checked=covered,
+                decoded_av_count=len(good) - len(resumed_verified_urls), candidate_count=len(candidates))
             raise
         # A failed source fetch must not overwrite the last complete encrypted baseline.
         encrypted_inventory = args.inventory.with_suffix(
-            args.inventory.suffix + ('.pending.enc' if (incomplete or discovery_partial) else '.enc'))
+            args.inventory.suffix + ('.pending.enc' if partial else '.enc'))
         archive_result = encrypt_inventory(inventory_tmp, encrypted_inventory,
                                            os.environ['V2_ARCHIVE_PASSPHRASE'])
     finally:
@@ -890,12 +897,13 @@ def main():
               'optional_discovery_source_drops': optional_source_drops,
               'discovery_partial': discovery_partial,
               'configured_sources_complete': not incomplete,
-              'full_discovery_acceptance': not (incomplete or discovery_partial),
+              'full_discovery_acceptance': not partial,
               'epg_checked': epg_checked,
               'epg_valid_programme_channel_ids': len(epg_ids),
               'existing_main_urls': len(main_urls), 'excluded_foreign_archive_urls': len(foreign_urls), 'unique_new_candidates': len(candidates), 'recovered_from_previous_encrypted_inventory': recovered_from_archive,
-              'http_checked': checked, 'http_checked_this_run': checked - len(resumed_urls),
-              'resumed_checkpoint_observations': len(resumed_urls),
+              'http_checked': covered, 'http_checked_this_run': checked - len(resumed_urls),
+              'resumed_checkpoint_observations': len(resumed_urls) - len(deferred_urls),
+              'deferred_archived_failures': len(deferred_urls),
               'eligible_failed_checkpoint_retries': eligible_retries,
               'retried_failed_checkpoint_urls': len(retry_urls),
               'recovered_av_from_failed_checkpoint': len(successfully_retried_urls),
@@ -914,34 +922,30 @@ def main():
               'exported_part1': min(len(good), args.limit),
               'part_count': (len(good) + args.limit - 1) // args.limit,
               'playback_verified_on_device': False, 'mock_data_used': False,
-              'status': ('PARTIAL_DISCOVERY_READY_FOR_DEVICE_TEST' if good else 'PARTIAL_DISCOVERY_NO_VERIFIED_CANDIDATES') if discovery_partial
-                        else ('READY_FOR_DEVICE_TEST' if good else 'NO_VERIFIED_CANDIDATES')}
+              'status': 'READY_FOR_DEVICE_TEST' if good else 'NO_VERIFIED_CANDIDATES'}
     args.report.parent.mkdir(parents=True, exist_ok=True)
-    args.report.write_text(json.dumps(report, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
-    if discovery_partial and not incomplete:
-        # Keep all real observations encrypted, but do not promote partial
-        # discovery into a complete baseline or M3U package. The next run
-        # can resume from the sealed per-URL checkpoint.
+    if partial:
         report['status'] = 'PARTIAL_DISCOVERY_EVIDENCE_ONLY'
+        if incomplete:
+            report['status'] = 'INCOMPLETE_SOURCE_FETCH_OR_DROP'
+        elif deferred_urls:
+            report['status'] = 'DEFERRED_ARCHIVED_FAILURES'
         report['written_parts'] = []
         report['part_count'] = 0
         report['exported_part1'] = 0
-        args.report.write_text(json.dumps(report, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
+    args.report.write_text(json.dumps(report, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
+    if incomplete:
+        raise SystemExit('Incomplete source fetch or source count collapse: refusing misleading IBO packages')
+    if partial:
         print(json.dumps({'status': report['status'],
                           'configured_sources_complete': True,
                           'optional_failed_discovered_sources': optional_failed_sources,
-                          'http_checked': checked,
+                          'http_checked': covered,
+                          'deferred_archived_failures': len(deferred_urls),
                           'av_verified': len(good),
                           'full_discovery_acceptance': False},
                          ensure_ascii=False))
         return
-    if incomplete:
-        report['status'] = 'INCOMPLETE_SOURCE_FETCH_OR_DROP'
-        report['written_parts'] = []
-        report['part_count'] = 0
-        report['exported_part1'] = 0
-        args.report.write_text(json.dumps(report, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
-        raise SystemExit('Incomplete source fetch or source count collapse: refusing misleading IBO packages')
     if not good:
         # A completed scan with zero eligible streams is a valid no-change result.
         # Keep the report and original playlist intact; do not invent channels.
