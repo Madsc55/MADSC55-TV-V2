@@ -9,6 +9,15 @@ import argparse
 import json
 from pathlib import Path
 
+DISCOVERY_REPORTS = {
+    "repositories": "discovery-34-candidates.json",
+    "github_m3u": "github-source-discovery.json",
+    "gitlab": "gitlab-m3u-source-discovery.json",
+    "codeberg": "codeberg-m3u-source-discovery.json",
+    "official": "official-tv-sites.json",
+    "youtube": "youtube-live-candidates.json",
+}
+
 
 class ScanIncomplete(ValueError):
     pass
@@ -81,15 +90,65 @@ def validate_report(report):
     }
 
 
+def require_complete_adapters(scan, reports):
+    """Check live adapter evidence independently of the scanner's M3U coverage."""
+    repositories = reports["repositories"]
+    github_m3u = reports["github_m3u"]
+    official = reports["official"]
+    youtube = reports["youtube"]
+    blocked = []
+    if (repositories.get("mode") != "network" or repositories.get("errors") != []
+            or not isinstance(repositories.get("candidates"), list)):
+        blocked.append("repository search")
+    if github_m3u.get("errors") != [] or not isinstance(github_m3u.get("sources"), list):
+        blocked.append("GitHub playlist search")
+    for name in ("gitlab", "codeberg"):
+        provider = reports[name]
+        total, checked, failed, skipped = (provider.get("queries_" + key)
+                                           for key in ("total", "checked", "failed", "skipped"))
+        if (provider.get("status") != "ok" or provider.get("rate_limited") is not False
+                or provider.get("errors") != []
+                or any(type(count) is not int for count in (total, checked, failed, skipped))
+                or total <= 0 or checked != total or failed != 0 or skipped != 0):
+            blocked.append(name)
+    if (official.get("scope") != "WORLDWIDE" or not isinstance(official.get("channels"), list)
+            or not official["channels"]):
+        blocked.append("official broadcasters")
+    checked, verified = youtube.get("videos_checked"), youtube.get("live_verified")
+    if (youtube.get("metadata_verification_complete") is not True or youtube.get("errors") != []
+            or type(checked) is not int or type(verified) is not int or not 0 < verified <= checked):
+        blocked.append("YouTube live metadata")
+    resolved = scan.get("resolved_direct_candidate_count")
+    if type(resolved) is not int or resolved <= 0:
+        blocked.append("official or YouTube direct streams")
+    if blocked:
+        raise ScanIncomplete("Worldwide adapter evidence incomplete: " + ", ".join(blocked))
+
+
+def read_report(path):
+    if path.is_symlink() or not path.is_file():
+        raise ScanIncomplete("Missing or symlinked report: " + path.name)
+    report = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(report, dict):
+        raise ScanIncomplete("Invalid JSON report: " + path.name)
+    return report
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--report", type=Path, required=True)
+    parser.add_argument("--discovery-reports-dir", type=Path,
+                        help="Require all worldwide adapter reports before accepting a package export")
     args = parser.parse_args()
     try:
-        if args.report.is_symlink():
-            raise ScanIncomplete("Refusing symlinked report")
-        payload = json.loads(args.report.read_text(encoding="utf-8"))
-        print(json.dumps(validate_report(payload), ensure_ascii=False, sort_keys=True))
+        payload = read_report(args.report)
+        totals = validate_report(payload)
+        if args.discovery_reports_dir is not None:
+            reports = {name: read_report(args.discovery_reports_dir / filename)
+                       for name, filename in DISCOVERY_REPORTS.items()}
+            require_complete_adapters(payload, reports)
+            totals["worldwide_adapters_complete"] = True
+        print(json.dumps(totals, ensure_ascii=False, sort_keys=True))
     except (ScanIncomplete, OSError, ValueError, TypeError) as exc:
         parser.exit(1, "Real scan NOT fully accepted: " + str(exc) + "\n")
 

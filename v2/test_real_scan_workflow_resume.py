@@ -22,6 +22,22 @@ def restore_shell():
 
 
 class ResumeWorkflowTests(unittest.TestCase):
+    def test_worldwide_workflows_check_readiness_before_discovery(self):
+        import yaml
+        workflow = yaml.load(WORKFLOW.read_text(encoding="utf-8"), Loader=yaml.BaseLoader)
+        jobs = workflow["jobs"]
+        self.assertEqual(jobs["scan"]["needs"], "readiness")
+        self.assertEqual(jobs["legacy-verify"]["needs"], "readiness")
+        guard = "python v2/prescan_readiness_gate.py"
+        self.assertIn(guard, [step.get("run") for step in jobs["readiness"]["steps"]])
+        metadata = WORKFLOW.with_name("v2-world-discovery.yml").read_text(encoding="utf-8")
+        self.assertLess(metadata.index(guard), metadata.index("python v2/discover.py"))
+
+    def test_export_follows_worldwide_adapter_acceptance(self):
+        workflow = WORKFLOW.read_text(encoding="utf-8")
+        gate = "python v2/validate_real_scan_acceptance.py --report v2/reports/ibo-real-scan-report.json --discovery-reports-dir v2/reports"
+        self.assertLess(workflow.index(gate), workflow.index("python v2/export_ibo_batches.py"))
+
     def test_reads_newest_completed_run_including_successful_partial(self):
         script = restore_shell()
         self.assertIn("select(.status == \"completed\")", script)
