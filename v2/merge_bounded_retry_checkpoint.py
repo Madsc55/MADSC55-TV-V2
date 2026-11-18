@@ -60,7 +60,7 @@ def reconcile(rows, report):
             "source_run_id": report["source_run_id"],
             "url_sha256": sha, "disposition": kind}
         # A single segment proves only a sample; preserve prior full AV evidence.
-        result = old["result"] if kind == "AV_SAMPLE_VERIFIED" else None
+        result = old["result"]  # Never erase authenticated full AV proof on a later HTTP error.
         merged[url] = checkpoint_row(
             url, result, diag, checked_at=when, recovery_attempts=count)
         applied += 1
