@@ -117,6 +117,33 @@ class Discovery34Tests(unittest.TestCase):
         self.assertEqual(sum(row["error"] == "provider_rate_limit_skipped" for row in report["errors"]), len(QUERIES) - 1)
         self.assertEqual(report["av_verified"], 0)
 
+    def test_network_cli_secondary_403_abuse_throttle_opens_circuit(self):
+        import io
+        import json
+        import tempfile
+        import urllib.error
+        from pathlib import Path
+        from unittest.mock import patch
+        import discovery_34
+        calls = []
+        def fake_fetch(url):
+            calls.append(url)
+            if "api.github.com" in url:
+                raise urllib.error.HTTPError(url, 403, "Abuse detection mechanism triggered", {}, io.BytesIO())
+            return [] if "gitlab.com" in url else {"data": []}
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / "candidates.json"
+            with patch.object(discovery_34, "fetch_json", side_effect=fake_fetch), \
+                 patch("prescan_readiness_gate.inspect", return_value={"ready": True}), \
+                 patch("sys.argv", ["discovery_34.py", "--network", "--output", str(output)]):
+                with self.assertRaises(SystemExit) as result:
+                    discovery_34.main()
+                self.assertEqual(result.exception.code, 1)
+            report = json.loads(output.read_text())
+        self.assertEqual(sum("api.github.com" in url for url in calls), 1)
+        self.assertEqual(sum(row["error"] == "provider_rate_limit_skipped" for row in report["errors"]), len(QUERIES) - 1)
+        self.assertEqual(report["av_verified"], 0)
+
     def test_youtube(self):
         items = curated_candidates("youtube", [{"video_id": "AbCdEf12345"}])
         self.assertEqual(items[0]["source_id"], "youtube:AbCdEf12345")
