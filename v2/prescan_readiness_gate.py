@@ -8,6 +8,8 @@ STATE = ROOT / "v2/tasks/state.json"
 REQUIRED = {15, 17, 18, 19, 20, 21, 28, 29, 30, 31, 32, 33, 34}
 
 def inspect(state):
+    if not isinstance(state, dict) or state.get("schema") != 1 or state.get("canonical_state") != "state.json":
+        return {"ready": False, "error": "INVALID_STATE_SCHEMA", "missing": sorted(REQUIRED), "pending": []}
     statuses = state.get("statuses", [])
     if not isinstance(statuses, list):
         return {"ready": False, "error": "INVALID_STATUSES", "missing": sorted(REQUIRED), "pending": []}
