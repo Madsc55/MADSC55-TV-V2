@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """#34: read-only source discovery; offline by default. No playlist writes."""
 import argparse
+import hashlib
 import ipaddress
 import json
 import os
@@ -12,11 +13,12 @@ import urllib.request
 from pathlib import Path
 from discovery_provider_requests import (
     MAX_ATTEMPTS, REQUEST_ERRORS, RETRYABLE_CONNECTION, http_error_details, provider_rate_limited,
-    retry_delay,
+    retry_delay, retry_not_before,
 )
 
 QUERIES = ("turkiye.m3u", "tr.m3u8", "turkish-iptv", "canli-tv", "yerel-tv", "iptv-turkiye")
 SOURCES = ("github", "gitlab", "codeberg", "official", "youtube", "m3u")
+REPOSITORY_SOURCES = ("github", "gitlab", "codeberg")
 MAX_BYTES = 2_000_000
 
 def identity(source, url):
@@ -49,7 +51,6 @@ def identity(source, url):
     authority = ("[" + host + "]" if ":" in host else host) + (":" + str(port) if port is not None else "")
     source_id = source + ":" + authority + p.path
     if source in ("official", "m3u") and p.query:
-        import hashlib
         source_id += "?sha256=" + hashlib.sha256(p.query.encode("utf-8")).hexdigest()
     return {"source": source, "source_id": source_id, "url": url, "verified_av": False}
 
@@ -100,7 +101,8 @@ def fetch_with_retry(url, fetch=None, sleep=None):
 
 def repository_items(source, payload):
     if source == "github":
-        if not isinstance(payload, dict) or not isinstance(payload.get("items"), list):
+        if (not isinstance(payload, dict) or "message" in payload
+                or not isinstance(payload.get("items"), list)):
             raise ValueError("Invalid GitHub repository API response")
         return payload["items"]
     if source == "gitlab":
@@ -159,23 +161,92 @@ def curated_candidates(source, records):
             continue
     return out
 
+def load_resume(path, plan):
+    """Carry forward public candidate identities and explicitly accounted queries."""
+    with path.open("rb") as incoming:
+        raw = incoming.read(MAX_BYTES + 1)
+    if len(raw) > MAX_BYTES:
+        raise ValueError("Resume report exceeds size limit")
+    report = json.loads(raw)
+    if (not isinstance(report, dict) or report.get("mode") != "network"
+            or report.get("av_verified") != 0 or not isinstance(report.get("candidates"), list)
+            or not isinstance(report.get("errors"), list)):
+        raise ValueError("Resume requires a previous network candidate report")
+    candidates, failures, cooldowns = [], set(), {}
+    for item in report["candidates"]:
+        if (not isinstance(item, dict) or item.get("source") not in REPOSITORY_SOURCES
+                or item.get("verified_av") is not False):
+            raise ValueError("Invalid candidate in resume report")
+        record = identity(item["source"], item.get("url"))
+        if record["source_id"] != item.get("source_id"):
+            raise ValueError("Candidate identity changed in resume report")
+        candidates.append(record)
+    for error in report["errors"]:
+        if (not isinstance(error, dict) or error.get("source") not in REPOSITORY_SOURCES
+                or not isinstance(error.get("query"), str) or not isinstance(error.get("error"), str)):
+            raise ValueError("Invalid failure in resume report")
+        source = error["source"]
+        failures.add((source, error["query"]))
+        deadline = error.get("retry_not_before", 0)
+        if type(deadline) is not int or deadline < 0:
+            raise ValueError("Invalid cooldown in resume report")
+        cooldowns[source] = max(cooldowns.get(source, 0), deadline)
+    completed = set()
+    if report.get("query_plan") == plan and "completed_queries" in report:
+        checked = report["completed_queries"]
+        if not isinstance(checked, dict) or checked.keys() != plan.keys():
+            raise ValueError("Invalid completed-query record")
+        for source, entries in checked.items():
+            if not isinstance(entries, list) or any(query not in plan[source] for query in entries):
+                raise ValueError("Invalid completed-query record")
+            completed.update((source, query) for query in entries)
+        if completed & failures:
+            raise ValueError("Conflicting completed and failed queries")
+    return candidates, completed, cooldowns, hashlib.sha256(raw).hexdigest()
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--network", action="store_true", help="Explicit opt-in repository metadata queries")
-    parser.add_argument("--output", default="v2/reports/discovery-34-candidates.json")
+    parser.add_argument("--output", type=Path, default=Path("v2/reports/discovery-34-candidates.json"))
+    parser.add_argument("--resume", type=Path, help="Continue from a previous network candidate report")
     args = parser.parse_args()
+    if args.resume and not args.network:
+        parser.error("--resume requires --network")
+    if args.output.exists() or args.output.is_symlink():
+        parser.error("--output already exists")
     candidates, errors = [], []
+    metadata = {}
     if args.network:
         # Fail closed before the first network request; offline mode stays available.
         from prescan_readiness_gate import require_readiness
         require_readiness()
-        for source in ("github", "gitlab", "codeberg"):
-            for index, query in enumerate(QUERIES):
+        plan = {source: list(QUERIES) for source in REPOSITORY_SOURCES}
+        completed, cooldowns = set(), {}
+        if args.resume:
+            try:
+                candidates, completed, cooldowns, digest = load_resume(args.resume, plan)
+            except (OSError, ValueError, TypeError) as exc:
+                parser.exit(1, f"Invalid discovery resume report ({type(exc).__name__})\n")
+            metadata["resumed_report_sha256"] = digest
+        queries_reused = len(completed)
+        queries_attempted = 0
+        for source, terms in plan.items():
+            pending = [query for query in terms if (source, query) not in completed]
+            deadline = cooldowns.get(source, 0)
+            if deadline > time.time():
+                errors.extend({"source": source, "query": query, "error": "provider_cooldown_pending",
+                               "retry_not_before": deadline} for query in pending)
+                continue
+            for index, query in enumerate(pending):
+                queries_attempted += 1
                 try:
                     payload = fetch_with_retry(search_url(source, query))
                     candidates.extend(repository_candidates(source, payload))
                     if incomplete_repository_response(source, payload):
                         errors.append({"source": source, "query": query, "error": "incomplete_repository_response"})
+                    else:
+                        completed.add((source, query))
                 except REQUEST_ERRORS as exc:
                     error = {"source": source, "query": query, "error": type(exc).__name__}
                     limited = False
@@ -183,20 +254,29 @@ def main():
                         details = http_error_details(exc)
                         error["http_status"] = details["http_status"]
                         limited = provider_rate_limited(details)
+                        if limited:
+                            error["retry_not_before"] = retry_not_before(details)
                     errors.append(error)
                     # Provider-wide rate limits must not trigger five more API calls.
                     # Preserve skipped terms as incomplete rather than empty results.
                     if limited:
                         errors.extend({"source": source, "query": term,
                                        "error": "provider_rate_limit_skipped"}
-                                      for term in QUERIES[index + 1:])
+                                      for term in pending[index + 1:])
                         break
+        metadata.update(query_plan=plan, queries_reused=queries_reused,
+                        queries_attempted_this_run=queries_attempted,
+                        completed_queries={
+                            source: [query for query in queries if (source, query) in completed]
+                            for source, queries in plan.items()})
     unique = {item["source_id"]: item for item in candidates}
-    output = Path(args.output)
+    output = args.output
     output.parent.mkdir(parents=True, exist_ok=True)
     # Preserve earlier evidence even when repeated jobs target the same report.
     with output.open("x", encoding="utf-8") as report:
-        report.write(json.dumps({"mode": "network" if args.network else "offline", "candidates": list(unique.values()), "errors": errors, "av_verified": 0}, indent=2) + "\n")
+        report.write(json.dumps({"mode": "network" if args.network else "offline",
+                                 "candidates": list(unique.values()), "errors": errors,
+                                 "av_verified": 0, **metadata}, indent=2) + "\n")
     print("Candidate identities:", len(unique), "Errors:", len(errors))
     # Persist partial evidence, but never report a failed live scan as success.
     if errors:

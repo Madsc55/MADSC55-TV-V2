@@ -45,6 +45,7 @@ jobs:
             exit 1
           fi
       - name: Discover new GitHub M3U sources before AV scanning
+        continue-on-error: true
         run: |
           python v2/github_source_discovery.py
       - name: Install YouTube discovery dependency

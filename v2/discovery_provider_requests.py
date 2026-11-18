@@ -61,8 +61,7 @@ def http_error_details(exc):
     return details
 
 
-def _retry_after_seconds(exc):
-    raw = header(exc, "Retry-After")
+def _retry_after_seconds(raw):
     if raw is None:
         return None
     try:
@@ -78,21 +77,35 @@ def _retry_after_seconds(exc):
             return None
 
 
+def _rate_limit_wait(retry_after, remaining, reset):
+    delay = _retry_after_seconds(retry_after)
+    if delay is None or str(remaining).strip() == "0":
+        try:
+            delay = max(delay or 0, math.ceil(int(reset) - time.time()))
+        except (OverflowError, TypeError, ValueError):
+            pass
+    return delay
+
+
+def retry_not_before(details):
+    """Record a provider cooldown for later discovery runs."""
+    wait = _rate_limit_wait(details.get("retry_after"), details.get("rate_limit_remaining"),
+                            details.get("rate_limit_reset"))
+    return math.ceil(time.time()) + (wait if wait is not None else 60)
+
+
 def retry_delay(exc, attempt):
     """Return a delay within the request budget, or None to end this request."""
     if not isinstance(exc, urllib.error.HTTPError):
         return attempt if isinstance(exc, RETRYABLE_CONNECTION) else None
     if exc.code not in RETRYABLE_HTTP:
         return None
-    delay = _retry_after_seconds(exc)
+    retry_after = header(exc, "Retry-After")
     if exc.code == 429:
-        remaining = header(exc, "X-RateLimit-Remaining")
-        if delay is None or str(remaining).strip() == "0":
-            try:
-                reset = int(header(exc, "X-RateLimit-Reset"))
-                delay = max(delay or 0, math.ceil(reset - time.time()))
-            except (OverflowError, TypeError, ValueError):
-                pass
+        delay = _rate_limit_wait(retry_after, header(exc, "X-RateLimit-Remaining"),
+                                 header(exc, "X-RateLimit-Reset"))
+    else:
+        delay = _retry_after_seconds(retry_after)
     if delay is None:
         base = 1
         if exc.code == 429:

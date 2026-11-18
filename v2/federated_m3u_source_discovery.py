@@ -214,6 +214,10 @@ def discover_provider(provider, fetch_json_fn=fetch_json, fetch_text_fn=_raw_fet
 
 
 def main():
+    reports = {provider: ROOT / "v2/reports" / (provider + "-m3u-source-discovery.json")
+               for provider in ("gitlab", "codeberg")}
+    if any(path.exists() or path.is_symlink() for path in reports.values()):
+        raise SystemExit("Federated discovery report already exists")
     configured = set()
     config = ROOT / "v2/config/sources.json"
     try:
@@ -221,18 +225,23 @@ def main():
                       if isinstance(row, dict) and isinstance(row.get("url"), str)}
     except (OSError, ValueError, TypeError, KeyError):
         pass
-    for provider in ("gitlab", "codeberg"):
+    incomplete = False
+    for provider, path in reports.items():
         result = discover_provider(provider, configured_urls=configured)
-        path = ROOT / "v2/reports" / (provider + "-m3u-source-discovery.json")
         path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(json.dumps({
+        report = {
             "created_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
             "policy": "READ_ONLY_NO_AUTOMATIC_SOURCE_OR_PLAYLIST_IMPORT",
             **result,
-        }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        }
+        with path.open("x", encoding="utf-8") as output:
+            output.write(json.dumps(report, ensure_ascii=False, indent=2) + "\n")
+        incomplete |= result["status"] != "ok"
         configured.update(row["url"] for row in result["sources"])
         print(provider, "projects:", result["projects_discovered"],
               "M3U sources:", result["sources_found"], "status:", result["status"])
+    if incomplete:
+        raise SystemExit(1)
 
 
 if __name__ == "__main__":
