@@ -199,8 +199,9 @@ def load_resume(path, plan):
         if not isinstance(checked, dict) or checked.keys() != plan.keys():
             raise ValueError("Invalid completed-query record")
         for source, entries in checked.items():
-            if (not isinstance(entries, list) or len(entries) != len(set(entries))
-                    or any(not isinstance(query, str) or query not in plan[source] for query in entries)):
+            if (not isinstance(entries, list)
+                    or any(not isinstance(query, str) or query not in plan[source] for query in entries)
+                    or len(entries) != len(set(entries))):
                 raise ValueError("Invalid completed-query record")
             completed.update((source, query) for query in entries)
         if completed & failures:
