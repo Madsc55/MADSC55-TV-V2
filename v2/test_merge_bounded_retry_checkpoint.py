@@ -62,5 +62,30 @@ class BoundedEvidenceTests(unittest.TestCase):
         _, n = reconcile(newer, self.report)
         self.assertEqual(n, 14)
 
+
+    def test_real_committed_report_shape_and_outcomes(self):
+        from pathlib import Path
+        path = Path(__file__).resolve().parent / "reports" / "task17-18-20-bounded-retry-20261118.json"
+        real = __import__("json").loads(path.read_text(encoding="utf-8"))
+        self.assertEqual(len(real["observations"]), 15)
+        self.assertEqual(sum(len(x["attempts"]) for x in real["observations"]), 17)
+        for obs in real["observations"]:
+            self.assertEqual(len(obs["url_sha256"]), 64)
+            self.assertIn(obs["latest_disposition"], real["latest_outcomes"])
+            self.assertLessEqual(obs["recovery_attempts_after_batch"], 3)
+        self.assertFalse(real["sealed_checkpoint_updated"])
+
+    def test_duplicate_hash_fails_closed(self):
+        report = copy.deepcopy(self.report)
+        report["observations"][1]["url_sha256"] = report["observations"][0]["url_sha256"]
+        with self.assertRaises(ValueError):
+            reconcile(self.rows, report)
+
+    def test_false_http_status_fails_closed(self):
+        report = copy.deepcopy(self.report)
+        report["observations"][1]["attempts"][0]["manifest_http_status"] = 200
+        with self.assertRaises(ValueError):
+            reconcile(self.rows, report)
+
 if __name__ == "__main__":
     unittest.main()
