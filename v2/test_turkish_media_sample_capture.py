@@ -16,6 +16,24 @@ class CaptureTests(unittest.TestCase):
     def test_dns_names_rejected_to_prevent_rebinding(self):
         with self.assertRaises(ValueError):
             validate_url("https://example.com/live")
+    def test_invalid_ports_rejected(self):
+        for url in ("http://8.8.8.8:abc/live", "http://8.8.8.8:65536/live", "http://8.8.8.8:0/live"):
+            with self.subTest(url=url), self.assertRaises(ValueError):
+                validate_url(url)
+
+    def test_symlink_created_during_capture_removed(self):
+        with tempfile.TemporaryDirectory() as d:
+            p = Path(d)/"sample.mkv"
+            target = Path(d)/"protected.txt"
+            target.write_text("untouched")
+            def runner(cmd, **kwargs):
+                p.symlink_to(target)
+                return SimpleNamespace(returncode=0)
+            with self.assertRaises(ValueError):
+                capture("http://8.8.8.8/live", p, runner=runner, which=lambda _: "/usr/bin/ffmpeg")
+            self.assertFalse(p.is_symlink())
+            self.assertEqual(target.read_text(), "untouched")
+
     def test_redirects_disabled(self):
         with tempfile.TemporaryDirectory() as d:
             p = Path(d)/"sample.mkv"
