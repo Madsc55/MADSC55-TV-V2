@@ -37,6 +37,21 @@ def load_progress(path, passphrase, *, worldwide, now=None):
     checkpoint data fail closed instead of silently asserting old AV proof.
     Rows older than the freshness window are not reused.
     """
+    rows = _read_progress_rows(path, passphrase, worldwide=worldwide)
+    now = time.time() if now is None else now
+    return {url: item for url, item in rows.items()
+            if -60 <= now - item["checked_at"] <= MAX_AGE_SECONDS}
+
+
+def load_failed_retry_candidates(path, passphrase, *, worldwide, now=None):
+    """Return past failures for fresh probes without reusing playback evidence."""
+    rows = _read_progress_rows(path, passphrase, worldwide=worldwide)
+    now = time.time() if now is None else now
+    return {url: item for url, item in rows.items()
+            if item.get("result") is None and item["checked_at"] <= now + 60}
+
+
+def _read_progress_rows(path, passphrase, *, worldwide):
     path = Path(path)
     if path.is_symlink():
         raise ValueError("Symlinked scan checkpoint refused")
@@ -51,7 +66,6 @@ def load_progress(path, passphrase, *, worldwide, now=None):
             or not isinstance(report.get("rows"), list)
             or len(report["rows"]) > MAX_ROWS):
         raise ValueError("Invalid scan checkpoint format or scope")
-    now = time.time() if now is None else now
     accepted = {}
     for item in report["rows"]:
         if not isinstance(item, dict):
@@ -69,8 +83,7 @@ def load_progress(path, passphrase, *, worldwide, now=None):
             raise ValueError("Invalid checkpoint observation")
         if url in accepted:
             raise ValueError("Duplicate checkpoint URL")
-        if -60 <= now - checked_at <= MAX_AGE_SECONDS:
-            accepted[url] = item
+        accepted[url] = item
     return accepted
 
 
