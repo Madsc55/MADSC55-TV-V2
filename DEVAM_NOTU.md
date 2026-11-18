@@ -1,3 +1,9 @@
+## 18 Kasım 2026 — Arşivden kurtarma kuyruğuna devam
+
+- 14 Kasım arşivinin ZIP hash’i ve şifreli checkpoint dosyası doğrulandı. Son deneme 300 tekrar içinde 28 yeni görüntü ve ses doğrulaması kaydetti. 20.148 kayıt açık kaldı. [Actions kanıtı](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43608247496/artifacts/14135417421)
+- Tarayıcı, şifreli bir geçmiş kayıttaki başarısız denemeleri yeniden test için seçebiliyor ve deneme sayısını koruyor. Önceki görüntü ve ses kanıtı için 18 saatlik geçerlilik süresi uygulanıyor. Yerelde 53 regresyon testi geçti.
+- #17, #18 ve #20 için yeni canlı görüntü ve ses sonuçları bekleniyor. Canlı tekrar denemesi için Actions ortamında şifreli checkpoint’e ve arşiv anahtarına erişim gerekiyor. [Açık görevler](v2/tasks/state.json)
+
 ## 18 Kasım 2026 — Türkçe kanal kanıt zinciri ve süre kararı
 - [PR #405](https://github.com/Madsc55/MADSC55-TV-V2/pull/405) kaynak sorgu planı kayması koruması; [PR #406](https://github.com/Madsc55/MADSC55-TV-V2/pull/406) önceki Türkçe kanal sınıflandırıcısı ve 8 regresyon testinin geri getirilmesi; [PR #407](https://github.com/Madsc55/MADSC55-TV-V2/pull/407) ASR/OCR/WebVTT/FFmpeg kaynaklı kanıt kayıtlarını salt-okunur, fail-closed toplu inceleme modülüne alma. Üçü de güvenlik onayından sonra main'e birleştirildi. #407 güvenlik koşusu 44326853217 SUCCESS.
 - Kullanıcı kararı: 20–30 saniyelik zorunlu ses/görüntü izleme eklenmeyecek. Mevcut scanner varsayılan timeout=12s ve ffmpeg/ffprobe subprocess timeout+5s sınırı korunacak; bu 17 saniye sürekli dinleme anlamına GELMEZ. ASR/OCR için yeterli medya kanıtı yoksa inceleme açık kalır, Türk/yabancı otomatik onayı ve playlist taşıma yapılmaz.

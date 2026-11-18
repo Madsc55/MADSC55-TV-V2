@@ -729,13 +729,19 @@ def main():
     # Resume is bound to the exact stream URL, authentic AES ciphertext and a
     # short evidence lifetime. Previous AV proof remains tagged as previous-run
     # evidence; it is never labeled as a new FFmpeg decode in this invocation.
-    from scan_checkpoint import checkpoint_row, load_progress, save_progress
+    from scan_checkpoint import checkpoint_row, load_failed_retry_candidates, load_progress, save_progress
     checkpoint_path = args.inventory.parent / 'ibo-scan-progress.enc'
     prior_progress = (load_progress(
         args.resume_checkpoint, os.environ['V2_ARCHIVE_PASSPHRASE'],
         worldwide=args.worldwide) if args.resume_checkpoint is not None else {})
+    retry_history = prior_progress
+    if args.resume_checkpoint is not None and args.retry_failed_limit:
+        older_failures = load_failed_retry_candidates(
+            args.resume_checkpoint, os.environ['V2_ARCHIVE_PASSPHRASE'],
+            worldwide=args.worldwide)
+        retry_history = {**older_failures, **prior_progress}
     retry_urls, eligible_retries = select_checkpoint_retry_urls(
-        prior_progress, candidates, args.retry_failed_limit)
+        retry_history, candidates, args.retry_failed_limit)
     progress_rows = {}
     resumed_urls = set()
     resumed_verified_urls = set()
@@ -766,7 +772,7 @@ def main():
                 resumed_urls.add(url)
                 if result is not None:
                     resumed_verified_urls.add(url)
-            previous_attempts = prior_progress.get(url, {}).get(
+            previous_attempts = retry_history.get(url, {}).get(
                 'recovery_attempts', historical_records.get(url, {}).get('recovery_attempts', 0))
             next_attempts = next_recovery_attempts(
                 previous_attempts, reused=reused, av_verified=result is not None)

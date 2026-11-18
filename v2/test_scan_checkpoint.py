@@ -6,7 +6,7 @@ import unittest
 from pathlib import Path
 
 from scan_checkpoint import (
-    MAX_AGE_SECONDS, checkpoint_row, load_progress, save_progress,
+    MAX_AGE_SECONDS, checkpoint_row, load_failed_retry_candidates, load_progress, save_progress,
 )
 
 
@@ -126,6 +126,21 @@ class ScanCheckpointTests(unittest.TestCase):
                       rows={self.url: stale})
         self.assertEqual(load_progress(
             self.path, self.secret, worldwide=True, now=now), {})
+
+    def test_old_failures_can_be_selected_for_fresh_probes(self):
+        now = time.time()
+        earlier = now - MAX_AGE_SECONDS - 1
+        failed = "https://example.org/failed.m3u8"
+        future = "https://example.org/future.m3u8"
+        save_progress(self.path, self.secret, worldwide=True, rows={
+            self.url: checkpoint_row(self.url, self.good, {}, checked_at=earlier),
+            failed: checkpoint_row(failed, None, {}, checked_at=earlier, recovery_attempts=2),
+            future: checkpoint_row(future, None, {}, checked_at=now + 61),
+        })
+        self.assertEqual(load_progress(self.path, self.secret, worldwide=True, now=now), {})
+        retries = load_failed_retry_candidates(self.path, self.secret, worldwide=True, now=now)
+        self.assertEqual(list(retries), [failed])
+        self.assertEqual(retries[failed]["recovery_attempts"], 2)
 
     def test_corruption_wrong_secret_and_scope_are_refused(self):
         row = checkpoint_row(self.url, self.good, {})
