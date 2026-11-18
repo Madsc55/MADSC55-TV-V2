@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Offline tests for the read-only pre-scan readiness decision."""
 import unittest
+import json
 from unittest.mock import patch
 from prescan_readiness_gate import REQUIRED, inspect
 
@@ -46,6 +47,25 @@ class PreScanGateTests(unittest.TestCase):
             with self.assertRaises(SystemExit):
                 discovery_34.main()
             fetch.assert_not_called()
+
+    def test_checked_in_ledger_blocks_live_scan(self):
+        import json
+        from prescan_readiness_gate import STATE
+        report = inspect(json.loads(STATE.read_text(encoding="utf-8")))
+        self.assertFalse(report["ready"])
+        self.assertIn(34, report["pending"])
+
+    def test_offline_discovery_does_not_require_readiness(self):
+        import discovery_34
+        import tempfile
+        from pathlib import Path
+        with tempfile.TemporaryDirectory() as tmp:
+            output = str(Path(tmp) / "offline.json")
+            with patch("sys.argv", ["discovery_34.py", "--output", output]), \\
+                 patch("discovery_34.fetch_with_retry") as fetch:
+                discovery_34.main()
+                fetch.assert_not_called()
+            self.assertEqual(json.loads(Path(output).read_text())["mode"], "offline")
 
     def test_unknown_status_blocks(self):
         entries = [{"id": i, "status": "completed"} for i in REQUIRED]
