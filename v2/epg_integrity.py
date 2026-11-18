@@ -64,6 +64,7 @@ def inspect(url, playlist_ids):
         programmes = 0
         current_programmes = 0
         invalid_programme_intervals = 0
+        missing_programme_titles = 0
         matched_programme_ids = set()
         valid_matched_programme_ids = set()
         current_matched_programme_ids = set()
@@ -72,6 +73,10 @@ def inspect(url, playlist_ids):
             channel_id = node.get("channel")
             if channel_id in playlist_ids:
                 matched_programme_ids.add(channel_id)
+            title = node.find("title")
+            has_title = title is not None and bool("".join(title.itertext()).strip())
+            if not has_title:
+                missing_programme_titles += 1
             start, stop = node.get("start", ""), node.get("stop", "")
             try:
                 start_at = parse_xmltv_time(start)
@@ -82,7 +87,7 @@ def inspect(url, playlist_ids):
                 # Only unique XMLTV channel declarations and valid time ranges
                 # qualify for the stricter evidence counts. The legacy raw
                 # matched-programme count is retained for compatibility.
-                matching_unique = channel_id in playlist_ids and channel_counts[channel_id] == 1
+                matching_unique = channel_id in playlist_ids and channel_counts[channel_id] == 1 and has_title
                 if matching_unique:
                     valid_matched_programme_ids.add(channel_id)
                 if start_at <= now <= stop_at:
@@ -99,6 +104,7 @@ def inspect(url, playlist_ids):
                       duplicate_channel_ids=sum(count > 1 for count in channel_counts.values()),
                       current_programme_intervals=current_programmes,
                       invalid_programme_intervals=invalid_programme_intervals,
+                      missing_programme_titles=missing_programme_titles,
                       playlist_id_match_rate=round(len(channels & playlist_ids) / len(playlist_ids), 4) if playlist_ids else None)
     except (OSError, ValueError, ET.ParseError, EOFError, gzip.BadGzipFile, MemoryError) as exc:
         result.update(status="EPG_UNVERIFIED", error_type=type(exc).__name__)
