@@ -2,7 +2,7 @@ import tempfile
 from pathlib import Path
 from types import SimpleNamespace
 import unittest
-from v2.turkish_media_sample_capture import capture, validate_url
+from v2.turkish_media_sample_capture import MAX_BYTES, capture, validate_url
 
 class CaptureTests(unittest.TestCase):
     def test_bad_urls(self):
@@ -21,6 +21,7 @@ class CaptureTests(unittest.TestCase):
             p = Path(d)/"sample.mkv"
             def runner(cmd, **kwargs):
                 self.assertEqual(cmd[cmd.index("-max_redirect")+1], "0")
+                self.assertEqual(cmd[cmd.index("-fs")+1], str(MAX_BYTES))
                 p.write_bytes(b"sample")
                 return SimpleNamespace(returncode=0)
             capture("http://8.8.8.8/live", p, runner=runner, which=lambda _: "/usr/bin/ffmpeg")
@@ -51,6 +52,17 @@ class CaptureTests(unittest.TestCase):
             self.assertFalse(r["language_verified"])
             self.assertFalse(r["asr_completed"])
             self.assertFalse(r["ocr_completed"])
+    def test_oversize_capture_is_rejected_and_removed(self):
+        with tempfile.TemporaryDirectory() as d:
+            p = Path(d)/"sample.mkv"
+            def runner(cmd, **kwargs):
+                with p.open("wb") as output:
+                    output.truncate(MAX_BYTES + 1)
+                return SimpleNamespace(returncode=0)
+            r = capture("http://8.8.8.8/live", p, runner=runner, which=lambda _: "/usr/bin/ffmpeg")
+            self.assertEqual(r["status"], "CAPTURE_FAILED")
+            self.assertFalse(p.exists())
+
     def test_failed_capture_cleans_partial_file(self):
         with tempfile.TemporaryDirectory() as d:
             p = Path(d)/"sample.mkv"
