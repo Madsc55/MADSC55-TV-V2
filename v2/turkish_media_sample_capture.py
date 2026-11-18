@@ -52,7 +52,7 @@ def capture(url, destination, *, seconds=4, timeout=17, runner=subprocess.run, w
         raise ValueError("Output must be a new .mkv file in an existing directory")
     cmd = [executable, "-nostdin", "-hide_banner", "-loglevel", "error",
            "-rw_timeout", str(timeout * 1000000), "-max_redirect", "0",
-           "-i", url, "-t", str(seconds),
+           "-i", url, "-t", str(seconds), "-fs", str(MAX_BYTES),
            "-map", "0:v:0?", "-map", "0:a:0?", "-c:v", "mpeg4", "-q:v", "12",
            "-c:a", "aac", "-b:a", "48k", "-n", str(dest)]
     try:
