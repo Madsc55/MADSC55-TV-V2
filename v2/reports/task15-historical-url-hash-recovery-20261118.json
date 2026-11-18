@@ -1,0 +1,115 @@
+{
+  "schema": 1,
+  "kind": "V2_TASK_15_HISTORICAL_URL_SHA256_RECOVERY",
+  "checked_on": "2026-11-18",
+  "repository_commit_at_check": "272084591df556c115eed273cecfa880760f2fcf",
+  "hash_algorithm": "sha256 over the UTF-8 stream address without surrounding whitespace",
+  "historical_aggregate_artifact_ids": [
+    12844533683,
+    12936474481
+  ],
+  "worldwide_crosswalk_artifact_id": 13524765368,
+  "historical_hashes": 4955,
+  "prior_worldwide_exact_matches": 4949,
+  "additional_exact_matches": 4,
+  "unmatched_after_audit": 2,
+  "current_stream_playback_measured": false,
+  "task_status": "in_progress",
+  "records": [
+    {
+      "name": "Xinjiang TV 3",
+      "historical_source_id": "dearbulut-online",
+      "url_sha256": "21f7e2f5adbafa79b67f957188aa6a9169e816a82c2025fdca9f1ca19d6fefc3",
+      "exact_match_sources": []
+    },
+    {
+      "name": "HTV Sports (1080i)",
+      "historical_source_id": "iptv-org",
+      "url_sha256": "32adcd0f50b9a3317843dd473aa27e663df67d14d417bb25caa1c5d439f7a0b5",
+      "exact_match_sources": [
+        {
+          "kind": "playlist_feed",
+          "source": "https://raw.githubusercontent.com/iptv-org/iptv/d3ce1f14b78328402fcccef539febc7ee4ec0104/index.m3u",
+          "utf8_feed_sha256": "f67d60e9aa5cc442095672fc13dc9df23c169a9f79e57cdcc61d1061cf083c5c"
+        }
+      ]
+    },
+    {
+      "name": "Arica TV",
+      "historical_source_id": "iptv-org",
+      "url_sha256": "39f38831a9c92703931a7a44a580cec1621210e3dd2ebf571168db460b59b806",
+      "exact_match_sources": [
+        {
+          "kind": "repository_m3u8",
+          "commit": "272084591df556c115eed273cecfa880760f2fcf",
+          "path": "YEDEKLER_PLAYLISTESI.m3u8"
+        },
+        {
+          "kind": "repository_m3u8",
+          "commit": "272084591df556c115eed273cecfa880760f2fcf",
+          "path": "v2/yedekler_batch/ANA_ARSIV.m3u8"
+        },
+        {
+          "kind": "repository_m3u8",
+          "commit": "272084591df556c115eed273cecfa880760f2fcf",
+          "path": "v2/yedekler_batch/YEDEKLER_ARCHIVE.m3u8"
+        },
+        {
+          "kind": "playlist_feed",
+          "source": "https://raw.githubusercontent.com/iptv-org/iptv/d3ce1f14b78328402fcccef539febc7ee4ec0104/index.m3u",
+          "utf8_feed_sha256": "f67d60e9aa5cc442095672fc13dc9df23c169a9f79e57cdcc61d1061cf083c5c"
+        }
+      ],
+      "publisher_evidence": {
+        "official_live_page": "https://arica.tv/envivo/",
+        "official_page_links_to_stream_host": true,
+        "exact_address_observed_on_publisher_page": false
+      }
+    },
+    {
+      "name": "American Ninja Warrior (1080p)",
+      "historical_source_id": "dearbulut-online",
+      "url_sha256": "5f50e0bc25685e0a619e238d25ee2bec533791e782ae3d32881e3d1384337105",
+      "exact_match_sources": []
+    },
+    {
+      "name": "Tooncast (1080p)",
+      "historical_source_id": "iptv-org",
+      "url_sha256": "dfb82c288ce5e9d1835e56fe0abc52006b3844298fa360b38a4706b59bb3f549",
+      "exact_match_sources": [
+        {
+          "kind": "repository_m3u8",
+          "commit": "272084591df556c115eed273cecfa880760f2fcf",
+          "path": "YEDEKLER_PLAYLISTESI.m3u8"
+        },
+        {
+          "kind": "repository_m3u8",
+          "commit": "272084591df556c115eed273cecfa880760f2fcf",
+          "path": "v2/yedekler_batch/ANA_ARSIV.m3u8"
+        },
+        {
+          "kind": "repository_m3u8",
+          "commit": "272084591df556c115eed273cecfa880760f2fcf",
+          "path": "v2/yedekler_batch/YEDEKLER_ARCHIVE.m3u8"
+        },
+        {
+          "kind": "playlist_feed",
+          "source": "https://raw.githubusercontent.com/iptv-org/iptv/d3ce1f14b78328402fcccef539febc7ee4ec0104/index.m3u",
+          "utf8_feed_sha256": "f67d60e9aa5cc442095672fc13dc9df23c169a9f79e57cdcc61d1061cf083c5c"
+        }
+      ]
+    },
+    {
+      "name": "Bir TV",
+      "historical_source_id": "github-auto-11",
+      "url_sha256": "f94ca33a1174497a88850617a3a8a420672fd64ecd3a8cfb5517df524f8395bc",
+      "exact_match_sources": [
+        {
+          "kind": "playlist_feed",
+          "source": "https://raw.githubusercontent.com/YosemiteSam6/turkiye-iptv-m3u-m3u8/d9434294ead2e0ef722abb780fb2302d24258513/kanallar.m3u",
+          "utf8_feed_sha256": "51c6fb78c5425724c98de7982a4cc804fcf2b79fa2b2a83066ccc5efb9a69c05"
+        }
+      ]
+    }
+  ]
+}
