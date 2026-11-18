@@ -25,10 +25,12 @@ def evaluate_observation(name, observation):
     else:
         # OCR of visible text is NOT subtitle evidence: do not invent subtitles.
         # OCR remains separate and cannot set spoken_language or subtitle_language.
-        record["evidence_sources"] = []
+        record["evidence_sources"] = ["ocr"]
     result = evaluate_record(record)
     result["observation_source"] = source
     result["observed_language"] = language.lower()
+    result["observed_language_is_verified"] = False
+    result["observation_provenance"] = source
     result["observed_text_length"] = len(text)
     result["ocr_text_is_not_subtitle_or_speech"] = source == "ocr"
     return result
