@@ -88,7 +88,7 @@ def provider_rate_limited(row):
         return False
     reason = str(row.get("http_reason", "")).casefold()
     remaining = str(row.get("rate_limit_remaining", "")).strip()
-    return remaining == "0" or "rate limit" in reason
+    return remaining == "0" or any(phrase in reason for phrase in ("rate limit", "abuse detection", "too many requests"))
 
 
 def probe_queries(source, queries=QUERIES, fetch=fetch_json, sleep=time.sleep):

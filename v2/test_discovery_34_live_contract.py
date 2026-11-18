@@ -342,6 +342,20 @@ class LiveContractRetryTests(unittest.TestCase):
         self.assertEqual(len(calls), 1)
         self.assertEqual(sleeps, [])
 
+    def test_secondary_403_abuse_detection_opens_provider_circuit(self):
+        calls = []
+        def fetch(url):
+            calls.append(url)
+            raise urllib.error.HTTPError(
+                url, 403, "Abuse detection mechanism triggered", {}, None)
+        result = probe_queries("github", queries=("first", "second", "third"),
+                               fetch=fetch, sleep=lambda _: self.fail("403 must not retry"))
+        self.assertEqual(result["status"], "error")
+        self.assertTrue(result["rate_limited"])
+        self.assertEqual(result["queries_checked"], 1)
+        self.assertEqual(result["queries_skipped"], 2)
+        self.assertEqual(len(calls), 1)
+
     def test_github_fetch_uses_readonly_token_when_available(self):
         import os
         from unittest.mock import patch
