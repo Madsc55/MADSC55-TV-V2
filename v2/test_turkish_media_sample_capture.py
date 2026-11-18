@@ -13,9 +13,20 @@ class CaptureTests(unittest.TestCase):
         for url in ("http://127.0.0.1/live", "http://10.0.0.1/live", "http://192.168.1.1/live", "http://[::1]/live", "https://localhost/live", "https://server.local/live"):
             with self.subTest(url=url), self.assertRaises(ValueError):
                 validate_url(url)
+    def test_dns_names_rejected_to_prevent_rebinding(self):
+        with self.assertRaises(ValueError):
+            validate_url("https://example.com/live")
+    def test_redirects_disabled(self):
+        with tempfile.TemporaryDirectory() as d:
+            p = Path(d)/"sample.mkv"
+            def runner(cmd, **kwargs):
+                self.assertEqual(cmd[cmd.index("-max_redirect")+1], "0")
+                p.write_bytes(b"sample")
+                return SimpleNamespace(returncode=0)
+            capture("http://8.8.8.8/live", p, runner=runner, which=lambda _: "/usr/bin/ffmpeg")
     def test_reject_long_duration_and_timeout(self):
         with self.assertRaises(ValueError):
-            capture("https://example.com/live", "/tmp/unused.mkv", seconds=13)
+            capture("http://8.8.8.8/live", "/tmp/unused.mkv", seconds=13)
         with self.assertRaises(ValueError):
             capture("https://example.com/live", "/tmp/unused.mkv", timeout=18)
     def test_no_ffmpeg_is_not_success(self):
