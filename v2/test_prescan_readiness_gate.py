@@ -18,6 +18,17 @@ class PreScanGateTests(unittest.TestCase):
     def test_missing_blocks(self):
         self.assertFalse(inspect({"statuses": []})["ready"])
 
+    def test_duplicate_ids_block(self):
+        entries = [{"id": i, "status": "completed"} for i in REQUIRED]
+        entries.append(dict(entries[0]))
+        self.assertEqual(inspect({"statuses": entries})["error"], "DUPLICATE_TASK_ID")
+
+    def test_invalid_entry_blocks(self):
+        self.assertEqual(inspect({"statuses": [None]})["error"], "INVALID_ENTRY")
+
+    def test_invalid_statuses_blocks(self):
+        self.assertEqual(inspect({"statuses": {}})["error"], "INVALID_STATUSES")
+
     def test_unknown_status_blocks(self):
         entries = [{"id": i, "status": "completed"} for i in REQUIRED]
         entries[0]["status"] = "unknown"
