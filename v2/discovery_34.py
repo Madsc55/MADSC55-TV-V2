@@ -172,6 +172,8 @@ def load_resume(path, plan):
             or report.get("av_verified") != 0 or not isinstance(report.get("candidates"), list)
             or not isinstance(report.get("errors"), list)):
         raise ValueError("Resume requires a previous network candidate report")
+    if "query_plan" in report and report["query_plan"] != plan:
+        raise ValueError("Resume query plan differs from current discovery plan")
     candidates, failures, cooldowns = [], set(), {}
     for item in report["candidates"]:
         if (not isinstance(item, dict) or item.get("source") not in REPOSITORY_SOURCES

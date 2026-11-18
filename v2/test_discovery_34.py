@@ -169,6 +169,23 @@ class Discovery34Tests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "Invalid completed-query"):
                 load_resume(path, plan)
 
+    def test_resume_rejects_query_plan_drift(self):
+        import json
+        import tempfile
+        from pathlib import Path
+        from discovery_34 import QUERIES, REPOSITORY_SOURCES, load_resume
+        plan = {source: list(QUERIES) for source in REPOSITORY_SOURCES}
+        stale_plan = {source: list(queries) for source, queries in plan.items()}
+        stale_plan["github"] = stale_plan["github"][:-1]
+        report = {"mode": "network", "av_verified": 0, "candidates": [],
+                  "errors": [], "query_plan": stale_plan,
+                  "completed_queries": {source: [] for source in stale_plan}}
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "previous.json"
+            path.write_text(json.dumps(report))
+            with self.assertRaisesRegex(ValueError, "query plan differs"):
+                load_resume(path, plan)
+
     def test_youtube(self):
         items = curated_candidates("youtube", [{"video_id": "AbCdEf12345"}])
         self.assertEqual(items[0]["source_id"], "youtube:AbCdEf12345")
