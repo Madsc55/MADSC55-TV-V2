@@ -7,14 +7,14 @@ speech recognition, OCR, or proof of channel/device playback.
 import re
 from v2.turkish_evidence_ingest import evaluate_record
 
-LANGUAGE = re.compile(r"^Language:\\s*([A-Za-z]{2,3}(?:-[A-Za-z]{2,8})?)\\s*$", re.I)
+LANGUAGE = re.compile(r"^Language:\s*([A-Za-z]{2,3}(?:-[A-Za-z]{2,8})?)\s*$", re.I)
 MAX_BYTES = 256 * 1024
 
 def extract_webvtt(name, content):
     if not isinstance(content, str) or len(content.encode("utf-8")) > MAX_BYTES:
         raise ValueError("Invalid or oversized subtitle data")
-    lines = content.lstrip("\\ufeff").splitlines()
-    if not lines or not re.match(r"^WEBVTT(?:[ \\t].*)?$", lines[0]):
+    lines = content.lstrip("\ufeff").splitlines()
+    if not lines or not re.match(r"^WEBVTT(?:[ \t].*)?$", lines[0]):
         raise ValueError("Not WebVTT")
     # Header ends at first blank line; cue text is never parsed as metadata.
     header = []
