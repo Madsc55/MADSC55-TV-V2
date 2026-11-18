@@ -6,7 +6,7 @@ or archive writes. Capture alone is NOT proof of speech language or OCR.
 """
 import argparse
 import json
-import os
+import ipaddress
 from pathlib import Path
 import shutil
 import subprocess
@@ -24,6 +24,15 @@ def validate_url(url):
         raise ValueError("Only HTTP(S) URLs without embedded credentials are allowed")
     if parsed.fragment:
         raise ValueError("URL fragments are not supported")
+    if parsed.hostname.lower() == "localhost" or parsed.hostname.lower().endswith((".localhost", ".local", ".internal")):
+        raise ValueError("Local hostnames are not supported")
+    try:
+        address = ipaddress.ip_address(parsed.hostname)
+    except ValueError:
+        pass
+    else:
+        if not address.is_global:
+            raise ValueError("Non-public IP addresses are not supported")
     return url
 
 def capture(url, destination, *, seconds=4, timeout=17, runner=subprocess.run, which=shutil.which):
@@ -36,6 +45,8 @@ def capture(url, destination, *, seconds=4, timeout=17, runner=subprocess.run, w
     if not executable:
         return {"status": "FFMPEG_UNAVAILABLE", "language_verified": False, "device_verified": False}
     dest = Path(destination)
+    if dest.is_absolute() and any(part in ("..",) for part in dest.parts):
+        raise ValueError("Invalid output path")
     if dest.exists() or dest.is_symlink():
         raise ValueError("Refusing to overwrite existing file")
     if dest.suffix.lower() != ".mkv" or not dest.parent.is_dir():
@@ -46,6 +57,8 @@ def capture(url, destination, *, seconds=4, timeout=17, runner=subprocess.run, w
            "-c:a", "aac", "-b:a", "48k", "-n", str(dest)]
     try:
         result = runner(cmd, capture_output=True, timeout=timeout, check=False)
+        if dest.is_symlink():
+            raise ValueError("Capture output cannot be a symlink")
         size = dest.stat().st_size if dest.is_file() else 0
         if result.returncode != 0 or not 0 < size <= MAX_BYTES:
             dest.unlink(missing_ok=True)

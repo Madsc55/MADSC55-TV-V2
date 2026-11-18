@@ -9,6 +9,10 @@ class CaptureTests(unittest.TestCase):
         for url in ("file:///tmp/secret", "http://user:pass@example.com/live", "ftp://host/live", "http://host/x#frag"):
             with self.subTest(url=url), self.assertRaises(ValueError):
                 validate_url(url)
+    def test_reject_private_and_local_destinations(self):
+        for url in ("http://127.0.0.1/live", "http://10.0.0.1/live", "http://192.168.1.1/live", "http://[::1]/live", "https://localhost/live", "https://server.local/live"):
+            with self.subTest(url=url), self.assertRaises(ValueError):
+                validate_url(url)
     def test_reject_long_duration_and_timeout(self):
         with self.assertRaises(ValueError):
             capture("https://example.com/live", "/tmp/unused.mkv", seconds=13)
