@@ -29,10 +29,9 @@ def validate_url(url):
     try:
         address = ipaddress.ip_address(parsed.hostname)
     except ValueError:
-        pass
-    else:
-        if not address.is_global:
-            raise ValueError("Non-public IP addresses are not supported")
+        raise ValueError("DNS hostnames are not allowed in restricted capture mode")
+    if not address.is_global:
+        raise ValueError("Non-public IP addresses are not supported")
     return url
 
 def capture(url, destination, *, seconds=4, timeout=17, runner=subprocess.run, which=shutil.which):
@@ -52,7 +51,8 @@ def capture(url, destination, *, seconds=4, timeout=17, runner=subprocess.run, w
     if dest.suffix.lower() != ".mkv" or not dest.parent.is_dir():
         raise ValueError("Output must be a new .mkv file in an existing directory")
     cmd = [executable, "-nostdin", "-hide_banner", "-loglevel", "error",
-           "-rw_timeout", str(timeout * 1000000), "-i", url, "-t", str(seconds),
+           "-rw_timeout", str(timeout * 1000000), "-max_redirect", "0",
+           "-i", url, "-t", str(seconds),
            "-map", "0:v:0?", "-map", "0:a:0?", "-c:v", "mpeg4", "-q:v", "12",
            "-c:a", "aac", "-b:a", "48k", "-n", str(dest)]
     try:
