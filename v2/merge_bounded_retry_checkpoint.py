@@ -8,6 +8,7 @@ from datetime import datetime
 import json
 import os
 from pathlib import Path
+import shutil
 from scan_checkpoint import _read_progress_rows, checkpoint_row, save_progress
 
 OUTCOMES = {"AV_SAMPLE_VERIFIED": 1, "RETRY_HTTP_503": 6, "REVIEW_HTTP_404": 8}
@@ -83,7 +84,21 @@ def main():
     report = json.loads(args.report.read_text(encoding="utf-8"))
     merged, count = reconcile(rows, report)
     if args.apply and count:
+        # Preserve the authenticated encrypted original for manual rollback.
+        backup = args.checkpoint.with_name(args.checkpoint.name + ".pre-bounded-retry.bak")
+        if backup.exists() or backup.is_symlink():
+            p.error("Backup already exists; refusing overwrite")
+        if args.checkpoint.is_symlink() or not args.checkpoint.is_file():
+            p.error("Regular encrypted checkpoint required")
+        with args.checkpoint.open("rb") as source, backup.open("xb") as target:
+            os.fchmod(target.fileno(), 0o600)
+            shutil.copyfileobj(source, target)
+            target.flush()
+            os.fsync(target.fileno())
         save_progress(args.checkpoint, secret, worldwide=True, rows=merged)
+        verified = _read_progress_rows(args.checkpoint, secret, worldwide=True)
+        if verified != merged or len(verified) != len(rows):
+            raise ValueError("Encrypted checkpoint read-back mismatch")
     print(json.dumps({"existing_rows": len(rows), "eligible_updates": count,
                       "applied": count if args.apply else 0, "dry_run": not args.apply}))
 
