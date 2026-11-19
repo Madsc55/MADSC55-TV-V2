@@ -1,3 +1,7 @@
+## 19 Kasım 2026 — Son 49 arşiv taşımasının geri alma kaydı
+
+[#395](https://github.com/Madsc55/MADSC55-TV-V2/pull/395) ile taşınmış 49 kanalın kaynak sıraları, önceki ve sonraki Git kayıtlarındaki birebir durum farkından çıkarıldı. Geri alma geçmişine bu işlem eklendi. İlk geri alma 49, ikincisi [#392](https://github.com/Madsc55/MADSC55-TV-V2/pull/392) ile taşınan 375 kaydı geri getirir. Aktif 2.076, Türk arşivindeki 424 ve ana arşivdeki 15.574 kanalın atamaları aynıdır.
+
 ## 19 Kasım 2026 — Güncel logo eksikleri, salt-okunur aday raporu (CI bekliyor)
 
 - Güncel ana playlist blob `1b9ff7e01a0d045c400b1317d50cfca64101b0d4`: 2.914 kayıt, 489 logosuz kayıt (tamamı YEDEKLER). Aynı görüntülenen kanal adı için mevcut listede tek logo URL'si bulunan 21 logosuz satır (19 benzersiz ad) `v2/reports/logo-current-exact-name-review-20261119.json` içinde kayıt bazında belgelendi. Bu sadece REVIEW_REQUIRED_NOT_VERIFIED inceleme kuyruğudur; resmî logo görseli doğrulanmadı, hiçbir logo atanmadı. Tarihsel #356 ve #391 riskli PR'ları birleştirilmeden kapatıldı. Ana playlist, arşivler, yayın URL'leri ve güvenlik manifesti değiştirilmedi.
