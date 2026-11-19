@@ -37,6 +37,23 @@ class LogoAuditTests(unittest.TestCase):
         current = playlist(("a", "https://example.org/new.png", "A", url))
         self.assertEqual(audit(current, old)["candidate_count"], 0)
 
+    def test_same_url_and_id_but_renamed_channel_is_rejected(self):
+        url = "https://example.org/live.m3u8"
+        old = playlist(("a", "https://example.org/a.png", "Old", url))
+        current = playlist(("a", "", "Different", url))
+        result = audit(current, old)
+        self.assertEqual(result["candidate_count"], 0)
+        self.assertEqual(result["ambiguous_records_skipped"], 1)
+
+    def test_same_url_and_id_but_changed_archive_group_is_rejected(self):
+        url = "https://example.org/live.m3u8"
+        old = playlist(("a", "https://example.org/a.png", "A", url))
+        current = playlist(("a", "", "A", url)).replace(
+            'group-title="YEDEKLER"', 'group-title="TURK ARŞİVİ"')
+        result = audit(current, old)
+        self.assertEqual(result["candidate_count"], 0)
+        self.assertEqual(result["ambiguous_records_skipped"], 1)
+
     def test_non_https_historical_logo_is_rejected(self):
         url = "https://example.org/live.m3u8"
         old = playlist(("a", "http://example.org/a.png", "A", url))
