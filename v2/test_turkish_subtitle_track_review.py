@@ -1,5 +1,5 @@
 import unittest
-from v2.turkish_subtitle_track_review import review_tracks
+from v2.turkish_subtitle_track_review import review_tracks, review_batch
 
 class SubtitleTrackReviewTests(unittest.TestCase):
     def test_turkish_track_is_candidate_only(self):
@@ -25,6 +25,32 @@ class SubtitleTrackReviewTests(unittest.TestCase):
                      {"streams": [{"index": 1, "codec_type": "subtitle", "tags": {"language": 42}}]}):
             with self.subTest(data=data), self.assertRaises(ValueError):
                 review_tracks(data)
+
+class SubtitleBatchTests(unittest.TestCase):
+    def test_multiple_channels_without_stream_urls(self):
+        report = review_batch([
+            {"channel_id": "foreign-1", "ffprobe": {"streams": [
+                {"index": 2, "codec_type": "subtitle", "tags": {"language": "tr"}}]}},
+            {"channel_id": "foreign-2", "ffprobe": {"streams": [
+                {"index": 0, "codec_type": "audio", "tags": {"language": "tr"}}]}}])
+        self.assertEqual(report["count"], 2)
+        self.assertEqual(report["candidate_channels"], 1)
+        self.assertEqual(report["approved"], 0)
+        self.assertFalse(report["playlist_modified"])
+
+    def test_duplicate_channel_id_rejected(self):
+        item = {"channel_id": "same", "ffprobe": {"streams": []}}
+        with self.assertRaises(ValueError):
+            review_batch([item, item])
+
+    def test_untrusted_fields_rejected(self):
+        with self.assertRaises(ValueError):
+            review_batch([{"channel_id": "tv", "ffprobe": {"streams": []}, "approved": True}])
+
+    def test_oversized_batch_rejected(self):
+        with self.assertRaises(ValueError):
+            review_batch([{"channel_id": str(i), "ffprobe": {"streams": []}} for i in range(20001)])
+
 
 if __name__ == "__main__":
     unittest.main()
