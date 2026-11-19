@@ -8,6 +8,13 @@ def http_error(code):
     return urllib.error.HTTPError("https://codeberg.org/api/v1/repos/search", code, "test", {}, None)
 
 class LiveContractRetryTests(unittest.TestCase):
+    def test_diagnostic_query_budget_rejects_unknown_duplicates_and_oversized_plan(self):
+        for queries in (("unapproved",), ("tr.m3u8", "tr.m3u8"),
+                        ("tr.m3u8",) * 7):
+            with self.subTest(queries=queries), self.assertRaises(ValueError):
+                probe_queries("codeberg", queries=queries,
+                              fetch=lambda _: self.fail("No request allowed for invalid plan"))
+
     def test_transient_recovery(self):
         calls = []
         sleeps = []
@@ -241,7 +248,7 @@ class LiveContractRetryTests(unittest.TestCase):
             calls.append(1)
             raise urllib.error.HTTPError("https://gitlab.com/api/v4/projects", 429,
                                          "rate limited", {"Retry-After": "9999"}, None)
-        result = probe_queries("gitlab", queries=("first", "second"), fetch=fetch, sleep=sleeps.append)
+        result = probe_queries("gitlab", queries=("turkiye.m3u", "tr.m3u8"), fetch=fetch, sleep=sleeps.append)
         self.assertTrue(result["rate_limited"])
         self.assertEqual(len(calls), 1)
         self.assertEqual(sleeps, [])
