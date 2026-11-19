@@ -1,8 +1,6 @@
 name: YEDEKLER recurring video and audio audit
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '20 3 * * 0'
 permissions:
   contents: read
 jobs:
