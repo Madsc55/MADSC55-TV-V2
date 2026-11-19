@@ -7,6 +7,7 @@ import argparse
 import json
 import re
 from pathlib import Path
+from collections import Counter
 
 LOGO = re.compile(r'(?<![\w-])tvg-logo="([^"]+)"')
 ID = re.compile(r'(?<![\w-])tvg-id="([^"]+)"')
@@ -29,6 +30,17 @@ def records(text):
 
 def audit(current_text, historical_text):
     current, historical = records(current_text), records(historical_text)
+    # A tvg-id repeated on distinct streams cannot establish a unique channel.
+    current_ids = Counter(
+        match.group(1)
+        for lines in current.values() for line in lines
+        if (match := ID.search(line))
+    )
+    historical_ids = Counter(
+        match.group(1)
+        for lines in historical.values() for line in lines
+        if (match := ID.search(line))
+    )
     candidates, ambiguous = [], 0
     for url, old_lines in historical.items():
         new_lines = current.get(url, [])
@@ -44,6 +56,10 @@ def audit(current_text, historical_text):
         old_id, new_id = ID.search(old), ID.search(new)
         # Never transfer a logo across changed or missing channel identity.
         if not old_id or not new_id or old_id.group(1) != new_id.group(1):
+            ambiguous += 1
+            continue
+        if (current_ids[new_id.group(1)] != 1
+                or historical_ids[old_id.group(1)] != 1):
             ambiguous += 1
             continue
         # A shared URL/ID is insufficient if its visible channel or archive group changed.
