@@ -1,0 +1,27 @@
+name: YEDEKLER recurring video and audio audit
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '20 3 * * 0'
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install existing video/audio probe dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+      - name: Audit all YEDEKLER streams (no playlist changes)
+        run: python3 v2/audit_yedekler_av.py --workers 8 --timeout 15
+      - name: Publish audit report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: yedekler-av-audit
+          path: v2/reports/yedekler_av_audit.json
+          if-no-files-found: warn
+          retention-days: 30
