@@ -1,0 +1,273 @@
+{
+  "observed_utc": "2026-11-19T13:52:42.798747+00:00",
+  "playlist_commit": "7e063f9ec7846b579ba659c8ca4fd63f49ee2a80",
+  "playlist_sha256": "66b1af9b52b0fcc54ada14582235ca3ed72ea9b49369d69c55b7c7044b6a0ca1",
+  "distinct_playlist_ids": 258,
+  "method": "At the same UTC instant, require exact case-sensitive playlist ID, one XMLTV declaration, a nonblank programme title and start <= instant < stop. Hashes cover decompressed XML and publisher HTML. Each publisher boundary is checked against its next programme.",
+  "configured_feeds": 5,
+  "feeds_with_current_exact_ids": 4,
+  "distinct_current_exact_ids": [
+    "ATV.tr",
+    "CNBC-E.tr",
+    "DMAX.tr",
+    "FX.tr",
+    "GZT.tr",
+    "KRT.tr",
+    "TMB.tr"
+  ],
+  "publisher_schedule_witnesses": {
+    "ATV.tr": {
+      "page": "https://www.atv.com.tr/yayin-akisi",
+      "page_sha256": "9b73b99135d4da35aa2487bd27ba604a75fcffaba566dc6932290023b862a507",
+      "day": "2026-11-19",
+      "time_zone": "Europe/Istanbul",
+      "title": "Esra Erol'da",
+      "start": "16:00",
+      "next_start": "19:00",
+      "next_title": "atv Ana Haber",
+      "agreement": "Exact title and both programme boundaries on the selected date."
+    },
+    "CNBC-E.tr": {
+      "page": "https://www.cnbce.com/yayin-akisi",
+      "page_sha256": "e3ae91f54aa1485814c1751fac1836d14f1d554ccff78db3e67ddf480bcd98d3",
+      "day": "2026-11-19",
+      "time_zone": "Europe/Istanbul",
+      "title": "4'te Ekonomi",
+      "start": "16:00",
+      "next_start": "17:00",
+      "next_title": "Kapanış Seansı",
+      "agreement": "Thursday selected by the broadcaster in the schedule component. Exact title and both programme boundaries."
+    },
+    "DMAX.tr": {
+      "page": "https://www.dmax.com.tr/yayin-akisi/persembe",
+      "page_sha256": "cc2afc865a2e8ea20bce7275fcb1f1bfc90239e14909a4b4ed881cc15902a22d",
+      "day": "2026-11-19",
+      "time_zone": "Europe/Istanbul",
+      "title": "Tamirat Tadilat",
+      "start": "16:35",
+      "next_start": "18:35",
+      "next_title": "Depo Savaşları",
+      "agreement": "The Thursday publisher schedule gives one two-hour title block. Four feeds split it at 17:35 into two consecutive entries with the same title. Only the outer boundaries are independently corroborated."
+    }
+  },
+  "playlist_channels": {
+    "ATV.tr": [
+      "ATV"
+    ],
+    "CNBC-E.tr": [
+      "CNBC-E"
+    ],
+    "DMAX.tr": [
+      "DMAX"
+    ],
+    "FX.tr": [
+      "FX TV HD"
+    ],
+    "GZT.tr": [
+      "GZT (1080p)"
+    ],
+    "KRT.tr": [
+      "KRT"
+    ],
+    "TMB.tr": [
+      "TMB"
+    ]
+  },
+  "awaiting_publisher_schedule": [
+    "FX.tr",
+    "GZT.tr",
+    "KRT.tr",
+    "TMB.tr"
+  ],
+  "publisher_xmltv_id_declaration_verified": [],
+  "historical_303_gap_rows_independently_resolved": null,
+  "sources": [
+    {
+      "configured_source": "https://raw.githubusercontent.com/trology85/iptv-epg-turkey/main/epg/turksat_epg.xml.gz",
+      "http": 200,
+      "source": "https://raw.githubusercontent.com/trology85/iptv-epg-turkey/main/epg/turksat_epg.xml.gz",
+      "xml_sha256": "bd765ba418b0344291402cb4127af9c55ecc63c5fb1f6e36c83e267340582ae0",
+      "xml_bytes": 1051035,
+      "status": "XMLTV_VALID",
+      "channel_declarations": 177,
+      "programmes": 7247,
+      "exact_id_overlap": 0,
+      "valid_titled_exact_ids": 0,
+      "current_titled_intervals": 0,
+      "current_exact_ids": 0,
+      "earliest_valid_start_utc": "2026-11-15T21:00:00+00:00",
+      "latest_valid_stop_utc": "2026-11-16T20:59:00+00:00",
+      "current_exact_programmes": []
+    },
+    {
+      "configured_source": "https://epgshare01.online/epgshare01/epg_ripper_TR1.xml.gz",
+      "http": 200,
+      "source": "https://epgshare01.online/epgshare01/epg_ripper_TR1.xml.gz",
+      "xml_sha256": "22d4f63edb23a0ca6d37fb669ddb627cf7cc0898a07a5596b794bb84e9fcd179",
+      "xml_bytes": 2406768,
+      "status": "XMLTV_VALID",
+      "channel_declarations": 178,
+      "programmes": 15214,
+      "exact_id_overlap": 3,
+      "valid_titled_exact_ids": 2,
+      "current_titled_intervals": 141,
+      "current_exact_ids": 2,
+      "earliest_valid_start_utc": "2026-11-18T21:00:00+00:00",
+      "latest_valid_stop_utc": "2026-11-22T23:00:00+00:00",
+      "current_exact_programmes": [
+        {
+          "id": "ATV.tr",
+          "xmltv_display_name": "ATV",
+          "title": "Esra Erol'da",
+          "start_utc": "2026-11-19T13:00:00+00:00",
+          "stop_utc": "2026-11-19T16:00:00+00:00"
+        },
+        {
+          "id": "DMAX.tr",
+          "xmltv_display_name": "DMAX",
+          "title": "Tamirat Tadilat",
+          "start_utc": "2026-11-19T13:35:00+00:00",
+          "stop_utc": "2026-11-19T14:35:00+00:00"
+        }
+      ]
+    },
+    {
+      "configured_source": "https://epgshare01.online/epgshare01/epg_ripper_TR3.xml.gz",
+      "http": 200,
+      "source": "https://epgshare01.online/epgshare01/epg_ripper_TR3.xml.gz",
+      "xml_sha256": "b4f31834c283566fb66818b9ec97c24c5fb055cd9c3cad668aa2e1d7e4c2df45",
+      "xml_bytes": 6901475,
+      "status": "XMLTV_VALID",
+      "channel_declarations": 287,
+      "programmes": 12457,
+      "exact_id_overlap": 4,
+      "valid_titled_exact_ids": 3,
+      "current_titled_intervals": 134,
+      "current_exact_ids": 3,
+      "earliest_valid_start_utc": "2026-11-17T21:00:00+00:00",
+      "latest_valid_stop_utc": "2026-11-22T00:45:00+00:00",
+      "current_exact_programmes": [
+        {
+          "id": "ATV.tr",
+          "xmltv_display_name": "ATV",
+          "title": "Esra Erol'da",
+          "start_utc": "2026-11-19T13:00:00+00:00",
+          "stop_utc": "2026-11-19T16:00:00+00:00"
+        },
+        {
+          "id": "DMAX.tr",
+          "xmltv_display_name": "DMAX",
+          "title": "Tamirat Tadilat",
+          "start_utc": "2026-11-19T13:35:00+00:00",
+          "stop_utc": "2026-11-19T14:35:00+00:00"
+        },
+        {
+          "id": "FX.tr",
+          "xmltv_display_name": "FX",
+          "title": "How I Met Your Mother",
+          "start_utc": "2026-11-19T13:30:00+00:00",
+          "stop_utc": "2026-11-19T14:00:00+00:00"
+        }
+      ]
+    },
+    {
+      "configured_source": "https://www.open-epg.com/files/turkey1.xml.gz",
+      "http": 200,
+      "source": "https://www.open-epg.com/app/download.php?file=turkey1.xml.gz",
+      "xml_sha256": "d33c7d8d9b158c9a9f153e5d100302104c54e54b722c3ed1f4109637ed8b2388",
+      "xml_bytes": 1223270,
+      "status": "XMLTV_VALID",
+      "channel_declarations": 108,
+      "programmes": 7267,
+      "exact_id_overlap": 3,
+      "valid_titled_exact_ids": 3,
+      "current_titled_intervals": 108,
+      "current_exact_ids": 3,
+      "earliest_valid_start_utc": "2026-11-18T21:00:00+00:00",
+      "latest_valid_stop_utc": "2026-11-21T20:59:00+00:00",
+      "current_exact_programmes": [
+        {
+          "id": "ATV.tr",
+          "xmltv_display_name": "ATV.tr",
+          "title": "Esra Erol'da",
+          "start_utc": "2026-11-19T13:00:00+00:00",
+          "stop_utc": "2026-11-19T16:00:00+00:00"
+        },
+        {
+          "id": "DMAX.tr",
+          "xmltv_display_name": "DMAX.tr",
+          "title": "Tamirat Tadilat",
+          "start_utc": "2026-11-19T13:35:00+00:00",
+          "stop_utc": "2026-11-19T14:35:00+00:00"
+        },
+        {
+          "id": "GZT.tr",
+          "xmltv_display_name": "GZT.tr",
+          "title": "Omg Scalework",
+          "start_utc": "2026-11-19T13:40:00+00:00",
+          "stop_utc": "2026-11-19T14:25:00+00:00"
+        }
+      ]
+    },
+    {
+      "configured_source": "https://www.open-epg.com/files/turkey2.xml.gz",
+      "http": 200,
+      "source": "https://www.open-epg.com/app/download.php?file=turkey2.xml.gz",
+      "xml_sha256": "cc397b06e9bbfa35538d9eef7f38814ee56d64793324d37cf161a8675d3ee034",
+      "xml_bytes": 2764836,
+      "status": "XMLTV_VALID",
+      "channel_declarations": 156,
+      "programmes": 7123,
+      "exact_id_overlap": 7,
+      "valid_titled_exact_ids": 6,
+      "current_titled_intervals": 96,
+      "current_exact_ids": 6,
+      "earliest_valid_start_utc": "2026-11-18T21:00:00+00:00",
+      "latest_valid_stop_utc": "2026-11-21T06:00:00+00:00",
+      "current_exact_programmes": [
+        {
+          "id": "ATV.tr",
+          "xmltv_display_name": "ATV.tr",
+          "title": "Esra Erol'da",
+          "start_utc": "2026-11-19T13:00:00+00:00",
+          "stop_utc": "2026-11-19T16:00:00+00:00"
+        },
+        {
+          "id": "CNBC-E.tr",
+          "xmltv_display_name": "CNBC-E.tr",
+          "title": "4'te Ekonomi",
+          "start_utc": "2026-11-19T13:00:00+00:00",
+          "stop_utc": "2026-11-19T14:00:00+00:00"
+        },
+        {
+          "id": "DMAX.tr",
+          "xmltv_display_name": "DMAX.tr",
+          "title": "Tamirat Tadilat",
+          "start_utc": "2026-11-19T13:35:00+00:00",
+          "stop_utc": "2026-11-19T14:35:00+00:00"
+        },
+        {
+          "id": "FX.tr",
+          "xmltv_display_name": "FX.tr",
+          "title": "How I Met Your Mother 8",
+          "start_utc": "2026-11-19T13:30:00+00:00",
+          "stop_utc": "2026-11-19T14:00:00+00:00"
+        },
+        {
+          "id": "KRT.tr",
+          "xmltv_display_name": "KRT.tr",
+          "title": "Gündem Hattı",
+          "start_utc": "2026-11-19T12:00:00+00:00",
+          "stop_utc": "2026-11-19T15:00:00+00:00"
+        },
+        {
+          "id": "TMB.tr",
+          "xmltv_display_name": "TMB.tr",
+          "title": "Klip",
+          "start_utc": "2026-11-19T12:00:00+00:00",
+          "stop_utc": "2026-11-19T14:00:00+00:00"
+        }
+      ]
+    }
+  ]
+}

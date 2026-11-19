@@ -99,7 +99,14 @@
       "publisher_evidence": {
         "official_live_page": "https://arica.tv/envivo/",
         "official_page_links_to_stream_host": true,
-        "exact_address_observed_on_publisher_page": false
+        "exact_address_observed_on_publisher_page": false,
+        "checked_on": "2026-11-19",
+        "official_page_sha256": "1b7e6c7cfc02cac6ba84b6dea62d75f2115709110c3da80ffd6e30d7fb054e8c",
+        "officially_embedded_player": "https://envivo.arica.tv/",
+        "player_page_sha256": "6c35d01fe268cfc7c28c40380c170fb03825beb4dcea2739615546a676634985",
+        "published_hls_sha256": "39f38831a9c92703931a7a44a580cec1621210e3dd2ebf571168db460b59b806",
+        "exact_address_verified_by_publisher": true,
+        "method": "Resolve the sole HTML video/source HLS reference relative to the broadcaster's embedded player. SHA-256 of the resulting unmodified UTF-8 URL equals the historical raw address hash. Playlist and media were not requested."
       }
     },
     {
