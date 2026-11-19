@@ -8,8 +8,9 @@ import json
 import re
 from pathlib import Path
 
-LOGO = re.compile(r'(?<!\\w)tvg-logo="([^"]+)"')
-ID = re.compile(r'(?<!\\w)tvg-id="([^"]+)"')
+LOGO = re.compile(r'(?<![\w-])tvg-logo="([^"]+)"')
+ID = re.compile(r'(?<![\w-])tvg-id="([^"]+)"')
+GROUP = re.compile(r'(?<![\w-])group-title="([^"]+)"')
 
 
 def records(text):
@@ -43,6 +44,13 @@ def audit(current_text, historical_text):
         old_id, new_id = ID.search(old), ID.search(new)
         # Never transfer a logo across changed or missing channel identity.
         if not old_id or not new_id or old_id.group(1) != new_id.group(1):
+            ambiguous += 1
+            continue
+        # A shared URL/ID is insufficient if its visible channel or archive group changed.
+        old_group, new_group = GROUP.search(old), GROUP.search(new)
+        if (old.rsplit(",", 1)[-1].strip() != new.rsplit(",", 1)[-1].strip()
+                or not old_group or not new_group
+                or old_group.group(1) != new_group.group(1)):
             ambiguous += 1
             continue
         if not old_logo.group(1).startswith("https://"):
