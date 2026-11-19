@@ -92,6 +92,24 @@ class XMLTVIntegrityTests(unittest.TestCase):
         self.assertEqual(result["current_matched_programme_channel_ids"], 1)
         self.assertEqual(result["current_titled_unique_programme_intervals"], 1)
 
+    def test_current_titled_evidence_excludes_declared_non_playlist_channel(self):
+        import datetime
+        now = datetime.datetime.now(datetime.timezone.utc)
+        start = (now - datetime.timedelta(minutes=5)).strftime("%Y%m%d%H%M%S +0000")
+        stop = (now + datetime.timedelta(minutes=5)).strftime("%Y%m%d%H%M%S +0000")
+        xml = ('<tv><channel id="listed"/><channel id="not-listed"/>'
+               + ''.join('<programme channel="%s" start="%s" stop="%s"><title>News</title></programme>'
+                         % (channel, start, stop) for channel in ("listed", "not-listed"))
+               + '</tv>').encode()
+        class Response(io.BytesIO):
+            def __enter__(self): return self
+            def __exit__(self, *args): self.close()
+        with patch("epg_integrity.urllib.request.urlopen", return_value=Response(xml)):
+            result = epg_integrity.inspect("https://example.org/epg.xml", {"listed"})
+        self.assertEqual(result["current_programme_intervals"], 2)
+        self.assertEqual(result["current_titled_unique_programme_intervals"], 1)
+        self.assertEqual(result["current_matched_programme_channel_ids"], 1)
+
     def test_expired_programmes_are_not_current_evidence(self):
         xml = (b'<tv><channel id="x"/>'
                b'<programme channel="x" start="20261113000000 +0000" stop="20261113010000 +0000">'
