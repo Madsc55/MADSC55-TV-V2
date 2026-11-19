@@ -1,3 +1,7 @@
+## 19 Kasım 2026 — Yayıncı kaynaklı logo kanıtı (CI bekliyor)
+
+- 21 salt-okunur logo adayının ilk kaynak kontrolünde **TRT ÇOCUK** için listede mevcut 2008–2021 eski logo bağlantısı tespit edildi; TRT'nin 1 Kasım 2021 yeni logo duyurusuyla uyuşmadığından bu aday **reddedildi**. **GZT** için yayıncının resmî PNG indirme sayfası bulundu; mevcut Wikimedia PNG ile görsel eşdeğerliği henüz kanıtlanmadı, otomatik atama yapılmadı. Bağlantılı kanıtlar `v2/reports/logo-publisher-evidence-20261119.json` içinde. Ana playlist değiştirilmedi.
+
 ## 19 Kasım 2026 — Güncel logo eksikleri, salt-okunur aday raporu (CI bekliyor)
 
 - Güncel ana playlist blob `1b9ff7e01a0d045c400b1317d50cfca64101b0d4`: 2.914 kayıt, 489 logosuz kayıt (tamamı YEDEKLER). Aynı görüntülenen kanal adı için mevcut listede tek logo URL'si bulunan 21 logosuz satır (19 benzersiz ad) `v2/reports/logo-current-exact-name-review-20261119.json` içinde kayıt bazında belgelendi. Bu sadece REVIEW_REQUIRED_NOT_VERIFIED inceleme kuyruğudur; resmî logo görseli doğrulanmadı, hiçbir logo atanmadı. Tarihsel #356 ve #391 riskli PR'ları birleştirilmeden kapatıldı. Ana playlist, arşivler, yayın URL'leri ve güvenlik manifesti değiştirilmedi.
