@@ -67,6 +67,34 @@ class XMLTVIntegrityTests(unittest.TestCase):
         self.assertEqual(result["valid_matched_programme_channel_ids"], 1)
         self.assertEqual(result["missing_programme_titles"], 2)
 
+    def test_main_report_preserves_unverified_historical_gap_status(self):
+        import json
+        import tempfile
+        from pathlib import Path
+        with tempfile.TemporaryDirectory() as directory:
+            out = Path(directory) / "audit.json"
+            sources = ["https://example.org/a.xml", "https://example.org/b.xml"]
+            with patch.object(epg_integrity, "ROOT", Path(directory)), \\
+                 patch.object(epg_integrity, "LIVE", Path(directory) / "playlist.m3u"), \\
+                 patch.object(epg_integrity, "OUT", out), \\
+                 patch.object(epg_integrity, "entries", return_value=[{"tvg_id": "x"}]), \\
+                 patch.object(epg_integrity, "inspect", side_effect=[
+                     {"status": "XMLTV_VALID", "valid_matched_programme_channel_ids": 1},
+                     {"status": "EPG_UNVERIFIED"}
+                 ]):
+                (Path(directory) / "v2").mkdir()
+                (Path(directory) / "v2" / "epg_sources.json").write_text(
+                    json.dumps({"sources": sources}), encoding="utf-8"
+                )
+                (Path(directory) / "playlist.m3u").write_text("#EXTM3U", encoding="utf-8")
+                epg_integrity.main()
+            report = json.loads(out.read_text(encoding="utf-8"))
+            self.assertEqual(report["source_coverage"]["configured_sources"], 2)
+            self.assertEqual(report["source_coverage"]["valid_xmltv_sources"], 1)
+            self.assertEqual(report["source_coverage"]["unverified_sources"], 1)
+            self.assertEqual(report["source_coverage"]["feeds_with_valid_matched_programmes"], 1)
+            self.assertIsNone(report["source_coverage"]["historical_303_gaps_resolved"])
+
     def test_epg_dtd_and_entity_declarations_are_rejected(self):
         xml = (b'<!DOCTYPE tv [<!ENTITY xxe SYSTEM "file:///etc/passwd">]>'
                b'<tv><channel id="x"/></tv>')
