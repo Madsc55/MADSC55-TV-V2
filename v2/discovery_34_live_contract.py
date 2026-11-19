@@ -70,8 +70,11 @@ def probe_queries(source, queries=QUERIES, fetch=fetch_json, sleep=time.sleep):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", type=Path, help="Write read-only diagnostic JSON using exclusive creation")
+    parser.add_argument("--provider", choices=("all", "github", "gitlab", "codeberg"), default="all",
+                        help="Limit the diagnostic to a single provider without re-querying others")
     args = parser.parse_args()
-    results = {source: probe_queries(source) for source in ("github", "gitlab", "codeberg")}
+    sources = ("github", "gitlab", "codeberg") if args.provider == "all" else (args.provider,)
+    results = {source: probe_queries(source) for source in sources}
     report = {"policy": "METADATA_ONLY_NOT_AV_VERIFIED", "verified_av": 0, "providers": results}
     payload = json.dumps(report, indent=2) + "\n"
     if args.output is not None:
