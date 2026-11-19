@@ -74,14 +74,14 @@ class XMLTVIntegrityTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             out = Path(directory) / "audit.json"
             sources = ["https://example.org/a.xml", "https://example.org/b.xml"]
-            with patch.object(epg_integrity, "ROOT", Path(directory)), \\
-                 patch.object(epg_integrity, "LIVE", Path(directory) / "playlist.m3u"), \\
-                 patch.object(epg_integrity, "OUT", out), \\
-                 patch.object(epg_integrity, "entries", return_value=[{"tvg_id": "x"}]), \\
-                 patch.object(epg_integrity, "inspect", side_effect=[
-                     {"status": "XMLTV_VALID", "valid_matched_programme_channel_ids": 1},
-                     {"status": "EPG_UNVERIFIED"}
-                 ]):
+            with (patch.object(epg_integrity, "ROOT", Path(directory)),
+                  patch.object(epg_integrity, "LIVE", Path(directory) / "playlist.m3u"),
+                  patch.object(epg_integrity, "OUT", out),
+                  patch.object(epg_integrity, "entries", return_value=[{"tvg_id": "x"}]),
+                  patch.object(epg_integrity, "inspect", side_effect=[
+                      {"status": "XMLTV_VALID", "valid_matched_programme_channel_ids": 1},
+                      {"status": "EPG_UNVERIFIED"}
+                  ])):
                 (Path(directory) / "v2").mkdir()
                 (Path(directory) / "v2" / "epg_sources.json").write_text(
                     json.dumps({"sources": sources}), encoding="utf-8"
