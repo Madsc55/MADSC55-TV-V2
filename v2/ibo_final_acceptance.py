@@ -71,6 +71,9 @@ def final_gate(package_report, archive_report, independent_restore=False, live_a
         raise ValueError("invalid acceptance flag types")
     if independent_restore and archive_report.get("external_restore_verified") is not True:
         raise ValueError("independent external restore evidence required")
+    if independent_restore and (not isinstance(archive_report.get("external_archive_sha256"), str)
+            or re.fullmatch(r"[0-9a-f]{64}", archive_report["external_archive_sha256"]) is None):
+        raise ValueError("external archive digest evidence required")
     if independent_restore and live_av and archive_report.get("encrypted") is not True:
         raise ValueError("authenticated encrypted archive evidence required for production review")
     if not independent_restore or not live_av:
