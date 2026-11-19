@@ -2491,7 +2491,7 @@ https://live.artidijitalmedya.com/artidijital_tatlisestv/tatlisestv/playlist.m3u
 https://raw.githubusercontent.com/UzunMuhalefet/streams/main/myvideo-az/tmb-tv.m3u8
 #EXTINF:-1 tvg-id="TrakyaTurk.tr" group-title="🗂️ YEDEKLER (2076)",Trakya Türk TV (720p)
 https://live.artidijitalmedya.com/artidijital_trakyaturk/trakyaturk/playlist.m3u8
-#EXTINF:-1 tvg-id="TYTTurk.tr" group-title="🗂️ YEDEKLER (2076)",TYT Turk
+#EXTINF:-1 tvg-logo="https://tytturk.com/upload/tyt-logo.png" tvg-id="TYTTurk.tr" group-title="🗂️ YEDEKLER (2076)",TYT Turk
 https://cdn-tytturk.yayin.com.tr/tytturk/index.m3u8
 #EXTINF:-1 tvg-id="UUTV2.tr" group-title="🗂️ YEDEKLER (2076)",ÜÜ TV Üsküdar Üniversitesi TV (1080p) [Not 24/7]
 https://uskudarunv.mediatriple.net/uskudarunv/uskudar2/playlist.m3u8
@@ -2931,7 +2931,7 @@ https://tr.socialsmart.tv/suntv/bant1/chunks.m3u8
 http://stream.taksimbilisim.com:1935/tv41/bant1/TV41.m3u8
 #EXTINF:-1 tvg-id="TV41.tr@SD" group-title="🗂️ YEDEKLER (2076)",TV 41 (720p) [Not 24/7]
 http://stream.taksimbilisim.com:1935/tv41/smil:tv41.smil/playlist.m3u8
-#EXTINF:-1 tvg-id="TV42.tr@SD" group-title="🗂️ YEDEKLER (2076)",TV 42
+#EXTINF:-1 tvg-logo="https://www.tv42.com.tr/logo.png" tvg-id="TV42.tr@SD" group-title="🗂️ YEDEKLER (2076)",TV 42
 https://canli.tv42.com.tr/memfs/d936e417-c4bd-4d42-89a2-02f289892d1d.m3u8
 #EXTINF:-1 tvg-id="ViasatHistory.tr@SD" group-title="🗂️ YEDEKLER (2076)",Viasat History (720p)
 https://nord.ayakkabiparti.lol/viasathistory/index.m3u8
@@ -3815,7 +3815,7 @@ https://edge1.socialsmart.tv/tekrumelitv/bant1/playlist.m3u8
 https://ahr7chck.rocketcdn.com/sifirtv.stream/chunklist.m3u8
 #EXTINF:-1 group-title="🗂️ YEDEKLER (2076)",VAV TV
 https://trkvz-live.ercdn.net/vavtv/vavtv.m3u8
-#EXTINF:-1 group-title="🗂️ YEDEKLER (2076)",AYAZ TV
+#EXTINF:-1 tvg-logo="https://www.ayaztv.com/storage/assets/site_logo.png" group-title="🗂️ YEDEKLER (2076)",AYAZ TV
 https://janya-ayaztv.vgcdn.net/ptnr-Vipo%20TV/title-Ayaz_TV/v1/vglive-sk-934820/AyazTV_1500k.m3u8
 #EXTINF:-1 tvg-name="NOW" group-title="🗂️ YEDEKLER (2076)",NOW GLOBAL ADAY
 https://streams.uzunmuhalefet.com/stream/f9368c57-16e5-44a2-a559-46377a476b04.m3u8
@@ -3843,7 +3843,7 @@ https://sc-kuzeykibrissmarttv.ercdn.net/brt2hd/bant1/playlist.m3u8
 https://sc-kuzeykibrissmarttv.ercdn.net/adatv/bant1/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/eBdQn9h.png" group-title="🗂️ YEDEKLER (2076)",GENÇ TV
 https://sc-kuzeykibrissmarttv.ercdn.net/kibrisgenctv/bant1/playlist.m3u8
-#EXTINF:-1 group-title="🗂️ YEDEKLER (2076)",TAY TV
+#EXTINF:-1 tvg-logo="https://www.dsmart.com.tr/api/v1/public/images/kanallar/tay_tv.png" group-title="🗂️ YEDEKLER (2076)",TAY TV
 https://mn-nl.mncdn.com/blutv_taytv/smil:taytv_sd.smil/playlist.m3u8
 #EXTINF:-1 group-title="🗂️ YEDEKLER (2076)" tvg-logo="",TV 264
 https://b01c02nl.mediatriple.net/videoonlylive/mtdxkkitgbrckilive/broadcast_5ee244263fd6d.smil/playlist.m3u8#all
@@ -3851,7 +3851,7 @@ https://b01c02nl.mediatriple.net/videoonlylive/mtdxkkitgbrckilive/broadcast_5ee2
 https://canli.tvden.com.tr/hls/live.m3u8#all
 #EXTINF:-1 group-title="🗂️ YEDEKLER (2076)" tvg-logo="",Tempo TV
 https://live.artidijitalmedya.com/artidijital_tempotv/tempotv/playlist.m3u8#all
-#EXTINF:-1 group-title="🗂️ YEDEKLER (2076)",CINE 1
+#EXTINF:-1 tvg-logo="https://cine1.com.tr/img/cine1loogo.png" group-title="🗂️ YEDEKLER (2076)",CINE 1
 https://canliyayin.cine1.com.tr/memfs/cbaef080-a742-4644-9e9e-2b9f6a5103c3.m3u8
 #EXTINF:-1 group-title="🗂️ YEDEKLER (2076)",DERIN TV
 https://cdn1-derintv.yayin.com.tr/derintv/derintv/chunklist_w1486394141_b1796000.m3u8
