@@ -82,9 +82,9 @@ jobs:
           python -m py_compile v2/identity_metadata.py v2/recovery_queue.py v2/stage2_integration.py v2/stage3_identity_recovery.py v2/stage3_metadata_acceptance.py v2/stage3_recovery_queue.py v2/real_ibo_scan.py v2/discover.py v2/consolidate_inventory.py
       - name: Ensure FFmpeg is available for real local decoded-media regression
         run: |
-          if ! command -v ffmpeg >/dev/null || ! command -v ffprobe >/dev/null; then
+          if ! command -v ffmpeg >/dev/null || ! command -v ffprobe >/dev/null || ! tesseract --list-langs 2>/dev/null | grep -qx tur; then
             sudo apt-get update -qq
-            sudo apt-get install -y --no-install-recommends ffmpeg
+            sudo apt-get install -y --no-install-recommends ffmpeg tesseract-ocr tesseract-ocr-tur fonts-dejavu-core
           fi
           command -v ffprobe
           command -v ffmpeg
@@ -105,6 +105,7 @@ jobs:
           python -m unittest -v v2.test_turkish_subtitle_track_review
           python -m unittest -v v2.test_turkish_iso639_review
           python -m unittest -v v2.test_turkish_local_media_probe
+          python -m unittest -v v2.test_backup_text_evidence v2.test_turkish_sample_review
       - name: Discovery 34 offline adapter and integration acceptance
         run: |
           PYTHONPATH=v2 python -m unittest -v test_discovery_34 test_discovery_34_integrate test_discovery_34_integrate_acceptance test_discovery_34_live_contract

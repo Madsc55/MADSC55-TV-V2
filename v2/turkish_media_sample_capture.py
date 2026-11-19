@@ -5,6 +5,7 @@ No automatic channel classification, no network activity on import, no playlist
 or archive writes. Capture alone is NOT proof of speech language or OCR.
 """
 import argparse
+import hashlib
 import json
 import ipaddress
 from pathlib import Path
@@ -40,12 +41,15 @@ def validate_url(url):
         raise ValueError("Non-public IP addresses are not supported")
     return url
 
-def capture(url, destination, *, seconds=4, timeout=17, runner=subprocess.run, which=shutil.which):
+def capture(url, destination, *, seconds=4, timeout=17, runner=subprocess.run, which=shutil.which,
+            include_subtitles=False):
     validate_url(url)
     if type(seconds) is not int or not 1 <= seconds <= MAX_SECONDS:
         raise ValueError("Sample duration must be 1..12 seconds")
     if type(timeout) is not int or not 1 <= timeout <= MAX_TIMEOUT:
         raise ValueError("Timeout must be 1..17 seconds")
+    if type(include_subtitles) is not bool:
+        raise ValueError("Invalid subtitle selection")
     executable = which("ffmpeg")
     if not executable:
         return {"status": "FFMPEG_UNAVAILABLE", "language_verified": False, "device_verified": False}
@@ -60,7 +64,10 @@ def capture(url, destination, *, seconds=4, timeout=17, runner=subprocess.run, w
            "-rw_timeout", str(timeout * 1000000), "-max_redirect", "0",
            "-i", url, "-t", str(seconds), "-fs", str(MAX_BYTES),
            "-map", "0:v:0?", "-map", "0:a:0?", "-c:v", "mpeg4", "-q:v", "12",
-           "-c:a", "aac", "-b:a", "48k", "-n", str(dest)]
+           "-c:a", "aac", "-b:a", "48k"]
+    if include_subtitles:
+        cmd.extend(["-map", "0:s?", "-c:s", "copy"])
+    cmd.extend(["-n", str(dest)])
     try:
         result = runner(cmd, capture_output=True, timeout=timeout, check=False)
         if dest.is_symlink():
@@ -71,6 +78,8 @@ def capture(url, destination, *, seconds=4, timeout=17, runner=subprocess.run, w
             dest.unlink(missing_ok=True)
             return {"status": "CAPTURE_FAILED", "language_verified": False, "device_verified": False}
         return {"status": "SAMPLE_CAPTURED_UNVERIFIED", "bytes": size,
+                "sample_sha256": hashlib.sha256(dest.read_bytes()).hexdigest(),
+                "url_sha256": hashlib.sha256(url.encode("utf-8")).hexdigest(),
                 "language_verified": False, "device_verified": False,
                 "asr_completed": False, "ocr_completed": False}
     except (subprocess.TimeoutExpired, OSError):
@@ -82,8 +91,10 @@ def main():
     parser.add_argument("--url", required=True)
     parser.add_argument("--output", required=True)
     parser.add_argument("--seconds", type=int, default=4)
+    parser.add_argument("--include-subtitles", action="store_true", help="Retain available embedded tracks")
     args = parser.parse_args()
-    print(json.dumps(capture(args.url, args.output, seconds=args.seconds), sort_keys=True))
+    print(json.dumps(capture(args.url, args.output, seconds=args.seconds,
+                             include_subtitles=args.include_subtitles), sort_keys=True))
 
 if __name__ == "__main__":
     main()

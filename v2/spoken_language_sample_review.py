@@ -7,11 +7,29 @@ Requires faster-whisper and ffmpeg installed by an explicit review job.
 import argparse
 import hashlib
 import json
+import math
+import re
 import subprocess
 import tempfile
 from pathlib import Path
 
 REPORTS = Path(__file__).resolve().parent / "reports"
+
+
+def transcribe_sample(wav, model):
+    """Summarize the model's own language prediction without retaining speech."""
+    segments, info = model.transcribe(str(wav), beam_size=1, vad_filter=True)
+    speech = any(segment.text.strip() for segment in segments)
+    probability = float(info.language_probability)
+    if not math.isfinite(probability) or not 0 <= probability <= 1:
+        raise ValueError("Invalid language probability")
+    if not isinstance(info.language, str) or not re.fullmatch(r"[a-z]{2,3}", info.language):
+        raise ValueError("Invalid model language")
+    return {"status": "LANGUAGE_MODEL_HINT_ONLY",
+            "detected_language": info.language,
+            "language_probability": round(probability, 4), "speech_detected": speech,
+            "approved": False, "spoken_turkish_verified": False}
+
 
 def run():
     parser = argparse.ArgumentParser()
@@ -57,12 +75,7 @@ def run():
                 if completed.returncode != 0 or not wav.exists() or wav.stat().st_size < 16000:
                     results.append({"url_sha256": digest, "status": "AUDIO_SAMPLE_UNAVAILABLE", "approved": False})
                     continue
-                segments, info = model.transcribe(str(wav), beam_size=1, vad_filter=True)
-                transcript = " ".join(s.text.strip() for s in segments).strip()
-                results.append({"url_sha256": digest, "status": "LANGUAGE_MODEL_HINT_ONLY",
-                                "detected_language": info.language, "language_probability": round(info.language_probability, 4),
-                                "speech_detected": bool(transcript), "approved": False,
-                                "spoken_turkish_verified": False})
+                results.append({"url_sha256": digest, **transcribe_sample(wav, model)})
             except (subprocess.TimeoutExpired, OSError, ValueError, RuntimeError, TypeError) as exc:
                 results.append({"url_sha256": digest, "status": "SAMPLE_ERROR", "error_type": type(exc).__name__, "approved": False})
     output = {"policy": "READ_ONLY_SAMPLED_ASR_HINTS_REQUIRE_REVIEW", "sampled": len(results),

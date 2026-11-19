@@ -1,3 +1,9 @@
+## 19 Kasım 2026 — Yerel örnekte konuşma, ekrandaki yazı ve zamanlı altyazı
+
+[#479](https://github.com/Madsc55/MADSC55-TV-V2/pull/479) yerel FFprobe incelemesini ana dala aldı. Örnek incelemesi artık FFmpeg ile ses ve görüntüyü çözüyor, yerel Whisper modelini ve Türkçe Tesseract OCR aracını çalıştırıyor. İngilizce ve Türkçe insan sesi içeren iki test klibinde üçer kare ve birer zamanlı Türkçe altyazı okundu. [Test kayıtları](v2/reports/turkish-sample-verification-20261119.json)
+
+Depo kökünde `python -m v2.turkish_sample_review --sample klip.mkv --local-asr-model MODEL_DIZINI` komutu JSON sonucu verir. Kullanılan model çok dilli faster-whisper tiny, ortam faster-whisper 1.2.1 ve PyAV 15.1.0 idi. Yakalama komutundaki `--include-subtitles` gömülü altyazıları seçer. `--capture-receipt` ile özgün yakalama çıktısı ve `--archive-preview` ile arşivdeki kaynak sırası denetlenir. Ayrı bir insan inceleme kararı, aynı örnek ve yayın adresiyle eşleşirse hedef arşiv önizlemesine girebilir. Ana playlistte işlem için açık onay gerekir.
+
 ## 19 Kasım 2026 — Son 49 arşiv taşımasının geri alma kaydı
 
 [#395](https://github.com/Madsc55/MADSC55-TV-V2/pull/395) ile taşınmış 49 kanalın kaynak sıraları, önceki ve sonraki Git kayıtlarındaki birebir durum farkından çıkarıldı. Geri alma geçmişine bu işlem eklendi. İlk geri alma 49, ikincisi [#392](https://github.com/Madsc55/MADSC55-TV-V2/pull/392) ile taşınan 375 kaydı geri getirir. Aktif 2.076, Türk arşivindeki 424 ve ana arşivdeki 15.574 kanalın atamaları aynıdır.
