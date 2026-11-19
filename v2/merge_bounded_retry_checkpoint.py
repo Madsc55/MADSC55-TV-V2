@@ -100,8 +100,8 @@ def main():
     if not rows:
         p.error("Existing authenticated checkpoint required")
     report_bytes = args.report.read_bytes()
-    if args.prepare_resume and sha256(report_bytes).hexdigest() != REVIEWED_REPORT_SHA256:
-        p.error("Resume requires the reviewed 15-observation report")
+    if (args.apply or args.prepare_resume) and sha256(report_bytes).hexdigest() != REVIEWED_REPORT_SHA256:
+        p.error("Checkpoint mutation requires the reviewed 15-observation report")
     report = json.loads(report_bytes)
     merged, count = reconcile(rows, report, existing_rows_only=args.prepare_resume)
     write_updates = args.apply or args.prepare_resume
