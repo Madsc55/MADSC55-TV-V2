@@ -21,8 +21,11 @@ def inspect(state):
     by_id = {item["id"]: item for item in statuses}
     missing = sorted(REQUIRED - by_id.keys())
     pending = sorted(i for i in REQUIRED if i in by_id and by_id[i].get("status") != "completed")
+    blockers = [{"id": i, "status": by_id[i].get("status"),
+                 "blocker": by_id[i].get("blocker") or "No blocker recorded"}
+                for i in pending]
     return {"ready": not missing and not pending, "missing": missing, "pending": pending,
-            "state_generated_at": state.get("generated_at")}
+            "blockers": blockers, "state_generated_at": state.get("generated_at")}
 
 def require_readiness():
     report = inspect(json.loads(STATE.read_text(encoding="utf-8")))
