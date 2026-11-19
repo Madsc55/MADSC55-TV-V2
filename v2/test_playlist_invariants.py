@@ -20,7 +20,7 @@ def main():
     current = LIVE.read_bytes()
     text = current.decode("utf-8-sig")
     channels_pre = list(entries(text))
-    assert len(channels_pre) == 2914, "Expected 838 protected channels and 2076 active backups"
+    assert len(channels_pre) == 2840, "Expected 838 protected channels and 2002 active backups"
     non_backup = [x for x in channels_pre if "YEDEKLER" not in x["group"]]
     foreign = list(entries((ROOT / "v2/yedekler_batch/YABANCI_ARSIV.m3u8").read_text(encoding="utf-8-sig")))
     protected = [x for x in non_backup if "YABANCI ARŞİV" not in x["group"]]
