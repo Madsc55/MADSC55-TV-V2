@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "scope": "Official publisher/source evidence for candidates in logo-current-exact-name-review-20261119.json",
+  "playlist_mutation": false,
+  "items": [
+    {
+      "channel": "TRT ÇOCUK",
+      "candidate_position": 1301,
+      "existing_logo_url": "https://upload.wikimedia.org/wikipedia/commons/2/23/TRT_çocuk_logo.png",
+      "finding": "REJECT_OUTDATED_LOGO",
+      "evidence": [
+        {
+          "url": "https://commons.wikimedia.org/wiki/File:TRT_%C3%A7ocuk_logo.png",
+          "fact": "This exact old logo is labeled used from 2008 to 2021"
+        },
+        {
+          "url": "https://www.trthaber.com/trtden-haberler/trt-cocuk-yenilendi-442.html",
+          "fact": "Publisher confirms new logo from 1 November 2021"
+        },
+        {
+          "url": "https://www.trt.net.tr/Kurumsal/Televizyon",
+          "fact": "Official publisher currently lists TRT Çocuk"
+        }
+      ],
+      "action": "Do not copy the outdated logo from another playlist entry; locate and validate current broadcaster logo image and IBO-compatible format."
+    },
+    {
+      "channel": "GZT",
+      "candidate_position": 1869,
+      "existing_logo_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/GZT_logo.svg/960px-GZT_logo.svg.png",
+      "finding": "PUBLISHER_HAS_OFFICIAL_DOWNLOAD_NOT_IMAGE_EQUIVALENCE_VERIFIED",
+      "evidence": [
+        {
+          "url": "https://www.gzt.com/kurumsal/basinodasi",
+          "fact": "Publisher offers official downloadable PNG and other logo formats"
+        },
+        {
+          "url": "https://commons.wikimedia.org/wiki/File:GZT_logo.svg",
+          "fact": "Wikimedia attributes logo to Albayrak Holding, but the current playlist PNG was not pixel-compared with publisher asset"
+        }
+      ],
+      "action": "Compare publisher's official PNG to proposed playlist image and verify stable HTTPS image URL before applying."
+    }
+  ]
+}
