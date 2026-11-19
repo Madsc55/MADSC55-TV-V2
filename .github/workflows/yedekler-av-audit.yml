@@ -1,4 +1,4 @@
-name: YEDEKLER recurring video and audio audit
+name: YEDEKLER manual video and audio audit
 on:
   workflow_dispatch:
 permissions:
