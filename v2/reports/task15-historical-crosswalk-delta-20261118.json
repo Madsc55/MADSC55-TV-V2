@@ -1,0 +1,44 @@
+{
+  "schema": 1,
+  "kind": "V2_TASK15_HISTORICAL_CROSSWALK_DELTA_AUDIT",
+  "scope": "Hash-only audit; no broadcaster authentication, plaintext URLs, or playlist changes",
+  "older_run_id": 42228674931,
+  "newer_run_id": 42216075104,
+  "older_exact_matches": 4948,
+  "newer_exact_matches": 4949,
+  "historical_identities": 4955,
+  "newly_matched_url_sha256": [
+    "28d0f3888014b5508c269b2ea84699b8182717ed3c58faa2144d0b6a139c8593"
+  ],
+  "remaining_unmatched_count": 6,
+  "older_av_decoded": 3062,
+  "newer_av_decoded": 3080,
+  "broadcaster_identity_verified": false,
+  "next_required_evidence": "Independent publisher attribution for historical stream endpoints remains open. The six addresses missing from the 6 November comparison have since been exactly matched.",
+  "compared_artifacts_created_utc": {
+    "older": "2026-11-06T13:50:07Z",
+    "newer": "2026-11-06T17:10:09Z"
+  },
+  "source_artifacts": [
+    {
+      "run_id": 42228674931,
+      "artifact_id": 13507480461,
+      "zip_sha256": "78f4b2188696e159662a29bf6cab3530992bd39490367d7342c0fef9958c23fb"
+    },
+    {
+      "run_id": 42216075104,
+      "artifact_id": 13524765368,
+      "zip_sha256": "6bec426291330c6b4b305e2871b721a25c44583f892c14d893472cdc3e80f87d"
+    }
+  ],
+  "decoded_hashes_only_in_older": 6,
+  "decoded_hashes_only_in_newer": 24,
+  "follow_up": {
+    "as_of": "2026-11-19",
+    "exact_matches": 4955,
+    "remaining_unmatched": 0,
+    "additional_exact_matches": 6,
+    "report": "v2/reports/task15-historical-url-hash-recovery-20261118.json",
+    "merge_commit": "717560ad7370517362acc4d1960a165e012fe22e"
+  }
+}
