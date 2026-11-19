@@ -46,8 +46,9 @@ def identity(source, url):
     if source not in SOURCES:
         raise ValueError("Unknown adapter")
     expected_hosts = {"github": "github.com", "gitlab": "gitlab.com", "codeberg": "codeberg.org", "youtube": "www.youtube.com"}
-    if source in expected_hosts and (p.scheme != "https" or host != expected_hosts[source]):
-        raise ValueError("Unexpected source host or insecure scheme")
+    if source in expected_hosts and (p.scheme != "https" or host != expected_hosts[source]
+                                     or port not in (None, 443) or p.fragment):
+        raise ValueError("Unexpected source host, port, fragment or insecure scheme")
     authority = ("[" + host + "]" if ":" in host else host) + (":" + str(port) if port is not None else "")
     source_id = source + ":" + authority + p.path
     if source in ("official", "m3u") and p.query:
