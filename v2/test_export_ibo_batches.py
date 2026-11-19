@@ -210,5 +210,12 @@ class BatchTests(unittest.TestCase):
             self.assertIn("https://example.invalid/good.m3u8", playlist)
             self.assertEqual(playlist.count("#EXTINF:"), 1)
 
+    def test_ambiguous_backslash_stream_url_rejected(self):
+        from export_ibo_batches import valid_stream_url
+        for url in ("https://example.invalid\\@private.invalid/live",
+                    "https://example.invalid/live\\segment"):
+            with self.subTest(url=url):
+                self.assertFalse(valid_stream_url(url))
+
 if __name__ == '__main__':
     unittest.main()
