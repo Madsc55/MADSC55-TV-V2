@@ -27,7 +27,11 @@ class BoundedEvidenceTests(unittest.TestCase):
                                    latest_disposition=kind,
                                    recovery_attempts_after_batch=1,
                                    attempts=[attempt]))
+        for item in self.items[:2]:
+            item["attempts"].insert(0, {"outcome": "NETWORK_TIMEOUT",
+                                        "finished_at_utc": "2026-11-18T18:33:44+00:00"})
         self.report = dict(tasks=[17, 18, 20], source_run_id=43608247496,
+                           source_artifact_id=14135417421,
                            unique_urls_attempted=15, attempts_this_batch=17,
                            latest_outcomes={"AV_SAMPLE_VERIFIED": 1,
                                             "RETRY_HTTP_503": 6,
@@ -44,13 +48,37 @@ class BoundedEvidenceTests(unittest.TestCase):
         self.assertEqual(replay, merged)
 
 
-    def test_http_retry_preserves_existing_av_result(self):
+    def test_retries_preserve_prior_av_evidence_and_its_age(self):
         prior = copy.deepcopy(self.rows)
-        url = list(prior)[1]  # A subsequent HTTP 503 is not proof that AV was never decoded.
-        prior[url]["result"] = {"video_decoded": True, "audio_decoded": True}
+        proof = {"decoded_av_verified": True, "decode_status": "DECODED_AV",
+                 "verified_quality": {"av_verified": True, "quality": "HD"}}
+        urls = list(prior)[:2]  # A later one-segment sample and a later HTTP 503.
+        for url in urls:
+            prior[url] = checkpoint_row(url, proof, {}, checked_at=1)
         merged, count = reconcile(prior, self.report)
         self.assertEqual(count, 15)
-        self.assertEqual(merged[url]["result"], prior[url]["result"])
+        for url in urls:
+            self.assertEqual(merged[url]["result"], prior[url]["result"])
+            self.assertEqual(merged[url]["checked_at"], prior[url]["checked_at"])
+            detail = merged[url]["diagnostics"]["bounded_retry_import"]
+            self.assertGreater(detail["observed_at"], merged[url]["checked_at"])
+            self.assertEqual(len(detail["attempts"]), 2)
+        self.assertEqual(reconcile(merged, self.report), (merged, 0))
+
+    def test_mismatched_evidence_totals_and_source_are_rejected(self):
+        examples = (("source_artifact_id", 1), ("source_run_id", 1))
+        for field, value in examples:
+            with self.subTest(field=field), self.assertRaises(ValueError):
+                reconcile(self.rows, {**self.report, field: value})
+        missing = copy.deepcopy(self.report)
+        missing["observations"][0]["attempts"].pop(0)
+        with self.assertRaises(ValueError):
+            reconcile(self.rows, missing)
+        changed = copy.deepcopy(self.report)
+        changed["observations"][1]["latest_disposition"] = "REVIEW_HTTP_404"
+        changed["observations"][1]["attempts"][-1]["manifest_http_status"] = 404
+        with self.assertRaises(ValueError):
+            reconcile(self.rows, changed)
 
     def test_missing_hash_fails_closed(self):
         report = copy.deepcopy(self.report)
@@ -60,7 +88,7 @@ class BoundedEvidenceTests(unittest.TestCase):
 
     def test_fake_av_fails_closed(self):
         report = copy.deepcopy(self.report)
-        report["observations"][0]["attempts"][0]["audio_frame_decoded"] = False
+        report["observations"][0]["attempts"][-1]["audio_frame_decoded"] = False
         with self.assertRaises(ValueError):
             reconcile(self.rows, report)
 
@@ -92,7 +120,7 @@ class BoundedEvidenceTests(unittest.TestCase):
 
     def test_false_http_status_fails_closed(self):
         report = copy.deepcopy(self.report)
-        report["observations"][1]["attempts"][0]["manifest_http_status"] = 200
+        report["observations"][1]["attempts"][-1]["manifest_http_status"] = 200
         with self.assertRaises(ValueError):
             reconcile(self.rows, report)
 
