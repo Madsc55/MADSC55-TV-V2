@@ -14,7 +14,7 @@
   "additional_exact_matches": 6,
   "unmatched_after_audit": 0,
   "current_stream_playback_measured": false,
-  "task_status": "in_progress",
+  "task_status": "completed",
   "records": [
     {
       "name": "Xinjiang TV 3",
@@ -221,5 +221,13 @@
     "one_listed_catalog_channel_id": 1825,
     "multiple_catalog_ids": 0,
     "method": "Exact UTF-8 URL hashes in the 28 October streams.json, joined by channel ID to channels.json from the same commit. Catalog IDs identify database entries. Independent publisher evidence is recorded separately on each reviewed row."
+  },
+  "scope_decision_20261119": {
+    "decision": "User explicitly waived independent broadcaster ownership attribution for task #15; historical URL source/hash reconciliation is the acceptance criterion.",
+    "historical_hashes_reconciled": 4955,
+    "unmatched": 0,
+    "publisher_attribution": "Not required for closure; four reviewed endpoints remain unattributed to publishers.",
+    "playback_status": "Not tested here; live AV/IBO Player checks remain deferred and must not be inferred from URL hash matches.",
+    "playlist_modified": false
   }
 }
