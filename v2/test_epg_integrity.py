@@ -28,7 +28,7 @@ class XMLTVIntegrityTests(unittest.TestCase):
         xml = (
             b'<tv><channel id="valid"/><channel id="invalid"/><channel id="duplicate"/>'
             b'<channel id="duplicate"/>'
-            b'<programme channel="valid" start="20261113100000 +0000" stop="20261113110000 +0000"/>'
+            b'<programme channel="valid" start="20261113100000 +0000" stop="20261113110000 +0000"><title>Programme</title></programme>'
             b'<programme channel="invalid" start="20261113130000 +0000" stop="20261113120000 +0000"/>'
             b'<programme channel="duplicate" start="20261113100000 +0000" stop="20261113110000 +0000"/>'
             b'<programme channel="undeclared" start="20261113100000 +0000" stop="20261113110000 +0000"/>'
@@ -49,6 +49,23 @@ class XMLTVIntegrityTests(unittest.TestCase):
         self.assertEqual(result["invalid_programme_intervals"], 1)
         self.assertLessEqual(result["current_matched_programme_channel_ids"],
                              result["valid_matched_programme_channel_ids"])
+
+    def test_missing_or_blank_titles_do_not_count_as_epg_evidence(self):
+        xml = (
+            b'<tv><channel id="missing"/><channel id="blank"/><channel id="good"/>'
+            b'<programme channel="missing" start="20261113100000 +0000" stop="20261113110000 +0000"/>'
+            b'<programme channel="blank" start="20261113100000 +0000" stop="20261113110000 +0000"><title>  </title></programme>'
+            b'<programme channel="good" start="20261113100000 +0000" stop="20261113110000 +0000"><title>News</title></programme>'
+            b'</tv>'
+        )
+        class Response(io.BytesIO):
+            def __enter__(self): return self
+            def __exit__(self, *args): self.close()
+        with patch("epg_integrity.urllib.request.urlopen", return_value=Response(xml)):
+            result = epg_integrity.inspect("https://example.org/epg.xml", {"missing", "blank", "good"})
+        self.assertEqual(result["matched_programme_channel_ids"], 3)
+        self.assertEqual(result["valid_matched_programme_channel_ids"], 1)
+        self.assertEqual(result["missing_programme_titles"], 2)
 
     def test_epg_dtd_and_entity_declarations_are_rejected(self):
         xml = (b'<!DOCTYPE tv [<!ENTITY xxe SYSTEM "file:///etc/passwd">]>'
