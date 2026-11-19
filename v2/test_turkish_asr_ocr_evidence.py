@@ -1,5 +1,5 @@
 import unittest
-from v2.turkish_asr_ocr_evidence import evaluate_observation
+from v2.turkish_asr_ocr_evidence import evaluate_observation, review_observation_batch
 
 class ASROCREvidenceTests(unittest.TestCase):
     def test_asr_turkish_is_review_only(self):
@@ -41,3 +41,25 @@ class ASROCREvidenceTests(unittest.TestCase):
             evaluate_observation("TV", {"source": "ocr", "language": "tr", "text": "x"*4097})
 if __name__ == "__main__":
     unittest.main()
+
+class BatchASROCRTests(unittest.TestCase):
+    def test_asr_and_ocr_kept_separate(self):
+        result = review_observation_batch([
+            {"channel_id": "one", "name": "Foreign TV", "observation": {"source": "asr", "language": "tur", "text": "SECRET_AUDIO"}},
+            {"channel_id": "two", "name": "Foreign TV", "observation": {"source": "ocr", "language": "tr", "text": "SECRET_SCREEN"}}])
+        self.assertEqual(result["count"], 2)
+        self.assertEqual(result["turkish_spoken_candidates"], 1)
+        self.assertEqual(result["approved"], 0)
+        self.assertFalse(result["playlist_modified"])
+        self.assertNotIn("SECRET_AUDIO", str(result))
+        self.assertNotIn("SECRET_SCREEN", str(result))
+        self.assertFalse(result["results"][1]["turkish_subtitle_hint"])
+
+    def test_duplicate_channel_rejected(self):
+        item = {"channel_id": "x", "name": "TV", "observation": {"source": "asr", "language": "tr", "text": "Hi"}}
+        with self.assertRaises(ValueError):
+            review_observation_batch([item, item])
+
+    def test_injected_approval_rejected(self):
+        with self.assertRaises(ValueError):
+            review_observation_batch([{"channel_id": "x", "name": "TV", "observation": {"source": "asr", "language": "tr", "text": "Hi"}, "approved": True}])
