@@ -2,7 +2,7 @@
 import copy
 import unittest
 from datetime import datetime, timezone
-from merge_bounded_retry_checkpoint import reconcile
+from merge_bounded_retry_checkpoint import reconcile, require_reviewed_report
 from scan_checkpoint import checkpoint_row
 
 class BoundedEvidenceTests(unittest.TestCase):
@@ -37,6 +37,16 @@ class BoundedEvidenceTests(unittest.TestCase):
                                             "RETRY_HTTP_503": 6,
                                             "REVIEW_HTTP_404": 8},
                            observations=self.items)
+
+    def test_checkpoint_mutation_requires_exact_reviewed_report_bytes(self):
+        from pathlib import Path
+        path = Path(__file__).resolve().parent / "reports" / "task17-18-20-bounded-retry-20261118.json"
+        approved = path.read_bytes()
+        require_reviewed_report(approved)
+        with self.assertRaises(ValueError):
+            require_reviewed_report(approved + b"\\n")
+        with self.assertRaises(ValueError):
+            require_reviewed_report(approved.replace(b"HTTP_ERROR", b"HTTP_OTHER", 1))
 
     def test_exact_merge_and_idempotence(self):
         merged, n = reconcile(self.rows, self.report)
