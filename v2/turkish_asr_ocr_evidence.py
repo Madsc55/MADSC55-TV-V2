@@ -38,3 +38,24 @@ def evaluate_observation(name, observation):
     result["observation_text_retained"] = False
     result["ocr_text_is_not_subtitle_or_speech"] = source == "ocr"
     return result
+
+def review_observation_batch(records):
+    """Review already-produced ASR/OCR observations; no recognition or network."""
+    if not isinstance(records, list) or len(records) > 20000:
+        raise ValueError("Expected at most 20000 observations")
+    results = []
+    seen = set()
+    for record in records:
+        if not isinstance(record, dict) or set(record) != {"channel_id", "name", "observation"}:
+            raise ValueError("Invalid observation record")
+        channel_id = record["channel_id"]
+        if not isinstance(channel_id, str) or not channel_id.strip() or len(channel_id) > 256:
+            raise ValueError("Invalid channel ID")
+        if channel_id in seen:
+            raise ValueError("Duplicate channel ID")
+        seen.add(channel_id)
+        results.append({"channel_id": channel_id,
+                        **evaluate_observation(record["name"], record["observation"])})
+    return {"count": len(results),
+            "turkish_spoken_candidates": sum(r["turkish_spoken_hint"] for r in results),
+            "approved": 0, "playlist_modified": False, "results": results}
