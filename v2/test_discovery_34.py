@@ -200,6 +200,14 @@ class Discovery34Tests(unittest.TestCase):
                             ("youtube", "https://youtu.be/AbCdEf12345")):
             with self.assertRaises(ValueError):
                 identity(source, url)
+    def test_provider_identity_rejects_port_and_fragment_bypass(self):
+        for source, host in (("github", "github.com"), ("gitlab", "gitlab.com"),
+                             ("codeberg", "codeberg.org"), ("youtube", "www.youtube.com")):
+            for url in (f"https://{host}:8443/example", f"https://{host}/example#hidden"):
+                with self.subTest(source=source, url=url), self.assertRaises(ValueError):
+                    identity(source, url)
+        self.assertEqual(identity("codeberg", "https://codeberg.org:443/example")["source"], "codeberg")
+
     def test_api_redirect_is_refused_before_followup_request(self):
         from discovery_34 import _NoRedirect
         handler = _NoRedirect()
