@@ -63,6 +63,8 @@ def inspect(url, playlist_ids):
         now = datetime.datetime.now(datetime.timezone.utc)
         programmes = 0
         current_programmes = 0
+        expired_programme_intervals = 0
+        latest_programme_stop_utc = None
         invalid_programme_intervals = 0
         missing_programme_titles = 0
         matched_programme_ids = set()
@@ -90,6 +92,10 @@ def inspect(url, playlist_ids):
                 matching_unique = channel_id in playlist_ids and channel_counts[channel_id] == 1 and has_title
                 if matching_unique:
                     valid_matched_programme_ids.add(channel_id)
+                if latest_programme_stop_utc is None or stop_at > latest_programme_stop_utc:
+                    latest_programme_stop_utc = stop_at
+                if stop_at < now:
+                    expired_programme_intervals += 1
                 if start_at <= now <= stop_at:
                     current_programmes += 1
                     if matching_unique:
@@ -103,6 +109,9 @@ def inspect(url, playlist_ids):
                       current_matched_programme_channel_ids=len(current_matched_programme_ids),
                       duplicate_channel_ids=sum(count > 1 for count in channel_counts.values()),
                       current_programme_intervals=current_programmes,
+                      expired_programme_intervals=expired_programme_intervals,
+                      latest_programme_stop_utc=(latest_programme_stop_utc.astimezone(datetime.timezone.utc).isoformat()
+                                                 if latest_programme_stop_utc else None),
                       invalid_programme_intervals=invalid_programme_intervals,
                       missing_programme_titles=missing_programme_titles,
                       playlist_id_match_rate=round(len(channels & playlist_ids) / len(playlist_ids), 4) if playlist_ids else None)
@@ -123,6 +132,9 @@ def main():
         "unverified_sources": len(sources) - len(valid_feeds),
         "feeds_with_valid_matched_programmes": sum(
             item.get("valid_matched_programme_channel_ids", 0) > 0 for item in valid_feeds
+        ),
+        "feeds_with_current_matched_programmes": sum(
+            item.get("current_matched_programme_channel_ids", 0) > 0 for item in valid_feeds
         ),
         "historical_303_gaps_resolved": None,
         "historical_gap_status": "UNVERIFIED_REQUIRES_INDEPENDENT_ID_EVIDENCE",
