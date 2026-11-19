@@ -31,6 +31,24 @@ class LogoAuditTests(unittest.TestCase):
         current = playlist(("a", "", "A", url), ("b", "", "B", url))
         self.assertEqual(audit(current, old)["candidate_count"], 0)
 
+    def test_duplicate_tvg_id_on_different_current_urls_is_rejected(self):
+        url = "https://example.org/live.m3u8"
+        old = playlist(("a", "https://example.org/a.png", "A", url))
+        current = playlist(("a", "", "A", url),
+                           ("a", "", "A", "https://example.org/other.m3u8"))
+        result = audit(current, old)
+        self.assertEqual(result["candidate_count"], 0)
+        self.assertEqual(result["ambiguous_records_skipped"], 1)
+
+    def test_duplicate_tvg_id_on_different_historical_urls_is_rejected(self):
+        url = "https://example.org/live.m3u8"
+        old = playlist(("a", "https://example.org/a.png", "A", url),
+                       ("a", "https://example.org/a.png", "A", "https://example.org/other.m3u8"))
+        current = playlist(("a", "", "A", url))
+        result = audit(current, old)
+        self.assertEqual(result["candidate_count"], 0)
+        self.assertEqual(result["ambiguous_records_skipped"], 1)
+
     def test_existing_logo_is_preserved(self):
         url = "https://example.org/live.m3u8"
         old = playlist(("a", "https://example.org/old.png", "A", url))

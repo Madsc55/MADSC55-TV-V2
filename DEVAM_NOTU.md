@@ -1,3 +1,7 @@
+## 19 Kasım 2026 — Logo audit benzersiz tvg-id kontrolü (CI bekliyor)
+
+- Tarihsel #391/#356 logo adaylarının salt-okunur denetimine, hem güncel hem tarihsel playlistte aynı `tvg-id` birden fazla yayın URL'sinde görünürse adayın reddedilmesi kuralı eklendi. İki regresyon testi eklendi. Otomatik logo ataması yok; ana playlist, arşivler ve manifest değiştirilmedi. Son commit için Production Security Gate SUCCESS olmadan birleştirme yapılmayacak.
+
 ## 19 Kasım 2026 — Tarihsel logo eşleşmesi ek güvenlik denetimi (CI bekliyor)
 
 - #391 ve #356 tarihsel logo adaylarının otomatik uygulanmasını önlemek için salt-okunur denetim, aynı yayın URL'si ve tvg-id yanında değişmemiş görünen kanal adını ve kategori/arşiv grubunu da zorunlu tutacak şekilde sıkılaştırıldı. İki yeni regresyon testi eklendi. Bu değişiklik hiçbir logo atamaz; tarihsel adaylar hâlâ REVIEW_REQUIRED_NOT_VERIFIED. Ana playlist, arşivler ve SHA-256 yetkilendirme manifesti değiştirilmedi. Production Security Gate SUCCESS ve PR birleştirmesi bekleniyor.
