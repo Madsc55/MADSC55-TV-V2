@@ -93,7 +93,7 @@ def inspect(url, playlist_ids):
                     valid_matched_programme_ids.add(channel_id)
                 if start_at <= now <= stop_at:
                     current_programmes += 1
-                    if has_title and channel_counts[channel_id] == 1:
+                    if has_title and channel_counts.get(channel_id, 0) == 1:
                         current_titled_programmes += 1
                     if matching_unique:
                         current_matched_programme_ids.add(channel_id)
