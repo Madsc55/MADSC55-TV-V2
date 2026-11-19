@@ -91,6 +91,20 @@ class XMLTVIntegrityTests(unittest.TestCase):
         self.assertEqual(result["current_titled_unique_programme_intervals"], 1)
         self.assertEqual(result["current_matched_programme_channel_ids"], 1)
 
+    def test_expired_programmes_are_not_current_evidence(self):
+        xml = (b'<tv><channel id="x"/>'
+               b'<programme channel="x" start="20261113000000 +0000" stop="20261113010000 +0000">'
+               b'<title>Old News</title></programme></tv>')
+        class Response(io.BytesIO):
+            def __enter__(self): return self
+            def __exit__(self, *args): self.close()
+        with patch("epg_integrity.urllib.request.urlopen", return_value=Response(xml)):
+            result = epg_integrity.inspect("https://example.org/epg.xml", {"x"})
+        self.assertEqual(result["valid_matched_programme_channel_ids"], 1)
+        self.assertEqual(result["current_matched_programme_channel_ids"], 0)
+        self.assertEqual(result["expired_programme_intervals"], 1)
+        self.assertEqual(result["latest_programme_stop_utc"], "2026-11-13T01:00:00+00:00")
+
     def test_main_report_preserves_unverified_historical_gap_status(self):
         import json
         import tempfile
@@ -117,6 +131,7 @@ class XMLTVIntegrityTests(unittest.TestCase):
             self.assertEqual(report["source_coverage"]["valid_xmltv_sources"], 1)
             self.assertEqual(report["source_coverage"]["unverified_sources"], 1)
             self.assertEqual(report["source_coverage"]["feeds_with_valid_matched_programmes"], 1)
+            self.assertEqual(report["source_coverage"]["feeds_with_current_matched_programmes"], 0)
             self.assertIsNone(report["source_coverage"]["historical_303_gaps_resolved"])
 
     def test_epg_dtd_and_entity_declarations_are_rejected(self):

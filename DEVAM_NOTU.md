@@ -1330,3 +1330,10 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - Esas kaynak: `v2/reports/task17-18-20-bounded-retry-20261118.json` (zaten main üzerinde). 20.148 şifreli kuyruk kimliğinin 3.781'i iki playlistte eşleşiyor; ana İBO'da 333 eşleşme, ikinci listede 3.781 eşleşme (örtüşme nedeniyle toplanmaz). 3.781'in 15'i önceki denemede 17 girişimle test edilmiş; 1 TRT Kurdî AV, 8 HTTP404, 6 HTTP503. 3.766 eşleşmiş ama bu denemede işlenmemiş ve 16.367 bu iki listede eşleşmemiş kimlik açık. Önceden yapılmış 15 denemeyi veya 16/16 tarihî test paketini tekrar başlatma.
 - Raporda `sealed_checkpoint_updated=false`; bağımsız gözlemlerin şifreli checkpoint'e güvenli, idempotent işlenmesi hâlâ açık. Şifreleme anahtarı veya gerçek checkpoint olmadan güncellendi iddiasında bulunma. 404 incelemesi, 503 gecikmeli yeniden denemesi, gerçek AV/cihaz kabulü SON KANAL TEST FAZINDA; kullanıcının açık talimatıyla şimdi kanal araması başlatılmaz.
 - #17, #18 ve #20 görevleri mevcut kanıt korunarak `in_progress` tutuldu; ana İBO/YEDEKLER/ANA-TURK-YABANCI arşiv/EPG değişmedi. Diğer görevleri tekrar başlatma.
+
+
+## 19 Kasım 2026 — #19 EPG güncel kanıt birleştirme takibi
+- PR #457 (38b766ef44180f18679ee24dec0b7b6f974e2445) main dalına birleştirildi; aynı değişiklikler tekrar uygulanmadı.
+- PR #455'in main ile çakışan güncel EPG düzeltmeleri, #457'nin başlık/benzersiz kanal kanıtı korunarak PR #458 altında iki dosyada birleştirildi: `v2/epg_integrity.py` ve `v2/test_epg_integrity.py`. Geçmiş program aralığı, en son bitiş zamanı ve güncel eşleşen program kaynağı raporu eklendi. Geçmiş programların güncel kanıt sayılmaması için regresyon testi eklendi.
+- PR #458 Production Security Gate henüz SUCCESS vermeden birleştirilmeyecek. #454 logo PR'ı güvenlik FAILURE nedeniyle beklemede. #455 eski çakışan PR körlemesine birleştirilmeyecek.
+- #19 tarihsel 303 EPG boşluğu bağımsız kanıt olmadan çözülmüş sayılmayacak. #17/#18/#20, #28–33 ve cihaz kabulü açık kalır. Ana İBO playlisti ve arşivler değiştirilmedi; genel kanal taraması başlatılmadı.
