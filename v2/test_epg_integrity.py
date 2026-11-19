@@ -90,6 +90,7 @@ class XMLTVIntegrityTests(unittest.TestCase):
         self.assertEqual(result["current_programme_intervals"], 4)
         self.assertEqual(result["current_titled_unique_programme_intervals"], 1)
         self.assertEqual(result["current_matched_programme_channel_ids"], 1)
+        self.assertEqual(result["current_titled_unique_programme_intervals"], 1)
 
     def test_expired_programmes_are_not_current_evidence(self):
         xml = (b'<tv><channel id="x"/>'
