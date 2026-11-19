@@ -109,7 +109,11 @@ def retry_delay(exc, attempt):
     if delay is None:
         base = 1
         if exc.code == 429:
-            host = urllib.parse.urlsplit(exc.url).hostname
+            try:
+                host = urllib.parse.urlsplit(exc.url or "").hostname
+            except ValueError:
+                # Malformed provider URL must not abort bounded retry handling.
+                host = None
             base = 60 if host == "api.github.com" else 30
         delay = base * (2 ** (attempt - 1))
     return delay if delay <= MAX_RETRY_AFTER_SECONDS else None
