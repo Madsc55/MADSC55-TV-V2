@@ -22,7 +22,7 @@ REPOSITORY_SOURCES = ("github", "gitlab", "codeberg")
 MAX_BYTES = 2_000_000
 
 def identity(source, url):
-    if not isinstance(url, str) or any(ord(char) < 32 or ord(char) == 127 for char in url):
+    if not isinstance(url, str) or "\\" in url or any(ord(char) < 32 or ord(char) == 127 for char in url):
         raise ValueError("Invalid URL characters")
     p = urllib.parse.urlsplit(url)
     if p.scheme not in ("https", "http") or not p.hostname:
