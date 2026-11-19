@@ -34,3 +34,21 @@ jobs:
             v2/reports/master-summary.json
           retention-days: 30
           if-no-files-found: warn
+
+  yedekler-av-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install existing audio and video decoder
+        run: sudo apt-get update -qq && sudo apt-get install -y ffmpeg
+      - name: Verify all current YEDEKLER streams
+        run: python3 v2/audit_yedekler_av.py --workers 8 --timeout 15
+      - name: Upload audit results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: yedekler-av-audit
+          path: v2/reports/yedekler_av_audit.json
+          retention-days: 30
+          if-no-files-found: warn
