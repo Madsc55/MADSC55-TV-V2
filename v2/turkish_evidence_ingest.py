@@ -27,8 +27,8 @@ def evaluate_record(record):
             raise ValueError("Invalid media flag")
     if record.get("spoken_language") and "asr" not in sources:
         raise ValueError("Spoken language requires ASR provenance")
-    if record.get("subtitle_language") and not ({"webvtt", "ocr"} & set(sources)):
-        raise ValueError("Subtitle language requires WebVTT/OCR provenance")
+    if record.get("subtitle_language") and "webvtt" not in sources:
+        raise ValueError("Subtitle language requires WebVTT provenance; OCR text alone is not subtitles")
     if (record.get("video_decoded") or record.get("audio_decoded")) and "ffmpeg" not in sources:
         raise ValueError("Decoded frames require FFmpeg provenance")
     if record.get("stream_checked") and not ({"ffmpeg", "ffprobe"} & set(sources)):
