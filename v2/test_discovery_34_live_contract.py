@@ -359,7 +359,7 @@ class LiveContractRetryTests(unittest.TestCase):
             calls.append(url)
             raise urllib.error.HTTPError(
                 url, 403, "Abuse detection mechanism triggered", {}, None)
-        result = probe_queries("github", queries=("first", "second", "third"),
+        result = probe_queries("github", queries=("turkiye.m3u", "tr.m3u8", "turkish-iptv"),
                                fetch=fetch, sleep=lambda _: self.fail("403 must not retry"))
         self.assertEqual(result["status"], "error")
         self.assertTrue(result["rate_limited"])
@@ -375,7 +375,7 @@ class LiveContractRetryTests(unittest.TestCase):
             raise urllib.error.HTTPError(
                 url, 403, "Forbidden", {},
                 BytesIO(b'{"message":"You exceeded a secondary rate limit. Internal response detail."}'))
-        result = probe_queries("github", queries=("first", "second"), fetch=fetch,
+        result = probe_queries("github", queries=("turkiye.m3u", "tr.m3u8"), fetch=fetch,
                                sleep=lambda _: self.fail("403 must not retry"))
         self.assertTrue(result["rate_limited"])
         self.assertEqual(len(calls), 1)
