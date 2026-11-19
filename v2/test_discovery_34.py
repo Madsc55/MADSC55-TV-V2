@@ -348,5 +348,12 @@ class Discovery34Tests(unittest.TestCase):
         for source in ("official", "m3u"):
             self.assertEqual(len(curated_candidates(source, [{"url": "https://example.org/live.m3u8"}])), 1)
 
+    def test_ambiguous_backslash_urls_rejected(self):
+        for source, url in (("github", "https://github.com\\@evil.example/a"),
+                            ("m3u", "https://example.org\\@127.0.0.1/live.m3u8"),
+                            ("official", "https://example.org/live\\segment.m3u8")):
+            with self.subTest(source=source), self.assertRaises(ValueError):
+                identity(source, url)
+
 if __name__ == "__main__":
     unittest.main()
