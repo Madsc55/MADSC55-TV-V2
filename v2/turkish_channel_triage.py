@@ -10,8 +10,8 @@ TR_COUNTRIES = {"TR", "TUR", "TURKEY", "TÜRKİYE"}
 TR_CYPRUS = {"KKTC", "NORTHERN CYPRUS"}
 TURKIC = {"AZ", "AZE", "AZERBAIJAN", "AZERBAYCAN", "TM", "TKM", "TURKMENISTAN"}
 NAME_MARKERS = re.compile(r"(?<![A-Z0-9])(?:TÜRK(?:İYE|ÇE)?|TURK(?:IYE|ISH)?|TRT|KKTC|KIBRIS|AZƏRBAYCAN|AZERBAYCAN)(?![A-Z0-9])", re.I)
-TR_LANGUAGE = {"tr", "tr-tr"}
-OTHER_TURKIC_LANGUAGES = {"az", "az-az", "tk", "tk-tm"}
+TR_LANGUAGE = {"tr", "tr-tr", "tur"}
+OTHER_TURKIC_LANGUAGES = {"az", "az-az", "aze", "tk", "tk-tm", "tuk"}
 
 def classify_channel(name, origin_country=None, spoken_language=None,
                      subtitle_language=None, video_decoded=False,
