@@ -85,6 +85,18 @@ jobs:
           # A prior partial-discovery scan may exit success while preserving
           # observations. Searching only FAILED runs loses its newer checkpoint.
           # Current running/queued jobs must never be selected as resume input.
+          # The validated offline import is newer than its source scan. Prefer
+          # its encrypted checkpoint so the 15 imported observations survive.
+          # Never treat the artifact as fresh AV proof: the scanner still checks
+          # each row's authenticated identity and original observation age.
+          if gh run download 44429064188 --name v2-bounded-retry-15-merged-checkpoint --dir /tmp/v2-resume/imported 2>/dev/null; then
+            if [ -s /tmp/v2-resume/imported/ibo-scan-progress.enc ] && [ ! -L /tmp/v2-resume/imported/ibo-scan-progress.enc ]; then
+              install -m 600 /tmp/v2-resume/imported/ibo-scan-progress.enc v2/reports/ibo-scan-resume.enc
+              echo "Authenticated encrypted 15-observation import selected as resume source."
+              exit 0
+            fi
+          fi
+          echo "::warning::Merged import artifact unavailable; checking completed real scans."
           PREVIOUS_RUNS="$(gh run list --workflow v2-real-iptv-scan.yml --branch main --limit 12 --json databaseId,status --jq '.[] | select(.status == "completed") | .databaseId' || true)"
           for PREVIOUS_RUN in $PREVIOUS_RUNS; do
             RESUME_DIR="/tmp/v2-resume/$PREVIOUS_RUN"

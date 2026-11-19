@@ -210,5 +210,16 @@ class ScanCheckpointTests(unittest.TestCase):
         self.assertEqual(target.read_bytes(), b"PROTECTED_M3U")
 
 
+def load_tests(loader, standard_tests, pattern):
+    """Include bounded evidence import tests in the existing mandatory scan gate.
+
+    The production security workflow already runs:
+    PYTHONPATH=v2 python -m unittest -v test_scan_checkpoint.
+    """
+    from test_merge_bounded_retry_checkpoint import BoundedEvidenceTests
+    standard_tests.addTests(loader.loadTestsFromTestCase(BoundedEvidenceTests))
+    return standard_tests
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -22,6 +22,12 @@ def validate_url(url):
     parsed = urlsplit(url)
     if parsed.scheme not in ("http", "https") or not parsed.hostname or parsed.username or parsed.password:
         raise ValueError("Only HTTP(S) URLs without embedded credentials are allowed")
+    try:
+        port = parsed.port
+    except ValueError as exc:
+        raise ValueError("Invalid URL port") from exc
+    if port == 0:
+        raise ValueError("Port zero is not a valid stream endpoint")
     if parsed.fragment:
         raise ValueError("URL fragments are not supported")
     if parsed.hostname.lower() == "localhost" or parsed.hostname.lower().endswith((".localhost", ".local", ".internal")):
@@ -52,12 +58,13 @@ def capture(url, destination, *, seconds=4, timeout=17, runner=subprocess.run, w
         raise ValueError("Output must be a new .mkv file in an existing directory")
     cmd = [executable, "-nostdin", "-hide_banner", "-loglevel", "error",
            "-rw_timeout", str(timeout * 1000000), "-max_redirect", "0",
-           "-i", url, "-t", str(seconds),
+           "-i", url, "-t", str(seconds), "-fs", str(MAX_BYTES),
            "-map", "0:v:0?", "-map", "0:a:0?", "-c:v", "mpeg4", "-q:v", "12",
            "-c:a", "aac", "-b:a", "48k", "-n", str(dest)]
     try:
         result = runner(cmd, capture_output=True, timeout=timeout, check=False)
         if dest.is_symlink():
+            dest.unlink(missing_ok=True)
             raise ValueError("Capture output cannot be a symlink")
         size = dest.stat().st_size if dest.is_file() else 0
         if result.returncode != 0 or not 0 < size <= MAX_BYTES:
