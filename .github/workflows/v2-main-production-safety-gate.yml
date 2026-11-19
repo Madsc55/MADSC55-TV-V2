@@ -102,6 +102,7 @@ jobs:
           python -m unittest -v v2.test_turkish_webvtt_evidence
           python -m unittest -v v2.test_turkish_asr_ocr_evidence
           python -m unittest -v v2.test_turkish_media_sample_capture
+          python -m unittest -v v2.test_turkish_subtitle_track_review
       - name: Discovery 34 offline adapter and integration acceptance
         run: |
           PYTHONPATH=v2 python -m unittest -v test_discovery_34 test_discovery_34_integrate test_discovery_34_integrate_acceptance test_discovery_34_live_contract
