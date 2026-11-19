@@ -82,6 +82,12 @@ def reconcile(rows, report, *, existing_rows_only=False):
         applied += 1
     return merged, applied
 
+def require_reviewed_report(report_bytes):
+    """Fail closed before checkpoint mutation if evidence bytes are unreviewed."""
+    if sha256(report_bytes).hexdigest() != REVIEWED_REPORT_SHA256:
+        raise ValueError("Checkpoint mutation requires the reviewed 15-observation report")
+
+
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--checkpoint", required=True, type=Path)
@@ -100,8 +106,11 @@ def main():
     if not rows:
         p.error("Existing authenticated checkpoint required")
     report_bytes = args.report.read_bytes()
-    if (args.apply or args.prepare_resume) and sha256(report_bytes).hexdigest() != REVIEWED_REPORT_SHA256:
-        p.error("Checkpoint mutation requires the reviewed 15-observation report")
+    if args.apply or args.prepare_resume:
+        try:
+            require_reviewed_report(report_bytes)
+        except ValueError as exc:
+            p.error(str(exc))
     report = json.loads(report_bytes)
     merged, count = reconcile(rows, report, existing_rows_only=args.prepare_resume)
     write_updates = args.apply or args.prepare_resume
