@@ -1,0 +1,126 @@
+{
+  "checked_utc": "2026-11-19T19:26:47+00:00",
+  "scope": "Two local integration fixtures. Human speech from the FLEURS test split was combined with a generated, captioned image and a timed Turkish test cue. No broadcaster or device assessment.",
+  "dataset": "https://huggingface.co/datasets/google/fleurs/tree/70bb2e84b976b7e960aa89f1c648e09c59f894dd",
+  "dataset_attribution": "FLEURS, Google, CC BY 4.0. Source audio and transcripts are not distributed here.",
+  "model": "https://huggingface.co/Systran/faster-whisper-tiny/tree/d90ca5fe260221311c53c58e660288d3deb8d356",
+  "asr_runtime": "faster-whisper 1.2.1, PyAV 15.1.0, CPU int8, two threads",
+  "ocr_language": "tur",
+  "ocr_model_sha256": "7393381111e1152420fc4092cb44eef4237580d21b92bf30d7d221aad192c6b7",
+  "samples": [
+    {
+      "dataset_locale": "tr_tr",
+      "dataset_file": "test/10000377651956138413.wav",
+      "source_audio_sha256": "e2efd9f3ce2fcc9e191126dcded8e674233a9ce83a9c2132541700e8f1bd57c3",
+      "sample": {
+        "audio_decoded": true,
+        "bytes": 202013,
+        "device_verified": false,
+        "non_turkish_speech_with_turkish_cues_hint": false,
+        "picture": {
+          "frames_decoded": 3,
+          "frames_with_text": 3,
+          "ocr_frames_completed": 3,
+          "turkish_visible_text_hint": true
+        },
+        "playlist_modified": false,
+        "review_approved": false,
+        "sample_sha256": "f7f308e8c5961e7afeda4dd91fd4a0941ec0fbf8fb099ef199acbe82543adeaf",
+        "speech": {
+          "approved": false,
+          "detected_language": "tr",
+          "language_probability": 0.9579,
+          "speech_detected": true,
+          "spoken_turkish_verified": false,
+          "status": "LANGUAGE_MODEL_HINT_ONLY"
+        },
+        "subtitle_tracks": [
+          {
+            "cue_count": 1,
+            "language_tag": "tur",
+            "status": "TIMED_CUES",
+            "stream_index": 2,
+            "tag_and_text_turkish_hint": true,
+            "turkish_text_hint": true
+          }
+        ],
+        "track_probe_status": "TRACK_METADATA_REVIEW_ONLY",
+        "triage": {
+          "av_decoded_in_supplied_check": true,
+          "category": "TURKISH_SPOKEN_REVIEW",
+          "language_evidence_verified": false,
+          "other_turkic_origin_hint": false,
+          "other_turkic_spoken_hint": false,
+          "playlist_modified": false,
+          "review_approved": false,
+          "source_country_verified": false,
+          "turkish_name_hint": false,
+          "turkish_origin_hint": false,
+          "turkish_spoken_hint": true,
+          "turkish_subtitle_hint": true,
+          "working_channel_verified": false
+        },
+        "unexamined_tracks": 0,
+        "url_sha256": null,
+        "video_decoded": true
+      }
+    },
+    {
+      "dataset_locale": "en_us",
+      "dataset_file": "test/1003119935936341070.wav",
+      "source_audio_sha256": "33aca50159ec2e3cbcc894eb26faa916d6badb1b49fb75994973561540a7f012",
+      "sample": {
+        "audio_decoded": true,
+        "bytes": 167710,
+        "device_verified": false,
+        "non_turkish_speech_with_turkish_cues_hint": true,
+        "picture": {
+          "frames_decoded": 3,
+          "frames_with_text": 3,
+          "ocr_frames_completed": 3,
+          "turkish_visible_text_hint": true
+        },
+        "playlist_modified": false,
+        "review_approved": false,
+        "sample_sha256": "a9ae20e70872af87e9e219670f9d637807ba8de86c54250a5e90dd539f0fc151",
+        "speech": {
+          "approved": false,
+          "detected_language": "en",
+          "language_probability": 0.9852,
+          "speech_detected": true,
+          "spoken_turkish_verified": false,
+          "status": "LANGUAGE_MODEL_HINT_ONLY"
+        },
+        "subtitle_tracks": [
+          {
+            "cue_count": 1,
+            "language_tag": "tur",
+            "status": "TIMED_CUES",
+            "stream_index": 2,
+            "tag_and_text_turkish_hint": true,
+            "turkish_text_hint": true
+          }
+        ],
+        "track_probe_status": "TRACK_METADATA_REVIEW_ONLY",
+        "triage": {
+          "av_decoded_in_supplied_check": true,
+          "category": "TURKISH_SUBTITLED_REVIEW",
+          "language_evidence_verified": false,
+          "other_turkic_origin_hint": false,
+          "other_turkic_spoken_hint": false,
+          "playlist_modified": false,
+          "review_approved": false,
+          "source_country_verified": false,
+          "turkish_name_hint": false,
+          "turkish_origin_hint": false,
+          "turkish_spoken_hint": false,
+          "turkish_subtitle_hint": true,
+          "working_channel_verified": false
+        },
+        "unexamined_tracks": 0,
+        "url_sha256": null,
+        "video_decoded": true
+      }
+    }
+  ]
+}

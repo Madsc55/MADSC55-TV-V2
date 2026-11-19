@@ -13,17 +13,23 @@ from v2.turkish_subtitle_track_review import review_tracks
 MAX_INPUT_BYTES = 12 * 1024 * 1024
 MAX_JSON_BYTES = 1024 * 1024
 
-def probe_local_sample(path, *, runner=subprocess.run, which=shutil.which):
+def validate_sample(path):
     path = Path(path)
     if path.is_symlink() or not path.is_file() or path.suffix.lower() != ".mkv":
         raise ValueError("Expected existing regular MKV sample")
     if not 0 < path.stat().st_size <= MAX_INPUT_BYTES:
         raise ValueError("Sample size outside bounds")
+    return path
+
+
+def probe_local_sample(path, *, runner=subprocess.run, which=shutil.which):
+    path = validate_sample(path)
     executable = which("ffprobe")
     if not executable:
         return {"status": "FFPROBE_UNAVAILABLE", "playlist_modified": False,
                 "review_approved": False}
-    command = [executable, "-v", "error", "-show_entries",
+    command = [executable, "-v", "error", "-protocol_whitelist", "file",
+               "-f", "matroska", "-show_entries",
                "stream=index,codec_type:stream_tags=language", "-of", "json",
                str(path.resolve())]
     try:
