@@ -6,6 +6,7 @@ Does not promote a one-segment sample into scanner-level AV acceptance.
 import argparse
 from collections import Counter
 from datetime import datetime
+from hashlib import sha256
 import json
 import os
 from pathlib import Path
@@ -13,8 +14,9 @@ import shutil
 from scan_checkpoint import _read_progress_rows, checkpoint_row, save_progress
 
 OUTCOMES = {"AV_SAMPLE_VERIFIED": 1, "RETRY_HTTP_503": 6, "REVIEW_HTTP_404": 8}
+REVIEWED_REPORT_SHA256 = "57e126a44f54011e6f58f38ca17721fba1ed04c6920d794b73c88d76396309eb"
 
-def reconcile(rows, report):
+def reconcile(rows, report, *, existing_rows_only=False):
     observations = report.get("observations", [])
     if (report.get("tasks") != [17, 18, 20]
             or report.get("source_run_id") != 43608247496
@@ -33,10 +35,9 @@ def reconcile(rows, report):
     merged, seen, applied = dict(rows), set(), 0
     for item in observations:
         sha = item["url_sha256"]
-        if sha in seen or sha not in lookup:
+        if sha in seen or (sha not in lookup and not existing_rows_only):
             raise ValueError("Duplicate or unknown hash; abort all")
         seen.add(sha)
-        url, old = lookup[sha]
         latest = item["attempts"][-1]
         dt = datetime.fromisoformat(latest["finished_at_utc"].replace("Z", "+00:00"))
         if dt.tzinfo is None:
@@ -61,6 +62,9 @@ def reconcile(rows, report):
         count = item["recovery_attempts_after_batch"]
         if type(count) is not int or not 0 <= count <= 3:
             raise ValueError("Invalid retry count")
+        if sha not in lookup:
+            continue
+        url, old = lookup[sha]
         diag = dict(old["diagnostics"])
         previous = diag.get("bounded_retry_import", {})
         if when <= max(old["checked_at"], previous.get("observed_at", old["checked_at"])):
@@ -82,7 +86,10 @@ def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--checkpoint", required=True, type=Path)
     p.add_argument("--report", required=True, type=Path)
-    p.add_argument("--apply", action="store_true")
+    mode = p.add_mutually_exclusive_group()
+    mode.add_argument("--apply", action="store_true")
+    mode.add_argument("--prepare-resume", action="store_true",
+                      help="Apply the reviewed evidence to matching rows in a working copy of a later scan.")
     args = p.parse_args()
     if args.checkpoint.name != "ibo-scan-progress.enc" or args.report.is_symlink():
         p.error("Invalid evidence path")
@@ -92,9 +99,13 @@ def main():
     rows = _read_progress_rows(args.checkpoint, secret, worldwide=True)
     if not rows:
         p.error("Existing authenticated checkpoint required")
-    report = json.loads(args.report.read_text(encoding="utf-8"))
-    merged, count = reconcile(rows, report)
-    if args.apply and count:
+    report_bytes = args.report.read_bytes()
+    if args.prepare_resume and sha256(report_bytes).hexdigest() != REVIEWED_REPORT_SHA256:
+        p.error("Resume requires the reviewed 15-observation report")
+    report = json.loads(report_bytes)
+    merged, count = reconcile(rows, report, existing_rows_only=args.prepare_resume)
+    write_updates = args.apply or args.prepare_resume
+    if write_updates and count:
         # Preserve the authenticated encrypted original for manual rollback.
         backup = args.checkpoint.with_name(args.checkpoint.name + ".pre-bounded-retry.bak")
         if backup.exists() or backup.is_symlink():
@@ -111,7 +122,7 @@ def main():
         if verified != merged or len(verified) != len(rows):
             raise ValueError("Encrypted checkpoint read-back mismatch")
     print(json.dumps({"existing_rows": len(rows), "eligible_updates": count,
-                      "applied": count if args.apply else 0, "dry_run": not args.apply}))
+                      "applied": count if write_updates else 0, "dry_run": not write_updates}))
 
 if __name__ == "__main__":
     main()
