@@ -115,9 +115,22 @@ def main():
     playlist_ids = {e["tvg_id"] for e in entries(LIVE.read_text(encoding="utf-8-sig")) if e["tvg_id"]}
     with concurrent.futures.ThreadPoolExecutor(max_workers=3) as pool:
         checks = list(pool.map(lambda url: inspect(url, playlist_ids), sources))
+    # Per-feed observations are not unique channel counts across feeds.
+    valid_feeds = [item for item in checks if item["status"] == "XMLTV_VALID"]
+    source_coverage = {
+        "configured_sources": len(sources),
+        "valid_xmltv_sources": len(valid_feeds),
+        "unverified_sources": len(sources) - len(valid_feeds),
+        "feeds_with_valid_matched_programmes": sum(
+            item.get("valid_matched_programme_channel_ids", 0) > 0 for item in valid_feeds
+        ),
+        "historical_303_gaps_resolved": None,
+        "historical_gap_status": "UNVERIFIED_REQUIRES_INDEPENDENT_ID_EVIDENCE",
+    }
     report = {"created_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
               "policy": "READ_ONLY; XMLTV numeric UTC offsets are respected; missing offsets assume UTC; matching IDs do not prove accurate schedules",
               "status_counts": dict(Counter(x["status"] for x in checks)),
+              "source_coverage": source_coverage,
               "playlist_distinct_tvg_ids": len(playlist_ids), "sources": checks}
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
