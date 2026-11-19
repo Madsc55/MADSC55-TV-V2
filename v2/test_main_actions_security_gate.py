@@ -35,6 +35,12 @@ class MainActionsGateTests(unittest.TestCase):
     def test_main_gate_rejects_wrong_push_scope(self):
         text=fixture("  workflow_dispatch:\n  push:\n    branches: [main]\n  pull_request:\n    branches: [main]\n")
         self.assertIn("MAIN_GATE_WRONG_PUSH_BRANCHES",audit_one(GATE,text))
+    def test_playlist_record_multiplicity_guard(self):
+        from collections import Counter
+        original = Counter({b"duplicate": 2, b"single": 1})
+        candidate = Counter({b"duplicate": 1, b"single": 1})
+        self.assertFalse(all(candidate[record] >= count for record, count in original.items()))
+        self.assertTrue(all(original[record] >= count for record, count in original.items()))
     def test_invalid_yaml_rejected(self):
         self.assertIn("UNPARSEABLE_YAML",audit_one("v2-world-discovery.yml","on: [bad"))
 if __name__=="__main__":
