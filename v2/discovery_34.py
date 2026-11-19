@@ -112,6 +112,7 @@ def repository_items(source, payload):
         return payload
     if source == "codeberg":
         if (not isinstance(payload, dict) or payload.get("ok", True) is not True
+                or "error" in payload or "message" in payload
                 or not isinstance(payload.get("data"), list)):
             raise ValueError("Invalid Codeberg repository API response")
         return payload["data"]

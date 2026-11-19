@@ -33,7 +33,9 @@ class LiveContractRetryTests(unittest.TestCase):
         for source, payload in (("github", {"message": "rate limited"}),
                                 ("gitlab", {"message": "forbidden"}),
                                 ("codeberg", {"message": "error"}),
-                                ("codeberg", {"ok": False, "data": []})):
+                                ("codeberg", {"ok": False, "data": []}),
+                                ("codeberg", {"message": "API error", "data": []}),
+                                ("codeberg", {"error": "throttled", "data": []})):
             with self.subTest(source=source):
                 result = probe(source, fetch=lambda _, p=payload: p,
                                sleep=lambda _: self.fail("unexpected retry"))
