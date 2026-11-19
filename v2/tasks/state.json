@@ -205,7 +205,7 @@
     {
       "id": 15,
       "status": "in_progress",
-      "last_checked_at": "2026-11-14T15:24:27Z",
+      "last_checked_at": "2026-11-19T08:33:30Z",
       "evidence_urls": [
         "https://github.com/Madsc55/MADSC55-TV-V2/blob/madsc/v2-discovery-bulk-20261031/v2/reports/task15-historical-api-identity-evidence-20261112.json",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42228674931",
@@ -216,10 +216,15 @@
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43455192478",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42216075104",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/artifacts/13524765368",
-        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43608247496"
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43608247496",
+        "https://github.com/Madsc55/MADSC55-TV-V2/blob/main/v2/reports/task15-historical-url-hash-recovery-20261118.json",
+        "https://raw.githubusercontent.com/Madsc55/MADSC55-TV-V2/062cf6ae9783803bb45b06efd4e877bcb6333f8e/v2/history/stage3-4955-hash-only.jsonl",
+        "https://raw.githubusercontent.com/iptv-org/api/f8d596e4c41cb5c4d81707f6d27c4b6163c202cb/streams.json",
+        "https://birtv.tv/canli-yayin",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42216075104/artifacts/13524765368"
       ],
-      "blocker": "6 historical URL hashes still absent from the 4,949/4,955 worldwide crosswalk; direct publisher ownership is not independently proven. A green IPTV source scan cannot authenticate ownership.",
-      "reason": "Pinned IPTV-org streams.json and channels.json to ca2dc7e7bcc89def37e55202a3ad108db46a7ccf. Matched 1,777 exact URL SHA-256 identities to unambiguous catalog channel IDs, reproduced all five prior exact IDs, and found 57 catalog site hostname correlations. The report includes no plaintext stream URLs. Catalog hostname correlation is not independent broadcaster proof. 13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open. Historical worldwide evidence inspected 13 Nov: run 42216075104 artifact 13524765368 contains 35,327 candidate hashes, 13,884 current-run FFmpeg video+audio decodes, and exact-hash crosswalk of 4,949/4,955 historical rows, with 3,080 historical hashes AV-decoded. The same report explicitly says historical broadcaster identity is not verified; #15 remains open for independently authenticated publisher attribution.\n14 Nov live scan #43608247496: 103/103 admissible M3U feeds read, 28,845 stream candidates and 8,573 total AV observations. Publisher attribution remains separately unverified; neither catalog correlation nor AV decode closes #15."
+      "blocker": "Independent publisher attribution is still open for historical stream endpoints. Among the six recovered addresses, the Bir TV player identifies the same HTTP resource after fragment removal. Evidence for the other five does not establish endpoint ownership. All 4,955 historical raw URL hashes match.",
+      "reason": "Pinned IPTV-org streams.json and channels.json to ca2dc7e7bcc89def37e55202a3ad108db46a7ccf. Matched 1,777 exact URL SHA-256 identities to unambiguous catalog channel IDs, reproduced all five prior exact IDs, and found 57 catalog site hostname correlations. The report includes no plaintext stream URLs. Catalog hostname correlation is not independent broadcaster proof. 13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open. Historical worldwide evidence inspected 13 Nov: run 42216075104 artifact 13524765368 contains 35,327 candidate hashes, 13,884 current-run FFmpeg video+audio decodes, and exact-hash crosswalk of 4,949/4,955 historical rows, with 3,080 historical hashes AV-decoded. The same report explicitly says historical broadcaster identity is not verified; #15 remains open for independently authenticated publisher attribution.\n14 Nov live scan #43608247496: 103/103 admissible M3U feeds read, 28,845 stream candidates and 8,573 total AV observations. Publisher attribution remains separately unverified; neither catalog correlation nor AV decode closes #15.\n18 Nov 2026 reconciliation: existing current-main v2/reports/task15-historical-url-hash-recovery-20261118.json documents the names and six exact hashes, four extra exact address matches and two unmatched; earlier six-unmatched blocker was stale. No channel scan, playlist changes, or publisher ownership claim.\n19 Nov 2026: the 4,949 unique archived crosswalk matches and six disjoint recovered raw URL hashes reproduce the complete immutable set of 4,955. Both outstanding hashes (Xinjiang TV 3 and American Ninja Warrior) match the 28 and 29 October pinned catalogs and the country playlists. The crosswalk itself still contains 4,949. Publisher evidence for the six reviewed rows is recorded in the recovery report."
     },
     {
       "id": 16,
@@ -241,22 +246,24 @@
     {
       "id": 17,
       "status": "in_progress",
-      "last_checked_at": "2026-11-18T18:35:26Z",
+      "last_checked_at": "2026-11-19T00:27:14Z",
       "evidence_urls": [
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43454977935",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43454976797",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43455192478",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43608247496",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43608247496/artifacts/14135417421",
-        "https://github.com/Madsc55/MADSC55-TV-V2/blob/main/v2/reports/task17-18-20-bounded-retry-20261118.json"
+        "https://github.com/Madsc55/MADSC55-TV-V2/blob/main/v2/reports/task17-18-20-bounded-retry-20261118.json",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44429064188",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44429064188/artifacts/14485014372"
       ],
-      "blocker": "The 14 November sealed retry queue held 20,148 URLs. This bounded batch covers 15 exact identities. The remaining queue needs evidence and reconciliation with the encrypted checkpoint.",
-      "reason": "13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open.\n14 Nov live scan #43608247496: encrypted resume reused 28,545 observations, performed 300 real new AV checks, recovered 33 previously failed streams, and kept the recovery queue. Real progress verified but full restoration is not complete.\n18 Nov 2026: read-only follow-up of 15 pending SHA-256 identities, 17 attempts. One current AV sample, eight HTTP 404 reviews and six HTTP 503 retries. Per-attempt evidence is recorded in the dated report."
+      "blocker": "The reviewed batch is in the encrypted checkpoint. Of the 20,148 historical queue identities, 3,766 matched to playlists and 16,367 absent from those playlists still need evidence. No new channel scan is authorized.",
+      "reason": "13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open.\n14 Nov live scan #43608247496: encrypted resume reused 28,545 observations, performed 300 real new AV checks, recovered 33 previously failed streams, and kept the recovery queue. Real progress verified but full restoration is not complete.\n18 Nov 2026: read-only follow-up of 15 pending SHA-256 identities, 17 attempts. One current AV sample, eight HTTP 404 reviews and six HTTP 503 retries. Per-attempt evidence is recorded in the dated report.\n18 Nov 2026 no-rescan reconciliation: current-main v2/reports/task17-18-20-bounded-retry-20261118.json confirms 20,148 queue, 3,781 matched, 15 unique URLs / 17 attempts, 1 AV, 8 HTTP404, 6 HTTP503, and sealed_checkpoint_updated=false. These observations must not be re-run merely because the tasks are open.\n19 Nov 2026: offline import run 44429064188 applied all 15 identities (17 historical attempts) to the 28,844-row encrypted checkpoint. The readback retained all rows, the second application made zero changes, and the published encrypted backup matched the input byte for byte. The 18 November report describes the pre-import snapshot."
     },
     {
       "id": 18,
       "status": "in_progress",
-      "last_checked_at": "2026-11-18T18:35:26Z",
+      "last_checked_at": "2026-11-19T00:27:14Z",
       "evidence_urls": [
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42989285004",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43454977935",
@@ -264,10 +271,12 @@
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43455192478",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43608247496",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43608247496/artifacts/14135417421",
-        "https://github.com/Madsc55/MADSC55-TV-V2/blob/main/v2/reports/task17-18-20-bounded-retry-20261118.json"
+        "https://github.com/Madsc55/MADSC55-TV-V2/blob/main/v2/reports/task17-18-20-bounded-retry-20261118.json",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44429064188",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44429064188/artifacts/14485014372"
       ],
-      "blocker": "One TRT Kurdî URL produced decoded audio and video in this batch. The other 14 tested URLs lack current decoded AV. Remaining channels and physical playback acceptance are open.",
-      "reason": "Pinned exact IPTV API evidence has 171 stream hashes, 168 decoded audio+video in both short FFmpeg samples. Identity review remains tied to #15. 13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open.\n14 Nov live scan #43608247496: exact real FFmpeg AV counts balance: 8,540 previous checkpoint + 33 this run = 8,573, with 20,272 still without AV proof. A green scan is not complete current playback acceptance.\n18 Nov 2026: read-only follow-up of 15 pending SHA-256 identities, 17 attempts. One current AV sample, eight HTTP 404 reviews and six HTTP 503 retries. Per-attempt evidence is recorded in the dated report."
+      "blocker": "The stored batch includes one TRT Kurdî audio/video sample, eight last HTTP 404 observations and six last HTTP 503 observations. Remaining playback evidence and device acceptance are open.",
+      "reason": "Pinned exact IPTV API evidence has 171 stream hashes, 168 decoded audio+video in both short FFmpeg samples. Identity review remains tied to #15. 13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open.\n14 Nov live scan #43608247496: exact real FFmpeg AV counts balance: 8,540 previous checkpoint + 33 this run = 8,573, with 20,272 still without AV proof. A green scan is not complete current playback acceptance.\n18 Nov 2026: read-only follow-up of 15 pending SHA-256 identities, 17 attempts. One current AV sample, eight HTTP 404 reviews and six HTTP 503 retries. Per-attempt evidence is recorded in the dated report.\n18 Nov 2026 no-rescan reconciliation: current-main v2/reports/task17-18-20-bounded-retry-20261118.json confirms 20,148 queue, 3,781 matched, 15 unique URLs / 17 attempts, 1 AV, 8 HTTP404, 6 HTTP503, and sealed_checkpoint_updated=false. These observations must not be re-run merely because the tasks are open.\n19 Nov 2026: offline import run 44429064188 applied all 15 identities (17 historical attempts) to the 28,844-row encrypted checkpoint. The readback retained all rows, the second application made zero changes, and the published encrypted backup matched the input byte for byte. The 18 November report describes the pre-import snapshot."
     },
     {
       "id": 19,
@@ -292,7 +301,7 @@
     {
       "id": 20,
       "status": "in_progress",
-      "last_checked_at": "2026-11-18T18:35:26Z",
+      "last_checked_at": "2026-11-19T00:27:14Z",
       "evidence_urls": [
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42989285004",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43454977935",
@@ -300,10 +309,12 @@
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43455192478",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43608247496",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43608247496/artifacts/14135417421",
-        "https://github.com/Madsc55/MADSC55-TV-V2/blob/main/v2/reports/task17-18-20-bounded-retry-20261118.json"
+        "https://github.com/Madsc55/MADSC55-TV-V2/blob/main/v2/reports/task17-18-20-bounded-retry-20261118.json",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44429064188",
+        "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44429064188/artifacts/14485014372"
       ],
-      "blocker": "Eight exact addresses now need endpoint review after HTTP 404 and six need retry after HTTP 503. Independent device testing and the full recovery chain remain open.",
-      "reason": "167 exact URL hashes have positive measured video dimensions and two successful real AV samples. Provenance and counts in the linked report. Full recovery queue acceptance depends on #17. 13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open.\n14 Nov live scan #43608247496: deterministic checkpoint replay and retry accounting evidenced. Retry-state and evidence archived, but independent full recovery/real playback signoff is absent.\n18 Nov 2026: read-only follow-up of 15 pending SHA-256 identities, 17 attempts. One current AV sample, eight HTTP 404 reviews and six HTTP 503 retries. Per-attempt evidence is recorded in the dated report."
+      "blocker": "The 15 observations are in the encrypted checkpoint. Eight HTTP 404 cases remain for endpoint review and six HTTP 503 cases for a later authorized retry. Independent production restore and device acceptance are still open.",
+      "reason": "167 exact URL hashes have positive measured video dimensions and two successful real AV samples. Provenance and counts in the linked report. Full recovery queue acceptance depends on #17. 13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open.\n14 Nov live scan #43608247496: deterministic checkpoint replay and retry accounting evidenced. Retry-state and evidence archived, but independent full recovery/real playback signoff is absent.\n18 Nov 2026: read-only follow-up of 15 pending SHA-256 identities, 17 attempts. One current AV sample, eight HTTP 404 reviews and six HTTP 503 retries. Per-attempt evidence is recorded in the dated report.\n18 Nov 2026 no-rescan reconciliation: current-main v2/reports/task17-18-20-bounded-retry-20261118.json confirms 20,148 queue, 3,781 matched, 15 unique URLs / 17 attempts, 1 AV, 8 HTTP404, 6 HTTP503, and sealed_checkpoint_updated=false. These observations must not be re-run merely because the tasks are open.\n19 Nov 2026: offline import run 44429064188 applied all 15 identities (17 historical attempts) to the 28,844-row encrypted checkpoint. The readback retained all rows, the second application made zero changes, and the published encrypted backup matched the input byte for byte. The 18 November report describes the pre-import snapshot."
     },
     {
       "id": 21,

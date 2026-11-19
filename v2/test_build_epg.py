@@ -141,6 +141,7 @@ class EPGBuilderMatchingTests(unittest.TestCase):
         p = ET.Element("programme", start="20261113120000 +0300", stop="20261113130000 +0300")
         begin = datetime(2026, 11, 13, 8, 0, tzinfo=timezone.utc)
         end = datetime(2026, 11, 13, 10, 0, tzinfo=timezone.utc)
+        ET.SubElement(p, "title").text = "Broadcast"
         self.assertTrue(programme_in_window(p, begin, end))
 
     def test_guide_export_rejects_invalid_intervals(self):
@@ -156,6 +157,17 @@ class EPGBuilderMatchingTests(unittest.TestCase):
             with self.subTest(start=start, stop=stop):
                 p = ET.Element("programme", start=start, stop=stop)
                 self.assertFalse(programme_in_window(p, begin, end))
+
+    def test_guide_export_requires_nonempty_title(self):
+        now = datetime(2026, 11, 13, 12, 0, tzinfo=timezone.utc)
+        end = now + timedelta(hours=2)
+        p = ET.Element("programme", start="20261113120000 +0000",
+                       stop="20261113130000 +0000")
+        self.assertFalse(programme_in_window(p, now, end))
+        ET.SubElement(p, "title").text = "  "
+        self.assertFalse(programme_in_window(p, now, end))
+        p.find("title").text = "Verified programme"
+        self.assertTrue(programme_in_window(p, now, end))
 
     def test_conflicting_tvg_name_and_display_are_ambiguous(self):
         self.assertEqual(select_epg_source("", "Unique Station", "Shared TV",
