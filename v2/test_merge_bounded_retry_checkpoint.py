@@ -47,7 +47,8 @@ class BoundedEvidenceTests(unittest.TestCase):
     def test_http_retry_preserves_existing_av_result(self):
         prior = copy.deepcopy(self.rows)
         url = list(prior)[1]  # A subsequent HTTP 503 is not proof that AV was never decoded.
-        prior[url]["result"] = {"video_decoded": True, "audio_decoded": True}
+        prior[url]["result"] = {"decoded_av_verified": True, "decode_status": "DECODED_AV",
+                                "verified_quality": {"av_verified": True}}
         merged, count = reconcile(prior, self.report)
         self.assertEqual(count, 15)
         self.assertEqual(merged[url]["result"], prior[url]["result"])
