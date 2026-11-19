@@ -229,7 +229,8 @@ def audit(root=ROOT):
                             all(x.startswith(b"#EXTINF:") and
                                 any(line.startswith((b"http://",b"https://")) for line in x.splitlines()[1:])
                                 for x in r1) and
-                            all(x in Counter(r1) for x in Counter(r0) if spec["operation"] not in {"remove","move","rename","category"}))
+                            (spec["operation"] in {"remove","move","rename","category"} or
+                             all(Counter(r1)[record] >= count for record, count in Counter(r0).items())))
                     except (OSError,ValueError,TypeError,KeyError):
                         valid=False
                     if not valid:
