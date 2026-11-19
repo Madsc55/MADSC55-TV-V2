@@ -22,9 +22,9 @@ def main():
     channels_pre = list(entries(text))
     assert len(channels_pre) == 2914, "Expected 838 protected channels and 2076 active backups"
     non_backup = [x for x in channels_pre if "YEDEKLER" not in x["group"]]
-    foreign = [x for x in channels_pre if "YABANCI ARŞİV" in x["group"]]
+    foreign = list(entries((ROOT / "v2/yedekler_batch/YABANCI_ARSIV.m3u8").read_text(encoding="utf-8-sig")))
     protected = [x for x in non_backup if "YABANCI ARŞİV" not in x["group"]]
-    assert len(protected) == 838, "Protected categories changed"
+    assert len(non_backup) == 838, "Protected categories changed"
     assert len(foreign) == 74 and all(x["group"] == "🌍 YABANCI ARŞİV (74)" for x in foreign), "Foreign archive count mismatch"
     backup_count = sum("YEDEKLER" in x["group"] for x in channels_pre)
     backup_group = f"🗂️ YEDEKLER ({backup_count})"
@@ -97,7 +97,7 @@ def main():
 
     # The approved-baseline safety gate verifies every backup record is retained.
 
-    assert not any(x["name"].startswith(("TRT Arabi", "TRT World")) for x in protected), "Unwanted foreign-language trials remain in protected main section"
+    assert not any(x["name"].startswith(("TRT Arabi", "TRT World")) for x in non_backup), "Unwanted foreign-language trials remain in protected main section"
     for name in ("Aras TV (576p) [Not 24/7]", "Haber61 TV (720p) [Not 24/7]", "TV Den (576p) [Not 24/7]", "YOL TV"):
         assert any(x["name"] == name and x["group"].startswith("📍 YEREL (") for x in channels), f"{name} missing from YEREL"
         assert any(x["name"] == name and x["group"].startswith("🇹🇷 ULUSAL-HEPSİ (") for x in channels), f"{name} missing from HEPSİ"
