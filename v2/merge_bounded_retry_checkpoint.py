@@ -4,6 +4,7 @@ No channel search. Requires the real encrypted worldwide checkpoint and key.
 Does not promote a one-segment sample into scanner-level AV acceptance.
 """
 import argparse
+from collections import Counter
 from datetime import datetime
 import json
 import os
@@ -14,17 +15,23 @@ from scan_checkpoint import _read_progress_rows, checkpoint_row, save_progress
 OUTCOMES = {"AV_SAMPLE_VERIFIED": 1, "RETRY_HTTP_503": 6, "REVIEW_HTTP_404": 8}
 
 def reconcile(rows, report):
+    observations = report.get("observations", [])
     if (report.get("tasks") != [17, 18, 20]
+            or report.get("source_run_id") != 43608247496
+            or report.get("source_artifact_id") != 14135417421
             or report.get("unique_urls_attempted") != 15
             or report.get("attempts_this_batch") != 17
             or report.get("latest_outcomes") != OUTCOMES
-            or len(report.get("observations", [])) != 15):
+            or len(observations) != 15
+            or any(not item.get("attempts") for item in observations)
+            or sum(len(item["attempts"]) for item in observations) != 17
+            or Counter(item.get("latest_disposition") for item in observations) != OUTCOMES):
         raise ValueError("Unexpected bounded report")
     lookup = {r["url_sha256"]: (url, r) for url, r in rows.items()}
     if len(lookup) != len(rows):
         raise ValueError("Ambiguous hash identity")
     merged, seen, applied = dict(rows), set(), 0
-    for item in report["observations"]:
+    for item in observations:
         sha = item["url_sha256"]
         if sha in seen or sha not in lookup:
             raise ValueError("Duplicate or unknown hash; abort all")
@@ -54,16 +61,20 @@ def reconcile(rows, report):
         count = item["recovery_attempts_after_batch"]
         if type(count) is not int or not 0 <= count <= 3:
             raise ValueError("Invalid retry count")
-        if when <= old["checked_at"]:
-            continue
         diag = dict(old["diagnostics"])
+        previous = diag.get("bounded_retry_import", {})
+        if when <= max(old["checked_at"], previous.get("observed_at", old["checked_at"])):
+            continue
         diag["bounded_retry_import"] = {
             "source_run_id": report["source_run_id"],
-            "url_sha256": sha, "disposition": kind}
-        # A single segment proves only a sample; preserve prior full AV evidence.
-        result = old["result"]  # Never erase authenticated full AV proof on a later HTTP error.
+            "source_artifact_id": report["source_artifact_id"],
+            "url_sha256": sha, "disposition": kind, "observed_at": when,
+            "attempts": item["attempts"]}
+        # Playback freshness belongs to the last full decode.
+        result = old["result"]
+        checked_at = old["checked_at"] if result is not None else when
         merged[url] = checkpoint_row(
-            url, result, diag, checked_at=when, recovery_attempts=count)
+            url, result, diag, checked_at=checked_at, recovery_attempts=count)
         applied += 1
     return merged, applied
 

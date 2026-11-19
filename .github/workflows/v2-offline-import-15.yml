@@ -1,16 +1,18 @@
 name: V2 Offline Import 15 Existing Observations
 on:
   workflow_dispatch:
+
 permissions:
   contents: read
   actions: read
+
 jobs:
   import:
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     env:
-      GH_TOKEN: ${{ github.token }}
-      V2_ARCHIVE_PASSPHRASE: ${{ secrets.V2_ARCHIVE_PASSPHRASE }}
+      REPORT: v2/reports/task17-18-20-bounded-retry-20261118.json
     steps:
       - uses: actions/checkout@v4
         with:
@@ -18,32 +20,52 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Install encrypted archive dependency
-        run: python -m pip install 'cryptography>=42,<47'
-      - name: Require archive key without exposing it
+      - name: Test the offline importer
         run: |
-          test -n "$V2_ARCHIVE_PASSPHRASE" || { echo "::error::Missing archive key"; exit 1; }
-      - name: Download only existing authenticated source artifact
-        run: |
-          set -euo pipefail
-          mkdir -p /tmp/v2-offline-source
-          gh run download 43608247496 --repo Madsc55/MADSC55-TV-V2 --name v2-real-scan-evidence --dir /tmp/v2-offline-source
-          test -f /tmp/v2-offline-source/ibo-scan-progress.enc
-          test ! -L /tmp/v2-offline-source/ibo-scan-progress.enc
-          install -m 600 /tmp/v2-offline-source/ibo-scan-progress.enc /tmp/ibo-scan-progress.enc
-      - name: Validate report and dry-run import
+          python -m pip install 'cryptography>=42,<47'
+          PYTHONPATH=v2 python -m unittest -v test_scan_checkpoint
+
+      - name: Retrieve the exact encrypted source recorded in the report
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          PYTHONPATH=v2 python -m unittest -v test_merge_bounded_retry_checkpoint
-          python v2/merge_bounded_retry_checkpoint.py --checkpoint /tmp/ibo-scan-progress.enc --report v2/reports/task17-18-20-bounded-retry-20261118.json
-      - name: Import existing 15 observations and verify encrypted readback
-        run: python v2/merge_bounded_retry_checkpoint.py --checkpoint /tmp/ibo-scan-progress.enc --report v2/reports/task17-18-20-bounded-retry-20261118.json --apply
-      - name: Upload only encrypted checkpoint and original backup
+          umask 077
+          work="$RUNNER_TEMP/offline-import"
+          mkdir "$work"
+          artifact=$(jq -er '.source_artifact_id | numbers' "$REPORT")
+          digest=$(jq -er '.source_archive_sha256' "$REPORT")
+          gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/$artifact/zip" > "$work/source.zip"
+          (cd "$work" && printf '%s  source.zip\n' "$digest" | sha256sum --check)
+          unzip -p "$work/source.zip" ibo-scan-progress.enc > "$work/ibo-scan-progress.enc"
+          test -s "$work/ibo-scan-progress.enc"
+
+      - name: Apply 15 observations and verify backup, readback and replay
+        env:
+          V2_ARCHIVE_PASSPHRASE: ${{ secrets.V2_ARCHIVE_PASSPHRASE }}
+        run: |
+          set -euo pipefail
+          : "${V2_ARCHIVE_PASSPHRASE:?Missing encrypted archive key}"
+          work="$RUNNER_TEMP/offline-import"
+          checkpoint="$work/ibo-scan-progress.enc"
+          import_cmd=(python v2/merge_bounded_retry_checkpoint.py --checkpoint "$checkpoint" --report "$REPORT")
+          "${import_cmd[@]}" | tee "$work/before.json"
+          jq -e '.dry_run and .eligible_updates == 15 and .applied == 0' "$work/before.json" > /dev/null
+          rows=$(jq -er '.existing_rows' "$work/before.json")
+          "${import_cmd[@]}" --apply | tee "$work/applied.json"
+          jq -e --argjson rows "$rows" '.dry_run == false and .existing_rows == $rows and .applied == 15' "$work/applied.json" > /dev/null
+          unzip -p "$work/source.zip" ibo-scan-progress.enc | cmp - "$checkpoint.pre-bounded-retry.bak"
+          sha256sum "$checkpoint" > "$work/merged.sha256"
+          "${import_cmd[@]}" --apply | tee "$work/replay.json"
+          jq -e --argjson rows "$rows" '.existing_rows == $rows and .eligible_updates == 0 and .applied == 0' "$work/replay.json" > /dev/null
+          sha256sum --check "$work/merged.sha256"
+
+      - name: Upload verified encrypted checkpoint and original backup
         uses: actions/upload-artifact@v4
         with:
           name: v2-bounded-retry-15-merged-checkpoint
           path: |
-            /tmp/ibo-scan-progress.enc
-            /tmp/ibo-scan-progress.enc.pre-bounded-retry.bak
+            ${{ runner.temp }}/offline-import/ibo-scan-progress.enc
+            ${{ runner.temp }}/offline-import/ibo-scan-progress.enc.pre-bounded-retry.bak
           if-no-files-found: error
           retention-days: 30
