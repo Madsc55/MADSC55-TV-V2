@@ -1,3 +1,7 @@
+## 19 Kasım 2026 — Tarihsel logo eşleşmesi ek güvenlik denetimi (CI bekliyor)
+
+- #391 ve #356 tarihsel logo adaylarının otomatik uygulanmasını önlemek için salt-okunur denetim, aynı yayın URL'si ve tvg-id yanında değişmemiş görünen kanal adını ve kategori/arşiv grubunu da zorunlu tutacak şekilde sıkılaştırıldı. İki yeni regresyon testi eklendi. Bu değişiklik hiçbir logo atamaz; tarihsel adaylar hâlâ REVIEW_REQUIRED_NOT_VERIFIED. Ana playlist, arşivler ve SHA-256 yetkilendirme manifesti değiştirilmedi. Production Security Gate SUCCESS ve PR birleştirmesi bekleniyor.
+
 ## 19 Kasım 2026 — Güvenlik, yayıncı kimliği ve güncel EPG
 
 - [#462](https://github.com/Madsc55/MADSC55-TV-V2/pull/462) ile keşif ve İBO dışa aktarımı belirsiz ters eğik çizgili adresleri reddediyor. [PR kontrolü](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44532509875) ve [7d4764e ana dal kontrolü](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44537130270) başarılı. #212 ve #214'ün keşif örnekleri ile #213'ün dışa aktarım örnekleri birleşmiş kodda da geçti. Üç eski PR birleştirilmeden kapatıldı.
