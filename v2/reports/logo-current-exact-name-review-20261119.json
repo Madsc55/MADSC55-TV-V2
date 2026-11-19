@@ -1,0 +1,200 @@
+{
+  "schema": 1,
+  "observed_playlist_blob_sha": "1b9ff7e01a0d045c400b1317d50cfca64101b0d4",
+  "read_only": true,
+  "missing_logo_records": 489,
+  "exact_name_single_logo_candidate_records": 21,
+  "unique_candidate_names": 19,
+  "warning": "This is a review queue only. No image was verified as official and no playlist modifications are authorized by this report.",
+  "candidates": [
+    {
+      "position": 1199,
+      "channel_name": "POWER TÜRK",
+      "group": "🗂️ YEDEKLER (2076)",
+      "tvg_id": null,
+      "existing_playlist_logo": "https://i.ibb.co/B6N9KsN/powerturk22.png",
+      "status": "REVIEW_REQUIRED_NOT_VERIFIED",
+      "reason": "Exact display-name match to one existing logo URL; source authenticity and image contents not independently verified."
+    },
+    {
+      "position": 1214,
+      "channel_name": "Kanal D Drama (1080p)",
+      "group": "🗂️ YEDEKLER (2076)",
+      "tvg_id": "KanalDDrama.tr@SD",
+      "existing_playlist_logo": "https://i.imgur.com/WIeZMKT.png",
+      "status": "REVIEW_REQUIRED_NOT_VERIFIED",
+      "reason": "Exact display-name match to one existing logo URL; source authenticity and image contents not independently verified."
+    },
+    {
+      "position": 1215,
+      "channel_name": "Kanal D Drama (1080p)",
+      "group": "🗂️ YEDEKLER (2076)",
+      "tvg_id": "KanalDDrama.tr@SD",
+      "existing_playlist_logo": "https://i.imgur.com/WIeZMKT.png",
+      "status": "REVIEW_REQUIRED_NOT_VERIFIED",
+      "reason": "Exact display-name match to one existing logo URL; source authenticity and image contents not independently verified."
+    },
+    {
+      "position": 1235,
+      "channel_name": "Can TV (720p)",
+      "group": "🗂️ YEDEKLER (2076)",
+      "tvg_id": "CanTV.tr",
+      "existing_playlist_logo": "https://i.imgur.com/oIMtuwB.png",
+      "status": "REVIEW_REQUIRED_NOT_VERIFIED",
+      "reason": "Exact display-name match to one existing logo URL; source authenticity and image contents not independently verified."
+    },
+    {
+      "position": 1301,
+      "channel_name": "TRT ÇOCUK",
+      "group": "🗂️ YEDEKLER (2076)",
+      "tvg_id": null,
+      "existing_playlist_logo": "https://upload.wikimedia.org/wikipedia/commons/2/23/TRT_çocuk_logo.png",
+      "status": "REVIEW_REQUIRED_NOT_VERIFIED",
+      "reason": "Exact display-name match to one existing logo URL; source authenticity and image contents not independently verified."
+    },
+    {
+      "position": 1303,
+      "channel_name": "TGRT EU",
+      "group": "🗂️ YEDEKLER (2076)",
+      "tvg_id": null,
+      "existing_playlist_logo": "https://i.ibb.co/kMM9hwR/tgrt-eu.png",
+      "status": "REVIEW_REQUIRED_NOT_VERIFIED",
+      "reason": "Exact display-name match to one existing logo URL; source authenticity and image contents not independently verified."
+    },
+    {
+      "position": 1354,
+      "channel_name": "Bursa TV (720p) [Not 24/7]",
+      "group": "🗂️ YEDEKLER (2076)",
+      "tvg_id": "BursaTV.tr@SD",
+      "existing_playlist_logo": "https://i.imgur.com/9cl1MR8.png",
+      "status": "REVIEW_REQUIRED_NOT_VERIFIED",
+      "reason": "Exact display-name match to one existing logo URL; source authenticity and image contents not independently verified."
+    },
+    {
+      "position": 1368,
+      "channel_name": "DİYANET TV",
+      "group": "🗂️ YEDEKLER (2076)",
+      "tvg_id": null,
+      "existing_playlist_logo": "https://d3ckc0u56niq67.cloudfront.net/conf/images/trt_diyanet_enZ.png",
+      "status": "REVIEW_REQUIRED_NOT_VERIFIED",
+      "reason": "Exact display-name match to one existing logo URL; source authenticity and image contents not independently verified."
+    },
+    {
+      "position": 1445,
+      "channel_name": "Cekmeköy TV (1080p)",
+      "group": "🗂️ YEDEKLER (2076)",
+      "tvg_id": "CekmekoyTV.tr@SD",
+      "existing_playlist_logo": "https://i.imgur.com/sjAGFWu.png",
+      "status": "REVIEW_REQUIRED_NOT_VERIFIED",
+      "reason": "Exact display-name match to one existing logo URL; source authenticity and image contents not independently verified."
+    },
+    {
+      "position": 1457,
+      "channel_name": "NOW TV",
+      "group": "🗂️ YEDEKLER (2076)",
+      "tvg_id": "NOWTV.tr@SD",
+      "existing_playlist_logo": "http://assets.tvcdn.net/80eb8816-1855-41f5-9002-7a05cc93fe4f.png",
+      "status": "REVIEW_REQUIRED_NOT_VERIFIED",
+      "reason": "Exact display-name match to one existing logo URL; source authenticity and image contents not independently verified."
+    },
+    {
+      "position": 1465,
+      "channel_name": "TV 41 (720p) [Not 24/7]",
+      "group": "🗂️ YEDEKLER (2076)",
+      "tvg_id": "TV41.tr@SD",
+      "existing_playlist_logo": "https://i.imgur.com/6T472LM.png",
+      "status": "REVIEW_REQUIRED_NOT_VERIFIED",
+      "reason": "Exact display-name match to one existing logo URL; source authenticity and image contents not independently verified."
+    },
+    {
+      "position": 1466,
+      "channel_name": "TV 41 (720p) [Not 24/7]",
+      "group": "🗂️ YEDEKLER (2076)",
+      "tvg_id": "TV41.tr@SD",
+      "existing_playlist_logo": "https://i.imgur.com/6T472LM.png",
+      "status": "REVIEW_REQUIRED_NOT_VERIFIED",
+      "reason": "Exact display-name match to one existing logo URL; source authenticity and image contents not independently verified."
+    },
+    {
+      "position": 1535,
+      "channel_name": "MINIKA GO",
+      "group": "🗂️ YEDEKLER (2076)",
+      "tvg_id": null,
+      "existing_playlist_logo": "https://raw.githubusercontent.com/tv-logo/tv-logos/refs/heads/main/countries/turkey/minika-go-tr.png",
+      "status": "REVIEW_REQUIRED_NOT_VERIFIED",
+      "reason": "Exact display-name match to one existing logo URL; source authenticity and image contents not independently verified."
+    },
+    {
+      "position": 1675,
+      "channel_name": "HABER 61 TV",
+      "group": "🗂️ YEDEKLER (2076)",
+      "tvg_id": null,
+      "existing_playlist_logo": "http://1.bp.blogspot.com/-VBFvcTD3wLY/VqnKIdk5l1I/AAAAAAAAPP4/nIcnwtkkCeY/s1600/haber61.jpg",
+      "status": "REVIEW_REQUIRED_NOT_VERIFIED",
+      "reason": "Exact display-name match to one existing logo URL; source authenticity and image contents not independently verified."
+    },
+    {
+      "position": 1767,
+      "channel_name": "HABER 61",
+      "group": "🗂️ YEDEKLER (2076)",
+      "tvg_id": null,
+      "existing_playlist_logo": "https://i.imgur.com/RhPIYKu.jpg",
+      "status": "REVIEW_REQUIRED_NOT_VERIFIED",
+      "reason": "Exact display-name match to one existing logo URL; source authenticity and image contents not independently verified."
+    },
+    {
+      "position": 1785,
+      "channel_name": "TJK TV 2",
+      "group": "🗂️ YEDEKLER (2076)",
+      "tvg_id": null,
+      "existing_playlist_logo": "http://assets.tvcdn.net/bcbd8593-677e-438a-9077-abe1cce5ffc2.png",
+      "status": "REVIEW_REQUIRED_NOT_VERIFIED",
+      "reason": "Exact display-name match to one existing logo URL; source authenticity and image contents not independently verified."
+    },
+    {
+      "position": 1851,
+      "channel_name": "HT SPOR",
+      "group": "🗂️ YEDEKLER (2076)",
+      "tvg_id": null,
+      "existing_playlist_logo": "https://yt3.googleusercontent.com/B3IWp1Ke7InBdWs0z8dkXpRlg4J6lQ0ETi8hbMQ64w3uh9RfHTOtU6K7_uLYRbIoA6NteY9a=s900-c-k-c0x00ffffff-no-rj",
+      "status": "REVIEW_REQUIRED_NOT_VERIFIED",
+      "reason": "Exact display-name match to one existing logo URL; source authenticity and image contents not independently verified."
+    },
+    {
+      "position": 1869,
+      "channel_name": "GZT",
+      "group": "🗂️ YEDEKLER (2076)",
+      "tvg_id": null,
+      "existing_playlist_logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/GZT_logo.svg/960px-GZT_logo.svg.png",
+      "status": "REVIEW_REQUIRED_NOT_VERIFIED",
+      "reason": "Exact display-name match to one existing logo URL; source authenticity and image contents not independently verified."
+    },
+    {
+      "position": 1908,
+      "channel_name": "VAV TV",
+      "group": "🗂️ YEDEKLER (2076)",
+      "tvg_id": null,
+      "existing_playlist_logo": "https://d3ckc0u56niq67.cloudfront.net/conf/images/vav_tv_czb.png",
+      "status": "REVIEW_REQUIRED_NOT_VERIFIED",
+      "reason": "Exact display-name match to one existing logo URL; source authenticity and image contents not independently verified."
+    },
+    {
+      "position": 1952,
+      "channel_name": "Show Max",
+      "group": "🗂️ YEDEKLER (2076)",
+      "tvg_id": null,
+      "existing_playlist_logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Show_MAX_logo.svg/2048px-Show_MAX_logo.svg.png",
+      "status": "REVIEW_REQUIRED_NOT_VERIFIED",
+      "reason": "Exact display-name match to one existing logo URL; source authenticity and image contents not independently verified."
+    },
+    {
+      "position": 1997,
+      "channel_name": "TRT ARABI",
+      "group": "🗂️ YEDEKLER (2076)",
+      "tvg_id": null,
+      "existing_playlist_logo": "https://raw.githubusercontent.com/kuz3-orange/TurkishIPTV-Claude/main/logos/trtarabi.png",
+      "status": "REVIEW_REQUIRED_NOT_VERIFIED",
+      "reason": "Exact display-name match to one existing logo URL; source authenticity and image contents not independently verified."
+    }
+  ]
+}
