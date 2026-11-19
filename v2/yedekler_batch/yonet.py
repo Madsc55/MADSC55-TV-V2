@@ -6,10 +6,31 @@ P=Path(__file__).resolve().parent
 STATE=P/"state.json"
 ARCHIVE=P/"YEDEKLER_ARCHIVE.m3u8"
 STATES=("ANA_ARSIV","TEST","TURK","YABANCI")
+
+def verify_history(state):
+    """Replay the batch transactions against the original unassigned archive."""
+    replay = {}
+    for event in state["history"]:
+        target = event["after"]
+        if target not in STATES:
+            raise ValueError("Geçersiz arşiv hedefi")
+        for key, previous in event["before"].items():
+            if (not key.isascii() or not key.isdecimal() or str(int(key)) != key
+                    or not 1 <= int(key) <= state["total"]
+                    or replay.get(key, "ANA_ARSIV") != previous):
+                raise ValueError("Arşiv işlem geçmişi kaynağa uymuyor")
+            if target == "ANA_ARSIV":
+                replay.pop(key, None)
+            else:
+                replay[key] = target
+    if replay != state["status"]:
+        raise ValueError("Arşiv işlem geçmişi güncel durumla uyuşmuyor")
+
 def load():
  s=json.loads(STATE.read_text(encoding="utf-8"))
  if not ARCHIVE.exists(): raise SystemExit("Arşiv eksik; işlem durduruldu")
  if hashlib.sha256(ARCHIVE.read_bytes()).hexdigest()!=s["source_sha256"]: raise SystemExit("SHA-256 uyuşmuyor")
+ verify_history(s)
  return s
 def save(s):
  tmp=STATE.with_suffix(".tmp");tmp.write_text(json.dumps(s,ensure_ascii=False,indent=2),encoding="utf-8");tmp.replace(STATE)

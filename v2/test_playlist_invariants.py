@@ -6,6 +6,7 @@ import pathlib
 import sys
 from collections import Counter
 from discover import ROOT, LIVE, SOURCES, entries
+from yedekler_batch.yonet import verify_history
 
 TURKISH_BACKUP_PRIORITY = ("BBC FİRST TURKİYE", "CARTOON NETWORK (TURKİYE)", "KANAL 7", "KANAL 7 AVRUPA", "KANAL 7 AVRUPA HD TR", "KANAL AVRUPA TR", "SHOW TV", "TRT 3 (720P)", "TRT COCUK (1440P)", "TRT EBA ILKOKUL (720P)", "TRT EBA LİSE (720P)", "TRT SPOR YİLDİZ (1440P) [GEO-BLOCKED]", "TRT TURK TR")
 
@@ -31,6 +32,7 @@ def main():
     source_path = ROOT / "v2/yedekler_batch/YEDEKLER_ARCHIVE.m3u8"
     queued_path = ROOT / "v2/yedekler_batch/ANA_ARSIV.m3u8"
     state = json.loads((ROOT / "v2/yedekler_batch/state.json").read_text(encoding="utf-8"))
+    verify_history(state)
     source_bytes = source_path.read_bytes()
     assert hashlib.sha256(source_bytes).hexdigest() == state["source_sha256"]
     assert state["total"] == 18074 and state["default_batch_size"] == 2500
