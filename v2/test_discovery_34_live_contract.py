@@ -422,6 +422,39 @@ class LiveContractRetryTests(unittest.TestCase):
             request = build.return_value.open.call_args.args[0]
             self.assertIsNone(request.get_header("Authorization"))
 
+class ProviderScopedDiagnosticTests(unittest.TestCase):
+    def test_codeberg_only_does_not_probe_other_providers(self):
+        import tempfile
+        import json
+        from pathlib import Path
+        from unittest.mock import patch
+        import discovery_34_live_contract as module
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / "codeberg.json"
+            def fake_probe(source):
+                self.assertEqual(source, "codeberg")
+                return {"status": "ok", "queries_total": 6, "queries_checked": 6,
+                        "queries_ok": 6, "queries_failed": 0, "queries_skipped": 0,
+                        "query_results": []}
+            with patch.object(module, "probe_queries", side_effect=fake_probe) as probe_calls, \
+                 patch("sys.argv", ["probe", "--provider", "codeberg", "--output", str(output)]):
+                module.main()
+            self.assertEqual(probe_calls.call_count, 1)
+            report = json.loads(output.read_text())
+            self.assertEqual(set(report["providers"]), {"codeberg"})
+            self.assertEqual(report["verified_av"], 0)
+
+    def test_unknown_provider_is_rejected_before_network(self):
+        from unittest.mock import patch
+        import discovery_34_live_contract as module
+        with patch.object(module, "probe_queries") as probe_calls, \
+             patch("sys.argv", ["probe", "--provider", "unknown"]):
+            with self.assertRaises(SystemExit) as error:
+                module.main()
+        self.assertEqual(error.exception.code, 2)
+        probe_calls.assert_not_called()
+
+
 class LiveDiagnosticReportTests(unittest.TestCase):
     def test_report_written_exclusively_and_fail_closed(self):
         import tempfile

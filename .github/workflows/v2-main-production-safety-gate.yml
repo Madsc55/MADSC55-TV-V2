@@ -7,6 +7,17 @@ on:
   pull_request:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      discovery_provider:
+        description: 'Read-only #34 diagnostic provider (all or one)'
+        required: true
+        type: choice
+        default: all
+        options:
+          - all
+          - github
+          - gitlab
+          - codeberg
 permissions:
   contents: read
 jobs:
@@ -123,7 +134,7 @@ jobs:
       - name: Probe all six discovery terms on GitHub, GitLab and Codeberg
         env:
           GITHUB_TOKEN: ${{ github.token }}
-        run: PYTHONPATH=v2 python v2/discovery_34_live_contract.py --output /tmp/v2-discovery-34-live-diagnostic.json
+        run: PYTHONPATH=v2 python v2/discovery_34_live_contract.py --provider "${{ inputs.discovery_provider || 'all' }}" --output /tmp/v2-discovery-34-live-diagnostic.json
       - name: Upload read-only provider diagnostic evidence
         if: always()
         uses: actions/upload-artifact@v4
