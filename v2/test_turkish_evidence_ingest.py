@@ -51,3 +51,19 @@ class EvidenceIngestTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+class SubtitleProvenanceBoundaryTests(unittest.TestCase):
+    def test_ocr_only_cannot_claim_turkish_subtitles(self):
+        with self.assertRaises(ValueError):
+            evaluate_record({"name": "Foreign TV", "subtitle_language": "tr", "evidence_sources": ["ocr"]})
+
+    def test_webvtt_subtitle_remains_review_only(self):
+        result = evaluate_record({"name": "Foreign TV", "subtitle_language": "tr", "evidence_sources": ["webvtt"]})
+        self.assertEqual(result["category"], "TURKISH_SUBTITLED_REVIEW")
+        self.assertFalse(result["language_evidence_verified"])
+        self.assertFalse(result["playlist_modified"])
+
+    def test_ocr_plus_webvtt_is_allowed_but_not_approved(self):
+        result = evaluate_record({"name": "Foreign TV", "subtitle_language": "tr", "evidence_sources": ["ocr", "webvtt"]})
+        self.assertFalse(result["review_approved"])
+
