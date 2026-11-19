@@ -86,6 +86,28 @@ class BoundedEvidenceTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             reconcile(self.rows, report)
 
+    def test_partial_resume_preserves_membership_and_newer_results(self):
+        from datetime import timedelta
+        eligible, newer = list(self.rows)[:2]
+        unrelated = "https://example.org/unrelated"
+        latest = datetime.fromisoformat(self.items[1]["attempts"][-1]["finished_at_utc"])
+        rows = {
+            eligible: self.rows[eligible],
+            newer: checkpoint_row(newer, None, {"from_new_scan": True},
+                                  checked_at=(latest + timedelta(seconds=1)).timestamp()),
+            unrelated: checkpoint_row(unrelated, None, {}, checked_at=1),
+        }
+        with self.assertRaises(ValueError):
+            reconcile(rows, self.report)
+        merged, applied = reconcile(rows, self.report, existing_rows_only=True)
+        self.assertEqual(applied, 1)
+        self.assertEqual(merged.keys(), rows.keys())
+        self.assertEqual(merged[newer], rows[newer])
+        self.assertEqual(merged[unrelated], rows[unrelated])
+        self.assertEqual(merged[eligible]["diagnostics"]["bounded_retry_import"]["attempts"],
+                         self.items[0]["attempts"])
+        self.assertEqual(reconcile(merged, self.report, existing_rows_only=True), (merged, 0))
+
     def test_fake_av_fails_closed(self):
         report = copy.deepcopy(self.report)
         report["observations"][0]["attempts"][-1]["audio_frame_decoded"] = False
@@ -101,8 +123,11 @@ class BoundedEvidenceTests(unittest.TestCase):
 
 
     def test_real_committed_report_shape_and_outcomes(self):
+        from hashlib import sha256
         from pathlib import Path
+        from merge_bounded_retry_checkpoint import REVIEWED_REPORT_SHA256
         path = Path(__file__).resolve().parent / "reports" / "task17-18-20-bounded-retry-20261118.json"
+        self.assertEqual(sha256(path.read_bytes()).hexdigest(), REVIEWED_REPORT_SHA256)
         real = __import__("json").loads(path.read_text(encoding="utf-8"))
         self.assertEqual(len(real["observations"]), 15)
         self.assertEqual(sum(len(x["attempts"]) for x in real["observations"]), 17)
