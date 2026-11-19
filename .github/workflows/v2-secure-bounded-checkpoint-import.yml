@@ -1,0 +1,66 @@
+name: V2 secure bounded checkpoint import (manual)
+on:
+  workflow_dispatch:
+    inputs:
+      apply:
+        description: 'Apply authenticated merge to a COPY of the encrypted checkpoint (default dry-run)'
+        required: true
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: v2-bounded-checkpoint-import
+  cancel-in-progress: false
+
+jobs:
+  secure-import:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check secret availability without printing it
+        env:
+          V2_ARCHIVE_PASSPHRASE: ${{ secrets.V2_ARCHIVE_PASSPHRASE }}
+        run: |
+          test -n "$V2_ARCHIVE_PASSPHRASE" || { echo 'Required repository secret is unavailable'; exit 1; }
+      - name: Download exact historical evidence artifact
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/evidence"
+          gh api "repos/${GITHUB_REPOSITORY}/actions/artifacts/14135417421/zip" > "$RUNNER_TEMP/evidence/source.zip"
+          echo "3442c6feb99772265a852d95232b97600702790aba8ae8db8bd715fa4f9a5da9  $RUNNER_TEMP/evidence/source.zip" | sha256sum -c -
+          unzip -q "$RUNNER_TEMP/evidence/source.zip" ibo-scan-progress.enc -d "$RUNNER_TEMP/evidence"
+          echo "5b06abb1257666a19826c85f4559cc24704e8e4cb15274cca96eeb9e80fb77a3  $RUNNER_TEMP/evidence/ibo-scan-progress.enc" | sha256sum -c -
+          chmod 600 "$RUNNER_TEMP/evidence/ibo-scan-progress.enc"
+      - name: Authenticated dry-run
+        env:
+          V2_ARCHIVE_PASSPHRASE: ${{ secrets.V2_ARCHIVE_PASSPHRASE }}
+        run: |
+          python3 v2/merge_bounded_retry_checkpoint.py --checkpoint "$RUNNER_TEMP/evidence/ibo-scan-progress.enc" --report v2/reports/task17-18-20-bounded-retry-20261118.json
+      - name: Apply only with explicit manual approval
+        if: ${{ inputs.apply }}
+        env:
+          V2_ARCHIVE_PASSPHRASE: ${{ secrets.V2_ARCHIVE_PASSPHRASE }}
+        run: |
+          set -euo pipefail
+          python3 v2/merge_bounded_retry_checkpoint.py --checkpoint "$RUNNER_TEMP/evidence/ibo-scan-progress.enc" --report v2/reports/task17-18-20-bounded-retry-20261118.json --apply
+          python3 v2/merge_bounded_retry_checkpoint.py --checkpoint "$RUNNER_TEMP/evidence/ibo-scan-progress.enc" --report v2/reports/task17-18-20-bounded-retry-20261118.json | tee "$RUNNER_TEMP/evidence/idempotence.json"
+          python3 - "$RUNNER_TEMP/evidence/idempotence.json" <<'PY'
+          import json,sys
+          result=json.load(open(sys.argv[1],encoding='utf-8'))
+          assert result["eligible_updates"] == 0, "Second run must be idempotent"
+          PY
+      - name: Preserve only encrypted updated checkpoint
+        if: ${{ inputs.apply }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: v2-bounded-import-encrypted-checkpoint-${{ github.run_id }}
+          path: ${{ runner.temp }}/evidence/ibo-scan-progress.enc
+          retention-days: 7
+          if-no-files-found: error
