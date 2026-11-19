@@ -1,3 +1,7 @@
+## 19 Kasım 2026 — Güncel logo eksikleri, salt-okunur aday raporu (CI bekliyor)
+
+- Güncel ana playlist blob `1b9ff7e01a0d045c400b1317d50cfca64101b0d4`: 2.914 kayıt, 489 logosuz kayıt (tamamı YEDEKLER). Aynı görüntülenen kanal adı için mevcut listede tek logo URL'si bulunan 21 logosuz satır (19 benzersiz ad) `v2/reports/logo-current-exact-name-review-20261119.json` içinde kayıt bazında belgelendi. Bu sadece REVIEW_REQUIRED_NOT_VERIFIED inceleme kuyruğudur; resmî logo görseli doğrulanmadı, hiçbir logo atanmadı. Tarihsel #356 ve #391 riskli PR'ları birleştirilmeden kapatıldı. Ana playlist, arşivler, yayın URL'leri ve güvenlik manifesti değiştirilmedi.
+
 ## 19 Kasım 2026 — Logo audit benzersiz tvg-id kontrolü (CI bekliyor)
 
 - Tarihsel #391/#356 logo adaylarının salt-okunur denetimine, hem güncel hem tarihsel playlistte aynı `tvg-id` birden fazla yayın URL'sinde görünürse adayın reddedilmesi kuralı eklendi. İki regresyon testi eklendi. Otomatik logo ataması yok; ana playlist, arşivler ve manifest değiştirilmedi. Son commit için Production Security Gate SUCCESS olmadan birleştirme yapılmayacak.
