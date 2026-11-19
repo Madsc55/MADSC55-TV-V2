@@ -63,6 +63,7 @@ def inspect(url, playlist_ids):
         now = datetime.datetime.now(datetime.timezone.utc)
         programmes = 0
         current_programmes = 0
+        current_titled_programmes = 0
         invalid_programme_intervals = 0
         missing_programme_titles = 0
         matched_programme_ids = set()
@@ -92,6 +93,8 @@ def inspect(url, playlist_ids):
                     valid_matched_programme_ids.add(channel_id)
                 if start_at <= now <= stop_at:
                     current_programmes += 1
+                    if has_title and channel_counts.get(channel_id, 0) == 1:
+                        current_titled_programmes += 1
                     if matching_unique:
                         current_matched_programme_ids.add(channel_id)
             except ValueError:
@@ -103,6 +106,7 @@ def inspect(url, playlist_ids):
                       current_matched_programme_channel_ids=len(current_matched_programme_ids),
                       duplicate_channel_ids=sum(count > 1 for count in channel_counts.values()),
                       current_programme_intervals=current_programmes,
+                      current_titled_unique_programme_intervals=current_titled_programmes,
                       invalid_programme_intervals=invalid_programme_intervals,
                       missing_programme_titles=missing_programme_titles,
                       playlist_id_match_rate=round(len(channels & playlist_ids) / len(playlist_ids), 4) if playlist_ids else None)

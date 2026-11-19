@@ -67,6 +67,30 @@ class XMLTVIntegrityTests(unittest.TestCase):
         self.assertEqual(result["valid_matched_programme_channel_ids"], 1)
         self.assertEqual(result["missing_programme_titles"], 2)
 
+    def test_current_titled_evidence_excludes_blank_and_duplicate_ids(self):
+        import datetime
+        now = datetime.datetime.now(datetime.timezone.utc)
+        start = (now - datetime.timedelta(minutes=5)).strftime("%Y%m%d%H%M%S +0000")
+        stop = (now + datetime.timedelta(minutes=5)).strftime("%Y%m%d%H%M%S +0000")
+        xml = ('<tv><channel id="good"/><channel id="blank"/>'
+               '<channel id="duplicate"/><channel id="duplicate"/>'
+               + ''.join('<programme channel="%s" start="%s" stop="%s">%s</programme>'
+                         % (channel, start, stop, title)
+                         for channel, title in [("good", "<title>News</title>"),
+                                                ("blank", "<title> </title>"),
+                                                ("duplicate", "<title>News</title>"),
+                                                ("undeclared", "<title>News</title>")])
+               + '</tv>').encode()
+        class Response(io.BytesIO):
+            def __enter__(self): return self
+            def __exit__(self, *args): self.close()
+        with patch("epg_integrity.urllib.request.urlopen", return_value=Response(xml)):
+            result = epg_integrity.inspect("https://example.org/epg.xml", {"good", "blank", "duplicate", "undeclared"})
+        self.assertEqual(result["status"], "XMLTV_VALID")
+        self.assertEqual(result["current_programme_intervals"], 4)
+        self.assertEqual(result["current_titled_unique_programme_intervals"], 1)
+        self.assertEqual(result["current_matched_programme_channel_ids"], 1)
+
     def test_main_report_preserves_unverified_historical_gap_status(self):
         import json
         import tempfile
