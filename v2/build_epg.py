@@ -105,7 +105,9 @@ def programme_in_window(programme, start_limit, end_limit):
         stop = parse_xmltv_time(programme.get("stop", ""))
     except (ValueError, TypeError, AttributeError):
         return False
-    return stop > start and start_limit <= start <= end_limit
+    title = programme.find("title")
+    has_title = title is not None and bool("".join(title.itertext()).strip())
+    return has_title and stop > start and start_limit <= start <= end_limit
 
 
 def main():
