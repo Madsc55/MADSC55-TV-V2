@@ -21,6 +21,14 @@ class PreScanGateTests(unittest.TestCase):
         entries[0]["status"] = "in_progress"
         self.assertFalse(inspect(ledger(entries))["ready"])
 
+    def test_pending_blocker_is_reported_without_changing_gate(self):
+        entries = [{"id": i, "status": "completed"} for i in REQUIRED]
+        entries[0] = {"id": min(REQUIRED), "status": "in_progress", "blocker": "Independent restore evidence missing"}
+        result = inspect(ledger(entries))
+        self.assertFalse(result["ready"])
+        self.assertEqual(result["blockers"], [{"id": min(REQUIRED), "status": "in_progress",
+                                               "blocker": "Independent restore evidence missing"}])
+
     def test_missing_blocks(self):
         self.assertFalse(inspect(ledger([]))["ready"])
 
