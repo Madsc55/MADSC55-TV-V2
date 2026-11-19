@@ -10,6 +10,7 @@ from yedekler_batch.yonet import verify_history
 
 TURKISH_BACKUP_PRIORITY = ("BBC FİRST TURKİYE", "CARTOON NETWORK (TURKİYE)", "KANAL 7", "KANAL 7 AVRUPA", "KANAL 7 AVRUPA HD TR", "KANAL AVRUPA TR", "SHOW TV", "TRT 3 (720P)", "TRT COCUK (1440P)", "TRT EBA ILKOKUL (720P)", "TRT EBA LİSE (720P)", "TRT SPOR YİLDİZ (1440P) [GEO-BLOCKED]", "TRT TURK TR")
 
+FOREIGN_BACKUP_POSITIONS = {59, 60, 61, 62, 63, 65, 66, 67, 115, 116, 117, 118, 121, 122, 123, 124, 125, 126, 300, 307, 308, 370, 371, 372, 630, 631, 632, 633, 634, 635, 636, 640, 666, 845, 846, 847, 849, 850, 851, 852, 853, 854, 855, 856, 857, 858, 859, 860, 861, 862, 863, 864, 865, 866, 867, 868, 869, 870, 871, 872, 873, 874, 875, 876, 1156, 1157, 1159, 1160, 1161, 1162, 1163, 1164, 1170, 1171}
 SELECTED_BACKUP_POSITIONS = set([3,11,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,79,80,81,82,83,84,85,86,88,89,90,91,92,93,100,104,105,117,119,126,135,157,170,171,172,173,177,181])
 SELECTED_SOURCE_POSITIONS = {n if n <= 111 else n + 375 for n in SELECTED_BACKUP_POSITIONS}
 
@@ -21,10 +22,13 @@ def main():
     channels_pre = list(entries(text))
     assert len(channels_pre) == 2914, "Expected 838 protected channels and 2076 active backups"
     non_backup = [x for x in channels_pre if "YEDEKLER" not in x["group"]]
-    assert len(non_backup) == 838, "Protected non-YEDEKLER categories changed in size"
+    foreign = [x for x in channels_pre if "YABANCI ARŞİV" in x["group"]]
+    protected = [x for x in non_backup if "YABANCI ARŞİV" not in x["group"]]
+    assert len(protected) == 838, "Protected categories changed"
+    assert len(foreign) == 74 and all(x["group"] == "🌍 YABANCI ARŞİV (74)" for x in foreign), "Foreign archive count mismatch"
     backup_count = sum("YEDEKLER" in x["group"] for x in channels_pre)
     backup_group = f"🗂️ YEDEKLER ({backup_count})"
-    assert backup_count == 2076, "YEDEKLER must contain 2076 channels after approved move"
+    assert backup_count == 2002, "YEDEKLER must contain 2002 channels after approved move"
     backup_names = [x["name"] for x in channels_pre if "YEDEKLER" in x["group"]]
     assert len(backup_names) == backup_count
     assert all(x["group"] == backup_group for x in channels_pre if "YEDEKLER" in x["group"]), "All backups must share one category"
@@ -40,7 +44,12 @@ def main():
     queued_entries = list(entries(queued_path.read_text(encoding="utf-8-sig")))
     active_entries = [x for x in channels_pre if "YEDEKLER" in x["group"]]
     assert len(source_entries) == 18074 and len(queued_entries) == 15574
-    assert [(x["name"], x["url"]) for x in active_entries] == [(x["name"], x["url"]) for x in [x for i, x in enumerate(source_entries[:111] + source_entries[486:2500], 1) if i not in SELECTED_BACKUP_POSITIONS]], "Remaining reviewed batch changed"
+    reviewed = [x for i, x in enumerate(source_entries[:111] + source_entries[486:2500], 1) if i not in SELECTED_BACKUP_POSITIONS]
+    assert len(reviewed) == 2076
+    expected_foreign = [x for i, x in enumerate(reviewed, 1) if i in FOREIGN_BACKUP_POSITIONS]
+    expected_active = [x for i, x in enumerate(reviewed, 1) if i not in FOREIGN_BACKUP_POSITIONS]
+    assert [(x["name"], x["url"]) for x in foreign] == [(x["name"], x["url"]) for x in expected_foreign], "Foreign archive changed"
+    assert [(x["name"], x["url"]) for x in active_entries] == [(x["name"], x["url"]) for x in expected_active], "Remaining batch changed"
     assert [(x["name"], x["url"]) for x in queued_entries] == [(x["name"], x["url"]) for x in source_entries[2500:]], "Queued archive lost or reordered records"
     assert len({x["url"] for x in source_entries}) == 18074, "Source has duplicate URLs"
     assert len(state["status"]) == 2500
@@ -49,7 +58,7 @@ def main():
     remaining_entries = list(entries((ROOT / "v2/yedekler_batch/YEDEKLER_KALAN_2125.m3u8").read_text(encoding="utf-8-sig")))
     assert len(turk_entries) == 424 and len(remaining_entries) == 2076
     assert [(x["name"], x["url"]) for x in turk_entries] == [(x["name"], x["url"]) for x in source_entries[111:486] + [source_entries[i - 1] for i in sorted(SELECTED_SOURCE_POSITIONS)]]
-    assert [(x["name"], x["url"]) for x in remaining_entries] == [(x["name"], x["url"]) for x in active_entries]
+    assert [(x["name"], x["url"]) for x in remaining_entries] == [(x["name"], x["url"]) for x in reviewed]
     assert len({x["url"] for x in turk_entries + remaining_entries}) == 2500
     # Fail closed on any reintroduction of the 48 channels that caused test_001.
     quarantine = json.loads((ROOT / "v2/archives/test001_quarantined_48.json").read_text(encoding="utf-8"))
@@ -66,7 +75,7 @@ def main():
     assert text.startswith("#EXTM3U"), "Missing M3U header"
     assert len(channels) >= 840, "Playlist shrank below the verified post-deduplication baseline"
     backups = [x for x in channels if "YEDEKLER" in x["group"]]
-    assert len(backups) == 2076, "YEDEKLER must contain 2076 channels"
+    assert len(backups) == 2002, "YEDEKLER must contain 2002 channels"
     assert any(x["name"] == "TRT 1 1440P QHD" for x in backups), "Original TRT 1 backup missing"
     assert any(x["name"] == "DHA CANLI 720P HD" for x in backups), "Original DHA backup missing"
     assert [x["name"] for x in backups[:2]] == [
@@ -88,7 +97,7 @@ def main():
 
     # The approved-baseline safety gate verifies every backup record is retained.
 
-    assert not any(x["name"].startswith(("TRT Arabi", "TRT World")) for x in non_backup), "Unwanted foreign-language trials remain in protected main section"
+    assert not any(x["name"].startswith(("TRT Arabi", "TRT World")) for x in protected), "Unwanted foreign-language trials remain in protected main section"
     for name in ("Aras TV (576p) [Not 24/7]", "Haber61 TV (720p) [Not 24/7]", "TV Den (576p) [Not 24/7]", "YOL TV"):
         assert any(x["name"] == name and x["group"].startswith("📍 YEREL (") for x in channels), f"{name} missing from YEREL"
         assert any(x["name"] == name and x["group"].startswith("🇹🇷 ULUSAL-HEPSİ (") for x in channels), f"{name} missing from HEPSİ"
