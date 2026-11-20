@@ -1,0 +1,28 @@
+name: IBO single-playlist archive transfer offline acceptance
+on:
+  pull_request:
+    paths:
+      - 'v2/ibo_single_playlist_transfer.py'
+      - 'v2/ibo_archive_operation_ledger.py'
+      - 'v2/test_ibo_archive_operation_ledger.py'
+      - 'v2/test_ibo_single_playlist_transfer.py'
+      - '.github/workflows/ibo-single-playlist-transfer-offline.yml'
+permissions:
+  contents: read
+jobs:
+  offline-acceptance:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Offline archive transfer regression
+        run: |
+          python -m py_compile v2/ibo_single_playlist_transfer.py v2/test_ibo_single_playlist_transfer.py v2/ibo_archive_operation_ledger.py v2/test_ibo_archive_operation_ledger.py
+          PYTHONPATH=v2 python -m unittest -v test_ibo_single_playlist_transfer test_ibo_archive_operation_ledger
+      - name: Verify existing main playlist unchanged
+        run: git diff --exit-code -- MADSC55_TV_IBO_CALISANLAR_TEST.m3u8
