@@ -62,6 +62,25 @@ class VaultTests(unittest.TestCase):
             restored.restore(tampered, hashlib.sha256(tampered.read_bytes()).hexdigest())
         self.assertFalse(restored.path.exists())
 
+    def test_private_permissions_and_symlink_rejection(self):
+        self.vault.add("tr1", "https://example.org/a", "source", True, True)
+        self.assertEqual(self.vault.path.stat().st_mode & 0o777, 0o600)
+        self.vault.path.chmod(0o644)
+        with self.assertRaises(ValueError):
+            self.vault.read()
+        self.vault.path.chmod(0o600)
+        backup = self.root / "backup.enc"
+        digest = self.vault.backup(backup)
+        self.assertEqual(backup.stat().st_mode & 0o777, 0o600)
+        backup.chmod(0o644)
+        with self.assertRaises(ValueError):
+            Vault(self.root / "restore.enc", self.key).restore(backup, digest)
+        backup.chmod(0o600)
+        link = self.root / "link.enc"
+        link.symlink_to(backup)
+        with self.assertRaises(ValueError):
+            Vault(self.root / "restore.enc", self.key).restore(link, digest)
+
     def test_wrong_key_fails_closed(self):
         self.vault.add("tr1", "https://example.org/a", "source", True, True)
         with self.assertRaises(ValueError):
