@@ -37,6 +37,30 @@ class FederatedM3UDiscoveryTests(unittest.TestCase):
                 self.assertEqual(result["sources_found"], 0)
                 self.assertEqual(result["query_results"][0]["reason"], "InvalidResponse")
 
+    def test_malformed_branch_metadata_is_not_discovered(self):
+        for provider, payload in (
+            ("gitlab", [{"id": 123, "path_with_namespace": "team/tv", "default_branch": ["bad"]}]),
+            ("codeberg", {"data": [{"full_name": "team/tv", "default_branch": ["bad"]}]}),
+        ):
+            with self.subTest(provider=provider):
+                result = discover_provider(provider, fetch_json_fn=lambda _: payload,
+                                           fetch_text_fn=lambda *_: self.fail("must not fetch"),
+                                           queries=("iptv",))
+                self.assertEqual(result["projects_discovered"], 0)
+                self.assertEqual(result["sources_found"], 0)
+
+    def test_invalid_raw_playlist_is_reported_without_crash(self):
+        def api(url):
+            if "/repository/tree?" in url:
+                return [{"type": "blob", "path": "channels.m3u"}]
+            return [{"id": 123, "path_with_namespace": "team/tv", "default_branch": "main"}]
+        result = discover_provider("gitlab", fetch_json_fn=api,
+                                   fetch_text_fn=lambda *_: (_ for _ in ()).throw(ValueError("bad encoding")),
+                                   queries=("iptv",))
+        self.assertEqual(result["status"], "error")
+        self.assertEqual(result["sources_found"], 0)
+        self.assertEqual(result["errors"][0]["error"], "ValueError")
+
     def test_gitlab_project_tree_and_raw_m3u_are_discovered(self):
         calls, fetched = [], []
         def api(url):
