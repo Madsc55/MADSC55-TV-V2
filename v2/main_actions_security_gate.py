@@ -129,7 +129,11 @@ def audit(root=ROOT):
         errors["WORKFLOW_INVENTORY"]={"missing":sorted(expected-found),
                                       "unexpected":sorted(found-expected)}
     for name in sorted(found&expected):
-        issues=audit_one(name,(folder/name).read_text(encoding="utf-8"))
+        workflow_path = folder/name
+        if workflow_path.is_symlink():
+            errors[name]=["SYMLINK_WORKFLOW_FORBIDDEN"]
+            continue
+        issues=audit_one(name,workflow_path.read_text(encoding="utf-8"))
         if issues:
             errors[name]=issues
     path=root/"MADSC55_TV_IBO_CALISANLAR_TEST.m3u8"
