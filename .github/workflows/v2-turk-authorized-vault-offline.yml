@@ -1,0 +1,23 @@
+name: Turkish authorized vault offline acceptance
+on:
+  pull_request:
+    paths:
+      - 'v2/turk_authorized_vault.py'
+      - 'v2/test_turk_authorized_vault.py'
+      - '.github/workflows/v2-turk-authorized-vault-offline.yml'
+  workflow_dispatch:
+jobs:
+  offline-vault:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install pinned cryptography
+        run: python -m pip install cryptography==44.0.2
+      - name: Verify vault without any network or real streams
+        run: python -m unittest -v v2.test_turk_authorized_vault
