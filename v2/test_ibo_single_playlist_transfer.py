@@ -46,11 +46,13 @@ class SinglePlaylistTransferTests(unittest.TestCase):
         self.assertEqual(sum(category(b.split("\n")[0]) == "YEDEKLER"
                              for b in parse(restored)[1]), 3)
 
-    def test_duplicate_url_fails_closed(self):
+    def test_existing_duplicate_urls_are_preserved(self):
         duplicated = SAMPLE + ('#EXTINF:-1 group-title="🗂️ YEDEKLER (4)",Again\n'
                                'https://example.org/1\n').encode()
-        with self.assertRaisesRegex(ValueError, "Duplicate stream URL"):
-            transform(duplicated, "YEDEKLER", "ANA", [1], sha(duplicated))
+        output, report = transform(duplicated, "YEDEKLER", "ANA", [1], sha(duplicated))
+        self.assertEqual(report["total"], 5)
+        self.assertEqual(output.decode().count("https://example.org/1"), 2)
+        self.assertEqual(inventory(output)["YEDEKLER"], 3)
 
     def test_transform_enforces_2500_limit(self):
         with self.assertRaisesRegex(ValueError, "2500"):
