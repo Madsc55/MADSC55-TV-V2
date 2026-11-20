@@ -73,6 +73,36 @@ def main():
             raise AssertionError("atomic_write replaced an existing symlink")
         assert symlink_path.is_symlink()
         assert symlink_target.read_bytes() == b"TARGET-KEEP"
+        # Even if a source is swapped after path validation, never follow the link.
+        for operation, data, suffix in ((backup, payload, "jsonl"),
+                                        (restore, encrypted.read_bytes(), "enc")):
+            source = root / ("swap-source." + suffix)
+            source.write_bytes(data)
+            target = root / ("swap-target." + suffix)
+            target.write_bytes(data)
+            output = root / ("swap-output-" + suffix)
+            original_validate = secure_archive._validate_paths
+            def swap_after_validation(src, dst):
+                original_validate(src, dst)
+                src.unlink()
+                src.symlink_to(target)
+            with patch.object(secure_archive, "_validate_paths", side_effect=swap_after_validation):
+                try:
+                    operation(source, output, secret)
+                except OSError:
+                    pass
+                else:
+                    raise AssertionError("Archive followed a source swapped to symlink")
+            assert not output.exists()
+            assert target.read_bytes() == data
+        # Bound the actual read even if the pre-read stat underreports the file.
+        with patch.object(secure_archive, "MAX_INPUT", 1):
+            try:
+                secure_archive._read_regular_bounded(original, 1)
+            except ValueError:
+                pass
+            else:
+                raise AssertionError("Oversized source read accepted")
         # Reject malformed API input types before cryptographic processing.
         for value in ("text", bytearray(b"data"), None):
             for operation in (encrypt, decrypt):
