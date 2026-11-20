@@ -254,6 +254,11 @@ def _recover_pending(path, journal_path):
         elif current_sha != operation["before_sha256"]:
             raise ValueError("Unknown playlist revision during recovery")
     pending_path.unlink()
+    dfd = os.open(journal_path.parent, os.O_RDONLY)
+    try:
+        os.fsync(dfd)
+    finally:
+        os.close(dfd)
 
 
 def apply_with_journal(path, raw, output, backup, journal_path, operation_id, report):
@@ -291,6 +296,11 @@ def apply_with_journal(path, raw, output, backup, journal_path, operation_id, re
             raise
         _durable_json(journal_path, {**ledger, "operations": records})
         pending_path.unlink()
+        dfd = os.open(journal_path.parent, os.O_RDONLY)
+        try:
+            os.fsync(dfd)
+        finally:
+            os.close(dfd)
 
 
 def rollback_last(path, previous_backup, rollback_backup, journal_path, operation_id):
