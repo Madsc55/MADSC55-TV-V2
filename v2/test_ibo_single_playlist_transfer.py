@@ -5,7 +5,7 @@ import json
 from pathlib import Path
 from ibo_archive_operation_ledger import read as read_journal
 
-from ibo_single_playlist_transfer import parse, transform, sha, category, inventory, restore_exact, apply_with_journal, _recover_pending, plan_next_batch, rollback_last
+from ibo_single_playlist_transfer import parse, transform, sha, category, inventory, restore_exact, apply_with_journal, _recover_pending, plan_next_batch, rollback_last, advance_next_package
 
 SAMPLE = ('#EXTM3U\n'
           '#EXTINF:-1 group-title="⭐ FAVORİLER (1)",Favorite\nhttps://example.org/f\n'
@@ -158,6 +158,28 @@ class SinglePlaylistTransferTests(unittest.TestCase):
             self.assertEqual(len(read_journal(journal)["operations"]), 2)
             with self.assertRaises(ValueError):
                 rollback_last(playlist, backup, root / "again", journal, "undo-2")
+
+    def test_advance_requires_empty_yedekler(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            playlist = root / "MADSC55_TV_IBO_CALISANLAR_TEST.m3u8"
+            playlist.write_bytes(SAMPLE)
+            with self.assertRaisesRegex(ValueError, "must be empty"):
+                advance_next_package(playlist, root / "backup", root / "journal",
+                                     "next-1", sha(SAMPLE))
+
+    def test_advance_next_package_moves_remaining_ana(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            playlist = root / "MADSC55_TV_IBO_CALISANLAR_TEST.m3u8"
+            all_to_ana, _ = transform(SAMPLE, "YEDEKLER", "ANA", [1, 2, 3], sha(SAMPLE))
+            playlist.write_bytes(all_to_ana)
+            report = advance_next_package(playlist, root / "backup", root / "journal",
+                                          "next-1", sha(all_to_ana))
+            self.assertEqual(report["moved"], 3)
+            self.assertEqual(report["counts_after"]["YEDEKLER"], 3)
+            self.assertEqual(report["counts_after"]["ANA"], 0)
+            self.assertEqual(len(read_journal(root / "journal")["operations"]), 1)
 
     def test_inclusive_range_math(self):
         self.assertEqual(len(list(range(112, 486 + 1))), 375)
