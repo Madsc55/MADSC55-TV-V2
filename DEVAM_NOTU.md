@@ -1,3 +1,12 @@
+## 21 Kasım 2026 — Aşama 2 / #489 arşiv kabul kanıtı
+
+- Main commit: `3eb84f890cbe8524d16c1a16f219b0b494cc50f0`; Production Security Gate run `44837457969`: SUCCESS.
+- Aynı run'ın `Verify suspended publishers, no cron and immutable IBO` job logunda açık kabul satırı: `PASS: #489 canonical 18912; 18074 archive; 838 protected; move/restore`. İlgili arşiv regresyonlarında 12 test OK; arşiv geri yükleme ve bütünlük testleri de OK.
+- Ayrı, daha eski run `44828290696` 29/29 offline test ile PASS verdi; ancak o test fixture'ı `YEDEKLER=1792, ANA=15574, TURK=424, YABANCI=284, OTHER=838` sayımlarını sabitliyordu. Bu eski fixture, son #489 kabul satırındaki 18.074 arşiv envanteriyle aynı snapshot değildir; iki sayım birbirine karıştırılmayacak.
+- Kabul edilen davranış: tek ana playlist üzerinde kategori taşıma/geri alma mantığı, 2.500 sınırı, SHA/URL manifest kilidi, mükerrer işlem engeli, işlem günlüğü ve 838 diğer kategori koruması testlerle doğrulandı.
+- Gerçek kullanıcı playlistinde bu turda taşıma/kalıcı yazma yapılmadı. Bu kasıtlıdır: mevcut ana dosyanın tam baytları ve güncel SHA'sı bağımsız olarak okunup doğrulanmadan üretim üzerinde mutasyon yapılmadı. Dolayısıyla kanıt test/CI kabulüdür; gerçek canlı dosyada taşıma gerçekleştiği iddiası değildir.
+- Yeni playlist ve genel tarama yok; kanal sayıları/playlist dosyası değiştirilmedi. Sonraki aşama #497 eski 1.792 sonuçtan 1.107 doğrulanmış + 685 belirsiz ayrımını mevcut raporlarla taramasız kabul etmektir.
+
 ## 21 Kasım 2026 — 8 aşamalı plan / Aşama 1 canlı CI denetimi
 
 - Denetlenen main: `0ecfb9b1cee91ca182bdd8318d958656e75a1538` (#548 merged: şifreli arşiv symlink-swap ve sınırsız okuma koruması). Production Security Gate `44836430233`: SUCCESS.
