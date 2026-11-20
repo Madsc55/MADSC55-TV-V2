@@ -614,5 +614,20 @@
     "next_stage": "#489 archive transfer verification",
     "playlist_changed": false,
     "task_statuses_changed": false
+  },
+  "stage3_issue497_artifact_audit_20261121": {
+    "expected_historical_counts": {
+      "total": 1792,
+      "verified_working": 1107,
+      "ambiguous_first_attempt": 685
+    },
+    "counts_independently_reverified": false,
+    "source_artifact_found": false,
+    "substitute_report_used": false,
+    "playlist_mutated": false,
+    "new_scan_started": false,
+    "processing_performed": false,
+    "blocker": "Original #497 Actions result artifact and immutable channel ID + URL SHA256 manifest not located in current v2/reports or verified Actions artifacts.",
+    "next_action": "Locate exact historical Actions run/artifact and validate schema/version/SHA256 before idempotent reconciliation."
   }
 }
