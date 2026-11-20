@@ -113,6 +113,12 @@ def audit_one(filename,source):
             problems.append("PRODUCTION_WRITER_NOT_MARKED_SUSPENDED")
     return problems
 
+def preserves_record_multiplicity(original, candidate):
+    """Ensure an authorized non-removal edit cannot silently lose repeated records."""
+    from collections import Counter
+    before, after = Counter(original), Counter(candidate)
+    return all(after[record] >= count for record, count in before.items())
+
 def audit(root=ROOT):
     root=Path(root)
     folder=root/".github/workflows"
@@ -230,7 +236,7 @@ def audit(root=ROOT):
                                 any(line.startswith((b"http://",b"https://")) for line in x.splitlines()[1:])
                                 for x in r1) and
                             (spec["operation"] in {"remove","move","rename","category"} or
-                             all(Counter(r1)[record] >= count for record, count in Counter(r0).items())))
+                             preserves_record_multiplicity(r0, r1)))
                     except (OSError,ValueError,TypeError,KeyError):
                         valid=False
                     if not valid:

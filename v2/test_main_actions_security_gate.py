@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Grouped no-network tests for GitHub main safety lock."""
 import unittest
-from main_actions_security_gate import audit_one,GATE,WRITER_SUSPENDED
+from main_actions_security_gate import audit_one,GATE,WRITER_SUSPENDED,preserves_record_multiplicity
 
 def fixture(events="  workflow_dispatch:\n", perms="  contents: read\n",
             job="    runs-on: ubuntu-latest\n    steps:\n      - run: echo safe\n"):
@@ -36,11 +36,10 @@ class MainActionsGateTests(unittest.TestCase):
         text=fixture("  workflow_dispatch:\n  push:\n    branches: [main]\n  pull_request:\n    branches: [main]\n")
         self.assertIn("MAIN_GATE_WRONG_PUSH_BRANCHES",audit_one(GATE,text))
     def test_playlist_record_multiplicity_guard(self):
-        from collections import Counter
-        original = Counter({b"duplicate": 2, b"single": 1})
-        candidate = Counter({b"duplicate": 1, b"single": 1})
-        self.assertFalse(all(candidate[record] >= count for record, count in original.items()))
-        self.assertTrue(all(original[record] >= count for record, count in original.items()))
+        original = [b"duplicate", b"duplicate", b"single"]
+        self.assertFalse(preserves_record_multiplicity(original, [b"duplicate", b"single"]))
+        self.assertTrue(preserves_record_multiplicity(original, original))
+        self.assertTrue(preserves_record_multiplicity(original, original + [b"new"]))
     def test_invalid_yaml_rejected(self):
         self.assertIn("UNPARSEABLE_YAML",audit_one("v2-world-discovery.yml","on: [bad"))
 if __name__=="__main__":
