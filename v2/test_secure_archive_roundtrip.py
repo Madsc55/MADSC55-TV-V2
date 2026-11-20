@@ -6,6 +6,8 @@ import tempfile
 from pathlib import Path
 from unittest.mock import patch
 import secure_archive
+from cryptography.fernet import Fernet
+from turk_authorized_vault import Vault
 from secure_archive import backup, restore, decrypt, encrypt
 
 def main():
@@ -130,6 +132,31 @@ def main():
             pass
         else:
             raise AssertionError("Incorrect passphrase was accepted")
+    # End-to-end integration of the existing secure archive with the Turkish-only vault.
+    # This exercises the production backup/restore API, without real streams or network.
+    with tempfile.TemporaryDirectory() as d:
+        root = Path(d)
+        key = Fernet.generate_key()
+        vault = Vault(root / "authorized-tr.enc", key)
+        vault.add("TR-001", "https://example.org/tr.m3u8?token=private",
+                  "licensed offline fixture", True, True)
+        original = vault.read()
+        outer = root / "private-backup.enc"
+        backup_report = backup(vault.path, outer, secret)
+        assert backup_report["restore_test_passed"]
+        recovered_ciphertext = root / "restored-vault.enc"
+        assert restore(outer, recovered_ciphertext, secret) == hashlib.sha256(vault.path.read_bytes()).hexdigest()
+        restored_vault = Vault(recovered_ciphertext, key)
+        assert restored_vault.read() == original
+        assert "private" not in str(restored_vault.public_report())
+        try:
+            restored_vault.add("FOREIGN", "https://example.org/foreign.m3u8",
+                               "offline fixture", True, False)
+        except ValueError:
+            pass
+        else:
+            raise AssertionError("Foreign stream accepted after secure archive restore")
+        assert restored_vault.read() == original
     print("PASS: encrypted backup, disk restore, tamper and wrong-key rejection")
 
 if __name__ == "__main__":
