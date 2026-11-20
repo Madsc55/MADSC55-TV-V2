@@ -76,7 +76,7 @@ def _validate_paths(source, destination):
         if parent.is_symlink():
             raise ValueError('Destination directory must not be a symlink')
     if destination.is_symlink():
-        raise ValueError('Destination must not be a symlink')
+        raise FileExistsError('Destination must not be a symlink')
 
 def backup(source, destination, passphrase):
     source, destination = Path(source), Path(destination)
