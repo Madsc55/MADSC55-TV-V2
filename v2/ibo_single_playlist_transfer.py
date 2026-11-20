@@ -195,6 +195,19 @@ def publish(path, raw, result, backup):
             os.unlink(tmp)
 
 
+def plan_next_batch(raw, source="ANA", limit=2500):
+    """Plan the next bounded package without modifying any playlist or channel."""
+    if source not in ARCHIVE_NAMES or not 1 <= limit <= 2500:
+        raise ValueError("Invalid batch source or size")
+    _, blocks = parse(raw)
+    matches = [block.strip().splitlines()[-1].strip() for block in blocks
+               if category(block.split("\n", 1)[0]) == source]
+    selected = matches[:limit]
+    return {"source": source, "start": 1 if selected else 0,
+            "end": len(selected), "remaining_after": len(matches) - len(selected),
+            "expected_sha256": sha(raw), "expected_urls": selected}
+
+
 def _durable_json(path, data):
     """Atomic durable journal/pending file replacement."""
     fd, staged = tempfile.mkstemp(prefix=".ibo-ledger-", dir=path.parent)
