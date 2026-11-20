@@ -47,6 +47,11 @@ class SourceLossTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             compare(report(("a", "ok", 10)), report(("a", "ok", True)))
 
+    def test_nonfinite_thresholds_rejected(self):
+        for value in (float("nan"), float("inf"), -float("inf"), True):
+            with self.subTest(value=value), self.assertRaises(ValueError):
+                compare(report(("a", "ok", 100)), report(("a", "ok", 0)), value)
+
     def test_threshold_rejected(self):
         with self.assertRaises(ValueError):
             compare(report(), report(), 1.2)
