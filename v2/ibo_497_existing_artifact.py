@@ -35,7 +35,7 @@ def main():
     if a.output_dir.exists():
         p.error("Output directory must not exist (no overwrite)")
     raw = a.playlist.read_bytes()
-    before = [b for b in parse(raw)[1] if category(b.split("\\n", 1)[0]) == "YEDEKLER"]
+    before = [b for b in parse(raw)[1] if category(b.split("\n", 1)[0]) == "YEDEKLER"]
     if len(before) != 1792:
         raise ValueError(f"Expected 1792 YEDEKLER entries; found {len(before)}")
     if not os.environ.get("GH_TOKEN"):
@@ -62,7 +62,7 @@ def main():
     a.output_dir.mkdir(parents=True, exist_ok=False)
     (a.output_dir / "preview.m3u8").write_bytes(result)
     (a.output_dir / "manifest.json").write_text(
-        json.dumps(manifest, ensure_ascii=False, indent=2) + "\\n", encoding="utf-8")
+        json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(json.dumps({"preview_only": True, "counts": manifest["counts"]}))
 
 
