@@ -23,12 +23,12 @@ def gh(*args):
 
 def main():
     p = argparse.ArgumentParser()
-    p.add_argument("--run-id", required=True, type=int, help="Already completed run")
-    p.add_argument("--artifact", required=True, help="Exact existing artifact name")
+    p.add_argument("--run-id", type=int, help="Already completed run; omit for discovery")
+    p.add_argument("--artifact", help="Exact existing artifact name; omit for discovery")
     p.add_argument("--playlist", type=Path, default=Path("MADSC55_TV_IBO_CALISANLAR_TEST.m3u8"))
     p.add_argument("--output-dir", type=Path, required=True)
     a = p.parse_args()
-    if a.run_id < 1 or not re.fullmatch(r"[a-zA-Z0-9_.-]+", a.artifact):
+    if (a.run_id is not None and a.run_id < 1) or (a.artifact is not None and not re.fullmatch(r"[a-zA-Z0-9_.-]+", a.artifact)):
         p.error("Invalid run ID or artifact name")
     if a.playlist.name != "MADSC55_TV_IBO_CALISANLAR_TEST.m3u8":
         p.error("Only canonical main playlist is supported")
@@ -41,10 +41,23 @@ def main():
     if not os.environ.get("GH_TOKEN"):
         raise ValueError("GH_TOKEN required for authenticated artifact retrieval")
     repo = os.environ.get("GITHUB_REPOSITORY", "Madsc55/MADSC55-TV-V2")
+    # Discover only existing sealed reports. No scan or workflow dispatch.
+    if a.run_id is None:
+        if a.artifact is not None:
+            p.error("--artifact requires --run-id")
+        inventory = json.loads(gh("api", f"repos/{repo}/actions/artifacts?per_page=100"))
+        candidates = [x for x in inventory.get("artifacts", [])
+                      if not x.get("expired") and x.get("name") == "v2-497-1792-report"]
+        if len(candidates) != 1:
+            raise ValueError("No unique sealed 1792 report artifact; refusing to guess")
+        a.run_id = candidates[0]["workflow_run"]["id"]
+        a.artifact = candidates[0]["name"]
+    if a.artifact is None:
+        p.error("--artifact required when --run-id is given")
     run = json.loads(gh("run", "view", str(a.run_id), "--repo", repo,
                         "--json", "status,conclusion"))
-    if run.get("status") != "completed":
-        raise ValueError("Source run not completed")
+    if run.get("status") != "completed" or run.get("conclusion") != "success":
+        raise ValueError("Source run not successful")
     with tempfile.TemporaryDirectory(prefix="v2-497-") as d:
         gh("run", "download", str(a.run_id), "--repo", repo,
            "--name", a.artifact, "--dir", d)
