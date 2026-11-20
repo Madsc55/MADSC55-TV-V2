@@ -599,5 +599,20 @@
       125
     ],
     "source_records": 18074
+  },
+  "stage1_ci_audit_20261121": {
+    "observed_main": "0ecfb9b1cee91ca182bdd8318d958656e75a1538",
+    "production_gate_run": 44836430233,
+    "production_gate_conclusion": "success",
+    "previous_main": "36c31ac05baab4fa2321e57b00493c6438a19a79",
+    "previous_production_gate_run": 44836309658,
+    "previous_playlist_gate_run": 44836309550,
+    "previous_gates_conclusion": "success",
+    "historical_failure_run": 44828876603,
+    "historical_failure": "missing git blob 688f0b194b9106d6fdc593e5d7dc4a64c7e01b2c",
+    "finding": "No demonstrated unresolved main CI failure in checked latest runs; open PR acceptance and real-environment acceptance remain separate",
+    "next_stage": "#489 archive transfer verification",
+    "playlist_changed": false,
+    "task_statuses_changed": false
   }
 }
