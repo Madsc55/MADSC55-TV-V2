@@ -6,10 +6,14 @@ import math
 from pathlib import Path
 
 def index(report):
+    if not isinstance(report, dict) or not isinstance(report.get("source_audit"), list):
+        raise ValueError("Invalid source audit report structure")
     result = {}
-    for item in report.get("source_audit", []):
+    for item in report["source_audit"]:
+        if not isinstance(item, dict):
+            raise ValueError("Invalid source audit entry")
         source = item.get("source")
-        if not source or source in result:
+        if not isinstance(source, str) or not source.strip() or source in result:
             raise ValueError("Missing or duplicate source identifier")
         result[source] = item
     return result
