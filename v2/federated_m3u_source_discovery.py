@@ -55,7 +55,8 @@ def _project_identity(provider, item):
         project_id = item.get("id")
         namespace = item.get("path_with_namespace")
         branch = item.get("default_branch") or "main"
-        if project_id is None or not isinstance(namespace, str) or "/" not in namespace:
+        if (project_id is None or not isinstance(namespace, str) or "/" not in namespace
+                or not isinstance(branch, str) or not branch.strip()):
             return None
         return str(project_id), namespace, branch
     full_name = item.get("full_name")
@@ -66,7 +67,8 @@ def _project_identity(provider, item):
         if isinstance(login, str) and isinstance(name, str):
             full_name = login + "/" + name
     branch = item.get("default_branch") or "main"
-    if not isinstance(full_name, str) or "/" not in full_name:
+    if (not isinstance(full_name, str) or "/" not in full_name
+            or not isinstance(branch, str) or not branch.strip()):
         return None
     return full_name, full_name, branch
 
@@ -191,6 +193,9 @@ def discover_provider(provider, fetch_json_fn=fetch_json, fetch_text_fn=_raw_fet
                 if provider_rate_limited(http_error_details(exc)):
                     rate_limited = True
                     break
+            except (ValueError, TypeError, UnicodeError) as exc:
+                errors.append({"project": namespace, "path": path,
+                               "error": type(exc).__name__})
             except REQUEST_ERRORS as exc:
                 errors.append({"project": namespace, "path": path,
                                "error": type(exc).__name__})
