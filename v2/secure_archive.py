@@ -10,6 +10,7 @@ import json
 import os
 from pathlib import Path
 import secrets
+import stat
 import tempfile
 from cryptography.hazmat.primitives.ciphers.aead import AESGCM
 from cryptography.hazmat.primitives.kdf.scrypt import Scrypt
@@ -44,6 +45,27 @@ def decrypt(blob, passphrase):
     nonce = blob[offset + 16:offset + 28]
     header = blob[:offset + 28]
     return AESGCM(_key(passphrase, salt)).decrypt(nonce, blob[len(header):], header)
+
+def _read_regular_bounded(path, maximum):
+    """Read a regular file without following a last-moment symlink swap.
+
+    The byte limit is enforced while reading, not just by a prior stat().
+    """
+    flags = os.O_RDONLY | getattr(os, 'O_NOFOLLOW', 0)
+    fd = os.open(path, flags)
+    try:
+        info = os.fstat(fd)
+        if not stat.S_ISREG(info.st_mode):
+            raise ValueError('Archive source must be a regular file')
+        if info.st_size > maximum:
+            raise ValueError('Archive source exceeds maximum size')
+        with os.fdopen(fd, 'rb', closefd=False) as stream:
+            data = stream.read(maximum + 1)
+        if len(data) > maximum:
+            raise ValueError('Archive source exceeds maximum size')
+        return data
+    finally:
+        os.close(fd)
 
 def atomic_write(path, data):
     path = Path(path)
@@ -83,9 +105,7 @@ def backup(source, destination, passphrase):
     _validate_paths(source, destination)
     if source.resolve() == destination.resolve():
         raise ValueError('Source and destination must differ')
-    if source.stat().st_size > MAX_INPUT:
-        raise ValueError('Archive input exceeds maximum size')
-    raw = source.read_bytes()
+    raw = _read_regular_bounded(source, MAX_INPUT)
     blob = encrypt(raw, passphrase)
     atomic_write(destination, blob)
     restored = decrypt(Path(destination).read_bytes(), passphrase)
@@ -102,9 +122,8 @@ def restore(source, destination, passphrase):
     _validate_paths(source, destination)
     if source.resolve() == destination.resolve():
         raise ValueError('Source and destination must differ')
-    if source.stat().st_size > MAX_INPUT + len(MAGIC) + 16 + 12 + 16:
-        raise ValueError('Encrypted archive exceeds maximum size')
-    raw = decrypt(source.read_bytes(), passphrase)
+    maximum = MAX_INPUT + len(MAGIC) + 16 + 12 + 16
+    raw = decrypt(_read_regular_bounded(source, maximum), passphrase)
     atomic_write(destination, raw)
     return hashlib.sha256(Path(destination).read_bytes()).hexdigest()
 
