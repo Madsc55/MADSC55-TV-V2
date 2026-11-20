@@ -5,7 +5,7 @@ import json
 from pathlib import Path
 from ibo_archive_operation_ledger import read as read_journal
 
-from ibo_single_playlist_transfer import parse, transform, sha, category, inventory, restore_exact, apply_with_journal, _recover_pending
+from ibo_single_playlist_transfer import parse, transform, sha, category, inventory, restore_exact, apply_with_journal, _recover_pending, plan_next_batch
 
 SAMPLE = ('#EXTM3U\n'
           '#EXTINF:-1 group-title="⭐ FAVORİLER (1)",Favorite\nhttps://example.org/f\n'
@@ -127,6 +127,20 @@ class SinglePlaylistTransferTests(unittest.TestCase):
             self.assertFalse(pending.exists())
             self.assertFalse(journal.exists())
             self.assertEqual(playlist.read_bytes(), SAMPLE)
+
+    def test_next_package_advances_after_move(self):
+        first = plan_next_batch(SAMPLE, "YEDEKLER", limit=2)
+        self.assertEqual(first["expected_urls"], ["https://example.org/1", "https://example.org/2"])
+        self.assertEqual(first["remaining_after"], 1)
+        output, _ = transform(SAMPLE, "YEDEKLER", "ANA", [1, 2], sha(SAMPLE),
+                              expected_urls=first["expected_urls"])
+        following = plan_next_batch(output, "YEDEKLER")
+        self.assertEqual(following["expected_urls"], ["https://example.org/3"])
+        self.assertEqual(following["remaining_after"], 0)
+
+    def test_batch_limit_rejected(self):
+        with self.assertRaisesRegex(ValueError, "Invalid batch"):
+            plan_next_batch(SAMPLE, "ANA", limit=2501)
 
     def test_inclusive_range_math(self):
         self.assertEqual(len(list(range(112, 486 + 1))), 375)
