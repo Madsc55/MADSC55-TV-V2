@@ -64,12 +64,8 @@ def rewrite_group(block, target):
     if not match:
         raise ValueError("Missing group-title")
     old = match.group(2)
-    # Preserve original suffix format when YEDEKLER count is already embedded.
+    # Visible count suffixes are normalized by transform().
     replacement = ARCHIVE_NAMES[target]
-    if target == "YEDEKLER":
-        count = re.search(r"\(\d+\)", old)
-        if count:
-            replacement += " " + count.group()
     return head[:match.start(2)] + replacement + head[match.end(2):] + sep + tail
 
 
@@ -86,13 +82,34 @@ def transform(raw, source, target, ordinals, expected_sha):
         raise ValueError("Ordinal outside source category")
     chosen = {indices[n - 1] for n in ordinals}
     updated = [rewrite_group(b, target) if i in chosen else b for i, b in enumerate(blocks)]
+    # Recompute visible counts in both affected groups; preserve other categories.
+    counts = {key: sum(category(b.split("\n", 1)[0]) == key for b in updated)
+              for key in (source, target)}
+    for i, block in enumerate(updated):
+        key = category(block.split("\n", 1)[0])
+        if key not in counts:
+            continue
+        head, sep, tail = block.partition("\n")
+        match = GROUP.search(head)
+        if not match:
+            raise ValueError("Missing group-title")
+        label = match.group(2)
+        if re.search(r"\(\d+\)", label):
+            label = re.sub(r"\(\d+\)", f"({counts[key]})", label)
+        else:
+            label = ARCHIVE_NAMES[key] + f" ({counts[key]})"
+        updated[i] = head[:match.start(2)] + label + head[match.end(2):] + sep + tail
     for i, (before, after) in enumerate(zip(blocks, updated)):
-        if i not in chosen and before != after:
-            raise ValueError("Unselected record changed")
+        if i not in chosen and category(before.split("\n", 1)[0]) not in counts and before != after:
+            raise ValueError("Unrelated category changed")
     result = (prefix + "".join(updated)).encode("utf-8")
     _, verified = parse(result)
     if len(verified) != len(blocks):
         raise ValueError("Record count changed")
+    for key in (source, target):
+        actual = sum(category(b.split("\n", 1)[0]) == key for b in verified)
+        if actual != counts[key]:
+            raise ValueError("Category parity failed")
     return result, {"source": source, "target": target, "moved": len(chosen),
                     "total": len(blocks), "before_sha256": expected_sha,
                     "after_sha256": sha(result)}
