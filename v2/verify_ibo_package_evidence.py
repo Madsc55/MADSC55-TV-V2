@@ -51,6 +51,8 @@ def verify(path, secret):
             seen.add(url)
             records.append(record)
         report = json.loads(archive.read("ibo-real-scan-report.json"))
+        if not records:
+            errors.append("No independently eligible AV-qualified records in encrypted inventory")
         if len(records) != report.get("av_verified"):
             errors.append("Decrypted AV-qualified count disagrees with report")
         package_counts = {}
