@@ -114,6 +114,28 @@ class SinglePlaylistTransferTests(unittest.TestCase):
             self.assertFalse(pending.exists())
             self.assertEqual(playlist.read_bytes(), output)
 
+    def test_replayed_pending_rejects_diverged_playlist(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            playlist = root / "main.m3u8"
+            journal = root / "journal.json"
+            pending = root / "journal.json.pending"
+            output, report = transform(SAMPLE, "YEDEKLER", "ANA", [1], sha(SAMPLE))
+            operation = {**report, "operation_id": "replayed-1"}
+            journal.write_text(json.dumps({"initial_sha256": sha(SAMPLE),
+                                           "operations": [operation]}), encoding="utf-8")
+            pending.write_text(json.dumps({"initial_sha256": sha(SAMPLE),
+                                           "operation": operation}), encoding="utf-8")
+            playlist.write_bytes(SAMPLE)
+            with self.assertRaisesRegex(ValueError, "playlist SHA mismatch"):
+                _recover_pending(playlist, journal)
+            self.assertTrue(pending.exists())
+            self.assertEqual(playlist.read_bytes(), SAMPLE)
+            playlist.write_bytes(output)
+            _recover_pending(playlist, journal)
+            self.assertFalse(pending.exists())
+            self.assertEqual(len(read_journal(journal)["operations"]), 1)
+
     def test_interrupted_before_publish_discards_pending(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
