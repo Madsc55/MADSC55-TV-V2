@@ -16,6 +16,12 @@ class XMLTVIntegrityTests(unittest.TestCase):
         self.assertEqual(epg_integrity.parse_xmltv_time("20261113120000 +1400").utcoffset().total_seconds(), 50400)
         self.assertEqual(epg_integrity.parse_xmltv_time("20261113120000 -0330").utcoffset().total_seconds(), -12600)
 
+    def test_malformed_timestamp_types_fail_closed(self):
+        for value in (None, 0, True, [], {}, b"20261113120000"):
+            with self.subTest(value=value):
+                with self.assertRaises(ValueError):
+                    epg_integrity.parse_xmltv_time(value)
+
     def test_invalid_timezone_offsets_rejected(self):
         for value in ("20261113120000 +1460", "20261113120000 +1401", "20261113120000 +1500", "20261113120000 -2360"):
             with self.assertRaises(ValueError):
