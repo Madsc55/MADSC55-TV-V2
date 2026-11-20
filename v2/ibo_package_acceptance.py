@@ -39,7 +39,7 @@ def parse(text):
                 raise ValueError("leading or trailing whitespace in stream URL")
             if pending is None:
                 raise ValueError("URL without EXTINF")
-            if any(ord(char) <= 32 or ord(char) == 127 for char in line):
+            if "\\" in line or any(ord(char) <= 32 or ord(char) == 127 for char in line):
                 raise ValueError("control or whitespace in stream URL")
             parts = urllib.parse.urlsplit(line)
             if (parts.scheme not in ("http", "https") or not parts.hostname

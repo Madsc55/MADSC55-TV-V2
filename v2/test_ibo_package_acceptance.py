@@ -115,6 +115,11 @@ class PackageTests(unittest.TestCase):
             with self.subTest(url=url), self.assertRaises(ValueError):
                 parse("#EXTM3U\n#EXTINF:-1,Name\n" + url + "\n")
 
+    def test_backslash_in_stream_url_is_rejected(self):
+        for url in ("https://example.org\\live.m3u8", "https://example.org/live\\segment.m3u8"):
+            with self.subTest(url=url), self.assertRaises(ValueError):
+                parse("#EXTM3U\n#EXTINF:-1,Name\n" + url + "\n")
+
     def test_same_url_under_different_names_is_not_two_channels(self):
         records = [
             ('#EXTINF:-1 tvg-id="one",First', 'https://example.org/shared.m3u8'),
