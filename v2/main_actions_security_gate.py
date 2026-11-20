@@ -59,7 +59,7 @@ def audit_one(filename,source):
         return ["INVALID_WORKFLOW"]
     events=mapping(doc.get("on"))
     if filename=="ibo-authorized-500.yml":
-        if set(events)!={"push","workflow_dispatch"} or mapping(events.get("push")).get("branches")!=["main"] or mapping(events.get("push")).get("paths")!=[".github/workflows/ibo-authorized-500.yml"]:
+        if set(events)!={"workflow_dispatch"}:
             return ["ONE_TIME_TRIGGER_CHANGED"]
         if mapping(doc.get("permissions"))!={"contents":"write","pull-requests":"write"}:
             return ["ONE_TIME_PERMISSIONS_CHANGED"]
