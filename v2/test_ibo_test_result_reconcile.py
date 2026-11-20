@@ -50,6 +50,19 @@ class Tests(unittest.TestCase):
         raw=sample(); r=report(raw,["verified"]*4)
         r["entries"][0]["url_sha256"]="0"*64
         with self.assertRaises(ValueError): run(raw,r)
+    def test_1792_fixture_preserves_1107_and_queues_685(self):
+        # Synthetic acceptance fixture, NOT real channel evidence.
+        raw = ('#EXTM3U\n' + ''.join(
+            '#EXTINF:-1 group-title="🗂️ YEDEKLER",C%d\nhttps://example.org/%d\n' % (i, i)
+            for i in range(1792))).encode()
+        r = report(raw, ["verified"] * 1107 + ["uncertain"] * 685)
+        result, manifest = run(raw, r)
+        self.assertEqual(result, raw)
+        self.assertEqual(manifest["counts"], {"verified": 1107, "uncertain": 685})
+        self.assertEqual(len(manifest["retry_queue"]), 685)
+        self.assertEqual(manifest["failed_count"], 0)
+        self.assertIsNone(manifest["failed_tail_start_1based"])
+
     def test_stale_playlist_fails(self):
         raw=sample(); r=report(raw,["verified"]*4)
         with self.assertRaises(ValueError):
