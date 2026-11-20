@@ -12,6 +12,14 @@ class XMLTVIntegrityTests(unittest.TestCase):
                 self.assertEqual(result["status"], "NON_HTTPS")
                 opener.assert_not_called()
 
+    def test_malformed_configured_source_urls_fail_closed_without_network(self):
+        for url in (None, 7, [], {}, "https://[broken/epg.xml",
+                    "http://example.org/epg.xml", "https://user:pass@example.org/epg.xml"):
+            with self.subTest(url=url), patch("epg_integrity.urllib.request.build_opener") as opener:
+                result = epg_integrity.inspect(url, set())
+                self.assertEqual(result["status"], "NON_HTTPS")
+                opener.assert_not_called()
+
     def test_valid_timezone_offsets(self):
         self.assertEqual(epg_integrity.parse_xmltv_time("20261113120000 +1400").utcoffset().total_seconds(), 50400)
         self.assertEqual(epg_integrity.parse_xmltv_time("20261113120000 -0330").utcoffset().total_seconds(), -12600)
