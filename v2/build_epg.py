@@ -107,7 +107,7 @@ def programme_in_window(programme, start_limit, end_limit):
         return False
     title = programme.find("title")
     has_title = title is not None and bool("".join(title.itertext()).strip())
-    return has_title and stop > start and start_limit <= start <= end_limit
+    return has_title and stop > start and start < end_limit and stop > start_limit
 
 
 def main():
