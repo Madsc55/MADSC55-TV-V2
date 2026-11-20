@@ -44,8 +44,9 @@ def probe(source, query="turkish-iptv", fetch=fetch_json, sleep=time.sleep):
 def probe_queries(source, queries=QUERIES, fetch=fetch_json, sleep=time.sleep):
     """Probe terms sequentially and stop provider fanout when throttled."""
     terms = list(queries)
-    if (len(terms) > len(QUERIES) or len(set(terms)) != len(terms)
-            or any(not isinstance(term, str) or term not in QUERIES for term in terms)):
+    if (len(terms) > len(QUERIES)
+            or any(not isinstance(term, str) or term not in QUERIES for term in terms)
+            or len(set(terms)) != len(terms)):
         raise ValueError("Diagnostic queries must be unique members of the approved plan")
     results = []
     for index, query in enumerate(terms):

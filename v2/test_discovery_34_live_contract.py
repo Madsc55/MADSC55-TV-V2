@@ -10,7 +10,7 @@ def http_error(code):
 class LiveContractRetryTests(unittest.TestCase):
     def test_diagnostic_query_budget_rejects_unknown_duplicates_and_oversized_plan(self):
         for queries in (("unapproved",), ("tr.m3u8", "tr.m3u8"),
-                        ("tr.m3u8",) * 7):
+                        ("tr.m3u8",) * 7, ([],), ({},), (None,)):
             with self.subTest(queries=queries), self.assertRaises(ValueError):
                 probe_queries("codeberg", queries=queries,
                               fetch=lambda _: self.fail("No request allowed for invalid plan"))
