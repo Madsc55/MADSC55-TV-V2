@@ -18,6 +18,8 @@ MAX_BYTES = 20_000_000
 
 def parse_xmltv_time(value):
     """Parse XMLTV YYYYMMDDHHMMSS with optional numeric UTC offset."""
+    if not isinstance(value, str):
+        raise ValueError("Invalid XMLTV timestamp")
     match = re.fullmatch(r"(\d{14})(?:\s*([+-])(\d{2})(\d{2}))?", value.strip())
     if not match:
         raise ValueError("Invalid XMLTV timestamp")
