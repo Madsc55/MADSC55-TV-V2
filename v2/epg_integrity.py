@@ -8,6 +8,7 @@ import hashlib
 import json
 import re
 import urllib.request
+import urllib.parse
 import xml.etree.ElementTree as ET
 from collections import Counter
 from discover import ROOT, LIVE, entries
@@ -31,14 +32,22 @@ def parse_xmltv_time(value):
         return base.replace(tzinfo=datetime.timezone(datetime.timedelta(minutes=minutes)))
     return base.replace(tzinfo=datetime.timezone.utc)
 
+class _NoRedirect(urllib.request.HTTPRedirectHandler):
+    """Reject feed redirects before a second network request is sent."""
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        raise ValueError("XMLTV feed redirect refused")
+
+
 def inspect(url, playlist_ids):
     result = {"url_sha256": hashlib.sha256(url.encode()).hexdigest(), "status": "UNVERIFIED"}
-    if not url.startswith("https://"):
+    parsed = urllib.parse.urlsplit(url)
+    if (parsed.scheme != "https" or not parsed.hostname or parsed.username
+            or parsed.password or "\\" in url):
         result["status"] = "NON_HTTPS"
         return result
     try:
         req = urllib.request.Request(url, headers={"User-Agent": "MADSC55-V2-EPG-Audit/1.0"})
-        with urllib.request.urlopen(req, timeout=16) as res:
+        with urllib.request.build_opener(_NoRedirect).open(req, timeout=16) as res:
             data = res.read(MAX_BYTES + 1)
         if len(data) > MAX_BYTES:
             result["status"] = "TOO_LARGE_FOR_AUDIT"
