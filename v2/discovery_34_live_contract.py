@@ -12,7 +12,7 @@ from discovery_34 import (
 )
 from discovery_provider_requests import (
     MAX_ATTEMPTS, REQUEST_ERRORS, http_error_details, provider_rate_limited,
-    retry_delay,
+    retry_delay, _indicates_throttling,
 )
 
 def probe(source, query="turkish-iptv", fetch=fetch_json, sleep=time.sleep):
@@ -20,6 +20,11 @@ def probe(source, query="turkish-iptv", fetch=fetch_json, sleep=time.sleep):
     for attempt in range(1, MAX_ATTEMPTS + 1):
         try:
             payload = fetch(url)
+            if (isinstance(payload, dict) and
+                    any(_indicates_throttling(payload.get(key, ""))
+                        for key in ("message", "error"))):
+                return {"status": "error", "reason": "provider_throttled_response",
+                        "provider": source, "rate_limited": True, "attempts": attempt}
             candidates = len(repository_candidates(source, payload))
             if incomplete_repository_response(source, payload):
                 return {"status": "error", "reason": "incomplete_repository_response",
