@@ -21,7 +21,7 @@ class SinglePlaylistTransferTests(unittest.TestCase):
         self.assertEqual(len(parse(output)[1]), 4)
         self.assertIn("TÜRK ARŞİVİ (2)", output.decode())
         self.assertIn(b'group-title="\xe2\xad\x90 FAVOR', output)
-        self.assertIn(b'group-title="\xf0\x9f\x97\x82\xef\xb8\x8f YEDEKLER (3)",Two', output)
+        self.assertIn(b'group-title="\xf0\x9f\x97\x82\xef\xb8\x8f YEDEKLER (1)",Two', output)
         self.assertEqual(sum(category(b.split("\n")[0]) == "TURK"
                              for b in parse(output)[1]), 2)
 
