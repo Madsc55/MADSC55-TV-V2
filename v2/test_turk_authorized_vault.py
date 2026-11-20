@@ -42,6 +42,26 @@ class VaultTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             Vault(self.root / "other.enc", self.key).restore(backup, "0" * 64)
 
+    def test_reject_malformed_urls(self):
+        for url in ("https://", "https://user:pass@example.org/a",
+                    "https://example.org/a\\nInjected", "https://example.org:0/a",
+                    "https://example.org:bad/a"):
+            with self.subTest(url=url), self.assertRaises(ValueError):
+                self.vault.add("tr1", url, "source", True, True)
+
+    def test_restore_rejects_encrypted_foreign_entry(self):
+        self.vault.add("tr1", "https://example.org/a", "source", True, True)
+        doc = self.vault.read()
+        doc["entries"]["tr1"]["turkish"] = False
+        tampered = self.root / "tampered.enc"
+        tampered.write_bytes(self.vault.cipher.encrypt(
+            __import__("json").dumps(doc).encode()))
+        restored = Vault(self.root / "restored.enc", self.key)
+        import hashlib
+        with self.assertRaises(ValueError):
+            restored.restore(tampered, hashlib.sha256(tampered.read_bytes()).hexdigest())
+        self.assertFalse(restored.path.exists())
+
     def test_wrong_key_fails_closed(self):
         self.vault.add("tr1", "https://example.org/a", "source", True, True)
         with self.assertRaises(ValueError):
