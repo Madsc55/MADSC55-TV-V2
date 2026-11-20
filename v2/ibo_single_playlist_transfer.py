@@ -195,17 +195,68 @@ def publish(path, raw, result, backup):
             os.unlink(tmp)
 
 
+def _durable_json(path, data):
+    """Atomic durable journal/pending file replacement."""
+    fd, staged = tempfile.mkstemp(prefix=".ibo-ledger-", dir=path.parent)
+    try:
+        with os.fdopen(fd, "wb") as stream:
+            stream.write(json.dumps(data, ensure_ascii=False, indent=2).encode("utf-8"))
+            stream.flush()
+            os.fsync(stream.fileno())
+        os.replace(staged, path)
+        dfd = os.open(path.parent, os.O_RDONLY)
+        try:
+            os.fsync(dfd)
+        finally:
+            os.close(dfd)
+    finally:
+        if os.path.exists(staged):
+            os.unlink(staged)
+
+
+def _recover_pending(path, journal_path):
+    """Complete an interrupted publish only if its exact before/after SHA matches."""
+    pending_path = journal_path.with_name(journal_path.name + ".pending")
+    if pending_path.is_symlink():
+        raise ValueError("Symlink pending journal rejected")
+    if not pending_path.exists():
+        return
+    pending = json.loads(pending_path.read_text(encoding="utf-8"))
+    ledger = read_journal(journal_path)
+    if ledger is None:
+        ledger = {"initial_sha256": pending["initial_sha256"], "operations": []}
+    from ibo_archive_operation_ledger import validate
+    head = validate(ledger["operations"], ledger["initial_sha256"])
+    operation = pending["operation"]
+    if operation["operation_id"] in {x["operation_id"] for x in ledger["operations"]}:
+        if head != operation["after_sha256"]:
+            raise ValueError("Pending operation journal mismatch")
+    else:
+        if head != operation["before_sha256"]:
+            raise ValueError("Pending journal chain mismatch")
+        current_sha = sha(path.read_bytes())
+        if current_sha == operation["after_sha256"]:
+            records = append_operation(ledger["operations"], ledger["initial_sha256"], operation)
+            _durable_json(journal_path, {**ledger, "operations": records})
+        elif current_sha != operation["before_sha256"]:
+            raise ValueError("Unknown playlist revision during recovery")
+    pending_path.unlink()
+
+
 def apply_with_journal(path, raw, output, backup, journal_path, operation_id, report):
-    """Serialize writers; require a consistent persistent journal."""
+    """Durable pending intent and idempotent crash recovery under an exclusive lock."""
     if not operation_id or not operation_id.strip():
         raise ValueError("Operation id required")
     if journal_path.is_symlink() or journal_path.resolve() == path.resolve():
         raise ValueError("Invalid journal path")
+    if journal_path.parent.resolve() != path.parent.resolve():
+        raise ValueError("Journal must share playlist directory")
     lock_path = path.with_name(path.name + ".archive.lock")
     if lock_path.is_symlink():
         raise ValueError("Symlink lock rejected")
     with open(lock_path, "a+b") as lock:
         fcntl.flock(lock.fileno(), fcntl.LOCK_EX)
+        _recover_pending(path, journal_path)
         if sha(path.read_bytes()) != sha(raw):
             raise ValueError("Playlist changed while waiting for lock")
         ledger = read_journal(journal_path)
@@ -214,20 +265,19 @@ def apply_with_journal(path, raw, output, backup, journal_path, operation_id, re
                 raise ValueError("Invalid existing journal")
             ledger = {"initial_sha256": sha(raw), "operations": []}
         op = {**report, "operation_id": operation_id}
-        new_records = append_operation(ledger["operations"], ledger["initial_sha256"], op)
-        payload = json.dumps({"initial_sha256": ledger["initial_sha256"],
-                              "operations": new_records}, ensure_ascii=False, indent=2).encode()
-        fd, staged = tempfile.mkstemp(prefix=".ibo-ledger-", dir=journal_path.parent)
+        records = append_operation(ledger["operations"], ledger["initial_sha256"], op)
+        pending_path = journal_path.with_name(journal_path.name + ".pending")
+        if pending_path.exists() or pending_path.is_symlink():
+            raise ValueError("Unresolved pending operation")
+        _durable_json(pending_path, {"initial_sha256": ledger["initial_sha256"],
+                                    "operation": op})
         try:
-            with os.fdopen(fd, "wb") as stream:
-                stream.write(payload)
-                stream.flush()
-                os.fsync(stream.fileno())
             publish(path, raw, output, backup)
-            os.replace(staged, journal_path)
-        finally:
-            if os.path.exists(staged):
-                os.unlink(staged)
+        except BaseException:
+            # Keep pending for deterministic recovery on the next attempt.
+            raise
+        _durable_json(journal_path, {**ledger, "operations": records})
+        pending_path.unlink()
 
 
 def main():
