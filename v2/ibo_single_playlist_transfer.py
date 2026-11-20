@@ -69,7 +69,7 @@ def rewrite_group(block, target):
     return head[:match.start(2)] + replacement + head[match.end(2):] + sep + tail
 
 
-def transform(raw, source, target, ordinals, expected_sha):
+def transform(raw, source, target, ordinals, expected_sha, expected_urls=None):
     if sha(raw) != expected_sha:
         raise ValueError("Source SHA mismatch")
     if source not in ARCHIVE_NAMES or target not in ARCHIVE_NAMES or source == target:
@@ -83,6 +83,9 @@ def transform(raw, source, target, ordinals, expected_sha):
     if min(ordinals) < 1 or max(ordinals) > len(indices):
         raise ValueError("Ordinal outside source category")
     chosen = {indices[n - 1] for n in ordinals}
+    selected_urls = [blocks[indices[n - 1]].strip().splitlines()[-1].strip() for n in ordinals]
+    if expected_urls is not None and selected_urls != expected_urls:
+        raise ValueError("Selected URL manifest mismatch; refusing stale ordinal selection")
     # Fail closed on duplicate stream URLs: ordinal-only moves would be ambiguous.
     urls = [b.strip().splitlines()[-1].strip() for b in blocks]
     if len(urls) != len(set(urls)):
@@ -117,6 +120,7 @@ def transform(raw, source, target, ordinals, expected_sha):
         if actual != counts[key]:
             raise ValueError("Category parity failed")
     return result, {"source": source, "target": target, "moved": len(chosen),
+                    "selected_urls_sha256": sha(json.dumps(selected_urls, ensure_ascii=False).encode("utf-8")),
                     "total": len(blocks), "before_sha256": expected_sha,
                     "after_sha256": sha(result)}
 
@@ -159,13 +163,23 @@ def main():
     p.add_argument("--end", type=int, required=True)
     p.add_argument("--expected-sha256", required=True)
     p.add_argument("--apply", action="store_true")
+    p.add_argument("--expected-urls-json", type=Path,
+                   help="JSON array of exact selected URLs in ordinal order; required for apply")
     p.add_argument("--backup", type=Path)
     a = p.parse_args()
     if a.start < 1 or a.end < a.start or a.end - a.start + 1 > 2500:
         p.error("Selection must be 1..2500 consecutive source-category entries")
     raw = a.playlist.read_bytes()
+    if a.apply and a.expected_urls_json is None:
+        p.error("--expected-urls-json required for --apply to prevent stale ordinal moves")
+    expected_urls = None
+    if a.expected_urls_json is not None:
+        expected_urls = json.loads(a.expected_urls_json.read_text(encoding="utf-8"))
+        if not isinstance(expected_urls, list) or not all(isinstance(x, str) for x in expected_urls):
+            p.error("--expected-urls-json must contain a JSON string array")
     output, report = transform(raw, a.source, a.target,
-                               list(range(a.start, a.end + 1)), a.expected_sha256)
+                               list(range(a.start, a.end + 1)), a.expected_sha256,
+                               expected_urls=expected_urls)
     if a.apply:
         if a.backup is None:
             p.error("--backup required for --apply")
