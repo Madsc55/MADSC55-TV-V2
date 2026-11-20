@@ -91,6 +91,8 @@ def audit_one(filename,source):
         if filename==OFFLINE:
             if set(mapping(events["pull_request"]).get("paths",[]))!={
                 "v2/ibo_single_playlist_transfer.py",
+                "v2/ibo_test_result_reconcile.py",
+                "v2/test_ibo_test_result_reconcile.py",
                 "v2/ibo_archive_operation_ledger.py",
                 "v2/test_ibo_archive_operation_ledger.py",
                 "v2/test_ibo_single_playlist_transfer.py",
