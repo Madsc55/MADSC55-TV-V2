@@ -67,8 +67,20 @@ def atomic_write(path, data):
         if os.path.exists(temporary):
             os.unlink(temporary)
 
+def _validate_paths(source, destination):
+    """Reject symlink inputs and destination parent links before touching private data."""
+    if source.is_symlink() or not source.is_file():
+        raise ValueError('Archive source must be a regular non-symlink file')
+    # Avoid redirecting a private restore through a symlinked directory.
+    for parent in (destination.parent, *destination.parent.parents):
+        if parent.is_symlink():
+            raise ValueError('Destination directory must not be a symlink')
+    if destination.is_symlink():
+        raise FileExistsError('Destination must not be a symlink')
+
 def backup(source, destination, passphrase):
     source, destination = Path(source), Path(destination)
+    _validate_paths(source, destination)
     if source.resolve() == destination.resolve():
         raise ValueError('Source and destination must differ')
     if source.stat().st_size > MAX_INPUT:
@@ -87,6 +99,7 @@ def backup(source, destination, passphrase):
 
 def restore(source, destination, passphrase):
     source, destination = Path(source), Path(destination)
+    _validate_paths(source, destination)
     if source.resolve() == destination.resolve():
         raise ValueError('Source and destination must differ')
     if source.stat().st_size > MAX_INPUT + len(MAGIC) + 16 + 12 + 16:

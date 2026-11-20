@@ -53,6 +53,35 @@ class SecureArchiveTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, 'exceeds maximum size'):
                 decrypt(blob, SECRET)
 
+    def test_backup_and_restore_reject_symlink_sources(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            source = root / 'source'
+            source.write_bytes(b'private')
+            source_link = root / 'source-link'
+            source_link.symlink_to(source)
+            with self.assertRaisesRegex(ValueError, 'non-symlink'):
+                backup(source_link, root / 'archive', SECRET)
+            encrypted = root / 'encrypted'
+            encrypted.write_bytes(encrypt(b'private', SECRET))
+            encrypted_link = root / 'encrypted-link'
+            encrypted_link.symlink_to(encrypted)
+            with self.assertRaisesRegex(ValueError, 'non-symlink'):
+                restore(encrypted_link, root / 'restored', SECRET)
+
+    def test_restore_rejects_symlink_destination_parent(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            actual = root / 'actual'
+            actual.mkdir()
+            link = root / 'linked'
+            link.symlink_to(actual, target_is_directory=True)
+            encrypted = root / 'encrypted'
+            encrypted.write_bytes(encrypt(b'private', SECRET))
+            with self.assertRaisesRegex(ValueError, 'directory must not be a symlink'):
+                restore(encrypted, link / 'restored', SECRET)
+            self.assertFalse((actual / 'restored').exists())
+
     def test_short_secret_rejected(self):
         with self.assertRaises(ValueError):
             encrypt(b'abc', 'short')
