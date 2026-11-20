@@ -40,9 +40,10 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("archive", type=Path)
     args = parser.parse_args()
-    print(json.dumps(inspect(args.archive), sort_keys=True))
+    result = inspect(args.archive)
+    print(json.dumps(result, sort_keys=True))
     # A legacy archive must not be passed to the incompatible binary restore path.
-    if not inspect(args.archive)["compatible_with_secure_archive"]:
+    if not result["compatible_with_secure_archive"]:
         parser.exit(2, "Legacy encrypted archive requires its original verified decryptor; no restore attempted.\n")
 
 
