@@ -51,6 +51,13 @@ class StageBPackageGateTests(unittest.TestCase):
         self.build(report_count=3)
         self.assertEqual(verify(self.path, SECRET)["result"], "FAIL")
 
+    def test_empty_verified_inventory_fails_closed(self):
+        self.records = []
+        self.build(report_count=0)
+        result = verify(self.path, SECRET)
+        self.assertEqual(result["result"], "FAIL")
+        self.assertTrue(any("No independently eligible" in error for error in result["errors"]))
+
     def test_wrong_secret_fails(self):
         self.build()
         with self.assertRaises(Exception):
