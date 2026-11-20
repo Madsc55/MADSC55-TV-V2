@@ -56,6 +56,7 @@ jobs:
           python -m pip install 'cryptography>=42,<47'
           python v2/test_secure_archive_roundtrip.py
           PYTHONPATH=v2 python -m unittest -v test_stage_c_verify_retrieved_archive
+          PYTHONPATH=v2 python -m unittest -v test_archive_format_preflight
           python -m py_compile v2/stage_c_verify_retrieved_archive.py v2/test_stage_c_verify_retrieved_archive.py
           python v2/test_consolidate_inventory.py
           echo 'Recheck Stage 3 scanner dynamic-source validation'
