@@ -1,3 +1,12 @@
+## 20 Kasım 2026 — #488 / #6 Türk yetkili yayın kasası devri
+
+- Birleştirilen PR'lar: #502 (Fernet şifreli kasa), #508 (URL ve restore bütünlüğü), #509 (mevcut secure_archive ile çevrimdışı yedek/geri yükleme kabul testi), #510 (özel dosya izinleri ve symlink reddi).
+- Son merge: `0554801daea2143d228f1423ffd15b827d43fc94`.
+- Güvenlik kapısı başarılı: [#508](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44736242955), [#509](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44736753654), [#510](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44737384557).
+- Kabul edilenler yalnızca Türk ve yetkili/açık HTTP(S) kaynaklarıdır; URL/token genel raporlara yazılmaz. Kaynak, karar geçmişi, ilk/son görülme ve URL parmak izi şifreli dosyada tutulur.
+- **Açık kalan gerçek ortam işi:** kalıcı özel depolama hedefi, gizli anahtarların yönetimi, yetki sınırları, harici şifreli yedeğin gerçek ortamda oluşturulması ve geri yüklenmesi henüz doğrulanmadı. Bu doğrulama yapılmadan #6 tamamlandı olarak kapatılmamalı.
+- Ana playlist ve kategoriler değiştirilmedi. Canlı kanal araması/oynatma testi yok. Şifre veya DRM aşma yok.
+
 ## 20 Kasım 2026 — YEDEKLER ve arşiv işlem geçmişi
 
 [#492](https://github.com/Madsc55/MADSC55-TV-V2/pull/492), [#493](https://github.com/Madsc55/MADSC55-TV-V2/pull/493) ve [#494](https://github.com/Madsc55/MADSC55-TV-V2/pull/494) öncesi ve sonrası yayın adresleri karşılaştırıldı. İşlem defterine ilk 74 taşıma eklendi. İkinci taşımadaki 85 kayıttan 11'inin özgün kaynak sırası düzeltildi. Son 125 taşıma doğruydu. 18.074 özgün yayının her biri tek bir hedefle eşleşiyor. YEDEKLER'de 1.792, TÜRK ARŞİVİ'nde 424, YABANCI ARŞİV'de 284 ve ANA ARŞİV'de 15.574 kanal var. Bu düzeltme yalnız işlem defterini ve onu doğrulayan kodu güncelledi.
