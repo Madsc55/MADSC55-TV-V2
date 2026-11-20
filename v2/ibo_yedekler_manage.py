@@ -73,10 +73,12 @@ def main():
     summary["revision"] = updated["revision"]
     summary["applied"] = bool(args.apply)
     summary["main_playlist_modified"] = False
-    if args.apply:
+    if args.apply and updated["revision"] != ledger["revision"]:
         path = args.root / f"ledger-{updated['revision']}.json"
         atomic_new(path, (json.dumps(updated, ensure_ascii=False, indent=2) + "\n").encode())
         summary["ledger"] = str(path)
+    elif args.apply:
+        summary["already_applied"] = True
     print(json.dumps(summary, ensure_ascii=False))
 
 
