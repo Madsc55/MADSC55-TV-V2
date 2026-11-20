@@ -26,6 +26,21 @@ def verify_history(state):
     if replay != state["status"]:
         raise ValueError("Arşiv işlem geçmişi güncel durumla uyuşmuyor")
 
+def verify_membership(state, sources, pools):
+    """Match every original source URL to exactly one current, recorded destination."""
+    if set(pools) != set(STATES) or len(sources) != state["total"]:
+        raise ValueError("Eksik arşiv bölümü veya kaynak sayısı")
+    expected = {row["url"]: state["status"].get(str(i), "ANA_ARSIV")
+                for i, row in enumerate(sources, 1)}
+    if len(expected) != len(sources):
+        raise ValueError("Kaynak arşivde yinelenen adres")
+    for destination, rows in pools.items():
+        for row in rows:
+            if expected.pop(row["url"], None) != destination:
+                raise ValueError(f"Yanlış veya yinelenen arşiv ataması ({destination})")
+    if expected:
+        raise ValueError("Arşivde eksik kaynak kaydı")
+
 def load():
  s=json.loads(STATE.read_text(encoding="utf-8"))
  if not ARCHIVE.exists(): raise SystemExit("Arşiv eksik; işlem durduruldu")

@@ -1,3 +1,9 @@
+## 20 Kasım 2026 — YEDEKLER ve arşiv işlem geçmişi
+
+[#492](https://github.com/Madsc55/MADSC55-TV-V2/pull/492), [#493](https://github.com/Madsc55/MADSC55-TV-V2/pull/493) ve [#494](https://github.com/Madsc55/MADSC55-TV-V2/pull/494) öncesi ve sonrası yayın adresleri karşılaştırıldı. İşlem defterine ilk 74 taşıma eklendi. İkinci taşımadaki 85 kayıttan 11'inin özgün kaynak sırası düzeltildi. Son 125 taşıma doğruydu. 18.074 özgün yayının her biri tek bir hedefle eşleşiyor. YEDEKLER'de 1.792, TÜRK ARŞİVİ'nde 424, YABANCI ARŞİV'de 284 ve ANA ARŞİV'de 15.574 kanal var. Bu düzeltme yalnız işlem defterini ve onu doğrulayan kodu güncelledi.
+
+[#490](https://github.com/Madsc55/MADSC55-TV-V2/pull/490) ile indirilen şifreli arşivin dört geri yükleme testi ana dalın güvenlik denetimine eklendi.
+
 ## 19 Kasım 2026 — Yerel örnekte konuşma, ekrandaki yazı ve zamanlı altyazı
 
 [#479](https://github.com/Madsc55/MADSC55-TV-V2/pull/479) yerel FFprobe incelemesini ana dala aldı. Örnek incelemesi artık FFmpeg ile ses ve görüntüyü çözüyor, yerel Whisper modelini ve Türkçe Tesseract OCR aracını çalıştırıyor. İngilizce ve Türkçe insan sesi içeren iki test klibinde üçer kare ve birer zamanlı Türkçe altyazı okundu. [Test kayıtları](v2/reports/turkish-sample-verification-20261119.json)
