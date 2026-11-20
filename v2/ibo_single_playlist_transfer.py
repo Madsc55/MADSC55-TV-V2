@@ -1,0 +1,155 @@
+#!/usr/bin/env python3
+"""Fail-closed, single-playlist YEDEKLER/archive category moves. No network access."""
+import argparse
+import hashlib
+import json
+import os
+from pathlib import Path
+import re
+import tempfile
+
+GROUP = re.compile(r'(group-title\s*=\s*")([^"]*)(")', re.I)
+ARCHIVE_NAMES = {"YEDEKLER": "🗂️ YEDEKLER", "ANA": "ANA ARŞİV",
+                 "TURK": "TÜRK ARŞİVİ", "YABANCI": "YABANCI ARŞİVİ"}
+
+
+def sha(raw):
+    return hashlib.sha256(raw).hexdigest()
+
+
+def category(extinf):
+    match = GROUP.search(extinf)
+    if not match:
+        return None
+    value = match.group(2).upper()
+    if "YEDEKLER" in value:
+        return "YEDEKLER"
+    if "ANA ARŞİV" in value or "ANA ARSIV" in value:
+        return "ANA"
+    if "TÜRK ARŞİV" in value or "TURK ARSIV" in value:
+        return "TURK"
+    if "YABANCI ARŞİV" in value or "YABANCI ARSIV" in value:
+        return "YABANCI"
+    return None
+
+
+def parse(raw):
+    text = raw.decode("utf-8")
+    lines = text.splitlines(keepends=True)
+    if not lines or not lines[0].startswith("#EXTM3U"):
+        raise ValueError("Invalid M3U header")
+    prefix, blocks, current = [], [], None
+    for line in lines:
+        if line.startswith("#EXTINF:"):
+            if current is not None:
+                raise ValueError("Incomplete EXTINF block")
+            current = [line]
+        elif current is None:
+            prefix.append(line)
+        else:
+            current.append(line)
+            if line.strip() and not line.startswith("#"):
+                blocks.append("".join(current))
+                current = None
+    if current is not None:
+        raise ValueError("Incomplete final EXTINF block")
+    if not blocks:
+        raise ValueError("Empty playlist")
+    return "".join(prefix), blocks
+
+
+def rewrite_group(block, target):
+    head, sep, tail = block.partition("\n")
+    match = GROUP.search(head)
+    if not match:
+        raise ValueError("Missing group-title")
+    old = match.group(2)
+    # Preserve original suffix format when YEDEKLER count is already embedded.
+    replacement = ARCHIVE_NAMES[target]
+    if target == "YEDEKLER":
+        count = re.search(r"\(\d+\)", old)
+        if count:
+            replacement += " " + count.group()
+    return head[:match.start(2)] + replacement + head[match.end(2):] + sep + tail
+
+
+def transform(raw, source, target, ordinals, expected_sha):
+    if sha(raw) != expected_sha:
+        raise ValueError("Source SHA mismatch")
+    if source not in ARCHIVE_NAMES or target not in ARCHIVE_NAMES or source == target:
+        raise ValueError("Invalid category transition")
+    prefix, blocks = parse(raw)
+    indices = [i for i, b in enumerate(blocks) if category(b.split("\n", 1)[0]) == source]
+    if not indices or not ordinals or len(ordinals) != len(set(ordinals)):
+        raise ValueError("Empty/duplicate selection")
+    if min(ordinals) < 1 or max(ordinals) > len(indices):
+        raise ValueError("Ordinal outside source category")
+    chosen = {indices[n - 1] for n in ordinals}
+    updated = [rewrite_group(b, target) if i in chosen else b for i, b in enumerate(blocks)]
+    for i, (before, after) in enumerate(zip(blocks, updated)):
+        if i not in chosen and before != after:
+            raise ValueError("Unselected record changed")
+    result = (prefix + "".join(updated)).encode("utf-8")
+    _, verified = parse(result)
+    if len(verified) != len(blocks):
+        raise ValueError("Record count changed")
+    return result, {"source": source, "target": target, "moved": len(chosen),
+                    "total": len(blocks), "before_sha256": expected_sha,
+                    "after_sha256": sha(result)}
+
+
+def publish(path, raw, result, backup):
+    if backup.exists() or backup.is_symlink():
+        raise ValueError("Backup already exists")
+    if path.is_symlink() or not path.is_file():
+        raise ValueError("Refusing symlink/non-file playlist")
+    if sha(path.read_bytes()) != sha(raw):
+        raise ValueError("Concurrent playlist modification")
+    if backup.parent.resolve() != path.parent.resolve():
+        raise ValueError("Backup must share playlist directory")
+    os.link(path, backup)  # no overwrite; preserves exact original bytes
+    fd, tmp = tempfile.mkstemp(prefix=".ibo-archive-", dir=path.parent)
+    try:
+        with os.fdopen(fd, "wb") as out:
+            out.write(result)
+            out.flush()
+            os.fsync(out.fileno())
+        if sha(path.read_bytes()) != sha(raw):
+            raise ValueError("Concurrent playlist modification")
+        os.replace(tmp, path)
+        dfd = os.open(path.parent, os.O_RDONLY)
+        try:
+            os.fsync(dfd)
+        finally:
+            os.close(dfd)
+    finally:
+        if os.path.exists(tmp):
+            os.unlink(tmp)
+
+
+def main():
+    p = argparse.ArgumentParser()
+    p.add_argument("--playlist", type=Path, required=True)
+    p.add_argument("--source", choices=sorted(ARCHIVE_NAMES), required=True)
+    p.add_argument("--target", choices=sorted(ARCHIVE_NAMES), required=True)
+    p.add_argument("--start", type=int, required=True)
+    p.add_argument("--end", type=int, required=True)
+    p.add_argument("--expected-sha256", required=True)
+    p.add_argument("--apply", action="store_true")
+    p.add_argument("--backup", type=Path)
+    a = p.parse_args()
+    if a.start < 1 or a.end < a.start or a.end - a.start + 1 > 2500:
+        p.error("Selection must be 1..2500 consecutive source-category entries")
+    raw = a.playlist.read_bytes()
+    output, report = transform(raw, a.source, a.target,
+                               list(range(a.start, a.end + 1)), a.expected_sha256)
+    if a.apply:
+        if a.backup is None:
+            p.error("--backup required for --apply")
+        publish(a.playlist, raw, output, a.backup)
+    report["applied"] = a.apply
+    print(json.dumps(report, ensure_ascii=False))
+
+
+if __name__ == "__main__":
+    main()
