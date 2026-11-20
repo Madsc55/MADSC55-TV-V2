@@ -33,5 +33,64 @@ class CanonicalPlaylistAcceptance(unittest.TestCase):
         self.assertEqual(PLAYLIST.read_bytes(), raw)
 
 
+    def test_all_archive_directions_and_exact_rollback_on_real_playlist(self):
+        """Every directed pair is exercised in memory; canonical bytes never change."""
+        from ibo_single_playlist_transfer import restore_exact
+        raw = PLAYLIST.read_bytes()
+        baseline = inventory(raw)
+        self.assertEqual(baseline, {
+            "YEDEKLER": 1792, "ANA": 15574, "TURK": 424,
+            "YABANCI": 284, "OTHER": 838, "TOTAL": 18912,
+        })
+        original_urls = [b.strip().splitlines()[-1] for b in parse(raw)[1]]
+        for source in ("YEDEKLER", "ANA", "TURK", "YABANCI"):
+            for target in ("YEDEKLER", "ANA", "TURK", "YABANCI"):
+                if source == target:
+                    continue
+                with self.subTest(source=source, target=target):
+                    moved, report = transform(raw, source, target, [1], sha(raw))
+                    counts = inventory(moved)
+                    self.assertEqual(report["moved"], 1)
+                    self.assertEqual(counts[source], baseline[source] - 1)
+                    self.assertEqual(counts[target], baseline[target] + 1)
+                    self.assertEqual(counts["TOTAL"], 18912)
+                    self.assertEqual(counts["OTHER"], 838)
+                    self.assertEqual(
+                        [b.strip().splitlines()[-1] for b in parse(moved)[1]],
+                        original_urls,
+                    )
+                    self.assertEqual(
+                        restore_exact(moved, raw, sha(moved), sha(raw)), raw
+                    )
+        self.assertEqual(PLAYLIST.read_bytes(), raw)
+
+    def test_full_2500_batch_and_reverse_rollback(self):
+        """ANA has enough entries for an exact 2500-record package."""
+        from ibo_single_playlist_transfer import restore_exact, plan_next_batch
+        raw = PLAYLIST.read_bytes()
+        before = inventory(raw)
+        plan = plan_next_batch(raw, "ANA", limit=2500)
+        self.assertEqual(len(plan["expected_urls"]), 2500)
+        self.assertEqual(plan["remaining_after"], 13074)
+        moved, report = transform(
+            raw, "ANA", "YEDEKLER", list(range(1, 2501)),
+            plan["expected_sha256"], expected_urls=plan["expected_urls"],
+        )
+        after = inventory(moved)
+        self.assertEqual(report["moved"], 2500)
+        self.assertEqual(after["ANA"], before["ANA"] - 2500)
+        self.assertEqual(after["YEDEKLER"], before["YEDEKLER"] + 2500)
+        self.assertEqual(after["TOTAL"], 18912)
+        self.assertEqual(after["OTHER"], 838)
+        self.assertEqual(
+            [b.strip().splitlines()[-1] for b in parse(moved)[1]],
+            [b.strip().splitlines()[-1] for b in parse(raw)[1]],
+        )
+        self.assertEqual(
+            restore_exact(moved, raw, sha(moved), sha(raw)), raw
+        )
+        self.assertEqual(PLAYLIST.read_bytes(), raw)
+
+
 if __name__ == "__main__":
     unittest.main()
