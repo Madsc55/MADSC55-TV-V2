@@ -2,6 +2,7 @@
 """Offline source-coverage regression comparison; never accesses stream URLs."""
 import argparse
 import json
+import math
 from pathlib import Path
 
 def index(report):
@@ -14,7 +15,7 @@ def index(report):
     return result
 
 def compare(previous, current, threshold=0.5):
-    if not 0 <= threshold <= 1:
+    if isinstance(threshold, bool) or not isinstance(threshold, (int, float)) or not math.isfinite(threshold) or not 0 <= threshold <= 1:
         raise ValueError("threshold must be between 0 and 1")
     old, new = index(previous), index(current)
     findings = []
