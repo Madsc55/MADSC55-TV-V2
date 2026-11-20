@@ -43,7 +43,8 @@ def parse(text):
                 raise ValueError("control or whitespace in stream URL")
             parts = urllib.parse.urlsplit(line)
             if (parts.scheme not in ("http", "https") or not parts.hostname
-                    or parts.username is not None or parts.password is not None):
+                    or parts.username is not None or parts.password is not None
+                    or parts.fragment):
                 raise ValueError("invalid stream URL")
             try:
                 _ = parts.port
