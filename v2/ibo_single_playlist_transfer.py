@@ -7,6 +7,8 @@ import os
 from pathlib import Path
 import re
 import tempfile
+import fcntl
+from ibo_archive_operation_ledger import append as append_operation, read as read_journal
 
 GROUP = re.compile(r'(group-title\s*=\s*")([^"]*)(")', re.I)
 ARCHIVE_NAMES = {"YEDEKLER": "🗂️ YEDEKLER", "ANA": "ANA ARŞİV",
@@ -193,6 +195,41 @@ def publish(path, raw, result, backup):
             os.unlink(tmp)
 
 
+def apply_with_journal(path, raw, output, backup, journal_path, operation_id, report):
+    """Serialize writers; require a consistent persistent journal."""
+    if not operation_id or not operation_id.strip():
+        raise ValueError("Operation id required")
+    if journal_path.is_symlink() or journal_path.resolve() == path.resolve():
+        raise ValueError("Invalid journal path")
+    lock_path = path.with_name(path.name + ".archive.lock")
+    if lock_path.is_symlink():
+        raise ValueError("Symlink lock rejected")
+    with open(lock_path, "a+b") as lock:
+        fcntl.flock(lock.fileno(), fcntl.LOCK_EX)
+        if sha(path.read_bytes()) != sha(raw):
+            raise ValueError("Playlist changed while waiting for lock")
+        ledger = read_journal(journal_path)
+        if ledger is None:
+            if journal_path.exists():
+                raise ValueError("Invalid existing journal")
+            ledger = {"initial_sha256": sha(raw), "operations": []}
+        op = {**report, "operation_id": operation_id}
+        new_records = append_operation(ledger["operations"], ledger["initial_sha256"], op)
+        payload = json.dumps({"initial_sha256": ledger["initial_sha256"],
+                              "operations": new_records}, ensure_ascii=False, indent=2).encode()
+        fd, staged = tempfile.mkstemp(prefix=".ibo-ledger-", dir=journal_path.parent)
+        try:
+            with os.fdopen(fd, "wb") as stream:
+                stream.write(payload)
+                stream.flush()
+                os.fsync(stream.fileno())
+            publish(path, raw, output, backup)
+            os.replace(staged, journal_path)
+        finally:
+            if os.path.exists(staged):
+                os.unlink(staged)
+
+
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("--playlist", type=Path, required=True)
@@ -205,6 +242,8 @@ def main():
     p.add_argument("--expected-urls-json", type=Path,
                    help="JSON array of exact selected URLs in ordinal order; required for apply")
     p.add_argument("--backup", type=Path)
+    p.add_argument("--journal", type=Path)
+    p.add_argument("--operation-id")
     a = p.parse_args()
     if a.start < 1 or a.end < a.start or a.end - a.start + 1 > 2500:
         p.error("Selection must be 1..2500 consecutive source-category entries")
@@ -222,7 +261,9 @@ def main():
     if a.apply:
         if a.backup is None:
             p.error("--backup required for --apply")
-        publish(a.playlist, raw, output, a.backup)
+        if a.journal is None or not a.operation_id:
+            p.error("--journal and --operation-id required for --apply")
+        apply_with_journal(a.playlist, raw, output, a.backup, a.journal, a.operation_id, report)
     report["applied"] = a.apply
     print(json.dumps(report, ensure_ascii=False))
 
