@@ -5,7 +5,9 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 STATE = ROOT / "v2/tasks/state.json"
-REQUIRED = {15, 17, 18, 19, 20, 21, 28, 29, 30, 31, 32, 33, 34}
+# Task 34 contains the final live scan itself; requiring it here would deadlock.
+# Keep all independent infrastructure prerequisites fail-closed.
+REQUIRED = {15, 17, 18, 19, 20, 21, 28, 29, 30, 31, 32, 33}
 
 def inspect(state):
     if not isinstance(state, dict) or state.get("schema") != 1 or state.get("canonical_state") != "state.json":
