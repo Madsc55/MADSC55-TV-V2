@@ -115,6 +115,10 @@ class PackageTests(unittest.TestCase):
             with self.subTest(url=url), self.assertRaises(ValueError):
                 parse("#EXTM3U\n#EXTINF:-1,Name\n" + url + "\n")
 
+    def test_rejects_fragment_in_stream_url(self):
+        with self.assertRaises(ValueError):
+            parse("#EXTM3U\n#EXTINF:-1,Name\nhttps://example.org/live.m3u8#other\n")
+
     def test_backslash_in_stream_url_is_rejected(self):
         for url in ("https://example.org\\live.m3u8", "https://example.org/live\\segment.m3u8"):
             with self.subTest(url=url), self.assertRaises(ValueError):
