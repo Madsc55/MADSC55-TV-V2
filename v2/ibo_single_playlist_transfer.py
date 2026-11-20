@@ -112,6 +112,15 @@ def transform(raw, source, target, ordinals, expected_sha, expected_urls=None):
         if i not in chosen and category(before.split("\n", 1)[0]) not in counts and before != after:
             raise ValueError("Unrelated category changed")
     result = (prefix + "".join(updated)).encode("utf-8")
+    before_counts = inventory(raw)
+    after_counts = inventory(result)
+    if before_counts["TOTAL"] != after_counts["TOTAL"] or before_counts["OTHER"] != after_counts["OTHER"]:
+        raise ValueError("Inventory parity mismatch")
+    if after_counts[source] != before_counts[source] - len(chosen) or after_counts[target] != before_counts[target] + len(chosen):
+        raise ValueError("Transfer category count mismatch")
+    for key in ARCHIVE_NAMES:
+        if key not in (source, target) and after_counts[key] != before_counts[key]:
+            raise ValueError("Unrelated archive count changed")
     _, verified = parse(result)
     if len(verified) != len(blocks):
         raise ValueError("Record count changed")
@@ -121,8 +130,38 @@ def transform(raw, source, target, ordinals, expected_sha, expected_urls=None):
             raise ValueError("Category parity failed")
     return result, {"source": source, "target": target, "moved": len(chosen),
                     "selected_urls_sha256": sha(json.dumps(selected_urls, ensure_ascii=False).encode("utf-8")),
-                    "total": len(blocks), "before_sha256": expected_sha,
+                    "total": len(blocks), "counts_before": before_counts,
+                    "counts_after": after_counts, "before_sha256": expected_sha,
                     "after_sha256": sha(result)}
+
+
+
+def inventory(raw):
+    """Count actual records; never trust displayed group count suffixes."""
+    _, blocks = parse(raw)
+    counts = {key: 0 for key in ARCHIVE_NAMES}
+    other = 0
+    for block in blocks:
+        key = category(block.split("\\n", 1)[0])
+        if key is None:
+            other += 1
+        else:
+            counts[key] += 1
+    counts["OTHER"] = other
+    counts["TOTAL"] = len(blocks)
+    return counts
+
+
+def restore_exact(raw, backup_raw, expected_sha, expected_backup_sha):
+    """Lossless full-transaction rollback, guarded against intervening edits."""
+    if sha(raw) != expected_sha or sha(backup_raw) != expected_backup_sha:
+        raise ValueError("Rollback SHA mismatch")
+    current = inventory(raw)
+    previous = inventory(backup_raw)
+    if current["TOTAL"] != previous["TOTAL"]:
+        raise ValueError("Rollback record count mismatch")
+    # No attempt to reconstruct order from category ordinals.
+    return backup_raw
 
 
 def publish(path, raw, result, backup):
