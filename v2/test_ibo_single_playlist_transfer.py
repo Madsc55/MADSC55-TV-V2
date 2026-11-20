@@ -52,6 +52,16 @@ class SinglePlaylistTransferTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "2500"):
             transform(SAMPLE, "YEDEKLER", "ANA", [1] * 2501, sha(SAMPLE))
 
+    def test_exact_url_manifest_prevents_stale_ordinals(self):
+        with self.assertRaisesRegex(ValueError, "manifest mismatch"):
+            transform(SAMPLE, "YEDEKLER", "ANA", [1], sha(SAMPLE),
+                      expected_urls=["https://example.org/2"])
+        output, report = transform(SAMPLE, "YEDEKLER", "ANA", [1], sha(SAMPLE),
+                                   expected_urls=["https://example.org/1"])
+        self.assertEqual(report["moved"], 1)
+        self.assertEqual(len(report["selected_urls_sha256"]), 64)
+        self.assertEqual(len(parse(output)[1]), len(parse(SAMPLE)[1]))
+
     def test_inclusive_range_math(self):
         self.assertEqual(len(list(range(112, 486 + 1))), 375)
 
