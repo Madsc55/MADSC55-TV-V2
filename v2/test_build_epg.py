@@ -22,6 +22,15 @@ class EPGBuilderMatchingTests(unittest.TestCase):
         self.names[norm("Unique Station")].add("unique.tr")
         self.schedules = {"channel.tr": [1, 2, 3], "channel.az": [1], "unique.tr": [1]}
 
+    def test_download_rejects_insecure_or_credentialed_xmltv_sources(self):
+        with patch.object(build_epg.urllib.request, "build_opener") as opener:
+            for url in ("http://example.org/epg.xml",
+                        "https://user:pass@example.org/epg.xml",
+                        "https://example.org\\epg.xml"):
+                with self.subTest(url=url), self.assertRaises(ValueError):
+                    download(url)
+            opener.assert_not_called()
+
     def test_candidate_epg_is_separate_and_preserves_protected_epg(self):
         with tempfile.TemporaryDirectory() as d:
             root = Path(d)
