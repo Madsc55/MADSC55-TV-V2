@@ -65,7 +65,11 @@ def integrate(reports=REPORTS):
         try:
             data = json.loads(Path(path).read_text(encoding="utf-8"))
             for item in normalize(source, data):
-                records[item["source_id"]] = item
+                source_id = item["source_id"]
+                if source_id not in records:
+                    records[source_id] = {**item, "discovered_in": [source]}
+                elif source not in records[source_id]["discovered_in"]:
+                    records[source_id]["discovered_in"].append(source)
         except (OSError, ValueError, TypeError, KeyError) as exc:
             errors.append({"source": source, "error": type(exc).__name__})
     return {"policy": "CANDIDATES_ONLY_NO_PLAYLIST_WRITES", "candidates": list(records.values()),
