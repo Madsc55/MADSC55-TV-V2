@@ -181,6 +181,25 @@ class SinglePlaylistTransferTests(unittest.TestCase):
             self.assertEqual(report["counts_after"]["ANA"], 0)
             self.assertEqual(len(read_journal(root / "journal")["operations"]), 1)
 
+    def test_existing_1792_channels_block_new_package(self):
+        entries = ["#EXTM3U\\n"]
+        for i in range(1792):
+            entries.append(f'#EXTINF:-1 group-title="YEDEKLER",Channel {i}\\nhttps://example.org/{i}\\n')
+        entries.append('#EXTINF:-1 group-title="ANA ARŞİV",Next\\nhttps://example.org/next\\n')
+        raw = "".join(entries).encode()
+        self.assertEqual(inventory(raw)["YEDEKLER"], 1792)
+        self.assertEqual(inventory(raw)["ANA"], 1)
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            playlist = root / "MADSC55_TV_IBO_CALISANLAR_TEST.m3u8"
+            playlist.write_bytes(raw)
+            with self.assertRaisesRegex(ValueError, "must be empty"):
+                advance_next_package(playlist, root / "backup", root / "journal",
+                                     "blocked-next", sha(raw))
+            self.assertEqual(playlist.read_bytes(), raw)
+            self.assertFalse((root / "backup").exists())
+            self.assertFalse((root / "journal").exists())
+
     def test_inclusive_range_math(self):
         self.assertEqual(len(list(range(112, 486 + 1))), 375)
 
