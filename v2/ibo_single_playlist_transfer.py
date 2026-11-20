@@ -142,7 +142,7 @@ def inventory(raw):
     counts = {key: 0 for key in ARCHIVE_NAMES}
     other = 0
     for block in blocks:
-        key = category(block.split("\\n", 1)[0])
+        key = category(block.split("\n", 1)[0])
         if key is None:
             other += 1
         else:
