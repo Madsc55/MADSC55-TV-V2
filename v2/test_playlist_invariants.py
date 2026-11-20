@@ -40,7 +40,7 @@ def main():
         assert current.startswith(base), "Original canonical records changed"
         assert len(list(entries(base.decode("utf-8-sig")))) == 2630
         historical = subprocess.check_output(
-            ["git", "show", "d5291424da8c273d48395b0c261feb87ae1ebf72:MADSC55_TV_IBO_CALISANLAR_TEST.m3u8"],
+            ["git", "cat-file", "blob", "d5291424da8c273d48395b0c261feb87ae1ebf72"],
             cwd=ROOT,
         )
         historical_rows = list(entries(historical.decode("utf-8-sig")))
