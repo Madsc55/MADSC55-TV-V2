@@ -6,7 +6,7 @@ import urllib.error
 import urllib.request
 from discover import ROOT, LIVE, entries
 
-IBO = "https://raw.githubusercontent.com/Madsc55/Madsc55-Tv/main/MADSC55_TV_IBO_CALISANLAR_TEST.m3u8"
+IBO = "https://raw.githubusercontent.com/Madsc55/MADSC55-TV-V2/main/MADSC55_TV_IBO_CALISANLAR_TEST.m3u8"
 OUT = ROOT / "v2/reports/ibo-parity.json"
 LEGACY_REFERENCE = "https://raw.githubusercontent.com/Madsc55/madsc-tv/main/CALISANLAR.m3u"
 
