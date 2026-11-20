@@ -24,9 +24,10 @@ def main():
             old = list(entries(ibo.decode("utf-8-sig")))
             new = list(entries(v2.decode("utf-8-sig")))
             old_urls = {e["url"] for e in old}
+            new_urls = {e["url"] for e in new}
             added = [e for e in new if e["url"] not in old_urls]
             result.update({"ibo_entries": len(old), "ibo_sha256": hashlib.sha256(ibo).hexdigest(),
-                           "missing_old_urls_in_v2": sum(e["url"] not in {n["url"] for n in new} for e in old),
+                           "missing_old_urls_in_v2": sum(e["url"] not in new_urls for e in old),
                            "new_v2_entries_by_url": len(added),
                            "new_v2_names": [e["name"] for e in added][:30],
                            "status": "IDENTICAL" if ibo == v2 else "DIFFERENT_REVIEW_REQUIRED"})
