@@ -40,7 +40,9 @@ class LiveContractRetryTests(unittest.TestCase):
                 result = probe(source, fetch=lambda _, p=payload: p,
                                sleep=lambda _: self.fail("unexpected retry"))
                 self.assertEqual(result["status"], "error")
-                self.assertEqual(result["reason"], "ValueError")
+                self.assertEqual(result["reason"],
+                                 "provider_throttled_response" if source == "github"
+                                 else "ValueError")
                 self.assertEqual(result["attempts"], 1)
 
     def test_http_200_throttle_envelope_opens_provider_circuit(self):
