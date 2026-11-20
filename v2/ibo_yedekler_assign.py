@@ -67,6 +67,9 @@ def plan(ledger, records, start, end, target):
 def commit(ledger, changes, expected_revision):
     if ledger["revision"] != expected_revision:
         raise ValueError("Stale revision")
+    # Replaying an already-applied assignment must not create a new revision.
+    if not changes:
+        return json.loads(json.dumps(ledger))
     result = json.loads(json.dumps(ledger))
     for change in changes:
         key = str(change["local_ordinal"])
@@ -130,9 +133,11 @@ def main():
                    "revision": updated["revision"]}
     summary.update({"source_sha256": source_sha, "source_modified": False,
                     "other_categories_modified": False})
-    if args.apply:
+    if args.apply and updated["revision"] != ledger["revision"]:
         atomic_new(args.output, (json.dumps(updated, ensure_ascii=False, indent=2) + "\n").encode())
         summary["ledger_written"] = str(args.output)
+    elif args.apply:
+        summary["already_applied"] = True
     else:
         summary["dry_run"] = True
     print(json.dumps(summary, ensure_ascii=False))
