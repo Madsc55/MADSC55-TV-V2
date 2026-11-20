@@ -28,6 +28,20 @@ class IntegrationTests(unittest.TestCase):
         self.assertEqual(youtube["status"], "LIVE_METADATA_VERIFIED")
         self.assertEqual(youtube["region"], "WORLD")
 
+    def test_duplicate_source_identity_retains_provenance_and_first_record(self):
+        with tempfile.TemporaryDirectory() as d:
+            first = Path(d) / "configured.json"
+            second = Path(d) / "discovered.json"
+            url = "https://example.org/shared.m3u"
+            first.write_text(json.dumps({"sources": [{"kind": "m3u", "url": url}]}))
+            second.write_text(json.dumps({"sources": [{
+                "status": "SOURCE_PARSED_STREAMS_NOT_PLAYBACK_VERIFIED", "url": url}]}))
+            result = integrate({"m3u": first, "gitlab_m3u": second})
+            self.assertEqual(result["errors"], [])
+            self.assertEqual(len(result["candidates"]), 1)
+            self.assertEqual(result["candidates"][0]["discovered_in"], ["m3u", "gitlab_m3u"])
+            self.assertFalse(result["candidates"][0]["verified_av"])
+
     def test_integrated_and_deduplicated(self):
         with tempfile.TemporaryDirectory() as d:
             reports = {}
