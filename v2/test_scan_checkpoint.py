@@ -165,10 +165,9 @@ class ScanCheckpointTests(unittest.TestCase):
             }, {})
         row = checkpoint_row(self.url, self.good, {})
         row["url_sha256"] = "0" * 64
-        save_progress(self.path, self.secret, worldwide=True,
-                      rows={self.url: row})
         with self.assertRaises(ValueError):
-            load_progress(self.path, self.secret, worldwide=True)
+            save_progress(self.path, self.secret, worldwide=True,
+                          rows={self.url: row})
 
     def test_missing_progress_falls_back_to_new_scan_and_protected_baseline_stays(self):
         self.assertEqual(load_progress(
@@ -193,9 +192,27 @@ class ScanCheckpointTests(unittest.TestCase):
         self.assertEqual(load_progress(self.path, self.secret, worldwide=True)[
             self.url]["recovery_attempts"], 2)
         row["recovery_attempts"] = 4
-        save_progress(self.path, self.secret, worldwide=True, rows={self.url: row})
         with self.assertRaises(ValueError):
-            load_progress(self.path, self.secret, worldwide=True)
+            save_progress(self.path, self.secret, worldwide=True, rows={self.url: row})
+        self.assertEqual(load_progress(self.path, self.secret, worldwide=True)[
+            self.url]["recovery_attempts"], 2)
+
+    def test_invalid_save_preserves_previous_encrypted_checkpoint(self):
+        row = checkpoint_row(self.url, self.good, {})
+        save_progress(self.path, self.secret, worldwide=True, rows={self.url: row})
+        original = self.path.read_bytes()
+        invalid = dict(row)
+        invalid["url_sha256"] = "0" * 64
+        for bad_rows, scope in (
+            ({self.url: invalid}, True),
+            ({"https://example.org/other.m3u8": row}, True),
+            ({self.url: row}, "true"),
+        ):
+            with self.subTest(scope=scope, rows=list(bad_rows)):
+                with self.assertRaises(ValueError):
+                    save_progress(self.path, self.secret, worldwide=scope, rows=bad_rows)
+                self.assertEqual(self.path.read_bytes(), original)
+        self.assertEqual(len(load_progress(self.path, self.secret, worldwide=True)), 1)
 
     def test_symlinked_checkpoint_is_refused(self):
         target = self.root / "protected.m3u8"

@@ -109,9 +109,22 @@ def save_progress(path, passphrase, *, worldwide, rows):
         raise ValueError("Only the dedicated scan checkpoint may be replaced")
     if path.is_symlink():
         raise ValueError("Symlinked scan checkpoint refused")
-    if len(rows) > MAX_ROWS:
-        raise ValueError("Checkpoint observation count exceeds limit")
-    payload = {"schema": SCHEMA, "worldwide": bool(worldwide),
+    if type(worldwide) is not bool:
+        raise ValueError("Checkpoint scope must be boolean")
+    if not isinstance(rows, dict) or len(rows) > MAX_ROWS:
+        raise ValueError("Invalid checkpoint observation collection")
+    for url, item in rows.items():
+        if not isinstance(item, dict) or item.get("url") != url:
+            raise ValueError("Checkpoint key and URL must match")
+        if (not isinstance(url, str) or url_sha256(url) != item.get("url_sha256")
+                or type(item.get("checked_at")) not in (int, float)
+                or not math.isfinite(item["checked_at"])
+                or not isinstance(item.get("diagnostics"), dict)
+                or not _valid_result(item.get("result"))
+                or type(item.get("recovery_attempts", 0)) is not int
+                or not 0 <= item.get("recovery_attempts", 0) <= 3):
+            raise ValueError("Invalid checkpoint observation")
+    payload = {"schema": SCHEMA, "worldwide": worldwide,
                "rows": list(rows.values())}
     encrypted = encrypt((json.dumps(payload, ensure_ascii=False,
                                     separators=(",", ":")) + "\n").encode(), passphrase)
