@@ -1,3 +1,12 @@
+## 20 Kasım 2026 — Öncelik 1 sistem altyapısı devir notu (tekrar yapmayın)
+
+- **Kod ve otomatik test aşaması tamamlandı:** GitHub Actions, Production Security Gate, hata yönetimi, şifreli checkpoint veri kaybı koruması ve otomatik devam mekanizması. PR #503, #504 ve #505 ana dala birleştirildi.
+- **Ana dal doğrulaması:** commit `0f59ccf3f471566c4d661ec290b92c0e7d29f889`; zorunlu `Verify suspended publishers, no cron and immutable IBO` kontrolü **SUCCESS**, Actions run [44732206559](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44732206559). Ana dal koruması aktif.
+- **Kesinti kanıtı:** PR #505 ile atomik şifreli checkpoint değişimi sırasında simüle edilmiş işletim sistemi hatası, önceki sağlam kaydın korunması/geri okunması ve geçici dosya temizliği çevrimdışı test edildi. **Gerçek üretim kesintisi/kurtarma tatbikatı yapılmadı; operasyonel kabulde açık bırak.** Bu testi gerçek üretim doğrulaması olarak sunma.
+- **Geçmiş başarısız Actions testleri:** PR #498'in önceki güvenlik ve arşiv kabul çalışmaları FAILURE verdi; son PR HEAD `a6d09584` için güvenlik [44733948243](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44733948243) ve arşiv çevrimdışı kabul [44733948237](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44733948237) SUCCESS. **#498 bu not tarihinde açık PR; ana dala geçmiş sayma.**
+- **Sonraki iş:** Öncelik 2, GitHub #489 / PR #498: tek ana playlist içinde YEDEKLER ↔ ANA ARŞİV ↔ TURK/YABANCI aktarımını ve kabulünü tamamla. Başarılı zorunlu test olmadan merge yapma; ana playlist dışı yeni playlist oluşturma.
+- **Sınırlar:** Yeni kanal araması ve gerçek AV taraması altyapı sonrası son faza bırakıldı. Ana İBO playlisti, mevcut kategoriler, 48 engelli kanal ve arşiv verileri bu öncelik 1 çalışmasında değiştirilmedi. Yapılmış işleri tekrar etme.
+
 ## 20 Kasım 2026 — YEDEKLER ve arşiv işlem geçmişi
 
 [#492](https://github.com/Madsc55/MADSC55-TV-V2/pull/492), [#493](https://github.com/Madsc55/MADSC55-TV-V2/pull/493) ve [#494](https://github.com/Madsc55/MADSC55-TV-V2/pull/494) öncesi ve sonrası yayın adresleri karşılaştırıldı. İşlem defterine ilk 74 taşıma eklendi. İkinci taşımadaki 85 kayıttan 11'inin özgün kaynak sırası düzeltildi. Son 125 taşıma doğruydu. 18.074 özgün yayının her biri tek bir hedefle eşleşiyor. YEDEKLER'de 1.792, TÜRK ARŞİVİ'nde 424, YABANCI ARŞİV'de 284 ve ANA ARŞİV'de 15.574 kanal var. Bu düzeltme yalnız işlem defterini ve onu doğrulayan kodu güncelledi.
