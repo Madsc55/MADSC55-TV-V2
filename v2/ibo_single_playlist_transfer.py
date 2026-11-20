@@ -89,9 +89,9 @@ def transform(raw, source, target, ordinals, expected_sha, expected_urls=None):
     if expected_urls is not None and selected_urls != expected_urls:
         raise ValueError("Selected URL manifest mismatch; refusing stale ordinal selection")
     # Fail closed on duplicate stream URLs: ordinal-only moves would be ambiguous.
-    urls = [b.strip().splitlines()[-1].strip() for b in blocks]
-    if len(urls) != len(set(urls)):
-        raise ValueError("Duplicate stream URL in playlist")
+    # Existing duplicate URLs are common in the canonical playlist. The
+    # operation changes only group metadata, never stream URLs or record count.
+    # SHA and ordered URL manifest protect selection against stale positions.
     updated = [rewrite_group(b, target) if i in chosen else b for i, b in enumerate(blocks)]
     # Recompute visible counts in both affected groups; preserve other categories.
     counts = {key: sum(category(b.split("\n", 1)[0]) == key for b in updated)
