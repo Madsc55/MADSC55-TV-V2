@@ -169,6 +169,23 @@ class Discovery34Tests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "Invalid completed-query"):
                 load_resume(path, plan)
 
+    def test_resume_rejects_duplicate_source_identities(self):
+        import json
+        import tempfile
+        from pathlib import Path
+        from discovery_34 import QUERIES, REPOSITORY_SOURCES, load_resume, identity
+        plan = {source: list(QUERIES) for source in REPOSITORY_SOURCES}
+        candidate = identity("github", "https://github.com/example/playlist")
+        report = {"mode": "network", "av_verified": 0,
+                  "candidates": [candidate, dict(candidate)], "errors": [],
+                  "query_plan": plan,
+                  "completed_queries": {source: [] for source in plan}}
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "resume.json"
+            path.write_text(json.dumps(report))
+            with self.assertRaisesRegex(ValueError, "Duplicate candidate identity"):
+                load_resume(path, plan)
+
     def test_resume_rejects_query_plan_drift(self):
         import json
         import tempfile

@@ -177,6 +177,7 @@ def load_resume(path, plan):
     if "query_plan" in report and report["query_plan"] != plan:
         raise ValueError("Resume query plan differs from current discovery plan")
     candidates, failures, cooldowns = [], set(), {}
+    seen_candidate_ids = set()
     for item in report["candidates"]:
         if (not isinstance(item, dict) or item.get("source") not in REPOSITORY_SOURCES
                 or item.get("verified_av") is not False):
@@ -184,6 +185,9 @@ def load_resume(path, plan):
         record = identity(item["source"], item.get("url"))
         if record["source_id"] != item.get("source_id"):
             raise ValueError("Candidate identity changed in resume report")
+        if record["source_id"] in seen_candidate_ids:
+            raise ValueError("Duplicate candidate identity in resume report")
+        seen_candidate_ids.add(record["source_id"])
         candidates.append(record)
     for error in report["errors"]:
         if (not isinstance(error, dict) or error.get("source") not in REPOSITORY_SOURCES
