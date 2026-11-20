@@ -1,10 +1,11 @@
 import hashlib
 import unittest
 import tempfile
+import json
 from pathlib import Path
 from ibo_archive_operation_ledger import read as read_journal
 
-from ibo_single_playlist_transfer import parse, transform, sha, category, inventory, restore_exact, apply_with_journal
+from ibo_single_playlist_transfer import parse, transform, sha, category, inventory, restore_exact, apply_with_journal, _recover_pending
 
 SAMPLE = ('#EXTM3U\n'
           '#EXTINF:-1 group-title="⭐ FAVORİLER (1)",Favorite\nhttps://example.org/f\n'
@@ -94,6 +95,38 @@ class SinglePlaylistTransferTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "changed"):
                 apply_with_journal(playlist, SAMPLE, output, root / "backup2", journal,
                                    "batch-1", report)
+
+    def test_interrupted_publish_recovers_ledger(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            playlist = root / "main.m3u8"
+            journal = root / "ledger.json"
+            pending = root / "ledger.json.pending"
+            output, report = transform(SAMPLE, "YEDEKLER", "ANA", [1], sha(SAMPLE))
+            operation = {**report, "operation_id": "interrupted-1"}
+            playlist.write_bytes(output)
+            pending.write_text(json.dumps({"initial_sha256": sha(SAMPLE),
+                                           "operation": operation}), encoding="utf-8")
+            _recover_pending(playlist, journal)
+            self.assertEqual(len(read_journal(journal)["operations"]), 1)
+            self.assertFalse(pending.exists())
+            self.assertEqual(playlist.read_bytes(), output)
+
+    def test_interrupted_before_publish_discards_pending(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            playlist = root / "main.m3u8"
+            journal = root / "ledger.json"
+            pending = root / "ledger.json.pending"
+            output, report = transform(SAMPLE, "YEDEKLER", "ANA", [1], sha(SAMPLE))
+            playlist.write_bytes(SAMPLE)
+            pending.write_text(json.dumps({"initial_sha256": sha(SAMPLE),
+                                           "operation": {**report, "operation_id": "not-published"}}),
+                               encoding="utf-8")
+            _recover_pending(playlist, journal)
+            self.assertFalse(pending.exists())
+            self.assertFalse(journal.exists())
+            self.assertEqual(playlist.read_bytes(), SAMPLE)
 
     def test_inclusive_range_math(self):
         self.assertEqual(len(list(range(112, 486 + 1))), 375)
