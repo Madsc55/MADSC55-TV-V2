@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """Grouped no-network tests for GitHub main safety lock."""
 import unittest
-from main_actions_security_gate import audit_one,GATE,WRITER_SUSPENDED,preserves_record_multiplicity
+import tempfile
+from pathlib import Path
+from main_actions_security_gate import audit, audit_one,GATE,WRITER_SUSPENDED,preserves_record_multiplicity
 
 def fixture(events="  workflow_dispatch:\n", perms="  contents: read\n",
             job="    runs-on: ubuntu-latest\n    steps:\n      - run: echo safe\n"):
@@ -40,6 +42,18 @@ class MainActionsGateTests(unittest.TestCase):
         self.assertFalse(preserves_record_multiplicity(original, [b"duplicate", b"single"]))
         self.assertTrue(preserves_record_multiplicity(original, original))
         self.assertTrue(preserves_record_multiplicity(original, original + [b"new"]))
+    def test_symlinked_workflow_rejected_before_parsing(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            folder = root / '.github' / 'workflows'
+            folder.mkdir(parents=True)
+            target = root / 'safe.yml'
+            target.write_text(fixture(), encoding='utf-8')
+            (folder / 'v2-world-discovery.yml').symlink_to(target)
+            report = audit(root)
+            self.assertEqual(report['errors']['v2-world-discovery.yml'],
+                             ['SYMLINK_WORKFLOW_FORBIDDEN'])
+
     def test_invalid_yaml_rejected(self):
         self.assertIn("UNPARSEABLE_YAML",audit_one("v2-world-discovery.yml","on: [bad"))
 if __name__=="__main__":
