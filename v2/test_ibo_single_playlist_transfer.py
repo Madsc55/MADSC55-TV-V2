@@ -1,7 +1,7 @@
 import hashlib
 import unittest
 
-from ibo_single_playlist_transfer import parse, transform, sha, category
+from ibo_single_playlist_transfer import parse, transform, sha, category, inventory, restore_exact
 
 SAMPLE = ('#EXTM3U\n'
           '#EXTINF:-1 group-title="⭐ FAVORİLER (1)",Favorite\nhttps://example.org/f\n'
@@ -61,6 +61,20 @@ class SinglePlaylistTransferTests(unittest.TestCase):
         self.assertEqual(report["moved"], 1)
         self.assertEqual(len(report["selected_urls_sha256"]), 64)
         self.assertEqual(len(parse(output)[1]), len(parse(SAMPLE)[1]))
+
+    def test_full_inventory_parity_and_exact_rollback(self):
+        output, report = transform(SAMPLE, "YEDEKLER", "ANA", [1, 3], sha(SAMPLE))
+        self.assertEqual(report["counts_before"]["YEDEKLER"], 3)
+        self.assertEqual(report["counts_after"]["YEDEKLER"], 1)
+        self.assertEqual(report["counts_after"]["ANA"], 2)
+        self.assertEqual(report["counts_after"]["OTHER"], 1)
+        self.assertEqual(report["counts_after"]["TOTAL"], 4)
+        self.assertEqual(restore_exact(output, SAMPLE, sha(output), sha(SAMPLE)), SAMPLE)
+
+    def test_rollback_rejects_intervening_changes(self):
+        output, _ = transform(SAMPLE, "YEDEKLER", "TURK", [1], sha(SAMPLE))
+        with self.assertRaisesRegex(ValueError, "SHA"):
+            restore_exact(output + b"\\n", SAMPLE, sha(output), sha(SAMPLE))
 
     def test_inclusive_range_math(self):
         self.assertEqual(len(list(range(112, 486 + 1))), 375)
