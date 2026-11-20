@@ -10,10 +10,11 @@ import pathlib
 import re
 import unicodedata
 import urllib.request
+import urllib.parse
 import xml.etree.ElementTree as ET
 from collections import Counter, defaultdict
 from datetime import datetime, timedelta, timezone
-from epg_integrity import parse_xmltv_time
+from epg_integrity import parse_xmltv_time, _NoRedirect
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 PLAYLIST = ROOT / "MADSC55_TV_IBO_CALISANLAR_TEST.m3u8"
@@ -30,8 +31,14 @@ def attr(line, key):
     return match.group(1) if match else ""
 
 def download(url):
+    if not isinstance(url, str) or "\\" in url:
+        raise ValueError("invalid XMLTV source URL")
+    parts = urllib.parse.urlsplit(url)
+    if (parts.scheme != "https" or not parts.hostname
+            or parts.username is not None or parts.password is not None):
+        raise ValueError("XMLTV source must be HTTPS without credentials")
     req = urllib.request.Request(url, headers={"User-Agent": "MADSC55-TV-V2-EPG/2"})
-    with urllib.request.urlopen(req, timeout=90) as response:
+    with urllib.request.build_opener(_NoRedirect).open(req, timeout=90) as response:
         data = response.read(120_000_001)
     if len(data) > 120_000_000:
         raise ValueError("compressed feed too large")
