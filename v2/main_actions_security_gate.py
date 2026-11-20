@@ -94,6 +94,7 @@ def audit_one(filename,source):
                 "v2/ibo_archive_operation_ledger.py",
                 "v2/test_ibo_archive_operation_ledger.py",
                 "v2/test_ibo_single_playlist_transfer.py",
+                "v2/test_ibo_single_playlist_real_data.py",
                 ".github/workflows/ibo-single-playlist-transfer-offline.yml",
             }:
                 problems.append("OFFLINE_TEST_PATHS_CHANGED")
