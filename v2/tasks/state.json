@@ -589,5 +589,15 @@
     "blocked",
     "completed"
   ],
-  "note": "Derived task ledger, not independent source of truth. Root state.json is canonical; this snapshot must be reconciled by hash/commit before mutation. No task completed without evidence. Imported unchanged task statuses from madsc/v2-discovery-bulk-20261031 on 2026-11-13; generated_at and observed_commit are historical. Later CI evidence is recorded in DEVAM_NOTU.md; no task status is automatically promoted by this import."
+  "note": "Derived task ledger, not independent source of truth. Root state.json is canonical; this snapshot must be reconciled by hash/commit before mutation. No task completed without evidence. Imported unchanged task statuses from madsc/v2-discovery-bulk-20261031 on 2026-11-13; generated_at and observed_commit are historical. Later CI evidence is recorded in DEVAM_NOTU.md; no task status is automatically promoted by this import.",
+  "yedekler_reconciliation_20261120": {
+    "verified_against": "ad8425cde626f5b3496a15d265aab297d41e2aa5",
+    "batch_ledger": "v2/yedekler_batch/state.json",
+    "recorded_foreign_moves": [
+      74,
+      85,
+      125
+    ],
+    "source_records": 18074
+  }
 }
