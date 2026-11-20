@@ -1,7 +1,10 @@
 import hashlib
 import unittest
+import tempfile
+from pathlib import Path
+from ibo_archive_operation_ledger import read as read_journal
 
-from ibo_single_playlist_transfer import parse, transform, sha, category, inventory, restore_exact
+from ibo_single_playlist_transfer import parse, transform, sha, category, inventory, restore_exact, apply_with_journal
 
 SAMPLE = ('#EXTM3U\n'
           '#EXTINF:-1 group-title="⭐ FAVORİLER (1)",Favorite\nhttps://example.org/f\n'
@@ -75,6 +78,22 @@ class SinglePlaylistTransferTests(unittest.TestCase):
         output, _ = transform(SAMPLE, "YEDEKLER", "TURK", [1], sha(SAMPLE))
         with self.assertRaisesRegex(ValueError, "SHA"):
             restore_exact(output + b"\\n", SAMPLE, sha(output), sha(SAMPLE))
+
+    def test_persisted_apply_and_duplicate_operation_rejected(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            playlist = root / "main.m3u8"
+            backup = root / "backup.m3u8"
+            journal = root / "ledger.json"
+            playlist.write_bytes(SAMPLE)
+            output, report = transform(SAMPLE, "YEDEKLER", "ANA", [1], sha(SAMPLE))
+            apply_with_journal(playlist, SAMPLE, output, backup, journal, "batch-1", report)
+            self.assertEqual(playlist.read_bytes(), output)
+            self.assertEqual(backup.read_bytes(), SAMPLE)
+            self.assertEqual(len(read_journal(journal)["operations"]), 1)
+            with self.assertRaisesRegex(ValueError, "changed"):
+                apply_with_journal(playlist, SAMPLE, output, root / "backup2", journal,
+                                   "batch-1", report)
 
     def test_inclusive_range_math(self):
         self.assertEqual(len(list(range(112, 486 + 1))), 375)
