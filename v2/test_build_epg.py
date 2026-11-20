@@ -242,7 +242,8 @@ class EPGBuilderMatchingTests(unittest.TestCase):
 
     def test_xmltv_dtd_and_internal_entities_are_rejected(self):
         malicious = b'<!DOCTYPE tv [<!ENTITY fake "broadcast">]><tv></tv>'
-        with patch("build_epg.urllib.request.urlopen", return_value=io.BytesIO(malicious)):
+        with patch("build_epg.urllib.request.build_opener") as opener:
+            opener.return_value.open.return_value.__enter__.return_value = io.BytesIO(malicious)
             with self.assertRaisesRegex(ValueError, "DTD"):
                 download("https://epg.example.net/guide.xml")
 
