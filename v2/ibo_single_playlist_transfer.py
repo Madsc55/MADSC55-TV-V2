@@ -244,6 +244,8 @@ def _recover_pending(path, journal_path):
     if operation["operation_id"] in {x["operation_id"] for x in ledger["operations"]}:
         if head != operation["after_sha256"]:
             raise ValueError("Pending operation journal mismatch")
+        if sha(path.read_bytes()) != operation["after_sha256"]:
+            raise ValueError("Pending journal playlist SHA mismatch")
     else:
         if head != operation["before_sha256"]:
             raise ValueError("Pending journal chain mismatch")
