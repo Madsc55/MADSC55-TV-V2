@@ -17,6 +17,7 @@ from pathlib import Path
 from export_ibo_batches import render, valid_stream_url
 from secure_archive import decrypt
 
+MAX_ZIP_MEMBERS = 10000
 MAX_ZIP_MEMBER_BYTES = 64 * 1024 * 1024
 MAX_ZIP_TOTAL_BYTES = 256 * 1024 * 1024
 
@@ -35,6 +36,8 @@ def verify(path, secret):
     errors = []
     with zipfile.ZipFile(path) as archive:
         members = archive.infolist()
+        if len(members) > MAX_ZIP_MEMBERS:
+            raise ValueError("ZIP evidence exceeds member count budget")
         if (any(member.file_size > MAX_ZIP_MEMBER_BYTES for member in members)
                 or sum(member.file_size for member in members) > MAX_ZIP_TOTAL_BYTES):
             raise ValueError("ZIP uncompressed evidence exceeds bounded verification budget")

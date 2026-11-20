@@ -65,6 +65,13 @@ class StageBPackageGateTests(unittest.TestCase):
         self.assertEqual(result["result"], "FAIL")
         self.assertTrue(any("No independently eligible" in error for error in result["errors"]))
 
+    def test_excess_zip_members_fail_before_decompression(self):
+        from unittest.mock import patch
+        self.build()
+        with patch("verify_ibo_package_evidence.MAX_ZIP_MEMBERS", 3):
+            with self.assertRaisesRegex(ValueError, "member count budget"):
+                verify(self.path, SECRET)
+
     def test_oversized_zip_member_fails_before_decompression(self):
         from unittest.mock import patch
         self.build()
