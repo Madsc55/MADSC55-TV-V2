@@ -1,3 +1,12 @@
+## 21 Kasım 2026 — 8 aşamalı plan / Aşama 1 canlı CI denetimi
+
+- Denetlenen main: `0ecfb9b1cee91ca182bdd8318d958656e75a1538` (#548 merged: şifreli arşiv symlink-swap ve sınırsız okuma koruması). Production Security Gate `44836430233`: SUCCESS.
+- Önceki main `36c31ac05baab4fa2321e57b00493c6438a19a79`: Playlist Safety Invariants `44836309550` SUCCESS; Production Security Gate `44836309658` SUCCESS. `44835254385` ve `44835269839` da SUCCESS.
+- Tarihsel başarısız `44828876603`: `git cat-file blob 688f0b194b9106d6fdc593e5d7dc4a64c7e01b2c` bulunamadı. Daha yeni main playlist kapısı başarılı olduğundan eski run körlemesine yeniden çalıştırılmadı.
+- Açık PR'lar #547, #543, #535, #514, #507 ve diğer tarihsel PR'lar. #548 merged. Açık PR olması main CI hatası değildir; PR kabulü ayrı kalır.
+- Aşama 1: incelenen güncel main CI güvenlik kapıları SUCCESS; kanıtlanmış güncel main CI hatası yok. PR bazlı kabul ve bağımsız gerçek ortam doğrulaması tamamlanmış sayılmaz. Sonraki öncelik #489 arşiv kabulüdür.
+- Bu denetim kanıtı playlisti, 18.912 envanteri, kategorileri, 34 görev statüsünü değiştirmez; yeni tarama ve yeni playlist yoktur.
+
 ## 20 Kasım 2026 — #488 / #6 Türk yetkili yayın kasası devri
 
 - Birleştirilen PR'lar: #502 (Fernet şifreli kasa), #508 (URL ve restore bütünlüğü), #509 (mevcut secure_archive ile çevrimdışı yedek/geri yükleme kabul testi), #510 (özel dosya izinleri ve symlink reddi).
