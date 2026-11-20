@@ -5,7 +5,7 @@ import json
 from pathlib import Path
 from ibo_archive_operation_ledger import read as read_journal
 
-from ibo_single_playlist_transfer import parse, transform, sha, category, inventory, restore_exact, apply_with_journal, _recover_pending, plan_next_batch
+from ibo_single_playlist_transfer import parse, transform, sha, category, inventory, restore_exact, apply_with_journal, _recover_pending, plan_next_batch, rollback_last
 
 SAMPLE = ('#EXTM3U\n'
           '#EXTINF:-1 group-title="⭐ FAVORİLER (1)",Favorite\nhttps://example.org/f\n'
@@ -141,6 +141,23 @@ class SinglePlaylistTransferTests(unittest.TestCase):
     def test_batch_limit_rejected(self):
         with self.assertRaisesRegex(ValueError, "Invalid batch"):
             plan_next_batch(SAMPLE, "ANA", limit=2501)
+
+    def test_last_transfer_rollback_restores_exact_bytes(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            playlist = root / "MADSC55_TV_IBO_CALISANLAR_TEST.m3u8"
+            backup = root / "before.m3u8"
+            undo_backup = root / "undo-before.m3u8"
+            journal = root / "journal.json"
+            playlist.write_bytes(SAMPLE)
+            output, report = transform(SAMPLE, "YEDEKLER", "TURK", [2], sha(SAMPLE))
+            apply_with_journal(playlist, SAMPLE, output, backup, journal, "move-1", report)
+            rollback_last(playlist, backup, undo_backup, journal, "undo-1")
+            self.assertEqual(playlist.read_bytes(), SAMPLE)
+            self.assertEqual(undo_backup.read_bytes(), output)
+            self.assertEqual(len(read_journal(journal)["operations"]), 2)
+            with self.assertRaises(ValueError):
+                rollback_last(playlist, backup, root / "again", journal, "undo-2")
 
     def test_inclusive_range_math(self):
         self.assertEqual(len(list(range(112, 486 + 1))), 375)
