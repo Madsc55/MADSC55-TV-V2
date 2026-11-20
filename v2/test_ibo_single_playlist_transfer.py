@@ -182,10 +182,10 @@ class SinglePlaylistTransferTests(unittest.TestCase):
             self.assertEqual(len(read_journal(root / "journal")["operations"]), 1)
 
     def test_existing_1792_channels_block_new_package(self):
-        entries = ["#EXTM3U\\n"]
+        entries = ["#EXTM3U\n"]
         for i in range(1792):
-            entries.append(f'#EXTINF:-1 group-title="YEDEKLER",Channel {i}\\nhttps://example.org/{i}\\n')
-        entries.append('#EXTINF:-1 group-title="ANA ARŞİV",Next\\nhttps://example.org/next\\n')
+            entries.append(f'#EXTINF:-1 group-title="YEDEKLER",Channel {i}\nhttps://example.org/{i}\n')
+        entries.append('#EXTINF:-1 group-title="ANA ARŞİV",Next\nhttps://example.org/next\n')
         raw = "".join(entries).encode()
         self.assertEqual(inventory(raw)["YEDEKLER"], 1792)
         self.assertEqual(inventory(raw)["ANA"], 1)
