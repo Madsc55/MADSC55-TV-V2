@@ -56,6 +56,14 @@ class ExistingAuditAdapterTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             convert(self.raw, self.audit, 1234)
 
+    def test_claimed_counts_must_match_each_classification(self):
+        # A forged summary must not turn a recheck-required channel into verified.
+        self.audit["results"][1107]["classification"] = "WORKING"
+        self.audit["results"][1107]["status"] = "AV_VERIFIED"
+        self.audit["results"][1107]["decoded_av_verified"] = True
+        with self.assertRaises(ValueError):
+            convert(self.raw, self.audit, 1234)
+
     def test_invalid_run_id_fails_closed(self):
         with self.assertRaises(ValueError):
             convert(self.raw, self.audit, 0)
