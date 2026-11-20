@@ -8,6 +8,14 @@ def report(*rows):
                              for name, status, count in rows]}
 
 class SourceLossTests(unittest.TestCase):
+    def test_malformed_audit_schema_rejected(self):
+        for malformed in (None, [], {}, {"source_audit": None},
+                          {"source_audit": {}}, {"source_audit": [None]},
+                          {"source_audit": [{"source": ["invalid"]}]},
+                          {"source_audit": [{"source": "  "}]}):
+            with self.subTest(malformed=malformed), self.assertRaises(ValueError):
+                compare(malformed, report())
+
     def test_historical_large_source_drop(self):
         before = report(("iptv-org", "PARSED_NOT_PLAYBACK_VERIFIED", 11204),
                         ("free-tv", "PARSED_NOT_PLAYBACK_VERIFIED", 1347))
