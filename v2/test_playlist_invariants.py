@@ -34,7 +34,7 @@ def main():
             "YABANCI": 284, "OTHER": 838, "TOTAL": 18912,
         }, f"Archive inventory mismatch: {counts}"
         base = subprocess.check_output(
-            ["git", "show", "origin/main:MADSC55_TV_IBO_CALISANLAR_TEST.m3u8"],
+            ["git", "cat-file", "blob", "688f0b194b9106d6fdc593e5d7dc4a64c7e01b2c"],
             cwd=ROOT,
         )
         assert current.startswith(base), "Original canonical records changed"
