@@ -41,10 +41,19 @@ class _NoRedirect(urllib.request.HTTPRedirectHandler):
 
 
 def inspect(url, playlist_ids):
+    # Configured sources are untrusted: malformed values must not abort the
+    # entire feed audit or disclose a URL in the report.
+    if not isinstance(url, str):
+        return {"url_sha256": None, "status": "NON_HTTPS"}
     result = {"url_sha256": hashlib.sha256(url.encode()).hexdigest(), "status": "UNVERIFIED"}
-    parsed = urllib.parse.urlsplit(url)
-    if (parsed.scheme != "https" or not parsed.hostname or parsed.username
-            or parsed.password or "\\" in url):
+    try:
+        parsed = urllib.parse.urlsplit(url)
+        safe = (parsed.scheme == "https" and bool(parsed.hostname)
+                and not parsed.username and not parsed.password
+                and "\\" not in url)
+    except ValueError:
+        safe = False
+    if not safe:
         result["status"] = "NON_HTTPS"
         return result
     try:
