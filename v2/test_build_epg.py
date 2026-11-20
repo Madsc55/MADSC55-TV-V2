@@ -62,6 +62,18 @@ class EPGBuilderMatchingTests(unittest.TestCase):
                     build_epg.main()
                 self.assertEqual(candidate.read_bytes(), prior)
 
+    def test_programme_overlapping_window_start_is_retained(self):
+        start_limit = datetime(2026, 11, 20, 12, tzinfo=timezone.utc)
+        end_limit = start_limit + timedelta(days=1)
+        programme = ET.Element("programme", {
+            "start": "20261120113000 +0000",
+            "stop": "20261120123000 +0000",
+        })
+        ET.SubElement(programme, "title").text = "News"
+        self.assertTrue(programme_in_window(programme, start_limit, end_limit))
+        programme.set("stop", "20261120120000 +0000")
+        self.assertFalse(programme_in_window(programme, start_limit, end_limit))
+
     def test_name_only_epg_link_stays_review_hint_not_exact_id(self):
         with tempfile.TemporaryDirectory() as d:
             root = Path(d)
