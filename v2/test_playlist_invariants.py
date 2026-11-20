@@ -22,6 +22,54 @@ def main():
     current = LIVE.read_bytes()
     text = current.decode("utf-8-sig")
     channels_pre = list(entries(text))
+    if len(channels_pre) == 18912:
+        # #489: single canonical playlist now includes all four archive categories.
+        # Keep the former 2,630 records byte-identical and validate the 16,282
+        # recovered archive records against the immutable historical inventory.
+        from ibo_single_playlist_transfer import inventory, parse, sha, transform, restore_exact
+        import subprocess
+        counts = inventory(current)
+        assert counts == {
+            "YEDEKLER": 1792, "ANA": 15574, "TURK": 424,
+            "YABANCI": 284, "OTHER": 838, "TOTAL": 18912,
+        }, f"Archive inventory mismatch: {counts}"
+        base = subprocess.check_output(
+            ["git", "show", "origin/main:MADSC55_TV_IBO_CALISANLAR_TEST.m3u8"],
+            cwd=ROOT,
+        )
+        assert current.startswith(base), "Original canonical records changed"
+        assert len(list(entries(base.decode("utf-8-sig")))) == 2630
+        historical = subprocess.check_output(
+            ["git", "show", "d5291424da8c273d48395b0c261feb87ae1ebf72:MADSC55_TV_IBO_CALISANLAR_TEST.m3u8"],
+            cwd=ROOT,
+        )
+        historical_rows = list(entries(historical.decode("utf-8-sig")))
+        original_urls = {
+            row["url"] for row in historical_rows if "YEDEKLER" in row["group"]
+        }
+        actual_archive = [
+            row for row in channels_pre
+            if ("YEDEKLER" in row["group"] or "ARŞİV" in row["group"]
+                or "ARSIV" in row["group"])
+        ]
+        assert len(original_urls) == 18074, "Historical source inventory changed"
+        assert len(actual_archive) == 18074, "Archive record count mismatch"
+        assert {row["url"] for row in actual_archive} == original_urls, (
+            "Historical archive URL lost or duplicated"
+        )
+        assert all(row["url"].startswith(("http://", "https://"))
+                   for row in channels_pre), "Invalid stream URL"
+        # Read-only roundtrip on the real 18,912-record playlist.
+        moved, report = transform(current, "YEDEKLER", "TURK", [1], sha(current))
+        assert report["moved"] == 1
+        assert inventory(moved)["TOTAL"] == 18912
+        assert inventory(moved)["OTHER"] == 838
+        assert inventory(moved)["YEDEKLER"] == 1791
+        assert inventory(moved)["TURK"] == 425
+        assert restore_exact(moved, current, sha(moved), sha(current)) == current
+        assert LIVE.read_bytes() == current, "Acceptance test modified playlist"
+        print("PASS: #489 canonical 18912; 18074 archive; 838 protected; move/restore")
+        return
     assert len(channels_pre) == 2630, "Expected 838 protected channels and 1792 active backups"
     non_backup = [x for x in channels_pre if "YEDEKLER" not in x["group"]]
     foreign = list(entries((ROOT / "v2/yedekler_batch/YABANCI_ARSIV.m3u8").read_text(encoding="utf-8-sig")))
