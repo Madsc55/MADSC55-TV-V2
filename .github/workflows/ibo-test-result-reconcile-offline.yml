@@ -1,0 +1,26 @@
+name: IBO #497 offline report reconciliation
+on:
+  pull_request:
+    paths:
+      - 'v2/ibo_test_result_reconcile.py'
+      - 'v2/test_ibo_test_result_reconcile.py'
+      - '.github/workflows/ibo-test-result-reconcile-offline.yml'
+permissions:
+  contents: read
+jobs:
+  reconcile-tests:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate #497 offline reconciliation
+        run: |
+          python -m py_compile v2/ibo_test_result_reconcile.py v2/test_ibo_test_result_reconcile.py
+          PYTHONPATH=v2 python -m unittest -v test_ibo_test_result_reconcile
+      - name: Never modify canonical playlist in PR
+        run: git diff --exit-code -- MADSC55_TV_IBO_CALISANLAR_TEST.m3u8
