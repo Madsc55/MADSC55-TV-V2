@@ -315,6 +315,24 @@ def rollback_last(path, previous_backup, rollback_backup, journal_path, operatio
     return report
 
 
+def advance_next_package(path, backup, journal_path, operation_id, expected_sha):
+    """Fill YEDEKLER only after its prior package has been fully drained."""
+    raw = path.read_bytes()
+    if sha(raw) != expected_sha:
+        raise ValueError("Source SHA mismatch")
+    counts = inventory(raw)
+    if counts["YEDEKLER"] != 0:
+        raise ValueError("YEDEKLER must be empty before advancing the next package")
+    batch = plan_next_batch(raw, "ANA", 2500)
+    if not batch["expected_urls"]:
+        raise ValueError("ANA ARŞİV has no remaining package")
+    result, report = transform(raw, "ANA", "YEDEKLER",
+                               list(range(1, batch["end"] + 1)), sha(raw),
+                               expected_urls=batch["expected_urls"])
+    apply_with_journal(path, raw, result, backup, journal_path, operation_id, report)
+    return report
+
+
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("--playlist", type=Path, required=True)
@@ -330,7 +348,17 @@ def main():
     p.add_argument("--journal", type=Path)
     p.add_argument("--operation-id")
     p.add_argument("--rollback-last", type=Path, metavar="PREVIOUS_BACKUP")
+    p.add_argument("--advance-next", action="store_true")
     a = p.parse_args()
+    if a.advance_next:
+        if a.rollback_last is not None or not a.apply or a.backup is None or a.journal is None or not a.operation_id or not a.expected_sha256:
+            p.error("--advance-next requires --apply --backup --journal --operation-id --expected-sha256")
+        if a.playlist.name != "MADSC55_TV_IBO_CALISANLAR_TEST.m3u8":
+            p.error("Only the canonical main playlist can be modified")
+        print(json.dumps(advance_next_package(a.playlist, a.backup, a.journal,
+                                              a.operation_id, a.expected_sha256),
+                         ensure_ascii=False))
+        return
     if a.rollback_last is not None:
         if not a.apply or a.backup is None or a.journal is None or not a.operation_id:
             p.error("--rollback-last requires --apply --backup --journal --operation-id")
