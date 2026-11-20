@@ -3,6 +3,7 @@ import json
 import tempfile
 import time
 import unittest
+from unittest.mock import patch
 from pathlib import Path
 
 from scan_checkpoint import (
@@ -117,6 +118,23 @@ class ScanCheckpointTests(unittest.TestCase):
         self.assertIsNone(rows[second_url]["result"])
         self.assertEqual(rows[second_url]["diagnostics"]["last_http_status"], 404)
         self.assertEqual(rows[second_url]["recovery_attempts"], 2)
+
+    def test_interrupted_atomic_replace_keeps_last_good_snapshot(self):
+        original = checkpoint_row(self.url, self.good, {})
+        save_progress(self.path, self.secret, worldwide=True,
+                      rows={self.url: original})
+        before = self.path.read_bytes()
+        second_url = "https://example.org/new-failure.m3u8"
+        second = checkpoint_row(second_url, None, {"last_http_status": 503})
+        with patch("scan_checkpoint.os.replace", side_effect=OSError("simulated interruption")):
+            with self.assertRaisesRegex(OSError, "simulated interruption"):
+                save_progress(self.path, self.secret, worldwide=True,
+                              rows={self.url: original, second_url: second})
+        self.assertEqual(self.path.read_bytes(), before)
+        restored = load_progress(self.path, self.secret, worldwide=True)
+        self.assertEqual(list(restored), [self.url])
+        self.assertTrue(restored[self.url]["result"]["decoded_av_verified"])
+        self.assertEqual(list(self.root.glob(".v2-scan-progress-*")), [])
 
     def test_stale_observations_do_not_renew_themselves(self):
         now = time.time()
