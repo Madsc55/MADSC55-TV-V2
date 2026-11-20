@@ -3,6 +3,7 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+import stat
 from pathlib import Path
 import tempfile
 from datetime import datetime, timezone
@@ -34,6 +35,12 @@ class Vault:
         self.cipher = Fernet(key)
 
     def _read(self, path):
+        if path.is_symlink():
+            raise ValueError("Symlink vault source forbidden")
+        if path.exists():
+            mode = path.stat().st_mode
+            if not stat.S_ISREG(mode) or mode & 0o077:
+                raise ValueError("Vault must be a private regular file")
         if not path.exists():
             return {"version": VERSION, "entries": {}}
         raw = path.read_bytes()
@@ -100,8 +107,8 @@ class Vault:
         destination = Path(destination)
         if destination.exists() or destination.is_symlink():
             raise ValueError("Backup destination already exists")
-        data = self.path.read_bytes()
         self._read(self.path)
+        data = self.path.read_bytes()
         destination.parent.mkdir(parents=True, exist_ok=True)
         fd = os.open(destination, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
         with os.fdopen(fd, "wb") as stream:
@@ -111,7 +118,10 @@ class Vault:
         return _digest(data)
 
     def restore(self, source, expected_sha256):
-        raw = Path(source).read_bytes()
+        source = Path(source)
+        if source.is_symlink() or not source.is_file() or source.stat().st_mode & 0o077:
+            raise ValueError("Backup must be a private regular file")
+        raw = source.read_bytes()
         if _digest(raw) != expected_sha256:
             raise ValueError("Backup checksum mismatch")
         doc = self._read(Path(source))
