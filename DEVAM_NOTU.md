@@ -1,3 +1,11 @@
+## 21 Kasım 2026 — Aşama 3 / #497 eski sonuç artefaktı denetimi
+
+- #497 kabul şartları incelendi: mevcut Actions artefaktı, schema/version + SHA-256 doğrulaması, immutable channel ID + URL hash eşleştirme, çalışanı koruma, 685 belirsizi sınırlı retry kuyruğuna alma, idempotent karar defteri ve dry-run zorunlu.
+- Hedeflenen tarihsel dağılım issue ve geçmiş notlarda 1.107 çalışan + 685 ilk denemede belirsiz = 1.792 olarak belirtiliyor. Bu sayılar bu turda özgün kaynak artefaktından yeniden doğrulanamadı.
+- Depodaki mevcut `v2/reports` listesi incelendi. `task17-18-20-bounded-retry-20261118.json` başka görevlerin 15 URL/17 denemelik raporudur; #497'nin 1.792 kanal raporu değildir ve kesinlikle ikame edilmeyecek. Diğer keşif/örnek tarama raporları da #497 kaynağı değildir.
+- #497'nin istediği özgün Actions artefaktı + manifesti (run/artifact ID, schema/version, SHA-256, immutable channel ID, URL hash) bulunamadı. Bu yüzden 1.107 kayıt korunup 685 kayıt kuyruklandı şeklinde bir işlem yapılmadı; hiçbir kayıt sıralanmadı veya playlist değiştirilmedi.
+- Yeni toplu tarama yok. 48 engelli kayıt ve tek ana playlist kuralları korunuyor. Aşama 3 blokajı: özgün #497 rapor artefaktını Actions'tan bulup hash/şema doğrulamak; sonra sadece mevcut kanıtı işlemek.
+
 ## 21 Kasım 2026 — 8 aşamalı plan / Aşama 1 canlı CI denetimi
 
 - Denetlenen main: `0ecfb9b1cee91ca182bdd8318d958656e75a1538` (#548 merged: şifreli arşiv symlink-swap ve sınırsız okuma koruması). Production Security Gate `44836430233`: SUCCESS.
