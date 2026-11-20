@@ -5,8 +5,8 @@ Only accepts a complete, playlist-SHA-bound 1792-result report. Never changes
 the canonical playlist; output is an offline reconciliation preview and queue.
 """
 import argparse
-import hashlib
 import json
+from collections import Counter
 from pathlib import Path
 
 from ibo_single_playlist_transfer import category, parse
@@ -62,6 +62,9 @@ def convert(raw, audit, run_id):
             "reason": "decoded_av_verified" if working else "recheck_required",
             "source_timestamp_utc": audit.get("timestamp_utc"),
         })
+    actual_counts = Counter(item["classification"] for item in results)
+    if dict(actual_counts) != source_counts:
+        raise ValueError("Reported counts disagree with individual channel classifications")
     report = {"schema": 1, "playlist_sha256": digest(raw), "entries": entries}
     return report, report_hash
 
