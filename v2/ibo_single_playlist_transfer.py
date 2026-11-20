@@ -76,11 +76,17 @@ def transform(raw, source, target, ordinals, expected_sha):
         raise ValueError("Invalid category transition")
     prefix, blocks = parse(raw)
     indices = [i for i, b in enumerate(blocks) if category(b.split("\n", 1)[0]) == source]
+    if len(ordinals) > 2500:
+        raise ValueError("Selection exceeds 2500 entries")
     if not indices or not ordinals or len(ordinals) != len(set(ordinals)):
         raise ValueError("Empty/duplicate selection")
     if min(ordinals) < 1 or max(ordinals) > len(indices):
         raise ValueError("Ordinal outside source category")
     chosen = {indices[n - 1] for n in ordinals}
+    # Fail closed on duplicate stream URLs: ordinal-only moves would be ambiguous.
+    urls = [b.strip().splitlines()[-1].strip() for b in blocks]
+    if len(urls) != len(set(urls)):
+        raise ValueError("Duplicate stream URL in playlist")
     updated = [rewrite_group(b, target) if i in chosen else b for i, b in enumerate(blocks)]
     # Recompute visible counts in both affected groups; preserve other categories.
     counts = {key: sum(category(b.split("\n", 1)[0]) == key for b in updated)
