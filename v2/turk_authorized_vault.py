@@ -6,12 +6,24 @@ import os
 from pathlib import Path
 import tempfile
 from datetime import datetime, timezone
+from urllib.parse import urlsplit
 from cryptography.fernet import Fernet, InvalidToken
 
 VERSION = 1
 
 def _now():
     return datetime.now(timezone.utc).isoformat()
+
+def _valid_url(url):
+    if not isinstance(url, str) or any(ord(ch) < 33 or ord(ch) == 127 for ch in url):
+        return False
+    try:
+        parts = urlsplit(url)
+        return (parts.scheme in ("http", "https") and bool(parts.hostname)
+                and parts.username is None and parts.password is None
+                and parts.port != 0)
+    except ValueError:
+        return False
 
 def _digest(data):
     return hashlib.sha256(data).hexdigest()
@@ -31,6 +43,15 @@ class Vault:
             raise ValueError("Vault integrity or decryption failure") from exc
         if doc.get("version") != VERSION or not isinstance(doc.get("entries"), dict):
             raise ValueError("Unsupported vault format")
+        for channel_id, entry in doc["entries"].items():
+            if not isinstance(channel_id, str) or not isinstance(entry, dict):
+                raise ValueError("Invalid vault entry")
+            url = entry.get("url")
+            if (entry.get("authorized") is not True or entry.get("turkish") is not True
+                or not _valid_url(url) or entry.get("fingerprint") != _digest(url.encode())
+                or not isinstance(entry.get("history"), list)
+                or not isinstance(entry.get("provenance"), str)):
+                raise ValueError("Vault policy or fingerprint validation failure")
         return doc
 
     def read(self):
@@ -58,7 +79,7 @@ class Vault:
             raise ValueError("Only authorized Turkish channels are accepted")
         if not all(isinstance(x, str) and x.strip() for x in (channel_id, url, provenance)):
             raise ValueError("Missing required metadata")
-        if not url.startswith(("https://", "http://")):
+        if not _valid_url(url):
             raise ValueError("Only HTTP(S) URLs are accepted")
         doc = self.read()
         entries = doc["entries"]
@@ -94,7 +115,7 @@ class Vault:
         if _digest(raw) != expected_sha256:
             raise ValueError("Backup checksum mismatch")
         doc = self._read(Path(source))
-        if self.path.exists():
+        if self.path.exists() or self.path.is_symlink():
             raise ValueError("Refusing to overwrite existing vault")
         self._write(doc)
 
