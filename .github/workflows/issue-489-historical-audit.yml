@@ -1,5 +1,9 @@
 name: Issue 489 historical inventory audit
 on:
+  pull_request:
+    paths:
+      - 'v2/audit_489_historical_inventory.py'
+      - '.github/workflows/issue-489-historical-audit.yml'
   workflow_dispatch:
 permissions:
   contents: read
