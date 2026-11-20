@@ -293,21 +293,56 @@ def apply_with_journal(path, raw, output, backup, journal_path, operation_id, re
         pending_path.unlink()
 
 
+def rollback_last(path, previous_backup, rollback_backup, journal_path, operation_id):
+    """Undo only the most recent recorded transfer; never undo intervening edits."""
+    if not journal_path.exists():
+        raise ValueError("Missing operation journal")
+    ledger = read_journal(journal_path)
+    if not ledger["operations"]:
+        raise ValueError("No transfer to undo")
+    last = ledger["operations"][-1]
+    current = path.read_bytes()
+    previous = previous_backup.read_bytes()
+    restored = restore_exact(current, previous, last["after_sha256"],
+                             last["before_sha256"])
+    report = {"source": last["target"], "target": last["source"],
+              "moved": last["moved"], "before_sha256": sha(current),
+              "after_sha256": sha(restored), "total": inventory(current)["TOTAL"],
+              "counts_before": inventory(current), "counts_after": inventory(restored),
+              "undoes_operation_id": last["operation_id"]}
+    apply_with_journal(path, current, restored, rollback_backup,
+                       journal_path, operation_id, report)
+    return report
+
+
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("--playlist", type=Path, required=True)
-    p.add_argument("--source", choices=sorted(ARCHIVE_NAMES), required=True)
-    p.add_argument("--target", choices=sorted(ARCHIVE_NAMES), required=True)
-    p.add_argument("--start", type=int, required=True)
-    p.add_argument("--end", type=int, required=True)
-    p.add_argument("--expected-sha256", required=True)
+    p.add_argument("--source", choices=sorted(ARCHIVE_NAMES))
+    p.add_argument("--target", choices=sorted(ARCHIVE_NAMES))
+    p.add_argument("--start", type=int)
+    p.add_argument("--end", type=int)
+    p.add_argument("--expected-sha256")
     p.add_argument("--apply", action="store_true")
     p.add_argument("--expected-urls-json", type=Path,
                    help="JSON array of exact selected URLs in ordinal order; required for apply")
     p.add_argument("--backup", type=Path)
     p.add_argument("--journal", type=Path)
     p.add_argument("--operation-id")
+    p.add_argument("--rollback-last", type=Path, metavar="PREVIOUS_BACKUP")
     a = p.parse_args()
+    if a.rollback_last is not None:
+        if not a.apply or a.backup is None or a.journal is None or not a.operation_id:
+            p.error("--rollback-last requires --apply --backup --journal --operation-id")
+        if a.playlist.name != "MADSC55_TV_IBO_CALISANLAR_TEST.m3u8":
+            p.error("Only the canonical main playlist can be modified")
+        print(json.dumps(rollback_last(a.playlist, a.rollback_last, a.backup,
+                                       a.journal, a.operation_id), ensure_ascii=False))
+        return
+    if None in (a.source, a.target, a.start, a.end, a.expected_sha256):
+        p.error("--source --target --start --end --expected-sha256 required for transfers")
+    if a.apply and a.playlist.name != "MADSC55_TV_IBO_CALISANLAR_TEST.m3u8":
+        p.error("Only the canonical main playlist can be modified")
     if a.start < 1 or a.end < a.start or a.end - a.start + 1 > 2500:
         p.error("Selection must be 1..2500 consecutive source-category entries")
     raw = a.playlist.read_bytes()
