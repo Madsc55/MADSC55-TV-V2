@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Offline regression checks for Stage B encrypted evidence gate."""
 import json
+import hashlib
 import os
 import sys
 import tempfile
@@ -11,7 +12,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from secure_archive import encrypt
 from export_ibo_batches import render
-from verify_ibo_package_evidence import verify
+from verify_ibo_package_evidence import verify, zip_sha256
 
 SECRET = "test-only-not-a-production-secret-2026"
 
@@ -38,6 +39,12 @@ class StageBPackageGateTests(unittest.TestCase):
                 if tamper and size == 1000:
                     payload = payload.replace(b"https://example.org/a.m3u8", b"https://example.org/wrong.m3u8")
                 z.writestr(f"IBO_AV_VERIFIED_{size}_PART1.m3u8", payload)
+
+    def test_zip_hash_matches_standard_sha256(self):
+        self.build()
+        expected = hashlib.sha256(self.path.read_bytes()).hexdigest()
+        self.assertEqual(zip_sha256(self.path), expected)
+        self.assertEqual(verify(self.path, SECRET)["zip_sha256"], expected)
 
     def test_exact_packages_pass(self):
         self.build()

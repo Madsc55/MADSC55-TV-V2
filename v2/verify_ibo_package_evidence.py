@@ -23,6 +23,14 @@ MAX_ZIP_TOTAL_BYTES = 256 * 1024 * 1024
 PATTERN = re.compile(r"IBO_AV_VERIFIED_(1000|2000)_PART([1-9][0-9]*)\.m3u8$")
 
 
+def zip_sha256(path):
+    digest = hashlib.sha256()
+    with Path(path).open("rb") as stream:
+        for chunk in iter(lambda: stream.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
 def verify(path, secret):
     errors = []
     with zipfile.ZipFile(path) as archive:
@@ -83,7 +91,7 @@ def verify(path, secret):
             errors.append("Unexpected verified playlist filenames")
     return {
         "result": "PASS" if not errors else "FAIL",
-        "zip_sha256": hashlib.sha256(Path(path).read_bytes()).hexdigest(),
+        "zip_sha256": zip_sha256(path),
         "decrypted_av_qualified_records": len(records),
         "package_parts": package_counts,
         "errors": errors,
