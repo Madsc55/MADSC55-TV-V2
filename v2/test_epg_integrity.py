@@ -4,6 +4,14 @@ from unittest.mock import patch
 import epg_integrity
 
 class XMLTVIntegrityTests(unittest.TestCase):
+    def test_unsafe_feed_urls_rejected_before_network(self):
+        for url in ("https://user:secret@example.org/guide.xml",
+                    "https://example.org\\@localhost/guide.xml"):
+            with patch("epg_integrity.urllib.request.build_opener") as opener:
+                result = epg_integrity.inspect(url, set())
+                self.assertEqual(result["status"], "NON_HTTPS")
+                opener.assert_not_called()
+
     def test_valid_timezone_offsets(self):
         self.assertEqual(epg_integrity.parse_xmltv_time("20261113120000 +1400").utcoffset().total_seconds(), 50400)
         self.assertEqual(epg_integrity.parse_xmltv_time("20261113120000 -0330").utcoffset().total_seconds(), -12600)
@@ -18,7 +26,8 @@ class XMLTVIntegrityTests(unittest.TestCase):
         class Response(io.BytesIO):
             def __enter__(self): return self
             def __exit__(self, *args): self.close()
-        with patch("epg_integrity.urllib.request.urlopen", return_value=Response(xml)):
+        with patch("epg_integrity.urllib.request.build_opener") as opener:
+            opener.return_value.open.return_value = Response(xml)
             result = epg_integrity.inspect("https://example.org/epg.xml", {"x"})
         self.assertEqual(result["status"], "XMLTV_VALID")
         self.assertEqual(result["invalid_programme_intervals"], 1)
@@ -37,7 +46,8 @@ class XMLTVIntegrityTests(unittest.TestCase):
         class Response(io.BytesIO):
             def __enter__(self): return self
             def __exit__(self, *args): self.close()
-        with patch("epg_integrity.urllib.request.urlopen", return_value=Response(xml)):
+        with patch("epg_integrity.urllib.request.build_opener") as opener:
+            opener.return_value.open.return_value = Response(xml)
             result = epg_integrity.inspect(
                 "https://example.org/epg.xml", {"valid", "invalid", "duplicate", "undeclared"}
             )
@@ -61,7 +71,8 @@ class XMLTVIntegrityTests(unittest.TestCase):
         class Response(io.BytesIO):
             def __enter__(self): return self
             def __exit__(self, *args): self.close()
-        with patch("epg_integrity.urllib.request.urlopen", return_value=Response(xml)):
+        with patch("epg_integrity.urllib.request.build_opener") as opener:
+            opener.return_value.open.return_value = Response(xml)
             result = epg_integrity.inspect("https://example.org/epg.xml", {"missing", "blank", "good"})
         self.assertEqual(result["matched_programme_channel_ids"], 3)
         self.assertEqual(result["valid_matched_programme_channel_ids"], 1)
@@ -84,7 +95,8 @@ class XMLTVIntegrityTests(unittest.TestCase):
         class Response(io.BytesIO):
             def __enter__(self): return self
             def __exit__(self, *args): self.close()
-        with patch("epg_integrity.urllib.request.urlopen", return_value=Response(xml)):
+        with patch("epg_integrity.urllib.request.build_opener") as opener:
+            opener.return_value.open.return_value = Response(xml)
             result = epg_integrity.inspect("https://example.org/epg.xml", {"good", "blank", "duplicate", "undeclared"})
         self.assertEqual(result["status"], "XMLTV_VALID")
         self.assertEqual(result["current_programme_intervals"], 4)
@@ -104,7 +116,8 @@ class XMLTVIntegrityTests(unittest.TestCase):
         class Response(io.BytesIO):
             def __enter__(self): return self
             def __exit__(self, *args): self.close()
-        with patch("epg_integrity.urllib.request.urlopen", return_value=Response(xml)):
+        with patch("epg_integrity.urllib.request.build_opener") as opener:
+            opener.return_value.open.return_value = Response(xml)
             result = epg_integrity.inspect("https://example.org/epg.xml", {"listed"})
         self.assertEqual(result["current_programme_intervals"], 2)
         self.assertEqual(result["current_titled_unique_programme_intervals"], 1)
@@ -117,7 +130,8 @@ class XMLTVIntegrityTests(unittest.TestCase):
         class Response(io.BytesIO):
             def __enter__(self): return self
             def __exit__(self, *args): self.close()
-        with patch("epg_integrity.urllib.request.urlopen", return_value=Response(xml)):
+        with patch("epg_integrity.urllib.request.build_opener") as opener:
+            opener.return_value.open.return_value = Response(xml)
             result = epg_integrity.inspect("https://example.org/epg.xml", {"x"})
         self.assertEqual(result["valid_matched_programme_channel_ids"], 1)
         self.assertEqual(result["current_matched_programme_channel_ids"], 0)
@@ -159,7 +173,8 @@ class XMLTVIntegrityTests(unittest.TestCase):
         class Response(io.BytesIO):
             def __enter__(self): return self
             def __exit__(self, *args): self.close()
-        with patch("epg_integrity.urllib.request.urlopen", return_value=Response(xml)):
+        with patch("epg_integrity.urllib.request.build_opener") as opener:
+            opener.return_value.open.return_value = Response(xml)
             result = epg_integrity.inspect("https://example.org/epg.xml", {"x"})
         self.assertEqual(result["status"], "XMLTV_DTD_REJECTED")
 
