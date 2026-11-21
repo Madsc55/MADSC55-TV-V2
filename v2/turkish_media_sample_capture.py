@@ -23,7 +23,7 @@ def validate_url(url):
         raise ValueError("Invalid stream URL")
     # urlsplit() silently strips some ASCII controls. FFmpeg receives the exact
     # original bytes; reject ambiguous authority/path delimiters before parsing.
-    if any(ord(char) <= 32 or ord(char) == 127 or char == "\\\\" for char in url):
+    if any(ord(char) <= 32 or ord(char) == 127 or char == "\\" for char in url):
         raise ValueError("Control characters, whitespace and backslashes are forbidden in stream URLs")
     parsed = urlsplit(url)
     if "%" in parsed.netloc:
