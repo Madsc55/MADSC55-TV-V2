@@ -98,7 +98,7 @@ class SampleReviewTests(unittest.TestCase):
         captured = self.root / "capture.mkv"
         def run(command, **kwargs):
             self.assertIn("0:s?", command)
-            captured.write_bytes(self.sample.read_bytes())
+            Path(command[-1]).write_bytes(self.sample.read_bytes())
             return SimpleNamespace(returncode=0)
         body = self.sample.read_bytes()
         class Response:
