@@ -1333,5 +1333,40 @@
       "live_discovery": "skipped"
     },
     "pr624_scope": "Removed hard-coded historical 18074 YEDEKLER count from snapshot and assignment read; added optional strict count and offline regression. Does not close issue 497."
+  },
+  "github_cleanup_final_20261121": {
+    "main_verified": "b4b2a845c9f296545c0bb66272648177db369ea2",
+    "playlist_blob_sha": "f3d39e4522d27912fccd6e67240a10fd16c4923b",
+    "merged_prs": [
+      624,
+      625,
+      626,
+      627
+    ],
+    "closed_unmerged_obsolete_prs": [
+      365
+    ],
+    "open_prs_pending_independent_logo_verification": [
+      618
+    ],
+    "open_issues_distinct": [
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      10
+    ],
+    "issue497_status": "Not in open issue search; prior issue body retained evidence. Do not assert full acceptance without artifact-to-ledger end-to-end proof.",
+    "actions_success_runs": [
+      44944789787,
+      44947424127,
+      44949181505,
+      44950371186
+    ],
+    "actions_failure_inventory_complete": false,
+    "live_scan_performed": false,
+    "playlist_modified": false
   }
 }
