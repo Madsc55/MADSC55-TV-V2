@@ -789,5 +789,22 @@
     "task_statuses_changed": false,
     "all_34_tasks_completed": false,
     "note": "GitHub issue #6 is not equivalent to statuses[id=6] in the 34-task ledger; never update historic task statuses from this note."
+  },
+  "stage3_685_retry_network_security_hold_20261121": {
+    "date": "2026-11-21",
+    "source_pr": 567,
+    "source_merge_sha": "7bbefc113b02e25e0d8da1709273c39e9bbb4f12",
+    "safety_pr": 581,
+    "risk": "Merged manual retry passes untrusted playlist URLs directly to ffprobe/FFmpeg; private-DNS, redirects and HLS child traffic are not pinned or blocked.",
+    "safety_control": "v2-yedekler-av-audit.yml retry job is held with if: ${{ false }}; production gate requires this hold and no extra jobs.",
+    "manual_historical_preview_still_available": true,
+    "historical_verified": 1107,
+    "historical_uncertain": 685,
+    "live_retry_started_by_this_work": false,
+    "playlist_mutated": false,
+    "channels_moved_or_deleted": 0,
+    "task_statuses_changed": false,
+    "release_gate": "Do not run the 685 live retry until safe DNS/IP pinning, redirect/child-resource restrictions and offline egress tests pass.",
+    "next_action": "Verify PR #581 CI and merge its fail-closed hold; review Stage 4 secure capture PR #572 separately from the 685 HLS retry."
   }
 }
