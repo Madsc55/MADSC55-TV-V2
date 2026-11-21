@@ -161,7 +161,7 @@ def download_bounded(url, output, *, timeout=17, resolver=socket.getaddrinfo,
     deadline = time.monotonic() + timeout
     try:
         host_header = hostname if ":" not in hostname else "[" + hostname + "]"
-        if port not in (80, 443):
+        if port != (443 if scheme == "https" else 80):
             host_header += ":" + str(port)
         conn.request("GET", target, headers={"Host": host_header,
                                               "Accept": "video/*,application/octet-stream",
