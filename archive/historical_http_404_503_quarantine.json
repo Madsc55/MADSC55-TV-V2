@@ -1,0 +1,110 @@
+{
+  "schema": 1,
+  "policy": "READ_ONLY_HISTORICAL_ERROR_QUARANTINE_NO_PLAYLIST_EDIT",
+  "source_run_id": 43608247496,
+  "source_artifact_id": 14135417421,
+  "counts": {
+    "http_404": 8,
+    "http_503": 6
+  },
+  "entries": [
+    {
+      "url_sha256": "02b20d4d0d152b34c1308eac66c9485f693bbacc4a7b64a96db186fed16cc6eb",
+      "label": "CBS News New York (720p)",
+      "disposition": "REVIEW_HTTP_404",
+      "action": "QUARANTINE_REVIEW_ONLY_NO_PLAYLIST_MUTATION",
+      "source_report": "v2/reports/task17-18-20-bounded-retry-20261118.json"
+    },
+    {
+      "url_sha256": "3944de44bb67a5667facbe2e6b25e8d40b279a4b8f3d49fd7c80a568f8f79e9d",
+      "label": "KANAL 7 AVRUPA GLOBAL ADAY",
+      "disposition": "RETRY_HTTP_503",
+      "action": "QUARANTINE_REVIEW_ONLY_NO_PLAYLIST_MUTATION",
+      "source_report": "v2/reports/task17-18-20-bounded-retry-20261118.json"
+    },
+    {
+      "url_sha256": "39895853360fff0b89fd9bd50336b5cd34823fcb1323a0b35157a5207cdb8f12",
+      "label": "CBS News Minnesota (720p)",
+      "disposition": "REVIEW_HTTP_404",
+      "action": "QUARANTINE_REVIEW_ONLY_NO_PLAYLIST_MUTATION",
+      "source_report": "v2/reports/task17-18-20-bounded-retry-20261118.json"
+    },
+    {
+      "url_sha256": "42e4f4de81592b388bf941523a279b53eae1e8ba6ebea32b398e237c95a10bd5",
+      "label": "TRT AVAZ",
+      "disposition": "RETRY_HTTP_503",
+      "action": "QUARANTINE_REVIEW_ONLY_NO_PLAYLIST_MUTATION",
+      "source_report": "v2/reports/task17-18-20-bounded-retry-20261118.json"
+    },
+    {
+      "url_sha256": "74296d67886c459ea92c05f1133c97314651c463f186b50f10cc95962c241da6",
+      "label": "CBS News Pittsburgh (720p)",
+      "disposition": "REVIEW_HTTP_404",
+      "action": "QUARANTINE_REVIEW_ONLY_NO_PLAYLIST_MUTATION",
+      "source_report": "v2/reports/task17-18-20-bounded-retry-20261118.json"
+    },
+    {
+      "url_sha256": "7cd738376c9bea8502dd0dd03dfaba21f198cac32159646e69297d07cbe5f2a2",
+      "label": "CBS News Colorado (720p)",
+      "disposition": "REVIEW_HTTP_404",
+      "action": "QUARANTINE_REVIEW_ONLY_NO_PLAYLIST_MUTATION",
+      "source_report": "v2/reports/task17-18-20-bounded-retry-20261118.json"
+    },
+    {
+      "url_sha256": "a79b7699dea4f4b8c93e21dc21959a59436237aeb86533a84eb141224518939c",
+      "label": "CBS News Chicago (720p)",
+      "disposition": "REVIEW_HTTP_404",
+      "action": "QUARANTINE_REVIEW_ONLY_NO_PLAYLIST_MUTATION",
+      "source_report": "v2/reports/task17-18-20-bounded-retry-20261118.json"
+    },
+    {
+      "url_sha256": "a9e39f09407870be6f0fb49ac326e9bcaf29fd61cf0196d6822e05ac43ff4ef4",
+      "label": "CBS News Los Angeles (720p)",
+      "disposition": "REVIEW_HTTP_404",
+      "action": "QUARANTINE_REVIEW_ONLY_NO_PLAYLIST_MUTATION",
+      "source_report": "v2/reports/task17-18-20-bounded-retry-20261118.json"
+    },
+    {
+      "url_sha256": "b07bf40995cc802b5602f534c337a8c90422899ac791510af95eec15a30e7bab",
+      "label": "CBS News Detroit (720p)",
+      "disposition": "REVIEW_HTTP_404",
+      "action": "QUARANTINE_REVIEW_ONLY_NO_PLAYLIST_MUTATION",
+      "source_report": "v2/reports/task17-18-20-bounded-retry-20261118.json"
+    },
+    {
+      "url_sha256": "b094be93f98a22c1fc32260c4ebaebf56781e8259f558ccbcbecee655cc43eef",
+      "label": "TRT BELGESEL",
+      "disposition": "RETRY_HTTP_503",
+      "action": "QUARANTINE_REVIEW_ONLY_NO_PLAYLIST_MUTATION",
+      "source_report": "v2/reports/task17-18-20-bounded-retry-20261118.json"
+    },
+    {
+      "url_sha256": "c0272766fa3cca10c6fcae213f8298328a57551b0d85cf8429c53eddce199ee0",
+      "label": "TRT TÜRK",
+      "disposition": "RETRY_HTTP_503",
+      "action": "QUARANTINE_REVIEW_ONLY_NO_PLAYLIST_MUTATION",
+      "source_report": "v2/reports/task17-18-20-bounded-retry-20261118.json"
+    },
+    {
+      "url_sha256": "cdaaa1cc524d174897d60bba195aaafd6bd25ee686448ddfebcf3d33c8bfa333",
+      "label": "Kanal 7",
+      "disposition": "RETRY_HTTP_503",
+      "action": "QUARANTINE_REVIEW_ONLY_NO_PLAYLIST_MUTATION",
+      "source_report": "v2/reports/task17-18-20-bounded-retry-20261118.json"
+    },
+    {
+      "url_sha256": "d3f09c407d8db0b1c580e5500cfc908a7d3f91ab48b6734e5c5a102014694134",
+      "label": "CBS News Boston (720p)",
+      "disposition": "REVIEW_HTTP_404",
+      "action": "QUARANTINE_REVIEW_ONLY_NO_PLAYLIST_MUTATION",
+      "source_report": "v2/reports/task17-18-20-bounded-retry-20261118.json"
+    },
+    {
+      "url_sha256": "f9f0966eb4399f138ab9a07ea3ae70c37f24f36771d726a123d8c84cd688c1f0",
+      "label": "TRT KURDİ",
+      "disposition": "RETRY_HTTP_503",
+      "action": "QUARANTINE_REVIEW_ONLY_NO_PLAYLIST_MUTATION",
+      "source_report": "v2/reports/task17-18-20-bounded-retry-20261118.json"
+    }
+  ]
+}
