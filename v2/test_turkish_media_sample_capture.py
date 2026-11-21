@@ -78,7 +78,7 @@ class CaptureTests(unittest.TestCase):
                 p.symlink_to(target)
                 return SimpleNamespace(returncode=0)
             with self.assertRaises(ValueError):
-                capture("http://8.8.8.8/live", p, runner=runner, which=lambda _: "/usr/bin/ffmpeg")
+                capture("http://8.8.8.8/live", p, runner=runner, which=lambda _: "/usr/bin/ffmpeg", allowed_hosts=["8.8.8.8"])
             self.assertFalse(p.is_symlink())
             self.assertEqual(target.read_text(), "untouched")
 
@@ -94,7 +94,7 @@ class CaptureTests(unittest.TestCase):
                 p.write_bytes(b"sample")
                 return SimpleNamespace(returncode=0)
             capture("https://example.com/live", p, runner=runner,
-                    which=lambda _: "/usr/bin/ffmpeg", allowed_hosts=["cdn.example.com"],
+                    which=lambda _: "/usr/bin/ffmpeg", allowed_hosts=["example.com", "cdn.example.com"],
                     allowed_ports=[8080])
 
     def test_reject_long_duration_and_timeout(self):
@@ -112,7 +112,7 @@ class CaptureTests(unittest.TestCase):
             p = Path(d) / "sample.mkv"
             p.write_bytes(b"existing")
             with self.assertRaises(ValueError):
-                capture("http://8.8.8.8/live", p, which=lambda _: "/usr/bin/ffmpeg")
+                capture("http://8.8.8.8/live", p, which=lambda _: "/usr/bin/ffmpeg", allowed_hosts=["8.8.8.8"])
             self.assertEqual(p.read_bytes(), b"existing")
 
     def test_success_is_not_language_proof(self):
@@ -122,7 +122,7 @@ class CaptureTests(unittest.TestCase):
                 self.assertLessEqual(kwargs["timeout"], 17)
                 p.write_bytes(b"sample")
                 return SimpleNamespace(returncode=0)
-            r = capture("http://8.8.8.8/live", p, runner=runner, which=lambda _: "/usr/bin/ffmpeg")
+            r = capture("http://8.8.8.8/live", p, runner=runner, which=lambda _: "/usr/bin/ffmpeg", allowed_hosts=["8.8.8.8"])
             self.assertEqual(r["status"], "SAMPLE_CAPTURED_UNVERIFIED")
             stamp = datetime.datetime.fromisoformat(r["captured_at_utc"].replace("Z", "+00:00"))
             self.assertIsNotNone(stamp.tzinfo)
@@ -137,7 +137,7 @@ class CaptureTests(unittest.TestCase):
                 with p.open("wb") as output:
                     output.truncate(MAX_BYTES + 1)
                 return SimpleNamespace(returncode=0)
-            r = capture("http://8.8.8.8/live", p, runner=runner, which=lambda _: "/usr/bin/ffmpeg")
+            r = capture("http://8.8.8.8/live", p, runner=runner, which=lambda _: "/usr/bin/ffmpeg", allowed_hosts=["8.8.8.8"])
             self.assertEqual(r["status"], "CAPTURE_FAILED")
             self.assertFalse(p.exists())
 
@@ -147,7 +147,7 @@ class CaptureTests(unittest.TestCase):
             def runner(cmd, **kwargs):
                 p.write_bytes(b"partial")
                 return SimpleNamespace(returncode=1)
-            r = capture("http://8.8.8.8/live", p, runner=runner, which=lambda _: "/usr/bin/ffmpeg")
+            r = capture("http://8.8.8.8/live", p, runner=runner, which=lambda _: "/usr/bin/ffmpeg", allowed_hosts=["8.8.8.8"])
             self.assertEqual(r["status"], "CAPTURE_FAILED")
             self.assertFalse(p.exists())
 
