@@ -26,7 +26,7 @@ jobs:
           RUN_JSON="$(gh run view 44842556117 --repo "$GITHUB_REPOSITORY" --json status,conclusion,headSha)"
           python -c 'import json,sys; d=json.loads(sys.argv[1]); assert d["status"]=="completed" and d["conclusion"]=="success" and d["headSha"]=="53a3aa9f965fb964326d2d052f02209ec3f160a4"' "$RUN_JSON"
           ARTIFACT_JSON="$(gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/14681083208")"
-          python -c 'import json,sys; d=json.loads(sys.argv[1]); assert d["name"]=="v2-497-existing-audit-preview" and d["expired"] is False and d["digest"]=="sha256:8e269517a92203131633e024c6329c8a5f9a9095746f2ee375d185e4cc3b0f45"' "$ARTIFACT_JSON"
+          python -c 'import json,sys; d=json.loads(sys.argv[1]); assert d["name"]=="v2-497-existing-audit-preview" and d["expired"] is False and d["digest"]=="sha256:8e269517a92203131633e024c6329c8a5f9a9095746f2ee375d185e4cc3b0f45" and d["workflow_run"]["id"]==44842556117' "$ARTIFACT_JSON"
           mkdir -p /tmp/v2-497-initial
           gh run download 44842556117 --repo "$GITHUB_REPOSITORY" --name v2-497-existing-audit-preview --dir /tmp/v2-497-initial
           echo "b001bf48f07437e9ae67ed9f73b12ea9cfcab653523973435cf3b1cee3c31fcc  /tmp/v2-497-initial/manifest.json" | sha256sum -c -
