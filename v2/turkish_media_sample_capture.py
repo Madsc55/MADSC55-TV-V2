@@ -19,9 +19,15 @@ MAX_TIMEOUT = 17
 MAX_BYTES = 12 * 1024 * 1024
 
 def validate_url(url):
-    if not isinstance(url, str) or len(url) > 4096:
+    if not isinstance(url, str) or not url or len(url) > 4096:
         raise ValueError("Invalid stream URL")
+    # urlsplit() silently strips some ASCII controls. FFmpeg receives the exact
+    # original bytes; reject ambiguous authority/path delimiters before parsing.
+    if any(ord(char) <= 32 or ord(char) == 127 or char == "\\\\" for char in url):
+        raise ValueError("Control characters, whitespace and backslashes are forbidden in stream URLs")
     parsed = urlsplit(url)
+    if "%" in parsed.netloc:
+        raise ValueError("Percent-encoded URL authority is forbidden")
     if parsed.scheme not in ("http", "https") or not parsed.hostname or parsed.username or parsed.password:
         raise ValueError("Only HTTP(S) URLs without embedded credentials are allowed")
     try:
@@ -63,6 +69,9 @@ def capture(url, destination, *, seconds=4, timeout=17, runner=subprocess.run, w
         raise ValueError("Output must be a new .mkv file in an existing directory")
     cmd = [executable, "-nostdin", "-hide_banner", "-loglevel", "error",
            "-rw_timeout", str(timeout * 1000000), "-max_redirect", "0",
+           # Limit FFmpeg to explicit transport protocols; does NOT provide an
+           # egress firewall or make untrusted HLS segment URLs safe by itself.
+           "-protocol_whitelist", "http,https,tcp,tls,crypto",
            "-i", url, "-t", str(seconds), "-fs", str(MAX_BYTES),
            "-map", "0:v:0?", "-map", "0:a:0?", "-c:v", "mpeg4", "-q:v", "12",
            "-c:a", "aac", "-b:a", "48k"]
