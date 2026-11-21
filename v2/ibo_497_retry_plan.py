@@ -213,7 +213,10 @@ def main():
     raw = args.playlist.read_bytes()
     manifest_bytes = args.initial_manifest.read_bytes()
     manifest = json.loads(manifest_bytes)
-    plan = build_plan(raw, manifest, manifest_bytes, require_known_snapshot=True)
+    # The manifest is regenerated from the pinned source artifact and the
+    # current canonical playlist on each manual run; bind its exact bytes in
+    # the plan rather than pinning an obsolete previous-run manifest digest.
+    plan = build_plan(raw, manifest, manifest_bytes, require_known_snapshot=False)
     result = write_plan(args.output, plan)
     print(json.dumps({"result": result, "plan_sha256": plan["plan_sha256"],
                       "retry_count": plan["uncertain_retry_plan_count"],
