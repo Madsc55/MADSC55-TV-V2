@@ -1,3 +1,12 @@
+## 21 Kasım 2026 — #497 devam notu / gerçek manifest ve açık PR sırası
+
+- Gerçek geçmiş rapor: Actions [44640007709](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44640007709), artifact `14587983768` (`yedekler-av-audit`); 1.792 sonuç, 1.107 WORKING ve 685 RECHECK_REQUIRED. Artifact mevcut, expired=false; rapor kimlikleri daha önceki kanıt kaydında doğrulandı.
+- #547'nin [44842556117](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44842556117) çalıştırmasında `v2-497-existing-audit-preview` artifact `14681083208` üretildi; artifact GitHub'da mevcut, expired=false, SHA-256 digest `8e269517a92203131633e024c6329c8a5f9a9095746f2ee375d185e4cc3b0f45`. PR #561 açıklaması bu çalıştırmanın 1.107 verified / 685 uncertain / 0 failed ve değişmemiş playlist SHA sonucu verdiğini bildiriyor; artifact içeriğinin bağımsız kabulü ayrı doğrulanacak.
+- #547, Task 34 FFmpeg düzeltmesi, #554 çalışma planı ve #562 ilerleme notu main commit geçmişinde mevcut; tekrar uygulanmayacak.
+- Açık işler: [#560](https://github.com/Madsc55/MADSC55-TV-V2/pull/560) yanlış rapor SHA reddi; [#561](https://github.com/Madsc55/MADSC55-TV-V2/pull/561) yalnız manuel tetiklenen salt-okunur sonuç işleme; [#565](https://github.com/Madsc55/MADSC55-TV-V2/pull/565) zaman damgalı ASR/OCR/WebVTT örnek kanıtı. PR açıklaması tek başına CI kabulü değildir; testler ve güvenlik kapısı ayrıca doğrulanacak.
+- Sıra: #560 CI ve güvenlik incelemesi → #561 CI/gerçek artifact önizleme kabulü → 685 belirsiz için yalnız kanıta dayalı tekrar kontrol → #565 gerçek medya kanıtı. 685 kayıt kesin çalışmıyor diye sınıflandırılmayacak.
+- Bu devir notu yalnız dokümantasyondur: ana playlist, 18.912 envanter, 18.074 arşiv tabanı, 838 korunan kayıt, kategori taşıma, 48 karantina kaydı ve görev statüleri değiştirilmedi. Yeni playlist veya yayın taraması yapılmadı.
+
 ## 21 Kasım 2026 — #6 mevcut Drive arşivi ve kasa güvenlik kabulü
 
 - Mevcut Google Drive `MADSC55-TV-V2 — Independent Encrypted Recovery Archive` klasörü yetkili bağlantıyla **yeniden kontrol edildi**. Klasörün doğrudan içinde 5 dosya mevcut: 2 adet `.enc` (7.832.688 ve 5.234.628 bayt) ve 3 ZIP. Yeni klasör veya yeni şifreli yedek oluşturulmadı.
