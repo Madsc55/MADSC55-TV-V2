@@ -719,5 +719,41 @@
     "all_34_tasks_completed": false,
     "next_single_action": "Execute and verify #547 exact historical artifact importer in an authorized read-only environment; inspect its generated preview+manifest and SHA/identity locks before using 685 retry candidates.",
     "report": "v2/reports/issue497-original-artifact-audit-20261121.json"
+  },
+  "stage5_worldwide_crosswalk_handoff_20261121": {
+    "stage": "Stage 5 historical worldwide evidence SHA crosswalk",
+    "status": "in_progress_waiting_ci_exact_overlap",
+    "source_run_id": 42216075104,
+    "source_head_sha": "062cf6ae9783803bb45b06efd4e877bcb6333f8e",
+    "source_artifact_id": 13524765368,
+    "source_zip_sha256": "6bec426291330c6b4b305e2871b721a25c44583f892c14d893472cdc3e80f87d",
+    "worldwide_report_sha256": "41d96419250fc466786753b7d889503d0d4fc83fceb562d47eaf614a99624f0d",
+    "historical_crosswalk_sha256": "a108f9009a8f32d65920ec61e85c9a023f9e7aa169ba2aa858eceda2cc0551fe",
+    "report_totals": {
+      "worldwide_candidates": 35327,
+      "worldwide_av_decoded": 13884,
+      "historical_exact_hash_match": 4949,
+      "historical_av_decoded": 3080
+    },
+    "archive_initial_total": 18074,
+    "current_main_expected_inventory": {
+      "YEDEKLER": 1792,
+      "ANA": 15574,
+      "TURK": 424,
+      "YABANCI": 284,
+      "OTHER": 838,
+      "TOTAL": 18912
+    },
+    "first_batch_status": {
+      "TEST": 1792,
+      "TURK": 424,
+      "YABANCI": 284
+    },
+    "exact_archive_overlap_verified": false,
+    "pr": 585,
+    "playlist_edited": false,
+    "new_scan_started": false,
+    "task_statuses_changed": false,
+    "next_action": "Wait for PR 585 full source artifact CI; inspect manifest/crosswalk counts; merge only after checks pass; keep unknown as unverified"
   }
 }
