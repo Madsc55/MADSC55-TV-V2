@@ -13,13 +13,18 @@ import urllib.request
 from pathlib import Path
 from discovery_provider_requests import (
     MAX_ATTEMPTS, REQUEST_ERRORS, RETRYABLE_CONNECTION, http_error_details, provider_rate_limited,
-    retry_delay, retry_not_before,
+    retry_delay, retry_not_before, _indicates_throttling,
 )
 
 QUERIES = ("turkiye.m3u", "tr.m3u8", "turkish-iptv", "canli-tv", "yerel-tv", "iptv-turkiye")
 SOURCES = ("github", "gitlab", "codeberg", "official", "youtube", "m3u")
 REPOSITORY_SOURCES = ("github", "gitlab", "codeberg")
 MAX_BYTES = 2_000_000
+
+class ProviderThrottledEnvelope(ValueError):
+    """Provider rate-limit JSON envelope returned with HTTP 200, not a successful result."""
+    pass
+
 
 def identity(source, url):
     if not isinstance(url, str) or "\\" in url or any(ord(char) < 32 or ord(char) == 127 for char in url):
@@ -254,14 +259,26 @@ def main():
                 queries_attempted += 1
                 try:
                     payload = fetch_with_retry(search_url(source, query))
+                    # Some provider APIs return a throttle envelope with HTTP 200.
+                    # Keep the body private and stop this provider's remaining
+                    # requests to avoid repeatedly hitting a throttled endpoint.
+                    if (isinstance(payload, dict) and
+                            any(_indicates_throttling(payload.get(key, ""))
+                                for key in ("message", "error"))):
+                        raise ProviderThrottledEnvelope()
                     candidates.extend(repository_candidates(source, payload))
                     if incomplete_repository_response(source, payload):
                         errors.append({"source": source, "query": query, "error": "incomplete_repository_response"})
                     else:
                         completed.add((source, query))
                 except REQUEST_ERRORS as exc:
-                    error = {"source": source, "query": query, "error": type(exc).__name__}
-                    limited = False
+                    envelope_throttled = isinstance(exc, ProviderThrottledEnvelope)
+                    error = {"source": source, "query": query,
+                             "error": "provider_throttled_response" if envelope_throttled
+                             else type(exc).__name__}
+                    limited = envelope_throttled
+                    if limited:
+                        error["retry_not_before"] = retry_not_before({})
                     if isinstance(exc, urllib.error.HTTPError):
                         details = http_error_details(exc)
                         error["http_status"] = details["http_status"]
