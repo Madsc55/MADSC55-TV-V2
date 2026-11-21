@@ -135,7 +135,7 @@ class RetrySelectionTests(unittest.TestCase):
             playlist.write_bytes(raw)
             source = Path(folder) / 'manifest.json'
             source.write_text(__import__('json').dumps(manifest))
-            with patch('ibo_495_yedekler_av_audit.digest', side_effect=lambda data: 'b001bf48f07437e9ae67ed9f73b12ea9cfcab653523973435cf3b1cee3c31fcc' if data == source.read_bytes() else __import__('hashlib').sha256(data).hexdigest()), patch('sys.argv', ['audit', '--retry-manifest', str(source), '--playlist', str(playlist)]), patch('ibo_495_yedekler_av_audit.probe') as probe:
+            with patch('ibo_495_yedekler_av_audit.INITIAL_CURRENT_PLAYLIST_SHA256', __import__('hashlib').sha256(raw).hexdigest()), patch('ibo_495_yedekler_av_audit.digest', side_effect=lambda data: 'b001bf48f07437e9ae67ed9f73b12ea9cfcab653523973435cf3b1cee3c31fcc' if data == source.read_bytes() else __import__('hashlib').sha256(data).hexdigest()), patch('sys.argv', ['audit', '--retry-manifest', str(source), '--playlist', str(playlist)]), patch('ibo_495_yedekler_av_audit.probe') as probe:
                 with self.assertRaisesRegex(RuntimeError, 'SECURITY HOLD'):
                     main()
                 probe.assert_not_called()
