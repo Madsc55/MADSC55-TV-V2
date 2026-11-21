@@ -114,3 +114,38 @@ Durum (bekliyor/çalışıyor/tamamlandı/bloke); değişen dosyalar; önce/sonr
 - Bu nedenle tam playlist SHA farklılığını görmezden gelerek doğrudan import yapılmayacak. PR #547 güncelleniyor: önce tarihî source commit + orijinal artifact sabit run/artifact/file SHA ile doğrulanacak; sonra 1.792 YEDEKLER bloğunun güncel main'de aynı sırayla byte-byte eşitliği aranacak; yalnız eşleşirse güncel playlist SHA'sına yeniden bağlanan preview/manifest üretilecek.
 - PR #547'ye eklenen importer ve offline testler: sabit kaynak run `44640007709`, artifact `14587983768`, report hash, tarihî playlist hash; ordered block equality; değişmiş kayıt/sıra için fail-closed. Yalnız preview ve retry manifesti; yeni scan ve playlist yazımı yok. PR #547 hâlâ draft; yeni CI/preview kanıtı bekleniyor.
 - **Aşama 2 durumu: özgün kaynak bulundu ve tarihî/current YEDEKLER kimliği eşleştirildi; güvenli importer kodu PR #547'de güncellendi. Nihai kabul için yeni testlerin PASS olması ve gerçek Actions artifact'tan preview+manifest üretiminin doğrulanması bekleniyor.** 685 kayıt henüz yeniden taranmadı/taşınmadı; kullanıcı playlistine yazılmadı.
+
+
+## Güncel uygulama kanıtı — 21 Kasım 2026
+
+### Aşama 1 — TAMAMLANDI
+- PR #551 arşiv kabul kanıtlarıyla **merge edildi**. PR run `44838963882` SUCCESS; 12 arşiv regresyonu PASS.
+- Kabul edilen arşiv snapshot'ı ile tarihî 18.074 başlangıç envanteri farklı zaman damgalı sayımlardır; kayıtlar karıştırılmaz. Gerçek playlist yazımı bu kabulün parçası değildir.
+
+### Aşama 2 — TAMAMLANDI
+- PR #547 **merge edildi**; gerçek orijinal artifact indirildi, kaynağı ve current main kimlik eşleşmesi doğrulandı.
+- Import run `44842556117` SUCCESS; çıktı artifact `v2-497-existing-audit-preview` ID `14681083208`.
+- Manifest counts: verified 1.107, uncertain 685, failed 0. Retry queue: 685 benzersiz channel hash + 685 benzersiz URL hash.
+- Preview ve current main M3U byte-byte aynı; SHA-256 `18ac8386964e2f336105bb83f8f1be0af008b6b9ea83f679a2fd1ca582097abe`. Manifest `preview_only=true`, `canonical_playlist_written=false`, `new_scan_started=false`.
+- 685 kayıt yalnız retry kuyruğunda; yeniden taranmadı ve hiçbir arşive taşınmadı.
+
+### Aşama 3 — KOD/OFFLINE KABUL TAMAMLANDI
+- PR #543 Task 34 FFmpeg decode **merge edildi**; merge commit `bca89ad77a5f8d2b9607e6cfbdd39c249ac2aeb9`.
+- Main Security Gate run `44842692873` SUCCESS. FFmpeg gerçek fixture audio+video decode, video-only negatif durum ve 11 decode regression testi PASS.
+- Bu, yerel fixture kabulüdür; gerçek yayınlardan AV kanıtı veya 18.074 kanal testi değildir.
+
+### Aşama 4 — SONRAKİ AKTİF İŞ
+- ASR/OCR/WebVTT modülleri ve yerel entegrasyon testleri mevcut. 19 Kasım raporu FLEURS + üretilmiş görüntü/altyazı fixture'larıdır; gerçek yayıncı/cihaz kabulü değildir.
+- `turkish_media_sample_capture.py` yalnız global IP literal kabul ediyor, DNS hostname'lerini reddediyor. Playlist kaynakları için güvenli DNS çözümleme/pinning, SSRF ve redirect engellemesi tasarlanmadan bu kural gevşetilmez.
+- Sıradaki teknik iş: gerçek kanal taramasını başlatmadan, güvenli DNS-aware bounded sample capture tasarımını ve offline güvenlik testlerini tamamlamak. Kullanıcının gerçek yayın testlerini en sona bırakma kuralı korunur.
+
+### Hâlâ yapılmayanlar
+- 685 belirsiz kaydın kontrollü tekrar AV testi.
+- 18.074 başlangıç YEDEKLER envanterinin tamamı için güncel gerçek medya kanıtı (önceki 1.792 rapor sadece bir snapshot'tır).
+- Gerçek ASR/OCR/WebVTT yayın örnekleri ve Türkçe konuşma/altyazı onayı.
+- Türk/Yabancı/çalışan/çalışmayan nihai ayrımının gerçek yayın kanıtıyla tamamlanması.
+- Kalıcı otomatik ledger/checkpoint, retry sonuçlarının gerçek rapora işlenmesi ve preview sonrası kullanıcı onaylı arşiv uygulaması.
+- #507 şifreli arşivin gerçek ortam kabulü.
+- İBO Player cihaz kabulü ve son kullanıcı 2.500'lük test döngüsü.
+
+**Değişmez korumalar devam ediyor:** tek ana playlist; yeni playlist yok; 48 karantina kanalını geri getirme yok; duplicate URL yok; 1003 kuralı yok; ana kategorilere izinsiz dokunma yok; İBO 2.500 kullanıcı testi sistem taramasından ayrı; gerçek scan ve playlist write yok.
