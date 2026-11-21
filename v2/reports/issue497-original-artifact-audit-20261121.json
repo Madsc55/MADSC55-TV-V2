@@ -1,0 +1,65 @@
+{
+  "schema": 1,
+  "created_utc": "2026-11-21",
+  "scope": "Historical 1,792 YEDEKLER AV audit only; not 18,074-channel complete scan",
+  "provenance": {
+    "source_run_id": 44640007709,
+    "source_event": "workflow_dispatch",
+    "source_head_sha": "1e8bd6d46762366f151e1270cc767f598c8e63e8",
+    "artifact_id": 14587983768,
+    "artifact_name": "yedekler-av-audit",
+    "report_filename": "yedekler_av_audit.json",
+    "artifact_zip_sha256": "d6fefd9dabc036302dcadf0e52fa66542c51d9032d9abf8aeb3e3b88233a9f73",
+    "raw_report_sha256": "30de600eca7d8e3140f423bb3fc248dc2f57df6ff031b0bf97276a9a861dba2c",
+    "report_playlist_sha256": "eee260cce3926caff18238f9583958b40475e362ce7650fb7fac51a66a84ee1c",
+    "report_schema_version": 1,
+    "total": 1792,
+    "counts": {
+      "WORKING": 1107,
+      "RECHECK_REQUIRED": 685
+    },
+    "uncertain_status_counts": {
+      "PROBE_FAILED": 621,
+      "TIMEOUT": 26,
+      "NO_MEDIA": 23,
+      "AV_STREAMS_PRESENT": 14,
+      "AUDIO_ONLY": 1
+    },
+    "checks": {
+      "archive_zip_hash_matches_upload_log": true,
+      "exact_report_file_hash_verified": true,
+      "positions_contiguous_1_to_1792": true,
+      "unique_url_hashes": 1792,
+      "url_sha_format_valid": true,
+      "working_all_video_audio_decoded": true,
+      "uncertain_none_decoded_verified": true,
+      "historical_and_main_ordered_yedekler_blocks_equal_prior_readonly_comparison": true
+    },
+    "merged_importer_pr": 547,
+    "merged_importer_main_ci_run": 44842749390,
+    "importer_main_ci_conclusion": "success",
+    "actual_importer_preview_artifact_verified": false,
+    "new_live_scan_started": false,
+    "channels_deleted_or_reordered": false,
+    "current_playlist_mutated": false
+  },
+  "stage3_code": {
+    "pr": 543,
+    "merged": true,
+    "merge_commit_sha": "bca89ad77a5f8d2b9607e6cfbdd39c249ac2aeb9",
+    "main_ci_run": 44842692873,
+    "main_ci_conclusion": "success",
+    "code_acceptance": "FFmpeg decoded video and audio short-sample gate merged",
+    "full_18074_channel_acceptance": false,
+    "device_acceptance": false
+  },
+  "safety": {
+    "read_only": true,
+    "raw_stream_urls_in_report": false,
+    "evidence_is_not_device_acceptance": true,
+    "source_hash_is_historical_not_current_playlist_hash": true,
+    "ambiguous_statuses_are_not_definitively_dead": true,
+    "retry_only_after_authorized_gate": true,
+    "no_new_playlist": true
+  }
+}
