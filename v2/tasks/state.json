@@ -789,5 +789,59 @@
     "task_statuses_changed": false,
     "all_34_tasks_completed": false,
     "note": "GitHub issue #6 is not equivalent to statuses[id=6] in the 34-task ledger; never update historic task statuses from this note."
+  },
+  "stage5_issue497_685_retry_handoff_20261121": {
+    "date": "2026-11-21",
+    "issue": 497,
+    "scope": "685 previously uncertain YEDEKLER channels; code acceptance and handoff only",
+    "canonical_playlist": "MADSC55_TV_IBO_CALISANLAR_TEST.m3u8",
+    "total_inventory": 18912,
+    "historical_yedekler_start": 18074,
+    "current_yedekler": 1792,
+    "archive_counts": {
+      "ANA_ARSIV": 15574,
+      "TURK_ARSIVI": 424,
+      "YABANCI_ARSIVI": 284,
+      "other": 838
+    },
+    "source_evidence": {
+      "original_run_id": 44640007709,
+      "original_artifact_id": 14587983768,
+      "original_report_sha256": "30de600eca7d8e3140f423bb3fc248dc2f57df6ff031b0bf97276a9a861dba2c",
+      "original_verified": 1107,
+      "original_uncertain": 685,
+      "original_failed": 0,
+      "initial_preview_run_id": 44842556117,
+      "initial_preview_artifact_id": 14681083208,
+      "manifest_sha256": "b001bf48f07437e9ae67ed9f73b12ea9cfcab653523973435cf3b1cee3c31fcc",
+      "preview_sha256": "18ac8386964e2f336105bb83f8f1be0af008b6b9ea83f679a2fd1ca582097abe",
+      "preview_byte_identical_to_canonical": true
+    },
+    "accepted_code": {
+      "ffmpeg_pull_request": 543,
+      "ffmpeg_merge_ci_run": 44842411969,
+      "historical_import_pull_request": 547,
+      "historical_import_ci_run": 44842556117,
+      "targeted_retry_pull_request": 567,
+      "targeted_retry_merge_commit": "7bbefc113b02e25e0d8da1709273c39e9bbb4f12",
+      "targeted_retry_ci_run": 44843776673,
+      "targeted_retry_postmerge_main_run": 44843984931,
+      "note_pr_578_ci_run": 44844070879
+    },
+    "retry_workflow": ".github/workflows/v2-yedekler-av-audit.yml",
+    "retry_mode": "manual_only_read_only_685_uncertain",
+    "workflow_dispatch_run_found": false,
+    "new_retry_results_imported": false,
+    "recent_manual_dispatch_audit": "Actions workflow_dispatch listing contained no run of the 685-only retry workflow at observation time",
+    "live_685_retry_completed": false,
+    "playlist_modified": false,
+    "channels_moved": 0,
+    "new_playlist_created": false,
+    "old_48_channels_restored": false,
+    "first_1003_protection_reapplied": false,
+    "issue497_completed": false,
+    "issue6_real_external_restore_verified": false,
+    "next_action": "Review/execute manual targeted 685-only read-only workflow when authorized, inspect its exact artifact/checksums and reconcile without touching canonical playlist; keep #497 open until real evidence. Separately validate #6 private vault backup/restore without secrets in public logs.",
+    "statuses_changed": false
   }
 }
