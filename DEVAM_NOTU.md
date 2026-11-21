@@ -1475,3 +1475,13 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - Kullanıcının **testleri sona bırakma** kuralı geçerlidir: 18.074 tam tarama, 685 retry, 2.500'lük İBO cihaz testi başlatılmadı. Ana playlist, 48 karantina, ana/arşiv kategorileri ve 1.003 kuralı değişmedi. Bu iki PR kod/CI kabulüdür, canlı kanal veya cihaz kabulü değildir.
 
 - PR [#567](https://github.com/Madsc55/MADSC55-TV-V2/pull/567) main'e `7bbefc113b02e25e0d8da1709273c39e9bbb4f12` ile birleşti: ilk 1.107 verified kaydı tekrar taramamak için 685 uncertain kimliğine bağlı, **manuel tetiklemeli ve playlist yazmayan** bounded AV retry + fail-closed reconcile kodu eklendi. Bu kabul yalnız kod kapsamıdır; yeni retry çalıştırması yapılmadı. Merge sonrası main Security Gate `44843984931` SUCCESS. #561 main gate `44843901219` ve #571 main gate `44843949176` de SUCCESS.
+
+
+## 21 Kasım 2026 — #497 685 kanal canlı retry güvenlik freni
+
+- PR #567 merge commit `7bbefc113b02e25e0d8da1709273c39e9bbb4f12` ile 685 belirsiz kayıt için tek tetiklemeli retry iş akışı main'e alındı. Bu birleşme 685 kaydın gerçekte yeniden test edildiği anlamına gelmez.
+- **Gerçek güvenlik açığı:** `v2/ibo_495_yedekler_av_audit.py`, `v2/stream_probe.py` üzerinden ffprobe/FFmpeg'e ham playlist URL'lerini doğrudan veriyor. Bu yolda DNS özel/loopback/link-local adres reddi, IP pinleme, redirect ve alt HLS medya kaynaklarını egress güvenlik denetimiyle sınırlama yok. Kapsamlı canlı 685 retry bu şartlarda kabul edilemez.
+- Bu düzeltme dalı `fix/497-suspend-unsafe-live-retry-20261121` iş akışındaki `retry` job'unu `if: ${{ false }}` ile durduruyor. `v2/main_actions_security_gate.py` bu emniyet freninin kaldırılmasını veya gizli başka job eklenmesini `UNSAFE_685_LIVE_RETRY_NOT_SUSPENDED` ile engeller. İlgili çevrimdışı güvenlik regresyonu eklendi.
+- **Ayrı güvenli iş:** #497'nin tarihi veriyi yalnız önizleme/manifest olarak üreten manuel `v2-yedekler-result-reconcile.yml` iş akışı korunur. Eski kanıt 1.792 kayıtta 1.107 decoded AV verified ve 685 belirsizdir; 685 kayıt kesin başarısız sayılmaz.
+- **Aşama 4 açık:** PR #572 DNS pinli sınırlı tek-örnek yakalama tasarımıdır; henüz draft/CI kabulü ayrı izlenecek. Bu, 685 HLS/FFmpeg retry için otomatik güvenlik onayı değildir. Güvenli taşıma ve çevrimdışı redirect/HLS/DNS/SSRF regresyonları kanıtlanmadan canlı tarama başlatma.
+- **Değişmeyenler:** `MADSC55_TV_IBO_CALISANLAR_TEST.m3u8`, kategori ve arşivler, EPG, 48 karantina kaydı, 1.003 kuralı ve 2.500'lük İBO kullanıcı testi. `v2/tasks/state.json` içindeki 34 görev statüsü değiştirilmez. Canlı retry başlatılmadı; kanal taşınmadı/silinmedi. PR ve güncel CI sonucu onaylanmadan güvenlik freni tamamlandı sayılmaz.
