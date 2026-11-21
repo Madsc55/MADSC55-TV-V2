@@ -3,6 +3,16 @@
 **Baz main:** `3eb84f890cbe8524d16c1a16f219b0b494cc50f0`  
 **Amaç:** Kanıtlı eksikleri tek tek kapatmak; tamamlanan işleri tekrarlamamak.
 
+## Güncel çalışma sırası — 21 Kasım 2026, #561/#567 sonrası
+
+Önceki bölümlerdeki “#551/#547/#543 açık”, “özgün #497 raporu yok” ve “#561 merge bekliyor” ifadeleri **tarihsel kayıt**tır; bugün geçerli değildir. Sonuçlar aşağıdaki sıraya taşındı:
+
+1. **Kabul edildi (tekrarlama):** #551 arşiv kabulü, #547 gerçek 1.792 rapor içeriği ve 1.107/685 önizlemesi, #543 iki medya akışını gerçekten decode eden FFmpeg kodu, #561 tek tetik manuel salt-okunur rapor işleme (main [44843901219](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44843901219) SUCCESS), #567 **yalnız 685 belirsiz** aday için manuel retry altyapısı (main [44843984931](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44843984931) SUCCESS), #571 URL/FFmpeg protokol sınırlandırması (PR [44843819098](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44843819098) SUCCESS). Bunlar altyapı/test kabulüdür, canlı 685 tekrar koşusu değildir.
+2. **Sıradaki ilk teknik eksik:** [PR #572](https://github.com/Madsc55/MADSC55-TV-V2/pull/572) güvenli DNS/IP pinli sınırlı medya örneklemesini kontrol et. IPv4/IPv6 tüm DNS yanıtları public olmalı; redirect ve dış/alt playlist/segment istekleri kapalı; SNI ve sertifika denetimi doğru olmalı; FFmpeg yalnız yerel baytları çözmeli. Başarı için güncel CI ve negatif saldırı regresyonu şart. HLS/DASH çoklu segmenti kapsam dışı kalır.
+3. **Sonraki eksikler:** gerçek akış kaynağından zaman/hash/yöntem izli ASR/OCR/WebVTT, 685 belirsizin yeni kanıtla idempotent ledger/retry sonucu (manuel tarama öncesi onay), #6 gerçek harici özel kasa backup/restore kabulü, geniş 18.074 yayın kanıtı, en son 2.500'lük İBO Player cihaz testi.
+4. **Değişmez güvenlik:** tek ana playlist, toplam 18.912 kayıt, başlangıç 18.074 arşiv kaydı; güncel kategori dağılımı YEDEKLER 1.792 / ANA 15.574 / TÜRK 424 / YABANCI 284 / diğer 838. 48 karantina kaydı geri gelmez, 1003 kuralı uygulanmaz, ana kategoriler/URL/EPG otomatik değişmez.
+
+
 ## Değişmez koruma kuralları
 - Tek ana IBO playlisti: `MADSC55_TV_IBO_CALISANLAR_TEST.m3u8`; yeni test playlisti yok.
 - 48 karantinaya alınmış kanal geri eklenmez; aynı URL mükerrer eklenmez.
