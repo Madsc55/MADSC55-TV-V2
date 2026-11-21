@@ -1,3 +1,4 @@
+import datetime
 import tempfile
 from pathlib import Path
 from types import SimpleNamespace
@@ -67,6 +68,8 @@ class CaptureTests(unittest.TestCase):
                 return SimpleNamespace(returncode=0)
             r = capture("http://8.8.8.8/live", p, runner=runner, which=lambda _: "/usr/bin/ffmpeg")
             self.assertEqual(r["status"], "SAMPLE_CAPTURED_UNVERIFIED")
+            stamp = datetime.datetime.fromisoformat(r["captured_at_utc"].replace("Z", "+00:00"))
+            self.assertIsNotNone(stamp.tzinfo)
             self.assertFalse(r["language_verified"])
             self.assertFalse(r["asr_completed"])
             self.assertFalse(r["ocr_completed"])
