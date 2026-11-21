@@ -166,3 +166,11 @@ Durum (bekliyor/çalışıyor/tamamlandı/bloke); değişen dosyalar; önce/sonr
 - #497 1.107 WORKING ve 685 RECHECK_REQUIRED içinden hiçbiri otomatik yeniden sınıflandırılmadı. Sonraki adım: 685 belirsiz için eski AV, zaman damgası, güncel durum, URL kimliği, tekrar deneme sayısı ve manifest ile **salt-okunur / idempotent retry önizlemesi**. 20 eski AV kanıtlı belirsiz kanal ayrıca inceleme grubuna konacak.
 - Ana playlist değişmedi, yeni playlist açılmadı, envanter ve 838 korunan kayıt yerinde, İBO Player kullanıcı testi son aşamada ve ayrı. 34 ana görev tamamlandı sayılmıyor; Aşama 5'in hash-eşleştirme kod kabulü tamam, canlı 18.074 AV kabulü eksik.
 
+
+
+## 21 Kasım 2026 güncellemesi — Aşama 6 plan kodu kabul edildi
+
+- PR #594 merged (`c17af7945921ba61f29c9d2e2918425e897c6cc8`): 685 `uncertain/recheck_required` kaydı için deterministik, SHA-256 kimlikli, kaynak zaman damgalı, idempotent ve no-clobber salt-okunur plan üreticisi eklendi.
+- PR Production Security Gate `44846469069` SUCCESS. Çevrimdışı testler; tam 685 satır, mükerrer/eksik kimlik reddi, URL hash eşleşmesi, kaynak rapor/run/artifact bağları, zaman damgası, playlist snapshot ve no-overwrite davranışını doğruladı.
+- Bu **plan kodu kabulüdür**; manuel `workflow_dispatch` henüz çalıştırılmadı ve gerçek retry plan artefaktı henüz oluşturulmadı. Canlı retry veya yeni kanal taraması yok. `live_retry_authorized=false`, `network_attempts=0`, playlist/arşiv yazımı kapalı.
+- Sonraki öncelikler: (1) Stage 5 tarihsel 18.074 crosswalk satırlarını kimlik/kanıt kaynağı bazında incele, (2) bağımsız özel şifreli kasa restore kabulünü kanıtla, (3) güvenli HLS/DASH segment/anahtar yakalama ve gerçek yayıncı örneği. 18.074 canlı AV taraması, 685 retry ve İBO cihaz testleri son aşamada.
