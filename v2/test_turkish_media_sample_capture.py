@@ -33,6 +33,13 @@ class CaptureTests(unittest.TestCase):
         self.assertEqual(validate_url("https://example.com/live", {"example.com"}),
                          "https://example.com/live")
 
+    def test_capture_requires_explicit_root_host_allowlist(self):
+        with tempfile.TemporaryDirectory() as d:
+            with self.assertRaises(ValueError):
+                capture("https://example.com/live", Path(d) / "sample.mkv",
+                        runner=lambda *a, **k: SimpleNamespace(returncode=0),
+                        which=lambda _: "/usr/bin/ffmpeg")
+
     def test_dns_hostname_requires_exact_proxy_allowlist(self):
         proxy = PinnedHTTPProxy({"example.com"}, resolver=dns_answer("8.8.8.8"))
         self.assertEqual(proxy.resolve("example.com", 443), "8.8.8.8")
@@ -104,7 +111,7 @@ class CaptureTests(unittest.TestCase):
             capture("http://8.8.8.8/live", "/tmp/unused.mkv", timeout=18)
 
     def test_no_ffmpeg_is_not_success(self):
-        r = capture("http://8.8.8.8/live", "/tmp/unused.mkv", which=lambda _: None)
+        r = capture("http://8.8.8.8/live", "/tmp/unused.mkv", which=lambda _: None, allowed_hosts=["8.8.8.8"])
         self.assertEqual(r["status"], "FFMPEG_UNAVAILABLE")
 
     def test_no_overwrite(self):
