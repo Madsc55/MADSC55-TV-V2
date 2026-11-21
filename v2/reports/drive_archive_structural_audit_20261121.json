@@ -1,0 +1,22 @@
+{
+  "audit_date": "2026-11-21",
+  "source_folder": "MADSC55-TV-V2 — Independent Encrypted Recovery Archive",
+  "file_title": "MADSC55-TV-V2 stage4-24 acceptance archive.enc",
+  "bytes": 7832688,
+  "sha256": "29f5498c3173b39afe5c4bee824e4423cc8229961fb5f7cbf26e402d449f4241",
+  "format": "JSONL schema-1 envelope; nonce and ciphertext fields",
+  "record_count": 7819,
+  "nonce_bytes": 12,
+  "unique_nonce_count": 7819,
+  "structural_pass": true,
+  "authenticated_decryption_verified": false,
+  "restore_test_passed": false,
+  "independent_reference_hash_match": false,
+  "drive_permissions_observed": [
+    "file owner",
+    "backup service account"
+  ],
+  "public_anyone_permission_observed": false,
+  "file_modified": false,
+  "next_action": "Locate authorized matching key and format-specific restore procedure; verify only in an isolated temporary destination and compare channel and URL fingerprints."
+}
