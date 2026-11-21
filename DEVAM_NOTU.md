@@ -1,3 +1,11 @@
+## 21 Kasım 2026 — #497 gerçek rapor şema uyumsuzluğu + #495 gate hatası
+
+- #495 gerçek üretici `v2/ibo_495_yedekler_av_audit.py` incelendi. Ürettiği rapor kökü `schema=1, playlist_sha256, source_run_id, source_commit, entries, counts, read_only`; satırlar `ordinal, channel_sha256, url_sha256, run_id, evidence_sha256, attempts, repeatable_av_failure, status, probe_status, decode_status, decoded_av_verified`.
+- #497 PR #547 adapter `v2/ibo_497_audit_adapter.py` ise farklı, üretilmeyen alanları bekliyor: `schema_version, category, total, results, position, name, classification`. Bu nedenle gerçek #495 `report.json` dosyası adapter'a verildiğinde kabul edilmeyecek. Bu gerçek kod/şema uyumsuzluğudur; #497 kabulünden önce düzeltilmeli ve üreticiyle aynı şema üzerinde test edilmelidir.
+- Ayrıca #495 workflow değişikliği run `44841183579` başarısız. Log: 12/12 unit test OK; main security gate `MAIN_WORKFLOW_FILE_LOCK_FAIL`, `WORKFLOW_INVENTORY.unexpected=[v2-yedekler-av-audit.yml]`. Hata, yeni manuel read-only workflow'un allowlist/inventory kilidinde tanımlı olmamasıdır. Cron yok, workflow_dispatch only. Bu değişiklik PR dalında; main playlist değişmedi.
+- Bu workflow gerçek FFmpeg AV denetimi yapacağından, kullanıcı yeni toplu taramayı yasakladığı için workflow dispatch edilmedi. Kod şema uyumluluğu ve güvenlik envanteri düzeltilmeden, ayrıca eski kaynak artefakt olmadığı sürece gerçek 1.107/685 sonuç işlenmiş sayılmayacak.
+- No scan, no playlist mutation, no channel move. #497 remains blocked pending adapter schema fix + security allowlist fix + source artifact availability/user-approved scan policy.
+
 ## 21 Kasım 2026 — #497 kaynak üreticisi bulundu, ancak çalıştırılmamış
 
 - PR #547 (head `77d30673609c39eee3a8d9a0606941c025698519`) incelendi. `v2/ibo_497_audit_adapter.py` mevcut YEDEKLER AV audit raporunu #497 reconcile formatına çeviriyor. PR #547'nin Production Security Gate'i SUCCESS; live-discovery-diagnostic SKIPPED. PR açık ve merge edilmedi.
