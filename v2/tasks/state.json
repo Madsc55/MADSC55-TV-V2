@@ -638,6 +638,28 @@
     "playlist_changed": false,
     "new_scan_started": false,
     "processing_applied": false,
-    "status": "blocked_missing_original_report_artifact"
+    "status": "blocked_missing_original_report_artifact",
+    "artifact_content_review": {
+      "run_44429064188_artifact": 14485014372,
+      "contents": [
+        "ibo-scan-progress.enc",
+        "ibo-scan-progress.enc.pre-bounded-retry.bak"
+      ],
+      "is_1792_result_report": false,
+      "run_43608247496_artifact": 14119727053,
+      "contents_summary": [
+        "candidate M3U batches",
+        "discovery reports",
+        "ibo-real-scan-report.json",
+        "encrypted candidate inventory",
+        "encrypted scan progress"
+      ],
+      "run_40743765437_artifact": 12844533683,
+      "name": "turkish-stream-review",
+      "purpose": "postscan triage evidence; not #497 1792 YEDEKLER test report",
+      "conclusion": "No matching original #497 report.json artifact identified; do not substitute scan/checkpoint artifacts.",
+      "new_scan": false,
+      "playlist_mutation": false
+    }
   }
 }
