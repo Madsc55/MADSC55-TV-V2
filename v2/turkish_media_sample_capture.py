@@ -5,6 +5,7 @@ No automatic channel classification, no network activity on import, no playlist
 or archive writes. Capture alone is NOT proof of speech language or OCR.
 """
 import argparse
+import datetime
 import hashlib
 import json
 import ipaddress
@@ -78,6 +79,7 @@ def capture(url, destination, *, seconds=4, timeout=17, runner=subprocess.run, w
             dest.unlink(missing_ok=True)
             return {"status": "CAPTURE_FAILED", "language_verified": False, "device_verified": False}
         return {"status": "SAMPLE_CAPTURED_UNVERIFIED", "bytes": size,
+                "captured_at_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
                 "sample_sha256": hashlib.sha256(dest.read_bytes()).hexdigest(),
                 "url_sha256": hashlib.sha256(url.encode("utf-8")).hexdigest(),
                 "language_verified": False, "device_verified": False,
