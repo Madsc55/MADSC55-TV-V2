@@ -660,6 +660,25 @@
       "conclusion": "No matching original #497 report.json artifact identified; do not substitute scan/checkpoint artifacts.",
       "new_scan": false,
       "playlist_mutation": false
+    },
+    "source_producer": {
+      "workflow": ".github/workflows/v2-yedekler-av-audit.yml",
+      "issue": 495,
+      "trigger": "workflow_dispatch only; schedule removed",
+      "artifact_name": "v2-497-1792-report",
+      "report_file": "report.json",
+      "produces_real_av_report": true,
+      "requires_new_bulk_av_audit": true,
+      "dispatched": false,
+      "reason": "User explicitly prohibited a new bulk scan; existing artifact not found in inspected runs.",
+      "pr547": {
+        "head": "77d30673609c39eee3a8d9a0606941c025698519",
+        "production_gate": "success",
+        "open": true,
+        "merged": false,
+        "adapter_test_synthetic": true
+      },
+      "status": "blocked_no_historical_artifact_and_no_rescan"
     }
   }
 }
