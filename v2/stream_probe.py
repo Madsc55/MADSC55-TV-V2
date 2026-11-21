@@ -2,16 +2,40 @@
 """Probe actual stream audio/video codecs using ffprobe; HTTP 200 is not proof."""
 import argparse
 import json
+import ipaddress
+import socket
 import os
 import shutil
 import subprocess
 from urllib.parse import urlsplit
 
+def _public_http_url(url):
+    """Reject malformed/private targets; not a substitute for FFmpeg egress isolation."""
+    if not isinstance(url, str) or not url.strip():
+        return False
+    try:
+        parsed = urlsplit(url.strip())
+        if (parsed.scheme not in ("http", "https") or not parsed.hostname
+                or parsed.username or parsed.password or parsed.fragment):
+            return False
+        host = parsed.hostname
+        if host.lower() in {"localhost", "localhost.localdomain"} or host.lower().endswith((".localhost", ".local", ".internal")):
+            return False
+        try:
+            addresses = [ipaddress.ip_address(host)]
+        except ValueError:
+            # Check every resolved address; DNS can change after this check.
+            addresses = [ipaddress.ip_address(row[4][0]) for row in socket.getaddrinfo(host, None, type=socket.SOCK_STREAM)]
+        return bool(addresses) and all(address.is_global for address in addresses)
+    except (ValueError, OSError, UnicodeError):
+        return False
+
+
 def probe(url, timeout=25, ffprobe='ffprobe'):
     if not isinstance(url, str) or not url.strip():
         return {'status': 'INVALID_URL', 'video': False, 'audio': False}
     parsed = urlsplit(url.strip())
-    if parsed.scheme not in ('http', 'https') or not parsed.hostname or parsed.username or parsed.password:
+    if not _public_http_url(url):
         return {'status': 'INVALID_URL', 'video': False, 'audio': False}
     executable = shutil.which(ffprobe)
     if not executable:
@@ -56,7 +80,7 @@ def probe(url, timeout=25, ffprobe='ffprobe'):
 def verify_decoded_av(url, timeout=25, ffmpeg='ffmpeg'):
     """Require at least one actually decoded frame from both video and audio."""
     parsed = urlsplit(url)
-    if parsed.scheme not in ('http', 'https') or not parsed.hostname or parsed.username or parsed.password:
+    if not _public_http_url(url):
         return {'decoded_av_verified': False, 'decode_status': 'INVALID_URL'}
     executable = shutil.which(ffmpeg)
     if not executable:
