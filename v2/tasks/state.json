@@ -909,5 +909,45 @@
     "new_scan_started": false,
     "task_statuses_changed": false,
     "next_action": "Wait for PR 585 full source artifact CI; inspect manifest/crosswalk counts; merge only after checks pass; keep unknown as unverified"
+  },
+  "stage4_security_acceptance_20261121": {
+    "date": "2026-11-21",
+    "kind": "evidence-only; historical 34 task statuses unchanged",
+    "source_pr_567_merged": true,
+    "retry_hold": {
+      "pr": 588,
+      "merged": true,
+      "commit": "a8d914864d925764c27a3abaadb6715be3ff540b",
+      "ci_run": 44844737445,
+      "ci_conclusion": "success",
+      "live_retry_job_suspended": true,
+      "workflow": ".github/workflows/v2-yedekler-av-audit.yml",
+      "live_retry_started": false,
+      "uncertain_preserved": 685,
+      "verified_preserved": 1107
+    },
+    "stage4_capture": {
+      "pr": 589,
+      "merged": true,
+      "commit": "8617aac1fd524b19516978285f5a7107119fc064",
+      "ci_run": 44845121550,
+      "ci_conclusion": "success",
+      "public_hostname_and_ip_literal_use_pinned_local_only_download": true,
+      "nested_hls_dash_supported": false,
+      "real_publisher_sample_tested": false,
+      "device_tested": false
+    },
+    "stage5_hash_only_crosswalk": {
+      "pr": 585,
+      "merged": true,
+      "full_18074_live_av_verified": false
+    },
+    "duplicate_prs_closed_unmerged": [
+      581,
+      590
+    ],
+    "main_playlist_or_archive_mutated": false,
+    "task_statuses_changed": false,
+    "next_action": "Review hash-only Stage 5 evidence/identity coverage and real independent encrypted vault restore. Keep 685 live retry disabled and defer broad channel and IBO device tests until explicitly authorized final testing."
   }
 }
