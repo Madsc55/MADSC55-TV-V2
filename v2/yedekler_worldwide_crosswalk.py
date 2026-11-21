@@ -49,7 +49,8 @@ def _entries(raw, parse):
 
 def build_crosswalk(archive_raw, main_raw, state, worldwide, historical,
                     *, expected_archive_sha256=None, expected_archive_total=None,
-                    expected_batch_size=2500, expected_main_inventory=None):
+                    expected_batch_size=2500, expected_main_inventory=None,
+                    expected_worldwide_count=35327, expected_worldwide_av_count=13884):
     try:
         from .ibo_single_playlist_transfer import parse, category, inventory
     except ImportError:
@@ -123,7 +124,8 @@ def build_crosswalk(archive_raw, main_raw, state, worldwide, historical,
             raise ValueError("Canonical category disagrees with immutable batch state at ordinal %d" % ordinal)
 
     actual_active = [url_hash for _, url_hash, group in main_rows if group == "YEDEKLER"]
-    if set(actual_active) != set(expected_active) or len(actual_active) != len(expected_active):
+    actual_active_set = set(actual_active)
+    if actual_active_set != set(expected_active) or len(actual_active) != len(expected_active):
         raise ValueError("Current YEDEKLER does not match the first-batch TEST identity set")
 
     candidates = worldwide.get("candidates")
@@ -141,7 +143,8 @@ def build_crosswalk(archive_raw, main_raw, state, worldwide, historical,
         if url_hash in candidate_by_hash:
             raise ValueError("Duplicate worldwide URL hash")
         candidate_by_hash[url_hash] = item
-    if worldwide.get("audio_video_decoded") != 13884 or len(candidates) != 35327:
+    if (worldwide.get("audio_video_decoded") != expected_worldwide_av_count
+            or len(candidates) != expected_worldwide_count):
         raise ValueError("Unexpected historical worldwide report scope/counts")
 
     hist_matches = historical.get("historical_match_url_sha256")
@@ -197,7 +200,7 @@ def build_crosswalk(archive_raw, main_raw, state, worldwide, historical,
             counts["historical_exact_hash_matches"] += 1
         if hist_av:
             counts["historical_av_decoded_matches"] += 1
-        if url_hash in set(actual_active):
+        if url_hash in actual_active_set:
             if item:
                 counts["current_yedekler_worldwide_matches"] += 1
                 if source_run_av:
@@ -227,9 +230,11 @@ def build_crosswalk(archive_raw, main_raw, state, worldwide, historical,
         "source_artifact_id": SOURCE_ARTIFACT_ID,
         "source_artifact_name": SOURCE_ARTIFACT_NAME,
         "source_artifact_digest": SOURCE_ARTIFACT_DIGEST,
-        "worldwide_report_sha256": digest(json.dumps(worldwide, ensure_ascii=False,
+        "worldwide_report_file_sha256": WORLDWIDE_REPORT_SHA256,
+        "worldwide_report_canonical_sha256": digest(json.dumps(worldwide, ensure_ascii=False,
             sort_keys=True, separators=(",", ":")).encode("utf-8")),
-        "historical_crosswalk_sha256": digest(json.dumps(historical, ensure_ascii=False,
+        "historical_crosswalk_file_sha256": HISTORICAL_CROSSWALK_SHA256,
+        "historical_crosswalk_canonical_sha256": digest(json.dumps(historical, ensure_ascii=False,
             sort_keys=True, separators=(",", ":")).encode("utf-8")),
         "historical_archive_sha256": archive_sha,
         "canonical_playlist_sha256": digest(main_raw),
