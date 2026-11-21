@@ -1163,5 +1163,50 @@
     "685_live_retry_started": false,
     "main_task_statuses_changed": false,
     "next_action": "Identify authentic authorized-Turkish vault backup in existing controlled external storage with provider ID/revision and independently pinned checksum, access authorized Fernet key securely and test only isolated restore. Do not disclose secrets or claim acceptance otherwise."
+  },
+  "stage9_ffmpeg_initial_egress_hardening_20261121": {
+    "date": "2026-11-21",
+    "scope": "Stage 4 safe media capture and #497 initial FFprobe/FFmpeg public URL screening; no live scan",
+    "prs": [
+      {
+        "pr": 613,
+        "merged": true,
+        "merge_commit_sha": "cc816ac0bf773e0390d12df370bb600fc1553c11",
+        "pr_ci_run": 44894165773,
+        "pr_ci_conclusion": "success",
+        "post_merge_main_ci_run": 44895656887,
+        "post_merge_main_ci_conclusion": "success"
+      },
+      {
+        "pr": 615,
+        "merged": true,
+        "merge_commit_sha": "69ac50944a67dc9a6fdf2b10a85c0d721a274056",
+        "pr_ci_run": 44895908045,
+        "pr_ci_conclusion": "success"
+      },
+      {
+        "pr": 616,
+        "merged": true,
+        "merge_commit_sha": "489a5c40fc93e92ed07ea840a7ff8b459691678d",
+        "pr_ci_run": 44895941802,
+        "pr_ci_conclusion": "success"
+      }
+    ],
+    "combined_main_ci_run": 44896085407,
+    "combined_main_commit": "489a5c40fc93e92ed07ea840a7ff8b459691678d",
+    "combined_main_ci_conclusion": "success",
+    "initial_ffprobe_target_rejects_private_mixed_dns_multicast_ipv4mapped_and_bad_url": true,
+    "https_tls_handshake_socket_closure_verified": true,
+    "scheme_specific_http_host_header_ports_verified": true,
+    "network_egress_isolation_for_hls_children_verified": false,
+    "full_live_retry_authorized": false,
+    "live_685_retry_started": false,
+    "new_playlist_created": false,
+    "canonical_playlist_changed": false,
+    "live_channel_classification_changed": false,
+    "existing_685_plan_artifact_id": 14702596056,
+    "issue6_authorized_turkish_offsite_restore_verified": false,
+    "historical_task_statuses_changed": false,
+    "next_action": "Validate latest main CI. Keep real FFmpeg/HLS retry blocked until DNS/redirect/HLS-child egress isolation is accepted; keep separate issue #6 offsite-vault acceptance open."
   }
 }
