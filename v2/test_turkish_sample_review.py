@@ -98,9 +98,19 @@ class SampleReviewTests(unittest.TestCase):
         captured = self.root / "capture.mkv"
         def run(command, **kwargs):
             self.assertIn("0:s?", command)
-            captured.write_bytes(self.sample.read_bytes())
+            self.assertEqual(command[command.index("-protocol_whitelist") + 1], "file")
+            self.assertNotIn(url, command)
+            Path(command[-1]).write_bytes(self.sample.read_bytes())
             return SimpleNamespace(returncode=0)
-        receipt = capture(url, captured, include_subtitles=True, which=lambda name: name, runner=run)
+        def fake_bounded_download(_url, output, **kwargs):
+            # Receipt/identity regression needs a media fixture, not network.
+            payload = b"0000ftypisommedia"
+            output.write_bytes(payload)
+            return {"bytes": len(payload), "pinned_ip_count": 1, "input_format": "mov"}
+        with patch("v2.turkish_media_sample_capture.download_bounded",
+                   side_effect=fake_bounded_download):
+            receipt = capture(url, captured, include_subtitles=True,
+                              which=lambda name: name, runner=run)
         with self.assertRaises(ValueError):
             review_sample(captured, capture_receipt={**receipt, "sample_sha256": "0" * 64})
         report = review_sample(captured, capture_receipt=receipt)
