@@ -56,6 +56,39 @@ class MainActionsGateTests(unittest.TestCase):
 
     def test_invalid_yaml_rejected(self):
         self.assertIn("UNPARSEABLE_YAML",audit_one("v2-world-discovery.yml","on: [bad"))
+    def test_685_retry_requires_explicit_security_hold(self):
+        held = """name: YEDEKLER uncertain AV retry (SECURITY HOLD)
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  retry:
+    if: ${{ false }}
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo paused
+"""
+        self.assertEqual(audit_one("v2-yedekler-av-audit.yml", held), [])
+        without_hold = held.replace("    if: ${{ false }}\n", "")
+        self.assertIn("UNSAFE_685_LIVE_RETRY_NOT_SUSPENDED",
+                      audit_one("v2-yedekler-av-audit.yml", without_hold))
+        enabled = held.replace("    if: ${{ false }}", "    if: ${{ true }}")
+        self.assertIn("UNSAFE_685_LIVE_RETRY_NOT_SUSPENDED",
+                      audit_one("v2-yedekler-av-audit.yml", enabled))
+        extra_job = held + """  hidden_network:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo unsupported
+"""
+        self.assertIn("UNSAFE_685_LIVE_RETRY_NOT_SUSPENDED",
+                      audit_one("v2-yedekler-av-audit.yml", extra_job))
+        scheduled = held.replace("  workflow_dispatch:\n",
+                                 "  workflow_dispatch:\n  schedule:\n    - cron: '0 2 * * *'\n")
+        self.assertIn("UNAPPROVED_TRIGGER",
+                      audit_one("v2-yedekler-av-audit.yml", scheduled))
+
     def test_yedekler_result_reconcile_is_manual_read_only(self):
         source = """name: YEDEKLER existing result reconciliation
 on:
