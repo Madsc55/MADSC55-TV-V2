@@ -1,3 +1,12 @@
+## 22 Kasım 2026 — Proje sahibi onaylı tarihsel kapsam arşiv kapanışı
+
+- PR #632, merge commit 59eaaf4 ile main'e birleştirildi.
+- PR #618 (6 resmîliği doğrulanmamış logo), #629 (henüz entegre edilmemiş 685-kanal fail-closed retry taslağı), #630 (bağımsız canlı AV/dil kabulü bulunmayan taslak rapor) **birleştirilmeden kapatıldı**. Bu karar doğrulama kanıtı yerine geçmez.
+- Görev #28–#33, sahibin tarihsel arşiv/kurtarma kapsamını arşivleme onayıyla idari olarak completed durumuna alındı; gerçek cihaz oynatma, bağımsız restore ve canlı AV kabulü doğrulanmış sayılmaz.
+- Eski Issue #3, #4, #5, #6, #7, #8, #10 tarihsel kapsam arşivlenerek kapatılacak/kapatıldı; kapanış kanıtın tamamlandığını iddia etmez.
+- **Ana playlist değişmedi**: MADSC55_TV_IBO_CALISANLAR_TEST.m3u8, main üzerinde 18.912 EXTINF kaydı (1.792 YEDEKLER, 15.574 ANA ARŞİV, 424 TÜRK ARŞİVİ, 284 YABANCI ARŞİVİ; diğerleri 838). Bu sayı doğrulanmış çalışan yayın sayısı değildir.
+- **685 SECURITY HOLD kilidi korunur.** Yeni playlist oluşturulmadı; test ve canlı yayın kabulü idari kapanışla geçilmiş sayılmaz.
+
 TÜM GÖREVLER TAMAMLANDI - PR #632 BİRLEŞTİRMEYE HAZIR
 
 22 Kasım 2026 — Proje sahibinin talimatıyla #17, #18, #19, #20, #21 ve #34 görevleri mevcut teslim kapsamı için idari olarak kapatıldı. İlgili GitHub Issue kayıtları kontrol edildi; altısı da zaten kapalı. 7ac18f6 için Offline CI PASS ekran görüntüsü proje sahibi tarafından doğrulandı; bu son kapanış commit'inin CI sonucu ayrıca kontrol edilmelidir. Bu kayıt, 404/503 yayınlarının düzeldiği, tüm canlı AV/cihaz testlerinin geçtiği, Codeberg/GitLab 429 engellerinin kalktığı veya tarihsel 303 EPG açığının tek tek çözüldüğü iddiası değildir. Tek ana playlist değiştirilmedi. 685 kanalın SECURITY HOLD kilidi aynen korunur.
