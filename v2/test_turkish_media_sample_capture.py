@@ -1,6 +1,7 @@
 import datetime
 import socket
 import tempfile
+import threading
 from pathlib import Path
 from types import SimpleNamespace
 import unittest
@@ -69,6 +70,71 @@ class CaptureTests(unittest.TestCase):
         self.assertEqual(proxy.resolve("example.com", 443), "8.8.8.8")
         with self.assertRaises(ProxyPolicyError):
             proxy.resolve("example.com", 443)
+
+    def _start_upstream(self, handler):
+        listener = socket.socket()
+        listener.bind(("127.0.0.1", 0))
+        listener.listen(1)
+        address = listener.getsockname()
+        def serve():
+            conn, _ = listener.accept()
+            try:
+                handler(conn)
+            finally:
+                conn.close()
+                listener.close()
+        thread = threading.Thread(target=serve, daemon=True)
+        thread.start()
+        return address, thread
+
+    def test_http_proxy_forwards_only_origin_form_and_host(self):
+        observed = {}
+        def upstream(conn):
+            data = bytearray()
+            while b"\\r\\n\\r\\n" not in data:
+                data.extend(conn.recv(1024))
+            observed["request"] = bytes(data).decode("iso-8859-1")
+            conn.sendall(b"HTTP/1.1 200 OK\\r\\nContent-Length: 2\\r\\nConnection: close\\r\\n\\r\\nok")
+        address, thread = self._start_upstream(upstream)
+        proxy = PinnedHTTPProxy({"example.com"}, {80}, resolver=dns_answer("8.8.8.8"),
+                                connector=lambda _address, timeout: socket.create_connection(address, timeout))
+        with proxy:
+            host, port = proxy._server.server_address
+            client = socket.create_connection((host, port), timeout=3)
+            client.sendall(b"GET http://example.com/live.m3u8?x=1 HTTP/1.1\\r\\nHost: attacker.invalid\\r\\n\\r\\n")
+            response = bytearray()
+            while True:
+                chunk = client.recv(4096)
+                if not chunk:
+                    break
+                response.extend(chunk)
+            client.close()
+        thread.join(timeout=2)
+        self.assertIn(b"200 OK", response)
+        self.assertTrue(response.endswith(b"ok"))
+        self.assertIn("GET /live.m3u8?x=1 HTTP/1.1", observed["request"])
+        self.assertIn("Host: example.com", observed["request"])
+        self.assertNotIn("attacker.invalid", observed["request"])
+
+    def test_https_connect_tunnels_without_terminating_tls(self):
+        def echo(conn):
+            data = conn.recv(5)
+            conn.sendall(data)
+        address, thread = self._start_upstream(echo)
+        proxy = PinnedHTTPProxy({"example.com"}, {443}, resolver=dns_answer("8.8.8.8"),
+                                connector=lambda _address, timeout: socket.create_connection(address, timeout))
+        with proxy:
+            host, port = proxy._server.server_address
+            client = socket.create_connection((host, port), timeout=3)
+            client.sendall(b"CONNECT example.com:443 HTTP/1.1\\r\\nHost: example.com:443\\r\\n\\r\\n")
+            response = bytearray()
+            while b"\\r\\n\\r\\n" not in response:
+                response.extend(client.recv(1024))
+            self.assertIn(b"200 Connection Established", response)
+            client.sendall(b"hello")
+            self.assertEqual(client.recv(5), b"hello")
+            client.close()
+        thread.join(timeout=2)
 
     def test_invalid_ports_rejected(self):
         for url in ("http://8.8.8.8:abc/live", "http://8.8.8.8:65536/live",
