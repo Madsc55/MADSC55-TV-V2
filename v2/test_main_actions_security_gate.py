@@ -56,5 +56,24 @@ class MainActionsGateTests(unittest.TestCase):
 
     def test_invalid_yaml_rejected(self):
         self.assertIn("UNPARSEABLE_YAML",audit_one("v2-world-discovery.yml","on: [bad"))
+
+    def test_yedekler_result_reconcile_is_manual_read_only(self):
+        source = """name: YEDEKLER existing result reconciliation
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  reconcile:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo preview-only
+"""
+        self.assertEqual(audit_one("v2-yedekler-result-reconcile.yml", source), [])
+        scheduled = source.replace("  workflow_dispatch:\n", "  workflow_dispatch:\n  schedule:\n    - cron: '0 2 * * *'\n")
+        self.assertIn("UNAPPROVED_TRIGGER",
+                      audit_one("v2-yedekler-result-reconcile.yml", scheduled))
+
 if __name__=="__main__":
     unittest.main()
