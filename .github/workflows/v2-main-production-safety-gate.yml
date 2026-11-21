@@ -132,8 +132,8 @@ jobs:
           command -v ffmpeg
       - name: Issue 497 targeted uncertain retry offline regressions (no live scan)
         run: |
-          python -m py_compile v2/ibo_495_yedekler_av_audit.py v2/ibo_497_retry_reconcile.py v2/test_ibo_495_yedekler_av_audit.py v2/test_ibo_497_retry_reconcile.py
-          PYTHONPATH=v2 python -m unittest -v v2.test_ibo_495_yedekler_av_audit v2.test_ibo_497_retry_reconcile
+          python -m py_compile v2/public_egress_guard.py v2/stream_probe.py v2/ibo_495_yedekler_av_audit.py v2/ibo_497_retry_reconcile.py v2/test_public_egress_guard.py v2/test_stream_probe.py v2/test_ibo_495_yedekler_av_audit.py v2/test_ibo_497_retry_reconcile.py
+          PYTHONPATH=v2 python -m unittest -v v2.test_public_egress_guard v2.test_stream_probe v2.test_ibo_495_yedekler_av_audit v2.test_ibo_497_retry_reconcile
       - name: Stage 5 evidence-gated export and final acceptance regressions
         run: |
           python -m py_compile v2/stage5_acceptance_gate.py v2/stage5_evidence_export.py v2/test_stage5_acceptance_gate.py v2/test_stage5_evidence_export.py
