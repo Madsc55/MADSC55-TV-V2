@@ -1,3 +1,11 @@
+## 21 Kasım 2026 — Harici özel kasa geri yükleme kontrolü / devir kaydı
+
+- Kullanıcının devam talimatıyla mevcut Google Drive `MADSC55-TV-V2 — Independent Encrypted Recovery Archive` klasörü yeniden incelendi: iki `.enc` ve üç ZIP dosyası mevcut; yeni klasör veya arşiv oluşturulmadı.
+- `MADSC55-TV-V2 stage4-24 acceptance archive.enc` (7.832.688 bayt) yetkili Drive bağlantısından indirilebilir; boyut ve dosya erişimi teyit edildi. Önceki incelemede raporlanan SHA-256: `29f5498c3173b39afe5c4bee824e4423cc8229961fb5f7cbf26e402d449f4241` (bağımsız referans hash eşleşmesi kanıtlanmadı).
+- Drive'da `turk_authorized` ve `vault` aramaları uygun özel kasa yedeği bulmadı. Mevcut stage4/4955+107 arşivleri, `v2/turk_authorized_vault.py` Fernet kasasıyla aynı biçim veya aynı kayıt seti olarak kabul edilmedi.
+- **#6 AÇIK:** yetkili anahtar ve gerçek özel kasa yedeği eşleştirilmeden şifre çözme, izole geri yükleme, kayıt kimliği/içerik karşılaştırması ve gerçek harici restore PASS iddiası yapılamaz. Anahtarlar ve ham yayın URL'leri raporlara konmayacak.
+- Devam adımı: mevcut özel kasa dosyasının ve izinli anahtar erişiminin gerçek ortamda bulunmasını doğrula; bağımsız kaynak SHA-256 ile indirilen baytları karşılaştır; yalnız izole geçici hedefe restore et; kanal kimliği ve URL parmak izlerini karşılaştır; ardından #6 kabulünü güncelle. Kullanıcıdan yeni depolama seçimi isteme; ana playlist, 18.912 envanter ve kategorilere dokunma.
+
 ## 21 Kasım 2026 — #6 mevcut Drive arşivi ve kasa güvenlik kabulü
 
 - Mevcut Google Drive `MADSC55-TV-V2 — Independent Encrypted Recovery Archive` klasörü yetkili bağlantıyla **yeniden kontrol edildi**. Klasörün doğrudan içinde 5 dosya mevcut: 2 adet `.enc` (7.832.688 ve 5.234.628 bayt) ve 3 ZIP. Yeni klasör veya yeni şifreli yedek oluşturulmadı.
