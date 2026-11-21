@@ -6,6 +6,11 @@ import unittest
 from v2.turkish_media_sample_capture import MAX_BYTES, capture, validate_url
 
 class CaptureTests(unittest.TestCase):
+    def setUp(self):
+        guard = patch("v2.turkish_media_sample_capture.is_installed", return_value=True)
+        guard.start()
+        self.addCleanup(guard.stop)
+
     def test_bad_urls(self):
         for url in ("file:///tmp/secret", "http://user:pass@example.com/live", "ftp://host/live", "http://host/x#frag"):
             with self.subTest(url=url), self.assertRaises(ValueError):
@@ -43,7 +48,8 @@ class CaptureTests(unittest.TestCase):
                 self.assertNotIn("file", whitelist)
                 self.assertNotIn("concat", whitelist)
                 self.assertNotIn("data", whitelist)
-                self.assertEqual(cmd[cmd.index("-max_redirect") + 1], "0")
+                self.assertEqual(cmd[cmd.index("-max_redirects") + 1], "0")
+                self.assertEqual(cmd[cmd.index("-tls_verify") + 1], "1")
                 p.write_bytes(b"synthetic-sample")
                 return SimpleNamespace(returncode=0)
             report = capture("https://8.8.8.8/live",
@@ -53,7 +59,7 @@ class CaptureTests(unittest.TestCase):
             self.assertFalse(report["device_verified"])
 
     def test_invalid_ports_rejected(self):
-        for url in ("http://8.8.8.8:abc/live", "http://8.8.8.8:65536/live", "http://8.8.8.8:0/live"):
+        for url in ("http://8.8.8.8:abc/live", "http://8.8.8.8:65536/live", "http://8.8.8.8:0/live", "http://8.8.8.8:53/live"):
             with self.subTest(url=url), self.assertRaises(ValueError):
                 validate_url(url)
 
@@ -84,6 +90,15 @@ class CaptureTests(unittest.TestCase):
             capture("http://8.8.8.8/live", "/tmp/unused.mkv", seconds=13)
         with self.assertRaises(ValueError):
             capture("http://8.8.8.8/live", "/tmp/unused.mkv", timeout=18)
+
+    def test_capture_fails_closed_without_egress_guard(self):
+        with tempfile.TemporaryDirectory() as d:
+            p = Path(d) / "sample.mkv"
+            with patch("v2.turkish_media_sample_capture.is_installed", return_value=False):
+                result = capture("https://8.8.8.8/live", p, runner=lambda *a, **k: self.fail("FFmpeg must not run"), which=lambda _: "/usr/bin/ffmpeg")
+            self.assertEqual(result["status"], "EGRESS_GUARD_REQUIRED")
+            self.assertFalse(p.exists())
+
     def test_no_ffmpeg_is_not_success(self):
         r = capture("http://8.8.8.8/live", "/tmp/unused.mkv", which=lambda _: None)
         self.assertEqual(r["status"], "FFMPEG_UNAVAILABLE")
