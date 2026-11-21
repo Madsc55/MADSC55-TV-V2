@@ -28,7 +28,7 @@ _HOST_LABEL = re.compile(r"^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$", re.ASCII)
 def parse_url(url):
     if not isinstance(url, str) or not 0 < len(url) <= 4096:
         raise ValueError("Invalid media URL")
-    if any(ord(c) <= 32 or ord(c) == 127 or c == "\\\\" for c in url):
+    if any(ord(c) <= 32 or ord(c) in (92, 127) for c in url):
         raise ValueError("Media URL contains whitespace or control characters")
     try:
         parsed = urlsplit(url)
