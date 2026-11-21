@@ -183,7 +183,7 @@ class PinnedHTTPProxy:
             if not name or any(not (c.isascii() and (c.isalnum() or c in "!#$%&'*+-.^_|~")) for c in name):
                 raise ProxyPolicyError("Invalid proxy header name")
             value = value.strip()
-            if any(ord(ch) < 32 and ch != "\\t" for ch in value):
+            if any(ord(ch) < 32 and ch != "\t" for ch in value):
                 raise ProxyPolicyError("Invalid proxy header value")
             headers.append((name, value))
         return parts[0].upper(), parts[1], parts[2], headers, buffered
