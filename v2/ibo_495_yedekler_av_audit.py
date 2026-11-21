@@ -9,7 +9,8 @@ from pathlib import Path
 from collections import Counter
 
 from ibo_single_playlist_transfer import parse, category
-from stream_probe import probe, verify_decoded_av
+from stream_probe import probe, verify_decoded_av, _egress_guard_installed
+from public_egress_guard import install as install_egress_guard, remove as remove_egress_guard
 
 PLAYLIST = Path("MADSC55_TV_IBO_CALISANLAR_TEST.m3u8")
 WORKERS = 32
@@ -17,9 +18,9 @@ TIMEOUT = 15
 SOURCE_RUN_ID = 44640007709
 SOURCE_REPORT_SHA256 = "30de600eca7d8e3140f423bb3fc248dc2f57df6ff031b0bf97276a9a861dba2c"
 SOURCE_PLAYLIST_SHA256 = "eee260cce3926caff18238f9583958b40475e362ce7650fb7fac51a66a84ee1c"
-INITIAL_MANIFEST_RUN_ID = 44842556117
-INITIAL_MANIFEST_ARTIFACT_ID = 14681083208
-INITIAL_MANIFEST_ARTIFACT_SHA256 = "8e269517a92203131633e024c6329c8a5f9a9095746f2ee375d185e4cc3b0f45"
+INITIAL_MANIFEST_RUN_ID = 44842749390
+INITIAL_MANIFEST_ARTIFACT_ID = 14681388150
+INITIAL_MANIFEST_ARTIFACT_SHA256 = "5e732b7066c63e0987fb22be6b28a8e08d72e8b7f1027f38b116bdeceba0cd41"
 INITIAL_MANIFEST_SHA256 = "b001bf48f07437e9ae67ed9f73b12ea9cfcab653523973435cf3b1cee3c31fcc"
 INITIAL_CURRENT_PLAYLIST_SHA256 = "18ac8386964e2f336105bb83f8f1be0af008b6b9ea83f679a2fd1ca582097abe"
 
@@ -101,10 +102,10 @@ def classify_outcomes(first_status, second_status=None):
 def audit_one(item):
     index, block = item
     url = block.splitlines()[-1].strip()
-    first = probe(url, timeout=TIMEOUT)
+    first = probe(url, timeout=TIMEOUT, require_guard=True)
     first_outcome = first
     if first.get("status") == "AV_STREAMS_PRESENT":
-        decoded = verify_decoded_av(url, timeout=TIMEOUT)
+        decoded = verify_decoded_av(url, timeout=TIMEOUT, require_guard=True)
         first_outcome = {**first, **decoded}
         first_outcome["status"] = "AV_VERIFIED" if decoded.get("decoded_av_verified") else decoded.get("decode_status", "DECODE_FAILED")
     first_status = first_outcome.get("status", "UNKNOWN")
@@ -112,7 +113,7 @@ def audit_one(item):
     outcome = first_outcome
     if first_status != "AV_VERIFIED":
         attempts = 2
-        second = probe(url, timeout=TIMEOUT)
+        second = probe(url, timeout=TIMEOUT, require_guard=True)
         if second.get("status") == "AV_STREAMS_PRESENT":
             decoded = verify_decoded_av(url, timeout=TIMEOUT)
             second = {**second, **decoded}
@@ -153,8 +154,15 @@ def main():
     manifest = json.loads(manifest_bytes)
     raw = args.playlist.read_bytes()
     chosen = select_retry_blocks(raw, manifest, require_known_snapshot=True)
-    with concurrent.futures.ThreadPoolExecutor(max_workers=WORKERS) as pool:
-        entries = list(pool.map(audit_one, chosen))
+    # No URL is opened until both IPv4 and IPv6 public-only egress guards are active.
+    install_egress_guard()
+    _egress_guard_installed.cache_clear()
+    try:
+        with concurrent.futures.ThreadPoolExecutor(max_workers=WORKERS) as pool:
+            entries = list(pool.map(audit_one, chosen))
+    finally:
+        remove_egress_guard()
+        _egress_guard_installed.cache_clear()
     counts = dict(Counter(item["status"] for item in entries))
     report = {
         "schema": 1,
