@@ -1,8 +1,25 @@
 # MADSC55 TV V2 — Ana çalışma sırası
 **Kayıt:** 21 Kasım 2026  
-**Baz main:** `3eb84f890cbe8524d16c1a16f219b0b494cc50f0`  
+**Baz main (güncel):** `cd90b364316322752b3a2184134646a335f3632d`  
 **Amaç:** Kanıtlı eksikleri tek tek kapatmak; tamamlanan işleri tekrarlamamak.
 
+
+
+## Güncel durum düzeltmesi — 21 Kasım 2026 00:22 UTC
+Bu bölüm aşağıdaki başlangıç fotoğrafı ve tarihsel ilerleme satırlarıyla çelişen eski durumları geçersiz kılar.
+
+| Aşama | Durum | Güncel kanıt |
+|---|---|---|
+| 1 / #489 | **Tamamlandı (CI/kod kabulü)** | #551 merged; main CI 44841861864 SUCCESS; 12 arşiv testi; 18.912 toplam / 18.074 başlangıç arşivi / 838 korunan kategori |
+| 2 / #497 | **Tamamlandı (kaynak + post-merge preview)** | #547 merged; main CI 44842749390 SUCCESS; artifact 14681388150; 1.107 verified / 685 uncertain; preview bayt bayt aynı; yeni tarama/yazım yok |
+| 3 / Task 34 | **Tamamlandı (FFmpeg kod/CI kabulü)** | #543 merged; main CI 44842692873 SUCCESS; video ve audio decode fixture'ları ile negatif testler geçti |
+| 4 / Türkçe dil/altyazı/OCR | **Açık — güvenli capture tasarımı bekliyor** | Yerel örnekler gerçek IPTV kanıtı değil; capture aracı DNS hostname'lerini reddediyor. Allowlist + DNS/IP pinleme + redirect/protocol/egress koruması çevrimdışı test edilmeli |
+| 5 / 18.074 gerçek medya doğrulaması | **Bekliyor** | Aşama 4 hazır olmadan geniş tarama başlatılmayacak |
+| 6 / otomatik ledger/retry | **Bekliyor** | #497 preview yalnız önizleme; 685 belirsiz için kalıcı idempotent retry/checkpoint uygulaması henüz kabul edilmedi |
+| 7 / şifreli kasa | **Kod güvenliği tamamlandı; gerçek ortam kabulü açık** | #559 merged ve güvenlik testleri main'e alındı; mevcut özel kasanın dış depoda bağımsız restore kanıtı hâlâ yok; #507 draft |
+| 8 / İBO Player cihaz kabulü | **Bekliyor** | Kullanıcı cihazından doğrulanmış oynatma kanıtı yok |
+
+18.074 başlangıç YEDEKLER envanteri ile 1.792 tarihî #497 snapshot'ı farklıdır. Bu güncelleme görevlerin tamamını kapatmaz; playlist, kategori, EPG veya kanal taşıması yapmaz.
 ## Değişmez koruma kuralları
 - Tek ana IBO playlisti: `MADSC55_TV_IBO_CALISANLAR_TEST.m3u8`; yeni test playlisti yok.
 - 48 karantinaya alınmış kanal geri eklenmez; aynı URL mükerrer eklenmez.
@@ -121,8 +138,15 @@ Durum (bekliyor/çalışıyor/tamamlandı/bloke); değişen dosyalar; önce/sonr
 - **Aşama 1 arşiv:** #551 birleşti. Arşiv regresyonları ve kanıt SUCCESS; bu, kullanıcının gerçek playlistinde bu inceleme tarafından yeni taşıma yapıldığı anlamına gelmez.
 - **Aşama 2 özgün AV kanıtı:** [read-only run #44640007709](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44640007709) artifact **14587983768** ve tam `yedekler_av_audit.json` indirildi, ZIP ve dosya SHA-256 eşleşmeleri doğrulandı. Schema 1, 1.792 benzersiz URL kimliği ve 1–1.792 kesintisiz pozisyon; 1.107 video+audio decoded, 685 RECHECK_REQUIRED.
 - **685 belirsizin ayrıntısı:** PROBE_FAILED 621; TIMEOUT 26; NO_MEDIA 23; AV_STREAMS_PRESENT (decode doğrulanmamış) 14; AUDIO_ONLY 1. **Hiçbiri kesin ölü ilan edilmedi.**
-- #547 importer ve offline regresyonları main'e birleşti; main CI run [44842749390](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44842749390) SUCCESS. Ancak mevcut kayıtta özgün artifact'tan **gerçek preview+manifest üretiminin uçtan uca kanıtı henüz yok**; bu yüzden #497 üretim uygulaması tamamlandı sayılmaz, 685 kanala yeni test/taşıma yapılmadı.
+- #547 importer ve offline regresyonları main'e birleşti; main CI run [44842749390](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44842749390) SUCCESS. **Sonraki main CI incelemesinde gerçek preview+manifest üretimi de doğrulandı:** artifact 14681388150, preview bayt bayt aynı, 1.107 verified + 685 uncertain. Yeni scan/playlist yazımı/kanal taşıma yok.
 - **Aşama 3 FFmpeg:** #543 birleşti; main CI [44842692873](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44842692873) SUCCESS. Bu kısa örnekte gerçek video+audio decode kabulüdür; 18.074 kanalın tümünün işlendiği veya İBO Player cihazda onaylandığı anlamına gelmez.
 - **Mükerrer işler:** #514 ve #535'in ortak reconciler/test dosyaları mevcut main'de SHA eşitliğiyle doğrulandı; #535'in eski importer'ı #547 ile güçlendirildi. #514, #535 ve eski eksik-artifact notlu #552 gerekçeli yorumla birleştirilmeden kapatıldı.
 - İşlem delili: [v2/reports/issue497-original-artifact-audit-20261121.json](v2/reports/issue497-original-artifact-audit-20261121.json). `v2/tasks/state.json` içinde yalnız yeni devir/gözlem alanı eklendi; 34 görev statüsüne ve ana playlist/URL/kategorilere dokunulmadı.
-- **Sonraki tek adım:** #547 importer'ı kimlik ve SHA kilitleriyle gerçek mevcut artifact üzerinden yalnız read-only önizleme/manifest üretip doğrulamak; ardından ASR/OCR/WebVTT kanıt zincirindeki açık gerçek işleri ele almak.
+- **Sonraki tek adım:** Aşama 4 için güvenli hostname capture tasarımı ve çevrimdışı regresyonları; DNS/IP pinleme, yayıncı allowlist, redirect/protocol/egress korumaları kabul edilmeden canlı capture yok.
+
+
+## İlerleme günlüğü — 21 Kasım 2026 00:22 UTC
+- #497 post-merge preview doğrulandı: main run 44842749390 SUCCESS; artifact 14681388150 (SHA-256 5e732b7066c63e0987fb22be6b28a8e08d72e8b7f1027f38b116bdeceba0cd41). Çıktı 1.107 verified / 685 uncertain, current playlist SHA 18ac8386964e2f336105bb83f8f1be0af008b6b9ea83f679a2fd1ca582097abe, preview_byte_identical=true, ordered_yedekler_blocks_identical=true, no scan/no playlist write.
+- #543 post-merge main run 44842692873 SUCCESS; Task 34 FFmpeg decode code accepted, but no live 18.074 sweep or device playback acceptance.
+- #559 merged commit cd90b364316322752b3a2184134646a335f3632d. Vault source descriptor/size and atomic no-clobber restore regressions are in the production gate. This closes code hardening only; independent external vault backup/restore remains open (#507/#6).
+- #562 already recorded original AV provenance and report breakdown; this entry corrects its earlier `actual_importer_preview_artifact_verified=false` with the later main run evidence. `v2/tasks/state.json` only receives observational evidence fields; the 34 task statuses remain unchanged.
