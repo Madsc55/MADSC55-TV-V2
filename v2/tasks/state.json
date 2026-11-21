@@ -1296,6 +1296,26 @@
     "existing_retry_plan_artifact_id": 14702596056,
     "original_task_statuses_changed": false,
     "playlist_modified": false,
-    "next_action": "Review remaining three PRs against main and reconcile full Actions run/job failure list; preserve #6/#497 gates."
+    "next_action": "Review remaining three PRs against main and reconcile full Actions run/job failure list; preserve #6/#497 gates.",
+    "verified_historical_actions_pairs": [
+      {
+        "failed": 41186910011,
+        "passed": 41186924198,
+        "job": "discovery-tests",
+        "scope": "offline acceptance"
+      },
+      {
+        "failed": 43483992949,
+        "passed": 43484653370,
+        "job": "Verify suspended publishers, no cron and immutable IBO",
+        "scope": "main security gate"
+      },
+      {
+        "failed": 44844890250,
+        "passed": 44845062944,
+        "job": "Verify suspended publishers, no cron and immutable IBO",
+        "scope": "PR security gate"
+      }
+    ]
   }
 }
