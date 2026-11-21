@@ -87,17 +87,28 @@ def select_retry_blocks(raw, manifest, require_known_snapshot=False):
         raise ValueError("Incomplete uncertain retry selection")
     return chosen
 
+def classify_outcomes(first_status, second_status=None):
+    """Only two deterministic media-absence results can become failed."""
+    if first_status == "AV_VERIFIED" or second_status == "AV_VERIFIED":
+        return "verified"
+    deterministic = {"NO_MEDIA", "NO_DECODED_FRAME"}
+    if first_status in deterministic and second_status in deterministic:
+        return "failed"
+    return "uncertain"
+
 def audit_one(item):
     index, block = item
     url = block.splitlines()[-1].strip()
     first = probe(url, timeout=TIMEOUT)
-    outcome = first
-    attempts = 1
+    first_outcome = first
     if first.get("status") == "AV_STREAMS_PRESENT":
         decoded = verify_decoded_av(url, timeout=TIMEOUT)
-        outcome = {**first, **decoded}
-        outcome["status"] = "AV_VERIFIED" if decoded.get("decoded_av_verified") else decoded.get("decode_status", "DECODE_FAILED")
-    if outcome.get("status") != "AV_VERIFIED":
+        first_outcome = {**first, **decoded}
+        first_outcome["status"] = "AV_VERIFIED" if decoded.get("decoded_av_verified") else decoded.get("decode_status", "DECODE_FAILED")
+    first_status = first_outcome.get("status", "UNKNOWN")
+    attempts = 1
+    outcome = first_outcome
+    if first_status != "AV_VERIFIED":
         attempts = 2
         second = probe(url, timeout=TIMEOUT)
         if second.get("status") == "AV_STREAMS_PRESENT":
@@ -105,10 +116,10 @@ def audit_one(item):
             second = {**second, **decoded}
             second["status"] = "AV_VERIFIED" if decoded.get("decoded_av_verified") else decoded.get("decode_status", "DECODE_FAILED")
         outcome = second
-    canonical = json.dumps(outcome, sort_keys=True, separators=(",", ":")).encode()
-    deterministic = outcome.get("status") in ("NO_MEDIA", "NO_DECODED_FRAME")
-    status = "verified" if outcome.get("status") == "AV_VERIFIED" else (
-        "failed" if deterministic and attempts >= 2 else "uncertain")
+        status = classify_outcomes(first_status, second.get("status", "UNKNOWN"))
+    else:
+        status = "verified"
+    canonical = json.dumps({"first": first_status, "final": outcome}, sort_keys=True, separators=(",", ":")).encode()
     return {
         "ordinal": index,
         "channel_sha256": digest(block.encode("utf-8")),
