@@ -1,5 +1,8 @@
+import os
 import tempfile
 import unittest
+from unittest.mock import patch
+import v2.turk_authorized_vault as vault_module
 from pathlib import Path
 from cryptography.fernet import Fernet
 from v2.turk_authorized_vault import Vault
@@ -80,6 +83,46 @@ class VaultTests(unittest.TestCase):
         link.symlink_to(backup)
         with self.assertRaises(ValueError):
             Vault(self.root / "restore.enc", self.key).restore(link, digest)
+
+    def test_source_symlink_swap_does_not_expose_vault(self):
+        self.vault.add("tr1", "https://example.org/a", "source", True, True)
+        replacement = self.root / "replacement.enc"
+        replacement.write_bytes(self.vault.path.read_bytes())
+        replacement.chmod(0o600)
+        original_open = os.open
+        def swap_before_descriptor(path, flags, *args, **kwargs):
+            if Path(path) == self.vault.path:
+                self.vault.path.unlink()
+                self.vault.path.symlink_to(replacement)
+            return original_open(path, flags, *args, **kwargs)
+        with patch.object(vault_module.os, "open", side_effect=swap_before_descriptor):
+            with self.assertRaises(OSError):
+                self.vault.read()
+
+    def test_backup_rejects_missing_or_oversized_source(self):
+        with self.assertRaises(ValueError):
+            self.vault.backup(self.root / "missing-backup.enc")
+        self.vault.add("tr1", "https://example.org/a", "source", True, True)
+        with patch.object(vault_module, "MAX_VAULT_BYTES", 1):
+            with self.assertRaisesRegex(ValueError, "maximum size"):
+                self.vault.backup(self.root / "oversized-backup.enc")
+        self.assertFalse((self.root / "oversized-backup.enc").exists())
+
+    def test_restore_race_cannot_overwrite_destination(self):
+        self.vault.add("tr1", "https://example.org/a", "source", True, True)
+        backup = self.root / "race-backup.enc"
+        digest = self.vault.backup(backup)
+        destination = self.root / "raced-restore.enc"
+        restored = Vault(destination, self.key)
+        original_link = os.link
+        def create_target_just_before_link(source, target, *args, **kwargs):
+            if Path(target) == destination:
+                destination.write_bytes(b"KEEP")
+            return original_link(source, target, *args, **kwargs)
+        with patch.object(vault_module.os, "link", side_effect=create_target_just_before_link):
+            with self.assertRaises(FileExistsError):
+                restored.restore(backup, digest)
+        self.assertEqual(destination.read_bytes(), b"KEEP")
 
     def test_wrong_key_fails_closed(self):
         self.vault.add("tr1", "https://example.org/a", "source", True, True)
