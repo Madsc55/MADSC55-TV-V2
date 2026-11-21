@@ -247,8 +247,8 @@
     },
     {
       "id": 17,
-      "status": "in_progress",
-      "last_checked_at": "2026-11-19T00:27:14Z",
+      "status": "completed",
+      "last_checked_at": "2026-11-21T22:22:00Z",
       "evidence_urls": [
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43454977935",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43454976797",
@@ -259,8 +259,8 @@
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44429064188",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44429064188/artifacts/14485014372"
       ],
-      "blocker": "The reviewed batch is in the encrypted checkpoint. Of the 20,148 historical queue identities, 3,766 matched to playlists and 16,367 absent from those playlists still need evidence. No new channel scan is authorized.",
-      "reason": "13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open.\n14 Nov live scan #43608247496: encrypted resume reused 28,545 observations, performed 300 real new AV checks, recovered 33 previously failed streams, and kept the recovery queue. Real progress verified but full restoration is not complete.\n18 Nov 2026: read-only follow-up of 15 pending SHA-256 identities, 17 attempts. One current AV sample, eight HTTP 404 reviews and six HTTP 503 retries. Per-attempt evidence is recorded in the dated report.\n18 Nov 2026 no-rescan reconciliation: current-main v2/reports/task17-18-20-bounded-retry-20261118.json confirms 20,148 queue, 3,781 matched, 15 unique URLs / 17 attempts, 1 AV, 8 HTTP404, 6 HTTP503, and sealed_checkpoint_updated=false. These observations must not be re-run merely because the tasks are open.\n19 Nov 2026: offline import run 44429064188 applied all 15 identities (17 historical attempts) to the 28,844-row encrypted checkpoint. The readback retained all rows, the second application made zero changes, and the published encrypted backup matched the input byte for byte. The 18 November report describes the pre-import snapshot."
+      "blocker": null,
+      "reason": "13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open.\n14 Nov live scan #43608247496: encrypted resume reused 28,545 observations, performed 300 real new AV checks, recovered 33 previously failed streams, and kept the recovery queue. Real progress verified but full restoration is not complete.\n18 Nov 2026: read-only follow-up of 15 pending SHA-256 identities, 17 attempts. One current AV sample, eight HTTP 404 reviews and six HTTP 503 retries. Per-attempt evidence is recorded in the dated report.\n18 Nov 2026 no-rescan reconciliation: current-main v2/reports/task17-18-20-bounded-retry-20261118.json confirms 20,148 queue, 3,781 matched, 15 unique URLs / 17 attempts, 1 AV, 8 HTTP404, 6 HTTP503, and sealed_checkpoint_updated=false. These observations must not be re-run merely because the tasks are open.\n19 Nov 2026: offline import run 44429064188 applied all 15 identities (17 historical attempts) to the 28,844-row encrypted checkpoint. The readback retained all rows, the second application made zero changes, and the published encrypted backup matched the input byte for byte. The 18 November report describes the pre-import snapshot.\n21 Nov 2026 owner-approved archival scope closure: Arşivlenmiş tarihsel kayıtlar belgelendi, güncel veriler doğrulandı. Historical unresolved individual identities (#17) and 303 historical EPG rows (#19) are explicitly waived as active acceptance blockers by project owner. This is archival/scope acceptance, not proof of per-identity restoration or per-row EPG resolution. Task #17 source reconciliation 20148=3781+16367, manifest archive/unverified_historical_ids.json; task #19 evidence v2/reports/task19-current-xmltv-20261119.json. No live scan or playlist changes."
     },
     {
       "id": 18,
@@ -282,8 +282,8 @@
     },
     {
       "id": 19,
-      "status": "in_progress",
-      "last_checked_at": "2026-11-19T14:05:27Z",
+      "status": "completed",
+      "last_checked_at": "2026-11-21T22:22:00Z",
       "evidence_urls": [
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42989285004",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43454977935",
@@ -298,8 +298,8 @@
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43608247496",
         "https://github.com/Madsc55/MADSC55-TV-V2/blob/main/v2/reports/task19-current-xmltv-20261119.json"
       ],
-      "blocker": "Seven distinct playlist IDs had a current titled programme on 19 Nov. Publisher schedules corroborate the ATV and CNBC-e intervals and the DMAX two-hour title block. Four schedule matches, publisher-issued XMLTV identifiers, and a row-level reconciliation with the 303 historical gaps remain open.",
-      "reason": "Validated 29 exact XMLTV IDs, 8 with valid programme time ranges, 14 also present in the reviewed AV set. 303 EPG gaps remain. Final identity acceptance depends on #18. 13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open. 13 Nov 2026: PR #156 merged as 5842d47a3617ccd3bc523632144e0c0eaffc0b9d. XMLTV programme availability now requires a unique channel ID and a parseable, strictly increasing start/stop interval, including UTC offset validation. Original Stage 2 fixture without stop failed first CI; fixture was corrected and PR run 43480044886 passed all groups. Main push security gate 43480208051 passed. Offline evidence only; live EPG gaps and final identity/EPG approval remain open. 13 Nov: PR #202 merged e5a233b8c281208b5ebc4662f741968002819d38. Main Actions 43484812015 SUCCESS. Offline crossfeed duplicate XMLTV ID rejection, undeclared programme rejection, DTD/ENTITY blocking proven. Live EPG and publisher identity acceptance remain open.\n14 Nov live scan #43608247496: read-only XMLTV audit 5 valid feeds; builder mapped 89 playlist entries via names into 54 review-only IDs and 1,838 programmes, explicitly 0 exact IDs. PR #255 safeguards name hints from automatic exact acceptance. 19 Nov: captured and hashed all five configured XMLTV feeds at one UTC instant. Four feeds provided current exact matches. Recorded publisher programme title and boundary evidence separately from XMLTV ID ownership and historical AV."
+      "blocker": null,
+      "reason": "Validated 29 exact XMLTV IDs, 8 with valid programme time ranges, 14 also present in the reviewed AV set. 303 EPG gaps remain. Final identity acceptance depends on #18. 13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open. 13 Nov 2026: PR #156 merged as 5842d47a3617ccd3bc523632144e0c0eaffc0b9d. XMLTV programme availability now requires a unique channel ID and a parseable, strictly increasing start/stop interval, including UTC offset validation. Original Stage 2 fixture without stop failed first CI; fixture was corrected and PR run 43480044886 passed all groups. Main push security gate 43480208051 passed. Offline evidence only; live EPG gaps and final identity/EPG approval remain open. 13 Nov: PR #202 merged e5a233b8c281208b5ebc4662f741968002819d38. Main Actions 43484812015 SUCCESS. Offline crossfeed duplicate XMLTV ID rejection, undeclared programme rejection, DTD/ENTITY blocking proven. Live EPG and publisher identity acceptance remain open.\n14 Nov live scan #43608247496: read-only XMLTV audit 5 valid feeds; builder mapped 89 playlist entries via names into 54 review-only IDs and 1,838 programmes, explicitly 0 exact IDs. PR #255 safeguards name hints from automatic exact acceptance. 19 Nov: captured and hashed all five configured XMLTV feeds at one UTC instant. Four feeds provided current exact matches. Recorded publisher programme title and boundary evidence separately from XMLTV ID ownership and historical AV.\n21 Nov 2026 owner-approved archival scope closure: Arşivlenmiş tarihsel kayıtlar belgelendi, güncel veriler doğrulandı. Historical unresolved individual identities (#17) and 303 historical EPG rows (#19) are explicitly waived as active acceptance blockers by project owner. This is archival/scope acceptance, not proof of per-identity restoration or per-row EPG resolution. Task #17 source reconciliation 20148=3781+16367, manifest archive/unverified_historical_ids.json; task #19 evidence v2/reports/task19-current-xmltv-20261119.json. No live scan or playlist changes."
     },
     {
       "id": 20,
@@ -1246,5 +1246,18 @@
     "archive_or_category_changes": false,
     "ledger_statuses_changed": false,
     "next_action": "Verify merge-after main CI; do not rerun historic reports. Keep #497 685 live retry on dual security hold until general FFmpeg/HLS egress isolation accepted. Separately identify genuine offsite #6 Fernet vault and authorized key for isolated restore."
+  },
+  "stage11_owner_archival_scope_closure_20261121": {
+    "tasks": [
+      17,
+      19
+    ],
+    "kind": "owner_accepted_historical_archive_scope_waiver",
+    "not_individual_record_verification": true,
+    "task17_manifest": "archive/unverified_historical_ids.json",
+    "task19_report": "v2/reports/task19-current-xmltv-20261119.json",
+    "live_scan": false,
+    "playlist_modified": false,
+    "security_hold_685_unchanged": true
   }
 }
