@@ -1631,3 +1631,10 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - Açık issue'lar #3, #4, #5, #6, #7, #8, #10, #497. #6 Türk özel Fernet kasa harici restore kanıtı eksik; #497 685 canlı retry güvenlik kilidi korunuyor. Önceki 685 satırlık plan artifact #14702596056 yeniden üretilmeyecek.
 - GitHub commit workflow-run connector sorgusu yalnız PR-triggered ilk sayfayı verir; main push veya bütün başarısız Actions koşularının eksiksiz envanteri değildir. `493e1699` commit status listesinin boşluğu CI PASS anlamına gelmez. Eski başarısız run'lar aynı kodda güncel başarılı kabul olmadan çözülmüş ilan edilmez.
 - Ana playlist, kategori, arşiv ve 34 kanonik görev statüsü değiştirilmedi. Canlı tarama ve İBO cihaz kabulü son aşamaya ertelendi. Kalan iş: #365/#372/#618 dosya incelemesi, eksiksiz Actions başarısızlık mutabakatı, #6/#497 bağımsız kabul kapıları.
+
+### Actions başarısızlıklarının karşılaştırmalı job kanıtı (21 Kasım 2026)
+
+- Run `41186910011`: `discovery-tests` FAILURE, `safety` SKIPPED; sonraki run `41186924198`: `compile`, `protect`, `discovery-tests`, `safety` SUCCESS. Tarihsel offline test hatası sonradan düzeltilmiş.
+- Main run `43483992949`: `Verify suspended publishers, no cron and immutable IBO` FAILURE; sonraki main run `43484653370`: aynı iş SUCCESS. Eski fixture hatası sonrası başarılı kontrol var.
+- PR run `44844890250`: aynı güvenlik işi FAILURE; sonraki PR run `44845062944`: SUCCESS. Import yolu düzeltmesi sonrası başarılı kontrol var.
+- PR #622 run `44921917164` güvenlik işi bu kayıt anında IN_PROGRESS; başarılı sonuç henüz doğrulanmadı. Bunlar tespit edilen tarihsel koşulardır, tüm repository Actions geçmişinin eksiksiz envanteri değildir.
