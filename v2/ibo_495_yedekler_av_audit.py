@@ -157,6 +157,10 @@ def main():
     manifest = json.loads(manifest_bytes)
     raw = args.playlist.read_bytes()
     chosen = select_retry_blocks(raw, manifest, require_known_snapshot=True)
+    # Defense in depth: even if the workflow SECURITY HOLD is accidentally removed,
+    # never send untrusted HLS child URLs to FFprobe/FFmpeg without a verified
+    # network-egress sandbox. A successful read-only preview is not authorization.
+    raise RuntimeError("SECURITY HOLD: 685 live retry requires accepted FFmpeg egress isolation")
     with concurrent.futures.ThreadPoolExecutor(max_workers=WORKERS) as pool:
         entries = list(pool.map(audit_one, chosen))
     counts = dict(Counter(item["status"] for item in entries))
