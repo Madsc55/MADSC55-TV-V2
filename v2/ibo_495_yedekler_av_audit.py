@@ -81,7 +81,7 @@ def main():
         "counts": counts,
         "read_only": True,
     }
-    Path("report.json").write_text(json.dumps(report, ensure_ascii=False, sort_keys=True, indent=2)+"\\n", encoding="utf-8")
+    Path("report.json").write_text(json.dumps(report, ensure_ascii=False, sort_keys=True, indent=2)+"\n", encoding="utf-8")
     print(json.dumps({"run_id": report["source_run_id"], "playlist_sha256": report["playlist_sha256"], "counts": counts, "entries": len(entries)}))
 if __name__ == "__main__":
     main()
