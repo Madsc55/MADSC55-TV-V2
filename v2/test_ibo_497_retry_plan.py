@@ -54,6 +54,7 @@ class RetryPlanTests(unittest.TestCase):
         with (
             patch("v2.ibo_497_retry_plan.SOURCE_PLAYLIST_SHA256", digest(raw)),
             patch("v2.ibo_497_retry_plan.SOURCE_REPORT_FILE_SHA256", "c" * 64),
+            patch("v2.ibo_497_retry_plan.SOURCE_REPORT_CANONICAL_SHA256", "b" * 64),
             patch("v2.ibo_497_retry_plan.INITIAL_MANIFEST_SHA256", digest(manifest_bytes)),
         ):
             return build_plan(raw, manifest, manifest_bytes, require_known_snapshot=True)
