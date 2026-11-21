@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Offline #497 source-artifact import tests; no network, scan or playlist writes."""
 import hashlib
+import json
 import unittest
 from unittest.mock import patch
 
@@ -34,7 +35,7 @@ def fixture():
         "timestamp_utc": "2026-11-20T00:20:09.490490+00:00",
         "results": results,
     }
-    raw_report = b"synthetic test fixture"
+    raw_report = json.dumps(audit, sort_keys=True, ensure_ascii=False, separators=(",", ":")).encode("utf-8")
     return source, current, audit, digest(raw_report)
 
 
