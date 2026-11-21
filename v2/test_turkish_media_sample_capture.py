@@ -14,9 +14,8 @@ class CaptureTests(unittest.TestCase):
         for url in ("http://127.0.0.1/live", "http://10.0.0.1/live", "http://192.168.1.1/live", "http://[::1]/live", "https://localhost/live", "https://server.local/live"):
             with self.subTest(url=url), self.assertRaises(ValueError):
                 validate_url(url)
-    def test_dns_names_rejected_to_prevent_rebinding(self):
-        with self.assertRaises(ValueError):
-            validate_url("https://example.com/live")
+    def test_dns_name_syntax_is_safe_before_pinned_network_resolution(self):
+        self.assertEqual(validate_url("https://example.com/live"), "https://example.com/live")
     def test_ambiguous_url_authority_and_controls_rejected(self):
         for url in (
             " http://8.8.8.8/live",
