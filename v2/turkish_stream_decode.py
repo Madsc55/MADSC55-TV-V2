@@ -6,8 +6,13 @@ import json
 import re
 import shutil
 import subprocess
-from discover import ROOT
-from turkish_stream_probe import probe
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+try:
+    from .turkish_stream_probe import probe
+except ImportError:  # direct script execution from the v2 directory
+    from turkish_stream_probe import probe
 
 SOURCE = ROOT / "v2/reports/turkish-stream-candidates.json"
 OUT = ROOT / "v2/reports/turkish-stream-decode.json"
