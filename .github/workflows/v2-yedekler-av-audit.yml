@@ -50,7 +50,7 @@ jobs:
           python -m py_compile v2/ibo_495_yedekler_av_audit.py v2/ibo_497_retry_reconcile.py
           PYTHONPATH=v2 python -m unittest -v v2.test_ibo_495_yedekler_av_audit v2.test_ibo_497_retry_reconcile
           PYTHONPATH=v2 python v2/ibo_495_yedekler_av_audit.py --retry-manifest /tmp/v2-497-initial/manifest.json
-          PYTHONPATH=v2 python v2/ibo_497_retry_reconcile.py --initial-manifest /tmp/v2-497-initial/manifest.json --retry-report retry-report.json --output-dir /tmp/v2-497-retry-result
+          PYTHONPATH=v2 python v2/ibo_497_retry_reconcile.py --initial-manifest /tmp/v2-497-initial/manifest.json --retry-report retry-report.json --output-dir v2-497-retry-result
       - name: Upload immutable retry evidence and preview (no playlist write)
         if: always()
         uses: actions/upload-artifact@v4
@@ -58,7 +58,7 @@ jobs:
           name: v2-497-685-retry-preview
           path: |
             retry-report.json
-            /tmp/v2-497-retry-result/manifest.json
-            /tmp/v2-497-retry-result/preview.m3u8
-          if-no-files-found: warn
+            v2-497-retry-result/manifest.json
+            v2-497-retry-result/preview.m3u8
+          if-no-files-found: error
           retention-days: 90
