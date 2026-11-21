@@ -124,5 +124,21 @@ class RetrySelectionTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             select_retry_blocks(raw, manifest)
 
+    def test_live_retry_entrypoint_fails_closed_before_any_probe(self):
+        import tempfile
+        from pathlib import Path
+        from unittest.mock import patch
+        from ibo_495_yedekler_av_audit import main
+        raw, manifest = self.fixture()
+        with tempfile.TemporaryDirectory() as folder:
+            playlist = Path(folder) / 'MADSC55_TV_IBO_CALISANLAR_TEST.m3u8'
+            playlist.write_bytes(raw)
+            source = Path(folder) / 'manifest.json'
+            source.write_text(__import__('json').dumps(manifest))
+            with patch('ibo_495_yedekler_av_audit.digest', side_effect=lambda data: 'b001bf48f07437e9ae67ed9f73b12ea9cfcab653523973435cf3b1cee3c31fcc' if data == source.read_bytes() else __import__('hashlib').sha256(data).hexdigest()), patch('sys.argv', ['audit', '--retry-manifest', str(source), '--playlist', str(playlist)]), patch('ibo_495_yedekler_av_audit.probe') as probe:
+                with self.assertRaisesRegex(RuntimeError, 'SECURITY HOLD'):
+                    main()
+                probe.assert_not_called()
+
 if __name__ == "__main__":
     unittest.main()
