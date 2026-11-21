@@ -789,5 +789,30 @@
     "task_statuses_changed": false,
     "all_34_tasks_completed": false,
     "note": "GitHub issue #6 is not equivalent to statuses[id=6] in the 34-task ledger; never update historic task statuses from this note."
+  },
+  "stage3_manual_retry_workflow_handoff_20261121": {
+    "observed_main_at_branch_creation": "5c007b3f3423f52ef41e7bf22b5317a87660cc97",
+    "historical_source_run": 44640007709,
+    "historical_artifact_id": 14587983768,
+    "historical_verified": 1107,
+    "historical_uncertain": 685,
+    "historical_failed": 0,
+    "imported_preview_main_run": 44842749390,
+    "imported_preview_artifact_id": 14681388150,
+    "ordered_1792_channel_evidence_match": true,
+    "merged_manual_reconcile_pr": 561,
+    "merged_manual_reconcile_main_ci_run": 44843901219,
+    "merged_targeted_685_retry_pr": 567,
+    "merged_targeted_retry_main_ci_run": 44843984931,
+    "merged_stage4_url_hardening_pr": 571,
+    "stage4_url_hardening_ci_run": 44843819098,
+    "manual_targeted_retry_scan_observed": false,
+    "manual_retry_scan_observation_scope": "latest 100 Actions runs as checked on 2026-11-21",
+    "next_review_pr": 572,
+    "next_review_requirement": "Review bounded DNS/IP-pinned sample capture SSRF/redirect/HLS restrictions and fresh CI; do not launch full scans or claim device acceptance",
+    "stream_urls_written": false,
+    "playlist_mutated": false,
+    "new_playlist_created": false,
+    "task_statuses_changed": false
   }
 }
