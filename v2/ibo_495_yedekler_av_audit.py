@@ -115,7 +115,7 @@ def audit_one(item):
         attempts = 2
         second = probe(url, timeout=TIMEOUT, require_guard=True)
         if second.get("status") == "AV_STREAMS_PRESENT":
-            decoded = verify_decoded_av(url, timeout=TIMEOUT)
+            decoded = verify_decoded_av(url, timeout=TIMEOUT, require_guard=True)
             second = {**second, **decoded}
             second["status"] = "AV_VERIFIED" if decoded.get("decoded_av_verified") else decoded.get("decode_status", "DECODE_FAILED")
         outcome = second
