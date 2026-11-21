@@ -26,7 +26,7 @@ INITIAL_CURRENT_PLAYLIST_SHA256 = "18ac8386964e2f336105bb83f8f1be0af008b6b9ea83f
 def digest(data):
     return hashlib.sha256(data).hexdigest()
 
-def select_retry_blocks(raw, manifest):
+def select_retry_blocks(raw, manifest, require_known_snapshot=False):
     if not isinstance(manifest, dict) or manifest.get("schema") != 1:
         raise ValueError("Invalid #497 initial manifest")
     if manifest.get("source_run_id") != SOURCE_RUN_ID:
@@ -41,7 +41,7 @@ def select_retry_blocks(raw, manifest):
         raise ValueError("Expected 1,792 current YEDEKLER entries")
     if manifest.get("current_playlist_sha256") != digest(raw):
         raise ValueError("Canonical playlist changed since initial preview")
-    if digest(raw) != INITIAL_CURRENT_PLAYLIST_SHA256:
+    if require_known_snapshot and digest(raw) != INITIAL_CURRENT_PLAYLIST_SHA256:
         raise ValueError("Unexpected canonical playlist snapshot")
     if manifest.get("ordered_yedekler_blocks_identical") is not True:
         raise ValueError("Initial source identity/order was not accepted")
@@ -139,7 +139,7 @@ def main():
         raise SystemExit("Initial retry manifest SHA-256 mismatch")
     manifest = json.loads(manifest_bytes)
     raw = args.playlist.read_bytes()
-    chosen = select_retry_blocks(raw, manifest)
+    chosen = select_retry_blocks(raw, manifest, require_known_snapshot=True)
     with concurrent.futures.ThreadPoolExecutor(max_workers=WORKERS) as pool:
         entries = list(pool.map(audit_one, chosen))
     counts = dict(Counter(item["status"] for item in entries))
