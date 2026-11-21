@@ -943,5 +943,87 @@
     },
     "live_full_18074_verification_completed": false,
     "ibo_device_playback_verified": false
+  },
+  "stage4_security_acceptance_20261121": {
+    "date": "2026-11-21",
+    "kind": "evidence-only; historical 34 task statuses unchanged",
+    "retry_hold": {
+      "pr": 588,
+      "merged": true,
+      "commit": "a8d914864d925764c27a3abaadb6715be3ff540b",
+      "ci_run": 44844737445,
+      "ci_conclusion": "success",
+      "live_retry_job_suspended": true,
+      "live_retry_started": false,
+      "uncertain_preserved": 685,
+      "verified_preserved": 1107
+    },
+    "stage4_capture": {
+      "pr": 589,
+      "merged": true,
+      "commit": "8617aac1fd524b19516978285f5a7107119fc064",
+      "ci_run": 44845121550,
+      "ci_conclusion": "success",
+      "public_hostname_and_ip_literal_use_pinned_local_only_download": true,
+      "nested_hls_dash_supported": false,
+      "real_publisher_sample_tested": false,
+      "device_tested": false
+    },
+    "stage5_hash_only_crosswalk": {
+      "pr": 585,
+      "merged": true,
+      "commit": "cf4b28f16c25af59295c7ee13c3dc5f659585ce1",
+      "full_18074_live_av_verified": false
+    },
+    "duplicate_prs_closed_unmerged": [
+      581,
+      590
+    ],
+    "main_playlist_or_archive_mutated": false,
+    "task_statuses_changed": false,
+    "next_action": "Review Stage 5 hash-only evidence/identity coverage and independently verify external encrypted-vault restore; keep 685 live retry disabled."
+  },
+  "stage6_retry_plan_20261121": {
+    "date": "2026-11-21",
+    "pr": 594,
+    "merged": true,
+    "merge_commit": "c17af7945921ba61f29c9d2e2918425e897c6cc8",
+    "production_security_gate_run": 44846469069,
+    "production_security_gate_conclusion": "success",
+    "planner": "v2/ibo_497_retry_plan.py",
+    "planned_rows": 685,
+    "source_run_id": 44640007709,
+    "source_artifact_id": 14587983768,
+    "deterministic_plan_sha256": true,
+    "source_timestamps_preserved": true,
+    "channel_and_url_sha256_bound": true,
+    "no_clobber_idempotent_output": true,
+    "manual_workflow_dispatched": false,
+    "actual_retry_plan_artifact_generated": false,
+    "live_retry_authorized": false,
+    "network_attempts": 0,
+    "new_scan_started": false,
+    "playlist_write_allowed": false,
+    "archive_write_allowed": false,
+    "task_statuses_changed": false,
+    "next_action": "Inspect the Stage 5 18,074 identity crosswalk and complete independent encrypted-vault restore; defer live retry and IBO device tests to final authorized test stage."
+  },
+  "stage4_drive_archive_structural_audit_20261121": {
+    "date": "2026-11-21",
+    "source": "existing private Google Drive Independent Encrypted Recovery Archive folder",
+    "file_title": "MADSC55-TV-V2 stage4-24 acceptance archive.enc",
+    "bytes": 7832688,
+    "sha256": "29f5498c3173b39afe5c4bee824e4423cc8229961fb5f7cbf26e402d449f4241",
+    "format": "JSONL schema-1 records with nonce and ciphertext fields",
+    "record_count": 7819,
+    "nonce_bytes": 12,
+    "unique_nonce_count": 7819,
+    "structural_audit": "pass",
+    "authenticated_decryption": false,
+    "restore_test_passed": false,
+    "independent_reference_hash_match": false,
+    "share_scope": "file owner and backup service account; no public anyone permission observed",
+    "file_modified": false,
+    "next_action": "Find the authorized matching key and format-specific decrypt/restore path; restore only to an isolated temporary destination and compare channel/URL fingerprints."
   }
 }

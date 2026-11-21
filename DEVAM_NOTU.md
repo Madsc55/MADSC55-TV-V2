@@ -1537,3 +1537,23 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - **Sınırlar:** Gerçek kanal taraması, yeni playlist, otomatik Türk/Yabancı ataması, kanal silme/taşıma, ana liste değişikliği, İBO Player kabulü yok. 48 engelli geri alınmadı; 1.003 kuralı yeniden uygulanmadı; önceki 112–486 ve 59–181 taşımaları tekrar edilmedi. `v2/tasks/state.json`'daki 34 görev durumuna dokunulmadı.
 - **Sıradaki çalışma:** Aşama 6'da eski kanıtları yeniden çalıştırmadan, 685 belirsiz kimliği `url_sha256` ve en yeni rapor zamanını esas alarak idempotent, sınırlı, salt-okunur retry/inceleme planına bağla; geçmiş AV kanıtı ile güncel kesin kanıtı ayrı tut. Canlı yayın ve cihaz testi son kapı, kullanıcı onayı olmadan liste yazımı yok.
 
+
+
+## 21 Kasım 2026 — Aşama 6 kod kabulü: 685 belirsiz için salt-okunur plan
+
+- PR #594 **merged**: `c17af7945921ba61f29c9d2e2918425e897c6cc8`. `v2/ibo_497_retry_plan.py`, tam olarak 685 tarihsel `uncertain/recheck_required` satırını kaynak run/artifact/rapor SHA-256, güncel ana playlist SHA-256, kanal bloğu SHA-256 ve URL SHA-256 ile bağlayan deterministik plan üretir.
+- Plan yalnızca ilk denemesi olan belirsiz kayıtları alır; kaynak zaman damgasını korur, YEDEKLER sırasını takip eder, URL veya yayın adresi yazmaz. Aynı girdiler aynı `plan_sha256` üretir; farklı mevcut dosyanın üzerine yazmaz.
+- PR #594 Production Security Gate run `44846469069` **SUCCESS**: retry-plan testleri, Stage 2/3, Stage 5, Stage 6, FFmpeg fixture ve Türkçe kanıt offline regresyonları geçti. Main'e birleşme sonrası gate `44846692188` kontrol anında devam ediyordu; son sonucu ayrıca kontrol et.
+- **Önemli ayrım:** Plan kodu ve sentetik/çevrimdışı testleri kabul edildi. Tek tıklamalı `workflow_dispatch` henüz çalıştırılmadı; gerçek 685 satırlı plan artefaktı henüz üretilmiş değil. Canlı retry, yeni tarama, FFmpeg canlı oynatma, otomatik sınıflandırma, playlist veya arşiv yazımı yapılmadı. Her satır `PENDING_FINAL_TEST_AUTHORIZATION` durumunda.
+- Aşama 4 güvenlik kodu DNS hostname ve public IP kaynaklarını aynı pinlenmiş indirme yoluna alır; FFmpeg yalnız yerel dosya görür. Çok parçalı HLS/DASH segment/anahtar toplayıcısı ve gerçek yayıncı örneği hâlâ açık. Bu yüzden 685 canlı retry kilidi kapalı kalır.
+- **Sıradaki sıra:** Stage 5 18.074 hash-only crosswalk kanıtını satır bazında incele; özel şifreli kasanın gerçek, bağımsız harici restore kabulünü tamamla. Ardından güvenli HLS/DASH segment taşıma ve gerçek yayıncı örneği. 18.074 tam medya taraması, 685 canlı retry ve İBO Player kullanıcı testi son test aşamasına kadar bekler.
+
+
+## 21 Kasım 2026 — Drive arşivi salt-okunur yapısal inceleme
+
+- Mevcut MADSC55-TV-V2 — Independent Encrypted Recovery Archive klasöründeki MADSC55-TV-V2 stage4-24 acceptance archive.enc dosyası yetkili Drive bağlantısından okundu; dosya boyutu **7.832.688 bayt**.
+- İndirilen baytların SHA-256 değeri 29f5498c3173b39afe5c4bee824e4423cc8229961fb5f7cbf26e402d449f4241; önceki nottaki hash ile eşleşti.
+- legacy_drive_archive_audit.py yapısal kontrolü yeniden üretildi: 7.819 JSONL kaydı, her kayıtta schema 1, 12 bayt nonce ve ciphertext; 7.819 nonce benzersiz. **Yalnızca yapısal PASS.**
+- Şifre çözme, kimlik/içerik doğrulaması veya restore yapılmadı. Bu dosya secure_archive.py Scrypt/AES-GCM tek-blob formatı ya da turk_authorized_vault.py Fernet kasası ile aynı format olarak varsayılmamalı. Uyumlu anahtar/şema ve bağımsız beklenen restore hash'i yok.
+- Drive izin metadatasında dosya sahibi ve yedek servis hesabı görünüyor; herkese açık (anyone) izin gözlenmedi. Dosya değiştirilmedi.
+- **#6 açık:** Yetkili anahtar ve doğru format uygulaması bulunmadan bağımsız şifre çözme/restore PASS denmeyecek. Sonraki adım formatla eşleşen anahtar erişimini ve beklenen hash kaynağını doğrulamak; ardından yalnız izole geçici hedefe restore ve kanal/URL hash karşılaştırması yapmak.
