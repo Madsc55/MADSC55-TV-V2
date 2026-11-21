@@ -72,6 +72,8 @@ jobs:
           python -m py_compile v2/real_ibo_scan.py v2/consolidate_inventory.py v2/ibo_package_acceptance.py v2/ibo_final_acceptance.py
           python v2/test_ibo_package_acceptance.py
           python v2/test_ibo_final_acceptance.py
+          python -m py_compile v2/ibo_device_acceptance.py v2/test_ibo_device_acceptance.py
+          python v2/test_ibo_device_acceptance.py
           PYTHONPATH=v2 python -m unittest -v test_verify_external_archive_bytes
           PYTHONPATH=v2 python -m unittest -v test_export_ibo_batches
       - name: Stage 2 and Stage 3 offline identity, EPG and recovery acceptance
