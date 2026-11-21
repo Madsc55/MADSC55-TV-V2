@@ -56,8 +56,8 @@ class HistoricalArtifactImportTests(unittest.TestCase):
 
     def test_changed_yedekler_order_fails_closed(self):
         source, current, audit, report_sha = fixture()
-        first = b'#EXTINF:-1 group-title="🗂️ YEDEKLER",Channel 1\nhttps://example.test/1\n'
-        second = b'#EXTINF:-1 group-title="🗂️ YEDEKLER",Channel 2\nhttps://example.test/2\n'
+        first = '#EXTINF:-1 group-title="🗂️ YEDEKLER",Channel 1\nhttps://example.test/1\n'.encode("utf-8")
+        second = '#EXTINF:-1 group-title="🗂️ YEDEKLER",Channel 2\nhttps://example.test/2\n'.encode("utf-8")
         current = current.replace(first + second, second + first)
         with self.assertRaises(ValueError):
             build_preview(source, current, audit, 44640007709, report_sha)
