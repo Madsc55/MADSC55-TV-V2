@@ -2,7 +2,7 @@
 import hashlib
 import unittest
 
-from ibo_495_yedekler_av_audit import select_retry_blocks, digest
+from ibo_495_yedekler_av_audit import select_retry_blocks, digest, classify_outcomes
 
 class RetrySelectionTests(unittest.TestCase):
     def fixture(self):
@@ -43,6 +43,13 @@ class RetrySelectionTests(unittest.TestCase):
             "retry_queue": queue,
         }
         return raw, manifest
+
+    def test_only_two_deterministic_absences_are_failed(self):
+        self.assertEqual(classify_outcomes("NO_MEDIA", "NO_MEDIA"), "failed")
+        self.assertEqual(classify_outcomes("NO_DECODED_FRAME", "NO_DECODED_FRAME"), "failed")
+        self.assertEqual(classify_outcomes("TIMEOUT", "NO_MEDIA"), "uncertain")
+        self.assertEqual(classify_outcomes("NO_MEDIA", "DECODE_FAILED"), "uncertain")
+        self.assertEqual(classify_outcomes("NO_MEDIA", "AV_VERIFIED"), "verified")
 
     def test_selects_exactly_685_uncertain_not_all_1792(self):
         raw, manifest = self.fixture()
