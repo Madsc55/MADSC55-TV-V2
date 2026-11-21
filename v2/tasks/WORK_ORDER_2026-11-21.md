@@ -136,3 +136,15 @@ Durum (bekliyor/çalışıyor/tamamlandı/bloke); değişen dosyalar; önce/sonr
 - Gerçek Türkçe konuşma/altyazı yayın örneği ve bağımsız gözlem yok. ASR/OCR/WebVTT yerel fixture'ları nihai Türk/yabancı kararı değildir; gerçek test/kanal taraması SON AŞAMA olarak bekler. Ana playlist/arşiv/EPG yazılmadı.
 
 - PR #567 `7bbefc113b02e25e0d8da1709273c39e9bbb4f12` birleşti: yalnız 685 belirsiz kanalın manuel/kanıt-kilitli yeniden denemesi ve yeniden birleştirme kodu hazır; **hiçbir canlı retry çalıştırması başlatılmadı**. Post-merge main run #44843984931 SUCCESS; #561 run #44843901219 ve #571 run #44843949176 da SUCCESS.
+
+
+## 21 Kasım 2026 — Aşama 4 DNS güvenliği, gerçek kod kabulü
+
+- **PR #572 merge edildi**, ana dal merge commit `8e9e86b0a422a59b2cfccdd9d732c0a16b442c99`. PR'ın son Production Security Gate Actions run'ı [44844424809](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44844424809) **SUCCESS**; 14 mevcut capture regresyonu ve 12 yeni pinned-DNS güvenlik testi PASS. Merge sonrası main run `44844614127` ayrı kontrol edilecek.
+- Tam uygulama kaydı: [v2/reports/stage4-pinned-dns-capture-20261121.md](../reports/stage4-pinned-dns-capture-20261121.md).
+- DNS adları artık **yalnız** onaylanmış genel/unicast IP'ye sabitlenmiş HTTP(S) indirme yoluyla örneklenebilir. DNS cevabında özel/multicast adres varsa fail-closed; HTTPS özgün hostname/SNI doğrular; HTTP redirect ve nested HLS/DASH reddedilir.
+- İndirilen finite MP4/Matroska/MPEG-TS dosyaları FFmpeg'e **yerel** dosya olarak ve yalnız `file` protokolü + sabit demuxer ile verilir. ffconcat/metin/manifest otomatik algılaması reddedilir. Çıktı özel geçici dizinde üretilir, mevcut hedefin üstüne yazılmaz. Sonuç yalnız `SAMPLE_CAPTURED_UNVERIFIED`; Türkçe konuşma, altyazı ve cihaz kanıtı değildir.
+- **Aşama 4 henüz tamamen tamamlanmadı.** En yaygın IPTV biçimi olan nested HLS/DASH, adaptif segmentler, anahtarlar ve redirect'ler için her alt isteği doğrulayan güvenli collector veya dış ağ egress duvarı gerekiyor; bilinçli olarak bloke. Mevcut legacy IP-literal FFmpeg modu da explicit whitelist'e rağmen egress firewall kanıtı değildir; ayrıca ele alınacak.
+- Önceki #567 kodu yalnız 685 belirsiz kaydın manuel, kanıt-kilitli retry hattıdır; CANLI retry çalıştırılmadı. 18.074 tam test, gerçek ASR/OCR/WebVTT, Türk/Yabancı final kararları, gerçek şifreli dış arşiv restore ve İBO Player cihaz kabulü açık.
+- Ana playlist, arşivler, EPG, yayın URL'leri ve kategoriler değiştirilmedi. Yeni playlist yok; 48 karantina kanal geri eklenmedi; eski 1003 kuralı uygulanmadı.
+- **Sonraki teknik sıra:** (a) güvenli HLS/DASH alt kaynak erişimi/egress tasarımı ve offline negatif testleri, (b) IP-literal legacy modun güvenli transport ile aynı seviyeye getirilmesi, (c) gerçek medya/ASR/OCR/WebVTT kanıtları için izinli manuel kabul, (d) son aşamadaki toplu testler.
