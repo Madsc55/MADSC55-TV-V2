@@ -40,7 +40,7 @@ def fixture():
 
 
 class HistoricalArtifactImportTests(unittest.TestCase):
-    def run_build(self, source, current, audit, report_sha, run_id=44640007709):
+    def run_build(self, source, current, audit, report_sha, run_id=44640007709, expected_report_sha=None):
         with patch("ibo_497_existing_artifact.SOURCE_PLAYLIST_SHA256", digest(source)), \
              patch("ibo_497_existing_artifact.SOURCE_REPORT_FILE_SHA256", report_sha):
             return build_preview(source, current, audit, run_id, report_sha)
