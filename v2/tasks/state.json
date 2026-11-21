@@ -614,5 +614,30 @@
     "next_stage": "#489 archive transfer verification",
     "playlist_changed": false,
     "task_statuses_changed": false
+  },
+  "stage3_issue497_implementation_review_20261121": {
+    "implementation_commit": "a893b79859dfbb0695c52b2e0222106c46bcea47",
+    "files_reviewed": [
+      "v2/ibo_497_existing_artifact.py",
+      "v2/ibo_test_result_reconcile.py",
+      "v2/test_ibo_test_result_reconcile.py"
+    ],
+    "expected_artifact_name": "v2-497-1792-report",
+    "matching_artifact_found": false,
+    "checked_runs": [
+      44799031940,
+      44798131945,
+      44798109696,
+      44798082554,
+      44787018154,
+      44758647544,
+      44757765645
+    ],
+    "synthetic_1107_685_test": true,
+    "real_1107_685_evidence": false,
+    "playlist_changed": false,
+    "new_scan_started": false,
+    "processing_applied": false,
+    "status": "blocked_missing_original_report_artifact"
   }
 }
