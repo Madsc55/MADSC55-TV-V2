@@ -36,7 +36,7 @@ class RetryPlanTests(unittest.TestCase):
             "source_artifact_id": 14587983768,
             "source_report_file_sha256": "c" * 64,
             "source_report_canonical_sha256": "b" * 64,
-            "source_playlist_sha256": "d" * 64,
+            "source_playlist_sha256": digest(raw),
             "current_playlist_sha256": digest(raw),
             "counts": {"verified": 1107, "uncertain": 685},
             "source_yedekler_count": 1792,
