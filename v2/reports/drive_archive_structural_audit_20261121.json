@@ -9,14 +9,27 @@
   "nonce_bytes": 12,
   "unique_nonce_count": 7819,
   "structural_pass": true,
-  "authenticated_decryption_verified": false,
-  "restore_test_passed": false,
-  "independent_reference_hash_match": false,
+  "authenticated_decryption_verified": true,
+  "restore_test_passed": true,
+  "independent_reference_hash_match": true,
   "drive_permissions_observed": [
     "file owner",
     "backup service account"
   ],
   "public_anyone_permission_observed": false,
   "file_modified": false,
-  "next_action": "Locate authorized matching key and format-specific restore procedure; verify only in an isolated temporary destination and compare channel and URL fingerprints."
+  "next_action": "Keep historical Stage 4 accepted; independently back up and restore the separate authorized Turkish vault with its correct scoped key and identity hashes.",
+  "historical_stage4_ci_restored": true,
+  "historical_stage4_ci_restore_run_id": 43241168321,
+  "historical_stage4_ci_restore_job_id": 131291179781,
+  "historical_stage4_ci_restore_job_conclusion": "success",
+  "historical_ci_authenticated_decryption_verified": true,
+  "historical_ci_independent_drive_restore_verified": true,
+  "historical_ci_restored_rows": 7819,
+  "historical_ci_original_history_rows": 4955,
+  "producer_artifact_sha256": "92766f43a713de6363577b6c179d9669e3d14ae3131e8e0efccd5f6c8007f369",
+  "restore_receipt_artifact_sha256": "b84546022f16e1c1e6583ec132e650f80c09c3ba5ade4e547cba4c086200427c",
+  "fresh_restore_performed_in_current_review": false,
+  "separate_turkish_authorized_vault_issue6_external_restore_passed": false,
+  "status_scope_note": "Historical Stage 4 offsite Drive restore succeeded in 2026-11-12 Actions. Current 2026-11-21 review rechecked exact producer and Drive ciphertext and receipts, without decrypting again. Separate Turkish authorized vault issue #6 remains open."
 }
