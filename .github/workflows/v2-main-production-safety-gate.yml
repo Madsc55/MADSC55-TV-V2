@@ -20,6 +20,7 @@ on:
           - codeberg
 permissions:
   contents: read
+  actions: read
 jobs:
   production-lock:
     name: Verify suspended publishers, no cron and immutable IBO
@@ -41,6 +42,37 @@ jobs:
         run: |
           PYTHONPATH=v2 python -m unittest -v test_ibo_test_result_reconcile test_ibo_497_audit_adapter test_ibo_497_existing_artifact
           python -m py_compile v2/ibo_test_result_reconcile.py v2/ibo_497_audit_adapter.py v2/ibo_497_existing_artifact.py
+      - name: Build #497 preview from exact historical artifact (no scan, no playlist write)
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: |
+          python v2/ibo_497_existing_artifact.py --output-dir /tmp/v2-497-existing-audit-preview
+          python - <<'PY'
+          import hashlib, json
+          from pathlib import Path
+          root = Path("/tmp/v2-497-existing-audit-preview")
+          manifest = json.loads((root / "manifest.json").read_text(encoding="utf-8"))
+          playlist = Path("MADSC55_TV_IBO_CALISANLAR_TEST.m3u8").read_bytes()
+          preview = (root / "preview.m3u8").read_bytes()
+          assert preview == playlist, "preview changed canonical playlist bytes"
+          assert manifest["counts"] == {"verified": 1107, "uncertain": 685}
+          assert manifest["ordered_yedekler_blocks_identical"] is True
+          assert manifest["canonical_playlist_written"] is False
+          assert manifest["new_scan_started"] is False
+          assert manifest["source_report_file_sha256"] == "30de600eca7d8e3140f423bb3fc248dc2f57df6ff031b0bf97276a9a861dba2c"
+          print(json.dumps({"preview_byte_identical": True, "counts": manifest["counts"],
+                            "source_run_id": manifest["source_run_id"],
+                            "source_artifact_id": manifest["source_artifact_id"],
+                            "playlist_sha256": hashlib.sha256(playlist).hexdigest()}))
+          PY
+      - name: Upload immutable #497 historical reconciliation preview
+        uses: actions/upload-artifact@v4
+        with:
+          name: v2-497-existing-audit-preview
+          path: /tmp/v2-497-existing-audit-preview/
+          if-no-files-found: error
+          retention-days: 90
       - name: Fail closed on changes to production trigger/write policy
         run: PYTHONPATH=v2 python v2/main_actions_security_gate.py
       - name: Preserve original IBO category and backup invariants
