@@ -11,7 +11,7 @@ from ibo_single_playlist_transfer import parse, category
 from stream_probe import probe, verify_decoded_av
 
 PLAYLIST = Path("MADSC55_TV_IBO_CALISANLAR_TEST.m3u8")
-WORKERS = 12
+WORKERS = 32
 TIMEOUT = 15
 
 def digest(data):
