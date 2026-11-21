@@ -876,7 +876,7 @@
   },
   "stage5_worldwide_crosswalk_handoff_20261121": {
     "stage": "Stage 5 historical worldwide evidence SHA crosswalk",
-    "status": "in_progress_waiting_ci_exact_overlap",
+    "status": "historical_hash_reconciliation_completed_read_only",
     "source_run_id": 42216075104,
     "source_head_sha": "062cf6ae9783803bb45b06efd4e877bcb6333f8e",
     "source_artifact_id": 13524765368,
@@ -903,11 +903,45 @@
       "TURK": 424,
       "YABANCI": 284
     },
-    "exact_archive_overlap_verified": false,
+    "exact_archive_overlap_verified": true,
     "pr": 585,
     "playlist_edited": false,
     "new_scan_started": false,
     "task_statuses_changed": false,
-    "next_action": "Wait for PR 585 full source artifact CI; inspect manifest/crosswalk counts; merge only after checks pass; keep unknown as unverified"
+    "next_action": "Stage 6: idempotent 685 uncertain report-only retry planning with source timestamps and URL hash identity; no real live retry or playlist mutation without controlled acceptance",
+    "merged": true,
+    "merge_commit_sha": "cf4b28f16c25af59295c7ee13c3dc5f659585ce1",
+    "pr_ci_run_id": 44845062944,
+    "pr_ci_conclusion": "success",
+    "main_push_run_id": 44845291731,
+    "main_push_conclusion": "pending_verification",
+    "crosswalk_artifact_id": 14682746793,
+    "crosswalk_artifact_zip_sha256": "b995abbb3eca5726d63c1a311a2132c57ded83caf87ca11eee778fc27463692f",
+    "crosswalk_counts": {
+      "archive_total": 18074,
+      "worldwide_exact_hash_matches": 16931,
+      "worldwide_not_found": 1143,
+      "source_run_av_decoded": 1904,
+      "prior_run_hash_only_matches": 10947,
+      "matched_but_not_av_decoded": 4080,
+      "historical_exact_hash_matches": 2681,
+      "historical_av_decoded_matches": 2617,
+      "current_yedekler_total": 1792,
+      "current_yedekler_worldwide_matches": 1436,
+      "current_yedekler_source_run_av_decoded": 161,
+      "current_yedekler_prior_run_hash_only": 863,
+      "current_yedekler_not_in_worldwide_report": 356
+    },
+    "issue497_crosswalk": {
+      "matched": 1792,
+      "working_latest_source": 1107,
+      "uncertain_latest_source": 685,
+      "uncertain_old_worldwide_av_decoded": 20,
+      "uncertain_old_prior_hash_only": 63,
+      "uncertain_not_in_worldwide_report": 208,
+      "old_evidence_does_not_override_latest_uncertain": true
+    },
+    "live_full_18074_verification_completed": false,
+    "ibo_device_playback_verified": false
   }
 }
