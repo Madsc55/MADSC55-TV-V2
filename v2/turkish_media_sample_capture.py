@@ -14,7 +14,10 @@ import shutil
 import subprocess
 from urllib.parse import urlsplit
 
-from public_egress_guard import install as install_egress_guard, remove as remove_egress_guard, is_installed
+try:
+    from .public_egress_guard import install as install_egress_guard, remove as remove_egress_guard, is_installed
+except ImportError:
+    from public_egress_guard import install as install_egress_guard, remove as remove_egress_guard, is_installed
 
 MAX_SECONDS = 12
 MAX_TIMEOUT = 17
