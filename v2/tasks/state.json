@@ -643,5 +643,81 @@
     "live_playlist_mutated": false,
     "live_write_claimed": false,
     "next_stage": "#497 existing 1792 result reconciliation without new scan"
+  },
+  "stage3_verified_historical_av_progress_20261121": {
+    "date": "2026-11-21",
+    "baseline_main_sha": "ee0bc043136fbd982775461ad76c588f8bc67951",
+    "purpose": "Record independently verified historical AV artifact and merged acceptance code; no new scan or playlist mutation.",
+    "stage1_archive": {
+      "pr": 551,
+      "merged": true,
+      "main_ci_run": 44841861864,
+      "main_ci_conclusion": "success",
+      "archive_test_count": 12,
+      "live_transfer_performed_by_this_review": false
+    },
+    "stage2_original_yedekler_av": {
+      "source_run_id": 44640007709,
+      "source_event": "workflow_dispatch",
+      "source_head_sha": "1e8bd6d46762366f151e1270cc767f598c8e63e8",
+      "artifact_id": 14587983768,
+      "artifact_name": "yedekler-av-audit",
+      "report_filename": "yedekler_av_audit.json",
+      "artifact_zip_sha256": "d6fefd9dabc036302dcadf0e52fa66542c51d9032d9abf8aeb3e3b88233a9f73",
+      "raw_report_sha256": "30de600eca7d8e3140f423bb3fc248dc2f57df6ff031b0bf97276a9a861dba2c",
+      "report_playlist_sha256": "eee260cce3926caff18238f9583958b40475e362ce7650fb7fac51a66a84ee1c",
+      "report_schema_version": 1,
+      "total": 1792,
+      "counts": {
+        "WORKING": 1107,
+        "RECHECK_REQUIRED": 685
+      },
+      "uncertain_status_counts": {
+        "PROBE_FAILED": 621,
+        "TIMEOUT": 26,
+        "NO_MEDIA": 23,
+        "AV_STREAMS_PRESENT": 14,
+        "AUDIO_ONLY": 1
+      },
+      "checks": {
+        "archive_zip_hash_matches_upload_log": true,
+        "exact_report_file_hash_verified": true,
+        "positions_contiguous_1_to_1792": true,
+        "unique_url_hashes": 1792,
+        "url_sha_format_valid": true,
+        "working_all_video_audio_decoded": true,
+        "uncertain_none_decoded_verified": true,
+        "historical_and_main_ordered_yedekler_blocks_equal_prior_readonly_comparison": true
+      },
+      "merged_importer_pr": 547,
+      "merged_importer_main_ci_run": 44842749390,
+      "importer_main_ci_conclusion": "success",
+      "actual_importer_preview_artifact_verified": false,
+      "new_live_scan_started": false,
+      "channels_deleted_or_reordered": false,
+      "current_playlist_mutated": false
+    },
+    "stage3_real_ffmpeg_decode_code": {
+      "pr": 543,
+      "merged": true,
+      "merge_commit_sha": "bca89ad77a5f8d2b9607e6cfbdd39c249ac2aeb9",
+      "main_ci_run": 44842692873,
+      "main_ci_conclusion": "success",
+      "code_acceptance": "FFmpeg decoded video and audio short-sample gate merged",
+      "full_18074_channel_acceptance": false,
+      "device_acceptance": false
+    },
+    "duplicate_pr_cleanup": {
+      "closed_unmerged": [
+        514,
+        535,
+        552
+      ],
+      "rationale": "514 and 535 reconciler/test blobs already included in merged 547; 552 missing-artifact claim was superseded by recovered exact source artifact."
+    },
+    "task_statuses_changed": false,
+    "all_34_tasks_completed": false,
+    "next_single_action": "Execute and verify #547 exact historical artifact importer in an authorized read-only environment; inspect its generated preview+manifest and SHA/identity locks before using 685 retry candidates.",
+    "report": "v2/reports/issue497-original-artifact-audit-20261121.json"
   }
 }
