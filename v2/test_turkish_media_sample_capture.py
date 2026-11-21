@@ -91,17 +91,17 @@ class CaptureTests(unittest.TestCase):
         observed = {}
         def upstream(conn):
             data = bytearray()
-            while b"\\r\\n\\r\\n" not in data:
+            while b"\r\n\r\n" not in data:
                 data.extend(conn.recv(1024))
             observed["request"] = bytes(data).decode("iso-8859-1")
-            conn.sendall(b"HTTP/1.1 200 OK\\r\\nContent-Length: 2\\r\\nConnection: close\\r\\n\\r\\nok")
+            conn.sendall(b"HTTP/1.1 200 OK\r\nContent-Length: 2\r\nConnection: close\r\n\r\nok")
         address, thread = self._start_upstream(upstream)
         proxy = PinnedHTTPProxy({"example.com"}, {80}, resolver=dns_answer("8.8.8.8"),
                                 connector=lambda _address, timeout: socket.create_connection(address, timeout))
         with proxy:
             host, port = proxy._server.server_address
             client = socket.create_connection((host, port), timeout=3)
-            client.sendall(b"GET http://example.com/live.m3u8?x=1 HTTP/1.1\\r\\nHost: attacker.invalid\\r\\n\\r\\n")
+            client.sendall(b"GET http://example.com/live.m3u8?x=1 HTTP/1.1\r\nHost: attacker.invalid\r\n\r\n")
             response = bytearray()
             while True:
                 chunk = client.recv(4096)
@@ -126,9 +126,9 @@ class CaptureTests(unittest.TestCase):
         with proxy:
             host, port = proxy._server.server_address
             client = socket.create_connection((host, port), timeout=3)
-            client.sendall(b"CONNECT example.com:443 HTTP/1.1\\r\\nHost: example.com:443\\r\\n\\r\\n")
+            client.sendall(b"CONNECT example.com:443 HTTP/1.1\r\nHost: example.com:443\r\n\r\n")
             response = bytearray()
-            while b"\\r\\n\\r\\n" not in response:
+            while b"\r\n\r\n" not in response:
                 response.extend(client.recv(1024))
             self.assertIn(b"200 Connection Established", response)
             client.sendall(b"hello")
