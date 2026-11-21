@@ -4,6 +4,7 @@ import concurrent.futures
 import datetime
 import json
 import re
+from pathlib import Path
 import shutil
 import subprocess
 from pathlib import Path
@@ -45,6 +46,10 @@ def decode(item):
 
 
 def main():
+    try:
+        from turkish_stream_probe import probe
+    except ModuleNotFoundError:
+        from v2.turkish_stream_probe import probe
     if not shutil.which("ffmpeg"):
         raise SystemExit("ffmpeg is required")
     candidates = json.loads(SOURCE.read_text(encoding="utf-8"))["candidates"]
