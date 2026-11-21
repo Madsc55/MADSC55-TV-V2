@@ -10,24 +10,41 @@ import subprocess
 from urllib.parse import urlsplit
 
 def _public_http_url(url):
-    """Reject malformed/private targets; not a substitute for FFmpeg egress isolation."""
-    if not isinstance(url, str) or not url.strip():
+    """Reject unsafe initial targets; FFmpeg still needs OS egress isolation.
+
+    This is deliberately NOT a live retry authorization. FFmpeg may follow
+    redirects or HLS child manifests, so the outer network sandbox remains
+    mandatory even after an initial URL passes.
+    """
+    if (not isinstance(url, str) or not 0 < len(url) <= 4096 or
+            any(ord(c) <= 32 or ord(c) == 127 or c == "\\" for c in url)):
         return False
     try:
-        parsed = urlsplit(url.strip())
-        if (parsed.scheme not in ("http", "https") or not parsed.hostname
-                or parsed.username or parsed.password or parsed.fragment):
+        parsed = urlsplit(url)
+        if ("%" in parsed.netloc or parsed.scheme not in ("http", "https") or
+                not parsed.hostname or parsed.username is not None or
+                parsed.password is not None or parsed.fragment or parsed.port == 0):
             return False
-        host = parsed.hostname
-        if host.lower() in {"localhost", "localhost.localdomain"} or host.lower().endswith((".localhost", ".local", ".internal")):
+        hostname = parsed.hostname
+        if (hostname.lower() in ("localhost", "localhost.localdomain") or
+                hostname.lower().endswith((".localhost", ".local", ".internal", ".home.arpa"))):
             return False
         try:
-            addresses = [ipaddress.ip_address(host)]
+            literal = ipaddress.ip_address(hostname)
         except ValueError:
-            # Check every resolved address; DNS can change after this check.
-            addresses = [ipaddress.ip_address(row[4][0]) for row in socket.getaddrinfo(host, None, type=socket.SOCK_STREAM)]
-        return bool(addresses) and all(address.is_global for address in addresses)
-    except (ValueError, OSError, UnicodeError):
+            # Check every answer, not only the first. DNS may still rebind
+            # after this preflight: never lift the outer FFmpeg security hold.
+            answers = socket.getaddrinfo(hostname, None, type=socket.SOCK_STREAM)
+            if not answers or len(answers) > 32:
+                return False
+            addresses = [ipaddress.ip_address(row[4][0]) for row in answers]
+        else:
+            addresses = [literal]
+        return all(a.is_global and not a.is_multicast and not a.is_reserved
+                   and not a.is_unspecified and not a.is_loopback
+                   and not a.is_link_local and
+                   getattr(a, "ipv4_mapped", None) is None for a in addresses)
+    except (ValueError, OSError, UnicodeError, TypeError, IndexError):
         return False
 
 
