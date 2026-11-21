@@ -38,10 +38,20 @@
     "merged_importer_pr": 547,
     "merged_importer_main_ci_run": 44842749390,
     "importer_main_ci_conclusion": "success",
-    "actual_importer_preview_artifact_verified": false,
+    "actual_importer_preview_artifact_verified": true,
     "new_live_scan_started": false,
     "channels_deleted_or_reordered": false,
-    "current_playlist_mutated": false
+    "current_playlist_mutated": false,
+    "preview_run_id": 44842749390,
+    "preview_artifact_id": 14681388150,
+    "preview_manifest_sha256": "b001bf48f07437e9ae67ed9f73b12ea9cfcab653523973435cf3b1cee3c31fcc",
+    "preview_playlist_sha256": "18ac8386964e2f336105bb83f8f1be0af008b6b9ea83f679a2fd1ca582097abe",
+    "preview_git_blob_sha1": "f3d39e4522d27912fccd6e67240a10fd16c4923b",
+    "preview_channel_count": 18912,
+    "preview_yedekler_count": 1792,
+    "preview_byte_identical_to_current_canonical": true,
+    "preview_uncertain_queue_count": 685,
+    "preview_retry_url_hash_order_matches_source": true
   },
   "stage3_code": {
     "pr": 543,

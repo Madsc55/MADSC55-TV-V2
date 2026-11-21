@@ -1441,3 +1441,13 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - **Mükerrer işler:** #514 ve #535'in ortak reconciler/test dosyaları mevcut main'de SHA eşitliğiyle doğrulandı; #535'in eski importer'ı #547 ile güçlendirildi. #514, #535 ve eski eksik-artifact notlu #552 gerekçeli yorumla birleştirilmeden kapatıldı.
 - İşlem delili: [v2/reports/issue497-original-artifact-audit-20261121.json](v2/reports/issue497-original-artifact-audit-20261121.json). `v2/tasks/state.json` içinde yalnız yeni devir/gözlem alanı eklendi; 34 görev statüsüne ve ana playlist/URL/kategorilere dokunulmadı.
 - **Sonraki tek adım:** #547 importer'ı kimlik ve SHA kilitleriyle gerçek mevcut artifact üzerinden yalnız read-only önizleme/manifest üretip doğrulamak; ardından ASR/OCR/WebVTT kanıt zincirindeki açık gerçek işleri ele almak.
+
+
+## 21 Kasım 2026 — #497 raporundan gerçek önizlemeye uçtan uca doğrulama
+
+- Gerçek kaynak: Actions run `44640007709`, artifact `14587983768` (`yedekler_av_audit.json`), kaynak dosya SHA-256 `30de600eca7d8e3140f423bb3fc248dc2f57df6ff031b0bf97276a9a861dba2c`.
+- Gerçek işleme: `44842749390` run, `14681388150` artefaktı (`manifest.json` + `preview.m3u8`). Manifest SHA-256 `b001bf48f07437e9ae67ed9f73b12ea9cfcab653523973435cf3b1cee3c31fcc`.
+- Bağımsız ZIP denetimi: kanonik liste tam **18.912** kayıt; YEDEKLER **1.792**, TÜRK ARŞİVİ **424**, YABANCI ARŞİVİ **284**, ANA ARŞİV **15.574** ve diğer kategoriler **838**. Kaynak rapordaki 1.792 pozisyon/ad/URL-hash eşleşmesinin **1.792'si** güncel YEDEKLER ile doğru, 0 uyumsuzluk; 685 retry manifest hash'i kaynak belirsiz kayıtlarla aynı sırada ve benzersiz.
+- **1.107 verified**, **685 uncertain**, **0 failed**; video+audio kanıtı 1.107 verified için mevcut, belirsizler kesin ölü ilan edilmedi. Belirsiz dağılım: 621 PROBE_FAILED, 26 TIMEOUT, 23 NO_MEDIA, 14 AV_STREAMS_PRESENT, 1 AUDIO_ONLY.
+- Önizleme Git blob SHA-1 `f3d39e4522d27912fccd6e67240a10fd16c4923b` ve SHA-256 `18ac8386964e2f336105bb83f8f1be0af008b6b9ea83f679a2fd1ca582097abe`; main kanonik playlistin **aynı dosyasıdır**. Hiçbir kategori/sıra/URL değişmedi.
+- PR #560 SHA kilidi güvenlik düzeltmesi CI PASS ile merge edildi. Önceki PR #561 envanter güncellemeleri başka merge'lerle çakıştığından, tek manuel salt-okunur preview workflow'u güncel main üzerine çatışmasız taşınıyor. Workflow dispatch sadece **mevcut raporu** indirir; stream probe/FFmpeg/new scan içermez. Gerçek retry ayrı aşamadır.

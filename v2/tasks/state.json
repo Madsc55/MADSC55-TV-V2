@@ -692,10 +692,15 @@
       "merged_importer_pr": 547,
       "merged_importer_main_ci_run": 44842749390,
       "importer_main_ci_conclusion": "success",
-      "actual_importer_preview_artifact_verified": false,
+      "actual_importer_preview_artifact_verified": true,
       "new_live_scan_started": false,
       "channels_deleted_or_reordered": false,
-      "current_playlist_mutated": false
+      "current_playlist_mutated": false,
+      "preview_run_id": 44842749390,
+      "preview_artifact_id": 14681388150,
+      "preview_manifest_sha256": "b001bf48f07437e9ae67ed9f73b12ea9cfcab653523973435cf3b1cee3c31fcc",
+      "preview_playlist_sha256": "18ac8386964e2f336105bb83f8f1be0af008b6b9ea83f679a2fd1ca582097abe",
+      "preview_byte_identical_to_main": true
     },
     "stage3_real_ffmpeg_decode_code": {
       "pr": 543,
@@ -717,7 +722,32 @@
     },
     "task_statuses_changed": false,
     "all_34_tasks_completed": false,
-    "next_single_action": "Execute and verify #547 exact historical artifact importer in an authorized read-only environment; inspect its generated preview+manifest and SHA/identity locks before using 685 retry candidates.",
+    "next_single_action": "Merge manual read-only #497 reconciliation workflow once its current-main security gate passes; keep 685 uncertain queued, no new AV scan or playlist mutation",
     "report": "v2/reports/issue497-original-artifact-audit-20261121.json"
+  },
+  "stage3_issue497_historical_import_20261121": {
+    "source_run_id": 44640007709,
+    "source_head_sha": "1e8bd6d46762366f151e1270cc767f598c8e63e8",
+    "source_artifact_id": 14587983768,
+    "source_report_name": "yedekler_av_audit.json",
+    "source_report_sha256": "30de600eca7d8e3140f423bb3fc248dc2f57df6ff031b0bf97276a9a861dba2c",
+    "source_playlist_sha256": "eee260cce3926caff18238f9583958b40475e362ce7650fb7fac51a66a84ee1c",
+    "source_yedekler_count": 1792,
+    "current_yedekler_count": 1792,
+    "ordered_yedekler_blocks_identical": true,
+    "verified": 1107,
+    "uncertain": 685,
+    "failed": 0,
+    "preview_run_id": 44842556117,
+    "preview_artifact_id": 14681083208,
+    "preview_playlist_sha256": "18ac8386964e2f336105bb83f8f1be0af008b6b9ea83f679a2fd1ca582097abe",
+    "preview_manifest_sha256": "b001bf48f07437e9ae67ed9f73b12ea9cfcab653523973435cf3b1cee3c31fcc",
+    "preview_byte_identical_to_canonical": true,
+    "new_scan_started": false,
+    "playlist_changed": false,
+    "channels_moved": 0,
+    "task_statuses_changed": false,
+    "status": "historical_report_imported_preview_only",
+    "followup_pr": 561
   }
 }

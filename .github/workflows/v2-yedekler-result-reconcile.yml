@@ -1,0 +1,50 @@
+name: YEDEKLER existing result reconciliation (read-only)
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: v2-yedekler-result-reconcile
+  cancel-in-progress: false
+jobs:
+  reconcile:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Build preview from the exact historical report (no scan)
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: |
+          python -m py_compile v2/ibo_test_result_reconcile.py v2/ibo_497_audit_adapter.py v2/ibo_497_existing_artifact.py
+          python v2/ibo_497_existing_artifact.py --output-dir /tmp/v2-497-existing-audit-preview
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          root = Path("/tmp/v2-497-existing-audit-preview")
+          manifest = json.loads((root / "manifest.json").read_text(encoding="utf-8"))
+          canonical = Path("MADSC55_TV_IBO_CALISANLAR_TEST.m3u8").read_bytes()
+          assert (root / "preview.m3u8").read_bytes() == canonical
+          assert manifest["counts"] == {"verified": 1107, "uncertain": 685}
+          assert manifest["failed_count"] == 0
+          assert manifest["ordered_yedekler_blocks_identical"] is True
+          assert manifest["canonical_playlist_written"] is False
+          assert manifest["new_scan_started"] is False
+          print(json.dumps({"status": "PREVIEW_ONLY", "counts": manifest["counts"],
+                            "failed_count": manifest["failed_count"]}))
+          PY
+      - name: Upload immutable reconciliation preview and retry manifest
+        uses: actions/upload-artifact@v4
+        with:
+          name: v2-497-existing-audit-preview
+          path: /tmp/v2-497-existing-audit-preview/
+          if-no-files-found: error
+          retention-days: 90
