@@ -53,7 +53,7 @@ class StreamProbeTests(unittest.TestCase):
         command = run.call_args.args[0]
         self.assertIn("-protocol_whitelist", command)
         self.assertIn("http,https,tcp,tls,crypto", command)
-        self.assertIn("-max_redirect", command)
+        self.assertIn("-max_redirects", command)
         self.assertIn("-tls_verify", command)
 
     @patch("stream_probe.shutil.which", return_value="/usr/bin/ffprobe")
@@ -96,7 +96,7 @@ class StreamProbeTests(unittest.TestCase):
             command = call.args[0]
             self.assertIn("-protocol_whitelist", command)
             self.assertIn("http,https,tcp,tls,crypto", command)
-            self.assertIn("-max_redirect", command)
+            self.assertIn("-max_redirects", command)
             self.assertIn("-tls_verify", command)
 
 
