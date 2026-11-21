@@ -71,5 +71,20 @@
     "ambiguous_statuses_are_not_definitively_dead": true,
     "retry_only_after_authorized_gate": true,
     "no_new_playlist": true
+  },
+  "network_retry_security_hold_20261121": {
+    "source_pr": 567,
+    "merged_code_only": true,
+    "scope": "685 uncertain retry",
+    "unsafe_transport": "ffprobe and FFmpeg directly access playlist URLs without DNS/IP pinning or nested HLS redirect egress checks",
+    "remediation_pr": "pending",
+    "workflow_file": ".github/workflows/v2-yedekler-av-audit.yml",
+    "retry_job_if_expression": "${{ false }}",
+    "gate_error_if_reenabled": "UNSAFE_685_LIVE_RETRY_NOT_SUSPENDED",
+    "no_live_retry_started_by_this_review": true,
+    "no_playlist_archive_epg_or_channel_changes": true,
+    "historical_verified": 1107,
+    "historical_uncertain": 685,
+    "next_action": "Complete offline tested public-only, redirect and HLS child-resource safe media transport before enabling any 685-channel live retry."
   }
 }
