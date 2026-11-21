@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "kind": "historical_unverified_identity_manifest",
+  "scope": "counts_and_encrypted_artifact_reference_only",
+  "individual_identities_included": false,
+  "source_report": "v2/reports/task17-18-20-bounded-retry-20261118.json",
+  "source_run_id": 43608247496,
+  "source_artifact_id": 14135417421,
+  "source_archive_sha256": "3442c6feb99772265a852d95232b97600702790aba8ae8db8bd715fa4f9a5da9",
+  "source_report_sha256": "d5f382fe8116f0cd0d11f171a016f834195becefb51270f3564f4d6257f5191f",
+  "historical_queue_rows": 20148,
+  "distinct_matching_queue_hashes": 3781,
+  "unverified_historical_id_count": 16367,
+  "reconciliation_delta": 0,
+  "matched_prior_actions": {
+    "CHECK_AV": 689,
+    "RETRY": 1339,
+    "REVIEW": 1753
+  },
+  "identity_evidence_status": "encrypted_artifact_not_opened",
+  "note": "This manifest does not contain or verify individual identities and does not establish full Task 17 recovery acceptance."
+}
