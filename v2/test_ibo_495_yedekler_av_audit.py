@@ -27,9 +27,11 @@ class RetrySelectionTests(unittest.TestCase):
         manifest = {
             "schema": 1,
             "source_run_id": 44640007709,
+            "source_head_sha": "1e8bd6d46762366f151e1270cc767f598c8e63e8",
             "source_report_file_sha256": "30de600eca7d8e3140f423bb3fc248dc2f57df6ff031b0bf97276a9a861dba2c",
             "source_playlist_sha256": "eee260cce3926caff18238f9583958b40475e362ce7650fb7fac51a66a84ee1c",
             "source_artifact_id": 14587983768,
+            "source_artifact_name": "yedekler-av-audit",
             "source_yedekler_count": 1792,
             "current_yedekler_count": 1792,
             "current_playlist_sha256": digest(raw),
