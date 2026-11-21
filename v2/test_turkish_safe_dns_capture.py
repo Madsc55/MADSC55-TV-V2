@@ -214,7 +214,7 @@ class CaptureTests(unittest.TestCase):
             self.assertEqual(seen[0]["pinned_ip"], "8.8.8.8")
 
     def test_ip_literal_capture_also_uses_pinned_local_file_transport(self):
-        body = b"\\x1a\\x45\\xdf\\xa3" + (b"\\x00" * 32)
+        body = b"\x1a\x45\xdf\xa3" + (b"\x00" * 32)
         factory, seen = factory_for(body=body, content_type="video/x-matroska")
         with tempfile.TemporaryDirectory() as d:
             output = Path(d) / "sample.mkv"
