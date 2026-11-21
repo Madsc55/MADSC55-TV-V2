@@ -2,6 +2,7 @@
 """Offline #497 source-artifact import tests; no network, scan or playlist writes."""
 import hashlib
 import unittest
+from unittest.mock import patch
 
 from ibo_497_existing_artifact import build_preview
 from ibo_test_result_reconcile import digest
@@ -10,13 +11,13 @@ from ibo_test_result_reconcile import digest
 def fixture():
     source = ('#EXTM3U\n#EXTINF:-1 group-title="FAVORITES",Outside old\nhttps://example.test/old\n' +
               ''.join('#EXTINF:-1 group-title="🗂️ YEDEKLER",Channel %d\nhttps://example.test/%d\n' % (i, i)
-                      for i in range(1, 1793))).encode()
+                      for i in range(1, 1793))).encode('utf-8')
     current = ('#EXTM3U\n#EXTINF:-1 group-title="FAVORITES",Outside changed\nhttps://example.test/new\n' +
                ''.join('#EXTINF:-1 group-title="🗂️ YEDEKLER",Channel %d\nhttps://example.test/%d\n' % (i, i)
-                       for i in range(1, 1793))).encode()
+                       for i in range(1, 1793))).encode('utf-8')
     results = []
     for i in range(1, 1793):
-        url = ("https://example.test/%d" % i).encode()
+        url = ("https://example.test/%d" % i).encode("utf-8")
         working = i <= 1107
         results.append({
             "position": i, "name": "Channel %d" % i,
@@ -38,10 +39,14 @@ def fixture():
 
 
 class HistoricalArtifactImportTests(unittest.TestCase):
+    def run_build(self, source, current, audit, report_sha, run_id=44640007709):
+        with patch("ibo_497_existing_artifact.SOURCE_PLAYLIST_SHA256", digest(source)), \
+             patch("ibo_497_existing_artifact.SOURCE_REPORT_FILE_SHA256", report_sha):
+            return build_preview(source, current, audit, run_id, report_sha)
+
     def test_rebinds_only_when_all_yedekler_blocks_match_in_order(self):
         source, current, audit, report_sha = fixture()
-        preview, manifest = build_preview(
-            source, current, audit, 44640007709, report_sha)
+        preview, manifest = self.run_build(source, current, audit, report_sha)
         self.assertEqual(preview, current)
         self.assertEqual(manifest["counts"], {"verified": 1107, "uncertain": 685})
         self.assertTrue(manifest["ordered_yedekler_blocks_identical"])
@@ -52,7 +57,7 @@ class HistoricalArtifactImportTests(unittest.TestCase):
         source, current, audit, report_sha = fixture()
         current = current.replace(b"https://example.test/1792", b"https://example.test/changed")
         with self.assertRaises(ValueError):
-            build_preview(source, current, audit, 44640007709, report_sha)
+            self.run_build(source, current, audit, report_sha)
 
     def test_changed_yedekler_order_fails_closed(self):
         source, current, audit, report_sha = fixture()
@@ -60,14 +65,14 @@ class HistoricalArtifactImportTests(unittest.TestCase):
         second = '#EXTINF:-1 group-title="🗂️ YEDEKLER",Channel 2\nhttps://example.test/2\n'.encode("utf-8")
         current = current.replace(first + second, second + first)
         with self.assertRaises(ValueError):
-            build_preview(source, current, audit, 44640007709, report_sha)
+            self.run_build(source, current, audit, report_sha)
 
     def test_wrong_report_hash_or_run_fails_closed(self):
         source, current, audit, report_sha = fixture()
         with self.assertRaises(ValueError):
-            build_preview(source, current, audit, 44640007709, "0" * 64)
+            self.run_build(source, current, audit, "0" * 64)
         with self.assertRaises(ValueError):
-            build_preview(source, current, audit, 1, report_sha)
+            self.run_build(source, current, audit, report_sha, run_id=1)
 
 
 if __name__ == "__main__":
