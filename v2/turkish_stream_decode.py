@@ -3,6 +3,7 @@
 import concurrent.futures
 import datetime
 import json
+import re
 import shutil
 import subprocess
 from discover import ROOT
@@ -11,24 +12,32 @@ from turkish_stream_probe import probe
 SOURCE = ROOT / "v2/reports/turkish-stream-candidates.json"
 OUT = ROOT / "v2/reports/turkish-stream-decode.json"
 MAX_DECODES = 24
+VIDEO_FRAME = re.compile(r"Parsed_showinfo.*\\bn:\\s*\\d+")
+AUDIO_FRAME = re.compile(r"Parsed_ashowinfo.*\\bn:\\s*\\d+")
+
 
 def decode(item):
-    """Decode actual video frames and audio samples; metadata alone is not AV proof."""
+    """Require FFmpeg to report at least one decoded video frame and audio frame."""
     url = item["url"]
-    # A single FFmpeg invocation must decode both media types; the exit code
-    # alone is not enough because FFmpeg may succeed with no selected streams.
-    cmd = ["ffmpeg", "-hide_banner", "-nostdin", "-v", "error",
+    cmd = ["ffmpeg", "-hide_banner", "-nostdin", "-v", "info",
            "-rw_timeout", "6000000", "-analyzeduration", "2000000",
            "-probesize", "65536", "-i", url,
            "-map", "0:v:0", "-map", "0:a:0",
+           "-vf", "showinfo", "-af", "ashowinfo",
            "-t", "3", "-f", "null", "-"]
     try:
         result = subprocess.run(cmd, capture_output=True, text=True, timeout=18)
+        stderr = result.stderr or ""
+        video_decoded = bool(VIDEO_FRAME.search(stderr))
+        audio_decoded = bool(AUDIO_FRAME.search(stderr))
+        verified = result.returncode == 0 and video_decoded and audio_decoded
         return {"channel_id": item["channel_id"],
-                "status": "SHORT_DECODE_VERIFIED" if result.returncode == 0 else "DECODE_UNVERIFIED",
-                "media_types": ["audio", "video"] if result.returncode == 0 else []}
+                "status": "SHORT_DECODE_VERIFIED" if verified else "DECODE_UNVERIFIED",
+                "media_types": ["audio", "video"] if verified else []}
     except (OSError, ValueError, subprocess.TimeoutExpired):
-        return {"channel_id": item["channel_id"], "status": "DECODE_UNVERIFIED"}
+        return {"channel_id": item["channel_id"], "status": "DECODE_UNVERIFIED",
+                "media_types": []}
+
 
 def main():
     if not shutil.which("ffmpeg"):
@@ -47,8 +56,10 @@ def main():
               "short_decode_verified": sum(x["status"] == "SHORT_DECODE_VERIFIED" for x in decoded),
               "results": decoded}
     OUT.parent.mkdir(parents=True, exist_ok=True)
-    OUT.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    OUT.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\\n", encoding="utf-8")
     print("Short decode verified:", report["short_decode_verified"], "of", len(selected),
           "HTTP media hints:", report["http_media_hints"])
+
+
 if __name__ == "__main__":
     main()
