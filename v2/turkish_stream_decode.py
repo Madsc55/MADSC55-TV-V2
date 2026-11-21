@@ -6,17 +6,14 @@ import json
 import re
 import shutil
 import subprocess
-try:
-    from discover import ROOT
-except ModuleNotFoundError:  # support package-style test invocation
-    from v2.discover import ROOT
+from discover import ROOT
 from turkish_stream_probe import probe
 
 SOURCE = ROOT / "v2/reports/turkish-stream-candidates.json"
 OUT = ROOT / "v2/reports/turkish-stream-decode.json"
 MAX_DECODES = 24
-VIDEO_FRAME = re.compile(r"Parsed_showinfo.*\\bn:\\s*\\d+")
-AUDIO_FRAME = re.compile(r"Parsed_ashowinfo.*\\bn:\\s*\\d+")
+VIDEO_FRAME = re.compile(r"Parsed_showinfo.*\bn:\s*\d+")
+AUDIO_FRAME = re.compile(r"Parsed_ashowinfo.*\bn:\s*\d+")
 
 
 def decode(item):
@@ -59,7 +56,7 @@ def main():
               "short_decode_verified": sum(x["status"] == "SHORT_DECODE_VERIFIED" for x in decoded),
               "results": decoded}
     OUT.parent.mkdir(parents=True, exist_ok=True)
-    OUT.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\\n", encoding="utf-8")
+    OUT.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print("Short decode verified:", report["short_decode_verified"], "of", len(selected),
           "HTTP media hints:", report["http_media_hints"])
 
