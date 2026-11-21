@@ -54,9 +54,9 @@ def validate_url(url):
         raise ValueError("Non-public IP addresses are not supported")
     return url
 
-def _capture_domain(url, dest, *, seconds, timeout, executable, runner,
+def _capture_pinned_media(url, dest, *, seconds, timeout, executable, runner,
                     resolver=None, connection_factory=None, include_subtitles=False):
-    """Pinned-IP download, then FFmpeg strictly on local bytes, never network."""
+    """Pinned-IP download for every address type, then FFmpeg strictly on local bytes."""
     with tempfile.TemporaryDirectory(prefix="v2-capture-", dir=dest.parent) as private:
         source = Path(private) / "source.bin"
         output = Path(private) / "decoded.mkv"
@@ -120,45 +120,13 @@ def capture(url, destination, *, seconds=4, timeout=17, runner=subprocess.run, w
     if dest.suffix.lower() != ".mkv" or not dest.parent.is_dir():
         raise ValueError("Output must be a new .mkv file in an existing directory")
     try:
-        ipaddress.ip_address(urlsplit(url).hostname)
-    except ValueError:
-        try:
-            return _capture_domain(url, dest, seconds=seconds, timeout=timeout,
-                                   executable=executable, runner=runner,
-                                   resolver=resolver, connection_factory=connection_factory,
-                                   include_subtitles=include_subtitles)
-        except (OSError, TimeoutError, subprocess.TimeoutExpired):
-            return {"status": "CAPTURE_FAILED", "language_verified": False,
-                    "device_verified": False}
-    cmd = [executable, "-nostdin", "-hide_banner", "-loglevel", "error",
-           "-rw_timeout", str(timeout * 1000000), "-max_redirect", "0",
-           # Limit FFmpeg to explicit transport protocols; does NOT provide an
-           # egress firewall or make untrusted HLS segment URLs safe by itself.
-           "-protocol_whitelist", "http,https,tcp,tls,crypto",
-           "-i", url, "-t", str(seconds), "-fs", str(MAX_BYTES),
-           "-map", "0:v:0?", "-map", "0:a:0?", "-c:v", "mpeg4", "-q:v", "12",
-           "-c:a", "aac", "-b:a", "48k"]
-    if include_subtitles:
-        cmd.extend(["-map", "0:s?", "-c:s", "copy"])
-    cmd.extend(["-n", str(dest)])
-    try:
-        result = runner(cmd, capture_output=True, timeout=timeout, check=False)
-        if dest.is_symlink():
-            dest.unlink(missing_ok=True)
-            raise ValueError("Capture output cannot be a symlink")
-        size = dest.stat().st_size if dest.is_file() else 0
-        if result.returncode != 0 or not 0 < size <= MAX_BYTES:
-            dest.unlink(missing_ok=True)
-            return {"status": "CAPTURE_FAILED", "language_verified": False, "device_verified": False}
-        return {"status": "SAMPLE_CAPTURED_UNVERIFIED", "bytes": size,
-                "captured_at_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
-                "sample_sha256": hashlib.sha256(dest.read_bytes()).hexdigest(),
-                "url_sha256": hashlib.sha256(url.encode("utf-8")).hexdigest(),
-                "language_verified": False, "device_verified": False,
-                "asr_completed": False, "ocr_completed": False}
-    except (subprocess.TimeoutExpired, OSError):
-        dest.unlink(missing_ok=True)
-        return {"status": "CAPTURE_FAILED", "language_verified": False, "device_verified": False}
+        return _capture_pinned_media(url, dest, seconds=seconds, timeout=timeout,
+                                     executable=executable, runner=runner,
+                                     resolver=resolver, connection_factory=connection_factory,
+                                     include_subtitles=include_subtitles)
+    except (OSError, TimeoutError, subprocess.TimeoutExpired):
+        return {"status": "CAPTURE_FAILED", "language_verified": False,
+                "device_verified": False}
 
 def main():
     parser = argparse.ArgumentParser()
