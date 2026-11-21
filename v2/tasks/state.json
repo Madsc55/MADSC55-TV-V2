@@ -1025,5 +1025,31 @@
     "share_scope": "file owner and backup service account; no public anyone permission observed",
     "file_modified": false,
     "next_action": "Find the authorized matching key and format-specific decrypt/restore path; restore only to an isolated temporary destination and compare channel/URL fingerprints."
+  },
+  "stage7_retry_verdict_integrity_20261121": {
+    "stage": "Stage 7: #497 live retry report consistency hardening",
+    "date": "2026-11-21",
+    "pr": 596,
+    "merged": true,
+    "merge_commit_sha": "a761fc34f96139c9be1cd7bcd2b120ad8628c38f",
+    "pr_ci_run_id": 44889082162,
+    "pr_ci_conclusion": "success",
+    "main_ci_run_id": 44889233215,
+    "main_ci_conclusion": "pending_verification",
+    "producer_records_first_and_second_av_status": true,
+    "reconcile_requires_actual_decoded_av": true,
+    "reconcile_requires_two_deterministic_absences_for_failed": true,
+    "exact_hex_evidence_hash_required": true,
+    "attempt_count_bounded": true,
+    "offline_regressions_passed": true,
+    "original_verified": 1107,
+    "original_uncertain": 685,
+    "original_failed": 0,
+    "planned_685_retry_artifact_generated": false,
+    "live_retry_started": false,
+    "playlist_modified": false,
+    "drive_data_modified": false,
+    "task_statuses_changed": false,
+    "next_action": "Verify main CI; generate read-only Stage 6 retry plan artifact using authorized manual workflow when available; otherwise continue independent #6 real external vault restore acceptance; keep 685 live retry security-held."
   }
 }
