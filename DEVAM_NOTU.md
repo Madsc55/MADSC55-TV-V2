@@ -1621,3 +1621,20 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - Eski PR #500 (91 commit gerideki throttle fix) ve #215 (eski 429 devre düzeltmesi), yeni kod altında yinelenme olduğu için birleştirmeden kapatıldı. Salt-okunur devir notu PR'ları #576/#570/#506/#375/#363/#293/#262 kapatıldı. #280 ayrı izole M3U çıkaracağı ve kullanıcı ayrı test playlisti istemediği için kapatıldı; cihaz favorileri ve ana liste korunuyor.
 - Hiçbir gerçek kanal keşif workflow_dispatch çalıştırılmadı; GitHub güvenlik koşuları yalnız offline fixture/metadata geçmiş artefakt testleri yaptı. Yeni playlist, kategori, kanal taşıması, arşiv yazımı yok. 48 yasaklı kanal geri gelmedi, ilk 1.003 koruma kuralı tekrar uygulanmadı. Canonical main playlist Git blob SHA f3d39e4522d27912fccd6e67240a10fd16c4923b değişmedi.
 - KALAN gerçek kabul: Ayrı Türk-yetkili özel Fernet kasa #6 harici özel yedek + bağımsız gerçek restore kanıtı eksik (GitHub issue #6 21 Kasım'da kapalı görünse de onay kanıtı dosyası yok); güvenli çok kaynaklı HLS/DASH taşıma, gerçek Türkçe ses/altyazı, 685 canlı retry ve İBO Player cihaz testi kullanıcı final test aşamasına ertelenmiş durumda. Tarihsel Stage4 Drive restore PASS, ayrı Türk özel kasa #6 kabulü değildir.
+
+
+## 21 Kasım 2026 — Açık PR ve issue temizliği, main mutabakatı
+
+- Main HEAD `493e1699f45e6d893db46ff29690a86b7a8f06eb`, kanonik playlist blob `f3d39e4522d27912fccd6e67240a10fd16c4923b` (salt okunur doğrulandı).
+- Birleştirilmeden kapatılan eski/mükerrer PR'lar: #200, #75, #57, #66, #620, #221, #216, #210, #206, #93, #83, #73, #67, #64, #60, #52, #44, #40, #11, #9. Tarihsel GitHub kayıtları silinmedi.
+- Açık tutulan PR'lar: #618 (6 logo resmi kaynak doğrulaması bekliyor), #372 (182 Türkçe aday inceleme raporu, kesin sınıflama değil), #365 (eski test/arşiv dalı, otomatik merge edilmez). Eski `plan/18074-kanal-akilli-test-arsiv-20261117` dalı main'e göre 233 ahead / 329 behind; güvenlik ve kod eşdeğerliği incelemesi gerekir.
+- Açık issue'lar #3, #4, #5, #6, #7, #8, #10, #497. #6 Türk özel Fernet kasa harici restore kanıtı eksik; #497 685 canlı retry güvenlik kilidi korunuyor. Önceki 685 satırlık plan artifact #14702596056 yeniden üretilmeyecek.
+- GitHub commit workflow-run connector sorgusu yalnız PR-triggered ilk sayfayı verir; main push veya bütün başarısız Actions koşularının eksiksiz envanteri değildir. `493e1699` commit status listesinin boşluğu CI PASS anlamına gelmez. Eski başarısız run'lar aynı kodda güncel başarılı kabul olmadan çözülmüş ilan edilmez.
+- Ana playlist, kategori, arşiv ve 34 kanonik görev statüsü değiştirilmedi. Canlı tarama ve İBO cihaz kabulü son aşamaya ertelendi. Kalan iş: #365/#372/#618 dosya incelemesi, eksiksiz Actions başarısızlık mutabakatı, #6/#497 bağımsız kabul kapıları.
+
+### Actions başarısızlıklarının karşılaştırmalı job kanıtı (21 Kasım 2026)
+
+- Run `41186910011`: `discovery-tests` FAILURE, `safety` SKIPPED; sonraki run `41186924198`: `compile`, `protect`, `discovery-tests`, `safety` SUCCESS. Tarihsel offline test hatası sonradan düzeltilmiş.
+- Main run `43483992949`: `Verify suspended publishers, no cron and immutable IBO` FAILURE; sonraki main run `43484653370`: aynı iş SUCCESS. Eski fixture hatası sonrası başarılı kontrol var.
+- PR run `44844890250`: aynı güvenlik işi FAILURE; sonraki PR run `44845062944`: SUCCESS. Import yolu düzeltmesi sonrası başarılı kontrol var.
+- PR #622 run `44921917164` güvenlik işi bu kayıt anında IN_PROGRESS; başarılı sonuç henüz doğrulanmadı. Bunlar tespit edilen tarihsel koşulardır, tüm repository Actions geçmişinin eksiksiz envanteri değildir.
