@@ -1035,7 +1035,7 @@
     "pr_ci_run_id": 44889082162,
     "pr_ci_conclusion": "success",
     "main_ci_run_id": 44889233215,
-    "main_ci_conclusion": "pending_verification",
+    "main_ci_conclusion": "success",
     "producer_records_first_and_second_av_status": true,
     "reconcile_requires_actual_decoded_av": true,
     "reconcile_requires_two_deterministic_absences_for_failed": true,
