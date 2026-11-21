@@ -157,3 +157,12 @@ Durum (bekliyor/çalışıyor/tamamlandı/bloke); değişen dosyalar; önce/sonr
 4. **Sonraki adımlar:** tarihsel kanıtla eşleşmeyen veya artık güncel olmayan kayıtları açık blocker olarak tut; Türkçe kanıtı konuşma/altyazı/OCR/kimlik kanallarında birbirinden ayrı izle. Paketli, kontrollü gerçek medya testi ve retry yalnız güvenlik/CI kapılarından sonra. İBO Player'ın kullanıcı kontrollü 2.500 test döngüsüne karışma. Arşiv gerçek ortam bağımsız restore ve İBO cihaz onayı ayrı son kapılardır.
 
 **Dokunulmayacaklar:** tek ana playlist, 48 karantina, 1003 kuralı, kullanıcı onayı olmadan kategori/playlist yazımı yok. Daha önce yapılan Türk/Yabancı taşıma komutları tekrar edilmeyecek. Tam teknik devir kanıtı `DEVAM_NOTU.md` sonunda.
+
+
+## Aşama 5 kabul edildi / Aşama 6 sıradaki iş — 21 Kasım
+
+- PR #585, merge `cf4b28f16c25af59295c7ee13c3dc5f659585ce1`, PR CI `44845062944` SUCCESS. Gerçek tarama başlatmadan orijinal 18.074 URL hash'iyle dünya raporu karşılaştırıldı; artifact `14682746793` SHA-256 `b995abbb3eca5726d63c1a311a2132c57ded83caf87ca11eee778fc27463692f`. Tam dağılım ve 685 alt kümesinin ayrıntısı `DEVAM_NOTU.md` son kaydında.
+- 18.074 özgün URL'nin 18.074'ü ana listede, kategori uyuşmazlığı 0; 16.931 tarihsel dünya eşleşmesi, 1.143 yok; 1.904 doğrudan eski-run AV, 10.947 prior-run hash-only, 4.080 diğer belirsiz eşleşme.
+- #497 1.107 WORKING ve 685 RECHECK_REQUIRED içinden hiçbiri otomatik yeniden sınıflandırılmadı. Sonraki adım: 685 belirsiz için eski AV, zaman damgası, güncel durum, URL kimliği, tekrar deneme sayısı ve manifest ile **salt-okunur / idempotent retry önizlemesi**. 20 eski AV kanıtlı belirsiz kanal ayrıca inceleme grubuna konacak.
+- Ana playlist değişmedi, yeni playlist açılmadı, envanter ve 838 korunan kayıt yerinde, İBO Player kullanıcı testi son aşamada ve ayrı. 34 ana görev tamamlandı sayılmıyor; Aşama 5'in hash-eşleştirme kod kabulü tamam, canlı 18.074 AV kabulü eksik.
+
