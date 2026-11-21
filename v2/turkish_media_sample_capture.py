@@ -46,16 +46,22 @@ def validate_url(url, allowed_hosts=None):
 
 def capture(url, destination, *, seconds=4, timeout=17, runner=subprocess.run, which=shutil.which,
             include_subtitles=False, allowed_hosts=(), allowed_ports=()):
-    parsed = urlsplit(url) if isinstance(url, str) else None
-    if parsed is None or not parsed.hostname:
+    if not isinstance(url, str) or len(url) > 4096:
         raise ValueError("Invalid stream URL")
+    parsed = urlsplit(url)
+    if not parsed.hostname:
+        raise ValueError("Invalid stream URL")
+    try:
+        parsed_port = parsed.port
+    except ValueError as exc:
+        raise ValueError("Invalid URL port") from exc
     root_host = normalize_host(parsed.hostname)
     if not isinstance(allowed_hosts, (list, tuple, set, frozenset)) or not allowed_hosts:
         raise ValueError("An explicit exact-host allowlist is required")
     hosts = {normalize_host(item) for item in allowed_hosts}
     if root_host not in hosts:
         raise ValueError("Root hostname must be explicitly allowlisted")
-    root_port = parsed.port or (443 if parsed.scheme == "https" else 80)
+    root_port = parsed_port or (443 if parsed.scheme == "https" else 80)
     ports = {80, 443, root_port}
     if not isinstance(allowed_ports, (list, tuple, set, frozenset)):
         raise ValueError("Allowed ports must be an explicit collection")
