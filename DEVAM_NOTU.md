@@ -1498,3 +1498,12 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - **Henüz kesinleşmeyen:** 18.074 envanter üzerinde gerçek eşleşme sayıları, yeni Stage 5 CI/artefaktı ve gerekli son PR merge kanıtı. CI başarı/rapor ortaya çıkmadan bu aşamayı tamamlandı olarak işaretleme.
 - **Değişmezler:** Tek ana `MADSC55_TV_IBO_CALISANLAR_TEST.m3u8` korundu; yeni playlist, yayın taraması, kanal silme/taşıma, 48 engelli kayıt geri eklemesi, 1003 kuralını yeniden uygulama veya eski 112–486/59–181 taşımasını yeniden yapma yok. İBO Player 2.500 kullanıcı testi bağımsız kalır.
 - **Sıradaki tek adım:** bu branch için açık PR'da offline negatif testleri ve tam tarihsel artifact hash eşleştirme CI'ını çalıştır; `v2-stage5-historical-worldwide-crosswalk` artifact'ından kesin mevcut eşleşme sayılarını doğrula. Başarılıysa yalnız güvenli read-only kod/kanıt merge edilsin. 685 belirsiz kayıt yeniden taranmış kabul edilmesin.
+
+
+### Aşama 5 ek denetim — canlı 18.912 satır ve 18.074 kaynak eşleşmesi
+
+- GitHub blob `57d55f3a339099e741b33ecbb55fc0ef809d1d61` özgün `YEDEKLER_ARCHIVE.m3u8`: tam **18.074 kayıt ve 18.074 farklı URL**. Önceden yanlış kaynak olarak seçilen `d5291424da8c273d48395b0c261feb87ae1ebf72` tarihsel **18.912 satırlık tam playlist**, yalnız YEDEKLER arşivi değil; Stage 5 kaynak blob sabiti düzeltildi.
+- GitHub main playlist blob `f3d39e4522d27912fccd6e67240a10fd16c4923b`: **18.912 kayıt, 18.074 farklı URL**. Bunların 838 korunan kanal URL'si, arşivde bulunan kayıtlarla bilinçli olarak örtüşüyor. Bunlar silinecek mükerrer arşiv kaydı değildir; karşılaştırıcı yalnız arşiv kategorilerindeki mükerrerleri reddedecek şekilde düzeltildi.
+- Güncel main'e karşı **18.074/18.074 arşiv URL'si bulundu, kaynak sıra defterindeki hedef kategori uyumsuzluğu 0**. Kategoriler: YEDEKLER 1.792, ANA 15.574, TÜRK 424, YABANCI 284, OTHER 838. İlk 2.500 işlem durumları: TEST 1.792, TURK 424, YABANCI 284. Bu kategori/URL kimlik karşılaştırmasıdır, gerçek yayın AV kanıtı değildir.
+- PR #585 ilk CI `44844890250` Stage 5 çevrimdışı test adımında Python paket import yolu nedeniyle **FAILED** (7/7 hata aynı `ModuleNotFoundError` kök neden); eski kaynak rapor taraması çalışmadı. `PYTHONPATH=v2:.` düzeltmesi commit `c410fbf889fabf4546f4b9f016535930153bfb79` ile eklendi. Başarı iddiası yok; yeni CI sonucu bekleniyor.
+
