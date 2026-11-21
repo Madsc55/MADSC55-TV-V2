@@ -148,3 +148,12 @@ Durum (bekliyor/çalışıyor/tamamlandı/bloke); değişen dosyalar; önce/sonr
 - Önceki #567 kodu yalnız 685 belirsiz kaydın manuel, kanıt-kilitli retry hattıdır; CANLI retry çalıştırılmadı. 18.074 tam test, gerçek ASR/OCR/WebVTT, Türk/Yabancı final kararları, gerçek şifreli dış arşiv restore ve İBO Player cihaz kabulü açık.
 - Ana playlist, arşivler, EPG, yayın URL'leri ve kategoriler değiştirilmedi. Yeni playlist yok; 48 karantina kanal geri eklenmedi; eski 1003 kuralı uygulanmadı.
 - **Sonraki teknik sıra:** (a) güvenli HLS/DASH alt kaynak erişimi/egress tasarımı ve offline negatif testleri, (b) IP-literal legacy modun güvenli transport ile aynı seviyeye getirilmesi, (c) gerçek medya/ASR/OCR/WebVTT kanıtları için izinli manuel kabul, (d) son aşamadaki toplu testler.
+
+## 21 Kasım 2026 — Güncellenmiş devam sırası / Aşama 5 başlatıldı
+
+1. **Bitti, tekrarlama:** #543 FFmpeg ses+görüntü, #547 değişmez 1.792 sonuç, #565 zaman damgalı ASR/OCR/WebVTT inceleme kayıtları. #547 CI `44842556117` ve #565 CI `44843144422` başarılı; ikisi de main'e birleştirildi. Gerçek 18.074 kanal taraması veya cihaz onayı anlamına gelmez.
+2. **Aktif Aşama 5:** eski dünya taraması run `42216075104`, artifact `13524765368`, ZIP SHA-256 `6bec426291330c6b4b305e2871b721a25c44583f892c14d893472cdc3e80f87d` doğrulandı. 35.327 aday / 13.884 AV / tarihsel 4.949 URL hash / 3.080 AV verisi 18.074 kaynak envanterine salt-okunur karşılaştırılacak. Önceki tarama kanıtları tekrar sınanmıyor.
+3. **Yapılacak kabul:** `v2/yedekler_worldwide_crosswalk.py` + negatif testleri CI'da çalıştır, gerçek `manifest.json` ve `crosswalk.json` artifact'ını doğrula, ilk 2.500 defteri `TEST=1.792, TURK=424, YABANCI=284` ve tüm kategoriler `18.912` ile kayıpsız tutarlı kalmalı. Kesin eşleşme sayılarını yalnız gerçek çıktıya bakarak kaydet. PR merge, CI PASS olmadan yok.
+4. **Sonraki adımlar:** tarihsel kanıtla eşleşmeyen veya artık güncel olmayan kayıtları açık blocker olarak tut; Türkçe kanıtı konuşma/altyazı/OCR/kimlik kanallarında birbirinden ayrı izle. Paketli, kontrollü gerçek medya testi ve retry yalnız güvenlik/CI kapılarından sonra. İBO Player'ın kullanıcı kontrollü 2.500 test döngüsüne karışma. Arşiv gerçek ortam bağımsız restore ve İBO cihaz onayı ayrı son kapılardır.
+
+**Dokunulmayacaklar:** tek ana playlist, 48 karantina, 1003 kuralı, kullanıcı onayı olmadan kategori/playlist yazımı yok. Daha önce yapılan Türk/Yabancı taşıma komutları tekrar edilmeyecek. Tam teknik devir kanıtı `DEVAM_NOTU.md` sonunda.
