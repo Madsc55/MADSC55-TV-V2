@@ -218,6 +218,10 @@ class PinnedHTTPProxy:
             path = parsed.path or "/"
             if parsed.query:
                 path += "?" + parsed.query
+            for name, value in headers:
+                lower = name.lower()
+                if lower == "transfer-encoding" or (lower == "content-length" and value not in ("", "0")):
+                    raise ProxyPolicyError("Request bodies are not supported")
             forwarded = []
             for name, value in headers:
                 lower = name.lower()
