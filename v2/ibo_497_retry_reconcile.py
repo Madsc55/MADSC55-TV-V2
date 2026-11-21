@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
-"""Combine original verified evidence with the targeted 685 retry and emit a read-only preview."""
+"""Combine original verified evidence with the targeted retry and emit a read-only preview."""
 import argparse
-import hashlib
 import json
 from collections import Counter
 from pathlib import Path
@@ -10,11 +9,12 @@ from ibo_single_playlist_transfer import parse, category
 from ibo_test_result_reconcile import digest, reconcile
 
 SOURCE_RUN_ID = 44640007709
-SOURCE_REPORT_CANONICAL_SHA256 = "b48bd57ba03a7e4ee4ed3f65355572e267db87b4d48c6d4fb390b8484dc55c"
+SOURCE_REPORT_CANONICAL_SHA256 = "b48bd57ba03a7e4ee4eedf3f65355572e267db87b4d48c6d4fb390b8484dc55c"
 INITIAL_MANIFEST_SHA256 = "b001bf48f07437e9ae67ed9f73b12ea9cfcab653523973435cf3b1cee3c31fcc"
 
-def build_full_report(raw, initial_manifest, initial_manifest_bytes, retry_report):
-    if digest(initial_manifest_bytes) != INITIAL_MANIFEST_SHA256:
+def build_full_report(raw, initial_manifest, initial_manifest_bytes, retry_report,
+                      require_known_snapshot=False):
+    if require_known_snapshot and digest(initial_manifest_bytes) != INITIAL_MANIFEST_SHA256:
         raise ValueError("Initial manifest SHA-256 mismatch")
     if initial_manifest.get("source_run_id") != SOURCE_RUN_ID:
         raise ValueError("Initial evidence run mismatch")
@@ -24,6 +24,8 @@ def build_full_report(raw, initial_manifest, initial_manifest_bytes, retry_repor
         raise ValueError("Initial evidence counts mismatch")
     if initial_manifest.get("source_report_canonical_sha256") != SOURCE_REPORT_CANONICAL_SHA256:
         raise ValueError("Initial report evidence digest mismatch")
+    if initial_manifest.get("preview_only") is not True or initial_manifest.get("canonical_playlist_written") is not False:
+        raise ValueError("Initial preview provenance mismatch")
     if retry_report.get("schema") != 1 or retry_report.get("retry_only") is not True:
         raise ValueError("Retry report schema/mode mismatch")
     if retry_report.get("playlist_sha256") != digest(raw):
@@ -37,6 +39,10 @@ def build_full_report(raw, initial_manifest, initial_manifest_bytes, retry_repor
     retry_entries = retry_report.get("entries")
     if not isinstance(retry_entries, list) or len(retry_entries) != 685:
         raise ValueError("Retry report is incomplete")
+    if not isinstance(retry_report.get("source_run_id"), int) or retry_report["source_run_id"] < 1:
+        raise ValueError("Retry run provenance missing")
+    if retry_report.get("read_only") is not True:
+        raise ValueError("Retry report is not marked read-only")
     selected = [b for b in parse(raw)[1] if category(b.splitlines()[0]) == "YEDEKLER"]
     if len(selected) != 1792:
         raise ValueError("Expected 1,792 YEDEKLER records")
@@ -47,8 +53,8 @@ def build_full_report(raw, initial_manifest, initial_manifest_bytes, retry_repor
     if not isinstance(queue, list) or len(queue) != 685:
         raise ValueError("Initial retry queue is incomplete")
     uncertain = {x["channel_sha256"]: x for x in queue}
-    if set(uncertain) - set(ids):
-        raise ValueError("Initial retry queue contains unmatched channels")
+    if len(uncertain) != 685 or set(uncertain) - set(ids):
+        raise ValueError("Initial retry queue has duplicate or unmatched channels")
     new = {}
     for item in retry_entries:
         if not isinstance(item, dict):
@@ -75,6 +81,9 @@ def build_full_report(raw, initial_manifest, initial_manifest_bytes, retry_repor
         new[key] = item
     if set(new) != set(uncertain):
         raise ValueError("Retry report does not cover the exact uncertain queue")
+    actual = Counter(item["status"] for item in retry_entries)
+    if dict(actual) != retry_report.get("counts"):
+        raise ValueError("Retry summary counts disagree with per-channel results")
     entries = []
     for block, key in zip(selected, ids):
         if key in new:
@@ -108,8 +117,9 @@ def main():
     raw = args.playlist.read_bytes()
     initial_bytes = args.initial_manifest.read_bytes()
     initial = json.loads(initial_bytes)
-    retry = json.loads(args.retry_report.read_text(encoding="utf-8"))
-    full, full_sha = build_full_report(raw, initial, initial_bytes, retry)
+    retry_bytes = args.retry_report.read_bytes()
+    retry = json.loads(retry_bytes)
+    full, full_sha = build_full_report(raw, initial, initial_bytes, retry, require_known_snapshot=True)
     preview, manifest = reconcile(raw, full, digest(raw), full_sha)
     if len([b for b in parse(preview)[1] if category(b.splitlines()[0]) == "YEDEKLER"]) != 1792:
         raise ValueError("YEDEKLER count changed")
@@ -122,7 +132,7 @@ def main():
         "initial_source_report_canonical_sha256": SOURCE_REPORT_CANONICAL_SHA256,
         "initial_manifest_sha256": digest(initial_bytes),
         "retry_run_id": retry.get("source_run_id"),
-        "retry_report_sha256": digest(args.retry_report.read_bytes()),
+        "retry_report_sha256": digest(retry_bytes),
         "retry_source_manifest_artifact_id": 14681083208,
         "preview_only": True,
         "new_scan_started": False,
@@ -132,7 +142,7 @@ def main():
     args.output_dir.mkdir(parents=True, exist_ok=False)
     (args.output_dir / "preview.m3u8").write_bytes(preview)
     (args.output_dir / "manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    (args.output_dir / "retry-report.json").write_bytes(args.retry_report.read_bytes())
+    (args.output_dir / "retry-report.json").write_bytes(retry_bytes)
     print(json.dumps({"preview_only": True, "counts": manifest["counts"],
                       "failed_count": manifest["failed_count"],
                       "retry_queue_count": len(manifest["retry_queue"]),
