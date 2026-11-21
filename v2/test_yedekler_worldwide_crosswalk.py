@@ -93,6 +93,33 @@ class WorldwideCrosswalkTests(unittest.TestCase):
             self.assertNotIn(url, rendered)
         self.assertEqual(len(crosswalk["entries"]), 6)
 
+    def test_protected_copy_of_archive_url_is_preserved(self):
+        # Canonical main intentionally contains 838 protected records whose
+        # stream URLs also occur in the 18,074-category archive inventory.
+        protected = make_playlist([("FAVORITES", "Protected copy", self.urls[0])])
+        main_with_protected = self.main + protected.split(b"\\n", 1)[1]
+        summary, crosswalk = build_crosswalk(
+            self.archive, main_with_protected, self.state, self.worldwide, self.historical,
+            expected_archive_sha256=self.state["source_sha256"],
+            expected_archive_total=6, expected_batch_size=4,
+            expected_main_inventory={
+                "YEDEKLER": 2, "ANA": 2, "TURK": 1,
+                "YABANCI": 1, "OTHER": 1, "TOTAL": 7,
+            }, expected_worldwide_count=3, expected_worldwide_av_count=1)
+        self.assertEqual(len(crosswalk["entries"]), 6)
+        self.assertEqual(summary["main_inventory"]["OTHER"], 1)
+        self.assertFalse(summary["playlist_written"])
+
+    def test_rejects_duplicate_inside_archive_categories(self):
+        duplicate = make_playlist([("ANA ARŞİV", "Duplicate record", self.urls[0])])
+        duplicate_main = self.main + duplicate.split(b"\\n", 1)[1]
+        with self.assertRaisesRegex(ValueError, "Duplicate URL hash within canonical archive"):
+            build_crosswalk(
+                self.archive, duplicate_main, self.state, self.worldwide, self.historical,
+                expected_archive_sha256=self.state["source_sha256"],
+                expected_archive_total=6, expected_batch_size=4,
+                expected_worldwide_count=3, expected_worldwide_av_count=1)
+
     def test_rejects_archive_sha_or_state_binding_mismatch(self):
         bad_state = dict(self.state, source_sha256="0" * 64)
         with self.assertRaisesRegex(ValueError, "state does not bind"):
