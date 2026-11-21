@@ -118,6 +118,24 @@ class DownloadTests(unittest.TestCase):
         self.assertEqual(seen[0]["headers"]["Host"], "media.example.com")
         self.assertTrue(seen[0]["closed"])
 
+    def test_http_host_header_uses_scheme_specific_default_port(self):
+        for scheme, port, expected_header in (
+            ("http", 80, "media.example.com"),
+            ("https", 443, "media.example.com"),
+            ("http", 443, "media.example.com:443"),
+            ("https", 80, "media.example.com:80"),
+        ):
+            with self.subTest(scheme=scheme, port=port):
+                factory, seen = factory_for()
+                with tempfile.TemporaryDirectory() as directory:
+                    download_bounded(
+                        f"{scheme}://media.example.com:{port}/video.mp4",
+                        Path(directory) / "video.bin",
+                        resolver=public_dns, connection_factory=factory)
+                self.assertEqual(seen[0]["port"], port)
+                self.assertEqual(seen[0]["headers"]["Host"], expected_header)
+                self.assertTrue(seen[0]["closed"])
+
     def test_tls_pinned_ip_preserves_original_hostname_for_sni(self):
         conn = _PinnedHTTPS("media.example.com", 443, "8.8.8.8", 4)
         raw_socket = object()
