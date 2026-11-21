@@ -174,3 +174,11 @@ Durum (bekliyor/çalışıyor/tamamlandı/bloke); değişen dosyalar; önce/sonr
 - PR Production Security Gate `44846469069` SUCCESS. Çevrimdışı testler; tam 685 satır, mükerrer/eksik kimlik reddi, URL hash eşleşmesi, kaynak rapor/run/artifact bağları, zaman damgası, playlist snapshot ve no-overwrite davranışını doğruladı.
 - Bu **plan kodu kabulüdür**; manuel `workflow_dispatch` henüz çalıştırılmadı ve gerçek retry plan artefaktı henüz oluşturulmadı. Canlı retry veya yeni kanal taraması yok. `live_retry_authorized=false`, `network_attempts=0`, playlist/arşiv yazımı kapalı.
 - Sonraki öncelikler: (1) Stage 5 tarihsel 18.074 crosswalk satırlarını kimlik/kanıt kaynağı bazında incele, (2) bağımsız özel şifreli kasa restore kabulünü kanıtla, (3) güvenli HLS/DASH segment/anahtar yakalama ve gerçek yayıncı örneği. 18.074 canlı AV taraması, 685 retry ve İBO cihaz testleri son aşamada.
+
+
+## 21 Kasım 2026 — Harici şifreli arşiv yapısal kontrolü
+
+- Mevcut Drive dosyası MADSC55-TV-V2 stage4-24 acceptance archive.enc: 7.832.688 bayt; SHA-256 29f5498c3173b39afe5c4bee824e4423cc8229961fb5f7cbf26e402d449f4241.
+- Salt-okunur JSONL kontrolü: 7.819 kayıt, 7.819 benzersiz 12-bayt nonce, schema 1 ve ciphertext alanları; yapısal PASS.
+- Bu sonuç **authenticated decryption veya restore PASS değildir**. Dosya biçimi mevcut Scrypt/AES-GCM tek-blob arşiv ve Fernet yetkili vault biçiminden farklıdır; doğru anahtar/şema eşleşmesi ve bağımsız restore SHA-256 referansı yoktur.
+- #6 bağımsız restore açık kalır. Anahtar/şema doğrulanınca izole hedefte restore, ardından kanal kimliği ve URL SHA-256 karşılaştırması yapılır. Drive dosyası değiştirilmedi.
