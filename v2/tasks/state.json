@@ -1128,5 +1128,40 @@
     "safe_hls_dash_segment_collection_accepted": false,
     "ibo_real_device_accepted": false,
     "next_action": "Keep original playlist untouched; finish independent authorized Turkish vault external restore and HLS/DASH safety before any final user-directed live scan/device acceptance."
+  },
+  "stage8_private_turkish_vault_restore_20261121": {
+    "date": "2026-11-21",
+    "scope": "GitHub issue #6 authorized-Turkish Fernet vault (not ledger statuses[6]); no live restore or playlist write",
+    "issue_6_status": "open",
+    "issue_6_reopened_because_external_restore_unverified": true,
+    "verifier_pr": 612,
+    "verifier_merged": true,
+    "verifier_merge_sha": "f670ff8984516af8cba9f727705cc17f2da1860d",
+    "verifier": "v2/authorized_vault_external_restore_acceptance.py",
+    "tests": "v2/test_authorized_vault_external_restore_acceptance.py",
+    "pr_ci_run": 44894072998,
+    "pr_ci_conclusion": "success",
+    "main_ci_run": 44894232051,
+    "main_ci_conclusion": "pending_verification",
+    "tests_cover": [
+      "distinct_private_source_and_downloaded_copy",
+      "pre-pinned_encrypted_SHA256",
+      "authenticated_Fernet_decrypt",
+      "isolated_restore_content_and_history_parity",
+      "no_URL_key_channel_ID_leaks",
+      "tamper_key_symlink_hardlink_permissions_rejection"
+    ],
+    "existing_drive_folder_id": "1cqEo3ZTfnIsVglQ51s0lXMEjcxkqRqPe",
+    "legacy_recovery_files_found": 5,
+    "legacy_stage4_restore_acceptance_separate": true,
+    "authenticated_external_turkish_vault_backup_identified": false,
+    "authorized_original_fernet_key_available": false,
+    "independent_offsite_turkish_vault_restore_verified": false,
+    "tool_reports_full_external_acceptance": false,
+    "new_drive_file_created": false,
+    "playlist_or_archive_modified": false,
+    "685_live_retry_started": false,
+    "main_task_statuses_changed": false,
+    "next_action": "Identify authentic authorized-Turkish vault backup in existing controlled external storage with provider ID/revision and independently pinned checksum, access authorized Fernet key securely and test only isolated restore. Do not disclose secrets or claim acceptance otherwise."
   }
 }
