@@ -29,6 +29,44 @@ class PublicTargetTests(unittest.TestCase):
         with patch("stream_probe.socket.getaddrinfo", side_effect=OSError):
             self.assertFalse(_public_http_url("https://example.org/live"))
 
+    def test_multicast_ipv6_mapped_and_ambiguous_authorities_fail_closed(self):
+        for url in (
+            "http://224.0.0.1/stream",
+            "https://239.255.255.250/stream",
+            "http://[ff02::1]/stream",
+            "http://[::ffff:8.8.8.8]/stream",
+            "http://8.8.8.8\\@127.0.0.1/stream",
+            "http://%38.8.8.8/stream",
+            "http://8.8.8.8:0/stream",
+            "http://8.8.8.8:99999/stream",
+            "http://8.8.8.8/stream#fragment",
+            " http://8.8.8.8/stream",
+            "http://8.8.8.8/stream\\nInjected",
+            "http://8.8.8.8/stream\\tInjected",
+            "http://8.8.8.8/" + "x" * 4096,
+        ):
+            with self.subTest(url=url), self.assertFalse(_public_http_url(url)):
+                pass
+
+    def test_public_literal_and_fully_public_dns_preflight(self):
+        self.assertTrue(_public_http_url("https://8.8.8.8/media.m3u8"))
+        with patch("stream_probe.socket.getaddrinfo", return_value=[
+            (2, 1, 6, "", ("8.8.8.8", 0)),
+            (2, 1, 6, "", ("1.1.1.1", 0)),
+        ]):
+            self.assertTrue(_public_http_url("https://example.org/media.m3u8"))
+
+    def test_dns_multicast_or_excess_addresses_rejected(self):
+        with patch("stream_probe.socket.getaddrinfo", return_value=[
+            (2, 1, 6, "", ("8.8.8.8", 0)),
+            (2, 1, 6, "", ("224.0.0.1", 0)),
+        ]):
+            self.assertFalse(_public_http_url("https://example.org/live"))
+        with patch("stream_probe.socket.getaddrinfo", return_value=[
+            (2, 1, 6, "", ("8.8.8.8", 0)) for _ in range(33)
+        ]):
+            self.assertFalse(_public_http_url("https://example.org/live"))
+
     def test_rejection_never_spawns_ffmpeg(self):
         with patch("stream_probe.subprocess.run") as run:
             self.assertEqual(probe("http://169.254.169.254/latest")["status"], "INVALID_URL")
