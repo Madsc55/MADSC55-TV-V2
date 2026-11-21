@@ -71,7 +71,7 @@ class HistoricalArtifactImportTests(unittest.TestCase):
     def test_wrong_report_hash_or_run_fails_closed(self):
         source, current, audit, report_sha = fixture()
         with self.assertRaises(ValueError):
-            self.run_build(source, current, audit, "0" * 64)
+            self.run_build(source, current, audit, "0" * 64, expected_report_sha=report_sha)
         with self.assertRaises(ValueError):
             self.run_build(source, current, audit, report_sha, run_id=1)
 
