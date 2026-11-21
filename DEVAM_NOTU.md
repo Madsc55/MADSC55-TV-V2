@@ -1553,7 +1553,7 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 
 - Mevcut MADSC55-TV-V2 — Independent Encrypted Recovery Archive klasöründeki MADSC55-TV-V2 stage4-24 acceptance archive.enc dosyası yetkili Drive bağlantısından okundu; dosya boyutu **7.832.688 bayt**.
 - İndirilen baytların SHA-256 değeri 29f5498c3173b39afe5c4bee824e4423cc8229961fb5f7cbf26e402d449f4241; önceki nottaki hash ile eşleşti.
-- legacy_drive_archive_audit.py yapısal kontrolü yeniden üretildi: 7.819 JSONL kaydı, her kayıtta schema 1, 12 bayt nonce ve ciphertext; 7.819 nonce benzersiz. **Yapısal PASS בלבד.**
+- legacy_drive_archive_audit.py yapısal kontrolü yeniden üretildi: 7.819 JSONL kaydı, her kayıtta schema 1, 12 bayt nonce ve ciphertext; 7.819 nonce benzersiz. **Yalnızca yapısal PASS.**
 - Şifre çözme, kimlik/içerik doğrulaması veya restore yapılmadı. Bu dosya secure_archive.py Scrypt/AES-GCM tek-blob formatı ya da turk_authorized_vault.py Fernet kasası ile aynı format olarak varsayılmamalı. Uyumlu anahtar/şema ve bağımsız beklenen restore hash'i yok.
 - Drive izin metadatasında dosya sahibi ve yedek servis hesabı görünüyor; herkese açık (anyone) izin gözlenmedi. Dosya değiştirilmedi.
 - **#6 açık:** Yetkili anahtar ve doğru format uygulaması bulunmadan bağımsız şifre çözme/restore PASS denmeyecek. Sonraki adım formatla eşleşen anahtar erişimini ve beklenen hash kaynağını doğrulamak; ardından yalnız izole geçici hedefe restore ve kanal/URL hash karşılaştırması yapmak.
