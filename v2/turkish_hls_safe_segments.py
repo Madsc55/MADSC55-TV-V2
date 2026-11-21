@@ -225,6 +225,7 @@ def download_hls_ts_bounded(url, output, *, timeout=12, max_bytes=MAX_REMOTE_BYT
                 part.unlink()
         if not 0 < total <= max_bytes:
             raise ValueError("HLS byte budget exceeded")
+        os.chmod(concat, 0o600)
         os.link(concat, dest, follow_symlinks=False)  # atomic no-clobber
     return {
         "input_format": "mpegts",
