@@ -1646,3 +1646,45 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - Eski PR #500 (91 commit gerideki throttle fix) ve #215 (eski 429 devre düzeltmesi), yeni kod altında yinelenme olduğu için birleştirmeden kapatıldı. Salt-okunur devir notu PR'ları #576/#570/#506/#375/#363/#293/#262 kapatıldı. #280 ayrı izole M3U çıkaracağı ve kullanıcı ayrı test playlisti istemediği için kapatıldı; cihaz favorileri ve ana liste korunuyor.
 - Hiçbir gerçek kanal keşif workflow_dispatch çalıştırılmadı; GitHub güvenlik koşuları yalnız offline fixture/metadata geçmiş artefakt testleri yaptı. Yeni playlist, kategori, kanal taşıması, arşiv yazımı yok. 48 yasaklı kanal geri gelmedi, ilk 1.003 koruma kuralı tekrar uygulanmadı. Canonical main playlist Git blob SHA f3d39e4522d27912fccd6e67240a10fd16c4923b değişmedi.
 - KALAN gerçek kabul: Ayrı Türk-yetkili özel Fernet kasa #6 harici özel yedek + bağımsız gerçek restore kanıtı eksik (GitHub issue #6 21 Kasım'da kapalı görünse de onay kanıtı dosyası yok); güvenli çok kaynaklı HLS/DASH taşıma, gerçek Türkçe ses/altyazı, 685 canlı retry ve İBO Player cihaz testi kullanıcı final test aşamasına ertelenmiş durumda. Tarihsel Stage4 Drive restore PASS, ayrı Türk özel kasa #6 kabulü değildir.
+
+
+## 21 Kasım 2026 — Açık PR ve issue temizliği, main mutabakatı
+
+- Main HEAD `493e1699f45e6d893db46ff29690a86b7a8f06eb`, kanonik playlist blob `f3d39e4522d27912fccd6e67240a10fd16c4923b` (salt okunur doğrulandı).
+- Birleştirilmeden kapatılan eski/mükerrer PR'lar: #200, #75, #57, #66, #620, #221, #216, #210, #206, #93, #83, #73, #67, #64, #60, #52, #44, #40, #11, #9. Tarihsel GitHub kayıtları silinmedi.
+- Açık tutulan PR'lar: #618 (6 logo resmi kaynak doğrulaması bekliyor), #372 (182 Türkçe aday inceleme raporu, kesin sınıflama değil), #365 (eski test/arşiv dalı, otomatik merge edilmez). Eski `plan/18074-kanal-akilli-test-arsiv-20261117` dalı main'e göre 233 ahead / 329 behind; güvenlik ve kod eşdeğerliği incelemesi gerekir.
+- Açık issue'lar #3, #4, #5, #6, #7, #8, #10, #497. #6 Türk özel Fernet kasa harici restore kanıtı eksik; #497 685 canlı retry güvenlik kilidi korunuyor. Önceki 685 satırlık plan artifact #14702596056 yeniden üretilmeyecek.
+- GitHub commit workflow-run connector sorgusu yalnız PR-triggered ilk sayfayı verir; main push veya bütün başarısız Actions koşularının eksiksiz envanteri değildir. `493e1699` commit status listesinin boşluğu CI PASS anlamına gelmez. Eski başarısız run'lar aynı kodda güncel başarılı kabul olmadan çözülmüş ilan edilmez.
+- Ana playlist, kategori, arşiv ve 34 kanonik görev statüsü değiştirilmedi. Canlı tarama ve İBO cihaz kabulü son aşamaya ertelendi. Kalan iş: #365/#372/#618 dosya incelemesi, eksiksiz Actions başarısızlık mutabakatı, #6/#497 bağımsız kabul kapıları.
+
+### Actions başarısızlıklarının karşılaştırmalı job kanıtı (21 Kasım 2026)
+
+- Run `41186910011`: `discovery-tests` FAILURE, `safety` SKIPPED; sonraki run `41186924198`: `compile`, `protect`, `discovery-tests`, `safety` SUCCESS. Tarihsel offline test hatası sonradan düzeltilmiş.
+- Main run `43483992949`: `Verify suspended publishers, no cron and immutable IBO` FAILURE; sonraki main run `43484653370`: aynı iş SUCCESS. Eski fixture hatası sonrası başarılı kontrol var.
+- PR run `44844890250`: aynı güvenlik işi FAILURE; sonraki PR run `44845062944`: SUCCESS. Import yolu düzeltmesi sonrası başarılı kontrol var.
+- PR #622 run `44921917164` güvenlik işi bu kayıt anında IN_PROGRESS; başarılı sonuç henüz doğrulanmadı. Bunlar tespit edilen tarihsel koşulardır, tüm repository Actions geçmişinin eksiksiz envanteri değildir.
+
+
+## 21 Kasım 2026 — son GitHub görev kaydı mutabakatı
+
+- `main` denetim tabanı: `05da09ca8a2ab87550436df6c8cc43267d28e21a` (#622 squash merge). Ana playlist blob SHA `f3d39e4522d27912fccd6e67240a10fd16c4923b`; bu denetimde playlist değiştirilmedi.
+- Açık PR yalnız **#365** (eski dal, güvenli modül karşılaştırması gerekli) ve **#618** (6 logonun gerçek kimlik ve URL doğrulaması bekliyor). #365'in karşılaştırma farkındaki 44 `v2/*.py` dosya yolunun 10'u main'de mevcut, 34'ü yok; dosya yokluğu işlev yokluğu değildir. Her ikisi de doğrulamasız merge edilmez.
+- Açık issue yalnız **#497, #3, #4, #5, #6, #7, #8, #10**. #497 mevcut raporları otomatik güvenle işleme altyapısıdır; #8 son aşama kullanıcı İBO cihaz testi; #10 son aşama keşif ve gerçek AV. Mükerrer sayılarak kapatılmayacaklar. #3–#7 görevleri ayrı altyapı kabul sınırlarıyla issue başlıklarında ayrıştırıldı.
+- Doğrulanmış tarihsel Actions failure → success: `41186910011` → `41186924198` (archive acceptance), `43483992949` → `43484653370` (Stage 6 offline package), `44844890250` → `44845062944` (Stage 5 hash crosswalk). #622 security run `44921994257` **SUCCESS**; canlı diagnostic **SKIPPED**. Bunlar tüm Actions tarihinin eksiksiz envanteri değildir.
+- Eski/mükerrer 20 PR ve #372 daha önce **merge edilmeden kapatıldı**. Tek kanonik playlist kuralı; yeni playlist yok; 48 kaldırılmış kanal geri gelmez; canlı test en son. Hiçbir teknik kabul kanıtsız `DONE` yapılmadı.
+
+
+## 21 Kasım 2026 — PR #624 birleşti; görev defteri güncellendi
+- GitHub PR [#624](https://github.com/Madsc55/MADSC55-TV-V2/pull/624) `main` dalına squash-merge edildi: `406976ca22c9787daac7d7496a8d8d9cc2b92492`.
+- Actions [44944789787](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44944789787): Production Security Gate **SUCCESS**; canlı keşif işi **SKIPPED**.
+- `v2/ibo_yedekler_archive.py` ve `v2/ibo_yedekler_assign.py`: tarihsel sabit 18.074 YEDEKLER koşulu kaldırıldı, isteğe bağlı `--expected-count` koruması eklendi. `v2/test_yedekler_current_count.py` offline regresyonu eklendi.
+- Kanonik playlist blob SHA **değişmedi**: `f3d39e4522d27912fccd6e67240a10fd16c4923b`.
+- Açık PR'lar: **#365, #618**. Açık issue'lar: **#3, #4, #5, #6, #7, #8, #10, #497**. Bunlar kanıtsız kapatılmadı. Eski/çift PR temizliği önceki kayıtlar uyarınca tamamlanmıştı.
+- #497 **tamamlanmadı**: mevcut raporların otomatik ve güvenli içeri alınması/uygulanması ayrıca gerekiyor. #365 eski dalı doğrudan merge edilmez; #618 gerçek logo doğrulaması bekler. #8/#10 canlı İBO ve AV aşamaları en sona bırakıldı.
+
+
+## 21 Kasım 2026 — eski PR #365 arşivlendi, teknik durum ayrıştırıldı
+- `main` doğrulanan SHA: `b4b2a845c9f296545c0bb66272648177db369ea2` (#627 squash merge). PR #624, #625, #626, #627 birleşti; ilgili güvenlik koşuları sırasıyla `44944789787`, `44947424127`, `44949181505`, `44950371186` SUCCESS.
+- PR #365 **birleştirilmeden kapatıldı**: büyük eski dalın güvenli işlevleri #624/#626/#627 ile seçici aktarıldı. Kalan özgün altyapı kabul maddeleri #3/#4/#5/#6/#7; son aşama canlı testler #8/#10. PR #618, gerçek logo eşleşmesi bağımsız doğrulama beklediğinden açık bırakıldı.
+- Kanonik playlist SHA: `f3d39e4522d27912fccd6e67240a10fd16c4923b`, değişmedi. Ayrı playlist oluşturulmadı, canlı tarama yapılmadı.
+- Açık issue sorgusu #497'yi artık döndürmüyor; önceki #497 kayıtları #624/#626 kanıtlarını içerir, fakat uçtan uca otomatik artefakt/karar defteri kabulü doğrulanmış sayılmaz. Açık issue sayısı 7. Tarihsel Actions başarısızlık envanteri henüz eksiksiz değil.

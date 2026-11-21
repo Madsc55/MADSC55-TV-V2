@@ -1253,6 +1253,128 @@
     "ledger_statuses_changed": false,
     "next_action": "Verify merge-after main CI; do not rerun historic reports. Keep #497 685 live retry on dual security hold until general FFmpeg/HLS egress isolation accepted. Separately identify genuine offsite #6 Fernet vault and authorized key for isolated restore."
   },
+  "github_cleanup_audit_20261121": {
+    "main_head_at_audit": "406976ca22c9787daac7d7496a8d8d9cc2b92492",
+    "canonical_playlist_blob_sha": "f3d39e4522d27912fccd6e67240a10fd16c4923b",
+    "closed_stale_prs_without_merge": [
+      200,
+      75,
+      57,
+      66,
+      620,
+      221,
+      216,
+      210,
+      206,
+      93,
+      83,
+      73,
+      67,
+      64,
+      60,
+      52,
+      44,
+      40,
+      11,
+      9
+    ],
+    "open_prs_for_review": [
+      365,
+      618
+    ],
+    "open_issues_preserved": [
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      10,
+      497
+    ],
+    "legacy_branch_ahead_by": 233,
+    "legacy_branch_behind_by": 329,
+    "actions_failure_inventory_complete": false,
+    "latest_main_actions_verified": true,
+    "issue6_external_restore_accepted": false,
+    "issue497_live_retry_enabled": false,
+    "existing_retry_plan_artifact_id": 14702596056,
+    "original_task_statuses_changed": false,
+    "playlist_modified": false,
+    "next_action": "Continue #497 existing-report safe ingestion and acceptance; compare #365 function-level gaps, authenticate #618 logos; #8/#10 live AV and IBO last.",
+    "verified_historical_actions_pairs": [
+      {
+        "failed": 41186910011,
+        "passed": 41186924198,
+        "job": "discovery-tests",
+        "scope": "offline acceptance"
+      },
+      {
+        "failed": 43483992949,
+        "passed": 43484653370,
+        "job": "Verify suspended publishers, no cron and immutable IBO",
+        "scope": "main security gate"
+      },
+      {
+        "failed": 44844890250,
+        "passed": 44845062944,
+        "job": "Verify suspended publishers, no cron and immutable IBO",
+        "scope": "PR security gate"
+      }
+    ],
+    "latest_main_actions_verification_scope": "PR #622 security run 44921994257 SUCCESS; historical three failure-to-success pairs only; not exhaustive",
+    "pr365_v2_python_path_inventory": {
+      "checked": 44,
+      "paths_present_on_main": 10,
+      "paths_absent_on_main": 34,
+      "functional_equivalence_verified": false
+    },
+    "pr372_closed_without_merge": true,
+    "pr622_merged_commit": "05da09ca8a2ab87550436df6c8cc43267d28e21a",
+    "github_audit_reconciled_on": "2026-11-21",
+    "pr624_merged_commit": "406976ca22c9787daac7d7496a8d8d9cc2b92492",
+    "pr624_security_run": {
+      "id": 44944789787,
+      "conclusion": "success",
+      "live_discovery": "skipped"
+    },
+    "pr624_scope": "Removed hard-coded historical 18074 YEDEKLER count from snapshot and assignment read; added optional strict count and offline regression. Does not close issue 497."
+  },
+  "github_cleanup_final_20261121": {
+    "main_verified": "b4b2a845c9f296545c0bb66272648177db369ea2",
+    "playlist_blob_sha": "f3d39e4522d27912fccd6e67240a10fd16c4923b",
+    "merged_prs": [
+      624,
+      625,
+      626,
+      627
+    ],
+    "closed_unmerged_obsolete_prs": [
+      365
+    ],
+    "open_prs_pending_independent_logo_verification": [
+      618
+    ],
+    "open_issues_distinct": [
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      10
+    ],
+    "issue497_status": "Not in open issue search; prior issue body retained evidence. Do not assert full acceptance without artifact-to-ledger end-to-end proof.",
+    "actions_success_runs": [
+      44944789787,
+      44947424127,
+      44949181505,
+      44950371186
+    ],
+    "actions_failure_inventory_complete": false,
+    "live_scan_performed": false,
+    "playlist_modified": false
+  },
   "stage11_owner_archival_scope_closure_20261121": {
     "tasks": [
       17,

@@ -8,7 +8,10 @@ from pathlib import Path
 import re
 import tempfile
 import fcntl
-from ibo_archive_operation_ledger import append as append_operation, read as read_journal
+if __package__:
+    from .ibo_archive_operation_ledger import append as append_operation, read as read_journal
+else:
+    from ibo_archive_operation_ledger import append as append_operation, read as read_journal
 
 GROUP = re.compile(r'(group-title\s*=\s*")([^"]*)(")', re.I)
 ARCHIVE_NAMES = {"YEDEKLER": "🗂️ YEDEKLER", "ANA": "ANA ARŞİV",
@@ -238,7 +241,10 @@ def _recover_pending(path, journal_path):
     ledger = read_journal(journal_path)
     if ledger is None:
         ledger = {"initial_sha256": pending["initial_sha256"], "operations": []}
-    from ibo_archive_operation_ledger import validate
+    if __package__:
+        from .ibo_archive_operation_ledger import validate
+    else:
+        from ibo_archive_operation_ledger import validate
     head = validate(ledger["operations"], ledger["initial_sha256"])
     operation = pending["operation"]
     if operation["operation_id"] in {x["operation_id"] for x in ledger["operations"]}:
