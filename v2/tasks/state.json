@@ -813,6 +813,9 @@
     "stream_urls_written": false,
     "playlist_mutated": false,
     "new_playlist_created": false,
+    "unsafe_manual_av_retry_blocker": "Untrusted remote playlist URLs reach ffprobe/FFmpeg without proven public-only DNS/IP pinning and HLS child-resource egress/redirect protections",
+    "security_hold_pr": 581,
+    "manual_dispatch_allowed_before_hold_and_transport_acceptance": false,
     "task_statuses_changed": false
   }
 }
