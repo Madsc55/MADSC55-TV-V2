@@ -44,7 +44,19 @@ jobs:
       - name: Kernel network namespace must be available (fail closed)
         shell: bash
         run: |
-          bwrap --die-with-parent --unshare-net --ro-bind / / --proc /proc --dev /dev -- python3 -c 'import socket; s=socket.socket(); s.settimeout(2);\ntry: s.connect(("1.1.1.1", 80))\nexcept OSError: pass\nelse: raise SystemExit("EGRESS LEAK")\nfinally: s.close()'
+          bwrap --die-with-parent --unshare-net --ro-bind / / --proc /proc --dev /dev -- python3 - <<'PY'
+          import socket
+          s = socket.socket()
+          s.settimeout(2)
+          try:
+              s.connect(("1.1.1.1", 80))
+          except OSError:
+              pass
+          else:
+              raise SystemExit("EGRESS LEAK: outbound connection succeeded")
+          finally:
+              s.close()
+          PY
       - name: Offline decode inside network namespace
         shell: bash
         run: |
