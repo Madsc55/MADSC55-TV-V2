@@ -1,4 +1,4 @@
-name: YEDEKLER video audio audit (manual read-only)
+name: YEDEKLER uncertain AV retry (685 only, read-only)
 on:
   workflow_dispatch:
 permissions:
@@ -8,9 +8,9 @@ concurrency:
   group: v2-yedekler-av-audit
   cancel-in-progress: false
 jobs:
-  audit:
+  retry:
     runs-on: ubuntu-24.04
-    timeout-minutes: 340
+    timeout-minutes: 120
     steps:
       - uses: actions/checkout@v4
         with:
@@ -18,22 +18,43 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Install FFmpeg
+      - name: Verify and download the accepted initial 685-item retry queue
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          RUN_JSON="$(gh run view 44842556117 --repo "$GITHUB_REPOSITORY" --json status,conclusion,headSha)"
+          python -c 'import json,sys; d=json.loads(sys.argv[1]); assert d["status"]=="completed" and d["conclusion"]=="success" and d["headSha"]=="53a3aa9f965fb964326d2d052f02209ec3f160a4"' "$RUN_JSON"
+          ARTIFACT_JSON="$(gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/14681083208")"
+          python -c 'import json,sys; d=json.loads(sys.argv[1]); assert d["name"]=="v2-497-existing-audit-preview" and d["expired"] is False and d["digest"]=="sha256:8e269517a92203131633e024c6329c8a5f9a9095746f2ee375d185e4cc3b0f45" and d["workflow_run"]["id"]==44842556117' "$ARTIFACT_JSON"
+          mkdir -p /tmp/v2-497-initial
+          gh run download 44842556117 --repo "$GITHUB_REPOSITORY" --name v2-497-existing-audit-preview --dir /tmp/v2-497-initial
+          echo "b001bf48f07437e9ae67ed9f73b12ea9cfcab653523973435cf3b1cee3c31fcc  /tmp/v2-497-initial/manifest.json" | sha256sum -c -
+          echo "18ac8386964e2f336105bb83f8f1be0af008b6b9ea83f679a2fd1ca582097abe  /tmp/v2-497-initial/preview.m3u8" | sha256sum -c -
+      - name: Install FFmpeg for bounded real AV rechecks
         run: |
           sudo apt-get update -qq
-          sudo apt-get install -y ffmpeg
-      - name: Compile and run read-only YEDEKLER AV audit
+          sudo apt-get install -y --no-install-recommends ffmpeg
+          command -v ffmpeg
+          command -v ffprobe
+      - name: Recheck only the 685 uncertain identities and build fail-closed preview
         env:
           GITHUB_RUN_ID: ${{ github.run_id }}
           GITHUB_SHA: ${{ github.sha }}
         run: |
-          python -m py_compile v2/ibo_495_yedekler_av_audit.py v2/stream_probe.py
-          PYTHONPATH=v2 python v2/ibo_495_yedekler_av_audit.py
-      - name: Upload immutable hashed-URL report
+          set -euo pipefail
+          python -m py_compile v2/ibo_495_yedekler_av_audit.py v2/ibo_497_retry_reconcile.py
+          PYTHONPATH=v2 python -m unittest -v v2.test_ibo_495_yedekler_av_audit v2.test_ibo_497_retry_reconcile
+          PYTHONPATH=v2 python v2/ibo_495_yedekler_av_audit.py --retry-manifest /tmp/v2-497-initial/manifest.json
+          PYTHONPATH=v2 python v2/ibo_497_retry_reconcile.py --initial-manifest /tmp/v2-497-initial/manifest.json --retry-report retry-report.json --output-dir /tmp/v2-497-retry-result
+      - name: Upload immutable retry evidence and preview (no playlist write)
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: v2-497-1792-report
-          path: report.json
-          if-no-files-found: error
+          name: v2-497-685-retry-preview
+          path: |
+            retry-report.json
+            /tmp/v2-497-retry-result/manifest.json
+            /tmp/v2-497-retry-result/preview.m3u8
+          if-no-files-found: warn
           retention-days: 90

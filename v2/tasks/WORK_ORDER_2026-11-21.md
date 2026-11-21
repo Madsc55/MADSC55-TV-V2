@@ -128,6 +128,15 @@ Durum (bekliyor/çalışıyor/tamamlandı/bloke); değişen dosyalar; önce/sonr
 - **Sonraki tek adım:** #547 importer'ı kimlik ve SHA kilitleriyle gerçek mevcut artifact üzerinden yalnız read-only önizleme/manifest üretip doğrulamak; ardından ASR/OCR/WebVTT kanıt zincirindeki açık gerçek işleri ele almak.
 
 
+
+### 21 Kasım 2026 — Aşama 4 güvenli örnek alma (kısmi kod kabulü)
+- PR #561 `0137e18a2df527afd3124b6bd01d953cae21112a` birleşti: YEDEKLER için manuel/salt-okunur tek tetik kanıt işleme workflow'u; PR CI #44843702938 SUCCESS. 1.107/685 tarihî raporuna dayanır, **canlı retry yapmaz**.
+- PR #571 `4b45245f094ffc1aba4e7ecff24f125d502f6d4e` birleşti: bounded FFmpeg capture URL ambiguity reddi, explicit network protocol whitelist ve sentetik negatif güvenlik testleri; PR CI #44843819098 SUCCESS.
+- **Aşama 4 tamamen PASS değil:** DNS hostname'leri hâlâ güvenlik için reddediliyor. Gerçek HLS segment/anahtar alt istekleri için egress firewall, izinli alan adı, IP pinning, redirect ve tüm child URL denetimi gerek. URL doğrulama veya FFmpeg whitelist tek başına yeterli değil.
+- Gerçek Türkçe konuşma/altyazı yayın örneği ve bağımsız gözlem yok. ASR/OCR/WebVTT yerel fixture'ları nihai Türk/yabancı kararı değildir; gerçek test/kanal taraması SON AŞAMA olarak bekler. Ana playlist/arşiv/EPG yazılmadı.
+
+- PR #567 `7bbefc113b02e25e0d8da1709273c39e9bbb4f12` birleşti: yalnız 685 belirsiz kanalın manuel/kanıt-kilitli yeniden denemesi ve yeniden birleştirme kodu hazır; **hiçbir canlı retry çalıştırması başlatılmadı**. Post-merge main run #44843984931 SUCCESS; #561 run #44843901219 ve #571 run #44843949176 da SUCCESS.
+
 ## 21 Kasım 2026 — Güncellenmiş devam sırası / Aşama 5 başlatıldı
 
 1. **Bitti, tekrarlama:** #543 FFmpeg ses+görüntü, #547 değişmez 1.792 sonuç, #565 zaman damgalı ASR/OCR/WebVTT inceleme kayıtları. #547 CI `44842556117` ve #565 CI `44843144422` başarılı; ikisi de main'e birleştirildi. Gerçek 18.074 kanal taraması veya cihaz onayı anlamına gelmez.
