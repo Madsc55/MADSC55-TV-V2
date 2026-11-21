@@ -75,12 +75,16 @@ def build_full_report(raw, initial_manifest, initial_manifest_bytes, retry_repor
             raise ValueError("Retry evidence hash missing")
         if item.get("status") not in ("verified", "uncertain", "failed"):
             raise ValueError("Unknown retry status")
-        if not isinstance(item.get("attempts"), int) or item["attempts"] < 1:
-            raise ValueError("Invalid retry attempt count")
+        if type(item.get("attempts")) is not int or not 1 <= item["attempts"] <= 2:
+            raise ValueError("Retry attempt count must be one or two")
+        if item.get("status") == "verified" and item.get("decoded_av_verified") is not True:
+            raise ValueError("Verified status lacks decoded audio/video evidence")
         if item.get("status") == "failed" and not (
-            item.get("repeatable_av_failure") is True and item["attempts"] >= 2
+            item.get("repeatable_av_failure") is True and item["attempts"] == 2
         ):
-            raise ValueError("Failed status lacks repeatable AV failure evidence")
+            raise ValueError("Failed status lacks two-attempt repeatable AV failure evidence")
+        if item.get("status") == "uncertain" and item.get("repeatable_av_failure") is not False:
+            raise ValueError("Uncertain status cannot claim repeatable AV failure")
         new[key] = item
     if set(new) != set(uncertain):
         raise ValueError("Retry report does not cover the exact uncertain queue")
