@@ -32,7 +32,7 @@ def build_full_report(raw, initial_manifest, initial_manifest_bytes, retry_repor
         raise ValueError("Retry report playlist SHA mismatch")
     if retry_report.get("retry_source_manifest_sha256") != digest(initial_manifest_bytes):
         raise ValueError("Retry report was not generated from the accepted initial manifest")
-    if retry_report.get("retry_source_manifest_artifact_id") != 14681083208:
+    if retry_report.get("retry_source_manifest_artifact_id") != 14681388150:
         raise ValueError("Retry source artifact identity mismatch")
     if retry_report.get("retry_scanned_count") != 685 or retry_report.get("full_inventory_count") != 1792:
         raise ValueError("Retry report must contain exactly the 685 uncertain entries")
@@ -133,7 +133,7 @@ def main():
         "initial_manifest_sha256": digest(initial_bytes),
         "retry_run_id": retry.get("source_run_id"),
         "retry_report_sha256": digest(retry_bytes),
-        "retry_source_manifest_artifact_id": 14681083208,
+        "retry_source_manifest_artifact_id": 14681388150,
         "preview_only": True,
         "new_scan_started": False,
         "canonical_playlist_written": False,
