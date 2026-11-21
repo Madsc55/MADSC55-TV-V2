@@ -679,6 +679,53 @@
         "adapter_test_synthetic": true
       },
       "status": "blocked_no_historical_artifact_and_no_rescan"
+    },
+    "schema_mismatch": {
+      "producer": "v2/ibo_495_yedekler_av_audit.py",
+      "producer_root_fields": [
+        "schema",
+        "playlist_sha256",
+        "source_run_id",
+        "source_commit",
+        "entries",
+        "counts",
+        "read_only"
+      ],
+      "producer_entry_fields": [
+        "ordinal",
+        "channel_sha256",
+        "url_sha256",
+        "run_id",
+        "evidence_sha256",
+        "attempts",
+        "repeatable_av_failure",
+        "status",
+        "probe_status",
+        "decode_status",
+        "decoded_av_verified"
+      ],
+      "adapter": "v2/ibo_497_audit_adapter.py",
+      "adapter_expected_fields": [
+        "schema_version",
+        "category",
+        "total",
+        "results",
+        "position",
+        "name",
+        "classification"
+      ],
+      "compatible": false,
+      "fix_required": true
+    },
+    "producer_workflow_gate_failure": {
+      "run_id": 44841183579,
+      "conclusion": "failure",
+      "unit_tests": "12 passed",
+      "gate_status": "MAIN_WORKFLOW_FILE_LOCK_FAIL",
+      "unexpected_workflow": "v2-yedekler-av-audit.yml",
+      "cron_removed": true,
+      "workflow_dispatch_only": true,
+      "scan_dispatched": false
     }
   }
 }
