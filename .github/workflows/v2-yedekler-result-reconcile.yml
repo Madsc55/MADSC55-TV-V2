@@ -24,7 +24,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           GITHUB_REPOSITORY: ${{ github.repository }}
         run: |
-          python -m py_compile v2/ibo_test_result_reconcile.py v2/ibo_497_audit_adapter.py v2/ibo_497_existing_artifact.py
+          python -m py_compile v2/ibo_test_result_reconcile.py v2/ibo_497_audit_adapter.py v2/ibo_497_existing_artifact.py v2/ibo_497_retry_plan.py
           python v2/ibo_497_existing_artifact.py --output-dir /tmp/v2-497-existing-audit-preview
           python - <<'PY'
           import json
@@ -40,6 +40,21 @@ jobs:
           assert manifest["new_scan_started"] is False
           print(json.dumps({"status": "PREVIEW_ONLY", "counts": manifest["counts"],
                             "failed_count": manifest["failed_count"]}))
+          PY
+          python v2/ibo_497_retry_plan.py --initial-manifest /tmp/v2-497-existing-audit-preview/manifest.json --output /tmp/v2-497-existing-audit-preview/retry-plan.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          plan = json.loads(Path("/tmp/v2-497-existing-audit-preview/retry-plan.json").read_text(encoding="utf-8"))
+          assert plan["uncertain_retry_plan_count"] == 685
+          assert len(plan["items"]) == 685
+          assert plan["network_attempts"] == 0
+          assert plan["live_retry_authorized"] is False
+          assert plan["new_scan_started"] is False
+          assert plan["playlist_write_allowed"] is False
+          assert plan["archive_write_allowed"] is False
+          print(json.dumps({"status": "READ_ONLY_RETRY_PLAN", "count": len(plan["items"]),
+                            "plan_sha256": plan["plan_sha256"]}))
           PY
       - name: Upload immutable reconciliation preview and retry manifest
         uses: actions/upload-artifact@v4
