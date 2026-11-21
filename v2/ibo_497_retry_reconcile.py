@@ -2,6 +2,7 @@
 """Combine original verified evidence with the targeted retry and emit a read-only preview."""
 import argparse
 import json
+import re
 from collections import Counter
 from pathlib import Path
 
@@ -11,6 +12,59 @@ from ibo_test_result_reconcile import digest, reconcile
 SOURCE_RUN_ID = 44640007709
 SOURCE_REPORT_CANONICAL_SHA256 = "b48bd57ba03a7e4ee4eedf3f65355572e267db87b4d48c6d4fb390b8484dc55c"
 INITIAL_MANIFEST_SHA256 = "b001bf48f07437e9ae67ed9f73b12ea9cfcab653523973435cf3b1cee3c31fcc"
+
+_HEX64 = re.compile(r"^[0-9a-f]{64}$", re.ASCII)
+_DETERMINISTIC_ABSENCE = {"NO_MEDIA", "NO_DECODED_FRAME"}
+
+def validate_retry_evidence(item):
+    """Reject claimed AV verdicts that contradict the recorded two-attempt evidence.
+
+    This validates report consistency only. It is not an independent
+    authentication of remote stream behavior or authorization to modify IBO.
+    """
+    if type(item.get("attempts")) is not int or item["attempts"] not in (1, 2):
+        raise ValueError("Retry attempts must be exactly one or two")
+    evidence = item.get("evidence_sha256")
+    if not isinstance(evidence, str) or not _HEX64.fullmatch(evidence):
+        raise ValueError("Retry evidence SHA-256 is malformed")
+    first = item.get("first_probe_status")
+    second = item.get("second_probe_status")
+    if not isinstance(first, str) or not first:
+        raise ValueError("Missing first AV attempt status")
+    if item["attempts"] == 1:
+        if second is not None:
+            raise ValueError("Unexpected second attempt after one probe")
+    elif not isinstance(second, str) or not second:
+        raise ValueError("Missing second AV attempt status")
+    if item.get("probe_status") != (second if second is not None else first):
+        raise ValueError("Final AV outcome does not match the recorded attempt")
+    if type(item.get("decoded_av_verified")) is not bool:
+        raise ValueError("Missing decoded AV boolean evidence")
+    if (item.get("decode_status") == "DECODED_AV") != item["decoded_av_verified"]:
+        raise ValueError("Decoded AV status contradicts its boolean result")
+    status = item.get("status")
+    verified_attempt = first == "AV_VERIFIED" or second == "AV_VERIFIED"
+    deterministic_failure = (first in _DETERMINISTIC_ABSENCE and
+                             second in _DETERMINISTIC_ABSENCE)
+    if status == "verified":
+        if (not verified_attempt or item["decoded_av_verified"] is not True or
+                item.get("decode_status") != "DECODED_AV" or
+                item.get("probe_status") != "AV_VERIFIED" or
+                item.get("repeatable_av_failure") is not False):
+            raise ValueError("Verified retry lacks actual decoded audio/video proof")
+    elif status == "failed":
+        if (item["attempts"] != 2 or not deterministic_failure or
+                item["decoded_av_verified"] is not False or
+                item.get("repeatable_av_failure") is not True):
+            raise ValueError("Failed retry lacks two deterministic media absences")
+    elif status == "uncertain":
+        if (verified_attempt or deterministic_failure or
+                item["decoded_av_verified"] is not False or
+                item.get("repeatable_av_failure") is not False):
+            raise ValueError("Uncertain result contradicts recorded retry evidence")
+    else:
+        raise ValueError("Unknown retry status")
+
 
 def build_full_report(raw, initial_manifest, initial_manifest_bytes, retry_report,
                       require_known_snapshot=False):
@@ -68,16 +122,7 @@ def build_full_report(raw, initial_manifest, initial_manifest_bytes, retry_repor
             raise ValueError("Retry result URL hash mismatch")
         if item.get("run_id") != retry_report.get("source_run_id"):
             raise ValueError("Retry result run ID mismatch")
-        if not isinstance(item.get("evidence_sha256"), str) or len(item["evidence_sha256"]) != 64:
-            raise ValueError("Retry evidence hash missing")
-        if item.get("status") not in ("verified", "uncertain", "failed"):
-            raise ValueError("Unknown retry status")
-        if not isinstance(item.get("attempts"), int) or item["attempts"] < 1:
-            raise ValueError("Invalid retry attempt count")
-        if item.get("status") == "failed" and not (
-            item.get("repeatable_av_failure") is True and item["attempts"] >= 2
-        ):
-            raise ValueError("Failed status lacks repeatable AV failure evidence")
+        validate_retry_evidence(item)
         new[key] = item
     if set(new) != set(uncertain):
         raise ValueError("Retry report does not cover the exact uncertain queue")

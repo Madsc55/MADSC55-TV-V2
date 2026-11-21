@@ -108,6 +108,7 @@ def audit_one(item):
         first_outcome = {**first, **decoded}
         first_outcome["status"] = "AV_VERIFIED" if decoded.get("decoded_av_verified") else decoded.get("decode_status", "DECODE_FAILED")
     first_status = first_outcome.get("status", "UNKNOWN")
+    second_status = None
     attempts = 1
     outcome = first_outcome
     if first_status != "AV_VERIFIED":
@@ -118,7 +119,8 @@ def audit_one(item):
             second = {**second, **decoded}
             second["status"] = "AV_VERIFIED" if decoded.get("decoded_av_verified") else decoded.get("decode_status", "DECODE_FAILED")
         outcome = second
-        status = classify_outcomes(first_status, second.get("status", "UNKNOWN"))
+        second_status = second.get("status", "UNKNOWN")
+        status = classify_outcomes(first_status, second_status)
     else:
         status = "verified"
     canonical = json.dumps({"first": first_status, "final": outcome}, sort_keys=True, separators=(",", ":")).encode()
@@ -129,6 +131,8 @@ def audit_one(item):
         "run_id": int(os.environ["GITHUB_RUN_ID"]),
         "evidence_sha256": digest(canonical),
         "attempts": attempts,
+        "first_probe_status": first_status,
+        "second_probe_status": second_status,
         "repeatable_av_failure": status == "failed",
         "status": status,
         "probe_status": outcome.get("status", "UNKNOWN"),
