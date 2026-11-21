@@ -1,3 +1,10 @@
+## Ek inceleme — 21 Kasım 2026 / eski scan artefaktlarının içeriği
+
+- Workflow dosyaları `.github/workflows/v2-postscan-triage.yml`, `v2-real-iptv-scan.yml`, `ibo-real-scan.yml`, `v2-offline-inventory.yml` incelendi. `v2-postscan-triage` 40743765437 run'ından `turkish-stream-review` raporlarını indiriyor; bu, 1.792 YEDEKLER test sonucu raporu değildir.
+- 44429064188 run'ındaki `v2-bounded-retry-15-merged-checkpoint` artefaktı indirildi; ZIP içeriği yalnız `ibo-scan-progress.enc` ve önceki checkpoint yedeğidir. 1.792 satırlık #497 report.json değildir.
+- 43608247496 run'ındaki `v2-real-scan-evidence` artefaktı indirildi; içeriği gerçek dünya taraması, aday envanteri, keşif raporları ve şifreli ilerleme checkpoint'idir. #497'nin beklediği 1.792 kanal test sonuç raporu/manifesti değildir. Bu artefaktı #497'ye kaynak diye kullanmak yasaklandı.
+- Böylece bilinen olası tarihsel kaynaklar dosya seviyesinde incelendi; hiçbiri #497'nin 1.107 verified + 685 uncertain gerçek test raporu değil. #497 kaynak raporu bulunana kadar bloklu kalır. Yeni tarama/işleme/playlist yazımı yok.
+
 ## 21 Kasım 2026 — #497 uygulama ve Actions artefaktı incelemesi
 
 - İlgili commit `a893b79859dfbb0695c52b2e0222106c46bcea47` (#497 existing artifact importer) incelendi. Dosyalar: `v2/ibo_497_existing_artifact.py`, `v2/ibo_test_result_reconcile.py`, `v2/test_ibo_test_result_reconcile.py`.
