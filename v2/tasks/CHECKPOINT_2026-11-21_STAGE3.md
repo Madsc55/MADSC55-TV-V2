@@ -28,3 +28,11 @@ Bu kayıt, tekrar çalışma yapılmaması ve bir sonraki sohbette aynı yerden 
 ## Değişmez kurallar
 
 Tek ana playlist; yeni test playlisti yok. 48 kaldırılmış hatalı kanal geri eklenmez; aynı URL mükerrer eklenmez; eski ilk 1003 kanal koruması tekrar uygulanmaz. Başlangıç 18.074 YEDEKLER envanteri ve 18.912 toplam kayıp/çift kayıt olmadan korunur; 112–486 ve seçili 59–181 TURK taşıma geçmişi korunur. Testleri kullanıcı İBO Player'da ayrıca yapar. Tamamlanmış PR/işler tekrar yapılmaz.
+
+## 21 Kasım 2026 — devam denetimi / artifact yeniden doğrulama
+
+- Orijinal artifact `14587983768` ZIP'i yeniden indirilen yerel dosyadan açıldı; **ZIP SHA256 `d6fefd9dabc036302dcadf0e52fa66542c51d9032d9abf8aeb3e3b88233a9f73` ve JSON SHA256 `30de600eca7d8e3140f423bb3fc248dc2f57df6ff031b0bf97276a9a861dba2c`** birebir eşleşti.
+- JSON: `schema_version=1`, `total=1792`, `WORKING=1107`, `RECHECK_REQUIRED=685`, kaynak playlist SHA `eee260cce3926caff18238f9583958b40475e362ce7650fb7fac51a66a84ee1c`.
+- Yeni gözlenen main commit `0137e18a2df527afd3124b6bd01d953cae21112a`: `feat(#497): add manual read-only YEDEKLER reconciliation`. **Bu commitin varlığı, gerçek artifact ile importer'ın uçtan uca çalıştırıldığını kanıtlamaz.**
+- Önceki checkpoint PR [#570](https://github.com/Madsc55/MADSC55-TV-V2/pull/570) için kayıt dalı korunuyor. Bu ek güncelleme aynı dala yazıldı; main playlist ve görev statüleri değiştirilmedi.
+- **Bir sonraki adım değişmedi:** orijinal JSON + kaynak playlist + güncel playlist ile read-only importer'ın gerçek preview/manifest üretimini kanıtlamak; sonra 685 belirsizi yeniden tarama kuyruğuna almak. Gerçek İBO cihaz kabulü hâlâ ayrı ve bekliyor.
