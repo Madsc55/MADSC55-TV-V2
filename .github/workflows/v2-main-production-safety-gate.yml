@@ -240,6 +240,8 @@ jobs:
           python -m unittest -v v2.test_turkish_asr_ocr_evidence
           python -m unittest -v v2.test_turkish_media_sample_capture
           python -m unittest -v v2.test_turkish_safe_dns_capture
+          python -m py_compile v2/turkish_hls_safe_segments.py v2/test_turkish_hls_safe_segments.py
+          python -m unittest -v v2.test_turkish_hls_safe_segments
           python -m unittest -v v2.test_turkish_subtitle_track_review
           python -m unittest -v v2.test_turkish_iso639_review
           python -m unittest -v v2.test_turkish_local_media_probe
