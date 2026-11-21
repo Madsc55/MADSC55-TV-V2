@@ -1,0 +1,66 @@
+name: V2 #497 Bounded Automatic Retry
+on:
+  schedule:
+    - cron: '17 3 * * 1'
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: v2-497-uncertain-retry
+  cancel-in-progress: false
+jobs:
+  retry:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    # Fail closed: a scheduled run cannot reach untrusted stream URLs until
+    # the separately reviewed egress/SSRF control has been accepted.
+    env:
+      RETRY_EGRESS_APPROVED: ${{ vars.V2_497_RETRY_EGRESS_APPROVED }}
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify live retry authorization
+        run: |
+          set -euo pipefail
+          if [ "${RETRY_EGRESS_APPROVED:-}" != "true" ]; then
+            echo "::notice::685-channel live retry held: approve secure media egress first (V2_497_RETRY_EGRESS_APPROVED=true)."
+            exit 0
+          fi
+      - name: Download pinned accepted initial manifest
+        if: env.RETRY_EGRESS_APPROVED == 'true'
+        run: |
+          set -euo pipefail
+          mkdir -p "${RUNNER_TEMP}/source"
+          gh api "repos/${GITHUB_REPOSITORY}/actions/artifacts/14681083208/zip" > "${RUNNER_TEMP}/source.zip"
+          unzip -q "${RUNNER_TEMP}/source.zip" -d "${RUNNER_TEMP}/source"
+          mapfile -d '' manifests < <(find "${RUNNER_TEMP}/source" -type f -name 'manifest.json' -print0)
+          test "${#manifests[@]}" -eq 1
+          printf '%s  %s\n' b001bf48f07437e9ae67ed9f73b12ea9cfcab653523973435cf3b1cee3c31fcc "${manifests[0]}" | sha256sum --check
+          cp "${manifests[0]}" "${RUNNER_TEMP}/initial-manifest.json"
+      - name: Install bounded AV probe dependencies
+        if: env.RETRY_EGRESS_APPROVED == 'true'
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y ffmpeg
+      - name: Retry only the 685 pinned uncertain entries (read-only)
+        if: env.RETRY_EGRESS_APPROVED == 'true'
+        run: |
+          set -euo pipefail
+          python v2/ibo_495_yedekler_av_audit.py --retry-manifest "${RUNNER_TEMP}/initial-manifest.json" --output "${RUNNER_TEMP}/retry-report.json"
+          python v2/ibo_497_retry_reconcile.py --initial-manifest "${RUNNER_TEMP}/initial-manifest.json" --retry-report "${RUNNER_TEMP}/retry-report.json" --output-dir "${RUNNER_TEMP}/retry-preview"
+      - name: Upload read-only retry evidence
+        if: env.RETRY_EGRESS_APPROVED == 'true' && always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v2-497-uncertain-retry-evidence
+          path: |
+            ${{ runner.temp }}/retry-report.json
+            ${{ runner.temp }}/retry-preview/manifest.json
+          if-no-files-found: warn
+          retention-days: 30
