@@ -20,12 +20,12 @@ class CaptureTests(unittest.TestCase):
     def test_ambiguous_url_authority_and_controls_rejected(self):
         for url in (
             " http://8.8.8.8/live",
-            "http://8.8.8.8/live\\nplaylist",
-            "http://8.8.8.8/live\\tplaylist",
+            "http://8.8.8.8/live\nplaylist",
+            "http://8.8.8.8/live\tplaylist",
             "http://8.8.8.8/with space",
-            "http://8.8.8.8\\\\@127.0.0.1/live",
+            "http://8.8.8.8\\@127.0.0.1/live",
             "http://%38.8.8.8/live",
-            "http://8.8.8.8/path\\\\file",
+            "http://8.8.8.8/path\\file",
         ):
             with self.subTest(url=url), self.assertRaises(ValueError):
                 validate_url(url)
