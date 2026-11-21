@@ -47,7 +47,7 @@ def probe(url, timeout=25, ffprobe="ffprobe", require_guard=False):
     command = [
         executable, "-v", "error",
         "-protocol_whitelist", PROTOCOL_WHITELIST,
-        "-max_redirect", MAX_REDIRECTS,
+        "-max_redirects", MAX_REDIRECTS,
         "-tls_verify", "1",
         "-probesize", "1500000",
         "-analyzeduration", "3000000",
@@ -116,7 +116,7 @@ def verify_decoded_av(url, timeout=25, ffmpeg="ffmpeg", require_guard=False):
         command = [
             executable, "-nostdin", "-hide_banner", "-v", "error",
             "-protocol_whitelist", PROTOCOL_WHITELIST,
-            "-max_redirect", MAX_REDIRECTS,
+            "-max_redirects", MAX_REDIRECTS,
             "-tls_verify", "1",
             "-rw_timeout", str(int(timeout * 1000000)),
             "-i", url,
