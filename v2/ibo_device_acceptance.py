@@ -2,12 +2,11 @@
 """Validate manually collected IBO Player device evidence without claiming playback."""
 import argparse
 import datetime as dt
-import hashlib
 import json
 import pathlib
 import re
 
-SHA256 = re.compile(r"[0-9a-f]{64}\\Z")
+SHA256 = re.compile(r"[0-9a-f]{64}\Z")
 REQUIRED_UI_CHECKS = (
     "playlist_loaded",
     "categories_visible",
