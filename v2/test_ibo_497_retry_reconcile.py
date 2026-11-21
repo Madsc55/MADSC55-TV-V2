@@ -44,7 +44,7 @@ class RetryReconcileTests(unittest.TestCase):
             "schema": 1, "retry_only": True, "read_only": True,
             "playlist_sha256": digest(raw), "source_run_id": 999,
             "retry_source_manifest_sha256": digest(initial_bytes),
-            "retry_source_manifest_artifact_id": 14681083208,
+            "retry_source_manifest_artifact_id": 14681388150,
             "retry_scanned_count": 685, "full_inventory_count": 1792,
             "entries": retry_entries,
             "counts": dict(Counter(statuses)),
