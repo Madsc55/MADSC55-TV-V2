@@ -1,0 +1,39 @@
+name: YEDEKLER video audio audit (manual read-only)
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: v2-yedekler-av-audit
+  cancel-in-progress: false
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 340
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install FFmpeg
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y ffmpeg
+      - name: Compile and run read-only YEDEKLER AV audit
+        env:
+          GITHUB_RUN_ID: ${{ github.run_id }}
+          GITHUB_SHA: ${{ github.sha }}
+        run: |
+          python -m py_compile v2/ibo_495_yedekler_av_audit.py v2/stream_probe.py
+          PYTHONPATH=v2 python v2/ibo_495_yedekler_av_audit.py
+      - name: Upload immutable hashed-URL report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v2-497-1792-report
+          path: report.json
+          if-no-files-found: error
+          retention-days: 90

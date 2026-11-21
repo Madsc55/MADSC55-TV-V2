@@ -26,7 +26,7 @@ v2-real-iptv-scan.yml v2-spoken-language-existing-snapshot.yml
 v2-turkish-stream-catalog.yml v2-turkish-stream-decode.yml
 v2-turkish-stream-probe.yml v2-turkish-stream-review.yml
 v2-turkish-tv-health.yml v2-world-discovery.yml
-v2-yedekler-logos.yml v2-youtube-discovery.yml
+v2-yedekler-logos.yml v2-youtube-discovery.yml v2-yedekler-av-audit.yml
 """.split())
 WRITER_SUSPENDED=frozenset("""
 alphabetize-yeni-turk.yml backups-logo-audit.yml full-turkish-backups-audit.yml
