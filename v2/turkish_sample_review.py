@@ -1,5 +1,6 @@
 """Read the audio, picture and embedded subtitles of one local captured MKV."""
 import argparse
+import datetime
 import hashlib
 import json
 import os
@@ -142,6 +143,15 @@ def review_sample(source, model_dir=None, capture_receipt=None, origin_country=N
                     or capture_receipt.get("bytes") != size
                     or not re.fullmatch("[0-9a-f]{64}", str(capture_receipt.get("url_sha256", "")))):
                 raise ValueError("Capture receipt does not match sample")
+            captured_at = capture_receipt.get("captured_at_utc")
+            if captured_at is not None:
+                try:
+                    parsed_capture_time = datetime.datetime.fromisoformat(
+                        captured_at.replace("Z", "+00:00"))
+                except (AttributeError, TypeError, ValueError) as exc:
+                    raise ValueError("Capture timestamp must be ISO-8601") from exc
+                if parsed_capture_time.tzinfo is None or parsed_capture_time.utcoffset() is None:
+                    raise ValueError("Capture timestamp must include a timezone")
             url_sha = capture_receipt["url_sha256"]
         metadata = probe_local_sample(local)
         audio, speech = review_audio(local, root, model_dir)
@@ -155,10 +165,28 @@ def review_sample(source, model_dir=None, capture_receipt=None, origin_country=N
     triage = classify_channel("sample", origin_country=origin_country, spoken_language=spoken,
                               subtitle_language="tr" if subtitled else None, video_decoded=video,
                               audio_decoded=audio, stream_checked=audio or video)
+    reviewed_at = datetime.datetime.now(datetime.timezone.utc).isoformat()
+    timed_subtitles = any(row.get("cue_count", 0) > 0 for row in subtitles)
+    provenance = {
+        "source_identity": "url_sha256" if url_sha else "local_file_unattributed",
+        "url_sha256": url_sha,
+        "sample_sha256": digest,
+        "captured_at_utc": capture_receipt.get("captured_at_utc") if capture_receipt else None,
+        "reviewed_at_utc": reviewed_at,
+        "capture_method": "bounded_ffmpeg_http_capture" if capture_receipt else "local_file_unattributed",
+        "av_method": "ffmpeg_local_audio_video_decode",
+        "asr_method": "faster_whisper_local_cpu_int8" if speech.get("status") == "LANGUAGE_MODEL_HINT_ONLY" else speech.get("status"),
+        "asr_confidence": speech.get("language_probability"),
+        "ocr_method": "tesseract_tur_psm6" if picture["ocr_frames_completed"] else "not_completed",
+        "ocr_confidence": None,
+        "subtitle_method": "ffmpeg_webvtt_timed_cue_review" if timed_subtitles else "not_completed",
+        "subtitle_confidence": None,
+    }
     return {"sample_sha256": digest, "url_sha256": url_sha, "bytes": size,
             "video_decoded": video, "audio_decoded": audio, "speech": speech, "picture": picture,
             "track_probe_status": metadata["status"], "subtitle_tracks": subtitles,
             "unexamined_tracks": len(tracks) - len(subtitles), "triage": triage,
+            "evidence_provenance": provenance,
             "non_turkish_speech_with_turkish_cues_hint":
                 bool(spoken and not triage["turkish_spoken_hint"] and subtitled),
             "device_verified": False, "review_approved": False, "playlist_modified": False}
