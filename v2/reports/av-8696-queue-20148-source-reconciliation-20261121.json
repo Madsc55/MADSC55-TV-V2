@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "source_artifact_id": 14135417421,
+  "source_report_sha256": "d5f382fe8116f0cd0d11f171a016f834195becefb51270f3564f4d6257f5191f",
+  "historical_av_count": 8696,
+  "historical_av_carryover": 8668,
+  "historical_av_new": 28,
+  "historical_av_individual_hashes_available_in_report": false,
+  "recovery_queue_count": 20148,
+  "recovery_queue_unique_url_hashes": 20148,
+  "recovery_queue_actions": {
+    "RETRY": 12898,
+    "REVIEW": 4845,
+    "CHECK_AV": 2405
+  },
+  "crosswalk_av_to_current_playlist_verified": false,
+  "live_language_verified": false,
+  "security_hold_685_released": false,
+  "playlist_changed": false,
+  "csv_sha256": "6f6154e500c6470c05d84e32db6a3ec41c58b68ab0b16e10402f9d2da9fd9f5b"
+}
