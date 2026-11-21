@@ -48,7 +48,10 @@ evidence that any real channel is playing.
    an outbound firewall** and does not prove nested HLS segments are safe.
    It requires its own isolation/transport acceptance before declaring Stage
    4 globally complete.
-3. No real IPTV stream capture, ASR/OCR/WebVTT language classification,
+3. HLS/DASH with separate segments, encryption keys or nested resources remains
+   unsupported. A future collector must validate every manifest, segment and
+   key with the same pinned-IP, host, redirect, content and byte-budget policy.
+4. No real IPTV stream capture, ASR/OCR/WebVTT language classification,
    685-channel retry, 18,074 full scan, archive transfer or playlist write
    has been performed by this PR.
 
@@ -62,3 +65,9 @@ categories. Existing IBO 2,500-channel device test cycle remains separate.
 Production Security Gate will run the new offline regressions; use the
 exact GitHub Actions run linked from PR #572 as the final acceptance record.
 Passing offline tests will **not** be described as proof of a live stream.
+
+## Follow-up — 21 November 2026
+
+- Public IP-literal URLs now use `download_bounded` too; there is no remaining direct FFmpeg network path in the sample-capture helper.
+- Offline regressions assert FFmpeg's protocol whitelist is exactly `file` for both DNS and IP sources, and that FFmpeg receives a local temporary input path rather than the remote URL.
+- Real channel sampling remains unperformed. Adaptive HLS/DASH remains deliberately unsupported until a per-resource secure collector exists.
