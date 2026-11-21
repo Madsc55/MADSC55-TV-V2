@@ -833,5 +833,45 @@
     "code_gate_status": "passed",
     "live_retry_status": "not_executed",
     "next_dependency": "No 685 live retry results yet; verify targeted run evidence if/when separately executed. Independent #6 encrypted external-vault real restore acceptance outstanding."
+  },
+  "stage4_capture_egress_review_20261121": {
+    "reviewed_at": "2026-11-21",
+    "main_baseline_sha": "4f306f723ade23af3b3d61f88ca5c58837a949e6",
+    "verified_main_success_run": 44844257018,
+    "later_main_run_at_review": {
+      "id": 44844315821,
+      "status": "in_progress",
+      "conclusion": null
+    },
+    "merged": {
+      "one_click_readonly_reconcile_pr": 561,
+      "targeted_685_retry_infrastructure_pr": 567,
+      "targeted_685_retry_merge_sha": "7bbefc113b02e25e0d8da1709273c39e9bbb4f12"
+    },
+    "original_evidence": {
+      "run_id": 44640007709,
+      "artifact_id": 14587983768,
+      "total": 1792,
+      "verified": 1107,
+      "uncertain": 685,
+      "failed": 0
+    },
+    "original_preview": {
+      "run_id": 44842556117,
+      "artifact_id": 14681083208,
+      "canonical_playlist_unchanged": true
+    },
+    "manual_retry_685_run_observed": false,
+    "stage4_pr": 572,
+    "stage4_review_head": "e64cebca229fd14a9bea23f21c2b7e7a792ba46e",
+    "stage4_review_issue_comment_id": 7054170571,
+    "stage4_unresolved_risk": "IP-literal input passes remote URL to FFmpeg with network protocols enabled. Nested HLS/playlist references can attempt secondary private/local requests; redirect=0 alone is insufficient.",
+    "accept_stage4_production": false,
+    "required_next_fix": "Use bounded pinned-IP local-file capture or fail closed for public IP literals; add offline nested HLS/key SSRF regression before accepting.",
+    "new_channel_scan_started": false,
+    "new_playlist_created": false,
+    "canonical_playlist_modified": false,
+    "archive_or_category_modified": false,
+    "existing_34_task_statuses_modified": false
   }
 }
