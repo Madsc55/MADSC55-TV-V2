@@ -116,6 +116,15 @@ def audit_one(filename,source):
     jobs=mapping(doc.get("jobs"))
     if not jobs:
         problems.append("NO_JOBS")
+    # #497: the historical 685-entry retry accepts untrusted remote URLs.
+    # Do not let any workflow run ffprobe/FFmpeg until DNS/IP/redirect/HLS
+    # egress restrictions have passed explicit offline security acceptance.
+    # Fail closed on newly added jobs as well as removal of the hold.
+    if filename=="v2-yedekler-av-audit.yml":
+        retry=jobs.get("retry")
+        if (set(jobs)!={"retry"} or not isinstance(retry,dict)
+                or retry.get("if")!="${{ false }}"):
+            problems.append("UNSAFE_685_LIVE_RETRY_NOT_SUSPENDED")
     for job in jobs.values():
         if not isinstance(job,dict):
             problems.append("INVALID_JOB")

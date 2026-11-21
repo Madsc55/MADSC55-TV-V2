@@ -1,3 +1,11 @@
+## 21 Kasım 2026 — Devam kontrolü: #561/#567 tamam, Stage 4 egress güvenliği açık
+
+- Güncel görev işleyişinde #561 (tek manuel, salt-okunur 1.792 rapor işleme) **merged**; son PR CI run `44843702938` SUCCESS. #567 (yalnız 685 belirsizin iki denemeli tekrar kontrolünü *manuel* çalıştıracak altyapı) **merged**; merge SHA `7bbefc113b02e25e0d8da1709273c39e9bbb4f12`, run `44843776673` SUCCESS ve merge sonrası main run `44843984931` SUCCESS. Bu kod ve testleri tekrar yazma.
+- **Gerçek veri durumunda değişiklik yok:** İlk kanıt `44640007709` / artifact `14587983768`; 1.792 YEDEKLER = 1.107 doğrulanmış AV + 685 belirsiz + 0 kesin başarısız. Mevcut önizleme/manifest kanıtı `44842556117` / artifact `14681083208`; playlist değişmez. 685 canlı tekrar denemesi **başlatılmış olarak doğrulanmadı**; 1.107 doğrulanmış kayıt yeniden taranmayacak. Aktif tek ana playlist, 48 geri alınmayacak hatalı kayıt, arşiv/kategori bütünlüğü ve mevcut 34 görev statüsü korunacak.
+- **Aşama 4 / PR #572 güvenlik incelemesi:** DNS-adı yakalama yolu pinned-public-IP indirme + yerel dosya FFmpeg yaklaşımına sahip; buna karşılık `v2/turkish_media_sample_capture.py` içindeki doğrudan genel-IP dalı hâlâ uzaktaki URL'yi FFmpeg'e `-i` olarak veriyor ve `http,https,tcp,tls,crypto` protokollerini kabul ediyor (PR head `e64cebca229fd14a9bea23f21c2b7e7a792ba46e` incelemesinde mevcut). Bir genel IP'den dönen HLS/playlist, ikincil yerel/özel segment veya key adreslerine yönlendirebileceğinden sadece `-max_redirect 0` güvenli egress sınırı sayılmaz. Bu olası SSRF/yan kaynak erişimi riski [PR #572 yorumunda](https://github.com/Madsc55/MADSC55-TV-V2/pull/572#issuecomment-7054170571) kayıt altına alındı. IP-literal yol da yerel dosya + güvenli indirme modeline alınmadan (veya fail-closed reddedilmeden), negatif regresyon testi geçmeden Stage 4 üretim kabulü verilmemeli.
+- **CI notu:** Son doğrulanmış main SUCCESS run `44844257018` (head `5c007b3f3423f52ef41e7bf22b5317a87660cc97`); sonraki main run `44844315821` bu kontrol anında in_progress. PR #572'nin son head için testi de sürmekteydi. Kapanmış kabul sonucu varsayılmayacak.
+- **Devam sırası:** 1) #572'de IP-literal egress güvenliğini kod ve çevrimdışı negatif testlerle kapat; 2) güncel PR/main güvenlik kapılarını doğrula; 3) Stage 4 ASR/OCR/WebVTT gerçek kanıtını eksiksiz bağla; 4) yalnız son test fazında 685 kanal ve İBO Player gerçek oynatma kabulünü ele al. Bu incelemede yeni kanal taraması, yeniden deneme workflow dispatch'i, yeni playlist, canlı playlist/URL/arşiv mutasyonu yok.
+
 ## 21 Kasım 2026 — GÜNCEL DEVİR: #6 gerçek kasa kabulü ve #497 tarihsel AV önizlemesi
 
 **Kaldığımız yer; daha önce tamamlanan işlere dönülmesin.**
@@ -1488,6 +1496,16 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - **Güvenlik ve sınırlar:** Tek ana `MADSC55_TV_IBO_CALISANLAR_TEST.m3u8` playlisti korunmuştur. Bu not için kanal/URL/kategori taşınmadı, 48 engelli kanal geri eklenmedi, yeni playlist oluşturulmadı. İBO Player cihaz testi ayrı ve kullanıcı sorumluluğunda; 34 görev statüsü değiştirilmedi.
 - **Devam noktası:** #567 kodu, güvenlik kapısı ve gerçek ilk manifest kabul edildi; **685 hedefli canlı yeniden deneme işlemi ayrı bir gerçekleştirme aşamasıdır**, tamamlanmış yazılmayacak. Tekrarlama/atlama yok; sonraki bağımsız öncelik #6 şifreli harici kasa gerçek geri-yükleme kanıtının doğrulanması ve kalan kabul engelleridir.
 
+
+## 21 Kasım 2026 — Aşama 4 güvenli DNS örnek alma kodu ve açık HLS sınırı
+
+- PR [#572](https://github.com/Madsc55/MADSC55-TV-V2/pull/572) **merge edildi**, commit `8e9e86b0a422a59b2cfccdd9d732c0a16b442c99`. PR CI [#44844424809](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44844424809) **SUCCESS**; 14 mevcut capture testi + 12 yeni DNS güvenlik testi PASS. Merge sonrası main CI #44844614127 ayrı izlenecek.
+- `v2/turkish_safe_dns_capture.py` geliştirildi: tüm A/AAAA adreslerini genel/unicast olarak denetle, tek doğrulanmış IP'ye pinle, SNI/TLS sertifikasını orijinal hostname ile doğrula; 30x, özel IP, multicast, manifest, ffconcat ve aşırı boyutu reddet. `v2/turkish_media_sample_capture.py` DNS için yalnız indirilen yerel dosyayı, `file` whitelist ve sabit FFmpeg demuxer ile açar; hedef dosyanın üstüne yazmaz.
+- Açık sınırlama: nested HLS/DASH alt istekleri henüz desteklenmiyor; her segment/anahtar için IP pinning ve egress kontrolü gerekir. Mevcut IP-literal FFmpeg modu whitelist kullansa da ağ firewall'u değildir. Aşama 4 bütünüyle bitti ilan edilmeyecek.
+- Gerçek bir IPTV yayınına ağ örneği alma testi yapılmadı; ASR/OCR/WebVTT'nin gerçek Türkçe kanıtı, 685 retry, 18.074 medya doğrulaması, dış şifreli yedek kabulü ve İBO Player cihaz kabulü açık. Testler en son kontrollü aşamada.
+- Tek ana playlist/URL/kategori/EPG değişmedi; 48 karantina kanalı geri gelmedi; mükerrer URL eklenmedi; yeni playlist açılmadı; 1003 kuralı yeniden uygulanmadı.
+- Kanıt dosyası `v2/reports/stage4-pinned-dns-capture-20261121.md`, ayrıntılı ana çalışma planı `v2/tasks/WORK_ORDER_2026-11-21.md`. Sonraki iş güvenli HLS alt kaynak collector/egress izolasyonunu ve IP-literal eski modun kapısını tamamlamak.
+
 ## 21 Kasım 2026 — Aşama 5 / gerçek eski dünya raporu ile 18.074 YEDEKLER hash mutabakatı
 
 - **Kalıcı devir noktası:** 1–4. aşamalardaki birleşmiş işler tekrarlanmayacak. #543 (FFmpeg AV), #547 (özgün 1.792 raporu) ve #565 (Türkçe örnek incelemesi kanıt zamanı/yöntemi) main'e birleşti. #547'nin son PR CI'ı `44842556117`, #565'in PR CI'ı `44843144422`: SUCCESS. #497 1.792'lik preview artefaktı `14681083208` üretildi; kullanıcı ana playlistine yazma yok.
@@ -1506,4 +1524,3 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - GitHub main playlist blob `f3d39e4522d27912fccd6e67240a10fd16c4923b`: **18.912 kayıt, 18.074 farklı URL**. Bunların 838 korunan kanal URL'si, arşivde bulunan kayıtlarla bilinçli olarak örtüşüyor. Bunlar silinecek mükerrer arşiv kaydı değildir; karşılaştırıcı yalnız arşiv kategorilerindeki mükerrerleri reddedecek şekilde düzeltildi.
 - Güncel main'e karşı **18.074/18.074 arşiv URL'si bulundu, kaynak sıra defterindeki hedef kategori uyumsuzluğu 0**. Kategoriler: YEDEKLER 1.792, ANA 15.574, TÜRK 424, YABANCI 284, OTHER 838. İlk 2.500 işlem durumları: TEST 1.792, TURK 424, YABANCI 284. Bu kategori/URL kimlik karşılaştırmasıdır, gerçek yayın AV kanıtı değildir.
 - PR #585 ilk CI `44844890250` Stage 5 çevrimdışı test adımında Python paket import yolu nedeniyle **FAILED** (7/7 hata aynı `ModuleNotFoundError` kök neden); eski kaynak rapor taraması çalışmadı. `PYTHONPATH=v2:.` düzeltmesi commit `c410fbf889fabf4546f4b9f016535930153bfb79` ile eklendi. Başarı iddiası yok; yeni CI sonucu bekleniyor.
-
