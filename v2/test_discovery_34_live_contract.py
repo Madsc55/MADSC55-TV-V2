@@ -40,8 +40,32 @@ class LiveContractRetryTests(unittest.TestCase):
                 result = probe(source, fetch=lambda _, p=payload: p,
                                sleep=lambda _: self.fail("unexpected retry"))
                 self.assertEqual(result["status"], "error")
-                self.assertEqual(result["reason"], "ValueError")
+                self.assertEqual(result["reason"],
+                                 "provider_throttled_response" if source == "github"
+                                 else "ValueError")
                 self.assertEqual(result["attempts"], 1)
+
+    def test_http_200_throttle_envelope_opens_provider_circuit(self):
+        cases = (("github", {"message": "secondary rate limit", "items": []}),
+                 ("codeberg", {"error": "too many requests", "data": []}),
+                 ("gitlab", {"message": "Rate limit exceeded"}))
+        for source, payload in cases:
+            calls = []
+            def fetch(url):
+                calls.append(url)
+                return payload
+            with self.subTest(source=source):
+                result = probe_queries(source, queries=("turkiye.m3u", "tr.m3u8"),
+                                       fetch=fetch,
+                                       sleep=lambda _: self.fail("No retry"))
+                self.assertEqual(result["status"], "error")
+                self.assertTrue(result["rate_limited"])
+                self.assertEqual(result["queries_checked"], 1)
+                self.assertEqual(result["queries_skipped"], 1)
+                self.assertEqual(len(calls), 1)
+                self.assertEqual(result["query_results"][0]["reason"], "provider_throttled_response")
+                self.assertNotIn("secondary rate limit", str(result))
+                self.assertNotIn("too many requests", str(result))
 
     def test_empty_valid_repository_lists_are_allowed(self):
         for source, payload in (("github", {"items": []}),
