@@ -1557,3 +1557,14 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - Şifre çözme, kimlik/içerik doğrulaması veya restore yapılmadı. Bu dosya secure_archive.py Scrypt/AES-GCM tek-blob formatı ya da turk_authorized_vault.py Fernet kasası ile aynı format olarak varsayılmamalı. Uyumlu anahtar/şema ve bağımsız beklenen restore hash'i yok.
 - Drive izin metadatasında dosya sahibi ve yedek servis hesabı görünüyor; herkese açık (anyone) izin gözlenmedi. Dosya değiştirilmedi.
 - **#6 açık:** Yetkili anahtar ve doğru format uygulaması bulunmadan bağımsız şifre çözme/restore PASS denmeyecek. Sonraki adım formatla eşleşen anahtar erişimini ve beklenen hash kaynağını doğrulamak; ardından yalnız izole geçici hedefe restore ve kanal/URL hash karşılaştırması yapmak.
+
+
+## 21 Kasım 2026 — KRİTİK DÜZELTME: 12 Kasım gerçek harici Drive restore kabulü
+
+- Önceki “Stage4-24 Drive arşivi hiçbir zaman şifresi çözülmedi / restore test edilmedi” iddiası tarihsel olarak YANLIŞ. GitHub Actions run 43241168321 (12 Kasım) SUCCESS; bağımsız Drive restore job 131291179781 SUCCESS. Bu job mevcut Google Drive arşivinin revision 4 sürümünü ayrı runner'a indirdi, gerekli sırlarla kayıtları doğrulayarak restore etti ve kabul makbuzu üretti.
+- Mevcut Drive dosyası MADSC55-TV-V2 stage4-24 acceptance archive.enc ile üretici artifact 13957249280 içindeki inventory.enc BAYT BAYT AYNI. Boyut 7.832.688, SHA-256 29f5498c3173b39afe5c4bee824e4423cc8229961fb5f7cbf26e402d449f4241. Kaynak ZIP hash 92766f43a713de6363577b6c179d9669e3d14ae3131e8e0efccd5f6c8007f369.
+- Bağımsız restore artifact 13958867734 ZIP hash b84546022f16e1c1e6583ec132e650f80c09c3ba5ade4e547cba4c086200427c; accepted.json hash 66790f47497edab8e3a813e53ee6a606eaba70d34f3b450a325e1804ce1adf68. Rapor: restored_from=google-drive-independent-runner, Drive version 4, 7.819 restore edilmiş arşiv satırı, 4.955 korunmuş tarihsel kayıt, 7.769 aday, 46 kaynak ve 801 geçmiş AV sonucu. Kaynak receipt.json hash 7d29d1e96f1cdf69bc6310637711a8fa8ec7f03f55cbd3297d6c5f33dbf051f6.
+- Yeni v2/stage4_historical_restore_verify.py yalnızca imzalanmış/pinlenmiş artifact ZIP hash, kaynak/restore makbuzları ve Drive şifreli baytlarını eşleştirir; yeni şifre çözme veya geri yükleme yapmaz. Üç özel dosya veya herhangi bir anahtar repoya eklenmedi.
+- ÖNEMLİ KAPSAM: Bu kabul yalnız 12 Kasım tarihsel Stage4 canlı keşif envanteri şifreli Drive arşividir. Ayrı Türk yetkili özel URL kasası (issue #6, turk_authorized_vault.py, Fernet ve ayrı karar geçmişi) için gerçek harici yedek/restore kabulü HALA AÇIK. Stage4 dosyası #6 kasasının yerine kullanılamaz.
+- 34 görev statüleri otomatik tamamlanmadı. Ana playlist, kanallar, kategoriler, arşivler değişmedi; 685 canlı retry, geniş tarama ve İBO Player cihaz testleri başlatılmadı.
+- Kanıt: https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43241168321 ; rapor v2/reports/stage4_historical_drive_restore_provenance_20261121.json.
