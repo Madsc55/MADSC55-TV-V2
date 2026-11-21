@@ -134,3 +134,5 @@ Durum (bekliyor/çalışıyor/tamamlandı/bloke); değişen dosyalar; önce/sonr
 - PR #571 `4b45245f094ffc1aba4e7ecff24f125d502f6d4e` birleşti: bounded FFmpeg capture URL ambiguity reddi, explicit network protocol whitelist ve sentetik negatif güvenlik testleri; PR CI #44843819098 SUCCESS.
 - **Aşama 4 tamamen PASS değil:** DNS hostname'leri hâlâ güvenlik için reddediliyor. Gerçek HLS segment/anahtar alt istekleri için egress firewall, izinli alan adı, IP pinning, redirect ve tüm child URL denetimi gerek. URL doğrulama veya FFmpeg whitelist tek başına yeterli değil.
 - Gerçek Türkçe konuşma/altyazı yayın örneği ve bağımsız gözlem yok. ASR/OCR/WebVTT yerel fixture'ları nihai Türk/yabancı kararı değildir; gerçek test/kanal taraması SON AŞAMA olarak bekler. Ana playlist/arşiv/EPG yazılmadı.
+
+- PR #567 `7bbefc113b02e25e0d8da1709273c39e9bbb4f12` birleşti: yalnız 685 belirsiz kanalın manuel/kanıt-kilitli yeniden denemesi ve yeniden birleştirme kodu hazır; **hiçbir canlı retry çalıştırması başlatılmadı**. Post-merge main run #44843984931 ilk kontrolde sürmekteydi; PASS için sonuç beklenir.
