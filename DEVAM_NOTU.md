@@ -1656,3 +1656,10 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - Kanonik playlist blob SHA **değişmedi**: `f3d39e4522d27912fccd6e67240a10fd16c4923b`.
 - Açık PR'lar: **#365, #618**. Açık issue'lar: **#3, #4, #5, #6, #7, #8, #10, #497**. Bunlar kanıtsız kapatılmadı. Eski/çift PR temizliği önceki kayıtlar uyarınca tamamlanmıştı.
 - #497 **tamamlanmadı**: mevcut raporların otomatik ve güvenli içeri alınması/uygulanması ayrıca gerekiyor. #365 eski dalı doğrudan merge edilmez; #618 gerçek logo doğrulaması bekler. #8/#10 canlı İBO ve AV aşamaları en sona bırakıldı.
+
+
+## 21 Kasım 2026 — eski PR #365 arşivlendi, teknik durum ayrıştırıldı
+- `main` doğrulanan SHA: `b4b2a845c9f296545c0bb66272648177db369ea2` (#627 squash merge). PR #624, #625, #626, #627 birleşti; ilgili güvenlik koşuları sırasıyla `44944789787`, `44947424127`, `44949181505`, `44950371186` SUCCESS.
+- PR #365 **birleştirilmeden kapatıldı**: büyük eski dalın güvenli işlevleri #624/#626/#627 ile seçici aktarıldı. Kalan özgün altyapı kabul maddeleri #3/#4/#5/#6/#7; son aşama canlı testler #8/#10. PR #618, gerçek logo eşleşmesi bağımsız doğrulama beklediğinden açık bırakıldı.
+- Kanonik playlist SHA: `f3d39e4522d27912fccd6e67240a10fd16c4923b`, değişmedi. Ayrı playlist oluşturulmadı, canlı tarama yapılmadı.
+- Açık issue sorgusu #497'yi artık döndürmüyor; önceki #497 kayıtları #624/#626 kanıtlarını içerir, fakat uçtan uca otomatik artefakt/karar defteri kabulü doğrulanmış sayılmaz. Açık issue sayısı 7. Tarihsel Actions başarısızlık envanteri henüz eksiksiz değil.
