@@ -213,6 +213,27 @@ class CaptureTests(unittest.TestCase):
             self.assertFalse(report["device_verified"])
             self.assertEqual(seen[0]["pinned_ip"], "8.8.8.8")
 
+    def test_ip_literal_capture_also_uses_pinned_local_file_transport(self):
+        body = b"\\x1a\\x45\\xdf\\xa3" + (b"\\x00" * 32)
+        factory, seen = factory_for(body=body, content_type="video/x-matroska")
+        with tempfile.TemporaryDirectory() as d:
+            output = Path(d) / "sample.mkv"
+            def runner(cmd, **kwargs):
+                self.assertEqual(cmd[cmd.index("-protocol_whitelist") + 1], "file")
+                self.assertEqual(cmd[cmd.index("-f") + 1], "matroska")
+                source = Path(cmd[cmd.index("-i") + 1])
+                self.assertEqual(source.read_bytes(), body)
+                self.assertNotIn("https://8.8.8.8/media.mkv", cmd)
+                Path(cmd[-1]).write_bytes(b"decoded-mkv")
+                return SimpleNamespace(returncode=0)
+            report = capture("https://8.8.8.8/media.mkv", output,
+                             which=lambda _: "/usr/bin/ffmpeg", runner=runner,
+                             connection_factory=factory)
+            self.assertEqual(report["status"], "SAMPLE_CAPTURED_UNVERIFIED")
+            self.assertEqual(seen[0]["pinned_ip"], "8.8.8.8")
+            self.assertFalse(report["language_verified"])
+            self.assertFalse(report["device_verified"])
+
     def test_domain_capture_never_overwrites_destination_created_during_decode(self):
         factory, _ = factory_for()
         with tempfile.TemporaryDirectory() as d:
