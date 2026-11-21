@@ -9,6 +9,7 @@ from ibo_single_playlist_transfer import parse, category
 from ibo_test_result_reconcile import digest, reconcile
 
 SOURCE_RUN_ID = 44640007709
+INITIAL_MANIFEST_RUN_ID = 44842749390
 SOURCE_REPORT_CANONICAL_SHA256 = "b48bd57ba03a7e4ee4eedf3f65355572e267db87b4d48c6d4fb390b8484dc55c"
 INITIAL_MANIFEST_SHA256 = "b001bf48f07437e9ae67ed9f73b12ea9cfcab653523973435cf3b1cee3c31fcc"
 
@@ -34,6 +35,8 @@ def build_full_report(raw, initial_manifest, initial_manifest_bytes, retry_repor
         raise ValueError("Retry report was not generated from the accepted initial manifest")
     if retry_report.get("retry_source_manifest_artifact_id") != 14681388150:
         raise ValueError("Retry source artifact identity mismatch")
+    if retry_report.get("retry_source_manifest_run_id") != INITIAL_MANIFEST_RUN_ID:
+        raise ValueError("Retry source workflow run identity mismatch")
     if retry_report.get("retry_scanned_count") != 685 or retry_report.get("full_inventory_count") != 1792:
         raise ValueError("Retry report must contain exactly the 685 uncertain entries")
     retry_entries = retry_report.get("entries")
