@@ -1,0 +1,63 @@
+{
+  "schema": 1,
+  "created_on": "2026-11-21",
+  "scope": "Historical evidence separation, not live broadcast certification",
+  "historical_scan_20261114": {
+    "source_run_id": 43608247496,
+    "source_artifact_id": 14135417421,
+    "av_total": 8696,
+    "av_carried_forward": 8668,
+    "av_recovered_in_300_retries": 28,
+    "pending_actions": {
+      "RETRY": 12898,
+      "CHECK_AV": 2405,
+      "REVIEW": 4845
+    },
+    "warning": "Counts represent scan records and cannot be added as distinct channels without exact URL/channel identity crosswalk."
+  },
+  "current_yedekler_historical_20261121": {
+    "source_run_id": 44640007709,
+    "source_artifact_id": 14587983768,
+    "total": 1792,
+    "av_decoded": 1107,
+    "uncertain": 685,
+    "uncertain_reasons": {
+      "PROBE_FAILED": 621,
+      "TIMEOUT": 26,
+      "NO_MEDIA": 23,
+      "AV_STREAMS_PRESENT": 14,
+      "AUDIO_ONLY": 1
+    },
+    "definitive_failed": 0,
+    "retry_plan_artifact_id": 14702596056,
+    "live_retry_authorized": false
+  },
+  "bounded_http_20261118": {
+    "report": "v2/reports/task17-18-20-bounded-retry-20261118.json",
+    "unique_urls": 15,
+    "attempts": 17,
+    "AV_SAMPLE_VERIFIED": 1,
+    "REVIEW_HTTP_404": 8,
+    "RETRY_HTTP_503": 6,
+    "warning": "Historical HTTP responses, not current endpoint state; 404 requires source review, 503 controlled retry."
+  },
+  "language_fixture_20261119": {
+    "report": "v2/reports/turkish-sample-verification-20261119.json",
+    "tr_speech_model_probability": 0.9579,
+    "en_speech_model_probability": 0.9852,
+    "both_fixtures_have_timed_turkish_subtitle_cue": true,
+    "broadcaster_verified": false,
+    "human_approved": false,
+    "device_verified": false,
+    "warning": "Speech model, subtitle tag and TR/AZ source metadata are separate evidence classes; do not auto-promote any to Turkish channel classification."
+  },
+  "blocking_requirements": [
+    "Obtain exact row-level AV evidence crosswalk from historical artifact before asserting 8696 distinct identities.",
+    "Validate Turkish speech, timed subtitles and broadcaster TR/AZ identity against same channel URL and sampled media; require review approval.",
+    "Complete FFmpeg/HLS child network egress isolation before enabling live retry for 685.",
+    "Do not delete or move channels based on a single HTTP 404/503 or model hint."
+  ],
+  "playlist_modified": false,
+  "channel_moved": false,
+  "live_network_scan_performed": false
+}
