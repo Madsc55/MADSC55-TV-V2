@@ -1,3 +1,12 @@
+## 21 Kasım 2026 — #497 kaynak üreticisi bulundu, ancak çalıştırılmamış
+
+- PR #547 (head `77d30673609c39eee3a8d9a0606941c025698519`) incelendi. `v2/ibo_497_audit_adapter.py` mevcut YEDEKLER AV audit raporunu #497 reconcile formatına çeviriyor. PR #547'nin Production Security Gate'i SUCCESS; live-discovery-diagnostic SKIPPED. PR açık ve merge edilmedi.
+- Kaynak üretici workflow bulundu: `.github/workflows/v2-yedekler-av-audit.yml` (#495). Workflow yalnız manuel `workflow_dispatch`; schedule tetikleyicisi kaldırılmış. Ürettiği artefaktın tam adı `v2-497-1792-report`, retention 90 gün. İçerik `report.json`.
+- Workflow dosyası `v2/ibo_495_yedekler_av_audit.py` ve `v2/stream_probe.py` ile mevcut ana playlistteki YEDEKLER'i FFmpeg ile gerçek AV denetiminden geçiriyor. Bu, yeni bir 1.792-kanal toplu tarama/AV denetimi olur. Kullanıcı açıkça yeni toplu tarama istemediği için workflow dispatch edilmedi.
+- Beş sayfalık yakın dönem Actions run listesinde workflow adıyla bir çalışma görünmedi; ayrıca PR #547/#535/#497 importer run'larının artifact listelerinde hedef artefakt yok. Dolayısıyla kaynak workflow mevcut ama istenen tarihsel artefakt daha önce üretilmiş olduğuna dair kanıt yok.
+- PR #547'nin adapter testi sentetik fixture kullanıyor; gerçek 1.107/685 sayımını doğrulamaz. Kaynak artefakt olmadan gerçek sonuçları üretmek/işlemek yasak.
+- #497 blokajı artık net: doğru artefaktın kaydı yok; üretmek için workflow çalıştırmak ise yeni toplu tarama yasağına aykırı. Kullanıcının mevcut eski sonuç raporu ayrıca bir yerde tutuluyorsa onun gerçek dosya/Actions run referansı gerekir; aksi halde 3. aşama güvenli biçimde tamamlanamaz. Ana playlist değişmedi.
+
 ## Ek inceleme — 21 Kasım 2026 / eski scan artefaktlarının içeriği
 
 - Workflow dosyaları `.github/workflows/v2-postscan-triage.yml`, `v2-real-iptv-scan.yml`, `ibo-real-scan.yml`, `v2-offline-inventory.yml` incelendi. `v2-postscan-triage` 40743765437 run'ından `turkish-stream-review` raporlarını indiriyor; bu, 1.792 YEDEKLER test sonucu raporu değildir.
