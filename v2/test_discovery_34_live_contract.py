@@ -182,6 +182,17 @@ class LiveContractRetryTests(unittest.TestCase):
         self.assertEqual(result["reason"], "HTTP_403")
         self.assertEqual(result["endpoint_host"], "codeberg.org")
 
+    def test_successive_provider_queries_have_mandatory_three_second_pause(self):
+        calls, sleeps = [], []
+        def fetch(url):
+            calls.append(url)
+            return {"data": []}
+        result = probe_queries("codeberg", queries=("turkiye.m3u", "tr.m3u8", "canli-tv"),
+                               fetch=fetch, sleep=sleeps.append)
+        self.assertEqual(result["status"], "ok")
+        self.assertEqual(len(calls), 3)
+        self.assertEqual(sleeps, [3, 3])
+
     def test_all_discovery_queries_are_checked(self):
         from urllib.parse import urlsplit, parse_qs
         seen = []
@@ -191,7 +202,7 @@ class LiveContractRetryTests(unittest.TestCase):
             return {"items": []}
         terms = ("turkiye.m3u", "tr.m3u8", "turkish-iptv")
         result = probe_queries("github", queries=terms, fetch=fetch,
-                               sleep=lambda _: self.fail("unexpected retry"))
+                               sleep=lambda seconds: self.assertEqual(seconds, 3))
         self.assertEqual(result["status"], "ok")
         self.assertEqual(result["queries_checked"], 3)
         self.assertEqual(result["queries_ok"], 3)
@@ -205,7 +216,7 @@ class LiveContractRetryTests(unittest.TestCase):
                 raise http_error(403)
             return {"data": []}
         result = probe_queries("codeberg", queries=("turkiye.m3u", "tr.m3u8", "canli-tv"),
-                               fetch=fetch, sleep=lambda _: self.fail("403 must not retry"))
+                               fetch=fetch, sleep=lambda seconds: self.assertEqual(seconds, 3))
         self.assertEqual(result["status"], "error")
         self.assertEqual(result["queries_checked"], 3)
         self.assertEqual(result["queries_failed"], 1)

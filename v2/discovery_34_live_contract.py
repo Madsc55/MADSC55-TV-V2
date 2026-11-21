@@ -56,7 +56,11 @@ def probe_queries(source, queries=QUERIES, fetch=fetch_json, sleep=time.sleep):
             or len(set(terms)) != len(terms)):
         raise ValueError("Diagnostic queries must be unique members of the approved plan")
     results = []
+    # Mandatory pause between distinct provider search requests. Retries already
+    # honor Retry-After and exponential backoff via retry_delay().
     for index, query in enumerate(terms):
+        if index:
+            sleep(3)
         row = probe(source, query=query, fetch=fetch, sleep=sleep)
         results.append({"query": query, **row})
         # A 429 is provider-wide pressure, not a query-specific failure.
