@@ -1647,3 +1647,12 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - Açık issue yalnız **#497, #3, #4, #5, #6, #7, #8, #10**. #497 mevcut raporları otomatik güvenle işleme altyapısıdır; #8 son aşama kullanıcı İBO cihaz testi; #10 son aşama keşif ve gerçek AV. Mükerrer sayılarak kapatılmayacaklar. #3–#7 görevleri ayrı altyapı kabul sınırlarıyla issue başlıklarında ayrıştırıldı.
 - Doğrulanmış tarihsel Actions failure → success: `41186910011` → `41186924198` (archive acceptance), `43483992949` → `43484653370` (Stage 6 offline package), `44844890250` → `44845062944` (Stage 5 hash crosswalk). #622 security run `44921994257` **SUCCESS**; canlı diagnostic **SKIPPED**. Bunlar tüm Actions tarihinin eksiksiz envanteri değildir.
 - Eski/mükerrer 20 PR ve #372 daha önce **merge edilmeden kapatıldı**. Tek kanonik playlist kuralı; yeni playlist yok; 48 kaldırılmış kanal geri gelmez; canlı test en son. Hiçbir teknik kabul kanıtsız `DONE` yapılmadı.
+
+
+## 21 Kasım 2026 — PR #624 birleşti; görev defteri güncellendi
+- GitHub PR [#624](https://github.com/Madsc55/MADSC55-TV-V2/pull/624) `main` dalına squash-merge edildi: `406976ca22c9787daac7d7496a8d8d9cc2b92492`.
+- Actions [44944789787](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44944789787): Production Security Gate **SUCCESS**; canlı keşif işi **SKIPPED**.
+- `v2/ibo_yedekler_archive.py` ve `v2/ibo_yedekler_assign.py`: tarihsel sabit 18.074 YEDEKLER koşulu kaldırıldı, isteğe bağlı `--expected-count` koruması eklendi. `v2/test_yedekler_current_count.py` offline regresyonu eklendi.
+- Kanonik playlist blob SHA **değişmedi**: `f3d39e4522d27912fccd6e67240a10fd16c4923b`.
+- Açık PR'lar: **#365, #618**. Açık issue'lar: **#3, #4, #5, #6, #7, #8, #10, #497**. Bunlar kanıtsız kapatılmadı. Eski/çift PR temizliği önceki kayıtlar uyarınca tamamlanmıştı.
+- #497 **tamamlanmadı**: mevcut raporların otomatik ve güvenli içeri alınması/uygulanması ayrıca gerekiyor. #365 eski dalı doğrudan merge edilmez; #618 gerçek logo doğrulaması bekler. #8/#10 canlı İBO ve AV aşamaları en sona bırakıldı.
