@@ -28,10 +28,14 @@ def atomic_new(path, data):
         out.write(data)
 
 
-def read_archive(source):
+def read_archive(source, expected_count=None):
+    if expected_count is not None and (type(expected_count) is not int or expected_count < 1):
+        raise ValueError("Expected count must be positive")
     raw, _, records = inventory(source)
-    if len(records) != 18074:
-        raise ValueError(f"Expected 18074 YEDEKLER records, found {len(records)}")
+    if not records:
+        raise ValueError("No YEDEKLER records; refusing empty assignment ledger")
+    if expected_count is not None and len(records) != expected_count:
+        raise ValueError(f"Expected {expected_count} YEDEKLER records, found {len(records)}")
     return digest(raw), records
 
 
@@ -114,8 +118,9 @@ def main():
     p.add_argument("--target", choices=sorted(TARGETS))
     p.add_argument("--apply", action="store_true", help="Explicitly authorize writing NEW ledger artifact")
     p.add_argument("--undo-last", action="store_true")
+    p.add_argument("--expected-count", type=int, help="Optional strict YEDEKLER count guard")
     args = p.parse_args()
-    source_sha, records = read_archive(args.source)
+    source_sha, records = read_archive(args.source, args.expected_count)
     ledger = json.loads(Path(args.ledger).read_text(encoding="utf-8")) if Path(args.ledger).exists() else initial_ledger(source_sha, records)
     validate_ledger(ledger, source_sha, records)
     if args.undo_last:
