@@ -749,5 +749,45 @@
     "task_statuses_changed": false,
     "status": "historical_report_imported_preview_only",
     "followup_pr": 561
+  },
+  "stage4_vault_handoff_20261121": {
+    "date": "2026-11-21",
+    "github_issue_6": {
+      "status": "open",
+      "private_vault_hardening_pr": 559,
+      "merge_commit": "cd90b364316322752b3a2184134646a335f3632d",
+      "pr_ci_run": 44843037968,
+      "pr_ci_status": "success",
+      "post_merge_main_ci_run": 44843224361,
+      "post_merge_main_ci_status": "success",
+      "existing_drive_folder_id": "1cqEo3ZTfnIsVglQ51s0lXMEjcxkqRqPe",
+      "prior_recovery_files_seen": 5,
+      "authorized_turkish_vault_backup_verified": false,
+      "real_external_restore_verified": false,
+      "secret_key_access_verified": false
+    },
+    "issue_497_handoff": {
+      "historical_source_run_id": 44640007709,
+      "source_artifact_id": 14587983768,
+      "source_report_sha256": "30de600eca7d8e3140f423bb3fc248dc2f57df6ff031b0bf97276a9a861dba2c",
+      "importer_pr": 547,
+      "preview_run_id": 44842556117,
+      "preview_artifact_id": 14681083208,
+      "preview_byte_identical_to_main_playlist": true,
+      "counts": {
+        "verified": 1107,
+        "uncertain": 685,
+        "failed": 0,
+        "total": 1792
+      },
+      "new_scan_started": false,
+      "channels_moved": 0
+    },
+    "next_priority": "Preserve existing historical source and preview; verify #6 actual private external vault backup and independently restored identity/content only with authorized key, then #497 idempotent 685 uncertain retry queue safety checks; postpone new live AV/IBO testing.",
+    "main_playlist_edited": false,
+    "drive_files_created": false,
+    "task_statuses_changed": false,
+    "all_34_tasks_completed": false,
+    "note": "GitHub issue #6 is not equivalent to statuses[id=6] in the 34-task ledger; never update historic task statuses from this note."
   }
 }
