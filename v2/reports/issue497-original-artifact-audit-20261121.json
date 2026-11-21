@@ -38,10 +38,26 @@
     "merged_importer_pr": 547,
     "merged_importer_main_ci_run": 44842749390,
     "importer_main_ci_conclusion": "success",
-    "actual_importer_preview_artifact_verified": false,
+    "actual_importer_preview_artifact_verified": true,
     "new_live_scan_started": false,
     "channels_deleted_or_reordered": false,
-    "current_playlist_mutated": false
+    "current_playlist_mutated": false,
+    "preview_artifact": {
+      "source_main_ci_run": 44842749390,
+      "artifact_id": 14681388150,
+      "artifact_name": "v2-497-existing-audit-preview",
+      "artifact_sha256": "5e732b7066c63e0987fb22be6b28a8e08d72e8b7f1027f38b116bdeceba0cd41",
+      "preview_byte_identical": true,
+      "ordered_yedekler_blocks_identical": true,
+      "preview_playlist_sha256": "18ac8386964e2f336105bb83f8f1be0af008b6b9ea83f679a2fd1ca582097abe",
+      "counts": {
+        "verified": 1107,
+        "uncertain": 685
+      },
+      "new_scan_started": false,
+      "canonical_playlist_written": false
+    },
+    "importer_main_ci_run": 44842749390
   },
   "stage3_code": {
     "pr": 543,
