@@ -1,3 +1,13 @@
+## 21 Kasım 2026 — #497 tarihsel rapor bulundu ve içe aktarma doğrulaması
+
+- Gerçek Actions artefaktı indirildi: run `44640007709`, artifact ID `14587983768`, artifact adı `yedekler-av-audit`, iç dosya `yedekler_av_audit.json`.
+- İndirilen ZIP içindeki JSON dosyasının SHA-256 değeri `30de600eca7d8e3140f423bb3fc248dc2f57df6ff031b0bf97276a9a861dba2c`; PR #547 importer'daki beklenen dosya hash'iyle birebir aynı.
+- JSON şeması `schema_version=1`, `category=YEDEKLER`, `total=1792`; hem özet counts hem satır sınıfları 1.107 WORKING + 685 RECHECK_REQUIRED olarak doğrulandı. Bu gerçek tarihsel rapordur, sentetik fixture değildir.
+- PR #558 üzerinde Unicode bytes literal SyntaxError düzeltildi; adapter'ın gerçek bulunan tarihsel rapor şemasına uygun olması sağlandı; testlerde rapor hash doğrulaması fixture'a doğru bağlandı. CI run `44842749390` son kontrol anında in_progress; kesin PASS henüz yok.
+- Tarihsel kaynak playlist commit'i `1e8bd6d46762366f151e1270cc767f598c8e63e8`, Git blob SHA `688f0b194b9106d6fdc593e5d7dc4a64c7e01b2c`; raporun beklediği SHA-256 `eee260cce3926caff18238f9583958b40475e362ce7650fb7fac51a66a84ee1c`.
+- Güvenli uygulama gereği raporun 1.792 tarihi kaydını güncel ana playlistin daha büyük YEDEKLER envanterine yalnız immutable EXTINF+URL hash ile eşleştirme gerekir; tüm güncel YEDEKLER'in 1.792 olduğunu varsaymak yasaktır. Bu subset eşleştirmesi ve 18.074 kayıt üzerinde kabul testi henüz tamamlanmadı.
+- Yeni tarama yapılmadı, Actions workflow dispatch edilmedi, ana playlist değiştirilmedi, kanal taşınmadı. #497 gerçek sonuçları henüz state'e uygulanmadı; aşama 3 açık.
+
 ## 20 Kasım 2026 — #488 / #6 Türk yetkili yayın kasası devri
 
 - Birleştirilen PR'lar: #502 (Fernet şifreli kasa), #508 (URL ve restore bütünlüğü), #509 (mevcut secure_archive ile çevrimdışı yedek/geri yükleme kabul testi), #510 (özel dosya izinleri ve symlink reddi).
