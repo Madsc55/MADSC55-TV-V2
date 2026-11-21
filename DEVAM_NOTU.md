@@ -1,3 +1,15 @@
+## 21 Kasım 2026 — Task 34 FFmpeg ve #497 hedefli 685 yeniden kontrol altyapısı
+
+- **Task 34 / PR #543:** gerçek FFmpeg ses+görüntü çözümleme düzeltmesi main'e birleştirildi. Production Security Gate run [44842411969](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44842411969) SUCCESS. 11 test OK; iki gerçek yerel fixture testi ses+görüntü birlikte decode edildiğinde doğruluyor, yalnız görüntü olan fixture doğrulanmamış kalıyor. Bu, 18.074 yayının tamamının canlı doğrulandığı anlamına gelmez.
+- **#497 / PR #547:** özgün rapor [run 44640007709](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44640007709), artifact 14587983768 SHA-256 ile doğrulandı. Kaynakta 1.792 kayıt; 1.107 AV_VERIFIED ve 685 RECHECK_REQUIRED. PR #547 main'e birleştirildi; CI [44842556117](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44842556117) SUCCESS.
+- PR #547 önizleme artifact'ı 14681083208, run 44842556117. ZIP SHA-256 `8e269517a92203131633e024c6329c8a5f9a9095746f2ee375d185e4cc3b0f45`; manifest SHA-256 `b001bf48f07437e9ae67ed9f73b12ea9cfcab653523973435cf3b1cee3c31fcc`; preview SHA-256 `18ac8386964e2f336105bb83f8f1be0af008b6b9ea83f679a2fd1ca582097abe`. Manifestte 1.107 verified / 685 uncertain / 0 failed; 1.792 YEDEKLER bloğu ve sırası byte-byte eşleşiyor. Preview ana playlist ile aynı; canonical yazım yok.
+- **#497 hedefli retry / PR #567:** yalnızca bu sabit manifestteki 685 uncertain kaydı iki denemeli, FFmpeg/FFprobe AV doğrulamasına alan manuel `workflow_dispatch` iş akışı eklendi ve main'e birleştirildi (merge commit `7bbefc113b02e25e0d8da1709273c39e9bbb4f12`). CI [44843776673](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44843776673) SUCCESS; hedefli retry offline testleri, ana güvenlik kapısı ve diğer kabul adımları başarılı.
+- Yeniden deneme sınıflandırması: yalnızca iki denemede de deterministik `NO_MEDIA` veya `NO_DECODED_FRAME` sonucu gelirse `failed`; timeout, 403, ağ/probe hatası veya karışık sonuçlar `uncertain` kalır. 1.107 ilk doğrulanmış kanal yeniden taranmaz.
+- **Henüz yapılmayan:** #567 iş akışının gerçek 685 kayıtlık çalıştırması henüz başlatılmadı; bu nedenle yeni retry sonuçları ve son önizleme yok. İş akışı GitHub Actions'ta `YEDEKLER uncertain AV retry (685 only, read-only)` adıyla manuel tetiklenebilir. Çıktı yalnızca rapor/önizleme artifact'ı üretir; ana playlist'e yazmaz, kategori taşımaz, yeni playlist oluşturmaz.
+- Bu turda ana playlist, 18.912 toplam envanter, kategori dağılımı, arşivler ve kanal URL'leri değiştirilmedi. 48 karantina kaydı korunuyor; 1.003 koruma kuralı yeniden uygulanmadı. #497 issue açık kalmalı; 685 tekrar sonuçları görülmeden tamamlandı denmemeli.
+
+---
+
 ## 21 Kasım 2026 — #6 mevcut Drive arşivi ve kasa güvenlik kabulü
 
 - Mevcut Google Drive `MADSC55-TV-V2 — Independent Encrypted Recovery Archive` klasörü yetkili bağlantıyla **yeniden kontrol edildi**. Klasörün doğrudan içinde 5 dosya mevcut: 2 adet `.enc` (7.832.688 ve 5.234.628 bayt) ve 3 ZIP. Yeni klasör veya yeni şifreli yedek oluşturulmadı.
