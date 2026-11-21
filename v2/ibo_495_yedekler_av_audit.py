@@ -29,13 +29,13 @@ def digest(data):
 def select_retry_blocks(raw, manifest, require_known_snapshot=False):
     if not isinstance(manifest, dict) or manifest.get("schema") != 1:
         raise ValueError("Invalid #497 initial manifest")
-    if manifest.get("source_run_id") != SOURCE_RUN_ID:
-        raise ValueError("Unexpected original audit run")
+    if manifest.get("source_run_id") != SOURCE_RUN_ID or manifest.get("source_head_sha") != "1e8bd6d46762366f151e1270cc767f598c8e63e8":
+        raise ValueError("Unexpected original audit run/head")
     if manifest.get("source_report_file_sha256") != SOURCE_REPORT_SHA256:
         raise ValueError("Original report hash mismatch")
     if manifest.get("source_playlist_sha256") != SOURCE_PLAYLIST_SHA256:
         raise ValueError("Original source playlist hash mismatch")
-    if manifest.get("source_artifact_id") != 14587983768:
+    if manifest.get("source_artifact_id") != 14587983768 or manifest.get("source_artifact_name") != "yedekler-av-audit":
         raise ValueError("Original audit artifact identity mismatch")
     if manifest.get("source_yedekler_count") != 1792 or manifest.get("current_yedekler_count") != 1792:
         raise ValueError("Expected 1,792 current YEDEKLER entries")
@@ -61,6 +61,8 @@ def select_retry_blocks(raw, manifest, require_known_snapshot=False):
         channel_id = digest(block.encode("utf-8"))
         url = block.splitlines()[-1].strip()
         by_id[channel_id] = (pos, block, digest(url.encode("utf-8")))
+    if len(by_id) != 1792:
+        raise ValueError("Duplicate immutable channel identity in canonical YEDEKLER")
     queue = manifest.get("retry_queue")
     if not isinstance(queue, list) or len(queue) != 685:
         raise ValueError("Expected exactly 685 uncertain retry records")
