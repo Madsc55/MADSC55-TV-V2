@@ -34,10 +34,18 @@ class RetryReconcileTests(unittest.TestCase):
         statuses = statuses or ["verified"] * 685
         for block, status in zip(selected[1107:], statuses):
             url = block.splitlines()[-1].strip()
+            first = "NO_MEDIA" if status == "failed" else (
+                "TIMEOUT" if status == "uncertain" else "AV_VERIFIED")
+            second = "NO_MEDIA" if status in ("failed", "uncertain") else None
             retry_entries.append({
                 "channel_sha256": digest(block.encode()), "url_sha256": digest(url.encode()),
                 "run_id": 999, "evidence_sha256": "c" * 64,
-                "attempts": 2 if status == "failed" else 1,
+                "attempts": 2 if second is not None else 1,
+                "first_probe_status": first,
+                "second_probe_status": second,
+                "probe_status": second if second is not None else first,
+                "decoded_av_verified": status == "verified",
+                "decode_status": "DECODED_AV" if status == "verified" else "NOT_RUN",
                 "repeatable_av_failure": status == "failed", "status": status,
             })
         retry = {
@@ -66,6 +74,34 @@ class RetryReconcileTests(unittest.TestCase):
         retry["entries"][-1]["repeatable_av_failure"] = False
         with self.assertRaises(ValueError):
             build_full_report(raw, initial, initial_bytes, retry)
+
+    def test_forged_retry_verdicts_rejected(self):
+        tamper_cases = [
+            ("verified_without_decoded_media", "verified", {"decoded_av_verified": False}),
+            ("verified_wrong_decode", "verified", {"decode_status": "NO_DECODED_FRAME"}),
+            ("verified_false_attempt", "verified", {"first_probe_status": "TIMEOUT"}),
+            ("failed_after_timeout", "failed", {"first_probe_status": "TIMEOUT"}),
+            ("failed_wrong_count", "failed", {"attempts": 1}),
+            ("failed_missing_second", "failed", {"second_probe_status": None}),
+            ("failed_inconsistent_final", "failed", {"probe_status": "TIMEOUT"}),
+            ("forged_boolean_attempts", "verified", {"attempts": True}),
+            ("malformed_digest", "verified", {"evidence_sha256": "z" * 64}),
+            ("uncertain_but_decoded", "uncertain", {"decoded_av_verified": True}),
+            ("uncertain_but_both_no_media", "uncertain", {"first_probe_status": "NO_MEDIA"}),
+        ]
+        for name, status, patch in tamper_cases:
+            raw, initial, initial_bytes, retry = self.fixture(
+                ["verified"] * 684 + [status])
+            retry["entries"][-1].update(patch)
+            with self.subTest(name=name), self.assertRaises(ValueError):
+                build_full_report(raw, initial, initial_bytes, retry)
+
+    def test_uncertain_remains_uncertain_not_failed(self):
+        raw, initial, initial_bytes, retry = self.fixture(
+            ["verified"] * 684 + ["uncertain"])
+        full, _ = build_full_report(raw, initial, initial_bytes, retry)
+        self.assertEqual(sum(e["status"] == "uncertain" for e in full["entries"]), 1)
+        self.assertEqual(sum(e["status"] == "failed" for e in full["entries"]), 0)
 
     def test_incomplete_or_duplicate_retry_report_fails_closed(self):
         raw, initial, initial_bytes, retry = self.fixture()
