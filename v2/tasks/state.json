@@ -1080,5 +1080,39 @@
     "drive_data_modified": false,
     "task_statuses_changed": false,
     "next_action": "Verify main CI; generate read-only Stage 6 retry plan artifact using authorized manual workflow when available; otherwise continue independent #6 real external vault restore acceptance; keep 685 live retry security-held."
+  },
+  "discovery34_200_throttle_completion_20261121": {
+    "date": "2026-11-21",
+    "diagnostic_pr": 600,
+    "diagnostic_commit": "49917175ee03965de1551c3edda70ac5f4042b0c",
+    "diagnostic_pr_ci_run": 44889818997,
+    "diagnostic_pr_ci_conclusion": "success",
+    "diagnostic_main_ci_run": 44889981141,
+    "diagnostic_main_ci_conclusion": "success",
+    "live_collector_pr": 601,
+    "live_collector_commit": "d2843941b30c6dfbe053aad5f3b62de860b920b5",
+    "live_collector_pr_ci_run": 44890242563,
+    "live_collector_pr_ci_conclusion": "success",
+    "live_provider_requests_triggered": false,
+    "playlist_sha_unchanged": "f3d39e4522d27912fccd6e67240a10fd16c4923b",
+    "playlist_modified": false,
+    "original_task_statuses_changed": false,
+    "duplicate_stale_prs_closed": [
+      500,
+      215,
+      576,
+      570,
+      506,
+      375,
+      363,
+      293,
+      280,
+      262
+    ],
+    "stage4_historical_drive_restore_accepted": true,
+    "separate_issue6_authorized_turkish_vault_external_restore_accepted": false,
+    "safe_hls_dash_segment_collection_accepted": false,
+    "ibo_real_device_accepted": false,
+    "next_action": "Keep original playlist untouched; finish independent authorized Turkish vault external restore and HLS/DASH safety before any final user-directed live scan/device acceptance."
   }
 }
