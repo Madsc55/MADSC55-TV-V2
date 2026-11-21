@@ -1,3 +1,12 @@
+## 21 Kasım 2026 — #497 uygulama ve Actions artefaktı incelemesi
+
+- İlgili commit `a893b79859dfbb0695c52b2e0222106c46bcea47` (#497 existing artifact importer) incelendi. Dosyalar: `v2/ibo_497_existing_artifact.py`, `v2/ibo_test_result_reconcile.py`, `v2/test_ibo_test_result_reconcile.py`.
+- Kod yalnız mevcut başarılı Actions artefaktını arar, tam `v2-497-1792-report` adını bekler, ana playlistin 1.792 YEDEKLER kaydını ve playlist/report SHA-256 değerlerini doğrular, immutable EXTINF+URL hash kimliğiyle tam eşleşme ister, preview/manifest üretir; yeni tarama başlatmaz.
+- İlgili run'lar `44799031940`, `44798131945`, `44798109696`, `44798082554`, `44787018154`, `44758647544`, `44757765645` incelendi. Run-artifact listelerinde hedef `v2-497-1792-report` artefaktı bulunamadı.
+- `test_ibo_test_result_reconcile.py::test_1792_fixture_preserves_1107_and_queues_685` açıkça sentetik fixture olarak tanımlı. Bu yalnız kodun 1107/685 davranışını test eder; gerçek 1.792 kanalın test sonuçlarını kanıtlamaz.
+- Sonuç: importer/reconciler kodu mevcut, ancak gerçek #497 kaynak raporu/artefaktı bulunamadı. Gerçek 1.107 çalışan + 685 belirsiz sonucu doğrulanmış değildir; hiçbir sonuç defterine işlenmedi, hiçbir kanal taşınmadı, playlist değişmedi ve yeni tarama başlatılmadı.
+- Sonraki güvenli adım: hedef artefaktı gerçekten üreten başarılı Actions run/workflow kaynağını bulmak veya kaynak artefaktı olmadan #497'yi kapatmamak. 4. aşamaya geçiş sırası, #497'nin kabulü tamamlanmadan başlatılmadı.
+
 ## 21 Kasım 2026 — 8 aşamalı plan / Aşama 1 canlı CI denetimi
 
 - Denetlenen main: `0ecfb9b1cee91ca182bdd8318d958656e75a1538` (#548 merged: şifreli arşiv symlink-swap ve sınırsız okuma koruması). Production Security Gate `44836430233`: SUCCESS.
