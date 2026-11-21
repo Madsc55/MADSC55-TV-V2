@@ -1,5 +1,6 @@
 """Offline, authorized Turkish stream vault. Never logs or exports stream URLs."""
 from __future__ import annotations
+import errno
 import hashlib
 import json
 import os
@@ -20,6 +21,10 @@ def _private_bytes(path):
         fd = os.open(path, flags)
     except FileNotFoundError:
         return None
+    except OSError as exc:
+        if exc.errno == errno.ELOOP:
+            raise ValueError("Symlink vault source forbidden") from exc
+        raise
     try:
         info = os.fstat(fd)
         if not stat.S_ISREG(info.st_mode) or info.st_mode & 0o077:
@@ -38,7 +43,7 @@ def _now():
     return datetime.now(timezone.utc).isoformat()
 
 def _valid_url(url):
-    if not isinstance(url, str) or any(ord(ch) < 33 or ord(ch) == 127 for ch in url):
+    if not isinstance(url, str) or "\\" in url or any(ord(ch) < 33 or ord(ch) == 127 for ch in url):
         return False
     try:
         parts = urlsplit(url)
@@ -150,6 +155,8 @@ class Vault:
         if _digest(raw) != expected_sha256:
             raise ValueError("Backup checksum mismatch")
         doc = self._decode(raw)  # Same validated bytes are restored.
+        if self.path.exists() or self.path.is_symlink():
+            raise ValueError("Refusing to overwrite existing vault")
         self._write(doc, exclusive=True)
 
     def public_report(self):
