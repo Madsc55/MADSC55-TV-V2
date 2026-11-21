@@ -1,3 +1,13 @@
+## 21 Kasım 2026 — CI hata denetimi devam kaydı (kanıtlı durum)
+
+- PR #547 geçmiş #497 AV rapor bağdaştırıcısı ana dala birleştirildi; Actions 44842556117 Production Security Gate SUCCESS. Tarihsel 1.792 sonuç: 1.107 verified, 685 uncertain. Belirsizler kesin çalışmıyor kabul edilmeyecek.
+- PR #558'in Actions 44842749390 sonucu SUCCESS; PR, #547 ile mükerrer olduğu için birleştirilmeden kapatıldı. Tekrar açılmayacak.
+- Eski #495 Actions 44841183579 güvenlik kapısı hatası MAIN_WORKFLOW_FILE_LOCK_FAIL: beklenmeyen workflow dosyası. Güvenlik izin listesi gevşetilerek geçiş sağlanmayacak. PR #495 kapalı.
+- PR #559 güvenli kasa okuma/no-clobber restore düzeltmesi birleştirildi; Actions 44843037968 Production Security Gate SUCCESS.
+- Güncel gözlenen main commit: 4b45245f094ffc1aba4e7ecff24f125d502f6d4e (stage4 FFmpeg URL/protokol güvenliği). Bu commit için CI sonucu henüz doğrulanmadı; tüm Actions geçmişi tarandı veya tüm testler düzeldi iddiası yok.
+- Sonraki adım: main'in yeni commit CI durumunu ve açık PR'ların başarısız job/step/log kayıtlarını denetle; yalnız somut hataya kod düzeltmesi ve offline regresyon testi ekle; PR üzerinden güvenlik kapısını geçir. Tamamlanan PR'ları yeniden yapma.
+- Tek ana playlist MADSC55_TV_IBO_CALISANLAR_TEST.m3u8 korunacak; kanal/arşiv taşıması, yeni playlist veya yeni canlı tarama yapılmadı.
+
 ## 21 Kasım 2026 — #6 mevcut Drive arşivi ve kasa güvenlik kabulü
 
 - Mevcut Google Drive `MADSC55-TV-V2 — Independent Encrypted Recovery Archive` klasörü yetkili bağlantıyla **yeniden kontrol edildi**. Klasörün doğrudan içinde 5 dosya mevcut: 2 adet `.enc` (7.832.688 ve 5.234.628 bayt) ve 3 ZIP. Yeni klasör veya yeni şifreli yedek oluşturulmadı.
