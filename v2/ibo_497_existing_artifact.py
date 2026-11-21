@@ -113,6 +113,8 @@ def main():
         source_raw = subprocess.run(
             ["git", "show", f"{SOURCE_HEAD_SHA}:{CANONICAL_PLAYLIST}"],
             check=True, capture_output=True).stdout
+        if digest(source_raw) != SOURCE_PLAYLIST_SHA256:
+            raise ValueError("Historical source playlist SHA-256 mismatch")
         current_raw = a.playlist.read_bytes()
         preview, manifest = build_preview(
             source_raw, current_raw, audit, SOURCE_RUN_ID, report_sha)
