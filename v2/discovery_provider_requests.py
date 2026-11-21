@@ -31,7 +31,7 @@ def _indicates_throttling(text):
 
 def provider_rate_limited(row):
     status = row.get("http_status")
-    return status == 429 or (status == 403 and (
+    return row.get("rate_limited") is True or status == 429 or (status == 403 and (
         row.get("rate_limited") is True
         or str(row.get("rate_limit_remaining", "")).strip() == "0"
         or bool(row.get("retry_after"))
