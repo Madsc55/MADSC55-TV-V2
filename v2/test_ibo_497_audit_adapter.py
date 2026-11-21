@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Offline tests using the exact #495 producer schema; no stream probes."""
+"""Offline tests using the exact historical #44640007709 audit schema; no stream probes."""
 import hashlib
 import unittest
 
