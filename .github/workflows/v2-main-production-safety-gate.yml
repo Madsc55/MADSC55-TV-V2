@@ -73,6 +73,46 @@ jobs:
           path: /tmp/v2-497-existing-audit-preview/
           if-no-files-found: error
           retention-days: 90
+      - name: Stage 5 historical worldwide URL hash crosswalk offline regression
+        run: |
+          PYTHONPATH=. python -m unittest -v v2.test_yedekler_worldwide_crosswalk
+          python -m py_compile v2/yedekler_worldwide_crosswalk.py v2/test_yedekler_worldwide_crosswalk.py
+      - name: Build Stage 5 historical crosswalk from exact old artifact (no scan)
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: |
+          PYTHONPATH=v2 python v2/yedekler_worldwide_crosswalk.py --output-dir /tmp/v2-stage5-worldwide-crosswalk
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          root = Path("/tmp/v2-stage5-worldwide-crosswalk")
+          summary = json.loads((root / "manifest.json").read_text(encoding="utf-8"))
+          rows = json.loads((root / "crosswalk.json").read_text(encoding="utf-8"))["entries"]
+          c = summary["counts"]
+          assert c["archive_total"] == 18074
+          assert len(rows) == 18074
+          assert summary["main_inventory"] == {
+              "YEDEKLER": 1792, "ANA": 15574, "TURK": 424,
+              "YABANCI": 284, "OTHER": 838, "TOTAL": 18912,
+          }
+          assert summary["batch_state_counts"] == {
+              "TEST": 1792, "TURK": 424, "YABANCI": 284,
+          }
+          assert c["worldwide_exact_hash_matches"] + c["worldwide_not_found"] == 18074
+          assert summary["new_scan_started"] is False
+          assert summary["playlist_written"] is False
+          assert summary["raw_urls_in_report"] is False
+          print(json.dumps({"counts": c, "source_run_id": summary["source_run_id"],
+                            "new_scan_started": False, "playlist_written": False}))
+          PY
+      - name: Upload Stage 5 unchanged historical hash crosswalk evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: v2-stage5-historical-worldwide-crosswalk
+          path: /tmp/v2-stage5-worldwide-crosswalk/
+          if-no-files-found: error
+          retention-days: 90
       - name: Fail closed on changes to production trigger/write policy
         run: PYTHONPATH=v2 python v2/main_actions_security_gate.py
       - name: Preserve original IBO category and backup invariants
