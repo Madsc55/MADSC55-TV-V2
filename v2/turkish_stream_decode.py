@@ -1,38 +1,57 @@
 #!/usr/bin/env python3
-"""Bounded ffprobe check of responsive Turkish stream candidates, advisory only."""
+"""Bounded real FFmpeg audio/video decode of Turkish candidates; advisory only."""
 import concurrent.futures
 import datetime
 import json
+import re
+from pathlib import Path
 import shutil
 import subprocess
-from discover import ROOT
-from turkish_stream_probe import probe
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+try:
+    from .turkish_stream_probe import probe
+except ImportError:  # direct script execution from the v2 directory
+    from turkish_stream_probe import probe
 
 SOURCE = ROOT / "v2/reports/turkish-stream-candidates.json"
 OUT = ROOT / "v2/reports/turkish-stream-decode.json"
 MAX_DECODES = 24
+VIDEO_FRAME = re.compile(r"Parsed_showinfo.*\bn:\s*\d+")
+AUDIO_FRAME = re.compile(r"Parsed_ashowinfo.*\bn:\s*\d+")
+
 
 def decode(item):
+    """Require FFmpeg to report at least one decoded video frame and audio frame."""
     url = item["url"]
-    cmd = ["ffprobe", "-v", "error", "-show_entries", "stream=codec_type,codec_name,width,height,avg_frame_rate,bit_rate",
-           "-of", "json", "-rw_timeout", "6000000", "-analyzeduration", "2000000",
-           "-probesize", "65536", url]
+    cmd = ["ffmpeg", "-hide_banner", "-nostdin", "-v", "info",
+           "-rw_timeout", "6000000", "-analyzeduration", "2000000",
+           "-probesize", "65536", "-i", url,
+           "-map", "0:v:0", "-map", "0:a:0",
+           "-vf", "showinfo", "-af", "ashowinfo",
+           "-t", "3", "-f", "null", "-"]
     try:
-        result = subprocess.run(cmd, capture_output=True, text=True, timeout=13)
-        if result.returncode != 0:
-            return {"channel_id": item["channel_id"], "url": url, "status": "DECODE_UNVERIFIED"}
-        streams = json.loads(result.stdout).get("streams", [])
-        types = sorted({x.get("codec_type") for x in streams if x.get("codec_type") in ("audio", "video")})
-        return {"channel_id": item["channel_id"], "url": url,
-                "video_streams": [{"width": s.get("width"), "height": s.get("height"), "codec": s.get("codec_name"), "bit_rate": s.get("bit_rate")} for s in streams if s.get("codec_type") == "video"],
-                "status": "SHORT_DECODE_VERIFIED" if types else "DECODE_UNVERIFIED",
-                "media_types": types}
+        result = subprocess.run(cmd, capture_output=True, text=True, timeout=18)
+        stderr = result.stderr or ""
+        video_decoded = bool(VIDEO_FRAME.search(stderr))
+        audio_decoded = bool(AUDIO_FRAME.search(stderr))
+        verified = result.returncode == 0 and video_decoded and audio_decoded
+        return {"channel_id": item["channel_id"],
+                "status": "SHORT_DECODE_VERIFIED" if verified else "DECODE_UNVERIFIED",
+                "media_types": ["audio", "video"] if verified else []}
     except (OSError, ValueError, subprocess.TimeoutExpired):
-        return {"channel_id": item["channel_id"], "status": "DECODE_UNVERIFIED"}
+        return {"channel_id": item["channel_id"], "status": "DECODE_UNVERIFIED",
+                "media_types": []}
+
 
 def main():
-    if not shutil.which("ffprobe"):
-        raise SystemExit("ffprobe is required")
+    try:
+        from turkish_stream_probe import probe
+    except ModuleNotFoundError:
+        from v2.turkish_stream_probe import probe
+    if not shutil.which("ffmpeg"):
+        raise SystemExit("ffmpeg is required")
     candidates = json.loads(SOURCE.read_text(encoding="utf-8"))["candidates"]
     with concurrent.futures.ThreadPoolExecutor(max_workers=8) as pool:
         hints = list(pool.map(probe, candidates))
@@ -50,5 +69,7 @@ def main():
     OUT.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print("Short decode verified:", report["short_decode_verified"], "of", len(selected),
           "HTTP media hints:", report["http_media_hints"])
+
+
 if __name__ == "__main__":
     main()

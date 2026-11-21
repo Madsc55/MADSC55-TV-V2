@@ -111,6 +111,10 @@ jobs:
           python -m unittest -v v2.test_turkish_iso639_review
           python -m unittest -v v2.test_turkish_local_media_probe
           python -m unittest -v v2.test_backup_text_evidence v2.test_turkish_sample_review
+      - name: Task 34 FFmpeg decoded audio/video regression (offline fixtures only)
+        run: |
+          python -m py_compile v2/turkish_stream_decode.py v2/test_turkish_local_media_probe.py v2/test_turkish_stream_decode.py
+          python -m unittest -v v2.test_turkish_local_media_probe v2.test_turkish_stream_decode
       - name: Discovery 34 offline adapter and integration acceptance
         run: |
           PYTHONPATH=v2 python -m unittest -v test_discovery_34 test_discovery_34_integrate test_discovery_34_integrate_acceptance test_discovery_34_live_contract

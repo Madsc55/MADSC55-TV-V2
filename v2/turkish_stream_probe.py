@@ -3,10 +3,11 @@
 import concurrent.futures
 import datetime
 import json
+from pathlib import Path
 import urllib.error
 import urllib.parse
 import urllib.request
-from discover import ROOT
+ROOT = Path(__file__).resolve().parents[1]
 
 SOURCE = ROOT / "v2/reports/turkish-stream-candidates.json"
 OUT = ROOT / "v2/reports/turkish-stream-probe.json"
