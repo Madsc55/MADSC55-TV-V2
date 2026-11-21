@@ -96,7 +96,7 @@ class VaultTests(unittest.TestCase):
                 self.vault.path.symlink_to(replacement)
             return original_open(path, flags, *args, **kwargs)
         with patch.object(vault_module.os, "open", side_effect=swap_before_descriptor):
-            with self.assertRaises(OSError):
+            with self.assertRaisesRegex(ValueError, "Symlink"):
                 self.vault.read()
 
     def test_backup_rejects_missing_or_oversized_source(self):
