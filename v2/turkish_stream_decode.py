@@ -6,7 +6,10 @@ import json
 import re
 import shutil
 import subprocess
-from discover import ROOT
+try:
+    from discover import ROOT
+except ModuleNotFoundError:  # support package-style test invocation
+    from v2.discover import ROOT
 from turkish_stream_probe import probe
 
 SOURCE = ROOT / "v2/reports/turkish-stream-candidates.json"
