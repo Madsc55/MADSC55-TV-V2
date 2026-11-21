@@ -93,29 +93,31 @@ class PinnedHTTPProxy:
         self._pin_lock = threading.Lock()
         self._byte_count = 0
         self._byte_lock = threading.Lock()
-        owner = self
-
-        class Handler(socketserver.BaseRequestHandler):
-            def handle(self):
-                owner._handle(self.request)
-
-        self._server = _ThreadingServer(("127.0.0.1", 0), Handler)
+        self._server = None
         self._thread = None
 
     @property
     def url(self):
+        if self._server is None:
+            raise RuntimeError("Proxy must be started before its URL is used")
         host, port = self._server.server_address
         return f"http://{host}:{port}"
 
     def __enter__(self):
+        owner = self
+        class Handler(socketserver.BaseRequestHandler):
+            def handle(self):
+                owner._handle(self.request)
+        self._server = _ThreadingServer(("127.0.0.1", 0), Handler)
         self._thread = threading.Thread(target=self._server.serve_forever,
                                         name="madsc55-pinned-proxy", daemon=True)
         self._thread.start()
         return self
 
     def __exit__(self, exc_type, exc, tb):
-        self._server.shutdown()
-        self._server.server_close()
+        if self._server is not None:
+            self._server.shutdown()
+            self._server.server_close()
         if self._thread:
             self._thread.join(timeout=2)
 
