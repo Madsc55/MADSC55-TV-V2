@@ -20,7 +20,7 @@ def _egress_guard_installed():
 
 
 def _valid_http_url(url):
-    if not isinstance(url, str) or not url or any(ord(ch) < 32 or ch.isspace() or ch == "\\\\" for ch in url):
+    if not isinstance(url, str) or not url or any(ord(ch) < 32 or ch.isspace() or ord(ch) == 92 for ch in url):
         return False
     try:
         parsed = urlsplit(url)
