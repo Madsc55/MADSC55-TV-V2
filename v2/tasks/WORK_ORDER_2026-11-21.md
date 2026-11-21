@@ -1,8 +1,25 @@
 # MADSC55 TV V2 — Ana çalışma sırası
 **Kayıt:** 21 Kasım 2026  
-**Baz main:** `3eb84f890cbe8524d16c1a16f219b0b494cc50f0`  
+**Baz main (güncel):** `ee0bc043136fbd982775461ad76c588f8bc67951`  
 **Amaç:** Kanıtlı eksikleri tek tek kapatmak; tamamlanan işleri tekrarlamamak.
 
+
+
+## Güncel durum düzeltmesi — 21 Kasım 2026 00:18 UTC
+Bu bölüm, aşağıdaki başlangıç fotoğrafındaki açık/bloke durumlarını güncel kanıt geldikçe geçersiz kılar; eski kayıtlar tarihsel bağlam olarak korunur.
+
+| Aşama | Güncel durum | Kanıt |
+|---|---|---|
+| 1 / #489 arşiv kabulü | **Tamamlandı (CI/kod kabulü)** | PR #551 merged; run 44838963882 SUCCESS; 12 arşiv regresyonu ve 18.912 / 18.074 arşiv / 838 korunan kategori kabul kaydı |
+| 2 / #497 eski AV raporu | **Tamamlandı (salt-okunur eşleme/önizleme)** | PR #547 merged; run 44842556117 SUCCESS; artifact 14681083208; 1.792 eşleşen kayıt: 1.107 doğrulanmış, 685 belirsiz; preview ana playlistle bayt bayt aynı |
+| 3 / Task 34 FFmpeg decode altyapısı | **Tamamlandı (kod/çevrimdışı kabul)** | PR #543 merged; run 44842411969 SUCCESS; gerçek yerel test kliplerinde ses+görüntü decode ve negatif testler geçti |
+| 4 / Türkçe dil, altyazı ve OCR | **Açık — gerçek yayın örneği bekliyor** | Mevcut yerel veri seti örnekleri gerçek IPTV yayın kanıtı değil; capture aracı DNS hostname'lerini reddediyor, bu nedenle yayıncı hostname'leri için güvenli hedef/bağlantı tasarımı gerekiyor |
+| 5 / 18.074 YEDEKLER gerçek medya doğrulaması | **Bekliyor** | Aşama 4 ve gerçek yayın kanıt zinciri hazır olmadan geniş tarama yok |
+| 6 / kalıcı ledger, retry ve arşiv önizlemesi | **Bekliyor** | #497 önizlemesi var; 685 belirsiz için otomatik, idempotent tekrar kuyruğu/checkpoint entegrasyonu henüz kabul edilmedi |
+| 7 / şifreli arşiv gerçek ortam kabulü | **Açık** | #507 draft; harici depolama ve bağımsız gerçek ortam geri yüklemesi kanıtlanmadı |
+| 8 / İBO Player cihaz kabulü | **Bekliyor** | Kullanıcı cihazında gerçek oynatma kanıtı yok |
+
+**Önemli:** 18.074 başlangıç YEDEKLER envanteri ile 1.792 tarihî test snapshot'ı aynı şey değildir. 1.792 sayısı yalnız #497'nin orijinal raporunun sabit kaynak görüntüsüdür. Bu güncelleme hiçbir kanal sayısını, playlisti, kategoriyi veya v2/tasks/state.json görev statüsünü değiştirmez.
 ## Değişmez koruma kuralları
 - Tek ana IBO playlisti: `MADSC55_TV_IBO_CALISANLAR_TEST.m3u8`; yeni test playlisti yok.
 - 48 karantinaya alınmış kanal geri eklenmez; aynı URL mükerrer eklenmez.
@@ -114,3 +131,12 @@ Durum (bekliyor/çalışıyor/tamamlandı/bloke); değişen dosyalar; önce/sonr
 - Bu nedenle tam playlist SHA farklılığını görmezden gelerek doğrudan import yapılmayacak. PR #547 güncelleniyor: önce tarihî source commit + orijinal artifact sabit run/artifact/file SHA ile doğrulanacak; sonra 1.792 YEDEKLER bloğunun güncel main'de aynı sırayla byte-byte eşitliği aranacak; yalnız eşleşirse güncel playlist SHA'sına yeniden bağlanan preview/manifest üretilecek.
 - PR #547'ye eklenen importer ve offline testler: sabit kaynak run `44640007709`, artifact `14587983768`, report hash, tarihî playlist hash; ordered block equality; değişmiş kayıt/sıra için fail-closed. Yalnız preview ve retry manifesti; yeni scan ve playlist yazımı yok. PR #547 hâlâ draft; yeni CI/preview kanıtı bekleniyor.
 - **Aşama 2 durumu: özgün kaynak bulundu ve tarihî/current YEDEKLER kimliği eşleştirildi; güvenli importer kodu PR #547'de güncellendi. Nihai kabul için yeni testlerin PASS olması ve gerçek Actions artifact'tan preview+manifest üretiminin doğrulanması bekleniyor.** 685 kayıt henüz yeniden taranmadı/taşınmadı; kullanıcı playlistine yazılmadı.
+
+
+## İlerleme günlüğü — 21 Kasım 2026 00:18 UTC
+- PR #551 (#489 dokümantasyon/kanıt mutabakatı) merged. 18.912 toplam, 18.074 başlangıç arşivi ve 838 korunan kayıt kabulü; gerçek playlist üzerinde taşıma yapıldığı iddia edilmiyor.
+- PR #547 (#497 eski rapor importu) merged. Orijinal Actions run 44640007709 / artifact 14587983768 sabit kaynak olarak kullanıldı. PR güvenlik/entegrasyon run 44842556117 SUCCESS; 17/17 #497 offline test PASS; import preview artifact 14681083208 oluşturuldu. Manifest 1.107 verified + 685 uncertain gösteriyor. Preview ana playlistle bayt bayt aynı; yeni tarama ve playlist yazımı yok.
+- PR #558 aynı importer testlerini ikinci kez taşıdığı için merged PR #547'ye göre gereksiz duplicate olarak kapatıldı; merge edilmedi.
+- PR #543 (Task 34) merged. Run 44842411969 SUCCESS; gerçek yerel fixture üzerinde FFmpeg ses+görüntü decode ve eksik ses/timeout/bozuk çıktı negatif testleri geçti. Bu canlı IPTV kanalı doğrulaması veya 18.074 taraması değildir.
+- **Sıradaki iş: Aşama 4.** ASR/OCR/WebVTT zincirinin gerçek yayın örneğine güvenli biçimde bağlanması. Mevcut capture aracı yalnız public IP literal kabul ediyor, DNS hostname'lerini reddediyor. Bu güvenlik kısıtı atlatılmayacak; izinli yayıncı hostname'leri için DNS çözümleme, IP pinleme, redirect/protocol kısıtları ve egress güvenliği tasarlanıp çevrimdışı test edilmeden canlı capture yapılmayacak.
+- v2/tasks/state.json tarihî snapshot olarak kalır; görev statüleri bu PR'da değiştirilmez. Ana playlist, 48 karantina kaydı, 1.003 kuralı, arşivler ve EPG değişmedi.
