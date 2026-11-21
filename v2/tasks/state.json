@@ -599,5 +599,30 @@
       125
     ],
     "source_records": 18074
+  },
+  "stage3_issue497_artifact_recovery": {
+    "source_run_id": 44640007709,
+    "artifact_id": 14587983768,
+    "artifact_name": "yedekler-av-audit",
+    "report_file": "yedekler_av_audit.json",
+    "report_sha256": "30de600eca7d8e3140f423bb3fc248dc2f57df6ff031b0bf97276a9a861dba2c",
+    "schema_version": 1,
+    "category": "YEDEKLER",
+    "total": 1792,
+    "counts": {
+      "WORKING": 1107,
+      "RECHECK_REQUIRED": 685
+    },
+    "counts_independently_verified": true,
+    "source_playlist_commit": "1e8bd6d46762366f151e1270cc767f598c8e63e8",
+    "source_playlist_git_blob": "688f0b194b9106d6fdc593e5d7dc4a64c7e01b2c",
+    "source_playlist_sha256": "eee260cce3926caff18238f9583958b40475e362ce7650fb7fac51a66a84ee1c",
+    "new_scan": false,
+    "playlist_mutated": false,
+    "channel_moves_applied": false,
+    "current_18074_subset_identity_acceptance": "pending",
+    "ci_run": 44842749390,
+    "ci_status_at_record": "in_progress",
+    "stage3_status": "in_progress"
   }
 }
