@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Offline tests for the recovered historical YEDEKLER audit schema."""
+"""Offline tests using the exact #495 producer schema; no stream probes."""
 import hashlib
 import unittest
 
@@ -16,8 +16,8 @@ class ExistingAuditAdapterTests(unittest.TestCase):
             '#EXTINF:-1 group-title="🗂️ YEDEKLER",Channel %d\nhttps://example.test/%d\n' % (i, i)
             for i in range(1, 1793)
         ]
-        self.raw = ('#EXTM3U\n' + ''.join(self.blocks)).encode('utf-8')
-        self.run_id = 44640007709
+        self.raw = ('#EXTM3U\n' + ''.join(self.blocks)).encode("utf-8")
+        self.run_id = 987654
         self.results = []
         for i, block in enumerate(self.blocks, 1):
             url = block.splitlines()[-1].strip()
@@ -34,15 +34,16 @@ class ExistingAuditAdapterTests(unittest.TestCase):
             })
         self.audit = {
             "schema_version": 1,
-            "category": "YEDEKLER",
+            "timestamp_utc": "2026-11-20T00:20:09.490490+00:00",
             "playlist_sha256": sha(self.raw),
+            "category": "YEDEKLER",
             "total": 1792,
             "counts": {"WORKING": 1107, "RECHECK_REQUIRED": 685},
-            "timestamp_utc": "2026-11-20T00:20:09.490490+00:00",
             "results": self.results,
+            "policy": "Read-only; failures need repeat verification.",
         }
 
-    def test_historical_report_maps_1107_and_685(self):
+    def test_real_producer_schema_maps_1107_and_685(self):
         report, evidence = convert(self.raw, self.audit, self.run_id)
         self.assertEqual(len(report["entries"]), 1792)
         self.assertEqual(sum(x["status"] == "verified" for x in report["entries"]), 1107)
@@ -59,7 +60,7 @@ class ExistingAuditAdapterTests(unittest.TestCase):
             convert(self.raw, self.audit, self.run_id)
 
     def test_channel_name_mismatch_fails_closed(self):
-        self.audit["results"][0]["name"] = "Wrong channel"
+        self.audit["results"][0]["name"] = "Different Channel"
         with self.assertRaises(ValueError):
             convert(self.raw, self.audit, self.run_id)
 
@@ -68,11 +69,11 @@ class ExistingAuditAdapterTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             convert(self.raw, self.audit, self.run_id)
 
-    def test_invalid_run_id_fails_closed(self):
+    def test_run_id_mismatch_fails_closed(self):
         with self.assertRaises(ValueError):
-            convert(self.raw, self.audit, 0)
+            convert(self.raw, self.audit, self.run_id + 1)
 
-    def test_unknown_classification_fails_closed(self):
+    def test_failed_source_status_is_not_relabelled_uncertain(self):
         self.audit["results"][1107]["classification"] = "FAILED"
         with self.assertRaises(ValueError):
             convert(self.raw, self.audit, self.run_id)
