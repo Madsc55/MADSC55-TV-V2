@@ -27,8 +27,7 @@ def audit_one(item):
     if first.get("status") == "AV_STREAMS_PRESENT":
         decoded = verify_decoded_av(url, timeout=TIMEOUT)
         outcome = {**first, **decoded}
-        if decoded.get("decoded_av_verified"):
-            outcome["status"] = "AV_VERIFIED"
+        outcome["status"] = "AV_VERIFIED" if decoded.get("decoded_av_verified") else decoded.get("decode_status", "DECODE_FAILED")
     # One bounded confirmation attempt for inconclusive/non-verified outcomes.
     if outcome.get("status") != "AV_VERIFIED":
         attempts = 2
@@ -36,8 +35,7 @@ def audit_one(item):
         if second.get("status") == "AV_STREAMS_PRESENT":
             decoded = verify_decoded_av(url, timeout=TIMEOUT)
             second = {**second, **decoded}
-            if decoded.get("decoded_av_verified"):
-                second["status"] = "AV_VERIFIED"
+            second["status"] = "AV_VERIFIED" if decoded.get("decoded_av_verified") else decoded.get("decode_status", "DECODE_FAILED")
         if second.get("status") == "AV_VERIFIED":
             outcome = second
         else:
@@ -65,7 +63,7 @@ def audit_one(item):
 def main():
     raw = PLAYLIST.read_bytes()
     _, blocks = parse(raw)
-    selected = [b for b in blocks if category(b.split("\\n", 1)[0]) == "YEDEKLER"]
+    selected = [b for b in blocks if category(b.splitlines()[0]) == "YEDEKLER"]
     if len(selected) != 1792:
         raise SystemExit(f"Expected 1792 YEDEKLER entries; found {len(selected)}")
     if len({digest(b.encode("utf-8")) for b in selected}) != len(selected):
