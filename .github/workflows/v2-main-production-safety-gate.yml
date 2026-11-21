@@ -141,7 +141,7 @@ jobs:
           PYTHONPATH=v2 python -m unittest -v test_stage5_evidence_export
       - name: Turkish channel triage offline regression (no playlist writes)
         run: |
-          python -m py_compile v2/turkish_channel_triage.py v2/test_turkish_channel_triage.py
+          python -m py_compile v2/public_egress_guard.py v2/turkish_media_sample_capture.py v2/turkish_channel_triage.py v2/test_turkish_channel_triage.py
           python -m unittest -v v2.test_turkish_channel_triage
           python -m unittest -v v2.test_turkish_evidence_ingest
           python -m unittest -v v2.test_turkish_probe_evidence
