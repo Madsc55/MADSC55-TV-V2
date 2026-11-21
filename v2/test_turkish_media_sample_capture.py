@@ -17,6 +17,41 @@ class CaptureTests(unittest.TestCase):
     def test_dns_names_rejected_to_prevent_rebinding(self):
         with self.assertRaises(ValueError):
             validate_url("https://example.com/live")
+    def test_ambiguous_url_authority_and_controls_rejected(self):
+        for url in (
+            " http://8.8.8.8/live",
+            "http://8.8.8.8/live\nplaylist",
+            "http://8.8.8.8/live\tplaylist",
+            "http://8.8.8.8/with space",
+            "http://8.8.8.8\\@127.0.0.1/live",
+            "http://%38.8.8.8/live",
+            "http://8.8.8.8/path\\file",
+        ):
+            with self.subTest(url=url), self.assertRaises(ValueError):
+                validate_url(url)
+        self.assertEqual(
+            validate_url("https://8.8.8.8/live?token=a%20b"),
+            "https://8.8.8.8/live?token=a%20b",
+        )
+
+    def test_ffmpeg_network_protocols_are_explicitly_limited(self):
+        with tempfile.TemporaryDirectory() as d:
+            p = Path(d) / "sample.mkv"
+            def runner(cmd, **kwargs):
+                whitelist = cmd[cmd.index("-protocol_whitelist") + 1].split(",")
+                self.assertEqual(set(whitelist), {"http", "https", "tcp", "tls", "crypto"})
+                self.assertNotIn("file", whitelist)
+                self.assertNotIn("concat", whitelist)
+                self.assertNotIn("data", whitelist)
+                self.assertEqual(cmd[cmd.index("-max_redirect") + 1], "0")
+                p.write_bytes(b"synthetic-sample")
+                return SimpleNamespace(returncode=0)
+            report = capture("https://8.8.8.8/live",
+                             p, runner=runner, which=lambda _: "/usr/bin/ffmpeg")
+            self.assertEqual(report["status"], "SAMPLE_CAPTURED_UNVERIFIED")
+            self.assertFalse(report["language_verified"])
+            self.assertFalse(report["device_verified"])
+
     def test_invalid_ports_rejected(self):
         for url in ("http://8.8.8.8:abc/live", "http://8.8.8.8:65536/live", "http://8.8.8.8:0/live"):
             with self.subTest(url=url), self.assertRaises(ValueError):
