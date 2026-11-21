@@ -76,8 +76,8 @@
     "source_pr": 567,
     "merged_code_only": true,
     "scope": "685 uncertain retry",
-    "unsafe_transport": "ffprobe and FFmpeg directly access playlist URLs without DNS/IP pinning or nested HLS redirect egress checks",
-    "remediation_pr": "pending",
+    "unsafe_transport": "Direct FFmpeg network transport removed for both DNS hostnames and numeric public IPs; FFmpeg sees local files only. Nested HLS/DASH segment/key transport remains unsupported.",
+    "remediation_pr": 588,
     "workflow_file": ".github/workflows/v2-yedekler-av-audit.yml",
     "retry_job_if_expression": "${{ false }}",
     "gate_error_if_reenabled": "UNSAFE_685_LIVE_RETRY_NOT_SUSPENDED",
@@ -85,6 +85,25 @@
     "no_playlist_archive_epg_or_channel_changes": true,
     "historical_verified": 1107,
     "historical_uncertain": 685,
-    "next_action": "Complete offline tested public-only, redirect and HLS child-resource safe media transport before enabling any 685-channel live retry."
+    "next_action": "Secure HLS/DASH nested-resource transport and a real broadcaster sample must pass before separately authorizing live retry.",
+    "merged": true,
+    "merge_commit_sha": "a8d914864d925764c27a3abaadb6715be3ff540b",
+    "production_security_gate_run": 44844737445,
+    "production_security_gate_conclusion": "success",
+    "live_retry_still_disabled": true
+  },
+  "stage6_read_only_retry_plan": {
+    "pr": 594,
+    "merged": true,
+    "merge_commit_sha": "c17af7945921ba61f29c9d2e2918425e897c6cc8",
+    "ci_run": 44846469069,
+    "ci_conclusion": "success",
+    "planned_rows": 685,
+    "manual_workflow_dispatched": false,
+    "actual_plan_artifact_generated": false,
+    "live_retry_authorized": false,
+    "network_attempts": 0,
+    "playlist_write_allowed": false,
+    "archive_write_allowed": false
   }
 }
