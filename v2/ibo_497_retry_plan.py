@@ -125,9 +125,12 @@ def build_plan(raw, manifest, manifest_bytes, *, require_known_snapshot=False):
         url = block.splitlines()[-1].strip()
         if digest(url.encode("utf-8")) != url_hash:
             raise ValueError("Queue URL hash does not match current channel identity")
+        name = block.splitlines()[0].rsplit(",", 1)[-1].strip()
+        if not name:
+            raise ValueError("Current channel name is empty")
         queue_by_hash[channel_hash] = {
             "position": position,
-            "name": block.splitlines()[0].rsplit(",", 1)[-1].strip(),
+            "name": name,
             "channel_sha256": channel_hash,
             "url_sha256": url_hash,
             "source_run_id": SOURCE_RUN_ID,
@@ -142,8 +145,6 @@ def build_plan(raw, manifest, manifest_bytes, *, require_known_snapshot=False):
         }
     if len(queue_by_hash) != EXPECTED_UNCERTAIN:
         raise ValueError("Retry plan did not bind all 685 unique channels")
-    if set(queue_by_hash) & (set(blocks_by_hash) - set(queue_by_hash)):
-        raise ValueError("Retry queue identity overlap error")
 
     items = sorted(queue_by_hash.values(), key=lambda row: row["position"])
     plan = {
@@ -177,6 +178,8 @@ def build_plan(raw, manifest, manifest_bytes, *, require_known_snapshot=False):
 
 def write_plan(path, plan):
     destination = Path(path)
+    if not destination.parent.is_dir():
+        raise ValueError("Retry plan output directory must already exist")
     if destination.is_symlink():
         raise ValueError("Refusing symlink output")
     payload = json.dumps(plan, ensure_ascii=False, sort_keys=True, indent=2).encode("utf-8") + b"\n"
