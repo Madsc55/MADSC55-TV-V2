@@ -1,5 +1,6 @@
 """Offline, authorized Turkish stream vault. Never logs or exports stream URLs."""
 from __future__ import annotations
+import errno
 import hashlib
 import json
 import os
@@ -11,12 +12,38 @@ from urllib.parse import urlsplit
 from cryptography.fernet import Fernet, InvalidToken
 
 VERSION = 1
+MAX_VAULT_BYTES = 512 * 1024 * 1024
+
+def _private_bytes(path):
+    """Open a private regular vault by descriptor; reject symlink swaps and oversize."""
+    flags = os.O_RDONLY | getattr(os, "O_NOFOLLOW", 0) | getattr(os, "O_NONBLOCK", 0)
+    try:
+        fd = os.open(path, flags)
+    except FileNotFoundError:
+        return None
+    except OSError as exc:
+        if exc.errno == errno.ELOOP:
+            raise ValueError("Symlink vault source forbidden") from exc
+        raise
+    try:
+        info = os.fstat(fd)
+        if not stat.S_ISREG(info.st_mode) or info.st_mode & 0o077:
+            raise ValueError("Vault must be a private regular file")
+        if info.st_size > MAX_VAULT_BYTES:
+            raise ValueError("Vault exceeds maximum size")
+        with os.fdopen(fd, "rb", closefd=False) as source:
+            data = source.read(MAX_VAULT_BYTES + 1)
+        if len(data) > MAX_VAULT_BYTES:
+            raise ValueError("Vault exceeds maximum size")
+        return data
+    finally:
+        os.close(fd)
 
 def _now():
     return datetime.now(timezone.utc).isoformat()
 
 def _valid_url(url):
-    if not isinstance(url, str) or any(ord(ch) < 33 or ord(ch) == 127 for ch in url):
+    if not isinstance(url, str) or "\\" in url or any(ord(ch) < 33 or ord(ch) == 127 for ch in url):
         return False
     try:
         parts = urlsplit(url)
@@ -34,16 +61,7 @@ class Vault:
         self.path = Path(path)
         self.cipher = Fernet(key)
 
-    def _read(self, path):
-        if path.is_symlink():
-            raise ValueError("Symlink vault source forbidden")
-        if path.exists():
-            mode = path.stat().st_mode
-            if not stat.S_ISREG(mode) or mode & 0o077:
-                raise ValueError("Vault must be a private regular file")
-        if not path.exists():
-            return {"version": VERSION, "entries": {}}
-        raw = path.read_bytes()
+    def _decode(self, raw):
         try:
             doc = json.loads(self.cipher.decrypt(raw))
         except (InvalidToken, ValueError, UnicodeDecodeError) as exc:
@@ -61,10 +79,16 @@ class Vault:
                 raise ValueError("Vault policy or fingerprint validation failure")
         return doc
 
+    def _read(self, path):
+        raw = _private_bytes(path)
+        if raw is None:
+            return {"version": VERSION, "entries": {}}
+        return self._decode(raw)
+
     def read(self):
         return self._read(self.path)
 
-    def _write(self, doc):
+    def _write(self, doc, *, exclusive=False):
         if self.path.is_symlink():
             raise ValueError("Symlink vault path forbidden")
         self.path.parent.mkdir(parents=True, exist_ok=True)
@@ -76,7 +100,11 @@ class Vault:
                 stream.write(payload)
                 stream.flush()
                 os.fsync(stream.fileno())
-            os.replace(temp, self.path)
+            if exclusive:
+                os.link(temp, self.path)  # atomic no-clobber restore
+                os.unlink(temp)
+            else:
+                os.replace(temp, self.path)
         finally:
             if os.path.exists(temp):
                 os.unlink(temp)
@@ -107,8 +135,10 @@ class Vault:
         destination = Path(destination)
         if destination.exists() or destination.is_symlink():
             raise ValueError("Backup destination already exists")
-        self._read(self.path)
-        data = self.path.read_bytes()
+        data = _private_bytes(self.path)
+        if data is None:
+            raise ValueError("Missing vault source")
+        self._decode(data)  # Validate the exact bytes copied, not a second open.
         destination.parent.mkdir(parents=True, exist_ok=True)
         fd = os.open(destination, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
         with os.fdopen(fd, "wb") as stream:
@@ -119,15 +149,15 @@ class Vault:
 
     def restore(self, source, expected_sha256):
         source = Path(source)
-        if source.is_symlink() or not source.is_file() or source.stat().st_mode & 0o077:
-            raise ValueError("Backup must be a private regular file")
-        raw = source.read_bytes()
+        raw = _private_bytes(source)
+        if raw is None:
+            raise ValueError("Missing backup source")
         if _digest(raw) != expected_sha256:
             raise ValueError("Backup checksum mismatch")
-        doc = self._read(Path(source))
+        doc = self._decode(raw)  # Same validated bytes are restored.
         if self.path.exists() or self.path.is_symlink():
             raise ValueError("Refusing to overwrite existing vault")
-        self._write(doc)
+        self._write(doc, exclusive=True)
 
     def public_report(self):
         doc = self.read()
