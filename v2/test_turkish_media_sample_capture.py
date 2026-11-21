@@ -80,7 +80,7 @@ class CaptureTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as d:
             p = Path(d)/"sample.mkv"
             def runner(cmd, **kwargs):
-                self.assertEqual(cmd[cmd.index("-max_redirect")+1], "0")
+                self.assertEqual(cmd[cmd.index("-max_redirects")+1], "0")
                 self.assertEqual(cmd[cmd.index("-fs")+1], str(MAX_BYTES))
                 p.write_bytes(b"sample")
                 return SimpleNamespace(returncode=0)
