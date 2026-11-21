@@ -73,6 +73,52 @@ jobs:
           path: /tmp/v2-497-existing-audit-preview/
           if-no-files-found: error
           retention-days: 90
+      - name: Generate SHA-bound 685 uncertain retry plan (offline; no network probes)
+        run: |
+          set -euo pipefail
+          PYTHONPATH=v2 python v2/ibo_497_retry_plan.py \
+            --playlist MADSC55_TV_IBO_CALISANLAR_TEST.m3u8 \
+            --initial-manifest /tmp/v2-497-existing-audit-preview/manifest.json \
+            --output /tmp/v2-497-685-retry-plan.json
+          python - <<'PY'
+          import hashlib, json
+          from pathlib import Path
+          output = Path("/tmp/v2-497-685-retry-plan.json")
+          plan = json.loads(output.read_text(encoding="utf-8"))
+          assert plan["schema_version"] == 1
+          assert plan["plan_type"] == "READ_ONLY_UNCERTAIN_RETRY_PLAN"
+          assert plan["plan_status"] == "PENDING_FINAL_TEST_AUTHORIZATION"
+          assert plan["plan_sha256"] == "0ea6f56d9bd599a6f7d5c287296f16a08701ac320c2377e095d6f227296c439a"
+          assert plan["playlist_sha256"] == hashlib.sha256(
+              Path("MADSC55_TV_IBO_CALISANLAR_TEST.m3u8").read_bytes()).hexdigest()
+          assert plan["initial_manifest_sha256"] == "b001bf48f07437e9ae67ed9f73b12ea9cfcab653523973435cf3b1cee3c31fcc"
+          assert len(plan["items"]) == plan["uncertain_retry_plan_count"] == 685
+          assert len({x["channel_sha256"] for x in plan["items"]}) == 685
+          assert len({x["url_sha256"] for x in plan["items"]}) == 685
+          assert all(x["source_status"] == "uncertain" and
+                     x["live_retry_authorized"] is False and
+                     x["next_attempt_number"] == 2 for x in plan["items"])
+          assert plan["historically_verified_count"] == 1107
+          assert plan["network_attempts"] == 0 and plan["new_scan_started"] is False
+          assert plan["live_retry_authorized"] is False
+          assert plan["playlist_write_allowed"] is False
+          assert plan["archive_write_allowed"] is False
+          assert plan["category_mutation_allowed"] is False
+          print(json.dumps({
+              "plan_sha256": plan["plan_sha256"],
+              "plan_file_sha256": hashlib.sha256(output.read_bytes()).hexdigest(),
+              "retry_rows": len(plan["items"]),
+              "new_scan_started": False,
+              "playlist_modified": False}, sort_keys=True))
+          PY
+      - name: Publish 685 retry plan artifact on main only (read-only)
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: v2-497-685-readonly-retry-plan
+          path: /tmp/v2-497-685-retry-plan.json
+          if-no-files-found: error
+          retention-days: 90
       - name: Stage 5 historical worldwide URL hash crosswalk offline regression
         run: |
           PYTHONPATH=v2:. python -m unittest -v v2.test_yedekler_worldwide_crosswalk
