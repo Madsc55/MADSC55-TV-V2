@@ -38,6 +38,7 @@ class RetryReconcileTests(unittest.TestCase):
                 "channel_sha256": digest(block.encode()), "url_sha256": digest(url.encode()),
                 "run_id": 999, "evidence_sha256": "c" * 64,
                 "attempts": 2 if status == "failed" else 1,
+                "decoded_av_verified": status == "verified",
                 "repeatable_av_failure": status == "failed", "status": status,
             })
         retry = {
@@ -82,6 +83,19 @@ class RetryReconcileTests(unittest.TestCase):
     def test_report_counts_must_match_entry_statuses(self):
         raw, initial, initial_bytes, retry = self.fixture()
         retry["counts"] = {"verified": 1}
+        with self.assertRaises(ValueError):
+            build_full_report(raw, initial, initial_bytes, retry)
+
+
+    def test_verified_requires_actual_decoded_av_flag(self):
+        raw, initial, initial_bytes, retry = self.fixture()
+        retry["entries"][0]["decoded_av_verified"] = False
+        with self.assertRaises(ValueError):
+            build_full_report(raw, initial, initial_bytes, retry)
+
+    def test_failed_requires_two_attempts_and_repeatable_failure(self):
+        raw, initial, initial_bytes, retry = self.fixture(["failed"] + ["verified"] * 684)
+        retry["entries"][0]["attempts"] = 1
         with self.assertRaises(ValueError):
             build_full_report(raw, initial, initial_bytes, retry)
 
