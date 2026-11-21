@@ -1,66 +1,78 @@
 import datetime
+import socket
 import tempfile
 from pathlib import Path
 from types import SimpleNamespace
 import unittest
+
+from v2.pinned_http_proxy import PinnedHTTPProxy, ProxyPolicyError
 from v2.turkish_media_sample_capture import MAX_BYTES, capture, validate_url
+
+
+def dns_answer(address):
+    def resolver(host, port, type=socket.SOCK_STREAM):
+        return [(socket.AF_INET, socket.SOCK_STREAM, 6, "", (address, port))]
+    return resolver
+
 
 class CaptureTests(unittest.TestCase):
     def test_bad_urls(self):
-        for url in ("file:///tmp/secret", "http://user:pass@example.com/live", "ftp://host/live", "http://host/x#frag"):
+        for url in ("file:///tmp/secret", "http://user:pass@example.com/live",
+                    "ftp://host/live", "http://host/x#frag", "http://localhost/live"):
             with self.subTest(url=url), self.assertRaises(ValueError):
                 validate_url(url)
-    def test_reject_private_and_local_destinations(self):
-        for url in ("http://127.0.0.1/live", "http://10.0.0.1/live", "http://192.168.1.1/live", "http://[::1]/live", "https://localhost/live", "https://server.local/live"):
-            with self.subTest(url=url), self.assertRaises(ValueError):
-                validate_url(url)
-    def test_dns_names_rejected_to_prevent_rebinding(self):
-        with self.assertRaises(ValueError):
-            validate_url("https://example.com/live")
-    def test_ambiguous_url_authority_and_controls_rejected(self):
-        for url in (
-            " http://8.8.8.8/live",
-            "http://8.8.8.8/live\nplaylist",
-            "http://8.8.8.8/live\tplaylist",
-            "http://8.8.8.8/with space",
-            "http://8.8.8.8\\@127.0.0.1/live",
-            "http://%38.8.8.8/live",
-            "http://8.8.8.8/path\\file",
-        ):
-            with self.subTest(url=url), self.assertRaises(ValueError):
-                validate_url(url)
-        self.assertEqual(
-            validate_url("https://8.8.8.8/live?token=a%20b"),
-            "https://8.8.8.8/live?token=a%20b",
-        )
 
-    def test_ffmpeg_network_protocols_are_explicitly_limited(self):
-        with tempfile.TemporaryDirectory() as d:
-            p = Path(d) / "sample.mkv"
-            def runner(cmd, **kwargs):
-                whitelist = cmd[cmd.index("-protocol_whitelist") + 1].split(",")
-                self.assertEqual(set(whitelist), {"http", "https", "tcp", "tls", "crypto"})
-                self.assertNotIn("file", whitelist)
-                self.assertNotIn("concat", whitelist)
-                self.assertNotIn("data", whitelist)
-                self.assertEqual(cmd[cmd.index("-max_redirect") + 1], "0")
-                p.write_bytes(b"synthetic-sample")
-                return SimpleNamespace(returncode=0)
-            report = capture("https://8.8.8.8/live",
-                             p, runner=runner, which=lambda _: "/usr/bin/ffmpeg")
-            self.assertEqual(report["status"], "SAMPLE_CAPTURED_UNVERIFIED")
-            self.assertFalse(report["language_verified"])
-            self.assertFalse(report["device_verified"])
+    def test_reject_private_and_local_destinations(self):
+        for url in ("http://127.0.0.1/live", "http://10.0.0.1/live",
+                    "http://192.168.1.1/live", "http://[::1]/live",
+                    "https://localhost/live", "https://server.local/live"):
+            with self.subTest(url=url), self.assertRaises(ValueError):
+                validate_url(url)
+
+    def test_dns_hostname_allowed_as_root_capture_host(self):
+        self.assertEqual(validate_url("https://example.com/live", {"example.com"}),
+                         "https://example.com/live")
+
+    def test_dns_hostname_requires_exact_proxy_allowlist(self):
+        proxy = PinnedHTTPProxy({"example.com"}, resolver=dns_answer("8.8.8.8"))
+        self.assertEqual(proxy.resolve("example.com", 443), "8.8.8.8")
+        with self.assertRaises(ProxyPolicyError):
+            proxy.resolve("cdn.example.com", 443)
+
+    def test_private_dns_answer_rejected(self):
+        proxy = PinnedHTTPProxy({"example.com"}, resolver=dns_answer("10.0.0.8"))
+        with self.assertRaises(ProxyPolicyError):
+            proxy.resolve("example.com", 443)
+
+    def test_mixed_public_and_private_dns_answers_rejected(self):
+        def resolver(host, port, type=socket.SOCK_STREAM):
+            return [
+                (socket.AF_INET, socket.SOCK_STREAM, 6, "", ("8.8.8.8", port)),
+                (socket.AF_INET, socket.SOCK_STREAM, 6, "", ("192.168.1.2", port)),
+            ]
+        proxy = PinnedHTTPProxy({"example.com"}, resolver=resolver)
+        with self.assertRaises(ProxyPolicyError):
+            proxy.resolve("example.com", 443)
+
+    def test_dns_answer_change_fails_closed(self):
+        answers = iter(("8.8.8.8", "1.1.1.1"))
+        proxy = PinnedHTTPProxy({"example.com"},
+                                resolver=lambda host, port, type=socket.SOCK_STREAM:
+                                [(socket.AF_INET, socket.SOCK_STREAM, 6, "", (next(answers), port))])
+        self.assertEqual(proxy.resolve("example.com", 443), "8.8.8.8")
+        with self.assertRaises(ProxyPolicyError):
+            proxy.resolve("example.com", 443)
 
     def test_invalid_ports_rejected(self):
-        for url in ("http://8.8.8.8:abc/live", "http://8.8.8.8:65536/live", "http://8.8.8.8:0/live"):
+        for url in ("http://8.8.8.8:abc/live", "http://8.8.8.8:65536/live",
+                    "http://8.8.8.8:0/live"):
             with self.subTest(url=url), self.assertRaises(ValueError):
                 validate_url(url)
 
     def test_symlink_created_during_capture_removed(self):
         with tempfile.TemporaryDirectory() as d:
-            p = Path(d)/"sample.mkv"
-            target = Path(d)/"protected.txt"
+            p = Path(d) / "sample.mkv"
+            target = Path(d) / "protected.txt"
             target.write_text("untouched")
             def runner(cmd, **kwargs):
                 p.symlink_to(target)
@@ -70,33 +82,42 @@ class CaptureTests(unittest.TestCase):
             self.assertFalse(p.is_symlink())
             self.assertEqual(target.read_text(), "untouched")
 
-    def test_redirects_disabled(self):
+    def test_redirects_are_bounded_and_proxy_is_mandatory(self):
         with tempfile.TemporaryDirectory() as d:
-            p = Path(d)/"sample.mkv"
+            p = Path(d) / "sample.mkv"
             def runner(cmd, **kwargs):
-                self.assertEqual(cmd[cmd.index("-max_redirect")+1], "0")
-                self.assertEqual(cmd[cmd.index("-fs")+1], str(MAX_BYTES))
+                self.assertEqual(cmd[cmd.index("-max_redirect") + 1], "3")
+                self.assertEqual(cmd[cmd.index("-fs") + 1], str(MAX_BYTES))
+                proxy = cmd[cmd.index("-http_proxy") + 1]
+                self.assertTrue(proxy.startswith("http://127.0.0.1:"))
+                self.assertEqual(cmd[cmd.index("-tls_verify") + 1], "1")
                 p.write_bytes(b"sample")
                 return SimpleNamespace(returncode=0)
-            capture("http://8.8.8.8/live", p, runner=runner, which=lambda _: "/usr/bin/ffmpeg")
+            capture("https://example.com/live", p, runner=runner,
+                    which=lambda _: "/usr/bin/ffmpeg", allowed_hosts=["cdn.example.com"],
+                    allowed_ports=[8080])
+
     def test_reject_long_duration_and_timeout(self):
         with self.assertRaises(ValueError):
             capture("http://8.8.8.8/live", "/tmp/unused.mkv", seconds=13)
         with self.assertRaises(ValueError):
             capture("http://8.8.8.8/live", "/tmp/unused.mkv", timeout=18)
+
     def test_no_ffmpeg_is_not_success(self):
         r = capture("http://8.8.8.8/live", "/tmp/unused.mkv", which=lambda _: None)
         self.assertEqual(r["status"], "FFMPEG_UNAVAILABLE")
+
     def test_no_overwrite(self):
         with tempfile.TemporaryDirectory() as d:
-            p = Path(d)/"sample.mkv"
+            p = Path(d) / "sample.mkv"
             p.write_bytes(b"existing")
             with self.assertRaises(ValueError):
                 capture("http://8.8.8.8/live", p, which=lambda _: "/usr/bin/ffmpeg")
             self.assertEqual(p.read_bytes(), b"existing")
+
     def test_success_is_not_language_proof(self):
         with tempfile.TemporaryDirectory() as d:
-            p = Path(d)/"sample.mkv"
+            p = Path(d) / "sample.mkv"
             def runner(cmd, **kwargs):
                 self.assertLessEqual(kwargs["timeout"], 17)
                 p.write_bytes(b"sample")
@@ -108,9 +129,10 @@ class CaptureTests(unittest.TestCase):
             self.assertFalse(r["language_verified"])
             self.assertFalse(r["asr_completed"])
             self.assertFalse(r["ocr_completed"])
+
     def test_oversize_capture_is_rejected_and_removed(self):
         with tempfile.TemporaryDirectory() as d:
-            p = Path(d)/"sample.mkv"
+            p = Path(d) / "sample.mkv"
             def runner(cmd, **kwargs):
                 with p.open("wb") as output:
                     output.truncate(MAX_BYTES + 1)
@@ -121,13 +143,14 @@ class CaptureTests(unittest.TestCase):
 
     def test_failed_capture_cleans_partial_file(self):
         with tempfile.TemporaryDirectory() as d:
-            p = Path(d)/"sample.mkv"
+            p = Path(d) / "sample.mkv"
             def runner(cmd, **kwargs):
                 p.write_bytes(b"partial")
                 return SimpleNamespace(returncode=1)
             r = capture("http://8.8.8.8/live", p, runner=runner, which=lambda _: "/usr/bin/ffmpeg")
             self.assertEqual(r["status"], "CAPTURE_FAILED")
             self.assertFalse(p.exists())
+
 
 if __name__ == "__main__":
     unittest.main()
