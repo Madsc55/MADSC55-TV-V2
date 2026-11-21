@@ -1248,7 +1248,7 @@
     "next_action": "Verify merge-after main CI; do not rerun historic reports. Keep #497 685 live retry on dual security hold until general FFmpeg/HLS egress isolation accepted. Separately identify genuine offsite #6 Fernet vault and authorized key for isolated restore."
   },
   "github_cleanup_audit_20261121": {
-    "main_head_at_audit": "05da09ca8a2ab87550436df6c8cc43267d28e21a",
+    "main_head_at_audit": "406976ca22c9787daac7d7496a8d8d9cc2b92492",
     "canonical_playlist_blob_sha": "f3d39e4522d27912fccd6e67240a10fd16c4923b",
     "closed_stale_prs_without_merge": [
       200,
@@ -1295,7 +1295,7 @@
     "existing_retry_plan_artifact_id": 14702596056,
     "original_task_statuses_changed": false,
     "playlist_modified": false,
-    "next_action": "Prioritize issue #497 report ingestion and acceptance; compare PR #365 missing functionality, verify #618 original logos; keep #8/#10 live tests last.",
+    "next_action": "Continue #497 existing-report safe ingestion and acceptance; compare #365 function-level gaps, authenticate #618 logos; #8/#10 live AV and IBO last.",
     "verified_historical_actions_pairs": [
       {
         "failed": 41186910011,
@@ -1325,6 +1325,13 @@
     },
     "pr372_closed_without_merge": true,
     "pr622_merged_commit": "05da09ca8a2ab87550436df6c8cc43267d28e21a",
-    "github_audit_reconciled_on": "2026-11-21"
+    "github_audit_reconciled_on": "2026-11-21",
+    "pr624_merged_commit": "406976ca22c9787daac7d7496a8d8d9cc2b92492",
+    "pr624_security_run": {
+      "id": 44944789787,
+      "conclusion": "success",
+      "live_discovery": "skipped"
+    },
+    "pr624_scope": "Removed hard-coded historical 18074 YEDEKLER count from snapshot and assignment read; added optional strict count and offline regression. Does not close issue 497."
   }
 }
