@@ -1,3 +1,11 @@
+## 21 Kasım 2026 — #6 mevcut Drive arşivi ve kasa güvenlik kabulü
+
+- Mevcut Google Drive `MADSC55-TV-V2 — Independent Encrypted Recovery Archive` klasörü yetkili bağlantıyla **yeniden kontrol edildi**. Klasörün doğrudan içinde 5 dosya mevcut: 2 adet `.enc` (7.832.688 ve 5.234.628 bayt) ve 3 ZIP. Yeni klasör veya yeni şifreli yedek oluşturulmadı.
+- Bu beş dosya önceki aşamaların kurtarma artefaktlarıdır. Bunların `v2/turk_authorized_vault.py` özel Türk/yetkili kanal kasası ile aynı formatta olduğu veya bu kasanın gerçekten harici ortamda geri yüklendiği **doğrulanmadı**. Eski stage4/4955+107 restore kabulü #6'nın özel kasa kabulü değildir.
+- Mevcut kasanın dosya okumalarında sonradan sembolik bağa dönüştürülme, aşırı büyük dosya ve geri yükleme hedefinin yarış halinde üzerine yazılması risklerine karşı kaynak dosya tanıtıcısı, bayt sınırı ve atomik no-clobber restore düzeltmeleri hazırlandı. Üç yeni çevrimdışı regresyon testi ana Production Security Gate'e bağlandı; PR/CI kontrolü yapılmadan tamamlandı kabul edilmez.
+- **AÇIK:** #6 gerçek kabulü için aynı mevcut özel Drive klasöründe doğrulanmış kasa yedeği, bağımsız kaynak SHA-256, izinli anahtar erişimi, geri yüklenen özel kasa içerik/kimlik eşitliği ve gerçek ortam kanıtı gerekiyor. Gizli anahtar ve ham URL'ler ne GitHub'a ne genel rapora konulacak.
+- Ana `MADSC55_TV_IBO_CALISANLAR_TEST.m3u8`, kategori/arşiv envanteri ve görev statüleri değiştirilmedi. Yeni kanal taraması yok.
+
 ## 21 Kasım 2026 — Aşama 2 / #489 arşiv kabul kanıtı
 
 - Main commit: `3eb84f890cbe8524d16c1a16f219b0b494cc50f0`; Production Security Gate run `44837457969`: SUCCESS.
