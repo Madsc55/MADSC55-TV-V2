@@ -37,6 +37,12 @@ jobs:
           sudo apt-get install -y --no-install-recommends ffmpeg
           command -v ffmpeg
           command -v ffprobe
+      - name: Preflight public-only IPv4 and IPv6 egress guard (no stream URLs)
+        run: |
+          set -euo pipefail
+          sudo python v2/public_egress_guard.py install
+          trap 'sudo python v2/public_egress_guard.py remove' EXIT
+          sudo python v2/public_egress_guard.py check
       - name: Recheck only the 685 uncertain identities and build fail-closed preview
         env:
           GITHUB_RUN_ID: ${{ github.run_id }}
