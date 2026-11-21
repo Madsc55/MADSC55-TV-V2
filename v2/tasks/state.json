@@ -643,5 +643,38 @@
     "live_playlist_mutated": false,
     "live_write_claimed": false,
     "next_stage": "#497 existing 1792 result reconciliation without new scan"
+  },
+  "stage3_issue497_authentic_reconciliation_20261121": {
+    "historical_run_id": 44640007709,
+    "historical_artifact_id": 14587983768,
+    "historical_report_sha256": "30de600eca7d8e3140f423bb3fc248dc2f57df6ff031b0bf97276a9a861dba2c",
+    "historical_playlist_sha256": "eee260cce3926caff18238f9583958b40475e362ce7650fb7fac51a66a84ee1c",
+    "historical_results": {
+      "verified": 1107,
+      "uncertain": 685,
+      "failed": 0
+    },
+    "canonical_inventory": {
+      "TOTAL": 18912,
+      "OTHER": 838,
+      "YEDEKLER": 1792,
+      "TURK": 424,
+      "YABANCI": 284,
+      "ANA": 15574
+    },
+    "ordered_historical_yedekler_blocks_identical_on_main": true,
+    "imported_on_main_security_gate_run": 44842749390,
+    "main_gate_conclusion": "success",
+    "preview_artifact_id": 14681388150,
+    "preview_manifest_sha256": "b001bf48f07437e9ae67ed9f73b12ea9cfcab653523973435cf3b1cee3c31fcc",
+    "preview_playlist_sha256": "18ac8386964e2f336105bb83f8f1be0af008b6b9ea83f679a2fd1ca582097abe",
+    "preview_equals_canonical_playlist": true,
+    "unique_retry_channel_hashes": 685,
+    "unique_retry_url_hashes": 685,
+    "raw_urls_published": false,
+    "live_stream_retry_started": false,
+    "playlist_mutated": false,
+    "task_statuses_changed": false,
+    "outstanding": "Persistent idempotent ledger and bounded authorized retries; real AV/ASR/OCR/WebVTT and IBO device acceptance remain open"
   }
 }
