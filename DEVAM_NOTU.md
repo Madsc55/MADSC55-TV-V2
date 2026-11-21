@@ -1537,3 +1537,13 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - **Sınırlar:** Gerçek kanal taraması, yeni playlist, otomatik Türk/Yabancı ataması, kanal silme/taşıma, ana liste değişikliği, İBO Player kabulü yok. 48 engelli geri alınmadı; 1.003 kuralı yeniden uygulanmadı; önceki 112–486 ve 59–181 taşımaları tekrar edilmedi. `v2/tasks/state.json`'daki 34 görev durumuna dokunulmadı.
 - **Sıradaki çalışma:** Aşama 6'da eski kanıtları yeniden çalıştırmadan, 685 belirsiz kimliği `url_sha256` ve en yeni rapor zamanını esas alarak idempotent, sınırlı, salt-okunur retry/inceleme planına bağla; geçmiş AV kanıtı ile güncel kesin kanıtı ayrı tut. Canlı yayın ve cihaz testi son kapı, kullanıcı onayı olmadan liste yazımı yok.
 
+
+
+## 21 Kasım 2026 — Aşama 6 kod kabulü: 685 belirsiz için salt-okunur plan
+
+- PR #594 **merged**: `c17af7945921ba61f29c9d2e2918425e897c6cc8`. `v2/ibo_497_retry_plan.py`, tam olarak 685 tarihsel `uncertain/recheck_required` satırını kaynak run/artifact/rapor SHA-256, güncel ana playlist SHA-256, kanal bloğu SHA-256 ve URL SHA-256 ile bağlayan deterministik plan üretir.
+- Plan yalnızca ilk denemesi olan belirsiz kayıtları alır; kaynak zaman damgasını korur, YEDEKLER sırasını takip eder, URL veya yayın adresi yazmaz. Aynı girdiler aynı `plan_sha256` üretir; farklı mevcut dosyanın üzerine yazmaz.
+- PR #594 Production Security Gate run `44846469069` **SUCCESS**: retry-plan testleri, Stage 2/3, Stage 5, Stage 6, FFmpeg fixture ve Türkçe kanıt offline regresyonları geçti. Main'e birleşme sonrası gate `44846692188` kontrol anında devam ediyordu; son sonucu ayrıca kontrol et.
+- **Önemli ayrım:** Plan kodu ve sentetik/çevrimdışı testleri kabul edildi. Tek tıklamalı `workflow_dispatch` henüz çalıştırılmadı; gerçek 685 satırlı plan artefaktı henüz üretilmiş değil. Canlı retry, yeni tarama, FFmpeg canlı oynatma, otomatik sınıflandırma, playlist veya arşiv yazımı yapılmadı. Her satır `PENDING_FINAL_TEST_AUTHORIZATION` durumunda.
+- Aşama 4 güvenlik kodu DNS hostname ve public IP kaynaklarını aynı pinlenmiş indirme yoluna alır; FFmpeg yalnız yerel dosya görür. Çok parçalı HLS/DASH segment/anahtar toplayıcısı ve gerçek yayıncı örneği hâlâ açık. Bu yüzden 685 canlı retry kilidi kapalı kalır.
+- **Sıradaki sıra:** Stage 5 18.074 hash-only crosswalk kanıtını satır bazında incele; özel şifreli kasanın gerçek, bağımsız harici restore kabulünü tamamla. Ardından güvenli HLS/DASH segment taşıma ve gerçek yayıncı örneği. 18.074 tam medya taraması, 685 canlı retry ve İBO Player kullanıcı testi son test aşamasına kadar bekler.
