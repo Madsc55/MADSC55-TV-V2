@@ -1638,3 +1638,12 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - Main run `43483992949`: `Verify suspended publishers, no cron and immutable IBO` FAILURE; sonraki main run `43484653370`: aynı iş SUCCESS. Eski fixture hatası sonrası başarılı kontrol var.
 - PR run `44844890250`: aynı güvenlik işi FAILURE; sonraki PR run `44845062944`: SUCCESS. Import yolu düzeltmesi sonrası başarılı kontrol var.
 - PR #622 run `44921917164` güvenlik işi bu kayıt anında IN_PROGRESS; başarılı sonuç henüz doğrulanmadı. Bunlar tespit edilen tarihsel koşulardır, tüm repository Actions geçmişinin eksiksiz envanteri değildir.
+
+
+## 21 Kasım 2026 — son GitHub görev kaydı mutabakatı
+
+- `main` denetim tabanı: `05da09ca8a2ab87550436df6c8cc43267d28e21a` (#622 squash merge). Ana playlist blob SHA `f3d39e4522d27912fccd6e67240a10fd16c4923b`; bu denetimde playlist değiştirilmedi.
+- Açık PR yalnız **#365** (eski dal, güvenli modül karşılaştırması gerekli) ve **#618** (6 logonun gerçek kimlik ve URL doğrulaması bekliyor). #365'in karşılaştırma farkındaki 44 `v2/*.py` dosya yolunun 10'u main'de mevcut, 34'ü yok; dosya yokluğu işlev yokluğu değildir. Her ikisi de doğrulamasız merge edilmez.
+- Açık issue yalnız **#497, #3, #4, #5, #6, #7, #8, #10**. #497 mevcut raporları otomatik güvenle işleme altyapısıdır; #8 son aşama kullanıcı İBO cihaz testi; #10 son aşama keşif ve gerçek AV. Mükerrer sayılarak kapatılmayacaklar. #3–#7 görevleri ayrı altyapı kabul sınırlarıyla issue başlıklarında ayrıştırıldı.
+- Doğrulanmış tarihsel Actions failure → success: `41186910011` → `41186924198` (archive acceptance), `43483992949` → `43484653370` (Stage 6 offline package), `44844890250` → `44845062944` (Stage 5 hash crosswalk). #622 security run `44921994257` **SUCCESS**; canlı diagnostic **SKIPPED**. Bunlar tüm Actions tarihinin eksiksiz envanteri değildir.
+- Eski/mükerrer 20 PR ve #372 daha önce **merge edilmeden kapatıldı**. Tek kanonik playlist kuralı; yeni playlist yok; 48 kaldırılmış kanal geri gelmez; canlı test en son. Hiçbir teknik kabul kanıtsız `DONE` yapılmadı.
