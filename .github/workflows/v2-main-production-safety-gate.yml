@@ -75,7 +75,7 @@ jobs:
           retention-days: 90
       - name: Stage 5 historical worldwide URL hash crosswalk offline regression
         run: |
-          PYTHONPATH=. python -m unittest -v v2.test_yedekler_worldwide_crosswalk
+          PYTHONPATH=v2:. python -m unittest -v v2.test_yedekler_worldwide_crosswalk
           python -m py_compile v2/yedekler_worldwide_crosswalk.py v2/test_yedekler_worldwide_crosswalk.py
       - name: Build Stage 5 historical crosswalk from exact old artifact (no scan)
         env:
