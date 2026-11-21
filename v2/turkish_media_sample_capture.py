@@ -50,10 +50,11 @@ def capture(url, destination, *, seconds=4, timeout=17, runner=subprocess.run, w
     if parsed is None or not parsed.hostname:
         raise ValueError("Invalid stream URL")
     root_host = normalize_host(parsed.hostname)
-    hosts = {root_host}
-    if not isinstance(allowed_hosts, (list, tuple, set, frozenset)):
-        raise ValueError("Allowed hosts must be an explicit collection")
-    hosts.update(normalize_host(item) for item in allowed_hosts)
+    if not isinstance(allowed_hosts, (list, tuple, set, frozenset)) or not allowed_hosts:
+        raise ValueError("An explicit exact-host allowlist is required")
+    hosts = {normalize_host(item) for item in allowed_hosts}
+    if root_host not in hosts:
+        raise ValueError("Root hostname must be explicitly allowlisted")
     root_port = parsed.port or (443 if parsed.scheme == "https" else 80)
     ports = {80, 443, root_port}
     if not isinstance(allowed_ports, (list, tuple, set, frozenset)):
@@ -116,8 +117,8 @@ def main():
     parser.add_argument("--output", required=True)
     parser.add_argument("--seconds", type=int, default=4)
     parser.add_argument("--include-subtitles", action="store_true", help="Retain available embedded tracks")
-    parser.add_argument("--allowed-host", action="append", default=[],
-                        help="Additional exact CDN hostname allowed for redirects/subresources")
+    parser.add_argument("--allowed-host", action="append", required=True,
+                        help="Exact approved root/CDN hostname; repeat for each permitted host")
     parser.add_argument("--allowed-port", action="append", type=int, default=[],
                         help="Additional explicit TCP port allowed for redirects/subresources")
     args = parser.parse_args()
