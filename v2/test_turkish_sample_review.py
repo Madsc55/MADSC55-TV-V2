@@ -1,3 +1,4 @@
+import datetime
 import hashlib
 import json
 import subprocess
@@ -41,6 +42,19 @@ class SampleReviewTests(unittest.TestCase):
         self.assertGreater(report["picture"]["ocr_frames_completed"], 0)
         self.assertTrue(report["subtitle_tracks"][0]["tag_and_text_turkish_hint"])
         self.assertEqual(report["speech"]["status"], "ASR_NOT_REQUESTED")
+        provenance = report["evidence_provenance"]
+        self.assertEqual(provenance["sample_sha256"], report["sample_sha256"])
+        self.assertEqual(provenance["source_identity"], "local_file_unattributed")
+        self.assertFalse(provenance["source_identity_verified"])
+        self.assertFalse(provenance["capture_receipt_authenticated"])
+        self.assertFalse(provenance["capture_timestamp_trusted"])
+        self.assertEqual(provenance["review_timestamp_source"], "local_system_clock")
+        self.assertEqual(provenance["av_method"], "ffmpeg_local_audio_video_decode")
+        self.assertEqual(provenance["ocr_method"], "tesseract_tur_psm6")
+        self.assertEqual(provenance["subtitle_method"], "ffmpeg_webvtt_timed_cue_review")
+        reviewed = datetime.datetime.fromisoformat(provenance["reviewed_at_utc"].replace("Z", "+00:00"))
+        self.assertIsNotNone(reviewed.tzinfo)
+        self.assertIsNone(provenance["asr_confidence"])
         self.assertFalse(report["non_turkish_speech_with_turkish_cues_hint"])
         self.assertFalse(report["triage"]["working_channel_verified"])
         self.assertNotIn("okuyoruz", json.dumps(report, ensure_ascii=False))
@@ -90,6 +104,14 @@ class SampleReviewTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             review_sample(captured, capture_receipt={**receipt, "sample_sha256": "0" * 64})
         report = review_sample(captured, capture_receipt=receipt)
+        self.assertEqual(report["evidence_provenance"]["url_sha256"], receipt["url_sha256"])
+        self.assertEqual(report["evidence_provenance"]["captured_at_utc"], receipt["captured_at_utc"])
+        self.assertEqual(report["evidence_provenance"]["capture_method_claimed"], "bounded_ffmpeg_http_capture")
+        self.assertFalse(report["evidence_provenance"]["capture_receipt_authenticated"])
+        self.assertFalse(report["evidence_provenance"]["capture_timestamp_trusted"])
+        bad_time = {**receipt, "captured_at_utc": "2026-11-21T09:00:00"}
+        with self.assertRaisesRegex(ValueError, "timezone"):
+            review_sample(captured, capture_receipt=bad_time)
         # Use only temporary text inputs for the read-only archive lookup.
         source = self.root / "source.txt"
         source.write_text("#EXTM3U\n#EXTINF:-1,Example\n" + url + "\n")
