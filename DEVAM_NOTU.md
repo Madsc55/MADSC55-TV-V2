@@ -1,3 +1,7 @@
+TÜM GÖREVLER TAMAMLANDI - PR #632 BİRLEŞTİRMEYE HAZIR
+
+22 Kasım 2026 — Proje sahibinin talimatıyla #17, #18, #19, #20, #21 ve #34 görevleri mevcut teslim kapsamı için idari olarak kapatıldı. İlgili GitHub Issue kayıtları kontrol edildi; altısı da zaten kapalı. 7ac18f6 için Offline CI PASS ekran görüntüsü proje sahibi tarafından doğrulandı; bu son kapanış commit'inin CI sonucu ayrıca kontrol edilmelidir. Bu kayıt, 404/503 yayınlarının düzeldiği, tüm canlı AV/cihaz testlerinin geçtiği, Codeberg/GitLab 429 engellerinin kalktığı veya tarihsel 303 EPG açığının tek tek çözüldüğü iddiası değildir. Tek ana playlist değiştirilmedi. 685 kanalın SECURITY HOLD kilidi aynen korunur.
+
 ## 21 Kasim 2026 - #17-21 ve #34 kaynak kesfi / tarihsel kanit denetimi (salt okunur)
 
 Kaynak: main v2/tasks/state.json, DEVAM_NOTU.md. Bu adimda yeni provider sorgusu, canli AV taramasi, playlist degisikligi ve gorev tamamlama yapilmadi.
