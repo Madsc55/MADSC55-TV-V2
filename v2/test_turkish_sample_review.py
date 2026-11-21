@@ -45,6 +45,10 @@ class SampleReviewTests(unittest.TestCase):
         provenance = report["evidence_provenance"]
         self.assertEqual(provenance["sample_sha256"], report["sample_sha256"])
         self.assertEqual(provenance["source_identity"], "local_file_unattributed")
+        self.assertFalse(provenance["source_identity_verified"])
+        self.assertFalse(provenance["capture_receipt_authenticated"])
+        self.assertFalse(provenance["capture_timestamp_trusted"])
+        self.assertEqual(provenance["review_timestamp_source"], "local_system_clock")
         self.assertEqual(provenance["av_method"], "ffmpeg_local_audio_video_decode")
         self.assertEqual(provenance["ocr_method"], "tesseract_tur_psm6")
         self.assertEqual(provenance["subtitle_method"], "ffmpeg_webvtt_timed_cue_review")
@@ -102,7 +106,9 @@ class SampleReviewTests(unittest.TestCase):
         report = review_sample(captured, capture_receipt=receipt)
         self.assertEqual(report["evidence_provenance"]["url_sha256"], receipt["url_sha256"])
         self.assertEqual(report["evidence_provenance"]["captured_at_utc"], receipt["captured_at_utc"])
-        self.assertEqual(report["evidence_provenance"]["capture_method"], "bounded_ffmpeg_http_capture")
+        self.assertEqual(report["evidence_provenance"]["capture_method_claimed"], "bounded_ffmpeg_http_capture")
+        self.assertFalse(report["evidence_provenance"]["capture_receipt_authenticated"])
+        self.assertFalse(report["evidence_provenance"]["capture_timestamp_trusted"])
         bad_time = {**receipt, "captured_at_utc": "2026-11-21T09:00:00"}
         with self.assertRaisesRegex(ValueError, "timezone"):
             review_sample(captured, capture_receipt=bad_time)
