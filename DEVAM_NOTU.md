@@ -1,3 +1,24 @@
+## 21 Kasim 2026 - #17-21 ve #34 kaynak kesfi / tarihsel kanit denetimi (salt okunur)
+
+Kaynak: main v2/tasks/state.json, DEVAM_NOTU.md. Bu adimda yeni provider sorgusu, canli AV taramasi, playlist degisikligi ve gorev tamamlama yapilmadi.
+
+#17: 20148 tarihsel kuyruk kimliginden 3766 playlist eslesmesi; 16367 playlist disi kimlik icin kanit eksik. Bu iki sayi toplamin tamamini aciklamadigindan kalan 15 kimlik de satir bazinda uzlastirilmali.
+
+#18: sakli AV kanitlari ve TRT Kurdi ornegi mevcut; son oynatma ve cihaz kabul kaniti acik.
+
+#19: 29 XMLTV ID, 8 zaman aralikli program, 7 playlist ID icin 19 Kasim guncel baslik; 303 tarihsel acik ve dort program eslesmesi acik.
+
+#20: 15 gozlem sakli; 8 HTTP 404 ve 6 HTTP 503 yeniden degerlendirme, bagimsiz restore ve cihaz kabul acik.
+
+#21: 103/103 uygun M3U feed basarili; GitLab 10/12 ve Codeberg 1/12 rate-limit, 353 YouTube metadata SIGN_IN_REQUIRED; tum kaynaklar icin basari iddiasi yok.
+
+#34: son Codeberg canli probe run 43459603986 ilk terimde 3 denemeden sonra HTTP 429; 5 terim atlandi. Manuel Codeberg-only diagnostic kodu var, calistirildigi kanitlanmadi. Kodun varligi provider kabul degildir.
+
+Kapanis sirasi: (1) #17 kimlik ve 15 fark uzlastirma; (2) #19 EPG ID ve 303 acik; (3) #21/#34 provider bazli Codeberg/GitLab tanilama, 429 icin saygili backoff; (4) #18/#20 guvenli gercek AV ve 404/503 kabul; (5) main CI ve cihaz/restore kaniti. #497 685 SECURITY HOLD degismez.
+
+Kayit: acik issue #3,#4,#5,#6,#7,#8,#10,#497; #17-21/#34 ana gorev statuleri in_progress kalir.
+
+
 ## 21 Kasım 2026 — #497 HLS MPEG-TS güvenli manuel örnekleme kabulü (#619)
 
 - **PR [#619](https://github.com/Madsc55/MADSC55-TV-V2/pull/619) MERGED**, commit `4d33ccb0cd1a604e49934a1c1e754f590fc2f377`. PR Production Security Gate run [#44907289097](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44907289097) **SUCCESS** (13 yeni HLS regresyonu PASS). Birleştirme-sonrası main run [#44907448219](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44907448219) **SUCCESS** olarak doğrulandı.
