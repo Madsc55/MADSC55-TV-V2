@@ -180,9 +180,12 @@ class PinnedHTTPProxy:
                 raise ProxyPolicyError("Invalid proxy header")
             name, value = line.split(":", 1)
             name = name.strip()
-            if not name or any(not (c.isalnum() or c in "!#$%&'*+-.^_|~") for c in name):
+            if not name or any(not (c.isascii() and (c.isalnum() or c in "!#$%&'*+-.^_|~")) for c in name):
                 raise ProxyPolicyError("Invalid proxy header name")
-            headers.append((name, value.strip()))
+            value = value.strip()
+            if any(ord(ch) < 32 and ch != "\\t" for ch in value):
+                raise ProxyPolicyError("Invalid proxy header value")
+            headers.append((name, value))
         return parts[0].upper(), parts[1], parts[2], headers, buffered
 
     @staticmethod
@@ -209,6 +212,8 @@ class PinnedHTTPProxy:
                 return
             if method not in ("GET", "HEAD") or buffered:
                 raise ProxyPolicyError("Only bodyless HTTP GET/HEAD and HTTPS CONNECT are supported")
+            if any(ord(ch) < 32 or ord(ch) == 127 for ch in target):
+                raise ProxyPolicyError("Control character in proxy URL")
             parsed = urlsplit(target)
             if parsed.scheme.lower() != "http" or not parsed.hostname or parsed.username or parsed.password or parsed.fragment:
                 raise ProxyPolicyError("Only absolute HTTP URLs are supported outside CONNECT")
