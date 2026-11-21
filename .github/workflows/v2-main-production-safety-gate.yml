@@ -39,8 +39,8 @@ jobs:
         run: PYTHONPATH=v2 python -m unittest -v test_main_actions_security_gate
       - name: Issue 497 existing-audit adapter offline regression (no scan)
         run: |
-          PYTHONPATH=v2 python -m unittest -v test_ibo_test_result_reconcile test_ibo_497_audit_adapter
-          python -m py_compile v2/ibo_test_result_reconcile.py v2/ibo_497_audit_adapter.py
+          PYTHONPATH=v2 python -m unittest -v test_ibo_test_result_reconcile test_ibo_497_audit_adapter test_ibo_497_existing_artifact
+          python -m py_compile v2/ibo_test_result_reconcile.py v2/ibo_497_audit_adapter.py v2/ibo_497_existing_artifact.py
       - name: Fail closed on changes to production trigger/write policy
         run: PYTHONPATH=v2 python v2/main_actions_security_gate.py
       - name: Preserve original IBO category and backup invariants
