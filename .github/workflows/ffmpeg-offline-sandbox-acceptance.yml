@@ -44,7 +44,7 @@ jobs:
       - name: Kernel network namespace must be available (fail closed)
         shell: bash
         run: |
-          bwrap --die-with-parent --unshare-net --ro-bind / / --proc /proc --dev /dev -- sh -c 'test ! -e /proc/net/route || ! grep -qE "^[^[:space:]]+[[:space:]]+[0-9A-Fa-f]{8}[[:space:]]" /proc/net/route'
+          bwrap --die-with-parent --unshare-net --ro-bind / / --proc /proc --dev /dev -- python3 -c 'import socket; s=socket.socket(); s.settimeout(2);\ntry: s.connect(("1.1.1.1", 80))\nexcept OSError: pass\nelse: raise SystemExit("EGRESS LEAK")\nfinally: s.close()'
       - name: Offline decode inside network namespace
         shell: bash
         run: |
