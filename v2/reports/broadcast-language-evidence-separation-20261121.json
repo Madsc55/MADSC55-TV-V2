@@ -59,5 +59,23 @@
   ],
   "playlist_modified": false,
   "channel_moved": false,
-  "live_network_scan_performed": false
+  "live_network_scan_performed": false,
+  "bounded_row_reconciliation_20261121": {
+    "source": "v2/reports/task17-18-20-bounded-retry-20261118.json",
+    "derived": "v2/reports/bounded-http-language-row-review-20261121.json",
+    "verified_by": "direct independent connector-side equality comparison",
+    "source_observations": 15,
+    "derived_rows": 15,
+    "attempts": 17,
+    "hash_identity_mismatches": 0,
+    "http_status_mismatches": 0,
+    "action_mismatches": 0,
+    "incorrect_language_approvals": 0,
+    "counts": {
+      "REVIEW_SOURCE_HTTP_404": 8,
+      "RETRY_LATER_HTTP_503": 6,
+      "KEEP_AV_EVIDENCE_LANGUAGE_PENDING": 1
+    },
+    "scope_limit": "This does not validate 8696 identities, current live HTTP status, broadcaster TR/AZ origin or real spoken/subtitle language; Python regression script not executed in CI."
+  }
 }
