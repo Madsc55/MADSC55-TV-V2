@@ -14,20 +14,19 @@ import shutil
 import subprocess
 from urllib.parse import urlsplit
 
+from v2.pinned_http_proxy import PinnedHTTPProxy, normalize_host
+
 MAX_SECONDS = 12
 MAX_TIMEOUT = 17
 MAX_BYTES = 12 * 1024 * 1024
+MAX_REDIRECTS = 3
+MAX_PROXY_BYTES = 64 * 1024 * 1024
 
-def validate_url(url):
-    if not isinstance(url, str) or not url or len(url) > 4096:
+
+def validate_url(url, allowed_hosts=None):
+    if not isinstance(url, str) or len(url) > 4096:
         raise ValueError("Invalid stream URL")
-    # urlsplit() silently strips some ASCII controls. FFmpeg receives the exact
-    # original bytes; reject ambiguous authority/path delimiters before parsing.
-    if any(ord(char) <= 32 or ord(char) == 127 or char == "\\" for char in url):
-        raise ValueError("Control characters, whitespace and backslashes are forbidden in stream URLs")
     parsed = urlsplit(url)
-    if "%" in parsed.netloc:
-        raise ValueError("Percent-encoded URL authority is forbidden")
     if parsed.scheme not in ("http", "https") or not parsed.hostname or parsed.username or parsed.password:
         raise ValueError("Only HTTP(S) URLs without embedded credentials are allowed")
     try:
@@ -38,19 +37,33 @@ def validate_url(url):
         raise ValueError("Port zero is not a valid stream endpoint")
     if parsed.fragment:
         raise ValueError("URL fragments are not supported")
-    if parsed.hostname.lower() == "localhost" or parsed.hostname.lower().endswith((".localhost", ".local", ".internal")):
-        raise ValueError("Local hostnames are not supported")
-    try:
-        address = ipaddress.ip_address(parsed.hostname)
-    except ValueError:
-        raise ValueError("DNS hostnames are not allowed in restricted capture mode")
-    if not address.is_global:
-        raise ValueError("Non-public IP addresses are not supported")
+    host = normalize_host(parsed.hostname)
+    if allowed_hosts is not None:
+        permitted = {normalize_host(item) for item in allowed_hosts}
+        if host not in permitted:
+            raise ValueError("Hostname is outside the explicit capture allowlist")
     return url
 
+
 def capture(url, destination, *, seconds=4, timeout=17, runner=subprocess.run, which=shutil.which,
-            include_subtitles=False):
-    validate_url(url)
+            include_subtitles=False, allowed_hosts=(), allowed_ports=()):
+    parsed = urlsplit(url) if isinstance(url, str) else None
+    if parsed is None or not parsed.hostname:
+        raise ValueError("Invalid stream URL")
+    root_host = normalize_host(parsed.hostname)
+    hosts = {root_host}
+    if not isinstance(allowed_hosts, (list, tuple, set, frozenset)):
+        raise ValueError("Allowed hosts must be an explicit collection")
+    hosts.update(normalize_host(item) for item in allowed_hosts)
+    root_port = parsed.port or (443 if parsed.scheme == "https" else 80)
+    ports = {80, 443, root_port}
+    if not isinstance(allowed_ports, (list, tuple, set, frozenset)):
+        raise ValueError("Allowed ports must be an explicit collection")
+    for item in allowed_ports:
+        if type(item) is not int or not 1 <= item <= 65535:
+            raise ValueError("Invalid allowed port")
+        ports.add(item)
+    validate_url(url, allowed_hosts=hosts)
     if type(seconds) is not int or not 1 <= seconds <= MAX_SECONDS:
         raise ValueError("Sample duration must be 1..12 seconds")
     if type(timeout) is not int or not 1 <= timeout <= MAX_TIMEOUT:
@@ -67,35 +80,36 @@ def capture(url, destination, *, seconds=4, timeout=17, runner=subprocess.run, w
         raise ValueError("Refusing to overwrite existing file")
     if dest.suffix.lower() != ".mkv" or not dest.parent.is_dir():
         raise ValueError("Output must be a new .mkv file in an existing directory")
-    cmd = [executable, "-nostdin", "-hide_banner", "-loglevel", "error",
-           "-rw_timeout", str(timeout * 1000000), "-max_redirect", "0",
-           # Limit FFmpeg to explicit transport protocols; does NOT provide an
-           # egress firewall or make untrusted HLS segment URLs safe by itself.
-           "-protocol_whitelist", "http,https,tcp,tls,crypto",
-           "-i", url, "-t", str(seconds), "-fs", str(MAX_BYTES),
-           "-map", "0:v:0?", "-map", "0:a:0?", "-c:v", "mpeg4", "-q:v", "12",
-           "-c:a", "aac", "-b:a", "48k"]
-    if include_subtitles:
-        cmd.extend(["-map", "0:s?", "-c:s", "copy"])
-    cmd.extend(["-n", str(dest)])
-    try:
-        result = runner(cmd, capture_output=True, timeout=timeout, check=False)
-        if dest.is_symlink():
-            dest.unlink(missing_ok=True)
-            raise ValueError("Capture output cannot be a symlink")
-        size = dest.stat().st_size if dest.is_file() else 0
-        if result.returncode != 0 or not 0 < size <= MAX_BYTES:
+    with PinnedHTTPProxy(hosts, ports, timeout=min(timeout, 4),
+                         max_bytes=MAX_PROXY_BYTES, max_seconds=timeout) as proxy:
+        cmd = [executable, "-nostdin", "-hide_banner", "-loglevel", "error",
+               "-rw_timeout", str(timeout * 1000000), "-http_proxy", proxy.url,
+               "-max_redirect", str(MAX_REDIRECTS), "-tls_verify", "1",
+               "-i", url, "-t", str(seconds), "-fs", str(MAX_BYTES),
+               "-map", "0:v:0?", "-map", "0:a:0?", "-c:v", "mpeg4", "-q:v", "12",
+               "-c:a", "aac", "-b:a", "48k"]
+        if include_subtitles:
+            cmd.extend(["-map", "0:s?", "-c:s", "copy"])
+        cmd.extend(["-n", str(dest)])
+        try:
+            result = runner(cmd, capture_output=True, timeout=timeout, check=False)
+            if dest.is_symlink():
+                dest.unlink(missing_ok=True)
+                raise ValueError("Capture output cannot be a symlink")
+            size = dest.stat().st_size if dest.is_file() else 0
+            if result.returncode != 0 or not 0 < size <= MAX_BYTES:
+                dest.unlink(missing_ok=True)
+                return {"status": "CAPTURE_FAILED", "language_verified": False, "device_verified": False}
+            return {"status": "SAMPLE_CAPTURED_UNVERIFIED", "bytes": size,
+                    "captured_at_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+                    "sample_sha256": hashlib.sha256(dest.read_bytes()).hexdigest(),
+                    "url_sha256": hashlib.sha256(url.encode("utf-8")).hexdigest(),
+                    "language_verified": False, "device_verified": False,
+                    "asr_completed": False, "ocr_completed": False}
+        except (subprocess.TimeoutExpired, OSError):
             dest.unlink(missing_ok=True)
             return {"status": "CAPTURE_FAILED", "language_verified": False, "device_verified": False}
-        return {"status": "SAMPLE_CAPTURED_UNVERIFIED", "bytes": size,
-                "captured_at_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
-                "sample_sha256": hashlib.sha256(dest.read_bytes()).hexdigest(),
-                "url_sha256": hashlib.sha256(url.encode("utf-8")).hexdigest(),
-                "language_verified": False, "device_verified": False,
-                "asr_completed": False, "ocr_completed": False}
-    except (subprocess.TimeoutExpired, OSError):
-        dest.unlink(missing_ok=True)
-        return {"status": "CAPTURE_FAILED", "language_verified": False, "device_verified": False}
+
 
 def main():
     parser = argparse.ArgumentParser()
@@ -103,9 +117,16 @@ def main():
     parser.add_argument("--output", required=True)
     parser.add_argument("--seconds", type=int, default=4)
     parser.add_argument("--include-subtitles", action="store_true", help="Retain available embedded tracks")
+    parser.add_argument("--allowed-host", action="append", default=[],
+                        help="Additional exact CDN hostname allowed for redirects/subresources")
+    parser.add_argument("--allowed-port", action="append", type=int, default=[],
+                        help="Additional explicit TCP port allowed for redirects/subresources")
     args = parser.parse_args()
     print(json.dumps(capture(args.url, args.output, seconds=args.seconds,
-                             include_subtitles=args.include_subtitles), sort_keys=True))
+                             include_subtitles=args.include_subtitles,
+                             allowed_hosts=args.allowed_host,
+                             allowed_ports=args.allowed_port), sort_keys=True))
+
 
 if __name__ == "__main__":
     main()
