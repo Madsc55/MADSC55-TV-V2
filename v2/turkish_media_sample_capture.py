@@ -73,8 +73,8 @@ def capture(url, destination, *, seconds=4, timeout=17, runner=subprocess.run, w
         raise ValueError("Output must be a new .mkv file in an existing directory")
     cmd = [executable, "-nostdin", "-hide_banner", "-loglevel", "error",
            "-rw_timeout", str(timeout * 1000000), "-max_redirects", "0", "-tls_verify", "1",
-           # Limit FFmpeg to explicit transport protocols; does NOT provide an
-           # egress firewall or make untrusted HLS segment URLs safe by itself.
+           # Restrict nested protocols; the active public-only firewall also
+           # blocks private/loopback destinations reached by HLS child requests.
            "-protocol_whitelist", "http,https,tcp,tls,crypto",
            "-i", url, "-t", str(seconds), "-fs", str(MAX_BYTES),
            "-map", "0:v:0?", "-map", "0:a:0?", "-c:v", "mpeg4", "-q:v", "12",
