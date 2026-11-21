@@ -95,15 +95,23 @@ def build_crosswalk(archive_raw, main_raw, state, worldwide, historical,
             raise ValueError("Malformed canonical playlist record")
         url = lines[-1].strip()
         url_hash = digest(url.encode("utf-8"))
-        if url_hash in main_by_hash:
-            raise ValueError("Duplicate URL hash in canonical playlist")
-        main_by_hash[url_hash] = block
-        main_rows.append((block, url_hash, category(lines[0])))
+        group = category(lines[0])
+        # The 838 protected/non-archive rows legitimately mirror URLs also
+        # represented in the original 18,074-channel archive. Do not mistake
+        # those protected copies for duplicate archival identities.
+        # Fail closed only if an URL is duplicated inside archive categories.
+        if group is not None:
+            if url_hash in main_by_hash:
+                raise ValueError("Duplicate URL hash within canonical archive categories")
+            main_by_hash[url_hash] = block
+        main_rows.append((block, url_hash, group))
     main_counts = inventory(main_raw)
     if expected_main_inventory is not None and main_counts != expected_main_inventory:
         raise ValueError("Canonical main playlist inventory changed")
     if len(main_rows) != main_counts["TOTAL"]:
         raise ValueError("Canonical playlist record count mismatch")
+    if len(main_by_hash) != len(archive_rows):
+        raise ValueError("Unexpected canonical archive identity count")
 
     expected_active = []
     for ordinal, (_, _, url_hash) in enumerate(archive_rows, 1):
