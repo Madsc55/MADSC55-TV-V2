@@ -114,3 +114,24 @@ Durum (bekliyor/çalışıyor/tamamlandı/bloke); değişen dosyalar; önce/sonr
 - Bu nedenle tam playlist SHA farklılığını görmezden gelerek doğrudan import yapılmayacak. PR #547 güncelleniyor: önce tarihî source commit + orijinal artifact sabit run/artifact/file SHA ile doğrulanacak; sonra 1.792 YEDEKLER bloğunun güncel main'de aynı sırayla byte-byte eşitliği aranacak; yalnız eşleşirse güncel playlist SHA'sına yeniden bağlanan preview/manifest üretilecek.
 - PR #547'ye eklenen importer ve offline testler: sabit kaynak run `44640007709`, artifact `14587983768`, report hash, tarihî playlist hash; ordered block equality; değişmiş kayıt/sıra için fail-closed. Yalnız preview ve retry manifesti; yeni scan ve playlist yazımı yok. PR #547 hâlâ draft; yeni CI/preview kanıtı bekleniyor.
 - **Aşama 2 durumu: özgün kaynak bulundu ve tarihî/current YEDEKLER kimliği eşleştirildi; güvenli importer kodu PR #547'de güncellendi. Nihai kabul için yeni testlerin PASS olması ve gerçek Actions artifact'tan preview+manifest üretiminin doğrulanması bekleniyor.** 685 kayıt henüz yeniden taranmadı/taşınmadı; kullanıcı playlistine yazılmadı.
+
+
+### Aşama 2 / #497 — TAMAMLANDI (kanıtlı preview üretildi)
+- PR #547 importer son kodu: `53a3aa9f965fb964326d2d052f02209ec3f160a4`.
+- Gerçek eski artifact indirme + kaynak playlist + güncel main 1.792 ordered-block eşitliği doğrulaması + preview üretimi Actions run `44842556117`: **SUCCESS**.
+- Çıktı artifact `v2-497-existing-audit-preview`, ID `14681083208`, ZIP SHA-256 `8e269517a92203131633e024c6329c8a5f9a9095746f2ee375d185e4cc3b0f45`.
+- Manifest SHA-256 `b001bf48f07437e9ae67ed9f73b12ea9cfcab653523973435cf3b1cee3c31fcc`; preview M3U bytes SHA-256 `18ac8386964e2f336105bb83f8f1be0af008b6b9ea83f679a2fd1ca582097abe`.
+- Manifest: 1.107 verified / 685 uncertain; retry queue 685 benzersiz kanal kimliği ve 685 benzersiz URL hash'i; failed=0; ordered YEDEKLER blocks identical=true; preview_only=true; new_scan_started=false; canonical_playlist_written=false. Preview byte-for-byte mevcut ana playlist ile aynı.
+- **Aşama 2 kabulü:** özgün kaynak raporu doğrulandı ve 1.792 kayda kimlik bazında eşlendi; yalnız preview/manifest üretildi. 685 kayıt yeniden test edilmedi, taşınmadı; ana playlist değişmedi.
+
+### Aşama 3 / Task 34 — KOD VE OFFLINE AV KABULÜ TAMAMLANDI
+- PR #543 merged: merge commit `bca89ad77a5f8d2b9607e6cfbdd39c249ac2aeb9`, 21 Kasım 2026 00:16 UTC.
+- Merge sonrası main Production Security Gate run `44842692873`: **SUCCESS**.
+- Log kanıtı: gerçek FFmpeg fixture'da video+audio decode testi PASS; yalnız video olan örnek DECODE_UNVERIFIED. `test_turkish_stream_decode` 5 negatif/pozitif test PASS; `test_turkish_local_media_probe` 6 test PASS.
+- Sınır: bu yerel üretilmiş test medyasıdır; gerçek yayın/18.074 kanal testi değildir. Gerçek kanallarda decode ve Türkçe konuşma onayı açık kalır.
+
+### Aşama 4 / ASR-OCR-WebVTT gerçek kanıt zinciri — kod incelemesi
+- Mevcut `turkish_sample_review.py`, `turkish_media_sample_capture.py`, `turkish_asr_ocr_evidence.py`, `turkish_webvtt_evidence.py` ve 19 Kasım örnek raporu incelendi.
+- Yerel test kanıtı FLEURS veri seti + üretilmiş görüntü/altyazı fixture'larıdır; rapor açıkça broadcaster/device assessment olmadığını söyler. ASR sonucu LANGUAGE_MODEL_HINT_ONLY, spoken_turkish_verified=false, review_approved=false. OCR ve WebVTT yalnız ipucu/track kanıtı; otomatik Türkçe onayı yok.
+- Capture modülü DNS hostname'lerini reddediyor ve yalnız global IP literal kabul ediyor. Bu, playlistteki alan adı tabanlı yayınların güvenli gerçek örnek yakalamasında bir entegrasyon engelidir. DNS çözümleme/pinning/redirect/SSRF güvenliği tasarlanmadan bu kontrol gevşetilmez.
+- **Aşama 4 durumu: yerel altyapı ve regresyonlar mevcut; gerçek yayın örneği kanıtı yok.** Kullanıcının gerçek kanal testlerini son aşamada yapma kuralına uygun olarak 18.074 kanalda veya gerçek yayınlarda tarama başlatılmadı. Sonraki teknik iş, güvenli DNS-aware bounded sample capture tasarımı ve testidir; gerçek kanal taraması hâlâ son kabul aşamasına saklıdır.
