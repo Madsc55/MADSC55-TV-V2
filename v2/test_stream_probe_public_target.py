@@ -45,8 +45,8 @@ class PublicTargetTests(unittest.TestCase):
             "http://8.8.8.8/stream\\tInjected",
             "http://8.8.8.8/" + "x" * 4096,
         ):
-            with self.subTest(url=url), self.assertFalse(_public_http_url(url)):
-                pass
+            with self.subTest(url=url):
+                self.assertFalse(_public_http_url(url))
 
     def test_public_literal_and_fully_public_dns_preflight(self):
         self.assertTrue(_public_http_url("https://8.8.8.8/media.m3u8"))
