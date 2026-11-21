@@ -16,7 +16,7 @@ class PublicEgressGuardTests(unittest.TestCase):
             "nameserver 127.0.0.53",
         ])
         self.assertEqual([str(x) for x in result],
-                         ["127.0.0.53", "10.0.0.2", "2001:4860:4860::8888"])
+                         ["10.0.0.2", "127.0.0.53", "2001:4860:4860::8888"])
 
     def test_dns_exceptions_precede_private_range_rejects(self):
         ns = [ipaddress.ip_address("127.0.0.53")]
@@ -55,6 +55,7 @@ class PublicEgressGuardTests(unittest.TestCase):
         def runner(command, **kwargs):
             calls.append(command)
             tool = command[1] if command[0] == "/usr/bin/sudo" else command[0]
+            tool = tool.rsplit("/", 1)[-1]
             code = 0 if tool == "iptables" else 1
             return SimpleNamespace(returncode=code, stdout="", stderr="")
         with patch("v2.public_egress_guard.os.geteuid", return_value=1000):
