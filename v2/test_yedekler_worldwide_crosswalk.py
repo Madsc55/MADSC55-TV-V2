@@ -120,7 +120,11 @@ class WorldwideCrosswalkTests(unittest.TestCase):
         bad["candidates"] = self.worldwide["candidates"] + [dict(self.worldwide["candidates"][0])]
         bad["unique_url_candidates"] = 4
         with self.assertRaisesRegex(ValueError, "Duplicate worldwide"):
-            self.build(expected_worldwide_count=4)
+            build_crosswalk(
+                self.archive, self.main, self.state, bad, self.historical,
+                expected_archive_sha256=self.state["source_sha256"],
+                expected_archive_total=6, expected_batch_size=4,
+                expected_worldwide_count=4, expected_worldwide_av_count=1)
 
     def test_rejects_incomplete_first_batch_status_map(self):
         bad = dict(self.state)
