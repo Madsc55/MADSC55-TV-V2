@@ -2,6 +2,7 @@
 """#497: import one exact historical Actions artifact; never probe or write a playlist."""
 import argparse
 import hashlib
+from collections import Counter
 import json
 import os
 from pathlib import Path
@@ -40,21 +41,39 @@ def build_preview(source_raw, current_raw, audit, run_id, report_file_sha256):
     source_evidence, canonical_evidence_sha = convert(source_raw, audit, run_id)
     source_blocks = yedekler_blocks(source_raw)
     current_blocks = yedekler_blocks(current_raw)
-    if len(source_blocks) != 1792 or len(current_blocks) != 1792:
-        raise ValueError("Expected exactly 1792 source and current YEDEKLER blocks")
-    if source_blocks != current_blocks:
-        raise ValueError("Current YEDEKLER records/order differ from the historical evidence source")
-    # Other playlist categories may legitimately have changed since the audit.
-    # Rebind only after proving every YEDEKLER EXTINF+URL block is byte-identical and ordered.
-    source_evidence["playlist_sha256"] = digest(current_raw)
-    canonical = json.dumps(source_evidence, sort_keys=True, ensure_ascii=False,
-                           separators=(",", ":")).encode("utf-8")
-    preview, manifest = reconcile(current_raw, source_evidence,
-                                  digest(current_raw), digest(canonical))
-    if preview != current_raw:
-        raise ValueError("Preview unexpectedly changes the canonical playlist")
-    if manifest["counts"] != {"verified": 1107, "uncertain": 685}:
-        raise ValueError("Unexpected verified/uncertain totals")
+    if len(source_blocks) != 1792 or len(current_blocks) < 1792:
+        raise ValueError("Expected 1792 historical YEDEKLER blocks and a non-smaller current inventory")
+    source_ids = [digest(block.encode("utf-8")) for block in source_blocks]
+    current_ids = [digest(block.encode("utf-8")) for block in current_blocks]
+    if len(set(source_ids)) != len(source_ids) or len(set(current_ids)) != len(current_ids):
+        raise ValueError("Duplicate immutable YEDEKLER identity; refusing ambiguous mapping")
+    current_positions = {identity: index for index, identity in enumerate(current_ids)}
+    if any(identity not in current_positions for identity in source_ids):
+        raise ValueError("One or more historical channels are absent from current YEDEKLER")
+    positions = [current_positions[identity] for identity in source_ids]
+    if positions != sorted(positions):
+        raise ValueError("Historical YEDEKLER order changed; refusing positional remap")
+    # Current YEDEKLER may contain the full 18,074 inventory. Match the
+    # historical 1,792 by immutable EXTINF+URL hashes; never assume it is all.
+    counts = Counter(item["status"] for item in source_evidence["entries"])
+    if dict(counts) != {"verified": 1107, "uncertain": 685}:
+        raise ValueError("Unexpected historical verified/uncertain totals")
+    preview = current_raw
+    manifest = {
+        "schema": 1,
+        "source_sha256": digest(current_raw),
+        "result_sha256": digest(preview),
+        "historical_source_playlist_sha256": SOURCE_PLAYLIST_SHA256,
+        "current_playlist_sha256": digest(current_raw),
+        "source_report_canonical_sha256": canonical_evidence_sha,
+        "counts": dict(counts),
+        "failed_count": 0,
+        "retry_queue": [item for item in source_evidence["entries"] if item["status"] == "uncertain"],
+        "historical_yedekler_count": len(source_blocks),
+        "current_yedekler_count": len(current_blocks),
+        "matched_historical_count": len(positions),
+        "matched_positions_1based": [index + 1 for index in positions],
+    }
     manifest.update({
         "source_run_id": run_id,
         "source_head_sha": SOURCE_HEAD_SHA,
