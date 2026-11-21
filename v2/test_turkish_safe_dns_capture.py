@@ -71,6 +71,7 @@ class URLTests(unittest.TestCase):
     def test_private_ip_urls_and_hostname_masquerades_rejected(self):
         for url in (
             "http://127.0.0.1/x", "http://10.0.0.1/a",
+            "http://224.0.0.1/live", "http://[ff05::1]/live",
             "http://169.254.169.254/latest", "http://[::1]/x",
             "https://internal.local/live", "https://localhost/live",
             "https://user:pass@example.com/x", "https://example.com/a#frag",
@@ -85,6 +86,12 @@ class URLTests(unittest.TestCase):
         self.assertEqual(resolve_public("media.example.com", resolver=public_dns), ("8.8.8.8",))
         with self.assertRaises(ValueError):
             resolve_public("media.example.com", resolver=mixed_dns)
+        with self.assertRaises(ValueError):
+            resolve_public(
+                "media.example.com",
+                resolver=lambda host, port, *, type: [
+                    (socket.AF_INET, socket.SOCK_STREAM, 6, "", ("224.0.0.1", 0))
+                ])
         with self.assertRaises(ValueError):
             resolve_public("media.example.com",
                            resolver=lambda host, port, *, type: [])
