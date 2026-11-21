@@ -118,6 +118,54 @@ class Discovery34Tests(unittest.TestCase):
         self.assertEqual(sum(row["error"] == "provider_rate_limit_skipped" for row in report["errors"]), len(QUERIES) - 1)
         self.assertEqual(report["av_verified"], 0)
 
+    def test_network_cli_http_200_throttle_stops_real_provider_queries(self):
+        import json
+        import tempfile
+        import time
+        from pathlib import Path
+        from unittest.mock import patch
+        import discovery_34
+        cases = [
+            ("github", {"message": "secondary rate limit", "items": []}),
+            ("codeberg", {"error": "too many requests", "data": []}),
+            ("gitlab", {"message": "Rate limit exceeded"}),
+        ]
+        for provider, envelope in cases:
+            with self.subTest(provider=provider), tempfile.TemporaryDirectory() as directory:
+                calls = []
+                def fake_fetch(url):
+                    calls.append(url)
+                    if provider == "github" and "api.github.com" in url:
+                        return envelope
+                    if provider == "gitlab" and "gitlab.com" in url:
+                        return envelope
+                    if provider == "codeberg" and "codeberg.org" in url:
+                        return envelope
+                    return ({"items": []} if "api.github.com" in url else
+                            [] if "gitlab.com" in url else {"data": []})
+                output = Path(directory) / "candidates.json"
+                with patch.object(discovery_34, "fetch_json", side_effect=fake_fetch), \
+                     patch("prescan_readiness_gate.inspect", return_value={"ready": True}), \
+                     patch("sys.argv", ["discovery_34.py", "--network", "--output", str(output)]):
+                    with self.assertRaises(SystemExit) as result:
+                        discovery_34.main()
+                    self.assertEqual(result.exception.code, 1)
+                report = json.loads(output.read_text())
+                self.assertEqual(sum(
+                    (("api.github.com" in url) if provider == "github" else
+                     (provider + (".org" if provider == "codeberg" else ".com")) in url)
+                    for url in calls), 1)
+                rows = [row for row in report["errors"] if row["source"] == provider]
+                self.assertEqual(len(rows), len(discovery_34.QUERIES))
+                self.assertEqual(rows[0]["error"], "provider_throttled_response")
+                self.assertGreater(rows[0]["retry_not_before"], int(time.time()))
+                self.assertEqual(
+                    sum(row["error"] == "provider_rate_limit_skipped" for row in rows),
+                    len(discovery_34.QUERIES) - 1)
+                self.assertNotIn("secondary rate limit", json.dumps(report))
+                self.assertNotIn("too many requests", json.dumps(report))
+                self.assertEqual(report["av_verified"], 0)
+
     def test_network_cli_secondary_403_abuse_throttle_opens_circuit(self):
         import io
         import json
