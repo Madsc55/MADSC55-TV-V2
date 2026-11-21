@@ -790,6 +790,50 @@
     "all_34_tasks_completed": false,
     "note": "GitHub issue #6 is not equivalent to statuses[id=6] in the 34-task ledger; never update historic task statuses from this note."
   },
+  "stage3_issue497_685_retry_gate_20261121": {
+    "main_commit": "7bbefc113b02e25e0d8da1709273c39e9bbb4f12",
+    "main_production_security_run_id": 44843984931,
+    "main_gate_conclusion": "success",
+    "retry_offline_regression_tests": "11/11 passed",
+    "merged_prs": [
+      560,
+      561,
+      562,
+      567
+    ],
+    "source_run_id": 44640007709,
+    "source_artifact_id": 14587983768,
+    "source_report_sha256": "30de600eca7d8e3140f423bb3fc248dc2f57df6ff031b0bf97276a9a861dba2c",
+    "preview_run_id": 44842749390,
+    "preview_artifact_id": 14681388150,
+    "manifest_sha256": "b001bf48f07437e9ae67ed9f73b12ea9cfcab653523973435cf3b1cee3c31fcc",
+    "preview_sha256": "18ac8386964e2f336105bb83f8f1be0af008b6b9ea83f679a2fd1ca582097abe",
+    "preview_git_blob": "f3d39e4522d27912fccd6e67240a10fd16c4923b",
+    "historical_verified_working": 1107,
+    "historical_uncertain": 685,
+    "historical_definitive_failed": 0,
+    "preview_retry_queue_count": 685,
+    "preview_retry_unique_identities": 685,
+    "main_playlist_records": 18912,
+    "main_yedekler_records": 1792,
+    "total_archived_records": 18074,
+    "archive_distribution": {
+      "ANA_ARSIV": 15574,
+      "YEDEKLER": 1792,
+      "TURK": 424,
+      "YABANCI": 284,
+      "OTHER": 838
+    },
+    "manual_retry_workflow": ".github/workflows/v2-yedekler-av-audit.yml",
+    "manual_685_retry_ran_in_this_review": false,
+    "live_retry_evidence_found": false,
+    "canonical_playlist_changed": false,
+    "channel_moves_applied": false,
+    "task_statuses_changed": false,
+    "code_gate_status": "passed",
+    "live_retry_status": "not_executed",
+    "next_dependency": "No 685 live retry results yet; verify targeted run evidence if/when separately executed. Independent #6 encrypted external-vault real restore acceptance outstanding."
+  },
   "stage3_manual_retry_workflow_handoff_20261121": {
     "observed_main_at_branch_creation": "5c007b3f3423f52ef41e7bf22b5317a87660cc97",
     "historical_source_run": 44640007709,
@@ -808,7 +852,7 @@
     "stage4_url_hardening_ci_run": 44843819098,
     "manual_targeted_retry_scan_observed": false,
     "manual_retry_scan_observation_scope": "latest 100 Actions runs as checked on 2026-11-21",
-    "next_review_pr": 572,
+    "next_review_pr": 581,
     "next_review_requirement": "Review bounded DNS/IP-pinned sample capture SSRF/redirect/HLS restrictions and fresh CI; do not launch full scans or claim device acceptance",
     "stream_urls_written": false,
     "playlist_mutated": false,
@@ -816,6 +860,8 @@
     "unsafe_manual_av_retry_blocker": "Untrusted remote playlist URLs reach ffprobe/FFmpeg without proven public-only DNS/IP pinning and HLS child-resource egress/redirect protections",
     "security_hold_pr": 581,
     "manual_dispatch_allowed_before_hold_and_transport_acceptance": false,
-    "task_statuses_changed": false
+    "task_statuses_changed": false,
+    "stage4_pinned_capture_merged_pr": 572,
+    "stage4_pinned_capture_pr_ci_run": 44844424809
   }
 }
