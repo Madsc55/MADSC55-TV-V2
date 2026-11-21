@@ -25,6 +25,14 @@ _DENIED_CONTENT = ("text/", "application/vnd.apple.mpegurl",
 _HOST_LABEL = re.compile(r"^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$", re.ASCII)
 
 
+def _public_unicast(ip):
+    # ipaddress.is_global alone is insufficient: multicast addresses can be
+    # reported as global and must never be used as media egress destinations.
+    return (ip.is_global and not ip.is_multicast and not ip.is_reserved and
+            not ip.is_unspecified and not ip.is_loopback and
+            not ip.is_link_local and getattr(ip, "ipv4_mapped", None) is None)
+
+
 def parse_url(url):
     if not isinstance(url, str) or not 0 < len(url) <= 4096:
         raise ValueError("Invalid media URL")
@@ -48,8 +56,8 @@ def parse_url(url):
     except ValueError:
         ip = None
     if ip is not None:
-        if not ip.is_global or getattr(ip, "ipv4_mapped", None) is not None:
-            raise ValueError("IP address must be globally routable")
+        if not _public_unicast(ip):
+            raise ValueError("IP address must be globally routable unicast")
         canonical_host = str(ip)
     else:
         try:
@@ -84,8 +92,8 @@ def resolve_public(host, *, resolver=socket.getaddrinfo):
             ip = ipaddress.ip_address(answer[4][0])
         except (IndexError, ValueError, TypeError, KeyError) as exc:
             raise ValueError("Invalid DNS answer") from exc
-        if not ip.is_global or getattr(ip, "ipv4_mapped", None) is not None:
-            raise ValueError("DNS response contains a non-public address")
+        if not _public_unicast(ip):
+            raise ValueError("DNS response contains a non-public/unicast address")
         if str(ip) not in addresses:
             addresses.append(str(ip))
     return tuple(addresses)
