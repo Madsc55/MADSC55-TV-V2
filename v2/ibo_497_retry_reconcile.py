@@ -40,6 +40,8 @@ def validate_retry_evidence(item):
         raise ValueError("Final AV outcome does not match the recorded attempt")
     if type(item.get("decoded_av_verified")) is not bool:
         raise ValueError("Missing decoded AV boolean evidence")
+    if (item.get("decode_status") == "DECODED_AV") != item["decoded_av_verified"]:
+        raise ValueError("Decoded AV status contradicts its boolean result")
     status = item.get("status")
     verified_attempt = first == "AV_VERIFIED" or second == "AV_VERIFIED"
     deterministic_failure = (first in _DETERMINISTIC_ABSENCE and
