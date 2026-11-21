@@ -100,7 +100,29 @@ class SampleReviewTests(unittest.TestCase):
             self.assertIn("0:s?", command)
             captured.write_bytes(self.sample.read_bytes())
             return SimpleNamespace(returncode=0)
-        receipt = capture(url, captured, include_subtitles=True, which=lambda name: name, runner=run)
+        body = self.sample.read_bytes()
+        class Response:
+            status = 200
+            def __init__(self):
+                import io
+                self.source = io.BytesIO(body)
+            def getheader(self, name):
+                return {"content-type": "video/x-matroska",
+                        "content-length": str(len(body))}.get(name.lower())
+            def read(self, count):
+                return self.source.read(count)
+        class Connection:
+            sock = None
+            def __init__(self, host, port, pinned_ip, timeout):
+                self.pinned_ip = pinned_ip
+            def request(self, method, target, headers):
+                self.headers = headers
+            def getresponse(self):
+                return Response()
+            def close(self):
+                pass
+        receipt = capture(url, captured, include_subtitles=True, which=lambda name: name,
+                          runner=run, connection_factory=Connection)
         with self.assertRaises(ValueError):
             review_sample(captured, capture_receipt={**receipt, "sample_sha256": "0" * 64})
         report = review_sample(captured, capture_receipt=receipt)
