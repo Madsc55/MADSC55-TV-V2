@@ -35,6 +35,8 @@ def build_preview(source_raw, current_raw, audit, run_id, report_file_sha256):
     """Bind the original audit to its source playlist, then map it only if current YEDEKLER blocks are byte-identical."""
     if run_id != SOURCE_RUN_ID:
         raise ValueError("Unexpected source Actions run")
+    if report_file_sha256 != SOURCE_REPORT_FILE_SHA256:
+        raise ValueError("Historical source report SHA-256 mismatch")
     source_evidence, canonical_evidence_sha = convert(source_raw, audit, run_id)
     source_blocks = yedekler_blocks(source_raw)
     current_blocks = yedekler_blocks(current_raw)
