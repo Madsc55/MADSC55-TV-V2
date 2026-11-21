@@ -2,6 +2,7 @@
 """Offline #497 source-artifact import tests; no network, scan or playlist writes."""
 import hashlib
 import unittest
+from unittest.mock import patch
 
 from ibo_497_existing_artifact import build_preview
 from ibo_test_result_reconcile import digest
@@ -38,6 +39,16 @@ def fixture():
 
 
 class HistoricalArtifactImportTests(unittest.TestCase):
+    def setUp(self):
+        self.hash_patch = patch("ibo_497_existing_artifact.SOURCE_REPORT_FILE_SHA256", fixture()[3])
+        self.hash_patch.start()
+        self.addCleanup(self.hash_patch.stop)
+
+    def test_wrong_report_hash_fails_closed(self):
+        source, current, audit, report_sha = fixture()
+        with self.assertRaisesRegex(ValueError, "report SHA-256 mismatch"):
+            build_preview(source, current, audit, 44640007709, "0" * 64)
+
     def test_rebinds_only_when_all_yedekler_blocks_match_in_order(self):
         source, current, audit, report_sha = fixture()
         preview, manifest = build_preview(
