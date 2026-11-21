@@ -1,3 +1,14 @@
+## 21 Kasım 2026 — #497 tarihsel AV artifact SHA denetimi / PR #560
+
+- PR #560: https://github.com/Madsc55/MADSC55-TV-V2/pull/560 (açık; main'e birleştirilmedi).
+- Dal: fix/558-report-hash-validation-20261121; kod commitleri f6b6aa1f66b832d410a077c159dc74901a903cc9 ve c4589e780ebac9dbdfd8c827ed859dd9e8e9dee3.
+- `v2/ibo_497_existing_artifact.py`: build_preview çağrısında kaynak rapor SHA-256 sabit değere eşit değilse fail-closed.
+- `v2/test_ibo_497_existing_artifact.py`: yanlış rapor SHA-256 için regresyon testi; sentetik fixture beklenen SHA'sı patch ile eşleştirildi.
+- Actions run 44842965593: V2 Main Production Security Gate SUCCESS. #497 existing-audit adapter offline regression, arşiv/paket, FFmpeg offline ve playlist güvenlik adımları SUCCESS. live-discovery-diagnostic SKIPPED.
+- Tarihsel AV sayıları: 1.107 WORKING + 685 RECHECK_REQUIRED = 1.792; güncel canlı AV taraması değildir.
+- PR #558 ayrı açık inceleme konusudur; #560 için merge/çatışma/nihai entegrasyon ayrıca doğrulanmalı. Yeni canlı tarama, playlist yazımı veya arşiv taşıması yapılmadı.
+- Sıradaki iş: #558 ve #560'ın birleşiminde gerçek artifact şeması, hash, test uyumu ve merge koşullarını kontrol et; yalnız başarı kanıtından sonra birleştir; sonra #497'nin 685 belirsiz kayıt için tekrar kontrol kuyruğunu ele al.
+
 ## 21 Kasım 2026 — Aşama 2 / #489 arşiv kabul kanıtı
 
 - Main commit: `3eb84f890cbe8524d16c1a16f219b0b494cc50f0`; Production Security Gate run `44837457969`: SUCCESS.
