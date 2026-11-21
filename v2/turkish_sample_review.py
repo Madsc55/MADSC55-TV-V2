@@ -168,12 +168,16 @@ def review_sample(source, model_dir=None, capture_receipt=None, origin_country=N
     reviewed_at = datetime.datetime.now(datetime.timezone.utc).isoformat()
     timed_subtitles = any(row.get("cue_count", 0) > 0 for row in subtitles)
     provenance = {
-        "source_identity": "url_sha256" if url_sha else "local_file_unattributed",
+        "source_identity": "url_sha256_claimed" if url_sha else "local_file_unattributed",
+        "source_identity_verified": False,
+        "capture_receipt_authenticated": False,
+        "capture_timestamp_trusted": False,
+        "review_timestamp_source": "local_system_clock",
         "url_sha256": url_sha,
         "sample_sha256": digest,
         "captured_at_utc": capture_receipt.get("captured_at_utc") if capture_receipt else None,
         "reviewed_at_utc": reviewed_at,
-        "capture_method": "bounded_ffmpeg_http_capture" if capture_receipt else "local_file_unattributed",
+        "capture_method_claimed": "bounded_ffmpeg_http_capture" if capture_receipt else "local_file_unattributed",
         "av_method": "ffmpeg_local_audio_video_decode",
         "asr_method": "faster_whisper_local_cpu_int8" if speech.get("status") == "LANGUAGE_MODEL_HINT_ONLY" else speech.get("status"),
         "asr_confidence": speech.get("language_probability"),
