@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 import hashlib
+import os
 import unittest
+from unittest.mock import patch
 
-from ibo_495_yedekler_av_audit import select_retry_blocks, digest, classify_outcomes
+from ibo_495_yedekler_av_audit import select_retry_blocks, digest, classify_outcomes, audit_one
 
 class RetrySelectionTests(unittest.TestCase):
     def fixture(self):
@@ -52,6 +54,45 @@ class RetrySelectionTests(unittest.TestCase):
         self.assertEqual(classify_outcomes("TIMEOUT", "NO_MEDIA"), "uncertain")
         self.assertEqual(classify_outcomes("NO_MEDIA", "DECODE_FAILED"), "uncertain")
         self.assertEqual(classify_outcomes("NO_MEDIA", "AV_VERIFIED"), "verified")
+
+    def test_retry_row_has_two_consistent_probe_outcomes(self):
+        block = '#EXTINF:-1 group-title="🗂️ YEDEKLER",Sample\\nhttps://example.test/sample\\n'
+        scenarios = [
+            (["NO_MEDIA", "NO_MEDIA"], "failed", 2),
+            (["TIMEOUT", "NO_MEDIA"], "uncertain", 2),
+            (["AV_STREAMS_PRESENT"], "verified", 1),
+        ]
+        for statuses, expected, attempts in scenarios:
+            calls = [{"status": status} for status in statuses]
+            with (self.subTest(expected=expected),
+                  patch("ibo_495_yedekler_av_audit.probe", side_effect=calls),
+                  patch("ibo_495_yedekler_av_audit.verify_decoded_av",
+                        return_value={"decoded_av_verified": True, "decode_status": "DECODED_AV"}),
+                  patch.dict(os.environ, {"GITHUB_RUN_ID": "999"})):
+                row = audit_one((1, block))
+            self.assertEqual(row["status"], expected)
+            self.assertEqual(row["attempts"], attempts)
+            first = "AV_VERIFIED" if statuses[0] == "AV_STREAMS_PRESENT" else statuses[0]
+            self.assertEqual(row["first_probe_status"], first)
+            self.assertEqual(row["second_probe_status"], statuses[1] if attempts == 2 else None)
+            self.assertEqual(row["probe_status"],
+                             row["second_probe_status"] if attempts == 2 else first)
+            self.assertEqual(row["decoded_av_verified"], expected == "verified")
+            self.assertEqual(len(row["evidence_sha256"]), 64)
+
+    def test_recovered_second_attempt_is_still_verified(self):
+        block = '#EXTINF:-1 group-title="🗂️ YEDEKLER",Sample\\nhttps://example.test/sample\\n'
+        with (patch("ibo_495_yedekler_av_audit.probe",
+                    side_effect=[{"status": "TIMEOUT"}, {"status": "AV_STREAMS_PRESENT"}]),
+              patch("ibo_495_yedekler_av_audit.verify_decoded_av",
+                    return_value={"decoded_av_verified": True, "decode_status": "DECODED_AV"}),
+              patch.dict(os.environ, {"GITHUB_RUN_ID": "999"})):
+            row = audit_one((1, block))
+        self.assertEqual(row["status"], "verified")
+        self.assertEqual(row["attempts"], 2)
+        self.assertEqual(row["first_probe_status"], "TIMEOUT")
+        self.assertEqual(row["second_probe_status"], "AV_VERIFIED")
+        self.assertEqual(row["decode_status"], "DECODED_AV")
 
     def test_selects_exactly_685_uncertain_not_all_1792(self):
         raw, manifest = self.fixture()
