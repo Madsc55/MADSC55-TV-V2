@@ -182,3 +182,11 @@ Durum (bekliyor/çalışıyor/tamamlandı/bloke); değişen dosyalar; önce/sonr
 - Salt-okunur JSONL kontrolü: 7.819 kayıt, 7.819 benzersiz 12-bayt nonce, schema 1 ve ciphertext alanları; yapısal PASS.
 - Bu sonuç **authenticated decryption veya restore PASS değildir**. Dosya biçimi mevcut Scrypt/AES-GCM tek-blob arşiv ve Fernet yetkili vault biçiminden farklıdır; doğru anahtar/şema eşleşmesi ve bağımsız restore SHA-256 referansı yoktur.
 - #6 bağımsız restore açık kalır. Anahtar/şema doğrulanınca izole hedefte restore, ardından kanal kimliği ve URL SHA-256 karşılaştırması yapılır. Drive dosyası değiştirilmedi.
+
+
+## 21 Kasım 2026 — Gerçek tarihsel Stage4 harici restore kanıtı doğrulandı
+
+- 12 Kasım GitHub Actions run 43241168321 ve bağımsız Drive restore job 131291179781 SUCCESS. Producer artifact 13957249280; accepted restore artifact 13958867734. Mevcut Drive revision 4 dosyası ile kaynak encrypted archive SHA-256 29f5498c3173b39afe5c4bee824e4423cc8229961fb5f7cbf26e402d449f4241 ve tüm baytlar aynı.
+- Eski kabul makbuzu: 7.819 şifreli arşiv satırı başarıyla restore, içeride korunan 4.955 tarihsel temel kayıt; 7.769 aday ve 801 AV çözümlemesi kaynak raporla aynı. 21 Kasım incelemesi yalnız kanıt ZIP/Drive baytları ve makbuzları tekrar doğruladı; yeni şifre çözme/restore yapılmadı.
+- Bu, tarihsel Stage4 envanterinin harici Drive restore PASS'idir. Ayrı Türk-yetkili URL kasası issue #6 için Fernet anahtarı, gerçek harici yedek ve bağımsız restore henüz kabul edilmedi; ayrıca tamamlanacak.
+- Sıradaki iş sırası: (1) #6 gerçek ortamda ayrı yetkili Türk özel kasa harici restore ve URL hash/kimlik doğrulaması, (2) güvenli HLS/DASH alt kaynak işleyişi, (3) gerçek Türkçe ses/altyazı kanıtı, (4) 685 kontrollü retry ve geniş AV taraması, (5) İBO Player cihaz kabulü. Tek ana playlist ve 48 karantina aynen korunur.
