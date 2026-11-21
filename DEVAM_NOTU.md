@@ -1421,3 +1421,14 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - Kaynak commit `1e8bd6d46762366f151e1270cc767f598c8e63e8` ve güncel main'deki 1.792 YEDEKLER EXTINF+URL blokları sırası korunarak byte-byte aynı. Tam playlist SHA'ları farklı; diğer kategoriler değişmiştir. PR #547 importer önce tarihî kaynağı ve artifact'ı sabitleyip, sonra bu 1.792 blok eşitliğini doğrulayarak yalnız preview üretmek üzere güncelleniyor.
 - #547 CI testlerinde ilk hata Unicode bytes literal idi; UTF-8 encode düzeltildi. Son düzeltme commit'i `c6a1b91842c4045ad502b62ade3936e4363cc88d`; yeni Actions sonucu kontrol edilecek. PR draft ve playlist değişikliği yok.
 - 685 kayıt henüz tekrar taranmadı/taşınmadı; yeni scan yok. Tek ana playlist, 48 karantina, URL tekrar yasağı, 1003 kuralının uygulanmaması ve İBO 2.500 kullanıcı döngüsünün ayrılığı korunuyor.
+
+
+## 21 Kasım 2026 — Uygulama durumu / güncel devir
+
+- Esas sıra ve tüm ayrıntılı kanıt günlüğü: `v2/tasks/WORK_ORDER_2026-11-21.md`.
+- Aşama 1 arşiv kabulü PR #551 merge edildi; run #44838963882 SUCCESS, 12 regresyon PASS.
+- Aşama 2 eski #497 AV raporu bulundu ve işlendi: PR #547 merge edildi; Actions #44842556117 SUCCESS; preview artifact #14681083208. 1.107 verified / 685 uncertain; preview byte-identical current main; playlist yazımı ve yeni tarama yok.
+- Aşama 3 Task 34 FFmpeg audio+video decode PR #543 merge edildi; merge commit `bca89ad77a5f8d2b9607e6cfbdd39c249ac2aeb9`; main gate #44842692873 SUCCESS; offline fixture decode testleri PASS.
+- Sıradaki aktif iş Aşama 4: gerçek yayın örneği almadan önce DNS hostname destekli bounded capture için SSRF-safe DNS pinning/redirect koruması tasarlamak. Mevcut capture DNS hostnames reddettiği için gerçek kaynaklara örnek capture henüz yapılmadı.
+- 685 belirsiz kayıt, 18.074 tam medya doğrulaması, gerçek ASR/OCR/WebVTT ve Türk/Yabancı nihai kararları, ledger/retry, #507 gerçek ortam, İBO Player kabulü açık.
+- Tek ana playlist ve tüm kullanıcı korumaları korunuyor; 48 karantina kanal geri eklenmedi, 1003 kuralı uygulanmadı, yeni playlist açılmadı.
