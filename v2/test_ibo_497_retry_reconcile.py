@@ -23,7 +23,7 @@ class RetryReconcileTests(unittest.TestCase):
                           "status": "uncertain", "reason": "recheck_required"})
         initial = {
             "schema": 1, "source_run_id": 44640007709,
-            "source_report_canonical_sha256": "b48bd57ba03a7e4ee4ed3f65355572e267db87b4d48c6d4fb390b8484dc55c",
+            "source_report_canonical_sha256": "b48bd57ba03a7e4ee4eed3f65355572e267db87b4d48c6d4fb390b8484dc55c",
             "current_playlist_sha256": digest(raw),
             "counts": {"verified": 1107, "uncertain": 685},
             "preview_only": True, "canonical_playlist_written": False,
