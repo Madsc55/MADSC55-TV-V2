@@ -1,0 +1,61 @@
+name: FFmpeg offline sandbox acceptance (685 hold retained)
+on:
+  pull_request:
+    paths:
+      - 'v2/ffmpeg_offline_sandbox.py'
+      - 'v2/test_ffmpeg_offline_sandbox.py'
+      - 'v2/ibo_497_retry_policy.py'
+      - 'v2/test_ibo_497_retry_policy.py'
+      - 'v2/turkish_hls_safe_segments.py'
+      - 'v2/test_turkish_hls_safe_segments.py'
+      - '.github/workflows/ffmpeg-offline-sandbox-acceptance.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  offline-regressions:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Offline retry, HLS and sandbox unit regressions
+        run: python -m unittest v2.test_ibo_497_retry_policy v2.test_ffmpeg_offline_sandbox v2.test_turkish_hls_safe_segments
+      - name: Assert 685 hold remains disabled
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          p = Path('v2/ibo_497_retry_plan.py').read_text()
+          assert '"live_retry_authorized": False' in p
+          assert '"new_scan_started": False' in p
+          print("685 live retry remains unauthorized")
+          PY
+  linux-egress-denial:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install sandbox and FFmpeg
+        run: sudo apt-get update && sudo apt-get install -y bubblewrap ffmpeg
+      - name: Kernel network namespace must be available (fail closed)
+        shell: bash
+        run: |
+          bwrap --die-with-parent --unshare-net --ro-bind / / --proc /proc --dev /dev -- sh -c 'test ! -e /proc/net/route || ! grep -qE "^[^[:space:]]+[[:space:]]+[0-9A-Fa-f]{8}[[:space:]]" /proc/net/route'
+      - name: Offline decode inside network namespace
+        shell: bash
+        run: |
+          python - <<'PY'
+          import pathlib, subprocess, tempfile
+          from v2.ffmpeg_offline_sandbox import isolated_local_ffmpeg
+          with tempfile.TemporaryDirectory() as d:
+              source = pathlib.Path(d) / 'input.ts'
+              target = pathlib.Path(d) / 'decoded.mkv'
+              subprocess.run(['ffmpeg','-nostdin','-v','error','-f','lavfi','-i','testsrc2=size=64x64:rate=1','-t','2','-c:v','mpeg2video','-f','mpegts','-y',str(source)],check=True)
+              result = isolated_local_ffmpeg(source, target)
+              assert result['live_retry_authorized'] is False
+              assert target.stat().st_size > 0
+          PY
