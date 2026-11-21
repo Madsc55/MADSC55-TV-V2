@@ -142,6 +142,9 @@ jobs:
       - name: Turkish channel triage offline regression (no playlist writes)
         run: |
           python -m py_compile v2/pinned_http_proxy.py v2/turkish_media_sample_capture.py v2/test_turkish_media_sample_capture.py
+          ffmpeg -hide_banner -h protocol=http 2>&1 | grep -q 'http_proxy'
+          ffmpeg -hide_banner -h protocol=http 2>&1 | grep -q 'max_redirect'
+          ffmpeg -hide_banner -h protocol=https 2>&1 | grep -q 'tls_verify'
           python -m py_compile v2/turkish_channel_triage.py v2/test_turkish_channel_triage.py
           python -m unittest -v v2.test_turkish_channel_triage
           python -m unittest -v v2.test_turkish_evidence_ingest
