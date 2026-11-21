@@ -1246,5 +1246,56 @@
     "archive_or_category_changes": false,
     "ledger_statuses_changed": false,
     "next_action": "Verify merge-after main CI; do not rerun historic reports. Keep #497 685 live retry on dual security hold until general FFmpeg/HLS egress isolation accepted. Separately identify genuine offsite #6 Fernet vault and authorized key for isolated restore."
+  },
+  "github_cleanup_audit_20261121": {
+    "main_head_at_audit": "493e1699f45e6d893db46ff29690a86b7a8f06eb",
+    "canonical_playlist_blob_sha": "f3d39e4522d27912fccd6e67240a10fd16c4923b",
+    "closed_stale_prs_without_merge": [
+      200,
+      75,
+      57,
+      66,
+      620,
+      221,
+      216,
+      210,
+      206,
+      93,
+      83,
+      73,
+      67,
+      64,
+      60,
+      52,
+      44,
+      40,
+      11,
+      9
+    ],
+    "open_prs_for_review": [
+      618,
+      372,
+      365
+    ],
+    "open_issues_preserved": [
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      10,
+      497
+    ],
+    "legacy_branch_ahead_by": 233,
+    "legacy_branch_behind_by": 329,
+    "actions_failure_inventory_complete": false,
+    "latest_main_actions_verified": false,
+    "issue6_external_restore_accepted": false,
+    "issue497_live_retry_enabled": false,
+    "existing_retry_plan_artifact_id": 14702596056,
+    "original_task_statuses_changed": false,
+    "playlist_modified": false,
+    "next_action": "Review remaining three PRs against main and reconcile full Actions run/job failure list; preserve #6/#497 gates."
   }
 }
