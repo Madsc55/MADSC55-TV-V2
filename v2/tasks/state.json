@@ -614,5 +614,34 @@
     "next_stage": "#489 archive transfer verification",
     "playlist_changed": false,
     "task_statuses_changed": false
+  },
+  "stage2_archive_acceptance_20261121": {
+    "main_commit": "3eb84f890cbe8524d16c1a16f219b0b494cc50f0",
+    "production_gate_run": 44837457969,
+    "production_gate_conclusion": "success",
+    "acceptance_log": "PASS: #489 canonical 18912; 18074 archive; 838 protected; move/restore",
+    "archive_regression_tests": "12 passed",
+    "older_fixture_run": 44828290696,
+    "older_fixture_tests": "29 passed",
+    "older_fixture_inventory": {
+      "YEDEKLER": 1792,
+      "ANA": 15574,
+      "TURK": 424,
+      "YABANCI": 284,
+      "OTHER": 838,
+      "TOTAL": 18912
+    },
+    "inventory_note": "Older fixture snapshot is not the same inventory snapshot as latest #489 acceptance; do not conflate 1792 YEDEKLER with 18074 archive.",
+    "verified": [
+      "single canonical playlist transfer logic",
+      "move and rollback",
+      "2500 batch cap",
+      "SHA and ordered URL manifest guards",
+      "duplicate operation rejection",
+      "838 OTHER category protection"
+    ],
+    "live_playlist_mutated": false,
+    "live_write_claimed": false,
+    "next_stage": "#497 existing 1792 result reconciliation without new scan"
   }
 }
