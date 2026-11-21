@@ -1401,3 +1401,15 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - PR #455'in main ile çakışan güncel EPG düzeltmeleri, #457'nin başlık/benzersiz kanal kanıtı korunarak PR #458 altında iki dosyada birleştirildi: `v2/epg_integrity.py` ve `v2/test_epg_integrity.py`. Geçmiş program aralığı, en son bitiş zamanı ve güncel eşleşen program kaynağı raporu eklendi. Geçmiş programların güncel kanıt sayılmaması için regresyon testi eklendi.
 - PR #458 Production Security Gate henüz SUCCESS vermeden birleştirilmeyecek. #454 logo PR'ı güvenlik FAILURE nedeniyle beklemede. #455 eski çakışan PR körlemesine birleştirilmeyecek.
 - #19 tarihsel 303 EPG boşluğu bağımsız kanıt olmadan çözülmüş sayılmayacak. #17/#18/#20, #28–33 ve cihaz kabulü açık kalır. Ana İBO playlisti ve arşivler değiştirilmedi; genel kanal taraması başlatılmadı.
+
+
+## 21 Kasım 2026 — Çalışma sırası ve ilerleme kaydı (güncel main'e taşındı)
+
+- Kullanıcı talimatı: tüm yapılan/yapılmayan işler kaydedilecek; işler belirlenen sırayla tek tek yürütülecek. Ayrıntılı esas plan: `v2/tasks/WORK_ORDER_2026-11-21.md`.
+- Güncel ana dal başlangıcı: `4819b3b98074243a23b0a23bdb24c61e6fdca3a3`; bu commit önceki plan kaydından sonra Stage 7 cihaz kanıt alımını eklemiştir.
+- Arşiv kabul PR #551 run #44838963882 SUCCESS; PR kaydındaki 12 arşiv regresyonu PASS. Gerçek kullanıcı playlistine yazım yapılmadı.
+- Özgün 1.792 YEDEKLER AV raporu bulundu: run #44640007709, artifact #14587983768, file `yedekler_av_audit.json`; 1.107 decoded AV verified / 685 recheck required. Report SHA-256 `30de600eca7d8e3140f423bb3fc248dc2f57df6ff031b0bf97276a9a861dba2c`; source playlist SHA-256 `eee260cce3926caff18238f9583958b40475e362ce7650fb7fac51a66a84ee1c`; upload ZIP SHA-256 `d6fefd9dabc036302dcadf0e52fa66542c51d9032d9abf8aeb3e3b88233a9f73`.
+- Kaynak commit `1e8bd6d46762366f151e1270cc767f598c8e63e8` ile güncel main playlistindeki 1.792 YEDEKLER EXTINF+URL bloğu sırası korunarak byte-byte aynı; tam playlist hash'leri farklı çünkü YEDEKLER dışındaki içerik değişmiş. #547 yalnız tarihî kaynak ve güncel 1.792 ordered-block equality doğrulandıktan sonra preview üretmek üzere güncelleniyor.
+- #547 importer CI denemesi test dosyasındaki Unicode bytes literal hatasını buldu; UTF-8 encode düzeltmesi commit `c6a1b91842c4045ad502b62ade3936e4363cc88d` ile yazıldı. Sonraki Actions sonucu bekleniyor; PR draft kalacak.
+- 685 kayıt tekrar taranmadı, taşınmadı veya playlistte değiştirilmedi. Yeni scan yok.
+- Değişmezler: tek ana playlist, yeni test playlisti yok, 48 karantina kanalını geri getirme yok, URL tekrarı yok, 1003 kuralı yok, ana kategorilere izinsiz dokunma yok, İBO 2.500 kullanıcı testi ayrı.
