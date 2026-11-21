@@ -1411,3 +1411,13 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - Doğrulayıcı tam rapor geldiğinde bile yalnızca `EVIDENCE_COMPLETE_REQUIRES_HUMAN_REVIEW` döndürür; `production_accepted=false` ve `device_playback_certified=false` sabittir. Sentetik fixture gerçek cihaz oynatımı kanıtı değildir.
 - Ana playlist, kanal kayıtları, kategoriler ve arşivler değiştirilmedi; canlı tarama/oynatma başlatılmadı. Yeni playlist oluşturulmadı.
 - **Açık kalan:** Gerçek İBO Player cihazından model/uygulama sürümü, test zamanı, ana playlist SHA-256, kategori/EPG ekranları ve seçilmiş kanalların gerçekten görüntü/ses verdiğine ilişkin kanıtlar henüz toplanmadı. Bu nedenle cihaz kabulü ve Stage 6/7 üretim teslimi açık kalır.
+
+
+## 21 Kasım 2026 — Çalışma sırası ve ilerleme kaydı
+
+- Kullanıcı talimatı: yapılmış/yapılmamış tüm işler kalıcı kaydedilecek ve açık işler sırayla tek tek tamamlanacak. Esas plan: `v2/tasks/WORK_ORDER_2026-11-21.md`.
+- Başlangıçta denetlenen main Security Gate #44837457969 SUCCESS; arşiv kabul PR #551 run #44838963882 SUCCESS ve 12 arşiv regresyonu PASS. Canlı playlist yazımı yapılmadı.
+- Özgün YEDEKLER AV raporu bulundu: run #44640007709, artifact #14587983768, `yedekler_av_audit.json`; 1.107 AV verified / 685 recheck. Rapor dosyası SHA-256 `30de600eca7d8e3140f423bb3fc248dc2f57df6ff031b0bf97276a9a861dba2c`; tarihî playlist SHA-256 `eee260cce3926caff18238f9583958b40475e362ce7650fb7fac51a66a84ee1c`; ZIP SHA-256 `d6fefd9dabc036302dcadf0e52fa66542c51d9032d9abf8aeb3e3b88233a9f73`.
+- Kaynak commit `1e8bd6d46762366f151e1270cc767f598c8e63e8` ve güncel main'deki 1.792 YEDEKLER EXTINF+URL blokları sırası korunarak byte-byte aynı. Tam playlist SHA'ları farklı; diğer kategoriler değişmiştir. PR #547 importer önce tarihî kaynağı ve artifact'ı sabitleyip, sonra bu 1.792 blok eşitliğini doğrulayarak yalnız preview üretmek üzere güncelleniyor.
+- #547 CI testlerinde ilk hata Unicode bytes literal idi; UTF-8 encode düzeltildi. Son düzeltme commit'i `c6a1b91842c4045ad502b62ade3936e4363cc88d`; yeni Actions sonucu kontrol edilecek. PR draft ve playlist değişikliği yok.
+- 685 kayıt henüz tekrar taranmadı/taşınmadı; yeni scan yok. Tek ana playlist, 48 karantina, URL tekrar yasağı, 1003 kuralının uygulanmaması ve İBO 2.500 kullanıcı döngüsünün ayrılığı korunuyor.
