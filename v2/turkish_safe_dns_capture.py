@@ -120,7 +120,11 @@ class _PinnedHTTPS(http.client.HTTPSConnection):
             raise ValueError("Proxy tunnels are not allowed")
         raw = socket.create_connection((self._pinned_ip, self.port), self.timeout)
         # TLS hostname validation and SNI MUST use the original DNS name.
-        self.sock = self._context.wrap_socket(raw, server_hostname=self.host)
+        try:
+            self.sock = self._context.wrap_socket(raw, server_hostname=self.host)
+        except BaseException:
+            raw.close()
+            raise
 
 
 def _strict_media_format(first):

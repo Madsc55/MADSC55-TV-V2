@@ -131,6 +131,17 @@ class DownloadTests(unittest.TestCase):
                                          server_hostname="media.example.com")
             self.assertIs(conn.sock, wrapped_socket)
 
+    def test_tls_handshake_failure_closes_pinned_socket(self):
+        conn = _PinnedHTTPS("media.example.com", 443, "8.8.8.8", 4)
+        from unittest.mock import Mock
+        raw_socket = Mock()
+        with patch("v2.turkish_safe_dns_capture.socket.create_connection",
+                   return_value=raw_socket), patch.object(
+                       conn._context, "wrap_socket", side_effect=OSError("TLS failed")):
+            with self.assertRaises(OSError):
+                conn.connect()
+        raw_socket.close.assert_called_once_with()
+
     def test_private_dns_is_rejected_before_connection_factory(self):
         factory, seen = factory_for()
         with tempfile.TemporaryDirectory() as d:
