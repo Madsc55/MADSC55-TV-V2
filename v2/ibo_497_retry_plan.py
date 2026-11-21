@@ -7,7 +7,6 @@ manifest to the exact current YEDEKLER block and URL identities.
 """
 import argparse
 import datetime
-import hashlib
 import json
 import os
 import re
@@ -47,6 +46,10 @@ def _canonical(value):
 
 
 def build_plan(raw, manifest, manifest_bytes, *, require_known_snapshot=False):
+    if not isinstance(raw, bytes) or len(raw) > 32 * 1024 * 1024:
+        raise ValueError("Canonical playlist input is invalid or oversized")
+    if not isinstance(manifest_bytes, bytes) or len(manifest_bytes) > 5 * 1024 * 1024:
+        raise ValueError("Initial manifest input is invalid or oversized")
     if not isinstance(manifest, dict):
         raise ValueError("Initial preview manifest must be an object")
     manifest_sha = digest(manifest_bytes)
