@@ -1,4 +1,4 @@
-name: YEDEKLER uncertain AV retry (685 only, read-only)
+name: YEDEKLER uncertain AV retry (685 only, SECURITY HOLD)
 on:
   workflow_dispatch:
 permissions:
@@ -9,6 +9,10 @@ concurrency:
   cancel-in-progress: false
 jobs:
   retry:
+    # SECURITY HOLD: no real stream probes until DNS/IP/redirect/HLS egress
+    # restrictions and regression tests have been independently accepted.
+    # Historical preview-only workflow remains available separately.
+    if: ${{ false }}
     runs-on: ubuntu-24.04
     timeout-minutes: 120
     steps:
