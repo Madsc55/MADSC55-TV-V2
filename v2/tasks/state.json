@@ -1142,7 +1142,7 @@
     "pr_ci_run": 44894072998,
     "pr_ci_conclusion": "success",
     "main_ci_run": 44894232051,
-    "main_ci_conclusion": "pending_verification",
+    "main_ci_conclusion": "success",
     "tests_cover": [
       "distinct_private_source_and_downloaded_copy",
       "pre-pinned_encrypted_SHA256",
