@@ -1401,3 +1401,13 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - PR #455'in main ile çakışan güncel EPG düzeltmeleri, #457'nin başlık/benzersiz kanal kanıtı korunarak PR #458 altında iki dosyada birleştirildi: `v2/epg_integrity.py` ve `v2/test_epg_integrity.py`. Geçmiş program aralığı, en son bitiş zamanı ve güncel eşleşen program kaynağı raporu eklendi. Geçmiş programların güncel kanıt sayılmaması için regresyon testi eklendi.
 - PR #458 Production Security Gate henüz SUCCESS vermeden birleştirilmeyecek. #454 logo PR'ı güvenlik FAILURE nedeniyle beklemede. #455 eski çakışan PR körlemesine birleştirilmeyecek.
 - #19 tarihsel 303 EPG boşluğu bağımsız kanıt olmadan çözülmüş sayılmayacak. #17/#18/#20, #28–33 ve cihaz kabulü açık kalır. Ana İBO playlisti ve arşivler değiştirilmedi; genel kanal taraması başlatılmadı.
+
+
+## 21 Kasım 2026 — Aşama 7 İBO Player cihaz kanıtı kabul altyapısı
+
+- PR [#556](https://github.com/Madsc55/MADSC55-TV-V2/pull/556) squash ile main'e alındı: `4819b3b98074243a23b0a23bdb24c61e6fdca3a3`.
+- Yeni `v2/ibo_device_acceptance.py` doğrulayıcısı, raporu yalnızca kullanıcının kesin ana playlist URL'sine, playlist SHA-256 değerine, cihaz/uygulama bilgisine, saat dilimli test zamanına, kategori/YEDEKLER/favori/EPG gözlemlerine ve kanal bazında video/ses kanıtına bağlar.
+- `v2/test_ibo_device_acceptance.py` sentetik/offline testleri ve Production Security Gate entegrasyonu PR run `44841708299` üzerinde SUCCESS verdi. Önceki düzeltilmemiş commit run `44841668393` başarısızdı; son commit `12ff506eb3dea467f81e10d340813a7e1bb7174c` için başarılı koşu esas alınır.
+- Doğrulayıcı tam rapor geldiğinde bile yalnızca `EVIDENCE_COMPLETE_REQUIRES_HUMAN_REVIEW` döndürür; `production_accepted=false` ve `device_playback_certified=false` sabittir. Sentetik fixture gerçek cihaz oynatımı kanıtı değildir.
+- Ana playlist, kanal kayıtları, kategoriler ve arşivler değiştirilmedi; canlı tarama/oynatma başlatılmadı. Yeni playlist oluşturulmadı.
+- **Açık kalan:** Gerçek İBO Player cihazından model/uygulama sürümü, test zamanı, ana playlist SHA-256, kategori/EPG ekranları ve seçilmiş kanalların gerçekten görüntü/ses verdiğine ilişkin kanıtlar henüz toplanmadı. Bu nedenle cihaz kabulü ve Stage 6/7 üretim teslimi açık kalır.
