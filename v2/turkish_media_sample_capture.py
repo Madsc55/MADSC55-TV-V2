@@ -16,12 +16,13 @@ import shutil
 import subprocess
 from urllib.parse import urlsplit
 from v2.turkish_safe_dns_capture import download_bounded, parse_url
+from v2.turkish_hls_safe_segments import download_hls_ts_bounded
 
 MAX_SECONDS = 12
 MAX_TIMEOUT = 17
 MAX_BYTES = 12 * 1024 * 1024
 
-def validate_url(url):
+def validate_url(url, *, allow_hls_ts=False):
     if not isinstance(url, str) or not url or len(url) > 4096:
         raise ValueError("Invalid stream URL")
     # urlsplit() silently strips some ASCII controls. FFmpeg receives the exact
@@ -48,14 +49,15 @@ def validate_url(url):
     except ValueError:
         # DNS names may be used ONLY through the pinned, local-file-only
         # transport below. No DNS is resolved during syntax validation.
-        parse_url(url)
+        parse_url(url, allow_playlist=allow_hls_ts)
         return url
     if not address.is_global:
         raise ValueError("Non-public IP addresses are not supported")
     return url
 
 def _capture_domain(url, dest, *, seconds, timeout, executable, runner,
-                    resolver=None, connection_factory=None, include_subtitles=False):
+                    resolver=None, connection_factory=None, include_subtitles=False,
+                    allow_hls_ts=False):
     """Pinned-IP download, then FFmpeg strictly on local bytes, never network."""
     with tempfile.TemporaryDirectory(prefix="v2-capture-", dir=dest.parent) as private:
         source = Path(private) / "source.bin"
@@ -65,7 +67,8 @@ def _capture_domain(url, dest, *, seconds, timeout, executable, runner,
             options["resolver"] = resolver
         if connection_factory is not None:
             options["connection_factory"] = connection_factory
-        info = download_bounded(url, source, timeout=timeout, **options)
+        downloader = download_hls_ts_bounded if allow_hls_ts else download_bounded
+        info = downloader(url, source, timeout=timeout, **options)
         cmd = [executable, "-nostdin", "-hide_banner", "-loglevel", "error",
                "-protocol_whitelist", "file", "-f", info["input_format"], "-i", str(source),
                "-t", str(seconds), "-fs", str(MAX_BYTES),
@@ -79,6 +82,7 @@ def _capture_domain(url, dest, *, seconds, timeout, executable, runner,
                 not 0 < output.stat().st_size <= MAX_BYTES):
             return {"status": "CAPTURE_FAILED", "language_verified": False,
                     "device_verified": False}
+        output.chmod(0o600)
         # Hard-link creation is exclusive: no overwrite if the final name was
         # created during the download or decode. The private staging directory
         # is owned by this process; no path in the user playlist is modified.
@@ -91,7 +95,9 @@ def _capture_domain(url, dest, *, seconds, timeout, executable, runner,
             "status": "SAMPLE_CAPTURED_UNVERIFIED",
             "bytes": len(sample),
             "downloaded_source_bytes": info["bytes"],
-            "dns_public_answers": info["pinned_ip_count"],
+            "dns_public_answers": (info["manifest_public_dns_answers"] if allow_hls_ts
+                                   else info["pinned_ip_count"]),
+            "hls_unencrypted_ts_segments": info.get("segment_count", 0),
             "captured_at_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
             "sample_sha256": hashlib.sha256(sample).hexdigest(),
             "url_sha256": hashlib.sha256(url.encode("utf-8")).hexdigest(),
@@ -101,8 +107,11 @@ def _capture_domain(url, dest, *, seconds, timeout, executable, runner,
 
 
 def capture(url, destination, *, seconds=4, timeout=17, runner=subprocess.run, which=shutil.which,
-            include_subtitles=False, resolver=None, connection_factory=None):
-    validate_url(url)
+            include_subtitles=False, resolver=None, connection_factory=None,
+            allow_hls_ts=False):
+    if type(allow_hls_ts) is not bool:
+        raise ValueError("Invalid opt-in HLS TS selection")
+    validate_url(url, allow_hls_ts=allow_hls_ts)
     if type(seconds) is not int or not 1 <= seconds <= MAX_SECONDS:
         raise ValueError("Sample duration must be 1..12 seconds")
     if type(timeout) is not int or not 1 <= timeout <= MAX_TIMEOUT:
@@ -127,7 +136,8 @@ def capture(url, destination, *, seconds=4, timeout=17, runner=subprocess.run, w
         return _capture_domain(url, dest, seconds=seconds, timeout=timeout,
                                executable=executable, runner=runner,
                                resolver=resolver, connection_factory=connection_factory,
-                               include_subtitles=include_subtitles)
+                               include_subtitles=include_subtitles,
+                               allow_hls_ts=allow_hls_ts)
     except (OSError, TimeoutError, subprocess.TimeoutExpired):
         return {"status": "CAPTURE_FAILED", "language_verified": False,
                 "device_verified": False}
@@ -138,9 +148,11 @@ def main():
     parser.add_argument("--output", required=True)
     parser.add_argument("--seconds", type=int, default=4)
     parser.add_argument("--include-subtitles", action="store_true", help="Retain available embedded tracks")
+    parser.add_argument("--allow-hls-ts", action="store_true", help="Manual opt-in only: same-origin, unencrypted MPEG-TS HLS")
     args = parser.parse_args()
     print(json.dumps(capture(args.url, args.output, seconds=args.seconds,
-                             include_subtitles=args.include_subtitles), sort_keys=True))
+                             include_subtitles=args.include_subtitles,
+                             allow_hls_ts=args.allow_hls_ts), sort_keys=True))
 
 if __name__ == "__main__":
     main()

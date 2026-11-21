@@ -33,7 +33,7 @@ def _public_unicast(ip):
             not ip.is_link_local and getattr(ip, "ipv4_mapped", None) is None)
 
 
-def parse_url(url):
+def parse_url(url, *, allow_playlist=False):
     if not isinstance(url, str) or not 0 < len(url) <= 4096:
         raise ValueError("Invalid media URL")
     if any(ord(c) <= 32 or ord(c) in (92, 127) for c in url):
@@ -72,7 +72,7 @@ def parse_url(url):
                 canonical_host.endswith((".invalid", ".test"))):
             raise ValueError("Unsafe DNS hostname")
     target = (parsed.path or "/") + (("?" + parsed.query) if parsed.query else "")
-    if (target.lower().split("?", 1)[0].endswith(
+    if (not allow_playlist and target.lower().split("?", 1)[0].endswith(
             (".m3u", ".m3u8", ".mpd", ".pls", ".xspf"))):
         raise ValueError("Nested adaptive media manifests are not supported")
     return parsed.scheme, canonical_host, port, target, ip
@@ -139,7 +139,7 @@ def _strict_media_format(first):
 
 
 def download_bounded(url, output, *, timeout=17, resolver=socket.getaddrinfo,
-                     connection_factory=None):
+                     connection_factory=None, max_bytes=MAX_REMOTE_BYTES):
     """Download bounded bytes into a *new private temp file* only.
 
     No redirects, no playlist/segment fetch, no FFmpeg network requests.
@@ -147,6 +147,8 @@ def download_bounded(url, output, *, timeout=17, resolver=socket.getaddrinfo,
     unsupported media or limits. Caller owns the temporary directory.
     """
     scheme, hostname, port, target, literal_ip = parse_url(url)
+    if type(max_bytes) is not int or not 1 <= max_bytes <= MAX_REMOTE_BYTES:
+        raise ValueError("Invalid safe media byte limit")
     if not 1 <= timeout <= 17:
         raise ValueError("Invalid timeout")
     addresses = (str(literal_ip),) if literal_ip is not None else resolve_public(hostname, resolver=resolver)
@@ -173,7 +175,7 @@ def download_bounded(url, output, *, timeout=17, resolver=socket.getaddrinfo,
         if content_type.startswith("text/") or content_type in _DENIED_CONTENT:
             raise ValueError("Media manifest or non-media response denied")
         length = response.getheader("Content-Length")
-        if length is not None and (not length.isdecimal() or int(length) > MAX_REMOTE_BYTES):
+        if length is not None and (not length.isdecimal() or int(length) > max_bytes):
             raise ValueError("Remote body length exceeds safe bound")
         fd = os.open(dest, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW, 0o600)
         with os.fdopen(fd, "wb") as target_file:
@@ -183,13 +185,13 @@ def download_bounded(url, output, *, timeout=17, resolver=socket.getaddrinfo,
                     raise TimeoutError("Capture download deadline reached")
                 if getattr(conn, "sock", None) is not None:
                     conn.sock.settimeout(min(remaining, 2))
-                chunk = response.read(min(CHUNK, MAX_REMOTE_BYTES + 1 - total))
+                chunk = response.read(min(CHUNK, max_bytes + 1 - total))
                 if not chunk:
                     break
                 if total == 0 and chunk.lstrip(b"\xef\xbb\xbf\r\n \t").startswith(b"#EXTM3U"):
                     raise ValueError("Nested HLS playlists are not supported")
                 total += len(chunk)
-                if total > MAX_REMOTE_BYTES:
+                if total > max_bytes:
                     raise ValueError("Remote media body exceeds safe bound")
                 target_file.write(chunk)
         if total == 0:
