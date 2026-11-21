@@ -8,7 +8,10 @@ import shutil
 import subprocess
 from urllib.parse import urlsplit
 
-from public_egress_guard import is_installed
+try:
+    from .public_egress_guard import is_installed
+except ImportError:
+    from public_egress_guard import is_installed
 
 PROTOCOL_WHITELIST = "http,https,tcp,tls,crypto"
 MAX_REDIRECTS = "5"
