@@ -14,6 +14,8 @@ import shutil
 import subprocess
 from urllib.parse import urlsplit
 
+from public_egress_guard import install as install_egress_guard, remove as remove_egress_guard, is_installed
+
 MAX_SECONDS = 12
 MAX_TIMEOUT = 17
 MAX_BYTES = 12 * 1024 * 1024
@@ -34,8 +36,8 @@ def validate_url(url):
         port = parsed.port
     except ValueError as exc:
         raise ValueError("Invalid URL port") from exc
-    if port == 0:
-        raise ValueError("Port zero is not a valid stream endpoint")
+    if port == 0 or port == 53:
+        raise ValueError("Port zero or DNS port is not a valid stream endpoint")
     if parsed.fragment:
         raise ValueError("URL fragments are not supported")
     if parsed.hostname.lower() == "localhost" or parsed.hostname.lower().endswith((".localhost", ".local", ".internal")):
@@ -51,6 +53,8 @@ def validate_url(url):
 def capture(url, destination, *, seconds=4, timeout=17, runner=subprocess.run, which=shutil.which,
             include_subtitles=False):
     validate_url(url)
+    if not is_installed():
+        return {"status": "EGRESS_GUARD_REQUIRED", "language_verified": False, "device_verified": False}
     if type(seconds) is not int or not 1 <= seconds <= MAX_SECONDS:
         raise ValueError("Sample duration must be 1..12 seconds")
     if type(timeout) is not int or not 1 <= timeout <= MAX_TIMEOUT:
@@ -68,7 +72,7 @@ def capture(url, destination, *, seconds=4, timeout=17, runner=subprocess.run, w
     if dest.suffix.lower() != ".mkv" or not dest.parent.is_dir():
         raise ValueError("Output must be a new .mkv file in an existing directory")
     cmd = [executable, "-nostdin", "-hide_banner", "-loglevel", "error",
-           "-rw_timeout", str(timeout * 1000000), "-max_redirect", "0",
+           "-rw_timeout", str(timeout * 1000000), "-max_redirects", "0", "-tls_verify", "1",
            # Limit FFmpeg to explicit transport protocols; does NOT provide an
            # egress firewall or make untrusted HLS segment URLs safe by itself.
            "-protocol_whitelist", "http,https,tcp,tls,crypto",
@@ -104,8 +108,13 @@ def main():
     parser.add_argument("--seconds", type=int, default=4)
     parser.add_argument("--include-subtitles", action="store_true", help="Retain available embedded tracks")
     args = parser.parse_args()
-    print(json.dumps(capture(args.url, args.output, seconds=args.seconds,
-                             include_subtitles=args.include_subtitles), sort_keys=True))
+    install_egress_guard()
+    try:
+        report = capture(args.url, args.output, seconds=args.seconds,
+                         include_subtitles=args.include_subtitles)
+    finally:
+        remove_egress_guard()
+    print(json.dumps(report, sort_keys=True))
 
 if __name__ == "__main__":
     main()
