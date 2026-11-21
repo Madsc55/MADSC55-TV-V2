@@ -719,5 +719,42 @@
     "all_34_tasks_completed": false,
     "next_single_action": "Execute and verify #547 exact historical artifact importer in an authorized read-only environment; inspect its generated preview+manifest and SHA/identity locks before using 685 retry candidates.",
     "report": "v2/reports/issue497-original-artifact-audit-20261121.json"
+  },
+  "stage4_vault_status_20261121": {
+    "date": "2026-11-21",
+    "scope": "Status-only record for GitHub issue #6 (authorized Turkish vault), not task statuses[6]; no live restore or playlist change",
+    "vault_hardening": {
+      "pr": 559,
+      "merged": true,
+      "merge_commit_sha": "cd90b364316322752b3a2184134646a335f3632d",
+      "pr_ci_run": 44843037968,
+      "pr_ci_conclusion": "success",
+      "main_ci_run": 44843224361,
+      "main_ci_conclusion": "success",
+      "regressions_added": 3
+    },
+    "existing_drive_folder": {
+      "id": "1cqEo3ZTfnIsVglQ51s0lXMEjcxkqRqPe",
+      "files_observed": 5,
+      "encrypted_files_observed": 2,
+      "zip_files_observed": 3,
+      "files_proven_to_be_current_authorized_turkish_vault_backup": 0,
+      "folder_created_in_this_work": false
+    },
+    "external_vault_restore_verified": false,
+    "keys_available_or_verified": false,
+    "github_issue_6_status": "open",
+    "next_proof_needed": "Identify valid encrypted authorized-Turkish vault backup already in controlled external storage; verify source SHA256 and provider identity, authorized key access, isolated restore and exact vault identity/content hash without disclosing URLs or keys. Never claim success from legacy 4955+107 Google Drive archive.",
+    "next_after_vault": "For #497, invoke merged #547 historical Actions importer read-only using artifact 14587983768 from run 44640007709; verify manifest/preview and immutable identity matching; do not scan or reorder channels.",
+    "no_playlist_mutation": true,
+    "no_new_scan": true,
+    "task_statuses_changed": false,
+    "evidence_urls": [
+      "https://github.com/Madsc55/MADSC55-TV-V2/pull/559",
+      "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44843037968",
+      "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44843224361",
+      "https://github.com/Madsc55/MADSC55-TV-V2/issues/6",
+      "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44640007709"
+    ]
   }
 }
