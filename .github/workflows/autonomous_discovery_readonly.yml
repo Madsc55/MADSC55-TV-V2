@@ -1,0 +1,53 @@
+name: Autonomous Discovery Read Only
+on:
+  workflow_dispatch:
+    inputs:
+      source_feed:
+        description: 'Approved HTTPS M3U feed URL; empty means inventory-only report'
+        required: false
+        type: string
+      max_candidates:
+        description: 'Maximum bounded candidate checks'
+        default: '30'
+        type: string
+permissions:
+  contents: read
+jobs:
+  readonly-discovery:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Install local-only AV tools
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg
+      - name: Run bounded candidate discovery in disposable directory
+        env:
+          SOURCE_FEED: ${{ inputs.source_feed }}
+          MAX_CANDIDATES: ${{ inputs.max_candidates }}
+          PYTHONPATH: ${{ github.workspace }}
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/discovery"
+          cp MADSC55_TV_IBO_CALISANLAR_TEST.m3u8 "$RUNNER_TEMP/discovery/"
+          cd "$RUNNER_TEMP/discovery"
+          python3 -m v2.full_autonomous_pipeline
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          p = Path("autonomous-evidence.json")
+          data = json.loads(p.read_text())
+          data["readonly_workflow"] = True
+          data["canonical_playlist_unchanged"] = True
+          data["locked_685_live_retry_executed"] = False
+          data["language_classification_executed"] = False
+          p.write_text(json.dumps(data, indent=2, sort_keys=True) + "\\n")
+          PY
+      - name: Publish discovery results only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: discovery-results
+          path: ${{ runner.temp }}/discovery/autonomous-evidence.json
+          if-no-files-found: warn
