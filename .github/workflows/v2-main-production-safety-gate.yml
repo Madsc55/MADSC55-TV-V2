@@ -140,13 +140,16 @@ jobs:
           assert c["archive_total"] == 18074
           assert len(rows) == 18074
           assert summary["main_inventory"] == {
-              "YEDEKLER": 1792, "ANA": 15574, "TURK": 424,
-              "YABANCI": 284, "OTHER": 838, "TOTAL": 18912,
+              "YEDEKLER": 1792, "ANA": 15018, "TURK": 422,
+              "YABANCI": 279, "OTHER": 826, "TOTAL": 18337,
           }
           assert summary["batch_state_counts"] == {
               "TEST": 1792, "TURK": 424, "YABANCI": 284,
           }
           assert c["worldwide_exact_hash_matches"] + c["worldwide_not_found"] == 18074
+          assert sum(row["current_category"] == "REMOVED_CONFIRMED_404" for row in rows) == 563
+          assert all(row["current_category"] != "REMOVED_CONFIRMED_404"
+                     for row in rows if row["first_batch_status"] == "TEST")
           assert summary["new_scan_started"] is False
           assert summary["playlist_written"] is False
           assert summary["raw_urls_in_report"] is False
