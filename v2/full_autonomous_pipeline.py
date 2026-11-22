@@ -21,7 +21,9 @@ HISTORICAL_MANIFEST_SHA256 = "b001bf48f07437e9ae67ed9f73b12ea9cfcab653523973435c
 
 
 def digest(value):
-    return hashlib.sha256(value.encode("utf-8")).hexdigest()
+    if isinstance(value, str):
+        value = value.encode("utf-8")
+    return hashlib.sha256(value).hexdigest()
 
 
 _LAST_REQUEST = [0.0]
