@@ -23,10 +23,16 @@ jobs:
         run: python v2/scripts/update_main_playlist.py --workers 4
       - name: Verify canonical playlist was not modified
         run: git diff --exit-code -- MADSC55_TV_IBO_CALISANLAR_TEST.m3u8
+      - name: Verify report output exists
+        run: |
+          test -s reports/latest_http_health.json
+          test -f reports/DEAD_URLS.txt
       - name: Upload read-only health report
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: main-playlist-health
-          path: v2/reports/main-playlist-live-health-latest.json
+          path: |
+            reports/latest_http_health.json
+            reports/DEAD_URLS.txt
           if-no-files-found: ignore
