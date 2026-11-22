@@ -41,6 +41,7 @@ jobs:
           python3 - <<'PY'
           import json
           from pathlib import Path
+          SourcePath = Path
           p = Path("autonomous-evidence.json")
           data = json.loads(p.read_text())
           data["readonly_workflow"] = True
