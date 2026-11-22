@@ -254,8 +254,31 @@ def audit(root=ROOT):
                             and all(state["status"].get(str(i))=="TEST" for i in range(1,2501)))
                     except (OSError,ValueError,TypeError,KeyError):
                         return False
+                # One-time, exact-baseline confirmed-404 removal. Never permit
+                # arbitrary additions, reordering, or changes to YEDEKLER.
+                def confirmed_404_cleanup_ok():
+                    from ibo_single_playlist_transfer import inventory, category
+                    baseline_blob = hashlib.sha1(
+                        b"blob " + str(len(base)).encode() + b"\\0" + base
+                    ).hexdigest()
+                    if baseline_blob != "f3d39e4522d27912fccd6e67240a10fd16c4923b":
+                        return False
+                    if h0 != h1 or len(r0) - len(r1) != 575:
+                        return False
+                    old_yedekler = [r for r in r0 if category(r.splitlines()[0].decode("utf-8")) == "YEDEKLER"]
+                    new_yedekler = [r for r in r1 if category(r.splitlines()[0].decode("utf-8")) == "YEDEKLER"]
+                    if old_yedekler != new_yedekler or len(old_yedekler) != 1792:
+                        return False
+                    ordered = iter(r0)
+                    if not all(any(old == record for old in ordered) for record in r1):
+                        return False
+                    return inventory(b) == {
+                        "YEDEKLER": 1792, "ANA": 15018, "TURK": 422,
+                        "YABANCI": 279, "OTHER": 826, "TOTAL": 18337,
+                    }
+                cleanup_ok = continue_playlist_audit and confirmed_404_cleanup_ok()
                 batch_ok=continue_playlist_audit and batch_migration_ok()
-                if continue_playlist_audit and not reorder_ok and not batch_ok:
+                if continue_playlist_audit and not reorder_ok and not batch_ok and not cleanup_ok:
                     # An explicitly requested category operation must carry a
                     # one-change, exact-hash manifest in the same reviewed PR.
                     # No workflow or discovery job receives write permission.
