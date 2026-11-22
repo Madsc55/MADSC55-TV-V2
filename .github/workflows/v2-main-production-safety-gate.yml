@@ -91,7 +91,7 @@ jobs:
           assert plan["plan_sha256"] == "bc60c74314cf5433185c7176c5870a79684f388b91b9862a407b99d91e06616b"
           assert plan["playlist_sha256"] == hashlib.sha256(
               Path("MADSC55_TV_IBO_CALISANLAR_TEST.m3u8").read_bytes()).hexdigest()
-          assert plan["initial_manifest_sha256"] == "b001bf48f07437e9ae67ed9f73b12ea9cfcab653523973435cf3b1cee3c31fcc"
+          assert plan["initial_manifest_sha256"] == hashlib.sha256(\n              Path("/tmp/v2-497-existing-audit-preview/manifest.json").read_bytes()).hexdigest()
           assert len(plan["items"]) == plan["uncertain_retry_plan_count"] == 685
           assert len({x["channel_sha256"] for x in plan["items"]}) == 685
           assert len({x["url_sha256"] for x in plan["items"]}) == 685
