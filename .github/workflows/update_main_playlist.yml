@@ -1,0 +1,32 @@
+name: Main Playlist HTTP Health Report (Read Only)
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: main-playlist-health-report
+  cancel-in-progress: false
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate maintenance script
+        run: python -m py_compile v2/scripts/update_main_playlist.py
+      - name: Probe streams without changing canonical playlist
+        run: python v2/scripts/update_main_playlist.py --workers 4
+      - name: Verify canonical playlist was not modified
+        run: git diff --exit-code -- MADSC55_TV_IBO_CALISANLAR_TEST.m3u8
+      - name: Upload read-only health report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: main-playlist-health
+          path: v2/reports/main-playlist-live-health-latest.json
+          if-no-files-found: ignore
