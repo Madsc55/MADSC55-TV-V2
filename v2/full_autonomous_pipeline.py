@@ -102,7 +102,7 @@ def main():
                     if not safe_label:
                         continue
                     # Never assign a guessed country/language category.
-                    new_block = f'#EXTINF:-1 group-title="🗂️ YEDEKLER", {safe_label}\\n{url}\\n'
+                    new_block = f'#EXTINF:-1 group-title="🗂️ YEDEKLER", {safe_label}\n{url}\n'
                     blocks.append(new_block)
                     known.add(url)
                     report["verified_additions"] += 1
@@ -115,7 +115,7 @@ def main():
                 for block in blocks[len(original):]:
                     handle.write(block.encode("utf-8"))
     finally:
-        EVIDENCE.write_text(json.dumps(report, indent=2, sort_keys=True) + "\\n")
+        EVIDENCE.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n")
     print(json.dumps(report, sort_keys=True))
 
 
