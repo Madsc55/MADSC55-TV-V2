@@ -24,8 +24,8 @@ EXPECTED_ARCHIVE_SHA256 = "d72ac1e6bf27982862e23e06957222a9abaf7b03f0fab01edc214
 EXPECTED_ARCHIVE_TOTAL = 18074
 EXPECTED_BATCH_SIZE = 2500
 EXPECTED_MAIN_INVENTORY = {
-    "YEDEKLER": 1792, "ANA": 15574, "TURK": 424,
-    "YABANCI": 284, "OTHER": 838, "TOTAL": 18912,
+    "YEDEKLER": 1792, "ANA": 15018, "TURK": 422,
+    "YABANCI": 279, "OTHER": 826, "TOTAL": 18337,
 }
 
 
@@ -110,14 +110,21 @@ def build_crosswalk(archive_raw, main_raw, state, worldwide, historical,
         raise ValueError("Canonical main playlist inventory changed")
     if len(main_rows) != main_counts["TOTAL"]:
         raise ValueError("Canonical playlist record count mismatch")
-    if len(main_by_hash) != len(archive_rows):
+    if len(main_by_hash) != (main_counts["YEDEKLER"] + main_counts["ANA"] + main_counts["TURK"] + main_counts["YABANCI"]):
         raise ValueError("Unexpected canonical archive identity count")
+    # Historical evidence includes URLs removed after independently confirmed 404s.
+    # Preserve them as missing historical identities, never as live matches.
+    if expected_main_inventory is not None and expected_archive_total == EXPECTED_ARCHIVE_TOTAL:
+        if len(archive_rows) - len(main_by_hash) != 563:
+            raise ValueError("Unexpected historical archive removal count")
 
     expected_active = []
     for ordinal, (_, _, url_hash) in enumerate(archive_rows, 1):
         block = main_by_hash.get(url_hash)
         if block is None:
-            raise ValueError("Historical archive URL missing from canonical main playlist")
+            if ordinal <= expected_batch_size and statuses[str(ordinal)] == "TEST":
+                raise ValueError("Protected TEST identity missing from canonical playlist")
+            continue
         actual_category = category(block.splitlines()[0])
         if ordinal <= expected_batch_size:
             status = statuses[str(ordinal)]
@@ -220,7 +227,8 @@ def build_crosswalk(archive_raw, main_raw, state, worldwide, historical,
         rows.append({
             "ordinal": ordinal,
             "url_sha256": url_hash,
-            "current_category": category(main_by_hash[url_hash].splitlines()[0]),
+            "current_category": (category(main_by_hash[url_hash].splitlines()[0])
+                                 if url_hash in main_by_hash else "REMOVED_CONFIRMED_404"),
             "first_batch_status": statuses.get(str(ordinal)) if ordinal <= expected_batch_size else "ANA",
             "worldwide_status": item.get("status") if item else "NOT_IN_WORLDWIDE_REPORT",
             "worldwide_evidence_origin": item.get("evidence_origin") if item else None,

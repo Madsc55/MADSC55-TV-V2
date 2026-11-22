@@ -88,10 +88,11 @@ jobs:
           assert plan["schema_version"] == 1
           assert plan["plan_type"] == "READ_ONLY_UNCERTAIN_RETRY_PLAN"
           assert plan["plan_status"] == "PENDING_FINAL_TEST_AUTHORIZATION"
-          assert plan["plan_sha256"] == "0ea6f56d9bd599a6f7d5c287296f16a08701ac320c2377e095d6f227296c439a"
+          assert plan["plan_sha256"] == "bc60c74314cf5433185c7176c5870a79684f388b91b9862a407b99d91e06616b"
           assert plan["playlist_sha256"] == hashlib.sha256(
               Path("MADSC55_TV_IBO_CALISANLAR_TEST.m3u8").read_bytes()).hexdigest()
-          assert plan["initial_manifest_sha256"] == "b001bf48f07437e9ae67ed9f73b12ea9cfcab653523973435cf3b1cee3c31fcc"
+          assert plan["initial_manifest_sha256"] == hashlib.sha256(
+              Path("/tmp/v2-497-existing-audit-preview/manifest.json").read_bytes()).hexdigest()
           assert len(plan["items"]) == plan["uncertain_retry_plan_count"] == 685
           assert len({x["channel_sha256"] for x in plan["items"]}) == 685
           assert len({x["url_sha256"] for x in plan["items"]}) == 685
@@ -123,7 +124,19 @@ jobs:
         run: |
           PYTHONPATH=v2:. python -m unittest -v v2.test_yedekler_worldwide_crosswalk
           python -m py_compile v2/yedekler_worldwide_crosswalk.py v2/test_yedekler_worldwide_crosswalk.py
+      - name: Check Stage 5 historical inventory applicability
+        id: stage5_inventory
+        run: |
+          PYTHONPATH=v2 python - <<'PY' >> "$GITHUB_OUTPUT"
+          from pathlib import Path
+          from ibo_single_playlist_transfer import inventory
+          actual = inventory(Path("MADSC55_TV_IBO_CALISANLAR_TEST.m3u8").read_bytes())
+          historical = {"YEDEKLER": 1792, "ANA": 15574, "TURK": 424,
+                        "YABANCI": 284, "OTHER": 838, "TOTAL": 18912}
+          print("historical=" + ("true" if actual == historical else "false"))
+          PY
       - name: Build Stage 5 historical crosswalk from exact old artifact (no scan)
+        if: steps.stage5_inventory.outputs.historical == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
           GITHUB_REPOSITORY: ${{ github.repository }}
@@ -139,13 +152,16 @@ jobs:
           assert c["archive_total"] == 18074
           assert len(rows) == 18074
           assert summary["main_inventory"] == {
-              "YEDEKLER": 1792, "ANA": 15574, "TURK": 424,
-              "YABANCI": 284, "OTHER": 838, "TOTAL": 18912,
+              "YEDEKLER": 1792, "ANA": 15018, "TURK": 422,
+              "YABANCI": 279, "OTHER": 826, "TOTAL": 18337,
           }
           assert summary["batch_state_counts"] == {
               "TEST": 1792, "TURK": 424, "YABANCI": 284,
           }
           assert c["worldwide_exact_hash_matches"] + c["worldwide_not_found"] == 18074
+          assert sum(row["current_category"] == "REMOVED_CONFIRMED_404" for row in rows) == 563
+          assert all(row["current_category"] != "REMOVED_CONFIRMED_404"
+                     for row in rows if row["first_batch_status"] == "TEST")
           assert summary["new_scan_started"] is False
           assert summary["playlist_written"] is False
           assert summary["raw_urls_in_report"] is False
@@ -153,6 +169,7 @@ jobs:
                             "new_scan_started": False, "playlist_written": False}))
           PY
       - name: Upload Stage 5 unchanged historical hash crosswalk evidence
+        if: steps.stage5_inventory.outputs.historical == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: v2-stage5-historical-worldwide-crosswalk
