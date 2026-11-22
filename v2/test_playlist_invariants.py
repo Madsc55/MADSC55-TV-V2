@@ -33,8 +33,8 @@ def main():
             cwd=ROOT)
         _, original_blocks = parse(baseline)
         _, actual_blocks = parse(current)
-        original_yedekler = [b for b in original_blocks if category(b.split("\\n", 1)[0]) == "YEDEKLER"]
-        actual_yedekler = [b for b in actual_blocks if category(b.split("\\n", 1)[0]) == "YEDEKLER"]
+        original_yedekler = [b for b in original_blocks if category(b.split("\n", 1)[0]) == "YEDEKLER"]
+        actual_yedekler = [b for b in actual_blocks if category(b.split("\n", 1)[0]) == "YEDEKLER"]
         assert len(original_yedekler) == len(actual_yedekler) == 1792
         assert actual_yedekler == original_yedekler, "SECURITY HOLD or YEDEKLER changed"
         it = iter(original_blocks)
