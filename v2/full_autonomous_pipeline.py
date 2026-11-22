@@ -7,6 +7,8 @@ import re
 import subprocess
 import tempfile
 import urllib.request
+import urllib.error
+import time
 from pathlib import Path
 from urllib.parse import urlsplit
 
@@ -21,6 +23,9 @@ def digest(value):
     return hashlib.sha256(value.encode("utf-8")).hexdigest()
 
 
+_LAST_REQUEST = [0.0]
+
+
 def fetch_feed(url):
     # Deliberately narrow: arbitrary web pages and YouTube metadata are NOT streams.
     # A separately reviewed source adapter is required before expanding this allowlist.
@@ -31,7 +36,17 @@ def fetch_feed(url):
         raise ValueError("Not an M3U feed")
     opener = urllib.request.build_opener(urllib.request.ProxyHandler({}))
     request = urllib.request.Request(url, headers={"User-Agent": "MADSC55-AV-Acceptance/1"})
-    with opener.open(request, timeout=15) as response:
+    wait = 3.0 - (time.monotonic() - _LAST_REQUEST[0])
+    if wait > 0:
+        time.sleep(wait)
+    _LAST_REQUEST[0] = time.monotonic()
+    try:
+        response = opener.open(request, timeout=15)
+    except urllib.error.HTTPError as exc:
+        if exc.code == 429:
+            raise ValueError("RATE_LIMITED_429: stop; do not retry automatically") from exc
+        raise
+    with response:
         if response.geturl() != url or response.status != 200:
             raise ValueError("Redirect or unexpected response")
         data = response.read(2_000_001)
@@ -83,7 +98,11 @@ def main():
               "original_entries": len(blocks), "candidates_checked": 0,
               "verified_additions": 0, "security_hold_685_preserved": True,
               "existing_categories_preserved": True, "language_verified": False,
-              "youtube_and_web_discovery_not_yet_supported": True}
+              "youtube_and_web_discovery_not_yet_supported": True,
+              "locked_685_live_retry": "SECURITY_HOLD_NO_OS_EGRESS_SANDBOX",
+              "locked_685_quarantined": 685,
+              "language_classification": "UNVERIFIED_NO_AUTOMATIC_REASSIGNMENT",
+              "source_rate_limit_seconds": 3}
     try:
         proposed = candidates(fetch_feed(source), limit) if source else []
         with tempfile.TemporaryDirectory() as directory:
