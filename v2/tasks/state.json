@@ -1387,5 +1387,25 @@
     "live_scan": false,
     "playlist_modified": false,
     "security_hold_685_unchanged": true
+  },
+  "full_inventory_health_scan_plan_20261123": {
+    "status": "PLANNED_NOT_IMPLEMENTED",
+    "priority": 1,
+    "scope": "All existing channels across all canonical playlist categories and all discovered candidates",
+    "canonical_playlist": "MADSC55_TV_IBO_CALISANLAR_TEST.m3u8",
+    "work_order": [
+      "inventory_all_categories",
+      "resumable_batched_http_hls_safe_av_scan",
+      "per_channel_working_dead_uncertain_evidence",
+      "preserve_locked_685",
+      "queue_and_verify_all_discovered_candidates",
+      "evidence_based_turkish_foreign_classification",
+      "safe_reviewed_single_playlist_pr_and_ci"
+    ],
+    "security_locked_channels": 685,
+    "do_not_create_new_playlist": true,
+    "do_not_modify_playlist_in_planning_pr": true,
+    "discovery_readonly_is_not_full_scan": true,
+    "completed": false
   }
 }
