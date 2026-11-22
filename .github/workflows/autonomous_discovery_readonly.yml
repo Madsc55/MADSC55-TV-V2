@@ -42,7 +42,7 @@ jobs:
           data["canonical_playlist_unchanged"] = True
           data["locked_685_live_retry_executed"] = False
           data["language_classification_executed"] = False
-          p.write_text(json.dumps(data, indent=2, sort_keys=True) + "\\n")
+          p.write_text(json.dumps(data, indent=2, sort_keys=True) + "\n")
           PY
       - name: Publish discovery results only
         if: always()
