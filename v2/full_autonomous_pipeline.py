@@ -17,6 +17,7 @@ from v2.turkish_media_sample_capture import capture
 
 PLAYLIST = Path("MADSC55_TV_IBO_CALISANLAR_TEST.m3u8")
 EVIDENCE = Path("autonomous-evidence.json")
+HISTORICAL_MANIFEST_SHA256 = "b001bf48f07437e9ae67ed9f73b12ea9cfcab653523973435cf3b1cee3c31fcc"
 
 
 def digest(value):
@@ -107,6 +108,8 @@ def discover_youtube_and_official_streams(source_urls, limit=30):
 def verify_685_locked_channels(manifest_path, playlist_blocks):
     """Probe immutable 685 identities using bounded pinned downloads and local-only FFmpeg."""
     manifest = json.loads(Path(manifest_path).read_text(encoding="utf-8"))
+    if hashlib.sha256(Path(manifest_path).read_bytes()).hexdigest() != HISTORICAL_MANIFEST_SHA256:
+        raise ValueError("Historical locked manifest checksum mismatch")
     queue = manifest.get("retry_queue")
     if not isinstance(queue, list) or len(queue) != 685:
         raise ValueError("Expected 685 locked manifest identities")
