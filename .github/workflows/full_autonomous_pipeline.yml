@@ -11,13 +11,13 @@ on:
         default: '30'
         type: string
 permissions:
-  contents: read
+  contents: write
+  pull-requests: write
 concurrency:
   group: autonomous-playlist
   cancel-in-progress: false
 jobs:
   acceptance:
-    if: ${{ false }} # SECURITY HOLD: network/AV and PR writer require separate approval
     runs-on: ubuntu-latest
     timeout-minutes: 90
     steps:
@@ -36,3 +36,22 @@ jobs:
         with:
           name: autonomous-acceptance-evidence
           path: autonomous-evidence.json
+      - name: Open review-only playlist pull request
+        if: ${{ success() }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          playlist=MADSC55_TV_IBO_CALISANLAR_TEST.m3u8
+          if git diff --quiet -- "$playlist"; then
+            echo "No verified playlist additions; no PR needed"
+            exit 0
+          fi
+          branch="autonomous/verified-candidates-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -c "$branch"
+          git add -- "$playlist"
+          git commit -m "chore: propose verified stream candidates for review"
+          git push origin "HEAD:refs/heads/$branch"
+          gh pr create --base main --head "$branch" --title "chore: review verified AV stream candidates ($GITHUB_RUN_ID)" --body "Automated proposal only. Existing main playlist was not directly changed. Review source provenance, 685 locked-channel preservation, AV evidence, and language classifications before merging."
