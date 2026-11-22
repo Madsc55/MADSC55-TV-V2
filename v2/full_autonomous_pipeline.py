@@ -184,13 +184,11 @@ def metadata_language_hint(label, group=""):
 
 def run_readonly_source_adapters(limit):
     """Call existing adapters; keep their outputs advisory and bounded."""
-    from v2.federated_m3u_source_discovery import discover_provider
-    from v2.youtube_discovery import search, QUERIES
-    from v2.official_sites_discovery import select_official_sites, URL
     import urllib.request
     results = {}
     for provider in ("gitlab", "codeberg"):
         try:
+            from v2.federated_m3u_source_discovery import discover_provider
             data = discover_provider(provider, queries=("iptv",), configured_urls=set())
             results[provider] = data
         except Exception as exc:
@@ -212,12 +210,14 @@ def run_readonly_source_adapters(limit):
     except ImportError as exc:
         results["github"] = {"status": "error", "error_type": type(exc).__name__}
     try:
+        from v2.youtube_discovery import search, QUERIES
         rows, error = search(QUERIES[0])
         results["youtube"] = {"status": "metadata_only", "candidates": rows[:limit],
                               "error": error, "stream_urls_verified": 0}
     except Exception as exc:
         results["youtube"] = {"status": "error", "error_type": type(exc).__name__}
     try:
+        from v2.official_sites_discovery import select_official_sites, URL
         req = urllib.request.Request(URL, headers={"User-Agent": "MADSC55-Readonly/1"})
         with urllib.request.urlopen(req, timeout=35) as response:
             raw = response.read(30_000_001)
