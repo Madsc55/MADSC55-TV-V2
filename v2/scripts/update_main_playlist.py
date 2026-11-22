@@ -3,6 +3,7 @@
 import argparse
 import concurrent.futures
 import hashlib
+from http.client import HTTPException
 import ipaddress
 import json
 import os
@@ -46,7 +47,7 @@ def check(url):
                 response.read(2048)
         except HTTPError as e:
             status = e.code
-        except (URLError, TimeoutError, OSError, ValueError):
+        except (URLError, TimeoutError, OSError, ValueError, HTTPException):
             return "unknown"
         if status == 429:
             return "rate_limited"
@@ -100,7 +101,12 @@ def main():
     with concurrent.futures.ThreadPoolExecutor(max_workers=min(max(args.workers, 1), 4)) as pool:
         futures = {pool.submit(check, url): url for url in unique}
         for future in concurrent.futures.as_completed(futures):
-            results[futures[future]] = future.result()
+            try:
+                results[futures[future]] = future.result()
+            except Exception:
+                # A malformed or truncated response must never abort the full
+                # read-only report or be interpreted as deletion evidence.
+                results[futures[future]] = "unknown"
     # Preserve all category/order metadata and every 685 SECURITY HOLD entry.
     # No candidates promoted: there is no independently attested unlock inventory.
     remove = {url for url, state in results.items() if state == "confirmed_404" and hashlib.sha256(url.encode()).hexdigest() not in flagged}
