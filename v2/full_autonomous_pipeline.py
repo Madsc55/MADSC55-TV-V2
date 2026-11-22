@@ -95,7 +95,7 @@ def discover_youtube_and_official_streams(source_urls, limit=30):
         if len(pool) >= limit:
             break
         parsed = urlsplit(source)
-        if parsed.hostname in ("youtube.com", "www.youtube.com", "youtu.be"):
+        if parsed.hostname in ("youtube.com", "www.youtube.com", "youtu.be", "m.youtube.com"):
             continue
         try:
             pool.extend(candidates(fetch_feed(source), limit - len(pool)))
@@ -111,6 +111,8 @@ def verify_685_locked_channels(manifest_path, playlist_blocks):
     if not isinstance(queue, list) or len(queue) != 685:
         raise ValueError("Expected 685 locked manifest identities")
     by_hash = {digest(block.splitlines()[-1].strip()): block for block in playlist_blocks}
+    if len(by_hash) != len(playlist_blocks):
+        raise ValueError("Duplicate playlist URLs prevent locked-channel identity matching")
     quarantine = []
     verified_unlocked = []
     with tempfile.TemporaryDirectory() as directory:
@@ -143,9 +145,9 @@ def classify_and_merge_to_main_playlist(verified_candidates, existing_blocks):
         language = item.get("language")
         if not item.get("decoded_av_verified") or not item.get("language_verified"):
             continue
-        if language == "tr":
+        if language == "tr" and item.get("language_evidence") == "independent_audio_review":
             group = "🇹🇷 ULUSAL-HEPSİ"
-        elif language == "foreign":
+        elif language == "foreign" and item.get("language_evidence") == "independent_audio_review":
             group = "YABANCI ARŞİVİ"
         else:
             continue
