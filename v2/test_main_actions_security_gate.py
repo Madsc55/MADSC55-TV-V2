@@ -56,6 +56,16 @@ class MainActionsGateTests(unittest.TestCase):
 
     def test_invalid_yaml_rejected(self):
         self.assertIn("UNPARSEABLE_YAML",audit_one("v2-world-discovery.yml","on: [bad"))
+    def test_autonomous_workflow_requires_security_hold(self):
+        held = fixture(job="    if: ${{ false }}\n    runs-on: ubuntu-latest\n    steps:\n      - run: echo held\n").replace("  verify:\n", "  acceptance:\n")
+        self.assertEqual(audit_one("full_autonomous_pipeline.yml", held), [])
+        enabled = held.replace("    if: ${{ false }}", "    if: ${{ true }}")
+        self.assertIn("AUTONOMOUS_PIPELINE_SECURITY_HOLD_REQUIRED",
+                      audit_one("full_autonomous_pipeline.yml", enabled))
+        writer = held.replace("  contents: read", "  contents: write")
+        self.assertIn("WORKFLOW_HAS_WRITE_PERMISSION",
+                      audit_one("full_autonomous_pipeline.yml", writer))
+
     def test_685_retry_requires_explicit_security_hold(self):
         held = """name: YEDEKLER uncertain AV retry (SECURITY HOLD)
 on:

@@ -1,0 +1,38 @@
+name: Full Autonomous Discovery and Acceptance
+on:
+  workflow_dispatch:
+    inputs:
+      source_feed:
+        description: 'Approved public M3U/M3U8 feed URL (optional)'
+        required: false
+        type: string
+      max_candidates:
+        description: 'Maximum new candidates per run'
+        default: '30'
+        type: string
+permissions:
+  contents: read
+concurrency:
+  group: autonomous-playlist
+  cancel-in-progress: false
+jobs:
+  acceptance:
+    if: ${{ false }} # SECURITY HOLD: network/AV and PR writer require separate approval
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install bounded local-media dependencies
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg
+      - name: Verify existing playlist and safely discover/validate
+        env:
+          SOURCE_FEED: ${{ inputs.source_feed }}
+          MAX_CANDIDATES: ${{ inputs.max_candidates }}
+        run: |
+          python3 -m v2.full_autonomous_pipeline
+      - name: Upload evidence (never publish stream URLs)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: autonomous-acceptance-evidence
+          path: autonomous-evidence.json
