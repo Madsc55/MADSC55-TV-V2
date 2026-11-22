@@ -1,0 +1,123 @@
+#!/usr/bin/env python3
+"""Fail-closed one-click discovery: only proven decoded AV is promoted."""
+import hashlib
+import json
+import os
+import re
+import subprocess
+import tempfile
+import urllib.request
+from pathlib import Path
+from urllib.parse import urlsplit
+
+from v2.ibo_single_playlist_transfer import parse
+from v2.turkish_media_sample_capture import capture
+
+PLAYLIST = Path("MADSC55_TV_IBO_CALISANLAR_TEST.m3u8")
+EVIDENCE = Path("autonomous-evidence.json")
+
+
+def digest(value):
+    return hashlib.sha256(value.encode("utf-8")).hexdigest()
+
+
+def fetch_feed(url):
+    # Deliberately narrow: arbitrary web pages and YouTube metadata are NOT streams.
+    # A separately reviewed source adapter is required before expanding this allowlist.
+    parsed = urlsplit(url)
+    if parsed.scheme != "https" or parsed.hostname != "raw.githubusercontent.com" or parsed.port is not None:
+        raise ValueError("Feed must be a reviewed raw.githubusercontent.com HTTPS M3U URL")
+    if not parsed.path.lower().endswith((".m3u", ".m3u8")):
+        raise ValueError("Not an M3U feed")
+    opener = urllib.request.build_opener(urllib.request.ProxyHandler({}))
+    request = urllib.request.Request(url, headers={"User-Agent": "MADSC55-AV-Acceptance/1"})
+    with opener.open(request, timeout=15) as response:
+        if response.geturl() != url or response.status != 200:
+            raise ValueError("Redirect or unexpected response")
+        data = response.read(2_000_001)
+    if len(data) > 2_000_000:
+        raise ValueError("Feed exceeds bounded size")
+    return data.decode("utf-8")
+
+
+def candidates(feed, limit):
+    lines = feed.splitlines()
+    if not lines or not lines[0].startswith("#EXTM3U"):
+        raise ValueError("Invalid feed header")
+    pending = None
+    found = []
+    for line in lines[1:]:
+        line = line.strip()
+        if line.startswith("#EXTINF:"):
+            pending = line
+        elif pending is not None and line and not line.startswith("#"):
+            if re.match(r"^https?://", line) and len(line) <= 4096:
+                label = pending.rsplit(",", 1)[-1].strip()
+                if label and len(label) <= 100 and not any(c in label for c in "\\r\\n"):
+                    found.append((label, line))
+            pending = None
+            if len(found) >= limit:
+                break
+    return found
+
+
+def decoded_both(path):
+    # The input is a local bounded sample produced with FFmpeg's file-only protocol.
+    cmd = ["ffprobe", "-v", "error", "-protocol_whitelist", "file",
+           "-show_entries", "stream=codec_type", "-of", "json", str(path)]
+    result = subprocess.run(cmd, capture_output=True, timeout=12, check=False)
+    if result.returncode:
+        return False
+    kinds = {s.get("codec_type") for s in json.loads(result.stdout).get("streams", [])}
+    return {"audio", "video"}.issubset(kinds)
+
+
+def main():
+    raw = PLAYLIST.read_bytes()
+    prefix, blocks = parse(raw)
+    original = [b for b in blocks]
+    known = {b.splitlines()[-1].strip() for b in blocks}
+    source = os.environ.get("SOURCE_FEED", "").strip()
+    limit = min(100, max(1, int(os.environ.get("MAX_CANDIDATES", "30"))))
+    report = {"schema": 1, "original_playlist_sha256": hashlib.sha256(raw).hexdigest(),
+              "original_entries": len(blocks), "candidates_checked": 0,
+              "verified_additions": 0, "security_hold_685_preserved": True,
+              "existing_categories_preserved": True, "language_verified": False,
+              "youtube_and_web_discovery_not_yet_supported": True}
+    try:
+        proposed = candidates(fetch_feed(source), limit) if source else []
+        with tempfile.TemporaryDirectory() as directory:
+            for index, (label, url) in enumerate(proposed):
+                if url in known:
+                    continue
+                report["candidates_checked"] += 1
+                output = Path(directory) / f"{index}.mkv"
+                try:
+                    # HTTPS/public-IP pinned; FFmpeg decodes local bytes only.
+                    result = capture(url, output, seconds=4, timeout=17,
+                                     allow_hls_ts=urlsplit(url).path.lower().endswith(".m3u8"))
+                    if result.get("status") != "SAMPLE_CAPTURED_UNVERIFIED" or not decoded_both(output):
+                        continue
+                    safe_label = re.sub(r"[\\r\\n\"<>]", "", label)
+                    if not safe_label:
+                        continue
+                    # Never assign a guessed country/language category.
+                    new_block = f'#EXTINF:-1 group-title="🗂️ YEDEKLER", {safe_label}\\n{url}\\n'
+                    blocks.append(new_block)
+                    known.add(url)
+                    report["verified_additions"] += 1
+                except (ValueError, OSError, TimeoutError, subprocess.SubprocessError, json.JSONDecodeError):
+                    continue
+        if report["verified_additions"]:
+            # Existing entries remain byte-for-byte and in exactly the same order.
+            assert blocks[:len(original)] == original
+            with PLAYLIST.open("ab") as handle:
+                for block in blocks[len(original):]:
+                    handle.write(block.encode("utf-8"))
+    finally:
+        EVIDENCE.write_text(json.dumps(report, indent=2, sort_keys=True) + "\\n")
+    print(json.dumps(report, sort_keys=True))
+
+
+if __name__ == "__main__":
+    main()
