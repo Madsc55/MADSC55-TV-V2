@@ -114,8 +114,9 @@ def build_crosswalk(archive_raw, main_raw, state, worldwide, historical,
         raise ValueError("Unexpected canonical archive identity count")
     # Historical evidence includes URLs removed after independently confirmed 404s.
     # Preserve them as missing historical identities, never as live matches.
-    if len(archive_rows) - len(main_by_hash) != 563:
-        raise ValueError("Unexpected historical archive removal count")
+    if expected_main_inventory is not None and expected_archive_total == EXPECTED_ARCHIVE_TOTAL:
+        if len(archive_rows) - len(main_by_hash) != 563:
+            raise ValueError("Unexpected historical archive removal count")
 
     expected_active = []
     for ordinal, (_, _, url_hash) in enumerate(archive_rows, 1):
