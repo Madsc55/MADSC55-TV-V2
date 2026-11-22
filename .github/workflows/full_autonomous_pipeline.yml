@@ -11,13 +11,13 @@ on:
         default: '30'
         type: string
 permissions:
-  contents: write
-  pull-requests: write
+  contents: read
 concurrency:
   group: autonomous-playlist
   cancel-in-progress: false
 jobs:
   acceptance:
+    if: ${{ false }} # SECURITY HOLD: network/AV and PR writer require separate approval
     runs-on: ubuntu-latest
     timeout-minutes: 90
     steps:
@@ -36,19 +36,3 @@ jobs:
         with:
           name: autonomous-acceptance-evidence
           path: autonomous-evidence.json
-      - name: Create playlist PR only when verified entries changed
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          if git diff --quiet -- MADSC55_TV_IBO_CALISANLAR_TEST.m3u8; then
-            echo "No AV-verified additions; no playlist PR."
-            exit 0
-          fi
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          branch="automation/verified-streams-${GITHUB_RUN_ID}"
-          git checkout -b "$branch"
-          git add MADSC55_TV_IBO_CALISANLAR_TEST.m3u8
-          git commit -m "playlist: add independently decoded AV-verified streams"
-          git push origin "$branch"
-          gh pr create --base main --head "$branch" --title "playlist: verified live AV additions (${GITHUB_RUN_ID})" --body "Automated fail-closed AV evidence; existing entries, categories and 685 protected channels unchanged. Review security gate before merge."
