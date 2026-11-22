@@ -17,6 +17,7 @@ from v2.turkish_media_sample_capture import capture
 
 PLAYLIST = Path("MADSC55_TV_IBO_CALISANLAR_TEST.m3u8")
 EVIDENCE = Path("autonomous-evidence.json")
+HISTORICAL_MANIFEST_SHA256 = "b001bf48f07437e9ae67ed9f73b12ea9cfcab653523973435cf3b1cee3c31fcc"
 
 
 def digest(value):
@@ -107,6 +108,8 @@ def discover_youtube_and_official_streams(source_urls, limit=30):
 def verify_685_locked_channels(manifest_path, playlist_blocks):
     """Probe immutable 685 identities using bounded pinned downloads and local-only FFmpeg."""
     manifest = json.loads(Path(manifest_path).read_text(encoding="utf-8"))
+    if hashlib.sha256(Path(manifest_path).read_bytes()).hexdigest() != HISTORICAL_MANIFEST_SHA256:
+        raise ValueError("Historical locked manifest checksum mismatch")
     queue = manifest.get("retry_queue")
     if not isinstance(queue, list) or len(queue) != 685:
         raise ValueError("Expected 685 locked manifest identities")
@@ -170,6 +173,63 @@ def classify_and_merge_to_main_playlist(verified_candidates, existing_blocks):
         known.add(url)
     return additions
 
+
+def metadata_language_hint(label, group=""):
+    """Metadata hints are never independently verified spoken-language evidence."""
+    combined = (str(label) + " " + str(group)).casefold()
+    if re.search(r"türk|turk|trt|\\btr\\b|azer|azər", combined):
+        return "TURKISH_METADATA_HINT_REVIEW_REQUIRED"
+    return "LANGUAGE_UNVERIFIED_REVIEW_REQUIRED"
+
+
+def run_readonly_source_adapters(limit):
+    """Call existing adapters; keep their outputs advisory and bounded."""
+    from v2.federated_m3u_source_discovery import discover_provider
+    from v2.youtube_discovery import search, QUERIES
+    from v2.official_sites_discovery import select_official_sites, URL
+    import urllib.request
+    results = {}
+    for provider in ("gitlab", "codeberg"):
+        try:
+            data = discover_provider(provider, queries=("iptv",), configured_urls=set())
+            results[provider] = data
+        except Exception as exc:
+            results[provider] = {"status": "error", "error_type": type(exc).__name__}
+    try:
+        from v2 import github_source_discovery as gh
+        with tempfile.TemporaryDirectory() as tmp:
+            previous_out, previous_queries = gh.OUT, gh.QUERIES
+            try:
+                gh.OUT = Path(tmp) / "github-source-discovery.json"
+                gh.QUERIES = gh.QUERIES[:1]
+                try:
+                    gh.main()
+                except SystemExit:
+                    pass  # Preserve partial error reports rather than losing evidence.
+                results["github"] = json.loads(gh.OUT.read_text()) if gh.OUT.exists() else {"status": "error", "reason": "no_report"}
+            finally:
+                gh.OUT, gh.QUERIES = previous_out, previous_queries
+    except ImportError as exc:
+        results["github"] = {"status": "error", "error_type": type(exc).__name__}
+    try:
+        rows, error = search(QUERIES[0])
+        results["youtube"] = {"status": "metadata_only", "candidates": rows[:limit],
+                              "error": error, "stream_urls_verified": 0}
+    except Exception as exc:
+        results["youtube"] = {"status": "error", "error_type": type(exc).__name__}
+    try:
+        req = urllib.request.Request(URL, headers={"User-Agent": "MADSC55-Readonly/1"})
+        with urllib.request.urlopen(req, timeout=35) as response:
+            raw = response.read(30_000_001)
+        if len(raw) > 30_000_000:
+            raise ValueError("Official directory exceeds size limit")
+        sites = select_official_sites(json.loads(raw))
+        results["official_sites"] = {"status": "directory_only", "count": len(sites),
+                                    "channels": sites[:limit], "stream_urls_verified": 0}
+    except Exception as exc:
+        results["official_sites"] = {"status": "error", "error_type": type(exc).__name__}
+    return results
+
 def main():
     raw = PLAYLIST.read_bytes()
     prefix, blocks = parse(raw)
@@ -187,6 +247,8 @@ def main():
               "language_classification": "UNVERIFIED_NO_AUTOMATIC_REASSIGNMENT",
               "source_rate_limit_seconds": 3}
     try:
+        report["source_adapters"] = run_readonly_source_adapters(limit)
+        report["metadata_language_hints"] = {"policy": "REVIEW_ONLY_NOT_SPOKEN_LANGUAGE_VERIFIED", "results": [{"name": b.splitlines()[0].rsplit(",", 1)[-1], "hint": metadata_language_hint(b.splitlines()[0])} for b in original[:limit]]}
         proposed = discover_youtube_and_official_streams([source], limit) if source else []
         with tempfile.TemporaryDirectory() as directory:
             for index, (label, url) in enumerate(proposed):
