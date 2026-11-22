@@ -42,7 +42,18 @@ jobs:
         run: |
           PYTHONPATH=v2 python -m unittest -v test_ibo_test_result_reconcile test_ibo_497_audit_adapter test_ibo_497_existing_artifact
           python -m py_compile v2/ibo_test_result_reconcile.py v2/ibo_497_audit_adapter.py v2/ibo_497_existing_artifact.py
-      - name: Check whether historical #497 preview can be rebound\n        id: historical\n        run: |\n          python - <<'PY' >> "$GITHUB_OUTPUT"\n          from pathlib import Path\n          import re\n          text = Path('MADSC55_TV_IBO_CALISANLAR_TEST.m3u8').read_text(encoding='utf-8-sig')\n          blocks = re.findall(r'^#EXTINF:.*group-title="[^"]*YEDEKLER[^\"]*"', text, re.M)\n          print('exact=' + ('true' if len(blocks) == 1792 else 'false'))\n          PY\n      - name: Build #497 preview from exact historical artifact (no scan, no playlist write)\n        if: steps.historical.outputs.exact == 'true'
+      - name: Check whether historical #497 preview can be rebound
+        id: historical
+        run: |
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          from pathlib import Path
+          import re
+          text = Path('MADSC55_TV_IBO_CALISANLAR_TEST.m3u8').read_text(encoding='utf-8-sig')
+          blocks = re.findall(r'^#EXTINF:.*group-title="[^"]*YEDEKLER[^\"]*"', text, re.M)
+          print('exact=' + ('true' if len(blocks) == 1792 else 'false'))
+          PY
+      - name: Build #497 preview from exact historical artifact (no scan, no playlist write)
+        if: steps.historical.outputs.exact == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
           GITHUB_REPOSITORY: ${{ github.repository }}
@@ -114,7 +125,6 @@ jobs:
               "playlist_modified": False}, sort_keys=True))
           PY
       - name: Publish 685 retry plan artifact on main only (read-only)
-        if: steps.historical.outputs.exact == 'true'
         if: ${{ steps.historical.outputs.exact == 'true' && github.event_name == 'push' && github.ref == 'refs/heads/main' }}
         uses: actions/upload-artifact@v4
         with:
