@@ -196,11 +196,19 @@ def run_readonly_source_adapters(limit):
         except Exception as exc:
             results[provider] = {"status": "error", "error_type": type(exc).__name__}
     try:
-        from v2.github_source_discovery import main as github_main
-        # Existing GitHub adapter writes a report in the checkout; do not mutate it.
-        # Its bounded search is run in a subprocess with disposable report output.
-        results["github"] = {"status": "ADAPTER_AVAILABLE_NOT_RUN",
-                             "reason": "Existing adapter writes into checkout"}
+        from v2 import github_source_discovery as gh
+        with tempfile.TemporaryDirectory() as tmp:
+            previous_out, previous_queries = gh.OUT, gh.QUERIES
+            try:
+                gh.OUT = Path(tmp) / "github-source-discovery.json"
+                gh.QUERIES = gh.QUERIES[:1]
+                try:
+                    gh.main()
+                except SystemExit:
+                    pass  # Preserve partial error reports rather than losing evidence.
+                results["github"] = json.loads(gh.OUT.read_text()) if gh.OUT.exists() else {"status": "error", "reason": "no_report"}
+            finally:
+                gh.OUT, gh.QUERIES = previous_out, previous_queries
     except ImportError as exc:
         results["github"] = {"status": "error", "error_type": type(exc).__name__}
     try:
@@ -240,7 +248,7 @@ def main():
               "source_rate_limit_seconds": 3}
     try:
         report["source_adapters"] = run_readonly_source_adapters(limit)
-        report["metadata_language_hints"] = {"policy": "REVIEW_ONLY_NOT_SPOKEN_LANGUAGE_VERIFIED", "results": [{"name": row.get("name", ""), "hint": metadata_language_hint(row.get("name", ""), row.get("group", ""))} for row in []]}
+        report["metadata_language_hints"] = {"policy": "REVIEW_ONLY_NOT_SPOKEN_LANGUAGE_VERIFIED", "results": [{"name": b.splitlines()[0].rsplit(",", 1)[-1], "hint": metadata_language_hint(b.splitlines()[0])} for b in original[:limit]]}
         proposed = discover_youtube_and_official_streams([source], limit) if source else []
         with tempfile.TemporaryDirectory() as directory:
             for index, (label, url) in enumerate(proposed):
