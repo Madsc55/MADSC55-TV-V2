@@ -22,6 +22,32 @@ def main():
     current = LIVE.read_bytes()
     text = current.decode("utf-8-sig")
     channels_pre = list(entries(text))
+    if len(channels_pre) == 18258:
+        # Post-404 cleanup: prove this is a deletion-only subset of the
+        # approved 18,912-record inventory, preserving exact order and bytes.
+        import subprocess
+        from ibo_single_playlist_transfer import inventory
+        baseline = subprocess.check_output(
+            ["git", "cat-file", "blob", "f3d39e45"], cwd=ROOT)
+        before = list(entries(baseline.decode("utf-8-sig")))
+        assert len(before) == 18912, "Historical pre-cleanup baseline changed"
+        assert len(before) - len(channels_pre) == 654, "Unexpected deletion count"
+        assert current.startswith(b"#EXTM3U"), "M3U header changed"
+        # Ordered multiset-subsequence: no additions, edits, or reordering.
+        pos = 0
+        for record in channels_pre:
+            while pos < len(before) and before[pos] != record:
+                pos += 1
+            assert pos < len(before), "New, edited, or reordered channel found"
+            pos += 1
+        counts = inventory(current)
+        assert counts == {
+            "YEDEKLER": 1713, "ANA": 15018, "TURK": 422,
+            "YABANCI": 279, "OTHER": 826, "TOTAL": 18258,
+        }, f"Post-cleanup inventory mismatch: {counts}"
+        assert LIVE.read_bytes() == current, "Offline test modified playlist"
+        print("PASS: 18,258 post-404 channels; 654 deletions; order and identity preserved")
+        return
     if len(channels_pre) == 18912:
         # #489: single canonical playlist now includes all four archive categories.
         # Keep the former 2,630 records byte-identical and validate the 16,282
