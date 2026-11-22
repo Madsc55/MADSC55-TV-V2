@@ -88,7 +88,7 @@ jobs:
           assert plan["schema_version"] == 1
           assert plan["plan_type"] == "READ_ONLY_UNCERTAIN_RETRY_PLAN"
           assert plan["plan_status"] == "PENDING_FINAL_TEST_AUTHORIZATION"
-          assert plan["plan_sha256"] == "0ea6f56d9bd599a6f7d5c287296f16a08701ac320c2377e095d6f227296c439a"
+          assert plan["plan_sha256"] == "bc60c74314cf5433185c7176c5870a79684f388b91b9862a407b99d91e06616b"
           assert plan["playlist_sha256"] == hashlib.sha256(
               Path("MADSC55_TV_IBO_CALISANLAR_TEST.m3u8").read_bytes()).hexdigest()
           assert plan["initial_manifest_sha256"] == "b001bf48f07437e9ae67ed9f73b12ea9cfcab653523973435cf3b1cee3c31fcc"
