@@ -105,53 +105,66 @@ def discover_youtube_and_official_streams(source_urls, limit=30):
 
 
 def verify_685_locked_channels(manifest_path, playlist_blocks):
-    """Read-only, fail-closed verification. Locked identities are never promoted."""
+    """Probe immutable 685 identities using bounded pinned downloads and local-only FFmpeg."""
     manifest = json.loads(Path(manifest_path).read_text(encoding="utf-8"))
     queue = manifest.get("retry_queue")
     if not isinstance(queue, list) or len(queue) != 685:
         raise ValueError("Expected 685 locked manifest identities")
-    by_hash = {digest(block.splitlines()[-1].strip()): block for block in playlist_blocks}
-    if len(by_hash) != len(playlist_blocks):
-        raise ValueError("Duplicate playlist URLs prevent locked-channel identity matching")
-    quarantine = []
-    verified_unlocked = []
+    by_identity = {digest(block.encode("utf-8")): block for block in playlist_blocks}
+    if len(by_identity) != len(playlist_blocks):
+        raise ValueError("Duplicate immutable playlist identities")
+    verified_unlocked, quarantine, seen = [], [], set()
     with tempfile.TemporaryDirectory() as directory:
         for index, record in enumerate(queue):
-            url_hash = record.get("url_sha256")
-            block = by_hash.get(url_hash)
-            if not block:
+            channel_hash = record.get("channel_sha256")
+            block = by_identity.get(channel_hash)
+            if channel_hash in seen or block is None or record.get("status") != "uncertain":
                 raise ValueError("Locked manifest identity mismatch")
+            seen.add(channel_hash)
             url = block.splitlines()[-1].strip()
+            url_hash = digest(url)
+            if record.get("url_sha256") != url_hash:
+                raise ValueError("Locked URL identity mismatch")
             output = Path(directory) / f"locked-{index}.mkv"
             try:
                 sample = capture(url, output, seconds=4, timeout=17,
                                  allow_hls_ts=urlsplit(url).path.lower().endswith(".m3u8"))
-                passed = sample.get("status") == "SAMPLE_CAPTURED_UNVERIFIED" and decoded_both(output)
+                passed = (sample.get("status") == "SAMPLE_CAPTURED_UNVERIFIED"
+                          and decoded_both(output))
             except (ValueError, OSError, TimeoutError, subprocess.SubprocessError,
                     json.JSONDecodeError):
                 passed = False
-            quarantine.append({"url_sha256": url_hash,
-                               "status": "AV_OBSERVED_SECURITY_HOLD" if passed else "RECHECK_REQUIRED"})
+            evidence = {"channel_sha256": channel_hash, "url_sha256": url_hash,
+                        "decoded_av_verified": passed, "security_lock_retained": True}
+            if passed:
+                verified_unlocked.append(evidence)
+            else:
+                quarantine.append({**evidence, "status": "RECHECK_REQUIRED"})
     return verified_unlocked, quarantine
 
 
 def classify_and_merge_to_main_playlist(verified_candidates, existing_blocks):
-    """Only independently proven language identities can enter language archives."""
+    """Return M3U blocks only for independently AV- and language-verified new URLs."""
     known = {block.splitlines()[-1].strip() for block in existing_blocks}
     additions = []
     for item in verified_candidates:
-        url = item["url"]
-        label = item["label"]
-        language = item.get("language")
+        url, label = item.get("url"), item.get("label")
+        if not isinstance(url, str) or not isinstance(label, str):
+            continue
         if not item.get("decoded_av_verified") or not item.get("language_verified"):
             continue
-        if language == "tr" and item.get("language_evidence") == "independent_audio_review":
+        if item.get("language_evidence") != "independent_audio_review":
+            continue
+        if item.get("language") == "tr":
             group = "🇹🇷 ULUSAL-HEPSİ"
-        elif language == "foreign" and item.get("language_evidence") == "independent_audio_review":
+        elif item.get("language") == "foreign":
             group = "YABANCI ARŞİVİ"
         else:
             continue
-        if url in known or not re.fullmatch(r"[^\\r\\n\"<>]{1,100}", label):
+        parsed = urlsplit(url)
+        if (parsed.scheme not in ("https", "http") or not parsed.hostname
+                or url in known or len(url) > 4096
+                or not re.fullmatch(r'[^\\r\\n"<>]{1,100}', label)):
             continue
         additions.append(f'#EXTINF:-1 group-title="{group}",{label}\\n{url}\\n')
         known.add(url)
