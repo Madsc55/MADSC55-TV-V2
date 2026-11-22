@@ -1697,3 +1697,18 @@ Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub i
 - PR #365 **birleştirilmeden kapatıldı**: büyük eski dalın güvenli işlevleri #624/#626/#627 ile seçici aktarıldı. Kalan özgün altyapı kabul maddeleri #3/#4/#5/#6/#7; son aşama canlı testler #8/#10. PR #618, gerçek logo eşleşmesi bağımsız doğrulama beklediğinden açık bırakıldı.
 - Kanonik playlist SHA: `f3d39e4522d27912fccd6e67240a10fd16c4923b`, değişmedi. Ayrı playlist oluşturulmadı, canlı tarama yapılmadı.
 - Açık issue sorgusu #497'yi artık döndürmüyor; önceki #497 kayıtları #624/#626 kanıtlarını içerir, fakat uçtan uca otomatik artefakt/karar defteri kabulü doğrulanmış sayılmaz. Açık issue sayısı 7. Tarihsel Actions başarısızlık envanteri henüz eksiksiz değil.
+
+
+## 23 Kasım 2026 — Kullanıcı onaylı öncelik sırası: tüm kanalların sağlık taraması
+
+**Ana hedef:** Yalnızca 685 kilitli kanal veya 30 keşif adayı değil; tek kanonik `MADSC55_TV_IBO_CALISANLAR_TEST.m3u8` dosyasındaki **tüm mevcut kategoriler ve tüm kanallar**, ayrıca keşfedilen **tüm yeni adaylar** kapsam dahilinde olacak. `Autonomous Discovery Read Only` mevcut haliyle bu tam envanter taramasının yerine geçmez. Aşağıdaki maddeler **yapılacak işlerdir**, tamamlandı sayılmaz.
+
+1. **Envanter ve kapsam:** Güncel main playlist'ten kanal kimliklerini, URL'leri, kategorileri ve gerçek sayıları çıkar; YEDEKLER, ANA ARŞİV, TÜRK, YABANCI ve diğer kategorilerden hiçbirini atlama. Tarihsel 18.912 sayısını güncel gerçek sayı varsayma. Tek ana playlist, yeni playlist yok.
+2. **Paketli, devam edilebilir tam tarama:** Bütün mevcut kanalları paketler halinde HTTP/HLS ve güvenli ses-görüntü doğrulamasından geçir. Kaldığı yerden devam, tekrar deneme, hız sınırı ve test kanıtı saklama zorunlu. FFmpeg/HLS ağ izolasyonu kabul koşullarını ihlal etme.
+3. **Kanal bazlı sağlık defteri:** Her kanal için değişmez kimlik, kategori, URL özeti, kontrol zamanı, HTTP/HLS sonucu, ses/video kanıtı ve `CALISIYOR` / `CALISMIYOR` / `BELIRSIZ_YENIDEN_TEST` durumunu kaydet. 403/503, bölgesel engel ve timeout tek başına kesin ölü değildir.
+4. **685 güvenlik kilidi:** Manifest kimliklerini koru; kilitli kanalları otomatik silme veya korumayı erken kaldırma. Şüpheli sonuçları karantinada/yeniden test kuyruğunda tut.
+5. **Keşfedilen tüm yeni adaylar:** GitHub/GitLab/Codeberg/resmî kaynaklardan bulunan her adayı tekilleştirip aynı sağlık doğrulamasına sok; aday bulundu diye canlı kabul etme. Sınırsız tek iş yerine kuyruk/paketleme uygula.
+6. **Türk/Yabancı kanıtlı sınıflandırma:** İsim/ülke ipucu kesin dil kanıtı değildir. Türkçe ses, altyazı veya bağımsız doğrulanmış yayın kimliği ile mevcut TÜRK/YABANCI arşivlerine güvenli taşıma planı oluştur; belirsizleri yanlış taşıma.
+7. **Güvenli uygulama ve kabul:** Sonuçları raporla; kullanıcı kuralları ve 685 kilidi doğrulandıktan sonra yalnızca doğrulanmış değişiklikleri mevcut ana playlist'e PR üzerinden uygula. Mevcut diğer kategorileri koru, 48 daha önce yasaklanan kanalı geri getirme; Offline CI ve Production Security Gate PASS olmadan merge etme. İBO Player cihaz testi ayrı son kabul aşaması.
+
+**Mevcut durum:** PR #649 main'e merge edildi; bu yalnızca 685 doğrulama akışındaki bytes/string çökmesini düzeltti. Tam envanter taraması, bütün kategori sağlık işaretleme ve arşiv taşımaları **henüz yapılmadı**. Öncelik yukarıdaki 1→7 sırasıdır; tekrar tekrar dar kapsamlı discovery çalıştırmak hedefin tamamlandığı anlamına gelmez.
