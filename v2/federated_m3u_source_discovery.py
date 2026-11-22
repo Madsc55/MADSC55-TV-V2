@@ -12,9 +12,9 @@ import urllib.parse
 import urllib.request
 from pathlib import Path
 
-from discover import ROOT, entries
-from discovery_34 import QUERIES, fetch_json, fetch_with_retry, repository_items, search_url, _NoRedirect
-from discovery_provider_requests import REQUEST_ERRORS, http_error_details, provider_rate_limited
+from v2.discover import ROOT, entries
+from v2.discovery_34 import QUERIES, fetch_json, fetch_with_retry, repository_items, search_url, _NoRedirect
+from v2.discovery_provider_requests import REQUEST_ERRORS, http_error_details, provider_rate_limited
 
 MAX_PROJECTS = 60
 MAX_FILES = 160
