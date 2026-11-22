@@ -173,6 +173,55 @@ def classify_and_merge_to_main_playlist(verified_candidates, existing_blocks):
         known.add(url)
     return additions
 
+
+def metadata_language_hint(label, group=""):
+    """Metadata hints are never independently verified spoken-language evidence."""
+    combined = (str(label) + " " + str(group)).casefold()
+    if re.search(r"türk|turk|trt|\\btr\\b|azer|azər", combined):
+        return "TURKISH_METADATA_HINT_REVIEW_REQUIRED"
+    return "LANGUAGE_UNVERIFIED_REVIEW_REQUIRED"
+
+
+def run_readonly_source_adapters(limit):
+    """Call existing adapters; keep their outputs advisory and bounded."""
+    from v2.federated_m3u_source_discovery import discover_provider
+    from v2.youtube_discovery import search, QUERIES
+    from v2.official_sites_discovery import select_official_sites, URL
+    import urllib.request
+    results = {}
+    for provider in ("gitlab", "codeberg"):
+        try:
+            data = discover_provider(provider, queries=("iptv",), configured_urls=set())
+            results[provider] = data
+        except Exception as exc:
+            results[provider] = {"status": "error", "error_type": type(exc).__name__}
+    try:
+        from v2.github_source_discovery import main as github_main
+        # Existing GitHub adapter writes a report in the checkout; do not mutate it.
+        # Its bounded search is run in a subprocess with disposable report output.
+        results["github"] = {"status": "ADAPTER_AVAILABLE_NOT_RUN",
+                             "reason": "Existing adapter writes into checkout"}
+    except ImportError as exc:
+        results["github"] = {"status": "error", "error_type": type(exc).__name__}
+    try:
+        rows, error = search(QUERIES[0])
+        results["youtube"] = {"status": "metadata_only", "candidates": rows[:limit],
+                              "error": error, "stream_urls_verified": 0}
+    except Exception as exc:
+        results["youtube"] = {"status": "error", "error_type": type(exc).__name__}
+    try:
+        req = urllib.request.Request(URL, headers={"User-Agent": "MADSC55-Readonly/1"})
+        with urllib.request.urlopen(req, timeout=35) as response:
+            raw = response.read(30_000_001)
+        if len(raw) > 30_000_000:
+            raise ValueError("Official directory exceeds size limit")
+        sites = select_official_sites(json.loads(raw))
+        results["official_sites"] = {"status": "directory_only", "count": len(sites),
+                                    "channels": sites[:limit], "stream_urls_verified": 0}
+    except Exception as exc:
+        results["official_sites"] = {"status": "error", "error_type": type(exc).__name__}
+    return results
+
 def main():
     raw = PLAYLIST.read_bytes()
     prefix, blocks = parse(raw)
@@ -190,6 +239,8 @@ def main():
               "language_classification": "UNVERIFIED_NO_AUTOMATIC_REASSIGNMENT",
               "source_rate_limit_seconds": 3}
     try:
+        report["source_adapters"] = run_readonly_source_adapters(limit)
+        report["metadata_language_hints"] = {"policy": "REVIEW_ONLY_NOT_SPOKEN_LANGUAGE_VERIFIED", "results": [{"name": row.get("name", ""), "hint": metadata_language_hint(row.get("name", ""), row.get("group", ""))} for row in []]}
         proposed = discover_youtube_and_official_streams([source], limit) if source else []
         with tempfile.TemporaryDirectory() as directory:
             for index, (label, url) in enumerate(proposed):
