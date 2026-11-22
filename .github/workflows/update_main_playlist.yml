@@ -1,0 +1,54 @@
+name: Update Main Playlist (Safe HTTP)
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 2 * * *'
+permissions:
+  contents: write
+concurrency:
+  group: update-main-playlist
+  cancel-in-progress: false
+jobs:
+  update:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Offline playlist syntax check
+        run: python -m py_compile v2/scripts/update_main_playlist.py
+      - name: Probe streams and safely update canonical playlist
+        run: python v2/scripts/update_main_playlist.py --apply --workers 4
+      - name: Validate M3U and categories after update
+        run: |
+          python - <<'PY'
+          import sys
+          sys.path.insert(0, 'v2/scripts')
+          from update_main_playlist import PLAYLIST, parse
+          before = PLAYLIST.read_text(encoding='utf-8')
+          prefix, entries = parse(before)
+          assert len(entries) > 0
+          assert before.startswith('#EXTM3U')
+          print('PASS:', len(entries), 'entries')
+          PY
+      - name: Commit canonical playlist only if changed
+        run: |
+          if ! git diff --quiet -- MADSC55_TV_IBO_CALISANLAR_TEST.m3u8; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add MADSC55_TV_IBO_CALISANLAR_TEST.m3u8
+            git commit -m "chore: remove independently confirmed 404 streams from canonical playlist"
+            git push origin HEAD:main
+          fi
+      - name: Upload health report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: main-playlist-health
+          path: v2/reports/main-playlist-live-health-latest.json
+          if-no-files-found: ignore
