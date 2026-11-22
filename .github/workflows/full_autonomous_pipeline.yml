@@ -29,7 +29,7 @@ jobs:
           SOURCE_FEED: ${{ inputs.source_feed }}
           MAX_CANDIDATES: ${{ inputs.max_candidates }}
         run: |
-          python3 v2/full_autonomous_pipeline.py
+          python3 -m v2.full_autonomous_pipeline
       - name: Upload evidence (never publish stream URLs)
         if: always()
         uses: actions/upload-artifact@v4
