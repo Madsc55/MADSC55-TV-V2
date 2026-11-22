@@ -22,6 +22,31 @@ def main():
     current = LIVE.read_bytes()
     text = current.decode("utf-8-sig")
     channels_pre = list(entries(text))
+    if len(channels_pre) == 18337:
+        # Approved HTTP cleanup: exactly 575 non-YEDEKLER entries removed.
+        # The historical 1,792 YEDEKLER records (including all 685 security holds)
+        # must remain byte-identical, in order, without weakening the lock.
+        import subprocess
+        from ibo_single_playlist_transfer import parse, category, inventory
+        baseline = subprocess.check_output(
+            ["git", "cat-file", "blob", "f3d39e4522d27912fccd6e67240a10fd16c4923b"],
+            cwd=ROOT)
+        _, original_blocks = parse(baseline)
+        _, actual_blocks = parse(current)
+        original_yedekler = [b for b in original_blocks if category(b.split("\\n", 1)[0]) == "YEDEKLER"]
+        actual_yedekler = [b for b in actual_blocks if category(b.split("\\n", 1)[0]) == "YEDEKLER"]
+        assert len(original_yedekler) == len(actual_yedekler) == 1792
+        assert actual_yedekler == original_yedekler, "SECURITY HOLD or YEDEKLER changed"
+        it = iter(original_blocks)
+        assert all(any(old == block for old in it) for block in actual_blocks), (
+            "New or reordered channel detected")
+        assert len(original_blocks) - len(actual_blocks) == 575
+        counts = inventory(current)
+        assert counts == {"YEDEKLER": 1792, "ANA": 15018, "TURK": 422,
+                          "YABANCI": 279, "OTHER": 826, "TOTAL": 18337}, counts
+        assert LIVE.read_bytes() == current
+        print("PASS: 18337 channels; 1792 YEDEKLER and 685 holds preserved")
+        return
     if len(channels_pre) == 18912:
         # #489: single canonical playlist now includes all four archive categories.
         # Keep the former 2,630 records byte-identical and validate the 16,282
