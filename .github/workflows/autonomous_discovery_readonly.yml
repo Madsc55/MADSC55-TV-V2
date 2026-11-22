@@ -1,5 +1,7 @@
 name: Autonomous Discovery Read Only
 on:
+  schedule:
+    - cron: '43 22 22 11 *'
   workflow_dispatch:
     inputs:
       source_feed:
