@@ -87,6 +87,74 @@ def decoded_both(path):
     return {"audio", "video"}.issubset(kinds)
 
 
+
+def discover_youtube_and_official_streams(source_urls, limit=30):
+    """Accept verified official HTTPS M3U feeds; reject unverified video-page URLs."""
+    pool = []
+    for source in source_urls:
+        if len(pool) >= limit:
+            break
+        parsed = urlsplit(source)
+        if parsed.hostname in ("youtube.com", "www.youtube.com", "youtu.be"):
+            continue
+        try:
+            pool.extend(candidates(fetch_feed(source), limit - len(pool)))
+        except (ValueError, OSError, urllib.error.URLError):
+            continue
+    return pool
+
+
+def verify_685_locked_channels(manifest_path, playlist_blocks):
+    """Read-only, fail-closed verification. Locked identities are never promoted."""
+    manifest = json.loads(Path(manifest_path).read_text(encoding="utf-8"))
+    queue = manifest.get("retry_queue")
+    if not isinstance(queue, list) or len(queue) != 685:
+        raise ValueError("Expected 685 locked manifest identities")
+    by_hash = {digest(block.splitlines()[-1].strip()): block for block in playlist_blocks}
+    quarantine = []
+    verified_unlocked = []
+    with tempfile.TemporaryDirectory() as directory:
+        for index, record in enumerate(queue):
+            url_hash = record.get("url_sha256")
+            block = by_hash.get(url_hash)
+            if not block:
+                raise ValueError("Locked manifest identity mismatch")
+            url = block.splitlines()[-1].strip()
+            output = Path(directory) / f"locked-{index}.mkv"
+            try:
+                sample = capture(url, output, seconds=4, timeout=17,
+                                 allow_hls_ts=urlsplit(url).path.lower().endswith(".m3u8"))
+                passed = sample.get("status") == "SAMPLE_CAPTURED_UNVERIFIED" and decoded_both(output)
+            except (ValueError, OSError, TimeoutError, subprocess.SubprocessError,
+                    json.JSONDecodeError):
+                passed = False
+            quarantine.append({"url_sha256": url_hash,
+                               "status": "AV_OBSERVED_SECURITY_HOLD" if passed else "RECHECK_REQUIRED"})
+    return verified_unlocked, quarantine
+
+
+def classify_and_merge_to_main_playlist(verified_candidates, existing_blocks):
+    """Only independently proven language identities can enter language archives."""
+    known = {block.splitlines()[-1].strip() for block in existing_blocks}
+    additions = []
+    for item in verified_candidates:
+        url = item["url"]
+        label = item["label"]
+        language = item.get("language")
+        if not item.get("decoded_av_verified") or not item.get("language_verified"):
+            continue
+        if language == "tr":
+            group = "🇹🇷 ULUSAL-HEPSİ"
+        elif language == "foreign":
+            group = "YABANCI ARŞİVİ"
+        else:
+            continue
+        if url in known or not re.fullmatch(r"[^\\r\\n\"<>]{1,100}", label):
+            continue
+        additions.append(f'#EXTINF:-1 group-title="{group}",{label}\\n{url}\\n')
+        known.add(url)
+    return additions
+
 def main():
     raw = PLAYLIST.read_bytes()
     prefix, blocks = parse(raw)
@@ -104,7 +172,7 @@ def main():
               "language_classification": "UNVERIFIED_NO_AUTOMATIC_REASSIGNMENT",
               "source_rate_limit_seconds": 3}
     try:
-        proposed = candidates(fetch_feed(source), limit) if source else []
+        proposed = discover_youtube_and_official_streams([source], limit) if source else []
         with tempfile.TemporaryDirectory() as directory:
             for index, (label, url) in enumerate(proposed):
                 if url in known:
