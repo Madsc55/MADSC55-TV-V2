@@ -1,0 +1,46 @@
+name: Owner-authorized one-time 685 archive move
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+  pull-requests: write
+jobs:
+  move-685:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: false
+      - name: Download immutable historical 685 manifest
+        uses: actions/download-artifact@v4
+        with:
+          name: v2-497-existing-audit-preview
+          run-id: 44842556117
+          github-token: ${{ github.token }}
+          path: ${{ runner.temp }}/move-685
+      - name: Run exact-identity migration
+        run: |
+          set -euo pipefail
+          python3 v2/unlock_and_move_685.py \
+            --manifest "${{ runner.temp }}/move-685/manifest.json" \
+            --report "${{ runner.temp }}/move-685/move-685-report.json"
+      - name: Publish category count evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: move-685-category-report
+          path: ${{ runner.temp }}/move-685/move-685-report.json
+      - name: Open migration PR (never push directly to main)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          branch="owner/one-time-685-move-${GITHUB_RUN_ID}"
+          git checkout -b "$branch"
+          git add MADSC55_TV_IBO_CALISANLAR_TEST.m3u8
+          git commit -m "Move exactly 685 historical records to ANA ARŞİV"
+          git -c http.extraheader="AUTHORIZATION: basic $(printf 'x-access-token:%s' "$GH_TOKEN" | base64 -w0)" push "https://github.com/${GITHUB_REPOSITORY}.git" "HEAD:refs/heads/$branch"
+          gh pr create --base main --head "$branch" --title "Apply owner-approved 685 archive move" --body "Exact 685 manifest identity checks; only group-title and ordering changed. Review CI before merge."
