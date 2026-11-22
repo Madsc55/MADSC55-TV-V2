@@ -6,6 +6,10 @@ on:
         description: 'Approved HTTPS M3U feed URL; empty means inventory-only report'
         required: false
         type: string
+      locked_manifest_path:
+        description: 'Optional reviewed 685-entry manifest path in repository'
+        required: false
+        type: string
       max_candidates:
         description: 'Maximum bounded candidate checks'
         default: '30'
@@ -27,6 +31,7 @@ jobs:
           SOURCE_FEED: ${{ inputs.source_feed }}
           MAX_CANDIDATES: ${{ inputs.max_candidates }}
           PYTHONPATH: ${{ github.workspace }}
+          LOCKED_MANIFEST_PATH: ${{ inputs.locked_manifest_path }}
         run: |
           set -euo pipefail
           mkdir -p "$RUNNER_TEMP/discovery"
@@ -40,8 +45,32 @@ jobs:
           data = json.loads(p.read_text())
           data["readonly_workflow"] = True
           data["canonical_playlist_unchanged"] = True
-          data["locked_685_live_retry_executed"] = False
-          data["language_classification_executed"] = False
+          import os
+          from v2.ibo_single_playlist_transfer import parse
+          from v2.full_autonomous_pipeline import (
+              verify_685_locked_channels, classify_and_merge_to_main_playlist)
+          manifest = os.environ.get("LOCKED_MANIFEST_PATH", "").strip()
+          if manifest:
+              from pathlib import Path as SourcePath
+              root = SourcePath(os.environ["PYTHONPATH"]).resolve()
+              selected = (root / manifest).resolve()
+              if not selected.is_relative_to(root) or not selected.is_file():
+                  raise ValueError("Locked manifest must be an existing repository file")
+              _, blocks = parse(SourcePath("MADSC55_TV_IBO_CALISANLAR_TEST.m3u8").read_bytes())
+              verified, quarantined = verify_685_locked_channels(selected, blocks)
+              data["locked_685_live_retry_executed"] = True
+              data["locked_685_verified_av_count"] = len(verified)
+              data["locked_685_quarantine_count"] = len(quarantined)
+              data["locked_685_verified_evidence"] = verified
+              data["locked_685_quarantine_evidence"] = quarantined
+          else:
+              data["locked_685_live_retry_executed"] = False
+              data["locked_685_manifest_required"] = True
+          _, blocks = parse(SourcePath("MADSC55_TV_IBO_CALISANLAR_TEST.m3u8").read_bytes())
+          classified = classify_and_merge_to_main_playlist([], blocks)
+          data["language_classification_executed"] = True
+          data["language_verified_additions"] = len(classified)
+          data["language_evidence_missing"] = True
           p.write_text(json.dumps(data, indent=2, sort_keys=True) + "\n")
           PY
       - name: Publish discovery results only
