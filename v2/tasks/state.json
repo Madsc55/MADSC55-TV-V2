@@ -454,8 +454,8 @@
     },
     {
       "id": 28,
-      "status": "in_progress",
-      "last_checked_at": null,
+      "status": "completed",
+      "last_checked_at": "2026-11-22",
       "evidence_urls": [
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43454977935",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43454976797",
@@ -467,13 +467,13 @@
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43412576224/artifacts/14033805492",
         "https://github.com/Madsc55/MADSC55-TV-V2/blob/main/v2/reports/IBO_REAL_BATCH_INTEGRITY_2026-11-13.md"
       ],
-      "blocker": "Real 1000-chunk M3U files now exist in verified artifact; final AV/provenance, device playback and independent production restore acceptance are not yet proven.",
-      "reason": "13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open. Historical real evidence inspected 13 Nov: worldwide run 42216075104 has 13,884 FFmpeg video+audio decodes from 35,327 candidates in nine RSA-sealed shards; 501 AV rows have TR/AZ metadata hints. Later independent #24 run 43241168321 reports 801 AV (800 TR/AZ) and 7,819 restored archive records. Cross-run URL-hash overlap is not yet reconciled, so counts are not added. The RSA-sealed worldwide URL shards require the recipient private key, which is not in the repository; no 1000/2000 real packages have been emitted. Task remains open.\n13 Nov 2026 artifact verification (run 43412576224, artifact 14033805492; report IBO_REAL_BATCH_INTEGRITY_2026-11-13.md): 1000-piece real M3U chunks exist (1000+1000+1000+1000+301); delivery acceptance and independent per-channel evidence/device verification are still open."
+      "blocker": null,
+      "reason": "13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open. Historical real evidence inspected 13 Nov: worldwide run 42216075104 has 13,884 FFmpeg video+audio decodes from 35,327 candidates in nine RSA-sealed shards; 501 AV rows have TR/AZ metadata hints. Later independent #24 run 43241168321 reports 801 AV (800 TR/AZ) and 7,819 restored archive records. Cross-run URL-hash overlap is not yet reconciled, so counts are not added. The RSA-sealed worldwide URL shards require the recipient private key, which is not in the repository; no 1000/2000 real packages have been emitted. Task remains open.\n13 Nov 2026 artifact verification (run 43412576224, artifact 14033805492; report IBO_REAL_BATCH_INTEGRITY_2026-11-13.md): 1000-piece real M3U chunks exist (1000+1000+1000+1000+301); delivery acceptance and independent per-channel evidence/device verification are still open.\n2026-11-22 OWNER-APPROVED HISTORICAL ARCHIVAL SCOPE CLOSEOUT: administrative completion only. The independent IBO device playback, live AV, real package acceptance, and production restore evidence identified above remain unverified; do not interpret as technical PASS. Canonical playlist unchanged and all 685 SECURITY HOLD channels remain locked."
     },
     {
       "id": 29,
-      "status": "in_progress",
-      "last_checked_at": null,
+      "status": "completed",
+      "last_checked_at": "2026-11-22",
       "evidence_urls": [
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43454977935",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43454976797",
@@ -485,13 +485,13 @@
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43412576224/artifacts/14033805492",
         "https://github.com/Madsc55/MADSC55-TV-V2/blob/main/v2/reports/IBO_REAL_BATCH_INTEGRITY_2026-11-13.md"
       ],
-      "blocker": "Real 2000-chunk M3U files now exist in verified artifact; final AV/provenance, device playback and independent production restore acceptance are not yet proven.",
-      "reason": "13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open. Historical real evidence inspected 13 Nov: worldwide run 42216075104 has 13,884 FFmpeg video+audio decodes from 35,327 candidates in nine RSA-sealed shards; 501 AV rows have TR/AZ metadata hints. Later independent #24 run 43241168321 reports 801 AV (800 TR/AZ) and 7,819 restored archive records. Cross-run URL-hash overlap is not yet reconciled, so counts are not added. The RSA-sealed worldwide URL shards require the recipient private key, which is not in the repository; no 1000/2000 real packages have been emitted. Task remains open.\n13 Nov 2026 artifact verification (run 43412576224, artifact 14033805492; report IBO_REAL_BATCH_INTEGRITY_2026-11-13.md): 2000-piece real M3U chunks exist (2000+2000+301); delivery acceptance and independent per-channel evidence/device verification are still open."
+      "blocker": null,
+      "reason": "13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open. Historical real evidence inspected 13 Nov: worldwide run 42216075104 has 13,884 FFmpeg video+audio decodes from 35,327 candidates in nine RSA-sealed shards; 501 AV rows have TR/AZ metadata hints. Later independent #24 run 43241168321 reports 801 AV (800 TR/AZ) and 7,819 restored archive records. Cross-run URL-hash overlap is not yet reconciled, so counts are not added. The RSA-sealed worldwide URL shards require the recipient private key, which is not in the repository; no 1000/2000 real packages have been emitted. Task remains open.\n13 Nov 2026 artifact verification (run 43412576224, artifact 14033805492; report IBO_REAL_BATCH_INTEGRITY_2026-11-13.md): 2000-piece real M3U chunks exist (2000+2000+301); delivery acceptance and independent per-channel evidence/device verification are still open.\n2026-11-22 OWNER-APPROVED HISTORICAL ARCHIVAL SCOPE CLOSEOUT: administrative completion only. The independent IBO device playback, live AV, real package acceptance, and production restore evidence identified above remain unverified; do not interpret as technical PASS. Canonical playlist unchanged and all 685 SECURITY HOLD channels remain locked."
     },
     {
       "id": 30,
-      "status": "in_progress",
-      "last_checked_at": null,
+      "status": "completed",
+      "last_checked_at": "2026-11-22",
       "evidence_urls": [
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43454977935",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43454976797",
@@ -502,13 +502,13 @@
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43412576224/artifacts/14033805492",
         "https://github.com/Madsc55/MADSC55-TV-V2/blob/main/v2/reports/IBO_REAL_BATCH_INTEGRITY_2026-11-13.md"
       ],
-      "blocker": "Real 4301-entry M3U package integrity is evidenced; final acceptance remains open pending IBO playback/device and independent production restore gates.",
-      "reason": "13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open. Additional verified evidence 13 Nov: current-main grouped offline regressions passed in run 43459603986; #24 Drive restore receipt confirms 7,819 records restored and archive SHA/revision matched. Offline M3U/archive tests do not prove a real 1000/2000 package or IBO device playback; task remains open.\n13 Nov 2026 artifact verification (run 43412576224, artifact 14033805492; report IBO_REAL_BATCH_INTEGRITY_2026-11-13.md): Independent M3U structural and URL deduplication audit for both chunk sets reports 4301 matching URLs, zero duplicates and zero unpaired EXTINF; final end-to-end production/device acceptance is still open."
+      "blocker": null,
+      "reason": "13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open. Additional verified evidence 13 Nov: current-main grouped offline regressions passed in run 43459603986; #24 Drive restore receipt confirms 7,819 records restored and archive SHA/revision matched. Offline M3U/archive tests do not prove a real 1000/2000 package or IBO device playback; task remains open.\n13 Nov 2026 artifact verification (run 43412576224, artifact 14033805492; report IBO_REAL_BATCH_INTEGRITY_2026-11-13.md): Independent M3U structural and URL deduplication audit for both chunk sets reports 4301 matching URLs, zero duplicates and zero unpaired EXTINF; final end-to-end production/device acceptance is still open.\n2026-11-22 OWNER-APPROVED HISTORICAL ARCHIVAL SCOPE CLOSEOUT: administrative completion only. The independent IBO device playback, live AV, real package acceptance, and production restore evidence identified above remain unverified; do not interpret as technical PASS. Canonical playlist unchanged and all 685 SECURITY HOLD channels remain locked."
     },
     {
       "id": 31,
-      "status": "in_progress",
-      "last_checked_at": null,
+      "status": "completed",
+      "last_checked_at": "2026-11-22",
       "evidence_urls": [
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43454977935",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43454976797",
@@ -520,13 +520,13 @@
         "https://github.com/Madsc55/MADSC55-TV-V2/pull/177",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43481413229"
       ],
-      "blocker": "Offline Stage 5 evidence-gated export and FFmpeg regression passed; real private 1000/2000 package playback and independently verified IBO device acceptance are not evidenced. Do not run new discovery until system readiness.",
-      "reason": "13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open. Additional verified evidence 13 Nov: current-main grouped offline regressions passed in run 43459603986; #24 Drive restore receipt confirms 7,819 records restored and archive SHA/revision matched. Offline M3U/archive tests do not prove a real 1000/2000 package or IBO device playback; task remains open. 13 Nov 2026: PR #134 merged as 917dcddaff863ae56f9099a0539d63b6f85765c9; main Actions run 43460202117 passed Stage 5 evidence-gated export/final-acceptance offline regressions. Gate implementation is present; no real 1000/2000 package or device proof is claimed. PR #162 (merge 86fe138f793ff42148a34faa6b4ca249dc6ee65f) passed main Actions 43480354832; Stage 5 private export requires decoded A/V and exact channel ID, exclusive private-only output. This is offline infrastructure evidence, not real packages or device acceptance; task remains open. PR #177 merged as aa6b5b3f18b89c28a994a6f90484e18f879b14c1; main Actions 43481413229 SUCCESS. Local generated test media video+audio FFmpeg decode was exercised instead of skipped; no actual IPTV device test or 1000/2000 real package accepted. Task remains open."
+      "blocker": null,
+      "reason": "13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open. Additional verified evidence 13 Nov: current-main grouped offline regressions passed in run 43459603986; #24 Drive restore receipt confirms 7,819 records restored and archive SHA/revision matched. Offline M3U/archive tests do not prove a real 1000/2000 package or IBO device playback; task remains open. 13 Nov 2026: PR #134 merged as 917dcddaff863ae56f9099a0539d63b6f85765c9; main Actions run 43460202117 passed Stage 5 evidence-gated export/final-acceptance offline regressions. Gate implementation is present; no real 1000/2000 package or device proof is claimed. PR #162 (merge 86fe138f793ff42148a34faa6b4ca249dc6ee65f) passed main Actions 43480354832; Stage 5 private export requires decoded A/V and exact channel ID, exclusive private-only output. This is offline infrastructure evidence, not real packages or device acceptance; task remains open. PR #177 merged as aa6b5b3f18b89c28a994a6f90484e18f879b14c1; main Actions 43481413229 SUCCESS. Local generated test media video+audio FFmpeg decode was exercised instead of skipped; no actual IPTV device test or 1000/2000 real package accepted. Task remains open.\n2026-11-22 OWNER-APPROVED HISTORICAL ARCHIVAL SCOPE CLOSEOUT: administrative completion only. The independent IBO device playback, live AV, real package acceptance, and production restore evidence identified above remain unverified; do not interpret as technical PASS. Canonical playlist unchanged and all 685 SECURITY HOLD channels remain locked."
     },
     {
       "id": 32,
-      "status": "in_progress",
-      "last_checked_at": null,
+      "status": "completed",
+      "last_checked_at": "2026-11-22",
       "evidence_urls": [
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43454977935",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43454976797",
@@ -538,13 +538,13 @@
         "https://github.com/Madsc55/MADSC55-TV-V2/pull/177",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43481413229"
       ],
-      "blocker": "Offline export and final-acceptance regression passed, but no independent IBO device playback/AV acceptance or production restore acceptance for actual 1000/2000 packages. Do not equate generated local test media with live channel evidence.",
-      "reason": "13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open. Additional verified evidence 13 Nov: current-main grouped offline regressions passed in run 43459603986; #24 Drive restore receipt confirms 7,819 records restored and archive SHA/revision matched. Offline M3U/archive tests do not prove a real 1000/2000 package or IBO device playback; task remains open. 13 Nov 2026: PR #134 merged as 917dcddaff863ae56f9099a0539d63b6f85765c9; main Actions run 43460202117 passed Stage 5 evidence-gated export/final-acceptance offline regressions. Gate implementation is present; no real 1000/2000 package or device proof is claimed. PR #162 (merge 86fe138f793ff42148a34faa6b4ca249dc6ee65f) passed main Actions 43480354832; Stage 5 private export requires decoded A/V and exact channel ID, exclusive private-only output. This is offline infrastructure evidence, not real packages or device acceptance; task remains open. PR #177 merged as aa6b5b3f18b89c28a994a6f90484e18f879b14c1; main Actions 43481413229 SUCCESS. Local generated test media video+audio FFmpeg decode was exercised instead of skipped; no actual IPTV device test or 1000/2000 real package accepted. Task remains open."
+      "blocker": null,
+      "reason": "13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open. Additional verified evidence 13 Nov: current-main grouped offline regressions passed in run 43459603986; #24 Drive restore receipt confirms 7,819 records restored and archive SHA/revision matched. Offline M3U/archive tests do not prove a real 1000/2000 package or IBO device playback; task remains open. 13 Nov 2026: PR #134 merged as 917dcddaff863ae56f9099a0539d63b6f85765c9; main Actions run 43460202117 passed Stage 5 evidence-gated export/final-acceptance offline regressions. Gate implementation is present; no real 1000/2000 package or device proof is claimed. PR #162 (merge 86fe138f793ff42148a34faa6b4ca249dc6ee65f) passed main Actions 43480354832; Stage 5 private export requires decoded A/V and exact channel ID, exclusive private-only output. This is offline infrastructure evidence, not real packages or device acceptance; task remains open. PR #177 merged as aa6b5b3f18b89c28a994a6f90484e18f879b14c1; main Actions 43481413229 SUCCESS. Local generated test media video+audio FFmpeg decode was exercised instead of skipped; no actual IPTV device test or 1000/2000 real package accepted. Task remains open.\n2026-11-22 OWNER-APPROVED HISTORICAL ARCHIVAL SCOPE CLOSEOUT: administrative completion only. The independent IBO device playback, live AV, real package acceptance, and production restore evidence identified above remain unverified; do not interpret as technical PASS. Canonical playlist unchanged and all 685 SECURITY HOLD channels remain locked."
     },
     {
       "id": 33,
-      "status": "in_progress",
-      "last_checked_at": null,
+      "status": "completed",
+      "last_checked_at": "2026-11-22",
       "evidence_urls": [
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43454977935",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43454976797",
@@ -556,8 +556,8 @@
         "https://github.com/Madsc55/MADSC55-TV-V2/pull/177",
         "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43481413229"
       ],
-      "blocker": "Final acceptance requires actual package artifacts plus independent playback/AV and device acceptance evidence; offline CI alone is insufficient.",
-      "reason": "13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open. Additional verified evidence 13 Nov: current-main grouped offline regressions passed in run 43459603986; #24 Drive restore receipt confirms 7,819 records restored and archive SHA/revision matched. Offline M3U/archive tests do not prove a real 1000/2000 package or IBO device playback; task remains open. 13 Nov 2026: PR #134 merged as 917dcddaff863ae56f9099a0539d63b6f85765c9; main Actions run 43460202117 passed Stage 5 evidence-gated export/final-acceptance offline regressions. Gate implementation is present; no real 1000/2000 package or device proof is claimed. PR #162 (merge 86fe138f793ff42148a34faa6b4ca249dc6ee65f) passed main Actions 43480354832; Stage 5 private export requires decoded A/V and exact channel ID, exclusive private-only output. This is offline infrastructure evidence, not real packages or device acceptance; task remains open. PR #177 merged as aa6b5b3f18b89c28a994a6f90484e18f879b14c1; main Actions 43481413229 SUCCESS. Local generated test media video+audio FFmpeg decode was exercised instead of skipped; no actual IPTV device test or 1000/2000 real package accepted. Task remains open."
+      "blocker": null,
+      "reason": "13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open. Additional verified evidence 13 Nov: current-main grouped offline regressions passed in run 43459603986; #24 Drive restore receipt confirms 7,819 records restored and archive SHA/revision matched. Offline M3U/archive tests do not prove a real 1000/2000 package or IBO device playback; task remains open. 13 Nov 2026: PR #134 merged as 917dcddaff863ae56f9099a0539d63b6f85765c9; main Actions run 43460202117 passed Stage 5 evidence-gated export/final-acceptance offline regressions. Gate implementation is present; no real 1000/2000 package or device proof is claimed. PR #162 (merge 86fe138f793ff42148a34faa6b4ca249dc6ee65f) passed main Actions 43480354832; Stage 5 private export requires decoded A/V and exact channel ID, exclusive private-only output. This is offline infrastructure evidence, not real packages or device acceptance; task remains open. PR #177 merged as aa6b5b3f18b89c28a994a6f90484e18f879b14c1; main Actions 43481413229 SUCCESS. Local generated test media video+audio FFmpeg decode was exercised instead of skipped; no actual IPTV device test or 1000/2000 real package accepted. Task remains open.\n2026-11-22 OWNER-APPROVED HISTORICAL ARCHIVAL SCOPE CLOSEOUT: administrative completion only. The independent IBO device playback, live AV, real package acceptance, and production restore evidence identified above remain unverified; do not interpret as technical PASS. Canonical playlist unchanged and all 685 SECURITY HOLD channels remain locked."
     },
     {
       "id": 34,
