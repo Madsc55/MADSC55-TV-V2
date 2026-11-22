@@ -124,7 +124,19 @@ jobs:
         run: |
           PYTHONPATH=v2:. python -m unittest -v v2.test_yedekler_worldwide_crosswalk
           python -m py_compile v2/yedekler_worldwide_crosswalk.py v2/test_yedekler_worldwide_crosswalk.py
+      - name: Check Stage 5 historical inventory applicability
+        id: stage5_inventory
+        run: |
+          PYTHONPATH=v2 python - <<'PY' >> "$GITHUB_OUTPUT"
+          from pathlib import Path
+          from ibo_single_playlist_transfer import inventory
+          actual = inventory(Path("MADSC55_TV_IBO_CALISANLAR_TEST.m3u8").read_bytes())
+          historical = {"YEDEKLER": 1792, "ANA": 15574, "TURK": 424,
+                        "YABANCI": 284, "OTHER": 838, "TOTAL": 18912}
+          print("historical=" + ("true" if actual == historical else "false"))
+          PY
       - name: Build Stage 5 historical crosswalk from exact old artifact (no scan)
+        if: steps.stage5_inventory.outputs.historical == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
           GITHUB_REPOSITORY: ${{ github.repository }}
@@ -157,6 +169,7 @@ jobs:
                             "new_scan_started": False, "playlist_written": False}))
           PY
       - name: Upload Stage 5 unchanged historical hash crosswalk evidence
+        if: steps.stage5_inventory.outputs.historical == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: v2-stage5-historical-worldwide-crosswalk
