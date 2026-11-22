@@ -90,7 +90,8 @@ def parse(raw):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--apply", action="store_true")\n    # Legacy flag accepted for compatibility; writes to playlist are disabled.
+    ap.add_argument("--apply", action="store_true")
+    # Legacy flag accepted for compatibility; writes to playlist are disabled.
     ap.add_argument("--workers", type=int, default=4)
     args = ap.parse_args()
     before = PLAYLIST.read_text(encoding="utf-8")
@@ -119,7 +120,7 @@ def main():
             except Exception:
                 results[futures[future]] = {"state": "unknown", "http_codes": ["probe_error"]}
     def metadata(inf):
-        name = inf.rstrip("\\r\\n").rsplit(",", 1)[-1]
+        name = inf.rstrip("\r\n").rsplit(",", 1)[-1]
         match = re.search(r'group-title="([^"]*)"', inf)
         return name, match.group(1) if match else ""
     entries = []
@@ -142,8 +143,8 @@ def main():
               "confirmed_404_review_count": len(dead), "candidate_count": len(candidate_results),
               "security_hold_released": 0, "entries": entries, "new_source_candidates": candidate_results}
     REPORT.parent.mkdir(parents=True, exist_ok=True)
-    REPORT.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\\n", encoding="utf-8")
-    DEAD.write_text("".join(url + "\\n" for url in dead), encoding="utf-8")
+    REPORT.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    DEAD.write_text("".join(url + "\n" for url in dead), encoding="utf-8")
     # This script never changes the canonical playlist, even with --apply.
     print(json.dumps({k: v for k, v in report.items() if k not in ("entries", "new_source_candidates")}, ensure_ascii=False))
 
