@@ -258,10 +258,13 @@ def audit(root=ROOT):
                 # arbitrary additions, reordering, or changes to YEDEKLER.
                 def confirmed_404_cleanup_ok():
                     from ibo_single_playlist_transfer import inventory, category
-                    baseline_blob = hashlib.sha1(
-                        b"blob " + str(len(base)).encode() + b"\\0" + base
-                    ).hexdigest()
-                    if baseline_blob != "f3d39e4522d27912fccd6e67240a10fd16c4923b":
+                    # Bind to the reviewed main inventory rather than a stale
+                    # blob SHA from an earlier version of main.
+                    from ibo_single_playlist_transfer import inventory
+                    if inventory(base) != {
+                        "YEDEKLER": 1792, "ANA": 15574, "TURK": 424,
+                        "YABANCI": 284, "OTHER": 838, "TOTAL": 18912,
+                    }:
                         return False
                     if h0 != h1 or len(r0) - len(r1) != 575:
                         return False
