@@ -127,6 +127,9 @@ def audit_one(filename,source):
     # Do not let any workflow run ffprobe/FFmpeg until DNS/IP/redirect/HLS
     # egress restrictions have passed explicit offline security acceptance.
     # Fail closed on newly added jobs as well as removal of the hold.
+    if filename=="full_autonomous_pipeline.yml":
+        if set(jobs)!={"acceptance"} or mapping(jobs.get("acceptance")).get("if")!="${{ false }}":
+            problems.append("AUTONOMOUS_PIPELINE_SECURITY_HOLD_REQUIRED")
     if filename=="v2-yedekler-av-audit.yml":
         retry=jobs.get("retry")
         if (set(jobs)!={"retry"} or not isinstance(retry,dict)
@@ -159,7 +162,7 @@ def audit(root=ROOT):
     root=Path(root)
     folder=root/".github/workflows"
     found={p.name for p in folder.iterdir() if p.is_file() and p.suffix in (".yml",".yaml")}
-    expected=ORIGINAL_FILES|{GATE,OFFLINE,HISTORICAL_AUDIT,HEALTH_REPORT,OFFLINE_CI,"v2-stage6-grouped-acceptance.yml","ibo-authorized-500.yml","v2-offline-import-15.yml"}
+    expected=ORIGINAL_FILES|{GATE,OFFLINE,HISTORICAL_AUDIT,HEALTH_REPORT,OFFLINE_CI,"full_autonomous_pipeline.yml","v2-stage6-grouped-acceptance.yml","ibo-authorized-500.yml","v2-offline-import-15.yml"}
     errors={}
     if found!=expected:
         errors["WORKFLOW_INVENTORY"]={"missing":sorted(expected-found),
