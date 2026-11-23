@@ -7,6 +7,7 @@ import pathlib
 import re
 import urllib.request
 from identity_metadata import identity_metadata
+from shared_url_identity import summarize_shared_urls
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 LIVE = ROOT / "MADSC55_TV_IBO_CALISANLAR_TEST.m3u8"
@@ -60,6 +61,11 @@ def entries(data):
                 m = re.search(r'\b' + re.escape(label) + r'="([^"]*)"', line)
                 return m.group(1).strip() if m else ""
             pending = {"name": name, "tvg_id": field("tvg-id"), "logo": field("tvg-logo"), "group": field("group-title")}
+        elif pending is not None and line.startswith("#EXTVLCOPT:program="):
+            # VLC-specific MPEG-TS program selector: metadata only, not AV proof.
+            value = line.partition("=")[2].strip()
+            if value.isdecimal() and len(value) <= 5 and 0 <= int(value) <= 65535:
+                pending["program_number"] = int(value)
         elif line and not line.startswith("#"):
             if pending is not None and line.startswith(("https://", "http://")):
                 yield {**pending, "url": line}
@@ -203,6 +209,14 @@ def main():
         if errors:
             raise SystemExit("Snapshot incomplete: " + str(len(errors)) + " source(s) failed; no playback permitted")
     result = {"schema": 1, "mode": "read-only", "configured_and_discovered_sources": len(sources), "source_count": len(loaded), "errors": errors, "source_audit": source_audit, "candidates": discover(loaded, live, scopes)}
+    # Preserve shared-URL different-label evidence in a read-only sidecar.
+    # Downstream scanners still require a unique URL hash per candidate;
+    # do not promote, delete or silently claim separate broadcasts.
+    review_entries = [{**item, "source": "MAIN_PLAYLIST"} for item in entries(live)]
+    for source_id, content in loaded:
+        review_entries.extend({**item, "source": source_id} for item in entries(content)
+                              if turkish_candidate(item, scopes.get(source_id, "candidate")))
+    result["shared_url_identity_review"] = summarize_shared_urls(review_entries)
     result["total_unique_candidates"] = len(result["candidates"])
     if args.previous_report:
         from source_loss_audit import compare

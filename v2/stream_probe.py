@@ -59,8 +59,8 @@ def probe(url, timeout=25, ffprobe='ffprobe'):
         return {'status': 'PROBE_UNAVAILABLE', 'video': False, 'audio': False}
     command = [executable, '-v', 'error', '-probesize', '1500000',
                '-analyzeduration', '3000000', '-rw_timeout', str(int(timeout * 1000000)),
-               '-show_entries', 'stream=codec_type,codec_name,width,height',
-               '-of', 'json', url]
+               '-show_entries', 'stream=codec_type,codec_name,width,height:program=program_id,program_num',
+               '-show_programs', '-of', 'json', url]
     try:
         result = subprocess.run(command, capture_output=True, text=True, timeout=timeout + 5,
                                 check=False, env={**os.environ, 'AV_LOG_FORCE_NOCOLOR': '1'})
@@ -81,6 +81,23 @@ def probe(url, timeout=25, ffprobe='ffprobe'):
         return {'status': 'INVALID_PROBE_RESULT', 'video': False, 'audio': False}
     video = any(x.get('codec_type') == 'video' and x.get('codec_name') not in (None, 'unknown') for x in streams)
     audio = any(x.get('codec_type') == 'audio' and x.get('codec_name') not in (None, 'unknown') for x in streams)
+    # MPEG-TS PAT/PMT program numbers are machine-read evidence of multiple
+    # services, not confirmation that each program is independently playable.
+    # HLS quality variants must not be mistaken for different broadcasters.
+    raw_programs = payload.get('programs', [])
+    numbers = set()
+    if isinstance(raw_programs, list):
+        for program in raw_programs[:256]:
+            if not isinstance(program, dict):
+                continue
+            value = program.get('program_num', program.get('program_id'))
+            if type(value) is int and 0 <= value <= 65535:
+                numbers.add(value)
+            elif isinstance(value, str) and value.isdecimal() and len(value) <= 5:
+                number = int(value)
+                if number <= 65535:
+                    numbers.add(number)
+    program_numbers = sorted(numbers)
     # Resolution is measured only from ffprobe video-stream metadata, never from a channel label.
     dimensions = [(s.get('width'), s.get('height')) for s in streams
                   if s.get('codec_type') == 'video' and s.get('codec_name') not in (None, 'unknown')]
@@ -91,6 +108,9 @@ def probe(url, timeout=25, ffprobe='ffprobe'):
     return {'streams': streams, 'status': 'AV_STREAMS_PRESENT' if video and audio else ('VIDEO_ONLY' if video else ('AUDIO_ONLY' if audio else 'NO_MEDIA')),
             'evidence_level': 'ffprobe_stream_metadata', 'decoded_av_verified': False,
             'video': video, 'audio': audio, 'width': width, 'height': height,
+            'mpegts_program_numbers': program_numbers,
+            'mpegts_multiple_programs_detected': len(program_numbers) > 1,
+            'mpegts_programs_playback_verified': False,
             'resolution_verified': bool(video and width and height)}
 
 
