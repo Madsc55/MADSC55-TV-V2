@@ -61,3 +61,71 @@ jobs:
           path: /tmp/shared-url-live-review.json
           if-no-files-found: warn
           retention-days: 30
+
+  full-playlist-url-audit:
+    name: Full playlist read-only sample \${{ matrix.shard }}
+    # One owner-requested, reviewed merge only; never from untrusted PRs.
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[full-ibo-url-audit]')
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        shard: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 50
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate safe read-only probe and shard invariants
+        run: |
+          PYTHONPATH=v2:. python -m unittest -v v2.test_shared_url_safe_probe v2.test_full_playlist_url_audit
+      - name: Audit at most 500 unique URLs in this shard
+        run: |
+          PYTHONPATH=v2 python v2/full_playlist_url_audit.py --shard \${{ matrix.shard }} --output /tmp/shard-\${{ matrix.shard }}.json
+      - name: Save no-token, checkpointed evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: full-ibo-audit-\${{ matrix.shard }}
+          path: /tmp/shard-\${{ matrix.shard }}.json
+          if-no-files-found: warn
+          retention-days: 30
+
+  full-playlist-audit-summary:
+    name: Verify complete URL coverage and save summary
+    needs: full-playlist-url-audit
+    if: always() && github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[full-ibo-url-audit]')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Download shard reports from this run only
+        uses: actions/download-artifact@v4
+        with:
+          pattern: full-ibo-audit-*
+          path: /tmp/full-ibo-audit-shards
+      - name: Refuse missing, stale, or duplicate URL results
+        run: |
+          PYTHONPATH=v2 python v2/full_playlist_url_audit.py --merge-dir /tmp/full-ibo-audit-shards --output /tmp/full-ibo-audit-summary.json
+      - name: Publish completeness result, even on partial scan
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: full-ibo-audit-summary
+          path: /tmp/full-ibo-audit-summary.json
+          if-no-files-found: warn
+          retention-days: 30
