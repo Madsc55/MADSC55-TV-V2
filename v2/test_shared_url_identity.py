@@ -82,10 +82,12 @@ class SharedUrlIdentityTests(unittest.TestCase):
                 {"program_num": 101},
             ],
         }
-        with patch("stream_probe._public_http_url", return_value=True), \\
-             patch("stream_probe.shutil.which", return_value="/usr/bin/ffprobe"), \\
-             patch("stream_probe.subprocess.run",
-                   return_value=subprocess.CompletedProcess([], 0, json.dumps(payload), "")) as run:
+        with (
+            patch("stream_probe._public_http_url", return_value=True),
+            patch("stream_probe.shutil.which", return_value="/usr/bin/ffprobe"),
+            patch("stream_probe.subprocess.run",
+                  return_value=subprocess.CompletedProcess([], 0, json.dumps(payload), "")) as run,
+        ):
             result = probe("https://example.invalid/multiplex.ts")
         self.assertIn("-show_programs", run.call_args.args[0])
         self.assertEqual(result["mpegts_program_numbers"], [101, 202])
