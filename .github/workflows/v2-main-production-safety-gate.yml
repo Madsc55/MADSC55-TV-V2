@@ -57,33 +57,50 @@ jobs:
               .replace('group-title="🗂️ YEDEKLER (1792)"'.encode(), 'group-title="🗂️ YEDEKLER (1107)"'.encode()))
           current = Path("MADSC55_TV_IBO_CALISANLAR_TEST.m3u8").read_bytes()
           sorted_blob = hashlib.sha1(b"blob " + str(len(current)).encode() + b"\0" + current).hexdigest()
-          # Once the approved parts PR is merged, historical 1,792-backup
-          # reconciliation does not apply to the 1,107/15,703 inventory.
-          # Only classify a SHA-verified, assembled parts playlist as applied.
+          # Once canonical SHA-bound parts are initialized, historical #497
+          # 1,792-backup reconciliation is no longer applicable. Authorized
+          # owner moves/reorders/copies may change counts; verify actual parts
+          # and category placement rather than initial fixed inventory.
           def approved_parts_playlist():
               try:
                   from collections import Counter
                   import json
+                  import re
                   from v2.playlist_parts_manager import split_records, category, logical, checksum
                   parts_dir = Path("v2/playlists/parts")
                   spec = json.loads((parts_dir / "manifest.json").read_text(encoding="utf-8"))
                   header, records = split_records(current)
                   groups = [logical(category(x)) for x in records]
-                  if (spec.get("version") != 1 or len(records) != 18337
-                          or spec.get("total_records") != 18337
-                          or Counter(groups)["YEDEKLER"] != 1107
-                          or Counter(groups)["ANA ARŞİV"] != 15703
+                  counts = Counter(groups)
+                  if (spec.get("version") != 1
+                          or not spec.get("entries")
+                          or len(records) != spec.get("total_records")
+                          or counts["YEDEKLER"] < 1
+                          or counts["ANA ARŞİV"] < 1
                           or bytes.fromhex(spec["header_hex"]) != header):
                       return False
                   end_of_backups = max(i for i, g in enumerate(groups) if g == "YEDEKLER")
-                  if groups[end_of_backups + 1:end_of_backups + 1 + 15703] != ["ANA ARŞİV"] * 15703:
+                  archive_count = counts["ANA ARŞİV"]
+                  if groups[end_of_backups + 1:end_of_backups + 1 + archive_count] != ["ANA ARŞİV"] * archive_count:
                       return False
                   payloads = []
+                  names = []
                   for entry in spec["entries"]:
-                      part = (parts_dir / entry["file"]).read_bytes()
+                      name = entry["file"]
+                      if not re.fullmatch(r"[0-9]{4}\\.m3u", name):
+                          return False
+                      part = (parts_dir / name).read_bytes()
                       if checksum(part) != entry["sha256"]:
                           return False
+                      _, entries = split_records(part)
+                      if len(entries) != entry["records"] or any(
+                              logical(category(x)) != entry["group"] for x in entries):
+                          return False
+                      names.append(name)
                       payloads.append(part)
+                  if len(names) != len(set(names)) or set(names) != {
+                          part.name for part in parts_dir.glob("*.m3u")}:
+                      return False
                   return header + b"".join(payloads) == current
               except (OSError, ValueError, KeyError, TypeError, IndexError):
                   return False
