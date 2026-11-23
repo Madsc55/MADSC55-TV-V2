@@ -95,6 +95,8 @@ def build():
         if not re.fullmatch(r"[0-9]{4}\.m3u", filename):
             raise ValueError("Unsafe part path")
         data = (PARTS / filename).read_bytes()
+        if checksum(data) != entry["sha256"]:
+            raise ValueError("Part checksum mismatch: " + filename)
         _, records = split_records(data) if data.startswith(b"#EXTINF:") else (None, None)
         if records is None or len(records) != entry["records"]:
             raise ValueError("Part record count mismatch: " + filename)
