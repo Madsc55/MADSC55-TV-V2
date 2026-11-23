@@ -444,6 +444,7 @@ def audit(root=ROOT):
                         names = []
                         for entry in manifest["entries"]:
                             name = entry["file"]
+                            # Strict four-digit basename only; reject separators and traversal.
                             if not re.fullmatch(r"[0-9]{4}\.m3u", name):
                                 return False
                             payload = (parts_dir / name).read_bytes()
