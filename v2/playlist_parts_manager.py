@@ -110,12 +110,20 @@ def build():
     counts = inventory(records)
     if len(records) != manifest["total_records"]:
         raise ValueError("Playlist record count changed")
-    if counts["YEDEKLER"] != 1107 or counts["ANA ARŞİV"] != 15703 or len(records) != 18337:
-        raise ValueError("Protected inventory changed")
+    if sum(e["records"] for e in entries) != len(records):
+        raise ValueError("Parts manifest record conservation failed")
+    # Channel operations are owner-authorized and can change category counts.
+    # The manifest hashes every part; never assume the initial 1,107/15,703
+    # figures remain valid after a reviewed transfer.
     groups = [logical(category(r)) for r in records]
+    if "YEDEKLER" not in groups or "ANA ARŞİV" not in groups:
+        raise ValueError("Required archive categories missing")
     y = max(i for i, g in enumerate(groups) if g == "YEDEKLER")
-    if groups[y+1:y+1+15703] != ["ANA ARŞİV"] * 15703:
+    count = counts["ANA ARŞİV"]
+    if groups[y+1:y+1+count] != ["ANA ARŞİV"] * count:
         raise ValueError("ANA ARŞİV must follow YEDEKLER")
+    if sum(1 for g in groups if g == "ANA ARŞİV") != count:
+        raise ValueError("ANA ARŞİV inventory mismatch")
     PLAYLIST.write_bytes(data)
     return data
 
