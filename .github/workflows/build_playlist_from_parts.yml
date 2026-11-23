@@ -1,0 +1,42 @@
+name: Build canonical IBO playlist from parts
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'v2/playlist_parts_manager.py'
+      - 'v2/playlists/parts/**'
+      - '.github/workflows/build_playlist_from_parts.yml'
+permissions:
+  contents: read
+concurrency:
+  group: canonical-ibo-parts
+  cancel-in-progress: false
+jobs:
+  build:
+    if: "!contains(github.event.head_commit.message, '[skip ci]')"
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Generate canonical playlist and validate inventory
+        run: |
+          python v2/playlist_parts_manager.py auto
+          python v2/test_playlist_invariants.py
+      - name: Commit generated parts and canonical playlist
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- MADSC55_TV_IBO_CALISANLAR_TEST.m3u8 v2/playlists/parts/
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "build: refresh canonical playlist from reviewed parts [skip ci]"
+          git -c http.extraheader="AUTHORIZATION: basic $(printf 'x-access-token:%s' "$GH_TOKEN" | base64 -w0)" push origin HEAD:main
