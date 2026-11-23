@@ -1,3 +1,9 @@
+#EXTINF:-1 tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/GBBD2300001C0_20250107T030829SQUARE.png" group-title="ANA ARŞİV (13712)",VEVO HIP HOP & R&B
+https://jmp2.uk/stvp-GBBD2300001C0
+#EXTINF:-1 tvg-name="Vevo Hip Hop (1080p)" group-title="ANA ARŞİV (13712)",Vevo Hip Hop (1080p)
+https://d3vgs3ro3x6v8a.cloudfront.net/Vevo_Hip_Hop.m3u8
+#EXTINF:-1 tvg-logo="https://tvpnlogopus.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/USBC3600002EK_20260303T094219SQUARE.png" group-title="ANA ARŞİV (13712)",VEVO HIP-HOP
+https://jmp2.uk/stvp-USBC3600002EK
 #EXTINF:-1 tvg-logo="https://i.ibb.co/WFQ0NCF/vevohprb.png" group-title="ANA ARŞİV (13712)",VEVO HP RB
 https://amg00056-amg00056c14-rakuten-fr-3244.playouts.now.amagi.tv/playlist/amg00056-vevotvfast-vevohiphopandrbfr-rakutenfr/playlist.m3u8?ads_amagi_channel=916
 #EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/64d161c93c785e0008df575e/colorLogoPNG.png" group-title="ANA ARŞİV (13712)",VEVO ÍCONOS LATINOS
@@ -342,8 +348,6 @@ https://live.dc.beltelecom.by/vtv/vitebsk.stream/playlist.m3u8
 http://iptv.vitotvo.video.makrodigital.com:8081/vitotvo/iptv/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/lzQsVfn.png" group-title="ANA ARŞİV (13712)",VITRINA TV (720P)
 https://live-11cinema.cdnvideo.ru/11cinema/11cinema/playlist.m3u8
-#EXTINF:-1 tvg-name="Viva Istanbul (1080p)" group-title="ANA ARŞİV (13712)",Viva Istanbul (1080p)
-http://str2.iptvhd.ru:8080/viva_plus/index.m3u8
 #EXTINF:-1 tvg-name="Viva Nicaragua Canal 13 (720p)" group-title="ANA ARŞİV (13712)",Viva Nicaragua Canal 13 (720p)
 https://cdn.vivamediosni.com/viva_720p/index.m3u8
 #EXTINF:-1 tvg-logo="https://cdn.epg.one/img2/9055.png" group-title="ANA ARŞİV (13712)",VIVA PREMIUM (1080P)
@@ -1630,7 +1634,5 @@ https://live.smotrim.ru/vgtrk/0/russia1-hd/index.m3u8
 https://stream.smotrim.ru/hls/solovievlive/playlist.m3u8?entity=channel&id=292&sign=83652f1317ad220efe74a7606d9a7f37
 #EXTINF:-1 tvg-logo="https://i.imgur.com/yb3xjOZ.png" group-title="ANA ARŞİV (13712)",ХУГО 2
 http://fta.hugo.mk:1935/live/tvhugo/stream/2.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/2BAQklm.png" group-title="ANA ARŞİV (13712)",ЯКУТИЯ 24
-https://live-saha.cdnvideo.ru/saha2/yak24rtmp_live.smil/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/he/thumb/1/17/Reshet13Logo2022.svg/500px-Reshet13Logo2022.svg.png" group-title="ANA ARŞİV (13712)",ערוץ 13
 https://d2xg1g9o5vns8m.cloudfront.net/out/v1/0855d703f7d5436fae6a9c7ce8ca5075/index.m3u8
