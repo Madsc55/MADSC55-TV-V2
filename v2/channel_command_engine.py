@@ -285,6 +285,29 @@ def parts_for(data, old_sha):
     return payloads, manifest
 
 
+def bind_git_blob_revision(data, command):
+    """Allow chat-created requests bound to GitHub's exact canonical blob SHA.
+
+    This is equivalent to the SHA256 lock; it never accepts an unbound command
+    or silently applies commands to a different playlist revision.
+    """
+    if not isinstance(command, dict):
+        raise ValueError("Command must be a JSON object")
+    blob = command.get("expected_git_blob_sha")
+    if blob is None:
+        return command
+    if not isinstance(blob, str) or not re.fullmatch(r"[0-9a-f]{40}", blob):
+        raise ValueError("Invalid expected Git blob SHA")
+    actual_blob = hashlib.sha1(b"blob " + str(len(data)).encode("ascii") +
+                               bytes([0]) + data).hexdigest()
+    if actual_blob != blob:
+        raise ValueError("Git blob SHA mismatch: main playlist changed")
+    current_sha = checksum(data)
+    if command.get("expected_sha256") not in (None, current_sha):
+        raise ValueError("SHA256 and Git blob revision disagree")
+    return {**command, "expected_sha256": current_sha}
+
+
 def run_cli():
     parser = argparse.ArgumentParser(description="Review a no-deletion playlist command")
     parser.add_argument("--request", type=Path, required=True, help="JSON command file")
@@ -295,6 +318,7 @@ def run_cli():
     status = json.loads(STATUS_PATH.read_text(encoding="utf-8")) if STATUS_PATH.exists() else {}
     if not isinstance(status, dict):
         raise ValueError("Bad status index")
+    request = bind_git_blob_revision(old, request)
     updated, new_status, report = operate(old, request, status)
     print(json.dumps(report, ensure_ascii=False, indent=2))
     if not args.apply:
