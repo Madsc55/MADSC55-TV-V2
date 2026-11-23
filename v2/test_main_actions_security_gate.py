@@ -10,6 +10,19 @@ def fixture(events="  workflow_dispatch:\n", perms="  contents: read\n",
     return "name: test\non:\n"+events+"permissions:\n"+perms+"jobs:\n  verify:\n"+job
 
 class MainActionsGateTests(unittest.TestCase):
+    def test_production_gate_uses_dynamic_owner_archive_counts(self):
+        from main_actions_security_gate import ROOT, GATE
+        workflow = (ROOT / ".github/workflows" / GATE).read_text(encoding="utf-8")
+        section = workflow.split("def approved_parts_playlist():", 1)[1].split(
+            "          applied = ", 1)[0]
+        self.assertIn('len(records) != spec.get("total_records")', section)
+        self.assertIn('archive_count = counts["ANA ARŞİV"]', section)
+        self.assertIn('groups[end_of_backups + 1:end_of_backups + 1 + archive_count]', section)
+        self.assertNotIn('Counter(groups)["YEDEKLER"] != 1107', section)
+        self.assertNotIn('Counter(groups)["ANA ARŞİV"] != 15703', section)
+        self.assertIn('entry["sha256"]', section)
+        self.assertIn('entry["records"]', section)
+
     def test_parts_builder_never_pushes_to_protected_main(self):
         from main_actions_security_gate import ROOT, PARTS_BUILD
         source = (ROOT / ".github/workflows" / PARTS_BUILD).read_text(encoding="utf-8")
