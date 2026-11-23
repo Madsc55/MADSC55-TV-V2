@@ -53,6 +53,59 @@ def record_tvg_name(record):
     return found.group(1).strip() if found else None
 
 
+# DISPLAY ONLY: preserve stream URL, logo, tvg-id and all non-backup records.
+_BACKUP_RES = re.compile(r"(?<![A-Z0-9])(\d{3,4})\s*([PI])(?![A-Z0-9])")
+_BACKUP_QUALITY = re.compile(r"(?<![A-Z0-9])(?:FHD|QHD|UHD|HD|SD|4K|8K)(?![A-Z0-9])")
+_BACKUP_TECH = re.compile(r"(?i)\b(?:TEKN[Iİ]K\s*TEST|TECHNICAL\s*TEST|NOT\s*24/7|KANAL\s*K[Iİ]ML[Iİ]G[Iİ]\s*DOGRULANMADI|UNCHECKED)\b")
+
+def format_backup_display(name):
+    """Uppercase station name followed only by known resolution and quality."""
+    if not isinstance(name, str) or not name.strip():
+        raise ValueError("Empty channel display name")
+    name = name.replace("ᶠᴴᴰ", " FHD").replace("ᴴᴰ", " HD").replace("ᵁᴴᴰ", " UHD")
+    # Brackets in the source are editorial notes, unless they contain *only*
+    # an existing quality or resolution indicator.
+    def square(match):
+        value = match.group(1).strip().upper()
+        if _BACKUP_QUALITY.fullmatch(value) or _BACKUP_RES.fullmatch(value):
+            return " " + value + " "
+        return " "
+    name = re.sub(r"\[([^\]]*)\]", square, name)
+    def parentheses(match):
+        value = match.group(1).strip().upper()
+        if _BACKUP_TECH.search(value):
+            return " "
+        if _BACKUP_QUALITY.fullmatch(value) or _BACKUP_RES.fullmatch(value):
+            return " " + value + " "
+        # Country and edition qualifiers can be part of a station's identity.
+        return match.group(0)
+    name = re.sub(r"\(([^)]*)\)", parentheses, name)
+    name = re.sub(r"(?i)\s*(?:-\s*)?(?:NOT\s*24/7|TEKN[Iİ]K\s*TEST[^\r\n]*)\s*$", "", name)
+    name = name.upper()
+    resolutions = list(_BACKUP_RES.finditer(name))
+    resolution = (resolutions[-1].group(1) + resolutions[-1].group(2)) if resolutions else ""
+    found_quality = [x.group() for x in _BACKUP_QUALITY.finditer(name)]
+    explicit_quality = found_quality[-1] if found_quality else ""
+    qualities = {"2160": "4K", "1440": "QHD", "1080": "FHD", "720": "HD"}
+    if resolution:
+        vertical = int(resolutions[-1].group(1))
+        quality = qualities.get(str(vertical), "SD" if vertical < 720 else "UHD")
+    else:
+        quality = explicit_quality
+    base = _BACKUP_QUALITY.sub(" ", _BACKUP_RES.sub(" ", name))
+    base = re.sub(r"\s+", " ", base).strip(" \t-|")
+    if not base:
+        raise ValueError("Channel name would become empty")
+    return " ".join(part for part in (base, resolution, quality) if part)
+
+def rename_backup_display(record):
+    head, sep, rest = record.partition(b"\n")
+    if not sep or b"," not in head:
+        raise ValueError("Malformed backup record")
+    metadata, comma, old_name = head.rpartition(b",")
+    new_name = format_backup_display(old_name.decode("utf-8").strip()).encode("utf-8")
+    return metadata + comma + new_name + sep + rest
+
 def set_label(record, label):
     head, sep, tail = record.partition(b"\n")
     found = GROUP.search(head)
@@ -178,6 +231,8 @@ def operate(data, command, statuses=None):
     action = command.get("action")
     if action not in VALID_ACTIONS:
         raise ValueError("Unsupported command")
+    if "format_backup_names" in command and (action != "recount" or command["format_backup_names"] is not True):
+        raise ValueError("Backup name formatting must be explicitly authorized under recount")
     header, buckets, labels = grouped(data)
     before = {labels[k]: len(v) for k, v in buckets.items()}
     selected = [] if action == "recount" else resolve_selectors(buckets, command)
@@ -238,6 +293,10 @@ def operate(data, command, statuses=None):
                 after_statuses[hashlib.sha256(record_url(record).encode("utf-8")).hexdigest()] = {
                     "status": command["status"], "channel": record_name(record),
                 }
+    if action == "recount" and command.get("format_backup_names") is True:
+        backups_id = lookup_category("YEDEKLER", buckets)
+        selected = [(backups_id, i, rec) for i, rec in enumerate(buckets[backups_id], 1)]
+        buckets[backups_id] = [rename_backup_display(rec) for rec in buckets[backups_id]]
     rebuilt, after = _retag_and_recount(buckets, labels)
     output = header + b"".join(rebuilt)
     old_records = split_records(data)[1]
@@ -341,8 +400,9 @@ def run_cli():
         PLAYLIST.write_bytes(updated)
         authorized = {
             "base_sha256": checksum(old), "result_sha256": checksum(updated),
-            "operation": {"recount": "category", "archive": "move", "remove": "move", "reorder": "reorder"}.get(
-                request["action"], request["action"]),
+            "operation": ("rename" if request["action"] == "recount" and request.get("format_backup_names") is True
+                          else {"recount": "category", "archive": "move", "remove": "move", "reorder": "reorder"}.get(
+                              request["action"], request["action"])),
             "request": request_text,
             "channels": report["selected"][:2000] or ["All category count labels"],
         }

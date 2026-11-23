@@ -62,6 +62,15 @@ class MainActionsGateTests(unittest.TestCase):
         self.assertFalse(safe_channel_move([from_source], []))
         self.assertFalse(safe_channel_move([from_source], [moved.replace(b"/a", b"/b")]))
 
+    def test_backup_display_cleanup_is_strictly_name_only(self):
+        from main_actions_security_gate import safe_backup_display_rename
+        old = '#EXTINF:-1 group-title="🗂️ YEDEKLER (2)",Sözlü TV (1080p) [TEST]\nhttps://sample.test/tv\n'.encode()
+        new = '#EXTINF:-1 group-title="🗂️ YEDEKLER (2)",SÖZLÜ TV 1080P FHD\nhttps://sample.test/tv\n'.encode()
+        self.assertTrue(safe_backup_display_rename([old], [new]))
+        self.assertFalse(safe_backup_display_rename([old], [new.replace(b"/tv", b"/other")]))
+        self.assertFalse(safe_backup_display_rename([old], [new.replace(b"FHD", b"HD")]))
+        self.assertFalse(safe_backup_display_rename([old], [old]))
+
     def test_category_reorder_counts_are_not_deleted(self):
         one = b'#EXTINF:-1 group-title="HABER (3)",A\nhttps://example.test/a\n'
         two = b'#EXTINF:-1 group-title="HABER (3)",B\nhttps://example.test/b\n'
