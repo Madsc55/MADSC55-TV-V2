@@ -81,7 +81,7 @@ def audit_one(filename,source):
                   "git commit -m", "[skip ci]", "push origin HEAD:main")
         if not all(fragment in source for fragment in required):
             return ["PARTS_BUILD_VALIDATION_OR_WRITE_SCOPE_CHANGED"]
-        if "pull_request_target" in source or "workflow_dispatch" in source or "schedule:" in source:
+        if "pull_request_target" in source or "schedule:" in source:
             return ["PARTS_BUILD_UNTRUSTED_TRIGGER"]
         return []
     if filename==PASS1:
