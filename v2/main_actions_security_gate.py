@@ -73,14 +73,24 @@ def audit_one(filename,source):
         if mapping(doc.get("permissions"))!={"contents":"read"}:
             return ["PARTS_BUILD_EXCESSIVE_DEFAULT_PERMISSIONS"]
         jobs=mapping(doc.get("jobs"))
-        if set(jobs)!={"build"} or mapping(jobs["build"].get("permissions"))!={"contents":"write"}:
+        if set(jobs)!={"build"} or mapping(jobs["build"].get("permissions"))!={"contents":"write","pull-requests":"write","actions":"write"}:
             return ["PARTS_BUILD_JOB_PERMISSIONS_CHANGED"]
+        if jobs["build"].get("if")!="github.ref == 'refs/heads/main' && !contains(github.event.head_commit.message, '[skip ci]')":
+            return ["PARTS_BUILD_MAIN_ONLY_REQUIRED"]
         required=("python v2/playlist_parts_manager.py auto",
                   "python v2/test_playlist_invariants.py",
                   "git add -- MADSC55_TV_IBO_CALISANLAR_TEST.m3u8 v2/playlists/parts/",
-                  "git commit -m", "[skip ci]", "push origin HEAD:main")
+                  "branch=\\"automation/ibo-parts-",
+                  "git switch -c \\"$branch\\"",
+                  "gh auth setup-git",
+                  'git push origin "HEAD:refs/heads/$branch"',
+                  "gh pr create --base main --head",
+                  'gh workflow run ci.yml --ref "$branch"',
+                  'gh workflow run v2-main-production-safety-gate.yml --ref "$branch"')
         if not all(fragment in source for fragment in required):
             return ["PARTS_BUILD_VALIDATION_OR_WRITE_SCOPE_CHANGED"]
+        if "push origin HEAD:main" in source or "push origin main" in source:
+            return ["PARTS_BUILD_DIRECT_MAIN_PUSH_FORBIDDEN"]
         if "pull_request_target" in source or "schedule:" in source:
             return ["PARTS_BUILD_UNTRUSTED_TRIGGER"]
         return []
@@ -124,7 +134,7 @@ def audit_one(filename,source):
             return ["685_DIRECT_MAIN_WRITE_FORBIDDEN"]
         return []
     allowed=({"push","pull_request","workflow_dispatch"} if filename==GATE else
-             {"push","pull_request"} if filename==OFFLINE_CI else
+             {"push","pull_request","workflow_dispatch"} if filename==OFFLINE_CI else
              {"push","workflow_dispatch"} if filename==SAFETY else
              {"pull_request"} if filename==OFFLINE else
              {"pull_request","workflow_dispatch"} if filename==HISTORICAL_AUDIT else
