@@ -299,32 +299,47 @@ jobs:
           python -m py_compile v2/official_sites_discovery.py v2/direct_stream_resolver.py v2/test_official_sites_discovery.py v2/test_direct_stream_resolver.py v2/youtube_discovery.py v2/test_youtube_discovery.py
           python -m py_compile v2/identity_metadata.py v2/recovery_queue.py v2/stage2_integration.py v2/stage3_identity_recovery.py v2/stage3_metadata_acceptance.py v2/stage3_recovery_queue.py v2/real_ibo_scan.py v2/discover.py v2/consolidate_inventory.py
       - name: Ensure FFmpeg is available for real local decoded-media regression
-        timeout-minutes: 7
+        timeout-minutes: 8
         run: |
           set -euo pipefail
-          # Ubuntu runners usually ship FFmpeg and Tesseract. Install only
-          # missing packages, avoiding slow unconditional apt index refresh.
+          # Fail closed on genuinely missing media tools. A bounded apt retry
+          # prevents a stalled package mirror from silently consuming the job.
           missing=()
-          command -v ffmpeg >/dev/null || missing+=(ffmpeg)
-          command -v ffprobe >/dev/null || missing+=(ffmpeg)
+          if ! command -v ffmpeg >/dev/null || ! command -v ffprobe >/dev/null; then
+            missing+=(ffmpeg)
+          fi
           if ! command -v tesseract >/dev/null; then
             missing+=(tesseract-ocr tesseract-ocr-tur)
-          elif ! tesseract --list-langs 2>/dev/null | grep -qx tur; then
-            missing+=(tesseract-ocr-tur)
+          else
+            langs="$(tesseract --list-langs 2>/dev/null)"
+            if ! grep -Fxq 'tur' <<< "$langs"; then
+              missing+=(tesseract-ocr-tur)
+            fi
           fi
-          if ! fc-list 2>/dev/null | grep -qi 'DejaVu'; then
+          families="$(fc-list --format '%{family}\n' 2>/dev/null)"
+          if ! grep -Fq 'DejaVu' <<< "$families"; then
             missing+=(fonts-dejavu-core)
           fi
           if (( ${#missing[@]} )); then
-            if ! timeout 120s sudo env DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --no-install-recommends "${missing[@]}"; then
-              timeout 75s sudo apt-get update -qq
-              timeout 120s sudo env DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --no-install-recommends "${missing[@]}"
+            printf 'Missing media packages: %s\n' "${missing[*]}"
+            # Explicit network and lock limits. Do not suppress apt errors.
+            apt_args=(-o Acquire::Retries=1
+                      -o Acquire::http::Timeout=15
+                      -o Acquire::https::Timeout=15
+                      -o DPkg::Lock::Timeout=20)
+            if ! timeout 135s sudo env DEBIAN_FRONTEND=noninteractive \
+              apt-get "${apt_args[@]}" install -y --no-install-recommends "${missing[@]}"; then
+              echo "::warning::Initial package install failed; refreshing apt indexes."
+              timeout 80s sudo apt-get "${apt_args[@]}" update
+              timeout 160s sudo env DEBIAN_FRONTEND=noninteractive \
+                apt-get "${apt_args[@]}" install -y --no-install-recommends "${missing[@]}"
             fi
           fi
           command -v ffprobe
           command -v ffmpeg
           command -v tesseract
-          tesseract --list-langs 2>/dev/null | grep -qx tur
+          langs="$(tesseract --list-langs 2>/dev/null)"
+          grep -Fxq 'tur' <<< "$langs"
       - name: Issue 497 targeted uncertain retry offline regressions (no live scan)
         run: |
           python -m py_compile v2/ibo_495_yedekler_av_audit.py v2/ibo_497_retry_reconcile.py v2/ibo_497_retry_plan.py v2/test_ibo_495_yedekler_av_audit.py v2/test_ibo_497_retry_reconcile.py v2/test_ibo_497_retry_plan.py
