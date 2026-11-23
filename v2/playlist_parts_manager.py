@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Lossless, bounded-size category parts for the one canonical IBO playlist."""
+# Re-trigger the approved main-branch playlist parts initialization.
 import argparse
 import hashlib
 import json
