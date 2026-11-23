@@ -1,3 +1,7 @@
+#EXTINF:-1 tvg-logo="https://i.ibb.co/brFBnw8/vevopop.png" group-title="ANA ARŞİV (13712)",VEVO POP
+https://amg00056-amg00056c9-rakuten-fr-3243.playouts.now.amagi.tv/playlist/amg00056-vevotvfast-vevopopfr-rakutenfr/playlist.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/dZHktKR.png" group-title="ANA ARŞİV (13712)",VEVO POP (1080P)
+https://amg00056-amg00056c6-rakuten-uk-3235.playouts.now.amagi.tv/playlist.m3u8
 #EXTINF:-1 tvg-name="Vevo Pop (1080p)" group-title="ANA ARŞİV (13712)",Vevo Pop (1080p)
 https://d2n5ee9u100agb.cloudfront.net/Vevo_Pop.m3u8
 #EXTINF:-1 tvg-logo="https://i.ibb.co/brFBnw8/vevopop.png" group-title="ANA ARŞİV (13712)",VEVO POP FAST
@@ -1132,8 +1136,6 @@ https://jmp2.uk/plu-612e044c970e6f00083bcf3b.m3u8
 https://jmp2.uk/stvp-GB340000289
 #EXTINF:-1 tvg-name="YAAAS! (720p)" group-title="ANA ARŞİV (13712)",YAAAS! (720p)
 https://d3knqoaufvjug3.cloudfront.net/yas.m3u8
-#EXTINF:-1 tvg-name="YABAN TV" group-title="ANA ARŞİV (13712)",YABAN TV
-https://59cba4d34b678.streamlock.net/live1/yabantv/playlist.m3u8
 #EXTINF:-1 tvg-name="Yachting TV (1080p)" group-title="ANA ARŞİV (13712)",Yachting TV (1080p)
 https://streams2.sofast.tv/vglive-sk-461164/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/4BNVhoC.png" group-title="ANA ARŞİV (13712)",YADAH TV (576P) [NOT 24/7]
@@ -1184,8 +1186,6 @@ https://amg00453-reuters-amg00453c1-samsung-de-2111.playouts.now.amagi.tv/playli
 https://amg00663-skynews-skynewsau-samsungau-r7n40.amagi.tv/playlist/amg00663-skynews-skynewsau-samsungau/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/8TzcJu5.png" group-title="ANA ARŞİV (13712)",YEMEN TODAY TV (480P)
 https://video.yementdy.tv/hls/yementoday.m3u8
-#EXTINF:-1 tvg-logo="https://i.ibb.co/fGnRLnLM/yenicag.png" group-title="ANA ARŞİV (13712)",YENİ ÇAĞ TV
-https://live.euromediacenter.com/yenicagtv/tracks-v1a1/mono.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/KqkOz6H.png" group-title="ANA ARŞİV (13712)",YERKIR MEDIA (1080P)
 http://yerkirmedia.am/yerkirmedia/live.m3u8
 #EXTINF:-1 tvg-name="YES" group-title="ANA ARŞİV (13712)",YES
