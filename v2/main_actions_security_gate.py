@@ -372,7 +372,7 @@ def audit(root=ROOT):
                     if h0 != h1 or len(r0) != 18337 or len(r1) != 18337:
                         return False
                     def group(record):
-                        match = re.search(rb'group-title\\s*=\\s*"([^"]+)"', record.splitlines()[0])
+                        match = re.search(rb'group-title\s*=\s*"([^"]+)"', record.splitlines()[0])
                         return match.group(1).decode("utf-8") if match else ""
                     archive = [r for r in r0 if "ANA ARŞİV" in group(r)]
                     others = [r for r in r0 if "ANA ARŞİV" not in group(r)]
