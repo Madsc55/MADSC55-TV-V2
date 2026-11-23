@@ -298,33 +298,46 @@ jobs:
           PYTHONPATH=v2 python -m unittest -v test_official_sites_discovery test_direct_stream_resolver test_youtube_discovery
           python -m py_compile v2/official_sites_discovery.py v2/direct_stream_resolver.py v2/test_official_sites_discovery.py v2/test_direct_stream_resolver.py v2/youtube_discovery.py v2/test_youtube_discovery.py
           python -m py_compile v2/identity_metadata.py v2/recovery_queue.py v2/stage2_integration.py v2/stage3_identity_recovery.py v2/stage3_metadata_acceptance.py v2/stage3_recovery_queue.py v2/real_ibo_scan.py v2/discover.py v2/consolidate_inventory.py
-      - name: Ensure FFmpeg is available for real local decoded-media regression
-        timeout-minutes: 7
+      - name: Ensure FFmpeg and Turkish OCR fixtures without slow apt mirrors
+        timeout-minutes: 3
         run: |
           set -euo pipefail
-          # Ubuntu runners usually ship FFmpeg and Tesseract. Install only
-          # missing packages, avoiding slow unconditional apt index refresh.
-          missing=()
-          command -v ffmpeg >/dev/null || missing+=(ffmpeg)
-          command -v ffprobe >/dev/null || missing+=(ffmpeg)
-          if ! command -v tesseract >/dev/null; then
-            missing+=(tesseract-ocr tesseract-ocr-tur)
-          elif ! tesseract --list-langs 2>/dev/null | grep -qx tur; then
-            missing+=(tesseract-ocr-tur)
+          # The pinned ubuntu-24.04 runner already provides these binaries
+          # and DejaVu fonts. Fail closed if the image ever stops providing
+          # them instead of silently skipping media regressions.
+          for binary in ffmpeg ffprobe tesseract curl git fc-match; do
+            command -v "$binary" >/dev/null || {
+              echo "::error::Missing required media binary: $binary"
+              exit 1
+            }
+          done
+          if ! fc-match -f '%{family}' 'DejaVu Sans' | grep -qi DejaVu; then
+            echo "::error::Missing DejaVu fonts in Ubuntu runner image"
+            exit 1
           fi
-          if ! fc-list 2>/dev/null | grep -qi 'DejaVu'; then
-            missing+=(fonts-dejavu-core)
-          fi
-          if (( ${#missing[@]} )); then
-            if ! timeout 120s sudo env DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --no-install-recommends "${missing[@]}"; then
-              timeout 75s sudo apt-get update -qq
-              timeout 120s sudo env DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --no-install-recommends "${missing[@]}"
+          if ! tesseract --list-langs 2>/dev/null | grep -Fxq tur; then
+            # Only the Turkish traineddata is missing from the standard image.
+            # Fetch the official fast model at a FIXED commit, authenticate its
+            # exact Git blob hash, and install it without any apt network calls.
+            model="$RUNNER_TEMP/tur.traineddata"
+            curl --fail --location --silent --show-error \
+              --connect-timeout 10 --max-time 45 --retry 2 --retry-delay 2 \
+              "https://raw.githubusercontent.com/tesseract-ocr/tessdata_fast/87416418657359cb625c412a48b6e1d6d41c29bd/tur.traineddata" \
+              --output "$model"
+            if [ "$(git hash-object "$model")" != "1f0b331ef29f50ceb7c44da58e38c7ec42314d0a" ]; then
+              echo "::error::Turkish OCR model integrity mismatch"
+              exit 1
             fi
+            data_dir="$(tesseract --list-langs 2>&1 | sed -n '1s/^List of available languages in "\([^"]*\)".*$/\1/p')"
+            if [ -z "$data_dir" ] || [ ! -d "$data_dir" ]; then
+              echo "::error::Unable to locate installed Tesseract language directory"
+              exit 1
+            fi
+            sudo install -m 0644 "$model" "${data_dir%/}/tur.traineddata"
           fi
           command -v ffprobe
           command -v ffmpeg
-          command -v tesseract
-          tesseract --list-langs 2>/dev/null | grep -qx tur
+          tesseract --list-langs 2>/dev/null | grep -Fxq tur
       - name: Issue 497 targeted uncertain retry offline regressions (no live scan)
         run: |
           python -m py_compile v2/ibo_495_yedekler_av_audit.py v2/ibo_497_retry_reconcile.py v2/ibo_497_retry_plan.py v2/test_ibo_495_yedekler_av_audit.py v2/test_ibo_497_retry_reconcile.py v2/test_ibo_497_retry_plan.py
