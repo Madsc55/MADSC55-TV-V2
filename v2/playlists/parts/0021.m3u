@@ -1,712 +1,740 @@
-#EXTINF:-1 tvg-logo="https://i.imgur.com/sVc8cFt.png" group-title="YABANCI ARŞİVİ (356)",AUTO PLUS
+#EXTINF:-1 tvg-logo="https://i.imgur.com/sVc8cFt.png" group-title="YABANCI ARŞİVİ (370)",AUTO PLUS
 https://stream8.cinerama.uz/1036/tracks-v1a1/mono.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/ELXmaqg.png" group-title="YABANCI ARŞİVİ (356)",TR SPORT (480P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/ELXmaqg.png" group-title="YABANCI ARŞİVİ (370)",TR SPORT (480P)
 https://livetr.teleromagna.it/mia/live/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/g0jPOcC.png" group-title="YABANCI ARŞİVİ (356)",TRT
+#EXTINF:-1 tvg-logo="https://i.imgur.com/g0jPOcC.png" group-title="YABANCI ARŞİVİ (370)",TRT
 https://av.hellasnet.tv/rst/trt/index.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Atv_logo_2018.png/250px-Atv_logo_2018.png" group-title="YABANCI ARŞİVİ (356)",ATV
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Atv_logo_2018.png/250px-Atv_logo_2018.png" group-title="YABANCI ARŞİVİ (370)",ATV
 http://141.94.193.53:80/ATV_HD/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/Z7URrp1.png" group-title="YABANCI ARŞİVİ (356)",TV8 (360P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/Z7URrp1.png" group-title="YABANCI ARŞİVİ (370)",TV8 (360P)
 http://109.74.145.11:1935/tv8/mp4:tv8.stream_360p/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/ATV_Peru_2025.svg/1920px-ATV_Peru_2025.svg.png" group-title="YABANCI ARŞİVİ (356)",ATV (720P)
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/ATV_Peru_2025.svg/1920px-ATV_Peru_2025.svg.png" group-title="YABANCI ARŞİVİ (370)",ATV (720P)
 http://187.102.210.46/ATV/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/Z7URrp1.png" group-title="YABANCI ARŞİVİ (356)",TV8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/Z7URrp1.png" group-title="YABANCI ARŞİVİ (370)",TV8
 https://dash3.antik.sk/live/test_osem/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.ibb.co/74fJt5v/8mblanc.png" group-title="YABANCI ARŞİVİ (356)",TV8 MONTBLANC
+#EXTINF:-1 tvg-logo="https://i.ibb.co/74fJt5v/8mblanc.png" group-title="YABANCI ARŞİVİ (370)",TV8 MONTBLANC
 https://tvradiozap.eu/tools/dm-m3u8.php/x3wqv8b.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/fY9256H.png" group-title="YABANCI ARŞİVİ (356)",ATV+ (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/fY9256H.png" group-title="YABANCI ARŞİVİ (370)",ATV+ (1080P)
 http://45.171.108.253:8888/ATV/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/JINE5xS.png" group-title="YABANCI ARŞİVİ (356)",ATV SPİRİT
+#EXTINF:-1 tvg-logo="https://i.imgur.com/JINE5xS.png" group-title="YABANCI ARŞİVİ (370)",ATV SPİRİT
 http://88.212.7.14/live/test_atv_spirit/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/LnyVa5H.png" group-title="YABANCI ARŞİVİ (356)",ATV SUR (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/LnyVa5H.png" group-title="YABANCI ARŞİVİ (370)",ATV SUR (1080P)
 http://190.93.224.42/ATV-SUR/index.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/5/56/ATV%2B_logo_2020.png" group-title="YABANCI ARŞİVİ (356)",ATV+ (1080P)
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/5/56/ATV%2B_logo_2020.png" group-title="YABANCI ARŞİVİ (370)",ATV+ (1080P)
 http://190.93.224.42/ATV-PLUS/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/WsD83lq.png" group-title="YABANCI ARŞİVİ (356)",CBC TV8 (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/WsD83lq.png" group-title="YABANCI ARŞİVİ (370)",CBC TV8 (1080P)
 https://1740288887.rsc.cdn77.org/1740288887/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/dRsacao.png" group-title="YABANCI ARŞİVİ (356)",HMONG STAR TV (720P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/dRsacao.png" group-title="YABANCI ARŞİVİ (370)",HMONG STAR TV (720P)
 https://livefta.malimarcdn.com/ftaedge00/hmongstartv.sdp/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://gbzottvsc25.tvplus.com.tr:33207/CPS/images/universal/film/logo/202506/20250623/71/0916028009315eb88428_op_0_XL.webp" group-title="YABANCI ARŞİVİ (356)",ATV (1080P)
+#EXTINF:-1 tvg-logo="https://gbzottvsc25.tvplus.com.tr:33207/CPS/images/universal/film/logo/202506/20250623/71/0916028009315eb88428_op_0_XL.webp" group-title="YABANCI ARŞİVİ (370)",ATV (1080P)
 https://live.zendzend.com/mpegts/29375_107244/media_mpegts_0.m3u8
-#EXTINF:-1 tvg-logo="https://gbzottvsc25.tvplus.com.tr:33207/CPS/images/universal/film/logo/202506/20250623/71/0916028009315eb88428_op_0_XL.webp" group-title="YABANCI ARŞİVİ (356)",ATV (1080P)
+#EXTINF:-1 tvg-logo="https://gbzottvsc25.tvplus.com.tr:33207/CPS/images/universal/film/logo/202506/20250623/71/0916028009315eb88428_op_0_XL.webp" group-title="YABANCI ARŞİVİ (370)",ATV (1080P)
 http://190.93.224.42/ATV/index.m3u8
-#EXTINF:-1 tvg-logo="https://gbzottvsc25.tvplus.com.tr:33207/CPS/images/universal/film/logo/202506/20250623/71/0916028009315eb88428_op_0_XL.webp" group-title="YABANCI ARŞİVİ (356)",ATV
+#EXTINF:-1 tvg-logo="https://gbzottvsc25.tvplus.com.tr:33207/CPS/images/universal/film/logo/202506/20250623/71/0916028009315eb88428_op_0_XL.webp" group-title="YABANCI ARŞİVİ (370)",ATV
 http://88.212.7.14/live/test_atv_hungary_1200_atk/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/15ILp0P.png" group-title="YABANCI ARŞİVİ (356)",KANAL D (720P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/15ILp0P.png" group-title="YABANCI ARŞİVİ (370)",KANAL D (720P)
 https://stream1.kanald.ro/iphone/knd-live.m3u8
-#EXTINF:-1 tvg-name="TV8" group-title="YABANCI ARŞİVİ (356)" tvg-logo="https://www.lyngsat.com/logo/tv/tt/tv8_tr.png",TV8
+#EXTINF:-1 tvg-name="TV8" group-title="YABANCI ARŞİVİ (370)" tvg-logo="https://www.lyngsat.com/logo/tv/tt/tv8_tr.png",TV8
 https://tv8-live.daioncdn.net/tv8/tv8_720p.m3u8
-#EXTINF:-1 tvg-name="SHOW TV" group-title="YABANCI ARŞİVİ (356)" tvg-logo="https://m.showtv.com.tr/assets/images/other/showtv_social_media.jpg",SHOW TV
+#EXTINF:-1 tvg-name="SHOW TV" group-title="YABANCI ARŞİVİ (370)" tvg-logo="https://m.showtv.com.tr/assets/images/other/showtv_social_media.jpg",SHOW TV
 https://ciner-live.daioncdn.net/showtv/showtv_1080p.m3u8
-#EXTINF:-1 tvg-name="SHOW TV" group-title="YABANCI ARŞİVİ (356)" tvg-logo="https://www.lyngsat.com/logo/tv/ss/show-tv-tr.svg",SHOW TV
+#EXTINF:-1 tvg-name="SHOW TV" group-title="YABANCI ARŞİVİ (370)" tvg-logo="https://www.lyngsat.com/logo/tv/ss/show-tv-tr.svg",SHOW TV
 https://ciner-live.daioncdn.net/showtv/showtv_720p.m3u8
-#EXTINF:-1 tvg-id="NationalGeographic.tr" tvg-logo="https://i.ibb.co/h17BsfgY/Ekran-g-r-nt-s-2026-07-25-103937.jpg" group-title="YABANCI ARŞİVİ (356)", NAT GEO HD
+#EXTINF:-1 tvg-id="NationalGeographic.tr" tvg-logo="https://i.ibb.co/h17BsfgY/Ekran-g-r-nt-s-2026-07-25-103937.jpg" group-title="YABANCI ARŞİVİ (370)", NAT GEO HD
 http://46.32.176.50/NationalGeographicHD/index.m3u8
-#EXTINF:-1 tvg-id="Discovering China.tr" tvg-logo="https://i.ibb.co/xt5Kx7SN/Ekran-g-r-nt-s-2026-07-25-103937.jpg" group-title="YABANCI ARŞİVİ (356)", Discovering China
+#EXTINF:-1 tvg-id="Discovering China.tr" tvg-logo="https://i.ibb.co/xt5Kx7SN/Ekran-g-r-nt-s-2026-07-25-103937.jpg" group-title="YABANCI ARŞİVİ (370)", Discovering China
 https://amg01314-amg01314c8-distrotv-us-10218.playouts.now.amagi.tv/playlist/amg01314-cgtn-cgtndiscoveringchina-distrotvus/playlist.m3u8
-#EXTINF:-1 tvg-id="FX.tr" tvg-logo="https://i.ibb.co/8gcyRP1Y/Ekran-g-r-nt-s-2026-07-25-163750.jpg" group-title="YABANCI ARŞİVİ (356)", FX TV HD
+#EXTINF:-1 tvg-id="FX.tr" tvg-logo="https://i.ibb.co/8gcyRP1Y/Ekran-g-r-nt-s-2026-07-25-163750.jpg" group-title="YABANCI ARŞİVİ (370)", FX TV HD
 https://saran-live.ercdn.net/fx/index.m3u8
-#EXTINF:-1 tvg-id="ViasatHistory.tr@SD" group-title="YABANCI ARŞİVİ (356)",Viasat History (720p)
+#EXTINF:-1 tvg-id="ViasatHistory.tr@SD" group-title="YABANCI ARŞİVİ (370)",Viasat History (720p)
 https://nord.ayakkabiparti.lol/viasathistory/index.m3u8
-#EXTINF:-1 tvg-id="NationalGeographic.tr@SD" group-title="YABANCI ARŞİVİ (356)",National Geographic
+#EXTINF:-1 tvg-id="NationalGeographic.tr@SD" group-title="YABANCI ARŞİVİ (370)",National Geographic
 https://nord.ayakkabiparti.lol/natgeo/index.m3u8
-#EXTINF:-1 tvg-id="NationalGeographicWild.tr@SD" group-title="YABANCI ARŞİVİ (356)",National Geographic Wild
+#EXTINF:-1 tvg-id="NationalGeographicWild.tr@SD" group-title="YABANCI ARŞİVİ (370)",National Geographic Wild
 https://nord.ayakkabiparti.lol/natgeowild/index.m3u8
-#EXTINF:-1 tvg-id="beINMoviesStars.tr@SD" group-title="YABANCI ARŞİVİ (356)",beIN Movies Stars
+#EXTINF:-1 tvg-id="beINMoviesStars.tr@SD" group-title="YABANCI ARŞİVİ (370)",beIN Movies Stars
 https://nord.ayakkabiparti.lol/bsaction1/index.m3u8
-#EXTINF:-1 tvg-id="beINBoxOffice1.tr@SD" group-title="YABANCI ARŞİVİ (356)",beIN Box Office 1
+#EXTINF:-1 tvg-id="beINBoxOffice1.tr@SD" group-title="YABANCI ARŞİVİ (370)",beIN Box Office 1
 https://nord.ayakkabiparti.lol/box1/index.m3u8
-#EXTINF:-1 tvg-id="beINBoxOffice2.tr@SD" group-title="YABANCI ARŞİVİ (356)",beIN Box Office 2
+#EXTINF:-1 tvg-id="beINBoxOffice2.tr@SD" group-title="YABANCI ARŞİVİ (370)",beIN Box Office 2
 https://nord.ayakkabiparti.lol/box2/index.m3u8
-#EXTINF:-1 tvg-id="beINBoxOffice3.tr@SD" group-title="YABANCI ARŞİVİ (356)",beIN Box Office 3
+#EXTINF:-1 tvg-id="beINBoxOffice3.tr@SD" group-title="YABANCI ARŞİVİ (370)",beIN Box Office 3
 https://nord.ayakkabiparti.lol/box3/index.m3u8
-#EXTINF:-1 tvg-id="AnadoluAgency.tr@SD" tvg-logo="https://i.imgur.com/dWElJll.png" group-title="YABANCI ARŞİVİ (356)",AA Live (720p) [Not 24/7]
+#EXTINF:-1 tvg-id="AnadoluAgency.tr@SD" tvg-logo="https://i.imgur.com/dWElJll.png" group-title="YABANCI ARŞİVİ (370)",AA Live (720p) [Not 24/7]
 https://mtulqxgomrllive.mediatriple.net/mtulqxgomrllive/broadcast_59f9c0c785b88.smil/playlist.m3u8
-#EXTINF:-1 tvg-id="ViasatExplore.tr@SD" tvg-logo="https://i.imgur.com/DyT5pKB.png" group-title="YABANCI ARŞİVİ (356)",Viasat Explore
+#EXTINF:-1 tvg-id="ViasatExplore.tr@SD" tvg-logo="https://i.imgur.com/DyT5pKB.png" group-title="YABANCI ARŞİVİ (370)",Viasat Explore
 https://tv.arectv29.sbs/live/viasathistory.m3u8
-#EXTINF:-1 tvg-name="BEIN BOX OFFICE 1 ʜᴅ" group-title="YABANCI ARŞİVİ (356)",BEIN BOX OFFICE 1 ʜᴅ
+#EXTINF:-1 tvg-name="BEIN BOX OFFICE 1 ʜᴅ" group-title="YABANCI ARŞİVİ (370)",BEIN BOX OFFICE 1 ʜᴅ
 http://unreal.eztv4you.xyz:25461/98392023/224vpw99f7/432166
-#EXTINF:-1 tvg-name="Bein Movies Stars" group-title="YABANCI ARŞİVİ (356)",Bein Movies Stars
+#EXTINF:-1 tvg-name="Bein Movies Stars" group-title="YABANCI ARŞİVİ (370)",Bein Movies Stars
 https://tv.prectv5.sbs/live/bsstars.m3u8
-#EXTINF:-1 tvg-name="Bein Movies premiere" group-title="YABANCI ARŞİVİ (356)",Bein Movies premiere
+#EXTINF:-1 tvg-name="Bein Movies premiere" group-title="YABANCI ARŞİVİ (370)",Bein Movies premiere
 https://tv.prectv5.sbs/live/bspremier1.m3u8
-#EXTINF:-1 tvg-name="beIN SPORTS" group-title="YABANCI ARŞİVİ (356)",beIN SPORTS
+#EXTINF:-1 tvg-name="beIN SPORTS" group-title="YABANCI ARŞİVİ (370)",beIN SPORTS
 http://unreal.eztv4you.xyz:25461/98392023/224vpw99f7/432184
-#EXTINF:-1 tvg-name="beIN SPORTS" group-title="YABANCI ARŞİVİ (356)",beIN SPORTS
+#EXTINF:-1 tvg-name="beIN SPORTS" group-title="YABANCI ARŞİVİ (370)",beIN SPORTS
 https://12mumdur.online/701/index.m3u8
-#EXTINF:-1 tvg-name="beIN SPORTS" group-title="YABANCI ARŞİVİ (356)",beIN SPORTS
+#EXTINF:-1 tvg-name="beIN SPORTS" group-title="YABANCI ARŞİVİ (370)",beIN SPORTS
 https://ancient-shape-c20a.yedekbirkankam.workers.dev/https://cinque.c53af06fa4e55583.click/p/selcuksportshd1611.xyz/601/a.cf-worker-f1a2134fd551fa4b.workers.dev/chunklist_hd.m3u8
-#EXTINF:-1 tvg-name="beIN SPORTS" group-title="YABANCI ARŞİVİ (356)",beIN SPORTS
+#EXTINF:-1 tvg-name="beIN SPORTS" group-title="YABANCI ARŞİVİ (370)",beIN SPORTS
 https://avyyrtb95k.zortspor1.online/599/index.m3u8
-#EXTINF:-1 tvg-name="beIN SPORTS" group-title="YABANCI ARŞİVİ (356)",beIN SPORTS
+#EXTINF:-1 tvg-name="beIN SPORTS" group-title="YABANCI ARŞİVİ (370)",beIN SPORTS
 https://avyyrtb95k.zortspor1.online/7000/index.m3u8
-#EXTINF:-1 tvg-name="beIN SPORTS" group-title="YABANCI ARŞİVİ (356)",beIN SPORTS
+#EXTINF:-1 tvg-name="beIN SPORTS" group-title="YABANCI ARŞİVİ (370)",beIN SPORTS
 https://cinque.c53af06fa4e55583.click/p/f2XX9QypQfMaQ5rX1zA/601/a.cf-worker-f1a2134fd551fa4b.workers.dev/chunklist_hd.m3u8
-#EXTINF:-1 tvg-name="beIN SPORTS" group-title="YABANCI ARŞİVİ (356)",beIN SPORTS
+#EXTINF:-1 tvg-name="beIN SPORTS" group-title="YABANCI ARŞİVİ (370)",beIN SPORTS
 https://due.7cbd07151f7a2d82.click/itis/8c1437d28413db5112720e3ce0579154/playlist.m3u8
-#EXTINF:-1 tvg-name="beIN SPORTS" group-title="YABANCI ARŞİVİ (356)",beIN SPORTS
+#EXTINF:-1 tvg-name="beIN SPORTS" group-title="YABANCI ARŞİVİ (370)",beIN SPORTS
 https://due.c53af06fa4e55583.click/p/limontv.xyz/601/a.cf-worker-f1a2134fd551fa4b.workers.dev/chunklist_hd.m3u8
-#EXTINF:-1 tvg-name="beIN SPORTS" group-title="YABANCI ARŞİVİ (356)",beIN SPORTS
+#EXTINF:-1 tvg-name="beIN SPORTS" group-title="YABANCI ARŞİVİ (370)",beIN SPORTS
 https://fxazuc197k.zortspor1.online/599/index.m3u8
-#EXTINF:-1 tvg-name="beIN SPORTS" group-title="YABANCI ARŞİVİ (356)",beIN SPORTS
+#EXTINF:-1 tvg-name="beIN SPORTS" group-title="YABANCI ARŞİVİ (370)",beIN SPORTS
 https://fxazuc197k.zortspor1.online/7000/index.m3u8
-#EXTINF:-1 tvg-name="beIN SPORTS" group-title="YABANCI ARŞİVİ (356)",beIN SPORTS
+#EXTINF:-1 tvg-name="beIN SPORTS" group-title="YABANCI ARŞİVİ (370)",beIN SPORTS
 https://g0.b4c8d3e9f1a2b7c5d24.cfd/yayinzirve.m3u8
-#EXTINF:-1 tvg-name="beIN SPORTS" group-title="YABANCI ARŞİVİ (356)",beIN SPORTS
+#EXTINF:-1 tvg-name="beIN SPORTS" group-title="YABANCI ARŞİVİ (370)",beIN SPORTS
 https://j0pgnqplxcrgtwz8ioahynbwnfr3xmij.zortspor1.online/599/index.m3u8
-#EXTINF:-1 tvg-name="beIN SPORTS" group-title="YABANCI ARŞİVİ (356)",beIN SPORTS
+#EXTINF:-1 tvg-name="beIN SPORTS" group-title="YABANCI ARŞİVİ (370)",beIN SPORTS
 https://j0pgnqplxcrgtwz8ioahynbwnfr3xmij.zortspor1.online/7000/index.m3u8
-#EXTINF:-1 tvg-name="beIN SPORTS" group-title="YABANCI ARŞİVİ (356)",beIN SPORTS
+#EXTINF:-1 tvg-name="beIN SPORTS" group-title="YABANCI ARŞİVİ (370)",beIN SPORTS
 https://k0.b4c8d3e9f1a2b7c5d28.cfd/yayinzirve.m3u8
-#EXTINF:-1 tvg-name="beIN SPORTS" group-title="YABANCI ARŞİVİ (356)",beIN SPORTS
+#EXTINF:-1 tvg-name="beIN SPORTS" group-title="YABANCI ARŞİVİ (370)",beIN SPORTS
 https://p0.b4c8d3e9f1a2b7c5d33.cfd/yayininat.m3u8
-#EXTINF:-1 tvg-name="beIN SPORTS" group-title="YABANCI ARŞİVİ (356)",beIN SPORTS
+#EXTINF:-1 tvg-name="beIN SPORTS" group-title="YABANCI ARŞİVİ (370)",beIN SPORTS
 https://pp.centtv38.live/yayinzirve.m3u8
-#EXTINF:-1 tvg-name="beIN SPORTS" group-title="YABANCI ARŞİVİ (356)",beIN SPORTS
+#EXTINF:-1 tvg-name="beIN SPORTS" group-title="YABANCI ARŞİVİ (370)",beIN SPORTS
 https://quattro.facd2855b1fdc415.click/i/neden/601/playlist.m3u8
-#EXTINF:-1 tvg-name="beIN SPORTS" group-title="YABANCI ARŞİVİ (356)",beIN SPORTS
+#EXTINF:-1 tvg-name="beIN SPORTS" group-title="YABANCI ARŞİVİ (370)",beIN SPORTS
 https://steep-tooth-6534.1ff056997784445.workers.dev/static/bs1.m3u8
-#EXTINF:-1 tvg-name="beIN SPORTS" group-title="YABANCI ARŞİVİ (356)",beIN SPORTS
+#EXTINF:-1 tvg-name="beIN SPORTS" group-title="YABANCI ARŞİVİ (370)",beIN SPORTS
 https://tre.c53af06fa4e55583.click/p/f2XX9QypQfMaQ5rX1zA/601/a.cf-worker-f1a2134fd551fa4b.workers.dev/chunklist_hd.m3u8
-#EXTINF:-1 tvg-name="beIN SPORTS" group-title="YABANCI ARŞİVİ (356)",beIN SPORTS
+#EXTINF:-1 tvg-name="beIN SPORTS" group-title="YABANCI ARŞİVİ (370)",beIN SPORTS
 https://uno.c53af06fa4e55583.click/p/f2XX9QypQfMaQ5rX1zA/601/a.cf-worker-f1a2134fd551fa4b.workers.dev/chunklist_hd.m3u8
-#EXTINF:-1 tvg-name="beIN SPORTS" group-title="YABANCI ARŞİVİ (356)",beIN SPORTS
+#EXTINF:-1 tvg-name="beIN SPORTS" group-title="YABANCI ARŞİVİ (370)",beIN SPORTS
 https://za.mevzuhls15.cfd/yayinzirve.m3u8
-#EXTINF:-1 tvg-name="beIN SPORTS 2" group-title="YABANCI ARŞİVİ (356)",beIN SPORTS 2
+#EXTINF:-1 tvg-name="beIN SPORTS 2" group-title="YABANCI ARŞİVİ (370)",beIN SPORTS 2
 https://alpha.cf-worker-c4d6a2ea181de1b9.workers.dev/live/bein-sports-2/playlist.m3u8
-#EXTINF:-1 tvg-name="beIN SPORTS 3" group-title="YABANCI ARŞİVİ (356)",beIN SPORTS 3
+#EXTINF:-1 tvg-name="beIN SPORTS 3" group-title="YABANCI ARŞİVİ (370)",beIN SPORTS 3
 https://alpha.cf-worker-c4d6a2ea181de1b9.workers.dev/live/bein-sports-3/playlist.m3u8
-#EXTINF:-1 tvg-name="beIN SPORTS 3" group-title="YABANCI ARŞİVİ (356)",beIN SPORTS 3
+#EXTINF:-1 tvg-name="beIN SPORTS 3" group-title="YABANCI ARŞİVİ (370)",beIN SPORTS 3
 https://ancient-shape-c20a.yedekbirkankam.workers.dev/https://nove.7fb7a3c9b851c072.click/p/mackeyfi3286.sbs/603/a.cf-worker-82ce8898971031cf.workers.dev/chunklist_hd.m3u8
-#EXTINF:-1 tvg-name="beIN SPORTS 4" group-title="YABANCI ARŞİVİ (356)",beIN SPORTS 4
+#EXTINF:-1 tvg-name="beIN SPORTS 4" group-title="YABANCI ARŞİVİ (370)",beIN SPORTS 4
 https://k0.b4c8d3e9f1a2b7c5d28.cfd/yayinb4.m3u8
-#EXTINF:-1 tvg-name="beIN SPORTS 5" group-title="YABANCI ARŞİVİ (356)",beIN SPORTS 5
+#EXTINF:-1 tvg-name="beIN SPORTS 5" group-title="YABANCI ARŞİVİ (370)",beIN SPORTS 5
 https://pp.centtv38.live/yayinb5.m3u8
-#EXTINF:-1 tvg-name="beIN SPORTS Max" group-title="YABANCI ARŞİVİ (356)",beIN SPORTS Max
+#EXTINF:-1 tvg-name="beIN SPORTS Max" group-title="YABANCI ARŞİVİ (370)",beIN SPORTS Max
 https://pp.centtv38.live/yayinbm1.m3u8
-#EXTINF:-1 tvg-name="beIN SPORTS Max 2" group-title="YABANCI ARŞİVİ (356)",beIN SPORTS Max 2
+#EXTINF:-1 tvg-name="beIN SPORTS Max 2" group-title="YABANCI ARŞİVİ (370)",beIN SPORTS Max 2
 https://pp.centtv38.live/yayinbm2.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/g0jPOcC.png" group-title="YABANCI ARŞİVİ (356)",TRT (GREECE) (720P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/g0jPOcC.png" group-title="YABANCI ARŞİVİ (370)",TRT (GREECE) (720P)
 https://av.hellasnet.tv/rst/trt/main_stream.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/6/67/Canal_trt_logo.PNG" group-title="YABANCI ARŞİVİ (356)",TRT (VENEZUELA) (410P) [NOT 24/7]
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/6/67/Canal_trt_logo.PNG" group-title="YABANCI ARŞİVİ (370)",TRT (VENEZUELA) (410P) [NOT 24/7]
 https://vcp12.myplaytv.com/trt/trt/playlist.m3u8
-#EXTINF:-1 group-title="YABANCI ARŞİVİ (356)",TRT ARABI
+#EXTINF:-1 group-title="YABANCI ARŞİVİ (370)",TRT ARABI
 https://tv-trtarabi.medya.trt.com.tr/master_720.m3u8
-#EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/kuz3-orange/TurkishIPTV-Claude/main/logos/trtarabi.png" group-title="YABANCI ARŞİVİ (356)",TRT ARABI
+#EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/kuz3-orange/TurkishIPTV-Claude/main/logos/trtarabi.png" group-title="YABANCI ARŞİVİ (370)",TRT ARABI
 https://tv-trtarabi.medya.trt.com.tr/master_1080.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/kkm7VqV.png" group-title="YABANCI ARŞİVİ (356)",ANTİQUES ROAD TRİP (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/kkm7VqV.png" group-title="YABANCI ARŞİVİ (370)",ANTİQUES ROAD TRİP (1080P)
 https://d3v8uchko88gmi.cloudfront.net/PBSART_GB.m3u8
-#EXTINF:-1 tvg-logo="https://enhd.ar/wp-content/uploads/2022/01/0e4a83fc-ba5b-4f26-a333-31f8bd544bcb-300x260.jpeg" group-title="YABANCI ARŞİVİ (356)",CİTRİCO TV (720P)
+#EXTINF:-1 tvg-logo="https://enhd.ar/wp-content/uploads/2022/01/0e4a83fc-ba5b-4f26-a333-31f8bd544bcb-300x260.jpeg" group-title="YABANCI ARŞİVİ (370)",CİTRİCO TV (720P)
 https://edge.essastream.com/citricotv/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://ltsk-cdn.s3.eu-west-1.amazonaws.com/jumpstart/Temp_Live/cdn/HLS/Channel/transparentImages/DD-Tripura-Logo_2000_X_1125_Transpharent.png" group-title="YABANCI ARŞİVİ (356)",DD TRİPURA (480P)
+#EXTINF:-1 tvg-logo="https://ltsk-cdn.s3.eu-west-1.amazonaws.com/jumpstart/Temp_Live/cdn/HLS/Channel/transparentImages/DD-Tripura-Logo_2000_X_1125_Transpharent.png" group-title="YABANCI ARŞİVİ (370)",DD TRİPURA (480P)
 https://d3qs3d2rkhfqrt.cloudfront.net/out/v1/52b998e9510d41c29ad2ceca8ea3d849/index.m3u8
-#EXTINF:-1 tvg-logo="http://epg.one/img/2266.png" group-title="YABANCI ARŞİVİ (356)",EURONEWS RUSSİAN TR
+#EXTINF:-1 tvg-logo="http://epg.one/img/2266.png" group-title="YABANCI ARŞİVİ (370)",EURONEWS RUSSİAN TR
 http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/32069/index.m3u8
-#EXTINF:-1 tvg-logo="https://jiotvimages.cdn.jio.com/dare_images/images/NKRTV.png" group-title="YABANCI ARŞİVİ (356)",NKR TV KANNADA (1080P)
+#EXTINF:-1 tvg-logo="https://jiotvimages.cdn.jio.com/dare_images/images/NKRTV.png" group-title="YABANCI ARŞİVİ (370)",NKR TV KANNADA (1080P)
 https://stream.ottlive.co.in/nkrtv/index.m3u8
-#EXTINF:-1 tvg-logo="https://jiotvimages.cdn.jio.com/dare_images/images/ntvtamil.png" group-title="YABANCI ARŞİVİ (356)",NTC TV (720P)
+#EXTINF:-1 tvg-logo="https://jiotvimages.cdn.jio.com/dare_images/images/ntvtamil.png" group-title="YABANCI ARŞİVİ (370)",NTC TV (720P)
 https://galaxyott.live/hls/ntv.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/gtZLzxq.png" group-title="YABANCI ARŞİVİ (356)",NTV (720P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/gtZLzxq.png" group-title="YABANCI ARŞİVİ (370)",NTV (720P)
 https://protokolldns.xyz/ntv.l.i.v.e5547892023/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/n79nkVC.png" group-title="YABANCI ARŞİVİ (356)",NTV (BRAZIL) (720P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/n79nkVC.png" group-title="YABANCI ARŞİVİ (370)",NTV (BRAZIL) (720P)
 https://cdn.livespanel.com/nossatv/nossatv/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/KQtQg5y.png" group-title="YABANCI ARŞİVİ (356)",NTV (CANADA) CJON-DT (480P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/KQtQg5y.png" group-title="YABANCI ARŞİVİ (370)",NTV (CANADA) CJON-DT (480P)
 https://2-fss-1.streamhoster.com/pl_122/201748-1431018-1/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/jnXpcwV.png" group-title="YABANCI ARŞİVİ (356)",NTV (MALDIVES)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/jnXpcwV.png" group-title="YABANCI ARŞİVİ (370)",NTV (MALDIVES)
 https://sunplay-cdn.bitratelabs.com/live/local-channel/ntv-e3d4300b49c8c901e9339174215d7580/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/9r1BKzK.png" group-title="YABANCI ARŞİVİ (356)",NTV (RUSSIA) (576P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/9r1BKzK.png" group-title="YABANCI ARŞİVİ (370)",NTV (RUSSIA) (576P)
 http://31.148.5.241/kanal_4/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/QdVa8tl.png" group-title="YABANCI ARŞİVİ (356)",NTV SERIES (576P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/QdVa8tl.png" group-title="YABANCI ARŞİVİ (370)",NTV SERIES (576P)
 http://stream.mcquack.net/301/index.m3u8
-#EXTINF:-1 tvg-logo="https://image.tmdb.org/t/p/original/qGCnptpQ9slUAoZ7e5y1Dk4TtjJ.png" group-title="YABANCI ARŞİVİ (356)",NTV SLEDSTVIYE VELI (1080P) [GEO-BLOCKED]
+#EXTINF:-1 tvg-logo="https://image.tmdb.org/t/p/original/qGCnptpQ9slUAoZ7e5y1Dk4TtjJ.png" group-title="YABANCI ARŞİVİ (370)",NTV SLEDSTVIYE VELI (1080P) [GEO-BLOCKED]
 https://mhd116.iptv2022.com/x/t4hRFz1R89Q6kjp3CL3WVQ,1792610109/streaming/sledstvie_veli_hd/324/1/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/WqTIoWS.png" group-title="YABANCI ARŞİVİ (356)",NTV TELUGU (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/WqTIoWS.png" group-title="YABANCI ARŞİVİ (370)",NTV TELUGU (1080P)
 https://mumbai-edge.smartplaytv.in/NTVTelugu/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/YEUhPBv.png" group-title="YABANCI ARŞİVİ (356)",NTV+
+#EXTINF:-1 tvg-logo="https://i.imgur.com/YEUhPBv.png" group-title="YABANCI ARŞİVİ (370)",NTV+
 https://2-fss-1.streamhoster.com/pl_122/201748-1431018-1/chunklist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/FfKBvz5.png" group-title="YABANCI ARŞİVİ (356)",NTV-HIT (576P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/FfKBvz5.png" group-title="YABANCI ARŞİVİ (370)",NTV-HIT (576P)
 http://178.134.1.158:8081/ntvhit/index.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/it/thumb/9/99/Ondatv.jpg/512px-Ondatv.jpg" group-title="YABANCI ARŞİVİ (356)",ONDA TV (ITALY) (568P)
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/it/thumb/9/99/Ondatv.jpg/512px-Ondatv.jpg" group-title="YABANCI ARŞİVİ (370)",ONDA TV (ITALY) (568P)
 https://5926fc9c7c5b2.streamlock.net/9040/9040/chunklist_w1373908906.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/yaCK1Mh.png" group-title="YABANCI ARŞİVİ (356)",ONTV4U (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/yaCK1Mh.png" group-title="YABANCI ARŞİVİ (370)",ONTV4U (1080P)
 https://ontv4u-orka.b-cdn.net/ONTV4U-ORKA/index.m3u8
-#EXTINF:-1 tvg-logo="https://cdn2-static.ntv.ru/home/promo/24740/perv_otdel_llive.jpg" group-title="YABANCI ARŞİVİ (356)",PERVIY OTDEL (1080P)
+#EXTINF:-1 tvg-logo="https://cdn2-static.ntv.ru/home/promo/24740/perv_otdel_llive.jpg" group-title="YABANCI ARŞİVİ (370)",PERVIY OTDEL (1080P)
 https://cdn-dvr.ntv.ru/Perviy_otdel/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/KnJAqbd.png" group-title="YABANCI ARŞİVİ (356)",PIURATV (720P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/KnJAqbd.png" group-title="YABANCI ARŞİVİ (370)",PIURATV (720P)
 https://live-evg7.tv360.bitel.com.pe/bitel/piuratvSRT/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/P5erWzm.png" group-title="YABANCI ARŞİVİ (356)",PONTV (720P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/P5erWzm.png" group-title="YABANCI ARŞİVİ (370)",PONTV (720P)
 http://122.248.43.242:1935/PONTV/_definst_/myStream/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/QazvinTV.svg/960px-QazvinTV.svg.png" group-title="YABANCI ARŞİVİ (356)",QAZVIN TV
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/QazvinTV.svg/960px-QazvinTV.svg.png" group-title="YABANCI ARŞİVİ (370)",QAZVIN TV
 https://ncdn.telewebion.ir/qazvin/live/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/nTVJcFA.png" group-title="YABANCI ARŞİVİ (356)",RITOQUE TV (720P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/nTVJcFA.png" group-title="YABANCI ARŞİVİ (370)",RITOQUE TV (720P)
 https://streaming.purum.cl/ritoquetv/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/DAK5ZnD.png" group-title="YABANCI ARŞİVİ (356)",RSELVATV (720P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/DAK5ZnD.png" group-title="YABANCI ARŞİVİ (370)",RSELVATV (720P)
 https://live-evg11.tv360.bitel.com.pe/bitel/selvaticaSRT/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/dvP2yqB.png" group-title="YABANCI ARŞİVİ (356)",RTRTV (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/dvP2yqB.png" group-title="YABANCI ARŞİVİ (370)",RTRTV (1080P)
 https://tv3ecuador.site/hls/stream/index.m3u8
-#EXTINF:-1 tvg-logo="https://santacruztv8.com/assets/images/logo.png" group-title="YABANCI ARŞİVİ (356)",SANTA CRUZ TV (1080P) [NOT 24/7]
+#EXTINF:-1 tvg-logo="https://santacruztv8.com/assets/images/logo.png" group-title="YABANCI ARŞİVİ (370)",SANTA CRUZ TV (1080P) [NOT 24/7]
 https://host.streamingnation.live/p/3345/hybrid/play.m3u8
-#EXTINF:-1 tvg-logo="https://dtil.tmsimg.com/assets/s143763_ld_h15_aa.png?lock=720x540" group-title="YABANCI ARŞİVİ (356)",SANTVANI CHANNEL (720P)
+#EXTINF:-1 tvg-logo="https://dtil.tmsimg.com/assets/s143763_ld_h15_aa.png?lock=720x540" group-title="YABANCI ARŞİVİ (370)",SANTVANI CHANNEL (720P)
 https://d1hyhsds9hb4o2.cloudfront.net/master.m3u8
-#EXTINF:-1 tvg-logo="https://cdn2-static.ntv.ru/home/promo/24740/shef_llive.jpg" group-title="YABANCI ARŞİVİ (356)",SHEF (1080P)
+#EXTINF:-1 tvg-logo="https://cdn2-static.ntv.ru/home/promo/24740/shef_llive.jpg" group-title="YABANCI ARŞİVİ (370)",SHEF (1080P)
 https://cdn-dvr.ntv.ru/Shef/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/0zCt8e4.png" group-title="YABANCI ARŞİVİ (356)",SPEKTRATV (720P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/0zCt8e4.png" group-title="YABANCI ARŞİVİ (370)",SPEKTRATV (720P)
 https://cloudvideo.servers10.com:8081/8026/tracks-v1a1/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/KUyqQCX.png" group-title="YABANCI ARŞİVİ (356)",SPERANTATV (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/KUyqQCX.png" group-title="YABANCI ARŞİVİ (370)",SPERANTATV (1080P)
 https://jstre.am/live/jsl:2gNjpghXRLE.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/id/7/75/SriwijayaTV_2014.png" group-title="YABANCI ARŞİVİ (356)",SRIWIJAYA TV (720P) [NOT 24/7]
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/id/7/75/SriwijayaTV_2014.png" group-title="YABANCI ARŞİVİ (370)",SRIWIJAYA TV (720P) [NOT 24/7]
 https://sriwijayatv.siar.us/live/sriwijayatv.m3u8
-#EXTINF:-1 tvg-logo="https://jiotvimages.cdn.jio.com/dare_images/images/subintvtamil.png" group-title="YABANCI ARŞİVİ (356)",SUBIN TV (1080P)
+#EXTINF:-1 tvg-logo="https://jiotvimages.cdn.jio.com/dare_images/images/subintvtamil.png" group-title="YABANCI ARŞİVİ (370)",SUBIN TV (1080P)
 https://stream.galaxyott.live/live/subintv/index.m3u8
-#EXTINF:-1 tvg-logo="https://jiotvimages.cdn.jio.com/dare_images/images/suryatvtamil.png" group-title="YABANCI ARŞİVİ (356)",SURIYA TV (1080P)
+#EXTINF:-1 tvg-logo="https://jiotvimages.cdn.jio.com/dare_images/images/suryatvtamil.png" group-title="YABANCI ARŞİVİ (370)",SURIYA TV (1080P)
 https://stream.ottlive.co.in/suryatvtamil/index.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/fa/thumb/f/f2/IRIB_tamashaTV.svg/960px-IRIB_tamashaTV.svg.png" group-title="YABANCI ARŞİVİ (356)",TAMASHA
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/fa/thumb/f/f2/IRIB_tamashaTV.svg/960px-IRIB_tamashaTV.svg.png" group-title="YABANCI ARŞİVİ (370)",TAMASHA
 https://ncdn.telewebion.ir/hdtest/live/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://www.taurianovatv.it/wp-content/uploads/2024/04/cropped-FotoJet-2-HD15.jpg" group-title="YABANCI ARŞİVİ (356)",TAURIANOVA TV (720P)
+#EXTINF:-1 tvg-logo="https://www.taurianovatv.it/wp-content/uploads/2024/04/cropped-FotoJet-2-HD15.jpg" group-title="YABANCI ARŞİVİ (370)",TAURIANOVA TV (720P)
 https://5f22d76e220e1.streamlock.net/taurianovatv/taurianovatv/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://thainguyentv.vn/modules/frontend/themes/ptthtn/images/logo.png" group-title="YABANCI ARŞİVİ (356)",THAI NGUYEN TV (720P)
+#EXTINF:-1 tvg-logo="https://thainguyentv.vn/modules/frontend/themes/ptthtn/images/logo.png" group-title="YABANCI ARŞİVİ (370)",THAI NGUYEN TV (720P)
 https://streaming.thainguyentv.vn/hls/livestream.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/XDNXJCl.png" group-title="YABANCI ARŞİVİ (356)",THE YOUNG TURKS (720P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/XDNXJCl.png" group-title="YABANCI ARŞİVİ (370)",THE YOUNG TURKS (720P)
 https://tyt-samsungus.amagi.tv/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/YJYdHKO.png" group-title="YABANCI ARŞİVİ (356)",TORONTO 360 TV (720P) [NOT 24/7]
+#EXTINF:-1 tvg-logo="https://i.imgur.com/YJYdHKO.png" group-title="YABANCI ARŞİVİ (370)",TORONTO 360 TV (720P) [NOT 24/7]
 http://cdn3.toronto360.tv:8081/toronto360/hd/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://xstreamcp-assets-msp.streamready.in/assets/LIVETV/LIVECHANNEL/LIVETV_LIVETVCHANNEL_TV9_BHARATVARSH/images/LOGO_HD/image.png" group-title="YABANCI ARŞİVİ (356)",TV9 BHARATVARSH (1080P)
+#EXTINF:-1 tvg-logo="https://xstreamcp-assets-msp.streamready.in/assets/LIVETV/LIVECHANNEL/LIVETV_LIVETVCHANNEL_TV9_BHARATVARSH/images/LOGO_HD/image.png" group-title="YABANCI ARŞİVİ (370)",TV9 BHARATVARSH (1080P)
 https://amg01106-amg01106c2-amgplt0747.playout.now3.amagi.tv/amg01106c2/hls.m3u8
-#EXTINF:-1 tvg-logo="https://jiotvimages.cdn.jio.com/dare_images/images/TV_100.png" group-title="YABANCI ARŞİVİ (356)",TV 100 (INDIA) (576P)
+#EXTINF:-1 tvg-logo="https://jiotvimages.cdn.jio.com/dare_images/images/TV_100.png" group-title="YABANCI ARŞİVİ (370)",TV 100 (INDIA) (576P)
 https://fta.ektv.in/live/310/master.m3u8
-#EXTINF:-1 tvg-logo="https://i.ibb.co/HHxGQGD/TVO-kanalbanner-page-0002-1-removebg-preview-300x94.png" group-title="YABANCI ARŞİVİ (356)",TV OSTFOLD (1080P)
+#EXTINF:-1 tvg-logo="https://i.ibb.co/HHxGQGD/TVO-kanalbanner-page-0002-1-removebg-preview-300x94.png" group-title="YABANCI ARŞİVİ (370)",TV OSTFOLD (1080P)
 https://streamnorge.com:8088/hls/tvo.m3u8
-#EXTINF:-1 tvg-logo="https://i.ibb.co/vxntQD60/twojatv-hd-online.png" group-title="YABANCI ARŞİVİ (356)",TWOJA.TV (1080P)
+#EXTINF:-1 tvg-logo="https://i.ibb.co/vxntQD60/twojatv-hd-online.png" group-title="YABANCI ARŞİVİ (370)",TWOJA.TV (1080P)
 https://stream.twoja.tv/ttv_hls/live.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/ZMsyjSr.png" group-title="YABANCI ARŞİVİ (356)",VIJU TV1000 (576P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/ZMsyjSr.png" group-title="YABANCI ARŞİVİ (370)",VIJU TV1000 (576P)
 http://46.53.200.153:7777/play/TV_1000/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/TMmyuzh.png" group-title="YABANCI ARŞİVİ (356)",VIJU TV1000 ACTION (576P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/TMmyuzh.png" group-title="YABANCI ARŞİVİ (370)",VIJU TV1000 ACTION (576P)
 http://46.53.200.153:7777/play/a01h/index.m3u8
-#EXTINF:-1 tvg-logo="https://www.cableman.ru/sites/default/files/viju_TV1000_%D0%BD%D0%BE%D0%B2%D0%B5%D0%BB%D0%BB%D0%B0_color_rgb_02%20%281%29.png" group-title="YABANCI ARŞİVİ (356)",VIJU TV1000 NOVELLA HD (1080P)
+#EXTINF:-1 tvg-logo="https://www.cableman.ru/sites/default/files/viju_TV1000_%D0%BD%D0%BE%D0%B2%D0%B5%D0%BB%D0%BB%D0%B0_color_rgb_02%20%281%29.png" group-title="YABANCI ARŞİVİ (370)",VIJU TV1000 NOVELLA HD (1080P)
 http://46.53.200.153:7777/play/VIJU_TV_1000_novella/index.m3u8
-#EXTINF:-1 tvg-logo="https://rnnxdki1nv.a.trbcdn.net/viasat/production/tvchannels/dc243048-c5ad-4ccc-86c6-3a480874ec29/logos/flo59mr6lh1jf68g3021urgwtd5k" group-title="YABANCI ARŞİVİ (356)",VIJU TV1000 ROMANTICA HD (1080P)
+#EXTINF:-1 tvg-logo="https://rnnxdki1nv.a.trbcdn.net/viasat/production/tvchannels/dc243048-c5ad-4ccc-86c6-3a480874ec29/logos/flo59mr6lh1jf68g3021urgwtd5k" group-title="YABANCI ARŞİVİ (370)",VIJU TV1000 ROMANTICA HD (1080P)
 http://46.53.200.153:7777/play/Viju_Drama/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/Meak2y4.png" group-title="YABANCI ARŞİVİ (356)",VIJU TV1000 RUSSKOE (576P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/Meak2y4.png" group-title="YABANCI ARŞİVİ (370)",VIJU TV1000 RUSSKOE (576P)
 http://46.53.200.153:7777/play/a01g/index.m3u8
-#EXTINF:-1 tvg-logo="https://beltelecom.by/sites/default/files/2026-02/img-news-btk-new-channel-voentv_0.png" group-title="YABANCI ARŞİVİ (356)",VOYENTV (1080P)
+#EXTINF:-1 tvg-logo="https://beltelecom.by/sites/default/files/2026-02/img-news-btk-new-channel-voentv_0.png" group-title="YABANCI ARŞİVİ (370)",VOYENTV (1080P)
 http://media1.skifnet.by/voentv/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/NtvfnVV.png" group-title="YABANCI ARŞİVİ (356)",XIZANG TV TIBETAN
+#EXTINF:-1 tvg-logo="https://i.imgur.com/NtvfnVV.png" group-title="YABANCI ARŞİVİ (370)",XIZANG TV TIBETAN
 https://live.vtibet.cn/live/ZYWS20261016.stream.m3u8
-#EXTINF:-1 tvg-logo="https://xtratvrd.com/logo512.png" group-title="YABANCI ARŞİVİ (356)",XTRA TV (720P) [NOT 24/7]
+#EXTINF:-1 tvg-logo="https://xtratvrd.com/logo512.png" group-title="YABANCI ARŞİVİ (370)",XTRA TV (720P) [NOT 24/7]
 https://edge.essastream.com/xtratv/index.m3u8
-#EXTINF:-1 tvg-logo="https://hegyvidektv.hu/wp-content/uploads/2025/05/BUDATV_logo_picon.png" group-title="YABANCI ARŞİVİ (356)",HEGYVIDÉK TV (BUDA TV)
+#EXTINF:-1 tvg-logo="https://hegyvidektv.hu/wp-content/uploads/2025/05/BUDATV_logo_picon.png" group-title="YABANCI ARŞİVİ (370)",HEGYVIDÉK TV (BUDA TV)
 http://budatv.streaming.aiproduction.hu/playlist.m3u
-#EXTINF:-1 tvg-logo="https://i.imgur.com/4VCEJuJ.png" group-title="YABANCI ARŞİVİ (356)",RADIOITALIATV
+#EXTINF:-1 tvg-logo="https://i.imgur.com/4VCEJuJ.png" group-title="YABANCI ARŞİVİ (370)",RADIOITALIATV
 https://radioitaliatv.akamaized.net/hls/live/2093117/RadioitaliaTV/master.m3u8
-#EXTINF:-1 tvg-logo="https://patbuweb.com/tivustream/chanlogoz/ita/esperiatv.png" group-title="YABANCI ARŞİVİ (356)",ESPERIA TV
+#EXTINF:-1 tvg-logo="https://patbuweb.com/tivustream/chanlogoz/ita/esperiatv.png" group-title="YABANCI ARŞİVİ (370)",ESPERIA TV
 https://59d7d6f47d7fc.streamlock.net/esperiatv/esperiatv/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://hostux.pics/images/2026/09/11/05_radio_arancia_tv84cccbbd33923281.png" group-title="YABANCI ARŞİVİ (356)",RADIO ARANCIA TV
+#EXTINF:-1 tvg-logo="https://hostux.pics/images/2026/09/11/05_radio_arancia_tv84cccbbd33923281.png" group-title="YABANCI ARŞİVİ (370)",RADIO ARANCIA TV
 https://stream3.xdevel.com/video0s975447-164/stream/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/gcysky4.png" group-title="YABANCI ARŞİVİ (356)",SIENATV
+#EXTINF:-1 tvg-logo="https://i.imgur.com/gcysky4.png" group-title="YABANCI ARŞİVİ (370)",SIENATV
 https://router.xdevel.com/video0s976727-1441/stream/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/Re3ur88.png" group-title="YABANCI ARŞİVİ (356)",SNTV DALJIR Ⓢ
+#EXTINF:-1 tvg-logo="https://i.imgur.com/Re3ur88.png" group-title="YABANCI ARŞİVİ (370)",SNTV DALJIR Ⓢ
 https://cd198.anystream.uk:9092/iqapp/s2tve/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/d/d6/SNTV_REBRANDED_LOGO.png" group-title="YABANCI ARŞİVİ (356)",SOMALI NATIONAL TV Ⓢ
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/d/d6/SNTV_REBRANDED_LOGO.png" group-title="YABANCI ARŞİVİ (370)",SOMALI NATIONAL TV Ⓢ
 https://cd198.anystream.uk:9092/iqapp/s4ne/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Fashion_TV_logo.svg/960px-Fashion_TV_logo.svg.png" group-title="YABANCI ARŞİVİ (356)",FASHIONTV (720P)
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Fashion_TV_logo.svg/960px-Fashion_TV_logo.svg.png" group-title="YABANCI ARŞİVİ (370)",FASHIONTV (720P)
 https://samitaorigin.tangotv.in/FASHIONTV/SAMITAORIGIN/index.m3u8
-#EXTINF:-1 tvg-logo="https://jiotvimages.cdn.jio.com/dare_images/images/NKRTV.png" group-title="YABANCI ARŞİVİ (356)",NKR TV KANNADA (1080P)
+#EXTINF:-1 tvg-logo="https://jiotvimages.cdn.jio.com/dare_images/images/NKRTV.png" group-title="YABANCI ARŞİVİ (370)",NKR TV KANNADA (1080P)
 https://vglivessai.akamaized.net/ptnr-lg/title-NKR_TV/sg/v1/master/611d79b11b77e2f571934fd80ca1413453772ac7/3e4833d1-e98f-4fc4-8868-6d31dc2ea843/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/pUcV46F.png" group-title="YABANCI ARŞİVİ (356)",NTV MIR (576P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/pUcV46F.png" group-title="YABANCI ARŞİVİ (370)",NTV MIR (576P)
 https://streaming.thestream.cyou/live/213.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/yaCK1Mh.png" group-title="YABANCI ARŞİVİ (356)",ONTV4U (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/yaCK1Mh.png" group-title="YABANCI ARŞİVİ (370)",ONTV4U (1080P)
 https://stirr.b-cdn.net/stirr/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/nTVJcFA.png" group-title="YABANCI ARŞİVİ (356)",RITOQUE TV (720P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/nTVJcFA.png" group-title="YABANCI ARŞİVİ (370)",RITOQUE TV (720P)
 https://v2.tustreaming.cl/unetev/index.m3u8
-#EXTINF:-1 tvg-logo="https://www.spondontv.com/wp-content/uploads/2025/10/cropped-SPONDON_Blue-Violet_1-copy-300x100.png" group-title="YABANCI ARŞİVİ (356)",SPONDON (720P)
+#EXTINF:-1 tvg-logo="https://www.spondontv.com/wp-content/uploads/2025/10/cropped-SPONDON_Blue-Violet_1-copy-300x100.png" group-title="YABANCI ARŞİVİ (370)",SPONDON (720P)
 https://mumt05.tangotv.in/87NeALx2SPONDON/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/XDNXJCl.png" group-title="YABANCI ARŞİVİ (356)",THE YOUNG TURKS (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/XDNXJCl.png" group-title="YABANCI ARŞİVİ (370)",THE YOUNG TURKS (1080P)
 https://amg01220-amg01220c1-firetv-us-5111.playouts.now.amagi.tv/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.ibb.co/vxntQD60/twojatv-hd-online.png" group-title="YABANCI ARŞİVİ (356)",TWOJA.TV (1080P)
+#EXTINF:-1 tvg-logo="https://i.ibb.co/vxntQD60/twojatv-hd-online.png" group-title="YABANCI ARŞİVİ (370)",TWOJA.TV (1080P)
 https://stream.twoja.tv/ttv_hls/live_720p/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/ZMsyjSr.png" group-title="YABANCI ARŞİVİ (356)",VIJU TV1000 (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/ZMsyjSr.png" group-title="YABANCI ARŞİVİ (370)",VIJU TV1000 (1080P)
 http://stream.mcquack.net/110/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/TMmyuzh.png" group-title="YABANCI ARŞİVİ (356)",VIJU TV1000 ACTION (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/TMmyuzh.png" group-title="YABANCI ARŞİVİ (370)",VIJU TV1000 ACTION (1080P)
 http://stream.mcquack.net/100/index.m3u8
-#EXTINF:-1 tvg-logo="https://www.tvchinese.net/uploads/tv/yunnantv.jpg" group-title="YABANCI ARŞİVİ (356)",YUNNAN SATELLITE TV
+#EXTINF:-1 tvg-logo="https://www.tvchinese.net/uploads/tv/yunnantv.jpg" group-title="YABANCI ARŞİVİ (370)",YUNNAN SATELLITE TV
 https://h5cul1yar48um3t.wcetv.com/hls/yunnantv.m3u8
-#EXTINF:-1 tvg-logo="https://i.ibb.co/8HZyRDN/Ekran-g-r-nt-s-2026-07-25-103937.jpg" group-title="YABANCI ARŞİVİ (356)",MEDYAHABER TV
+#EXTINF:-1 tvg-logo="https://i.ibb.co/8HZyRDN/Ekran-g-r-nt-s-2026-07-25-103937.jpg" group-title="YABANCI ARŞİVİ (370)",MEDYAHABER TV
 https://hlspackager.akamaized.net/live/DB/MEDYA_HABER/HLS/MEDYA_HABER.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Daystar_(2008%E2%80%93present)_unmodified_logo.svg/960px-Daystar_(2008%E2%80%93present)_unmodified_logo.svg.png" group-title="YABANCI ARŞİVİ (356)",DAYSTAR TV ESPANOL (720P)
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Daystar_(2008%E2%80%93present)_unmodified_logo.svg/960px-Daystar_(2008%E2%80%93present)_unmodified_logo.svg.png" group-title="YABANCI ARŞİVİ (370)",DAYSTAR TV ESPANOL (720P)
 https://live-mcl.cdn01.net/smarttv/64wj6m6d8/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/xNatV8K.png" group-title="YABANCI ARŞİVİ (356)",ESPRESO TV (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/xNatV8K.png" group-title="YABANCI ARŞİVİ (370)",ESPRESO TV (1080P)
 https://dash2.antik.sk/live/test_espresso/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/xNatV8K.png" group-title="YABANCI ARŞİVİ (356)",ESPRESO TV
+#EXTINF:-1 tvg-logo="https://i.imgur.com/xNatV8K.png" group-title="YABANCI ARŞİVİ (370)",ESPRESO TV
 https://dash4.antik.sk/live/test_espresso/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Fashion_TV_logo.svg/960px-Fashion_TV_logo.svg.png" group-title="YABANCI ARŞİVİ (356)",FASHIONTV (720P)
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Fashion_TV_logo.svg/960px-Fashion_TV_logo.svg.png" group-title="YABANCI ARŞİVİ (370)",FASHIONTV (720P)
 https://mumt01.tangotv.in/O5aw8Zn3FASHIONTV/index.m3u8
-#EXTINF:-1 tvg-logo="https://jiotvimages.cdn.jio.com/dare_images/images/NKRTV.png" group-title="YABANCI ARŞİVİ (356)",NKR TV KANNADA (1080P)
+#EXTINF:-1 tvg-logo="https://jiotvimages.cdn.jio.com/dare_images/images/NKRTV.png" group-title="YABANCI ARŞİVİ (370)",NKR TV KANNADA (1080P)
 https://vglivessai.akamaized.net/sg/v1/master/611d79b11b77e2f571934fd80ca1413453772ac7/bd25b31b-5ce2-453d-a544-d073555d85f3/index.m3u8
-#EXTINF:-1 tvg-logo="https://jiotvimages.cdn.jio.com/dare_images/images/NKRTV.png" group-title="YABANCI ARŞİVİ (356)",NKR TV KANNADA (720P)
+#EXTINF:-1 tvg-logo="https://jiotvimages.cdn.jio.com/dare_images/images/NKRTV.png" group-title="YABANCI ARŞİVİ (370)",NKR TV KANNADA (720P)
 https://mumt05.tangotv.in/87NeALx2NKRTV/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/9r1BKzK.png" group-title="YABANCI ARŞİVİ (356)",NTV (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/9r1BKzK.png" group-title="YABANCI ARŞİVİ (370)",NTV (1080P)
 https://cdn-dvr.ntv.ru/ntv0_hd/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/9r1BKzK.png" group-title="YABANCI ARŞİVİ (356)",NTV (576P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/9r1BKzK.png" group-title="YABANCI ARŞİVİ (370)",NTV (576P)
 http://176.118.197.101/NTV/index.m3u8
-#EXTINF:-1 tvg-logo="https://dtil.tmsimg.com/assets/s154897_ld_h15_aa.png?lock=720x540" group-title="YABANCI ARŞİVİ (356)",NTV TELUGU (576P)
+#EXTINF:-1 tvg-logo="https://dtil.tmsimg.com/assets/s154897_ld_h15_aa.png?lock=720x540" group-title="YABANCI ARŞİVİ (370)",NTV TELUGU (576P)
 https://cdn.pishow.tv/ott/live/383/master.m3u8
-#EXTINF:-1 tvg-logo="https://dtil.tmsimg.com/assets/s154897_ld_h15_aa.png?lock=720x540" group-title="YABANCI ARŞİVİ (356)",NTV TELUGU (360P)
+#EXTINF:-1 tvg-logo="https://dtil.tmsimg.com/assets/s154897_ld_h15_aa.png?lock=720x540" group-title="YABANCI ARŞİVİ (370)",NTV TELUGU (360P)
 https://yuppmedtaorire.akamaized.net/v1/master/a0d007312bfd99c47f76b77ae26b1ccdaae76cb1/ntv_nim_https/110322/ntv/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/DAK5ZnD.png" group-title="YABANCI ARŞİVİ (356)",RSELVATV (720P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/DAK5ZnD.png" group-title="YABANCI ARŞİVİ (370)",RSELVATV (720P)
 https://live.obslivestream.com/selvatv/index.m3u8
-#EXTINF:-1 tvg-logo="https://dtil.tmsimg.com/assets/s143763_ld_h15_aa.png?lock=720x540" group-title="YABANCI ARŞİVİ (356)",SANTVANI CHANNEL (576P)
+#EXTINF:-1 tvg-logo="https://dtil.tmsimg.com/assets/s143763_ld_h15_aa.png?lock=720x540" group-title="YABANCI ARŞİVİ (370)",SANTVANI CHANNEL (576P)
 https://cdn.pishow.tv/ott/live/475/master.m3u8
-#EXTINF:-1 tvg-logo="https://dtil.tmsimg.com/assets/s143763_ld_h15_aa.png?lock=720x540" group-title="YABANCI ARŞİVİ (356)",SANTVANI CHANNEL (576P)
+#EXTINF:-1 tvg-logo="https://dtil.tmsimg.com/assets/s143763_ld_h15_aa.png?lock=720x540" group-title="YABANCI ARŞİVİ (370)",SANTVANI CHANNEL (576P)
 https://fta.ektv.in/live/342/master.m3u8
-#EXTINF:-1 tvg-logo="https://dtil.tmsimg.com/assets/s143763_ld_h15_aa.png?lock=720x540" group-title="YABANCI ARŞİVİ (356)",SANTVANI CHANNEL (360P)
+#EXTINF:-1 tvg-logo="https://dtil.tmsimg.com/assets/s143763_ld_h15_aa.png?lock=720x540" group-title="YABANCI ARŞİVİ (370)",SANTVANI CHANNEL (360P)
 https://d1msejlow1t3l4.cloudfront.net/fta/santwani/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://dtil.tmsimg.com/assets/s144027_ld_h15_aa.png?lock=720x540" group-title="YABANCI ARŞİVİ (356)",TV9 BHARATVARSH (720P)
+#EXTINF:-1 tvg-logo="https://dtil.tmsimg.com/assets/s144027_ld_h15_aa.png?lock=720x540" group-title="YABANCI ARŞİVİ (370)",TV9 BHARATVARSH (720P)
 https://dyjmyiv3bp2ez.cloudfront.net/pub-iotv9hinjzgtpe/liveabr/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://dtil.tmsimg.com/assets/s144027_ld_h15_aa.png?lock=720x540" group-title="YABANCI ARŞİVİ (356)",TV9 BHARATVARSH (720P)
+#EXTINF:-1 tvg-logo="https://dtil.tmsimg.com/assets/s144027_ld_h15_aa.png?lock=720x540" group-title="YABANCI ARŞİVİ (370)",TV9 BHARATVARSH (720P)
 https://streams.tangotv.in/TV9BHARATVARSH/ORIGIN/index.m3u8
-#EXTINF:-1 tvg-logo="https://dtil.tmsimg.com/assets/s144027_ld_h15_aa.png?lock=720x540" group-title="YABANCI ARŞİVİ (356)",TV9 BHARATVARSH (720P)
+#EXTINF:-1 tvg-logo="https://dtil.tmsimg.com/assets/s144027_ld_h15_aa.png?lock=720x540" group-title="YABANCI ARŞİVİ (370)",TV9 BHARATVARSH (720P)
 https://vg-tv9yupp.vgcdn.net/vglive-sk-468570/v1/019dfce4b3371ea55784752988544/019dfce515ea1ea540a871e333259/main.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/TMmyuzh.png" group-title="YABANCI ARŞİVİ (356)",VIJU TV1000 ACTION
+#EXTINF:-1 tvg-logo="https://i.imgur.com/TMmyuzh.png" group-title="YABANCI ARŞİVİ (370)",VIJU TV1000 ACTION
 https://stream8.cinerama.uz/1225/tracks-v1a1/mono.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/Meak2y4.png" group-title="YABANCI ARŞİVİ (356)",VIJU TV1000 RUSSKOE
+#EXTINF:-1 tvg-logo="https://i.imgur.com/Meak2y4.png" group-title="YABANCI ARŞİVİ (370)",VIJU TV1000 RUSSKOE
 https://stream8.cinerama.uz/1058/tracks-v1a1/mono.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/Meak2y4.png" group-title="YABANCI ARŞİVİ (356)",VIJU TV1000 RUSSKOE
+#EXTINF:-1 tvg-logo="https://i.imgur.com/Meak2y4.png" group-title="YABANCI ARŞİVİ (370)",VIJU TV1000 RUSSKOE
 https://stream8.cinerama.uz/1059/tracks-v1a1/mono.m3u8
-#EXTINF:-1 tvg-logo="https://i.ibb.co/Tr2b0gV/natv.png" group-title="YABANCI ARŞİVİ (356)",NA TV
+#EXTINF:-1 tvg-logo="https://i.ibb.co/Tr2b0gV/natv.png" group-title="YABANCI ARŞİVİ (370)",NA TV
 https://edge11.vedge.infomaniak.com/livecast/ik:naradio/manifest.m3u8
-#EXTINF:-1 tvg-logo="https://i.ibb.co/3T2TS2p/tvestar.jpg" group-title="YABANCI ARŞİVİ (356)",STAR TVE
+#EXTINF:-1 tvg-logo="https://i.ibb.co/3T2TS2p/tvestar.jpg" group-title="YABANCI ARŞİVİ (370)",STAR TVE
 https://rtvelivestream-rtveplayplus.rtve.es/rtvesec/int/star_main_720.m3u8
-#EXTINF:-1 tvg-logo="https://i.ibb.co/Pt5ThHQ/andatv.png" group-title="YABANCI ARŞİVİ (356)",SUR 2 ANDALUCÍA
+#EXTINF:-1 tvg-logo="https://i.ibb.co/Pt5ThHQ/andatv.png" group-title="YABANCI ARŞİVİ (370)",SUR 2 ANDALUCÍA
 https://cdnlive.codev8.net/rtvalive/channel22.smil/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://provider-static.plex.tv/epg/cms/production/377dc2cb-53dd-4034-84e1-125be2b086c0/2WHITEaddictaTV_Logo_Transparency-Backgroud-Official-Brand_1500x1000px.png" group-title="YABANCI ARŞİVİ (356)",ADDICTATV
+#EXTINF:-1 tvg-logo="https://provider-static.plex.tv/epg/cms/production/377dc2cb-53dd-4034-84e1-125be2b086c0/2WHITEaddictaTV_Logo_Transparency-Backgroud-Official-Brand_1500x1000px.png" group-title="YABANCI ARŞİVİ (370)",ADDICTATV
 https://epg.provider.plex.tv/library/parts/643054b1fc3be59477853717-69d6d88b1790acff6189dea5/?X-Plex-Token=JxvdjQaYsT8th2yysxpp
-#EXTINF:-1 tvg-logo="https://provider-static.plex.tv/epg/cms/production/2230b4ec-e410-4f49-b5b2-8ac4dfd20c5c/combatv_logo_dark_-_Jordan_Warkol.png" group-title="YABANCI ARŞİVİ (356)",COMBATV
+#EXTINF:-1 tvg-logo="https://provider-static.plex.tv/epg/cms/production/2230b4ec-e410-4f49-b5b2-8ac4dfd20c5c/combatv_logo_dark_-_Jordan_Warkol.png" group-title="YABANCI ARŞİVİ (370)",COMBATV
 https://epg.provider.plex.tv/library/parts/643054b1fc3be59477853717-63f0ca427b78030ed9990309/?X-Plex-Token=JxvdjQaYsT8th2yysxpp
-#EXTINF:-1 tvg-logo="https://provider-static.plex.tv/epg/cms/production/377dc2cb-53dd-4034-84e1-125be2b086c0/2WHITEaddictaTV_Logo_Transparency-Backgroud-Official-Brand_1500x1000px.png" group-title="YABANCI ARŞİVİ (356)",ADDICTATV
+#EXTINF:-1 tvg-logo="https://provider-static.plex.tv/epg/cms/production/377dc2cb-53dd-4034-84e1-125be2b086c0/2WHITEaddictaTV_Logo_Transparency-Backgroud-Official-Brand_1500x1000px.png" group-title="YABANCI ARŞİVİ (370)",ADDICTATV
 https://epg.provider.plex.tv/library/parts/608049aefa2b8ae93c2c3a63-69d6d88b1790acff6189dea5/?X-Plex-Token=cTnhNqxLknrr2dCnuZab
-#EXTINF:-1 tvg-logo="https://provider-static.plex.tv/epg/cms/production/377dc2cb-53dd-4034-84e1-125be2b086c0/2WHITEaddictaTV_Logo_Transparency-Backgroud-Official-Brand_1500x1000px.png" group-title="YABANCI ARŞİVİ (356)",ADDICTATV
+#EXTINF:-1 tvg-logo="https://provider-static.plex.tv/epg/cms/production/377dc2cb-53dd-4034-84e1-125be2b086c0/2WHITEaddictaTV_Logo_Transparency-Backgroud-Official-Brand_1500x1000px.png" group-title="YABANCI ARŞİVİ (370)",ADDICTATV
 https://epg.provider.plex.tv/library/parts/6a1610bebdf296985fd95603-69d6d88b1790acff6189dea5/?X-Plex-Token=Pzw3GgfMJzzNJ3CaHMej
-#EXTINF:-1 tvg-logo="https://tvpnlogopus.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/USAJ340000677_20250408T020751SQUARE.png" group-title="YABANCI ARŞİVİ (356)",MAGELLANTV WILDEST
+#EXTINF:-1 tvg-logo="https://tvpnlogopus.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/USAJ340000677_20250408T020751SQUARE.png" group-title="YABANCI ARŞİVİ (370)",MAGELLANTV WILDEST
 https://jmp2.uk/stvp-USAJ340000677
-#EXTINF:-1 tvg-logo="https://images.sr.roku.com/idType/roku-trc/context/trc/id/257afd66cee15a1ca2125fc377e87cc2/https%3A%2F%2Fimage.roku.com%2Fbh-uploads%2Fproduction%2FinfoHUDLogo%2F1718724430937_TeamUSATV_HUDLogo_260x147.png" group-title="YABANCI ARŞİVİ (356)",TEAM USA TV
+#EXTINF:-1 tvg-logo="https://images.sr.roku.com/idType/roku-trc/context/trc/id/257afd66cee15a1ca2125fc377e87cc2/https%3A%2F%2Fimage.roku.com%2Fbh-uploads%2Fproduction%2FinfoHUDLogo%2F1718724430937_TeamUSATV_HUDLogo_260x147.png" group-title="YABANCI ARŞİVİ (370)",TEAM USA TV
 https://jmp2.uk/rok-257afd66cee15a1ca2125fc377e87cc2.m3u8
-#EXTINF:-1 tvg-logo="https://images.sr.roku.com/idType/roku-trc/context/trc/id/427be38e736e5c6e92bd1cec086e941a/https%3A%2F%2Fimage.roku.com%2Fbh-uploads%2Fproduction%2FinfoHUDLogo%2F1763491674042_LOGO_uNICATV-HUD-HORIZONTALefefef.png" group-title="YABANCI ARŞİVİ (356)",ÚNICA TV
+#EXTINF:-1 tvg-logo="https://images.sr.roku.com/idType/roku-trc/context/trc/id/427be38e736e5c6e92bd1cec086e941a/https%3A%2F%2Fimage.roku.com%2Fbh-uploads%2Fproduction%2FinfoHUDLogo%2F1763491674042_LOGO_uNICATV-HUD-HORIZONTALefefef.png" group-title="YABANCI ARŞİVİ (370)",ÚNICA TV
 https://jmp2.uk/rok-427be38e736e5c6e92bd1cec086e941a.m3u8
-#EXTINF:-1 tvg-logo="https://canvas-lb.tubitv.com/opts/9OVEbAJcKG4LlA==/f19b2e05-e9f9-402a-89bb-955a1559d984/CHgQeDoFMS4xLjlAAQ==" group-title="YABANCI ARŞİVİ (356)",CINE ESTRELLATV
+#EXTINF:-1 tvg-logo="https://canvas-lb.tubitv.com/opts/9OVEbAJcKG4LlA==/f19b2e05-e9f9-402a-89bb-955a1559d984/CHgQeDoFMS4xLjlAAQ==" group-title="YABANCI ARŞİVİ (370)",CINE ESTRELLATV
 https://live-manifest.production-public.tubi.io/live/3900e8be-5992-4e76-9d58-9f858bee83a2/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://media.sonlatv.vn/upload/files/logo/logo_footer.png" group-title="YABANCI ARŞİVİ (356)",SƠN LA HD
+#EXTINF:-1 tvg-logo="https://media.sonlatv.vn/upload/files/logo/logo_footer.png" group-title="YABANCI ARŞİVİ (370)",SƠN LA HD
 https://cdn.sonlatv.vn/live/28595222e707a364251b8724717894baa46/chunklist.m3u8
-#EXTINF:-1 tvg-name="NTV [TEST]" tvg-logo="" group-title="YABANCI ARŞİVİ (356)",NTV [TEST]
+#EXTINF:-1 tvg-name="NTV [TEST]" tvg-logo="" group-title="YABANCI ARŞİVİ (370)",NTV [TEST]
 https://tvsen5.aynaott.com/xV4jEKf3D9zc/index.m3u8
-#EXTINF:-1 tvg-name="TNTV (1080p)" group-title="YABANCI ARŞİVİ (356)",TNTV (1080p)
+#EXTINF:-1 tvg-name="TNTV (1080p)" group-title="YABANCI ARŞİVİ (370)",TNTV (1080p)
 https://tntv-samsung-fr.amagi.tv/playlist.m3u8
-#EXTINF:-1 tvg-name="ANTV (720p)" group-title="YABANCI ARŞİVİ (356)",ANTV (720p)
+#EXTINF:-1 tvg-name="ANTV (720p)" group-title="YABANCI ARŞİVİ (370)",ANTV (720p)
 http://103.58.160.157:8278/720-ANTV/playlist.m3u8
-#EXTINF:-1 tvg-name="ArubaTV + (480p)" group-title="YABANCI ARŞİVİ (356)",ArubaTV + (480p)
+#EXTINF:-1 tvg-name="ArubaTV + (480p)" group-title="YABANCI ARŞİVİ (370)",ArubaTV + (480p)
 https://rtmpcontrol.com:1936/atvplus/ngrp:atvplus_all/playlist.m3u8
-#EXTINF:-1 tvg-name="AuroraTV (720p)" group-title="YABANCI ARŞİVİ (356)",AuroraTV (720p)
+#EXTINF:-1 tvg-name="AuroraTV (720p)" group-title="YABANCI ARŞİVİ (370)",AuroraTV (720p)
 https://reflect-aurora.cablecast.tv/live-8/live/live.m3u8
-#EXTINF:-1 tvg-name="BATV (480p)" group-title="YABANCI ARŞİVİ (356)",BATV (480p)
+#EXTINF:-1 tvg-name="BATV (480p)" group-title="YABANCI ARŞİVİ (370)",BATV (480p)
 https://reflect-batv.cablecast.tv/live-5/live/live.m3u8
-#EXTINF:-1 tvg-name="BATV Government TV (480p)" group-title="YABANCI ARŞİVİ (356)",BATV Government TV (480p)
+#EXTINF:-1 tvg-name="BATV Government TV (480p)" group-title="YABANCI ARŞİVİ (370)",BATV Government TV (480p)
 https://reflect-batv.cablecast.tv/live-3/live/live.m3u8
-#EXTINF:-1 tvg-name="CTV8 HD" group-title="YABANCI ARŞİVİ (356)",CTV8 HD
+#EXTINF:-1 tvg-name="CTV8 HD" group-title="YABANCI ARŞİVİ (370)",CTV8 HD
 https://server.dtvhd.com/memfs/92d5968d-1b58-486d-a1ba-7b5a3f21c16c.m3u8
-#EXTINF:-1 tvg-name="CreaTV Channel 15 (720p)" group-title="YABANCI ARŞİVİ (356)",CreaTV Channel 15 (720p)
+#EXTINF:-1 tvg-name="CreaTV Channel 15 (720p)" group-title="YABANCI ARŞİVİ (370)",CreaTV Channel 15 (720p)
 https://reflect-creatv.cablecast.tv/live-13/live/live.m3u8
-#EXTINF:-1 tvg-name="CreaTV Channel 27 (720p)" group-title="YABANCI ARŞİVİ (356)",CreaTV Channel 27 (720p)
+#EXTINF:-1 tvg-name="CreaTV Channel 27 (720p)" group-title="YABANCI ARŞİVİ (370)",CreaTV Channel 27 (720p)
 https://reflect-creatv.cablecast.tv/live-19/live/live.m3u8
-#EXTINF:-1 tvg-name="CreaTV Channel 28 (720p)" group-title="YABANCI ARŞİVİ (356)",CreaTV Channel 28 (720p)
+#EXTINF:-1 tvg-name="CreaTV Channel 28 (720p)" group-title="YABANCI ARŞİVİ (370)",CreaTV Channel 28 (720p)
 https://reflect-creatv.cablecast.tv/live-14/live/live.m3u8
-#EXTINF:-1 tvg-name="CreaTV Channel 30 (720p)" group-title="YABANCI ARŞİVİ (356)",CreaTV Channel 30 (720p)
+#EXTINF:-1 tvg-name="CreaTV Channel 30 (720p)" group-title="YABANCI ARŞİVİ (370)",CreaTV Channel 30 (720p)
 https://reflect-creatv.cablecast.tv/live-16/live/live.m3u8
-#EXTINF:-1 tvg-name="Famatv (1080p)" group-title="YABANCI ARŞİVİ (356)",Famatv (1080p)
+#EXTINF:-1 tvg-name="Famatv (1080p)" group-title="YABANCI ARŞİVİ (370)",Famatv (1080p)
 https://tv2.fastcast4u.com:3310/live/famatvlive.m3u8
-#EXTINF:-1 tvg-name="FarmodaTV (1080p)" group-title="YABANCI ARŞİVİ (356)",FarmodaTV (1080p)
+#EXTINF:-1 tvg-name="FarmodaTV (1080p)" group-title="YABANCI ARŞİVİ (370)",FarmodaTV (1080p)
 https://avr.host247.net/live/FarmodaTV/playlist.m3u8
-#EXTINF:-1 tvg-name="FashionTV Asia (720p)" group-title="YABANCI ARŞİVİ (356)",FashionTV Asia (720p)
+#EXTINF:-1 tvg-name="FashionTV Asia (720p)" group-title="YABANCI ARŞİVİ (370)",FashionTV Asia (720p)
 http://58.8.186.128:10006/bysid/2616
-#EXTINF:-1 tvg-name="FashionTV Europe (1080p)" group-title="YABANCI ARŞİVİ (356)",FashionTV Europe (1080p)
+#EXTINF:-1 tvg-name="FashionTV Europe (1080p)" group-title="YABANCI ARŞİVİ (370)",FashionTV Europe (1080p)
 https://68f1accef2154d2195cae87dec183843.mediatailor.us-east-1.amazonaws.com/v1/master/44f73ba4d03e9607dcd9bebdcb8494d86964f1d8/RakutenTV-eu_FashionTV/playlist.m3u8
-#EXTINF:-1 tvg-name="Hits 360 TV (720p)" group-title="YABANCI ARŞİVİ (356)",Hits 360 TV (720p)
+#EXTINF:-1 tvg-name="Hits 360 TV (720p)" group-title="YABANCI ARŞİVİ (370)",Hits 360 TV (720p)
 http://cm.hostlagarto.com:8081/hits360tv/hits360HD.myStream/playlist.m3u8
-#EXTINF:-1 tvg-name="KKRtv (720p)" group-title="YABANCI ARŞİVİ (356)",KKRtv (720p)
+#EXTINF:-1 tvg-name="KKRtv (720p)" group-title="YABANCI ARŞİVİ (370)",KKRtv (720p)
 http://stream.kkr.dk/live/kkr/playlist.m3u8
-#EXTINF:-1 tvg-name="LATV (1080p)" group-title="YABANCI ARŞİVİ (356)",LATV (1080p)
+#EXTINF:-1 tvg-name="LATV (1080p)" group-title="YABANCI ARŞİVİ (370)",LATV (1080p)
 https://amg00779-latv-amg00779c1-klowdtv-us-2135.playouts.now.amagi.tv/playlist/amg00779-latvnetworkllc-latv-klowdtvus/playlist.m3u8
-#EXTINF:-1 tvg-name="MagellanTV Now (1080p)" group-title="YABANCI ARŞİVİ (356)",MagellanTV Now (1080p)
+#EXTINF:-1 tvg-name="MagellanTV Now (1080p)" group-title="YABANCI ARŞİVİ (370)",MagellanTV Now (1080p)
 https://amg00376-magellan-amg00376c5-samsung-au-1708.playouts.now.amagi.tv/playlist/amg00376-magellantv-magellantvnowww-samsungau/playlist.m3u8
-#EXTINF:-1 tvg-name="MagellanTV Now (1080p)" group-title="YABANCI ARŞİVİ (356)",MagellanTV Now (1080p)
+#EXTINF:-1 tvg-name="MagellanTV Now (1080p)" group-title="YABANCI ARŞİVİ (370)",MagellanTV Now (1080p)
 https://amg00376-magellan-amg00376c5-samsung-nz-1714.playouts.now.amagi.tv/playlist/amg00376-magellantv-magellantvnowww-samsungnz/playlist.m3u8
-#EXTINF:-1 tvg-name="MediterraniaTV (1080p)" group-title="YABANCI ARŞİVİ (356)",MediterraniaTV (1080p)
+#EXTINF:-1 tvg-name="MediterraniaTV (1080p)" group-title="YABANCI ARŞİVİ (370)",MediterraniaTV (1080p)
 https://59bb40cf810aa.streamlock.net:4443/streamingvincente/streamingvincente/playlist.m3u8
-#EXTINF:-1 tvg-name="itasli.github.io/TURKTV" group-title="YABANCI ARŞİVİ (356)",itasli.github.io/TURKTV
+#EXTINF:-1 tvg-name="itasli.github.io/TURKTV" group-title="YABANCI ARŞİVİ (370)",itasli.github.io/TURKTV
 https://i.ibb.co/YZG9MRS/turktv.png
-#EXTINF:-1 tvg-name="viju TV1000 (576p)" group-title="YABANCI ARŞİVİ (356)",viju TV1000 (576p)
+#EXTINF:-1 tvg-name="viju TV1000 (576p)" group-title="YABANCI ARŞİVİ (370)",viju TV1000 (576p)
 https://fs.uplink.kz/viju_tv1000/mono.m3u8?token=onlinetv
-#EXTINF:-1 tvg-name="NTV" group-title="YABANCI ARŞİVİ (356)",NTV
+#EXTINF:-1 tvg-name="NTV" group-title="YABANCI ARŞİVİ (370)",NTV
 http://43.252.18.195:5080/LiveApp/streams/ntvhd.m3u8
-#EXTINF:-1 tvg-name="NTV" group-title="YABANCI ARŞİVİ (356)",NTV
+#EXTINF:-1 tvg-name="NTV" group-title="YABANCI ARŞİVİ (370)",NTV
 https://stream.pdtvhd.com/LiveApp/streams/ntvhd.m3u8
-#EXTINF:-1 tvg-name="NTV (1080p)" group-title="YABANCI ARŞİVİ (356)",NTV (1080p)
+#EXTINF:-1 tvg-name="NTV (1080p)" group-title="YABANCI ARŞİVİ (370)",NTV (1080p)
 http://flussonic.linkintel.ru/ntv/index.m3u8
-#EXTINF:-1 tvg-name="NTV (1080p)" group-title="YABANCI ARŞİVİ (356)",NTV (1080p)
+#EXTINF:-1 tvg-name="NTV (1080p)" group-title="YABANCI ARŞİVİ (370)",NTV (1080p)
 https://bl.rutube.ru/livestream/c37cd74192c6bc3d6cd6077c0c4fd686/index.m3u8?e=2077050299&s=HSWg81JrQ3OqmwuWkEIDAQ&scheme=https
-#EXTINF:-1 tvg-name="NTV (1080p)" group-title="YABANCI ARŞİVİ (356)",NTV (1080p)
+#EXTINF:-1 tvg-name="NTV (1080p)" group-title="YABANCI ARŞİVİ (370)",NTV (1080p)
 https://cdn4.skygo.mn/live/disk1/NTVHD/DASH-FTA/NTVHD.mpd
-#EXTINF:-1 tvg-name="NTV (1080p)" group-title="YABANCI ARŞİVİ (356)",NTV (1080p)
+#EXTINF:-1 tvg-name="NTV (1080p)" group-title="YABANCI ARŞİVİ (370)",NTV (1080p)
 https://strhlslb01.streamakaci.tv/str_ntv_ntv/str_ntv_ntv_multi/playlist.m3u8
-#EXTINF:-1 tvg-name="NTV Law (576p)" group-title="YABANCI ARŞİVİ (356)",NTV Law (576p)
+#EXTINF:-1 tvg-name="NTV Law (576p)" group-title="YABANCI ARŞİVİ (370)",NTV Law (576p)
 http://hls127.freeott.top:8080/NTV_PRAVO_TV/video.m3u8
-#EXTINF:-1 tvg-name="NTV Law (576p)" group-title="YABANCI ARŞİVİ (356)",NTV Law (576p)
+#EXTINF:-1 tvg-name="NTV Law (576p)" group-title="YABANCI ARŞİVİ (370)",NTV Law (576p)
 https://cdn.ntv.ru/th_pravo/playlist.m3u8
-#EXTINF:-1 tvg-name="NTV Mir (576p)" group-title="YABANCI ARŞİVİ (356)",NTV Mir (576p)
+#EXTINF:-1 tvg-name="NTV Mir (576p)" group-title="YABANCI ARŞİVİ (370)",NTV Mir (576p)
 http://5.188.159.128:8070/ntvmir_TV/index.m3u8
-#EXTINF:-1 tvg-name="NTV Style (576p)" group-title="YABANCI ARŞİVİ (356)",NTV Style (576p)
+#EXTINF:-1 tvg-name="NTV Style (576p)" group-title="YABANCI ARŞİVİ (370)",NTV Style (576p)
 http://hls127.freeott.top:8080/NTV_STIL_TV/video.m3u8
-#EXTINF:-1 tvg-name="NTV Style (576p)" group-title="YABANCI ARŞİVİ (356)",NTV Style (576p)
+#EXTINF:-1 tvg-name="NTV Style (576p)" group-title="YABANCI ARŞİVİ (370)",NTV Style (576p)
 https://cdn.ntv.ru/th_style/playlist.m3u8
-#EXTINF:-1 tvg-name="NTV Vitrina (720p)" group-title="YABANCI ARŞİVİ (356)",NTV Vitrina (720p)
+#EXTINF:-1 tvg-name="NTV Vitrina (720p)" group-title="YABANCI ARŞİVİ (370)",NTV Vitrina (720p)
 https://cdn.ntv.ru/vitrina/index.m3u8
-#EXTINF:-1 tvg-name="NTV7" group-title="YABANCI ARŞİVİ (356)",NTV7
+#EXTINF:-1 tvg-name="NTV7" group-title="YABANCI ARŞİVİ (370)",NTV7
 https://tonton-live-switch-ssar.akamaized.net/stream-ntv7/master.m3u8?bpkio_serviceid=6c0958d82a830a02ca0936d9cfab8311
-#EXTINF:-1 tvg-name="ONTV (1080p)" group-title="YABANCI ARŞİVİ (356)",ONTV (1080p)
+#EXTINF:-1 tvg-name="ONTV (1080p)" group-title="YABANCI ARŞİVİ (370)",ONTV (1080p)
 https://cdn4.skygo.mn/live/disk1/ONTV/DASH-FTA/ONTV.mpd
-#EXTINF:-1 tvg-name="RBATV (720p)" group-title="YABANCI ARŞİVİ (356)",RBATV (720p)
+#EXTINF:-1 tvg-name="RBATV (720p)" group-title="YABANCI ARŞİVİ (370)",RBATV (720p)
 https://cdn.live.br1.jmvstream.com/w/LVW-15748/LVW15748_Yed7yzLuRC/playlist.m3u8
-#EXTINF:-1 tvg-name="TV1000" group-title="YABANCI ARŞİVİ (356)",TV1000
+#EXTINF:-1 tvg-name="TV1000" group-title="YABANCI ARŞİVİ (370)",TV1000
 http://stream.mcquack.net/100/tracks-v1a1/mono.ts.m3u8?ads=1&filter.tracks=v1a1
-#EXTINF:-1 tvg-name="TV1000 Russian Kino Global" group-title="YABANCI ARŞİVİ (356)",TV1000 Russian Kino Global
+#EXTINF:-1 tvg-name="TV1000 Russian Kino Global" group-title="YABANCI ARŞİVİ (370)",TV1000 Russian Kino Global
 http://213.91.179.28:8000/play/a0bx
-#EXTINF:-1 tvg-name="UATV (1080p)" group-title="YABANCI ARŞİVİ (356)",UATV (1080p)
+#EXTINF:-1 tvg-name="UATV (1080p)" group-title="YABANCI ARŞİVİ (370)",UATV (1080p)
 https://unlimited1-us.dps.live/uatv/uatv.smil/playlist.m3u8
-#EXTINF:-1 tvg-name="VTV8 (1080p)" group-title="YABANCI ARŞİVİ (356)",VTV8 (1080p)
+#EXTINF:-1 tvg-name="VTV8 (1080p)" group-title="YABANCI ARŞİVİ (370)",VTV8 (1080p)
 https://dethich.pw/vtv8/index.m3u8
-#EXTINF:-1 tvg-name="ViaATV (1080p)" group-title="YABANCI ARŞİVİ (356)",ViaATV (1080p)
+#EXTINF:-1 tvg-name="ViaATV (1080p)" group-title="YABANCI ARŞİVİ (370)",ViaATV (1080p)
 https://streamer01.myvideoplace.tv/streamer02/hls/ATV_DIRECT_EV_111018.m3u8
-#EXTINF:-1 tvg-name="VivaTV (1080p)" group-title="YABANCI ARŞİVİ (356)",VivaTV (1080p)
+#EXTINF:-1 tvg-name="VivaTV (1080p)" group-title="YABANCI ARŞİVİ (370)",VivaTV (1080p)
 http://bantel-cdn1.iptvperu.tv:1935/btnscrtn/vivatv.stream/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/fa/d/df/Quarntvlogo.png" group-title="YABANCI ARŞİVİ (356)",QURAN TV (1080P)
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/fa/d/df/Quarntvlogo.png" group-title="YABANCI ARŞİVİ (370)",QURAN TV (1080P)
 https://ncdn.telewebion.ir/quran/live/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://static.wikia.nocookie.net/logos/images/1/1a/ANTV_2023.png/revision/latest/scale-to-width-down/512?path-prefix=vi" group-title="YABANCI ARŞİVİ (356)",AN NINH TV HD (1080P)
+#EXTINF:-1 tvg-logo="https://static.wikia.nocookie.net/logos/images/1/1a/ANTV_2023.png/revision/latest/scale-to-width-down/512?path-prefix=vi" group-title="YABANCI ARŞİVİ (370)",AN NINH TV HD (1080P)
 https://freem3u.xyz/api/live/play.m3u8?vid=20
-#EXTINF:-1 tvg-logo="https://i.imgur.com/qiVfsfB.png" group-title="YABANCI ARŞİVİ (356)",CATVE2 (720P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/qiVfsfB.png" group-title="YABANCI ARŞİVİ (370)",CATVE2 (720P)
 https://5b33b873179a2.streamlock.net:1443/catve2/catve2/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/w89yw36.png" group-title="YABANCI ARŞİVİ (356)",CATVE FM (720P) [NOT 24/7]
+#EXTINF:-1 tvg-logo="https://i.imgur.com/w89yw36.png" group-title="YABANCI ARŞİVİ (370)",CATVE FM (720P) [NOT 24/7]
 https://5b33b873179a2.streamlock.net:1443/radiocamera/livestream/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/4m7Iazm.png" group-title="YABANCI ARŞİVİ (356)",CATVE MASTER TV (720P) [NOT 24/7]
+#EXTINF:-1 tvg-logo="https://i.imgur.com/4m7Iazm.png" group-title="YABANCI ARŞİVİ (370)",CATVE MASTER TV (720P) [NOT 24/7]
 https://5b33b873179a2.streamlock.net:1443/mastertv/livestream/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/4uV90gw.png" group-title="YABANCI ARŞİVİ (356)",CONSTANZATV (720P) [NOT 24/7]
+#EXTINF:-1 tvg-logo="https://i.imgur.com/4uV90gw.png" group-title="YABANCI ARŞİVİ (370)",CONSTANZATV (720P) [NOT 24/7]
 https://183.giatvcdn.com/ssh101/ssh101/ctv8hd/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://ukrtvr.org/images/%D0%A1%D1%83%D0%BF%D1%83%D1%82%D0%BD%D0%B8%D0%BA%D0%BE%D0%B2%D0%B5/CTV%20-%20Dla%20Ciebie%20TV.png" group-title="YABANCI ARŞİVİ (356)",CTV DLA CIEBIE TV
+#EXTINF:-1 tvg-logo="https://ukrtvr.org/images/%D0%A1%D1%83%D0%BF%D1%83%D1%82%D0%BD%D0%B8%D0%BA%D0%BE%D0%B2%D0%B5/CTV%20-%20Dla%20Ciebie%20TV.png" group-title="YABANCI ARŞİVİ (370)",CTV DLA CIEBIE TV
 http://90.183.52.46:4000/play/a065/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/uVdKHMG.png" group-title="YABANCI ARŞİVİ (356)",DAYSTAR TV WSLF-LD (720P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/uVdKHMG.png" group-title="YABANCI ARŞİVİ (370)",DAYSTAR TV WSLF-LD (720P)
 https://content.uplynk.com/channel/1992858a34c3423dbdad491d07ae6f75.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/6lvQ3Xz.png" group-title="YABANCI ARŞİVİ (356)",DELLATV (720P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/6lvQ3Xz.png" group-title="YABANCI ARŞİVİ (370)",DELLATV (720P)
 https://183.giatvcdn.com/giatvplayout7/giatv-211474/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/cCFxyIp.jpg" group-title="YABANCI ARŞİVİ (356)",KANDELATV (480P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/cCFxyIp.jpg" group-title="YABANCI ARŞİVİ (370)",KANDELATV (480P)
 https://streamtv.intervenhosting.net:3718/live/kandelamedioslive.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/ZiPL9ar.png" group-title="YABANCI ARŞİVİ (356)",KEMPENTV (480P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/ZiPL9ar.png" group-title="YABANCI ARŞİVİ (370)",KEMPENTV (480P)
 http://ms7.mx-cd.net/tv/Omroep_de_Kempen.smil/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/nxY84W5.png" group-title="YABANCI ARŞİVİ (356)",NBC KNTV (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/nxY84W5.png" group-title="YABANCI ARŞİVİ (370)",NBC KNTV (1080P)
 https://d368vp0qqzvkid.cloudfront.net/11603/88889711/hls/master.m3u8?ads.xumo_channelId=88889711a&ads.xumo_ifaType=&ads.xumo_providerId=3822&ads.xumo_providerName=NBCNBA
-#EXTINF:-1 tvg-logo="https://i.imgur.com/Lj2jRn3.png" group-title="YABANCI ARŞİVİ (356)",NICOYATV (720P) [NOT 24/7]
+#EXTINF:-1 tvg-logo="https://i.imgur.com/Lj2jRn3.png" group-title="YABANCI ARŞİVİ (370)",NICOYATV (720P) [NOT 24/7]
 https://59ef525c24caa.streamlock.net/nicoyatv/nicoyatv/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://30a.media/wp-content/uploads/2023/08/pzaz-30atv-2-230x366-ridiculous.jpg" group-title="YABANCI ARŞİVİ (356)",30A RİDİCULOUS TV (720P)
+#EXTINF:-1 tvg-logo="https://30a.media/wp-content/uploads/2023/08/pzaz-30atv-2-230x366-ridiculous.jpg" group-title="YABANCI ARŞİVİ (370)",30A RİDİCULOUS TV (720P)
 https://30a-tv.com/feeds/720p/63.m3u8
-#EXTINF:-1 tvg-logo="https://cdn2-static.ntv.ru/home/promo/24740/5minut_live.jpg" group-title="YABANCI ARŞİVİ (356)",5 MİNUT TİSHİNY (720P)
+#EXTINF:-1 tvg-logo="https://cdn2-static.ntv.ru/home/promo/24740/5minut_live.jpg" group-title="YABANCI ARŞİVİ (370)",5 MİNUT TİSHİNY (720P)
 https://cdn-dvr.ntv.ru/5_minut_tishiny/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/7ecgGIG.png" group-title="YABANCI ARŞİVİ (356)",8NTV (720P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/7ecgGIG.png" group-title="YABANCI ARŞİVİ (370)",8NTV (720P)
 https://60417ddeaf0d9.streamlock.net/ntv/videontv/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://jiotvimages.cdn.jio.com/dare_images/images/aryatvtamil.png" group-title="YABANCI ARŞİVİ (356)",AARYAA TV (1080P)
+#EXTINF:-1 tvg-logo="https://jiotvimages.cdn.jio.com/dare_images/images/aryatvtamil.png" group-title="YABANCI ARŞİVİ (370)",AARYAA TV (1080P)
 https://stream.ottlive.co.in/aryatvtamil/index.m3u8
-#EXTINF:-1 tvg-logo="https://tv.alterna.ar/alternatv.png" group-title="YABANCI ARŞİVİ (356)",ALTERNATV (720P)
+#EXTINF:-1 tvg-logo="https://tv.alterna.ar/alternatv.png" group-title="YABANCI ARŞİVİ (370)",ALTERNATV (720P)
 https://tv.alterna.ar/stream/hls/live.m3u8
-#EXTINF:-1 tvg-logo="https://static.wikia.nocookie.net/logos/images/1/1a/ANTV_2023.png/revision/latest/scale-to-width-down/512?path-prefix=vi" group-title="YABANCI ARŞİVİ (356)",AN NİNH TV (1080P)
+#EXTINF:-1 tvg-logo="https://static.wikia.nocookie.net/logos/images/1/1a/ANTV_2023.png/revision/latest/scale-to-width-down/512?path-prefix=vi" group-title="YABANCI ARŞİVİ (370)",AN NİNH TV (1080P)
 https://live.tvon.vn/g2/vtv1/video_hd_compat/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/Qm88HT0.png" group-title="YABANCI ARŞİVİ (356)",ANTV (720P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/Qm88HT0.png" group-title="YABANCI ARŞİVİ (370)",ANTV (720P)
 http://181.78.8.199:8000/play/a0fo/index.m3u8
-#EXTINF:-1 tvg-logo="https://asthatv.com/wp-content/uploads/2026/02/Logo-Astha.png" group-title="YABANCI ARŞİVİ (356)",ASTHA TV (1080P)
+#EXTINF:-1 tvg-logo="https://asthatv.com/wp-content/uploads/2026/02/Logo-Astha.png" group-title="YABANCI ARŞİVİ (370)",ASTHA TV (1080P)
 https://hgmtv.com:2020/hls/asthalive/asthalive.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/pwM5txv.png" group-title="YABANCI ARŞİVİ (356)",ATVSAT (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/pwM5txv.png" group-title="YABANCI ARŞİVİ (370)",ATVSAT (1080P)
 https://stream.atvsat.com/atvsatlive/smil:atvsatlive.smil/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/di3XX5L.png" group-title="YABANCI ARŞİVİ (356)",AZSTARTV
+#EXTINF:-1 tvg-logo="https://i.imgur.com/di3XX5L.png" group-title="YABANCI ARŞİVİ (370)",AZSTARTV
 http://live.azstartv.com/azstar/smil:azstar.smil/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://cdn2-static.ntv.ru/home/promo/24740/balabol_vse.jpg" group-title="YABANCI ARŞİVİ (356)",BALABOL (720P)
+#EXTINF:-1 tvg-logo="https://cdn2-static.ntv.ru/home/promo/24740/balabol_vse.jpg" group-title="YABANCI ARŞİVİ (370)",BALABOL (720P)
 https://cdn-dvr.ntv.ru/Balabol/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/eDoJqtg.png" group-title="YABANCI ARŞİVİ (356)",BATV EDUCATİONAL CHANNEL (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/eDoJqtg.png" group-title="YABANCI ARŞİVİ (370)",BATV EDUCATİONAL CHANNEL (1080P)
 https://livestream.telvue.com/billerica2/f7b44cfafd5c52223d5498196c8a2e7b.sdp/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/4MdSstx.png" group-title="YABANCI ARŞİVİ (356)",BATV GOVERNMENT CHANNEL (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/4MdSstx.png" group-title="YABANCI ARŞİVİ (370)",BATV GOVERNMENT CHANNEL (1080P)
 https://livestream.telvue.com/billerica3/f7b44cfafd5c52223d5498196c8a2e7b.sdp/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/zKQMDsu.png" group-title="YABANCI ARŞİVİ (356)",BATV PUBLİC CHANNEL (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/zKQMDsu.png" group-title="YABANCI ARŞİVİ (370)",BATV PUBLİC CHANNEL (1080P)
 https://livestream.telvue.com/billerica1/f7b44cfafd5c52223d5498196c8a2e7b.sdp/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/TUMiKCX.png" group-title="YABANCI ARŞİVİ (356)",BEST OF BATV CHANNEL (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/TUMiKCX.png" group-title="YABANCI ARŞİVİ (370)",BEST OF BATV CHANNEL (1080P)
 https://livestream.telvue.com/billerica4/f7b44cfafd5c52223d5498196c8a2e7b.sdp/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/3/3a/CarubanTV%28Low-res%29.png" group-title="YABANCI ARŞİVİ (356)",CARUBAN TV (1080P)
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/3/3a/CarubanTV%28Low-res%29.png" group-title="YABANCI ARŞİVİ (370)",CARUBAN TV (1080P)
 https://stream.carubantv.id/hls/0/stream.m3u8
-#EXTINF:-1 tvg-logo="https://caribbeanadvantage.com/images/CAtv-logo-512.png" group-title="YABANCI ARŞİVİ (356)",CATV (1080P)
+#EXTINF:-1 tvg-logo="https://caribbeanadvantage.com/images/CAtv-logo-512.png" group-title="YABANCI ARŞİVİ (370)",CATV (1080P)
 https://video2.getstreamhosting.com:19360/8216/8216.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/bPoPAbR.png" group-title="YABANCI ARŞİVİ (356)",CGNTV CHİNESE (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/bPoPAbR.png" group-title="YABANCI ARŞİVİ (370)",CGNTV CHİNESE (1080P)
 https://d3e05csss9c272.cloudfront.net/out/v1/f0bf71c57581470fb9379f603e8f5d83/CGNWebLiveCN.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/5LNZeVq.png" group-title="YABANCI ARŞİVİ (356)",CGNTV JAPAN (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/5LNZeVq.png" group-title="YABANCI ARŞİVİ (370)",CGNTV JAPAN (1080P)
 https://d2p4mrcwl6ly4.cloudfront.net/out/v1/8d50f69fdbbf411a8d302743e4263716/CGNWebLiveJP.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/4uV90gw.png" group-title="YABANCI ARŞİVİ (356)",CONSTANZATV (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/4uV90gw.png" group-title="YABANCI ARŞİVİ (370)",CONSTANZATV (1080P)
 https://live20.bozztv.com/akamaissh101/ssh101/ctv8hd/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/Bnjj29f.png" group-title="YABANCI ARŞİVİ (356)",CREALATV (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/Bnjj29f.png" group-title="YABANCI ARŞİVİ (370)",CREALATV (1080P)
 https://stream.crealatv.com/live.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/uVdKHMG.png" group-title="YABANCI ARŞİVİ (356)",DAYSTAR TV (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/uVdKHMG.png" group-title="YABANCI ARŞİVİ (370)",DAYSTAR TV (1080P)
 https://live-mcl.cdn01.net/smarttv/48vy43564/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Daystar_(2008%E2%80%93present)_unmodified_logo.svg/960px-Daystar_(2008%E2%80%93present)_unmodified_logo.svg.png" group-title="YABANCI ARŞİVİ (356)",DAYSTAR TV ESPANOL (1080P)
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Daystar_(2008%E2%80%93present)_unmodified_logo.svg/960px-Daystar_(2008%E2%80%93present)_unmodified_logo.svg.png" group-title="YABANCI ARŞİVİ (370)",DAYSTAR TV ESPANOL (1080P)
 http://167.249.23.102:8000/play/a0ev/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/6lvQ3Xz.png" group-title="YABANCI ARŞİVİ (356)",DELLATV (720P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/6lvQ3Xz.png" group-title="YABANCI ARŞİVİ (370)",DELLATV (720P)
 https://live20.bozztv.com/giatvplayout7/giatv-211474/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/crttwAR.png" group-title="YABANCI ARŞİVİ (356)",DELTATV
+#EXTINF:-1 tvg-logo="https://i.imgur.com/crttwAR.png" group-title="YABANCI ARŞİVİ (370)",DELTATV
 https://tv2.bitstreaming.net:3539/live/deltanetlive.m3u8
-#EXTINF:-1 tvg-logo="https://dhammaweb.tv/wp-content/uploads/2018/08/cropped-dhammatv-3.png" group-title="YABANCI ARŞİVİ (356)",DHAMMA TV (720P)
+#EXTINF:-1 tvg-logo="https://dhammaweb.tv/wp-content/uploads/2018/08/cropped-dhammatv-3.png" group-title="YABANCI ARŞİVİ (370)",DHAMMA TV (720P)
 https://b.webcache.maxindo.net.id/dhamma/dhamma.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/dtrTfZC.png" group-title="YABANCI ARŞİVİ (356)",DUNYA NEWS UK (720P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/dtrTfZC.png" group-title="YABANCI ARŞİVİ (370)",DUNYA NEWS UK (720P)
 https://ukintl.dunyanews.tv/liveuk/ngrp:dunyalive_all/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://tv.elyssatv.com/logo.png" group-title="YABANCI ARŞİVİ (356)",ELYSSA TV (1080P)
+#EXTINF:-1 tvg-logo="https://tv.elyssatv.com/logo.png" group-title="YABANCI ARŞİVİ (370)",ELYSSA TV (1080P)
 https://tv.elyssatv.com/live/master.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/8/81/ESPERIATV18_verde.png" group-title="YABANCI ARŞİVİ (356)",ESPERIA TV (720P)
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/8/81/ESPERIATV18_verde.png" group-title="YABANCI ARŞİVİ (370)",ESPERIA TV (720P)
 http://wms.shared.streamshow.it/esperiatv/esperiatv/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/xNatV8K.png" group-title="YABANCI ARŞİVİ (356)",ESPRESO TV (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/xNatV8K.png" group-title="YABANCI ARŞİVİ (370)",ESPRESO TV (1080P)
 https://api-tv.ipnet.ua/api/v1/manifest/2118742594.m3u8
-#EXTINF:-1 tvg-logo="https://ukrtvr.org/images/%D1%82%D0%B5%D0%BB%D0%B5%D0%B2%D0%B5%D0%B6%D1%96/%D1%81%D1%82%D0%B0%D1%80%D1%96_%D0%BB%D0%BE%D0%B3%D0%BE/FASHION%20TV%20UKRAINE/FASHION%20TV%20UKRAINE.png" group-title="YABANCI ARŞİVİ (356)",FASHION (1080P)
+#EXTINF:-1 tvg-logo="https://ukrtvr.org/images/%D1%82%D0%B5%D0%BB%D0%B5%D0%B2%D0%B5%D0%B6%D1%96/%D1%81%D1%82%D0%B0%D1%80%D1%96_%D0%BB%D0%BE%D0%B3%D0%BE/FASHION%20TV%20UKRAINE/FASHION%20TV%20UKRAINE.png" group-title="YABANCI ARŞİVİ (370)",FASHION (1080P)
 http://stream.mcquack.net/288/index.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Fashion_TV_logo.svg/960px-Fashion_TV_logo.svg.png" group-title="YABANCI ARŞİVİ (356)",FASHIONTV (1080P)
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Fashion_TV_logo.svg/960px-Fashion_TV_logo.svg.png" group-title="YABANCI ARŞİVİ (370)",FASHIONTV (1080P)
 http://fashionlive.mediacdn.ru/cdn/fashiontv/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/GFTAN5Q.png" group-title="YABANCI ARŞİVİ (356)",FASHIONTV PARIS L'ORIGINAL (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/GFTAN5Q.png" group-title="YABANCI ARŞİVİ (370)",FASHIONTV PARIS L'ORIGINAL (1080P)
 https://edge-fast3.evrideo.tv/bfdbb576-83f7-11f0-9f89-0200170e3e04_1000028043_HLS/manifest.m3u8
-#EXTINF:-1 tvg-logo="https://i.ibb.co/fVGJyCC8/w512.png" group-title="YABANCI ARŞİVİ (356)",FASHIONTV SECRETS (1080P)
+#EXTINF:-1 tvg-logo="https://i.ibb.co/fVGJyCC8/w512.png" group-title="YABANCI ARŞİVİ (370)",FASHIONTV SECRETS (1080P)
 https://ssai.aniview.com/api/v1/hls/stream.m3u8?AVS_SSAIID=67c0c39764ad6f7dab07aa0b&AV_APPNAME=[ADS.APP_NAME]&AV_APPPKGNAME=[ADS.APP_BUNDLE]&AV_APPSTOREURL=[ADS.APP_STORE_URL]&AV_CCPA=[ADS.US_PRIVACY]&AV_CLIENT_SECTION=ftv_secrets&AV_CONSENT=[ADS.GDPR_CONSENT]&AV_CONTENT_CAT=IAB7&AV_CONTENT_CHANNEL=&AV_CONTENT_CONTEXT=&AV_CONTENT_EPISODE=&AV_CONTENT_GENRE=fashion+and+lifestyle&AV_CONTENT_ID=[ADS.VIDAA_ADS_CONTENTID]&AV_CONTENT_KEYWORDS=&AV_CONTENT_LANGUAGE=en&AV_CONTENT_LENGTH=&AV_CONTENT_NETWORK=&AV_CONTENT_PROVIDER=FTV&AV_CONTENT_RATING=R&AV_CONTENT_SEASON=&AV_CONTENT_SERIES=&AV_CONTENT_TITLE=&AV_CONTENT_URL=&AV_DNT=[ADS.DNT]&AV_GDPR=[ADS.GDPR]&AV_HEIGHT=[ADS.H]&AV_IDFA=[ADS.IFA]&AV_IFA_TYPE=[ADS.IFA_TYPE]&AV_LANGUAGE=[ADS.DEVICE_LANGUAGE]&AV_OSVERS=[ADS.DEVICE_OSV]&AV_RTB_DEVICE_TYPE=[ADS.DEVICE_TYPE]&AV_VAUTH=[ADS.VAUTH]&AV_WIDTH=[ADS.W]&Content_Id=[ADS.ADS_CONTENTID]&ads.vidaa_ads_param=1191723366&cb=[CACHEBUSTER]&content_channel_name=ftv+-fashiontv+Secrets&content_livestream=1
-#EXTINF:-1 tvg-logo="https://i.imgur.com/jasSHXJ.png" group-title="YABANCI ARŞİVİ (356)",GRP VERATV (576P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/jasSHXJ.png" group-title="YABANCI ARŞİVİ (370)",GRP VERATV (576P)
 https://webstream.multistream.it/memfs/a3195c96-f884-4c74-924f-2648814fc0b5_output_0.m3u8
-#EXTINF:-1 tvg-logo="https://i0.wp.com/hebrontv.in/wp-content/uploads/2023/11/hebron-.png?w=512" group-title="YABANCI ARŞİVİ (356)",HEBRON TV (1080P)
+#EXTINF:-1 tvg-logo="https://i0.wp.com/hebrontv.in/wp-content/uploads/2023/11/hebron-.png?w=512" group-title="YABANCI ARŞİVİ (370)",HEBRON TV (1080P)
 https://account20.livebox.co.in/charleshls/live.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/1nJl0Pv.png" group-title="YABANCI ARŞİVİ (356)",INTV AUSTRALIA (720P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/1nJl0Pv.png" group-title="YABANCI ARŞİVİ (370)",INTV AUSTRALIA (720P)
 http://tv1.intv.mk:1935/live/intv/index.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/IsfahanTV.svg/960px-IsfahanTV.svg.png" group-title="YABANCI ARŞİVİ (356)",ISFAHAN TV (1080P)
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/IsfahanTV.svg/960px-IsfahanTV.svg.png" group-title="YABANCI ARŞİVİ (370)",ISFAHAN TV (1080P)
 https://ncdn.telewebion.ir/esfahan/live/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://www.tvchinese.net/uploads/tv/kangbatv.jpg" group-title="YABANCI ARŞİVİ (356)",KANGBA TV
+#EXTINF:-1 tvg-logo="https://www.tvchinese.net/uploads/tv/kangbatv.jpg" group-title="YABANCI ARŞİVİ (370)",KANGBA TV
 http://110.185.237.164:8888/hls/30/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/ZiPL9ar.png" group-title="YABANCI ARŞİVİ (356)",KEMPENTV (720P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/ZiPL9ar.png" group-title="YABANCI ARŞİVİ (370)",KEMPENTV (720P)
 https://ms2.mx-cd.net/tv/242-2079866/Omroep_de_Kempen.smil/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/ppn5oJy.png" group-title="YABANCI ARŞİVİ (356)",KTOO 360TV (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/ppn5oJy.png" group-title="YABANCI ARŞİVİ (370)",KTOO 360TV (1080P)
 https://api.v3.invintus.com/StreamURI/persis/2147483647/KTOO360TV.stream/media.m3u8
-#EXTINF:-1 tvg-logo="https://lahoratv.org/imagen/lahora.jpeg" group-title="YABANCI ARŞİVİ (356)",LA HORA TV (360P)
+#EXTINF:-1 tvg-logo="https://lahoratv.org/imagen/lahora.jpeg" group-title="YABANCI ARŞİVİ (370)",LA HORA TV (360P)
 https://edge.enhdtv.com/8206/index.m3u8
-#EXTINF:-1 tvg-logo="https://dominicanchannels.com/wp-content/uploads/lagunatv.jpg" group-title="YABANCI ARŞİVİ (356)",LAGUNA TV (1080P)
+#EXTINF:-1 tvg-logo="https://dominicanchannels.com/wp-content/uploads/lagunatv.jpg" group-title="YABANCI ARŞİVİ (370)",LAGUNA TV (1080P)
 https://cnn.hostlagarto.com/lagutv/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/YjgYYH3.png" group-title="YABANCI ARŞİVİ (356)",LATACUNGATV (360P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/YjgYYH3.png" group-title="YABANCI ARŞİVİ (370)",LATACUNGATV (360P)
 https://stmv1.voxtvhd.com.br/latacungatv/latacungatv/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/ScxwHYR.png" group-title="YABANCI ARŞİVİ (356)",LATV (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/ScxwHYR.png" group-title="YABANCI ARŞİVİ (370)",LATV (1080P)
 https://amg00779-latv-amg00779c1-cineverse-us-1746.playouts.now.amagi.tv/playlist/amg00779-latvnetworkllc-latv-cineverseus/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/d02uxkB.png" group-title="YABANCI ARŞİVİ (356)",LENTV24 (540P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/d02uxkB.png" group-title="YABANCI ARŞİVİ (370)",LENTV24 (540P)
 https://rt-nw-spb-htlive.cdn.ngenix.net/hls/CH_R02_LENTVSD/variant.m3u8
-#EXTINF:-1 group-title="YABANCI ARŞİVİ (356)",LIFEVISIONTV (720P)
+#EXTINF:-1 group-title="YABANCI ARŞİVİ (370)",LIFEVISIONTV (720P)
 https://tgn.bozztv.com/lifevision/lifevision/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/hBswXYZ.png" group-title="YABANCI ARŞİVİ (356)",LIRATV (720P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/hBswXYZ.png" group-title="YABANCI ARŞİVİ (370)",LIRATV (720P)
 https://cloud2.streaminglivehd.com:1936/liratv/liratv/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/gEraSp5.png" group-title="YABANCI ARŞİVİ (356)",MAGELLANTV NOW (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/gEraSp5.png" group-title="YABANCI ARŞİVİ (370)",MAGELLANTV NOW (1080P)
 https://pb-5evqkeieu3o6d.akamaized.net/Magellan_TV_Now.m3u8
-#EXTINF:-1 tvg-logo="https://mahdawioun.tv/wp-content/uploads/2024/03/New-Logo-Color.png" group-title="YABANCI ARŞİVİ (356)",MAHDAWIOUNTV (1080P)
+#EXTINF:-1 tvg-logo="https://mahdawioun.tv/wp-content/uploads/2024/03/New-Logo-Color.png" group-title="YABANCI ARŞİVİ (370)",MAHDAWIOUNTV (1080P)
 https://live.mahdawioun.tv/stream/mahdawioun/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://mntv.co.mz/wp-content/uploads/2025/11/Prancheta-4_1-1.png" group-title="YABANCI ARŞİVİ (356)",MNTV
+#EXTINF:-1 tvg-logo="https://mntv.co.mz/wp-content/uploads/2025/11/Prancheta-4_1-1.png" group-title="YABANCI ARŞİVİ (370)",MNTV
 https://www.khuwemultimedia.com/hls/mntv/mntv.m3u8
-#EXTINF:-1 tvg-logo="" group-title="YABANCI ARŞİVİ (356)",06.KanalD Drama
+#EXTINF:-1 tvg-logo="" group-title="YABANCI ARŞİVİ (370)",06.KanalD Drama
 https://amg01602-themahqfrance-vivekanald-samsungspain-uu2zn.amagi.tv/playlist/amg01602-themahqfrance-vivekanald-samsungspain/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/639751f81a36b400072b8f5a/colorLogoPNG.png" group-title="YABANCI ARŞİVİ (356)",VIVE KANAL D DRAMA
+#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/639751f81a36b400072b8f5a/colorLogoPNG.png" group-title="YABANCI ARŞİVİ (370)",VIVE KANAL D DRAMA
 https://jmp2.uk/plu-639751f81a36b400072b8f5a.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/oBpcWEm.png" group-title="YABANCI ARŞİVİ (356)",#RICCANZA – PLUTO TV
+#EXTINF:-1 tvg-logo="https://i.imgur.com/oBpcWEm.png" group-title="YABANCI ARŞİVİ (370)",#RICCANZA – PLUTO TV
 https://service-stitcher.clusters.pluto.tv/v1/stitch/embed/hls/channel/626baa721c279b00072cbedd/master.m3u8?deviceId=channel&deviceModel=web&deviceVersion=1.0&appVersion=1.0&deviceType=rokuChannel&deviceMake=rokuChannel&deviceDNT=1&advertisingId=channel&embedPartner=rokuChannel&appName=rokuchannel&is_lat=1&bmodel=bm1&content=channel&platform=web&tags=ROKU_CONTENT_TAGS&coppa=false&content_type=livefeed&rdid=channel&genre=ROKU_ADS_CONTENT_GENRE&content_rating=ROKU_ADS_CONTENT_RATING&studio_id=viacom&channel_id=channel
-#EXTINF:-1 tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/GB800002OP_20260407T040228SQUARE.png" group-title="YABANCI ARŞİVİ (356)",&TV
+#EXTINF:-1 tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/GB800002OP_20260407T040228SQUARE.png" group-title="YABANCI ARŞİVİ (370)",&TV
 https://jmp2.uk/stvp-GB800002OP
-#EXTINF:-1 tvg-logo="https://dvdh7g0f0hwck.cloudfront.net/assets/images/channel/%26TV_Transparent_c5cc189b-8493-48d2-b07c-3fa4f92d754a.png" group-title="YABANCI ARŞİVİ (356)",&TV (1080P)
+#EXTINF:-1 tvg-logo="https://dvdh7g0f0hwck.cloudfront.net/assets/images/channel/%26TV_Transparent_c5cc189b-8493-48d2-b07c-3fa4f92d754a.png" group-title="YABANCI ARŞİVİ (370)",&TV (1080P)
 https://3f56f997.wurl.com/master/f36d25e7e52f1ba8d7e56eb859c636563214f541/U2Ftc3VuZy1nYl9BbmRUVl9ITFM/playlist.m3u8
-#EXTINF:-1 tvg-name="&xplor HD (1080p)" group-title="YABANCI ARŞİVİ (356)",&xplor HD (1080p)
+#EXTINF:-1 tvg-name="&xplor HD (1080p)" group-title="YABANCI ARŞİVİ (370)",&xplor HD (1080p)
 http://dksmedia.tv/play/live.php?mac=00:1A:79:B6:60:3D&stream=209743&extension=ts&play_token=mR7FwO88sY
-#EXTINF:-1 tvg-logo="https://i.ibb.co/ZRDvqJcf/Logo-Mais-Um-original-sem-fundo.png" group-title="YABANCI ARŞİVİ (356)",+MAISUM (720P)
+#EXTINF:-1 tvg-logo="https://i.ibb.co/ZRDvqJcf/Logo-Mais-Um-original-sem-fundo.png" group-title="YABANCI ARŞİVİ (370)",+MAISUM (720P)
 https://stream.ichibansys.com:3230/hybrid/play.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/3wZdPwN.png" group-title="YABANCI ARŞİVİ (356)",+PERFIL
+#EXTINF:-1 tvg-logo="https://i.imgur.com/3wZdPwN.png" group-title="YABANCI ARŞİVİ (370)",+PERFIL
 https://unlimited1-us.dps.live/perfiltv/perfiltv.smil/perfiltv/livestream2/chunks.m3u8
-#EXTINF:-1 tvg-name="+TV (576p)" group-title="YABANCI ARŞİVİ (356)",+TV (576p)
+#EXTINF:-1 tvg-name="+TV (576p)" group-title="YABANCI ARŞİVİ (370)",+TV (576p)
 https://stream.plustv.by/plustv-web/plustv/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/Q4A6ci4.png" group-title="YABANCI ARŞİVİ (356)",.BLACK (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/Q4A6ci4.png" group-title="YABANCI ARŞİVİ (370)",.BLACK (1080P)
 http://stream.mcquack.net/263/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/GET9Qut.png" group-title="YABANCI ARŞİVİ (356)",.RED (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/GET9Qut.png" group-title="YABANCI ARŞİVİ (370)",.RED (1080P)
 http://stream.mcquack.net/69/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/GET9Qut.png" group-title="YABANCI ARŞİVİ (356)",.RED HD (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/GET9Qut.png" group-title="YABANCI ARŞİVİ (370)",.RED HD (1080P)
 http://178.134.1.158:8081/red/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/nSSUHcg.png" group-title="YABANCI ARŞİVİ (356)",.SCI-FI (576P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/nSSUHcg.png" group-title="YABANCI ARŞİVİ (370)",.SCI-FI (576P)
 http://stream.mcquack.net/180/index.m3u8
-#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/62ba60f059624e000781c436/colorLogoPNG.png" group-title="YABANCI ARŞİVİ (356)",00S REPLAY
+#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/62ba60f059624e000781c436/colorLogoPNG.png" group-title="YABANCI ARŞİVİ (370)",00S REPLAY
 https://jmp2.uk/plu-62ba60f059624e000781c436.m3u8
-#EXTINF:-1 tvg-logo="" group-title="YABANCI ARŞİVİ (356)",07.Poker Night In America
+#EXTINF:-1 tvg-logo="" group-title="YABANCI ARŞİVİ (370)",07.Poker Night In America
 https://linear-1068.frequency.stream/mt/freelivesports/1068/hls/master/playlist.m3u8
-#EXTINF:-1 tvg-logo="" group-title="YABANCI ARŞİVİ (356)",07.World Poker Tour
+#EXTINF:-1 tvg-logo="" group-title="YABANCI ARŞİVİ (370)",07.World Poker Tour
 https://amg00218-wptenterprisesi-worldpokertour-klowdtv-5619e.amagi.tv/playlist/amg00218-wptenterprisesi-worldpokertour-klowdtv/playlist.m3u8
-#EXTINF:-1 tvg-logo="" group-title="YABANCI ARŞİVİ (356)",07.WPT 20th Anniversary
+#EXTINF:-1 tvg-logo="" group-title="YABANCI ARŞİVİ (370)",07.WPT 20th Anniversary
 https://amg00218-wptenterprises-amg00218c1-sportstribal-emea-1900.playouts.now.amagi.tv/playlist/amg00218-wptenterprisesfast-worldpokertour-sportstribalemea/playlist.m3u8
-#EXTINF:-1 tvg-logo="" group-title="YABANCI ARŞİVİ (356)",07.WPT Torneo de Campeones
+#EXTINF:-1 tvg-logo="" group-title="YABANCI ARŞİVİ (370)",07.WPT Torneo de Campeones
 https://amg00218-wptenterprises-amg00218c2-sportstribal-emea-1901.playouts.now.amagi.tv/playlist/amg00218-wptenterprisesfast-worldpokertourespanol-sportstribalemea/playlist.m3u8
-#EXTINF:-1 group-title="YABANCI ARŞİVİ (356)",08.GCTV [TEKNIK TEST - KANAL KIMLIGI DOGRULANMADI]
+#EXTINF:-1 group-title="YABANCI ARŞİVİ (370)",08.GCTV [TEKNIK TEST - KANAL KIMLIGI DOGRULANMADI]
 https://cdn-uw2-prod.tsv2.amagi.tv/linear/amg00585-sportstribaltv-gctv-sportstribal/playlist.m3u8
-#EXTINF:-1 group-title="YABANCI ARŞİVİ (356)",08.Tennis TV Classics [TEKNIK TEST - KANAL KIMLIGI DOGRULANMADI]
+#EXTINF:-1 group-title="YABANCI ARŞİVİ (370)",08.Tennis TV Classics [TEKNIK TEST - KANAL KIMLIGI DOGRULANMADI]
 https://amg01470-amg01470c1-freelivesports-emea-9021.playouts.now.amagi.tv/playlist/amg01470-atpmediaoperationsltdfast-tennistvclassics-freelivesportsemea/playlist.m3u8
-#EXTINF:-1 group-title="YABANCI ARŞİVİ (356)",09.Surfer [TEKNIK TEST - KANAL KIMLIGI DOGRULANMADI]
+#EXTINF:-1 group-title="YABANCI ARŞİVİ (370)",09.Surfer [TEKNIK TEST - KANAL KIMLIGI DOGRULANMADI]
 https://amg13231-actve-amg13231c4-plex-us-1821.playouts.now.amagi.tv/playlist/amg13231-actvefast-surfer-plexus/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/LOY0rtp.png" group-title="YABANCI ARŞİVİ (356)",1+1 INTERNATİONAL (720P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/LOY0rtp.png" group-title="YABANCI ARŞİVİ (370)",1+1 INTERNATİONAL (720P)
 https://dash2.antik.sk/live/test_one_plus_one_int_tizen/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/smQKa2G.png" group-title="YABANCI ARŞİVİ (356)",1+1 MARAFON (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/smQKa2G.png" group-title="YABANCI ARŞİVİ (370)",1+1 MARAFON (1080P)
 https://dash2.antik.sk/live/1plus1_marathon/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/FlG7npq.png" group-title="YABANCI ARŞİVİ (356)",1+1 UKRAİNA (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/FlG7npq.png" group-title="YABANCI ARŞİVİ (370)",1+1 UKRAİNA (1080P)
 http://stream.mcquack.net/219/index.m3u8
-#EXTINF:-1 tvg-name="1-2-3.tv (480p)" group-title="YABANCI ARŞİVİ (356)",1-2-3.tv (480p)
+#EXTINF:-1 tvg-name="1-2-3.tv (480p)" group-title="YABANCI ARŞİVİ (370)",1-2-3.tv (480p)
 https://123tv-mx1.flex-cdn.net/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/2xglh33.png" group-title="YABANCI ARŞİVİ (356)",10 BOLD (480P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/2xglh33.png" group-title="YABANCI ARŞİVİ (370)",10 BOLD (480P)
 https://dce3793146fef017.mediapackage.us-west-2.amazonaws.com/out/v1/55cdf73af7894775ba6de8f57482b66a/CMAF_HLS/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/ZjKvXPn.png" group-title="YABANCI ARŞİVİ (356)",10 HD
+#EXTINF:-1 tvg-logo="https://i.imgur.com/ZjKvXPn.png" group-title="YABANCI ARŞİVİ (370)",10 HD
 https://i.mjh.nz/.r/10-nsw.m3u8
-#EXTINF:-1 tvg-logo="https://dtil.tmsimg.com/assets/s142495_ld_h15_aa.png?lock=720x540" group-title="YABANCI ARŞİVİ (356)",10 TV (576P)
+#EXTINF:-1 tvg-logo="https://dtil.tmsimg.com/assets/s142495_ld_h15_aa.png?lock=720x540" group-title="YABANCI ARŞİVİ (370)",10 TV (576P)
 https://fta.ektv.in/live/686/master.m3u8
-#EXTINF:-1 tvg-logo="https://dtil.tmsimg.com/assets/s142495_ld_h15_aa.png?lock=720x540" group-title="YABANCI ARŞİVİ (356)",10 TV (576P)
+#EXTINF:-1 tvg-logo="https://dtil.tmsimg.com/assets/s142495_ld_h15_aa.png?lock=720x540" group-title="YABANCI ARŞİVİ (370)",10 TV (576P)
 https://cdn.pishow.tv/ott/live/391/master.m3u8
-#EXTINF:-1 tvg-logo="https://xstreamcp-assets-msp.streamready.in/assets/LIVETV/LIVECHANNEL/LIVETV_LIVETVCHANNEL_10TV/images/LOGO_HD/image.png" group-title="YABANCI ARŞİVİ (356)",10 TV (720P)
+#EXTINF:-1 tvg-logo="https://xstreamcp-assets-msp.streamready.in/assets/LIVETV/LIVECHANNEL/LIVETV_LIVETVCHANNEL_10TV/images/LOGO_HD/image.png" group-title="YABANCI ARŞİVİ (370)",10 TV (720P)
 https://mumbai-edge.smartplaytv.in/10TV/index.m3u8
-#EXTINF:-1 group-title="YABANCI ARŞİVİ (356)",10.FIGHT NETWORK [TEKNIK TEST - KANAL KIMLIGI DOGRULANMADI]
+#EXTINF:-1 group-title="YABANCI ARŞİVİ (370)",10.FIGHT NETWORK [TEKNIK TEST - KANAL KIMLIGI DOGRULANMADI]
 https://amg00966-amg00966c10-amgplt0201.playout.now3.amagi.tv/playlist/amg00966-amg00966c10-amgplt0201/playlist.m3u8
-#EXTINF:-1 group-title="YABANCI ARŞİVİ (356)",10.Lucha Plus [TEKNIK TEST - KANAL KIMLIGI DOGRULANMADI]
+#EXTINF:-1 group-title="YABANCI ARŞİVİ (370)",10.Lucha Plus [TEKNIK TEST - KANAL KIMLIGI DOGRULANMADI]
 https://amg17334-amg17334c1-freelivesports-emea-7386.playouts.now.amagi.tv/playlist/amg17334-luchalibrefast-luchalibre-freelivesportsemea/playlist.m3u8
-#EXTINF:-1 group-title="YABANCI ARŞİVİ (356)",10.TNA Wrestling Channel [TEKNIK TEST - KANAL KIMLIGI DOGRULANMADI]
+#EXTINF:-1 group-title="YABANCI ARŞİVİ (370)",10.TNA Wrestling Channel [TEKNIK TEST - KANAL KIMLIGI DOGRULANMADI]
 https://amg00966-amg00966c1-freelivesports-emea-7712.playouts.now.amagi.tv/playlist/amg00966-anthem-tnawrestling-freelivesportsemea/playlist.m3u8
-#EXTINF:-1 tvg-name="100% Auto Moto TV (406p)" group-title="YABANCI ARŞİVİ (356)",100% Auto Moto TV (406p)
+#EXTINF:-1 tvg-name="100% Auto Moto TV (406p)" group-title="YABANCI ARŞİVİ (370)",100% Auto Moto TV (406p)
 http://100automoto.tv:1935/bgtv1/autotv/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/GB2600017PX_20261006T143211SQUARE.png" group-title="YABANCI ARŞİVİ (356)",100% CHRISTMAS - RAKUTEN TV
+#EXTINF:-1 tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/GB2600017PX_20261006T143211SQUARE.png" group-title="YABANCI ARŞİVİ (370)",100% CHRISTMAS - RAKUTEN TV
 https://jmp2.uk/stvp-GB2600017PX
-#EXTINF:-1 tvg-logo="https://i.imgur.com/bSXKdK5.png" group-title="YABANCI ARŞİVİ (356)",100% NEWS (576P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/bSXKdK5.png" group-title="YABANCI ARŞİVİ (370)",100% NEWS (576P)
 http://85.238.112.40:8810/hls_sec/239.33.16.32-.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/dWA9y2J.png" group-title="YABANCI ARŞİVİ (356)",1001 NOİTES (720P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/dWA9y2J.png" group-title="YABANCI ARŞİVİ (370)",1001 NOİTES (720P)
 https://cpbr.appflux.com.br:2000/hls/1001noites/1001noites.m3u8
-#EXTINF:-1 tvg-name="1001 Noites (720p)" group-title="YABANCI ARŞİVİ (356)",1001 Noites (720p)
+#EXTINF:-1 tvg-name="1001 Noites (720p)" group-title="YABANCI ARŞİVİ (370)",1001 Noites (720p)
 https://cdn.jmvstream.com/w/LVW-8155/ngrp:LVW8155_41E1ciuCvO_all/playlist.m3u8
-#EXTINF:-1 tvg-name="101tv Antequera (720p)" group-title="YABANCI ARŞİVİ (356)",101tv Antequera (720p)
+#EXTINF:-1 tvg-name="101tv Antequera (720p)" group-title="YABANCI ARŞİVİ (370)",101tv Antequera (720p)
 https://liveingesta318.cdnmedia.tv/101weblive/smil:antequera.smil/playlist.m3u8
-#EXTINF:-1 tvg-name="101tv Cadiz (1080p)" group-title="YABANCI ARŞİVİ (356)",101tv Cadiz (1080p)
+#EXTINF:-1 tvg-name="101tv Cadiz (1080p)" group-title="YABANCI ARŞİVİ (370)",101tv Cadiz (1080p)
 https://streaming101tv.es:19360/cadiz/cadiz.m3u8
-#EXTINF:-1 tvg-name="101tv Malaga" group-title="YABANCI ARŞİVİ (356)",101tv Malaga
+#EXTINF:-1 tvg-name="101tv Malaga" group-title="YABANCI ARŞİVİ (370)",101tv Malaga
 https://liveingesta318.cdnmedia.tv/101weblive/smil:malaga.smil/playlist.m3u8
-#EXTINF:-1 tvg-name="101tv Sevilla" group-title="YABANCI ARŞİVİ (356)",101tv Sevilla
+#EXTINF:-1 tvg-name="101tv Sevilla" group-title="YABANCI ARŞİVİ (370)",101tv Sevilla
 https://liveingesta318.cdnmedia.tv/101weblive/smil:sevilla.smil/playlist.m3u8
-#EXTINF:-1 group-title="YABANCI ARŞİVİ (356)",11.Kozoom [TEKNIK TEST - KANAL KIMLIGI DOGRULANMADI]
+#EXTINF:-1 group-title="YABANCI ARŞİVİ (370)",11.Kozoom [TEKNIK TEST - KANAL KIMLIGI DOGRULANMADI]
 https://cdn-uw2-prod.tsv2.amagi.tv/linear/amg01743-sportstribal-kozoom-sportstribal/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/kVREx1Q.png" group-title="YABANCI ARŞİVİ (356)",111 TV (720P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/kVREx1Q.png" group-title="YABANCI ARŞİVİ (370)",111 TV (720P)
 https://5db313b643fd8.streamlock.net/111/111/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/mBYxWOg.png" group-title="YABANCI ARŞİVİ (356)",12 TV PARMA (576P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/mBYxWOg.png" group-title="YABANCI ARŞİVİ (370)",12 TV PARMA (576P)
 https://5929b138b139d.streamlock.net/12TVParma/livestream/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/xXGeZms.png" group-title="YABANCI ARŞİVİ (356)",123TV (480P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/xXGeZms.png" group-title="YABANCI ARŞİVİ (370)",123TV (480P)
 http://200.59.191.177:8000/play/a0lb/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/VSTgXsh.png" group-title="YABANCI ARŞİVİ (356)",12TV (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/VSTgXsh.png" group-title="YABANCI ARŞİVİ (370)",12TV (1080P)
 https://cloud.streamingconnect.tv/hls/12tv/12tv2.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/VSTgXsh.png" group-title="YABANCI ARŞİVİ (356)",12TV (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/VSTgXsh.png" group-title="YABANCI ARŞİVİ (370)",12TV (1080P)
 https://cloud.fastchannel.es/mic/manifiest/hls/12tv/12tv.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/Ymk6j5o.png" group-title="YABANCI ARŞİVİ (356)",13 FESTİVAL (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/Ymk6j5o.png" group-title="YABANCI ARŞİVİ (370)",13 FESTİVAL (1080P)
 https://origin.dpsgo.com/ssai/event/Nftd0fM2SXasfDlRphvUsg/master.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/KvMuTzN.png" group-title="YABANCI ARŞİVİ (356)",13 HUMOR (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/KvMuTzN.png" group-title="YABANCI ARŞİVİ (370)",13 HUMOR (1080P)
 https://origin.dpsgo.com/ssai/event/cKWySXKgSK-SzlJmESkOWw/master.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/8WJUbSD.png" group-title="YABANCI ARŞİVİ (356)",13 KİDS (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/8WJUbSD.png" group-title="YABANCI ARŞİVİ (370)",13 KİDS (1080P)
 https://origin.dpsgo.com/ssai/event/LhHrVtyeQkKZ-Ye_xEU75g/master.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/m0SuwMU.png" group-title="YABANCI ARŞİVİ (356)",13 REALİTİES (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/m0SuwMU.png" group-title="YABANCI ARŞİVİ (370)",13 REALİTİES (1080P)
 https://origin.dpsgo.com/ssai/event/g7_JOM0ORki9SR5RKHe-Kw/master.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/FvEp1S2.png" group-title="YABANCI ARŞİVİ (356)",13 SİAM THAİ (720P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/FvEp1S2.png" group-title="YABANCI ARŞİVİ (370)",13 SİAM THAİ (720P)
 https://live.x2.co.th/live/13livetv-th.m3u8
-#EXTINF:-1 tvg-name="13 Ulica (1080p) [TEST]" tvg-logo="" group-title="YABANCI ARŞİVİ (356)",13 Ulica (1080p) [TEST]
+#EXTINF:-1 tvg-name="13 Ulica (1080p) [TEST]" tvg-logo="" group-title="YABANCI ARŞİVİ (370)",13 Ulica (1080p) [TEST]
 http://57.128.231.171:8080/325/index.m3u8
-#EXTINF:-1 group-title="YABANCI ARŞİVİ (356)",13.FloRacing [TEKNIK TEST - KANAL KIMLIGI DOGRULANMADI]
+#EXTINF:-1 group-title="YABANCI ARŞİVİ (370)",13.FloRacing [TEKNIK TEST - KANAL KIMLIGI DOGRULANMADI]
 https://amg02278-amg02278c1-freelivesports-emea-7535.playouts.now.amagi.tv/playlist/amg02278-flosports-floracing24x7-freelivesportsemea/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/Zfe2f5j.png" group-title="YABANCI ARŞİVİ (356)",13C (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/Zfe2f5j.png" group-title="YABANCI ARŞİVİ (370)",13C (1080P)
 https://origin.dpsgo.com/ssai/event/GI-9cp_bT8KcerLpZwkuhw/master.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/utI1tJV.png" group-title="YABANCI ARŞİVİ (356)",13E (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/utI1tJV.png" group-title="YABANCI ARŞİVİ (370)",13E (1080P)
 https://origin.dpsgo.com/ssai/event/BBp0VeP6QtOOlH8nu3bWTg/master.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/k0DCMTL.png" group-title="YABANCI ARŞİVİ (356)",13EME RUE
+#EXTINF:-1 tvg-logo="https://i.imgur.com/k0DCMTL.png" group-title="YABANCI ARŞİVİ (370)",13EME RUE
 http://192.99.186.30/stream/251/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/R6D228s.png" group-title="YABANCI ARŞİVİ (356)",13P (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/R6D228s.png" group-title="YABANCI ARŞİVİ (370)",13P (1080P)
 https://origin.dpsgo.com/ssai/event/p4mmBxEzSmKAxY1GusOHrw/master.m3u8
-#EXTINF:-1 tvg-name="13Rec (576p)" group-title="YABANCI ARŞİVİ (356)",13Rec (576p)
+#EXTINF:-1 tvg-name="13Rec (576p)" group-title="YABANCI ARŞİVİ (370)",13Rec (576p)
 http://45.4.1.201:8000/play/a11i/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/csBNi2L.png" group-title="YABANCI ARŞİVİ (356)",13T (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/csBNi2L.png" group-title="YABANCI ARŞİVİ (370)",13T (1080P)
 https://origin.dpsgo.com/ssai/event/f4TrySe8SoiGF8Lu3EIq1g/master.m3u8
-#EXTINF:-1 tvg-name="15+ Music (1080p)" group-title="YABANCI ARŞİVİ (356)",15+ Music (1080p)
+#EXTINF:-1 tvg-name="15+ Music (1080p)" group-title="YABANCI ARŞİVİ (370)",15+ Music (1080p)
 https://live.15plusmg.ru/memfs/ce3366b1-bf25-4e24-96bb-1adf0d44bd3d.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/hyxkJYV.png" group-title="YABANCI ARŞİVİ (356)",15.1 BPB (720P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/hyxkJYV.png" group-title="YABANCI ARŞİVİ (370)",15.1 BPB (720P)
 https://v2.tustreaming.cl/enlacebpbtv/index.m3u8
-#EXTINF:-1 tvg-name="15TV [TEST]" tvg-logo="" group-title="YABANCI ARŞİVİ (356)",15TV [TEST]
+#EXTINF:-1 tvg-name="15TV [TEST]" tvg-logo="" group-title="YABANCI ARŞİVİ (370)",15TV [TEST]
 https://servilive.com:3380/live/v3n6thy7glive.m3u8
-#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/60940a07d88ba90007b9cb71/colorLogoPNG.png" group-title="YABANCI ARŞİVİ (356)",16 ANNİ E INCİNTA
+#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/60940a07d88ba90007b9cb71/colorLogoPNG.png" group-title="YABANCI ARŞİVİ (370)",16 ANNİ E INCİNTA
 https://jmp2.uk/plu-60940a07d88ba90007b9cb71.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/4BHrbP7.png" group-title="YABANCI ARŞİVİ (356)",16 ANNI E INCINTA – PLUTO TV
+#EXTINF:-1 tvg-logo="https://i.imgur.com/4BHrbP7.png" group-title="YABANCI ARŞİVİ (370)",16 ANNI E INCINTA – PLUTO TV
 https://service-stitcher.clusters.pluto.tv/v1/stitch/embed/hls/channel/60940a07d88ba90007b9cb71/master.m3u8?deviceId=channel&deviceModel=web&deviceVersion=1.0&appVersion=1.0&deviceType=rokuChannel&deviceMake=rokuChannel&deviceDNT=1&advertisingId=channel&embedPartner=rokuChannel&appName=rokuchannel&is_lat=1&bmodel=bm1&content=channel&platform=web&tags=ROKU_CONTENT_TAGS&coppa=false&content_type=livefeed&rdid=channel&genre=ROKU_ADS_CONTENT_GENRE&content_rating=ROKU_ADS_CONTENT_RATING&studio_id=viacom&channel_id=channel
-#EXTINF:-1 tvg-logo="https://i.imgur.com/04fCzHl.png" group-title="YABANCI ARŞİVİ (356)",16TV BUDAPEST (360P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/04fCzHl.png" group-title="YABANCI ARŞİVİ (370)",16TV BUDAPEST (360P)
 https://cloudfront44.lexanetwork.com:1344/freerelay/16tv.sdp/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/XfkbTrU.png" group-title="YABANCI ARŞİVİ (356)",1ALMERETV (720P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/XfkbTrU.png" group-title="YABANCI ARŞİVİ (370)",1ALMERETV (720P)
 https://d3472rjicrodic.cloudfront.net/nlpo/clr-nlpo/709d5260/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/4Ww7CsR.png" group-title="YABANCI ARŞİVİ (356)",1HD MUSİC TELEVİSİON (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/4Ww7CsR.png" group-title="YABANCI ARŞİVİ (370)",1HD MUSİC TELEVİSİON (1080P)
 http://176.118.197.101/1HD/index.m3u8
-#EXTINF:-1 tvg-logo="https://admango.cdn.mangomolo.com/analytics/uploads/188/6544bebaae.jpg" group-title="YABANCI ARŞİVİ (356)",1KZN TV (576P)
+#EXTINF:-1 tvg-logo="https://admango.cdn.mangomolo.com/analytics/uploads/188/6544bebaae.jpg" group-title="YABANCI ARŞİVİ (370)",1KZN TV (576P)
 https://cdn.freevisiontv.co.za/sttv/smil:1kzn.stream.smil/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/PozF9MT.png" group-title="YABANCI ARŞİVİ (356)",1MUS
+#EXTINF:-1 tvg-logo="https://i.imgur.com/PozF9MT.png" group-title="YABANCI ARŞİVİ (370)",1MUS
 http://hz1.teleport.cc/HLS/HD.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/FSkYLPK.png" group-title="YABANCI ARŞİVİ (356)",1TV (720P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/FSkYLPK.png" group-title="YABANCI ARŞİVİ (370)",1TV (720P)
 https://tv.cdn.xsg.ge/gpb-1tv/index.m3u8
-#EXTINF:-1 group-title="YABANCI ARŞİVİ (356)",1TV GEO
+#EXTINF:-1 group-title="YABANCI ARŞİVİ (370)",1TV GEO
 https://tv.cdn.xsg.ge/gpb-1tv/tracks-v1a1/mono.m3u8?checkedby:iptvcat.net
-#EXTINF:-1 tvg-logo="https://i.imgur.com/ftiuNK3.png" group-title="YABANCI ARŞİVİ (356)",1TWENTE TV (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/ftiuNK3.png" group-title="YABANCI ARŞİVİ (370)",1TWENTE TV (1080P)
 https://ms7.mx-cd.net/dtv-11/198-989148/1Twente_TV.smil/chunklist_w954512639_b4292608_slNLD.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/FJBL6zI.png" group-title="YABANCI ARŞİVİ (356)",2 TV (720P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/FJBL6zI.png" group-title="YABANCI ARŞİVİ (370)",2 TV (720P)
 https://tv.cdn.xsg.ge/gpb-2tv/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/v6KBgqk.png" group-title="YABANCI ARŞİVİ (356)",2+2 (1080P)
+#EXTINF:-1 tvg-logo="https://i.imgur.com/v6KBgqk.png" group-title="YABANCI ARŞİVİ (370)",2+2 (1080P)
 http://stream.mcquack.net/173/index.m3u8
-#EXTINF:-1 tvg-name="20" group-title="YABANCI ARŞİVİ (356)",20
+#EXTINF:-1 tvg-name="20" group-title="YABANCI ARŞİVİ (370)",20
 https://live3-mediaset-it.akamaized.net/Content/hls_h0_clr_vos/live/channel(lb)/index.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/20_Minutes_TV_IDF_logo_%282023%29.png/960px-20_Minutes_TV_IDF_logo_%282023%29.png" group-title="YABANCI ARŞİVİ (356)",20 MİNUTES TV (1080P)
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/20_Minutes_TV_IDF_logo_%282023%29.png/960px-20_Minutes_TV_IDF_logo_%282023%29.png" group-title="YABANCI ARŞİVİ (370)",20 MİNUTES TV (1080P)
 https://live-20minutestv.digiteka.com/1961167769/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.ibb.co/fqg1vfr/24h.png" group-title="YABANCI ARŞİVİ (370)",24 H CATALUNYA
+https://rtvelivestream.rtve.es/rtvesec/cat/24h_cat_main_dvr.m3u8
+#EXTINF:-1 tvg-name="24 Horas (1080p)" group-title="YABANCI ARŞİVİ (370)",24 Horas (1080p)
+http://187.102.208.209:8000/play/a0a1/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.ibb.co/21sXZ3GT/24h.png" group-title="YABANCI ARŞİVİ (370)",24 HORAS (720P)
+https://ztnr.rtve.es/ztnr/1694255.m3u8
+#EXTINF:-1 tvg-name="24 Horas Canarias (1080p)" group-title="YABANCI ARŞİVİ (370)",24 Horas Canarias (1080p)
+http://185.47.212.25:8080/24h_HD/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.ibb.co/21sXZ3GT/24h.png" group-title="YABANCI ARŞİVİ (370)",24 HORAS CANARIAS (720P)
+https://ztnr.rtve.es/ztnr/5473142.m3u8
+#EXTINF:-1 tvg-logo="https://i.ibb.co/21sXZ3GT/24h.png" group-title="YABANCI ARŞİVİ (370)",24 HORAS CATALUNYA (720P)
+https://ztnr.rtve.es/ztnr/4952053.m3u8
+#EXTINF:-1 tvg-logo="https://provider-static.plex.tv/epg/images/ott_channels/logos/24hrfreemovies_logo_dark.png" group-title="YABANCI ARŞİVİ (370)",24 HOUR FREE MOVIES
+https://epg.provider.plex.tv/library/parts/6a1610bebdf296985fd95603-5fd115bab7ef8d002dcf181d/?X-Plex-Token=Pzw3GgfMJzzNJ3CaHMej
+#EXTINF:-1 tvg-logo="https://i.imgur.com/iSVnzR1.png" group-title="YABANCI ARŞİVİ (370)",24 HOUR FREE MOVİES (720P)
+https://d1j2u714xk898n.cloudfront.net/scheduler/scheduleMaster/145.m3u8
+#EXTINF:-1 tvg-logo="https://pbs.twimg.com/profile_images/1498285886714298374/EMSJzC-0_400x400.jpg" group-title="YABANCI ARŞİVİ (370)",24 KANAL
+http://streamvideol1.luxnet.ua/news24/smil:news24.stream.smil/playlist.m3u8
+#EXTINF:-1 tvg-logo="https://pbs.twimg.com/profile_images/1498285886714298374/EMSJzC-0_400x400.jpg" group-title="YABANCI ARŞİVİ (370)",24 KANAL (720P)
+https://cdn15.live-tv.cloud/ua_infinitas_tv/news24-abr/playlist.m3u8
+#EXTINF:-1 tvg-id="3908" tvg-logo="http://epg.one/img/3908.png" group-title="YABANCI ARŞİVİ (370)",24 KİTCHEN HD TR
+http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6853/index.m3u8
+#EXTINF:-1 tvg-logo="https://sund-images.sunnxt.com/202222/300x300_24News_202222_d63feca0-79ae-47ea-b75a-66c17d456f4c.png" group-title="YABANCI ARŞİVİ (370)",24 NEWS (360P)
+https://segment.yuppcdn.net/110322/channel24/playlist.m3u8
+#EXTINF:-1 tvg-logo="https://sund-images.sunnxt.com/202222/300x300_24News_202222_d63feca0-79ae-47ea-b75a-66c17d456f4c.png" group-title="YABANCI ARŞİVİ (370)",24 NEWS (720P)
+https://mumt07.tangotv.in/zHjX9OFlTWENTYFOURNEWS/index.m3u8
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/en/9/93/24_News_HD_Logo.png" group-title="YABANCI ARŞİVİ (370)",24 NEWS HD
+https://cdn4.mjunoon.tv:8087/streamtest/146M/chunks.m3u8
