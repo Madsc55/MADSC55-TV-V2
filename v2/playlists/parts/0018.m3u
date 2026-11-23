@@ -1,3 +1,21 @@
+#EXTINF:-1 tvg-logo="https://xstreamcp-assets-msp.streamready.in/assets/LIVETV/LIVECHANNEL/LIVETV_LIVETVCHANNEL_BHARAT_EXPRESS/images/LOGO_HD/image.png" group-title="YABANCI ARŞİVİ (9424)",BHARAT EXPRESS (1080P)
+https://stream.ottlive.co.in/bharatexpress/index.m3u8
+#EXTINF:-1 tvg-logo="https://ltsk-cdn.s3.eu-west-1.amazonaws.com/jumpstart/Temp_Live/cdn/HLS/Channel/transparentImages/Bharat-Expess-Transparent.png" group-title="YABANCI ARŞİVİ (9424)",BHARAT EXPRESS (480P)
+https://stream1.livebox.co.in/VCAREhls/live.m3u8
+#EXTINF:-1 tvg-logo="https://ltsk-cdn.s3.eu-west-1.amazonaws.com/jumpstart/Temp_Live/cdn/HLS/Channel/transparentImages/Bharat-Expess-Transparent.png" group-title="YABANCI ARŞİVİ (9424)",BHARAT EXPRESS (576P)
+https://cdn.pishow.tv/ott/live/1139/master.m3u8
+#EXTINF:-1 tvg-logo="https://ltsk-cdn.s3.eu-west-1.amazonaws.com/jumpstart/Temp_Live/cdn/HLS/Channel/transparentImages/Bharat-Expess-Transparent.png" group-title="YABANCI ARŞİVİ (9424)",BHARAT EXPRESS (576P)
+https://fta.ektv.in/live/736/master.m3u8
+#EXTINF:-1 tvg-logo="https://ltsk-cdn.s3.eu-west-1.amazonaws.com/jumpstart/Temp_Live/cdn/HLS/Channel/transparentImages/Bharat-Expess-Transparent.png" group-title="YABANCI ARŞİVİ (9424)",BHARAT EXPRESS (720P)
+https://mumt07.tangotv.in/zHjX9OFlBHARATEXPRESS/index.m3u8
+#EXTINF:-1 tvg-logo="https://ltsk-cdn.s3.eu-west-1.amazonaws.com/jumpstart/Temp_Live/cdn/HLS/Channel/transparentImages/9ff26e4cd19e2f6c3ad7de6b58c0326d.jpg" group-title="YABANCI ARŞİVİ (9424)",BHARAT SAMACHAR (360P)
+https://d1msejlow1t3l4.cloudfront.net/fta/bharatsamachar/playlist.m3u8
+#EXTINF:-1 tvg-logo="https://ltsk-cdn.s3.eu-west-1.amazonaws.com/jumpstart/Temp_Live/cdn/HLS/Channel/transparentImages/9ff26e4cd19e2f6c3ad7de6b58c0326d.jpg" group-title="YABANCI ARŞİVİ (9424)",BHARAT SAMACHAR (480P)
+https://idvd.multitvsolution.com/idvo/bharatsamachar.m3u8
+#EXTINF:-1 tvg-logo="https://xstreamcp-assets-msp.streamready.in/assets/LIVETV/LIVECHANNEL/LIVETV_LIVETVCHANNEL_BHARAT_SAMACHAR/images/LOGO_HD/image.png" group-title="YABANCI ARŞİVİ (9424)",BHARAT SAMACHAR (720P)
+https://mumt03.tangotv.in/Dsly5z3HBHARATSAMACHAR/index.m3u8
+#EXTINF:-1 tvg-logo="https://jiotvimages.cdn.jio.com/dare_images/images/Bharat_Update.png" group-title="YABANCI ARŞİVİ (9424)",BHARAT UPDATE (576P)
+https://cdn.pishow.tv/ott/live/339/master.m3u8
 #EXTINF:-1 tvg-logo="https://dtil.tmsimg.com/assets/s142710_ld_h15_aa.png?lock=720x540" group-title="YABANCI ARŞİVİ (9424)",BHARAT24 (1080P)
 https://d3qs3d2rkhfqrt.cloudfront.net/out/v1/2774c390ad884e06a7b0257c8489e23d/index.m3u8
 #EXTINF:-1 tvg-logo="https://dtil.tmsimg.com/assets/s142710_ld_h15_aa.png?lock=720x540" group-title="YABANCI ARŞİVİ (9424)",BHARAT24 (1080P)
@@ -98,8 +116,6 @@ https://jmp2.uk/stvp-US26000201N
 https://tvdatta.com:3021/live/biosferatvlive.m3u8
 #EXTINF:-1 tvg-name="Bir Gece Masalı" group-title="YABANCI ARŞİVİ (9424)",Bir Gece Masalı
 http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Bir.Gece.Masali.SON.mkv
-#EXTINF:-1 tvg-id="BirTV.tr" group-title="YABANCI ARŞİVİ (9424)",Bir TV (720p)
-https://live.artidijitalmedya.com/artidijital_birtv/birtv/playlist.m3u8
 #EXTINF:-1 tvg-name="Bir Zamanlar Istanbul" group-title="YABANCI ARŞİVİ (9424)",Bir Zamanlar Istanbul
 http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Bir.Zamanlar.Istanbul.SON.mkv
 #EXTINF:-1 tvg-name="bitMe (1080p)" group-title="YABANCI ARŞİVİ (9424)",bitMe (1080p)
@@ -108,18 +124,12 @@ http://181.119.66.28:8081/BITME/index.m3u8
 http://200.229.147.210:9999/play/a01y/index.m3u8
 #EXTINF:-1 tvg-name="bitMe Latin America (576p)" group-title="YABANCI ARŞİVİ (9424)",bitMe Latin America (576p)
 https://cablered.iptvperu.tv:1936/cablered/bitme_new/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://biztv.uz/static/media/biz-cinema.286b83dc.png" group-title="YABANCI ARŞİVİ (9424)",BIZ CINEMA
-https://stream8.cinerama.uz/1213/tracks-v1a1/mono.m3u8
 #EXTINF:-1 tvg-name="BIZ Cinema (720p) [TEST]" tvg-logo="" group-title="YABANCI ARŞİVİ (9424)",BIZ Cinema (720p) [TEST]
 https://fl.biztv.media/cinema_720_EMfSyXgoRdiIHgldXTZICucKTIeCKO/index.m3u8
 #EXTINF:-1 tvg-logo="https://www.lyngsat.com/logo/tv/bb/biz-music-uz.png" tvg-name="BIZ Music" group-title="YABANCI ARŞİVİ (9424)",BIZ Music
 https://fl.biztv.media/music_480_FbLnBjkOoclIXBLHLbLTuwFOKaihFS/tracks-v1a1/mono.m3u8
-#EXTINF:-1 tvg-logo="https://i.ibb.co/DfsCJwk/Uz-biz-music-5462.jpg" group-title="YABANCI ARŞİVİ (9424)",BIZ MUSIC
-https://stream8.cinerama.uz/1212/tracks-v1a1/mono.m3u8
 #EXTINF:-1 tvg-name="BIZ Music (720p) [TEST]" tvg-logo="" group-title="YABANCI ARŞİVİ (9424)",BIZ Music (720p) [TEST]
 https://fl.biztv.media/music_720_QAKpGmVUjaPApCNjpsgBxrdqNihAkl/index.m3u8
-#EXTINF:-1 tvg-logo="https://biztv.uz/static/media/logo.5f993187.png" group-title="YABANCI ARŞİVİ (9424)",BIZ TV
-https://stream8.cinerama.uz/1211/tracks-v1a1/mono.m3u8
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/0/05/A_logo_for_BizTV.png" group-title="YABANCI ARŞİVİ (9424)",BİZ TV (1080P)
 https://2-fss-1.streamhoster.com/pl_154/205722-2251224-1/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQc9BALoDt-xvKETysdwh4x_G7ZEQ94RYxE-A&s" group-title="YABANCI ARŞİVİ (9424)",BIZ TV (1080P)
@@ -128,8 +138,6 @@ https://thegateway.app/BizAndYou/BizTV/playlist.m3u8
 https://fl.biztv.media/biz_tv_720_uni8jhub4h8fub4idejswh8dh3j94finbu4nidj39inwsj92in3d/index.m3u8
 #EXTINF:-1 tvg-logo="https://tvpnlogopus.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/US1700027JI_20251013T235657SQUARE.png" group-title="YABANCI ARŞİVİ (9424)",BIZAARTV
 https://jmp2.uk/stvp-US1700027JI
-#EXTINF:-1 tvg-id="BizimevTV.tr@SD" tvg-logo="https://i.imgur.com/eJa6sFY.png" group-title="YABANCI ARŞİVİ (9424)",Bizimev TV (720p)
-https://mn-nl.mncdn.com/blutv_bizimev/bizimev_sd.smil/playlist.m3u8
 #EXTINF:-1 tvg-name="Biznet Adventure (1080p)" group-title="YABANCI ARŞİVİ (9424)",Biznet Adventure (1080p)
 http://livestream.biznetvideo.net/biznet_adventure/smil:adventure.smil/playlist.m3u8
 #EXTINF:-1 tvg-name="Biznet Kids (1080p)" group-title="YABANCI ARŞİVİ (9424)",Biznet Kids (1080p)
@@ -180,18 +188,6 @@ https://bloomberg.com/media-manifest/streams/us.m3u8
 https://www.bloomberg.com/media-manifest/streams/eu.m3u8
 #EXTINF:-1 tvg-logo="https://i.ibb.co/Nn5x9Hq/bloom.jpg" group-title="YABANCI ARŞİVİ (9424)",BLOOMBERG FR
 https://995e2d68.wurl.com/master/f36d25e7e52f1ba8d7e56eb859c636563214f541/U2Ftc3VuZy1mcl9CbG9vbWJlcmdUVkZyYW5jZV9ITFM/playlist.m3u8
-#EXTINF:-1 tvg-name="BLOOMBERG HT" group-title="YABANCI ARŞİVİ (9424)" tvg-logo="https://www.lyngsat.com/logo/tv/bb/bloomberg-ht-tr.svg",BLOOMBERG HT
-https://bloomberght-live.daioncdn.net/bloomberght/bloomberght.m3u8
-#EXTINF:-1 tvg-name="BLOOMBERG HT" group-title="YABANCI ARŞİVİ (9424)" tvg-logo="https://play-lh.googleusercontent.com/byyHq1uwkzFuB42rm9LDzVZhYr-jyW4KSubjUWtCKxi-C09JjNm7csXuFsTxOJ5_Eygk",BLOOMBERG HT
-https://ciner-live.daioncdn.net/bloomberght/bloomberght_720p.m3u8
-#EXTINF:-1 tvg-name="BLOOMBERG HT" group-title="YABANCI ARŞİVİ (9424)" tvg-logo="https://d3ckc0u56niq67.cloudfront.net/conf/images/bloomberg_ht_21c.png",BLOOMBERG HT
-https://goldvod.org/live/hpgdiscoo/123456/129.m3u8
-#EXTINF:-1 tvg-name="Bloomberg HT" group-title="YABANCI ARŞİVİ (9424)",Bloomberg HT
-https://bloomberght2dvr.blutv.com/blutv_bloomberght_dvr/live.m3u8
-#EXTINF:-1 group-title="YABANCI ARŞİVİ (9424)",BLOOMBERG HT YOUTUBE
-https://www.youtube.com/@BloombergHT/live
-#EXTINF:-1 group-title="YABANCI ARŞİVİ (9424)",BLOOMBERG HT YOUTUBE
-https://www.youtube.com/user/BloombergHT/live
 #EXTINF:-1 tvg-logo="https://provider-static.plex.tv/epg/cms/production/a69341a2-fce3-4a05-af2e-469540b25d73/BBOriginals_2023_Plex_Stacked_WHTrdx.png" group-title="YABANCI ARŞİVİ (9424)",BLOOMBERG ORİGİNALS (1080P)
 https://e96a7526.wurl.com/master/f36d25e7e52f1ba8d7e56eb859c636563214f541/UmFrdXRlblRWLWV1X0Jsb29tYmVyZ09yaWdpbmFsc19ITFM/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://provider-static.plex.tv/epg/cms/production/a69341a2-fce3-4a05-af2e-469540b25d73/BBOriginals_2023_Plex_Stacked_WHTrdx.png" group-title="YABANCI ARŞİVİ (9424)",BLOOMBERG ORIGINALS (1080P)
@@ -258,8 +254,6 @@ https://jmp2.uk/stvp-USAJ3400011A8
 https://www.bloomberg.com/media-manifest/streams/us-event.m3u8
 #EXTINF:-1 tvg-logo="https://i.ibb.co/Nn5x9Hq/bloom.jpg" group-title="YABANCI ARŞİVİ (9424)",BLOOMBERG US
 https://www.bloomberg.com/media-manifest/streams/phoenix-us.m3u8
-#EXTINF:-1 tvg-id="BloombergHT.tr@SD" group-title="YABANCI ARŞİVİ (9424)",BloombergHT (720p)
-https://ciner-live.daioncdn.net/bloomberght/bloomberght.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/w2t8CGT.png" group-title="YABANCI ARŞİVİ (9424)",BLU RADIO (720P)
 https://mdstrm.com/live-stream-playlist/58d1921a72e2b22e2905e493.m3u8
 #EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/6a15f7770ed14e790bab6449/colorLogoPNG_1782506664518.png" group-title="YABANCI ARŞİVİ (9424)",BLUE BLOODS
@@ -328,8 +322,6 @@ http://stream.mcquack.net/154/index.m3u8
 https://livestream2.bokradio.co.za/hls/Bok5c.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/eajSRFo.png" group-title="YABANCI ARŞİVİ (9424)",BOL ENTERTAİNMENT (720P)
 https://vodzong.mjunoon.tv:8087/streamtest/Channel5-159-4/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/s7o0ifu.png" group-title="YABANCI ARŞİVİ (9424)",BOLAJON (576P)
-https://stream8.cinerama.uz/1007/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/61c1dc21b9587d0007e3fc15/colorLogoPNG.png" group-title="YABANCI ARŞİVİ (9424)",BOLİGJAKTEN
 https://jmp2.uk/plu-61c1dc21b9587d0007e3fc15.m3u8
 #EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/63c6a1c46d126a000760b91c/colorLogoPNG.png" group-title="YABANCI ARŞİVİ (9424)",BOLİGKJOP İ BLİNDE
