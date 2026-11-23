@@ -88,6 +88,19 @@ class DecodedFrameTests(unittest.TestCase):
         self.assertEqual(decode.call_args_list[0].args[0], b"synthetic")
         self.assertNotIn("SENSITIVE", str(report))
 
+    def test_pinned_local_ffmpeg_fallback(self):
+        from full_playlist_av_decode import get_local_ffmpeg
+        from unittest.mock import MagicMock
+        import sys
+        fake = MagicMock()
+        fake.get_ffmpeg_exe.return_value = "/tmp/pinned-ffmpeg"
+        with (
+            patch("full_playlist_av_decode.shutil.which", return_value=None),
+            patch.dict(sys.modules, {"imageio_ffmpeg": fake}),
+            patch("full_playlist_av_decode.Path.is_file", return_value=True),
+        ):
+            self.assertEqual(get_local_ffmpeg(), "/tmp/pinned-ffmpeg")
+
     def test_fetch_error_is_unknown_not_dead(self):
         with patch("full_playlist_av_decode.sample_transport_stream",
                    side_effect=SafeFetchError("REDIRECT_BLOCKED")):

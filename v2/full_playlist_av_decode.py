@@ -61,6 +61,21 @@ def decoded_frame(sample, stream_type, executable, runner=subprocess.run):
     )
 
 
+def get_local_ffmpeg():
+    """Prefer system FFmpeg, otherwise the pinned isolated package's binary."""
+    executable = shutil.which("ffmpeg")
+    if executable:
+        return executable
+    try:
+        import imageio_ffmpeg
+        path = imageio_ffmpeg.get_ffmpeg_exe()
+        if path and Path(path).is_file():
+            return path
+    except (ImportError, OSError, RuntimeError, ValueError):
+        pass
+    return None
+
+
 def decode_url(url):
     try:
         data = sample_transport_stream(
@@ -82,7 +97,7 @@ def decode_url(url):
         }
 
     programs = program_table(data)
-    executable = shutil.which("ffmpeg")
+    executable = get_local_ffmpeg()
     if not executable:
         return {
             "status": "DECODER_UNAVAILABLE", "sample_bytes": len(data),

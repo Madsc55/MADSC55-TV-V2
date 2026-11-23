@@ -151,9 +151,12 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Install pinned self-contained FFmpeg binary
+        run: |
+          python -m pip install --no-deps imageio-ffmpeg==0.6.0
+          python -c "import imageio_ffmpeg; print('Local decoder ready:', imageio_ffmpeg.get_ffmpeg_exe())"
       - name: Verify FFmpeg and local-only decoded A/V safety
         run: |
-          command -v ffmpeg
           PYTHONPATH=v2:. python -m unittest -v v2.test_full_playlist_av_decode v2.test_shared_url_safe_probe
       - name: Retrieve SHA-bound prior metadata evidence
         uses: actions/download-artifact@v4
