@@ -73,14 +73,24 @@ def audit_one(filename,source):
         if mapping(doc.get("permissions"))!={"contents":"read"}:
             return ["PARTS_BUILD_EXCESSIVE_DEFAULT_PERMISSIONS"]
         jobs=mapping(doc.get("jobs"))
-        if set(jobs)!={"build"} or mapping(jobs["build"].get("permissions"))!={"contents":"write"}:
+        if set(jobs)!={"build"} or mapping(jobs["build"].get("permissions"))!={"contents":"write","pull-requests":"write","actions":"write"}:
             return ["PARTS_BUILD_JOB_PERMISSIONS_CHANGED"]
+        if jobs["build"].get("if")!="github.ref == 'refs/heads/main' && !contains(github.event.head_commit.message, '[skip ci]')":
+            return ["PARTS_BUILD_MAIN_ONLY_REQUIRED"]
         required=("python v2/playlist_parts_manager.py auto",
                   "python v2/test_playlist_invariants.py",
                   "git add -- MADSC55_TV_IBO_CALISANLAR_TEST.m3u8 v2/playlists/parts/",
-                  "git commit -m", "[skip ci]", "push origin HEAD:main")
+                  'branch="automation/ibo-parts-',
+                  'git switch -c "$branch"',
+                  "gh auth setup-git",
+                  'git push origin "HEAD:refs/heads/$branch"',
+                  "gh pr create --base main --head",
+                  'gh workflow run ci.yml --ref "$branch"',
+                  'gh workflow run v2-main-production-safety-gate.yml --ref "$branch"')
         if not all(fragment in source for fragment in required):
             return ["PARTS_BUILD_VALIDATION_OR_WRITE_SCOPE_CHANGED"]
+        if "push origin HEAD:main" in source or "push origin main" in source:
+            return ["PARTS_BUILD_DIRECT_MAIN_PUSH_FORBIDDEN"]
         if "pull_request_target" in source or "schedule:" in source:
             return ["PARTS_BUILD_UNTRUSTED_TRIGGER"]
         return []
@@ -124,7 +134,7 @@ def audit_one(filename,source):
             return ["685_DIRECT_MAIN_WRITE_FORBIDDEN"]
         return []
     allowed=({"push","pull_request","workflow_dispatch"} if filename==GATE else
-             {"push","pull_request"} if filename==OFFLINE_CI else
+             {"push","pull_request","workflow_dispatch"} if filename==OFFLINE_CI else
              {"push","workflow_dispatch"} if filename==SAFETY else
              {"pull_request"} if filename==OFFLINE else
              {"pull_request","workflow_dispatch"} if filename==HISTORICAL_AUDIT else
@@ -399,12 +409,64 @@ def audit(root=ROOT):
                     # byte-preservation and category-slot checks above.
                     git_blob = hashlib.sha1(b"blob " + str(len(b)).encode() + b"\0" + b).hexdigest()
                     return git_blob == "aaeb2bc9d7bc1a109068e76df513416e609d9e3f"
+                # Authorized lossless parts migration: one reviewed PR reorders
+                # the whole ANA ARŞİV block after YEDEKLER, retaining all bytes,
+                # multiplicities and internal order. The manifest binds the exact
+                # original main SHA and hashes of every generated part.
+                def canonical_parts_move_ok():
+                    try:
+                        from playlist_parts_manager import category as part_category, logical
+                        import re
+                        if h0 != h1 or len(r0) != len(r1) or len(r0) != 18337:
+                            return False
+                        def group(record):
+                            return logical(part_category(record))
+                        from collections import Counter
+                        if Counter(r0) != Counter(r1):
+                            return False
+                        if Counter(map(group, r0)) != Counter(map(group, r1)):
+                            return False
+                        if Counter(map(group, r1))["YEDEKLER"] != 1107 or Counter(map(group, r1))["ANA ARŞİV"] != 15703:
+                            return False
+                        archive = [x for x in r0 if group(x) == "ANA ARŞİV"]
+                        remaining = [x for x in r0 if group(x) != "ANA ARŞİV"]
+                        insertion = max(i for i, x in enumerate(remaining) if group(x) == "YEDEKLER") + 1
+                        if r1 != remaining[:insertion] + archive + remaining[insertion:]:
+                            return False
+                        parts_dir = root / "v2/playlists/parts"
+                        manifest = json.loads((parts_dir / "manifest.json").read_text(encoding="utf-8"))
+                        if (manifest.get("version") != 1
+                                or manifest.get("total_records") != 18337
+                                or manifest.get("source_sha256") != hashlib.sha256(base).hexdigest()
+                                or manifest.get("header_hex") != h0.hex()):
+                            return False
+                        parts = []
+                        names = []
+                        for entry in manifest["entries"]:
+                            name = entry["file"]
+                            if not re.fullmatch(r"[0-9]{4}\\.m3u", name):
+                                return False
+                            payload = (parts_dir / name).read_bytes()
+                            if hashlib.sha256(payload).hexdigest() != entry["sha256"]:
+                                return False
+                            if len([line for line in payload.splitlines() if line.startswith(b"#EXTINF:")]) != entry["records"]:
+                                return False
+                            if any(group(x) != entry["group"] for x in parse(payload)[1]):
+                                return False
+                            names.append(name)
+                            parts.append(payload)
+                        if len(names) != len(set(names)) or set(names) != {p.name for p in parts_dir.glob("*.m3u")}:
+                            return False
+                        return b == h1 + b"".join(parts)
+                    except (OSError,ValueError,TypeError,KeyError,UnicodeError,IndexError,AttributeError):
+                        return False
+                parts_move_ok = continue_playlist_audit and canonical_parts_move_ok()
                 archive_sort_ok = continue_playlist_audit and ana_archive_alphabetical_sort_ok()
                 counter_correction_ok = continue_playlist_audit and category_counter_correction_ok()
                 move_685_ok = continue_playlist_audit and authorized_685_migration_ok()
                 cleanup_ok = continue_playlist_audit and confirmed_404_cleanup_ok()
                 batch_ok=continue_playlist_audit and batch_migration_ok()
-                if continue_playlist_audit and not reorder_ok and not batch_ok and not cleanup_ok and not move_685_ok and not counter_correction_ok and not archive_sort_ok:
+                if continue_playlist_audit and not reorder_ok and not batch_ok and not cleanup_ok and not move_685_ok and not counter_correction_ok and not archive_sort_ok and not parts_move_ok:
                     # An explicitly requested category operation must carry a
                     # one-change, exact-hash manifest in the same reviewed PR.
                     # No workflow or discovery job receives write permission.

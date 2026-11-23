@@ -57,9 +57,40 @@ jobs:
               .replace('group-title="🗂️ YEDEKLER (1792)"'.encode(), 'group-title="🗂️ YEDEKLER (1107)"'.encode()))
           current = Path("MADSC55_TV_IBO_CALISANLAR_TEST.m3u8").read_bytes()
           sorted_blob = hashlib.sha1(b"blob " + str(len(current)).encode() + b"\0" + current).hexdigest()
+          # Once the approved parts PR is merged, historical 1,792-backup
+          # reconciliation does not apply to the 1,107/15,703 inventory.
+          # Only classify a SHA-verified, assembled parts playlist as applied.
+          def approved_parts_playlist():
+              try:
+                  from collections import Counter
+                  import json
+                  from v2.playlist_parts_manager import split_records, category, logical, checksum
+                  parts_dir = Path("v2/playlists/parts")
+                  spec = json.loads((parts_dir / "manifest.json").read_text(encoding="utf-8"))
+                  header, records = split_records(current)
+                  groups = [logical(category(x)) for x in records]
+                  if (spec.get("version") != 1 or len(records) != 18337
+                          or spec.get("total_records") != 18337
+                          or Counter(groups)["YEDEKLER"] != 1107
+                          or Counter(groups)["ANA ARŞİV"] != 15703
+                          or bytes.fromhex(spec["header_hex"]) != header):
+                      return False
+                  end_of_backups = max(i for i, g in enumerate(groups) if g == "YEDEKLER")
+                  if groups[end_of_backups + 1:end_of_backups + 1 + 15703] != ["ANA ARŞİV"] * 15703:
+                      return False
+                  payloads = []
+                  for entry in spec["entries"]:
+                      part = (parts_dir / entry["file"]).read_bytes()
+                      if checksum(part) != entry["sha256"]:
+                          return False
+                      payloads.append(part)
+                  return header + b"".join(payloads) == current
+              except (OSError, ValueError, KeyError, TypeError, IndexError):
+                  return False
           applied = (digest == "203274453ef09bf5a87c25374275127367eb79e75c351ce738fa788be6c52da4"
                      or current == normalized
-                     or sorted_blob == "aaeb2bc9d7bc1a109068e76df513416e609d9e3f")
+                     or sorted_blob == "aaeb2bc9d7bc1a109068e76df513416e609d9e3f"
+                     or approved_parts_playlist())
           print("applied=" + str(applied).lower())
           PY
       - name: Build #497 preview from exact historical artifact (no scan, no playlist write)
