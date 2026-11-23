@@ -22,8 +22,8 @@ class MainActionsGateTests(unittest.TestCase):
         self.assertIn("--max-time 45", step)
         self.assertIn("tesseract --list-langs", step)
         self.assertIn("grep -Fxq tur", step)
-        self.assertIn("command -v ffmpeg", step)
-        self.assertIn("command -v ffprobe", step)
+        self.assertIn("for binary in ffmpeg ffprobe tesseract", step)
+        self.assertIn('command -v "$binary"', step)
         self.assertNotIn("|| true", step)
 
     def test_production_gate_uses_dynamic_owner_archive_counts(self):
