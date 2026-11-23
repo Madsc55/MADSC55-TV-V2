@@ -22,5 +22,6 @@ jobs:
           path: |
             pass1-results/MADSC55_TV_IBO_CALISANLAR_TEST.m3u8
             pass1-results/report.json
+            pass1-results/removed-records.m3u8
           if-no-files-found: error
           retention-days: 7

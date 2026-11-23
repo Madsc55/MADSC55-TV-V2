@@ -46,6 +46,12 @@ def parse(lines):
             i += 1
     return prefix, blocks
 
+def channel_name(header):
+    return header.split(",", 1)[1].strip().casefold() if "," in header else ""
+
+def record_key(header, url):
+    return (url, channel_name(header))
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--playlist", type=Path, default=PLAYLIST)
@@ -63,19 +69,26 @@ def main():
         for field in ("tvg-id", "tvg-logo"):
             val = attr(block[0], field)
             if val:
-                candidates[url][field].add(val)
+                candidates[record_key(block[0], url)][field].add(val)
     unique = []
+    removed = []
     seen = set()
+    names_by_url = collections.defaultdict(set)
+    for block, url in blocks:
+        names_by_url[url].add(channel_name(block[0]))
     stats = {"original_channels": len(blocks), "duplicates_removed": 0,
              "epg_added": 0, "logos_added": 0, "metadata_conflicts": 0}
+    stats["same_url_different_names"] = sum(len(names) for names in names_by_url.values() if len(names) > 1)
     for block, url in blocks:
-        if url in seen:
+        key = record_key(block[0], url)
+        if key in seen:
             stats["duplicates_removed"] += 1
+            removed.append("".join(block))
             continue
-        seen.add(url)
+        seen.add(key)
         head = block[0]
         for field, key in (("tvg-id", "epg_added"), ("tvg-logo", "logos_added")):
-            values = candidates[url][field]
+            values = candidates[key][field]
             if len(values) > 1:
                 stats["metadata_conflicts"] += 1
             elif len(values) == 1 and not attr(head, field):
@@ -97,6 +110,7 @@ def main():
     args.report.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(result, encoding="utf-8")
     args.report.write_text(json.dumps(stats, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    (args.report.parent / "removed-records.m3u8").write_text("#EXTM3U\\n" + "".join(removed), encoding="utf-8")
     print(json.dumps(stats, ensure_ascii=False))
 
 if __name__ == "__main__":
