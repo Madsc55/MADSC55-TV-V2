@@ -38,7 +38,7 @@ class Pass1Test(unittest.TestCase):
         with tempfile.TemporaryDirectory() as d:
             root = Path(d)
             source = root / "in.m3u8"
-            source.write_text("#EXTM3U\\n#EXTINF:-1,Kanal D\\nhttps://example.org/a\\n#EXTINF:-1,Star TV\\nhttps://example.org/a\\n", encoding="utf-8")
+            source.write_text("#EXTM3U\n#EXTINF:-1,Kanal D\nhttps://example.org/a\n#EXTINF:-1,Star TV\nhttps://example.org/a\n", encoding="utf-8")
             out = root / "out.m3u8"
             report = root / "report.json"
             subprocess.run([sys.executable, str(SCRIPT), "--playlist", str(source), "--output", str(out), "--report", str(report)], check=True, capture_output=True)
