@@ -1,0 +1,11 @@
+{
+  "expected_git_blob_sha": "07ad3766834f58ec9785663289c72fd0bf4f61db",
+  "request": "Kullanıcı talimatı 872–7509 dahil 6638 kayıt: son 3/3. Güncel ANA ARŞİV 872–2509 dahil 1638 kayıt (ilk liste 5872–7509) YABANCI ARŞİVİ'ne. Silme, kopyalama, yeni playlist ve canlı AV testi yok.",
+  "action": "move",
+  "source": "ANA ARŞİV",
+  "target": "YABANCI ARŞİVİ",
+  "range": {
+    "start": 872,
+    "end": 2509
+  }
+}
