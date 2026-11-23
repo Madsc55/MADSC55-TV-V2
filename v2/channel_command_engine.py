@@ -145,7 +145,7 @@ def resolve_selectors(buckets, command):
             matches = [part for part in candidates
                        if phrase.casefold().strip() in
                        (record_name(part[2]).casefold(), (record_tvg_name(part[2]) or "").casefold())]
-        else:
+        elif field == "url":
             matches = [part for part in candidates if record_url(part[2]) == selector[field]]
         if len(matches) != 1:
             raise ValueError("Channel selection must match exactly one record: " + repr(selector))
