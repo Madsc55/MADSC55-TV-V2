@@ -41,6 +41,36 @@ class FastMoveScopeTests(unittest.TestCase):
             json.dumps(self.spec, ensure_ascii=False), encoding="utf-8"
         )
 
+    def test_fast_path_keeps_security_and_skips_only_media_on_moves(self):
+        from playlist_parts_manager import ROOT
+        gate = (ROOT / ".github/workflows/v2-main-production-safety-gate.yml").read_text(
+            encoding="utf-8")
+        offline = (ROOT / ".github/workflows/ci.yml").read_text(encoding="utf-8")
+        self.assertIn("id: move_scope", gate)
+        self.assertIn("id: move_scope", offline)
+        self.assertIn('git show "$BASE_SHA:v2/fast_channel_move_scope.py"', gate)
+        self.assertIn('git show "$BASE_SHA:v2/fast_channel_move_scope.py"', offline)
+        section = gate.split(
+            "      - name: Ensure FFmpeg is available for real local decoded-media regression"
+        )[1].split("      - name: Issue 497 targeted uncertain retry", 1)[0]
+        self.assertIn("if: steps.move_scope.outputs.eligible != 'true'", section)
+        self.assertNotIn("apt-get", section)
+        self.assertIn("sha256sum -c -", section)
+        self.assertIn(
+            "17cf42701de208afbf8de9ae4cd016122c875d95beedc6c4b37894d35a523063",
+            section)
+        self.assertIn("drawtext", section)
+        self.assertIn("tesseract --list-langs", section)
+        self.assertIn("grep -Fxq tur", section)
+        self.assertIn(
+            "      - name: Fail closed on changes to production trigger/write policy\n"
+            "        run: PYTHONPATH=v2 python v2/main_actions_security_gate.py",
+            gate)
+        self.assertIn(
+            "      - name: Preserve original IBO category and backup invariants\n"
+            "        run: python v2/test_playlist_invariants.py", gate)
+        self.assertIn("Test channel move invariants and workflow security only", offline)
+
     def test_one_move_passes_and_labels_are_consistent(self):
         self.assertTrue(safe_move_bytes(
             self.original, self.candidate, self.spec, self.parts))
