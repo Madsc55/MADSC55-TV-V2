@@ -1,0 +1,6 @@
+{
+  "expected_git_blob_sha": "9840fc9e5b31e6b78c2d81c0b56646f8323a1c09",
+  "request": "Kullanıcı talimatı: YEDEKLER kategorisinde kalan 592 kanalın sadece görünen adlarını BÜYÜK HARF ile yaz; teknik test, doğrulanmadı, NOT 24/7 ve diğer köşeli notları kaldır. Sadece kanal adı, mevcut çözünürlük ve bundan çıkarılabilen kalite sınıfı yazılsın; çözünürlük uydurulmasın. Kanal URL'si, logo, EPG metadata, kanal sırası ve bütün diğer kategoriler değişmesin. Ses/görüntü testi yok.",
+  "action": "recount",
+  "format_backup_names": true
+}
