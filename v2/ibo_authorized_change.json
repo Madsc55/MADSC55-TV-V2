@@ -1,12 +1,9 @@
 {
-  "base_sha256": "eee260cce3926caff18238f9583958b40475e362ce7650fb7fac51a66a84ee1c",
-  "result_sha256": "18ac8386964e2f336105bb83f8f1be0af008b6b9ea83f679a2fd1ca582097abe",
-  "operation": "add",
-  "request": "489 — Mevcut tek ana playlist içinde tarihsel 18.074 benzersiz arşiv kanalını kayıpsız geri getir; 838 ana kategori kanalını aynen koru, yeni playlist oluşturma.",
+  "base_sha256": "597dbb738ee5c1f8433d114077fad829741763636b5ab0877f4b56b286b0705f",
+  "result_sha256": "7d7652037149cb19b37a88af7f0518319ea87f3253187ce02ac21ef5fb04f642",
+  "operation": "category",
+  "request": "Ana playlist kategorilerinin tüm başlık sayılarını mevcut gerçek kayıt sayılarına eşitle; kanal kayıtlarını, URL'leri ve sıralamayı kesinlikle değiştirme.",
   "channels": [
-    "YEDEKLER: 1792 mevcut kayıt değişmeden korunur",
-    "TURK: 424 tarihsel kayıt arşive eklenir",
-    "YABANCI: 284 tarihsel kayıt arşive eklenir",
-    "ANA ARŞİV: 15574 tarihsel kayıt arşive eklenir"
+    "All category count labels"
   ]
 }
