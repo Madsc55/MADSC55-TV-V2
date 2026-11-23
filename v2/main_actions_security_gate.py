@@ -42,6 +42,7 @@ GATE="v2-main-production-safety-gate.yml"
 OFFLINE="ibo-single-playlist-transfer-offline.yml"
 HISTORICAL_AUDIT="issue-489-historical-audit.yml"
 OFFLINE_CI="ci.yml"
+PASS1="run_pass1_cleanup.yml"
 HEALTH_REPORT="update_main_playlist.yml"
 SAFETY="v2-playlist-safety.yml"
 STAGING="madsc/v2-production-actions-lock-20261103"
@@ -62,6 +63,18 @@ def audit_one(filename,source):
     if not isinstance(doc,dict):
         return ["INVALID_WORKFLOW"]
     events=mapping(doc.get("on"))
+    if filename==PASS1:
+        if set(mapping(doc.get("on")))!={"workflow_dispatch"}:
+            return ["PASS1_MANUAL_ONLY_REQUIRED"]
+        if mapping(doc.get("permissions"))!={"contents":"read"}:
+            return ["PASS1_READ_ONLY_REQUIRED"]
+        if set(mapping(doc.get("jobs")))!={"cleanup"}:
+            return ["PASS1_JOB_CHANGED"]
+        if ("v2/cleanup_epg_logo_pass1.py" not in source or "pass1-cleanup-results" not in source or "actions/upload-artifact@v4" not in source):
+            return ["PASS1_ARTIFACT_INVARIANTS_CHANGED"]
+        if MUTATION.search(source) or PERSISTED.search(source):
+            return ["PASS1_WRITE_FORBIDDEN"]
+        return []
     if filename=="ibo-authorized-500.yml":
         if set(events)!={"workflow_dispatch"}:
             return ["ONE_TIME_TRIGGER_CHANGED"]
@@ -179,7 +192,7 @@ def audit(root=ROOT):
     root=Path(root)
     folder=root/".github/workflows"
     found={p.name for p in folder.iterdir() if p.is_file() and p.suffix in (".yml",".yaml")}
-    expected=ORIGINAL_FILES|{GATE,OFFLINE,HISTORICAL_AUDIT,HEALTH_REPORT,OFFLINE_CI,"full_autonomous_pipeline.yml","autonomous_discovery_readonly.yml","v2-stage6-grouped-acceptance.yml","ibo-authorized-500.yml","v2-offline-import-15.yml","run_move_685.yml"}
+    expected=ORIGINAL_FILES|{PASS1,GATE,OFFLINE,HISTORICAL_AUDIT,HEALTH_REPORT,OFFLINE_CI,"full_autonomous_pipeline.yml","autonomous_discovery_readonly.yml","v2-stage6-grouped-acceptance.yml","ibo-authorized-500.yml","v2-offline-import-15.yml","run_move_685.yml"}
     errors={}
     if found!=expected:
         errors["WORKFLOW_INVENTORY"]={"missing":sorted(expected-found),
