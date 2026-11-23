@@ -23,3 +23,35 @@ jobs:
         run: python -m pip install 'cryptography>=42,<47' PyYAML==6.0.2
       - name: Run offline regression suite
         run: make run
+
+  shared-url-live-review:
+    name: Read-only bounded shared URL evidence
+    # Only the explicitly tagged owner-requested squash merge on main runs
+    # public-network sampling. Never run from untrusted PRs or on a schedule.
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[shared-url-safe-review]')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify public-IP pinning, HLS bounds and offline PSI fixtures
+        run: |
+          PYTHONPATH=v2:. python -m unittest -v v2.test_shared_url_safe_probe
+          python -m py_compile v2/shared_url_safe_probe.py v2/shared_url_live_review.py
+      - name: Bounded read-only shared URL sample
+        run: |
+          PYTHONPATH=v2 python v2/shared_url_live_review.py --report /tmp/shared-url-live-review.json
+      - name: Upload no-token evidence (never upload stream URLs)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: shared-url-safe-live-review
+          path: /tmp/shared-url-live-review.json
+          if-no-files-found: warn
+          retention-days: 30
