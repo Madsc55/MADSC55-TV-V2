@@ -1,3 +1,7 @@
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/3/3d/2022_Disney_Channel_logo.svg" group-title="ANA ARŞİV (13712)",DİSNEY CHANNEL (1080P)
+http://185.227.34.179:8080/disney-channel-hd/index.m3u8
+#EXTINF:-1 tvg-name="Disney Channel (360p)" group-title="ANA ARŞİV (13712)",Disney Channel (360p)
+http://151.80.18.177:86/Disney_Channel_HD/index.m3u8
 #EXTINF:-1 tvg-name="Disney Channel (360p)" group-title="ANA ARŞİV (13712)",Disney Channel (360p)
 http://str2.iptvhd.ru:8080/disney/index.m3u8
 #EXTINF:-1 tvg-name="Disney Channel (360p)" group-title="ANA ARŞİV (13712)",Disney Channel (360p)
@@ -4362,8 +4366,6 @@ https://jmp2.uk/plu-5dcde27ffae9520009c0c75a.m3u8
 https://jmp2.uk/plu-5cf96b8f4f1ca3f0629f4bf1.m3u8
 #EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/6683cd2fca74680008772545/colorLogoPNG_1747399523793.png" group-title="ANA ARŞİV (13712)",INVESTIGATION BY PLUTO TV
 https://jmp2.uk/plu-6683cd2fca74680008772545.m3u8
-#EXTINF:-1 tvg-name="INVESTIGATION DISCOVERY" group-title="ANA ARŞİV (13712)",INVESTIGATION DISCOVERY
-https://dnx8nkmlprapr.cloudfront.net/out/v1/c9e1c183395d4d29a9fa34ecdef4163b/master.m3u8
 #EXTINF:-1 tvg-logo="https://static.wikia.nocookie.net/logopedia/images/0/01/ID_%28Print%29.svg/revision/latest?cb=20210101125600" group-title="ANA ARŞİV (13712)",INVESTIGATION DISCOVERY
 http://88.212.15.50/live/test_id_hevc_atktv/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/InvestigationDiscoveryLogo2020.svg/960px-InvestigationDiscoveryLogo2020.svg.png" group-title="ANA ARŞİV (13712)",INVESTIGATION DISCOVERY
@@ -5038,8 +5040,6 @@ https://dash4.antik.sk/live/test_kabel_eins_tizen/playlist.m3u8
 http://178.27.12.3:9981/stream/channelid/1958526590?profile=pass
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Kabel_eins_Doku_Logo_2016.svg/960px-Kabel_eins_Doku_Logo_2016.svg.png" group-title="ANA ARŞİV (13712)",KABEL EINS DOKU (576P)
 https://s6.hopslan.com/dokuX/index.m3u8
-#EXTINF:-1 tvg-name="KAÇKAR TV" group-title="ANA ARŞİV (13712)",KAÇKAR TV GLOBAL ADAY
-https://kackartv.ozelip.com:3898/hybrid/play.m3u8
 #EXTINF:-1 tvg-logo="https://jiotvimages.cdn.jio.com/dare_images/images/Kadak.png" group-title="ANA ARŞİV (13712)",KADAK (1080P)
 https://n18syndication.akamaized.net/bpk-tv/Kadak_NW18_MOB/output01/master.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/zGGeSQg.png" group-title="ANA ARŞİV (13712)",KAIFA TV (576P)

@@ -4349,6 +4349,12 @@ https://v2.catcast.tv/content/48694/index.m3u8?token=81a8730704e9247dee1607a387f
 https://tvsms.club/tvz.php?kanal=toppop&file=.m3u8
 #EXTINF:-1 tvg-name="Viasat History" group-title="ANA ARŞİV (13712)",Viasat History
 https://tv.prectv5.sbs/live/viasatexplore.m3u8
+#EXTINF:-1 group-title="ANA ARŞİV (13712)",BEGEN TV
+https://ip44.radyotelekomtv.com:3958/stream/play.m3u8
+#EXTINF:-1 tvg-name="INVESTIGATION DISCOVERY" group-title="ANA ARŞİV (13712)",INVESTIGATION DISCOVERY
+https://dnx8nkmlprapr.cloudfront.net/out/v1/c9e1c183395d4d29a9fa34ecdef4163b/master.m3u8
+#EXTINF:-1 tvg-name="KAÇKAR TV" group-title="ANA ARŞİV (13712)",KAÇKAR TV GLOBAL ADAY
+https://kackartv.ozelip.com:3898/hybrid/play.m3u8
 #EXTINF:-1 tvg-name="Aristo TV (360p)" group-title="ANA ARŞİV (13712)",Aristo TV (360p)
 https://ma.anixa.tv/clips/stream/aristo/index.m3u8
 #EXTINF:-1 tvg-name="BBC Earth (1080p)" group-title="ANA ARŞİV (13712)",BBC Earth (1080p)
@@ -4361,8 +4367,6 @@ https://jmp2.uk/plu-630348a54c48ce00077eb6c7.m3u8
 https://jmp2.uk/plu-672e157d7d5da5000812872d.m3u8
 #EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/672e157d7d5da5000812872d/colorLogoPNG-1731073515797.png" group-title="ANA ARŞİV (13712)",BECKER (SWEDEN) NO
 https://jmp2.uk/plu-672e1634e482950008c759a5.m3u8
-#EXTINF:-1 group-title="ANA ARŞİV (13712)",BEGEN TV
-https://ip44.radyotelekomtv.com:3958/stream/play.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/vsktAez.png" group-title="ANA ARŞİV (13712)",BEIJING SATELLITE TV HD (1080P)
 http://go.bkpcp.top/mg/bjws
 #EXTINF:-1 tvg-name="Belle Amie (576p)" group-title="ANA ARŞİV (13712)",Belle Amie (576p)
@@ -12453,8 +12457,6 @@ https://jmp2.uk/plu-5dcde27ffae9520009c0c75a.m3u8
 https://jmp2.uk/plu-5cf96b8f4f1ca3f0629f4bf1.m3u8
 #EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/6683cd2fca74680008772545/colorLogoPNG_1747399523793.png" group-title="ANA ARŞİV (13712)",INVESTIGATION BY PLUTO TV
 https://jmp2.uk/plu-6683cd2fca74680008772545.m3u8
-#EXTINF:-1 tvg-name="INVESTIGATION DISCOVERY" group-title="ANA ARŞİV (13712)",INVESTIGATION DISCOVERY
-https://dnx8nkmlprapr.cloudfront.net/out/v1/c9e1c183395d4d29a9fa34ecdef4163b/master.m3u8
 #EXTINF:-1 tvg-logo="https://static.wikia.nocookie.net/logopedia/images/0/01/ID_%28Print%29.svg/revision/latest?cb=20210101125600" group-title="ANA ARŞİV (13712)",INVESTIGATION DISCOVERY
 http://88.212.15.50/live/test_id_hevc_atktv/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/InvestigationDiscoveryLogo2020.svg/960px-InvestigationDiscoveryLogo2020.svg.png" group-title="ANA ARŞİV (13712)",INVESTIGATION DISCOVERY
@@ -13129,8 +13131,6 @@ https://dash4.antik.sk/live/test_kabel_eins_tizen/playlist.m3u8
 http://178.27.12.3:9981/stream/channelid/1958526590?profile=pass
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Kabel_eins_Doku_Logo_2016.svg/960px-Kabel_eins_Doku_Logo_2016.svg.png" group-title="ANA ARŞİV (13712)",KABEL EINS DOKU (576P)
 https://s6.hopslan.com/dokuX/index.m3u8
-#EXTINF:-1 tvg-name="KAÇKAR TV" group-title="ANA ARŞİV (13712)",KAÇKAR TV GLOBAL ADAY
-https://kackartv.ozelip.com:3898/hybrid/play.m3u8
 #EXTINF:-1 tvg-logo="https://jiotvimages.cdn.jio.com/dare_images/images/Kadak.png" group-title="ANA ARŞİV (13712)",KADAK (1080P)
 https://n18syndication.akamaized.net/bpk-tv/Kadak_NW18_MOB/output01/master.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/zGGeSQg.png" group-title="ANA ARŞİV (13712)",KAIFA TV (576P)
