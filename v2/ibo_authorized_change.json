@@ -1,8 +1,8 @@
 {
-  "base_sha256": "64039ee5e92f453febcf28e176e3cf68cff926452edda250bd292b949c79e9e5",
-  "result_sha256": "117f126028cfec61ce9f32a085294e68200fc96cc7d4f601d0aa3e07501b5242",
+  "base_sha256": "117f126028cfec61ce9f32a085294e68200fc96cc7d4f601d0aa3e07501b5242",
+  "result_sha256": "d8ff24135c247c06a3f764887de68cc05e16e08e9e9824feda757166a4750c00",
   "operation": "reorder",
-  "request": "Kullanıcının tüm Türk/Türkî yayın ve Türkçe içerik adaylarını ANA ARŞİV başına alma talimatı. Güncel 13.712 kayıt yeniden tarandı; önceki 712 öncelikli kayıt, 10 yeni canlı yayın adayı (BEIN SPORTS 2 HD aynı yayıncı, Naxcivan TV, iki NBA TV aynı Türkçe spor paketi kaynağı, STAR BACKUP resmi DYG, STERK TV Türkçe/Kürtçe yayın araştırması, üç Timeless Dizi Channel SPI Türkçe orijinal yayın bilgisi, v.Bein Sport 1 NetSpor) ve mevcut 26 Türkçe dizi/program VOD kaydı (M3U kanal girdisi, canlı kanal değildir) başa alınır. Toplam 748 öncelikli kayıt. Dizi ve program kayıtları yeni eklenmemiştir, yalnızca yerleri değişir. Aday yayınların güncel sesi/altyazısı canlı doğrulanmadı. Diğer tüm kayıtlar ve kategoriler, URL, metadata, sayı ve kendi sırası korunur; silme, kopyalama, başka kategoriye taşıma, yeni playlist veya canlı test yok.",
+  "request": "Kullanıcının ANA ARŞİV'de kalan Türk/Türkî kanalları bulup en başa alma talimatı. 13.712 kayıt tekrar tarandı; 748 mevcut öncelikli kayıt ve 9 ek aday başa alınır (757). Yeni kayıtlar Euro Sport ve Euro Sport 2 (Türkiye katalog URL eşleşmesi), FX, History Channel, Nat Geo Wild ve Viasat History (Türk kanal kataloğundaki aynı kaynak URL, Viasat adı/adresinde Explore farklılığı vardır), MILYON TV (milyonyapim.com/milyon-tv ve birden fazla katalogda aynı URL), NOW-MUSIC (Azerbaycan kataloglarında catcast içerik 48694), TOP POP TV (Türkiye kanal kimliği ve Türkçe TV SMS kataloğu). Yayın dili ve erişilebilirlik canlı doğrulanmadı. Yalnızca isim ya da ortak sunucu eşleşmeleriyle yabancı kanallar taşınmaz. Önceki 26 VOD program kaydı korunur, yeni VOD eklenmez. Diğer kayıtlar, sıraları, kategoriler, URL/metaveriler ve 18.337 toplam korunur. Silme, kopyalama, başka kategoriye taşıma, yeni playlist ve canlı test yok.",
   "channels": [
     "24 TV",
     "24 TV",
@@ -751,6 +751,15 @@
     "v.Bein Sport 1 NetSpor",
     "Yalan",
     "Yalı Çapkını",
-    "Zembilli"
+    "Zembilli",
+    "Euro Sport",
+    "Euro Sport 2",
+    "FX",
+    "History Channel",
+    "MILYON TV",
+    "Nat Geo Wild",
+    "NOW-MUSIC",
+    "TOP POP TV",
+    "Viasat History"
   ]
 }

@@ -1,5 +1,3 @@
-#EXTINF:-1 tvg-logo="https://tvpnlogopus.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/USBC3600001RQ_20260303T094217SQUARE.png" group-title="ANA ARŞİV (13712)",VEVO COUNTRY
-https://jmp2.uk/stvp-USBC3600001RQ
 #EXTINF:-1 tvg-name="Vevo Country (1080p)" group-title="ANA ARŞİV (13712)",Vevo Country (1080p)
 https://pb-xrdbj9zdgm6ez.akamaized.net/Vevo_Country.m3u8
 #EXTINF:-1 tvg-logo="https://tvpnlogopus.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/US400006630_20260117T020414SQUARE.png" group-title="ANA ARŞİV (13712)",VEVO COUNTRY REWIND
@@ -132,8 +130,6 @@ http://88.212.15.29/live/test_viasat_history_atk_tv/playlist.m3u8
 https://arwen1.panaka1.cfd/vhis/usergenrnd4v6g8eigt.m3u8
 #EXTINF:-1 tvg-name="Viasat History" group-title="ANA ARŞİV (13712)",Viasat History
 https://lb.dstvmultimedia.com/ViasatHistory/index.m3u8
-#EXTINF:-1 tvg-name="Viasat History" group-title="ANA ARŞİV (13712)",Viasat History
-https://tv.prectv5.sbs/live/viasatexplore.m3u8
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/9/9e/Viasat_History_2026.svg?utm_source=hu.wikipedia.org&utm_campaign=index&utm_content=original" group-title="ANA ARŞİV (13712)",VIASAT HISTORY
 http://141.94.193.53:80/Viasat_History_HD/index.m3u8
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/9/9e/Viasat_History_2026.svg" group-title="ANA ARŞİV (13712)",VIASAT HISTORY (BULGARIA) (1080P)

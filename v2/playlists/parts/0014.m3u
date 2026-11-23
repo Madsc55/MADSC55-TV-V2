@@ -1,3 +1,17 @@
+#EXTINF:-1 tvg-name="Disney Channel (360p)" group-title="ANA ARŞİV (13712)",Disney Channel (360p)
+http://str2.iptvhd.ru:8080/disney/index.m3u8
+#EXTINF:-1 tvg-name="Disney Channel (360p)" group-title="ANA ARŞİV (13712)",Disney Channel (360p)
+https://lb.iptvnetwork.net/ls28/10014/playlist.m3u8
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/3/3d/2022_Disney_Channel_logo.svg" group-title="ANA ARŞİV (13712)",DİSNEY CHANNEL (576P)
+https://s6.hopslan.com/disneyX/index.m3u8
+#EXTINF:-1 tvg-name="Disney Channel (720p)" group-title="ANA ARŞİV (13712)",Disney Channel (720p)
+http://212.5.144.156/disney/index.m3u8
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/2024_Disney_Channel_text_logo.svg/960px-2024_Disney_Channel_text_logo.svg.png" group-title="ANA ARŞİV (13712)",DISNEY CHANNEL (UNITED STATES) (720P)
+http://4.30.180.36:8420/disneychannel/index.m3u8?token=test
+#EXTINF:-1 group-title="ANA ARŞİV (13712)",DISNEY CHANNEL LATIN AMERICA
+http://190.14.10.19:16000/play/a06z/index.m3u8
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/f/ff/2024_Disney_Channel_text_logo.svg" group-title="ANA ARŞİV (13712)",DİSNEY CHANNEL LATİN AMERİCA (1080P)
+http://45.185.163.75:8000/play/a02j/index.m3u8
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/f/ff/2024_Disney_Channel_text_logo.svg" group-title="ANA ARŞİV (13712)",DISNEY CHANNEL LATIN AMERICA (1080P)
 http://45.171.108.253:8888/DISNEY_CHANNEL/index.m3u8
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/f/ff/2024_Disney_Channel_text_logo.svg" group-title="ANA ARŞİV (13712)",DISNEY CHANNEL LATIN AMERICA (1080P)
@@ -1238,10 +1252,6 @@ https://mdstrm.com/live-stream-playlist/6952e02d19eabace52e2885f.m3u8
 https://epg.provider.plex.tv/library/parts/64305451fc3be5947773c339-62ee74af52f7d73061eec491/?X-Plex-Token=YJfpNbznTNgZeFsjtUL6
 #EXTINF:-1 tvg-logo="https://i.imgur.com/lF0iofX.png" group-title="ANA ARŞİV (13712)",EURO INDIE MUSIC CHART TV (1080P)
 http://178.33.224.197:1935/euroindiemusic/euroindiemusic/playlist.m3u8
-#EXTINF:-1 tvg-name="Euro Sport" group-title="ANA ARŞİV (13712)",Euro Sport
-https://cinque.29d0b51b213115a0.click/p/9cgzadFETvVedJ4Tsp/132/a.cf-worker-4e1da3ddd26870a5.workers.dev/chunklist_hd.m3u8
-#EXTINF:-1 tvg-name="Euro Sport 2" group-title="ANA ARŞİV (13712)",Euro Sport 2
-http://tvskor99.xyz:80/live/sahinselat2/k6rd0vxMYg/290924.ts
 #EXTINF:-1 tvg-logo="https://www.eurotv.gr/wp-content/uploads/2018/03/ima-euro-channel-190-x-400.png" group-title="ANA ARŞİV (13712)",EURO TV (360P)
 https://lbgo.bozztv.com/ssh101/ssh101/eurotvlive/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/HFWWzKT.png" group-title="ANA ARŞİV (13712)",EURO TV (720P)
@@ -2308,8 +2318,6 @@ https://live.kwikmotion.com/futurelive/ftv.smil/playlist.m3u8
 http://190.61.90.17:40000/play/a03v/index.m3u8
 #EXTINF:-1 tvg-logo="https://premium.futvcr.com/assets/img/logo-premium.png" group-title="ANA ARŞİV (13712)",FUTV (1080P)
 http://45.228.234.9:8000/play/a06o/index.m3u8
-#EXTINF:-1 tvg-name="FX" group-title="ANA ARŞİV (13712)",FX
-https://tv.prectv5.sbs/live/fx.m3u8
 #EXTINF:-1 tvg-logo="https://i.ibb.co/tqkV2sn/irflag.png" group-title="ANA ARŞİV (13712)",FX 1
 https://fxtvhls.wns.live/hls/stream.m3u8
 #EXTINF:-1 group-title="ANA ARŞİV (13712)",FX 2
@@ -3482,8 +3490,6 @@ http://138.121.15.230:9002/HISTORY-2/index.m3u8
 https://jmp2.uk/stvp-USBD35000428O
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/History_%282021%29.svg/500px-History_%282021%29.svg.png" group-title="ANA ARŞİV (13712)",HISTORY ASIA (1080P)
 https://freem3u.xyz/api/live/play.m3u8?vid=9856
-#EXTINF:-1 tvg-name="History Channel" group-title="ANA ARŞİV (13712)",History Channel
-https://tv.prectv5.sbs/live/history.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/ulHoqlP.png" group-title="ANA ARŞİV (13712)",HISTORY HIT (1080P)
 https://lds-timeline-plex.amagi.tv/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/ulHoqlP.png" group-title="ANA ARŞİV (13712)",HISTORY HIT (1080P)
@@ -5092,9 +5098,3 @@ https://ap02.iqplay.tv:8082/iqb8002/ka1s0n/playlist.m3u8
 https://tv.kaludecolombia.com/memfs/d71c0104-4752-4690-bdbf-19aa849da6c4.m3u8
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Kan11Logo.svg/960px-Kan11Logo.svg.png" group-title="ANA ARŞİV (13712)",KAN 11 (1080P)
 https://kancdn.medonecdn.net/livehls/oil/kancdn-live/live/kan11/live.livx/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/KanHinuchit.svg/960px-KanHinuchit.svg.png" group-title="ANA ARŞİV (13712)",KAN EDUCATIONAL (576P)
-http://stream.mcquack.net/378/index.m3u8
-#EXTINF:-1 tvg-name="Kanaal Z (1080p)" group-title="ANA ARŞİV (13712)",Kanaal Z (1080p)
-https://d1hz1p2gea2zy4.cloudfront.net/live/rmgtv/RMG-TRENDSZNL-LIVE/index.m3u8
-#EXTINF:-1 tvg-logo="https://ltsk-cdn.s3.eu-west-1.amazonaws.com/jumpstart/Temp_Live/cdn/HLS/Channel/transparentImages/Kanak%20News.png" group-title="ANA ARŞİV (13712)",KANAK NEWS (1080P)
-https://live-kanaknews.videostech.cloud/master.m3u8
