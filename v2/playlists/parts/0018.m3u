@@ -1,3 +1,9 @@
+#EXTINF:-1 tvg-logo="https://tvpnlogopus.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/USBC3600001RQ_20260303T094217SQUARE.png" group-title="ANA ARŞİV (13712)",VEVO COUNTRY
+https://jmp2.uk/stvp-USBC3600001RQ
+#EXTINF:-1 tvg-name="Vevo Country (1080p)" group-title="ANA ARŞİV (13712)",Vevo Country (1080p)
+https://pb-xrdbj9zdgm6ez.akamaized.net/Vevo_Country.m3u8
+#EXTINF:-1 tvg-logo="https://tvpnlogopus.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/US400006630_20260117T020414SQUARE.png" group-title="ANA ARŞİV (13712)",VEVO COUNTRY REWIND
+https://jmp2.uk/stvp-US400006630
 #EXTINF:-1 tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/GBBD2300001C0_20250107T030829SQUARE.png" group-title="ANA ARŞİV (13712)",VEVO HIP HOP & R&B
 https://jmp2.uk/stvp-GBBD2300001C0
 #EXTINF:-1 tvg-name="Vevo Hip Hop (1080p)" group-title="ANA ARŞİV (13712)",Vevo Hip Hop (1080p)
@@ -1158,10 +1164,6 @@ https://yahoo-plex.amagi.tv/playlist.m3u8
 https://amg00119-amg00119c1-firetv-us-4205.playouts.now.amagi.tv/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://tvpnlogopus.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/US3200012O8_20260421T143258SQUARE.png" group-title="ANA ARŞİV (13712)",YAHOO! SPORTS NETWORK
 https://jmp2.uk/stvp-US3200012O8
-#EXTINF:-1 tvg-name="Yalan" group-title="ANA ARŞİV (13712)",Yalan
-http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Yalan.SON.mkv
-#EXTINF:-1 tvg-name="Yalı Çapkını" group-title="ANA ARŞİV (13712)",Yalı Çapkını
-http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Yali.Capkini.SON.mkv
 #EXTINF:-1 tvg-name="Yalta TV (480p)" group-title="ANA ARŞİV (13712)",Yalta TV (480p)
 http://195.26.83.96:7029/play/a006
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/he/thumb/5/58/YamTichoniChannel.svg/1280px-YamTichoniChannel.svg.png" group-title="ANA ARŞİV (13712)",YAM TICHONI (1080P)
@@ -1464,8 +1466,6 @@ https://mumt07.tangotv.in/zHjX9OFlZEEUPUK/index.m3u8
 https://7.innovatestream.pe:19360/zelevetv/zelevetv.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/CGWaunJ.jpeg" group-title="ANA ARŞİV (13712)",ZELEVE TV (720P)
 https://live-evg11.tv360.bitel.com.pe/bitel/zeleve/playlist.m3u8
-#EXTINF:-1 tvg-name="Zembilli" group-title="ANA ARŞİV (13712)",Zembilli
-http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Zembilli.SON.mkv
 #EXTINF:-1 tvg-name="Zenebutik" group-title="ANA ARŞİV (13712)",Zenebutik
 http://88.212.15.19/live/zenebutik/index.m3u8
 #EXTINF:-1 tvg-logo="https://znth.tv/images/logo.png" group-title="ANA ARŞİV (13712)",ZENITH (1080P)

@@ -1,3 +1,19 @@
+#EXTINF:-1 tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/GB3800007C5_20251209T004625SQUARE.png" group-title="ANA ARŞİV (13712)",SPACE LIVE POWERED BY SEN
+https://jmp2.uk/plu-69b3db5d61e8e298254c7108.m3u8
+#EXTINF:-1 tvg-logo="https://static.frequency.com/studio/itv/channels/1224-400x200.png" group-title="ANA ARŞİV (13712)",SPACE LIVE POWERED BY SEN (1080P)
+https://linear-1224.frequency.stream/dist/lg-uk/1224/hls/master/playlist.m3u8
+#EXTINF:-1 tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/GB3800007C5_20251209T004625SQUARE.png" group-title="ANA ARŞİV (13712)",SPACE LIVE POWERED BY SEN (1080P)
+https://d111bsx9oooqoh.cloudfront.net/playlist.m3u8
+#EXTINF:-1 tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/GB3800007C5_20251209T004625SQUARE.png" group-title="ANA ARŞİV (13712)",SPACE LIVE POWERED BY SEN (720P)
+https://jmp2.uk/plu-69b1489b5828e7c242d83064.m3u8
+#EXTINF:-1 tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/GB3800007C5_20251209T004625SQUARE.png" group-title="ANA ARŞİV (13712)",SPACE LIVE POWERED BY SEN (720P)
+https://jmp2.uk/plu-69b16df6ed2a2444365e7ff1.m3u8
+#EXTINF:-1 tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/GB3800007C5_20251209T004625SQUARE.png" group-title="ANA ARŞİV (13712)",SPACE LIVE POWERED BY SEN (720P)
+https://jmp2.uk/plu-69a554497ed3b3fff0b9ca80.m3u8
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/en/2/2b/Spacetoon_logo.png" group-title="ANA ARŞİV (13712)",SPACETOON ARABIC (576P)
+https://live-uae-next.spacetoongo.com/ST_MENA_NEXT/hls/r9p2hjipmw2kl.m3u8
+#EXTINF:-1 tvg-logo="https://images.sr.roku.com/idType/roku-trc/context/trc/id/eb1dbd690001553eacdf32d7b155b933/https%3A%2F%2Fimage.roku.com%2Fbh-uploads%2Fproduction%2FinfoHUDLogo%2F1659742235158_Whitt_Hansen_-_SparkTVLogo_HUD_2_v2.png" group-title="ANA ARŞİV (13712)",SPARK TV
+https://jmp2.uk/rok-eb1dbd690001553eacdf32d7b155b933.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/svc98Kg.png" group-title="ANA ARŞİV (13712)",SPARK TV (1080P)
 https://candlelightmedia-sparklightlove-4-us.roku.wurl.tv/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/GBAJ400042T1_20250107T025804SQUARE.png" group-title="ANA ARŞİV (13712)",SPARKLE MOVIES
@@ -168,8 +184,6 @@ https://livestar.siliconweb.com/starvod/star4/star4.m3u8
 https://livestar.siliconweb.com/media/star4/star4.m3u8
 #EXTINF:-1 tvg-logo="https://i.ibb.co/PmDyTX6/star.jpg" group-title="ANA ARŞİV (13712)",STAR
 http://telmaco-cdn.akamaized.net/starcgr/default/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.ibb.co/DYyDzGV/star22tv.png" group-title="ANA ARŞİV (13712)",STAR (BACKUP)
-http://dygvideo.dygdigital.com/live/hls/stardai?m3u8
 #EXTINF:-1 tvg-logo="https://star101.gu/images/fb_icon.jpg" group-title="ANA ARŞİV (13712)",STAR 101 FM (720P) [NOT 24/7]
 https://live2.tensila.com/knut-v-1.choice/hls/master.m3u8
 #EXTINF:-1 tvg-name="Star Asia (720p)" group-title="ANA ARŞİV (13712)",Star Asia (720p)
@@ -352,8 +366,6 @@ http://stream.mcquack.net/156/index.m3u8
 https://h056.video-stream-hosting.de/easycast8-live/_definst_/mp4:livestreamhd4/playlist.m3u8?ref=
 #EXTINF:-1 tvg-logo="https://i.imgur.com/sCDcYFW.png" group-title="ANA ARŞİV (13712)",STEREO 5 TV (720P)
 https://stream1.aswifi.it/stereo5/live/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/bIheNAI.png" group-title="ANA ARŞİV (13712)",STERK TV (1080P)
-https://hlspackager.akamaized.net/live/DB/STERK_TV/HLS/STERK_TV.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/ZP3cJi7.png" group-title="ANA ARŞİV (13712)",STILETV
 https://proxy.media.convergenze.it/stiletv/streams/oQOFd7JglHjO1631525551097.m3u8
 #EXTINF:-1 tvg-logo="https://images.sr.roku.com/idType/roku-trc/context/trc/id/73991aa61267bcc005a855c7b6303afc/https%3A%2F%2Fimage.roku.com%2Fbh-uploads%2Fproduction%2FinfoHUDLogo%2F1750260327511_StingrayCityscapes_HUDlogo_centered_260x147.png" group-title="ANA ARŞİV (13712)",STINGRAY CITYSCAPES
@@ -866,8 +878,6 @@ http://stream.mcquack.net/435/index.m3u8
 https://live-nstu.cdn-03.cosmonova.net.ua/mobile-app/main/nstu-kyiv/master.m3u8
 #EXTINF:-1 tvg-name="Suspilne. Sport (1080p)" group-title="ANA ARŞİV (13712)",Suspilne. Sport (1080p)
 http://stream.mcquack.net/444/index.m3u8
-#EXTINF:-1 tvg-name="Sustalı Ceylan" group-title="ANA ARŞİV (13712)",Sustalı Ceylan
-http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Sustali.Ceylan.SON.mkv
 #EXTINF:-1 tvg-name="Sutel TV" group-title="ANA ARŞİV (13712)",Sutel TV
 https://vipottbpkstream.vip.hr/Content/onevip-hls/Live/Channel(Shutel)/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/0H1HObK.png" group-title="ANA ARŞİV (13712)",SUVARNA NEWS (576P)
@@ -1998,8 +2008,6 @@ http://170.83.16.50/TERRA_VIVA/index.m3u8
 https://9ada494d.wurl.com/master/f36d25e7e52f1ba8d7e56eb859c636563214f541/TEctYnJfVXBseW5rLU5ld2NvX0hMUw/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/wnYsE3O.png" group-title="ANA ARŞİV (13712)",TERRA VIVA (720P)
 http://170.83.49.66:8083/TERRAVIVAHD/index.m3u8
-#EXTINF:-1 tvg-name="Teşkilat" group-title="ANA ARŞİV (13712)",Teşkilat
-http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Teskilat.SON.mkv
 #EXTINF:-1 tvg-logo="https://i.imgur.com/Wu6wtbe.png" group-title="ANA ARŞİV (13712)",TET (1080P)
 http://stream.mcquack.net/338/index.m3u8
 #EXTINF:-1 tvg-name="Teva (1080p)" group-title="ANA ARŞİV (13712)",Teva (1080p)
@@ -2496,12 +2504,6 @@ https://jmp2.uk/plu-63dac1b78795f300086d5ca6.m3u8
 https://jmp2.uk/plu-69256bd7db5cc2f81d8a1a08.m3u8
 #EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/61c1a05ef30f5d0007e562f3/colorLogoPNG.png" group-title="ANA ARŞİV (13712)",TIL MIDDAG HOS
 https://jmp2.uk/plu-61c1a05ef30f5d0007e562f3.m3u8
-#EXTINF:-1 tvg-name="Timeless Dizi Channel" group-title="ANA ARŞİV (13712)",Timeless Dizi Channel
-https://atlantida1.aquax1.cfd/dizy/usergendlk0tas9c.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/s3Sqd4L.png" group-title="ANA ARŞİV (13712)",TIMELESS DIZI CHANNEL (576I)
-https://nosignal1.antenaplay.ro/hls/dzi-int-hd/index.m3u8
-#EXTINF:-1 tvg-name="Timeless Dizi Channel (Poland) (1080p)" group-title="ANA ARŞİV (13712)",Timeless Dizi Channel (Poland) (1080p)
-http://hls127.freeott.top:8080/BG_Dizi_HD/video.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/bjcpeVH.png" group-title="ANA ARŞİV (13712)",TIMELESS TV
 https://timelesstv1.b-cdn.net/hls/TimelessTV.m3u8
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Times_Brasil_CNBC_logo_2025.svg/960px-Times_Brasil_CNBC_logo_2025.svg.png" group-title="ANA ARŞİV (13712)",TIMES BRASIL (720P)
@@ -4968,8 +4970,6 @@ https://em4qj6nedyvg-hls-live.wmncdn.net/utv/ab2de115318ae40bdd434e193a2f2e7f.sd
 https://www.uvatvhd.com/hls.php?file=live.m3u8
 #EXTINF:-1 tvg-name="Uvagut TV (1080p)" group-title="ANA ARŞİV (13712)",Uvagut TV (1080p)
 https://hls.uvagut.tv/hls/uvagut/playlist.m3u8
-#EXTINF:-1 tvg-name="Uzak Şehir" group-title="ANA ARŞİV (13712)",Uzak Şehir
-http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Uzak.Sehir.SON.mkv
 #EXTINF:-1 tvg-logo="https://i.imgur.com/WIACJSy.png" group-title="ANA ARŞİV (13712)",V CLASSIC TV (1080P)
 https://5eaccbab48461.streamlock.net:1936/8112/8112/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/jNJkLHl.png" group-title="ANA ARŞİV (13712)",V GOSTYAKH U SKAZKI (1080P)
@@ -4982,8 +4982,6 @@ http://stream.mcquack.net/241/index.m3u8
 http://315e5a5d.ottrast.com/iptv/8XFKA8883W9M5K/12077/index.m3u8
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/pt/e/ef/V%2BTVI_Logo.png" group-title="ANA ARŞİV (13712)",V+ TVI (720P)
 https://raw.githubusercontent.com/thomraider12/canaistvpt/main/m3u8s/vmaistvi.m3u8
-#EXTINF:-1 group-title="ANA ARŞİV (13712)" tvg-logo="https://netspor-amp.xyz/logo.png",v.Bein Sport 1 NetSpor
-http://463758a0.ucomist.net/iptv/V4ZVP6G52HVXDE/6817/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/PXGqyLn.png" group-title="ANA ARŞİV (13712)",V2BEAT TV
 https://abr.de1se01.v2beat.live/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://ltsk-cdn.s3.eu-west-1.amazonaws.com/jumpstart/Temp_Live/cdn/HLS/Channel/transparentImages/V6%20News.png" group-title="ANA ARŞİV (13712)",V6 NEWS (1080P)
@@ -5186,9 +5184,3 @@ https://jmp2.uk/stvp-USBB4400015F5
 https://d3150hggbcolbo.cloudfront.net/Vevo_2K.m3u8
 #EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/5da0d75e84830900098a1ea0/featuredImage.jpg" group-title="ANA ARŞİV (13712)",VEVO COUNTRY
 https://jmp2.uk/plu-5da0d75e84830900098a1ea0.m3u8
-#EXTINF:-1 tvg-logo="https://tvpnlogopus.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/USBC3600001RQ_20260303T094217SQUARE.png" group-title="ANA ARŞİV (13712)",VEVO COUNTRY
-https://jmp2.uk/stvp-USBC3600001RQ
-#EXTINF:-1 tvg-name="Vevo Country (1080p)" group-title="ANA ARŞİV (13712)",Vevo Country (1080p)
-https://pb-xrdbj9zdgm6ez.akamaized.net/Vevo_Country.m3u8
-#EXTINF:-1 tvg-logo="https://tvpnlogopus.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/US400006630_20260117T020414SQUARE.png" group-title="ANA ARŞİV (13712)",VEVO COUNTRY REWIND
-https://jmp2.uk/stvp-US400006630
