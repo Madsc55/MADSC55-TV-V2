@@ -1387,5 +1387,41 @@
     "live_scan": false,
     "playlist_modified": false,
     "security_hold_685_unchanged": true
+  },
+  "channel_lifecycle_plan_20261123": {
+    "decision": "preserve_current_main_playlist_and_defer_deletion",
+    "baseline_entries": 18337,
+    "pr666": {
+      "merged": true,
+      "ci": "success",
+      "security_gate": "success"
+    },
+    "pr667": {
+      "merged": false,
+      "ci": "failure",
+      "security_gate": "failure",
+      "proposed_duplicates": 806,
+      "proposed_final": 17531,
+      "epg_added": 0,
+      "logos_added": 0
+    },
+    "dedupe_rule": "exact URL plus same channel display name; preserve distinct names and distinct URLs",
+    "priority": [
+      "immutable channel identity and discovery provenance",
+      "URL history and repeat discovery reconciliation",
+      "real decoded audio and video health checks",
+      "Turkish spoken audio and subtitle evidence",
+      "verified classification and audit ledger",
+      "EPG and original logo provenance",
+      "lossless recovery manifest and guarded deduplication"
+    ],
+    "constraints": [
+      "no playlist deletion until evidence ledger and recovery verified",
+      "no bypass of offline CI or Production Security Gate",
+      "preserve category and archive ordering",
+      "no new playlist",
+      "no manual user GitHub steps"
+    ],
+    "verification_pending": true
   }
 }
