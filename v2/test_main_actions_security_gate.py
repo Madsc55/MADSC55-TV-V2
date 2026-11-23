@@ -10,20 +10,24 @@ def fixture(events="  workflow_dispatch:\n", perms="  contents: read\n",
     return "name: test\non:\n"+events+"permissions:\n"+perms+"jobs:\n  verify:\n"+job
 
 class MainActionsGateTests(unittest.TestCase):
-    def test_production_ocr_setup_is_pinned_bounded_and_no_apt(self):
+    def test_production_ocr_setup_is_sha_pinned_and_bounded(self):
         from main_actions_security_gate import ROOT, GATE
         source = (ROOT / ".github/workflows" / GATE).read_text(encoding="utf-8")
-        step = source.split("      - name: Ensure FFmpeg and Turkish OCR fixtures", 1)[1].split(
+        step = source.split("      - name: Provision FFmpeg and Turkish OCR with verified, bounded downloads", 1)[1].split(
             "      - name: Issue 497 targeted uncertain retry", 1)[0]
-        self.assertIn("timeout-minutes: 3", step)
-        self.assertNotIn("apt-get", step)
+        self.assertIn("timeout-minutes: 8", step)
+        self.assertNotIn("apt-get update", step)
+        self.assertIn("timeout 60s sudo", step)
+        self.assertIn("sha256sum -c -", step)
+        self.assertIn("d7a22611c3d6793d2939ff992db8feecfdb9c206a583aa31d9a887e0992502c8", step)
+        self.assertIn("v9.0.2/ffmpeg-linux-amd64.tar.gz", step)
         self.assertIn("git hash-object", step)
         self.assertIn("1f0b331ef29f50ceb7c44da58e38c7ec42314d0a", step)
         self.assertIn("--max-time 45", step)
         self.assertIn("tesseract --list-langs", step)
         self.assertIn("grep -Fxq tur", step)
-        self.assertIn("for binary in ffmpeg ffprobe tesseract", step)
-        self.assertIn('command -v "$binary"', step)
+        self.assertIn("command -v ffmpeg", step)
+        self.assertIn("command -v ffprobe", step)
         self.assertNotIn("|| true", step)
 
     def test_production_gate_uses_dynamic_owner_archive_counts(self):
