@@ -13,7 +13,7 @@ import re
 import sys
 
 from playlist_parts_manager import (
-    ROOT, PLAYLIST, PARTS, MANIFEST, MAX_BYTES, split_records, category, checksum,
+    ROOT, PLAYLIST, PARTS, MANIFEST, MAX_BYTES, split_records, category, checksum, logical,
 )
 
 GROUP = re.compile(rb'(group-title\s*=\s*")([^"]*)(")', re.I)
@@ -254,7 +254,7 @@ def parts_for(data, old_sha):
     for i, (group, payload, n) in enumerate(chunks):
         name = f"{i:04d}.m3u"
         payloads[name] = payload
-        entries.append({"file": name, "group": group, "records": n,
+        entries.append({"file": name, "group": logical(group), "records": n,
                         "sha256": checksum(payload)})
     manifest = {"version": 1, "header_hex": header.hex(), "source_sha256": old_sha,
                 "total_records": len(records), "entries": entries}
