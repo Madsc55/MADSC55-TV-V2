@@ -63,7 +63,7 @@ jobs:
           retention-days: 30
 
   full-playlist-url-audit:
-    name: Full playlist read-only sample \${{ matrix.shard }}
+    name: Full playlist read-only sample ${{ matrix.shard }}
     # One owner-requested, reviewed merge only; never from untrusted PRs.
     if: github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[full-ibo-url-audit]')
     strategy:
@@ -87,13 +87,13 @@ jobs:
           PYTHONPATH=v2:. python -m unittest -v v2.test_shared_url_safe_probe v2.test_full_playlist_url_audit
       - name: Audit at most 500 unique URLs in this shard
         run: |
-          PYTHONPATH=v2 python v2/full_playlist_url_audit.py --shard \${{ matrix.shard }} --output /tmp/shard-\${{ matrix.shard }}.json
+          PYTHONPATH=v2 python v2/full_playlist_url_audit.py --shard ${{ matrix.shard }} --output /tmp/shard-${{ matrix.shard }}.json
       - name: Save no-token, checkpointed evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: full-ibo-audit-\${{ matrix.shard }}
-          path: /tmp/shard-\${{ matrix.shard }}.json
+          name: full-ibo-audit-${{ matrix.shard }}
+          path: /tmp/shard-${{ matrix.shard }}.json
           if-no-files-found: warn
           retention-days: 30
 
