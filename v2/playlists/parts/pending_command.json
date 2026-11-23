@@ -1,0 +1,15 @@
+{
+  "action": "move",
+  "source": "ANA ARŞİV",
+  "target": "YABANCI ARŞİVİ",
+  "channels": [
+    {
+      "position": 7
+    },
+    {
+      "position": 45
+    }
+  ],
+  "expected_git_blob_sha": "da0053d0dcf3be13ca10e6e373e52c0bd38c2182",
+  "request": "Kullanıcı talimatı: ANA ARŞİV kategorisindeki güncel 7. sıradaki kanal ile 45. sıradaki kanalı (yalnızca bu iki kanal) YABANCI ARŞİVİ'ne taşı; hiçbirini silme ve diğer kategorileri değiştirme."
+}
