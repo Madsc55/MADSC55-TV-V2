@@ -1,3 +1,57 @@
+#EXTINF:-1 tvg-name="Planet Fun (1080p)" group-title="ANA ARŞİV (13712)",Planet Fun (1080p)
+http://66.102.126.10:8000/play/a02k/index.m3u8
+#EXTINF:-1 tvg-name="Planeta Channel" group-title="ANA ARŞİV (13712)",Planeta Channel
+https://vs20.live.opencaster.com/planetachannel_089eff6d/index.m3u8
+#EXTINF:-1 tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ES2800001G7_20250624T022314SQUARE.png" group-title="ANA ARŞİV (13712)",PLANETA DE CINE
+https://jmp2.uk/stvp-ES2800001G7
+#EXTINF:-1 tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ES1600003FF_20260421T125606SQUARE.png" group-title="ANA ARŞİV (13712)",PLANETA SALVAJE
+https://jmp2.uk/stvp-ES1600003FF
+#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/6894febddbd49c964f3b66c8/colorLogoPNG_1756396393218.png" group-title="ANA ARŞİV (13712)",PLATO DEL DIA BY ELGOURMET
+https://jmp2.uk/plu-6894febddbd49c964f3b66c8.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/vEzeqHP.png" group-title="ANA ARŞİV (13712)",PLATZI TV (1080P)
+https://mdstrm.com/live-stream-playlist/629a63ae8df27c082901f78b.m3u8
+#EXTINF:-1 tvg-name="Play Crime (1080p)" group-title="ANA ARŞİV (13712)",Play Crime (1080p)
+https://playmedia-playcrime-goplay-dash.amagi.tv/master.mpd
+#EXTINF:-1 tvg-name="Play Entertainment (576p)" group-title="ANA ARŞİV (13712)",Play Entertainment (576p)
+http://103.250.28.74:8000/play/a050/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/Ikrj3lk.png" group-title="ANA ARŞİV (13712)",PLAY TV (1080P)
+https://isaocorp.cloudecast.com/playtv/index.m3u8
+#EXTINF:-1 tvg-name="Play TV (720p)" group-title="ANA ARŞİV (13712)",Play TV (720p)
+http://connectiktv.ddns.net:5000/playtv/@playtv/playlist.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/JWFOYuD.png" group-title="ANA ARŞİV (13712)",PLAY TV (GREECE) (480P) [NOT 24/7]
+http://web.onair-radio.eu:1935/Alpha-Host/Alpha-Host/playlist.m3u8
+#EXTINF:-1 group-title="ANA ARŞİV (13712)",PLAYERCINEMA-HIND_FILMLERI-2
+https://v2.catcast.tv/content/50892/index.m3u8?token=add0277746a9aa112a5d18c4a9ed9b7c
+#EXTINF:-1 group-title="ANA ARŞİV (13712)",PLAYERCINEMA-HIND_FILMLERI-5
+https://v2.catcast.tv/content/50895/index.m3u8?token=f92c9108805d3bc8bc05dffafa8f33ef
+#EXTINF:-1 group-title="ANA ARŞİV (13712)",PLAYERCINEMA-TV
+https://v2.catcast.tv/content/50372/index.m3u8?token=34a5655ba7c9354114f048c6194ee1b0
+#EXTINF:-1 group-title="ANA ARŞİV (13712)",PLAYERFILMAZERBAYCAN-TV
+https://v2.catcast.tv/content/50472/index.m3u8?token=fbaafc9025eb6540afa6f677d43b90ff
+#EXTINF:-1 tvg-logo="https://i.imgur.com/lH4RT7b.png" group-title="ANA ARŞİV (13712)",PLENA TV (720P)
+https://cdn.jmvstream.com/w/LVW-9591/LVW9591_PmXtgATnaS/playlist.m3u8
+#EXTINF:-1 tvg-name="Plenitud TV (360p)" group-title="ANA ARŞİV (13712)",Plenitud TV (360p)
+https://stream.oursnetworktv.com/latin/PlenitudGtm/playlist.m3u8
+#EXTINF:-1 group-title="ANA ARŞİV (13712)",PLENITUDE TV
+https://strv.painelvox.top/plenitude/plenitude/playlist.m3u8
+#EXTINF:-1 tvg-logo="https://i.ibb.co/H4VktvG/Plex-TV-237.jpg" group-title="ANA ARŞİV (13712)",PLEX TV
+http://connectiktv.ddns.net:5000/plextv/@plextv/playlist.m3u8
+#EXTINF:-1 tvg-name="Plim Plim (1080p)" group-title="ANA ARŞİV (13712)",Plim Plim (1080p)
+http://200.115.120.1:8000/play/ca091/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/MYc8srh.png" group-title="ANA ARŞİV (13712)",PLIM PLIM (1080P)
+http://45.70.168.162:1503/play/a02a/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/OSet4en.png" group-title="ANA ARŞİV (13712)",PLOUS TV (1080P)
+https://vcp.myplaytv.com/glowtv/glowtv/playlist.m3u8
+#EXTINF:-1 group-title="ANA ARŞİV (13712)",PLOVDIV ORTHODOX TV (1080P)
+http://78.130.149.196:1935/live/pptv.stream/playlist.m3u8
+#EXTINF:-1 tvg-name="Plus TV (720p)" group-title="ANA ARŞİV (13712)",Plus TV (720p)
+https://plustv.streamseguro.com:5443/LiveApp/streams/streaming.m3u8
+#EXTINF:-1 tvg-name="Plus TV (720p)" group-title="ANA ARŞİV (13712)",Plus TV (720p)
+https://vcp4.myplaytv.com:1936/plustv/plustv/playlist.m3u8
+#EXTINF:-1 tvg-name="Plus TV Africa (720p)" group-title="ANA ARŞİV (13712)",Plus TV Africa (720p)
+https://5c0740dba62b3.streamlock.net/plustv/myStream/playlist.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/9bPhStm.png" group-title="ANA ARŞİV (13712)",PLUSPLUS (1080P)
+http://stream.mcquack.net/339/index.m3u8
 #EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/66dad50215d2c60008d7afbd/colorLogoPNG.png" group-title="ANA ARŞİV (13712)",PLUTO CLASSIC MOVIE WESTERNS
 https://jmp2.uk/plu-66dad50215d2c60008d7afbd.m3u8
 #EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/66d717d2abec540008ba7ec4/colorLogoPNG_1787911717842.png" group-title="ANA ARŞİV (13712)",PLUTO TV 80'S ACTION
@@ -2602,8 +2656,6 @@ http://185.23.80.23:8080/REN/index.m3u8
 http://178.134.1.158:8081/RENTV/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/Qsd9wuS.png" group-title="ANA ARŞİV (13712)",RENEGADE – PLUTO TV
 https://service-stitcher.clusters.pluto.tv/v1/stitch/embed/hls/channel/634926e4b51d2d00077819a2/master.m3u8?deviceId=channel&deviceModel=web&deviceVersion=1.0&appVersion=1.0&deviceType=rokuChannel&deviceMake=rokuChannel&deviceDNT=1&advertisingId=channel&embedPartner=rokuChannel&appName=rokuchannel&is_lat=1&bmodel=bm1&content=channel&platform=web&tags=ROKU_CONTENT_TAGS&coppa=false&content_type=livefeed&rdid=channel&genre=ROKU_ADS_CONTENT_GENRE&content_rating=ROKU_ADS_CONTENT_RATING&studio_id=viacom&channel_id=channel
-#EXTINF:-1 tvg-logo="https://i.imgur.com/cVlcqCX.png" group-title="ANA ARŞİV (13712)",RENESSANS TV (576P)
-https://stream8.cinerama.uz/1221/tracks-v1a1/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://dtil.tmsimg.com/assets/s143722_ld_h15_aa.png?lock=720x540" group-title="ANA ARŞİV (13712)",RENGONI (360P)
 https://d1msejlow1t3l4.cloudfront.net/fta/rengonitv/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://dtil.tmsimg.com/assets/s143722_ld_h15_aa.png?lock=720x540" group-title="ANA ARŞİV (13712)",RENGONI (576P)
@@ -2838,8 +2890,6 @@ https://l6.cloudskep.com/rikct/rikhd/playlist.m3u8
 https://l3.cloudskep.com/cybcsat/abr/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.ibb.co/3sHp7pS/riksat.png" group-title="ANA ARŞİV (13712)",RIK SAT CYPRUS
 http://l3.cloudskep.com/cybcsat/abr/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/KJHWZ3B.png" group-title="ANA ARŞİV (13712)",RIKA TV (480P)
-https://live-rikatv.cdnvideo.ru/rikatv/rikatv_tcode.sdp/playlist.m3u8
 #EXTINF:-1 tvg-name="Riku TV (1080p)" group-title="ANA ARŞİV (13712)",Riku TV (1080p)
 https://amixtv.com:8081/rikutv/index.m3u8
 #EXTINF:-1 tvg-name="RING" group-title="ANA ARŞİV (13712)",RING
@@ -4386,8 +4436,6 @@ https://d1s1wrpgemt9re.cloudfront.net/Shout_TV.m3u8
 https://jmp2.uk/stvp-USBD1200021JM
 #EXTINF:-1 tvg-name="Show do Milhao (720p)" group-title="ANA ARŞİV (13712)",Show do Milhao (720p)
 https://d38s7rrdbnh4oy.cloudfront.net/v1/master/215c0da80606fed29372070168106400a6ca7e1a/SSAI-Saudades/index.m3u8
-#EXTINF:-1 tvg-logo="https://yoda.az/logos/showplus.png" group-title="ANA ARŞİV (13712)",SHOW PLUS TV
-https://rtmp.showplus.tv/hls/myshow.m3u8
 #EXTINF:-1 tvg-logo="https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0b/Showtime_Family_Zone.svg/960px-Showtime_Family_Zone.svg.png" group-title="ANA ARŞİV (13712)",SHOWTIME FAMILY ZONE (720P)
 http://23.237.104.106:8080/USA_SHOWTIME_FAMILY/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/AJIN8Dc.png" group-title="ANA ARŞİV (13712)",SHOWVEN TV (720P)
@@ -4466,12 +4514,6 @@ https://live20.bozztv.com/giatv/giatv-SilTvOnline/SilTvOnline/playlist.m3u8
 https://tvsms.club/tv.php?kanal=silatv&file=.m3u8
 #EXTINF:-1 tvg-logo="https://tvpnlogopus.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/US2600027AI_20261006T051031SQUARE.png" group-title="ANA ARŞİV (13712)",SILENT WITNESS & NEW TRICKS
 https://jmp2.uk/stvp-US2600027AI
-#EXTINF:-1 tvg-logo="https://i.imgur.com/SJNDksF.png" group-title="ANA ARŞİV (13712)",SILK WAY
-https://dash2.antik.sk/live/test_qazaq_tv_tizen/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/SJNDksF.png" group-title="ANA ARŞİV (13712)",SILK WAY (1080P)
-https://hlspackager.akamaized.net/live/DB/SILKWAY/SILKWAY/SILKWAY.m3u8
-#EXTINF:-1 tvg-name="Silk Way Cinema (1080p)" group-title="ANA ARŞİV (13712)",Silk Way Cinema (1080p)
-https://stream.qazcdn.net/ex6r514/silkwaycinema/index.m3u8
 #EXTINF:-1 tvg-name="Silver Screen (576p)" group-title="ANA ARŞİV (13712)",Silver Screen (576p)
 http://103.250.28.74:8000/play/a044/index.m3u8
 #EXTINF:-1 tvg-name="Silverbird News 24 (480p)" group-title="ANA ARŞİV (13712)",Silverbird News 24 (480p)
@@ -5056,47 +5098,3 @@ http://88.212.15.19/live/test_spektrum/playlist.m3u8
 http://88.212.15.50/live/test_spektrum/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://media.port.hu/images/001/591/100x100/776.jpg" group-title="ANA ARŞİV (13712)",SPEKTRUM Ⓖ
 http://141.94.193.53:80/Spektrum_HD/index.m3u8
-#EXTINF:-1 tvg-name="Spektrum Home" group-title="ANA ARŞİV (13712)",Spektrum Home
-http://88.212.15.19/live/spektrum_home_hun/index.m3u8
-#EXTINF:-1 tvg-name="Spektrum Home" group-title="ANA ARŞİV (13712)",Spektrum Home
-http://88.212.15.19/live/test_home_hevc/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/VaVi65F.png" group-title="ANA ARŞİV (13712)",SPEKTRUM HOME (CZECH REPUBLIC)
-http://88.212.15.50/live/test_home_hevc/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/2/2d/Spektrum-home.png" group-title="ANA ARŞİV (13712)",SPEKTRUM HOME Ⓖ
-http://141.94.193.53:80/Spektrum_Home_HD/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/cdCD2A2.png" group-title="ANA ARŞİV (13712)",SPIKE OUTDOORS
-https://jmp2.uk/plu-5c393cad2de254456f7ef8c2.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/woY8Ecb.png" group-title="ANA ARŞİV (13712)",SPIKE PLUTO TV
-https://jmp2.uk/plu-5812bcc8237a6ff45d16c407.m3u8
-#EXTINF:-1 tvg-name="Spiler 1" group-title="ANA ARŞİV (13712)",Spiler 1
-http://88.212.15.19/live/spiler1/index.m3u8
-#EXTINF:-1 tvg-name="Spiler 2" group-title="ANA ARŞİV (13712)",Spiler 2
-http://88.212.15.19/live/spiler2/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/yCp6vXz.png" group-title="ANA ARŞİV (13712)",SPIRIT TV (720P) [NOT 24/7]
-https://cdnlive.myspirit.tv/LS-ATL-43240-2/index.m3u8
-#EXTINF:-1 tvg-name="Spondon (1080p)" group-title="ANA ARŞİV (13712)",Spondon (1080p)
-https://nktv.smartstream.video/smartstream-us/spondon/spondon/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/5d00e8adaab96b5635b2a005/colorLogoPNG.png" group-title="ANA ARŞİV (13712)",SPONGEBOB SCHWAMMKOPF (720P)
-https://jmp2.uk/plu-5d00e8adaab96b5635b2a005.m3u8
-#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/63f87d057533d80008ab9549/colorLogoPNG.png" group-title="ANA ARŞİV (13712)",SPONGEBOB SQUAREPANTS (720P)
-https://jmp2.uk/plu-63f87d057533d80008ab9549.m3u8
-#EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/slovakia/rtvs-sport-sk.png" group-title="ANA ARŞİV (13712)",ŠPORT
-https://sktv.mxnticek.eu/new/stream.php?ch=%C5%A0port
-#EXTINF:-1 tvg-name="Sport (1080p)" group-title="ANA ARŞİV (13712)",Sport (1080p)
-http://88.212.15.27/live/test_rtvs_sport_hevc/playlist.m3u8
-#EXTINF:-1 tvg-name="Sport (480p)" group-title="ANA ARŞİV (13712)",Sport (480p)
-https://st2.mediabay.tv/KG_KTRK-Sport/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/oAtcxNZ.png" group-title="ANA ARŞİV (13712)",SPORT (SLOVAKIA) (1080P)
-http://88.212.15.50/live/test_rtvs_sport_hevc/playlist.m3u8
-#EXTINF:-1 tvg-name="Sport 1" group-title="ANA ARŞİV (13712)",Sport 1
-http://88.212.15.19/live/sport1_hun/index.m3u8
-#EXTINF:-1 tvg-name="Sport 1 (1080p)" group-title="ANA ARŞİV (13712)",Sport 1 (1080p)
-http://str2.iptvhd.ru:8080/sport1/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/Zjb8awW.png" group-title="ANA ARŞİV (13712)",SPORT 1 (UKRAINE) (576P)
-http://stream.mcquack.net/391/index.m3u8
-#EXTINF:-1 tvg-name="Sport 1 Baltic (1080p)" group-title="ANA ARŞİV (13712)",Sport 1 Baltic (1080p)
-http://stream.mcquack.net/461/index.m3u8
-#EXTINF:-1 tvg-name="Sport 2" group-title="ANA ARŞİV (13712)",Sport 2
-http://88.212.15.19/live/sport2_hun/index.m3u8
-#EXTINF:-1 tvg-name="Sport 2 (1080p)" group-title="ANA ARŞİV (13712)",Sport 2 (1080p)
-http://str2.iptvhd.ru:8080/Sport_2/index.m3u8

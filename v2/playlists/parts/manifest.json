@@ -1,7 +1,7 @@
 {
   "version": 1,
   "header_hex": "234558544d33550a",
-  "source_sha256": "7519362e06e2e588ec25c2724fbec3f2cb796c1b97690736b56ffdeab4b357eb",
+  "source_sha256": "2429665bab7c2aca796abb4a11a1bb5ef7b01786ffeed7db61f8b1b189e6affe",
   "total_records": 18337,
   "entries": [
     {
@@ -85,38 +85,38 @@
     {
       "file": "0013.m3u",
       "group": "ANA ARŞİV",
-      "records": 2603,
-      "sha256": "95fc986a324ab1c18e1a8c616adf575e606a3dd5dcd1d4189fc67991b0946cd6"
+      "records": 2612,
+      "sha256": "172a6fc3884c014344d0bd43950b80e15cb160374c4578745d1dad85da35c9d8"
     },
     {
       "file": "0014.m3u",
       "group": "ANA ARŞİV",
-      "records": 2557,
-      "sha256": "dc5f0a0a81387259248703cfe3f9e911f168da9ad75c72bdff463d8e74493d0d"
+      "records": 2554,
+      "sha256": "b50b9a1eb58bacf5b4e3e09a29b7df384b21c31623a139f8395fa00f314774c4"
     },
     {
       "file": "0015.m3u",
       "group": "ANA ARŞİV",
-      "records": 2586,
-      "sha256": "7ab5910850818150e349fff8b500f552bdf6c3e2818f3c907038c89a0ab4f767"
+      "records": 2580,
+      "sha256": "25f58df6fe02ea901cf399f6fed98e09c2f1d3d91af839817dbcd791bcdd145e"
     },
     {
       "file": "0016.m3u",
       "group": "ANA ARŞİV",
-      "records": 2551,
-      "sha256": "a6d08158f07a13bca5b9ffc2261bb9a377976abedee7d07c9de33109754a0519"
+      "records": 2550,
+      "sha256": "d48861507790c993e170684f4ba41b9ef7175960b9fe66f6dbf6aaeeeb25291e"
     },
     {
       "file": "0017.m3u",
       "group": "ANA ARŞİV",
-      "records": 2594,
-      "sha256": "aa997d1c2e4bdde3d2bc3956537cb6b098f419eb31e626db963473678bdff216"
+      "records": 2596,
+      "sha256": "e9fc07194002142dd1e76978efabab043575004142bee15fbf5a414110c17e0c"
     },
     {
       "file": "0018.m3u",
       "group": "ANA ARŞİV",
-      "records": 821,
-      "sha256": "ccd02a071709c663e9487e19940d72899cecd5bd8bea35a7c508b5225c76c495"
+      "records": 820,
+      "sha256": "02a09ccdbbdb69dd68ac6c475c1e61b104741856cf1f7921e279a216ccff3a5b"
     },
     {
       "file": "0019.m3u",
