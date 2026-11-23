@@ -12,7 +12,7 @@ from pathlib import Path
 import re
 
 from playlist_parts_manager import PLAYLIST, split_records, category
-from channel_command_engine import key, record_url
+from channel_command_engine import key, record_url, record_name
 
 SUFFIX = re.compile(r"\s*\((\d+)\)\s*$")
 
@@ -31,6 +31,7 @@ def audit(data: bytes, observed=None) -> dict:
     by_group = {}
     urls_by_group = defaultdict(set)
     global_urls = defaultdict(list)
+    metadata_by_group = defaultdict(list)
     malformed = []
     for index, record in enumerate(records, 1):
         try:
@@ -52,6 +53,35 @@ def audit(data: bytes, observed=None) -> dict:
             info["declared_counts"].add(declared)
         urls_by_group[ident].add(url)
         global_urls[url].append(ident)
+        # Header metadata is a *possible* importer-identity hint, not proof
+        # that IBO Player merges or excludes this record.
+        header_text = record.splitlines()[0].decode("utf-8")
+        def attr(name):
+            match = re.search(r'(?<![a-z-])' + re.escape(name) +
+                              r'="([^"]*)"', header_text, re.I)
+            return match.group(1).strip() if match else ""
+        metadata_by_group[ident].append({
+            "name": record_name(record),
+            "tvg_name": attr("tvg-name"),
+            "tvg_id": attr("tvg-id"),
+            "tvg_logo": attr("tvg-logo"),
+        })
+
+    def collision_summary(records, field):
+        # Empty metadata is not a collision; separate EPG IDs can legitimately
+        # be shared by SD/HD versions, hence report-only behavior.
+        index = defaultdict(list)
+        for row in records:
+            value = row[field].casefold()
+            if value:
+                index[value].append(row["name"])
+        duplicates = [names for names in index.values() if len(names) > 1]
+        duplicates.sort(key=lambda names: (-len(names), names[0].casefold()))
+        return {
+            "groups": len(duplicates),
+            "extra_records": sum(len(names) - 1 for names in duplicates),
+            "examples": [names[:12] for names in duplicates[:10]],
+        }
 
     categories = {}
     for ident, info in by_group.items():
@@ -67,6 +97,9 @@ def audit(data: bytes, observed=None) -> dict:
             "header_matches_records": counts == [count] if counts else None,
             "reported_in_player": shown,
             "unaccounted_player_records": count - shown if shown is not None else None,
+            "metadata_repeated_tvg_name": collision_summary(metadata_by_group[ident], "tvg_name"),
+            "metadata_repeated_tvg_id": collision_summary(metadata_by_group[ident], "tvg_id"),
+            "metadata_repeated_display_name": collision_summary(metadata_by_group[ident], "name"),
         }
 
     shared = sum(len(groups) > 1 for groups in global_urls.values())
@@ -80,6 +113,7 @@ def audit(data: bytes, observed=None) -> dict:
         "cross_category_url_groups": cross,
         "malformed_records": malformed,
         "player_count_cause_verified": False,
+        "metadata_repeats_are_ibo_parser_proof": False,
         "note": (
             "Player counts are user-reported observations, not a direct IBO API reading. "
             "Repeated URL, hidden categories, stale import or an IBO parser rule are "

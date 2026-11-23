@@ -43,6 +43,34 @@ class IboImportVisibilityTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             audit(data, {"BELGESEL": "18"})
 
+    def test_colliding_metadata_identifies_candidates_without_claiming_player_behavior(self):
+        data = (b"#EXTM3U\n"
+                + ('#EXTINF:-1 tvg-name="TGRT BELGESEL" tvg-id="3915" '
+                   'group-title="🌍 BELGESEL (2)",TGRT BELGESEL HD\n'
+                   'https://example.org/hd.m3u8\n').encode("utf-8")
+                + ('#EXTINF:-1 tvg-name="TGRT BELGESEL" tvg-id="3915" '
+                   'group-title="🌍 BELGESEL (2)",TGRT BELGESEL SD\n'
+                   'https://example.org/sd.m3u8\n').encode("utf-8"))
+        report = audit(data)
+        item = report["categories"]["belgesel"]
+        self.assertEqual(item["file_records"], 2)
+        self.assertEqual(item["distinct_urls_inside_category"], 2)
+        self.assertEqual(item["metadata_repeated_tvg_name"]["groups"], 1)
+        self.assertEqual(item["metadata_repeated_tvg_name"]["extra_records"], 1)
+        self.assertEqual(item["metadata_repeated_tvg_id"]["groups"], 1)
+        self.assertEqual(item["metadata_repeated_tvg_name"]["examples"],
+                         [["TGRT BELGESEL HD", "TGRT BELGESEL SD"]])
+        self.assertFalse(report["player_count_cause_verified"])
+        self.assertFalse(report["metadata_repeats_are_ibo_parser_proof"])
+
+    def test_blank_metadata_is_not_flagged_as_duplicate(self):
+        data = (b"#EXTM3U\n"
+                + row("🌍 BELGESEL (2)", "A", "https://example.org/a")
+                + row("🌍 BELGESEL (2)", "B", "https://example.org/b"))
+        info = audit(data)["categories"]["belgesel"]
+        self.assertEqual(info["metadata_repeated_tvg_name"]["groups"], 0)
+        self.assertEqual(info["metadata_repeated_tvg_id"]["groups"], 0)
+
     def test_identical_urls_inside_category_reported_but_never_removed(self):
         data = (b"#EXTM3U\n" +
                 row("🌍 BELGESEL (2)", "A", "https://example.org/1") +
