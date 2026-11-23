@@ -128,6 +128,21 @@ class ChannelCommandEngineTests(unittest.TestCase):
         self.assertEqual(next(iter(statuses.values()))["status"], "broken")
         self.assertEqual(report["deleted"], 0)
 
+    def test_format_backup_names_preserves_urls_and_other_categories(self):
+        raw = SAMPLE.replace(
+            b",S\xc3\xb6zl\xc3\xbc TV\n",
+            ",Sözlü TV (1080p) [TEKNIK TEST - KANAL KIMLIGI DOGRULANMADI]\n".encode("utf-8"))
+        out, statuses, report = run(raw, "recount", format_backup_names=True)
+        self.assertEqual(statuses, {})
+        self.assertEqual(report["before_total"], report["after_total"])
+        self.assertEqual(names_in(out, "YEDEKLER")[-1], "SÖZLÜ TV 1080P FHD")
+        self.assertEqual(names_in(out, "HABER"), ["News A", "News B"])
+        self.assertEqual(Counter(map(record_url, split_records(out)[1])),
+                         Counter(map(record_url, split_records(raw)[1])))
+        with self.assertRaisesRegex(ValueError, "explicitly authorized"):
+            run(raw, "move", format_backup_names=True, source="YEDEKLER",
+                target="ANA ARŞİV", channels=[{"position": 1}])
+
     def test_recount_only_corrects_stale_category_labels(self):
         out, _, _ = run(SAMPLE, "recount")
         self.assertIn('FAVORİLER 1 (1)', out.decode())
