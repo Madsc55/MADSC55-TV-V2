@@ -317,10 +317,29 @@ def audit(root=ROOT):
                             after.get("ANA")==before.get("ANA")+685 and
                             after.get("TOTAL")==18337 and
                             all(after.get(k)==before.get(k) for k in ("TURK","YABANCI","OTHER")))
+                # Owner-requested category-counter correction only. Require the
+                # entire playlist to match byte-for-byte after exactly these
+                # three label substitutions; no URL, ordering or record edits.
+                def category_counter_correction_ok():
+                    if h0 != h1 or len(r0) != 18337 or len(r1) != 18337:
+                        return False
+                    replacements = (
+                        ('group-title="🗂️ YEDEKLER (1792)"', 'group-title="🗂️ YEDEKLER (1107)"'),
+                        ('group-title="ANA ARŞİV (15574)"', 'group-title="ANA ARŞİV (15703)"'),
+                        ('group-title="ANA ARŞİV"', 'group-title="ANA ARŞİV (15703)"'),
+                    )
+                    normalized = base
+                    for old_label, new_label in replacements:
+                        normalized = normalized.replace(old_label.encode("utf-8"), new_label.encode("utf-8"))
+                    return (normalized != base and b == normalized
+                            and base.count('group-title="🗂️ YEDEKLER (1792)"'.encode()) == 1107
+                            and b.count('group-title="🗂️ YEDEKLER (1107)"'.encode()) == 1107
+                            and b.count('group-title="ANA ARŞİV (15703)"'.encode()) == 15703)
+                counter_correction_ok = continue_playlist_audit and category_counter_correction_ok()
                 move_685_ok = continue_playlist_audit and authorized_685_migration_ok()
                 cleanup_ok = continue_playlist_audit and confirmed_404_cleanup_ok()
                 batch_ok=continue_playlist_audit and batch_migration_ok()
-                if continue_playlist_audit and not reorder_ok and not batch_ok and not cleanup_ok and not move_685_ok:
+                if continue_playlist_audit and not reorder_ok and not batch_ok and not cleanup_ok and not move_685_ok and not counter_correction_ok:
                     # An explicitly requested category operation must carry a
                     # one-change, exact-hash manifest in the same reviewed PR.
                     # No workflow or discovery job receives write permission.

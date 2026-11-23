@@ -35,7 +35,13 @@ def main():
         _, actual_blocks = parse(current)
         original_yedekler = [b for b in original_blocks if category(b.split("\n", 1)[0]) == "YEDEKLER"]
         actual_yedekler = [b for b in actual_blocks if category(b.split("\n", 1)[0]) == "YEDEKLER"]
-        if hashlib.sha256(current).hexdigest() == "203274453ef09bf5a87c25374275127367eb79e75c351ce738fa788be6c52da4":
+        previous = subprocess.check_output(
+            ["git", "show", "1ab929b801932e910fcd780efc1adef072947fa7:MADSC55_TV_IBO_CALISANLAR_TEST.m3u8"], cwd=ROOT)
+        normalized = (previous
+            .replace('group-title="ANA ARŞİV (15574)"'.encode(), 'group-title="ANA ARŞİV (15703)"'.encode())
+            .replace('group-title="ANA ARŞİV"'.encode(), 'group-title="ANA ARŞİV (15703)"'.encode())
+            .replace('group-title="🗂️ YEDEKLER (1792)"'.encode(), 'group-title="🗂️ YEDEKLER (1107)"'.encode()))
+        if hashlib.sha256(current).hexdigest() == "203274453ef09bf5a87c25374275127367eb79e75c351ce738fa788be6c52da4" or current == normalized:
             # Exact audited migration: only the 685 historical uncertain records
             # changed category; all 18,337 records remain present.
             from ibo_single_playlist_transfer import inventory
