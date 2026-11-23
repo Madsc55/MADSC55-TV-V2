@@ -1512,6 +1512,12 @@ https://v2.catcast.tv/content/48694/index.m3u8?token=81a8730704e9247dee1607a387f
 https://tvsms.club/tvz.php?kanal=toppop&file=.m3u8
 #EXTINF:-1 tvg-name="Viasat History" group-title="ANA ARŞİV (13712)",Viasat History
 https://tv.prectv5.sbs/live/viasatexplore.m3u8
+#EXTINF:-1 group-title="ANA ARŞİV (13712)",BEGEN TV
+https://ip44.radyotelekomtv.com:3958/stream/play.m3u8
+#EXTINF:-1 tvg-name="INVESTIGATION DISCOVERY" group-title="ANA ARŞİV (13712)",INVESTIGATION DISCOVERY
+https://dnx8nkmlprapr.cloudfront.net/out/v1/c9e1c183395d4d29a9fa34ecdef4163b/master.m3u8
+#EXTINF:-1 tvg-name="KAÇKAR TV" group-title="ANA ARŞİV (13712)",KAÇKAR TV GLOBAL ADAY
+https://kackartv.ozelip.com:3898/hybrid/play.m3u8
 #EXTINF:-1 tvg-name="Aristo TV (360p)" group-title="ANA ARŞİV (13712)",Aristo TV (360p)
 https://ma.anixa.tv/clips/stream/aristo/index.m3u8
 #EXTINF:-1 tvg-name="BBC Earth (1080p)" group-title="ANA ARŞİV (13712)",BBC Earth (1080p)
@@ -1524,8 +1530,6 @@ https://jmp2.uk/plu-630348a54c48ce00077eb6c7.m3u8
 https://jmp2.uk/plu-672e157d7d5da5000812872d.m3u8
 #EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/672e157d7d5da5000812872d/colorLogoPNG-1731073515797.png" group-title="ANA ARŞİV (13712)",BECKER (SWEDEN) NO
 https://jmp2.uk/plu-672e1634e482950008c759a5.m3u8
-#EXTINF:-1 group-title="ANA ARŞİV (13712)",BEGEN TV
-https://ip44.radyotelekomtv.com:3958/stream/play.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/vsktAez.png" group-title="ANA ARŞİV (13712)",BEIJING SATELLITE TV HD (1080P)
 http://go.bkpcp.top/mg/bjws
 #EXTINF:-1 tvg-name="Belle Amie (576p)" group-title="ANA ARŞİV (13712)",Belle Amie (576p)
@@ -5248,7 +5252,3 @@ http://88.212.15.50/live/test_disney/playlist.m3u8
 http://88.212.7.14/live/disney_channel_hun/index.m3u8
 #EXTINF:-1 tvg-name="Disney Channel (1080p)" group-title="ANA ARŞİV (13712)",Disney Channel (1080p)
 http://66.102.126.10:8000/play/a013/index.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/3/3d/2022_Disney_Channel_logo.svg" group-title="ANA ARŞİV (13712)",DİSNEY CHANNEL (1080P)
-http://185.227.34.179:8080/disney-channel-hd/index.m3u8
-#EXTINF:-1 tvg-name="Disney Channel (360p)" group-title="ANA ARŞİV (13712)",Disney Channel (360p)
-http://151.80.18.177:86/Disney_Channel_HD/index.m3u8
