@@ -366,8 +366,20 @@ jobs:
           for encoder in mpeg4 aac srt; do
             ffmpeg -hide_banner -encoders | grep -E "[[:space:]]$encoder[[:space:]]"
           done
-          command -v tesseract || { echo '::error::Tesseract missing'; exit 1; }
-          command -v fc-match || { echo '::error::Fontconfig missing'; exit 1; }
+          # Unlike large FFmpeg packages, the system OCR executable is a
+          # small targeted package. Never refresh apt indexes or block on
+          # hundreds of video codec dependencies.
+          ocr_missing=()
+          command -v tesseract >/dev/null || ocr_missing+=(tesseract-ocr)
+          command -v fc-match >/dev/null || ocr_missing+=(fontconfig fonts-dejavu-core)
+          if (( ${#ocr_missing[@]} )); then
+            timeout 120s sudo env DEBIAN_FRONTEND=noninteractive apt-get \
+              -o Acquire::Retries=0 -o Acquire::http::Timeout=15 \
+              -o Acquire::https::Timeout=15 -o DPkg::Lock::Timeout=15 \
+              install -y -qq --no-install-recommends "${ocr_missing[@]}"
+          fi
+          command -v tesseract
+          command -v fc-match
           fc-match -f '%{family}' 'DejaVu Sans' | grep -qi DejaVu
           if ! tesseract --list-langs 2>/dev/null | grep -Fxq tur; then
             model="$RUNNER_TEMP/tur.traineddata"
