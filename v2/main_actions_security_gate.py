@@ -73,7 +73,7 @@ def audit_one(filename,source):
         if mapping(doc.get("permissions"))!={"contents":"read"}:
             return ["PARTS_BUILD_EXCESSIVE_DEFAULT_PERMISSIONS"]
         jobs=mapping(doc.get("jobs"))
-        if set(jobs)!={"build"} or mapping(jobs["build"].get("permissions"))!={"contents":"write","pull-requests":"write","actions":"write"}:
+        if set(jobs)!={"build"} or mapping(jobs["build"].get("permissions"))!={"contents":"write"}:
             return ["PARTS_BUILD_JOB_PERMISSIONS_CHANGED"]
         if jobs["build"].get("if")!="github.ref == 'refs/heads/main' && !contains(github.event.head_commit.message, '[skip ci]')":
             return ["PARTS_BUILD_MAIN_ONLY_REQUIRED"]
@@ -84,13 +84,13 @@ def audit_one(filename,source):
                   'git switch -c "$branch"',
                   "gh auth setup-git",
                   'git push origin "HEAD:refs/heads/$branch"',
-                  "gh pr create --base main --head",
-                  'gh workflow run ci.yml --ref "$branch"',
-                  'gh workflow run v2-main-production-safety-gate.yml --ref "$branch"')
+                  'echo "Validated proposal branch: $branch" >> "$GITHUB_STEP_SUMMARY"')
         if not all(fragment in source for fragment in required):
             return ["PARTS_BUILD_VALIDATION_OR_WRITE_SCOPE_CHANGED"]
         if "push origin HEAD:main" in source or "push origin main" in source:
             return ["PARTS_BUILD_DIRECT_MAIN_PUSH_FORBIDDEN"]
+        if "gh pr create" in source or "gh workflow run" in source:
+            return ["PARTS_BUILD_BOT_PR_OR_DISPATCH_FORBIDDEN"]
         if "pull_request_target" in source or "schedule:" in source:
             return ["PARTS_BUILD_UNTRUSTED_TRIGGER"]
         return []
