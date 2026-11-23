@@ -31,9 +31,21 @@ class MainActionsGateTests(unittest.TestCase):
                                 "git push origin HEAD:main")
         self.assertIn("PARTS_BUILD_VALIDATION_OR_WRITE_SCOPE_CHANGED",
                       audit_one(PARTS_BUILD, unsafe))
-        untrusted = source.replace("    branches: [main]", "    branches: [main, unsafe]")
+        untrusted = source.replace("    branches: [main, 'command/ibo-*']", "    branches: [main, unsafe]")
         self.assertIn("PARTS_BUILD_UNAPPROVED_TRIGGER",
                       audit_one(PARTS_BUILD, untrusted))
+
+    def test_single_pr_command_branch_requires_owner_and_sha_preflight(self):
+        from main_actions_security_gate import ROOT, PARTS_BUILD
+        source = (ROOT / ".github/workflows" / PARTS_BUILD).read_text(encoding="utf-8")
+        self.assertEqual(audit_one(PARTS_BUILD, source), [])
+        changed_owner = source.replace("github.actor == 'Madsc55'", "github.actor != 'Madsc55'")
+        self.assertIn("PARTS_BUILD_COMMAND_BRANCH_GUARD_CHANGED",
+                      audit_one(PARTS_BUILD, changed_owner))
+        bypass = source.replace("git diff --name-status origin/main...HEAD",
+                                "git diff --name-status HEAD")
+        self.assertIn("PARTS_BUILD_COMMAND_BRANCH_VALIDATION_CHANGED",
+                      audit_one(PARTS_BUILD, bypass))
 
     def test_favorites_copy_preserves_originals_and_rejects_unknown_urls(self):
         source = b'#EXTINF:-1 group-title="YEDEKLER (3)",TRT 1\nhttps://example.test/1\n'
