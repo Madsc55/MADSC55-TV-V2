@@ -10,6 +10,18 @@ def fixture(events="  workflow_dispatch:\n", perms="  contents: read\n",
     return "name: test\non:\n"+events+"permissions:\n"+perms+"jobs:\n  verify:\n"+job
 
 class MainActionsGateTests(unittest.TestCase):
+    def test_parts_builder_never_pushes_to_protected_main(self):
+        from main_actions_security_gate import ROOT, PARTS_BUILD
+        source = (ROOT / ".github/workflows" / PARTS_BUILD).read_text(encoding="utf-8")
+        self.assertEqual(audit_one(PARTS_BUILD, source), [])
+        unsafe = source.replace('git push origin "HEAD:refs/heads/$branch"',
+                                "git push origin HEAD:main")
+        self.assertIn("PARTS_BUILD_VALIDATION_OR_WRITE_SCOPE_CHANGED",
+                      audit_one(PARTS_BUILD, unsafe))
+        untrusted = source.replace("    branches: [main]", "    branches: [main, unsafe]")
+        self.assertIn("PARTS_BUILD_UNAPPROVED_TRIGGER",
+                      audit_one(PARTS_BUILD, untrusted))
+
     def test_manual_readonly_allowed(self):
         self.assertEqual(audit_one("v2-world-discovery.yml",fixture()),[])
     def test_685_manual_publisher_is_scoped(self):
