@@ -1,7 +1,7 @@
 {
   "version": 1,
   "header_hex": "234558544d33550a",
-  "source_sha256": "eaeb2e11cb578cd81e3bee94c5c635daf9e88cedd98b6f1cf28d77bc47286295",
+  "source_sha256": "9b23a6ca7aa26d208ddebcb73360e4f556105574c64030f8c2038ec169d2dd9b",
   "total_records": 18337,
   "entries": [
     {
@@ -79,44 +79,44 @@
     {
       "file": "0012.m3u",
       "group": "YEDEKLER",
-      "records": 592,
-      "sha256": "9ee85e952a27d756ef6910ad629cb1bb3b2ad0bc5238f77153dc841303790c64"
+      "records": 667,
+      "sha256": "cea851ee9bb88b72921326076f67d92462a9b1e474b8d24816b0a5f8383b9693"
     },
     {
       "file": "0013.m3u",
       "group": "ANA ARŞİV",
-      "records": 2612,
-      "sha256": "8312fdf9b9703f86a5a3eb6a5060c599778626d986ce83d518a59bbd5f953bbc"
+      "records": 2537,
+      "sha256": "067ec1676e86fccf8aaffacf374c980d6eb286a905f2c47280760cdc987f19d6"
     },
     {
       "file": "0014.m3u",
       "group": "ANA ARŞİV",
       "records": 2554,
-      "sha256": "e4aa938677d8407aadfae21da00056f3517f918e9a27d2954a90d9c0129024c4"
+      "sha256": "19dfb7f482f826645ebe093eee2ecedeb43b8e0cc15bc31d81d07040af085cc2"
     },
     {
       "file": "0015.m3u",
       "group": "ANA ARŞİV",
       "records": 2580,
-      "sha256": "25f58df6fe02ea901cf399f6fed98e09c2f1d3d91af839817dbcd791bcdd145e"
+      "sha256": "b9880bf36e9e8601463e28a3d589b19d08c84ddd4e84a91d3b6c8c002bb44733"
     },
     {
       "file": "0016.m3u",
       "group": "ANA ARŞİV",
       "records": 2550,
-      "sha256": "d48861507790c993e170684f4ba41b9ef7175960b9fe66f6dbf6aaeeeb25291e"
+      "sha256": "f49dcf54d9549528d72f20b90704ba14e558147c4408611fa6bbfe77b55c2ce5"
     },
     {
       "file": "0017.m3u",
       "group": "ANA ARŞİV",
       "records": 2596,
-      "sha256": "e9fc07194002142dd1e76978efabab043575004142bee15fbf5a414110c17e0c"
+      "sha256": "6aa9495a7afb2a7479d89ba7956577f22be11919745f163e485c7c42282b1896"
     },
     {
       "file": "0018.m3u",
       "group": "ANA ARŞİV",
       "records": 820,
-      "sha256": "02a09ccdbbdb69dd68ac6c475c1e61b104741856cf1f7921e279a216ccff3a5b"
+      "sha256": "66608fecb9cc8b0fe2a8c7bfa7875d36bfbd914c310516a8d4994ba661e4b324"
     },
     {
       "file": "0019.m3u",
