@@ -444,7 +444,7 @@ def audit(root=ROOT):
                         names = []
                         for entry in manifest["entries"]:
                             name = entry["file"]
-                            if not re.fullmatch(r"[0-9]{4}\\.m3u", name):
+                            if not re.fullmatch(r"[0-9]{4}\.m3u", name):
                                 return False
                             payload = (parts_dir / name).read_bytes()
                             if hashlib.sha256(payload).hexdigest() != entry["sha256"]:
