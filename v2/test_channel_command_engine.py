@@ -76,6 +76,33 @@ class ChannelCommandEngineTests(unittest.TestCase):
         self.assertIn('YEDEKLER (3)', out.decode())
         self.assertIn('HABER (3)', out.decode())
 
+    def test_move_consecutive_backup_range_to_archive_without_loss(self):
+        out, _, report = run(SAMPLE, "move", source="YEDEKLER",
+                             target="ANA ARŞİV", range={"start": 2, "end": 3})
+        self.assertEqual(names_in(out, "YEDEKLER"), ["TRT 1", "Sözlü TV"])
+        self.assertEqual(names_in(out, "ANA ARŞİV"), ["Archived A", "TRT 2", "TRT 3"])
+        self.assertEqual(report["before_total"], report["after_total"])
+        self.assertEqual(report["deleted"], 0)
+
+    def test_remove_command_archives_and_marks_broken_without_deleting(self):
+        out, statuses, report = run(SAMPLE, "remove", source="HABER",
+                                     target="ANA ARŞİV", channels=["News B"],
+                                     status="broken")
+        self.assertEqual(names_in(out, "HABER"), ["News A"])
+        self.assertEqual(names_in(out, "ANA ARŞİV"), ["Archived A", "News B"])
+        self.assertEqual(len(statuses), 1)
+        self.assertEqual(next(iter(statuses.values()))["status"], "broken")
+        self.assertEqual(report["deleted"], 0)
+        self.assertEqual(report["before_total"], report["after_total"])
+
+    def test_invalid_range_rejected_without_changes(self):
+        with self.assertRaisesRegex(ValueError, "Range"):
+            run(SAMPLE, "move", source="YEDEKLER",
+                target="ANA ARŞİV", range={"start": 3, "end": 2})
+        with self.assertRaisesRegex(ValueError, "2500"):
+            run(SAMPLE, "move", source="YEDEKLER",
+                target="ANA ARŞİV", range={"start": 1, "end": 2501})
+
     def test_foreign_to_turkish_archive(self):
         expanded = SAMPLE + ('#EXTINF:-1 group-title="YABANCI ARŞİVİ (284)",Foreign B\n'
                              'https://sample.test/x2\n').encode()
