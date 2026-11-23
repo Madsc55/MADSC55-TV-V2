@@ -295,6 +295,7 @@ def operate(data, command, statuses=None):
                 }
     if action == "recount" and command.get("format_backup_names") is True:
         backups_id = lookup_category("YEDEKLER", buckets)
+        selected = [(backups_id, i, rec) for i, rec in enumerate(buckets[backups_id], 1)]
         buckets[backups_id] = [rename_backup_display(rec) for rec in buckets[backups_id]]
     rebuilt, after = _retag_and_recount(buckets, labels)
     output = header + b"".join(rebuilt)
