@@ -1,8 +1,8 @@
 {
-  "base_sha256": "2429665bab7c2aca796abb4a11a1bb5ef7b01786ffeed7db61f8b1b189e6affe",
-  "result_sha256": "eaeb2e11cb578cd81e3bee94c5c635daf9e88cedd98b6f1cf28d77bc47286295",
+  "base_sha256": "eaeb2e11cb578cd81e3bee94c5c635daf9e88cedd98b6f1cf28d77bc47286295",
+  "result_sha256": "9b23a6ca7aa26d208ddebcb73360e4f556105574c64030f8c2038ec169d2dd9b",
   "operation": "reorder",
-  "request": "Kullanıcının tekrarlanan kesin talimatı: Güncel ANA ARŞİV'in 13.712 kaydının tamamı tekrar tek tek taranmış, mevcut ilk 616 Türk/Türkî kanal adayı ve ülke yayın envanterleri, tvg-id, isim/logo ve kaynak URL kanıtıyla bulunan 57 yeni Türk/Türkî kanal adayı ANA ARŞİV içinde ilk 673 sıraya toplanacaktır. Türkçe konuşma veya altyazı var diye canlı test olmadan kesin hüküm verilmez. Seçilenlerin kendi aralarındaki mevcut sıra ve diğer kayıtların sırası korunur. Başka kategoriye taşıma, kanal silme, kopyalama, metadata değişikliği, test veya yeni playlist yok.",
+  "request": "Kullanıcının ANA ARŞİV'in tüm Türk/Türkî kanallarını en başa alma talebini tamamla. #717 ile ilk 673 sıraya alınan Türk/Türkî adaylar aynen en başta kalacak. Taramada kalan iki doğrulanmış aday, güncel sıra 5129 KANAL 7 AVRUPA GLOBAL ADAY (kanal7AvrupaLive Türkiye yayını) ve sıra 5130 KANAL-65 (iptv-org Kanal65Music.az, Azerbaycan Kanal 65 Music, catcast.tv/content/47437) bu grubun sonuna eklensin; toplam 675 Türk/Türkî kanal adayı ANA ARŞİV kategorisinin ilk 675 sırasına gelsin. Diğer kayıtların ve kategorilerin iç sırası korunacak. Kanal silme, kopyalama, başka kategoriye taşıma, URL/metaveri düzenleme, canlı yayın testi veya yeni playlist yok. Yayın dili doğrudan test edilmedi.",
   "channels": [
     "24 TV",
     "24 TV",
@@ -676,6 +676,8 @@
     "XINJIANG TV 3",
     "XINJIANG TV 3",
     "XINJIANG TV 3",
-    "XINJIANG TV 8"
+    "XINJIANG TV 8",
+    "KANAL 7 AVRUPA GLOBAL ADAY",
+    "KANAL-65"
   ]
 }
