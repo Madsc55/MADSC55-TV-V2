@@ -44,6 +44,7 @@ HISTORICAL_AUDIT="issue-489-historical-audit.yml"
 OFFLINE_CI="ci.yml"
 PASS1="run_pass1_cleanup.yml"
 HEALTH_REPORT="update_main_playlist.yml"
+PARTS_BUILD="build_playlist_from_parts.yml"
 SAFETY="v2-playlist-safety.yml"
 STAGING="madsc/v2-production-actions-lock-20261103"
 MUTATION=re.compile(r"\bgit\s+(?:-C\s+\S+\s+)?(?:push|add|commit)\b", re.I)
@@ -63,6 +64,26 @@ def audit_one(filename,source):
     if not isinstance(doc,dict):
         return ["INVALID_WORKFLOW"]
     events=mapping(doc.get("on"))
+    if filename==PARTS_BUILD:
+        if set(events)!={"push"} or mapping(events["push"]).get("branches")!=["main"]:
+            return ["PARTS_BUILD_UNAPPROVED_TRIGGER"]
+        paths=set(mapping(events["push"]).get("paths",[]))
+        if paths!={"v2/playlist_parts_manager.py","v2/playlists/parts/**",".github/workflows/build_playlist_from_parts.yml"}:
+            return ["PARTS_BUILD_UNAPPROVED_PATHS"]
+        if mapping(doc.get("permissions"))!={"contents":"read"}:
+            return ["PARTS_BUILD_EXCESSIVE_DEFAULT_PERMISSIONS"]
+        jobs=mapping(doc.get("jobs"))
+        if set(jobs)!={"build"} or mapping(jobs["build"].get("permissions"))!={"contents":"write"}:
+            return ["PARTS_BUILD_JOB_PERMISSIONS_CHANGED"]
+        required=("python v2/playlist_parts_manager.py auto",
+                  "python v2/test_playlist_invariants.py",
+                  "git add -- MADSC55_TV_IBO_CALISANLAR_TEST.m3u8 v2/playlists/parts/",
+                  "git commit -m", "[skip ci]", "push origin HEAD:main")
+        if not all(fragment in source for fragment in required):
+            return ["PARTS_BUILD_VALIDATION_OR_WRITE_SCOPE_CHANGED"]
+        if "pull_request_target" in source or "workflow_dispatch" in source or "schedule:" in source:
+            return ["PARTS_BUILD_UNTRUSTED_TRIGGER"]
+        return []
     if filename==PASS1:
         if set(mapping(doc.get("on")))!={"workflow_dispatch"}:
             return ["PASS1_MANUAL_ONLY_REQUIRED"]
@@ -192,7 +213,7 @@ def audit(root=ROOT):
     root=Path(root)
     folder=root/".github/workflows"
     found={p.name for p in folder.iterdir() if p.is_file() and p.suffix in (".yml",".yaml")}
-    expected=ORIGINAL_FILES|{PASS1,GATE,OFFLINE,HISTORICAL_AUDIT,HEALTH_REPORT,OFFLINE_CI,"full_autonomous_pipeline.yml","autonomous_discovery_readonly.yml","v2-stage6-grouped-acceptance.yml","ibo-authorized-500.yml","v2-offline-import-15.yml","run_move_685.yml"}
+    expected=ORIGINAL_FILES|{PASS1,GATE,OFFLINE,HISTORICAL_AUDIT,HEALTH_REPORT,OFFLINE_CI,PARTS_BUILD,"full_autonomous_pipeline.yml","autonomous_discovery_readonly.yml","v2-stage6-grouped-acceptance.yml","ibo-authorized-500.yml","v2-offline-import-15.yml","run_move_685.yml"}
     errors={}
     if found!=expected:
         errors["WORKFLOW_INVENTORY"]={"missing":sorted(expected-found),
