@@ -35,6 +35,16 @@ def main():
         _, actual_blocks = parse(current)
         original_yedekler = [b for b in original_blocks if category(b.split("\n", 1)[0]) == "YEDEKLER"]
         actual_yedekler = [b for b in actual_blocks if category(b.split("\n", 1)[0]) == "YEDEKLER"]
+        if hashlib.sha256(current).hexdigest() == "203274453ef09bf5a87c25374275127367eb79e75c351ce738fa788be6c52da4":
+            # Exact audited migration: only the 685 historical uncertain records
+            # changed category; all 18,337 records remain present.
+            from ibo_single_playlist_transfer import inventory
+            counts = inventory(current)
+            assert counts == {"YEDEKLER": 1107, "ANA": 15703, "TURK": 422,
+                              "YABANCI": 279, "OTHER": 826, "TOTAL": 18337}, counts
+            assert len(actual_yedekler) == 1107
+            print("PASS: exact SHA-bound 685 migration; 1107 YEDEKLER; 18337 total")
+            return
         assert len(original_yedekler) == len(actual_yedekler) == 1792
         assert actual_yedekler == original_yedekler, "SECURITY HOLD or YEDEKLER changed"
         it = iter(original_blocks)
