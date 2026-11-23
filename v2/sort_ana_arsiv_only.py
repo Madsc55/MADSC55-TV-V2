@@ -59,6 +59,7 @@ def main():
     positions = [i for i, block in enumerate(blocks) if is_archive(block)]
     if len(blocks) != 18337 or len(positions) != 15703:
         raise SystemExit(f"Refusing unexpected counts: total={len(blocks)}, ANA ARŞİV={len(positions)}")
+    position_set = set(positions)
     before = [blocks[i] for i in positions]
     after = sorted(before, key=sort_key)
     updated = blocks.copy()
@@ -68,7 +69,7 @@ def main():
     new_prefix, verified = parse(result)
     if (new_prefix != prefix or len(verified) != len(blocks)
             or Counter(verified) != Counter(blocks)
-            or [verified[i] for i in range(len(blocks)) if i not in set(positions)]
+            or [verified[i] for i in range(len(blocks)) if i not in position_set]
                != [blocks[i] for i in range(len(blocks)) if i not in set(positions)]
             or [verified[i] for i in positions] != after):
         raise SystemExit("Invariant failure; refusing write")
