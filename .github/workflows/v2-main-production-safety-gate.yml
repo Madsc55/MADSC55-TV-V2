@@ -331,44 +331,62 @@ jobs:
         timeout-minutes: 8
         run: |
           set -euo pipefail
-          # Fail closed on genuinely missing media tools. A bounded apt retry
-          # prevents a stalled package mirror from silently consuming the job.
-          missing=()
+          # Ubuntu package mirrors previously timed out after 4+ minutes.
+          # Supply the COMPLETE local decoder from an immutable, SHA256-pinned
+          # GitHub release; never fetch a live stream in this setup.
+          for binary in curl tar sha256sum git find; do
+            command -v "$binary" >/dev/null || {
+              echo "::error::Missing required bootstrap tool: $binary"
+              exit 1
+            }
+          done
           if ! command -v ffmpeg >/dev/null || ! command -v ffprobe >/dev/null; then
-            missing+=(ffmpeg)
-          fi
-          if ! command -v tesseract >/dev/null; then
-            missing+=(tesseract-ocr tesseract-ocr-tur)
-          else
-            langs="$(tesseract --list-langs 2>/dev/null)"
-            if ! grep -Fxq 'tur' <<< "$langs"; then
-              missing+=(tesseract-ocr-tur)
-            fi
-          fi
-          families="$(fc-list --format '%{family}\n' 2>/dev/null)"
-          if ! grep -Fq 'DejaVu' <<< "$families"; then
-            missing+=(fonts-dejavu-core)
-          fi
-          if (( ${#missing[@]} )); then
-            printf 'Missing media packages: %s\n' "${missing[*]}"
-            # Explicit network and lock limits. Do not suppress apt errors.
-            apt_args=(-o Acquire::Retries=1
-                      -o Acquire::http::Timeout=15
-                      -o Acquire::https::Timeout=15
-                      -o DPkg::Lock::Timeout=20)
-            if ! timeout 135s sudo env DEBIAN_FRONTEND=noninteractive \
-              apt-get "${apt_args[@]}" install -y --no-install-recommends "${missing[@]}"; then
-              echo "::warning::Initial package install failed; refreshing apt indexes."
-              timeout 80s sudo apt-get "${apt_args[@]}" update
-              timeout 160s sudo env DEBIAN_FRONTEND=noninteractive \
-                apt-get "${apt_args[@]}" install -y --no-install-recommends "${missing[@]}"
-            fi
+            archive="$RUNNER_TEMP/ffmpeg-full-gpl.tar.xz"
+            curl --fail --location --silent --show-error \
+              --connect-timeout 10 --max-time 180 --retry 1 --retry-delay 2 \
+              'https://github.com/FFmpeg-Builds/FFmpeg-Builds/releases/download/autobuild-2026-11-23-12-43/ffmpeg-n9.0.2-62-gac1c6e003f-linux64-gpl-9.0.tar.xz' \
+              --output "$archive"
+            echo "17cf42701de208afbf8de9ae4cd016122c875d95beedc6c4b37894d35a523063  $archive" | sha256sum -c -
+            mkdir -p "$RUNNER_TEMP/ffmpeg-extract" "$RUNNER_TEMP/ffmpeg-bin"
+            tar -xJf "$archive" -C "$RUNNER_TEMP/ffmpeg-extract" --no-same-owner
+            ffmpeg_path="$(find "$RUNNER_TEMP/ffmpeg-extract" -type f -name ffmpeg -print -quit)"
+            ffprobe_path="$(find "$RUNNER_TEMP/ffmpeg-extract" -type f -name ffprobe -print -quit)"
+            test -n "$ffmpeg_path" && test -n "$ffprobe_path"
+            install -m 0755 "$ffmpeg_path" "$RUNNER_TEMP/ffmpeg-bin/ffmpeg"
+            install -m 0755 "$ffprobe_path" "$RUNNER_TEMP/ffmpeg-bin/ffprobe"
+            export PATH="$RUNNER_TEMP/ffmpeg-bin:$PATH"
+            echo "$RUNNER_TEMP/ffmpeg-bin" >> "$GITHUB_PATH"
           fi
           command -v ffprobe
           command -v ffmpeg
-          command -v tesseract
-          langs="$(tesseract --list-langs 2>/dev/null)"
-          grep -Fxq 'tur' <<< "$langs"
+          ffprobe -hide_banner -version >/dev/null
+          ffmpeg -hide_banner -version >/dev/null
+          # The real Turkish-caption fixture requires these exact features.
+          ffmpeg -hide_banner -filters | grep -E '[[:space:]]drawtext[[:space:]]'
+          for encoder in mpeg4 aac srt; do
+            ffmpeg -hide_banner -encoders | grep -E "[[:space:]]$encoder[[:space:]]"
+          done
+          command -v tesseract || { echo '::error::Tesseract missing'; exit 1; }
+          command -v fc-match || { echo '::error::Fontconfig missing'; exit 1; }
+          fc-match -f '%{family}' 'DejaVu Sans' | grep -qi DejaVu
+          if ! tesseract --list-langs 2>/dev/null | grep -Fxq tur; then
+            model="$RUNNER_TEMP/tur.traineddata"
+            curl --fail --location --silent --show-error \
+              --connect-timeout 10 --max-time 45 --retry 1 --retry-delay 2 \
+              'https://raw.githubusercontent.com/tesseract-ocr/tessdata_fast/87416418657359cb625c412a48b6e1d6d41c29bd/tur.traineddata' \
+              --output "$model"
+            if [ "$(git hash-object "$model")" != '1f0b331ef29f50ceb7c44da58e38c7ec42314d0a' ]; then
+              echo '::error::Turkish OCR traineddata integrity failure'
+              exit 1
+            fi
+            tessdata="$(tesseract --list-langs 2>&1 | sed -n '1s/^List of available languages in "\([^"]*\)".*$/\1/p')"
+            if [ -z "$tessdata" ] || [ ! -d "$tessdata" ]; then
+              echo '::error::No installed Tesseract tessdata directory'
+              exit 1
+            fi
+            sudo install -m 0644 "$model" "$tessdata/tur.traineddata"
+          fi
+          tesseract --list-langs 2>/dev/null | grep -Fxq tur
       - name: Issue 497 targeted uncertain retry offline regressions (no live scan)
         if: steps.move_scope.outputs.eligible != 'true'
         run: |
