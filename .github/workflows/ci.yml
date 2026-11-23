@@ -19,10 +19,40 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Install offline test dependencies
+      - name: Detect exact owner move-only PR (trusted base verifier)
+        id: move_scope
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha || '' }}
+          HEAD_REPO: ${{ github.event.pull_request.head.repo.full_name || '' }}
+          PR_AUTHOR: ${{ github.event.pull_request.user.login || '' }}
+          HEAD_REF: ${{ github.head_ref || '' }}
+        run: |
+          set -euo pipefail
+          if [ "${{ github.event_name }}" != 'pull_request' ] ||
+             ! git cat-file -e "$BASE_SHA:v2/fast_channel_move_scope.py" 2>/dev/null; then
+            echo 'eligible=false' >> "$GITHUB_OUTPUT"
+          else
+            git show "$BASE_SHA:v2/fast_channel_move_scope.py" > "$RUNNER_TEMP/fast_channel_move_scope.py"
+            PYTHONPATH=v2 python "$RUNNER_TEMP/fast_channel_move_scope.py" \
+              --base "$BASE_SHA" --repo "$GITHUB_REPOSITORY" \
+              --head-repo "$HEAD_REPO" --author "$PR_AUTHOR" \
+              --head-ref "$HEAD_REF" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Install full-suite offline dependencies
+        if: steps.move_scope.outputs.eligible != 'true'
         run: python -m pip install 'cryptography>=42,<47' PyYAML==6.0.2
-      - name: Run offline regression suite
+      - name: Run full offline regression suite
+        if: steps.move_scope.outputs.eligible != 'true'
         run: make run
+      - name: Install move-only YAML audit dependency
+        if: steps.move_scope.outputs.eligible == 'true'
+        run: python -m pip install PyYAML==6.0.2
+      - name: Test channel move invariants and workflow security only
+        if: steps.move_scope.outputs.eligible == 'true'
+        run: |
+          PYTHONPATH=v2 python -m unittest -v test_channel_command_engine test_main_actions_security_gate test_fast_channel_move_scope
+          PYTHONPATH=v2 python v2/main_actions_security_gate.py
+          python v2/test_playlist_invariants.py
 
   shared-url-live-review:
     name: Read-only bounded shared URL evidence
