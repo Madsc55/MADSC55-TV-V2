@@ -65,7 +65,7 @@ def audit_one(filename,source):
         return ["INVALID_WORKFLOW"]
     events=mapping(doc.get("on"))
     if filename==PARTS_BUILD:
-        if set(events)!={"push","workflow_dispatch"} or mapping(events["push"]).get("branches")!=["main"]:
+        if set(events)!={"push","workflow_dispatch"} or mapping(events["push"]).get("branches")!=["main","command/ibo-*"]:
             return ["PARTS_BUILD_UNAPPROVED_TRIGGER"]
         paths=set(mapping(events["push"]).get("paths",[]))
         if paths!={"v2/playlist_parts_manager.py","v2/playlists/parts/**",".github/workflows/build_playlist_from_parts.yml"}:
@@ -73,10 +73,29 @@ def audit_one(filename,source):
         if mapping(doc.get("permissions"))!={"contents":"read"}:
             return ["PARTS_BUILD_EXCESSIVE_DEFAULT_PERMISSIONS"]
         jobs=mapping(doc.get("jobs"))
-        if set(jobs)!={"build"} or mapping(jobs["build"].get("permissions"))!={"contents":"write"}:
+        if set(jobs)!={"build","command-branch"} or mapping(jobs["build"].get("permissions"))!={"contents":"write"}:
             return ["PARTS_BUILD_JOB_PERMISSIONS_CHANGED"]
         if jobs["build"].get("if")!="github.ref == 'refs/heads/main' && !contains(github.event.head_commit.message, '[skip ci]')":
             return ["PARTS_BUILD_MAIN_ONLY_REQUIRED"]
+        command_job = mapping(jobs.get("command-branch"))
+        if (command_job.get("if") !=
+                "startsWith(github.ref, 'refs/heads/command/ibo-') && github.actor == 'Madsc55'"
+                or mapping(command_job.get("permissions")) != {"contents":"write"}):
+            return ["PARTS_BUILD_COMMAND_BRANCH_GUARD_CHANGED"]
+        command_required = (
+            "git diff --name-status origin/main...HEAD",
+            "git merge-base origin/main HEAD",
+            "A\\tv2/playlists/parts/pending_command.json",
+            "expected_git_blob_sha",
+            "python v2/channel_command_engine.py --request v2/playlists/parts/pending_command.json --apply",
+            "rm -- v2/playlists/parts/pending_command.json",
+            "python v2/playlist_parts_manager.py auto",
+            "python v2/test_playlist_invariants.py",
+            'git push origin "HEAD:refs/heads/${GITHUB_REF_NAME}"',
+            "git diff --cached --name-only",
+        )
+        if not all(fragment in source for fragment in command_required):
+            return ["PARTS_BUILD_COMMAND_BRANCH_VALIDATION_CHANGED"]
         required=("python v2/channel_command_engine.py --request v2/playlists/parts/pending_command.json --apply",
                   "rm -- v2/playlists/parts/pending_command.json",
                   "python v2/playlist_parts_manager.py auto",

@@ -2,7 +2,7 @@ name: Build canonical IBO playlist from parts
 on:
   workflow_dispatch:
   push:
-    branches: [main]
+    branches: [main, 'command/ibo-*']
     paths:
       - 'v2/playlist_parts_manager.py'
       - 'v2/playlists/parts/**'
@@ -61,3 +61,71 @@ jobs:
           echo "Validated proposal branch: $branch" >> "$GITHUB_STEP_SUMMARY"
           echo "GitHub Actions is not permitted to create pull requests in this repository." >> "$GITHUB_STEP_SUMMARY"
           echo "Use the authorized GitHub integration to open a PR against main and review both required checks." >> "$GITHUB_STEP_SUMMARY"
+
+  command-branch:
+    # Owner command remains on one isolated branch, never staging through main.
+    if: "startsWith(github.ref, 'refs/heads/command/ibo-') && github.actor == 'Madsc55'"
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Allow only a new owner command against current main
+        run: |
+          set -euo pipefail
+          git fetch origin main
+          test "$(git merge-base origin/main HEAD)" = "$(git rev-parse origin/main)"
+          test -f v2/playlists/parts/pending_command.json
+          if [ "$(git diff --name-status origin/main...HEAD)" != "$(printf 'A\tv2/playlists/parts/pending_command.json')" ]; then
+            echo "::error::Only pending_command.json may be added on a command branch."
+            exit 1
+          fi
+          python - <<'PY'
+          import json, re
+          from pathlib import Path
+          request = json.loads(Path("v2/playlists/parts/pending_command.json").read_text(encoding="utf-8"))
+          assert isinstance(request, dict)
+          assert isinstance(request.get("expected_git_blob_sha"), str)
+          assert re.fullmatch(r"[0-9a-f]{40}", request["expected_git_blob_sha"])
+          assert isinstance(request.get("request"), str) and len(request["request"].strip()) >= 12
+          assert request.get("action") in {"move", "copy", "reorder", "archive", "remove", "mark", "recount"}
+          PY
+      - name: Apply and validate authorized command
+        run: |
+          set -euo pipefail
+          python v2/channel_command_engine.py --request v2/playlists/parts/pending_command.json --apply
+          rm -- v2/playlists/parts/pending_command.json
+          python v2/playlist_parts_manager.py auto
+          python v2/test_playlist_invariants.py
+      - name: Push validated proposal to SAME command branch
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- MADSC55_TV_IBO_CALISANLAR_TEST.m3u8 v2/playlists/parts/
+          for file in v2/ibo_authorized_change.json v2/playlists/channel_status.json; do
+            if [ -f "$file" ]; then git add -- "$file"; fi
+          done
+          if git diff --cached --quiet; then
+            echo "::error::Command produced no changes; no PR is needed."
+            exit 1
+          fi
+          while IFS= read -r file; do
+            case "$file" in
+              MADSC55_TV_IBO_CALISANLAR_TEST.m3u8|v2/playlists/parts/*|v2/ibo_authorized_change.json|v2/playlists/channel_status.json) ;;
+              *) echo "::error::Unexpected generated file: $file"; exit 1 ;;
+            esac
+          done < <(git diff --cached --name-only)
+          git commit -m "build: apply owner-approved IBO command for review"
+          gh auth setup-git
+          git push origin "HEAD:refs/heads/${GITHUB_REF_NAME}"
+          echo "Validated single-PR command branch: ${GITHUB_REF_NAME}" >> "$GITHUB_STEP_SUMMARY"
+          echo "An authorized GitHub integration can open ONE PR; check Offline CI and Production Security Gate." >> "$GITHUB_STEP_SUMMARY"
