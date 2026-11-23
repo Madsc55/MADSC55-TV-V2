@@ -1,9 +1,9 @@
 {
-  "base_sha256": "597dbb738ee5c1f8433d114077fad829741763636b5ab0877f4b56b286b0705f",
-  "result_sha256": "7d7652037149cb19b37a88af7f0518319ea87f3253187ce02ac21ef5fb04f642",
-  "operation": "category",
-  "request": "Ana playlist kategorilerinin tüm başlık sayılarını mevcut gerçek kayıt sayılarına eşitle; kanal kayıtlarını, URL'leri ve sıralamayı kesinlikle değiştirme.",
+  "base_sha256": "7d7652037149cb19b37a88af7f0518319ea87f3253187ce02ac21ef5fb04f642",
+  "result_sha256": "d351f89feb642ce2f3088d914218898ec7b284415ee1b2d1fed3b883421b019f",
+  "operation": "move",
+  "request": "Kullanıcı talimatı: Türk arşivinde bulunan birinci sıradaki kanalı YABANCI ARŞİVİ'ne taşı; hiçbir kanalı silme.",
   "channels": [
-    "All category count labels"
+    "VIVE KANAL D DRAMA"
   ]
 }
