@@ -1,5 +1,0 @@
-{
-  "action": "recount",
-  "expected_git_blob_sha": "c707dd1cb17f170b8e5821d74ab379b04fc56ed1",
-  "request": "Ana playlist kategorilerinin tüm başlık sayılarını mevcut gerçek kayıt sayılarına eşitle; kanal kayıtlarını, URL'leri ve sıralamayı kesinlikle değiştirme."
-}

@@ -1,7 +1,7 @@
 {
   "version": 1,
   "header_hex": "234558544d33550a",
-  "source_sha256": "b401a989fd6005149cbd46e1a0e299aeb47aeabe58821498cffe897989b01c9b",
+  "source_sha256": "597dbb738ee5c1f8433d114077fad829741763636b5ab0877f4b56b286b0705f",
   "total_records": 18337,
   "entries": [
     {
@@ -12,9 +12,9 @@
     },
     {
       "file": "0001.m3u",
-      "group": "⭐ FAVORİLER 1 (62)",
+      "group": "⭐ FAVORİLER 1 (60)",
       "records": 60,
-      "sha256": "6c60724bc5ea3b8f8f6e6d0c3f611bfbd9101a35995278e64a4664c40cbd432d"
+      "sha256": "a9c6ad361ebb62a556f58ca2800d2a9a5a5c5292c461609d4df2954d7d47108e"
     },
     {
       "file": "0002.m3u",
@@ -24,9 +24,9 @@
     },
     {
       "file": "0003.m3u",
-      "group": "🇹🇷 ULUSAL-HEPSİ (415)",
+      "group": "🇹🇷 ULUSAL-HEPSİ (408)",
       "records": 408,
-      "sha256": "7076c7cacea1152fa12dbd7d1a5783efa0901d5778c2eedb39d9eda3f912d4d8"
+      "sha256": "f04e207b76dd16c4f3e433290723ec3e32f68a0c4de3a2751968bfe2094702e8"
     },
     {
       "file": "0004.m3u",
@@ -66,9 +66,9 @@
     },
     {
       "file": "0010.m3u",
-      "group": "📍 YEREL (75)",
+      "group": "📍 YEREL (72)",
       "records": 72,
-      "sha256": "a90f096fa1d4e0d22b60471eaa112afe80d7a6075987b77347fa076ff5cc6037"
+      "sha256": "0ba561ca305d52ac68929c9b00e1f9a7330ed505a52c697c3d6f02713abc0929"
     },
     {
       "file": "0011.m3u",
@@ -126,15 +126,15 @@
     },
     {
       "file": "0020.m3u",
-      "group": "TÜRK ARŞİVİ (424)",
+      "group": "TÜRK ARŞİVİ (422)",
       "records": 422,
-      "sha256": "208f985b05cdd3878b4194063e42e7cbe990cb15a365946ed9fb1c5cac8fab0b"
+      "sha256": "d9bf1628f8a8074a22c3306445d4dd14b7bb32f4a1f288fe67195ce410de8bfa"
     },
     {
       "file": "0021.m3u",
-      "group": "YABANCI ARŞİVİ (284)",
+      "group": "YABANCI ARŞİVİ (279)",
       "records": 279,
-      "sha256": "425c3f8ad1f8106b015e92ea504a42cc02250c7211199c47e692efbf3b68ce2f"
+      "sha256": "069aa2536718b6756e3246d416bf791b3f7bc33a282be03dc16ecc442fa518d1"
     }
   ]
 }
