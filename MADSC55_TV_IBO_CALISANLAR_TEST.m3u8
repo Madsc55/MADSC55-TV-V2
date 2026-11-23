@@ -4259,12 +4259,80 @@ http://live-saha.cdnvideo.ru/saha/tooky/playlist.m3u8
 http://str2.iptvhd.ru:8080/viva_plus/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/2BAQklm.png" group-title="ANA ARŞİV (13712)",ЯКУТИЯ 24
 https://live-saha.cdnvideo.ru/saha2/yak24rtmp_live.smil/playlist.m3u8
-#EXTINF:-1 tvg-name="Aristo TV (360p)" group-title="ANA ARŞİV (13712)",Aristo TV (360p)
-https://ma.anixa.tv/clips/stream/aristo/index.m3u8
 #EXTINF:-1 tvg-name="Arka Sokaklar" group-title="ANA ARŞİV (13712)",Arka Sokaklar
 http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Arka.Sokaklar.SON.mkv
 #EXTINF:-1 tvg-name="Aşk Evlilik Boşanma" group-title="ANA ARŞİV (13712)",Aşk Evlilik Boşanma
 http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Ask.Evlilik.Bosanma.SON.mkv
+#EXTINF:-1 tvg-name="BEIN 2 HD" group-title="ANA ARŞİV (13712)",BEIN SPORTS 2 HD
+https://andro.evrenesoglu99.click/checklist/androstreamlivebs2.m3u8
+#EXTINF:-1 tvg-name="Can Borcu" group-title="ANA ARŞİV (13712)",Can Borcu
+http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Can.Borcu.SON.mkv
+#EXTINF:-1 tvg-name="Deha" group-title="ANA ARŞİV (13712)",Deha
+http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Deha.SON.mkv
+#EXTINF:-1 tvg-name="Esref Rüya" group-title="ANA ARŞİV (13712)",Esref Rüya
+http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Esref.Ruya.SON.mkv
+#EXTINF:-1 tvg-name="Gizli Bahçe" group-title="ANA ARŞİV (13712)",Gizli Bahçe
+http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Gizli.Bahce.SON.mkv
+#EXTINF:-1 tvg-name="Gönül Dağı" group-title="ANA ARŞİV (13712)",Gönül Dağı
+http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Gonul.Dagi.SON.mkv
+#EXTINF:-1 tvg-name="Güldür Güldür Show" group-title="ANA ARŞİV (13712)",Güldür Güldür Show
+http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Guldur.Guldur.Show.SON.mkv
+#EXTINF:-1 tvg-name="Holding" group-title="ANA ARŞİV (13712)",Holding
+http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Holding.SON.mkv
+#EXTINF:-1 tvg-name="Hudutsuz Sevda" group-title="ANA ARŞİV (13712)",Hudutsuz Sevda
+http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Hudutsuz.Sevda.SON.mkv
+#EXTINF:-1 tvg-name="Kalpazan" group-title="ANA ARŞİV (13712)",Kalpazan
+http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Kalpazan.SON.mkv
+#EXTINF:-1 tvg-name="Kardelenler" group-title="ANA ARŞİV (13712)",Kardelenler
+http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Kardelenler.SON.mkv
+#EXTINF:-1 tvg-name="Konuşanlar" group-title="ANA ARŞİV (13712)",Konuşanlar
+http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Konusanlar.SON.mkv
+#EXTINF:-1 tvg-name="Kral Kabederse" group-title="ANA ARŞİV (13712)",Kral Kabederse
+http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Kral.Kaybederse.SON.mkv
+#EXTINF:-1 tvg-name="Leyla" group-title="ANA ARŞİV (13712)",Leyla
+http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Leyla.SON.mkv
+#EXTINF:-1 tvg-name="Naxcivan TV (720p) [TEST]" tvg-logo="" group-title="ANA ARŞİV (13712)",Naxcivan TV (720p) [TEST]
+https://str2.yodacdn.net/ntv/video.m3u8
+#EXTINF:-1 tvg-name="NBA TV" group-title="ANA ARŞİV (13712)",NBA TV
+http://unreal.eztv4you.xyz:25461/98392023/224vpw99f7/432435
+#EXTINF:-1 tvg-name="NBA TV" group-title="ANA ARŞİV (13712)",NBA TV
+http://unreal.eztv4you.xyz:25461/98392023/224vpw99f7/432436
+#EXTINF:-1 tvg-name="Piyasa" group-title="ANA ARŞİV (13712)",Piyasa
+http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Piyasa.SON.mkv
+#EXTINF:-1 tvg-name="Sahipsizler" group-title="ANA ARŞİV (13712)",Sahipsizler
+http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Sahipsizler.SON.mkv
+#EXTINF:-1 tvg-name="Sandık Kokusu" group-title="ANA ARŞİV (13712)",Sandık Kokusu
+http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Sandik.Kokusu.SON.mkv
+#EXTINF:-1 tvg-name="Selahaddin Eyyubi" group-title="ANA ARŞİV (13712)",Selahaddin Eyyubi
+http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Selahaddin.Eyyubi.SON.mkv
+#EXTINF:-1 tvg-name="Siyah Kalp" group-title="ANA ARŞİV (13712)",Siyah Kalp
+http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Siyah.Kalp.SON.mkv
+#EXTINF:-1 tvg-logo="https://i.ibb.co/DYyDzGV/star22tv.png" group-title="ANA ARŞİV (13712)",STAR (BACKUP)
+http://dygvideo.dygdigital.com/live/hls/stardai?m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/bIheNAI.png" group-title="ANA ARŞİV (13712)",STERK TV (1080P)
+https://hlspackager.akamaized.net/live/DB/STERK_TV/HLS/STERK_TV.m3u8
+#EXTINF:-1 tvg-name="Sustalı Ceylan" group-title="ANA ARŞİV (13712)",Sustalı Ceylan
+http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Sustali.Ceylan.SON.mkv
+#EXTINF:-1 tvg-name="Teşkilat" group-title="ANA ARŞİV (13712)",Teşkilat
+http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Teskilat.SON.mkv
+#EXTINF:-1 tvg-name="Timeless Dizi Channel" group-title="ANA ARŞİV (13712)",Timeless Dizi Channel
+https://atlantida1.aquax1.cfd/dizy/usergendlk0tas9c.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/s3Sqd4L.png" group-title="ANA ARŞİV (13712)",TIMELESS DIZI CHANNEL (576I)
+https://nosignal1.antenaplay.ro/hls/dzi-int-hd/index.m3u8
+#EXTINF:-1 tvg-name="Timeless Dizi Channel (Poland) (1080p)" group-title="ANA ARŞİV (13712)",Timeless Dizi Channel (Poland) (1080p)
+http://hls127.freeott.top:8080/BG_Dizi_HD/video.m3u8
+#EXTINF:-1 tvg-name="Uzak Şehir" group-title="ANA ARŞİV (13712)",Uzak Şehir
+http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Uzak.Sehir.SON.mkv
+#EXTINF:-1 group-title="ANA ARŞİV (13712)" tvg-logo="https://netspor-amp.xyz/logo.png",v.Bein Sport 1 NetSpor
+http://463758a0.ucomist.net/iptv/V4ZVP6G52HVXDE/6817/index.m3u8
+#EXTINF:-1 tvg-name="Yalan" group-title="ANA ARŞİV (13712)",Yalan
+http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Yalan.SON.mkv
+#EXTINF:-1 tvg-name="Yalı Çapkını" group-title="ANA ARŞİV (13712)",Yalı Çapkını
+http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Yali.Capkini.SON.mkv
+#EXTINF:-1 tvg-name="Zembilli" group-title="ANA ARŞİV (13712)",Zembilli
+http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Zembilli.SON.mkv
+#EXTINF:-1 tvg-name="Aristo TV (360p)" group-title="ANA ARŞİV (13712)",Aristo TV (360p)
+https://ma.anixa.tv/clips/stream/aristo/index.m3u8
 #EXTINF:-1 tvg-name="BBC Earth (1080p)" group-title="ANA ARŞİV (13712)",BBC Earth (1080p)
 http://57.128.231.171:8080/307/index.m3u8
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/7/7e/BBC_Earth_2023.svg" group-title="ANA ARŞİV (13712)",BBC EARTH (1080P)
@@ -4279,8 +4347,6 @@ https://jmp2.uk/plu-672e1634e482950008c759a5.m3u8
 https://ip44.radyotelekomtv.com:3958/stream/play.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/vsktAez.png" group-title="ANA ARŞİV (13712)",BEIJING SATELLITE TV HD (1080P)
 http://go.bkpcp.top/mg/bjws
-#EXTINF:-1 tvg-name="BEIN 2 HD" group-title="ANA ARŞİV (13712)",BEIN SPORTS 2 HD
-https://andro.evrenesoglu99.click/checklist/androstreamlivebs2.m3u8
 #EXTINF:-1 tvg-name="Belle Amie (576p)" group-title="ANA ARŞİV (13712)",Belle Amie (576p)
 http://92.60.238.10:1935/live/belleamie/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/Belsat_%282022%29.svg/960px-Belsat_%282022%29.svg.png" group-title="ANA ARŞİV (13712)",BELSAT
@@ -4567,8 +4633,6 @@ https://5e85d90130e77.streamlock.net/6052/6052/playlist.m3u8
 https://pantera1-100gb-cl-movistar.dps.live/campustv/campustv.smil/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/3d8cLm9.jpg" group-title="ANA ARŞİV (13712)",CAMU TV (480P)
 https://live20.bozztv.com/akamaissh101/ssh101/camutv/playlist.m3u8
-#EXTINF:-1 tvg-name="Can Borcu" group-title="ANA ARŞİV (13712)",Can Borcu
-http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Can.Borcu.SON.mkv
 #EXTINF:-1 tvg-logo="https://i.ibb.co/MDhNH26J/cantho1-2025.png" group-title="ANA ARŞİV (13712)",CAN THO TV (1080P)
 https://live.canthotv.vn/live/tv/chunklist.m3u8
 #EXTINF:-1 tvg-logo="https://i.ibb.co/JjVvkMsf/cantho2-2025.png" group-title="ANA ARŞİV (13712)",CAN THO TV 2 (1080P)
@@ -7711,8 +7775,6 @@ https://jmp2.uk/plu-5c6eeb85c05dfc257e5a50c4.m3u8
 https://jmp2.uk/rok-d89b6124edce5dc0a4dfe42a8026353a.m3u8
 #EXTINF:-1 tvg-name="Degrassi (720p)" group-title="ANA ARŞİV (13712)",Degrassi (720p)
 https://d3537vnymvfque.cloudfront.net/playlist.m3u8
-#EXTINF:-1 tvg-name="Deha" group-title="ANA ARŞİV (13712)",Deha
-http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Deha.SON.mkv
 #EXTINF:-1 group-title="ANA ARŞİV (13712)",DEJ TV
 https://rdejhls.wns.live/hls/stream.m3u8
 #EXTINF:-1 tvg-logo="https://imgur.com/Pw7ZUT1.jpg" group-title="ANA ARŞİV (13712)",DEL PUEBLO TV
@@ -9129,8 +9191,6 @@ http://190.128.214.97:64333/play/a02i/index.m3u8
 https://directes-tv-int.3catdirectes.cat/live-content/esport3-hls/master.m3u8
 #EXTINF:-1 tvg-name="Esport3 (1080p)" group-title="ANA ARŞİV (13712)",Esport3 (1080p)
 https://directes-tv-int.3catdirectes.cat/live-origin/esport3-hls/master.m3u8
-#EXTINF:-1 tvg-name="Esref Rüya" group-title="ANA ARŞİV (13712)",Esref Rüya
-http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Esref.Ruya.SON.mkv
 #EXTINF:-1 tvg-logo="https://i.imgur.com/YAADx7P.png" group-title="ANA ARŞİV (13712)",ESTACION LIMACHE TV (720P)
 https://v4.tustreaming.cl/limachemovil/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/eICyrPP.png" group-title="ANA ARŞİV (13712)",ESTACION TV (720P)
@@ -10625,8 +10685,6 @@ https://s.emisoras.tv:8081/girasoltv/index.m3u8
 https://jmp2.uk/plu-66ba1e4446762a000855cd87.m3u8
 #EXTINF:-1 tvg-name="GIT (720p)" group-title="ANA ARŞİV (13712)",GIT (720p)
 https://stream.uagit.tv/gittv.m3u8
-#EXTINF:-1 tvg-name="Gizli Bahçe" group-title="ANA ARŞİV (13712)",Gizli Bahçe
-http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Gizli.Bahce.SON.mkv
 #EXTINF:-1 tvg-logo="https://i.imgur.com/l5FEP9w.png" group-title="ANA ARŞİV (13712)",GLAS (576P)
 http://85.238.112.69:8811/hls_sec/239.0.4.18-.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/GXJKWdy.png" group-title="ANA ARŞİV (13712)",GLAZAMI TURISTA (576I)
@@ -10825,8 +10883,6 @@ https://ncdn.telewebion.ir/golkhane/live/playlist.m3u8
 https://amg01596-gongnetworks-gong-ono-vh5f2.amagi.tv/1080p-vtt/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/YL3rpd7.png" group-title="ANA ARŞİV (13712)",GONGYOUNG HOME SHOPPING (720P)
 https://etv.publichs.com/live5.stream/playlist.m3u8
-#EXTINF:-1 tvg-name="Gönül Dağı" group-title="ANA ARŞİV (13712)",Gönül Dağı
-http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Gonul.Dagi.SON.mkv
 #EXTINF:-1 tvg-logo="https://i.imgur.com/YxFRoft.png" group-title="ANA ARŞİV (13712)",GOOD 2 (1080P)
 https://live.streamingfast.net/osmflivech2.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/ETgVyTy.png" group-title="ANA ARŞİV (13712)",GOOD IDEA TV (1080P)
@@ -11039,8 +11095,6 @@ https://d2gvyg6lvauoko.cloudfront.net/230226/gujaratfirst/playlist.m3u8?hdnts=st
 https://fta.ektv.in/live/655/master.m3u8
 #EXTINF:-1 tvg-logo="https://ltsk-cdn.s3.eu-west-1.amazonaws.com/jumpstart/Temp_Live/cdn/HLS/Channel/transparentImages/Gujrat-First-logo_2000_X_1125_Transpharant.png" group-title="ANA ARŞİV (13712)",GUJARAT FIRST (720P)
 https://mumt03.tangotv.in/Dsly5z3HGUJARATFIRST/index.m3u8
-#EXTINF:-1 tvg-name="Güldür Güldür Show" group-title="ANA ARŞİV (13712)",Güldür Güldür Show
-http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Guldur.Guldur.Show.SON.mkv
 #EXTINF:-1 tvg-logo="https://dtil.tmsimg.com/assets/s143097_ld_h15_aa.png?lock=720x540" group-title="ANA ARŞİV (13712)",GULISTAN NEWS (1080P)
 https://d3qs3d2rkhfqrt.cloudfront.net/out/v1/030a117c40d84ca99ac8927d3e2a1eec/index.m3u8
 #EXTINF:-1 tvg-logo="https://dtil.tmsimg.com/assets/s143097_ld_h15_aa.png?lock=720x540" group-title="ANA ARŞİV (13712)",GULISTAN NEWS (1080P)
@@ -11639,8 +11693,6 @@ http://190.61.47.54:8000/play/a01n/index.m3u8
 https://jmp2.uk/plu-6537abf42cf1310008441686.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/i0Qexxd.png" group-title="ANA ARŞİV (13712)",HOLA! TV LATIN AMERICA (1080P)
 http://168.196.127.137:6001/play/a03q/index.m3u8
-#EXTINF:-1 tvg-name="Holding" group-title="ANA ARŞİV (13712)",Holding
-http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Holding.SON.mkv
 #EXTINF:-1 tvg-logo="https://i.imgur.com/oVNjFoj.png" group-title="ANA ARŞİV (13712)",HOLLYWIRE (720P)
 https://bozztv.com/hwotta/playlist/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/oVNjFoj.png" group-title="ANA ARŞİV (13712)",HOLLYWIRE (720P)
@@ -11877,8 +11929,6 @@ https://tv.huachotv.com/stream.m3u8
 https://paneltv.online:1936/8024/8024/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/1UUjU26.png" group-title="ANA ARŞİV (13712)",HUDA TV (720P)
 https://cdn.bestream.io:19360/elfaro1/elfaro1.m3u8
-#EXTINF:-1 tvg-name="Hudutsuz Sevda" group-title="ANA ARŞİV (13712)",Hudutsuz Sevda
-http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Hudutsuz.Sevda.SON.mkv
 #EXTINF:-1 tvg-name="Huelva TV (720p)" group-title="ANA ARŞİV (13712)",Huelva TV (720p)
 https://5d8d85cf2c308.streamlock.net:1936/huelvatv/htvdirecto/playlist.m3u8
 #EXTINF:-1 tvg-name="Hum News" group-title="ANA ARŞİV (13712)",Hum News
@@ -13123,8 +13173,6 @@ https://mumt01.tangotv.in/O5aw8Zn3KALINGATV/index.m3u8
 https://server.thelegitpro.in/kalingatv/kalingatv/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/XPyOTZF.jpeg" group-title="ANA ARŞİV (13712)",KALOOPY TV (1080P)
 https://streamingserver000.viewtv.cloud/VIEWTVNETWORK-KALOOPY/index.m3u8
-#EXTINF:-1 tvg-name="Kalpazan" group-title="ANA ARŞİV (13712)",Kalpazan
-http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Kalpazan.SON.mkv
 #EXTINF:-1 tvg-name="Kalsan TV (576p)" group-title="ANA ARŞİV (13712)",Kalsan TV (576p)
 https://ap02.iqplay.tv:8082/iqb8002/ka1s0n/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/MO4w3OT.jpeg" group-title="ANA ARŞİV (13712)",KALU TV (720P)
@@ -13181,8 +13229,6 @@ https://mumt03.tangotv.in/Dsly5z3HKAPPATV/index.m3u8
 https://ktvlive.online/stream/hls/ch3.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/QcrVj3Q.png" group-title="ANA ARŞİV (13712)",KARCAG TV (720P)
 https://cloudfront41.lexanetwork.com:1344/relay03/livestream003.sdp/playlist.m3u8
-#EXTINF:-1 tvg-name="Kardelenler" group-title="ANA ARŞİV (13712)",Kardelenler
-http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Kardelenler.SON.mkv
 #EXTINF:-1 tvg-name="Karibena (720p)" group-title="ANA ARŞİV (13712)",Karibena (720p)
 https://iptv-pe-x-7-g3s-video.egostreaming.pe/karibenatv_685a-pe-a5676-584412/index.fmp4.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/mdpIRoW.png" group-title="ANA ARŞİV (13712)",KARIBENA (720P)
@@ -13547,8 +13593,6 @@ http://775065.live.tvstitch.com/playlist.m3u8?source=aHR0cHM6Ly9obHMtY2RuMi5keXZ
 https://kontralive.siliconweb.com/live/kontratv/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.ibb.co/L9fj1Hj/greece.png" group-title="ANA ARŞİV (13712)",KONTRA TV
 http://kontralive.siliconweb.com/live/kontratv/playlist.m3u8
-#EXTINF:-1 tvg-name="Konuşanlar" group-title="ANA ARŞİV (13712)",Konuşanlar
-http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Konusanlar.SON.mkv
 #EXTINF:-1 tvg-logo="https://i.ibb.co/6cWRtp65/koogi.png" group-title="ANA ARŞİV (13712)",KOOGI TV
 https://5b622f07944df.streamlock.net/koogi.tv/koogi.smil/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/zojMTP9.png" group-title="ANA ARŞİV (13712)",KOOGI TV (1080P)
@@ -13575,8 +13619,6 @@ https://cloud.tvomix.com/KPOPMIX/index.m3u8
 https://giatv.bozztv.com/giatv/giatv-kpoptvplay/kpoptvplay/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/dGoQ88j.png" group-title="ANA ARŞİV (13712)",KPVM-LD 25.1 (720P)
 https://2-fss-1.streamhoster.com/pl_122/206858-4405346-1/playlist.m3u8
-#EXTINF:-1 tvg-name="Kral Kabederse" group-title="ANA ARŞİV (13712)",Kral Kabederse
-http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Kral.Kaybederse.SON.mkv
 #EXTINF:-1 tvg-logo="https://i.imgur.com/8c9Uqks.jpeg" group-title="ANA ARŞİV (13712)",KRC TV
 https://channels.ad-ug.com/live/ch03/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/kTh2jgF.png" group-title="ANA ARŞİV (13712)",KRGV-TV 5.2 (720P)
@@ -14053,8 +14095,6 @@ https://jmp2.uk/rok-ffe5d9e0480d1c5e1dcead3abd966ac7.m3u8
 https://jmp2.uk/stvp-US7000229B
 #EXTINF:-1 tvg-logo="https://i.imgur.com/a36SPo6.png" group-title="ANA ARŞİV (13712)",LEX TV (720P)
 https://cdn3.wowza.com/5/M0lyamVmM2JWcjhQ/lfucg/G0264_005/playlist.m3u8
-#EXTINF:-1 tvg-name="Leyla" group-title="ANA ARŞİV (13712)",Leyla
-http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Leyla.SON.mkv
 #EXTINF:-1 tvg-logo="https://i.imgur.com/a9E0DTY.jpeg" group-title="ANA ARŞİV (13712)",LGD TELEVISION (720P)
 https://streamtv.intervenhosting.net:3403/hybrid/play.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/d5w2pT4.png" group-title="ANA ARŞİV (13712)",LGTV (1080P)
@@ -16659,12 +16699,6 @@ https://hls.navahang.live/hls/stream.m3u8
 https://cnn.hostlagarto.com/ntvnavarrete/index.m3u8
 #EXTINF:-1 tvg-logo="https://jiotvimages.cdn.jio.com/dare_images/images/Naxatra_News_Hindi.png" group-title="ANA ARŞİV (13712)",NAXATRA NEWS HINDI (360P)
 https://d2gvyg6lvauoko.cloudfront.net/230226/naxatranewshindi/playlist.m3u8?hdnts=st=1735898689~exp=1835898688~acl=*~hmac=f5fe24724fe05481e3841f9eb5ab8efdee0a3dd83645ae9dcf45703f525bab7b
-#EXTINF:-1 tvg-name="Naxcivan TV (720p) [TEST]" tvg-logo="" group-title="ANA ARŞİV (13712)",Naxcivan TV (720p) [TEST]
-https://str2.yodacdn.net/ntv/video.m3u8
-#EXTINF:-1 tvg-name="NBA TV" group-title="ANA ARŞİV (13712)",NBA TV
-http://unreal.eztv4you.xyz:25461/98392023/224vpw99f7/432435
-#EXTINF:-1 tvg-name="NBA TV" group-title="ANA ARŞİV (13712)",NBA TV
-http://unreal.eztv4you.xyz:25461/98392023/224vpw99f7/432436
 #EXTINF:-1 group-title="ANA ARŞİV (13712)",NBC
 https://content.uplynk.com/channel/5545aa8a7e5a480d85fd1cff8d0cf610.m3u8
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/NBC_logo_2022_%28vertical%29.svg/960px-NBC_logo_2022_%28vertical%29.svg.png" group-title="ANA ARŞİV (13712)",NBC (1080P)
@@ -18341,8 +18375,6 @@ https://jmp2.uk/rok-2bc36154da3310eaa692d0ea141ef8e0.m3u8
 http://stream.mcquack.net/323/index.m3u8
 #EXTINF:-1 tvg-name="PixL TV (720p)" group-title="ANA ARŞİV (13712)",PixL TV (720p)
 https://frndlymsl.akamaized.net/hls/live/2006426/pixlmsl/pixlmsl/playlist.m3u8?hdnts=st=1606053234~exp=3216054041~acl=*~hmac=208d261d9f98d76a5ac30aa2ce51751f88ee50cfc24812b7cbea8b0397489a07
-#EXTINF:-1 tvg-name="Piyasa" group-title="ANA ARŞİV (13712)",Piyasa
-http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Piyasa.SON.mkv
 #EXTINF:-1 tvg-name="PK Sports (720p)" group-title="ANA ARŞİV (13712)",PK Sports (720p)
 https://lbgo.bozztv.com/ssh101/ssh101/pksportshd/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/mldv8Sf.png" group-title="ANA ARŞİV (13712)",PKTV (480P)
@@ -22073,8 +22105,6 @@ https://cdn3.wowza.com/1/YStGZlJRdktzZkdK/VXROZWNW/hls/live/playlist.m3u8
 https://mumt03.tangotv.in/Dsly5z3HSAHANANEWS/index.m3u8
 #EXTINF:-1 tvg-name="Sahara 24 (1080p)" group-title="ANA ARŞİV (13712)",Sahara 24 (1080p)
 https://live.saharamedias.net:3317/live/shara24live.m3u8
-#EXTINF:-1 tvg-name="Sahipsizler" group-title="ANA ARŞİV (13712)",Sahipsizler
-http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Sahipsizler.SON.mkv
 #EXTINF:-1 tvg-logo="https://xstreamcp-assets-msp.streamready.in/assets/LIVETV/LIVECHANNEL/LIVETV_LIVETVCHANNEL_SAI_TV/images/LOGO_HD/image.png" group-title="ANA ARŞİV (13712)",SAI TV (576P)
 https://cdn.pishow.tv/ott/live/1235/master.m3u8
 #EXTINF:-1 tvg-logo="https://xstreamcp-assets-msp.streamready.in/assets/LIVETV/LIVECHANNEL/LIVETV_LIVETVCHANNEL_SAI_TV/images/LOGO_HD/image.png" group-title="ANA ARŞİV (13712)",SAI TV (720P)
@@ -22195,8 +22225,6 @@ https://service-stitcher.clusters.pluto.tv/v1/stitch/embed/hls/channel/63eb57d6c
 https://stream.ottlive.co.in/sandeshnews/index.m3u8
 #EXTINF:-1 tvg-logo="https://dtil.tmsimg.com/assets/s143755_ld_h15_aa.png?lock=720x540" group-title="ANA ARŞİV (13712)",SANDESH NEWS (720P)
 https://mumt01.tangotv.in/O5aw8Zn3SANDESHNEWS/index.m3u8
-#EXTINF:-1 tvg-name="Sandık Kokusu" group-title="ANA ARŞİV (13712)",Sandık Kokusu
-http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Sandik.Kokusu.SON.mkv
 #EXTINF:-1 tvg-logo="https://i.imgur.com/lm9Fgsp.png" group-title="ANA ARŞİV (13712)",SANDZAK TV (576P)
 https://streaming.iptv.nextfiber.rs/nxt004/master.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/4rTNT8F.png" group-title="ANA ARŞİV (13712)",SANGAJI TV (720P)
@@ -22469,8 +22497,6 @@ https://seatv.netlinkbroadcaster.com/hls/test.m3u8
 http://23.237.104.106:8080/USA_SEC_NETWORK/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/3TgBg9v.jpg" group-title="ANA ARŞİV (13712)",SEENLUFT24 (1080P)
 https://h056.video-stream-hosting.de/easycast7-live/_definst_/mp4:livestreamhd20/playlist.m3u8?ref=
-#EXTINF:-1 tvg-name="Selahaddin Eyyubi" group-title="ANA ARŞİV (13712)",Selahaddin Eyyubi
-http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Selahaddin.Eyyubi.SON.mkv
 #EXTINF:-1 tvg-name="SelangorTV (1080p)" group-title="ANA ARŞİV (13712)",SelangorTV (1080p)
 https://live.mana2.my/SelangorTv/index.m3u8?auth_key=1745177902-0210d7bbc24749879b1c370bfbd2b512-0-1a02652c616fd55ef43edbcf07d9c7dd&token=1745177902-0210d7bbc24749879b1c370bfbd2b512-0-1a02652c616fd55ef43edbcf07d9c7dd
 #EXTINF:-1 tvg-name="Semarang TV (720p)" group-title="ANA ARŞİV (13712)",Semarang TV (720p)
@@ -22921,8 +22947,6 @@ https://jmp2.uk/plu-68e38b005c876cf730fcbf0f.m3u8
 https://cloudfront44.lexanetwork.com:1344/relay01/HDE038.sdp/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Sixx_Logo.svg/960px-Sixx_Logo.svg.png" group-title="ANA ARŞİV (13712)",SIXX
 https://dash4.antik.sk/live/test_sixx_tizen/playlist.m3u8
-#EXTINF:-1 tvg-name="Siyah Kalp" group-title="ANA ARŞİV (13712)",Siyah Kalp
-http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Siyah.Kalp.SON.mkv
 #EXTINF:-1 tvg-logo="https://i.imgur.com/9Zc8G7i.png" group-title="ANA ARŞİV (13712)",SIYATHA TV (576P)
 https://rtmp01.voaplus.com/hls/6x6ik312qk4grfxocfcv.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/XiXwr5h.png" group-title="ANA ARŞİV (13712)",SK 1 (720P)
@@ -23597,8 +23621,6 @@ https://livestar.siliconweb.com/starvod/star4/star4.m3u8
 https://livestar.siliconweb.com/media/star4/star4.m3u8
 #EXTINF:-1 tvg-logo="https://i.ibb.co/PmDyTX6/star.jpg" group-title="ANA ARŞİV (13712)",STAR
 http://telmaco-cdn.akamaized.net/starcgr/default/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.ibb.co/DYyDzGV/star22tv.png" group-title="ANA ARŞİV (13712)",STAR (BACKUP)
-http://dygvideo.dygdigital.com/live/hls/stardai?m3u8
 #EXTINF:-1 tvg-logo="https://star101.gu/images/fb_icon.jpg" group-title="ANA ARŞİV (13712)",STAR 101 FM (720P) [NOT 24/7]
 https://live2.tensila.com/knut-v-1.choice/hls/master.m3u8
 #EXTINF:-1 tvg-name="Star Asia (720p)" group-title="ANA ARŞİV (13712)",Star Asia (720p)
@@ -23781,8 +23803,6 @@ http://stream.mcquack.net/156/index.m3u8
 https://h056.video-stream-hosting.de/easycast8-live/_definst_/mp4:livestreamhd4/playlist.m3u8?ref=
 #EXTINF:-1 tvg-logo="https://i.imgur.com/sCDcYFW.png" group-title="ANA ARŞİV (13712)",STEREO 5 TV (720P)
 https://stream1.aswifi.it/stereo5/live/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/bIheNAI.png" group-title="ANA ARŞİV (13712)",STERK TV (1080P)
-https://hlspackager.akamaized.net/live/DB/STERK_TV/HLS/STERK_TV.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/ZP3cJi7.png" group-title="ANA ARŞİV (13712)",STILETV
 https://proxy.media.convergenze.it/stiletv/streams/oQOFd7JglHjO1631525551097.m3u8
 #EXTINF:-1 tvg-logo="https://images.sr.roku.com/idType/roku-trc/context/trc/id/73991aa61267bcc005a855c7b6303afc/https%3A%2F%2Fimage.roku.com%2Fbh-uploads%2Fproduction%2FinfoHUDLogo%2F1750260327511_StingrayCityscapes_HUDlogo_centered_260x147.png" group-title="ANA ARŞİV (13712)",STINGRAY CITYSCAPES
@@ -24295,8 +24315,6 @@ http://stream.mcquack.net/435/index.m3u8
 https://live-nstu.cdn-03.cosmonova.net.ua/mobile-app/main/nstu-kyiv/master.m3u8
 #EXTINF:-1 tvg-name="Suspilne. Sport (1080p)" group-title="ANA ARŞİV (13712)",Suspilne. Sport (1080p)
 http://stream.mcquack.net/444/index.m3u8
-#EXTINF:-1 tvg-name="Sustalı Ceylan" group-title="ANA ARŞİV (13712)",Sustalı Ceylan
-http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Sustali.Ceylan.SON.mkv
 #EXTINF:-1 tvg-name="Sutel TV" group-title="ANA ARŞİV (13712)",Sutel TV
 https://vipottbpkstream.vip.hr/Content/onevip-hls/Live/Channel(Shutel)/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/0H1HObK.png" group-title="ANA ARŞİV (13712)",SUVARNA NEWS (576P)
@@ -25427,8 +25445,6 @@ http://170.83.16.50/TERRA_VIVA/index.m3u8
 https://9ada494d.wurl.com/master/f36d25e7e52f1ba8d7e56eb859c636563214f541/TEctYnJfVXBseW5rLU5ld2NvX0hMUw/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/wnYsE3O.png" group-title="ANA ARŞİV (13712)",TERRA VIVA (720P)
 http://170.83.49.66:8083/TERRAVIVAHD/index.m3u8
-#EXTINF:-1 tvg-name="Teşkilat" group-title="ANA ARŞİV (13712)",Teşkilat
-http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Teskilat.SON.mkv
 #EXTINF:-1 tvg-logo="https://i.imgur.com/Wu6wtbe.png" group-title="ANA ARŞİV (13712)",TET (1080P)
 http://stream.mcquack.net/338/index.m3u8
 #EXTINF:-1 tvg-name="Teva (1080p)" group-title="ANA ARŞİV (13712)",Teva (1080p)
@@ -25925,12 +25941,6 @@ https://jmp2.uk/plu-63dac1b78795f300086d5ca6.m3u8
 https://jmp2.uk/plu-69256bd7db5cc2f81d8a1a08.m3u8
 #EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/61c1a05ef30f5d0007e562f3/colorLogoPNG.png" group-title="ANA ARŞİV (13712)",TIL MIDDAG HOS
 https://jmp2.uk/plu-61c1a05ef30f5d0007e562f3.m3u8
-#EXTINF:-1 tvg-name="Timeless Dizi Channel" group-title="ANA ARŞİV (13712)",Timeless Dizi Channel
-https://atlantida1.aquax1.cfd/dizy/usergendlk0tas9c.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/s3Sqd4L.png" group-title="ANA ARŞİV (13712)",TIMELESS DIZI CHANNEL (576I)
-https://nosignal1.antenaplay.ro/hls/dzi-int-hd/index.m3u8
-#EXTINF:-1 tvg-name="Timeless Dizi Channel (Poland) (1080p)" group-title="ANA ARŞİV (13712)",Timeless Dizi Channel (Poland) (1080p)
-http://hls127.freeott.top:8080/BG_Dizi_HD/video.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/bjcpeVH.png" group-title="ANA ARŞİV (13712)",TIMELESS TV
 https://timelesstv1.b-cdn.net/hls/TimelessTV.m3u8
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Times_Brasil_CNBC_logo_2025.svg/960px-Times_Brasil_CNBC_logo_2025.svg.png" group-title="ANA ARŞİV (13712)",TIMES BRASIL (720P)
@@ -28397,8 +28407,6 @@ https://em4qj6nedyvg-hls-live.wmncdn.net/utv/ab2de115318ae40bdd434e193a2f2e7f.sd
 https://www.uvatvhd.com/hls.php?file=live.m3u8
 #EXTINF:-1 tvg-name="Uvagut TV (1080p)" group-title="ANA ARŞİV (13712)",Uvagut TV (1080p)
 https://hls.uvagut.tv/hls/uvagut/playlist.m3u8
-#EXTINF:-1 tvg-name="Uzak Şehir" group-title="ANA ARŞİV (13712)",Uzak Şehir
-http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Uzak.Sehir.SON.mkv
 #EXTINF:-1 tvg-logo="https://i.imgur.com/WIACJSy.png" group-title="ANA ARŞİV (13712)",V CLASSIC TV (1080P)
 https://5eaccbab48461.streamlock.net:1936/8112/8112/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/jNJkLHl.png" group-title="ANA ARŞİV (13712)",V GOSTYAKH U SKAZKI (1080P)
@@ -28411,8 +28419,6 @@ http://stream.mcquack.net/241/index.m3u8
 http://315e5a5d.ottrast.com/iptv/8XFKA8883W9M5K/12077/index.m3u8
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/pt/e/ef/V%2BTVI_Logo.png" group-title="ANA ARŞİV (13712)",V+ TVI (720P)
 https://raw.githubusercontent.com/thomraider12/canaistvpt/main/m3u8s/vmaistvi.m3u8
-#EXTINF:-1 group-title="ANA ARŞİV (13712)" tvg-logo="https://netspor-amp.xyz/logo.png",v.Bein Sport 1 NetSpor
-http://463758a0.ucomist.net/iptv/V4ZVP6G52HVXDE/6817/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/PXGqyLn.png" group-title="ANA ARŞİV (13712)",V2BEAT TV
 https://abr.de1se01.v2beat.live/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://ltsk-cdn.s3.eu-west-1.amazonaws.com/jumpstart/Temp_Live/cdn/HLS/Channel/transparentImages/V6%20News.png" group-title="ANA ARŞİV (13712)",V6 NEWS (1080P)
@@ -29781,10 +29787,6 @@ https://yahoo-plex.amagi.tv/playlist.m3u8
 https://amg00119-amg00119c1-firetv-us-4205.playouts.now.amagi.tv/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://tvpnlogopus.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/US3200012O8_20260421T143258SQUARE.png" group-title="ANA ARŞİV (13712)",YAHOO! SPORTS NETWORK
 https://jmp2.uk/stvp-US3200012O8
-#EXTINF:-1 tvg-name="Yalan" group-title="ANA ARŞİV (13712)",Yalan
-http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Yalan.SON.mkv
-#EXTINF:-1 tvg-name="Yalı Çapkını" group-title="ANA ARŞİV (13712)",Yalı Çapkını
-http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Yali.Capkini.SON.mkv
 #EXTINF:-1 tvg-name="Yalta TV (480p)" group-title="ANA ARŞİV (13712)",Yalta TV (480p)
 http://195.26.83.96:7029/play/a006
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/he/thumb/5/58/YamTichoniChannel.svg/1280px-YamTichoniChannel.svg.png" group-title="ANA ARŞİV (13712)",YAM TICHONI (1080P)
@@ -30087,8 +30089,6 @@ https://mumt07.tangotv.in/zHjX9OFlZEEUPUK/index.m3u8
 https://7.innovatestream.pe:19360/zelevetv/zelevetv.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/CGWaunJ.jpeg" group-title="ANA ARŞİV (13712)",ZELEVE TV (720P)
 https://live-evg11.tv360.bitel.com.pe/bitel/zeleve/playlist.m3u8
-#EXTINF:-1 tvg-name="Zembilli" group-title="ANA ARŞİV (13712)",Zembilli
-http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Zembilli.SON.mkv
 #EXTINF:-1 tvg-name="Zenebutik" group-title="ANA ARŞİV (13712)",Zenebutik
 http://88.212.15.19/live/zenebutik/index.m3u8
 #EXTINF:-1 tvg-logo="https://znth.tv/images/logo.png" group-title="ANA ARŞİV (13712)",ZENITH (1080P)

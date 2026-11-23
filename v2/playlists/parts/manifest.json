@@ -1,7 +1,7 @@
 {
   "version": 1,
   "header_hex": "234558544d33550a",
-  "source_sha256": "ee218e647574dceb21940809046af3a9fc846dcd256d4a3af087f5766cbcd29b",
+  "source_sha256": "64039ee5e92f453febcf28e176e3cf68cff926452edda250bd292b949c79e9e5",
   "total_records": 18337,
   "entries": [
     {
@@ -85,38 +85,38 @@
     {
       "file": "0013.m3u",
       "group": "ANA ARŞİV",
-      "records": 2617,
-      "sha256": "6b6f0ba388dd26da00b8948808594b41d62a2542d5cb101d8a350a8da58d81af"
+      "records": 2625,
+      "sha256": "f41c638bcfa4a44c7bb309efc0fad192d5c77315176259a20a1c332c0e5827fa"
     },
     {
       "file": "0014.m3u",
       "group": "ANA ARŞİV",
-      "records": 2555,
-      "sha256": "0f6f877b8eeaad7156e5f50de21ded426d1c795bc65870daf363405ef57e1d86"
+      "records": 2550,
+      "sha256": "f9555daa3bcc7447423bbd7bed277f8cd6388adc8a8398286070c475cfc4ff6a"
     },
     {
       "file": "0015.m3u",
       "group": "ANA ARŞİV",
-      "records": 2578,
-      "sha256": "17a0512ad3b35df03fdfbe65520c85a0f0d0024927564af1cf122c3b03c2bc82"
+      "records": 2581,
+      "sha256": "8605c014aeecd5667548cfe284e7f95f2d2b733d0a7e7bf2fef20a7b5518c402"
     },
     {
       "file": "0016.m3u",
       "group": "ANA ARŞİV",
-      "records": 2546,
-      "sha256": "a222662813ca60fe4c15ce3164d8083903ec2ecc6f0d81933c95e0ff6a9bcc24"
+      "records": 2544,
+      "sha256": "2b5faf2135b37364073a632cdfc39c098cf09c45d79df3a5330f16108c59e762"
     },
     {
       "file": "0017.m3u",
       "group": "ANA ARŞİV",
-      "records": 2597,
-      "sha256": "1fada7aaaaa4c94c87edd46f68b31015e69903204b0c038524e44a7bdc0283eb"
+      "records": 2593,
+      "sha256": "01251ffaf9a3f25b802522926e125db7115513aca8123f9bfc4aff511917afe1"
     },
     {
       "file": "0018.m3u",
       "group": "ANA ARŞİV",
       "records": 819,
-      "sha256": "1d04c19dc61cb1ea6a045bbf7c1774cb73558191afc3cd2331e476b92feeb92e"
+      "sha256": "37b1e985aa1f0bca2e50197c46e9255f13b163a4796192d682644000d9340ebc"
     },
     {
       "file": "0019.m3u",

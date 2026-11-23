@@ -1422,12 +1422,80 @@ http://live-saha.cdnvideo.ru/saha/tooky/playlist.m3u8
 http://str2.iptvhd.ru:8080/viva_plus/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/2BAQklm.png" group-title="ANA ARŞİV (13712)",ЯКУТИЯ 24
 https://live-saha.cdnvideo.ru/saha2/yak24rtmp_live.smil/playlist.m3u8
-#EXTINF:-1 tvg-name="Aristo TV (360p)" group-title="ANA ARŞİV (13712)",Aristo TV (360p)
-https://ma.anixa.tv/clips/stream/aristo/index.m3u8
 #EXTINF:-1 tvg-name="Arka Sokaklar" group-title="ANA ARŞİV (13712)",Arka Sokaklar
 http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Arka.Sokaklar.SON.mkv
 #EXTINF:-1 tvg-name="Aşk Evlilik Boşanma" group-title="ANA ARŞİV (13712)",Aşk Evlilik Boşanma
 http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Ask.Evlilik.Bosanma.SON.mkv
+#EXTINF:-1 tvg-name="BEIN 2 HD" group-title="ANA ARŞİV (13712)",BEIN SPORTS 2 HD
+https://andro.evrenesoglu99.click/checklist/androstreamlivebs2.m3u8
+#EXTINF:-1 tvg-name="Can Borcu" group-title="ANA ARŞİV (13712)",Can Borcu
+http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Can.Borcu.SON.mkv
+#EXTINF:-1 tvg-name="Deha" group-title="ANA ARŞİV (13712)",Deha
+http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Deha.SON.mkv
+#EXTINF:-1 tvg-name="Esref Rüya" group-title="ANA ARŞİV (13712)",Esref Rüya
+http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Esref.Ruya.SON.mkv
+#EXTINF:-1 tvg-name="Gizli Bahçe" group-title="ANA ARŞİV (13712)",Gizli Bahçe
+http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Gizli.Bahce.SON.mkv
+#EXTINF:-1 tvg-name="Gönül Dağı" group-title="ANA ARŞİV (13712)",Gönül Dağı
+http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Gonul.Dagi.SON.mkv
+#EXTINF:-1 tvg-name="Güldür Güldür Show" group-title="ANA ARŞİV (13712)",Güldür Güldür Show
+http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Guldur.Guldur.Show.SON.mkv
+#EXTINF:-1 tvg-name="Holding" group-title="ANA ARŞİV (13712)",Holding
+http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Holding.SON.mkv
+#EXTINF:-1 tvg-name="Hudutsuz Sevda" group-title="ANA ARŞİV (13712)",Hudutsuz Sevda
+http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Hudutsuz.Sevda.SON.mkv
+#EXTINF:-1 tvg-name="Kalpazan" group-title="ANA ARŞİV (13712)",Kalpazan
+http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Kalpazan.SON.mkv
+#EXTINF:-1 tvg-name="Kardelenler" group-title="ANA ARŞİV (13712)",Kardelenler
+http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Kardelenler.SON.mkv
+#EXTINF:-1 tvg-name="Konuşanlar" group-title="ANA ARŞİV (13712)",Konuşanlar
+http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Konusanlar.SON.mkv
+#EXTINF:-1 tvg-name="Kral Kabederse" group-title="ANA ARŞİV (13712)",Kral Kabederse
+http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Kral.Kaybederse.SON.mkv
+#EXTINF:-1 tvg-name="Leyla" group-title="ANA ARŞİV (13712)",Leyla
+http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Leyla.SON.mkv
+#EXTINF:-1 tvg-name="Naxcivan TV (720p) [TEST]" tvg-logo="" group-title="ANA ARŞİV (13712)",Naxcivan TV (720p) [TEST]
+https://str2.yodacdn.net/ntv/video.m3u8
+#EXTINF:-1 tvg-name="NBA TV" group-title="ANA ARŞİV (13712)",NBA TV
+http://unreal.eztv4you.xyz:25461/98392023/224vpw99f7/432435
+#EXTINF:-1 tvg-name="NBA TV" group-title="ANA ARŞİV (13712)",NBA TV
+http://unreal.eztv4you.xyz:25461/98392023/224vpw99f7/432436
+#EXTINF:-1 tvg-name="Piyasa" group-title="ANA ARŞİV (13712)",Piyasa
+http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Piyasa.SON.mkv
+#EXTINF:-1 tvg-name="Sahipsizler" group-title="ANA ARŞİV (13712)",Sahipsizler
+http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Sahipsizler.SON.mkv
+#EXTINF:-1 tvg-name="Sandık Kokusu" group-title="ANA ARŞİV (13712)",Sandık Kokusu
+http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Sandik.Kokusu.SON.mkv
+#EXTINF:-1 tvg-name="Selahaddin Eyyubi" group-title="ANA ARŞİV (13712)",Selahaddin Eyyubi
+http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Selahaddin.Eyyubi.SON.mkv
+#EXTINF:-1 tvg-name="Siyah Kalp" group-title="ANA ARŞİV (13712)",Siyah Kalp
+http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Siyah.Kalp.SON.mkv
+#EXTINF:-1 tvg-logo="https://i.ibb.co/DYyDzGV/star22tv.png" group-title="ANA ARŞİV (13712)",STAR (BACKUP)
+http://dygvideo.dygdigital.com/live/hls/stardai?m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/bIheNAI.png" group-title="ANA ARŞİV (13712)",STERK TV (1080P)
+https://hlspackager.akamaized.net/live/DB/STERK_TV/HLS/STERK_TV.m3u8
+#EXTINF:-1 tvg-name="Sustalı Ceylan" group-title="ANA ARŞİV (13712)",Sustalı Ceylan
+http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Sustali.Ceylan.SON.mkv
+#EXTINF:-1 tvg-name="Teşkilat" group-title="ANA ARŞİV (13712)",Teşkilat
+http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Teskilat.SON.mkv
+#EXTINF:-1 tvg-name="Timeless Dizi Channel" group-title="ANA ARŞİV (13712)",Timeless Dizi Channel
+https://atlantida1.aquax1.cfd/dizy/usergendlk0tas9c.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/s3Sqd4L.png" group-title="ANA ARŞİV (13712)",TIMELESS DIZI CHANNEL (576I)
+https://nosignal1.antenaplay.ro/hls/dzi-int-hd/index.m3u8
+#EXTINF:-1 tvg-name="Timeless Dizi Channel (Poland) (1080p)" group-title="ANA ARŞİV (13712)",Timeless Dizi Channel (Poland) (1080p)
+http://hls127.freeott.top:8080/BG_Dizi_HD/video.m3u8
+#EXTINF:-1 tvg-name="Uzak Şehir" group-title="ANA ARŞİV (13712)",Uzak Şehir
+http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Uzak.Sehir.SON.mkv
+#EXTINF:-1 group-title="ANA ARŞİV (13712)" tvg-logo="https://netspor-amp.xyz/logo.png",v.Bein Sport 1 NetSpor
+http://463758a0.ucomist.net/iptv/V4ZVP6G52HVXDE/6817/index.m3u8
+#EXTINF:-1 tvg-name="Yalan" group-title="ANA ARŞİV (13712)",Yalan
+http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Yalan.SON.mkv
+#EXTINF:-1 tvg-name="Yalı Çapkını" group-title="ANA ARŞİV (13712)",Yalı Çapkını
+http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Yali.Capkini.SON.mkv
+#EXTINF:-1 tvg-name="Zembilli" group-title="ANA ARŞİV (13712)",Zembilli
+http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Zembilli.SON.mkv
+#EXTINF:-1 tvg-name="Aristo TV (360p)" group-title="ANA ARŞİV (13712)",Aristo TV (360p)
+https://ma.anixa.tv/clips/stream/aristo/index.m3u8
 #EXTINF:-1 tvg-name="BBC Earth (1080p)" group-title="ANA ARŞİV (13712)",BBC Earth (1080p)
 http://57.128.231.171:8080/307/index.m3u8
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/7/7e/BBC_Earth_2023.svg" group-title="ANA ARŞİV (13712)",BBC EARTH (1080P)
@@ -1442,8 +1510,6 @@ https://jmp2.uk/plu-672e1634e482950008c759a5.m3u8
 https://ip44.radyotelekomtv.com:3958/stream/play.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/vsktAez.png" group-title="ANA ARŞİV (13712)",BEIJING SATELLITE TV HD (1080P)
 http://go.bkpcp.top/mg/bjws
-#EXTINF:-1 tvg-name="BEIN 2 HD" group-title="ANA ARŞİV (13712)",BEIN SPORTS 2 HD
-https://andro.evrenesoglu99.click/checklist/androstreamlivebs2.m3u8
 #EXTINF:-1 tvg-name="Belle Amie (576p)" group-title="ANA ARŞİV (13712)",Belle Amie (576p)
 http://92.60.238.10:1935/live/belleamie/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/Belsat_%282022%29.svg/960px-Belsat_%282022%29.svg.png" group-title="ANA ARŞİV (13712)",BELSAT
@@ -1730,8 +1796,6 @@ https://5e85d90130e77.streamlock.net/6052/6052/playlist.m3u8
 https://pantera1-100gb-cl-movistar.dps.live/campustv/campustv.smil/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/3d8cLm9.jpg" group-title="ANA ARŞİV (13712)",CAMU TV (480P)
 https://live20.bozztv.com/akamaissh101/ssh101/camutv/playlist.m3u8
-#EXTINF:-1 tvg-name="Can Borcu" group-title="ANA ARŞİV (13712)",Can Borcu
-http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Can.Borcu.SON.mkv
 #EXTINF:-1 tvg-logo="https://i.ibb.co/MDhNH26J/cantho1-2025.png" group-title="ANA ARŞİV (13712)",CAN THO TV (1080P)
 https://live.canthotv.vn/live/tv/chunklist.m3u8
 #EXTINF:-1 tvg-logo="https://i.ibb.co/JjVvkMsf/cantho2-2025.png" group-title="ANA ARŞİV (13712)",CAN THO TV 2 (1080P)
@@ -4874,8 +4938,6 @@ https://jmp2.uk/plu-5c6eeb85c05dfc257e5a50c4.m3u8
 https://jmp2.uk/rok-d89b6124edce5dc0a4dfe42a8026353a.m3u8
 #EXTINF:-1 tvg-name="Degrassi (720p)" group-title="ANA ARŞİV (13712)",Degrassi (720p)
 https://d3537vnymvfque.cloudfront.net/playlist.m3u8
-#EXTINF:-1 tvg-name="Deha" group-title="ANA ARŞİV (13712)",Deha
-http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Deha.SON.mkv
 #EXTINF:-1 group-title="ANA ARŞİV (13712)",DEJ TV
 https://rdejhls.wns.live/hls/stream.m3u8
 #EXTINF:-1 tvg-logo="https://imgur.com/Pw7ZUT1.jpg" group-title="ANA ARŞİV (13712)",DEL PUEBLO TV
@@ -5186,49 +5248,3 @@ http://4.30.180.36:8420/disneychannel/index.m3u8?token=test
 http://190.14.10.19:16000/play/a06z/index.m3u8
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/f/ff/2024_Disney_Channel_text_logo.svg" group-title="ANA ARŞİV (13712)",DİSNEY CHANNEL LATİN AMERİCA (1080P)
 http://45.185.163.75:8000/play/a02j/index.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/f/ff/2024_Disney_Channel_text_logo.svg" group-title="ANA ARŞİV (13712)",DISNEY CHANNEL LATIN AMERICA (1080P)
-http://45.171.108.253:8888/DISNEY_CHANNEL/index.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/f/ff/2024_Disney_Channel_text_logo.svg" group-title="ANA ARŞİV (13712)",DISNEY CHANNEL LATIN AMERICA (1080P)
-http://138.59.227.20:8000/play/a06w/index.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/f/ff/2024_Disney_Channel_text_logo.svg" group-title="ANA ARŞİV (13712)",DISNEY CHANNEL LATIN AMERICA (1080P)
-http://15.204.246.24:8080/DisneyHD/index.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/f/ff/2024_Disney_Channel_text_logo.svg" group-title="ANA ARŞİV (13712)",DISNEY CHANNEL LATIN AMERICA CENTER (1080P)
-http://181.78.8.199:8000/play/a0dn/index.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/f/ff/2024_Disney_Channel_text_logo.svg" group-title="ANA ARŞİV (13712)",DISNEY CHANNEL LATIN AMERICA MEXICO (720P)
-http://45.166.93.156:9999/play/a0f3/index.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/f/ff/2024_Disney_Channel_text_logo.svg" group-title="ANA ARŞİV (13712)",DISNEY CHANNEL LATIN AMERICA NORTH (576P)
-http://138.121.15.230:9002/DISNEY-CHANNEL/index.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/f/ff/2024_Disney_Channel_text_logo.svg" group-title="ANA ARŞİV (13712)",DISNEY CHANNEL LATIN AMERICA PANREGIONAL HD (1080P)
-http://45.134.141.161:2200/ARG/Disney_Channel/index.m3u8
-#EXTINF:-1 tvg-name="Disney International HD (576p)" group-title="ANA ARŞİV (13712)",Disney International HD (576p)
-http://103.151.60.162:2122/play/a018/index.m3u8?hls
-#EXTINF:-1 tvg-name="Disney Jr. (1080p)" group-title="ANA ARŞİV (13712)",Disney Jr. (1080p)
-http://151.80.18.177:86/Disney_Junior_HD/index.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/e/e3/2024_Disney_Jr._Logo.svg" group-title="ANA ARŞİV (13712)",DİSNEY JR. LATİN AMERİCA (1080P)
-http://181.78.14.26:4000/play/a073/index.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/e/e3/2024_Disney_Jr._Logo.svg" group-title="ANA ARŞİV (13712)",DISNEY JR. LATIN AMERICA (1080P)
-http://tr.live.clarovtrcdn.vtrplay.com/disneyjrhdchi/vxfmt=dp/playlist.m3u8?device_profile=STB_HLS_VCAS_LIVE_HD
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/e/e3/2024_Disney_Jr._Logo.svg" group-title="ANA ARŞİV (13712)",DISNEY JR. LATIN AMERICA (1080P)
-http://190.14.10.19:16000/play/a02d/index.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/e/e3/2024_Disney_Jr._Logo.svg" group-title="ANA ARŞİV (13712)",DISNEY JR. LATIN AMERICA SOUTH (1080P)
-http://45.185.163.75:8000/play/a016/index.m3u8
-#EXTINF:-1 tvg-name="Disney Junior" group-title="ANA ARŞİV (13712)",Disney Junior
-http://88.212.15.19/live/test_disney_junior/playlist.m3u8
-#EXTINF:-1 tvg-name="Disney Junior" group-title="ANA ARŞİV (13712)",Disney Junior
-https://atlantida1.aquax1.cfd/disjr/usergendxvoq4rnd.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/e/e3/2024_Disney_Jr._Logo.svg" group-title="ANA ARŞİV (13712)",DİSNEY JUNİOR
-http://88.212.15.50/live/test_disney_junior/playlist.m3u8
-#EXTINF:-1 tvg-name="Disney Junior (360p)" group-title="ANA ARŞİV (13712)",Disney Junior (360p)
-http://212.5.144.156/disneyjr/index.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/2024_Disney_Jr._Logo.svg/960px-2024_Disney_Jr._Logo.svg.png" group-title="ANA ARŞİV (13712)",DİSNEY JUNİOR (480P)
-https://directv-iptv-player.vercel.app/api/stream?url=http%3A%2F%2F212.5.144.156%3A8080%2Fdisneyjr%2Ftracks-v1a1%2Fmono.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/2024_Disney_Jr._Logo.svg/960px-2024_Disney_Jr._Logo.svg.png" group-title="ANA ARŞİV (13712)",DISNEY JUNIOR (480P)
-https://directv-iptv-player.vercel.app/api/stream?url=http://212.5.144.156:8080/disneyjr/tracks-v1a1/mono.m3u8
-#EXTINF:-1 tvg-name="Disney Junior (576p)" group-title="ANA ARŞİV (13712)",Disney Junior (576p)
-http://103.151.60.162:2122/play/a016/index.m3u8?hls
-#EXTINF:-1 tvg-name="Disney Junior (576p)" group-title="ANA ARŞİV (13712)",Disney Junior (576p)
-http://57.128.231.171:8080/277/index.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/a/a8/2015_Disney_XD_logo.svg" group-title="ANA ARŞİV (13712)",DİSNEY XD (576P)
-http://185.227.34.179:8080/disney-xd/index.m3u8
-#EXTINF:-1 tvg-name="Disney XD (720p)" group-title="ANA ARŞİV (13712)",Disney XD (720p)
-http://23.237.104.106:8080/USA_DISNEY_XD/index.m3u8
