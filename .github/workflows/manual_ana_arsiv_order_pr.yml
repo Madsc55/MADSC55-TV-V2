@@ -1,0 +1,42 @@
+name: Manual ANA ARŞİV ordering PR
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+  pull-requests: write
+jobs:
+  reorder-and-open-pr:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Reorder only existing playlist category blocks
+        run: |
+          set -euo pipefail
+          python3 v2/place_ana_arsiv_below_yedekler.py
+          git diff --check
+          git diff --stat -- MADSC55_TV_IBO_CALISANLAR_TEST.m3u8
+          if git diff --quiet -- MADSC55_TV_IBO_CALISANLAR_TEST.m3u8; then
+            echo 'No change required; category already ordered'
+            exit 0
+          fi
+      - name: Open reviewed playlist reorder PR
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          if git diff --quiet -- MADSC55_TV_IBO_CALISANLAR_TEST.m3u8; then exit 0; fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          branch="owner/ana-arsiv-below-yedekler-${GITHUB_RUN_ID}"
+          git switch -c "$branch"
+          git add -- MADSC55_TV_IBO_CALISANLAR_TEST.m3u8
+          git commit -m 'Place ANA ARŞİV directly below YEDEKLER'
+          gh auth setup-git
+          git push origin "HEAD:refs/heads/$branch"
+          gh pr create --base main --head "$branch" \
+            --title 'Place ANA ARŞİV (15,703) directly below YEDEKLER (1,107)' \
+            --body "Single existing playlist only. No channel blocks or URLs changed; 1,107 YEDEKLER and 15,703 ANA ARŞİV remain. Manually review production security gate before merging. Source workflow run: ${GITHUB_RUN_ID}."
