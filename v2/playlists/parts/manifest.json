@@ -1,7 +1,7 @@
 {
   "version": 1,
   "header_hex": "234558544d33550a",
-  "source_sha256": "3e4c79d7dfbae81ba68ced081d054a989e8d8a25517c1f1722cd5c4267e9a5b2",
+  "source_sha256": "d90f8b91415a8cf17648fb5f0bb4724dd15f7f4ab49e63f10097aa102cacf361",
   "total_records": 18337,
   "entries": [
     {
@@ -79,8 +79,8 @@
     {
       "file": "0012.m3u",
       "group": "YEDEKLER",
-      "records": 640,
-      "sha256": "b8949e76c246da30970a12bf23941d1a84d93443617b2d26523faf9ddd718f24"
+      "records": 593,
+      "sha256": "39036f194b0611f2f7804f83abf38f97034202e3fc3791456609cf6c5238949f"
     },
     {
       "file": "0013.m3u",
@@ -126,9 +126,9 @@
     },
     {
       "file": "0020.m3u",
-      "group": "YABANCI ARŞİVİ (1356)",
-      "records": 1356,
-      "sha256": "69eaaa2005f2627bb8465f6843ceb3984c71d2738a3df09ecc298c3224ccaa8d"
+      "group": "YABANCI ARŞİVİ (1403)",
+      "records": 1403,
+      "sha256": "a8970cf2b50c691069e7fed70459ee3fdaee7a7f6b6bb9e40b033de3c5343ab0"
     }
   ]
 }
