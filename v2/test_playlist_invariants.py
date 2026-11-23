@@ -43,7 +43,7 @@ def main():
             .replace('group-title="🗂️ YEDEKLER (1792)"'.encode(), 'group-title="🗂️ YEDEKLER (1107)"'.encode()))
         # Owner-approved ANA ARŞİV-only sort: verify against the immutable
         # category-corrected baseline and the exact reviewed playlist blob.
-        if hashlib.sha1(b"blob " + str(len(current)).encode() + b"\\0" + current).hexdigest() == "aaeb2bc9d7bc1a109068e76df513416e609d9e3f":
+        if hashlib.sha1(b"blob " + str(len(current)).encode() + b"\0" + current).hexdigest() == "aaeb2bc9d7bc1a109068e76df513416e609d9e3f":
             from collections import Counter
             from ibo_single_playlist_transfer import inventory, category
             _, baseline_blocks = parse(normalized)
