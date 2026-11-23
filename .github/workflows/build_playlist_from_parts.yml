@@ -26,8 +26,13 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Generate canonical playlist and validate inventory
+      - name: Apply reviewed channel command and validate canonical inventory
         run: |
+          set -euo pipefail
+          if [ -f v2/playlists/parts/pending_command.json ]; then
+            python v2/channel_command_engine.py --request v2/playlists/parts/pending_command.json --apply
+            rm -- v2/playlists/parts/pending_command.json
+          fi
           python v2/playlist_parts_manager.py auto
           python v2/test_playlist_invariants.py
       - name: Create validated proposal branch (never push main)
@@ -38,6 +43,9 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -- MADSC55_TV_IBO_CALISANLAR_TEST.m3u8 v2/playlists/parts/
+          for file in v2/ibo_authorized_change.json v2/playlists/channel_status.json; do
+            if [ -f "$file" ]; then git add -- "$file"; fi
+          done
           if git diff --cached --quiet; then
             echo "Canonical playlist and reviewed parts already match."
             exit 0

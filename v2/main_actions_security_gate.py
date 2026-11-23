@@ -77,7 +77,9 @@ def audit_one(filename,source):
             return ["PARTS_BUILD_JOB_PERMISSIONS_CHANGED"]
         if jobs["build"].get("if")!="github.ref == 'refs/heads/main' && !contains(github.event.head_commit.message, '[skip ci]')":
             return ["PARTS_BUILD_MAIN_ONLY_REQUIRED"]
-        required=("python v2/playlist_parts_manager.py auto",
+        required=("python v2/channel_command_engine.py --request v2/playlists/parts/pending_command.json --apply",
+                  "rm -- v2/playlists/parts/pending_command.json",
+                  "python v2/playlist_parts_manager.py auto",
                   "python v2/test_playlist_invariants.py",
                   "git add -- MADSC55_TV_IBO_CALISANLAR_TEST.m3u8 v2/playlists/parts/",
                   'branch="automation/ibo-parts-',
@@ -218,6 +220,69 @@ def preserves_record_multiplicity(original, candidate):
     from collections import Counter
     before, after = Counter(original), Counter(candidate)
     return all(after[record] >= count for record, count in before.items())
+
+def category_count_normalized(record):
+    """Normalize only the visible numeric suffix; preserve every other byte."""
+    head, sep, rest = record.partition(b"\n")
+    pattern = re.compile(rb'(group-title\s*=\s*")([^"]*)(")', re.I)
+    match = pattern.search(head)
+    if match is None:
+        raise ValueError("Missing group title")
+    label = re.sub(rb'\s*\(\d+\)\s*\Z', b'', match.group(2))
+    return head[:match.start(2)] + label + head[match.end(2):] + sep + rest
+
+
+def safe_favorite_copy(original, candidate):
+    """No missing channels; additions may only copy existing streams to FAVORİLER."""
+    from collections import Counter
+    try:
+        old = Counter(map(category_count_normalized, original))
+        new = Counter(map(category_count_normalized, candidate))
+        if any(new[record] < n for record, n in old.items()):
+            return False
+        extras = new - old
+        if sum(extras.values()) > 2000:
+            return False
+
+        def without_group(rec):
+            return re.sub(rb'group-title\s*=\s*"[^"]*"', b'group-title="<EXISTING>"',
+                          rec, count=1, flags=re.I)
+
+        known = {without_group(rec) for rec in old}
+        for rec in extras:
+            head = rec.splitlines()[0].decode("utf-8")
+            matched = re.search(r'group-title\s*=\s*"([^"]+)"', head, re.I)
+            if matched is None or "FAVORİLER" not in matched.group(1).upper():
+                return False
+            if without_group(rec) not in known:
+                return False
+        return True
+    except (ValueError, UnicodeError, TypeError):
+        return False
+
+
+def safe_channel_move(original, candidate):
+    """Owner-approved category moves/recounts must preserve every underlying record."""
+    from collections import Counter
+    try:
+        def without_group(record):
+            return re.sub(rb'group-title\s*=\s*"[^"]*"',
+                          b'group-title="<PRESERVED>"', record, count=1, flags=re.I)
+        return Counter(map(without_group, original)) == Counter(
+            map(without_group, candidate))
+    except (ValueError, UnicodeError, TypeError):
+        return False
+
+
+def safe_category_reorder(original, candidate):
+    """Reorder and counter changes cannot mutate or delete existing records."""
+    from collections import Counter
+    try:
+        return Counter(map(category_count_normalized, original)) == Counter(
+            map(category_count_normalized, candidate))
+    except (ValueError, UnicodeError, TypeError):
+        return False
+
 
 def audit(root=ROOT):
     root=Path(root)
@@ -481,14 +546,15 @@ def audit(root=ROOT):
                             spec["result_sha256"]==hashlib.sha256(b).hexdigest() and
                             spec["operation"] in allowed and
                             isinstance(spec["request"],str) and len(spec["request"].strip())>=12 and
-                            isinstance(spec["channels"],list) and 0<len(spec["channels"])<=2000 and
+                            isinstance(spec["channels"],list) and 0<len(spec["channels"])<=2500 and
                             all(isinstance(x,str) and x.strip() for x in spec["channels"]) and
                             h0==h1 and len(r1)>0 and
                             all(x.startswith(b"#EXTINF:") and
                                 any(line.startswith((b"http://",b"https://")) for line in x.splitlines()[1:])
                                 for x in r1) and
-                            (spec["operation"] in {"remove","move","rename","category"} or
-                             preserves_record_multiplicity(r0, r1)))
+                            ((spec["operation"] in {"move","category"} and safe_channel_move(r0, r1)) or
+                             (spec["operation"]=="copy" and safe_favorite_copy(r0, r1)) or
+                             (spec["operation"]=="reorder" and safe_category_reorder(r0, r1))))
                     except (OSError,ValueError,TypeError,KeyError):
                         valid=False
                     if not valid:

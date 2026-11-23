@@ -3,7 +3,7 @@
 import unittest
 import tempfile
 from pathlib import Path
-from main_actions_security_gate import audit, audit_one,GATE,WRITER_SUSPENDED,preserves_record_multiplicity
+from main_actions_security_gate import audit, audit_one,GATE,WRITER_SUSPENDED,preserves_record_multiplicity,safe_favorite_copy,safe_category_reorder,safe_channel_move
 
 def fixture(events="  workflow_dispatch:\n", perms="  contents: read\n",
             job="    runs-on: ubuntu-latest\n    steps:\n      - run: echo safe\n"):
@@ -21,6 +21,29 @@ class MainActionsGateTests(unittest.TestCase):
         untrusted = source.replace("    branches: [main]", "    branches: [main, unsafe]")
         self.assertIn("PARTS_BUILD_UNAPPROVED_TRIGGER",
                       audit_one(PARTS_BUILD, untrusted))
+
+    def test_favorites_copy_preserves_originals_and_rejects_unknown_urls(self):
+        source = b'#EXTINF:-1 group-title="YEDEKLER (3)",TRT 1\nhttps://example.test/1\n'
+        favorite = b'#EXTINF:-1 group-title="FAVOR\xc4\xb0LER 1 (1)",TRT 1\nhttps://example.test/1\n'
+        self.assertTrue(safe_favorite_copy([source], [source, favorite]))
+        forged = favorite.replace(b"https://example.test/1", b"https://bad.test/forged")
+        self.assertFalse(safe_favorite_copy([source], [source, forged]))
+        self.assertFalse(safe_favorite_copy([source], [favorite]))
+
+    def test_owner_category_move_preserves_every_original_channel(self):
+        from_source = b'#EXTINF:-1 group-title="YEDEKLER (2)",A\\nhttps://example.test/a\\n'
+        moved = from_source.replace(b"YEDEKLER (2)", b"ANA ARSIV (1)")
+        self.assertTrue(safe_channel_move([from_source], [moved]))
+        self.assertFalse(safe_channel_move([from_source], []))
+        self.assertFalse(safe_channel_move([from_source], [moved.replace(b"/a", b"/b")]))
+
+    def test_category_reorder_counts_are_not_deleted(self):
+        one = b'#EXTINF:-1 group-title="HABER (3)",A\nhttps://example.test/a\n'
+        two = b'#EXTINF:-1 group-title="HABER (3)",B\nhttps://example.test/b\n'
+        one2 = one.replace(b"(3)", b"(2)")
+        two2 = two.replace(b"(3)", b"(2)")
+        self.assertTrue(safe_category_reorder([one, two], [two2, one2]))
+        self.assertFalse(safe_category_reorder([one, two], [two2]))
 
     def test_manual_readonly_allowed(self):
         self.assertEqual(audit_one("v2-world-discovery.yml",fixture()),[])
