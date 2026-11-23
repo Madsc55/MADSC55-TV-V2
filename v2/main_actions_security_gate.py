@@ -293,6 +293,38 @@ def safe_channel_move(original, candidate):
         return False
 
 
+def safe_backup_display_rename(original, candidate):
+    """Only deterministic YEDEKLER display-name edits; every other byte stable."""
+    try:
+        from channel_command_engine import format_backup_display
+        from playlist_parts_manager import category, logical
+        if len(original) != len(candidate) or not original:
+            return False
+        changed = 0
+        for before, after in zip(original, candidate):
+            bhead, bsep, btail = before.partition(b"\n")
+            ahead, asep, atail = after.partition(b"\n")
+            if bsep != asep or btail != atail:
+                return False
+            if b"," not in bhead or b"," not in ahead:
+                return False
+            bmeta, _, bname = bhead.rpartition(b",")
+            ameta, _, aname = ahead.rpartition(b",")
+            if bmeta != ameta or category(before) != category(after):
+                return False
+            if logical(category(before)) == "YEDEKLER":
+                wanted = format_backup_display(bname.decode("utf-8").strip()).encode("utf-8")
+                if aname != wanted:
+                    return False
+            elif before != after:
+                return False
+            if before != after:
+                changed += 1
+        return changed > 0
+    except (ValueError, UnicodeError, TypeError, KeyError):
+        return False
+
+
 def safe_category_reorder(original, candidate):
     """Reorder and counter changes cannot mutate or delete existing records."""
     from collections import Counter
@@ -573,7 +605,8 @@ def audit(root=ROOT):
                                 for x in r1) and
                             ((spec["operation"] in {"move","category"} and safe_channel_move(r0, r1)) or
                              (spec["operation"]=="copy" and safe_favorite_copy(r0, r1)) or
-                             (spec["operation"]=="reorder" and safe_category_reorder(r0, r1))))
+                             (spec["operation"]=="reorder" and safe_category_reorder(r0, r1)) or
+                             (spec["operation"]=="rename" and safe_backup_display_rename(r0, r1))))
                     except (OSError,ValueError,TypeError,KeyError):
                         valid=False
                     if not valid:
