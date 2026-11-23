@@ -65,7 +65,6 @@ jobs:
               try:
                   from collections import Counter
                   import json
-                  import re
                   from v2.playlist_parts_manager import split_records, category, logical, checksum
                   parts_dir = Path("v2/playlists/parts")
                   spec = json.loads((parts_dir / "manifest.json").read_text(encoding="utf-8"))
@@ -87,7 +86,7 @@ jobs:
                   names = []
                   for entry in spec["entries"]:
                       name = entry["file"]
-                      if not re.fullmatch(r"[0-9]{4}\\.m3u", name):
+                      if not (isinstance(name, str) and len(name) == 8 and name[:4].isascii() and name[:4].isdigit() and name[4:] == ".m3u"):
                           return False
                       part = (parts_dir / name).read_bytes()
                       if checksum(part) != entry["sha256"]:
