@@ -5,6 +5,7 @@ run: test
 
 test:
 	PYTHONPATH=v2:. $(PYTHON) -m unittest -v v2.test_channel_command_engine
+	PYTHONPATH=v2:. $(PYTHON) -m unittest -v v2.test_fast_channel_move_scope
 	PYTHONPATH=v2:. $(PYTHON) -m unittest -v v2.test_ibo_import_visibility_audit
 	PYTHONPATH=v2:. $(PYTHON) -m unittest -v v2.test_discovery_34_live_contract v2.test_federated_m3u_source_discovery v2.test_discovery_34 v2.test_task_ledger_integrity
 	PYTHONPATH=v2:. $(PYTHON) -m unittest -v v2.test_shared_url_identity
