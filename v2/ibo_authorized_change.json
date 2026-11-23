@@ -1,22 +1,10 @@
 {
-  "base_sha256": "d7d4e17a1093dbde66ce3c8e191abf06516ba78e08c0efbe551b4a7e2f2d215e",
-  "result_sha256": "9dccd3ba2d43fd757e540c87cebcc66b5b4a3514d9e243d5fc55afc6684bac48",
+  "base_sha256": "9dccd3ba2d43fd757e540c87cebcc66b5b4a3514d9e243d5fc55afc6684bac48",
+  "result_sha256": "cbdd6f02d217fa8f5964762af7cc39427a4e990bceb878f727364d6814767459",
   "operation": "move",
-  "request": "Kullanıcının açık talimatı: ANA ARŞİV'in güncel 2. sıradan 15. sıraya kadar olan kanallarının tamamını (14 kayıt, 15 dahil) YABANCI ARŞİVİ'ne taşı. Kanalları silme, hiçbir başka kategoriye dokunma.",
+  "request": "Kullanıcı talimatı: ANA ARŞİV kategorisindeki güncel 7. sıradaki kanal ile 45. sıradaki kanalı (yalnızca bu iki kanal) YABANCI ARŞİVİ'ne taşı; hiçbirini silme ve diğer kategorileri değiştirme.",
   "channels": [
-    "24 H CATALUNYA",
-    "24 Horas (1080p)",
-    "24 HORAS (720P)",
-    "24 Horas Canarias (1080p)",
-    "24 HORAS CANARIAS (720P)",
-    "24 HORAS CATALUNYA (720P)",
-    "24 HOUR FREE MOVIES",
-    "24 HOUR FREE MOVİES (720P)",
-    "24 KANAL",
-    "24 KANAL (720P)",
-    "24 KİTCHEN HD TR",
-    "24 NEWS (360P)",
-    "24 NEWS (720P)",
-    "24 NEWS HD"
+    "24/7 CANAL DE NOTİCİAS (720P)",
+    "36.6 TV"
   ]
 }
