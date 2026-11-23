@@ -23,7 +23,8 @@ class SafeFetchError(Exception):
 
 def vetted_target(url):
     if (not isinstance(url, str) or not 0 < len(url) <= 4096
-            or any(ord(c) <= 32 or ord(c) == 127 or c == "\\" for c in url)):
+            or any(ord(c) <= 32 or ord(c) == 127 or c == "\\" for c in url)
+            or any(bad in url.lower() for bad in ("%0a", "%0d", "%00"))):
         raise SafeFetchError("INVALID_URL")
     try:
         parsed = urlsplit(url)
@@ -126,7 +127,9 @@ def sample_transport_stream(url, fetch=bounded_get):
         chunk = fetch(current, MAX_SAMPLE)
         if not chunk.lstrip().startswith(b"#EXTM3U"):
             return chunk
-        text = chunk[:MAX_MANIFEST].decode("utf-8-sig", errors="replace")
+        if len(chunk) > MAX_MANIFEST:
+            raise SafeFetchError("HLS_MANIFEST_TOO_LARGE")
+        text = chunk.decode("utf-8-sig", errors="replace")
         lines = [line.strip() for line in text.splitlines() if line.strip()]
         if any(line.startswith("#EXT-X-KEY:") and "METHOD=NONE" not in line
                for line in lines):
