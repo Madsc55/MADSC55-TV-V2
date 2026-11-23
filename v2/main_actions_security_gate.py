@@ -72,6 +72,23 @@ def audit_one(filename,source):
         if ("14136864383" not in source or "python3 v2/import_every_archive_both_systems.py --old-repo /tmp/old-madsc-tv --scan-dir /tmp/all-scan" not in source or "python3 v2/test_playlist_invariants.py" not in source or "v2/ibo_authorized_change.json" not in source):
             return ["ONE_TIME_IMPORT_INVARIANTS_CHANGED"]
         return []
+    if filename=="run_move_685.yml":
+        # One explicitly authorized manual-only writer. Never run on push/PR.
+        if set(events)!={"workflow_dispatch"}:
+            return ["685_UNAPPROVED_TRIGGER"]
+        if mapping(doc.get("permissions"))!={"contents":"write","pull-requests":"write","actions":"read"}:
+            return ["685_WRONG_PERMISSIONS"]
+        if set(mapping(doc.get("jobs")))!={"preview-685"}:
+            return ["685_UNEXPECTED_JOB"]
+        required=("v2/unlock_and_move_685.py", "44842556117",
+                  "git switch -c", "gh pr create --base main",
+                  "git push origin", "git diff --exit-code",
+                  "actions/upload-artifact@v4")
+        if not all(fragment in source for fragment in required):
+            return ["685_PUBLISHER_INVARIANTS_CHANGED"]
+        if "refs/heads/main" in source or "git push origin main" in source:
+            return ["685_DIRECT_MAIN_WRITE_FORBIDDEN"]
+        return []
     allowed=({"push","pull_request","workflow_dispatch"} if filename==GATE else
              {"push","pull_request"} if filename==OFFLINE_CI else
              {"push","workflow_dispatch"} if filename==SAFETY else
