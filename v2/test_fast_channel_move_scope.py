@@ -6,9 +6,9 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
-from channel_command_engine import operate, record_name
+from channel_command_engine import operate, record_name, parts_for
 from fast_channel_move_scope import eligible_pr, safe_move_bytes
-from playlist_parts_manager import checksum, parts_for
+from playlist_parts_manager import checksum
 from test_channel_command_engine import SAMPLE
 
 PLAYLIST = "MADSC55_TV_IBO_CALISANLAR_TEST.m3u8"
