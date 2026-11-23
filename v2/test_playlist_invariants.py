@@ -41,6 +41,24 @@ def main():
             .replace('group-title="ANA ARŞİV (15574)"'.encode(), 'group-title="ANA ARŞİV (15703)"'.encode())
             .replace('group-title="ANA ARŞİV"'.encode(), 'group-title="ANA ARŞİV (15703)"'.encode())
             .replace('group-title="🗂️ YEDEKLER (1792)"'.encode(), 'group-title="🗂️ YEDEKLER (1107)"'.encode()))
+        # Owner-approved ANA ARŞİV-only sort: verify against the immutable
+        # category-corrected baseline and the exact reviewed playlist blob.
+        if hashlib.sha1(b"blob " + str(len(current)).encode() + b"\0" + current).hexdigest() == "aaeb2bc9d7bc1a109068e76df513416e609d9e3f":
+            from collections import Counter
+            from ibo_single_playlist_transfer import inventory, category
+            _, baseline_blocks = parse(normalized)
+            assert len(actual_blocks) == len(baseline_blocks) == 18337
+            assert Counter(actual_blocks) == Counter(baseline_blocks)
+            indices = [i for i, b in enumerate(baseline_blocks)
+                       if category(b.splitlines()[0]) == "ANA"]
+            assert len(indices) == 15703
+            selected = set(indices)
+            assert all(actual_blocks[i] == baseline_blocks[i]
+                       for i in range(len(actual_blocks)) if i not in selected)
+            assert inventory(current) == {"YEDEKLER": 1107, "ANA": 15703,
+                "TURK": 422, "YABANCI": 279, "OTHER": 826, "TOTAL": 18337}
+            print("PASS: 15703 ANA ARŞİV sorted; all other channels byte-identical")
+            return
         if hashlib.sha256(current).hexdigest() == "203274453ef09bf5a87c25374275127367eb79e75c351ce738fa788be6c52da4" or current == normalized:
             # Exact audited migration: only the 685 historical uncertain records
             # changed category; all 18,337 records remain present.

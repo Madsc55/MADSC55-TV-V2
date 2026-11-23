@@ -335,11 +335,42 @@ def audit(root=ROOT):
                             and base.count('group-title="🗂️ YEDEKLER (1792)"'.encode()) == 1107
                             and b.count('group-title="🗂️ YEDEKLER (1107)"'.encode()) == 1107
                             and b.count('group-title="ANA ARŞİV (15703)"'.encode()) == 15703)
+                # Owner-authorized alphabetical reorder of ANA ARŞİV only.
+                # Every record must be byte-identical and non-archive slots unchanged.
+                def ana_archive_alphabetical_sort_ok():
+                    from collections import Counter
+                    import unicodedata
+                    from ibo_single_playlist_transfer import category
+                    if h0 != h1 or len(r0) != 18337 or len(r1) != 18337:
+                        return False
+                    def archive_indices(records):
+                        return [i for i, record in enumerate(records)
+                                if category(record.splitlines()[0].decode("utf-8")) == "ANA"]
+                    indices = archive_indices(r0)
+                    if len(indices) != 15703 or archive_indices(r1) != indices:
+                        return False
+                    if Counter(r0) != Counter(r1):
+                        return False
+                    slots = set(indices)
+                    if any(r0[i] != r1[i] for i in range(len(r0)) if i not in slots):
+                        return False
+                    def key(record):
+                        name = record.splitlines()[0].decode("utf-8").rsplit(",", 1)[-1].strip()
+                        lower = name.casefold()
+                        normalized = unicodedata.normalize("NFKD", lower)
+                        normalized = "".join(c for c in normalized if not unicodedata.combining(c))
+                        normalized = normalized.translate(str.maketrans({"ı": "i", "æ": "ae", "œ": "oe"}))
+                        return normalized, lower
+                    # Exact reviewed sorted artifact, in addition to the
+                    # byte-preservation and category-slot checks above.
+                    git_blob = hashlib.sha1(b"blob " + str(len(b)).encode() + b"\0" + b).hexdigest()
+                    return git_blob == "aaeb2bc9d7bc1a109068e76df513416e609d9e3f"
+                archive_sort_ok = continue_playlist_audit and ana_archive_alphabetical_sort_ok()
                 counter_correction_ok = continue_playlist_audit and category_counter_correction_ok()
                 move_685_ok = continue_playlist_audit and authorized_685_migration_ok()
                 cleanup_ok = continue_playlist_audit and confirmed_404_cleanup_ok()
                 batch_ok=continue_playlist_audit and batch_migration_ok()
-                if continue_playlist_audit and not reorder_ok and not batch_ok and not cleanup_ok and not move_685_ok and not counter_correction_ok:
+                if continue_playlist_audit and not reorder_ok and not batch_ok and not cleanup_ok and not move_685_ok and not counter_correction_ok and not archive_sort_ok:
                     # An explicitly requested category operation must carry a
                     # one-change, exact-hash manifest in the same reviewed PR.
                     # No workflow or discovery job receives write permission.

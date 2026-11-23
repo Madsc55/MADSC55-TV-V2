@@ -56,7 +56,10 @@ jobs:
               .replace('group-title="ANA ARŞİV"'.encode(), 'group-title="ANA ARŞİV (15703)"'.encode())
               .replace('group-title="🗂️ YEDEKLER (1792)"'.encode(), 'group-title="🗂️ YEDEKLER (1107)"'.encode()))
           current = Path("MADSC55_TV_IBO_CALISANLAR_TEST.m3u8").read_bytes()
-          applied = digest == "203274453ef09bf5a87c25374275127367eb79e75c351ce738fa788be6c52da4" or current == normalized
+          sorted_blob = hashlib.sha1(b"blob " + str(len(current)).encode() + b"\0" + current).hexdigest()
+          applied = (digest == "203274453ef09bf5a87c25374275127367eb79e75c351ce738fa788be6c52da4"
+                     or current == normalized
+                     or sorted_blob == "aaeb2bc9d7bc1a109068e76df513416e609d9e3f")
           print("applied=" + str(applied).lower())
           PY
       - name: Build #497 preview from exact historical artifact (no scan, no playlist write)
