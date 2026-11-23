@@ -1,0 +1,24 @@
+name: Pass 1 cleanup (read-only artifact)
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Run offline cleanup
+        run: python3 v2/cleanup_epg_logo_pass1.py
+      - name: Upload proposed playlist and report
+        uses: actions/upload-artifact@v4
+        with:
+          name: pass1-cleanup-results
+          path: |
+            pass1-results/MADSC55_TV_IBO_CALISANLAR_TEST.m3u8
+            pass1-results/report.json
+          if-no-files-found: error
+          retention-days: 7
