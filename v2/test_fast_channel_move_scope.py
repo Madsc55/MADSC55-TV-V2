@@ -54,7 +54,9 @@ class FastMoveScopeTests(unittest.TestCase):
             "      - name: Ensure FFmpeg is available for real local decoded-media regression"
         )[1].split("      - name: Issue 497 targeted uncertain retry", 1)[0]
         self.assertIn("if: steps.move_scope.outputs.eligible != 'true'", section)
-        self.assertNotIn("apt-get", section)
+        self.assertNotIn("apt-get update", section)
+        self.assertIn("timeout 120s sudo", section)
+        self.assertIn("tesseract-ocr", section)
         self.assertIn("sha256sum -c -", section)
         self.assertIn(
             "17cf42701de208afbf8de9ae4cd016122c875d95beedc6c4b37894d35a523063",
