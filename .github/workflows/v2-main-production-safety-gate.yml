@@ -316,7 +316,8 @@ jobs:
               missing+=(tesseract-ocr-tur)
             fi
           fi
-          if ! fc-list --format '%{family}\n' 2>/dev/null | grep -Fq 'DejaVu'; then
+          families="$(fc-list --format '%{family}\n' 2>/dev/null)"
+          if ! grep -Fq 'DejaVu' <<< "$families"; then
             missing+=(fonts-dejavu-core)
           fi
           if (( ${#missing[@]} )); then
