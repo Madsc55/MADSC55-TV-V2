@@ -1,3 +1,19 @@
+#EXTINF:-1 tvg-logo="https://i.imgur.com/vk0j1mY.png" group-title="ANA ARŞİV (13712)",SPORT 2 (UKRAINE) (1080P)
+http://stream.mcquack.net/392/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/qkvavfH.png" group-title="ANA ARŞİV (13712)",SPORT 3 (1080P)
+http://stream.mcquack.net/393/index.m3u8
+#EXTINF:-1 tvg-name="Sport 3 (1080p)" group-title="ANA ARŞİV (13712)",Sport 3 (1080p)
+http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/BWGFFCU59AE6AEV3KF3FXTBA/12251/index.m3u8
+#EXTINF:-1 tvg-name="Sport 4 (1080p)" group-title="ANA ARŞİV (13712)",Sport 4 (1080p)
+http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/BWGFFCU59AE6AEV3KF3FXTBA/2389/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/xW6oGIx.png" group-title="ANA ARŞİV (13712)",SPORT 4 (576P)
+http://stream.mcquack.net/394/index.m3u8
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/c/c5/Sport5UA.jpg" group-title="ANA ARŞİV (13712)",SPORT 5 (1080P)
+http://stream.mcquack.net/212/index.m3u8
+#EXTINF:-1 tvg-logo="https://static.wikia.nocookie.net/logopedia/images/f/fa/Sport_Extra_horizontal.svg/revision/latest/scale-to-width-down/1000?cb=20220425110755" group-title="ANA ARŞİV (13712)",SPORT EXTRA HD
+http://92.180.26.103:80/stream/93/index.m3u8
+#EXTINF:-1 tvg-logo="https://sptfm.ro/wp-content/uploads/2021/05/logo-sport-total-fm-01.png" group-title="ANA ARŞİV (13712)",SPORT TOTAL FM (576I)
+https://livesptfm.com/SPTFM/Live/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://www.beltelecom.by/sites/default/files/styles/200200/public/tv-channels/2025-10/sporttv.png" group-title="ANA ARŞİV (13712)",SPORT TV (1080P)
 http://media1.skifnet.by/sporttv/index.m3u8
 #EXTINF:-1 tvg-name="Sport TV (1080p)" group-title="ANA ARŞİV (13712)",Sport TV (1080p)
@@ -1074,10 +1090,6 @@ http://107.167.16.138/tarangtv/index.m3u8?token=test
 https://livetv.tarangplus.in/tarangtv-origin/live/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/V3rtPEl.jpg" group-title="ANA ARŞİV (13712)",TARAQQIYOT TV
 https://stream8.cinerama.uz/1204/tracks-v1a1/mono.m3u8
-#EXTINF:-1 tvg-name="TARIM TV" group-title="ANA ARŞİV (13712)",TARIM TV
-https://content.tvkur.com/l/c7e1da7mm25p552d9u9g/index-1080p.m3u8
-#EXTINF:-1 tvg-name="TARIM TV" group-title="ANA ARŞİV (13712)",TARIM TV
-https://content.tvkur.com/l/c7e1da7mm25p552d9u9g/master.m3u8
 #EXTINF:-1 tvg-logo="https://vercanalesdominicanos.com/wp-content/uploads/2026/03/tarima.png" group-title="ANA ARŞİV (13712)",TARIMA TV (720P)
 http://190.122.104.210:5080/LiveApp/streams/tarima.m3u8
 #EXTINF:-1 group-title="ANA ARŞİV (13712)",TAROTEAME (576P)
@@ -1236,8 +1248,6 @@ https://fta.ektv.in/live/636/master.m3u8
 https://cdn.pishow.tv/ott/live/239/master.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/PCVOdup.png" group-title="ANA ARŞİV (13712)",TEHZEEB TV (720P)
 https://mumt05.tangotv.in/87NeALx2TEHZEEBTV/index.m3u8
-#EXTINF:-1 group-title="ANA ARŞİV (13712)",TEK RUMELİ TV
-https://edge1.socialsmart.tv/tekrumelitv/bant1/playlist.m3u8
 #EXTINF:-1 tvg-name="Tekyemadahi (720p)" group-title="ANA ARŞİV (13712)",Tekyemadahi (720p)
 https://ncdn.telewebion.ir/tekyemadahi/live/playlist.m3u8
 #EXTINF:-1 tvg-name="Telavision (720p)" group-title="ANA ARŞİV (13712)",Telavision (720p)
@@ -3170,14 +3180,10 @@ https://stmv.webtvninjas.com.br/tv3/tv3/playlist.m3u8
 https://tv3v.live-kd.com/live/tv3v/livestream/playlist.m3u8
 #EXTINF:-1 tvg-name="TV 45 (720p)" group-title="ANA ARŞİV (13712)",TV 45 (720p)
 https://hdbox.chunklistv.com/live?stream=3abn-nicaragua
-#EXTINF:-1 group-title="ANA ARŞİV (13712)",TV 48
-https://ajansplay.com:5443/LiveApp/streams/tv48.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/k9WqPLZ.png" group-title="ANA ARŞİV (13712)",TV 7 ALBANIA
 https://rpn3.bozztv.com/albaniatv/Med7-TV7Tirana/index.m3u8
 #EXTINF:-1 tvg-name="TV 7 Albania (1080p)" group-title="ANA ARŞİV (13712)",TV 7 Albania (1080p)
 https://vs.sednastream.com:1936/tv7/tv7/playlist.m3u8
-#EXTINF:-1 group-title="ANA ARŞİV (13712)",TV 8.5
-https://tv8.daioncdn.net/tv8bucuk/tv8bucuk_1080p.m3u8?app=tv8bucuk_web&ce=3
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/id/e/ed/TV9_Nusantara.png" group-title="ANA ARŞİV (13712)",TV 9 NUSANTARA (720P)
 https://5bf7b725107e5.streamlock.net/tv9/tv9/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/j51rBro.png" group-title="ANA ARŞİV (13712)",TV A CRITICA (1080P)
@@ -3942,8 +3948,6 @@ https://cdn3.wowza.com/5/UWpORHhLSEs5SkJs/bullheadcity/G0860_002/playlist.m3u8
 https://server.livelegitpro.in/bnews24/bnews24/video.m3u8
 #EXTINF:-1 tvg-logo="https://jiotvimages.cdn.jio.com/dare_images/images/TV45.png" group-title="ANA ARŞİV (13712)",TV45 (720P)
 https://stream.ottlive.co.in/tv45/index.m3u8
-#EXTINF:-1 group-title="ANA ARŞİV (13712)",TV5
-https://tv5-live.ercdn.net/tv5/tv5.m3u8
 #EXTINF:-1 tvg-name="TV5 (1080p)" group-title="ANA ARŞİV (13712)",TV5 (1080p)
 https://cdn4.skygo.mn/live/disk1/TV5HD/DASH-FTA/TV5HD.mpd
 #EXTINF:-1 tvg-logo="https://dtil.tmsimg.com/assets/s144024_ld_h15_aa.png?lock=720x540" group-title="ANA ARŞİV (13712)",TV5 KANNADA (576P)
@@ -4028,10 +4032,6 @@ https://vglivessai.akamaized.net/sg/v1/master/611d79b11b77e2f571934fd80ca1413453
 https://www.gruppotv7.com:8090/hls/ireporter.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/9g3wknl.png" group-title="ANA ARŞİV (13712)",TV8 (LITHUANIA) (576P)
 http://stream.mcquack.net/374/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.ibb.co/dgj3MTh/tv85.png" group-title="ANA ARŞİV (13712)",TV8 BUÇUK
-https://tv8.daioncdn.net/tv8bucuk/tv8bucuk.m3u8?app=tv8bucuk_web
-#EXTINF:-1 tvg-logo="https://i.ibb.co/dgj3MTh/tv85.png" group-title="ANA ARŞİV (13712)",TV8 BUÇUK (BACKUP)
-https://tv8.daioncdn.net/tv8bucuk/tv8bucuk.m3u8?app=bf58ab52-4865-4c81-b223-26b41009801e
 #EXTINF:-1 tvg-name="TV9 (1080p)" group-title="ANA ARŞİV (13712)",TV9 (1080p)
 https://cdn4.skygo.mn/live/disk1/TV9HD/DASH-FTA/TV9HD.mpd
 #EXTINF:-1 tvg-logo="https://i.imgur.com/Sco4x8t.png" group-title="ANA ARŞİV (13712)",TV9 (SLOVAKIA)
@@ -5186,7 +5186,3 @@ https://jmp2.uk/plu-5d93b635b43dd1a399b39eee.m3u8
 https://jmp2.uk/stvp-ESBC2100001IU
 #EXTINF:-1 tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/GBBC19000017V_20250107T025833SQUARE.png" group-title="ANA ARŞİV (13712)",VEVO POP
 https://jmp2.uk/stvp-GBBC19000017V
-#EXTINF:-1 tvg-logo="https://i.ibb.co/brFBnw8/vevopop.png" group-title="ANA ARŞİV (13712)",VEVO POP
-https://amg00056-amg00056c9-rakuten-fr-3243.playouts.now.amagi.tv/playlist/amg00056-vevotvfast-vevopopfr-rakutenfr/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/dZHktKR.png" group-title="ANA ARŞİV (13712)",VEVO POP (1080P)
-https://amg00056-amg00056c6-rakuten-uk-3235.playouts.now.amagi.tv/playlist.m3u8

@@ -1,3 +1,33 @@
+#EXTINF:-1 tvg-logo="https://jiotvimages.cdn.jio.com/dare_images/images/Khabar_Fast.png" group-title="ANA ARŞİV (13712)",KHABAR FAST (720P)
+https://samitaorigin.tangotv.in/KHABARFAST/SAMITAORIGIN/index.m3u8
+#EXTINF:-1 tvg-logo="https://dtil.tmsimg.com/assets/s143262_ld_h15_aa.png?lock=720x540" group-title="ANA ARŞİV (13712)",KHABRAIN ABHI TAK (360P)
+https://d1msejlow1t3l4.cloudfront.net/fta/khabreinabhitak/playlist.m3u8
+#EXTINF:-1 tvg-logo="https://dtil.tmsimg.com/assets/s143262_ld_h15_aa.png?lock=720x540" group-title="ANA ARŞİV (13712)",KHABRAIN ABHI TAK (576P)
+https://fta.ektv.in/live/308/master.m3u8
+#EXTINF:-1 tvg-logo="https://dtil.tmsimg.com/assets/s143262_ld_h15_aa.png?lock=720x540" group-title="ANA ARŞİV (13712)",KHABRAIN ABHI TAK (720P)
+https://mumt05.tangotv.in/87NeALx2KHABRAINABHITAK/index.m3u8
+#EXTINF:-1 tvg-name="Khalij TV" group-title="ANA ARŞİV (13712)",Khalij TV
+https://khalijhls.wns.live/hls/stream.m3u8
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/fa/thumb/7/7c/Bandar_KHALI_J_e_FARS_TV.svg/960px-Bandar_KHALI_J_e_FARS_TV.svg.png" group-title="ANA ARŞİV (13712)",KHALIJ-E FARS TV (576P)
+https://ncdn.telewebion.ir/khalijefars/live/playlist.m3u8
+#EXTINF:-1 tvg-name="Khatlon (576p)" group-title="ANA ARŞİV (13712)",Khatlon (576p)
+https://live.teleradiocom.tj/10/3m.m3u8
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/fa/8/86/KHAVARAN_tv.png" group-title="ANA ARŞİV (13712)",KHAVARAN TV (1080P)
+https://ncdn.telewebion.ir/khavaran/live/playlist.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/RgdHdOV.png" group-title="ANA ARŞİV (13712)",KHL (576P)
+http://176.118.197.101/KHL/index.m3u8
+#EXTINF:-1 tvg-name="KHL (576p)" group-title="ANA ARŞİV (13712)",KHL (576p)
+https://fs.uplink.kz/telekanal_khl/mono.m3u8?token=onlinetv
+#EXTINF:-1 tvg-logo="https://i.imgur.com/RgdHdOV.png" group-title="ANA ARŞİV (13712)",KHL (576P)
+http://stream.mcquack.net/166/index.m3u8
+#EXTINF:-1 tvg-name="KHL Prime (1080p)" group-title="ANA ARŞİV (13712)",KHL Prime (1080p)
+https://fs.uplink.kz/khl_prime/mono.m3u8?token=onlinetv
+#EXTINF:-1 tvg-logo="https://i.imgur.com/pwxT0ON.png" group-title="ANA ARŞİV (13712)",KHL PRIME (1080P)
+http://stream.mcquack.net/178/index.m3u8
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/fa/b/bd/%D9%84%D9%88%DA%AF%D9%88_%D8%B4%D8%A8%DA%A9%D9%87_%D8%AE%D8%B1%D8%A7%D8%B3%D8%A7%D9%86_%D8%B1%D8%B6%D9%88%DB%8C.png" group-title="ANA ARŞİV (13712)",KHORASAN RAZAVI TV (1080P)
+https://ncdn.telewebion.ir/khorasanrazavi/live/playlist.m3u8
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/fa/thumb/9/9a/Ahwaz_TV.svg/960px-Ahwaz_TV.svg.png" group-title="ANA ARŞİV (13712)",KHOZESTAN TV (1080P)
+https://ncdn.telewebion.ir/khoozestan/live/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://dtil.tmsimg.com/assets/s143265_ld_h9_aa.png?lock=720x540" group-title="ANA ARŞİV (13712)",KHUSHBOO BANGLA (360P)
 https://tvsen6.aynaott.com/mzwbzfZ4/index.m3u8
 #EXTINF:-1 tvg-logo="https://xstreamcp-assets-msp.streamready.in/assets/LIVETV/LIVECHANNEL/LIVETV_LIVETVCHANNEL_KHUSHBOO_BANGLA/images/LOGO_HD/image.png" group-title="ANA ARŞİV (13712)",KHUSHBOO BANGLA (720P)
@@ -1630,8 +1660,6 @@ https://maverick-maverick-black-cinema-3-us.roku.wurl.tv/playlist.m3u8
 https://aegis-cloudfront-1.tubi.video/55607a73-d5bd-4a09-979e-5933354469ee/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://images.fubo.tv/station_logos/maverick_black_cinema_c.png" group-title="ANA ARŞİV (13712)",MAVERICK BLACK CINEMA (720P)
 https://maverick-maverick-black-cinema-1-us.samsung.wurl.tv/playlist.m3u8
-#EXTINF:-1 group-title="ANA ARŞİV (13712)",MAVİ KARADENİZ
-https://edge1.socialsmart.tv/mavikaradeniz/bant1/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/Oj3hEBh.jpg" group-title="ANA ARŞİV (13712)",MAX ANIME (1080P)
 https://cdnlive.klicgo.net/maxanime/live/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/Oj3hEBh.jpg" group-title="ANA ARŞİV (13712)",MAX ANIME (720P)
@@ -1932,8 +1960,6 @@ https://mn-nl.mncdn.com/mekameleen/smil:mekameleentv.smil/playlist.m3u8
 https://eu1.servers10.com:8081/8334/index.m3u8
 #EXTINF:-1 tvg-name="Melody FM (1080p)" group-title="ANA ARŞİV (13712)",Melody FM (1080p)
 https://cdn3.wowza.com/1/OVRrOWxXUEswS2Yv/eGVxSWZy/hls/live/playlist.m3u8
-#EXTINF:-1 group-title="ANA ARŞİV (13712)",MELTEM TV
-http://vhxyrsly.rocketcdn.com/meltemtv/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.ibb.co/tcYgz6h/mensup.png" group-title="ANA ARŞİV (13712)",MEN'S UP TV
 https://tvradiozap.eu/tools/dm-m3u8.php/x2kr3hs.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/sfd87LX.png" group-title="ANA ARŞİV (13712)",MERCURIO NOTICIAS
@@ -2452,8 +2478,6 @@ https://tvextra-hls.b-cdn.net/moozlove/moozlove.m3u8
 https://tvextra-hls.b-cdn.net/moozretro/moozretro.m3u8
 #EXTINF:-1 tvg-name="Mooz Ro!" group-title="ANA ARŞİV (13712)",Mooz Ro!
 https://tvextra-hls.b-cdn.net/moozro/moozro.m3u8
-#EXTINF:-1 tvg-logo="https://i.ibb.co/qRsfyb2/tvmor.png" group-title="ANA ARŞİV (13712)",MOR TV
-https://live.euromediacenter.com/tvmor/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/yT0RmKi.png" group-title="ANA ARŞİV (13712)",MORA-NET TV (576P)
 https://stream.moranettv.hu/live/index.m3u8
 #EXTINF:-1 tvg-name="Morazan TV (720p)" group-title="ANA ARŞİV (13712)",Morazan TV (720p)
@@ -4498,8 +4522,6 @@ https://a-cdn.klowdtv.com/live3/onpatrol_720p/playlist.m3u8
 https://vmttv.dpdns.org/tv360?id=175
 #EXTINF:-1 tvg-name="ON Vie Drama (720p)" group-title="ANA ARŞİV (13712)",ON Vie Drama (720p)
 http://dvrfl05.bozztv.com/vch_vchannel18/index.m3u8
-#EXTINF:-1 tvg-name="ÖNCÜ TV" tvg-logo="https://raw.githubusercontent.com/Madsc55/madsc-tv/main/logos/yayinci-20261012-oncu.png" group-title="ANA ARŞİV (13712)",ÖNCÜ TV 720P HD
-https://edge1.socialsmart.tv/oncurtv/bant1/playlist.m3u8
 #EXTINF:-1 tvg-name="Onda 15 TV (720p)" group-title="ANA ARŞİV (13712)",Onda 15 TV (720p)
 https://cloudvideo.servers10.com:8081/8034/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/Qoh9CFy.png" group-title="ANA ARŞİV (13712)",ONDA NOVARA TV
@@ -4570,8 +4592,6 @@ https://stream.oromar.tv/hls/oromartv_hi/index.m3u8
 https://plenaris.parlament.hu:446/edgelive/smil:mkogyplen.smil/playlist.m3u8
 #EXTINF:-1 tvg-name="Orszaggyules: OGY TAB (720p)" group-title="ANA ARŞİV (13712)",Orszaggyules: OGY TAB (720p)
 https://tab.parlament.hu:446/edgelive/smil:mkogytab.smil/playlist.m3u8
-#EXTINF:-1 tvg-name="ORT TV" group-title="ANA ARŞİV (13712)",ORT TV
-https://edge1.socialsmart.tv/orttv/bant1/playlist.m3u8
 #EXTINF:-1 tvg-name="ORTB TV (1080p)" group-title="ANA ARŞİV (13712)",ORTB TV (1080p)
 https://strhls.streamakaci.tv/ortb/ortb1-multi/playlist.m3u8
 #EXTINF:-1 tvg-name="ORTM 1" group-title="ANA ARŞİV (13712)",ORTM 1
@@ -5150,19 +5170,3 @@ https://vcp4.myplaytv.com:1936/plustv/plustv/playlist.m3u8
 https://5c0740dba62b3.streamlock.net/plustv/myStream/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/9bPhStm.png" group-title="ANA ARŞİV (13712)",PLUSPLUS (1080P)
 http://stream.mcquack.net/339/index.m3u8
-#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/66dad50215d2c60008d7afbd/colorLogoPNG.png" group-title="ANA ARŞİV (13712)",PLUTO CLASSIC MOVIE WESTERNS
-https://jmp2.uk/plu-66dad50215d2c60008d7afbd.m3u8
-#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/66d717d2abec540008ba7ec4/colorLogoPNG_1787911717842.png" group-title="ANA ARŞİV (13712)",PLUTO TV 80'S ACTION
-https://jmp2.uk/plu-66d717d2abec540008ba7ec4.m3u8
-#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/66b4990746762a00084c2f78/colorLogoPNG.png" group-title="ANA ARŞİV (13712)",PLUTO TV 90'S CLASSICS
-https://jmp2.uk/plu-66b4990746762a00084c2f78.m3u8
-#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/5dfcde52d28b09000a42d7a2/colorLogoPNG.png" group-title="ANA ARŞİV (13712)",PLUTO TV A LA MEXICANA
-https://jmp2.uk/plu-5dfcde52d28b09000a42d7a2.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/g8PCdh6.png" group-title="ANA ARŞİV (13712)",PLUTO TV ACTION
-http://service-stitcher.clusters.pluto.tv/stitch/hls/channel/561d7d484dc7c8770484914a/master.m3u8?terminate=false&deviceType=web&deviceMake=web&deviceModel=web&sid=54&deviceId=561d7d484dc7c8770484914a&deviceVersion=DNT&appVersion=DNT&deviceDNT=0&userId=&advertisingId=&deviceLat=&deviceLon=&app_name=&appName=web&buildVersion=&appStoreUrl=&architecture=&includeExtendedEvents=false&marketingRegion=US&serverSideAds=false
-#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/5dbfeb961b411c00090b52b3/colorLogoPNG.png" group-title="ANA ARŞİV (13712)",PLUTO TV ACTION
-https://jmp2.uk/plu-5dbfeb961b411c00090b52b3.m3u8
-#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/61c095861782bd000780e0ba/colorLogoPNG.png" group-title="ANA ARŞİV (13712)",PLUTO TV ACTION (SWEDEN)
-https://jmp2.uk/plu-61c0b0688a80a4000703fbcb.m3u8
-#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/61c095861782bd000780e0ba/colorLogoPNG.png" group-title="ANA ARŞİV (13712)",PLUTO TV ACTION (SWEDEN) DK
-https://jmp2.uk/plu-61c095861782bd000780e0ba.m3u8
