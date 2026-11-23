@@ -43,7 +43,6 @@ def main():
             assert counts == {"YEDEKLER": 1107, "ANA": 15703, "TURK": 422,
                               "YABANCI": 279, "OTHER": 826, "TOTAL": 18337}, counts
             assert len(actual_yedekler) == 1107
-            assert all(block in original_blocks or block in actual_blocks for block in original_blocks)
             print("PASS: exact SHA-bound 685 migration; 1107 YEDEKLER; 18337 total")
             return
         assert len(original_yedekler) == len(actual_yedekler) == 1792
