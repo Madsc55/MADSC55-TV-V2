@@ -298,27 +298,58 @@ jobs:
           PYTHONPATH=v2 python -m unittest -v test_official_sites_discovery test_direct_stream_resolver test_youtube_discovery
           python -m py_compile v2/official_sites_discovery.py v2/direct_stream_resolver.py v2/test_official_sites_discovery.py v2/test_direct_stream_resolver.py v2/youtube_discovery.py v2/test_youtube_discovery.py
           python -m py_compile v2/identity_metadata.py v2/recovery_queue.py v2/stage2_integration.py v2/stage3_identity_recovery.py v2/stage3_metadata_acceptance.py v2/stage3_recovery_queue.py v2/real_ibo_scan.py v2/discover.py v2/consolidate_inventory.py
-      - name: Ensure FFmpeg and Turkish OCR fixtures without slow apt mirrors
-        timeout-minutes: 3
+      - name: Provision FFmpeg and Turkish OCR with verified, bounded downloads
+        timeout-minutes: 8
         run: |
           set -euo pipefail
-          # The pinned ubuntu-24.04 runner already provides these binaries
-          # and DejaVu fonts. Fail closed if the image ever stops providing
-          # them instead of silently skipping media regressions.
-          for binary in ffmpeg ffprobe tesseract curl git fc-match; do
+          for binary in git curl tar sha256sum; do
             command -v "$binary" >/dev/null || {
-              echo "::error::Missing required media binary: $binary"
+              echo "::error::Required bootstrap tool not installed: $binary"
               exit 1
             }
           done
-          if ! fc-match -f '%{family}' 'DejaVu Sans' | grep -qi DejaVu; then
-            echo "::error::Missing DejaVu fonts in Ubuntu runner image"
+          if ! command -v ffmpeg >/dev/null || ! command -v ffprobe >/dev/null; then
+            # ubuntu-24.04 runners may not ship FFmpeg. Avoid hanging apt
+            # mirrors: fetch both native binaries from a fixed GitHub release,
+            # then verify the exact published SHA256 before extraction.
+            bundle="$RUNNER_TEMP/ffmpeg-linux-amd64-v9.0.2.tar.gz"
+            curl --fail --location --silent --show-error \
+              --connect-timeout 10 --max-time 180 --retry 2 --retry-delay 2 \
+              "https://github.com/binmgr/ffmpeg/releases/download/v9.0.2/ffmpeg-linux-amd64.tar.gz" \
+              --output "$bundle"
+            echo "d7a22611c3d6793d2939ff992db8feecfdb9c206a583aa31d9a887e0992502c8  $bundle" | sha256sum -c -
+            mkdir -p "$RUNNER_TEMP/ffmpeg-extract" "$RUNNER_TEMP/ffmpeg-tools"
+            tar -xzf "$bundle" -C "$RUNNER_TEMP/ffmpeg-extract" --no-same-owner
+            ffmpeg_path="$(find "$RUNNER_TEMP/ffmpeg-extract" -type f -name ffmpeg -print -quit)"
+            ffprobe_path="$(find "$RUNNER_TEMP/ffmpeg-extract" -type f -name ffprobe -print -quit)"
+            if [ -z "$ffmpeg_path" ] || [ -z "$ffprobe_path" ]; then
+              echo "::error::Signed release archive missing FFmpeg/FFprobe binaries"
+              exit 1
+            fi
+            install -m 0755 "$ffmpeg_path" "$RUNNER_TEMP/ffmpeg-tools/ffmpeg"
+            install -m 0755 "$ffprobe_path" "$RUNNER_TEMP/ffmpeg-tools/ffprobe"
+            export PATH="$RUNNER_TEMP/ffmpeg-tools:$PATH"
+            echo "$RUNNER_TEMP/ffmpeg-tools" >> "$GITHUB_PATH"
+          fi
+          command -v ffmpeg
+          command -v ffprobe
+          ffmpeg -hide_banner -version >/dev/null
+          ffprobe -hide_banner -version >/dev/null
+          if ! command -v tesseract >/dev/null; then
+            # Install only the small OCR executable, never FFmpeg from apt.
+            # Bound the network operation and fail if Ubuntu mirrors are down.
+            timeout 60s sudo env DEBIAN_FRONTEND=noninteractive apt-get install \
+              -y -qq --no-install-recommends \
+              -o Acquire::Retries=0 -o Acquire::http::Timeout=15 \
+              -o Acquire::https::Timeout=15 tesseract-ocr
+          fi
+          command -v tesseract
+          if ! command -v fc-match >/dev/null ||
+             ! fc-match -f '%{family}' 'DejaVu Sans' | grep -qi DejaVu; then
+            echo "::error::DejaVu fonts required for offline decoder fixtures"
             exit 1
           fi
           if ! tesseract --list-langs 2>/dev/null | grep -Fxq tur; then
-            # Only the Turkish traineddata is missing from the standard image.
-            # Fetch the official fast model at a FIXED commit, authenticate its
-            # exact Git blob hash, and install it without any apt network calls.
             model="$RUNNER_TEMP/tur.traineddata"
             curl --fail --location --silent --show-error \
               --connect-timeout 10 --max-time 45 --retry 2 --retry-delay 2 \
@@ -335,8 +366,6 @@ jobs:
             fi
             sudo install -m 0644 "$model" "${data_dir%/}/tur.traineddata"
           fi
-          command -v ffprobe
-          command -v ffmpeg
           tesseract --list-langs 2>/dev/null | grep -Fxq tur
       - name: Issue 497 targeted uncertain retry offline regressions (no live scan)
         run: |
