@@ -19,7 +19,7 @@ from playlist_parts_manager import (
 GROUP = re.compile(rb'(group-title\s*=\s*")([^"]*)(")', re.I)
 STATUS_PATH = ROOT / "v2/playlists/channel_status.json"
 AUTHORIZED = ROOT / "v2/ibo_authorized_change.json"
-VALID_ACTIONS = {"move", "copy", "reorder", "archive", "mark", "recount"}
+VALID_ACTIONS = {"move", "copy", "reorder", "archive", "remove", "mark", "recount"}
 VALID_STATUSES = {"working", "broken", "unchecked", "unavailable"}
 COUNT_SUFFIX = re.compile(r"\s*\(\d+\)\s*$")
 
@@ -96,8 +96,21 @@ def lookup_category(query, buckets):
 
 def resolve_selectors(buckets, command):
     choices = command.get("channels")
-    if not isinstance(choices, list) or not choices or len(choices) > 2000:
-        raise ValueError("Select between 1 and 2,000 channels")
+    window = command.get("range")
+    if window is not None:
+        if choices is not None:
+            raise ValueError("Specify either range or channels, not both")
+        if not isinstance(window, dict) or set(window) != {"start", "end"}:
+            raise ValueError("Range must contain start and end")
+        first, last = window["start"], window["end"]
+        if (type(first) is not int or type(last) is not int
+                or first < 1 or last < first or last - first + 1 > 2500):
+            raise ValueError("Range must select 1..2500 consecutive channels")
+        if not isinstance(command.get("source"), str):
+            raise ValueError("Range requires an existing source category")
+        choices = [{"position": ordinal} for ordinal in range(first, last + 1)]
+    if not isinstance(choices, list) or not choices or len(choices) > 2500:
+        raise ValueError("Select between 1 and 2,500 channels")
     selected = []
     seen = set()
     fallback = command.get("source")
@@ -178,7 +191,7 @@ def operate(data, command, statuses=None):
             "before": before, "after": before, "deleted": 0,
         }
     if action != "recount":
-        target = command.get("target", "ANA ARŞİV" if action == "archive" else None)
+        target = command.get("target", "ANA ARŞİV" if action in {"archive", "remove"} else None)
         if action == "reorder":
             source_groups = {group for group, _, _ in selected}
             if len(source_groups) != 1:
@@ -186,11 +199,11 @@ def operate(data, command, statuses=None):
             target_id = source_groups.pop()
         else:
             target_id = lookup_category(target, buckets)
-        if action == "archive" and target_id not in {
+        if action in {"archive", "remove"} and target_id not in {
             key("ANA ARŞİV"), key("TÜRK ARŞİVİ"), key("YABANCI ARŞİVİ")
         }:
             raise ValueError("Archive destination must be an existing archive")
-        if action in {"move", "archive", "reorder"}:
+        if action in {"move", "archive", "remove", "reorder"}:
             for group, ordinal, _ in sorted(selected, key=lambda p: (p[0], -p[1])):
                 buckets[group].pop(ordinal - 1)
             if action != "reorder" and any(group == target_id for group, _, _ in selected):
@@ -214,6 +227,13 @@ def operate(data, command, statuses=None):
         if type(position) is not int or not 1 <= position <= len(buckets[target_id]) + 1:
             raise ValueError("Target position is out of range")
         buckets[target_id][position - 1:position - 1] = insert
+        if action == "remove" and command.get("status") is not None:
+            if command["status"] not in VALID_STATUSES:
+                raise ValueError("Unrecognized stream status")
+            for _, _, record in selected:
+                after_statuses[hashlib.sha256(record_url(record).encode("utf-8")).hexdigest()] = {
+                    "status": command["status"], "channel": record_name(record),
+                }
     rebuilt, after = _retag_and_recount(buckets, labels)
     output = header + b"".join(rebuilt)
     old_records = split_records(data)[1]
@@ -293,7 +313,7 @@ def run_cli():
         PLAYLIST.write_bytes(updated)
         authorized = {
             "base_sha256": checksum(old), "result_sha256": checksum(updated),
-            "operation": {"recount": "category", "archive": "move", "reorder": "reorder"}.get(
+            "operation": {"recount": "category", "archive": "move", "remove": "move", "reorder": "reorder"}.get(
                 request["action"], request["action"]),
             "request": request_text,
             "channels": report["selected"][:2000] or ["All category count labels"],
