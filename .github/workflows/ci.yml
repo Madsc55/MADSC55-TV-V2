@@ -129,3 +129,80 @@ jobs:
           path: /tmp/full-ibo-audit-summary.json
           if-no-files-found: warn
           retention-days: 30
+
+  full-playlist-decoded-av:
+    name: Local decoded A/V review ${{ matrix.shard }}
+    # A single approved main merge; no schedule, PR network probes or publisher.
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[full-ibo-av-decode]')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 110
+    permissions:
+      contents: read
+      actions: read
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        shard: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify FFmpeg and local-only decoded A/V safety
+        run: |
+          command -v ffmpeg
+          PYTHONPATH=v2:. python -m unittest -v v2.test_full_playlist_av_decode v2.test_shared_url_safe_probe
+      - name: Retrieve SHA-bound prior metadata evidence
+        uses: actions/download-artifact@v4
+        with:
+          run-id: 45232887355
+          github-token: ${{ github.token }}
+          name: full-ibo-audit-${{ matrix.shard }}
+          path: /tmp/ibo-prior
+      - name: Decode bounded local MPEG-TS sample for every URL
+        run: |
+          PYTHONPATH=v2 python v2/full_playlist_av_decode.py --shard ${{ matrix.shard }} --previous-report /tmp/ibo-prior/shard-${{ matrix.shard }}.json --output /tmp/decode-${{ matrix.shard }}.json
+      - name: Upload checkpoint for this shard
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: full-ibo-decode-${{ matrix.shard }}
+          path: /tmp/decode-${{ matrix.shard }}.json
+          if-no-files-found: warn
+          retention-days: 30
+
+  full-playlist-decoded-av-summary:
+    name: Validate 100% of URL decode attempts
+    needs: full-playlist-decoded-av
+    if: always() && github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[full-ibo-av-decode]')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Download results from this same workflow run
+        uses: actions/download-artifact@v4
+        with:
+          pattern: full-ibo-decode-*
+          path: /tmp/full-ibo-decoded-shards
+      - name: Fail if any URLs are missing or prior SHA differs
+        run: |
+          PYTHONPATH=v2 python v2/full_playlist_av_decode.py --merge-dir /tmp/full-ibo-decoded-shards --output /tmp/full-ibo-av-summary.json
+      - name: Save verified coverage and separated A/V outcomes
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: full-ibo-av-summary
+          path: /tmp/full-ibo-av-summary.json
+          if-no-files-found: warn
+          retention-days: 30
