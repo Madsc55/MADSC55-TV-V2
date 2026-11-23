@@ -87,15 +87,15 @@ def main():
             continue
         seen.add(key)
         head = block[0]
-        for field, key in (("tvg-id", "epg_added"), ("tvg-logo", "logos_added")):
-            values = candidates[key][field]
+        for field, counter_name in (("tvg-id", "epg_added"), ("tvg-logo", "logos_added")):
+            values = candidates[record_key(block[0], url)][field]
             if len(values) > 1:
                 stats["metadata_conflicts"] += 1
             elif len(values) == 1 and not attr(head, field):
                 value = next(iter(values))
                 new_head = set_attr(head, field, value)
                 if new_head != head:
-                    stats[key] += 1
+                    stats[counter_name] += 1
                     head = new_head
         block[0] = head
         unique.append(block)
@@ -110,7 +110,7 @@ def main():
     args.report.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(result, encoding="utf-8")
     args.report.write_text(json.dumps(stats, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    (args.report.parent / "removed-records.m3u8").write_text("#EXTM3U\\n" + "".join(removed), encoding="utf-8")
+    (args.report.parent / "removed-records.m3u8").write_text("#EXTM3U\n" + "".join(removed), encoding="utf-8")
     print(json.dumps(stats, ensure_ascii=False))
 
 if __name__ == "__main__":
