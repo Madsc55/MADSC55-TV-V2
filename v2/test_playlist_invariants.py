@@ -50,7 +50,7 @@ def main():
             assert len(actual_blocks) == len(baseline_blocks) == 18337
             assert Counter(actual_blocks) == Counter(baseline_blocks)
             indices = [i for i, b in enumerate(baseline_blocks)
-                       if category(b.splitlines()[0].decode("utf-8")) == "ANA"]
+                       if category(b.splitlines()[0]) == "ANA"]
             assert len(indices) == 15703
             selected = set(indices)
             assert all(actual_blocks[i] == baseline_blocks[i]
