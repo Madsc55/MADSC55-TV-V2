@@ -1,3 +1,19 @@
+#EXTINF:-1 tvg-logo="https://ltsk-cdn.s3.eu-west-1.amazonaws.com/jumpstart/Temp_Live/cdn/HLS/Channel/transparentImages/kalinga-bharat--Logo_2000_X_1125_Transpharent.png" group-title="ANA ARŞİV (13712)",KALINGA TV (576P)
+https://fta.ektv.in/live/386/master.m3u8
+#EXTINF:-1 tvg-logo="https://ltsk-cdn.s3.eu-west-1.amazonaws.com/jumpstart/Temp_Live/cdn/HLS/Channel/transparentImages/kalinga-bharat--Logo_2000_X_1125_Transpharent.png" group-title="ANA ARŞİV (13712)",KALINGA TV (576P)
+https://cdn.pishow.tv/ott/live/1470/master.m3u8
+#EXTINF:-1 tvg-logo="https://ltsk-cdn.s3.eu-west-1.amazonaws.com/jumpstart/Temp_Live/cdn/HLS/Channel/transparentImages/kalinga-bharat--Logo_2000_X_1125_Transpharent.png" group-title="ANA ARŞİV (13712)",KALINGA TV (720P)
+https://mumt01.tangotv.in/O5aw8Zn3KALINGATV/index.m3u8
+#EXTINF:-1 tvg-logo="https://ltsk-cdn.s3.eu-west-1.amazonaws.com/jumpstart/Temp_Live/cdn/HLS/Channel/transparentImages/kalinga-bharat--Logo_2000_X_1125_Transpharent.png" group-title="ANA ARŞİV (13712)",KALINGA TV (720P)
+https://server.thelegitpro.in/kalingatv/kalingatv/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/XPyOTZF.jpeg" group-title="ANA ARŞİV (13712)",KALOOPY TV (1080P)
+https://streamingserver000.viewtv.cloud/VIEWTVNETWORK-KALOOPY/index.m3u8
+#EXTINF:-1 tvg-name="Kalsan TV (576p)" group-title="ANA ARŞİV (13712)",Kalsan TV (576p)
+https://ap02.iqplay.tv:8082/iqb8002/ka1s0n/playlist.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/MO4w3OT.jpeg" group-title="ANA ARŞİV (13712)",KALU TV (720P)
+https://tv.kaludecolombia.com/memfs/d71c0104-4752-4690-bdbf-19aa849da6c4.m3u8
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Kan11Logo.svg/960px-Kan11Logo.svg.png" group-title="ANA ARŞİV (13712)",KAN 11 (1080P)
+https://kancdn.medonecdn.net/livehls/oil/kancdn-live/live/kan11/live.livx/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/KanHinuchit.svg/960px-KanHinuchit.svg.png" group-title="ANA ARŞİV (13712)",KAN EDUCATIONAL (576P)
 http://stream.mcquack.net/378/index.m3u8
 #EXTINF:-1 tvg-name="Kanaal Z (1080p)" group-title="ANA ARŞİV (13712)",Kanaal Z (1080p)
@@ -512,8 +528,6 @@ https://bsttv.bonus-tv.ru/cdn/kurai/playlist.m3u8
 https://kurdchhls.wns.live/hls/stream.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/9QWs2ms.png" group-title="ANA ARŞİV (13712)",KURDISTAN 24 (1080P)
 https://hlspackager.akamaized.net/live/DB/K24/HLS/K24.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/mjQptpc.png" group-title="ANA ARŞİV (13712)",KURDISTAN TV (720P)
-https://5a3ed7a72ed4b.streamlock.net/live/SMIL:myStream.smil/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/UAbSwYA.png" group-title="ANA ARŞİV (13712)",KURDSAT (1080P)
 https://hlspackager.akamaized.net/live/DB/KURDSAT_HD/HLS/KURDSAT_HD.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/UAbSwYA.png" group-title="ANA ARŞİV (13712)",KURDSAT (576P)
@@ -1178,8 +1192,6 @@ https://live-manifest.production-public.tubi.io/live/470abd8a-dea0-41a1-98bc-bf7
 https://amg01515-amg01515c26-xumo-us-4765.playouts.now.amagi.tv/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://tv.lovenature.com/wp-content/uploads/2024/10/LoveNature2024_Logo_full_colour-copy.png" group-title="ANA ARŞİV (13712)",LOVE NATURE (1080P)
 https://bamus-klowdtv.amagi.tv/playlist.m3u8
-#EXTINF:-1 tvg-id="" tvg-name="LOVE NATURE" tvg-logo="https://www.google.com/s2/favicons?domain=lovenature.com&sz=256" group-title="ANA ARŞİV (13712)",LOVE NATURE 1080P FHD
-https://aegis-cloudfront-1.tubi.video/6d6d0f24-8445-4b4c-bdf6-44f9e38beaa4/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://tvpnlogopus.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/USBA3400003IP_20260421T142045SQUARE.png" group-title="ANA ARŞİV (13712)",LOVE NATURE 4K
 https://jmp2.uk/stvp-USBA3400003IP
 #EXTINF:-1 tvg-logo="https://tv.lovenature.com/wp-content/uploads/2024/10/LoveNature2024_Logo_full_colour-copy.png" group-title="ANA ARŞİV (13712)",LOVE NATURE 4K (2160P) [GEO-BLOCKED]
@@ -1194,8 +1206,6 @@ https://amg01515-amg01515c17-xumo-us-2489.playouts.now.amagi.tv/bamus-lovenature
 https://bantel-cdn1.iptvperu.tv:1936/ZyphraCast/love-nature/chunks.m3u8
 #EXTINF:-1 tvg-logo="https://images.sr.roku.com/idType/roku-trc/context/trc/id/479fe0d11f3f5132a3f36b617547da3b/https%3A%2F%2Fimage.roku.com%2Fbh-uploads%2Fproduction%2FinfoHUDLogo%2F1738776545554_LoveNature_logos_HUB_Centered.png" group-title="ANA ARŞİV (13712)",LOVE NATURE ENGLISH
 https://jmp2.uk/rok-479fe0d11f3f5132a3f36b617547da3b.m3u8
-#EXTINF:-1 tvg-name="LOVE NATURE HD" tvg-logo="https://tv.lovenature.com/wp-content/uploads/2024/10/LoveNature2024_Logo_full_colour-copy.png" group-title="ANA ARŞİV (13712)",LOVE NATURE HD 1080P FHD
-https://mumbai-edge.smartplaytv.in/LoveNature/index.m3u8
 #EXTINF:-1 tvg-logo="https://tvpnlogopus.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/US300065DB_20250304T041514SQUARE.png" group-title="ANA ARŞİV (13712)",LOVE PETS
 https://jmp2.uk/stvp-US300065DB
 #EXTINF:-1 tvg-logo="https://lovepetstv.com/wp-content/uploads/2022/12/LovePets_Logo_SecondaryColor.png" group-title="ANA ARŞİV (13712)",LOVE PETS (1080P)
@@ -1934,10 +1944,6 @@ https://edge-f.swagit.com/live/miamibeachfl/live-1-a/playlist.m3u8
 http://168.196.127.137:6001/play/a070/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/TAjbaml.png" group-title="ANA ARŞİV (13712)",MC (720P)
 http://45.5.118.152:8000/play/a03r/index.m3u8
-#EXTINF:-1 group-title="ANA ARŞİV (13712)",MC TV
-https://rrr.sz.xlcdn.com/?account=mceutv&file=mc2&type=live&service=wowza&protocol=https&output=playlist.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/tr/c/ca/MC_TV_logosu.png" group-title="ANA ARŞİV (13712)",MC TV (720P)
-https://rrr.sz.xlcdn.com/?account=mceutv&file=mc2&output=playlist.m3u8&protocol=https&service=wowza&type=live
 #EXTINF:-1 tvg-logo="https://pbs.twimg.com/profile_images/1836009952420274177/FfYonU6r_400x400.jpg" group-title="ANA ARŞİV (13712)",MCI TELEVISION (1080P)
 https://video.ejeserver.com/live/mcitelevision.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/q4BBDzw.png" group-title="ANA ARŞİV (13712)",MCLEOD'S DAUGHTERS (1080P)
@@ -5152,11 +5158,3 @@ https://sistemastr.tropicalmoonmedia.com/live/7C452409423F57ADC960F6405635267F/7
 https://jmp2.uk/stvp-ES2100002BU
 #EXTINF:-1 tvg-name="Pingviins (720p)" group-title="ANA ARŞİV (13712)",Pingviins (720p)
 https://sirius.greenhosting.ru/PingvinRu/video.m3u8
-#EXTINF:-1 tvg-name="Pingxiang TV News Channel (576p)" group-title="ANA ARŞİV (13712)",Pingxiang TV News Channel (576p)
-http://www.pxitv.com:8099/hls-live/livepkgr/_definst_/pxitvevent/pxtv1stream.m3u8
-#EXTINF:-1 tvg-name="Pink (720p)" group-title="ANA ARŞİV (13712)",Pink (720p)
-https://edge8.pink.rs/pinktv/index.m3u8
-#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/6a0c25fe09705ebdf7e4599a/colorLogoPNG_1780925919473.png" group-title="ANA ARŞİV (13712)",PIPPI CALZASLARGAS
-https://jmp2.uk/plu-6a0c25fe09705ebdf7e4599a.m3u8
-#EXTINF:-1 tvg-logo="https://i.ibb.co/RN3dJQ7/geoflag.png" group-title="ANA ARŞİV (13712)",PIRVELI TV
-https://raw.githubusercontent.com/fraudiay79/strm/refs/heads/main/platforms/links/ge/pirvelitv.m3u8
