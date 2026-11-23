@@ -72,6 +72,23 @@ def audit_one(filename,source):
         if ("14136864383" not in source or "python3 v2/import_every_archive_both_systems.py --old-repo /tmp/old-madsc-tv --scan-dir /tmp/all-scan" not in source or "python3 v2/test_playlist_invariants.py" not in source or "v2/ibo_authorized_change.json" not in source):
             return ["ONE_TIME_IMPORT_INVARIANTS_CHANGED"]
         return []
+    if filename=="run_move_685.yml":
+        # One explicitly authorized manual-only writer. Never run on push/PR.
+        if set(events)!={"workflow_dispatch"}:
+            return ["685_UNAPPROVED_TRIGGER"]
+        if mapping(doc.get("permissions"))!={"contents":"write","pull-requests":"write","actions":"read"}:
+            return ["685_WRONG_PERMISSIONS"]
+        if set(mapping(doc.get("jobs")))!={"preview-685"}:
+            return ["685_UNEXPECTED_JOB"]
+        required=("v2/unlock_and_move_685.py", "44842556117",
+                  "git switch -c", "gh pr create --base main",
+                  "git push origin", "git diff --exit-code",
+                  "actions/upload-artifact@v4")
+        if not all(fragment in source for fragment in required):
+            return ["685_PUBLISHER_INVARIANTS_CHANGED"]
+        if "refs/heads/main" in source or "git push origin main" in source:
+            return ["685_DIRECT_MAIN_WRITE_FORBIDDEN"]
+        return []
     allowed=({"push","pull_request","workflow_dispatch"} if filename==GATE else
              {"push","pull_request"} if filename==OFFLINE_CI else
              {"push","workflow_dispatch"} if filename==SAFETY else
@@ -282,9 +299,28 @@ def audit(root=ROOT):
                         "YEDEKLER": 1792, "ANA": 15018, "TURK": 422,
                         "YABANCI": 279, "OTHER": 826, "TOTAL": 18337,
                     }
+                # Exact previously generated 685-entry migration, with immutable
+                # input/output digests and record-count preservation.
+                def authorized_685_migration_ok():
+                    if hashlib.sha256(base).hexdigest()!="6c4c06e4c5188f0868552a15fe0e2a78beee30bd6eb86b7b7d666338e29f29fc":
+                        return False
+                    if hashlib.sha256(b).hexdigest()!="203274453ef09bf5a87c25374275127367eb79e75c351ce738fa788be6c52da4":
+                        return False
+                    if h0!=h1 or len(r0)!=18337 or len(r1)!=18337:
+                        return False
+                    from ibo_single_playlist_transfer import inventory
+                    before=inventory(base)
+                    after=inventory(b)
+                    return (before.get("YEDEKLER")==1792 and
+                            before.get("TOTAL")==18337 and
+                            after.get("YEDEKLER")==1107 and
+                            after.get("ANA")==before.get("ANA")+685 and
+                            after.get("TOTAL")==18337 and
+                            all(after.get(k)==before.get(k) for k in ("TURK","YABANCI","OTHER")))
+                move_685_ok = continue_playlist_audit and authorized_685_migration_ok()
                 cleanup_ok = continue_playlist_audit and confirmed_404_cleanup_ok()
                 batch_ok=continue_playlist_audit and batch_migration_ok()
-                if continue_playlist_audit and not reorder_ok and not batch_ok and not cleanup_ok:
+                if continue_playlist_audit and not reorder_ok and not batch_ok and not cleanup_ok and not move_685_ok:
                     # An explicitly requested category operation must carry a
                     # one-change, exact-hash manifest in the same reviewed PR.
                     # No workflow or discovery job receives write permission.

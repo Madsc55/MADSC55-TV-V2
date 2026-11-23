@@ -1,8 +1,9 @@
-name: Preview 685 archive move (artifact only)
+name: Manual 685 archive move PR publisher
 on:
   workflow_dispatch:
 permissions:
-  contents: read
+  contents: write
+  pull-requests: write
   actions: read
 jobs:
   preview-685:
@@ -35,3 +36,20 @@ jobs:
           name: move-685-playlist-preview
           path: ${{ runner.temp }}/move-685/output/
           if-no-files-found: error
+      - name: Open reviewed 685 migration PR (never write main)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          branch="owner/685-archive-move-${GITHUB_RUN_ID}"
+          git switch -c "$branch"
+          cp "${RUNNER_TEMP}/move-685/output/MADSC55_TV_IBO_CALISANLAR_TEST.m3u8" MADSC55_TV_IBO_CALISANLAR_TEST.m3u8
+          git add -- MADSC55_TV_IBO_CALISANLAR_TEST.m3u8
+          git commit -m "Move exact 685 historical YEDEKLER entries to ANA ARŞİV"
+          gh auth setup-git
+          git push origin "HEAD:refs/heads/$branch"
+          gh pr create --base main --head "$branch" \
+            --title "Move verified 685 historical entries to ANA ARŞİV" \
+            --body "Generated from immutable historical manifest by manual workflow. 685 exact identities moved, total 18,337 retained. Review Offline CI and Production Security Gate before merge. Source run: ${GITHUB_RUN_ID}."

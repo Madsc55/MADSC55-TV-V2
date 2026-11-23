@@ -12,6 +12,16 @@ def fixture(events="  workflow_dispatch:\n", perms="  contents: read\n",
 class MainActionsGateTests(unittest.TestCase):
     def test_manual_readonly_allowed(self):
         self.assertEqual(audit_one("v2-world-discovery.yml",fixture()),[])
+    def test_685_manual_publisher_is_scoped(self):
+        from main_actions_security_gate import ROOT
+        source=(ROOT/".github/workflows/run_move_685.yml").read_text(encoding="utf-8")
+        self.assertEqual(audit_one("run_move_685.yml",source),[])
+        self.assertIn("685_UNAPPROVED_TRIGGER",
+                      audit_one("run_move_685.yml",source.replace(
+                          "  workflow_dispatch:", "  workflow_dispatch:\\n  push:\\n    branches: [main]")))
+        self.assertIn("685_WRONG_PERMISSIONS",
+                      audit_one("run_move_685.yml",source.replace(
+                          "  contents: write", "  contents: read")))
     def test_cron_rejected(self):
         text=fixture("  workflow_dispatch:\n  schedule:\n    - cron: '0 2 * * *'\n")
         self.assertIn("UNAPPROVED_TRIGGER",audit_one("v2-world-discovery.yml",text))
