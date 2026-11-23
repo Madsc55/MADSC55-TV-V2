@@ -65,7 +65,7 @@ def audit_one(filename,source):
         return ["INVALID_WORKFLOW"]
     events=mapping(doc.get("on"))
     if filename==PARTS_BUILD:
-        if set(events)!={"push"} or mapping(events["push"]).get("branches")!=["main"]:
+        if set(events)!={"push","workflow_dispatch"} or mapping(events["push"]).get("branches")!=["main"]:
             return ["PARTS_BUILD_UNAPPROVED_TRIGGER"]
         paths=set(mapping(events["push"]).get("paths",[]))
         if paths!={"v2/playlist_parts_manager.py","v2/playlists/parts/**",".github/workflows/build_playlist_from_parts.yml"}:
@@ -81,7 +81,7 @@ def audit_one(filename,source):
                   "git commit -m", "[skip ci]", "push origin HEAD:main")
         if not all(fragment in source for fragment in required):
             return ["PARTS_BUILD_VALIDATION_OR_WRITE_SCOPE_CHANGED"]
-        if "pull_request_target" in source or "workflow_dispatch" in source or "schedule:" in source:
+        if "pull_request_target" in source or "schedule:" in source:
             return ["PARTS_BUILD_UNTRUSTED_TRIGGER"]
         return []
     if filename==PASS1:

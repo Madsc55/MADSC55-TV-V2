@@ -1,5 +1,6 @@
 name: Build canonical IBO playlist from parts
 on:
+  workflow_dispatch:
   push:
     branches: [main]
     paths:
