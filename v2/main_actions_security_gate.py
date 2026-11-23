@@ -77,7 +77,9 @@ def audit_one(filename,source):
             return ["PARTS_BUILD_JOB_PERMISSIONS_CHANGED"]
         if jobs["build"].get("if")!="github.ref == 'refs/heads/main' && !contains(github.event.head_commit.message, '[skip ci]')":
             return ["PARTS_BUILD_MAIN_ONLY_REQUIRED"]
-        required=("python v2/playlist_parts_manager.py auto",
+        required=("python v2/channel_command_engine.py --request v2/playlists/parts/pending_command.json --apply",
+                  "rm -- v2/playlists/parts/pending_command.json",
+                  "python v2/playlist_parts_manager.py auto",
                   "python v2/test_playlist_invariants.py",
                   "git add -- MADSC55_TV_IBO_CALISANLAR_TEST.m3u8 v2/playlists/parts/",
                   'branch="automation/ibo-parts-',
