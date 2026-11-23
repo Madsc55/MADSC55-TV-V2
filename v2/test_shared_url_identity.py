@@ -66,6 +66,32 @@ class SharedUrlIdentityTests(unittest.TestCase):
         self.assertEqual(normalized_url("HTTPS://EXAMPLE.INVALID/Live.ts?Token=X"),
                          "https://example.invalid/Live.ts?Token=X")
 
+    def test_actual_program_table_is_reported_without_playback_claim(self):
+        import json
+        import subprocess
+        from unittest.mock import patch
+        from stream_probe import probe
+        payload = {
+            "streams": [
+                {"codec_type": "video", "codec_name": "h264"},
+                {"codec_type": "audio", "codec_name": "aac"},
+            ],
+            "programs": [
+                {"program_num": 101},
+                {"program_num": "202"},
+                {"program_num": 101},
+            ],
+        }
+        with patch("stream_probe._public_http_url", return_value=True), \\
+             patch("stream_probe.shutil.which", return_value="/usr/bin/ffprobe"), \\
+             patch("stream_probe.subprocess.run",
+                   return_value=subprocess.CompletedProcess([], 0, json.dumps(payload), "")) as run:
+            result = probe("https://example.invalid/multiplex.ts")
+        self.assertIn("-show_programs", run.call_args.args[0])
+        self.assertEqual(result["mpegts_program_numbers"], [101, 202])
+        self.assertTrue(result["mpegts_multiple_programs_detected"])
+        self.assertFalse(result["mpegts_programs_playback_verified"])
+
     def test_no_program_selector_still_works(self):
         text = playlist(("one", "One", "https://example.invalid/one.ts", None))
         self.assertNotIn("program_number", list(entries(text))[0])
