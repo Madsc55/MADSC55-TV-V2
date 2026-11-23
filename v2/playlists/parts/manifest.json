@@ -1,7 +1,7 @@
 {
   "version": 1,
   "header_hex": "234558544d33550a",
-  "source_sha256": "597dbb738ee5c1f8433d114077fad829741763636b5ab0877f4b56b286b0705f",
+  "source_sha256": "7d7652037149cb19b37a88af7f0518319ea87f3253187ce02ac21ef5fb04f642",
   "total_records": 18337,
   "entries": [
     {
@@ -126,15 +126,15 @@
     },
     {
       "file": "0020.m3u",
-      "group": "TÜRK ARŞİVİ (422)",
-      "records": 422,
-      "sha256": "d9bf1628f8a8074a22c3306445d4dd14b7bb32f4a1f288fe67195ce410de8bfa"
+      "group": "TÜRK ARŞİVİ (421)",
+      "records": 421,
+      "sha256": "451ec614fbc8d539e3003c149e47bdf4befd49dfec5aeada6eb13d8c15edd497"
     },
     {
       "file": "0021.m3u",
-      "group": "YABANCI ARŞİVİ (279)",
-      "records": 279,
-      "sha256": "069aa2536718b6756e3246d416bf791b3f7bc33a282be03dc16ecc442fa518d1"
+      "group": "YABANCI ARŞİVİ (280)",
+      "records": 280,
+      "sha256": "966d57e5caae7599d7b5b8173c5f0e77675d4fc84def92915d1ffc8c3c0e0bc6"
     }
   ]
 }
