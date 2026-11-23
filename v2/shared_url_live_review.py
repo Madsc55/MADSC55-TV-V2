@@ -47,16 +47,33 @@ def inventory(data):
     return sorted(conflicts, key=lambda x: x[1]["url_sha256"])
 
 
-def review(playlist_text, live=True, probe=inspect_url):
+def review(playlist_text, live=True, probe=inspect_url, previous=None):
     findings = inventory(playlist_text)
     result = []
-    for url, item in findings[:100]:
-        evidence = probe(url) if live else {
+    saved = {}
+    if isinstance(previous, dict) and isinstance(previous.get("findings"), list):
+        for old in previous["findings"]:
+            if isinstance(old, dict) and isinstance(old.get("url_sha256"), str):
+                saved[old["url_sha256"]] = old
+    resumed = 0
+    for url, item in findings:
+        old = saved.get(item["url_sha256"])
+        reuse = bool(old and all(old.get(k) == item[k] for k in
+                                 ("names", "tvg_ids", "groups", "records"))
+                     and isinstance(old.get("evidence"), dict)
+                     and isinstance(old["evidence"].get("status"), str))
+        if reuse:
+            evidence = old["evidence"]
+            resumed += 1
+        elif live:
+            evidence = probe(url)
+        else:
+            evidence = {
             "status": "NOT_LIVE_CHECKED",
             "programs": [], "sample_bytes": 0,
             "distinct_broadcasters_verified": False,
             "audio_video_decoded_verified": False,
-        }
+            }
         result.append({
             **item, "evidence": evidence,
             "identity_result": "INCONCLUSIVE_NO_BROADCASTER_IDENTITY_PROOF",
@@ -68,7 +85,8 @@ def review(playlist_text, live=True, probe=inspect_url):
         "policy": "READ_ONLY; no deletion, retagging, or broadcaster identity claim",
         "matched_url_groups": len(findings),
         "reviewed_url_groups": len(result),
-        "truncated": len(findings) > 100,
+        "resumed_url_groups": resumed,
+        "truncated": False,
         "live_requested": live,
         "status_counts": dict(sorted(counts.items())),
         "validated_distinct_broadcasters": 0,
@@ -81,11 +99,23 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--playlist", type=Path, default=PLAYLIST)
     ap.add_argument("--report", type=Path, default=DEFAULT_REPORT)
+    ap.add_argument("--resume-report", type=Path,
+                    help="Reuse hash- and playlist-bound read-only evidence")
     ap.add_argument("--offline", action="store_true",
                     help="Metadata-only dry run: no network requests")
     args = ap.parse_args()
     original = args.playlist.read_bytes()
-    report = review(original.decode("utf-8-sig"), live=not args.offline)
+    sha = hashlib.sha256(original).hexdigest()
+    previous = None
+    if args.resume_report:
+        candidate = json.loads(args.resume_report.read_text(encoding="utf-8"))
+        if (candidate.get("playlist_sha256") != sha or
+                candidate.get("policy") !=
+                "READ_ONLY; no deletion, retagging, or broadcaster identity claim"):
+            raise SystemExit("Previous audit is not bound to this exact playlist")
+        previous = candidate
+    report = review(original.decode("utf-8-sig"), live=not args.offline,
+                    previous=previous)
     report["created_utc"] = datetime.datetime.now(
         datetime.timezone.utc).isoformat()
     report["playlist_sha256"] = hashlib.sha256(original).hexdigest()
@@ -98,6 +128,7 @@ def main():
     print(json.dumps({
         "matched_url_groups": report["matched_url_groups"],
         "reviewed_url_groups": report["reviewed_url_groups"],
+        "resumed_url_groups": report["resumed_url_groups"],
         "status_counts": report["status_counts"],
         "modified_playlist": False,
         "no_broadcast_identity_claims": True,
