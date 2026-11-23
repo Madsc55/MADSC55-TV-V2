@@ -12,7 +12,7 @@ from pathlib import Path
 import re
 import subprocess
 
-from channel_command_engine import grouped
+from channel_command_engine import grouped, key
 from playlist_parts_manager import ROOT, category, checksum, logical, split_records
 
 PLAYLIST = "MADSC55_TV_IBO_CALISANLAR_TEST.m3u8"
@@ -88,7 +88,7 @@ def safe_move_bytes(original, candidate, spec, parts_dir=PARTS):
         for rec in records:
             label = category(rec)
             match = COUNT_TITLE.search(label)
-            if not match or int(match.group(1)) != len(records) or logical(label) != labels1[group]:
+            if not match or int(match.group(1)) != len(records) or key(label) != group:
                 return False
 
     manifest = json.loads((parts_dir / "manifest.json").read_text(encoding="utf-8"))
