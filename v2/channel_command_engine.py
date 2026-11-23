@@ -119,13 +119,6 @@ def resolve_selectors(buckets, command):
         if not isinstance(selector, dict):
             raise ValueError("Bad channel selector")
         src = selector.get("category", fallback)
-        if src is not None:
-            candidates = [(lookup_category(src, buckets), n, record)
-                          for n, record in enumerate(buckets[lookup_category(src, buckets)], 1)]
-        else:
-            candidates = [(group, n, record)
-                          for group, records in buckets.items()
-                          for n, record in enumerate(records, 1)]
         filters = [name for name in ("name", "position", "url") if name in selector]
         if len(filters) != 1:
             raise ValueError("Select by exactly one of name, position or URL")
@@ -133,8 +126,19 @@ def resolve_selectors(buckets, command):
         if field == "position":
             if src is None or type(selector[field]) is not int or selector[field] < 1:
                 raise ValueError("Ordinal requires category and positive integer")
-            matches = [part for part in candidates if part[1] == selector[field]]
-        elif field == "name":
+            src_key = lookup_category(src, buckets)
+            ordinal = selector[field]
+            matches = [(src_key, ordinal, buckets[src_key][ordinal - 1])] if ordinal <= len(buckets[src_key]) else []
+        else:
+            if src is not None:
+                src_key = lookup_category(src, buckets)
+                candidates = [(src_key, n, record) for n, record in enumerate(buckets[src_key], 1)]
+            else:
+                candidates = [(group, n, record)
+                              for group, records in buckets.items()
+                              for n, record in enumerate(records, 1)]
+            matches = []
+        if field == "name":
             phrase = selector[field]
             if not isinstance(phrase, str) or not phrase.strip():
                 raise ValueError("Invalid channel name")
