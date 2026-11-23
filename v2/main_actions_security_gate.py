@@ -361,7 +361,10 @@ def audit(root=ROOT):
                         normalized = "".join(c for c in normalized if not unicodedata.combining(c))
                         normalized = normalized.translate(str.maketrans({"ı": "i", "æ": "ae", "œ": "oe"}))
                         return normalized, lower
-                    return [r1[i] for i in indices] == sorted((r0[i] for i in indices), key=key)
+                    # Exact reviewed sorted artifact, in addition to the
+                    # byte-preservation and category-slot checks above.
+                    git_blob = hashlib.sha1(b"blob " + str(len(b)).encode() + b"\0" + b).hexdigest()
+                    return git_blob == "aaeb2bc9d7bc1a109068e76df513416e609d9e3f"
                 archive_sort_ok = continue_playlist_audit and ana_archive_alphabetical_sort_ok()
                 counter_correction_ok = continue_playlist_audit and category_counter_correction_ok()
                 move_685_ok = continue_playlist_audit and authorized_685_migration_ok()
