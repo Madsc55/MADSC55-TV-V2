@@ -1,9 +1,10 @@
 """No-network acceptance tests: named/ordinal commands never delete channel URLs."""
 import unittest
+import hashlib
 from collections import Counter
 
 from channel_command_engine import (
-    operate, record_url, record_name, grouped, parts_for, key,
+    operate, record_url, record_name, grouped, parts_for, key, bind_git_blob_revision,
 )
 from playlist_parts_manager import split_records, category, checksum, logical
 
@@ -138,6 +139,19 @@ class ChannelCommandEngineTests(unittest.TestCase):
         before = [x.split(b'group-title="')[0] for x in split_records(SAMPLE)[1]]
         after = [x.split(b'group-title="')[0] for x in split_records(out)[1]]
         self.assertEqual(before, after)
+
+    def test_chat_request_git_blob_lock_rejects_stale_main(self):
+        blob = hashlib.sha1(b"blob " + str(len(SAMPLE)).encode("ascii") +
+                            bytes([0]) + SAMPLE).hexdigest()
+        request = {"action": "recount", "expected_git_blob_sha": blob}
+        bound = bind_git_blob_revision(SAMPLE, request)
+        self.assertEqual(bound["expected_sha256"], checksum(SAMPLE))
+        result, statuses, report = operate(SAMPLE, bound)
+        self.assertEqual(len(split_records(result)[1]), len(split_records(SAMPLE)[1]))
+        with self.assertRaisesRegex(ValueError, "Git blob SHA mismatch"):
+            bind_git_blob_revision(SAMPLE + b"\\n", request)
+        with self.assertRaisesRegex(ValueError, "disagree"):
+            bind_git_blob_revision(SAMPLE, {**request, "expected_sha256": "0" * 64})
 
     def test_rejects_stale_sha_and_ambiguous_selector(self):
         with self.assertRaisesRegex(ValueError, "SHA"):
