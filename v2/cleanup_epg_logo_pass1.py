@@ -69,7 +69,7 @@ def main():
         for field in ("tvg-id", "tvg-logo"):
             val = attr(block[0], field)
             if val:
-                candidates[url][field].add(val)
+                candidates[record_key(block[0], url)][field].add(val)
     unique = []
     removed = []
     seen = set()
@@ -88,7 +88,7 @@ def main():
         seen.add(key)
         head = block[0]
         for field, key in (("tvg-id", "epg_added"), ("tvg-logo", "logos_added")):
-            values = candidates[url][field]
+            values = candidates[key][field]
             if len(values) > 1:
                 stats["metadata_conflicts"] += 1
             elif len(values) == 1 and not attr(head, field):
