@@ -65,7 +65,7 @@ def audit_one(filename,source):
         return ["INVALID_WORKFLOW"]
     events=mapping(doc.get("on"))
     if filename==PARTS_BUILD:
-        if set(events)!={"push"} or mapping(events["push"]).get("branches")!=["main"]:
+        if set(events)!={"push","workflow_dispatch"} or mapping(events["push"]).get("branches")!=["main"]:
             return ["PARTS_BUILD_UNAPPROVED_TRIGGER"]
         paths=set(mapping(events["push"]).get("paths",[]))
         if paths!={"v2/playlist_parts_manager.py","v2/playlists/parts/**",".github/workflows/build_playlist_from_parts.yml"}:
