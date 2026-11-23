@@ -1,0 +1,11 @@
+{
+  "action": "move",
+  "source": "ANA ARŞİV",
+  "target": "YABANCI ARŞİVİ",
+  "range": {
+    "start": 2,
+    "end": 15
+  },
+  "expected_git_blob_sha": "a02bf99ebe13146518a5002c2af7790deb7681f5",
+  "request": "Kullanıcının açık talimatı: ANA ARŞİV'in güncel 2. sıradan 15. sıraya kadar olan kanallarının tamamını (14 kayıt, 15 dahil) YABANCI ARŞİVİ'ne taşı. Kanalları silme, hiçbir başka kategoriye dokunma."
+}
