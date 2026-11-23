@@ -126,6 +126,27 @@ class SampleSafetyTests(unittest.TestCase):
         self.assertEqual(result["status"], "ONE_VIDEO_SERVICE_OBSERVED")
         self.assertEqual(len(result["programs"]), 1)
 
+    def test_resume_reuses_only_matching_bound_evidence(self):
+        u = "https://public.example/a.ts"
+        data = ("#EXTM3U\n#EXTINF:-1 tvg-id=\"x\",Name 1\n" + u +
+                "\n#EXTINF:-1 tvg-id=\"x\",Name 2\n" + u + "\n")
+        calls = []
+        def probe(url):
+            calls.append(url)
+            return {"status": "ONE_VIDEO_SERVICE_OBSERVED", "programs": [],
+                    "distinct_broadcasters_verified": False,
+                    "audio_video_decoded_verified": False}
+        first = review(data, probe=probe)
+        second = review(data, probe=probe, previous=first)
+        self.assertEqual(len(calls), 1)
+        self.assertEqual(second["resumed_url_groups"], 1)
+        self.assertFalse(second["truncated"])
+        # A change in labels invalidates the reused evidence.
+        third = review(data.replace("Name 2", "Different"), probe=probe,
+                       previous=first)
+        self.assertEqual(third["resumed_url_groups"], 0)
+        self.assertEqual(len(calls), 2)
+
     def test_report_never_contains_stream_token_or_auto_deletion(self):
         u = "https://public.example/path.ts?token=PRIVATE-SECRET"
         data = (

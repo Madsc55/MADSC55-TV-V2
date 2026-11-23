@@ -33,6 +33,7 @@ jobs:
     timeout-minutes: 15
     permissions:
       contents: read
+      actions: read
     steps:
       - uses: actions/checkout@v4
         with:
@@ -40,13 +41,18 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Reuse SHA-bound preceding evidence (skip already audited URLs)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh run download 45212066252 --repo "$GITHUB_REPOSITORY" --name shared-url-safe-live-review --dir /tmp/previous-shared-review
       - name: Verify public-IP pinning, HLS bounds and offline PSI fixtures
         run: |
           PYTHONPATH=v2:. python -m unittest -v v2.test_shared_url_safe_probe
           python -m py_compile v2/shared_url_safe_probe.py v2/shared_url_live_review.py
       - name: Bounded read-only shared URL sample
         run: |
-          PYTHONPATH=v2 python v2/shared_url_live_review.py --report /tmp/shared-url-live-review.json
+          PYTHONPATH=v2 python v2/shared_url_live_review.py --report /tmp/shared-url-live-review.json --resume-report /tmp/previous-shared-review/shared-url-live-review.json
       - name: Upload no-token evidence (never upload stream URLs)
         if: always()
         uses: actions/upload-artifact@v4
