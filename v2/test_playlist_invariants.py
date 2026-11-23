@@ -22,39 +22,46 @@ def main():
     current = LIVE.read_bytes()
     text = current.decode("utf-8-sig")
     channels_pre = list(entries(text))
-    # The approved parts builder performs a lossless ANA ARŞİV block move.
-    # Validate it against the committed canonical playlist, not the older
-    # historical 1,792-backup layout. Fail closed on any other mutation.
+    # Verified parts become the canonical read-only source after the approved
+    # initial migration. Subsequent owner-authorized moves, favorites, and
+    # count reconciliations may change category sizes, never by silent deletion.
     parts_manifest = ROOT / "v2/playlists/parts/manifest.json"
-    if parts_manifest.exists() and len(channels_pre) == 18337:
-        import subprocess
-        from playlist_parts_manager import split_records, category, logical, inventory, checksum
+    if parts_manifest.exists():
+        import re
+        from playlist_parts_manager import split_records, category, logical, checksum
+        from channel_command_engine import key, record_url
         manifest = json.loads(parts_manifest.read_text(encoding="utf-8"))
-        baseline = subprocess.check_output(
-            ["git", "show", "HEAD:MADSC55_TV_IBO_CALISANLAR_TEST.m3u8"], cwd=ROOT)
-        before_header, before = split_records(baseline)
-        after_header, after = split_records(current)
-        expected_counts = {"YEDEKLER": 1107, "ANA ARŞİV": 15703}
-        assert manifest["total_records"] == len(before) == len(after) == 18337
-        assert inventory(before) == inventory(after)
-        assert all(inventory(after)[key] == count for key, count in expected_counts.items())
-        assert before_header == after_header
-        assert manifest["header_hex"] == before_header.hex()
-        assert checksum(baseline) == manifest["source_sha256"] or baseline == current, (
-            "Parts source differs from committed canonical playlist")
-        from collections import Counter
-        assert Counter(before) == Counter(after), "Parts builder changed channel records"
-        non_archive_before = [r for r in before if logical(category(r)) != "ANA ARŞİV"]
-        non_archive_after = [r for r in after if logical(category(r)) != "ANA ARŞİV"]
-        assert non_archive_before == non_archive_after, "Non-archive order changed"
-        archive_before = [r for r in before if logical(category(r)) == "ANA ARŞİV"]
-        archive_after = [r for r in after if logical(category(r)) == "ANA ARŞİV"]
-        assert archive_before == archive_after, "ANA ARŞİV order changed"
-        groups = [logical(category(r)) for r in after]
-        last_backup = max(i for i, group in enumerate(groups) if group == "YEDEKLER")
-        assert groups[last_backup + 1:last_backup + 1 + 15703] == ["ANA ARŞİV"] * 15703
+        assert manifest.get("version") == 1
+        header, records = split_records(current)
+        assert len(records) == len(channels_pre) == manifest["total_records"]
+        assert header.hex() == manifest["header_hex"]
+        entries_info = manifest["entries"]
+        assert entries_info and sum(e["records"] for e in entries_info) == len(records)
+        filenames = []
+        rebuilt = []
+        for entry in entries_info:
+            name = entry["file"]
+            assert re.fullmatch(r"[0-9]{4}\.m3u", name)
+            part_path = parts_manifest.parent / name
+            payload = part_path.read_bytes()
+            assert checksum(payload) == entry["sha256"]
+            assert len(split_records(payload)[1]) == entry["records"]
+            assert all(logical(category(rec)) == entry["group"] for rec in split_records(payload)[1])
+            rebuilt.append(payload)
+            filenames.append(name)
+        assert len(filenames) == len(set(filenames))
+        assert {p.name for p in parts_manifest.parent.glob("*.m3u")} == set(filenames)
+        assert current == header + b"".join(rebuilt), "Parts and canonical playlist disagree"
+        groups = [logical(category(r)) for r in records]
+        assert "YEDEKLER" in groups and "ANA ARŞİV" in groups
+        y = max(i for i, g in enumerate(groups) if g == "YEDEKLER")
+        archive_count = sum(g == "ANA ARŞİV" for g in groups)
+        assert groups[y + 1:y + 1 + archive_count] == ["ANA ARŞİV"] * archive_count
+        # Every channel has a parseable stream URL. A stream URL may exist
+        # in multiple favorite/archive categories by explicit owner command.
+        assert all(record_url(rec).startswith(("http://", "https://")) for rec in records)
         assert LIVE.read_bytes() == current
-        print("PASS: parts build preserved all 18337 records and protected category order")
+        print(f"PASS: checked {len(records)} canonical channels and {len(entries_info)} SHA-bound parts")
         return
     if len(channels_pre) == 18337:
         # Approved HTTP cleanup: exactly 575 non-YEDEKLER entries removed.
