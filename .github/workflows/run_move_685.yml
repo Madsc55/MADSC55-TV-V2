@@ -1,0 +1,37 @@
+name: Preview 685 archive move (artifact only)
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  preview-685:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Download historical 685 identity manifest
+        uses: actions/download-artifact@v4
+        with:
+          name: v2-497-existing-audit-preview
+          run-id: 44842556117
+          github-token: ${{ github.token }}
+          path: ${{ runner.temp }}/move-685
+      - name: Generate proposed playlist in temporary directory only
+        run: |
+          set -euo pipefail
+          mkdir -p "${RUNNER_TEMP}/move-685/output"
+          cp MADSC55_TV_IBO_CALISANLAR_TEST.m3u8 "${RUNNER_TEMP}/move-685/output/"
+          python3 v2/unlock_and_move_685.py \
+            --playlist "${RUNNER_TEMP}/move-685/output/MADSC55_TV_IBO_CALISANLAR_TEST.m3u8" \
+            --manifest "${RUNNER_TEMP}/move-685/manifest.json" \
+            --report "${RUNNER_TEMP}/move-685/output/move-685-report.json"
+          git diff --exit-code -- MADSC55_TV_IBO_CALISANLAR_TEST.m3u8
+      - name: Publish proposed playlist and move report
+        uses: actions/upload-artifact@v4
+        with:
+          name: move-685-playlist-preview
+          path: ${{ runner.temp }}/move-685/output/
+          if-no-files-found: error
