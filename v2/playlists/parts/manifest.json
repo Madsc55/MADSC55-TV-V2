@@ -1,7 +1,7 @@
 {
   "version": 1,
   "header_hex": "234558544d33550a",
-  "source_sha256": "d8ff24135c247c06a3f764887de68cc05e16e08e9e9824feda757166a4750c00",
+  "source_sha256": "1bbbd1ea25c097df75207b44f2901b1630f3be9f22c8d338b187f4473f846c4a",
   "total_records": 18337,
   "entries": [
     {
@@ -85,38 +85,38 @@
     {
       "file": "0013.m3u",
       "group": "ANA ARŞİV",
-      "records": 2627,
-      "sha256": "b34929939335b0568d1033c30dd6836078643e2052bf16608d0be606a71e86f4"
+      "records": 2625,
+      "sha256": "a23057ae0bfdec17910fafd39fde9ca38cbceba3c775ce7a20efb621e4649804"
     },
     {
       "file": "0014.m3u",
       "group": "ANA ARŞİV",
-      "records": 2550,
-      "sha256": "62499608cf6e9c6d2d15f31e8e9235caf8e7a5c99c506417e86f6eb840c7f884"
+      "records": 2553,
+      "sha256": "3c3fb46b6e0e9a7b041d38ff4b3c409b934b55e9f210051c6f649baaead5d31f"
     },
     {
       "file": "0015.m3u",
       "group": "ANA ARŞİV",
-      "records": 2581,
-      "sha256": "74d21b8fbf70bed4d12c5a8be079977fc3ad8620ba063178fb8188f544e78fcf"
+      "records": 2580,
+      "sha256": "7c596d1e95d960afa5c7dc1277875ef599e8397a69398383e768f64103364711"
     },
     {
       "file": "0016.m3u",
       "group": "ANA ARŞİV",
       "records": 2544,
-      "sha256": "2b5faf2135b37364073a632cdfc39c098cf09c45d79df3a5330f16108c59e762"
+      "sha256": "727295757d7ad597202261ccb39cfc2c9ae6f64465bb9e29609c9bde27874929"
     },
     {
       "file": "0017.m3u",
       "group": "ANA ARŞİV",
-      "records": 2593,
-      "sha256": "b67e65f3f803b44ca1c8f5abf1e0345409799d370af94e22217949b4dc43a781"
+      "records": 2592,
+      "sha256": "dbee9c77c8a4c60d80e0d5ae9c087cafb04995a606ffad796ab16138d0fbf9cf"
     },
     {
       "file": "0018.m3u",
       "group": "ANA ARŞİV",
-      "records": 817,
-      "sha256": "ee7e834a4c9fab222dc9289e425882e62f0e4a0473114692eda71903b21aa6a4"
+      "records": 818,
+      "sha256": "064ffc3391cedf0a8049f262c3d33c404ed28ecfedd8a438afd655e5e2d9b5fe"
     },
     {
       "file": "0019.m3u",

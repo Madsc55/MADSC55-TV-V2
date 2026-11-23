@@ -1,3 +1,11 @@
+#EXTINF:-1 tvg-name="Pingxiang TV News Channel (576p)" group-title="ANA ARŞİV (13712)",Pingxiang TV News Channel (576p)
+http://www.pxitv.com:8099/hls-live/livepkgr/_definst_/pxitvevent/pxtv1stream.m3u8
+#EXTINF:-1 tvg-name="Pink (720p)" group-title="ANA ARŞİV (13712)",Pink (720p)
+https://edge8.pink.rs/pinktv/index.m3u8
+#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/6a0c25fe09705ebdf7e4599a/colorLogoPNG_1780925919473.png" group-title="ANA ARŞİV (13712)",PIPPI CALZASLARGAS
+https://jmp2.uk/plu-6a0c25fe09705ebdf7e4599a.m3u8
+#EXTINF:-1 tvg-logo="https://i.ibb.co/RN3dJQ7/geoflag.png" group-title="ANA ARŞİV (13712)",PIRVELI TV
+https://raw.githubusercontent.com/fraudiay79/strm/refs/heads/main/platforms/links/ge/pirvelitv.m3u8
 #EXTINF:-1 tvg-name="Pitaara (1080p)" group-title="ANA ARŞİV (13712)",Pitaara (1080p)
 https://vg-pitaaratvlive.akamaized.net/v1/master/611d79b11b77e2f571934fd80ca1413453772ac7/vglive-sk-583798/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://xstreamcp-assets-msp.streamready.in/assets/LIVETV/LIVECHANNEL/LIVETV_LIVETVCHANNEL_PITAARA/images/LOGO_HD/image.png" group-title="ANA ARŞİV (13712)",PITAARA (1080P)
@@ -3176,12 +3184,6 @@ https://w1.mediastreaming.it/calabriachannel/livestream/playlist.m3u8
 https://scl.edge.grupoz.cl/rtcstreaming/live/playlist.m3u8
 #EXTINF:-1 tvg-name="RTG int." group-title="ANA ARŞİV (13712)",RTG int.
 http://213.91.179.28:8000/play/a0bw
-#EXTINF:-1 tvg-logo="https://i.imgur.com/ZMKPAho.png" group-title="ANA ARŞİV (13712)",RTG TV (1080P)
-http://stream.mcquack.net/164/index.m3u8
-#EXTINF:-1 tvg-name="RTG TV (720p)" group-title="ANA ARŞİV (13712)",RTG TV (720p)
-http://31.148.48.15/RTG_HD/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/ZMKPAho.png" group-title="ANA ARŞİV (13712)",RTG TV HD (1080P)
-http://46.53.200.153:7777/play/a00u/index.m3u8
 #EXTINF:-1 tvg-name="RTH-TV1 (720p)" group-title="ANA ARŞİV (13712)",RTH-TV1 (720p)
 https://2-fss-2.streamhoster.com/pl_120/amlst:206708-4203440/playlist.m3u8
 #EXTINF:-1 tvg-name="RTH-TV2 Gospel (720p)" group-title="ANA ARŞİV (13712)",RTH-TV2 Gospel (720p)
@@ -5084,5 +5086,3 @@ http://45.171.64.30:6060/play/a04n/index.m3u8
 https://jmp2.uk/stvp-ES7000088K
 #EXTINF:-1 tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/GB3800007C5_20260901T102539SQUARE.png" group-title="ANA ARŞİV (13712)",SPACE LIVE
 https://jmp2.uk/stvp-GB3800007C5
-#EXTINF:-1 tvg-logo="https://images.sr.roku.com/idType/roku-trc/context/trc/id/4d62b7d4fc91fbc2b528eb10857d7ab8/https%3A%2F%2Fimage.roku.com%2Fbh-uploads%2Fproduction%2FinfoHUDLogo%2F1787161821038_space_live_logo_hud.png" group-title="ANA ARŞİV (13712)",SPACE LIVE
-https://jmp2.uk/rok-4d62b7d4fc91fbc2b528eb10857d7ab8.m3u8
