@@ -49,7 +49,15 @@ jobs:
           import hashlib
           from pathlib import Path
           digest = hashlib.sha256(Path("MADSC55_TV_IBO_CALISANLAR_TEST.m3u8").read_bytes()).hexdigest()
-          print("applied=" + str(digest == "203274453ef09bf5a87c25374275127367eb79e75c351ce738fa788be6c52da4").lower())
+          import subprocess
+          previous = subprocess.check_output(["git", "show", "1ab929b801932e910fcd780efc1adef072947fa7:MADSC55_TV_IBO_CALISANLAR_TEST.m3u8"])
+          normalized = (previous
+              .replace('group-title="ANA ARŞİV (15574)"'.encode(), 'group-title="ANA ARŞİV (15703)"'.encode())
+              .replace('group-title="ANA ARŞİV"'.encode(), 'group-title="ANA ARŞİV (15703)"'.encode())
+              .replace('group-title="🗂️ YEDEKLER (1792)"'.encode(), 'group-title="🗂️ YEDEKLER (1107)"'.encode()))
+          current = Path("MADSC55_TV_IBO_CALISANLAR_TEST.m3u8").read_bytes()
+          applied = digest == "203274453ef09bf5a87c25374275127367eb79e75c351ce738fa788be6c52da4" or current == normalized
+          print("applied=" + str(applied).lower())
           PY
       - name: Build #497 preview from exact historical artifact (no scan, no playlist write)
         if: ${{ steps.migration685.outputs.applied != 'true' }}
