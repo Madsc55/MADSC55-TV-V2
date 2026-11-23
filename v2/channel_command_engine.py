@@ -299,7 +299,7 @@ def bind_git_blob_revision(data, command):
     if not isinstance(blob, str) or not re.fullmatch(r"[0-9a-f]{40}", blob):
         raise ValueError("Invalid expected Git blob SHA")
     actual_blob = hashlib.sha1(b"blob " + str(len(data)).encode("ascii") +
-                               b"\\0" + data).hexdigest()
+                               bytes([0]) + data).hexdigest()
     if actual_blob != blob:
         raise ValueError("Git blob SHA mismatch: main playlist changed")
     current_sha = checksum(data)
