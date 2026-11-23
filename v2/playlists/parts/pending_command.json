@@ -1,0 +1,11 @@
+{
+  "expected_git_blob_sha": "9077785affab93c69baeacb8d4f398fa648651f2",
+  "request": "Kullanıcının açık talimatı: Güncel YEDEKLER kategorisinin 594. sırasından 640. sırasına kadar, iki sınır dahil, toplam 47 kanalı YABANCI ARŞİVİ'ne taşı. Hiçbir kanal silinmesin veya kopyalanmasın; diğer kategoriler ve kalan kayıt sırası korunsun; ses/görüntü testi yapılmasın.",
+  "action": "move",
+  "source": "YEDEKLER",
+  "target": "YABANCI ARŞİVİ",
+  "range": {
+    "start": 594,
+    "end": 640
+  }
+}
