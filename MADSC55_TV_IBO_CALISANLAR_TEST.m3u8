@@ -4181,6 +4181,10 @@ http://120.70.60.179:9901/tsfile/live/1006_1.m3u8?authid=0&key=txiptv&playlive=1
 https://st-video.xjmty.com/fs/livedit/e55abfa37af26e19/8ce9971c2177b3dd.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/JJw1Ndc.png" group-title="ANA ARŞİV (13712)",XINJIANG TV 8
 http://120.70.60.179:9901/tsfile/live/1002_1.m3u8?authid=0&key=txiptv&playlive=1
+#EXTINF:-1 tvg-name="KANAL 7 AVRUPA" group-title="ANA ARŞİV (13712)",KANAL 7 AVRUPA GLOBAL ADAY
+https://live.kanal7.com/live/kanal7AvrupaLive/index.m3u8
+#EXTINF:-1 group-title="ANA ARŞİV (13712)",KANAL-65
+https://v2.catcast.tv/content/47437/index.m3u8?token=d14d4c518fb49c3021c39829af74c3b7
 #EXTINF:-1 tvg-name="Aristo TV (360p)" group-title="ANA ARŞİV (13712)",Aristo TV (360p)
 https://ma.anixa.tv/clips/stream/aristo/index.m3u8
 #EXTINF:-1 tvg-name="Arka Sokaklar" group-title="ANA ARŞİV (13712)",Arka Sokaklar
@@ -13091,10 +13095,6 @@ https://fta.ektv.in/live/669/master.m3u8
 http://cdn-kanal10.crossnet.net:1935/kanal10/kanal10asia/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/Qw7N3S2.png" group-title="ANA ARŞİV (13712)",KANAL 5 Ⓢ Ⓖ
 https://teve.mk/tvstanici/2/playlist.m3u8
-#EXTINF:-1 tvg-name="KANAL 7 AVRUPA" group-title="ANA ARŞİV (13712)",KANAL 7 AVRUPA GLOBAL ADAY
-https://live.kanal7.com/live/kanal7AvrupaLive/index.m3u8
-#EXTINF:-1 group-title="ANA ARŞİV (13712)",KANAL-65
-https://v2.catcast.tv/content/47437/index.m3u8?token=d14d4c518fb49c3021c39829af74c3b7
 #EXTINF:-1 tvg-name="Kanal12 Spremberg TV (404p)" group-title="ANA ARŞİV (13712)",Kanal12 Spremberg TV (404p)
 https://58de7a369a9c4.streamlock.net/sprembergtv/live/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/l02znlE.png" group-title="ANA ARŞİV (13712)",KANIZSA TV (360P)
