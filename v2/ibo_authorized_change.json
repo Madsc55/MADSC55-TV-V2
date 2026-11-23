@@ -1,8 +1,8 @@
 {
-  "base_sha256": "eaeb2e11cb578cd81e3bee94c5c635daf9e88cedd98b6f1cf28d77bc47286295",
-  "result_sha256": "9b23a6ca7aa26d208ddebcb73360e4f556105574c64030f8c2038ec169d2dd9b",
+  "base_sha256": "9b23a6ca7aa26d208ddebcb73360e4f556105574c64030f8c2038ec169d2dd9b",
+  "result_sha256": "ee218e647574dceb21940809046af3a9fc846dcd256d4a3af087f5766cbcd29b",
   "operation": "reorder",
-  "request": "Kullanıcının ANA ARŞİV'in tüm Türk/Türkî kanallarını en başa alma talebini tamamla. #717 ile ilk 673 sıraya alınan Türk/Türkî adaylar aynen en başta kalacak. Taramada kalan iki doğrulanmış aday, güncel sıra 5129 KANAL 7 AVRUPA GLOBAL ADAY (kanal7AvrupaLive Türkiye yayını) ve sıra 5130 KANAL-65 (iptv-org Kanal65Music.az, Azerbaycan Kanal 65 Music, catcast.tv/content/47437) bu grubun sonuna eklensin; toplam 675 Türk/Türkî kanal adayı ANA ARŞİV kategorisinin ilk 675 sırasına gelsin. Diğer kayıtların ve kategorilerin iç sırası korunacak. Kanal silme, kopyalama, başka kategoriye taşıma, URL/metaveri düzenleme, canlı yayın testi veya yeni playlist yok. Yayın dili doğrudan test edilmedi.",
+  "request": "Kullanıcının ANA ARŞİV'deki tüm Türk/Türkî adayları başa alma talimatı. 13.712 kayıt altı parçadan tekrar okundu; mevcut 675 öncelikli kayıt ve 20 ilave aday başa alınır (695). Yeni adaylar: CAN TV, Cartoonito TV, Cine5 TV, DAMAR TV, EZO TV, FOX, GENC SMS TV, HABERGLOBAL, KON TV, MEKAMELEEN, MinikaGo, Mirovoe kino, Music, NICKELODEON CIS, NOW GLOBAL ADAY, Osh Pirim, PLAYERFILMAZERBAYCAN-TV, SILA TV, YURD FM TV, ZEYNO TV. Ülke kataloğu, yayıncı adı ve kaynak URL kanıtları kullanıldı; bazı SMS kayıtlarının ortak URL'si ve radyo/uluslararası ülke adaylarının gerçek yayın dili doğrulanmamıştır. VOD dizileri seçilmedi. Diğer kayıtların kendi sırası, tüm kategoriler, kanal sayıları, URL ve metadata korunur. Canlı yayın testi, silme, kopyalama, başka kategoriye taşıma veya yeni playlist yok.",
   "channels": [
     "24 TV",
     "24 TV",
@@ -678,6 +678,26 @@
     "XINJIANG TV 3",
     "XINJIANG TV 8",
     "KANAL 7 AVRUPA GLOBAL ADAY",
-    "KANAL-65"
+    "KANAL-65",
+    "CAN TV",
+    "Cartoonito TV",
+    "Cine5 TV",
+    "DAMAR TV",
+    "EZO TV",
+    "FOX",
+    "GENC SMS TV",
+    "HABERGLOBAL",
+    "KON TV",
+    "MEKAMELEEN",
+    "MinikaGo",
+    "Mirovoe kino (1080p)",
+    "Music (480p)",
+    "NICKELODEON CIS (1080P)",
+    "NOW GLOBAL ADAY",
+    "Osh Pirim (1080p)",
+    "PLAYERFILMAZERBAYCAN-TV",
+    "SILA TV",
+    "YURD FM TV",
+    "ZEYNO TV"
   ]
 }
