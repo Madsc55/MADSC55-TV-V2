@@ -4331,6 +4331,24 @@ http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Yalan.SON.mkv
 http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Yali.Capkini.SON.mkv
 #EXTINF:-1 tvg-name="Zembilli" group-title="ANA ARŞİV (13712)",Zembilli
 http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Zembilli.SON.mkv
+#EXTINF:-1 tvg-name="Euro Sport" group-title="ANA ARŞİV (13712)",Euro Sport
+https://cinque.29d0b51b213115a0.click/p/9cgzadFETvVedJ4Tsp/132/a.cf-worker-4e1da3ddd26870a5.workers.dev/chunklist_hd.m3u8
+#EXTINF:-1 tvg-name="Euro Sport 2" group-title="ANA ARŞİV (13712)",Euro Sport 2
+http://tvskor99.xyz:80/live/sahinselat2/k6rd0vxMYg/290924.ts
+#EXTINF:-1 tvg-name="FX" group-title="ANA ARŞİV (13712)",FX
+https://tv.prectv5.sbs/live/fx.m3u8
+#EXTINF:-1 tvg-name="History Channel" group-title="ANA ARŞİV (13712)",History Channel
+https://tv.prectv5.sbs/live/history.m3u8
+#EXTINF:-1 tvg-name="MILYON TV" tvg-id="" tvg-logo="https://i.ibb.co/sQRhqCs/milyon-tv.png" group-title="ANA ARŞİV (13712)",MILYON TV
+https://sosyoapp-live.cdnnew.com/sosyo/buraya-bir-isim-verin.m3u8
+#EXTINF:-1 tvg-name="Nat Geo Wild" group-title="ANA ARŞİV (13712)",Nat Geo Wild
+https://tv.prectv5.sbs/live/natgeowild.m3u8
+#EXTINF:-1 group-title="ANA ARŞİV (13712)",NOW-MUSIC
+https://v2.catcast.tv/content/48694/index.m3u8?token=81a8730704e9247dee1607a387fbf087
+#EXTINF:-1 group-title="ANA ARŞİV (13712)",TOP POP TV
+https://tvsms.club/tvz.php?kanal=toppop&file=.m3u8
+#EXTINF:-1 tvg-name="Viasat History" group-title="ANA ARŞİV (13712)",Viasat History
+https://tv.prectv5.sbs/live/viasatexplore.m3u8
 #EXTINF:-1 tvg-name="Aristo TV (360p)" group-title="ANA ARŞİV (13712)",Aristo TV (360p)
 https://ma.anixa.tv/clips/stream/aristo/index.m3u8
 #EXTINF:-1 tvg-name="BBC Earth (1080p)" group-title="ANA ARŞİV (13712)",BBC Earth (1080p)
@@ -9325,10 +9343,6 @@ https://mdstrm.com/live-stream-playlist/6952e02d19eabace52e2885f.m3u8
 https://epg.provider.plex.tv/library/parts/64305451fc3be5947773c339-62ee74af52f7d73061eec491/?X-Plex-Token=YJfpNbznTNgZeFsjtUL6
 #EXTINF:-1 tvg-logo="https://i.imgur.com/lF0iofX.png" group-title="ANA ARŞİV (13712)",EURO INDIE MUSIC CHART TV (1080P)
 http://178.33.224.197:1935/euroindiemusic/euroindiemusic/playlist.m3u8
-#EXTINF:-1 tvg-name="Euro Sport" group-title="ANA ARŞİV (13712)",Euro Sport
-https://cinque.29d0b51b213115a0.click/p/9cgzadFETvVedJ4Tsp/132/a.cf-worker-4e1da3ddd26870a5.workers.dev/chunklist_hd.m3u8
-#EXTINF:-1 tvg-name="Euro Sport 2" group-title="ANA ARŞİV (13712)",Euro Sport 2
-http://tvskor99.xyz:80/live/sahinselat2/k6rd0vxMYg/290924.ts
 #EXTINF:-1 tvg-logo="https://www.eurotv.gr/wp-content/uploads/2018/03/ima-euro-channel-190-x-400.png" group-title="ANA ARŞİV (13712)",EURO TV (360P)
 https://lbgo.bozztv.com/ssh101/ssh101/eurotvlive/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/HFWWzKT.png" group-title="ANA ARŞİV (13712)",EURO TV (720P)
@@ -10395,8 +10409,6 @@ https://live.kwikmotion.com/futurelive/ftv.smil/playlist.m3u8
 http://190.61.90.17:40000/play/a03v/index.m3u8
 #EXTINF:-1 tvg-logo="https://premium.futvcr.com/assets/img/logo-premium.png" group-title="ANA ARŞİV (13712)",FUTV (1080P)
 http://45.228.234.9:8000/play/a06o/index.m3u8
-#EXTINF:-1 tvg-name="FX" group-title="ANA ARŞİV (13712)",FX
-https://tv.prectv5.sbs/live/fx.m3u8
 #EXTINF:-1 tvg-logo="https://i.ibb.co/tqkV2sn/irflag.png" group-title="ANA ARŞİV (13712)",FX 1
 https://fxtvhls.wns.live/hls/stream.m3u8
 #EXTINF:-1 group-title="ANA ARŞİV (13712)",FX 2
@@ -11569,8 +11581,6 @@ http://138.121.15.230:9002/HISTORY-2/index.m3u8
 https://jmp2.uk/stvp-USBD35000428O
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/History_%282021%29.svg/500px-History_%282021%29.svg.png" group-title="ANA ARŞİV (13712)",HISTORY ASIA (1080P)
 https://freem3u.xyz/api/live/play.m3u8?vid=9856
-#EXTINF:-1 tvg-name="History Channel" group-title="ANA ARŞİV (13712)",History Channel
-https://tv.prectv5.sbs/live/history.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/ulHoqlP.png" group-title="ANA ARŞİV (13712)",HISTORY HIT (1080P)
 https://lds-timeline-plex.amagi.tv/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/ulHoqlP.png" group-title="ANA ARŞİV (13712)",HISTORY HIT (1080P)
@@ -15497,8 +15507,6 @@ https://live1.1tvcrimea.ru/milletlive.m3u8
 https://jmp2.uk/stvp-US300067FX
 #EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/677fb3432952c1163bf1a539/colorLogoPNG_1761664837789.png" group-title="ANA ARŞİV (13712)",MILLION DOLLAR LISTING
 https://jmp2.uk/plu-677fb3432952c1163bf1a539.m3u8
-#EXTINF:-1 tvg-name="MILYON TV" tvg-id="" tvg-logo="https://i.ibb.co/sQRhqCs/milyon-tv.png" group-title="ANA ARŞİV (13712)",MILYON TV
-https://sosyoapp-live.cdnnew.com/sosyo/buraya-bir-isim-verin.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/xBlYirh.jpeg" group-title="ANA ARŞİV (13712)",MINDANOW NETWORK TV (720P)
 https://cdn.vegasplus.us/vegas/mmn01/playlist.m3u8
 #EXTINF:-1 tvg-name="MINFAV TV (240p)" group-title="ANA ARŞİV (13712)",MINFAV TV (240p)
@@ -16563,8 +16571,6 @@ https://live.nasul.tv/live/stream.m3u8
 http://141.94.193.53:80/Nat_Geo_HD/index.m3u8
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/New_NatGeo_People_logo.svg/960px-New_NatGeo_People_logo.svg.png" group-title="ANA ARŞİV (13712)",NAT GEO PEOPLE (576I)
 http://92.114.85.87:8016/play/a003/index.m3u8
-#EXTINF:-1 tvg-name="Nat Geo Wild" group-title="ANA ARŞİV (13712)",Nat Geo Wild
-https://tv.prectv5.sbs/live/natgeowild.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/a7tNaD5.png" group-title="ANA ARŞİV (13712)",NAT TV (1080P)
 https://livefta.malimarcdn.com/ftaedge00/nat.sdp/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/VKU9qwy.png" group-title="ANA ARŞİV (13712)",NATICK EDUCATION CHANNEL (720P)
@@ -17587,8 +17593,6 @@ https://nowushls.wns.live/hls/stream.m3u8
 https://lightning-now90s-samsungnz.amagi.tv/playlist720p.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/GuM4GnX.png" group-title="ANA ARŞİV (13712)",NOW ROCK (720P)
 https://jmp2.uk/plu-6568a78d635c3c0008765f41.m3u8
-#EXTINF:-1 group-title="ANA ARŞİV (13712)",NOW-MUSIC
-https://v2.catcast.tv/content/48694/index.m3u8?token=81a8730704e9247dee1607a387fbf087
 #EXTINF:-1 tvg-name="NPC Radio e TV (720p)" group-title="ANA ARŞİV (13712)",NPC Radio e TV (720p)
 https://stmv5.samcast.com.br/nasciparacantartv/nasciparacantartv/playlist.m3u8
 #EXTINF:-1 tvg-name="NPO 1 (360p)" group-title="ANA ARŞİV (13712)",NPO 1 (360p)
@@ -26253,8 +26257,6 @@ https://live.topnews.co.th/hls/topnews_a_720.m3u8
 https://live1.ottlive.co.in/topnewsmarathi/topnewsmarathi/index.m3u8
 #EXTINF:-1 tvg-logo="https://jiotvimages.cdn.jio.com/dare_images/images/topnewsmarathi.png" group-title="ANA ARŞİV (13712)",TOP NEWS MARATHI (1080P)
 https://stream.ottlive.co.in/topnewsmarathi/index.m3u8
-#EXTINF:-1 group-title="ANA ARŞİV (13712)",TOP POP TV
-https://tvsms.club/tvz.php?kanal=toppop&file=.m3u8
 #EXTINF:-1 tvg-logo="https://images.sr.roku.com/idType/roku-trc/context/trc/id/c0b79a332cfd90b8eeb6d4a0dcb63674/https%3A%2F%2Fimage.roku.com%2Fbh-uploads%2Fproduction%2FinfoHUDLogo%2F1730998467166_TRClassics_HUD.png" group-title="ANA ARŞİV (13712)",TOP RANK CLASSICS
 https://jmp2.uk/rok-c0b79a332cfd90b8eeb6d4a0dcb63674.m3u8
 #EXTINF:-1 tvg-logo="https://i.ibb.co/TLPBT2L/topsante.png" group-title="ANA ARŞİV (13712)",TOP SANTÉ
@@ -28755,8 +28757,6 @@ http://88.212.15.29/live/test_viasat_history_atk_tv/playlist.m3u8
 https://arwen1.panaka1.cfd/vhis/usergenrnd4v6g8eigt.m3u8
 #EXTINF:-1 tvg-name="Viasat History" group-title="ANA ARŞİV (13712)",Viasat History
 https://lb.dstvmultimedia.com/ViasatHistory/index.m3u8
-#EXTINF:-1 tvg-name="Viasat History" group-title="ANA ARŞİV (13712)",Viasat History
-https://tv.prectv5.sbs/live/viasatexplore.m3u8
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/9/9e/Viasat_History_2026.svg?utm_source=hu.wikipedia.org&utm_campaign=index&utm_content=original" group-title="ANA ARŞİV (13712)",VIASAT HISTORY
 http://141.94.193.53:80/Viasat_History_HD/index.m3u8
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/9/9e/Viasat_History_2026.svg" group-title="ANA ARŞİV (13712)",VIASAT HISTORY (BULGARIA) (1080P)

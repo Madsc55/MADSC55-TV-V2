@@ -1,7 +1,7 @@
 {
   "version": 1,
   "header_hex": "234558544d33550a",
-  "source_sha256": "64039ee5e92f453febcf28e176e3cf68cff926452edda250bd292b949c79e9e5",
+  "source_sha256": "117f126028cfec61ce9f32a085294e68200fc96cc7d4f601d0aa3e07501b5242",
   "total_records": 18337,
   "entries": [
     {
@@ -85,20 +85,20 @@
     {
       "file": "0013.m3u",
       "group": "ANA ARŞİV",
-      "records": 2625,
-      "sha256": "f41c638bcfa4a44c7bb309efc0fad192d5c77315176259a20a1c332c0e5827fa"
+      "records": 2627,
+      "sha256": "4bf3ccd18eff9eec61571bb53a98c86102de8a498beeeab1043b12ead4701130"
     },
     {
       "file": "0014.m3u",
       "group": "ANA ARŞİV",
       "records": 2550,
-      "sha256": "f9555daa3bcc7447423bbd7bed277f8cd6388adc8a8398286070c475cfc4ff6a"
+      "sha256": "3bc4386b4dda5b162c57d20730f487aac5dd7a74f416fe7408959258ca5c1ddb"
     },
     {
       "file": "0015.m3u",
       "group": "ANA ARŞİV",
       "records": 2581,
-      "sha256": "8605c014aeecd5667548cfe284e7f95f2d2b733d0a7e7bf2fef20a7b5518c402"
+      "sha256": "74d21b8fbf70bed4d12c5a8be079977fc3ad8620ba063178fb8188f544e78fcf"
     },
     {
       "file": "0016.m3u",
@@ -110,13 +110,13 @@
       "file": "0017.m3u",
       "group": "ANA ARŞİV",
       "records": 2593,
-      "sha256": "01251ffaf9a3f25b802522926e125db7115513aca8123f9bfc4aff511917afe1"
+      "sha256": "b67e65f3f803b44ca1c8f5abf1e0345409799d370af94e22217949b4dc43a781"
     },
     {
       "file": "0018.m3u",
       "group": "ANA ARŞİV",
-      "records": 819,
-      "sha256": "37b1e985aa1f0bca2e50197c46e9255f13b163a4796192d682644000d9340ebc"
+      "records": 817,
+      "sha256": "ee7e834a4c9fab222dc9289e425882e62f0e4a0473114692eda71903b21aa6a4"
     },
     {
       "file": "0019.m3u",
