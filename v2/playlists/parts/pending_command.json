@@ -1,0 +1,11 @@
+{
+  "expected_git_blob_sha": "76e71c2b7401c156201e22bb708a2fb591965e6e",
+  "request": "Kullanıcının açık talimatı: güncel ANA ARŞİV 965–2610 dahil 1646 kaydı YABANCI ARŞİVİ'ne taşı. Önceki sıralar esas alınır. Silme, kopyalama, yeni playlist ve canlı AV testi yok; diğer kategoriler korunur.",
+  "action": "move",
+  "source": "ANA ARŞİV",
+  "target": "YABANCI ARŞİVİ",
+  "range": {
+    "start": 965,
+    "end": 2610
+  }
+}
