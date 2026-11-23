@@ -1,0 +1,11 @@
+{
+  "expected_git_blob_sha": "17c7afe5dc6960b812af85dd2fa33ff6534fd003",
+  "request": "Kullanıcı talimatı 872–7509 dahil 6638 kayıt: 2/3. İlk paket PR #730 main'e birleşti. Güncel ANA ARŞİV 872–3371 dahil 2500 kayıt (ilk liste 3372–5871) YABANCI ARŞİVİ'ne taşınacak. Silme, kopyalama, yeni playlist ve canlı AV testi yok.",
+  "action": "move",
+  "source": "ANA ARŞİV",
+  "target": "YABANCI ARŞİVİ",
+  "range": {
+    "start": 872,
+    "end": 3371
+  }
+}
