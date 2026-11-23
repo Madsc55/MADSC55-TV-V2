@@ -1,8 +1,8 @@
 {
-  "base_sha256": "9b23a6ca7aa26d208ddebcb73360e4f556105574c64030f8c2038ec169d2dd9b",
-  "result_sha256": "ee218e647574dceb21940809046af3a9fc846dcd256d4a3af087f5766cbcd29b",
+  "base_sha256": "ee218e647574dceb21940809046af3a9fc846dcd256d4a3af087f5766cbcd29b",
+  "result_sha256": "64039ee5e92f453febcf28e176e3cf68cff926452edda250bd292b949c79e9e5",
   "operation": "reorder",
-  "request": "Kullanıcının ANA ARŞİV'deki tüm Türk/Türkî adayları başa alma talimatı. 13.712 kayıt altı parçadan tekrar okundu; mevcut 675 öncelikli kayıt ve 20 ilave aday başa alınır (695). Yeni adaylar: CAN TV, Cartoonito TV, Cine5 TV, DAMAR TV, EZO TV, FOX, GENC SMS TV, HABERGLOBAL, KON TV, MEKAMELEEN, MinikaGo, Mirovoe kino, Music, NICKELODEON CIS, NOW GLOBAL ADAY, Osh Pirim, PLAYERFILMAZERBAYCAN-TV, SILA TV, YURD FM TV, ZEYNO TV. Ülke kataloğu, yayıncı adı ve kaynak URL kanıtları kullanıldı; bazı SMS kayıtlarının ortak URL'si ve radyo/uluslararası ülke adaylarının gerçek yayın dili doğrulanmamıştır. VOD dizileri seçilmedi. Diğer kayıtların kendi sırası, tüm kategoriler, kanal sayıları, URL ve metadata korunur. Canlı yayın testi, silme, kopyalama, başka kategoriye taşıma veya yeni playlist yok.",
+  "request": "Kullanıcının tekrar tarama talimatı: mevcut 695 Türk/Türkî aday korunur ve 17 ek yüksek olasılıklı kayıt ANA ARŞİV başına alınır (712). Ekler: Fashion One iki kayıt ve NR1 Fashion One (Number1 Türkiye ortaklığı ve aynı yayın altyapısı), İsviçre TV (isvicretv.com ve Türkçe yayın araştırması), KOMEDI-AZ-TV (Azerbaycan isim ve kaynak adayı, kimlik kesin değil), Mukabele TV, NR1 Damar, Sabalan ve Sahand TV (İran Azerbaycan Türkçesi bölgesel yayınları), SDM TV, TNV-Planet üç kayıt ve TNV-Tatarstan (tnv.ru/about Tatarca), TOOKU (Yakutça çocuk yayını), Viva Istanbul (Türk dizileri, orijinal ses ihtimali), Yakutia 24 (Saha dili yayın araştırması). Bunlar yayın dili canlı doğrulanmamış adaylardır; VOD ve sırf yabancı ülke CDN eşleşmeleri seçilmedi. Diğer kayıtların sırası, kategoriler, URL, metadata ve 18.337 toplam korunur; silme, kopyalama, başka kategoriye taşıma, canlı test veya yeni playlist yok.",
   "channels": [
     "24 TV",
     "24 TV",
@@ -698,6 +698,23 @@
     "PLAYERFILMAZERBAYCAN-TV",
     "SILA TV",
     "YURD FM TV",
-    "ZEYNO TV"
+    "ZEYNO TV",
+    "FASHION ONE",
+    "FASHION ONE",
+    "İSVİÇRE TV",
+    "KOMEDI-AZ-TV",
+    "MUKABELE TV",
+    "NR 1 DAMAR",
+    "NR1 FASHION ONE",
+    "SABALAN TV",
+    "SAHAND TV",
+    "SDM TV",
+    "TNV-PLANET",
+    "TNV-PLANET (576P)",
+    "TNV-Planet (576p)",
+    "TNV-TATARSTAN (720P)",
+    "TOOKU (1080P)",
+    "Viva Istanbul (1080p)",
+    "ЯКУТИЯ 24"
   ]
 }

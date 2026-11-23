@@ -1,3 +1,31 @@
+#EXTINF:-1 tvg-logo="https://i.imgur.com/GGZ8BQ8.png" group-title="ANA ARŞİV (13712)",DİSTRİCT OF COLUMBİA NETWORK (1080P)
+https://video.oct.dc.gov/out/u/DCN.m3u8
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/DistritoComediaLOGO2018.png/960px-DistritoComediaLOGO2018.png" group-title="ANA ARŞİV (13712)",DİSTRİTO COMEDİA (1080P)
+http://15.204.142.109:22880/TELEVISA-PROVEEDOR-DISTRITO-COMEDIA/index.m3u8
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/DistritoComediaLOGO2018.png/960px-DistritoComediaLOGO2018.png" group-title="ANA ARŞİV (13712)",DISTRITO COMEDIA (1080P)
+http://138.121.15.230:9002/DISTRITO-COMEDIA/index.m3u8
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/DistritoComediaLOGO2018.png/960px-DistritoComediaLOGO2018.png" group-title="ANA ARŞİV (13712)",DISTRITO COMEDIA (1080P)
+http://190.61.47.54:8000/play/a028/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/AqGIoIt.png" group-title="ANA ARŞİV (13712)",DİSTRİTO TV (1080P)
+https://nlb2-live.emitstream.com/hls/3mn7wpcv7hbmxmdzaxap/master.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/fGAaBAs.png" group-title="ANA ARŞİV (13712)",DİT İS HELMOND (1080P)
+http://ms2.mx-cd.net/tv/Omroep_Helmond.smil/chunklist.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/fGAaBAs.png" group-title="ANA ARŞİV (13712)",DIT IS HELMOND (1080P)
+https://ms2.mx-cd.net/tv/228-1864150/Omroep_Helmond.smil/playlist.m3u8
+#EXTINF:-1 tvg-logo="https://i.logos-download.com/114030/29915-s5120-904df224e4c030fefcc45adda448b6e8.png/DiviSport_Logo_2023-s5120.png" group-title="ANA ARŞİV (13712)",DİVİSPORT (1080P)
+http://stream.mcquack.net/457/index.m3u8
+#EXTINF:-1 tvg-logo="https://tvpnlogopus.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/USBD300006A6_20260421T141839SQUARE.png" group-title="ANA ARŞİV (13712)",DIVORCE COURT
+https://jmp2.uk/stvp-USBD300006A6
+#EXTINF:-1 tvg-logo="https://jiotvimages.cdn.jio.com/dare_images/images/DivyaBhajan.png" group-title="ANA ARŞİV (13712)",DİVYA BHAJAN (720P)
+https://jmp2.uk/stvp-IN1600002IQ
+#EXTINF:-1 tvg-logo="https://i.ibb.co/WWn5gFnp/Divya-Darshan-TV-HD.png" group-title="ANA ARŞİV (13712)",DİVYA DARSHAN TV (1080P)
+https://live.divyadarshantv.com/hls/0/stream.m3u8
+#EXTINF:-1 tvg-logo="https://i.ibb.co/WWn5gFnp/Divya-Darshan-TV-HD.png" group-title="ANA ARŞİV (13712)",DIVYA DARSHAN TV (720P)
+http://live.divyadarshantv.com/hls/stream.m3u8
+#EXTINF:-1 tvg-logo="https://jiotvimages.cdn.jio.com/dare_images/images/Divya_Vani.png" group-title="ANA ARŞİV (13712)",DİVYAVANİ TV (576P)
+https://cdn.pishow.tv/ott/live/1624/master.m3u8
+#EXTINF:-1 tvg-logo="https://jiotvimages.cdn.jio.com/dare_images/images/Divya_Vani.png" group-title="ANA ARŞİV (13712)",DIVYAVANI TV (576P)
+https://fta.ektv.in/live/382/master.m3u8
 #EXTINF:-1 tvg-logo="https://jiotvimages.cdn.jio.com/dare_images/images/Divya_Vani.png" group-title="ANA ARŞİV (13712)",DIVYAVANI TV (720P)
 https://mumbai-edge.smartplaytv.in/Divyavani/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/1fC7tqH.png" group-title="ANA ARŞİV (13712)",DIYA TV (1080P)
@@ -1568,10 +1596,6 @@ https://64b16f23efbee.streamlock.net/canale157/canale157/playlist.m3u8
 https://fash1043.cloudycdn.services/slive/ftv_ftv_midnite_k1y_27049_midnite_secr_108_hls.smil/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/GvDRZgq.png" group-title="ANA ARŞİV (13712)",FASHION FINDS (720P)
 https://qvc-amd-live.akamaized.net/hls/live/2034113/lsqvc5us/master.m3u8
-#EXTINF:-1 tvg-logo="https://i.ibb.co/9grLJCS/fone22.png" group-title="ANA ARŞİV (13712)",FASHION ONE
-https://b01c02nl.mediatriple.net/videoonlylive/mtkgeuihrlfwlive/u_stream_5c9e2ee6997cb_1/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.ibb.co/9grLJCS/fone22.png" group-title="ANA ARŞİV (13712)",FASHION ONE
-https://b01c02nl.mediatriple.net/videoonlylive/mtkgeuihrlfwlive/broadcast_5c9e2ee690051.smil/playlist.m3u8
 #EXTINF:-1 tvg-name="Fashion TV" group-title="ANA ARŞİV (13712)",Fashion TV
 https://fashiontv-fashiontv-1-eu.rakuten.wurl.tv/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/Bk7W39G.png" group-title="ANA ARŞİV (13712)",FASHION TV (1080P)
@@ -4470,8 +4494,6 @@ https://relay2.cdn.fem-net.de/hls/loop/istuff_live/istuff_live-720p.m3u8
 https://stmv1.srvstm.com/sistema7933/sistema7933/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/TGAKFcV.jpg" group-title="ANA ARŞİV (13712)",ISTV (720P)
 https://livefta.malimarcdn.com/ftaedge00/ichannel.sdp/playlist.m3u8
-#EXTINF:-1 group-title="ANA ARŞİV (13712)",İSVİÇRE TV
-https://i41.ozelip.com:3269/hybrid/play.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/0jgzoSF.png" group-title="ANA ARŞİV (13712)",IT IS WRITTEN TV (1080P)
 https://itiswrittentv.akamaized.net/xR8gyATuHMVx69u9G79DXnpNRL/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/6a4fda4538f47f0af402bdb0/colorLogoPNG_1787854579734.png" group-title="ANA ARŞİV (13712)",IT'S ANIME
@@ -5086,27 +5108,3 @@ https://d1msejlow1t3l4.cloudfront.net/fta/kappatv/playlist.m3u8
 https://mumt03.tangotv.in/Dsly5z3HKAPPATV/index.m3u8
 #EXTINF:-1 tvg-logo="https://www.karbala-tv.iq/documentary/static/img/logo.png" group-title="ANA ARŞİV (13712)",KARBALA DOCUMENTARY
 https://ktvlive.online/stream/hls/ch3.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/QcrVj3Q.png" group-title="ANA ARŞİV (13712)",KARCAG TV (720P)
-https://cloudfront41.lexanetwork.com:1344/relay03/livestream003.sdp/playlist.m3u8
-#EXTINF:-1 tvg-name="Kardelenler" group-title="ANA ARŞİV (13712)",Kardelenler
-http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Kardelenler.SON.mkv
-#EXTINF:-1 tvg-name="Karibena (720p)" group-title="ANA ARŞİV (13712)",Karibena (720p)
-https://iptv-pe-x-7-g3s-video.egostreaming.pe/karibenatv_685a-pe-a5676-584412/index.fmp4.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/mdpIRoW.png" group-title="ANA ARŞİV (13712)",KARIBENA (720P)
-http://187.102.210.46/KARIBENA/index.m3u8
-#EXTINF:-1 tvg-logo="https://jiotvimages.cdn.jio.com/dare_images/images/newsbeatkarnataka.png" group-title="ANA ARŞİV (13712)",KARNATAKA NEWS BEAT (1080P)
-https://vglivessai.akamaized.net/sg/v1/master/611d79b11b77e2f571934fd80ca1413453772ac7/d0f1a078-3293-4f87-80ac-34cff3279b0d/index.m3u8
-#EXTINF:-1 tvg-name="Kartoon Channel! (1080p)" group-title="ANA ARŞİV (13712)",Kartoon Channel! (1080p)
-https://cdn-apse1-prod.tsv2.amagi.tv/linear/amg01076-lightningintern-kartoonchannel-samsungnz/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/1luzP3T.png" group-title="ANA ARŞİV (13712)",KARTOON CHANNEL! (1080P)
-https://lightning-fnf-samsungaus.amagi.tv/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/1luzP3T.png" group-title="ANA ARŞİV (13712)",KARTOON CHANNEL! (1080P)
-https://hlspackager.akamaized.net/live/DB/KARTOON_CHANNEL/HLS/KARTOON_CHANNEL.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/1luzP3T.png" group-title="ANA ARŞİV (13712)",KARTOON CHANNEL! (720P)
-https://d2z0ysa6dgxhlc.cloudfront.net/kchan.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/1luzP3T.png" group-title="ANA ARŞİV (13712)",KARTOON CHANNEL! (720P)
-https://jmp2.uk/plu-60fb040d4795a6000762fe8f.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/1luzP3T.png" group-title="ANA ARŞİV (13712)",KARTOON CHANNEL! (720P)
-https://aegis-cloudfront-1.tubi.video/ba23a03c-22ff-4a48-ae7e-dd8bf4ee4e29/kc_co.m3u8
-#EXTINF:-1 tvg-logo="https://jiotvimages.cdn.jio.com/dare_images/images/Kashish_News.png" group-title="ANA ARŞİV (13712)",KASHISH NEWS (360P)
-https://d1msejlow1t3l4.cloudfront.net/fta/kashishnews/playlist.m3u8
