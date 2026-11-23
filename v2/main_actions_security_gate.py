@@ -366,6 +366,23 @@ def audit(root=ROOT):
                     git_blob = hashlib.sha1(b"blob " + str(len(b)).encode() + b"\0" + b).hexdigest()
                     return git_blob == "aaeb2bc9d7bc1a109068e76df513416e609d9e3f"
                 archive_sort_ok = continue_playlist_audit and ana_archive_alphabetical_sort_ok()
+                # Owner-approved category placement: ANA ARŞİV directly after
+                # YEDEKLER. Require exact record identity and deterministic order.
+                def archive_after_yedekler_ok():
+                    if h0 != h1 or len(r0) != 18337 or len(r1) != 18337:
+                        return False
+                    def group(record):
+                        match = re.search(rb'group-title\\s*=\\s*"([^"]+)"', record.splitlines()[0])
+                        return match.group(1).decode("utf-8") if match else ""
+                    archive = [r for r in r0 if "ANA ARŞİV" in group(r)]
+                    others = [r for r in r0 if "ANA ARŞİV" not in group(r)]
+                    last = next((i for i in range(len(others)-1, -1, -1)
+                                 if "YEDEKLER" in group(others[i])), -1)
+                    if len(archive) != 15703 or last < 0:
+                        return False
+                    expected = others[:last+1] + archive + others[last+1:]
+                    return r1 == expected and r1 != r0
+                archive_placement_ok = continue_playlist_audit and archive_after_yedekler_ok()
                 counter_correction_ok = continue_playlist_audit and category_counter_correction_ok()
                 move_685_ok = continue_playlist_audit and authorized_685_migration_ok()
                 cleanup_ok = continue_playlist_audit and confirmed_404_cleanup_ok()
