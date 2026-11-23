@@ -409,12 +409,64 @@ def audit(root=ROOT):
                     # byte-preservation and category-slot checks above.
                     git_blob = hashlib.sha1(b"blob " + str(len(b)).encode() + b"\0" + b).hexdigest()
                     return git_blob == "aaeb2bc9d7bc1a109068e76df513416e609d9e3f"
+                # Authorized lossless parts migration: one reviewed PR reorders
+                # the whole ANA ARŞİV block after YEDEKLER, retaining all bytes,
+                # multiplicities and internal order. The manifest binds the exact
+                # original main SHA and hashes of every generated part.
+                def canonical_parts_move_ok():
+                    try:
+                        from playlist_parts_manager import category as part_category, logical
+                        import re
+                        if h0 != h1 or len(r0) != len(r1) or len(r0) != 18337:
+                            return False
+                        def group(record):
+                            return logical(part_category(record))
+                        from collections import Counter
+                        if Counter(r0) != Counter(r1):
+                            return False
+                        if Counter(map(group, r0)) != Counter(map(group, r1)):
+                            return False
+                        if Counter(map(group, r1))["YEDEKLER"] != 1107 or Counter(map(group, r1))["ANA ARŞİV"] != 15703:
+                            return False
+                        archive = [x for x in r0 if group(x) == "ANA ARŞİV"]
+                        remaining = [x for x in r0 if group(x) != "ANA ARŞİV"]
+                        insertion = max(i for i, x in enumerate(remaining) if group(x) == "YEDEKLER") + 1
+                        if r1 != remaining[:insertion] + archive + remaining[insertion:]:
+                            return False
+                        parts_dir = root / "v2/playlists/parts"
+                        manifest = json.loads((parts_dir / "manifest.json").read_text(encoding="utf-8"))
+                        if (manifest.get("version") != 1
+                                or manifest.get("total_records") != 18337
+                                or manifest.get("source_sha256") != hashlib.sha256(base).hexdigest()
+                                or manifest.get("header_hex") != h0.hex()):
+                            return False
+                        parts = []
+                        names = []
+                        for entry in manifest["entries"]:
+                            name = entry["file"]
+                            if not re.fullmatch(r"[0-9]{4}\\.m3u", name):
+                                return False
+                            payload = (parts_dir / name).read_bytes()
+                            if hashlib.sha256(payload).hexdigest() != entry["sha256"]:
+                                return False
+                            if len([line for line in payload.splitlines() if line.startswith(b"#EXTINF:")]) != entry["records"]:
+                                return False
+                            if any(group(x) != entry["group"] for x in parse(payload)[1]):
+                                return False
+                            names.append(name)
+                            parts.append(payload)
+                        if len(names) != len(set(names)) or set(names) != {p.name for p in parts_dir.glob("*.m3u")}:
+                            return False
+                        return b == h1 + b"".join(parts)
+                    except (OSError,ValueError,TypeError,KeyError,UnicodeError,IndexError,AttributeError):
+                        return False
+                parts_move_ok = continue_playlist_audit and canonical_parts_move_ok()
                 archive_sort_ok = continue_playlist_audit and ana_archive_alphabetical_sort_ok()
                 counter_correction_ok = continue_playlist_audit and category_counter_correction_ok()
                 move_685_ok = continue_playlist_audit and authorized_685_migration_ok()
                 cleanup_ok = continue_playlist_audit and confirmed_404_cleanup_ok()
                 batch_ok=continue_playlist_audit and batch_migration_ok()
-                if continue_playlist_audit and not reorder_ok and not batch_ok and not cleanup_ok and not move_685_ok and not counter_correction_ok and not archive_sort_ok:
+                if continue_playlist_audit and not reorder_ok and not batch_ok and not cleanup_ok and not move_685_ok and not counter_correction_ok and not archive_sort_ok and not parts_move_ok:
                     # An explicitly requested category operation must carry a
                     # one-change, exact-hash manifest in the same reviewed PR.
                     # No workflow or discovery job receives write permission.
