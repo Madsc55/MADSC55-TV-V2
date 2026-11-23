@@ -312,14 +312,14 @@ jobs:
             # ubuntu-24.04 runners may not ship FFmpeg. Avoid hanging apt
             # mirrors: fetch both native binaries from a fixed GitHub release,
             # then verify the exact published SHA256 before extraction.
-            bundle="$RUNNER_TEMP/ffmpeg-linux-amd64-v9.0.2.tar.gz"
+            bundle="$RUNNER_TEMP/ffmpeg-n9.0.2-linux64-gpl.tar.xz"
             curl --fail --location --silent --show-error \
               --connect-timeout 10 --max-time 180 --retry 2 --retry-delay 2 \
-              "https://github.com/binmgr/ffmpeg/releases/download/v9.0.2/ffmpeg-linux-amd64.tar.gz" \
+              "https://github.com/FFmpeg-Builds/FFmpeg-Builds/releases/download/autobuild-2026-11-23-12-43/ffmpeg-n9.0.2-62-gac1c6e003f-linux64-gpl-9.0.tar.xz" \
               --output "$bundle"
-            echo "d7a22611c3d6793d2939ff992db8feecfdb9c206a583aa31d9a887e0992502c8  $bundle" | sha256sum -c -
+            echo "17cf42701de208afbf8de9ae4cd016122c875d95beedc6c4b37894d35a523063  $bundle" | sha256sum -c -
             mkdir -p "$RUNNER_TEMP/ffmpeg-extract" "$RUNNER_TEMP/ffmpeg-tools"
-            tar -xzf "$bundle" -C "$RUNNER_TEMP/ffmpeg-extract" --no-same-owner
+            tar -xJf "$bundle" -C "$RUNNER_TEMP/ffmpeg-extract" --no-same-owner
             ffmpeg_path="$(find "$RUNNER_TEMP/ffmpeg-extract" -type f -name ffmpeg -print -quit)"
             ffprobe_path="$(find "$RUNNER_TEMP/ffmpeg-extract" -type f -name ffprobe -print -quit)"
             if [ -z "$ffmpeg_path" ] || [ -z "$ffprobe_path" ]; then
@@ -335,6 +335,13 @@ jobs:
           command -v ffprobe
           ffmpeg -hide_banner -version >/dev/null
           ffprobe -hide_banner -version >/dev/null
+          # The real Turkish media fixture requires drawtext (FreeType +
+          # HarfBuzz), MPEG-4 video, AAC audio and SRT subtitle encoders.
+          # Reject trimmed static builds rather than running a fake decode.
+          ffmpeg -hide_banner -filters | grep -E '[[:space:]]drawtext[[:space:]]'
+          ffmpeg -hide_banner -encoders | grep -E '[[:space:]]mpeg4[[:space:]]'
+          ffmpeg -hide_banner -encoders | grep -E '[[:space:]]aac[[:space:]]'
+          ffmpeg -hide_banner -encoders | grep -E '[[:space:]]srt[[:space:]]'
           if ! command -v tesseract >/dev/null; then
             # Install only the small OCR executable, never FFmpeg from apt.
             # Bound the network operation and fail if Ubuntu mirrors are down.
