@@ -1,3 +1,19 @@
+#EXTINF:-1 tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ESBC2100002LV_20260707T051048SQUARE.png" group-title="ANA ARŞİV (13712)",VEVO LATINO
+https://jmp2.uk/stvp-ESBC2100002LV
+#EXTINF:-1 tvg-logo="https://tvpnlogopus.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/USBC3600015GF_20260303T094222SQUARE.png" group-title="ANA ARŞİV (13712)",VEVO LATINO
+https://jmp2.uk/stvp-USBC3600015GF
+#EXTINF:-1 tvg-name="Vevo Latino (1080p)" group-title="ANA ARŞİV (13712)",Vevo Latino (1080p)
+https://d1vgg34wqvwdqj.cloudfront.net/Vevo_Latino.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/D7SwmuB.png" group-title="ANA ARŞİV (13712)",VEVO LATINO (1080P)
+https://amg00056-amg00056c13-rakuten-es-3246.playouts.now.amagi.tv/playlist.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/DPqMpQC.png" group-title="ANA ARŞİV (13712)",VEVO POP
+https://amg00056-amg00056c8-rakuten-it-3239.playouts.now.amagi.tv/playlist.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/dZHktKR.png" group-title="ANA ARŞİV (13712)",VEVO POP
+https://jmp2.uk/plu-5d93b635b43dd1a399b39eee.m3u8
+#EXTINF:-1 tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ESBC2100001IU_20241022T051146SQUARE.png" group-title="ANA ARŞİV (13712)",VEVO POP
+https://jmp2.uk/stvp-ESBC2100001IU
+#EXTINF:-1 tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/GBBC19000017V_20250107T025833SQUARE.png" group-title="ANA ARŞİV (13712)",VEVO POP
+https://jmp2.uk/stvp-GBBC19000017V
 #EXTINF:-1 tvg-logo="https://i.ibb.co/brFBnw8/vevopop.png" group-title="ANA ARŞİV (13712)",VEVO POP
 https://amg00056-amg00056c9-rakuten-fr-3243.playouts.now.amagi.tv/playlist/amg00056-vevotvfast-vevopopfr-rakutenfr/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/dZHktKR.png" group-title="ANA ARŞİV (13712)",VEVO POP (1080P)
@@ -240,8 +256,6 @@ http://31.148.5.241/Viasat_Sport/index.m3u8
 http://46.53.200.153:7777/play/Viasat_Sport/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/fXESG0l.png" group-title="ANA ARŞİV (13712)",VIJU+ SPORT HD (1080P)
 http://46.53.200.153:7777/play/a01l/index.m3u8
-#EXTINF:-1 tvg-logo="https://vilayet.tv/wp-content/uploads/elementor/thumbs/logo-q3w2md1u47q39x7d0004wqzz74xdv1glw356ex6ph0.png" group-title="ANA ARŞİV (13712)",VILAYET TV
-https://nl.livekadeh.com/hls2/vilayet.m3u8
 #EXTINF:-1 tvg-name="Villa Altagracia TV (1080p)" group-title="ANA ARŞİV (13712)",Villa Altagracia TV (1080p)
 https://stream.inliveserver.com:19360/8004/8004.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/ryzCsvy.jpg" group-title="ANA ARŞİV (13712)",VILLA ELISA RADIO TV (1080P)
@@ -364,8 +378,6 @@ https://jmp2.uk/rok-396f57d10b5d5ec98648f810dcbe1f11.m3u8
 https://jmp2.uk/rok-1d889b474b205fe385a2c552aa909b94.m3u8
 #EXTINF:-1 tvg-logo="https://images.sr.roku.com/idType/roku-trc/context/trc/id/7b5699f58b2b54be9da4d23fe354fb59/https%3A%2F%2Fimage.roku.com%2Fbh-uploads%2Fproduction%2FinfoHUDLogo%2F1678481229409_VillanosDeNovela_HUD_Logo_260x147.png" group-title="ANA ARŞİV (13712)",VIX VILLANOS DE NOVELA
 https://jmp2.uk/rok-7b5699f58b2b54be9da4d23fe354fb59.m3u8
-#EXTINF:-1 tvg-logo="https://i.ibb.co/mHt7rQf/Tryerel.png" group-title="ANA ARŞİV (13712)",VİYANA TV
-http://nrttn172.kesintisizyayin.com:29010/nrttn/nrttn/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Vizion_Plus.svg/960px-Vizion_Plus.svg.png" group-title="ANA ARŞİV (13712)",VIZION PLUS (1080P)
 https://tringliveviz.akamaized.net/delta/105/out/u/qwaszxerdfcvrtryuy.m3u8
 #EXTINF:-1 tvg-logo="https://www.cableman.ru/sites/default/files/logo%20%287%29%20%281%29.png" group-title="ANA ARŞİV (13712)",VKUS (576P)
@@ -1032,22 +1044,6 @@ http://stream2.xiancity.cn/xatv3/playlist.m3u8
 http://stream2.xiancity.cn/xatv5/playlist.m3u8
 #EXTINF:-1 tvg-name="Xinjiang TV 1" group-title="ANA ARŞİV (13712)",Xinjiang TV 1
 https://klmysjtzb.rcsxzx.com/hls/klmy2.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/GXFLqxx.png" group-title="ANA ARŞİV (13712)",XINJIANG TV 2
-http://110.153.180.106:55555/out_3/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/GXFLqxx.png" group-title="ANA ARŞİV (13712)",XINJIANG TV 2
-https://infolive.hongshannet.cn/RedHillEye/1781077833267957853648adb1cc9957853648adb1cc9.m3u8?auth_key=1812613833-0-0-4dabcc60fbe41e40712b37dbf24dc877
-#EXTINF:-1 tvg-logo="https://i.imgur.com/GXFLqxx.png" group-title="ANA ARŞİV (13712)",XINJIANG TV 2
-https://hls.quklive.com/live/play-sh-21.quklive.com/1777511615189085.m3u8?auth_key=2092871636-a39d8614688744d0b170b856b086ba80-0-33900446b83fa0b5befeb6bedbcd51a0
-#EXTINF:-1 tvg-logo="https://i.imgur.com/l8S5qQB.png" group-title="ANA ARŞİV (13712)",XINJIANG TV 3
-http://110.153.180.106:55555/out_2/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/l8S5qQB.png" group-title="ANA ARŞİV (13712)",XINJIANG TV 3
-http://218.84.35.38:3000/m3u8/live/tctv-2/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/l8S5qQB.png" group-title="ANA ARŞİV (13712)",XINJIANG TV 3
-http://120.70.60.179:9901/tsfile/live/1006_1.m3u8?authid=0&key=txiptv&playlive=1
-#EXTINF:-1 tvg-logo="https://i.imgur.com/l8S5qQB.png" group-title="ANA ARŞİV (13712)",XINJIANG TV 3
-https://st-video.xjmty.com/fs/livedit/e55abfa37af26e19/8ce9971c2177b3dd.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/JJw1Ndc.png" group-title="ANA ARŞİV (13712)",XINJIANG TV 8
-http://120.70.60.179:9901/tsfile/live/1002_1.m3u8?authid=0&key=txiptv&playlive=1
 #EXTINF:-1 tvg-logo="https://i.imgur.com/jxuwGRi.png" group-title="ANA ARŞİV (13712)",XITE (720P)
 https://xite-rakuten.amagi.tv/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://tvpnlogopus.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/USBB320000647_20260512T070257SQUARE.png" group-title="ANA ARŞİV (13712)",XITE 80S FLASHBACK
