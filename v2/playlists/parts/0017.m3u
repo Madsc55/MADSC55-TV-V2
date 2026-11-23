@@ -1,3 +1,15 @@
+#EXTINF:-1 tvg-logo="https://i.imgur.com/w3OewHc.png" group-title="ANA ARŞİV (13712)",SOYUZ (576P)
+https://hls-tvsoyuz.cdnvideo.ru/tvsoyuz/soyuz/playlist.m3u8
+#EXTINF:-1 tvg-name="Soyuzny (1080p)" group-title="ANA ARŞİV (13712)",Soyuzny (1080p)
+https://souzny.mediacdn.ru/cdn/souzny/playlist.m3u8
+#EXTINF:-1 tvg-logo="https://www.mtis.by/upload/medialibrary/717/v07nk6rmf6m1mno8ujhbkcg8nstkfjgv/Slide%2016_9%20-%2050.png" group-title="ANA ARŞİV (13712)",SOYUZNY (360P)
+http://178.124.179.122:8080/TRO/index.m3u8
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/SpaceLogo.svg/960px-SpaceLogo.svg.png" group-title="ANA ARŞİV (13712)",SPACE (1080P)
+http://45.171.64.30:6060/play/a04n/index.m3u8
+#EXTINF:-1 tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ES7000088K_20260901T054146SQUARE.png" group-title="ANA ARŞİV (13712)",SPACE LIVE
+https://jmp2.uk/stvp-ES7000088K
+#EXTINF:-1 tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/GB3800007C5_20260901T102539SQUARE.png" group-title="ANA ARŞİV (13712)",SPACE LIVE
+https://jmp2.uk/stvp-GB3800007C5
 #EXTINF:-1 tvg-logo="https://images.sr.roku.com/idType/roku-trc/context/trc/id/4d62b7d4fc91fbc2b528eb10857d7ab8/https%3A%2F%2Fimage.roku.com%2Fbh-uploads%2Fproduction%2FinfoHUDLogo%2F1787161821038_space_live_logo_hud.png" group-title="ANA ARŞİV (13712)",SPACE LIVE
 https://jmp2.uk/rok-4d62b7d4fc91fbc2b528eb10857d7ab8.m3u8
 #EXTINF:-1 tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/GB3800007C5_20251209T004625SQUARE.png" group-title="ANA ARŞİV (13712)",SPACE LIVE POWERED BY SEN
@@ -5170,15 +5182,3 @@ https://jmp2.uk/plu-5fd7bb1f86d94a000796e2c2.m3u8
 https://jmp2.uk/stvp-USBD3000133M
 #EXTINF:-1 tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/GBBC2100002HP_20250107T025831SQUARE.png" group-title="ANA ARŞİV (13712)",VEVO '90S & '00S
 https://jmp2.uk/stvp-GBBC2100002HP
-#EXTINF:-1 tvg-name="Vevo '90s (1080p)" group-title="ANA ARŞİV (13712)",Vevo '90s (1080p)
-https://d29u7uq3k6xqk0.cloudfront.net/Vevo_90s.m3u8
-#EXTINF:-1 tvg-logo="https://tvpnlogopus.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/USBD120002431_20260303T094211SQUARE.png" group-title="ANA ARŞİV (13712)",VEVO 2010S
-https://jmp2.uk/stvp-USBD120002431
-#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/5fd7bca3e0a4ee0007a38e8c/featuredImage.jpg" group-title="ANA ARŞİV (13712)",VEVO 2K
-https://jmp2.uk/plu-5fd7bca3e0a4ee0007a38e8c.m3u8
-#EXTINF:-1 tvg-logo="https://tvpnlogopus.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/USBB4400015F5_20260303T094214SQUARE.png" group-title="ANA ARŞİV (13712)",VEVO 2K
-https://jmp2.uk/stvp-USBB4400015F5
-#EXTINF:-1 tvg-name="Vevo 2K (1080p)" group-title="ANA ARŞİV (13712)",Vevo 2K (1080p)
-https://d3150hggbcolbo.cloudfront.net/Vevo_2K.m3u8
-#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/5da0d75e84830900098a1ea0/featuredImage.jpg" group-title="ANA ARŞİV (13712)",VEVO COUNTRY
-https://jmp2.uk/plu-5da0d75e84830900098a1ea0.m3u8

@@ -1,8 +1,8 @@
 {
-  "base_sha256": "1bbbd1ea25c097df75207b44f2901b1630f3be9f22c8d338b187f4473f846c4a",
-  "result_sha256": "4cacb329bc48dcf4b4377a4c2eba6d9c7555ff707203a0c5aad2b00cb2ea9bd3",
+  "base_sha256": "4cacb329bc48dcf4b4377a4c2eba6d9c7555ff707203a0c5aad2b00cb2ea9bd3",
+  "result_sha256": "d18dfd8d8e7684b0af99688e9edfd5d401f7d9171d4d35800dd8ce7e6f486383",
   "operation": "reorder",
-  "request": "Kullanıcının ANA ARŞİV'deki Türkçe ve Türkî yayın adaylarını yeniden araştırıp başa alma açık talimatı. 13.712 kayıt yeniden tarandı; iptv-org ülke yerine dil katalogları (tur, aze, kaz, uzb, kir, tuk, tat, uig, bak, sah) ile URL ve yayın kimliği eşleştirildi. Önceki 760 kayıt korunur; 10 aday eklenir: HUZUR TV (Tatarca, tam URL), KURDISTAN TV (Türkçe dahil dil kataloğu, tam URL), iki LOVE NATURE (Türkçe katalog URL eşleşmesi, bölgesel ses belirsiz), iki MC TV (Türkçe katalog adı ve kaynak, ortak temel URL nedeniyle canlı doğrulama gerekli), üç RTG TV (Türkçe katalog kimliği, bir tam URL ve iki aynı kanal adı/logo), TAMYR (Başkurtça, tam URL). Açıkça yabancı ülke sürümleri ve yalnız ortak sunucu adresi eşleşmeleri dışarıda bırakılır. İlk 770 kayıt önceliklendirilir. Yayın dili canlı doğrulanmamıştır; önceki 26 VOD kaydı korunur, yeni VOD eklenmez. Tüm 18.337 kayıt, diğer kategoriler, URL ve metadata ve kalanların sırası korunur. Silme, kopyalama, yeni playlist, kategori taşıma veya canlı yayın testi yok.",
+  "request": "Kullanıcının ANA ARŞİV'deki Türkçe/Türkî yayın adaylarını kapsamlı araştırıp aynı kategorinin başına alma talimatı. 13.712 kayıt; Digitürk, TV+, D-Smart, Türksat Kablo program rehberleriyle 192 isim eşleşmesi incelendi. 18 ek aday: Film Screen HD birebir katalog URL eşleşmesi ve Türkçe uydu ses kaydı; BBC Earth, Da Vinci, Discovery, E!, Epic Drama, History, National Geographic/Wild ve Viasat Explore/History/Nature çok dilli Avrupa sürümü olasılığı, Türkçe dağıtım katalogları ile isim ve bölgesel kaynak eşleşmesi. Son 17 kayıt düşük/orta güvenli dil inceleme adaylarıdır, doğrulanmış Türkçe yayın olarak sunulmaz. Açıkça yabancı ülke sürümleri, ortak alakasız isimler ve tek ortak URL kullanan belirsiz kanallar dışarıda bırakılır. İlk 770 kayıt korunur, 18 aday eklenir, ilk 788 kayıt önceliklendirilir. Yeni kayıt ekleme, silme, kopyalama, kategori taşıma, canlı test veya yeni playlist yok; tüm 18.337 kayıt ve diğer kategoriler korunur.",
   "channels": [
     "24 TV",
     "24 TV",
@@ -773,6 +773,24 @@
     "RTG TV (1080P)",
     "RTG TV (720p)",
     "RTG TV HD (1080P)",
-    "TAMYR (576P)"
+    "TAMYR (576P)",
+    "BBC Earth (1080p)",
+    "Da Vinci (1080p)",
+    "DA VİNCİ (576P)",
+    "DİSCOVERY CHANNEL",
+    "DİSCOVERY CHANNEL (1080P)",
+    "E! (1080p)",
+    "Epic Drama",
+    "FILM SCREEN HD",
+    "History",
+    "HISTORY",
+    "History (1080p)",
+    "National Geographic",
+    "NATIONAL GEOGRAPHIC",
+    "National Geographic Wild",
+    "NATIONAL GEOGRAPHIC WILD",
+    "Viasat Explore",
+    "Viasat History",
+    "Viasat Nature"
   ]
 }

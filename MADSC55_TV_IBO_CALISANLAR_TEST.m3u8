@@ -4375,10 +4375,44 @@ http://31.148.48.15/RTG_HD/index.m3u8
 http://46.53.200.153:7777/play/a00u/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/Ia3acCB.png" group-title="ANA ARŞİV (13712)",TAMYR (576P)
 https://bsttv.bonus-tv.ru/cdn/tamyr/playlist.m3u8
-#EXTINF:-1 tvg-name="Aristo TV (360p)" group-title="ANA ARŞİV (13712)",Aristo TV (360p)
-https://ma.anixa.tv/clips/stream/aristo/index.m3u8
 #EXTINF:-1 tvg-name="BBC Earth (1080p)" group-title="ANA ARŞİV (13712)",BBC Earth (1080p)
 http://57.128.231.171:8080/307/index.m3u8
+#EXTINF:-1 tvg-name="Da Vinci (1080p)" group-title="ANA ARŞİV (13712)",Da Vinci (1080p)
+http://57.128.231.171:8080/284/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/V8AUJP6.png" group-title="ANA ARŞİV (13712)",DA VİNCİ (576P)
+http://stream.mcquack.net/238/index.m3u8
+#EXTINF:-1 tvg-logo="https://static.wikia.nocookie.net/logopedia/images/2/27/Discovery_Channel_2019_symbol.svg/revision/latest?cb=20210804150956" group-title="ANA ARŞİV (13712)",DİSCOVERY CHANNEL
+http://88.212.15.50/live/test_discovery_hd_hevc/playlist.m3u8
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/2019_Discovery_logo.svg/960px-2019_Discovery_logo.svg.png" group-title="ANA ARŞİV (13712)",DİSCOVERY CHANNEL (1080P)
+http://stream.mcquack.net/177/index.m3u8
+#EXTINF:-1 tvg-name="E! (1080p)" group-title="ANA ARŞİV (13712)",E! (1080p)
+http://57.128.231.171:8080/273/index.m3u8
+#EXTINF:-1 tvg-name="Epic Drama" group-title="ANA ARŞİV (13712)",Epic Drama
+http://82.78.243.219:45739/play/a01p/index.m3u8
+#EXTINF:-1 tvg-logo="https://feo.kablowebtv.com/resize/168A635D265A4328C2883FB4CD8FF/0/0/Vod/HLS/7d58e86c-d38e-4ef5-8ee0-fda0a7e65914.png" group-title="ANA ARŞİV (13712)",FILM SCREEN HD
+https://edge-e3.evrideo.tv/f2dcbecf-5af0-47db-a82e-032112050a23_1000027346_HLS/manifest.m3u8
+#EXTINF:-1 tvg-name="History" group-title="ANA ARŞİV (13712)",History
+http://88.212.15.19/live/test_history/playlist.m3u8
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/History_%282021%29.svg/500px-History_%282021%29.svg.png" group-title="ANA ARŞİV (13712)",HISTORY
+http://88.212.15.50/live/test_history/playlist.m3u8
+#EXTINF:-1 tvg-name="History (1080p)" group-title="ANA ARŞİV (13712)",History (1080p)
+https://streamer12.xploretv.si/__cl/cg:prod/__c/A1_SI_HISTORYHD_ott/__op/dash-default/__dci/__f/index.m3u8?admin=xploreTv_test_user&redirect=true
+#EXTINF:-1 tvg-name="National Geographic" group-title="ANA ARŞİV (13712)",National Geographic
+http://88.212.15.19/live/test_ngc/playlist.m3u8
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Natgeologo.svg/960px-Natgeologo.svg.png" group-title="ANA ARŞİV (13712)",NATIONAL GEOGRAPHIC
+http://88.212.15.50/live/test_ngc/playlist.m3u8
+#EXTINF:-1 tvg-name="National Geographic Wild" group-title="ANA ARŞİV (13712)",National Geographic Wild
+http://88.212.15.29/live/test_ngw/playlist.m3u8
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/National_Geographic_Wild_logo.svg/960px-National_Geographic_Wild_logo.svg.png" group-title="ANA ARŞİV (13712)",NATIONAL GEOGRAPHIC WILD
+http://88.212.15.50/live/test_ngw/playlist.m3u8
+#EXTINF:-1 tvg-name="Viasat Explore" group-title="ANA ARŞİV (13712)",Viasat Explore
+http://88.212.15.29/live/test_viasat_explore_atk_tv/playlist.m3u8
+#EXTINF:-1 tvg-name="Viasat History" group-title="ANA ARŞİV (13712)",Viasat History
+http://88.212.15.29/live/test_viasat_history_atk_tv/playlist.m3u8
+#EXTINF:-1 tvg-name="Viasat Nature" group-title="ANA ARŞİV (13712)",Viasat Nature
+http://88.212.15.29/live/test_viasat_nature_atk_tv/playlist.m3u8
+#EXTINF:-1 tvg-name="Aristo TV (360p)" group-title="ANA ARŞİV (13712)",Aristo TV (360p)
+https://ma.anixa.tv/clips/stream/aristo/index.m3u8
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/7/7e/BBC_Earth_2023.svg" group-title="ANA ARŞİV (13712)",BBC EARTH (1080P)
 https://aegis-cloudfront-1.tubi.video/bb1fc6ad-9948-42ea-aaf3-20acfcdeecac/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/630348a54c48ce00077eb6c7/colorLogoPNG.png" group-title="ANA ARŞİV (13712)",BECKER
@@ -7401,10 +7435,6 @@ https://live.mediatech.vn/live/285b59a111d76974225a8e3004bfc31a509/chunklist.m3u
 https://live.mediatech.vn/live/2859145290d0d7947ef88b6240123b62474/chunklist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/V8AUJP6.png" group-title="ANA ARŞİV (13712)",DA VINCI
 https://stream8.cinerama.uz/1231/tracks-v1a1/mono.m3u8
-#EXTINF:-1 tvg-name="Da Vinci (1080p)" group-title="ANA ARŞİV (13712)",Da Vinci (1080p)
-http://57.128.231.171:8080/284/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/V8AUJP6.png" group-title="ANA ARŞİV (13712)",DA VİNCİ (576P)
-http://stream.mcquack.net/238/index.m3u8
 #EXTINF:-1 tvg-name="Da Vinci Asia (1080p)" group-title="ANA ARŞİV (13712)",Da Vinci Asia (1080p)
 https://freem3u.xyz/api/live/play.m3u8?vid=214
 #EXTINF:-1 tvg-logo="https://i.imgur.com/iBx7K1M.png" group-title="ANA ARŞİV (13712)",DA VİNCİ ASİA (1080P)
@@ -8037,14 +8067,10 @@ http://92.114.85.87:8014/play/a007/index.m3u8
 https://livecdn.live247stream.com/discoverpakistan/web/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/wr2bLaA.png" group-title="ANA ARŞİV (13712)",DİSCOVERİNG CHİNA (1080P)
 https://fastlive.cctvplus.com/out/v1/8442c3bfd4c64a3984389328f6087879/index.m3u8
-#EXTINF:-1 tvg-logo="https://static.wikia.nocookie.net/logopedia/images/2/27/Discovery_Channel_2019_symbol.svg/revision/latest?cb=20210804150956" group-title="ANA ARŞİV (13712)",DİSCOVERY CHANNEL
-http://88.212.15.50/live/test_discovery_hd_hevc/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/2019_Discovery_logo.svg/960px-2019_Discovery_logo.svg.png" group-title="ANA ARŞİV (13712)",DİSCOVERY CHANNEL
 http://88.212.7.14/live/discovery_hungary/index.m3u8
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/2019_Discovery_logo.svg/960px-2019_Discovery_logo.svg.png" group-title="ANA ARŞİV (13712)",DİSCOVERY CHANNEL (1080P)
 https://streaming.aurora.enhanced.live/live/mpc/enl0eG1mLmVncmVzcy5mZDJ2eHI=/out/v1/IT_SIMULCAST/DISCOVERYCHANNEL/CMAF/index.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/2019_Discovery_logo.svg/960px-2019_Discovery_logo.svg.png" group-title="ANA ARŞİV (13712)",DİSCOVERY CHANNEL (1080P)
-http://stream.mcquack.net/177/index.m3u8
 #EXTINF:-1 tvg-name="Discovery Channel (360p)" group-title="ANA ARŞİV (13712)",Discovery Channel (360p)
 https://lb.iptvnetwork.net/ls28/10015/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/2019_Discovery_logo.svg/960px-2019_Discovery_logo.svg.png" group-title="ANA ARŞİV (13712)",DİSCOVERY CHANNEL (720P)
@@ -8653,8 +8679,6 @@ https://gist.githubusercontent.com/iptvonlinetv/cf56ccf36d1c0827e4dc470db7b7912d
 https://gist.githubusercontent.com/iptvonlinetv/cf56ccf36d1c0827e4dc470db7b7912d/raw/066b1c9755b2496805575f16d413bd1207ca8117/udp410.310.578:2020.m3u8
 #EXTINF:-1 tvg-name="E International (360p)" group-title="ANA ARŞİV (13712)",E International (360p)
 https://vodcdn.bamboo-cloud.com/livehls/69a123b780c99d28cc0f0016/master.m3u8
-#EXTINF:-1 tvg-name="E! (1080p)" group-title="ANA ARŞİV (13712)",E! (1080p)
-http://57.128.231.171:8080/273/index.m3u8
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/E%21_Logo_Flat_2012.svg/960px-E%21_Logo_Flat_2012.svg.png" group-title="ANA ARŞİV (13712)",E! (1080P)
 http://23.237.104.106:8080/USA_E/index.m3u8
 #EXTINF:-1 tvg-name="E! Keeping Up (1080p)" group-title="ANA ARŞİV (13712)",E! Keeping Up (1080p)
@@ -9101,8 +9125,6 @@ https://fta.ektv.in/live/467/master.m3u8
 https://mumt01.tangotv.in/O5aw8Zn3EPICBHOJPURI/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/EFDsCkH.png" group-title="ANA ARŞİV (13712)",EPIC CRIMES (1080P)
 https://cc-wsuyg2uxeak04.akamaized.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-wsuyg2uxeak04/master.m3u8
-#EXTINF:-1 tvg-name="Epic Drama" group-title="ANA ARŞİV (13712)",Epic Drama
-http://82.78.243.219:45739/play/a01p/index.m3u8
 #EXTINF:-1 tvg-logo="https://tvpnlogopus.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/US2000017HT_20260407T042323SQUARE.png" group-title="ANA ARŞİV (13712)",EPIC GARDENING TV
 https://jmp2.uk/stvp-US2000017HT
 #EXTINF:-1 tvg-logo="https://ltsk-cdn.s3.eu-west-1.amazonaws.com/jumpstart/Temp_Live/cdn/HLS/Channel/transparentImages/GUBARE_Poster-transparent.png" group-title="ANA ARŞİV (13712)",EPIC KIDS (1080P)
@@ -9903,8 +9925,6 @@ https://service-stitcher.clusters.pluto.tv/v1/stitch/embed/hls/channel/608aa42b5
 https://lbgo.bozztv.com/ssh101/ssh101/filmnoww/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/KxPsLG3.png" group-title="ANA ARŞİV (13712)",FILM ROMANTICI – PLUTO TV
 https://service-stitcher.clusters.pluto.tv/v1/stitch/embed/hls/channel/608aa4a4cc92820007b663af/master.m3u8?deviceId=channel&deviceModel=web&deviceVersion=1.0&appVersion=1.0&deviceType=rokuChannel&deviceMake=rokuChannel&deviceDNT=1&advertisingId=channel&embedPartner=rokuChannel&appName=rokuchannel&is_lat=1&bmodel=bm1&content=channel&platform=web&tags=ROKU_CONTENT_TAGS&coppa=false&content_type=livefeed&rdid=channel&genre=ROKU_ADS_CONTENT_GENRE&content_rating=ROKU_ADS_CONTENT_RATING&studio_id=viacom&channel_id=channel
-#EXTINF:-1 tvg-logo="https://feo.kablowebtv.com/resize/168A635D265A4328C2883FB4CD8FF/0/0/Vod/HLS/7d58e86c-d38e-4ef5-8ee0-fda0a7e65914.png" group-title="ANA ARŞİV (13712)",FILM SCREEN HD
-https://edge-e3.evrideo.tv/f2dcbecf-5af0-47db-a82e-032112050a23_1000027346_HLS/manifest.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/hIWMGRW.png" group-title="ANA ARŞİV (13712)",FILM THRILLER – PLUTO TV
 https://service-stitcher.clusters.pluto.tv/v1/stitch/embed/hls/channel/608aa5e995132a00075f7005/master.m3u8?deviceId=channel&deviceModel=web&deviceVersion=1.0&appVersion=1.0&deviceType=rokuChannel&deviceMake=rokuChannel&deviceDNT=1&advertisingId=channel&embedPartner=rokuChannel&appName=rokuchannel&is_lat=1&bmodel=bm1&content=channel&platform=web&tags=ROKU_CONTENT_TAGS&coppa=false&content_type=livefeed&rdid=channel&genre=ROKU_ADS_CONTENT_GENRE&content_rating=ROKU_ADS_CONTENT_RATING&studio_id=viacom&channel_id=channel
 #EXTINF:-1 tvg-logo="https://i.imgur.com/QeFc7F3.png" group-title="ANA ARŞİV (13712)",FILM – PLUTO TV
@@ -11575,18 +11595,12 @@ https://jmp2.uk/plu-67517f923a61d40008c451f0.m3u8
 http://213.91.179.28:8000/play/a0c1
 #EXTINF:-1 tvg-name="History" group-title="ANA ARŞİV (13712)",History
 http://88.212.15.19/live/history_hun/index.m3u8
-#EXTINF:-1 tvg-name="History" group-title="ANA ARŞİV (13712)",History
-http://88.212.15.19/live/test_history/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/History_%282021%29.svg/500px-History_%282021%29.svg.png" group-title="ANA ARŞİV (13712)",HISTORY
-http://88.212.15.50/live/test_history/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/OWIK7FJ.png" group-title="ANA ARŞİV (13712)",HISTORY
 http://88.212.7.14/live/history_hun/index.m3u8
 #EXTINF:-1 tvg-logo="https://tvpnlogopus.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/USBD1200009JI_20250401T004831SQUARE.png" group-title="ANA ARŞİV (13712)",HISTORY & WARFARE NOW
 https://jmp2.uk/stvp-USBD1200009JI
 #EXTINF:-1 tvg-name="History (1080p)" group-title="ANA ARŞİV (13712)",History (1080p)
 http://45.177.114.114/HISTORY/index.m3u8
-#EXTINF:-1 tvg-name="History (1080p)" group-title="ANA ARŞİV (13712)",History (1080p)
-https://streamer12.xploretv.si/__cl/cg:prod/__c/A1_SI_HISTORYHD_ott/__op/dash-default/__dci/__f/index.m3u8?admin=xploreTv_test_user&redirect=true
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/History_%282021%29.svg/500px-History_%282021%29.svg.png" group-title="ANA ARŞİV (13712)",HISTORY (1080P)
 http://212.5.144.156:8080/history/index.m3u8
 #EXTINF:-1 tvg-name="History (360p)" group-title="ANA ARŞİV (13712)",History (360p)
@@ -16596,11 +16610,7 @@ https://hls01ns.antenaplay.ro/hls/n24-plus-sd/index.m3u8
 #EXTINF:-1 tvg-name="National Geographic" group-title="ANA ARŞİV (13712)",National Geographic
 http://88.212.15.19/live/ngc_hun/index.m3u8
 #EXTINF:-1 tvg-name="National Geographic" group-title="ANA ARŞİV (13712)",National Geographic
-http://88.212.15.19/live/test_ngc/playlist.m3u8
-#EXTINF:-1 tvg-name="National Geographic" group-title="ANA ARŞİV (13712)",National Geographic
 https://onyx1.mofta1.cfd/ngeo/usergenrnd84oeigt.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Natgeologo.svg/960px-Natgeologo.svg.png" group-title="ANA ARŞİV (13712)",NATIONAL GEOGRAPHIC
-http://88.212.15.50/live/test_ngc/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Natgeologo.svg/960px-Natgeologo.svg.png" group-title="ANA ARŞİV (13712)",NATIONAL GEOGRAPHIC
 http://88.212.7.14/live/ngc_hun/index.m3u8
 #EXTINF:-1 tvg-name="National Geographic (1080p)" group-title="ANA ARŞİV (13712)",National Geographic (1080p)
@@ -16634,11 +16644,7 @@ http://15.204.246.24:8080/NatGeoHD/index.m3u8
 #EXTINF:-1 tvg-name="National Geographic Wild" group-title="ANA ARŞİV (13712)",National Geographic Wild
 http://88.212.15.19/live/ngw_hun/index.m3u8
 #EXTINF:-1 tvg-name="National Geographic Wild" group-title="ANA ARŞİV (13712)",National Geographic Wild
-http://88.212.15.29/live/test_ngw/playlist.m3u8
-#EXTINF:-1 tvg-name="National Geographic Wild" group-title="ANA ARŞİV (13712)",National Geographic Wild
 https://flash1.bogulus1.cfd/wild/usergenr9qsi5gt.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/National_Geographic_Wild_logo.svg/960px-National_Geographic_Wild_logo.svg.png" group-title="ANA ARŞİV (13712)",NATIONAL GEOGRAPHIC WILD
-http://88.212.15.50/live/test_ngw/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/National_Geographic_Wild_logo.svg/960px-National_Geographic_Wild_logo.svg.png" group-title="ANA ARŞİV (13712)",NATIONAL GEOGRAPHIC WILD
 http://88.212.7.14/live/ngw_hun/index.m3u8
 #EXTINF:-1 tvg-name="National Geographic Wild (1080p)" group-title="ANA ARŞİV (13712)",National Geographic Wild (1080p)
@@ -28732,8 +28738,6 @@ http://315e5a5d.ottrast.com/iptv/8XFKA8883W9M5K/12085/index.m3u8
 #EXTINF:-1 tvg-name="Viasat Explore" group-title="ANA ARŞİV (13712)",Viasat Explore
 http://777905.live.tvstitch.com/playlist.m3u8?source=aHR0cDovLzE3Ni4xMjIuMTAzLjI0MTo3MDAwL2NoODUvdHJhY2tzLXYxYTEvbW9uby5tM3U4P2xpdmU9MSZpcD0xNzguMTM2LjQyLjIyMCZpZD05NDg4NjUmc2VjcmV0PW4xdTd1aTA2JnNzbD0xJjIxeW89MCZlPTE3OTA3NTMyOTgmc3Q9eWVMNVRuX0tiUlAwVWd0UjctYTBMZw%3D%3D&master=79
 #EXTINF:-1 tvg-name="Viasat Explore" group-title="ANA ARŞİV (13712)",Viasat Explore
-http://88.212.15.29/live/test_viasat_explore_atk_tv/playlist.m3u8
-#EXTINF:-1 tvg-name="Viasat Explore" group-title="ANA ARŞİV (13712)",Viasat Explore
 https://arwen1.panaka1.cfd/vexplr/usergenrnd7ke5lgt.m3u8
 #EXTINF:-1 tvg-name="Viasat Explore" group-title="ANA ARŞİV (13712)",Viasat Explore
 https://lb.dstvmultimedia.com/ViasatExplore/index.m3u8
@@ -28751,8 +28755,6 @@ https://da9c49fa.wurl.com/master/f36d25e7e52f1ba8d7e56eb859c636563214f541/UmFrdX
 http://315e5a5d.ottrast.com/iptv/8XFKA8883W9M5K/12101/index.m3u8
 #EXTINF:-1 tvg-name="Viasat History" group-title="ANA ARŞİV (13712)",Viasat History
 http://777905.live.tvstitch.com/playlist.m3u8?source=aHR0cDovLzE3Ni4xMjIuMTAzLjI0MTo3MDAwL2NoODYvdHJhY2tzLXYxYTEvbW9uby5tM3U4P2xpdmU9MSZpcD0xNzguMTM2LjQyLjIyMCZpZD05NDg4NjUmc2VjcmV0PW4xdTd1aTA2JnNzbD0xJjIxeW89MCZlPTE3OTA3NTM0ODYmc3Q9MVprUlhpb2xfODRPc2RMR2R0VDNzQQ%3D%3D&master=78
-#EXTINF:-1 tvg-name="Viasat History" group-title="ANA ARŞİV (13712)",Viasat History
-http://88.212.15.29/live/test_viasat_history_atk_tv/playlist.m3u8
 #EXTINF:-1 tvg-name="Viasat History" group-title="ANA ARŞİV (13712)",Viasat History
 https://arwen1.panaka1.cfd/vhis/usergenrnd4v6g8eigt.m3u8
 #EXTINF:-1 tvg-name="Viasat History" group-title="ANA ARŞİV (13712)",Viasat History
@@ -28785,8 +28787,6 @@ http://777905.live.tvstitch.com/playlist.m3u8?master=102&source=aHR0cDovLzE3Ni4x
 http://315e5a5d.ottrast.com/iptv/8XFKA8883W9M5K/12084/index.m3u8
 #EXTINF:-1 tvg-name="Viasat Nature" group-title="ANA ARŞİV (13712)",Viasat Nature
 http://777905.live.tvstitch.com/playlist.m3u8?source=aHR0cDovLzE3Ni4xMjIuMTAzLjI0MTo3MDAwL2NoODQvdHJhY2tzLXYxYTEvbW9uby5tM3U4P2xpdmU9MSZpcD0xNzguMTM2LjQyLjIyMCZpZD05NDg4NjUmc2VjcmV0PW4xdTd1aTA2JnNzbD0xJjIxeW89MCZlPTE3OTA3NTMxMTAmc3Q9dTZrbUNadl9LWlpqMllkWVJRbDVBdw%3D%3D&master=77
-#EXTINF:-1 tvg-name="Viasat Nature" group-title="ANA ARŞİV (13712)",Viasat Nature
-http://88.212.15.29/live/test_viasat_nature_atk_tv/playlist.m3u8
 #EXTINF:-1 tvg-name="Viasat Nature" group-title="ANA ARŞİV (13712)",Viasat Nature
 https://arwen1.panaka1.cfd/vnature/usergenrnd2g9eqk.m3u8
 #EXTINF:-1 tvg-name="Viasat Nature" group-title="ANA ARŞİV (13712)",Viasat Nature

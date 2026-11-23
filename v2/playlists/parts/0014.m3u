@@ -1,3 +1,23 @@
+#EXTINF:-1 tvg-logo="https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7f/Discovery_Kids_2021_2D_sin_wordmark.svg/960px-Discovery_Kids_2021_2D_sin_wordmark.svg.png" group-title="ANA ARŞİV (13712)",DISCOVERY KIDS LATIN AMERICA COLOMBIA (1080P)
+http://38.134.250.110:8000/play/a003/index.m3u8
+#EXTINF:-1 tvg-logo="https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7f/Discovery_Kids_2021_2D_sin_wordmark.svg/960px-Discovery_Kids_2021_2D_sin_wordmark.svg.png" group-title="ANA ARŞİV (13712)",DISCOVERY KIDS LATIN AMERICA MEXICO
+http://38.65.175.84:8000/play/a0an/index.m3u8
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Discovery_science_new_logo_2017.png/960px-Discovery_science_new_logo_2017.png" group-title="ANA ARŞİV (13712)",DİSCOVERY SCİENCE LATİN AMERİCA (480P)
+http://45.134.141.161:2200/ARG/Discovery_Science_HD/index.m3u8
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Discovery_science_new_logo_2017.png/960px-Discovery_science_new_logo_2017.png" group-title="ANA ARŞİV (13712)",DISCOVERY SCIENCE LATIN AMERICA (720P)
+http://45.171.64.30:6060/play/a007/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/AqR0Jkn.png" group-title="ANA ARŞİV (13712)",DİSCOVERY THEATER LATİN AMERİCA (1080P)
+http://181.224.200.5:2277/play/a0bj/index.m3u8
+#EXTINF:-1 tvg-logo="https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ea/Discovery_Turbo_Italy.svg/1920px-Discovery_Turbo_Italy.svg.png" group-title="ANA ARŞİV (13712)",DİSCOVERY TURBO (1080P)
+https://streaming.aurora.enhanced.live/live/mpc/enl0eG1mLmVncmVzcy5mZDJ2eHI=/out/v1/IT_SIMULCAST/TURBO/CMAF/index.m3u8
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Discovery_Turbo_2025.svg/1920px-Discovery_Turbo_2025.svg.png" group-title="ANA ARŞİV (13712)",DİSCOVERY TURBO (720P)
+http://41.205.93.154/ESPNNEWS/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/1pQPxu3.png" group-title="ANA ARŞİV (13712)",DİSCOVERY TURBO LATİN AMERİCA (1080P)
+http://38.134.250.110:8000/play/a01y/index.m3u8
+#EXTINF:-1 tvg-logo="https://tvpnlogopus.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/USBC3600005U9_20260505T062506SQUARE.png" group-title="ANA ARŞİV (13712)",DISCOVERY TURBO TV
+https://jmp2.uk/stvp-USBC3600005U9
+#EXTINF:-1 tvg-logo="https://i.imgur.com/yNFmUkE.png" group-title="ANA ARŞİV (13712)",DİSCOVERY WORLD (1080P)
+http://168.196.127.137:6001/play/a097/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/yNFmUkE.png" group-title="ANA ARŞİV (13712)",DISCOVERY WORLD BRAZIL (720P) [GEO-BLOCKED]
 http://15.204.246.24:8080/DiscoveryWorldHD/index.m3u8
 #EXTINF:-1 tvg-logo="https://jiotvimages.cdn.jio.com/dare_images/images/Disha_tv.png" group-title="ANA ARŞİV (13712)",DISHA TV (396P)
@@ -566,8 +586,6 @@ https://gist.githubusercontent.com/iptvonlinetv/cf56ccf36d1c0827e4dc470db7b7912d
 https://gist.githubusercontent.com/iptvonlinetv/cf56ccf36d1c0827e4dc470db7b7912d/raw/066b1c9755b2496805575f16d413bd1207ca8117/udp410.310.578:2020.m3u8
 #EXTINF:-1 tvg-name="E International (360p)" group-title="ANA ARŞİV (13712)",E International (360p)
 https://vodcdn.bamboo-cloud.com/livehls/69a123b780c99d28cc0f0016/master.m3u8
-#EXTINF:-1 tvg-name="E! (1080p)" group-title="ANA ARŞİV (13712)",E! (1080p)
-http://57.128.231.171:8080/273/index.m3u8
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/E%21_Logo_Flat_2012.svg/960px-E%21_Logo_Flat_2012.svg.png" group-title="ANA ARŞİV (13712)",E! (1080P)
 http://23.237.104.106:8080/USA_E/index.m3u8
 #EXTINF:-1 tvg-name="E! Keeping Up (1080p)" group-title="ANA ARŞİV (13712)",E! Keeping Up (1080p)
@@ -1014,8 +1032,6 @@ https://fta.ektv.in/live/467/master.m3u8
 https://mumt01.tangotv.in/O5aw8Zn3EPICBHOJPURI/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/EFDsCkH.png" group-title="ANA ARŞİV (13712)",EPIC CRIMES (1080P)
 https://cc-wsuyg2uxeak04.akamaized.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-wsuyg2uxeak04/master.m3u8
-#EXTINF:-1 tvg-name="Epic Drama" group-title="ANA ARŞİV (13712)",Epic Drama
-http://82.78.243.219:45739/play/a01p/index.m3u8
 #EXTINF:-1 tvg-logo="https://tvpnlogopus.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/US2000017HT_20260407T042323SQUARE.png" group-title="ANA ARŞİV (13712)",EPIC GARDENING TV
 https://jmp2.uk/stvp-US2000017HT
 #EXTINF:-1 tvg-logo="https://ltsk-cdn.s3.eu-west-1.amazonaws.com/jumpstart/Temp_Live/cdn/HLS/Channel/transparentImages/GUBARE_Poster-transparent.png" group-title="ANA ARŞİV (13712)",EPIC KIDS (1080P)
@@ -1816,8 +1832,6 @@ https://service-stitcher.clusters.pluto.tv/v1/stitch/embed/hls/channel/608aa42b5
 https://lbgo.bozztv.com/ssh101/ssh101/filmnoww/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/KxPsLG3.png" group-title="ANA ARŞİV (13712)",FILM ROMANTICI – PLUTO TV
 https://service-stitcher.clusters.pluto.tv/v1/stitch/embed/hls/channel/608aa4a4cc92820007b663af/master.m3u8?deviceId=channel&deviceModel=web&deviceVersion=1.0&appVersion=1.0&deviceType=rokuChannel&deviceMake=rokuChannel&deviceDNT=1&advertisingId=channel&embedPartner=rokuChannel&appName=rokuchannel&is_lat=1&bmodel=bm1&content=channel&platform=web&tags=ROKU_CONTENT_TAGS&coppa=false&content_type=livefeed&rdid=channel&genre=ROKU_ADS_CONTENT_GENRE&content_rating=ROKU_ADS_CONTENT_RATING&studio_id=viacom&channel_id=channel
-#EXTINF:-1 tvg-logo="https://feo.kablowebtv.com/resize/168A635D265A4328C2883FB4CD8FF/0/0/Vod/HLS/7d58e86c-d38e-4ef5-8ee0-fda0a7e65914.png" group-title="ANA ARŞİV (13712)",FILM SCREEN HD
-https://edge-e3.evrideo.tv/f2dcbecf-5af0-47db-a82e-032112050a23_1000027346_HLS/manifest.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/hIWMGRW.png" group-title="ANA ARŞİV (13712)",FILM THRILLER – PLUTO TV
 https://service-stitcher.clusters.pluto.tv/v1/stitch/embed/hls/channel/608aa5e995132a00075f7005/master.m3u8?deviceId=channel&deviceModel=web&deviceVersion=1.0&appVersion=1.0&deviceType=rokuChannel&deviceMake=rokuChannel&deviceDNT=1&advertisingId=channel&embedPartner=rokuChannel&appName=rokuchannel&is_lat=1&bmodel=bm1&content=channel&platform=web&tags=ROKU_CONTENT_TAGS&coppa=false&content_type=livefeed&rdid=channel&genre=ROKU_ADS_CONTENT_GENRE&content_rating=ROKU_ADS_CONTENT_RATING&studio_id=viacom&channel_id=channel
 #EXTINF:-1 tvg-logo="https://i.imgur.com/QeFc7F3.png" group-title="ANA ARŞİV (13712)",FILM – PLUTO TV
@@ -3488,18 +3502,12 @@ https://jmp2.uk/plu-67517f923a61d40008c451f0.m3u8
 http://213.91.179.28:8000/play/a0c1
 #EXTINF:-1 tvg-name="History" group-title="ANA ARŞİV (13712)",History
 http://88.212.15.19/live/history_hun/index.m3u8
-#EXTINF:-1 tvg-name="History" group-title="ANA ARŞİV (13712)",History
-http://88.212.15.19/live/test_history/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/History_%282021%29.svg/500px-History_%282021%29.svg.png" group-title="ANA ARŞİV (13712)",HISTORY
-http://88.212.15.50/live/test_history/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/OWIK7FJ.png" group-title="ANA ARŞİV (13712)",HISTORY
 http://88.212.7.14/live/history_hun/index.m3u8
 #EXTINF:-1 tvg-logo="https://tvpnlogopus.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/USBD1200009JI_20250401T004831SQUARE.png" group-title="ANA ARŞİV (13712)",HISTORY & WARFARE NOW
 https://jmp2.uk/stvp-USBD1200009JI
 #EXTINF:-1 tvg-name="History (1080p)" group-title="ANA ARŞİV (13712)",History (1080p)
 http://45.177.114.114/HISTORY/index.m3u8
-#EXTINF:-1 tvg-name="History (1080p)" group-title="ANA ARŞİV (13712)",History (1080p)
-https://streamer12.xploretv.si/__cl/cg:prod/__c/A1_SI_HISTORYHD_ott/__op/dash-default/__dci/__f/index.m3u8?admin=xploreTv_test_user&redirect=true
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/History_%282021%29.svg/500px-History_%282021%29.svg.png" group-title="ANA ARŞİV (13712)",HISTORY (1080P)
 http://212.5.144.156:8080/history/index.m3u8
 #EXTINF:-1 tvg-name="History (360p)" group-title="ANA ARŞİV (13712)",History (360p)
@@ -5092,15 +5100,3 @@ https://segment.yuppcdn.net/050522/murasu/playlist.m3u8
 https://yuppmedtaorire.akamaized.net/v1/master/a0d007312bfd99c47f76b77ae26b1ccdaae76cb1/murasu_nim_https/050522/murasu/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://ltsk-cdn.s3.eu-west-1.amazonaws.com/jumpstart/Temp_Live/cdn/HLS/Channel/transparentImages/Seithigal-transparent.png" group-title="ANA ARŞİV (13712)",KALAIGNAR SEITHIGAL (360P)
 https://yuppnimresmum.akamaized.net/120723/smil:seithagal.smil/playlist.m3u8?hdnts=st=1735898689~exp=1835898688~acl=*~hmac=f5fe24724fe05481e3841f9eb5ab8efdee0a3dd83645ae9dcf45703f525bab7b
-#EXTINF:-1 tvg-logo="https://ltsk-cdn.s3.eu-west-1.amazonaws.com/jumpstart/Temp_Live/cdn/HLS/Channel/transparentImages/Seithigal-transparent.png" group-title="ANA ARŞİV (13712)",KALAIGNAR SEITHIGAL (360P)
-https://raw.githubusercontent.com/amazeyourself/adaptive-streams/refs/heads/main/streams/in/YuppTV/KalaignarSeithigal.m3u8
-#EXTINF:-1 tvg-logo="https://dtil.tmsimg.com/assets/s143249_ld_h15_aa.png?lock=720x540" group-title="ANA ARŞİV (13712)",KALAIGNAR TV (360P)
-https://segment.yuppcdn.net/240122/kalaignartv/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/RsKKULI.png" group-title="ANA ARŞİV (13712)",KALEMEH TV
-https://klmhls.wns.live/hls/stream.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/XWXFoJA.png" group-title="ANA ARŞİV (13712)",KALIKA TV (576P)
-http://server.applelive.in/kalikatv/kalikatv.m3u8
-#EXTINF:-1 tvg-logo="https://ltsk-cdn.s3.eu-west-1.amazonaws.com/jumpstart/Temp_Live/cdn/HLS/Channel/transparentImages/kalinga-bharat--Logo_2000_X_1125_Transpharent.png" group-title="ANA ARŞİV (13712)",KALINGA TV (360P)
-https://mumbai-edge.smartplaytv.in/kalingatv/index.m3u8
-#EXTINF:-1 tvg-logo="https://ltsk-cdn.s3.eu-west-1.amazonaws.com/jumpstart/Temp_Live/cdn/HLS/Channel/transparentImages/kalinga-bharat--Logo_2000_X_1125_Transpharent.png" group-title="ANA ARŞİV (13712)",KALINGA TV (360P)
-https://d1msejlow1t3l4.cloudfront.net/fta/kalingatv/playlist.m3u8

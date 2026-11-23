@@ -1538,10 +1538,44 @@ http://31.148.48.15/RTG_HD/index.m3u8
 http://46.53.200.153:7777/play/a00u/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/Ia3acCB.png" group-title="ANA ARŞİV (13712)",TAMYR (576P)
 https://bsttv.bonus-tv.ru/cdn/tamyr/playlist.m3u8
-#EXTINF:-1 tvg-name="Aristo TV (360p)" group-title="ANA ARŞİV (13712)",Aristo TV (360p)
-https://ma.anixa.tv/clips/stream/aristo/index.m3u8
 #EXTINF:-1 tvg-name="BBC Earth (1080p)" group-title="ANA ARŞİV (13712)",BBC Earth (1080p)
 http://57.128.231.171:8080/307/index.m3u8
+#EXTINF:-1 tvg-name="Da Vinci (1080p)" group-title="ANA ARŞİV (13712)",Da Vinci (1080p)
+http://57.128.231.171:8080/284/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/V8AUJP6.png" group-title="ANA ARŞİV (13712)",DA VİNCİ (576P)
+http://stream.mcquack.net/238/index.m3u8
+#EXTINF:-1 tvg-logo="https://static.wikia.nocookie.net/logopedia/images/2/27/Discovery_Channel_2019_symbol.svg/revision/latest?cb=20210804150956" group-title="ANA ARŞİV (13712)",DİSCOVERY CHANNEL
+http://88.212.15.50/live/test_discovery_hd_hevc/playlist.m3u8
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/2019_Discovery_logo.svg/960px-2019_Discovery_logo.svg.png" group-title="ANA ARŞİV (13712)",DİSCOVERY CHANNEL (1080P)
+http://stream.mcquack.net/177/index.m3u8
+#EXTINF:-1 tvg-name="E! (1080p)" group-title="ANA ARŞİV (13712)",E! (1080p)
+http://57.128.231.171:8080/273/index.m3u8
+#EXTINF:-1 tvg-name="Epic Drama" group-title="ANA ARŞİV (13712)",Epic Drama
+http://82.78.243.219:45739/play/a01p/index.m3u8
+#EXTINF:-1 tvg-logo="https://feo.kablowebtv.com/resize/168A635D265A4328C2883FB4CD8FF/0/0/Vod/HLS/7d58e86c-d38e-4ef5-8ee0-fda0a7e65914.png" group-title="ANA ARŞİV (13712)",FILM SCREEN HD
+https://edge-e3.evrideo.tv/f2dcbecf-5af0-47db-a82e-032112050a23_1000027346_HLS/manifest.m3u8
+#EXTINF:-1 tvg-name="History" group-title="ANA ARŞİV (13712)",History
+http://88.212.15.19/live/test_history/playlist.m3u8
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/History_%282021%29.svg/500px-History_%282021%29.svg.png" group-title="ANA ARŞİV (13712)",HISTORY
+http://88.212.15.50/live/test_history/playlist.m3u8
+#EXTINF:-1 tvg-name="History (1080p)" group-title="ANA ARŞİV (13712)",History (1080p)
+https://streamer12.xploretv.si/__cl/cg:prod/__c/A1_SI_HISTORYHD_ott/__op/dash-default/__dci/__f/index.m3u8?admin=xploreTv_test_user&redirect=true
+#EXTINF:-1 tvg-name="National Geographic" group-title="ANA ARŞİV (13712)",National Geographic
+http://88.212.15.19/live/test_ngc/playlist.m3u8
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Natgeologo.svg/960px-Natgeologo.svg.png" group-title="ANA ARŞİV (13712)",NATIONAL GEOGRAPHIC
+http://88.212.15.50/live/test_ngc/playlist.m3u8
+#EXTINF:-1 tvg-name="National Geographic Wild" group-title="ANA ARŞİV (13712)",National Geographic Wild
+http://88.212.15.29/live/test_ngw/playlist.m3u8
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/National_Geographic_Wild_logo.svg/960px-National_Geographic_Wild_logo.svg.png" group-title="ANA ARŞİV (13712)",NATIONAL GEOGRAPHIC WILD
+http://88.212.15.50/live/test_ngw/playlist.m3u8
+#EXTINF:-1 tvg-name="Viasat Explore" group-title="ANA ARŞİV (13712)",Viasat Explore
+http://88.212.15.29/live/test_viasat_explore_atk_tv/playlist.m3u8
+#EXTINF:-1 tvg-name="Viasat History" group-title="ANA ARŞİV (13712)",Viasat History
+http://88.212.15.29/live/test_viasat_history_atk_tv/playlist.m3u8
+#EXTINF:-1 tvg-name="Viasat Nature" group-title="ANA ARŞİV (13712)",Viasat Nature
+http://88.212.15.29/live/test_viasat_nature_atk_tv/playlist.m3u8
+#EXTINF:-1 tvg-name="Aristo TV (360p)" group-title="ANA ARŞİV (13712)",Aristo TV (360p)
+https://ma.anixa.tv/clips/stream/aristo/index.m3u8
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/7/7e/BBC_Earth_2023.svg" group-title="ANA ARŞİV (13712)",BBC EARTH (1080P)
 https://aegis-cloudfront-1.tubi.video/bb1fc6ad-9948-42ea-aaf3-20acfcdeecac/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/630348a54c48ce00077eb6c7/colorLogoPNG.png" group-title="ANA ARŞİV (13712)",BECKER
@@ -4564,10 +4598,6 @@ https://live.mediatech.vn/live/285b59a111d76974225a8e3004bfc31a509/chunklist.m3u
 https://live.mediatech.vn/live/2859145290d0d7947ef88b6240123b62474/chunklist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/V8AUJP6.png" group-title="ANA ARŞİV (13712)",DA VINCI
 https://stream8.cinerama.uz/1231/tracks-v1a1/mono.m3u8
-#EXTINF:-1 tvg-name="Da Vinci (1080p)" group-title="ANA ARŞİV (13712)",Da Vinci (1080p)
-http://57.128.231.171:8080/284/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/V8AUJP6.png" group-title="ANA ARŞİV (13712)",DA VİNCİ (576P)
-http://stream.mcquack.net/238/index.m3u8
 #EXTINF:-1 tvg-name="Da Vinci Asia (1080p)" group-title="ANA ARŞİV (13712)",Da Vinci Asia (1080p)
 https://freem3u.xyz/api/live/play.m3u8?vid=214
 #EXTINF:-1 tvg-logo="https://i.imgur.com/iBx7K1M.png" group-title="ANA ARŞİV (13712)",DA VİNCİ ASİA (1080P)
@@ -5200,14 +5230,10 @@ http://92.114.85.87:8014/play/a007/index.m3u8
 https://livecdn.live247stream.com/discoverpakistan/web/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/wr2bLaA.png" group-title="ANA ARŞİV (13712)",DİSCOVERİNG CHİNA (1080P)
 https://fastlive.cctvplus.com/out/v1/8442c3bfd4c64a3984389328f6087879/index.m3u8
-#EXTINF:-1 tvg-logo="https://static.wikia.nocookie.net/logopedia/images/2/27/Discovery_Channel_2019_symbol.svg/revision/latest?cb=20210804150956" group-title="ANA ARŞİV (13712)",DİSCOVERY CHANNEL
-http://88.212.15.50/live/test_discovery_hd_hevc/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/2019_Discovery_logo.svg/960px-2019_Discovery_logo.svg.png" group-title="ANA ARŞİV (13712)",DİSCOVERY CHANNEL
 http://88.212.7.14/live/discovery_hungary/index.m3u8
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/2019_Discovery_logo.svg/960px-2019_Discovery_logo.svg.png" group-title="ANA ARŞİV (13712)",DİSCOVERY CHANNEL (1080P)
 https://streaming.aurora.enhanced.live/live/mpc/enl0eG1mLmVncmVzcy5mZDJ2eHI=/out/v1/IT_SIMULCAST/DISCOVERYCHANNEL/CMAF/index.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/2019_Discovery_logo.svg/960px-2019_Discovery_logo.svg.png" group-title="ANA ARŞİV (13712)",DİSCOVERY CHANNEL (1080P)
-http://stream.mcquack.net/177/index.m3u8
 #EXTINF:-1 tvg-name="Discovery Channel (360p)" group-title="ANA ARŞİV (13712)",Discovery Channel (360p)
 https://lb.iptvnetwork.net/ls28/10015/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/2019_Discovery_logo.svg/960px-2019_Discovery_logo.svg.png" group-title="ANA ARŞİV (13712)",DİSCOVERY CHANNEL (720P)
@@ -5228,23 +5254,3 @@ http://15.204.246.24:8080/DiscoveryKidsHD/index.m3u8
 http://181.224.200.5:2277/play/a00o/index.m3u8
 #EXTINF:-1 tvg-logo="https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7f/Discovery_Kids_2021_2D_sin_wordmark.svg/960px-Discovery_Kids_2021_2D_sin_wordmark.svg.png" group-title="ANA ARŞİV (13712)",DISCOVERY KIDS LATIN AMERICA CHILE (1080P)
 http://38.224.231.176:8000/play/a01j/index.m3u8
-#EXTINF:-1 tvg-logo="https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7f/Discovery_Kids_2021_2D_sin_wordmark.svg/960px-Discovery_Kids_2021_2D_sin_wordmark.svg.png" group-title="ANA ARŞİV (13712)",DISCOVERY KIDS LATIN AMERICA COLOMBIA (1080P)
-http://38.134.250.110:8000/play/a003/index.m3u8
-#EXTINF:-1 tvg-logo="https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7f/Discovery_Kids_2021_2D_sin_wordmark.svg/960px-Discovery_Kids_2021_2D_sin_wordmark.svg.png" group-title="ANA ARŞİV (13712)",DISCOVERY KIDS LATIN AMERICA MEXICO
-http://38.65.175.84:8000/play/a0an/index.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Discovery_science_new_logo_2017.png/960px-Discovery_science_new_logo_2017.png" group-title="ANA ARŞİV (13712)",DİSCOVERY SCİENCE LATİN AMERİCA (480P)
-http://45.134.141.161:2200/ARG/Discovery_Science_HD/index.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Discovery_science_new_logo_2017.png/960px-Discovery_science_new_logo_2017.png" group-title="ANA ARŞİV (13712)",DISCOVERY SCIENCE LATIN AMERICA (720P)
-http://45.171.64.30:6060/play/a007/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/AqR0Jkn.png" group-title="ANA ARŞİV (13712)",DİSCOVERY THEATER LATİN AMERİCA (1080P)
-http://181.224.200.5:2277/play/a0bj/index.m3u8
-#EXTINF:-1 tvg-logo="https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ea/Discovery_Turbo_Italy.svg/1920px-Discovery_Turbo_Italy.svg.png" group-title="ANA ARŞİV (13712)",DİSCOVERY TURBO (1080P)
-https://streaming.aurora.enhanced.live/live/mpc/enl0eG1mLmVncmVzcy5mZDJ2eHI=/out/v1/IT_SIMULCAST/TURBO/CMAF/index.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Discovery_Turbo_2025.svg/1920px-Discovery_Turbo_2025.svg.png" group-title="ANA ARŞİV (13712)",DİSCOVERY TURBO (720P)
-http://41.205.93.154/ESPNNEWS/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/1pQPxu3.png" group-title="ANA ARŞİV (13712)",DİSCOVERY TURBO LATİN AMERİCA (1080P)
-http://38.134.250.110:8000/play/a01y/index.m3u8
-#EXTINF:-1 tvg-logo="https://tvpnlogopus.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/USBC3600005U9_20260505T062506SQUARE.png" group-title="ANA ARŞİV (13712)",DISCOVERY TURBO TV
-https://jmp2.uk/stvp-USBC3600005U9
-#EXTINF:-1 tvg-logo="https://i.imgur.com/yNFmUkE.png" group-title="ANA ARŞİV (13712)",DİSCOVERY WORLD (1080P)
-http://168.196.127.137:6001/play/a097/index.m3u8

@@ -1,3 +1,11 @@
+#EXTINF:-1 tvg-logo="https://i.imgur.com/GC2wj2K.png" group-title="ANA ARŞİV (13712)",PIMP MY RIDE – PLUTO TV
+https://service-stitcher.clusters.pluto.tv/v1/stitch/embed/hls/channel/636a4eaf77279a0007f14861/master.m3u8?deviceId=channel&deviceModel=web&deviceVersion=1.0&appVersion=1.0&deviceType=rokuChannel&deviceMake=rokuChannel&deviceDNT=1&advertisingId=channel&embedPartner=rokuChannel&appName=rokuchannel&is_lat=1&bmodel=bm1&content=channel&platform=web&tags=ROKU_CONTENT_TAGS&coppa=false&content_type=livefeed&rdid=channel&genre=ROKU_ADS_CONTENT_GENRE&content_rating=ROKU_ADS_CONTENT_RATING&studio_id=viacom&channel_id=channel
+#EXTINF:-1 tvg-name="Pindin TV" group-title="ANA ARŞİV (13712)",Pindin TV
+https://sistemastr.tropicalmoonmedia.com/live/7C452409423F57ADC960F6405635267F/7.m3u8
+#EXTINF:-1 tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ES2100002BU_20260901T054127SQUARE.png" group-title="ANA ARŞİV (13712)",PINGU
+https://jmp2.uk/stvp-ES2100002BU
+#EXTINF:-1 tvg-name="Pingviins (720p)" group-title="ANA ARŞİV (13712)",Pingviins (720p)
+https://sirius.greenhosting.ru/PingvinRu/video.m3u8
 #EXTINF:-1 tvg-name="Pingxiang TV News Channel (576p)" group-title="ANA ARŞİV (13712)",Pingxiang TV News Channel (576p)
 http://www.pxitv.com:8099/hls-live/livepkgr/_definst_/pxitvevent/pxtv1stream.m3u8
 #EXTINF:-1 tvg-name="Pink (720p)" group-title="ANA ARŞİV (13712)",Pink (720p)
@@ -5074,15 +5082,3 @@ https://cdn.freevisiontv.co.za/sttv/smil:soweto.stream.smil/playlist.m3u8
 https://59ef525c24caa.streamlock.net/vmtv/soyplancha/playlist.m3u8
 #EXTINF:-1 tvg-name="Soyon Gegeeruulegch TV (1080p)" group-title="ANA ARŞİV (13712)",Soyon Gegeeruulegch TV (1080p)
 https://cdn4.skygo.mn/live/disk1/SoyonGegeeruulegch/DASH-FTA/SoyonGegeeruulegch.mpd
-#EXTINF:-1 tvg-logo="https://i.imgur.com/w3OewHc.png" group-title="ANA ARŞİV (13712)",SOYUZ (576P)
-https://hls-tvsoyuz.cdnvideo.ru/tvsoyuz/soyuz/playlist.m3u8
-#EXTINF:-1 tvg-name="Soyuzny (1080p)" group-title="ANA ARŞİV (13712)",Soyuzny (1080p)
-https://souzny.mediacdn.ru/cdn/souzny/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://www.mtis.by/upload/medialibrary/717/v07nk6rmf6m1mno8ujhbkcg8nstkfjgv/Slide%2016_9%20-%2050.png" group-title="ANA ARŞİV (13712)",SOYUZNY (360P)
-http://178.124.179.122:8080/TRO/index.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/SpaceLogo.svg/960px-SpaceLogo.svg.png" group-title="ANA ARŞİV (13712)",SPACE (1080P)
-http://45.171.64.30:6060/play/a04n/index.m3u8
-#EXTINF:-1 tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ES7000088K_20260901T054146SQUARE.png" group-title="ANA ARŞİV (13712)",SPACE LIVE
-https://jmp2.uk/stvp-ES7000088K
-#EXTINF:-1 tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/GB3800007C5_20260901T102539SQUARE.png" group-title="ANA ARŞİV (13712)",SPACE LIVE
-https://jmp2.uk/stvp-GB3800007C5
