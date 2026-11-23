@@ -261,6 +261,19 @@ def safe_favorite_copy(original, candidate):
         return False
 
 
+def safe_channel_move(original, candidate):
+    """Owner-approved category moves/recounts must preserve every underlying record."""
+    from collections import Counter
+    try:
+        def without_group(record):
+            return re.sub(rb'group-title\s*=\s*"[^"]*"',
+                          b'group-title="<PRESERVED>"', record, count=1, flags=re.I)
+        return Counter(map(without_group, original)) == Counter(
+            map(without_group, candidate))
+    except (ValueError, UnicodeError, TypeError):
+        return False
+
+
 def safe_category_reorder(original, candidate):
     """Reorder and counter changes cannot mutate or delete existing records."""
     from collections import Counter
@@ -533,16 +546,15 @@ def audit(root=ROOT):
                             spec["result_sha256"]==hashlib.sha256(b).hexdigest() and
                             spec["operation"] in allowed and
                             isinstance(spec["request"],str) and len(spec["request"].strip())>=12 and
-                            isinstance(spec["channels"],list) and 0<len(spec["channels"])<=2000 and
+                            isinstance(spec["channels"],list) and 0<len(spec["channels"])<=2500 and
                             all(isinstance(x,str) and x.strip() for x in spec["channels"]) and
                             h0==h1 and len(r1)>0 and
                             all(x.startswith(b"#EXTINF:") and
                                 any(line.startswith((b"http://",b"https://")) for line in x.splitlines()[1:])
                                 for x in r1) and
-                            (spec["operation"] in {"remove","move","rename","category"} or
+                            ((spec["operation"] in {"move","category"} and safe_channel_move(r0, r1)) or
                              (spec["operation"]=="copy" and safe_favorite_copy(r0, r1)) or
-                             (spec["operation"]=="reorder" and safe_category_reorder(r0, r1)) or
-                             preserves_record_multiplicity(r0, r1)))
+                             (spec["operation"]=="reorder" and safe_category_reorder(r0, r1))))
                     except (OSError,ValueError,TypeError,KeyError):
                         valid=False
                     if not valid:
