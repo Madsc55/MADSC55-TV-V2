@@ -1,7 +1,7 @@
 {
   "version": 1,
   "header_hex": "234558544d33550a",
-  "source_sha256": "a9e0f874e3503e4cf2a836d2685a52ce026c215cd2e242a48b0707ab4c65cd26",
+  "source_sha256": "265f368758e75c5b18bc1b936a9792fef36528ba486288ddb35e4e7e23775ecf",
   "total_records": 18330,
   "entries": [
     {
@@ -98,7 +98,7 @@
       "file": "0015.m3u",
       "group": "YABANCI ARŞİVİ (15940)",
       "records": 2555,
-      "sha256": "d15dc5158270e32513e5e9b563f127a6f8ea8927fa17f1f20b0990d66349fcc8"
+      "sha256": "ab80072d7d7a1c67eb4ed6eec0ed435d38b7dd189b78dd361ba1cc60073ba5a2"
     },
     {
       "file": "0016.m3u",
