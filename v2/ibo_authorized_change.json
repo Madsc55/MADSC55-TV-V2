@@ -1,10 +1,9 @@
 {
-  "base_sha256": "6ab2646f111213b38f0f0c061e771b9fb163368e72b5d5951b0e3090b33a97b6",
-  "result_sha256": "103a5f8bd4677742d48ef633a0af4d3f665312d5763ace8a2758e2dde7eabf53",
-  "operation": "remove",
-  "request": "Kullanıcının talimatı: ULUSAL-HEPSİ 43. sıradaki bozuk FLASH HABER 720P HD yayın adresi ana listeden kaldırılacak; aynı URL'nin dört kaydı silinir, farklı yayın adresleri korunur.",
+  "base_sha256": "103a5f8bd4677742d48ef633a0af4d3f665312d5763ace8a2758e2dde7eabf53",
+  "result_sha256": "527f623b6e628d4712dda9caa8f789d8234c7be8de8972b7b014348a87451e9e",
+  "operation": "reorder",
+  "request": "Kullanıcı talimatı: YEDEKLER 1. TRT 1 ve 2. DHA CANLI sabit; üçüncü sıradan itibaren Türkçe alfabetik sırala, diğer kayıtlar aynen korunsun.",
   "channels": [
-    "FLASH HABER 720P HD",
-    "FLASH HABER 1 720P HD"
+    "YEDEKLER: 3-1562 alfabetik sıralama"
   ]
 }
