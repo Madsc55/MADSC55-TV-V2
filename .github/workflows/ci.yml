@@ -381,3 +381,93 @@ jobs:
           path: /tmp/deep-summary.json
           if-no-files-found: error
           retention-days: 30
+
+  yedekler-quality-review:
+    name: YEDEKLER quality review shard ${{ matrix.shard }}
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[yedekler-quality-20261124]')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 150
+    permissions:
+      contents: read
+      actions: read
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        shard: [0, 1, 2, 3, 4, 5, 6, 7]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/download-artifact@v4
+        with:
+          run-id: 45441455673
+          github-token: ${{ github.token }}
+          name: yedekler-av-20261124-summary
+          path: /tmp/prior
+      - uses: actions/download-artifact@v4
+        with:
+          run-id: 45449090774
+          github-token: ${{ github.token }}
+          name: yedekler-deep-review-summary
+          path: /tmp/deep
+      - run: python -m pip install --no-deps imageio-ffmpeg==0.6.0
+      - name: Verify existing safe probe and actual synthetic local media quality
+        run: |
+          PYTHONPATH=v2:. python -m unittest -v v2.test_shared_url_safe_probe v2.test_full_playlist_av_decode
+          PYTHONPATH=v2 python v2/yedekler_quality_review.py --self-test
+      - name: Review 1209 unresolved channels with duration and quality evidence
+        run: PYTHONPATH=v2 python v2/yedekler_quality_review.py --prior /tmp/prior/yedekler-summary.json --deep /tmp/deep/deep-summary.json --shard ${{ matrix.shard }} --output /tmp/quality-${{ matrix.shard }}.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: yedekler-quality-${{ matrix.shard }}
+          path: /tmp/quality-${{ matrix.shard }}.json
+          if-no-files-found: error
+          retention-days: 30
+
+  yedekler-quality-summary:
+    name: YEDEKLER quality review complete coverage
+    needs: yedekler-quality-review
+    if: always() && github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[yedekler-quality-20261124]')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/download-artifact@v4
+        with:
+          run-id: 45441455673
+          github-token: ${{ github.token }}
+          name: yedekler-av-20261124-summary
+          path: /tmp/prior
+      - uses: actions/download-artifact@v4
+        with:
+          run-id: 45449090774
+          github-token: ${{ github.token }}
+          name: yedekler-deep-review-summary
+          path: /tmp/deep
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: yedekler-quality-*
+          path: /tmp/quality
+      - run: PYTHONPATH=v2 python v2/yedekler_quality_review.py --prior /tmp/prior/yedekler-summary.json --deep /tmp/deep/deep-summary.json --merge-dir /tmp/quality --output /tmp/quality-summary.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: yedekler-quality-summary
+          path: /tmp/quality-summary.json
+          if-no-files-found: error
+          retention-days: 30
