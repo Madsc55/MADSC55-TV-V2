@@ -39,16 +39,18 @@ def load_targets(prior, deep):
     return raw,[{**r,"previous":p["classification"],"prior_outcomes":[x["status"] for x in p["first"]+p["second"]]}
                 for r,p in zip(scope,results) if p["classification"] in REVIEW]
 
-def safe_sample(url,limit=MAX_BYTES,*,root=False, connection_factory=None):
+def safe_sample(url,limit=MAX_BYTES,*,root=False, connection_factory=None, timeout=8):
     """Existing public-IP pinning per hop, at most 2 redirects; no cookies/auth.
     HTTPS downgrade, private targets, unsupported ports, encodings remain blocked.
     Retain partial bytes on read timeout instead of discarding playable samples.
     """
+    if timeout not in (8,12):
+        raise ValueError("Invalid sample timeout")
     current=url
     for hop in range(3):
         scheme,host,port,ip,path=vetted_target(current)
         factory=connection_factory or (PinnedHTTPS if scheme=="https" else PinnedHTTP)
-        con=factory(host,port,ip,8)
+        con=factory(host,port,ip,timeout)
         try:
             con.request("GET",path,headers={"Accept-Encoding":"identity",
                 "User-Agent":"MADSC55-TV-V2-QualityAudit/1.0"})
@@ -121,7 +123,7 @@ def quality(data,fmt,exe):
             "video":v,"audio":a,"video_seconds":vspan,"audio_seconds":aspan,
             "quality_flags":flags,"full_sample":full,"decoder_returncode":r.returncode}
 
-def inspect(url,exe):
+def inspect(url,exe,*,variant_index=0,timeout=8):
     attempts=[]
     calls=0
     budget=MAX_BYTES
@@ -130,7 +132,7 @@ def inspect(url,exe):
         calls+=1
         if calls>12 or budget<=0:
             raise SafeFetchError("REQUEST_BUDGET")
-        data,final=safe_sample(target,min(limit,budget),root=root)
+        data,final=safe_sample(target,min(limit,budget),root=root,timeout=timeout)
         budget-=len(data)
         return data,final
     def visit(data,target,depth=0):
@@ -143,7 +145,7 @@ def inspect(url,exe):
         lines,uris=parse_manifest(data)
         if any(x.startswith("#EXT-X-STREAM-INF:") for x in lines):
             # One advertised variant per attempt; no alternate credentials or DRM.
-            variant,final=get(urljoin(target,uris[0]),512000)
+            variant,final=get(urljoin(target,uris[min(variant_index,len(uris)-1)]),512000)
             visit(variant,final,depth+1)
             return
         if not any(x.startswith("#EXTINF:") for x in lines):

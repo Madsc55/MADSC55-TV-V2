@@ -52,6 +52,7 @@ jobs:
             sudo apt-get install -y --no-install-recommends ffmpeg
           fi
           PYTHONPATH=v2 python v2/yedekler_quality_review.py --self-test
+          PYTHONPATH=v2 python v2/yedekler_targeted_recheck.py --self-test
       - name: Install move-only YAML audit dependency
         if: steps.move_scope.outputs.eligible == 'true'
         run: python -m pip install PyYAML==6.0.2
@@ -482,5 +483,88 @@ jobs:
         with:
           name: yedekler-quality-summary
           path: /tmp/quality-summary.json
+          if-no-files-found: error
+          retention-days: 30
+
+  yedekler-targeted-recheck:
+    name: YEDEKLER targeted recheck shard ${{ matrix.shard }}
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[yedekler-targeted-20261124]')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 150
+    permissions:
+      contents: read
+      actions: read
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        shard: [0, 1, 2, 3, 4, 5, 6, 7]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/download-artifact@v4
+        with:
+          run-id: 45457537617
+          github-token: ${{ github.token }}
+          name: yedekler-quality-summary
+          path: /tmp/prior-quality
+      - name: Ensure system FFmpeg is installed
+        run: |
+          if [ ! -x /usr/bin/ffmpeg ]; then
+            sudo apt-get update
+            sudo apt-get install -y --no-install-recommends ffmpeg
+          fi
+      - name: Verify offline safety and decoder
+        run: |
+          PYTHONPATH=v2:. python -m unittest -v v2.test_shared_url_safe_probe v2.test_full_playlist_av_decode
+          PYTHONPATH=v2 python v2/yedekler_quality_review.py --self-test
+          PYTHONPATH=v2 python v2/yedekler_targeted_recheck.py --self-test
+      - name: Targeted evidence review
+        run: PYTHONPATH=v2 python v2/yedekler_targeted_recheck.py --prior /tmp/prior-quality/quality-summary.json --shard ${{ matrix.shard }} --output /tmp/targeted-${{ matrix.shard }}.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: yedekler-targeted-${{ matrix.shard }}
+          path: /tmp/targeted-${{ matrix.shard }}.json
+          if-no-files-found: error
+          retention-days: 30
+
+  yedekler-targeted-summary:
+    name: YEDEKLER targeted complete coverage
+    needs: yedekler-targeted-recheck
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[yedekler-targeted-20261124]')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/download-artifact@v4
+        with:
+          run-id: 45457537617
+          github-token: ${{ github.token }}
+          name: yedekler-quality-summary
+          path: /tmp/prior-quality
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: yedekler-targeted-*
+          path: /tmp/targeted-parts
+      - run: PYTHONPATH=v2 python v2/yedekler_targeted_recheck.py --prior /tmp/prior-quality/quality-summary.json --merge-dir /tmp/targeted-parts --output /tmp/targeted-summary.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: yedekler-targeted-summary
+          path: /tmp/targeted-summary.json
           if-no-files-found: error
           retention-days: 30
