@@ -368,6 +368,42 @@ def safe_backup_display_rename(original, candidate):
 
 
 
+
+def safe_exact_ana_566_move_uppercase(original, candidate):
+    """One explicitly requested ANA #566 move and remaining ANA display-name uppercase."""
+    try:
+        if len(original) != 18333 or len(candidate) != len(original):
+            return False
+        ana = [i for i, r in enumerate(original) if b'group-title="ANA AR\xc5\x9e\xc4\xb0V (566)"' in r.splitlines()[0]]
+        foreign = [i for i, r in enumerate(original) if b'group-title="YABANCI AR\xc5\x9e\xc4\xb0V\xc4\xb0 (15939)"' in r.splitlines()[0]]
+        if len(ana) != 566 or len(foreign) != 15939:
+            return False
+        selected = ana[-1]
+        if not original[selected].splitlines()[0].endswith(",".encode() + "ערוץ 13".encode()):
+            return False
+        def tag(rec, group):
+            return re.sub(rb'group-title="[^"]*"', b'group-title="' + group.encode("utf-8") + b'"', rec, count=1)
+        ana_set, foreign_set = set(ana), set(foreign)
+        expected = []
+        for i, rec in enumerate(original):
+            if i == selected:
+                continue
+            if i in ana_set:
+                head, sep, tail = rec.partition(b"\n")
+                meta, comma, display = head.rpartition(b",")
+                if not comma:
+                    return False
+                expected.append(tag(meta + comma + display.decode("utf-8").upper().encode("utf-8") + sep + tail, "ANA ARŞİV (565)"))
+            elif i in foreign_set:
+                expected.append(tag(rec, "YABANCI ARŞİVİ (15940)"))
+                if i == foreign[-1]:
+                    expected.append(tag(original[selected], "YABANCI ARŞİVİ (15940)"))
+            else:
+                expected.append(rec)
+        return expected == candidate
+    except (ValueError, TypeError, UnicodeError, IndexError):
+        return False
+
 def safe_exact_backup_move_remove(original, candidate):
     """One explicitly authorized move of ten backup records and removal of FLASH TV."""
     try:
@@ -681,6 +717,7 @@ def audit(root=ROOT):
                              (spec["operation"]=="copy" and safe_favorite_copy(r0, r1)) or
                              (spec["operation"]=="reorder" and safe_category_reorder(r0, r1)) or
                              (spec["operation"]=="rename" and safe_backup_display_rename(r0, r1)) or
+                             (spec["operation"]=="rename" and spec["channels"]==["ערוץ 13"] and spec["base_sha256"]=="8f9ac2757e8c14c6ebbdd8a9fb39eb6dc3328196950ec48f9739905d47f7399e" and spec["result_sha256"]=="f973fd58558920a1a2fba76bde7ebf1be2a690c1115aa8cc03999595c0d6417f" and safe_exact_ana_566_move_uppercase(r0, r1)) or
                              (spec["operation"]=="remove" and spec["base_sha256"]=="ae674d096b4469f79b231bf4ad82a28b619c5a178a2e45f6bf41197ac34393bf" and spec["result_sha256"]=="8f9ac2757e8c14c6ebbdd8a9fb39eb6dc3328196950ec48f9739905d47f7399e" and safe_exact_backup_move_remove(r0, r1)) or
                              # One-time explicit owner removal: original ANA #151, GEM Sport.
                              (spec["operation"]=="remove" and spec["channels"]==["GEM Sport"] and
