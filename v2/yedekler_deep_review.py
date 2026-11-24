@@ -25,11 +25,16 @@ REVIEW={"RECHECK_REQUIRED","VIDEO_ONLY_REVIEW","AUDIO_ONLY_REVIEW","RADIO_OR_NON
 def sha(b):
     return hashlib.sha256(b).hexdigest()
 
-def load_scope(prior_path):
+def yedekler_records(raw):
+    """Exact ordered record bytes; unrelated groups cannot invalidate this scope."""
+    return [r for r in re.split(rb"(?m)(?=^#EXTINF:)", raw)[1:]
+            if re.search(rb'group-title="[^"]*YEDEKLER', r.split(b"\n", 1)[0])]
+
+def load_scope(prior_path, *, allow_other_groups=False):
     original=subprocess.check_output(["git","show",OLD_COMMIT+":"+PLAYLIST.name],cwd=ROOT)
     old=inventory(original)
     raw=PLAYLIST.read_bytes()
-    if sha(raw)!=CURRENT_SHA:
+    if sha(raw)!=CURRENT_SHA and not allow_other_groups:
         raise ValueError("Unexpected current playlist hash")
     prior=json.loads(prior_path.read_text())
     if prior.get("playlist_sha256")!=OLD_SHA or prior.get("complete") is not True or prior.get("total")!=1562:
@@ -52,8 +57,12 @@ def load_scope(prior_path):
         if pos in selected:
             meta,comma,name=h.rpartition(b",")
             records[i]=meta+comma+"❌ ".encode()+name+sep+tail
-    if b"".join(records)!=raw:
-        raise ValueError("Prior prefix publication differs from expected")
+    expected=b"".join(records)
+    if sha(expected)!=CURRENT_SHA:
+        raise ValueError("Reconstructed evidence snapshot hash mismatch")
+    if expected!=raw and (not allow_other_groups or
+                          yedekler_records(expected)!=yedekler_records(raw)):
+        raise ValueError("Prior YEDEKLER scope differs from expected")
     target=[]
     for row,prev in zip(old,results):
         if prev["classification"] in REVIEW:
