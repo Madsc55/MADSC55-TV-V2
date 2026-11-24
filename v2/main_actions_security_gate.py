@@ -312,6 +312,29 @@ def safe_single_ana_removal(original, candidate, record_sha256):
     except (ValueError, TypeError, IndexError):
         return False
 
+
+def safe_exact_mc_tv_pair_removal(original, candidate, record_hashes):
+    """Only the two explicitly identified MC TV records may be removed."""
+    if len(original) != len(candidate) + 2 or len(record_hashes) != 2 or len(set(record_hashes)) != 2:
+        return False
+    try:
+        matches = []
+        for name, digest in zip((b"MC TV", b"MC TV (720P)"), record_hashes):
+            found = [i for i, rec in enumerate(original)
+                     if hashlib.sha256(rec).hexdigest() == digest
+                     and b'group-title="ANA AR' in rec.splitlines()[0]
+                     and rec.splitlines()[0].endswith(b"," + name)]
+            if len(found) != 1:
+                return False
+            matches.extend(found)
+        if len(set(matches)) != 2:
+            return False
+        expected = [r for i, r in enumerate(original) if i not in matches]
+        return [category_count_normalized(r) for r in expected] == [
+            category_count_normalized(r) for r in candidate]
+    except (ValueError, TypeError, IndexError):
+        return False
+
 def safe_backup_display_rename(original, candidate):
     """Only deterministic YEDEKLER display-name edits; every other byte stable."""
     try:
@@ -630,7 +653,12 @@ def audit(root=ROOT):
                              (spec["operation"]=="remove" and spec["channels"]==["GEM Sport"] and
                               spec["base_sha256"]=="9eba8a6fb34d69d3150dde76efa39ca403b490bad8770ba09151088e9567873c" and
                               spec["result_sha256"]=="b0e3061aeae62835894de40c2a2ca23249a0a833b13411950bf3840e5e75083c" and
-                              safe_single_ana_removal(r0, r1, "74331fff013b25b76d35b754e0b55671f7c387239bf6f6f5f7056e177e8f7572"))))
+                              safe_single_ana_removal(r0, r1, "74331fff013b25b76d35b754e0b55671f7c387239bf6f6f5f7056e177e8f7572")) or
+                             # Exact, one-time owner-authorized original ANA #579 and #580.
+                             (spec["operation"]=="remove" and spec["channels"]==["MC TV", "MC TV (720P)"] and
+                              spec["base_sha256"]=="c0e99815ed5a9555366e4705b2db701876665b013e7d6f05f95c4592ddd1aa6a" and
+                              spec["result_sha256"]=="42060312ebfb016633ba3da5b500ab5bd9f544b7e3c82a4e9ada08d1803fb929" and
+                              safe_exact_mc_tv_pair_removal(r0, r1, ("2079818250fe6fa0fa16f48fa119497ee7a50b24aa198b882bc2751c305febab", "1e9b190e8040a151380018da71f4af0901ad6fdc008af633e6cd7d216cf8c1d4")))))
                     except (OSError,ValueError,TypeError,KeyError):
                         valid=False
                     if not valid:
