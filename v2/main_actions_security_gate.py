@@ -457,6 +457,38 @@ def safe_exact_backup_move_remove(original, candidate):
     except (ValueError, TypeError, IndexError, UnicodeError):
         return False
 
+def safe_exact_sozcu_dual_move(original, candidate):
+    """Only owner-authorized backup #8 to the ends of ULUSAL and HABER."""
+    try:
+        from playlist_parts_manager import category
+        y, u, h = "🗂️ YEDEKLER (1564)", "🇹🇷 ULUSAL-HEPSİ (408)", "📺 HABER (73)"
+        y2, u2, h2 = "🗂️ YEDEKLER (1563)", "🇹🇷 ULUSAL-HEPSİ (409)", "📺 HABER (74)"
+        groups = [category(r) for r in original]
+        if len(original) != 18333 or len(candidate) != 18334:
+            return False
+        if (groups.count(y), groups.count(u), groups.count(h)) != (1564, 408, 73):
+            return False
+        selected = [i for i, g in enumerate(groups) if g == y][7]
+        if not original[selected].splitlines()[0].endswith(b",SOZCU TV 1080P FHD"):
+            return False
+        def tag(record, label):
+            return re.sub(rb'group-title="[^"]*"', b'group-title="' + label.encode("utf-8") + b'"', record, count=1)
+        expected = []
+        for i, (record, group) in enumerate(zip(original, groups)):
+            if i == selected:
+                continue
+            if group in (y, u, h):
+                label = {y:y2, u:u2, h:h2}[group]
+                expected.append(tag(record, label))
+                if group in (u, h) and i == max(j for j, g in enumerate(groups) if g == group):
+                    expected.append(tag(original[selected], label))
+            else:
+                expected.append(record)
+        return expected == candidate
+    except (ValueError, TypeError, IndexError, UnicodeError):
+        return False
+
+
 def safe_category_reorder(original, candidate):
     """Reorder and counter changes cannot mutate or delete existing records."""
     from collections import Counter
@@ -736,6 +768,7 @@ def audit(root=ROOT):
                                 any(line.startswith((b"http://",b"https://")) for line in x.splitlines()[1:])
                                 for x in r1) and
                             ((spec["operation"] in {"move","category"} and safe_channel_move(r0, r1)) or
+                             (spec["operation"]=="move" and spec["channels"]==["SOZCU TV 1080P FHD"] and spec["base_sha256"]=="5c63569e27487e282c05a83366156963fee7ac83b826deab524f8f4303131eec" and spec["result_sha256"]=="c173c590f8bd1fd76f5dd3fea507d4602402777e1e329cea49d67463550eaef2" and safe_exact_sozcu_dual_move(r0, r1)) or
                              (spec["operation"]=="copy" and safe_favorite_copy(r0, r1)) or
                              (spec["operation"]=="reorder" and safe_category_reorder(r0, r1)) or
                              (spec["operation"]=="rename" and safe_backup_display_rename(r0, r1)) or
