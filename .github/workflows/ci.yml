@@ -816,3 +816,35 @@ jobs:
           path: /tmp/reason-summary.json
           if-no-files-found: error
           retention-days: 30
+
+
+  yedekler-source-directory:
+    name: YEDEKLER 1562 official source directory research
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[yedekler-source-directory-20261124]')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/download-artifact@v4
+        with:
+          run-id: 45500054298
+          github-token: ${{ github.token }}
+          name: yedekler-reason-summary
+          path: /tmp/reason-prior
+      - run: PYTHONPATH=v2:. python -m unittest -v v2.test_shared_url_safe_probe v2.test_official_sites_discovery
+      - run: PYTHONPATH=v2 python v2/yedekler_source_directory.py --prior /tmp/reason-prior/reason-summary.json --output /tmp/yedekler-source-directory.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: yedekler-source-directory
+          path: /tmp/yedekler-source-directory.json
+          if-no-files-found: error
+          retention-days: 30
