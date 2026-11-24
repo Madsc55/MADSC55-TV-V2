@@ -368,6 +368,29 @@ def safe_exact_mc_tv_pair_removal(original, candidate, record_hashes):
     except (ValueError, TypeError, IndexError):
         return False
 
+def safe_exact_yedekler_failed_prefix(original, candidate):
+    """Exact read-only scan run 45441455673, verified summary job 138617413589."""
+    try:
+        if len(original) != 18330 or len(candidate) != len(original):
+            return False
+        positions = set([46,93,191,208,209,213,241,251,263,307,335,374,377,383,384,503,507,524,550,551,556,563,564,565,566,568,636,683,716,727,734,737,739,742,754,806,819,829,835,845,848,869,888,889,977,1327,1332,1362,1370,1419,1479,1490,1524,1525,1554])
+        index = 0
+        expected = []
+        for r in original:
+            head, sep, tail = r.partition(b"\n")
+            if re.search(rb'group-title="[^"]*YEDEKLER', head):
+                index += 1
+                if index in positions:
+                    meta, comma, name = head.rpartition(b",")
+                    if not comma or name.startswith("❌".encode("utf-8")):
+                        return False
+                    r = meta + comma + "❌ ".encode("utf-8") + name + sep + tail
+            expected.append(r)
+        return index == 1562 and len(positions) == 55 and candidate == expected
+    except (ValueError, TypeError, IndexError, UnicodeError):
+        return False
+
+
 def safe_backup_display_rename(original, candidate):
     """Only deterministic YEDEKLER display-name edits; every other byte stable."""
     try:
@@ -804,6 +827,7 @@ def audit(root=ROOT):
                              (spec["operation"]=="move" and spec["channels"]==["SOZCU TV 1080P FHD"] and spec["base_sha256"]=="5c63569e27487e282c05a83366156963fee7ac83b826deab524f8f4303131eec" and spec["result_sha256"]=="c173c590f8bd1fd76f5dd3fea507d4602402777e1e329cea49d67463550eaef2" and safe_exact_sozcu_dual_move(r0, r1)) or
                              (spec["operation"]=="copy" and safe_favorite_copy(r0, r1)) or
                              (spec["operation"]=="reorder" and safe_category_reorder(r0, r1)) or
+                             (spec["operation"]=="rename" and spec["base_sha256"]=="527f623b6e628d4712dda9caa8f789d8234c7be8de8972b7b014348a87451e9e" and spec["result_sha256"]=="cae52b3780c4c65c7727b6a240f33058187c0f39a62131f1adcb247882c1c642" and safe_exact_yedekler_failed_prefix(r0, r1)) or
                              (spec["operation"]=="rename" and safe_backup_display_rename(r0, r1)) or
                              (spec["operation"]=="rename" and spec["base_sha256"]=="0271e2cdddd09fcf06c5af33fcf0a17282b85eabfa1e0f9b42528213554f3e42" and spec["result_sha256"]=="579f18135e66dbb74cc340fc6665e6a4d48c21a9de454ac9f98691613488ac55" and safe_exact_turk_archive_uppercase(r0, r1)) or
                              (spec["operation"]=="rename" and spec["channels"]==["ערוץ 13"] and spec["base_sha256"]=="8f9ac2757e8c14c6ebbdd8a9fb39eb6dc3328196950ec48f9739905d47f7399e" and spec["result_sha256"]=="f973fd58558920a1a2fba76bde7ebf1be2a690c1115aa8cc03999595c0d6417f" and safe_exact_ana_566_move_uppercase(r0, r1)) or
