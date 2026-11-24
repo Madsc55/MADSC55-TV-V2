@@ -391,6 +391,33 @@ def safe_exact_yedekler_failed_prefix(original, candidate):
         return False
 
 
+def safe_exact_yedekler_quality_prefix(original, candidate):
+    """Exact 14 quality-review marks from completed run 45457537617."""
+    try:
+        if len(original) != 18330 or len(candidate) != len(original):
+            return False
+        import hashlib
+        hashes = {272:"eea57e02e30e2952ed66c0185d6de3ba38322fb2c2f3b2e0a80f6310107d0269",362:"43fd439f853e18507370356d84f7bd400743db844744f8d3500c4d3b54c251c8",435:"65f0546c528b79f8282cee75d211379699fc332df855977d32dc1733e0ccc6b6",436:"47ca37d7499c6ab489a93713d93a1bce0c91eea9ca67b616a2a73096f346eddc",582:"1e59a55abffc2d39a076b4e1d0f7c365f02a98473b7b832a7b8a7acf4828de16",583:"40bb083c6d49726c600d5dfe692b452014d48c0c5a4eee576a8404e87a6b64ac",587:"4c4e8da940975ec8825d81b613083d04a9848ab104eca9c6d7f24b3ebdb2b62f",854:"a1ebf2ceaa1335f6bb28c8b5d90be5f1c9a8b0c37a26a38019f7e5030c4b2e2e",971:"05cd824a41b71c078e07f69af0b539f2f761e3096104c5f6697d996056b4a961",1334:"9741c9b035517ceb4974ac2c0af5c6ad1a3d3ff0830a4dcc5a71bd2266b7badd",1448:"e004948fddc7becd84e3017d228fe8d9744b852301f61fc102fe763032fee576",1449:"214c5183758c65ccb52822450dfea8f573ec57a244899b15a8bd435a8903c5a5",1507:"493a4b54758dc85a0b4fb5bdb918162bf8268a62e80d398f590de2e0b394ff41",1508:"50465a6083b227fd5f1963bf8d6023d7b4042c56a9d290e1b4be23cb1cf44614"}
+        expected = []
+        position = 0
+        for record in original:
+            head, sep, tail = record.partition(b"\n")
+            if re.search(rb'group-title="[^"]*YEDEKLER', head):
+                position += 1
+                if position in hashes:
+                    if hashlib.sha256(record).hexdigest() != hashes[position]:
+                        return False
+                    meta, comma, name = head.rpartition(b",")
+                    if not comma:
+                        return False
+                    mark = "🔵 " if position == 362 else "🟠 "
+                    record = meta + comma + mark.encode("utf-8") + name + sep + tail
+            expected.append(record)
+        return position == 1562 and candidate == expected
+    except (ValueError, TypeError, UnicodeError):
+        return False
+
+
 def safe_backup_display_rename(original, candidate):
     """Only deterministic YEDEKLER display-name edits; every other byte stable."""
     try:
@@ -828,6 +855,7 @@ def audit(root=ROOT):
                              (spec["operation"]=="copy" and safe_favorite_copy(r0, r1)) or
                              (spec["operation"]=="reorder" and safe_category_reorder(r0, r1)) or
                              (spec["operation"]=="rename" and spec["base_sha256"]=="527f623b6e628d4712dda9caa8f789d8234c7be8de8972b7b014348a87451e9e" and spec["result_sha256"]=="cae52b3780c4c65c7727b6a240f33058187c0f39a62131f1adcb247882c1c642" and safe_exact_yedekler_failed_prefix(r0, r1)) or
+                             (spec["operation"]=="rename" and spec["base_sha256"]=="67443efce853bb09793df69dc9c46ad36c47990df0c1d546daa14ea3b25e0cbc" and spec["result_sha256"]=="2e3565a4db92dfdc84208bb9926f5af501bb534f5c68e13be6f2acb8d8e9af90" and safe_exact_yedekler_quality_prefix(r0, r1)) or
                              (spec["operation"]=="rename" and safe_backup_display_rename(r0, r1)) or
                              (spec["operation"]=="rename" and spec["base_sha256"]=="0271e2cdddd09fcf06c5af33fcf0a17282b85eabfa1e0f9b42528213554f3e42" and spec["result_sha256"]=="579f18135e66dbb74cc340fc6665e6a4d48c21a9de454ac9f98691613488ac55" and safe_exact_turk_archive_uppercase(r0, r1)) or
                              (spec["operation"]=="rename" and spec["channels"]==["ערוץ 13"] and spec["base_sha256"]=="8f9ac2757e8c14c6ebbdd8a9fb39eb6dc3328196950ec48f9739905d47f7399e" and spec["result_sha256"]=="f973fd58558920a1a2fba76bde7ebf1be2a690c1115aa8cc03999595c0d6417f" and safe_exact_ana_566_move_uppercase(r0, r1)) or
