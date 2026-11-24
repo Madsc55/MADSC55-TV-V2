@@ -1,58 +1,16 @@
 #EXTM3U
-#EXTINF:-1 tvg-logo="https://i.imgur.com/sVc8cFt.png" group-title="🌍 YABANCI ARŞİV (284)",AUTO PLUS
-https://stream8.cinerama.uz/1036/tracks-v1a1/mono.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/ELXmaqg.png" group-title="🌍 YABANCI ARŞİV (284)",TR SPORT (480P)
-https://livetr.teleromagna.it/mia/live/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/g0jPOcC.png" group-title="🌍 YABANCI ARŞİV (284)",TRT
-https://av.hellasnet.tv/rst/trt/index.m3u8
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Atv_logo_2018.png/250px-Atv_logo_2018.png" group-title="🌍 YABANCI ARŞİV (284)",ATV
 http://141.94.193.53:80/ATV_HD/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/Z7URrp1.png" group-title="🌍 YABANCI ARŞİV (284)",TV8 (360P)
 http://109.74.145.11:1935/tv8/mp4:tv8.stream_360p/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/ATV_Peru_2025.svg/1920px-ATV_Peru_2025.svg.png" group-title="🌍 YABANCI ARŞİV (284)",ATV (720P)
-http://187.102.210.46/ATV/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/Z7URrp1.png" group-title="🌍 YABANCI ARŞİV (284)",TV8
-https://dash3.antik.sk/live/test_osem/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.ibb.co/74fJt5v/8mblanc.png" group-title="🌍 YABANCI ARŞİV (284)",TV8 MONTBLANC
-https://tvradiozap.eu/tools/dm-m3u8.php/x3wqv8b.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/fY9256H.png" group-title="🌍 YABANCI ARŞİV (284)",ATV+ (1080P)
-http://45.171.108.253:8888/ATV/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/JINE5xS.png" group-title="🌍 YABANCI ARŞİV (284)",ATV SPİRİT
-http://88.212.7.14/live/test_atv_spirit/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/LnyVa5H.png" group-title="🌍 YABANCI ARŞİV (284)",ATV SUR (1080P)
-http://190.93.224.42/ATV-SUR/index.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/5/56/ATV%2B_logo_2020.png" group-title="🌍 YABANCI ARŞİV (284)",ATV+ (1080P)
-http://190.93.224.42/ATV-PLUS/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/WsD83lq.png" group-title="🌍 YABANCI ARŞİV (284)",CBC TV8 (1080P)
-https://1740288887.rsc.cdn77.org/1740288887/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/dRsacao.png" group-title="🌍 YABANCI ARŞİV (284)",HMONG STAR TV (720P)
-https://livefta.malimarcdn.com/ftaedge00/hmongstartv.sdp/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://gbzottvsc25.tvplus.com.tr:33207/CPS/images/universal/film/logo/202506/20250623/71/0916028009315eb88428_op_0_XL.webp" group-title="🌍 YABANCI ARŞİV (284)",ATV (1080P)
 https://live.zendzend.com/mpegts/29375_107244/media_mpegts_0.m3u8
-#EXTINF:-1 tvg-logo="https://gbzottvsc25.tvplus.com.tr:33207/CPS/images/universal/film/logo/202506/20250623/71/0916028009315eb88428_op_0_XL.webp" group-title="🌍 YABANCI ARŞİV (284)",ATV (1080P)
-http://190.93.224.42/ATV/index.m3u8
-#EXTINF:-1 tvg-logo="https://gbzottvsc25.tvplus.com.tr:33207/CPS/images/universal/film/logo/202506/20250623/71/0916028009315eb88428_op_0_XL.webp" group-title="🌍 YABANCI ARŞİV (284)",ATV
-http://88.212.7.14/live/test_atv_hungary_1200_atk/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/15ILp0P.png" group-title="🌍 YABANCI ARŞİV (284)",KANAL D (720P)
-https://stream1.kanald.ro/iphone/knd-live.m3u8
 #EXTINF:-1 tvg-name="TV8" group-title="🌍 YABANCI ARŞİV (284)" tvg-logo="https://www.lyngsat.com/logo/tv/tt/tv8_tr.png",TV8
 https://tv8-live.daioncdn.net/tv8/tv8_720p.m3u8
 #EXTINF:-1 tvg-name="SHOW TV" group-title="🌍 YABANCI ARŞİV (284)" tvg-logo="https://m.showtv.com.tr/assets/images/other/showtv_social_media.jpg",SHOW TV
 https://ciner-live.daioncdn.net/showtv/showtv_1080p.m3u8
 #EXTINF:-1 tvg-name="SHOW TV" group-title="🌍 YABANCI ARŞİV (284)" tvg-logo="https://www.lyngsat.com/logo/tv/ss/show-tv-tr.svg",SHOW TV
 https://ciner-live.daioncdn.net/showtv/showtv_720p.m3u8
-#EXTINF:-1 tvg-id="NationalGeographic.tr" tvg-logo="https://i.ibb.co/h17BsfgY/Ekran-g-r-nt-s-2026-07-25-103937.jpg" group-title="🌍 YABANCI ARŞİV (284)", NAT GEO HD
-http://46.32.176.50/NationalGeographicHD/index.m3u8
-#EXTINF:-1 tvg-id="Discovering China.tr" tvg-logo="https://i.ibb.co/xt5Kx7SN/Ekran-g-r-nt-s-2026-07-25-103937.jpg" group-title="🌍 YABANCI ARŞİV (284)", Discovering China
-https://amg01314-amg01314c8-distrotv-us-10218.playouts.now.amagi.tv/playlist/amg01314-cgtn-cgtndiscoveringchina-distrotvus/playlist.m3u8
-#EXTINF:-1 tvg-id="FX.tr" tvg-logo="https://i.ibb.co/8gcyRP1Y/Ekran-g-r-nt-s-2026-07-25-163750.jpg" group-title="🌍 YABANCI ARŞİV (284)", FX TV HD
-https://saran-live.ercdn.net/fx/index.m3u8
-#EXTINF:-1 tvg-id="ViasatHistory.tr@SD" group-title="🌍 YABANCI ARŞİV (284)",Viasat History (720p)
-https://nord.ayakkabiparti.lol/viasathistory/index.m3u8
-#EXTINF:-1 tvg-id="NationalGeographic.tr@SD" group-title="🌍 YABANCI ARŞİV (284)",National Geographic
-https://nord.ayakkabiparti.lol/natgeo/index.m3u8
-#EXTINF:-1 tvg-id="NationalGeographicWild.tr@SD" group-title="🌍 YABANCI ARŞİV (284)",National Geographic Wild
-https://nord.ayakkabiparti.lol/natgeowild/index.m3u8
 #EXTINF:-1 tvg-id="beINMoviesStars.tr@SD" group-title="🌍 YABANCI ARŞİV (284)",beIN Movies Stars
 https://nord.ayakkabiparti.lol/bsaction1/index.m3u8
 #EXTINF:-1 tvg-id="beINBoxOffice1.tr@SD" group-title="🌍 YABANCI ARŞİV (284)",beIN Box Office 1
@@ -63,8 +21,6 @@ https://nord.ayakkabiparti.lol/box2/index.m3u8
 https://nord.ayakkabiparti.lol/box3/index.m3u8
 #EXTINF:-1 tvg-id="AnadoluAgency.tr@SD" tvg-logo="https://i.imgur.com/dWElJll.png" group-title="🌍 YABANCI ARŞİV (284)",AA Live (720p) [Not 24/7]
 https://mtulqxgomrllive.mediatriple.net/mtulqxgomrllive/broadcast_59f9c0c785b88.smil/playlist.m3u8
-#EXTINF:-1 tvg-id="ViasatExplore.tr@SD" tvg-logo="https://i.imgur.com/DyT5pKB.png" group-title="🌍 YABANCI ARŞİV (284)",Viasat Explore
-https://tv.arectv29.sbs/live/viasathistory.m3u8
 #EXTINF:-1 tvg-name="BEIN BOX OFFICE 1 ʜᴅ" group-title="🌍 YABANCI ARŞİV (284)",BEIN BOX OFFICE 1 ʜᴅ
 http://unreal.eztv4you.xyz:25461/98392023/224vpw99f7/432166
 #EXTINF:-1 tvg-name="Bein Movies Stars" group-title="🌍 YABANCI ARŞİV (284)",Bein Movies Stars
@@ -127,14 +83,64 @@ https://pp.centtv38.live/yayinb5.m3u8
 https://pp.centtv38.live/yayinbm1.m3u8
 #EXTINF:-1 tvg-name="beIN SPORTS Max 2" group-title="🌍 YABANCI ARŞİV (284)",beIN SPORTS Max 2
 https://pp.centtv38.live/yayinbm2.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/g0jPOcC.png" group-title="🌍 YABANCI ARŞİV (284)",TRT (GREECE) (720P)
-https://av.hellasnet.tv/rst/trt/main_stream.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/6/67/Canal_trt_logo.PNG" group-title="🌍 YABANCI ARŞİV (284)",TRT (VENEZUELA) (410P) [NOT 24/7]
-https://vcp12.myplaytv.com/trt/trt/playlist.m3u8
 #EXTINF:-1 group-title="🌍 YABANCI ARŞİV (284)",TRT ARABI
 https://tv-trtarabi.medya.trt.com.tr/master_720.m3u8
 #EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/kuz3-orange/TurkishIPTV-Claude/main/logos/trtarabi.png" group-title="🌍 YABANCI ARŞİV (284)",TRT ARABI
 https://tv-trtarabi.medya.trt.com.tr/master_1080.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/gtZLzxq.png" group-title="🌍 YABANCI ARŞİV (284)",NTV (720P)
+https://protokolldns.xyz/ntv.l.i.v.e5547892023/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/di3XX5L.png" group-title="🌍 YABANCI ARŞİV (284)",AZSTARTV
+http://live.azstartv.com/azstar/smil:azstar.smil/playlist.m3u8
+#EXTINF:-1 tvg-logo="" group-title="🌍 YABANCI ARŞİV (284)",06.KanalD Drama
+https://amg01602-themahqfrance-vivekanald-samsungspain-uu2zn.amagi.tv/playlist/amg01602-themahqfrance-vivekanald-samsungspain/playlist.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/sVc8cFt.png" group-title="🌍 YABANCI ARŞİV (284)",AUTO PLUS
+https://stream8.cinerama.uz/1036/tracks-v1a1/mono.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/ELXmaqg.png" group-title="🌍 YABANCI ARŞİV (284)",TR SPORT (480P)
+https://livetr.teleromagna.it/mia/live/playlist.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/g0jPOcC.png" group-title="🌍 YABANCI ARŞİV (284)",TRT
+https://av.hellasnet.tv/rst/trt/index.m3u8
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/ATV_Peru_2025.svg/1920px-ATV_Peru_2025.svg.png" group-title="🌍 YABANCI ARŞİV (284)",ATV (720P)
+http://187.102.210.46/ATV/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/Z7URrp1.png" group-title="🌍 YABANCI ARŞİV (284)",TV8
+https://dash3.antik.sk/live/test_osem/playlist.m3u8
+#EXTINF:-1 tvg-logo="https://i.ibb.co/74fJt5v/8mblanc.png" group-title="🌍 YABANCI ARŞİV (284)",TV8 MONTBLANC
+https://tvradiozap.eu/tools/dm-m3u8.php/x3wqv8b.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/fY9256H.png" group-title="🌍 YABANCI ARŞİV (284)",ATV+ (1080P)
+http://45.171.108.253:8888/ATV/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/JINE5xS.png" group-title="🌍 YABANCI ARŞİV (284)",ATV SPİRİT
+http://88.212.7.14/live/test_atv_spirit/playlist.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/LnyVa5H.png" group-title="🌍 YABANCI ARŞİV (284)",ATV SUR (1080P)
+http://190.93.224.42/ATV-SUR/index.m3u8
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/5/56/ATV%2B_logo_2020.png" group-title="🌍 YABANCI ARŞİV (284)",ATV+ (1080P)
+http://190.93.224.42/ATV-PLUS/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/WsD83lq.png" group-title="🌍 YABANCI ARŞİV (284)",CBC TV8 (1080P)
+https://1740288887.rsc.cdn77.org/1740288887/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/dRsacao.png" group-title="🌍 YABANCI ARŞİV (284)",HMONG STAR TV (720P)
+https://livefta.malimarcdn.com/ftaedge00/hmongstartv.sdp/playlist.m3u8
+#EXTINF:-1 tvg-logo="https://gbzottvsc25.tvplus.com.tr:33207/CPS/images/universal/film/logo/202506/20250623/71/0916028009315eb88428_op_0_XL.webp" group-title="🌍 YABANCI ARŞİV (284)",ATV (1080P)
+http://190.93.224.42/ATV/index.m3u8
+#EXTINF:-1 tvg-logo="https://gbzottvsc25.tvplus.com.tr:33207/CPS/images/universal/film/logo/202506/20250623/71/0916028009315eb88428_op_0_XL.webp" group-title="🌍 YABANCI ARŞİV (284)",ATV
+http://88.212.7.14/live/test_atv_hungary_1200_atk/playlist.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/15ILp0P.png" group-title="🌍 YABANCI ARŞİV (284)",KANAL D (720P)
+https://stream1.kanald.ro/iphone/knd-live.m3u8
+#EXTINF:-1 tvg-id="NationalGeographic.tr" tvg-logo="https://i.ibb.co/h17BsfgY/Ekran-g-r-nt-s-2026-07-25-103937.jpg" group-title="🌍 YABANCI ARŞİV (284)", NAT GEO HD
+http://46.32.176.50/NationalGeographicHD/index.m3u8
+#EXTINF:-1 tvg-id="Discovering China.tr" tvg-logo="https://i.ibb.co/xt5Kx7SN/Ekran-g-r-nt-s-2026-07-25-103937.jpg" group-title="🌍 YABANCI ARŞİV (284)", Discovering China
+https://amg01314-amg01314c8-distrotv-us-10218.playouts.now.amagi.tv/playlist/amg01314-cgtn-cgtndiscoveringchina-distrotvus/playlist.m3u8
+#EXTINF:-1 tvg-id="FX.tr" tvg-logo="https://i.ibb.co/8gcyRP1Y/Ekran-g-r-nt-s-2026-07-25-163750.jpg" group-title="🌍 YABANCI ARŞİV (284)", FX TV HD
+https://saran-live.ercdn.net/fx/index.m3u8
+#EXTINF:-1 tvg-id="ViasatHistory.tr@SD" group-title="🌍 YABANCI ARŞİV (284)",Viasat History (720p)
+https://nord.ayakkabiparti.lol/viasathistory/index.m3u8
+#EXTINF:-1 tvg-id="NationalGeographic.tr@SD" group-title="🌍 YABANCI ARŞİV (284)",National Geographic
+https://nord.ayakkabiparti.lol/natgeo/index.m3u8
+#EXTINF:-1 tvg-id="NationalGeographicWild.tr@SD" group-title="🌍 YABANCI ARŞİV (284)",National Geographic Wild
+https://nord.ayakkabiparti.lol/natgeowild/index.m3u8
+#EXTINF:-1 tvg-id="ViasatExplore.tr@SD" tvg-logo="https://i.imgur.com/DyT5pKB.png" group-title="🌍 YABANCI ARŞİV (284)",Viasat Explore
+https://tv.arectv29.sbs/live/viasathistory.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/g0jPOcC.png" group-title="🌍 YABANCI ARŞİV (284)",TRT (GREECE) (720P)
+https://av.hellasnet.tv/rst/trt/main_stream.m3u8
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/6/67/Canal_trt_logo.PNG" group-title="🌍 YABANCI ARŞİV (284)",TRT (VENEZUELA) (410P) [NOT 24/7]
+https://vcp12.myplaytv.com/trt/trt/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/kkm7VqV.png" group-title="🌍 YABANCI ARŞİV (284)",ANTİQUES ROAD TRİP (1080P)
 https://d3v8uchko88gmi.cloudfront.net/PBSART_GB.m3u8
 #EXTINF:-1 tvg-logo="https://enhd.ar/wp-content/uploads/2022/01/0e4a83fc-ba5b-4f26-a333-31f8bd544bcb-300x260.jpeg" group-title="🌍 YABANCI ARŞİV (284)",CİTRİCO TV (720P)
@@ -147,8 +153,6 @@ http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ
 https://stream.ottlive.co.in/nkrtv/index.m3u8
 #EXTINF:-1 tvg-logo="https://jiotvimages.cdn.jio.com/dare_images/images/ntvtamil.png" group-title="🌍 YABANCI ARŞİV (284)",NTC TV (720P)
 https://galaxyott.live/hls/ntv.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/gtZLzxq.png" group-title="🌍 YABANCI ARŞİV (284)",NTV (720P)
-https://protokolldns.xyz/ntv.l.i.v.e5547892023/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/n79nkVC.png" group-title="🌍 YABANCI ARŞİV (284)",NTV (BRAZIL) (720P)
 https://cdn.livespanel.com/nossatv/nossatv/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/KQtQg5y.png" group-title="🌍 YABANCI ARŞİV (284)",NTV (CANADA) CJON-DT (480P)
@@ -481,8 +485,6 @@ http://181.78.8.199:8000/play/a0fo/index.m3u8
 https://hgmtv.com:2020/hls/asthalive/asthalive.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/pwM5txv.png" group-title="🌍 YABANCI ARŞİV (284)",ATVSAT (1080P)
 https://stream.atvsat.com/atvsatlive/smil:atvsatlive.smil/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/di3XX5L.png" group-title="🌍 YABANCI ARŞİV (284)",AZSTARTV
-http://live.azstartv.com/azstar/smil:azstar.smil/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://cdn2-static.ntv.ru/home/promo/24740/balabol_vse.jpg" group-title="🌍 YABANCI ARŞİV (284)",BALABOL (720P)
 https://cdn-dvr.ntv.ru/Balabol/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/eDoJqtg.png" group-title="🌍 YABANCI ARŞİV (284)",BATV EDUCATİONAL CHANNEL (1080P)
@@ -565,5 +567,3 @@ https://pb-5evqkeieu3o6d.akamaized.net/Magellan_TV_Now.m3u8
 https://live.mahdawioun.tv/stream/mahdawioun/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://mntv.co.mz/wp-content/uploads/2025/11/Prancheta-4_1-1.png" group-title="🌍 YABANCI ARŞİV (284)",MNTV
 https://www.khuwemultimedia.com/hls/mntv/mntv.m3u8
-#EXTINF:-1 tvg-logo="" group-title="🌍 YABANCI ARŞİV (284)",06.KanalD Drama
-https://amg01602-themahqfrance-vivekanald-samsungspain-uu2zn.amagi.tv/playlist/amg01602-themahqfrance-vivekanald-samsungspain/playlist.m3u8
