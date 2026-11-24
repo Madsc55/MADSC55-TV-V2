@@ -294,6 +294,39 @@ def safe_channel_move(original, candidate):
 
 
 
+def safe_exact_flash_haber_removal(original, candidate):
+    """Owner-authorized removal of only the broken ULUSAL #43 URL and its copies."""
+    try:
+        from playlist_parts_manager import category
+        groups = [category(r) for r in original]
+        ulusal = [i for i, g in enumerate(groups) if g == "🇹🇷 ULUSAL-HEPSİ (409)"]
+        if len(original) != 18334 or len(candidate) != 18330 or len(ulusal) != 409:
+            return False
+        target = original[ulusal[42]]
+        if hashlib.sha256(target).hexdigest() != "604cdcda81ec3b82f25b8cde8f9ab04976fe56bbd9b090c752389de65a3f9274":
+            return False
+        def stream(r):
+            return next((line for line in r.splitlines()[1:] if line.startswith((b"http://", b"https://"))), None)
+        url = stream(target)
+        if not url:
+            return False
+        selected = [i for i, r in enumerate(original) if stream(r) == url]
+        expected_groups = ["⭐ FAVORİLER (66)","🇹🇷 ULUSAL-HEPSİ (409)","📺 HABER (74)","🗂️ YEDEKLER (1563)"]
+        if len(selected) != 4 or sorted(groups[i] for i in selected) != sorted(expected_groups):
+            return False
+        labels = {"⭐ FAVORİLER (66)":"⭐ FAVORİLER (65)","🇹🇷 ULUSAL-HEPSİ (409)":"🇹🇷 ULUSAL-HEPSİ (408)","📺 HABER (74)":"📺 HABER (73)","🗂️ YEDEKLER (1563)":"🗂️ YEDEKLER (1562)"}
+        expected = []
+        for i, r in enumerate(original):
+            if i in selected:
+                continue
+            if groups[i] in labels:
+                r = re.sub(rb'group-title="[^"]*"', b'group-title="' + labels[groups[i]].encode("utf-8") + b'"', r, count=1)
+            expected.append(r)
+        return candidate == expected
+    except (ValueError, TypeError, IndexError, UnicodeError, KeyError):
+        return False
+
+
 def safe_single_ana_removal(original, candidate, record_sha256):
     """Verify exactly one named record removal; preserve all other records and order."""
     if len(original) != len(candidate) + 1:
@@ -775,6 +808,8 @@ def audit(root=ROOT):
                              (spec["operation"]=="rename" and spec["base_sha256"]=="0271e2cdddd09fcf06c5af33fcf0a17282b85eabfa1e0f9b42528213554f3e42" and spec["result_sha256"]=="579f18135e66dbb74cc340fc6665e6a4d48c21a9de454ac9f98691613488ac55" and safe_exact_turk_archive_uppercase(r0, r1)) or
                              (spec["operation"]=="rename" and spec["channels"]==["ערוץ 13"] and spec["base_sha256"]=="8f9ac2757e8c14c6ebbdd8a9fb39eb6dc3328196950ec48f9739905d47f7399e" and spec["result_sha256"]=="f973fd58558920a1a2fba76bde7ebf1be2a690c1115aa8cc03999595c0d6417f" and safe_exact_ana_566_move_uppercase(r0, r1)) or
                              (spec["operation"]=="remove" and spec["base_sha256"]=="ae674d096b4469f79b231bf4ad82a28b619c5a178a2e45f6bf41197ac34393bf" and spec["result_sha256"]=="8f9ac2757e8c14c6ebbdd8a9fb39eb6dc3328196950ec48f9739905d47f7399e" and safe_exact_backup_move_remove(r0, r1)) or
+                             # Exact owner-authorized broken FLASH HABER URL removal.
+                             (spec["operation"]=="remove" and spec["channels"]==["FLASH HABER 720P HD", "FLASH HABER 1 720P HD"] and spec["base_sha256"]=="6ab2646f111213b38f0f0c061e771b9fb163368e72b5d5951b0e3090b33a97b6" and spec["result_sha256"]=="103a5f8bd4677742d48ef633a0af4d3f665312d5763ace8a2758e2dde7eabf53" and safe_exact_flash_haber_removal(r0, r1)) or
                              # One-time explicit owner removal: original ANA #151, GEM Sport.
                              (spec["operation"]=="remove" and spec["channels"]==["GEM Sport"] and
                               spec["base_sha256"]=="9eba8a6fb34d69d3150dde76efa39ca403b490bad8770ba09151088e9567873c" and

@@ -1,14 +1,14 @@
 {
   "version": 1,
   "header_hex": "234558544d33550a",
-  "source_sha256": "6ab2646f111213b38f0f0c061e771b9fb163368e72b5d5951b0e3090b33a97b6",
-  "total_records": 18334,
+  "source_sha256": "103a5f8bd4677742d48ef633a0af4d3f665312d5763ace8a2758e2dde7eabf53",
+  "total_records": 18330,
   "entries": [
     {
       "file": "0000.m3u",
-      "group": "⭐ FAVORİLER (66)",
-      "records": 66,
-      "sha256": "ec53c56a9fd1129ba99a12ea4aea27f87acf60b5ce9265726be9d80690bd44c1"
+      "group": "⭐ FAVORİLER (65)",
+      "records": 65,
+      "sha256": "4b4d6d2520da32b6edd76e18beb5c2c9894c44b4818a9cbf16e07112a5617dea"
     },
     {
       "file": "0001.m3u",
@@ -24,9 +24,9 @@
     },
     {
       "file": "0003.m3u",
-      "group": "🇹🇷 ULUSAL-HEPSİ (409)",
-      "records": 409,
-      "sha256": "e13f0be2bce232a3c09a8c231d3afaa781b59921c5499395a6f0454eb66de818"
+      "group": "🇹🇷 ULUSAL-HEPSİ (408)",
+      "records": 408,
+      "sha256": "7147af0ea23a67ec3ad5e9bf815e8b2a982c7ea4d079a9c4d6542199dbed90bd"
     },
     {
       "file": "0004.m3u",
@@ -36,9 +36,9 @@
     },
     {
       "file": "0005.m3u",
-      "group": "📺 HABER (74)",
-      "records": 74,
-      "sha256": "51155f5ec61ea3b08980434fd1d83503e8bf7b83e522dfeca1c507d57fbb766c"
+      "group": "📺 HABER (73)",
+      "records": 73,
+      "sha256": "1282b5c7b4bfc2542a8fc0ef67e782687a76b74d9ce0655b9433af517d0a9c12"
     },
     {
       "file": "0006.m3u",
@@ -79,8 +79,8 @@
     {
       "file": "0012.m3u",
       "group": "YEDEKLER",
-      "records": 1563,
-      "sha256": "92af0c8dc93571e00b12c9a2b30d706c27415023208cb41af1113bc403f87d0a"
+      "records": 1562,
+      "sha256": "8e9cd23b7e4f8de7709350315ce464e78eb730664e0bd14f0b2295bed7db7768"
     },
     {
       "file": "0013.m3u",
