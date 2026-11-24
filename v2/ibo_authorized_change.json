@@ -1,9 +1,32 @@
 {
-  "base_sha256": "9eba8a6fb34d69d3150dde76efa39ca403b490bad8770ba09151088e9567873c",
-  "result_sha256": "b0e3061aeae62835894de40c2a2ca23249a0a833b13411950bf3840e5e75083c",
-  "operation": "remove",
-  "request": "Kullanıcının açık talimatı: ANA ARŞİV önceki 151. sıradaki açılışta hata veren GEM Sport kaydını sil. PR #737 sonrası aynı kayıt 144. sıradadır. Yalnız bu tek kayıt silinir; diğer tüm kayıtlar ve sıra korunur.",
+  "base_sha256": "b0e3061aeae62835894de40c2a2ca23249a0a833b13411950bf3840e5e75083c",
+  "result_sha256": "9d761d3bbd272fb5460b17ae41822ee0cdb34764aced128b87c3ed210034767d",
+  "operation": "move",
+  "request": "Kullanıcı ANA ARŞİV'de 753 kayıt bulunan sürümde 503,504,544,547,554,555,557,558,560,561,562,563,579,588,590,591,594,595,596,598,599,600,601,602 numaralarını YABANCI ARŞİVİ'ne taşımayı istedi. Önceki GEM Sport silme PR #738 sonrası her seçilen sıra bir azaldı; kayıtlar birebir karşılaştırıldı. Sadece 24 kayıt taşınır, başka silme veya canlı AV testi yok.",
   "channels": [
-    "GEM Sport"
+    "Vive Kanal D Drama (1080p)",
+    "ZO'R TV (576P)",
+    "XINJIANG TV 8",
+    "Cartoonito TV",
+    "MEKAMELEEN",
+    "PLAYERFILMAZERBAYCAN-TV",
+    "YURD FM TV",
+    "FASHION ONE",
+    "NR 1 DAMAR",
+    "SAHAND TV",
+    "TOOKU (1080P)",
+    "ЯКУТИЯ 24",
+    "Naxcivan TV (720p) [TEST]",
+    "STERK TV (1080P)",
+    "Timeless Dizi Channel (Poland) (1080p)",
+    "v.Bein Sport 1 NetSpor",
+    "NOW-MUSIC",
+    "TOP POP TV",
+    "Viasat History",
+    "INVESTIGATION DISCOVERY",
+    "KAÇKAR TV GLOBAL ADAY",
+    "HUZUR TV (1080P)",
+    "KURDISTAN TV (720P)",
+    "LOVE NATURE 1080P FHD"
   ]
 }
