@@ -1,3 +1,105 @@
+#EXTINF:-1 tvg-name="Kto est kto (576p)" group-title="YABANCI ARŞİVİ (15940)",Kto est kto (576p)
+http://31.148.48.15/Kto_est_kto/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.ibb.co/WkrLDJW/Screenshot-20230714-135036-removebg-preview.png" group-title="YABANCI ARŞİVİ (15940)",KTV (1080P)
+https://hlive.ktv.go.kr/live/klive_h.stream/playlist.m3u8
+#EXTINF:-1 tvg-name="KTV (720p)" group-title="YABANCI ARŞİVİ (15940)",KTV (720p)
+https://flv.intechmedia.net/live/ch118.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/kG0d8Ay.png" group-title="YABANCI ARŞİVİ (15940)",KTV 1 (1080P)
+https://kwtktv1ta.cdn.mangomolo.com/ktv1/smil:ktv1.stream.smil/chunklist.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/kG0d8Ay.png" group-title="YABANCI ARŞİVİ (15940)",KTV 1 (480P)
+https://cdn-globecast.akamaized.net/live/eds/kuwait_tv1/hls_roku/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/hB57mNh.png" group-title="YABANCI ARŞİVİ (15940)",KTV 2 (1080P)
+https://kwtktv2ta.cdn.mangomolo.com/ktv2/smil:ktv2.stream.smil/chunklist.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/naVEZtj.png" group-title="YABANCI ARŞİVİ (15940)",KTV AL QURAIN (1080P)
+https://kwtktvaqta.cdn.mangomolo.com/ktvaq/smil:tktvaq.stream.smil/chunklist.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/jg3VAxO.png" group-title="YABANCI ARŞİVİ (15940)",KTV ARABE (1080P)
+https://kwtktvata.cdn.mangomolo.com/ktva/smil:tktva.stream.smil/chunklist.m3u8
+#EXTINF:-1 tvg-logo="https://jiotvimages.cdn.jio.com/dare_images/images/channel/2f8e3b371c660faa2f43a7f0942948a4.png" group-title="YABANCI ARŞİVİ (15940)",KTV BANGLA (1080P)
+https://stream.ottlive.co.in/ktvbangla/index.m3u8
+#EXTINF:-1 tvg-logo="https://jiotvimages.cdn.jio.com/dare_images/images/channel/2f8e3b371c660faa2f43a7f0942948a4.png" group-title="YABANCI ARŞİVİ (15940)",KTV BANGLA (720P)
+https://server.livelegitpro.in:9899/tribetv/tribetv/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/hqEbc49.png" group-title="YABANCI ARŞİVİ (15940)",KTV ETHRAA (1080P)
+https://kwtethta.cdn.mangomolo.com/eth/smil:eth.stream.smil/chunklist.m3u8
+#EXTINF:-1 tvg-name="KTV News (1080p)" group-title="YABANCI ARŞİVİ (15940)",KTV News (1080p)
+https://kwtktvata.cdn.mangomolo.com/ktva/smil:ktva.stream.smil/chunklist.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/erZ0Ol1.png" group-title="YABANCI ARŞİVİ (15940)",KTV NEWS (1080P)
+https://kwtkbta.cdn.mangomolo.com/kb/smil:kb.stream.smil/chunklist.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/erZ0Ol1.png" group-title="YABANCI ARŞİVİ (15940)",KTV NEWS (360P)
+https://cdn-globecast.akamaized.net/live/eds/ktv_al_akhbar/hls_roku/ktv_al_akhbar.m3u8
+#EXTINF:-1 tvg-logo="https://www.cableman.ru/sites/default/files/2022-03-23_02-09-35.png" group-title="YABANCI ARŞİVİ (15940)",KUBAN 24 (480P)
+http://dmi3y-tv.online/hls/zabava/region/MAYK/CH_MAYKOP.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/atzrXcz.png" group-title="YABANCI ARŞİVİ (15940)",KUBAN 24 SD [GEO-BLOCKED]
+https://rt-sth-krdar-htlive.cdn.ngenix.net/hls/CH_R04_KUBAN24/variant.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/7jxZnuS.png" group-title="YABANCI ARŞİVİ (15940)",KUHNYA (576P)
+http://stream.mcquack.net/179/index.m3u8
+#EXTINF:-1 tvg-logo="https://cdn2.red-media.ru/wp-content/uploads/2016/08/Kuhnya-mediakit.png" group-title="YABANCI ARŞİVİ (15940)",KUHNYA (576P)
+https://stream8.cinerama.uz/1236/tracks-v1a1/mono.m3u8
+#EXTINF:-1 tvg-logo="https://smotret.tv/images/kulinar-tv.webp" group-title="YABANCI ARŞİVİ (15940)",KULINAR TV (576P)
+https://api.alpaca.t62a.com/hls/9110/stream0.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/io7cJ1Z.png" group-title="YABANCI ARŞİVİ (15940)",KULTURMD (1080P)
+http://58bd5b7a98e04.streamlock.net/medienasa-live/kulturmd_high/playlist.m3u8
+#EXTINF:-1 tvg-name="Kunskapskanalen (1080p)" group-title="YABANCI ARŞİVİ (15940)",Kunskapskanalen (1080p)
+https://svt-live-channel.akamaized.net/l6/se/svtk/master-fmp4.m3u8?defaultSubLang=1&format=hls
+#EXTINF:-1 tvg-logo="https://i.imgur.com/hZXBD9F.png" group-title="YABANCI ARŞİVİ (15940)",KURAJ-TV (576P)
+https://bsttv.bonus-tv.ru/cdn/kurai/playlist.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/xPwzad9.png" group-title="YABANCI ARŞİVİ (15940)",KURD CHANNEL
+https://kurdchhls.wns.live/hls/stream.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/9QWs2ms.png" group-title="YABANCI ARŞİVİ (15940)",KURDISTAN 24 (1080P)
+https://hlspackager.akamaized.net/live/DB/K24/HLS/K24.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/UAbSwYA.png" group-title="YABANCI ARŞİVİ (15940)",KURDSAT (1080P)
+https://hlspackager.akamaized.net/live/DB/KURDSAT_HD/HLS/KURDSAT_HD.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/UAbSwYA.png" group-title="YABANCI ARŞİVİ (15940)",KURDSAT (576P)
+http://185.9.2.18/chid_1/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/F3XRwkt.png" group-title="YABANCI ARŞİVİ (15940)",KURDSAT NEWS (1080P)
+https://hlspackager.akamaized.net/live/DB/KURDSAT_NEWS/HLS/KURDSAT_NEWS.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/CZViCwB.jpg" group-title="YABANCI ARŞİVİ (15940)",KURIAKOS CINE (1080P)
+https://w2.manasat.com/kcine/smil:kcine.smil/playlist.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/SRX6EPY.png" group-title="YABANCI ARŞİVİ (15940)",KURIAKOS KIDS (1080P)
+https://w2.manasat.com/kkids/smil:kkids.smil/playlist.m3u8
+#EXTINF:-1 tvg-logo="https://i.ibb.co/KxXJddKf/Kuriakosmsc.png" group-title="YABANCI ARŞİVİ (15940)",KURIAKOS MUSIC
+https://w2.manasat.com/kmusic/smil:kmusic.smil/playlist.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/Zl40NYi.jpg" group-title="YABANCI ARŞİVİ (15940)",KURIAKOS MUSIC (1080P)
+http://195.23.211.179:1935/kmusic/smil:kmusic.smil/playlist.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/xdAW0D5.png" group-title="YABANCI ARŞİVİ (15940)",KURIAKOS TV (1080P)
+https://w1.manasat.com/ktv/smil:ktv.smil/playlist.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/HBPnUD5.png" group-title="YABANCI ARŞİVİ (15940)",KURIR TV
+https://static.am.mediaoutcast.com/storage/nQJnjJkO/nQJnjJkO/stream/O68x4o8g/720p/720p.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/4a4qX0P.png" group-title="YABANCI ARŞİVİ (15940)",KUS-KUS
+https://dash2.antik.sk/live/test_kuskus_tv_atktv/playlist.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/4giVyxb.png" group-title="YABANCI ARŞİVİ (15940)",KUTONEN
+https://live-fi.tvkaista.net/kutonen/live.m3u8?src=freetv
+#EXTINF:-1 tvg-logo="https://i.ibb.co/tMLDMdy/kwttv.png" group-title="YABANCI ARŞİVİ (15940)",KUWAIT TV KHALLIK
+https://kwtsplta.cdn.mangomolo.com/kb/smil:kb.stream.smil/chunklist.m3u8
+#EXTINF:-1 tvg-name="Kvartal TV (576p)" group-title="YABANCI ARŞİVİ (15940)",Kvartal TV (576p)
+http://158.101.222.193:88/georgia_play.php?id=kvartal95
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Kringvarp_F%C3%B8roya_2018.svg/500px-Kringvarp_F%C3%B8roya_2018.svg.png" group-title="YABANCI ARŞİVİ (15940)",KVF SJÓNVARP
+https://w-live-edge1.kringvarp.fo/uttanlands/_definst_/smil:uttanlands.smil/playlist.m3u8
+#EXTINF:-1 tvg-logo="https://web02.antik.sk/assets/img/channels/0d824abdc4c21ab5d35cf946847cedee.svg" group-title="YABANCI ARŞİVİ (15940)",KVIFF TV (1080P)
+http://antik.streaming.tivio.studio/channels/HC7JIqyyvQMl0mnqbbnI/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/Vw3LFLX.png" group-title="YABANCI ARŞİVİ (15940)",KVN TV (576P)
+http://178.124.179.122:8080/KVN-TV/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/Vw3LFLX.png" group-title="YABANCI ARŞİVİ (15940)",KVN TV (576P)
+https://fs.uplink.kz/kvn_tv/mono.m3u8?token=onlinetv
+#EXTINF:-1 tvg-logo="https://i.imgur.com/CjKQuEP.png" group-title="YABANCI ARŞİVİ (15940)",KVTN-DT 25.1 (720P)
+https://jk3lzkn4lw79-hls-live.5centscdn.com/VTN2/bcaafe9ad8d42834b08e762ac58596b8.sdp/playlist.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/TVuCY4N.png" group-title="YABANCI ARŞİVİ (15940)",KYIV (1080P)
+https://api-tv.ipnet.ua/api/v1/manifest/1293296300.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/chHsCzB.png" group-title="YABANCI ARŞİVİ (15940)",L!KE (720P)
+https://cnl-cl.otteravision.com/cnl/cl_h265/cl_h265.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/05YWVCq.png" group-title="YABANCI ARŞİVİ (15940)",L'ALTRO CORRIERE TV (720P)
+https://52ee6512fee4427889eba89957975fa0.msvdn.net/live/S24350460/BEj8ZmQiQ9UG/playlist.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/t35zhM9.png" group-title="YABANCI ARŞİVİ (15940)",L'EQUIPE (1080P)
+https://dq37unyetkpcz.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-m04j89j7k5gtp/LEquipe_FR.m3u8
+#EXTINF:-1 tvg-logo="https://i.ibb.co/KXhYwm0/lequipe.png" group-title="YABANCI ARŞİVİ (15940)",L'ÉQUIPE TV
+https://raw.githubusercontent.com/Paradise-91/ParaTV/main/streams/lequipe/la-chaine-l-equipe-en-direct-dm.m3u8
+#EXTINF:-1 tvg-name="L1 (1080p)" group-title="YABANCI ARŞİVİ (15940)",L1 (1080p)
+http://45.4.1.201:8000/play/a1ai/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/2fziU2B.png" group-title="YABANCI ARŞİVİ (15940)",L1 MAX (1080P)
+http://190.93.224.42/LIGA-1-MAX/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/Jyhn1iP.png" group-title="YABANCI ARŞİVİ (15940)",L1 Ⓢ
+http://d34pj260kw1xmk.cloudfront.net/live/l1/tv/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/SDD5KS5.png" group-title="YABANCI ARŞİVİ (15940)",L1 TV (720P)
+https://d34pj260kw1xmk.cloudfront.net/live/l1/tv/index.m3u8
 #EXTINF:-1 tvg-name="La 1 (2160p)" group-title="YABANCI ARŞİVİ (15940)",La 1 (2160p)
 http://185.47.212.25:8080/tdp_HD/index.m3u8
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/La_1_2026.svg/500px-La_1_2026.svg.png" group-title="YABANCI ARŞİVİ (15940)",LA 1 CANARIAS (720P)
@@ -4828,87 +4930,3 @@ https://jmp2.uk/plu-63c6e37e636b7e0007ccb635.m3u8
 https://jmp2.uk/plu-6036e7c385749f00075dbd3b.m3u8
 #EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/65bd0f53dc10a40008e68b96/colorLogoPNG_1747382175081.png" group-title="YABANCI ARŞİVİ (15940)",PLUTO TV GASOLINA
 https://jmp2.uk/plu-65bd0f53dc10a40008e68b96.m3u8
-#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/66b0dfa1d512590008bfa7fd/colorLogoPNG.png" group-title="YABANCI ARŞİVİ (15940)",PLUTO TV GORE & SLASHER
-https://jmp2.uk/plu-66b0dfa1d512590008bfa7fd.m3u8
-#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/69b015c5d29cc97de7da4af8/colorLogoPNG_1779802132594.png" group-title="YABANCI ARŞİVİ (15940)",PLUTO TV HAIALARM
-https://jmp2.uk/plu-69b015c5d29cc97de7da4af8.m3u8
-#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/68dfa431cc3c6cd904053100/colorLogoPNG_1761838112979.png" group-title="YABANCI ARŞİVİ (15940)",PLUTO TV HANDBOLD HIGHLIGHTS
-https://jmp2.uk/plu-68dfa431cc3c6cd904053100.m3u8
-#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/6618f54baec96800081525ec/colorLogoPNG_1762173655031.png" group-title="YABANCI ARŞİVİ (15940)",PLUTO TV HANDBOLD LIVE
-https://jmp2.uk/plu-6618f54baec96800081525ec.m3u8
-#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/68dfa3e2cc3c6cd904052c41/colorLogoPNG_1761838923264.png" group-title="YABANCI ARŞİVİ (15940)",PLUTO TV HANDBOLL HIGHLIGHTS
-https://jmp2.uk/plu-68dfa3e2cc3c6cd904052c41.m3u8
-#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/686faf533ffa5e0c912688e7/colorLogoPNG_1762169254016.png" group-title="YABANCI ARŞİVİ (15940)",PLUTO TV HANDBOLL LIVE
-https://jmp2.uk/plu-686faf533ffa5e0c912688e7.m3u8
-#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/68c01afa3efb41cd9759dafb/colorLogoPNG_1770018342774.png" group-title="YABANCI ARŞİVİ (15940)",PLUTO TV HARLEQUIN
-https://jmp2.uk/plu-68c01bed508ba507f0d0dd60.m3u8
-#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/68c01afa3efb41cd9759dafb/colorLogoPNG_1770018342774.png" group-title="YABANCI ARŞİVİ (15940)",PLUTO TV HARLEQUIN DK
-https://jmp2.uk/plu-68c01afa3efb41cd9759dafb.m3u8
-#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/68c01afa3efb41cd9759dafb/colorLogoPNG_1770018342774.png" group-title="YABANCI ARŞİVİ (15940)",PLUTO TV HARLEQUIN NO
-https://jmp2.uk/plu-68c01b9a6bdcf3b9a64febcc.m3u8
-#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/611e771e2f5f180007002224/colorLogoPNG.png" group-title="YABANCI ARŞİVİ (15940)",PLUTO TV HISTOIRE (720P)
-https://jmp2.uk/plu-611e771e2f5f180007002224.m3u8
-#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/61cd7b49543066000713b620/colorLogoPNG.png" group-title="YABANCI ARŞİVİ (15940)",PLUTO TV HISTORIA (GERMANY) (720P)
-https://jmp2.uk/plu-61cd7b49543066000713b620.m3u8
-#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/5f1ef1a8cec6be00072a7ac9/colorLogoPNG_1754405659295.png" group-title="YABANCI ARŞİVİ (15940)",PLUTO TV HISTORIA (UNITED STATES)
-https://jmp2.uk/plu-5f1ef1a8cec6be00072a7ac9.m3u8
-#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/5f1ef1a8cec6be00072a7ac9/colorLogoPNG_1754405659295.png" group-title="YABANCI ARŞİVİ (15940)",PLUTO TV HISTORIA (UNITED STATES) LATAM
-https://jmp2.uk/plu-5de5758e1a30dc00094fcd6c.m3u8
-#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/5f4d3696d938c900072679fd/colorLogoPNG.png" group-title="YABANCI ARŞİVİ (15940)",PLUTO TV HISTORIAS DE ULTRATUMBA
-https://jmp2.uk/plu-5f4d3696d938c900072679fd.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/XkQD5kM.png" group-title="YABANCI ARŞİVİ (15940)",PLUTO TV HISTORY
-https://jmp2.uk/plu-5a4d35dfa5c02e717a234f86.m3u8
-#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/5d4af1803e7983b391d73b13/colorLogoPNG.png" group-title="YABANCI ARŞİVİ (15940)",PLUTO TV HISTORY
-https://jmp2.uk/plu-5d4af1803e7983b391d73b13.m3u8
-#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/69d6c7befde57cd5ba0160c3/colorLogoPNG_1777488284970.png" group-title="YABANCI ARŞİVİ (15940)",PLUTO TV HOMETOWN DRAMA
-https://jmp2.uk/plu-69d6c7befde57cd5ba0160c3.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/An93hAh.png" group-title="YABANCI ARŞİVİ (15940)",PLUTO TV HORROR
-http://service-stitcher.clusters.pluto.tv/stitch/hls/channel/569546031a619b8f07ce6e25/master.m3u8?terminate=false&deviceType=web&deviceMake=web&deviceModel=web&sid=75&deviceId=569546031a619b8f07ce6e25&deviceVersion=DNT&appVersion=DNT&deviceDNT=0&userId=&advertisingId=&deviceLat=&deviceLon=&app_name=&appName=web&buildVersion=&appStoreUrl=&architecture=&includeExtendedEvents=false&marketingRegion=US&serverSideAds=false
-#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/6267d4d1fb694f0007a6af0e/colorLogoPNG.png" group-title="YABANCI ARŞİVİ (15940)",PLUTO TV HORROR
-https://jmp2.uk/plu-6267d4d1fb694f0007a6af0e.m3u8
-#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/63a1c9790cc44a0007dc8857/colorLogoPNG.png" group-title="YABANCI ARŞİVİ (15940)",PLUTO TV HORROR (SWEDEN)
-https://jmp2.uk/plu-63a19e1b9ab2df0007bef7a7.m3u8
-#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/63a1c9790cc44a0007dc8857/colorLogoPNG.png" group-title="YABANCI ARŞİVİ (15940)",PLUTO TV HORROR (SWEDEN) DK
-https://jmp2.uk/plu-63a1c9790cc44a0007dc8857.m3u8
-#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/63a1c9790cc44a0007dc8857/colorLogoPNG.png" group-title="YABANCI ARŞİVİ (15940)",PLUTO TV HORROR (SWEDEN) NO
-https://jmp2.uk/plu-63a19cb7847a090007f230d7.m3u8
-#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/569546031a619b8f07ce6e25/colorLogoPNG.png" group-title="YABANCI ARŞİVİ (15940)",PLUTO TV HORROR (UNITED STATES)
-https://jmp2.uk/plu-569546031a619b8f07ce6e25.m3u8
-#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/569546031a619b8f07ce6e25/colorLogoPNG.png" group-title="YABANCI ARŞİVİ (15940)",PLUTO TV HORROR (UNITED STATES) CA
-https://jmp2.uk/plu-62ea3f8a38acc80007072d26.m3u8
-#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/67ff7d9c7fc25e0e72451bc9/colorLogoPNG_1749796239058.png" group-title="YABANCI ARŞİVİ (15940)",PLUTO TV HORROR-SERIEN
-https://jmp2.uk/plu-67ff7d9c7fc25e0e72451bc9.m3u8
-#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/61c0974945b45d0007aaa5ac/colorLogoPNG.png" group-title="YABANCI ARŞİVİ (15940)",PLUTO TV HUMOR (SWEDEN)
-https://jmp2.uk/plu-61c0974945b45d0007aaa5ac.m3u8
-#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/5e8397936791b30007ebb5a7/colorLogoPNG.png" group-title="YABANCI ARŞİVİ (15940)",PLUTO TV HUMOR (UNITED STATES)
-https://jmp2.uk/plu-5e8397936791b30007ebb5a7.m3u8
-#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/64b585f84ea480000838e446/colorLogoPNG.png" group-title="YABANCI ARŞİVİ (15940)",PLUTO TV ICONS
-https://jmp2.uk/plu-64b585f84ea480000838e446.m3u8
-#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/68adc697116b783a33f99e6c/colorLogoPNG_1760448745473.png" group-title="YABANCI ARŞİVİ (15940)",PLUTO TV IMPACTO
-https://jmp2.uk/plu-68adc697116b783a33f99e6c.m3u8
-#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/5f8ed3892ed7bb000741a1d2/colorLogoPNG.png" group-title="YABANCI ARŞİVİ (15940)",PLUTO TV INSIDE
-https://jmp2.uk/plu-5f8ed3892ed7bb000741a1d2.m3u8
-#EXTINF:-1 tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/GBAK3504518A_20250107T022641SQUARE.png" group-title="YABANCI ARŞİVİ (15940)",PLUTO TV INSIDE
-https://jmp2.uk/stvp-GBAK3504518A
-#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/654a35ce346f420008d5c36e/colorLogoPNG.png" group-title="YABANCI ARŞİVİ (15940)",PLUTO TV INVASION ALIEN
-https://jmp2.uk/plu-654a35ce346f420008d5c36e.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/JlQq0YJ.png" group-title="YABANCI ARŞİVİ (15940)",PLUTO TV INVESTIGACAO
-https://jmp2.uk/plu-5f32cf37c9ff2b00082adbc8.m3u8
-#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/63808dc806aa4700075f319a/colorLogoPNG.png" group-title="YABANCI ARŞİVİ (15940)",PLUTO TV INVESTIGATION
-https://jmp2.uk/plu-63808dc806aa4700075f319a.m3u8
-#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/655ca7aa635c3c000855d655/colorLogoPNG.png" group-title="YABANCI ARŞİVİ (15940)",PLUTO TV JOHN WAYNE
-https://jmp2.uk/plu-655caaaac0fc8800086f5d99.m3u8
-#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/655ca7aa635c3c000855d655/colorLogoPNG.png" group-title="YABANCI ARŞİVİ (15940)",PLUTO TV JOHN WAYNE DK
-https://jmp2.uk/plu-655ca7aa635c3c000855d655.m3u8
-#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/655ca7aa635c3c000855d655/colorLogoPNG.png" group-title="YABANCI ARŞİVİ (15940)",PLUTO TV JOHN WAYNE NO
-https://jmp2.uk/plu-655ca99dfbc15b00081f209c.m3u8
-#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/5f12141b146d760007934ea7/colorLogoPNG.png" group-title="YABANCI ARŞİVİ (15940)",PLUTO TV JUNIOR
-https://jmp2.uk/plu-5f12141b146d760007934ea7.m3u8
-#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/5f1aa9bcd8160700076d45d1/colorLogoPNG_1747402544424.png" group-title="YABANCI ARŞİVİ (15940)",PLUTO TV JUNIOR
-https://jmp2.uk/plu-5f1aa9bcd8160700076d45d1.m3u8
-#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/5f12141b146d760007934ea7/colorLogoPNG.png" group-title="YABANCI ARŞİVİ (15940)",PLUTO TV JUNIOR LATAM
-https://jmp2.uk/plu-5dcde2ac4bc6c500094ab45b.m3u8
-#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/61c09a78bd194c0008decc28/colorLogoPNG_1748329348443.png" group-title="YABANCI ARŞİVİ (15940)",PLUTO TV JUNIORKLUBBEN (720P)
-https://jmp2.uk/plu-61c0b7eb8929e40007ff5125.m3u8
-#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/61c09a78bd194c0008decc28/colorLogoPNG_1748329348443.png" group-title="YABANCI ARŞİVİ (15940)",PLUTO TV JUNIORKLUBBEN DK (720P)
-https://jmp2.uk/plu-61c09a78bd194c0008decc28.m3u8

@@ -1,3 +1,97 @@
+#EXTINF:-1 tvg-name="BBC Red Button 12 (720p)" group-title="YABANCI ARŞİVİ (15940)",BBC Red Button 12 (720p)
+https://ve-cmaf-push-uk-live.akamaized.net/x=4/i=urn:bbc:pips:service:uk_bbc_stream_012/iptv_hd_abr_v1.mpd
+#EXTINF:-1 tvg-name="BBC Red Button 13" group-title="YABANCI ARŞİVİ (15940)",BBC Red Button 13
+https://ve-cmaf-push-uk-live.akamaized.net/x=4/i=urn:bbc:pips:service:uk_bbc_stream_013/hevc_iptv_mse_v0.mpd
+#EXTINF:-1 tvg-name="BBC Red Button 13 (720p)" group-title="YABANCI ARŞİVİ (15940)",BBC Red Button 13 (720p)
+https://ve-cmaf-push-uk-live.akamaized.net/x=4/i=urn:bbc:pips:service:uk_bbc_stream_013/iptv_hd_abr_v1.mpd
+#EXTINF:-1 tvg-name="BBC Red Button 14 (720p)" group-title="YABANCI ARŞİVİ (15940)",BBC Red Button 14 (720p)
+https://ve-cmaf-push-uk-live.akamaized.net/x=4/i=urn:bbc:pips:service:uk_bbc_stream_014/iptv_hd_abr_v1.mpd
+#EXTINF:-1 tvg-name="BBC Red Button 15 (720p)" group-title="YABANCI ARŞİVİ (15940)",BBC Red Button 15 (720p)
+https://ve-cmaf-push-uk-live.akamaized.net/x=4/i=urn:bbc:pips:service:uk_bbc_stream_015/iptv_hd_abr_v1.mpd
+#EXTINF:-1 tvg-name="BBC Red Button 16 (720p)" group-title="YABANCI ARŞİVİ (15940)",BBC Red Button 16 (720p)
+https://ve-cmaf-push-uk-live.akamaized.net/x=4/i=urn:bbc:pips:service:uk_bbc_stream_016/iptv_hd_abr_v1.mpd
+#EXTINF:-1 tvg-name="BBC Red Button 17" group-title="YABANCI ARŞİVİ (15940)",BBC Red Button 17
+https://ve-cmaf-push-uk-live.akamaized.net/x=4/i=urn:bbc:pips:service:uk_bbc_stream_017/hevc_iptv_mse_v0.mpd
+#EXTINF:-1 tvg-name="BBC Red Button 17 (720p)" group-title="YABANCI ARŞİVİ (15940)",BBC Red Button 17 (720p)
+https://ve-cmaf-push-uk-live.akamaized.net/x=4/i=urn:bbc:pips:service:uk_bbc_stream_017/iptv_hd_abr_v1.mpd
+#EXTINF:-1 tvg-name="BBC Red Button 18 (720p)" group-title="YABANCI ARŞİVİ (15940)",BBC Red Button 18 (720p)
+https://ve-cmaf-push-uk-live.akamaized.net/x=4/i=urn:bbc:pips:service:uk_bbc_stream_018/iptv_hd_abr_v1.mpd
+#EXTINF:-1 tvg-name="BBC Red Button 19 (720p)" group-title="YABANCI ARŞİVİ (15940)",BBC Red Button 19 (720p)
+https://ve-cmaf-push-uk-live.akamaized.net/x=4/i=urn:bbc:pips:service:uk_bbc_stream_019/iptv_hd_abr_v1.mpd
+#EXTINF:-1 tvg-name="BBC Red Button 2" group-title="YABANCI ARŞİVİ (15940)",BBC Red Button 2
+https://ve-cmaf-push-uk-live.akamaized.net/x=4/i=urn:bbc:pips:service:uk_bbc_stream_002/hevc_iptv_mse_v0.mpd
+#EXTINF:-1 tvg-name="BBC Red Button 2 (720p)" group-title="YABANCI ARŞİVİ (15940)",BBC Red Button 2 (720p)
+https://ve-cmaf-push-uk-live.akamaized.net/x=4/i=urn:bbc:pips:service:uk_bbc_stream_002/iptv_hd_abr_v1.mpd
+#EXTINF:-1 tvg-name="BBC Red Button 20 (720p)" group-title="YABANCI ARŞİVİ (15940)",BBC Red Button 20 (720p)
+https://ve-cmaf-push-uk-live.akamaized.net/x=4/i=urn:bbc:pips:service:uk_bbc_stream_020/iptv_hd_abr_v1.mpd
+#EXTINF:-1 tvg-name="BBC Red Button 21 (720p)" group-title="YABANCI ARŞİVİ (15940)",BBC Red Button 21 (720p)
+https://ve-cmaf-push-uk-live.akamaized.net/x=4/i=urn:bbc:pips:service:uk_bbc_stream_021/iptv_hd_abr_v1.mpd
+#EXTINF:-1 tvg-name="BBC Red Button 22 (720p)" group-title="YABANCI ARŞİVİ (15940)",BBC Red Button 22 (720p)
+https://ve-cmaf-push-uk-live.akamaized.net/x=4/i=urn:bbc:pips:service:uk_bbc_stream_022/iptv_hd_abr_v1.mpd
+#EXTINF:-1 tvg-name="BBC Red Button 23 (720p)" group-title="YABANCI ARŞİVİ (15940)",BBC Red Button 23 (720p)
+https://ve-cmaf-push-uk-live.akamaized.net/x=4/i=urn:bbc:pips:service:uk_bbc_stream_023/iptv_hd_abr_v1.mpd
+#EXTINF:-1 tvg-name="BBC Red Button 24 (720p)" group-title="YABANCI ARŞİVİ (15940)",BBC Red Button 24 (720p)
+https://ve-cmaf-push-uk-live.akamaized.net/x=4/i=urn:bbc:pips:service:uk_bbc_stream_024/iptv_hd_abr_v1.mpd
+#EXTINF:-1 tvg-name="BBC Red Button 3 (720p)" group-title="YABANCI ARŞİVİ (15940)",BBC Red Button 3 (720p)
+https://ve-cmaf-push-uk-live.akamaized.net/x=4/i=urn:bbc:pips:service:uk_bbc_stream_003/iptv_hd_abr_v1.mpd
+#EXTINF:-1 tvg-name="BBC Red Button 4 (720p)" group-title="YABANCI ARŞİVİ (15940)",BBC Red Button 4 (720p)
+https://ve-cmaf-push-uk-live.akamaized.net/x=4/i=urn:bbc:pips:service:uk_bbc_stream_004/iptv_hd_abr_v1.mpd
+#EXTINF:-1 tvg-name="BBC Red Button 5 (720p)" group-title="YABANCI ARŞİVİ (15940)",BBC Red Button 5 (720p)
+https://ve-cmaf-push-uk-live.akamaized.net/x=4/i=urn:bbc:pips:service:uk_bbc_stream_005/iptv_hd_abr_v1.mpd
+#EXTINF:-1 tvg-name="BBC Red Button 6 (720p)" group-title="YABANCI ARŞİVİ (15940)",BBC Red Button 6 (720p)
+https://ve-cmaf-push-uk-live.akamaized.net/x=4/i=urn:bbc:pips:service:uk_bbc_stream_006/iptv_hd_abr_v1.mpd
+#EXTINF:-1 tvg-name="BBC Red Button 7 (720p)" group-title="YABANCI ARŞİVİ (15940)",BBC Red Button 7 (720p)
+https://ve-cmaf-push-uk-live.akamaized.net/x=4/i=urn:bbc:pips:service:uk_bbc_stream_007/iptv_hd_abr_v1.mpd
+#EXTINF:-1 tvg-name="BBC Red Button 8 (720p)" group-title="YABANCI ARŞİVİ (15940)",BBC Red Button 8 (720p)
+https://ve-cmaf-push-uk-live.akamaized.net/x=4/i=urn:bbc:pips:service:uk_bbc_stream_008/iptv_hd_abr_v1.mpd
+#EXTINF:-1 tvg-name="BBC Red Button 9 (720p)" group-title="YABANCI ARŞİVİ (15940)",BBC Red Button 9 (720p)
+https://ve-cmaf-push-uk-live.akamaized.net/x=4/i=urn:bbc:pips:service:uk_bbc_stream_009/iptv_hd_abr_v1.mpd
+#EXTINF:-1 tvg-name="BBC Scotland (720p)" group-title="YABANCI ARŞİVİ (15940)",BBC Scotland (720p)
+https://vs-cmaf-pushb-uk-live.akamaized.net/x=4/i=urn:bbc:pips:service:bbc_scotland_hd/iptv_hd_abr_v1.mpd
+#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/60dafb9a0df1ba000758d37b/colorLogoPNG_1770367705306.png" group-title="YABANCI ARŞİVİ (15940)",BBC SERIES
+https://jmp2.uk/plu-60dafb9a0df1ba000758d37b.m3u8
+#EXTINF:-1 tvg-name="BBC Three (720p)" group-title="YABANCI ARŞİVİ (15940)",BBC Three (720p)
+https://vs-cmaf-pushb-uk-live.akamaized.net/x=4/i=urn:bbc:pips:service:bbc_three_hd/iptv_hd_abr_v1.mpd
+#EXTINF:-1 tvg-name="BBC Three (720p)" group-title="YABANCI ARŞİVİ (15940)",BBC Three (720p)
+https://vs-hls-pushb-uk-live.akamaized.net/x=4/i=urn:bbc:pips:service:bbc_three_hd/mobile_wifi_main_hd_abr_v2.m3u8
+#EXTINF:-1 tvg-name="BBC Three/CBBC (720p)" group-title="YABANCI ARŞİVİ (15940)",BBC Three/CBBC (720p)
+http://193.46.58.239:8080/CBBCHD/index.m3u8
+#EXTINF:-1 tvg-logo="https://tvpnlogopus.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/US2600028R7_20261006T051026SQUARE.png" group-title="YABANCI ARŞİVİ (15940)",BBC TRAVEL
+https://jmp2.uk/stvp-US2600028R7
+#EXTINF:-1 tvg-logo="https://i.imgur.com/QiuYWs9.png" group-title="YABANCI ARŞİVİ (15940)",BBC TRAVEL
+https://jmp2.uk/plu-60e4519e6873180007d3cddb.m3u8
+#EXTINF:-1 tvg-name="BBC Two (720p)" group-title="YABANCI ARŞİVİ (15940)",BBC Two (720p)
+http://193.46.58.239:8080/BBCTwoHD/index.m3u8
+#EXTINF:-1 tvg-name="BBC Two (720p)" group-title="YABANCI ARŞİVİ (15940)",BBC Two (720p)
+https://vs-hls-push-uk-live.akamaized.net/x=4/i=urn:bbc:pips:service:bbc_two_hd/mobile_wifi_main_hd_abr_v2.m3u8
+#EXTINF:-1 tvg-name="BBC UHD 1 (720p)" group-title="YABANCI ARŞİVİ (15940)",BBC UHD 1 (720p)
+https://xemzi.short.gy/1000001
+#EXTINF:-1 tvg-name="BBC UHD 2 (720p)" group-title="YABANCI ARŞİVİ (15940)",BBC UHD 2 (720p)
+https://xemzi.short.gy/1000002
+#EXTINF:-1 tvg-name="BBC UHD 3 (720p)" group-title="YABANCI ARŞİVİ (15940)",BBC UHD 3 (720p)
+http://45.14.84.37/bbc3/index.m3u8
+#EXTINF:-1 tvg-name="BBC UHD 4 (720p)" group-title="YABANCI ARŞİVİ (15940)",BBC UHD 4 (720p)
+http://45.14.84.37/bbc4/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.ibb.co/JB18vMW/bblack.png" group-title="YABANCI ARŞİVİ (15940)",BBLACK! AFRICA
+https://livevideo.vedge.infomaniak.com/livecast/ik:bblackafrica/manifest.m3u8
+#EXTINF:-1 tvg-logo="https://i.ibb.co/JB18vMW/bblack.png" group-title="YABANCI ARŞİVİ (15940)",BBLACK! CARIBBEAN
+https://livevideo.vedge.infomaniak.com/livecast/ik:bblackcaribbean/manifest.m3u8
+#EXTINF:-1 tvg-logo="https://i.ibb.co/JB18vMW/bblack.png" group-title="YABANCI ARŞİVİ (15940)",BBLACK! CLASSIK
+https://livevideo.vedge.infomaniak.com/livecast/ik:bblackclassik/manifest.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/Hub1AXv.png" group-title="YABANCI ARŞİVİ (15940)",BBS TV
+https://bbstv.ug/hls/ch01/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/01UmXRe.png" group-title="YABANCI ARŞİVİ (15940)",BBS TV (1080P)
+http://bbstv.clouducs.com:1935/bbstv-live/livestream/playlist.m3u8
+#EXTINF:-1 tvg-logo="https://bcngospelchannel.com/wp-content/uploads/2025/09/bcn-gospel-channer-favicon.png" group-title="YABANCI ARŞİVİ (15940)",BCN GOSPEL TV (720P)
+https://live1.ovalcast.com:3916/live/bcngospeltvlive.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/VKv1Y6p.png" group-title="YABANCI ARŞİVİ (15940)",BCS STARCROSS TV (480P)
+https://viewmedia7219.bozztv.com/wmedia/viewmedia100/web_001/Stream/playlist.m3u8
+#EXTINF:-1 tvg-name="BD Television (720p)" group-title="YABANCI ARŞİVİ (15940)",BD Television (720p)
+https://stream.oursnetworktv.com/latin/telegtmb/playlist.m3u8
+#EXTINF:-1 tvg-name="BDN (720p)" group-title="YABANCI ARŞİVİ (15940)",BDN (720p)
+https://liveingesta318.cdnmedia.tv/badalonatvlive/smil:live.smil/playlist.m3u8
+#EXTINF:-1 tvg-logo="https://tvpnlogopus.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/US14000119Q_20260421T143158SQUARE.png" group-title="YABANCI ARŞİVİ (15940)",BEACH BONFIRE VIBES
+https://jmp2.uk/stvp-US14000119Q
 #EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/68bb162bb3900870ec364cbe/colorLogoPNG_1757977922278.png" group-title="YABANCI ARŞİVİ (15940)",BEACH DAY
 https://jmp2.uk/plu-68bb162bb3900870ec364cbe.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/weypM9C.png" group-title="YABANCI ARŞİVİ (15940)",BEACH TV FLORİDA & ALABAMA (720P)
@@ -4878,105 +4972,3 @@ https://627bb251f23c7.streamlock.net:444/EBNTELEVISION/EBNTELEVISION/playlist.m3
 https://goliveafrica.media:9998/live/65d8475d1e6cb/index.m3u8
 #EXTINF:-1 tvg-logo="https://images.sr.roku.com/idType/roku-trc/context/trc/id/d0c6ac240cb8529992ee3340e5b7f102/https%3A%2F%2Fimage.roku.com%2Fbh-uploads%2Fproduction%2FinfoHUDLogo%2F1774038479615_EbonyTV_HUDLogo_260x147_HexEFEFEF.png" group-title="YABANCI ARŞİVİ (15940)",EBONY
 https://jmp2.uk/rok-d0c6ac240cb8529992ee3340e5b7f102.m3u8
-#EXTINF:-1 tvg-logo="https://provider-static.plex.tv/epg/cms/production/234d5377-ab07-41bf-acd6-34c17c1c051a/EbonyTV_Plex_Logo_Light_1500x1000.png" group-title="YABANCI ARŞİVİ (15940)",EBONY TV BY LIONSGATE (1080P)
-https://amg00353-lionsgatestudios-amg00353c11-xumo-us-2108.playouts.now.amagi.tv/EbonyTV-pl/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://provider-static.plex.tv/epg/cms/production/234d5377-ab07-41bf-acd6-34c17c1c051a/EbonyTV_Plex_Logo_Light_1500x1000.png" group-title="YABANCI ARŞİVİ (15940)",EBONY TV BY LIONSGATE (1080P)
-https://pb-6csswagmy4nat.akamaized.net/Ebony_TV_by_Lionsgate.m3u8
-#EXTINF:-1 tvg-logo="https://provider-static.plex.tv/epg/cms/production/234d5377-ab07-41bf-acd6-34c17c1c051a/EbonyTV_Plex_Logo_Light_1500x1000.png" group-title="YABANCI ARŞİVİ (15940)",EBONY TV BY LIONSGATE (1080P)
-https://aegis-cloudfront-1.tubi.video/a0ad4b53-ab3a-48dd-be12-bc7f533c372c/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/6675c713fc3a46000863dde7/colorLogoPNG.png" group-title="YABANCI ARŞİVİ (15940)",EBONY TV DRAMA
-https://jmp2.uk/plu-6675c713fc3a46000863dde7.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/DIIRPNN.png" group-title="YABANCI ARŞİVİ (15940)",EBS (1080P)
-https://streams.prd.commavservices.eu/live/ebs/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/zqbK2IB.png" group-title="YABANCI ARŞİVİ (15940)",EBS (1080P)
-https://rpn.bozztv.com/ebstv/ebstv/index.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/EBS_1TV_Logo.svg/960px-EBS_1TV_Logo.svg.png" group-title="YABANCI ARŞİVİ (15940)",EBS 1TV (360P)
-https://ebsonair.ebs.co.kr/groundwavefamilypc/familypc1m/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/EBS_1TV_Logo.svg/960px-EBS_1TV_Logo.svg.png" group-title="YABANCI ARŞİVİ (15940)",EBS 1TV (360P)
-https://ebsonair.ebs.co.kr/ebs1familypc/familypc1m/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/EBS_2TV_Logo.svg/960px-EBS_2TV_Logo.svg.png" group-title="YABANCI ARŞİVİ (15940)",EBS 2TV (360P)
-https://ebsonair.ebs.co.kr/ebs2familypc/familypc1m/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/fewPTFE.png" group-title="YABANCI ARŞİVİ (15940)",EBS CINEMA (720P)
-https://rpn.bozztv.com/ebstv/ebscinema/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/5wLJzb0.png" group-title="YABANCI ARŞİVİ (15940)",EBS ENGLISH (360P)
-https://ebsonair.ebs.co.kr/plus3familypc/familypc1m/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/62oo8Bx.png" group-title="YABANCI ARŞİVİ (15940)",EBS KIDS (360P)
-https://ebsonair.ebs.co.kr/ebsufamilypc/familypc1m/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/lSpplhD.png" group-title="YABANCI ARŞİVİ (15940)",EBS MUSIKA (720P)
-https://rpn.bozztv.com/ebstv/ebsmusika/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/aCeuhon.png" group-title="YABANCI ARŞİVİ (15940)",EBS PLUS 1 (360P)
-https://ebsonair.ebs.co.kr/plus1familypc/familypc1m/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/pllIMGi.png" group-title="YABANCI ARŞİVİ (15940)",EBS PLUS 2 (360P)
-https://ebsonair.ebs.co.kr/plus2familypc/familypc1m/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/7V012zQ.png" group-title="YABANCI ARŞİVİ (15940)",EBS+ (1080P)
-https://streams.prd.commavservices.eu/live/ebsplus/index.m3u8
-#EXTINF:-1 tvg-name="Ecclesia TV" group-title="YABANCI ARŞİVİ (15940)",Ecclesia TV
-https://video1.getstreamhosting.com:1936/8294/8294/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/QQSSMZx.png" group-title="YABANCI ARŞİVİ (15940)",ECCLESIA TV (1080P)
-https://liveopen.siliconweb.com/openTvLive/openEcclessia/playlist.m3u8
-#EXTINF:-1 tvg-name="Echo24 (720p)" group-title="YABANCI ARŞİVİ (15940)",Echo24 (720p)
-https://echo24new.pl/LiveAppStreamECHO24/streams/GL0VksiIgQUS1672825288490.m3u8
-#EXTINF:-1 tvg-logo="https://i.ibb.co/ccNRGVj/download-10.png" group-title="YABANCI ARŞİVİ (15940)",ECHTJETZT TV (1080P)
-https://bibeltv03.iptv-playoutcenter.de/bibeltv03/bibeltv03.stream_all/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/GiDD8xG.jpg" group-title="YABANCI ARŞİVİ (15940)",ECLIPSE TV (720P)
-https://vdo6.instainternet.com:3272/live/jobetalborezlive.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/ly1KU6w.png" group-title="YABANCI ARŞİVİ (15940)",ECO TELEVISION
-https://stream.ecoperu.tv/ECOTV/tracks-v1a1/mono.m3u8
-#EXTINF:-1 tvg-logo="https://imgur.com/ccFwraQ.png" group-title="YABANCI ARŞİVİ (15940)",ECOS CANAL 57 (1080P)
-https://2-fss-2.streamhoster.com/pl_138/206532-6829872-1/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/pVlZUSV.png" group-title="YABANCI ARŞİVİ (15940)",ECOTEL TV (720P)
-https://ecoteltv.streamseguro.com:5443/LiveApp/streams/streaming.m3u8
-#EXTINF:-1 tvg-logo="https://imgur.com/Y4ahiYu.png" group-title="YABANCI ARŞİVİ (15940)",ECOVISION (720P)
-https://streaming.grupomediosdelnorte.com:19360/ecovision/ecovision.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/hj6EYwe.png" group-title="YABANCI ARŞİVİ (15940)",ECUADOR TV
-https://video-eu1.streamerr.co/hls/s64029a8fdf/live.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/hj6EYwe.png" group-title="YABANCI ARŞİVİ (15940)",ECUADOR TV (1080P)
-http://45.224.97.181:9999/EcuadorTV/index.m3u8
-#EXTINF:-1 tvg-name="EcuaMundo Radio TV (720p)" group-title="YABANCI ARŞİVİ (15940)",EcuaMundo Radio TV (720p)
-https://pacific.direcnode.com:3353/live/ecuamundotvlive.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/Hl5wowk.png" group-title="YABANCI ARŞİVİ (15940)",ECUAVISA (1080P)
-https://redirector.dps.live/hls-video/c54ac2799874375c81c1672abb700870537c5223/ecuavisa/ecuavisa.smil/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/Hl5wowk.png" group-title="YABANCI ARŞİVİ (15940)",ECUAVISA (1080P)
-http://45.224.97.181:9999/Ecuavisa/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/Hl5wowk.png" group-title="YABANCI ARŞİVİ (15940)",ECUAVISA GUAYAQUIL (1080P) [NOT 24/7]
-https://dai.google.com/linear/hls/event/GyPkTVDZSXGhpOvxPK7m2g/master.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/4ClnG0x.png" group-title="YABANCI ARŞİVİ (15940)",EDEN TV (540P)
-https://rtmp.edentv.bj/hls/stream.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/5fPsYTz.png" group-title="YABANCI ARŞİVİ (15940)",EDN TV (1080P) [NOT 24/7]
-https://60417ddeaf0d9.streamlock.net/edntv/videoedntv/playlist.m3u8
-#EXTINF:-1 tvg-name="EDU TV (576p)" group-title="YABANCI ARŞİVİ (15940)",EDU TV (576p)
-https://5aa64ca8b95b8.streamlock.net:4443/edutv/edutelevizija/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/nDRVsIc.png" group-title="YABANCI ARŞİVİ (15940)",EDUCA TV (720P)
-https://avm.ecuamedia.net/educatv/live/playlist.m3u8
-#EXTINF:-1 tvg-name="Educanal (1080p)" group-title="YABANCI ARŞİVİ (15940)",Educanal (1080p)
-http://190.128.214.97:64333/play/a011/index.m3u8
-#EXTINF:-1 tvg-name="Edutainment TV (1080p)" group-title="YABANCI ARŞİVİ (15940)",Edutainment TV (1080p)
-https://cdn4.skygo.mn/live/disk1/Education/DASH-FTA/Education.mpd
-#EXTINF:-1 tvg-logo="https://i.imgur.com/ppBdqel.png" group-title="YABANCI ARŞİVİ (15940)",EDUVISION (1080P)
-https://stmv3.voxtvhd.com.br/conex2/conex2/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/rntSEDZ.png" group-title="YABANCI ARŞİVİ (15940)",EET TV (1080P)
-https://eu.streamjo.com/eetlive/eettv.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/iYTimXh.png" group-title="YABANCI ARŞİVİ (15940)",EFARINA TV (720P)
-https://live.efarinatv.com/hls/bgtaufikganteng.m3u8
-#EXTINF:-1 tvg-name="EGM Channel (480p)" group-title="YABANCI ARŞİVİ (15940)",EGM Channel (480p)
-https://paneltv.online:1936/8186/8186/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/zuyYIca.png" group-title="YABANCI ARŞİVİ (15940)",EGNATIA
-https://video.streams.ovh:1936/egnatiatv/egnatiatv/index.m3u
-#EXTINF:-1 tvg-logo="https://i.imgur.com/zuyYIca.png" group-title="YABANCI ARŞİVİ (15940)",EGNATIA TV (576P)
-https://video.streams.ovh:1936/egnatiatv/egnatiatv/index.m3u8
-#EXTINF:-1 tvg-name="Egyker TV (1080p)" group-title="YABANCI ARŞİVİ (15940)",Egyker TV (1080p)
-https://iptv01.eurocable.co.hu/EC-EGYKERTVHD/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.ibb.co/FhXvbPN/eitb.jpg" group-title="YABANCI ARŞİVİ (15940)",EITB INT
-https://multimedia.eitb.eus/live-content/eitbbasque-hls/master.m3u8
-#EXTINF:-1 tvg-logo="https://jiotv.catchup.cdn.jio.com/dare_images/images/Ekamra_Bharat_Odia.png" group-title="YABANCI ARŞİVİ (15940)",EKAMRA BHARAT ODIA (360P)
-https://live.ekamraott.com/bharat/bharat/index.m3u8
-#EXTINF:-1 tvg-name="Ekhon TV (1080p)" group-title="YABANCI ARŞİVİ (15940)",Ekhon TV (1080p)
-https://tplay.live/out/bangladesh/ekhontv.index.m3u8
-#EXTINF:-1 tvg-name="EKids (576p)" group-title="YABANCI ARŞİVİ (15940)",EKids (576p)
-http://78.108.244.134:8899/ekids
-#EXTINF:-1 tvg-logo="https://i.imgur.com/WovATGb.png" group-title="YABANCI ARŞİVİ (15940)",EKO TV (720P)
-https://ext.cdn.nashnet.tv/228.0.1.60/index.m3u8
-#EXTINF:-1 tvg-name="Ekran Movies" group-title="YABANCI ARŞİVİ (15940)",Ekran Movies
-https://ca-rt.onetv.app/EkranMovies/index-0.m3u8?token=onetv202
-#EXTINF:-1 tvg-logo="https://i.imgur.com/lRpkGHj.png" group-title="YABANCI ARŞİVİ (15940)",EKUSHEY TV (480P)
-https://ekusheyserver.com/etvlivesn.m3u8

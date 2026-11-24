@@ -97,44 +97,44 @@
     {
       "file": "0015.m3u",
       "group": "YABANCI ARŞİVİ (15940)",
-      "records": 2542,
-      "sha256": "5a8495ec85dd4ac4918002484f1cf4152573105e29b200e22299a2d62815a7bb"
+      "records": 2549,
+      "sha256": "f2c92ee199c031d70e2de9d182887c5314fd171d191eeb069fcf697c8f44f06e"
     },
     {
       "file": "0016.m3u",
       "group": "YABANCI ARŞİVİ (15940)",
-      "records": 2491,
-      "sha256": "49159d960a55c88f13b6fdb497526f7367c153e7c7b8484fc6ce8fe2f71476a3"
+      "records": 2487,
+      "sha256": "b5de0002bb6f9f378d485e35d673648fe5937be3dd58a3566ddeb04afbbc4d4c"
     },
     {
       "file": "0017.m3u",
       "group": "YABANCI ARŞİVİ (15940)",
       "records": 2478,
-      "sha256": "067dccd59978efaaa6d0a71f3649237272c34b546a872bca2ce2a01ca7d7f791"
+      "sha256": "5deab819a7e6da772ac7c8e38df22847bb9cd203f288ad4491be247ce812e835"
     },
     {
       "file": "0018.m3u",
       "group": "YABANCI ARŞİVİ (15940)",
-      "records": 2457,
-      "sha256": "1770de12399e8ee242cb71f9a03c3642d72db726be8ab36f53773c9cc5c66cfa"
+      "records": 2466,
+      "sha256": "385616ee220443c51b4312d70cce3a22fc2b17aabc2f4b6578a14c4107e2309d"
     },
     {
       "file": "0019.m3u",
       "group": "YABANCI ARŞİVİ (15940)",
-      "records": 2502,
-      "sha256": "7bb89d77d0b1a12ebb475f72e03f72fc09932a33b8cc3c6007475dec18cda522"
+      "records": 2500,
+      "sha256": "c425f82fa6c5c2f393ecedc9cc9284f8478e5e3cd5021083cdd59161460dd9c8"
     },
     {
       "file": "0020.m3u",
       "group": "YABANCI ARŞİVİ (15940)",
-      "records": 2494,
-      "sha256": "d0ef3129ac65d80f0fb377f4592a8b58168fed7e6a8478ece9b964a5a6fec091"
+      "records": 2505,
+      "sha256": "6977285e7ea0a80df6122d547fddec5c147ec78e55150aa647cb8b5c41a1bed8"
     },
     {
       "file": "0021.m3u",
       "group": "YABANCI ARŞİVİ (15940)",
-      "records": 976,
-      "sha256": "9c6d6e6decc576beb703fdd3e370ed41d7d7099c6300d3e9da8cc2c19aeffc53"
+      "records": 955,
+      "sha256": "d2c5fc8cc1cf8a4c770743250722e8de6e11dfc16cf998ecb2f2491e95e17716"
     }
   ]
 }
