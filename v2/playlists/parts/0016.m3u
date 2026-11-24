@@ -1,3 +1,9 @@
+#EXTINF:-1 tvg-name="BBC Red Button 10 (720p)" group-title="YABANCI ARŞİVİ (15940)",BBC Red Button 10 (720p)
+https://ve-cmaf-push-uk-live.akamaized.net/x=4/i=urn:bbc:pips:service:uk_bbc_stream_010/iptv_hd_abr_v1.mpd
+#EXTINF:-1 tvg-name="BBC Red Button 11 (720p)" group-title="YABANCI ARŞİVİ (15940)",BBC Red Button 11 (720p)
+https://ve-cmaf-push-uk-live.akamaized.net/x=4/i=urn:bbc:pips:service:uk_bbc_stream_011/iptv_hd_abr_v1.mpd
+#EXTINF:-1 tvg-name="BBC Red Button 12" group-title="YABANCI ARŞİVİ (15940)",BBC Red Button 12
+https://ve-cmaf-push-uk-live.akamaized.net/x=4/i=urn:bbc:pips:service:uk_bbc_stream_012/hevc_iptv_mse_v0.mpd
 #EXTINF:-1 tvg-name="BBC Red Button 12 (720p)" group-title="YABANCI ARŞİVİ (15940)",BBC Red Button 12 (720p)
 https://ve-cmaf-push-uk-live.akamaized.net/x=4/i=urn:bbc:pips:service:uk_bbc_stream_012/iptv_hd_abr_v1.mpd
 #EXTINF:-1 tvg-name="BBC Red Button 13" group-title="YABANCI ARŞİVİ (15940)",BBC Red Button 13
@@ -446,10 +452,6 @@ https://redirector.rudo.video/hls-video/339f69c6122f6d8f4574732c235f09b7683e31a5
 https://jmp2.uk/stvp-US26000201N
 #EXTINF:-1 tvg-name="Biosfera TV (720p)" group-title="YABANCI ARŞİVİ (15940)",Biosfera TV (720p)
 https://tvdatta.com:3021/live/biosferatvlive.m3u8
-#EXTINF:-1 tvg-name="Bir Gece Masalı" group-title="YABANCI ARŞİVİ (15940)",Bir Gece Masalı
-http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Bir.Gece.Masali.SON.mkv
-#EXTINF:-1 tvg-name="Bir Zamanlar Istanbul" group-title="YABANCI ARŞİVİ (15940)",Bir Zamanlar Istanbul
-http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Bir.Zamanlar.Istanbul.SON.mkv
 #EXTINF:-1 tvg-name="bitMe (1080p)" group-title="YABANCI ARŞİVİ (15940)",bitMe (1080p)
 http://181.119.66.28:8081/BITME/index.m3u8
 #EXTINF:-1 tvg-name="bitMe (576p)" group-title="YABANCI ARŞİVİ (15940)",bitMe (576p)
@@ -4970,5 +4972,3 @@ https://5e85d90130e77.streamlock.net/6010/ngrp:6010_all/playlist.m3u8
 https://627bb251f23c7.streamlock.net:444/EBNTELEVISION/EBNTELEVISION/playlist.m3u8
 #EXTINF:-1 tvg-name="EBN TV (720p)" group-title="YABANCI ARŞİVİ (15940)",EBN TV (720p)
 https://goliveafrica.media:9998/live/65d8475d1e6cb/index.m3u8
-#EXTINF:-1 tvg-logo="https://images.sr.roku.com/idType/roku-trc/context/trc/id/d0c6ac240cb8529992ee3340e5b7f102/https%3A%2F%2Fimage.roku.com%2Fbh-uploads%2Fproduction%2FinfoHUDLogo%2F1774038479615_EbonyTV_HUDLogo_260x147_HexEFEFEF.png" group-title="YABANCI ARŞİVİ (15940)",EBONY
-https://jmp2.uk/rok-d0c6ac240cb8529992ee3340e5b7f102.m3u8

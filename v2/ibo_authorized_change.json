@@ -1,22 +1,17 @@
 {
-  "base_sha256": "67443efce853bb09793df69dc9c46ad36c47990df0c1d546daa14ea3b25e0cbc",
-  "result_sha256": "2e3565a4db92dfdc84208bb9926f5af501bb534f5c68e13be6f2acb8d8e9af90",
-  "operation": "rename",
-  "request": "Owner request: prefix 🟠 to quality issues and video-only, 🔵 to radio/non-TV review, exact 14 records from run 45457537617; no other changes.",
+  "base_sha256": "2e3565a4db92dfdc84208bb9926f5af501bb534f5c68e13be6f2acb8d8e9af90",
+  "result_sha256": "8fcc6c409c3b9433032be4f745e8fdcf5546daef1ff44f50ed33dc9dc987f879",
+  "operation": "reorder",
+  "request": "Owner request: second pass for missed Turkish and Turkic broadcast candidates; only stable reorder inside YABANCI ARŞİVİ.",
   "channels": [
-    "DMAX",
-    "FM TV TR",
-    "HT SPOR",
-    "HT SPOR 2 1080P FHD",
-    "KRAL - KRAL POP (BACKUP)",
-    "KRAL - KRAL POP (BACKUP)",
-    "KRAL POP TV 720P HD",
-    "SPACETOON TURKEY 720P HD",
-    "TLC",
-    "TRT 1 (BACKUP)",
-    "TRT WORLD 576P SD",
-    "TRT WORLD 1080P FHD",
-    "TV8.5",
-    "TV8.5"
+    "SDM TV",
+    "Alvin Channel TV (360p) [Not 24/7]",
+    "AZSTARTV",
+    "Annem Ankara",
+    "Bahar",
+    "Başka Bir Gün",
+    "Bir Gece Masalı",
+    "Bir Zamanlar Istanbul",
+    "FTV (1080P)"
   ]
 }

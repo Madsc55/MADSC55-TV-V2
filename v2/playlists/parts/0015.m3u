@@ -1,3 +1,21 @@
+#EXTINF:-1 group-title="YABANCI ARŞİVİ (15940)",SDM TV
+https://host.onlineradyotv.net:8081/sdmtv/tracks-v1a1/mono.m3u8
+#EXTINF:-1 tvg-name="Alvin Channel TV (360p) [Not 24/7]" group-title="YABANCI ARŞİVİ (15940)",Alvin Channel TV (360p) [Not 24/7]
+https://cdn10-alvinchannel.yayin.com.tr/alvinchannel/alvinchannel/playlist.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/di3XX5L.png" group-title="YABANCI ARŞİVİ (15940)",AZSTARTV
+http://live.azstartv.com/azstar/smil:azstar.smil/playlist.m3u8
+#EXTINF:-1 tvg-name="Annem Ankara" group-title="YABANCI ARŞİVİ (15940)",Annem Ankara
+http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Annem.Ankara.SON.mkv
+#EXTINF:-1 tvg-name="Bahar" group-title="YABANCI ARŞİVİ (15940)",Bahar
+http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Bahar.SON.mkv
+#EXTINF:-1 tvg-name="Başka Bir Gün" group-title="YABANCI ARŞİVİ (15940)",Başka Bir Gün
+http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Baska.Bir.Gun.SON.mkv
+#EXTINF:-1 tvg-name="Bir Gece Masalı" group-title="YABANCI ARŞİVİ (15940)",Bir Gece Masalı
+http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Bir.Gece.Masali.SON.mkv
+#EXTINF:-1 tvg-name="Bir Zamanlar Istanbul" group-title="YABANCI ARŞİVİ (15940)",Bir Zamanlar Istanbul
+http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Bir.Zamanlar.Istanbul.SON.mkv
+#EXTINF:-1 tvg-logo="https://i.imgur.com/7lpISyN.jpg" group-title="YABANCI ARŞİVİ (15940)",FTV (1080P)
+https://stream8.cinerama.uz/1018/playlist.m3u8
 #EXTINF:-1 tvg-name="TV8" group-title="YABANCI ARŞİVİ (15940)" tvg-logo="https://www.lyngsat.com/logo/tv/tt/tv8_tr.png",TV8
 https://tv8-live.daioncdn.net/tv8/tv8_720p.m3u8
 #EXTINF:-1 tvg-name="SHOW TV" group-title="YABANCI ARŞİVİ (15940)" tvg-logo="https://m.showtv.com.tr/assets/images/other/showtv_social_media.jpg",SHOW TV
@@ -588,16 +606,12 @@ https://tvsen5.aynaott.com/xV4jEKf3D9zc/index.m3u8
 https://cdnplay.peanutsquare.com/560828843292539228453915.m3u8
 #EXTINF:-1 tvg-logo="https://jiotvimages.cdn.jio.com/dare_images/images/GS_TV.png" group-title="YABANCI ARŞİVİ (15940)",GS TV (720P)
 https://mumt05.tangotv.in/87NeALx2GSTV/index.m3u8
-#EXTINF:-1 group-title="YABANCI ARŞİVİ (15940)",SDM TV
-https://host.onlineradyotv.net:8081/sdmtv/tracks-v1a1/mono.m3u8
 #EXTINF:-1 group-title="YABANCI ARŞİVİ (15940)",15.DHA Canlı 1 [TEKNIK TEST - KANAL KIMLIGI DOGRULANMADI]
 https://603c568fccdf5.streamlock.net/live/dhaweb1_C5efC/chunklist.m3u8
 #EXTINF:-1 group-title="YABANCI ARŞİVİ (15940)",15.DHA Canlı 2 [TEKNIK TEST - KANAL KIMLIGI DOGRULANMADI]
 https://603c568fccdf5.streamlock.net/live2/dhaweb2/chunklist.m3u8
 #EXTINF:-1 tvg-id="AlRafidainTV.tr@SD" tvg-logo="https://i.imgur.com/rjXDCN5.png" group-title="YABANCI ARŞİVİ (15940)",Al Rafidain (720p) [Not 24/7]
 https://arrafidain.tvplayer.online/arrafidaintv/source/playlist.m3u8
-#EXTINF:-1 tvg-name="Alvin Channel TV (360p) [Not 24/7]" group-title="YABANCI ARŞİVİ (15940)",Alvin Channel TV (360p) [Not 24/7]
-https://cdn10-alvinchannel.yayin.com.tr/alvinchannel/alvinchannel/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/sVc8cFt.png" group-title="YABANCI ARŞİVİ (15940)",AUTO PLUS
 https://stream8.cinerama.uz/1036/tracks-v1a1/mono.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/ELXmaqg.png" group-title="YABANCI ARŞİVİ (15940)",TR SPORT (480P)
@@ -984,8 +998,6 @@ http://181.78.8.199:8000/play/a0fo/index.m3u8
 https://hgmtv.com:2020/hls/asthalive/asthalive.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/pwM5txv.png" group-title="YABANCI ARŞİVİ (15940)",ATVSAT (1080P)
 https://stream.atvsat.com/atvsatlive/smil:atvsatlive.smil/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/di3XX5L.png" group-title="YABANCI ARŞİVİ (15940)",AZSTARTV
-http://live.azstartv.com/azstar/smil:azstar.smil/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://cdn2-static.ntv.ru/home/promo/24740/balabol_vse.jpg" group-title="YABANCI ARŞİVİ (15940)",BALABOL (720P)
 https://cdn-dvr.ntv.ru/Balabol/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/eDoJqtg.png" group-title="YABANCI ARŞİVİ (15940)",BATV EDUCATİONAL CHANNEL (1080P)
@@ -3996,8 +4008,6 @@ https://anjan.vstream.online/anjanorg/ngrp:anjan_hdall/playlist.m3u8
 https://cdn.pishow.tv/ott/live/993/master.m3u8
 #EXTINF:-1 tvg-logo="https://ltsk-cdn.s3.eu-west-1.amazonaws.com/jumpstart/Temp_Live/cdn/HLS/Channel/transparentImages/anjan-transparent.png" group-title="YABANCI ARŞİVİ (15940)",ANJAN TV (720P)
 https://mumt06.tangotv.in/qYyB8fXVANJANTV/index.m3u8
-#EXTINF:-1 tvg-name="Annem Ankara" group-title="YABANCI ARŞİVİ (15940)",Annem Ankara
-http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Annem.Ankara.SON.mkv
 #EXTINF:-1 tvg-logo="https://www.tvchinese.net/uploads/tv/anshun.jpg" group-title="YABANCI ARŞİVİ (15940)",ANSHUN COMPREHENSİVE NEWS CHANNEL
 https://hplayer1.juyun.tv/camera/154379194.m3u8
 #EXTINF:-1 tvg-name="ANT1 (1080p)" group-title="YABANCI ARŞİVİ (15940)",ANT1 (1080p)
@@ -4828,8 +4838,6 @@ http://185.121.1.163:8083/Badakhshon/index.m3u8
 http://badentv-stream2.siebnich.info/rtplive/btv.stream/live.m3u8
 #EXTINF:-1 tvg-name="Baden TV (1080p)" group-title="YABANCI ARŞİVİ (15940)",Baden TV (1080p)
 https://cdn.icu.de/rtplive/btv.stream/playlist.m3u8
-#EXTINF:-1 tvg-name="Bahar" group-title="YABANCI ARŞİVİ (15940)",Bahar
-http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Bahar.SON.mkv
 #EXTINF:-1 tvg-logo="https://i.imgur.com/t6Lmntr.png" group-title="YABANCI ARŞİVİ (15940)",BAHRAİN INTERNATİONAL (720P)
 https://5c7b683162943.streamlock.net/live/ngrp:bahraininternational_all/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/er5hOK4.png" group-title="YABANCI ARŞİVİ (15940)",BAHRAİN QURAN (720P)
@@ -4952,8 +4960,6 @@ https://jmp2.uk/stvp-US1600011FY
 https://dash4.antik.sk/live/test_barrandov_plus_atk_1200/playlist.m3u8
 #EXTINF:-1 tvg-name="Bashkortostan 24 (1080p)" group-title="YABANCI ARŞİVİ (15940)",Bashkortostan 24 (1080p)
 https://vgtrkregion-reg.cdnvideo.ru/vgtrk/ufa/bashkortostan24-hd/index.m3u8
-#EXTINF:-1 tvg-name="Başka Bir Gün" group-title="YABANCI ARŞİVİ (15940)",Başka Bir Gün
-http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Baska.Bir.Gun.SON.mkv
 #EXTINF:-1 tvg-logo="https://provider-static.plex.tv/epg/cms/production/f6d14e42-d9be-4f81-893f-cb676d32c473/BassmasterChannel_DarkBackground_-_Will_Flowers.png" group-title="YABANCI ARŞİVİ (15940)",BASSMASTER
 https://epg.provider.plex.tv/library/parts/64305451fc3be5947773c339-68caada21fabab6eb2e99331/?X-Plex-Token=YJfpNbznTNgZeFsjtUL6
 #EXTINF:-1 tvg-logo="https://images.sr.roku.com/idType/roku-trc/context/trc/id/9210a8fbeab66e9d1ce20c187804ee7d/https%3A%2F%2Fimage.roku.com%2Fbh-uploads%2Fproduction%2FinfoHUDLogo%2F1749678868866_BassmasterChannel_InfoHUDChannelIdentifier_260x147.png" group-title="YABANCI ARŞİVİ (15940)",BASSMASTER
@@ -5090,9 +5096,3 @@ https://vs-hls-pushb-ww.live.cf.md.bbci.co.uk/x=4/i=urn:bbc:pips:service:bbc_per
 https://vs-hls-pushb-ww-live.akamaized.net/x=4/i=urn:bbc:pips:service:bbc_persian_tv/mobile_wifi_main_hd_abr_v2.m3u8
 #EXTINF:-1 tvg-name="BBC Red Button 1 (720p)" group-title="YABANCI ARŞİVİ (15940)",BBC Red Button 1 (720p)
 https://ve-cmaf-push-uk-live.akamaized.net/x=4/i=urn:bbc:pips:service:uk_bbc_stream_001/iptv_hd_abr_v1.mpd
-#EXTINF:-1 tvg-name="BBC Red Button 10 (720p)" group-title="YABANCI ARŞİVİ (15940)",BBC Red Button 10 (720p)
-https://ve-cmaf-push-uk-live.akamaized.net/x=4/i=urn:bbc:pips:service:uk_bbc_stream_010/iptv_hd_abr_v1.mpd
-#EXTINF:-1 tvg-name="BBC Red Button 11 (720p)" group-title="YABANCI ARŞİVİ (15940)",BBC Red Button 11 (720p)
-https://ve-cmaf-push-uk-live.akamaized.net/x=4/i=urn:bbc:pips:service:uk_bbc_stream_011/iptv_hd_abr_v1.mpd
-#EXTINF:-1 tvg-name="BBC Red Button 12" group-title="YABANCI ARŞİVİ (15940)",BBC Red Button 12
-https://ve-cmaf-push-uk-live.akamaized.net/x=4/i=urn:bbc:pips:service:uk_bbc_stream_012/hevc_iptv_mse_v0.mpd
