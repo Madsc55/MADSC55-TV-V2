@@ -1,19 +1,9 @@
 {
-  "base_sha256": "ae674d096b4469f79b231bf4ad82a28b619c5a178a2e45f6bf41197ac34393bf",
-  "result_sha256": "8f9ac2757e8c14c6ebbdd8a9fb39eb6dc3328196950ec48f9739905d47f7399e",
-  "operation": "remove",
-  "request": "Kullanıcının açık talimatı: YEDEKLER 277,297,428,460,461,558,567,580,584,592 YABANCI ARŞİVİ'ne taşı; yalnızca 309 FLASH TV sil.",
+  "base_sha256": "8f9ac2757e8c14c6ebbdd8a9fb39eb6dc3328196950ec48f9739905d47f7399e",
+  "result_sha256": "f973fd58558920a1a2fba76bde7ebf1be2a690c1115aa8cc03999595c0d6417f",
+  "operation": "rename",
+  "request": "Kullanıcının açık talimatı: ANA ARŞİV 566. sıradaki kanalı YABANCI ARŞİVİ'ne taşı, ANA ARŞİV'de kalan bütün kanal görüntü adlarını büyük harfe çevir.",
   "channels": [
-    "ZAROK TV 720P HD",
-    "MED MUZİK 1080P FHD",
-    "ZAROK TV",
-    "KN MUSİC TV 1080P FHD",
-    "AYAZ TV 1080P FHD",
-    "CGTN DOCUMENTARY",
-    "HORSE & COUNTRY",
-    "REAL MADRID TV",
-    "SLOPES TV",
-    "GUNAZ TV 1080P FHD",
-    "FLASH TV"
+    "ערוץ 13"
   ]
 }
