@@ -1,7 +1,7 @@
 {
   "version": 1,
   "header_hex": "234558544d33550a",
-  "source_sha256": "f973fd58558920a1a2fba76bde7ebf1be2a690c1115aa8cc03999595c0d6417f",
+  "source_sha256": "0271e2cdddd09fcf06c5af33fcf0a17282b85eabfa1e0f9b42528213554f3e42",
   "total_records": 18333,
   "entries": [
     {
@@ -79,14 +79,14 @@
     {
       "file": "0012.m3u",
       "group": "YEDEKLER",
-      "records": 581,
-      "sha256": "c68b360ba36c3e2bccf1f0c975eed7e2c3ab148efbc7aaefdaa7ae5d36d766d4"
+      "records": 1144,
+      "sha256": "7270f04eb231c1b64b81ce94f2ba58caebf1122797eebd3644a5d5369fad1af6"
     },
     {
       "file": "0013.m3u",
       "group": "ANA ARŞİV",
-      "records": 565,
-      "sha256": "42d74c4d479b8cdfca8f42066eb01d4e6919ecfda6c01315872ff6989d15e6c5"
+      "records": 2,
+      "sha256": "0bc1d65ec5254a14d4e6b4647694a72a56bd5a70742a6c711e10db08745a74a1"
     },
     {
       "file": "0014.m3u",
