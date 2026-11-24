@@ -1,7 +1,7 @@
 {
   "version": 1,
   "header_hex": "234558544d33550a",
-  "source_sha256": "103a5f8bd4677742d48ef633a0af4d3f665312d5763ace8a2758e2dde7eabf53",
+  "source_sha256": "527f623b6e628d4712dda9caa8f789d8234c7be8de8972b7b014348a87451e9e",
   "total_records": 18330,
   "entries": [
     {
@@ -80,7 +80,7 @@
       "file": "0012.m3u",
       "group": "YEDEKLER",
       "records": 1562,
-      "sha256": "8e9cd23b7e4f8de7709350315ce464e78eb730664e0bd14f0b2295bed7db7768"
+      "sha256": "effe7ad7a66190063c9e1f701d1f63718aa4d528440df482a84cc4d0a8ebc5bd"
     },
     {
       "file": "0013.m3u",
