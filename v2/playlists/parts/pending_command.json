@@ -1,0 +1,492 @@
+{
+  "expected_git_blob_sha": "2e667eee90ac87f999966555c6522efb4161591b",
+  "request": "Kullanıcı talimatı: ANA ARŞİV belirtilen 161 sıra (76–754 aralığındaki tekil seçimler) YABANCI ARŞİVİ'ne taşınır. 151 numara hata veren ayrı kayıt; bu taşıma komutunda hariç. 2,63 ifadesi sıralı bağlamda 263; tekrarlanan 506 ve 687 tek seçilir. Diğer kayıtlar korunur.",
+  "action": "move",
+  "source": "ANA ARŞİV",
+  "target": "YABANCI ARŞİVİ",
+  "channels": [
+    {
+      "position": 76
+    },
+    {
+      "position": 95
+    },
+    {
+      "position": 124
+    },
+    {
+      "position": 129
+    },
+    {
+      "position": 131
+    },
+    {
+      "position": 142
+    },
+    {
+      "position": 150
+    },
+    {
+      "position": 153
+    },
+    {
+      "position": 154
+    },
+    {
+      "position": 174
+    },
+    {
+      "position": 178
+    },
+    {
+      "position": 181
+    },
+    {
+      "position": 182
+    },
+    {
+      "position": 183
+    },
+    {
+      "position": 184
+    },
+    {
+      "position": 185
+    },
+    {
+      "position": 186
+    },
+    {
+      "position": 188
+    },
+    {
+      "position": 226
+    },
+    {
+      "position": 228
+    },
+    {
+      "position": 229
+    },
+    {
+      "position": 236
+    },
+    {
+      "position": 241
+    },
+    {
+      "position": 242
+    },
+    {
+      "position": 243
+    },
+    {
+      "position": 244
+    },
+    {
+      "position": 245
+    },
+    {
+      "position": 246
+    },
+    {
+      "position": 247
+    },
+    {
+      "position": 255
+    },
+    {
+      "position": 256
+    },
+    {
+      "position": 257
+    },
+    {
+      "position": 259
+    },
+    {
+      "position": 260
+    },
+    {
+      "position": 261
+    },
+    {
+      "position": 263
+    },
+    {
+      "position": 266
+    },
+    {
+      "position": 267
+    },
+    {
+      "position": 268
+    },
+    {
+      "position": 269
+    },
+    {
+      "position": 312
+    },
+    {
+      "position": 313
+    },
+    {
+      "position": 314
+    },
+    {
+      "position": 315
+    },
+    {
+      "position": 316
+    },
+    {
+      "position": 317
+    },
+    {
+      "position": 318
+    },
+    {
+      "position": 319
+    },
+    {
+      "position": 320
+    },
+    {
+      "position": 321
+    },
+    {
+      "position": 322
+    },
+    {
+      "position": 323
+    },
+    {
+      "position": 324
+    },
+    {
+      "position": 325
+    },
+    {
+      "position": 335
+    },
+    {
+      "position": 336
+    },
+    {
+      "position": 366
+    },
+    {
+      "position": 367
+    },
+    {
+      "position": 445
+    },
+    {
+      "position": 505
+    },
+    {
+      "position": 506
+    },
+    {
+      "position": 515
+    },
+    {
+      "position": 524
+    },
+    {
+      "position": 525
+    },
+    {
+      "position": 526
+    },
+    {
+      "position": 564
+    },
+    {
+      "position": 565
+    },
+    {
+      "position": 571
+    },
+    {
+      "position": 572
+    },
+    {
+      "position": 573
+    },
+    {
+      "position": 574
+    },
+    {
+      "position": 575
+    },
+    {
+      "position": 576
+    },
+    {
+      "position": 577
+    },
+    {
+      "position": 578
+    },
+    {
+      "position": 579
+    },
+    {
+      "position": 616
+    },
+    {
+      "position": 617
+    },
+    {
+      "position": 618
+    },
+    {
+      "position": 619
+    },
+    {
+      "position": 620
+    },
+    {
+      "position": 621
+    },
+    {
+      "position": 622
+    },
+    {
+      "position": 623
+    },
+    {
+      "position": 624
+    },
+    {
+      "position": 625
+    },
+    {
+      "position": 626
+    },
+    {
+      "position": 627
+    },
+    {
+      "position": 628
+    },
+    {
+      "position": 629
+    },
+    {
+      "position": 630
+    },
+    {
+      "position": 631
+    },
+    {
+      "position": 632
+    },
+    {
+      "position": 633
+    },
+    {
+      "position": 634
+    },
+    {
+      "position": 635
+    },
+    {
+      "position": 636
+    },
+    {
+      "position": 637
+    },
+    {
+      "position": 638
+    },
+    {
+      "position": 639
+    },
+    {
+      "position": 640
+    },
+    {
+      "position": 641
+    },
+    {
+      "position": 642
+    },
+    {
+      "position": 643
+    },
+    {
+      "position": 644
+    },
+    {
+      "position": 645
+    },
+    {
+      "position": 646
+    },
+    {
+      "position": 647
+    },
+    {
+      "position": 648
+    },
+    {
+      "position": 649
+    },
+    {
+      "position": 650
+    },
+    {
+      "position": 651
+    },
+    {
+      "position": 652
+    },
+    {
+      "position": 653
+    },
+    {
+      "position": 654
+    },
+    {
+      "position": 655
+    },
+    {
+      "position": 659
+    },
+    {
+      "position": 660
+    },
+    {
+      "position": 661
+    },
+    {
+      "position": 662
+    },
+    {
+      "position": 663
+    },
+    {
+      "position": 665
+    },
+    {
+      "position": 666
+    },
+    {
+      "position": 667
+    },
+    {
+      "position": 668
+    },
+    {
+      "position": 669
+    },
+    {
+      "position": 670
+    },
+    {
+      "position": 671
+    },
+    {
+      "position": 672
+    },
+    {
+      "position": 676
+    },
+    {
+      "position": 684
+    },
+    {
+      "position": 686
+    },
+    {
+      "position": 687
+    },
+    {
+      "position": 688
+    },
+    {
+      "position": 689
+    },
+    {
+      "position": 690
+    },
+    {
+      "position": 691
+    },
+    {
+      "position": 695
+    },
+    {
+      "position": 696
+    },
+    {
+      "position": 698
+    },
+    {
+      "position": 699
+    },
+    {
+      "position": 702
+    },
+    {
+      "position": 703
+    },
+    {
+      "position": 705
+    },
+    {
+      "position": 706
+    },
+    {
+      "position": 707
+    },
+    {
+      "position": 708
+    },
+    {
+      "position": 709
+    },
+    {
+      "position": 711
+    },
+    {
+      "position": 728
+    },
+    {
+      "position": 740
+    },
+    {
+      "position": 741
+    },
+    {
+      "position": 742
+    },
+    {
+      "position": 744
+    },
+    {
+      "position": 748
+    },
+    {
+      "position": 749
+    },
+    {
+      "position": 750
+    },
+    {
+      "position": 751
+    },
+    {
+      "position": 752
+    },
+    {
+      "position": 753
+    },
+    {
+      "position": 754
+    }
+  ]
+}
