@@ -25,10 +25,11 @@ REVIEW={"RECHECK_REQUIRED","VIDEO_ONLY_REVIEW","AUDIO_ONLY_REVIEW","RADIO_OR_NON
 def sha(b):
     return hashlib.sha256(b).hexdigest()
 
-def load_scope(prior_path):
+def load_scope(prior_path, *, snapshot=None):
+    """Validate initial evidence against the exact historical playlist snapshot."""
     original=subprocess.check_output(["git","show",OLD_COMMIT+":"+PLAYLIST.name],cwd=ROOT)
     old=inventory(original)
-    raw=PLAYLIST.read_bytes()
+    raw=PLAYLIST.read_bytes() if snapshot is None else snapshot
     if sha(raw)!=CURRENT_SHA:
         raise ValueError("Unexpected current playlist hash")
     prior=json.loads(prior_path.read_text())
