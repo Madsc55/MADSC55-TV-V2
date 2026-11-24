@@ -1,9 +1,9 @@
 {
-  "base_sha256": "265f368758e75c5b18bc1b936a9792fef36528ba486288ddb35e4e7e23775ecf",
-  "result_sha256": "67af0c018122420976376772d8d22683c95c8a8e344d0da1148feaec0d488723",
+  "base_sha256": "67af0c018122420976376772d8d22683c95c8a8e344d0da1148feaec0d488723",
+  "result_sha256": "265f368758e75c5b18bc1b936a9792fef36528ba486288ddb35e4e7e23775ecf",
   "operation": "rename",
-  "request": "Owner explicitly authorized red marks for 1102 channels with neither audio nor video in run 45506727312; 1048 changed display names, exact snapshot.",
+  "request": "Owner explicitly requests exact reversal of PR #779; restore original display names without deleting or moving channels.",
   "channels": [
-    "YEDEKLER: 1102 evidence-matched records, run 45506727312 artifact 14974571946"
+    "YEDEKLER: exact reversal of PR #779, 1048 changed names within 1102 selected records"
   ]
 }
