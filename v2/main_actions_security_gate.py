@@ -404,6 +404,28 @@ def safe_exact_ana_566_move_uppercase(original, candidate):
     except (ValueError, TypeError, UnicodeError, IndexError):
         return False
 
+
+def safe_exact_turk_archive_uppercase(original, candidate):
+    """Explicit owner request: uppercase only TURK archive display names."""
+    try:
+        if len(original) != 18333 or len(candidate) != len(original):
+            return False
+        expected = []
+        count = 0
+        for rec in original:
+            head, sep, tail = rec.partition(b"\n")
+            if 'group-title="TÜRK ARŞİVİ (421)"'.encode("utf-8") in head:
+                meta, comma, display = head.rpartition(b",")
+                if not comma:
+                    return False
+                expected.append(meta + comma + display.decode("utf-8").upper().encode("utf-8") + sep + tail)
+                count += 1
+            else:
+                expected.append(rec)
+        return count == 421 and expected == candidate
+    except (ValueError, TypeError, UnicodeError):
+        return False
+
 def safe_exact_backup_move_remove(original, candidate):
     """One explicitly authorized move of ten backup records and removal of FLASH TV."""
     try:
@@ -717,6 +739,7 @@ def audit(root=ROOT):
                              (spec["operation"]=="copy" and safe_favorite_copy(r0, r1)) or
                              (spec["operation"]=="reorder" and safe_category_reorder(r0, r1)) or
                              (spec["operation"]=="rename" and safe_backup_display_rename(r0, r1)) or
+                             (spec["operation"]=="rename" and spec["base_sha256"]=="0271e2cdddd09fcf06c5af33fcf0a17282b85eabfa1e0f9b42528213554f3e42" and spec["result_sha256"]=="579f18135e66dbb74cc340fc6665e6a4d48c21a9de454ac9f98691613488ac55" and safe_exact_turk_archive_uppercase(r0, r1)) or
                              (spec["operation"]=="rename" and spec["channels"]==["ערוץ 13"] and spec["base_sha256"]=="8f9ac2757e8c14c6ebbdd8a9fb39eb6dc3328196950ec48f9739905d47f7399e" and spec["result_sha256"]=="f973fd58558920a1a2fba76bde7ebf1be2a690c1115aa8cc03999595c0d6417f" and safe_exact_ana_566_move_uppercase(r0, r1)) or
                              (spec["operation"]=="remove" and spec["base_sha256"]=="ae674d096b4469f79b231bf4ad82a28b619c5a178a2e45f6bf41197ac34393bf" and spec["result_sha256"]=="8f9ac2757e8c14c6ebbdd8a9fb39eb6dc3328196950ec48f9739905d47f7399e" and safe_exact_backup_move_remove(r0, r1)) or
                              # One-time explicit owner removal: original ANA #151, GEM Sport.
