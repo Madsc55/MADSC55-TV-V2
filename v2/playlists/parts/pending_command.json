@@ -1,0 +1,12 @@
+{
+  "expected_git_blob_sha": "f6fdab7a0efdf6dffc3ed3b7c4e6ea02ab6a56ce",
+  "request": "Kullanıcının açık talimatı: ANA ARŞİV 566. sıradaki ערוץ 13 kanalını YABANCI ARŞİVİ'ne taşı; diğer kayıtları koru.",
+  "action": "move",
+  "source": "ANA ARŞİV",
+  "target": "YABANCI ARŞİVİ",
+  "channels": [
+    {
+      "position": 566
+    }
+  ]
+}
