@@ -1,3 +1,91 @@
+#EXTINF:-1 tvg-name="Star Life" group-title="YABANCI ARŞİVİ (15940)",Star Life
+http://znty.dyndns.org:5010/hls/foxlife.m3u8
+#EXTINF:-1 tvg-name="Star Life (1080p)" group-title="YABANCI ARŞİVİ (15940)",Star Life (1080p)
+http://hls127.freeott.top:8080/BG_FOX_Life/video.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/5c9PVS0.png" group-title="YABANCI ARŞİVİ (15940)",STAR MAA HD (720P)
+https://da86m1sqpm3o0.cloudfront.net/28072023/smil:starmaa1.smil/chunklist_b2628000.m3u8
+#EXTINF:-1 tvg-logo="https://dtil.tmsimg.com/assets/s143826_ld_h15_aa.png?lock=720x540" group-title="YABANCI ARŞİVİ (15940)",STAR MAA MOVIES HD (720P)
+https://da86m1sqpm3o0.cloudfront.net/28072023/smil:maamovies.smil/chunklist_b2628000.m3u8
+#EXTINF:-1 tvg-name="Star Movies" group-title="YABANCI ARŞİVİ (15940)",Star Movies
+http://92.36.202.5:10001/play/a01o
+#EXTINF:-1 tvg-name="Star Movies" group-title="YABANCI ARŞİVİ (15940)",Star Movies
+http://znty.dyndns.org:5010/hls/foxm.m3u8
+#EXTINF:-1 tvg-name="Star Movies (1080p)" group-title="YABANCI ARŞİVİ (15940)",Star Movies (1080p)
+http://103.151.60.162:2122/play/a02k/index.m3u8?hls
+#EXTINF:-1 tvg-name="Star Movies Select (1080p)" group-title="YABANCI ARŞİVİ (15940)",Star Movies Select (1080p)
+http://103.151.60.162:2122/play/a02l/index.m3u8?hls
+#EXTINF:-1 tvg-name="Star Plus Televizija (1080p)" group-title="YABANCI ARŞİVİ (15940)",Star Plus Televizija (1080p)
+https://live.muzickatv.mk/live/StarMusic2.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/ZT0u7AK.png" group-title="YABANCI ARŞİVİ (15940)",STAR PRAVAH HD (720P)
+https://da86m1sqpm3o0.cloudfront.net/28072023/smil:starpravah.smil/chunklist_b1928000.m3u8
+#EXTINF:-1 tvg-name="Star Sports 1 (576p)" group-title="YABANCI ARŞİVİ (15940)",Star Sports 1 (576p)
+http://103.151.60.162:2122/play/a01a/index.m3u8?hls
+#EXTINF:-1 tvg-name="Star Sports 2 (576p)" group-title="YABANCI ARŞİVİ (15940)",Star Sports 2 (576p)
+http://103.151.60.162:2122/play/a00v/index.m3u8?hls
+#EXTINF:-1 tvg-name="Star Sports 2 Telugu (576p)" group-title="YABANCI ARŞİVİ (15940)",Star Sports 2 Telugu (576p)
+https://real-vk.proxy.nellaiiptv.com/SDMEDIA/index.m3u8
+#EXTINF:-1 tvg-name="Star Sports 3 (576p)" group-title="YABANCI ARŞİVİ (15940)",Star Sports 3 (576p)
+http://103.151.60.162:2122/play/a029/index.m3u8?hls
+#EXTINF:-1 tvg-name="Star Sports Select 1 (1080p)" group-title="YABANCI ARŞİVİ (15940)",Star Sports Select 1 (1080p)
+http://103.151.60.162:2122/play/a026/index.m3u8?hls
+#EXTINF:-1 tvg-name="Star Sports Select 2 (1080p)" group-title="YABANCI ARŞİVİ (15940)",Star Sports Select 2 (1080p)
+http://103.151.60.162:2122/play/a027/index.m3u8?hls
+#EXTINF:-1 tvg-name="Star Tamil Television (360p)" group-title="YABANCI ARŞİVİ (15940)",Star Tamil Television (360p)
+https://edge4-moblive.yuppcdn.net/trans1sd/smil:strtml19.smil/playlist.m3u8?dvr=
+#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/5efbd39f8c4ce900075d7698/colorLogoPNG.png" group-title="YABANCI ARŞİVİ (15940)",STAR TREK
+https://jmp2.uk/plu-5f99ac4fded33000078f29ab.m3u8
+#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/5efbd39f8c4ce900075d7698/colorLogoPNG.png" group-title="YABANCI ARŞİVİ (15940)",STAR TREK LATAM
+https://jmp2.uk/plu-5ec5761aabe4690007f6e047.m3u8
+#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/6400c281dff38e00083f59da/colorLogoPNG.png" group-title="YABANCI ARŞİVİ (15940)",STAR TREK MOVIES
+https://jmp2.uk/plu-6400c2a6cb41a40008dbe5bc.m3u8
+#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/6400c281dff38e00083f59da/colorLogoPNG.png" group-title="YABANCI ARŞİVİ (15940)",STAR TREK MOVIES DK
+https://jmp2.uk/plu-6400c281dff38e00083f59da.m3u8
+#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/6400c281dff38e00083f59da/colorLogoPNG.png" group-title="YABANCI ARŞİVİ (15940)",STAR TREK MOVIES NO
+https://jmp2.uk/plu-6400c228498393000878a9b7.m3u8
+#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/5efbd39f8c4ce900075d7698/colorLogoPNG.png" group-title="YABANCI ARŞİVİ (15940)",STAR TREK US
+https://jmp2.uk/plu-5efbd39f8c4ce900075d7698.m3u8
+#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/65c69bbfd77d450008c7ffee/colorLogoPNG_1758310416057.png" group-title="YABANCI ARŞİVİ (15940)",STAR TREK: DEEP SPACE NINE
+https://jmp2.uk/plu-65c69bbfd77d450008c7ffee.m3u8
+#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/695c32671ca20bb8ca7fd8f7/colorLogoPNG_1768440939423.png" group-title="YABANCI ARŞİVİ (15940)",STAR TREK: ENTERPRISE
+https://jmp2.uk/plu-695c32671ca20bb8ca7fd8f7.m3u8
+#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/69776ce979545c21a1220bff/colorLogoPNG_1769434849537.png" group-title="YABANCI ARŞİVİ (15940)",STAR TREK: THE NEXT GENERATION (GERMANY)
+https://jmp2.uk/plu-69776ce979545c21a1220bff.m3u8
+#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/695c32e61ca20bb8ca802eb9/colorLogoPNG_1768440087394.png" group-title="YABANCI ARŞİVİ (15940)",STAR TREK: THE NEXT GENERATION (UNITED STATES)
+https://jmp2.uk/plu-695c32e61ca20bb8ca802eb9.m3u8
+#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/69776b58036e883f39e5ab8a/colorLogoPNG_1769434091096.png" group-title="YABANCI ARŞİVİ (15940)",STAR TREK: THE ORIGINAL SERIES (GERMANY)
+https://jmp2.uk/plu-69776b58036e883f39e5ab8a.m3u8
+#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/693add137e308621c051e733/colorLogoPNG_1765465486347.png" group-title="YABANCI ARŞİVİ (15940)",STAR TREK: THE ORIGINAL SERIES (SWEDEN)
+https://jmp2.uk/plu-693ade4d569386f93f235bb6.m3u8
+#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/693add137e308621c051e733/colorLogoPNG_1765465486347.png" group-title="YABANCI ARŞİVİ (15940)",STAR TREK: THE ORIGINAL SERIES (SWEDEN) DK
+https://jmp2.uk/plu-693add137e308621c051e733.m3u8
+#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/693add137e308621c051e733/colorLogoPNG_1765465486347.png" group-title="YABANCI ARŞİVİ (15940)",STAR TREK: THE ORIGINAL SERIES (SWEDEN) NO
+https://jmp2.uk/plu-693addd62bf6cf7414c4b2fc.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/VnUrFqB.png" group-title="YABANCI ARŞİVİ (15940)",STAR TREK: THE ORIGINAL SERIES – PLUTO TV
+https://service-stitcher.clusters.pluto.tv/v1/stitch/embed/hls/channel/6581a09edfed030008e12b39/master.m3u8?deviceId=channel&deviceModel=web&deviceVersion=1.0&appVersion=1.0&deviceType=rokuChannel&deviceMake=rokuChannel&deviceDNT=1&advertisingId=channel&embedPartner=rokuChannel&appName=rokuchannel&is_lat=1&bmodel=bm1&content=channel&platform=web&tags=ROKU_CONTENT_TAGS&coppa=false&content_type=livefeed&rdid=channel&genre=ROKU_ADS_CONTENT_GENRE&content_rating=ROKU_ADS_CONTENT_RATING&studio_id=viacom&channel_id=channel
+#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/65787f2eb228b7000843fa5c/colorLogoPNG.png" group-title="YABANCI ARŞİVİ (15940)",STAR TREK: VOYAGER (GERMANY) IT
+https://jmp2.uk/plu-65cb73d33ba51e00084cabad.m3u8
+#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/634dacf51d90320007fcd5fa/colorLogoPNG_1758310287876.png" group-title="YABANCI ARŞİVİ (15940)",STAR TREK: VOYAGER (UNITED STATES)
+https://jmp2.uk/plu-634dacf51d90320007fcd5fa.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/dZtJHAe.png" group-title="YABANCI ARŞİVİ (15940)",STAR VIJAY UK (396P)
+https://da86m1sqpm3o0.cloudfront.net/28072023/smil:starvijayuk.smil/playlist.m3u8
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/9/91/Stara_TV_Sumedang_fix.png" group-title="YABANCI ARŞİVİ (15940)",STARA TV (720P)
+https://stream.staratv.id/hls/0/stream.m3u8
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/9/91/Stara_TV_Sumedang_fix.png" group-title="YABANCI ARŞİVİ (15940)",STARA TV BANDUNG (1080P)
+https://bandung.staratv.id/hls/0/stream.m3u8
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/9/91/Stara_TV_Sumedang_fix.png" group-title="YABANCI ARŞİVİ (15940)",STARA TV BOJONEGORO (720P)
+https://bojonegoro.staratv.id/hls/stream.m3u8
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/9/91/Stara_TV_Sumedang_fix.png" group-title="YABANCI ARŞİVİ (15940)",STARA TV CIANJUR (720P)
+https://cianjur.staratv.id/hls/0/stream.m3u8
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/9/91/Stara_TV_Sumedang_fix.png" group-title="YABANCI ARŞİVİ (15940)",STARA TV JAKARTA (1080P)
+https://jakarta.staratv.id/hls/0/stream.m3u8
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/9/91/Stara_TV_Sumedang_fix.png" group-title="YABANCI ARŞİVİ (15940)",STARA TV MALANG (1080P)
+https://malang.staratv.id/hls/0/stream.m3u8
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/9/91/Stara_TV_Sumedang_fix.png" group-title="YABANCI ARŞİVİ (15940)",STARA TV PARAHYANGAN (720P)
+https://parahyangan.staratv.id/hls/0/stream.m3u8
+#EXTINF:-1 tvg-logo="https://images.sr.roku.com/idType/roku-trc/context/trc/id/11c7c3660c6b6f18a21838fd404a7a1d/https%3A%2F%2Fimage.roku.com%2Fbh-uploads%2Fproduction%2FinfoHUDLogo%2F1749756384598_Stargate_HUDLogo_Centered_260x147.png" group-title="YABANCI ARŞİVİ (15940)",STARGATE
+https://jmp2.uk/rok-11c7c3660c6b6f18a21838fd404a7a1d.m3u8
+#EXTINF:-1 tvg-logo="https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/2384/1782291852384-h.jpg" group-title="YABANCI ARŞİVİ (15940)",STARPLUS (1080P)
+https://livetv.shamon-cable.net:8443/Star-Plus-HD/index.m3u8
 #EXTINF:-1 tvg-name="StarPlus (1080p)" group-title="YABANCI ARŞİVİ (15940)",StarPlus (1080p)
 http://103.185.24.134:3001/Star-Plus/index.m3u8
 #EXTINF:-1 tvg-name="StarPlus (576p)" group-title="YABANCI ARŞİVİ (15940)",StarPlus (576p)
@@ -4920,69 +5008,3 @@ https://d1hf773q57zx9s.cloudfront.net/Vevo_R_B.m3u8
 https://jmp2.uk/plu-64dab5fe35425100080e2991.m3u8
 #EXTINF:-1 tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ESBD230000289_20250513T005434SQUARE.png" group-title="YABANCI ARŞİVİ (15940)",VEVO RETRO
 https://jmp2.uk/stvp-ESBD230000289
-#EXTINF:-1 tvg-name="Vevo Retro Rock (1080p)" group-title="YABANCI ARŞİVİ (15940)",Vevo Retro Rock (1080p)
-https://d2hdqrshyzxswl.cloudfront.net/Vevo_Retro_Rock.m3u8
-#EXTINF:-1 tvg-logo="https://tvpnlogopus.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/USBD3000145P_20260421T141843SQUARE.png" group-title="YABANCI ARŞİVİ (15940)",VEVO ROCK
-https://jmp2.uk/stvp-USBD3000145P
-#EXTINF:-1 tvg-name="Vevo True School Hip-Hop" group-title="YABANCI ARŞİVİ (15940)",Vevo True School Hip-Hop
-https://jmp2.uk/plu-61d4c2817a823d00070ba53e.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/VH1_logonew.svg/960px-VH1_logonew.svg.png" group-title="YABANCI ARŞİVİ (15940)",VH1 (1080P)
-http://23.237.104.106:8080/USA_VH1/index.m3u8
-#EXTINF:-1 tvg-name="VH1 (360p)" group-title="YABANCI ARŞİVİ (15940)",VH1 (360p)
-http://193.254.245.162/VH1/index.m3u8
-#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/66abefe5d2d50d00082c7d12/colorLogoPNG.png" group-title="YABANCI ARŞİVİ (15940)",VH1 QUEENS OF REALITY
-https://jmp2.uk/plu-66abefe5d2d50d00082c7d12.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/vGgh3cs.png" group-title="YABANCI ARŞİVİ (15940)",VH1+ BACK TO 90'S – PLUTO TV
-https://service-stitcher.clusters.pluto.tv/v1/stitch/embed/hls/channel/6552085aab05240008b05f6c/master.m3u8?deviceId=channel&deviceModel=web&deviceVersion=1.0&appVersion=1.0&deviceType=rokuChannel&deviceMake=rokuChannel&deviceDNT=1&advertisingId=channel&embedPartner=rokuChannel&appName=rokuchannel&is_lat=1&bmodel=bm1&content=channel&platform=web&tags=ROKU_CONTENT_TAGS&coppa=false&content_type=livefeed&rdid=channel&genre=ROKU_ADS_CONTENT_GENRE&content_rating=ROKU_ADS_CONTENT_RATING&studio_id=viacom&channel_id=channel
-#EXTINF:-1 tvg-logo="https://i.imgur.com/fpQBKP2.png" group-title="YABANCI ARŞİVİ (15940)",VH1+ CANZONI ITALIANE – PLUTO TV
-https://service-stitcher.clusters.pluto.tv/v1/stitch/embed/hls/channel/63724270c7c2360007b170e8/master.m3u8?deviceId=channel&deviceModel=web&deviceVersion=1.0&appVersion=1.0&deviceType=rokuChannel&deviceMake=rokuChannel&deviceDNT=1&advertisingId=channel&embedPartner=rokuChannel&appName=rokuchannel&is_lat=1&bmodel=bm1&content=channel&platform=web&tags=ROKU_CONTENT_TAGS&coppa=false&content_type=livefeed&rdid=channel&genre=ROKU_ADS_CONTENT_GENRE&content_rating=ROKU_ADS_CONTENT_RATING&studio_id=viacom&channel_id=channel
-#EXTINF:-1 tvg-logo="https://i.imgur.com/Z4t6fdU.png" group-title="YABANCI ARŞİVİ (15940)",VH1+ GIRL POWER! – PLUTO TV
-https://service-stitcher.clusters.pluto.tv/v1/stitch/embed/hls/channel/655208ff53fc9700084a834e/master.m3u8?deviceId=channel&deviceModel=web&deviceVersion=1.0&appVersion=1.0&deviceType=rokuChannel&deviceMake=rokuChannel&deviceDNT=1&advertisingId=channel&embedPartner=rokuChannel&appName=rokuchannel&is_lat=1&bmodel=bm1&content=channel&platform=web&tags=ROKU_CONTENT_TAGS&coppa=false&content_type=livefeed&rdid=channel&genre=ROKU_ADS_CONTENT_GENRE&content_rating=ROKU_ADS_CONTENT_RATING&studio_id=viacom&channel_id=channel
-#EXTINF:-1 tvg-logo="https://i.imgur.com/k1zQpiO.png" group-title="YABANCI ARŞİVİ (15940)",VH1+ HIP HOP & RAP – PLUTO TV
-https://service-stitcher.clusters.pluto.tv/v1/stitch/embed/hls/channel/6465fef47cb4b100086ee7bd/master.m3u8?deviceId=channel&deviceModel=web&deviceVersion=1.0&appVersion=1.0&deviceType=rokuChannel&deviceMake=rokuChannel&deviceDNT=1&advertisingId=channel&embedPartner=rokuChannel&appName=rokuchannel&is_lat=1&bmodel=bm1&content=channel&platform=web&tags=ROKU_CONTENT_TAGS&coppa=false&content_type=livefeed&rdid=channel&genre=ROKU_ADS_CONTENT_GENRE&content_rating=ROKU_ADS_CONTENT_RATING&studio_id=viacom&channel_id=channel
-#EXTINF:-1 tvg-logo="https://i.imgur.com/kJ1MDVi.png" group-title="YABANCI ARŞİVİ (15940)",VH1+ MUSIC LEGENDS – PLUTO TV
-https://service-stitcher.clusters.pluto.tv/v1/stitch/embed/hls/channel/62e8cc10ca869f00078efca8/master.m3u8?deviceId=channel&deviceModel=web&deviceVersion=1.0&appVersion=1.0&deviceType=rokuChannel&deviceMake=rokuChannel&deviceDNT=1&advertisingId=channel&embedPartner=rokuChannel&appName=rokuchannel&is_lat=1&bmodel=bm1&content=channel&platform=web&tags=ROKU_CONTENT_TAGS&coppa=false&content_type=livefeed&rdid=channel&genre=ROKU_ADS_CONTENT_GENRE&content_rating=ROKU_ADS_CONTENT_RATING&studio_id=viacom&channel_id=channel
-#EXTINF:-1 tvg-logo="https://i.imgur.com/P1OCuFl.png" group-title="YABANCI ARŞİVİ (15940)",VH1+ ROCK! – PLUTO TV
-https://service-stitcher.clusters.pluto.tv/v1/stitch/embed/hls/channel/636a4173e34fd50007534542/master.m3u8?deviceId=channel&deviceModel=web&deviceVersion=1.0&appVersion=1.0&deviceType=rokuChannel&deviceMake=rokuChannel&deviceDNT=1&advertisingId=channel&embedPartner=rokuChannel&appName=rokuchannel&is_lat=1&bmodel=bm1&content=channel&platform=web&tags=ROKU_CONTENT_TAGS&coppa=false&content_type=livefeed&rdid=channel&genre=ROKU_ADS_CONTENT_GENRE&content_rating=ROKU_ADS_CONTENT_RATING&studio_id=viacom&channel_id=channel
-#EXTINF:-1 tvg-logo="https://i.imgur.com/aJ4XExn.png" group-title="YABANCI ARŞİVİ (15940)",VIA ALTOMAYO (720P) [NOT 24/7]
-https://live.obslivestream.com/viaaltomayomux/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/FiptbGQ.png" group-title="YABANCI ARŞİVİ (15940)",VIA TELEVISION [NOT 24/7]
-https://videoserver.tmcreativos.com:19360/cablerasvia/cablerasvia.m3u8
-#EXTINF:-1 tvg-logo="https://web02.antik.sk/assets/img/channels/247e7974b5eeaeda06744f312d2bbc51.svg" group-title="YABANCI ARŞİVİ (15940)",VIA TV
-http://88.212.15.50/live/via_tv/index.m3u8
-#EXTINF:-1 tvg-name="VIA TV" group-title="YABANCI ARŞİVİ (15940)",VIA TV
-http://88.212.15.19/live/via_tv/index.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/d/d3/VIAX-oficial.png" group-title="YABANCI ARŞİVİ (15940)",VIA X (576P)
-http://45.170.130.224:8000/play/a025/index.m3u8
-#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/62bebc3459624e00078209c3/colorLogoPNG.png" group-title="YABANCI ARŞİVİ (15940)",VIAFREE MOVIES
-https://jmp2.uk/plu-62f64ec9eb1045000728cad6.m3u8
-#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/62bebc3459624e00078209c3/colorLogoPNG.png" group-title="YABANCI ARŞİVİ (15940)",VIAFREE MOVIES DK
-https://jmp2.uk/plu-62bebc3459624e00078209c3.m3u8
-#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/62bebc3459624e00078209c3/colorLogoPNG.png" group-title="YABANCI ARŞİVİ (15940)",VIAFREE MOVIES NO
-https://jmp2.uk/plu-62beb44e3afd120007915d1b.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/3GJg0uy.png" group-title="YABANCI ARŞİVİ (15940)",VIAGGI – PLUTO TV
-https://service-stitcher.clusters.pluto.tv/v1/stitch/embed/hls/channel/63c923944207be0007fd0887/master.m3u8?deviceId=channel&deviceModel=web&deviceVersion=1.0&appVersion=1.0&deviceType=rokuChannel&deviceMake=rokuChannel&deviceDNT=1&advertisingId=channel&embedPartner=rokuChannel&appName=rokuchannel&is_lat=1&bmodel=bm1&content=channel&platform=web&tags=ROKU_CONTENT_TAGS&coppa=false&content_type=livefeed&rdid=channel&genre=ROKU_ADS_CONTENT_GENRE&content_rating=ROKU_ADS_CONTENT_RATING&studio_id=viacom&channel_id=channel
-#EXTINF:-1 tvg-logo="https://i.imgur.com/XVCV9rj.png" group-title="YABANCI ARŞİVİ (15940)",VIAMATELE (1080P)
-https://5dd226f8f01e8.streamlock.net/via-matele-live/matelelive_1080/playlist.m3u8
-#EXTINF:-1 tvg-name="ViaOccitanie (540p)" group-title="YABANCI ARŞİVİ (15940)",ViaOccitanie (540p)
-https://streamer01.myvideoplace.tv/streamer02/hls/MDS_VIA_PAD_301117.m3u8
-#EXTINF:-1 tvg-name="Viaplay TV (720p)" group-title="YABANCI ARŞİVİ (15940)",Viaplay TV (720p)
-https://live-fi.tvkaista.net/viaplay-tv/live.m3u8?hd=true
-#EXTINF:-1 tvg-name="Viasat 3" group-title="YABANCI ARŞİVİ (15940)",Viasat 3
-http://88.212.15.19/live/viasat3/index.m3u8
-#EXTINF:-1 tvg-name="Viasat 6" group-title="YABANCI ARŞİVİ (15940)",Viasat 6
-http://88.212.15.19/live/viasat6/index.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/e/e1/Viasat_Epic_Drama_2026.svg" group-title="YABANCI ARŞİVİ (15940)",VIASAT EPIC DRAMA POLAND (1080P)
-http://92.114.85.87:8001/play/a00x/index.m3u8
-#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/e/e1/Viasat_Epic_Drama_2026.svg" group-title="YABANCI ARŞİVİ (15940)",VIASAT EPIC DRAMA UKRAINE (576P)
-http://195.189.60.253/118/index.m3u8
-#EXTINF:-1 tvg-name="Viasat Explore" group-title="YABANCI ARŞİVİ (15940)",Viasat Explore
-http://315e5a5d.ottrast.com/iptv/8XFKA8883W9M5K/12085/index.m3u8
-#EXTINF:-1 tvg-name="Viasat Explore" group-title="YABANCI ARŞİVİ (15940)",Viasat Explore
-http://777905.live.tvstitch.com/playlist.m3u8?source=aHR0cDovLzE3Ni4xMjIuMTAzLjI0MTo3MDAwL2NoODUvdHJhY2tzLXYxYTEvbW9uby5tM3U4P2xpdmU9MSZpcD0xNzguMTM2LjQyLjIyMCZpZD05NDg4NjUmc2VjcmV0PW4xdTd1aTA2JnNzbD0xJjIxeW89MCZlPTE3OTA3NTMyOTgmc3Q9eWVMNVRuX0tiUlAwVWd0UjctYTBMZw%3D%3D&master=79
-#EXTINF:-1 tvg-name="Viasat Explore" group-title="YABANCI ARŞİVİ (15940)",Viasat Explore
-http://88.212.15.29/live/test_viasat_explore_atk_tv/playlist.m3u8
-#EXTINF:-1 tvg-name="Viasat Explore" group-title="YABANCI ARŞİVİ (15940)",Viasat Explore
-https://arwen1.panaka1.cfd/vexplr/usergenrnd7ke5lgt.m3u8
-#EXTINF:-1 tvg-name="Viasat Explore" group-title="YABANCI ARŞİVİ (15940)",Viasat Explore
-https://lb.dstvmultimedia.com/ViasatExplore/index.m3u8
