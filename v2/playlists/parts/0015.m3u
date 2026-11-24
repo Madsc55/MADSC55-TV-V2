@@ -574,6 +574,8 @@ https://jmp2.uk/plu-639751f81a36b400072b8f5a.m3u8
 https://thema-vivekanald-rakuten.amagi.tv/playlist.m3u8
 #EXTINF:-1 tvg-id="MedMuzik.tr@SD" tvg-logo="https://i.imgur.com/gtUFmCD.png" group-title="YABANCI ARŞİVİ (15940)",MED MUZİK 1080P FHD
 http://54.36.110.140/live3/live3.m3u8
+#EXTINF:-1 group-title="YABANCI ARŞİVİ (15940)",15.DHA 2 [TEKNIK TEST - KANAL KIMLIGI DOGRULANMADI]
+https://603c568fccdf5.streamlock.net/live2/dhaweb2/chunklist_w1843782493.m3u8
 #EXTINF:-1 tvg-name="Radyo Kulüp" group-title="YABANCI ARŞİVİ (15940)",Radyo Kulüp
 http://cdn-radyokulup.yayin.com.tr/radyokulup/radyokulup/chunklist.m3u8
 #EXTINF:-1 group-title="YABANCI ARŞİVİ (15940)",NR 1 DAMAR
@@ -3168,8 +3170,6 @@ https://stream-us-east-1.getpublica.com/playlist.m3u8?network_id=1986&live=1&avo
 https://linear-891.frequency.stream/mt/freelivesports/891/hls/master/playlist.m3u8
 #EXTINF:-1 group-title="YABANCI ARŞİVİ (15940)",13.MTRSPT1 [TEKNIK TEST - KANAL KIMLIGI DOGRULANMADI]
 https://amg02873-kravemedia-mtrspt1-sportstribal-ajosc.amagi.tv/playlist.m3u8
-#EXTINF:-1 group-title="YABANCI ARŞİVİ (15940)",15.DHA 2 [TEKNIK TEST - KANAL KIMLIGI DOGRULANMADI]
-https://603c568fccdf5.streamlock.net/live2/dhaweb2/chunklist_w1843782493.m3u8
 #EXTINF:-1 group-title="YABANCI ARŞİVİ (15940)",7.Outdoor America [TEKNIK TEST - KANAL KIMLIGI DOGRULANMADI]
 https://linear-600.frequency.stream/mt/freelivesports/600/hls/master/playlist.m3u8
 #EXTINF:-1 group-title="YABANCI ARŞİVİ (15940)",7.Sport Fishing TV [TEKNIK TEST - KANAL KIMLIGI DOGRULANMADI]
