@@ -367,6 +367,38 @@ def safe_backup_display_rename(original, candidate):
         return False
 
 
+
+def safe_exact_backup_move_remove(original, candidate):
+    """One explicitly authorized move of ten backup records and removal of FLASH TV."""
+    try:
+        from playlist_parts_manager import category, logical
+        groups = [logical(category(r)) for r in original]
+        backups = [i for i,g in enumerate(groups) if g == "YEDEKLER"]
+        foreign = [i for i,g in enumerate(groups) if g.startswith("YABANCI ARŞİVİ")]
+        if len(backups) != 592 or len(foreign) != 15929 or len(original) != len(candidate)+1:
+            return False
+        moved = [backups[n-1] for n in (277,297,428,460,461,558,567,580,584,592)]
+        deleted = backups[308]
+        if not original[deleted].splitlines()[0].endswith(b",FLASH TV"):
+            return False
+        def tag(record, label):
+            return re.sub(rb'group-title="[^"]*"', b'group-title="' + label.encode() + b'"', record, count=1)
+        expected = []
+        for i, record in enumerate(original):
+            if i == deleted or i in moved:
+                continue
+            if groups[i] == "YEDEKLER":
+                expected.append(tag(record, "🗂️ YEDEKLER (581)"))
+            elif groups[i].startswith("YABANCI ARŞİVİ"):
+                expected.append(tag(record, "YABANCI ARŞİVİ (15939)"))
+                if i == foreign[-1]:
+                    expected.extend(tag(original[j], "YABANCI ARŞİVİ (15939)") for j in moved)
+            else:
+                expected.append(record)
+        return expected == candidate
+    except (ValueError, TypeError, IndexError, UnicodeError):
+        return False
+
 def safe_category_reorder(original, candidate):
     """Reorder and counter changes cannot mutate or delete existing records."""
     from collections import Counter
@@ -649,6 +681,7 @@ def audit(root=ROOT):
                              (spec["operation"]=="copy" and safe_favorite_copy(r0, r1)) or
                              (spec["operation"]=="reorder" and safe_category_reorder(r0, r1)) or
                              (spec["operation"]=="rename" and safe_backup_display_rename(r0, r1)) or
+                             (spec["operation"]=="remove" and spec["base_sha256"]=="ae674d096b4469f79b231bf4ad82a28b619c5a178a2e45f6bf41197ac34393bf" and spec["result_sha256"]=="8f9ac2757e8c14c6ebbdd8a9fb39eb6dc3328196950ec48f9739905d47f7399e" and safe_exact_backup_move_remove(r0, r1)) or
                              # One-time explicit owner removal: original ANA #151, GEM Sport.
                              (spec["operation"]=="remove" and spec["channels"]==["GEM Sport"] and
                               spec["base_sha256"]=="9eba8a6fb34d69d3150dde76efa39ca403b490bad8770ba09151088e9567873c" and
