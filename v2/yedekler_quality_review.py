@@ -6,6 +6,7 @@ import argparse
 from collections import Counter
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import http.client
+import hashlib
 import json
 from pathlib import Path
 import re
@@ -24,8 +25,26 @@ MEDIA_SECONDS=20
 def get_quality_decoder():
     # Use the OS decoder, not the static imageio binary that can crash on MPEG-TS.
     return shutil.which("ffmpeg", path="/usr/bin:/bin")
+EVIDENCE_COMMIT="8b305613b4508596876037ff86c2723f88e8bcd1"
+
+def digest(raw):
+    return hashlib.sha256(raw).hexdigest()
+
+def yedekler_records(raw):
+    return [record for record in re.split(rb"(?m)(?=^#EXTINF:)",raw)[1:]
+            if re.search(rb'group-title="[^"]*YEDEKLER',record.split(b"\n",1)[0])]
+
+def verify_same_scope(snapshot, current):
+    old, new = yedekler_records(snapshot), yedekler_records(current)
+    if not old or old != new:
+        raise ValueError("YEDEKLER records or ordering changed; refresh evidence")
+
 def load_targets(prior, deep):
-    raw, scope=load_scope(prior)
+    snapshot=subprocess.check_output(["git","show",EVIDENCE_COMMIT+":"+PLAYLIST.name],
+                                     cwd=PLAYLIST.parent)
+    _, scope=load_scope(prior,snapshot=snapshot)
+    raw=PLAYLIST.read_bytes()
+    verify_same_scope(snapshot,raw)
     doc=json.loads(deep.read_text())
     if doc.get("playlist_sha256")!=CURRENT_SHA or doc.get("complete") is not True or doc.get("total")!=1226:
         raise ValueError("Invalid second-stage evidence")
@@ -204,6 +223,18 @@ def review(row,exe):
             "classification":classify(first,second,radio)}
 
 def self_test():
+    header=b"#EXTM3U\n"
+    fixed=b'#EXTINF:-1 group-title="YEDEKLER",Fixed\nhttps://example.com/1\n'
+    second=b'#EXTINF:-1 group-title="YEDEKLER",Second\nhttps://example.com/2\n'
+    foreign=b'#EXTINF:-1 group-title="YABANCI",Foreign\nhttps://example.com/3\n'
+    verify_same_scope(header+fixed+foreign+second,header+foreign+fixed+second)
+    for changed in (header+second+fixed,header+fixed,header+fixed+second.replace(b"/2",b"/9")):
+        try:
+            verify_same_scope(header+fixed+second,changed)
+        except ValueError:
+            pass
+        else:
+            raise AssertionError("Changed YEDEKLER evidence accepted")
     a={"status":"MEDIA_20S","video":True,"audio":True,"full_sample":True,"quality_flags":[]}
     b={**a,"quality_flags":["BLACK_INTERVAL"]}
     c={"status":"ORIGINAL_HTTP_404","video":False,"audio":False}
@@ -244,9 +275,10 @@ def main():
         self_test()
         return
     raw,scope=load_targets(a.prior,a.deep)
+    current_sha=digest(raw)
     if a.merge_dir:
         parts=[json.loads(x.read_text()) for x in a.merge_dir.rglob("quality-*.json")]
-        if len(parts)!=SHARDS or {x["shard"] for x in parts}!=set(range(SHARDS)) or any(not x["complete"] or x["playlist_sha256"]!=CURRENT_SHA for x in parts):
+        if len(parts)!=SHARDS or {x["shard"] for x in parts}!=set(range(SHARDS)) or any(not x["complete"] or x["playlist_sha256"]!=current_sha or x.get("evidence_playlist_sha256")!=CURRENT_SHA for x in parts):
             raise ValueError("Missing or stale shards")
         rows=sorted([r for x in parts for r in x["results"]],key=lambda r:r["position"])
         keys=lambda xs:[(r["position"],r["url_sha256"],r["record_sha256"]) for r in xs]
@@ -254,7 +286,7 @@ def main():
             raise ValueError("Coverage mismatch")
         counts=dict(Counter(x["classification"] for x in rows))
         statuses=dict(Counter(x["status"] for r in rows for x in r["first"]+r["second"]))
-        report={"playlist_sha256":CURRENT_SHA,"complete":True,"total":len(rows),"counts":counts,"attempt_statuses":statuses,"results":rows}
+        report={"playlist_sha256":current_sha,"evidence_playlist_sha256":CURRENT_SHA,"complete":True,"total":len(rows),"counts":counts,"attempt_statuses":statuses,"results":rows}
         write_json_atomic(a.output,report)
         print(json.dumps({"total":len(rows),"counts":counts,"attempt_statuses":statuses,
             "confirmed_unavailable_positions":[r["position"] for r in rows if r["classification"]=="CONFIRMED_UNAVAILABLE"]}))
@@ -265,7 +297,7 @@ def main():
         if not exe:
             raise ValueError("Decoder missing")
         target=[r for i,r in enumerate(scope) if i%SHARDS==a.shard]
-        report={"playlist_sha256":CURRENT_SHA,"shard":a.shard,"complete":False,"results":[]}
+        report={"playlist_sha256":current_sha,"evidence_playlist_sha256":CURRENT_SHA,"shard":a.shard,"complete":False,"results":[]}
         write_json_atomic(a.output,report)
         with ThreadPoolExecutor(max_workers=4) as pool:
             jobs=[pool.submit(review,r,exe) for r in target]
