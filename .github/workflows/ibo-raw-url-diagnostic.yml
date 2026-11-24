@@ -1,0 +1,36 @@
+name: IBO exact URL diagnostic (read only)
+on:
+  push:
+    branches: ['diagnostic/ibo-raw-parity-20261124']
+permissions:
+  contents: read
+jobs:
+  raw:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Compare unchanged public raw URL with local canonical file
+        run: |
+          python3 - <<'PY'
+          import collections, hashlib, pathlib, re, urllib.request, urllib.error
+          p = pathlib.Path("MADSC55_TV_IBO_CALISANLAR_TEST.m3u8")
+          url = "https://raw.githubusercontent.com/Madsc55/MADSC55-TV-V2/main/MADSC55_TV_IBO_CALISANLAR_TEST.m3u8"
+          local = p.read_bytes()
+          def report(label, data):
+              c = collections.Counter(re.findall(r'group-title="([^"]*)"', data.decode("utf-8-sig")))
+              print(label, "bytes",len(data),"sha256",hashlib.sha256(data).hexdigest(),"total",sum(c.values()))
+              print({k:v for k,v in c.items() if "ARŞİV" in k})
+          report("LOCAL",local)
+          for label, headers in [("NORMAL", {"User-Agent":"Mozilla/5.0"}),("REVALIDATE", {"User-Agent":"Mozilla/5.0","Cache-Control":"no-cache","Pragma":"no-cache"})]:
+              try:
+                  with urllib.request.urlopen(urllib.request.Request(url,headers=headers),timeout=25) as r:
+                      print(label,"HTTP",r.status,"cache",r.headers.get("X-Cache"),"age",r.headers.get("Age"),"etag",r.headers.get("ETag"),"content-type",r.headers.get("Content-Type"))
+                      data=r.read(10000000)
+                  report(label,data)
+                  print(label,"IDENTICAL",data==local)
+              except (urllib.error.URLError, TimeoutError, OSError, UnicodeError) as e:
+                  print(label,"ERROR",type(e).__name__,str(e))
+          PY
