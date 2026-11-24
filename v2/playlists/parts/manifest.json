@@ -1,7 +1,7 @@
 {
   "version": 1,
   "header_hex": "234558544d33550a",
-  "source_sha256": "579f18135e66dbb74cc340fc6665e6a4d48c21a9de454ac9f98691613488ac55",
+  "source_sha256": "5c63569e27487e282c05a83366156963fee7ac83b826deab524f8f4303131eec",
   "total_records": 18333,
   "entries": [
     {
@@ -79,8 +79,8 @@
     {
       "file": "0012.m3u",
       "group": "YEDEKLER",
-      "records": 1144,
-      "sha256": "7270f04eb231c1b64b81ce94f2ba58caebf1122797eebd3644a5d5369fad1af6"
+      "records": 1564,
+      "sha256": "ddbc324054a958f69aa999c48ef617c18d1b7881cd214cc3a183662ef46ac577"
     },
     {
       "file": "0013.m3u",
@@ -90,9 +90,9 @@
     },
     {
       "file": "0014.m3u",
-      "group": "TÜRK ARŞİVİ (421)",
-      "records": 421,
-      "sha256": "e1e5ad0dd844dce1a913da73d1b90a6fca0f94b752041974b08af3dd44c9773b"
+      "group": "TÜRK ARŞİVİ (1)",
+      "records": 1,
+      "sha256": "ced1d3d36980af3269aee51e5cc38cfc8606714c6e309bbaeb7caa38f02bb7d2"
     },
     {
       "file": "0015.m3u",
