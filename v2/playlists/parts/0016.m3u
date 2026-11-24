@@ -450,10 +450,6 @@ https://redirector.rudo.video/hls-video/339f69c6122f6d8f4574732c235f09b7683e31a5
 https://jmp2.uk/stvp-US26000201N
 #EXTINF:-1 tvg-name="Biosfera TV (720p)" group-title="YABANCI ARŞİVİ (15940)",Biosfera TV (720p)
 https://tvdatta.com:3021/live/biosferatvlive.m3u8
-#EXTINF:-1 tvg-name="Bir Gece Masalı" group-title="YABANCI ARŞİVİ (15940)",Bir Gece Masalı
-http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Bir.Gece.Masali.SON.mkv
-#EXTINF:-1 tvg-name="Bir Zamanlar Istanbul" group-title="YABANCI ARŞİVİ (15940)",Bir Zamanlar Istanbul
-http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Bir.Zamanlar.Istanbul.SON.mkv
 #EXTINF:-1 tvg-name="bitMe (1080p)" group-title="YABANCI ARŞİVİ (15940)",bitMe (1080p)
 http://181.119.66.28:8081/BITME/index.m3u8
 #EXTINF:-1 tvg-name="bitMe (576p)" group-title="YABANCI ARŞİVİ (15940)",bitMe (576p)
