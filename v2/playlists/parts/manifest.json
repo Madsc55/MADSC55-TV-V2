@@ -1,7 +1,7 @@
 {
   "version": 1,
   "header_hex": "234558544d33550a",
-  "source_sha256": "cae52b3780c4c65c7727b6a240f33058187c0f39a62131f1adcb247882c1c642",
+  "source_sha256": "7a40de20bed5e7cbf3f8055a4e23b6c23ea709fd64cff7a9f9a97b4a2b1c503f",
   "total_records": 18330,
   "entries": [
     {
@@ -97,44 +97,44 @@
     {
       "file": "0015.m3u",
       "group": "YABANCI ARŞİVİ (15940)",
-      "records": 2538,
-      "sha256": "37a1c03810706e7ea7437eae6d5f73644c6df72d5b40d3347a20fc4f3e4f83ec"
+      "records": 2546,
+      "sha256": "ed0075787ab657893ebb15a7013a5f5bd69540c8d8e1376cdb18e16e3495b028"
     },
     {
       "file": "0016.m3u",
       "group": "YABANCI ARŞİVİ (15940)",
-      "records": 2488,
-      "sha256": "557ed71cfc4bd01b85a8e28bf58ed79a980408f6c5abf906fb3cd24a845f5795"
+      "records": 2489,
+      "sha256": "89d0cbac218761aeb4aad6a69da27871acc899413f7c67a2ed96588eecbe3545"
     },
     {
       "file": "0017.m3u",
       "group": "YABANCI ARŞİVİ (15940)",
       "records": 2480,
-      "sha256": "ea3e463bfb35fb42dd256bb9c8819331d85a516dc8ddb40e1389764aca2647ca"
+      "sha256": "baaf5b93d824b7e26511b9256d014c5b475b6ee6fe053274b09c5034aca3befe"
     },
     {
       "file": "0018.m3u",
       "group": "YABANCI ARŞİVİ (15940)",
-      "records": 2456,
-      "sha256": "f90e382a123f2f0db6404468a13960357cd0a826f3420d2f089b7dd36f899476"
+      "records": 2461,
+      "sha256": "5c40991117b753121e85779b3f181b341e74fb8581469eb5547e2a73e1cfa99f"
     },
     {
       "file": "0019.m3u",
       "group": "YABANCI ARŞİVİ (15940)",
-      "records": 2499,
-      "sha256": "523dc5792ada22f80bd5cfdf013b6069b2834e49de1a3bf0ff9dea2c7241b65c"
+      "records": 2505,
+      "sha256": "5151042d8d8b060242d47405b2ac25bf41443b4402c4e0723cc2816db483e9b9"
     },
     {
       "file": "0020.m3u",
       "group": "YABANCI ARŞİVİ (15940)",
-      "records": 2487,
-      "sha256": "c01722e8f35752ee85ec4c566982da59aa531f268a1bd910ef93d58959ce361c"
+      "records": 2492,
+      "sha256": "f95d3ba411b5197a4ac1a8d293944d9e5d7247b337a619d11fcf825d62e1e32f"
     },
     {
       "file": "0021.m3u",
       "group": "YABANCI ARŞİVİ (15940)",
-      "records": 992,
-      "sha256": "a5bf422b91cf8f875132fe3f6e990f21828e80968ee4a75dca141c548970c1d1"
+      "records": 967,
+      "sha256": "9d00431f503160260959f29287b9e18f79d85fa166b26a2d563d901ab4ed54bf"
     }
   ]
 }
