@@ -228,5 +228,24 @@ class SingleAnaRemovalTest(unittest.TestCase):
         self.assertFalse(safe_single_ana_removal(original, after, hashlib.sha256(a).hexdigest()))
 
 
+
+class ExactMcTvPairRemovalTest(unittest.TestCase):
+    def test_exact_pair_only(self):
+        import hashlib
+        from main_actions_security_gate import safe_exact_mc_tv_pair_removal
+        prefix = '#EXTINF:-1 group-title="ANA ARŞİV (4)",'
+        a, b, c, d = [(prefix + n + '\nhttps://example.invalid/' + str(i) + '\n').encode()
+                      for i, n in enumerate(("A", "MC TV", "MC TV (720P)", "D"))]
+        original = [a, b, c, d]
+        hashes = tuple(hashlib.sha256(x).hexdigest() for x in (b, c))
+        after = [x.replace(b"(4)", b"(2)") for x in (a, d)]
+        self.assertTrue(safe_exact_mc_tv_pair_removal(original, after, hashes))
+        self.assertFalse(safe_exact_mc_tv_pair_removal(original, after[::-1], hashes))
+        self.assertFalse(safe_exact_mc_tv_pair_removal(original, after[:1], hashes))
+        self.assertFalse(safe_exact_mc_tv_pair_removal(original, [a, c], hashes))
+        self.assertFalse(safe_exact_mc_tv_pair_removal(original, after, hashes[::-1]))
+        self.assertFalse(safe_exact_mc_tv_pair_removal(original, after, (hashes[0], hashes[0])))
+
+
 if __name__=="__main__":
     unittest.main()
