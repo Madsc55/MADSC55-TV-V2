@@ -15,7 +15,7 @@ import time
 from urllib.parse import urljoin
 from shared_url_safe_probe import vetted_target, PinnedHTTP, PinnedHTTPS, SafeFetchError
 from full_playlist_url_audit import write_json_atomic
-from yedekler_deep_review import load_scope, CURRENT_SHA, REVIEW, PLAYLIST, parse_manifest, local_frame
+from yedekler_deep_review import load_scope, CURRENT_SHA, REVIEW, PLAYLIST, parse_manifest, local_frame, sha, yedekler_records
 
 SHARDS=8
 MAX_BYTES=24*1024*1024
@@ -25,7 +25,7 @@ def get_quality_decoder():
     # Use the OS decoder, not the static imageio binary that can crash on MPEG-TS.
     return shutil.which("ffmpeg", path="/usr/bin:/bin")
 def load_targets(prior, deep):
-    raw, scope=load_scope(prior)
+    raw, scope=load_scope(prior, allow_other_groups=True)
     doc=json.loads(deep.read_text())
     if doc.get("playlist_sha256")!=CURRENT_SHA or doc.get("complete") is not True or doc.get("total")!=1226:
         raise ValueError("Invalid second-stage evidence")
@@ -211,6 +211,21 @@ def self_test():
     assert classify([b],[])=="AV_20S_QUALITY_REVIEW"
     assert classify([c],[c])=="CONFIRMED_UNAVAILABLE"
     assert classify([c],[c],True)=="RADIO_OR_NON_TV_REVIEW"
+    # A change outside YEDEKLER is safe; any change to its exact records is not.
+    from unittest.mock import patch
+    from yedekler_deep_review import verify_current_scope
+    original=b'#EXTM3U\n#EXTINF:-1 group-title="YEDEKLER",A\nhttps://example.org/a\n#EXTINF:-1 group-title="OTHER",B\nhttps://example.org/b\n'
+    unrelated=original.replace(b",B\n",b",C\n")
+    altered=original.replace(b",A\n",b",C\n")
+    with patch("yedekler_deep_review.CURRENT_SHA", sha(original)):
+        verify_current_scope(original, unrelated, True)
+        for candidate, allow in [(unrelated, False), (altered, True)]:
+            try:
+                verify_current_scope(original, candidate, allow)
+            except ValueError:
+                pass
+            else:
+                raise AssertionError("Scope verification accepted unexpected change")
     # Verify synthetic local media with actual FFmpeg, without network requests.
     exe=get_quality_decoder()
     if not exe:
@@ -246,7 +261,7 @@ def main():
     raw,scope=load_targets(a.prior,a.deep)
     if a.merge_dir:
         parts=[json.loads(x.read_text()) for x in a.merge_dir.rglob("quality-*.json")]
-        if len(parts)!=SHARDS or {x["shard"] for x in parts}!=set(range(SHARDS)) or any(not x["complete"] or x["playlist_sha256"]!=CURRENT_SHA for x in parts):
+        if len(parts)!=SHARDS or {x["shard"] for x in parts}!=set(range(SHARDS)) or any(not x["complete"] or x["playlist_sha256"]!=CURRENT_SHA or x.get("current_playlist_sha256")!=sha(raw) for x in parts):
             raise ValueError("Missing or stale shards")
         rows=sorted([r for x in parts for r in x["results"]],key=lambda r:r["position"])
         keys=lambda xs:[(r["position"],r["url_sha256"],r["record_sha256"]) for r in xs]
@@ -254,7 +269,7 @@ def main():
             raise ValueError("Coverage mismatch")
         counts=dict(Counter(x["classification"] for x in rows))
         statuses=dict(Counter(x["status"] for r in rows for x in r["first"]+r["second"]))
-        report={"playlist_sha256":CURRENT_SHA,"complete":True,"total":len(rows),"counts":counts,"attempt_statuses":statuses,"results":rows}
+        report={"playlist_sha256":CURRENT_SHA,"current_playlist_sha256":sha(raw),"complete":True,"total":len(rows),"counts":counts,"attempt_statuses":statuses,"results":rows}
         write_json_atomic(a.output,report)
         print(json.dumps({"total":len(rows),"counts":counts,"attempt_statuses":statuses,
             "confirmed_unavailable_positions":[r["position"] for r in rows if r["classification"]=="CONFIRMED_UNAVAILABLE"]}))
@@ -265,7 +280,7 @@ def main():
         if not exe:
             raise ValueError("Decoder missing")
         target=[r for i,r in enumerate(scope) if i%SHARDS==a.shard]
-        report={"playlist_sha256":CURRENT_SHA,"shard":a.shard,"complete":False,"results":[]}
+        report={"playlist_sha256":CURRENT_SHA,"current_playlist_sha256":sha(raw),"shard":a.shard,"complete":False,"results":[]}
         write_json_atomic(a.output,report)
         with ThreadPoolExecutor(max_workers=4) as pool:
             jobs=[pool.submit(review,r,exe) for r in target]
