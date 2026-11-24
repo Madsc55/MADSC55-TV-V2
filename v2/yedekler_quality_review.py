@@ -9,17 +9,21 @@ import http.client
 import json
 from pathlib import Path
 import re
+import shutil
 import subprocess
 import time
 from urllib.parse import urljoin
 from shared_url_safe_probe import vetted_target, PinnedHTTP, PinnedHTTPS, SafeFetchError
-from full_playlist_av_decode import get_local_ffmpeg
 from full_playlist_url_audit import write_json_atomic
 from yedekler_deep_review import load_scope, CURRENT_SHA, REVIEW, PLAYLIST, parse_manifest, local_frame
 
 SHARDS=8
 MAX_BYTES=24*1024*1024
 MEDIA_SECONDS=20
+
+def get_quality_decoder():
+    # Use the OS decoder, not the static imageio binary that can crash on MPEG-TS.
+    return shutil.which("ffmpeg", path="/usr/bin:/bin")
 def load_targets(prior, deep):
     raw, scope=load_scope(prior)
     doc=json.loads(deep.read_text())
@@ -90,12 +94,12 @@ def safe_sample(url,limit=MAX_BYTES,*,root=False, connection_factory=None):
 
 def quality(data,fmt,exe):
     """Observe up to 20.5 seconds of local media, not a 20-second network promise."""
-    cmd=[exe,"-nostdin","-hide_banner","-loglevel","info","-threads","1",
+    cmd=[exe,"-nostdin","-hide_banner","-nostats","-loglevel","info","-threads","1",
          "-filter_threads","1","-protocol_whitelist","pipe","-f",fmt,"-i","pipe:0",
          "-map","0:v:0","-map","0:a:0","-t","20.5",
          "-vf","blackdetect=d=2:pix_th=0.10,freezedetect=n=-60dB:d=2,showinfo",
          "-af","silencedetect=n=-50dB:d=2,ashowinfo",
-         "-f","null","pipe:1"]
+         "-threads","1","-f","null","pipe:1"]
     try:
         r=subprocess.run(cmd,input=data,stdout=subprocess.DEVNULL,stderr=subprocess.PIPE,
                          timeout=40,check=False)
@@ -115,7 +119,7 @@ def quality(data,fmt,exe):
             (r"silence_start:","SILENCE_INTERVAL")] if re.search(pattern,logs)]
     return {"status":"MEDIA_20S" if full else "SHORT_OR_PARTIAL_MEDIA",
             "video":v,"audio":a,"video_seconds":vspan,"audio_seconds":aspan,
-            "quality_flags":flags,"full_sample":full}
+            "quality_flags":flags,"full_sample":full,"decoder_returncode":r.returncode}
 
 def inspect(url,exe):
     attempts=[]
@@ -208,7 +212,10 @@ def self_test():
     assert classify([c],[c])=="CONFIRMED_UNAVAILABLE"
     assert classify([c],[c],True)=="RADIO_OR_NON_TV_REVIEW"
     # Verify synthetic local media with actual FFmpeg, without network requests.
-    exe=get_local_ffmpeg()
+    exe=get_quality_decoder()
+    if not exe:
+        raise RuntimeError("System FFmpeg unavailable")
+    print(subprocess.run([exe,"-version"],capture_output=True,text=True,check=True,timeout=10).stdout.splitlines()[0])
     if exe:
         for black in (False,True):
             src="color=c=black:s=64x64:r=10" if black else "testsrc2=s=64x64:r=10"
@@ -219,9 +226,10 @@ def self_test():
             res=quality(data,"mpegts",exe)
             assert res["full_sample"],res
             if black:
-                assert {"BLACK_INTERVAL","SILENCE_INTERVAL"}.issubset(res["quality_flags"]),res
+                assert {"BLACK_INTERVAL","FREEZE_INTERVAL","SILENCE_INTERVAL"}.issubset(res["quality_flags"]),res
             else:
                 assert not res["quality_flags"],res
+            print("Synthetic quality fixture passed:", "black/frozen/silent" if black else "moving/audible", res)
 
 def main():
     p=argparse.ArgumentParser()
@@ -253,7 +261,7 @@ def main():
     else:
         if a.shard not in range(SHARDS):
             raise ValueError("Invalid shard")
-        exe=get_local_ffmpeg()
+        exe=get_quality_decoder()
         if not exe:
             raise ValueError("Decoder missing")
         target=[r for i,r in enumerate(scope) if i%SHARDS==a.shard]
