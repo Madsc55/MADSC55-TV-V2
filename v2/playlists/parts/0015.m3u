@@ -36,12 +36,6 @@ https://ncdn.telewebion.ir/azarbayjangharbi/live/playlist.m3u8
 https://tv-trtarabi.medya.trt.com.tr/master_720.m3u8
 #EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/kuz3-orange/TurkishIPTV-Claude/main/logos/trtarabi.png" group-title="YABANCI ARŞİVİ (15940)",TRT ARABI
 https://tv-trtarabi.medya.trt.com.tr/master_1080.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/g0jPOcC.png" group-title="YABANCI ARŞİVİ (15940)",TRT
-https://av.hellasnet.tv/rst/trt/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/Z7URrp1.png" group-title="YABANCI ARŞİVİ (15940)",TV8
-https://dash3.antik.sk/live/test_osem/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/15ILp0P.png" group-title="YABANCI ARŞİVİ (15940)",KANAL D (720P)
-https://stream1.kanald.ro/iphone/knd-live.m3u8
 #EXTINF:-1 tvg-id="NationalGeographic.tr" tvg-logo="https://i.ibb.co/h17BsfgY/Ekran-g-r-nt-s-2026-07-25-103937.jpg" group-title="YABANCI ARŞİVİ (15940)", NAT GEO HD
 http://46.32.176.50/NationalGeographicHD/index.m3u8
 #EXTINF:-1 tvg-id="FX.tr" tvg-logo="https://i.ibb.co/8gcyRP1Y/Ekran-g-r-nt-s-2026-07-25-163750.jpg" group-title="YABANCI ARŞİVİ (15940)", FX TV HD
@@ -398,26 +392,6 @@ https://stream.kaztrk.kz/regional/kyzylordatv/index.m3u8
 https://fs.uplink.kz/sport+/mono.m3u8?token=onlinetv
 #EXTINF:-1 tvg-logo="https://i.imgur.com/Z9R4nZg.png" group-title="YABANCI ARŞİVİ (15940)",TOSHKENT (576P)
 https://stream8.cinerama.uz/1003/tracks-v1a1/playlist.m3u8
-#EXTINF:-1 group-title="YABANCI ARŞİVİ (15940)",DigiNET Cinema
-https://a8.radyotelekom.com.tr:3276/stream/play.m3u8
-#EXTINF:-1 tvg-name="MANAS TV" tvg-logo="https://i.ibb.co/2Kvcj5Q/manas.jpg" group-title="YABANCI ARŞİVİ (15940)",MANAS TV 720P HD
-http://212.42.111.152:8080/hls/manas.m3u8
-#EXTINF:-1 group-title="YABANCI ARŞİVİ (15940)",MEDIA FM TV
-https://restreamer.livetv.az/mediafm.index.m3u8
-#EXTINF:-1 tvg-name="Cartoon Network" group-title="YABANCI ARŞİVİ (15940)",Cartoon Network
-http://stream.tvcdn.net/cocuk-egitim/cartoon-network.m3u8
-#EXTINF:-1 tvg-logo="https://i.ibb.co/HV0x9JZ/fashion-one.png" group-title="YABANCI ARŞİVİ (15940)",NR1 FASHION ONE
-http://b01c02nl.mediatriple.net/videoonlylive/mtkgeuihrlfwlive/u_stream_5c9e2ee6997cb_1/playlist.m3u8
-#EXTINF:-1 tvg-name="FX" group-title="YABANCI ARŞİVİ (15940)",FX
-https://tv.prectv5.sbs/live/fx.m3u8
-#EXTINF:-1 tvg-name="History Channel" group-title="YABANCI ARŞİVİ (15940)",History Channel
-https://tv.prectv5.sbs/live/history.m3u8
-#EXTINF:-1 tvg-name="Nat Geo Wild" group-title="YABANCI ARŞİVİ (15940)",Nat Geo Wild
-https://tv.prectv5.sbs/live/natgeowild.m3u8
-#EXTINF:-1 tvg-name="Cartoonito TV" group-title="YABANCI ARŞİVİ (15940)",Cartoonito TV
-https://cartoonito.blutv.com/blutv_cartoonito/smil:cartoonito.smil/playlist.m3u8
-#EXTINF:-1 tvg-name="Viasat History" group-title="YABANCI ARŞİVİ (15940)",Viasat History
-https://tv.prectv5.sbs/live/viasatexplore.m3u8
 #EXTINF:-1 tvg-name="24KZ (576p) [TEST]" tvg-logo="" group-title="YABANCI ARŞİVİ (15940)",24KZ (576p) [TEST]
 https://fs.uplink.kz/24KZ/mono.m3u8?token=onlinetv
 #EXTINF:-1 tvg-name="31 Kanal (576p)" group-title="YABANCI ARŞİVİ (15940)",31 Kanal (576p)
@@ -466,8 +440,6 @@ http://tvcdn01.esilnet.kz/tv/mir/index.m3u8
 https://tvcdn01.oktv.kz/tv/mtrk/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/bjlzu5k.png" group-title="YABANCI ARŞİVİ (15940)",MY5 (576P)
 https://stream8.cinerama.uz/1217/tracks-v1a1/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.ibb.co/cXd3MBV/symkr.png" group-title="YABANCI ARŞİVİ (15940)",ZAROK SORANÎ
-https://zindisorani.zaroktv.com.tr/hls/stream.m3u8
 #EXTINF:-1 tvg-name="Channel 7 (576p)" group-title="YABANCI ARŞİVİ (15940)",Channel 7 (576p)
 https://fs.uplink.kz/7_kanal/mono.m3u8?token=onlinetv
 #EXTINF:-1 tvg-logo="https://i.imgur.com/LebKU09.png" group-title="YABANCI ARŞİVİ (15940)",CHANNEL 7 (576P)
@@ -592,6 +564,62 @@ http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Teskilat.SON.mkv
 http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Uzak.Sehir.SON.mkv
 #EXTINF:-1 tvg-name="Zembilli" group-title="YABANCI ARŞİVİ (15940)",Zembilli
 http://45.159.95.10:8880/STORE/DIZI.SON.BOLUMLER/Zembilli.SON.mkv
+#EXTINF:-1 tvg-logo="https://i.imgur.com/Z7URrp1.png" group-title="YABANCI ARŞİVİ (15940)",TV8 (360P)
+http://109.74.145.11:1935/tv8/mp4:tv8.stream_360p/playlist.m3u8
+#EXTINF:-1 tvg-name="beIN SPORTS" group-title="YABANCI ARŞİVİ (15940)",beIN SPORTS
+https://cinque.c53af06fa4e55583.click/p/f2XX9QypQfMaQ5rX1zA/601/a.cf-worker-f1a2134fd551fa4b.workers.dev/chunklist_hd.m3u8
+#EXTINF:-1 tvg-name="beIN SPORTS" group-title="YABANCI ARŞİVİ (15940)",beIN SPORTS
+https://due.7cbd07151f7a2d82.click/itis/8c1437d28413db5112720e3ce0579154/playlist.m3u8
+#EXTINF:-1 tvg-name="beIN SPORTS" group-title="YABANCI ARŞİVİ (15940)",beIN SPORTS
+https://due.c53af06fa4e55583.click/p/limontv.xyz/601/a.cf-worker-f1a2134fd551fa4b.workers.dev/chunklist_hd.m3u8
+#EXTINF:-1 tvg-name="beIN SPORTS" group-title="YABANCI ARŞİVİ (15940)",beIN SPORTS
+https://g0.b4c8d3e9f1a2b7c5d24.cfd/yayinzirve.m3u8
+#EXTINF:-1 tvg-name="beIN SPORTS" group-title="YABANCI ARŞİVİ (15940)",beIN SPORTS
+https://k0.b4c8d3e9f1a2b7c5d28.cfd/yayinzirve.m3u8
+#EXTINF:-1 tvg-name="beIN SPORTS" group-title="YABANCI ARŞİVİ (15940)",beIN SPORTS
+https://p0.b4c8d3e9f1a2b7c5d33.cfd/yayininat.m3u8
+#EXTINF:-1 tvg-name="beIN SPORTS" group-title="YABANCI ARŞİVİ (15940)",beIN SPORTS
+https://quattro.facd2855b1fdc415.click/i/neden/601/playlist.m3u8
+#EXTINF:-1 tvg-name="beIN SPORTS" group-title="YABANCI ARŞİVİ (15940)",beIN SPORTS
+https://steep-tooth-6534.1ff056997784445.workers.dev/static/bs1.m3u8
+#EXTINF:-1 tvg-name="beIN SPORTS" group-title="YABANCI ARŞİVİ (15940)",beIN SPORTS
+https://tre.c53af06fa4e55583.click/p/f2XX9QypQfMaQ5rX1zA/601/a.cf-worker-f1a2134fd551fa4b.workers.dev/chunklist_hd.m3u8
+#EXTINF:-1 tvg-name="beIN SPORTS" group-title="YABANCI ARŞİVİ (15940)",beIN SPORTS
+https://uno.c53af06fa4e55583.click/p/f2XX9QypQfMaQ5rX1zA/601/a.cf-worker-f1a2134fd551fa4b.workers.dev/chunklist_hd.m3u8
+#EXTINF:-1 tvg-name="beIN SPORTS 2" group-title="YABANCI ARŞİVİ (15940)",beIN SPORTS 2
+https://alpha.cf-worker-c4d6a2ea181de1b9.workers.dev/live/bein-sports-2/playlist.m3u8
+#EXTINF:-1 tvg-name="beIN SPORTS 3" group-title="YABANCI ARŞİVİ (15940)",beIN SPORTS 3
+https://alpha.cf-worker-c4d6a2ea181de1b9.workers.dev/live/bein-sports-3/playlist.m3u8
+#EXTINF:-1 tvg-name="beIN SPORTS 4" group-title="YABANCI ARŞİVİ (15940)",beIN SPORTS 4
+https://k0.b4c8d3e9f1a2b7c5d28.cfd/yayinb4.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/g0jPOcC.png" group-title="YABANCI ARŞİVİ (15940)",TRT
+https://av.hellasnet.tv/rst/trt/index.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/Z7URrp1.png" group-title="YABANCI ARŞİVİ (15940)",TV8
+https://dash3.antik.sk/live/test_osem/playlist.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/15ILp0P.png" group-title="YABANCI ARŞİVİ (15940)",KANAL D (720P)
+https://stream1.kanald.ro/iphone/knd-live.m3u8
+#EXTINF:-1 group-title="YABANCI ARŞİVİ (15940)",DigiNET Cinema
+https://a8.radyotelekom.com.tr:3276/stream/play.m3u8
+#EXTINF:-1 tvg-name="MANAS TV" tvg-logo="https://i.ibb.co/2Kvcj5Q/manas.jpg" group-title="YABANCI ARŞİVİ (15940)",MANAS TV 720P HD
+http://212.42.111.152:8080/hls/manas.m3u8
+#EXTINF:-1 group-title="YABANCI ARŞİVİ (15940)",MEDIA FM TV
+https://restreamer.livetv.az/mediafm.index.m3u8
+#EXTINF:-1 tvg-name="Cartoon Network" group-title="YABANCI ARŞİVİ (15940)",Cartoon Network
+http://stream.tvcdn.net/cocuk-egitim/cartoon-network.m3u8
+#EXTINF:-1 tvg-logo="https://i.ibb.co/HV0x9JZ/fashion-one.png" group-title="YABANCI ARŞİVİ (15940)",NR1 FASHION ONE
+http://b01c02nl.mediatriple.net/videoonlylive/mtkgeuihrlfwlive/u_stream_5c9e2ee6997cb_1/playlist.m3u8
+#EXTINF:-1 tvg-name="FX" group-title="YABANCI ARŞİVİ (15940)",FX
+https://tv.prectv5.sbs/live/fx.m3u8
+#EXTINF:-1 tvg-name="History Channel" group-title="YABANCI ARŞİVİ (15940)",History Channel
+https://tv.prectv5.sbs/live/history.m3u8
+#EXTINF:-1 tvg-name="Nat Geo Wild" group-title="YABANCI ARŞİVİ (15940)",Nat Geo Wild
+https://tv.prectv5.sbs/live/natgeowild.m3u8
+#EXTINF:-1 tvg-name="Cartoonito TV" group-title="YABANCI ARŞİVİ (15940)",Cartoonito TV
+https://cartoonito.blutv.com/blutv_cartoonito/smil:cartoonito.smil/playlist.m3u8
+#EXTINF:-1 tvg-name="Viasat History" group-title="YABANCI ARŞİVİ (15940)",Viasat History
+https://tv.prectv5.sbs/live/viasatexplore.m3u8
+#EXTINF:-1 tvg-logo="https://i.ibb.co/cXd3MBV/symkr.png" group-title="YABANCI ARŞİVİ (15940)",ZAROK SORANÎ
+https://zindisorani.zaroktv.com.tr/hls/stream.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/9EruWIQ.png" group-title="YABANCI ARŞİVİ (15940)",LUYS TV (1080P)
 https://b01c02nl.mediatriple.net/videoonlylive/mtpayqrfkgirxelive/broadcast_5e91c5ac96898.smil/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/JINE5xS.png" group-title="YABANCI ARŞİVİ (15940)",ATV SPİRİT
@@ -620,8 +648,6 @@ https://stream8.cinerama.uz/1036/tracks-v1a1/mono.m3u8
 https://livetr.teleromagna.it/mia/live/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Atv_logo_2018.png/250px-Atv_logo_2018.png" group-title="YABANCI ARŞİVİ (15940)",ATV
 http://141.94.193.53:80/ATV_HD/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/Z7URrp1.png" group-title="YABANCI ARŞİVİ (15940)",TV8 (360P)
-http://109.74.145.11:1935/tv8/mp4:tv8.stream_360p/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/ATV_Peru_2025.svg/1920px-ATV_Peru_2025.svg.png" group-title="YABANCI ARŞİVİ (15940)",ATV (720P)
 http://187.102.210.46/ATV/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.ibb.co/74fJt5v/8mblanc.png" group-title="YABANCI ARŞİVİ (15940)",TV8 MONTBLANC
@@ -638,32 +664,6 @@ https://1740288887.rsc.cdn77.org/1740288887/index.m3u8
 https://livefta.malimarcdn.com/ftaedge00/hmongstartv.sdp/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://gbzottvsc25.tvplus.com.tr:33207/CPS/images/universal/film/logo/202506/20250623/71/0916028009315eb88428_op_0_XL.webp" group-title="YABANCI ARŞİVİ (15940)",ATV (1080P)
 http://190.93.224.42/ATV/index.m3u8
-#EXTINF:-1 tvg-name="beIN SPORTS" group-title="YABANCI ARŞİVİ (15940)",beIN SPORTS
-https://cinque.c53af06fa4e55583.click/p/f2XX9QypQfMaQ5rX1zA/601/a.cf-worker-f1a2134fd551fa4b.workers.dev/chunklist_hd.m3u8
-#EXTINF:-1 tvg-name="beIN SPORTS" group-title="YABANCI ARŞİVİ (15940)",beIN SPORTS
-https://due.7cbd07151f7a2d82.click/itis/8c1437d28413db5112720e3ce0579154/playlist.m3u8
-#EXTINF:-1 tvg-name="beIN SPORTS" group-title="YABANCI ARŞİVİ (15940)",beIN SPORTS
-https://due.c53af06fa4e55583.click/p/limontv.xyz/601/a.cf-worker-f1a2134fd551fa4b.workers.dev/chunklist_hd.m3u8
-#EXTINF:-1 tvg-name="beIN SPORTS" group-title="YABANCI ARŞİVİ (15940)",beIN SPORTS
-https://g0.b4c8d3e9f1a2b7c5d24.cfd/yayinzirve.m3u8
-#EXTINF:-1 tvg-name="beIN SPORTS" group-title="YABANCI ARŞİVİ (15940)",beIN SPORTS
-https://k0.b4c8d3e9f1a2b7c5d28.cfd/yayinzirve.m3u8
-#EXTINF:-1 tvg-name="beIN SPORTS" group-title="YABANCI ARŞİVİ (15940)",beIN SPORTS
-https://p0.b4c8d3e9f1a2b7c5d33.cfd/yayininat.m3u8
-#EXTINF:-1 tvg-name="beIN SPORTS" group-title="YABANCI ARŞİVİ (15940)",beIN SPORTS
-https://quattro.facd2855b1fdc415.click/i/neden/601/playlist.m3u8
-#EXTINF:-1 tvg-name="beIN SPORTS" group-title="YABANCI ARŞİVİ (15940)",beIN SPORTS
-https://steep-tooth-6534.1ff056997784445.workers.dev/static/bs1.m3u8
-#EXTINF:-1 tvg-name="beIN SPORTS" group-title="YABANCI ARŞİVİ (15940)",beIN SPORTS
-https://tre.c53af06fa4e55583.click/p/f2XX9QypQfMaQ5rX1zA/601/a.cf-worker-f1a2134fd551fa4b.workers.dev/chunklist_hd.m3u8
-#EXTINF:-1 tvg-name="beIN SPORTS" group-title="YABANCI ARŞİVİ (15940)",beIN SPORTS
-https://uno.c53af06fa4e55583.click/p/f2XX9QypQfMaQ5rX1zA/601/a.cf-worker-f1a2134fd551fa4b.workers.dev/chunklist_hd.m3u8
-#EXTINF:-1 tvg-name="beIN SPORTS 2" group-title="YABANCI ARŞİVİ (15940)",beIN SPORTS 2
-https://alpha.cf-worker-c4d6a2ea181de1b9.workers.dev/live/bein-sports-2/playlist.m3u8
-#EXTINF:-1 tvg-name="beIN SPORTS 3" group-title="YABANCI ARŞİVİ (15940)",beIN SPORTS 3
-https://alpha.cf-worker-c4d6a2ea181de1b9.workers.dev/live/bein-sports-3/playlist.m3u8
-#EXTINF:-1 tvg-name="beIN SPORTS 4" group-title="YABANCI ARŞİVİ (15940)",beIN SPORTS 4
-https://k0.b4c8d3e9f1a2b7c5d28.cfd/yayinb4.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/g0jPOcC.png" group-title="YABANCI ARŞİVİ (15940)",TRT (GREECE) (720P)
 https://av.hellasnet.tv/rst/trt/main_stream.m3u8
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/6/67/Canal_trt_logo.PNG" group-title="YABANCI ARŞİVİ (15940)",TRT (VENEZUELA) (410P) [NOT 24/7]
