@@ -1,3 +1,7 @@
+#EXTINF:-1 tvg-logo="https://i.imgur.com/RtEzpPQ.png" group-title="YABANCI ARŞİVİ (15940)",KTN NEWS (360P)
+https://vodzong.mjunoon.tv:8087/streamtest/KTNNews-151/playlist.m3u8
+#EXTINF:-1 tvg-name="KTO (576p)" group-title="YABANCI ARŞİVİ (15940)",KTO (576p)
+http://145.239.5.177/354/index.m3u8
 #EXTINF:-1 tvg-name="Kto est kto (576p)" group-title="YABANCI ARŞİVİ (15940)",Kto est kto (576p)
 http://31.148.48.15/Kto_est_kto/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.ibb.co/WkrLDJW/Screenshot-20230714-135036-removebg-preview.png" group-title="YABANCI ARŞİVİ (15940)",KTV (1080P)
@@ -4928,5 +4932,3 @@ https://jmp2.uk/plu-62f3e0522443200008c567d7.m3u8
 https://jmp2.uk/plu-63c6e37e636b7e0007ccb635.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/JXZEg2e.png" group-title="YABANCI ARŞİVİ (15940)",PLUTO TV GAME SHOWS
 https://jmp2.uk/plu-6036e7c385749f00075dbd3b.m3u8
-#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/65bd0f53dc10a40008e68b96/colorLogoPNG_1747382175081.png" group-title="YABANCI ARŞİVİ (15940)",PLUTO TV GASOLINA
-https://jmp2.uk/plu-65bd0f53dc10a40008e68b96.m3u8

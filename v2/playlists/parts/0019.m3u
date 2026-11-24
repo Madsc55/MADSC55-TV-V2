@@ -1,3 +1,5 @@
+#EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/65bd0f53dc10a40008e68b96/colorLogoPNG_1747382175081.png" group-title="YABANCI ARŞİVİ (15940)",PLUTO TV GASOLINA
+https://jmp2.uk/plu-65bd0f53dc10a40008e68b96.m3u8
 #EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/66b0dfa1d512590008bfa7fd/colorLogoPNG.png" group-title="YABANCI ARŞİVİ (15940)",PLUTO TV GORE & SLASHER
 https://jmp2.uk/plu-66b0dfa1d512590008bfa7fd.m3u8
 #EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/69b015c5d29cc97de7da4af8/colorLogoPNG_1779802132594.png" group-title="YABANCI ARŞİVİ (15940)",PLUTO TV HAIALARM
@@ -4994,7 +4996,3 @@ http://103.151.60.162:2122/play/a00w/index.m3u8?hls
 https://da86m1sqpm3o0.cloudfront.net/28072023/smil:starjalsha.smil/chunklist_b1928000.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/ZBt6beo.png" group-title="YABANCI ARŞİVİ (15940)",STAR KENTRIKIS ELLADAS (1080P)
 https://telmaco-cdn.akamaized.net/starcgr/default/index.m3u8
-#EXTINF:-1 tvg-name="Star Kiran (576p)" group-title="YABANCI ARŞİVİ (15940)",Star Kiran (576p)
-http://103.151.60.162:2122/play/a032/index.m3u8?hls
-#EXTINF:-1 tvg-name="Star Life" group-title="YABANCI ARŞİVİ (15940)",Star Life
-http://92.36.202.5:10001/play/a02n

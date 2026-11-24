@@ -1,3 +1,5 @@
+#EXTINF:-1 tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ESBD230000289_20250513T005434SQUARE.png" group-title="YABANCI ARŞİVİ (15940)",VEVO RETRO
+https://jmp2.uk/stvp-ESBD230000289
 #EXTINF:-1 tvg-name="Vevo Retro Rock (1080p)" group-title="YABANCI ARŞİVİ (15940)",Vevo Retro Rock (1080p)
 https://d2hdqrshyzxswl.cloudfront.net/Vevo_Retro_Rock.m3u8
 #EXTINF:-1 tvg-logo="https://tvpnlogopus.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/USBD3000145P_20260421T141843SQUARE.png" group-title="YABANCI ARŞİVİ (15940)",VEVO ROCK
@@ -1582,8 +1584,6 @@ https://nosignal1.antenaplay.ro/hls/dzi-int-hd/index.m3u8
 https://cinque.29d0b51b213115a0.click/p/9cgzadFETvVedJ4Tsp/132/a.cf-worker-4e1da3ddd26870a5.workers.dev/chunklist_hd.m3u8
 #EXTINF:-1 tvg-name="Euro Sport 2" group-title="YABANCI ARŞİVİ (15940)",Euro Sport 2
 http://tvskor99.xyz:80/live/sahinselat2/k6rd0vxMYg/290924.ts
-#EXTINF:-1 tvg-id="KanalDDrama.tr@SD" tvg-logo="https://i.imgur.com/WIeZMKT.png" group-title="YABANCI ARŞİVİ (15940)",Vive Kanal D Drama (1080p)
-https://thema-vivekanald-rakuten.amagi.tv/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.ibb.co/0mtj39x/Mekameleen.png" group-title="YABANCI ARŞİVİ (15940)",MEKAMELEEN
 http://mn-nl.mncdn.com/mekameleen/smil:mekameleentv.smil/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.ibb.co/9grLJCS/fone22.png" group-title="YABANCI ARŞİVİ (15940)",FASHION ONE
@@ -1896,8 +1896,6 @@ https://live.smotrim.ru/vgtrk/0/russia1-hd/index.m3u8
 https://stream.smotrim.ru/hls/solovievlive/playlist.m3u8?entity=channel&id=292&sign=83652f1317ad220efe74a7606d9a7f37
 #EXTINF:-1 tvg-logo="https://i.imgur.com/yb3xjOZ.png" group-title="YABANCI ARŞİVİ (15940)",ХУГО 2
 http://fta.hugo.mk:1935/live/tvhugo/stream/2.m3u8
-#EXTINF:-1 tvg-id="MedMuzik.tr@SD" tvg-logo="https://i.imgur.com/gtUFmCD.png" group-title="YABANCI ARŞİVİ (15940)",MED MUZİK 1080P FHD
-http://54.36.110.140/live3/live3.m3u8
 #EXTINF:-1 group-title="YABANCI ARŞİVİ (15940)",CGTN DOCUMENTARY
 https://english-livetx.cgtn.com/hls/yypdjlctzb_hd.m3u8
 #EXTINF:-1 group-title="YABANCI ARŞİVİ (15940)",HORSE & COUNTRY
