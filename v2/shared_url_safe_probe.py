@@ -85,7 +85,7 @@ class PinnedHTTPS(http.client.HTTPSConnection):
             raise
 
 
-def bounded_get(url, limit=MAX_SAMPLE, timeout=6):
+def bounded_get(url, limit=MAX_SAMPLE, timeout=6, *, report_http_status=False):
     """Pin DNS to a vetted IP, refuse redirects and cap response bytes."""
     scheme, host, port, ip, path = vetted_target(url)
     connection = (PinnedHTTPS if scheme == "https" else PinnedHTTP)(
@@ -102,6 +102,8 @@ def bounded_get(url, limit=MAX_SAMPLE, timeout=6):
         if response.status in (301, 302, 303, 307, 308):
             raise SafeFetchError("REDIRECT_BLOCKED")
         if response.status not in (200, 206):
+            if report_http_status and response.status in (404, 410):
+                raise SafeFetchError("HTTP_" + str(response.status))
             raise SafeFetchError("HTTP_UNAVAILABLE")
         if response.getheader("Content-Encoding", "identity").lower() != "identity":
             raise SafeFetchError("ENCODING_BLOCKED")
