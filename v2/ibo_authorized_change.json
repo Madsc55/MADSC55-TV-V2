@@ -1,8 +1,8 @@
 {
-  "base_sha256": "28a561e03fa06f0b1d4250297fb9bc52b3383ef9b91f21676dbcfc5eaad43e61",
-  "result_sha256": "73aa3cb62dc19221532f5fb120d006b972130aed4dea7592b4aac76eece9a0f4",
+  "base_sha256": "73aa3cb62dc19221532f5fb120d006b972130aed4dea7592b4aac76eece9a0f4",
+  "result_sha256": "966d0c9f697feb8c464db4ad148c44855cd5bcdec0887fa7165cfa09af67d8a2",
   "operation": "reorder",
-  "request": "24 Kasım 2026: Ana IBO playlistindeki 15.940 kanallık YABANCI ARŞİVİ içinde Türk/Türkî/Türkiye kaynaklı adayları (288 kayıt) tam en başa, TRT Türkü 1. sırada olacak şekilde sırala; diğer kategorileri, tüm URLleri ve kanal sayısını koru. TRT Greece, ATV Hungary gibi yabancı, radyo ve dizi dosyalarını seçme.",
+  "request": "24 Kasım 2026: YABANCI ARŞİVİ'nin ilk 288 Türk/Türkî adayından sonra bulunan DHA 2 adayını 289. sıraya taşı. Ana playlist, parts, URL ve kategoriler aynı kalır; yalnız arşiv içi sıra değişir.",
   "channels": [
     "TRT Türkü",
     "TV8",
@@ -291,6 +291,7 @@
     "06.KanalD Drama",
     "VIVE KANAL D DRAMA",
     "Vive Kanal D Drama (1080p)",
-    "MED MUZİK 1080P FHD"
+    "MED MUZİK 1080P FHD",
+    "15.DHA 2 [TEKNIK TEST - KANAL KIMLIGI DOGRULANMADI]"
   ]
 }
