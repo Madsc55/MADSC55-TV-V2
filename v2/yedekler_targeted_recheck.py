@@ -67,15 +67,32 @@ def targets(path):
         raise ValueError("Unexpected route totals")
     return raw, rows
 
-def review(row, exe):
+def followup_targets(rows, path):
+    doc = json.loads(path.read_bytes())
+    previous = subprocess.check_output(["git","show","60e0a90d4272dcab8706e797001c745de43dc99a:"+PLAYLIST.name],cwd=ROOT)
+    if doc.get("complete") is not True or doc.get("total") != 1057 or doc.get("playlist_sha256") != sha(previous):
+        raise ValueError("Invalid targeted report")
+    keys = lambda r: (r["position"],r["record_sha256"],r["url_sha256"])
+    prior = doc["results"]
+    if len(prior)!=1057 or sorted(map(keys,prior))!=sorted(map(keys,rows)):
+        raise ValueError("Prior coverage mismatch")
+    if Counter(r["classification"] for r in prior)!={"ACCESS_RESTRICTED":375,"INVALID_OR_POLICY_BLOCKED":213,"RECHECK_REQUIRED":448,"AV_20S_VERIFIED":21}:
+        raise ValueError("Unexpected prior outcomes")
+    selected={keys(r) for r in prior if r["classification"]=="RECHECK_REQUIRED" and r["route"]=="SAFE_RETRY"}
+    result=[r for r in rows if keys(r) in selected and r["route"]=="SAFE_RETRY"]
+    if len(result)!=448:
+        raise ValueError("Invalid retry scope")
+    return result
+
+def review(row, exe, followup=False):
     out = {k:v for k,v in row.items() if k!="url"}
     if row["route"] != "SAFE_RETRY":
         return {**out,"classification":row["route"],"attempts":[]}
     # A different advertised public HLS variant, longer bounded timeout;
     # no cookies, credentials, header spoofing, access bypass or private egress.
-    first = inspect(row["url"],exe,variant_index=1,timeout=12)
+    first = inspect(row["url"],exe,variant_index=2 if followup else 1,timeout=12)
     second = []
-    if len(first)==1 and first[0]["status"] in {"ORIGINAL_HTTP_404","ORIGINAL_HTTP_410"}:
+    if (followup and classify(first,[])=="RECHECK_REQUIRED") or (len(first)==1 and first[0]["status"] in {"ORIGINAL_HTTP_404","ORIGINAL_HTTP_410"}):
         second = inspect(row["url"],exe,variant_index=1,timeout=12)
     return {**out,"classification":classify(first,second),"attempts":first+second}
 
@@ -93,6 +110,7 @@ def self_test():
 def main():
     p=argparse.ArgumentParser()
     p.add_argument("--prior",type=Path)
+    p.add_argument("--followup",type=Path)
     p.add_argument("--shard",type=int)
     p.add_argument("--merge-dir",type=Path)
     p.add_argument("--output",type=Path)
@@ -102,6 +120,8 @@ def main():
         self_test()
         return
     raw, rows=targets(args.prior)
+    if args.followup:
+        rows=followup_targets(rows,args.followup)
     keys=lambda rs:[(r["position"],r["record_sha256"],r["url_sha256"]) for r in rs]
     if args.merge_dir:
         parts=[json.loads(x.read_text()) for x in args.merge_dir.rglob("targeted-*.json")]
@@ -124,7 +144,7 @@ def main():
         result={"shard":args.shard,"playlist_sha256":sha(raw),"complete":False,"results":[]}
         write_json_atomic(args.output,result)
         with ThreadPoolExecutor(max_workers=4) as pool:
-            for row in pool.map(lambda r:review(r,exe),subset):
+            for row in pool.map(lambda r:review(r,exe,bool(args.followup)),subset):
                 result["results"].append(row)
                 if len(result["results"])%10==0:
                     write_json_atomic(args.output,result)
