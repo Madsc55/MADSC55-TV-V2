@@ -209,5 +209,24 @@ jobs:
         self.assertIn("UNAPPROVED_TRIGGER",
                       audit_one("v2-yedekler-result-reconcile.yml", scheduled))
 
+
+class SingleAnaRemovalTest(unittest.TestCase):
+    def test_exact_removal_only(self):
+        import hashlib
+        from main_actions_security_gate import safe_single_ana_removal
+        prefix = '#EXTINF:-1 group-title="ANA ARŞİV (3)",'
+        a = (prefix + 'A\nhttps://example.invalid/a\n').encode()
+        b = (prefix + 'GEM Sport\nhttps://example.invalid/b\n').encode()
+        c = (prefix + 'C\nhttps://example.invalid/c\n').encode()
+        original = [a, b, c]
+        digest = hashlib.sha256(b).hexdigest()
+        after = [x.replace(b"(3)", b"(2)") for x in (a, c)]
+        self.assertTrue(safe_single_ana_removal(original, after, digest))
+        self.assertFalse(safe_single_ana_removal(original, list(reversed(after)), digest))
+        self.assertFalse(safe_single_ana_removal(original, after[:1], digest))
+        self.assertFalse(safe_single_ana_removal(original, [after[0], after[1].replace(b"/c", b"/x")], digest))
+        self.assertFalse(safe_single_ana_removal(original, after, hashlib.sha256(a).hexdigest()))
+
+
 if __name__=="__main__":
     unittest.main()

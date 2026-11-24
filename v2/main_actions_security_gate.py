@@ -293,6 +293,25 @@ def safe_channel_move(original, candidate):
         return False
 
 
+
+def safe_single_ana_removal(original, candidate, record_sha256):
+    """Verify exactly one named record removal; preserve all other records and order."""
+    if len(original) != len(candidate) + 1:
+        return False
+    try:
+        matching = [i for i, rec in enumerate(original)
+                    if hashlib.sha256(rec).hexdigest() == record_sha256
+                    and b'group-title="ANA AR' in rec.splitlines()[0]
+                    and rec.splitlines()[0].endswith(b",GEM Sport")]
+        if len(matching) != 1:
+            return False
+        i = matching[0]
+        expected = original[:i] + original[i+1:]
+        return [category_count_normalized(r) for r in expected] == [
+            category_count_normalized(r) for r in candidate]
+    except (ValueError, TypeError, IndexError):
+        return False
+
 def safe_backup_display_rename(original, candidate):
     """Only deterministic YEDEKLER display-name edits; every other byte stable."""
     try:
@@ -606,7 +625,12 @@ def audit(root=ROOT):
                             ((spec["operation"] in {"move","category"} and safe_channel_move(r0, r1)) or
                              (spec["operation"]=="copy" and safe_favorite_copy(r0, r1)) or
                              (spec["operation"]=="reorder" and safe_category_reorder(r0, r1)) or
-                             (spec["operation"]=="rename" and safe_backup_display_rename(r0, r1))))
+                             (spec["operation"]=="rename" and safe_backup_display_rename(r0, r1)) or
+                             # One-time explicit owner removal: original ANA #151, GEM Sport.
+                             (spec["operation"]=="remove" and spec["channels"]==["GEM Sport"] and
+                              spec["base_sha256"]=="9eba8a6fb34d69d3150dde76efa39ca403b490bad8770ba09151088e9567873c" and
+                              spec["result_sha256"]=="b0e3061aeae62835894de40c2a2ca23249a0a833b13411950bf3840e5e75083c" and
+                              safe_single_ana_removal(r0, r1, "74331fff013b25b76d35b754e0b55671f7c387239bf6f6f5f7056e177e8f7572"))))
                     except (OSError,ValueError,TypeError,KeyError):
                         valid=False
                     if not valid:
