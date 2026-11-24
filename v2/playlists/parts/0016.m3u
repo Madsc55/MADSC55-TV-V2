@@ -1,3 +1,7 @@
+#EXTINF:-1 tvg-name="BBC Red Button 11 (720p)" group-title="YABANCI ARŞİVİ (15940)",BBC Red Button 11 (720p)
+https://ve-cmaf-push-uk-live.akamaized.net/x=4/i=urn:bbc:pips:service:uk_bbc_stream_011/iptv_hd_abr_v1.mpd
+#EXTINF:-1 tvg-name="BBC Red Button 12" group-title="YABANCI ARŞİVİ (15940)",BBC Red Button 12
+https://ve-cmaf-push-uk-live.akamaized.net/x=4/i=urn:bbc:pips:service:uk_bbc_stream_012/hevc_iptv_mse_v0.mpd
 #EXTINF:-1 tvg-name="BBC Red Button 12 (720p)" group-title="YABANCI ARŞİVİ (15940)",BBC Red Button 12 (720p)
 https://ve-cmaf-push-uk-live.akamaized.net/x=4/i=urn:bbc:pips:service:uk_bbc_stream_012/iptv_hd_abr_v1.mpd
 #EXTINF:-1 tvg-name="BBC Red Button 13" group-title="YABANCI ARŞİVİ (15940)",BBC Red Button 13
@@ -4970,5 +4974,3 @@ https://5e85d90130e77.streamlock.net/6010/ngrp:6010_all/playlist.m3u8
 https://627bb251f23c7.streamlock.net:444/EBNTELEVISION/EBNTELEVISION/playlist.m3u8
 #EXTINF:-1 tvg-name="EBN TV (720p)" group-title="YABANCI ARŞİVİ (15940)",EBN TV (720p)
 https://goliveafrica.media:9998/live/65d8475d1e6cb/index.m3u8
-#EXTINF:-1 tvg-logo="https://images.sr.roku.com/idType/roku-trc/context/trc/id/d0c6ac240cb8529992ee3340e5b7f102/https%3A%2F%2Fimage.roku.com%2Fbh-uploads%2Fproduction%2FinfoHUDLogo%2F1774038479615_EbonyTV_HUDLogo_260x147_HexEFEFEF.png" group-title="YABANCI ARŞİVİ (15940)",EBONY
-https://jmp2.uk/rok-d0c6ac240cb8529992ee3340e5b7f102.m3u8

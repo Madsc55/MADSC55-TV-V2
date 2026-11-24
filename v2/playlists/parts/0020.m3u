@@ -1,3 +1,7 @@
+#EXTINF:-1 tvg-name="Star Kiran (576p)" group-title="YABANCI ARŞİVİ (15940)",Star Kiran (576p)
+http://103.151.60.162:2122/play/a032/index.m3u8?hls
+#EXTINF:-1 tvg-name="Star Life" group-title="YABANCI ARŞİVİ (15940)",Star Life
+http://92.36.202.5:10001/play/a02n
 #EXTINF:-1 tvg-name="Star Life" group-title="YABANCI ARŞİVİ (15940)",Star Life
 http://znty.dyndns.org:5010/hls/foxlife.m3u8
 #EXTINF:-1 tvg-name="Star Life (1080p)" group-title="YABANCI ARŞİVİ (15940)",Star Life (1080p)
@@ -5006,5 +5010,3 @@ https://jmp2.uk/stvp-USBC3900009K5
 https://d1hf773q57zx9s.cloudfront.net/Vevo_R_B.m3u8
 #EXTINF:-1 tvg-logo="https://images.pluto.tv/channels/64dab5fe35425100080e2991/colorLogoPNG.png" group-title="YABANCI ARŞİVİ (15940)",VEVO REGIONAL MEXICANO
 https://jmp2.uk/plu-64dab5fe35425100080e2991.m3u8
-#EXTINF:-1 tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ESBD230000289_20250513T005434SQUARE.png" group-title="YABANCI ARŞİVİ (15940)",VEVO RETRO
-https://jmp2.uk/stvp-ESBD230000289
