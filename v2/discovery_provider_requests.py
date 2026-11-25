@@ -118,7 +118,7 @@ def retry_delay(exc, attempt):
                 host = None
             base = 60 if host == "api.github.com" else 30
         delay = base * (2 ** (attempt - 1))
-    if throttled and str(retry_after).strip() == "0":
+    if throttled:
         try:
             host = urllib.parse.urlsplit(exc.url or "").hostname
         except ValueError:
