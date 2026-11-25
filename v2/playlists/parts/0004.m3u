@@ -1,2 +1,24 @@
-#EXTINF:-1 tvg-id="" tvg-name="CNBC-E" tvg-logo="https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/turkey/cnbc-e-tr.png" group-title="🎬 SİNEMA (1)",CNBC-E 1080P FHD
+#EXTINF:-1 tvg-id="" tvg-name="CNBC-E" tvg-logo="https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/turkey/cnbc-e-tr.png" group-title="🎬 SİNEMA (12)",CNBC-E 1080P FHD
 https://hnpsechtsc.turknet.ercdn.net/xpnvudnlsv/cnbc-e/cnbc-e.m3u8
+#EXTINF:-1 tvg-id="DenizPostasiTV.tr@SD" tvg-logo="https://raw.githubusercontent.com/Madsc55/madsc-tv/main/logos/resmi-deniz-20261012.png" group-title="🎬 SİNEMA (12)",DENİZ POSTASI TV 720P
+https://live.artidijitalmedya.com/artidijital_denizpostasi/denizpostasi/playlist.m3u8
+#EXTINF:-1 tvg-id="" tvg-name="KANAL 15 720P" tvg-logo="https://i.imgur.com/wb1Cdc9.png" group-title="🎬 SİNEMA (12)",KANAL 15 720P
+https://live.artidijitalmedya.com/artidijital_kanal15/kanal15/playlist.m3u8
+#EXTINF:-1 tvg-name="MANAS TV" tvg-logo="https://i.ibb.co/2Kvcj5Q/manas.jpg" group-title="🎬 SİNEMA (12)",MANAS TV 720P HD
+http://212.42.111.152:8080/hls/manas.m3u8
+#EXTINF:-1 tvg-name="ÖNCÜ TV" tvg-logo="https://raw.githubusercontent.com/Madsc55/madsc-tv/main/logos/yayinci-20261012-oncu.png" group-title="🎬 SİNEMA (12)",ÖNCÜ TV 720P HD
+https://edge1.socialsmart.tv/oncurtv/bant1/playlist.m3u8
+#EXTINF:-1 tvg-id="3810" tvg-logo="http://epg.one/img/3810.png" group-title="🎬 SİNEMA (12)",BEIN BOX OFFİCE 3 HD TR
+http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6743/index.m3u8
+#EXTINF:-1 tvg-id="3811" tvg-logo="http://epg.one/img/3811.png" group-title="🎬 SİNEMA (12)",BEIN BOX OFFİCE 1 HD TR
+http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6744/index.m3u8
+#EXTINF:-1 tvg-id="3812" tvg-logo="http://epg.one/img/3812.png" group-title="🎬 SİNEMA (12)",BEIN BOX OFFİCE 2 HD TR
+http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6745/index.m3u8
+#EXTINF:-1 tvg-id="3860" tvg-logo="http://epg.one/img/3860.png" group-title="🎬 SİNEMA (12)",DİZİSMART PREMİUM HD TR
+http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6802/index.m3u8
+#EXTINF:-1 tvg-id="3864" tvg-logo="http://epg.one/img/3864.png" group-title="🎬 SİNEMA (12)",SİNEMA TV HD TR
+http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6806/index.m3u8
+#EXTINF:-1 tvg-id="3870" tvg-logo="http://epg.one/img/3870.png" group-title="🎬 SİNEMA (12)",BEIN SERİES 2 HD TR
+http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6814/index.m3u8
+#EXTINF:-1 tvg-id="3935" tvg-logo="http://epg.one/img/3935.png" group-title="🎬 SİNEMA (12)",BEIN MOVİES PREMİERE HD TR
+http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6880/index.m3u8
