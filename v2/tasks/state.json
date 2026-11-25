@@ -1388,4 +1388,28 @@
     "playlist_modified": false,
     "security_hold_685_unchanged": true
   }
+,
+  "final_infrastructure_packages_20261125": {
+    "scope": "ANA SİSTEM ALTYAPISI VE GÜVENLİK TESTLERİ TAMAMLANDI — yalnız final PR iki CI kontrolü PASS olduğunda geçerli",
+    "package1": {
+      "pr": 784,
+      "offline_ci": "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/45574375452",
+      "security_gate": "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/45574375379"
+    },
+    "package2": {
+      "pr": 785,
+      "merge_sha": "d0f7ec99082ca1ae90128251ef2763346c9e5999",
+      "offline_ci": "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/45575191193",
+      "security_gate": "https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/45575191143"
+    },
+    "package3": {
+      "acceptance": "offline isolated synthetic fixture only; requires both CI gates",
+      "test": "v2/test_secure_archive_roundtrip.py",
+      "external_restore_performed": false,
+      "production_key_used": false,
+      "playlist_modified": false
+    },
+    "historical_statuses_unchanged": true,
+    "live_broadcast_acceptance": false
+  }
 }
