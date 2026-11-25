@@ -6,81 +6,75 @@
   "entries": [
     {
       "file": "0000.m3u",
-      "group": "⭐ FAVORİLER (65)",
-      "records": 65,
-      "sha256": "4b4d6d2520da32b6edd76e18beb5c2c9894c44b4818a9cbf16e07112a5617dea"
+      "group": "⭐ FAVORİLER (37)",
+      "records": 37,
+      "sha256": "ab8a830f633bae5fefe5ba175dab79a18ced3232b39911a98788c81cf32217bf"
     },
     {
       "file": "0001.m3u",
-      "group": "⭐ FAVORİLER 1 (60)",
-      "records": 60,
-      "sha256": "a9c6ad361ebb62a556f58ca2800d2a9a5a5c5292c461609d4df2954d7d47108e"
-    },
-    {
-      "file": "0002.m3u",
-      "group": "⭐ FAVORİLER 2 (1)",
-      "records": 1,
-      "sha256": "f7effb2b81c07ad050ac65d39c92a1df536304c5b39c987ad2580ecba05ea680"
+      "group": "⭐ FAVORİLER 1 (27)",
+      "records": 27,
+      "sha256": "747f55188557de65bbbee476c4d880d25dd99b2aa2a501df1068fad59b7abd93"
     },
     {
       "file": "0003.m3u",
-      "group": "🇹🇷 ULUSAL-HEPSİ (408)",
-      "records": 408,
-      "sha256": "7147af0ea23a67ec3ad5e9bf815e8b2a982c7ea4d079a9c4d6542199dbed90bd"
+      "group": "🇹🇷 ULUSAL-HEPSİ (124)",
+      "records": 124,
+      "sha256": "f0a053eac6b346ec81939fba02d9a5ae906542ba338a85ca5f4b8e00073b87b0"
     },
     {
       "file": "0004.m3u",
-      "group": "🎬 SİNEMA (12)",
-      "records": 12,
-      "sha256": "a0272ad8a28df9a66f56c671f1d273a0a087e2624fb03d468b186e6e8d27b52a"
+      "group": "🎬 SİNEMA (1)",
+      "records": 1,
+      "sha256": "424c3552b88bd36bee2cd122a8bec93a3c199d30eb6555803c145b466121d828"
     },
     {
       "file": "0005.m3u",
-      "group": "📺 HABER (73)",
-      "records": 73,
-      "sha256": "1282b5c7b4bfc2542a8fc0ef67e782687a76b74d9ce0655b9433af517d0a9c12"
+      "group": "📺 HABER (36)",
+      "records": 36,
+      "sha256": "d952e1eabfad2694b25f7f908fb537ec61468000e582170de806f816f4a6980b"
     },
     {
       "file": "0006.m3u",
-      "group": "⚽️ SPOR (28)",
-      "records": 28,
-      "sha256": "a6181a8d6aed9b89948e1edf3e9092e10c7333a70958a606445e40739f284e6c"
+      "group": "⚽️ SPOR (8)",
+      "records": 8,
+      "sha256": "0d012b52e65cb9a70772faa4ecef54215dbf50dead5e12e0548708c95406f9d2"
     },
     {
       "file": "0007.m3u",
-      "group": "🌍 BELGESEL (19)",
-      "records": 19,
-      "sha256": "90bec2bd561974a0271ad2a3234b4cc822ed0b0a97b25e8ae0d89049773fb615"
+      "group": "🌍 BELGESEL (2)",
+      "records": 2,
+      "sha256": "1cf0f8acc604320b62d21e52e24e86f296980051a8b3962e4b1b9664fdf0d3f3"
     },
     {
       "file": "0008.m3u",
-      "group": "🧸 ÇOCUK (29)",
-      "records": 29,
-      "sha256": "bfd7073c45f29c2781eb4e076f9cdd25b71e1d1f6b4f60d13967fff570ecc92e"
+      "group": "🧸 ÇOCUK (11)",
+      "records": 11,
+      "sha256": "4f5195e8e67a4fc2863a08651a50ab6d63cd3788db6c267c7c174df201eb8deb"
     },
     {
       "file": "0009.m3u",
-      "group": "🎧 MÜZİK (41)",
-      "records": 41,
-      "sha256": "1fe93bfbdaed6cd09c9198f5a7bfb0f3ba8449b9daabcca7a183f8bbfb595415"
+      "group": "🎧 MÜZİK (4)",
+      "records": 4,
+      "sha256": "2f868a4be71b7045232244649893d3011924f7d55c061d6518e0df161b7dafa6"
     },
     {
       "file": "0010.m3u",
-      "group": "📍 YEREL (72)",
-      "records": 72,
-      "sha256": "0ba561ca305d52ac68929c9b00e1f9a7330ed505a52c697c3d6f02713abc0929"
+      "group": "📍 YEREL (3)",
+      "records": 3,
+      "sha256": "f9eeccb5ae01f07cc44e14eeb08841744b27896eb898de9aa7b42f0cc259abf2"
     },
     {
       "file": "0011.m3u",
-      "group": "🕌 DİNİ (17)",
-      "records": 17,
-      "sha256": "670c9772bc78521afb53e6860b5b8cf86bee79a07562ebb1b58069e1996281d1"
+      "group": "🕌 DİNİ (10)",
+      "records": 10,
+      "sha256": "847012c8e97149f0bc6dab689f2389e9ceb245fa8d5c074a47aa44c8e7644cc4"
     },
     {
       "file": "0012.m3u",
       "group": "YEDEKLER",
-      "records": 1562,
-      "sha256": "c3ae5b55c454dead839ad786be2ceaf3bc9805e24713960235699fbbbe061722"
+      "records": 2124,
+      "sha256": "8e0fd32f3dea16e5acbbd31880e7d6948a8bac4e439a5f8d1c2188f26a1a990d"
     },
     {
       "file": "0013.m3u",
