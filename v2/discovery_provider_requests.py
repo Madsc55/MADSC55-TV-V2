@@ -91,24 +91,27 @@ def retry_not_before(details):
     """Record a provider cooldown for later discovery runs."""
     wait = _rate_limit_wait(details.get("retry_after"), details.get("rate_limit_remaining"),
                             details.get("rate_limit_reset"))
-    return math.ceil(time.time()) + (wait if wait is not None else 60)
+    return math.ceil(time.time()) + max(30, wait if wait is not None else 60)
 
 
 def retry_delay(exc, attempt):
     """Return a delay within the request budget, or None to end this request."""
     if not isinstance(exc, urllib.error.HTTPError):
         return attempt if isinstance(exc, RETRYABLE_CONNECTION) else None
-    if exc.code not in RETRYABLE_HTTP:
+    throttled = exc.code == 429 or (exc.code == 403 and (
+        str(header(exc, "X-RateLimit-Remaining")).strip() == "0"
+        or bool(header(exc, "Retry-After"))))
+    if exc.code not in RETRYABLE_HTTP and not throttled:
         return None
     retry_after = header(exc, "Retry-After")
-    if exc.code == 429:
+    if throttled:
         delay = _rate_limit_wait(retry_after, header(exc, "X-RateLimit-Remaining"),
                                  header(exc, "X-RateLimit-Reset"))
     else:
         delay = _retry_after_seconds(retry_after)
     if delay is None:
         base = 1
-        if exc.code == 429:
+        if throttled:
             try:
                 host = urllib.parse.urlsplit(exc.url or "").hostname
             except ValueError:
@@ -116,4 +119,7 @@ def retry_delay(exc, attempt):
                 host = None
             base = 60 if host == "api.github.com" else 30
         delay = base * (2 ** (attempt - 1))
+    if throttled:
+        # Never hammer a provider even when Retry-After is zero.
+        delay = max(delay, min(120, 30 * (2 ** (attempt - 1))))
     return delay if delay <= MAX_RETRY_AFTER_SECONDS else None
