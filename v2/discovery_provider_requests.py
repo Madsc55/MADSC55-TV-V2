@@ -98,9 +98,8 @@ def retry_delay(exc, attempt):
     """Return a delay within the request budget, or None to end this request."""
     if not isinstance(exc, urllib.error.HTTPError):
         return attempt if isinstance(exc, RETRYABLE_CONNECTION) else None
-    throttled = exc.code == 429 or (exc.code == 403 and (
-        str(header(exc, "X-RateLimit-Remaining")).strip() == "0"
-        or bool(header(exc, "Retry-After"))))
+    # HTTP 403 must open the provider circuit immediately; retry only 429.
+    throttled = exc.code == 429
     if exc.code not in RETRYABLE_HTTP and not throttled:
         return None
     retry_after = header(exc, "Retry-After")
