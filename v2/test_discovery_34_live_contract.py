@@ -261,7 +261,7 @@ class LiveContractRetryTests(unittest.TestCase):
         result = probe("codeberg", fetch=fetch, sleep=sleeps.append)
         self.assertEqual(result["status"], "ok")
         self.assertEqual(result["attempts"], 2)
-        self.assertEqual(sleeps, [17])
+        self.assertEqual(sleeps, [30])
 
     def test_http_429_honors_http_date_retry_after(self):
         from datetime import datetime, timedelta, timezone
@@ -276,8 +276,8 @@ class LiveContractRetryTests(unittest.TestCase):
         self.assertEqual(result["reason"], "HTTP_429")
         self.assertEqual(result["attempts"], 3)
         self.assertEqual(len(sleeps), 2)
-        self.assertTrue(all(0 <= delay <= 35 for delay in sleeps))
-        self.assertTrue(all(delay >= 30 for delay in sleeps))
+        self.assertTrue(30 <= sleeps[0] <= 35)
+        self.assertEqual(sleeps[1], 60)
 
     def test_retry_after_beyond_budget_opens_circuit_without_early_retry(self):
         calls, sleeps = [], []
@@ -356,7 +356,7 @@ class LiveContractRetryTests(unittest.TestCase):
         self.assertEqual(len(calls), 1)
         self.assertEqual(sleeps, [])
 
-    def test_past_http_date_retry_after_does_not_sleep(self):
+    def test_past_http_date_retry_after_obeys_minimum_backoff(self):
         from datetime import datetime, timedelta, timezone
         from email.utils import format_datetime
         calls, sleeps = [], []
@@ -370,7 +370,7 @@ class LiveContractRetryTests(unittest.TestCase):
         result = probe("codeberg", fetch=fetch, sleep=sleeps.append)
         self.assertEqual(result["status"], "ok")
         self.assertEqual(result["attempts"], 2)
-        self.assertEqual(sleeps, [0])
+        self.assertEqual(sleeps, [30])
 
     def test_github_403_rate_limit_opens_provider_circuit(self):
         calls, sleeps = [], []
