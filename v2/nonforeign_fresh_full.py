@@ -5,6 +5,7 @@ from concurrent.futures import ThreadPoolExecutor
 import json
 from pathlib import Path
 import re
+import time
 from yedekler_quality_review import inspect, classify, get_quality_decoder
 from yedekler_deep_review import PLAYLIST, sha, yedekler_records
 from full_playlist_url_audit import write_json_atomic
@@ -39,19 +40,60 @@ def outcome(first,second):
         return "SECURITY_POLICY_BLOCKED"
     return result
 
-def review(row,exe):
+RETRY_GAP=120
+HARD_FAILURE={"ORIGINAL_HTTP_404","ORIGINAL_HTTP_410"}
+
+def red_eligible(rounds, historical_playable):
+    # Only independently timed original-endpoint 404/410 are accepted.
+    # Malformed streams, unsupported formats and decoder errors remain uncertain.
+    if historical_playable or len(rounds)!=3:
+        return False
+    return all(b["started"]-a["finished"]>=RETRY_GAP for a,b in zip(rounds,rounds[1:])) and all(
+        len(r["evidence"])==1 and r["evidence"][0]["status"] in HARD_FAILURE
+        and not r["evidence"][0].get("video") and not r["evidence"][0].get("audio")
+        for r in rounds)
+
+def history_index(paths):
+    playable=set()
+    for path in paths:
+        doc=json.loads(path.read_text())
+        if doc.get("complete") is not True:
+            raise ValueError("Incomplete history")
+        for row in doc["results"]:
+            if any(e.get("video") or e.get("audio") for e in row.get("first",[])+row.get("second",[])) or row.get("historical_playable"):
+                if row.get("url_sha256"):
+                    playable.add(row["url_sha256"])
+    return playable
+
+def review(row,exe,history):
     out={k:v for k,v in row.items() if k!="url"}
-    if row["url"] is None:
-        return {**out,"classification":"INVALID_URL","first":[],"second":[]}
-    first=inspect(row["url"],exe,variant_index=0,timeout=12)
-    second=[] if classify(first,[])=="AV_20S_VERIFIED" else inspect(row["url"],exe,variant_index=2,timeout=12)
-    return {**out,"classification":outcome(first,second),"first":first,"second":second}
+    historical=row["url_sha256"] in history
+    rounds=[]
+    if row["url"] is not None:
+        for i in range(3):
+            if i:
+                time.sleep(RETRY_GAP)
+            started=time.time()
+            evidence=inspect(row["url"],exe,variant_index=i,timeout=12,seconds=60,profile=i)
+            rounds.append({"started":started,"finished":time.time(),"evidence":evidence})
+            if classify(evidence,[])=="AV_20S_VERIFIED":
+                break
+    first=rounds[0]["evidence"] if rounds else []
+    second=[e for r in rounds[1:] for e in r["evidence"]]
+    classification=outcome(first,second) if rounds else "INVALID_URL"
+    eligible=red_eligible(rounds,historical)
+    if classification=="CONFIRMED_UNAVAILABLE" and not eligible:
+        classification="RECHECK_REQUIRED"
+    classification=classification.replace("AV_20S_","AV_60S_")
+    return {**out,"classification":classification,"first":first,"second":second,
+            "rounds":rounds,"historical_playable":historical,"red_eligible":eligible}
 
 def main():
     p=argparse.ArgumentParser()
     p.add_argument("--shard",type=int)
     p.add_argument("--merge-dir",type=Path)
     p.add_argument("--output",type=Path)
+    p.add_argument("--history",type=Path,action="append",default=[])
     a=p.parse_args()
     raw=PLAYLIST.read_bytes()
     rows=inventory(raw)
@@ -64,9 +106,10 @@ def main():
         if keys(result)!=keys(rows):
             raise ValueError("Coverage mismatch")
         counts=dict(Counter(r["classification"] for r in result))
-        buckets={"AV_20S_VERIFIED":"green","VIDEO_ONLY_REVIEW":"yellow","AUDIO_ONLY_REVIEW":"blue","AV_20S_QUALITY_REVIEW":"orange","AV_SHORT_VERIFIED":"orange"}
+        buckets={"AV_60S_VERIFIED":"green","VIDEO_ONLY_REVIEW":"yellow","AUDIO_ONLY_REVIEW":"blue","AV_60S_QUALITY_REVIEW":"orange","AV_SHORT_VERIFIED":"orange"}
         by_category={}
         for r in result:
+            r["red_eligible"]=red_eligible(r["rounds"],r["historical_playable"])
             r["bucket"]=buckets.get(r["classification"],"white")
             by_category.setdefault(r["category"],Counter())[r["bucket"]]+=1
         statuses=dict(Counter(x["status"] for r in result for x in r["first"]+r["second"]))
@@ -79,11 +122,14 @@ def main():
         exe=get_quality_decoder()
         if not exe:
             raise RuntimeError("System FFmpeg required")
+        if not a.history:
+            raise ValueError("Historical evidence required")
+        history=history_index(a.history)
         subset=rows[a.shard::SHARDS]
         report={"shard":a.shard,"playlist_sha256":sha(raw),"complete":False,"results":[]}
         write_json_atomic(a.output,report)
         with ThreadPoolExecutor(max_workers=4) as pool:
-            for row in pool.map(lambda r:review(r,exe),subset):
+            for row in pool.map(lambda r:review(r,exe,history),subset):
                 report["results"].append(row)
                 if len(report["results"])%10==0:
                     write_json_atomic(a.output,report)
