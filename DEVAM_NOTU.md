@@ -1,3 +1,10 @@
+## 25 Kasım 2026 — Final altyapı paketleri
+
+- PR [#784](https://github.com/Madsc55/MADSC55-TV-V2/pull/784) MERGED; Offline CI ve Production Security Gate PASS. GitLab/Codeberg 429 sınırlı backoff ve ölçülen kalite karar modülü.
+- PR [#785](https://github.com/Madsc55/MADSC55-TV-V2/pull/785) MERGED (`d0f7ec99082ca1ae90128251ef2763346c9e5999`); iki CI PASS. Kalite raporuna kesin kimlik/URL hash eşleşmesi, Türkçe ses/altyazı, bölge ve doğrulanmış varlık kararları bağlandı. Gerçek yayın kanıtı üretildiği iddia edilmez.
+- Final 3. Paket: sahibi harici dosya ve manuel anahtar şartını kaldırdı. Mevcut AES-256-GCM kodu, geçici rastgele test parolası, ayrı üretici/kurtarma dizinleri, şifreli kopya SHA-256 ve üretici dizini kaldırıldıktan sonra geri yüklenen içerik SHA-256 eşitliği ile offline test edilir. Bozulmuş şifreli veri ve yanlış anahtar reddedilir. Bu bir sentetik CI testi olup gerçek harici yedek veya üretim kasası restore kanıtı değildir.
+- **ANA SİSTEM ALTYAPISI VE GÜVENLİK TESTLERİ TAMAMLANDI** ifadesi yalnız bu final PR için Offline CI ve Production Security Gate PASS ve merge doğrulandığında, daraltılmış offline altyapı kapsamına uygulanır. Tarihsel görev statüleri ve güvenlik kilitleri korunur. Ana playlist ve devam eden canlı kanal testi değiştirilmez.
+
 ## 22 Kasım 2026 — Proje sahibi onaylı tarihsel kapsam arşiv kapanışı
 
 - PR #632, merge commit 59eaaf4 ile main'e birleştirildi.
