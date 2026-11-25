@@ -1,38 +1,4 @@
-#EXTINF:-1 tvg-id="" tvg-name="ÇİFTÇİ TV 1" tvg-logo="http://epg.one/img/3832.png" group-title="🌍 BELGESEL (19)",ÇİFTÇİ TV 1 720P HD
-https://live.artidijitalmedya.com/artidijital_ciftcitv/ciftcitv/playlist.m3u8
-#EXTINF:-1 tvg-id="" tvg-name="ÇİFTÇİ TV 2" tvg-logo="http://epg.one/img/3832.png" group-title="🌍 BELGESEL (19)",ÇİFTÇİ TV 2 720P HD
-http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6772/index.m3u8
-#EXTINF:-1 tvg-id="" tvg-name="ÇİFTÇİ TV" tvg-logo="http://epg.one/img/3832.png" group-title="🌍 BELGESEL (19)",ÇİFTÇİ TV 720P HD
-https://live.artidijitalmedya.com/artidijital_ciftcitv/ciftcitv/chunks.m3u8
-#EXTINF:-1 tvg-id="EdessaTV.tr@SD" tvg-logo="https://www.tvlogo.org/turkey/edessa-tv-tr.png" group-title="🌍 BELGESEL (19)",EDESSA TV 1080P
-https://canli.edessatv.com/hls/stream.m3u8
-#EXTINF:-1 tvg-name="GURME TV" tvg-logo="https://raw.githubusercontent.com/Madsc55/madsc-tv/main/logos/duzeltilmis-gurme.png" group-title="🌍 BELGESEL (19)",GURME TV
-https://live.euromediacenter.com/gurmetv/index.m3u8
-#EXTINF:-1 tvg-id="" tvg-name="LOVE NATURE" tvg-logo="https://www.google.com/s2/favicons?domain=lovenature.com&sz=256" group-title="🌍 BELGESEL (19)",LOVE NATURE 1080P FHD
+#EXTINF:-1 tvg-id="" tvg-name="LOVE NATURE" tvg-logo="https://www.google.com/s2/favicons?domain=lovenature.com&sz=256" group-title="🌍 BELGESEL (2)",LOVE NATURE 1080P FHD
 https://aegis-cloudfront-1.tubi.video/6d6d0f24-8445-4b4c-bdf6-44f9e38beaa4/playlist.m3u8
-#EXTINF:-1 tvg-name="LOVE NATURE HD" tvg-logo="https://tv.lovenature.com/wp-content/uploads/2024/10/LoveNature2024_Logo_full_colour-copy.png" group-title="🌍 BELGESEL (19)",LOVE NATURE HD 1080P FHD
-https://mumbai-edge.smartplaytv.in/LoveNature/index.m3u8
-#EXTINF:-1 tvg-id="MTurkTV.tr@SD" tvg-logo="https://raw.githubusercontent.com/Madsc55/madsc-tv/main/logos/resmi-mturk-20261012.png" group-title="🌍 BELGESEL (19)",MTÜRK TV 1080P
-https://edge1.socialsmart.tv/muglaturk/bant1/playlist.m3u8
-#EXTINF:-1 tvg-id="" tvg-name="STİNGRAY NATURESCAPE" tvg-logo="https://www.google.com/s2/favicons?domain=stingray.com&sz=256" group-title="🌍 BELGESEL (19)",STINGRAY NATURESCAPE 1080P FHD
+#EXTINF:-1 tvg-id="" tvg-name="STİNGRAY NATURESCAPE" tvg-logo="https://www.google.com/s2/favicons?domain=stingray.com&sz=256" group-title="🌍 BELGESEL (2)",STINGRAY NATURESCAPE 1080P FHD
 https://lotus.stingray.com/manifest/naturescape-a003-montreal/samsungtvplus/master.m3u8
-#EXTINF:-1 tvg-id="" tvg-name="TGRT BELGESEL" tvg-logo="http://epg.one/img/3915.png" group-title="🌍 BELGESEL (19)",TGRT BELGESEL 1080P FHD
-http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6860/index.m3u8
-#EXTINF:-1 tvg-id="" tvg-name="TGRT BELGESEL" tvg-logo="http://epg.one/img/3915.png" group-title="🌍 BELGESEL (19)",TGRT BELGESEL
-https://b01c02nl.mediatriple.net/videoonlylive/mtsxxkzwwuqtglive/broadcast_5fe462afc6a0e.smil/playlist.m3u8
-#EXTINF:-1 tvg-id="80spas00o3iq47a" tvg-name="TRT BELGESEL" tvg-logo="https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/turkey/trt-belgesel-tr.png" group-title="🌍 BELGESEL (19)",TRT BELGESEL 1080P FHD
-http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6852/index.m3u8
-#EXTINF:-1 tvg-id="madsc.candidate.829555d86adb1ac415d4" tvg-name="CGTN DOCUMENTARY" tvg-logo="https://raw.githubusercontent.com/Madsc55/madsc-tv/main/logos/onayli-cgtn-documentary-20261012.png" group-title="🌍 BELGESEL (19)",CGTN DOCUMENTARY 576P SD
-https://hlspackager.akamaized.net/live/DB/CGTN_DOCUMENTARY/HLS/CGTN_DOCUMENTARY.m3u8
-#EXTINF:-1 tvg-id="3908" tvg-logo="http://epg.one/img/3908.png" group-title="🌍 BELGESEL (19)",24 KİTCHEN HD TR
-http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6853/index.m3u8
-#EXTINF:-1 tvg-id="3916" tvg-logo="http://epg.one/img/325.png" group-title="🌍 BELGESEL (19)",DİSCOVERY CHANNEL HD TR
-http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6861/index.m3u8
-#EXTINF:-1 tvg-id="3916" tvg-logo="http://epg.one/img/325.png" group-title="🌍 BELGESEL (19)",DİSCOVERY CHANNEL TR
-http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6863/index.m3u8
-#EXTINF:-1 tvg-id="3922" tvg-logo="http://epg.one/img/3922.png" group-title="🌍 BELGESEL (19)",NATİONAL GEOGRAPHİC HD TR
-http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6866/index.m3u8
-#EXTINF:-1 tvg-id="3922" tvg-logo="http://epg.one/img/3922.png" group-title="🌍 BELGESEL (19)",NATİONAL GEOGRAPHİC FHD TR
-http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/6867/index.m3u8
-#EXTINF:-1 tvg-id="6531" tvg-logo="http://epg.one/img/6531.png" group-title="🌍 BELGESEL (19)",BEIN IZ HD TR
-http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/WCSZMUM84X4689VHGC7UDAQQ/19078/index.m3u8
