@@ -2,6 +2,8 @@
 """Offline archive safety regression: no network, no playlist modification."""
 import hashlib
 import os
+import secrets
+import shutil
 import tempfile
 from pathlib import Path
 from unittest.mock import patch
@@ -10,7 +12,48 @@ from cryptography.fernet import Fernet
 from turk_authorized_vault import Vault
 from secure_archive import backup, restore, decrypt, encrypt
 
+def test_independent_ephemeral_restore():
+    # Separate producer and recovery directories; never touch repository data.
+    secret = secrets.token_urlsafe(32)
+    payload = b'{"fixture":"independent AES-256-GCM restore"}\n'
+    expected = hashlib.sha256(payload).hexdigest()
+    with tempfile.TemporaryDirectory(prefix="v2-recovery-") as recovery:
+        recovery = Path(recovery)
+        with tempfile.TemporaryDirectory(prefix="v2-producer-") as producer:
+            producer = Path(producer)
+            source = producer / "fixture.json"
+            source.write_bytes(payload)
+            encrypted = producer / "fixture.enc"
+            receipt = backup(source, encrypted, secret)
+            copy = recovery / "retrieved.enc"
+            shutil.copyfile(encrypted, copy)
+            copy.chmod(0o600)
+            assert hashlib.sha256(copy.read_bytes()).hexdigest() == receipt["archive_sha256"]
+        assert not producer.exists()
+        recovered = recovery / "restored.json"
+        assert restore(copy, recovered, secret) == expected
+        assert hashlib.sha256(recovered.read_bytes()).hexdigest() == expected
+        assert recovered.read_bytes() == payload
+        assert recovered.stat().st_mode & 0o777 == 0o600
+        damaged = recovery / "damaged.enc"
+        blob = bytearray(copy.read_bytes())
+        blob[-1] ^= 1
+        damaged.write_bytes(blob)
+        from cryptography.exceptions import InvalidTag
+        for bad_source, bad_key in ((damaged, secret), (copy, secrets.token_urlsafe(32))):
+            target = recovery / "rejected.json"
+            try:
+                restore(bad_source, target, bad_key)
+            except InvalidTag:
+                pass
+            else:
+                raise AssertionError("Invalid archive accepted")
+            assert not target.exists()
+    print("PASS: independent ephemeral AES-256-GCM restore and SHA-256 parity")
+
+
 def main():
+    test_independent_ephemeral_restore()
     secret = "offline-fixture-passphrase-only"
     with tempfile.TemporaryDirectory() as d:
         root = Path(d)
