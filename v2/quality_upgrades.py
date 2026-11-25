@@ -3,6 +3,7 @@
 import datetime
 import json
 import re
+from v2.package2_evidence import evaluate
 from discover import ROOT, LIVE, entries
 
 SOURCE = ROOT / "v2/reports/turkish-stream-candidates.json"
@@ -63,7 +64,10 @@ def main():
                       "candidate_declared_height": claimed,
                       "status": status,
                       "warning": "Name and catalog quality labels are unverified; ffprobe width/height and stability required."})
-    report = {"created_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+    evidence_path = ROOT / "v2/reports/reviewed-stream-evidence.json"
+    evidence = json.loads(evidence_path.read_text(encoding="utf-8"))["results"] if evidence_path.exists() else []
+    decisions = evaluate(catalog["candidates"], evidence)
+    report = {"reviewed_decisions": decisions, "created_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
               "policy": "READ_ONLY; never replace a stream based on name or declared quality",
               "candidates": items,
               "potential_label_upgrades": sum(x["status"] == "POTENTIAL_QUALITY_UPGRADE" for x in items),
