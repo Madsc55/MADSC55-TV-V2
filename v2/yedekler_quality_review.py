@@ -39,7 +39,7 @@ def load_targets(prior, deep):
     return raw,[{**r,"previous":p["classification"],"prior_outcomes":[x["status"] for x in p["first"]+p["second"]]}
                 for r,p in zip(scope,results) if p["classification"] in REVIEW]
 
-def safe_sample(url,limit=MAX_BYTES,*,root=False, connection_factory=None, timeout=8):
+def safe_sample(url,limit=MAX_BYTES,*,root=False, connection_factory=None, timeout=8, seconds=20, profile=0):
     """Existing public-IP pinning per hop, at most 2 redirects; no cookies/auth.
     HTTPS downgrade, private targets, unsupported ports, encodings remain blocked.
     Retain partial bytes on read timeout instead of discarding playable samples.
@@ -53,7 +53,7 @@ def safe_sample(url,limit=MAX_BYTES,*,root=False, connection_factory=None, timeo
         con=factory(host,port,ip,timeout)
         try:
             con.request("GET",path,headers={"Accept-Encoding":"identity",
-                "User-Agent":"MADSC55-TV-V2-QualityAudit/1.0"})
+                "User-Agent":f"MADSC55-TV-V2-QualityAudit/1.0 (profile {profile})"})
             response=con.getresponse()
             if response.status in (301,302,303,307,308):
                 dest=response.getheader("Location")
@@ -73,7 +73,7 @@ def safe_sample(url,limit=MAX_BYTES,*,root=False, connection_factory=None, timeo
                 raise SafeFetchError("ENCODING_BLOCKED")
             chunks=[]
             size=0
-            deadline=time.monotonic()+22
+            deadline=time.monotonic()+seconds+2
             while size<limit and time.monotonic()<deadline:
                 try:
                     chunk=response.read1(min(65536,limit-size))
@@ -94,17 +94,17 @@ def safe_sample(url,limit=MAX_BYTES,*,root=False, connection_factory=None, timeo
             con.close()
     raise SafeFetchError("REDIRECT_LIMIT")
 
-def quality(data,fmt,exe):
+def quality(data,fmt,exe,seconds=20):
     """Observe up to 20.5 seconds of local media, not a 20-second network promise."""
     cmd=[exe,"-nostdin","-hide_banner","-nostats","-loglevel","info","-threads","1",
          "-filter_threads","1","-protocol_whitelist","pipe","-f",fmt,"-i","pipe:0",
-         "-map","0:v:0","-map","0:a:0","-t","20.5",
+         "-map","0:v:0","-map","0:a:0","-t",str(seconds+0.5),
          "-vf","blackdetect=d=2:pix_th=0.10,freezedetect=n=-60dB:d=2,showinfo",
          "-af","silencedetect=n=-50dB:d=2,ashowinfo",
          "-threads","1","-f","null","pipe:1"]
     try:
         r=subprocess.run(cmd,input=data,stdout=subprocess.DEVNULL,stderr=subprocess.PIPE,
-                         timeout=40,check=False)
+                         timeout=max(40,seconds+20),check=False)
         logs=r.stderr.decode("utf-8",errors="replace")
     except (OSError,subprocess.TimeoutExpired,ValueError):
         return {"status":"LOCAL_DECODE_TIMEOUT","video":False,"audio":False}
@@ -116,23 +116,23 @@ def quality(data,fmt,exe):
     aspan=span("Parsed_ashowinfo")
     v=vspan>0 or local_frame(data,fmt,"v",exe)
     a=aspan>0 or local_frame(data,fmt,"a",exe)
-    full=r.returncode==0 and min(vspan,aspan)>=19.5
+    full=r.returncode==0 and min(vspan,aspan)>=seconds-0.5
     flags=[label for pattern,label in [(r"black_start:","BLACK_INTERVAL"),(r"freeze_start:","FREEZE_INTERVAL"),
             (r"silence_start:","SILENCE_INTERVAL")] if re.search(pattern,logs)]
-    return {"status":"MEDIA_20S" if full else "SHORT_OR_PARTIAL_MEDIA",
+    return {"status":f"MEDIA_{seconds}S" if full else "SHORT_OR_PARTIAL_MEDIA",
             "video":v,"audio":a,"video_seconds":vspan,"audio_seconds":aspan,
             "quality_flags":flags,"full_sample":full,"decoder_returncode":r.returncode}
 
-def inspect(url,exe,*,variant_index=0,timeout=8):
+def inspect(url,exe,*,variant_index=0,timeout=8,seconds=20,profile=0):
     attempts=[]
     calls=0
-    budget=MAX_BYTES
+    budget=MAX_BYTES*(3 if seconds==60 else 1)
     def get(target,limit=MAX_BYTES,root=False):
         nonlocal calls,budget
         calls+=1
-        if calls>12 or budget<=0:
+        if calls>(36 if seconds==60 else 12) or budget<=0:
             raise SafeFetchError("REQUEST_BUDGET")
-        data,final=safe_sample(target,min(limit,budget),root=root,timeout=timeout)
+        data,final=safe_sample(target,min(limit,budget),root=root,timeout=timeout,seconds=seconds,profile=profile)
         budget-=len(data)
         return data,final
     def visit(data,target,depth=0):
@@ -140,7 +140,7 @@ def inspect(url,exe,*,variant_index=0,timeout=8):
             raise SafeFetchError("HLS_DEPTH_LIMIT")
         if not data.lstrip().startswith((b"#EXTM3U",b"\xef\xbb\xbf#EXTM3U")):
             fmt="mov" if len(data)>12 and data[4:8] in (b"ftyp",b"moov",b"styp") else "mpegts"
-            attempts.append(quality(data,fmt,exe))
+            attempts.append(quality(data,fmt,exe,seconds))
             return
         lines,uris=parse_manifest(data)
         if any(x.startswith("#EXT-X-STREAM-INF:") for x in lines):
@@ -160,7 +160,7 @@ def inspect(url,exe,*,variant_index=0,timeout=8):
                 raise SafeFetchError("FMP4_MAP_UNSUPPORTED")
             init,_=get(urljoin(target,m.group(1)),512000)
         segments=[]
-        for u in uris[-5:]:
+        for u in uris[-(24 if seconds==60 else 5):]:
             if budget<65536:
                 break
             try:
@@ -170,9 +170,9 @@ def inspect(url,exe,*,variant_index=0,timeout=8):
                 attempts.append({"status":str(e),"video":False,"audio":False})
                 break
         if segments:
-            attempts.append(quality(init+b"".join(segments),"mov" if init else "mpegts",exe))
+            attempts.append(quality(init+b"".join(segments),"mov" if init else "mpegts",exe,seconds))
     try:
-        data,final=get(url,root=True)
+        data,final=get(url,limit=MAX_BYTES*(3 if seconds==60 else 1),root=True)
         visit(data,final)
     except SafeFetchError as e:
         attempts.append({"status":str(e),"video":False,"audio":False})

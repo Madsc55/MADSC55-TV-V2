@@ -44,6 +44,8 @@ jobs:
       - name: Run full offline regression suite
         if: steps.move_scope.outputs.eligible != 'true'
         run: make run
+      - name: Verify deep AV decision lock
+        run: PYTHONPATH=v2 python -m unittest v2.test_nonforeign_deep_av
       - name: Verify system FFmpeg quality fixtures before merge
         if: steps.move_scope.outputs.eligible != 'true'
         run: |
@@ -853,9 +855,10 @@ jobs:
     name: Nonforeign all-category fresh quality shard ${{ matrix.shard }}
     if: github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[nonforeign-av-20261125]')
     runs-on: ubuntu-24.04
-    timeout-minutes: 150
+    timeout-minutes: 350
     permissions:
       contents: read
+      actions: read
     strategy:
       fail-fast: false
       max-parallel: 4
@@ -879,8 +882,15 @@ jobs:
           PYTHONPATH=v2:. python -m unittest -v v2.test_shared_url_safe_probe v2.test_full_playlist_av_decode
           PYTHONPATH=v2 python v2/yedekler_quality_review.py --self-test
           python -m py_compile v2/nonforeign_fresh_full.py
+          PYTHONPATH=v2 python -m unittest v2.test_nonforeign_deep_av
+      - uses: actions/download-artifact@v4
+        with:
+          run-id: 45506727312
+          github-token: ${{ github.token }}
+          name: yedekler-fresh-summary
+          path: /tmp/history
       - name: Fresh bounded quality test
-        run: PYTHONPATH=v2 python v2/nonforeign_fresh_full.py --shard ${{ matrix.shard }} --output /tmp/fresh-${{ matrix.shard }}.json
+        run: PYTHONPATH=v2 python v2/nonforeign_fresh_full.py --shard ${{ matrix.shard }} --history /tmp/history/fresh-summary.json --output /tmp/fresh-${{ matrix.shard }}.json
       - uses: actions/upload-artifact@v4
         if: always()
         with:
