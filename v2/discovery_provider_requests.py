@@ -118,7 +118,11 @@ def retry_delay(exc, attempt):
                 host = None
             base = 60 if host == "api.github.com" else 30
         delay = base * (2 ** (attempt - 1))
-    if throttled:
-        # Never hammer a provider even when Retry-After is zero.
-        delay = max(delay, min(120, 30 * (2 ** (attempt - 1))))
+    if throttled and str(retry_after).strip() == "0":
+        try:
+            host = urllib.parse.urlsplit(exc.url or "").hostname
+        except ValueError:
+            host = None
+        if host in ("gitlab.com", "codeberg.org"):
+            delay = max(delay, min(120, 30 * (2 ** (attempt - 1))))
     return delay if delay <= MAX_RETRY_AFTER_SECONDS else None
