@@ -1,0 +1,11 @@
+{
+  "reverts_pr": 787,
+  "reverts_commit": "27838a8d11179e87dd2d17498a493d061022fd1c",
+  "restores_playlist_from": "abab59a5aece98080bebcec3a2493300da6a2764",
+  "base_playlist_sha256": "414300c76946ace6e969efa69ec4c9155926fcf50541d350c6476ae7d6e78603",
+  "restored_playlist_sha256": "265f368758e75c5b18bc1b936a9792fef36528ba486288ddb35e4e7e23775ecf",
+  "restored_records": 562,
+  "backups_after": 1562,
+  "total": 18330,
+  "deleted": 0
+}
