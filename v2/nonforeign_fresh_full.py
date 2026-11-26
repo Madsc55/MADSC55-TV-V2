@@ -41,6 +41,9 @@ def outcome(first,second):
     return result
 
 RETRY_GAP=120
+STARTUP_TIMEOUT=180
+LATE_START_SECONDS=15
+REQUIRED_ROUNDS=3
 HARD_FAILURE={"ORIGINAL_HTTP_404","ORIGINAL_HTTP_410"}
 
 def red_eligible(rounds, historical_playable):
@@ -69,15 +72,19 @@ def review(row,exe,history):
     out={k:v for k,v in row.items() if k!="url"}
     historical=row["url_sha256"] in history
     rounds=[]
-    if row["url"] is not None:
-        for i in range(3):
-            if i:
-                time.sleep(RETRY_GAP)
-            started=time.time()
-            evidence=inspect(row["url"],exe,variant_index=i,timeout=12,seconds=60,profile=i)
-            rounds.append({"started":started,"finished":time.time(),"evidence":evidence})
-            if classify(evidence,[])=="AV_20S_VERIFIED":
-                break
+    for i in range(REQUIRED_ROUNDS):
+        if i:
+            time.sleep(RETRY_GAP)
+        started=time.time()
+        evidence=(inspect(row["url"],exe,variant_index=i,timeout=STARTUP_TIMEOUT,seconds=60,profile=i)
+                  if row["url"] is not None else
+                  [{"status":"INVALID_URL","video":False,"audio":False,"startup_seconds":None}])
+        startup=next((e["startup_seconds"] for e in evidence if e.get("startup_seconds") is not None),None)
+        healthy=any(e.get("full_sample") and not e.get("quality_flags") and
+                    e.get("video") and e.get("audio") and e.get("startup_seconds") is not None
+                    for e in evidence)
+        rounds.append({"started":started,"finished":time.time(),"evidence":evidence,
+                       "startup_seconds":startup,"healthy_60s":healthy})
     first=rounds[0]["evidence"] if rounds else []
     second=[e for r in rounds[1:] for e in r["evidence"]]
     classification=outcome(first,second) if rounds else "INVALID_URL"
@@ -85,8 +92,18 @@ def review(row,exe,history):
     if classification=="CONFIRMED_UNAVAILABLE" and not eligible:
         classification="RECHECK_REQUIRED"
     classification=classification.replace("AV_20S_","AV_60S_")
+    passed=sum(r["healthy_60s"] for r in rounds)
+    late=any(r["healthy_60s"] and r["startup_seconds"]>LATE_START_SECONDS for r in rounds)
+    if classification=="AV_60S_VERIFIED":
+        if passed==REQUIRED_ROUNDS:
+            classification="AV_60S_LATE_START_VERIFIED" if late else "AV_60S_VERIFIED"
+        else:
+            classification="AV_60S_INCONSISTENT_REVIEW"
     return {**out,"classification":classification,"first":first,"second":second,
-            "rounds":rounds,"historical_playable":historical,"red_eligible":eligible}
+            "rounds":rounds,"startup_seconds":[r["startup_seconds"] for r in rounds],
+            "healthy_rounds":passed,"required_rounds":REQUIRED_ROUNDS,
+            "consistency_score":round(passed/REQUIRED_ROUNDS,4),
+            "late_start_observed":late,"historical_playable":historical,"red_eligible":eligible}
 
 def main():
     p=argparse.ArgumentParser()
@@ -105,8 +122,10 @@ def main():
         result=sorted([r for part in parts for r in part["results"]],key=lambda r:r["position"])
         if keys(result)!=keys(rows):
             raise ValueError("Coverage mismatch")
+        if any(len(r["rounds"])!=REQUIRED_ROUNDS or r.get("required_rounds")!=REQUIRED_ROUNDS for r in result):
+            raise ValueError("Incomplete independent rounds")
         counts=dict(Counter(r["classification"] for r in result))
-        buckets={"AV_60S_VERIFIED":"green","VIDEO_ONLY_REVIEW":"yellow","AUDIO_ONLY_REVIEW":"blue","AV_60S_QUALITY_REVIEW":"orange","AV_SHORT_VERIFIED":"orange"}
+        buckets={"AV_60S_VERIFIED":"green","AV_60S_LATE_START_VERIFIED":"green","AV_60S_INCONSISTENT_REVIEW":"orange","VIDEO_ONLY_REVIEW":"yellow","AUDIO_ONLY_REVIEW":"blue","AV_60S_QUALITY_REVIEW":"orange","AV_SHORT_VERIFIED":"orange"}
         by_category={}
         for r in result:
             r["red_eligible"]=red_eligible(r["rounds"],r["historical_playable"])
