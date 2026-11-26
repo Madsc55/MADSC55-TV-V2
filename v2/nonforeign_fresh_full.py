@@ -13,16 +13,35 @@ from full_playlist_url_audit import write_json_atomic
 from playlist_parts_manager import split_records, category
 
 SHARDS=32
-def inventory(raw):
+def turkic_hint(record):
+    # Metadata-only hints, not a country/language verification or playback claim.
+    head=record.splitlines()[0].decode("utf-8",errors="replace")
+    name=head.rsplit(",",1)[-1].casefold()
+    meta=" ".join(re.findall(r'(?:tvg-id|tvg-name|tvg-country|tvg-language)="([^"]*)"',head,re.I)).casefold()
+    text=name+" "+meta
+    patterns=[
+        ("KKTC",r"\b(?:kktc|trnc|kıbrıs|kibris|kuzey kıbrıs|bayrak radyo televizyon)\b"),
+        ("Azerbaycan",r"\b(?:azerbaycan|azerbaijan|azərbaycan|aztv|idman az|xezer|xəzər)\b|\.az\b"),
+        ("Diğer Türkî",r"\b(?:türkmenistan|turkmenistan|özbekistan|uzbekistan|kazakistan|kazakhstan|kırgızistan|kyrgyzstan|tatarstan|uyghur)\b|\.(?:tm|uz|kz|kg)\b"),
+        ("Türkiye/Türkçe",r"\b(?:türkiye|turkiye|turkey|türkçe|turkish|trt|türk|turk|kanal 7|show tv|star tv|atv|haber türk|habertürk)\b|\.tr\b|(?:^|[\s|])tr(?:$|[\s|])")
+    ]
+    return next((label for label,pattern in patterns if re.search(pattern,text)), "Belirsiz/diğer")
+
+def inventory(raw, scope="nonforeign"):
+    if scope not in ("nonforeign","yedekler"):
+        raise ValueError("Unknown audit scope")
     rows=[]
     for pos, record in enumerate(split_records(raw)[1],1):
         group=category(record)
         if "YABANCI ARŞİV" in group.upper():
             continue
+        if scope=="yedekler" and not re.fullmatch(r"(?:🗂️?\s*)?YEDEKLER(?: \(\d+\))?",group):
+            continue
         urls=[u for u in record.splitlines()[1:] if u.startswith((b"http://",b"https://"))]
         rows.append({"position":pos,"category":group,"record_sha256":sha(record),
                      "url_sha256":sha(urls[0]) if len(urls)==1 else None,
-                     "url":urls[0].decode("utf-8") if len(urls)==1 else None})
+                     "url":urls[0].decode("utf-8") if len(urls)==1 else None,
+                     **({"turkic_metadata_hint":turkic_hint(record)} if scope=="yedekler" else {})})
     if not rows:
         raise ValueError("Empty audit scope")
     return rows
@@ -111,13 +130,14 @@ def main():
     p.add_argument("--merge-dir",type=Path)
     p.add_argument("--output",type=Path)
     p.add_argument("--history",type=Path,action="append",default=[])
+    p.add_argument("--scope",choices=["nonforeign","yedekler"],default="nonforeign")
     a=p.parse_args()
     raw=PLAYLIST.read_bytes()
-    rows=inventory(raw)
+    rows=inventory(raw,a.scope)
     keys=lambda rs:[(r["position"],r["category"],r["record_sha256"],r["url_sha256"]) for r in rs]
     if a.merge_dir:
         parts=[json.loads(x.read_text()) for x in a.merge_dir.rglob("fresh-*.json")]
-        if len(parts)!=SHARDS or {x["shard"] for x in parts}!=set(range(SHARDS)) or any(not x["complete"] or x["playlist_sha256"]!=sha(raw) for x in parts):
+        if len(parts)!=SHARDS or {x["shard"] for x in parts}!=set(range(SHARDS)) or any(not x["complete"] or x["playlist_sha256"]!=sha(raw) or x.get("scope","nonforeign")!=a.scope for x in parts):
             raise ValueError("Missing or stale shards")
         result=sorted([r for part in parts for r in part["results"]],key=lambda r:r["position"])
         if keys(result)!=keys(rows):
@@ -132,9 +152,12 @@ def main():
             r["bucket"]=buckets.get(r["classification"],"white")
             by_category.setdefault(r["category"],Counter())[r["bucket"]]+=1
         statuses=dict(Counter(x["status"] for r in result for x in r["first"]+r["second"]))
-        report={"complete":True,"total":len(result),"playlist_sha256":sha(raw),"counts":counts,"by_category":by_category,"attempt_statuses":statuses,"results":result}
+        if a.scope=="yedekler" and any(r.get("turkic_metadata_hint")!=source.get("turkic_metadata_hint") for r,source in zip(result,rows)):
+            raise ValueError("Metadata hint mismatch")
+        green_summary={c:dict(Counter(r.get("turkic_metadata_hint","Belirsiz/diğer") for r in result if r["classification"]==c)) for c in ("AV_60S_VERIFIED","AV_60S_LATE_START_VERIFIED")}
+        report={"scope":a.scope,"green_metadata_candidates":green_summary,"complete":True,"total":len(result),"playlist_sha256":sha(raw),"counts":counts,"by_category":by_category,"attempt_statuses":statuses,"results":result}
         write_json_atomic(a.output,report)
-        print(json.dumps({"total":len(result),"counts":counts,"attempt_statuses":statuses}))
+        print(json.dumps({"scope":a.scope,"total":len(result),"counts":counts,"green_metadata_candidates":green_summary,"attempt_statuses":statuses},ensure_ascii=False))
     else:
         if a.shard not in range(SHARDS):
             raise ValueError("Invalid shard")
@@ -145,7 +168,7 @@ def main():
             raise ValueError("Historical evidence required")
         history=history_index(a.history)
         subset=rows[a.shard::SHARDS]
-        report={"shard":a.shard,"playlist_sha256":sha(raw),"complete":False,"results":[]}
+        report={"scope":a.scope,"shard":a.shard,"playlist_sha256":sha(raw),"complete":False,"results":[]}
         write_json_atomic(a.output,report)
         with ThreadPoolExecutor(max_workers=4) as pool:
             for row in pool.map(lambda r:review(r,exe,history),subset):

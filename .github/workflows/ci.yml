@@ -853,7 +853,7 @@ jobs:
 
   nonforeign-fresh-full:
     name: Nonforeign all-category fresh quality shard ${{ matrix.shard }}
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[nonforeign-av-20261125]')
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && (contains(github.event.head_commit.message, '[nonforeign-av-20261125]') || contains(github.event.head_commit.message, '[yedekler-startup-20261126]'))
     runs-on: ubuntu-24.04
     timeout-minutes: 350
     permissions:
@@ -890,7 +890,7 @@ jobs:
           name: yedekler-fresh-summary
           path: /tmp/history
       - name: Fresh bounded quality test
-        run: PYTHONPATH=v2 python v2/nonforeign_fresh_full.py --shard ${{ matrix.shard }} --history /tmp/history/fresh-summary.json --output /tmp/fresh-${{ matrix.shard }}.json
+        run: PYTHONPATH=v2 python v2/nonforeign_fresh_full.py --scope ${{ contains(github.event.head_commit.message, '[yedekler-startup-20261126]') && 'yedekler' || 'nonforeign' }} --shard ${{ matrix.shard }} --history /tmp/history/fresh-summary.json --output /tmp/fresh-${{ matrix.shard }}.json
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -902,7 +902,7 @@ jobs:
   nonforeign-fresh-full-summary:
     name: Nonforeign all-category fresh coverage
     needs: nonforeign-fresh-full
-    if: always() && github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[nonforeign-av-20261125]')
+    if: always() && github.event_name == 'push' && github.ref == 'refs/heads/main' && (contains(github.event.head_commit.message, '[nonforeign-av-20261125]') || contains(github.event.head_commit.message, '[yedekler-startup-20261126]'))
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     permissions:
@@ -919,7 +919,7 @@ jobs:
         with:
           pattern: nonforeign-fresh-*
           path: /tmp/fresh-parts
-      - run: PYTHONPATH=v2 python v2/nonforeign_fresh_full.py --merge-dir /tmp/fresh-parts --output /tmp/fresh-summary.json
+      - run: PYTHONPATH=v2 python v2/nonforeign_fresh_full.py --scope ${{ contains(github.event.head_commit.message, '[yedekler-startup-20261126]') && 'yedekler' || 'nonforeign' }} --merge-dir /tmp/fresh-parts --output /tmp/fresh-summary.json
       - uses: actions/upload-artifact@v4
         with:
           name: nonforeign-fresh-summary

@@ -73,3 +73,14 @@ class DecisionTests(unittest.TestCase):
             clock[0]=179
             obs.observe(b"data","mpegts")
             self.assertIsNone(obs.metrics()["startup_seconds"])
+
+    def test_yedekler_scope_and_metadata(self):
+        from nonforeign_fresh_full import inventory
+        raw=('#EXTM3U\n#EXTINF:-1 group-title="🗂️ YEDEKLER (2)" tvg-id="TRT1.tr",TRT 1\nhttps://example.org/a\n'
+             '#EXTINF:-1 group-title="🗂️ YEDEKLER (2)",AZTV\nhttps://example.org/b\n'
+             '#EXTINF:-1 group-title="⭐ FAVORİLER (1)",TRT 1\nhttps://example.org/c\n'
+             '#EXTINF:-1 group-title="YABANCI ARŞİVİ (1)",TRT 1\nhttps://example.org/d\n').encode()
+        rows=inventory(raw,"yedekler")
+        self.assertEqual([r["position"] for r in rows],[1,2])
+        self.assertEqual([r["turkic_metadata_hint"] for r in rows],["Türkiye/Türkçe","Azerbaycan"])
+        self.assertEqual(len(inventory(raw)),3)
