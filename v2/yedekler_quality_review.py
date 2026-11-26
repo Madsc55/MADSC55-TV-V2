@@ -39,18 +39,65 @@ def load_targets(prior, deep):
     return raw,[{**r,"previous":p["classification"],"prior_outcomes":[x["status"] for x in p["first"]+p["second"]]}
                 for r,p in zip(scope,results) if p["classification"] in REVIEW]
 
-def safe_sample(url,limit=MAX_BYTES,*,root=False, connection_factory=None, timeout=8, seconds=20, profile=0):
+class StartupObservation:
+    """Wall-clock time to first locally decoded video and audio, not IBO telemetry."""
+    def __init__(self, exe, timeout=180, seconds=60):
+        self.exe = exe
+        self.started = time.monotonic()
+        self.startup_deadline = self.started + timeout
+        self.seconds = seconds
+        self.video_at = self.audio_at = None
+        self.ready_at = None
+        self.last_probe = float("-inf")
+
+    def deadline(self):
+        return self.startup_deadline if self.ready_at is None else self.ready_at + self.seconds + 2
+
+    def remaining(self):
+        return self.deadline() - time.monotonic()
+
+    def observe(self, data, fmt, *, force=False):
+        if self.ready_at is not None or not data:
+            return
+        now = time.monotonic()
+        if now >= self.startup_deadline or (not force and now - self.last_probe < 2):
+            return
+        self.last_probe = now
+        for kind, attr in (("v", "video_at"), ("a", "audio_at")):
+            if getattr(self, attr) is None and time.monotonic() < self.startup_deadline:
+                if local_frame(data, fmt, kind, self.exe):
+                    observed = time.monotonic()
+                    if observed <= self.startup_deadline:
+                        setattr(self, attr, observed)
+        if self.video_at is not None and self.audio_at is not None:
+            self.ready_at = max(self.video_at, self.audio_at)
+
+    def metrics(self):
+        elapsed = lambda t: None if t is None else round(t - self.started, 3)
+        return {"startup_seconds": elapsed(self.ready_at),
+                "first_video_seconds": elapsed(self.video_at),
+                "first_audio_seconds": elapsed(self.audio_at),
+                "startup_measurement": "local_decode_observed",
+                "startup_timeout_seconds": 180,
+                "requested_media_seconds": self.seconds}
+
+
+def safe_sample(url,limit=MAX_BYTES,*,root=False, connection_factory=None, timeout=8, seconds=20, profile=0,
+                observation=None, on_chunk=None):
     """Existing public-IP pinning per hop, at most 2 redirects; no cookies/auth.
     HTTPS downgrade, private targets, unsupported ports, encodings remain blocked.
     Retain partial bytes on read timeout instead of discarding playable samples.
     """
-    if timeout not in (8,12):
+    if timeout not in (8,12,180) or (timeout == 180 and observation is None):
         raise ValueError("Invalid sample timeout")
     current=url
     for hop in range(3):
         scheme,host,port,ip,path=vetted_target(current)
         factory=connection_factory or (PinnedHTTPS if scheme=="https" else PinnedHTTP)
-        con=factory(host,port,ip,timeout)
+        remaining = observation.remaining() if observation is not None else timeout
+        if remaining <= 0:
+            raise SafeFetchError("STARTUP_OR_CAPTURE_DEADLINE")
+        con=factory(host,port,ip,min(timeout,remaining))
         try:
             con.request("GET",path,headers={"Accept-Encoding":"identity",
                 "User-Agent":f"MADSC55-TV-V2-QualityAudit/1.0 (profile {profile})"})
@@ -74,8 +121,18 @@ def safe_sample(url,limit=MAX_BYTES,*,root=False, connection_factory=None, timeo
             chunks=[]
             size=0
             deadline=time.monotonic()+seconds+2
-            while size<limit and time.monotonic()<deadline:
+            while size<limit:
+                remaining = (observation.remaining() if observation is not None
+                             else deadline-time.monotonic())
+                if remaining <= 0:
+                    break
                 try:
+                    if observation is not None:
+                        sock = con.sock
+                        if sock is None:
+                            sock = getattr(getattr(response.fp, "raw", None), "_sock", None)
+                        if sock is not None:
+                            sock.settimeout(min(timeout, max(0.001, remaining)))
                     chunk=response.read1(min(65536,limit-size))
                 except (OSError,TimeoutError,http.client.HTTPException):
                     break
@@ -83,6 +140,10 @@ def safe_sample(url,limit=MAX_BYTES,*,root=False, connection_factory=None, timeo
                     break
                 chunks.append(chunk)
                 size+=len(chunk)
+                if on_chunk is not None:
+                    on_chunk(chunks, False)
+            if chunks and on_chunk is not None:
+                on_chunk(chunks, True)
             if not chunks:
                 raise SafeFetchError("EMPTY_OR_TIMEOUT")
             return b"".join(chunks),current
@@ -127,25 +188,41 @@ def inspect(url,exe,*,variant_index=0,timeout=8,seconds=20,profile=0):
     attempts=[]
     calls=0
     budget=MAX_BYTES*(3 if seconds==60 else 1)
-    def get(target,limit=MAX_BYTES,root=False):
+    observation=StartupObservation(exe, timeout, seconds) if timeout==180 else None
+    def get(target,limit=MAX_BYTES,root=False,on_chunk=None):
         nonlocal calls,budget
         calls+=1
         if calls>(36 if seconds==60 else 12) or budget<=0:
             raise SafeFetchError("REQUEST_BUDGET")
-        data,final=safe_sample(target,min(limit,budget),root=root,timeout=timeout,seconds=seconds,profile=profile)
+        kwargs = {}
+        if observation is not None:
+            kwargs.update(observation=observation,on_chunk=on_chunk)
+        data,final=safe_sample(target,min(limit,budget),root=root,timeout=timeout,seconds=seconds,profile=profile,**kwargs)
         budget-=len(data)
         return data,final
+    def direct_probe(chunks, force):
+        if observation is None or observation.ready_at is not None:
+            return
+        prefix = chunks[0].lstrip()
+        if prefix.startswith((b"#EXTM3U", b"\xef\xbb\xbf#EXTM3U")) or (len(prefix) < 12 and not force):
+            return
+        data = b"".join(chunks)
+        fmt = "mov" if len(data)>12 and data[4:8] in (b"ftyp",b"moov",b"styp") else "mpegts"
+        observation.observe(data,fmt,force=force)
+
     def visit(data,target,depth=0):
         if depth>2:
             raise SafeFetchError("HLS_DEPTH_LIMIT")
         if not data.lstrip().startswith((b"#EXTM3U",b"\xef\xbb\xbf#EXTM3U")):
             fmt="mov" if len(data)>12 and data[4:8] in (b"ftyp",b"moov",b"styp") else "mpegts"
+            if observation is not None:
+                observation.observe(data,fmt,force=True)
             attempts.append(quality(data,fmt,exe,seconds))
             return
         lines,uris=parse_manifest(data)
         if any(x.startswith("#EXT-X-STREAM-INF:") for x in lines):
             # One advertised variant per attempt; no alternate credentials or DRM.
-            variant,final=get(urljoin(target,uris[min(variant_index,len(uris)-1)]),512000)
+            variant,final=get(urljoin(target,uris[min(variant_index,len(uris)-1)]),512000,on_chunk=direct_probe)
             visit(variant,final,depth+1)
             return
         if not any(x.startswith("#EXTINF:") for x in lines):
@@ -164,7 +241,11 @@ def inspect(url,exe,*,variant_index=0,timeout=8,seconds=20,profile=0):
             if budget<65536:
                 break
             try:
-                part,_=get(urljoin(target,u),6*1024*1024)
+                def segment_probe(chunks, force):
+                    if observation is not None and observation.ready_at is None:
+                        observation.observe(init+b"".join(segments)+b"".join(chunks),
+                                            "mov" if init else "mpegts",force=force)
+                part,_=get(urljoin(target,u),6*1024*1024,on_chunk=segment_probe)
                 segments.append(part)
             except SafeFetchError as e:
                 attempts.append({"status":str(e),"video":False,"audio":False})
@@ -172,12 +253,15 @@ def inspect(url,exe,*,variant_index=0,timeout=8,seconds=20,profile=0):
         if segments:
             attempts.append(quality(init+b"".join(segments),"mov" if init else "mpegts",exe,seconds))
     try:
-        data,final=get(url,limit=MAX_BYTES*(3 if seconds==60 else 1),root=True)
+        data,final=get(url,limit=MAX_BYTES*(3 if seconds==60 else 1),root=True,on_chunk=direct_probe)
         visit(data,final)
     except SafeFetchError as e:
         attempts.append({"status":str(e),"video":False,"audio":False})
     except Exception:
         attempts.append({"status":"UNEXPECTED_ERROR","video":False,"audio":False})
+    if observation is not None:
+        for row in attempts:
+            row.update(observation.metrics())
     return attempts
 
 def classify(first,second,radio=False):
