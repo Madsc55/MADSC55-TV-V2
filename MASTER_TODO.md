@@ -432,6 +432,9 @@ Tarama kapsamı: main ağacındaki tüm .md/.txt/.json/.yml/.yaml dosyaları, a�
 - **PR #650 @ fe1420ca833e / DEVAM_NOTU.md:L1708** — [Açık PR, tarihsel plan] 3. **Kanal bazlı sağlık defteri:** Her kanal için değişmez kimlik, kategori, URL özeti, kontrol zamanı, HTTP/HLS sonucu, ses/video kanıtı ve `CALISIYOR` / `CALISMIYOR` / `BELIRSIZ_YENIDEN_TEST` durumunu kaydet. 403/503, bölgesel engel ve timeout tek başına kesin ölü değildir.
 - **PR #650 @ fe1420ca833e / DEVAM_NOTU.md:L1712** — [Açık PR, tarihsel plan] 7. **Güvenli uygulama ve kabul:** Sonuçları raporla; kullanıcı kuralları ve 685 kilidi doğrulandıktan sonra yalnızca doğrulanmış değişiklikleri mevcut ana playlist'e PR üzerinden uygula. Mevcut diğer kategorileri koru, 48 daha önce yasaklanan kanalı geri getirme; Offline CI ve Production Security Gate PASS olmadan merge etme. İBO Player cihaz testi ayrı son kabul aşaması.
 
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L3** — [Açık PR, tarihsel plan] Durum: TAKİPTE — kullanıcı talimatıyla kayıt altına alındı.
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L11** — [Açık PR, tarihsel plan] Değişmez kurallar
+
 <!-- A-END -->
 
 ## B) Yarım Kalmış / Beklemeye Alınmış Teknik ve Kurtarma İşleri
@@ -2810,6 +2813,36 @@ Tarama kapsamı: main ağacındaki tüm .md/.txt/.json/.yml/.yaml dosyaları, a�
 - **PR #650 @ fe1420ca833e / v2/tasks/state.json:$.full_inventory_health_scan_plan_20261123.work_order[4]** — [Açık PR, tarihsel plan] queue_and_verify_all_discovered_candidates
 - **PR #650 @ fe1420ca833e / v2/tasks/state.json:$.full_inventory_health_scan_plan_20261123.work_order[5]** — [Açık PR, tarihsel plan] evidence_based_turkish_foreign_classification
 
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L1** — [Açık PR, tarihsel plan] MADSC55 TV V2 — Kalan İşler ve Kabul Planı
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L2** — [Açık PR, tarihsel plan] Tarih: 2026-11-23
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L5** — [Açık PR, tarihsel plan] Genel durum
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L6** — [Açık PR, tarihsel plan] - Planlama amaçlı tahmini ilerleme: %75 tamamlandı / %25 kaldı.
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L7** — [Açık PR, tarihsel plan] - Bu yüzdeler CI veya üretim ortamı tarafından ölçülmüş kesin oranlar değildir.
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L8** — [Açık PR, tarihsel plan] - 34/34 idari görev kapanışı, teknik kabulün %100 olduğu anlamına gelmez.
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L9** — [Açık PR, tarihsel plan] - Nihai %100 yalnızca aşağıdaki kabul kanıtlarıyla ilan edilir.
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L15** — [Açık PR, tarihsel plan] 4. 685 SECURITY HOLD kayıt, açık yetkilendirme ve güvenli doğrulama olmadan canlı teste veya serbest dolaşıma çıkarılmaz.
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L17** — [Açık PR, tarihsel plan] 6. Gerçek ses/görüntü ve İBO Player kabul testleri son aşamada yapılır.
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L19** — [Açık PR, tarihsel plan] Öncelikli takip tablosu
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L20** — [Açık PR, tarihsel plan] | No | İş | Kabul kanıtı | Durum |
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L24** — [Açık PR, tarihsel plan] | 03 | HTTP sağlık taramasını tüm kapsamda hatasız bitir | Tamamlanan Actions run, rapor ve hata ayrımı | BEKLİYOR |
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L26** — [Açık PR, tarihsel plan] | 05 | Kaynak keşfi ve 404/429/503 yeniden değerlendirmesini tamamla | Kaynak bazlı sonuç, yanlış pozitif kontrolü | BEKLİYOR |
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L30** — [Açık PR, tarihsel plan] | 09 | Aynı URL, tarihsel kuyruk ve liste tutarsızlıklarını temizle | Deduplikasyon ve kimlik mutabakat raporu | BEKLİYOR |
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L31** — [Açık PR, tarihsel plan] | 10 | Bağımsız şifreli yedek ve geri yükleme kanıtı üret | Ayrı ortamda restore denemesi ve bütünlük sonucu | BEKLİYOR |
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L32** — [Açık PR, tarihsel plan] | 11 | FFmpeg/HLS ağ erişim sınırları ve CI güvenliğini kabul et | Fail-closed güvenlik kapıları ve regresyon testleri PASS | BEKLİYOR |
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L35** — [Açık PR, tarihsel plan] Sıra
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L36** — [Açık PR, tarihsel plan] Aşama 1: #01, #02, #03, #09, #11 — temel doğruluk ve güvenlik.
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L37** — [Açık PR, tarihsel plan] Aşama 2: #04, #05 — otomasyon ve kaynak keşfi.
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L38** — [Açık PR, tarihsel plan] Aşama 3: #06, #07, #08, #10 — içerik kalitesi ve kurtarma.
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L39** — [Açık PR, tarihsel plan] Aşama 4: #12 — en son gerçek yayın ve İBO Player kabulü.
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L41** — [Açık PR, tarihsel plan] Referanslar ve açık kararlar
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L42** — [Açık PR, tarihsel plan] - PR #654: 685 kayıt arşiv önizlemesi; CI/merge sonucu ayrıca doğrulanacak.
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L43** — [Açık PR, tarihsel plan] - PR #651: ekran görüntülerinden çıkarılmış eksik işler.
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L44** — [Açık PR, tarihsel plan] - PR #650: keşif ve sağlık taraması planı.
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L45** — [Açık PR, tarihsel plan] - PR #641: 404 sonrası envanter/güvenlik kapısı.
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L46** — [Açık PR, tarihsel plan] - Tarihsel sayılar güncel main üzerinden yeniden hesaplanmadan kesin kabul edilmez.
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L47** — [Açık PR, tarihsel plan] - Her tamamlanan madde için commit/PR, CI run, çıktı ve kabul tarihi eklenir.
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L48** — [Açık PR, tarihsel plan] - Yeni iş çıktığında bu tek planda güncellenir; biten işler tekrarlanmaz.
+
 <!-- B-END -->
 
 ## C) Kanal Testi, Taşıma ve Kategori Düzenleme İşleri
@@ -4219,6 +4252,18 @@ The last 30x er
 - **PR #650 @ fe1420ca833e / v2/tasks/state.json:$.full_inventory_health_scan_plan_20261123.work_order[6]** — [Açık PR, tarihsel plan] safe_reviewed_single_playlist_pr_and_ci
 - **PR #642 @ 4bc0d6614299 / DEVAM_NOTU.md:L1** — [Açık PR, tarihsel plan] SİSTEM HAZIR VE GÜNCEL - 18.337 KANAL AKTİF
 
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L12** — [Açık PR, tarihsel plan] 1. Tek ana playlist: MADSC55_TV_IBO_CALISANLAR_TEST.m3u8. Yeni test/yan playlist oluşturma.
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L13** — [Açık PR, tarihsel plan] 2. YEDEKLER dışındaki ana kategorileri ve kanal kimliklerini koru; 2.500'lük test döngüsü düzenini bozma.
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L14** — [Açık PR, tarihsel plan] 3. Türk/Yabancı arşivlerine taşınan kayıtlar YEDEKLER'den düşmeli; işlemler tekil kimlik ve sayım denetimli olmalı.
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L16** — [Açık PR, tarihsel plan] 5. Daha önce çıkarılmış 48 engelli kanal geri eklenmez; orijinal olmayan logo kullanılmaz.
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L22** — [Açık PR, tarihsel plan] | 01 | main playlist güncel envanter ve kategori sayımlarını doğrula | EXTINF ve kategori sayımı, önce/sonra fark raporu | BEKLİYOR |
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L23** — [Açık PR, tarihsel plan] | 02 | 685 kayıt için salt-okunur önizleme ve yetkili arşiv taşıma akışını tamamla | PR #654 testleri, workflow çıktısı, kimlik/özet kontrolü | BEKLİYOR |
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L25** — [Açık PR, tarihsel plan] | 04 | Tek playlist üzerinde PR tabanlı uçtan uca otomasyonu doğrula | İkinci çalıştırmada tekrar eklemeyen/idempotent test ve PR diff | BEKLİYOR |
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L27** — [Açık PR, tarihsel plan] | 06 | TÜRK/YABANCI ayrımı ve arşiv geçişlerini doğrula | Ses/altyazı/ülke kanıtı, kimlik ve kategori sayım testleri | BEKLİYOR |
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L28** — [Açık PR, tarihsel plan] | 07 | EPG eşleşme ve kapsama eksiklerini kapat | XMLTV ID eşleşme raporu | BEKLİYOR |
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L29** — [Açık PR, tarihsel plan] | 08 | Eksik gerçek kanal logolarını tamamla | Doğrulanmış kaynak URL, yanlış eşleşme yok | BEKLİYOR |
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L33** — [Açık PR, tarihsel plan] | 12 | Son aşamada canlı AV, kanal sürekliliği ve gerçek İBO Player testleri | Gerçek cihazda doğrulanmış test raporu | EN SON |
+
 <!-- C-END -->
 
 ## D) Açık Kalan GitHub Issue'ları ve Doğrulanmamış Maddeler
@@ -4452,6 +4497,8 @@ The last 30x er
 - **PR #651 @ f0c8e198fb08 / v2/tasks/KALAN_TEKNIK_ISLER_20261123.md:L30** — [Açık PR, tarihsel plan] D. Her maddeyi **kanıt bağlantısı + tarih + run/commit + kabul sonucu** olmadan DONE işaretleme. GitHub PR merge / issue kapatma ile teknik kabulü ayır.
 - **PR #651 @ f0c8e198fb08 / v2/tasks/KALAN_TEKNIK_ISLER_20261123.md:L33** — [Açık PR, tarihsel plan] Bu kayıt bir **iş planı**, tamamlama beyanı değildir. HTTP Health Report #2'nin son durumu henüz burada doğrulanmadı. Playlist ve `v2/tasks/state.json` bu not nedeniyle değiştirilmez.
 
+
+
 <!-- D-END -->
 
 ### Dosya tarama fihristi ve kapsam denetimi
@@ -4614,7 +4661,7 @@ Her satırda snapshot/PR referansı, kaynak, okuma sonucu ve çıkarılan kayıt
 - PR #669 `DEVAM_NOTU.md` @ `a5fcf3a84bbe7c4f85d74ed94fb5cee576fde65c` — OK; 269075 karakter, 10 ayrı main'den farklı kaynak kaydı; blob `8296f4ea13145201b3a251c0095a4f6e9bd77df5`. Aynı path'te main ile birebir aynı metin zaten main kaynak indeksindedir.
 - PR #669 `v2/tasks/state.json` @ `a5fcf3a84bbe7c4f85d74ed94fb5cee576fde65c` — OK; 97693 karakter, 1 ayrı main'den farklı kaynak kaydı; blob `69dcfe1e14bd2a2a5585544ddee237c0b1b8fb9e`. Aynı path'te main ile birebir aynı metin zaten main kaynak indeksindedir.
 - PR #664 `v2/tasks/KALAN_ISLER_2026-11-23.md` @ `bccb4937f2e36db866011b5f028298d389bb20fe` — OK; 3857 karakter, 31 ayrı kaynak kaydı; blob `67dae61b21f45f6941e2bd4ebd6e0032e122a262`. 
-- PR #655 `v2/tasks/KALAN_ISLER_2026-11-23.md` — OKUNAMADI: NOT_FOUND: Error code: NOT_FOUND; Error: GitHub API error 404: {"message":"No commit found for the ref 2380ed9501601abcd83f08b6b8b245e358b7c","documentation_url":"https://docs.github.com/v3/repos/cont
+- PR #655 `v2/tasks/KALAN_ISLER_2026-11-23.md` @ `2380ed9501601abcd83f08b6b8b245e45c358b7c` — OK; 3366 karakter, 42 ayrı kaynak kaydı; blob `d36376e098fa7b66fa9c5d6b4fd45198625b5ce7`. İlk erişim hatası güncel ref ile tekrar okumada giderildi.
 - PR #651 `v2/tasks/KALAN_TEKNIK_ISLER_20261123.md` @ `f0c8e198fb0865f1800339cd4bcb909e93ddce57` — OK; 5454 karakter, 28 ayrı kaynak kaydı; blob `fca61a630dc319846a4b37c3b29a5182b337fd5f`. 
 - PR #650 `DEVAM_NOTU.md` @ `fe1420ca833eb1a52bdbb8890023d4cc45f24c59` — OK; 269156 karakter, 10 ayrı main'den farklı kaynak kaydı; blob `b7226463c3532cbec593c2e9bd795321848f2f23`. Aynı path'te main ile birebir aynı metin zaten main kaynak indeksindedir.
 - PR #650 `v2/tasks/state.json` @ `fe1420ca833eb1a52bdbb8890023d4cc45f24c59` — OK; 97260 karakter, 9 ayrı main'den farklı kaynak kaydı; blob `c9e20dd0de580caa172b070b13811269608d9bf4`. Aynı path'te main ile birebir aynı metin zaten main kaynak indeksindedir.
