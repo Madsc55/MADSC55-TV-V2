@@ -88,7 +88,7 @@ def history_index(paths):
                     playable.add(row["url_sha256"])
     return playable
 
-def review(row,exe,history):
+def review(row,exe,history,language_probe=None):
     out={k:v for k,v in row.items() if k!="url"}
     historical=row["url_sha256"] in history
     rounds=[]
@@ -96,7 +96,7 @@ def review(row,exe,history):
         if i:
             time.sleep(RETRY_GAP)
         started=time.time()
-        evidence=(inspect(row["url"],exe,variant_index=i,timeout=STARTUP_TIMEOUT,seconds=60,profile=i)
+        evidence=(inspect(row["url"],exe,variant_index=i,timeout=STARTUP_TIMEOUT,seconds=60,profile=i,**({'language_probe':language_probe} if language_probe else {}))
                   if row["url"] is not None else
                   [{"status":"INVALID_URL","video":False,"audio":False,"startup_seconds":None}])
         startup=next((e["startup_seconds"] for e in evidence if e.get("startup_seconds") is not None),None)
