@@ -16,7 +16,7 @@ test:
 	$(PYTHON) v2/test_playlist_invariants.py
 	$(PYTHON) -m py_compile v2/discovery_34_live_contract.py v2/federated_m3u_source_discovery.py v2/discovery_provider_requests.py
 
-# Compare source-record counts to the November 23 IBO Player snapshot.
+# The November 23 device counts apply only to that day's repository snapshot.
 # This command is strictly read-only and does not rewrite the canonical M3U8.
 ibo-visibility-audit:
-	PYTHONPATH=v2:. $(PYTHON) v2/ibo_import_visibility_audit.py --observed-json '{"BELGESEL":18,"YEDEKLER":1104,"ANA ARŞİV":15606}'
+	PYTHONPATH=v2:. $(PYTHON) v2/ibo_import_visibility_audit.py --issue-693

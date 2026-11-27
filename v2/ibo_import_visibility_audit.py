@@ -15,6 +15,8 @@ from playlist_parts_manager import PLAYLIST, split_records, category
 from channel_command_engine import key, record_url, record_name
 
 SUFFIX = re.compile(r"\s*\((\d+)\)\s*$")
+NOV23_PLAYLIST_SHA256 = "d351f89feb642ce2f3088d914218898ec7b284415ee1b2d1fed3b883421b019f"
+NOV23_PLAYER_COUNTS = {"BELGESEL": 18, "YEDEKLER": 1104, "ANA ARŞİV": 15606}
 
 
 def audit(data: bytes, observed=None) -> dict:
@@ -125,12 +127,25 @@ def audit(data: bytes, observed=None) -> dict:
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--playlist", type=Path, default=PLAYLIST)
-    parser.add_argument("--observed-json", default="{}",
-                        help="JSON object of category names to IBO Player counts")
+    observation = parser.add_mutually_exclusive_group()
+    observation.add_argument("--observed-json", default="{}",
+                             help="Player counts observed for the supplied playlist")
+    observation.add_argument("--issue-693", action="store_true",
+                             help="Use the November 23 player counts only for that day's repository playlist")
     args = parser.parse_args()
     before = args.playlist.read_bytes()
     digest = hashlib.sha256(before).hexdigest()
-    result = audit(before, json.loads(args.observed_json))
+    observed = json.loads(args.observed_json)
+    if args.issue_693:
+        observed = NOV23_PLAYER_COUNTS if digest == NOV23_PLAYLIST_SHA256 else {}
+    result = audit(before, observed)
+    if args.issue_693:
+        result["issue_693"] = {
+            "observation_date": "2026-11-23",
+            "repository_snapshot_sha256": NOV23_PLAYLIST_SHA256,
+            "historical_player_counts": NOV23_PLAYER_COUNTS,
+            "compared_to_this_file": digest == NOV23_PLAYLIST_SHA256,
+        }
     if hashlib.sha256(args.playlist.read_bytes()).hexdigest() != digest:
         raise RuntimeError("Unexpected playlist modification during read-only audit")
     result["source_sha256"] = digest
