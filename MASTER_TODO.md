@@ -86,6 +86,22 @@ Kayıt bazında hash ve geri alma kaynağı [taşıma raporunda](reports/YEDEKLE
 - B22 engel: önceki 28844 kayıtlı şifreli checkpoint artefaktı 14485014372 listede mevcut, fakat yetkili secret ile gerçek readback/restore yürütülemedi. Mevcut v2-offline-import-15.yml ve merge_bounded_retry_checkpoint.py yalnız sabit SHA ile onaylı 15 eski gözlem için tasarlanmış; yeni raporları bu iş akışına zorlamayın. Yeni güvenli import için onaylı çalıştırma ortamı, doğrulanmış kaynak, exact hash eşleşmesi, iki tarihli gözlemleri kayıpsız saklama, eski olumlu kanıtı düşürmeme, 28844 satır bütünlüğü, yedek/readback/idempotence/kalıcı restore gerekir. 0 yeni kayıt uygulandı; B22 açık, eski checkpoint değiştirilmedi.
 - B33/A16/A17: güncel YEDEKLER parçası 1562 kayıt, 697 boş/olmayan logo, 1187 boş/olmayan tvg-id. #792 ve #794 raporlarında 3 metadata logo adayı, 5 tarihsel EPG-ID eşleşmesi var; hiçbiri güncel bağımsız kimlik+URL ve varlık kanıtını tamamlamıyor. v2/package2_evidence.py kuralları korunur: logo resmi köken ve içerik doğrulaması, HTTPS resmi kaynak ve SHA-256; EPG exact kimlik, verified ve HTTPS kaynak. 0 logo, 0 EPG atandı; B33 açık, A16/A17 kalıcı koruma. Playlist ve güvenlik workflow'ları değiştirilmedi.
 
+## 27 Kasım 2026 — Ana liste yayını ve İBO sayım farkı
+
+[Paket 3 (#798)](https://github.com/Madsc55/MADSC55-TV-V2/pull/798) main dalına birleşti. Ana playlist adresinden indirilen dosyanın SHA-256 değeri `68fcad6bdcde53fffb25de32cefbecb7758986dfd3fd866b9928084012ba5d92`. 43 taşımadan sonra YEDEKLER’de 1.519 kayıt bulunuyor. Bunların 696’sında logo, 1.172’sinde tvg-id boş veya eksik. [Offline CI](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/46008052465) · [Production Security Gate](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/46008052461)
+
+B33 / A17 için depodaki XMLTV dosyasının tamamı okundu. 164 rehber kimliğinden 68’i YEDEKLER’deki 170 kaydın mevcut tvg-id değeriyle bire bir eşleşiyor. Dosyadaki son program 7 Kasım 2026 tarihinde sona eriyor. 27 Kasım için bu dosyadan doğrulanabilen program sayısı sıfır. [İncelenen XMLTV](https://github.com/Madsc55/MADSC55-TV-V2/blob/2c519706c6e072a6b1024643b04dcf0a8043fa49/madsc-epg.xml)
+
+**D01–D04 / [#693](https://github.com/Madsc55/MADSC55-TV-V2/issues/693) açık.** `make ibo-visibility-audit` cihaz sayımlarını 23 Kasım’da depoda bulunan ana dosyanın SHA-256 değerine bağlıyor. İki tarihin birleşik M3U dosyaları doğrudan okundu. Her iki dosyada da denetleyicinin okuyamadığı kayıt sayısı sıfır. Üç kategorinin etiketleri dosyadaki kayıt sayılarıyla eşleşti. [23 Kasım kaynak sürümü](https://github.com/Madsc55/MADSC55-TV-V2/commit/464293b3827c038d963df6bb89362bdb402b6c24)
+
+| Kategori | 23 Kasım M3U | 23 Kasım cihaz bildirimi | O günkü fark | 27 Kasım M3U |
+|---|---:|---:|---:|---:|
+| BELGESEL | 19 | 18 | 1 | 19 |
+| YEDEKLER | 1.107 | 1.104 | 3 | 1.519 |
+| ANA ARŞİV | 15.703 | 15.606 | 97 | 2 |
+
+23 Kasım için toplam fark 101 kayıttır. Hangi yayınların cihazda görünmediğini belirlemek için oynatıcıdan kanal adları veya içe aktarma günlüğü gerekiyor. Güncel dosya için yeni cihaz sayımı bekleniyor.
+
 ## A) Kullanıcı Tarafından Kaydettirilmiş Özel Notlar ve İstekler
 
 ### Güncel uygulama kuralları ve ayrı kullanıcı kararları
