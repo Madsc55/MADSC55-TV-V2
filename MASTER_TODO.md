@@ -410,6 +410,8 @@ Tarama kapsamı: main ağacındaki tüm .md/.txt/.json/.yml/.yaml dosyaları, a�
 - **v2/yedekler_batch/README.md:L18** — [Tarihsel kaynak kaydı] **Sınırlar:** Durum atamaları yayınların görüntü/ses çalışırlığını doğrulamaz. Sınıflandırma kullanıcı onayıyla yapılır. GitHub Actions üzerinden otomatik test/taşıma henüz bağlı değildir. Arşiv dosyası üretimi ve uçtan uca kabul ayrıca doğrulanmalıdır.
 - **v2/yedekler_red_av_request.md:L3** — [Tarihsel kaynak kaydı] Owner request: fresh test of all 1562 records. Mark ❌ when neither video nor audio is obtained, including inaccessible and uncertain results. Preserve all records, URLs, categories and ordering. Single-medium results are not red under this rule. Use the existing bounded fresh full audit. Test results are observations, not permanent closure claims.
 
+
+
 <!-- A-END -->
 
 ## B) Yarım Kalmış / Beklemeye Alınmış Teknik ve Kurtarma İşleri
@@ -2758,6 +2760,8 @@ Tarama kapsamı: main ağacındaki tüm .md/.txt/.json/.yml/.yaml dosyaları, a�
 - **v2/tasks/state.json:$.final_infrastructure_packages_20261125.package3.acceptance** — [Tarihsel kaynak kaydı] offline isolated synthetic fixture only; requires both CI gates
 - **v2/tasks/state.json:$.final_infrastructure_packages_20261125.package3.external_restore_performed** — [Tarihsel kaynak kaydı] false
 
+
+
 <!-- B-END -->
 
 ## C) Kanal Testi, Taşıma ve Kategori Düzenleme İşleri
@@ -4098,6 +4102,32 @@ The last 30x er
 - **yedekler/logo-kaynaklari.md:L199** — [Tarihsel kaynak kaydı] 193. [URL: kaynak dosyada]
 - **yedekler/logo-kaynaklari.md:L200** — [Tarihsel kaynak kaydı] 194. [URL: kaynak dosyada]
 
+- **PR #767 @ cc021e46872a / v2/ibo_authorized_change.json:$.base_sha256** — [Açık PR, uygulanmadı] 2e3565a4db92dfdc84208bb9926f5af501bb534f5c68e13be6f2acb8d8e9af90
+- **PR #767 @ cc021e46872a / v2/ibo_authorized_change.json:$.result_sha256** — [Açık PR, uygulanmadı] 8fcc6c409c3b9433032be4f745e8fdcf5546daef1ff44f50ed33dc9dc987f879
+- **PR #767 @ cc021e46872a / v2/ibo_authorized_change.json:$.operation** — [Açık PR, uygulanmadı] reorder
+- **PR #767 @ cc021e46872a / v2/ibo_authorized_change.json:$.request** — [Açık PR, uygulanmadı] Owner request: second pass for missed Turkish and Turkic broadcast candidates; only stable reorder inside YABANCI ARŞİVİ.
+- **PR #767 @ cc021e46872a / v2/ibo_authorized_change.json:$.channels** — [Açık PR, uygulanmadı] Yetki manifestinde 9 kaynak kanal referansı; tek tek ham kanal konumları kaynakta, uygulanmaz.
+- **PR #757 @ eca1bc56609f / v2/ibo_authorized_change.json:$.base_sha256** — [Açık PR, uygulanmadı] cae52b3780c4c65c7727b6a240f33058187c0f39a62131f1adcb247882c1c642
+- **PR #757 @ eca1bc56609f / v2/ibo_authorized_change.json:$.result_sha256** — [Açık PR, uygulanmadı] 7a40de20bed5e7cbf3f8055a4e23b6c23ea709fd64cff7a9f9a97b4a2b1c503f
+- **PR #757 @ eca1bc56609f / v2/ibo_authorized_change.json:$.operation** — [Açık PR, uygulanmadı] reorder
+- **PR #757 @ eca1bc56609f / v2/ibo_authorized_change.json:$.request** — [Açık PR, uygulanmadı] Owner request 24 November 2026: Yabancı arşivde Türk kanallarını ilk başa taşı. Azeri Türk Türkmenistan yani Türkçe tüm kanalları yabancı arşivin başına taşı. Only reorder; no channel changes or removals.
+- **PR #757 @ eca1bc56609f / v2/ibo_authorized_change.json:$.channels** — [Açık PR, uygulanmadı] Yetki manifestinde 84 kaynak kanal referansı; tek tek ham kanal konumları kaynakta, uygulanmaz.
+- **PR #755 @ b7223fa181a0 / v2/ibo_authorized_change.json:$.base_sha256** — [Açık PR, uygulanmadı] cae52b3780c4c65c7727b6a240f33058187c0f39a62131f1adcb247882c1c642
+- **PR #755 @ b7223fa181a0 / v2/ibo_authorized_change.json:$.result_sha256** — [Açık PR, uygulanmadı] 95c49b86e68bd124b1698a910e69227e4fba6cef50df6175487eb75e63a8f859
+- **PR #755 @ b7223fa181a0 / v2/ibo_authorized_change.json:$.operation** — [Açık PR, uygulanmadı] reorder
+- **PR #755 @ b7223fa181a0 / v2/ibo_authorized_change.json:$.request** — [Açık PR, uygulanmadı] Owner request 24 November 2026: Yabancı arşivde Türk kanallarını ilk başa taşı. Azeri Türk Türkmenistan yani Türkçe tüm kanalları yabancı arşivin başına taşı. Preserve current main non-target categories and original PR 755 foreign ordering.
+- **PR #755 @ b7223fa181a0 / v2/ibo_authorized_change.json:$.channels** — [Açık PR, uygulanmadı] Yetki manifestinde 102 kaynak kanal referansı; tek tek ham kanal konumları kaynakta, uygulanmaz.
+- **PR #728 @ 42974e294608 / v2/ibo_authorized_change.json:$.base_sha256** — [Açık PR, uygulanmadı] 4cacb329bc48dcf4b4377a4c2eba6d9c7555ff707203a0c5aad2b00cb2ea9bd3
+- **PR #728 @ 42974e294608 / v2/ibo_authorized_change.json:$.result_sha256** — [Açık PR, uygulanmadı] d18dfd8d8e7684b0af99688e9edfd5d401f7d9171d4d35800dd8ce7e6f486383
+- **PR #728 @ 42974e294608 / v2/ibo_authorized_change.json:$.operation** — [Açık PR, uygulanmadı] reorder
+- **PR #728 @ 42974e294608 / v2/ibo_authorized_change.json:$.request** — [Açık PR, uygulanmadı] Kullanıcının ANA ARŞİV'deki Türkçe/Türkî yayın adaylarını kapsamlı araştırıp aynı kategorinin başına alma talimatı. 13.712 kayıt; Digitürk, TV+, D-Smart, Türksat Kablo program rehberleriyle 192 isim eşleşmesi incelendi. 18 ek aday: Film Screen HD birebir katalog URL eşleşmesi ve Türkçe uydu ses kaydı; BBC Earth, Da Vinci, Discovery, E!, Epic Drama, History, National Geographic/Wild ve Viasat Explore/History/Nature çok dilli Avrupa sürümü olasılığı, Türkçe dağıtım katalogları ile isim ve bölgesel kaynak eşleşmesi. Son 17 kayıt düşük/orta güvenli dil inceleme adaylarıdır, doğrulanmış Türkçe yayın olarak sunulmaz. Açıkça yabancı ülke sürümleri, ortak alakasız isimler ve tek ortak URL kullanan belirsiz kanallar dışarıda bırakılır. İlk 770 kayıt korunur, 18 aday eklenir, ilk 788 kayıt önceliklendirilir. Yeni kayıt ekleme, silme, kopyalama, kategori taşıma, canlı test veya yeni playlist yok; tüm 18.337 kayıt ve diğer kategoriler korunur.
+- **PR #728 @ 42974e294608 / v2/ibo_authorized_change.json:$.channels** — [Açık PR, uygulanmadı] Yetki manifestinde 788 kaynak kanal referansı; tek tek ham kanal konumları kaynakta, uygulanmaz.
+- **PR #721 @ 3482c2af7906 / v2/ibo_authorized_change.json:$.base_sha256** — [Açık PR, uygulanmadı] 9b23a6ca7aa26d208ddebcb73360e4f556105574c64030f8c2038ec169d2dd9b
+- **PR #721 @ 3482c2af7906 / v2/ibo_authorized_change.json:$.result_sha256** — [Açık PR, uygulanmadı] 3fc04f67eb8db0a8e3bae29d25c3cb8f3ad0dbbd96f4f1c900f36e865807cb2b
+- **PR #721 @ 3482c2af7906 / v2/ibo_authorized_change.json:$.operation** — [Açık PR, uygulanmadı] move
+- **PR #721 @ 3482c2af7906 / v2/ibo_authorized_change.json:$.request** — [Açık PR, uygulanmadı] Kullanıcının talimatı: ANA ARŞİV kategorisindeki güncel 1–75. sıraları (75 dahil) YEDEKLER kategorisine taşı. Diğer kayıtlar, URL ve metaveriler korunacak; kanal silme, kopyalama, yeni playlist ve canlı yayın testi yok.
+- **PR #721 @ 3482c2af7906 / v2/ibo_authorized_change.json:$.channels** — [Açık PR, uygulanmadı] Yetki manifestinde 75 kaynak kanal referansı; tek tek ham kanal konumları kaynakta, uygulanmaz.
+
 <!-- C-END -->
 
 ## D) Açık Kalan GitHub Issue'ları ve Doğrulanmamış Maddeler
@@ -4307,6 +4337,27 @@ The last 30x er
 - **PR [#641](https://github.com/Madsc55/MADSC55-TV-V2/pull/641) — AÇIK (snapshot)**: fix: post-404 inventory and historical security gate CI (supersedes #640)
 - **PR #641:gövde L1** — Includes PR #640 deletion-only playlist cleanup plus CI fixes. Offline inventory verifies 654 deletions and updated counts; historical #497 preview and retry artifacts are only generated for exact matching source inventory, preserving the 685 uncertain hold. Do not merge until both CI checks pass.
 
+- **PR #767 @ cc021e46872a / v2/playlists/parts/manifest.json:$** — [Açık PR, uygulanmadı] Kaynak parça manifesti okundu; ham kanal/parça envanteri görev değildir; eski PR snapshot'ı.
+- **PR #760 @ 3d59f47863cd / .github/workflows/ci.yml:L58** — [Açık PR, uygulanmadı] name: YEDEKLER quality offline preflight
+- **PR #760 @ 3d59f47863cd / .github/workflows/ci.yml:L59** — [Açık PR, uygulanmadı] if: github.event_name == 'pull_request'
+- **PR #760 @ 3d59f47863cd / .github/workflows/ci.yml:L72** — [Açık PR, uygulanmadı] - name: Verify changed quality scanner with synthetic local media
+- **PR #760 @ 3d59f47863cd / .github/workflows/ci.yml:L444** — [Açık PR, uygulanmadı] - name: Install system FFmpeg for local pipe decoding
+- **PR #760 @ 3d59f47863cd / .github/workflows/ci.yml:L448** — [Açık PR, uygulanmadı] ffmpeg -version
+- **PR #757 @ eca1bc56609f / v2/playlists/parts/manifest.json:$** — [Açık PR, uygulanmadı] Kaynak parça manifesti okundu; ham kanal/parça envanteri görev değildir; eski PR snapshot'ı.
+- **PR #755 @ b7223fa181a0 / v2/playlists/parts/manifest.json:$** — [Açık PR, uygulanmadı] Kaynak parça manifesti okundu; ham kanal/parça envanteri görev değildir; eski PR snapshot'ı.
+- **PR #728 @ 42974e294608 / v2/playlists/parts/manifest.json:$** — [Açık PR, uygulanmadı] Kaynak parça manifesti okundu; ham kanal/parça envanteri görev değildir; eski PR snapshot'ı.
+- **PR #721 @ 3482c2af7906 / v2/playlists/parts/manifest.json:$** — [Açık PR, uygulanmadı] Kaynak parça manifesti okundu; ham kanal/parça envanteri görev değildir; eski PR snapshot'ı.
+- **PR #641 @ dea1da290c5c / .github/workflows/v2-main-production-safety-gate.yml:L45** — [Açık PR, uygulanmadı] - name: Check whether historical #497 preview can be rebound
+- **PR #641 @ dea1da290c5c / .github/workflows/v2-main-production-safety-gate.yml:L56** — [Açık PR, uygulanmadı] if: steps.historical.outputs.exact == 'true'
+- **PR #641 @ dea1da290c5c / .github/workflows/v2-main-production-safety-gate.yml:L81** — [Açık PR, uygulanmadı] if: steps.historical.outputs.exact == 'true'
+- **PR #641 @ dea1da290c5c / .github/workflows/v2-main-production-safety-gate.yml:L89** — [Açık PR, uygulanmadı] if: steps.historical.outputs.exact == 'true'
+- **PR #641 @ dea1da290c5c / .github/workflows/v2-main-production-safety-gate.yml:L107** — [Açık PR, uygulanmadı] assert plan["initial_manifest_sha256"] == "b001bf48f07437e9ae67ed9f73b12ea9cfcab653523973435cf3b1cee3c31fcc"
+- **PR #641 @ dea1da290c5c / .github/workflows/v2-main-production-safety-gate.yml:L128** — [Açık PR, uygulanmadı] if: ${{ steps.historical.outputs.exact == 'true' && github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+- **PR #641 @ dea1da290c5c / .github/workflows/v2-main-production-safety-gate.yml:L140** — [Açık PR, uygulanmadı] if: steps.historical.outputs.exact == 'true'
+- **PR #641 @ dea1da290c5c / .github/workflows/v2-main-production-safety-gate.yml:L170** — [Açık PR, uygulanmadı] if: steps.historical.outputs.exact == 'true'
+- **PR #641 @ dea1da290c5c / .github/workflows/v2-main-production-safety-gate.yml:L231** — [Açık PR, uygulanmadı] if ! command -v ffmpeg &gt;/dev/null || ! command -v ffprobe &gt;/dev/null || ! tesseract --list-langs 2&gt;/dev/null | grep -qx tur; then
+- **PR #641 @ dea1da290c5c / .github/workflows/v2-main-production-safety-gate.yml:L233** — [Açık PR, uygulanmadı] sudo apt-get install -y --no-install-recommends ffmpeg tesseract-ocr tesseract-ocr-tur fonts-dejavu-core
+
 <!-- D-END -->
 
 ### Dosya tarama fihristi ve kapsam denetimi
@@ -4454,4 +4505,16 @@ Her satırda snapshot/PR referansı, kaynak, okuma sonucu ve çıkarılan kayıt
 - PR #642: açık; gövde okundu; yorum sayısı 0.
 - PR #641: açık; gövde okundu; yorum sayısı 0.
 - Açık kayıt sayfalama: ilk sayfa 15, ikinci sayfa 0; açık Issue 1, açık PR 14. Yorum sayısı sıfır olan kayıtta ayrı yorum içeriği yoktur.
+- PR #767 `v2/ibo_authorized_change.json` @ `cc021e46872aadb7d1d87f1b78dfb3a235a7fd3e` — OK; 556 karakter, 5 ayrı kaynak kaydı; blob `ca1c3520e9876d58f88d727831a2fd0cec085553`.
+- PR #767 `v2/playlists/parts/manifest.json` @ `cc021e46872aadb7d1d87f1b78dfb3a235a7fd3e` — OK; 4130 karakter, 1 ayrı kaynak kaydı; blob `d5ff5d7c624d165f73461f37c2846ea4bf9db727`.
+- PR #760 `.github/workflows/ci.yml` @ `3d59f47863cd512bb813948d4077ff8b8e8fdb21` — OK; 20342 karakter, 5 ayrı kaynak kaydı; blob `8ac8ad28ba9af0c9cfa92757c04efc0b6d148a2c`.
+- PR #757 `v2/ibo_authorized_change.json` @ `eca1bc56609f7b47d82ab34c51eac47dc7ff2124` — OK; 2432 karakter, 5 ayrı kaynak kaydı; blob `35e0d8c39b873b9a574f949ffd7e5adcbabcd7a0`.
+- PR #757 `v2/playlists/parts/manifest.json` @ `eca1bc56609f7b47d82ab34c51eac47dc7ff2124` — OK; 4130 karakter, 1 ayrı kaynak kaydı; blob `faae77d88012e43d5e72a2b5e92dbd7b6d8f94e5`.
+- PR #755 `v2/ibo_authorized_change.json` @ `b7223fa181a0de4f043824880a733ee9ecb63d4e` — OK; 2947 karakter, 5 ayrı kaynak kaydı; blob `685cce6e66fa713de6c6509ea127d58b96ac3d0d`.
+- PR #755 `v2/playlists/parts/manifest.json` @ `b7223fa181a0de4f043824880a733ee9ecb63d4e` — OK; 4130 karakter, 1 ayrı kaynak kaydı; blob `e9ef7f25579a4e737ee83a15f3a6d196391a0bb6`.
+- PR #728 `v2/ibo_authorized_change.json` @ `42974e29460833d9e08372a11ddcb4fb34e681d0` — OK; 17894 karakter, 5 ayrı kaynak kaydı; blob `661d46b3086f86bd702e8631d9a9f2d9c697f4f3`.
+- PR #728 `v2/playlists/parts/manifest.json` @ `42974e29460833d9e08372a11ddcb4fb34e681d0` — OK; 4068 karakter, 1 ayrı kaynak kaydı; blob `26d6cd78b3a7d0ab694538af04ce1a6a2feb3599`.
+- PR #721 `v2/ibo_authorized_change.json` @ `3482c2af7906ee942b61c24ef9d4d6e6f70efbf5` — OK; 1981 karakter, 5 ayrı kaynak kaydı; blob `8f67bae6e96507867939729b529df310e43ae687`.
+- PR #721 `v2/playlists/parts/manifest.json` @ `3482c2af7906ee942b61c24ef9d4d6e6f70efbf5` — OK; 4068 karakter, 1 ayrı kaynak kaydı; blob `efeb613496c55f5bc1a62818c569750886ec3600`.
+- PR #641 `.github/workflows/v2-main-production-safety-gate.yml` @ `dea1da290c5c04e62b85e9e4e50900063e8e0fe9` — OK; 18397 karakter, 10 ayrı kaynak kaydı; blob `5e0c415847131243b2423fa2e6e344c8e1c46cdd`.
 <!-- COVERAGE-END -->
