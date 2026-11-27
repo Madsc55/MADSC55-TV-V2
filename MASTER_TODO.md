@@ -4253,6 +4253,60 @@ The last 30x er
 - **v2/tasks/state.json:$.stage8_private_turkish_vault_restore_20261121.scope** — [Tarihsel kaynak kaydı] GitHub issue #6 authorized-Turkish Fernet vault (not ledger statuses[6]); no live restore or playlist write
 - **v2/tasks/state.json:$.stage9_ffmpeg_initial_egress_hardening_20261121.next_action** — [Tarihsel kaynak kaydı] Validate latest main CI. Keep real FFmpeg/HLS retry blocked until DNS/redirect/HLS-child egress isolation is accepted; keep separate issue #6 offsite-vault acceptance open.
 
+
+### Açık Issue ve PR kayıtları (güncel sorgu)
+
+- **PR [#768](https://github.com/Madsc55/MADSC55-TV-V2/pull/768) — AÇIK (snapshot)**: YABANCI ARŞİV: Türk ve Türkî kanalları en üste taşı
+- **PR #768:gövde L1** — YABANCI_ARSIV.m3u8 içindeki Türk/Türkî olduğu güçlü metadata ile belirlenen 47 kayıt, kendi göreli sıraları korunarak listenin en üstüne taşındı. Toplam 284 kayıt ve tüm URL/kayıtlar korunuyor; kategori adı değişmedi. TRT Greece, Kanal D Romania, ATV Hungary/Peru gibi yalnız isim benzerliği taşıyan yabancı kayıtlar Türk bloğuna alınmadı.
+- **PR [#767](https://github.com/Madsc55/MADSC55-TV-V2/pull/767) — AÇIK (snapshot)**: YABANCI ARŞİVİ: ikinci taramada bulunan 9 yayın adayını öne al
+- **PR #767:gövde L1** — Mevcut 291 adayın önüne 9 ek kayıt. 15.940 arşiv ve 18.330 toplam kayıt korunur. Diğer kategoriler byte-identical. Mevcut iç parça manifesti eşitlendi. Canlı dil/AV testi yapılmadı.
+- **PR [#760](https://github.com/Madsc55/MADSC55-TV-V2/pull/760) — AÇIK (snapshot)**: Fix failed YEDEKLER quality CI: FFmpeg runtime and scoped evidence
+- **PR #760:gövde L1** — Main run 45454793458 failed in all eight shards: the local synthetic media decoder reported no streams, then summary rejected a changed global playlist hash. Require system FFmpeg, add PR offline synthetic preflight, validate reconstructed historical SHA and exact ordered YEDEKLER record bytes before accepting unrelated group changes, and bind all shards to the actual checkout hash. No playlist writes, no URL changes, no security gate bypass. Merge only after required checks pass; squash commit must include [yedekler-quality-20261124] to restart the authorized read-only scan.
+- **PR [#757](https://github.com/Madsc55/MADSC55-TV-V2/pull/757) — AÇIK (snapshot)**: YABANCI ARŞİVİ — Türk dilleri yayınlarını öne al
+- **PR #757:gövde L1** — Mevcut Türkçe/Azerice/Türkmence öncelikli bloğu korur ve Kazakça, Özbekçe, Kırgızca, Tatarca ve diğer Türk dilleriyle ilişkili ek kayıtları ön tarafa taşır. 99 ek kayıt öne alındı. Sadece mevcut ana M3U8 içinde sıralama değişikliği; 18.330 toplam ve 15.940 YABANCI ARŞİVİ kaydı korunur. Kayıtlar isim ve kaynak metadatasına göre seçildi; canlı ses/görüntü testi yapılmadı.
+- **PR [#755](https://github.com/Madsc55/MADSC55-TV-V2/pull/755) — AÇIK (snapshot)**: YABANCI ARŞİVİ: Türk ve Türkî yayınları öne al
+- **PR #755:gövde L1** — Yalnız mevcut ana playlist içinde YABANCI ARŞİVİ sıralaması değiştirildi. 263 Türk/Türkî yayın adayı başa alındı; 15.940 arşiv kaydı ve 18.330 toplam kayıt korunuyor. Kayıt içerikleri, bağlantılar, kategori adları ve diğer kategoriler değişmedi. Yayın dili ve ses/görüntü canlı doğrulaması yapılmadı; sınıflandırma mevcut ad, kaynak ve kimlik bilgilerine dayanıyor.
+- **PR [#728](https://github.com/Madsc55/MADSC55-TV-V2/pull/728) — AÇIK (snapshot)**: ANA ARŞİV: platform kataloglarından 18 ek aday, ilk 788 kayıt
+- **PR #728:gövde L1** — 13.712 kayıt incelendi; 192 platform kanal adı eşleşmesinden 18 yayın adayı seçildi. Film Screen HD birebir URL eşleşmesi, kalan 17 kayıt çok dilli yayın adayıdır; canlı dil doğrulaması yapılmadı. İlk 770 öncelikli kayıt korunur; 18 ek aday başa alınır. Toplam 18.337 kayıt ve diğer kategoriler korunur. Offline CI ve Production Security Gate geçmeden birleştirilmez. PR #721 ile eşzamanlı birleştirmeyin.
+- **PR [#721](https://github.com/Madsc55/MADSC55-TV-V2/pull/721) — AÇIK (snapshot)**: ANA ARŞİV 1–75: 75 kanalı YEDEKLER'e taşı
+- **PR #721:gövde L1** — Kullanıcı talimatı: ANA ARŞİV ilk 75 kayıt YEDEKLER'e taşındı (mevcut YEDEKLER sonuna). ANA ARŞİV 13.712 → 13.637; YEDEKLER 592 → 667; toplam 18.337. Diğer kategoriler, yayın URL ve metaveriler korundu. Kanal silme, kopyalama veya canlı test yok. Offline CI ve Production Security Gate PASS sonrası merge.
+- **Issue [#693](https://github.com/Madsc55/MADSC55-TV-V2/issues/693) — AÇIK (snapshot)**: BUG: İBO Player kanal görünürlüğü 19/1107/15703 kaydın 18/1104/15606'sını gösteriyor
+- **Issue #693:gövde L1** — ## İBO Player görünür kanal sayısı ile kanonik M3U envanteri uyuşmuyor
+- **Issue #693:gövde L3** — Kullanıcının 23 Kasım 2026 gözlemi (İBO Player):
+- **Issue #693:gövde L4** — | Kategori | M3U başlık ve gerçek #EXTINF | İBO'da görünen | Fark |
+- **Issue #693:gövde L5** — |---|---:|---:|---:|
+- **Issue #693:gövde L6** — | 🌍 BELGESEL | 19 | 18 | 1 |
+- **Issue #693:gövde L7** — | 🗂️ YEDEKLER | 1107 | 1104 | 3 |
+- **Issue #693:gövde L8** — | ANA ARŞİV | 15703 | 15606 | 97 |
+- **Issue #693:gövde L10** — **Doğrulanan repo kanıtı (main):**
+- **Issue #693:gövde L11** — - `v2/playlists/parts/0007.m3u`: 19 M3U kanalı, 19 farklı HTTP(S) URL, 19 farklı görünen kanal adı.
+- **Issue #693:gövde L12** — - `v2/playlists/parts/0012.m3u`: 1107 M3U kanalı, 1107 farklı URL.
+- **Issue #693:gövde L13** — - `v2/playlists/parts/0013.m3u`–`0019.m3u`: toplam 15703 M3U kanalı, kendi kategorisi içinde 15703 farklı URL.
+- **Issue #693:gövde L14** — - Üç kategorinin kayıtlarında gerekli `#EXTINF`, `group-title`, yayın adresi satırı ve doğru çift tırnak yapısı mevcut. Kategori etiketleri dosya içindeki **kayıt** sayıları ile eşleşiyor.
+- **Issue #693:gövde L15** — - Tam liste 18337 kayıt tutuyor. İBO'nun görüntüleme/filtreleme/kesme/caching davranışı henüz doğrulanamadı.
+- **Issue #693:gövde L16** — - **101 farkın**, ayrı incelemedeki 101 ortak URL grubu ile aynı olguyu temsil ettiği kanıtlanmadı; bu ikisini birleştirmeyin.
+- **Issue #693:gövde L18** — ## Kalan iş
+- **Issue #693:gövde L19** — 1. İBO'da güncel ana URL'nin gerçekten yeniden yüklendiğini ve saklı/eski/filtreli görünüm olmadığını doğrulayın.
+- **Issue #693:gövde L20** — 2. İBO'da göstermediği tam kanal kimliklerini bulup GitHub'daki 19/1107/15703 kayıtlarla karşılaştırın; gerekirse iBO'nin gerçek içe aktarma raporunu inceleyin.
+- **Issue #693:gövde L21** — 3. Ancak kanıtlanmış parser/kimlik sorunu varsa **orijinal yayın URL'lerini ve kategori sırasını koruyarak** hedefli, testli bir PR hazırlayın.
+- **Issue #693:gövde L22** — 4. Görünürlük sorunu bulunmadan kategori sayılarını 18/1104/15606 olarak etiketlemeyin: bu, gerçek kayıt sayısını yanlış gösterip sorunu örter.
+- **Issue #693:gövde L24** — **Güvenlik:** Bu issue yalnızca takip/kanıt içindir. Ana playlist, kategori sırası, URL, kanal kayıtları ve ayrı test listeleri değişmeyecek.
+- **PR [#669](https://github.com/Madsc55/MADSC55-TV-V2/pull/669) — AÇIK (snapshot)**: Record no-loss channel lifecycle and defer playlist deletion
+- **PR #669:gövde L1** — Persist user-approved channel discovery -> provenance -> AV/Turkish language -> classification -> recovery -> guarded deduplication sequence in DEVAM_NOTU.md and v2/tasks/state.json. PR #667 must remain unmerged; preserve current 18,337 playlist entries. No playlist mutation.
+- **PR [#664](https://github.com/Madsc55/MADSC55-TV-V2/pull/664) — AÇIK (snapshot)**: docs: 23 Kasım güncel kalan işler ve iptal edilen arşiv taşıma kararı
+- **PR #664:gövde L1** — Proje sahibinin 23 Kasım son kararlarını ve 12 teknik kabul başlığını `v2/tasks/KALAN_ISLER_2026-11-23.md` dosyasında kaydeder. ANA ARŞİV'i YEDEKLER altına taşıma iptal edildi; alfabetik sıralama tekrar yapılmayacak. Tek playlist ve 685 SECURITY HOLD korunur. Yalnız belge değişikliği, playlist/workflow/state.json değişmez. Güvenlik/CI incelemesi sonrası birleştirilmelidir.
+- **PR [#655](https://github.com/Madsc55/MADSC55-TV-V2/pull/655) — AÇIK (snapshot)**: Kalan işler ve %100 teknik kabul takip planını kaydet
+- **PR #655:gövde L1** — 12 açık teknik kabul işi, sıralı dört aşama, tek ana playlist ve 685 SECURITY HOLD kuralları ile %75/%25 tahmini başlangıç durumu kayıt altına alındı. Sadece dokümantasyon değişikliği; playlist ve workflow davranışı değişmez.
+- **PR [#651](https://github.com/Madsc55/MADSC55-TV-V2/pull/651) — AÇIK (snapshot)**: docs: 15 ekran görüntüsündeki kalan teknik işleri kayıt altına al
+- **PR #651:gövde L1** — 15 ekran görüntüsündeki açık teknik kabul şartlarını ve HTTP Health Report #2 bekleyişini tek dosyada kaydeder. 34 görevin idari kapanışı ile gerçek teknik kabulü ayırır. Sadece yeni belge; ana playlist, 685 güvenlik kilidi ve state.json değişmez.
+- **PR [#650](https://github.com/Madsc55/MADSC55-TV-V2/pull/650) — AÇIK (snapshot)**: Record prioritized full inventory and discovery health scan plan
+- **PR #650:gövde L1** — Record owner-approved ordered work across all existing playlist categories and all discovered candidates in DEVAM_NOTU.md and v2/tasks/state.json. Planning only; no playlist, workflow, or security lock changes. Do not mark scan complete.
+- **PR [#642](https://github.com/Madsc55/MADSC55-TV-V2/pull/642) — AÇIK (snapshot)**: docs: DEVAM_NOTU tarihsel kapsamı arşivle ve sistem hazır durumunu yaz
+- **PR #642:gövde L1** — Proje sahibinin açık talimatıyla DEVAM_NOTU.md içindeki tarihsel bekleyen iş kayıtları kapsam dışı/arşivlenmiş kabul edilerek dosya yalnızca `SİSTEM HAZIR VE GÜNCEL - 18.337 KANAL AKTİF` satırına indirildi.
+- **PR #642:gövde L3** — Yalnızca DEVAM_NOTU.md değiştirildi; playlist, güvenlik kilitleri, workflow ve test dosyalarına dokunulmadı. Bu değişiklik teknik kabul kanıtı üretmez.
+- **PR [#641](https://github.com/Madsc55/MADSC55-TV-V2/pull/641) — AÇIK (snapshot)**: fix: post-404 inventory and historical security gate CI (supersedes #640)
+- **PR #641:gövde L1** — Includes PR #640 deletion-only playlist cleanup plus CI fixes. Offline inventory verifies 654 deletions and updated counts; historical #497 preview and retry artifacts are only generated for exact matching source inventory, preserving the 685 uncertain hold. Do not merge until both CI checks pass.
+
 <!-- D-END -->
 
 ### Dosya tarama fihristi ve kapsam denetimi
@@ -4384,4 +4438,20 @@ Her satırda snapshot/PR referansı, kaynak, okuma sonucu ve çıkarılan kayıt
 - main `v2/yedekler_batch/state.json` — OK; 139198/139198 bayt, 9 not/durum kaydı; blob `51268ca27d40af24a9dda86fc45fb063e1060cb4`.
 - main `v2/yedekler_red_av_request.md` — OK; 372/372 bayt, 2 not/durum kaydı; blob `eacbcb2439b1f9d4d49f184e6db6ac2a5c8a984e`.
 - main `yedekler/logo-kaynaklari.md` — OK; 12504/12504 bayt, 197 not/durum kaydı; blob `bba56e011edb0707bb3889aeb905f38df634d362`.
+- PR #768: açık; gövde okundu; yorum sayısı 0.
+- PR #767: açık; gövde okundu; yorum sayısı 0.
+- PR #760: açık; gövde okundu; yorum sayısı 0.
+- PR #757: açık; gövde okundu; yorum sayısı 0.
+- PR #755: açık; gövde okundu; yorum sayısı 0.
+- PR #728: açık; gövde okundu; yorum sayısı 0.
+- PR #721: açık; gövde okundu; yorum sayısı 0.
+- Issue #693: açık; gövde okundu; yorum sayısı 0.
+- PR #669: açık; gövde okundu; yorum sayısı 0.
+- PR #664: açık; gövde okundu; yorum sayısı 0.
+- PR #655: açık; gövde okundu; yorum sayısı 0.
+- PR #651: açık; gövde okundu; yorum sayısı 0.
+- PR #650: açık; gövde okundu; yorum sayısı 0.
+- PR #642: açık; gövde okundu; yorum sayısı 0.
+- PR #641: açık; gövde okundu; yorum sayısı 0.
+- Açık kayıt sayfalama: ilk sayfa 15, ikinci sayfa 0; açık Issue 1, açık PR 14. Yorum sayısı sıfır olan kayıtta ayrı yorum içeriği yoktur.
 <!-- COVERAGE-END -->
