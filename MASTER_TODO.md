@@ -8,6 +8,12 @@ Durum sözlüğü: **Güncel** = halen geçerli koruma veya açık kayıt; **Tar
 
 Tarama kapsamı: main ağacındaki tüm .md/.txt/.json/.yml/.yaml dosyaları, açık Issue ve açık PR'lar; açık PR'ların değişen not dosyaları ayrıca. Dosya bazlı tarama fihristi en altta. Makine verilerindeki kanal başına URL/logo/pozisyon satırları ayrı kullanıcı görevi değildir; görev, not, açıklama, durum ve kural alanları indekslenir. Sadece aynı kaynak içindeki yapı satırları (örneğin JSON parantezleri) ayıklanır.
 
+
+## 27 Kasım 2026 — Paket 1 güncel durum (tarihsel indeks korunur)
+
+- B37 / D05–D18: #641, #642, #650, #651, #655, #664, #669, #721, #728, #755, #757, #760, #767, #768 GitHub üzerinden kapatıldı; 14/14 closed, merged=false. Notlar bu dosyada korunur; eski PR içerikleri uygulanmadı.
+- D01–D04 / #693: Açık. 23 Kasım tarihli 101 görünürlük farkı güncel envanterle aynı değildir. Main parçaları 0001–0021 üzerinde EXTINF başlıklarında tırnak dışında ayırıcı virgül, kontrol karakteri ve takip eden HTTP(S) URL için salt-okunur kontrol yapıldı: bu kontrollerde hata saptanmadı. Güncel BELGESEL 19, YEDEKLER 1562, ANA ARŞİV 2; eski 19/1107/15703 snapshot ile karıştırılmamalı. Ana birleşik dosya içeriği API üzerinden okunamadı; yalnız parçalar incelendi. İBO gerçek içe aktarma raporu ve eksik kanal kimlikleri olmadan kök neden veya düzeltilen kanal sayısı doğrulanamaz. Playlist yazımı yapılmadı; 0 kanal değiştirildi. #693 kapatılmadı.
+
 ## A) Kullanıcı Tarafından Kaydettirilmiş Özel Notlar ve İstekler
 
 ### Güncel uygulama kuralları ve ayrı kullanıcı kararları
