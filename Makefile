@@ -12,6 +12,7 @@ test:
 	PYTHONPATH=v2:. $(PYTHON) -m unittest -v v2.test_shared_url_safe_probe
 	PYTHONPATH=v2:. $(PYTHON) -m unittest -v v2.test_full_playlist_url_audit
 	PYTHONPATH=v2:. $(PYTHON) -m unittest -v v2.test_full_playlist_av_decode
+	PYTHONPATH=v2:. $(PYTHON) -m unittest -v v2.test_stream_quality_decision v2.test_package2_evidence
 	$(PYTHON) v2/test_playlist_invariants.py
 	$(PYTHON) -m py_compile v2/discovery_34_live_contract.py v2/federated_m3u_source_discovery.py v2/discovery_provider_requests.py
 
