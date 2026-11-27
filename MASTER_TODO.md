@@ -435,6 +435,14 @@ Tarama kapsamı: main ağacındaki tüm .md/.txt/.json/.yml/.yaml dosyaları, a�
 - **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L3** — [Açık PR, tarihsel plan] Durum: TAKİPTE — kullanıcı talimatıyla kayıt altına alındı.
 - **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L11** — [Açık PR, tarihsel plan] Değişmez kurallar
 
+- **PR #669 @ a5fcf3a84bbe / v2/tasks/state.json:$.channel_lifecycle_plan_20261123.dedupe_rule** — [Açık PR, tarihsel plan] exact URL plus same channel display name; preserve distinct names and distinct URLs
+- **PR #669 @ a5fcf3a84bbe / v2/tasks/state.json:$.channel_lifecycle_plan_20261123.constraints[0]** — [Açık PR, tarihsel plan] no playlist deletion until evidence ledger and recovery verified
+- **PR #669 @ a5fcf3a84bbe / v2/tasks/state.json:$.channel_lifecycle_plan_20261123.constraints[1]** — [Açık PR, tarihsel plan] no bypass of offline CI or Production Security Gate
+- **PR #669 @ a5fcf3a84bbe / v2/tasks/state.json:$.channel_lifecycle_plan_20261123.constraints[2]** — [Açık PR, tarihsel plan] preserve category and archive ordering
+- **PR #669 @ a5fcf3a84bbe / v2/tasks/state.json:$.channel_lifecycle_plan_20261123.constraints[3]** — [Açık PR, tarihsel plan] no new playlist
+- **PR #669 @ a5fcf3a84bbe / v2/tasks/state.json:$.channel_lifecycle_plan_20261123.constraints[4]** — [Açık PR, tarihsel plan] no manual user GitHub steps
+- **v2/tasks/state.json:$.stage4_drive_archive_structural_audit_20261121.share_scope** — [Tarihsel kaynak kaydı, ek alan kontrolü] file owner and backup service account; no public anyone permission observed
+
 <!-- A-END -->
 
 ## B) Yarım Kalmış / Beklemeye Alınmış Teknik ve Kurtarma İşleri
@@ -2202,281 +2210,6 @@ Tarama kapsamı: main ağacındaki tüm .md/.txt/.json/.yml/.yaml dosyaları, a�
 - **v2/reports/turkish-discovery.json:$.pending_count** — [Tarihsel kaynak kaydı] 68
 
 - **v2/reports/turkish-only-fresh-scan.json:$.summary.language_review_required** — [Tarihsel kaynak kaydı] 0
-- **v2/reports/turkish-only-fresh-scan.json:$.results[0].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[1].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[2].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[3].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[4].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[5].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[6].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[7].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[8].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[9].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[10].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[11].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[12].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[13].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[14].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[15].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[16].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[17].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[18].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[19].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[20].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[21].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[22].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[23].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[24].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[25].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[26].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[27].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[28].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[29].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[30].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[31].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[32].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[33].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[34].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[35].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[36].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[37].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[38].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[39].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[40].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[41].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[42].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[43].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[44].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[45].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[46].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[47].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[48].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[49].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[50].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[51].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[52].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[53].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[54].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[55].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[56].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[57].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[58].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[59].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[60].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[61].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[62].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[63].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[64].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[65].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[66].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[67].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[68].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[69].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[70].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[71].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[72].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[73].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[74].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[75].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[76].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[77].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[78].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[79].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[80].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[81].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[82].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[83].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[84].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[85].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[86].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[87].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[88].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[89].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[90].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[91].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[92].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[93].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[94].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[95].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[96].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[97].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[98].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[99].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[100].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[101].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[102].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[103].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[104].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[105].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[106].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[107].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[108].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[109].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[110].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[111].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[112].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[113].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[114].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[115].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[116].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[117].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[118].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[119].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[120].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[121].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[122].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[123].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[124].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[125].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[126].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[127].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[128].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[129].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[130].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[131].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[132].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[133].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[134].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[135].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[136].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[137].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[138].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[139].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[140].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[141].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[142].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[143].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[144].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[145].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[146].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[147].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[148].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[149].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[150].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[151].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[152].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[153].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[154].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[155].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[156].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[157].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[158].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[159].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[160].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[161].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[162].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[163].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[164].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[165].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[166].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[167].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[168].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[169].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[170].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[171].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[172].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[173].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[174].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[175].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[176].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[177].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[178].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[179].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[180].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[181].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[182].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[183].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[184].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[185].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[186].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[187].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[188].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[189].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[190].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[191].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[192].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[193].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[194].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[195].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[196].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[197].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[198].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[199].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[200].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[201].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[202].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[203].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[204].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[205].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[206].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[207].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[208].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[209].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[210].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[211].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[212].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[213].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[214].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[215].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[216].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[217].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[218].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[219].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[220].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[221].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[222].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[223].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[224].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[225].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[226].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[227].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[228].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[229].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[230].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[231].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[232].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[233].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[234].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[235].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[236].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[237].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[238].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[239].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[240].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[241].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[242].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[243].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[244].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[245].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[246].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[247].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[248].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[249].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[250].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[251].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[252].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[253].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[254].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[255].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[256].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[257].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[258].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[259].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[260].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[261].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[262].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[263].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[264].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[265].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[266].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[267].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[268].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[269].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[270].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[271].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[272].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[273].status** — [Tarihsel kaynak kaydı] FAILED
-- **v2/reports/turkish-only-fresh-scan.json:$.results[274].status** — [Tarihsel kaynak kaydı] FAILED
 - **v2/reports/turkish-sample-verification-20261119.json:$.scope** — [Tarihsel kaynak kaydı] Two local integration fixtures. Human speech from the FLEURS test split was combined with a generated, captioned image and a timed Turkish test cue. No broadcaster or device assessment.
 - **v2/tasks/KALAN_ISLER_12_ASAMALI_PLAN_20261123.md:L1** — [Tarihsel kaynak kaydı] MADSC55 TV V2 — Birleşik yapılacak işler
 - **v2/tasks/KALAN_ISLER_12_ASAMALI_PLAN_20261123.md:L6** — [Tarihsel kaynak kaydı] 1. [ ] PR #641/#642/#650 ve tüm güncel PR/CI/güvenlik kapısı durumunu doğrula
@@ -2842,6 +2575,42 @@ Tarama kapsamı: main ağacındaki tüm .md/.txt/.json/.yml/.yaml dosyaları, a�
 - **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L46** — [Açık PR, tarihsel plan] - Tarihsel sayılar güncel main üzerinden yeniden hesaplanmadan kesin kabul edilmez.
 - **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L47** — [Açık PR, tarihsel plan] - Her tamamlanan madde için commit/PR, CI run, çıktı ve kabul tarihi eklenir.
 - **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L48** — [Açık PR, tarihsel plan] - Yeni iş çıktığında bu tek planda güncellenir; biten işler tekrarlanmaz.
+
+- **PR #650 @ fe1420ca833e / v2/tasks/state.json:$.full_inventory_health_scan_plan_20261123.priority** — [Açık PR, tarihsel plan] 1
+- **PR #650 @ fe1420ca833e / v2/tasks/state.json:$.full_inventory_health_scan_plan_20261123.discovery_readonly_is_not_full_scan** — [Açık PR, tarihsel plan] true
+- **PR #650 @ fe1420ca833e / v2/tasks/state.json:$.full_inventory_health_scan_plan_20261123.completed** — [Açık PR, tarihsel plan] false
+- **v2/tasks/state.json:$.stage1_ci_audit_20261121.finding** — [Tarihsel kaynak kaydı, ek alan kontrolü] No demonstrated unresolved main CI failure in checked latest runs; open PR acceptance and real-environment acceptance remain separate
+- **v2/tasks/state.json:$.stage1_ci_audit_20261121.task_statuses_changed** — [Tarihsel kaynak kaydı, ek alan kontrolü] false
+- **v2/tasks/state.json:$.stage3_verified_historical_av_progress_20261121.duplicate_pr_cleanup.rationale** — [Tarihsel kaynak kaydı, ek alan kontrolü] 514 and 535 reconciler/test blobs already included in merged 547; 552 missing-artifact claim was superseded by recovered exact source artifact.
+- **v2/tasks/state.json:$.stage3_verified_historical_av_progress_20261121.task_statuses_changed** — [Tarihsel kaynak kaydı, ek alan kontrolü] false
+- **v2/tasks/state.json:$.stage3_issue497_historical_import_20261121.task_statuses_changed** — [Tarihsel kaynak kaydı, ek alan kontrolü] false
+- **v2/tasks/state.json:$.stage4_vault_handoff_20261121.task_statuses_changed** — [Tarihsel kaynak kaydı, ek alan kontrolü] false
+- **v2/tasks/state.json:$.stage3_issue497_685_retry_gate_20261121.task_statuses_changed** — [Tarihsel kaynak kaydı, ek alan kontrolü] false
+- **v2/tasks/state.json:$.stage4_capture_egress_review_20261121.required_next_fix** — [Tarihsel kaynak kaydı, ek alan kontrolü] Use bounded pinned-IP local-file capture or fail closed for public IP literals; add offline nested HLS/key SSRF regression before accepting.
+- **v2/tasks/state.json:$.stage4_capture_egress_review_20261121.existing_34_task_statuses_modified** — [Tarihsel kaynak kaydı, ek alan kontrolü] false
+- **v2/tasks/state.json:$.stage5_worldwide_crosswalk_handoff_20261121.task_statuses_changed** — [Tarihsel kaynak kaydı, ek alan kontrolü] false
+- **v2/tasks/state.json:$.stage4_security_acceptance_20261121.task_statuses_changed** — [Tarihsel kaynak kaydı, ek alan kontrolü] false
+- **v2/tasks/state.json:$.stage6_retry_plan_20261121.task_statuses_changed** — [Tarihsel kaynak kaydı, ek alan kontrolü] false
+- **v2/tasks/state.json:$.stage4_drive_archive_structural_audit_20261121.source** — [Tarihsel kaynak kaydı, ek alan kontrolü] existing private Google Drive Independent Encrypted Recovery Archive folder
+- **v2/tasks/state.json:$.stage4_historical_drive_restore_verified_20261121.accepted_historical_actions_run** — [Tarihsel kaynak kaydı, ek alan kontrolü] 43241168321
+- **v2/tasks/state.json:$.stage4_historical_drive_restore_verified_20261121.evidence_report** — [Tarihsel kaynak kaydı, ek alan kontrolü] v2/reports/stage4_historical_drive_restore_provenance_20261121.json
+- **v2/tasks/state.json:$.stage4_historical_drive_restore_verified_20261121.main_task_statuses_changed** — [Tarihsel kaynak kaydı, ek alan kontrolü] false
+- **v2/tasks/state.json:$.stage7_retry_verdict_integrity_20261121.task_statuses_changed** — [Tarihsel kaynak kaydı, ek alan kontrolü] false
+- **v2/tasks/state.json:$.discovery34_200_throttle_completion_20261121.original_task_statuses_changed** — [Tarihsel kaynak kaydı, ek alan kontrolü] false
+- **v2/tasks/state.json:$.stage8_private_turkish_vault_restore_20261121.main_task_statuses_changed** — [Tarihsel kaynak kaydı, ek alan kontrolü] false
+- **v2/tasks/state.json:$.stage9_ffmpeg_initial_egress_hardening_20261121.historical_task_statuses_changed** — [Tarihsel kaynak kaydı, ek alan kontrolü] false
+- **v2/tasks/state.json:$.stage10_manual_hls_ts_safe_capture_20261121.segments_must_be_same_origin_relative_unencrypted_ts** — [Tarihsel kaynak kaydı, ek alan kontrolü] true
+- **v2/tasks/state.json:$.github_cleanup_audit_20261121.actions_failure_inventory_complete** — [Tarihsel kaynak kaydı, ek alan kontrolü] false
+- **v2/tasks/state.json:$.github_cleanup_audit_20261121.original_task_statuses_changed** — [Tarihsel kaynak kaydı, ek alan kontrolü] false
+- **v2/tasks/state.json:$.github_cleanup_audit_20261121.latest_main_actions_verification_scope** — [Tarihsel kaynak kaydı, ek alan kontrolü] PR #622 security run 44921994257 SUCCESS; historical three failure-to-success pairs only; not exhaustive
+- **v2/tasks/state.json:$.github_cleanup_final_20261121.actions_success_runs[0]** — [Tarihsel kaynak kaydı, ek alan kontrolü] 44944789787
+- **v2/tasks/state.json:$.github_cleanup_final_20261121.actions_success_runs[1]** — [Tarihsel kaynak kaydı, ek alan kontrolü] 44947424127
+- **v2/tasks/state.json:$.github_cleanup_final_20261121.actions_success_runs[2]** — [Tarihsel kaynak kaydı, ek alan kontrolü] 44949181505
+- **v2/tasks/state.json:$.github_cleanup_final_20261121.actions_success_runs[3]** — [Tarihsel kaynak kaydı, ek alan kontrolü] 44950371186
+- **v2/tasks/state.json:$.github_cleanup_final_20261121.actions_failure_inventory_complete** — [Tarihsel kaynak kaydı, ek alan kontrolü] false
+- **v2/tasks/state.json:$.stage11_owner_archival_scope_closure_20261121.not_individual_record_verification** — [Tarihsel kaynak kaydı, ek alan kontrolü] true
+- **v2/tasks/state.json:$.stage11_owner_archival_scope_closure_20261121.task19_report** — [Tarihsel kaynak kaydı, ek alan kontrolü] v2/reports/task19-current-xmltv-20261119.json
+- **v2/tasks/state.json:$.stage11_owner_archival_scope_closure_20261121.security_hold_685_unchanged** — [Tarihsel kaynak kaydı, ek alan kontrolü] true
 
 <!-- B-END -->
 
@@ -4264,6 +4033,31 @@ The last 30x er
 - **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L29** — [Açık PR, tarihsel plan] | 08 | Eksik gerçek kanal logolarını tamamla | Doğrulanmış kaynak URL, yanlış eşleşme yok | BEKLİYOR |
 - **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L33** — [Açık PR, tarihsel plan] | 12 | Son aşamada canlı AV, kanal sürekliliği ve gerçek İBO Player testleri | Gerçek cihazda doğrulanmış test raporu | EN SON |
 
+- **PR #669 @ a5fcf3a84bbe / v2/tasks/state.json:$.channel_lifecycle_plan_20261123.baseline_entries** — [Açık PR, tarihsel plan] 18337
+- **PR #669 @ a5fcf3a84bbe / v2/tasks/state.json:$.channel_lifecycle_plan_20261123.pr666.merged** — [Açık PR, tarihsel plan] true
+- **PR #669 @ a5fcf3a84bbe / v2/tasks/state.json:$.channel_lifecycle_plan_20261123.pr666.ci** — [Açık PR, tarihsel plan] success
+- **PR #669 @ a5fcf3a84bbe / v2/tasks/state.json:$.channel_lifecycle_plan_20261123.pr666.security_gate** — [Açık PR, tarihsel plan] success
+- **PR #669 @ a5fcf3a84bbe / v2/tasks/state.json:$.channel_lifecycle_plan_20261123.pr667.merged** — [Açık PR, tarihsel plan] false
+- **PR #669 @ a5fcf3a84bbe / v2/tasks/state.json:$.channel_lifecycle_plan_20261123.pr667.ci** — [Açık PR, tarihsel plan] failure
+- **PR #669 @ a5fcf3a84bbe / v2/tasks/state.json:$.channel_lifecycle_plan_20261123.pr667.security_gate** — [Açık PR, tarihsel plan] failure
+- **PR #669 @ a5fcf3a84bbe / v2/tasks/state.json:$.channel_lifecycle_plan_20261123.pr667.proposed_duplicates** — [Açık PR, tarihsel plan] 806
+- **PR #669 @ a5fcf3a84bbe / v2/tasks/state.json:$.channel_lifecycle_plan_20261123.pr667.proposed_final** — [Açık PR, tarihsel plan] 17531
+- **PR #669 @ a5fcf3a84bbe / v2/tasks/state.json:$.channel_lifecycle_plan_20261123.pr667.epg_added** — [Açık PR, tarihsel plan] 0
+- **PR #669 @ a5fcf3a84bbe / v2/tasks/state.json:$.channel_lifecycle_plan_20261123.pr667.logos_added** — [Açık PR, tarihsel plan] 0
+- **PR #669 @ a5fcf3a84bbe / v2/tasks/state.json:$.channel_lifecycle_plan_20261123.priority[0]** — [Açık PR, tarihsel plan] immutable channel identity and discovery provenance
+- **PR #669 @ a5fcf3a84bbe / v2/tasks/state.json:$.channel_lifecycle_plan_20261123.priority[1]** — [Açık PR, tarihsel plan] URL history and repeat discovery reconciliation
+- **PR #669 @ a5fcf3a84bbe / v2/tasks/state.json:$.channel_lifecycle_plan_20261123.priority[2]** — [Açık PR, tarihsel plan] real decoded audio and video health checks
+- **PR #669 @ a5fcf3a84bbe / v2/tasks/state.json:$.channel_lifecycle_plan_20261123.priority[3]** — [Açık PR, tarihsel plan] Turkish spoken audio and subtitle evidence
+- **PR #669 @ a5fcf3a84bbe / v2/tasks/state.json:$.channel_lifecycle_plan_20261123.priority[4]** — [Açık PR, tarihsel plan] verified classification and audit ledger
+- **PR #669 @ a5fcf3a84bbe / v2/tasks/state.json:$.channel_lifecycle_plan_20261123.priority[5]** — [Açık PR, tarihsel plan] EPG and original logo provenance
+- **PR #669 @ a5fcf3a84bbe / v2/tasks/state.json:$.channel_lifecycle_plan_20261123.priority[6]** — [Açık PR, tarihsel plan] lossless recovery manifest and guarded deduplication
+- **PR #650 @ fe1420ca833e / v2/tasks/state.json:$.full_inventory_health_scan_plan_20261123.canonical_playlist** — [Açık PR, tarihsel plan] MADSC55_TV_IBO_CALISANLAR_TEST.m3u8
+- **PR #650 @ fe1420ca833e / v2/tasks/state.json:$.full_inventory_health_scan_plan_20261123.security_locked_channels** — [Açık PR, tarihsel plan] 685
+- **PR #650 @ fe1420ca833e / v2/tasks/state.json:$.full_inventory_health_scan_plan_20261123.do_not_create_new_playlist** — [Açık PR, tarihsel plan] true
+- **PR #650 @ fe1420ca833e / v2/tasks/state.json:$.full_inventory_health_scan_plan_20261123.do_not_modify_playlist_in_planning_pr** — [Açık PR, tarihsel plan] true
+- **v2/tasks/state.json:$.stage3_verified_historical_av_progress_20261121.purpose** — [Tarihsel kaynak kaydı, ek alan kontrolü] Record independently verified historical AV artifact and merged acceptance code; no new scan or playlist mutation.
+- **v2/tasks/state.json:$.stage4_capture_egress_review_20261121.stage4_unresolved_risk** — [Tarihsel kaynak kaydı, ek alan kontrolü] IP-literal input passes remote URL to FFmpeg with network protocols enabled. Nested HLS/playlist references can attempt secondary private/local requests; redirect=0 alone is insufficient.
+
 <!-- C-END -->
 
 ## D) Açık Kalan GitHub Issue'ları ve Doğrulanmamış Maddeler
@@ -4499,6 +4293,11 @@ The last 30x er
 
 
 
+- **PR #669 @ a5fcf3a84bbe / v2/tasks/state.json:$.channel_lifecycle_plan_20261123.verification_pending** — [Açık PR, tarihsel plan] true
+- **v2/tasks/state.json:$.github_cleanup_audit_20261121.pr624_scope** — [Tarihsel kaynak kaydı, ek alan kontrolü] Removed hard-coded historical 18074 YEDEKLER count from snapshot and assignment read; added optional strict count and offline regression. Does not close issue 497.
+- **v2/tasks/state.json:$.github_cleanup_final_20261121.open_prs_pending_independent_logo_verification[0]** — [Tarihsel kaynak kaydı, ek alan kontrolü] 618
+- **v2/tasks/state.json:$.stage11_owner_archival_scope_closure_20261121.task17_manifest** — [Tarihsel kaynak kaydı, ek alan kontrolü] archive/unverified_historical_ids.json
+
 <!-- D-END -->
 
 ### Dosya tarama fihristi ve kapsam denetimi
@@ -4617,7 +4416,7 @@ Her satırda snapshot/PR referansı, kaynak, okuma sonucu ve çıkarılan kayıt
 - main `v2/reports/turkish-category-audit.json` — OK; 11243/11243 bayt, 277 not/durum kaydı; blob `9c2af20c9db989ad0b1c8e1589adcac162ea1f52`.
 - main `v2/reports/turkish-discovery.json` — OK; 18886/18886 bayt, 1 not/durum kaydı; blob `8f2a66378cca550f5cacdd83344665a8be5cd92e`.
 - main `v2/reports/turkish-live-probe.json` — OK; 16832/16832 bayt, 1 not/durum kaydı; blob `522188f6aeac2bbdf200fae5fc1e9f3e9ffe0592`.
-- main `v2/reports/turkish-only-fresh-scan.json` — OK; 73435/73435 bayt, 277 not/durum kaydı; blob `0beb62f7d30c9ee8cd9211152bcb954ae820d399`.
+- main `v2/reports/turkish-only-fresh-scan.json` — OK; 73435/73435 bayt, 2 not/durum kaydı (275 ham kanal test durum satırı özgün raporda korunur); blob `0beb62f7d30c9ee8cd9211152bcb954ae820d399`.
 - main `v2/reports/turkish-sample-verification-20261119.json` — OK; 4773/4773 bayt, 1 not/durum kaydı; blob `04998992d40d4556e8b9baf50e85e5a53b3a02fd`.
 - main `v2/reports/yedekler-missing-logos.json` — OK; 3765/3765 bayt, 1 not/durum kaydı; blob `6eab121062c5901334245443bb4587d21e37dddc`.
 - main `v2/tasks/ANA_PLAYLIST_ARSIV_BUTUNLUK_20261121.md` — OK; 1624/1624 bayt, 19 not/durum kaydı; blob `7f602eea01585ba2d68db98c6c33b52b4863136f`.
@@ -4667,4 +4466,5 @@ Her satırda snapshot/PR referansı, kaynak, okuma sonucu ve çıkarılan kayıt
 - PR #650 `v2/tasks/state.json` @ `fe1420ca833eb1a52bdbb8890023d4cc45f24c59` — OK; 97260 karakter, 9 ayrı main'den farklı kaynak kaydı; blob `c9e20dd0de580caa172b070b13811269608d9bf4`. Aynı path'te main ile birebir aynı metin zaten main kaynak indeksindedir.
 - PR #642 `DEVAM_NOTU.md` @ `4bc0d6614299c3b2ad20eb5688eee6ab6e4dab9a` — OK; 44 karakter, 1 ayrı main'den farklı kaynak kaydı; blob `03f34df69e513a247dfe502b7c287a792b1da3d5`. Aynı path'te main ile birebir aynı metin zaten main kaynak indeksindedir.
 - PR #768: değişen .md/.txt/.json/.yml/.yaml dosyası yok; PR gövdesi D bölümünde kayıtlı.
+- Ek yapısal kontrol: main state.json ve PR #669/#650 plan nesneleri yeniden açıldı. Öncelik, kısıt, güvenlik, risk ve diğer henüz indekslenmemiş plan alanları ayrı kayıt olarak eklendi (70 alan). Ham sonuç durumları görevlerden ayrıldı.
 <!-- COVERAGE-END -->
