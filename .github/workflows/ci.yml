@@ -942,6 +942,7 @@ jobs:
     outputs:
       matrix: ${{ steps.plan.outputs.matrix }}
       revision: ${{ steps.plan.outputs.revision }}
+      model_attempt: ${{ steps.plan.outputs.model_attempt }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -970,7 +971,10 @@ jobs:
           done < /tmp/foreign-artifacts.tsv
       - id: plan
         run: |
-          echo "matrix=$(PYTHONPATH=v2:. python v2/foreign_archive_plan.py --root /tmp/foreign-state)" >> "$GITHUB_OUTPUT"
+          set -euo pipefail
+          matrix=$(PYTHONPATH=v2:. python v2/foreign_archive_plan.py --root /tmp/foreign-state --queue-output /tmp/foreign-state/queue.json)
+          echo "matrix=$matrix" >> "$GITHUB_OUTPUT"
+          echo "model_attempt=$GITHUB_RUN_ATTEMPT" >> "$GITHUB_OUTPUT"
           echo "revision=$(sha256sum MADSC55_TV_IBO_CALISANLAR_TEST.m3u8 | cut -d' ' -f1)" >> "$GITHUB_OUTPUT"
       - uses: actions/upload-artifact@v4
         with:
@@ -978,6 +982,26 @@ jobs:
           path: /tmp/foreign-state/
           retention-days: 90
           if-no-files-found: error
+      - name: Download the reviewed Whisper model once per wave
+        if: steps.plan.outputs.matrix != '[]'
+        run: |
+          set -euo pipefail
+          dir="$RUNNER_TEMP/foreign-whisper-tiny"
+          mkdir -p "$dir"
+          revision=d90ca5fe260221311c53c58e660288d3deb8d356
+          for name in config.json model.bin tokenizer.json vocabulary.txt; do
+            curl --fail --silent --show-error --location --proto '=https' --proto-redir '=https' --retry 3 --max-time 240 \
+              "https://huggingface.co/Systran/faster-whisper-tiny/resolve/$revision/$name" -o "$dir/$name"
+          done
+          (cd "$dir" && sha256sum --check "$GITHUB_WORKSPACE/v2/foreign_whisper_tiny.sha256")
+      - uses: actions/upload-artifact@v4
+        if: steps.plan.outputs.matrix != '[]'
+        with:
+          name: foreign-whisper-tiny-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/foreign-whisper-tiny/
+          retention-days: 7
+          if-no-files-found: error
+
   foreign-archive-audit:
     name: Foreign archive live AV batch ${{ matrix.batch }}
     needs: foreign-archive-plan
@@ -1002,11 +1026,23 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - run: |
-          sudo apt-get update
-          sudo apt-get install -y ffmpeg tesseract-ocr tesseract-ocr-tur
-          python -m pip install faster-whisper==1.1.1
-          python -c "from faster_whisper import WhisperModel; WhisperModel('tiny',device='cpu',compute_type='int8')"
+      - name: Install and check media and language dependencies
+        run: |
+          set -euo pipefail
+          sudo apt-get -o Acquire::Retries=3 update
+          sudo apt-get -o Acquire::Retries=3 install -y --no-install-recommends ffmpeg tesseract-ocr tesseract-ocr-tur tesseract-ocr-eng
+          python -m pip install -r v2/requirements-foreign-asr.txt
+          python -m pip check
+          python -c 'from faster_whisper import WhisperModel'
+          tesseract --list-langs | grep -Fx tur
+      - uses: actions/download-artifact@v4
+        with:
+          name: foreign-whisper-tiny-${{ github.run_id }}-${{ needs.foreign-archive-plan.outputs.model_attempt }}
+          path: ${{ runner.temp }}/foreign-whisper-tiny
+      - name: Verify local model
+        run: |
+          cd "$RUNNER_TEMP/foreign-whisper-tiny"
+          sha256sum --check "$GITHUB_WORKSPACE/v2/foreign_whisper_tiny.sha256"
       - uses: actions/download-artifact@v4
         with:
           name: foreign-plan-${{ github.run_id }}
@@ -1016,6 +1052,7 @@ jobs:
           PYTHONPATH=v2:. python -m unittest -v v2.test_shared_url_safe_probe v2.test_full_playlist_av_decode v2.test_nonforeign_deep_av v2.test_foreign_archive_batch
           PYTHONPATH=v2:. python v2/yedekler_quality_review.py --self-test
       - name: Run bounded read-only batch
+        id: probe
         env:
           BATCH: ${{ matrix.batch }}
         run: |
@@ -1023,10 +1060,10 @@ jobs:
           file="/tmp/foreign-state/batch-$BATCH.json"
           args=()
           if [[ -f "$file" ]]; then args=(--resume "$file"); fi
-          PYTHONPATH=v2:. python v2/foreign_archive_batch.py --batch "$BATCH" --output "$file" "${args[@]}"
+          PYTHONPATH=v2:. python v2/foreign_archive_batch.py --model-dir "$RUNNER_TEMP/foreign-whisper-tiny" --batch "$BATCH" --output "$file" "${args[@]}"
           test "$(sha256sum MADSC55_TV_IBO_CALISANLAR_TEST.m3u8 | cut -d' ' -f1)" = "${{ needs.foreign-archive-plan.outputs.revision }}"
       - uses: actions/upload-artifact@v4
-        if: always()
+        if: always() && steps.probe.outcome != 'skipped'
         with:
           name: foreign-${{ needs.foreign-archive-plan.outputs.revision }}-${{ matrix.batch }}-${{ github.run_id }}-${{ github.run_attempt }}
           path: /tmp/foreign-state/batch-${{ matrix.batch }}.json
