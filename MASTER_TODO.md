@@ -14,6 +14,8 @@ Tarama kapsamı: main ağacındaki tüm .md/.txt/.json/.yml/.yaml dosyaları, a�
 - **.github/workflows/ci.yml:L71** — [Tarihsel yapılandırma kaydı] # Only the explicitly tagged owner-requested squash merge on main runs
 - **.github/workflows/ci.yml:L109** — [Tarihsel yapılandırma kaydı] # One owner-requested, reviewed merge only; never from untrusted PRs.
 
+
+
 <!-- A-END -->
 
 ## B) Yarım Kalmış / Beklemeye Alınmış Teknik ve Kurtarma İşleri
@@ -154,6 +156,70 @@ Tarama kapsamı: main ağacındaki tüm .md/.txt/.json/.yml/.yaml dosyaları, a�
 - **.github/workflows/run_pass1_cleanup.yml:L16** — [Tarihsel yapılandırma kaydı] - name: Run offline cleanup
 - **.github/workflows/run_pass1_cleanup.yml:L21** — [Tarihsel yapılandırma kaydı] name: pass1-cleanup-results
 
+- **.github/workflows/sort-backups-enrich-logos.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/turkish-backup-identity-audit.yml:L1** — [Tarihsel yapılandırma kaydı] name: Turkish backup identity audit (production writer suspended)
+- **.github/workflows/turkish-backup-identity-audit.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/turkish-backups-fifth-audit.yml:L1** — [Tarihsel yapılandırma kaydı] name: Turkish backups fifth audit (production writer suspended)
+- **.github/workflows/turkish-backups-fifth-audit.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/turkish-backups-fourth-audit.yml:L1** — [Tarihsel yapılandırma kaydı] name: Turkish backups fourth audit (production writer suspended)
+- **.github/workflows/turkish-backups-fourth-audit.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/turkish-backups-second-pass.yml:L1** — [Tarihsel yapılandırma kaydı] name: Turkish backups second pass (production writer suspended)
+- **.github/workflows/turkish-backups-second-pass.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/turkish-backups-third-pass.yml:L1** — [Tarihsel yapılandırma kaydı] name: Turkish backups third pass (production writer suspended)
+- **.github/workflows/turkish-backups-third-pass.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/turkish-category-audit.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/update_main_playlist.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/update_main_playlist.yml:L20** — [Tarihsel yapılandırma kaydı] - name: Validate maintenance script
+- **.github/workflows/update_main_playlist.yml:L26** — [Tarihsel yapılandırma kaydı] - name: Verify report output exists
+- **.github/workflows/update_main_playlist.yml:L30** — [Tarihsel yapılandırma kaydı] - name: Upload read-only health report
+- **.github/workflows/update_main_playlist.yml:L31** — [Tarihsel yapılandırma kaydı] if: always()
+- **.github/workflows/v2-batched-playback.yml:L1** — [Tarihsel yapılandırma kaydı] name: V2 Batched All-Source Playback Verification
+- **.github/workflows/v2-batched-playback.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/v2-batched-playback.yml:L20** — [Tarihsel yapılandırma kaydı] - name: Install ffprobe
+- **.github/workflows/v2-batched-playback.yml:L24** — [Tarihsel yapılandırma kaydı] - name: Discover GitHub M3U sources
+- **.github/workflows/v2-batched-playback.yml:L28** — [Tarihsel yapılandırma kaydı] - name: Probe bounded shard with source coverage
+- **.github/workflows/v2-batched-playback.yml:L36** — [Tarihsel yapılandırma kaydı] - name: Upload hashed evidence
+- **.github/workflows/v2-batched-playback.yml:L37** — [Tarihsel yapılandırma kaydı] if: always()
+- **.github/workflows/v2-batched-playback.yml:L40** — [Tarihsel yapılandırma kaydı] name: all-source-playback-page-${{ matrix.page }}-shard-${{ matrix.shard }}
+- **.github/workflows/v2-batched-playback.yml:L46** — [Tarihsel yapılandırma kaydı] if: always()
+- **.github/workflows/v2-batched-playback.yml:L53** — [Tarihsel yapılandırma kaydı] - name: Download all shard evidence
+- **.github/workflows/v2-batched-playback.yml:L58** — [Tarihsel yapılandırma kaydı] - name: Merge and validate shard evidence
+- **.github/workflows/v2-batched-playback.yml:L60** — [Tarihsel yapılandırma kaydı] - name: Upload single acceptance summary
+- **.github/workflows/v2-batched-playback.yml:L63** — [Tarihsel yapılandırma kaydı] name: all-source-playback-aggregate
+- **.github/workflows/v2-bruksel-logo-png.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/v2-epg.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/v2-full-decoder.yml:L1** — [Tarihsel yapılandırma kaydı] name: V2 Full Decoder Verification (manual, read-only)
+- **.github/workflows/v2-full-decoder.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/v2-full-decoder.yml:L20** — [Tarihsel yapılandırma kaydı] - name: Install metadata verifier
+- **.github/workflows/v2-full-decoder.yml:L24** — [Tarihsel yapılandırma kaydı] - name: Upload full audit evidence
+- **.github/workflows/v2-full-decoder.yml:L25** — [Tarihsel yapılandırma kaydı] if: always()
+- **.github/workflows/v2-full-decoder.yml:L28** — [Tarihsel yapılandırma kaydı] name: v2-full-decoder-evidence
+- **.github/workflows/v2-full-decoder.yml:L43** — [Tarihsel yapılandırma kaydı] - name: Install existing audio and video decoder
+- **.github/workflows/v2-full-decoder.yml:L47** — [Tarihsel yapılandırma kaydı] - name: Upload audit results
+- **.github/workflows/v2-full-decoder.yml:L48** — [Tarihsel yapılandırma kaydı] if: always()
+- **.github/workflows/v2-github-source-discovery.yml:L1** — [Tarihsel yapılandırma kaydı] name: V2 GitHub Turkish M3U Source Discovery
+- **.github/workflows/v2-github-source-discovery.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/v2-github-source-discovery.yml:L18** — [Tarihsel yapılandırma kaydı] - name: Check syntax
+- **.github/workflows/v2-github-source-discovery.yml:L20** — [Tarihsel yapılandırma kaydı] - name: Search GitHub repositories and inspect M3U files
+- **.github/workflows/v2-github-source-discovery.yml:L24** — [Tarihsel yapılandırma kaydı] - name: Save discovered sources for review
+- **.github/workflows/v2-github-source-discovery.yml:L25** — [Tarihsel yapılandırma kaydı] if: always()
+- **.github/workflows/v2-github-source-discovery.yml:L28** — [Tarihsel yapılandırma kaydı] name: github-turkish-m3u-source-discovery
+- **.github/workflows/v2-historical-recovery.yml:L1** — [Tarihsel yapılandırma kaydı] name: MADSC TV — Eski ve Yeni Tarama Kurtarma Kontrolü
+- **.github/workflows/v2-historical-recovery.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/v2-historical-recovery.yml:L19** — [Tarihsel yapılandırma kaydı] - name: Download existing #60 and #72 evidence without rescanning
+- **.github/workflows/v2-historical-recovery.yml:L26** — [Tarihsel yapılandırma kaydı] - name: Compare historical candidates and preserve missing decoded identities
+- **.github/workflows/v2-historical-recovery.yml:L32** — [Tarihsel yapılandırma kaydı] - name: Recover latest GitHub-discovered M3U source catalog when available
+- **.github/workflows/v2-historical-recovery.yml:L43** — [Tarihsel yapılandırma kaydı] - name: Verify dynamic source CLI is supported before rediscovery
+- **.github/workflows/v2-historical-recovery.yml:L46** — [Tarihsel yapılandırma kaydı] - name: Rediscover historical decoded identities from current configured sources without full playback scan
+- **.github/workflows/v2-historical-recovery.yml:L54** — [Tarihsel yapılandırma kaydı] - name: Show recovery counts in GitHub Actions summary
+- **.github/workflows/v2-historical-recovery.yml:L81** — [Tarihsel yapılandırma kaydı] - name: Publish anonymous recovery evidence only
+- **.github/workflows/v2-historical-recovery.yml:L84** — [Tarihsel yapılandırma kaydı] name: historical-60-vs-72-recovery
+- **.github/workflows/v2-ibo-parity.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/v2-ibo-parity.yml:L15** — [Tarihsel yapılandırma kaydı] - name: Validate syntax
+- **.github/workflows/v2-ibo-parity.yml:L19** — [Tarihsel yapılandırma kaydı] - name: Store read-only comparison
+- **.github/workflows/v2-ibo-parity.yml:L20** — [Tarihsel yapılandırma kaydı] if: always()
+- **.github/workflows/v2-logo-backup.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+
 <!-- B-END -->
 
 ## C) Kanal Testi, Taşıma ve Kategori Düzenleme İşleri
@@ -260,12 +326,42 @@ Tarama kapsamı: main ağacındaki tüm .md/.txt/.json/.yml/.yaml dosyaları, a�
 - **.github/workflows/run_move_685.yml:L36** — [Tarihsel yapılandırma kaydı] name: move-685-playlist-preview
 - **.github/workflows/run_pass1_cleanup.yml:L18** — [Tarihsel yapılandırma kaydı] - name: Upload proposed playlist and report
 
+- **.github/workflows/sort-backups-enrich-logos.yml:L1** — [Tarihsel yapılandırma kaydı] name: Sort backups and enrich missing logos (production writer suspended)
+- **.github/workflows/sort-backups-enrich-logos.yml:L14** — [Tarihsel yapılandırma kaydı] - name: Verify protected IBO playlist without changing it
+- **.github/workflows/turkish-backup-identity-audit.yml:L14** — [Tarihsel yapılandırma kaydı] - name: Verify protected IBO playlist without changing it
+- **.github/workflows/turkish-backups-fifth-audit.yml:L14** — [Tarihsel yapılandırma kaydı] - name: Verify protected IBO playlist without changing it
+- **.github/workflows/turkish-backups-fourth-audit.yml:L14** — [Tarihsel yapılandırma kaydı] - name: Verify protected IBO playlist without changing it
+- **.github/workflows/turkish-backups-second-pass.yml:L14** — [Tarihsel yapılandırma kaydı] - name: Verify protected IBO playlist without changing it
+- **.github/workflows/turkish-backups-third-pass.yml:L14** — [Tarihsel yapılandırma kaydı] - name: Verify protected IBO playlist without changing it
+- **.github/workflows/turkish-category-audit.yml:L1** — [Tarihsel yapılandırma kaydı] name: Audit Turkish channels and remove test symbols (production writer suspended)
+- **.github/workflows/turkish-category-audit.yml:L14** — [Tarihsel yapılandırma kaydı] - name: Verify protected IBO playlist without changing it
+- **.github/workflows/update_main_playlist.yml:L1** — [Tarihsel yapılandırma kaydı] name: Main Playlist HTTP Health Report (Read Only)
+- **.github/workflows/update_main_playlist.yml:L22** — [Tarihsel yapılandırma kaydı] - name: Probe streams without changing canonical playlist
+- **.github/workflows/update_main_playlist.yml:L24** — [Tarihsel yapılandırma kaydı] - name: Verify canonical playlist was not modified
+- **.github/workflows/update_main_playlist.yml:L34** — [Tarihsel yapılandırma kaydı] name: main-playlist-health
+- **.github/workflows/v2-batched-playback.yml:L22** — [Tarihsel yapılandırma kaydı] - name: Validate playlist protection
+- **.github/workflows/v2-bruksel-logo-png.yml:L1** — [Tarihsel yapılandırma kaydı] name: Bruksel Turk PNG Logo (production writer suspended)
+- **.github/workflows/v2-bruksel-logo-png.yml:L14** — [Tarihsel yapılandırma kaydı] - name: Verify protected IBO playlist without changing it
+- **.github/workflows/v2-epg.yml:L1** — [Tarihsel yapılandırma kaydı] name: V2 Independent EPG (production writer suspended)
+- **.github/workflows/v2-epg.yml:L14** — [Tarihsel yapılandırma kaydı] - name: Verify protected IBO playlist without changing it
+- **.github/workflows/v2-full-decoder.yml:L22** — [Tarihsel yapılandırma kaydı] - name: Verify protected playlist fingerprint and run full decoder sample
+- **.github/workflows/v2-full-decoder.yml:L45** — [Tarihsel yapılandırma kaydı] - name: Verify all current YEDEKLER streams
+- **.github/workflows/v2-full-decoder.yml:L51** — [Tarihsel yapılandırma kaydı] name: yedekler-av-audit
+- **.github/workflows/v2-historical-recovery.yml:L15** — [Tarihsel yapılandırma kaydı] - name: Protect IBO and permanent backups
+- **.github/workflows/v2-ibo-parity.yml:L1** — [Tarihsel yapılandırma kaydı] name: V2 Canonical IBO Playlist Parity
+- **.github/workflows/v2-ibo-parity.yml:L17** — [Tarihsel yapılandırma kaydı] - name: Compare canonical IBO URL with V2
+- **.github/workflows/v2-ibo-parity.yml:L23** — [Tarihsel yapılandırma kaydı] name: ibo-playlist-parity
+- **.github/workflows/v2-logo-backup.yml:L1** — [Tarihsel yapılandırma kaydı] name: V2 Logo Backup (non-destructive) (production writer suspended)
+- **.github/workflows/v2-logo-backup.yml:L14** — [Tarihsel yapılandırma kaydı] - name: Verify protected IBO playlist without changing it
+
 <!-- C-END -->
 
 ## D) Açık Kalan GitHub Issue'ları ve Doğrulanmamış Maddeler
 
 - **.github/workflows/issue-489-historical-audit.yml:L1** — [Tarihsel yapılandırma kaydı] name: Issue 489 historical inventory audit
 - **.github/workflows/issue-489-historical-audit.yml:L22** — [Tarihsel yapılandırma kaydı] name: issue-489-inventory-audit
+
+
 
 <!-- D-END -->
 
@@ -289,4 +385,20 @@ Her satırda snapshot/PR referansı, kaynak, okuma sonucu ve çıkarılan kayıt
 - main `.github/workflows/repair-playlist-grouping.yml` — OK; 658/658 bayt, 3 yapılandırma/not satırı; blob `248a10135fe7f46bc67a2a7e23cd629c33589969`.
 - main `.github/workflows/run_move_685.yml` — OK; 2511/2511 bayt, 8 yapılandırma/not satırı; blob `1a063b634af06267595097915b875ac7c7161ac8`.
 - main `.github/workflows/run_pass1_cleanup.yml` — OK; 836/836 bayt, 6 yapılandırma/not satırı; blob `157fe44762f30c8c7e0589f92ef52b227ba3eb6f`.
+- main `.github/workflows/sort-backups-enrich-logos.yml` — OK; 660/660 bayt, 3 yapılandırma/not satırı; blob `90231bc6c36530fedf62129eaaa13b658d991ba3`.
+- main `.github/workflows/turkish-backup-identity-audit.yml` — OK; 652/652 bayt, 3 yapılandırma/not satırı; blob `45502b01d1580f6378dfc01fe44673c3d83781ea`.
+- main `.github/workflows/turkish-backups-fifth-audit.yml` — OK; 650/650 bayt, 3 yapılandırma/not satırı; blob `09279c6ca495f47c2928ffbebf170d6b04409021`.
+- main `.github/workflows/turkish-backups-fourth-audit.yml` — OK; 651/651 bayt, 3 yapılandırma/not satırı; blob `831af32f94d33e8726e021bf29b3b97c044f32b3`.
+- main `.github/workflows/turkish-backups-second-pass.yml` — OK; 650/650 bayt, 3 yapılandırma/not satırı; blob `53a28ee74213c72f87b797b09e80ef9ad52d6193`.
+- main `.github/workflows/turkish-backups-third-pass.yml` — OK; 649/649 bayt, 3 yapılandırma/not satırı; blob `e3db1e54e6f30bbe27b4925d6c23d57928339707`.
+- main `.github/workflows/turkish-category-audit.yml` — OK; 669/669 bayt, 3 yapılandırma/not satırı; blob `bbd769859588720a2b9e7fc5ce1c4456fa727987`.
+- main `.github/workflows/update_main_playlist.yml` — OK; 1242/1242 bayt, 9 yapılandırma/not satırı; blob `fe9e57fd70075f66c2184b9f7f539010d4cb0374`.
+- main `.github/workflows/v2-batched-playback.yml` — OK; 2036/2036 bayt, 14 yapılandırma/not satırı; blob `13c9144d96fa34f7bf4f9cf61f1fae1c169699d3`.
+- main `.github/workflows/v2-bruksel-logo-png.yml` — OK; 644/644 bayt, 3 yapılandırma/not satırı; blob `8474166bccacff350ed3385481106b2f2a736a66`.
+- main `.github/workflows/v2-epg.yml` — OK; 641/641 bayt, 3 yapılandırma/not satırı; blob `fdb8b0941bd7d9933b4b7bc5ea72b71dfe75e6d2`.
+- main `.github/workflows/v2-full-decoder.yml` — OK; 1699/1699 bayt, 12 yapılandırma/not satırı; blob `995bb04175c1b9e77a8a0762f133b95052a5a19a`.
+- main `.github/workflows/v2-github-source-discovery.yml` — OK; 912/912 bayt, 7 yapılandırma/not satırı; blob `760c787e405034cd78953e486c826447ade5340a`.
+- main `.github/workflows/v2-historical-recovery.yml` — OK; 4274/4274 bayt, 11 yapılandırma/not satırı; blob `b4198aead6fb8e4af42928c3ea3c131426537b93`.
+- main `.github/workflows/v2-ibo-parity.yml` — OK; 688/688 bayt, 7 yapılandırma/not satırı; blob `3b9d9141347e76ddfd5d4a8cede1b71cdd2b55a0`.
+- main `.github/workflows/v2-logo-backup.yml` — OK; 655/655 bayt, 3 yapılandırma/not satırı; blob `29a9ae1ed5b929336979a526d9c8aff01d88cb7a`.
 <!-- COVERAGE-END -->
