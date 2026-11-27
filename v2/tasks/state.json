@@ -1411,5 +1411,18 @@
     },
     "historical_statuses_unchanged": true,
     "live_broadcast_acceptance": false
+  },
+  "yedekler_verified_owner_move_20261127": {
+    "source_run": 45799091422,
+    "source_artifact": 15147217790,
+    "source_sha256": "265f368758e75c5b18bc1b936a9792fef36528ba486288ddb35e4e7e23775ecf",
+    "result_sha256": "68fcad6bdcde53fffb25de32cefbecb7758986dfd3fd866b9928084012ba5d92",
+    "moved": 43,
+    "fast": 40,
+    "late": 3,
+    "backups_before": 1562,
+    "backups_after": 1519,
+    "total_records": 18330,
+    "report": "reports/YEDEKLER_KURTARMA_OZETI.md"
   }
 }

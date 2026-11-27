@@ -24,9 +24,9 @@
     },
     {
       "file": "0003.m3u",
-      "group": "🇹🇷 ULUSAL-HEPSİ (408)",
-      "records": 408,
-      "sha256": "7147af0ea23a67ec3ad5e9bf815e8b2a982c7ea4d079a9c4d6542199dbed90bd"
+      "group": "🇹🇷 ULUSAL-HEPSİ (427)",
+      "records": 427,
+      "sha256": "e890cb41fb57dd9998baf36bb14795c7c868340372572097171a6c781ea667ec"
     },
     {
       "file": "0004.m3u",
@@ -36,15 +36,15 @@
     },
     {
       "file": "0005.m3u",
-      "group": "📺 HABER (73)",
-      "records": 73,
-      "sha256": "1282b5c7b4bfc2542a8fc0ef67e782687a76b74d9ce0655b9433af517d0a9c12"
+      "group": "📺 HABER (84)",
+      "records": 84,
+      "sha256": "9eef52b32faa1d86957482ec44133c7e0ecc00e77bf888daa94fc19e36cdd576"
     },
     {
       "file": "0006.m3u",
-      "group": "⚽️ SPOR (28)",
-      "records": 28,
-      "sha256": "a6181a8d6aed9b89948e1edf3e9092e10c7333a70958a606445e40739f284e6c"
+      "group": "⚽️ SPOR (29)",
+      "records": 29,
+      "sha256": "7e6d79b6be2ccf9d7f44985b2db21a80518a413b88042a92bd139a8ca6ab3e4c"
     },
     {
       "file": "0007.m3u",
@@ -54,15 +54,15 @@
     },
     {
       "file": "0008.m3u",
-      "group": "🧸 ÇOCUK (29)",
-      "records": 29,
-      "sha256": "bfd7073c45f29c2781eb4e076f9cdd25b71e1d1f6b4f60d13967fff570ecc92e"
+      "group": "🧸 ÇOCUK (31)",
+      "records": 31,
+      "sha256": "00cf81fdb32f9d7f2e78bdb5c16e7eb1bfd7075d107e487483be9046e23cc3cb"
     },
     {
       "file": "0009.m3u",
-      "group": "🎧 MÜZİK (41)",
-      "records": 41,
-      "sha256": "1fe93bfbdaed6cd09c9198f5a7bfb0f3ba8449b9daabcca7a183f8bbfb595415"
+      "group": "🎧 MÜZİK (46)",
+      "records": 46,
+      "sha256": "17f6c9520a045873a9681fb1d8ae301be59ff41d7aeda882e6c4351f609e235f"
     },
     {
       "file": "0010.m3u",
@@ -72,15 +72,15 @@
     },
     {
       "file": "0011.m3u",
-      "group": "🕌 DİNİ (17)",
-      "records": 17,
-      "sha256": "670c9772bc78521afb53e6860b5b8cf86bee79a07562ebb1b58069e1996281d1"
+      "group": "🕌 DİNİ (22)",
+      "records": 22,
+      "sha256": "a3be4635ce488e29bf482e27bc549051f71d2559b185310d2511ed61f99a4cf4"
     },
     {
       "file": "0012.m3u",
       "group": "YEDEKLER",
-      "records": 1562,
-      "sha256": "c3ae5b55c454dead839ad786be2ceaf3bc9805e24713960235699fbbbe061722"
+      "records": 1519,
+      "sha256": "fb1cf69cee52ae80243b2b53303a8c48f9b505ee3143c746a81eb4877f9e23b6"
     },
     {
       "file": "0013.m3u",
