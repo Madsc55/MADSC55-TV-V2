@@ -301,6 +301,34 @@ Tarama kapsamı: main ağacındaki tüm .md/.txt/.json/.yml/.yaml dosyaları, a�
 - **v2/MAIN_PRODUCTION_SAFETY_LOCK.md:L8** — [Tarihsel kaynak kaydı] they must not be reactivated without reviewed playlist-owner authorization.
 - **v2/MAIN_PRODUCTION_SAFETY_LOCK.md:L22** — [Tarihsel kaynak kaydı] Do not merge PR #9 or alter the playlist while applying the platform rules.
 
+- **v2/OPERATIONS.md:L14** — [Tarihsel kaynak kaydı] - `logo-attribution.json`: source domains and unverified ownership.
+- **v2/OPERATIONS.md:L21** — [Tarihsel kaynak kaydı] All audits are read-only against `MADSC55_TV_IBO_CALISANLAR_TEST.m3u8`. Master compares SHA-256 before and after. No candidate is automatically added to IBO or favorites. Remote HTTP responses, XMLTV validity and logo reachability do not establish playback continuity, channel mapping, or official logo ownership. Those require independent, per-channel evidence.
+- **v2/README.md:L11** — [Tarihsel kaynak kaydı] **Do not delete legacy EPG repo** until a new EPG URL is created, verified on IBO and playlist header is migrated. Do not delete legacy playlist repo until backups are independently verified and any remaining external dependencies are checked.
+- **v2/SCAN_61_ACTION_REPORT.md:L11** — [Tarihsel kaynak kaydı] - Mevcut IBO: 840 playlist girdisi, 13 kategori, iki özgün yedek (DHA CANLI 720P HD ve TRT 1 1440P QHD) korunmuş.
+- **v2/WORK_PLAN.md:L4** — [Tarihsel kaynak kaydı] - Canlı IBO playlisti, favoriler ve iki özgün yedek korunur.
+- **v2/WORK_PLAN.md:L17** — [Tarihsel kaynak kaydı] 6. Kullanıcı onayından sonra yalnızca doğrulanan yeni kanalları önce ayrı test listesine, sonra uygun kategori ve ULUSAL-HEPSİ'ye aktar.
+- **v2/WORK_PLAN.md:L21** — [Tarihsel kaynak kaydı] - Mevcut canlı IBO, favoriler ve özgün iki YEDEKLER hiçbir keşif çalışmasında değişmez.
+- **v2/WORK_PLAN.md:L31** — [Tarihsel kaynak kaydı] - Canlı playlist, FAVORİLER ve özgün iki YEDEKLER korunur. Otomatik yayın ekleme kesinlikle yoktur.
+- **v2/WORK_PLAN.md:L55** — [Tarihsel kaynak kaydı] - Öncelik 5: Kullanıcı onayından sonra canlı listeye güvenli ekleme; 840 giriş, 13 kategori, FAVORİLER ve özgün iki YEDEKLER başlangıç bütünlüğünü koru.
+- **v2/WORK_PLAN.md:L59** — [Tarihsel kaynak kaydı] - Ana birleşik workflow bu listeyi otomatik üretir ve artifact olarak sunar; kullanıcıya yedi ayrı komut gerekmez.
+- **v2/WORK_PLAN.md:L60** — [Tarihsel kaynak kaydı] - Öncelik: yeni workflow'un sonucunu kontrol et, ardından tam kapsamlı parçalı yayın doğrulaması ve YouTube kalıcı uyumunu tamamla. Korunan canlı listeye otomatik ekleme yoktur.
+- **v2/WORK_PLAN.md:L75** — [Tarihsel kaynak kaydı] **Kullanıcının kesin talebi:** Yalnızca **"Kanalları ara"** demesi yeterli olacak. Ayrı "ara", "test et", "EPG kontrol et", "liste oluştur" komutları istemiyor. Tek tetikleme altında keşif → tüm yeni adayların bütçeli/parçalı doğrulaması → başarısız tekrar denemesi → ses/görüntü/çözünürlük/kimlik/kararlılık → EPG/logo/kategori/tekrar kontrolü → ayrı IBO inceleme listesi → tek sonuç raporu **otomatik ve sıralı** tamamlanmalı. Ayrı test workflow'larını sürekli tetiklemek çözüm değildir. **Sonraki asistan önce bunu ana birleşik workflow'a bağlamalı; yeni bağımsız test workflow'u açmamalı.** Kullanıcı kısa ve net Türkçe ilerleme istiyor; gereksiz aşama anlatılmasın.
+- **v2/WORK_PLAN.md:L77** — [Tarihsel kaynak kaydı] **Güvenlik:** Ana repo `Madsc55/MADSC55-TV-V2`, main. Canlı `MADSC55_TV_IBO_CALISANLAR_TEST.m3u8`, FAVORİLER, YEDEKLER'deki iki özgün TRT 1 1440P QHD ve DHA CANLI 720P HD korunacak; otomatik canlı playlist değişikliği veya yeni kanal importu yok. Ayrı test listesi salt okunur keşif çıktısı. YouTube watch URL/geçici imzalı HLS'yi kalıcı IBO yayını diye ekleme.
+- **v2/WORK_PLAN.md:L89** — [Tarihsel kaynak kaydı] 5. Tek komut çalıştır, bitişini kontrol et, gerçek sayı ve güvenlik sonucunu kullanıcıya kısa bildir; WORK_PLAN.md'yi güncel tut.
+- **v2/WORK_PLAN.md:L91** — [Tarihsel kaynak kaydı] **Önemli:** Son kullanıcı bu sohbetin dolduğunu, yeni sohbete geçip hiçbir şeyi unutmadan devam etmek istediğini söyledi. Yukarıdaki hedef ve eksikler devir notudur.
+- **v2/WORK_PLAN.md:L100** — [Tarihsel kaynak kaydı] 28 Ekim — kullanıcı ekran görüntüsü ve hata düzeltmesi
+- **v2/WORK_PLAN.md:L112** — [Tarihsel kaynak kaydı] Kullanıcı talebi: tek tetikleme, tüm kaynakları tara, tüm adayları listele; aday başına kimlik, oynatma, ses, video, EPG, logo, kategori kontrolü; başarısızları 3 kez yeniden dene; eksik kaynakları yeniden tara; ara rapor yayımlama; yalnızca finalde `approved`, `rejected`, `pending_review` ayrımlı tek rapor; tüm işler tamamlanmadan workflow success verme.
+- **v2/WORK_PLAN.md:L117** — [Tarihsel kaynak kaydı] - Kullanıcının mevcut kategori adları, sıralaması, FAVORİLER, iki özgün YEDEKLER ve canlı IBO korunacak. Yeni adaylar yalnızca ayrı test listesinde.
+- **v2/archives/test001_quarantined_48.json:$.policy** — [Tarihsel kaynak kaydı] Do not automatically reimport these 48 exact records
+- **v2/arsiv/eski_sistem_7650_test_kuyrugu_README.md:L5** — [Tarihsel kaynak kaydı] **Güvenlik:** V2 ana dalı yeni workflow ve zamanlanmış cron işleri yasaklar. Bu yüzden otomatik zamanlayıcı eklenmedi. Kodu mevcut izinli tarama akışına bağlamak için ayrı bir güvenlik değerlendirmesi gerekir.
+- **v2/arsiv/eski_sistem_aktarim_raporu_2026-11-16.json:$.warning** — [Tarihsel kaynak kaydı] No live audio/video validation; do not promote to YEDEKLER before validation.
+- **v2/docs/checkpoint-bounded-evidence-runbook.md:L30** — [Tarihsel kaynak kaydı] 2. Uygulama sonrası şifreli dosya tekrar kimlik ve satır sayısı denetiminden geçmeli; önceki satırlar korunmalı.
+- **v2/ibo_authorized_change.json:$.request** — [Tarihsel kaynak kaydı] Owner explicitly requested rollback of PR #787: restore the exact previous canonical playlist and parts; move the same 562 records back to their original categories, preserving all 18330 records and all archive contents.
+- **v2/reports/DEVIR_2026-11-01.md:L3** — [Tarihsel kaynak kaydı] Değişmez kurallar
+- **v2/reports/DEVIR_2026-11-01.md:L8** — [Tarihsel kaynak kaydı] - İBO cihaz testini kullanıcı yapar; 2000'er kanallık paketleri asistan hazırlar.
+- **v2/reports/DEVIR_2026-11-01.md:L10** — [Tarihsel kaynak kaydı] - Kullanıcı telefonla çalışıyor; terminal isteme; adım adım onay sorusu sorma.
+- **v2/reports/DEVIR_2026-11-01.md:L58** — [Tarihsel kaynak kaydı] - Kullanıcıya kısa, somut, dürüst rapor ver; onay beklemeden mantıksal sırayla kodla.
+
 <!-- A-END -->
 
 ## B) Yarım Kalmış / Beklemeye Alınmış Teknik ve Kurtarma İşleri
@@ -1420,6 +1448,179 @@ Tarama kapsamı: main ağacındaki tüm .md/.txt/.json/.yml/.yaml dosyaları, a�
 - **v2/MAIN_PRODUCTION_SAFETY_LOCK.md:L18** — [Tarihsel kaynak kaydı] check from V2 Main Production Security Gate.
 - **v2/MAIN_PRODUCTION_SAFETY_LOCK.md:L20** — [Tarihsel kaynak kaydı] Settings: [URL: kaynak dosyada]
 
+- **v2/OPERATIONS.md:L1** — [Tarihsel kaynak kaydı] MADSC55 TV V2 — Operational status
+- **v2/OPERATIONS.md:L3** — [Tarihsel kaynak kaydı] Run
+- **v2/OPERATIONS.md:L5** — [Tarihsel kaynak kaydı] python3 master.py --run
+- **v2/OPERATIONS.md:L10** — [Tarihsel kaynak kaydı] Reports
+- **v2/OPERATIONS.md:L15** — [Tarihsel kaynak kaydı] - `master-summary.json`: consolidated results and verification limitations.
+- **v2/OPERATIONS.md:L17** — [Tarihsel kaynak kaydı] Decoder coverage
+- **v2/OPERATIONS.md:L18** — [Tarihsel kaynak kaydı] The default `MADSC55_DECODER_SAMPLE=30` tests a rotating subset of responsive entries. For a **manual** full-sample run, set `MADSC55_DECODER_SAMPLE=1039` before `python3 master.py --run`. A full run may take hours, so it is **not** used in the 25-minute scheduled GitHub workflow. ffprobe stream identification does **not** prove continuous audio/video playback.
+- **v2/OPERATIONS.md:L20** — [Tarihsel kaynak kaydı] Protection and outstanding verification
+- **v2/OPERATIONS.md:L23** — [Tarihsel kaynak kaydı] Full decoder workflow
+- **v2/README.md:L1** — [Tarihsel kaynak kaydı] MADSC55 TV V2
+- **v2/README.md:L8** — [Tarihsel kaynak kaydı] - Worldwide discovery: `v2/discover.py`, source list `v2/config/sources.json`; report only, no automatic additions.
+- **v2/README.md:L9** — [Tarihsel kaynak kaydı] - GitHub Actions: manual trigger or twice-daily scheduled discovery; candidate report is an artifact, not a live update.
+- **v2/SCAN_61_ACTION_REPORT.md:L1** — [Tarihsel kaynak kaydı] Birleşik tarama #61 — sonuç ve yapılacaklar
+- **v2/SCAN_61_ACTION_REPORT.md:L5** — [Tarihsel kaynak kaydı] Kesin sonuçlar
+- **v2/SCAN_61_ACTION_REPORT.md:L6** — [Tarihsel kaynak kaydı] - Workflow başarılı; 42/42 kaynak erişilebilir; 27.047/27.047 benzersiz aday test edilmiş; tarama kapsamı tam.
+- **v2/SCAN_61_ACTION_REPORT.md:L8** — [Tarihsel kaynak kaydı] - Triage: PLAYBACK_REJECTED 15.239; VIDEO_NO_AUDIO 1.810; VIDEO_METADATA_GAPS 1.364; VIDEO_IDENTITY_REVIEW 8.634.
+- **v2/SCAN_61_ACTION_REPORT.md:L9** — [Tarihsel kaynak kaydı] - Kimlik tutarlılığı: 8.593 tek kaynak incelemesi, 41 çakışma incelemesi.
+- **v2/SCAN_61_ACTION_REPORT.md:L12** — [Tarihsel kaynak kaydı] - NewlistTR: 154 kaynak girdisi, 153 test, 22 kısa video çözümleme; 0 test bekleyen.
+- **v2/SCAN_61_ACTION_REPORT.md:L13** — [Tarihsel kaynak kaydı] - Kısa çözümleme sonucu 12 geçici inceleme girdisi; yayıncı kimliği ve uzun süreli çalışma doğrulanmış değil.
+- **v2/SCAN_61_ACTION_REPORT.md:L17** — [Tarihsel kaynak kaydı] Bir sonraki tek birleşik iş akışına ilişkin kararlar
+- **v2/SCAN_61_ACTION_REPORT.md:L18** — [Tarihsel kaynak kaydı] 1. #61'in mevcut raporlarını yeniden taramadan kullan; #60, #2, #3 testlerini tekrar etme.
+- **v2/SCAN_61_ACTION_REPORT.md:L22** — [Tarihsel kaynak kaydı] 5. Tek birleşik workflow'u koru; güvenlik ve mevcut korumalar dışındaki gereksiz test çoğaltmalarını yapma.
+- **v2/SCAN_61_ACTION_REPORT.md:L24** — [Tarihsel kaynak kaydı] Dokunulmayacaklar
+- **v2/WORK_PLAN.md:L1** — [Tarihsel kaynak kaydı] V2 güvenli toplu doğrulama iş planı
+- **v2/WORK_PLAN.md:L3** — [Tarihsel kaynak kaydı] Tamamlananlar
+- **v2/WORK_PLAN.md:L5** — [Tarihsel kaynak kaydı] - GitHub/M3U kaynak listesi 17 kaynak olarak yapılandırıldı.
+- **v2/WORK_PLAN.md:L7** — [Tarihsel kaynak kaydı] - YouTube canlı yayın keşfi ve metadata kontrolü mevcut.
+- **v2/WORK_PLAN.md:L9** — [Tarihsel kaynak kaydı] - GitHub Actions concurrency kuyruğu çakışmaları azaltacak şekilde güncellendi.
+- **v2/WORK_PLAN.md:L11** — [Tarihsel kaynak kaydı] Öncelik sırası
+- **v2/WORK_PLAN.md:L14** — [Tarihsel kaynak kaydı] 3. Adayların HTTP ve kısa video decoder kontrollerini kaynak bazında yap; uzun süreli kararlılığı ayrı değerlendir.
+- **v2/WORK_PLAN.md:L20** — [Tarihsel kaynak kaydı] Kabul koşulları
+- **v2/WORK_PLAN.md:L23** — [Tarihsel kaynak kaydı] - Eksik testler başarı gibi raporlanmaz.
+- **v2/WORK_PLAN.md:L24** — [Tarihsel kaynak kaydı] - Her yayın için kaynak ve test kanıtı saklanır; token/özel URL'ler kamuya açık JSON raporlarında paylaşılmaz.
+- **v2/WORK_PLAN.md:L26** — [Tarihsel kaynak kaydı] 28 Ekim 2026 — birleşik keşif zinciri devir notu
+- **v2/WORK_PLAN.md:L27** — [Tarihsel kaynak kaydı] - Yeni GitHub depo/M3U kaynak keşfi ana `V2 Turkish Stream End-to-End Discovery` workflow'unun ilk aşamasına bağlandı.
+- **v2/WORK_PLAN.md:L33** — [Tarihsel kaynak kaydı] 28 Ekim 2026 — toplu test takip notu
+- **v2/WORK_PLAN.md:L35** — [Tarihsel kaynak kaydı] - Kaynak bazında M3U kayıt sayısı, farklı stream URL sayısı ve kaynak erişim hatası `v2/reports/candidates.json` içindeki `source_audit` alanına eklendi. Bu geliştirme sonraki workflow çalışmasında doğrulanmalı.
+- **v2/WORK_PLAN.md:L39** — [Tarihsel kaynak kaydı] 28 Ekim — hızlandırılmış kabul sırası
+- **v2/WORK_PLAN.md:L40** — [Tarihsel kaynak kaydı] 1. **Tamamlandı (kod):** GitHub kaynak keşfi + 17 kayıtlı kaynağı birleşik aday havuzuna alma; kaynak bazında sayım ve hata raporu.
+- **v2/WORK_PLAN.md:L41** — [Tarihsel kaynak kaydı] 2. **Tamamlandı (kod; Actions sonucu bekleniyor):** `v2/all_source_playback.py` her erişilebilir M3U kaynağından en fazla dört yeni URL seçer, toplam 100 akışı ffprobe ile kısa video/ses/çözünürlük kontrolüne sokar. Kaynak başına ve URL hash'i bazında rapor üretir; bu **örnekleme**, tüm yayınların doğrulanması değildir.
+- **v2/WORK_PLAN.md:L43** — [Tarihsel kaynak kaydı] 4. **Eksik:** Örneklemeyi kademeli tam kapsama yükseltmek (maliyet/süre/kota kontrolü); bütün adaylar için kimlik, içerik, kararlılık ve tekrar doğrulaması.
+- **v2/WORK_PLAN.md:L47** — [Tarihsel kaynak kaydı] 28 Ekim 2026 — test sonuçları ve kalan öncelikler
+- **v2/WORK_PLAN.md:L50** — [Tarihsel kaynak kaydı] - `v2/final_validation_summary.py` artık kaynak erişimi, GitHub yeni M3U dosyaları, aday sayısı, örneklenen stream ve video doğrulama sayılarını tek raporda toplar. Değişiklik yeni Actions koşusunda doğrulanacak.
+- **v2/WORK_PLAN.md:L51** — [Tarihsel kaynak kaydı] - Öncelik 1: En yeni Actions run'ın sonucunu ve `final-validation-summary.json` içeriğini doğrula; hata varsa düzelt.
+- **v2/WORK_PLAN.md:L52** — [Tarihsel kaynak kaydı] - Öncelik 2: Kaynakların tüm adayları için bütçeli, parçalara bölünmüş HTTP/ffprobe taraması ve tekrar denemeleri; kaynak bazlı tam kapsam sayacı. 100 örneklemi tüm yayın testi diye sunma.
+- **v2/WORK_PLAN.md:L57** — [Tarihsel kaynak kaydı] 28 Ekim — tek komut test listesi entegrasyonu
+- **v2/WORK_PLAN.md:L62** — [Tarihsel kaynak kaydı] 28 Ekim — dört parçalı test sonuçları
+- **v2/WORK_PLAN.md:L64** — [Tarihsel kaynak kaydı] - Run 40660159911: **success**; ayrı `short-decoded-review-only.m3u8` üretimi dahil birleşik zincir başarıyla bitti, artifact mevcut.
+- **v2/WORK_PLAN.md:L65** — [Tarihsel kaynak kaydı] - Run 40660910249: son kontrol sırasında **in_progress**; sonuç bekleniyor.
+- **v2/WORK_PLAN.md:L69** — [Tarihsel kaynak kaydı] 28 Ekim — ölçülmüş toplu doğrulama sonucu
+- **v2/WORK_PLAN.md:L74** — [Tarihsel kaynak kaydı] 28 Ekim 2026 — YENİ SOHBETE DEVİR / TEK KOMUT ÖNCELİĞİ
+- **v2/WORK_PLAN.md:L84** — [Tarihsel kaynak kaydı] **Yeni sohbette kesin iş sırası:**
+- **v2/WORK_PLAN.md:L85** — [Tarihsel kaynak kaydı] 1. Son Actions run'larını ve 40665346855 hatasını incele; hatayı düzelt.
+- **v2/WORK_PLAN.md:L86** — [Tarihsel kaynak kaydı] 2. Ana `V2 Turkish Stream End-to-End Discovery` workflow'unda tek tetiklemeyle toplu sayfalı/shard yayın testlerini başlat, bağımlılıkla bekle, tek aggregate raporu üret; kaynak keşfi ile toplu testin aynı aday anlık görüntüsünü kullanmasını sağla. Yinelenen pahalı işlerden kaçın.
+- **v2/WORK_PLAN.md:L93** — [Tarihsel kaynak kaydı] 28 Ekim 2026 — yeni sohbet Actions kontrolü
+- **v2/WORK_PLAN.md:L94** — [Tarihsel kaynak kaydı] - `49cc5a9` commit'i ana `.github/workflows/v2-turkish-stream-review.yml` dosyasına 4 shard × 2 page playback matrix, artifact indirme ve aggregate adımını **eklemiş**. Önceki devir notundaki 'henüz bağlanmadı' ifadesi artık güncel değil.
+- **v2/WORK_PLAN.md:L96** — [Tarihsel kaynak kaydı] - Eski toplu run `40665346855` **failure**: sekiz playback işi success, `aggregate` işinin `Merge and validate shard evidence` adımı failure. `40665377633` sonraki toplu run **success**. Eski hatanın kök sebebi log olmadan kesinleştirilemez.
+- **v2/WORK_PLAN.md:L97** — [Tarihsel kaynak kaydı] - Ana workflow hâlâ her shard içinde GitHub kaynak keşfini yeniden çalıştırıyor; aynı aday snapshot'ı garanti edilmiyor. Ayrıca `review` job'u `if: always()` ile eksik/başarısız shard sonrasında da başlayabiliyor. Öncelik: tek keşif artifact'ı paylaşımı, başarısız shard'ı açık raporlama, bütçeli tekrar denemesi, gerçek kapsama ve metadata doğrulaması.
+- **v2/WORK_PLAN.md:L101** — [Tarihsel kaynak kaydı] - Run `40665346855` aggregate logu kesin hata: `Duplicate shard index: 0`; 8 playback job success. Sonraki run `40665377633` success.
+- **v2/WORK_PLAN.md:L102** — [Tarihsel kaynak kaydı] - `v2/aggregate_playback_shards.py` artık shard anahtarını `(page, shard_index)` olarak sayısal normalleştiriyor ve eksik shard indeksini açık hata olarak raporluyor (commit `09a9eb0`).
+- **v2/WORK_PLAN.md:L103** — [Tarihsel kaynak kaydı] - Ana workflow 8 playback matrix ve review aggregate zincirini zaten içeriyor. Tek komutun tüm kabul koşulları henüz tamamlanmadı: aynı keşif snapshot'ı, başarısızların retry, tam kapsam ve aday metadata kanıtı eksik. Ayrı workflow'ları tetikleyerek çözüm üretme.
+- **v2/WORK_PLAN.md:L105** — [Tarihsel kaynak kaydı] 28 Ekim — toplu zincir sağlamlaştırma
+- **v2/WORK_PLAN.md:L106** — [Tarihsel kaynak kaydı] - Ana birleşik workflow'da sekiz playback shard başarısızsa review artık `if: always()` ile devam etmiyor; yanlış başarılı rapor önleniyor (commit `5182c4c`).
+- **v2/WORK_PLAN.md:L107** — [Tarihsel kaynak kaydı] - `final_validation_summary.py` sekiz shard'ın `all-source-playback-aggregate.json` sonucunu öncelikli okuyor; toplam farklı test, decoded, not decoded ve batch bilgilerini raporluyor (commit `36b2546`). Önceki tek `all-source-playback.json` dosyasını zorunlu sanma hatası giderildi.
+- **v2/WORK_PLAN.md:L111** — [Tarihsel kaynak kaydı] 28 Ekim — kesin tek birleşik görev kabul sözleşmesi
+- **v2/WORK_PLAN.md:L115** — [Tarihsel kaynak kaydı] 28 Ekim — birleşik kanıt eksiksizliği
+- **v2/WORK_PLAN.md:L116** — [Tarihsel kaynak kaydı] - `6f98ef8`: playback aggregator tam olarak `(page 0..1, shard 0..3)` sekiz kanıtı görmeden başarılı sonuç üretmez; eksik/fazla batch açık hata. Bu, örneklemenin bütün adayları kapsadığı iddiası değildir.
+- **v2/WORK_PLAN.md:L120** — [Tarihsel kaynak kaydı] 28 Ekim — birleşik yayın yeniden deneme
+- **v2/WORK_PLAN.md:L122** — [Tarihsel kaynak kaydı] - `40683960121` birleşik run kontrol anında in_progress; yeni commit'in sonucunu henüz kanıtlamaz.
+- **v2/WORK_PLAN.md:L125** — [Tarihsel kaynak kaydı] 28 Ekim 13:31 — doğrulanmış sonuç ve kalan sıra
+- **v2/WORK_PLAN.md:L126** — [Tarihsel kaynak kaydı] - Actions `40683960121` (commit `6f98ef87`) SUCCESS; Actions `40684089681` (commit `9d247f74`, 3 yeniden deneme) SUCCESS. Bu, sınırlı örneklemenin başarı durumudur; tüm adayları doğrulamaz.
+- **v2/WORK_PLAN.md:L127** — [Tarihsel kaynak kaydı] - `523eb9dd`: toplu kanıtta `coverage_complete` ve `incomplete_sources` alanları; kaynak fetch hatası veya shard adaylarının örneklenmemesi görünür hale getirildi.
+- **v2/WORK_PLAN.md:L128** — [Tarihsel kaynak kaydı] - **Öncelik 1:** kaynakların tek immutable snapshot'ı ve eksik fetch'lerin 3 yeniden denenmesi.
+- **v2/WORK_PLAN.md:L129** — [Tarihsel kaynak kaydı] - **Öncelik 2:** 250×8 sınırlı örneklemeden bütün adaylara tam kapsam, otomatik genişleyen batch.
+- **v2/WORK_PLAN.md:L134** — [Tarihsel kaynak kaydı] 28 Ekim 14:45 — testler doğrulandı, final rapor bağlandı
+- **v2/WORK_PLAN.md:L137** — [Tarihsel kaynak kaydı] - Sonraki iş: ortak immutable kaynak snapshot, tüm adayların dinamik sayfalama ile kapsanması, tek final kabul raporu ve eksik kontrollerde fail-closed. Canlı listeye müdahale yok.
+- **v2/arsiv/eski_sistem_7650_test_kuyrugu_README.md:L1** — [Tarihsel kaynak kaydı] 7.650 eski sistem adayının güvenli test kuyruğu
+- **v2/arsiv/eski_sistem_7650_test_kuyrugu_README.md:L7** — [Tarihsel kaynak kaydı] Bir çalışma ortamında ffmpeg kuruluysa:
+- **v2/arsiv/eski_sistem_7650_test_kuyrugu_README.md:L9** — [Tarihsel kaynak kaydı] python v2/verify_legacy_7650_queue.py --state v2/reports/legacy-queue/state.json --output v2/reports/legacy-queue/summary.json
+- **v2/arsiv/eski_sistem_aktarim_raporu_2026-11-16.json:$.status** — [Tarihsel kaynak kaydı] staged_only_not_playback_verified
+- **v2/config/sources.json:$.sources[0].scope** — [Tarihsel kaynak kaydı] world
+- **v2/config/sources.json:$.sources[1].scope** — [Tarihsel kaynak kaydı] TR
+- **v2/config/sources.json:$.sources[2].scope** — [Tarihsel kaynak kaydı] SE
+- **v2/config/sources.json:$.sources[3].scope** — [Tarihsel kaynak kaydı] world
+- **v2/config/sources.json:$.sources[4].scope** — [Tarihsel kaynak kaydı] TR
+- **v2/config/sources.json:$.sources[5].scope** — [Tarihsel kaynak kaydı] TR
+- **v2/config/sources.json:$.sources[6].scope** — [Tarihsel kaynak kaydı] TR
+- **v2/config/sources.json:$.sources[7].scope** — [Tarihsel kaynak kaydı] TR
+- **v2/config/sources.json:$.sources[8].scope** — [Tarihsel kaynak kaydı] TR
+- **v2/config/sources.json:$.sources[9].scope** — [Tarihsel kaynak kaydı] TR
+- **v2/config/sources.json:$.sources[10].scope** — [Tarihsel kaynak kaydı] TR
+- **v2/config/sources.json:$.sources[11].scope** — [Tarihsel kaynak kaydı] TR
+- **v2/config/sources.json:$.sources[12].scope** — [Tarihsel kaynak kaydı] TR
+- **v2/config/sources.json:$.sources[13].scope** — [Tarihsel kaynak kaydı] TR
+- **v2/config/sources.json:$.sources[14].scope** — [Tarihsel kaynak kaydı] TR
+- **v2/config/sources.json:$.sources[15].scope** — [Tarihsel kaynak kaydı] TR
+- **v2/config/sources.json:$.sources[16].scope** — [Tarihsel kaynak kaydı] AZ
+- **v2/config/sources.json:$.sources[17].scope** — [Tarihsel kaynak kaydı] AZ
+- **v2/config/sources.json:$.sources[18].scope** — [Tarihsel kaynak kaydı] AZ
+- **v2/config/sources.json:$.sources[19].scope** — [Tarihsel kaynak kaydı] TR
+- **v2/config/sources.json:$.sources[20].scope** — [Tarihsel kaynak kaydı] world
+- **v2/config/sources.json:$.sources[21].scope** — [Tarihsel kaynak kaydı] world
+- **v2/config/sources.json:$.sources[22].scope** — [Tarihsel kaynak kaydı] TR
+- **v2/config/sources.json:$.sources[23].scope** — [Tarihsel kaynak kaydı] TR
+- **v2/config/sources.json:$.sources[24].scope** — [Tarihsel kaynak kaydı] TR
+- **v2/config/sources.json:$.sources[25].scope** — [Tarihsel kaynak kaydı] world
+- **v2/config/sources.json:$.sources[26].scope** — [Tarihsel kaynak kaydı] world
+- **v2/config/sources.json:$.sources[27].scope** — [Tarihsel kaynak kaydı] TR
+- **v2/config/sources.json:$.sources[28].scope** — [Tarihsel kaynak kaydı] TR
+- **v2/config/sources.json:$.sources[29].scope** — [Tarihsel kaynak kaydı] TR
+- **v2/config/sources.json:$.sources[30].scope** — [Tarihsel kaynak kaydı] world
+- **v2/config/sources.json:$.sources[31].scope** — [Tarihsel kaynak kaydı] world
+- **v2/config/sources.json:$.sources[32].scope** — [Tarihsel kaynak kaydı] world
+- **v2/config/sources.json:$.sources[33].scope** — [Tarihsel kaynak kaydı] world
+- **v2/docs/checkpoint-bounded-evidence-runbook.md:L1** — [Tarihsel kaynak kaydı] V2 #17/#18/#20 — mevcut kanıtın şifreli checkpoint'e aktarımı
+- **v2/docs/checkpoint-bounded-evidence-runbook.md:L3** — [Tarihsel kaynak kaydı] **Durum:** PR #431 ile `v2/merge_bounded_retry_checkpoint.py` ve regresyon testleri main'e alındı. Bu dosya gerçek checkpoint aktarımının yapıldığı anlamına **gelmez**.
+- **v2/docs/checkpoint-bounded-evidence-runbook.md:L5** — [Tarihsel kaynak kaydı] Ön koşullar
+- **v2/docs/checkpoint-bounded-evidence-runbook.md:L7** — [Tarihsel kaynak kaydı] - `V2_ARCHIVE_PASSPHRASE`: güvenli çalışma ortamından sağlanmalı; GitHub'a, loga veya rapora yazılmamalı.
+- **v2/docs/checkpoint-bounded-evidence-runbook.md:L8** — [Tarihsel kaynak kaydı] - `v2/reports/task17-18-20-bounded-retry-20261118.json`: main'deki önceki 15 adres/17 deneme kanıtı.
+- **v2/docs/checkpoint-bounded-evidence-runbook.md:L9** — [Tarihsel kaynak kaydı] - Çalışma yalnızca yetkili izole ortamda yapılmalı. Checkpoint önce şifreli olarak yedeklenmeli; yedek ve SHA-256 kontrolü kaydedilmeli.
+- **v2/docs/checkpoint-bounded-evidence-runbook.md:L11** — [Tarihsel kaynak kaydı] Çevrimdışı uygulama
+- **v2/docs/checkpoint-bounded-evidence-runbook.md:L14** — [Tarihsel kaynak kaydı] Repo kökünden; parolayı komut satırında yazmayın.
+- **v2/docs/checkpoint-bounded-evidence-runbook.md:L15** — [Tarihsel kaynak kaydı] python3 v2/merge_bounded_retry_checkpoint.py \
+- **v2/docs/checkpoint-bounded-evidence-runbook.md:L17** — [Tarihsel kaynak kaydı] --report v2/reports/task17-18-20-bounded-retry-20261118.json
+- **v2/docs/checkpoint-bounded-evidence-runbook.md:L19** — [Tarihsel kaynak kaydı] İlk komut hata vermediyse, gerçek şifreli checkpoint ve yedeği hazırsa:
+- **v2/docs/checkpoint-bounded-evidence-runbook.md:L20** — [Tarihsel kaynak kaydı] python3 v2/merge_bounded_retry_checkpoint.py \
+- **v2/docs/checkpoint-bounded-evidence-runbook.md:L22** — [Tarihsel kaynak kaydı] --report v2/reports/task17-18-20-bounded-retry-20261118.json \
+- **v2/docs/checkpoint-bounded-evidence-runbook.md:L23** — [Tarihsel kaynak kaydı] --apply
+- **v2/docs/checkpoint-bounded-evidence-runbook.md:L28** — [Tarihsel kaynak kaydı] Kabul ölçütü
+- **v2/docs/checkpoint-bounded-evidence-runbook.md:L29** — [Tarihsel kaynak kaydı] 1. Dry-run hatasız, 15 tarihsel kimlik mevcut, uygun güncelleme sayısı kaydedilmiş olmalı.
+- **v2/docs/checkpoint-bounded-evidence-runbook.md:L31** — [Tarihsel kaynak kaydı] 3. Aynı rapor ikinci kez uygulandığında `eligible_updates=0` olmalı.
+- **v2/docs/checkpoint-bounded-evidence-runbook.md:L32** — [Tarihsel kaynak kaydı] 4. Önceki şifreli yedek üzerinden geri dönüş mümkün olmalı.
+- **v2/docs/checkpoint-bounded-evidence-runbook.md:L33** — [Tarihsel kaynak kaydı] 5. Gerçek cihaz oynatma, yayıncı kimliği ve açık görevler ayrıca doğrulanmalı. Bu aktarım #17/#18/#20'yi tek başına kapatmaz.
+- **v2/reports/DEVIR_2026-11-01.md:L1** — [Tarihsel kaynak kaydı] MADSC55-TV-V2 — 2026-11-01 yeni sohbet devir kaydı
+- **v2/reports/DEVIR_2026-11-01.md:L4** — [Tarihsel kaynak kaydı] - Yalnız Madsc55/MADSC55-TV-V2 üzerinde çalış. Eski madsc-tv deposuna dokunma.
+- **v2/reports/DEVIR_2026-11-01.md:L9** — [Tarihsel kaynak kaydı] - Gerçek ağ taraması, sonuç doğrulaması, kalıcı veri koruma; simülasyon veya yalnız kod eklemek bitmiş sayılmaz.
+- **v2/reports/DEVIR_2026-11-01.md:L12** — [Tarihsel kaynak kaydı] Doğrulanan depo kodu
+- **v2/reports/DEVIR_2026-11-01.md:L13** — [Tarihsel kaynak kaydı] - v2/config/sources.json: 35 yapılandırılmış kaynak (2026-11-01 kontrolü).
+- **v2/reports/DEVIR_2026-11-01.md:L14** — [Tarihsel kaynak kaydı] - v2/discover.py: M3U parse, TR/AZ metadata filtreleri, SHA256 aday raporu, kaynak doğrulaması, kaynak kaybı kontrolü, özel snapshot yazmadan önce kayıp kontrolü.
+- **v2/reports/DEVIR_2026-11-01.md:L16** — [Tarihsel kaynak kaydı] - v2/source_loss_audit.py: önceki rapora göre kayıp kaynaklar ve %50 altına düşüş tespiti.
+- **v2/reports/DEVIR_2026-11-01.md:L17** — [Tarihsel kaynak kaydı] - v2/archive_acceptance_gate.py: arşiv geri yükleme kabul kapısı; çalışan şifreli kalıcı arşiv sisteminin kanıtı değil.
+- **v2/reports/DEVIR_2026-11-01.md:L19** — [Tarihsel kaynak kaydı] - DEVAM_NOTU.md: önceki devir notları mevcut, GitHub yazma sorunu sonrası yeniden güncellenebildi.
+- **v2/reports/DEVIR_2026-11-01.md:L21** — [Tarihsel kaynak kaydı] Son ilgili commitler
+- **v2/reports/DEVIR_2026-11-01.md:L22** — [Tarihsel kaynak kaydı] - b51662f: TR/AZ regex düzeltmesi.
+- **v2/reports/DEVIR_2026-11-01.md:L23** — [Tarihsel kaynak kaydı] - 77c5627: keşif metadata testleri.
+- **v2/reports/DEVIR_2026-11-01.md:L24** — [Tarihsel kaynak kaydı] - f03f0db: keşif testini zorunlu CI zincirine bağlama.
+- **v2/reports/DEVIR_2026-11-01.md:L25** — [Tarihsel kaynak kaydı] - d9fb64a, 613f939: kaynak kaybında hata kodu ve eşik testi.
+- **v2/reports/DEVIR_2026-11-01.md:L26** — [Tarihsel kaynak kaydı] - 6185125, 844227c: aday dil işareti ve doğrulanmamış dil testi.
+- **v2/reports/DEVIR_2026-11-01.md:L27** — [Tarihsel kaynak kaydı] - 14fc9a1, 3df167a: kaynak envanteri doğrulama ve testleri.
+- **v2/reports/DEVIR_2026-11-01.md:L28** — [Tarihsel kaynak kaydı] - 944ca8d, 8eba518: büyük DEVAM_NOTU.md dosyasına başarılı yazma.
+- **v2/reports/DEVIR_2026-11-01.md:L29** — [Tarihsel kaynak kaydı] - 0954621, 16912ab: özel snapshot yazmadan önce kaynak kaybı kapısı ve testi.
+- **v2/reports/DEVIR_2026-11-01.md:L30** — [Tarihsel kaynak kaydı] - cf1ce18: devir notu güncellemesi.
+- **v2/reports/DEVIR_2026-11-01.md:L32** — [Tarihsel kaynak kaydı] Önceki gerçek sayıların tarihsel bağlamı
+- **v2/reports/DEVIR_2026-11-01.md:L33** — [Tarihsel kaynak kaydı] - #60: 27.047 benzersiz URL, 11.860 oynatılabilir video olarak raporlanmış.
+- **v2/reports/DEVIR_2026-11-01.md:L34** — [Tarihsel kaynak kaydı] - #74: 13.593 benzersiz URL, yaklaşık 7.306 oynatılabilir; #60'a göre 13.454 daha az URL.
+- **v2/reports/DEVIR_2026-11-01.md:L35** — [Tarihsel kaynak kaydı] - Ortak 13.179; yalnız #60'da 13.868; yalnız #74'te 414 URL kimliği.
+- **v2/reports/DEVIR_2026-11-01.md:L36** — [Tarihsel kaynak kaydı] - Önceden çalıştığı belirtilen 4.955 kayıp aday kimliği; eski raporlarda URL'leri yok. Yeniden kaynaklardan bulunmaları gerekiyor.
+- **v2/reports/DEVIR_2026-11-01.md:L37** — [Tarihsel kaynak kaydı] - Kaynak kaybı örnekleri: IPTV-org dünya 11.204 -&gt; 9, Free-TV 1.347 -&gt; 5, Efeisot 4.931 -&gt; 247. Bu tarihsel rapor sayıları güncel tarama sonucu değildir.
+- **v2/reports/DEVIR_2026-11-01.md:L39** — [Tarihsel kaynak kaydı] Kalan kaynak kapsamı
+- **v2/reports/DEVIR_2026-11-01.md:L42** — [Tarihsel kaynak kaydı] Kalan dokuz teknik iş
+- **v2/reports/DEVIR_2026-11-01.md:L43** — [Tarihsel kaynak kaydı] 1. Gerçek URL ve kaynak geçmişi için şifreli, kalıcı arşiv; geri yükleme ve bütünlük testi.
+- **v2/reports/DEVIR_2026-11-01.md:L44** — [Tarihsel kaynak kaydı] 2. #60 ve yeni taramaların karşılaştırılması, kayıp URL'lerin yeniden bulunması.
+- **v2/reports/DEVIR_2026-11-01.md:L45** — [Tarihsel kaynak kaydı] 3. Tüm tarama yollarında kaynak kaybı koruması; dramatik düşüşte güvenli durdurma.
+- **v2/reports/DEVIR_2026-11-01.md:L46** — [Tarihsel kaynak kaydı] 4. Gerçek ağ/HLS/video/ses kontrolü; HTTP 200'ü oynatma kanıtı saymama.
+- **v2/reports/DEVIR_2026-11-01.md:L47** — [Tarihsel kaynak kaydı] 5. Türkçe/Azerice, Türkiye/diaspora, çalışan/çalışmayan, mevcut/yeni/alternatif sınıflandırma.
+- **v2/reports/DEVIR_2026-11-01.md:L49** — [Tarihsel kaynak kaydı] 7. Kontrollü paralellik, retry ve timeout.
+- **v2/reports/DEVIR_2026-11-01.md:L50** — [Tarihsel kaynak kaydı] 8. Tam gerçek tarama, sonuçların kaynak bazlı raporu, başarısız testlerin düzeltilmesi.
+- **v2/reports/DEVIR_2026-11-01.md:L53** — [Tarihsel kaynak kaydı] Ek açık işler
+- **v2/reports/DEVIR_2026-11-01.md:L55** — [Tarihsel kaynak kaydı] - GitHub Actions son durumunu kontrol et, kırmızı testleri düzelt, yeşil kanıt olmadan tamamlandı deme.
+- **v2/reports/DEVIR_2026-11-01.md:L57** — [Tarihsel kaynak kaydı] - Açık URL veya token içeren özel envanteri herkese açık repoya commit etme.
+- **v2/reports/DEVIR_2026-11-01.md:L60** — [Tarihsel kaynak kaydı] Yazma engeli
+- **v2/reports/DEVIR_2026-11-01.md:L61** — [Tarihsel kaynak kaydı] - Önceki DEVAM_NOTU.md update denemeleri araç güvenlik kontrolünde engellendi; aynı dosyaya daha sonra 944ca8d ve 8eba518 ile başarılı yazıldı. Kesin tetikleyici bilinmiyor. Güncel SHA ile sırayla yaz, sonra yeniden oku; güvenlik kontrolünü devre dışı bırakmaya çalışma.
+
 <!-- B-END -->
 
 ## C) Kanal Testi, Taşıma ve Kategori Düzenleme İşleri
@@ -2051,6 +2252,2276 @@ Tarama kapsamı: main ağacındaki tüm .md/.txt/.json/.yml/.yaml dosyaları, a�
 - **v2/MAIN_PRODUCTION_SAFETY_LOCK.md:L9** — [Tarihsel kaynak kaydı] - Other original workflows are now manual-only; the read-only playlist safety
 - **v2/MAIN_PRODUCTION_SAFETY_LOCK.md:L13** — [Tarihsel kaynak kaydı] writer suspension and the immutable main playlist Git blob.
 
+- **v2/OPERATIONS.md:L8** — [Tarihsel kaynak kaydı] GitHub Actions runs the read-only audit twice daily. Reports are uploaded as a workflow artifact (not committed into the live playlist).
+- **v2/OPERATIONS.md:L11** — [Tarihsel kaynak kaydı] - `turkish-tv-health.json`: live playlist network probes, responsive Turkish candidates, YouTube metadata, and sampled ffprobe codec checks.
+- **v2/OPERATIONS.md:L12** — [Tarihsel kaynak kaydı] - `assets-health.json`: EPG/logo HTTP reachability.
+- **v2/OPERATIONS.md:L13** — [Tarihsel kaynak kaydı] - `epg-integrity.json`: bounded XMLTV structural checks and programme counts.
+- **v2/OPERATIONS.md:L24** — [Tarihsel kaynak kaydı] The GitHub Actions workflow `V2 Full Decoder Verification (manual, read-only)` uses `MADSC55_DECODER_SAMPLE=1039` and allows up to 180 minutes. It also runs automatically every Sunday at 02:15 UTC. To start immediately, use **Actions → V2 Full Decoder Verification → Run workflow**. It checks decodability for all *responsive* entries (not all entries if unreachable). Reports remain evidence of codec detection, not sustained playback or official logo provenance.
+- **v2/README.md:L3** — [Tarihsel kaynak kaydı] Independent V2. The existing IBO playlist remains unchanged and is the only live playlist.
+- **v2/README.md:L5** — [Tarihsel kaynak kaydı] - Playlist: `MADSC55_TV_IBO_CALISANLAR_TEST.m3u8`
+- **v2/README.md:L6** — [Tarihsel kaynak kaydı] - EPG: existing `[URL: kaynak dosyada]` (not migrated yet).
+- **v2/README.md:L7** — [Tarihsel kaynak kaydı] - Logos: existing `tvg-logo` URLs preserved; 194 unique URLs inventoried in `yedekler/logo-kaynaklari.md`. Image bytes not yet mirrored.
+- **v2/SCAN_61_ACTION_REPORT.md:L3** — [Tarihsel kaynak kaydı] Kaynak: GitHub Actions run 40758418496, commit 50a7a395; turkish-stream-review artifact 12851805839 (28 Ekim 2026). Bu belge yalnızca kanıtları özetler; otomatik kanal onayı değildir.
+- **v2/SCAN_61_ACTION_REPORT.md:L7** — [Tarihsel kaynak kaydı] - 11.808 VIDEO_DECODED, 15.239 görüntü doğrulanamayan/reddedilen; otomatik onaylanan kanal **0**.
+- **v2/SCAN_61_ACTION_REPORT.md:L10** — [Tarihsel kaynak kaydı] - Metadata: 11.749 EPG ID eksik; 5.699 logo eksik; 2.234 kategori eksik. Bu sayılar birbiriyle örtüşebilir.
+- **v2/SCAN_61_ACTION_REPORT.md:L14** — [Tarihsel kaynak kaydı] - Mevcut playlist URL çakışması: 2 çapraz kanal kimliği vakası. Yalnızca raporla; otomatik silme/birleştirme yapma.
+- **v2/SCAN_61_ACTION_REPORT.md:L15** — [Tarihsel kaynak kaydı] - 139 mevcut kanal ölçüm adayı, 127 ölçülmüş; 32 yayın için üç kararlılık örneği. Bu 24 saat kesintisizlik kanıtı değildir.
+- **v2/SCAN_61_ACTION_REPORT.md:L19** — [Tarihsel kaynak kaydı] 2. Önce 41 kimlik çakışmasını, 2 mevcut playlist URL çakışmasını ve 12 geçici inceleme girdisini gözden geçir. İsim veya URL benzerliğine bakarak otomatik kabul/ret yapma.
+- **v2/SCAN_61_ACTION_REPORT.md:L20** — [Tarihsel kaynak kaydı] 3. 1.810 ses eksikliği, 1.364 metadata eksikliği ve EPG/logo/kategori boşluklarını tek raporda takip et; kaynağı doğrulanmayan metadata uydurma.
+- **v2/SCAN_61_ACTION_REPORT.md:L25** — [Tarihsel kaynak kaydı] Canlı IBO playlist, FAVORİLER, 13 kategori ve iki özgün YEDEKLER. Bu rapor yalnızca yeni bir doküman olarak eklendi; canlı yayın dosyalarını değiştirmez.
+- **v2/WORK_PLAN.md:L6** — [Tarihsel kaynak kaydı] - Dünya çapında kaynak keşfi, Türkçe aday taraması, HTTP probe, kısa decoder, çözünürlük, kararlılık, logo ve EPG kontrolleri mevcut.
+- **v2/WORK_PLAN.md:L8** — [Tarihsel kaynak kaydı] - Arama workflow'u salt okunur; hiçbir aday otomatik canlı IBO listesine eklenmez.
+- **v2/WORK_PLAN.md:L12** — [Tarihsel kaynak kaydı] 1. Her çalışmanın Actions sonucu ve artifact raporunu kontrol et. Başarılı workflow ile doğrulanmış kanal sayısını karıştırma.
+- **v2/WORK_PLAN.md:L13** — [Tarihsel kaynak kaydı] 2. Her kaynak için erişim, toplam kanal, tekrar, canlı listede bulunan ve test edilen sayılarını raporla. Hatalı/ölü kaynakları işaretle; kaynak bulunması kanalın çalıştığı anlamına gelmez.
+- **v2/WORK_PLAN.md:L15** — [Tarihsel kaynak kaydı] 4. YouTube'da yalnızca resmî ve gerçekten canlı yayınları incele. YouTube watch URL veya süresi dolan imzalı HLS URL'lerini kalıcı IBO adresi gibi ekleme. Gerekirse yasal, güvenilir yenileme mekanizmasını ayrıca tasarla ve test et.
+- **v2/WORK_PLAN.md:L16** — [Tarihsel kaynak kaydı] 5. Kanal kimliği, yayın içeriği, çözünürlük, ses, logo, EPG ve doğru kategori eşleşmesini doğrula.
+- **v2/WORK_PLAN.md:L18** — [Tarihsel kaynak kaydı] 7. Son aşamada kategori sayaçları, favoriler, özgün iki YEDEKLER ve playlist güvenlik testlerini yeniden çalıştır.
+- **v2/WORK_PLAN.md:L22** — [Tarihsel kaynak kaydı] - Adaylar raporda; otomatik playlist yazımı yok.
+- **v2/WORK_PLAN.md:L28** — [Tarihsel kaynak kaydı] - `v2/github_source_discovery.py` raporu `v2/reports/github-source-discovery.json` üretir; `v2/discover.py` bu rapordaki en fazla 80 yeni HTTPS kaynağı yapılandırılmış 17 kaynakla birleştirir, M3U içindeki kanal kayıtlarını ayıklar ve canlı IBO'yu değiştirmeden aday raporuna alır.
+- **v2/WORK_PLAN.md:L29** — [Tarihsel kaynak kaydı] - Ardından mevcut IPTV-org TR aday taraması, HTTP, ffprobe kısa decoder, çözünürlük, kararlılık, kalite karşılaştırması, resmî TV sitesi, YouTube canlı yayın, EPG, logo ve güvenlik testleri aynı workflow'da devam eder.
+- **v2/WORK_PLAN.md:L30** — [Tarihsel kaynak kaydı] - Sınır: YouTube canlı yayın sayfaları henüz kalıcı IBO uyumlu akışa dönüştürülmez; kaynaklardan keşfedilen tüm kanallar henüz tek tek ffprobe doğrulamasına alınmaz. Bunlar sonraki entegrasyon işidir. Başarılı workflow bütün adayların çalıştığı anlamına gelmez.
+- **v2/WORK_PLAN.md:L36** — [Tarihsel kaynak kaydı] - Kalan kritik işler: GitHub'dan keşfedilen her yeni kaynak için kanalların ayrı playback testlerine girmesi; YouTube resmî canlı yayınları için IBO'da sürdürülebilir adres yöntemi; tüm raporların birleştirilmiş kabul özeti.
+- **v2/WORK_PLAN.md:L37** — [Tarihsel kaynak kaydı] - Arama işlemleri canlı IBO ve özgün YEDEKLER'e otomatik yazamaz.
+- **v2/WORK_PLAN.md:L42** — [Tarihsel kaynak kaydı] 3. **Devam eden:** Birleşik workflow'un bütün aşamalarının tamamlanması, artifact raporları ve canlı playlist güvenlik testlerinin kontrolü.
+- **v2/WORK_PLAN.md:L44** — [Tarihsel kaynak kaydı] 5. **Eksik:** YouTube için resmî canlı yayın ve yenilenebilir/kalıcı IBO uyumlu kaynak bulma; watch URL veya geçici imzalı HLS kalıcı yayın diye eklenmeyecek.
+- **v2/WORK_PLAN.md:L45** — [Tarihsel kaynak kaydı] 6. **Kabul:** Tek özet, başarısızlıkların ayrı listesi, manuel onaydan önce canlı playlistte sıfır değişiklik.
+- **v2/WORK_PLAN.md:L48** — [Tarihsel kaynak kaydı] - Run 40606347272: V2 Turkish Stream End-to-End Discovery **success**; 40605519678: Health and Discovery **success**; 40605519505: Worldwide Channel Discovery **success**; 40604652483: GitHub source discovery **success**. Workflow başarısı tüm stream'lerin canlı olduğu anlamına gelmez.
+- **v2/WORK_PLAN.md:L49** — [Tarihsel kaynak kaydı] - `v2/all_source_playback.py` ana workflow'da mevcut: yapılandırılmış + GitHub'da bulunan kaynaklardan kaynak başına en fazla 4, toplam en fazla 100 yeni stream'i ffprobe ile örnekler; **bütün kanalların testi değildir**.
+- **v2/WORK_PLAN.md:L53** — [Tarihsel kaynak kaydı] - Öncelik 3: Resmî YouTube canlı yayınları için sürdürülebilir, yetkili IBO-uyumlu akış çözümü; imzalı geçici URL'yi kalıcı playlist'e ekleme.
+- **v2/WORK_PLAN.md:L54** — [Tarihsel kaynak kaydı] - Öncelik 4: Kimlik, içerik, ses/video, gerçek çözünürlük, EPG, logo, kararlılık ve kategori kanıtlarıyla ayrı test listesi oluştur.
+- **v2/WORK_PLAN.md:L58** — [Tarihsel kaynak kaydı] - `v2/build_verified_test_playlist.py` eklendi: kısa decoder ile video kanıtı olan, canlı IBO'da aynı URL ile bulunmayan adaylardan ayrı `v2/reports/short-decoded-review-only.m3u8` üretir. Bu liste **geçici inceleme listesidir**, kanal kimliği ve uzun süreli çalışma henüz kesin değildir.
+- **v2/WORK_PLAN.md:L63** — [Tarihsel kaynak kaydı] - Run 40660958068: **success**, dört shard'ın artifact'ı da mevcut (0,1,2,3). Bu başarı adayı doğrulanan kanal sayısına eşit değildir; raporların içindeki `sampled` ve `video_decoded` sayıları ayrıca okunmalıdır.
+- **v2/WORK_PLAN.md:L66** — [Tarihsel kaynak kaydı] - Sonraki öncelik: dört shard raporunu tek kabul özetine birleştirmek, kapsam dışı aday sayısını hesaplamak, eksik kanalları sonraki partilere almak, YouTube IBO kalıcılığı ve kimlik/EPG/logo eşleştirmelerini kanıtlamak.
+- **v2/WORK_PLAN.md:L67** — [Tarihsel kaynak kaydı] - Canlı IBO, FAVORİLER ve YEDEKLER'e otomatik yazma yok.
+- **v2/WORK_PLAN.md:L70** — [Tarihsel kaynak kaydı] - Run 40662300708 dört playback shard ve aggregate işleri **success**. Aggregate job logu: **1.000 farklı URL hash'i test edildi, 414'ünde video doğrulandı, 586'sında video doğrulanamadı**. Bunlar kanal kimliği veya kalıcı yayın garantisi değildir.
+- **v2/WORK_PLAN.md:L71** — [Tarihsel kaynak kaydı] - Run 40660910249 birleşik kanal arama **success**; 40660159911 ayrı inceleme playlisti dahil **success**.
+- **v2/WORK_PLAN.md:L72** — [Tarihsel kaynak kaydı] - Sıradaki iş sırası: (1) test edilmemiş adayların kapsama hesabı ve sonraki partiler; (2) 586 başarısızın kontrollü tekrar denemesi; (3) 414 görüntülü adayın ses, kimlik, çözünürlük, EPG/logo ve kararlılık doğrulaması; (4) resmî YouTube IBO uyumluluğu; (5) yalnızca kanıtlı adayların ayrı onay listesi. Canlı IBO'ya otomatik aktarım yok.
+- **v2/WORK_PLAN.md:L79** — [Tarihsel kaynak kaydı] **Mevcut kod:** Ana workflow `.github/workflows/v2-turkish-stream-review.yml` kaynak/GitHub/YouTube/resmî site/EPG/logo keşfini ve 100 örnek ffprobe testini, TR kısa decoder, inceleme listesini, güvenlik testlerini çalıştırıyor. `v2/build_verified_test_playlist.py` geçici `v2/reports/short-decoded-review-only.m3u8` oluşturuyor (tam doğrulanmış sayılmamalı). Ayrı `.github/workflows/v2-batched-playback.yml` 4 shard × 2 page, shard başına 250 örnek kapasitesi; `v2/all_source_playback.py` shard ve `PLAYBACK_PAGE` destekliyor; `v2/aggregate_playback_shards.py` kanıtları birleştiriyor. **Ancak bu sekizli toplu kontrol henüz ana tek komutlu workflow'a bağlanmadı.** Ana eksik budur.
+- **v2/WORK_PLAN.md:L81** — [Tarihsel kaynak kaydı] **Doğrulanmış sonuç:** run 40662300708 success, 1.000 farklı URL test, 414 VIDEO_DECODED, 586 video doğrulanamadı. Bu sonuç bütün adayları veya 414 tam onaylı kanalı ifade etmez. run 40660159911 ve 40660910249 birleşik workflow success.
+- **v2/WORK_PLAN.md:L87** — [Tarihsel kaynak kaydı] 3. 414 görüntülü adayın ses, kimlik, kararlılık, EPG/logo/kategori kontrollerini ve 586 başarısızın sınırlı tekrar denemesini otomatik zincire ekle. Tüm adayların kapsanmadığı durumlarda eksik sayısını açıkça raporla.
+- **v2/WORK_PLAN.md:L88** — [Tarihsel kaynak kaydı] 4. Ayrı geçici IBO test listesi ve tek nihai kanıt raporu üret; YouTube kalıcı uyumluluğunu ancak yetkili sürdürülebilir akış varsa onayla.
+- **v2/WORK_PLAN.md:L98** — [Tarihsel kaynak kaydı] - Canlı IBO, FAVORİLER ve iki özgün YEDEKLER'e yazma yapılmadı.
+- **v2/WORK_PLAN.md:L109** — [Tarihsel kaynak kaydı] - Sıradaki eksikler: tek kaynak snapshot'ı, bütçeli başarısız retry, tüm aday kapsama ve aday başına metadata/kimlik/kararlılık doğrulaması. Canlı playlist'e dokunma.
+- **v2/WORK_PLAN.md:L113** — [Tarihsel kaynak kaydı] Mevcut ana workflow bu sözleşmeyi henüz tam uygulamıyor: 4x2 sınırlı örnekleme, kaynak snapshot farkları, yalnızca sınırlı kararlılık örneği ve kimlik kanıtı eksik. Kısmi örneklem başarı değildir. Sonraki kod değişiklikleri mevcut `.github/workflows/v2-turkish-stream-review.yml` içinde yapılmalı; bağımsız test workflow'u oluşturulmamalı. Canlı IBO, FAVORİLER ve iki özgün YEDEKLER salt okunur.
+- **v2/WORK_PLAN.md:L118** — [Tarihsel kaynak kaydı] - Sıradaki işler: tek kaynak snapshot, tam kapsama, üç otomatik retry, aday bazında kimlik/ses/video/EPG/logo/kategori kabul durumu ve tek final raporu.
+- **v2/WORK_PLAN.md:L121** — [Tarihsel kaynak kaydı] - `9d247f7`: `v2/all_source_playback.py` içinde ffprobe başarısızlığı için ilk denemeden sonra **en fazla 3 yeniden deneme** eklendi; sonuçta `attempts` sayısı saklanır. Bu yalnızca playback ffprobe kapsamındadır, tüm EPG/kimlik kontrollerinin tamamlandığı anlamına gelmez.
+- **v2/WORK_PLAN.md:L130** — [Tarihsel kaynak kaydı] - **Öncelik 3:** aday bazlı kimlik, yayın, ses, video, EPG, logo, kategori ve kararlılık delili.
+- **v2/WORK_PLAN.md:L132** — [Tarihsel kaynak kaydı] - **Öncelik 5:** Actions uçtan uca doğrulama. Canlı IBO/kategoriler/FAVORİLER/iki YEDEKLER salt okunur.
+- **v2/WORK_PLAN.md:L135** — [Tarihsel kaynak kaydı] - Actions `40688516292`, `40689745489`, `40689918425` SUCCESS. Bu üç çalışma, sırasıyla kapsam göstergesi, kaynak retry ve kanal bazlı playback raporunun CI içinde tamamlandığını gösterir.
+- **v2/WORK_PLAN.md:L136** — [Tarihsel kaynak kaydı] - `98f37a6`: `final-validation-summary.json` içine `playback_coverage_complete`, `playback_incomplete_sources`, `channel_review_counts` aktarıldı. `approved=0` tutuluyor çünkü kanal kimliği/EPG/logo/kategori henüz kanıtlanmadı. Bu commit'in CI sonucu bekleniyor.
+- **v2/archives/test001_quarantined_48.json:$.reason** — [Tarihsel kaynak kaydı] IBO Player test_001 disappeared after removal of 48 backup records
+- **v2/arsiv/eski_sistem_7650_test_kuyrugu_README.md:L3** — [Tarihsel kaynak kaydı] Bu kuyruk 4 dosyadaki 7.650 benzersiz URL'yi 500'erlik dilimlerle gerçek ffprobe ve ffmpeg ses+görüntü testinden geçirir. Ana IBO playlistine, YEDEKLER'e ve 2.881 arşive yazmaz.
+- **v2/arsiv/eski_sistem_7650_test_kuyrugu_README.md:L11** — [Tarihsel kaynak kaydı] Her çalışmada 500 URL ilerler; state.json dosyası kalıcı saklanmalı. 16 çalışmada tüm adaylar birer kez incelenir. 'av_verified' sadece ses ve görüntü çözümleme testi başarılı anlamına gelir; canlı yayın kimliği ve IBO cihaz testi ayrıca gerekir. Bağlantılar ana YEDEKLER'e otomatik aktarılmaz.
+- **v2/config/sources.json:$.policy** — [Tarihsel kaynak kaydı] discovery-only; never modify live playlist
+- **v2/docs/checkpoint-bounded-evidence-runbook.md:L6** — [Tarihsel kaynak kaydı] - `ibo-scan-progress.enc`: gerçek, şifresi doğrulanabilen **worldwide** tarama checkpoint'i; dosya adı ve kapsamı tam eşleşmeli.
+- **v2/docs/checkpoint-bounded-evidence-runbook.md:L16** — [Tarihsel kaynak kaydı] --checkpoint /secure/path/ibo-scan-progress.enc \
+- **v2/docs/checkpoint-bounded-evidence-runbook.md:L21** — [Tarihsel kaynak kaydı] --checkpoint /secure/path/ibo-scan-progress.enc \
+- **v2/docs/checkpoint-bounded-evidence-runbook.md:L26** — [Tarihsel kaynak kaydı] `--apply` olmadan hiçbir checkpoint yazılmaz. Araç tam hash eşleşmesi ister, eksik/tekrarlı kimliği reddeder; eski gözlemler yeni kayıtların üzerine yazılmaz. Tek HLS segmentindeki AV kanıtı tam tarayıcı onayına yükseltilmez. Kaynak raporun 15 kimliğinden biri gerçek checkpoint'te yoksa işlem **durur**; sahte URL veya yeni kanal keşfi yapılmaz.
+- **v2/docs/checkpoint-bounded-evidence-runbook.md:L35** — [Tarihsel kaynak kaydı] **Koruma:** Ana İBO, YEDEKLER, ANA/TURK/YABANCI arşivleri, EPG, 48 engelli kanal değiştirilmeyecek. 2.500'lük İBO Player test döngüsü ayrı iş akışıdır. Yeni kanal araması yapılmayacak.
+- **v2/epg-report.json:$.sources[0].status** — [Tarihsel kaynak kaydı] ok
+- **v2/epg-report.json:$.sources[1].status** — [Tarihsel kaynak kaydı] ok
+- **v2/epg-report.json:$.sources[2].status** — [Tarihsel kaynak kaydı] ok
+- **v2/epg-report.json:$.sources[3].status** — [Tarihsel kaynak kaydı] ok
+- **v2/epg-report.json:$.sources[4].status** — [Tarihsel kaynak kaydı] ok
+- **v2/logos/manifest.json:$[0].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[3].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[4].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[5].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[6].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[7].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[8].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[9].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[10].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[11].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[12].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[13].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[14].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[15].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[16].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[17].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[18].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[19].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[20].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[21].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[22].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[23].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[24].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[25].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[26].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[27].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[28].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[29].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[30].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[31].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[32].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[33].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[34].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[35].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[36].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[37].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[38].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[39].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[40].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[41].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[42].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[43].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[44].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[45].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[46].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[47].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[48].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[49].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[50].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[51].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[52].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[53].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[54].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[55].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[56].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[57].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[58].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[59].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[60].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[61].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[62].status** — [Tarihsel kaynak kaydı] failed
+- **v2/logos/manifest.json:$[62].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 403: Forbidden
+- **v2/logos/manifest.json:$[63].status** — [Tarihsel kaynak kaydı] failed
+- **v2/logos/manifest.json:$[63].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 403: Forbidden
+- **v2/logos/manifest.json:$[64].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[65].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[66].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[67].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[68].status** — [Tarihsel kaynak kaydı] failed
+- **v2/logos/manifest.json:$[68].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[69].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[70].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[71].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[72].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[73].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[74].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[75].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[76].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[77].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[78].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[79].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[80].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[81].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[82].status** — [Tarihsel kaynak kaydı] failed
+- **v2/logos/manifest.json:$[82].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 403: Forbidden
+- **v2/logos/manifest.json:$[83].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[84].status** — [Tarihsel kaynak kaydı] failed
+- **v2/logos/manifest.json:$[84].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 301: The HTTP server returned a redirect error that would lead to an infinite loop.
+The last 30x er
+- **v2/logos/manifest.json:$[85].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[86].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[87].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[88].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[89].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[90].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[91].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[92].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[93].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[94].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[95].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[96].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[97].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[98].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[99].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[100].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[101].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[102].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[103].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[104].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[105].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[106].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[107].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[108].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[109].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[110].status** — [Tarihsel kaynak kaydı] failed
+- **v2/logos/manifest.json:$[110].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[111].status** — [Tarihsel kaynak kaydı] failed
+- **v2/logos/manifest.json:$[111].reason** — [Tarihsel kaynak kaydı] URLError: &lt;urlopen error [Errno -5] No address associated with hostname&gt;
+- **v2/logos/manifest.json:$[112].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[113].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[114].status** — [Tarihsel kaynak kaydı] failed
+- **v2/logos/manifest.json:$[114].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 429: Too Many Requests (015d12c)
+- **v2/logos/manifest.json:$[115].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[116].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[117].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[118].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[119].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[120].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[121].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[122].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[123].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[124].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[125].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[126].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[127].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[128].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[129].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[130].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[131].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[132].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[133].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[134].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[135].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[136].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[137].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[138].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[139].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[140].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[141].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[142].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[143].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[144].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[145].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[146].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[147].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[148].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[149].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[150].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[151].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[152].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[153].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[154].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[155].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[156].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[157].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[158].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[159].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[160].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[161].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[162].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[163].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[164].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[165].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[166].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[167].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[168].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[169].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[170].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[171].status** — [Tarihsel kaynak kaydı] failed
+- **v2/logos/manifest.json:$[171].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 403: Forbidden
+- **v2/logos/manifest.json:$[172].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[173].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[174].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[175].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[176].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[177].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[178].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[179].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[180].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[181].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[182].status** — [Tarihsel kaynak kaydı] failed
+- **v2/logos/manifest.json:$[182].reason** — [Tarihsel kaynak kaydı] URLError: &lt;urlopen error [Errno -2] Name or service not known&gt;
+- **v2/logos/manifest.json:$[183].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[184].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[185].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[186].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[187].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[188].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[189].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[190].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[191].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[192].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[193].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[194].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[195].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[196].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[197].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[198].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[199].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[200].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[201].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[202].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[203].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[204].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[205].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[206].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[207].status** — [Tarihsel kaynak kaydı] failed
+- **v2/logos/manifest.json:$[207].reason** — [Tarihsel kaynak kaydı] ValueError: invalid image size
+- **v2/logos/manifest.json:$[208].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[209].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[210].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[211].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[212].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[213].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[214].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[215].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[216].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[217].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[218].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[219].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[220].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[221].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[222].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[223].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[224].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[225].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[226].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[227].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[228].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[229].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[230].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[231].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[232].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[233].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[234].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[235].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[236].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[237].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[238].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[239].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[240].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[241].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[242].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[243].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[244].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[245].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[246].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[247].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[248].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[249].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[250].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[251].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[252].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[253].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[254].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[255].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[256].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[257].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[258].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[259].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[260].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[261].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[262].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[263].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[264].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[265].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[266].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[267].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[268].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[269].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[270].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[271].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[272].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[273].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[274].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[275].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[276].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[277].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[278].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[279].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[280].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[281].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[282].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[283].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[284].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[285].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[286].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[287].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[288].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[289].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[290].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[291].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[292].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[293].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[294].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[295].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[296].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[297].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[298].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[299].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[300].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[301].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[302].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[303].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[304].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[305].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[306].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[307].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[308].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[309].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[310].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[311].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[312].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[313].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[314].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[315].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[316].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[317].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[318].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[319].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[320].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[321].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[322].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[323].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[324].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[325].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[326].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[327].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[328].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[329].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[330].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[331].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[332].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[333].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[334].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[335].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[336].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[337].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[338].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[339].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[340].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[341].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[342].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[343].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[344].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[345].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[346].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[347].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[348].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[349].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[350].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[351].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[352].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[353].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[354].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[355].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[356].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[357].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[358].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[359].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[360].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[361].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[362].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[363].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[364].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[365].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[366].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[367].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[368].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[369].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[370].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[371].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[372].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[373].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[374].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[375].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[376].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[377].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[378].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[379].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[380].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[381].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[382].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[383].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[384].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[385].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[386].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[387].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[388].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[389].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[390].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[391].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[392].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[393].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[394].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[395].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[396].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[397].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[398].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[399].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[400].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[401].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[402].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[403].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[404].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[405].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[406].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[407].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[408].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[409].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[410].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[411].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[412].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[413].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[414].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[415].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[416].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[417].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[418].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[419].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[420].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[421].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[422].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[423].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[424].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[425].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[426].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[427].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[428].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[429].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[430].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[431].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[432].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[433].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[434].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[435].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[436].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[437].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[438].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[439].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[440].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[441].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[442].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[443].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[444].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[445].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[446].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[447].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[448].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[449].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[450].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[451].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[452].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[453].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[454].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[455].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[456].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[457].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[458].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[459].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[460].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[461].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[462].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[463].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[464].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[465].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[466].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[467].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[468].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[469].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[470].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[471].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[472].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[473].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[474].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[475].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[476].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[477].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[478].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[479].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[480].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[481].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[482].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[483].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[484].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[485].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[486].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[487].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[488].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[489].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[490].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[491].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[492].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[493].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[494].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[495].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[496].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[497].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[498].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[499].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[500].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[501].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[502].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[503].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[504].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[505].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[506].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[507].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[508].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[509].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[510].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[511].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[512].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[513].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[514].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[515].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[516].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[517].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[518].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[519].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[520].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[521].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[522].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[523].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[524].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[525].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[526].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[527].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[528].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[529].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[530].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[531].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[532].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[533].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[534].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[535].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[536].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[537].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[538].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[539].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[540].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[541].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[542].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[543].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[544].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[545].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[546].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[547].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[548].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[549].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[550].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[551].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[552].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[553].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[554].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[555].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[556].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[557].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[558].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[559].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[560].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[561].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[562].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[563].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[564].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[565].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[566].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[567].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[568].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[569].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[570].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[571].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[572].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[573].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[574].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[575].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[576].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[577].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[578].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[579].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[580].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[581].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[582].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[583].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[584].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[585].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[586].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[587].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[588].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[589].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[590].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[591].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[592].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[593].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[594].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[595].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[596].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[597].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[598].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[599].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[600].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[601].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[602].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[603].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[604].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[605].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[606].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[607].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[608].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[609].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[610].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[611].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[612].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[613].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[614].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[615].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[616].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[617].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[618].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[619].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[620].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[621].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[622].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[623].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[624].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[625].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[626].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[627].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[628].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[629].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[630].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[631].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[632].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[633].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[634].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[635].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[636].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[637].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[638].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[639].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[640].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[641].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[642].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[643].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[644].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[645].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[646].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[647].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[648].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[649].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[650].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[651].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[652].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[653].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[654].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[655].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[656].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[657].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[658].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[659].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[660].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[661].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[662].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[663].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[664].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[665].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[666].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[667].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[668].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[669].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[670].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[671].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[672].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[673].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[674].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[675].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[676].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[677].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[678].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[679].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[680].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[681].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[682].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[683].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[684].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[685].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[686].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[687].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[688].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[689].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[690].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[691].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[692].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[693].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[694].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[695].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[696].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[697].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[698].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[699].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[700].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[701].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[702].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[703].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[704].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[705].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[706].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[707].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[708].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[709].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[710].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[711].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[712].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[713].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[714].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[715].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[716].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[717].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[718].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[719].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[720].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[721].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[722].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[723].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[724].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[725].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[726].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[727].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[728].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[729].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[730].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[731].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[732].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[733].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[734].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[735].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[736].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[737].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[738].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[739].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[740].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[741].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[742].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[743].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[744].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[745].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[746].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[747].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[748].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[749].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[750].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[751].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[752].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[753].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[754].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[755].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[756].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[757].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[758].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[759].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[760].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[761].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[762].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[763].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[764].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[765].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[766].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[767].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[768].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[769].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[770].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[771].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[772].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[773].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[774].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[775].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[776].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[777].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[778].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[779].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[780].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[781].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[782].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[783].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[784].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[785].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[786].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[787].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[788].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[789].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[790].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[791].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[792].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[793].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[794].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[795].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[796].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[797].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[798].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[799].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[800].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[801].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[802].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[803].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[804].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[805].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[806].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[807].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[808].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[809].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[810].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[811].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[812].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[813].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[814].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[815].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[816].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[817].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[818].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[819].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[820].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[821].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[822].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[823].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[824].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[825].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[826].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[827].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[828].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[829].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[830].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[831].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[832].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[833].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[834].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[835].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[836].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[837].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[838].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[839].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[840].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[841].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[842].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[843].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[844].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[845].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[846].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[847].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[848].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[849].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[850].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[851].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[852].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[853].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[854].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[855].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[856].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[857].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[858].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[859].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[860].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[861].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[862].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[863].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[864].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[865].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[866].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[867].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[868].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[869].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[870].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[871].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[872].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[873].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[874].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[875].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[876].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[877].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[878].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[879].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[880].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[881].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[882].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[883].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[884].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[885].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[886].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[887].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[888].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[889].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[890].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[891].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[892].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[893].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[894].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[895].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[896].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[897].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[898].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[899].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[900].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[901].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[902].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[903].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[904].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[905].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[906].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[907].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[908].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[909].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[910].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[911].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[912].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[913].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[914].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[915].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[916].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[917].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[918].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[919].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[920].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[921].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[922].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[923].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[924].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[925].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[926].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[927].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[928].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[929].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[930].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[931].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[932].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[933].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[934].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[935].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[936].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[937].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[938].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[939].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[940].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[941].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[942].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[943].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[944].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[945].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[946].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[947].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[948].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[949].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[950].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[951].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[952].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[953].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[954].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[955].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[956].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[957].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[958].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[959].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[960].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[961].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[962].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[963].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[964].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[965].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[966].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[967].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[968].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[969].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[970].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[971].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[972].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[973].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[974].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[975].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[976].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[977].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[978].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[979].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[980].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[981].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[982].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[983].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[984].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[985].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[986].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[987].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[988].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[989].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[990].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[991].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[992].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[993].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[994].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[995].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[996].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[997].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[998].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[999].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1000].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1001].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1002].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1003].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1004].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1005].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1006].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1007].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1008].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1009].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1010].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1011].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1012].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1013].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1014].status** — [Tarihsel kaynak kaydı] failed
+- **v2/logos/manifest.json:$[1014].reason** — [Tarihsel kaynak kaydı] ValueError: not a supported image
+- **v2/logos/manifest.json:$[1015].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1016].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1017].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1018].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1019].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1020].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1021].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1022].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1023].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1024].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1025].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1026].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1027].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1028].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1029].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1030].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1031].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1032].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1033].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1034].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1035].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1036].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1037].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1038].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1039].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1040].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1041].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1042].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1043].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1044].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1045].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1046].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1047].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1048].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1049].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1050].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1051].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1052].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1053].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1054].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1055].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1056].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1057].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1058].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1059].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1060].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1061].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1062].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1063].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1064].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1065].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1066].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1067].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1068].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1069].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1070].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1071].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1072].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1073].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1074].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1075].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1076].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1077].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1078].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1079].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1080].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1081].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1082].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1083].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1084].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1085].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1086].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1087].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1088].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1089].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1090].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1091].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1092].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1093].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1094].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1095].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1096].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1097].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1098].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1099].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1100].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1101].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1102].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1103].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1104].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1105].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1106].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1107].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1108].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1109].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1110].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1111].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1112].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1113].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1114].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1115].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1116].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1117].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1118].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1119].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1120].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1121].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1122].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1123].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1124].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1125].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1126].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1127].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1128].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1129].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1130].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1131].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1132].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1133].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1134].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1135].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1136].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1137].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1138].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1139].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1140].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1141].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1142].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1143].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1144].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1145].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1146].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1147].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1148].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1149].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1150].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1151].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1152].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1153].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1154].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1155].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1156].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1157].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1158].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1159].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1160].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1161].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1162].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1163].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1164].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1165].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1166].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1167].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1168].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1169].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1170].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1171].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1172].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1173].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1174].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1175].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1176].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1177].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1178].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1179].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1180].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1181].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1182].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1183].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1184].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1185].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1186].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1187].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1188].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1189].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1190].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1191].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1192].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1193].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1194].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1195].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1196].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1197].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1198].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1199].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1200].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1201].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1202].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1203].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1204].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1205].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1206].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1207].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1208].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1209].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1210].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1211].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1212].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1213].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1214].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1215].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1216].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1217].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1218].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1219].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1220].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1221].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1222].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1223].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1224].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1225].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1226].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1227].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1228].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1229].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1230].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1231].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1232].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1233].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1234].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1235].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1236].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1237].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1238].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1239].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1240].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1241].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1242].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1243].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1244].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1245].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1246].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1247].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1248].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1249].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1250].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1251].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1252].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1253].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1254].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1255].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1256].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1257].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1258].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1259].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1260].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1261].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1262].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1263].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1264].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1265].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1266].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1267].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1268].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1269].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1270].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1271].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1272].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1273].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1274].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1275].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1276].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1277].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1278].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1279].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1280].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1281].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1282].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1283].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1284].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1285].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1286].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1287].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1288].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1289].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1290].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1291].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1292].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1293].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1294].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1295].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1296].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1297].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1298].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1299].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1300].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1301].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1302].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1303].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1304].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1305].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1306].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1307].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1308].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1309].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1310].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1311].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1312].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1313].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1314].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1315].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1316].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1317].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1318].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1319].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1320].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1321].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1322].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1323].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1324].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1325].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1326].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1327].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1328].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1329].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1330].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1331].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1332].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1333].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1334].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1335].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1336].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1337].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1338].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1339].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1340].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1341].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1342].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1343].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1344].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1345].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1346].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1347].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1348].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1349].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1350].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1351].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1352].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1353].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1354].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1355].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1356].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1357].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1358].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1359].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1360].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1361].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1362].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1363].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1364].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1365].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1366].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1367].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1368].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1369].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1370].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1371].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1372].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1373].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1374].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1375].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1376].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1377].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1378].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1379].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1380].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1381].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1382].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1383].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1384].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1385].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1386].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1387].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1388].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1389].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1390].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1391].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1392].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1393].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1394].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1395].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1396].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1397].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1398].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1399].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1400].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1401].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1402].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1403].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1404].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1405].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1406].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1407].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1408].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1409].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1410].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1411].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1412].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1413].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1414].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1415].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1416].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1417].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1418].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1419].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1420].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1421].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1422].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1423].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1424].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1425].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1426].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1427].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1428].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1429].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1430].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1431].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1432].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1433].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1434].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1435].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1436].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1437].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1438].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1439].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1440].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1441].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1442].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1443].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1444].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1445].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1446].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1447].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1448].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1449].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1450].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1451].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1452].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1453].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1454].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1455].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1456].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1457].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1458].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1459].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1460].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1461].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1462].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1463].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1464].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1465].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1466].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1467].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1468].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1469].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1470].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1471].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1472].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1473].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1474].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1475].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1476].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1477].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1478].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1479].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1480].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1481].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1482].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1483].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1484].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1485].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1486].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1487].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1488].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1489].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1490].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1491].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1492].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1493].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1494].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1495].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1496].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1497].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1498].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1499].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1500].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1501].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1502].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1503].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1504].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1505].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1506].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1507].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1508].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1509].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1510].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1511].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1512].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1513].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1514].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1515].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1516].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1517].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1518].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1519].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1520].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1521].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1522].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1523].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1524].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1525].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1526].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1527].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1528].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1529].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1530].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1531].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1532].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1533].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1534].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1535].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1536].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1537].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1538].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1539].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1540].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1541].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1542].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1543].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1544].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1545].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1546].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1547].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1548].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1549].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1550].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1551].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1552].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1553].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1554].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1555].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1556].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1557].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1558].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1559].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1560].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1561].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1562].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1563].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1564].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1565].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1566].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1567].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1568].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1569].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1570].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1571].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1572].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1573].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1574].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1575].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1576].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1577].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1578].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1579].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1580].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1581].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1582].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1583].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1584].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1585].status** — [Tarihsel kaynak kaydı] failed
+- **v2/logos/manifest.json:$[1585].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[1586].status** — [Tarihsel kaynak kaydı] failed
+- **v2/logos/manifest.json:$[1586].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[1587].status** — [Tarihsel kaynak kaydı] failed
+- **v2/logos/manifest.json:$[1588].status** — [Tarihsel kaynak kaydı] failed
+- **v2/logos/manifest.json:$[1589].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1590].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1591].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1592].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1593].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1594].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1595].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1596].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1597].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1598].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1599].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1600].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1601].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1602].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1603].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1604].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1605].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1606].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1607].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1608].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1609].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1610].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1611].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1612].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1613].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1614].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1615].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1616].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1617].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1618].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1619].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1620].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1621].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1622].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1623].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1624].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1625].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1626].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1627].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1628].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1629].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1630].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1631].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1632].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1633].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1634].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1635].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1636].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1637].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1638].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1639].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1640].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1641].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1642].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1643].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1644].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1645].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1646].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1647].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1648].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1649].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1650].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1651].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1652].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1653].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1654].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1655].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1656].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1657].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1658].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1659].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1660].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1661].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1662].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1663].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1664].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1665].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1666].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1667].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1668].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1669].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1670].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1671].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1672].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1673].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1674].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1675].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1676].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1677].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1678].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1679].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1680].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1681].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1682].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1683].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1684].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1685].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1686].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1687].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1688].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1689].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1690].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1691].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1692].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1693].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1694].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1695].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1696].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1697].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1698].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1699].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1700].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1701].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1702].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1703].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1704].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1705].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1706].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1707].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1708].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1709].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1710].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1711].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1712].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1713].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1714].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1715].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1716].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1717].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1718].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1719].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1720].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1721].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1722].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1723].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1724].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1725].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1726].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1727].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1728].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1729].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1730].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1731].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1732].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1733].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1734].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1735].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1736].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1737].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1738].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1739].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1740].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1741].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1742].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1743].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1744].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1745].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1746].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1747].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1748].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1749].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1750].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1751].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1752].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1753].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1754].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1755].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1756].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1757].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1758].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1759].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1760].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1761].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1762].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1763].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1764].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1765].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1766].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1767].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1768].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1769].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1770].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1771].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1772].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1773].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1774].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1775].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1776].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1777].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1778].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1779].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1780].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1781].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1782].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1783].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1784].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1785].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1786].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1787].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1788].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1789].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1790].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1791].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1792].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1793].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1794].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1795].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1796].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1797].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1798].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1799].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1800].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1801].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1802].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1803].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1804].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1805].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1806].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1807].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1808].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1809].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1810].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1811].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1812].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1813].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1814].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1815].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1816].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1817].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1818].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1819].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1820].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1821].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1822].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1823].status** — [Tarihsel kaynak kaydı] failed
+- **v2/logos/manifest.json:$[1823].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 523: &lt;none&gt;
+- **v2/logos/manifest.json:$[1824].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1825].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1826].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1827].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1828].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1829].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1830].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1831].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1832].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1833].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1834].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1835].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1836].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1837].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1838].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1839].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1840].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1841].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1842].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1843].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1844].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1845].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1846].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1847].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1848].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1849].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1850].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1851].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1852].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1853].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1854].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1855].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1856].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1857].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1858].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1859].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1860].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1861].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1862].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1863].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1864].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1865].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1866].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1867].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1868].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1869].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1870].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1871].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1872].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1873].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1874].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1875].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1876].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1877].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1878].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1879].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1880].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1881].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1882].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1883].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1884].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1885].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1886].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1887].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1888].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1889].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1890].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1891].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1892].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1893].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1894].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1895].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1896].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1897].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1898].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1899].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1900].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1901].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1902].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1903].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1904].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1905].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1906].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1907].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1908].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1909].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1910].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1911].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1912].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1913].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1914].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1915].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1916].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1917].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1918].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1919].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1920].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1921].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1922].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1923].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1924].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1925].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1926].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1927].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1928].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1929].status** — [Tarihsel kaynak kaydı] failed
+- **v2/logos/manifest.json:$[1929].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 429: Too Many Requests (015d12c)
+- **v2/logos/manifest.json:$[1930].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1931].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1932].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1933].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1934].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1935].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1936].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1937].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1938].status** — [Tarihsel kaynak kaydı] failed
+- **v2/logos/manifest.json:$[1938].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[1939].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1940].status** — [Tarihsel kaynak kaydı] failed
+- **v2/logos/manifest.json:$[1940].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[1941].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1942].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1943].status** — [Tarihsel kaynak kaydı] failed
+- **v2/logos/manifest.json:$[1943].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[1944].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1945].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1946].status** — [Tarihsel kaynak kaydı] failed
+- **v2/logos/manifest.json:$[1946].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[1947].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1948].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1949].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1950].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1951].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1952].status** — [Tarihsel kaynak kaydı] failed
+- **v2/logos/manifest.json:$[1952].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[1953].status** — [Tarihsel kaynak kaydı] failed
+- **v2/logos/manifest.json:$[1953].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[1954].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1955].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1956].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1957].status** — [Tarihsel kaynak kaydı] failed
+- **v2/logos/manifest.json:$[1957].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[1958].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1959].status** — [Tarihsel kaynak kaydı] failed
+- **v2/logos/manifest.json:$[1959].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[1960].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1961].status** — [Tarihsel kaynak kaydı] failed
+- **v2/logos/manifest.json:$[1961].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[1962].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1963].status** — [Tarihsel kaynak kaydı] failed
+- **v2/logos/manifest.json:$[1963].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[1964].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1965].status** — [Tarihsel kaynak kaydı] failed
+- **v2/logos/manifest.json:$[1965].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[1966].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1967].status** — [Tarihsel kaynak kaydı] failed
+- **v2/logos/manifest.json:$[1967].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[1968].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1969].status** — [Tarihsel kaynak kaydı] failed
+- **v2/logos/manifest.json:$[1969].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[1970].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1971].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1972].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1973].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1974].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1975].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1976].status** — [Tarihsel kaynak kaydı] failed
+- **v2/logos/manifest.json:$[1976].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[1977].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1978].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1979].status** — [Tarihsel kaynak kaydı] failed
+- **v2/logos/manifest.json:$[1979].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[1980].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1981].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1982].status** — [Tarihsel kaynak kaydı] failed
+- **v2/logos/manifest.json:$[1982].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[1983].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1984].status** — [Tarihsel kaynak kaydı] failed
+- **v2/logos/manifest.json:$[1984].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[1985].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1986].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1987].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1988].status** — [Tarihsel kaynak kaydı] failed
+- **v2/logos/manifest.json:$[1988].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[1989].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1990].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1991].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1992].status** — [Tarihsel kaynak kaydı] failed
+- **v2/logos/manifest.json:$[1992].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[1993].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1994].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1995].status** — [Tarihsel kaynak kaydı] failed
+- **v2/logos/manifest.json:$[1995].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[1996].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1997].status** — [Tarihsel kaynak kaydı] failed
+- **v2/logos/manifest.json:$[1997].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[1998].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[1999].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2000].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2001].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2002].status** — [Tarihsel kaynak kaydı] failed
+- **v2/logos/manifest.json:$[2002].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[2003].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2004].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2005].status** — [Tarihsel kaynak kaydı] failed
+- **v2/logos/manifest.json:$[2005].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[2006].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2007].status** — [Tarihsel kaynak kaydı] failed
+- **v2/logos/manifest.json:$[2007].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[2008].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2009].status** — [Tarihsel kaynak kaydı] failed
+- **v2/logos/manifest.json:$[2009].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[2010].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2011].status** — [Tarihsel kaynak kaydı] failed
+- **v2/logos/manifest.json:$[2011].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[2012].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2013].status** — [Tarihsel kaynak kaydı] failed
+- **v2/logos/manifest.json:$[2013].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[2014].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2015].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2016].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2017].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2018].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2019].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2020].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2021].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2022].status** — [Tarihsel kaynak kaydı] failed
+- **v2/logos/manifest.json:$[2022].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[2023].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2024].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2025].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2026].status** — [Tarihsel kaynak kaydı] failed
+- **v2/logos/manifest.json:$[2026].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[2027].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2028].status** — [Tarihsel kaynak kaydı] failed
+- **v2/logos/manifest.json:$[2028].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[2029].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2030].status** — [Tarihsel kaynak kaydı] failed
+- **v2/logos/manifest.json:$[2030].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[2031].status** — [Tarihsel kaynak kaydı] failed
+- **v2/logos/manifest.json:$[2031].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[2032].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2033].status** — [Tarihsel kaynak kaydı] failed
+- **v2/logos/manifest.json:$[2033].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[2034].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2035].status** — [Tarihsel kaynak kaydı] failed
+- **v2/logos/manifest.json:$[2035].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[2036].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2037].status** — [Tarihsel kaynak kaydı] failed
+- **v2/logos/manifest.json:$[2037].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[2038].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2039].status** — [Tarihsel kaynak kaydı] failed
+- **v2/logos/manifest.json:$[2039].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[2040].status** — [Tarihsel kaynak kaydı] failed
+- **v2/logos/manifest.json:$[2040].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[2041].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2042].status** — [Tarihsel kaynak kaydı] failed
+- **v2/logos/manifest.json:$[2042].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[2043].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2044].status** — [Tarihsel kaynak kaydı] failed
+- **v2/logos/manifest.json:$[2044].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[2045].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2046].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2047].status** — [Tarihsel kaynak kaydı] failed
+- **v2/logos/manifest.json:$[2047].reason** — [Tarihsel kaynak kaydı] ValueError: not a supported image
+- **v2/logos/manifest.json:$[2048].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2049].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2050].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2051].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2052].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2053].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2054].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2055].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2056].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2057].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2058].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2059].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2060].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2061].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2062].status** — [Tarihsel kaynak kaydı] failed
+- **v2/logos/manifest.json:$[2062].reason** — [Tarihsel kaynak kaydı] URLError: &lt;urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: certificate has expired (_ssl.c:101
+- **v2/logos/manifest.json:$[2063].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2064].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2065].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2066].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2067].status** — [Tarihsel kaynak kaydı] failed
+- **v2/logos/manifest.json:$[2067].reason** — [Tarihsel kaynak kaydı] ValueError: not a supported image
+- **v2/logos/manifest.json:$[2068].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2069].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2070].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2071].status** — [Tarihsel kaynak kaydı] failed
+- **v2/logos/manifest.json:$[2071].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 403: Forbidden
+- **v2/logos/manifest.json:$[2072].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2073].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2074].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2075].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2076].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2077].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2078].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2079].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2080].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2081].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2082].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2083].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2084].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2085].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2086].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2087].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2088].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2089].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2090].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2091].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2092].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2093].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2094].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2095].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2096].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2097].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2098].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2099].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2100].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2101].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2102].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2103].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2104].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2105].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2106].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2107].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2108].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2109].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2110].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2111].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2112].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2113].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2114].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2115].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2116].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2117].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2118].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2119].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2120].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2121].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2122].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2123].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2124].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2125].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2126].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2127].status** — [Tarihsel kaynak kaydı] saved
+- **v2/logos/manifest.json:$[2128].status** — [Tarihsel kaynak kaydı] saved
+- **v2/reports/DEVIR_2026-11-01.md:L5** — [Tarihsel kaynak kaydı] - MADSC55_TV_IBO_CALISANLAR_TEST.m3u8, YEDEKLER, YENİLER, FAVORİLER ve cihaz favorilerini koru.
+- **v2/reports/DEVIR_2026-11-01.md:L6** — [Tarihsel kaynak kaydı] - YEDEKLER ilk iki sıra TRT 1 1440P QHD ve DHA CANLI 720P HD; silme, yer değiştirme; logolarını koru.
+- **v2/reports/DEVIR_2026-11-01.md:L7** — [Tarihsel kaynak kaydı] - Ana listeye veya YEDEKLER'e onaysız aday ekleme; PR #9'u merge etme.
+- **v2/reports/DEVIR_2026-11-01.md:L15** — [Tarihsel kaynak kaydı] - v2/real_ibo_scan.py: ağ kaynaklarını okuma, HTTP/HLS kontrolü, paralel test, 2000'lik aday çıktısı, aday envanteri; cihaz oynatma kanıtı değil.
+- **v2/reports/DEVIR_2026-11-01.md:L40** — [Tarihsel kaynak kaydı] Türkçe M3U/M3U8; IPTV-org dünya/TR/AZ/dil/bölge; Free-TV; GitHub/Gist; GitLab; Codeberg/diğer kod platformları; canlı TV web siteleri; resmî kanal siteleri; YouTube TR/AZ gerçek canlı; Avrupa/diaspora; Güneş TV, Rec TV, Gopik TV; TURKTV, Dearbulut, Onur Eroz; Scribd, SlideShare, Internet Archive kamusal referansları.
+- **v2/reports/DEVIR_2026-11-01.md:L48** — [Tarihsel kaynak kaydı] 6. Aynı kanalın farklı çalışan URL'lerini koruyan tekilleştirme.
+- **v2/reports/DEVIR_2026-11-01.md:L51** — [Tarihsel kaynak kaydı] 9. Ana listede olmayan gerçek adaylardan 2000'lik İBO paketleri; YEDEKLER'e onaysız aktarmama.
+- **v2/reports/DEVIR_2026-11-01.md:L54** — [Tarihsel kaynak kaydı] - YEDEKLER logo eksikleri: eski denetim 33 kayıtta logo eksikliği raporlamış; güncel yeniden kontrol şart.
+- **v2/reports/DEVIR_2026-11-01.md:L56** — [Tarihsel kaynak kaydı] - Kaynak keşfi tamamlanmadan yeni kanalları ana listeye karıştırma.
+
 <!-- C-END -->
 
 ## D) Açık Kalan GitHub Issue'ları ve Doğrulanmamış Maddeler
@@ -2149,6 +4620,17 @@ Tarama kapsamı: main ağacındaki tüm .md/.txt/.json/.yml/.yaml dosyaları, a�
 - **v2/DEVAM_NOTU_2026-10-29_LOGOLAR.md:L26** — [Tarihsel kaynak kaydı] - YouTube video/kanal sayfası URL'sini doğrudan oynatılabilir M3U akışı sanma; IBO Player ile uyumlu, izinli, kararlı canlı yayın adresi doğrulanmadan playlist'e ekleme.
 - **v2/DEVAM_NOTU_2026-10-29_LOGOLAR.md:L28** — [Tarihsel kaynak kaydı] - Kanal ve kategori sayısını koruyarak, yanlış taşımaları geri al; YEDEKLER'deki Türk kanallarını güvenilir kaynakla tespit et; belirsizleri raporla. Test yeşil ve gerçek playlist doğrulanmadan tamamlandı deme.
 
+- **v2/SCAN_61_ACTION_REPORT.md:L21** — [Tarihsel kaynak kaydı] 4. Yayıncı kimliği, haklar, EPG/logo doğruluğu ve uzun süreli stabilite doğrulanmadan bulunan URL'leri canlı IBO'ya taşımama.
+- **v2/WORK_PLAN.md:L34** — [Tarihsel kaynak kaydı] - Birleşik tarama run 40605265927 kontrol edildi: kısa decoder doğrulaması aşamasında çalışıyordu; tamamlandı sonucu henüz doğrulanmadı.
+- **v2/WORK_PLAN.md:L82** — [Tarihsel kaynak kaydı] **28 Ekim son kontrol:** 40665346855 batched playback **failure**; 40665323600 **success**; 40665377633 **in_progress**; 40665323555 birleşik **in_progress**; 40665873146 birleşik **pending**. Bunların sonuçlarını yeniden kontrol et, başarısız işin logunu inceleyip düzelt; başarı varsayma.
+- **v2/WORK_PLAN.md:L95** — [Tarihsel kaynak kaydı] - Run `40665873146` son kontrolde **pending**; run `40665323555` **in_progress**. Bunlar tamamlandı veya başarılı diye sunulamaz.
+- **v2/WORK_PLAN.md:L108** — [Tarihsel kaynak kaydı] - Son kontrol: birleşik run `40666379703` pending; `40665873146` pending; `40665323555` in_progress. Başarı teyidi yok.
+- **v2/WORK_PLAN.md:L123** — [Tarihsel kaynak kaydı] - Kalan: ortak kaynak snapshot, eksik kaynak tekrar taraması, tüm adaylara eksiksiz kapsam, tek nihai kanal bazlı approved/rejected/pending_review sınıflaması ve katı başarı koşulu.
+- **v2/WORK_PLAN.md:L131** — [Tarihsel kaynak kaydı] - **Öncelik 4:** `approved/rejected/pending_review` tek final rapor ve eksik iş varsa başarısız job; ara rapor yayınlamama.
+- **v2/logos/manifest.json:$[1587].reason** — [Tarihsel kaynak kaydı] URLError: &lt;urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certific
+- **v2/logos/manifest.json:$[1588].reason** — [Tarihsel kaynak kaydı] URLError: &lt;urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certific
+- **v2/reports/DEVIR_2026-11-01.md:L18** — [Tarihsel kaynak kaydı] - .github/workflows/v2-ordered-preflight.yml: derleme, playlist koruma, keşif regresyon ve güvenlik test zinciri; son CI yeşil durumu doğrulanmadı.
+
 <!-- D-END -->
 
 ### Dosya tarama fihristi ve kapsam denetimi
@@ -2219,4 +4701,20 @@ Her satırda snapshot/PR referansı, kaynak, okuma sonucu ve çıkarılan kayıt
 - main `reports/YEDEKLER_KURTARMA_OZETI.md` — OK; 17744/17744 bayt, 31 not/durum/yapılandırma kaydı; blob `712f44fe19c0ac5555f706f87913a4e1fce32adf`.
 - main `v2/DEVAM_NOTU_2026-10-29_LOGOLAR.md` — OK; 2808/2808 bayt, 25 not/durum/yapılandırma kaydı; blob `cc9a95270f9f02d914bbb916af5a37e420c38c08`.
 - main `v2/MAIN_PRODUCTION_SAFETY_LOCK.md` — OK; 1281/1281 bayt, 18 not/durum/yapılandırma kaydı; blob `0c62d00539e87b6c7869857e6e25206a2a18b911`.
+- main `v2/OPERATIONS.md` — OK; 1935/1935 bayt, 16 not/durum kaydı; blob `e7259b862becd728b60d662cbf44f47009ce45d8`.
+- main `v2/README.md` — OK; 865/865 bayt, 8 not/durum kaydı; blob `a601b65f69bbb787a1014e2a7bb2e517508e7eaa`.
+- main `v2/SCAN_61_ACTION_REPORT.md` — OK; 2327/2327 bayt, 21 not/durum kaydı; blob `da8bbbfb37deff7cdbacf3b0abb0592bb147e838`.
+- main `v2/WORK_PLAN.md` — OK; 18992/18992 bayt, 113 not/durum kaydı; blob `bff93483c39110d5952e08396e77b57865fb30fa`.
+- main `v2/archives/test001_backup_metadata_report.json` — OK; 916/916 bayt, 0 not/durum kaydı; blob `aae5c667aff06bd3a9a7ad41fcf5ac3f6066ba7c`.
+- main `v2/archives/test001_quarantined_48.json` — OK; 7112/7112 bayt, 2 not/durum kaydı; blob `b4c4cf8290f5053eeab9e340e94a4ff981c79f25`.
+- main `v2/arsiv/eski_sistem_7650_test_kuyrugu_README.md` — OK; 973/973 bayt, 6 not/durum kaydı; blob `ff9cff9b197aee29cf2a6c4c6a56a516390c80dc`.
+- main `v2/arsiv/eski_sistem_aktarim_raporu_2026-11-16.json` — OK; 895/895 bayt, 2 not/durum kaydı; blob `80ba968fe582181134bbbdecadd2a8c1e1776f86`.
+- main `v2/config/sources.json` — OK; 5672/5672 bayt, 35 not/durum kaydı; blob `cabaa12e0467b89ea2094e28839b82aa99c38051`.
+- main `v2/docs/checkpoint-bounded-evidence-runbook.md` — OK; 2382/2382 bayt, 25 not/durum kaydı; blob `5bb609bf5447694cda62c4f4de69fc8209bc351a`.
+- main `v2/epg-report.json` — OK; 836/836 bayt, 5 not/durum kaydı; blob `0dd9f7e4fd66e43787ac39644b6e9dc685a4569a`.
+- main `v2/epg_sources.json` — OK; 355/355 bayt, 0 not/durum kaydı; blob `861513463e547f7508cc72114c873e6441b294c4`.
+- main `v2/ibo_authorized_change.json` — OK; 541/541 bayt, 1 not/durum kaydı; blob `c1ac2463cd76dfaa892bfea3af9687028a6773d3`.
+- main `v2/logos/manifest.json` — OK; 615351/615351 bayt, 2190 not/durum kaydı; blob `b926b027558e1cf6dad03c8b2e44b94210ac99c7`.
+- main `v2/playlists/parts/manifest.json` — OK; 4195/4195 bayt, 0 not/durum kaydı; blob `af677c055714da785998083fa84b12ca70a32283`.
+- main `v2/reports/DEVIR_2026-11-01.md` — OK; 4772/4772 bayt, 53 not/durum kaydı; blob `c7dc638ec4b4dab5c38d0dfaaf06a8e557998055`.
 <!-- COVERAGE-END -->
