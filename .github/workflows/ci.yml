@@ -1070,3 +1070,90 @@ jobs:
           retention-days: 90
           if-no-files-found: error
 
+
+  import-reviewed-decisions:
+    name: Import November 25 and 26 decision history
+    if: github.event_name == 'push' && github.repository == 'Madsc55/MADSC55-TV-V2' && github.ref == 'refs/heads/main' && github.actor == 'Madsc55' && startsWith(github.event.head_commit.message, 'Import reviewed decisions [decision-import-20261127]')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Prepare pinned input bytes
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          umask 077
+          dir="$RUNNER_TEMP/decision-inputs"
+          mkdir "$dir"
+          cd "$dir"
+          gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/14485014372/zip" > original.zip
+          gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/15007854439/zip" > nov25.zip
+          gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/15147217790/zip" > nov26.zip
+          sha256sum --check <<'DIGESTS'
+          af923674e8408f73a291bf3407169cbc189ce8796dbb594736811f56938271c4  original.zip
+          b07f07794ddff572a6eb6178bdbdab17c9d84152ea41c68214d430db99ca1161  nov25.zip
+          42c8a2481fda6989bc8a351ae370f6af11a52207f7e64a9c3c3ca29e7a22eab5  nov26.zip
+          DIGESTS
+          unzip -p original.zip ibo-scan-progress.enc > before.enc
+          unzip -p nov25.zip fresh-summary.json > 2026-11-25.json
+          unzip -p nov26.zip fresh-summary.json > 2026-11-26.json
+          git -C "$GITHUB_WORKSPACE" show 50c4c03f2006884d5cf7b0aefbc5b05e73841c74:MADSC55_TV_IBO_CALISANLAR_TEST.m3u8 > playlist
+          python -m pip install 'cryptography>=42,<47'
+      - name: Authenticate baseline, attach exact observations and check replay
+        env:
+          V2_ARCHIVE_PASSPHRASE: ${{ secrets.V2_ARCHIVE_PASSPHRASE }}
+        run: |
+          set -euo pipefail
+          umask 077
+          dir="$RUNNER_TEMP/decision-inputs"
+          PYTHONPATH=v2:. python v2/import_fresh_decisions.py build --source "$dir/before.enc" --reports "$dir" --playlist "$dir/playlist" --bundle "$RUNNER_TEMP/decision-bundle"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: authenticated-decisions-20261127
+          path: |
+            ${{ runner.temp }}/decision-bundle/before.enc
+            ${{ runner.temp }}/decision-bundle/ibo-scan-progress.enc
+            ${{ runner.temp }}/decision-bundle/fresh-observations.zip.enc
+            ${{ runner.temp }}/decision-bundle/receipt.json
+          retention-days: 90
+          if-no-files-found: error
+          compression-level: 0
+
+  restore-reviewed-decisions:
+    name: Restore decision history on an independent runner
+    needs: import-reviewed-decisions
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/download-artifact@v4
+        with:
+          name: authenticated-decisions-20261127
+          path: ${{ runner.temp }}/restored
+      - run: |
+          set -euo pipefail
+          git show 50c4c03f2006884d5cf7b0aefbc5b05e73841c74:MADSC55_TV_IBO_CALISANLAR_TEST.m3u8 > "$RUNNER_TEMP/decision-playlist"
+          python -m pip install 'cryptography>=42,<47'
+      - name: Verify every restored row and both report digests
+        env:
+          V2_ARCHIVE_PASSPHRASE: ${{ secrets.V2_ARCHIVE_PASSPHRASE }}
+        run: PYTHONPATH=v2:. python v2/import_fresh_decisions.py verify --playlist "$RUNNER_TEMP/decision-playlist" --bundle "$RUNNER_TEMP/restored"
