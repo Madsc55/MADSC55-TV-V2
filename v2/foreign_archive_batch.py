@@ -39,8 +39,7 @@ def batch(raw, number, path, probe, resume=None, expected=EXPECTED):
         if identity(result)!=identity(row) or len(result.get("rounds",[]))!=3 or "url" in result:
             raise ValueError("Invalid probe result")
         # No identity or language evidence is fabricated from metadata.
-        result.update(language_review={"status":"NOT_INTEGRATED","asr":None,"ocr":None,"webvtt":None},
-                      reorder_eligible=False)
+        result.update(language_review=[e["language_review"] for rnd in result["rounds"] for e in rnd.get("evidence",[]) if "language_review" in e], reorder_eligible=False)
         doc["results"].append(result)
         write_json_atomic(path,doc)
     doc["complete"]=True
@@ -52,15 +51,19 @@ def main():
     p.add_argument("--batch",type=int,required=True)
     p.add_argument("--output",type=Path,required=True)
     p.add_argument("--resume",type=Path)
-    p.add_argument("--history",type=Path,action="append",required=True)
+    p.add_argument("--history",type=Path,action="append",default=[])
     a=p.parse_args()
     raw=PLAYLIST.read_bytes()
     exe=get_quality_decoder()
     if not exe:
         raise RuntimeError("System FFmpeg required")
     history=history_index(a.history)
+    from faster_whisper import WhisperModel
+    from foreign_language_sample import sample
+    model=WhisperModel("tiny",device="cpu",compute_type="int8",local_files_only=True)
+    language_probe=lambda data,fmt:sample(data,fmt,exe,model)
     def probe(row):
-        result=review(row,exe,history)
+        result=review(row,exe,history,language_probe)
         # Historical archive evidence may not cover this URL. Do not authorize red.
         result["red_eligible"]=False
         if result["classification"]=="CONFIRMED_UNAVAILABLE":
