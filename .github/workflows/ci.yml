@@ -930,7 +930,8 @@ jobs:
           retention-days: 30
 
   foreign-archive-plan:
-    if: github.ref == 'refs/heads/main' && ((github.event_name == 'push' && contains(github.event.head_commit.message, '[foreign-archive-deep]')) || github.event_name == 'workflow_dispatch')
+    name: Foreign archive live checkpoint plan
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && (contains(github.event.head_commit.message, '[foreign-archive-deep]') || contains(github.event.head_commit.message, '[foreign-live-20261127]'))
     runs-on: ubuntu-24.04
     permissions:
       contents: read
@@ -953,9 +954,12 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           mkdir -p /tmp/foreign-state
+          printf 'foreign checkpoint bundle\n' > /tmp/foreign-state/README.txt
           revision=$(sha256sum MADSC55_TV_IBO_CALISANLAR_TEST.m3u8 | cut -d' ' -f1)
-          gh api --paginate "repos/$GITHUB_REPOSITORY/actions/artifacts?per_page=100" --jq '.artifacts[] | select(.expired == false and .workflow_run.head_branch == "main") | [.name,.id] | @tsv' > /tmp/foreign-artifacts.tsv
-          while IFS=$'\t' read -r name id; do
+          gh api --paginate "repos/$GITHUB_REPOSITORY/actions/workflows/ci.yml/runs?branch=main&event=push&per_page=100" --jq '.workflow_runs[] | .id' > /tmp/foreign-trusted-runs
+          gh api --paginate "repos/$GITHUB_REPOSITORY/actions/artifacts?per_page=100" --jq '.artifacts[] | select(.expired == false and .workflow_run.head_branch == "main") | [.name,.id,.workflow_run.id] | @tsv' > /tmp/foreign-artifacts.tsv
+          while IFS=$'\t' read -r name id run; do
+            grep -Fxq -- "$run" /tmp/foreign-trusted-runs || continue
             if [[ "$name" =~ ^foreign-${revision}-([0-9]+)-[0-9]+-[0-9]+$ ]]; then
               n="${BASH_REMATCH[1]}"
               [[ "$n" -lt 638 ]] || continue
@@ -973,10 +977,11 @@ jobs:
           name: foreign-plan-${{ github.run_id }}
           path: /tmp/foreign-state/
           retention-days: 90
-          if-no-files-found: ignore
+          if-no-files-found: error
   foreign-archive-audit:
+    name: Foreign archive live AV batch ${{ matrix.batch }}
     needs: foreign-archive-plan
-    if: needs.foreign-archive-plan.outputs.matrix != '[]'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && needs.foreign-archive-plan.result == 'success' && needs.foreign-archive-plan.outputs.matrix != '' && needs.foreign-archive-plan.outputs.matrix != '[]'
     runs-on: ubuntu-24.04
     permissions:
       contents: read
@@ -1003,10 +1008,13 @@ jobs:
           python -m pip install faster-whisper==1.1.1
           python -c "from faster_whisper import WhisperModel; WhisperModel('tiny',device='cpu',compute_type='int8')"
       - uses: actions/download-artifact@v4
-        continue-on-error: true
         with:
           name: foreign-plan-${{ github.run_id }}
           path: /tmp/foreign-state
+      - name: Verify live decoder safety fixtures
+        run: |
+          PYTHONPATH=v2:. python -m unittest -v v2.test_shared_url_safe_probe v2.test_full_playlist_av_decode v2.test_nonforeign_deep_av v2.test_foreign_archive_batch
+          PYTHONPATH=v2:. python v2/yedekler_quality_review.py --self-test
       - name: Run bounded read-only batch
         env:
           BATCH: ${{ matrix.batch }}
