@@ -4,9 +4,41 @@
 
 Durum sözlüğü: **Güncel** = halen geçerli koruma veya açık kayıt; **Tarihsel** = kaynak tarihindeki not/iş, son durum ayrıca doğrulanmalı; **Arşiv/kapsam dışı** = önceki sahibi onaylı kapanış; **Offline kabul** = #794 kapsamı, gerçek cihaz/yayın kabulü değildir; **Bekliyor** = kaynakta açık veya doğrulanmamış, otomatik uygulama yok.
 
+**Kalıcı kullanım kuralı:** Yeni kullanıcı notu veya görev kaydedildiğinde özgün kaynak korunarak bu merkezde ayrı kaynak referansı, tarih, kapsam, durum ve kanıt bağlantısı ile yeni kayıt açılır. Bir görev tamamlandığında veya iptal edildiğinde silinmez, durum/kanıt güncellenir. Bu indeks kendi başına eski PR'ların uygulanmasına veya görevlerin yeniden açılmasına izin vermez.
+
 Tarama kapsamı: main ağacındaki tüm .md/.txt/.json/.yml/.yaml dosyaları, açık Issue ve açık PR'lar; açık PR'ların değişen not dosyaları ayrıca. Dosya bazlı tarama fihristi en altta. Makine verilerindeki kanal başına URL/logo/pozisyon satırları ayrı kullanıcı görevi değildir; görev, not, açıklama, durum ve kural alanları indekslenir. Sadece aynı kaynak içindeki yapı satırları (örneğin JSON parantezleri) ayıklanır.
 
 ## A) Kullanıcı Tarafından Kaydettirilmiş Özel Notlar ve İstekler
+
+### Güncel uygulama kuralları ve ayrı kullanıcı kararları
+
+- A01 — Tek kanonik ana playlist; yeni playlist veya YEDEKLER_TEST yok. Kaynak: ANA_PLAYLIST_KORUMA_KURALI.md; WORK_ORDER_2026-11-21.md.
+- A02 — Açık ve somut kullanıcı talimatı olmadan ana playlist yazımı yok. Kaynak: ANA_PLAYLIST_KORUMA_KURALI.md.
+- A03 — Korunan kategoriler, favoriler, sıralar, URL, kanal kimliği, logo ve EPG korunur. Kaynak: ANA_PLAYLIST_KORUMA_KURALI.md.
+- A04 — 48 tarihsel dışlanan kanal geri eklenmez. Kaynak: v2/tasks/WORK_ORDER_2026-11-21.md; v2/archives/test001_quarantined_48.json.
+- A05 — İlk 1003 koruması yeniden uygulanmaz. Kaynak: v2/tasks/WORK_ORDER_2026-11-21.md; PR #651.
+- A06 — 685 SECURITY HOLD güvenli kabul ve açık yetki olmadan kaldırılmaz. Kaynak: v2/tasks/KAPANIS_SIRASI_20261121.md; PR #651.
+- A07 — İBO Player kullanıcı testi sistem taramasından ayrı. Kaynak: v2/tasks/WORK_ORDER_2026-11-21.md.
+- A08 — 2500'lü manuel paket döngüsü, taşıma sonrası kaynak gruptan düşme ve geri alma. Yeni otomatik doldurma izni değildir. Kaynak: v2/yedekler_batch/README.md; PR #651.
+- A09 — Aynı URL + aynı ad yalnız mükerrer adayı; aynı URL farklı ad şüpheli olarak korunur. Kaynak: açık PR #669 (DEVAM_NOTU.md L1705).
+- A10 — Aynı ad farklı URL korunur. Kaynak: PR #669.
+- A11 — Silme öncesi kayıpsız geri yükleme manifesti ve geçmiş kanıtları. Kaynak: PR #669 L1706–1707.
+- A12 — PR #667'deki 806 mükerrer silme önerisi MERGE EDİLMEYECEK; güncel envantere uygulanmaz. Kaynak: PR #669 L1704.
+- A13 — ANA ARŞİV alfabetik sıralaması kullanıcı teyidiyle yeniden açılmaz. Kaynak: PR #664.
+- A14 — ANA ARŞİV'i YEDEKLER altına taşıma kararı iptal; #660–663 uygulanmaz. Kaynak: PR #664.
+- A15 — 112–486 ve diğer geçmiş 59–181 taşıma emirleri tekrar uygulanmaz. Kaynak: v2/tasks/WORK_ORDER_2026-11-21.md.
+- A16 — Rastgele logo değil, gerçek/doğrulanmış yayıncı logosu. Kaynak: PR #651/#655; v2/reports/logo_inventory_20261121.md.
+- A17 — EPG yalnız kanıtlı kanal/program kimliği. Kaynak: PR #651; v2/reports/task19-current-xmltv-20261119.json.
+- A18 — İsim ve ülke tek başına Türkçe yayın veya AV kanıtı değildir. Kaynak: WORK_ORDER; PR #650/#651.
+- A19 — HTTP 200 gerçek AV değildir; geçici erişim engeli, 403/429/503/timeout kesin ölü sayılmaz. Kaynak: PR #650/#651/#664.
+- A20 — Kullanıcı manuel GitHub tıklaması istemiyor; testler PASS ise yetkili PR işlemi, güvenlik bypass yok. Kaynak: PR #669 L1710.
+- A21 — Gerçek yayın ve cihaz kabulü en son, yeni canlı tarama bu görevde yok. Kaynak: PR #651; son offline final raporu.
+- A22 — Tüm notlarda commit/run/kanıt ve tarih korunur, eski kapanış kararları yeniden açılmaz. Kaynak: DEVAM_NOTU.md; PR #655/#664.
+- A23 — Son #794 offline teslim kapsamı tamamlandı; gerçek yayın/varlık/cihaz/harici üretim restore iddiası değil. Kaynak: reports/ANA_SISTEM_10_MADDE_FINAL_KABUL_20261127.md.
+
+Aşağıdaki kaynak indeksinde kuralların ve tarihsel notların ayrı kayıtları korunur. Öncelik sırası kaynak tarihine aittir; yeni talimat değildir.
+
+### Ayrıntılı kaynak kayıtları
 
 - **.github/workflows/build_playlist_from_parts.yml:L66** — [Tarihsel yapılandırma kaydı] # Owner command remains on one isolated branch, never staging through main.
 - **.github/workflows/build_playlist_from_parts.yml:L79** — [Tarihsel yapılandırma kaydı] - name: Allow only a new owner command against current main
@@ -446,6 +478,49 @@ Tarama kapsamı: main ağacındaki tüm .md/.txt/.json/.yml/.yaml dosyaları, a�
 <!-- A-END -->
 
 ## B) Yarım Kalmış / Beklemeye Alınmış Teknik ve Kurtarma İşleri
+
+### Teknik takip haritası — sonradan tamamlananlar ve açık kanıtlar ayrı
+
+- B01 — HTTP Health Report #2 eski bekleyen sonucu ve artifact incelemesi (#637): PR #651. Tarihsel durum; bu indeks çalışmasında run sonucu ayrıca doğrulanmadı.
+- B02 — Master Engine, süre sınırı ve hata izleme: #23/#24/#25/#26 tamamlanan kabul; eski çalışmaları tekrarlama. Kaynak: state.json.
+- B03 — GitHub/Gist kaynak keşfi: mevcut altyapı; tüm yeni adayların gerçek medya kabulü ayrı. Kaynak: v2/WORK_PLAN.md.
+- B04 — GitLab canlı sağlayıcı kabulü: #784 429 koruması offline tamamlandı; canlı uçtan uca doğrulama ayrı. Kaynak: final rapor; PR #664.
+- B05 — Codeberg canlı sağlayıcı kabulü: aynı ayrım. Kaynak: PR #651/#664, README-discovery-34-live-probe.md.
+- B06 — YouTube resmî canlı yayın ve sürdürülebilir yetkili adres çözümü; geçici URL kalıcı kaynak değil. Kaynak: v2/WORK_PLAN.md.
+- B07 — Resmî TV yayıncı sayfalarının kaynak/kimlik/AV kabulü. Kaynak: state.json #9/#11; PR #651.
+- B08 — Scribd kaynak incelemesi (geçerli M3U bulunmadığı tarihsel kayıt). Kaynak: state.json #8.
+- B09 — SlideShare kaynak incelemesi (aynı ayrı kaynak sonucu). Kaynak: state.json #8.
+- B10 — Internet Archive kaynak provenansı ve AV ayrımı. Kaynak: state.json #8.
+- B11 — Dünya/Türkiye/Azerbaycan kaynak keşfi ve tüm adayların bütçeli, devam edilebilir paket doğrulaması. Kaynak: PR #650; WORK_PLAN.
+- B12 — 35.327 ve 18.074 tarihsel küme birleşimi 36.470, 7.650/1.110/4.955 mutabakatı: #793 offline kabul tamamlandı. Bütün geçmiş taramaların toplamı değildir.
+- B13 — #3 tarihsel 46 oynatma kanıtı eksik kaydı; arşiv/kapsam kararı korunur. Kaynak: state.json #3.
+- B14 — #4 tarihsel 1.866 inceleme grubu ve 19 eksik hash; ayrı geçmiş kanıtı. Kaynak: state.json #4.
+- B15 — #5 26 eşleşmemiş EXTINF incelemesindeki çözülemeyen adresler; kapsam dışı tarihsel kurtarma. Kaynak: state.json #5.
+- B16 — #6 2.643 tarihsel kurtarma hedefi, idari kapsam kapanışı. Kaynak: state.json #6 (GitHub Issue #6 ayrı).
+- B17 — #15 4.955/4.955 adres hash mutabakatı tamamlandı; yayıncı sahipliği şartı kaldırıldı. Kaynak: state.json #15.
+- B18 — #17 20.148 kuyruk = 3.781 eşleşen + 16.367 tarihsel doğrulanmamış kimlik; fark sıfır, tekil gerçek yayın kabulü değil, tarihsel kapsam arşivli. Kaynak: archive/unverified_historical_ids.json.
+- B19 — #18 gerçek AV kabulü, tarihsel kaynak ve yeni kanıtı ayrı tut. Kaynak: state.json #18.
+- B20 — #20 HTTP 404 (8) ve 503 (6) tarihsel gözlemler/15 kimlik/17 deneme; yeniden işleme yok, kurtarma ayrı. Kaynak: v2/reports/task17-18-20-bounded-retry-20261118.json.
+- B21 — 28.844 checkpoint'te 15 import, ikinci uygulama 0: kanıtlı. Sonraki tüm kullanıcı kararlarıyla yeni sonuçların gerçek entegrasyonu ayrı. Kaynak: state.json; final rapor.
+- B22 — Kanal bazında kalıcı kaynak/kimlik/URL/son test zamanı/AV ve dil/sonuç/geri alma kaydı. Kaynak: PR #669 ve #650.
+- B23 — Tekrar keşfedilen URL'nin geçmiş kimlikle eşleştirilmesi ve kayıpsız yeniden test. Kaynak: PR #669.
+- B24 — FFmpeg/HLS/DASH alt istekleri, DNS pinleme, OS düzeyi egress ve gerçek yayıncı örneği kabulü; 685 kilitli. Kaynak: stage4-pinned-dns-capture-20261121.md; PR #651.
+- B25 — 685 retry planı artifact 14702596056 mevcut; yeniden üretme. Canlı retry yetki ve güvenlik kabulüne bağlı. Kaynak: state.json stage6; PR #650.
+- B26 — Gerçek konuşma ASR uygulaması; #793 offline tamamlandı, toplu canlı kabul ayrı.
+- B27 — Gerçek ekran OCR uygulaması; #793 offline tamamlandı, toplu canlı kabul ayrı.
+- B28 — Gerçek zamanlı WebVTT/altyazı uygulaması; #793 offline tamamlandı, toplu canlı kabul ayrı.
+- B29 — Yabancı adlı/yurt dışı/Türkî yayın kimliği; #793 offline tamamlandı, bağımsız gerçek kimlik incelemesi ayrı.
+- B30 — Ölçülmüş çözünürlük/bitrate/bağımsız kimlik kalite seçimi #784/#785/#794 offline tamamlandı; gerçek aday kazananı atanmadı.
+- B31 — 303 tarihsel EPG açığı ve program/ID incelemesi: kapsam arşivli, gerçek atama tamamlanmış değil. Kaynak: state.json #19; PR #664.
+- B32 — Tarihsel 4.745 logosuz envanter, 330 aday, 6 doğrulanmamış öneri; eski snapshot sayıları. Kaynak: logo_inventory_20261121.md; PR #651.
+- B33 — YEDEKLER 697 logosuz, 1187 boş TVG-ID, 3 logo adayı, 5 tarihsel EPG-ID eşleşmesi: #792 rapor, gerçek atama sıfır; yeni ölçüm/atama yetkiye bağlı.
+- B34 — Google Drive tarihsel Stage 4 gerçek bağımsız restore PASS; özel Türk Fernet kasasıyla aynı değil. Kaynak: state.json #13/#24; PR #651.
+- B35 — Ayrı özel kasa harici backup/restore şartı sonradan kaldırıldı; #786 AES-GCM sentetik restore PASS, harici üretim restore kanıtı değil. Kaynak: final rapor, DEVAM_NOTU.
+- B36 — 1000/2000 ve 4301 paketleri: bütünlük doğrulandı; gerçek üretim/cihaz kabulü arşivli/ayrı. Kaynak: IBO_REAL_BATCH_INTEGRITY_2026-11-13.md; #28–33.
+- B37 — Açık tarihsel PR ve CI envanteri: önce güncel HEAD ve kanıtla karşılaştır, eski veya geçersiz PR'ı birleştirme. Kaynak: KAPANIS_SIRASI; #641/#760.
+- B38 — #794 10 maddelik offline final kabulü tamamlandı; yeni gerçek üretim akışı ve cihaz kabulü aynı şey değildir. Kaynak: final rapor.
+
+### Ayrıntılı kaynak kayıtları
 
 - **.github/workflows/alphabetize-yeni-turk.yml:L1** — [Tarihsel yapılandırma kaydı] name: Alphabetize YENI TURK (production writer suspended)
 - **.github/workflows/alphabetize-yeni-turk.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
@@ -2616,6 +2691,29 @@ Tarama kapsamı: main ağacındaki tüm .md/.txt/.json/.yml/.yaml dosyaları, a�
 
 ## C) Kanal Testi, Taşıma ve Kategori Düzenleme İşleri
 
+### Kanal işlemleri — tarihsel emirler ve kullanıcı kabulü
+
+- C01 — Pinned main manifesti: 18.330 kayıt; 1.562 YEDEKLER, 2 ANA ARŞİV, 1 TÜRK ARŞİVİ, 15.940 YABANCI ARŞİVİ, 825 diğer. Kaynak: v2/playlists/parts/manifest.json. Tarihsel 18.912/18.337 sayıları güncel sayı değildir.
+- C02 — Özgün 18.074 arşiv ve eski 2500 paket döngüsü; 21 Kasım 1792+424+284=2500 tarihsel kabul. Kaynak: ANA_PLAYLIST_ARSIV_BUTUNLUK_20261121.md.
+- C03 — Geçmiş 112–486 ve ek taşıma emirlerinin önce/sonra URL-hash kimlik mutabakatı o raporda açık; tekrar taşıma yapılmaz. Kaynak: aynı rapor.
+- C04 — Eski 7650 aday paketi ve 1110 küçük listenin URL üyeliği doğrulandı; gerçek medya kabulü aynı değil. Kaynak: v2/arsiv/eski_sistem_7650_test_kuyrugu_README.md; #793.
+- C05 — PR #650 tarihsel bütün kategori ve aday taraması hedefi; daha sonra #791 yabancı arşiv dışı dar kapsam test edildi. Yeni tam tarama yok.
+- C06 — 26 Kasım 32/32 paket tamamlandı; run 45799091422, final artifact 15147217790. Kaynak: final rapor; #792 rapor 27/32 anlık kesittir.
+- C07 — 180 sn açılış toleransı, 60 sn AV, üç tur, 120 sn aralık, 15 sn geç açılış ayrımı. Kaynak: #789; final rapor. Yerel decoder ölçümü, cihaz ölçümü değildir.
+- C08 — 25 Kasım YEDEKLER 1562 kayıt eski ❌ işaret emri: iki medya da yoksa işaret, tek medya ayrı. Kaynak: v2/yedekler_red_av_request.md. Tarihsel emir, şimdi uygulanmaz.
+- C09 — Yanlış kırmızı işaret sonrası 1102 dahil 1562 yeni salt-okunur kontrol, otomatik işaret yok; erişim hatası belirsiz. Kaynak: v2/yedekler_av_recheck_20261125.md. Sonraki kural eski işaret emrinin tekrarına izin vermez.
+- C10 — Çalışan/çalışmayan/belirsiz, tek medya, kalite sorunu, dil ve kimlik ayrı. Kaynak: ffmpeg_av_gap_classification_20261121.md; #792.
+- C11 — #787 562 kayıt vitrin→YEDEKLER taşıması ve #788 tam geri alma: tamamlanmış tarihsel işlem, yeniden uygulanmaz. Kaynak: green-vitrine-revert-20261125.json.
+- C12 — PR #721 75 ANA ARŞİV kaydını YEDEKLER'e taşıma; açık eski PR, uygulanmadı.
+- C13 — PR #728 ANA ARŞİV 18 ek platform adayı; açık eski PR, uygulanmadı.
+- C14 — PR #755 YABANCI ARŞİVİ 263 aday sıralaması; açık eski PR, uygulanmadı.
+- C15 — PR #757 99 ek Türkî aday sıralaması; açık eski PR, uygulanmadı.
+- C16 — PR #767 9 ek aday sıralaması; açık eski PR, uygulanmadı.
+- C17 — PR #768 eski ayrı YABANCI_ARSIV.m3u8 içinde 47 aday; açık eski PR, tek playlist kuralı nedeniyle otomatik uygulanmaz.
+- C18 — İBO Player cihazında kullanıcı testleri ve onaylı Türk/Yabancı arşiv taşıması ayrı. Kaynak: WORK_ORDER; #693.
+
+### Ayrıntılı kaynak kayıtları
+
 - **.github/workflows/alphabetize-yeni-turk.yml:L14** — [Tarihsel yapılandırma kaydı] - name: Verify protected IBO playlist without changing it
 - **.github/workflows/backups-logo-audit.yml:L1** — [Tarihsel yapılandırma kaydı] name: Alphabetize backups and audit logos (production writer suspended)
 - **.github/workflows/backups-logo-audit.yml:L14** — [Tarihsel yapılandırma kaydı] - name: Verify protected IBO playlist without changing it
@@ -4062,6 +4160,31 @@ The last 30x er
 
 ## D) Açık Kalan GitHub Issue'ları ve Doğrulanmamış Maddeler
 
+### Açık kayıtların hızlı takip listesi
+
+- D01 — Issue #693: güncel ana URL'nin yeniden yüklendiğini ve cache/filtre olmadığını kontrol et.
+- D02 — Issue #693: görünmeyen tam kanal kimliklerini ve gerçek içe aktarma raporunu karşılaştır.
+- D03 — Issue #693: yalnız kanıtlı parser/kimlik sorunu varsa URL ve kategori sırası korunan hedefli PR.
+- D04 — Issue #693: gerçek kayıt sayısını görünür cihaz sayısına indirme; 101 fark ile 101 ortak URL grubunu eşitleme.
+- D05 — PR #641: eski 654 silme ve CI önerisi; ana playlist değişikliği içerir, otomatik merge yok.
+- D06 — PR #642: eski DEVAM_NOTU'nu tek satıra indirme önerisi; teknik kabul değil, tarihsel kayıt silinmez.
+- D07 — PR #650: tüm envanter/aday sağlık planı; bu indeks içinde kaynak kayıtları korunur.
+- D08 — PR #651: 15 ekran görüntüsündeki teknik kabul planı; ayrı kaynak kayıtları korunur.
+- D09 — PR #655: 12 maddelik ve dört aşamalı eski kabul planı; ayrı kaynak kayıtları korunur.
+- D10 — PR #664: 12 başlık ve iptal edilmiş arşiv taşıma kararı; ayrı kaynak kayıtları korunur.
+- D11 — PR #669: kayıpsız yaşam döngüsü ve dedupe erteleme planı; ayrı kaynak kayıtları korunur.
+- D12 — PR #760: geçmiş FFmpeg runtime/kanıt kapsamı düzeltmesi ve tetik etiketi; eski PR, yeni tarama tetiklenmez.
+- D13 — PR #721: eski 75 kayıt taşıma isteği; açık, uygulanmaz.
+- D14 — PR #728: eski 18 aday sıralama isteği; açık, uygulanmaz.
+- D15 — PR #755: eski 263 aday sıralama isteği; açık, uygulanmaz.
+- D16 — PR #757: eski 99 aday sıralama isteği; açık, uygulanmaz.
+- D17 — PR #767: eski 9 aday sıralama isteği; açık, uygulanmaz.
+- D18 — PR #768: eski 47 aday sıralama isteği; açık, uygulanmaz.
+
+Bu özetin altındaki özgün Issue/PR gövdeleri ve dosya kayıtları ayrı tutulur. Açık PR olması tek başına güncel iş veya birleştirme izni değildir.
+
+### Ayrıntılı kaynak kayıtları
+
 - **.github/workflows/issue-489-historical-audit.yml:L1** — [Tarihsel yapılandırma kaydı] name: Issue 489 historical inventory audit
 - **.github/workflows/issue-489-historical-audit.yml:L22** — [Tarihsel yapılandırma kaydı] name: issue-489-inventory-audit
 
@@ -4301,6 +4424,8 @@ The last 30x er
 <!-- D-END -->
 
 ### Dosya tarama fihristi ve kapsam denetimi
+
+Main snapshot'ta 2539 ağaç girdisi, 125 hedef uzantılı blob: 125/125 okunmuş ve SHA/bayt eşleşmesi kontrol edilmiş. 1 gerçek açık Issue (#693), 14 açık PR; ikinci sayfa boş. Açık PR'larda 20 değişen hedef uzantılı dosya okundu. #768'in hedef uzantıda dosyası yok; gövdesi kayıtlı. Ana dal dışında yalnız açık PR'ların değişen not/yapılandırma dosyaları kapsandı; kapalı PR'ların veya diğer dalların tüm Git tarihi bu taramaya dahil değil. Satır/alan düzeyi mekanik indeks ile yukarıdaki elle oluşturulan yönlendirme özeti ayrıdır; ham kanal durumları ve URL listeleri kaynakta tutulur, ayrı yapılacak iş sayılmaz.
 
 Her satırda snapshot/PR referansı, kaynak, okuma sonucu ve çıkarılan kayıt sayısı bulunur. Bu fihrist, dosya okunmadığı halde tamamlandı denmesini önler.
 
