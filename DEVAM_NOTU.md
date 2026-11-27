@@ -1,3 +1,7 @@
+## 27 Kasım 2026 — Paket 3 · YEDEKLER’den ana kategorilere 43 taşıma
+
+YEDEKLER 1.562’den 1.519’a indi. Taşınan 43 kayıt ve üç açılış süresi [taşıma raporunda](reports/YEDEKLER_KURTARMA_OZETI.md). Ana liste toplamı 18.330.
+
 ## 27 Kasım 2026 — 10 maddelik ana sistem offline final kabulü
 
 - #793 iki CI PASS ve MERGED (`2e853cc46b5e201dd9e7f7939dade4c686daad40`); 1–5 offline kabul tamamlandı.

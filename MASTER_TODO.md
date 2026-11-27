@@ -9,6 +9,71 @@ Durum sözlüğü: **Güncel** = halen geçerli koruma veya açık kayıt; **Tar
 Tarama kapsamı: main ağacındaki tüm .md/.txt/.json/.yml/.yaml dosyaları, açık Issue ve açık PR'lar; açık PR'ların değişen not dosyaları ayrıca. Dosya bazlı tarama fihristi en altta. Makine verilerindeki kanal başına URL/logo/pozisyon satırları ayrı kullanıcı görevi değildir; görev, not, açıklama, durum ve kural alanları indekslenir. Sadece aynı kaynak içindeki yapı satırları (örneğin JSON parantezleri) ayıklanır.
 
 
+## 27 Kasım 2026 — Paket 3 · YEDEKLER’den ana kategorilere 43 taşıma
+
+26 Kasım nihai raporunda üç turda 60 saniyelik ses ve görüntü kaydı bulunan, `Türkiye/Türkçe` üstveri etiketli 43 satır seçildi. 40 kayıt hızlı, 3 ATV kaydı geç açıldı. Açılış süreleri her turda yerel çözücüde ölçüldü. [Nihai test](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/45799091422) · [Sonuç dosyası](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/45799091422/artifacts/15147217790)
+
+Aynı adlı yayınlar özgün konumları, kayıt ve yayın adresi SHA-256 değerleriyle ayrıldı. Her grupta eski sıra korundu ve eklenenler eski YEDEKLER sırasıyla sona yerleştirildi. 18.330 kaydın tamamı bire bir eşleşti. FTV TÜRK için aynı yayın adresinin mevcut SPOR kategorisi, TBMM TV için Meclis yayınlarının içeriği esas alındı.
+
+| Kategori | Önce | Sonra | Taşınan |
+|---|---:|---:|---:|
+| 🗂️ YEDEKLER | 1562 | 1519 | -43 |
+| 🇹🇷 ULUSAL-HEPSİ | 408 | 427 | +19 |
+| 📺 HABER | 73 | 84 | +11 |
+| ⚽️ SPOR | 28 | 29 | +1 |
+| 🧸 ÇOCUK | 29 | 31 | +2 |
+| 🎧 MÜZİK | 41 | 46 | +5 |
+| 🕌 DİNİ | 17 | 22 | +5 |
+| Ana liste toplamı | 18.330 | 18.330 | 0 |
+
+| Eski YEDEKLER sırası | Kanal | Yeni kategori | Kategorideki yeni sıra | Açılış 1 / 2 / 3 (sn) |
+|---:|---|---|---:|---|
+| 3 | 09.KANAL 7 TÜRKNET | 🇹🇷 ULUSAL-HEPSİ | 409 | 5,496 / 3,716 / 3,566 |
+| 106 | ATV (BACKUP) | 🇹🇷 ULUSAL-HEPSİ | 410 | 3,899 / 3,423 / 3,097 |
+| 107 | ATV 1 1080P FHD | 🇹🇷 ULUSAL-HEPSİ | 411 | 5,492 / 11,34 / 2,938 |
+| 110 | ATV 4 480P SD | 🇹🇷 ULUSAL-HEPSİ | 412 | 8,14 / 3,286 / 6,942 |
+| 112 | ATV 6 360P SD | 🇹🇷 ULUSAL-HEPSİ | 413 | 4,067 / 33,95 / 82,771 · geç |
+| 113 | ATV 7 360P SD | 🇹🇷 ULUSAL-HEPSİ | 414 | 13,257 / 21,47 / 2,679 · geç |
+| 114 | ATV 1080P FHD | 🇹🇷 ULUSAL-HEPSİ | 415 | 105,457 / 7,803 / 22,442 · geç |
+| 261 | DİYANET TV 2 1080P FHD | 🕌 DİNİ | 18 | 2,83 / 2,134 / 2,574 |
+| 262 | DİYANET TV 1080P FHD | 🕌 DİNİ | 19 | 2,502 / 3,607 / 2,42 |
+| 287 | DREAM TÜRK | 🎧 MÜZİK | 42 | 1,26 / 1,857 / 2,261 |
+| 291 | DREAM TÜRK 1 720P HD | 🎧 MÜZİK | 43 | 2,224 / 3,09 / 2,846 |
+| 292 | DREAM TÜRK 2 720P HD | 🎧 MÜZİK | 44 | 2,583 / 2,507 / 2,537 |
+| 293 | DREAM TÜRK 720P HD | 🎧 MÜZİK | 45 | 3,443 / 3,089 / 3,497 |
+| 368 | FTV TÜRK 540P SD | ⚽️ SPOR | 29 | 1,534 / 1,218 / 0,796 |
+| 401 | HABER TÜRK (BACKUP) | 📺 HABER | 74 | 5,74 / 3,996 / 4,493 |
+| 402 | HABER TÜRK (BACKUP) | 📺 HABER | 75 | 2,588 / 2,882 / 2,709 |
+| 412 | HABERTÜRK 2 1080P FHD | 📺 HABER | 76 | 6,55 / 3,7 / 5,302 |
+| 413 | HABERTÜRK 2 1080P FHD | 📺 HABER | 77 | 1,223 / 1,056 / 1,947 |
+| 414 | HABERTÜRK 3 1080P FHD | 📺 HABER | 78 | 1,867 / 1,531 / 1,527 |
+| 415 | HABERTÜRK 4 1080P FHD | 📺 HABER | 79 | 4,623 / 3,938 / 4,001 |
+| 796 | SAT 7 TÜRK 360P SD | 🕌 DİNİ | 20 | 3,067 / 2,955 / 2,726 |
+| 803 | SEMERKAND TV 1 1080P FHD | 🕌 DİNİ | 21 | 3,117 / 2,92 / 2,892 |
+| 804 | SEMERKAND TV 2 1080P FHD | 🕌 DİNİ | 22 | 2,04 / 1,918 / 2,135 |
+| 821 | SHOW TV | 🇹🇷 ULUSAL-HEPSİ | 416 | 4,055 / 3,044 / 3,14 |
+| 822 | SHOW TV | 🇹🇷 ULUSAL-HEPSİ | 417 | 2,176 / 1,778 / 2,406 |
+| 823 | SHOW TV | 🇹🇷 ULUSAL-HEPSİ | 418 | 4,311 / 3,423 / 3,396 |
+| 834 | SHOW TV 1080P FHD | 🇹🇷 ULUSAL-HEPSİ | 419 | 2,69 / 2,293 / 2,094 |
+| 871 | STAR TV 2 720P HD | 🇹🇷 ULUSAL-HEPSİ | 420 | 3,535 / 3,023 / 3,082 |
+| 873 | STAR TV 4 720P HD | 🇹🇷 ULUSAL-HEPSİ | 421 | 2,848 / 2,556 / 2,539 |
+| 895 | TBMM TV 720P HD | 📺 HABER | 80 | 2,435 / 2,532 / 2,405 |
+| 1331 | TRT 1 | 🇹🇷 ULUSAL-HEPSİ | 422 | 3,317 / 2,76 / 2,889 |
+| 1335 | TRT 1 (BACKUP) | 🇹🇷 ULUSAL-HEPSİ | 423 | 2,594 / 1,438 / 1,399 |
+| 1368 | TRT COCUK 1440P QHD | 🧸 ÇOCUK | 30 | 1,652 / 3,414 / 1,854 |
+| 1373 | TRT ÇOCUK 2 1080P FHD | 🧸 ÇOCUK | 31 | 1,255 / 1,095 / 1,302 |
+| 1391 | TRT GENÇ 1440P QHD | 🇹🇷 ULUSAL-HEPSİ | 424 | 1,195 / 3,197 / 2,844 |
+| 1397 | TRT HABER (BACKUP) | 📺 HABER | 81 | 1,588 / 1,478 / 1,529 |
+| 1400 | TRT HABER 4 720P HD | 📺 HABER | 82 | 2,33 / 1,9 / 1,87 |
+| 1401 | TRT HABER 4 720P HD | 📺 HABER | 83 | 0,453 / 0,396 / 0,618 |
+| 1402 | TRT HABER 1440P QHD | 📺 HABER | 84 | 0,72 / 0,628 / 0,586 |
+| 1418 | TRT MÜZİK 1440P QHD | 🎧 MÜZİK | 46 | 0,962 / 0,897 / 1,942 |
+| 1437 | TRT TÜRK | 🇹🇷 ULUSAL-HEPSİ | 425 | 0,501 / 0,436 / 0,444 |
+| 1442 | TRT TÜRK 2 720P HD | 🇹🇷 ULUSAL-HEPSİ | 426 | 0,517 / 0,27 / 0,28 |
+| 1444 | TRT TÜRK 1440P QHD | 🇹🇷 ULUSAL-HEPSİ | 427 | 1,763 / 0,951 / 1,292 |
+
+Kayıt bazında hash ve geri alma kaynağı [taşıma raporunda](reports/YEDEKLER_KURTARMA_OZETI.md).
+
 ## 27 Kasım 2026 — Paket 1 güncel durum (tarihsel indeks korunur)
 
 - B37 / D05–D18: #641, #642, #650, #651, #655, #664, #669, #721, #728, #755, #757, #760, #767, #768 GitHub üzerinden kapatıldı; 14/14 closed, merged=false. Notlar bu dosyada korunur; eski PR içerikleri uygulanmadı.
