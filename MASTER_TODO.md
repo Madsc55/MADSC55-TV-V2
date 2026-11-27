@@ -1,0 +1,4595 @@
+# MADSC55 TV V2 — MASTER_TODO
+
+27 Kasım 2026 | Ana kaynak snapshot: `bc93dc7811ae8976f097c6b5e9addb5e6db67045`. Bu dosya tek merkezî görev/not indeksidir; yürütme yetkisi değildir. Ana playlist, kanallar, kategoriler, eski 34 görev ve 685 SECURITY HOLD kilidi değişmez. #794 ile kapanan 10/10 offline kapsam korunur. Tarihsel notlar kendi tarihindeki ifadeleri taşır; eski talimatlar otomatik olarak yeniden yürürlüğe girmez. Aynı talep farklı kaynakta kaydedilmişse kaynak kayıtları ayrı tutulur. Bir kaynak satırında birden fazla şart bulunuyorsa özgün bağlam korunur. Akış adresleri/olası sırlar burada yeniden yayımlanmaz; tam kaynak konumu gösterilir.
+
+Durum sözlüğü: **Güncel** = halen geçerli koruma veya açık kayıt; **Tarihsel** = kaynak tarihindeki not/iş, son durum ayrıca doğrulanmalı; **Arşiv/kapsam dışı** = önceki sahibi onaylı kapanış; **Offline kabul** = #794 kapsamı, gerçek cihaz/yayın kabulü değildir; **Bekliyor** = kaynakta açık veya doğrulanmamış, otomatik uygulama yok.
+
+**Kalıcı kullanım kuralı:** Yeni kullanıcı notu veya görev kaydedildiğinde özgün kaynak korunarak bu merkezde ayrı kaynak referansı, tarih, kapsam, durum ve kanıt bağlantısı ile yeni kayıt açılır. Bir görev tamamlandığında veya iptal edildiğinde silinmez, durum/kanıt güncellenir. Bu indeks kendi başına eski PR'ların uygulanmasına veya görevlerin yeniden açılmasına izin vermez.
+
+Tarama kapsamı: main ağacındaki tüm .md/.txt/.json/.yml/.yaml dosyaları, açık Issue ve açık PR'lar; açık PR'ların değişen not dosyaları ayrıca. Dosya bazlı tarama fihristi en altta. Makine verilerindeki kanal başına URL/logo/pozisyon satırları ayrı kullanıcı görevi değildir; görev, not, açıklama, durum ve kural alanları indekslenir. Sadece aynı kaynak içindeki yapı satırları (örneğin JSON parantezleri) ayıklanır.
+
+## A) Kullanıcı Tarafından Kaydettirilmiş Özel Notlar ve İstekler
+
+### Güncel uygulama kuralları ve ayrı kullanıcı kararları
+
+- A01 — Tek kanonik ana playlist; yeni playlist veya YEDEKLER_TEST yok. Kaynak: ANA_PLAYLIST_KORUMA_KURALI.md; WORK_ORDER_2026-11-21.md.
+- A02 — Açık ve somut kullanıcı talimatı olmadan ana playlist yazımı yok. Kaynak: ANA_PLAYLIST_KORUMA_KURALI.md.
+- A03 — Korunan kategoriler, favoriler, sıralar, URL, kanal kimliği, logo ve EPG korunur. Kaynak: ANA_PLAYLIST_KORUMA_KURALI.md.
+- A04 — 48 tarihsel dışlanan kanal geri eklenmez. Kaynak: v2/tasks/WORK_ORDER_2026-11-21.md; v2/archives/test001_quarantined_48.json.
+- A05 — İlk 1003 koruması yeniden uygulanmaz. Kaynak: v2/tasks/WORK_ORDER_2026-11-21.md; PR #651.
+- A06 — 685 SECURITY HOLD güvenli kabul ve açık yetki olmadan kaldırılmaz. Kaynak: v2/tasks/KAPANIS_SIRASI_20261121.md; PR #651.
+- A07 — İBO Player kullanıcı testi sistem taramasından ayrı. Kaynak: v2/tasks/WORK_ORDER_2026-11-21.md.
+- A08 — 2500'lü manuel paket döngüsü, taşıma sonrası kaynak gruptan düşme ve geri alma. Yeni otomatik doldurma izni değildir. Kaynak: v2/yedekler_batch/README.md; PR #651.
+- A09 — Aynı URL + aynı ad yalnız mükerrer adayı; aynı URL farklı ad şüpheli olarak korunur. Kaynak: açık PR #669 (DEVAM_NOTU.md L1705).
+- A10 — Aynı ad farklı URL korunur. Kaynak: PR #669.
+- A11 — Silme öncesi kayıpsız geri yükleme manifesti ve geçmiş kanıtları. Kaynak: PR #669 L1706–1707.
+- A12 — PR #667'deki 806 mükerrer silme önerisi MERGE EDİLMEYECEK; güncel envantere uygulanmaz. Kaynak: PR #669 L1704.
+- A13 — ANA ARŞİV alfabetik sıralaması kullanıcı teyidiyle yeniden açılmaz. Kaynak: PR #664.
+- A14 — ANA ARŞİV'i YEDEKLER altına taşıma kararı iptal; #660–663 uygulanmaz. Kaynak: PR #664.
+- A15 — 112–486 ve diğer geçmiş 59–181 taşıma emirleri tekrar uygulanmaz. Kaynak: v2/tasks/WORK_ORDER_2026-11-21.md.
+- A16 — Rastgele logo değil, gerçek/doğrulanmış yayıncı logosu. Kaynak: PR #651/#655; v2/reports/logo_inventory_20261121.md.
+- A17 — EPG yalnız kanıtlı kanal/program kimliği. Kaynak: PR #651; v2/reports/task19-current-xmltv-20261119.json.
+- A18 — İsim ve ülke tek başına Türkçe yayın veya AV kanıtı değildir. Kaynak: WORK_ORDER; PR #650/#651.
+- A19 — HTTP 200 gerçek AV değildir; geçici erişim engeli, 403/429/503/timeout kesin ölü sayılmaz. Kaynak: PR #650/#651/#664.
+- A20 — Kullanıcı manuel GitHub tıklaması istemiyor; testler PASS ise yetkili PR işlemi, güvenlik bypass yok. Kaynak: PR #669 L1710.
+- A21 — Gerçek yayın ve cihaz kabulü en son, yeni canlı tarama bu görevde yok. Kaynak: PR #651; son offline final raporu.
+- A22 — Tüm notlarda commit/run/kanıt ve tarih korunur, eski kapanış kararları yeniden açılmaz. Kaynak: DEVAM_NOTU.md; PR #655/#664.
+- A23 — Son #794 offline teslim kapsamı tamamlandı; gerçek yayın/varlık/cihaz/harici üretim restore iddiası değil. Kaynak: reports/ANA_SISTEM_10_MADDE_FINAL_KABUL_20261127.md.
+
+Aşağıdaki kaynak indeksinde kuralların ve tarihsel notların ayrı kayıtları korunur. Öncelik sırası kaynak tarihine aittir; yeni talimat değildir.
+
+### Ayrıntılı kaynak kayıtları
+
+- **.github/workflows/build_playlist_from_parts.yml:L66** — [Tarihsel yapılandırma kaydı] # Owner command remains on one isolated branch, never staging through main.
+- **.github/workflows/build_playlist_from_parts.yml:L79** — [Tarihsel yapılandırma kaydı] - name: Allow only a new owner command against current main
+- **.github/workflows/ci.yml:L22** — [Tarihsel yapılandırma kaydı] - name: Detect exact owner move-only PR (trusted base verifier)
+- **.github/workflows/ci.yml:L71** — [Tarihsel yapılandırma kaydı] # Only the explicitly tagged owner-requested squash merge on main runs
+- **.github/workflows/ci.yml:L109** — [Tarihsel yapılandırma kaydı] # One owner-requested, reviewed merge only; never from untrusted PRs.
+
+
+
+- **.github/workflows/v2-main-production-safety-gate.yml:L39** — [Tarihsel yapılandırma kaydı] - name: Detect reviewed owner move-only change (fail closed)
+- **.github/workflows/v2-main-production-safety-gate.yml:L84** — [Tarihsel yapılandırma kaydı] # owner moves/reorders/copies may change counts; verify actual parts
+- **.github/workflows/v2-main-production-safety-gate.yml:L134** — [Tarihsel yapılandırma kaydı] - name: Build #497 preview from exact historical artifact (no scan, no playlist write)
+- **.github/workflows/v2-main-production-safety-gate.yml:L415** — [Tarihsel yapılandırma kaydı] - name: Turkish channel triage offline regression (no playlist writes)
+- **.github/workflows/v2-real-iptv-scan.yml:L149** — [Tarihsel yapılandırma kaydı] # successful core scan must not imply source-ownership/EPG/device
+
+- **.github/workflows/v2-yedekler-av-audit.yml:L54** — [Tarihsel yapılandırma kaydı] - name: Upload immutable retry evidence and preview (no playlist write)
+- **ANA_PLAYLIST_KORUMA_KURALI.md:L3** — [Tarihsel kaynak kaydı] Kullanıcının açık ve özel talimatı olmadan ana IBO playlistine **hiçbir değişiklik yapılamaz**.
+- **ANA_PLAYLIST_KORUMA_KURALI.md:L5** — [Tarihsel kaynak kaydı] Korunan dosya: `MADSC55_TV_IBO_CALISANLAR_TEST.m3u8`
+- **ANA_PLAYLIST_KORUMA_KURALI.md:L7** — [Tarihsel kaynak kaydı] - Kanal ekleme, silme, değiştirme, yeniden adlandırma, taşıma **YASAK**.
+- **ANA_PLAYLIST_KORUMA_KURALI.md:L8** — [Tarihsel kaynak kaydı] - Kategori ekleme, silme, yeniden adlandırma, sıralama değiştirme **YASAK**.
+- **ANA_PLAYLIST_KORUMA_KURALI.md:L9** — [Tarihsel kaynak kaydı] - Favoriler, favori sıralaması, yedekler, yayın URL'leri, kanal kimlikleri ve logo URL'leri **KORUNUR**.
+- **ANA_PLAYLIST_KORUMA_KURALI.md:L10** — [Tarihsel kaynak kaydı] - EPG adresi dahil playlist başlığı ve tüm baytlar **KORUNUR**.
+- **ANA_PLAYLIST_KORUMA_KURALI.md:L12** — [Tarihsel kaynak kaydı] - Yeni bulunan kanallar yalnızca ayrı aday raporuna yazılabilir. Otomatik canlıya alma **YASAK**.
+- **ANA_PLAYLIST_KORUMA_KURALI.md:L13** — [Tarihsel kaynak kaydı] - Kullanıcının açık izni olmadan korunan dosyada GitHub API, Actions, bot, betik veya insan aracılığıyla yazma işlemi yapılmaz.
+- **ANA_PLAYLIST_KORUMA_KURALI.md:L21** — [Tarihsel kaynak kaydı] - Amaç: Kullanıcının IBO Player'da gerçekten çalışıp çalışmadıklarını denemesi.
+- **ANA_PLAYLIST_KORUMA_KURALI.md:L22** — [Tarihsel kaynak kaydı] - Kullanıcı açıkça ekleme talimatı vermedikçe **ana playlistin YEDEKLER kategorisine bile otomatik ekleme yapılmaz**. Önce ayrı aday/test listesinde sunulur.
+- **ANA_PLAYLIST_KORUMA_KURALI.md:L23** — [Tarihsel kaynak kaydı] - Kullanıcı açıkça eklenmesini istediğinde yalnızca onayladığı adaylar YEDEKLER'e eklenir; diğer kategorilere ve mevcut kayıtlara dokunulmaz.
+- **ANA_PLAYLIST_KORUMA_KURALI.md:L24** — [Tarihsel kaynak kaydı] - Test sonucu ve sonrasındaki taşıma/silme işlemleri de ayrıca kullanıcı onayı gerektirir.
+- **ANA_PLAYLIST_KORUMA_KURALI.md:L26** — [Tarihsel kaynak kaydı] Kullanıcı talimatıyla düzenleme — 15 Kasım 2026
+- **ANA_PLAYLIST_KORUMA_KURALI.md:L28** — [Tarihsel kaynak kaydı] Bu koruma, kullanıcının **açık ve somut talimatıyla** yapılan değişiklikleri yasaklamaz. Kullanıcı kanal sıralaması, kategori sırası, kategori ekleme/silme, kanalın birden fazla kategoriye kopyalanması veya YEDEKLER'den onaylı çalışan kanalların ilgili kategorilere aktarılması talimatı verebilir. Talimat yalnızca adı geçen kanal/kategori ve istenen işlemi kapsar; genel otomatik yazma izni değildir.
+- **ANA_PLAYLIST_KORUMA_KURALI.md:L30** — [Tarihsel kaynak kaydı] Zorunlu işlem sırası: (1) kullanıcı talimatını ve kapsamını kaydet, (2) ana listenin değişiklik öncesi SHA-256 yedeğini al, (3) aynı isimli farklı akışları URL/tvg-id/logo ile ayırt et, (4) yalnız onaylanan değişikliği PR dalında yap, (5) kayıtların, diğer kategorilerin ve URL'lerin korunmasını otomatik test et, (6) GitHub koruma kontrolleri başarılı olursa PR üzerinden birleştir, (7) cihazda oynatma kabulünü ayrıca doğrula. Otomatik keşif bu yetkiyi kullanamaz.
+- **ANA_PLAYLIST_KORUMA_KURALI.md:L32** — [Tarihsel kaynak kaydı] **Teknik durum:** Mevcut güvenlik kapısı yalnız YEDEKLER içi yeniden sıralamaya izin veriyor. Kullanıcı onaylı kategori/kanal düzenlemeleri için dar kapsamlı, denetlenebilir PR onay mekanizması geliştirilip test edilene kadar bu metin tek başına teknik engeli kaldırmaz.
+- **DEVAM_NOTU.md:L4** — [Tarihsel kaynak kaydı] - 6–10 mevcut kalite, logo/EPG, 429, şifreli checkpoint ve kullanıcı onay/rollback kanıtları [final raporda](reports/ANA_SISTEM_10_MADDE_FINAL_KABUL_20261127.md) kayıtlı. Mevcut iki karar testi offline Makefile hedefinde açıkça çalıştırılır.
+- **DEVAM_NOTU.md:L5** — [Tarihsel kaynak kaydı] - **10/10 TAMAMLANDI — ANA SİSTEM %100 TESLİM EDİLDİ** yalnız bu final PR iki CI SUCCESS ve merge doğrulamasından sonra, belirtilen offline kapsam için geçerlidir. Gerçek yayın, varlık ataması, harici üretim restore ve cihaz kabulü iddia edilmez. Ana playlist, eski 34 görev ve 685 güvenlik kilidi korunur; yeni canlı tarama yok.
+- **DEVAM_NOTU.md:L12** — [Tarihsel kaynak kaydı] - **ANA SİSTEM ALTYAPISI VE GÜVENLİK TESTLERİ TAMAMLANDI** ifadesi yalnız bu final PR için Offline CI ve Production Security Gate PASS ve merge doğrulandığında, daraltılmış offline altyapı kapsamına uygulanır. Tarihsel görev statüleri ve güvenlik kilitleri korunur. Ana playlist ve devam eden canlı kanal testi değiştirilmez.
+- **DEVAM_NOTU.md:L14** — [Tarihsel kaynak kaydı] 22 Kasım 2026 — Proje sahibi onaylı tarihsel kapsam arşiv kapanışı
+- **DEVAM_NOTU.md:L21** — [Tarihsel kaynak kaydı] - **685 SECURITY HOLD kilidi korunur.** Yeni playlist oluşturulmadı; test ve canlı yayın kabulü idari kapanışla geçilmiş sayılmaz.
+- **DEVAM_NOTU.md:L25** — [Tarihsel kaynak kaydı] 22 Kasım 2026 — Proje sahibinin talimatıyla #17, #18, #19, #20, #21 ve #34 görevleri mevcut teslim kapsamı için idari olarak kapatıldı. İlgili GitHub Issue kayıtları kontrol edildi; altısı da zaten kapalı. 7ac18f6 için Offline CI PASS ekran görüntüsü proje sahibi tarafından doğrulandı; bu son kapanış commit'inin CI sonucu ayrıca kontrol edilmelidir. Bu kayıt, 404/503 yayınlarının düzeldiği, tüm canlı AV/cihaz testlerinin geçtiği, Codeberg/GitLab 429 engellerinin kalktığı veya tarihsel 303 EPG açığının tek tek çözüldüğü iddiası değildir. Tek ana playlist değiştirilmedi. 685 kanalın SECURITY HOLD kilidi aynen korunur.
+- **DEVAM_NOTU.md:L43** — [Tarihsel kaynak kaydı] Kapanis sirasi: (1) #17 kimlik ve 15 fark uzlastirma; (2) #19 EPG ID ve 303 acik; (3) #21/#34 provider bazli Codeberg/GitLab tanilama, 429 icin saygili backoff; (4) #18/#20 guvenli gercek AV ve 404/503 kabul; (5) main CI ve cihaz/restore kaniti. #497 685 SECURITY HOLD degismez.
+- **DEVAM_NOTU.md:L53** — [Tarihsel kaynak kaydı] - **GÜVENLİK HOLD DEVAM**: Bu manuel TS alt akışı #497 toplu FFprobe/FFmpeg retry motoruna bağlanmadı. Oradaki 685 belirsiz kanalın canlı tekrar denemesi GitHub `if: ${{ false }}` ve Python `SECURITY HOLD` ile **kapalı** kalır; tüm HLS özellikleri, yönlendirme ve FFmpeg'in otomatik dış istekleri için genel OS egress izolasyonu kabul edilmiş değildir. `stage9_ffmpeg_initial_egress_hardening_20261121.network_egress_isolation_for_hls_children_verified=false` korunur.
+- **DEVAM_NOTU.md:L64** — [Tarihsel kaynak kaydı] - **ÖNEMLİ GÜVENLİK SINIRI:** Bu PR'lar yalnız *ilk* URL'yi / güvenli indiriciyi iyileştirir. FFmpeg'in uzaktan yönlendirme, HLS alt manifest/segment veya key isteğinde DNS değişimi ve ağ erişimi için OS-seviyesi güvenli egress izolasyonu hâlâ kabul edilmedi. **#497 685 kanalın canlı yeniden denemesi iki katmanlı SECURITY HOLD içinde kalmalı, otomatik açılmamalı.** Stage4 sınırlı MP4/MKV/TS örnek indirme sadece açık kullanıcı isteğiyle yapılabilir; HLS/DASH child takip etmiyor.
+- **DEVAM_NOTU.md:L65** — [Tarihsel kaynak kaydı] - **Korunan diğer kanıtlar:** YEDEKLER 1792 = 1107 tarihsel AV + 685 belirsiz + 0 kesin başarısız. Gerçek 685 salt-okunur plan artefaktı [#14702596056](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44891650993) daha önce doğrulandı, tekrar üretme. **#6 özel yetkili/Türk kasa gerçek Google Drive backup/key/independent restore kabulü AÇIK**; geçmiş Stage4 legacy Drive restore farklı. Tek ana playlist, diğer arşivler, 48 çıkarılan kanal ve 34 ana görev statüsü değişmedi.
+- **DEVAM_NOTU.md:L74** — [Tarihsel kaynak kaydı] - **Değişmezler:** #497 gerçek 685'lik salt-okunur plan artefaktı `14702596056` ve 1.107+685 tarihsel sonuçları yeniden oluşturma. Canlı retry `if: ${{ false }}` ve Python SECURITY HOLD ile kapalı. Tek ana playlist, YEDEKLER, diğer arşivler, önceden çıkarılmış 48 kanal, 34 ana görev statüsü değişmedi.
+- **DEVAM_NOTU.md:L81** — [Tarihsel kaynak kaydı] - **Sıradaki tek teknik engel**: Final aşama için güvenli gerçek yayın/FFmpeg/İBO kabulü ve #6 özel kasa gerçek harici geri yükleme kanıtı. #497 rapor bulma, import, 685 plan kodu, gerçek plan artefaktı ve bütünlük testlerini yeniden üretme. Mevcut tek ana playlist ve 34 görev statüsü korunuyor.
+- **DEVAM_NOTU.md:L89** — [Tarihsel kaynak kaydı] - **Değişmezler:** Tek ana `MADSC55_TV_IBO_CALISANLAR_TEST.m3u8`; 18.912 toplam / YEDEKLER 1.792 / ANA 15.574 / TÜRK 424 / YABANCI 284 / diğer 838. Playlist/kategori/arşiv/48 eski dışlanmış URL ve 34 ana görev statülerinde değişiklik yapılmadı; yeni test playlisti, canlı tarama veya otomatik yeniden sınıflama yok.
+- **DEVAM_NOTU.md:L95** — [Tarihsel kaynak kaydı] - **Gerçek veri durumunda değişiklik yok:** İlk kanıt `44640007709` / artifact `14587983768`; 1.792 YEDEKLER = 1.107 doğrulanmış AV + 685 belirsiz + 0 kesin başarısız. Mevcut önizleme/manifest kanıtı `44842556117` / artifact `14681083208`; playlist değişmez. 685 canlı tekrar denemesi **başlatılmış olarak doğrulanmadı**; 1.107 doğrulanmış kayıt yeniden taranmayacak. Aktif tek ana playlist, 48 geri alınmayacak hatalı kayıt, arşiv/kategori bütünlüğü ve mevcut 34 görev statüsü korunacak.
+- **DEVAM_NOTU.md:L126** — [Tarihsel kaynak kaydı] - Gerçek kullanıcı playlistinde bu turda taşıma/kalıcı yazma yapılmadı. Bu kasıtlıdır: mevcut ana dosyanın tam baytları ve güncel SHA'sı bağımsız olarak okunup doğrulanmadan üretim üzerinde mutasyon yapılmadı. Dolayısıyla kanıt test/CI kabulüdür; gerçek canlı dosyada taşıma gerçekleştiği iddiası değildir.
+- **DEVAM_NOTU.md:L193** — [Tarihsel kaynak kaydı] - **Taramanın kaldığı yerden devamı.** İş akışı, tamamlanmış tarama kayıtlarını oluşturulma zamanına göre inceler. #442 ile zenginleştirilen yedek, kaynak taramanın tarihi olan 14 Kasım’a göre sıralanır. Böylece daha sonra oluşmuş tarama kaydı önceliğini korur. Onaylanmış 15 gözlemden yalnızca seçilen dosyada karşılığı bulunan ve daha eski olan satırlar güncellenir. Dosyada olmayan bir adres eklenmez. Özgün şifreli dosya korunur. 25 çevrimdışı test geçti. [Devam iş akışı](.github/workflows/v2-real-iptv-scan.yml) · [Kurtarma testleri](v2/test_real_scan_workflow_resume.py)
+- **DEVAM_NOTU.md:L214** — [Tarihsel kaynak kaydı] - Kullanıcı kararı: 20–30 saniyelik zorunlu ses/görüntü izleme eklenmeyecek. Mevcut scanner varsayılan timeout=12s ve ffmpeg/ffprobe subprocess timeout+5s sınırı korunacak; bu 17 saniye sürekli dinleme anlamına GELMEZ. ASR/OCR için yeterli medya kanıtı yoksa inceleme açık kalır, Türk/yabancı otomatik onayı ve playlist taşıma yapılmaz.
+- **DEVAM_NOTU.md:L215** — [Tarihsel kaynak kaydı] - Açık işler: gerçek yayınlardan ASR/OCR/WebVTT kanıtının güvenilir toplanması ve kayıtlarla ilişkilendirilmesi, 18.074 YEDEKLER kanalı için gerçek medya kanıtlı toplu inceleme, 13 açık sistem görevinin ayrı tamamlanması. Ana IBO playlisti, arşivler ve EPG korunacak; 2500'lük İBO Player arşiv döngüsü bu çalışmadan ayrı tutulacak.
+- **DEVAM_NOTU.md:L229** — [Tarihsel kaynak kaydı] - Kullanıcının açık talimatıyla ilk 1003 kanalın arkasındaki Türkî blokta yeni 18 Türkiye/Azerbaycan kaynak kaydı bir araya getirildi; TRT (VENEZUELA) ve üç TRT ARABI kaydı Türkçe yayın bloğu dışına taşındı. Yunan TRT zaten önceki turda blok dışındaydı.
+- **DEVAM_NOTU.md:L230** — [Tarihsel kaynak kaydı] - 18.912 toplam EXTINF ve 18.074 YEDEKLER kayıt sayısı korunmuştur; tam eski/yeni SHA256 değerleri `v2/ibo_authorized_change.json` dosyasındadır.
+- **DEVAM_NOTU.md:L236** — [Tarihsel kaynak kaydı] - PR #383 birleştirildi (merge `89db7b84c0d8bd7b6dff64647d55f2ba6bf9f6ed`): 6 Türkmenistan kaydı Türkî bloğa taşındı, TRT (GREECE) blok dışına alındı. 18.912 toplam ve 18.074 YEDEKLER korundu; ilgili GitHub security gate başarıyla geçti. Bu, canlı ses/görüntü kanıtı değildir.
+- **DEVAM_NOTU.md:L244** — [Tarihsel kaynak kaydı] - Blokta yabancı TRT (GREECE) sıra 1752 bulundu. Blok dışında altı Türkmenistan yayın kaydı saptandı; kullanıcı Türkmenistan ve Azerbaycan'ı da Türkî gruba dahil etmeyi açıkça istedi.
+- **DEVAM_NOTU.md:L245** — [Tarihsel kaynak kaydı] - Ayrıntı `v2/reports/turkic-third-pass-review-20261117.json`. Playlist içindeki serbest yorum satırları da korunmalı; bütünlük ve güvenlik kapısı geçmeden reorder yapılmadı. Teknik test ve VOD adayları kimlik incelemesinde.
+- **DEVAM_NOTU.md:L250** — [Tarihsel kaynak kaydı] 15 Kasım 2026 — ÖNCELİKLİ: kullanıcı onaylı İBO düzenleme kapısı
+- **DEVAM_NOTU.md:L252** — [Tarihsel kaynak kaydı] Kullanıcının kurduğu esas iş akışı: kanal keşfi → ayrı adaylar → açık onayla YEDEKLER → cihazda gerçek görüntü/ses testi → çalışan kanalları kullanıcının talimatıyla ULUSAL-HEPSİ/HABER/SPOR/BELGESEL/SİNEMA vb. kategorilere kopyalama/taşıma → istenirse kanal ve kategori sırasını değiştirme. YEDEKLER'de kaynak kullanıcı aksini istemedikçe kalır. Ana listeye izinsiz otomatik yazma kesinlikle yasak. Kullanıcının açık talimatıyla yapılan kategori düzenlemeleri ise teknik olarak mümkün olmalıdır.
+- **DEVAM_NOTU.md:L275** — [Tarihsel kaynak kaydı] **Gerçek kanıt:** https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43608247496 — Actions SUCCESS, artifact ID 14119727053, 103/103 uygun M3U kaynağı, 28.845 aday, 8.573 AV (8.540 önceki şifreli checkpoint + 33 bu koşu gerçek FFmpeg AV), 20.272 doğrulanmamış; gerçek yeniden deneme 300, geri kazanılan AV 33, yeniden kullanılabilen eski kontrol 28.545. 15.462 uygun başarısız tekrar adayı var; bunların tamamı yeniden denenmedi. Kurtarma kuyrukları 12.883 RETRY / 2.546 CHECK_AV / 4.843 REVIEW. Korunan ana İBO değiştirilmedi; cihaz oynatma kabulü false.
+- **DEVAM_NOTU.md:L277** — [Tarihsel kaynak kaydı] **EPG #19:** Beş XMLTV kaynağı yapısal olarak geçerli, fakat orijinal playlist TVG-ID ile kesin eşleşme 0. Salt-okunur EPG adayı 876 playlist girdisinden 89 isme dayalı eşleşme, 54 ad-hint kanalı ve 1.838 program üretti. Bunlar kesin yayıncı/kanal kimliği değildir. `madsc-epg.xml` korunur. Geçmiş 303 EPG boşluğu bağımsız kesin kaynak doğrulamasıyla henüz kapanmadı.
+- **DEVAM_NOTU.md:L283** — [Tarihsel kaynak kaydı] **Yeni denetim:** `v2/stage_a_evidence_review.py` altı görevin ayrı kanıt/kısıt raporunu her gerçek Actions taramasına eklemek için hazırlanmıştır. `READY_FOR_DEVICE_TEST` olan başarıyla taranmış kaynaklar = Aşama A tam üretim/cihaz/EPG/kaynak kabulü değildir. Rapor şifreli URL envanteri açmaz, korunan yayın listelerine yazmaz, kabul durumunu taklit etmez.
+- **DEVAM_NOTU.md:L285** — [Tarihsel kaynak kaydı] **Sıra:** Başka işlerin sürmesine engel olmadan A açık kanıtlar; sonra B #28–30, C #31–33, D #34 en son. Aynı anda çalışan diğer PR dallarını körlemesine birleştirme; otomatik cron/korunan üretim yayımlaması açma.
+- **DEVAM_NOTU.md:L290** — [Tarihsel kaynak kaydı] - Önceki scanner sentetik yeni XMLTV içindeki adla yeniden yazılmış hedef ID'yi tam tvg-id kanıtı sayabiliyordu. Bu, #19 kanıtını olduğundan güçlü gösterir. Artık builder `&lt;channel madsc-match-method="name-hint"&gt;` ile hedefin kanıtsız ad eşlemesini etiketler, yalnız kaynak TVG-ID birebir ve tek kanaldan geldiyse `exact-id` yazar. Scanner name-hint kanalları EPG exact-match kesin kanıt kümesine eklemez; gerçek programların görüntülenmesine yönelik aday XMLTV korunur.
+- **DEVAM_NOTU.md:L291** — [Tarihsel kaynak kaydı] - Regresyon testleri adla eşleşen fakat kimliği farklı kanalın `exact-id` kanıtı olamadığını, korunan EPG'ye yazılmadığını doğrular. #19 kapanmadı: yayıncı ve XMLTV ID'lerini bağımsız kaynakla eşleştirme, 303 EPG boşluğu ölçümü ve gerçek kabul hâlâ gerekiyor.
+- **DEVAM_NOTU.md:L292** — [Tarihsel kaynak kaydı] - #43605095525: 28.845 gerçek aday, 300 yeni başarısız-kaynak probe'u, 30 güncel yeni AV başarısı, 8.540 toplam AV, önceki 8.510 başarı korunmuş; kalan 20.305'te gerçek AV yok. GitLab isteğe bağlı test fikstürü 429 ve GitHub geçersiz M3U, güvenlik kapısı gereği scan `failure`; kanıt arşivi mevcut. Yeni PR #252 bozuk keşif girdilerini düzeltti ancak önceki koşuya uygulanmadı.
+- **DEVAM_NOTU.md:L304** — [Tarihsel kaynak kaydı] - Bu kod/CI hazırlığı A #17/#20 için somut bir onarımdır, ancak gerçek 300 probe henüz çalıştırılmamıştır. Ana İBO/YEDEKLER/YENİLER/FAVORİLER değişmez; üretim paketleri yalnız gerçek tam keşif ve güncel AV kanıtıyla kabul edilir. #15/#17/#18/#19/#20/#21 nihai kabulü hâlâ açık.
+- **DEVAM_NOTU.md:L307** — [Tarihsel kaynak kaydı] 14 Kasım 2026 — Aşama A #19: korunan EPG'ye dokunmadan gerçek XMLTV kanıtı üretme
+- **DEVAM_NOTU.md:L309** — [Tarihsel kaynak kaydı] - Yeni manuel tarama entegrasyonu: `epg_integrity.py` internetten beş EPG kaynağını salt-okunur denetleyecek; `build_epg.py --candidate-only` gerçek XMLTV'den ayrı `v2/reports/stage-a-epg-candidate.xml` oluşturmayı deneyecek. Gerekli kaynak/gerçek zamanlı program yoksa aday oluşmaz ve #19 açık kalır. Korumalı kök `madsc-epg.xml` değişmez. Yeni aday yalnızca Actions artifact'ına kanıt olarak yüklenir, otomatik yayımlanmaz.
+- **DEVAM_NOTU.md:L311** — [Tarihsel kaynak kaydı] - Bu değişiklik CI regresyonu ile doğrulandıktan sonra üretim kodu olacaktır; canlı dış kaynak erişimi ve geçmişteki 303 EPG boşluğunun kapanması ancak yeni gerçek koşu/artifact incelemesi ile teyit edilebilir. #15/#17/#18/#19/#20/#21 açık, henüz A bitmedi. Korunan ana İBO, YEDEKLER, YENİLER, FAVORİLER değişmedi.
+- **DEVAM_NOTU.md:L325** — [Tarihsel kaynak kaydı] - Korunan ana İBO, YEDEKLER, YENİLER, FAVORİLER değişmeyecek. Zorunlu kaynak eksikliği tam keşif kabulünü durdurur; isteğe bağlı başarısız keşif açıkça raporlanır. Başka sohbetlerdeki B/C/D PR'lerine müdahale edilmez.
+- **DEVAM_NOTU.md:L330** — [Tarihsel kaynak kaydı] - Onarım: son tamamlanan main gerçek tarama koşularını, sonuç SUCCESS veya FAILURE ayrımı yapmadan listeler; aktif/queued koşuları atlar. Her run artifaktı kendi geçici dizinine indirilir, ilk uygun şifreli checkpoint/legacy envanter alınır. Kimlik/18 saat/şifre anahtarı kontrolleri tarayıcı tarafında korunur. Gerçek A son kabulü hâlâ açık; kod ve offline CI kanıtı canlı resume yerine geçmez.
+- **DEVAM_NOTU.md:L339** — [Tarihsel kaynak kaydı] **Kaldığı yerden devam kanıtı:** PR #226 per-URL encrypted checkpoint, PR #240 pre-checkpoint eski gerçek envanterden güvenli resume, PR #241 zorunlu ve isteğe bağlı kaynak ayrımı. Eski 28.845 gözlem geri yüklenebildi. Yalnız eski AV yeni FFmpeg kanıtı olarak gösterilmez; 18 saatlik geçerlilik ve URL kimlik kontrolü uygulanır. Çalışma hatalarında checkpoint korunur, runner'ın tamamen kaybolmasında otomatik yükleme garantisi yoktur.
+- **DEVAM_NOTU.md:L349** — [Tarihsel kaynak kaydı] **Koruma:** Ana İBO, YEDEKLER, YENİLER, FAVORİLER, korumalı üretim tetikleyicileri değişmez. Mevcut kanıt korunur; hatalı kaynaklar sessizce tam keşif olarak kabul edilmez. Birbiriyle yarışan testler ve eski pull request'ler körlemesine birleştirilmez. Manuel kanal taraması kullanıcı talebi olmadan yeniden başlatılmaz.
+- **DEVAM_NOTU.md:L354** — [Tarihsel kaynak kaydı] - PR Actions `43482907222` SUCCESS; main Actions `43483112580` SUCCESS: Stage 6 offline kabul, korunan İBO invariants ve üretim tetikleyici güvenlik kontrolleri geçti.
+- **DEVAM_NOTU.md:L358** — [Tarihsel kaynak kaydı] 13 Kasım 2026 — #28–#30 gerçek İBO paketlerinin silinmeden korunması: CI KABULÜ
+- **DEVAM_NOTU.md:L362** — [Tarihsel kaynak kaydı] - Bu, **sistem güvenliği/çevrimdışı test kabulü**dür; gerçek cihazda yayın, bağımsız harici arşiv restore veya nihai 1000/2000 İBO paket teslimi kabulü değildir. #28–#33 statüleri değiştirilmedi; ana İBO, YEDEKLER, YENİLER, FAVORİLER ve kapsamlı tarama korunuyor.
+- **DEVAM_NOTU.md:L366** — [Tarihsel kaynak kaydı] - Güncel main tabanlı PR commit'i `643c19d9819ab34247b823451557bfaf4a132005` için Production Security Gate Actions https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43481305204: SUCCESS. Korunan İBO invariants, görev defteri, Stage 2/3, Stage 5, Stage 6 ve #34 çevrimdışı kabul adımları PASS.
+- **DEVAM_NOTU.md:L367** — [Tarihsel kaynak kaydı] - Stage 5 kanıt URL'lerinde özel/yerel IP, bozuk port, saklı kullanıcı bilgileri, kontrol karakterleri ve .local/.internal gibi yerel ana makine alanları reddedilir; bozuk JSON şeması fail-closed, mevcut kabul çıktısı exclusive create ile korunur. Negatif regresyon testleri main'de doğrulandı.
+- **DEVAM_NOTU.md:L368** — [Tarihsel kaynak kaydı] - Bunlar sadece çevrimdışı güvenlik/altyapı kabulüdür. Gerçek FFmpeg görüntü/ses, harici şifreli geri yükleme, gerçek 1000/2000 İBO paketleri ve cihaz kabulü doğrulanmadı. #31–#33 nihai kapatılmadı, task ledger değiştirilmedi; ana İBO/YEDEKLER/YENİLER/FAVORİLER korunuyor ve kapsamlı tarama başlatılmadı.
+- **DEVAM_NOTU.md:L373** — [Tarihsel kaynak kaydı] - Daha önce ana dala alınan PR #156, XMLTV programının geçerli başlangıç/bitiş zamanı ve tekil kanal kimliği olmadan mevcut sayılmasını zaten engelliyor. PR #161, bu kanıtın haricî girdiden sahte biçimde eklenmesini kapatıyor; bağımsız kabul şartı korunuyor.
+- **DEVAM_NOTU.md:L382** — [Tarihsel kaynak kaydı] - PR #151 squash merge `171a3c50`: GitLab/Codeberg M3U kaynak aramasına genel terimler eklendi; önceki TR/AZ terimleri ve bounded/project limits korundu. Main Actions `43479368483` SUCCESS.
+- **DEVAM_NOTU.md:L391** — [Tarihsel kaynak kaydı] - PR head `5161a4263faada3376fbd9e9fae64d243f748a97` için Actions run `43479914354`: SUCCESS. Production Security Gate, Stage 2/3, Stage 5/6, #34 offline entegrasyon ve korunan İBO invariantları PASS.
+- **DEVAM_NOTU.md:L392** — [Tarihsel kaynak kaydı] - Bu sadece kod ve çevrimdışı kabul kanıtıdır. Canlı Codeberg, yeni gerçek AV, 1000/2000 gerçek İBO paketleri ve bağımsız geri yükleme doğrulaması açık. Yeni toplu kanal taraması ve korunan liste değişikliği yapılmadı.
+- **DEVAM_NOTU.md:L417** — [Tarihsel kaynak kaydı] - PR #48 merge commit `f82156e7c36612f0e05c373706ab436608779ca8`; PR head `3a8b4cc1fbe47e0b8f495585d5111f26c7bf72b3` için Actions `43449878648` SUCCESS: güvenlik, korunan İBO, Stage 6 offline paket/arşiv ve #34 offline keşif adımları PASS.
+- **DEVAM_NOTU.md:L423** — [Tarihsel kaynak kaydı] - Canlı API sözleşmesi ve gerçek FFmpeg görüntü/ses kabulü bu çalışmayla kanıtlanmadı; #34 ve gerçek kanıt isteyen #28–#33 açık. Kapsamlı tarama ve korunan listelerde değişiklik yok.
+- **DEVAM_NOTU.md:L427** — [Tarihsel kaynak kaydı] - Güncel `main` tabanlı `fix-34-api-diagnostics-current-main-20261113` dalında HTTP 408/425 retry ve API host tanılaması (`584b476`) ile iki regresyon testi (`eaea679`) eklendi. Var olan yanıt şeması ve bağlantı kesintisi kontrolleri korundu.
+- **DEVAM_NOTU.md:L433** — [Tarihsel kaynak kaydı] - Bu güvenlik işi canlı Codeberg API sözleşmesi veya gerçek FFmpeg AV kabulü değildir. #34 nihai kabulü AÇIK; kapsamlı tarama yapılmadı, korunan İBO/YEDEKLER/YENİLER/FAVORİLER değiştirilmedi.
+- **DEVAM_NOTU.md:L457** — [Tarihsel kaynak kaydı] - Codeberg canlı API isteği önceki testte HTTPError verdi; yeni başarılı canlı kabul kanıtı yoktur. #34 açık kalır. Ana İBO korunur.
+- **DEVAM_NOTU.md:L460** — [Tarihsel kaynak kaydı] - Production Security Gate run 43320335176: SUCCESS, commit 4019cb7c. Workflow envanteri ve korunan İBO dosyası kontrolü geçti.
+- **DEVAM_NOTU.md:L466** — [Tarihsel kaynak kaydı] - Actions run 43319830482: güvenlik kilidi, yeni v2-discovery-34-offline.yml dosyasını beklenmeyen workflow saydı. Kilidi değiştirmeden bu yeni workflow dosyası efddbdd4 commit'inde kaldırıldı. Test kodları dalda korundu.
+- **DEVAM_NOTU.md:L481** — [Tarihsel kaynak kaydı] - `v2/real_ibo_scan.py` geçmiş arşivden okunan her iki kaynak kimliği biçimini kayıpsız birleştirir ve varsayılan paket boyutu son kullanıcı kararıyla 500'dür (401d194). Offline regresyon testi eklendi (28c97fa).
+- **DEVAM_NOTU.md:L483** — [Tarihsel kaynak kaydı] - Yeni internet taraması başlatılmadı; korunan playlist/YEDEKLER/EPG/favoriler değiştirilmedi. #60 gerçek URL kurtarma ve harici kalıcı şifreli yedek hâlâ açık.
+- **DEVAM_NOTU.md:L500** — [Tarihsel kaynak kaydı] - Gerçek tarama BAŞLATILMADI; ana playlist, EPG, YEDEKLER ve yabancı arşiv değiştirilmedi. Yeni adayların YEDEKLER'e aktarımı yalnızca kullanıcı onayıyla, 500'lük gruplarla yapılır.
+- **DEVAM_NOTU.md:L501** — [Tarihsel kaynak kaydı] - `v2/real_ibo_scan.py`: geçmiş envanterdeki kaynak kimlikleri ve gözlemler sonraki taramada korunacak biçimde güncellendi; 3964 yabancı arşiv kaydı benzersiz URL sayısına eşit olmak zorunda değil; eksik tarama raporunda yazılmayan paket sayısı sıfırlanır (commit 136565c7).
+- **DEVAM_NOTU.md:L510** — [Tarihsel kaynak kaydı] - Kullanıcı açıkça yeni tarama istemiyor; eski kayıtların saklanması, entegrasyon ve offline doğrulama öncelikli. 500'lük YEDEKLER aktarımı yalnızca yeni açık kullanıcı talimatıyla yapılır.
+- **DEVAM_NOTU.md:L518** — [Tarihsel kaynak kaydı] 2 Kasım 2026 — kullanıcının yeni öncelik kararı
+- **DEVAM_NOTU.md:L520** — [Tarihsel kaynak kaydı] - Kanal araması tamamlandıktan sonra adaylar önce kalıcı envanterde saklanacak. **Kullanıcı açıkça söylemeden** YEDEKLER'e hiçbir aday aktarılmayacak.
+- **DEVAM_NOTU.md:L521** — [Tarihsel kaynak kaydı] - Kullanıcının yeni İBO test grubu **500 kanal** (önceki 2000'lik kararının yerine geçer). 500 sayısını doldurmak için sahte/çalışmayan URL üretilmeyecek.
+- **DEVAM_NOTU.md:L522** — [Tarihsel kaynak kaydı] - Ana V2 playlist, 38 mevcut YEDEKLER kanalı, 3964 kayıtlı yabancı arşivi, EPG ve favoriler korunacak; TRT 1 ile DHA ilk iki sırada.
+- **DEVAM_NOTU.md:L523** — [Tarihsel kaynak kaydı] - `.github/workflows/v2-public-source-audit.yml` günlük otomatik taraması durduruldu; workflow elle çalıştırılabilir, ancak kullanıcı onayı olmadan tetiklenmeyecek. Commit a36e7ca7.
+- **DEVAM_NOTU.md:L530** — [Tarihsel kaynak kaydı] - Kullanıcı YEDEKLER 1-38 kayıtlarını korumayı, 39-4002 arasındaki 3964 kaydı ayrı yabancı arşive taşımayı onayladı. Arşiv: v2/arsiv/yabanci_yedekler_2026-11-02_3964.m3u8.
+- **DEVAM_NOTU.md:L532** — [Tarihsel kaynak kaydı] - Arşivdeki 3964 yayın adresi korunur; bunlar otomatik olarak Türkçe sayılmaz ve yeniden İBO test adayı yapılmaz.
+- **DEVAM_NOTU.md:L536** — [Tarihsel kaynak kaydı] - Koruma testleri 38 YEDEKLER + 3964 arşiv kuralına uyarlanmıştır. Gelecekte kullanıcı onayıyla 500 kanal eklenecekse testlerin sabit 38 sayımı da kontrollü güncellenmelidir.
+- **DEVAM_NOTU.md:L543** — [Tarihsel kaynak kaydı] Değişmezler
+- **DEVAM_NOTU.md:L544** — [Tarihsel kaynak kaydı] - Kullanıcının İBO'da kullandığı **asıl playlist**: [URL: kaynak dosyada]
+- **DEVAM_NOTU.md:L548** — [Tarihsel kaynak kaydı] - Orijinal favoriler, kategoriler, yayın URL'leri ve EPG korunacak. YEDEKLER'deki **TRT 1 1440P QHD** ve **DHA CANLI 720P HD** kesinlikle silinmeyecek.
+- **DEVAM_NOTU.md:L552** — [Tarihsel kaynak kaydı] 1. V2 ana playlisti kullanıcı talebiyle **1047 kayıt** oldu; YEDEKLER yeniden yalnızca **2 orijinal kanaldan** oluşuyor. Son değişiklik commit 60a98365deae3ba1b7c0fc8894a640a8ea3662fe.
+- **DEVAM_NOTU.md:L553** — [Tarihsel kaynak kaydı] 2. TRT Arabi ve TRT World yabancı dil nedeniyle V2 listesinden çıkarıldı. Aras TV, Haber61 TV, TV Den ve YOL TV, YEDEKLER'den alınıp hem **📍 YEREL (74)** hem **📺 HEPSİ (378)** kategorilerine eklendi. Orijinal TRT 1 ve DHA CANLI YEDEKLER (2) içinde korundu. Yeni kanalların İBO Player'da uzun süreli oynatımı henüz kanıtlanmadı.
+- **DEVAM_NOTU.md:L555** — [Tarihsel kaynak kaydı] 4. `v2/youtube_discovery.py` eklendi: YouTube'da beş Türk TV arama sorgusu, sınırlı aday keşfi, en fazla 12 adayın canlı yayın metadatası kontrolü. Bulunanlar `v2/reports/youtube-live-candidates.json` dosyasına raporlanır; **playlist otomatik değişmez**.
+- **DEVAM_NOTU.md:L562** — [Tarihsel kaynak kaydı] 4. **İBO uyumluluğu:** yeni altı kanalı gerçek İBO Player üzerinde kullanıcıyla doğrula; uzun süreli çalışma, EPG ve logoları test et. Sadece ffprobe başarılı olması yeterli değildir.
+- **DEVAM_NOTU.md:L563** — [Tarihsel kaynak kaydı] 5. **Asıl İBO playlistiyle eşitleme:** eski `Madsc55/Madsc55-Tv` deposunun canlı dosyasını ve kategorilerini karşılaştır; hiçbir eski kaydı değiştirmeden yalnızca kullanıcı onaylı, doğrulanmış yeni kanalları ekle. Güncellemeden önce/sonra sayım ve içerik bütünlüğü testini yap.
+- **DEVAM_NOTU.md:L564** — [Tarihsel kaynak kaydı] 6. **Otomasyon güvenliği:** `v2-promote-yedekler.yml` tek seferlik iş akışıdır; gelecekte yanlışlıkla tekrar çalışıp YEDEKLER sayısını çoğaltmaması için kontrol et. Her eklemede önceki 2 yedek de korunmalı.
+- **DEVAM_NOTU.md:L566** — [Tarihsel kaynak kaydı] 27 Ekim 2026 son ilerleme\n- YouTube workflow başarılı: https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/40554927212 — 27 aday, 0 canlı doğrulama, 0 arama hatası.\n- Resmî TV sitesi keşif kodu ve haftalık workflow eklendi; ilk çalışma **başarılı**: https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/40555364316 — 370 site kaydı. Fark karşılaştırması başarılı: https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/40555669301 — 6 eşleşme, 364 inceleme kaydı. Eşleşme yönteminin kısıtları nedeniyle 364 eksik kanal sonucu çıkarılamaz.\n- IPTV-org API kanal/stream/logo/EPG/blocklist uçları belgelendi: [URL: kaynak dosyada] . Resmî site keşfi sadece kanal kataloğu URL'lerini listeler, doğrudan stream doğrulaması değildir.\n\n## Son kontrol ve erişim engeli\n- V2 playlisti GitHub'dan tekrar okundu: **1047 kanal, 2 YEDEKLER**; iki orijinal yedek mevcut.\n- **Asıl İBO deposu erişim engeli:** \`Madsc55/Madsc55-Tv\` içindeki \`MADSC55_TV_IBO_CALISANLAR_TEST.m3u8\` dosyasına GitHub bağlantısı 404 döndürüyor. Depo listesinde yalnızca \`madsc-tv\` ve \`MADSC55-TV-V2\` erişilebilir. \`Madsc55/madsc-tv/CALISANLAR.m3u\` dosyası ayrıca kontrol edildi: 1039 kanal ve orijinal 2 YEDEKLER; eski V2 playlist blob SHA'sıyla birebir aynı (b40aaf...). Ancak kullanıcının verdiği **İBO raw URL'si \`Madsc55/Madsc55-Tv\`** deposuna işaret ediyor ve bu depo GitHub bağlantısında 404; \`madsc-tv/CALISANLAR.m3u\` dosyasının İBO'nun gerçekten kullandığı dosya olduğu doğrulanmadı. **Asıl İBO listesi değiştirilmedi**. V2 listesiyle eşitleme hâlâ açık iştir.\n- \`v2/test_playlist_invariants.py\` ve \`.github/workflows/v2-playlist-safety.yml\` eklendi. 1045+ kayıt, 8+ YEDEKLER, orijinal TRT 1/DHA ve YEDEKLER kategori sayacı korunmasını test eder. Workflow **başarılı**: run 40557969966, 1047 kanal, 2 yedek, 14 kategori, 3 kaynak.\n- Resmî site alias test hatası düzeltildi; başarılı tekrar run: https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/40557210310\n\n## Yeni eklenen gerçek İBO kontrolü\n- \`v2/ibo_parity.py\` ve günlük \`.github/workflows/v2-ibo-parity.yml\` eklendi. Kullanıcının verdiği **tam raw İBO URL'sini** HTTP üzerinden okuyup V2 ile SHA-256, kanal sayısı, eksik eski URL'ler ve yeni aday isimlerini karşılaştırır; **hiçbir dosyayı değiştirmez**.\n- İlk iş akışı **başarılı çalıştı** (run 40558519460) ancak sonuç **IBO_URL_UNREACHABLE**; V2 1047 kayıt, asıl İBO içeriği okunamadı. İBO raw URL 404/erişilemez ise raporda açıkça \`IBO_URL_UNREACHABLE\` olarak belirtilecek; V2'nin üretimle eşit olduğu iddia edilmeyecek.\n- Açık işler: İBO bağlantısına yazma yetkisi/doğru repo, gerçek İBO Player oynatım testi, YouTube canlı metadata 0 sonucunu iyileştirme ve resmî site akışlarının doğrulanması.\n\n## Sonraki sohbet için çalışma şekli
+- **DEVAM_NOTU.md:L570** — [Tarihsel kaynak kaydı] - Kullanıcıyı GitHub'da elle işlem yapmaya yönlendirme; mevcut yetkilerle doğrudan çalış. Test edilmemiş işi bitmiş gibi anlatma.
+- **DEVAM_NOTU.md:L572** — [Tarihsel kaynak kaydı] Son kullanıcı kararı — öncelikli ve geçerli
+- **DEVAM_NOTU.md:L580** — [Tarihsel kaynak kaydı] - V2 kullanıcı kararı geçerli: **1047 kayıt, YEDEKLER 2, YEREL 74, HEPSİ 378**. Test run `40559428314` başarılı.
+- **DEVAM_NOTU.md:L583** — [Tarihsel kaynak kaydı] Yeni ilerleme — kullanıcıdan oynatım testi beklemeden
+- **DEVAM_NOTU.md:L586** — [Tarihsel kaynak kaydı] - Kullanıcı yeni kanalların İBO Player'daki oynatımına **daha sonra kendisi bakacak**. Bu konuda tekrar tekrar soru sorma; kanal keşfi ve otomatik testlerle ilerle. Canlı IBO playlistine erişim yokken değiştirme.
+- **DEVAM_NOTU.md:L590** — [Tarihsel kaynak kaydı] - `v2/turkish_stream_catalog.py` ve `.github/workflows/v2-turkish-stream-catalog.yml` eklendi. IPTV-org **streams.json** içinden TR kanal kimlikli doğrudan yayın adaylarını toplar, V2'de zaten olan URL'leri ayıklar, eşleşen kanal kimliklerini işaretler ve **salt-okunur** JSON artifact üretir. Haftada iki kez otomatik çalışır; DRM veya erişim kısıtlaması aşmaz; kullanıcı onayı ve oynatım doğrulaması olmadan playlist değiştirmez.
+- **DEVAM_NOTU.md:L591** — [Tarihsel kaynak kaydı] - İlk workflow sonucu kontrol edilecek. İBO Player'daki oynatım kontrolünü kullanıcı daha sonra kendisi yapacak.
+- **DEVAM_NOTU.md:L595** — [Tarihsel kaynak kaydı] - Keşif filtresi TRT Arabi ve TRT World'ü kullanıcı isteğine göre hariç tutacak şekilde güncellendi. Mevcut kanal için alternatif yayın ile yeni kanal adayları ayrı sınıflandırılır; özel HTTP header gerektiren yayınlar otomatik aday yapılmaz. Commit `84243be09c64b88279219d08e2431c506ed0bb4b`; yeni test sonucu kontrol edilecek.
+- **DEVAM_NOTU.md:L596** — [Tarihsel kaynak kaydı] - İBO Player oynatım kontrolünü kullanıcı daha sonra yapacak; bu konuyla kullanıcıyı tekrar tekrar meşgul etme.
+- **DEVAM_NOTU.md:L606** — [Tarihsel kaynak kaydı] - Hiçbir İBO/V2 playlistine otomatik aktarım yapılmaz; gerçek IBO Player testi kullanıcıya bırakılmıştır.
+- **DEVAM_NOTU.md:L611** — [Tarihsel kaynak kaydı] - İBO ve V2 playlistleri değişmedi; kullanıcı İBO oynatımını daha sonra kontrol edecek.
+- **DEVAM_NOTU.md:L616** — [Tarihsel kaynak kaydı] - İBO Player kullanıcı kontrolü ertelendi; canlı playlist, kategoriler ve iki yedek değişmedi.
+- **DEVAM_NOTU.md:L630** — [Tarihsel kaynak kaydı] - Sınırlama: aynı içeriği farklı URL'lerde sunan akışların video-fingerprint eşitliği henüz doğrulanmıyor. Yeni adayların EPG/logo eşleştirmesi henüz otomatik değil. İBO playlisti korunur.
+- **DEVAM_NOTU.md:L632** — [Tarihsel kaynak kaydı] Kullanıcı önerisi — yeni kaynak incelemesi
+- **DEVAM_NOTU.md:L661** — [Tarihsel kaynak kaydı] - Yeni run 40576629287 henüz doğrulanmalı. Otomatik yayın değiştirme kapalı, canlı IBO/favoriler/yedekler korunur.
+- **DEVAM_NOTU.md:L666** — [Tarihsel kaynak kaydı] - Yeni workflow run 40577598333 doğrulanmalı. Uzun süreli stabilite/çok zamanlı içerik doğrulaması ve 1047 kanalın tümünün ölçümü hâlâ kapsam dışı. Canlı IBO, favoriler, kategoriler ve iki orijinal yedek korunur.
+- **DEVAM_NOTU.md:L701** — [Tarihsel kaynak kaydı] Kullanıcı kararı: Yeni özellikler icat ederek işi uzatma; mevcut eksikleri topluca kapat, tek birleşik workflow ile test et ve kabul koşulları karşılanınca projeyi tamamlandı ilan et.
+- **DEVAM_NOTU.md:L703** — [Tarihsel kaynak kaydı] Dört değişmez kabul koşulu
+- **DEVAM_NOTU.md:L706** — [Tarihsel kaynak kaydı] 3. Canlı `MADSC55_TV_IBO_CALISANLAR_TEST.m3u8` Git blob hash `4b1c3cea4b5107a425abab60f62d41f9f81e05a7`, FAVORİLER, 13 kategori, TRT 1 1440P QHD ve DHA CANLI 720P HD daimi yedekleri korunur; kullanıcı onayı olmadan otomatik yayın yapılmaz.
+- **DEVAM_NOTU.md:L713** — [Tarihsel kaynak kaydı] - Kanıtlanamayanları doğrulanmış diye gösterme. Güvenli inceleme kuyruğuna al; kullanıcıya her küçük değişiklik için yeni test yaptırma.
+- **DEVAM_NOTU.md:L716** — [Tarihsel kaynak kaydı] - Önceki #66 birleşik test kullanıcı ekran görüntüsüne göre SUCCESS; 32 playback işi, 68 artifact. #66 son commitlerin testi değildir.
+- **DEVAM_NOTU.md:L727** — [Tarihsel kaynak kaydı] - Değişmez dört bitiş şartı: (1) gerçek Türkçe konuşma kanıtı ve çalışan yayın, (2) terfi adayı için kimlik/video/ses/kalite/EPG/logo, belirsizleri karantina, (3) IBO/favoriler/13 kategori/2 yedek koruma, otomatik yayın yok, (4) tek toplu final test ve doğru rapor; sonra MADSC TV TAMAMLANDI. Beşinci şart yok.
+- **DEVAM_NOTU.md:L739** — [Tarihsel kaynak kaydı] - Korunan V2 playlist: 840 kayıt, 13 kategori, YEDEKLER'de 2 orijinal kanal; bu çalışma playlist'i değiştirmedi. Yukarıdaki eski 1047/14 kategori notları tarihsel ve güncel değildir.
+- **DEVAM_NOTU.md:L742** — [Tarihsel kaynak kaydı] 30 Ekim 2026 — Kullanıcı kararı: 27.429 benzersiz yayın kimliğini koru
+- **DEVAM_NOTU.md:L745** — [Tarihsel kaynak kaydı] - Kullanıcı kendi player'ında oynatım testlerini kendisi yapacak; kullanıcıdan her aşamada tekrar player testi isteme. Otomatik keşif, kaynak teşhisi, mevcut güvenli ses/oynatım kontrolleri ve toplu testler sürdürülebilir.
+- **DEVAM_NOTU.md:L747** — [Tarihsel kaynak kaydı] - Mevcut IBO, favoriler, kategori düzeni ve iki orijinal YEDEKLER kanalı korunacak. Otomatik üretime alma yok; doğrulanmayan adayları karantinada tut.
+- **DEVAM_NOTU.md:L754** — [Tarihsel kaynak kaydı] Kullanici tarafindan onaylanan sonraki calisma plani; **ana toplu Turkce kanal taramasi tamamlandiktan sonra** uygulanacak. Bu bolum bir uygulama tamamlandi iddiasi degildir.
+- **DEVAM_NOTU.md:L758** — [Tarihsel kaynak kaydı] 3. Deneme partilerini mevcut IBO ana playlist, favoriler, kategoriler ve iki orijinal YEDEKLER kaydina dokunmadan **ayri gecici test listeleri** olarak hazirla. Kullanici kendi IBO Player'inda kanallari tek tek dener; otomatik playback testleri kullanici kararinin yerini almaz.
+- **DEVAM_NOTU.md:L759** — [Tarihsel kaynak kaydı] 4. Her aday icin kullanicinin karari kalici olarak kaydedilsin: CALISAN_TURKCE, CALISMIYOR, YABANCI_DIL, KARARSIZ, HENUZ_TEST_EDILMEDI. Ayrica kanal adi, kaynak/ulke, yayin dili, URL kimligi, TVG-ID, son test tarihi, parti numarasi ve kullanici notu tutulabilsin. Kaynak ulkesi yayin dili kaniti degildir.
+- **DEVAM_NOTU.md:L760** — [Tarihsel kaynak kaydı] 5. Onayli calisan Turkce kanallari ayri koru. Test edilen calismayan/yabanci adresleri sonraki kullanici test partilerinden ayir; yeni taramalarda ayni URL veya ayni kanalin alternatiflerini tani. Calismayanlari sonsuza kadar engelleme: yeniden deneme tarihi/manuel sifirlama imkani sagla.
+- **DEVAM_NOTU.md:L761** — [Tarihsel kaynak kaydı] 6. Bir parti tamamlandiginda kullanici onayi ile gecici test listesini temizle ve siradaki 1000/1500 adayi hazirla. Kayitlar, onaylar ve parti sirasi kesinlikle silinmesin. Yeni sohbetlerde DEVAM_NOTU.md ve durum dosyalarindan ayni noktadan devam edilebilsin.
+- **DEVAM_NOTU.md:L762** — [Tarihsel kaynak kaydı] 7. Kabul testleri: 27.500 ornek adayda 28 x 1000'lik parti; tekrar aday yok; yeniden tarama kullanici kararlarini silmez; ayni kanal farkli URL'den gelirse alternatif olarak iliskilendirilir; bir parti geri alinip yeniden acilabilir; ana IBO ve iki yedek degismez. 27.500 sayisi varsayimsal ornektir, dogrulanmis mevcut sayi degildir.
+- **DEVAM_NOTU.md:L764** — [Tarihsel kaynak kaydı] **Oncelik:** Ana kanal taramasinin sonucu alindiktan sonra bu plani ilk siraya koy. Kullaniciya tarama bitince bu plani hatirlat; sonraki calismaya buradan basla.
+- **DEVAM_NOTU.md:L767** — [Tarihsel kaynak kaydı] DEGISMEZ KURAL: Bulunan hicbir kanal kaydi kaybolmayacak (30 Ekim 2026)
+- **DEVAM_NOTU.md:L769** — [Tarihsel kaynak kaydı] Kullanicinin acik ve yuksek oncelikli talebi: **Kesfedilen hicbir kanal/stream adayi, calismiyor, yabanci, Turkce degil, tekrar veya gecici olarak erisilemez diye veri tabanindan silinmeyecek.** Bulunan her adresin tarihi ve kaynaklari korunacak. Bu bir veri saklama gereksinimidir; mevcut uygulamanin bunu sagladigi iddia edilmez.
+- **DEVAM_NOTU.md:L771** — [Tarihsel kaynak kaydı] - Append-only/versiyonlu kalici aday arsivi: gercek URL (yetkili/guvenli erisimle), URL hash'i, kaynak M3U, gorulen kanal adi, tvg-id, grup, logo, kaynak ulke, yayin dili kaniti, ilk/son gorulme, tum tarama kimlikleri, gozlemler ve kullanici kararlari.
+- **DEVAM_NOTU.md:L776** — [Tarihsel kaynak kaydı] - Tum tarama adaylari kullaniciya 1000/1500'luk IBO test partileri olarak sunulabilecek; daha onceki parti ve test kararlari korunacak. IBO ana liste/favoriler/kategoriler/iki orijinal yedek korunacak.
+- **DEVAM_NOTU.md:L777** — [Tarihsel kaynak kaydı] - Kabul testleri: ard arda iki taramada toplam aday birlesimi korunuyor; bir aday silinse/erisilemez olsa bile arsivde; tum kararlar yeniden baslatma ve yeni sohbet sonrasi geri yukleniyor; yedekten gercek URL'lerle M3U parti yeniden uretilebiliyor; yetki bilgileri sizmiyor.
+- **DEVAM_NOTU.md:L784** — [Tarihsel kaynak kaydı] Kullanici talimati: Kanal aramasini gelistirmek icin kalan butun isleri **ayri ayri testlerle oyalamadan, tek koordineli toplu calisma** halinde ele al. Su an ana taramanin bitmesi beklenecek. Bu bir yapildi iddiasi degil; siradaki uygulama ve kabul plani.
+- **DEVAM_NOTU.md:L794** — [Tarihsel kaynak kaydı] **E. Kademeli IBO Player manuel test:** Kalici havuzdan sabit kimlikli, tekrar etmeyen 1000/1500'luk M3U partileri uret. Kullanici kendi player'inda test ederek CALISAN_TURKCE, CALISMIYOR, YABANCI_DIL, KARARSIZ, HENUZ_TEST_EDILMEDI olarak ayiracak; kararlari, tarihleri ve parti sirasi kalici kaydedilecek. Yeniden taramada onceden karar verilenleri tekrar yeni test partisine koyma, ama arsivden asla silme; calismayanlara gelecekte yeniden deneme imkani ver. Kanal ile URL kimligini ayri tut.
+- **DEVAM_NOTU.md:L796** — [Tarihsel kaynak kaydı] **F. Koruma ve toplu kabul:** Mevcut 840 girdili V2 IBO playlist, 13 kategori, favoriler ve iki orijinal YEDEKLER yayini korunacak; izinsiz otomatik yayinlama yok. Tek koordine CI/test turunda syntax/offline kontrat, kaynak kesif, tarihi kurtarma, snapshot arsivleme, shard playback, rapor birlestirme, 1000/1500 parti olusturma, tekrar/geri yukleme ve playlist invariants dogrulansin. Basarisiz adimlar icin net hata/kok neden/duzeltme ver; yeni testleri gereksiz yere tek tek kullaniciya yaptirma.
+- **DEVAM_NOTU.md:L800** — [Tarihsel kaynak kaydı] **Kabul:** Kullaniciya tamamlandi demeden once hem kaynak kapsami hem URL arsivi hem geri yukleme hem kademeli IBO parti ve durum hafizasi hem playlist korumasi testlerden gecmis olmali. Tarama bitene kadar bu yeni toplu isi baslatmak icin kullanicidan ekstra is isteme.
+- **DEVAM_NOTU.md:L803** — [Tarihsel kaynak kaydı] KULLANICI GUNCEL PARTI BOYUTU: 2000 (30 Ekim 2026)
+- **DEVAM_NOTU.md:L805** — [Tarihsel kaynak kaydı] Kullanici son talimati: **Ana kanal taramasi tamamlandiktan sonra ilk 2000 bulunan adayi IBO Player'da manuel test edebilmek icin YEDEKLER/test alanina hazirla.** Daha once konusulan 1000/1500 varsayilaninin yerine **2000** esas alinsin. Kullanici calisan Turkce, calismayan ve yabanci kanallari sececek; sonuclari kalici kaydet, sonraki 2000'lik partiye gec, onceki partileri ve tum URL verisini asla kaybetme. **Mevcut iki orijinal YEDEKLER kaydini, IBO ana listeyi, favorileri ve kategorileri silme/ustune yazma**; gerekiyorsa ayri isimli gecici test yedegi/playlist uret ve kullaniciya yukleme seklini acikla. Yalnizca tarama bitince, gercek URL'lerin guvenli arsivden geri yuklenebildigi dogrulandiktan sonra parti dosyasini olustur. Kullanici test kararlarini otomatik playback sonucuyla degistirme.
+- **DEVAM_NOTU.md:L810** — [Tarihsel kaynak kaydı] Kullanicinin kesin talimati: **Ayrica bir playlist VERME/URETME.** Ana playlist zaten kayitli: `[URL: kaynak dosyada]`. EPG: `[URL: kaynak dosyada]`. V2 gelistirme playlisti farkli depoda, asil IBO olarak varsayilmayacak. Tarama bitince 2000 aday **kullanicinin ana IBO playlistindeki YEDEKLER bolumunde** test icin isteniyor; baska URL/playlist onerme ve kullanicidan bu adresleri tekrar isteme. Mevcut iki orijinal YEDEKLER kanali TRT 1 1440P QHD ve DHA CANLI 720P HD silinmeyecek; favoriler, mevcut kategoriler ve EPG korunacak. Asil IBO adresine erisim/yazma yetkisi daha once 404 olarak raporlandi; erisim ve guvenli geri alma/backup olmadan asla degistirildi iddiasinda bulunma. Yetki saglanmadan kullanicinin talebini ayri playlist ile ikame etme. Eski notlardaki 'ayri gecici test listesi' onerisi kullanici tarafindan acikca reddedildi; bu son talimat gecerlidir.
+- **DEVAM_NOTU.md:L814** — [Tarihsel kaynak kaydı] - `v2/discover.py`: Ayni URL farkli kaynaklarda goruldugunde `source_ids` ile tum kaynak kimlikleri kaydediliyor; ilk kaynak tekeline bagli raporlama azaltildi. Mevcut `source` alani uyumluluk icin korundu.
+- **DEVAM_NOTU.md:L818** — [Tarihsel kaynak kaydı] - Kritik veri riski: Gercek stream URL'lerini saklayan ozel snapshot 1 gunluk artifact; kalici sifreli URL arsivi/geri yukleme HENUZ YOK. SHA256 tek basina URL kurtarmaz. Onceki tarama verileri korunmadan yenisi eskisinin yerine gecmis sayilmayacak.
+- **DEVAM_NOTU.md:L819** — [Tarihsel kaynak kaydı] - Ana IBO playlisti, iki orijinal YEDEKLER, favoriler, kategoriler, EPG degistirilmedi. Kullanicinin son istegi 2000 aday mevcut IBO YEDEKLER bolumunde, AYRI playlist yok. Kanonik IBO URL erisimi dogrulanmadan yazma yapma.
+- **DEVAM_NOTU.md:L824** — [Tarihsel kaynak kaydı] Bu not, yeni sohbette devam icin son durumdur. Kullanici butun kararlarin korunmasini istiyor.
+- **DEVAM_NOTU.md:L826** — [Tarihsel kaynak kaydı] - Asil IBO playlist: [URL: kaynak dosyada] . EPG: [URL: kaynak dosyada] . V2 gelistirme playlisti farklidir. Asil URL daha once erisilemez gorundu; dogrulamadan degistirme. Kullaniciya adresi yeniden sorma.
+- **DEVAM_NOTU.md:L827** — [Tarihsel kaynak kaydı] - Kesin karar: ayri test playlisti yok. 2000 aday mevcut asil IBO YEDEKLER bolumunde test edilecek. Iki orijinal yedek TRT 1 1440P QHD ve DHA CANLI 720P HD, favoriler, kategoriler, EPG korunacak. V2 referans 840 giris ve 13 kategori.
+- **DEVAM_NOTU.md:L833** — [Tarihsel kaynak kaydı] - Yeni sohbet ilk adim: bu notu oku, son GitHub Actions run'larini kontrol et, sonra eksikleri topluca ele al. Kullaniciya eski bilgileri tekrar sordurma.
+- **DEVAM_NOTU.md:L838** — [Tarihsel kaynak kaydı] KULLANICI DUZELTMESI: Butun aktif calisma yalnizca `Madsc55/MADSC55-TV-V2` deposunun `main` dalinda yapilacak. `Madsc55-Tv`, eski repo, eski IBO raw adresi ve diger projelere KULLANICI ACIKCA SOYLEMEDIKCE dokunma, yonlendirme yapma veya onlari aktif hedef olarak kabul etme. Onceki devir notlarindaki asil IBO'nun baska repo oldugu talimati bu is icin GECERSIZDIR. Aktif V2 playlisti: `MADSC55_TV_IBO_CALISANLAR_TEST.m3u8`. V2 EPG, favoriler, kategoriler ve mevcut kanallar korunacak. Iki orijinal YEDEKLER TRT 1 1440P QHD ve DHA CANLI 720P HD silinmeyecek. Ayri playlist YOK. Manuel test partisi 2000 aday ve mevcut V2 playlistinin YEDEKLER bolumune eklenecek; guvenli backup, tekrar etmeme, kullanici kararlarini koruma ve izin/kabul testleri gereklidir.
+- **DEVAM_NOTU.md:L846** — [Tarihsel kaynak kaydı] KALAN ISLER: GitLab/Codeberg/benzeri kaynak kesfi, resmi yayin siteleri ve YouTube adaylarinin ana havuza entegrasyonu, Gunes TV/Rec TV/Gopik TV dogrulamasi, tarihsel #60 URL kurtarma, tokenleri aciga cikarmayan kalici geri yuklenebilir URL arsivi, manuel karar hafizasi, 2000'lik V2 YEDEKLER partisi, toplu CI regresyon ve playlist degismezlik testi. Her URL'nin kaynaklarini ve tarihcesini koru; tekrar tarama eski veriyi silmesin. Yapilmayan isleri yapildi diye yazma. Kullaniciya daha once verdigi bilgileri tekrar sorma.
+- **DEVAM_NOTU.md:L854** — [Tarihsel kaynak kaydı] - Ana V2 playlisti, YEDEKLER, EPG, kategoriler ve favoriler degistirilmedi. Bu commit sonrasi Actions testleri henuz dogrulanmadi; kullanici onceki testlerin yesil oldugunu bildirdi.
+- **DEVAM_NOTU.md:L861** — [Tarihsel kaynak kaydı] - `get_commit_combined_status` sorgusu `b113e9c7` icin bos statuses dondu; bu, GitHub Actions basarisi veya basarisizligi kaniti DEGIL. Kullanici onceki testleri yesil bildirdi; yeni commitlerin run/job sonucunu kontrol etmek gerekiyor.
+- **DEVAM_NOTU.md:L879** — [Tarihsel kaynak kaydı] 2026-10-30 KULLANICI ONAYLI SIRALI BEKLEYEN IS PLANI
+- **DEVAM_NOTU.md:L880** — [Tarihsel kaynak kaydı] - Kullanici talimati: son birlesik Actions testleri bitene kadar tekrar tekrar test baslatma; kalan isleri asagidaki bagimlilik sirasina koy ve test sonucu geldikten sonra bu sirayla devam et. Bu bir arka plan otomasyonu olusturuldugu anlamina GELMEZ; bir sonraki calismada GitHub Actions durumu kontrol edilerek devam edilir.
+- **DEVAM_NOTU.md:L885** — [Tarihsel kaynak kaydı] - 5. Tek birlesik test: kesif, arşiv/restore, kaynak kapsam, dedup, kanal kimligi, playback, dil, mevcut playlist ve orijinal YEDEKLER degismezligi; kullaniciyi tek tek testlere yonlendirme.
+- **DEVAM_NOTU.md:L886** — [Tarihsel kaynak kaydı] - 6. Ilk 2000: arsiv, dedup, manuel karar defteri ve backup koruma saglandiktan sonra kullanicinin onayi dogrultusunda mevcut V2 `MADSC55_TV_IBO_CALISANLAR_TEST.m3u8` dosyasinin YEDEKLER bolumune 2000 yeni aday ekle; orijinal TRT 1 1440P QHD ve DHA CANLI 720P HD'yi koru. Ayrı playlist olusturma. Kullanici IBO Player'da CALISAN_TURKCE/CALISMIYOR/YABANCI_DIL/KARARSIZ/HENUZ_TEST_EDILMEDI olarak siniflar; kararlari sonraki batch'ten disla ama tarihceyi silme.
+- **DEVAM_NOTU.md:L887** — [Tarihsel kaynak kaydı] - Kesin koruma: SADECE Madsc55/MADSC55-TV-V2; eski repo yok; ana playlistin mevcut 840 kanal/13 kategori/EPG/favori duzeni ve YEDEKLER'in iki orijinali kullanici onayli degisiklik asamasina kadar korunur.
+- **DEVAM_NOTU.md:L892** — [Tarihsel kaynak kaydı] - Kullanici GitHub Actions #82 ekran goruntusunu paylasti. `sources` basarili; `playback (0,0)` `Download shared source discovery` adiminda 5 retry sonrasi `Unable to download and extract artifact` hatasiyla durdu. Bu log oynatma/kanal decode hatasi degil, GitHub Actions artifact transfer hatasidir. Diger shard'larin tum sonucunu bu ekran kanitlamaz.
+- **DEVAM_NOTU.md:L894** — [Tarihsel kaynak kaydı] - Yeni commit Actions sonucu henuz dogrulanmadi; kullaniciya yeni run'in basarili oldugunu soyleme. Ana playlist/YEDEKLER/favoriler/EPG degismedi. Sonraki adim: #82 tamamlanma sonucu, yeni run, artifact tekrar hatasi ve tum shard kapsam kontrolu.
+- **DEVAM_NOTU.md:L898** — [Tarihsel kaynak kaydı] - Kullanici #82 final ekraninda FAILURE, 1h11m32s, 66 artifact, sources yesil, 32 playback job tamamlanmis fakat matrix kirmizi, review kirmizi gosterdi. Bilinen playback(0,0) sebebi source snapshot download 5 retry sonrasi basarisizlik; diger shard/review hata loglari henuz elde edilmedi.
+- **DEVAM_NOTU.md:L899** — [Tarihsel kaynak kaydı] - V2 workflow `Download private candidate snapshot` adimina ikinci download-artifact denemesi eklendi; commit `d2453cefab2173a82550200c46d85a88a3e3664f`. Onceki `unified-source-snapshot` retry duzeltmesi korunuyor. Yeni commitin Actions sonucu henüz dogrulanmadi; #82 eski committe calistigi icin duzeltilmis sayilamaz.
+- **DEVAM_NOTU.md:L904** — [Tarihsel kaynak kaydı] 2026-10-30 KULLANICI EKRAN GORUNTUSUYLE ACTIONS DOGRULAMASI
+- **DEVAM_NOTU.md:L906** — [Tarihsel kaynak kaydı] - `V2 Canonical IBO Playlist Parity` #5 YESIL. Bu bilgiler kullanicinin sagladigi GitHub ekran goruntulerine dayali, is-bazinda ayrintili log incelemesi degil. #85'in tam scan sayilari/arsiv dogrulamasi ayri kontrol edilmeli.
+- **DEVAM_NOTU.md:L907** — [Tarihsel kaynak kaydı] - Kullanici testlerin bittigini bildirdi. Yeni tam tarama baslatma; siradaki oncelik kalici guvenli tam URL arsivi ve #60 kurtarma. Ana playlist, YEDEKLER ve favorilere dokunma.
+- **DEVAM_NOTU.md:L911** — [Tarihsel kaynak kaydı] - Kullanici `v2/verify_private_archive_input.py` dosyasini main'e yukledi; GitHub fetch ile dosyanin varligi ve icerigi dogrulandi.
+- **DEVAM_NOTU.md:L919** — [Tarihsel kaynak kaydı] - `v2/verify_private_archive_input.py` GitHub'da mevcut; kaynak taramasinda private/public aday kimlik kontrolu var. Review artifact transfer retry commit `f869229a` eklendi. Kullanici testlerin yesil oldugunu bildirdi, fakat bu son commitlerin ayri Actions sonucunu burada API ile dogrulamadik.
+- **DEVAM_NOTU.md:L921** — [Tarihsel kaynak kaydı] - Gunes TV / Rec TV / Gopik TV ve GitLab/Codeberg/official/YouTube kaynak kapsami ayri kanit gerektirir. Korunan IBO playlisti, iki orijinal YEDEKLER kaydi ve favoriler degistirilmedi.
+- **DEVAM_NOTU.md:L926** — [Tarihsel kaynak kaydı] - Bu commitin yeni Actions sonucu henuz bagimsiz dogrulanmadi. Onceki kullanici yesil test bildirimi eski run'lar icindir.
+- **DEVAM_NOTU.md:L937** — [Tarihsel kaynak kaydı] - Kullanici Scribd ve benzer belge sitelerinden Turk M3U kaynaklari aramayi istedi. Scribd, SlideShare, Internet Archive: belge/arastirma kaynagi, dogrudan M3U endpoint'i degil; erisim ve telif sinirlarina uyarak baglanti incelemesi gerekir. Bu uc sitenin otomatik tarayicisi HENUZ eklenmedi.
+- **DEVAM_NOTU.md:L939** — [Tarihsel kaynak kaydı] - Yeni commitin Actions sonucu henuz dogrulanmadi. Ana IBO, YEDEKLER ve favoriler korunuyor. Belge kaynaklari, Codeberg genel kesif, #60 URL kurtarma, sifreli kalici arsiv ve 2000 test kanali acik.
+- **DEVAM_NOTU.md:L945** — [Tarihsel kaynak kaydı] - Kullanici toplu test ve arama istiyor. Yeni commit workflow push tetikleyebilir ama gercek run sonucunu API kaniti olmadan YESIL yazma. Yeni testler, kalici sifreli arsiv, #60 kurtarma, 2000 YEDEKLER islemi tamamlanmadi. Ana playlist ve favorilere dokunulmadi.
+- **DEVAM_NOTU.md:L958** — [Tarihsel kaynak kaydı] - Kullanici toplu test istiyor; yeni commitlere ait Actions sonucunu dogrulamadan YESIL denemez. Kaynaklarin calisirligi, #60 kurtarma, belge crawler, kalici sifreli arsiv ve YEDEKLER 2000 hala acik. Korunan IBO playlisti degismedi.
+- **DEVAM_NOTU.md:L961** — [Tarihsel kaynak kaydı] 2026-10-30 KULLANICI KARARI: TARAMA EN SON, IBO 2000+2000
+- **DEVAM_NOTU.md:L962** — [Tarihsel kaynak kaydı] - Kullanici yeni kanal taramasinin altyapi, eksik kaynaklar, offline testler, guvenli kalici arsiv ve restore hazir olmadan BASLATILMAMASINI istedi.
+- **DEVAM_NOTU.md:L963** — [Tarihsel kaynak kaydı] - Birlesik `.github/workflows/v2-turkish-stream-review.yml` otomatik `push` tetikleyicisi kaldirildi; `workflow_dispatch` manuel tetikleyicisi korundu. Commit `3645070a1e4905c6e37e09f3118a4de05a13935e`. Bu yeni push-tetikli scan olusmasini engeller; daha once kuyruga girmis/calismakta olan run'lari iptal ettigi anlamina gelmez. Diger workflow tetikleyicileri ayri denetlenmeli.
+- **DEVAM_NOTU.md:L964** — [Tarihsel kaynak kaydı] - Sira: (1) eksik kesif kaynaklari ve crawler kurulumlari, (2) kod/guvenlik ve offline testler, (3) erisim kontrollu sifreli kalici URL arsivi ve restore testi, (4) tam hazirlik denetimi, (5) kullanici talimatiyla TEK kapsamli tarama, (6) kalici arsiv + dedup + playback/dil siniflandirma, (7) mevcut YEDEKLER bolumune iki orijinali koruyarak 2000+2000 IBO test batchleri; her batch icin kullanici kararlari kalici tutulacak. Test kanallarini erken ekleme. Ana playlist, favoriler, EPG, logolar, yedekler korunacak.
+- **DEVAM_NOTU.md:L969** — [Tarihsel kaynak kaydı] Bu bolum onceki tum devir notlariyla birlikte uygulanacak; tamamlandi isaretleri yalniz kanitli test/commit ile degistirilecek. SADECE Madsc55/MADSC55-TV-V2. Eski repo yasak.
+- **DEVAM_NOTU.md:L973** — [Tarihsel kaynak kaydı] - Koruma sabiti: MADSC55_TV_IBO_CALISANLAR_TEST.m3u8 840 kanal, 13 kategori, blob 4b1c3cea4b5107a425abab60f62d41f9f81e05a7; YEDEKLER'in orijinal TRT 1 1440P QHD ve DHA CANLI 720P HD; YENILER/FAVORILER/cihaz favorileri/EPG/logo/sira ve yedekler. Kullanici onayli batch asamasina kadar hicbirine dokunma.
+- **DEVAM_NOTU.md:L991** — [Tarihsel kaynak kaydı] - Kaynak kapsami ve yeni adaptor testleri, CI, koruma hashleri, arşiv/restore, kapasite ve guvenlik raporu YESIL olmadan tarama baslatma. Sadece bu faz bittiginde kullanici talimatiyla tek kapsamli tarama icin workflow_dispatch.
+- **DEVAM_NOTU.md:L999** — [Tarihsel kaynak kaydı] - Arsiv, restore, test sonucu ve backup kanitindan SONRA mevcut YEDEKLER bolumune 2000 adaylik ilk parti; iki orijinal YEDEKLER kanalini koru. Ayrı playlist yok. Kullanici IBO cihaz testini yapacak.
+- **DEVAM_NOTU.md:L1001** — [Tarihsel kaynak kaydı] - Ilk 2000 sonucu ve geri alma/koruma kontrolunden sonra ikinci 2000, sonra ayni kuralla sonraki 2000'ler. Kullanici onayli YEDEKLER degisimi disinda ana listeyi/favorileri/EPG'yi degistirme.
+- **DEVAM_NOTU.md:L1018** — [Tarihsel kaynak kaydı] - ACIK: tum workflow trigger audit, GitHub CI gercek sonuc, GitLab/Codeberg/genel web/belge/resmi site kesif adaptörleri, #60 regresyon kapsamı, sifreli kalici URL arsivi ve restore, toplu test altyapisi. Kullanici karari: bunlar tamamlanmadan GERCEK KANAL TARAMASI YOK; IBO playlistine dokunma.
+- **DEVAM_NOTU.md:L1029** — [Tarihsel kaynak kaydı] 8. SADECE tum kapilar gecildikten sonra kullanici onayiyla manuel tek kapsamli tarama, sonra IBO YEDEKLER 2000+2000.
+- **DEVAM_NOTU.md:L1053** — [Tarihsel kaynak kaydı] - v2-ordered-preflight.yml icin her gun 03:17 UTC schedule eklendi, commit 1905fbcd279e07b5d02eee58d976c83a6e0e7e7b. Push ve manuel tetikleme de korunur.
+- **DEVAM_NOTU.md:L1074** — [Tarihsel kaynak kaydı] - YALNIZCA Madsc55/MADSC55-TV-V2. Eski madsc-tv deposuna dokunma. Ana IBO playlisti (son bilinen 840 kanal), YEDEKLER'in 2 orijinal kanali, YENILER, FAVORILER, cihaz favorileri, EPG, logo ve yedekler korunacak; PR #71 merge edilmez.
+- **DEVAM_NOTU.md:L1075** — [Tarihsel kaynak kaydı] - Kullanicinin asil hedefi: 20 kaynak grubunu ve 10 kesif motoru ozelligini TOPLU uygulamak; surekli kucuk test/plan commitleriyle oyalanmamak. Kaynak gruplari: TR M3U/M3U8; IPTV-org world/TR/AZ/tur/aze; Free-TV; GitHub/Gist; genel GitLab; Codeberg/diger hostlar; Scribd; SlideShare; Internet Archive; resmi TV siteleri; canli TV portallari; YouTube live; Azerbaycan; Avrupa Turk diaspora; dunya Turkce; Gunes TV/Rec TV/Gopik TV; TURKTV; Dearbulut; Onur Eroz; #60 kayip aday kurtarma. Motor: otomatik kaynak kesfi, provenance, gelismis parser, kaynak kaybi, dedup, dil/ulke, web sayfasi vs direct stream, sifreli kalici arsiv, eski-yeni karsilastirma, kaynak hata toleransi.
+- **DEVAM_NOTU.md:L1076** — [Tarihsel kaynak kaydı] - 32 yapilandirilmis kaynak var, calisirliklari ve yeni kaynaklarla 32 shard playback dogrulanmadi. 4.955 eski calisan aday hash'i var, URL'ler kaynaklardan tekrar edinilmeli. Tarama ancak gercek sifreli kalici arsiv ve restore kabulunden sonra; ardindan 2000'lik IBO test partileri, kullanici onayi ile mevcut YEDEKLER'de.
+- **DEVAM_NOTU.md:L1079** — [Tarihsel kaynak kaydı] - SONRAKI ASIL IS: GitLab/Codeberg/Archive/belge platformlari/resmi TV/YouTube/diaspora kaynak adaptörlerini topluca KODLA, offline toplu test et; #60/#74 kaynak kaybi regression; gercek sifreli arsiv ve restore; acceptance gate; tek kapsamli tarama. Kullanici tekrar plan istemiyor, dogrudan kod/tespit ve toplu tamamlanma istiyor.
+- **DEVAM_NOTU.md:L1094** — [Tarihsel kaynak kaydı] - Bu araç otomatik gerçek kaynak taraması, eski URL kurtarma veya şifreli arşiv yerine geçmez. Ana playlist/YEDEKLER/eskidepo korunmuştur.
+- **DEVAM_NOTU.md:L1106** — [Tarihsel kaynak kaydı] - `v2/test_discovery_offline_regressions.py` (`be569bf`): bu entegrasyonun kodda korunması için çevrimdışı regresyon denetimi; mevcut ordered-preflight discovery-tests adımına bağlı.
+- **DEVAM_NOTU.md:L1120** — [Tarihsel kaynak kaydı] - YEDEKLER dışında hiçbir kategorinin sırası değiştirilmeyecek; yalnız YEDEKLER alfabetik olacak. İBO cihaz testi kullanıcıya aittir.
+- **DEVAM_NOTU.md:L1123** — [Tarihsel kaynak kaydı] - YEDEKLER logoları tamamlanmadı; adayların gerçek IBO oynatımı henüz kullanıcı tarafından doğrulanmadı. Kaynak kapsamı ve eski kanalların kurtarılması tamamlandı denemez.
+- **DEVAM_NOTU.md:L1126** — [Tarihsel kaynak kaydı] 1. **CI ve güvenlik:** Güncel main üzerinde derleme, playlist invariants, keşif ve güvenlik testlerini yeşil doğrula; orijinal 838 kaydı, iki ilk YEDEKLER kaydını ve tüm URL'leri koruyan değişmezleri güçlendir. Kırmızı job loglarını incelemeden tamamlandı deme.
+- **DEVAM_NOTU.md:L1131** — [Tarihsel kaynak kaydı] 6. **Toplu rapor ve kullanıcı testi:** kaynak bazında aday, doğrulanan, kaybolan ve yeni sayıları; kullanıcıya 2000'lik YEDEKLER partileri. Kullanıcı onayı olmadan ana İBO playlistini değiştirme.
+- **DEVAM_NOTU.md:L1144** — [Tarihsel kaynak kaydı] - Kullanıcının #307 compile logu: `v2/test_unified_safety_contract.py` satır 42, `SyntaxError: unexpected character after line continuation character`.
+- **DEVAM_NOTU.md:L1150** — [Tarihsel kaynak kaydı] - Kullanıcının paylaştığı #5 `backup` logunda `git push` `main -&gt; main (fetch first)` nedeniyle exit 1; indirme adımı değil, eşzamanlı main ilerlemesi kaynaklı non-fast-forward reddi.
+- **DEVAM_NOTU.md:L1156** — [Tarihsel kaynak kaydı] - Ana playlist commit `4c8ebc4`: mevcut 2840 kaydın hiçbiri silinmeden 838 diğer kategori sırası korunarak, 2002 YEDEKLER içinde TRT 1 1440P QHD ve DHA CANLI 720P HD ilk iki sırada bırakıldı; adı açıkça Türkiye/TRT/Kanal 7/Kanal Avrupa/Show TV olan 14 kayıt hemen sonrasına alındı. Kalanlar sıralandı; başka ülkelerdeki ATV gibi belirsiz adlar Türk kabul edilmedi.
+- **DEVAM_NOTU.md:L1160** — [Tarihsel kaynak kaydı] - Bu commitler için Actions yeşil sonucu henüz doğrulanmadı. İBO cihaz testi kullanıcıda.
+- **DEVAM_NOTU.md:L1164** — [Tarihsel kaynak kaydı] - Kullanıcının #313 ve #314 ekran görüntüleri: `v2/test_playlist_invariants.py` satır 10, `SyntaxError: closing parenthesis ']' does not match opening parenthesis '('`. `v2/real_ibo_scan.py` içindeki aynı öncelik tuple'ında da aynı yazım yanlışı vardı.
+- **DEVAM_NOTU.md:L1166** — [Tarihsel kaynak kaydı] - Playlist değiştirilmedi. 2002 YEDEKLER'in ilk iki kaydı TRT 1 ve DHA; sonraki 14 Türk yayın kaydı mevcut testin beklediği sıralamayla eşleşiyor. 838 diğer kayıt korunuyor.
+- **DEVAM_NOTU.md:L1184** — [Tarihsel kaynak kaydı] - `v2/real_ibo_scan.py` commit `621e9ec`: aynı yayın URL'si birden çok kaynakta görülürse tek aday olarak tutuluyor, ancak tüm `source_ids` korunuyor. `ibo-candidate-inventory.jsonl` kayıtları kaynak listesini taşıyor; rapora `multi_source_candidates` sayısı eklendi.
+- **DEVAM_NOTU.md:L1191** — [Tarihsel kaynak kaydı] - Korunan playlist, YEDEKLER, YENİLER, FAVORİLER ve cihaz favorileri değiştirilmedi. CI sonuçları doğrulanmadan aşama tamamlandı denmeyecek.
+- **DEVAM_NOTU.md:L1196** — [Tarihsel kaynak kaydı] - `v2/test_discovery_metadata.py` commit `77c5627`: dünya kaynaklarında Türkçe/Azerice metaveri eşleşmeleri, ilgisiz aday reddi ve birden çok kaynağın korunması için çevrimdışı regresyon testleri eklendi.
+- **DEVAM_NOTU.md:L1230** — [Tarihsel kaynak kaydı] - Devir notuna doğrudan yazma yeniden çalışıyor. Korunan playlist ve YEDEKLER değiştirilmedi.
+- **DEVAM_NOTU.md:L1248** — [Tarihsel kaynak kaydı] - Ana İBO playlisti ve YEDEKLER korunuyor. #60 kurtarma ve gerçek 1000/2000 paketleri tamamlanmadı.
+- **DEVAM_NOTU.md:L1264** — [Tarihsel kaynak kaydı] - Kullanıcı kararı: Eksik kaynak entegrasyonları bitmeden yapılan taramalar yalnızca ARA TARAMA olarak etiketlenir; nihai/tam kapsamlı tarama veya proje tamamlandı diye sunulmaz.
+- **DEVAM_NOTU.md:L1268** — [Tarihsel kaynak kaydı] - Koruma: yalnızca MADSC55-TV-V2; ana MADSC55_TV_IBO_CALISANLAR_TEST.m3u8, YEDEKLER, YENİLER, FAVORİLER ve cihaz favorileri değiştirilmez. YEDEKLER ilk iki sıra TRT 1 1440P QHD ve DHA CANLI 720P HD korunur. PR #9 izinsiz birleştirilmez. İBO Player cihaz testlerini kullanıcı yapar.
+- **DEVAM_NOTU.md:L1273** — [Tarihsel kaynak kaydı] - Kullanıcı teyidi: #34 kaynak adaptörleri, dünya kapsamı, resmî yayıncılar, YouTube Live, M3U/M3U8, logo ve EPG eşleştirmesi tam bağlanıp kabul edilmeden yeni tarama **nihai/toplu dünya taraması** olarak sunulmayacak.
+- **DEVAM_NOTU.md:L1277** — [Tarihsel kaynak kaydı] - Hiçbir ara test tamamlanmış nihai kabul sayılmayacak. Ana İBO listesi, YEDEKLER/YENİLER/FAVORİLER korunacak.
+- **DEVAM_NOTU.md:L1288** — [Tarihsel kaynak kaydı] - `v2/discovery_34_integrate.py`: official/YouTube/M3U raporlarının kök ve satır koleksiyonları doğrulanır; hatalı satırlar atlanır, geçerli adaylar korunur, hatalı koleksiyon biçimleri fail-closed hata üretir.
+- **DEVAM_NOTU.md:L1291** — [Tarihsel kaynak kaydı] - Bu yalnızca mevcut rapor dosyalarının çevrimdışı normalizasyon kabulüdür; canlı API, her sağlayıcının gerçek yayın URL'sine çözülmesi, FFmpeg AV, logo/EPG üretim eşlemesi veya nihai dünya taraması değildir. #34 ve gerçek yayın gerektiren görevler açık kalır. Korunan listelere dokunulmadı.
+- **DEVAM_NOTU.md:L1304** — [Tarihsel kaynak kaydı] - PR #71 için Production Security Gate run `43455192478`: SUCCESS. Görev defteri bütünlüğü, güvenlik kilidi, korunan İBO invariantları, Stage 6 offline paket/arşiv, Stage 2/3 offline kimlik-EPG-kurtarma ve #34 offline adaptör testleri PASS.
+- **DEVAM_NOTU.md:L1344** — [Tarihsel kaynak kaydı] - Görev defteri 21 completed / 13 in_progress olarak korundu; gerçek yayın kanıtı, bağımsız harici geri yükleme ve gerçek paket kanıtları olmadan görev kapatılmadı.
+- **DEVAM_NOTU.md:L1354** — [Tarihsel kaynak kaydı] - 1000/2000 gerçek paketler henüz üretilmedi. Worldwide URL shard'ları RSA-3072 alıcı public key ile mühürlü; açma işlemi kullanıcıya ait private key gerektiriyor ve bu private key depoda bulunmuyor. Ana İBO/YEDEKLER/YENİLER/FAVORİLER korunuyor. Sentetik paketler gerçek teslim sayılmadı.
+- **DEVAM_NOTU.md:L1358** — [Tarihsel kaynak kaydı] - Bu kabul yalnızca kanıt kapısının ve dışa aktarma doğrulama kodunun çevrimdışı testidir. Gerçek 1.000/2.000 kanal paketi, FFmpeg AV, IBO cihaz oynatımı veya kullanıcı onayı yerine geçmez; #31–#33 açık kalır.
+- **DEVAM_NOTU.md:L1404** — [Tarihsel kaynak kaydı] - Dışa aktarım sadece yeni `private-*.m3u8` dosyasına, O_EXCL/O_NOFOLLOW + 0600 ile yapılır; korunan ana İBO, YEDEKLER, YENİLER, FAVORİLER üzerine yazma yok.
+- **DEVAM_NOTU.md:L1409** — [Tarihsel kaynak kaydı] - PR #176 squash merge `1951340476326f5812072b1161b8795e2c5f04a2`; PR Actions run `43481008490` SUCCESS; merge sonrası main Production Security Gate run `43481158009` SUCCESS (Stage 5 regresyonları, Stage 2/3/6, #34 offline ve korunan İBO kontrolleri).
+- **DEVAM_NOTU.md:L1412** — [Tarihsel kaynak kaydı] - Eşzamanlı oturumların ana dala aldığı daha güçlü Stage 5 korumaları (yerel FFmpeg protocol whitelist, tvg-id/channel-id eşlemesi, private-*.m3u8, O_EXCL/O_NOFOLLOW ve 0600) korunmuştur. Eski kodu geri getirecek PR #165 ve PR #169 birleştirilmeden kapatıldı.
+- **DEVAM_NOTU.md:L1426** — [Tarihsel kaynak kaydı] - Daha önce birleştirilen farklı kanalın aynı kanıt SHA-256'sını yeniden kullanamaması kuralı korunarak eşzamanlı Stage 5 değişiklikleriyle çakışma giderildi; PR #180 zorla birleştirilmeden kapatıldı.
+- **DEVAM_NOTU.md:L1427** — [Tarihsel kaynak kaydı] - Bu altyapı güvenlik kabulü, mevcut 4.301 URL'lik M3U parçaları için gerçek cihaz oynatımı, bütün kanalların bağımsız AV/kimlik kabulü veya harici üretim geri yüklemesi anlamına gelmez. #28–#33 açık kalır. Yeni toplu tarama veya korunan İBO/YEDEKLER/YENİLER/FAVORİLER dosyası değişikliği yapılmadı.
+- **DEVAM_NOTU.md:L1444** — [Tarihsel kaynak kaydı] - Korunan liste: `MADSC55_TV_IBO_CALISANLAR_TEST.m3u8`. YEDEKLER toplamı 1.087. PR #274 ile 58, PR #275 ile dört Bicolor+ futbol yayını, PR #276 ile AntenaPlay Events ve Nautical Channel eklenerek listenin sonundaki spor bölümü **64 kayıt** (1024–1087) oldu. Bu, kesin ve eksiksiz spor kanalı envanteri olduğu anlamına gelmez; yayınlar bağımsız görüntü+ses kanıtıyla doğrulanmış değildir.
+- **DEVAM_NOTU.md:L1447** — [Tarihsel kaynak kaydı] - Takip işi (AÇIK): 1.087 kaydın `tvg-id`, `group-title`, kaynak ülke/kimlik, yayıncı resmi kategori ve uygun olduğunda gerçek ses/görüntü örnekleriyle çok dilli yeniden sınıflandırılması; belirsizlerin ayrı raporlanması. Doğrulanan yeni spor kanalları, mevcut 64 kayıtla birlikte YEDEKLER'in sonuna kararlı sırayla taşınacak. **İlk iki YEDEKLER kaydı ve tüm stream URL'leri korunacak; silme yapılmayacak.** Spor kanal sayısı %100 kesin olarak raporlanmayacak; gerçek AV kabulü olmadan 'çalışıyor' denmeyecek.
+- **DEVAM_NOTU.md:L1448** — [Tarihsel kaynak kaydı] - Bu turda doğrulanmamış şüpheli kanallar taşınmadı. Bu kayıt açık takip olarak kalır; kullanıcı istemeden tamamlandı işaretlenmez.
+- **DEVAM_NOTU.md:L1451** — [Tarihsel kaynak kaydı] 15 Kasım 2026 — YEDEKLER kullanıcı inceleme / arşiv geri yükleme doğrulaması
+- **DEVAM_NOTU.md:L1452** — [Tarihsel kaynak kaydı] - Kullanıcı iş akışı: YEDEKLER geçici deneme alanı; TRT 1 1440P QHD ve DHA CANLI 720P HD ilk iki sabit kanal. Kullanıcı İBO Player'da dener; çalışan Türk kanallarını onayladığı ana kategorilere, çalışmayanları ve yabancıları kayıpsız arşive ayırmak ister. Kullanıcının seçmediği kanallar kaybolmamalı ve talep üzerine YEDEKLER'e yeniden yüklenebilmeli. Tarihî 38 kanalın özgün kayıtları korunacak; 38 ayrı ve güncel 1.087 toplamın dışında ek bir sayı olarak yorumlanmayacak.
+- **DEVAM_NOTU.md:L1459** — [Tarihsel kaynak kaydı] - Kullanıcı kararı: Şu anda başlatılmış iki tarama bitsin; ardından 7.650 aday için yeni sürümde **tek kez** `v2-real-iptv-scan.yml` manuel `Run workflow` başlatılacak. Kullanıcıya iki taramanın tamamlandığı bildirilecek; kullanıcı başlatmayı onaylayacak.
+- **DEVAM_NOTU.md:L1463** — [Tarihsel kaynak kaydı] - **Ana 838 kanal, mevcut YEDEKLER, 2.881 kanallık `v2/arsiv/yabanci_kanallar_2026-11-16_2881.m3u8` değiştirilmeyecek.** AV doğrulamasından geçenler tekrar/kimlik kontrolünden sonra kullanıcı onaylı güvenli YEDEKLER aktarımına aday; otomatik listeye yazma şu an etkin değil.
+- **DEVAM_NOTU.md:L1464** — [Tarihsel kaynak kaydı] - Otomatik yeni-run tetikleme (`workflow_run`, cron vb.) mevcut güvenlik kapısınca yasak; koruma değiştirilmedi. Bu nedenle iki tarama bitince yeni çalışmayı kendiliğinden başlatma **kurulmuş değil**. Kullanıcıya haber verilip birlikte başlatılacak.
+- **DEVAM_NOTU.md:L1465** — [Tarihsel kaynak kaydı] - Kabul şartı: 16 batch artifact'ı ve 7.650 benzersiz URL için sonuçlar; çalışanların gerçek AV kanıtı; korunan liste SHA/parite kontrolleri; ardından kontrollü YEDEKLER aktarımı. **AÇIK — tamamlandı işaretlenmeyecek.**
+- **DEVAM_NOTU.md:L1476** — [Tarihsel kaynak kaydı] - Stage 6 hata çıktısının kök nedeni: `v2/real_ibo_scan.py` korunan yabancı arşiv için 4.768 kayıt + 4.768 benzersiz URL şartına güncellenmişti; `v2/test_real_ibo_scan_offline.py` içindeki üç CLI regresyon senaryosu ise sahte tarihî arşiv envanterini hâlâ 2.881 kayıtla kuruyordu. Scanner test başında fail-closed arşiv sayımında durduğu için senaryoların asıl zorunlu-kaynak/dinamik-rapor davranışlarına ulaşamıyordu.
+- **DEVAM_NOTU.md:L1477** — [Tarihsel kaynak kaydı] - PR #374 dalında üç offline fixture `range(2881)` → `range(4768)` olarak hizalandı. Commit: `037b53654b8ff56a24da212955508fd7a4190948` (`test(scan): align offline archive fixtures with 4768-entry invariant`). Üretim scanner kodu, korunan arşiv, ana İBO ve YEDEKLER değiştirilmedi.
+- **DEVAM_NOTU.md:L1481** — [Tarihsel kaynak kaydı] 17 Kasım 2026 — Kullanıcı onaylı eski 1.110 listesi kaldırma ve tüm M3U envanteri
+- **DEVAM_NOTU.md:L1482** — [Tarihsel kaynak kaydı] - Kullanıcının açık talimatı: `MADSC55_IBO_NEWLISTTR_YEDEKLER_TEST.m3u8` (1.110 kayıt) ile dört parçalı eski sistem arşiv adayları (7.650 kayıt) ana `MADSC55_TV_IBO_CALISANLAR_TEST.m3u8` dosyasının `🗂️ YEDEKLER` kategorisinde bulunsun; tekrar dosyası kaldırılsın; diğer M3U listeleri sayılsın.
+- **DEVAM_NOTU.md:L1484** — [Tarihsel kaynak kaydı] - URL düzeyinde karşılaştırma: 7.650/7.650 eski adayın tamamı ve 1.110/1.110 eski küçük liste kaydı ana İBO'nun YEDEKLER kategorisinde zaten var. Eksik URL sıfır. Bu nedenle 18.074 mevcut YEDEKLER'e yeniden kopyalama yapılsaydı 8.760 gereksiz tekrar oluşacaktı; ana playlistin tek bir baytı değiştirilmedi. Eski küçük listedeki aynı URL'ye ait bazı ad/metadata farklılıkları arşivlenmiş Git geçmişinde korunur; bu karşılaştırma kanal kimliği/AV kabulü değildir.
+- **DEVAM_NOTU.md:L1486** — [Tarihsel kaynak kaydı] - Kullanıcının silme talimatı uyarınca tek eski `MADSC55_IBO_NEWLISTTR_YEDEKLER_TEST.m3u8` dosyası **ayrı PR dalından kaldırıldı**; eski sürümü Git commit geçmişinden geri yüklemek mümkün. Ana İBO, diğer yedi M3U ve tüm kategori satırları değiştirilmedi. Güvenlik kontrolleri ve PR kabulü doğrulanmadan tamamlandı denmez.
+- **DEVAM_NOTU.md:L1494** — [Tarihsel kaynak kaydı] - **Sonraki işler (AÇIK):** Önce 13 prescan görevini tamamlayıp readiness gate doğrulamak; gerçek medya örneğinden izinli ve kanıtlı ASR/OCR çıktısı üretmek; FFmpeg örneklerinin güvenli depolama/temizleme ve DNS-hostname gereksinimlerini ayrı güvenlik incelemesine almak; yalnızca kanıtla Türk/Türkî/yabancı sınıflandırma ve kullanıcı onaylı arşiv taşıma. Geniş çaplı tarama veya otomatik playlist değişikliği yapılmayacak.
+- **DEVAM_NOTU.md:L1499** — [Tarihsel kaynak kaydı] - `v2/turkish_media_sample_capture.py` FFmpeg komutuna `-fs MAX_BYTES` sınırı eklendi; mevcut sonradan boyut denetimi korundu. `v2/test_turkish_media_sample_capture.py` komut sınırı ve fazla büyük çıktının reddedilip temizlenmesi için regresyon içerir.
+- **DEVAM_NOTU.md:L1507** — [Tarihsel kaynak kaydı] - Mevcut main raporu: `v2/reports/task15-historical-url-hash-recovery-20261118.json`. Eski `6 eşleşmeyen` ifadesi **güncelliğini yitirmiştir**: 6 tarihî kimliğin adı ve SHA-256 değeri belirlenmiş; Arica TV, HTV Sports, Tooncast, Bir TV için 4 birebir tarihî adres eşleşmesi bulunmuş; Xinjiang TV 3 ve American Ninja Warrior için 2 birebir adres eşleşmesi açık. Eski dünya raporundaki 4.949 + ayrı arşiv/kaynaklarda doğrulanmış 4 = 4.953/4.955 **kanıt kapsamı**, ancak tek dünya raporunun kendi 4.949 sayısı değişmez.
+- **DEVAM_NOTU.md:L1509** — [Tarihsel kaynak kaydı] - #15 **in_progress** kalır: iki exact-hash eşleşmesi ve bağımsız yayıncı sahipliği kanıtı eksik. Kullanıcı açıkça sistem tamamlanmadan yeni kanal araması/AV taraması yapılmamasını istedi. Kanal taraması gerektiren adımlar SON FAZA ertelendi. Ana İBO, YEDEKLER, arşiv ve EPG değiştirilmedi.
+- **DEVAM_NOTU.md:L1514** — [Tarihsel kaynak kaydı] - Raporda `sealed_checkpoint_updated=false`; bağımsız gözlemlerin şifreli checkpoint'e güvenli, idempotent işlenmesi hâlâ açık. Şifreleme anahtarı veya gerçek checkpoint olmadan güncellendi iddiasında bulunma. 404 incelemesi, 503 gecikmeli yeniden denemesi, gerçek AV/cihaz kabulü SON KANAL TEST FAZINDA; kullanıcının açık talimatıyla şimdi kanal araması başlatılmaz.
+- **DEVAM_NOTU.md:L1515** — [Tarihsel kaynak kaydı] - #17, #18 ve #20 görevleri mevcut kanıt korunarak `in_progress` tutuldu; ana İBO/YEDEKLER/ANA-TURK-YABANCI arşiv/EPG değişmedi. Diğer görevleri tekrar başlatma.
+- **DEVAM_NOTU.md:L1520** — [Tarihsel kaynak kaydı] - PR #455'in main ile çakışan güncel EPG düzeltmeleri, #457'nin başlık/benzersiz kanal kanıtı korunarak PR #458 altında iki dosyada birleştirildi: `v2/epg_integrity.py` ve `v2/test_epg_integrity.py`. Geçmiş program aralığı, en son bitiş zamanı ve güncel eşleşen program kaynağı raporu eklendi. Geçmiş programların güncel kanıt sayılmaması için regresyon testi eklendi.
+- **DEVAM_NOTU.md:L1528** — [Tarihsel kaynak kaydı] - Yeni `v2/ibo_device_acceptance.py` doğrulayıcısı, raporu yalnızca kullanıcının kesin ana playlist URL'sine, playlist SHA-256 değerine, cihaz/uygulama bilgisine, saat dilimli test zamanına, kategori/YEDEKLER/favori/EPG gözlemlerine ve kanal bazında video/ses kanıtına bağlar.
+- **DEVAM_NOTU.md:L1537** — [Tarihsel kaynak kaydı] - Kullanıcı talimatı: yapılmış/yapılmamış tüm işler kalıcı kaydedilecek ve açık işler sırayla tek tek tamamlanacak. Esas plan: `v2/tasks/WORK_ORDER_2026-11-21.md`.
+- **DEVAM_NOTU.md:L1540** — [Tarihsel kaynak kaydı] - Kaynak commit `1e8bd6d46762366f151e1270cc767f598c8e63e8` ve güncel main'deki 1.792 YEDEKLER EXTINF+URL blokları sırası korunarak byte-byte aynı. Tam playlist SHA'ları farklı; diğer kategoriler değişmiştir. PR #547 importer önce tarihî kaynağı ve artifact'ı sabitleyip, sonra bu 1.792 blok eşitliğini doğrulayarak yalnız preview üretmek üzere güncelleniyor.
+- **DEVAM_NOTU.md:L1542** — [Tarihsel kaynak kaydı] - 685 kayıt henüz tekrar taranmadı/taşınmadı; yeni scan yok. Tek ana playlist, 48 karantina, URL tekrar yasağı, 1003 kuralının uygulanmaması ve İBO 2.500 kullanıcı döngüsünün ayrılığı korunuyor.
+- **DEVAM_NOTU.md:L1547** — [Tarihsel kaynak kaydı] - **Aşama 1 arşiv:** #551 birleşti. Arşiv regresyonları ve kanıt SUCCESS; bu, kullanıcının gerçek playlistinde bu inceleme tarafından yeni taşıma yapıldığı anlamına gelmez.
+- **DEVAM_NOTU.md:L1574** — [Tarihsel kaynak kaydı] - Kullanıcının **testleri sona bırakma** kuralı geçerlidir: 18.074 tam tarama, 685 retry, 2.500'lük İBO cihaz testi başlatılmadı. Ana playlist, 48 karantina, ana/arşiv kategorileri ve 1.003 kuralı değişmedi. Bu iki PR kod/CI kabulüdür, canlı kanal veya cihaz kabulü değildir.
+- **DEVAM_NOTU.md:L1587** — [Tarihsel kaynak kaydı] - **Güvenlik ve sınırlar:** Tek ana `MADSC55_TV_IBO_CALISANLAR_TEST.m3u8` playlisti korunmuştur. Bu not için kanal/URL/kategori taşınmadı, 48 engelli kanal geri eklenmedi, yeni playlist oluşturulmadı. İBO Player cihaz testi ayrı ve kullanıcı sorumluluğunda; 34 görev statüsü değiştirilmedi.
+- **DEVAM_NOTU.md:L1602** — [Tarihsel kaynak kaydı] - **Kalıcı devir noktası:** 1–4. aşamalardaki birleşmiş işler tekrarlanmayacak. #543 (FFmpeg AV), #547 (özgün 1.792 raporu) ve #565 (Türkçe örnek incelemesi kanıt zamanı/yöntemi) main'e birleşti. #547'nin son PR CI'ı `44842556117`, #565'in PR CI'ı `44843144422`: SUCCESS. #497 1.792'lik preview artefaktı `14681083208` üretildi; kullanıcı ana playlistine yazma yok.
+- **DEVAM_NOTU.md:L1604** — [Tarihsel kaynak kaydı] - **Eski gerçek rapor içeriği:** 35.327 benzersiz dünya adayı; 13.884 AV decode, tarihsel 4.949 URL SHA eşleşmesi ve 3.080 tarihsel AV eşleşmesi. Bu rakamlar 18.074 başlangıç YEDEKLER kanalına doğrudan uygulanamaz. İBO Player onayı FALSE, konuşma dili doğrulaması 0, korunan ana playlist yazımı FALSE.
+- **DEVAM_NOTU.md:L1608** — [Tarihsel kaynak kaydı] - **Değişmezler:** Tek ana `MADSC55_TV_IBO_CALISANLAR_TEST.m3u8` korundu; yeni playlist, yayın taraması, kanal silme/taşıma, 48 engelli kayıt geri eklemesi, 1003 kuralını yeniden uygulama veya eski 112–486/59–181 taşımasını yeniden yapma yok. İBO Player 2.500 kullanıcı testi bağımsız kalır.
+- **DEVAM_NOTU.md:L1615** — [Tarihsel kaynak kaydı] - GitHub main playlist blob `f3d39e4522d27912fccd6e67240a10fd16c4923b`: **18.912 kayıt, 18.074 farklı URL**. Bunların 838 korunan kanal URL'si, arşivde bulunan kayıtlarla bilinçli olarak örtüşüyor. Bunlar silinecek mükerrer arşiv kaydı değildir; karşılaştırıcı yalnız arşiv kategorilerindeki mükerrerleri reddedecek şekilde düzeltildi.
+- **DEVAM_NOTU.md:L1627** — [Tarihsel kaynak kaydı] - **Envanter ve ana liste:** orijinal `YEDEKLER_ARCHIVE.m3u8` blob `57d55f3a339099e741b33ecbb55fc0ef809d1d61` içinde **18.074/18.074 benzersiz URL**; main'de 18.912 satır ve 18.074 benzersiz URL (838 korunan kanal kaydı arşiv adresleriyle bilerek örtüşüyor). Özgün 18.074 arşiv URL'sinin **18.074'ü main'de mevcut**, hedef kategori uyuşmazlığı **0**. Kategoriler: YEDEKLER=1.792, ANA=15.574, TURK=424, YABANCI=284, OTHER=838. İlk 2.500 defteri TEST=1.792, TURK=424, YABANCI=284.
+- **DEVAM_NOTU.md:L1629** — [Tarihsel kaynak kaydı] - **Sıradaki çalışma:** Aşama 6'da eski kanıtları yeniden çalıştırmadan, 685 belirsiz kimliği `url_sha256` ve en yeni rapor zamanını esas alarak idempotent, sınırlı, salt-okunur retry/inceleme planına bağla; geçmiş AV kanıtı ile güncel kesin kanıtı ayrı tut. Canlı yayın ve cihaz testi son kapı, kullanıcı onayı olmadan liste yazımı yok.
+- **DEVAM_NOTU.md:L1640** — [Tarihsel kaynak kaydı] - **Sıradaki sıra:** Stage 5 18.074 hash-only crosswalk kanıtını satır bazında incele; özel şifreli kasanın gerçek, bağımsız harici restore kabulünü tamamla. Ardından güvenli HLS/DASH segment taşıma ve gerçek yayıncı örneği. 18.074 tam medya taraması, 685 canlı retry ve İBO Player kullanıcı testi son test aşamasına kadar bekler.
+- **DEVAM_NOTU.md:L1657** — [Tarihsel kaynak kaydı] - Bağımsız restore artifact 13958867734 ZIP hash b84546022f16e1c1e6583ec132e650f80c09c3ba5ade4e547cba4c086200427c; accepted.json hash 66790f47497edab8e3a813e53ee6a606eaba70d34f3b450a325e1804ce1adf68. Rapor: restored_from=google-drive-independent-runner, Drive version 4, 7.819 restore edilmiş arşiv satırı, 4.955 korunmuş tarihsel kayıt, 7.769 aday, 46 kaynak ve 801 geçmiş AV sonucu. Kaynak receipt.json hash 7d29d1e96f1cdf69bc6310637711a8fa8ec7f03f55cbd3297d6c5f33dbf051f6.
+- **DEVAM_NOTU.md:L1667** — [Tarihsel kaynak kaydı] - PR #601 merged: commit d2843941b30c6dfbe053aad5f3b62de860b920b5, PR CI run 44890242563 SUCCESS. Gerçek ağ-etkin discovery_34.py kolektörü de HTTP 200 throttle cevabında fail closed, provider cooldown ve kalan beş sorguyu SKIPPED olarak kaydeder; 429/403 eski sağlam akış korunur. Main run 44890387099 bu kayıt anında çalışıyordu, sonucunu ayrı doğrula.
+- **DEVAM_NOTU.md:L1668** — [Tarihsel kaynak kaydı] - Eski PR #500 (91 commit gerideki throttle fix) ve #215 (eski 429 devre düzeltmesi), yeni kod altında yinelenme olduğu için birleştirmeden kapatıldı. Salt-okunur devir notu PR'ları #576/#570/#506/#375/#363/#293/#262 kapatıldı. #280 ayrı izole M3U çıkaracağı ve kullanıcı ayrı test playlisti istemediği için kapatıldı; cihaz favorileri ve ana liste korunuyor.
+- **DEVAM_NOTU.md:L1669** — [Tarihsel kaynak kaydı] - Hiçbir gerçek kanal keşif workflow_dispatch çalıştırılmadı; GitHub güvenlik koşuları yalnız offline fixture/metadata geçmiş artefakt testleri yaptı. Yeni playlist, kategori, kanal taşıması, arşiv yazımı yok. 48 yasaklı kanal geri gelmedi, ilk 1.003 koruma kuralı tekrar uygulanmadı. Canonical main playlist Git blob SHA f3d39e4522d27912fccd6e67240a10fd16c4923b değişmedi.
+- **DEVAM_NOTU.md:L1670** — [Tarihsel kaynak kaydı] - KALAN gerçek kabul: Ayrı Türk-yetkili özel Fernet kasa #6 harici özel yedek + bağımsız gerçek restore kanıtı eksik (GitHub issue #6 21 Kasım'da kapalı görünse de onay kanıtı dosyası yok); güvenli çok kaynaklı HLS/DASH taşıma, gerçek Türkçe ses/altyazı, 685 canlı retry ve İBO Player cihaz testi kullanıcı final test aşamasına ertelenmiş durumda. Tarihsel Stage4 Drive restore PASS, ayrı Türk özel kasa #6 kabulü değildir.
+- **DEVAM_NOTU.md:L1678** — [Tarihsel kaynak kaydı] - Açık issue'lar #3, #4, #5, #6, #7, #8, #10, #497. #6 Türk özel Fernet kasa harici restore kanıtı eksik; #497 685 canlı retry güvenlik kilidi korunuyor. Önceki 685 satırlık plan artifact #14702596056 yeniden üretilmeyecek.
+- **DEVAM_NOTU.md:L1694** — [Tarihsel kaynak kaydı] - Açık issue yalnız **#497, #3, #4, #5, #6, #7, #8, #10**. #497 mevcut raporları otomatik güvenle işleme altyapısıdır; #8 son aşama kullanıcı İBO cihaz testi; #10 son aşama keşif ve gerçek AV. Mükerrer sayılarak kapatılmayacaklar. #3–#7 görevleri ayrı altyapı kabul sınırlarıyla issue başlıklarında ayrıştırıldı.
+- **archive/historical_http_404_503_quarantine.json:$.policy** — [Tarihsel kaynak kaydı] READ_ONLY_HISTORICAL_ERROR_QUARANTINE_NO_PLAYLIST_EDIT
+- **reports/ANA_SISTEM_10_MADDE_FINAL_KABUL_20261127.md:L3** — [Tarihsel kaynak kaydı] Kapsam: proje sahibinin 27 Kasım talimatı, mevcut modüller, kayıtlı kanıtlar ve offline regresyonlar. Canlı kanal taraması, playlist yazımı veya yeni kanal/varlık ataması yok. Nihai 10/10 kabulü bu PR'ın Offline CI ve Production Security Gate SUCCESS sonuçları ve merge doğrulaması koşuluna bağlıdır.
+- **reports/ANA_SISTEM_10_MADDE_FINAL_KABUL_20261127.md:L15** — [Tarihsel kaynak kaydı] | 9 | Karar hafızası | #786 sentetik AES-256-GCM restore; run 44429064188 gerçek 28844 kayıtlı checkpoint import; #787/#788 kullanıcı onayı ve ters işlem SHA kilidi. |
+- **reports/ANA_SISTEM_10_MADDE_FINAL_KABUL_20261127.md:L38** — [Tarihsel kaynak kaydı] - Mevcut v2/test_stream_quality_decision.py ve v2/test_package2_evidence.py kodları doğrudan incelendi; Makefile run hedefinde bu iki özel test açıkça yoktu. Final PR sadece mevcut testleri offline test hedefinde çağırır; üretim kodu/güvenlik workflow'u değişmez. Yeni final Offline CI sonucu bu testlerin yeni çalıştırma kanıtıdır.
+- **reports/ANA_SISTEM_10_MADDE_FINAL_KABUL_20261127.md:L43** — [Tarihsel kaynak kaydı] - Run 44429064188 job 135241423030 logu: existing_rows=28844; dry_run eligible_updates=15 applied=0; gerçek import applied=15; ikinci import eligible_updates=0 applied=0. state.json #17/#18/#20 kayıtları readback ve byte-identical backup kanıtını belgeliyor. Bu, tüm yeni kullanıcı kararlarının üretim kasasına aktarıldığı iddiası değildir.
+- **reports/ANA_SISTEM_10_MADDE_FINAL_KABUL_20261127.md:L44** — [Tarihsel kaynak kaydı] - #787 commit'indeki v2/ibo_authorized_change.json base SHA 265f368758e75c5b18bc1b936a9792fef36528ba486288ddb35e4e7e23775ecf ve result SHA 414300c76946ace6e969efa69ec4c9155926fcf50541d350c6476ae7d6e78603; owner move manifesti. #788 geri alma manifesti aynı iki SHA'yı tersine çeviriyor. v2/reports/green-vitrine-revert-20261125.json: 562 geri taşınan, 1562 YEDEKLER, 18330 toplam, deleted=0. Güncel parts manifest SHA ilk değerle eşit. Onaylı tarihsel işlemin yeniden uygulanması yok.
+- **reports/ANA_SISTEM_10_MADDE_FINAL_KABUL_20261127.md:L49** — [Tarihsel kaynak kaydı] Bu rapor 10 maddelik offline altyapı ve kayıtlı kanıt kabulüdür; gerçek yayın dili, tüm logo/EPG eksikleri, canlı sağlayıcı erişimi, cihaz oynatması veya bütün üretim akışının yeni canlı kabulü değildir. 34 eski görev ve 685 SECURITY HOLD korunur. İBO Player #693 ayrı aşamadır. Nihai ifade ancak bu PR iki CI PASS ve merge sonrasında geçerli: **10/10 TAMAMLANDI — ANA SİSTEM %100 TESLİM EDİLDİ (belirlenen offline kapsam).**
+- **reports/ANA_SISTEM_1_5_OFFLINE_KAPANIS_20261127.md:L3** — [Tarihsel kaynak kaydı] Kullanıcı onaylı kapsam: mevcut artifact ve repo testleriyle envanter mutabakatı ve dil/kimlik zincirinin offline kabulü. Canlı yayın taraması, playlist yazımı, kanal taşıma/silme, güvenlik değişikliği, eski 34 görev statüsünün değiştirilmesi yok.
+- **reports/ANA_SISTEM_1_5_OFFLINE_KAPANIS_20261127.md:L57** — [Tarihsel kaynak kaydı] 1–5 maddeler sadece kullanıcı tarafından belirlenen offline kapsam için tamamlandı. Bu raporun main kabulü yeni PR'ın Offline CI ve Production Security Gate SUCCESS sonuçlarına ve merge doğrulamasına bağlıdır. Gerçek yayınların toplu ASR/OCR/WebVTT tespiti ve gerçek yayıncı kimliği kabulü bu raporla yapılmış sayılmaz. 685 SECURITY HOLD korunur; 34 eski görev yeniden açılmaz; yeni playlist veya canlı tarama yoktur. Sıradaki iş 6 — mevcut kalite karar motorunun gerçek kayıtlı ölçümlerle offline doğrulanması.
+- **v2/DEVAM_NOTU_2026-10-29_LOGOLAR.md:L3** — [Tarihsel kaynak kaydı] Kullanıcının isteği
+- **v2/DEVAM_NOTU_2026-10-29_LOGOLAR.md:L20** — [Tarihsel kaynak kaydı] - Sıradaki iş: 1881 eksik logoyu daha kapsamlı kaynaklardan (iptv-org channels.json + logos.json kanal id ve ad ilişkisi, Wikimedia/official channel branding) yüksek güvenle eşleştir, doğrula, logo URL'lerini uygula; çözülemeyenleri raporla. Yanlış marka logosu atama. Gerekiyorsa kullanıcıdan olmayanlar için jenerik logo tercihini sor ama önce gerçek logoları araştır.
+- **v2/DEVAM_NOTU_2026-10-29_LOGOLAR.md:L22** — [Tarihsel kaynak kaydı] - Kullanıcı kısa Türkçe sonuç ve yeni sohbet için devir notu istiyor.
+- **v2/MAIN_PRODUCTION_SAFETY_LOCK.md:L8** — [Tarihsel kaynak kaydı] they must not be reactivated without reviewed playlist-owner authorization.
+- **v2/MAIN_PRODUCTION_SAFETY_LOCK.md:L22** — [Tarihsel kaynak kaydı] Do not merge PR #9 or alter the playlist while applying the platform rules.
+
+- **v2/OPERATIONS.md:L14** — [Tarihsel kaynak kaydı] - `logo-attribution.json`: source domains and unverified ownership.
+- **v2/OPERATIONS.md:L21** — [Tarihsel kaynak kaydı] All audits are read-only against `MADSC55_TV_IBO_CALISANLAR_TEST.m3u8`. Master compares SHA-256 before and after. No candidate is automatically added to IBO or favorites. Remote HTTP responses, XMLTV validity and logo reachability do not establish playback continuity, channel mapping, or official logo ownership. Those require independent, per-channel evidence.
+- **v2/README.md:L11** — [Tarihsel kaynak kaydı] **Do not delete legacy EPG repo** until a new EPG URL is created, verified on IBO and playlist header is migrated. Do not delete legacy playlist repo until backups are independently verified and any remaining external dependencies are checked.
+- **v2/SCAN_61_ACTION_REPORT.md:L11** — [Tarihsel kaynak kaydı] - Mevcut IBO: 840 playlist girdisi, 13 kategori, iki özgün yedek (DHA CANLI 720P HD ve TRT 1 1440P QHD) korunmuş.
+- **v2/WORK_PLAN.md:L4** — [Tarihsel kaynak kaydı] - Canlı IBO playlisti, favoriler ve iki özgün yedek korunur.
+- **v2/WORK_PLAN.md:L17** — [Tarihsel kaynak kaydı] 6. Kullanıcı onayından sonra yalnızca doğrulanan yeni kanalları önce ayrı test listesine, sonra uygun kategori ve ULUSAL-HEPSİ'ye aktar.
+- **v2/WORK_PLAN.md:L21** — [Tarihsel kaynak kaydı] - Mevcut canlı IBO, favoriler ve özgün iki YEDEKLER hiçbir keşif çalışmasında değişmez.
+- **v2/WORK_PLAN.md:L31** — [Tarihsel kaynak kaydı] - Canlı playlist, FAVORİLER ve özgün iki YEDEKLER korunur. Otomatik yayın ekleme kesinlikle yoktur.
+- **v2/WORK_PLAN.md:L55** — [Tarihsel kaynak kaydı] - Öncelik 5: Kullanıcı onayından sonra canlı listeye güvenli ekleme; 840 giriş, 13 kategori, FAVORİLER ve özgün iki YEDEKLER başlangıç bütünlüğünü koru.
+- **v2/WORK_PLAN.md:L59** — [Tarihsel kaynak kaydı] - Ana birleşik workflow bu listeyi otomatik üretir ve artifact olarak sunar; kullanıcıya yedi ayrı komut gerekmez.
+- **v2/WORK_PLAN.md:L60** — [Tarihsel kaynak kaydı] - Öncelik: yeni workflow'un sonucunu kontrol et, ardından tam kapsamlı parçalı yayın doğrulaması ve YouTube kalıcı uyumunu tamamla. Korunan canlı listeye otomatik ekleme yoktur.
+- **v2/WORK_PLAN.md:L75** — [Tarihsel kaynak kaydı] **Kullanıcının kesin talebi:** Yalnızca **"Kanalları ara"** demesi yeterli olacak. Ayrı "ara", "test et", "EPG kontrol et", "liste oluştur" komutları istemiyor. Tek tetikleme altında keşif → tüm yeni adayların bütçeli/parçalı doğrulaması → başarısız tekrar denemesi → ses/görüntü/çözünürlük/kimlik/kararlılık → EPG/logo/kategori/tekrar kontrolü → ayrı IBO inceleme listesi → tek sonuç raporu **otomatik ve sıralı** tamamlanmalı. Ayrı test workflow'larını sürekli tetiklemek çözüm değildir. **Sonraki asistan önce bunu ana birleşik workflow'a bağlamalı; yeni bağımsız test workflow'u açmamalı.** Kullanıcı kısa ve net Türkçe ilerleme istiyor; gereksiz aşama anlatılmasın.
+- **v2/WORK_PLAN.md:L77** — [Tarihsel kaynak kaydı] **Güvenlik:** Ana repo `Madsc55/MADSC55-TV-V2`, main. Canlı `MADSC55_TV_IBO_CALISANLAR_TEST.m3u8`, FAVORİLER, YEDEKLER'deki iki özgün TRT 1 1440P QHD ve DHA CANLI 720P HD korunacak; otomatik canlı playlist değişikliği veya yeni kanal importu yok. Ayrı test listesi salt okunur keşif çıktısı. YouTube watch URL/geçici imzalı HLS'yi kalıcı IBO yayını diye ekleme.
+- **v2/WORK_PLAN.md:L89** — [Tarihsel kaynak kaydı] 5. Tek komut çalıştır, bitişini kontrol et, gerçek sayı ve güvenlik sonucunu kullanıcıya kısa bildir; WORK_PLAN.md'yi güncel tut.
+- **v2/WORK_PLAN.md:L91** — [Tarihsel kaynak kaydı] **Önemli:** Son kullanıcı bu sohbetin dolduğunu, yeni sohbete geçip hiçbir şeyi unutmadan devam etmek istediğini söyledi. Yukarıdaki hedef ve eksikler devir notudur.
+- **v2/WORK_PLAN.md:L100** — [Tarihsel kaynak kaydı] 28 Ekim — kullanıcı ekran görüntüsü ve hata düzeltmesi
+- **v2/WORK_PLAN.md:L112** — [Tarihsel kaynak kaydı] Kullanıcı talebi: tek tetikleme, tüm kaynakları tara, tüm adayları listele; aday başına kimlik, oynatma, ses, video, EPG, logo, kategori kontrolü; başarısızları 3 kez yeniden dene; eksik kaynakları yeniden tara; ara rapor yayımlama; yalnızca finalde `approved`, `rejected`, `pending_review` ayrımlı tek rapor; tüm işler tamamlanmadan workflow success verme.
+- **v2/WORK_PLAN.md:L117** — [Tarihsel kaynak kaydı] - Kullanıcının mevcut kategori adları, sıralaması, FAVORİLER, iki özgün YEDEKLER ve canlı IBO korunacak. Yeni adaylar yalnızca ayrı test listesinde.
+- **v2/archives/test001_quarantined_48.json:$.policy** — [Tarihsel kaynak kaydı] Do not automatically reimport these 48 exact records
+- **v2/arsiv/eski_sistem_7650_test_kuyrugu_README.md:L5** — [Tarihsel kaynak kaydı] **Güvenlik:** V2 ana dalı yeni workflow ve zamanlanmış cron işleri yasaklar. Bu yüzden otomatik zamanlayıcı eklenmedi. Kodu mevcut izinli tarama akışına bağlamak için ayrı bir güvenlik değerlendirmesi gerekir.
+- **v2/arsiv/eski_sistem_aktarim_raporu_2026-11-16.json:$.warning** — [Tarihsel kaynak kaydı] No live audio/video validation; do not promote to YEDEKLER before validation.
+- **v2/docs/checkpoint-bounded-evidence-runbook.md:L30** — [Tarihsel kaynak kaydı] 2. Uygulama sonrası şifreli dosya tekrar kimlik ve satır sayısı denetiminden geçmeli; önceki satırlar korunmalı.
+- **v2/ibo_authorized_change.json:$.request** — [Tarihsel kaynak kaydı] Owner explicitly requested rollback of PR #787: restore the exact previous canonical playlist and parts; move the same 562 records back to their original categories, preserving all 18330 records and all archive contents.
+- **v2/reports/DEVIR_2026-11-01.md:L3** — [Tarihsel kaynak kaydı] Değişmez kurallar
+- **v2/reports/DEVIR_2026-11-01.md:L8** — [Tarihsel kaynak kaydı] - İBO cihaz testini kullanıcı yapar; 2000'er kanallık paketleri asistan hazırlar.
+- **v2/reports/DEVIR_2026-11-01.md:L10** — [Tarihsel kaynak kaydı] - Kullanıcı telefonla çalışıyor; terminal isteme; adım adım onay sorusu sorma.
+- **v2/reports/DEVIR_2026-11-01.md:L58** — [Tarihsel kaynak kaydı] - Kullanıcıya kısa, somut, dürüst rapor ver; onay beklemeden mantıksal sırayla kodla.
+
+- **v2/reports/STAGE6_ACCEPTANCE_LEDGER_2026-11-12.md:L10** — [Tarihsel kaynak kaydı] - Kapsam: playlist değişmezleri, şifreli arşiv roundtrip, envanter geri yükleme regresyonu, çevrimdışı tarayıcı regresyonu.
+- **v2/reports/ffmpeg_av_gap_classification_20261121.md:L7** — [Tarihsel kaynak kaydı] - Güncel YEDEKLER 1.792 (#497): 1.107 tarihsel WORKING, 685 RECHECK_REQUIRED, 0 kesin FAILED. 685'in 20'sinde eski dünya AV kanıtı var; daha yeni belirsiz kararı otomatik değişmez.
+- **v2/reports/ffmpeg_av_gap_classification_20261121.md:L15** — [Tarihsel kaynak kaydı] - `UNSAFE_OR_UNSUPPORTED_TRANSPORT`: nested HLS/DASH/anahtar güvenli toplanamıyor; doğrudan network FFmpeg yasak.
+- **v2/reports/ibo-500-batch-01-register.md:L7** — [Tarihsel kaynak kaydı] - Ana liste: MADSC55_TV_IBO_CALISANLAR_TEST.m3u8; başlangıç 876 kayıt; FAVORİLER korunmalı.
+- **v2/reports/ibo-500-batch-01-register.md:L12** — [Tarihsel kaynak kaydı] Kullanıcının açık yayımlama izni — 15 Kasım 2026
+- **v2/reports/ibo-500-batch-01-register.md:L14** — [Tarihsel kaynak kaydı] - Bundan sonraki paketler de yalnızca kullanıcı her paket için talimat verdiğinde, 500'er kanal halinde eklenebilir.
+- **v2/reports/ibo-500-batch-01-register.md:L15** — [Tarihsel kaynak kaydı] - Mevcut 876 kanal, FAVORİLER, diğer gruplar ve ana playlist bağlantısı aynen korunacaktır; yeni ana playlist oluşturulmayacaktır.
+- **v2/reports/ibo-500-batch-01-register.md:L16** — [Tarihsel kaynak kaydı] - YEDEKLER'den sonraki taşıma, silme, seçme ve üretim kararları yalnızca kullanıcının ayrıca verdiği talimatla yapılır.
+- **v2/reports/ibo-923-out-1000-in-preparation-2026-11-16.md:L3** — [Tarihsel kaynak kaydı] **Durum:** HAZIRLIK; ana oynatma listesine henüz uygulanmadı. Kullanıcı ayrı player listesi istemiyor.
+- **v2/reports/ibo-923-out-1000-in-preparation-2026-11-16.md:L6** — [Tarihsel kaynak kaydı] - Korunan 923 kanal: `v2/arsiv/yabanci_yedekler_2026-11-16_positions_84-1006_923.m3u8` (PR #286 ile main'e alındı)
+- **v2/reports/ibo-923-out-1000-in-preparation-2026-11-16.md:L7** — [Tarihsel kaynak kaydı] - Korunan 3964 yabancı kanal: `v2/arsiv/yabanci_yedekler_2026-11-02_3964.m3u8`; kaynak blob SHA: `c54272e97f711c3074303cec74739d6d0ec806b2`
+- **v2/reports/ibo-923-out-1000-in-preparation-2026-11-16.md:L16** — [Tarihsel kaynak kaydı] Ana listeye değişiklik yapılırken yalnız YEDEKLER'in 84–1006 arası kayıtları çıkarılacak ve 1000 farklı URL YEDEKLER'e eklenecek. İlk 83 ve eski 1007–1087 kayıtları, diğer kategoriler, favoriler, URL'ler ve playlist başlığı korunacak. Korunan arşiv dosyaları değiştirilmeyecek. GitHub güvenlik kapısı için tam kaynak/sonuç SHA-256 manifesti ve PR testleri gereklidir. Akışların çalıştığı ancak gerçek cihazda denemeden ileri sürülemez.
+- **v2/reports/logo-current-exact-name-review-20261119.json:$.warning** — [Tarihsel kaynak kaydı] This is a review queue only. No image was verified as official and no playlist modifications are authorized by this report.
+- **v2/reports/package-artifact-independent-audit-20261119.md:L14** — [Tarihsel kaynak kaydı] Next acceptance gates: separately verified IBO device playback for the actual packages, independent production restore with matching evidence, and provenance/AV acceptance per policy. Preserve the protected main playlist and the excluded 48 entries; do not create new playlists or start a channel search until system completion.
+
+- **v2/reports/task15-historical-url-hash-recovery-20261118.json:$.scope_decision_20261119.decision** — [Tarihsel kaynak kaydı] User explicitly waived independent broadcaster ownership attribution for task #15; historical URL source/hash reconciliation is the acceptance criterion.
+- **v2/reports/task15-historical-url-hash-recovery-20261118.json:$.scope_decision_20261119.playback_status** — [Tarihsel kaynak kaydı] Not tested here; live AV/IBO Player checks remain deferred and must not be inferred from URL hash matches.
+- **v2/reports/task17-18-20-offline-operator-procedure-20261119.md:L28** — [Tarihsel kaynak kaydı] Kullanıcı açıkça başlatana kadar keşif yapılmaz. Daha sonra bulunan yeni kanallar kapsamlı ses, görüntü, dil, altyazı, logo, EPG, kaynak ve çalışma testlerinden geçtikten sonra uygun olanlar ANA ARŞİV'e alınır. Ana İBO playlistine otomatik ekleme yoktur. İBO Player 2.500'lük manuel test süreci ayrıdır.
+- **v2/reports/task17-18-20-secure-import-runbook-20261119.md:L17** — [Tarihsel kaynak kaydı] Yasaklar ve kapsam
+- **v2/reports/task17-18-av-resume-handoff-20261118.md:L5** — [Tarihsel kaynak kaydı] Korunan tamamlanmış kanıtlar
+- **v2/reports/task17-18-av-resume-handoff-20261118.md:L19** — [Tarihsel kaynak kaydı] 6. Tarama bitince tekrarların sıfırlandığını, önceki 300/33 sonuçlarının korunduğunu, kalan kuyruk ile tüm sayımların dengelendiğini doğrula. Güvenlik kapısı ve gerçek İBO Player cihaz kabulü olmadan #17–18'i kapatma.
+- **v2/reports/task21-evidence-handoff-20261119.md:L20** — [Tarihsel kaynak kaydı] 7. İBO Player'ın ayrı 2.500'lük test/arşiv döngüsüne ve korunan ana İBO, YEDEKLER, YENİLER, FAVORİLER, EPG dosyalarına dokunma.
+- **v2/reports/turkic-fourth-pass-review-20261117.md:L31** — [Tarihsel kaynak kaydı] - 18801 WEST AZERBAİJAN TV: İran Batı Azerbaycan bölgesine ait; kullanıcı Türkî dili dahil ettiyse dil doğrulamasıyla değerlendirilmeli.
+- **v2/reports/turkic-fourth-pass-review-20261117.md:L36** — [Tarihsel kaynak kaydı] Bu rapor yayınların ses/görüntü veya dili doğrulanmış demek değildir. Yeni reorder için orijinal EXTINF/URL çiftleri ve özel yorumlar eksiksiz korunmalı, ilk 1003 kayıt değişmemeli, 18.912/18.074 sayıları sabit kalmalı, tam SHA-256 yetki manifesti ve GitHub güvenlik testi geçmelidir. Bu PR salt inceleme raporudur.
+
+- **v2/tasks/KALAN_ISLER_12_ASAMALI_PLAN_20261123.md:L3** — [Tarihsel kaynak kaydı] 23 Kasım 2026 — Proje sahibinin onayladığı 12 aşamalı çalışma planı. **Yalnız plan kaydıdır; tamamlanmış test veya canlı yayın kabulü değildir.** 34 eski görevin idari kapanışı korunur; kanıt eksikleri ayrıca izlenir.
+- **v2/tasks/KALAN_ISLER_12_ASAMALI_PLAN_20261123.md:L7** — [Tarihsel kaynak kaydı] 2. [ ] Ana playlist sayıları, 654 silme, 685 korunan kimlik ve kategori envanterini uzlaştır
+- **v2/tasks/KALAN_ISLER_12_ASAMALI_PLAN_20261123.md:L12** — [Tarihsel kaynak kaydı] 7. [ ] Kontrollü tekrar deneme; 685 SECURITY HOLD ve FFmpeg/HLS OS ağ izolasyonu korunacak
+- **v2/tasks/KALAN_ISLER_12_ASAMALI_PLAN_20261123.md:L27** — [Tarihsel kaynak kaydı] Değişmez kurallar
+- **v2/tasks/KAPANIS_SIRASI_20261121.md:L27** — [Tarihsel kaynak kaydı] Degismez kurallar
+- **v2/tasks/KAPANIS_SIRASI_20261121.md:L29** — [Tarihsel kaynak kaydı] Yeni playlist yok. Ana playlist URL, kategori, arsiv ve kanal siralari korunur. Tamamlanmis PR kodu tekrar yazilmaz. Guvenlik HOLD kaldirilmaz. Gorev statuleri kanitsiz degistirilmez.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L6** — [Tarihsel kaynak kaydı] Değişmez koruma kuralları
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L10** — [Tarihsel kaynak kaydı] - Kullanıcı onayı olmadan ana playlist, ana kategoriler, EPG veya arşiv içerikleri değiştirilmez.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L12** — [Tarihsel kaynak kaydı] - 112–486 Türk taşıma talimatı ve 59–181 seçilmiş düzeltmeler tekrar uygulanmaz.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L14** — [Tarihsel kaynak kaydı] - İBO Player 2.500'lük kullanıcı testi, sistemin arka plan taramasından ayrı tutulur.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L24** — [Tarihsel kaynak kaydı] - #551'deki snapshot: YEDEKLER 1.792, ANA ARŞİV 15.574, TÜRK 424, YABANCI 284, diğer korunan kategoriler 838; toplam 18.912. Bu sayım 18.074 başlangıç YEDEKLER sayısından ayrı snapshot'tır. #551 açık PR; kanıt mutabakatı tamamlanmadan nihai kabul değildir.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L30** — [Tarihsel kaynak kaydı] Bu plan ve DEVAM_NOTU kayda alınır. Başlangıç main/Actions/PR referansları sabitlenir. Playlist ve görev statüleri değişmez.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L33** — [Tarihsel kaynak kaydı] - #551 diff'ini, 12 arşiv regresyonunu ve 18.912 / 18.074 başlangıç / 838 korunan kategori / taşıma-geri alma kanıtını incele.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L35** — [Tarihsel kaynak kaydı] - 112–486 ve 59–181 talimatlarıyla çakışma, mükerrer URL ve kayıp kimlik olmadığını salt-okunur hash/kimlik mutabakatıyla doğrula.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L36** — [Tarihsel kaynak kaydı] - Kabul: kaynak-hedef sayım mutabakatı, korunan 838 kategorinin değişmediği, rollback testleri ve güncel main CI PASS. Playlist yazımı yok. Kanıt yetersizse PR açık kalır.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L39** — [Tarihsel kaynak kaydı] - Orijinal Actions artifact'ını ve değişmez kanal-ID/URL-hash manifestini bul.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L47** — [Tarihsel kaynak kaydı] - Eksik video/audio veya decode hatası DECODE_UNVERIFIED kalmalı; timeout, boyut ve ağ güvenlik sınırları korunmalı.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L68** — [Tarihsel kaynak kaydı] - İBO 2.500'lük kullanıcı testi ile sistem taraması ayrı kalır.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L69** — [Tarihsel kaynak kaydı] - Kabul: yeniden başlatma/çökme sonrası devam, retry, idempotency, rollback ve preview testleri PASS. Kullanıcı onayı olmadan playlist yazımı yok.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L75** — [Tarihsel kaynak kaydı] 8 — İBO Player kullanıcı kabulü ve kapanış
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L77** — [Tarihsel kaynak kaydı] - Kullanıcının 2.500'lük deneme akışı yalnız kendi test alanında ve açık talimatla yürütülür.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L78** — [Tarihsel kaynak kaydı] - Final rapor: envanter, çalışan/çalışmayan/belirsiz, Türk/Yabancı kanıtı, korunan kategoriler ve rollback.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L85** — [Tarihsel kaynak kaydı] - 112–486 ve 59–181 taşıma talimatları tekrar uygulanmaz.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L97** — [Tarihsel kaynak kaydı] - Önemli sınır: bu test/CI kabulüdür. PR notu gerçek kullanıcı playlistine yazma yapılmadığını açıkça söylüyor. Bu nedenle canlı dosyada fiziksel taşıma yapıldı denmiyor.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L113** — [Tarihsel kaynak kaydı] - Güncel main tam playlisti farklı SHA'ya sahip (`71b95cbc6e4f8b6bab4c294ffe423043870b0aa9b08d560327b4b512a3fc0a77)); ancak kaynak commit ile güncel main arasında 1.792 YEDEKLER EXTINF+URL bloklarının tamamı **sırası korunarak byte-byte aynı**. Her iki snapshot'ta da 1.792 kayıt ve benzersiz URL var; eşleşmeyen, tekrarlanan, adı veya EXTINF metadatası değişen YEDEKLER kaydı yok. Fark, YEDEKLER dışındaki playlist içeriğinde.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L116** — [Tarihsel kaynak kaydı] - **Aşama 2 durumu: özgün kaynak bulundu ve tarihî/current YEDEKLER kimliği eşleştirildi; güvenli importer kodu PR #547'de güncellendi. Nihai kabul için yeni testlerin PASS olması ve gerçek Actions artifact'tan preview+manifest üretiminin doğrulanması bekleniyor.** 685 kayıt henüz yeniden taranmadı/taşınmadı; kullanıcı playlistine yazılmadı.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L121** — [Tarihsel kaynak kaydı] - **Aşama 1 arşiv:** #551 birleşti. Arşiv regresyonları ve kanıt SUCCESS; bu, kullanıcının gerçek playlistinde bu inceleme tarafından yeni taşıma yapıldığı anlamına gelmez.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L154** — [Tarihsel kaynak kaydı] 1. **Bitti, tekrarlama:** #543 FFmpeg ses+görüntü, #547 değişmez 1.792 sonuç, #565 zaman damgalı ASR/OCR/WebVTT inceleme kayıtları. #547 CI `44842556117` ve #565 CI `44843144422` başarılı; ikisi de main'e birleştirildi. Gerçek 18.074 kanal taraması veya cihaz onayı anlamına gelmez.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L157** — [Tarihsel kaynak kaydı] 4. **Sonraki adımlar:** tarihsel kanıtla eşleşmeyen veya artık güncel olmayan kayıtları açık blocker olarak tut; Türkçe kanıtı konuşma/altyazı/OCR/kimlik kanallarında birbirinden ayrı izle. Paketli, kontrollü gerçek medya testi ve retry yalnız güvenlik/CI kapılarından sonra. İBO Player'ın kullanıcı kontrollü 2.500 test döngüsüne karışma. Arşiv gerçek ortam bağımsız restore ve İBO cihaz onayı ayrı son kapılardır.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L159** — [Tarihsel kaynak kaydı] **Dokunulmayacaklar:** tek ana playlist, 48 karantina, 1003 kuralı, kullanıcı onayı olmadan kategori/playlist yazımı yok. Daha önce yapılan Türk/Yabancı taşıma komutları tekrar edilmeyecek. Tam teknik devir kanıtı `DEVAM_NOTU.md` sonunda.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L167** — [Tarihsel kaynak kaydı] - Ana playlist değişmedi, yeni playlist açılmadı, envanter ve 838 korunan kayıt yerinde, İBO Player kullanıcı testi son aşamada ve ayrı. 34 ana görev tamamlandı sayılmıyor; Aşama 5'in hash-eşleştirme kod kabulü tamam, canlı 18.074 AV kabulü eksik.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L190** — [Tarihsel kaynak kaydı] - Eski kabul makbuzu: 7.819 şifreli arşiv satırı başarıyla restore, içeride korunan 4.955 tarihsel temel kayıt; 7.769 aday ve 801 AV çözümlemesi kaynak raporla aynı. 21 Kasım incelemesi yalnız kanıt ZIP/Drive baytları ve makbuzları tekrar doğruladı; yeni şifre çözme/restore yapılmadı.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L192** — [Tarihsel kaynak kaydı] - Sıradaki iş sırası: (1) #6 gerçek ortamda ayrı yetkili Türk özel kasa harici restore ve URL hash/kimlik doğrulaması, (2) güvenli HLS/DASH alt kaynak işleyişi, (3) gerçek Türkçe ses/altyazı kanıtı, (4) 685 kontrollü retry ve geniş AV taraması, (5) İBO Player cihaz kabulü. Tek ana playlist ve 48 karantina aynen korunur.
+- **v2/tasks/state.json:$.statuses[14].reason** — [Tarihsel kaynak kaydı] Pinned IPTV-org streams.json and channels.json to ca2dc7e7bcc89def37e55202a3ad108db46a7ccf. Matched 1,777 exact URL SHA-256 identities to unambiguous catalog channel IDs, reproduced all five prior exact IDs, and found 57 catalog site hostname correlations. The report includes no plaintext stream URLs. Catalog hostname correlation is not independent broadcaster proof. 13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open. Historical worldwide evidence inspected 13 Nov: run 42216075104 artifact 13524765368 contains 35,327 candidate hashes, 13,884 current-run FFmpeg video+audio decodes, and exact-hash crosswalk of 4,949/4,955 historical rows, with 3,080 historical hashes AV-decoded. The same report explicitly says historical broadcaster identity is not verified; #15 remains open for independently authenticated publisher attribution. ⏎ 14 Nov live scan #43608247496: 103/103 admissible M3U feeds read, 28,845 stream candidates and 8,573 total AV observations. Publisher attribution remains separately unverified; neither catalog correlation nor AV decode closes #15. ⏎ 18 Nov 2026 reconciliation: existing current-main v2/reports/task15-historical-url-hash-recovery-20261118.json documents the names and six exact hashes, four extra exact address matches and two unmatched; earlier six-unmatched blocker was stale. No channel scan, playlist changes, or publisher ownership claim. ⏎ 19 Nov 2026: the 4,949 unique archived crosswalk matches and six disjoint recovered raw URL hashes reproduce the complete immutable set of 4,955. Both outstanding hashes (Xinjiang TV 3 and American Ninja Warrior) match the 28 and 29 October pinned catalogs and the country playlists. The crosswalk itself still contains 4,949. Publisher evidence for the six reviewed rows is recorded in the recovery report. 19 Nov: verified the original Arica TV address through the broadcaster page and its embedded HTML player. No media probe. ⏎ 19 Nov 2026 user scope decision: Independent broadcaster ownership/attribution is no longer an acceptance criterion for task #15. Historical provenance/hash reconciliation is complete at 4,955/4,955. Task #15 closed for historical address source/hash reconciliation only. Stream functionality, live AV decoding and IBO Player acceptance are separate deferred checks and are NOT claimed complete. The four publisher-unattributed endpoints remain unverified as to ownership, without blocking task #15. No playlist mutation or live channel scan.
+- **v2/tasks/state.json:$.statuses[16].reason** — [Tarihsel kaynak kaydı] 13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open. ⏎ 14 Nov live scan #43608247496: encrypted resume reused 28,545 observations, performed 300 real new AV checks, recovered 33 previously failed streams, and kept the recovery queue. Real progress verified but full restoration is not complete. ⏎ 18 Nov 2026: read-only follow-up of 15 pending SHA-256 identities, 17 attempts. One current AV sample, eight HTTP 404 reviews and six HTTP 503 retries. Per-attempt evidence is recorded in the dated report. ⏎ 18 Nov 2026 no-rescan reconciliation: current-main v2/reports/task17-18-20-bounded-retry-20261118.json confirms 20,148 queue, 3,781 matched, 15 unique URLs / 17 attempts, 1 AV, 8 HTTP404, 6 HTTP503, and sealed_checkpoint_updated=false. These observations must not be re-run merely because the tasks are open. ⏎ 19 Nov 2026: offline import run 44429064188 applied all 15 identities (17 historical attempts) to the 28,844-row encrypted checkpoint. The readback retained all rows, the second application made zero changes, and the published encrypted backup matched the input byte for byte. The 18 November report describes the pre-import snapshot. ⏎ 21 Nov 2026 owner-approved archival scope closure: Arşivlenmiş tarihsel kayıtlar belgelendi, güncel veriler doğrulandı. Historical unresolved individual identities (#17) and 303 historical EPG rows (#19) are explicitly waived as active acceptance blockers by project owner. This is archival/scope acceptance, not proof of per-identity restoration or per-row EPG resolution. Task #17 source reconciliation 20148=3781+16367, manifest archive/unverified_historical_ids.json; task #19 evidence v2/reports/task19-current-xmltv-20261119.json. No live scan or playlist changes. ⏎ 22 Nov 2026: OWNER-DIRECTED ADMINISTRATIVE CLOSEOUT in PR #632. Closed for this delivery scope; NOT evidence that all live AV, HTTP 404/503 recovery, device playback, worldwide provider rate limits, or per-row historical identity/EPG gaps have been resolved. Preserve historical observations and SECURITY HOLD for 685 channels. Offline CI PASS was observed by owner at commit 7ac18f6; this closure commit requires its own CI check.
+- **v2/tasks/state.json:$.statuses[17].reason** — [Tarihsel kaynak kaydı] Pinned exact IPTV API evidence has 171 stream hashes, 168 decoded audio+video in both short FFmpeg samples. Identity review remains tied to #15. 13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open. ⏎ 14 Nov live scan #43608247496: exact real FFmpeg AV counts balance: 8,540 previous checkpoint + 33 this run = 8,573, with 20,272 still without AV proof. A green scan is not complete current playback acceptance. ⏎ 18 Nov 2026: read-only follow-up of 15 pending SHA-256 identities, 17 attempts. One current AV sample, eight HTTP 404 reviews and six HTTP 503 retries. Per-attempt evidence is recorded in the dated report. ⏎ 18 Nov 2026 no-rescan reconciliation: current-main v2/reports/task17-18-20-bounded-retry-20261118.json confirms 20,148 queue, 3,781 matched, 15 unique URLs / 17 attempts, 1 AV, 8 HTTP404, 6 HTTP503, and sealed_checkpoint_updated=false. These observations must not be re-run merely because the tasks are open. ⏎ 19 Nov 2026: offline import run 44429064188 applied all 15 identities (17 historical attempts) to the 28,844-row encrypted checkpoint. The readback retained all rows, the second application made zero changes, and the published encrypted backup matched the input byte for byte. The 18 November report describes the pre-import snapshot. ⏎ 22 Nov 2026: OWNER-DIRECTED ADMINISTRATIVE CLOSEOUT in PR #632. Closed for this delivery scope; NOT evidence that all live AV, HTTP 404/503 recovery, device playback, worldwide provider rate limits, or per-row historical identity/EPG gaps have been resolved. Preserve historical observations and SECURITY HOLD for 685 channels. Offline CI PASS was observed by owner at commit 7ac18f6; this closure commit requires its own CI check.
+- **v2/tasks/state.json:$.statuses[18].reason** — [Tarihsel kaynak kaydı] Validated 29 exact XMLTV IDs, 8 with valid programme time ranges, 14 also present in the reviewed AV set. 303 EPG gaps remain. Final identity acceptance depends on #18. 13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open. 13 Nov 2026: PR #156 merged as 5842d47a3617ccd3bc523632144e0c0eaffc0b9d. XMLTV programme availability now requires a unique channel ID and a parseable, strictly increasing start/stop interval, including UTC offset validation. Original Stage 2 fixture without stop failed first CI; fixture was corrected and PR run 43480044886 passed all groups. Main push security gate 43480208051 passed. Offline evidence only; live EPG gaps and final identity/EPG approval remain open. 13 Nov: PR #202 merged e5a233b8c281208b5ebc4662f741968002819d38. Main Actions 43484812015 SUCCESS. Offline crossfeed duplicate XMLTV ID rejection, undeclared programme rejection, DTD/ENTITY blocking proven. Live EPG and publisher identity acceptance remain open. ⏎ 14 Nov live scan #43608247496: read-only XMLTV audit 5 valid feeds; builder mapped 89 playlist entries via names into 54 review-only IDs and 1,838 programmes, explicitly 0 exact IDs. PR #255 safeguards name hints from automatic exact acceptance. 19 Nov: captured and hashed all five configured XMLTV feeds at one UTC instant. Four feeds provided current exact matches. Recorded publisher programme title and boundary evidence separately from XMLTV ID ownership and historical AV. ⏎ 21 Nov 2026 owner-approved archival scope closure: Arşivlenmiş tarihsel kayıtlar belgelendi, güncel veriler doğrulandı. Historical unresolved individual identities (#17) and 303 historical EPG rows (#19) are explicitly waived as active acceptance blockers by project owner. This is archival/scope acceptance, not proof of per-identity restoration or per-row EPG resolution. Task #17 source reconciliation 20148=3781+16367, manifest archive/unverified_historical_ids.json; task #19 evidence v2/reports/task19-current-xmltv-20261119.json. No live scan or playlist changes. ⏎ 22 Nov 2026: OWNER-DIRECTED ADMINISTRATIVE CLOSEOUT in PR #632. Closed for this delivery scope; NOT evidence that all live AV, HTTP 404/503 recovery, device playback, worldwide provider rate limits, or per-row historical identity/EPG gaps have been resolved. Preserve historical observations and SECURITY HOLD for 685 channels. Offline CI PASS was observed by owner at commit 7ac18f6; this closure commit requires its own CI check.
+- **v2/tasks/state.json:$.statuses[19].reason** — [Tarihsel kaynak kaydı] 167 exact URL hashes have positive measured video dimensions and two successful real AV samples. Provenance and counts in the linked report. Full recovery queue acceptance depends on #17. 13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open. ⏎ 14 Nov live scan #43608247496: deterministic checkpoint replay and retry accounting evidenced. Retry-state and evidence archived, but independent full recovery/real playback signoff is absent. ⏎ 18 Nov 2026: read-only follow-up of 15 pending SHA-256 identities, 17 attempts. One current AV sample, eight HTTP 404 reviews and six HTTP 503 retries. Per-attempt evidence is recorded in the dated report. ⏎ 18 Nov 2026 no-rescan reconciliation: current-main v2/reports/task17-18-20-bounded-retry-20261118.json confirms 20,148 queue, 3,781 matched, 15 unique URLs / 17 attempts, 1 AV, 8 HTTP404, 6 HTTP503, and sealed_checkpoint_updated=false. These observations must not be re-run merely because the tasks are open. ⏎ 19 Nov 2026: offline import run 44429064188 applied all 15 identities (17 historical attempts) to the 28,844-row encrypted checkpoint. The readback retained all rows, the second application made zero changes, and the published encrypted backup matched the input byte for byte. The 18 November report describes the pre-import snapshot. ⏎ 22 Nov 2026: OWNER-DIRECTED ADMINISTRATIVE CLOSEOUT in PR #632. Closed for this delivery scope; NOT evidence that all live AV, HTTP 404/503 recovery, device playback, worldwide provider rate limits, or per-row historical identity/EPG gaps have been resolved. Preserve historical observations and SECURITY HOLD for 685 channels. Offline CI PASS was observed by owner at commit 7ac18f6; this closure commit requires its own CI check.
+- **v2/tasks/state.json:$.statuses[20].reason** — [Tarihsel kaynak kaydı] 13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open. 13 Nov 2026: opt-in worldwide source scope is present in current-main scanner (--worldwide) with offline regression coverage; this only enables future worldwide scans and does not mean a scan was run. ⏎ 14 Nov live scan #43608247496: 103/103 admissible M3U feeds accepted and 28,845 candidates read. Separate GitLab/Codeberg adapters incomplete; YouTube 353/353 unverified, direct HLS 0/120, so global sources must not be treated as verified. ⏎ 22 Nov 2026: OWNER-DIRECTED ADMINISTRATIVE CLOSEOUT in PR #632. Closed for this delivery scope; NOT evidence that all live AV, HTTP 404/503 recovery, device playback, worldwide provider rate limits, or per-row historical identity/EPG gaps have been resolved. Preserve historical observations and SECURITY HOLD for 685 channels. Offline CI PASS was observed by owner at commit 7ac18f6; this closure commit requires its own CI check.
+- **v2/tasks/state.json:$.statuses[21].reason** — [Tarihsel kaynak kaydı] Verified live GitHub dev-branch protected playlist blob 4b1c3cea4b5107a425abab60f62d41f9f81e05a7, and exact first two YEDEKLER entries TRT 1 1440P QHD, DHA CANLI 720P HD. Regression in v2/test_playlist_invariants.py asserts exact order. No playlist write or IBO device-playback claim.
+- **v2/tasks/state.json:$.statuses[27].reason** — [Tarihsel kaynak kaydı] 13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open. Historical real evidence inspected 13 Nov: worldwide run 42216075104 has 13,884 FFmpeg video+audio decodes from 35,327 candidates in nine RSA-sealed shards; 501 AV rows have TR/AZ metadata hints. Later independent #24 run 43241168321 reports 801 AV (800 TR/AZ) and 7,819 restored archive records. Cross-run URL-hash overlap is not yet reconciled, so counts are not added. The RSA-sealed worldwide URL shards require the recipient private key, which is not in the repository; no 1000/2000 real packages have been emitted. Task remains open. ⏎ 13 Nov 2026 artifact verification (run 43412576224, artifact 14033805492; report IBO_REAL_BATCH_INTEGRITY_2026-11-13.md): 1000-piece real M3U chunks exist (1000+1000+1000+1000+301); delivery acceptance and independent per-channel evidence/device verification are still open. ⏎ 2026-11-22 OWNER-APPROVED HISTORICAL ARCHIVAL SCOPE CLOSEOUT: administrative completion only. The independent IBO device playback, live AV, real package acceptance, and production restore evidence identified above remain unverified; do not interpret as technical PASS. Canonical playlist unchanged and all 685 SECURITY HOLD channels remain locked.
+- **v2/tasks/state.json:$.statuses[28].reason** — [Tarihsel kaynak kaydı] 13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open. Historical real evidence inspected 13 Nov: worldwide run 42216075104 has 13,884 FFmpeg video+audio decodes from 35,327 candidates in nine RSA-sealed shards; 501 AV rows have TR/AZ metadata hints. Later independent #24 run 43241168321 reports 801 AV (800 TR/AZ) and 7,819 restored archive records. Cross-run URL-hash overlap is not yet reconciled, so counts are not added. The RSA-sealed worldwide URL shards require the recipient private key, which is not in the repository; no 1000/2000 real packages have been emitted. Task remains open. ⏎ 13 Nov 2026 artifact verification (run 43412576224, artifact 14033805492; report IBO_REAL_BATCH_INTEGRITY_2026-11-13.md): 2000-piece real M3U chunks exist (2000+2000+301); delivery acceptance and independent per-channel evidence/device verification are still open. ⏎ 2026-11-22 OWNER-APPROVED HISTORICAL ARCHIVAL SCOPE CLOSEOUT: administrative completion only. The independent IBO device playback, live AV, real package acceptance, and production restore evidence identified above remain unverified; do not interpret as technical PASS. Canonical playlist unchanged and all 685 SECURITY HOLD channels remain locked.
+- **v2/tasks/state.json:$.statuses[29].reason** — [Tarihsel kaynak kaydı] 13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open. Additional verified evidence 13 Nov: current-main grouped offline regressions passed in run 43459603986; #24 Drive restore receipt confirms 7,819 records restored and archive SHA/revision matched. Offline M3U/archive tests do not prove a real 1000/2000 package or IBO device playback; task remains open. ⏎ 13 Nov 2026 artifact verification (run 43412576224, artifact 14033805492; report IBO_REAL_BATCH_INTEGRITY_2026-11-13.md): Independent M3U structural and URL deduplication audit for both chunk sets reports 4301 matching URLs, zero duplicates and zero unpaired EXTINF; final end-to-end production/device acceptance is still open. ⏎ 2026-11-22 OWNER-APPROVED HISTORICAL ARCHIVAL SCOPE CLOSEOUT: administrative completion only. The independent IBO device playback, live AV, real package acceptance, and production restore evidence identified above remain unverified; do not interpret as technical PASS. Canonical playlist unchanged and all 685 SECURITY HOLD channels remain locked.
+- **v2/tasks/state.json:$.statuses[30].reason** — [Tarihsel kaynak kaydı] 13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open. Additional verified evidence 13 Nov: current-main grouped offline regressions passed in run 43459603986; #24 Drive restore receipt confirms 7,819 records restored and archive SHA/revision matched. Offline M3U/archive tests do not prove a real 1000/2000 package or IBO device playback; task remains open. 13 Nov 2026: PR #134 merged as 917dcddaff863ae56f9099a0539d63b6f85765c9; main Actions run 43460202117 passed Stage 5 evidence-gated export/final-acceptance offline regressions. Gate implementation is present; no real 1000/2000 package or device proof is claimed. PR #162 (merge 86fe138f793ff42148a34faa6b4ca249dc6ee65f) passed main Actions 43480354832; Stage 5 private export requires decoded A/V and exact channel ID, exclusive private-only output. This is offline infrastructure evidence, not real packages or device acceptance; task remains open. PR #177 merged as aa6b5b3f18b89c28a994a6f90484e18f879b14c1; main Actions 43481413229 SUCCESS. Local generated test media video+audio FFmpeg decode was exercised instead of skipped; no actual IPTV device test or 1000/2000 real package accepted. Task remains open. ⏎ 2026-11-22 OWNER-APPROVED HISTORICAL ARCHIVAL SCOPE CLOSEOUT: administrative completion only. The independent IBO device playback, live AV, real package acceptance, and production restore evidence identified above remain unverified; do not interpret as technical PASS. Canonical playlist unchanged and all 685 SECURITY HOLD channels remain locked.
+- **v2/tasks/state.json:$.statuses[31].reason** — [Tarihsel kaynak kaydı] 13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open. Additional verified evidence 13 Nov: current-main grouped offline regressions passed in run 43459603986; #24 Drive restore receipt confirms 7,819 records restored and archive SHA/revision matched. Offline M3U/archive tests do not prove a real 1000/2000 package or IBO device playback; task remains open. 13 Nov 2026: PR #134 merged as 917dcddaff863ae56f9099a0539d63b6f85765c9; main Actions run 43460202117 passed Stage 5 evidence-gated export/final-acceptance offline regressions. Gate implementation is present; no real 1000/2000 package or device proof is claimed. PR #162 (merge 86fe138f793ff42148a34faa6b4ca249dc6ee65f) passed main Actions 43480354832; Stage 5 private export requires decoded A/V and exact channel ID, exclusive private-only output. This is offline infrastructure evidence, not real packages or device acceptance; task remains open. PR #177 merged as aa6b5b3f18b89c28a994a6f90484e18f879b14c1; main Actions 43481413229 SUCCESS. Local generated test media video+audio FFmpeg decode was exercised instead of skipped; no actual IPTV device test or 1000/2000 real package accepted. Task remains open. ⏎ 2026-11-22 OWNER-APPROVED HISTORICAL ARCHIVAL SCOPE CLOSEOUT: administrative completion only. The independent IBO device playback, live AV, real package acceptance, and production restore evidence identified above remain unverified; do not interpret as technical PASS. Canonical playlist unchanged and all 685 SECURITY HOLD channels remain locked.
+- **v2/tasks/state.json:$.statuses[32].reason** — [Tarihsel kaynak kaydı] 13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open. Additional verified evidence 13 Nov: current-main grouped offline regressions passed in run 43459603986; #24 Drive restore receipt confirms 7,819 records restored and archive SHA/revision matched. Offline M3U/archive tests do not prove a real 1000/2000 package or IBO device playback; task remains open. 13 Nov 2026: PR #134 merged as 917dcddaff863ae56f9099a0539d63b6f85765c9; main Actions run 43460202117 passed Stage 5 evidence-gated export/final-acceptance offline regressions. Gate implementation is present; no real 1000/2000 package or device proof is claimed. PR #162 (merge 86fe138f793ff42148a34faa6b4ca249dc6ee65f) passed main Actions 43480354832; Stage 5 private export requires decoded A/V and exact channel ID, exclusive private-only output. This is offline infrastructure evidence, not real packages or device acceptance; task remains open. PR #177 merged as aa6b5b3f18b89c28a994a6f90484e18f879b14c1; main Actions 43481413229 SUCCESS. Local generated test media video+audio FFmpeg decode was exercised instead of skipped; no actual IPTV device test or 1000/2000 real package accepted. Task remains open. ⏎ 2026-11-22 OWNER-APPROVED HISTORICAL ARCHIVAL SCOPE CLOSEOUT: administrative completion only. The independent IBO device playback, live AV, real package acceptance, and production restore evidence identified above remain unverified; do not interpret as technical PASS. Canonical playlist unchanged and all 685 SECURITY HOLD channels remain locked.
+- **v2/tasks/state.json:$.statuses[33].reason** — [Tarihsel kaynak kaydı] The grouped offline system verification passed. #34 source discovery is running on the exact tested source tree. Fresh AV, encryption and final acceptance remain open. 13 Nov 2026: current-main offline Stage 2/3 identity, EPG, recovery, scanner/probe integration and Stage 6 package/archive regression groups passed Production Security Gate runs 43454977935 and 43454976797. Offline acceptance only; no new channel scan, no new live AV proof, no external restore or device acceptance. Final task remains open. 13 Nov 2026: inspected prior live job logs; Codeberg failed at HTTP layer, not candidate parser. Current code reports HTTP status/provider/host and retries transient statuses; 403 is fail-closed. No live rerun or channel scan performed. Codeberg blocker diagnosis and offline-only follow-up recorded in PR #79; run 43455836114 passed offline gate, not live API. PR #86 merged; six configured discovery terms are now included in live-contract test matrix and offline tests passed in run 43457308527. This is not live API acceptance; #34 remains open. 13 Nov: live run 43458069505 established GitHub/GitLab results and Codeberg 429; PR #128 added rate-limit reset handling and provider circuit breaker. Follow-up main run 43459603986: offline production gate PASS; live diagnostic still returned Codeberg HTTP_429 after 3 attempts and skipped 5 sibling queries, while GitHub 6/6 and GitLab 6/6 remained successful. No full channel scan or playlist writes performed. #34 remains open. 13 Nov 2026: PR #132 merged as ee2471b28804fb7c2c212f83f62d73d06566bed9; queries_checked now counts actual requests, with queries_total and queries_skipped separately reported. The observed live run 43459603986 made one Codeberg query (three bounded attempts) and skipped five; this reporting fix has offline CI PASS, but no second live probe after the metrics fix is claimed. ⏎ 19 Nov: PR #471 merged 57e4bc330762b2ff6d40786925cbf831675ac707 enabling manual read-only #34 diagnostic; PR #472 merged 065dd930c8ea807031ef207f6e3ecb88a20fa4a4 adding explicit provider-scoped manual probe and regression tests. Both PR gates (44573946459, 44577557536) and main push gate (44577940202) passed. This is offline and workflow configuration evidence only; no successful new Codeberg live run is claimed. ⏎ 22 Nov 2026: OWNER-DIRECTED ADMINISTRATIVE CLOSEOUT in PR #632. Closed for this delivery scope; NOT evidence that all live AV, HTTP 404/503 recovery, device playback, worldwide provider rate limits, or per-row historical identity/EPG gaps have been resolved. Preserve historical observations and SECURITY HOLD for 685 channels. Offline CI PASS was observed by owner at commit 7ac18f6; this closure commit requires its own CI check.
+- **v2/tasks/state.json:$.stage2_archive_acceptance_20261121.inventory_note** — [Tarihsel kaynak kaydı] Older fixture snapshot is not the same inventory snapshot as latest #489 acceptance; do not conflate 1792 YEDEKLER with 18074 archive.
+- **v2/tasks/state.json:$.stage6_retry_plan_20261121.next_action** — [Tarihsel kaynak kaydı] 685 plan actual GitHub artifact accepted; do not regenerate. #6 authorized Turkish vault external restore remains open; separately accept secure live streaming and IBO device tests only in authorized final stage.
+- **v2/tasks/state.json:$.stage8_private_turkish_vault_restore_20261121.next_action** — [Tarihsel kaynak kaydı] Identify authentic authorized-Turkish vault backup in existing controlled external storage with provider ID/revision and independently pinned checksum, access authorized Fernet key securely and test only isolated restore. Do not disclose secrets or claim acceptance otherwise.
+- **v2/tasks/state.json:$.stage10_manual_hls_ts_safe_capture_20261121.next_action** — [Tarihsel kaynak kaydı] Verify merge-after main CI; do not rerun historic reports. Keep #497 685 live retry on dual security hold until general FFmpeg/HLS egress isolation accepted. Separately identify genuine offsite #6 Fernet vault and authorized key for isolated restore.
+- **v2/tasks/state.json:$.github_cleanup_final_20261121.issue497_status** — [Tarihsel kaynak kaydı] Not in open issue search; prior issue body retained evidence. Do not assert full acceptance without artifact-to-ledger end-to-end proof.
+- **v2/yedekler_av_recheck_20261125.md:L3** — [Tarihsel kaynak kaydı] Owner requests fresh decoded video and audio checks after false red marks. Use existing full 1562 read-only quality workflow, including all 1102 previously marked entries. Report video, audio, quality and unresolved separately. No playlist edits or automatic marking. Access failures are inconclusive.
+- **v2/yedekler_batch/README.md:L18** — [Tarihsel kaynak kaydı] **Sınırlar:** Durum atamaları yayınların görüntü/ses çalışırlığını doğrulamaz. Sınıflandırma kullanıcı onayıyla yapılır. GitHub Actions üzerinden otomatik test/taşıma henüz bağlı değildir. Arşiv dosyası üretimi ve uçtan uca kabul ayrıca doğrulanmalıdır.
+- **v2/yedekler_red_av_request.md:L3** — [Tarihsel kaynak kaydı] Owner request: fresh test of all 1562 records. Mark ❌ when neither video nor audio is obtained, including inaccessible and uncertain results. Preserve all records, URLs, categories and ordering. Single-medium results are not red under this rule. Use the existing bounded fresh full audit. Test results are observations, not permanent closure claims.
+
+
+
+- **PR #669 @ a5fcf3a84bbe / DEVAM_NOTU.md:L1701** — [Açık PR, tarihsel plan] 23 Kasım 2026 — Kanal yaşam döngüsü, kayıp önleme ve 1. Paket kararı (kullanıcı onayı)
+- **PR #669 @ a5fcf3a84bbe / DEVAM_NOTU.md:L1704** — [Açık PR, tarihsel plan] - **Kritik koruma:** PR #667 (18.337 -&gt; 17.531, 806 aynı URL+aynı ad mükerreri; EPG 0, logo 0) güvenlik ve offline testleri FAIL verdi; **MERGE EDİLMEYECEK**. Mevcut 18.337 kayıt korunacak. 806 kayıtlık geri yükleme arşivi yalnız PR dalındadır; main üzerinde arşiv bulunduğu iddia edilmeyecek.
+- **PR #669 @ a5fcf3a84bbe / DEVAM_NOTU.md:L1705** — [Açık PR, tarihsel plan] - Mükerrer kuralı: yalnız **birebir URL + aynı kanal adı** eşleşmeleri aday; aynı URL ama farklı kanal adı (Kanal D/Star TV örneği) korunur ve şüpheli olarak raporlanır. Aynı ad ama farklı URL korunur. Kategori ve ANA ARŞİV alfabetik sırası korunur.
+- **PR #669 @ a5fcf3a84bbe / DEVAM_NOTU.md:L1710** — [Açık PR, tarihsel plan] - Kullanıcı manuel GitHub tıklaması, indirme veya onay adımı istemiyor. Herhangi bir uygulama ancak güvenlik ve offline testleri PASS olursa, izlenebilir PR ile merge edilecek.
+- **PR #664 @ bccb4937f2e3 / v2/tasks/KALAN_ISLER_2026-11-23.md:L1** — [Açık PR, tarihsel plan] MADSC55 TV V2 — 23 Kasım 2026 güncel kalan işler ve proje sahibi kararları
+- **PR #664 @ bccb4937f2e3 / v2/tasks/KALAN_ISLER_2026-11-23.md:L3** — [Açık PR, tarihsel plan] Bu kayıt, 23 Kasım görüşmesindeki son talimatları önceki planların üzerine işler. Yalnız takip belgesidir; ana playlist, kanal kimlikleri, workflow ve güvenlik kilitleri değiştirilmez.
+- **PR #664 @ bccb4937f2e3 / v2/tasks/KALAN_ISLER_2026-11-23.md:L7** — [Açık PR, tarihsel plan] - Proje sahibi ANA ARŞİV'in alfabetik sıralamasının tamamlandığını teyit etti. Tekrar sıralama işi açılmayacak. Bu teyit ayrıca main üzerinde teknik doğrulama yerine geçmez.
+- **PR #664 @ bccb4937f2e3 / v2/tasks/KALAN_ISLER_2026-11-23.md:L8** — [Açık PR, tarihsel plan] - Proje sahibi ANA ARŞİV'i YEDEKLER'in hemen altına taşıma isteğinden vazgeçti. #660/#661/#662/#663 kapsamındaki yer değiştirme işlemleri **iptal**; mevcut kategori sırası korunacak, otomatik uygulanmayacak.
+- **PR #664 @ bccb4937f2e3 / v2/tasks/KALAN_ISLER_2026-11-23.md:L37** — [Açık PR, tarihsel plan] İşleri tek tek kanıtla; başarılı olanları kapat, eksik kalanları açık tut. Playlist'e yazan değişiklikler güvenlik kapısından geçmeden birleştirilmez. Bu dosya yalnızca güncel planı ve kullanıcının iptal kararlarını kalıcı kayda geçirmek için hazırlanmıştır.
+- **PR #651 @ f0c8e198fb08 / v2/tasks/KALAN_TEKNIK_ISLER_20261123.md:L3** — [Açık PR, tarihsel plan] Bu belge kullanıcının önceki 15 ekran görüntüsündeki talepleri ve devam konuşmasındaki ek işleri tekrar kaybetmemek için tutulur. **34 görevin state.json içinde completed olması teknik kabulün tamamlandığı anlamına gelmez.** Bu dosya ayrı bir teknik açık işler kaydıdır; görev statülerini değiştirmez.
+- **PR #651 @ f0c8e198fb08 / v2/tasks/KALAN_TEKNIK_ISLER_20261123.md:L5** — [Açık PR, tarihsel plan] Değişmez kurallar
+- **PR #651 @ f0c8e198fb08 / v2/tasks/KALAN_TEKNIK_ISLER_20261123.md:L7** — [Açık PR, tarihsel plan] - Ana kategoriler, kanal kimlikleri ve sıra korunur; değişiklikler kanıta ve açık yetkiye dayanır.
+- **PR #651 @ f0c8e198fb08 / v2/tasks/KALAN_TEKNIK_ISLER_20261123.md:L11** — [Açık PR, tarihsel plan] - Gerçek yayın taraması ve İBO Player cihaz kabulü kullanıcı isteğiyle **son test aşaması**; HTTP salt-okunur raporu bunun yerine geçmez.
+- **PR #651 @ f0c8e198fb08 / v2/tasks/KALAN_TEKNIK_ISLER_20261123.md:L14** — [Açık PR, tarihsel plan] 1. **HTTP taraması:** PR #637 birleştirilmiş olduğu kullanıcı tarafından bildirildi. `Main Playlist HTTP Health Report (Read Only) #2` ekran görüntüsünde main / `53e0a03`, 33m34s `In progress`. Tamamlama, artifact, başarısızlık, HTTP 404/503/timeout/unknown ayrımı ve sonuçların kilitli kayıtları koruyan güvenli değerlendirmesi doğrulanacak. **Bu ekran görüntüsü PASS değildir.** Rapor tamamlanmadan otomatik silme yapılmaz.
+- **PR #651 @ f0c8e198fb08 / v2/tasks/KALAN_TEKNIK_ISLER_20261123.md:L19** — [Açık PR, tarihsel plan] 6. **Arşiv otomasyonu:** 18.074 özgün arşiv kimliğinin tek listede korunması; tarihsel dağılım YEDEKLER 1.792, ANA ARŞİV 15.574, TÜRK 424, YABANCI 284, diğer 838. 2.500'lük YEDEKLER paket döngüsü, taşımanın kaynak gruptan düşmesi, sıradaki paketin ANA ARŞİV'den gelmesi, mükerrer önleme, idempotent işlem ve geri alma/restore kabulü. İBO Player kullanıcı testi sistem işleyişinden ayrı.
+- **PR #651 @ f0c8e198fb08 / v2/tasks/KALAN_TEKNIK_ISLER_20261123.md:L23** — [Açık PR, tarihsel plan] 10. **İBO paketleri (#28–#30):** Tarihsel 1.000 / 2.000 / 4.301 paket çalışmalarını gerçek ses+görüntü kanıtı, kaynak kimliği ve M3U bütünlüğü ile karşılaştır; sentetik veya yalnız HTTP erişimi olan kayıtları gerçek oynatılabilir kanal diye sayma. Kullanıcının güncel tek playlist kuralını ihlal edecek ayrı üretim listesi yayımlama.
+- **PR #650 @ fe1420ca833e / DEVAM_NOTU.md:L1702** — [Açık PR, tarihsel plan] 23 Kasım 2026 — Kullanıcı onaylı öncelik sırası: tüm kanalların sağlık taraması
+- **PR #650 @ fe1420ca833e / DEVAM_NOTU.md:L1708** — [Açık PR, tarihsel plan] 3. **Kanal bazlı sağlık defteri:** Her kanal için değişmez kimlik, kategori, URL özeti, kontrol zamanı, HTTP/HLS sonucu, ses/video kanıtı ve `CALISIYOR` / `CALISMIYOR` / `BELIRSIZ_YENIDEN_TEST` durumunu kaydet. 403/503, bölgesel engel ve timeout tek başına kesin ölü değildir.
+- **PR #650 @ fe1420ca833e / DEVAM_NOTU.md:L1712** — [Açık PR, tarihsel plan] 7. **Güvenli uygulama ve kabul:** Sonuçları raporla; kullanıcı kuralları ve 685 kilidi doğrulandıktan sonra yalnızca doğrulanmış değişiklikleri mevcut ana playlist'e PR üzerinden uygula. Mevcut diğer kategorileri koru, 48 daha önce yasaklanan kanalı geri getirme; Offline CI ve Production Security Gate PASS olmadan merge etme. İBO Player cihaz testi ayrı son kabul aşaması.
+
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L3** — [Açık PR, tarihsel plan] Durum: TAKİPTE — kullanıcı talimatıyla kayıt altına alındı.
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L11** — [Açık PR, tarihsel plan] Değişmez kurallar
+
+- **PR #669 @ a5fcf3a84bbe / v2/tasks/state.json:$.channel_lifecycle_plan_20261123.dedupe_rule** — [Açık PR, tarihsel plan] exact URL plus same channel display name; preserve distinct names and distinct URLs
+- **PR #669 @ a5fcf3a84bbe / v2/tasks/state.json:$.channel_lifecycle_plan_20261123.constraints[0]** — [Açık PR, tarihsel plan] no playlist deletion until evidence ledger and recovery verified
+- **PR #669 @ a5fcf3a84bbe / v2/tasks/state.json:$.channel_lifecycle_plan_20261123.constraints[1]** — [Açık PR, tarihsel plan] no bypass of offline CI or Production Security Gate
+- **PR #669 @ a5fcf3a84bbe / v2/tasks/state.json:$.channel_lifecycle_plan_20261123.constraints[2]** — [Açık PR, tarihsel plan] preserve category and archive ordering
+- **PR #669 @ a5fcf3a84bbe / v2/tasks/state.json:$.channel_lifecycle_plan_20261123.constraints[3]** — [Açık PR, tarihsel plan] no new playlist
+- **PR #669 @ a5fcf3a84bbe / v2/tasks/state.json:$.channel_lifecycle_plan_20261123.constraints[4]** — [Açık PR, tarihsel plan] no manual user GitHub steps
+- **v2/tasks/state.json:$.stage4_drive_archive_structural_audit_20261121.share_scope** — [Tarihsel kaynak kaydı, ek alan kontrolü] file owner and backup service account; no public anyone permission observed
+
+<!-- A-END -->
+
+## B) Yarım Kalmış / Beklemeye Alınmış Teknik ve Kurtarma İşleri
+
+### Teknik takip haritası — sonradan tamamlananlar ve açık kanıtlar ayrı
+
+- B01 — HTTP Health Report #2 eski bekleyen sonucu ve artifact incelemesi (#637): PR #651. Tarihsel durum; bu indeks çalışmasında run sonucu ayrıca doğrulanmadı.
+- B02 — Master Engine, süre sınırı ve hata izleme: #23/#24/#25/#26 tamamlanan kabul; eski çalışmaları tekrarlama. Kaynak: state.json.
+- B03 — GitHub/Gist kaynak keşfi: mevcut altyapı; tüm yeni adayların gerçek medya kabulü ayrı. Kaynak: v2/WORK_PLAN.md.
+- B04 — GitLab canlı sağlayıcı kabulü: #784 429 koruması offline tamamlandı; canlı uçtan uca doğrulama ayrı. Kaynak: final rapor; PR #664.
+- B05 — Codeberg canlı sağlayıcı kabulü: aynı ayrım. Kaynak: PR #651/#664, README-discovery-34-live-probe.md.
+- B06 — YouTube resmî canlı yayın ve sürdürülebilir yetkili adres çözümü; geçici URL kalıcı kaynak değil. Kaynak: v2/WORK_PLAN.md.
+- B07 — Resmî TV yayıncı sayfalarının kaynak/kimlik/AV kabulü. Kaynak: state.json #9/#11; PR #651.
+- B08 — Scribd kaynak incelemesi (geçerli M3U bulunmadığı tarihsel kayıt). Kaynak: state.json #8.
+- B09 — SlideShare kaynak incelemesi (aynı ayrı kaynak sonucu). Kaynak: state.json #8.
+- B10 — Internet Archive kaynak provenansı ve AV ayrımı. Kaynak: state.json #8.
+- B11 — Dünya/Türkiye/Azerbaycan kaynak keşfi ve tüm adayların bütçeli, devam edilebilir paket doğrulaması. Kaynak: PR #650; WORK_PLAN.
+- B12 — 35.327 ve 18.074 tarihsel küme birleşimi 36.470, 7.650/1.110/4.955 mutabakatı: #793 offline kabul tamamlandı. Bütün geçmiş taramaların toplamı değildir.
+- B13 — #3 tarihsel 46 oynatma kanıtı eksik kaydı; arşiv/kapsam kararı korunur. Kaynak: state.json #3.
+- B14 — #4 tarihsel 1.866 inceleme grubu ve 19 eksik hash; ayrı geçmiş kanıtı. Kaynak: state.json #4.
+- B15 — #5 26 eşleşmemiş EXTINF incelemesindeki çözülemeyen adresler; kapsam dışı tarihsel kurtarma. Kaynak: state.json #5.
+- B16 — #6 2.643 tarihsel kurtarma hedefi, idari kapsam kapanışı. Kaynak: state.json #6 (GitHub Issue #6 ayrı).
+- B17 — #15 4.955/4.955 adres hash mutabakatı tamamlandı; yayıncı sahipliği şartı kaldırıldı. Kaynak: state.json #15.
+- B18 — #17 20.148 kuyruk = 3.781 eşleşen + 16.367 tarihsel doğrulanmamış kimlik; fark sıfır, tekil gerçek yayın kabulü değil, tarihsel kapsam arşivli. Kaynak: archive/unverified_historical_ids.json.
+- B19 — #18 gerçek AV kabulü, tarihsel kaynak ve yeni kanıtı ayrı tut. Kaynak: state.json #18.
+- B20 — #20 HTTP 404 (8) ve 503 (6) tarihsel gözlemler/15 kimlik/17 deneme; yeniden işleme yok, kurtarma ayrı. Kaynak: v2/reports/task17-18-20-bounded-retry-20261118.json.
+- B21 — 28.844 checkpoint'te 15 import, ikinci uygulama 0: kanıtlı. Sonraki tüm kullanıcı kararlarıyla yeni sonuçların gerçek entegrasyonu ayrı. Kaynak: state.json; final rapor.
+- B22 — Kanal bazında kalıcı kaynak/kimlik/URL/son test zamanı/AV ve dil/sonuç/geri alma kaydı. Kaynak: PR #669 ve #650.
+- B23 — Tekrar keşfedilen URL'nin geçmiş kimlikle eşleştirilmesi ve kayıpsız yeniden test. Kaynak: PR #669.
+- B24 — FFmpeg/HLS/DASH alt istekleri, DNS pinleme, OS düzeyi egress ve gerçek yayıncı örneği kabulü; 685 kilitli. Kaynak: stage4-pinned-dns-capture-20261121.md; PR #651.
+- B25 — 685 retry planı artifact 14702596056 mevcut; yeniden üretme. Canlı retry yetki ve güvenlik kabulüne bağlı. Kaynak: state.json stage6; PR #650.
+- B26 — Gerçek konuşma ASR uygulaması; #793 offline tamamlandı, toplu canlı kabul ayrı.
+- B27 — Gerçek ekran OCR uygulaması; #793 offline tamamlandı, toplu canlı kabul ayrı.
+- B28 — Gerçek zamanlı WebVTT/altyazı uygulaması; #793 offline tamamlandı, toplu canlı kabul ayrı.
+- B29 — Yabancı adlı/yurt dışı/Türkî yayın kimliği; #793 offline tamamlandı, bağımsız gerçek kimlik incelemesi ayrı.
+- B30 — Ölçülmüş çözünürlük/bitrate/bağımsız kimlik kalite seçimi #784/#785/#794 offline tamamlandı; gerçek aday kazananı atanmadı.
+- B31 — 303 tarihsel EPG açığı ve program/ID incelemesi: kapsam arşivli, gerçek atama tamamlanmış değil. Kaynak: state.json #19; PR #664.
+- B32 — Tarihsel 4.745 logosuz envanter, 330 aday, 6 doğrulanmamış öneri; eski snapshot sayıları. Kaynak: logo_inventory_20261121.md; PR #651.
+- B33 — YEDEKLER 697 logosuz, 1187 boş TVG-ID, 3 logo adayı, 5 tarihsel EPG-ID eşleşmesi: #792 rapor, gerçek atama sıfır; yeni ölçüm/atama yetkiye bağlı.
+- B34 — Google Drive tarihsel Stage 4 gerçek bağımsız restore PASS; özel Türk Fernet kasasıyla aynı değil. Kaynak: state.json #13/#24; PR #651.
+- B35 — Ayrı özel kasa harici backup/restore şartı sonradan kaldırıldı; #786 AES-GCM sentetik restore PASS, harici üretim restore kanıtı değil. Kaynak: final rapor, DEVAM_NOTU.
+- B36 — 1000/2000 ve 4301 paketleri: bütünlük doğrulandı; gerçek üretim/cihaz kabulü arşivli/ayrı. Kaynak: IBO_REAL_BATCH_INTEGRITY_2026-11-13.md; #28–33.
+- B37 — Açık tarihsel PR ve CI envanteri: önce güncel HEAD ve kanıtla karşılaştır, eski veya geçersiz PR'ı birleştirme. Kaynak: KAPANIS_SIRASI; #641/#760.
+- B38 — #794 10 maddelik offline final kabulü tamamlandı; yeni gerçek üretim akışı ve cihaz kabulü aynı şey değildir. Kaynak: final rapor.
+
+### Ayrıntılı kaynak kayıtları
+
+- **.github/workflows/alphabetize-yeni-turk.yml:L1** — [Tarihsel yapılandırma kaydı] name: Alphabetize YENI TURK (production writer suspended)
+- **.github/workflows/alphabetize-yeni-turk.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/autonomous_discovery_readonly.yml:L1** — [Tarihsel yapılandırma kaydı] name: Autonomous Discovery Read Only
+- **.github/workflows/autonomous_discovery_readonly.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/autonomous_discovery_readonly.yml:L6** — [Tarihsel yapılandırma kaydı] description: 'Approved HTTPS M3U feed URL; empty means inventory-only report'
+- **.github/workflows/autonomous_discovery_readonly.yml:L10** — [Tarihsel yapılandırma kaydı] description: 'Optional reviewed 685-entry manifest path in repository'
+- **.github/workflows/autonomous_discovery_readonly.yml:L14** — [Tarihsel yapılandırma kaydı] description: 'Maximum bounded candidate checks'
+- **.github/workflows/autonomous_discovery_readonly.yml:L28** — [Tarihsel yapılandırma kaydı] - name: Install local-only AV tools
+- **.github/workflows/autonomous_discovery_readonly.yml:L30** — [Tarihsel yapılandırma kaydı] - name: Download historical 685 manifest using GitHub Actions artifact service
+- **.github/workflows/autonomous_discovery_readonly.yml:L33** — [Tarihsel yapılandırma kaydı] name: v2-497-existing-audit-preview
+- **.github/workflows/autonomous_discovery_readonly.yml:L37** — [Tarihsel yapılandırma kaydı] - name: Verify immutable historical 685 manifest
+- **.github/workflows/autonomous_discovery_readonly.yml:L55** — [Tarihsel yapılandırma kaydı] - name: Run bounded candidate discovery in disposable directory
+- **.github/workflows/autonomous_discovery_readonly.yml:L104** — [Tarihsel yapılandırma kaydı] - name: Publish discovery results only
+- **.github/workflows/autonomous_discovery_readonly.yml:L105** — [Tarihsel yapılandırma kaydı] if: always()
+- **.github/workflows/autonomous_discovery_readonly.yml:L108** — [Tarihsel yapılandırma kaydı] name: discovery-results
+- **.github/workflows/backups-logo-audit.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/build_playlist_from_parts.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/build_playlist_from_parts.yml:L17** — [Tarihsel yapılandırma kaydı] if: "github.ref == 'refs/heads/main' && !contains(github.event.head_commit.message, '[skip ci]')"
+- **.github/workflows/build_playlist_from_parts.yml:L38** — [Tarihsel yapılandırma kaydı] - name: Create validated proposal branch (never push main)
+- **.github/workflows/build_playlist_from_parts.yml:L58** — [Tarihsel yapılandırma kaydı] # Repository settings forbid GitHub Actions bots from creating PRs.
+- **.github/workflows/build_playlist_from_parts.yml:L59** — [Tarihsel yapılandırma kaydı] # Leave a validated, isolated proposal branch and report it explicitly;
+- **.github/workflows/build_playlist_from_parts.yml:L60** — [Tarihsel yapılandırma kaydı] # an authorized GitHub identity can open a PR with required checks.
+- **.github/workflows/build_playlist_from_parts.yml:L99** — [Tarihsel yapılandırma kaydı] - name: Apply and validate authorized command
+- **.github/workflows/build_playlist_from_parts.yml:L106** — [Tarihsel yapılandırma kaydı] - name: Push validated proposal to SAME command branch
+- **.github/workflows/ci.yml:L1** — [Tarihsel yapılandırma kaydı] name: Offline CI
+- **.github/workflows/ci.yml:L5** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/ci.yml:L17** — [Tarihsel yapılandırma kaydı] # The default shallow checkout omits those Git objects.
+- **.github/workflows/ci.yml:L41** — [Tarihsel yapılandırma kaydı] - name: Install full-suite offline dependencies
+- **.github/workflows/ci.yml:L42** — [Tarihsel yapılandırma kaydı] if: steps.move_scope.outputs.eligible != 'true'
+- **.github/workflows/ci.yml:L44** — [Tarihsel yapılandırma kaydı] - name: Run full offline regression suite
+- **.github/workflows/ci.yml:L45** — [Tarihsel yapılandırma kaydı] if: steps.move_scope.outputs.eligible != 'true'
+- **.github/workflows/ci.yml:L47** — [Tarihsel yapılandırma kaydı] - name: Verify deep AV decision lock
+- **.github/workflows/ci.yml:L49** — [Tarihsel yapılandırma kaydı] - name: Verify system FFmpeg quality fixtures before merge
+- **.github/workflows/ci.yml:L50** — [Tarihsel yapılandırma kaydı] if: steps.move_scope.outputs.eligible != 'true'
+- **.github/workflows/ci.yml:L59** — [Tarihsel yapılandırma kaydı] - name: Install move-only YAML audit dependency
+- **.github/workflows/ci.yml:L60** — [Tarihsel yapılandırma kaydı] if: steps.move_scope.outputs.eligible == 'true'
+- **.github/workflows/ci.yml:L63** — [Tarihsel yapılandırma kaydı] if: steps.move_scope.outputs.eligible == 'true'
+- **.github/workflows/ci.yml:L70** — [Tarihsel yapılandırma kaydı] name: Read-only bounded shared URL evidence
+- **.github/workflows/ci.yml:L72** — [Tarihsel yapılandırma kaydı] # public-network sampling. Never run from untrusted PRs or on a schedule.
+- **.github/workflows/ci.yml:L73** — [Tarihsel yapılandırma kaydı] if: github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[shared-url-safe-review]')
+- **.github/workflows/ci.yml:L86** — [Tarihsel yapılandırma kaydı] - name: Reuse SHA-bound preceding evidence (skip already audited URLs)
+- **.github/workflows/ci.yml:L91** — [Tarihsel yapılandırma kaydı] - name: Verify public-IP pinning, HLS bounds and offline PSI fixtures
+- **.github/workflows/ci.yml:L95** — [Tarihsel yapılandırma kaydı] - name: Bounded read-only shared URL sample
+- **.github/workflows/ci.yml:L98** — [Tarihsel yapılandırma kaydı] - name: Upload no-token evidence (never upload stream URLs)
+- **.github/workflows/ci.yml:L99** — [Tarihsel yapılandırma kaydı] if: always()
+- **.github/workflows/ci.yml:L102** — [Tarihsel yapılandırma kaydı] name: shared-url-safe-live-review
+- **.github/workflows/ci.yml:L127** — [Tarihsel yapılandırma kaydı] - name: Validate safe read-only probe and shard invariants
+- **.github/workflows/ci.yml:L130** — [Tarihsel yapılandırma kaydı] - name: Audit at most 500 unique URLs in this shard
+- **.github/workflows/ci.yml:L133** — [Tarihsel yapılandırma kaydı] - name: Save no-token, checkpointed evidence
+- **.github/workflows/ci.yml:L134** — [Tarihsel yapılandırma kaydı] if: always()
+- **.github/workflows/ci.yml:L143** — [Tarihsel yapılandırma kaydı] name: Verify complete URL coverage and save summary
+- **.github/workflows/ci.yml:L158** — [Tarihsel yapılandırma kaydı] - name: Download shard reports from this run only
+- **.github/workflows/ci.yml:L163** — [Tarihsel yapılandırma kaydı] - name: Refuse missing, stale, or duplicate URL results
+- **.github/workflows/ci.yml:L166** — [Tarihsel yapılandırma kaydı] - name: Publish completeness result, even on partial scan
+- **.github/workflows/ci.yml:L167** — [Tarihsel yapılandırma kaydı] if: always()
+- **.github/workflows/ci.yml:L176** — [Tarihsel yapılandırma kaydı] name: Local decoded A/V review ${{ matrix.shard }}
+- **.github/workflows/ci.yml:L177** — [Tarihsel yapılandırma kaydı] # A single approved main merge; no schedule, PR network probes or publisher.
+- **.github/workflows/ci.yml:L196** — [Tarihsel yapılandırma kaydı] - name: Install pinned self-contained FFmpeg binary
+- **.github/workflows/ci.yml:L200** — [Tarihsel yapılandırma kaydı] - name: Verify FFmpeg and local-only decoded A/V safety
+- **.github/workflows/ci.yml:L203** — [Tarihsel yapılandırma kaydı] - name: Retrieve SHA-bound prior metadata evidence
+- **.github/workflows/ci.yml:L210** — [Tarihsel yapılandırma kaydı] - name: Decode bounded local MPEG-TS sample for every URL
+- **.github/workflows/ci.yml:L213** — [Tarihsel yapılandırma kaydı] - name: Upload checkpoint for this shard
+- **.github/workflows/ci.yml:L214** — [Tarihsel yapılandırma kaydı] if: always()
+- **.github/workflows/ci.yml:L223** — [Tarihsel yapılandırma kaydı] name: Validate 100% of URL decode attempts
+- **.github/workflows/ci.yml:L238** — [Tarihsel yapılandırma kaydı] - name: Download results from this same workflow run
+- **.github/workflows/ci.yml:L243** — [Tarihsel yapılandırma kaydı] - name: Fail if any URLs are missing or prior SHA differs
+- **.github/workflows/ci.yml:L246** — [Tarihsel yapılandırma kaydı] - name: Save verified coverage and separated A/V outcomes
+- **.github/workflows/ci.yml:L247** — [Tarihsel yapılandırma kaydı] if: always()
+- **.github/workflows/ci.yml:L275** — [Tarihsel yapılandırma kaydı] - name: Validate public IP pinning, pipe-only decode and failure policy
+- **.github/workflows/ci.yml:L282** — [Tarihsel yapılandırma kaydı] if: always()
+- **.github/workflows/ci.yml:L309** — [Tarihsel yapılandırma kaydı] - name: Validate exact coverage and report markable positions
+- **.github/workflows/ci.yml:L312** — [Tarihsel yapılandırma kaydı] if: always()
+- **.github/workflows/ci.yml:L347** — [Tarihsel yapılandırma kaydı] - name: Test local decoder and bounded public network safety
+- **.github/workflows/ci.yml:L354** — [Tarihsel yapılandırma kaydı] if: always()
+- **.github/workflows/ci.yml:L390** — [Tarihsel yapılandırma kaydı] if: always()
+- **.github/workflows/ci.yml:L430** — [Tarihsel yapılandırma kaydı] - name: Ensure system FFmpeg is installed
+- **.github/workflows/ci.yml:L436** — [Tarihsel yapılandırma kaydı] - name: Verify existing safe probe and actual synthetic local media quality
+- **.github/workflows/ci.yml:L443** — [Tarihsel yapılandırma kaydı] if: always()
+- **.github/workflows/ci.yml:L485** — [Tarihsel yapılandırma kaydı] if: always()
+- **.github/workflows/ci.yml:L519** — [Tarihsel yapılandırma kaydı] - name: Ensure system FFmpeg is installed
+- **.github/workflows/ci.yml:L525** — [Tarihsel yapılandırma kaydı] - name: Verify offline safety and decoder
+- **.github/workflows/ci.yml:L530** — [Tarihsel yapılandırma kaydı] - name: Targeted evidence review
+- **.github/workflows/ci.yml:L533** — [Tarihsel yapılandırma kaydı] if: always()
+- **.github/workflows/ci.yml:L608** — [Tarihsel yapılandırma kaydı] - name: Ensure system FFmpeg is installed
+- **.github/workflows/ci.yml:L614** — [Tarihsel yapılandırma kaydı] - name: Verify offline safety and decoder
+- **.github/workflows/ci.yml:L619** — [Tarihsel yapılandırma kaydı] - name: Targeted evidence review
+- **.github/workflows/ci.yml:L622** — [Tarihsel yapılandırma kaydı] if: always()
+- **.github/workflows/ci.yml:L690** — [Tarihsel yapılandırma kaydı] - name: Ensure system FFmpeg
+- **.github/workflows/ci.yml:L696** — [Tarihsel yapılandırma kaydı] - name: Verify safety and decoder fixtures
+- **.github/workflows/ci.yml:L701** — [Tarihsel yapılandırma kaydı] - name: Fresh bounded quality test
+- **.github/workflows/ci.yml:L704** — [Tarihsel yapılandırma kaydı] if: always()
+- **.github/workflows/ci.yml:L766** — [Tarihsel yapılandırma kaydı] - name: Ensure system FFmpeg
+- **.github/workflows/ci.yml:L772** — [Tarihsel yapılandırma kaydı] - name: Verify safety and decoder fixtures
+- **.github/workflows/ci.yml:L777** — [Tarihsel yapılandırma kaydı] - name: Fresh bounded quality test
+- **.github/workflows/ci.yml:L780** — [Tarihsel yapılandırma kaydı] if: always()
+- **.github/workflows/ci.yml:L855** — [Tarihsel yapılandırma kaydı] name: Nonforeign all-category fresh quality shard ${{ matrix.shard }}
+- **.github/workflows/ci.yml:L874** — [Tarihsel yapılandırma kaydı] - name: Ensure system FFmpeg
+- **.github/workflows/ci.yml:L880** — [Tarihsel yapılandırma kaydı] - name: Verify safety and decoder fixtures
+- **.github/workflows/ci.yml:L892** — [Tarihsel yapılandırma kaydı] - name: Fresh bounded quality test
+- **.github/workflows/ci.yml:L895** — [Tarihsel yapılandırma kaydı] if: always()
+- **.github/workflows/ci.yml:L897** — [Tarihsel yapılandırma kaydı] name: nonforeign-fresh-${{ matrix.shard }}
+- **.github/workflows/ci.yml:L903** — [Tarihsel yapılandırma kaydı] name: Nonforeign all-category fresh coverage
+- **.github/workflows/ci.yml:L925** — [Tarihsel yapılandırma kaydı] name: nonforeign-fresh-summary
+- **.github/workflows/full-turkish-backups-audit.yml:L1** — [Tarihsel yapılandırma kaydı] name: Full Turkish backups audit (production writer suspended)
+- **.github/workflows/full-turkish-backups-audit.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/full_autonomous_pipeline.yml:L1** — [Tarihsel yapılandırma kaydı] name: Full Autonomous Discovery and Acceptance
+- **.github/workflows/full_autonomous_pipeline.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/full_autonomous_pipeline.yml:L6** — [Tarihsel yapılandırma kaydı] description: 'Approved public M3U/M3U8 feed URL (optional)'
+- **.github/workflows/full_autonomous_pipeline.yml:L10** — [Tarihsel yapılandırma kaydı] description: 'Maximum new candidates per run'
+- **.github/workflows/full_autonomous_pipeline.yml:L20** — [Tarihsel yapılandırma kaydı] if: ${{ false }} # SECURITY HOLD: network/AV and PR writer require separate approval
+- **.github/workflows/full_autonomous_pipeline.yml:L25** — [Tarihsel yapılandırma kaydı] - name: Install bounded local-media dependencies
+- **.github/workflows/full_autonomous_pipeline.yml:L33** — [Tarihsel yapılandırma kaydı] - name: Upload evidence (never publish stream URLs)
+- **.github/workflows/full_autonomous_pipeline.yml:L34** — [Tarihsel yapılandırma kaydı] if: always()
+- **.github/workflows/full_autonomous_pipeline.yml:L37** — [Tarihsel yapılandırma kaydı] name: autonomous-acceptance-evidence
+- **.github/workflows/ibo-authorized-500.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/ibo-authorized-500.yml:L13** — [Tarihsel yapılandırma kaydı] - name: Download scan artifact
+- **.github/workflows/ibo-authorized-500.yml:L19** — [Tarihsel yapılandırma kaydı] - name: Extract all scan candidates and import legacy archive
+- **.github/workflows/ibo-authorized-500.yml:L33** — [Tarihsel yapılandırma kaydı] - name: Create protected-branch PR
+- **.github/workflows/ibo-real-scan.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/ibo-single-playlist-transfer-offline.yml:L24** — [Tarihsel yapılandırma kaydı] - name: Offline archive transfer regression
+- **.github/workflows/import-backup-candidates.yml:L1** — [Tarihsel yapılandırma kaydı] name: Backup candidates import (production writer suspended)
+- **.github/workflows/import-backup-candidates.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/issue-489-historical-audit.yml:L7** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/move-turkish-backups.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/repair-playlist-grouping.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/run_move_685.yml:L1** — [Tarihsel yapılandırma kaydı] name: Manual 685 archive move PR publisher
+- **.github/workflows/run_move_685.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/run_move_685.yml:L16** — [Tarihsel yapılandırma kaydı] - name: Download historical 685 identity manifest
+- **.github/workflows/run_move_685.yml:L19** — [Tarihsel yapılandırma kaydı] name: v2-497-existing-audit-preview
+- **.github/workflows/run_move_685.yml:L39** — [Tarihsel yapılandırma kaydı] - name: Open reviewed 685 migration PR (never write main)
+- **.github/workflows/run_pass1_cleanup.yml:L1** — [Tarihsel yapılandırma kaydı] name: Pass 1 cleanup (read-only artifact)
+- **.github/workflows/run_pass1_cleanup.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/run_pass1_cleanup.yml:L14** — [Tarihsel yapılandırma kaydı] - name: Offline regression test
+- **.github/workflows/run_pass1_cleanup.yml:L16** — [Tarihsel yapılandırma kaydı] - name: Run offline cleanup
+- **.github/workflows/run_pass1_cleanup.yml:L21** — [Tarihsel yapılandırma kaydı] name: pass1-cleanup-results
+
+- **.github/workflows/sort-backups-enrich-logos.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/turkish-backup-identity-audit.yml:L1** — [Tarihsel yapılandırma kaydı] name: Turkish backup identity audit (production writer suspended)
+- **.github/workflows/turkish-backup-identity-audit.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/turkish-backups-fifth-audit.yml:L1** — [Tarihsel yapılandırma kaydı] name: Turkish backups fifth audit (production writer suspended)
+- **.github/workflows/turkish-backups-fifth-audit.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/turkish-backups-fourth-audit.yml:L1** — [Tarihsel yapılandırma kaydı] name: Turkish backups fourth audit (production writer suspended)
+- **.github/workflows/turkish-backups-fourth-audit.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/turkish-backups-second-pass.yml:L1** — [Tarihsel yapılandırma kaydı] name: Turkish backups second pass (production writer suspended)
+- **.github/workflows/turkish-backups-second-pass.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/turkish-backups-third-pass.yml:L1** — [Tarihsel yapılandırma kaydı] name: Turkish backups third pass (production writer suspended)
+- **.github/workflows/turkish-backups-third-pass.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/turkish-category-audit.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/update_main_playlist.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/update_main_playlist.yml:L20** — [Tarihsel yapılandırma kaydı] - name: Validate maintenance script
+- **.github/workflows/update_main_playlist.yml:L26** — [Tarihsel yapılandırma kaydı] - name: Verify report output exists
+- **.github/workflows/update_main_playlist.yml:L30** — [Tarihsel yapılandırma kaydı] - name: Upload read-only health report
+- **.github/workflows/update_main_playlist.yml:L31** — [Tarihsel yapılandırma kaydı] if: always()
+- **.github/workflows/v2-batched-playback.yml:L1** — [Tarihsel yapılandırma kaydı] name: V2 Batched All-Source Playback Verification
+- **.github/workflows/v2-batched-playback.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/v2-batched-playback.yml:L20** — [Tarihsel yapılandırma kaydı] - name: Install ffprobe
+- **.github/workflows/v2-batched-playback.yml:L24** — [Tarihsel yapılandırma kaydı] - name: Discover GitHub M3U sources
+- **.github/workflows/v2-batched-playback.yml:L28** — [Tarihsel yapılandırma kaydı] - name: Probe bounded shard with source coverage
+- **.github/workflows/v2-batched-playback.yml:L36** — [Tarihsel yapılandırma kaydı] - name: Upload hashed evidence
+- **.github/workflows/v2-batched-playback.yml:L37** — [Tarihsel yapılandırma kaydı] if: always()
+- **.github/workflows/v2-batched-playback.yml:L40** — [Tarihsel yapılandırma kaydı] name: all-source-playback-page-${{ matrix.page }}-shard-${{ matrix.shard }}
+- **.github/workflows/v2-batched-playback.yml:L46** — [Tarihsel yapılandırma kaydı] if: always()
+- **.github/workflows/v2-batched-playback.yml:L53** — [Tarihsel yapılandırma kaydı] - name: Download all shard evidence
+- **.github/workflows/v2-batched-playback.yml:L58** — [Tarihsel yapılandırma kaydı] - name: Merge and validate shard evidence
+- **.github/workflows/v2-batched-playback.yml:L60** — [Tarihsel yapılandırma kaydı] - name: Upload single acceptance summary
+- **.github/workflows/v2-batched-playback.yml:L63** — [Tarihsel yapılandırma kaydı] name: all-source-playback-aggregate
+- **.github/workflows/v2-bruksel-logo-png.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/v2-epg.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/v2-full-decoder.yml:L1** — [Tarihsel yapılandırma kaydı] name: V2 Full Decoder Verification (manual, read-only)
+- **.github/workflows/v2-full-decoder.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/v2-full-decoder.yml:L20** — [Tarihsel yapılandırma kaydı] - name: Install metadata verifier
+- **.github/workflows/v2-full-decoder.yml:L24** — [Tarihsel yapılandırma kaydı] - name: Upload full audit evidence
+- **.github/workflows/v2-full-decoder.yml:L25** — [Tarihsel yapılandırma kaydı] if: always()
+- **.github/workflows/v2-full-decoder.yml:L28** — [Tarihsel yapılandırma kaydı] name: v2-full-decoder-evidence
+- **.github/workflows/v2-full-decoder.yml:L43** — [Tarihsel yapılandırma kaydı] - name: Install existing audio and video decoder
+- **.github/workflows/v2-full-decoder.yml:L47** — [Tarihsel yapılandırma kaydı] - name: Upload audit results
+- **.github/workflows/v2-full-decoder.yml:L48** — [Tarihsel yapılandırma kaydı] if: always()
+- **.github/workflows/v2-github-source-discovery.yml:L1** — [Tarihsel yapılandırma kaydı] name: V2 GitHub Turkish M3U Source Discovery
+- **.github/workflows/v2-github-source-discovery.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/v2-github-source-discovery.yml:L18** — [Tarihsel yapılandırma kaydı] - name: Check syntax
+- **.github/workflows/v2-github-source-discovery.yml:L20** — [Tarihsel yapılandırma kaydı] - name: Search GitHub repositories and inspect M3U files
+- **.github/workflows/v2-github-source-discovery.yml:L24** — [Tarihsel yapılandırma kaydı] - name: Save discovered sources for review
+- **.github/workflows/v2-github-source-discovery.yml:L25** — [Tarihsel yapılandırma kaydı] if: always()
+- **.github/workflows/v2-github-source-discovery.yml:L28** — [Tarihsel yapılandırma kaydı] name: github-turkish-m3u-source-discovery
+- **.github/workflows/v2-historical-recovery.yml:L1** — [Tarihsel yapılandırma kaydı] name: MADSC TV — Eski ve Yeni Tarama Kurtarma Kontrolü
+- **.github/workflows/v2-historical-recovery.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/v2-historical-recovery.yml:L19** — [Tarihsel yapılandırma kaydı] - name: Download existing #60 and #72 evidence without rescanning
+- **.github/workflows/v2-historical-recovery.yml:L26** — [Tarihsel yapılandırma kaydı] - name: Compare historical candidates and preserve missing decoded identities
+- **.github/workflows/v2-historical-recovery.yml:L32** — [Tarihsel yapılandırma kaydı] - name: Recover latest GitHub-discovered M3U source catalog when available
+- **.github/workflows/v2-historical-recovery.yml:L43** — [Tarihsel yapılandırma kaydı] - name: Verify dynamic source CLI is supported before rediscovery
+- **.github/workflows/v2-historical-recovery.yml:L46** — [Tarihsel yapılandırma kaydı] - name: Rediscover historical decoded identities from current configured sources without full playback scan
+- **.github/workflows/v2-historical-recovery.yml:L54** — [Tarihsel yapılandırma kaydı] - name: Show recovery counts in GitHub Actions summary
+- **.github/workflows/v2-historical-recovery.yml:L81** — [Tarihsel yapılandırma kaydı] - name: Publish anonymous recovery evidence only
+- **.github/workflows/v2-historical-recovery.yml:L84** — [Tarihsel yapılandırma kaydı] name: historical-60-vs-72-recovery
+- **.github/workflows/v2-ibo-parity.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/v2-ibo-parity.yml:L15** — [Tarihsel yapılandırma kaydı] - name: Validate syntax
+- **.github/workflows/v2-ibo-parity.yml:L19** — [Tarihsel yapılandırma kaydı] - name: Store read-only comparison
+- **.github/workflows/v2-ibo-parity.yml:L20** — [Tarihsel yapılandırma kaydı] if: always()
+- **.github/workflows/v2-logo-backup.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+
+- **.github/workflows/v2-main-production-safety-gate.yml:L1** — [Tarihsel yapılandırma kaydı] name: V2 Main Production Security Gate
+- **.github/workflows/v2-main-production-safety-gate.yml:L9** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/v2-main-production-safety-gate.yml:L12** — [Tarihsel yapılandırma kaydı] description: 'Read-only #34 diagnostic provider (all or one)'
+- **.github/workflows/v2-main-production-safety-gate.yml:L37** — [Tarihsel yapılandırma kaydı] - name: Install pinned YAML parser
+- **.github/workflows/v2-main-production-safety-gate.yml:L48** — [Tarihsel yapılandırma kaydı] # Run the eligibility verifier from the trusted BASE revision;
+- **.github/workflows/v2-main-production-safety-gate.yml:L49** — [Tarihsel yapılandırma kaydı] # workflow/code modifications always receive the FULL test suite.
+- **.github/workflows/v2-main-production-safety-gate.yml:L60** — [Tarihsel yapılandırma kaydı] - name: Grouped safety regression tests
+- **.github/workflows/v2-main-production-safety-gate.yml:L63** — [Tarihsel yapılandırma kaydı] if: steps.move_scope.outputs.eligible != 'true'
+- **.github/workflows/v2-main-production-safety-gate.yml:L67** — [Tarihsel yapılandırma kaydı] - name: Identify exact authorized 685 migration
+- **.github/workflows/v2-main-production-safety-gate.yml:L82** — [Tarihsel yapılandırma kaydı] # Once canonical SHA-bound parts are initialized, historical #497
+- **.github/workflows/v2-main-production-safety-gate.yml:L83** — [Tarihsel yapılandırma kaydı] # 1,792-backup reconciliation is no longer applicable. Authorized
+- **.github/workflows/v2-main-production-safety-gate.yml:L85** — [Tarihsel yapılandırma kaydı] # and category placement rather than initial fixed inventory.
+- **.github/workflows/v2-main-production-safety-gate.yml:L135** — [Tarihsel yapılandırma kaydı] if: ${{ steps.migration685.outputs.applied != 'true' }}
+- **.github/workflows/v2-main-production-safety-gate.yml:L159** — [Tarihsel yapılandırma kaydı] - name: Upload immutable #497 historical reconciliation preview
+- **.github/workflows/v2-main-production-safety-gate.yml:L160** — [Tarihsel yapılandırma kaydı] if: ${{ steps.migration685.outputs.applied != 'true' }}
+- **.github/workflows/v2-main-production-safety-gate.yml:L163** — [Tarihsel yapılandırma kaydı] name: v2-497-existing-audit-preview
+- **.github/workflows/v2-main-production-safety-gate.yml:L167** — [Tarihsel yapılandırma kaydı] - name: Generate SHA-bound 685 uncertain retry plan (offline; no network probes)
+- **.github/workflows/v2-main-production-safety-gate.yml:L168** — [Tarihsel yapılandırma kaydı] if: ${{ steps.migration685.outputs.applied != 'true' }}
+- **.github/workflows/v2-main-production-safety-gate.yml:L207** — [Tarihsel yapılandırma kaydı] - name: Publish 685 retry plan artifact on main only (read-only)
+- **.github/workflows/v2-main-production-safety-gate.yml:L208** — [Tarihsel yapılandırma kaydı] if: ${{ steps.migration685.outputs.applied != 'true' && github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+- **.github/workflows/v2-main-production-safety-gate.yml:L211** — [Tarihsel yapılandırma kaydı] name: v2-497-685-readonly-retry-plan
+- **.github/workflows/v2-main-production-safety-gate.yml:L215** — [Tarihsel yapılandırma kaydı] - name: Stage 5 historical worldwide URL hash crosswalk offline regression
+- **.github/workflows/v2-main-production-safety-gate.yml:L216** — [Tarihsel yapılandırma kaydı] if: steps.move_scope.outputs.eligible != 'true'
+- **.github/workflows/v2-main-production-safety-gate.yml:L220** — [Tarihsel yapılandırma kaydı] - name: Check Stage 5 historical inventory applicability
+- **.github/workflows/v2-main-production-safety-gate.yml:L221** — [Tarihsel yapılandırma kaydı] if: steps.move_scope.outputs.eligible != 'true'
+- **.github/workflows/v2-main-production-safety-gate.yml:L232** — [Tarihsel yapılandırma kaydı] - name: Build Stage 5 historical crosswalk from exact old artifact (no scan)
+- **.github/workflows/v2-main-production-safety-gate.yml:L233** — [Tarihsel yapılandırma kaydı] if: steps.stage5_inventory.outputs.historical == 'true'
+- **.github/workflows/v2-main-production-safety-gate.yml:L265** — [Tarihsel yapılandırma kaydı] - name: Upload Stage 5 unchanged historical hash crosswalk evidence
+- **.github/workflows/v2-main-production-safety-gate.yml:L266** — [Tarihsel yapılandırma kaydı] if: steps.stage5_inventory.outputs.historical == 'true'
+- **.github/workflows/v2-main-production-safety-gate.yml:L269** — [Tarihsel yapılandırma kaydı] name: v2-stage5-historical-worldwide-crosswalk
+- **.github/workflows/v2-main-production-safety-gate.yml:L273** — [Tarihsel yapılandırma kaydı] - name: Fail closed on changes to production trigger/write policy
+- **.github/workflows/v2-main-production-safety-gate.yml:L277** — [Tarihsel yapılandırma kaydı] - name: Historical task ledger integrity
+- **.github/workflows/v2-main-production-safety-gate.yml:L278** — [Tarihsel yapılandırma kaydı] if: steps.move_scope.outputs.eligible != 'true'
+- **.github/workflows/v2-main-production-safety-gate.yml:L280** — [Tarihsel yapılandırma kaydı] - name: Stage 2 identity recovery metadata integration acceptance
+- **.github/workflows/v2-main-production-safety-gate.yml:L281** — [Tarihsel yapılandırma kaydı] if: steps.move_scope.outputs.eligible != 'true'
+- **.github/workflows/v2-main-production-safety-gate.yml:L289** — [Tarihsel yapılandırma kaydı] - name: Stage 6 offline package and archive acceptance regressions
+- **.github/workflows/v2-main-production-safety-gate.yml:L290** — [Tarihsel yapılandırma kaydı] if: steps.move_scope.outputs.eligible != 'true'
+- **.github/workflows/v2-main-production-safety-gate.yml:L320** — [Tarihsel yapılandırma kaydı] if: steps.move_scope.outputs.eligible != 'true'
+- **.github/workflows/v2-main-production-safety-gate.yml:L329** — [Tarihsel yapılandırma kaydı] - name: Ensure FFmpeg is available for real local decoded-media regression
+- **.github/workflows/v2-main-production-safety-gate.yml:L330** — [Tarihsel yapılandırma kaydı] if: steps.move_scope.outputs.eligible != 'true'
+- **.github/workflows/v2-main-production-safety-gate.yml:L334** — [Tarihsel yapılandırma kaydı] # Ubuntu package mirrors previously timed out after 4+ minutes.
+- **.github/workflows/v2-main-production-safety-gate.yml:L335** — [Tarihsel yapılandırma kaydı] # Supply the COMPLETE local decoder from an immutable, SHA256-pinned
+- **.github/workflows/v2-main-production-safety-gate.yml:L336** — [Tarihsel yapılandırma kaydı] # GitHub release; never fetch a live stream in this setup.
+- **.github/workflows/v2-main-production-safety-gate.yml:L364** — [Tarihsel yapılandırma kaydı] # The real Turkish-caption fixture requires these exact features.
+- **.github/workflows/v2-main-production-safety-gate.yml:L369** — [Tarihsel yapılandırma kaydı] # Unlike large FFmpeg packages, the system OCR executable is a
+- **.github/workflows/v2-main-production-safety-gate.yml:L370** — [Tarihsel yapılandırma kaydı] # small targeted package. Never refresh apt indexes or block on
+- **.github/workflows/v2-main-production-safety-gate.yml:L371** — [Tarihsel yapılandırma kaydı] # hundreds of video codec dependencies.
+- **.github/workflows/v2-main-production-safety-gate.yml:L403** — [Tarihsel yapılandırma kaydı] if: steps.move_scope.outputs.eligible != 'true'
+- **.github/workflows/v2-main-production-safety-gate.yml:L409** — [Tarihsel yapılandırma kaydı] - name: Stage 5 evidence-gated export and final acceptance regressions
+- **.github/workflows/v2-main-production-safety-gate.yml:L410** — [Tarihsel yapılandırma kaydı] if: steps.move_scope.outputs.eligible != 'true'
+- **.github/workflows/v2-main-production-safety-gate.yml:L416** — [Tarihsel yapılandırma kaydı] if: steps.move_scope.outputs.eligible != 'true'
+- **.github/workflows/v2-main-production-safety-gate.yml:L432** — [Tarihsel yapılandırma kaydı] - name: Task 34 FFmpeg decoded audio/video regression (offline fixtures only)
+- **.github/workflows/v2-main-production-safety-gate.yml:L433** — [Tarihsel yapılandırma kaydı] if: steps.move_scope.outputs.eligible != 'true'
+- **.github/workflows/v2-main-production-safety-gate.yml:L437** — [Tarihsel yapılandırma kaydı] - name: Discovery 34 offline adapter and integration acceptance
+- **.github/workflows/v2-main-production-safety-gate.yml:L438** — [Tarihsel yapılandırma kaydı] if: steps.move_scope.outputs.eligible != 'true'
+- **.github/workflows/v2-main-production-safety-gate.yml:L447** — [Tarihsel yapılandırma kaydı] # The checked-in inputs are intentionally incomplete; preserve the partial report,
+- **.github/workflows/v2-main-production-safety-gate.yml:L448** — [Tarihsel yapılandırma kaydı] # and assert the CLI fails closed rather than treating missing sources as success.
+- **.github/workflows/v2-main-production-safety-gate.yml:L456** — [Tarihsel yapılandırma kaydı] if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '#34 live probe'))
+- **.github/workflows/v2-main-production-safety-gate.yml:L467** — [Tarihsel yapılandırma kaydı] - name: Probe all six discovery terms on GitHub, GitLab and Codeberg
+- **.github/workflows/v2-main-production-safety-gate.yml:L471** — [Tarihsel yapılandırma kaydı] - name: Upload read-only provider diagnostic evidence
+- **.github/workflows/v2-main-production-safety-gate.yml:L472** — [Tarihsel yapılandırma kaydı] if: always()
+- **.github/workflows/v2-main-production-safety-gate.yml:L475** — [Tarihsel yapılandırma kaydı] name: v2-discovery-34-live-diagnostic
+- **.github/workflows/v2-official-sites.yml:L1** — [Tarihsel yapılandırma kaydı] name: V2 Official Turkish TV Site Discovery
+- **.github/workflows/v2-official-sites.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/v2-official-sites.yml:L15** — [Tarihsel yapılandırma kaydı] - name: Syntax validation
+- **.github/workflows/v2-official-sites.yml:L17** — [Tarihsel yapılandırma kaydı] - name: Discover broadcaster websites
+- **.github/workflows/v2-official-sites.yml:L21** — [Tarihsel yapılandırma kaydı] - name: Save review-only report
+- **.github/workflows/v2-official-sites.yml:L22** — [Tarihsel yapılandırma kaydı] if: always()
+- **.github/workflows/v2-official-sites.yml:L25** — [Tarihsel yapılandırma kaydı] name: official-tv-sites
+- **.github/workflows/v2-offline-import-15.yml:L1** — [Tarihsel yapılandırma kaydı] name: V2 Offline Import 15 Existing Observations
+- **.github/workflows/v2-offline-import-15.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/v2-offline-import-15.yml:L11** — [Tarihsel yapılandırma kaydı] if: github.ref == 'refs/heads/main'
+- **.github/workflows/v2-offline-import-15.yml:L23** — [Tarihsel yapılandırma kaydı] - name: Test the offline importer
+- **.github/workflows/v2-offline-import-15.yml:L28** — [Tarihsel yapılandırma kaydı] - name: Retrieve the exact encrypted source recorded in the report
+- **.github/workflows/v2-offline-import-15.yml:L43** — [Tarihsel yapılandırma kaydı] - name: Apply 15 observations and verify backup, readback and replay
+- **.github/workflows/v2-offline-import-15.yml:L63** — [Tarihsel yapılandırma kaydı] - name: Upload verified encrypted checkpoint and original backup
+- **.github/workflows/v2-offline-import-15.yml:L66** — [Tarihsel yapılandırma kaydı] name: v2-bounded-retry-15-merged-checkpoint
+- **.github/workflows/v2-offline-inventory.yml:L1** — [Tarihsel yapılandırma kaydı] name: V2 Offline Inventory Integrity
+- **.github/workflows/v2-offline-inventory.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/v2-offline-inventory.yml:L20** — [Tarihsel yapılandırma kaydı] - name: Install encryption dependency
+- **.github/workflows/v2-offline-inventory.yml:L22** — [Tarihsel yapılandırma kaydı] - name: Compile inventory modules
+- **.github/workflows/v2-offline-inventory.yml:L28** — [Tarihsel yapılandırma kaydı] - name: Test encrypted archive backup and recovery
+- **.github/workflows/v2-offline-inventory.yml:L30** — [Tarihsel yapılandırma kaydı] - name: Test offline encrypted inventory restoration
+- **.github/workflows/v2-offline-inventory.yml:L32** — [Tarihsel yapılandırma kaydı] - name: Test scanner behavior without network
+- **.github/workflows/v2-one-shot-final-contract.yml:L1** — [Tarihsel yapılandırma kaydı] name: MADSC TV — Tek Toplu Güvenlik ve Bitiş Kontrolü
+- **.github/workflows/v2-one-shot-final-contract.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/v2-one-shot-final-contract.yml:L11** — [Tarihsel yapılandırma kaydı] name: Tek toplu çevrimdışı kontrol
+- **.github/workflows/v2-one-shot-final-contract.yml:L19** — [Tarihsel yapılandırma kaydı] - name: Compile all modules
+- **.github/workflows/v2-one-shot-final-contract.yml:L25** — [Tarihsel yapılandırma kaydı] - name: Enforce unified read-only contracts
+- **.github/workflows/v2-one-shot-final-contract.yml:L27** — [Tarihsel yapılandırma kaydı] - name: Exercise language behavior with fixtures
+- **.github/workflows/v2-one-shot-final-contract.yml:L29** — [Tarihsel yapılandırma kaydı] - name: Check bounded speech sampler command
+- **.github/workflows/v2-one-shot-final-contract.yml:L31** — [Tarihsel yapılandırma kaydı] - name: Final one-shot safety verdict
+- **.github/workflows/v2-ordered-preflight.yml:L1** — [Tarihsel yapılandırma kaydı] name: V2 Sirali Hazirlik Testleri
+- **.github/workflows/v2-ordered-preflight.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/v2-ordered-preflight.yml:L17** — [Tarihsel yapılandırma kaydı] - name: Compile all V2 Python sources
+- **.github/workflows/v2-ordered-preflight.yml:L38** — [Tarihsel yapılandırma kaydı] - name: Required test_discovery_offline_regressions.py
+- **.github/workflows/v2-ordered-preflight.yml:L40** — [Tarihsel yapılandırma kaydı] - name: Required test_discovery_metadata.py
+- **.github/workflows/v2-ordered-preflight.yml:L42** — [Tarihsel yapılandırma kaydı] - name: Required test_source_provenance.py
+- **.github/workflows/v2-ordered-preflight.yml:L44** — [Tarihsel yapılandırma kaydı] - name: Required test_source_inventory_contract.py
+- **.github/workflows/v2-ordered-preflight.yml:L46** — [Tarihsel yapılandırma kaydı] - name: Required test_source_loss_audit.py
+- **.github/workflows/v2-ordered-preflight.yml:L48** — [Tarihsel yapılandırma kaydı] - name: Required test_archive_acceptance_gate.py
+- **.github/workflows/v2-ordered-preflight.yml:L50** — [Tarihsel yapılandırma kaydı] - name: Install authenticated archive dependency
+- **.github/workflows/v2-ordered-preflight.yml:L52** — [Tarihsel yapılandırma kaydı] - name: Required encrypted archive restore tests
+- **.github/workflows/v2-ordered-preflight.yml:L54** — [Tarihsel yapılandırma kaydı] - name: Required video/audio stream probe tests
+- **.github/workflows/v2-ordered-preflight.yml:L56** — [Tarihsel yapılandırma kaydı] - name: Required verified 1000/2000 batch tests
+- **.github/workflows/v2-playlist-safety.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/v2-playlist-safety.yml:L23** — [Tarihsel yapılandırma kaydı] - name: Compile tests
+- **.github/workflows/v2-postscan-triage.yml:L1** — [Tarihsel yapılandırma kaydı] name: V2 Postscan Triage — Reuse #60 Evidence
+- **.github/workflows/v2-postscan-triage.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/v2-postscan-triage.yml:L6** — [Tarihsel yapılandırma kaydı] description: "Successful unified scan run ID"
+- **.github/workflows/v2-postscan-triage.yml:L21** — [Tarihsel yapılandırma kaydı] - name: Download immutable completed scan report (no new network stream probing)
+- **.github/workflows/v2-postscan-triage.yml:L42** — [Tarihsel yapılandırma kaydı] - name: Publish hash-only triage (never raw stream URLs)
+- **.github/workflows/v2-postscan-triage.yml:L43** — [Tarihsel yapılandırma kaydı] if: always()
+- **.github/workflows/v2-postscan-triage.yml:L46** — [Tarihsel yapılandırma kaydı] name: postscan-triage
+- **.github/workflows/v2-promote-yedekler.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/v2-public-source-audit.yml:L1** — [Tarihsel yapılandırma kaydı] name: V2 Parolasiz Gercek Kaynak Denetimi
+- **.github/workflows/v2-public-source-audit.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/v2-public-source-audit.yml:L15** — [Tarihsel yapılandırma kaydı] - name: Install scanner import dependency
+- **.github/workflows/v2-public-source-audit.yml:L17** — [Tarihsel yapılandırma kaydı] - name: Fetch actual IPTV sources and count TR/AZ candidates
+- **.github/workflows/v2-public-source-audit.yml:L19** — [Tarihsel yapılandırma kaydı] - name: Preserve source audit evidence
+- **.github/workflows/v2-public-source-audit.yml:L20** — [Tarihsel yapılandırma kaydı] if: always()
+- **.github/workflows/v2-public-source-audit.yml:L23** — [Tarihsel yapılandırma kaydı] name: v2-public-real-network-source-audit
+- **.github/workflows/v2-real-iptv-scan.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/v2-real-iptv-scan.yml:L12** — [Tarihsel yapılandırma kaydı] name: Verify worldwide scan prerequisites
+- **.github/workflows/v2-real-iptv-scan.yml:L36** — [Tarihsel yapılandırma kaydı] - name: Install AV verification dependencies
+- **.github/workflows/v2-real-iptv-scan.yml:L41** — [Tarihsel yapılandırma kaydı] - name: Require encrypted archive key
+- **.github/workflows/v2-real-iptv-scan.yml:L47** — [Tarihsel yapılandırma kaydı] - name: Discover new GitHub M3U sources before AV scanning
+- **.github/workflows/v2-real-iptv-scan.yml:L51** — [Tarihsel yapılandırma kaydı] - name: Install YouTube discovery dependency
+- **.github/workflows/v2-real-iptv-scan.yml:L53** — [Tarihsel yapılandırma kaydı] - name: Discover worldwide repository metadata from GitHub GitLab Codeberg
+- **.github/workflows/v2-real-iptv-scan.yml:L56** — [Tarihsel yapılandırma kaydı] - name: Discover official broadcaster directory references
+- **.github/workflows/v2-real-iptv-scan.yml:L59** — [Tarihsel yapılandırma kaydı] - name: Discover YouTube Live candidates and verify live metadata
+- **.github/workflows/v2-real-iptv-scan.yml:L62** — [Tarihsel yapılandırma kaydı] - name: Discover parsed M3U files in GitLab and Codeberg repositories
+- **.github/workflows/v2-real-iptv-scan.yml:L65** — [Tarihsel yapılandırma kaydı] - name: Integrate six discovery adapters into unified candidate report
+- **.github/workflows/v2-real-iptv-scan.yml:L67** — [Tarihsel yapılandırma kaydı] - name: Resolve official and YouTube live pages to encrypted direct HLS candidates
+- **.github/workflows/v2-real-iptv-scan.yml:L79** — [Tarihsel yapılandırma kaydı] - name: Restore authenticated progress from the latest completed real scan
+- **.github/workflows/v2-real-iptv-scan.yml:L86** — [Tarihsel yapılandırma kaydı] # The import started from scan 43608247496, created 14 November.
+- **.github/workflows/v2-real-iptv-scan.yml:L87** — [Tarihsel yapılandırma kaydı] # Put its enriched copy just ahead of that scan in chronological order.
+- **.github/workflows/v2-real-iptv-scan.yml:L121** — [Tarihsel yapılandırma kaydı] # Work on a private copy. Later scans can contain a different URL set.
+- **.github/workflows/v2-real-iptv-scan.yml:L128** — [Tarihsel yapılandırma kaydı] - name: Real network discovery and AV probe including discovered sources
+- **.github/workflows/v2-real-iptv-scan.yml:L140** — [Tarihsel yapılandırma kaydı] - name: Require complete scan and worldwide adapter evidence
+- **.github/workflows/v2-real-iptv-scan.yml:L142** — [Tarihsel yapılandırma kaydı] - name: Export 1000 and 2000 real verified new URL batches
+- **.github/workflows/v2-real-iptv-scan.yml:L144** — [Tarihsel yapılandırma kaydı] - name: Audit remaining A-stage acceptance blockers separately from green scan
+- **.github/workflows/v2-real-iptv-scan.yml:L145** — [Tarihsel yapılandırma kaydı] if: always()
+- **.github/workflows/v2-real-iptv-scan.yml:L148** — [Tarihsel yapılandırma kaydı] # This never updates task statuses or any protected M3U. Even a
+- **.github/workflows/v2-real-iptv-scan.yml:L150** — [Tarihsel yapılandırma kaydı] # and worldwide discovery adapter acceptance.
+- **.github/workflows/v2-real-iptv-scan.yml:L162** — [Tarihsel yapılandırma kaydı] - name: Upload reports and encrypted inventory even on scan failure
+- **.github/workflows/v2-real-iptv-scan.yml:L163** — [Tarihsel yapılandırma kaydı] if: always()
+- **.github/workflows/v2-real-iptv-scan.yml:L166** — [Tarihsel yapılandırma kaydı] name: v2-real-scan-evidence
+- **.github/workflows/v2-real-iptv-scan.yml:L192** — [Tarihsel yapılandırma kaydı] name: Legacy AV batch ${{ matrix.batch }}
+- **.github/workflows/v2-real-iptv-scan.yml:L205** — [Tarihsel yapılandırma kaydı] - name: Install ffmpeg
+- **.github/workflows/v2-real-iptv-scan.yml:L214** — [Tarihsel yapılandırma kaydı] - name: Upload batch evidence and checkpoint
+- **.github/workflows/v2-real-iptv-scan.yml:L215** — [Tarihsel yapılandırma kaydı] if: always()
+- **.github/workflows/v2-real-iptv-scan.yml:L218** — [Tarihsel yapılandırma kaydı] name: v2-legacy-7650-batch-${{ matrix.batch }}
+- **.github/workflows/v2-spoken-language-existing-snapshot.yml:L1** — [Tarihsel yapılandırma kaydı] name: MADSC TV — Mevcut Tarama Üzerinden Toplu Ses İncelemesi
+- **.github/workflows/v2-spoken-language-existing-snapshot.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/v2-spoken-language-existing-snapshot.yml:L24** — [Tarihsel yapılandırma kaydı] - name: Download previously completed run evidence (not a new scan)
+- **.github/workflows/v2-spoken-language-existing-snapshot.yml:L35** — [Tarihsel yapılandırma kaydı] - name: Install bounded speech recognition
+- **.github/workflows/v2-spoken-language-existing-snapshot.yml:L41** — [Tarihsel yapılandırma kaydı] - name: Sample existing playable audio and generate review-only language hints
+- **.github/workflows/v2-spoken-language-existing-snapshot.yml:L43** — [Tarihsel yapılandırma kaydı] - name: Publish only anonymized read-only evidence
+- **.github/workflows/v2-spoken-language-existing-snapshot.yml:L44** — [Tarihsel yapılandırma kaydı] if: always()
+- **.github/workflows/v2-spoken-language-existing-snapshot.yml:L47** — [Tarihsel yapılandırma kaydı] name: existing-snapshot-spoken-language-evidence
+- **.github/workflows/v2-stage6-grouped-acceptance.yml:L1** — [Tarihsel yapılandırma kaydı] name: V2 Stage 6 Grouped Offline Acceptance
+- **.github/workflows/v2-stage6-grouped-acceptance.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/v2-stage6-grouped-acceptance.yml:L15** — [Tarihsel yapılandırma kaydı] - name: Install encrypted archive test dependency
+- **.github/workflows/v2-stage6-grouped-acceptance.yml:L17** — [Tarihsel yapılandırma kaydı] - name: Compile acceptance modules
+- **.github/workflows/v2-stage6-grouped-acceptance.yml:L21** — [Tarihsel yapılandırma kaydı] - name: Encrypted archive roundtrip regression
+- **.github/workflows/v2-stage6-grouped-acceptance.yml:L23** — [Tarihsel yapılandırma kaydı] - name: Inventory restoration regression
+- **.github/workflows/v2-stage6-grouped-acceptance.yml:L25** — [Tarihsel yapılandırma kaydı] - name: Offline discovery regression
+- **.github/workflows/v2-stage6-grouped-acceptance.yml:L27** — [Tarihsel yapılandırma kaydı] - name: Stage A encrypted checkpoint restart and evidence regression
+- **.github/workflows/v2-stage6-grouped-acceptance.yml:L31** — [Tarihsel yapılandırma kaydı] - name: Explain acceptance boundary
+- **.github/workflows/v2-stage6-grouped-acceptance.yml:L35** — [Tarihsel yapılandırma kaydı] - name: Stage 7 #34 discovery adapters offline acceptance
+- **.github/workflows/v2-stage6-grouped-acceptance.yml:L41** — [Tarihsel yapılandırma kaydı] - name: Stage 7 #34 live repository API contract (fail closed)
+- **.github/workflows/v2-turkish-stream-catalog.yml:L1** — [Tarihsel yapılandırma kaydı] name: V2 Turkish Stream Catalog Discovery
+- **.github/workflows/v2-turkish-stream-catalog.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/v2-turkish-stream-catalog.yml:L15** — [Tarihsel yapılandırma kaydı] - name: Validate source syntax
+- **.github/workflows/v2-turkish-stream-catalog.yml:L17** — [Tarihsel yapılandırma kaydı] - name: Discover unlisted Turkish stream URLs
+- **.github/workflows/v2-turkish-stream-catalog.yml:L19** — [Tarihsel yapılandırma kaydı] - name: Save review-only candidates
+- **.github/workflows/v2-turkish-stream-catalog.yml:L20** — [Tarihsel yapılandırma kaydı] if: always()
+- **.github/workflows/v2-turkish-stream-catalog.yml:L23** — [Tarihsel yapılandırma kaydı] name: turkish-stream-candidates
+- **.github/workflows/v2-turkish-stream-decode.yml:L1** — [Tarihsel yapılandırma kaydı] name: V2 Turkish Stream Short Decode
+- **.github/workflows/v2-turkish-stream-decode.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/v2-turkish-stream-decode.yml:L15** — [Tarihsel yapılandırma kaydı] - name: Install ffprobe
+- **.github/workflows/v2-turkish-stream-decode.yml:L17** — [Tarihsel yapılandırma kaydı] - name: Syntax validation
+- **.github/workflows/v2-turkish-stream-decode.yml:L19** — [Tarihsel yapılandırma kaydı] - name: Refresh candidates
+- **.github/workflows/v2-turkish-stream-decode.yml:L21** — [Tarihsel yapılandırma kaydı] - name: Check short media decode
+- **.github/workflows/v2-turkish-stream-decode.yml:L23** — [Tarihsel yapılandırma kaydı] - name: Upload verification reports
+- **.github/workflows/v2-turkish-stream-decode.yml:L24** — [Tarihsel yapılandırma kaydı] if: always()
+- **.github/workflows/v2-turkish-stream-decode.yml:L27** — [Tarihsel yapılandırma kaydı] name: turkish-stream-decode
+- **.github/workflows/v2-turkish-stream-probe.yml:L1** — [Tarihsel yapılandırma kaydı] name: V2 Turkish Stream Candidate Probe
+- **.github/workflows/v2-turkish-stream-probe.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/v2-turkish-stream-probe.yml:L15** — [Tarihsel yapılandırma kaydı] - name: Validate scripts
+- **.github/workflows/v2-turkish-stream-probe.yml:L17** — [Tarihsel yapılandırma kaydı] - name: Refresh Turkish stream candidates
+- **.github/workflows/v2-turkish-stream-probe.yml:L19** — [Tarihsel yapılandırma kaydı] - name: Probe candidate HTTP endpoints
+- **.github/workflows/v2-turkish-stream-probe.yml:L21** — [Tarihsel yapılandırma kaydı] - name: Upload candidate reports
+- **.github/workflows/v2-turkish-stream-probe.yml:L22** — [Tarihsel yapılandırma kaydı] if: always()
+- **.github/workflows/v2-turkish-stream-probe.yml:L25** — [Tarihsel yapılandırma kaydı] name: turkish-stream-probe
+
+- **.github/workflows/v2-turkish-stream-review.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/v2-turkish-stream-review.yml:L23** — [Tarihsel yapılandırma kaydı] - name: Compile and validate all V2 Python modules before scanning
+- **.github/workflows/v2-turkish-stream-review.yml:L25** — [Tarihsel yapılandırma kaydı] - name: Run offline consolidated safety contracts before network scans
+- **.github/workflows/v2-turkish-stream-review.yml:L27** — [Tarihsel yapılandırma kaydı] - name: Check multi-source provenance before scanning
+- **.github/workflows/v2-turkish-stream-review.yml:L29** — [Tarihsel yapılandırma kaydı] - name: Require independently verified encrypted archive restore before any network scan
+- **.github/workflows/v2-turkish-stream-review.yml:L34** — [Tarihsel yapılandırma kaydı] - name: Discover GitHub sources once
+- **.github/workflows/v2-turkish-stream-review.yml:L38** — [Tarihsel yapılandırma kaydı] - name: Fetch and deduplicate all M3U candidates once
+- **.github/workflows/v2-turkish-stream-review.yml:L40** — [Tarihsel yapılandırma kaydı] - name: Verify private and public candidate identity before artifact handoff
+- **.github/workflows/v2-turkish-stream-review.yml:L45** — [Tarihsel yapılandırma kaydı] - name: Report newly scanned candidate and source counts
+- **.github/workflows/v2-turkish-stream-review.yml:L54** — [Tarihsel yapılandırma kaydı] - name: Share safe candidate report
+- **.github/workflows/v2-turkish-stream-review.yml:L57** — [Tarihsel yapılandırma kaydı] name: unified-source-candidates
+- **.github/workflows/v2-turkish-stream-review.yml:L60** — [Tarihsel yapılandırma kaydı] - name: Share private playback snapshot
+- **.github/workflows/v2-turkish-stream-review.yml:L63** — [Tarihsel yapılandırma kaydı] name: unified-private-playback-snapshot
+- **.github/workflows/v2-turkish-stream-review.yml:L67** — [Tarihsel yapılandırma kaydı] - name: Share immutable discovery result
+- **.github/workflows/v2-turkish-stream-review.yml:L70** — [Tarihsel yapılandırma kaydı] name: unified-source-snapshot
+- **.github/workflows/v2-turkish-stream-review.yml:L88** — [Tarihsel yapılandırma kaydı] - name: Install ffprobe
+- **.github/workflows/v2-turkish-stream-review.yml:L92** — [Tarihsel yapılandırma kaydı] - name: Download shared source discovery
+- **.github/workflows/v2-turkish-stream-review.yml:L97** — [Tarihsel yapılandırma kaydı] name: unified-source-snapshot
+- **.github/workflows/v2-turkish-stream-review.yml:L99** — [Tarihsel yapılandırma kaydı] - name: Retry shared source discovery download after transient transfer failure
+- **.github/workflows/v2-turkish-stream-review.yml:L100** — [Tarihsel yapılandırma kaydı] if: steps.download_source_snapshot.outcome == 'failure'
+- **.github/workflows/v2-turkish-stream-review.yml:L103** — [Tarihsel yapılandırma kaydı] name: unified-source-snapshot
+- **.github/workflows/v2-turkish-stream-review.yml:L105** — [Tarihsel yapılandırma kaydı] - name: Require downloaded source discovery snapshot
+- **.github/workflows/v2-turkish-stream-review.yml:L109** — [Tarihsel yapılandırma kaydı] - name: Download private candidate snapshot
+- **.github/workflows/v2-turkish-stream-review.yml:L114** — [Tarihsel yapılandırma kaydı] name: unified-private-playback-snapshot
+- **.github/workflows/v2-turkish-stream-review.yml:L116** — [Tarihsel yapılandırma kaydı] - name: Retry private candidate snapshot download
+- **.github/workflows/v2-turkish-stream-review.yml:L117** — [Tarihsel yapılandırma kaydı] if: steps.private_snapshot_download.outcome == 'failure'
+- **.github/workflows/v2-turkish-stream-review.yml:L120** — [Tarihsel yapılandırma kaydı] name: unified-private-playback-snapshot
+- **.github/workflows/v2-turkish-stream-review.yml:L122** — [Tarihsel yapılandırma kaydı] - name: Download public-safe candidate inventory for hash parity
+- **.github/workflows/v2-turkish-stream-review.yml:L125** — [Tarihsel yapılandırma kaydı] name: unified-source-candidates
+- **.github/workflows/v2-turkish-stream-review.yml:L127** — [Tarihsel yapılandırma kaydı] - name: Restore checkpoint for same run and exact candidate snapshot
+- **.github/workflows/v2-turkish-stream-review.yml:L134** — [Tarihsel yapılandırma kaydı] - name: Verify candidate playback in bounded batch
+- **.github/workflows/v2-turkish-stream-review.yml:L155** — [Tarihsel yapılandırma kaydı] - name: Save checkpoint even when playback fails
+- **.github/workflows/v2-turkish-stream-review.yml:L156** — [Tarihsel yapılandırma kaydı] if: always()
+- **.github/workflows/v2-turkish-stream-review.yml:L161** — [Tarihsel yapılandırma kaydı] - name: Persist resumable checkpoint as restricted diagnostic artifact
+- **.github/workflows/v2-turkish-stream-review.yml:L162** — [Tarihsel yapılandırma kaydı] if: always()
+- **.github/workflows/v2-turkish-stream-review.yml:L165** — [Tarihsel yapılandırma kaydı] name: playback-checkpoint-page-${{ matrix.page }}-shard-${{ matrix.shard }}
+- **.github/workflows/v2-turkish-stream-review.yml:L169** — [Tarihsel yapılandırma kaydı] - name: Upload batch evidence
+- **.github/workflows/v2-turkish-stream-review.yml:L170** — [Tarihsel yapılandırma kaydı] if: always()
+- **.github/workflows/v2-turkish-stream-review.yml:L173** — [Tarihsel yapılandırma kaydı] name: unified-playback-page-${{ matrix.page }}-shard-${{ matrix.shard }}
+- **.github/workflows/v2-turkish-stream-review.yml:L179** — [Tarihsel yapılandırma kaydı] if: ${{ always() && needs.sources.result == 'success' }}
+- **.github/workflows/v2-turkish-stream-review.yml:L187** — [Tarihsel yapılandırma kaydı] - name: Install ffprobe
+- **.github/workflows/v2-turkish-stream-review.yml:L189** — [Tarihsel yapılandırma kaydı] - name: Install YouTube discovery dependency
+- **.github/workflows/v2-turkish-stream-review.yml:L191** — [Tarihsel yapılandırma kaydı] - name: Validate scripts
+- **.github/workflows/v2-turkish-stream-review.yml:L193** — [Tarihsel yapılandırma kaydı] - name: Download shared source discovery
+- **.github/workflows/v2-turkish-stream-review.yml:L198** — [Tarihsel yapılandırma kaydı] name: unified-source-snapshot
+- **.github/workflows/v2-turkish-stream-review.yml:L200** — [Tarihsel yapılandırma kaydı] - name: Retry download shared source discovery after transfer failure
+- **.github/workflows/v2-turkish-stream-review.yml:L201** — [Tarihsel yapılandırma kaydı] if: steps.review_source_download.outcome == 'failure'
+- **.github/workflows/v2-turkish-stream-review.yml:L204** — [Tarihsel yapılandırma kaydı] name: unified-source-snapshot
+- **.github/workflows/v2-turkish-stream-review.yml:L206** — [Tarihsel yapılandırma kaydı] - name: Download shared candidate report
+- **.github/workflows/v2-turkish-stream-review.yml:L211** — [Tarihsel yapılandırma kaydı] name: unified-source-candidates
+- **.github/workflows/v2-turkish-stream-review.yml:L213** — [Tarihsel yapılandırma kaydı] - name: Retry download shared candidate report after transfer failure
+- **.github/workflows/v2-turkish-stream-review.yml:L214** — [Tarihsel yapılandırma kaydı] if: steps.review_candidates_download.outcome == 'failure'
+- **.github/workflows/v2-turkish-stream-review.yml:L217** — [Tarihsel yapılandırma kaydı] name: unified-source-candidates
+- **.github/workflows/v2-turkish-stream-review.yml:L219** — [Tarihsel yapılandırma kaydı] - name: Download all playback batch evidence
+- **.github/workflows/v2-turkish-stream-review.yml:L224** — [Tarihsel yapılandırma kaydı] - name: Merge all playback evidence
+- **.github/workflows/v2-turkish-stream-review.yml:L226** — [Tarihsel yapılandırma kaydı] - name: Audit metadata for every discovered candidate
+- **.github/workflows/v2-turkish-stream-review.yml:L228** — [Tarihsel yapılandırma kaydı] - name: Classify every candidate from this run without rescanning
+- **.github/workflows/v2-turkish-stream-review.yml:L232** — [Tarihsel yapılandırma kaydı] - name: Audit Turkish spoken-language evidence for every candidate
+- **.github/workflows/v2-turkish-stream-review.yml:L236** — [Tarihsel yapılandırma kaydı] - name: Audit identity metadata conflicts in the same run
+- **.github/workflows/v2-turkish-stream-review.yml:L240** — [Tarihsel yapılandırma kaydı] - name: Generate unified postscan action queue without rescanning
+- **.github/workflows/v2-turkish-stream-review.yml:L242** — [Tarihsel yapılandırma kaydı] - name: Refresh candidates
+- **.github/workflows/v2-turkish-stream-review.yml:L246** — [Tarihsel yapılandırma kaydı] - name: HTTP candidate probe
+- **.github/workflows/v2-turkish-stream-review.yml:L248** — [Tarihsel yapılandırma kaydı] - name: Short decoder verification
+- **.github/workflows/v2-turkish-stream-review.yml:L258** — [Tarihsel yapılandırma kaydı] - name: Merge baseline batches
+- **.github/workflows/v2-turkish-stream-review.yml:L273** — [Tarihsel yapılandırma kaydı] - name: Attach measured quality to upgrade report
+- **.github/workflows/v2-turkish-stream-review.yml:L275** — [Tarihsel yapılandırma kaydı] - name: Build manual review queue
+- **.github/workflows/v2-turkish-stream-review.yml:L281** — [Tarihsel yapılandırma kaydı] - name: Compare short video frames for possible duplicates
+- **.github/workflows/v2-turkish-stream-review.yml:L283** — [Tarihsel yapılandırma kaydı] - name: Repeated stream stability samples
+- **.github/workflows/v2-turkish-stream-review.yml:L291** — [Tarihsel yapılandırma kaydı] - name: Discover official broadcaster sites
+- **.github/workflows/v2-turkish-stream-review.yml:L296** — [Tarihsel yapılandırma kaydı] - name: Discover YouTube live candidates
+- **.github/workflows/v2-turkish-stream-review.yml:L303** — [Tarihsel yapılandırma kaydı] - name: Generate final evidence summary
+- **.github/workflows/v2-turkish-stream-review.yml:L304** — [Tarihsel yapılandırma kaydı] if: always()
+- **.github/workflows/v2-turkish-stream-review.yml:L306** — [Tarihsel yapılandırma kaydı] - name: Save final diagnostic evidence even when validation rejects incomplete coverage
+- **.github/workflows/v2-turkish-stream-review.yml:L307** — [Tarihsel yapılandırma kaydı] if: always()
+- **.github/workflows/v2-turkish-stream-review.yml:L310** — [Tarihsel yapılandırma kaydı] name: turkish-stream-review
+- **.github/workflows/v2-turkish-tv-health.yml:L1** — [Tarihsel yapılandırma kaydı] name: V2 Turkish TV Health and Discovery
+- **.github/workflows/v2-turkish-tv-health.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/v2-turkish-tv-health.yml:L15** — [Tarihsel yapılandırma kaydı] - name: Install YouTube metadata verifier
+- **.github/workflows/v2-turkish-tv-health.yml:L17** — [Tarihsel yapılandırma kaydı] - name: Install video decoder
+- **.github/workflows/v2-turkish-tv-health.yml:L19** — [Tarihsel yapılandırma kaydı] - name: Syntax validation
+- **.github/workflows/v2-turkish-tv-health.yml:L21** — [Tarihsel yapılandırma kaydı] - name: Offline regression tests
+- **.github/workflows/v2-turkish-tv-health.yml:L26** — [Tarihsel yapılandırma kaydı] if: always()
+- **.github/workflows/v2-turkish-tv-health.yml:L29** — [Tarihsel yapılandırma kaydı] name: v2-turkish-tv-health
+- **.github/workflows/v2-world-discovery.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/v2-world-discovery.yml:L15** — [Tarihsel yapılandırma kaydı] - name: Verify worldwide scan prerequisites
+- **.github/workflows/v2-world-discovery.yml:L19** — [Tarihsel yapılandırma kaydı] - name: Upload candidate report
+- **.github/workflows/v2-world-discovery.yml:L20** — [Tarihsel yapılandırma kaydı] if: always()
+- **.github/workflows/v2-youtube-discovery.yml:L1** — [Tarihsel yapılandırma kaydı] name: V2 YouTube Turkish TV Discovery
+- **.github/workflows/v2-youtube-discovery.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/v2-youtube-discovery.yml:L15** — [Tarihsel yapılandırma kaydı] - name: Install discovery dependency
+- **.github/workflows/v2-youtube-discovery.yml:L17** — [Tarihsel yapılandırma kaydı] - name: Syntax check
+- **.github/workflows/v2-youtube-discovery.yml:L19** — [Tarihsel yapılandırma kaydı] - name: Discover YouTube candidates and verify live metadata
+- **.github/workflows/v2-youtube-discovery.yml:L21** — [Tarihsel yapılandırma kaydı] - name: Upload review-only results
+- **.github/workflows/v2-youtube-discovery.yml:L22** — [Tarihsel yapılandırma kaydı] if: always()
+- **.github/workflows/v2-youtube-discovery.yml:L25** — [Tarihsel yapılandırma kaydı] name: youtube-live-candidates
+- **DEVAM_NOTU.md:L1** — [Tarihsel kaynak kaydı] 27 Kasım 2026 — 10 maddelik ana sistem offline final kabulü
+- **DEVAM_NOTU.md:L3** — [Tarihsel kaynak kaydı] - #793 iki CI PASS ve MERGED (`2e853cc46b5e201dd9e7f7939dade4c686daad40`); 1–5 offline kabul tamamlandı.
+- **DEVAM_NOTU.md:L7** — [Tarihsel kaynak kaydı] 25 Kasım 2026 — Final altyapı paketleri
+- **DEVAM_NOTU.md:L9** — [Tarihsel kaynak kaydı] - PR [#784](https://github.com/Madsc55/MADSC55-TV-V2/pull/784) MERGED; Offline CI ve Production Security Gate PASS. GitLab/Codeberg 429 sınırlı backoff ve ölçülen kalite karar modülü.
+- **DEVAM_NOTU.md:L10** — [Tarihsel kaynak kaydı] - PR [#785](https://github.com/Madsc55/MADSC55-TV-V2/pull/785) MERGED (`d0f7ec99082ca1ae90128251ef2763346c9e5999`); iki CI PASS. Kalite raporuna kesin kimlik/URL hash eşleşmesi, Türkçe ses/altyazı, bölge ve doğrulanmış varlık kararları bağlandı. Gerçek yayın kanıtı üretildiği iddia edilmez.
+- **DEVAM_NOTU.md:L11** — [Tarihsel kaynak kaydı] - Final 3. Paket: sahibi harici dosya ve manuel anahtar şartını kaldırdı. Mevcut AES-256-GCM kodu, geçici rastgele test parolası, ayrı üretici/kurtarma dizinleri, şifreli kopya SHA-256 ve üretici dizini kaldırıldıktan sonra geri yüklenen içerik SHA-256 eşitliği ile offline test edilir. Bozulmuş şifreli veri ve yanlış anahtar reddedilir. Bu bir sentetik CI testi olup gerçek harici yedek veya üretim kasası restore kanıtı değildir.
+- **DEVAM_NOTU.md:L16** — [Tarihsel kaynak kaydı] - PR #632, merge commit 59eaaf4 ile main'e birleştirildi.
+- **DEVAM_NOTU.md:L18** — [Tarihsel kaynak kaydı] - Görev #28–#33, sahibin tarihsel arşiv/kurtarma kapsamını arşivleme onayıyla idari olarak completed durumuna alındı; gerçek cihaz oynatma, bağımsız restore ve canlı AV kabulü doğrulanmış sayılmaz.
+- **DEVAM_NOTU.md:L23** — [Tarihsel kaynak kaydı] TÜM GÖREVLER TAMAMLANDI - PR #632 BİRLEŞTİRMEYE HAZIR
+- **DEVAM_NOTU.md:L27** — [Tarihsel kaynak kaydı] 21 Kasim 2026 - #17-21 ve #34 kaynak kesfi / tarihsel kanit denetimi (salt okunur)
+- **DEVAM_NOTU.md:L33** — [Tarihsel kaynak kaydı] #18: sakli AV kanitlari ve TRT Kurdi ornegi mevcut; son oynatma ve cihaz kabul kaniti acik.
+- **DEVAM_NOTU.md:L37** — [Tarihsel kaynak kaydı] #20: 15 gozlem sakli; 8 HTTP 404 ve 6 HTTP 503 yeniden degerlendirme, bagimsiz restore ve cihaz kabul acik.
+- **DEVAM_NOTU.md:L39** — [Tarihsel kaynak kaydı] #21: 103/103 uygun M3U feed basarili; GitLab 10/12 ve Codeberg 1/12 rate-limit, 353 YouTube metadata SIGN_IN_REQUIRED; tum kaynaklar icin basari iddiasi yok.
+- **DEVAM_NOTU.md:L41** — [Tarihsel kaynak kaydı] #34: son Codeberg canli probe run 43459603986 ilk terimde 3 denemeden sonra HTTP 429; 5 terim atlandi. Manuel Codeberg-only diagnostic kodu var, calistirildigi kanitlanmadi. Kodun varligi provider kabul degildir.
+- **DEVAM_NOTU.md:L48** — [Tarihsel kaynak kaydı] 21 Kasım 2026 — #497 HLS MPEG-TS güvenli manuel örnekleme kabulü (#619)
+- **DEVAM_NOTU.md:L50** — [Tarihsel kaynak kaydı] - **PR [#619](https://github.com/Madsc55/MADSC55-TV-V2/pull/619) MERGED**, commit `4d33ccb0cd1a604e49934a1c1e754f590fc2f377`. PR Production Security Gate run [#44907289097](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44907289097) **SUCCESS** (13 yeni HLS regresyonu PASS). Birleştirme-sonrası main run [#44907448219](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44907448219) **SUCCESS** olarak doğrulandı.
+- **DEVAM_NOTU.md:L51** — [Tarihsel kaynak kaydı] - **Gerçek kod**: `v2/turkish_hls_safe_segments.py`, `v2/test_turkish_hls_safe_segments.py`, `v2/turkish_media_sample_capture.py`, `v2/turkish_safe_dns_capture.py`. Mevcut manuel örnek yakalamaya yalnız açık `--allow-hls-ts` seçimiyle, **varsayılan kapalı**, dar bir güvenli HLS alt akış eklendi. Yalnız **tek** şifresiz medyaya ait `.m3u8` (en fazla 64 KiB), en fazla 8 aynı kök/host/port üzerindeki göreli `.ts` parçası; URL'lerin tümü herhangi parça alınmadan doğrulanır. DNS cevaplarının hepsi public unicast olmalı; her HTTPS bağlantısı doğrulanmış SNI ile public IP'ye pin edilir. Redirect, cross-origin/özel IP, AES key, master/nested HLS, init MAP, BYTERANGE ve bilinmeyen kontrol etiketleri reddedilir; toplam medya limiti 12 MiB, azami işlem süresi 60 saniyedir.
+- **DEVAM_NOTU.md:L57** — [Tarihsel kaynak kaydı] 21 Kasım 2026 — Stage 4/#497 yeni FFmpeg hedef ve ağ güvenliği düzeltmeleri (#613, #615, #616)
+- **DEVAM_NOTU.md:L59** — [Tarihsel kaynak kaydı] **Tamamlanmış PR'ları yeniden yapma; gerçek canlı AV kabulü yerine çevrimdışı güvenlik kabulü yaz.**
+- **DEVAM_NOTU.md:L61** — [Tarihsel kaynak kaydı] - **PR [#613](https://github.com/Madsc55/MADSC55-TV-V2/pull/613) MERGED** `cc816ac0bf773e0390d12df370bb600fc1553c11`; PR Security Gate run [#44894165773](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44894165773) **SUCCESS**, merge sonrası main run [#44895656887](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44895656887) **SUCCESS**. HTTPS'de pinned-public-IP TLS el sıkışması başarısızsa ham socket kapatılır; çevrimdışı regresyonu var.
+- **DEVAM_NOTU.md:L62** — [Tarihsel kaynak kaydı] - **PR [#615](https://github.com/Madsc55/MADSC55-TV-V2/pull/615) MERGED** `69ac50944a67dc9a6fdf2b10a85c0d721a274056`. Initial `v2/stream_probe.py` URL denetimi artık kontrol karakterlerini, hatalı authority/port/fragments, yerel ve özel IP'leri, multicast, reserved, IPv4-mapped IPv6, boş/aşırı DNS kayıtlarını ve mixed public/private DNS cevaplarını FFprobe/FFmpeg'den *önce* reddediyor. HLS `.m3u8` dosyaları sırf uzantıları yüzünden yanlışlıkla engellenmiyor. Ayrı çevrimdışı regresyon dosyası `v2/test_stream_probe_public_target.py` mevcut Production Security Gate'in #497 bölümüne eklendi. PR güncel test run [#44895908045](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44895908045) **SUCCESS**.
+- **DEVAM_NOTU.md:L63** — [Tarihsel kaynak kaydı] - **PR [#616](https://github.com/Madsc55/MADSC55-TV-V2/pull/616) MERGED** `489a5c40fc93e92ed07ea840a7ff8b459691678d`. Sabit IP üzerinden güvenli HTTP(S) isteğinde Host header artık sadece ilgili protokolün varsayılan portunu gizliyor (HTTP=80, HTTPS=443); farklı portları açıkça koruyor. Dört çevrimdışı kombinasyon testi `v2/test_turkish_safe_dns_capture.py` içine eklendi. PR run [#44895941802](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44895941802) **SUCCESS**.
+- **DEVAM_NOTU.md:L66** — [Tarihsel kaynak kaydı] - Merge sonrası birleşik main Production Security Gate run [#44896085407](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44896085407) **SUCCESS** olarak bağımsız doğrulandı. Bu devir notu yalnız durum kaydıdır, yeni test ve yayın değişikliği değildir.
+- **DEVAM_NOTU.md:L68** — [Tarihsel kaynak kaydı] 21 Kasım 2026 — #6 özel Türk/yetkili kasa gerçek geri yükleme kabulü: kod tamam, harici kaynak kanıtı eksik
+- **DEVAM_NOTU.md:L70** — [Tarihsel kaynak kaydı] - **PR [#612](https://github.com/Madsc55/MADSC55-TV-V2/pull/612) merged** `f670ff8984516af8cba9f727705cc17f2da1860d`; PR Production Security Gate [#44894072998](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44894072998) **SUCCESS** (yeni şifreli kasa testlerini içeren Stage 6 PASS). Merge-sonrası main Production Security Gate [#44894232051](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44894232051) **SUCCESS** olarak bağımsız doğrulandı.
+- **DEVAM_NOTU.md:L72** — [Tarihsel kaynak kaydı] - **Harici gerçek kabul hâlâ EKSİK:** Mevcut [Independent Encrypted Recovery Archive]([URL: kaynak dosyada]) klasörü yeniden listelendi: **5 eski dosya (2 başka biçimli `.enc` + 3 ZIP)**; Türk/yetkili Fernet kasasının gerçekten bu klasördeki yedeği olarak tanımlanmış bir dosya ve doğru gizli anahtar kanıtı bulunamadı. Tarihsel Stage 4 7.819 kayıt restore makbuzu ayrı veridir, #6 kasası için kullanılamaz. Yeni Drive klasörü/yedek oluşturulmadı, gerçek key kullanılmadı, gerçek offsite restore çalıştırılmadı.
+- **DEVAM_NOTU.md:L83** — [Tarihsel kaynak kaydı] 21 Kasım 2026 — #497 gerçek retry karar kanıtı güvenliği (PR #596)
+- **DEVAM_NOTU.md:L85** — [Tarihsel kaynak kaydı] - **Main kod kabulü:** [PR #596](https://github.com/Madsc55/MADSC55-TV-V2/pull/596) **merged**, squash `a761fc34f96139c9be1cd7bcd2b120ad8628c38f`; PR Production Security Gate [#44889082162](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44889082162) **SUCCESS**. Merge sonrası main güvenlik kontrolü [#44889233215](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44889233215) **SUCCESS** olarak bağımsız doğrulandı.
+- **DEVAM_NOTU.md:L92** — [Tarihsel kaynak kaydı] 21 Kasım 2026 — Devam kontrolü: #561/#567 tamam, Stage 4 egress güvenliği açık
+- **DEVAM_NOTU.md:L94** — [Tarihsel kaynak kaydı] - Güncel görev işleyişinde #561 (tek manuel, salt-okunur 1.792 rapor işleme) **merged**; son PR CI run `44843702938` SUCCESS. #567 (yalnız 685 belirsizin iki denemeli tekrar kontrolünü *manuel* çalıştıracak altyapı) **merged**; merge SHA `7bbefc113b02e25e0d8da1709273c39e9bbb4f12`, run `44843776673` SUCCESS ve merge sonrası main run `44843984931` SUCCESS. Bu kod ve testleri tekrar yazma.
+- **DEVAM_NOTU.md:L97** — [Tarihsel kaynak kaydı] - **CI notu:** Son doğrulanmış main SUCCESS run `44844257018` (head `5c007b3f3423f52ef41e7bf22b5317a87660cc97`); sonraki main run `44844315821` bu kontrol anında in_progress. PR #572'nin son head için testi de sürmekteydi. Kapanmış kabul sonucu varsayılmayacak.
+- **DEVAM_NOTU.md:L100** — [Tarihsel kaynak kaydı] 21 Kasım 2026 — GÜNCEL DEVİR: #6 gerçek kasa kabulü ve #497 tarihsel AV önizlemesi
+- **DEVAM_NOTU.md:L102** — [Tarihsel kaynak kaydı] **Kaldığımız yer; daha önce tamamlanan işlere dönülmesin.**
+- **DEVAM_NOTU.md:L104** — [Tarihsel kaynak kaydı] - **#6 kod güvenliği tamamlandı:** PR [#559](https://github.com/Madsc55/MADSC55-TV-V2/pull/559) merge SHA `cd90b364316322752b3a2184134646a335f3632d`. Özel kasa dosya okumasında `O_NOFOLLOW`, normal/özel dosya ve maksimum boyut kontrolü, symlink-swap reddi, atomik no-clobber restore ve üç regresyon testi var. PR Security Gate [#44843037968](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44843037968) **SUCCESS**, merge-sonrası main Security Gate [#44843224361](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44843224361) **SUCCESS**. Bu testleri tekrar çalıştırma.
+- **DEVAM_NOTU.md:L112** — [Tarihsel kaynak kaydı] 21 Kasım 2026 — #6 mevcut Drive arşivi ve kasa güvenlik kabulü
+- **DEVAM_NOTU.md:L114** — [Tarihsel kaynak kaydı] - Mevcut Google Drive `MADSC55-TV-V2 — Independent Encrypted Recovery Archive` klasörü yetkili bağlantıyla **yeniden kontrol edildi**. Klasörün doğrudan içinde 5 dosya mevcut: 2 adet `.enc` (7.832.688 ve 5.234.628 bayt) ve 3 ZIP. Yeni klasör veya yeni şifreli yedek oluşturulmadı.
+- **DEVAM_NOTU.md:L116** — [Tarihsel kaynak kaydı] - Mevcut kasanın dosya okumalarında sonradan sembolik bağa dönüştürülme, aşırı büyük dosya ve geri yükleme hedefinin yarış halinde üzerine yazılması risklerine karşı kaynak dosya tanıtıcısı, bayt sınırı ve atomik no-clobber restore düzeltmeleri hazırlandı. Üç yeni çevrimdışı regresyon testi ana Production Security Gate'e bağlandı; PR/CI kontrolü yapılmadan tamamlandı kabul edilmez.
+- **DEVAM_NOTU.md:L117** — [Tarihsel kaynak kaydı] - **AÇIK:** #6 gerçek kabulü için aynı mevcut özel Drive klasöründe doğrulanmış kasa yedeği, bağımsız kaynak SHA-256, izinli anahtar erişimi, geri yüklenen özel kasa içerik/kimlik eşitliği ve gerçek ortam kanıtı gerekiyor. Gizli anahtar ve ham URL'ler ne GitHub'a ne genel rapora konulacak.
+- **DEVAM_NOTU.md:L120** — [Tarihsel kaynak kaydı] 21 Kasım 2026 — Aşama 2 / #489 arşiv kabul kanıtı
+- **DEVAM_NOTU.md:L122** — [Tarihsel kaynak kaydı] - Main commit: `3eb84f890cbe8524d16c1a16f219b0b494cc50f0`; Production Security Gate run `44837457969`: SUCCESS.
+- **DEVAM_NOTU.md:L129** — [Tarihsel kaynak kaydı] 21 Kasım 2026 — 8 aşamalı plan / Aşama 1 canlı CI denetimi
+- **DEVAM_NOTU.md:L131** — [Tarihsel kaynak kaydı] - Denetlenen main: `0ecfb9b1cee91ca182bdd8318d958656e75a1538` (#548 merged: şifreli arşiv symlink-swap ve sınırsız okuma koruması). Production Security Gate `44836430233`: SUCCESS.
+- **DEVAM_NOTU.md:L134** — [Tarihsel kaynak kaydı] - Açık PR'lar #547, #543, #535, #514, #507 ve diğer tarihsel PR'lar. #548 merged. Açık PR olması main CI hatası değildir; PR kabulü ayrı kalır.
+- **DEVAM_NOTU.md:L135** — [Tarihsel kaynak kaydı] - Aşama 1: incelenen güncel main CI güvenlik kapıları SUCCESS; kanıtlanmış güncel main CI hatası yok. PR bazlı kabul ve bağımsız gerçek ortam doğrulaması tamamlanmış sayılmaz. Sonraki öncelik #489 arşiv kabulüdür.
+- **DEVAM_NOTU.md:L138** — [Tarihsel kaynak kaydı] 20 Kasım 2026 — #488 / #6 Türk yetkili yayın kasası devri
+- **DEVAM_NOTU.md:L140** — [Tarihsel kaynak kaydı] - Birleştirilen PR'lar: #502 (Fernet şifreli kasa), #508 (URL ve restore bütünlüğü), #509 (mevcut secure_archive ile çevrimdışı yedek/geri yükleme kabul testi), #510 (özel dosya izinleri ve symlink reddi).
+- **DEVAM_NOTU.md:L141** — [Tarihsel kaynak kaydı] - Son merge: `0554801daea2143d228f1423ffd15b827d43fc94`.
+- **DEVAM_NOTU.md:L142** — [Tarihsel kaynak kaydı] - Güvenlik kapısı başarılı: [#508](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44736242955), [#509](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44736753654), [#510](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44737384557).
+- **DEVAM_NOTU.md:L143** — [Tarihsel kaynak kaydı] - Kabul edilenler yalnızca Türk ve yetkili/açık HTTP(S) kaynaklarıdır; URL/token genel raporlara yazılmaz. Kaynak, karar geçmişi, ilk/son görülme ve URL parmak izi şifreli dosyada tutulur.
+- **DEVAM_NOTU.md:L151** — [Tarihsel kaynak kaydı] [#490](https://github.com/Madsc55/MADSC55-TV-V2/pull/490) ile indirilen şifreli arşivin dört geri yükleme testi ana dalın güvenlik denetimine eklendi.
+- **DEVAM_NOTU.md:L153** — [Tarihsel kaynak kaydı] 19 Kasım 2026 — Yerel örnekte konuşma, ekrandaki yazı ve zamanlı altyazı
+- **DEVAM_NOTU.md:L155** — [Tarihsel kaynak kaydı] [#479](https://github.com/Madsc55/MADSC55-TV-V2/pull/479) yerel FFprobe incelemesini ana dala aldı. Örnek incelemesi artık FFmpeg ile ses ve görüntüyü çözüyor, yerel Whisper modelini ve Türkçe Tesseract OCR aracını çalıştırıyor. İngilizce ve Türkçe insan sesi içeren iki test klibinde üçer kare ve birer zamanlı Türkçe altyazı okundu. [Test kayıtları](v2/reports/turkish-sample-verification-20261119.json)
+- **DEVAM_NOTU.md:L177** — [Tarihsel kaynak kaydı] - [#462](https://github.com/Madsc55/MADSC55-TV-V2/pull/462) ile keşif ve İBO dışa aktarımı belirsiz ters eğik çizgili adresleri reddediyor. [PR kontrolü](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44532509875) ve [7d4764e ana dal kontrolü](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44537130270) başarılı. #212 ve #214'ün keşif örnekleri ile #213'ün dışa aktarım örnekleri birleşmiş kodda da geçti. Üç eski PR birleştirilmeden kapatıldı.
+- **DEVAM_NOTU.md:L179** — [Tarihsel kaynak kaydı] - Arica TV'nin resmî yayın sayfasındaki gömülü oynatıcı, tarihsel yayın adresinin tam SHA-256 değerini doğruluyor. #15'te incelenen altı adresin birinde tam adres, Bir TV'de ise fragment çıkarıldıktan sonraki HTTP kaynağı yayıncıya bağlandı. Diğer dört adres için yayıncı kanıtı açık. [#15 kanıtları](v2/reports/task15-historical-url-hash-recovery-20261118.json)
+- **DEVAM_NOTU.md:L180** — [Tarihsel kaynak kaydı] - 19 Kasım saat 13.52 UTC'de tanımlı beş XMLTV kaynağının dördünde yedi farklı İBO kimliği için başlıklı, o anda geçerli program bulundu. ATV ve CNBC-e için program başlığı ve iki saat sınırı yayıncıyla örtüşüyor. DMAX'ın 16.35–18.35 Türkiye saatiyle yayımladığı başlık, kılavuzlarda iki ardışık bölüme ayrılıyor. Diğer dört kimliğin yayıncı teyidi ve tarihsel 303 boşluğun satır bazında eşleşmesi açık. [Kaynak özetleri ve program kayıtları](v2/reports/task19-current-xmltv-20261119.json)
+- **DEVAM_NOTU.md:L181** — [Tarihsel kaynak kaydı] - #17, #18 ve #20'deki 15 kayıt için şifreli aktarım önceden tamamlandı. Yetkili çalışmanın günlükleri 28.844 satırda ön kontrol 15, uygulama 15 ve tekrarda 0 değişiklik gösteriyor. Özgün yedek karşılaştırması ve şifreli dosyanın yeniden okunması başarılı. Bu kayıtları yeniden aktarmayın. [Çalışma](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44429064188) · [Şifreli sonuç ve yedek](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44429064188/artifacts/14485014372)
+- **DEVAM_NOTU.md:L184** — [Tarihsel kaynak kaydı] 19 Kasım 2026 — #15 adres eşleştirmesi ve #442 şifreli aktarımı
+- **DEVAM_NOTU.md:L186** — [Tarihsel kaynak kaydı] - **#15 tarihsel adresler.** Özgün 4.955 adres özetini, arşivdeki 4.949 eşleşme ve sonradan bulunan altı adresle karşılaştırdık. İki küme örtüşmüyor ve birleşimleri özgün envanterle birebir aynı. Xinjiang TV 3 ve American Ninja Warrior için 28 ve 29 Ekim katalogları ile aynı tarihli ülke listeleri iki adresin tam SHA-256 değerlerini doğruluyor. [Eşleşme raporu](v2/reports/task15-historical-url-hash-recovery-20261118.json) · [Arşivdeki 4.949 eşleşme](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42216075104/artifacts/13524765368)
+- **DEVAM_NOTU.md:L187** — [Tarihsel kaynak kaydı] - **#425 tarihsel karşılaştırması.** 6 Kasım’daki iki arşivin tam adres özetlerini yeniden karşılaştırdık. Eşleşme 4.948’den 4.949’a çıktı. Ses ve görüntü kanıtı olan adres sayısı 3.062’den 3.080’e çıktı. 24 adres yalnızca ikinci, altı adres yalnızca ilk kayıtta bu kanıta sahipti. Bu karşılaştırmada eşleşmeyen altı adresin tümü daha sonra #421’de doğrulandı. [Karşılaştırma raporu](v2/reports/task15-historical-crosswalk-delta-20261118.json) · [PR #425](https://github.com/Madsc55/MADSC55-TV-V2/pull/425)
+- **DEVAM_NOTU.md:L189** — [Tarihsel kaynak kaydı] - **#442 aktarımı.** 18 Kasım raporundaki 15 kayıt ve 17 deneme, 28.844 satırlık şifreli checkpoint’e işlendi. Arşiv tekrar okunduğunda satır sayısı 28.844 kaldı. Aynı rapor ikinci kez uygulandığında 0 kayıt değişti. Kayıtlar bir TRT Kurdî görüntü ve ses örneği, sekiz HTTP 404 ve altı HTTP 503 sonucu içeriyor. 19 çevrimdışı test geçti. [Çalıştırma kaydı](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44429064188)
+- **DEVAM_NOTU.md:L190** — [Tarihsel kaynak kaydı] - **Yedek.** GitHub’dan indirilen yedek, özgün şifreli dosyayla bayt bayt aynı. Özgün dosya ve yedeğin SHA-256 değeri `5b06abb1257666a19826c85f4559cc24704e8e4cb15274cca96eeb9e80fb77a3`, güncellenen dosyanınki `7327c323864bbb991428bea609f3bf439968637a2d30a6215df50f2d242ecd32`. [Güncellenen dosya ve yedek](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44429064188/artifacts/14485014372)
+- **DEVAM_NOTU.md:L191** — [Tarihsel kaynak kaydı] - **#442 güvenlik kontrolü.** PR kontrolü başarılıydı. Birleştirmeden sonraki ana dal çalışmasının iki denemesi de FFmpeg paketleri indirilirken 15 dakikalık süre sınırına ulaştı. #442 ve #445’i içeren `e1048429` ana dal sürümü güvenlik kontrolünü geçti. [PR kontrolü](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44427454497) · [Süre sınırına ulaşan çalışma](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44427651493) · [Başarılı ana dal kontrolü](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44432770581)
+- **DEVAM_NOTU.md:L192** — [Tarihsel kaynak kaydı] - **#421 birleştirmesi.** Eşleşme raporu ve görev defteri `717560ad` ile ana dala girdi. Birleştirmeden önce güvenlik kontrolü geçti. [PR #421](https://github.com/Madsc55/MADSC55-TV-V2/pull/421) · [PR güvenlik sonucu](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44488764104)
+- **DEVAM_NOTU.md:L194** — [Tarihsel kaynak kaydı] - **Güvenlik kontrolünün süresi.** #442’de Ubuntu paketlerini indirirken iki kez dolan 15 dakikalık süre, FFmpeg gerektiren güvenlik işi için 30 dakikaya çıkarıldı. #447’nin güvenlik işi 20 dakika 53 saniyede başarıyla bitti. FFmpeg ve FFprobe kurulumundan sonra ses ve görüntü testleri de geçti. Düzeltme `d2e4efae` ile ana dala birleşti. [PR #447](https://github.com/Madsc55/MADSC55-TV-V2/pull/447) · [Başarılı güvenlik çalışması](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44490409133) · [Güvenlik iş akışı](.github/workflows/v2-main-production-safety-gate.yml)
+- **DEVAM_NOTU.md:L197** — [Tarihsel kaynak kaydı] 18 Kasım 2026 — #17, #18 ve #20 için sınırlı canlı tekrar testi
+- **DEVAM_NOTU.md:L199** — [Tarihsel kaynak kaydı] - [PR #420](https://github.com/Madsc55/MADSC55-TV-V2/pull/420), `cf166ee25a080e11d75d68799806af7b4461b271` ile birleşti. [PR güvenlik çalışması](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44372344270) ve [ana dal güvenlik çalışması](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44372697378) başarılı. 18 Kasım çalışmasında 154 yerel testin geçtiği kaydedildi.
+- **DEVAM_NOTU.md:L200** — [Tarihsel kaynak kaydı] - [PR #418](https://github.com/Madsc55/MADSC55-TV-V2/pull/418) ana dala `a196801c0b1b8c1e1f317d1c7e45417c13284cfb` ile alındı. [PR güvenlik çalışması](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44367475775) ve [birleştirme sonrası ana dal çalışması](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44370392930) başarılı.
+- **DEVAM_NOTU.md:L201** — [Tarihsel kaynak kaydı] - [14 Kasım arşivindeki](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43608247496/artifacts/14135417421) 20.148 bekleyen adresin 3.781'i, iki mevcut listede SHA-256 ile birebir eşleşti. Arşivde bunların 1.339'u RETRY, 689'u CHECK_AV ve 1.753'ü REVIEW durumundaydı.
+- **DEVAM_NOTU.md:L203** — [Tarihsel kaynak kaydı] - Süresi dolmuş başarısız kayıtlar için yeniden deneme sınırı tarayıcının asıl girişinde uygulandı. Ertelenen kayıtlar, önceki zaman damgası ve deneme sayısıyla saklanıyor. Yarım kalan koşuların ara kaydı, henüz sırası gelmeyen geçerli geçmiş satırları da içeriyor.
+- **DEVAM_NOTU.md:L204** — [Tarihsel kaynak kaydı] - Devam ederken kayıtları rapordaki tam adres özetiyle eşleştir. Sekiz 404 adresi kaynak incelemesinde, altı 503 adresi sonraki yeniden denemede ele alınacak. Arşivin şifreli checkpoint'ine bu bağımsız gözlemler henüz işlenmedi. Diğer 3.766 eşleşmenin ve bu iki listede karşılığı olmayan 16.367 adresin durumu açık. [Görev defteri](v2/tasks/state.json).
+- **DEVAM_NOTU.md:L206** — [Tarihsel kaynak kaydı] 18 Kasım 2026 — Arşivden kurtarma kuyruğuna devam
+- **DEVAM_NOTU.md:L209** — [Tarihsel kaynak kaydı] - Tarayıcı, şifreli bir geçmiş kayıttaki başarısız denemeleri yeniden test için seçebiliyor ve deneme sayısını koruyor. Önceki görüntü ve ses kanıtı için 18 saatlik geçerlilik süresi uygulanıyor. Yerelde 53 regresyon testi geçti.
+- **DEVAM_NOTU.md:L210** — [Tarihsel kaynak kaydı] - #17, #18 ve #20 için yeni canlı görüntü ve ses sonuçları bekleniyor. Canlı tekrar denemesi için Actions ortamında şifreli checkpoint’e ve arşiv anahtarına erişim gerekiyor. [Açık görevler](v2/tasks/state.json)
+- **DEVAM_NOTU.md:L217** — [Tarihsel kaynak kaydı] 18 Kasım 2026 — Kaynak doğrulama ve açık görev kanıtları
+- **DEVAM_NOTU.md:L219** — [Tarihsel kaynak kaydı] - [#398 ana dal güvenlik testi](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44305739868) ve [#399 ana dal güvenlik testi](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44308192475) başarılı. [#400](https://github.com/Madsc55/MADSC55-TV-V2/pull/400) genişletilmiş 403/429 korumasını, [#401](https://github.com/Madsc55/MADSC55-TV-V2/pull/401) 13 görev ön koşulunu ve paket dışa aktarımından önce sağlayıcı kanıtı denetimini ana dala aldı.
+- **DEVAM_NOTU.md:L220** — [Tarihsel kaynak kaydı] - #21 ve #34 için [sınırlı canlı API tanılaması](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44311170298/artifacts/14430965819) GitHub'da 6 geçerli sorgu ve 103 ham aday satırı, GitLab'da 6 geçerli boş yanıt gösterdi. Codeberg ilk sorguda üç kez HTTP 429 verdi ve kalan beş sorgu atlandı.
+- **DEVAM_NOTU.md:L221** — [Tarihsel kaynak kaydı] - Türkiye ve Azerbaycan M3U örneklerinden sırasıyla 178 ve 14 kayıt okundu. [TRT Haber resmî yayınından]([URL: kaynak dosyada]) alınan tek HLS segmentinden FFmpeg ile görüntü ve ses çözüldü. Örnek SHA-256 değeri `ba8fae2a20fb5eb87bf1c7f4e3ae6c1a83962329015c29efbce9cf0e4ba27220`. Denenen YouTube canlı sayfasının meta verisi doğrulanamadı.
+- **DEVAM_NOTU.md:L222** — [Tarihsel kaynak kaydı] - #15 için dünya raporundaki 4.949 eşleşmenin dışında kalan altı tarihsel hash incelendi. Arica TV, HTV Sports, Tooncast ve Bir TV arşivde veya sabitlenmiş eski kaynakta birebir eşleşti. Xinjiang TV 3 ve American Ninja Warrior eşleşmeleri ile tüm kayıtlar için bağımsız yayıncı doğrulaması açık. [Tarihsel çapraz tablo]([URL: kaynak dosyada]) · [18 Kasım hash denetimi](v2/reports/task15-historical-url-hash-recovery-20261118.json).
+- **DEVAM_NOTU.md:L225** — [Tarihsel kaynak kaydı] - #28–#33 için [1.000 ve 2.000'lik gerçek paket arşivi](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43412576224/artifacts/14033805492) ZIP SHA-256 ve parça bütünlüğüyle doğrulandı. Her iki paket dizisi sırası eşleşen 4.301 benzersiz adres içeriyor. [Önceki Drive geri yükleme makbuzu]([URL: kaynak dosyada]) 7.819 kayıt içeriyor. Güncel paketin bağımsız üretim geri yüklemesi ve fiziksel cihazda oynatma kabulü açık.
+- **DEVAM_NOTU.md:L231** — [Tarihsel kaynak kaydı] - Teknik test işaretli kayıtlar, YouTube ve Azerbaycan film kaynakları gerçek görüntü/ses ve canlı yayın olarak henüz doğrulanmamıştır. GitHub güvenlik testi başarılı olmadan tamamlandı/merge edildi sayılmayacak.
+- **DEVAM_NOTU.md:L246** — [Tarihsel kaynak kaydı] - Bu kayıt tamamlanmış uygulama veya başarılı yayın testi değildir; sonraki adım güvenli reorder + yetkili SHA256 kayıt + Actions + merge.
+- **DEVAM_NOTU.md:L258** — [Tarihsel kaynak kaydı] 15 Kasım 2026 — Kanonik bitirme akışı (kapanış kanıtı zorunlu)
+- **DEVAM_NOTU.md:L260** — [Tarihsel kaynak kaydı] **Kanonik durum:** `v2/tasks/state.json`: 21 completed / 13 in_progress. Açıklar: #15, #17, #18, #19, #20, #21, #28, #29, #30, #31, #32, #33, #34. Bu kayıt hiçbir görevi tamamlandı yapmaz.
+- **DEVAM_NOTU.md:L263** — [Tarihsel kaynak kaydı] 2. **Aşama B:** #28 gerçek kanıtlı 1000 İBO, #29 gerçek kanıtlı 2000 İBO, #30 EXTINF/URL, ZIP, manifest, SHA-256. Sentetik paket nihai teslim değildir.
+- **DEVAM_NOTU.md:L264** — [Tarihsel kaynak kaydı] 3. **Aşama C:** #31 gerçek cihaz görüntü/ses; #32 bağımsız haricî şifreli restore; #33 üretim kabulü. Önceki #13 Drive restore #32 kabulü yerine geçmez.
+- **DEVAM_NOTU.md:L265** — [Tarihsel kaynak kaydı] 4. **Aşama D — en son:** #34 Türkiye/Azerbaycan/dünya, GitHub/Gist/GitLab/Codeberg/YouTube/resmî yayıncı M3U/M3U8 kapsamlı tarama.
+- **DEVAM_NOTU.md:L267** — [Tarihsel kaynak kaydı] **Her görev kapanışı:** kanonik state ve son commit/PR/Actions/artifact incele → eksikliği gider → offline ve gerekli gerçek canlı testleri yap → kanıt/başarı ölçütünü doğrula → yalnız o zaman `state.json` completed, tarih ve kanıt URL'leriyle güncelle → `DEVAM_NOTU.md` içine sonuç/engel/run/commit kaydet → sıradakine geç. Kanıtsız kapanış yok.
+- **DEVAM_NOTU.md:L273** — [Tarihsel kaynak kaydı] 14 Kasım 2026 — Aşama A gerçek koşu #43608247496: başarı, ancak 6 nihai kabul görevi açık
+- **DEVAM_NOTU.md:L279** — [Tarihsel kaynak kaydı] **Keşif #21:** GitLab 10/12 sorgu (rate-limited, 2 atlandı), Codeberg 1/12 (rate-limited, 11 atlandı), YouTube 353 video adayı ve 353 SIGN_IN_REQUIRED, 0 canlı metadata, 0 doğrudan HLS çözümü/120 giriş. Bu ayrı adapter sonuçları, 103/103 uygun M3U kaynağının başarılı olmasına karşın dünya keşfi kabulünün tamamlandığı anlamına gelmez. GitHub/GitLab/Codeberg provider kısıtları göz ardı edilemez.
+- **DEVAM_NOTU.md:L288** — [Tarihsel kaynak kaydı] 14 Kasım 2026 — Aşama A #19: XMLTV ad ipuçları kesin TVG kimliği değildir
+- **DEVAM_NOTU.md:L295** — [Tarihsel kaynak kaydı] 14 Kasım 2026 — Aşama A: iki yanlış keşif girdisi için kaynak kalitesi ayrımı
+- **DEVAM_NOTU.md:L298** — [Tarihsel kaynak kaydı] - Bütün kaynakların anlamlı kabulü yalnız doğrulanan uygun M3U girişleri içindir; açıkça reddedilen test fikstürleri kaynak kapsamından çıkarılır. Bu düzeltme hâlihazırda çalışan #43605095525 taramasını retroaktif etkilemez, yalnız sonraki koşularda devreye girer. #15 ve #21 yayıncı/provenans tamamlandı sayılmaz.
+- **DEVAM_NOTU.md:L301** — [Tarihsel kaynak kaydı] 14 Kasım 2026 — Aşama A #17/#20: 18 saatlik checkpoint içindeki başarısız yayınları kontrollü gerçek yeniden dene
+- **DEVAM_NOTU.md:L302** — [Tarihsel kaynak kaydı] - Önceki 43598617218 taraması 28.844 eski gözlemi tekrar kullandı, sadece 1 yeni AV denemesi yaptı. Başarısız URL'ler de 18 saat içinde yeniden denenmeden atlandığı için kurtarma kuyruğunun canlı kapanışı ilerlemiyordu.
+- **DEVAM_NOTU.md:L303** — [Tarihsel kaynak kaydı] - Yeni `select_checkpoint_retry_urls` yalnız mevcut aday kümesindeki, AV başarısı olmayan, recovery_attempts 0..2 ve HTTP RETRY/CHECK_AV uygun durumlarını seçer. 403/404, tüketilmiş 3 deneme ve şifreli önceki AV başarıları gerçek probe'a gönderilmez; her koşuda en fazla 300 başarısız aday yeniden `check_hls` ile denenir. Gerçek probe yapılmadan sayaç artırılmaz, başarılı ses+görüntü yeni kanıt olarak sayılır. Toplam eligible, retried ve recovered AV sayıları gizli URL içermeyen rapora eklenir.
+- **DEVAM_NOTU.md:L317** — [Tarihsel kaynak kaydı] - Yalnız yt-dlp gerçekten canlı metadata doğrularsa LIVE_METADATA_VERIFIED yazılır. 'İzleyiciye açık' başlık veya 'LIVE' sözcüğü AV kanıtı değildir. Yeni bu hata sınıflandırması offline CI'da test edildiğinde #21 canlı kabulü tamamlanmış sayılmaz; gerçek YouTube/official resolver/live FFmpeg kanıtı halen gerekir.
+- **DEVAM_NOTU.md:L320** — [Tarihsel kaynak kaydı] 14 Kasım 2026 — Aşama A #17/#20: gerçek kurtarma denemesi ve kanıt sınırları
+- **DEVAM_NOTU.md:L324** — [Tarihsel kaynak kaydı] - #15 özgün yayıncı kimliği, #18 güncel video+audio, #21 dünya TR/AZ/YouTube canlı kaynak kabulü açık. Son keşifte direct HLS 0/120, doğrulanmış YouTube LIVE metadata 0. Gerçek kayıtları yanlış sınıflandıran otomatik kabul önlenmeli; altı A görevi tamamlandı diye işaretlenmemeli.
+- **DEVAM_NOTU.md:L328** — [Tarihsel kaynak kaydı] 14 Kasım 2026 — Aşama A devam arşivi: son tamamlanan başarılı/kısmi koşuyu da geri al
+- **DEVAM_NOTU.md:L329** — [Tarihsel kaynak kaydı] - 43598617218 koşusu GitHub Actions tarafında success, tarama raporunda PARTIAL_DISCOVERY_EVIDENCE_ONLY idi. 28.845 kayıttan 28.844 eski gözlem + 1 yeni FFmpeg AV; 8.510 toplam AV kanıtı. Önceki workflow yalnız '--status failure' koşularını aradığından, sonraki taramada bu daha güncel başarıyla yüklenmiş checkpoint atlanabilirdi.
+- **DEVAM_NOTU.md:L333** — [Tarihsel kaynak kaydı] 14 Kasım 2026 — V2 devam kontrolü: 13 açık görev, gerçek tarama kanıtı, A→B→C→D
+- **DEVAM_NOTU.md:L335** — [Tarihsel kaynak kaydı] **Güncel 34 görev:** tasks/state.json içinde 21 completed, 13 in_progress. Açıklar: #15 #17 #18 #19 #20 #21 #28 #29 #30 #31 #32 #33 #34. Başarısız/eksik kanıt için done işareti verilmez. Diğer sohbetlerdeki paralel PR ve işler ile çakışma kontrolü yapılır.
+- **DEVAM_NOTU.md:L341** — [Tarihsel kaynak kaydı] **Yeni düzeltme:** Yeşil Actions koşusuna rağmen partial raporun geçerli görünmesini engelleyecek v2/validate_real_scan_acceptance.py CI kapısı eklenecek. Tam kaynak keşfi, gerçek ve tutarlı decode sayıları, tam şifreli envanter ve M3U test parçaları yoksa iş FAIL olmalı. Bu yalnızca tarama işinin doğrulanmasıdır; nihai A/B/C/D veya cihaz kabulü değildir.
+- **DEVAM_NOTU.md:L343** — [Tarihsel kaynak kaydı] **Bitirme sırası ve kalanlar:**
+- **DEVAM_NOTU.md:L345** — [Tarihsel kaynak kaydı] 2. B (#28 #29 #30): yalnız gerçek AV ve kaynak kanıtıyla 1.000/2.000 M3U, ZIP, manifest, SHA-256, EXTINF/URL birlikteliği, bağımsız cihaz paketi. Eski 4.301 M3U yapısal kanıtı bu koşunun yeni AV kabulü değildir.
+- **DEVAM_NOTU.md:L346** — [Tarihsel kaynak kaydı] 3. C (#31 #32 #33): Android/oynatıcı gerçek ses+görüntü, bağımsız haricî şifreli arşiv geri yükleme, nihai üretim kabulü. Offline CI veya yalnız dosya varlığı final kanıtı değildir. C dal ve PR'leriyle çatışma yaratılmayacak.
+- **DEVAM_NOTU.md:L347** — [Tarihsel kaynak kaydı] 4. D (#34) EN SON: GitHub/Gist/GitLab/Codeberg/YouTube/resmî yayıncı, dünya ve TR/AZ geniş kaynak keşfi. Canlı Codeberg 429, GitLab API hata ve YouTube/live direct HLS boşlukları çözülmeden done değil.
+- **DEVAM_NOTU.md:L352** — [Tarihsel kaynak kaydı] 13 Kasım 2026 — #28–#30 Unicode M3U satır bütünlüğü KABULÜ
+- **DEVAM_NOTU.md:L361** — [Tarihsel kaynak kaydı] - PR Actions run `43481457491` SUCCESS; merge sonrası main Actions run `43481721700` SUCCESS. Kanıt: https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43481721700
+- **DEVAM_NOTU.md:L364** — [Tarihsel kaynak kaydı] 13 Kasım 2026 — #31–#33 Stage 5 güvenlik düzeltmesi main kabulü
+- **DEVAM_NOTU.md:L365** — [Tarihsel kaynak kaydı] - PR #181 başarıyla squash merge edildi: `a04ca3e8bb7e4148efdab1d6cddb00a11427328f`. Kaynak PR: https://github.com/Madsc55/MADSC55-TV-V2/pull/181
+- **DEVAM_NOTU.md:L372** — [Tarihsel kaynak kaydı] - PR baş commit `5615599e06196d77e6daa1937074e292b27cf17d` için Production Security Gate Actions `43480580074` SUCCESS; gerçek logda `test_untrusted_xmltv_programme_claims_are_not_promoted` PASS, Stage 2/3 grup testleri PASS.
+- **DEVAM_NOTU.md:L376** — [Tarihsel kaynak kaydı] 13 Kasım 2026 — Gerçek İBO 4.301 AV paketinin bağımsız ZIP/M3U denetimi
+- **DEVAM_NOTU.md:L377** — [Tarihsel kaynak kaydı] - Gerçek Actions run `43412576224` SUCCESS; artifact `14033805492`, ZIP SHA-256 `139c8a0868f35d4b64cd55a17bcbd56325d8e3c87b5d07295028bb4d56e832a6` kontrol edildi.
+- **DEVAM_NOTU.md:L378** — [Tarihsel kaynak kaydı] - ZIP içindeki 1000'lik parçalar 1000+1000+1000+1000+301, 2000'lik parçalar 2000+2000+301; her ikisi tam 4301 farklı URL, birebir aynı sıra, sıfır URL tekrarı, sıfır eşleşmemiş EXTINF. Rapor: 13735 yeni aday, 4301 AV, 9434 doğrulanmamış; mock=false, arşiv roundtrip=true (rapor beyanı), cihaz playback=false.
+- **DEVAM_NOTU.md:L381** — [Tarihsel kaynak kaydı] 13 Kasım 2026 — #34 federated API yanıtı güvenliği (kanıtlı entegrasyon)
+- **DEVAM_NOTU.md:L383** — [Tarihsel kaynak kaydı] - PR #154 squash merge `4e50de45`: HTTP 200 API hata nesnelerinin başarılı boş depo araması olarak kaydedilmesi engellendi. 5 negatif çevrimdışı regresyon testi eklendi; PR Actions `43479623350` ve main Actions `43479774992` SUCCESS.
+- **DEVAM_NOTU.md:L384** — [Tarihsel kaynak kaydı] - PR #160 squash merge `1c76c9a8`: HTTP 200 hatalı GitLab/Codeberg depo-ağacı yanıtlarının başarılı boş sonuç sayılması engellendi. 4 negatif çevrimdışı regresyon testi eklendi; PR Actions `43479941927` ve main Actions `43480100836` SUCCESS.
+- **DEVAM_NOTU.md:L387** — [Tarihsel kaynak kaydı] 13 Kasım 2026 — #34 keşif kanıtı üzerine yazma koruması
+- **DEVAM_NOTU.md:L388** — [Tarihsel kaynak kaydı] - Güncel main üzerinde PR #157 squash merge `b0ed1797e31e9953125473adca9be56b06dd4484`; eski PR #152 main ile çakıştığı için merge edilmeden kapatıldı.
+- **DEVAM_NOTU.md:L389** — [Tarihsel kaynak kaydı] - `v2/discovery_34.py` ve `v2/discovery_34_integrate.py` raporları artık yalnız `open("x")` ile yazar; önceden mevcut aday veya entegre raporu asla üzerine yazmaz.
+- **DEVAM_NOTU.md:L390** — [Tarihsel kaynak kaydı] - İki CLI için regresyon testleri mevcut raporun byte içeriğini koruduğunu ve işlem kodunun başarısız döndüğünü doğrular.
+- **DEVAM_NOTU.md:L394** — [Tarihsel kaynak kaydı] 13 Kasım 2026 — PR #106 güncel ana dal kabul testi başarılı
+- **DEVAM_NOTU.md:L395** — [Tarihsel kaynak kaydı] - PR #106 (`integrate-stage6-28-33-current-main-20261113`) için Actions run `43457997079` completed / success.
+- **DEVAM_NOTU.md:L398** — [Tarihsel kaynak kaydı] - PR #87 kapatıldı; PR #106 squash merge commit `478aba262b0b37c39019a85bcc3abfc812b04208` ile birleştirildi. PR #106 merge test ağacı Actions run `43457997079`: SUCCESS.
+- **DEVAM_NOTU.md:L401** — [Tarihsel kaynak kaydı] 13 Kasım 2026 — Aşama 2 (#15, #17–#21) çevrimdışı kabul kapısı ana dala alındı
+- **DEVAM_NOTU.md:L402** — [Tarihsel kaynak kaydı] - PR #72 squash merge `e333adca5c0497de6c021e021d74b3369571276d`; ana Production Security Gate Actions `43455393756` SUCCESS.
+- **DEVAM_NOTU.md:L407** — [Tarihsel kaynak kaydı] 13 Kasım 2026 — PR #53 kontrol karakteri regresyonu ve CI kabulü
+- **DEVAM_NOTU.md:L408** — [Tarihsel kaynak kaydı] - PR #53 düzeltmesi: `v2/test_discovery_34.py` gerçek newline/CR/NUL/DEL karakterlerini Python string kaçışlarıyla test eder; önceki hatalı fixture nedeniyle başarısız testin kendisi düzeltildi. Üretim URL reddetme kontrolü PR #45 ile ana dala alınmıştı.
+- **DEVAM_NOTU.md:L409** — [Tarihsel kaynak kaydı] - GitHub Actions run `43451905845`: SUCCESS. Ana güvenlik kapısı, görev defteri bütünlüğü, Stage 6 offline paket/arşiv ve #34 offline keşif testlerinin tüm adımları PASS.
+- **DEVAM_NOTU.md:L412** — [Tarihsel kaynak kaydı] 13 Kasım 2026 — Güncel görev defteri ve PR #48 kabul kanıtı
+- **DEVAM_NOTU.md:L414** — [Tarihsel kaynak kaydı] - #15 in_progress: 1.777/4.955 tarihî hash IPTV-org kataloğuyla eşleşti; 3.178 hash için güncel katalog eşleşmesi yok, eksik yayıncı atıfları ayrıca doğrulanmalı.
+- **DEVAM_NOTU.md:L415** — [Tarihsel kaynak kaydı] - #34 in_progress: çevrimdışı sistem doğrulaması başarılı; keşif sonucu, yeni adayların AV doğrulaması ve arşiv kanıtı bekleniyor.
+- **DEVAM_NOTU.md:L420** — [Tarihsel kaynak kaydı] 13 Kasım 2026 — #34 PR #37 birleşimi ve doğrulanmış CI kanıtı
+- **DEVAM_NOTU.md:L421** — [Tarihsel kaynak kaydı] - PR #37 squash merge `b981b139cfaae6a1a83b9d31db268f12cd60e636`: HTTP 408/425 retry, API host tanılaması ve iki regresyon testi `main` dalında.
+- **DEVAM_NOTU.md:L422** — [Tarihsel kaynak kaydı] - PR baş commit `d2756c804a384a9f72e4aec2b7d19217cb381bf0` için GitHub Actions `43449222459` SUCCESS; güvenlik, İBO koruması, Stage 6 offline paket/arşiv ve #34 offline keşif PASS.
+- **DEVAM_NOTU.md:L424** — [Tarihsel kaynak kaydı] - `v2/tasks/state.json` istenen yolda 404; mevcut olmayan dosyada görev kapanışı yapılmadı.
+- **DEVAM_NOTU.md:L426** — [Tarihsel kaynak kaydı] 13 Kasım 2026 — #34 güncel main üzerinde API tanılama düzeltmesi
+- **DEVAM_NOTU.md:L430** — [Tarihsel kaynak kaydı] 13 Kasım 2026 — güncel main tabanlı #34 PR #30 güvenlik işi PASS
+- **DEVAM_NOTU.md:L431** — [Tarihsel kaynak kaydı] - Dal fix/v2-34-socket-retries-20261113, PR #30: commit f950fb09 ile geçici socket hataları için en fazla üç deneme; commit 7a294735 ile dört HTTP/socket regresyon testi.
+- **DEVAM_NOTU.md:L435** — [Tarihsel kaynak kaydı] 13 Kasım 2026 — Stage 6 temiz PR CI kabulü
+- **DEVAM_NOTU.md:L436** — [Tarihsel kaynak kaydı] - PR #27, commit cd24cc65ded9be6c5b2e242d31c20ed8cb515553: GitHub Actions 43448236664 SUCCESS. `Stage 6 offline package and archive acceptance regressions` adımı PASS; güvenlik kilidi, ana İBO koruma ve #34 offline entegrasyon adımları da PASS.
+- **DEVAM_NOTU.md:L440** — [Tarihsel kaynak kaydı] 13 Kasım 2026 — #34 canlı API retry düzeltmesi ana dalda; nihai kabul açık
+- **DEVAM_NOTU.md:L441** — [Tarihsel kaynak kaydı] - PR #24 squash merge: 313a9abe6f44af1635523823ac69e17b74f0ea54. Canlı API geçici hatalarında en çok üç deneme, beş regresyon testi ve mevcut grouped acceptance iş akışına test çağrısı eklendi.
+- **DEVAM_NOTU.md:L442** — [Tarihsel kaynak kaydı] - PR baş commit'i c4f204d4 için Production Security Gate Actions 43447044630: SUCCESS; güvenlik, İBO invariants ve offline discovery başarılı. Bu koşu yeni retry testlerinin veya canlı Codeberg API kabulünün başarılı çalıştığına kanıt değildir.
+- **DEVAM_NOTU.md:L445** — [Tarihsel kaynak kaydı] 13 Kasım 2026 — #34 son güvenlik regresyonu PASS
+- **DEVAM_NOTU.md:L449** — [Tarihsel kaynak kaydı] 12 Kasım 2026 — #34 toplu çevrimdışı kabul PASS
+- **DEVAM_NOTU.md:L451** — [Tarihsel kaynak kaydı] - Altı adaptörün offline birim/entegrasyon kabulü tamamlandı. Bu sonuç canlı Codeberg API erişimini veya gerçek FFmpeg AV kanıtını doğrulamaz.
+- **DEVAM_NOTU.md:L452** — [Tarihsel kaynak kaydı] - Codeberg canlı API HTTPError nedeniyle #34 tam canlı kabul açık. Ana İBO değiştirilmedi.
+- **DEVAM_NOTU.md:L454** — [Tarihsel kaynak kaydı] 12 Kasım 2026 — #34 izinli kabul iş akışına bağlandı
+- **DEVAM_NOTU.md:L455** — [Tarihsel kaynak kaydı] - Commit ab0066e6 için Production Security Gate run 43321317264 SUCCESS.
+- **DEVAM_NOTU.md:L456** — [Tarihsel kaynak kaydı] - Yeni workflow eklemek güvenlik envanterini bozduğundan #34 çevrimdışı kabul adımları mevcut, izinli, salt-okunur v2-stage6-grouped-acceptance.yml iş akışına 1ab65026 commit'i ile eklendi. Workflow yalnızca workflow_dispatch ile çalışır; bu commit için henüz yeni #34 Actions kabul sonucu yoktur.
+- **DEVAM_NOTU.md:L459** — [Tarihsel kaynak kaydı] 12 Kasım 2026 — #34 güvenlik düzeltmesi doğrulandı
+- **DEVAM_NOTU.md:L461** — [Tarihsel kaynak kaydı] - Codeberg canlı sözleşme testinde HTTPError vardı; v2/discovery_34_live_contract.py hata HTTP durum kodunu raporlayacak şekilde iyileştirildi (1beaf556). Bu değişikliğin canlı kabul testi henüz yapılmadı.
+- **DEVAM_NOTU.md:L462** — [Tarihsel kaynak kaydı] - #34 kapatılmadı: Codeberg canlı sözleşme kabulü ve onaylı workflow altında altı adaptörün uçtan uca kabulü açık.
+- **DEVAM_NOTU.md:L464** — [Tarihsel kaynak kaydı] 12 Kasım 2026 — #34 güvenlik ve canlı API hata analizi
+- **DEVAM_NOTU.md:L465** — [Tarihsel kaynak kaydı] - Actions run 43319831631: offline-acceptance PASS; live-contract FAIL. GitHub API 20 aday, GitLab API 0 aday/başarılı yanıt, Codeberg HTTPError.
+- **DEVAM_NOTU.md:L467** — [Tarihsel kaynak kaydı] - #34 nihai kabul açık: Codeberg erişim sorunu ve izinli Actions kabul yolu çözülmeli. Başarısız testler tamamlandı sayılmadı. Ana İBO değişmedi.
+- **DEVAM_NOTU.md:L469** — [Tarihsel kaynak kaydı] 12 Kasım 2026 — #34 güncel kabul
+- **DEVAM_NOTU.md:L470** — [Tarihsel kaynak kaydı] - Entegre çevrimdışı kabul başarılı: GitHub Actions run 43318458059 (success), commit 9b04bff570602ce31520e70dd03429f06cf95a0f.
+- **DEVAM_NOTU.md:L473** — [Tarihsel kaynak kaydı] 12 Kasım 2026 — #34 keşif adaptörleri (geliştirme dalı)
+- **DEVAM_NOTU.md:L474** — [Tarihsel kaynak kaydı] - Dal: stage7-34-discovery-adapters-20261112. v2/discovery_34.py: GitHub/GitLab/Codeberg arama API adaptörleri; official/youtube/m3u aday kimliği normalizasyonu; salt-okunur, ağ erişimi yalnızca --network ile.
+- **DEVAM_NOTU.md:L475** — [Tarihsel kaynak kaydı] - v2/test_discovery_34.py: çevrimdışı birim testleri. .github/workflows/v2-discovery-34-offline.yml: compile, unit test, offline smoke acceptance.
+- **DEVAM_NOTU.md:L477** — [Tarihsel kaynak kaydı] - #34 henüz kabul edilmedi: yeni Actions koşusunun yeşil sonucu ve adaptörlerin gerçek servis yanıtları doğrulanmalı; official/youtube/m3u mevcut keşif modülleriyle üretim entegrasyonu tamamlanmalı.
+- **DEVAM_NOTU.md:L479** — [Tarihsel kaynak kaydı] 2 Kasım 2026 — kaynak kimliği bütünlüğü ve 500'lük varsayılan paket (yeni çalışma)
+- **DEVAM_NOTU.md:L480** — [Tarihsel kaynak kaydı] - `v2/consolidate_inventory.py` eski `source_id` ile yeni `source_ids` aynı kayıtta bulunduğunda ikisini de saklar (59d594e). Regresyon testi eklendi (9e44e86).
+- **DEVAM_NOTU.md:L485** — [Tarihsel kaynak kaydı] 2 Kasım 2026 — eksik taramada paket koruması
+- **DEVAM_NOTU.md:L488** — [Tarihsel kaynak kaydı] - Gerçek geçmiş #60 kayıtlarının adres bazında kurtarılması ve GitHub dışı kalıcı şifreli arşiv doğrulaması açık işlerdir.
+- **DEVAM_NOTU.md:L490** — [Tarihsel kaynak kaydı] 2 Kasım 2026 — tarihsel kaynak kimliği uyumluluğu
+- **DEVAM_NOTU.md:L494** — [Tarihsel kaynak kaydı] 2 Kasım 2026 — şifreli arşiv geri yükleme testleri
+- **DEVAM_NOTU.md:L495** — [Tarihsel kaynak kaydı] - `v2/test_secure_archive_roundtrip.py` oluşturuldu (commit 20067e68): çevrimdışı fikstür üzerinde şifreleme, geri yükleme, bozulma ve yanlış şifre reddini sınar. Gerçek yayın verisi veya gerçek tarama değildir.
+- **DEVAM_NOTU.md:L496** — [Tarihsel kaynak kaydı] - `.github/workflows/v2-offline-inventory.yml` bu testi CI'a dahil eder (commit 5d654015).
+- **DEVAM_NOTU.md:L497** — [Tarihsel kaynak kaydı] - Bu değişiklik **harici kalıcı özel depolama sağlamaz**; Actions başarı sonucu henüz teyit edilmedi. Gerçek tarihsel kayıt kurtarma ve harici depolama hâlâ açık.
+- **DEVAM_NOTU.md:L499** — [Tarihsel kaynak kaydı] 2 Kasım 2026 — son altyapı değişiklikleri ve açık doğrulamalar
+- **DEVAM_NOTU.md:L502** — [Tarihsel kaynak kaydı] - `v2/consolidate_inventory.py`: dosya yolunun farklı yazımlarıyla şifreli girişin üzerine yazma, yinelenen giriş ve rapor/giriş çakışması engellendi (commit 134355e5).
+- **DEVAM_NOTU.md:L503** — [Tarihsel kaynak kaydı] - Offline CI artık tarayıcının Python sözdizimini de denetliyor; ağ taraması çalıştırmıyor (commit 556f7717).
+- **DEVAM_NOTU.md:L504** — [Tarihsel kaynak kaydı] - `v2/test_consolidate_inventory.py`: gözlem geçmişi roundtrip, bozuk arşiv reddi, giriş/çıkış yol çakışması ve tekrar giriş regresyonları eklendi (commit 5bd76de ve 6753f451).
+- **DEVAM_NOTU.md:L505** — [Tarihsel kaynak kaydı] - **Doğrulanmamış:** Bu son commitlerin Actions yeşil sonucu; geçmiş #60 kayıplarının gerçek URL bazında kurtarılması; harici özel depolamaya yedek aktarımı ve geri yükleme; gerçek uçtan uca üretim koşusu. Bunlar tamamlandı diye raporlanamaz.
+- **DEVAM_NOTU.md:L507** — [Tarihsel kaynak kaydı] MADSC55 TV V2 — TEK DEVAM NOTU
+- **DEVAM_NOTU.md:L509** — [Tarihsel kaynak kaydı] 2 Kasım 2026 — toplu altyapı tamamlama, taramasız
+- **DEVAM_NOTU.md:L511** — [Tarihsel kaynak kaydı] - `v2/consolidate_inventory.py` oluşturuldu (commit 1bbb788f): gerçek JSONL girişlerini URL'ye göre birleştirir; kaynak kimliklerini ve her gözlemi saklar; şifreli arşivi diske yazar ve geri yükleme kontrolü yapar. Yeni yayın adresi uydurmaz, internete çıkmaz.
+- **DEVAM_NOTU.md:L514** — [Tarihsel kaynak kaydı] - Henüz gerçek geçmiş JSONL dosyaları bu birleştiriciye verilmedi, kalıcı harici depolama sağlanmadı ve #60 URL kurtarma yapılmadı. Bunlar açık işlerdir.
+- **DEVAM_NOTU.md:L524** — [Tarihsel kaynak kaydı] - Diğer keşif workflow'larının zamanlayıcıları ayrı ayrı denetlenmeli; bu değişiklik **bütün taramaların durduğu anlamına gelmez**.
+- **DEVAM_NOTU.md:L525** — [Tarihsel kaynak kaydı] - Kodun varlığı, Actions başarısı ve kalıcı arşiv/üretim teslimi birbirinden ayrı doğrulanacak.
+- **DEVAM_NOTU.md:L528** — [Tarihsel kaynak kaydı] 2 Kasım 2026 — güncel durum (önceki tarihli notları geçersiz kılan kararlar)
+- **DEVAM_NOTU.md:L541** — [Tarihsel kaynak kaydı] **Kural:** Projede devam ve devir için TEK kanonik dosya budur: `DEVAM_NOTU.md`. Yeni devir/durum notları açma; her çalışma sonunda bu dosyayı güncelle. Eski mimari K1–K5 ve 92 workflow geri getirilmeyecek.
+- **DEVAM_NOTU.md:L549** — [Tarihsel kaynak kaydı] - İBO uyumluluğu teyit edilmemiş YouTube sayfa URL'lerini doğrudan M3U yayını gibi ekleme. Telif, yayın hakkı, DRM, erişim anahtarı ve coğrafi kısıtlamaları atlatma.
+- **DEVAM_NOTU.md:L551** — [Tarihsel kaynak kaydı] Tamamlanan ve doğrulanan
+- **DEVAM_NOTU.md:L556** — [Tarihsel kaynak kaydı] 5. `.github/workflows/v2-youtube-discovery.yml` eklendi: günlük ve elle tetiklenen keşif, rapor artifact'ı. **İlk çalışmanın başarı sonucu ayrıca kontrol edilecek.**
+- **DEVAM_NOTU.md:L558** — [Tarihsel kaynak kaydı] Açık işler — öncelik sırasıyla
+- **DEVAM_NOTU.md:L559** — [Tarihsel kaynak kaydı] 1. **YouTube iş akışının ilk çalışmasını kontrol et:** syntax, arama erişimi, aday sayısı, canlı doğrulama sayısı, hatalar. Gerekiyorsa düzelt ve tekrar çalıştır. `yt-dlp` arama başarısı platform koşullarına bağlıdır.
+- **DEVAM_NOTU.md:L568** — [Tarihsel kaynak kaydı] - Sonra açık işlerden en yüksek öncelikliyi gerçekten uygula; başarısını somut commit/run/çıktıyla doğrula.
+- **DEVAM_NOTU.md:L578** — [Tarihsel kaynak kaydı] Son çalışma — üretim bağlantısı güvenliği
+- **DEVAM_NOTU.md:L588** — [Tarihsel kaynak kaydı] Son ilerleme — yeni kaynak keşfi
+- **DEVAM_NOTU.md:L593** — [Tarihsel kaynak kaydı] Son keşif sonucu
+- **DEVAM_NOTU.md:L598** — [Tarihsel kaynak kaydı] HTTP başlığına ihtiyaç duyan adaylar
+- **DEVAM_NOTU.md:L599** — [Tarihsel kaynak kaydı] - İlk yeni keşif 115 URL adayı; sıkı filtreli ikinci çalışma `40561936686` başarılı, **101 normal URL adayı** buldu. Farkın tümü yalnızca HTTP header kaynaklı kabul edilmemeli; diğer filtreler de değişti.
+- **DEVAM_NOTU.md:L603** — [Tarihsel kaynak kaydı] Yeni aday doğrulama aşaması
+- **DEVAM_NOTU.md:L605** — [Tarihsel kaynak kaydı] - `v2/turkish_stream_probe.py` ve `.github/workflows/v2-turkish-stream-probe.yml` eklendi. En fazla 120 normal adayı 8 eşzamanlı istekle 8 saniyelik timeout ve en fazla 4096 bayt örnekle salt-okunur HTTP/media işareti testine sokar; sonuçlar artifact olarak saklanır. Header isteyen 11 aday ayrı tutulur. HTTP başarısı gerçek uzun süreli oynatım kanıtı değildir.
+- **DEVAM_NOTU.md:L608** — [Tarihsel kaynak kaydı] Yayın adaylarının teknik doğrulaması
+- **DEVAM_NOTU.md:L610** — [Tarihsel kaynak kaydı] - `v2/turkish_stream_decode.py` ve `.github/workflows/v2-turkish-stream-decode.yml` eklendi: HTTP medya işareti veren en fazla 24 adaya 13 saniye sınırında `ffprobe` kısa ses/video codec doğrulaması. Haftada iki kez, salt-okunur; sonuçlar artifact. İlk çalışma henüz doğrulanacak.
+- **DEVAM_NOTU.md:L613** — [Tarihsel kaynak kaydı] Kısa çözümleme sonucu ve aday inceleme
+- **DEVAM_NOTU.md:L618** — [Tarihsel kaynak kaydı] Tek seferde otomatik keşif zinciri
+- **DEVAM_NOTU.md:L621** — [Tarihsel kaynak kaydı] - Commit `3a80383af8dcec01a7e751fa55898693391440cd`; yeni birleşik CI sonucu kontrol edilecek.
+- **DEVAM_NOTU.md:L628** — [Tarihsel kaynak kaydı] - `v2/config/sources.json`: üç iptv-org diliminden farklı olarak `Free-TV/IPTV` ve `omerdenizhan/IPTV-M3U` Türkiye listesi eklendi. Artık 5 M3U kaynağı; bağımsız kökenler karıştırılmamalı. Her kaynak salt-okunur ve erişim hataları raporlanır.
+- **DEVAM_NOTU.md:L634** — [Tarihsel kaynak kaydı] - `ramazansancar/UzunMuhalefet_Legal-IPTV` incelendi: doğrudan standart M3U dosyası yerine `lists/video/sources` ağacı bulunuyor; uygun güvenli kaynak formatı ayrıntılı incelenmeden otomatik çalıştırılmayacak.
+- **DEVAM_NOTU.md:L635** — [Tarihsel kaynak kaydı] - `MohamedAminGrami/IPTV-SCRAPPER` Python kod projesi; üçüncü taraf kodu incelemeden CI'da çalıştırılmayacak. Kaynak üretim mantığı ayrı güvenlik/izin değerlendirmesi gerektirir.
+- **DEVAM_NOTU.md:L637** — [Tarihsel kaynak kaydı] 27 Ekim 2026 — Kalite doğrulama düzeltmeleri
+- **DEVAM_NOTU.md:L638** — [Tarihsel kaynak kaydı] - `v2/turkish_stream_decode.py` artık ffprobe gerçek video width/height, codec, bitrate alanlarını ve **test edilen URL'yi** raporlar.
+- **DEVAM_NOTU.md:L643** — [Tarihsel kaynak kaydı] 27 Ekim 2026 — Birleşik arama son eklemeler
+- **DEVAM_NOTU.md:L644** — [Tarihsel kaynak kaydı] - Resmî TV sitesi keşfi ve YouTube canlı yayın keşfi tek V2 Turkish Stream End-to-End Discovery workflow'una dahil edildi. Önceki birleşik run 40572810092 SUCCESS.
+- **DEVAM_NOTU.md:L647** — [Tarihsel kaynak kaydı] - `v2/frame_collisions.py`: kısa video örneklerinin tek kare hash eşleşmesiyle olası aynı görüntüleri işaretliyor; kesin yayın kimliği veya zamana yayılmış karşılaştırma değil.
+- **DEVAM_NOTU.md:L650** — [Tarihsel kaynak kaydı] 27 Ekim 2026 — Mevcut yayınların gerçek çözünürlük karşılaştırması
+- **DEVAM_NOTU.md:L651** — [Tarihsel kaynak kaydı] - Birleşik run 40574958656 SUCCESS.
+- **DEVAM_NOTU.md:L653** — [Tarihsel kaynak kaydı] - `v2/quality_upgrades.py` aday ffprobe ölçümlerini mevcut yayının ölçülmüş yüksekliğiyle tvg-id temelinde kıyaslayıp `MEASURED_CANDIDATE_HIGHER`, `MEASURED_NO_UPGRADE` veya `INSUFFICIENT_MEASUREMENTS` olarak raporlar.
+- **DEVAM_NOTU.md:L655** — [Tarihsel kaynak kaydı] - Yeni workflow run 40575609850 doğrulanmalı.
+- **DEVAM_NOTU.md:L657** — [Tarihsel kaynak kaydı] 27 Ekim 2026 — Aday öncelikli mevcut yayın ölçümü ve üç kare örneği
+- **DEVAM_NOTU.md:L658** — [Tarihsel kaynak kaydı] - Run 40575609850 SUCCESS (birleşik keşif ve ölçüm).
+- **DEVAM_NOTU.md:L660** — [Tarihsel kaynak kaydı] - `frame_collisions.py` tek kare yerine üç örnek kareden ham video hash'i üretir; zaman kayması ve içerik eşitliği kesin tespit edilmez.
+- **DEVAM_NOTU.md:L664** — [Tarihsel kaynak kaydı] - Run 40576629287 SUCCESS.
+- **DEVAM_NOTU.md:L668** — [Tarihsel kaynak kaydı] 27 Ekim 2026 — Sözdizimi hata düzeltmesi
+- **DEVAM_NOTU.md:L669** — [Tarihsel kaynak kaydı] - Run 40577598333 FAILURE: `Validate scripts` aşamasında `v2/frame_collisions.py` içinde literal `\\n` karakterleri SyntaxError üretti. `e20f462` commit'iyle gerçek satır sonlarına dönüştürüldü.
+- **DEVAM_NOTU.md:L670** — [Tarihsel kaynak kaydı] - Düzeltme run 40578459621 sonucu kontrol edilmeli; henüz başarılı ilan edilmedi.
+- **DEVAM_NOTU.md:L673** — [Tarihsel kaynak kaydı] 27 Ekim 2026 — Düzeltme doğrulandı, mevcut yayın örneklemesi genişletildi
+- **DEVAM_NOTU.md:L674** — [Tarihsel kaynak kaydı] - 40578459621 ve 40578503591 birleşik workflow çalıştırmaları SUCCESS; `frame_collisions.py` SyntaxError giderildi.
+- **DEVAM_NOTU.md:L678** — [Tarihsel kaynak kaydı] 27 Ekim 2026 — Toplu mevcut yayın ölçümü
+- **DEVAM_NOTU.md:L679** — [Tarihsel kaynak kaydı] - Run 40579224508 SUCCESS.
+- **DEVAM_NOTU.md:L684** — [Tarihsel kaynak kaydı] 27 Ekim 2026 — Tek çalıştırmada toplu doğrulama
+- **DEVAM_NOTU.md:L689** — [Tarihsel kaynak kaydı] 27 Ekim 2026 — Tek final rapor kapısı
+- **DEVAM_NOTU.md:L690** — [Tarihsel kaynak kaydı] - Birleşik altı alanlı test run 40582406848 SUCCESS.
+- **DEVAM_NOTU.md:L694** — [Tarihsel kaynak kaydı] 27 Ekim 2026 — NewlistTR ayrı doğrulanmış yayın çıktısı
+- **DEVAM_NOTU.md:L696** — [Tarihsel kaynak kaydı] - `newlisttr-check.json` test kapsamı, başarısızlar ve ölçülen çözünürlükleri URL hash'leriyle kaydeder. 600 URL sınırı vardır; kalanlar varsa açıkça `remaining_untested` olarak gösterilir.
+- **DEVAM_NOTU.md:L700** — [Tarihsel kaynak kaydı] 29 Ekim 2026 — SABİT BİTİŞ SÖZLEŞMESİ (yeni sohbetlerde de geçerli)
+- **DEVAM_NOTU.md:L704** — [Tarihsel kaynak kaydı] 1. Türkçe yayın adayları keşfedilir; çalışırlık ve **gerçek konuşma dili** kanıtı açıkça doğrulanır. Metadata, ülke kodu, video decode veya ses varlığı tek başına Türkçe kanıtı değildir. Kanıtlanmayan adaylar onaylanmaz.
+- **DEVAM_NOTU.md:L707** — [Tarihsel kaynak kaydı] 4. `.github/workflows/v2-turkish-stream-review.yml` **tek birleşik final testi** başarıyla tamamlanır, final raporları incelenir ve kabul şartları karşılanır. Sonra "MADSC TV TAMAMLANDI" denir. Yeni bağımsız proje aşamaları açılmaz; zamanla bozulan internet yayınları bakım kapsamındadır.
+- **DEVAM_NOTU.md:L709** — [Tarihsel kaynak kaydı] Kapanışa kadar uygulanacak sıra
+- **DEVAM_NOTU.md:L710** — [Tarihsel kaynak kaydı] - Var olan birleşik workflow'u yeniden tasarlama veya gereksiz tekrar taraması yapma. Önce en son çalışmanın gerçek run ID, job sonuçları ve `turkish-stream-review` artifact raporunu incele.
+- **DEVAM_NOTU.md:L712** — [Tarihsel kaynak kaydı] - Mümkün olan düzeltmeleri toplu uygula; ucuz çevrimdışı testleri önce çalıştır, pahalı tek birleşik taramayı en sonda bir kez başlat.
+- **DEVAM_NOTU.md:L715** — [Tarihsel kaynak kaydı] Doğrulanmış ve doğrulanmamış durum
+- **DEVAM_NOTU.md:L717** — [Tarihsel kaynak kaydı] - Eski run `40758418496` için GitHub API'den ilk sayfada 30/30 job SUCCESS ve 52 artifact görüldü; bu run yeni son test olarak sunulmaz.
+- **DEVAM_NOTU.md:L719** — [Tarihsel kaynak kaydı] - `v2/turkish_language_evidence.py` henüz ASR veya gerçek konuşma dili sınıflandırması yapmıyor; `spoken_turkish_verified=0`, otomatik onay 0. Bunu bitmiş sayma.
+- **DEVAM_NOTU.md:L720** — [Tarihsel kaynak kaydı] - Güncel raporlar görülmeden yeni adayların gerçekten Türkçe, kimlikleri kesin, 24 saat kararlı veya yayıma hazır olduğu iddia edilmez.
+- **DEVAM_NOTU.md:L723** — [Tarihsel kaynak kaydı] 29 Ekim 2026 — TOPLU TEST SONUCU VE KALAN İŞLER
+- **DEVAM_NOTU.md:L729** — [Tarihsel kaynak kaydı] - Gereksiz 32-shard tam tarama tekrarları yapılmayacak. Toplu kısa test başarılı diye gerçek Türkçe doğrulandı veya proje bitti denmeyecek.
+- **DEVAM_NOTU.md:L732** — [Tarihsel kaynak kaydı] 29 Ekim 2026 — #60 ve #72 gerçek karşılaştırması (güncel otoritatif durum)
+- **DEVAM_NOTU.md:L733** — [Tarihsel kaynak kaydı] - #60 başarılı run 40743765437: 27.047 benzersiz URL test edildi; 11.860 VIDEO_DECODED. #72 başarılı run 40948768782: 13.518 URL; 7.254 VIDEO_DECODED.
+- **DEVAM_NOTU.md:L734** — [Tarihsel kaynak kaydı] - İki gerçek aggregate artifact'ı karşılaştırıldı: 13.136 ortak URL SHA-256, 13.911 yalnızca #60'ta, 382 yalnızca #72'de; #60'ta VIDEO_DECODED olup #72'de bulunmayan **4.955** bağlantı. Bunlar #72'de test edilmedi; hâlâ çalıştığı veya Türkçe konuştuğu kanıtlanmadı.
+- **DEVAM_NOTU.md:L735** — [Tarihsel kaynak kaydı] - Büyük kaynak düşüşleri: iptv-org 11204 -&gt; 9; github-auto-7 4931 -&gt; 0; github-auto-8 1854 -&gt; 1; free-tv-independent 1347 -&gt; 5. Kaynak sayısı artmış olması aynı kapsama ulaşıldığını kanıtlamaz.
+- **DEVAM_NOTU.md:L736** — [Tarihsel kaynak kaydı] - Kod: `v2/compare_historical_playback.py` salt-okunur SHA-256 bazlı karşılaştırma; `.github/workflows/v2-historical-recovery.yml` mevcut #60/#72 artifact'larını indirip tek seferde anonim CSV+JSON üretir. Workflow run 40968303248; tamamlanma sonucu kontrol edilecek. Tam 32-shard canlı taramayı tekrar çalıştırmaz.
+- **DEVAM_NOTU.md:L744** — [Tarihsel kaynak kaydı] - Eskiye özgü 13.911, yeniye özgü 382 URL kimliği vardır. Eski #60'ta VIDEO_DECODED olup #72'de olmayan 4.955 kurtarma adayı bulunur. Bunlar güncel çalışır/Türkçe doğrulanmış sayılmaz.
+- **DEVAM_NOTU.md:L746** — [Tarihsel kaynak kaydı] - **Saklama gerçeği:** Tarihsel raporlar anonim URL SHA-256 kimliklerini saklar; 27.429 URL'nin tamamının açık metin adresleri elde değildir. SHA-256'dan adres türetme iddiasında bulunma. Yeniden keşfedilen adresleri yalnızca izinli, güvenli ve erişim sınırlarına uygun şekilde işle; token/özel URL'leri açık GitHub raporuna koyma.
+- **DEVAM_NOTU.md:L748** — [Tarihsel kaynak kaydı] - Teşhis: `v2/rediscover_historical_candidates.py` yalnızca `sources.json` sabit kaynaklarını okuyor; `discover.py` ise mevcutsa `github-source-discovery.json` dinamik kaynaklarını da kullanıyor. Bu kapsam farkını güvenli biçimde gider; eski kaynak kaybının nedenlerini audit ile ayır. Tam 32-shard taramayı gereksiz yere yeniden çalıştırma.
+- **DEVAM_NOTU.md:L756** — [Tarihsel kaynak kaydı] 1. Tarama sonucu bulunan tum adaylarin gercek oynatilabilir URL'lerini, adlarini, kaynaklarini, TVG-ID ve URL kimliklerini, ulke/dil ipuclarini **guvenli, kalici ve geri yuklenebilir** ana havuzda tut. Su anki 1 gunluk private playback snapshot ve yalnizca SHA256 iceren aday raporu bunun icin yeterli degil. Kimlik bilgisi/token iceren URL'leri acik repoya koyma; saklama/erisim politikasi belirle.
+- **DEVAM_NOTU.md:L757** — [Tarihsel kaynak kaydı] 2. Tekrarlari ayikla, sabit aday kimlikleri ve deterministik siralama olustur; taramalar arasi kaybolmasin. 1000'lik (istege gore 1500'luk) M3U deneme partileri uret; parti numarasi, aralik, test durumu ve son kalinan konumu kaydet.
+- **DEVAM_NOTU.md:L773** — [Tarihsel kaynak kaydı] - Durumlar CALISAN_TURKCE / CALISMIYOR / YABANCI_DIL / KARARSIZ / HENUZ_TEST_EDILMEDI; tarihli, kaynakli karar gecmisi tut. Siniflandirma veri silme degildir.
+- **DEVAM_NOTU.md:L774** — [Tarihsel kaynak kaydı] - Yeni tarama mevcut kayitlari **birlesitirir**, asla onceki arsivi yeni snapshot ile degistirip eski kayitlari yok etmez. Yeni gorulmeyen aday 'bu taramada gorulmedi' diye isaretlenir; arsivden silinmez.
+- **DEVAM_NOTU.md:L775** — [Tarihsel kaynak kaydı] - Kalici URL depolamasi tek gunluk GitHub Actions artifact'ina veya SHA256'ya dayanmayacak. Yetkisiz/kimlik bilgili URL'leri acik repoya yazma; guvenli depolama, yedekleme, geri yukleme ve erisim kontrolu gerekli.
+- **DEVAM_NOTU.md:L779** — [Tarihsel kaynak kaydı] **Yapilacak:** Tarama sonucunun saklama suresi dolmadan mevcut URL snapshot'larini kurtarip kalici guvenli arsive alma mekanizmasini kurmak ilk teknik oncelik. Yalnizca not almak bu guvenceyi saglamaz.
+- **DEVAM_NOTU.md:L782** — [Tarihsel kaynak kaydı] SONRAKI OTURUM: TEK TOPLU TAMAMLAMA PLANI (30 Ekim 2026)
+- **DEVAM_NOTU.md:L790** — [Tarihsel kaynak kaydı] **C. Tarihsel kurtarma:** Eski #60 ve #72 tarama kimlikleri, 4955 eksik onceki VIDEO_DECODED URL kimligi, v2-historical-recovery.yml ve dinamik kaynak entegrasyonunu denetle. Hash'ten URL geri cevrilemeyecegini kabul et; eski gercek URL'leri ancak hala erisilebilir guvenli artifact/kaynaklardan kurtar. Gercek kurtarilan URL sayisini ayrica raporla.
+- **DEVAM_NOTU.md:L792** — [Tarihsel kaynak kaydı] **D. Veri kaybini engelle:** Bir gunluk private snapshot ve sadece SHA256 raporu kalici arsiv degildir. Tum kesfedilen stream URL'leri, kaynaklar, gorulme tarihleri, metadata, URL hash'leri ve tarama kimliklerini guvenli, geri yuklenebilir, versiyonlu/append-only depolamaya al. Hassas token/kimlik bilgili URL'leri public repoya koyma. Yeni tarama eskileri silmesin. Arama sonucu kayitlarini saklama suresi dolmadan guvenli arsive aktarma kritik. Yedekleme/geri yukleme ve tekrar tarama kabul testleri yap.
+- **DEVAM_NOTU.md:L798** — [Tarihsel kaynak kaydı] **G. Devir ve durum:** Her anlamli degisiklikten sonra bu DEVAM_NOTU.md'ye commit SHA, run ID, kesin sayilar, tamamlanan/kalan isler, sonraki tek adim ve veri koruma durumunu yaz. Sohbet hafizasina guvenme.
+- **DEVAM_NOTU.md:L813** — [Tarihsel kaynak kaydı] 30 Ekim 2026 - Kapsam genisletme uygulamasi (KISMEN TAMAMLANDI)
+- **DEVAM_NOTU.md:L822** — [Tarihsel kaynak kaydı] 2026-10-30 YENI SOHBET DEVIR NOTU
+- **DEVAM_NOTU.md:L836** — [Tarihsel kaynak kaydı] 2026-10-30 EN SON KESIN DEVIR - V2 TEK HEDEF
+- **DEVAM_NOTU.md:L842** — [Tarihsel kaynak kaydı] Bu sohbette V2 commitleri: 7262458a, 6a6b685f, 332e854f, 0130133b, e42a076c, 1acecd9f, fad4442b, 4c545474. AZ/Turkce dil/Avrupa/Asya kaynaklari, 20 GitHub sorgusu, 240 repo limiti, source_ids ve workflow tetikleyicileri eklendi. Yeni Actions testlerinin basari durumu dogrulanmis DEGIL.
+- **DEVAM_NOTU.md:L844** — [Tarihsel kaynak kaydı] Tek bir V2 ana taramasi 34 job (1 kaynak, 32 playback, 1 review) acabilir. Son kod degisiklikleri birden fazla run tetiklemis olabilir. Workflow concurrency `v2-turkish-stream-review-main`, `cancel-in-progress: false`, `queue: max`; dolayisiyla sirada bekleyen tekrarlar olabilir. Bilinen #74 eski basarili run; yeni run ID/status kontrolu henuz yapilmadi. Yeni sohbette ilk is Actions sayfasindan yeni run ID/status/job/hata kontrolu; basarili varsayma ve gereksiz taramalari ayirt et.
+- **DEVAM_NOTU.md:L848** — [Tarihsel kaynak kaydı] Bu kayit onceki tum hedef-repo referanslarindan ONCELIKLIDIR. Yeni sohbet yalnizca MADSC55-TV-V2 ile devam edecek.
+- **DEVAM_NOTU.md:L851** — [Tarihsel kaynak kaydı] 2026-10-30 DEVAM - KAYNAK KESFI SIRALAMA DUZELTMESI
+- **DEVAM_NOTU.md:L852** — [Tarihsel kaynak kaydı] - Yalnizca V2 main dalinda `v2/github_source_discovery.py` degistirildi; commit `b113e9c7ff93198b2c82ed07f9a36f202ab5b7fd`.
+- **DEVAM_NOTU.md:L853** — [Tarihsel kaynak kaydı] - GitHub depolari ve depo ici M3U dosyalari casefold sirali seciliyor; bulunan kaynak raporu da sabit sirali yaziliyor. Amac: kaynak kesfi secimindeki degisken siralama etkisini azaltmak. GitHub API arama sonucunun ve kota/limitlerin kapsami hala degisebilir; #60 kayip URL kurtarma garantisi degildir.
+- **DEVAM_NOTU.md:L858** — [Tarihsel kaynak kaydı] 2026-10-30 DEVAM - DINAMIK KAYNAK KIMLIGI
+- **DEVAM_NOTU.md:L859** — [Tarihsel kaynak kaydı] - V2 `v2/discover.py` icindeki `github-auto-&lt;sira&gt;` kimlikleri, kaynak URL'sinin SHA256 ilk 20 hex karakteri ile kararlı `github-auto-&lt;hash&gt;` kimligine cevrildi. Commit: `d438d2bb0142a40ee30438941fef0fbb1ddfd475`.
+- **DEVAM_NOTU.md:L860** — [Tarihsel kaynak kaydı] - Sebep: farkli taramalarda kaynak sirasi degisince ayni ID'nin baska M3U dosyasini gostermesini onlemek; #60/#74 kaynak karsilastirmasi ve provenance icin gerekli. Onceki raporlardaki sira tabanli ID'ler yeni hash ID'lerle birebir ayni degildir; eslestirme kaynak URL'sinden yapilmali.
+- **DEVAM_NOTU.md:L865** — [Tarihsel kaynak kaydı] 2026-10-30 DEVAM - OZEL SNAPSHOT KAYNAK PROVENANCE
+- **DEVAM_NOTU.md:L866** — [Tarihsel kaynak kaydı] - `v2/discover.py` icinde public-safe aday `source_ids` tekrarlarini engelleme ve private playback snapshot icinde her benzersiz URL icin tum kaynak ID'lerini `source_ids` ile koruma degisikligi yapildi. Commit `f6d564c3e3a07a01923935eb53f2bf24e0143edd`.
+- **DEVAM_NOTU.md:L867** — [Tarihsel kaynak kaydı] - Bu degisiklik mevcut `source` ilk-kaynak alanini korur, ayni URL'nin baska kaynaklarda gorulmesini private snapshot icinde kaybetmez. Kisa sureli snapshot'i kalici arsive DONUSTURMEZ; 1 gunluk artifact veri kaybi riski suruyor.
+- **DEVAM_NOTU.md:L872** — [Tarihsel kaynak kaydı] 2026-10-30 DEVAM - KAYNAK PROVENANCE REGRESYON TESTI
+- **DEVAM_NOTU.md:L874** — [Tarihsel kaynak kaydı] - Birlesik `.github/workflows/v2-turkish-stream-review.yml` sources asamasina bu offline test eklendi; commit `40b294d06d1f2bd308db8ec0afe77f8f85b42991`. Yeni test dosyasi degisimi de workflow tetikleyicilerine eklendi. Ayrica ayri manuel test workflow'u acilmadi.
+- **DEVAM_NOTU.md:L881** — [Tarihsel kaynak kaydı] - 1. Actions: son commitlerin run ID, 32 playback shard, sources/review job, artifact ve log sonucunu dogrula; yesil/eksik/hata durumunu kanitla. Gerekirse tek birlesik workflow icinde onar.
+- **DEVAM_NOTU.md:L882** — [Tarihsel kaynak kaydı] - 2. Kalici guvenli URL arsivi: kaynak URL'leri, provenance, tarih, run ID, hash, oynatma sonuclari ve insan kararlarini versiyonlu, erisim kontrollu, geri yuklenebilir bicimde sakla; tokenli URL'leri public repo'ya yazma; restore testi yap. 1 gunluk Actions artifact yeterli degildir.
+- **DEVAM_NOTU.md:L883** — [Tarihsel kaynak kaydı] - 3. #60 kurtarma: 27047 unique URL / 11860 VIDEO_DECODED tarihsel referans; #74 13593 unique URL / 7306 VIDEO_DECODED. 13868 yalniz #60 URL hash kimligi ile 4955 once calisan ama kaybolan hash adayini gercek URL olarak tarihsel artifact ve kaynaklardan geri bul; hash tek basina adresi geri vermez. Kaynak atif sayilarini URL kaybi sanma.
+- **DEVAM_NOTU.md:L884** — [Tarihsel kaynak kaydı] - 4. Kaynak kapsami: GitLab/Codeberg/diger kod platformlari, resmi TV canli siteleri, YouTube, Turkce dunya/diaspora, AZ/Azerbaycanca; Gunes TV, Rec TV, Gopik TV tek tek teyit. Yalnizca yasal/erisilebilir yayina dair kanit; konusulan dilin dogrulanmasi ayridir.
+- **DEVAM_NOTU.md:L888** — [Tarihsel kaynak kaydı] - Bu kayit SADECE is sirasi ve devir notudur; isler tamamlandi, testler yeni commitler icin yesil veya arka planda surekli calisiliyor iddiasi degildir.
+- **DEVAM_NOTU.md:L893** — [Tarihsel kaynak kaydı] - `.github/workflows/v2-turkish-stream-review.yml` playback `Download shared source discovery` adimina kontrollu ikinci indirme denemesi ve indirilen JSON'un dolu/gecerli oldugunu kontrol eden fail-closed kontrol eklendi. Commit `1e2e12f5a9b546ceb9ca234a68e451dd4f04c05f`. Degisiklik hem playback hem review'daki ayni indirme adimina uygulandi; mevcut calisan #82 run'ini geriye donuk duzeltmez.
+- **DEVAM_NOTU.md:L897** — [Tarihsel kaynak kaydı] 2026-10-30 #82 FAILURE SONRASI EK ARTIFACT RETRY
+- **DEVAM_NOTU.md:L910** — [Tarihsel kaynak kaydı] 2026-10-30 ARSIV ONCESI KIMLIK VE PROVENANCE KAPISI
+- **DEVAM_NOTU.md:L912** — [Tarihsel kaynak kaydı] - Birlesik workflow `sources` job'una `discover.py --snapshot-output` sonrasi ve artifact upload oncesi `python v2/verify_private_archive_input.py --private v2/reports/private-playback-snapshot.json --public v2/reports/candidates.json` adimi eklendi. Commit `2da1bd6bc91850cd140980cf3c324bee525c7616`.
+- **DEVAM_NOTU.md:L917** — [Tarihsel kaynak kaydı] 2026-10-30 KALAN ISLERIN GERCEK DURUM KONTROLU
+- **DEVAM_NOTU.md:L918** — [Tarihsel kaynak kaydı] - V2 `v2/config/sources.json` dosyasi GitHub'dan okundu: iptv-org TR/AZ ulke listeleri, tur/aze dil listeleri, tr/az stream listeleri ve bolgesel girdiler zaten var. Bu girdileri yeniden eklemek gereksiz; kaynaklarin canli olarak basarili tarandigi veya tum eksiklerin kurtarildigi bu kontrolle kanitlanmaz.
+- **DEVAM_NOTU.md:L924** — [Tarihsel kaynak kaydı] 2026-10-30 EKSIK SNAPSHOT OLUSTURMAYI ENGELLEME
+- **DEVAM_NOTU.md:L925** — [Tarihsel kaynak kaydı] - `v2/discover.py` kaynak hatalari varsa `--snapshot-output` ozel URL snapshot dosyasini yazmadan once fail-closed durur. Commit `2173ea3bbdb2421522fcb96e9909c6826b14c1ab`. Eksik kaynaklarla olusturulmus yeni private snapshot'in tam envanter gibi kullanilmasi engellenir.
+- **DEVAM_NOTU.md:L930** — [Tarihsel kaynak kaydı] 2026-10-30 TOPLU KAYNAK KESFI GENISLETME
+- **DEVAM_NOTU.md:L931** — [Tarihsel kaynak kaydı] - Yalniz V2 `v2/github_source_discovery.py` icin Gunes TV, Rec TV, Gopik TV, Azerbaycan Turkce ve Almanya/Hollanda Turk diaspora M3U arama sorgulari eklendi: commit `3e073f33c4361eb9d14b1eb4d14f8333023b18d5`.
+- **DEVAM_NOTU.md:L932** — [Tarihsel kaynak kaydı] - Genisleyen sorgu kapsamina uygun olarak MAX_REPOS/MAX_FILES 240'tan 320'ye cikarildi: commit `7fbbb30a8e6c2d41b7c8b37a7b727926f63f2056`.
+- **DEVAM_NOTU.md:L938** — [Tarihsel kaynak kaydı] - Web ile incelenen TURKTV archive, iptv-org GitLab TR/TUR mirror ve dearbulut tam index M3U kaynaklari `v2/config/sources.json` icine discovery-only olarak eklendi. Commit `bd2bbf6c0845a7f554c642c33823b7d0a5db4685`. Mirror'lar URL dedup sisteminden geciyor; tum stream'ler oynatilir veya Turkce konusur iddiasi yok.
+- **DEVAM_NOTU.md:L942** — [Tarihsel kaynak kaydı] 2026-10-30 BELGE ARAMASI VE BEST M3U KAYNAGI
+- **DEVAM_NOTU.md:L943** — [Tarihsel kaynak kaydı] - Scribd/SlideShare/Internet Archive icin web arastirmasi yapildi; SlideShare'deki IPTV belgelerinin bir kismi kurulum rehberi veya iptv-org liste kopyasi. Belgeyi dogrudan M3U endpoint'i gibi `sources.json` icine EKLEME; baglanti ve lisans incelemesi yapmadan URL cikarma.
+- **DEVAM_NOTU.md:L948** — [Tarihsel kaynak kaydı] 2026-10-30 ONUR EROZ DOGRUDAN M3U KAYNAKLARI
+- **DEVAM_NOTU.md:L949** — [Tarihsel kaynak kaydı] - Yayincinin kamuya acik sayfasinda 13.07.2026 guncelleme notuyla listelenen dort endpoint V2 discovery-only `v2/config/sources.json` icine eklendi: `/indirmeler/turk/index.m3u`, `/indirmeler/turk/all.m3u`, `/indirmeler/turk/karma-index.m3u`, `/indirmeler/dunya/index.m3u`. Commit `b99983d447a2f464b9e2a06597962185bb50eb2d`.
+- **DEVAM_NOTU.md:L955** — [Tarihsel kaynak kaydı] - `v2/discover.py` dunya ve dinamik kaynaklardaki Azerbaijani/Azeri/Azerbaijan/Azərbaycan etiketlerini aday kabul edecek sekilde genisletildi: `3d21b7e`.
+- **DEVAM_NOTU.md:L956** — [Tarihsel kaynak kaydı] - Ek kontrol sirasinda `TRT Turk` gibi dunya kaynaklarinda adinda sadece `TRT` veya `Turk/Turk` bulunan adaylarin elenebildigi goruldu; bu adlandirmalar da eklendi: `669f6310`.
+- **DEVAM_NOTU.md:L971** — [Tarihsel kaynak kaydı] FAZ 0 — KORUMA VE DURUM ENVANTERI [ACIK]
+- **DEVAM_NOTU.md:L972** — [Tarihsel kaynak kaydı] - Tum V2 Actions workflow tetikleyicilerini ve kuyruktaki/calisan isleri denetle; tarama yapan push/schedule tetikleyicilerini kapat, halihazirda baslamis isleri otomatik durduruldu sanma. Birlesik workflow push kapatildi (3645070a); digerleri denetlenecek.
+- **DEVAM_NOTU.md:L974** — [Tarihsel kaynak kaydı] - DEVAM_NOTU, mevcut config, raporlar, #60/#74 farklari, #82-#85 CI kanitlari ve workflow esdegerliklerini tek kontrol listesinde uzlastir.
+- **DEVAM_NOTU.md:L979** — [Tarihsel kaynak kaydı] - GitLab, Codeberg ve uygun diger kod barindiricilarinda genel TR/AZ/diaspora repo/dosya kesfi; GitHub/Gist 320 sinirli kesifin kaynak kapsamini ve kaynak kaybini test et.
+- **DEVAM_NOTU.md:L983** — [Tarihsel kaynak kaydı] FAZ 2 — GUVENLIK, KALICI ARSIV VE TEST ALTYAPISI [ACIK]
+- **DEVAM_NOTU.md:L984** — [Tarihsel kaynak kaydı] - Kaynak hatalarinda fail-closed fakat hangi kaynagin neden eksik oldugunu acik raporla; retry/backoff, boyut siniri, timeout, duplicate ve idempotency kontrolleri. Bozuk kaynagi sessizce basarili sayma.
+- **DEVAM_NOTU.md:L985** — [Tarihsel kaynak kaydı] - Private tam stream URL + source_ids + ilk/son gorulme + test/karar gecmisi icin erisim kontrollu sifreli KALICI arsiv tasarla/kur; GitHub public raporlara token/URL sizdirma; 1 gunluk Actions artifact arsiv DEGIL.
+- **DEVAM_NOTU.md:L986** — [Tarihsel kaynak kaydı] - Restore testi, butunluk hashleri, versiyonlama, kaynak izlenebilirligi, kismi tarama durumu, kayip kaynak raporu, 2000'lik batch checkpoint ve karar defteri ekle. Guvenli depolama erisimi yoksa taramayi baslatma; eksigi acik tut.
+- **DEVAM_NOTU.md:L988** — [Tarihsel kaynak kaydı] - Eski workflow davranissal esdegerlikleri ve besli sistem K2/K5 dahil tum onceki eksikleri kontrol et; kanitsiz kapatma, PR #71/main merge veya eski repo degisikligi YOK.
+- **DEVAM_NOTU.md:L990** — [Tarihsel kaynak kaydı] FAZ 3 — TARAMA ONCESI KABUL KAPISI [ACIK]
+- **DEVAM_NOTU.md:L994** — [Tarihsel kaynak kaydı] - Dunya capi Turkce ve Azerice yayin aramasi; GitHub/GitLab/Codeberg/M3U/belge referanslari/resmi siteler/YouTube/canli TV kaynaklari. URL/provenance'yi kalici arsive al, kaynak hatalarini ayri goster.
+- **DEVAM_NOTU.md:L1000** — [Tarihsel kaynak kaydı] - Sonuclari CALISAN_TURKCE / CALISMIYOR / YABANCI_DIL / KARARSIZ / HENUZ_TEST_EDILMEDI, ulke ve kaynakla kalici kaydet. Onceki test edilenleri kaybetme, sonraki partide tekrar sunma.
+- **DEVAM_NOTU.md:L1003** — [Tarihsel kaynak kaydı] DURUM KURALI
+- **DEVAM_NOTU.md:L1007** — [Tarihsel kaynak kaydı] 2026-10-30 FAZ 0/2 UYGULAMA: TARAMA KILIDI OFFLINE REGRESYON
+- **DEVAM_NOTU.md:L1008** — [Tarihsel kaynak kaydı] - `v2/test_unified_safety_contract.py` icine birlesik taramanin sadece `workflow_dispatch` ile baslatilmasi ve `push`/`schedule` tetikleyicilerinin olmamasi regresyon kontrolleri eklendi.
+- **DEVAM_NOTU.md:L1009** — [Tarihsel kaynak kaydı] - 32 kaynagin URL/id benzersizligi, HTTPS zorunlulugu, izinli scope ve yeni TURKTV/Onur Eroz/Dearbulut kaynaklarinin kaybolmama kontrolleri eklendi. Commit `ef0ad7e396a348dd2d18148445575d2404ed51b6`.
+- **DEVAM_NOTU.md:L1013** — [Tarihsel kaynak kaydı] 2026-10-31 KESIF TOPLU UYGULAMA / TEST KANITI
+- **DEVAM_NOTU.md:L1016** — [Tarihsel kaynak kaydı] - v2/test_unified_safety_contract.py yeni test dosyasini tarama oncesi cagiriyor. Commit 30e52852559868002bf7689617bae0866e1e60e5.
+- **DEVAM_NOTU.md:L1017** — [Tarihsel kaynak kaydı] - Yerel izole Python test calismasi: 5 test / 5 PASS (2026-10-31). GitHub dosyasindaki ilgili discover.py fonksiyonlari ayni icerikle yerelde calistirildi; BU tum repo veya Actions CI basarisi degildir.
+- **DEVAM_NOTU.md:L1021** — [Tarihsel kaynak kaydı] 2026-10-31 GITHUB ISLERI SIRALI UYGULAMA PLANI
+- **DEVAM_NOTU.md:L1022** — [Tarihsel kaynak kaydı] 1. Workflow ve Actions envanteri: tum V2 tetikleyicileri, bekleyen/calisan/basarisiz runlar, artifact hatalari ve olasi tarama tetiklemeleri; kanitsiz tamamlandi deme.
+- **DEVAM_NOTU.md:L1024** — [Tarihsel kaynak kaydı] 3. Eski workflow davranissal esdegerligi ve besli sistem: K2/K5 dahil kalan farklar, PR #71'i merge etme, eski repoya dokunma.
+- **DEVAM_NOTU.md:L1025** — [Tarihsel kaynak kaydı] 4. Kaynak kesif altyapisi: GitHub/Gist, GitLab, Codeberg, Scribd, SlideShare, Internet Archive, resmi yayin siteleri, canli TV, YouTube, Turkce diaspora, AZ, Gunes TV/Rec TV/Gopik TV; tum adaptorleri offline fixture ile dogrula.
+- **DEVAM_NOTU.md:L1026** — [Tarihsel kaynak kaydı] 5. #60/#74 kaynak kaybi regresyonu: kabul filtresi, parser, limit, scope, provenance ve kaynak kaybi raporlarini test et.
+- **DEVAM_NOTU.md:L1027** — [Tarihsel kaynak kaydı] 6. Kalici erisim kontrollu sifreli URL arsivi: yedek, hash, restore, 2000'lik test karar defteri; restore kaniti olmadan tarama YOK.
+- **DEVAM_NOTU.md:L1028** — [Tarihsel kaynak kaydı] 7. Tum cevrimdisi testler ve Actions CI: hata varsa duzelt, tekrar test et, yesil kanitlari not et. Hazirlik CI ile gercek taramayi ayir.
+- **DEVAM_NOTU.md:L1034** — [Tarihsel kaynak kaydı] - #1 Actions tetikleyici ve run envanteri
+- **DEVAM_NOTU.md:L1036** — [Tarihsel kaynak kaydı] - #3 K2/K5 besli sistem ve eski workflow davranis esdegerligi
+- **DEVAM_NOTU.md:L1037** — [Tarihsel kaynak kaydı] - #4 TR/AZ dunya kesif adaptorleri
+- **DEVAM_NOTU.md:L1038** — [Tarihsel kaynak kaydı] - #5 #60/#74 kaynak kaybi regresyonu
+- **DEVAM_NOTU.md:L1039** — [Tarihsel kaynak kaydı] - #6 Sifreli kalici URL arsivi ve restore
+- **DEVAM_NOTU.md:L1040** — [Tarihsel kaynak kaydı] - #7 Offline testler ve Actions kabul kapisi
+- **DEVAM_NOTU.md:L1045** — [Tarihsel kaynak kaydı] 2026-10-31 OTOMATIK SIRALI ACTIONS HAZIRLIK TESTI
+- **DEVAM_NOTU.md:L1046** — [Tarihsel kaynak kaydı] - .github/workflows/v2-ordered-preflight.yml olusturuldu: commit 9f5e525aadc554e2e2067740befc528911846158.
+- **DEVAM_NOTU.md:L1049** — [Tarihsel kaynak kaydı] - Yeni commit icin combined statuses bos dondu; Actions sonucu PASS diye onaylanmadi. Sonuc Actions ekranindan teyit edilecek.
+- **DEVAM_NOTU.md:L1052** — [Tarihsel kaynak kaydı] 2026-10-31 GECE OTOMATIK OFFLINE TESTLER
+- **DEVAM_NOTU.md:L1058** — [Tarihsel kaynak kaydı] 2026-10-31 TOPLU GUVENLI TARAMA KAPISI UYGULAMASI
+- **DEVAM_NOTU.md:L1059** — [Tarihsel kaynak kaydı] - 39788e8: v2/archive_acceptance_gate.py; sifreli kalici arsiv geri yukleme onayi ve kaniti olmadan network kesif baslamaz.
+- **DEVAM_NOTU.md:L1060** — [Tarihsel kaynak kaydı] - 6c76bbf: birlesik tarama workflow'unda GitHub kaynak kesfinden ONCE arsiv kabul kontrolu.
+- **DEVAM_NOTU.md:L1061** — [Tarihsel kaynak kaydı] - 047c3cc: 4 cevrimdisi kabul kapisi senaryosu.
+- **DEVAM_NOTU.md:L1062** — [Tarihsel kaynak kaydı] - d366741: bu testler sirali gece preflight zincirine eklendi.
+- **DEVAM_NOTU.md:L1063** — [Tarihsel kaynak kaydı] - 4c38bdd: unified safety contract, arsiv kapisinin kesiften once oldugunu ve preflight testini dogrular.
+- **DEVAM_NOTU.md:L1067** — [Tarihsel kaynak kaydı] 2026-10-31 ARSIV GERI YUKLEME BUTUNLUK DUZELTMESI
+- **DEVAM_NOTU.md:L1068** — [Tarihsel kaynak kaydı] - Commit 5e829870e30d7c2035e8f9a05923fbc913451e79: kabul kapisi artik restore dosyasinin varligini ve SHA256 digestini gercek byte'lar uzerinden denetliyor; yalnizca JSON boolean alanlarina guvenmiyor.
+- **DEVAM_NOTU.md:L1069** — [Tarihsel kaynak kaydı] - Commit 977efb312fc17f80bfbe2031fcb4c421c0597dc3: offline testler gercek dosya, eksik dosya ve checksum uyusmazligi senaryolarini kapsiyor.
+- **DEVAM_NOTU.md:L1077** — [Tarihsel kaynak kaydı] - Son kod: 5e829870e30d7c2035e8f9a05923fbc913451e79 arşiv kabul kapisinda gercek restore dosyasi SHA256 kontrolu; 977efb312fc17f80bfbe2031fcb4c421c0597dc3 offline testleri yeni kanita uyarladi. GitHub Actions ordered-preflight #9 (run 41186910011) FAILURE discovery-tests; ardindan #10 (run 41186924198) SUCCESS, GitHub API ile dogrulandi. #9 tekrar calistirilmasin. #10: https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/41186924198
+- **DEVAM_NOTU.md:L1078** — [Tarihsel kaynak kaydı] - Onceki commitler: archive gate 39788e8; workflow gate 6c76bbf; tests 047c3cc; ordered CI d366741; safety assertion 4c38bdd; DEVAM_NOTU guncellemesi e25b625. Ordered preflight compile -&gt; protect -&gt; discovery-tests -&gt; safety, gecelik schedule. Bu CI PASS yalnizca offline testleri kapsar, gercek tarama degil.
+- **DEVAM_NOTU.md:L1083** — [Tarihsel kaynak kaydı] 31 Ekim 2026 — Kaynak envanteri çevrimdışı kabul kapısı
+- **DEVAM_NOTU.md:L1084** — [Tarihsel kaynak kaydı] - `v2/test_source_inventory_contract.py` eklendi (`319b881`): keşif-only politika, benzersiz ID/URL, HTTPS/kimlik bilgisi kontrolü, çekirdek IPTV-org/Free-TV/Dearbulut/TURKTV/Onur Eröz kaynakları ve ülke-dil kanıtı ayrımı için çevrimdışı testler.
+- **DEVAM_NOTU.md:L1087** — [Tarihsel kaynak kaydı] - Açık işler: 20 kaynak grubunun eksik adaptörleri; 10 keşif özelliğinin kapsamlı kabulü; gerçek kalıcı şifreli arşiv/geri yükleme; yeni Actions sonucunun kontrolü. Test eklemek bunları tamamlamaz.
+- **DEVAM_NOTU.md:L1090** — [Tarihsel kaynak kaydı] 31 Ekim 2026 — Kaynak kaybı denetimi CI entegrasyonu
+- **DEVAM_NOTU.md:L1091** — [Tarihsel kaynak kaydı] - `v2/source_loss_audit.py` (`60d9304`): iki kaynak audit raporunu karşılaştıran salt-okunur CLI; SOURCE_MISSING, FETCH_FAILED, SOURCE_DROP durumları, varsayılan %50 düşüş eşiği; kritik düşüşte çıkış kodu 2.
+- **DEVAM_NOTU.md:L1092** — [Tarihsel kaynak kaydı] - `v2/test_source_loss_audit.py` (`28a91a8`): #60→#74 örneği IPTV-org/Free-TV düşüşleri, eksik/hatalı kaynak, normal değişim, yinelenen ID ve eşik kontrolü çevrimdışı fixture testleri.
+- **DEVAM_NOTU.md:L1093** — [Tarihsel kaynak kaydı] - `.github/workflows/v2-ordered-preflight.yml` (`d4ca6f7`) discovery-tests içine yeni testi sıraya aldı. Push tetiklemeli CI sonucu henüz okunmadı; başarılı iddiası yok.
+- **DEVAM_NOTU.md:L1097** — [Tarihsel kaynak kaydı] 31 Ekim 2026 — Kaynak sayısı bozuk verisi regresyon düzeltmesi
+- **DEVAM_NOTU.md:L1098** — [Tarihsel kaynak kaydı] - `v2/source_loss_audit.py` (`ec1814d`): eski taramadaki negatif/boolean/bozuk kaynak sayılarını kaynak kaybolsa bile karşılaştırmadan önce reddeder; güncel sayı da tam integer olmalıdır.
+- **DEVAM_NOTU.md:L1099** — [Tarihsel kaynak kaydı] - `v2/test_source_loss_audit.py` (`d390eb6`): negatif eski sayı ve boolean yeni sayı için iki regresyon fixture eklendi.
+- **DEVAM_NOTU.md:L1104** — [Tarihsel kaynak kaydı] 31 Ekim 2026 — Keşif motoruna önceki tarama kaynak kaybı raporu
+- **DEVAM_NOTU.md:L1107** — [Tarihsel kaynak kaydı] - Yeni GitHub Actions çalışmasının tamamlanma sonucu bu oturumda henüz doğrulanamadı; 'testler geçti' iddiası yok. Hâlâ eksik: belge platformları/genel kod hostları adaptörleri, şifreli kalıcı arşiv/restore ve tam kaynak kapsamı.
+- **DEVAM_NOTU.md:L1110** — [Tarihsel kaynak kaydı] 31 Ekim 2026 — Keşif CLI yanlış başarı / yanlış kayıp güvenlik düzeltmesi
+- **DEVAM_NOTU.md:L1112** — [Tarihsel kaynak kaydı] - `v2/test_discovery_offline_regressions.py` (`f0bf096`): üç geçersiz CLI kombinasyonu için çevrimdışı fail-closed testleri. Zaten ordered-preflight discovery-tests aşamasına bağlı.
+- **DEVAM_NOTU.md:L1113** — [Tarihsel kaynak kaydı] - Bu ortamda GitHub Actions run sonuçlarını doğrulayacak listeleme/dispatch aracı bulunamadı; container üzerinden GitHub erişimi de DNS nedeniyle başarısız. Testlerin gerçekten geçtiği iddia edilmiyor.
+- **DEVAM_NOTU.md:L1117** — [Tarihsel kaynak kaydı] 1 Kasım 2026 — doğrulanmış durum ve sıralı teslim planı
+- **DEVAM_NOTU.md:L1122** — [Tarihsel kaynak kaydı] - Geçmişteki Actions run 41189283457 içinde compile, protect, discovery-tests, safety işleri başarılıydı; **eski başarılı çalışma yeni commit'leri doğrulamaz**.
+- **DEVAM_NOTU.md:L1125** — [Tarihsel kaynak kaydı] Sıralı işler ve bitiş ölçütleri
+- **DEVAM_NOTU.md:L1127** — [Tarihsel kaynak kaydı] 2. **Kaynak envanteri:** v2/config/sources.json ile tüm keşif adaptörlerini denetle; Türkçe M3U/M3U8, IPTV-org, Free-TV, GitHub/Gist, GitLab, Codeberg, canlı TV siteleri, resmî yayınlar, YouTube, Azerbaycan ve diaspora kapsamını kaynak bazında raporla. Güneş TV, Rec TV, Gopik TV ve TURKTV/Dearbulut/Onur Eroz'u ayrıca doğrula.
+- **DEVAM_NOTU.md:L1128** — [Tarihsel kaynak kaydı] 3. **Kurtarma ve kayıp kontrolü:** #60 ve sonraki taramaları kaynak/URL bazında karşılaştır; kaybolan yayınları yeniden keşfet, her kaynağın ani düşüşünü raporla. Eksik URL'leri uydurma.
+- **DEVAM_NOTU.md:L1132** — [Tarihsel kaynak kaydı] - **Tamamlanma durumu:** Bu planın hiçbir aşaması güncel main üzerinde uçtan uca doğrulanmış olarak işaretlenmedi. Kod değişikliği ile başarılı çalışma kanıtı ayrı tutulacak.
+- **DEVAM_NOTU.md:L1137** — [Tarihsel kaynak kaydı] - `v2-ordered-preflight.yml` içindeki beş keşif testinin `continue-on-error: true` ayarı kaldırıldı; hatalı testler artık CI'yi kıracak: commit `5c84046`.
+- **DEVAM_NOTU.md:L1143** — [Tarihsel kaynak kaydı] 2026-11-01 — #307 compile SyntaxError düzeltmesi
+- **DEVAM_NOTU.md:L1145** — [Tarihsel kaynak kaydı] - Neden: önceki committe tek satır içine literal `\\nassert` yazılmıştı. Gerçek satır sonu ile değiştirildi; commit `67de3b8`.
+- **DEVAM_NOTU.md:L1167** — [Tarihsel kaynak kaydı] - Yeni Actions PASS sonucu henüz görülmedi. Gelecek çalışma compile/protect/discovery-tests/safety aşamalarında ayrıca doğrulanmalı; hata varsa loguna göre onarılmalı.
+- **DEVAM_NOTU.md:L1172** — [Tarihsel kaynak kaydı] - Rapor artık aday envanteri konumunu ve HTTP/HLS doğrulanmamış/başarısız aday sayısını içeriyor. Kaynak erişim hataları mevcut raporda ayrıca tutuluyor.
+- **DEVAM_NOTU.md:L1180** — [Tarihsel kaynak kaydı] - Önceki CI yeşil run 41189283457 geçmişe ait; son commitlerin CI durumu hâlâ doğrulanmalı.
+- **DEVAM_NOTU.md:L1183** — [Tarihsel kaynak kaydı] 2026-11-01 — Kaynak geçmişini kaybetmeden tekilleştirme
+- **DEVAM_NOTU.md:L1188** — [Tarihsel kaynak kaydı] 2026-11-01 — Aşama 1: dünya Türkçe/Azerice IPTV keşfi genişletmesi
+- **DEVAM_NOTU.md:L1189** — [Tarihsel kaynak kaydı] - `v2/discover.py` commit `fc39048`: dünya listelerindeki Türkçe/Azerice metaveri ipuçları daha geniş yakalanıyor; dil doğrulaması yapılmış sayılmıyor.
+- **DEVAM_NOTU.md:L1194** — [Tarihsel kaynak kaydı] 2026-11-01 — Keşif modülü düzeltmesi ve regresyon testi
+- **DEVAM_NOTU.md:L1195** — [Tarihsel kaynak kaydı] - `v2/discover.py` commit `b51662f`: dünya listesindeki TR/AZ metaveri düzenli ifadesinin çift kaçış hatası düzeltildi.
+- **DEVAM_NOTU.md:L1200** — [Tarihsel kaynak kaydı] 2026-11-01 — Zorunlu CI keşif regresyon kapısı
+- **DEVAM_NOTU.md:L1201** — [Tarihsel kaynak kaydı] - `.github/workflows/v2-ordered-preflight.yml` commit `f03f0db`: `v2/test_discovery_metadata.py` artık `discovery-tests` işinde zorunlu olarak çalışır; başarısızlıkta `safety` aşamasına geçilmez.
+- **DEVAM_NOTU.md:L1202** — [Tarihsel kaynak kaydı] - Kaynak kaybı denetimindeki mevcut `v2/source_loss_audit.py` ve `v2/test_source_loss_audit.py` incelendi; önceki kaynaklara göre %50'den fazla düşüş ve kayıp/başarısız kaynak raporlanıyor. Bu modülün gerçek tarama baz çizgisi ayrıca doğrulanmalı.
+- **DEVAM_NOTU.md:L1206** — [Tarihsel kaynak kaydı] 2026-11-01 — Kaynak kaybı korumasında hata durumunu zorunlu kılma
+- **DEVAM_NOTU.md:L1207** — [Tarihsel kaynak kaydı] - `v2/discover.py` commit `d9fb64a`: `--previous-report` ile kıyaslama kaynak kaybı bulursa rapor diske yazıldıktan sonra süreç başarısız çıkış koduyla sonlandırılır; sessizce başarılı kabul edilmez.
+- **DEVAM_NOTU.md:L1208** — [Tarihsel kaynak kaydı] - `v2/test_source_loss_audit.py` commit `613f939`: %50 eşik sınırında regresyon testi eklendi.
+- **DEVAM_NOTU.md:L1213** — [Tarihsel kaynak kaydı] - `v2/discover.py` commit `6185125`: keşif adaylarına `language_hint` (`tr_candidate`, `az_candidate`, `unknown`) ve `language_verified: false` eklendi. Coğrafi/metaveri işareti ses dili doğrulaması olarak gösterilmez.
+- **DEVAM_NOTU.md:L1214** — [Tarihsel kaynak kaydı] - `v2/test_discovery_metadata.py` commit `844227c`: bu sözleşme için regresyon testi eklendi; mevcut zorunlu preflight zincirinde çalışır.
+- **DEVAM_NOTU.md:L1217** — [Tarihsel kaynak kaydı] &lt;!-- 2026-11-01 source inventory validation: 14fc9a1, tests: 3df167a --&gt;
+- **DEVAM_NOTU.md:L1220** — [Tarihsel kaynak kaydı] 2026-11-01 — Kaynak envanteri doğrulama kaydı
+- **DEVAM_NOTU.md:L1221** — [Tarihsel kaynak kaydı] - Kaynak kimlikleri ve HTTPS adresleri taramadan önce doğrulanıyor (`14fc9a1`).
+- **DEVAM_NOTU.md:L1222** — [Tarihsel kaynak kaydı] - Tekrarlanan veya hatalı kaynaklar için çevrimdışı testler eklendi (`3df167a`).
+- **DEVAM_NOTU.md:L1223** — [Tarihsel kaynak kaydı] - GitHub yazma kontrolü başarılı (`944ca8d`).
+- **DEVAM_NOTU.md:L1227** — [Tarihsel kaynak kaydı] 2026-11-01 — Güvenlik kapısı ve yazma doğrulaması
+- **DEVAM_NOTU.md:L1228** — [Tarihsel kaynak kaydı] - `v2/discover.py` commit `0954621`: kaynak kaybı denetimi özel oynatma snapshot dosyası yazılmadan önce çalışır.
+- **DEVAM_NOTU.md:L1229** — [Tarihsel kaynak kaydı] - `v2/test_discovery_offline_regressions.py` commit `16912ab`: denetimin dosya yazımından önce bulunduğunu kontrol eden test eklendi.
+- **DEVAM_NOTU.md:L1235** — [Tarihsel kaynak kaydı] - `v2/secure_archive.py` commit `6d9d2fd`: AES-256-GCM ve scrypt tabanlı şifreli envanter yedeği; atomik dosya yazımı, fsync ve geri yükleme doğrulaması.
+- **DEVAM_NOTU.md:L1236** — [Tarihsel kaynak kaydı] - `v2/test_secure_archive.py` commit `d1297a8`: şifre çözme, yanlış parola, değiştirilmiş arşiv ve disk geri yükleme testleri.
+- **DEVAM_NOTU.md:L1238** — [Tarihsel kaynak kaydı] - `.github/workflows/v2-ordered-preflight.yml` commit `322d049`: arşiv bağımlılığı ve zorunlu test adımı.
+- **DEVAM_NOTU.md:L1242** — [Tarihsel kaynak kaydı] 2026-11-01 — Gerçek AV doğrulaması ve tarama envanteri şifreleme
+- **DEVAM_NOTU.md:L1243** — [Tarihsel kaynak kaydı] - `v2/stream_probe.py` commit `0d51513`, düzeltme `950599b`: ffprobe ile video ve ses codec'lerini gerçekten sorgulama; HTTP 200 başarı sayılmaz. Yerel sistem ffprobe kontrolü `-nostdin` seçeneğinin desteklenmediğini gösterdi, kaldırıldı.
+- **DEVAM_NOTU.md:L1244** — [Tarihsel kaynak kaydı] - `v2/test_stream_probe.py` commit `436ddff`: URL, ses/video, yalnız video ve timeout regresyon testleri; yerel test 4/4 başarılı.
+- **DEVAM_NOTU.md:L1247** — [Tarihsel kaynak kaydı] - `.github/workflows/v2-ordered-preflight.yml` commit `124461a`: AV testleri CI'ya eklendi. İlgili commit için GitHub Actions çalıştırması sorgusunda henüz sonuç yoktu.
+- **DEVAM_NOTU.md:L1253** — [Tarihsel kaynak kaydı] - Commit `755a29c`: M3U satır sonu kaçışları düzeltildi.
+- **DEVAM_NOTU.md:L1258** — [Tarihsel kaynak kaydı] 2026-11-01 17:43 — Şifreli envanterden aday geri kazanımı
+- **DEVAM_NOTU.md:L1260** — [Tarihsel kaynak kaydı] - Bu işlev #60'daki yalnız kimliği bilinen 4.955 URL'yi adres olmadan geri getiremez. Gerçek internet taraması bu ortamda DNS erişimi nedeniyle çalıştırılamadı; başarılı canlı AV sayısı veya M3U paket sayısı ileri sürülmüyor.
+- **DEVAM_NOTU.md:L1263** — [Tarihsel kaynak kaydı] 2026-11-01 — ZORUNLU ÇALIŞMA KURALI: Önce keşif kapsamı, sonra nihai AV taraması
+- **DEVAM_NOTU.md:L1267** — [Tarihsel kaynak kaydı] - Ancak bundan sonra nihai geniş AV doğrulaması, şifreli arşiv/geri yükleme ve 2000'lik gerçek İBO test paketleri üretilir. Mevcut ara tarama kanıtları ve doğrulanmış adaylar kaybedilmez.
+- **DEVAM_NOTU.md:L1269** — [Tarihsel kaynak kaydı] - 2026-11-01 başarılı önceki ara tarama: 12.148 yeni URL adayı, 4.098 ffprobe AV doğrulanmış aday, 3 adet 2000 sınırına göre M3U parçası; bu sonuçlar nihai kapsam kanıtı değildir.
+- **DEVAM_NOTU.md:L1272** — [Tarihsel kaynak kaydı] 2026-11-13 — Zorunlu düzeltme: nihai taramadan önce entegrasyon kabulü
+- **DEVAM_NOTU.md:L1275** — [Tarihsel kaynak kaydı] - PR #19 merge 6cd8dbc: GitHub/GitLab/Codeberg/official/YouTube/M3U aday keşfi workflow'a eklendi; metadata adayları AV kanıtı değildir. GitLab/Codeberg/official/YouTube çıktıları henüz gerçek FFmpeg taramasına tümüyle aktarılmadı.
+- **DEVAM_NOTU.md:L1280** — [Tarihsel kaynak kaydı] 2026-11-13 — #34 bozuk aday URL regresyonu (PR #31)
+- **DEVAM_NOTU.md:L1281** — [Tarihsel kaynak kaydı] - `v2/discovery_34.py`: GitHub/GitLab/Codeberg ve curated adaylarda null, sayı, liste veya nesne URL alanları güvenli biçimde atlanır; keşif döngüsü çökmez.
+- **DEVAM_NOTU.md:L1282** — [Tarihsel kaynak kaydı] - `v2/test_discovery_34.py`: bozuk dış URL alanları için çevrimdışı regresyon eklendi.
+- **DEVAM_NOTU.md:L1283** — [Tarihsel kaynak kaydı] - PR #31 merge commit `0ba9dd81b3ef8007e03a9efdcc392bf4d2d551c2`. Actions run `43448805524`: Production Security Gate, stage 6 offline acceptance ve Discovery 34 offline acceptance iş adımları SUCCESS.
+- **DEVAM_NOTU.md:L1287** — [Tarihsel kaynak kaydı] 2026-11-13 — #34 kaynak raporu entegrasyon doğrulaması (PR #46)
+- **DEVAM_NOTU.md:L1289** — [Tarihsel kaynak kaydı] - `v2/test_discovery_34_integrate.py`: karışık bozuk/geçerli satırlar ve geçersiz koleksiyon tipleri için regresyon eklendi.
+- **DEVAM_NOTU.md:L1290** — [Tarihsel kaynak kaydı] - PR #46 merge commit `06a26a6aff41ded43cb1e3e78abe14080cc6fb9e`; Actions run `43449834934` SUCCESS; #34 offline adapter/integration acceptance ve Stage 6 paket/arşiv regresyon adımları SUCCESS.
+- **DEVAM_NOTU.md:L1294** — [Tarihsel kaynak kaydı] 13 Kasım 2026 — Güncel main üzerinde Aşama 2/3 offline kimlik ve kurtarma entegrasyonu kabul edildi
+- **DEVAM_NOTU.md:L1295** — [Tarihsel kaynak kaydı] - PR #70 squash merge `8a2abf3f74073a5ea6a34c949260ac0c26556b80`.
+- **DEVAM_NOTU.md:L1298** — [Tarihsel kaynak kaydı] - İlk denemede bulunan uyumsuzluklar (main scanner dynamic source validator kaybı, bozuk FFprobe JSON türleri, Stage 3 scanner test sözleşmesi) düzeltilip tam gate yeniden çalıştırıldı.
+- **DEVAM_NOTU.md:L1302** — [Tarihsel kaynak kaydı] 13 Kasım 2026 — PR #71 görev defteri ve devam notu ana dala alındı
+- **DEVAM_NOTU.md:L1303** — [Tarihsel kaynak kaydı] - PR #71 squash merge `02e5792c209149e98ec4e14d77c087f9d8faf49b`.
+- **DEVAM_NOTU.md:L1306** — [Tarihsel kaynak kaydı] - Ana dalın bu kayıt güncellemesinden sonraki gözlenen commit'i `02e5792c209149e98ec4e14d77c087f9d8faf49b`. Görev defterinde 34 görev: 21 completed, 13 in_progress; açık işlere completed statüsü verilmedi.
+- **DEVAM_NOTU.md:L1309** — [Tarihsel kaynak kaydı] 13 Kasım 2026 — #34 canlı API hata kaynağı ayrıştırıldı
+- **DEVAM_NOTU.md:L1310** — [Tarihsel kaynak kaydı] - Önceki gerçek Actions canlı sözleşme koşusu `43319831631` iş kayıtları incelendi: GitHub API `ok` ve 20 aday, GitLab API `ok` fakat 0 aday, Codeberg API `HTTPError` nedeniyle başarısız. Bu sonuç tüm üç kaynağın canlı kabulü değildir.
+- **DEVAM_NOTU.md:L1311** — [Tarihsel kaynak kaydı] - Güncel `main` üzerindeki `v2/discovery_34_live_contract.py`, HTTP durum kodunu `HTTP_&lt;code&gt;` biçiminde, sağlayıcı ve endpoint host ile raporlar; 408/425/429/5xx için en fazla üç deneme uygular. 403 kalıcı erişim/izin engeli olarak tekrar denenerek başarıya çevrilmez. `v2/discovery_34.py` Codeberg için Forgejo `/api/v1/repos/search` yolunu ve `data` yanıt listesini bekler.
+- **DEVAM_NOTU.md:L1312** — [Tarihsel kaynak kaydı] - Harici API dokümantasyonu Forgejo/Codeberg repository-search endpoint'inin `/api/v1/repos/search` olduğunu ve `data` alanlı yanıt kullandığını doğruluyor; dolayısıyla mevcut kanıt, endpoint/JSON şema hatasından çok CI çıkışının Codeberg tarafından 403 ile reddedilmesiyle uyumlu. Bu, Codeberg'in kendi tarafında kalıcı arıza olduğu anlamına gelmez.
+- **DEVAM_NOTU.md:L1316** — [Tarihsel kaynak kaydı] 13 Kasım 2026 — #34 Codeberg blocker kaydı ana dala alındı
+- **DEVAM_NOTU.md:L1317** — [Tarihsel kaynak kaydı] - PR #79 squash merge `2d2bd9193cf06fbd81077912e4e4d434316e7c5e`.
+- **DEVAM_NOTU.md:L1319** — [Tarihsel kaynak kaydı] - Bu koşu canlı Codeberg API çağrısı değildir. #34 açık: önceki canlı koşuda Codeberg HTTPError; güncel main canlı API tekrar çalıştırılmadı. GitHub Actions bağlantısı workflow_dispatch başlatma sağlamıyor.
+- **DEVAM_NOTU.md:L1322** — [Tarihsel kaynak kaydı] 13 Kasım 2026 — #34 altı arama terimli canlı sözleşme altyapısı
+- **DEVAM_NOTU.md:L1323** — [Tarihsel kaynak kaydı] - PR #86 squash merge `ec02cb3993f54d42d3b3a4a71670eb50c87c6adc`.
+- **DEVAM_NOTU.md:L1324** — [Tarihsel kaynak kaydı] - Actions `43457308527`: SUCCESS. Çevrimdışı güvenlik, görev defteri, Stage 2/3, Stage 6 ve #34 adapter/integration regresyonları PASS.
+- **DEVAM_NOTU.md:L1325** — [Tarihsel kaynak kaydı] - `v2/discovery_34_live_contract.py` artık yalnızca `turkish-iptv` örnek terimini değil, `QUERIES` içindeki altı terimin tamamını GitHub/GitLab/Codeberg için ayrı ayrı kontrol ediyor. Sağlayıcı ve sorgu bazında başarısızlıkları görünür kılıyor; HTTP status/reason, Retry-After ve rate-limit kalan sayısını güvenli biçimde raporluyor; response body veya gizli veri yazmıyor.
+- **DEVAM_NOTU.md:L1330** — [Tarihsel kaynak kaydı] 2026-11-13 — encrypted archive restore size-bound acceptance (current main)
+- **DEVAM_NOTU.md:L1332** — [Tarihsel kaynak kaydı] - `v2/secure_archive.py`: `decrypt` now rejects encrypted blobs larger than the format header + MAX_INPUT plaintext + AES-GCM tag before decryption. `v2/test_secure_archive.py` covers the upper bound in addition to malformed/truncated, tamper, round-trip and same-path cases.
+- **DEVAM_NOTU.md:L1336** — [Tarihsel kaynak kaydı] 13 Kasım 2026 — Güncel main Production Security Gate ve canlı #34 teşhisi
+- **DEVAM_NOTU.md:L1337** — [Tarihsel kaynak kaydı] - Main commit `478aba262b0b37c39019a85bcc3abfc812b04208` için Actions run `43458337072`: offline Production Security Gate SUCCESS; ayrı `live-discovery-diagnostic` işi SKIPPED. Bu run canlı sağlayıcı kanıtı değildir.
+- **DEVAM_NOTU.md:L1338** — [Tarihsel kaynak kaydı] - Canlı altı-terim denetimi ayrı olarak main commit `436d5492b71394a2958b08cc8895156f5c111ed0` üzerindeki Actions run `43458069505` ile yapıldı. Ana Production Security Gate SUCCESS; ayrı canlı diagnostic işi Codeberg HTTP 429 nedeniyle FAILURE oldu (iş `continue-on-error` olduğundan offline ana gate başarılı kaldı).
+- **DEVAM_NOTU.md:L1340** — [Tarihsel kaynak kaydı] - PR #117 squash merge `eda23b30c3cc05a019e79e42235234488110d4f1`; Actions run `43458662138` SUCCESS. İlk tükenmiş 429 sonrasında sağlayıcı devre kesicisi açılır, kalan sorgulara istek gönderilmez; sorgular skipped olarak raporlanır ve genel durum error kalır.
+- **DEVAM_NOTU.md:L1341** — [Tarihsel kaynak kaydı] - Codeberg için sayısal ve HTTP-date Retry-After desteği 60 saniye üst sınırıyla main'de mevcut. Devre kesici düzeltmesiyle yeni tek seferlik canlı doğrulama bu dokümantasyon commitinden sonra tetiklenecek; Codeberg başarılı yanıt vermeden #34 kapatılmaz.
+- **DEVAM_NOTU.md:L1348** — [Tarihsel kaynak kaydı] 13 Kasım 2026 — canlı keşif ve gerçek AV kanıtlarının yeniden denetimi
+- **DEVAM_NOTU.md:L1349** — [Tarihsel kaynak kaydı] - PR #128 birleştirildi (`e0d533e5f17996c02f614b33cbf9a3966e7611f7`). Güncel Production Security Gate ve Stage 2/3 + Stage 6 + #34 çevrimdışı kabulü run `43459603986` içinde PASS.
+- **DEVAM_NOTU.md:L1350** — [Tarihsel kaynak kaydı] - Aynı run'ın tek seferlik canlı metadata tanılama işi: GitHub altı sorgunun tamamında geçerli yanıt verdi; ham sonuç sayıları `11, 20, 20, 20, 12, 19` (toplam 102 ham eşleşme; sorgular arası tekilleştirme yapılmadı). GitLab altı sorguda da geçerli boş listeler döndürdü. Codeberg `turkiye.m3u` sorgusunda üç sınırlı denemeden sonra HTTP 429 verdi; devre kesici kalan beş terimi atladı. 30/60 saniyelik geri çekilme Codeberg sınırını kaldırmadı. Bu canlı iş non-blocking olarak başarısız; ana güvenlik işi başarılı.
+- **DEVAM_NOTU.md:L1352** — [Tarihsel kaynak kaydı] - Eski gerçek dünya AV raporu run `42216075104`, artifact `13524765368`: 35.327 aday, 13.884 mevcut-run FFmpeg video+ses decode, 9 RSA-sealed shard. Aynı rapor tarihî 4.955 hash'in 4.949'unu worldwide raporla eşleştiriyor; 3.080 tarihî hash için AV decode kanıtı var. Ancak `historical_broadcaster_identity_verified=false` olduğu için #15 kapanmaz.
+- **DEVAM_NOTU.md:L1353** — [Tarihsel kaynak kaydı] - Ayrı #24 run `43241168321` restore receipt: 801 AV sonuç (800 TR/AZ), 7.819 arşiv kaydı geri yüklendi. Bu rapor ile worldwide raporun hash örtüşmesi henüz hesaplanmadı; sayılar toplanmadı.
+- **DEVAM_NOTU.md:L1356** — [Tarihsel kaynak kaydı] 13 Kasım 2026 — Stage 5 kanıt kapısı ve #34 sorgu ölçümü güncellemesi
+- **DEVAM_NOTU.md:L1359** — [Tarihsel kaynak kaydı] - PR #132 sorgu sayımı düzeltmesi squash merge ee2471b28804fb7c2c212f83f62d73d06566bed9; offline Production Security Gate run 43460164276 SUCCESS. queries_checked gerçek ağ çağrılarını sayar; queries_total ve queries_skipped ayrıdır.
+- **DEVAM_NOTU.md:L1360** — [Tarihsel kaynak kaydı] - Canlı run 43459603986 sonucu: GitHub 6/6 geçerli, 102 ham aday satırı; GitLab 6/6 geçerli boş liste; Codeberg ilk sorguda HTTP 429/3 deneme, kalan beş sorgu atlandı. Codeberg için başarılı canlı kabul yok; #34 açık.
+- **DEVAM_NOTU.md:L1361** — [Tarihsel kaynak kaydı] - Worldwide tarama kapsamı seçeneği --worldwide mevcut main'de etkinleştirilebilir; offline kapsam testi geçti. Bu seçenekle yeni tarama başlatılmadı.
+- **DEVAM_NOTU.md:L1365** — [Tarihsel kaynak kaydı] 13 Kasım 2026 — worldwide kaynakların AV tarama hattına bağlanması
+- **DEVAM_NOTU.md:L1366** — [Tarihsel kaynak kaydı] - PR #141 squash merge `703bf12d3cb3e61cf4b5e9505350ed6dd698f302`: GitHub 403 rate-limit exhaustion da sağlayıcı devre kesicisini açar; sıradaki beş sorguya istek gönderilmez.
+- **DEVAM_NOTU.md:L1367** — [Tarihsel kaynak kaydı] - PR #144 squash merge `6c10d7d3467a145931ca05c91942db8a930a1faf`: workflow yalnızca read-only `github.token` ile GitHub API sorgular; token yalnızca `api.github.com` host'una gönderilir. Public Gist'lerin son 200 kaydı içinde M3U/M3U8/TXT dosyaları için bounded arama ve parse eklendi. Main Production Security Gate run `43462401762` SUCCESS.
+- **DEVAM_NOTU.md:L1368** — [Tarihsel kaynak kaydı] - PR #145 squash merge `50d839b3c1e2860921105768aa3450bc02e04a7e`: GitLab ve Codeberg public repo arama/tree/raw M3U adaptörleri; altı terim, repo/dosya limitleri, 429/403 rate-limit circuit breaker ve offline regresyonlar. Unified discovery report ve manual scan workflow'una bağlandı. Main Production Security Gate run `43463214901` SUCCESS.
+- **DEVAM_NOTU.md:L1369** — [Tarihsel kaynak kaydı] - PR #142 squash merge `6ffa52d24271c161c573052594b765e185357ca8`: GitHub/Gist M3U kaynak raporu birleşik keşif raporuna ve scanner'ın M3U feed girişine bağlandı.
+- **DEVAM_NOTU.md:L1370** — [Tarihsel kaynak kaydı] - PR #143 squash merge `d0d2b4a53ebca4f210b55640689c26f859201c3d`: kritik AV kabul düzeltmesi. Scanner artık yalnızca ffprobe stream metadata'sına bakarak AV verified saymaz; gerçek video frame ve audio frame decode için `verify_decoded_av` başarılı olmalıdır. Main Production Security Gate run `43461691392` SUCCESS.
+- **DEVAM_NOTU.md:L1371** — [Tarihsel kaynak kaydı] - PR #146 squash merge `078aafaf0e5d16ea57aae042e81b55d10736e08f`: official broadcaster directory worldwide moduna genişletildi; YouTube Live ve official site sayfaları yt-dlp ile doğrudan HTTPS HLS URL'lerine çözülür; signed URL'ler yalnızca authenticated encrypted raporda saklanır. Scanner şifreli raporu bellekte açar ve FFmpeg gerçek ses+görüntü decode olmadan kabul etmez. Manual scan workflow'u `--worldwide`, birleşik M3U adayları ve şifreli direct stream raporuyla hazırlandı. Main Production Security Gate run `43464677927` SUCCESS.
+- **DEVAM_NOTU.md:L1372** — [Tarihsel kaynak kaydı] - PR #147 squash merge `d970a0da1f73e3bdd3552c193a144d9ded9a0be1`: 340 dakikalık manuel workflow bütçesine göre dünya çapı tarama aday tavanı 3.000'e ayarlandı; gerçek 1.000/2.000 paket üretim hedefleri ayrı kanıt kapısında kalır.
+- **DEVAM_NOTU.md:L1379** — [Tarihsel kaynak kaydı] 13 Kasım 2026 — YouTube Live worldwide sorgu ve bölge dağılımı
+- **DEVAM_NOTU.md:L1381** — [Tarihsel kaynak kaydı] - Resolver bütçesi bounded ve dengeli: en çok 60 YouTube live adayı (TR/AZ/WORLD için 20/10/30 başlangıç kotası) ve en çok 60 official site adayı (ülke başına önce bir aday, kalan bütçe round-robin). Direct URL'ler authenticated encrypted dosyada saklanır; FFmpeg gerçek video frame + audio frame decode olmadan AV verified sayılmaz.
+- **DEVAM_NOTU.md:L1383** — [Tarihsel kaynak kaydı] - Manuel worldwide scan workflow'u 3.000 aday tavanıyla hazırdır; `workflow_dispatch` dışında tetiklenmez ve henüz çalıştırılmamıştır.
+- **DEVAM_NOTU.md:L1395** — [Tarihsel kaynak kaydı] 13 Kasım 2026 — #19 XMLTV program aralığı kabulü (PR #156)
+- **DEVAM_NOTU.md:L1401** — [Tarihsel kaynak kaydı] 13 Kasım 2026 — Stage 5 FFmpeg decode kanıtı ve özel İBO koruması (PR #162)
+- **DEVAM_NOTU.md:L1402** — [Tarihsel kaynak kaydı] - PR #162 squash merge `86fe138f793ff42148a34faa6b4ca249dc6ee65f`, ana dal güvenlik kapısı Actions `43480354832` SUCCESS; PR kabul koşusu `43480221367` SUCCESS.
+- **DEVAM_NOTU.md:L1408** — [Tarihsel kaynak kaydı] 13 Kasım 2026 — Stage 5 (#31–#33) medya kanıtı tekilliği ve kabul
+- **DEVAM_NOTU.md:L1416** — [Tarihsel kaynak kaydı] 13 Kasım 2026 — Stage 5 yerel FFmpeg video+ses çözümleme testi zorunlu CI kabulü
+- **DEVAM_NOTU.md:L1417** — [Tarihsel kaynak kaydı] - PR #177 squash merge `aa6b5b3f18b89c28a994a6f90484e18f879b14c1`. PR Actions `43481199861` SUCCESS; main Actions `43481413229` SUCCESS.
+- **DEVAM_NOTU.md:L1418** — [Tarihsel kaynak kaydı] - GitHub Ubuntu runner'ında FFmpeg/FFprobe eksikse paketler kurulur. Yerel testte 1 saniyelik sentetik test medyası üretip gerçek decode üzerinden hem video frame hem ses örneği doğrulanır. `test_local_ffmpeg_decodes_both_real_fixture_tracks ... ok` ile bu kez atlanmadan geçti.
+- **DEVAM_NOTU.md:L1422** — [Tarihsel kaynak kaydı] 13 Kasım 2026 — Stage 5 özel M3U çıktı koruması (PR #184)
+- **DEVAM_NOTU.md:L1423** — [Tarihsel kaynak kaydı] - `v2/stage5_evidence_export.py` özel veya signed gerçek yayın URL'lerini içerebilen M3U test dosyalarının Git deposu içine, `v2/reports` dâhil, yazılmasını reddeder. Yalnızca depo dışındaki `private-*.m3u8` hedefler kabul edilir; `O_EXCL/O_NOFOLLOW` ve `0600` korumaları değişmedi.
+- **DEVAM_NOTU.md:L1424** — [Tarihsel kaynak kaydı] - `v2/test_stage5_evidence_export.py` repo içindeki hedefin hiçbir dosya yaratılmadan reddedildiğini kontrol eder.
+- **DEVAM_NOTU.md:L1431** — [Tarihsel kaynak kaydı] - PR #202 birleştirildi: `e5a233b8c281208b5ebc4662f741968002819d38`; PR CI `43484557050` SUCCESS, main CI `43484812015` SUCCESS.
+- **DEVAM_NOTU.md:L1433** — [Tarihsel kaynak kaydı] - Aynı PR'da #28–30'un eski test fixture'ındaki eksik `decoded_av_verified` ve `decode_status` alanları güncellendi; üretim kanıt standardı düşürülmedi.
+- **DEVAM_NOTU.md:L1436** — [Tarihsel kaynak kaydı] 13 Kasım 2026 — #19 ve Stage 6 kabul düzeltmeleri (son Actions)
+- **DEVAM_NOTU.md:L1438** — [Tarihsel kaynak kaydı] - Stage 6/M3U: PR #194 merge `8dff642a1e3d3dbf6b4aa133b323fc7bdfdfb7b6`, Unicode C1/format ayırıcılarla sahte M3U satır enjeksiyonunu ve şifreli JSONL envanterde bozuk türlerin paketi çökertmesini engeller. PR Actions `43483502608` SUCCESS.
+- **DEVAM_NOTU.md:L1439** — [Tarihsel kaynak kaydı] - Ana dal run `43483992949` eşzamanlı yeni `decoded_av_verified + DECODED_AV` kabul kuralı nedeniyle geçersiz test fixture'ı üzerinden FAILED. Üretim kuralı gevşetilmeden PR #203 merge `70a6925566c37fdd7e31b85a3b7903790aacb1c0` ile test kanıtı düzeltildi; PR run `43484486032` ve main run `43484653370` SUCCESS.
+- **DEVAM_NOTU.md:L1458** — [Tarihsel kaynak kaydı] 16 Kasım 2026 — 7.650 eski sistem adayı / iki tarama sonrası devam (AÇIK)
+- **DEVAM_NOTU.md:L1460** — [Tarihsel kaynak kaydı] - İzlenecek taramalar: **#43787744310** (ilk tarama; eski revizyon), **#43788739181** (ikinci tarama; önceki 500'lük kuyruk revizyonu). Her ikisinin de terminal statüsü kontrol edilmeli; başarısızlık varsa ayrıca raporlanmalı. Eski iki tarama 7.650 adayın tümünü test etmiş sayılmaz.
+- **DEVAM_NOTU.md:L1461** — [Tarihsel kaynak kaydı] - **PR #304** ile 7.650 benzersiz aday 4 arşiv parçasına alındı; **PR #305** ile `v2/verify_legacy_7650_queue.py` eklendi; **PR #306** ile tek-500 kuyruk bağlandı; **PR #307** ile izinli gerçek tarama workflow'una 16 ayrı batch matrix işi eklendi. Son değişiklik ana dalda; önceki iki tarama eski commitlerden çalıştığı için matrix'i içermez.
+- **DEVAM_NOTU.md:L1468** — [Tarihsel kaynak kaydı] 17 Kasım 2026 — Genel scan korumalı yabancı arşiv sayısı uyumsuzluğu (AÇIK)
+- **DEVAM_NOTU.md:L1489** — [Tarihsel kaynak kaydı] 18 Kasım 2026 — Türkçe yayın kanıtı / güvenli medya örneği (PR #411–#417)
+- **DEVAM_NOTU.md:L1490** — [Tarihsel kaynak kaydı] - **Tamamlandı, main'e birleştirildi:** #411 WebVTT dil beyanı için offline review-only adapter; #412 dış ASR/OCR gözlemi için offline adapter; #413 OCR provenance düzeltmesi; #414 dil etiketi doğrulama ve metin saklamama regresyonları; #415 isteğe bağlı tek-yayın FFmpeg örnek alma ve testleri; #416 yerel/özel ağ hedefleri ile symlink çıktısına karşı kontroller; #417 yalnız genel IP literal kabulü ve HTTP yönlendirme kapatma kontrolleri.
+- **DEVAM_NOTU.md:L1491** — [Tarihsel kaynak kaydı] - **#417 güvenlik kanıtı:** V2 Main Production Security Gate run `44367839772` SUCCESS, merge commit `2c65e7f05e84a02f16c280d567f52d59579b7aed`. Önceki #417 kırmızı koşu `44366873405` üç eski test fixture'ındaki hostname kullanımından kaynaklandı; testler düzeltildi ve yeşil koşu doğrulandı.
+- **DEVAM_NOTU.md:L1492** — [Tarihsel kaynak kaydı] - **Sınırlar:** `v2/turkish_media_sample_capture.py` yalnızca açıkça çağrılan tek akışta, en fazla 12 saniyelik örnek ve 17 saniyelik subprocess zaman aşımı uygular. DNS hostname'leri reddedilir; normal IPTV hostname bağlantıları bu modda kullanılamaz. Örnek yakalama tek başına Türkçe konuşma, OCR, altyazı, kesintisiz yayın veya İBO Player cihaz kabulü **kanıtı değildir**. Gerçek ASR/OCR çıkarımı, güvenli hostname çözümleme ve doğrulanmış kaynak kanıt zinciri **AÇIK**.
+- **DEVAM_NOTU.md:L1497** — [Tarihsel kaynak kaydı] 18 Kasım 2026 — PR #422 FFmpeg çıktı sınırı, doğrulama ve devir
+- **DEVAM_NOTU.md:L1498** — [Tarihsel kaynak kaydı] - **Tamamlandı ve main'e birleştirildi:** PR #422 `security(v2): enforce media sample size limit while FFmpeg runs`; güvenlik koşusu `44377930613` (V2 Main Production Security Gate, run #1327) **SUCCESS**, merge commit `ed6bb51a5d73627ce8ef5fd313a226d2e4508401`.
+- **DEVAM_NOTU.md:L1504** — [Tarihsel kaynak kaydı] 18 Kasım 2026 — #15 önceki altı hash denetimi ZATEN YAPILMIŞ (tekrar etmeyin)
+- **DEVAM_NOTU.md:L1506** — [Tarihsel kaynak kaydı] 19 Kasım güncellemesinde son iki adres de doğrulandı. Güncel sonuç dosyanın başındaki 19 Kasım kaydındadır.
+- **DEVAM_NOTU.md:L1519** — [Tarihsel kaynak kaydı] - PR #457 (38b766ef44180f18679ee24dec0b7b6f974e2445) main dalına birleştirildi; aynı değişiklikler tekrar uygulanmadı.
+- **DEVAM_NOTU.md:L1525** — [Tarihsel kaynak kaydı] 21 Kasım 2026 — Aşama 7 İBO Player cihaz kanıtı kabul altyapısı
+- **DEVAM_NOTU.md:L1527** — [Tarihsel kaynak kaydı] - PR [#556](https://github.com/Madsc55/MADSC55-TV-V2/pull/556) squash ile main'e alındı: `4819b3b98074243a23b0a23bdb24c61e6fdca3a3`.
+- **DEVAM_NOTU.md:L1530** — [Tarihsel kaynak kaydı] - Doğrulayıcı tam rapor geldiğinde bile yalnızca `EVIDENCE_COMPLETE_REQUIRES_HUMAN_REVIEW` döndürür; `production_accepted=false` ve `device_playback_certified=false` sabittir. Sentetik fixture gerçek cihaz oynatımı kanıtı değildir.
+- **DEVAM_NOTU.md:L1535** — [Tarihsel kaynak kaydı] 21 Kasım 2026 — Çalışma sırası ve ilerleme kaydı
+- **DEVAM_NOTU.md:L1545** — [Tarihsel kaynak kaydı] 21 Kasım 2026 — Ara kabul: eski AV kanıtı, FFmpeg ve mükerrer PR temizliği
+- **DEVAM_NOTU.md:L1549** — [Tarihsel kaynak kaydı] - **685 belirsizin ayrıntısı:** PROBE_FAILED 621; TIMEOUT 26; NO_MEDIA 23; AV_STREAMS_PRESENT (decode doğrulanmamış) 14; AUDIO_ONLY 1. **Hiçbiri kesin ölü ilan edilmedi.**
+- **DEVAM_NOTU.md:L1552** — [Tarihsel kaynak kaydı] - **Mükerrer işler:** #514 ve #535'in ortak reconciler/test dosyaları mevcut main'de SHA eşitliğiyle doğrulandı; #535'in eski importer'ı #547 ile güçlendirildi. #514, #535 ve eski eksik-artifact notlu #552 gerekçeli yorumla birleştirilmeden kapatıldı.
+- **DEVAM_NOTU.md:L1554** — [Tarihsel kaynak kaydı] - **Sonraki tek adım:** #547 importer'ı kimlik ve SHA kilitleriyle gerçek mevcut artifact üzerinden yalnız read-only önizleme/manifest üretip doğrulamak; ardından ASR/OCR/WebVTT kanıt zincirindeki açık gerçek işleri ele almak.
+- **DEVAM_NOTU.md:L1557** — [Tarihsel kaynak kaydı] 21 Kasım 2026 — #497 raporundan gerçek önizlemeye uçtan uca doğrulama
+- **DEVAM_NOTU.md:L1560** — [Tarihsel kaynak kaydı] - Gerçek işleme: `44842749390` run, `14681388150` artefaktı (`manifest.json` + `preview.m3u8`). Manifest SHA-256 `b001bf48f07437e9ae67ed9f73b12ea9cfcab653523973435cf3b1cee3c31fcc`.
+- **DEVAM_NOTU.md:L1562** — [Tarihsel kaynak kaydı] - **1.107 verified**, **685 uncertain**, **0 failed**; video+audio kanıtı 1.107 verified için mevcut, belirsizler kesin ölü ilan edilmedi. Belirsiz dağılım: 621 PROBE_FAILED, 26 TIMEOUT, 23 NO_MEDIA, 14 AV_STREAMS_PRESENT, 1 AUDIO_ONLY.
+- **DEVAM_NOTU.md:L1571** — [Tarihsel kaynak kaydı] - PR [#571](https://github.com/Madsc55/MADSC55-TV-V2/pull/571) main'e `4b45245f094ffc1aba4e7ecff24f125d502f6d4e` commit'iyle birleşti. Mevcut `v2/turkish_media_sample_capture.py` FFmpeg çağrısında kontrol/boşluk/backslash ve URL authority percent-encoding reddi ile açık HTTP/HTTPS/TCP/TLS/crypto protokol allowlist'i eklendi; HTTP redirect kapalı tutuldu. Sentetik ve network kullanmayan testler [#44843819098](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44843819098) SUCCESS.
+- **DEVAM_NOTU.md:L1572** — [Tarihsel kaynak kaydı] - Bu **DNS hostname çözümleme, IP pinning, HLS çocuk URL egress filtresi veya gerçek yayın örneği kabulü değildir**. `validate_url` DNS hostname'lerini reddetmeye devam eder; sadece FFmpeg protokol allowlist'i SSRF izolasyonu sağlamaz. Yetkili URL/kaynak ve ağ sınırları belirlenmeden bu engel kaldırılmayacak.
+- **DEVAM_NOTU.md:L1573** — [Tarihsel kaynak kaydı] - Sonraki gerçek iş: Stage 4 için ağdan izole edilmiş, DNS/IP pinleyen, tüm alt kaynak isteklerini ve redirectleri denetleyen egress politikası ve offline regresyonları; ardından yetkili gerçek konuşma/altyazı örneğiyle ASR/OCR/WebVTT kanıt doğrulaması.
+- **DEVAM_NOTU.md:L1579** — [Tarihsel kaynak kaydı] 21 Kasım 2026 — #497 gerçek artefakt ve 685 belirsiz yeniden deneme için güvenli devir (kayıt)
+- **DEVAM_NOTU.md:L1581** — [Tarihsel kaynak kaydı] - Denetlenen `main`: `7bbefc113b02e25e0d8da1709273c39e9bbb4f12` (#567 merge). Sonrasında çalıştırılan Production Security Gate: [44843984931](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44843984931) **SUCCESS**. Bu run'da #497 hedefli belirsiz retry çevrimdışı regresyonları **11/11 PASS**; otomatik FFmpeg canlı taraması değil.
+- **DEVAM_NOTU.md:L1585** — [Tarihsel kaynak kaydı] - **Birleşmiş PR'lar:** #560 (orijinal dosya hash kilidi), #561 (yalnız manuel/salt-okunur eski sonuç önizleme workflow'u), #562 (kanıt raporu), **#567 (yalnız 685 belirsiz için hedefli retry kodu)**. #567'nin güncel CI sonucu yukarıda başarılı. Kodda 1.107 doğrulanmış yeniden taranmaz; yalnız iki tekrarlanabilir deterministik medya hatası kesin başarısız sayılabilir. 11 çevrimdışı regresyon bu korumaları kontrol ediyor.
+- **DEVAM_NOTU.md:L1588** — [Tarihsel kaynak kaydı] - **Devam noktası:** #567 kodu, güvenlik kapısı ve gerçek ilk manifest kabul edildi; **685 hedefli canlı yeniden deneme işlemi ayrı bir gerçekleştirme aşamasıdır**, tamamlanmış yazılmayacak. Tekrarlama/atlama yok; sonraki bağımsız öncelik #6 şifreli harici kasa gerçek geri-yükleme kanıtının doğrulanması ve kalan kabul engelleridir.
+- **DEVAM_NOTU.md:L1591** — [Tarihsel kaynak kaydı] 21 Kasım 2026 — Aşama 4 güvenli DNS örnek alma kodu ve açık HLS sınırı
+- **DEVAM_NOTU.md:L1593** — [Tarihsel kaynak kaydı] - PR [#572](https://github.com/Madsc55/MADSC55-TV-V2/pull/572) **merge edildi**, commit `8e9e86b0a422a59b2cfccdd9d732c0a16b442c99`. PR CI [#44844424809](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44844424809) **SUCCESS**; 14 mevcut capture testi + 12 yeni DNS güvenlik testi PASS. Merge sonrası main CI #44844614127 ayrı izlenecek.
+- **DEVAM_NOTU.md:L1594** — [Tarihsel kaynak kaydı] - `v2/turkish_safe_dns_capture.py` geliştirildi: tüm A/AAAA adreslerini genel/unicast olarak denetle, tek doğrulanmış IP'ye pinle, SNI/TLS sertifikasını orijinal hostname ile doğrula; 30x, özel IP, multicast, manifest, ffconcat ve aşırı boyutu reddet. `v2/turkish_media_sample_capture.py` DNS için yalnız indirilen yerel dosyayı, `file` whitelist ve sabit FFmpeg demuxer ile açar; hedef dosyanın üstüne yazmaz.
+- **DEVAM_NOTU.md:L1595** — [Tarihsel kaynak kaydı] - Açık sınırlama: nested HLS/DASH alt istekleri henüz desteklenmiyor; her segment/anahtar için IP pinning ve egress kontrolü gerekir. Mevcut IP-literal FFmpeg modu whitelist kullansa da ağ firewall'u değildir. Aşama 4 bütünüyle bitti ilan edilmeyecek.
+- **DEVAM_NOTU.md:L1596** — [Tarihsel kaynak kaydı] - Gerçek bir IPTV yayınına ağ örneği alma testi yapılmadı; ASR/OCR/WebVTT'nin gerçek Türkçe kanıtı, 685 retry, 18.074 medya doğrulaması, dış şifreli yedek kabulü ve İBO Player cihaz kabulü açık. Testler en son kontrollü aşamada.
+- **DEVAM_NOTU.md:L1598** — [Tarihsel kaynak kaydı] - Kanıt dosyası `v2/reports/stage4-pinned-dns-capture-20261121.md`, ayrıntılı ana çalışma planı `v2/tasks/WORK_ORDER_2026-11-21.md`. Sonraki iş güvenli HLS alt kaynak collector/egress izolasyonunu ve IP-literal eski modun kapısını tamamlamak.
+- **DEVAM_NOTU.md:L1603** — [Tarihsel kaynak kaydı] - **Özgün dünya raporu, kaynak git ve ZIP SHA kanıtı:** run `42216075104`, head `062cf6ae9783803bb45b06efd4e877bcb6333f8e`, artifact adı `v2-grouped-av-evidence-42216075104`, ID `13524765368`; indirilen ZIP SHA-256 `6bec426291330c6b4b305e2871b721a25c44583f892c14d893472cdc3e80f87d`. Gerçek `final-worldwide-acceptance.json` dosya SHA-256 `41d96419250fc466786753b7d889503d0d4fc83fceb562d47eaf614a99624f0d`; `historical-worldwide-av-crosswalk.json` dosya SHA-256 `a108f9009a8f32d65920ec61e85c9a023f9e7aa169ba2aa858eceda2cc0551fe`.
+- **DEVAM_NOTU.md:L1607** — [Tarihsel kaynak kaydı] - **Henüz kesinleşmeyen:** 18.074 envanter üzerinde gerçek eşleşme sayıları, yeni Stage 5 CI/artefaktı ve gerekli son PR merge kanıtı. CI başarı/rapor ortaya çıkmadan bu aşamayı tamamlandı olarak işaretleme.
+- **DEVAM_NOTU.md:L1609** — [Tarihsel kaynak kaydı] - **Sıradaki tek adım:** bu branch için açık PR'da offline negatif testleri ve tam tarihsel artifact hash eşleştirme CI'ını çalıştır; `v2-stage5-historical-worldwide-crosswalk` artifact'ından kesin mevcut eşleşme sayılarını doğrula. Başarılıysa yalnız güvenli read-only kod/kanıt merge edilsin. 685 belirsiz kayıt yeniden taranmış kabul edilmesin.
+- **DEVAM_NOTU.md:L1612** — [Tarihsel kaynak kaydı] Aşama 5 ek denetim — canlı 18.912 satır ve 18.074 kaynak eşleşmesi
+- **DEVAM_NOTU.md:L1617** — [Tarihsel kaynak kaydı] - PR #585 ilk CI `44844890250` Stage 5 çevrimdışı test adımında Python paket import yolu nedeniyle **FAILED** (7/7 hata aynı `ModuleNotFoundError` kök neden); eski kaynak rapor taraması çalışmadı. `PYTHONPATH=v2:.` düzeltmesi commit `c410fbf889fabf4546f4b9f016535930153bfb79` ile eklendi. Başarı iddiası yok; yeni CI sonucu bekleniyor.
+- **DEVAM_NOTU.md:L1620** — [Tarihsel kaynak kaydı] 21 Kasım 2026 — Aşama 5 kapanış: gerçek dünya raporu / 18.074 tam hash mutabakatı
+- **DEVAM_NOTU.md:L1623** — [Tarihsel kaynak kaydı] - **Tam kanıt:** workflow run `42216075104` exact tarihsel worldwide artifact ID `13524765368`; yeni read-only crosswalk Actions artifact `14682746793`, adı `v2-stage5-historical-worldwide-crosswalk`, indirilen ZIP SHA-256 `b995abbb3eca5726d63c1a311a2132c57ded83caf87ca11eee778fc27463692f`. ZIP `manifest.json` + tam 18.074 hash kayıtlı `crosswalk.json` içeriyor; yayın URL'leri yazılmadı.
+- **DEVAM_NOTU.md:L1624** — [Tarihsel kaynak kaydı] - **18.074 özgün arşiv kaydı:** dünya raporuyla tam URL SHA-256 eşleşmesi **16.931**; eşleşmeyen **1.143**. Eşleşenlerden aynı dünya koşusunda çözülmüş ses+görüntü AV kanıtı **1.904**; yalnız eski koşudan aktarılmış hash-only **10.947**; AV kanıtı olmayan başka eşleşme **4.080**. Bu 1.904 tarihsel kanıttır, 2026-11-21'de yeni canlı yayın testi yapılmadı.
+- **DEVAM_NOTU.md:L1626** — [Tarihsel kaynak kaydı] - **#497 ile örtüşme:** özgün 20 Kasım AV raporunun 1.107 WORKING + 685 RECHECK_REQUIRED kimliğinin tamamı yeni hash haritasındaki 1.792 TEST kaydıyla **1.792/1.792 birebir eşleşiyor**. Belirsiz 685 kayıttan **20** eski dünya çalıştırmasında gerçek AV çözülmüş (bunların güncel rapor durumu: PROBE_FAILED 11, AV_STREAMS_PRESENT 5, TIMEOUT 4); **63** yalnız önceki hash-only; **208** dünya raporunda hiç yok. Eski 20 AV, yeni belirsiz sonucu otomatik geçersiz kılamaz; recheck kuyruğunda kalır.
+- **DEVAM_NOTU.md:L1633** — [Tarihsel kaynak kaydı] 21 Kasım 2026 — Aşama 6 kod kabulü: 685 belirsiz için salt-okunur plan
+- **DEVAM_NOTU.md:L1637** — [Tarihsel kaynak kaydı] - PR #594 Production Security Gate run `44846469069` **SUCCESS**: retry-plan testleri, Stage 2/3, Stage 5, Stage 6, FFmpeg fixture ve Türkçe kanıt offline regresyonları geçti. Main'e birleşme sonrası gate `44846692188` kontrol anında devam ediyordu; son sonucu ayrıca kontrol et.
+- **DEVAM_NOTU.md:L1639** — [Tarihsel kaynak kaydı] - Aşama 4 güvenlik kodu DNS hostname ve public IP kaynaklarını aynı pinlenmiş indirme yoluna alır; FFmpeg yalnız yerel dosya görür. Çok parçalı HLS/DASH segment/anahtar toplayıcısı ve gerçek yayıncı örneği hâlâ açık. Bu yüzden 685 canlı retry kilidi kapalı kalır.
+- **DEVAM_NOTU.md:L1643** — [Tarihsel kaynak kaydı] 21 Kasım 2026 — Drive arşivi salt-okunur yapısal inceleme
+- **DEVAM_NOTU.md:L1645** — [Tarihsel kaynak kaydı] - Mevcut MADSC55-TV-V2 — Independent Encrypted Recovery Archive klasöründeki MADSC55-TV-V2 stage4-24 acceptance archive.enc dosyası yetkili Drive bağlantısından okundu; dosya boyutu **7.832.688 bayt**.
+- **DEVAM_NOTU.md:L1646** — [Tarihsel kaynak kaydı] - İndirilen baytların SHA-256 değeri 29f5498c3173b39afe5c4bee824e4423cc8229961fb5f7cbf26e402d449f4241; önceki nottaki hash ile eşleşti.
+- **DEVAM_NOTU.md:L1647** — [Tarihsel kaynak kaydı] - legacy_drive_archive_audit.py yapısal kontrolü yeniden üretildi: 7.819 JSONL kaydı, her kayıtta schema 1, 12 bayt nonce ve ciphertext; 7.819 nonce benzersiz. **Yalnızca yapısal PASS.**
+- **DEVAM_NOTU.md:L1648** — [Tarihsel kaynak kaydı] - Şifre çözme, kimlik/içerik doğrulaması veya restore yapılmadı. Bu dosya secure_archive.py Scrypt/AES-GCM tek-blob formatı ya da turk_authorized_vault.py Fernet kasası ile aynı format olarak varsayılmamalı. Uyumlu anahtar/şema ve bağımsız beklenen restore hash'i yok.
+- **DEVAM_NOTU.md:L1649** — [Tarihsel kaynak kaydı] - Drive izin metadatasında dosya sahibi ve yedek servis hesabı görünüyor; herkese açık (anyone) izin gözlenmedi. Dosya değiştirilmedi.
+- **DEVAM_NOTU.md:L1653** — [Tarihsel kaynak kaydı] 21 Kasım 2026 — KRİTİK DÜZELTME: 12 Kasım gerçek harici Drive restore kabulü
+- **DEVAM_NOTU.md:L1655** — [Tarihsel kaynak kaydı] - Önceki “Stage4-24 Drive arşivi hiçbir zaman şifresi çözülmedi / restore test edilmedi” iddiası tarihsel olarak YANLIŞ. GitHub Actions run 43241168321 (12 Kasım) SUCCESS; bağımsız Drive restore job 131291179781 SUCCESS. Bu job mevcut Google Drive arşivinin revision 4 sürümünü ayrı runner'a indirdi, gerekli sırlarla kayıtları doğrulayarak restore etti ve kabul makbuzu üretti.
+- **DEVAM_NOTU.md:L1656** — [Tarihsel kaynak kaydı] - Mevcut Drive dosyası MADSC55-TV-V2 stage4-24 acceptance archive.enc ile üretici artifact 13957249280 içindeki inventory.enc BAYT BAYT AYNI. Boyut 7.832.688, SHA-256 29f5498c3173b39afe5c4bee824e4423cc8229961fb5f7cbf26e402d449f4241. Kaynak ZIP hash 92766f43a713de6363577b6c179d9669e3d14ae3131e8e0efccd5f6c8007f369.
+- **DEVAM_NOTU.md:L1658** — [Tarihsel kaynak kaydı] - Yeni v2/stage4_historical_restore_verify.py yalnızca imzalanmış/pinlenmiş artifact ZIP hash, kaynak/restore makbuzları ve Drive şifreli baytlarını eşleştirir; yeni şifre çözme veya geri yükleme yapmaz. Üç özel dosya veya herhangi bir anahtar repoya eklenmedi.
+- **DEVAM_NOTU.md:L1661** — [Tarihsel kaynak kaydı] - Kanıt: https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43241168321 ; rapor v2/reports/stage4_historical_drive_restore_provenance_20261121.json.
+- **DEVAM_NOTU.md:L1664** — [Tarihsel kaynak kaydı] 21 Kasım 2026 — #34 hız sınırı kapıları main'e alındı; gereksiz PR'lar temizlendi
+- **DEVAM_NOTU.md:L1666** — [Tarihsel kaynak kaydı] - PR #600 merged: commit 49917175ee03965de1551c3edda70ac5f4042b0c, PR CI run 44889818997 SUCCESS ve main CI run 44889981141 SUCCESS. HTTP 200 içinde GitHub/Codeberg/GitLab rate-limit hatası döndüğünde salt-okunur keşif tanılaması aynı sağlayıcının sonraki sorgularını durdurur. Provider body/token çıktı olarak yayınlanmaz. Hata sadece bir sorguya indirgenir, kalan sorgular SKIPPED olur; normal boş sonuçlar başarılı kalır.
+- **DEVAM_NOTU.md:L1676** — [Tarihsel kaynak kaydı] - Birleştirilmeden kapatılan eski/mükerrer PR'lar: #200, #75, #57, #66, #620, #221, #216, #210, #206, #93, #83, #73, #67, #64, #60, #52, #44, #40, #11, #9. Tarihsel GitHub kayıtları silinmedi.
+- **DEVAM_NOTU.md:L1679** — [Tarihsel kaynak kaydı] - GitHub commit workflow-run connector sorgusu yalnız PR-triggered ilk sayfayı verir; main push veya bütün başarısız Actions koşularının eksiksiz envanteri değildir. `493e1699` commit status listesinin boşluğu CI PASS anlamına gelmez. Eski başarısız run'lar aynı kodda güncel başarılı kabul olmadan çözülmüş ilan edilmez.
+- **DEVAM_NOTU.md:L1682** — [Tarihsel kaynak kaydı] Actions başarısızlıklarının karşılaştırmalı job kanıtı (21 Kasım 2026)
+- **DEVAM_NOTU.md:L1684** — [Tarihsel kaynak kaydı] - Run `41186910011`: `discovery-tests` FAILURE, `safety` SKIPPED; sonraki run `41186924198`: `compile`, `protect`, `discovery-tests`, `safety` SUCCESS. Tarihsel offline test hatası sonradan düzeltilmiş.
+- **DEVAM_NOTU.md:L1686** — [Tarihsel kaynak kaydı] - PR run `44844890250`: aynı güvenlik işi FAILURE; sonraki PR run `44845062944`: SUCCESS. Import yolu düzeltmesi sonrası başarılı kontrol var.
+- **DEVAM_NOTU.md:L1690** — [Tarihsel kaynak kaydı] 21 Kasım 2026 — son GitHub görev kaydı mutabakatı
+- **DEVAM_NOTU.md:L1695** — [Tarihsel kaynak kaydı] - Doğrulanmış tarihsel Actions failure → success: `41186910011` → `41186924198` (archive acceptance), `43483992949` → `43484653370` (Stage 6 offline package), `44844890250` → `44845062944` (Stage 5 hash crosswalk). #622 security run `44921994257` **SUCCESS**; canlı diagnostic **SKIPPED**. Bunlar tüm Actions tarihinin eksiksiz envanteri değildir.
+- **DEVAM_NOTU.md:L1699** — [Tarihsel kaynak kaydı] 21 Kasım 2026 — PR #624 birleşti; görev defteri güncellendi
+- **DEVAM_NOTU.md:L1700** — [Tarihsel kaynak kaydı] - GitHub PR [#624](https://github.com/Madsc55/MADSC55-TV-V2/pull/624) `main` dalına squash-merge edildi: `406976ca22c9787daac7d7496a8d8d9cc2b92492`.
+- **DEVAM_NOTU.md:L1701** — [Tarihsel kaynak kaydı] - Actions [44944789787](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44944789787): Production Security Gate **SUCCESS**; canlı keşif işi **SKIPPED**.
+- **DEVAM_NOTU.md:L1708** — [Tarihsel kaynak kaydı] 21 Kasım 2026 — eski PR #365 arşivlendi, teknik durum ayrıştırıldı
+- **DEVAM_NOTU.md:L1709** — [Tarihsel kaynak kaydı] - `main` doğrulanan SHA: `b4b2a845c9f296545c0bb66272648177db369ea2` (#627 squash merge). PR #624, #625, #626, #627 birleşti; ilgili güvenlik koşuları sırasıyla `44944789787`, `44947424127`, `44949181505`, `44950371186` SUCCESS.
+- **reports/ANA_SISTEM_10_MADDE_FINAL_KABUL_20261127.md:L1** — [Tarihsel kaynak kaydı] MADSC55 TV V2 — 10 maddelik ana sistem offline final kabulü — 27 Kasım 2026
+- **reports/ANA_SISTEM_10_MADDE_FINAL_KABUL_20261127.md:L5** — [Tarihsel kaynak kaydı] | No | Madde | Kanıt / offline kabul |
+- **reports/ANA_SISTEM_10_MADDE_FINAL_KABUL_20261127.md:L7** — [Tarihsel kaynak kaydı] | 1 | Envanter | #793: iki kümenin 36470 URL birleşimi; 7650/7650, 1110/1110, 4955/4955 tarihsel mutabakat. Tüm tarihsel taramaların toplamı değildir. |
+- **reports/ANA_SISTEM_10_MADDE_FINAL_KABUL_20261127.md:L8** — [Tarihsel kaynak kaydı] | 2 | ASR | #793: FLEURS yerel Türkçe/İngilizce örnek, model güveni 0.9579/0.9852, yalnız ipucu. |
+- **reports/ANA_SISTEM_10_MADDE_FINAL_KABUL_20261127.md:L9** — [Tarihsel kaynak kaydı] | 3 | OCR | #793: 6/6 yerel örnek frame, Türkçe metin ipucu. |
+- **reports/ANA_SISTEM_10_MADDE_FINAL_KABUL_20261127.md:L10** — [Tarihsel kaynak kaydı] | 4 | WebVTT | #793: iki zamanlı Türkçe cue, konuşmadan ayrı. |
+- **reports/ANA_SISTEM_10_MADDE_FINAL_KABUL_20261127.md:L11** — [Tarihsel kaynak kaydı] | 5 | Kimlik | #793: yabancı ad/ülke, konuşma/altyazı ayrımı, fail-closed. |
+- **reports/ANA_SISTEM_10_MADDE_FINAL_KABUL_20261127.md:L12** — [Tarihsel kaynak kaydı] | 6 | Kalite | #784/#785 ölçülen çözünürlük ve bitrate, bağımsız kimlik ve AV; #789 ayrı başlangıç/istikrar testi. |
+- **reports/ANA_SISTEM_10_MADDE_FINAL_KABUL_20261127.md:L14** — [Tarihsel kaynak kaydı] | 8 | Kaynak erişimi | #784 GitLab/Codeberg 429 sınırları, Retry-After ve devre kesici regresyonları. |
+- **reports/ANA_SISTEM_10_MADDE_FINAL_KABUL_20261127.md:L16** — [Tarihsel kaynak kaydı] | 10 | Final kabul | Bu rapor, önceki kanıtlar ve iki yeni CI kapısı; merge sonrası yalnız belirlenmiş offline teslim kapsamı kapanır. |
+- **reports/ANA_SISTEM_10_MADDE_FINAL_KABUL_20261127.md:L18** — [Tarihsel kaynak kaydı] Önceki PR kanıtları
+- **reports/ANA_SISTEM_10_MADDE_FINAL_KABUL_20261127.md:L20** — [Tarihsel kaynak kaydı] | PR | Offline CI run | Production Security Gate run | Merge |
+- **reports/ANA_SISTEM_10_MADDE_FINAL_KABUL_20261127.md:L22** — [Tarihsel kaynak kaydı] | 784 | 45574375452 | 45574375379 | b4c5bda1563d7198c689c302774f8c78405b27ac |
+- **reports/ANA_SISTEM_10_MADDE_FINAL_KABUL_20261127.md:L23** — [Tarihsel kaynak kaydı] | 785 | 45575191193 | 45575191143 | d0f7ec99082ca1ae90128251ef2763346c9e5999 |
+- **reports/ANA_SISTEM_10_MADDE_FINAL_KABUL_20261127.md:L24** — [Tarihsel kaynak kaydı] | 786 | 45583956793 | 45583956760 | abab59a5aece98080bebcec3a2493300da6a2764 |
+- **reports/ANA_SISTEM_10_MADDE_FINAL_KABUL_20261127.md:L25** — [Tarihsel kaynak kaydı] | 787 | 45700670542 | 45700670504 | 27838a8d11179e87dd2d17498a493d061022fd1c |
+- **reports/ANA_SISTEM_10_MADDE_FINAL_KABUL_20261127.md:L26** — [Tarihsel kaynak kaydı] | 788 | 45709361771 | 45709361784 | 1a350aaf67690577475e4945714b5af1287eabfc |
+- **reports/ANA_SISTEM_10_MADDE_FINAL_KABUL_20261127.md:L27** — [Tarihsel kaynak kaydı] | 789 | 45729120272 | 45729120267 | b666a0b6fdc39c7787b4782f03e008821a5b5dcb |
+- **reports/ANA_SISTEM_10_MADDE_FINAL_KABUL_20261127.md:L28** — [Tarihsel kaynak kaydı] | 792 | 45871683327 | 45871683359 | a4e0dc1410c5c82336e097dd87cf834fa57792b6 |
+- **reports/ANA_SISTEM_10_MADDE_FINAL_KABUL_20261127.md:L29** — [Tarihsel kaynak kaydı] | 793 | 45911528890 | 45911528852 | 2e853cc46b5e201dd9e7f7939dade4c686daad40 |
+- **reports/ANA_SISTEM_10_MADDE_FINAL_KABUL_20261127.md:L31** — [Tarihsel kaynak kaydı] Tüm tabloda listelenen önceki iki CI sonucu GitHub API üzerinden completed/success, PR'lar merged=true doğrulandı. Run bağlantısı: https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/&lt;run-id&gt;. İlk beş ayrıntısı: [önceki kapanış](ANA_SISTEM_1_5_OFFLINE_KAPANIS_20261127.md).
+- **reports/ANA_SISTEM_10_MADDE_FINAL_KABUL_20261127.md:L33** — [Tarihsel kaynak kaydı] 6–8 ayrıntıları
+- **reports/ANA_SISTEM_10_MADDE_FINAL_KABUL_20261127.md:L37** — [Tarihsel kaynak kaydı] - v2/discovery_provider_requests.py: 429 bounded Retry-After, reset ve backoff, 120 sn üst sınır; 403 devre kesici. 139068536714 job logunda test_http_429_honors_bounded_retry_after, test_http_429_honors_http_date_retry_after, test_http_429_uses_rate_limit_reset_header, test_http_429_without_header_uses_exponential_backoff, test_query_matrix_opens_circuit_after_provider_429, test_network_cli_stops_codeberg_fanout_after_429, test_provider_429_retries_then_skips_remaining_terms ok. Canlı GitLab/Codeberg erişiminin düzeldiği iddia edilmez.
+- **reports/ANA_SISTEM_10_MADDE_FINAL_KABUL_20261127.md:L40** — [Tarihsel kaynak kaydı] 9 ayrıntıları
+- **reports/ANA_SISTEM_10_MADDE_FINAL_KABUL_20261127.md:L42** — [Tarihsel kaynak kaydı] - #786 job 139100675922 logu: PASS: independent ephemeral AES-256-GCM restore and SHA-256 parity. Ayrı geçici üretici/kurtarma dizinleri, üretici silindikten sonra byte/hash eşitliği, yanlış anahtar/bozuk tag reddi. Gerçek harici üretim kasası restore iddiası yok.
+- **reports/ANA_SISTEM_10_MADDE_FINAL_KABUL_20261127.md:L47** — [Tarihsel kaynak kaydı] Teslim sınırı
+- **reports/ANA_SISTEM_1_5_OFFLINE_KAPANIS_20261127.md:L1** — [Tarihsel kaynak kaydı] MADSC55 TV V2 — 1–5. maddeler offline kapanış raporu (27 Kasım 2026)
+- **reports/ANA_SISTEM_1_5_OFFLINE_KAPANIS_20261127.md:L7** — [Tarihsel kaynak kaydı] İndirilen iki özgün Actions ZIP dosyası doğrudan açıldı, SHA-256 doğrulandı; JSON içindeki URL SHA-256 değerlerinden benzersiz kümeler hesaplandı.
+- **reports/ANA_SISTEM_1_5_OFFLINE_KAPANIS_20261127.md:L9** — [Tarihsel kaynak kaydı] | Kaynak | Run / artifact | Benzersiz URL |
+- **reports/ANA_SISTEM_1_5_OFFLINE_KAPANIS_20261127.md:L11** — [Tarihsel kaynak kaydı] | Dünya taraması | 42216075104 / 13524765368 | 35327 |
+- **reports/ANA_SISTEM_1_5_OFFLINE_KAPANIS_20261127.md:L12** — [Tarihsel kaynak kaydı] | Tarihsel arşiv crosswalk | 44891650993 / 14702541294 | 18074 |
+- **reports/ANA_SISTEM_1_5_OFFLINE_KAPANIS_20261127.md:L13** — [Tarihsel kaynak kaydı] | Kesişim | Tam URL SHA-256 | 16931 |
+- **reports/ANA_SISTEM_1_5_OFFLINE_KAPANIS_20261127.md:L14** — [Tarihsel kaynak kaydı] | Yalnız dünya | Küme farkı | 18396 |
+- **reports/ANA_SISTEM_1_5_OFFLINE_KAPANIS_20261127.md:L15** — [Tarihsel kaynak kaydı] | Yalnız arşiv | Küme farkı | 1143 |
+- **reports/ANA_SISTEM_1_5_OFFLINE_KAPANIS_20261127.md:L16** — [Tarihsel kaynak kaydı] | Birleşim | 35327 + 18074 - 16931 | 36470 |
+- **reports/ANA_SISTEM_1_5_OFFLINE_KAPANIS_20261127.md:L18** — [Tarihsel kaynak kaydı] ZIP SHA-256:
+- **reports/ANA_SISTEM_1_5_OFFLINE_KAPANIS_20261127.md:L19** — [Tarihsel kaynak kaydı] - 13524765368: 6bec426291330c6b4b305e2871b721a25c44583f892c14d893472cdc3e80f87d
+- **reports/ANA_SISTEM_1_5_OFFLINE_KAPANIS_20261127.md:L20** — [Tarihsel kaynak kaydı] - 14702541294: 5cbb1de6cb9fcd7b923080259a78d36dc950f1de9b3c1dced0a680ff067a9f0b
+- **reports/ANA_SISTEM_1_5_OFFLINE_KAPANIS_20261127.md:L22** — [Tarihsel kaynak kaydı] JSON SHA-256:
+- **reports/ANA_SISTEM_1_5_OFFLINE_KAPANIS_20261127.md:L23** — [Tarihsel kaynak kaydı] - final-worldwide-acceptance.json: 41d96419250fc466786753b7d889503d0d4fc83fceb562d47eaf614a99624f0d
+- **reports/ANA_SISTEM_1_5_OFFLINE_KAPANIS_20261127.md:L24** — [Tarihsel kaynak kaydı] - crosswalk.json: 59c7487afc37d77bd38c1fb3b5398162ce606cf598904bd7fd862319ffebdf6c
+- **reports/ANA_SISTEM_1_5_OFFLINE_KAPANIS_20261127.md:L26** — [Tarihsel kaynak kaydı] Dünya raporundaki 13884 AV olumlu kaydın 2118'i CURRENT_RUN_FFPROBE_FFMPEG, 11766'sı PRIOR_RUN_HASH_ONLY_NOT_FRESH. Önceki kanıt güncel test değildir.
+- **reports/ANA_SISTEM_1_5_OFFLINE_KAPANIS_20261127.md:L30** — [Tarihsel kaynak kaydı] Kaynaklar: [dünya run](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/42216075104), [crosswalk run](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44891650993), [PR #585](https://github.com/Madsc55/MADSC55-TV-V2/pull/585), [durum defteri](../v2/tasks/state.json), [devam notu](../DEVAM_NOTU.md).
+- **reports/ANA_SISTEM_1_5_OFFLINE_KAPANIS_20261127.md:L32** — [Tarihsel kaynak kaydı] 2–5 — Dil ve kimlik zinciri: OFFLINE TAMAMLANDI
+- **reports/ANA_SISTEM_1_5_OFFLINE_KAPANIS_20261127.md:L34** — [Tarihsel kaynak kaydı] [v2/reports/turkish-sample-verification-20261119.json](../v2/reports/turkish-sample-verification-20261119.json) doğrudan okundu. İki yerel entegrasyon örneği: FLEURS gerçek insan konuşması, üretilmiş yazılı görüntü ve zamanlı Türkçe test altyazısı. Yayıncı veya cihaz örneği değildir.
+- **reports/ANA_SISTEM_1_5_OFFLINE_KAPANIS_20261127.md:L36** — [Tarihsel kaynak kaydı] | Madde | Mevcut kanıt | Offline durum |
+- **reports/ANA_SISTEM_1_5_OFFLINE_KAPANIS_20261127.md:L38** — [Tarihsel kaynak kaydı] | 2 ASR | tr 0.9579; en 0.9852; model hint only | TAMAMLANDI |
+- **reports/ANA_SISTEM_1_5_OFFLINE_KAPANIS_20261127.md:L39** — [Tarihsel kaynak kaydı] | 3 OCR | 2 örnekte 3+3 frame tamamlandı, Türkçe metin ipucu | TAMAMLANDI |
+- **reports/ANA_SISTEM_1_5_OFFLINE_KAPANIS_20261127.md:L40** — [Tarihsel kaynak kaydı] | 4 WebVTT | Her örnekte 1 zamanlı Türkçe cue; konuşmadan ayrı | TAMAMLANDI |
+- **reports/ANA_SISTEM_1_5_OFFLINE_KAPANIS_20261127.md:L41** — [Tarihsel kaynak kaydı] | 5 İsimden bağımsız kimlik inceleme | TURKISH_SPOKEN_REVIEW / TURKISH_SUBTITLED_REVIEW ayrımı; yabancı ad/ülke testleri | TAMAMLANDI |
+- **reports/ANA_SISTEM_1_5_OFFLINE_KAPANIS_20261127.md:L45** — [Tarihsel kaynak kaydı] 26 Kasım Production Security Gate run 45871683359, job 140088410115 SUCCESS logunda doğrudan görülen testler:
+- **reports/ANA_SISTEM_1_5_OFFLINE_KAPANIS_20261127.md:L47** — [Tarihsel kaynak kaydı] - test_asr_turkish_is_review_only, test_ocr_turkish_is_not_spoken_or_subtitle — ok
+- **reports/ANA_SISTEM_1_5_OFFLINE_KAPANIS_20261127.md:L48** — [Tarihsel kaynak kaydı] - test_turkish_header_only_creates_review — ok (WebVTT)
+- **reports/ANA_SISTEM_1_5_OFFLINE_KAPANIS_20261127.md:L49** — [Tarihsel kaynak kaydı] - test_real_decode_ocr_and_timed_track, test_foreign_speech_with_timed_turkish_cues, test_timing_metadata_and_text_are_separate, test_silence_and_invalid_language_probability, test_capture_receipt_and_archive_identity — ok (local integrated sample)
+- **reports/ANA_SISTEM_1_5_OFFLINE_KAPANIS_20261127.md:L50** — [Tarihsel kaynak kaydı] - test_ocr_turkish_letters_hint_only — ok.
+- **reports/ANA_SISTEM_1_5_OFFLINE_KAPANIS_20261127.md:L53** — [Tarihsel kaynak kaydı] [CI job](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/45871683359/job/140088410115).
+- **reports/ANA_SISTEM_1_5_OFFLINE_KAPANIS_20261127.md:L55** — [Tarihsel kaynak kaydı] Kapanış ve korumalar
+- **v2/MAIN_PRODUCTION_SAFETY_LOCK.md:L1** — [Tarihsel kaynak kaydı] MADSC55 TV V2 — Main Production Actions File Lock
+- **v2/MAIN_PRODUCTION_SAFETY_LOCK.md:L3** — [Tarihsel kaynak kaydı] The production workflow files were put into a fail-closed state without changing
+- **v2/MAIN_PRODUCTION_SAFETY_LOCK.md:L6** — [Tarihsel kaynak kaydı] - Original 19 contents-write production workflows are suspended as manual,
+- **v2/MAIN_PRODUCTION_SAFETY_LOCK.md:L7** — [Tarihsel kaynak kaydı] read-only audit jobs. Their original sources remain recoverable from Git history;
+- **v2/MAIN_PRODUCTION_SAFETY_LOCK.md:L10** — [Tarihsel kaynak kaydı] check remains activated by relevant pushes.
+- **v2/MAIN_PRODUCTION_SAFETY_LOCK.md:L11** — [Tarihsel kaynak kaydı] - A dedicated main safety workflow runs when main is pushed or a PR targets
+- **v2/MAIN_PRODUCTION_SAFETY_LOCK.md:L12** — [Tarihsel kaynak kaydı] main. It checks all registered workflow files, privilege scopes, trigger events,
+- **v2/MAIN_PRODUCTION_SAFETY_LOCK.md:L14** — [Tarihsel kaynak kaydı] - This checked-in lock cannot replace a server-side GitHub branch rule. The
+- **v2/MAIN_PRODUCTION_SAFETY_LOCK.md:L15** — [Tarihsel kaynak kaydı] GitHub managed app lacks administration write access and cannot create rules.
+- **v2/MAIN_PRODUCTION_SAFETY_LOCK.md:L16** — [Tarihsel kaynak kaydı] - A repository administrator must enable a main branch ruleset with mandatory
+- **v2/MAIN_PRODUCTION_SAFETY_LOCK.md:L17** — [Tarihsel kaynak kaydı] PR approval, no admin bypass, no force pushes/deletion and required status
+- **v2/MAIN_PRODUCTION_SAFETY_LOCK.md:L18** — [Tarihsel kaynak kaydı] check from V2 Main Production Security Gate.
+- **v2/MAIN_PRODUCTION_SAFETY_LOCK.md:L20** — [Tarihsel kaynak kaydı] Settings: [URL: kaynak dosyada]
+
+- **v2/OPERATIONS.md:L1** — [Tarihsel kaynak kaydı] MADSC55 TV V2 — Operational status
+- **v2/OPERATIONS.md:L3** — [Tarihsel kaynak kaydı] Run
+- **v2/OPERATIONS.md:L5** — [Tarihsel kaynak kaydı] python3 master.py --run
+- **v2/OPERATIONS.md:L10** — [Tarihsel kaynak kaydı] Reports
+- **v2/OPERATIONS.md:L15** — [Tarihsel kaynak kaydı] - `master-summary.json`: consolidated results and verification limitations.
+- **v2/OPERATIONS.md:L17** — [Tarihsel kaynak kaydı] Decoder coverage
+- **v2/OPERATIONS.md:L18** — [Tarihsel kaynak kaydı] The default `MADSC55_DECODER_SAMPLE=30` tests a rotating subset of responsive entries. For a **manual** full-sample run, set `MADSC55_DECODER_SAMPLE=1039` before `python3 master.py --run`. A full run may take hours, so it is **not** used in the 25-minute scheduled GitHub workflow. ffprobe stream identification does **not** prove continuous audio/video playback.
+- **v2/OPERATIONS.md:L20** — [Tarihsel kaynak kaydı] Protection and outstanding verification
+- **v2/OPERATIONS.md:L23** — [Tarihsel kaynak kaydı] Full decoder workflow
+- **v2/README.md:L1** — [Tarihsel kaynak kaydı] MADSC55 TV V2
+- **v2/README.md:L8** — [Tarihsel kaynak kaydı] - Worldwide discovery: `v2/discover.py`, source list `v2/config/sources.json`; report only, no automatic additions.
+- **v2/README.md:L9** — [Tarihsel kaynak kaydı] - GitHub Actions: manual trigger or twice-daily scheduled discovery; candidate report is an artifact, not a live update.
+- **v2/SCAN_61_ACTION_REPORT.md:L1** — [Tarihsel kaynak kaydı] Birleşik tarama #61 — sonuç ve yapılacaklar
+- **v2/SCAN_61_ACTION_REPORT.md:L5** — [Tarihsel kaynak kaydı] Kesin sonuçlar
+- **v2/SCAN_61_ACTION_REPORT.md:L6** — [Tarihsel kaynak kaydı] - Workflow başarılı; 42/42 kaynak erişilebilir; 27.047/27.047 benzersiz aday test edilmiş; tarama kapsamı tam.
+- **v2/SCAN_61_ACTION_REPORT.md:L8** — [Tarihsel kaynak kaydı] - Triage: PLAYBACK_REJECTED 15.239; VIDEO_NO_AUDIO 1.810; VIDEO_METADATA_GAPS 1.364; VIDEO_IDENTITY_REVIEW 8.634.
+- **v2/SCAN_61_ACTION_REPORT.md:L9** — [Tarihsel kaynak kaydı] - Kimlik tutarlılığı: 8.593 tek kaynak incelemesi, 41 çakışma incelemesi.
+- **v2/SCAN_61_ACTION_REPORT.md:L12** — [Tarihsel kaynak kaydı] - NewlistTR: 154 kaynak girdisi, 153 test, 22 kısa video çözümleme; 0 test bekleyen.
+- **v2/SCAN_61_ACTION_REPORT.md:L13** — [Tarihsel kaynak kaydı] - Kısa çözümleme sonucu 12 geçici inceleme girdisi; yayıncı kimliği ve uzun süreli çalışma doğrulanmış değil.
+- **v2/SCAN_61_ACTION_REPORT.md:L17** — [Tarihsel kaynak kaydı] Bir sonraki tek birleşik iş akışına ilişkin kararlar
+- **v2/SCAN_61_ACTION_REPORT.md:L18** — [Tarihsel kaynak kaydı] 1. #61'in mevcut raporlarını yeniden taramadan kullan; #60, #2, #3 testlerini tekrar etme.
+- **v2/SCAN_61_ACTION_REPORT.md:L22** — [Tarihsel kaynak kaydı] 5. Tek birleşik workflow'u koru; güvenlik ve mevcut korumalar dışındaki gereksiz test çoğaltmalarını yapma.
+- **v2/SCAN_61_ACTION_REPORT.md:L24** — [Tarihsel kaynak kaydı] Dokunulmayacaklar
+- **v2/WORK_PLAN.md:L1** — [Tarihsel kaynak kaydı] V2 güvenli toplu doğrulama iş planı
+- **v2/WORK_PLAN.md:L3** — [Tarihsel kaynak kaydı] Tamamlananlar
+- **v2/WORK_PLAN.md:L5** — [Tarihsel kaynak kaydı] - GitHub/M3U kaynak listesi 17 kaynak olarak yapılandırıldı.
+- **v2/WORK_PLAN.md:L7** — [Tarihsel kaynak kaydı] - YouTube canlı yayın keşfi ve metadata kontrolü mevcut.
+- **v2/WORK_PLAN.md:L9** — [Tarihsel kaynak kaydı] - GitHub Actions concurrency kuyruğu çakışmaları azaltacak şekilde güncellendi.
+- **v2/WORK_PLAN.md:L11** — [Tarihsel kaynak kaydı] Öncelik sırası
+- **v2/WORK_PLAN.md:L14** — [Tarihsel kaynak kaydı] 3. Adayların HTTP ve kısa video decoder kontrollerini kaynak bazında yap; uzun süreli kararlılığı ayrı değerlendir.
+- **v2/WORK_PLAN.md:L20** — [Tarihsel kaynak kaydı] Kabul koşulları
+- **v2/WORK_PLAN.md:L23** — [Tarihsel kaynak kaydı] - Eksik testler başarı gibi raporlanmaz.
+- **v2/WORK_PLAN.md:L24** — [Tarihsel kaynak kaydı] - Her yayın için kaynak ve test kanıtı saklanır; token/özel URL'ler kamuya açık JSON raporlarında paylaşılmaz.
+- **v2/WORK_PLAN.md:L26** — [Tarihsel kaynak kaydı] 28 Ekim 2026 — birleşik keşif zinciri devir notu
+- **v2/WORK_PLAN.md:L27** — [Tarihsel kaynak kaydı] - Yeni GitHub depo/M3U kaynak keşfi ana `V2 Turkish Stream End-to-End Discovery` workflow'unun ilk aşamasına bağlandı.
+- **v2/WORK_PLAN.md:L33** — [Tarihsel kaynak kaydı] 28 Ekim 2026 — toplu test takip notu
+- **v2/WORK_PLAN.md:L35** — [Tarihsel kaynak kaydı] - Kaynak bazında M3U kayıt sayısı, farklı stream URL sayısı ve kaynak erişim hatası `v2/reports/candidates.json` içindeki `source_audit` alanına eklendi. Bu geliştirme sonraki workflow çalışmasında doğrulanmalı.
+- **v2/WORK_PLAN.md:L39** — [Tarihsel kaynak kaydı] 28 Ekim — hızlandırılmış kabul sırası
+- **v2/WORK_PLAN.md:L40** — [Tarihsel kaynak kaydı] 1. **Tamamlandı (kod):** GitHub kaynak keşfi + 17 kayıtlı kaynağı birleşik aday havuzuna alma; kaynak bazında sayım ve hata raporu.
+- **v2/WORK_PLAN.md:L41** — [Tarihsel kaynak kaydı] 2. **Tamamlandı (kod; Actions sonucu bekleniyor):** `v2/all_source_playback.py` her erişilebilir M3U kaynağından en fazla dört yeni URL seçer, toplam 100 akışı ffprobe ile kısa video/ses/çözünürlük kontrolüne sokar. Kaynak başına ve URL hash'i bazında rapor üretir; bu **örnekleme**, tüm yayınların doğrulanması değildir.
+- **v2/WORK_PLAN.md:L43** — [Tarihsel kaynak kaydı] 4. **Eksik:** Örneklemeyi kademeli tam kapsama yükseltmek (maliyet/süre/kota kontrolü); bütün adaylar için kimlik, içerik, kararlılık ve tekrar doğrulaması.
+- **v2/WORK_PLAN.md:L47** — [Tarihsel kaynak kaydı] 28 Ekim 2026 — test sonuçları ve kalan öncelikler
+- **v2/WORK_PLAN.md:L50** — [Tarihsel kaynak kaydı] - `v2/final_validation_summary.py` artık kaynak erişimi, GitHub yeni M3U dosyaları, aday sayısı, örneklenen stream ve video doğrulama sayılarını tek raporda toplar. Değişiklik yeni Actions koşusunda doğrulanacak.
+- **v2/WORK_PLAN.md:L51** — [Tarihsel kaynak kaydı] - Öncelik 1: En yeni Actions run'ın sonucunu ve `final-validation-summary.json` içeriğini doğrula; hata varsa düzelt.
+- **v2/WORK_PLAN.md:L52** — [Tarihsel kaynak kaydı] - Öncelik 2: Kaynakların tüm adayları için bütçeli, parçalara bölünmüş HTTP/ffprobe taraması ve tekrar denemeleri; kaynak bazlı tam kapsam sayacı. 100 örneklemi tüm yayın testi diye sunma.
+- **v2/WORK_PLAN.md:L57** — [Tarihsel kaynak kaydı] 28 Ekim — tek komut test listesi entegrasyonu
+- **v2/WORK_PLAN.md:L62** — [Tarihsel kaynak kaydı] 28 Ekim — dört parçalı test sonuçları
+- **v2/WORK_PLAN.md:L64** — [Tarihsel kaynak kaydı] - Run 40660159911: **success**; ayrı `short-decoded-review-only.m3u8` üretimi dahil birleşik zincir başarıyla bitti, artifact mevcut.
+- **v2/WORK_PLAN.md:L65** — [Tarihsel kaynak kaydı] - Run 40660910249: son kontrol sırasında **in_progress**; sonuç bekleniyor.
+- **v2/WORK_PLAN.md:L69** — [Tarihsel kaynak kaydı] 28 Ekim — ölçülmüş toplu doğrulama sonucu
+- **v2/WORK_PLAN.md:L74** — [Tarihsel kaynak kaydı] 28 Ekim 2026 — YENİ SOHBETE DEVİR / TEK KOMUT ÖNCELİĞİ
+- **v2/WORK_PLAN.md:L84** — [Tarihsel kaynak kaydı] **Yeni sohbette kesin iş sırası:**
+- **v2/WORK_PLAN.md:L85** — [Tarihsel kaynak kaydı] 1. Son Actions run'larını ve 40665346855 hatasını incele; hatayı düzelt.
+- **v2/WORK_PLAN.md:L86** — [Tarihsel kaynak kaydı] 2. Ana `V2 Turkish Stream End-to-End Discovery` workflow'unda tek tetiklemeyle toplu sayfalı/shard yayın testlerini başlat, bağımlılıkla bekle, tek aggregate raporu üret; kaynak keşfi ile toplu testin aynı aday anlık görüntüsünü kullanmasını sağla. Yinelenen pahalı işlerden kaçın.
+- **v2/WORK_PLAN.md:L93** — [Tarihsel kaynak kaydı] 28 Ekim 2026 — yeni sohbet Actions kontrolü
+- **v2/WORK_PLAN.md:L94** — [Tarihsel kaynak kaydı] - `49cc5a9` commit'i ana `.github/workflows/v2-turkish-stream-review.yml` dosyasına 4 shard × 2 page playback matrix, artifact indirme ve aggregate adımını **eklemiş**. Önceki devir notundaki 'henüz bağlanmadı' ifadesi artık güncel değil.
+- **v2/WORK_PLAN.md:L96** — [Tarihsel kaynak kaydı] - Eski toplu run `40665346855` **failure**: sekiz playback işi success, `aggregate` işinin `Merge and validate shard evidence` adımı failure. `40665377633` sonraki toplu run **success**. Eski hatanın kök sebebi log olmadan kesinleştirilemez.
+- **v2/WORK_PLAN.md:L97** — [Tarihsel kaynak kaydı] - Ana workflow hâlâ her shard içinde GitHub kaynak keşfini yeniden çalıştırıyor; aynı aday snapshot'ı garanti edilmiyor. Ayrıca `review` job'u `if: always()` ile eksik/başarısız shard sonrasında da başlayabiliyor. Öncelik: tek keşif artifact'ı paylaşımı, başarısız shard'ı açık raporlama, bütçeli tekrar denemesi, gerçek kapsama ve metadata doğrulaması.
+- **v2/WORK_PLAN.md:L101** — [Tarihsel kaynak kaydı] - Run `40665346855` aggregate logu kesin hata: `Duplicate shard index: 0`; 8 playback job success. Sonraki run `40665377633` success.
+- **v2/WORK_PLAN.md:L102** — [Tarihsel kaynak kaydı] - `v2/aggregate_playback_shards.py` artık shard anahtarını `(page, shard_index)` olarak sayısal normalleştiriyor ve eksik shard indeksini açık hata olarak raporluyor (commit `09a9eb0`).
+- **v2/WORK_PLAN.md:L103** — [Tarihsel kaynak kaydı] - Ana workflow 8 playback matrix ve review aggregate zincirini zaten içeriyor. Tek komutun tüm kabul koşulları henüz tamamlanmadı: aynı keşif snapshot'ı, başarısızların retry, tam kapsam ve aday metadata kanıtı eksik. Ayrı workflow'ları tetikleyerek çözüm üretme.
+- **v2/WORK_PLAN.md:L105** — [Tarihsel kaynak kaydı] 28 Ekim — toplu zincir sağlamlaştırma
+- **v2/WORK_PLAN.md:L106** — [Tarihsel kaynak kaydı] - Ana birleşik workflow'da sekiz playback shard başarısızsa review artık `if: always()` ile devam etmiyor; yanlış başarılı rapor önleniyor (commit `5182c4c`).
+- **v2/WORK_PLAN.md:L107** — [Tarihsel kaynak kaydı] - `final_validation_summary.py` sekiz shard'ın `all-source-playback-aggregate.json` sonucunu öncelikli okuyor; toplam farklı test, decoded, not decoded ve batch bilgilerini raporluyor (commit `36b2546`). Önceki tek `all-source-playback.json` dosyasını zorunlu sanma hatası giderildi.
+- **v2/WORK_PLAN.md:L111** — [Tarihsel kaynak kaydı] 28 Ekim — kesin tek birleşik görev kabul sözleşmesi
+- **v2/WORK_PLAN.md:L115** — [Tarihsel kaynak kaydı] 28 Ekim — birleşik kanıt eksiksizliği
+- **v2/WORK_PLAN.md:L116** — [Tarihsel kaynak kaydı] - `6f98ef8`: playback aggregator tam olarak `(page 0..1, shard 0..3)` sekiz kanıtı görmeden başarılı sonuç üretmez; eksik/fazla batch açık hata. Bu, örneklemenin bütün adayları kapsadığı iddiası değildir.
+- **v2/WORK_PLAN.md:L120** — [Tarihsel kaynak kaydı] 28 Ekim — birleşik yayın yeniden deneme
+- **v2/WORK_PLAN.md:L122** — [Tarihsel kaynak kaydı] - `40683960121` birleşik run kontrol anında in_progress; yeni commit'in sonucunu henüz kanıtlamaz.
+- **v2/WORK_PLAN.md:L125** — [Tarihsel kaynak kaydı] 28 Ekim 13:31 — doğrulanmış sonuç ve kalan sıra
+- **v2/WORK_PLAN.md:L126** — [Tarihsel kaynak kaydı] - Actions `40683960121` (commit `6f98ef87`) SUCCESS; Actions `40684089681` (commit `9d247f74`, 3 yeniden deneme) SUCCESS. Bu, sınırlı örneklemenin başarı durumudur; tüm adayları doğrulamaz.
+- **v2/WORK_PLAN.md:L127** — [Tarihsel kaynak kaydı] - `523eb9dd`: toplu kanıtta `coverage_complete` ve `incomplete_sources` alanları; kaynak fetch hatası veya shard adaylarının örneklenmemesi görünür hale getirildi.
+- **v2/WORK_PLAN.md:L128** — [Tarihsel kaynak kaydı] - **Öncelik 1:** kaynakların tek immutable snapshot'ı ve eksik fetch'lerin 3 yeniden denenmesi.
+- **v2/WORK_PLAN.md:L129** — [Tarihsel kaynak kaydı] - **Öncelik 2:** 250×8 sınırlı örneklemeden bütün adaylara tam kapsam, otomatik genişleyen batch.
+- **v2/WORK_PLAN.md:L134** — [Tarihsel kaynak kaydı] 28 Ekim 14:45 — testler doğrulandı, final rapor bağlandı
+- **v2/WORK_PLAN.md:L137** — [Tarihsel kaynak kaydı] - Sonraki iş: ortak immutable kaynak snapshot, tüm adayların dinamik sayfalama ile kapsanması, tek final kabul raporu ve eksik kontrollerde fail-closed. Canlı listeye müdahale yok.
+- **v2/arsiv/eski_sistem_7650_test_kuyrugu_README.md:L1** — [Tarihsel kaynak kaydı] 7.650 eski sistem adayının güvenli test kuyruğu
+- **v2/arsiv/eski_sistem_7650_test_kuyrugu_README.md:L7** — [Tarihsel kaynak kaydı] Bir çalışma ortamında ffmpeg kuruluysa:
+- **v2/arsiv/eski_sistem_7650_test_kuyrugu_README.md:L9** — [Tarihsel kaynak kaydı] python v2/verify_legacy_7650_queue.py --state v2/reports/legacy-queue/state.json --output v2/reports/legacy-queue/summary.json
+- **v2/arsiv/eski_sistem_aktarim_raporu_2026-11-16.json:$.status** — [Tarihsel kaynak kaydı] staged_only_not_playback_verified
+- **v2/config/sources.json:$.sources[0].scope** — [Tarihsel kaynak kaydı] world
+- **v2/config/sources.json:$.sources[1].scope** — [Tarihsel kaynak kaydı] TR
+- **v2/config/sources.json:$.sources[2].scope** — [Tarihsel kaynak kaydı] SE
+- **v2/config/sources.json:$.sources[3].scope** — [Tarihsel kaynak kaydı] world
+- **v2/config/sources.json:$.sources[4].scope** — [Tarihsel kaynak kaydı] TR
+- **v2/config/sources.json:$.sources[5].scope** — [Tarihsel kaynak kaydı] TR
+- **v2/config/sources.json:$.sources[6].scope** — [Tarihsel kaynak kaydı] TR
+- **v2/config/sources.json:$.sources[7].scope** — [Tarihsel kaynak kaydı] TR
+- **v2/config/sources.json:$.sources[8].scope** — [Tarihsel kaynak kaydı] TR
+- **v2/config/sources.json:$.sources[9].scope** — [Tarihsel kaynak kaydı] TR
+- **v2/config/sources.json:$.sources[10].scope** — [Tarihsel kaynak kaydı] TR
+- **v2/config/sources.json:$.sources[11].scope** — [Tarihsel kaynak kaydı] TR
+- **v2/config/sources.json:$.sources[12].scope** — [Tarihsel kaynak kaydı] TR
+- **v2/config/sources.json:$.sources[13].scope** — [Tarihsel kaynak kaydı] TR
+- **v2/config/sources.json:$.sources[14].scope** — [Tarihsel kaynak kaydı] TR
+- **v2/config/sources.json:$.sources[15].scope** — [Tarihsel kaynak kaydı] TR
+- **v2/config/sources.json:$.sources[16].scope** — [Tarihsel kaynak kaydı] AZ
+- **v2/config/sources.json:$.sources[17].scope** — [Tarihsel kaynak kaydı] AZ
+- **v2/config/sources.json:$.sources[18].scope** — [Tarihsel kaynak kaydı] AZ
+- **v2/config/sources.json:$.sources[19].scope** — [Tarihsel kaynak kaydı] TR
+- **v2/config/sources.json:$.sources[20].scope** — [Tarihsel kaynak kaydı] world
+- **v2/config/sources.json:$.sources[21].scope** — [Tarihsel kaynak kaydı] world
+- **v2/config/sources.json:$.sources[22].scope** — [Tarihsel kaynak kaydı] TR
+- **v2/config/sources.json:$.sources[23].scope** — [Tarihsel kaynak kaydı] TR
+- **v2/config/sources.json:$.sources[24].scope** — [Tarihsel kaynak kaydı] TR
+- **v2/config/sources.json:$.sources[25].scope** — [Tarihsel kaynak kaydı] world
+- **v2/config/sources.json:$.sources[26].scope** — [Tarihsel kaynak kaydı] world
+- **v2/config/sources.json:$.sources[27].scope** — [Tarihsel kaynak kaydı] TR
+- **v2/config/sources.json:$.sources[28].scope** — [Tarihsel kaynak kaydı] TR
+- **v2/config/sources.json:$.sources[29].scope** — [Tarihsel kaynak kaydı] TR
+- **v2/config/sources.json:$.sources[30].scope** — [Tarihsel kaynak kaydı] world
+- **v2/config/sources.json:$.sources[31].scope** — [Tarihsel kaynak kaydı] world
+- **v2/config/sources.json:$.sources[32].scope** — [Tarihsel kaynak kaydı] world
+- **v2/config/sources.json:$.sources[33].scope** — [Tarihsel kaynak kaydı] world
+- **v2/docs/checkpoint-bounded-evidence-runbook.md:L1** — [Tarihsel kaynak kaydı] V2 #17/#18/#20 — mevcut kanıtın şifreli checkpoint'e aktarımı
+- **v2/docs/checkpoint-bounded-evidence-runbook.md:L3** — [Tarihsel kaynak kaydı] **Durum:** PR #431 ile `v2/merge_bounded_retry_checkpoint.py` ve regresyon testleri main'e alındı. Bu dosya gerçek checkpoint aktarımının yapıldığı anlamına **gelmez**.
+- **v2/docs/checkpoint-bounded-evidence-runbook.md:L5** — [Tarihsel kaynak kaydı] Ön koşullar
+- **v2/docs/checkpoint-bounded-evidence-runbook.md:L7** — [Tarihsel kaynak kaydı] - `V2_ARCHIVE_PASSPHRASE`: güvenli çalışma ortamından sağlanmalı; GitHub'a, loga veya rapora yazılmamalı.
+- **v2/docs/checkpoint-bounded-evidence-runbook.md:L8** — [Tarihsel kaynak kaydı] - `v2/reports/task17-18-20-bounded-retry-20261118.json`: main'deki önceki 15 adres/17 deneme kanıtı.
+- **v2/docs/checkpoint-bounded-evidence-runbook.md:L9** — [Tarihsel kaynak kaydı] - Çalışma yalnızca yetkili izole ortamda yapılmalı. Checkpoint önce şifreli olarak yedeklenmeli; yedek ve SHA-256 kontrolü kaydedilmeli.
+- **v2/docs/checkpoint-bounded-evidence-runbook.md:L11** — [Tarihsel kaynak kaydı] Çevrimdışı uygulama
+- **v2/docs/checkpoint-bounded-evidence-runbook.md:L14** — [Tarihsel kaynak kaydı] Repo kökünden; parolayı komut satırında yazmayın.
+- **v2/docs/checkpoint-bounded-evidence-runbook.md:L15** — [Tarihsel kaynak kaydı] python3 v2/merge_bounded_retry_checkpoint.py \
+- **v2/docs/checkpoint-bounded-evidence-runbook.md:L17** — [Tarihsel kaynak kaydı] --report v2/reports/task17-18-20-bounded-retry-20261118.json
+- **v2/docs/checkpoint-bounded-evidence-runbook.md:L19** — [Tarihsel kaynak kaydı] İlk komut hata vermediyse, gerçek şifreli checkpoint ve yedeği hazırsa:
+- **v2/docs/checkpoint-bounded-evidence-runbook.md:L20** — [Tarihsel kaynak kaydı] python3 v2/merge_bounded_retry_checkpoint.py \
+- **v2/docs/checkpoint-bounded-evidence-runbook.md:L22** — [Tarihsel kaynak kaydı] --report v2/reports/task17-18-20-bounded-retry-20261118.json \
+- **v2/docs/checkpoint-bounded-evidence-runbook.md:L23** — [Tarihsel kaynak kaydı] --apply
+- **v2/docs/checkpoint-bounded-evidence-runbook.md:L28** — [Tarihsel kaynak kaydı] Kabul ölçütü
+- **v2/docs/checkpoint-bounded-evidence-runbook.md:L29** — [Tarihsel kaynak kaydı] 1. Dry-run hatasız, 15 tarihsel kimlik mevcut, uygun güncelleme sayısı kaydedilmiş olmalı.
+- **v2/docs/checkpoint-bounded-evidence-runbook.md:L31** — [Tarihsel kaynak kaydı] 3. Aynı rapor ikinci kez uygulandığında `eligible_updates=0` olmalı.
+- **v2/docs/checkpoint-bounded-evidence-runbook.md:L32** — [Tarihsel kaynak kaydı] 4. Önceki şifreli yedek üzerinden geri dönüş mümkün olmalı.
+- **v2/docs/checkpoint-bounded-evidence-runbook.md:L33** — [Tarihsel kaynak kaydı] 5. Gerçek cihaz oynatma, yayıncı kimliği ve açık görevler ayrıca doğrulanmalı. Bu aktarım #17/#18/#20'yi tek başına kapatmaz.
+- **v2/reports/DEVIR_2026-11-01.md:L1** — [Tarihsel kaynak kaydı] MADSC55-TV-V2 — 2026-11-01 yeni sohbet devir kaydı
+- **v2/reports/DEVIR_2026-11-01.md:L4** — [Tarihsel kaynak kaydı] - Yalnız Madsc55/MADSC55-TV-V2 üzerinde çalış. Eski madsc-tv deposuna dokunma.
+- **v2/reports/DEVIR_2026-11-01.md:L9** — [Tarihsel kaynak kaydı] - Gerçek ağ taraması, sonuç doğrulaması, kalıcı veri koruma; simülasyon veya yalnız kod eklemek bitmiş sayılmaz.
+- **v2/reports/DEVIR_2026-11-01.md:L12** — [Tarihsel kaynak kaydı] Doğrulanan depo kodu
+- **v2/reports/DEVIR_2026-11-01.md:L13** — [Tarihsel kaynak kaydı] - v2/config/sources.json: 35 yapılandırılmış kaynak (2026-11-01 kontrolü).
+- **v2/reports/DEVIR_2026-11-01.md:L14** — [Tarihsel kaynak kaydı] - v2/discover.py: M3U parse, TR/AZ metadata filtreleri, SHA256 aday raporu, kaynak doğrulaması, kaynak kaybı kontrolü, özel snapshot yazmadan önce kayıp kontrolü.
+- **v2/reports/DEVIR_2026-11-01.md:L16** — [Tarihsel kaynak kaydı] - v2/source_loss_audit.py: önceki rapora göre kayıp kaynaklar ve %50 altına düşüş tespiti.
+- **v2/reports/DEVIR_2026-11-01.md:L17** — [Tarihsel kaynak kaydı] - v2/archive_acceptance_gate.py: arşiv geri yükleme kabul kapısı; çalışan şifreli kalıcı arşiv sisteminin kanıtı değil.
+- **v2/reports/DEVIR_2026-11-01.md:L19** — [Tarihsel kaynak kaydı] - DEVAM_NOTU.md: önceki devir notları mevcut, GitHub yazma sorunu sonrası yeniden güncellenebildi.
+- **v2/reports/DEVIR_2026-11-01.md:L21** — [Tarihsel kaynak kaydı] Son ilgili commitler
+- **v2/reports/DEVIR_2026-11-01.md:L22** — [Tarihsel kaynak kaydı] - b51662f: TR/AZ regex düzeltmesi.
+- **v2/reports/DEVIR_2026-11-01.md:L23** — [Tarihsel kaynak kaydı] - 77c5627: keşif metadata testleri.
+- **v2/reports/DEVIR_2026-11-01.md:L24** — [Tarihsel kaynak kaydı] - f03f0db: keşif testini zorunlu CI zincirine bağlama.
+- **v2/reports/DEVIR_2026-11-01.md:L25** — [Tarihsel kaynak kaydı] - d9fb64a, 613f939: kaynak kaybında hata kodu ve eşik testi.
+- **v2/reports/DEVIR_2026-11-01.md:L26** — [Tarihsel kaynak kaydı] - 6185125, 844227c: aday dil işareti ve doğrulanmamış dil testi.
+- **v2/reports/DEVIR_2026-11-01.md:L27** — [Tarihsel kaynak kaydı] - 14fc9a1, 3df167a: kaynak envanteri doğrulama ve testleri.
+- **v2/reports/DEVIR_2026-11-01.md:L28** — [Tarihsel kaynak kaydı] - 944ca8d, 8eba518: büyük DEVAM_NOTU.md dosyasına başarılı yazma.
+- **v2/reports/DEVIR_2026-11-01.md:L29** — [Tarihsel kaynak kaydı] - 0954621, 16912ab: özel snapshot yazmadan önce kaynak kaybı kapısı ve testi.
+- **v2/reports/DEVIR_2026-11-01.md:L30** — [Tarihsel kaynak kaydı] - cf1ce18: devir notu güncellemesi.
+- **v2/reports/DEVIR_2026-11-01.md:L32** — [Tarihsel kaynak kaydı] Önceki gerçek sayıların tarihsel bağlamı
+- **v2/reports/DEVIR_2026-11-01.md:L33** — [Tarihsel kaynak kaydı] - #60: 27.047 benzersiz URL, 11.860 oynatılabilir video olarak raporlanmış.
+- **v2/reports/DEVIR_2026-11-01.md:L34** — [Tarihsel kaynak kaydı] - #74: 13.593 benzersiz URL, yaklaşık 7.306 oynatılabilir; #60'a göre 13.454 daha az URL.
+- **v2/reports/DEVIR_2026-11-01.md:L35** — [Tarihsel kaynak kaydı] - Ortak 13.179; yalnız #60'da 13.868; yalnız #74'te 414 URL kimliği.
+- **v2/reports/DEVIR_2026-11-01.md:L36** — [Tarihsel kaynak kaydı] - Önceden çalıştığı belirtilen 4.955 kayıp aday kimliği; eski raporlarda URL'leri yok. Yeniden kaynaklardan bulunmaları gerekiyor.
+- **v2/reports/DEVIR_2026-11-01.md:L37** — [Tarihsel kaynak kaydı] - Kaynak kaybı örnekleri: IPTV-org dünya 11.204 -&gt; 9, Free-TV 1.347 -&gt; 5, Efeisot 4.931 -&gt; 247. Bu tarihsel rapor sayıları güncel tarama sonucu değildir.
+- **v2/reports/DEVIR_2026-11-01.md:L39** — [Tarihsel kaynak kaydı] Kalan kaynak kapsamı
+- **v2/reports/DEVIR_2026-11-01.md:L42** — [Tarihsel kaynak kaydı] Kalan dokuz teknik iş
+- **v2/reports/DEVIR_2026-11-01.md:L43** — [Tarihsel kaynak kaydı] 1. Gerçek URL ve kaynak geçmişi için şifreli, kalıcı arşiv; geri yükleme ve bütünlük testi.
+- **v2/reports/DEVIR_2026-11-01.md:L44** — [Tarihsel kaynak kaydı] 2. #60 ve yeni taramaların karşılaştırılması, kayıp URL'lerin yeniden bulunması.
+- **v2/reports/DEVIR_2026-11-01.md:L45** — [Tarihsel kaynak kaydı] 3. Tüm tarama yollarında kaynak kaybı koruması; dramatik düşüşte güvenli durdurma.
+- **v2/reports/DEVIR_2026-11-01.md:L46** — [Tarihsel kaynak kaydı] 4. Gerçek ağ/HLS/video/ses kontrolü; HTTP 200'ü oynatma kanıtı saymama.
+- **v2/reports/DEVIR_2026-11-01.md:L47** — [Tarihsel kaynak kaydı] 5. Türkçe/Azerice, Türkiye/diaspora, çalışan/çalışmayan, mevcut/yeni/alternatif sınıflandırma.
+- **v2/reports/DEVIR_2026-11-01.md:L49** — [Tarihsel kaynak kaydı] 7. Kontrollü paralellik, retry ve timeout.
+- **v2/reports/DEVIR_2026-11-01.md:L50** — [Tarihsel kaynak kaydı] 8. Tam gerçek tarama, sonuçların kaynak bazlı raporu, başarısız testlerin düzeltilmesi.
+- **v2/reports/DEVIR_2026-11-01.md:L53** — [Tarihsel kaynak kaydı] Ek açık işler
+- **v2/reports/DEVIR_2026-11-01.md:L55** — [Tarihsel kaynak kaydı] - GitHub Actions son durumunu kontrol et, kırmızı testleri düzelt, yeşil kanıt olmadan tamamlandı deme.
+- **v2/reports/DEVIR_2026-11-01.md:L57** — [Tarihsel kaynak kaydı] - Açık URL veya token içeren özel envanteri herkese açık repoya commit etme.
+- **v2/reports/DEVIR_2026-11-01.md:L60** — [Tarihsel kaynak kaydı] Yazma engeli
+- **v2/reports/DEVIR_2026-11-01.md:L61** — [Tarihsel kaynak kaydı] - Önceki DEVAM_NOTU.md update denemeleri araç güvenlik kontrolünde engellendi; aynı dosyaya daha sonra 944ca8d ve 8eba518 ile başarılı yazıldı. Kesin tetikleyici bilinmiyor. Güncel SHA ile sırayla yaz, sonra yeniden oku; güvenlik kontrolünü devre dışı bırakmaya çalışma.
+
+- **v2/reports/README-discovery-34-live-probe.md:L1** — [Tarihsel kaynak kaydı] Discovery #34 live metadata probe
+- **v2/reports/README-discovery-34-live-probe.md:L3** — [Tarihsel kaynak kaydı] A merge commit containing the literal marker `#34 live probe` on `main` triggers the guarded `live-discovery-diagnostic` job in `v2-main-production-safety-gate.yml`.
+- **v2/reports/README-discovery-34-live-probe.md:L7** — [Tarihsel kaynak kaydı] A provider rate limit or missing evidence must remain incomplete; a green production security gate is not itself live discovery acceptance.
+- **v2/reports/README-discovery-34-live-probe.md:L9** — [Tarihsel kaynak kaydı] Trigger verification: the **actual main commit message**, not merely the PR title or body, must contain `#34 live probe`. Check the resulting main-branch workflow run and its diagnostic artifact before claiming any API calls occurred.
+- **v2/reports/STAGE6_ACCEPTANCE_LEDGER_2026-11-12.md:L1** — [Tarihsel kaynak kaydı] MADSC55 TV V2 — Aşama 6 kabul ve teslim kayıt defteri
+- **v2/reports/STAGE6_ACCEPTANCE_LEDGER_2026-11-12.md:L3** — [Tarihsel kaynak kaydı] Tarih: 2026-11-12. Durum: **AÇIK / TESLİM EDİLMEDİ**.
+- **v2/reports/STAGE6_ACCEPTANCE_LEDGER_2026-11-12.md:L7** — [Tarihsel kaynak kaydı] #31 — Toplu kabul
+- **v2/reports/STAGE6_ACCEPTANCE_LEDGER_2026-11-12.md:L8** — [Tarihsel kaynak kaydı] - CI tanımı: `.github/workflows/v2-stage6-grouped-acceptance.yml`.
+- **v2/reports/STAGE6_ACCEPTANCE_LEDGER_2026-11-12.md:L9** — [Tarihsel kaynak kaydı] - PR: https://github.com/Madsc55/MADSC55-TV-V2/pull/14 (taslak).
+- **v2/reports/STAGE6_ACCEPTANCE_LEDGER_2026-11-12.md:L11** — [Tarihsel kaynak kaydı] - Doğrulanmış toplu çevrimdışı kabul: https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43127461813 — success (önceki commit c8c3c779 için).
+- **v2/reports/STAGE6_ACCEPTANCE_LEDGER_2026-11-12.md:L12** — [Tarihsel kaynak kaydı] - Doğrulanmış üretim güvenlik kapısı: https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43127894437 — success (commit 3cc6ff37).
+- **v2/reports/STAGE6_ACCEPTANCE_LEDGER_2026-11-12.md:L13** — [Tarihsel kaynak kaydı] - Bu iki farklı koşu birlikte tüm son kabulü kanıtlamaz. Son commit için Stage 6 toplu koşu ve gerçek canlı yayın/bağımsız bulut geri yükleme kanıtları eksiktir.
+- **v2/reports/STAGE6_ACCEPTANCE_LEDGER_2026-11-12.md:L14** — [Tarihsel kaynak kaydı] - Kabul: toplu koşu başarılı + önceki aşamaların bağımsız gerçek kanıtları doğrulanmış olmalı.
+- **v2/reports/STAGE6_ACCEPTANCE_LEDGER_2026-11-12.md:L17** — [Tarihsel kaynak kaydı] - Gerçek cihazdan doğrudan erişim ve cihaz test kanıtı **yok**.
+- **v2/reports/STAGE6_ACCEPTANCE_LEDGER_2026-11-12.md:L19** — [Tarihsel kaynak kaydı] - Video ve ses gözlemi yapılmadan `PASS` yazılamaz. HTTP 200, FFprobe, sentetik fikstür veya ekran görüntüsü tek başına yeterli değildir.
+- **v2/reports/STAGE6_ACCEPTANCE_LEDGER_2026-11-12.md:L21** — [Tarihsel kaynak kaydı] #33 — Son arşiv ve teslim
+- **v2/reports/STAGE6_ACCEPTANCE_LEDGER_2026-11-12.md:L22** — [Tarihsel kaynak kaydı] - Gerekli kayıtlar: şifreli arşiv nesnesi/konumu, SHA-256, erişim yetkileri, bağımsız geri yükleme koşusu ve sonucu, kanıt bağlantıları, envanter sayımları, nihai commit ve Actions URL'leri.
+- **v2/reports/STAGE6_ACCEPTANCE_LEDGER_2026-11-12.md:L23** — [Tarihsel kaynak kaydı] - Gerçek Google Drive/S3 geri yükleme kanıtı ve nihai cihaz kabulü **henüz bağlanmadı**.
+- **v2/reports/STAGE6_ACCEPTANCE_LEDGER_2026-11-12.md:L24** — [Tarihsel kaynak kaydı] - Teslim raporu **taslak**, nihai teslim **yapılmadı**.
+- **v2/reports/STAGE6_ACCEPTANCE_LEDGER_2026-11-12.md:L26** — [Tarihsel kaynak kaydı] Karar
+- **v2/reports/STAGE6_ACCEPTANCE_LEDGER_2026-11-12.md:L27** — [Tarihsel kaynak kaydı] #31: AÇIK. #32: AÇIK. #33: AÇIK.
+- **v2/reports/STAGE6_ACCEPTANCE_LEDGER_2026-11-12.md:L28** — [Tarihsel kaynak kaydı] Gerçek kanıtlar tamamlanmadan bu görevler kapanmaz ve bu dosya başarı raporu olarak sunulmaz.
+- **v2/reports/STAGE_C_INDEPENDENT_ACCEPTANCE_PROTOCOL.md:L1** — [Tarihsel kaynak kaydı] Aşama C — Bağımsız üretim kabul protokolü (#31, #32, #33)
+- **v2/reports/STAGE_C_INDEPENDENT_ACCEPTANCE_PROTOCOL.md:L5** — [Tarihsel kaynak kaydı] #31 — Android cihazda gerçek görüntü + ses
+- **v2/reports/STAGE_C_INDEPENDENT_ACCEPTANCE_PROTOCOL.md:L6** — [Tarihsel kaynak kaydı] - Gerçek Android cihazın ve İBO Player sürümünün kimliğini (kişisel veri içermeden), test zamanını, kullanılan M3U parçasının SHA-256 değerini kaydet.
+- **v2/reports/STAGE_C_INDEPENDENT_ACCEPTANCE_PROTOCOL.md:L9** — [Tarihsel kaynak kaydı] - Önerilen kanıt: `v2/evidence/stage-c/device-playback.json` + gerçek cihaz ekran/ses kayıtları (hassas bilgiler temizlenmiş).
+- **v2/reports/STAGE_C_INDEPENDENT_ACCEPTANCE_PROTOCOL.md:L11** — [Tarihsel kaynak kaydı] #32 — Bağımsız şifreli arşiv geri yüklemesi
+- **v2/reports/STAGE_C_INDEPENDENT_ACCEPTANCE_PROTOCOL.md:L12** — [Tarihsel kaynak kaydı] - Üretimden **ayrı** izole hedef ortam kullan; ana kayıtlar ve mevcut arşivler üzerine yazma.
+- **v2/reports/STAGE_C_INDEPENDENT_ACCEPTANCE_PROTOCOL.md:L13** — [Tarihsel kaynak kaydı] - Arşivin kaynak kimliği, sürümü, indirilen baytların SHA-256 değeri, şifreli arşiv bütünlük testi ve çözme sonucunu kaydet. Gizli anahtarları veya parolaları rapora yazma.
+- **v2/reports/STAGE_C_INDEPENDENT_ACCEPTANCE_PROTOCOL.md:L14** — [Tarihsel kaynak kaydı] - Geri yüklenen kayıt sayısını, kimlikleri ve mümkünse kayıt hash'lerini kaynak manifest ile karşılaştır; kayıp, mükerrer ve bozuk kayıt sayılarını ayrı göster.
+- **v2/reports/STAGE_C_INDEPENDENT_ACCEPTANCE_PROTOCOL.md:L15** — [Tarihsel kaynak kaydı] - Çalıştırma ortamı kimliği, başlangıç/bitiş zamanı, komut çıkış kodları, günlük ve sonuç dosyalarının SHA-256 değerlerini kaydet.
+- **v2/reports/STAGE_C_INDEPENDENT_ACCEPTANCE_PROTOCOL.md:L16** — [Tarihsel kaynak kaydı] - Önerilen kanıt: `v2/evidence/stage-c/independent-restore.json` + bağımsız geri yükleme logları.
+- **v2/reports/STAGE_C_INDEPENDENT_ACCEPTANCE_PROTOCOL.md:L18** — [Tarihsel kaynak kaydı] #33 — Son kabul kapısı
+- **v2/reports/STAGE_C_INDEPENDENT_ACCEPTANCE_PROTOCOL.md:L19** — [Tarihsel kaynak kaydı] - #31 ve #32 kanıt dosyaları gerçekten mevcut, okunabilir ve SHA-256 eşleşmeleri doğrulanmış olmalı.
+- **v2/reports/STAGE_C_INDEPENDENT_ACCEPTANCE_PROTOCOL.md:L20** — [Tarihsel kaynak kaydı] - Her iki testte `passed=true` ve gerçek ortam/cihaz doğrulaması bulunmalı; `skipped`, `mock`, `unknown` veya eksik alan **başarısız** sayılmalı.
+- **v2/reports/STAGE_C_INDEPENDENT_ACCEPTANCE_PROTOCOL.md:L21** — [Tarihsel kaynak kaydı] - 1.000/2.000'lik M3U paketleri, `#EXTM3U` başlığı, `#EXTINF`+URL çiftleri, URL tekrarları, manifest sayıları ve SHA-256 değerleri açısından yeniden karşılaştırılmalı.
+- **v2/reports/STAGE_C_INDEPENDENT_ACCEPTANCE_PROTOCOL.md:L22** — [Tarihsel kaynak kaydı] - Son raporda kabul edilen/edilmeyen yayınlar, hata listesi, kullanılan artifact/Actions bağlantıları, kanıt hash'leri ve bağımsız onay zamanı yer almalı.
+- **v2/reports/STAGE_C_INDEPENDENT_ACCEPTANCE_PROTOCOL.md:L23** — [Tarihsel kaynak kaydı] - Yalnız bütün zorunlu kanıtlar başarıyla doğrulanırsa `state.json` içindeki #31, #32, #33 görevleri `done` yapılabilir; aksi hâlde açık bırakılır.
+- **v2/reports/STAGE_C_INDEPENDENT_ACCEPTANCE_PROTOCOL.md:L25** — [Tarihsel kaynak kaydı] Mevcut kanıtın sınırı
+- **v2/reports/STAGE_C_INDEPENDENT_ACCEPTANCE_PROTOCOL.md:L26** — [Tarihsel kaynak kaydı] 13 Kasım 2026 Actions `43412576224` artifact `14033805492`: raporda 4.301 AV doğrulanmış URL, 1.000/2.000 M3U bütünlüğü, `playback_verified_on_device=false` ve yalnız Actions içi `archive_restore_test_passed=true` kayıtlı. Bu artifact tek başına #31 veya #32'nin bağımsız kabulü değildir.
+- **v2/reports/drive_archive_structural_audit_20261121.json:$.authenticated_decryption_verified** — [Tarihsel kaynak kaydı] true
+- **v2/reports/drive_archive_structural_audit_20261121.json:$.next_action** — [Tarihsel kaynak kaydı] Keep historical Stage 4 accepted; independently back up and restore the separate authorized Turkish vault with its correct scoped key and identity hashes.
+- **v2/reports/drive_archive_structural_audit_20261121.json:$.historical_stage4_ci_restore_job_conclusion** — [Tarihsel kaynak kaydı] success
+- **v2/reports/drive_archive_structural_audit_20261121.json:$.historical_ci_authenticated_decryption_verified** — [Tarihsel kaynak kaydı] true
+- **v2/reports/drive_archive_structural_audit_20261121.json:$.historical_ci_independent_drive_restore_verified** — [Tarihsel kaynak kaydı] true
+- **v2/reports/drive_archive_structural_audit_20261121.json:$.fresh_restore_performed_in_current_review** — [Tarihsel kaynak kaydı] false
+- **v2/reports/ffmpeg_av_gap_classification_20261121.md:L1** — [Tarihsel kaynak kaydı] FFmpeg AV eksik doğrulama ayrımı — 2026-11-21
+- **v2/reports/ffmpeg_av_gap_classification_20261121.md:L3** — [Tarihsel kaynak kaydı] Farklı veri kümelerini karıştırma
+- **v2/reports/ffmpeg_av_gap_classification_20261121.md:L4** — [Tarihsel kaynak kaydı] - 14 Kasım tarihsel tarama: 28.844 aday; 8.696 ses+görüntü doğrulandı; 20.148 AV doğrulanamadı. **20.148 kesin bozuk demek değildir.** Özgün raporun satır bazında hata nedenleri olmadan alt sınıf sayıları çıkarılamaz.
+- **v2/reports/ffmpeg_av_gap_classification_20261121.md:L5** — [Tarihsel kaynak kaydı] - Dünya taraması run 42216075104: 35.327 aday, 13.884 AV decode; farklı kapsam, üstteki sayılara eklenmez.
+- **v2/reports/ffmpeg_av_gap_classification_20261121.md:L6** — [Tarihsel kaynak kaydı] - PR #585 18.074 başlangıç arşivi hash mutabakatı: 1.904 aynı dünya koşusunda AV decode, 10.947 yalnız önceki koşudan hash, 4.080 eşleşen ama AV kanıtı olmayan, 1.143 eşleşmeyen. Toplam 18.074.
+- **v2/reports/ffmpeg_av_gap_classification_20261121.md:L9** — [Tarihsel kaynak kaydı] Satır bazında uygulanacak durumlar
+- **v2/reports/ffmpeg_av_gap_classification_20261121.md:L10** — [Tarihsel kaynak kaydı] - `AV_DECODED`: FFmpeg hem ses hem görüntü decode kanıtı.
+- **v2/reports/ffmpeg_av_gap_classification_20261121.md:L11** — [Tarihsel kaynak kaydı] - `VIDEO_ONLY`: yalnız görüntü kanıtı.
+- **v2/reports/ffmpeg_av_gap_classification_20261121.md:L12** — [Tarihsel kaynak kaydı] - `AUDIO_ONLY`: yalnız ses kanıtı.
+- **v2/reports/ffmpeg_av_gap_classification_20261121.md:L13** — [Tarihsel kaynak kaydı] - `DECODE_ERROR`: medya çözümlenemedi, kalıcı arıza hükmü değil.
+- **v2/reports/ffmpeg_av_gap_classification_20261121.md:L14** — [Tarihsel kaynak kaydı] - `TIMEOUT_OR_RATE_LIMIT`: timeout, 403/429 veya geçici erişim; retry.
+- **v2/reports/ffmpeg_av_gap_classification_20261121.md:L16** — [Tarihsel kaynak kaydı] - `HASH_ONLY_HISTORICAL`: hash veya metadata eşleşmesi, yeni AV PASS değil.
+- **v2/reports/ffmpeg_av_gap_classification_20261121.md:L17** — [Tarihsel kaynak kaydı] - `NOT_IN_REPORT`: raporda hash eşleşmesi yok.
+- **v2/reports/ffmpeg_av_gap_classification_20261121.md:L19** — [Tarihsel kaynak kaydı] - `FAILED_CONFIRMED`: iki deterministik negatif deneme ve kimlik/zaman kanıtı gerekli.
+- **v2/reports/ffmpeg_av_gap_classification_20261121.md:L21** — [Tarihsel kaynak kaydı] Açık kabul kapıları
+- **v2/reports/ffmpeg_av_gap_classification_20261121.md:L22** — [Tarihsel kaynak kaydı] - 685 canlı retry yapılmadı. #594 plan ve #596 verdict kodu PASS, canlı test kanıtı değil.
+- **v2/reports/ffmpeg_av_gap_classification_20261121.md:L23** — [Tarihsel kaynak kaydı] - Güvenli nested HLS/DASH segment/anahtar toplama ve gerçek yayıncı kabulü eksik; 18.074 tam canlı tarama tamamlanmış değil.
+- **v2/reports/ffmpeg_av_gap_classification_20261121.md:L24** — [Tarihsel kaynak kaydı] - 20.148 alt durum adetleri yalnız özgün satır raporu incelenince çıkarılabilir; uydurulmaz.
+- **v2/reports/package-artifact-independent-audit-20261119.md:L1** — [Tarihsel kaynak kaydı] Independent package artifact audit — 2026-11-19
+- **v2/reports/package-artifact-independent-audit-20261119.md:L5** — [Tarihsel kaynak kaydı] - Source: Actions run https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43412576224, artifact ID `14033805492` (`v2-real-scan-evidence`).
+- **v2/reports/package-artifact-independent-audit-20261119.md:L6** — [Tarihsel kaynak kaydı] - Downloaded ZIP SHA-256: `139c8a0868f35d4b64cd55a17bcbd56325d8e3c87b5d07295028bb4d56e832a6`, equal to GitHub artifact digest.
+- **v2/reports/package-artifact-independent-audit-20261119.md:L8** — [Tarihsel kaynak kaydı] - Every package has the `#EXTM3U` header; each file's URL count equals its `#EXTINF` count; no file exceeds its declared chunk size.
+- **v2/reports/package-artifact-independent-audit-20261119.md:L9** — [Tarihsel kaynak kaydı] - Each series has 4,301 URL entries, 4,301 distinct URL strings. The concatenated URL sequences of the two series are identical **in order**, not just as sets.
+- **v2/reports/package-artifact-independent-audit-20261119.md:L11** — [Tarihsel kaynak kaydı] - Important evidence boundary: the JSON values are **claims in the existing run's report**, not newly repeated HTTP/FFmpeg checks or independently observed production restore. This audit independently validates package structure and archive integrity only. The report's restore-test flag does not establish an independent production restore acceptance.
+- **v2/reports/source-inventory-change-log.md:L1** — [Tarihsel kaynak kaydı] Source inventory validation
+- **v2/reports/source-inventory-change-log.md:L3** — [Tarihsel kaynak kaydı] 2026-11-01
+- **v2/reports/source-inventory-change-log.md:L5** — [Tarihsel kaynak kaydı] - Discovery validates source IDs, URLs, HTTPS and scopes before scanning.
+- **v2/reports/source-inventory-change-log.md:L6** — [Tarihsel kaynak kaydı] - Commit: 14fc9a1.
+- **v2/reports/source-inventory-change-log.md:L7** — [Tarihsel kaynak kaydı] - Offline regression tests cover duplicate and unsafe inputs.
+- **v2/reports/source-inventory-change-log.md:L8** — [Tarihsel kaynak kaydı] - Test commit: 3df167a.
+- **v2/reports/source-inventory-change-log.md:L9** — [Tarihsel kaynak kaydı] - CI results not yet confirmed.
+
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L1** — [Tarihsel kaynak kaydı] MADSC55 TV V2 — Stage 4 safe DNS capture implementation
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L2** — [Tarihsel kaynak kaydı] Date: 2026-11-21
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L4** — [Tarihsel kaynak kaydı] Goal and hard limits
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L5** — [Tarihsel kaynak kaydı] Enable **opt-in** bounded media sampling from ordinary DNS-hostname sources
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L6** — [Tarihsel kaynak kaydı] without letting FFmpeg fetch arbitrary nested network URLs. This is a
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L10** — [Tarihsel kaynak kaydı] Files
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L11** — [Tarihsel kaynak kaydı] - `v2/turkish_safe_dns_capture.py`: strict URL parser; validate every DNS
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L12** — [Tarihsel kaynak kaydı] A/AAAA result; disallow private/link-local/multicast/reserved/IPv4-mapped
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L13** — [Tarihsel kaynak kaydı] addresses; use a vetted numeric IP for TCP; verify HTTPS certificate and
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L14** — [Tarihsel kaynak kaydı] SNI against the original hostname; reject redirects, invalid content,
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L15** — [Tarihsel kaynak kaydı] manifest bodies and oversized/timeout downloads.
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L16** — [Tarihsel kaynak kaydı] - `v2/turkish_media_sample_capture.py`: DNS hostnames use the new pinned
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L17** — [Tarihsel kaynak kaydı] downloader; FFmpeg reads only a temporary private local file with
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L18** — [Tarihsel kaynak kaydı] `-protocol_whitelist file` and an explicit demuxer
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L19** — [Tarihsel kaynak kaydı] (MP4/Matroska/MPEG-TS); no output file is overwritten; language/device
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L21** — [Tarihsel kaynak kaydı] - `v2/test_turkish_safe_dns_capture.py`: offline tests with fake resolver,
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L22** — [Tarihsel kaynak kaydı] fake HTTP response and mocked FFmpeg. No actual HTTP request.
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L23** — [Tarihsel kaynak kaydı] - `v2/test_turkish_media_sample_capture.py`: retains existing IP-literal
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L24** — [Tarihsel kaynak kaydı] safety regressions and adds DNS syntax acceptance without DNS resolution.
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L25** — [Tarihsel kaynak kaydı] - `.github/workflows/v2-main-production-safety-gate.yml`: tests included.
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L27** — [Tarihsel kaynak kaydı] Safeguards and acceptance
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L28** — [Tarihsel kaynak kaydı] - All answers for one DNS lookup must be globally routable **unicast**, not
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L29** — [Tarihsel kaynak kaydı] just `is_global`. A single private or multicast answer fails closed.
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L30** — [Tarihsel kaynak kaydı] - Connection goes to the pinned IP. No re-resolution on connect.
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L31** — [Tarihsel kaynak kaydı] - HTTPS uses the original hostname for TLS/SNI and certificate checking.
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L32** — [Tarihsel kaynak kaydı] - HTTP 30x is never followed. Credentials, ambiguous authority,
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L33** — [Tarihsel kaynak kaydı] backslashes, local-only hostnames, and URL fragments are rejected.
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L35** — [Tarihsel kaynak kaydı] containers are rejected before FFmpeg.
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L36** — [Tarihsel kaynak kaydı] - Download must respect byte budget and time limit.
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L37** — [Tarihsel kaynak kaydı] - Decoding uses a private local input with only the `file` protocol;
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L38** — [Tarihsel kaynak kaydı] the output is linked exclusively to a new filename (no clobber).
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L42** — [Tarihsel kaynak kaydı] Not yet completed
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L43** — [Tarihsel kaynak kaydı] 1. Adaptive HLS/DASH with separate segments or encryption is deliberately
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L44** — [Tarihsel kaynak kaydı] unsupported. It needs a per-resource validated egress proxy or a secure
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L45** — [Tarihsel kaynak kaydı] offline segment collector that checks **each** manifest, segment and key.
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L46** — [Tarihsel kaynak kaydı] 2. The pre-existing IP-literal FFmpeg transport is retained for compatibility,
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L47** — [Tarihsel kaynak kaydı] including its existing explicit protocol whitelist. That whitelist is **not
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L48** — [Tarihsel kaynak kaydı] an outbound firewall** and does not prove nested HLS segments are safe.
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L49** — [Tarihsel kaynak kaydı] It requires its own isolation/transport acceptance before declaring Stage
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L50** — [Tarihsel kaynak kaydı] 4 globally complete.
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L51** — [Tarihsel kaynak kaydı] 3. No real IPTV stream capture, ASR/OCR/WebVTT language classification,
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L53** — [Tarihsel kaynak kaydı] has been performed by this PR.
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L55** — [Tarihsel kaynak kaydı] Repository invariants
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L61** — [Tarihsel kaynak kaydı] CI evidence
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L62** — [Tarihsel kaynak kaydı] Production Security Gate will run the new offline regressions; use the
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L63** — [Tarihsel kaynak kaydı] exact GitHub Actions run linked from PR #572 as the final acceptance record.
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L64** — [Tarihsel kaynak kaydı] Passing offline tests will **not** be described as proof of a live stream.
+- **v2/reports/stage4_historical_drive_restore_provenance_20261121.json:$.scope** — [Tarihsel kaynak kaydı] HISTORICAL_STAGE4_INVENTORY_DRIVE_RESTORE_ONLY
+- **v2/reports/stage4_historical_drive_restore_provenance_20261121.json:$.source_run_conclusion** — [Tarihsel kaynak kaydı] success
+- **v2/reports/stage4_historical_drive_restore_provenance_20261121.json:$.independent_drive_restore_job_conclusion** — [Tarihsel kaynak kaydı] success
+- **v2/reports/stage4_historical_drive_restore_provenance_20261121.json:$.independent_offsite_restore_historical_evidence_verified** — [Tarihsel kaynak kaydı] true
+- **v2/reports/stage4_historical_drive_restore_provenance_20261121.json:$.separate_authorized_turkish_vault_issue6_external_restore_accepted** — [Tarihsel kaynak kaydı] false
+- **v2/reports/stage4_historical_drive_restore_provenance_20261121.json:$.limitations[0]** — [Tarihsel kaynak kaydı] Offline recheck validates pinned artifacts and CI receipts, not live cryptographic key access or a fresh decryption
+- **v2/reports/stage4_historical_drive_restore_provenance_20261121.json:$.limitations[1]** — [Tarihsel kaynak kaydı] The accepted Stage 4 inventory archive is not the separate Fernet authorized-Turkish URL vault (#6)
+- **v2/reports/task15-historical-crosswalk-delta-20261118.json:$.remaining_unmatched_count** — [Tarihsel kaynak kaydı] 6
+- **v2/reports/task15-historical-crosswalk-delta-20261118.json:$.broadcaster_identity_verified** — [Tarihsel kaynak kaydı] false
+- **v2/reports/task15-historical-crosswalk-delta-20261118.json:$.next_required_evidence** — [Tarihsel kaynak kaydı] Independent publisher attribution for historical stream endpoints remains open. The six addresses missing from the 6 November comparison have since been exactly matched.
+- **v2/reports/task15-historical-crosswalk-delta-20261118.json:$.follow_up.remaining_unmatched** — [Tarihsel kaynak kaydı] 0
+- **v2/reports/task15-historical-url-hash-recovery-20261118.json:$.task_status** — [Tarihsel kaynak kaydı] completed
+- **v2/reports/task17-18-20-already-attempted-exclusion-20261118.json:$.remaining_matched_hashes** — [Tarihsel kaynak kaydı] 3766
+- **v2/reports/task17-18-20-bounded-retry-20261118.json:$.tasks[0]** — [Tarihsel kaynak kaydı] 17
+- **v2/reports/task17-18-20-bounded-retry-20261118.json:$.tasks[1]** — [Tarihsel kaynak kaydı] 18
+- **v2/reports/task17-18-20-bounded-retry-20261118.json:$.tasks[2]** — [Tarihsel kaynak kaydı] 20
+- **v2/reports/task17-18-20-bounded-retry-20261118.json:$.latest_outcomes.AV_SAMPLE_VERIFIED** — [Tarihsel kaynak kaydı] 1
+- **v2/reports/task17-18-20-offline-operator-procedure-20261119.md:L5** — [Tarihsel kaynak kaydı] Ön koşullar
+- **v2/reports/task17-18-20-offline-operator-procedure-20261119.md:L7** — [Tarihsel kaynak kaydı] - `V2_ARCHIVE_PASSPHRASE` ortam değişkeni yalnızca güvenli ortamda bulunmalı; GitHub'a, terminal çıktısına veya PR'a yazılmamalı.
+- **v2/reports/task17-18-20-offline-operator-procedure-20261119.md:L8** — [Tarihsel kaynak kaydı] - `python -m pip install 'cryptography&gt;=42,&lt;47'` ile bağımlılığı kurun.
+- **v2/reports/task17-18-20-offline-operator-procedure-20261119.md:L9** — [Tarihsel kaynak kaydı] - Kaynağın ayrı bir kopyasını saklayın. Şifreli dosyayı Git'e commit etmeyin.
+- **v2/reports/task17-18-20-offline-operator-procedure-20261119.md:L11** — [Tarihsel kaynak kaydı] Çalıştırma (yalnızca mevcut 15 kimlik, ağ taraması yok)
+- **v2/reports/task17-18-20-offline-operator-procedure-20261119.md:L14** — [Tarihsel kaynak kaydı] mkdir -p /tmp/v2-existing-evidence
+- **v2/reports/task17-18-20-offline-operator-procedure-20261119.md:L17** — [Tarihsel kaynak kaydı] python v2/merge_bounded_retry_checkpoint.py \
+- **v2/reports/task17-18-20-offline-operator-procedure-20261119.md:L19** — [Tarihsel kaynak kaydı] --report v2/reports/task17-18-20-bounded-retry-20261118.json
+- **v2/reports/task17-18-20-offline-operator-procedure-20261119.md:L22** — [Tarihsel kaynak kaydı] Önce `dry_run: true`, `eligible_updates` ve `applied: 0` doğrulanır. Orijinal kanıtla tutarlılık sağlanırsa **ayrı, açık yetkiyle** aynı komuta `--apply` eklenir. Bu yalnızca şifreli kopyayı günceller; gerçek AV taraması yapmaz.
+- **v2/reports/task17-18-20-offline-operator-procedure-20261119.md:L24** — [Tarihsel kaynak kaydı] **Önemli:** 1 kısa ses/görüntü örneği, tam yayın kabulü değildir. 8 HTTP404 ve 6 HTTP503 sonuçları, canlı tekrar tarama yapılmadan sadece geçmiş kanıt olarak tutulur. Kalan #17–18–20 görevleri kapatılmaz.
+- **v2/reports/task17-18-20-secure-import-runbook-20261119.md:L1** — [Tarihsel kaynak kaydı] #17/#18/#20 — güvenli şifreli kontrol noktası aktarımı (19 Kasım 2026)
+- **v2/reports/task17-18-20-secure-import-runbook-20261119.md:L3** — [Tarihsel kaynak kaydı] Doğrulanmış durum
+- **v2/reports/task17-18-20-secure-import-runbook-20261119.md:L4** — [Tarihsel kaynak kaydı] - PR #442, var olan 15 HTTP/AV gözleminin çevrimdışı aktarım kodunu ekledi; bu, gerçek şifreli kontrol noktasına uygulanmış olduğu anlamına gelmez.
+- **v2/reports/task17-18-20-secure-import-runbook-20261119.md:L5** — [Tarihsel kaynak kaydı] - PR #448, yeni bir `v2-secure-bounded-checkpoint-import.yml` iş akışı ekledi. Production Security Gate koşusu [44502831052](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44502831052) `MAIN_WORKFLOW_FILE_LOCK_FAIL` / `WORKFLOW_INVENTORY` ile başarısız oldu. PR #448 **birleştirilmeden kapatıldı**.
+- **v2/reports/task17-18-20-secure-import-runbook-20261119.md:L8** — [Tarihsel kaynak kaydı] Güvenli yürütme sırası (yetkili, kontrollü ortamda)
+- **v2/reports/task17-18-20-secure-import-runbook-20261119.md:L10** — [Tarihsel kaynak kaydı] 2. `V2_ARCHIVE_PASSPHRASE` değerini yalnızca güvenli çalışma ortamında secret olarak sağlayın; komut satırına, rapora, GitHub yorumuna veya loglara yazmayın. Şifreli dosyayı ve yedeğini hiçbir zaman repoya commit etmeyin.
+- **v2/reports/task17-18-20-secure-import-runbook-20261119.md:L12** — [Tarihsel kaynak kaydı] 4. Sadece dry-run ve kimlik doğrulama başarılıysa, kontrollü bir **çalışma kopyasında** aynı komutu `--apply` ile yürütün. Oluşan `.pre-bounded-retry.bak` dosyasını koruyun. Kodun şifreli yazma sonrası tekrar okuma kontrolü başarılı olmalıdır.
+- **v2/reports/task17-18-20-secure-import-runbook-20261119.md:L13** — [Tarihsel kaynak kaydı] 5. Aynı kopyada dry-run'ı yeniden çalıştırın: `eligible_updates == 0` olmalı (idempotence). Kayıt sayısı değişmemeli; güncel AV kanıtı eski HTTP denemeleriyle düşürülmemeli.
+- **v2/reports/task17-18-20-secure-import-runbook-20261119.md:L14** — [Tarihsel kaynak kaydı] 6. Güncellenen **yalnızca şifreli** kontrol noktasını bağımsız kalıcı arşive, erişim ve bütünlük doğrulamasıyla aktarın; ardından bağımsız geri yükleme/okuma kabulü yapın. 7 günlük geçici Actions artefaktı kalıcı kabul değildir.
+- **v2/reports/task17-18-20-secure-import-runbook-20261119.md:L15** — [Tarihsel kaynak kaydı] 7. Bu kanıtlar olmadan #17/#18/#20'yi tamamlandı işaretlemeyin. Production Security Gate başarıyla tamamlanmadan hiçbir değişikliği main'e birleştirmeyin.
+- **v2/reports/task17-18-20-secure-import-runbook-20261119.md:L18** — [Tarihsel kaynak kaydı] - Yeni GitHub Actions iş akışı oluşturmayın veya güvenlik envanter kilidini dolanmayın.
+- **v2/reports/task17-18-20-secure-import-runbook-20261119.md:L21** — [Tarihsel kaynak kaydı] - 15 gözlem: 1 AV **örnek** kanıtı, 6 HTTP 503, 8 HTTP 404; gerçek cihaz/İBO kabulü değildir.
+- **v2/reports/task17-18-20-secure-import-runbook-20261119.md:L22** — [Tarihsel kaynak kaydı] - Engel: onaylı yürütme ortamı, gerçek şifreli dosya ve secret, ardından kalıcı bağımsız restore kanıtı.
+- **v2/reports/task17-18-20-secure-import-runbook-20261119.md:L24** — [Tarihsel kaynak kaydı] Kabul kayıtları
+- **v2/reports/task17-18-20-secure-import-runbook-20261119.md:L25** — [Tarihsel kaynak kaydı] Her uygulamada güvenli ortamda şu alanlar kayıt altına alınmalı: kaynak artefakt kimliği ve doğrulanan SHA-256, işlenen kayıt sayısı, güncellenen kayıt sayısı, ikinci dry-run'ın sıfır güncelleme sonucu, şifreli çıktı SHA-256, bağımsız restore doğrulaması, Production Security Gate koşu bağlantısı. Gizli anahtarlar ve açık yayın adresleri rapora yazılmamalıdır.
+- **v2/reports/task17-18-av-resume-handoff-20261118.md:L1** — [Tarihsel kaynak kaydı] #17–18 gerçek AV doğrulaması — tekrar yapmadan devam
+- **v2/reports/task17-18-av-resume-handoff-20261118.md:L3** — [Tarihsel kaynak kaydı] Tarih: 2026-11-18. Kaynak: `v2/tasks/state.json` ve `v2/reports/task17-18-20-bounded-retry-20261118.json`.
+- **v2/reports/task17-18-av-resume-handoff-20261118.md:L7** — [Tarihsel kaynak kaydı] - GitHub Actions 43608247496: şifreli kontrol noktasından 28.545 eski gözlem kullanıldı; **300 yeni gerçek AV kontrolü** yapıldı; **33 başarısız yayın kurtarıldı**. Bu işlemler yeniden yapılmayacak.
+- **v2/reports/task17-18-av-resume-handoff-20261118.md:L8** — [Tarihsel kaynak kaydı] - Önceki 8.540 + 33 = **8.573** AV kanıtı; **20.272** AV kanıtı olmayan kayıt. Bunlar tarihsel kanıtlardır, anlık yayın garantisi değildir.
+- **v2/reports/task17-18-av-resume-handoff-20261118.md:L9** — [Tarihsel kaynak kaydı] - 2026-11-18 tarihli sınırlı inceleme: **15 farklı URL, 17 girişim**; **1** TRT Kurdî gerçek ses+görüntü örneği, **8** HTTP 404 inceleme, **6** HTTP 503 tekrar deneme. Bunlar da yeniden sayılmayacak.
+- **v2/reports/task17-18-av-resume-handoff-20261118.md:L12** — [Tarihsel kaynak kaydı] Yeni taramanın zorunlu sırası
+- **v2/reports/task17-18-av-resume-handoff-20261118.md:L14** — [Tarihsel kaynak kaydı] 1. Önce 43608247496 koşusunun **şifreli kontrol noktası** ve kurtarma artifact'ini indir; hash ve kayıt kimliklerini doğrula. Kontrol noktası yoksa eski denemeleri yeniden yaparak tamamlandı sayma.
+- **v2/reports/task17-18-av-resume-handoff-20261118.md:L15** — [Tarihsel kaynak kaydı] 2. 18 Kasım sınırlı incelemesindeki 15 kimliği ve tüm geçmiş doğrulanmış AV kayıtlarını SHA-256 üzerinden ayıkla; **yalnızca kanıtı eksik kalan** URL'leri yeni iş kuyruğuna al.
+- **v2/reports/task17-18-av-resume-handoff-20261118.md:L16** — [Tarihsel kaynak kaydı] 3. HTTP 404 için yayıncı endpoint incelemesi yap; kanıt olmadan URL değiştirme. HTTP 503 için kontrollü, sınırlı ve geri çekilmeli retry uygula. Kimlik doğrulamalı, geo-blocked, karantina ve özel URL'leri tarama.
+- **v2/reports/task17-18-av-resume-handoff-20261118.md:L17** — [Tarihsel kaynak kaydı] 4. İşleri küçük, kaldığı yerden devam edebilen gruplara ayır. Yeni denemeleri gerçek FFmpeg decoded video **ve** audio kanıtlarıyla ölç; HTTP 200 veya manifest tek başına PASS değildir.
+- **v2/reports/task17-18-av-resume-handoff-20261118.md:L18** — [Tarihsel kaynak kaydı] 5. Her yeni denemeyi URL SHA-256, deneme zamanı, kaynak run/artifact, audio/video decode sonucu, hata ve retry sayısıyla checkpoint'e ekle. Eski kayıtları yeni ölçüm diye sayma.
+- **v2/reports/task17-18-av-resume-handoff-20261118.md:L21** — [Tarihsel kaynak kaydı] Değiştirilmeyecekler
+- **v2/reports/task17-18-av-resume-handoff-20261118.md:L26** — [Tarihsel kaynak kaydı] Durum
+- **v2/reports/task17-18-av-resume-handoff-20261118.md:L30** — [Tarihsel kaynak kaydı] Kanıt: https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43608247496 ; https://github.com/Madsc55/MADSC55-TV-V2/blob/main/v2/reports/task17-18-20-bounded-retry-20261118.json
+- **v2/reports/task19-current-xmltv-20261119.json:$.publisher_schedule_witnesses.ATV.tr.next_start** — [Tarihsel kaynak kaydı] 19:00
+- **v2/reports/task19-current-xmltv-20261119.json:$.publisher_schedule_witnesses.ATV.tr.next_title** — [Tarihsel kaynak kaydı] atv Ana Haber
+- **v2/reports/task19-current-xmltv-20261119.json:$.publisher_schedule_witnesses.CNBC-E.tr.next_start** — [Tarihsel kaynak kaydı] 17:00
+- **v2/reports/task19-current-xmltv-20261119.json:$.publisher_schedule_witnesses.CNBC-E.tr.next_title** — [Tarihsel kaynak kaydı] Kapanış Seansı
+- **v2/reports/task19-current-xmltv-20261119.json:$.publisher_schedule_witnesses.DMAX.tr.next_start** — [Tarihsel kaynak kaydı] 18:35
+- **v2/reports/task19-current-xmltv-20261119.json:$.publisher_schedule_witnesses.DMAX.tr.next_title** — [Tarihsel kaynak kaydı] Depo Savaşları
+- **v2/reports/task19-current-xmltv-20261119.json:$.sources[0].status** — [Tarihsel kaynak kaydı] XMLTV_VALID
+- **v2/reports/task19-current-xmltv-20261119.json:$.sources[1].status** — [Tarihsel kaynak kaydı] XMLTV_VALID
+- **v2/reports/task19-current-xmltv-20261119.json:$.sources[2].status** — [Tarihsel kaynak kaydı] XMLTV_VALID
+- **v2/reports/task19-current-xmltv-20261119.json:$.sources[3].status** — [Tarihsel kaynak kaydı] XMLTV_VALID
+- **v2/reports/task19-current-xmltv-20261119.json:$.sources[4].status** — [Tarihsel kaynak kaydı] XMLTV_VALID
+- **v2/reports/task21-evidence-handoff-20261119.md:L1** — [Tarihsel kaynak kaydı] Görev #21 — kaynak keşfi kanıt devri (19 Kasım 2026)
+- **v2/reports/task21-evidence-handoff-20261119.md:L3** — [Tarihsel kaynak kaydı] Kapsam ve sınır
+- **v2/reports/task21-evidence-handoff-20261119.md:L6** — [Tarihsel kaynak kaydı] Doğrulanmış tarihsel temel
+- **v2/reports/task21-evidence-handoff-20261119.md:L7** — [Tarihsel kaynak kaydı] - [14 Kasım gerçek tarama](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43608247496): 103/103 uygun M3U kaynağı; 28.845 aday URL; 8.573 toplam AV gözlemi (8.540 önceki kimliği doğrulanmış checkpoint, 33 o koşudaki yeni FFmpeg çözümlemesi); 20.272 AV kanıtı eksik.
+- **v2/reports/task21-evidence-handoff-20261119.md:L8** — [Tarihsel kaynak kaydı] - GitLab keşfi: 10/12 sorgu; kalan sorgular sağlayıcı hız sınırı nedeniyle eksik.
+- **v2/reports/task21-evidence-handoff-20261119.md:L9** — [Tarihsel kaynak kaydı] - Codeberg keşfi: 1/12 sorgu; kalan sorgular sağlayıcı hız sınırı nedeniyle eksik.
+- **v2/reports/task21-evidence-handoff-20261119.md:L10** — [Tarihsel kaynak kaydı] - YouTube: 353/353 `SIGN_IN_REQUIRED`, 0 doğrulanmış LIVE; doğrudan YouTube/resmî HLS çözümü 0/120. Bunlar doğrulanmış yayın olarak eklenemez.
+- **v2/reports/task21-evidence-handoff-20261119.md:L11** — [Tarihsel kaynak kaydı] - [18 Kasım DEVAM_NOTU](../../DEVAM_NOTU.md): GitHub tanılamasında 6 geçerli sorgu/103 ham aday satırı, GitLab'da 6 geçerli boş yanıt ve Codeberg'de ilk sorguda üç 429 sonrası beş atlanan sorgu. Türkiye/Azerbaycan örneklerinden 178/14 kayıt okundu. TRT Haber resmî yayınındaki tek HLS segmentinde FFmpeg görüntü ve ses çözümlemesi kaydedildi. Bu tekil kanıt küresel kabul değildir.
+- **v2/reports/task21-evidence-handoff-20261119.md:L13** — [Tarihsel kaynak kaydı] Tamamlama kapıları (toplu işlem kontrol listesi)
+- **v2/reports/task21-evidence-handoff-20261119.md:L14** — [Tarihsel kaynak kaydı] 1. Mevcut #21 ve #34 kaynak/adaptör kodunu, PR ve Actions kanıtlarını karşılaştır; zaten birleşmiş korumaları yeniden yazma.
+- **v2/reports/task21-evidence-handoff-20261119.md:L15** — [Tarihsel kaynak kaydı] 2. GitHub/GitLab/Codeberg sorgularını hız sınırı, Retry-After, sağlayıcı devre kesicisi ve resume-plan tutarlılığı ile fail-closed tut; eksik sorguları tamamlanmış gibi sayma.
+- **v2/reports/task21-evidence-handoff-20261119.md:L16** — [Tarihsel kaynak kaydı] 3. YouTube `SIGN_IN_REQUIRED` durumlarını atlatmaya çalışma veya yayın doğrulaması gibi gösterme. Yalnız izinli/resmî açık canlı HLS ve yayıncı sayfası kanıtını değerlendir.
+- **v2/reports/task21-evidence-handoff-20261119.md:L18** — [Tarihsel kaynak kaydı] 5. Geçerli yeni kanıtlar için tekrarları kimlik/hash üzerinden ayıkla, başarısız/kanıtsızları karantinada tut, şifreli envanterin sırlarını veya yayın URL'lerini rapora yazma.
+- **v2/reports/task21-evidence-handoff-20261119.md:L19** — [Tarihsel kaynak kaydı] 6. Offline regresyon, Production Security Gate ve gerekiyorsa izinli canlı Actions koşusu sonuçlarını kaydet; bütün kabul kapıları geçmeden `completed` işaretleme veya yayın listesi üretme.
+- **v2/reports/task21-evidence-handoff-20261119.md:L22** — [Tarihsel kaynak kaydı] Mevcut karar
+- **v2/reports/turkic-fourth-pass-review-20261117.md:L6** — [Tarihsel kaynak kaydı] Blok dışında yeniden bulunan Türkiye / Azerbaycan kayıtları
+- **v2/reports/turkic-fourth-pass-review-20261117.md:L9** — [Tarihsel kaynak kaydı] - 2415 Karadeniz TV (teknik test)
+- **v2/reports/turkic-fourth-pass-review-20261117.md:L10** — [Tarihsel kaynak kaydı] - 2481 MEDYAHABER TV (yayın dili ayrıca doğrulanmalı)
+- **v2/reports/turkic-fourth-pass-review-20261117.md:L11** — [Tarihsel kaynak kaydı] - 2722–2725 PowerTurk Akustik, Slow, Taptaze, TV (teknik test)
+- **v2/reports/turkic-fourth-pass-review-20261117.md:L12** — [Tarihsel kaynak kaydı] - 2726–2727 TurkHaber TV (teknik test, iki kayıt)
+- **v2/reports/turkic-fourth-pass-review-20261117.md:L13** — [Tarihsel kaynak kaydı] - 3157 HABER GLOBAL YOUTUBE (URL: YouTube; yayın canlılığı ayrıca doğrulanmalı)
+- **v2/reports/turkic-fourth-pass-review-20261117.md:L14** — [Tarihsel kaynak kaydı] - 3196 A2 Dizi & Sinema (teknik test)
+- **v2/reports/turkic-fourth-pass-review-20261117.md:L15** — [Tarihsel kaynak kaydı] - 3209–3210 CNBC-e (teknik test)
+- **v2/reports/turkic-fourth-pass-review-20261117.md:L16** — [Tarihsel kaynak kaydı] - 3221 Haber 61 (teknik test)
+- **v2/reports/turkic-fourth-pass-review-20261117.md:L17** — [Tarihsel kaynak kaydı] - 3222 Haber Global (teknik test)
+- **v2/reports/turkic-fourth-pass-review-20261117.md:L18** — [Tarihsel kaynak kaydı] - 3236–3237 Power Dance ve Power Love (teknik test)
+- **v2/reports/turkic-fourth-pass-review-20261117.md:L19** — [Tarihsel kaynak kaydı] - 10438 PLAYERFILMAZERBAYCAN-TV (film yayını / VOD ayrımı gerekli)
+- **v2/reports/turkic-fourth-pass-review-20261117.md:L20** — [Tarihsel kaynak kaydı] - 10439 AZERI-RETRO FILMLER (film yayını / VOD ayrımı gerekli)
+- **v2/reports/turkic-fourth-pass-review-20261117.md:L21** — [Tarihsel kaynak kaydı] - 10514 A2 (576p) (kaynak kimliği belirsiz)
+- **v2/reports/turkic-fourth-pass-review-20261117.md:L22** — [Tarihsel kaynak kaydı] - 10906 CNBC-e (Youtube)
+- **v2/reports/turkic-fourth-pass-review-20261117.md:L24** — [Tarihsel kaynak kaydı] Yabancı / belirsiz benzer adlar
+- **v2/reports/turkic-fourth-pass-review-20261117.md:L26** — [Tarihsel kaynak kaydı] - 2449, 2476 THE YOUNG TURKS: İngilizce ABD siyasi yayını, Türkiye TV olarak otomatik seçilmez.
+- **v2/reports/turkic-fourth-pass-review-20261117.md:L27** — [Tarihsel kaynak kaydı] - 2520 TURKUZPLAY1: kimlik ve dil belirsiz.
+- **v2/reports/turkic-fourth-pass-review-20261117.md:L28** — [Tarihsel kaynak kaydı] - 2545 itasli.github.io/TURKTV: URL bir PNG görseline gidiyor, M3U canlı yayın olarak seçilmez.
+- **v2/reports/turkic-fourth-pass-review-20261117.md:L29** — [Tarihsel kaynak kaydı] - 3086, 3128 POWER TV: Hindistan/Kannada kaynakları, Türk Power TV sanılmamalı.
+- **v2/reports/turkic-fourth-pass-review-20261117.md:L30** — [Tarihsel kaynak kaydı] - 3824 POWER TV (INDIA): yabancı.
+- **v2/reports/turkic-fourth-pass-review-20261117.md:L32** — [Tarihsel kaynak kaydı] - 9063 RIK SAT CYPRUS ve 15533 ANT1 CYPRUS: Güney Kıbrıs yayınları, KKTC yayını değil.
+- **v2/reports/turkic-fourth-pass-review-20261117.md:L34** — [Tarihsel kaynak kaydı] Güvenlik
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[0]** — [Tarihsel kaynak kaydı] 24
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[3]** — [Tarihsel kaynak kaydı] 360° (1080P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[4]** — [Tarihsel kaynak kaydı] 360° (1080P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[5]** — [Tarihsel kaynak kaydı] 360° NEWS (1080P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[6]** — [Tarihsel kaynak kaydı] 360 RFTV (576P) [GEO-BLOCKED]
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[7]** — [Tarihsel kaynak kaydı] A2
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[8]** — [Tarihsel kaynak kaydı] A2 CNN
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[9]** — [Tarihsel kaynak kaydı] ACTUALIDAD 360
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[10]** — [Tarihsel kaynak kaydı] ACTUALIDAD 360
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[11]** — [Tarihsel kaynak kaydı] ACTUALIDAD 360 (1080P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[12]** — [Tarihsel kaynak kaydı] ADA TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[13]** — [Tarihsel kaynak kaydı] ADA TV (720P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[14]** — [Tarihsel kaynak kaydı] ADA TV (720P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[15]** — [Tarihsel kaynak kaydı] ADDICTATV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[16]** — [Tarihsel kaynak kaydı] ADDICTATV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[17]** — [Tarihsel kaynak kaydı] ADDICTATV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[18]** — [Tarihsel kaynak kaydı] AKSU TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[19]** — [Tarihsel kaynak kaydı] AKSU TV  KAHRAMANMARAŞ
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[20]** — [Tarihsel kaynak kaydı] ALANYA POSTA TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[21]** — [Tarihsel kaynak kaydı] AL IRAQIA SPORT (720P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[22]** — [Tarihsel kaynak kaydı] ALTERNATV (720P) [NOT 24/7]
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[23]** — [Tarihsel kaynak kaydı] ANADOLU NET TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[24]** — [Tarihsel kaynak kaydı] ANADOLU NET TV  KAYSERİ
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[25]** — [Tarihsel kaynak kaydı] ARADANA TV (576P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[26]** — [Tarihsel kaynak kaydı] ARAS TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[27]** — [Tarihsel kaynak kaydı] ARAS TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[28]** — [Tarihsel kaynak kaydı] ARAS TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[29]** — [Tarihsel kaynak kaydı] ARENA SPORT 1
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[30]** — [Tarihsel kaynak kaydı] ARENA SPORT 2
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[31]** — [Tarihsel kaynak kaydı] A SPORT
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[32]** — [Tarihsel kaynak kaydı] AS TV  BURSA
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[33]** — [Tarihsel kaynak kaydı] ATVSAT (1080P) [NOT 24/7]
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[37]** — [Tarihsel kaynak kaydı] BEGEN TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[38]** — [Tarihsel kaynak kaydı] BEIN IZ TV HD
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[39]** — [Tarihsel kaynak kaydı] BELEMTÜRK
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[43]** — [Tarihsel kaynak kaydı] BLOOMBERG HT  HABER
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[44]** — [Tarihsel kaynak kaydı] BRTV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[45]** — [Tarihsel kaynak kaydı] BRTV (INDONESIA) (720P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[46]** — [Tarihsel kaynak kaydı] BURSA LINE TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[47]** — [Tarihsel kaynak kaydı] CANAL+ 360 (576I)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[48]** — [Tarihsel kaynak kaydı] CATVE2 (720P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[49]** — [Tarihsel kaynak kaydı] CATVE MASTER TV (720P) [NOT 24/7]
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[50]** — [Tarihsel kaynak kaydı] CATV (1080P) [NOT 24/7]
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[51]** — [Tarihsel kaynak kaydı] CAY TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[52]** — [Tarihsel kaynak kaydı] CAY TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[53]** — [Tarihsel kaynak kaydı] CAY TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[54]** — [Tarihsel kaynak kaydı] CINE+
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[55]** — [Tarihsel kaynak kaydı] CINE 1
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[56]** — [Tarihsel kaynak kaydı] CINE 1
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[57]** — [Tarihsel kaynak kaydı] CNBC-E
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[58]** — [Tarihsel kaynak kaydı] CNBC-E
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[59]** — [Tarihsel kaynak kaydı] COMBATV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[60]** — [Tarihsel kaynak kaydı] COMBATV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[61]** — [Tarihsel kaynak kaydı] CONSTANZATV (1080P) [NOT 24/7]
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[62]** — [Tarihsel kaynak kaydı] CREALATV (1080P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[63]** — [Tarihsel kaynak kaydı] CRIME 360 (720P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[64]** — [Tarihsel kaynak kaydı] DAYSTAR TV (1080P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[65]** — [Tarihsel kaynak kaydı] DAYSTAR TV ESPANOL (1080P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[66]** — [Tarihsel kaynak kaydı] DAYSTAR TV WSLF-LD (720P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[67]** — [Tarihsel kaynak kaydı] DELLATV (720P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[68]** — [Tarihsel kaynak kaydı] DELTATV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[69]** — [Tarihsel kaynak kaydı] DERIN TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[70]** — [Tarihsel kaynak kaydı] DHA CANLI
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[71]** — [Tarihsel kaynak kaydı] DIYANET TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[72]** — [Tarihsel kaynak kaydı] DIYAR TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[73]** — [Tarihsel kaynak kaydı] DOST TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[74]** — [Tarihsel kaynak kaydı] DOST TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[75]** — [Tarihsel kaynak kaydı] D�ZG�N TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[76]** — [Tarihsel kaynak kaydı] EDESSA TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[77]** — [Tarihsel kaynak kaydı] EDIRNE TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[78]** — [Tarihsel kaynak kaydı] EKOL SPORTS
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[79]** — [Tarihsel kaynak kaydı] EKOL SPORTS
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[80]** — [Tarihsel kaynak kaydı] EKOL TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[81]** — [Tarihsel kaynak kaydı] EKOTURK
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[82]** — [Tarihsel kaynak kaydı] EL TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[83]** — [Tarihsel kaynak kaydı] EL TV (360P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[84]** — [Tarihsel kaynak kaydı] ERCİŞ TV  VAN
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[85]** — [Tarihsel kaynak kaydı] ERZURUM WEB TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[86]** — [Tarihsel kaynak kaydı] ESENLER SEHIR EKRANI
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[87]** — [Tarihsel kaynak kaydı] ES TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[88]** — [Tarihsel kaynak kaydı] ES TV  ESKİŞEHİR
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[89]** — [Tarihsel kaynak kaydı] ETV  KAYSERİ
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[90]** — [Tarihsel kaynak kaydı] ETV KAYSERI
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[91]** — [Tarihsel kaynak kaydı] FARMODATV (1080P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[92]** — [Tarihsel kaynak kaydı] FINANS TURK TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[93]** — [Tarihsel kaynak kaydı] GRP VERATV (576P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[94]** — [Tarihsel kaynak kaydı] GRT GAZİANTEP TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[95]** — [Tarihsel kaynak kaydı] GRT TV  GAZİANTEP
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[96]** — [Tarihsel kaynak kaydı] GURBET 24 TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[97]** — [Tarihsel kaynak kaydı] HABER 61
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[98]** — [Tarihsel kaynak kaydı] HABER 61 TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[99]** — [Tarihsel kaynak kaydı] HABER61 TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[100]** — [Tarihsel kaynak kaydı] Haber61 TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[101]** — [Tarihsel kaynak kaydı] HABER GLOBAL
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[102]** — [Tarihsel kaynak kaydı] HRT AKDENIZ
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[103]** — [Tarihsel kaynak kaydı] HTSPOR TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[104]** — [Tarihsel kaynak kaydı] HUNAT TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[105]** — [Tarihsel kaynak kaydı] HUNAT TV  KAYSERİ
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[106]** — [Tarihsel kaynak kaydı] ICEL TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[107]** — [Tarihsel kaynak kaydı] ICEL TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[108]** — [Tarihsel kaynak kaydı] ILKE TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[109]** — [Tarihsel kaynak kaydı] İZMİR TIME 35 TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[137]** — [Tarihsel kaynak kaydı] KARADENIZ TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[138]** — [Tarihsel kaynak kaydı] KARADENIZ TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[139]** — [Tarihsel kaynak kaydı] KAY TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[140]** — [Tarihsel kaynak kaydı] KAY TV  KAYSERİ
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[141]** — [Tarihsel kaynak kaydı] KENT TURK
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[142]** — [Tarihsel kaynak kaydı] KENT TÜRK TV  KAYSERİ
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[143]** — [Tarihsel kaynak kaydı] KIBRIS TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[144]** — [Tarihsel kaynak kaydı] KN MUSIC TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[145]** — [Tarihsel kaynak kaydı] KOCAELI TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[146]** — [Tarihsel kaynak kaydı] KOCAELI TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[147]** — [Tarihsel kaynak kaydı] KONYA OLAY TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[148]** — [Tarihsel kaynak kaydı] KONYA OLAY TV  KONYA
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[149]** — [Tarihsel kaynak kaydı] LA CASA DE PAPEL-TR S03 LA CASA DE PAPEL S03E01 1080P NF DUAL [TR-SPA] WEB-DL DDP5.1 H264 - TURG
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[150]** — [Tarihsel kaynak kaydı] LA CASA DE PAPEL-TR S03 LA CASA DE PAPEL S03E02 1080P NF DUAL [TR-SPA] WEB-DL DDP5.1 H264 - TURG
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[151]** — [Tarihsel kaynak kaydı] LA CASA DE PAPEL-TR S03 LA CASA DE PAPEL S03E03 1080P NF DUAL [TR-SPA] WEB-DL DDP5.1 H264 - TURG
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[152]** — [Tarihsel kaynak kaydı] LA CASA DE PAPEL-TR S03 LA CASA DE PAPEL S03E04 1080P NF DUAL [TR-SPA] WEB-DL DDP5.1 H264 - TURG
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[153]** — [Tarihsel kaynak kaydı] LA CASA DE PAPEL-TR S03 LA CASA DE PAPEL S03E05 1080P NF DUAL [TR-SPA] WEB-DL DDP5.1 H264 - TURG
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[154]** — [Tarihsel kaynak kaydı] LA CASA DE PAPEL-TR S03 LA CASA DE PAPEL S03E06 1080P NF DUAL [TR-SPA] WEB-DL DDP5.1 H264 - TURG
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[155]** — [Tarihsel kaynak kaydı] LA CASA DE PAPEL-TR S03 LA CASA DE PAPEL S03E07 1080P NF DUAL [TR-SPA] WEB-DL DDP5.1 H264 - TURG
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[156]** — [Tarihsel kaynak kaydı] LA CASA DE PAPEL-TR S03 LA CASA DE PAPEL S03E08 1080P NF DUAL [TR-SPA] WEB-DL DDP5.1 H264 - TURG
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[157]** — [Tarihsel kaynak kaydı] LALEGUL TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[158]** — [Tarihsel kaynak kaydı] LATACUNGATV (360P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[159]** — [Tarihsel kaynak kaydı] LATV (1080P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[160]** — [Tarihsel kaynak kaydı] LATV (1080P) [GEO-BLOCKED]
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[161]** — [Tarihsel kaynak kaydı] LIRATV (720P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[162]** — [Tarihsel kaynak kaydı] MAVIKARADENIZ TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[163]** — [Tarihsel kaynak kaydı] MED MUZIK
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[164]** — [Tarihsel kaynak kaydı] MEDYAHABER TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[165]** — [Tarihsel kaynak kaydı] MELTEM TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[166]** — [Tarihsel kaynak kaydı] MELTEM TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[167]** — [Tarihsel kaynak kaydı] MERCAN TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[168]** — [Tarihsel kaynak kaydı] MERCAN TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[169]** — [Tarihsel kaynak kaydı] MERCAN TV  ADIYAMAN
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[170]** — [Tarihsel kaynak kaydı] MINIKAGO
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[171]** — [Tarihsel kaynak kaydı] MR  ROBOT TR S01 MR.ROBOT.S01E01
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[172]** — [Tarihsel kaynak kaydı] MR  ROBOT TR S01 MR.ROBOT.S01E02
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[173]** — [Tarihsel kaynak kaydı] MR  ROBOT TR S01 MR.ROBOT.S01E03
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[174]** — [Tarihsel kaynak kaydı] MR  ROBOT TR S01 MR.ROBOT.S01E04
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[175]** — [Tarihsel kaynak kaydı] MR  ROBOT TR S01 MR.ROBOT.S01E05
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[176]** — [Tarihsel kaynak kaydı] MR  ROBOT TR S01 MR.ROBOT.S01E06
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[177]** — [Tarihsel kaynak kaydı] MR  ROBOT TR S01 MR.ROBOT.S01E07
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[178]** — [Tarihsel kaynak kaydı] MR  ROBOT TR S01 MR.ROBOT.S01E08
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[179]** — [Tarihsel kaynak kaydı] MR  ROBOT TR S01 MR.ROBOT.S01E09
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[180]** — [Tarihsel kaynak kaydı] MR  ROBOT TR S01 MR.ROBOT.S01E10
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[181]** — [Tarihsel kaynak kaydı] MR  ROBOT TR S02 MR.ROBOT.S02E01.TR
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[182]** — [Tarihsel kaynak kaydı] MR  ROBOT TR S02 MR.ROBOT.S02E02.TR
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[183]** — [Tarihsel kaynak kaydı] MR  ROBOT TR S02 MR.ROBOT.S02E03.TR
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[184]** — [Tarihsel kaynak kaydı] MR  ROBOT TR S02 MR.ROBOT.S02E04.TR
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[185]** — [Tarihsel kaynak kaydı] MR  ROBOT TR S02 MR.ROBOT.S02E05.TR
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[186]** — [Tarihsel kaynak kaydı] MR  ROBOT TR S02 MR.ROBOT.S02E06
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[187]** — [Tarihsel kaynak kaydı] MR  ROBOT TR S02 MR.ROBOT.S02E07.TR
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[188]** — [Tarihsel kaynak kaydı] MR  ROBOT TR S02 MR.ROBOT.S02E08.TR
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[189]** — [Tarihsel kaynak kaydı] MR  ROBOT TR S02 MR.ROBOT.S02E09.TR
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[190]** — [Tarihsel kaynak kaydı] MR  ROBOT TR S02 MR.ROBOT.S02E10.TR
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[191]** — [Tarihsel kaynak kaydı] MR  ROBOT TR S02 MR.ROBOT.S02E11.TR
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[192]** — [Tarihsel kaynak kaydı] MR  ROBOT TR S02 MR.ROBOT.S02E12.TR
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[193]** — [Tarihsel kaynak kaydı] MR  ROBOT TR S03 MR.ROBOT.S03E01.TR
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[194]** — [Tarihsel kaynak kaydı] MR  ROBOT TR S03 MR.ROBOT.S03E02.TR
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[195]** — [Tarihsel kaynak kaydı] MR  ROBOT TR S03 MR.ROBOT.S03E03.TR
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[196]** — [Tarihsel kaynak kaydı] MR  ROBOT TR S03 MR.ROBOT.S03E04.TR
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[197]** — [Tarihsel kaynak kaydı] MR  ROBOT TR S03 MR.ROBOT.S03E05.TR.
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[198]** — [Tarihsel kaynak kaydı] MR  ROBOT TR S03 MR.ROBOT.S03E06.TR
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[199]** — [Tarihsel kaynak kaydı] MR  ROBOT TR S03 MR.ROBOT.S03E07.TR
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[200]** — [Tarihsel kaynak kaydı] MR  ROBOT TR S03 MR.ROBOT.S03E08.TR
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[201]** — [Tarihsel kaynak kaydı] MR  ROBOT TR S03 MR.ROBOT.S03E09.TR
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[202]** — [Tarihsel kaynak kaydı] MR  ROBOT TR S03 MR.ROBOT.S03E10.TR
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[203]** — [Tarihsel kaynak kaydı] MR  ROBOT TR S04 MR ROBOT S04E02
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[204]** — [Tarihsel kaynak kaydı] MR  ROBOT TR S04 MR ROBOT S04E04
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[205]** — [Tarihsel kaynak kaydı] NICOYATV (720P) [NOT 24/7]
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[206]** — [Tarihsel kaynak kaydı] NR 1 TURK
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[207]** — [Tarihsel kaynak kaydı] NR1 TURK TV HD
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[208]** — [Tarihsel kaynak kaydı] OLAY TÜRK KAYSERİ TV  KAYSERİ
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[209]** — [Tarihsel kaynak kaydı] OLAYTURK TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[210]** — [Tarihsel kaynak kaydı] PIURATV (720P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[211]** — [Tarihsel kaynak kaydı] POWER DANCE
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[212]** — [Tarihsel kaynak kaydı] POWER HD
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[213]** — [Tarihsel kaynak kaydı] POWER LOVE
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[214]** — [Tarihsel kaynak kaydı] POWERTURK AKUSTIK
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[215]** — [Tarihsel kaynak kaydı] POWERTURK SLOW
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[216]** — [Tarihsel kaynak kaydı] POWERTURK TAPTAZE
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[217]** — [Tarihsel kaynak kaydı] POWERTURK TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[218]** — [Tarihsel kaynak kaydı] POWER TV (720P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[219]** — [Tarihsel kaynak kaydı] POWER TV AKUSTIK
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[220]** — [Tarihsel kaynak kaydı] POWER TV (INDIA) (576P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[221]** — [Tarihsel kaynak kaydı] PRIMA SPORT CZECHIA
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[222]** — [Tarihsel kaynak kaydı] PROFI 24 TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[223]** — [Tarihsel kaynak kaydı] RADIOITALIATV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[224]** — [Tarihsel kaynak kaydı] RBATV (720P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[225]** — [Tarihsel kaynak kaydı] RIZE TÜRK  EKSTRA
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[226]** — [Tarihsel kaynak kaydı] RIZE TURK HD
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[227]** — [Tarihsel kaynak kaydı] RSELVATV (720P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[228]** — [Tarihsel kaynak kaydı] RSELVATV (720P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[229]** — [Tarihsel kaynak kaydı] RTRTV (1080P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[230]** — [Tarihsel kaynak kaydı] RUHA TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[231]** — [Tarihsel kaynak kaydı] RUHA TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[232]** — [Tarihsel kaynak kaydı] SDM TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[233]** — [Tarihsel kaynak kaydı] SERCEM TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[234]** — [Tarihsel kaynak kaydı] SETANTA SPORTS 1 EURASIA (1080P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[235]** — [Tarihsel kaynak kaydı] SETANTA SPORTS 2 EURASIA (1080P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[236]** — [Tarihsel kaynak kaydı] SHOW MAX
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[237]** — [Tarihsel kaynak kaydı] SHOW MAX (DIZI & SINEMA)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[238]** — [Tarihsel kaynak kaydı] SICILIA 24 TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[239]** — [Tarihsel kaynak kaydı] SIENATV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[240]** — [Tarihsel kaynak kaydı] SONMEZ TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[241]** — [Tarihsel kaynak kaydı] SONMEZ TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[242]** — [Tarihsel kaynak kaydı] SPEKTRATV (720P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[243]** — [Tarihsel kaynak kaydı] SPERANTATV (1080P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[244]** — [Tarihsel kaynak kaydı] STAR-TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[245]** — [Tarihsel kaynak kaydı] STREAMFORCE 360 (1080P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[246]** — [Tarihsel kaynak kaydı] TAPAHTUMATV EVEO
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[247]** — [Tarihsel kaynak kaydı] TATLISES
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[248]** — [Tarihsel kaynak kaydı] TATV (720P) [NOT 24/7]
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[249]** — [Tarihsel kaynak kaydı] TBMM TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[250]** — [Tarihsel kaynak kaydı] THE YOUNG TURKS (1080P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[251]** — [Tarihsel kaynak kaydı] THE YOUNG TURKS (720P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[252]** — [Tarihsel kaynak kaydı] TH TURK HABER TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[253]** — [Tarihsel kaynak kaydı] TOKAT TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[254]** — [Tarihsel kaynak kaydı] TURKHABER TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[255]** — [Tarihsel kaynak kaydı] TURKHABER TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[256]** — [Tarihsel kaynak kaydı] TURKMENISTAN (406P) [NOT 24/7]
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[257]** — [Tarihsel kaynak kaydı] TURKMENISTAN SPORT (406P) [NOT 24/7]
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[258]** — [Tarihsel kaynak kaydı] TURKMEN OWAZY (406P) [NOT 24/7]
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[259]** — [Tarihsel kaynak kaydı] TV 1  KAYSERİ
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[260]** — [Tarihsel kaynak kaydı] TV 264  SAKARYA
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[261]** — [Tarihsel kaynak kaydı] TV 4
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[262]** — [Tarihsel kaynak kaydı] TV4
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[263]** — [Tarihsel kaynak kaydı] TV4
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[264]** — [Tarihsel kaynak kaydı] TV9 BHARATVARSH (720P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[265]** — [Tarihsel kaynak kaydı] TV9 BHARATVARSH (720P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[266]** — [Tarihsel kaynak kaydı] TV DEN
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[267]** — [Tarihsel kaynak kaydı] TV DEN
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[268]** — [Tarihsel kaynak kaydı] UATV (1080P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[269]** — [Tarihsel kaynak kaydı] UATV (1080P) [NOT 24/7]
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[270]** — [Tarihsel kaynak kaydı] URFA NATIK TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[271]** — [Tarihsel kaynak kaydı] URFANATİK TV  ŞANLIUFRA
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[272]** — [Tarihsel kaynak kaydı] VALUE 24 TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[273]** — [Tarihsel kaynak kaydı] VAN 65 TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[274]** — [Tarihsel kaynak kaydı] VIYANA TV HD
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[275]** — [Tarihsel kaynak kaydı] ZAROK TV
+- **v2/reports/turkish-category-audit.json:$.policy** — [Tarihsel kaynak kaydı] Conservative automated moves; ambiguous Turkish entries remain for review.
+- **v2/reports/turkish-discovery.json:$.pending_count** — [Tarihsel kaynak kaydı] 68
+
+- **v2/reports/turkish-only-fresh-scan.json:$.summary.language_review_required** — [Tarihsel kaynak kaydı] 0
+- **v2/reports/turkish-sample-verification-20261119.json:$.scope** — [Tarihsel kaynak kaydı] Two local integration fixtures. Human speech from the FLEURS test split was combined with a generated, captioned image and a timed Turkish test cue. No broadcaster or device assessment.
+- **v2/tasks/KALAN_ISLER_12_ASAMALI_PLAN_20261123.md:L1** — [Tarihsel kaynak kaydı] MADSC55 TV V2 — Birleşik yapılacak işler
+- **v2/tasks/KALAN_ISLER_12_ASAMALI_PLAN_20261123.md:L6** — [Tarihsel kaynak kaydı] 1. [ ] PR #641/#642/#650 ve tüm güncel PR/CI/güvenlik kapısı durumunu doğrula
+- **v2/tasks/KALAN_ISLER_12_ASAMALI_PLAN_20261123.md:L10** — [Tarihsel kaynak kaydı] 5. [ ] HTTP 404/403/429/503/timeout sınıflandırması, kesintisiz raporlama
+- **v2/tasks/KALAN_ISLER_12_ASAMALI_PLAN_20261123.md:L11** — [Tarihsel kaynak kaydı] 6. [ ] Gerçek video/ses/HLS testi; HTTP 200 AV kanıtı değildir; İBO kabulü ayrı
+- **v2/tasks/KALAN_ISLER_12_ASAMALI_PLAN_20261123.md:L13** — [Tarihsel kaynak kaydı] 8. [ ] Kesin ölüleri kanıtla temizle, doğrulanmış adayları ekle; rollback ve CI
+- **v2/tasks/KALAN_ISLER_12_ASAMALI_PLAN_20261123.md:L16** — [Tarihsel kaynak kaydı] 11. [ ] Harici şifreli bağımsız restore, otomatik bakım, geçmiş raporları ve kaldığı yerden devam
+- **v2/tasks/KALAN_ISLER_12_ASAMALI_PLAN_20261123.md:L19** — [Tarihsel kaynak kaydı] Birlikte ele alınacak ek eksikler
+- **v2/tasks/KALAN_ISLER_12_ASAMALI_PLAN_20261123.md:L21** — [Tarihsel kaynak kaydı] - 654 silme sonrası envanter; 404/503 yeniden değerlendirme; Codeberg/GitLab 429; tarihsel YouTube SIGN_IN_REQUIRED.
+- **v2/tasks/KALAN_ISLER_12_ASAMALI_PLAN_20261123.md:L22** — [Tarihsel kaynak kaydı] - 20.148 tarihsel kuyruk / 3.766 eşleşme / 16.367 dışarıda / 15 fark uzlaştırması; güncel sayımla doğrula.
+- **v2/tasks/KALAN_ISLER_12_ASAMALI_PLAN_20261123.md:L24** — [Tarihsel kaynak kaydı] - Yetkili Fernet kasası için harici gerçek şifreli yedek ve bağımsız restore; anahtarları kaydetme.
+- **v2/tasks/KALAN_ISLER_12_ASAMALI_PLAN_20261123.md:L30** — [Tarihsel kaynak kaydı] - 685 SECURITY HOLD güvenli kabul olmadan kaldırılmayacak.
+- **v2/tasks/KALAN_ISLER_12_ASAMALI_PLAN_20261123.md:L31** — [Tarihsel kaynak kaydı] - Önceden tamamlanan işler tekrarlanmayacak; PR #650 planıyla kapsam birleştirilecek.
+- **v2/tasks/KALAN_ISLER_12_ASAMALI_PLAN_20261123.md:L32** — [Tarihsel kaynak kaydı] - Her aşama ancak CI/Production Security Gate, gerçek envanter ve gerektiğinde AV/cihaz/restore kanıtıyla tamamlandı işaretlenecek.
+- **v2/tasks/KAPANIS_SIRASI_20261121.md:L1** — [Tarihsel kaynak kaydı] MADSC55 TV V2 - 21 Kasim 2026 kapanis plani
+- **v2/tasks/KAPANIS_SIRASI_20261121.md:L7** — [Tarihsel kaynak kaydı] Sirali kabul asamalari
+- **v2/tasks/KAPANIS_SIRASI_20261121.md:L13** — [Tarihsel kaynak kaydı] 3. FFmpeg/HLS OS seviyesinde egress guvenligi: #497 685 canli retry SECURITY HOLD, guvenlik kabulune kadar kaldirilmaz. Mevcut 685 plan artifact 14702596056 yeniden uretilmez.
+- **v2/tasks/KAPANIS_SIRASI_20261121.md:L15** — [Tarihsel kaynak kaydı] 4. AV gercek decode, Turkce ses/altyazi ve belirsiz yayinlar: 8696 tarihsel AV raporu, #18/#20 ve 685 tekrar testleri kanitlarla uzlastirilir; izinsiz tarama yok.
+- **v2/tasks/KAPANIS_SIRASI_20261121.md:L21** — [Tarihsel kaynak kaydı] 7. Kaynak kesfi ve gecmis eslestirme: #17,#21,#34; Codeberg 429 ve diger saglayici engelleri kanitla kapat.
+- **v2/tasks/KAPANIS_SIRASI_20261121.md:L23** — [Tarihsel kaynak kaydı] 8. Sifreli ozel Turk kasasi harici yedek/restore (#6); 1000/2000 ve 4301 paketleri #28-31 gercek provenans ve restore.
+- **v2/tasks/KAPANIS_SIRASI_20261121.md:L31** — [Tarihsel kaynak kaydı] Ilk sonraki uygulama
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L1** — [Tarihsel kaynak kaydı] MADSC55 TV V2 — Ana çalışma sırası
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L2** — [Tarihsel kaynak kaydı] **Kayıt:** 21 Kasım 2026
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L3** — [Tarihsel kaynak kaydı] **Baz main:** `3eb84f890cbe8524d16c1a16f219b0b494cc50f0`
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L4** — [Tarihsel kaynak kaydı] **Amaç:** Kanıtlı eksikleri tek tek kapatmak; tamamlanan işleri tekrarlamamak.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L15** — [Tarihsel kaynak kaydı] - Her iş: kanıtı bul → kimlik/hash/kapsamı doğrula → yalnız gerçek açığı düzelt → hedefli test → güncel CI → rapor. Başarısız veya belirsiz kanıt tamamlandı sayılmaz.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L17** — [Tarihsel kaynak kaydı] Başlangıçta doğrulanan durum
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L18** — [Tarihsel kaynak kaydı] - Main HEAD: `3eb84f890cbe8524d16c1a16f219b0b494cc50f0`.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L19** — [Tarihsel kaynak kaydı] - Production Security Gate #44837457969: SUCCESS.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L21** — [Tarihsel kaynak kaydı] - `v2/tasks/state.json` son üretilme zamanı 13 Kasım; 22 completed / 12 in_progress tarihî dosya beyanıdır, güncel durum değildir. Güncel kanıt olmadan statüler değiştirilmez.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L25** — [Tarihsel kaynak kaydı] - İncelenecek açık PR'lar: #551, #552, #547, #543, #535, #514, #507. Açık PR olmak tek başına kabul/merge gerekçesi değildir.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L27** — [Tarihsel kaynak kaydı] Sıralı çalışma aşamaları
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L29** — [Tarihsel kaynak kaydı] 0 — Devir kaydını sabitle
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L38** — [Tarihsel kaynak kaydı] 2 — #497 eski AV raporu ve kimlik manifesti (PR #552 → #547)
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L40** — [Tarihsel kaynak kaydı] - Bulunamazsa açık blocker kaydet; 1.107 çalışan + 685 belirsiz sayısını doğrulanmış veri gibi kullanma.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L43** — [Tarihsel kaynak kaydı] - #535/#514 ile örtüşmeyi ayır. Kabul: orijinal kanıt zinciri, hash eşleşmesi, hedefli test ve güncel CI PASS.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L45** — [Tarihsel kaynak kaydı] 3 — Task 34 gerçek FFmpeg AV decode (PR #543)
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L46** — [Tarihsel kaynak kaydı] - FFprobe metadata sonucunun gerçek FFmpeg video ve audio decode ile değiştirildiğini incele.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L48** — [Tarihsel kaynak kaydı] - PR CI ve main güvenlik kapısı PASS olmadan merge yok.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L49** — [Tarihsel kaynak kaydı] - Kabul: kontrollü izinli örneklerde iki akış decode kanıtı, negatif testler, timeout ve CI PASS. Bu, 18.074 taraması değildir.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L51** — [Tarihsel kaynak kaydı] 4 — Türkçe dil / altyazı / OCR kanıt zinciri
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L52** — [Tarihsel kaynak kaydı] - Mevcut ASR/OCR/WebVTT altyapısını yeniden yazma; gerçek yayın örneğinden kanıt üreten eksikleri tamamla.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L53** — [Tarihsel kaynak kaydı] - Konuşma dili, ekran yazısı, altyazı, yayıncı/ülke kimliği ve AV durumu ayrı tutulmalı.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L58** — [Tarihsel kaynak kaydı] - Önce mevcut dünya ve tarihî raporları tam URL hash/kimlik ile eşleştir; eski AV kanıtını yeni test gibi sayma.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L59** — [Tarihsel kaynak kaydı] - Her kayıt için tekil kimlik, son test zamanı, AV, ASR/OCR/WebVTT, kaynak ve retry geçmişi tut.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L60** — [Tarihsel kaynak kaydı] - Geniş taramayı yalnız #497/#543/dil kanıt kapıları hazır, güvenli ve CI kabulü tamamlandıktan sonra bounded paketlerle başlat.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L61** — [Tarihsel kaynak kaydı] - Geçici timeout/403/429 doğrudan kalıcı çalışmıyor sayılmaz; retry/backoff ve mükerrer önleme uygulanır.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L64** — [Tarihsel kaynak kaydı] 6 — Otomatik sonuç işleme, retry ve arşiv önizlemesi
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L65** — [Tarihsel kaynak kaydı] - Kalıcı ledger/checkpoint ve idempotent sonuç işleme eksiklerini tamamla.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L66** — [Tarihsel kaynak kaydı] - Çalışan, çalışmayan ve belirsiz ayrı tutulur; belirsizler kontrollü tekrar denenir.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L67** — [Tarihsel kaynak kaydı] - Her işlem öncesi/sonrası sayım, kimlik/hash ve rollback kanıtı üret.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L71** — [Tarihsel kaynak kaydı] 7 — Şifreli arşiv gerçek ortam kabulü (PR #507; #502/#508/#509/#510/#548 altyapısı)
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L72** — [Tarihsel kaynak kaydı] - Birleşmiş kodu yeniden yazma. Kalıcı özel depolama, anahtar yönetimi, yetki sınırı, harici şifreli yedek ve bağımsız restore'u gerçek ortamda doğrula.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L73** — [Tarihsel kaynak kaydı] - Kabul: yetkili ortamda gerçek backup/restore, hash/versiyon/izin kanıtı ve sırların loglanmaması. Kimlik bilgisi yoksa blocker.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L76** — [Tarihsel kaynak kaydı] - Offline CI, gerçek AV, Türkçe sınıflandırma ve cihaz oynatması ayrı kabul kapılarıdır.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L79** — [Tarihsel kaynak kaydı] - Her görev için commit, PR, Actions run, artifact ve test sonucu sunulur; açık blocker saklanmaz.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L81** — [Tarihsel kaynak kaydı] Tekrarlanmayacak tamamlanmış işler
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L82** — [Tarihsel kaynak kaydı] - Birleşmiş #502, #508, #509, #510, #539, #546, #548 ve #549 tekrar yapılmaz; yalnız regresyon kanıtı varsa hedefli düzeltme.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L83** — [Tarihsel kaynak kaydı] - 101 offline PASS ve mevcut main Security Gate yeniden çalıştırma amacıyla tekrarlanmaz; yeni kodun zorunlu CI'si doğal olarak çalışır.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L84** — [Tarihsel kaynak kaydı] - #42216075104 dünya taraması mevcut tarihî kanıttır; aynı kapsam körlemesine yeniden taranmaz.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L88** — [Tarihsel kaynak kaydı] Her aşamanın rapor şablonu
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L92** — [Tarihsel kaynak kaydı] İlerleme günlüğü — 21 Kasım 2026
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L93** — [Tarihsel kaynak kaydı] Aşama 1 / #489 arşiv kabulü — kanıt kontrolü yapıldı
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L94** — [Tarihsel kaynak kaydı] - PR #551 kaynak diff'inde `DEVAM_NOTU.md` ve `v2/tasks/state.json` kanıt kaydı incelendi.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L96** — [Tarihsel kaynak kaydı] - PR #551 kaydında arşiv regresyonları **12 test PASS** ve log kabul satırı `PASS: #489 canonical 18912; 18074 archive; 838 protected; move/restore` olarak belirtiliyor.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L100** — [Tarihsel kaynak kaydı] Aşama 2 / #497 kaynak artifact — blocker teyit edildi
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L103** — [Tarihsel kaynak kaydı] - `task17-18-20-bounded-retry-20261118.json` farklı kapsamlı 15 URL/17 deneme raporudur; ikame edilmeyecek.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L108** — [Tarihsel kaynak kaydı] Aşama 2 / #497 özgün AV raporu — artifact bulundu ve kimlik eşlemesi doğrulandı
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L119** — [Tarihsel kaynak kaydı] 21 Kasım 2026 — Ara kabul: eski AV kanıtı, FFmpeg ve mükerrer PR temizliği
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L123** — [Tarihsel kaynak kaydı] - **685 belirsizin ayrıntısı:** PROBE_FAILED 621; TIMEOUT 26; NO_MEDIA 23; AV_STREAMS_PRESENT (decode doğrulanmamış) 14; AUDIO_ONLY 1. **Hiçbiri kesin ölü ilan edilmedi.**
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L126** — [Tarihsel kaynak kaydı] - **Mükerrer işler:** #514 ve #535'in ortak reconciler/test dosyaları mevcut main'de SHA eşitliğiyle doğrulandı; #535'in eski importer'ı #547 ile güçlendirildi. #514, #535 ve eski eksik-artifact notlu #552 gerekçeli yorumla birleştirilmeden kapatıldı.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L128** — [Tarihsel kaynak kaydı] - **Sonraki tek adım:** #547 importer'ı kimlik ve SHA kilitleriyle gerçek mevcut artifact üzerinden yalnız read-only önizleme/manifest üretip doğrulamak; ardından ASR/OCR/WebVTT kanıt zincirindeki açık gerçek işleri ele almak.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L132** — [Tarihsel kaynak kaydı] 21 Kasım 2026 — Aşama 4 güvenli örnek alma (kısmi kod kabulü)
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L134** — [Tarihsel kaynak kaydı] - PR #571 `4b45245f094ffc1aba4e7ecff24f125d502f6d4e` birleşti: bounded FFmpeg capture URL ambiguity reddi, explicit network protocol whitelist ve sentetik negatif güvenlik testleri; PR CI #44843819098 SUCCESS.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L135** — [Tarihsel kaynak kaydı] - **Aşama 4 tamamen PASS değil:** DNS hostname'leri hâlâ güvenlik için reddediliyor. Gerçek HLS segment/anahtar alt istekleri için egress firewall, izinli alan adı, IP pinning, redirect ve tüm child URL denetimi gerek. URL doğrulama veya FFmpeg whitelist tek başına yeterli değil.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L141** — [Tarihsel kaynak kaydı] 21 Kasım 2026 — Aşama 4 DNS güvenliği, gerçek kod kabulü
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L143** — [Tarihsel kaynak kaydı] - **PR #572 merge edildi**, ana dal merge commit `8e9e86b0a422a59b2cfccdd9d732c0a16b442c99`. PR'ın son Production Security Gate Actions run'ı [44844424809](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44844424809) **SUCCESS**; 14 mevcut capture regresyonu ve 12 yeni pinned-DNS güvenlik testi PASS. Merge sonrası main run `44844614127` ayrı kontrol edilecek.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L144** — [Tarihsel kaynak kaydı] - Tam uygulama kaydı: [v2/reports/stage4-pinned-dns-capture-20261121.md](../reports/stage4-pinned-dns-capture-20261121.md).
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L145** — [Tarihsel kaynak kaydı] - DNS adları artık **yalnız** onaylanmış genel/unicast IP'ye sabitlenmiş HTTP(S) indirme yoluyla örneklenebilir. DNS cevabında özel/multicast adres varsa fail-closed; HTTPS özgün hostname/SNI doğrular; HTTP redirect ve nested HLS/DASH reddedilir.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L147** — [Tarihsel kaynak kaydı] - **Aşama 4 henüz tamamen tamamlanmadı.** En yaygın IPTV biçimi olan nested HLS/DASH, adaptif segmentler, anahtarlar ve redirect'ler için her alt isteği doğrulayan güvenli collector veya dış ağ egress duvarı gerekiyor; bilinçli olarak bloke. Mevcut legacy IP-literal FFmpeg modu da explicit whitelist'e rağmen egress firewall kanıtı değildir; ayrıca ele alınacak.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L148** — [Tarihsel kaynak kaydı] - Önceki #567 kodu yalnız 685 belirsiz kaydın manuel, kanıt-kilitli retry hattıdır; CANLI retry çalıştırılmadı. 18.074 tam test, gerçek ASR/OCR/WebVTT, Türk/Yabancı final kararları, gerçek şifreli dış arşiv restore ve İBO Player cihaz kabulü açık.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L150** — [Tarihsel kaynak kaydı] - **Sonraki teknik sıra:** (a) güvenli HLS/DASH alt kaynak erişimi/egress tasarımı ve offline negatif testleri, (b) IP-literal legacy modun güvenli transport ile aynı seviyeye getirilmesi, (c) gerçek medya/ASR/OCR/WebVTT kanıtları için izinli manuel kabul, (d) son aşamadaki toplu testler.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L152** — [Tarihsel kaynak kaydı] 21 Kasım 2026 — Güncellenmiş devam sırası / Aşama 5 başlatıldı
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L155** — [Tarihsel kaynak kaydı] 2. **Aktif Aşama 5:** eski dünya taraması run `42216075104`, artifact `13524765368`, ZIP SHA-256 `6bec426291330c6b4b305e2871b721a25c44583f892c14d893472cdc3e80f87d` doğrulandı. 35.327 aday / 13.884 AV / tarihsel 4.949 URL hash / 3.080 AV verisi 18.074 kaynak envanterine salt-okunur karşılaştırılacak. Önceki tarama kanıtları tekrar sınanmıyor.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L162** — [Tarihsel kaynak kaydı] Aşama 5 kabul edildi / Aşama 6 sıradaki iş — 21 Kasım
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L164** — [Tarihsel kaynak kaydı] - PR #585, merge `cf4b28f16c25af59295c7ee13c3dc5f659585ce1`, PR CI `44845062944` SUCCESS. Gerçek tarama başlatmadan orijinal 18.074 URL hash'iyle dünya raporu karşılaştırıldı; artifact `14682746793` SHA-256 `b995abbb3eca5726d63c1a311a2132c57ded83caf87ca11eee778fc27463692f`. Tam dağılım ve 685 alt kümesinin ayrıntısı `DEVAM_NOTU.md` son kaydında.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L171** — [Tarihsel kaynak kaydı] 21 Kasım 2026 güncellemesi — Aşama 6 plan kodu kabul edildi
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L173** — [Tarihsel kaynak kaydı] - PR #594 merged (`c17af7945921ba61f29c9d2e2918425e897c6cc8`): 685 `uncertain/recheck_required` kaydı için deterministik, SHA-256 kimlikli, kaynak zaman damgalı, idempotent ve no-clobber salt-okunur plan üreticisi eklendi.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L176** — [Tarihsel kaynak kaydı] - Sonraki öncelikler: (1) Stage 5 tarihsel 18.074 crosswalk satırlarını kimlik/kanıt kaynağı bazında incele, (2) bağımsız özel şifreli kasa restore kabulünü kanıtla, (3) güvenli HLS/DASH segment/anahtar yakalama ve gerçek yayıncı örneği. 18.074 canlı AV taraması, 685 retry ve İBO cihaz testleri son aşamada.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L179** — [Tarihsel kaynak kaydı] 21 Kasım 2026 — Harici şifreli arşiv yapısal kontrolü
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L181** — [Tarihsel kaynak kaydı] - Mevcut Drive dosyası MADSC55-TV-V2 stage4-24 acceptance archive.enc: 7.832.688 bayt; SHA-256 29f5498c3173b39afe5c4bee824e4423cc8229961fb5f7cbf26e402d449f4241.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L182** — [Tarihsel kaynak kaydı] - Salt-okunur JSONL kontrolü: 7.819 kayıt, 7.819 benzersiz 12-bayt nonce, schema 1 ve ciphertext alanları; yapısal PASS.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L183** — [Tarihsel kaynak kaydı] - Bu sonuç **authenticated decryption veya restore PASS değildir**. Dosya biçimi mevcut Scrypt/AES-GCM tek-blob arşiv ve Fernet yetkili vault biçiminden farklıdır; doğru anahtar/şema eşleşmesi ve bağımsız restore SHA-256 referansı yoktur.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L187** — [Tarihsel kaynak kaydı] 21 Kasım 2026 — Gerçek tarihsel Stage4 harici restore kanıtı doğrulandı
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L189** — [Tarihsel kaynak kaydı] - 12 Kasım GitHub Actions run 43241168321 ve bağımsız Drive restore job 131291179781 SUCCESS. Producer artifact 13957249280; accepted restore artifact 13958867734. Mevcut Drive revision 4 dosyası ile kaynak encrypted archive SHA-256 29f5498c3173b39afe5c4bee824e4423cc8229961fb5f7cbf26e402d449f4241 ve tüm baytlar aynı.
+- **v2/tasks/state.json:$.statuses[0].id** — [Tarihsel kaynak kaydı] 1
+- **v2/tasks/state.json:$.statuses[0].status** — [Tarihsel kaynak kaydı] completed
+- **v2/tasks/state.json:$.statuses[0].blocker** — [Tarihsel kaynak kaydı] null
+- **v2/tasks/state.json:$.statuses[1].id** — [Tarihsel kaynak kaydı] 2
+- **v2/tasks/state.json:$.statuses[1].status** — [Tarihsel kaynak kaydı] completed
+- **v2/tasks/state.json:$.statuses[1].blocker** — [Tarihsel kaynak kaydı] null
+- **v2/tasks/state.json:$.statuses[1].reason** — [Tarihsel kaynak kaydı] Four grouped workflows succeeded on identical head commit 3cec2d44597b8e89e8be543806c3054a86204237; task engine regressions included; this is code acceptance, not stream AV proof.
+- **v2/tasks/state.json:$.statuses[2].id** — [Tarihsel kaynak kaydı] 3
+- **v2/tasks/state.json:$.statuses[2].status** — [Tarihsel kaynak kaydı] completed
+- **v2/tasks/state.json:$.statuses[2].blocker** — [Tarihsel kaynak kaydı] null
+- **v2/tasks/state.json:$.statuses[2].reason** — [Tarihsel kaynak kaydı] Investigation accepted for all 50 immutable identities (55 source occurrences). Per-identity records document 4 exact AV results, 36 candidates without decoded AV and 10 without an exact approved URL across the reviewed runs. The 46 unresolved playback entries remain open; earlier aggregate AV observations are retained. See v2/reports/stage2-orphan-investigation-20261111.json.
+- **v2/tasks/state.json:$.statuses[3].id** — [Tarihsel kaynak kaydı] 4
+- **v2/tasks/state.json:$.statuses[3].status** — [Tarihsel kaynak kaydı] completed
+- **v2/tasks/state.json:$.statuses[3].blocker** — [Tarihsel kaynak kaydı] null
+- **v2/tasks/state.json:$.statuses[3].reason** — [Tarihsel kaynak kaydı] Verified all 4,955 immutable identities and the exact 1,866-row review partition (1,658 partial media, 173 source research, 30 transient retry, 5 other). Rechecked each of the original 20 absent URL hashes against a later complete and a later partial sealed Actions report. One exact hash has real AV proof in both later reports; 19 remain absent from both snapshots and remain research entries. See v2/reports/stage2-historical-evidence-20261111.json. No device approval.
+- **v2/tasks/state.json:$.statuses[4].id** — [Tarihsel kaynak kaydı] 5
+- **v2/tasks/state.json:$.statuses[4].status** — [Tarihsel kaynak kaydı] completed
+- **v2/tasks/state.json:$.statuses[4].blocker** — [Tarihsel kaynak kaydı] null
+- **v2/tasks/state.json:$.statuses[5].id** — [Tarihsel kaynak kaydı] 6
+- **v2/tasks/state.json:$.statuses[5].status** — [Tarihsel kaynak kaydı] completed
+- **v2/tasks/state.json:$.statuses[5].blocker** — [Tarihsel kaynak kaydı] null
+- **v2/tasks/state.json:$.statuses[6].id** — [Tarihsel kaynak kaydı] 7
+- **v2/tasks/state.json:$.statuses[6].status** — [Tarihsel kaynak kaydı] completed
+- **v2/tasks/state.json:$.statuses[6].blocker** — [Tarihsel kaynak kaydı] null
+- **v2/tasks/state.json:$.statuses[7].id** — [Tarihsel kaynak kaydı] 8
+- **v2/tasks/state.json:$.statuses[7].status** — [Tarihsel kaynak kaydı] completed
+- **v2/tasks/state.json:$.statuses[7].blocker** — [Tarihsel kaynak kaydı] null
+- **v2/tasks/state.json:$.statuses[7].reason** — [Tarihsel kaynak kaydı] Rechecked actual GitHub Actions run #41723036558 jobs: compile, protect, discovery-tests, safety and read-only live public Scribd/SlideShare/Internet Archive audit all completed with success. Historical audit reported 2 validated public Archive M3U sources, 18,035 raw EXTINF entries; Scribd/SlideShare yielded no validated M3U. Source discovery is not AV/device proof. Existing document_platform_discovery.py and grouped test_document_platform_discovery.py cover all three platforms.
+- **v2/tasks/state.json:$.statuses[8].id** — [Tarihsel kaynak kaydı] 9
+- **v2/tasks/state.json:$.statuses[8].status** — [Tarihsel kaynak kaydı] completed
+- **v2/tasks/state.json:$.statuses[8].blocker** — [Tarihsel kaynak kaydı] null
+- **v2/tasks/state.json:$.statuses[9].id** — [Tarihsel kaynak kaydı] 10
+- **v2/tasks/state.json:$.statuses[9].status** — [Tarihsel kaynak kaydı] completed
+- **v2/tasks/state.json:$.statuses[9].blocker** — [Tarihsel kaynak kaydı] null
+- **v2/tasks/state.json:$.statuses[10].id** — [Tarihsel kaynak kaydı] 11
+- **v2/tasks/state.json:$.statuses[10].status** — [Tarihsel kaynak kaydı] completed
+- **v2/tasks/state.json:$.statuses[10].blocker** — [Tarihsel kaynak kaydı] null
+- **v2/tasks/state.json:$.statuses[10].reason** — [Tarihsel kaynak kaydı] Validated all 83 page-reference associations across 68 unique SHA-256 hashes, including all 15 shared references. Historical duplicate recovery retains each original observation record. Provenance and AV claims were independently reconciled; source acceptance #9 satisfied.
+- **v2/tasks/state.json:$.statuses[11].id** — [Tarihsel kaynak kaydı] 12
+- **v2/tasks/state.json:$.statuses[11].status** — [Tarihsel kaynak kaydı] completed
+- **v2/tasks/state.json:$.statuses[11].blocker** — [Tarihsel kaynak kaydı] null
+- **v2/tasks/state.json:$.statuses[12].id** — [Tarihsel kaynak kaydı] 13
+- **v2/tasks/state.json:$.statuses[12].status** — [Tarihsel kaynak kaydı] completed
+- **v2/tasks/state.json:$.statuses[12].blocker** — [Tarihsel kaynak kaydı] null
+- **v2/tasks/state.json:$.statuses[13].id** — [Tarihsel kaynak kaydı] 14
+- **v2/tasks/state.json:$.statuses[13].status** — [Tarihsel kaynak kaydı] completed
+- **v2/tasks/state.json:$.statuses[13].blocker** — [Tarihsel kaynak kaydı] null
+- **v2/tasks/state.json:$.statuses[13].reason** — [Tarihsel kaynak kaydı] Accepted #13 independent Google Drive OIDC SHA-256 original AES-256-GCM production restore run 43117212383 attempt 5, plus fresh same-commit Master Engine grouped historical archive, transient AV and canonical 34-task offline acceptance run 43139744799 (offline-tests success), and Ordered Preflight 43139744816 success. Historical 4955 and orphan 107 records restored; preservation regression accepted. Does not assert AWS/S3 restore or live Master/device acceptance.
+- **v2/tasks/state.json:$.statuses[14].id** — [Tarihsel kaynak kaydı] 15
+- **v2/tasks/state.json:$.statuses[14].status** — [Tarihsel kaynak kaydı] completed
+- **v2/tasks/state.json:$.statuses[14].blocker** — [Tarihsel kaynak kaydı] null
+- **v2/tasks/state.json:$.statuses[15].id** — [Tarihsel kaynak kaydı] 16
+- **v2/tasks/state.json:$.statuses[15].status** — [Tarihsel kaynak kaydı] completed
+- **v2/tasks/state.json:$.statuses[15].blocker** — [Tarihsel kaynak kaydı] null
+- **v2/tasks/state.json:$.statuses[16].id** — [Tarihsel kaynak kaydı] 17
+- **v2/tasks/state.json:$.statuses[16].status** — [Tarihsel kaynak kaydı] completed
+- **v2/tasks/state.json:$.statuses[16].blocker** — [Tarihsel kaynak kaydı] null
+- **v2/tasks/state.json:$.statuses[17].id** — [Tarihsel kaynak kaydı] 18
+- **v2/tasks/state.json:$.statuses[17].status** — [Tarihsel kaynak kaydı] completed
+- **v2/tasks/state.json:$.statuses[17].blocker** — [Tarihsel kaynak kaydı] null
+- **v2/tasks/state.json:$.statuses[18].id** — [Tarihsel kaynak kaydı] 19
+- **v2/tasks/state.json:$.statuses[18].status** — [Tarihsel kaynak kaydı] completed
+- **v2/tasks/state.json:$.statuses[18].blocker** — [Tarihsel kaynak kaydı] null
+- **v2/tasks/state.json:$.statuses[19].id** — [Tarihsel kaynak kaydı] 20
+- **v2/tasks/state.json:$.statuses[19].status** — [Tarihsel kaynak kaydı] completed
+- **v2/tasks/state.json:$.statuses[19].blocker** — [Tarihsel kaynak kaydı] null
+- **v2/tasks/state.json:$.statuses[20].id** — [Tarihsel kaynak kaydı] 21
+- **v2/tasks/state.json:$.statuses[20].status** — [Tarihsel kaynak kaydı] completed
+- **v2/tasks/state.json:$.statuses[20].blocker** — [Tarihsel kaynak kaydı] null
+- **v2/tasks/state.json:$.statuses[21].id** — [Tarihsel kaynak kaydı] 22
+- **v2/tasks/state.json:$.statuses[21].status** — [Tarihsel kaynak kaydı] completed
+- **v2/tasks/state.json:$.statuses[21].blocker** — [Tarihsel kaynak kaydı] null
+- **v2/tasks/state.json:$.statuses[22].id** — [Tarihsel kaynak kaydı] 23
+- **v2/tasks/state.json:$.statuses[22].status** — [Tarihsel kaynak kaydı] completed
+- **v2/tasks/state.json:$.statuses[22].blocker** — [Tarihsel kaynak kaydı] null
+- **v2/tasks/state.json:$.statuses[23].id** — [Tarihsel kaynak kaydı] 24
+- **v2/tasks/state.json:$.statuses[23].status** — [Tarihsel kaynak kaydı] completed
+- **v2/tasks/state.json:$.statuses[23].blocker** — [Tarihsel kaynak kaydı] null
+- **v2/tasks/state.json:$.statuses[24].id** — [Tarihsel kaynak kaydı] 25
+- **v2/tasks/state.json:$.statuses[24].status** — [Tarihsel kaynak kaydı] completed
+- **v2/tasks/state.json:$.statuses[24].blocker** — [Tarihsel kaynak kaydı] null
+- **v2/tasks/state.json:$.statuses[24].reason** — [Tarihsel kaynak kaydı] Task #25 acceptance met: bounded deadline, retry/backoff, cache-after-deadline and stuck-job/no-unsafe-retry regressions passed in grouped Master and Ordered Preflight checks. A forced live outage was not manufactured or claimed.
+- **v2/tasks/state.json:$.statuses[25].id** — [Tarihsel kaynak kaydı] 26
+- **v2/tasks/state.json:$.statuses[25].status** — [Tarihsel kaynak kaydı] completed
+- **v2/tasks/state.json:$.statuses[25].blocker** — [Tarihsel kaynak kaydı] null
+- **v2/tasks/state.json:$.statuses[25].reason** — [Tarihsel kaynak kaydı] Task #26 acceptance met: real GitHub Actions job/step failure metadata was inspected from failed runs, monitor regression fixed and successful #42902074582 verified on 0937fa0d. Skipped live Master is not counted as live success; no automatic unsafe retry.
+- **v2/tasks/state.json:$.statuses[26].id** — [Tarihsel kaynak kaydı] 27
+- **v2/tasks/state.json:$.statuses[26].status** — [Tarihsel kaynak kaydı] completed
+- **v2/tasks/state.json:$.statuses[26].blocker** — [Tarihsel kaynak kaydı] null
+- **v2/tasks/state.json:$.statuses[26].reason** — [Tarihsel kaynak kaydı] Task #27 canonical root/ledger reconciliation and SHA concurrency fail-closed regressions in v2/tasks/test_task_engine.py passed in real Master Engine offline-tests job for exact commit 90f195b010df2e1992b2d39bbdc43beb06ba9d98, run 42391685418; Eight-Stage both jobs success run 42391685379; monitor job success run 42391685458. Tests cover root links, same-commit GitHub run identity, stale root observations, SHA mismatch rejection, unauthorized device evidence, and protected writes. Read-only reconciliation does not claim live master execution: conditional master job skipped by design.
+- **v2/tasks/state.json:$.statuses[27].id** — [Tarihsel kaynak kaydı] 28
+- **v2/tasks/state.json:$.statuses[27].status** — [Tarihsel kaynak kaydı] completed
+- **v2/tasks/state.json:$.statuses[27].blocker** — [Tarihsel kaynak kaydı] null
+- **v2/tasks/state.json:$.statuses[28].id** — [Tarihsel kaynak kaydı] 29
+- **v2/tasks/state.json:$.statuses[28].status** — [Tarihsel kaynak kaydı] completed
+- **v2/tasks/state.json:$.statuses[28].blocker** — [Tarihsel kaynak kaydı] null
+- **v2/tasks/state.json:$.statuses[29].id** — [Tarihsel kaynak kaydı] 30
+- **v2/tasks/state.json:$.statuses[29].status** — [Tarihsel kaynak kaydı] completed
+- **v2/tasks/state.json:$.statuses[29].blocker** — [Tarihsel kaynak kaydı] null
+- **v2/tasks/state.json:$.statuses[30].id** — [Tarihsel kaynak kaydı] 31
+- **v2/tasks/state.json:$.statuses[30].status** — [Tarihsel kaynak kaydı] completed
+- **v2/tasks/state.json:$.statuses[30].blocker** — [Tarihsel kaynak kaydı] null
+- **v2/tasks/state.json:$.statuses[31].id** — [Tarihsel kaynak kaydı] 32
+- **v2/tasks/state.json:$.statuses[31].status** — [Tarihsel kaynak kaydı] completed
+- **v2/tasks/state.json:$.statuses[31].blocker** — [Tarihsel kaynak kaydı] null
+- **v2/tasks/state.json:$.statuses[32].id** — [Tarihsel kaynak kaydı] 33
+- **v2/tasks/state.json:$.statuses[32].status** — [Tarihsel kaynak kaydı] completed
+- **v2/tasks/state.json:$.statuses[32].blocker** — [Tarihsel kaynak kaydı] null
+- **v2/tasks/state.json:$.statuses[33].id** — [Tarihsel kaynak kaydı] 34
+- **v2/tasks/state.json:$.statuses[33].status** — [Tarihsel kaynak kaydı] completed
+- **v2/tasks/state.json:$.statuses[33].blocker** — [Tarihsel kaynak kaydı] null
+- **v2/tasks/state.json:$.note** — [Tarihsel kaynak kaydı] Derived task ledger, not independent source of truth. Root state.json is canonical; this snapshot must be reconciled by hash/commit before mutation. No task completed without evidence. Imported unchanged task statuses from madsc/v2-discovery-bulk-20261031 on 2026-11-13; generated_at and observed_commit are historical. Later CI evidence is recorded in DEVAM_NOTU.md; no task status is automatically promoted by this import.
+- **v2/tasks/state.json:$.stage1_ci_audit_20261121.production_gate_conclusion** — [Tarihsel kaynak kaydı] success
+- **v2/tasks/state.json:$.stage1_ci_audit_20261121.previous_gates_conclusion** — [Tarihsel kaynak kaydı] success
+- **v2/tasks/state.json:$.stage1_ci_audit_20261121.next_stage** — [Tarihsel kaynak kaydı] #489 archive transfer verification
+- **v2/tasks/state.json:$.stage2_archive_acceptance_20261121.production_gate_conclusion** — [Tarihsel kaynak kaydı] success
+- **v2/tasks/state.json:$.stage2_archive_acceptance_20261121.acceptance_log** — [Tarihsel kaynak kaydı] PASS: #489 canonical 18912; 18074 archive; 838 protected; move/restore
+- **v2/tasks/state.json:$.stage2_archive_acceptance_20261121.next_stage** — [Tarihsel kaynak kaydı] #497 existing 1792 result reconciliation without new scan
+- **v2/tasks/state.json:$.stage3_verified_historical_av_progress_20261121.stage1_archive.main_ci_conclusion** — [Tarihsel kaynak kaydı] success
+- **v2/tasks/state.json:$.stage3_verified_historical_av_progress_20261121.stage1_archive.live_transfer_performed_by_this_review** — [Tarihsel kaynak kaydı] false
+- **v2/tasks/state.json:$.stage3_verified_historical_av_progress_20261121.stage2_original_yedekler_av.counts.RECHECK_REQUIRED** — [Tarihsel kaynak kaydı] 685
+- **v2/tasks/state.json:$.stage3_verified_historical_av_progress_20261121.stage2_original_yedekler_av.checks.exact_report_file_hash_verified** — [Tarihsel kaynak kaydı] true
+- **v2/tasks/state.json:$.stage3_verified_historical_av_progress_20261121.stage2_original_yedekler_av.checks.uncertain_none_decoded_verified** — [Tarihsel kaynak kaydı] true
+- **v2/tasks/state.json:$.stage3_verified_historical_av_progress_20261121.stage2_original_yedekler_av.importer_main_ci_conclusion** — [Tarihsel kaynak kaydı] success
+- **v2/tasks/state.json:$.stage3_verified_historical_av_progress_20261121.stage2_original_yedekler_av.actual_importer_preview_artifact_verified** — [Tarihsel kaynak kaydı] true
+- **v2/tasks/state.json:$.stage3_verified_historical_av_progress_20261121.stage3_real_ffmpeg_decode_code.main_ci_conclusion** — [Tarihsel kaynak kaydı] success
+- **v2/tasks/state.json:$.stage3_verified_historical_av_progress_20261121.all_34_tasks_completed** — [Tarihsel kaynak kaydı] false
+- **v2/tasks/state.json:$.stage3_issue497_historical_import_20261121.status** — [Tarihsel kaynak kaydı] historical_report_imported_preview_only
+- **v2/tasks/state.json:$.stage4_vault_handoff_20261121.github_issue_6.status** — [Tarihsel kaynak kaydı] open
+- **v2/tasks/state.json:$.stage4_vault_handoff_20261121.github_issue_6.pr_ci_status** — [Tarihsel kaynak kaydı] success
+- **v2/tasks/state.json:$.stage4_vault_handoff_20261121.github_issue_6.post_merge_main_ci_status** — [Tarihsel kaynak kaydı] success
+- **v2/tasks/state.json:$.stage4_vault_handoff_20261121.github_issue_6.authorized_turkish_vault_backup_verified** — [Tarihsel kaynak kaydı] false
+- **v2/tasks/state.json:$.stage4_vault_handoff_20261121.github_issue_6.real_external_restore_verified** — [Tarihsel kaynak kaydı] false
+- **v2/tasks/state.json:$.stage4_vault_handoff_20261121.github_issue_6.secret_key_access_verified** — [Tarihsel kaynak kaydı] false
+- **v2/tasks/state.json:$.stage4_vault_handoff_20261121.all_34_tasks_completed** — [Tarihsel kaynak kaydı] false
+- **v2/tasks/state.json:$.stage3_issue497_685_retry_gate_20261121.main_gate_conclusion** — [Tarihsel kaynak kaydı] success
+- **v2/tasks/state.json:$.stage3_issue497_685_retry_gate_20261121.manual_685_retry_ran_in_this_review** — [Tarihsel kaynak kaydı] false
+- **v2/tasks/state.json:$.stage3_issue497_685_retry_gate_20261121.code_gate_status** — [Tarihsel kaynak kaydı] passed
+- **v2/tasks/state.json:$.stage3_issue497_685_retry_gate_20261121.live_retry_status** — [Tarihsel kaynak kaydı] not_executed
+- **v2/tasks/state.json:$.stage3_issue497_685_retry_gate_20261121.next_dependency** — [Tarihsel kaynak kaydı] No 685 live retry results yet; verify targeted run evidence if/when separately executed. Independent #6 encrypted external-vault real restore acceptance outstanding.
+- **v2/tasks/state.json:$.stage4_capture_egress_review_20261121.later_main_run_at_review.status** — [Tarihsel kaynak kaydı] in_progress
+- **v2/tasks/state.json:$.stage4_capture_egress_review_20261121.later_main_run_at_review.conclusion** — [Tarihsel kaynak kaydı] null
+- **v2/tasks/state.json:$.stage5_worldwide_crosswalk_handoff_20261121.status** — [Tarihsel kaynak kaydı] historical_hash_reconciliation_completed_read_only
+- **v2/tasks/state.json:$.stage5_worldwide_crosswalk_handoff_20261121.exact_archive_overlap_verified** — [Tarihsel kaynak kaydı] true
+- **v2/tasks/state.json:$.stage5_worldwide_crosswalk_handoff_20261121.pr_ci_conclusion** — [Tarihsel kaynak kaydı] success
+- **v2/tasks/state.json:$.stage5_worldwide_crosswalk_handoff_20261121.live_full_18074_verification_completed** — [Tarihsel kaynak kaydı] false
+- **v2/tasks/state.json:$.stage5_worldwide_crosswalk_handoff_20261121.ibo_device_playback_verified** — [Tarihsel kaynak kaydı] false
+- **v2/tasks/state.json:$.stage4_security_acceptance_20261121.retry_hold.ci_conclusion** — [Tarihsel kaynak kaydı] success
+- **v2/tasks/state.json:$.stage4_security_acceptance_20261121.stage4_capture.ci_conclusion** — [Tarihsel kaynak kaydı] success
+- **v2/tasks/state.json:$.stage4_security_acceptance_20261121.stage5_hash_only_crosswalk.full_18074_live_av_verified** — [Tarihsel kaynak kaydı] false
+- **v2/tasks/state.json:$.stage4_security_acceptance_20261121.next_action** — [Tarihsel kaynak kaydı] Review Stage 5 hash-only evidence/identity coverage and independently verify external encrypted-vault restore; keep 685 live retry disabled.
+- **v2/tasks/state.json:$.stage6_retry_plan_20261121.production_security_gate_conclusion** — [Tarihsel kaynak kaydı] success
+- **v2/tasks/state.json:$.stage6_retry_plan_20261121.workflow_pr_ci_conclusion** — [Tarihsel kaynak kaydı] success
+- **v2/tasks/state.json:$.stage6_retry_plan_20261121.workflow_main_ci_conclusion** — [Tarihsel kaynak kaydı] success
+- **v2/tasks/state.json:$.stage6_retry_plan_20261121.playlist_write_allowed** — [Tarihsel kaynak kaydı] false
+- **v2/tasks/state.json:$.stage6_retry_plan_20261121.archive_write_allowed** — [Tarihsel kaynak kaydı] false
+- **v2/tasks/state.json:$.stage4_drive_archive_structural_audit_20261121.historical_ci_authenticated_decryption_verified** — [Tarihsel kaynak kaydı] true
+- **v2/tasks/state.json:$.stage4_drive_archive_structural_audit_20261121.historical_ci_independent_drive_restore_verified** — [Tarihsel kaynak kaydı] true
+- **v2/tasks/state.json:$.stage4_drive_archive_structural_audit_20261121.historical_ci_restore_job_conclusion** — [Tarihsel kaynak kaydı] success
+- **v2/tasks/state.json:$.stage4_drive_archive_structural_audit_20261121.decryption_or_restore_repeated_this_review** — [Tarihsel kaynak kaydı] false
+- **v2/tasks/state.json:$.stage4_historical_drive_restore_verified_20261121.job_status** — [Tarihsel kaynak kaydı] success
+- **v2/tasks/state.json:$.stage4_historical_drive_restore_verified_20261121.next_action** — [Tarihsel kaynak kaydı] Keep historical Stage 4 accepted; separately complete authorized Turkish vault #6 external restore.
+- **v2/tasks/state.json:$.stage7_retry_verdict_integrity_20261121.pr_ci_conclusion** — [Tarihsel kaynak kaydı] success
+- **v2/tasks/state.json:$.stage7_retry_verdict_integrity_20261121.main_ci_conclusion** — [Tarihsel kaynak kaydı] success
+- **v2/tasks/state.json:$.stage7_retry_verdict_integrity_20261121.producer_records_first_and_second_av_status** — [Tarihsel kaynak kaydı] true
+- **v2/tasks/state.json:$.stage7_retry_verdict_integrity_20261121.exact_hex_evidence_hash_required** — [Tarihsel kaynak kaydı] true
+- **v2/tasks/state.json:$.stage7_retry_verdict_integrity_20261121.original_verified** — [Tarihsel kaynak kaydı] 1107
+- **v2/tasks/state.json:$.stage7_retry_verdict_integrity_20261121.next_action** — [Tarihsel kaynak kaydı] Verify main CI; generate read-only Stage 6 retry plan artifact using authorized manual workflow when available; otherwise continue independent #6 real external vault restore acceptance; keep 685 live retry security-held.
+- **v2/tasks/state.json:$.discovery34_200_throttle_completion_20261121.diagnostic_pr_ci_conclusion** — [Tarihsel kaynak kaydı] success
+- **v2/tasks/state.json:$.discovery34_200_throttle_completion_20261121.diagnostic_main_ci_conclusion** — [Tarihsel kaynak kaydı] success
+- **v2/tasks/state.json:$.discovery34_200_throttle_completion_20261121.live_collector_pr_ci_conclusion** — [Tarihsel kaynak kaydı] success
+- **v2/tasks/state.json:$.discovery34_200_throttle_completion_20261121.stage4_historical_drive_restore_accepted** — [Tarihsel kaynak kaydı] true
+- **v2/tasks/state.json:$.discovery34_200_throttle_completion_20261121.separate_issue6_authorized_turkish_vault_external_restore_accepted** — [Tarihsel kaynak kaydı] false
+- **v2/tasks/state.json:$.discovery34_200_throttle_completion_20261121.safe_hls_dash_segment_collection_accepted** — [Tarihsel kaynak kaydı] false
+- **v2/tasks/state.json:$.discovery34_200_throttle_completion_20261121.ibo_real_device_accepted** — [Tarihsel kaynak kaydı] false
+- **v2/tasks/state.json:$.stage8_private_turkish_vault_restore_20261121.issue_6_status** — [Tarihsel kaynak kaydı] open
+- **v2/tasks/state.json:$.stage8_private_turkish_vault_restore_20261121.pr_ci_conclusion** — [Tarihsel kaynak kaydı] success
+- **v2/tasks/state.json:$.stage8_private_turkish_vault_restore_20261121.main_ci_conclusion** — [Tarihsel kaynak kaydı] success
+- **v2/tasks/state.json:$.stage8_private_turkish_vault_restore_20261121.independent_offsite_turkish_vault_restore_verified** — [Tarihsel kaynak kaydı] false
+- **v2/tasks/state.json:$.stage9_ffmpeg_initial_egress_hardening_20261121.scope** — [Tarihsel kaynak kaydı] Stage 4 safe media capture and #497 initial FFprobe/FFmpeg public URL screening; no live scan
+- **v2/tasks/state.json:$.stage9_ffmpeg_initial_egress_hardening_20261121.prs[0].pr_ci_conclusion** — [Tarihsel kaynak kaydı] success
+- **v2/tasks/state.json:$.stage9_ffmpeg_initial_egress_hardening_20261121.prs[0].post_merge_main_ci_conclusion** — [Tarihsel kaynak kaydı] success
+- **v2/tasks/state.json:$.stage9_ffmpeg_initial_egress_hardening_20261121.prs[1].pr_ci_conclusion** — [Tarihsel kaynak kaydı] success
+- **v2/tasks/state.json:$.stage9_ffmpeg_initial_egress_hardening_20261121.prs[2].pr_ci_conclusion** — [Tarihsel kaynak kaydı] success
+- **v2/tasks/state.json:$.stage9_ffmpeg_initial_egress_hardening_20261121.combined_main_ci_conclusion** — [Tarihsel kaynak kaydı] success
+- **v2/tasks/state.json:$.stage9_ffmpeg_initial_egress_hardening_20261121.https_tls_handshake_socket_closure_verified** — [Tarihsel kaynak kaydı] true
+- **v2/tasks/state.json:$.stage9_ffmpeg_initial_egress_hardening_20261121.scheme_specific_http_host_header_ports_verified** — [Tarihsel kaynak kaydı] true
+- **v2/tasks/state.json:$.stage9_ffmpeg_initial_egress_hardening_20261121.network_egress_isolation_for_hls_children_verified** — [Tarihsel kaynak kaydı] false
+- **v2/tasks/state.json:$.stage9_ffmpeg_initial_egress_hardening_20261121.issue6_authorized_turkish_offsite_restore_verified** — [Tarihsel kaynak kaydı] false
+- **v2/tasks/state.json:$.stage10_manual_hls_ts_safe_capture_20261121.scope** — [Tarihsel kaynak kaydı] Manually selected, opt-in, read-only HLS MPEG-TS local capture (NOT automated #497 retry authorization)
+- **v2/tasks/state.json:$.stage10_manual_hls_ts_safe_capture_20261121.pr_ci_conclusion** — [Tarihsel kaynak kaydı] success
+- **v2/tasks/state.json:$.stage10_manual_hls_ts_safe_capture_20261121.main_ci_conclusion** — [Tarihsel kaynak kaydı] success
+- **v2/tasks/state.json:$.stage10_manual_hls_ts_safe_capture_20261121.general_hls_child_network_egress_security_accepted** — [Tarihsel kaynak kaydı] false
+- **v2/tasks/state.json:$.stage10_manual_hls_ts_safe_capture_20261121.issue_6_external_vault_restore_accepted** — [Tarihsel kaynak kaydı] false
+- **v2/tasks/state.json:$.github_cleanup_audit_20261121.open_prs_for_review[0]** — [Tarihsel kaynak kaydı] 365
+- **v2/tasks/state.json:$.github_cleanup_audit_20261121.open_prs_for_review[1]** — [Tarihsel kaynak kaydı] 618
+- **v2/tasks/state.json:$.github_cleanup_audit_20261121.latest_main_actions_verified** — [Tarihsel kaynak kaydı] true
+- **v2/tasks/state.json:$.github_cleanup_audit_20261121.issue6_external_restore_accepted** — [Tarihsel kaynak kaydı] false
+- **v2/tasks/state.json:$.github_cleanup_audit_20261121.verified_historical_actions_pairs[0].scope** — [Tarihsel kaynak kaydı] offline acceptance
+- **v2/tasks/state.json:$.github_cleanup_audit_20261121.verified_historical_actions_pairs[1].scope** — [Tarihsel kaynak kaydı] main security gate
+- **v2/tasks/state.json:$.github_cleanup_audit_20261121.verified_historical_actions_pairs[2].scope** — [Tarihsel kaynak kaydı] PR security gate
+- **v2/tasks/state.json:$.github_cleanup_audit_20261121.pr365_v2_python_path_inventory.functional_equivalence_verified** — [Tarihsel kaynak kaydı] false
+- **v2/tasks/state.json:$.github_cleanup_audit_20261121.pr624_security_run.conclusion** — [Tarihsel kaynak kaydı] success
+- **v2/tasks/state.json:$.github_cleanup_final_20261121.main_verified** — [Tarihsel kaynak kaydı] b4b2a845c9f296545c0bb66272648177db369ea2
+- **v2/tasks/state.json:$.github_cleanup_final_20261121.live_scan_performed** — [Tarihsel kaynak kaydı] false
+- **v2/tasks/state.json:$.stage11_owner_archival_scope_closure_20261121.tasks[0]** — [Tarihsel kaynak kaydı] 17
+- **v2/tasks/state.json:$.stage11_owner_archival_scope_closure_20261121.tasks[1]** — [Tarihsel kaynak kaydı] 19
+- **v2/tasks/state.json:$.final_infrastructure_packages_20261125.scope** — [Tarihsel kaynak kaydı] ANA SİSTEM ALTYAPISI VE GÜVENLİK TESTLERİ TAMAMLANDI — yalnız final PR iki CI kontrolü PASS olduğunda geçerli
+- **v2/tasks/state.json:$.final_infrastructure_packages_20261125.package3.acceptance** — [Tarihsel kaynak kaydı] offline isolated synthetic fixture only; requires both CI gates
+- **v2/tasks/state.json:$.final_infrastructure_packages_20261125.package3.external_restore_performed** — [Tarihsel kaynak kaydı] false
+
+
+
+- **PR #664 @ bccb4937f2e3 / v2/tasks/KALAN_ISLER_2026-11-23.md:L5** — [Açık PR, tarihsel plan] Kesin kararlar
+- **PR #664 @ bccb4937f2e3 / v2/tasks/KALAN_ISLER_2026-11-23.md:L11** — [Açık PR, tarihsel plan] - Daha önce tamamlanmış kod/CI işleri yeniden yapılmaz; idari tamamlanma gerçek teknik kabul sayılmaz.
+- **PR #664 @ bccb4937f2e3 / v2/tasks/KALAN_ISLER_2026-11-23.md:L13** — [Açık PR, tarihsel plan] Güncel takip listesi (12 başlık)
+- **PR #664 @ bccb4937f2e3 / v2/tasks/KALAN_ISLER_2026-11-23.md:L17** — [Açık PR, tarihsel plan] 4. GitLab/Codeberg 429: sağlayıcı başına güvenli hız sınırı/backoff; erişim engeli kalan kaynakların açık raporu.
+- **PR #664 @ bccb4937f2e3 / v2/tasks/KALAN_ISLER_2026-11-23.md:L21** — [Açık PR, tarihsel plan] 8. Türkçe/yabancı ayrımı: ses, dil, altyazı, Türkiye/KKTC ve diğer Türkî yayın ölçütleri; isim/ülke tek başına kesin kanıt değil.
+- **PR #664 @ bccb4937f2e3 / v2/tasks/KALAN_ISLER_2026-11-23.md:L23** — [Açık PR, tarihsel plan] 10. Şifreli özel kasa: mevcut yetkili harici depoda gerçek backup/revizyon, bağımsız checksum, anahtar erişimi ve izole restore kabulü; eski Stage 4 restore kanıtını bu kasanın kabulü sayma.
+- **PR #664 @ bccb4937f2e3 / v2/tasks/KALAN_ISLER_2026-11-23.md:L24** — [Açık PR, tarihsel plan] 11. Güvenli canlı AV/FFmpeg: HLS alt istekleri için OS düzeyi egress izolasyonu kabul edilmeden 685 canlı retry açma; iki denemeli kanıt, görüntü+ses doğrulaması ve hatalı kesin karar önleme.
+- **PR #664 @ bccb4937f2e3 / v2/tasks/KALAN_ISLER_2026-11-23.md:L27** — [Açık PR, tarihsel plan] İş sırası
+- **PR #664 @ bccb4937f2e3 / v2/tasks/KALAN_ISLER_2026-11-23.md:L29** — [Açık PR, tarihsel plan] Aşama 2: keşif/sınıflandırma/karar/arşiv otomasyonu.
+- **PR #664 @ bccb4937f2e3 / v2/tasks/KALAN_ISLER_2026-11-23.md:L30** — [Açık PR, tarihsel plan] Aşama 3: şifreli yedek, güvenlik ve üretim kabulü.
+- **PR #664 @ bccb4937f2e3 / v2/tasks/KALAN_ISLER_2026-11-23.md:L31** — [Açık PR, tarihsel plan] Aşama 4: güvenli canlı AV, gerçek İBO Player ve nihai kabul.
+- **PR #664 @ bccb4937f2e3 / v2/tasks/KALAN_ISLER_2026-11-23.md:L33** — [Açık PR, tarihsel plan] Tamamlanma yüzdesi
+- **PR #664 @ bccb4937f2e3 / v2/tasks/KALAN_ISLER_2026-11-23.md:L34** — [Açık PR, tarihsel plan] #655 içindeki %75 tamamlandı / %25 kaldı yalnızca tarihsel planlama tahminidir. Son değişikliklerden sonra yeni ölçülmüş yüzde yok. 34 ana görevin idari kapanışı %100 teknik başarı değildir. Nihai yüzde, her bir açık kabul maddesinin güncel main/Actions/gerçek cihaz kanıtıyla hesaplanacak.
+- **PR #664 @ bccb4937f2e3 / v2/tasks/KALAN_ISLER_2026-11-23.md:L36** — [Açık PR, tarihsel plan] Sonraki çalışma kuralı
+- **PR #651 @ f0c8e198fb08 / v2/tasks/KALAN_TEKNIK_ISLER_20261123.md:L1** — [Açık PR, tarihsel plan] MADSC55 TV V2 — Kalan teknik işler ve kabul planı (23 Kasım 2026)
+- **PR #651 @ f0c8e198fb08 / v2/tasks/KALAN_TEKNIK_ISLER_20261123.md:L13** — [Açık PR, tarihsel plan] Öncelikli işler — gerçek kabul gerektirir
+- **PR #651 @ f0c8e198fb08 / v2/tasks/KALAN_TEKNIK_ISLER_20261123.md:L15** — [Açık PR, tarihsel plan] 2. **Actions ve otomasyon:** Offline CI / Production Security Gate güncel main koşuları, önceki hata→düzeltme→başarı zinciri, Master Engine, süre sınırı, retry/backoff, izleme ve hata raporları uçtan uca denetlenecek (#23,#25,#26,#24). Geçmiş 101 PASS ve Security SUCCESS güncel canlı yayın kanıtı değildir.
+- **PR #651 @ f0c8e198fb08 / v2/tasks/KALAN_TEKNIK_ISLER_20261123.md:L26** — [Açık PR, tarihsel plan] Çalışma sırası
+- **PR #651 @ f0c8e198fb08 / v2/tasks/KALAN_TEKNIK_ISLER_20261123.md:L27** — [Açık PR, tarihsel plan] A. Devam eden HTTP Health Report #2 sonuçlarını doğrula, varsa çökme/hata düzelt; güvenli salt-okunur raporu al.
+- **PR #651 @ f0c8e198fb08 / v2/tasks/KALAN_TEKNIK_ISLER_20261123.md:L32** — [Açık PR, tarihsel plan] Durum
+- **PR #650 @ fe1420ca833e / DEVAM_NOTU.md:L1710** — [Açık PR, tarihsel plan] 5. **Keşfedilen tüm yeni adaylar:** GitHub/GitLab/Codeberg/resmî kaynaklardan bulunan her adayı tekilleştirip aynı sağlık doğrulamasına sok; aday bulundu diye canlı kabul etme. Sınırsız tek iş yerine kuyruk/paketleme uygula.
+- **PR #650 @ fe1420ca833e / v2/tasks/state.json:$.full_inventory_health_scan_plan_20261123.status** — [Açık PR, tarihsel plan] PLANNED_NOT_IMPLEMENTED
+- **PR #650 @ fe1420ca833e / v2/tasks/state.json:$.full_inventory_health_scan_plan_20261123.work_order[0]** — [Açık PR, tarihsel plan] inventory_all_categories
+- **PR #650 @ fe1420ca833e / v2/tasks/state.json:$.full_inventory_health_scan_plan_20261123.work_order[1]** — [Açık PR, tarihsel plan] resumable_batched_http_hls_safe_av_scan
+- **PR #650 @ fe1420ca833e / v2/tasks/state.json:$.full_inventory_health_scan_plan_20261123.work_order[3]** — [Açık PR, tarihsel plan] preserve_locked_685
+- **PR #650 @ fe1420ca833e / v2/tasks/state.json:$.full_inventory_health_scan_plan_20261123.work_order[4]** — [Açık PR, tarihsel plan] queue_and_verify_all_discovered_candidates
+- **PR #650 @ fe1420ca833e / v2/tasks/state.json:$.full_inventory_health_scan_plan_20261123.work_order[5]** — [Açık PR, tarihsel plan] evidence_based_turkish_foreign_classification
+
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L1** — [Açık PR, tarihsel plan] MADSC55 TV V2 — Kalan İşler ve Kabul Planı
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L2** — [Açık PR, tarihsel plan] Tarih: 2026-11-23
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L5** — [Açık PR, tarihsel plan] Genel durum
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L6** — [Açık PR, tarihsel plan] - Planlama amaçlı tahmini ilerleme: %75 tamamlandı / %25 kaldı.
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L7** — [Açık PR, tarihsel plan] - Bu yüzdeler CI veya üretim ortamı tarafından ölçülmüş kesin oranlar değildir.
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L8** — [Açık PR, tarihsel plan] - 34/34 idari görev kapanışı, teknik kabulün %100 olduğu anlamına gelmez.
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L9** — [Açık PR, tarihsel plan] - Nihai %100 yalnızca aşağıdaki kabul kanıtlarıyla ilan edilir.
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L15** — [Açık PR, tarihsel plan] 4. 685 SECURITY HOLD kayıt, açık yetkilendirme ve güvenli doğrulama olmadan canlı teste veya serbest dolaşıma çıkarılmaz.
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L17** — [Açık PR, tarihsel plan] 6. Gerçek ses/görüntü ve İBO Player kabul testleri son aşamada yapılır.
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L19** — [Açık PR, tarihsel plan] Öncelikli takip tablosu
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L20** — [Açık PR, tarihsel plan] | No | İş | Kabul kanıtı | Durum |
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L24** — [Açık PR, tarihsel plan] | 03 | HTTP sağlık taramasını tüm kapsamda hatasız bitir | Tamamlanan Actions run, rapor ve hata ayrımı | BEKLİYOR |
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L26** — [Açık PR, tarihsel plan] | 05 | Kaynak keşfi ve 404/429/503 yeniden değerlendirmesini tamamla | Kaynak bazlı sonuç, yanlış pozitif kontrolü | BEKLİYOR |
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L30** — [Açık PR, tarihsel plan] | 09 | Aynı URL, tarihsel kuyruk ve liste tutarsızlıklarını temizle | Deduplikasyon ve kimlik mutabakat raporu | BEKLİYOR |
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L31** — [Açık PR, tarihsel plan] | 10 | Bağımsız şifreli yedek ve geri yükleme kanıtı üret | Ayrı ortamda restore denemesi ve bütünlük sonucu | BEKLİYOR |
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L32** — [Açık PR, tarihsel plan] | 11 | FFmpeg/HLS ağ erişim sınırları ve CI güvenliğini kabul et | Fail-closed güvenlik kapıları ve regresyon testleri PASS | BEKLİYOR |
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L35** — [Açık PR, tarihsel plan] Sıra
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L36** — [Açık PR, tarihsel plan] Aşama 1: #01, #02, #03, #09, #11 — temel doğruluk ve güvenlik.
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L37** — [Açık PR, tarihsel plan] Aşama 2: #04, #05 — otomasyon ve kaynak keşfi.
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L38** — [Açık PR, tarihsel plan] Aşama 3: #06, #07, #08, #10 — içerik kalitesi ve kurtarma.
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L39** — [Açık PR, tarihsel plan] Aşama 4: #12 — en son gerçek yayın ve İBO Player kabulü.
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L41** — [Açık PR, tarihsel plan] Referanslar ve açık kararlar
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L42** — [Açık PR, tarihsel plan] - PR #654: 685 kayıt arşiv önizlemesi; CI/merge sonucu ayrıca doğrulanacak.
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L43** — [Açık PR, tarihsel plan] - PR #651: ekran görüntülerinden çıkarılmış eksik işler.
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L44** — [Açık PR, tarihsel plan] - PR #650: keşif ve sağlık taraması planı.
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L45** — [Açık PR, tarihsel plan] - PR #641: 404 sonrası envanter/güvenlik kapısı.
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L46** — [Açık PR, tarihsel plan] - Tarihsel sayılar güncel main üzerinden yeniden hesaplanmadan kesin kabul edilmez.
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L47** — [Açık PR, tarihsel plan] - Her tamamlanan madde için commit/PR, CI run, çıktı ve kabul tarihi eklenir.
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L48** — [Açık PR, tarihsel plan] - Yeni iş çıktığında bu tek planda güncellenir; biten işler tekrarlanmaz.
+
+- **PR #650 @ fe1420ca833e / v2/tasks/state.json:$.full_inventory_health_scan_plan_20261123.priority** — [Açık PR, tarihsel plan] 1
+- **PR #650 @ fe1420ca833e / v2/tasks/state.json:$.full_inventory_health_scan_plan_20261123.discovery_readonly_is_not_full_scan** — [Açık PR, tarihsel plan] true
+- **PR #650 @ fe1420ca833e / v2/tasks/state.json:$.full_inventory_health_scan_plan_20261123.completed** — [Açık PR, tarihsel plan] false
+- **v2/tasks/state.json:$.stage1_ci_audit_20261121.finding** — [Tarihsel kaynak kaydı, ek alan kontrolü] No demonstrated unresolved main CI failure in checked latest runs; open PR acceptance and real-environment acceptance remain separate
+- **v2/tasks/state.json:$.stage1_ci_audit_20261121.task_statuses_changed** — [Tarihsel kaynak kaydı, ek alan kontrolü] false
+- **v2/tasks/state.json:$.stage3_verified_historical_av_progress_20261121.duplicate_pr_cleanup.rationale** — [Tarihsel kaynak kaydı, ek alan kontrolü] 514 and 535 reconciler/test blobs already included in merged 547; 552 missing-artifact claim was superseded by recovered exact source artifact.
+- **v2/tasks/state.json:$.stage3_verified_historical_av_progress_20261121.task_statuses_changed** — [Tarihsel kaynak kaydı, ek alan kontrolü] false
+- **v2/tasks/state.json:$.stage3_issue497_historical_import_20261121.task_statuses_changed** — [Tarihsel kaynak kaydı, ek alan kontrolü] false
+- **v2/tasks/state.json:$.stage4_vault_handoff_20261121.task_statuses_changed** — [Tarihsel kaynak kaydı, ek alan kontrolü] false
+- **v2/tasks/state.json:$.stage3_issue497_685_retry_gate_20261121.task_statuses_changed** — [Tarihsel kaynak kaydı, ek alan kontrolü] false
+- **v2/tasks/state.json:$.stage4_capture_egress_review_20261121.required_next_fix** — [Tarihsel kaynak kaydı, ek alan kontrolü] Use bounded pinned-IP local-file capture or fail closed for public IP literals; add offline nested HLS/key SSRF regression before accepting.
+- **v2/tasks/state.json:$.stage4_capture_egress_review_20261121.existing_34_task_statuses_modified** — [Tarihsel kaynak kaydı, ek alan kontrolü] false
+- **v2/tasks/state.json:$.stage5_worldwide_crosswalk_handoff_20261121.task_statuses_changed** — [Tarihsel kaynak kaydı, ek alan kontrolü] false
+- **v2/tasks/state.json:$.stage4_security_acceptance_20261121.task_statuses_changed** — [Tarihsel kaynak kaydı, ek alan kontrolü] false
+- **v2/tasks/state.json:$.stage6_retry_plan_20261121.task_statuses_changed** — [Tarihsel kaynak kaydı, ek alan kontrolü] false
+- **v2/tasks/state.json:$.stage4_drive_archive_structural_audit_20261121.source** — [Tarihsel kaynak kaydı, ek alan kontrolü] existing private Google Drive Independent Encrypted Recovery Archive folder
+- **v2/tasks/state.json:$.stage4_historical_drive_restore_verified_20261121.accepted_historical_actions_run** — [Tarihsel kaynak kaydı, ek alan kontrolü] 43241168321
+- **v2/tasks/state.json:$.stage4_historical_drive_restore_verified_20261121.evidence_report** — [Tarihsel kaynak kaydı, ek alan kontrolü] v2/reports/stage4_historical_drive_restore_provenance_20261121.json
+- **v2/tasks/state.json:$.stage4_historical_drive_restore_verified_20261121.main_task_statuses_changed** — [Tarihsel kaynak kaydı, ek alan kontrolü] false
+- **v2/tasks/state.json:$.stage7_retry_verdict_integrity_20261121.task_statuses_changed** — [Tarihsel kaynak kaydı, ek alan kontrolü] false
+- **v2/tasks/state.json:$.discovery34_200_throttle_completion_20261121.original_task_statuses_changed** — [Tarihsel kaynak kaydı, ek alan kontrolü] false
+- **v2/tasks/state.json:$.stage8_private_turkish_vault_restore_20261121.main_task_statuses_changed** — [Tarihsel kaynak kaydı, ek alan kontrolü] false
+- **v2/tasks/state.json:$.stage9_ffmpeg_initial_egress_hardening_20261121.historical_task_statuses_changed** — [Tarihsel kaynak kaydı, ek alan kontrolü] false
+- **v2/tasks/state.json:$.stage10_manual_hls_ts_safe_capture_20261121.segments_must_be_same_origin_relative_unencrypted_ts** — [Tarihsel kaynak kaydı, ek alan kontrolü] true
+- **v2/tasks/state.json:$.github_cleanup_audit_20261121.actions_failure_inventory_complete** — [Tarihsel kaynak kaydı, ek alan kontrolü] false
+- **v2/tasks/state.json:$.github_cleanup_audit_20261121.original_task_statuses_changed** — [Tarihsel kaynak kaydı, ek alan kontrolü] false
+- **v2/tasks/state.json:$.github_cleanup_audit_20261121.latest_main_actions_verification_scope** — [Tarihsel kaynak kaydı, ek alan kontrolü] PR #622 security run 44921994257 SUCCESS; historical three failure-to-success pairs only; not exhaustive
+- **v2/tasks/state.json:$.github_cleanup_final_20261121.actions_success_runs[0]** — [Tarihsel kaynak kaydı, ek alan kontrolü] 44944789787
+- **v2/tasks/state.json:$.github_cleanup_final_20261121.actions_success_runs[1]** — [Tarihsel kaynak kaydı, ek alan kontrolü] 44947424127
+- **v2/tasks/state.json:$.github_cleanup_final_20261121.actions_success_runs[2]** — [Tarihsel kaynak kaydı, ek alan kontrolü] 44949181505
+- **v2/tasks/state.json:$.github_cleanup_final_20261121.actions_success_runs[3]** — [Tarihsel kaynak kaydı, ek alan kontrolü] 44950371186
+- **v2/tasks/state.json:$.github_cleanup_final_20261121.actions_failure_inventory_complete** — [Tarihsel kaynak kaydı, ek alan kontrolü] false
+- **v2/tasks/state.json:$.stage11_owner_archival_scope_closure_20261121.not_individual_record_verification** — [Tarihsel kaynak kaydı, ek alan kontrolü] true
+- **v2/tasks/state.json:$.stage11_owner_archival_scope_closure_20261121.task19_report** — [Tarihsel kaynak kaydı, ek alan kontrolü] v2/reports/task19-current-xmltv-20261119.json
+- **v2/tasks/state.json:$.stage11_owner_archival_scope_closure_20261121.security_hold_685_unchanged** — [Tarihsel kaynak kaydı, ek alan kontrolü] true
+
+<!-- B-END -->
+
+## C) Kanal Testi, Taşıma ve Kategori Düzenleme İşleri
+
+### Kanal işlemleri — tarihsel emirler ve kullanıcı kabulü
+
+- C01 — Pinned main manifesti: 18.330 kayıt; 1.562 YEDEKLER, 2 ANA ARŞİV, 1 TÜRK ARŞİVİ, 15.940 YABANCI ARŞİVİ, 825 diğer. Kaynak: v2/playlists/parts/manifest.json. Tarihsel 18.912/18.337 sayıları güncel sayı değildir.
+- C02 — Özgün 18.074 arşiv ve eski 2500 paket döngüsü; 21 Kasım 1792+424+284=2500 tarihsel kabul. Kaynak: ANA_PLAYLIST_ARSIV_BUTUNLUK_20261121.md.
+- C03 — Geçmiş 112–486 ve ek taşıma emirlerinin önce/sonra URL-hash kimlik mutabakatı o raporda açık; tekrar taşıma yapılmaz. Kaynak: aynı rapor.
+- C04 — Eski 7650 aday paketi ve 1110 küçük listenin URL üyeliği doğrulandı; gerçek medya kabulü aynı değil. Kaynak: v2/arsiv/eski_sistem_7650_test_kuyrugu_README.md; #793.
+- C05 — PR #650 tarihsel bütün kategori ve aday taraması hedefi; daha sonra #791 yabancı arşiv dışı dar kapsam test edildi. Yeni tam tarama yok.
+- C06 — 26 Kasım 32/32 paket tamamlandı; run 45799091422, final artifact 15147217790. Kaynak: final rapor; #792 rapor 27/32 anlık kesittir.
+- C07 — 180 sn açılış toleransı, 60 sn AV, üç tur, 120 sn aralık, 15 sn geç açılış ayrımı. Kaynak: #789; final rapor. Yerel decoder ölçümü, cihaz ölçümü değildir.
+- C08 — 25 Kasım YEDEKLER 1562 kayıt eski ❌ işaret emri: iki medya da yoksa işaret, tek medya ayrı. Kaynak: v2/yedekler_red_av_request.md. Tarihsel emir, şimdi uygulanmaz.
+- C09 — Yanlış kırmızı işaret sonrası 1102 dahil 1562 yeni salt-okunur kontrol, otomatik işaret yok; erişim hatası belirsiz. Kaynak: v2/yedekler_av_recheck_20261125.md. Sonraki kural eski işaret emrinin tekrarına izin vermez.
+- C10 — Çalışan/çalışmayan/belirsiz, tek medya, kalite sorunu, dil ve kimlik ayrı. Kaynak: ffmpeg_av_gap_classification_20261121.md; #792.
+- C11 — #787 562 kayıt vitrin→YEDEKLER taşıması ve #788 tam geri alma: tamamlanmış tarihsel işlem, yeniden uygulanmaz. Kaynak: green-vitrine-revert-20261125.json.
+- C12 — PR #721 75 ANA ARŞİV kaydını YEDEKLER'e taşıma; açık eski PR, uygulanmadı.
+- C13 — PR #728 ANA ARŞİV 18 ek platform adayı; açık eski PR, uygulanmadı.
+- C14 — PR #755 YABANCI ARŞİVİ 263 aday sıralaması; açık eski PR, uygulanmadı.
+- C15 — PR #757 99 ek Türkî aday sıralaması; açık eski PR, uygulanmadı.
+- C16 — PR #767 9 ek aday sıralaması; açık eski PR, uygulanmadı.
+- C17 — PR #768 eski ayrı YABANCI_ARSIV.m3u8 içinde 47 aday; açık eski PR, tek playlist kuralı nedeniyle otomatik uygulanmaz.
+- C18 — İBO Player cihazında kullanıcı testleri ve onaylı Türk/Yabancı arşiv taşıması ayrı. Kaynak: WORK_ORDER; #693.
+
+### Ayrıntılı kaynak kayıtları
+
+- **.github/workflows/alphabetize-yeni-turk.yml:L14** — [Tarihsel yapılandırma kaydı] - name: Verify protected IBO playlist without changing it
+- **.github/workflows/backups-logo-audit.yml:L1** — [Tarihsel yapılandırma kaydı] name: Alphabetize backups and audit logos (production writer suspended)
+- **.github/workflows/backups-logo-audit.yml:L14** — [Tarihsel yapılandırma kaydı] - name: Verify protected IBO playlist without changing it
+- **.github/workflows/build_playlist_from_parts.yml:L1** — [Tarihsel yapılandırma kaydı] name: Build canonical IBO playlist from parts
+- **.github/workflows/build_playlist_from_parts.yml:L29** — [Tarihsel yapılandırma kaydı] - name: Apply reviewed channel command and validate canonical inventory
+- **.github/workflows/build_playlist_from_parts.yml:L67** — [Tarihsel yapılandırma kaydı] if: "startsWith(github.ref, 'refs/heads/command/ibo-') && github.actor == 'Madsc55'"
+- **.github/workflows/ci.yml:L16** — [Tarihsel yapılandırma kaydı] # Playlist invariants read immutable historical blobs with git cat-file.
+- **.github/workflows/ci.yml:L62** — [Tarihsel yapılandırma kaydı] - name: Test channel move invariants and workflow security only
+- **.github/workflows/ci.yml:L108** — [Tarihsel yapılandırma kaydı] name: Full playlist read-only sample ${{ matrix.shard }}
+- **.github/workflows/ci.yml:L110** — [Tarihsel yapılandırma kaydı] if: github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[full-ibo-url-audit]')
+- **.github/workflows/ci.yml:L137** — [Tarihsel yapılandırma kaydı] name: full-ibo-audit-${{ matrix.shard }}
+- **.github/workflows/ci.yml:L145** — [Tarihsel yapılandırma kaydı] if: always() && github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[full-ibo-url-audit]')
+- **.github/workflows/ci.yml:L170** — [Tarihsel yapılandırma kaydı] name: full-ibo-audit-summary
+- **.github/workflows/ci.yml:L178** — [Tarihsel yapılandırma kaydı] if: github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[full-ibo-av-decode]')
+- **.github/workflows/ci.yml:L208** — [Tarihsel yapılandırma kaydı] name: full-ibo-audit-${{ matrix.shard }}
+- **.github/workflows/ci.yml:L217** — [Tarihsel yapılandırma kaydı] name: full-ibo-decode-${{ matrix.shard }}
+- **.github/workflows/ci.yml:L225** — [Tarihsel yapılandırma kaydı] if: always() && github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[full-ibo-av-decode]')
+- **.github/workflows/ci.yml:L250** — [Tarihsel yapılandırma kaydı] name: full-ibo-av-summary
+- **.github/workflows/ci.yml:L256** — [Tarihsel yapılandırma kaydı] name: YEDEKLER decoded AV shard ${{ matrix.shard }}
+- **.github/workflows/ci.yml:L257** — [Tarihsel yapılandırma kaydı] if: github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[yedekler-av-20261124]')
+- **.github/workflows/ci.yml:L279** — [Tarihsel yapılandırma kaydı] - name: Decode only YEDEKLER, retry unresolved
+- **.github/workflows/ci.yml:L284** — [Tarihsel yapılandırma kaydı] name: yedekler-av-20261124-${{ matrix.shard }}
+- **.github/workflows/ci.yml:L290** — [Tarihsel yapılandırma kaydı] name: YEDEKLER complete coverage and confirmed failures
+- **.github/workflows/ci.yml:L292** — [Tarihsel yapılandırma kaydı] if: always() && github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[yedekler-av-20261124]')
+- **.github/workflows/ci.yml:L314** — [Tarihsel yapılandırma kaydı] name: yedekler-av-20261124-summary
+- **.github/workflows/ci.yml:L320** — [Tarihsel yapılandırma kaydı] name: YEDEKLER deep review shard ${{ matrix.shard }}
+- **.github/workflows/ci.yml:L321** — [Tarihsel yapılandırma kaydı] if: github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[yedekler-deep-review-20261124]')
+- **.github/workflows/ci.yml:L344** — [Tarihsel yapılandırma kaydı] name: yedekler-av-20261124-summary
+- **.github/workflows/ci.yml:L351** — [Tarihsel yapılandırma kaydı] - name: Review only prior unresolved channels with alternate segments
+- **.github/workflows/ci.yml:L356** — [Tarihsel yapılandırma kaydı] name: yedekler-deep-review-${{ matrix.shard }}
+- **.github/workflows/ci.yml:L362** — [Tarihsel yapılandırma kaydı] name: YEDEKLER deep review coverage and outcomes
+- **.github/workflows/ci.yml:L364** — [Tarihsel yapılandırma kaydı] if: always() && github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[yedekler-deep-review-20261124]')
+- **.github/workflows/ci.yml:L382** — [Tarihsel yapılandırma kaydı] name: yedekler-av-20261124-summary
+- **.github/workflows/ci.yml:L392** — [Tarihsel yapılandırma kaydı] name: yedekler-deep-review-summary
+- **.github/workflows/ci.yml:L398** — [Tarihsel yapılandırma kaydı] name: YEDEKLER quality review shard ${{ matrix.shard }}
+- **.github/workflows/ci.yml:L399** — [Tarihsel yapılandırma kaydı] if: github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[yedekler-quality-20261124]')
+- **.github/workflows/ci.yml:L422** — [Tarihsel yapılandırma kaydı] name: yedekler-av-20261124-summary
+- **.github/workflows/ci.yml:L428** — [Tarihsel yapılandırma kaydı] name: yedekler-deep-review-summary
+- **.github/workflows/ci.yml:L440** — [Tarihsel yapılandırma kaydı] - name: Review 1209 unresolved channels with duration and quality evidence
+- **.github/workflows/ci.yml:L445** — [Tarihsel yapılandırma kaydı] name: yedekler-quality-${{ matrix.shard }}
+- **.github/workflows/ci.yml:L451** — [Tarihsel yapılandırma kaydı] name: YEDEKLER quality review complete coverage
+- **.github/workflows/ci.yml:L453** — [Tarihsel yapılandırma kaydı] if: always() && github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[yedekler-quality-20261124]')
+- **.github/workflows/ci.yml:L471** — [Tarihsel yapılandırma kaydı] name: yedekler-av-20261124-summary
+- **.github/workflows/ci.yml:L477** — [Tarihsel yapılandırma kaydı] name: yedekler-deep-review-summary
+- **.github/workflows/ci.yml:L487** — [Tarihsel yapılandırma kaydı] name: yedekler-quality-summary
+- **.github/workflows/ci.yml:L493** — [Tarihsel yapılandırma kaydı] name: YEDEKLER targeted recheck shard ${{ matrix.shard }}
+- **.github/workflows/ci.yml:L494** — [Tarihsel yapılandırma kaydı] if: github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[yedekler-targeted-20261124]')
+- **.github/workflows/ci.yml:L517** — [Tarihsel yapılandırma kaydı] name: yedekler-quality-summary
+- **.github/workflows/ci.yml:L535** — [Tarihsel yapılandırma kaydı] name: yedekler-targeted-${{ matrix.shard }}
+- **.github/workflows/ci.yml:L541** — [Tarihsel yapılandırma kaydı] name: YEDEKLER targeted complete coverage
+- **.github/workflows/ci.yml:L543** — [Tarihsel yapılandırma kaydı] if: github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[yedekler-targeted-20261124]')
+- **.github/workflows/ci.yml:L561** — [Tarihsel yapılandırma kaydı] name: yedekler-quality-summary
+- **.github/workflows/ci.yml:L570** — [Tarihsel yapılandırma kaydı] name: yedekler-targeted-summary
+- **.github/workflows/ci.yml:L576** — [Tarihsel yapılandırma kaydı] name: YEDEKLER 448 follow-up recheck shard ${{ matrix.shard }}
+- **.github/workflows/ci.yml:L577** — [Tarihsel yapılandırma kaydı] if: github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[yedekler-448-20261124]')
+- **.github/workflows/ci.yml:L600** — [Tarihsel yapılandırma kaydı] name: yedekler-quality-summary
+- **.github/workflows/ci.yml:L606** — [Tarihsel yapılandırma kaydı] name: yedekler-targeted-summary
+- **.github/workflows/ci.yml:L624** — [Tarihsel yapılandırma kaydı] name: yedekler-followup-${{ matrix.shard }}
+- **.github/workflows/ci.yml:L630** — [Tarihsel yapılandırma kaydı] name: YEDEKLER 448 follow-up complete coverage
+- **.github/workflows/ci.yml:L632** — [Tarihsel yapılandırma kaydı] if: github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[yedekler-448-20261124]')
+- **.github/workflows/ci.yml:L650** — [Tarihsel yapılandırma kaydı] name: yedekler-quality-summary
+- **.github/workflows/ci.yml:L656** — [Tarihsel yapılandırma kaydı] name: yedekler-targeted-summary
+- **.github/workflows/ci.yml:L665** — [Tarihsel yapılandırma kaydı] name: yedekler-followup-summary
+- **.github/workflows/ci.yml:L672** — [Tarihsel yapılandırma kaydı] name: YEDEKLER full 1562 fresh quality shard ${{ matrix.shard }}
+- **.github/workflows/ci.yml:L673** — [Tarihsel yapılandırma kaydı] if: github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[yedekler-full-1562-20261124]')
+- **.github/workflows/ci.yml:L706** — [Tarihsel yapılandırma kaydı] name: yedekler-fresh-${{ matrix.shard }}
+- **.github/workflows/ci.yml:L712** — [Tarihsel yapılandırma kaydı] name: YEDEKLER full 1562 fresh coverage
+- **.github/workflows/ci.yml:L714** — [Tarihsel yapılandırma kaydı] if: always() && github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[yedekler-full-1562-20261124]')
+- **.github/workflows/ci.yml:L734** — [Tarihsel yapılandırma kaydı] name: yedekler-fresh-summary
+- **.github/workflows/ci.yml:L740** — [Tarihsel yapılandırma kaydı] name: YEDEKLER 1562 reason quality shard ${{ matrix.shard }}
+- **.github/workflows/ci.yml:L741** — [Tarihsel yapılandırma kaydı] if: github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[yedekler-reasons-1562-20261124]')
+- **.github/workflows/ci.yml:L764** — [Tarihsel yapılandırma kaydı] name: yedekler-fresh-summary
+- **.github/workflows/ci.yml:L782** — [Tarihsel yapılandırma kaydı] name: yedekler-reason-${{ matrix.shard }}
+- **.github/workflows/ci.yml:L788** — [Tarihsel yapılandırma kaydı] name: YEDEKLER 1562 reason coverage
+- **.github/workflows/ci.yml:L790** — [Tarihsel yapılandırma kaydı] if: always() && github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[yedekler-reasons-1562-20261124]')
+- **.github/workflows/ci.yml:L808** — [Tarihsel yapılandırma kaydı] name: yedekler-fresh-summary
+- **.github/workflows/ci.yml:L817** — [Tarihsel yapılandırma kaydı] name: yedekler-reason-summary
+- **.github/workflows/ci.yml:L824** — [Tarihsel yapılandırma kaydı] name: YEDEKLER 1562 official source directory research
+- **.github/workflows/ci.yml:L825** — [Tarihsel yapılandırma kaydı] if: github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[yedekler-source-directory-20261124]')
+- **.github/workflows/ci.yml:L843** — [Tarihsel yapılandırma kaydı] name: yedekler-reason-summary
+- **.github/workflows/ci.yml:L849** — [Tarihsel yapılandırma kaydı] name: yedekler-source-directory
+- **.github/workflows/ci.yml:L856** — [Tarihsel yapılandırma kaydı] if: github.event_name == 'push' && github.ref == 'refs/heads/main' && (contains(github.event.head_commit.message, '[nonforeign-av-20261125]') || contains(github.event.head_commit.message, '[yedekler-startup-20261126]'))
+- **.github/workflows/ci.yml:L890** — [Tarihsel yapılandırma kaydı] name: yedekler-fresh-summary
+- **.github/workflows/ci.yml:L905** — [Tarihsel yapılandırma kaydı] if: always() && github.event_name == 'push' && github.ref == 'refs/heads/main' && (contains(github.event.head_commit.message, '[nonforeign-av-20261125]') || contains(github.event.head_commit.message, '[yedekler-startup-20261126]'))
+- **.github/workflows/full-turkish-backups-audit.yml:L14** — [Tarihsel yapılandırma kaydı] - name: Verify protected IBO playlist without changing it
+- **.github/workflows/full_autonomous_pipeline.yml:L27** — [Tarihsel yapılandırma kaydı] - name: Verify existing playlist and safely discover/validate
+- **.github/workflows/ibo-authorized-500.yml:L1** — [Tarihsel yapılandırma kaydı] name: One-time authorized IBO complete old and V2 archives transfer
+- **.github/workflows/ibo-real-scan.yml:L1** — [Tarihsel yapılandırma kaydı] name: V2 Real IBO Candidate Scan (production writer suspended)
+- **.github/workflows/ibo-real-scan.yml:L14** — [Tarihsel yapılandırma kaydı] - name: Verify protected IBO playlist without changing it
+- **.github/workflows/ibo-single-playlist-transfer-offline.yml:L1** — [Tarihsel yapılandırma kaydı] name: IBO single-playlist archive transfer offline acceptance
+- **.github/workflows/ibo-single-playlist-transfer-offline.yml:L28** — [Tarihsel yapılandırma kaydı] - name: Verify existing main playlist unchanged
+- **.github/workflows/import-backup-candidates.yml:L14** — [Tarihsel yapılandırma kaydı] - name: Verify protected IBO playlist without changing it
+- **.github/workflows/issue-489-historical-audit.yml:L18** — [Tarihsel yapılandırma kaydı] - name: Compare historical and current inventories without changing playlists
+- **.github/workflows/move-turkish-backups.yml:L1** — [Tarihsel yapılandırma kaydı] name: Move Turkish backup channels (production writer suspended)
+- **.github/workflows/move-turkish-backups.yml:L14** — [Tarihsel yapılandırma kaydı] - name: Verify protected IBO playlist without changing it
+- **.github/workflows/repair-playlist-grouping.yml:L1** — [Tarihsel yapılandırma kaydı] name: Repair playlist grouping and counts (production writer suspended)
+- **.github/workflows/repair-playlist-grouping.yml:L14** — [Tarihsel yapılandırma kaydı] - name: Verify protected IBO playlist without changing it
+- **.github/workflows/run_move_685.yml:L23** — [Tarihsel yapılandırma kaydı] - name: Generate proposed playlist in temporary directory only
+- **.github/workflows/run_move_685.yml:L33** — [Tarihsel yapılandırma kaydı] - name: Publish proposed playlist and move report
+- **.github/workflows/run_move_685.yml:L36** — [Tarihsel yapılandırma kaydı] name: move-685-playlist-preview
+- **.github/workflows/run_pass1_cleanup.yml:L18** — [Tarihsel yapılandırma kaydı] - name: Upload proposed playlist and report
+
+- **.github/workflows/sort-backups-enrich-logos.yml:L1** — [Tarihsel yapılandırma kaydı] name: Sort backups and enrich missing logos (production writer suspended)
+- **.github/workflows/sort-backups-enrich-logos.yml:L14** — [Tarihsel yapılandırma kaydı] - name: Verify protected IBO playlist without changing it
+- **.github/workflows/turkish-backup-identity-audit.yml:L14** — [Tarihsel yapılandırma kaydı] - name: Verify protected IBO playlist without changing it
+- **.github/workflows/turkish-backups-fifth-audit.yml:L14** — [Tarihsel yapılandırma kaydı] - name: Verify protected IBO playlist without changing it
+- **.github/workflows/turkish-backups-fourth-audit.yml:L14** — [Tarihsel yapılandırma kaydı] - name: Verify protected IBO playlist without changing it
+- **.github/workflows/turkish-backups-second-pass.yml:L14** — [Tarihsel yapılandırma kaydı] - name: Verify protected IBO playlist without changing it
+- **.github/workflows/turkish-backups-third-pass.yml:L14** — [Tarihsel yapılandırma kaydı] - name: Verify protected IBO playlist without changing it
+- **.github/workflows/turkish-category-audit.yml:L1** — [Tarihsel yapılandırma kaydı] name: Audit Turkish channels and remove test symbols (production writer suspended)
+- **.github/workflows/turkish-category-audit.yml:L14** — [Tarihsel yapılandırma kaydı] - name: Verify protected IBO playlist without changing it
+- **.github/workflows/update_main_playlist.yml:L1** — [Tarihsel yapılandırma kaydı] name: Main Playlist HTTP Health Report (Read Only)
+- **.github/workflows/update_main_playlist.yml:L22** — [Tarihsel yapılandırma kaydı] - name: Probe streams without changing canonical playlist
+- **.github/workflows/update_main_playlist.yml:L24** — [Tarihsel yapılandırma kaydı] - name: Verify canonical playlist was not modified
+- **.github/workflows/update_main_playlist.yml:L34** — [Tarihsel yapılandırma kaydı] name: main-playlist-health
+- **.github/workflows/v2-batched-playback.yml:L22** — [Tarihsel yapılandırma kaydı] - name: Validate playlist protection
+- **.github/workflows/v2-bruksel-logo-png.yml:L1** — [Tarihsel yapılandırma kaydı] name: Bruksel Turk PNG Logo (production writer suspended)
+- **.github/workflows/v2-bruksel-logo-png.yml:L14** — [Tarihsel yapılandırma kaydı] - name: Verify protected IBO playlist without changing it
+- **.github/workflows/v2-epg.yml:L1** — [Tarihsel yapılandırma kaydı] name: V2 Independent EPG (production writer suspended)
+- **.github/workflows/v2-epg.yml:L14** — [Tarihsel yapılandırma kaydı] - name: Verify protected IBO playlist without changing it
+- **.github/workflows/v2-full-decoder.yml:L22** — [Tarihsel yapılandırma kaydı] - name: Verify protected playlist fingerprint and run full decoder sample
+- **.github/workflows/v2-full-decoder.yml:L45** — [Tarihsel yapılandırma kaydı] - name: Verify all current YEDEKLER streams
+- **.github/workflows/v2-full-decoder.yml:L51** — [Tarihsel yapılandırma kaydı] name: yedekler-av-audit
+- **.github/workflows/v2-historical-recovery.yml:L15** — [Tarihsel yapılandırma kaydı] - name: Protect IBO and permanent backups
+- **.github/workflows/v2-ibo-parity.yml:L1** — [Tarihsel yapılandırma kaydı] name: V2 Canonical IBO Playlist Parity
+- **.github/workflows/v2-ibo-parity.yml:L17** — [Tarihsel yapılandırma kaydı] - name: Compare canonical IBO URL with V2
+- **.github/workflows/v2-ibo-parity.yml:L23** — [Tarihsel yapılandırma kaydı] name: ibo-playlist-parity
+- **.github/workflows/v2-logo-backup.yml:L1** — [Tarihsel yapılandırma kaydı] name: V2 Logo Backup (non-destructive) (production writer suspended)
+- **.github/workflows/v2-logo-backup.yml:L14** — [Tarihsel yapılandırma kaydı] - name: Verify protected IBO playlist without changing it
+
+- **.github/workflows/v2-main-production-safety-gate.yml:L26** — [Tarihsel yapılandırma kaydı] name: Verify suspended publishers, no cron and immutable IBO
+- **.github/workflows/v2-main-production-safety-gate.yml:L275** — [Tarihsel yapılandırma kaydı] - name: Preserve original IBO category and backup invariants
+- **.github/workflows/v2-main-production-safety-gate.yml:L319** — [Tarihsel yapılandırma kaydı] - name: Stage 2 and Stage 3 offline identity, EPG and recovery acceptance
+- **.github/workflows/v2-official-sites.yml:L19** — [Tarihsel yapılandırma kaydı] - name: Compare official sites with existing playlist
+- **.github/workflows/v2-offline-inventory.yml:L24** — [Tarihsel yapılandırma kaydı] - name: Compile protected playlist acceptance
+- **.github/workflows/v2-offline-inventory.yml:L26** — [Tarihsel yapılandırma kaydı] - name: Verify protected IBO playlist and archived backups
+- **.github/workflows/v2-offline-inventory.yml:L34** — [Tarihsel yapılandırma kaydı] - name: Test IBO packaging and final acceptance offline
+- **.github/workflows/v2-one-shot-final-contract.yml:L21** — [Tarihsel yapılandırma kaydı] - name: Protect IBO, favorites, categories and original backups
+- **.github/workflows/v2-ordered-preflight.yml:L19** — [Tarihsel yapılandırma kaydı] - name: Confirm playlist safety test compiles
+- **.github/workflows/v2-playlist-safety.yml:L1** — [Tarihsel yapılandırma kaydı] name: V2 Playlist Safety Invariants
+- **.github/workflows/v2-playlist-safety.yml:L18** — [Tarihsel yapılandırma kaydı] # Historical immutable playlist blobs are required by the invariant test.
+- **.github/workflows/v2-playlist-safety.yml:L25** — [Tarihsel yapılandırma kaydı] - name: Verify channel counts and original backups
+- **.github/workflows/v2-postscan-triage.yml:L34** — [Tarihsel yapılandırma kaydı] - name: Audit all scanned channels and prepare separated review queues
+- **.github/workflows/v2-postscan-triage.yml:L38** — [Tarihsel yapılandırma kaydı] - name: Cross-check identity candidates across sources and EPG identifiers
+- **.github/workflows/v2-promote-yedekler.yml:L1** — [Tarihsel yapılandırma kaydı] name: V2 One-Time YEDEKLER Promotion (production writer suspended)
+- **.github/workflows/v2-promote-yedekler.yml:L14** — [Tarihsel yapılandırma kaydı] - name: Verify protected IBO playlist without changing it
+- **.github/workflows/v2-real-iptv-scan.yml:L1** — [Tarihsel yapılandırma kaydı] name: V2 Gercek IPTV Tarama ve IBO Paketleri
+- **.github/workflows/v2-real-iptv-scan.yml:L69** — [Tarihsel yapılandırma kaydı] - name: Read-only live EPG source and schedule integrity audit
+- **.github/workflows/v2-real-iptv-scan.yml:L72** — [Tarihsel yapılandırma kaydı] # Advisory evidence only: this never modifies madsc-epg.xml.
+- **.github/workflows/v2-real-iptv-scan.yml:L74** — [Tarihsel yapılandırma kaydı] - name: Generate separate EPG candidate from actual XMLTV feeds for review
+- **.github/workflows/v2-real-iptv-scan.yml:L77** — [Tarihsel yapılandırma kaydı] # Save in v2/reports; the protected root EPG remains untouched.
+- **.github/workflows/v2-real-iptv-scan.yml:L138** — [Tarihsel yapılandırma kaydı] - name: Prepare encrypted 500-channel review backups (never publish to main IBO)
+- **.github/workflows/v2-real-iptv-scan.yml:L209** — [Tarihsel yapılandırma kaydı] - name: Test this 500-channel batch with video and audio decoding
+- **.github/workflows/v2-spoken-language-existing-snapshot.yml:L18** — [Tarihsel yapılandırma kaydı] - name: Protect original playlist and backups
+- **.github/workflows/v2-stage6-grouped-acceptance.yml:L19** — [Tarihsel yapılandırma kaydı] - name: Playlist and protected archive invariants
+
+- **.github/workflows/v2-turkish-stream-review.yml:L1** — [Tarihsel yapılandırma kaydı] name: Kanalları ara — Tek Birleşik Görev
+- **.github/workflows/v2-turkish-stream-review.yml:L19** — [Tarihsel yapılandırma kaydı] - name: Enforce frozen IBO playlist and permanent backups before all tests
+- **.github/workflows/v2-turkish-stream-review.yml:L90** — [Tarihsel yapılandırma kaydı] - name: Protect live playlist
+- **.github/workflows/v2-turkish-stream-review.yml:L238** — [Tarihsel yapılandırma kaydı] - name: Audit same URL across different channels
+- **.github/workflows/v2-turkish-stream-review.yml:L244** — [Tarihsel yapılandırma kaydı] - name: Find quality upgrades for existing channels
+- **.github/workflows/v2-turkish-stream-review.yml:L250** — [Tarihsel yapılandırma kaydı] - name: Extract verified NewlistTR channels separately
+- **.github/workflows/v2-turkish-stream-review.yml:L252** — [Tarihsel yapılandırma kaydı] - name: Measure current playlist stream resolutions in batches
+- **.github/workflows/v2-turkish-stream-review.yml:L277** — [Tarihsel yapılandırma kaydı] - name: Build isolated provisional IBO review playlist
+- **.github/workflows/v2-turkish-stream-review.yml:L279** — [Tarihsel yapılandırma kaydı] - name: Map candidate EPG and logo metadata
+- **.github/workflows/v2-turkish-stream-review.yml:L285** — [Tarihsel yapılandırma kaydı] - name: Validate playlist EPG XMLTV sources
+- **.github/workflows/v2-turkish-stream-review.yml:L287** — [Tarihsel yapılandırma kaydı] - name: Check playlist logos and EPG URLs
+- **.github/workflows/v2-turkish-stream-review.yml:L289** — [Tarihsel yapılandırma kaydı] - name: Audit logo formats and attribution
+- **.github/workflows/v2-turkish-stream-review.yml:L299** — [Tarihsel yapılandırma kaydı] - name: Final playlist and backup safety invariants
+- **.github/workflows/v2-turkish-tv-health.yml:L23** — [Tarihsel yapılandırma kaydı] - name: Audit live channels and discover Turkish TV (read only)
+- **.github/workflows/v2-turkish-tv-health.yml:L25** — [Tarihsel yapılandırma kaydı] - name: Upload private run artifact (not committed to playlist)
+- **.github/workflows/v2-world-discovery.yml:L1** — [Tarihsel yapılandırma kaydı] name: V2 Worldwide Channel Discovery (read-only)
+- **.github/workflows/v2-world-discovery.yml:L17** — [Tarihsel yapılandırma kaydı] - name: Discover without changing playlist
+- **.github/workflows/v2-world-discovery.yml:L23** — [Tarihsel yapılandırma kaydı] name: v2-channel-candidates
+- **.github/workflows/v2-yedekler-av-audit.yml:L1** — [Tarihsel yapılandırma kaydı] name: YEDEKLER uncertain AV retry (685 only, SECURITY HOLD)
+- **.github/workflows/v2-yedekler-av-audit.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/v2-yedekler-av-audit.yml:L12** — [Tarihsel yapılandırma kaydı] # SECURITY HOLD: no real stream probes until DNS/IP/redirect/HLS egress
+- **.github/workflows/v2-yedekler-av-audit.yml:L13** — [Tarihsel yapılandırma kaydı] # restrictions and regression tests have been independently accepted.
+- **.github/workflows/v2-yedekler-av-audit.yml:L14** — [Tarihsel yapılandırma kaydı] # Historical preview-only workflow remains available separately.
+- **.github/workflows/v2-yedekler-av-audit.yml:L15** — [Tarihsel yapılandırma kaydı] if: ${{ false }}
+- **.github/workflows/v2-yedekler-av-audit.yml:L25** — [Tarihsel yapılandırma kaydı] - name: Verify and download the accepted initial 685-item retry queue
+- **.github/workflows/v2-yedekler-av-audit.yml:L38** — [Tarihsel yapılandırma kaydı] - name: Install FFmpeg for bounded real AV rechecks
+- **.github/workflows/v2-yedekler-av-audit.yml:L44** — [Tarihsel yapılandırma kaydı] - name: Recheck only the 685 uncertain identities and build fail-closed preview
+- **.github/workflows/v2-yedekler-av-audit.yml:L55** — [Tarihsel yapılandırma kaydı] if: always()
+- **.github/workflows/v2-yedekler-av-audit.yml:L58** — [Tarihsel yapılandırma kaydı] name: v2-497-685-retry-preview
+- **.github/workflows/v2-yedekler-logos.yml:L1** — [Tarihsel yapılandırma kaydı] name: V2 YEDEKLER Verified Logos (production writer suspended)
+- **.github/workflows/v2-yedekler-logos.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/v2-yedekler-logos.yml:L14** — [Tarihsel yapılandırma kaydı] - name: Verify protected IBO playlist without changing it
+- **.github/workflows/v2-yedekler-result-reconcile.yml:L1** — [Tarihsel yapılandırma kaydı] name: YEDEKLER existing result reconciliation (read-only)
+- **.github/workflows/v2-yedekler-result-reconcile.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/v2-yedekler-result-reconcile.yml:L22** — [Tarihsel yapılandırma kaydı] - name: Build preview from the exact historical report (no scan)
+- **.github/workflows/v2-yedekler-result-reconcile.yml:L59** — [Tarihsel yapılandırma kaydı] - name: Upload immutable reconciliation preview and retry manifest
+- **.github/workflows/v2-yedekler-result-reconcile.yml:L62** — [Tarihsel yapılandırma kaydı] name: v2-497-existing-audit-preview
+- **ANA_PLAYLIST_KORUMA_KURALI.md:L1** — [Tarihsel kaynak kaydı] MADSC55 TV V2 — 1 NUMARALI DEĞİŞMEZ KURAL
+- **ANA_PLAYLIST_KORUMA_KURALI.md:L11** — [Tarihsel kaynak kaydı] - Keşif, EPG ve logo otomasyonları yalnızca kendi çıktılarında çalışabilir; ana playlisti değiştiremez.
+- **ANA_PLAYLIST_KORUMA_KURALI.md:L14** — [Tarihsel kaynak kaydı] - Eski depoları silmek bu kuralı değiştirmez.
+- **ANA_PLAYLIST_KORUMA_KURALI.md:L16** — [Tarihsel kaynak kaydı] Bu dosya bir politika kaydıdır; GitHub dal koruması veya teknik yazma engeli yerine geçmez.
+- **ANA_PLAYLIST_KORUMA_KURALI.md:L18** — [Tarihsel kaynak kaydı] Yeni kanal kabul kuralı
+- **ANA_PLAYLIST_KORUMA_KURALI.md:L20** — [Tarihsel kaynak kaydı] - Dünya çapında keşfedilen yeni kanalların **tek hedef kategorisi**: `📦 YEDEKLER`.
+- **DEVAM_NOTU.md:L17** — [Tarihsel kaynak kaydı] - PR #618 (6 resmîliği doğrulanmamış logo), #629 (henüz entegre edilmemiş 685-kanal fail-closed retry taslağı), #630 (bağımsız canlı AV/dil kabulü bulunmayan taslak rapor) **birleştirilmeden kapatıldı**. Bu karar doğrulama kanıtı yerine geçmez.
+- **DEVAM_NOTU.md:L20** — [Tarihsel kaynak kaydı] - **Ana playlist değişmedi**: MADSC55_TV_IBO_CALISANLAR_TEST.m3u8, main üzerinde 18.912 EXTINF kaydı (1.792 YEDEKLER, 15.574 ANA ARŞİV, 424 TÜRK ARŞİVİ, 284 YABANCI ARŞİVİ; diğerleri 838). Bu sayı doğrulanmış çalışan yayın sayısı değildir.
+- **DEVAM_NOTU.md:L29** — [Tarihsel kaynak kaydı] Kaynak: main v2/tasks/state.json, DEVAM_NOTU.md. Bu adimda yeni provider sorgusu, canli AV taramasi, playlist degisikligi ve gorev tamamlama yapilmadi.
+- **DEVAM_NOTU.md:L31** — [Tarihsel kaynak kaydı] #17: 20148 tarihsel kuyruk kimliginden 3766 playlist eslesmesi; 16367 playlist disi kimlik icin kanit eksik. Bu iki sayi toplamin tamamini aciklamadigindan kalan 15 kimlik de satir bazinda uzlastirilmali.
+- **DEVAM_NOTU.md:L35** — [Tarihsel kaynak kaydı] #19: 29 XMLTV ID, 8 zaman aralikli program, 7 playlist ID icin 19 Kasim guncel baslik; 303 tarihsel acik ve dort program eslesmesi acik.
+- **DEVAM_NOTU.md:L54** — [Tarihsel kaynak kaydı] - **Önceden bitenler tekrar yapılmasın:** 1792 YEDEKLER = 1107 tarihsel AV verified + 685 belirsiz + 0 kesin başarısız; gerçek salt-okunur 685 plan artefaktı `14702596056` zaten kabul edilmiş. #6 Türk/yetkili kasa harici Drive backup/anahtar/izole gerçek restore **açık**. Tek ana `MADSC55_TV_IBO_CALISANLAR_TEST.m3u8`, 34 ana görev statüsü, diğer arşivler ve dışlanan 48 kanal değişmedi.
+- **DEVAM_NOTU.md:L55** — [Tarihsel kaynak kaydı] - **Sıradaki iş:** son main CI'yi doğrula; #497 canlı genel HLS/FFmpeg egress sandbox kabulü ve #6 gerçek bağımsız kasa backup/restore. Her yeni kanal testini final güvenlik aşamasına bırak.
+- **DEVAM_NOTU.md:L71** — [Tarihsel kaynak kaydı] - `v2/authorized_vault_external_restore_acceptance.py` yeni salt-okunur doğrulayıcıdır. Kaynak ve indirilmiş **iki ayrı 0600 özel dosyada** daha önce sabitlenmiş encrypted SHA-256/byte paritesi, doğru `V2_AUTHORIZED_VAULT_FERNET_KEY` (sadece ortam sırrı) ile authenticated decrypt, ayrı geçici restore ve URL/karar-geçmişi/kayıt bütünlüğü eşitliği sağlar. Çıktı ham URL, kanal kimliği veya anahtar içermez; sağlayıcı kimliğini araç tek başına doğrulamadığı için **`full_external_acceptance=false`** olarak kalır. Yanlış key, bozuk içerik, SHA, hardlink/symlink/izin, yok dosya ve yetkisiz kayıt testleri CI'da geçti.
+- **DEVAM_NOTU.md:L76** — [Tarihsel kaynak kaydı] 21 Kasım 2026 — #497 685 belirsiz kanal için GERÇEK SALT OKUNUR PLAN ARTEFAKTI KABULÜ
+- **DEVAM_NOTU.md:L78** — [Tarihsel kaynak kaydı] - **#607 main'e merged**: `e20c79cd6c6251f49b3c2532afa3fb12dd30cf5f`. PR Production Security Gate [#44891506947](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44891506947) SUCCESS; main Production Security Gate [#44891650993](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44891650993) **SUCCESS**. Mevcut güvenlik kapısına eklenen yeni adım `v2/ibo_497_retry_plan.py` ile zaten doğrulanmış tarihsel manifestten 685 kanal için plan üretiyor; ağ taraması, FFmpeg yayını, kanal taşınması, yeni test playlisti ve üretim playlist yazımı yok. Plan yalnızca `main` push çalışmasında `v2-497-685-readonly-retry-plan` adlı artefakta aktarılır, PR'larda sadece kontrol edilir.
+- **DEVAM_NOTU.md:L79** — [Tarihsel kaynak kaydı] - **Gerçek GitHub artefaktı kontrol edildi**: run `44891650993`, artefakt ID `14702596056`, `expired=false`; indirilen ZIP SHA-256 `31a44e42cb1a7175d87bd3277e1f4a82c0f55d1e823707afc8448e1ab1d8d25c`. ZIP içi `v2-497-685-retry-plan.json` boyut **427122** bayt, tam dosya SHA-256 `63502d64489da9f803bc7c1cd9687b84c9b18dc72edd8215e2faf69118e2573e`, deterministik `plan_sha256` `0ea6f56d9bd599a6f7d5c287296f16a08701ac320c2377e095d6f227296c439a`. Araçla önceki yerel planla **bayt bayta eşleşti**. Kaynak manifest SHA `b001bf48f07437e9ae67ed9f73b12ea9cfcab653523973435cf3b1cee3c31fcc`; bütün 685 kanal+URL SHA kimliği eşleşiyor, mükerrer yok.
+- **DEVAM_NOTU.md:L80** — [Tarihsel kaynak kaydı] - **Gerçek kanallar hakkında yeni sonuç yok**: YEDEKLER 1792 = 1107 tarihsel AV verified + 685 `RECHECK_REQUIRED` + 0 kesin başarısız. `live_retry_authorized=false`, `network_attempts=0`, `new_scan_started=false`, playlist/arsiv/kategori yazma izni `false`. #497 canlı retry workflow işi hâlâ `if: ${{ false }}` güvenlik kilidinde; izin verilmeden açılmayacak. Ayrı #6 Türk/yetkili kasa harici restore kabulü de açık; daha eski Stage 4 şifreli arşiv restore kanıtını onun yerine sayma.
+- **DEVAM_NOTU.md:L86** — [Tarihsel kaynak kaydı] - `v2/ibo_495_yedekler_av_audit.py` artık ilk ve ikinci probe sonuçlarını ayrı kaydediyor. `v2/ibo_497_retry_reconcile.py` ilk/son probe sonucu, 1–2 gerçek deneme, SHA-256 biçimi, FFmpeg decoded-AV boolean/durum eşitliği ve yalnız iki deterministik medya yokluğu kanıtında `failed` kararı şartlarını fail-closed denetliyor. Bozuk, çelişkili, sahte başarılı/başarısız raporlar önizlemeye alınmaz. Çevrimdışı üretici/işleyici negatif regresyonları güvenlik kapısında geçti.
+- **DEVAM_NOTU.md:L87** — [Tarihsel kaynak kaydı] - **Tarihsel gerçek envanter değişmedi:** 1.792 YEDEKLER = 1.107 doğrulanmış AV + 685 `RECHECK_REQUIRED` + 0 kesin başarısız. Kaynak Actions run `44640007709` / artifact `14587983768`, gerçek salt-okunur önizleme `44842556117` / artifact `14681083208`. Stage 6 salt-okunur planlayıcı [#594](https://github.com/Madsc55/MADSC55-TV-V2/pull/594) zaten merged; tekrar yazılmayacak. **Henüz gerçek 685 plan artifact'i üretildi veya canlı retry yapıldı denmez**; GitHub workflow `retry` işi güvenlik nedeniyle disabled `if: ${{ false }}`.
+- **DEVAM_NOTU.md:L88** — [Tarihsel kaynak kaydı] - **Sıradaki eksikler:** #6 özel Türk/yetkili kasanın mevcut Google Drive dışında/üzerinde bağımsız doğrulanmış şifreli backup+anahtarla restore kanıtı; #497 için gerçek salt-okunur 685 plan artefaktının üretim/kimlik doğrulaması (manual dispatch erişimi gerekir); yeni canlı kanal ve İBO Player testleri final aşamada yetkili güvenlik kabulünden sonra.
+- **DEVAM_NOTU.md:L98** — [Tarihsel kaynak kaydı] - **Devam sırası:** 1) #572'de IP-literal egress güvenliğini kod ve çevrimdışı negatif testlerle kapat; 2) güncel PR/main güvenlik kapılarını doğrula; 3) Stage 4 ASR/OCR/WebVTT gerçek kanıtını eksiksiz bağla; 4) yalnız son test fazında 685 kanal ve İBO Player gerçek oynatma kabulünü ele al. Bu incelemede yeni kanal taraması, yeniden deneme workflow dispatch'i, yeni playlist, canlı playlist/URL/arşiv mutasyonu yok.
+- **DEVAM_NOTU.md:L106** — [Tarihsel kaynak kaydı] - **#497 tarihsel kaynak BULUNDU:** Eski “1.792 kaynak rapor yok” iddiası artık geçersizdir. Gerçek Actions run [#44640007709](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44640007709), artefakt ID `14587983768` (`yedekler-av-audit`, süresi dolmamış). Ham rapor hash `30de600eca7d8e3140f423bb3fc248dc2f57df6ff031b0bf97276a9a861dba2c`. Kayıtlar **1.792 YEDEKLER / 1.107 doğrulanmış AV / 685 belirsiz / 0 kesin başarısız**. #547 importer main'e birleştirildi; [#44842749390](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44842749390) başarılı.
+- **DEVAM_NOTU.md:L108** — [Tarihsel kaynak kaydı] - **Tek ana playlist/invariyantlar:** `MADSC55_TV_IBO_CALISANLAR_TEST.m3u8`, toplam 18.912; YEDEKLER 1.792, ANA ARŞİV 15.574, TÜRK ARŞİVİ 424, YABANCI ARŞİVİ 284, diğer 838. 18.074 sayısı tarihî ilk YEDEKLER envanteridir, bugünkü YEDEKLER sayısı değildir. 48 önceden kaldırılmış hatalı kanal geri eklenmeyecek; mükerrer URL, ayrı test playlisti, kontrolsüz taşıma ve erken İBO Player testi yok.
+- **DEVAM_NOTU.md:L109** — [Tarihsel kaynak kaydı] - **Sıradaki çalışma sırası:** (1) #6 gerçek özel kasa harici backup/restore kanıtını mümkün olan erişimlerle doğrula; yoksa açık tut. (2) #497 685 belirsizin tekrar kuyruğu ve karar/kanıt güvenlik testleri. (3) Kanal AV/cihaz testleri en son; hiçbir üretim playlist mutasyonu bu nottan kaynaklanmaz.
+- **DEVAM_NOTU.md:L110** — [Tarihsel kaynak kaydı] - **Bu kayıt yalnızca devirdir:** Main playlist, 34 görevin statüleri, canlı taramalar ve Drive dosyaları bu PR ile değişmedi.
+- **DEVAM_NOTU.md:L118** — [Tarihsel kaynak kaydı] - Ana `MADSC55_TV_IBO_CALISANLAR_TEST.m3u8`, kategori/arşiv envanteri ve görev statüleri değiştirilmedi. Yeni kanal taraması yok.
+- **DEVAM_NOTU.md:L123** — [Tarihsel kaynak kaydı] - Aynı run'ın `Verify suspended publishers, no cron and immutable IBO` job logunda açık kabul satırı: `PASS: #489 canonical 18912; 18074 archive; 838 protected; move/restore`. İlgili arşiv regresyonlarında 12 test OK; arşiv geri yükleme ve bütünlük testleri de OK.
+- **DEVAM_NOTU.md:L124** — [Tarihsel kaynak kaydı] - Ayrı, daha eski run `44828290696` 29/29 offline test ile PASS verdi; ancak o test fixture'ı `YEDEKLER=1792, ANA=15574, TURK=424, YABANCI=284, OTHER=838` sayımlarını sabitliyordu. Bu eski fixture, son #489 kabul satırındaki 18.074 arşiv envanteriyle aynı snapshot değildir; iki sayım birbirine karıştırılmayacak.
+- **DEVAM_NOTU.md:L125** — [Tarihsel kaynak kaydı] - Kabul edilen davranış: tek ana playlist üzerinde kategori taşıma/geri alma mantığı, 2.500 sınırı, SHA/URL manifest kilidi, mükerrer işlem engeli, işlem günlüğü ve 838 diğer kategori koruması testlerle doğrulandı.
+- **DEVAM_NOTU.md:L127** — [Tarihsel kaynak kaydı] - Yeni playlist ve genel tarama yok; kanal sayıları/playlist dosyası değiştirilmedi. Sonraki aşama #497 eski 1.792 sonuçtan 1.107 doğrulanmış + 685 belirsiz ayrımını mevcut raporlarla taramasız kabul etmektir.
+- **DEVAM_NOTU.md:L132** — [Tarihsel kaynak kaydı] - Önceki main `36c31ac05baab4fa2321e57b00493c6438a19a79`: Playlist Safety Invariants `44836309550` SUCCESS; Production Security Gate `44836309658` SUCCESS. `44835254385` ve `44835269839` da SUCCESS.
+- **DEVAM_NOTU.md:L133** — [Tarihsel kaynak kaydı] - Tarihsel başarısız `44828876603`: `git cat-file blob 688f0b194b9106d6fdc593e5d7dc4a64c7e01b2c` bulunamadı. Daha yeni main playlist kapısı başarılı olduğundan eski run körlemesine yeniden çalıştırılmadı.
+- **DEVAM_NOTU.md:L136** — [Tarihsel kaynak kaydı] - Bu denetim kanıtı playlisti, 18.912 envanteri, kategorileri, 34 görev statüsünü değiştirmez; yeni tarama ve yeni playlist yoktur.
+- **DEVAM_NOTU.md:L145** — [Tarihsel kaynak kaydı] - Ana playlist ve kategoriler değiştirilmedi. Canlı kanal araması/oynatma testi yok. Şifre veya DRM aşma yok.
+- **DEVAM_NOTU.md:L147** — [Tarihsel kaynak kaydı] 20 Kasım 2026 — YEDEKLER ve arşiv işlem geçmişi
+- **DEVAM_NOTU.md:L149** — [Tarihsel kaynak kaydı] [#492](https://github.com/Madsc55/MADSC55-TV-V2/pull/492), [#493](https://github.com/Madsc55/MADSC55-TV-V2/pull/493) ve [#494](https://github.com/Madsc55/MADSC55-TV-V2/pull/494) öncesi ve sonrası yayın adresleri karşılaştırıldı. İşlem defterine ilk 74 taşıma eklendi. İkinci taşımadaki 85 kayıttan 11'inin özgün kaynak sırası düzeltildi. Son 125 taşıma doğruydu. 18.074 özgün yayının her biri tek bir hedefle eşleşiyor. YEDEKLER'de 1.792, TÜRK ARŞİVİ'nde 424, YABANCI ARŞİV'de 284 ve ANA ARŞİV'de 15.574 kanal var. Bu düzeltme yalnız işlem defterini ve onu doğrulayan kodu güncelledi.
+- **DEVAM_NOTU.md:L157** — [Tarihsel kaynak kaydı] Depo kökünde `python -m v2.turkish_sample_review --sample klip.mkv --local-asr-model MODEL_DIZINI` komutu JSON sonucu verir. Kullanılan model çok dilli faster-whisper tiny, ortam faster-whisper 1.2.1 ve PyAV 15.1.0 idi. Yakalama komutundaki `--include-subtitles` gömülü altyazıları seçer. `--capture-receipt` ile özgün yakalama çıktısı ve `--archive-preview` ile arşivdeki kaynak sırası denetlenir. Ayrı bir insan inceleme kararı, aynı örnek ve yayın adresiyle eşleşirse hedef arşiv önizlemesine girebilir. Ana playlistte işlem için açık onay gerekir.
+- **DEVAM_NOTU.md:L159** — [Tarihsel kaynak kaydı] 19 Kasım 2026 — Son 49 arşiv taşımasının geri alma kaydı
+- **DEVAM_NOTU.md:L161** — [Tarihsel kaynak kaydı] [#395](https://github.com/Madsc55/MADSC55-TV-V2/pull/395) ile taşınmış 49 kanalın kaynak sıraları, önceki ve sonraki Git kayıtlarındaki birebir durum farkından çıkarıldı. Geri alma geçmişine bu işlem eklendi. İlk geri alma 49, ikincisi [#392](https://github.com/Madsc55/MADSC55-TV-V2/pull/392) ile taşınan 375 kaydı geri getirir. Aktif 2.076, Türk arşivindeki 424 ve ana arşivdeki 15.574 kanalın atamaları aynıdır.
+- **DEVAM_NOTU.md:L169** — [Tarihsel kaynak kaydı] - Tarihsel #391/#356 logo adaylarının salt-okunur denetimine, hem güncel hem tarihsel playlistte aynı `tvg-id` birden fazla yayın URL'sinde görünürse adayın reddedilmesi kuralı eklendi. İki regresyon testi eklendi. Otomatik logo ataması yok; ana playlist, arşivler ve manifest değiştirilmedi. Son commit için Production Security Gate SUCCESS olmadan birleştirme yapılmayacak.
+- **DEVAM_NOTU.md:L173** — [Tarihsel kaynak kaydı] - #391 ve #356 tarihsel logo adaylarının otomatik uygulanmasını önlemek için salt-okunur denetim, aynı yayın URL'si ve tvg-id yanında değişmemiş görünen kanal adını ve kategori/arşiv grubunu da zorunlu tutacak şekilde sıkılaştırıldı. İki yeni regresyon testi eklendi. Bu değişiklik hiçbir logo atamaz; tarihsel adaylar hâlâ REVIEW_REQUIRED_NOT_VERIFIED. Ana playlist, arşivler ve SHA-256 yetkilendirme manifesti değiştirilmedi. Production Security Gate SUCCESS ve PR birleştirmesi bekleniyor.
+- **DEVAM_NOTU.md:L175** — [Tarihsel kaynak kaydı] 19 Kasım 2026 — Güvenlik, yayıncı kimliği ve güncel EPG
+- **DEVAM_NOTU.md:L178** — [Tarihsel kaynak kaydı] - [#461](https://github.com/Madsc55/MADSC55-TV-V2/pull/461) tarihsel logoları karşılaştıran aracı ve testlerini getirdi. [PR kontrolü](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44532393707) ve [7e063f9 ana dal kontrolü](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44537512417) başarılı. Başlangıçtaki 2.914 İBO kaydının 489'unda logo alanı boştu. Aktif YEDEKLER 2.076, ANA ARŞİV 15.574, TURK ARŞİVİ 424 ve YABANCI ARŞİVİ 0.
+- **DEVAM_NOTU.md:L188** — [Tarihsel kaynak kaydı] - **#15 yayıncı kanıtı.** Bir TV’nin kendi sayfasına gömdüğü oynatıcı, tarihsel adresteki HTTP kaynağını doğruluyor. Özgün adres özeti, URL’nin sonundaki fragmenti de içeriyor. Diğer beş kayıtta kanal veya dağıtıcı ilişkisi belgelenmiş olsa da tarihsel yayın adresinin yayıncıya aidiyeti açık. Görev bu nedenle `in_progress` durumunda. [PR #421 ve kontrolleri](https://github.com/Madsc55/MADSC55-TV-V2/pull/421)
+- **DEVAM_NOTU.md:L195** — [Tarihsel kaynak kaydı] - **Sıradaki iş.** #17, #18 ve #20’de kalan yayın kanıtları, bağımsız geri yükleme ve İBO Player kabulü açık. Sistem kurulumu tamamlanana kadar yeni kanal ve canlı yayın taraması ertelenmiş durumda. [Görev kaydı](v2/tasks/state.json)
+- **DEVAM_NOTU.md:L202** — [Tarihsel kaynak kaydı] - TRT, Kanal 7 ve CBS yayın alanlarında ölçütlere uyan 15 adres denendi. İlk turda zaman aşımına uğrayan iki adres ikinci defa denendi. TRT Kurdî'nin bir adresinde aynı HLS parçasından ses ve görüntü çözüldü. Son denemede sekiz adres HTTP 404, altı adres HTTP 503 verdi. [17 denemenin saatleri, adres ve medya özetleri](v2/reports/task17-18-20-bounded-retry-20261118.json).
+- **DEVAM_NOTU.md:L212** — [Tarihsel kaynak kaydı] 18 Kasım 2026 — Türkçe kanal kanıt zinciri ve süre kararı
+- **DEVAM_NOTU.md:L213** — [Tarihsel kaynak kaydı] - [PR #405](https://github.com/Madsc55/MADSC55-TV-V2/pull/405) kaynak sorgu planı kayması koruması; [PR #406](https://github.com/Madsc55/MADSC55-TV-V2/pull/406) önceki Türkçe kanal sınıflandırıcısı ve 8 regresyon testinin geri getirilmesi; [PR #407](https://github.com/Madsc55/MADSC55-TV-V2/pull/407) ASR/OCR/WebVTT/FFmpeg kaynaklı kanıt kayıtlarını salt-okunur, fail-closed toplu inceleme modülüne alma. Üçü de güvenlik onayından sonra main'e birleştirildi. #407 güvenlik koşusu 44326853217 SUCCESS.
+- **DEVAM_NOTU.md:L223** — [Tarihsel kaynak kaydı] - #17, #18 ve #20 için [14 Kasım saklanan son deneme kanıtı](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43608247496/artifacts/14135417421) 8.696 AV sonucunun 8.668'ini önceki checkpoint'ten taşıyor. 300 tekrar denemenin 28'inde o koşuda AV geri kazanıldı. Aynı arşivde 12.898 RETRY, 2.405 CHECK_AV ve 4.845 REVIEW kaydı var. Bu sayılar 14 Kasım denemesine ait.
+- **DEVAM_NOTU.md:L224** — [Tarihsel kaynak kaydı] - #19 güncel denetiminde beş XMLTV dosyası okundu. Ayrı aday üretiminde 2 birebir kanal kimliği ve 172 ad eşleşmesi bulundu. Ad eşleşmeleri ile tarihsel 303 boşluğun kapanışı onaylanmadı.
+- **DEVAM_NOTU.md:L226** — [Tarihsel kaynak kaydı] - İBO ana listesi 2.914 kayıt ve 2.076 aktif YEDEKLER içeriyor. Arşiv sayımı ANA 15.574, TURK 424 ve YABANCI 0. `YEDEKLER_PLAYLISTESI.m3u8` 32.488 kayıt içeriyor. Görev defterinde 21 tamamlanmış ve 13 açık görev var. Dünya taraması bu çalışmada başlatılmadı.
+- **DEVAM_NOTU.md:L235** — [Tarihsel kaynak kaydı] 17 Kasım 2026 — YEDEKLER dördüncü tarama ve üçüncü tur kapanışı
+- **DEVAM_NOTU.md:L237** — [Tarihsel kaynak kaydı] - Güncel ana playlist blob `dda1881e8884a9ded54cb44e0d7cd924967b1df1` üzerinden dördüncü tarama yapıldı. Türkiye ve Azerbaycan kaynaklı olabilecek ilave kayıtlar ile yabancı adaşlar `v2/reports/turkic-fourth-pass-review-20261117.md` dosyasında tek tek kaydedildi.
+- **DEVAM_NOTU.md:L238** — [Tarihsel kaynak kaydı] - Dördüncü taramadaki adayların yayın dili ve canlılık doğrulaması henüz yoktur; bu aşamada playlist değiştirilmedi. Sonraki işlem yalnız açıkça seçilen kayıtları tam bütünlük/SHA256 manifesti ve güvenlik testi ile yeniden sıralamak; başarısız testleri tamamlandı saymamak.
+- **DEVAM_NOTU.md:L242** — [Tarihsel kaynak kaydı] 17 Kasım 2026 — Türkî YEDEKLER üçüncü tarama (açık)
+- **DEVAM_NOTU.md:L243** — [Tarihsel kaynak kaydı] - Güncel İBO blob `843a2216ab08873ce0d3281e64bcb4fdd20a05d4`: 18.912 toplam, 18.074 YEDEKLER, 1003 sonrası mevcut 1.395 blok.
+- **DEVAM_NOTU.md:L254** — [Tarihsel kaynak kaydı] AÇIK TEKNİK ENGEL: `v2/main_actions_security_gate.py` yalnız YEDEKLER içi reorder kabul ediyor. PR üzerinden somut işlem onayı + değişiklik öncesi/sonrası kayıt denetimi + tam snapshot/rollback + regresyon testleri hazırlanmalı; güvenlik kapısı bu doğrulanmış onayları kabul etmeli, yetkisiz otomasyonları reddetmeli. Bu tamamlanmadan 'çözüldü' yazma. Eski MADSC-TV deposuna ve ana listeye bu notla hiçbir değişiklik yapılmaz.
+- **DEVAM_NOTU.md:L262** — [Tarihsel kaynak kaydı] 1. **Aşama A — önce:** #15 tarihî kimlik ve 6 eksik hash / bağımsız yayıncı kanıtı; #17 kurtarma kuyruğu; #18 güncel gerçek ses+görüntü; #19 kesin EPG-ID ve 303 boşluk; #20 kurtarma kanıt zinciri; #21 TR/AZ/dünya/YouTube canlı kaynak devam testleri. Son canlı koşu #43608247496: 103/103 uygun M3U, 28.845 aday, 8.573 AV (8.540 eski + 33 yeni), 20.272 kanıtsız, 300 gerçek tekrar deneme. Altı görev açık.
+- **DEVAM_NOTU.md:L269** — [Tarihsel kaynak kaydı] **Koruma:** Ana İBO, YEDEKLER, YENİLER, FAVORİLER, EPG ve eski MADSC-TV ayrı tutulur. Eşzamanlı PR körlemesine merge edilmez. Manuel canlı tarama ve üretim yayımlaması kendiliğinden başlatılmaz.
+- **DEVAM_NOTU.md:L281** — [Tarihsel kaynak kaydı] **Açık A görevleri güncellendi:** #15 bağımsız yayıncı kimliği + eski 4.955 tarihî hash'ten 6 eşleşmeyen; #17 geri yükleme kuyruğu; #18 tüm gerekli yayınların güncel görüntü+ses kimlik kanıtı; #19 kesin EPG-ID ve 303 boşluk; #20 kurtarma kanıt zinciri; #21 dünya kaynak/YouTube/resmî yayın doğrulaması. `v2/tasks/state.json` altı maddeyi de `in_progress` tuttu ve gerçek run kanıtını ekledi. Hiçbiri `completed` sayılmadı.
+- **DEVAM_NOTU.md:L289** — [Tarihsel kaynak kaydı] - Gerçek koşu #43605095525 (artifakt 14118620647) EPG audit: beş XMLTV akışı geçerli. Her beş akışta korumalı playlist'teki mevcut tvg-id ile birebir kaynak kanal ID eşleşmesi **0**; ayrı aday builder 876 ana liste girdisinden 89'unu ad ipuçlarıyla eşleştirerek 54 sentetik hedef kanal ve 1.879 gerçek zaman pencereli program üretti. Bu eşleşme asıl XMLTV kaynağının doğruladığı `tvg-id` ya da yayıncı sahipliği değildir.
+- **DEVAM_NOTU.md:L296** — [Tarihsel kaynak kaydı] - Son gerçek arşiv #43598617218'de hata veren iki isteğe bağlı M3U keşif girdisi bağımsız incelendi: GitHub YOUSEFX13/IPTV `Turkey-list (3).m3u` dosyası gerçek GitHub Contents yanıtında `#EXTM3U` yerine doğrudan `#EXTINF` ile başlıyor ve V2'nin zorunlu M3U biçimini karşılamıyor; diğer aday GitLab python-m3u8 projesinin `tests/playlists/simple-playlist.m3u8` test fikstürü, gerçek yayıncı kaynağı değil. Bunlar kullanışlı/hak sahibi kanal listesi olarak kabul edilmez.
+- **DEVAM_NOTU.md:L297** — [Tarihsel kaynak kaydı] - Yeni kalite kontrolü: yalnız sonradan bulunan test-fikstür M3U girdileri ağ taramasından önce `NonBroadcastTestFixture` olarak reddedilir; sadece gerçekten indirilen ve hatası tam `Not an M3U playlist` olan isteğe bağlı adaylar geçersiz belge diye raporlanır. `sources_attempted_including_invalid_discoveries`, `quarantined_invalid_discovery_sources` sayıları saklanır; gerçek konfigüre kaynak HTTP hataları, 25MB sınırı, eksik byte ve başka ValueError hataları kesinlikle yok sayılmaz. Geçersiz girdi yayın/AV başarısı veya bağımsız yayıncı kimliği sayılmaz.
+- **DEVAM_NOTU.md:L308** — [Tarihsel kaynak kaydı] - Tespit: Depodaki `madsc-epg.xml` 0 bayt; `v2/epg_sources.json` beş harici XMLTV kaynağı içeriyor. Önceki gerçek IPTV Actions taraması kaynakları `epg_integrity.py` ile denetlemiyor, `build_epg.py` çalıştırmıyor ve tarayıcıya `--epg` vermiyordu. #19 eksik kabulü bununla kendiliğinden kapanamaz.
+- **DEVAM_NOTU.md:L310** — [Tarihsel kaynak kaydı] - Scanner EPG kabulünde salt `&lt;channel&gt;` id'sini yeterli bulamaz: benzersiz XMLTV kanal bildirimi, tarih aralığı, geçerli UTC offset, pozitif program süresi ve dolu başlık gerekir. Geçerli kaynak ID'leri yine yalnız kesin tvg-id metadata ipucudur; yayıncı sahipliği veya AV kanıtı değildir. Yeni XMLTV eski/boş/geçersiz ise kabul artışı üretilemez.
+- **DEVAM_NOTU.md:L314** — [Tarihsel kaynak kaydı] 14 Kasım 2026 — Aşama A #21: YouTube canlı metadata hata kategorileri
+- **DEVAM_NOTU.md:L316** — [Tarihsel kaynak kaydı] - v2/youtube_discovery.py yeni sürümünde hata/engel sebebini yalnız güvenli kategori olarak raporlar: UPSTREAM_RATE_LIMITED, UPSTREAM_ACCESS_DENIED, SIGN_IN_REQUIRED, VIDEO_UNAVAILABLE, YTDLP_METADATA_FAILED, METADATA_TIMEOUT, LIVE_STATUS_MISSING, INVALID_METADATA. Ham stderr, URL belirteci ve özel bilgileri genel rapora dökmez.
+- **DEVAM_NOTU.md:L321** — [Tarihsel kaynak kaydı] - Son gerçek koşu: https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43598617218 — 28.845 kanal adayı, 8.510 FFmpeg AV kanıtı (8.509 önceki checkpoint, yalnız 1 yeni); 20.335 doğrulanamayan kayıt; 12.871 RETRY, 2.624 CHECK_AV, 4.840 REVIEW kararları. Bu kuyruk kararları *gerçek yeniden denemenin yapıldığı* anlamına gelmez.
+- **DEVAM_NOTU.md:L322** — [Tarihsel kaynak kaydı] - Aşama A kurtarma düzeltmesi: önceki checkpoint'ten kullanılan başarısız URL için recovery_attempts artırılmaz; yalnız yeni check_hls çağrısı sayılır. Şifreli checkpoint içinde gerçek deneme sayısı taşınır, eski envanterden ilk geri alma da sayacı saklar; tekrar kullanılan observations kökeni resumed-checkpoint olur, current-scan olmaz. Bu değişiklik #17/#20 için doğru kanıt üretir, ancak gerçek canlı tekrar denemeleri bitmiş sayılmaz.
+- **DEVAM_NOTU.md:L323** — [Tarihsel kaynak kaydı] - EPG kontrolü: repodaki madsc-epg.xml sıfır bayt; son gerçek taramada --epg kullanılmadı, raporda EPG kabul kanıtı yok. #19 kapsamında 303 geçmiş EPG boşluğu açık; gerçek XMLTV yayıncı verisi olmadan sıfırlandı/bitirildi yazılamaz.
+- **DEVAM_NOTU.md:L344** — [Tarihsel kaynak kaydı] 1. A (#15 #17 #18 #19 #20 #21): #15 bağımsız yayıncı/kaynak kimliği, tarihî 4.955 kayıttan 6 hash eksik; #17/#20 gerçek kurtarma kuyruğu; #18 taze ses+görüntü FFmpeg kanıtı; #19 gerçek XMLTV ile 303 EPG boşluğu; #21 canlı TR/AZ/dünya kaynak kapsamı. YouTube canlı metadata 0, direct HLS 0/120. Fail kaynaklar önce teşhis; eksik yayınlar gerçek gözlemle tekrar ölçülmeli.
+- **DEVAM_NOTU.md:L353** — [Tarihsel kaynak kaydı] - PR #193 squash merge `8ea0c66296788dda207d75279e44f3db725fd984`: `export_ibo_batches.py` içindeki metadata temizleyici, ASCII CR/LF yanı sıra Unicode NEL (U+0085), LINE SEPARATOR (U+2028), PARAGRAPH SEPARATOR (U+2029) karakterlerini de tek satırlı güvenli boşlukla değiştirir. Yeni regresyon her üçünde tam 3 satır/tek EXTINF üretimini doğrular.
+- **DEVAM_NOTU.md:L355** — [Tarihsel kaynak kaydı] - Önceki URL/metadata filtrelemesi başka bir eşzamanlı PR ile ana dala alındığından çakışan PR #192 kapatıldı; güncel uygulama üzerine yalnızca Unicode ek koruması taşındı.
+- **DEVAM_NOTU.md:L359** — [Tarihsel kaynak kaydı] - PR #183 squash merge `c108fafe1915e9c9b3c1863184a1a1cbdc23d216`: `v2/export_ibo_batches.py` önceki `IBO_AV_VERIFIED_*_PART*.m3u8` paketlerini silen işlemi kaldırdı. Yeni paketler tüm hedef dosya adları için ön kontrol yaparak mevcut dosyayı, sembolik bağlantıyı veya yinelemeli hedefleri reddediyor; klasör sembolik bağlantıları reddediliyor.
+- **DEVAM_NOTU.md:L360** — [Tarihsel kaynak kaydı] - Koruma regresyonları `v2/test_export_ibo_batches.py` içine eklendi; ana Production Security Gate Stage 6 adımına test çağrısı bağlandı.
+- **DEVAM_NOTU.md:L370** — [Tarihsel kaynak kaydı] 13 Kasım 2026 — #19 sahte EPG kabul işareti engellendi (PR #161)
+- **DEVAM_NOTU.md:L371** — [Tarihsel kaynak kaydı] - PR #161 squash merge: `a715a612facf325322e2b911366b8d5f45a173a5`. Stage 2 entegrasyonu, XMLTV doğrulama kaynağı olmadan gelen `epg_programme_available=True` ve sahte `epg_match_type` değerlerini sıfırlıyor.
+- **DEVAM_NOTU.md:L374** — [Tarihsel kaynak kaydı] - #19 in_progress: gerçek EPG boşlukları ve #18 bağımlılığı açık. Bu yalnızca offline kabul kanıtıdır; yeni canlı kanal/EPG taraması, gerçek AV veya nihai yayın kabulü değildir. Ana İBO, YEDEKLER, YENİLER, FAVORİLER değiştirilmedi.
+- **DEVAM_NOTU.md:L379** — [Tarihsel kaynak kaydı] - Bağımsız paket bütünlüğü raporu: `v2/reports/IBO_REAL_BATCH_INTEGRITY_2026-11-13.md`. Bu iş yeni tarama yapmadı, şifreli envanteri çözmedi, fiziksel cihaz veya bağımsız bulut geri yükleme kanıtı üretmedi. #28–#33 statüleri kanıt sınırları nedeniyle değiştirilmedi. Ana İBO/YEDEKLER/YENİLER/FAVORİLER değişmedi.
+- **DEVAM_NOTU.md:L385** — [Tarihsel kaynak kaydı] - Bu entegrasyonlar **yalnızca çevrimdışı altyapı/safety kabulü**dür. Canlı Codeberg 429 engeli; gerçek worldwide FFmpeg görüntü/ses kabulü; gerçek 1000/2000 İBO paketleri; bağımsız harici şifreli restore halen açıktır. #34 görev kaydı kapatılmadı. Yeni kapsamlı kanal taraması başlatılmadı; ana İBO/YEDEKLER/YENİLER/FAVORİLER değiştirilmedi.
+- **DEVAM_NOTU.md:L396** — [Tarihsel kaynak kaydı] - Tüm adımlar SUCCESS: grouped safety regression tests; production trigger/write policy; original IBO category/backup invariants; historical task ledger; Stage 2 identity recovery metadata; Stage 6 offline package/archive regressions; Stage 2/3 offline identity, EPG and recovery; Discovery #34 offline adapter/integration acceptance.
+- **DEVAM_NOTU.md:L397** — [Tarihsel kaynak kaydı] - Bu, PR #106'nın merge test ağacında çevrimdışı ve güvenlik kabulüdür. Gerçek FFmpeg AV, gerçek harici bağımsız restore ve üretim kanal paketi kanıtı yerine geçmez.
+- **DEVAM_NOTU.md:L399** — [Tarihsel kaynak kaydı] - Ana İBO, YEDEKLER, YENİLER, FAVORİLER değiştirilmedi; kanal taraması başlatılmadı.
+- **DEVAM_NOTU.md:L403** — [Tarihsel kaynak kaydı] - Başarılı adımlar: Stage 2 identity/recovery/metadata integration acceptance; Stage 2/3 offline identity, EPG and recovery acceptance; Stage 6 offline package/archive; #34 offline adapter/integration; production security and protected IBO invariants.
+- **DEVAM_NOTU.md:L404** — [Tarihsel kaynak kaydı] - Bu kanıt mevcut gözlemler üzerinde çevrimdışı entegrasyon içindir. Canlı motorun tüm üretim girdilerinde devreye alındığı, gerçek yayın AV, logo/EPG varlığı veya 1.000/2.000 gerçek İBO paketleri kanıtlanmış değildir. #15/#17–#21 ve #28–#33 görevleri bu sebeple otomatik kapatılmadı.
+- **DEVAM_NOTU.md:L405** — [Tarihsel kaynak kaydı] - Yeni kapsamlı kanal taraması yapılmadı; ana İBO, YEDEKLER, YENİLER ve FAVORİLER değiştirilmedi.
+- **DEVAM_NOTU.md:L410** — [Tarihsel kaynak kaydı] - Bu koşu canlı GitHub/GitLab/Codeberg API erişimini, yeni adayların FFmpeg ses/görüntü kanıtını veya bağımsız arşiv geri yüklemesini doğrulamaz. #34 ve #28–#33 gerçek kanıt kabulleri açık. Kapsamlı tarama yapılmadı; ana İBO, YEDEKLER, YENİLER ve FAVORİLER değiştirilmedi.
+- **DEVAM_NOTU.md:L418** — [Tarihsel kaynak kaydı] - Canlı #34 API sözleşmesi ve yeni aday AV/arşiv kabulü bu koşuda yapılmadı. Ana İBO, YEDEKLER, YENİLER, FAVORİLER değiştirilmedi; kapsamlı yeni tarama başlatılmadı.
+- **DEVAM_NOTU.md:L428** — [Tarihsel kaynak kaydı] - CI ve canlı Codeberg API kabulü bekleniyor; #34 açık. Ana İBO ve YEDEKLER/YENİLER/FAVORİLER değişmedi; kanal taraması yapılmadı.
+- **DEVAM_NOTU.md:L432** — [Tarihsel kaynak kaydı] - GitHub Actions run 43448792241: "Verify suspended publishers, no cron and immutable IBO" işi SUCCESS. Güvenlik regresyonları, İBO invariants, Stage 6 çevrimdışı paket/arşiv ve #34 offline adapter/entegrasyon adımları SUCCESS.
+- **DEVAM_NOTU.md:L437** — [Tarihsel kaynak kaydı] - Bu sonuç çevrimdışı test kanıtıdır. Gerçek yayın görüntü/ses, bağımsız harici arşiv geri yükleme ve nihai cihaz/kanal kabulü henüz kanıtlanmadığından #28–#33 nihai görevleri kapatılmadı.
+- **DEVAM_NOTU.md:L438** — [Tarihsel kaynak kaydı] - Ana İBO, YEDEKLER, YENİLER, FAVORİLER değiştirilmedi; kapsamlı tarama başlatılmadı.
+- **DEVAM_NOTU.md:L446** — [Tarihsel kaynak kaydı] - Commit bb52eac0, GitHub Actions 43327990827: SUCCESS; discovery offline acceptance, source-host restrictions, production security and IBO invariants PASS.
+- **DEVAM_NOTU.md:L447** — [Tarihsel kaynak kaydı] - Codeberg canlı API kabulü hâlâ ayrıca doğrulanmalı; workflow_dispatch ile çalışan canlı sözleşme adımı henüz yürütülmedi. #34 nihai kabul açık; playlist değiştirilmedi.
+- **DEVAM_NOTU.md:L450** — [Tarihsel kaynak kaydı] - Commit 574d5d69, GitHub Actions run 43322841131: SUCCESS. Production Security Gate, IBO invariants ve "Discovery 34 offline adapter and integration acceptance" adımı SUCCESS.
+- **DEVAM_NOTU.md:L471** — [Tarihsel kaynak kaydı] - Gerçek GitHub/GitLab/Codeberg API uçlarının uçtan uca üretim doğrulaması henüz yapılmadı; #34 nihai kabulü açık. Kanal taraması ve İBO değişikliği yok.
+- **DEVAM_NOTU.md:L476** — [Tarihsel kaynak kaydı] - Gerçek kaynak taraması yapılmadı; yeni AV kanıtı üretilmedi; ana İBO/YEDEKLER/EPG değiştirilmedi.
+- **DEVAM_NOTU.md:L486** — [Tarihsel kaynak kaydı] - `v2/real_ibo_scan.py` eksik kaynak taraması durumunda eski başarılı IBO paketlerini silmeyecek biçimde değiştirildi; eski `source_id` kaynak kimlikleri de taşınır (commit c6ce007d).
+- **DEVAM_NOTU.md:L487** — [Tarihsel kaynak kaydı] - Değişiklik GitHub'a kaydedildi; Actions sonucu ve uçtan uca doğrulama henüz teyit edilmedi. Yeni ağ taraması başlatılmadı, ana liste/YEDEKLER/EPG değiştirilmedi.
+- **DEVAM_NOTU.md:L491** — [Tarihsel kaynak kaydı] - `v2/consolidate_inventory.py` eski `source_id` alanını `source_ids` listesine taşır; bozuk `observations` öğelerini reddeder (654767c1). Offline regresyon testleri eklendi (d359444b).
+- **DEVAM_NOTU.md:L512** — [Tarihsel kaynak kaydı] - `v2/test_consolidate_inventory.py` (commit 9628e09e) sentetik **yalnızca offline test fikstürü** kullanır; gerçek kanal çıktısı olarak sunulmaz.
+- **DEVAM_NOTU.md:L513** — [Tarihsel kaynak kaydı] - `.github/workflows/v2-offline-inventory.yml` (commit b330fbdc) sadece offline bütünlük testlerini çalıştırır; kanal taraması yapmaz. İlk Actions sonucu henüz teyit edilmedi.
+- **DEVAM_NOTU.md:L515** — [Tarihsel kaynak kaydı] - 38 aktif YEDEKLER ve 3964 yabancı arşiv değişmedi. EPG ve ana playlist düzenlenmedi.
+- **DEVAM_NOTU.md:L519** — [Tarihsel kaynak kaydı] - **Şimdi kanal araması/taraması başlatılmayacak.** Önce altyapı, entegrasyon, kaynak kaybı koruması, envanter ve offline test eksikleri kapatılacak.
+- **DEVAM_NOTU.md:L529** — [Tarihsel kaynak kaydı] - Çalışılan tek depo: Madsc55/MADSC55-TV-V2. Ana dosya: MADSC55_TV_IBO_CALISANLAR_TEST.m3u8.
+- **DEVAM_NOTU.md:L531** — [Tarihsel kaynak kaydı] - V2 ana listede 838 diğer kategori kaydı + 38 YEDEKLER = 876 kayıt bulunur. TRT 1 ve DHA YEDEKLER ilk iki sırada, EUROSPORT 1 HD TR üçüncü, 24 dördüncü, ADA TV beşinci sıradadır.
+- **DEVAM_NOTU.md:L534** — [Tarihsel kaynak kaydı] - Eski raporlarda 12148 ana listede olmayan URL ve 4098 AV doğrulama adayı bildirilmişti; güncel 500 kanal paketi hazırlanmış veya YEDEKLER'e eklenmiş değildir. Eski Actions artifact verileri yeniden elde edilmeli; yeni ağ testi ve Türkçe/Azerice kontrolü yapılmalıdır.
+- **DEVAM_NOTU.md:L535** — [Tarihsel kaynak kaydı] - DEVAM_NOTU.md'nin aşağıdaki 27 Ekim kayıtları tarihsel bilgidir; eski YEDEKLER=2 ve 1047 kanal sayımları artık güncel değildir.
+- **DEVAM_NOTU.md:L537** — [Tarihsel kaynak kaydı] - GitHub Actions gerçek koşu sonucu ve IBO Player yenilemesi ayrı doğrulanır; commit başarısı oynatım kanıtı değildir.
+- **DEVAM_NOTU.md:L540** — [Tarihsel kaynak kaydı] **Son güncelleme:** 27 Ekim 2026 — çok kaynaklı M3U arama ve kanal URL çakışma denetimi
+- **DEVAM_NOTU.md:L545** — [Tarihsel kaynak kaydı] - İBO EPG: [URL: kaynak dosyada]
+- **DEVAM_NOTU.md:L546** — [Tarihsel kaynak kaydı] - V2 geliştirme playlisti: [URL: kaynak dosyada]
+- **DEVAM_NOTU.md:L547** — [Tarihsel kaynak kaydı] - Bu iki playlist **ayrı GitHub depolarındadır**. V2'yi güncellemek İBO'nun mevcut adresini otomatik güncellemez. Asıl İBO dosyasına geçmeden önce güvenli karşılaştırma, koruma ve son doğrulama yapılmalı.
+- **DEVAM_NOTU.md:L554** — [Tarihsel kaynak kaydı] 3. IPTV-org dünya, Türkiye, İsveç M3U listeleri ve Türkiye kanal dizini üzerinden keşif; bağlantı/ffprobe kontrolü. Kaynaklar `v2/config/sources.json` dosyasında.
+- **DEVAM_NOTU.md:L560** — [Tarihsel kaynak kaydı] 2. **Resmî TV siteleri keşfi:** \`v2/official_sites_discovery.py\` ve haftalık \`v2-official-sites.yml\` eklendi; Türkiye kanallarının resmî web sitelerini kamuya açık katalogdan raporlar. İlk workflow **başarılı**: run 40555364316, **370 resmî web sitesi kaydı**. \`v2/official_site_gap.py\` eklendi: bu kayıtları V2 playlistindeki isim/ID ile karşılaştırır; workflow **başarılı**: run 40555669301, 370 site, 6 kesin isim/ID eşleşmesi, 364 manuel inceleme gerektiren kayıt. 364 eksik kanal demek değildir; takma ad önerileri için kod güncellendi. İlk alias test run 40556916080, satır 19'da yanlış literal \\n yüzünden SyntaxError verdi; düzeltme commit 22eb5be93ffd844a90f085b49c63277e0e81a92c, yeniden test run 40557210310. Sonuç doğrulanacak. Ardından izinli yayın oynatıcı türü/İBO uyumluluğu analizi ekle. DRM/token aşma yok.
+- **DEVAM_NOTU.md:L561** — [Tarihsel kaynak kaydı] 3. **Kaynak çeşitliliği:** başka kamuya açık ve meşru IPTV dizinlerini güvenilirlik açısından incele; tekrarları, yanlış ülke eşleşmelerini ve sahte Türk kanalı isimlerini ele. Yeni kaynakları ancak doğrulayınca `sources.json` içine ekle.
+- **DEVAM_NOTU.md:L567** — [Tarihsel kaynak kaydı] - Önce bu **tek dosyayı** oku; güncel GitHub Actions ve playlist sayımını kontrol et.
+- **DEVAM_NOTU.md:L569** — [Tarihsel kaynak kaydı] - Başarıyla tamamlananları yukarı taşı, açık işleri güncelle. **Başka DEVAM, RAPOR, DEVİR veya NOT dosyası açma.**
+- **DEVAM_NOTU.md:L573** — [Tarihsel kaynak kaydı] - YEDEKLER'de **yalnızca TRT 1 1440P QHD ve DHA CANLI 720P HD** tutulacak. TRT Arabi ve TRT World istenmiyor; yeniden ekleme.
+- **DEVAM_NOTU.md:L574** — [Tarihsel kaynak kaydı] - Aras TV, Haber61 TV, TV Den, YOL TV **YEREL ve HEPSİ** içinde bulunacak; YEDEKLER'e geri taşınmayacak.
+- **DEVAM_NOTU.md:L575** — [Tarihsel kaynak kaydı] - V2 son sayım: **1047 kayıt, 14 kategori, YEDEKLER 2, YEREL 74, HEPSİ 378**. Koruma testi yeni kurala uyarlandı; GitHub Actions sonucu doğrulanacak.
+- **DEVAM_NOTU.md:L579** — [Tarihsel kaynak kaydı] - `v2/ibo_parity.py` erişilemeyen kanonik İBO URL'si durumunda `Madsc55/madsc-tv/CALISANLAR.m3u` dosyasını **yalnızca tanı amaçlı referans** olarak okur ve ayrı raporlar; bu dosyanın İBO'nun gerçek kaynağı olduğu **iddia edilmez**. Commit `8c6429aad2698f9497d0ebff2e0105af8dd21f64`.
+- **DEVAM_NOTU.md:L581** — [Tarihsel kaynak kaydı] - Kanonik İBO raw URL erişim sorunu ve gerçek IBO Player oynatım doğrulaması açık; üretime otomatik aktarım yapılmadı.
+- **DEVAM_NOTU.md:L584** — [Tarihsel kaynak kaydı] - Kanonik İBO karşılaştırma workflow'u `40560009239` **success**; fakat içerik sonucu **IBO_URL_UNREACHABLE**. Bu, otomasyonun düzgün çalıştığını gösterir, gerçek IBO içeriğini doğrulamaz.
+- **DEVAM_NOTU.md:L585** — [Tarihsel kaynak kaydı] - `v2/test_playlist_invariants.py` artık sadece YEDEKLER'i değil **14 kategorinin tamamının** parantez içindeki sayacını gerçek kayıt sayısıyla doğrular. Commit `b1fd24b79c20514404ddcccb1824acd586b67e95`; CI sonucu kontrol edilecek.
+- **DEVAM_NOTU.md:L589** — [Tarihsel kaynak kaydı] - 14 kategori sayacı güvenlik testi **başarılı**, run `40560761225`: 1047 kanal kaydı, 2 yedek, 14 kategori, 3 keşif kaynağı.
+- **DEVAM_NOTU.md:L594** — [Tarihsel kaynak kaydı] - Türk yayın API keşfi ilk workflow **başarılı**: run `40561001771`, V2'de bulunmayan **115 URL adayı**, mevcut playlist 1047 kayıt. Bunlar 115 doğrulanmış yeni kanal değildir.
+- **DEVAM_NOTU.md:L600** — [Tarihsel kaynak kaydı] - `v2/turkish_stream_catalog.py` güncellendi: `http_referrer` veya `user_agent` isteyen yayınları sessizce atmak yerine `header_required_review` adlı **ayrı salt-okunur rapor bölümünde** tutar. Bunlar otomatik playlist aktarımına girmez. Commit `20f6a29be4c14d696bc3c048f7bdee0060cc883a`.
+- **DEVAM_NOTU.md:L601** — [Tarihsel kaynak kaydı] - Hiçbir mevcut kanal, YEDEKLER, kategori, EPG veya İBO bağlantısı değiştirilmedi.
+- **DEVAM_NOTU.md:L604** — [Tarihsel kaynak kaydı] - Run `40562287679` **success**: **101 normal URL adayı + 11 HTTP header gerektiren ayrı inceleme adayı**, V2 1047 kayıt. Bunlar ayrı URL adaylarıdır, kesin yeni/çalışan kanal sayısı değildir.
+- **DEVAM_NOTU.md:L615** — [Tarihsel kaynak kaydı] - `v2/turkish_stream_review.py` ve `.github/workflows/v2-turkish-stream-review.yml` eklendi: kısa çözümlenmiş adayları mevcut kanal alternatifi / yeni kanal adayı olarak etiketleyip **salt-okunur manuel inceleme kuyruğuna** yazar. Aynı kanal kimliğiyle birden fazla URL olabileceğinden otomatik aktarım yapılmaz. İlk test sonucu ayrıca kontrol edilecek.
+- **DEVAM_NOTU.md:L619** — [Tarihsel kaynak kaydı] - `.github/workflows/v2-turkish-stream-review.yml` artık **V2 Turkish Stream End-to-End Discovery** adını taşır: tek çalışmada **aday kataloğu → HTTP probe → kısa ffprobe çözümleme → inceleme kuyruğu → artifact**. Elle veya haftada iki kez zamanlanmış tetiklenir. Kod değişikliklerinde de tetiklenir.
+- **DEVAM_NOTU.md:L620** — [Tarihsel kaynak kaydı] - Önceki ayrı workflow'lar hâlâ mevcuttur; birleşik workflow aynı işlemleri tek çalışmada tamamlayabilir. Tüm keşif türlerinin (YouTube, resmî siteler vb.) birleştiği iddia edilmez. Hiçbir canlı playlisti otomatik değiştirmez.
+- **DEVAM_NOTU.md:L623** — [Tarihsel kaynak kaydı] Birleşik keşif — EPG ve logolar
+- **DEVAM_NOTU.md:L624** — [Tarihsel kaynak kaydı] - `.github/workflows/v2-turkish-stream-review.yml` tek çalışmada katalog → HTTP → ffprobe → aday inceleme → **mevcut playlist EPG XMLTV bütünlüğü** (`v2/epg_integrity.py`) → **logo/EPG URL erişimi** (`v2/assets_health.py`) → **logo formatı/kaynak incelemesi** (`v2/logo_attribution.py`) → artifact yapar. Commit `7a47b32ecd10f5e42b04fa0330bedae1b45882be`.
+- **DEVAM_NOTU.md:L625** — [Tarihsel kaynak kaydı] - Bu denetimler mevcut playlist EPG/logo sağlığını ölçer; yeni adaylar için doğru logo veya tvg-id eşleştirmesi **henüz otomatik yapılmıyor**. Playlist otomatik değiştirilmez.
+- **DEVAM_NOTU.md:L627** — [Tarihsel kaynak kaydı] Bağımsız M3U kaynakları ve kanal çakışmaları
+- **DEVAM_NOTU.md:L629** — [Tarihsel kaynak kaydı] - Birleşik `.github/workflows/v2-turkish-stream-review.yml` artık `python v2/discover.py` ile tüm M3U kaynaklarını tarar ve `python v2/stream_url_collisions.py` ile mevcut V2 playlistinde **aynı URL'nin farklı kanal kimliklerine bağlanmasını** kontrol eder. Aynı kanalın farklı kategorilerde tekrar görünmesi ayrı sınıflandırılır. URL'ler raporda SHA-256 olarak saklanır.
+- **DEVAM_NOTU.md:L633** — [Tarihsel kaynak kaydı] - `discevisita/hayatiptv` içindeki `TRDECesitlikanallar.m3u` ve `ilyswch/IPTV-TR` içindeki `box.m3u` **salt-okunur kaynak** olarak `v2/config/sources.json` dosyasına eklendi. Bulunan URL'ler otomatik playlist'e alınmaz.
+- **DEVAM_NOTU.md:L639** — [Tarihsel kaynak kaydı] - `v2/turkish_stream_review.py` yalnızca aynı kanal kimliği **ve aynı URL** için doğrulama eşler; kardeş URL'leri yanlışlıkla doğrulanmış saymaz, `measured_max_height` ekler.
+- **DEVAM_NOTU.md:L640** — [Tarihsel kaynak kaydı] - `v2/discover.py` mevcut kanal kimliğine ait farklı URL'leri artık atmaz, `existing_channel_alternative` ile işaretler. Yine salt-okunur, kaynak raporunda URL hash tutulur.
+- **DEVAM_NOTU.md:L645** — [Tarihsel kaynak kaydı] - FFprobe sonuçları kalite raporuna URL+kanal kimliği eşleşmesiyle katılıyor; **mevcut playlist yayını gerçek çözünürlüğü henüz karşılaştırılmıyor**.
+- **DEVAM_NOTU.md:L646** — [Tarihsel kaynak kaydı] - `v2/candidate_assets.py`: aday tvg-id değerini mevcut playlist ile birebir eşleyerek EPG ID ve logo **önerisi** çıkarıyor; bağımsız doğrulama değil.
+- **DEVAM_NOTU.md:L648** — [Tarihsel kaynak kaydı] - Her iki yeni rapor birleşik workflow artifact'ına eklendi. Yeni run 40574958656 sonucunu doğrula; başarısızsa düzelt. Canlı IBO, FAVORİLER, kategoriler ve iki yedek değişmedi.
+- **DEVAM_NOTU.md:L652** — [Tarihsel kaynak kaydı] - `v2/current_stream_resolution.py` mevcut playlistten en fazla 24 farklı tvg-id için ffprobe ile gerçek video yüksekliği örnekler; sonuç `current-stream-resolution.json`.
+- **DEVAM_NOTU.md:L654** — [Tarihsel kaynak kaydı] - Bu yalnızca örneklenmiş kanallarda tek kısa ölçüm; tüm 1047 girdinin kapsamlı kalite/stabilite veya içerik kimliği onayı değildir. `frame_collisions.py` tek karelik olası tekrar tespiti de kesin doğrulama değildir. Canlı IBO ve yedekler değişmedi.
+- **DEVAM_NOTU.md:L659** — [Tarihsel kaynak kaydı] - `current_stream_resolution.py` artık mevcut playlistte alternatifi keşfedilen tvg-id değerlerini önceleyerek en fazla 120 farklı kanalı örnekler; tüm playlistin otomatik doğrulandığı anlamına gelmez.
+- **DEVAM_NOTU.md:L663** — [Tarihsel kaynak kaydı] 27 Ekim 2026 — Kanallar arası görüntü çakışması raporu
+- **DEVAM_NOTU.md:L665** — [Tarihsel kaynak kaydı] - `frame_collisions.py` 32 kısa decode adayını örnekleyebilir; eşleşen üç-kare hash'lerinde `channel_ids` ve `cross_channel_identity_risk` alanlarını verir. Yalnızca olası çakışma işareti, kesin kanal kimliği değildir.
+- **DEVAM_NOTU.md:L671** — [Tarihsel kaynak kaydı] - Mevcut yayın örnekleme önceliği alternatif tvg-id'ler üzerinden en fazla 120 ile sınırlandırılmıştır. Tam 1047 kanal ve uzun dönem yayın kararlılığı testi henüz bitmedi.
+- **DEVAM_NOTU.md:L675** — [Tarihsel kaynak kaydı] - `current_stream_resolution.py` önce alternatifi bulunan kanal kimliklerini seçiyor, 120'lik sınırda yer kalırsa diğer kanallarla dolduruyor; tüm 1047 kanalın doğrulandığı anlamına gelmez.
+- **DEVAM_NOTU.md:L676** — [Tarihsel kaynak kaydı] - Yeni test run 40579224508 bekleniyor. Canlı IBO ve yedekler değiştirilmedi.
+- **DEVAM_NOTU.md:L680** — [Tarihsel kaynak kaydı] - `current_stream_resolution.py` artık `--batch` ve `--batch-size` destekliyor; birleşik workflow 10 x 120 ayrı kanal kimliği ölçümünü sırayla yürütüp JSON sonuçlarını birleştiriyor (en fazla 1200 distinct tvg-id; 1047 playlist girdisiyle aynı kavram değildir).
+- **DEVAM_NOTU.md:L681** — [Tarihsel kaynak kaydı] - Bütün kanalların ölçülebilir olması garanti değil; kısa ffprobe erişim testi uzun dönem kararlılık veya kanal içerik kimliği kanıtı değildir.
+- **DEVAM_NOTU.md:L682** — [Tarihsel kaynak kaydı] - Workflow timeout 65 dakika. Yeni Actions sonuçları doğrulanmalı. Canlı IBO, favoriler ve yedekler değişmedi.
+- **DEVAM_NOTU.md:L685** — [Tarihsel kaynak kaydı] - Ana `v2-turkish-stream-review.yml` workflow'una `stream_stability.py` (32 aday, 3 HTTP örneklemesi, 90 saniye aralık) ve son `test_playlist_invariants.py` güvenlik kapısı eklendi. 10 x 120 mevcut yayın çözünürlük grubu, ffprobe aday ölçümü, 3 kare olası çakışma, EPG/logo ve resmî/YouTube keşfi aynı workflow'da.
+- **DEVAM_NOTU.md:L686** — [Tarihsel kaynak kaydı] - Bu **gerçek 24 saatlik kararlılık veya kesin kanal kimliği doğrulaması değildir**; ayrı zamanlanmış gözlemler ve manuel kanıt gerekir. Workflow başarılı olsa bile tüm 1047 playlist girdisinin kararlı olduğu iddia edilmemeli.
+- **DEVAM_NOTU.md:L687** — [Tarihsel kaynak kaydı] - Yeni run 40582406848 sonucunu kontrol et. Canlı IBO/favoriler/yedekler değişmedi.
+- **DEVAM_NOTU.md:L691** — [Tarihsel kaynak kaydı] - `v2/final_validation_summary.py` bütün ana JSON kanıtlarını toplayıp `v2/reports/final-validation-summary.json` üretir; eksik rapor varsa workflow başarısız olur. Sayılar, 24 saatlik kararlılık veya kesin kanal kimliği kanıtı olarak yorumlanmaz.
+- **DEVAM_NOTU.md:L692** — [Tarihsel kaynak kaydı] - Son rapor ana workflow'a zorunlu adım olarak eklendi. Yeni run 40584261821 sonucunu kontrol et. Canlı IBO ve yedekler değişmedi.
+- **DEVAM_NOTU.md:L695** — [Tarihsel kaynak kaydı] - `v2/newlisttr_extract.py` doğrudan akan1970 NewlistTR M3U kaynağını okur, farklı URL'leri HTTP ve kısa ffprobe ile sınar; kısa video çözümlenebilenleri `v2/reports/newlisttr-decoded-only.m3u8` dosyasına yazar. Bu dosya yalnızca GitHub Actions artifact'ıdır, canlı IBO listesine otomatik eklenmez.
+- **DEVAM_NOTU.md:L697** — [Tarihsel kaynak kaydı] - Final kanıt raporuna NewlistTR kaynak, test, decode ve test edilmemiş sayı alanları eklendi. 24 saatlik kararlılık, kesin kanal kimliği ve logo/EPG doğruluğu kısa ffprobe ile kanıtlanmaz.
+- **DEVAM_NOTU.md:L705** — [Tarihsel kaynak kaydı] 2. Onaya aday yayınların kanal kimliği, görüntü/ses, kalite, EPG ve logo kanıtları gözden geçirilir; eksik veya şüpheli olanlar karantinada kalır. İnceleme bekleyen tüm internet yayınlarının sıfırlanması değil, **yayına alınacakların** güvenli kabulü esastır.
+- **DEVAM_NOTU.md:L711** — [Tarihsel kaynak kaydı] - Açık gerçek eksikleri tek listede sınıflandır: Türkçe ses kanıtı; kanal kimliği/çakışmalar; oynatma ve ses; EPG/logo/kalite; test/rapor tutarlılığı.
+- **DEVAM_NOTU.md:L724** — [Tarihsel kaynak kaydı] - En son tam birleşik kanal taraması: #72, run 40948768782, SUCCESS. Rapor: 13.518 aday, 7.254 VIDEO_DECODED, 6.264 diğer, 46 kaynak; gerçek Türkçe konuşma doğrulaması 0. Bu başarı kanal onayı değildir.
+- **DEVAM_NOTU.md:L725** — [Tarihsel kaynak kaydı] - Birleşik kısa çevrimdışı test: `.github/workflows/v2-one-shot-final-contract.yml`, run 40965143233, SUCCESS. Python derleme, IBO/yedek bütünlüğü, güvenlik sözleşmesi, dil davranış fixture testleri, ses örnekleyici CLI kontrolü aynı çalışmada geçti.
+- **DEVAM_NOTU.md:L726** — [Tarihsel kaynak kaydı] - Yeni `v2/spoken_language_sample_review.py` ses örneklerinden ASR dil ipucu çıkarma için eklendi; bağımsız gerçek akışta henüz çalıştırılmadı ve bütün adayları kapsamaz. Çıktı hiçbir kanalı onaylamaz/yayımlamaz.
+- **DEVAM_NOTU.md:L728** — [Tarihsel kaynak kaydı] - **Sıradaki işler:** (A) son #72 raporundan çalışan, kimliği makul adayların önceliklendirilmesi; (B) ses örnekleme ve ASR ipuçlarını mevcut inceleme raporuna güvenli biçimde entegre edip belirsizleri karantinada tutma; (C) sadece terfi düşünülen adayların yayıncı kimliği, kalite, EPG, logo ve gerçek IBO oynatım uygunluğunu doğrulama; (D) koruma testleriyle tek nihai bitiş kararı. Gerçek IBO cihaz oynatımı ve insan gerektiren dil/kimlik kanıtları yazılımın tek başına ispatlayamadığı hususlardır.
+- **DEVAM_NOTU.md:L737** — [Tarihsel kaynak kaydı] - Öncelikli açık iş: 4.955 geçmişte görüntüsü çözülmüş bağlantının **güncel canlı durumunu** ve Türkçe sesini izinli/korumalı ortamda yeniden test etmek. Eski #60 artifact'ında özel URL snapshot'ı bulunmuyor; SHA-256'dan URL geri çıkarılamaz. Kaynak kapsamındaki düşüşün nedenini ayrıca kaynak düzeyinde teşhis et. Eksik kanalları onaysız üretime ekleme.
+- **DEVAM_NOTU.md:L738** — [Tarihsel kaynak kaydı] - Son başarılı konuşma örnekleme run 40966389885; 16 deneme, 14 analiz, 6 Türkçe model ipucu; 0 doğrulanmış kanal.
+- **DEVAM_NOTU.md:L743** — [Tarihsel kaynak kaydı] - #60: 27.047 URL, #72: 13.518 URL, ortak SHA-256: 13.136; birleşim: **27.429 benzersiz yayın URL kimliği** (27.047 + 13.518 - 13.136). Bu **27.429 farklı veya çalışan Türk TV kanalı değildir**; aynı kanalın birden çok URL'si olabilir.
+- **DEVAM_NOTU.md:L752** — [Tarihsel kaynak kaydı] ANA TARAMA BITINCE YAPILACAK: Kalici kanal hafizasi ve kademeli IBO Player testi (30 Ekim 2026)
+- **DEVAM_NOTU.md:L772** — [Tarihsel kaynak kaydı] - Kanal kimligi ile stream URL kimligini ayri tut; ayni kanal birden fazla URL ile gelebilir, ayni URL farkli kaynaklarda gecse de kaynak iliskilerini kaybetme.
+- **DEVAM_NOTU.md:L786** — [Tarihsel kaynak kaydı] **A. Once gercek durum:** `v2-turkish-stream-review.yml` en son run ID/commit/sonuc, 32 shard ve review job durumu, taranan kaynaklar, benzersiz URL adaylari, oynatilan/video decoded, Turkce konusma kaniti, hatali kaynaklar, eksik raporlar ve onceki 27047 / 13518 / 27429 URL kimligi karsilastirmasini raporla. Yeni sayilari rapordan dogrula, 27429'u onayli Turk kanali olarak sunma.
+- **DEVAM_NOTU.md:L788** — [Tarihsel kaynak kaydı] **B. Kaynak kapsami ve kesif:** Dunyadaki Turkce yayin yapan kanallarin uluslararasi M3U kaynaklarinda bulunmasini hedefle. 17 sabit kaynak, GitHub dinamik kesif (10 sorgu, 150 repo/240 dosya siniri) ve diger resmi/yayinci/YouTube kesiflerinin gercekten ana taramaya baglandigini test et; limitleri ve API oran sinirlarini gozden gecir. Kaynak basarisizligi, filtreleme, istikrarsiz github-auto siralamasi, iptv-org 11204-&gt;9 ve github-auto kaynak kayiplari icin kok neden incelemesi yap. Kaynak ulkesi ile Turkce yayin kanitini karistirma. Eksikleri topluca duzelt.
+- **DEVAM_NOTU.md:L808** — [Tarihsel kaynak kaydı] DUZELTME: 2000 ADAY AYRI PLAYLIST DEGIL ANA IBO YEDEKLER ICIN (30 Ekim 2026)
+- **DEVAM_NOTU.md:L816** — [Tarihsel kaynak kaydı] - `v2/github_source_discovery.py`: Turkce/Azerbaycanca/diaspora/ucretsiz IPTV GitHub arama sorgulari genisletildi; repo tarama siniri 240. API kotasi ve gercek kaynak kalitesi sinirlayabilir.
+- **DEVAM_NOTU.md:L817** — [Tarihsel kaynak kaydı] - ONEMLI EKSIKLER: GitLab/Codeberg benzeri platformlarin otomatik kaynak kesfi; resmî yayin siteleri ve YouTube canli yayinlarinin ana aday havuzuna guvenli ve dogrulanabilir entegrasyonu; Gunes TV, Rec TV, Gopik TV isimlerinin somut kanal/site eslestirmesi; #60 URL'lerinin kalici geri yuklenebilir arsivi; tek toplu CI sonucu ve son kaynak bazli karsilastirma. Bu isler tamamlandi diye raporlanmayacak.
+- **DEVAM_NOTU.md:L828** — [Tarihsel kaynak kaydı] - Bulunan her URL ve kaynak bilgisi kalici, guvenli ve geri yuklenebilir saklanmali. Calisan Turkce, calismiyor, yabanci dil, kararsiz, test edilmedi kararlarini kaydet; onaylanan/elenen kanallari sonraki partide tekrar sunma. Tokenli URL'leri acik depoda yayinlama. Bir gunluk ozel artifact kalici arsiv degildir.
+- **DEVAM_NOTU.md:L829** — [Tarihsel kaynak kaydı] - #60 run 40743765437: 27047 URL, 11860 VIDEO_DECODED, 42 kaynak. #74 run 40972785562: 13593 URL, 7306 VIDEO_DECODED, 68 kaynak. Raporlanan ortak URL kimligi 13179, yalniz #60 13868, yalniz #74 414. Bunlar kesin Turkce kanal sayilari degil. Kaynak sayiminda ilk-kaynak deduplikasyon etkisi var.
+- **DEVAM_NOTU.md:L831** — [Tarihsel kaynak kaydı] - Cok GitHub Actions isi gorulmesi normal olabilir: tek ana tarama 1 sources + 32 playback + 1 review = 34 job. Push tetikleyicileri birden fazla run baslatmis olabilir. concurrency group v2-turkish-stream-review-main, cancel-in-progress false. Yeni run kimlikleri ve durumlari henuz kontrol edilmedi; gereksiz kosular ve Actions kotasi incelenecek. Bilinen #74 basarili.
+- **DEVAM_NOTU.md:L832** — [Tarihsel kaynak kaydı] - Acik isler: GitLab ve diger kod barindirma platformlarinda IPTV kesfi; resmi canli TV ve YouTube canli yayin adaylarini ana havuza katma; Gunes TV/Rec TV/Gopik TV kaynaklarini dogrulama; #60 ve #74 kayip adaylarini kurtarma; kalici guvenli URL arsivi; 2000 adaylik YEDEKLER test uygulamasi; tek koordineli CI ve regresyon testleri. Yapilmamis isi tamamlandi diye bildirme.
+- **DEVAM_NOTU.md:L840** — [Tarihsel kaynak kaydı] Onceki tarama #60: 27047 URL, 11860 decoded, 42 kaynak; #74: 13593 URL, 7306 decoded, 68 kaynak. 13179 ortak hash, 13868 yalniz #60, 414 yalniz #74. Hash = Turkce kanal kaniti DEGIL. Kaynak sirasi/dedup kaynak bazli farklari etkileyebilir.
+- **DEVAM_NOTU.md:L855** — [Tarihsel kaynak kaydı] - KALAN: son Actions run ID/job/log kontrolu; eski #60 URL'lerini gercek adres olarak kurtarma; kalici guvenli geri yuklenebilir arsiv; GitLab/Codeberg ve resmi TV/YouTube kaynak entegrasyonu; 2000'lik mevcut V2 YEDEKLER testi; koordineli regresyon. Yeni test partisi hazir diye iddia etme.
+- **DEVAM_NOTU.md:L862** — [Tarihsel kaynak kaydı] - Playlist/YEDEKLER/favoriler/kategoriler/EPG degismedi. Kalici URL arsivi, resmi/YouTube/GitLab/Codeberg entegrasyonu, 2000 aday testine gecis ve tarihsel URL kurtarma hala acik.
+- **DEVAM_NOTU.md:L873** — [Tarihsel kaynak kaydı] - Yeni `v2/test_source_provenance.py` eklendi, commit `0ea36dfb1d2c8676b5b34be3e7b4dc9276e0a44f`: iki M3U kaynaginin ayni URL'si icin tek aday, iki `source_ids`, URL SHA256, kaynak sirasi degisimi ve mevcut playlist URL'sinin dislanmasi offline kontrol ediliyor.
+- **DEVAM_NOTU.md:L876** — [Tarihsel kaynak kaydı] - Kalan: kalici guvenli URL arsivi/restore, #60 gercek URL kurtarma, GitLab/Codeberg, resmi yayin/YouTube ana havuz entegrasyonu, 2000 YEDEKLER manuel test akisi ve toplu kabul.
+- **DEVAM_NOTU.md:L891** — [Tarihsel kaynak kaydı] 2026-10-30 #82 PLAYBACK (0,0) ARTIFACT INDIRME HATASI
+- **DEVAM_NOTU.md:L900** — [Tarihsel kaynak kaydı] - Kaynaklarin ilk indirme hatasinda sonraki retry calisir; her iki deneme de basarisizsa job fail-closed olur. Public playlist, YEDEKLER, favoriler ve EPG degismedi.
+- **DEVAM_NOTU.md:L901** — [Tarihsel kaynak kaydı] - SIRADAKI: yeni run'in 32 shard/review durumlarini kontrol et; ayrintili review logu varsa diger hata sebebini ayir; sonra kalici guvenli arsiv ve #60 kurtarma yol haritasina devam et.
+- **DEVAM_NOTU.md:L905** — [Tarihsel kaynak kaydı] - GitHub All workflows ekran goruntulerinde V2 `Kanallari ara — Tek Birlesik Gorev` #85 (commit d2453ce, 1h50m15s) YESIL, #84 (commit 1e2e12f, 1h21m53s) YESIL, #83 (commit 40b294d, 1h48m32s) YESIL. Eski #82 (commit f6d564c, 1h11m32s) KIRMIZI.
+- **DEVAM_NOTU.md:L920** — [Tarihsel kaynak kaydı] - KRITIK ACIK: harici kalici, erisim kontrollu, sifreli URL arsivi ve gercek restore testi kurulmus degil. #60'in sadece SHA256 ile bilinen kayip URL'leri hash'ten geri elde edilemez; kaynaklardan tekrar bulunmalidir. 2000 kanal YEDEKLER'e otomatik eklenmeyecek.
+- **DEVAM_NOTU.md:L927** — [Tarihsel kaynak kaydı] - Kalici sifreli arsiv, restore kaniti, #60 eksik URL kurtarma ve 2000 YEDEKLER test asamasi HALA tamamlanmadi. Ana liste ve YEDEKLER degismedi.
+- **DEVAM_NOTU.md:L936** — [Tarihsel kaynak kaydı] 2026-10-30 BELGE SITELERI VE EK KANAL KAYNAKLARI
+- **DEVAM_NOTU.md:L950** — [Tarihsel kaynak kaydı] - Scribd'de Turk kanallari gecen belgeler tespit edildi, ancak belge sitelerinin tam M3U stream endpoint'i olmadigi ve kimi belgelerde kimlik bilgileri/abonelik akislari bulundugu goruldu. Scribd/SlideShare/Archive otomatik crawler kurulmus DEGIL; kaynaklari incelemeden veya kimlik bilgilerini yayinlamadan ayrica islemek gerekiyor.
+- **DEVAM_NOTU.md:L954** — [Tarihsel kaynak kaydı] 2026-10-30 DUNYA/DİASPORA KANAL ADAYI FILTRESI
+- **DEVAM_NOTU.md:L957** — [Tarihsel kaynak kaydı] - Sentetik regex kontrolunde Azerbaijani TV, Azərbaycan TV, Azeri live ve Turkish diaspora eslesti; English TV eslesmedi. Bu YALNIZCA filtre birim kontroludur; GitHub Actions'in 32 shard playback testi veya gercek kanal taramasi degildir.
+- **DEVAM_NOTU.md:L965** — [Tarihsel kaynak kaydı] - Son degisikliklerden sonra kanal taramasi sonucu veya yeni Actions YESIL iddiasi YOK. Hazirlik boyunca `discover.py` ve tam playback workflow'u calistirma.
+- **DEVAM_NOTU.md:L968** — [Tarihsel kaynak kaydı] KALICI ANA IS SIRASI — TARAMA EN SON / IBO 2000+2000 (2026-10-30)
+- **DEVAM_NOTU.md:L976** — [Tarihsel kaynak kaydı] FAZ 1 — KANAL ARAMASI YAPMADAN KESIF ALTYAPISI [ACIK]
+- **DEVAM_NOTU.md:L977** — [Tarihsel kaynak kaydı] - M3U kaynaklarinin endpoint, format, ulasim ve dedup testlerini mock/offline fixture ile yap; gercek kanal taramasi YOK. Mevcut 32 config girdisi icin source-id/URL/scope ve mirror cakismalarini denetle; eklenen TURKTV, GitLab mirror, Dearbulut best/index, Onur Eroz dort liste dahil.
+- **DEVAM_NOTU.md:L978** — [Tarihsel kaynak kaydı] - Scribd, SlideShare, Internet Archive icin kamuya acik belgelerden yasal/erisebilir M3U URL referansi kesfi; belgeyi playlist sanma, abonelik/paywall/credential/token toplama ve sizdirma yok; rate limit ve provenance.
+- **DEVAM_NOTU.md:L980** — [Tarihsel kaynak kaydı] - Resmi kanal siteleri, canli TV sayfalari, YouTube Turkce canli, Azerbaycan/Azerice, yurtdisi Turk kanallari, Gunes TV/Rec TV/Gopik TV icin ayrik adaptorler; IBO uyumlu dogrudan stream ile sayfa URL'sini ayir.
+- **DEVAM_NOTU.md:L981** — [Tarihsel kaynak kaydı] - #60 regresyonu: iptv-org 11204-&gt;9, Efeisot 4931-&gt;247, YOUSEFX13 1854-&gt;0, Free-TV 1347-&gt;5 vb. Kaynak, filtre, boyut, sira, parser ve kapsam kaybi icin offline regresyon fixture'lari ekle; yeni kaynaklari dogrudan IBO'ya yazma.
+- **DEVAM_NOTU.md:L987** — [Tarihsel kaynak kaydı] - Tum parser, discovery adaptor, kimlik/provenance, dil/ulke ayrimi, kalite/EPG/logo, playlist invariants, backup ve Actions artifact aktarimi icin mock/offline testleri tamamla. 32 playback shard ve review birlestirme mantigini sentetik veriyle dogrula; agdan gercek kanal arama YOK.
+- **DEVAM_NOTU.md:L993** — [Tarihsel kaynak kaydı] FAZ 4 — EN SON TOPLU KANAL ARAMASI VE DOGRULAMA [BEKLEMEDE]
+- **DEVAM_NOTU.md:L995** — [Tarihsel kaynak kaydı] - #60 27047 URL, #74 13593 URL, ortak 13179, #60'a ozel 13868, #74'e ozel 414; 4955 gecmiste calisan ama yeni taramada olmayan hash. Hash'ten URL geri uretilemez; kaynaklardan yeniden edin. Eski/yeni farkini raporla, aday sayisini calisan kanal sayisi diye sunma.
+- **DEVAM_NOTU.md:L996** — [Tarihsel kaynak kaydı] - Playback/ffprobe, tekrar, turkce/azerice/yabanci/kararsiz, ulke, kaynak, kalite, stabilite, EPG/logo ve manuel karar kuyrugunu test edip arsivle. Kanitsiz 'calisiyor' deme.
+- **DEVAM_NOTU.md:L998** — [Tarihsel kaynak kaydı] FAZ 5 — IBO PLAYER TESTI: 2000 + 2000 + ... [BEKLEMEDE]
+- **DEVAM_NOTU.md:L1004** — [Tarihsel kaynak kaydı] - [ACIK]/[BEKLEMEDE] maddeleri bitmis sayilmaz. Yeni istegi uygun faza ekle, eski maddeyi silme. Her kod degisikligi icin commit, offline test kaniti ve kalan engeli yaz. Kanal taramasini faz 3 kabulunden once baslatma.
+- **DEVAM_NOTU.md:L1014** — [Tarihsel kaynak kaydı] - V2 discover.py: dunya kaynagi metadatasinda Turkey kabulü ve bozuk dinamik kaynak envanterini sessizce atlamama: commit f579f29bf812f66dd4b04eb9b9a350086450cb36.
+- **DEVAM_NOTU.md:L1015** — [Tarihsel kaynak kaydı] - v2/test_discovery_offline_regressions.py: 5 adet agsiz davranis testi: Turkey/TRT/AZ/world filtresi, AZ ulke adayligi, iki kaynaktan URL dedup ve source_ids, mevcut IBO URL haric tutma, EXTINF/EXTVLCOPT ayrıştırma. Commit 7a3ee60204710a280711fcfaddd183421b82d10c.
+- **DEVAM_NOTU.md:L1023** — [Tarihsel kaynak kaydı] 2. Koruma kapisi: 840 kanalli ana IBO playlist hash'i, 13 kategori, YEDEKLER iki orijinal kanal, YENILER, FAVORILER, EPG, logo, yedek ve geri alma testi.
+- **DEVAM_NOTU.md:L1030** — [Tarihsel kaynak kaydı] Calisma kurali: bir asama kanitli yesil olmadan sonraki agir isi baslatma; tamamlanan commit/run/test kimliklerini buraya ekle. Ana IBO playlistine ve YEDEKLER'e tarama oncesi dokunma.
+- **DEVAM_NOTU.md:L1035** — [Tarihsel kaynak kaydı] - #2 Ana IBO playlist ve YEDEKLER koruma
+- **DEVAM_NOTU.md:L1041** — [Tarihsel kaynak kaydı] - #8 En son manuel kapsamli tarama ve 2000'lik IBO partileri
+- **DEVAM_NOTU.md:L1047** — [Tarihsel kaynak kaydı] - Push main (v2/** degisikligi) ve workflow_dispatch ile tetiklenir. Sirali needs zinciri: compile -&gt; protect -&gt; discovery-tests -&gt; safety. Onceki is basarisizsa sonraki calismaz. Sadece offline testler; GERCEK KANAL TARAMASI YOK.
+- **DEVAM_NOTU.md:L1054** — [Tarihsel kaynak kaydı] - Zincir compile -&gt; protect -&gt; discovery-tests -&gt; safety; onceki job basarisizsa sonraki baslamaz. Kanal kesfi/playback yoktur.
+- **DEVAM_NOTU.md:L1064** — [Tarihsel kaynak kaydı] - Bu kod degisiklikleri Actions PASS kaniti degildir. Arsiv saklama/sifreleme/gercek restore altyapisi henuz tamamlanmadi; onay degiskenleri ayarlanmadi. Gercek tarama yapilmadi, ana IBO playlisti degismedi.
+- **DEVAM_NOTU.md:L1070** — [Tarihsel kaynak kaydı] - Kod commitleri Actions PASS kaniti degildir. Kalici sifreli depo ve gercek backup/restore uygulamasi halen ACIK; gercek tarama YOK. Ana IBO playlistine dokunulmadi.
+- **DEVAM_NOTU.md:L1073** — [Tarihsel kaynak kaydı] 2026-10-31 YENI SOHBET DEVIR KAYDI — KANAL KESIF ONCELIKLI
+- **DEVAM_NOTU.md:L1080** — [Tarihsel kaynak kaydı] - Yeni sohbet basinda bu dosyanin son kaydini oku; GitHub Actions'in en son sonucunu denetle; eski repo veya canli IBO listesini degistirme.
+- **DEVAM_NOTU.md:L1086** — [Tarihsel kaynak kaydı] - Ana playlist, YEDEKLER ve eski repo değiştirilmedi; gerçek ağ taraması başlatılmadı.
+- **DEVAM_NOTU.md:L1101** — [Tarihsel kaynak kaydı] - Kalan büyük işler: kaynak adaptörlerinin tamamlanması, şifreli kalıcı gerçek URL arşivi ve geri yükleme, tüm Actions sonuçlarının kontrolü, tek izinli kapsamlı tarama. Playlist ve eski repo değiştirilmedi.
+- **DEVAM_NOTU.md:L1105** — [Tarihsel kaynak kaydı] - `v2/discover.py` (`506c303`): isteğe bağlı `--previous-report &lt;onceki-candidates.json&gt;` argümanı; önceki `source_audit` ile yeni audit karşılaştırılır, yeni `candidates.json` içinde `source_loss_audit` ve görünür uyarı üretilir. Salt-okunur karşılaştırmadır; playlist'e dokunmaz, gerçek tarama başlatmaz.
+- **DEVAM_NOTU.md:L1111** — [Tarihsel kaynak kaydı] - `v2/discover.py` (`e3ad12b`): `--offline --snapshot-output` ve `--offline --previous-report` kombinasyonları reddedilir; negatif `--limit` reddedilir; hiçbir kaynak başarıyla yüklenmediğinde snapshot çıkışı kapalıdır. Amaç boş test çıktısını gerçek kanal taraması ya da kaynak kaybı gibi göstermemektir.
+- **DEVAM_NOTU.md:L1114** — [Tarihsel kaynak kaydı] - Eksik adaptörler, şifreli kalıcı URL arşivi, gerçek restore testi ve kapsamlı tarama hâlâ tamamlanmadı. Ana playlist, YEDEKLER ve eski depo değiştirilmedi.
+- **DEVAM_NOTU.md:L1118** — [Tarihsel kaynak kaydı] - Bu bölüm önceki 27 Ekim kayıtlarının **yerine geçen güncel durumdur**; önceki 1047 kanal / 2 YEDEKLER sayımı artık güncel değildir.
+- **DEVAM_NOTU.md:L1119** — [Tarihsel kaynak kaydı] - V2 playlisti doğrudan okundu: **2840 kayıt**, **2002 YEDEKLER**, **838 diğer kategori kaydı**. Playlist içindeki 424 URL tekrarı farklı kategorilerdeki kasıtlı yayın tekrarlarını da kapsar; bütün listeyi benzersiz URL şartına bağlamak yanlıştır.
+- **DEVAM_NOTU.md:L1121** — [Tarihsel kaynak kaydı] - Playlist güvenlik testindeki yanlış URL-tekillik koşulu ve ardından oluşan literal \\n sözdizimi hatası düzeltildi (93bea96, 8ef6483). Tarayıcıya YEDEKLER'e yeni kayıt eklenince yalnız bu kategoriyi yeniden sıralama eklendi (c222fe1). **Bu değişiklikler için yeni Actions başarısı henüz teyit edilmedi.**
+- **DEVAM_NOTU.md:L1129** — [Tarihsel kaynak kaydı] 4. **Kalıcı arşiv ve gerçek tarama:** aday URL, kaynak, tarih, sınıflandırma ve test kanıtını kayıpsız sakla; geri yükleme ve canlı manifest/video testlerini doğrula. HTTP erişimi IBO cihaz testi değildir.
+- **DEVAM_NOTU.md:L1130** — [Tarihsel kaynak kaydı] 5. **Logolar ve sınıflandırma:** yalnız kanıtlı logo eşleştirmeleri; Türkçe/Azerice, ülke, yeni/mevcut, çalışan/belirsiz/çalışmayan etiketleri; farklı çalışan alternatif URL'leri koru.
+- **DEVAM_NOTU.md:L1136** — [Tarihsel kaynak kaydı] - Main playlist blob SHA `39259e7e8a16b47141ae17ac1d471eb695d8a50f`; önceki birleşik workflow `4b1c3...` sabitini kontrol ederek güncel playlisti yanlış reddediyordu. Workflow üç kontrolünde güncel blob SHA'ya geçildi: commit `696898c`.
+- **DEVAM_NOTU.md:L1138** — [Tarihsel kaynak kaydı] - `v2/test_unified_safety_contract.py` güncel playlist SHA ve sıkı preflight koşuluna uyarlandı: commit `375e30a`.
+- **DEVAM_NOTU.md:L1140** — [Tarihsel kaynak kaydı] - Playlist, YEDEKLER, YENİLER, FAVORİLER, cihaz favorileri, EPG ve eski depo değiştirilmedi. Sonraki adım: güncel CI job sonuçları ve başarısızsa logları; sonra kalan kod hatalarını düzelt.
+- **DEVAM_NOTU.md:L1146** — [Tarihsel kaynak kaydı] - Yeni Actions PASS henüz görülmedi; compile/protect/discovery-tests/safety sonucun kontrolü sıradaki iş. Ana playlist ve YEDEKLER değiştirilmedi.
+- **DEVAM_NOTU.md:L1149** — [Tarihsel kaynak kaydı] 2026-11-01 — Logo Backup #5 push çakışması
+- **DEVAM_NOTU.md:L1151** — [Tarihsel kaynak kaydı] - `.github/workflows/v2-logo-backup.yml` commit `c83dd91`: logo commitinden sonra `git fetch origin main`, `git rebase origin/main`, `git push origin HEAD:main`; yarış halinde en fazla 5 güvenli deneme. Rebase çakışmasında abort ve kırmızı sonuç, asla force push yok.
+- **DEVAM_NOTU.md:L1152** — [Tarihsel kaynak kaydı] - #5 eski run başarılı hale gelmez; sonraki logo backup run sonucunu ayrıca doğrulamak gerekir. Bu değişiklik mevcut playlist/YEDEKLER/cihaz favorilerini değiştirmez.
+- **DEVAM_NOTU.md:L1155** — [Tarihsel kaynak kaydı] 2026-11-01 — YEDEKLER Türk kanalları önceliği
+- **DEVAM_NOTU.md:L1157** — [Tarihsel kaynak kaydı] - Playlist yeni blob SHA `c6cda4d6e4d31fbcd46971b830ed55d474923ed8`; frozen SHA workflow ve safety sözleşmesinde güncellendi (`822995e`, `90b34dc`).
+- **DEVAM_NOTU.md:L1158** — [Tarihsel kaynak kaydı] - Gelecekteki tarayıcı eklemeleri aynı Türkçe önceliği korusun diye `v2/real_ibo_scan.py` ve `v2/test_playlist_invariants.py` güncellendi (`41e8779`, `b9bb62f`), GEO-BLOCKED ad yazımı düzeltildi (`b83844b`, `756f0a5`).
+- **DEVAM_NOTU.md:L1159** — [Tarihsel kaynak kaydı] - YEDEKLER içinde 18 kayıtta `tvg-logo` eksik: 30A TV Classic Movies, 6 Wise TV, Afra Film, America Paraguay, Arax TV, Arko TV, Armenia Premium, Arvan TV, Cafe Film, Canada One, CC-TV, Chosen TV English, DanceTV Algorhythm, Dej TV, Dove Channel, Dr G Medical Examiner, DreamWorks Channel Latin America, Grand Cinema. Orijinal logoları henüz kanıtlı bulunmadığından yanlış logo atanmadı. `v2/mirror_logos.py` sadece zaten tanımlı logo URL'lerini indiriyor; eksik 18 logo keşfi yapmıyor.
+- **DEVAM_NOTU.md:L1163** — [Tarihsel kaynak kaydı] 2026-11-01 — #313/#314 compile ve playlist safety sözdizimi onarımı
+- **DEVAM_NOTU.md:L1165** — [Tarihsel kaynak kaydı] - `v2/test_playlist_invariants.py` düzeltildi: `bd469d3`; `v2/real_ibo_scan.py` düzeltildi: `8e105e7`. Her iki dosyanın GitHub'daki son içeriği tekrar okunarak tuple kapanışı `)` doğrulandı.
+- **DEVAM_NOTU.md:L1170** — [Tarihsel kaynak kaydı] 2026-11-01 — Kanal keşfinde aday kaybını önleme
+- **DEVAM_NOTU.md:L1171** — [Tarihsel kaynak kaydı] - `v2/real_ibo_scan.py` commit `5a66508`: kaynaklardan keşfedilen yeni adayların tamamı, HTTP/HLS kontrolü geçsin veya geçmesin, atomik olarak `v2/reports/ibo-candidate-inventory.jsonl` dosyasına yazılıyor. Kayıtlarda `http_hls_status` ve `ibo_device_tested: false` bulunuyor. Başarılı cihaz testi olarak sunulmuyor.
+- **DEVAM_NOTU.md:L1176** — [Tarihsel kaynak kaydı] 2026-11-01 — Güncel playlist ve YEDEKLER logo denetimi
+- **DEVAM_NOTU.md:L1177** — [Tarihsel kaynak kaydı] - GitHub'dan doğrudan okunan güncel `MADSC55_TV_IBO_CALISANLAR_TEST.m3u8`: 4.840 EXTINF kaydı; 838 diğer gruplar, 4.002 YEDEKLER. TRT 1 ve DHA YEDEKLER'in ilk iki sırasında.
+- **DEVAM_NOTU.md:L1178** — [Tarihsel kaynak kaydı] - YEDEKLER içinde `tvg-logo` eksik/boş olan 33 kayıt bulundu (önceki 18 sayısı güncel değil). Tam isimler ve boş tvg-id bilgileri `v2/reports/yedekler-missing-logos.json` dosyasına kaydedildi, son düzeltme commit `3b45e31`.
+- **DEVAM_NOTU.md:L1179** — [Tarihsel kaynak kaydı] - Eksik logolar henüz bulunup eklenmedi; doğrulanmamış logo tahmini yapılmadı. Ana playlist değiştirilmedi.
+- **DEVAM_NOTU.md:L1203** — [Tarihsel kaynak kaydı] - GitHub Actions sonuçları bu kayıt anında doğrulanmış değildir. Ana playlist, YEDEKLER ve favoriler değiştirilmedi.
+- **DEVAM_NOTU.md:L1212** — [Tarihsel kaynak kaydı] 2026-11-01 — Kanal dili aday sınıflandırması
+- **DEVAM_NOTU.md:L1234** — [Tarihsel kaynak kaydı] 2026-11-01 — Şifreli arşiv ve ana playlist güvenliği
+- **DEVAM_NOTU.md:L1237** — [Tarihsel kaynak kaydı] - `v2/real_ibo_scan.py` commit `7e47203`: `--append-live` ile ana playlistin değiştirilmesi reddedilir.
+- **DEVAM_NOTU.md:L1245** — [Tarihsel kaynak kaydı] - `v2/real_ibo_scan.py` commit `37726c3`: IBO aday ihracı için gerçek video+ses codec doğrulaması zorunlu.
+- **DEVAM_NOTU.md:L1246** — [Tarihsel kaynak kaydı] - `v2/real_ibo_scan.py` commit `a597217`: envanter geçici düz metinden AES-GCM şifreli .enc arşive aktarılır; parola yoksa tarama başlamaz. Kalıcı harici yedek ve gerçek kaynaklarla uçtan uca tarama henüz yapılmadı.
+- **DEVAM_NOTU.md:L1251** — [Tarihsel kaynak kaydı] 2026-11-01 — IBO paket çıktısı ve eksik kaynak güvenliği
+- **DEVAM_NOTU.md:L1252** — [Tarihsel kaynak kaydı] - `v2/real_ibo_scan.py` commit `c503035`: doğrulanmış tüm adayları disk üzerinde ayrı M3U partlarına yazıp `written_parts` ile gerçek dosya yollarını raporlar; ilk partla sınırlı değildir.
+- **DEVAM_NOTU.md:L1254** — [Tarihsel kaynak kaydı] - Commit `8de4c46`: kaynak erişim hatası varsa tarama raporu yazılır ancak eksik kaynaklı sonuçtan IBO paketleri dışa aktarılmaz.
+- **DEVAM_NOTU.md:L1259** — [Tarihsel kaynak kaydı] - `v2/real_ibo_scan.py` commit `2734c37`: önceki şifreli envanterde bulunan, ana listede olmayan ve yeni taramada kaybolmuş URL'ler yeniden aday havuzuna alınır ve ağ/video/ses testinden geçirilir. `recovered_from_previous_encrypted_inventory` raporlanır.
+- **DEVAM_NOTU.md:L1265** — [Tarihsel kaynak kaydı] - Önce TR/AZ/diaspora M3U kaynakları; IPTV-org, Free-TV, GitHub/Gist/GitLab/Codeberg, canlı TV web siteleri, resmî yayıncı siteleri, YouTube TR/AZ, Rec TV, Gopik TV, Güneş TV, Scribd ve erişilebilir diğer açık kaynakların keşif kapsamı incelenip ortak aday envanterine bağlanır. YouTube sayfa URL'si doğrudan IBO yayın URL'si sayılmaz.
+- **DEVAM_NOTU.md:L1266** — [Tarihsel kaynak kaydı] - Sonra #60 geçmiş kayıplar için gerçek URL kurtarma, tekrar ayıklama, TR/AZ aday sınıflandırması, logo eşleştirme ve ana playlistle karşılaştırma tamamlanır. Kaynak/metaveri ipucu ses dili doğrulaması olarak gösterilmez.
+- **DEVAM_NOTU.md:L1274** — [Tarihsel kaynak kaydı] - 2026-11-13 run 43412576224: 13.735 yeni URL adayı, 4.301 FFmpeg AV doğrulanmış URL, 88 başarılı kaynak; bu **ARA TARAMA** kanıtıdır, benzersiz kanal veya dünya çapında eksiksiz kapsam kanıtı değildir.
+- **DEVAM_NOTU.md:L1276** — [Tarihsel kaynak kaydı] - Kabul için kalanlar: dünya kaynaklarının akış URL'lerine çözülmesi ve FFmpeg'e verilmesi; kaynak başına başarı/hata ve ülke kapsam raporu; YouTube canlı metadata ile oynatılabilir yayın ayrımı; kanal kimliği/logo/EPG eşleştirme kanıtı; zorunlu entegrasyon testleri; en son tam tarama, şifreli yedek/geri yükleme, gerçek İBO test paketleri.
+- **DEVAM_NOTU.md:L1296** — [Tarihsel kaynak kaydı] - Main üzerinde Stage 2/3 modülleri: `identity_metadata.py`, `recovery_queue.py`, `stage2_integration.py`, `stage3_identity_recovery.py`, `stage3_metadata_acceptance.py`, `stage3_recovery_queue.py`; `discover.py` metadata ipuçlarını rapora ekler, `consolidate_inventory.py` sunulan URL SHA-256 değerini doğrular, `real_ibo_scan.py` ve `stream_probe.py` scanner/probe sözleşmesine bağlanır.
+- **DEVAM_NOTU.md:L1297** — [Tarihsel kaynak kaydı] - Mevcut onaylı Production Security Gate'e Stage 2/3 offline regresyon grubu eklendi. Actions run `43454977935` ve `43454976797`: SUCCESS. Her ikisinde güvenlik kilidi, playlist invariants, task-ledger integrity, Stage 6 offline paket/arşiv, Stage 2/3 kimlik/EPG/kurtarma ve #34 offline entegrasyon adımları PASS.
+- **DEVAM_NOTU.md:L1299** — [Tarihsel kaynak kaydı] - Bu kabul offline kod/entegrasyon kabulüdür. Canlı yayınlarda yeni FFmpeg görüntü+ses kanıtı, gerçek dış kaynak API doğrulaması, bağımsız harici arşiv geri yüklemesi ve gerçek 1000/2000 İBO üretimi değildir. #15/#17–#21, #28–#34 nihai kabulü açık tutulur. Yeni kanal taraması yapılmadı; ana İBO, YEDEKLER, YENİLER ve FAVORİLER değiştirilmedi.
+- **DEVAM_NOTU.md:L1305** — [Tarihsel kaynak kaydı] - Bu run dokümantasyon ve defter bütünlüğü kabulüdür; canlı #34 API sözleşmesi, gerçek yayın AV, yeni kanal taraması veya gerçek 1000/2000 paket üretimi değildir.
+- **DEVAM_NOTU.md:L1313** — [Tarihsel kaynak kaydı] - Güncel main üzerinde canlı sözleşme yeniden çalıştırılmadı; mevcut GitHub bağlantısı workflow_dispatch başlatma yetkisi sağlamıyor. Bu nedenle #34 canlı kabulü açık bırakıldı; hata gizlenmedi, Codeberg başarısızlığı başarı sayılmadı. Yeni kanal taraması ve playlist değişikliği yapılmadı.
+- **DEVAM_NOTU.md:L1318** — [Tarihsel kaynak kaydı] - Actions `43455836114`: SUCCESS. Güvenlik, playlist invariants, görev defteri, Stage 6 offline paket/arşiv, Stage 2/3 kimlik-EPG-kurtarma ve #34 offline adaptör adımları PASS.
+- **DEVAM_NOTU.md:L1327** — [Tarihsel kaynak kaydı] - Yeni kapsamlı kanal taraması yapılmadı; ana İBO, YEDEKLER, YENİLER ve FAVORİLER değiştirilmedi.
+- **DEVAM_NOTU.md:L1331** — [Tarihsel kaynak kaydı] - PR #89 merged as `207f5c3f4a83cc1bb716deddf1344cf8c1f36e16`; head `3396cb0806da203aae336d3b3b3083bc198632a5`; Production Security Gate run `43457399513` SUCCESS. All grouped steps passed, including Stage 2 identity metadata, Stage 6 archive/package regressions, Stage 2/3 offline identity/EPG/recovery, Discovery 34 offline adapters and protected IBO invariants.
+- **DEVAM_NOTU.md:L1333** — [Tarihsel kaynak kaydı] - Offline/security acceptance only. Does not close #28–#33 real production package/independent restore gates, #15 unmatched historical identities, #17–#21 final mapping/live evidence, or #34 live provider/AV/archive gate. No scan or playlist write; protected lists unchanged.
+- **DEVAM_NOTU.md:L1339** — [Tarihsel kaynak kaydı] - GitHub: altı sorgunun tamamı başarılı; aday kayıtları sırasıyla 11, 20, 20, 20, 12, 19 (toplam 102 ham kayıt; benzersiz kanal sayısı değildir). GitLab: altı sorgunun tamamı başarılı, 0 aday. Codeberg: altı sorgunun tamamında HTTP 429; her sorgu üç denemeye kadar sürdü, Retry-After/rate-limit kalan başlığı yoktu.
+- **DEVAM_NOTU.md:L1342** — [Tarihsel kaynak kaydı] - PR #130 squash merge `3fc54210d22d6dd52bf97c85dae2fe7576102bf7`; Actions run `43459495298` SUCCESS. XMLTV timezone offset sınırları ve geçersiz programme start/stop aralıkları için üç yeni test PASS; EPG bütün kaynaklarının gerçek içerik kabulü değildir.
+- **DEVAM_NOTU.md:L1343** — [Tarihsel kaynak kaydı] - Stage 6 (#28–#33) offline paketleme, M3U doğrulama, şifreli arşiv/geri-yükleme regresyonları; Stage 2/3; #34 offline adapter ve güvenlik/invariant kapıları PASS. Gerçek FFmpeg AV, bağımsız harici depodan restore veya gerçek 1000/2000 kanal paketi değildir.
+- **DEVAM_NOTU.md:L1345** — [Tarihsel kaynak kaydı] - Yeni kapsamlı kanal taraması yapılmadı. Ana İBO, YEDEKLER, YENİLER ve FAVORİLER değiştirilmedi.
+- **DEVAM_NOTU.md:L1351** — [Tarihsel kaynak kaydı] - #34 kodu tüm altı terimi kapsıyor, HTTP 429 sonrası sağlayıcıya tekrar tekrar yüklenmiyor; Codeberg canlı kabulü açık. Tam kanal taraması yapılmadı, playlist değişmedi.
+- **DEVAM_NOTU.md:L1357** — [Tarihsel kaynak kaydı] - PR #134 Stage 5 evidence-gated IBO export/final-acceptance code and offline regressions squash merge 917dcddaff863ae56f9099a0539d63b6f85765c9; main Production Security Gate run 43460202117 SUCCESS, including Stage 5 evidence-gate tests.
+- **DEVAM_NOTU.md:L1362** — [Tarihsel kaynak kaydı] - Ana İBO, YEDEKLER, YENİLER ve FAVORİLER değiştirilmedi; yeni kapsamlı kanal taraması yapılmadı.
+- **DEVAM_NOTU.md:L1373** — [Tarihsel kaynak kaydı] - Main canlı diagnostic run `43464785708`: read-only token sonrası GitHub 6/6 sorgu başarılı (11,20,20,20,12,19 ham eşleşme; toplam 102, benzersiz kanal sayısı değildir). GitLab 6/6 sorgu başarılı fakat 0 aday. Codeberg ilk sorguda HTTP 429 verdi; bir sorgu denendi, kalan beş sorgu circuit breaker ile atlandı. Offline ana güvenlik işi SUCCESS, ayrı canlı diagnostic FAILURE. Codeberg canlı kabulü yok; #34 açık.
+- **DEVAM_NOTU.md:L1374** — [Tarihsel kaynak kaydı] - Tarama workflow'u yalnızca `workflow_dispatch` ile başlar ve bu değişiklikler sırasında çalıştırılmadı. Yeni kapsamlı kanal taraması yapılmadı. M3U kaynaklarının bulunması/ayrıştırılması playback kabulü değildir; YouTube/official resolver adayları da FFmpeg decode öncesi verified sayılmaz.
+- **DEVAM_NOTU.md:L1375** — [Tarihsel kaynak kaydı] - Görev defteri 21 completed / 13 in_progress olarak kaldı: #15, #17–#21, #28–#34 açık. #15 tarihî yayıncı kimliği; #17–#21 nihai metadata/EPG/kategori/çözünürlük ve gerçek yayın kanıtı; #28–#33 gerçek paket, harici restore ve cihaz kabul kanıtı; #34 Codeberg canlı API ve tüm kaynakların gerçek AV kabulini bekler.
+- **DEVAM_NOTU.md:L1376** — [Tarihsel kaynak kaydı] - Ana İBO, YEDEKLER, YENİLER ve FAVORİLER'e yazılmadı; hiçbir görev gerçek kanıt olmadan kapatılmadı.
+- **DEVAM_NOTU.md:L1380** — [Tarihsel kaynak kaydı] - PR #149 squash merge `2d828e24805bcd41900c4e9212fb5d134068a7dc`. YouTube Live arama kümesi 18 TR/AZ sorgusunu koruyarak 12 dünya sorgusu ekledi (Afrika, Asya, Avrupa, Latin Amerika, Arapça, Hintçe, İspanyolca, Fransızca, Portekizce, Japonca/Korece ve uluslararası haber/TV). Her aday TR/AZ/WORLD bölge etiketi taşır; birleşik rapor ve şifreli doğrudan HLS resolver bu etiketi korur.
+- **DEVAM_NOTU.md:L1382** — [Tarihsel kaynak kaydı] - Main Production Security Gate run `43466178239` SUCCESS; YouTube sorgu bölgesi, resolver bütçesi, encrypted round-trip ve scanner intake offline regresyonları PASS. Canlı YouTube keşfi veya geniş kanal taraması bu gate içinde çalıştırılmadı.
+- **DEVAM_NOTU.md:L1388** — [Tarihsel kaynak kaydı] 13 Kasım 2026 — #19 EPG yanlış kimlik ataması ve program zamanı koruması (PR #155)
+- **DEVAM_NOTU.md:L1389** — [Tarihsel kaynak kaydı] - `v2/build_epg.py` artık yalnızca bire bir `tvg-id` eşleşmesini veya tek anlamlı normalize edilmiş EPG isim eşleşmesini kullanıyor. Aynı ada birden çok XMLTV kaynağı karşılık gelirse önceki gibi en çok programa sahip kaynağı seçip yanlış rehber atamıyor; eşleşme atlanıyor ve `ambiguous_entries_skipped` ile raporlanıyor.
+- **DEVAM_NOTU.md:L1390** — [Tarihsel kaynak kaydı] - Rehber dışa aktarımında zaman damgaları `epg_integrity.parse_xmltv_time` ile ayrıştırılıyor. Geçersiz UTC ofseti, eksik/ters başlangıç-bitiş ve sıfır süreli programlar dışa alınmıyor; gerçek +0300 saat farkı göz önüne alınıyor.
+- **DEVAM_NOTU.md:L1391** — [Tarihsel kaynak kaydı] - `v2/test_build_epg.py` yeni çevrimdışı testleri ve `.github/workflows/v2-main-production-safety-gate.yml` içinde zorunlu kabul bağlantısı eklendi.
+- **DEVAM_NOTU.md:L1392** — [Tarihsel kaynak kaydı] - PR #155 merge commit `5ec41d2e98930f6610c592ccf458b6bcf8c694e9`; head `49dab604eae5a57640157512d2994818c58f392c`; Actions run `43479698309` SUCCESS. Stage 2/3 kimlik/EPG/kurtarma, Stage 5/6 paket ve arşiv, #34 çevrimdışı keşif ve ana İBO güvenlik korumaları SUCCESS.
+- **DEVAM_NOTU.md:L1396** — [Tarihsel kaynak kaydı] - PR #156 squash merge `5842d47a3617ccd3bc523632144e0c0eaffc0b9d` ile `identity_metadata.verify_epg_ids` program uygunluğu için tekil XMLTV channel ID, iki geçerli UTC tarih/saat alanı ve `stop &gt; start` şartlarını zorunlu kılar. EPG ID tam eşleşmesi ile geçerli program aralığı ayrı kanıtlar olarak tutulur.
+- **DEVAM_NOTU.md:L1397** — [Tarihsel kaynak kaydı] - Eksik `stop`, geçersiz saat/ofset, ters/sıfır süreli aralık ve duplicate channel regresyonları eklendi. İlk PR denemesi Stage 2 test fixture'ında eksik `stop` nedeniyle FAIL oldu; fixture gerçek zaman aralığıyla düzeltildi. Son PR Actions `43480044886`: SUCCESS; ilgili Stage 2, Stage 3, Stage 5/6, #34 ve ana İBO korumalarının tamamı PASS. Merge sonrası ana dal run `43480208051`: SUCCESS.
+- **DEVAM_NOTU.md:L1398** — [Tarihsel kaynak kaydı] - Gerçek XMLTV kaynaklarındaki 303 eksik eşleşme giderilmiş sayılmaz ve #19 görevi gerçek kaynak/kanal kanıtı olmadan kapatılmadı. Yeni tarama yok; ana İBO, YEDEKLER, YENİLER, FAVORİLER değiştirilmedi.
+- **DEVAM_NOTU.md:L1403** — [Tarihsel kaynak kaydı] - Kanıt dosyası yalnızca ffprobe akış başlıklarını taşımasıyla kabul edilmiyor: yerel FFmpeg framemd5 çıktısında hem görüntü kareleri hem ses örneklerinin gerçekten decode edilmesi gerekiyor. Kimlikte `tvg-id` ile `channel_id` eşitliği aranıyor.
+- **DEVAM_NOTU.md:L1405** — [Tarihsel kaynak kaydı] - Yanlış kimlik, sahte kanıt, çakışan dosya ve yalnız görüntü akışı regresyonları PASS. GitHub runner'da FFmpeg bulunmadığı için yerel klip entegrasyon testi SKIPPED; çevrimdışı mock regresyonları PASS. Gerçek 1.000/2.000 kanal paketleri veya cihaz AV kabulü yapılmadı; #31–#33 açık.
+- **DEVAM_NOTU.md:L1410** — [Tarihsel kaynak kaydı] - `v2/stage5_evidence_export.py`: ayrı kanal kimlikleri aynı SHA-256 medya kanıtını iki kez kullanamaz. Geçersiz kütüphane hedef değerleri (0, negatif, boolean, &gt;2000, metin) reddedilir. Üretim CLI hedefleri yalnızca 1000 ve 2000 olarak kalır.
+- **DEVAM_NOTU.md:L1411** — [Tarihsel kaynak kaydı] - `v2/test_stage5_evidence_export.py`: iki farklı dosya adıyla aynı medya baytlarını yeniden kullanan iki kanal kimliği için fail-closed regresyon eklendi; testler gerçek kanal delili değildir.
+- **DEVAM_NOTU.md:L1413** — [Tarihsel kaynak kaydı] - Gerçek 1000/2000 AV/doğrulama paketi, harici bağımsız şifreli geri yükleme ve IBO cihaz kabulü hâlâ eksik. #31–#33 nihai kabul açık; 34 görevde 21 completed ve 13 in_progress. Ana İBO, YEDEKLER, YENİLER, FAVORİLER değiştirilmedi ve yeni kanal taraması yapılmadı.
+- **DEVAM_NOTU.md:L1419** — [Tarihsel kaynak kaydı] - Yalnızca test aracı için üretilen sentetik medya gerçek yayın veya gerçek İBO paketi kabul edilmedi. #31–#33 ve diğer gerçek yayın kanıtı bekleyen görevler açık. Yeni kapsamlı kanal taraması yapılmadı; ana İBO/YEDEKLER/YENİLER/FAVORİLER'e dokunulmadı.
+- **DEVAM_NOTU.md:L1425** — [Tarihsel kaynak kaydı] - PR #184 merge commit `c400b1f3aff3744c65f110e41629cabc5ed90596`; Actions run `43481525275` SUCCESS. Stage 2/3 kimlik/EPG, Stage 5 yerel FFmpeg video+ses decode, Stage 6 paket/arşiv, #34 offline ve ana İBO güvenlik kapıları geçti.
+- **DEVAM_NOTU.md:L1430** — [Tarihsel kaynak kaydı] 13 Kasım 2026 — #19 farklı EPG kaynaklarında tekrarlanan XMLTV ID koruması
+- **DEVAM_NOTU.md:L1432** — [Tarihsel kaynak kaydı] - Aynı XMLTV channel ID birden fazla feed'de veya tek feed içinde birden fazla kez bildirilirse kanaldaki programlar eşleştirmeden çıkarılır. Bildirilmeyen program id'leri, XML DTD/ENTITY ve signed feed hata sorgu parametreleri reddedilir/redakte edilir. Yeni çevrimdışı regresyonlar PASS.
+- **DEVAM_NOTU.md:L1434** — [Tarihsel kaynak kaydı] - Gerçek EPG kaynak yayını taranmadı. 303 önceki EPG boşluğu ve bağımsız yayıncı kimliği kanıtı hâlâ açık. #19 completed yapılmadı. Ana İBO/YEDEKLER/YENİLER/FAVORİLER değişmedi.
+- **DEVAM_NOTU.md:L1437** — [Tarihsel kaynak kaydı] - #19 EPG güvenliği: PR #172 merge `eb827b9c0bc4fe7eef507b8637ef37284be91dbd`; geçerli program aralığı/tekil XMLTV kimlik kanıtı ile ham EPG eşleşmesi ayrı raporlanır, DTD/ENTITY engellenir. PR Actions `43480892500`, main Actions `43481012343`: SUCCESS. 303 gerçek EPG açığı kaldı; #19 açık.
+- **DEVAM_NOTU.md:L1440** — [Tarihsel kaynak kaydı] - Kaydedilmiş gerçek 4.301 URL'lik M3U paket parçaları ve yapısal SHA/EXTINF denetimi, bütün kanalların güncel ses+görüntü/kimlik ve IBO cihaz kabulü değildir. #28–#33 açık. Kapsamlı yeni tarama ve ana İBO, YEDEKLER, YENİLER, FAVORİLER üzerinde yazma yapılmadı.
+- **DEVAM_NOTU.md:L1443** — [Tarihsel kaynak kaydı] 15 Kasım 2026 — YEDEKLER spor kanalları geniş tekrar denetimi ve açık takip
+- **DEVAM_NOTU.md:L1445** — [Tarihsel kaynak kaydı] - 15 Kasım yeniden tarama: spor bölümünün dışındaki 1.023 kaydın adları ve şüpheli kayıtların URL/kimlik ipuçları incelendi. Şüpheli/manuel kimlik doğrulaması bekleyenler: **GS TV (600), HSTV (643), MAKINA TV (785), AMERICAN NINJA WARRIOR (178), CANAL DO BOI (322), JUBILO TV (714), MK SIX (840), NHTV (984), BYU TV (301), CATVE2 (342)**. Bu adlar spor kanalı olduklarının kanıtı değildir; örneğin HSTV'nin akışı iptv-org Hindistan listesinde bulunur ancak spor sınıfı kanıtlanmadı.
+- **DEVAM_NOTU.md:L1446** — [Tarihsel kaynak kaydı] - **Adrenalina Pura TV Brazil (152)** spor değil: resmi yayıncı ve Pluto TV envanteri aksiyon/gerilim filmleri olarak tanımlar. Sadece adındaki 'adrenalin' nedeniyle taşınmayacak.
+- **DEVAM_NOTU.md:L1453** — [Tarihsel kaynak kaydı] - Mevcut `v2/ibo_parity.py` sadece okuma/karşılaştırma yapıyor. Mevcut tarihî keşif arşivleri, YEDEKLER'den seçili kanal çıkarma ve isteğe göre birebir geri yükleme mekanizmasının doğrulandığı anlamına gelmez.
+- **DEVAM_NOTU.md:L1454** — [Tarihsel kaynak kaydı] - İlk güvenli doğrulama için `v2/ibo_archive_verify.py` eklendi: gerçek M3U dosyasını ham baytlarıyla SHA-256 korumalı kayıpsız arşivler, yeni hedef dosyaya geri yükler, var olan hedefin üstüne yazmaz. `v2/test_playlist_invariants.py` içinde gerçek playlist üzerinde geçici dizinde birebir geri yükleme testi var. Üretim playlisti değiştirilmiyor.
+- **DEVAM_NOTU.md:L1455** — [Tarihsel kaynak kaydı] - **AÇIK**: Seçilen 30/1000 gibi kanal bazlı sınıflandırma, arşivden kısmi geri yükleme, kalıcı bağımsız depo ve İBO Player canlı senkronizasyonu henüz uygulanmış/doğrulanmış değil. Bunlar geçmeden YEDEKLER'den toplu silme veya taşıma yapılmayacak. CI yeşil olsa bile sadece kayıpsız tam dosya geri yükleme testini kanıtlar.
+- **DEVAM_NOTU.md:L1469** — [Tarihsel kaynak kaydı] - 7.650 eski sistem adayının 16/16 AV yeniden test job'u başarılı; bu tüm kanalların oynatılabilir olduğu anlamına gelmez. Ayrı genel `scan` job'u eski commit üzerinde başarısız kalmıştır.
+- **DEVAM_NOTU.md:L1470** — [Tarihsel kaynak kaydı] - Güncel `v2/arsiv/yabanci_kanallar_2026-11-16_2881.m3u8` dosyası adı tarihî 2881 değerini taşısa da içeriğinde 4768 farklı URL ve 4768 EXTINF vardır. `v2/real_ibo_scan.py` hâlâ 2881 beklediği için yeni çalışmada da bütünlük kontrolünden geçemeyecektir.
+- **DEVAM_NOTU.md:L1471** — [Tarihsel kaynak kaydı] - Ayrı düzeltme dalında gerçek 4768 benzersiz arşiv girdisi için fail-closed doğrulama güncellendi. **Arşiv içeriği, ana İBO listesi ve YEDEKLER değiştirilmedi.**
+- **DEVAM_NOTU.md:L1483** — [Tarihsel kaynak kaydı] - `main` üzerindeki M3U envanteri okundu (8 dosya): ana İBO 18.912 toplam / 18.074 YEDEKLER; `MADSC55_TV_IBO_YEDEKLER_DUZELTILMIS_TEST.m3u8` 18.960 toplam / 18.122 YEDEKLER; eski `MADSC55_IBO_NEWLISTTR_YEDEKLER_TEST.m3u8` 1.110 toplam / 65 YEDEKLER (443 benzersiz URL); yabancı arşiv 4.768; dört eski aday parçası sırasıyla 2.000, 2.000, 2.000, 1.650 (7.650 benzersiz URL).
+- **DEVAM_NOTU.md:L1485** — [Tarihsel kaynak kaydı] - 18.122 YEDEKLER içeren alternatif test playlisti ana dosyaya göre +48 farklı URL taşıyor; bu 48 URL, `v2/archives/test001_quarantined_48.json` içindeki koruma altına alınan 48 kaydın aynısı. Bu test dosyası ana İBO yerine geçmez ve 48 kanal otomatik geri alınmaz.
+- **DEVAM_NOTU.md:L1493** — [Tarihsel kaynak kaydı] - **Koruma:** Ana İBO playlisti, YEDEKLER playlisti, ANA/TURK/YABANCI arşivleri ve EPG değiştirilmedi. 48 engelli kanal geri eklenmeyecek; 1003 sabit kuralı kullanılmayacak. Ayrı 2.500'lük İBO Player test/arşiv döngüsü bu dil kanıtı geliştirmesiyle karıştırılmayacak.
+- **DEVAM_NOTU.md:L1500** — [Tarihsel kaynak kaydı] - **Kapsam sınırı:** FFmpeg `-fs` bir işlem-içi çıktı sınırı önlemidir; güvenilmeyen ağ hedeflerini güvenli hale getirmez, gerçek AV/Türkçe dil kanıtı veya İBO Player kabulü sağlamaz. 13 prescan görevi kapanmış sayılmaz. Gerçek ASR/OCR, hostname güvenliği, canlı kaynak keşfi, EPG/kimlik ve cihaz kabulü AÇIK.
+- **DEVAM_NOTU.md:L1501** — [Tarihsel kaynak kaydı] - **Koruma:** Ana İBO, YEDEKLER, ANA/TURK/YABANCI arşivleri, EPG ve 48 engelli kanal değiştirilmedi; 1003 kuralı kullanılmadı. Sonraki değişiklikler güvenlik SUCCESS olmadan main'e birleştirilmeyecek.
+- **DEVAM_NOTU.md:L1508** — [Tarihsel kaynak kaydı] - Arica TV resmî canlı sayfasında akış sunucusuna bağlantı görüldü; sayfada aynı tam adres gözlenmedi. Bu, yayıncı sahipliği için kesin kanıt değildir. Dört eşleşmeyi tekrar araştırma veya kanal araması başlatma.
+- **DEVAM_NOTU.md:L1512** — [Tarihsel kaynak kaydı] 18 Kasım 2026 — #17/#18/#20 toplu mevcut kanıt mutabakatı (kanal araması YOK)
+- **DEVAM_NOTU.md:L1513** — [Tarihsel kaynak kaydı] - Esas kaynak: `v2/reports/task17-18-20-bounded-retry-20261118.json` (zaten main üzerinde). 20.148 şifreli kuyruk kimliğinin 3.781'i iki playlistte eşleşiyor; ana İBO'da 333 eşleşme, ikinci listede 3.781 eşleşme (örtüşme nedeniyle toplanmaz). 3.781'in 15'i önceki denemede 17 girişimle test edilmiş; 1 TRT Kurdî AV, 8 HTTP404, 6 HTTP503. 3.766 eşleşmiş ama bu denemede işlenmemiş ve 16.367 bu iki listede eşleşmemiş kimlik açık. Önceden yapılmış 15 denemeyi veya 16/16 tarihî test paketini tekrar başlatma.
+- **DEVAM_NOTU.md:L1518** — [Tarihsel kaynak kaydı] 19 Kasım 2026 — #19 EPG güncel kanıt birleştirme takibi
+- **DEVAM_NOTU.md:L1521** — [Tarihsel kaynak kaydı] - PR #458 Production Security Gate henüz SUCCESS vermeden birleştirilmeyecek. #454 logo PR'ı güvenlik FAILURE nedeniyle beklemede. #455 eski çakışan PR körlemesine birleştirilmeyecek.
+- **DEVAM_NOTU.md:L1529** — [Tarihsel kaynak kaydı] - `v2/test_ibo_device_acceptance.py` sentetik/offline testleri ve Production Security Gate entegrasyonu PR run `44841708299` üzerinde SUCCESS verdi. Önceki düzeltilmemiş commit run `44841668393` başarısızdı; son commit `12ff506eb3dea467f81e10d340813a7e1bb7174c` için başarılı koşu esas alınır.
+- **DEVAM_NOTU.md:L1531** — [Tarihsel kaynak kaydı] - Ana playlist, kanal kayıtları, kategoriler ve arşivler değiştirilmedi; canlı tarama/oynatma başlatılmadı. Yeni playlist oluşturulmadı.
+- **DEVAM_NOTU.md:L1538** — [Tarihsel kaynak kaydı] - Başlangıçta denetlenen main Security Gate #44837457969 SUCCESS; arşiv kabul PR #551 run #44838963882 SUCCESS ve 12 arşiv regresyonu PASS. Canlı playlist yazımı yapılmadı.
+- **DEVAM_NOTU.md:L1539** — [Tarihsel kaynak kaydı] - Özgün YEDEKLER AV raporu bulundu: run #44640007709, artifact #14587983768, `yedekler_av_audit.json`; 1.107 AV verified / 685 recheck. Rapor dosyası SHA-256 `30de600eca7d8e3140f423bb3fc248dc2f57df6ff031b0bf97276a9a861dba2c`; tarihî playlist SHA-256 `eee260cce3926caff18238f9583958b40475e362ce7650fb7fac51a66a84ee1c`; ZIP SHA-256 `d6fefd9dabc036302dcadf0e52fa66542c51d9032d9abf8aeb3e3b88233a9f73`.
+- **DEVAM_NOTU.md:L1541** — [Tarihsel kaynak kaydı] - #547 CI testlerinde ilk hata Unicode bytes literal idi; UTF-8 encode düzeltildi. Son düzeltme commit'i `c6a1b91842c4045ad502b62ade3936e4363cc88d`; yeni Actions sonucu kontrol edilecek. PR draft ve playlist değişikliği yok.
+- **DEVAM_NOTU.md:L1548** — [Tarihsel kaynak kaydı] - **Aşama 2 özgün AV kanıtı:** [read-only run #44640007709](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44640007709) artifact **14587983768** ve tam `yedekler_av_audit.json` indirildi, ZIP ve dosya SHA-256 eşleşmeleri doğrulandı. Schema 1, 1.792 benzersiz URL kimliği ve 1–1.792 kesintisiz pozisyon; 1.107 video+audio decoded, 685 RECHECK_REQUIRED.
+- **DEVAM_NOTU.md:L1550** — [Tarihsel kaynak kaydı] - #547 importer ve offline regresyonları main'e birleşti; main CI run [44842749390](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44842749390) SUCCESS. Ancak mevcut kayıtta özgün artifact'tan **gerçek preview+manifest üretiminin uçtan uca kanıtı henüz yok**; bu yüzden #497 üretim uygulaması tamamlandı sayılmaz, 685 kanala yeni test/taşıma yapılmadı.
+- **DEVAM_NOTU.md:L1551** — [Tarihsel kaynak kaydı] - **Aşama 3 FFmpeg:** #543 birleşti; main CI [44842692873](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44842692873) SUCCESS. Bu kısa örnekte gerçek video+audio decode kabulüdür; 18.074 kanalın tümünün işlendiği veya İBO Player cihazda onaylandığı anlamına gelmez.
+- **DEVAM_NOTU.md:L1559** — [Tarihsel kaynak kaydı] - Gerçek kaynak: Actions run `44640007709`, artifact `14587983768` (`yedekler_av_audit.json`), kaynak dosya SHA-256 `30de600eca7d8e3140f423bb3fc248dc2f57df6ff031b0bf97276a9a861dba2c`.
+- **DEVAM_NOTU.md:L1561** — [Tarihsel kaynak kaydı] - Bağımsız ZIP denetimi: kanonik liste tam **18.912** kayıt; YEDEKLER **1.792**, TÜRK ARŞİVİ **424**, YABANCI ARŞİVİ **284**, ANA ARŞİV **15.574** ve diğer kategoriler **838**. Kaynak rapordaki 1.792 pozisyon/ad/URL-hash eşleşmesinin **1.792'si** güncel YEDEKLER ile doğru, 0 uyumsuzluk; 685 retry manifest hash'i kaynak belirsiz kayıtlarla aynı sırada ve benzersiz.
+- **DEVAM_NOTU.md:L1563** — [Tarihsel kaynak kaydı] - Önizleme Git blob SHA-1 `f3d39e4522d27912fccd6e67240a10fd16c4923b` ve SHA-256 `18ac8386964e2f336105bb83f8f1be0af008b6b9ea83f679a2fd1ca582097abe`; main kanonik playlistin **aynı dosyasıdır**. Hiçbir kategori/sıra/URL değişmedi.
+- **DEVAM_NOTU.md:L1564** — [Tarihsel kaynak kaydı] - PR #560 SHA kilidi güvenlik düzeltmesi CI PASS ile merge edildi. Önceki PR #561 envanter güncellemeleri başka merge'lerle çakıştığından, tek manuel salt-okunur preview workflow'u güncel main üzerine çatışmasız taşınıyor. Workflow dispatch sadece **mevcut raporu** indirir; stream probe/FFmpeg/new scan içermez. Gerçek retry ayrı aşamadır.
+- **DEVAM_NOTU.md:L1568** — [Tarihsel kaynak kaydı] 21 Kasım 2026 — YEDEKLER tek tetik ve Stage 4 capture güvenlik kapısı
+- **DEVAM_NOTU.md:L1570** — [Tarihsel kaynak kaydı] - PR [#561](https://github.com/Madsc55/MADSC55-TV-V2/pull/561) main'e `0137e18a2df527afd3124b6bd01d953cae21112a` commit'iyle birleşti. Manuel `v2-yedekler-result-reconcile.yml` workflow'u mevcut 1.792 satırlık kanıtı yeniden indirir, hash/kimlik bağını doğrular, 1.107 verified + 685 uncertain için **salt-okunur** manifest ve önizleme üretir. PR Production Security Gate [#44843702938](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44843702938) SUCCESS. Bu iş akışı AV testi başlatmaz; 685 kanala yeni retry veya playlist yazımı yapmaz.
+- **DEVAM_NOTU.md:L1576** — [Tarihsel kaynak kaydı] - PR [#567](https://github.com/Madsc55/MADSC55-TV-V2/pull/567) main'e `7bbefc113b02e25e0d8da1709273c39e9bbb4f12` ile birleşti: ilk 1.107 verified kaydı tekrar taramamak için 685 uncertain kimliğine bağlı, **manuel tetiklemeli ve playlist yazmayan** bounded AV retry + fail-closed reconcile kodu eklendi. Bu kabul yalnız kod kapsamıdır; yeni retry çalıştırması yapılmadı. Merge sonrası main Security Gate `44843984931` SUCCESS. #561 main gate `44843901219` ve #571 main gate `44843949176` de SUCCESS.
+- **DEVAM_NOTU.md:L1582** — [Tarihsel kaynak kaydı] - **Kaynak (gerçek, tarihsel):** [44640007709](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44640007709), artifact `14587983768` (`yedekler_av_audit.json`), dosya SHA-256 `30de600eca7d8e3140f423bb3fc248dc2f57df6ff031b0bf97276a9a861dba2c`. Kaynak JSON içinde **1.792 satır = 1.107 WORKING + 685 RECHECK_REQUIRED**; 685 kesin çalışmayan olarak sınıflandırılmadı.
+- **DEVAM_NOTU.md:L1583** — [Tarihsel kaynak kaydı] - **Gerçek işleme çıktısı:** [44842749390](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44842749390), artifact `14681388150` (`v2-497-existing-audit-preview`). Arşiv içindeki `manifest.json` SHA-256 `b001bf48f07437e9ae67ed9f73b12ea9cfcab653523973435cf3b1cee3c31fcc`; `preview.m3u8` SHA-256 `18ac8386964e2f336105bb83f8f1be0af008b6b9ea83f679a2fd1ca582097abe`, Git blob `f3d39e4522d27912fccd6e67240a10fd16c4923b`, güncel ana listenin blob değeriyle aynı. Manifestte tam **685** farklı `channel_sha256` kimliği var ve hepsinin durumu `uncertain`.
+- **DEVAM_NOTU.md:L1584** — [Tarihsel kaynak kaydı] - **Playlist envanteri (yukarıdaki gerçek preview):** 18.912 toplam; ANA ARŞİV 15.574; YEDEKLER 1.792; TÜRK ARŞİVİ 424; YABANCI ARŞİVİ 284; diğer kategoriler 838. Toplam arşiv 18.074, ancak YEDEKLER tek başına 18.074 değildir. Tarihsel 1.792 ile bugünkü YEDEKLER 1.792/1.792 aynı EXTINF+URL kayıt ve sırasıyla eşleşti.
+- **DEVAM_NOTU.md:L1586** — [Tarihsel kaynak kaydı] - **Gerçek yeni retry durumu:** Bu denetimde `YEDEKLER uncertain AV retry (685 only, read-only)` için gerçekleşmiş workflow run/üretilmiş yeni retry raporu görülmedi. Sadece elle tetiklenebilir; **çalıştırılmadı**. 685 belirsiz kaydın yeni AV sonucu **henüz bilinmiyor**. Çalışan 1.107 için mevcut kanıt tarihsel, cihazda güncel canlı oynatma garantisi değil.
+- **DEVAM_NOTU.md:L1597** — [Tarihsel kaynak kaydı] - Tek ana playlist/URL/kategori/EPG değişmedi; 48 karantina kanalı geri gelmedi; mükerrer URL eklenmedi; yeni playlist açılmadı; 1003 kuralı yeniden uygulanmadı.
+- **DEVAM_NOTU.md:L1600** — [Tarihsel kaynak kaydı] 21 Kasım 2026 — Aşama 5 / gerçek eski dünya raporu ile 18.074 YEDEKLER hash mutabakatı
+- **DEVAM_NOTU.md:L1605** — [Tarihsel kaynak kaydı] - **Kategori defteri mevcut main (salt-okunur):** `v2/yedekler_batch/state.json` özgün `18.074` kaydı referanslıyor ve ilk 2.500 durumunda `TEST=1.792, TURK=424, YABANCI=284` var. Beklenen güncel kanonik dağılım `YEDEKLER=1.792, ANA ARŞİV=15.574, TÜRK=424, YABANCI=284, OTHER=838, TOTAL=18.912`. Farklı tarihî snapshot'lar karıştırılmayacak.
+- **DEVAM_NOTU.md:L1606** — [Tarihsel kaynak kaydı] - **Yeni hazırlanan kontrollü işlem:** `v2/yedekler_worldwide_crosswalk.py`, `v2/test_yedekler_worldwide_crosswalk.py` ve yalnız okuyan Production Security Gate aşaması, dünya raporunun URL SHA-256'larını özgün 18.074 envanter ve güncel 18.912 kayıtla eşleştirip `manifest.json` + `crosswalk.json` üretmek üzere ayrı branch'te. Özgün run, ZIP ve rapor hash'leri sabit; 2.500 durum kimliği, 838 diğer kategori, mükerrer URL ve kaynak/kategori uyumsuzluğu fail-closed. Eski rapordaki `PRIOR_RUN_HASH_ONLY_NOT_FRESH` gerçek yeni AV PASS diye yükseltilmez.
+- **DEVAM_NOTU.md:L1614** — [Tarihsel kaynak kaydı] - GitHub blob `57d55f3a339099e741b33ecbb55fc0ef809d1d61` özgün `YEDEKLER_ARCHIVE.m3u8`: tam **18.074 kayıt ve 18.074 farklı URL**. Önceden yanlış kaynak olarak seçilen `d5291424da8c273d48395b0c261feb87ae1ebf72` tarihsel **18.912 satırlık tam playlist**, yalnız YEDEKLER arşivi değil; Stage 5 kaynak blob sabiti düzeltildi.
+- **DEVAM_NOTU.md:L1616** — [Tarihsel kaynak kaydı] - Güncel main'e karşı **18.074/18.074 arşiv URL'si bulundu, kaynak sıra defterindeki hedef kategori uyumsuzluğu 0**. Kategoriler: YEDEKLER 1.792, ANA 15.574, TÜRK 424, YABANCI 284, OTHER 838. İlk 2.500 işlem durumları: TEST 1.792, TURK 424, YABANCI 284. Bu kategori/URL kimlik karşılaştırmasıdır, gerçek yayın AV kanıtı değildir.
+- **DEVAM_NOTU.md:L1622** — [Tarihsel kaynak kaydı] - **Uygulama birleşti:** [PR #585](https://github.com/Madsc55/MADSC55-TV-V2/pull/585), merge commit `cf4b28f16c25af59295c7ee13c3dc5f659585ce1`. PR Production Security Gate [run 44845062944](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44845062944) **SUCCESS**; offline negatif test, tam kaynak artifact crosswalk üretimi, arşiv/playlist invariants ve diğer regresyonlar geçti. Yeni main push run `44845291731` başlangıçta in_progress, ayrıca kontrol edilecek.
+- **DEVAM_NOTU.md:L1625** — [Tarihsel kaynak kaydı] - **Güncel 1.792 YEDEKLER:** dünya raporunda **1.436** hash eşleşmesi; **356** yok. Tarihsel dünya koşusunda doğrudan AV decode **161**; eski koşudan yalnız hash aktarımı **863**.
+- **DEVAM_NOTU.md:L1628** — [Tarihsel kaynak kaydı] - **Sınırlar:** Gerçek kanal taraması, yeni playlist, otomatik Türk/Yabancı ataması, kanal silme/taşıma, ana liste değişikliği, İBO Player kabulü yok. 48 engelli geri alınmadı; 1.003 kuralı yeniden uygulanmadı; önceki 112–486 ve 59–181 taşımaları tekrar edilmedi. `v2/tasks/state.json`'daki 34 görev durumuna dokunulmadı.
+- **DEVAM_NOTU.md:L1635** — [Tarihsel kaynak kaydı] - PR #594 **merged**: `c17af7945921ba61f29c9d2e2918425e897c6cc8`. `v2/ibo_497_retry_plan.py`, tam olarak 685 tarihsel `uncertain/recheck_required` satırını kaynak run/artifact/rapor SHA-256, güncel ana playlist SHA-256, kanal bloğu SHA-256 ve URL SHA-256 ile bağlayan deterministik plan üretir.
+- **DEVAM_NOTU.md:L1636** — [Tarihsel kaynak kaydı] - Plan yalnızca ilk denemesi olan belirsiz kayıtları alır; kaynak zaman damgasını korur, YEDEKLER sırasını takip eder, URL veya yayın adresi yazmaz. Aynı girdiler aynı `plan_sha256` üretir; farklı mevcut dosyanın üzerine yazmaz.
+- **DEVAM_NOTU.md:L1650** — [Tarihsel kaynak kaydı] - **#6 açık:** Yetkili anahtar ve doğru format uygulaması bulunmadan bağımsız şifre çözme/restore PASS denmeyecek. Sonraki adım formatla eşleşen anahtar erişimini ve beklenen hash kaynağını doğrulamak; ardından yalnız izole geçici hedefe restore ve kanal/URL hash karşılaştırması yapmak.
+- **DEVAM_NOTU.md:L1660** — [Tarihsel kaynak kaydı] - 34 görev statüleri otomatik tamamlanmadı. Ana playlist, kanallar, kategoriler, arşivler değişmedi; 685 canlı retry, geniş tarama ve İBO Player cihaz testleri başlatılmadı.
+- **DEVAM_NOTU.md:L1675** — [Tarihsel kaynak kaydı] - Main HEAD `493e1699f45e6d893db46ff29690a86b7a8f06eb`, kanonik playlist blob `f3d39e4522d27912fccd6e67240a10fd16c4923b` (salt okunur doğrulandı).
+- **DEVAM_NOTU.md:L1680** — [Tarihsel kaynak kaydı] - Ana playlist, kategori, arşiv ve 34 kanonik görev statüsü değiştirilmedi. Canlı tarama ve İBO cihaz kabulü son aşamaya ertelendi. Kalan iş: #365/#372/#618 dosya incelemesi, eksiksiz Actions başarısızlık mutabakatı, #6/#497 bağımsız kabul kapıları.
+- **DEVAM_NOTU.md:L1685** — [Tarihsel kaynak kaydı] - Main run `43483992949`: `Verify suspended publishers, no cron and immutable IBO` FAILURE; sonraki main run `43484653370`: aynı iş SUCCESS. Eski fixture hatası sonrası başarılı kontrol var.
+- **DEVAM_NOTU.md:L1692** — [Tarihsel kaynak kaydı] - `main` denetim tabanı: `05da09ca8a2ab87550436df6c8cc43267d28e21a` (#622 squash merge). Ana playlist blob SHA `f3d39e4522d27912fccd6e67240a10fd16c4923b`; bu denetimde playlist değiştirilmedi.
+- **DEVAM_NOTU.md:L1696** — [Tarihsel kaynak kaydı] - Eski/mükerrer 20 PR ve #372 daha önce **merge edilmeden kapatıldı**. Tek kanonik playlist kuralı; yeni playlist yok; 48 kaldırılmış kanal geri gelmez; canlı test en son. Hiçbir teknik kabul kanıtsız `DONE` yapılmadı.
+- **DEVAM_NOTU.md:L1702** — [Tarihsel kaynak kaydı] - `v2/ibo_yedekler_archive.py` ve `v2/ibo_yedekler_assign.py`: tarihsel sabit 18.074 YEDEKLER koşulu kaldırıldı, isteğe bağlı `--expected-count` koruması eklendi. `v2/test_yedekler_current_count.py` offline regresyonu eklendi.
+- **DEVAM_NOTU.md:L1703** — [Tarihsel kaynak kaydı] - Kanonik playlist blob SHA **değişmedi**: `f3d39e4522d27912fccd6e67240a10fd16c4923b`.
+- **DEVAM_NOTU.md:L1705** — [Tarihsel kaynak kaydı] - #497 **tamamlanmadı**: mevcut raporların otomatik ve güvenli içeri alınması/uygulanması ayrıca gerekiyor. #365 eski dalı doğrudan merge edilmez; #618 gerçek logo doğrulaması bekler. #8/#10 canlı İBO ve AV aşamaları en sona bırakıldı.
+- **DEVAM_NOTU.md:L1710** — [Tarihsel kaynak kaydı] - PR #365 **birleştirilmeden kapatıldı**: büyük eski dalın güvenli işlevleri #624/#626/#627 ile seçici aktarıldı. Kalan özgün altyapı kabul maddeleri #3/#4/#5/#6/#7; son aşama canlı testler #8/#10. PR #618, gerçek logo eşleşmesi bağımsız doğrulama beklediğinden açık bırakıldı.
+- **DEVAM_NOTU.md:L1711** — [Tarihsel kaynak kaydı] - Kanonik playlist SHA: `f3d39e4522d27912fccd6e67240a10fd16c4923b`, değişmedi. Ayrı playlist oluşturulmadı, canlı tarama yapılmadı.
+- **reports/ANA_SISTEM_10_MADDE_FINAL_KABUL_20261127.md:L13** — [Tarihsel kaynak kaydı] | 7 | Logo/EPG | #785 kesin kimlik ve doğrulanmış varlık girdisi; #792 gerçek envanter aday raporu. |
+- **reports/ANA_SISTEM_10_MADDE_FINAL_KABUL_20261127.md:L35** — [Tarihsel kaynak kaydı] - v2/stream_quality_decision.py ve v2/package2_evidence.py doğrudan okundu: tam kanal ID + URL hash join, duplicate evidence reddi, bağımsız observed ID, decoded audio/video ve pozitif ölçülen height/width/bitrate koşulları. Sıralama height, width, bitrate; eşitlikte hash. Açılış süresi bu sıralamanın girdisi değil, #789 ayrı kalite/istikrar sınıflandırmasıdır. 180 sn başlangıç toleransı, 60 sn örnek, 3 tur, 120 sn ara, geç açılış eşiği 15 sn. Run 45799091422 completed/success, 32 paket artifact ve final artifact 15147217790 mevcut; yeni canlı ölçüm veya kalite kazananı atanmadı.
+- **reports/ANA_SISTEM_10_MADDE_FINAL_KABUL_20261127.md:L36** — [Tarihsel kaynak kaydı] - #785 assets: exact observed ID, doğrulanmış EPG ve HTTPS kaynak, logo için official_origin_verified + content_verified + HTTPS resmî kaynak + SHA-256. #792 raporunda 697 logosuz, 1187 boş TVG-ID, 3 metadata logo adayı, 5 tarihsel tam EPG-ID eşleşmesi; resmî yeni logo/EPG ataması sıfır. Aday eşleşme resmî onay değildir. [Rapor](YEDEKLER_KURTARMA_OZETI.md).
+- **reports/ANA_SISTEM_10_MADDE_FINAL_KABUL_20261127.md:L45** — [Tarihsel kaynak kaydı] - Kanonik playlist blob başlangıç: cb49c9f5a9224c4fd8fde0bbace64c8f20b0466f. Bu PR playlist ve onay manifestine dokunmaz.
+- **reports/ANA_SISTEM_1_5_OFFLINE_KAPANIS_20261127.md:L5** — [Tarihsel kaynak kaydı] 1 — Büyük kanal envanteri: TAMAMLANDI (belirlenen tarihsel kapsam)
+- **reports/ANA_SISTEM_1_5_OFFLINE_KAPANIS_20261127.md:L27** — [Tarihsel kaynak kaydı] DEVAM_NOTU.md içindeki önceki URL mutabakatı 7650/7650 ve 1110/1110 eski listenin o tarihteki YEDEKLER envanterinde mevcut olduğunu belgeliyor; bu iki listenin ham dosyaları bu oturumda yeniden hesaplanmadı ve 36470'e ayrıca eklenmedi. state.json #15 ve v2/reports/task15-historical-url-hash-recovery-20261118.json kayıtları 4949+6=4955 tarihsel kimlik mutabakatını belgeler; bu ayrı tarihi baseline birleşime otomatik eklenmez.
+- **reports/ANA_SISTEM_1_5_OFFLINE_KAPANIS_20261127.md:L28** — [Tarihsel kaynak kaydı] 36470 yalnız iki doğrudan karşılaştırılan URL kümesinin birleşimidir, tüm geçmiş taramalar veya güncel çalışan TV kanalları sayısı değildir.
+- **reports/ANA_SISTEM_1_5_OFFLINE_KAPANIS_20261127.md:L43** — [Tarihsel kaynak kaydı] Her iki örnekte audio_decoded ve video_decoded true; review_approved, language_evidence_verified, working_channel_verified, device_verified ve playlist_modified false. Model güveni doğrulanmış yayın dili veya yayıncı kimliği değildir. Yeni model inference yapılmadı; saklanmış örnek raporu ve mevcut CI logları incelendi.
+- **reports/ANA_SISTEM_1_5_OFFLINE_KAPANIS_20261127.md:L46** — [Tarihsel kaynak kaydı] - test_turkish_speech_without_turkish_name_abroad, test_foreign_channel_turkish_subtitle — ok (triage)
+- **reports/ANA_SISTEM_1_5_OFFLINE_KAPANIS_20261127.md:L52** — [Tarihsel kaynak kaydı] Mevcut test kodları ve CI tanımı incelendi: v2/test_turkish_channel_triage.py (8 test), v2/test_turkish_asr_ocr_evidence.py (12 test), v2/test_turkish_webvtt_evidence.py (7 test), v2/test_turkish_sample_review.py. Bunlar mevcut offline kapsamı karşılıyor; yeni üretim kodu veya mükerrer test eklenmedi.
+- **reports/YEDEKLER_KURTARMA_OZETI.md:L1** — [Tarihsel kaynak kaydı] YEDEKLER kurtarma özeti — 26 Kasım 2026
+- **reports/YEDEKLER_KURTARMA_OZETI.md:L3** — [Tarihsel kaynak kaydı] Salt-okunur çevrimdışı analiz. Yeni yayın testi, yayın URL'si, playlist değişikliği, logo/EPG ataması veya cihaz kabulü yok.
+- **reports/YEDEKLER_KURTARMA_OZETI.md:L5** — [Tarihsel kaynak kaydı] Kaynak ve kapsam
+- **reports/YEDEKLER_KURTARMA_OZETI.md:L7** — [Tarihsel kaynak kaydı] - Main kanonik playlist SHA-256: `265f368758e75c5b18bc1b936a9792fef36528ba486288ddb35e4e7e23775ecf`; YEDEKLER iç parça blob: `5b1335c5cf01a5fcb8a623fb3b76539f5193f1ed`. 18.330 toplam kayıt, 1.562 YEDEKLER. Kategori içi sıra = genel 1-bazlı sıra - 825.
+- **reports/YEDEKLER_KURTARMA_OZETI.md:L8** — [Tarihsel kaynak kaydı] - 26 Kasım [run 45799091422](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/45799091422): erişilebilir 0–26 numaralı 27/32 paket, 1.322 benzersiz pozisyon; tüm indirilen paketler aynı playlist SHA-256 ve YEDEKLER kapsamını bildiriyor. 240 kayıt için bu anlık kesitte yeni sonuç yok. Nihai özet henüz yok.
+- **reports/YEDEKLER_KURTARMA_OZETI.md:L9** — [Tarihsel kaynak kaydı] - 25 Kasım [run 45515390523](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/45515390523), artifact 15007854439, fresh-summary.json: tam 2.390 yabancı arşiv dışı kayıt, 1.562 YEDEKLER, aynı playlist SHA-256. YEDEKLER: 197 AV_60S_VERIFIED, 255 AV_SHORT_VERIFIED, 8 kalite incelemesi, 3 video-only, 450 recheck, 434 access restricted, 108 invalid URL, 107 security policy blocked. 26 Kasımda mevcut olmayan paketler için yalnız tarihsel pozitif kayıtlar ayrıca gösterilir.
+- **reports/YEDEKLER_KURTARMA_OZETI.md:L10** — [Tarihsel kaynak kaydı] - 26 Kasım kapsamı bütün ülkeler: 121 AV_60S_VERIFIED, 4 AV_60S_LATE_START_VERIFIED, 212 AV_SHORT_VERIFIED, 36 tutarsızlık, 12 kalite incelemesi, 3 video-only, 462 recheck, 289 erişim engeli, 94 güvenlik engeli, 89 geçersiz URL (toplam 1.322).
+- **reports/YEDEKLER_KURTARMA_OZETI.md:L11** — [Tarihsel kaynak kaydı] - 26 Kasım Türkî aday etiketleri kaynak raporun turkic_metadata_hint alanından; gerçek konuşma/altyazı veya yayıncı kökeni kanıtı değildir. Tarihsel bölüm için aynı tür ad/TVG metadata ipuçları kullanılmıştır. Aynı kanal farklı URL'lerde tekrarlanabilir; sayılar kanal kayıt sayısıdır.
+- **reports/YEDEKLER_KURTARMA_OZETI.md:L12** — [Tarihsel kaynak kaydı] - Açılış süresi üç turda yerel decoder gözlemi (saniye), İBO cihaz süresi değildir. '-' ölçüm yok. Çözünürlük ve bitrate bu artifact'larda ölçülmemiştir; varsa görünen addaki kalite etiketi yalnız metadata. AV sınıfı gerçek ölçüm sonucudur. Hiçbir erişim engeli aşılmamıştır.
+- **reports/YEDEKLER_KURTARMA_OZETI.md:L14** — [Tarihsel kaynak kaydı] 26 Kasım — mevcut paketlerde Türk/Türkî metadata adayları
+- **reports/YEDEKLER_KURTARMA_OZETI.md:L16** — [Tarihsel kaynak kaydı] | Bölge ipucu | 60 sn AV | Geç açılan 60 sn AV | Kısa AV |
+- **reports/YEDEKLER_KURTARMA_OZETI.md:L18** — [Tarihsel kaynak kaydı] | Türkiye/Türkçe | 31 | 3 | 56 |
+- **reports/YEDEKLER_KURTARMA_OZETI.md:L19** — [Tarihsel kaynak kaydı] | KKTC | 0 | 0 | 1 |
+- **reports/YEDEKLER_KURTARMA_OZETI.md:L20** — [Tarihsel kaynak kaydı] | Azerbaycan | 0 | 0 | 0 |
+- **reports/YEDEKLER_KURTARMA_OZETI.md:L21** — [Tarihsel kaynak kaydı] | Diğer Türkî | 0 | 0 | 0 |
+- **reports/YEDEKLER_KURTARMA_OZETI.md:L22** — [Tarihsel kaynak kaydı] | Toplam | 31 | 3 | 57 |
+- **reports/YEDEKLER_KURTARMA_OZETI.md:L24** — [Tarihsel kaynak kaydı] | YEDEKLER sıra | Genel sıra | Kanal adı (varsa ilan edilen kalite) | TVG-ID | Bölge ipucu | AV sonucu | Açılış tur 1 / 2 / 3 (sn) |
+- **reports/YEDEKLER_KURTARMA_OZETI.md:L118** — [Tarihsel kaynak kaydı] 25 Kasım — yeni paketi henüz olmayan tarihsel pozitif adaylar
+- **reports/YEDEKLER_KURTARMA_OZETI.md:L120** — [Tarihsel kaynak kaydı] Yalnız yeni 27 paketin kapsamadığı pozisyonlardan; açılış ölçülmemiştir. 25 Kasımda 60 sn AV sınıfı üç sağlıklı turun tamamlandığını ispatlamaz.
+- **reports/YEDEKLER_KURTARMA_OZETI.md:L122** — [Tarihsel kaynak kaydı] | YEDEKLER sıra | Genel sıra | Kanal adı | TVG-ID | Bölge ipucu | Tarihsel AV sonucu | Açılış |
+- **reports/YEDEKLER_KURTARMA_OZETI.md:L153** — [Tarihsel kaynak kaydı] Logo ve EPG — kesin metadata eşleşmesi ile resmî doğrulamayı ayır
+- **reports/YEDEKLER_KURTARMA_OZETI.md:L155** — [Tarihsel kaynak kaydı] - Güncel YEDEKLER parçasında boş/olmayan logo: 697; boş/olmayan TVG-ID: 1187. Boş TVG-ID tek başına EPG'nin eksik olduğunu kanıtlamaz.
+- **reports/YEDEKLER_KURTARMA_OZETI.md:L156** — [Tarihsel kaynak kaydı] - Kesin resmî logo ataması için yeterli mevcut kanıt: 0 doğrulanmış kayıt. Aşağıdaki eşleşmeler aynı tam TVG-ID + aynı görünen ad + tek mevcut logo URL'si koşulunu sağlıyor; logo görseli ve yayıncı resmiyeti teyit edilmediği için yalnız inceleme adayıdır.
+- **reports/YEDEKLER_KURTARMA_OZETI.md:L157** — [Tarihsel kaynak kaydı] - Tarihsel 19 Kasım [logo inceleme raporu](../v2/reports/logo-current-exact-name-review-20261119.json) resmî logo kanıtı değildir.
+- **reports/YEDEKLER_KURTARMA_OZETI.md:L158** — [Tarihsel kaynak kaydı] - [19 Kasım XMLTV raporu](../v2/reports/task19-current-xmltv-20261119.json) 7 tam ID, bunların ATV.tr, CNBC-E.tr ve DMAX.tr için yayıncı program zamanına ilişkin tarihsel tanık içerir; yayıncı XMLTV ID beyanı doğrulanmış değildir. Güncel madsc-epg.xml içeriği bağlantı boyut sınırı nedeniyle okunamadı; yeni EPG eksikliği veya güncel program ataması kesinleştirilemez. Aşağıda güncel YEDEKLER TVG-ID ile tarihsel XMLTV raporunun tam, büyük/küçük harfe duyarlı eşleşmeleri gösterilir. Resmî EPG tamamlandı: 0.
+- **reports/YEDEKLER_KURTARMA_OZETI.md:L160** — [Tarihsel kaynak kaydı] Aynı tam TVG-ID + aynı ad ile tek mevcut logo (resmîliği doğrulanmamış)
+- **reports/YEDEKLER_KURTARMA_OZETI.md:L162** — [Tarihsel kaynak kaydı] | YEDEKLER sıra | Ad | TVG-ID | Logo dolu eş kayıt sıraları |
+- **reports/YEDEKLER_KURTARMA_OZETI.md:L168** — [Tarihsel kaynak kaydı] Tarihsel tam XMLTV-ID eşleşmeleri
+- **reports/YEDEKLER_KURTARMA_OZETI.md:L170** — [Tarihsel kaynak kaydı] | YEDEKLER sıra | Ad | TVG-ID | 19 Kasım kanıtı |
+- **reports/YEDEKLER_KURTARMA_OZETI.md:L178** — [Tarihsel kaynak kaydı] Kapanış sınırı
+- **reports/YEDEKLER_KURTARMA_OZETI.md:L180** — [Tarihsel kaynak kaydı] Bu bir mevcut-kanıt raporudur, yeni çalışma veya canlı dil doğrulaması değildir. 26 Kasım 5 paket eksik olduğundan 27 paket üzerinden nihai karar alınmaz. Playlist, parçaları, state.json, güvenlik altyapısı ve kanal kayıtlarına dokunulmaz. Yalnız bu Markdown dosyası eklenir.
+- **v2/DEVAM_NOTU_2026-10-29_LOGOLAR.md:L1** — [Tarihsel kaynak kaydı] MADSC55 TV V2 — SOHBET DEVİR NOTU (29 EKİM 2026)
+- **v2/DEVAM_NOTU_2026-10-29_LOGOLAR.md:L4** — [Tarihsel kaynak kaydı] YEDEKLER (11.316) ve YENİ TÜRK (494) kanallarını alfabetik sıraya diz; eksik tüm logoları bulup uygula; sonraki sohbette kaldığımız yerden devam et. Tek tek oyalayan testler yerine toplu iş ve gerçek sonuç isteniyor.
+- **v2/DEVAM_NOTU_2026-10-29_LOGOLAR.md:L6** — [Tarihsel kaynak kaydı] Kesinleşen son durum
+- **v2/DEVAM_NOTU_2026-10-29_LOGOLAR.md:L7** — [Tarihsel kaynak kaydı] - Repo: Madsc55/MADSC55-TV-V2
+- **v2/DEVAM_NOTU_2026-10-29_LOGOLAR.md:L8** — [Tarihsel kaynak kaydı] - Playlist: MADSC55_TV_IBO_CALISANLAR_TEST.m3u8
+- **v2/DEVAM_NOTU_2026-10-29_LOGOLAR.md:L9** — [Tarihsel kaynak kaydı] - Playlist URL: [URL: kaynak dosyada]
+- **v2/DEVAM_NOTU_2026-10-29_LOGOLAR.md:L10** — [Tarihsel kaynak kaydı] - EPG: [URL: kaynak dosyada]
+- **v2/DEVAM_NOTU_2026-10-29_LOGOLAR.md:L11** — [Tarihsel kaynak kaydı] - 12.648 toplam, 14 kategori. YENİ TÜRK 494, YEDEKLER 11.316. Her iki grup alfabetik.
+- **v2/DEVAM_NOTU_2026-10-29_LOGOLAR.md:L12** — [Tarihsel kaynak kaydı] - ÖNEMLİ: IBO Player daha önce orijinal Madsc55/Madsc55-Tv deposunun raw adresini kullanıyordu. V2 değişiklikleri orijinal listeye otomatik yansımaz; IBO playlist adresini kontrol et.
+- **v2/DEVAM_NOTU_2026-10-29_LOGOLAR.md:L13** — [Tarihsel kaynak kaydı] - Son başarılı logo/sıralama workflow: https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/40790353148
+- **v2/DEVAM_NOTU_2026-10-29_LOGOLAR.md:L14** — [Tarihsel kaynak kaydı] - Script: v2/sort_backups_and_logo_audit.py
+- **v2/DEVAM_NOTU_2026-10-29_LOGOLAR.md:L15** — [Tarihsel kaynak kaydı] - Workflow: .github/workflows/backups-logo-audit.yml
+- **v2/DEVAM_NOTU_2026-10-29_LOGOLAR.md:L16** — [Tarihsel kaynak kaydı] - Rapor: v2/reports/logo-audit.json
+- **v2/DEVAM_NOTU_2026-10-29_LOGOLAR.md:L17** — [Tarihsel kaynak kaydı] - 31 eksik logo mevcut kanalların doğrulanmış aynı isim eşleşmesinden eklendi; iptv-org logos.json üzerinden 0 eşleşme (tvg-id verileri uyuşmuyor ya da yok).
+- **v2/DEVAM_NOTU_2026-10-29_LOGOLAR.md:L18** — [Tarihsel kaynak kaydı] - KALAN LOGOSUZ: YENİ TÜRK 172, YEDEKLER 1709, toplam 1881. Bunlar tamamlandı diye iddia etme.
+- **v2/DEVAM_NOTU_2026-10-29_LOGOLAR.md:L19** — [Tarihsel kaynak kaydı] - YENİ TÜRK ve YEDEKLER sıralaması tamamlandı; kanallar silinmedi.
+- **v2/DEVAM_NOTU_2026-10-29_LOGOLAR.md:L21** — [Tarihsel kaynak kaydı] - Ek olarak YEDEKLER'de hâlâ Türk kanalı olabileceği biliniyor; 'başka yok' deme.
+- **v2/DEVAM_NOTU_2026-10-29_LOGOLAR.md:L24** — [Tarihsel kaynak kaydı] 29 Ekim — kesin Türk kanal keşif kapsamı
+- **v2/DEVAM_NOTU_2026-10-29_LOGOLAR.md:L25** — [Tarihsel kaynak kaydı] - Türkiye içindeki Türk kanalları, yurtdışında Türk izleyiciye yönelik Türkçe kanallar ve YouTube üzerinde gerçekten canlı yayın yapan Türk kanalları DAHİL.
+- **v2/DEVAM_NOTU_2026-10-29_LOGOLAR.md:L27** — [Tarihsel kaynak kaydı] - Yalnızca Türkçe ses seçeneği olan yabancı kanallar otomatik Türk kanalı değildir. Yabancı benzer isimli kanalları, VOD/dizi bölümlerini YENİ TÜRK'e alma.
+- **v2/MAIN_PRODUCTION_SAFETY_LOCK.md:L4** — [Tarihsel kaynak kaydı] the canonical MADSC55_TV_IBO_CALISANLAR_TEST.m3u8 playlist.
+- **v2/MAIN_PRODUCTION_SAFETY_LOCK.md:L9** — [Tarihsel kaynak kaydı] - Other original workflows are now manual-only; the read-only playlist safety
+- **v2/MAIN_PRODUCTION_SAFETY_LOCK.md:L13** — [Tarihsel kaynak kaydı] writer suspension and the immutable main playlist Git blob.
+
+- **v2/OPERATIONS.md:L8** — [Tarihsel kaynak kaydı] GitHub Actions runs the read-only audit twice daily. Reports are uploaded as a workflow artifact (not committed into the live playlist).
+- **v2/OPERATIONS.md:L11** — [Tarihsel kaynak kaydı] - `turkish-tv-health.json`: live playlist network probes, responsive Turkish candidates, YouTube metadata, and sampled ffprobe codec checks.
+- **v2/OPERATIONS.md:L12** — [Tarihsel kaynak kaydı] - `assets-health.json`: EPG/logo HTTP reachability.
+- **v2/OPERATIONS.md:L13** — [Tarihsel kaynak kaydı] - `epg-integrity.json`: bounded XMLTV structural checks and programme counts.
+- **v2/OPERATIONS.md:L24** — [Tarihsel kaynak kaydı] The GitHub Actions workflow `V2 Full Decoder Verification (manual, read-only)` uses `MADSC55_DECODER_SAMPLE=1039` and allows up to 180 minutes. It also runs automatically every Sunday at 02:15 UTC. To start immediately, use **Actions → V2 Full Decoder Verification → Run workflow**. It checks decodability for all *responsive* entries (not all entries if unreachable). Reports remain evidence of codec detection, not sustained playback or official logo provenance.
+- **v2/README.md:L3** — [Tarihsel kaynak kaydı] Independent V2. The existing IBO playlist remains unchanged and is the only live playlist.
+- **v2/README.md:L5** — [Tarihsel kaynak kaydı] - Playlist: `MADSC55_TV_IBO_CALISANLAR_TEST.m3u8`
+- **v2/README.md:L6** — [Tarihsel kaynak kaydı] - EPG: existing `[URL: kaynak dosyada]` (not migrated yet).
+- **v2/README.md:L7** — [Tarihsel kaynak kaydı] - Logos: existing `tvg-logo` URLs preserved; 194 unique URLs inventoried in `yedekler/logo-kaynaklari.md`. Image bytes not yet mirrored.
+- **v2/SCAN_61_ACTION_REPORT.md:L3** — [Tarihsel kaynak kaydı] Kaynak: GitHub Actions run 40758418496, commit 50a7a395; turkish-stream-review artifact 12851805839 (28 Ekim 2026). Bu belge yalnızca kanıtları özetler; otomatik kanal onayı değildir.
+- **v2/SCAN_61_ACTION_REPORT.md:L7** — [Tarihsel kaynak kaydı] - 11.808 VIDEO_DECODED, 15.239 görüntü doğrulanamayan/reddedilen; otomatik onaylanan kanal **0**.
+- **v2/SCAN_61_ACTION_REPORT.md:L10** — [Tarihsel kaynak kaydı] - Metadata: 11.749 EPG ID eksik; 5.699 logo eksik; 2.234 kategori eksik. Bu sayılar birbiriyle örtüşebilir.
+- **v2/SCAN_61_ACTION_REPORT.md:L14** — [Tarihsel kaynak kaydı] - Mevcut playlist URL çakışması: 2 çapraz kanal kimliği vakası. Yalnızca raporla; otomatik silme/birleştirme yapma.
+- **v2/SCAN_61_ACTION_REPORT.md:L15** — [Tarihsel kaynak kaydı] - 139 mevcut kanal ölçüm adayı, 127 ölçülmüş; 32 yayın için üç kararlılık örneği. Bu 24 saat kesintisizlik kanıtı değildir.
+- **v2/SCAN_61_ACTION_REPORT.md:L19** — [Tarihsel kaynak kaydı] 2. Önce 41 kimlik çakışmasını, 2 mevcut playlist URL çakışmasını ve 12 geçici inceleme girdisini gözden geçir. İsim veya URL benzerliğine bakarak otomatik kabul/ret yapma.
+- **v2/SCAN_61_ACTION_REPORT.md:L20** — [Tarihsel kaynak kaydı] 3. 1.810 ses eksikliği, 1.364 metadata eksikliği ve EPG/logo/kategori boşluklarını tek raporda takip et; kaynağı doğrulanmayan metadata uydurma.
+- **v2/SCAN_61_ACTION_REPORT.md:L25** — [Tarihsel kaynak kaydı] Canlı IBO playlist, FAVORİLER, 13 kategori ve iki özgün YEDEKLER. Bu rapor yalnızca yeni bir doküman olarak eklendi; canlı yayın dosyalarını değiştirmez.
+- **v2/WORK_PLAN.md:L6** — [Tarihsel kaynak kaydı] - Dünya çapında kaynak keşfi, Türkçe aday taraması, HTTP probe, kısa decoder, çözünürlük, kararlılık, logo ve EPG kontrolleri mevcut.
+- **v2/WORK_PLAN.md:L8** — [Tarihsel kaynak kaydı] - Arama workflow'u salt okunur; hiçbir aday otomatik canlı IBO listesine eklenmez.
+- **v2/WORK_PLAN.md:L12** — [Tarihsel kaynak kaydı] 1. Her çalışmanın Actions sonucu ve artifact raporunu kontrol et. Başarılı workflow ile doğrulanmış kanal sayısını karıştırma.
+- **v2/WORK_PLAN.md:L13** — [Tarihsel kaynak kaydı] 2. Her kaynak için erişim, toplam kanal, tekrar, canlı listede bulunan ve test edilen sayılarını raporla. Hatalı/ölü kaynakları işaretle; kaynak bulunması kanalın çalıştığı anlamına gelmez.
+- **v2/WORK_PLAN.md:L15** — [Tarihsel kaynak kaydı] 4. YouTube'da yalnızca resmî ve gerçekten canlı yayınları incele. YouTube watch URL veya süresi dolan imzalı HLS URL'lerini kalıcı IBO adresi gibi ekleme. Gerekirse yasal, güvenilir yenileme mekanizmasını ayrıca tasarla ve test et.
+- **v2/WORK_PLAN.md:L16** — [Tarihsel kaynak kaydı] 5. Kanal kimliği, yayın içeriği, çözünürlük, ses, logo, EPG ve doğru kategori eşleşmesini doğrula.
+- **v2/WORK_PLAN.md:L18** — [Tarihsel kaynak kaydı] 7. Son aşamada kategori sayaçları, favoriler, özgün iki YEDEKLER ve playlist güvenlik testlerini yeniden çalıştır.
+- **v2/WORK_PLAN.md:L22** — [Tarihsel kaynak kaydı] - Adaylar raporda; otomatik playlist yazımı yok.
+- **v2/WORK_PLAN.md:L28** — [Tarihsel kaynak kaydı] - `v2/github_source_discovery.py` raporu `v2/reports/github-source-discovery.json` üretir; `v2/discover.py` bu rapordaki en fazla 80 yeni HTTPS kaynağı yapılandırılmış 17 kaynakla birleştirir, M3U içindeki kanal kayıtlarını ayıklar ve canlı IBO'yu değiştirmeden aday raporuna alır.
+- **v2/WORK_PLAN.md:L29** — [Tarihsel kaynak kaydı] - Ardından mevcut IPTV-org TR aday taraması, HTTP, ffprobe kısa decoder, çözünürlük, kararlılık, kalite karşılaştırması, resmî TV sitesi, YouTube canlı yayın, EPG, logo ve güvenlik testleri aynı workflow'da devam eder.
+- **v2/WORK_PLAN.md:L30** — [Tarihsel kaynak kaydı] - Sınır: YouTube canlı yayın sayfaları henüz kalıcı IBO uyumlu akışa dönüştürülmez; kaynaklardan keşfedilen tüm kanallar henüz tek tek ffprobe doğrulamasına alınmaz. Bunlar sonraki entegrasyon işidir. Başarılı workflow bütün adayların çalıştığı anlamına gelmez.
+- **v2/WORK_PLAN.md:L36** — [Tarihsel kaynak kaydı] - Kalan kritik işler: GitHub'dan keşfedilen her yeni kaynak için kanalların ayrı playback testlerine girmesi; YouTube resmî canlı yayınları için IBO'da sürdürülebilir adres yöntemi; tüm raporların birleştirilmiş kabul özeti.
+- **v2/WORK_PLAN.md:L37** — [Tarihsel kaynak kaydı] - Arama işlemleri canlı IBO ve özgün YEDEKLER'e otomatik yazamaz.
+- **v2/WORK_PLAN.md:L42** — [Tarihsel kaynak kaydı] 3. **Devam eden:** Birleşik workflow'un bütün aşamalarının tamamlanması, artifact raporları ve canlı playlist güvenlik testlerinin kontrolü.
+- **v2/WORK_PLAN.md:L44** — [Tarihsel kaynak kaydı] 5. **Eksik:** YouTube için resmî canlı yayın ve yenilenebilir/kalıcı IBO uyumlu kaynak bulma; watch URL veya geçici imzalı HLS kalıcı yayın diye eklenmeyecek.
+- **v2/WORK_PLAN.md:L45** — [Tarihsel kaynak kaydı] 6. **Kabul:** Tek özet, başarısızlıkların ayrı listesi, manuel onaydan önce canlı playlistte sıfır değişiklik.
+- **v2/WORK_PLAN.md:L48** — [Tarihsel kaynak kaydı] - Run 40606347272: V2 Turkish Stream End-to-End Discovery **success**; 40605519678: Health and Discovery **success**; 40605519505: Worldwide Channel Discovery **success**; 40604652483: GitHub source discovery **success**. Workflow başarısı tüm stream'lerin canlı olduğu anlamına gelmez.
+- **v2/WORK_PLAN.md:L49** — [Tarihsel kaynak kaydı] - `v2/all_source_playback.py` ana workflow'da mevcut: yapılandırılmış + GitHub'da bulunan kaynaklardan kaynak başına en fazla 4, toplam en fazla 100 yeni stream'i ffprobe ile örnekler; **bütün kanalların testi değildir**.
+- **v2/WORK_PLAN.md:L53** — [Tarihsel kaynak kaydı] - Öncelik 3: Resmî YouTube canlı yayınları için sürdürülebilir, yetkili IBO-uyumlu akış çözümü; imzalı geçici URL'yi kalıcı playlist'e ekleme.
+- **v2/WORK_PLAN.md:L54** — [Tarihsel kaynak kaydı] - Öncelik 4: Kimlik, içerik, ses/video, gerçek çözünürlük, EPG, logo, kararlılık ve kategori kanıtlarıyla ayrı test listesi oluştur.
+- **v2/WORK_PLAN.md:L58** — [Tarihsel kaynak kaydı] - `v2/build_verified_test_playlist.py` eklendi: kısa decoder ile video kanıtı olan, canlı IBO'da aynı URL ile bulunmayan adaylardan ayrı `v2/reports/short-decoded-review-only.m3u8` üretir. Bu liste **geçici inceleme listesidir**, kanal kimliği ve uzun süreli çalışma henüz kesin değildir.
+- **v2/WORK_PLAN.md:L63** — [Tarihsel kaynak kaydı] - Run 40660958068: **success**, dört shard'ın artifact'ı da mevcut (0,1,2,3). Bu başarı adayı doğrulanan kanal sayısına eşit değildir; raporların içindeki `sampled` ve `video_decoded` sayıları ayrıca okunmalıdır.
+- **v2/WORK_PLAN.md:L66** — [Tarihsel kaynak kaydı] - Sonraki öncelik: dört shard raporunu tek kabul özetine birleştirmek, kapsam dışı aday sayısını hesaplamak, eksik kanalları sonraki partilere almak, YouTube IBO kalıcılığı ve kimlik/EPG/logo eşleştirmelerini kanıtlamak.
+- **v2/WORK_PLAN.md:L67** — [Tarihsel kaynak kaydı] - Canlı IBO, FAVORİLER ve YEDEKLER'e otomatik yazma yok.
+- **v2/WORK_PLAN.md:L70** — [Tarihsel kaynak kaydı] - Run 40662300708 dört playback shard ve aggregate işleri **success**. Aggregate job logu: **1.000 farklı URL hash'i test edildi, 414'ünde video doğrulandı, 586'sında video doğrulanamadı**. Bunlar kanal kimliği veya kalıcı yayın garantisi değildir.
+- **v2/WORK_PLAN.md:L71** — [Tarihsel kaynak kaydı] - Run 40660910249 birleşik kanal arama **success**; 40660159911 ayrı inceleme playlisti dahil **success**.
+- **v2/WORK_PLAN.md:L72** — [Tarihsel kaynak kaydı] - Sıradaki iş sırası: (1) test edilmemiş adayların kapsama hesabı ve sonraki partiler; (2) 586 başarısızın kontrollü tekrar denemesi; (3) 414 görüntülü adayın ses, kimlik, çözünürlük, EPG/logo ve kararlılık doğrulaması; (4) resmî YouTube IBO uyumluluğu; (5) yalnızca kanıtlı adayların ayrı onay listesi. Canlı IBO'ya otomatik aktarım yok.
+- **v2/WORK_PLAN.md:L79** — [Tarihsel kaynak kaydı] **Mevcut kod:** Ana workflow `.github/workflows/v2-turkish-stream-review.yml` kaynak/GitHub/YouTube/resmî site/EPG/logo keşfini ve 100 örnek ffprobe testini, TR kısa decoder, inceleme listesini, güvenlik testlerini çalıştırıyor. `v2/build_verified_test_playlist.py` geçici `v2/reports/short-decoded-review-only.m3u8` oluşturuyor (tam doğrulanmış sayılmamalı). Ayrı `.github/workflows/v2-batched-playback.yml` 4 shard × 2 page, shard başına 250 örnek kapasitesi; `v2/all_source_playback.py` shard ve `PLAYBACK_PAGE` destekliyor; `v2/aggregate_playback_shards.py` kanıtları birleştiriyor. **Ancak bu sekizli toplu kontrol henüz ana tek komutlu workflow'a bağlanmadı.** Ana eksik budur.
+- **v2/WORK_PLAN.md:L81** — [Tarihsel kaynak kaydı] **Doğrulanmış sonuç:** run 40662300708 success, 1.000 farklı URL test, 414 VIDEO_DECODED, 586 video doğrulanamadı. Bu sonuç bütün adayları veya 414 tam onaylı kanalı ifade etmez. run 40660159911 ve 40660910249 birleşik workflow success.
+- **v2/WORK_PLAN.md:L87** — [Tarihsel kaynak kaydı] 3. 414 görüntülü adayın ses, kimlik, kararlılık, EPG/logo/kategori kontrollerini ve 586 başarısızın sınırlı tekrar denemesini otomatik zincire ekle. Tüm adayların kapsanmadığı durumlarda eksik sayısını açıkça raporla.
+- **v2/WORK_PLAN.md:L88** — [Tarihsel kaynak kaydı] 4. Ayrı geçici IBO test listesi ve tek nihai kanıt raporu üret; YouTube kalıcı uyumluluğunu ancak yetkili sürdürülebilir akış varsa onayla.
+- **v2/WORK_PLAN.md:L98** — [Tarihsel kaynak kaydı] - Canlı IBO, FAVORİLER ve iki özgün YEDEKLER'e yazma yapılmadı.
+- **v2/WORK_PLAN.md:L109** — [Tarihsel kaynak kaydı] - Sıradaki eksikler: tek kaynak snapshot'ı, bütçeli başarısız retry, tüm aday kapsama ve aday başına metadata/kimlik/kararlılık doğrulaması. Canlı playlist'e dokunma.
+- **v2/WORK_PLAN.md:L113** — [Tarihsel kaynak kaydı] Mevcut ana workflow bu sözleşmeyi henüz tam uygulamıyor: 4x2 sınırlı örnekleme, kaynak snapshot farkları, yalnızca sınırlı kararlılık örneği ve kimlik kanıtı eksik. Kısmi örneklem başarı değildir. Sonraki kod değişiklikleri mevcut `.github/workflows/v2-turkish-stream-review.yml` içinde yapılmalı; bağımsız test workflow'u oluşturulmamalı. Canlı IBO, FAVORİLER ve iki özgün YEDEKLER salt okunur.
+- **v2/WORK_PLAN.md:L118** — [Tarihsel kaynak kaydı] - Sıradaki işler: tek kaynak snapshot, tam kapsama, üç otomatik retry, aday bazında kimlik/ses/video/EPG/logo/kategori kabul durumu ve tek final raporu.
+- **v2/WORK_PLAN.md:L121** — [Tarihsel kaynak kaydı] - `9d247f7`: `v2/all_source_playback.py` içinde ffprobe başarısızlığı için ilk denemeden sonra **en fazla 3 yeniden deneme** eklendi; sonuçta `attempts` sayısı saklanır. Bu yalnızca playback ffprobe kapsamındadır, tüm EPG/kimlik kontrollerinin tamamlandığı anlamına gelmez.
+- **v2/WORK_PLAN.md:L130** — [Tarihsel kaynak kaydı] - **Öncelik 3:** aday bazlı kimlik, yayın, ses, video, EPG, logo, kategori ve kararlılık delili.
+- **v2/WORK_PLAN.md:L132** — [Tarihsel kaynak kaydı] - **Öncelik 5:** Actions uçtan uca doğrulama. Canlı IBO/kategoriler/FAVORİLER/iki YEDEKLER salt okunur.
+- **v2/WORK_PLAN.md:L135** — [Tarihsel kaynak kaydı] - Actions `40688516292`, `40689745489`, `40689918425` SUCCESS. Bu üç çalışma, sırasıyla kapsam göstergesi, kaynak retry ve kanal bazlı playback raporunun CI içinde tamamlandığını gösterir.
+- **v2/WORK_PLAN.md:L136** — [Tarihsel kaynak kaydı] - `98f37a6`: `final-validation-summary.json` içine `playback_coverage_complete`, `playback_incomplete_sources`, `channel_review_counts` aktarıldı. `approved=0` tutuluyor çünkü kanal kimliği/EPG/logo/kategori henüz kanıtlanmadı. Bu commit'in CI sonucu bekleniyor.
+- **v2/archives/test001_quarantined_48.json:$.reason** — [Tarihsel kaynak kaydı] IBO Player test_001 disappeared after removal of 48 backup records
+- **v2/arsiv/eski_sistem_7650_test_kuyrugu_README.md:L3** — [Tarihsel kaynak kaydı] Bu kuyruk 4 dosyadaki 7.650 benzersiz URL'yi 500'erlik dilimlerle gerçek ffprobe ve ffmpeg ses+görüntü testinden geçirir. Ana IBO playlistine, YEDEKLER'e ve 2.881 arşive yazmaz.
+- **v2/arsiv/eski_sistem_7650_test_kuyrugu_README.md:L11** — [Tarihsel kaynak kaydı] Her çalışmada 500 URL ilerler; state.json dosyası kalıcı saklanmalı. 16 çalışmada tüm adaylar birer kez incelenir. 'av_verified' sadece ses ve görüntü çözümleme testi başarılı anlamına gelir; canlı yayın kimliği ve IBO cihaz testi ayrıca gerekir. Bağlantılar ana YEDEKLER'e otomatik aktarılmaz.
+- **v2/config/sources.json:$.policy** — [Tarihsel kaynak kaydı] discovery-only; never modify live playlist
+- **v2/docs/checkpoint-bounded-evidence-runbook.md:L6** — [Tarihsel kaynak kaydı] - `ibo-scan-progress.enc`: gerçek, şifresi doğrulanabilen **worldwide** tarama checkpoint'i; dosya adı ve kapsamı tam eşleşmeli.
+- **v2/docs/checkpoint-bounded-evidence-runbook.md:L16** — [Tarihsel kaynak kaydı] --checkpoint /secure/path/ibo-scan-progress.enc \
+- **v2/docs/checkpoint-bounded-evidence-runbook.md:L21** — [Tarihsel kaynak kaydı] --checkpoint /secure/path/ibo-scan-progress.enc \
+- **v2/docs/checkpoint-bounded-evidence-runbook.md:L26** — [Tarihsel kaynak kaydı] `--apply` olmadan hiçbir checkpoint yazılmaz. Araç tam hash eşleşmesi ister, eksik/tekrarlı kimliği reddeder; eski gözlemler yeni kayıtların üzerine yazılmaz. Tek HLS segmentindeki AV kanıtı tam tarayıcı onayına yükseltilmez. Kaynak raporun 15 kimliğinden biri gerçek checkpoint'te yoksa işlem **durur**; sahte URL veya yeni kanal keşfi yapılmaz.
+- **v2/docs/checkpoint-bounded-evidence-runbook.md:L35** — [Tarihsel kaynak kaydı] **Koruma:** Ana İBO, YEDEKLER, ANA/TURK/YABANCI arşivleri, EPG, 48 engelli kanal değiştirilmeyecek. 2.500'lük İBO Player test döngüsü ayrı iş akışıdır. Yeni kanal araması yapılmayacak.
+- **v2/epg-report.json:$.sources[0].status** — [Tarihsel kaynak kaydı] ok
+- **v2/epg-report.json:$.sources[1].status** — [Tarihsel kaynak kaydı] ok
+- **v2/epg-report.json:$.sources[2].status** — [Tarihsel kaynak kaydı] ok
+- **v2/epg-report.json:$.sources[3].status** — [Tarihsel kaynak kaydı] ok
+- **v2/epg-report.json:$.sources[4].status** — [Tarihsel kaynak kaydı] ok
+- **v2/logos/manifest.json:$[62].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 403: Forbidden
+- **v2/logos/manifest.json:$[63].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 403: Forbidden
+- **v2/logos/manifest.json:$[68].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[82].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 403: Forbidden
+- **v2/logos/manifest.json:$[84].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 301: The HTTP server returned a redirect error that would lead to an infinite loop.
+The last 30x er
+- **v2/logos/manifest.json:$[110].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[111].reason** — [Tarihsel kaynak kaydı] URLError: &lt;urlopen error [Errno -5] No address associated with hostname&gt;
+- **v2/logos/manifest.json:$[114].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 429: Too Many Requests (015d12c)
+- **v2/logos/manifest.json:$[171].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 403: Forbidden
+- **v2/logos/manifest.json:$[182].reason** — [Tarihsel kaynak kaydı] URLError: &lt;urlopen error [Errno -2] Name or service not known&gt;
+- **v2/logos/manifest.json:$[207].reason** — [Tarihsel kaynak kaydı] ValueError: invalid image size
+- **v2/logos/manifest.json:$[1014].reason** — [Tarihsel kaynak kaydı] ValueError: not a supported image
+- **v2/logos/manifest.json:$[1585].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[1586].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[1823].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 523: &lt;none&gt;
+- **v2/logos/manifest.json:$[1929].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 429: Too Many Requests (015d12c)
+- **v2/logos/manifest.json:$[1938].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[1940].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[1943].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[1946].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[1952].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[1953].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[1957].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[1959].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[1961].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[1963].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[1965].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[1967].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[1969].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[1976].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[1979].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[1982].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[1984].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[1988].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[1992].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[1995].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[1997].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[2002].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[2005].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[2007].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[2009].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[2011].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[2013].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[2022].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[2026].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[2028].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[2030].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[2031].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[2033].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[2035].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[2037].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[2039].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[2040].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[2042].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[2044].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 404: Not Found
+- **v2/logos/manifest.json:$[2047].reason** — [Tarihsel kaynak kaydı] ValueError: not a supported image
+- **v2/logos/manifest.json:$[2062].reason** — [Tarihsel kaynak kaydı] URLError: &lt;urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: certificate has expired (_ssl.c:101
+- **v2/logos/manifest.json:$[2067].reason** — [Tarihsel kaynak kaydı] ValueError: not a supported image
+- **v2/logos/manifest.json:$[2071].reason** — [Tarihsel kaynak kaydı] HTTPError: HTTP Error 403: Forbidden
+- **v2/reports/DEVIR_2026-11-01.md:L5** — [Tarihsel kaynak kaydı] - MADSC55_TV_IBO_CALISANLAR_TEST.m3u8, YEDEKLER, YENİLER, FAVORİLER ve cihaz favorilerini koru.
+- **v2/reports/DEVIR_2026-11-01.md:L6** — [Tarihsel kaynak kaydı] - YEDEKLER ilk iki sıra TRT 1 1440P QHD ve DHA CANLI 720P HD; silme, yer değiştirme; logolarını koru.
+- **v2/reports/DEVIR_2026-11-01.md:L7** — [Tarihsel kaynak kaydı] - Ana listeye veya YEDEKLER'e onaysız aday ekleme; PR #9'u merge etme.
+- **v2/reports/DEVIR_2026-11-01.md:L15** — [Tarihsel kaynak kaydı] - v2/real_ibo_scan.py: ağ kaynaklarını okuma, HTTP/HLS kontrolü, paralel test, 2000'lik aday çıktısı, aday envanteri; cihaz oynatma kanıtı değil.
+- **v2/reports/DEVIR_2026-11-01.md:L40** — [Tarihsel kaynak kaydı] Türkçe M3U/M3U8; IPTV-org dünya/TR/AZ/dil/bölge; Free-TV; GitHub/Gist; GitLab; Codeberg/diğer kod platformları; canlı TV web siteleri; resmî kanal siteleri; YouTube TR/AZ gerçek canlı; Avrupa/diaspora; Güneş TV, Rec TV, Gopik TV; TURKTV, Dearbulut, Onur Eroz; Scribd, SlideShare, Internet Archive kamusal referansları.
+- **v2/reports/DEVIR_2026-11-01.md:L48** — [Tarihsel kaynak kaydı] 6. Aynı kanalın farklı çalışan URL'lerini koruyan tekilleştirme.
+- **v2/reports/DEVIR_2026-11-01.md:L51** — [Tarihsel kaynak kaydı] 9. Ana listede olmayan gerçek adaylardan 2000'lik İBO paketleri; YEDEKLER'e onaysız aktarmama.
+- **v2/reports/DEVIR_2026-11-01.md:L54** — [Tarihsel kaynak kaydı] - YEDEKLER logo eksikleri: eski denetim 33 kayıtta logo eksikliği raporlamış; güncel yeniden kontrol şart.
+- **v2/reports/DEVIR_2026-11-01.md:L56** — [Tarihsel kaynak kaydı] - Kaynak keşfi tamamlanmadan yeni kanalları ana listeye karıştırma.
+
+- **v2/reports/IBO_REAL_BATCH_INTEGRITY_2026-11-13.md:L1** — [Tarihsel kaynak kaydı] #28–#33 — 13 Kasım 2026 gerçek İBO paket kanıtı denetimi
+- **v2/reports/IBO_REAL_BATCH_INTEGRITY_2026-11-13.md:L3** — [Tarihsel kaynak kaydı] **Durum:** Gerçek Actions tarama/artifact kanıtı mevcut; fiziksel cihaz kabulü ve bağımsız üretim geri yükleme teslimi **açık**. Bu kayıt bir görev kapanışı değildir.
+- **v2/reports/IBO_REAL_BATCH_INTEGRITY_2026-11-13.md:L5** — [Tarihsel kaynak kaydı] Kaynak ve doğrulama
+- **v2/reports/IBO_REAL_BATCH_INTEGRITY_2026-11-13.md:L7** — [Tarihsel kaynak kaydı] - GitHub Actions: https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43412576224 — **SUCCESS** (13 Kasım 2026).
+- **v2/reports/IBO_REAL_BATCH_INTEGRITY_2026-11-13.md:L8** — [Tarihsel kaynak kaydı] - Kanıt artifact'i: https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43412576224/artifacts/14033805492
+- **v2/reports/IBO_REAL_BATCH_INTEGRITY_2026-11-13.md:L9** — [Tarihsel kaynak kaydı] - Artifact ZIP SHA-256: `139c8a0868f35d4b64cd55a17bcbd56325d8e3c87b5d07295028bb4d56e832a6`
+- **v2/reports/IBO_REAL_BATCH_INTEGRITY_2026-11-13.md:L10** — [Tarihsel kaynak kaydı] - İncelenen dosya: `v2-real-scan-evidence` ZIP. Parça sayımları arşivin **gerçek baytları** açılıp UTF-8 M3U girdilerinin yapısal eşleştirilmesiyle denetlendi; yeni internet kanal taraması çalıştırılmadı.
+- **v2/reports/IBO_REAL_BATCH_INTEGRITY_2026-11-13.md:L12** — [Tarihsel kaynak kaydı] Ölçülmüş sonuç
+- **v2/reports/IBO_REAL_BATCH_INTEGRITY_2026-11-13.md:L14** — [Tarihsel kaynak kaydı] | Ölçüt | Sonuç |
+- **v2/reports/IBO_REAL_BATCH_INTEGRITY_2026-11-13.md:L16** — [Tarihsel kaynak kaydı] | Yeni farklı aday URL | 13.735 |
+- **v2/reports/IBO_REAL_BATCH_INTEGRITY_2026-11-13.md:L17** — [Tarihsel kaynak kaydı] | Actions raporunda AV doğrulanan | 4.301 |
+- **v2/reports/IBO_REAL_BATCH_INTEGRITY_2026-11-13.md:L18** — [Tarihsel kaynak kaydı] | Doğrulanmamış / başarısız | 9.434 |
+- **v2/reports/IBO_REAL_BATCH_INTEGRITY_2026-11-13.md:L19** — [Tarihsel kaynak kaydı] | Şifreli envanter | `ibo-candidate-inventory.jsonl.enc` (ZIP içinde) |
+- **v2/reports/IBO_REAL_BATCH_INTEGRITY_2026-11-13.md:L20** — [Tarihsel kaynak kaydı] | 1000'lik M3U parçaları | 1000 + 1000 + 1000 + 1000 + 301 |
+- **v2/reports/IBO_REAL_BATCH_INTEGRITY_2026-11-13.md:L21** — [Tarihsel kaynak kaydı] | 2000'lik M3U parçaları | 2000 + 2000 + 301 |
+- **v2/reports/IBO_REAL_BATCH_INTEGRITY_2026-11-13.md:L22** — [Tarihsel kaynak kaydı] | Her gruptaki toplam farklı URL | 4.301 |
+- **v2/reports/IBO_REAL_BATCH_INTEGRITY_2026-11-13.md:L23** — [Tarihsel kaynak kaydı] | Gruplar arasında tam URL dizisi aynı | Evet |
+- **v2/reports/IBO_REAL_BATCH_INTEGRITY_2026-11-13.md:L24** — [Tarihsel kaynak kaydı] | Yinelenen URL / eşleşmemiş EXTINF / biçimsiz yayın satırı | 0 / 0 / 0 |
+- **v2/reports/IBO_REAL_BATCH_INTEGRITY_2026-11-13.md:L25** — [Tarihsel kaynak kaydı] | `mock_data_used` | `false` |
+- **v2/reports/IBO_REAL_BATCH_INTEGRITY_2026-11-13.md:L26** — [Tarihsel kaynak kaydı] | `archive_restore_test_passed` | `true` (**Actions raporundaki test sonucu**, bağımsız bulut geri yükleme değildir) |
+- **v2/reports/IBO_REAL_BATCH_INTEGRITY_2026-11-13.md:L27** — [Tarihsel kaynak kaydı] | `playback_verified_on_device` | `false` |
+- **v2/reports/IBO_REAL_BATCH_INTEGRITY_2026-11-13.md:L28** — [Tarihsel kaynak kaydı] | Rapor durumu | `READY_FOR_DEVICE_TEST` |
+- **v2/reports/IBO_REAL_BATCH_INTEGRITY_2026-11-13.md:L30** — [Tarihsel kaynak kaydı] Doğrulama yöntemi ve kapsam sınırı
+- **v2/reports/IBO_REAL_BATCH_INTEGRITY_2026-11-13.md:L32** — [Tarihsel kaynak kaydı] 1. ZIP açılarak `IBO_AV_VERIFIED_1000_PART*.m3u8` ve `IBO_AV_VERIFIED_2000_PART*.m3u8` dosyaları ayrı ayrı incelendi.
+- **v2/reports/IBO_REAL_BATCH_INTEGRITY_2026-11-13.md:L33** — [Tarihsel kaynak kaydı] 2. Her dosyada `#EXTM3U` başlığı, her `#EXTINF` için bir HTTP(S) URL satırı, bitmemiş çift bulunmaması, URL tekrarı ve belirtilen parça büyüklüğü kontrol edildi.
+- **v2/reports/IBO_REAL_BATCH_INTEGRITY_2026-11-13.md:L34** — [Tarihsel kaynak kaydı] 3. Her iki grupta tüm 4.301 URL'nin aynı sırada bulunduğu ve rapor toplamıyla örtüştüğü doğrulandı. `4.301 + 9.434 = 13.735` aritmetiği tutarlı.
+- **v2/reports/IBO_REAL_BATCH_INTEGRITY_2026-11-13.md:L35** — [Tarihsel kaynak kaydı] 4. Arşivin şifresi kullanılmadı; bu denetim şifreli envanteri bağımsız çözmedi, FFmpeg akışlarını yeniden ölçmedi, video/sesin kimliğini veya İBO Player cihazını doğrulamadı.
+- **v2/reports/IBO_REAL_BATCH_INTEGRITY_2026-11-13.md:L36** — [Tarihsel kaynak kaydı] 5. Salt okunur denetim; ana İBO, YEDEKLER, YENİLER, FAVORİLER veya arşiv kayıtlarına yazma yok.
+- **v2/reports/IBO_REAL_BATCH_INTEGRITY_2026-11-13.md:L38** — [Tarihsel kaynak kaydı] **Kabul sınırı:** Bu kanıt #28–#30 için gerçek paket oluşumu ve M3U biçim/bütünlük denetimine güçlü kanıttır; #31–#33 nihai kabulü için ayrı bağımsız gerçek ortam/cihaz/teslim kanıtları ve ilgili onay kapıları zorunludur. Görev statüleri otomatik değiştirilmedi.
+- **v2/reports/README-discovery-34-live-probe.md:L5** — [Tarihsel kaynak kaydı] The job queries six search terms across GitHub, GitLab and Codeberg, records read-only metadata diagnostics as the `v2-discovery-34-live-diagnostic` Actions artifact, and does not update playlists or certify decoded video/audio.
+- **v2/reports/STAGE6_ACCEPTANCE_LEDGER_2026-11-12.md:L5** — [Tarihsel kaynak kaydı] Bu belge gerçek kabul kanıtı yerine geçmez. Ana IBO listesi, YEDEKLER, favoriler ve EPG üzerinde değişiklik yapılmaz.
+- **v2/reports/STAGE6_ACCEPTANCE_LEDGER_2026-11-12.md:L16** — [Tarihsel kaynak kaydı] #32 — Fiziksel IBO Player kabulü
+- **v2/reports/STAGE6_ACCEPTANCE_LEDGER_2026-11-12.md:L18** — [Tarihsel kaynak kaydı] - Gerekli kayıtlar: cihaz modeli/uygulama sürümü, test tarihi, yüklenen playlist sürümü ve SHA-256, kanalların gerçek görüntü ve ses oynatımı, kategori/YEDEKLER/favori ve EPG ekranları, hatalar.
+- **v2/reports/STAGE_C_INDEPENDENT_ACCEPTANCE_PROTOCOL.md:L3** — [Tarihsel kaynak kaydı] Bu protokol **testin yapıldığına dair kanıt değildir**. Ana İBO, YEDEKLER, YENİLER ve FAVORİLER üzerinde yazma işlemi yapılmaz. Gerçek cihaz ve bağımsız geri yükleme kanıtları üretilene kadar görevler `in_progress` kalır.
+- **v2/reports/STAGE_C_INDEPENDENT_ACCEPTANCE_PROTOCOL.md:L7** — [Tarihsel kaynak kaydı] - İBO Player'a gerçek `IBO_AV_VERIFIED_*_PART*.m3u8` paketini yükle; seçilen her kanal için **görüntü ve sesin aynı oynatma oturumunda** bulunduğunu doğrula. Yalnız HTTP 200, ffprobe, emülatör veya sentetik medya cihaz kabulü sayılmaz.
+- **v2/reports/STAGE_C_INDEPENDENT_ACCEPTANCE_PROTOCOL.md:L8** — [Tarihsel kaynak kaydı] - Kanal kimliği, başlangıç/bitiş zamanı, oynatma sonucu, video ve ses kanıtı dosyalarının yolları, SHA-256 değerleri ve hata günlüğünü üret. Başarısız kanalları başarılı olarak etiketleme.
+- **v2/reports/ffmpeg_av_gap_classification_20261121.md:L25** — [Tarihsel kaynak kaydı] - Ana playlist, arşiv ve kategorilere dokunulmadı; yeni playlist yok.
+- **v2/reports/ibo-500-batch-01-register.md:L1** — [Tarihsel kaynak kaydı] MADSC55 TV V2 — IBO YEDEKLER 500'lü test kayıt defteri
+- **v2/reports/ibo-500-batch-01-register.md:L3** — [Tarihsel kaynak kaydı] - İlk paket: 500 kanal, dosya: MADSC55_V2_500_YEDEKLER.m3u8
+- **v2/reports/ibo-500-batch-01-register.md:L4** — [Tarihsel kaynak kaydı] - SHA-256: de060b0f0227481c01156141216cc13bcc003dab0b1915341697a72dc4aa7ddc
+- **v2/reports/ibo-500-batch-01-register.md:L5** — [Tarihsel kaynak kaydı] - Kaynak: başarılı gerçek tarama #43653012989, artifact 14136864383 (v2-real-scan-evidence)
+- **v2/reports/ibo-500-batch-01-register.md:L6** — [Tarihsel kaynak kaydı] - Arşivdeki aday listesi: IBO_YENI_ADAYLAR_PART1.m3u8
+- **v2/reports/ibo-500-batch-01-register.md:L8** — [Tarihsel kaynak kaydı] - İlk 500 test paketi, sonraki partilerde tekrar seçilmemeli. SHA-256 ile karşılaştırılmalı.
+- **v2/reports/ibo-500-batch-01-register.md:L9** — [Tarihsel kaynak kaydı] - Durum: GitHub protected main ve immutable IBO kontrolü nedeniyle ana İBO'ya aktarım YAPILMADI; cihazda çalıştığı iddia edilmez.
+- **v2/reports/ibo-500-batch-01-register.md:L10** — [Tarihsel kaynak kaydı] - Önceki otomasyon PR: #266, engelli. İBO'ya otomatik yayın izni olmadan dokunulmaz.
+- **v2/reports/ibo-500-batch-01-register.md:L13** — [Tarihsel kaynak kaydı] - Yalnızca mevcut MADSC55 TV V2 ana IBO playlistinin YEDEKLER grubuna, bulunan kaynaklardan **500 kanal** eklenmesine açık izin verilmiştir.
+- **v2/reports/ibo-500-batch-01-register.md:L17** — [Tarihsel kaynak kaydı] - Bu izin, GitHub branch protection / required status check mekanizmalarını devre dışı bırakmaz; değişiklik koruma denetiminden geçmelidir.
+- **v2/reports/ibo-923-out-1000-in-preparation-2026-11-16.md:L1** — [Tarihsel kaynak kaydı] İBO ana listeye aktarım hazırlığı — 16 Kasım 2026
+- **v2/reports/ibo-923-out-1000-in-preparation-2026-11-16.md:L5** — [Tarihsel kaynak kaydı] - Ana dosya: `MADSC55_TV_IBO_CALISANLAR_TEST.m3u8`
+- **v2/reports/ibo-923-out-1000-in-preparation-2026-11-16.md:L8** — [Tarihsel kaynak kaydı] - Ana listede mevcut kayıt: 1925; YEDEKLER: 1087.
+- **v2/reports/ibo-923-out-1000-in-preparation-2026-11-16.md:L9** — [Tarihsel kaynak kaydı] - Eski YEDEKLER 84–1006 arası 923 kanal arşivlenmiş, ancak ana listeden henüz çıkarılmamış.
+- **v2/reports/ibo-923-out-1000-in-preparation-2026-11-16.md:L10** — [Tarihsel kaynak kaydı] - 3964 arşiv kaydının tamamı farklı yayın URL'sine sahip; ana listedeki URL'lerle tam eşleşme 0, aynı isim eşleşmesi 170.
+- **v2/reports/ibo-923-out-1000-in-preparation-2026-11-16.md:L11** — [Tarihsel kaynak kaydı] - Öngörülen ilk paket: arşivdeki sıralı ilk 1000 URL; mevcut ana listedeki URL'lerden farklı. Bu adaylar İBO Player'da henüz görüntü/ses açısından test edilmedi.
+- **v2/reports/ibo-923-out-1000-in-preparation-2026-11-16.md:L12** — [Tarihsel kaynak kaydı] - İstenen nihai YEDEKLER: 1087 − 923 + 1000 = 1164. Ana liste toplamı: 1925 − 923 + 1000 = 2002.
+- **v2/reports/ibo-923-out-1000-in-preparation-2026-11-16.md:L14** — [Tarihsel kaynak kaydı] Güvenli uygulama sınırı
+- **v2/reports/logo_inventory_20261121.md:L1** — [Tarihsel kaynak kaydı] 21 Kasım 2026 — Güncel ana playlist logo envanteri
+- **v2/reports/logo_inventory_20261121.md:L3** — [Tarihsel kaynak kaydı] Kaynak blob SHA: `f3d39e4522d27912fccd6e67240a10fd16c4923b`. Salt okunur denetim; logo URL'si doğrulaması veya playlist değişikliği yapılmadı.
+- **v2/reports/logo_inventory_20261121.md:L5** — [Tarihsel kaynak kaydı] - Toplam kanal: 18.912
+- **v2/reports/logo_inventory_20261121.md:L6** — [Tarihsel kaynak kaydı] - Logosuz kayıt: 4.745
+- **v2/reports/logo_inventory_20261121.md:L7** — [Tarihsel kaynak kaydı] - YEDEKLER: 399; TÜRK ARŞİVİ: 371; YABANCI ARŞİVİ: 90; ANA ARŞİV: 3.885
+- **v2/reports/logo_inventory_20261121.md:L8** — [Tarihsel kaynak kaydı] - Aynı görünen isimle başka kayıtta tekil logo URL'si bulunan **inceleme adayları**: 330. Bunlar doğrulanmış logo değildir. Kanal kimliği, yayıncı resmi kaynağı, güncellik ve HTTPS kontrolü olmadan uygulanmaz.
+- **v2/reports/logo_inventory_20261121.md:L9** — [Tarihsel kaynak kaydı] - Tarihî 307/558 rakamları güncel 18.912 kayıtlık envanterin sonucu değildir.
+- **v2/reports/logo_inventory_20261121.md:L11** — [Tarihsel kaynak kaydı] İnceleme adayları (ilk 100)
+- **v2/reports/logo_inventory_20261121.md:L13** — [Tarihsel kaynak kaydı] | Satır | Kategori | Kanal adı |
+- **v2/reports/logo_inventory_20261121.md:L15** — [Tarihsel kaynak kaydı] | 2356 | 🗂️ YEDEKLER (1792) | POWER TÜRK |
+- **v2/reports/logo_inventory_20261121.md:L16** — [Tarihsel kaynak kaydı] | 2380 | 🗂️ YEDEKLER (1792) | Kanal D Drama (1080p) |
+- **v2/reports/logo_inventory_20261121.md:L17** — [Tarihsel kaynak kaydı] | 2382 | 🗂️ YEDEKLER (1792) | Kanal D Drama (1080p) |
+- **v2/reports/logo_inventory_20261121.md:L18** — [Tarihsel kaynak kaydı] | 2392 | 🗂️ YEDEKLER (1792) | Ulke TV |
+- **v2/reports/logo_inventory_20261121.md:L19** — [Tarihsel kaynak kaydı] | 2422 | 🗂️ YEDEKLER (1792) | Can TV (720p) |
+- **v2/reports/logo_inventory_20261121.md:L20** — [Tarihsel kaynak kaydı] | 2454 | 🗂️ YEDEKLER (1792) | CGTN Documentary |
+- **v2/reports/logo_inventory_20261121.md:L21** — [Tarihsel kaynak kaydı] | 2558 | 🗂️ YEDEKLER (1792) | TGRT EU |
+- **v2/reports/logo_inventory_20261121.md:L22** — [Tarihsel kaynak kaydı] | 2584 | 🗂️ YEDEKLER (1792) | Diyanet TV |
+- **v2/reports/logo_inventory_20261121.md:L23** — [Tarihsel kaynak kaydı] | 2660 | 🗂️ YEDEKLER (1792) | Bursa TV (720p) [Not 24/7] |
+- **v2/reports/logo_inventory_20261121.md:L24** — [Tarihsel kaynak kaydı] | 2662 | 🗂️ YEDEKLER (1792) | PowerTurk TV |
+- **v2/reports/logo_inventory_20261121.md:L25** — [Tarihsel kaynak kaydı] | 2688 | 🗂️ YEDEKLER (1792) | DİYANET TV |
+- **v2/reports/logo_inventory_20261121.md:L26** — [Tarihsel kaynak kaydı] | 2842 | 🗂️ YEDEKLER (1792) | Cekmeköy TV (1080p) |
+- **v2/reports/logo_inventory_20261121.md:L27** — [Tarihsel kaynak kaydı] | 2866 | 🗂️ YEDEKLER (1792) | NOW TV |
+- **v2/reports/logo_inventory_20261121.md:L28** — [Tarihsel kaynak kaydı] | 2882 | 🗂️ YEDEKLER (1792) | TV 41 (720p) [Not 24/7] |
+- **v2/reports/logo_inventory_20261121.md:L29** — [Tarihsel kaynak kaydı] | 2884 | 🗂️ YEDEKLER (1792) | TV 41 (720p) [Not 24/7] |
+- **v2/reports/logo_inventory_20261121.md:L30** — [Tarihsel kaynak kaydı] | 2984 | 🗂️ YEDEKLER (1792) | Van 65 TV |
+- **v2/reports/logo_inventory_20261121.md:L31** — [Tarihsel kaynak kaydı] | 3004 | 🗂️ YEDEKLER (1792) | MINIKA GO |
+- **v2/reports/logo_inventory_20261121.md:L32** — [Tarihsel kaynak kaydı] | 3018 | 🗂️ YEDEKLER (1792) | beIN Box Office 2 HD TR |
+- **v2/reports/logo_inventory_20261121.md:L33** — [Tarihsel kaynak kaydı] | 3266 | 🗂️ YEDEKLER (1792) | MAVİ KARADENİZ |
+- **v2/reports/logo_inventory_20261121.md:L34** — [Tarihsel kaynak kaydı] | 3284 | 🗂️ YEDEKLER (1792) | HABER 61 TV |
+- **v2/reports/logo_inventory_20261121.md:L35** — [Tarihsel kaynak kaydı] | 3302 | 🗂️ YEDEKLER (1792) | Now TV |
+- **v2/reports/logo_inventory_20261121.md:L36** — [Tarihsel kaynak kaydı] | 3304 | 🗂️ YEDEKLER (1792) | S SPORT |
+- **v2/reports/logo_inventory_20261121.md:L37** — [Tarihsel kaynak kaydı] | 3406 | 🗂️ YEDEKLER (1792) | HABER 61 |
+- **v2/reports/logo_inventory_20261121.md:L38** — [Tarihsel kaynak kaydı] | 3442 | 🗂️ YEDEKLER (1792) | TJK TV 2 |
+- **v2/reports/logo_inventory_20261121.md:L39** — [Tarihsel kaynak kaydı] | 3610 | 🗂️ YEDEKLER (1792) | GZT |
+- **v2/reports/logo_inventory_20261121.md:L40** — [Tarihsel kaynak kaydı] | 3688 | 🗂️ YEDEKLER (1792) | VAV TV |
+- **v2/reports/logo_inventory_20261121.md:L41** — [Tarihsel kaynak kaydı] | 3744 | 🗂️ YEDEKLER (1792) | TV4 |
+- **v2/reports/logo_inventory_20261121.md:L42** — [Tarihsel kaynak kaydı] | 5274 | TÜRK ARŞİVİ (424) | ATV (1080p) |
+- **v2/reports/logo_inventory_20261121.md:L43** — [Tarihsel kaynak kaydı] | 5276 | TÜRK ARŞİVİ (424) | ATV (1080p) |
+- **v2/reports/logo_inventory_20261121.md:L44** — [Tarihsel kaynak kaydı] | 5912 | TÜRK ARŞİVİ (424) | ATV Avrupa |
+- **v2/reports/logo_inventory_20261121.md:L45** — [Tarihsel kaynak kaydı] | 5914 | TÜRK ARŞİVİ (424) | ATV Spirit |
+- **v2/reports/logo_inventory_20261121.md:L46** — [Tarihsel kaynak kaydı] | 5926 | TÜRK ARŞİVİ (424) | KRT TV |
+- **v2/reports/logo_inventory_20261121.md:L47** — [Tarihsel kaynak kaydı] | 5990 | TÜRK ARŞİVİ (424) | TRT Diyanet Çocuk |
+- **v2/reports/logo_inventory_20261121.md:L48** — [Tarihsel kaynak kaydı] | 6242 | YABANCI ARŞİVİ (284) | TRT ARABI |
+- **v2/reports/logo_inventory_20261121.md:L49** — [Tarihsel kaynak kaydı] | 6454 | YABANCI ARŞİVİ (284) | ANTV (720p) |
+- **v2/reports/logo_inventory_20261121.md:L50** — [Tarihsel kaynak kaydı] | 6490 | YABANCI ARŞİVİ (284) | LATV (1080p) |
+- **v2/reports/logo_inventory_20261121.md:L51** — [Tarihsel kaynak kaydı] | 6492 | YABANCI ARŞİVİ (284) | MagellanTV Now (1080p) |
+- **v2/reports/logo_inventory_20261121.md:L52** — [Tarihsel kaynak kaydı] | 6494 | YABANCI ARŞİVİ (284) | MagellanTV Now (1080p) |
+- **v2/reports/logo_inventory_20261121.md:L53** — [Tarihsel kaynak kaydı] | 6506 | YABANCI ARŞİVİ (284) | NTV (1080p) |
+- **v2/reports/logo_inventory_20261121.md:L54** — [Tarihsel kaynak kaydı] | 6508 | YABANCI ARŞİVİ (284) | NTV (1080p) |
+- **v2/reports/logo_inventory_20261121.md:L55** — [Tarihsel kaynak kaydı] | 6510 | YABANCI ARŞİVİ (284) | NTV (1080p) |
+- **v2/reports/logo_inventory_20261121.md:L56** — [Tarihsel kaynak kaydı] | 6512 | YABANCI ARŞİVİ (284) | NTV (1080p) |
+- **v2/reports/logo_inventory_20261121.md:L57** — [Tarihsel kaynak kaydı] | 13058 | ANA ARŞİV (15574) | QAZAQSTAN |
+- **v2/reports/logo_inventory_20261121.md:L58** — [Tarihsel kaynak kaydı] | 13960 | ANA ARŞİV (15574) | NEWS STATE PUNJAB HARYANA HIMACHAL (1080P) |
+- **v2/reports/logo_inventory_20261121.md:L59** — [Tarihsel kaynak kaydı] | 14626 | ANA ARŞİV (15574) | CINE+ |
+- **v2/reports/logo_inventory_20261121.md:L60** — [Tarihsel kaynak kaydı] | 20092 | ANA ARŞİV (15574) | TENNIS CHANNEL |
+- **v2/reports/logo_inventory_20261121.md:L61** — [Tarihsel kaynak kaydı] | 20772 | ANA ARŞİV (15574) | EL TV |
+- **v2/reports/logo_inventory_20261121.md:L62** — [Tarihsel kaynak kaydı] | 20796 | ANA ARŞİV (15574) | YU-GI-OH! |
+- **v2/reports/logo_inventory_20261121.md:L63** — [Tarihsel kaynak kaydı] | 21008 | ANA ARŞİV (15574) | TV4 |
+- **v2/reports/logo_inventory_20261121.md:L64** — [Tarihsel kaynak kaydı] | 21034 | ANA ARŞİV (15574) | TOP Barca (1080p) |
+- **v2/reports/logo_inventory_20261121.md:L65** — [Tarihsel kaynak kaydı] | 21066 | ANA ARŞİV (15574) | TNT (1080p) |
+- **v2/reports/logo_inventory_20261121.md:L66** — [Tarihsel kaynak kaydı] | 21076 | ANA ARŞİV (15574) | TNV-Planet (576p) |
+- **v2/reports/logo_inventory_20261121.md:L67** — [Tarihsel kaynak kaydı] | 21078 | ANA ARŞİV (15574) | A&E Latin America (1080p) |
+- **v2/reports/logo_inventory_20261121.md:L68** — [Tarihsel kaynak kaydı] | 21082 | ANA ARŞİV (15574) | A1 TV (1080p) |
+- **v2/reports/logo_inventory_20261121.md:L69** — [Tarihsel kaynak kaydı] | 21110 | ANA ARŞİV (15574) | AMC Europe |
+- **v2/reports/logo_inventory_20261121.md:L70** — [Tarihsel kaynak kaydı] | 21112 | ANA ARŞİV (15574) | AMC Europe |
+- **v2/reports/logo_inventory_20261121.md:L71** — [Tarihsel kaynak kaydı] | 21114 | ANA ARŞİV (15574) | AMC Europe |
+- **v2/reports/logo_inventory_20261121.md:L72** — [Tarihsel kaynak kaydı] | 21130 | ANA ARŞİV (15574) | ATN Bangla (720p) |
+- **v2/reports/logo_inventory_20261121.md:L73** — [Tarihsel kaynak kaydı] | 21138 | ANA ARŞİV (15574) | AXN CEE |
+- **v2/reports/logo_inventory_20261121.md:L74** — [Tarihsel kaynak kaydı] | 21140 | ANA ARŞİV (15574) | AXN CEE |
+- **v2/reports/logo_inventory_20261121.md:L75** — [Tarihsel kaynak kaydı] | 21142 | ANA ARŞİV (15574) | AXN CEE |
+- **v2/reports/logo_inventory_20261121.md:L76** — [Tarihsel kaynak kaydı] | 21144 | ANA ARŞİV (15574) | AXN Crime |
+- **v2/reports/logo_inventory_20261121.md:L77** — [Tarihsel kaynak kaydı] | 21148 | ANA ARŞİV (15574) | AXN Spin |
+- **v2/reports/logo_inventory_20261121.md:L78** — [Tarihsel kaynak kaydı] | 21154 | ANA ARŞİV (15574) | Aaj Tak (1080p) |
+- **v2/reports/logo_inventory_20261121.md:L79** — [Tarihsel kaynak kaydı] | 21156 | ANA ARŞİV (15574) | Aakaash Aath (576p) |
+- **v2/reports/logo_inventory_20261121.md:L80** — [Tarihsel kaynak kaydı] | 21178 | ANA ARŞİV (15574) | Adult Swim Latin America (720p) |
+- **v2/reports/logo_inventory_20261121.md:L81** — [Tarihsel kaynak kaydı] | 21206 | ANA ARŞİV (15574) | Aguacate TV (1080p) |
+- **v2/reports/logo_inventory_20261121.md:L82** — [Tarihsel kaynak kaydı] | 21210 | ANA ARŞİV (15574) | Aire de Santa Fe (1080p) |
+- **v2/reports/logo_inventory_20261121.md:L83** — [Tarihsel kaynak kaydı] | 21230 | ANA ARŞİV (15574) | Alcance TV (720p) |
+- **v2/reports/logo_inventory_20261121.md:L84** — [Tarihsel kaynak kaydı] | 21240 | ANA ARŞİV (15574) | Alma TV |
+- **v2/reports/logo_inventory_20261121.md:L85** — [Tarihsel kaynak kaydı] | 21266 | ANA ARŞİV (15574) | An Ninh TV (1080p) |
+- **v2/reports/logo_inventory_20261121.md:L86** — [Tarihsel kaynak kaydı] | 21288 | ANA ARŞİV (15574) | Antena 1 (720p) |
+- **v2/reports/logo_inventory_20261121.md:L87** — [Tarihsel kaynak kaydı] | 21324 | ANA ARŞİV (15574) | Are We There Yet? (1080p) |
+- **v2/reports/logo_inventory_20261121.md:L88** — [Tarihsel kaynak kaydı] | 21326 | ANA ARŞİV (15574) | Arena Sport 1 |
+- **v2/reports/logo_inventory_20261121.md:L89** — [Tarihsel kaynak kaydı] | 21328 | ANA ARŞİV (15574) | Arena Sport 2 |
+- **v2/reports/logo_inventory_20261121.md:L90** — [Tarihsel kaynak kaydı] | 21330 | ANA ARŞİV (15574) | Arena4 |
+- **v2/reports/logo_inventory_20261121.md:L91** — [Tarihsel kaynak kaydı] | 21338 | ANA ARŞİV (15574) | Arte 1 (720p) |
+- **v2/reports/logo_inventory_20261121.md:L92** — [Tarihsel kaynak kaydı] | 21356 | ANA ARŞİV (15574) | Astana TV (576p) |
+- **v2/reports/logo_inventory_20261121.md:L93** — [Tarihsel kaynak kaydı] | 21358 | ANA ARŞİV (15574) | Astha TV (1080p) |
+- **v2/reports/logo_inventory_20261121.md:L94** — [Tarihsel kaynak kaydı] | 21390 | ANA ARŞİV (15574) | B4U Kadak (576p) |
+- **v2/reports/logo_inventory_20261121.md:L95** — [Tarihsel kaynak kaydı] | 21402 | ANA ARŞİV (15574) | BBC Earth (1080p) |
+- **v2/reports/logo_inventory_20261121.md:L96** — [Tarihsel kaynak kaydı] | 21414 | ANA ARŞİV (15574) | BBC News Pashto (720p) |
+- **v2/reports/logo_inventory_20261121.md:L97** — [Tarihsel kaynak kaydı] | 21550 | ANA ARŞİV (15574) | BNT 1 (1080p) |
+- **v2/reports/logo_inventory_20261121.md:L98** — [Tarihsel kaynak kaydı] | 21554 | ANA ARŞİV (15574) | BNT 3 (1080p) |
+- **v2/reports/logo_inventory_20261121.md:L99** — [Tarihsel kaynak kaydı] | 21556 | ANA ARŞİV (15574) | BNT 4 (1080p) |
+- **v2/reports/logo_inventory_20261121.md:L100** — [Tarihsel kaynak kaydı] | 21566 | ANA ARŞİV (15574) | BRIDGE Classic (576p) |
+- **v2/reports/logo_inventory_20261121.md:L101** — [Tarihsel kaynak kaydı] | 21578 | ANA ARŞİV (15574) | BTB 2 (1080p) |
+- **v2/reports/logo_inventory_20261121.md:L102** — [Tarihsel kaynak kaydı] | 21582 | ANA ARŞİV (15574) | BTB Info (1080p) |
+- **v2/reports/logo_inventory_20261121.md:L103** — [Tarihsel kaynak kaydı] | 21598 | ANA ARŞİV (15574) | BUM Television (720p) |
+- **v2/reports/logo_inventory_20261121.md:L104** — [Tarihsel kaynak kaydı] | 21636 | ANA ARŞİV (15574) | BandNews (1080p) |
+- **v2/reports/logo_inventory_20261121.md:L105** — [Tarihsel kaynak kaydı] | 21648 | ANA ARŞİV (15574) | Baywatch (1080p) |
+- **v2/reports/logo_inventory_20261121.md:L106** — [Tarihsel kaynak kaydı] | 21656 | ANA ARŞİV (15574) | Belarus-5 (1080p) |
+- **v2/reports/logo_inventory_20261121.md:L107** — [Tarihsel kaynak kaydı] | 21692 | ANA ARŞİV (15574) | Bober (576p) |
+- **v2/reports/logo_inventory_20261121.md:L108** — [Tarihsel kaynak kaydı] | 21694 | ANA ARŞİV (15574) | Bober (576p) |
+- **v2/reports/logo_inventory_20261121.md:L109** — [Tarihsel kaynak kaydı] | 21728 | ANA ARŞİV (15574) | CBC News Network (1080p) |
+- **v2/reports/logo_inventory_20261121.md:L110** — [Tarihsel kaynak kaydı] | 21740 | ANA ARŞİV (15574) | CBS News Bay Area (720p) |
+- **v2/reports/logo_inventory_20261121.md:L111** — [Tarihsel kaynak kaydı] | 21742 | ANA ARŞİV (15574) | CBS News Boston (720p) |
+- **v2/reports/logo_inventory_20261121.md:L112** — [Tarihsel kaynak kaydı] | 21744 | ANA ARŞİV (15574) | CBS News Chicago (720p) |
+- **v2/reports/logo_inventory_20261121.md:L113** — [Tarihsel kaynak kaydı] | 21746 | ANA ARŞİV (15574) | CBS News Colorado (720p) |
+- **v2/reports/logo_inventory_20261121.md:L114** — [Tarihsel kaynak kaydı] | 21748 | ANA ARŞİV (15574) | CBS News Detroit (720p) |
+- **v2/reports/logo_inventory_20261121.md:L116** — [Tarihsel kaynak kaydı] Bu rapor üretim playlistini, kanal URL'lerini, arşivleri veya sıralamayı değiştirmez.
+- **v2/reports/package-artifact-independent-audit-20261119.md:L3** — [Tarihsel kaynak kaydı] Scope: existing immutable GitHub Actions artifact only; no new discovery, AV probe, device playback, playlist write, archive mutation or restore execution.
+- **v2/reports/package-artifact-independent-audit-20261119.md:L7** — [Tarihsel kaynak kaydı] - Independent ZIP read found 14 entries. 1000-series contains five files with channel counts `1000,1000,1000,1000,301`. 2000-series contains three files with counts `2000,2000,301`.
+- **v2/reports/package-artifact-independent-audit-20261119.md:L10** — [Tarihsel kaynak kaydı] - Embedded `ibo-real-scan-report.json` records `http_hls_ok=4301`, `av_verified=4301`, `archive_restore_test_passed=true`, `mock_data_used=false`, `playback_verified_on_device=false`, `status=READY_FOR_DEVICE_TEST`.
+- **v2/reports/package-artifact-independent-audit-20261119.md:L12** — [Tarihsel kaynak kaydı] - No device/IBO playback was observed. Do **not** close tasks 28–33 or claim final production acceptance on this audit alone.
+- **v2/reports/pr391-logo-reconciliation-20261119.md:L1** — [Tarihsel kaynak kaydı] PR #391 — 19 Kasım 2026 güvenli logo mutabakatı
+- **v2/reports/pr391-logo-reconciliation-20261119.md:L3** — [Tarihsel kaynak kaydı] Doğrulanmış durum
+- **v2/reports/pr391-logo-reconciliation-20261119.md:L4** — [Tarihsel kaynak kaydı] - Ana korumalı dal: `main` commit `43dcebdbad3014b7850ab3bbd93c257ebdcd77f0`.
+- **v2/reports/pr391-logo-reconciliation-20261119.md:L5** — [Tarihsel kaynak kaydı] - Güncel ana İBO playlist blob SHA: `25a015401dd09c082b0d766c18d54e54f4a4b44d`.
+- **v2/reports/pr391-logo-reconciliation-20261119.md:L6** — [Tarihsel kaynak kaydı] - Güncel playlist: 2.914 `#EXTINF` kaydı, bunların 2.076'sı `🗂️ YEDEKLER (2076)` kategorisinde.
+- **v2/reports/pr391-logo-reconciliation-20261119.md:L7** — [Tarihsel kaynak kaydı] - PR #391 playlist sürümü: 3.338 `#EXTINF` kaydı. Eski sürümle güncel sürüm arasında URL üzerinden karşılaştırmada eski PR'a özgü 419 kayıt bulundu; güncel listede boş logo alanına karşılık eski PR'da dolu logo alanı bulunan 217 kayıt saptandı. Bu 217 kayıt **doğrulanmış logo eşleşmesi değildir**; URL bazlı eşleşme tekrarları ve kanal kimliği ayrıca incelenmelidir.
+- **v2/reports/pr391-logo-reconciliation-20261119.md:L8** — [Tarihsel kaynak kaydı] - PR #391 yalnızca `MADSC55_TV_IBO_CALISANLAR_TEST.m3u8` dosyasını değiştiriyor; GitHub değişiklik yaması boyut nedeniyle sağlanmıyor.
+- **v2/reports/pr391-logo-reconciliation-20261119.md:L9** — [Tarihsel kaynak kaydı] - PR #391: merge conflict (`dirty`), Production Security Gate **FAILURE**, başarısız adım: `Fail closed on changes to production trigger/write policy`.
+- **v2/reports/pr391-logo-reconciliation-20261119.md:L11** — [Tarihsel kaynak kaydı] Karar / güvenlik sınırı
+- **v2/reports/pr391-logo-reconciliation-20261119.md:L12** — [Tarihsel kaynak kaydı] - #391 eski playlistini `main` üzerine **asla komple kopyalama** veya zorla birleştirme. Mevcut 2.076 YEDEKLER kaydını ve diğer kategorileri koru.
+- **v2/reports/pr391-logo-reconciliation-20261119.md:L13** — [Tarihsel kaynak kaydı] - Ana playlist dışında yeni test playlisti, YEDEKLER_TEST kategorisi oluşturma; 48 engelli kanalı geri ekleme; kaldırılmış ilk-1003 kuralını uygulama.
+- **v2/reports/pr391-logo-reconciliation-20261119.md:L14** — [Tarihsel kaynak kaydı] - Logo işi için aynı kanalın **kimlik + yayın URL + ad** eşleşmesini doğrula; yalnızca eksik ve resmî/orijinal olduğu kanıtlanan logo bağlantılarını aday olarak belirle. Tekrarlanan URL'lerde farklı kanal kimlikleri olabileceğini dikkate al.
+- **v2/reports/pr391-logo-reconciliation-20261119.md:L15** — [Tarihsel kaynak kaydı] - Önce güncel main ile dar kapsamlı, kanal sayısını/sırasını/URL'lerini değiştirmeyen değişiklik önerisi hazırla. Production Security Gate SUCCESS olmadan merge etme.
+- **v2/reports/pr391-logo-reconciliation-20261119.md:L16** — [Tarihsel kaynak kaydı] - Sistem kurulumu tamamlanmadan yeni kanal araması, AV testi veya IBO Player testini başlatma.
+- **v2/reports/pr391-logo-reconciliation-20261119.md:L18** — [Tarihsel kaynak kaydı] Önceki işler
+- **v2/reports/pr391-logo-reconciliation-20261119.md:L19** — [Tarihsel kaynak kaydı] - #421, #425, #443: merged ve ilgili Production Security Gate SUCCESS olarak doğrulandı.
+- **v2/reports/pr391-logo-reconciliation-20261119.md:L20** — [Tarihsel kaynak kaydı] - #427: closed, merged değil; eski başarılı test sonucu tek başına merge anlamına gelmez.
+- **v2/reports/pr391-logo-reconciliation-20261119.md:L21** — [Tarihsel kaynak kaydı] - #391: açık ve bloklu; bu rapor işi tamamlandı anlamına gelmez.
+- **v2/reports/source-inventory-change-log.md:L10** — [Tarihsel kaynak kaydı] - Protected playlists were not edited.
+
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L7** — [Tarihsel kaynak kaydı] **developer security implementation**, not an actual 18,074-channel scan or
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L8** — [Tarihsel kaynak kaydı] evidence that any real channel is playing.
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L34** — [Tarihsel kaynak kaydı] - Nested HLS/M3U8/DASH playlists, ffconcat scripts, HTML/text and unrecognized
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L40** — [Tarihsel kaynak kaydı] and IBO Player device proof.
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L52** — [Tarihsel kaynak kaydı] 685-channel retry, 18,074 full scan, archive transfer or playlist write
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L56** — [Tarihsel kaynak kaydı] Exactly one main IBO playlist is preserved, with no new playlist, no
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L57** — [Tarihsel kaynak kaydı] re-adding 48 quarantined channels, no restoring the obsolete first-1,003
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L58** — [Tarihsel kaynak kaydı] protection rule, no URL duplication and no changes to the user's channel
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L59** — [Tarihsel kaynak kaydı] categories. Existing IBO 2,500-channel device test cycle remains separate.
+- **v2/reports/stage4_historical_drive_restore_provenance_20261121.json:$.limitations[2]** — [Tarihsel kaynak kaydı] Live broadcaster language and IBO Player device acceptance remain open
+- **v2/reports/task15-historical-crosswalk-delta-20261118.json:$.scope** — [Tarihsel kaynak kaydı] Hash-only audit; no broadcaster authentication, plaintext URLs, or playlist changes
+- **v2/reports/task17-18-20-offline-operator-procedure-20261119.md:L1** — [Tarihsel kaynak kaydı] #17–18–20: mevcut kanıtların çevrimdışı işlenmesi (kanal araması YOK)
+- **v2/reports/task17-18-20-offline-operator-procedure-20261119.md:L3** — [Tarihsel kaynak kaydı] Bu işlem yeni kanal, kaynak veya yayın aramaz. İBO ana listesi ve arşivler değiştirilmez.
+- **v2/reports/task17-18-20-offline-operator-procedure-20261119.md:L6** — [Tarihsel kaynak kaydı] - 14 Kasım gerçek taramasının **orijinal** `ibo-scan-progress.enc` dosyasını [43608247496](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43608247496) çalışmasının `v2-real-scan-evidence` artifact'inden güvenilir çalışma ortamına alın.
+- **v2/reports/task17-18-20-offline-operator-procedure-20261119.md:L15** — [Tarihsel kaynak kaydı] cp /secure/source/ibo-scan-progress.enc /tmp/v2-existing-evidence/ibo-scan-progress.enc
+- **v2/reports/task17-18-20-offline-operator-procedure-20261119.md:L16** — [Tarihsel kaynak kaydı] chmod 600 /tmp/v2-existing-evidence/ibo-scan-progress.enc
+- **v2/reports/task17-18-20-offline-operator-procedure-20261119.md:L18** — [Tarihsel kaynak kaydı] --checkpoint /tmp/v2-existing-evidence/ibo-scan-progress.enc \
+- **v2/reports/task17-18-20-offline-operator-procedure-20261119.md:L26** — [Tarihsel kaynak kaydı] Kanal araması için gelecekteki kural
+- **v2/reports/task17-18-20-secure-import-runbook-20261119.md:L6** — [Tarihsel kaynak kaydı] - Mevcut `v2/merge_bounded_retry_checkpoint.py` çevrimdışı bir araçtır; varsayılanı salt-okunur dry-run'dır. Gerçek anahtar ve kimliği doğrulanmış `ibo-scan-progress.enc` olmadan kabul yapılamaz.
+- **v2/reports/task17-18-20-secure-import-runbook-20261119.md:L9** — [Tarihsel kaynak kaydı] 1. Gerçek `ibo-scan-progress.enc` dosyasını onaylı ve erişim denetimli kaynaktan alın. Kaynağın beklenen artefaktı, özgün ZIP SHA-256 değerini ve içteki şifreli dosyanın SHA-256 değerini ayrı ayrı doğrulayın; başka kayıtla ikame etmeyin.
+- **v2/reports/task17-18-20-secure-import-runbook-20261119.md:L11** — [Tarihsel kaynak kaydı] 3. `python3 v2/merge_bounded_retry_checkpoint.py --checkpoint /secure/path/ibo-scan-progress.enc --report v2/reports/task17-18-20-bounded-retry-20261118.json` komutuyla **önce dry-run** yapın. `existing_rows`, `eligible_updates`, hata ve eşleşme sonuçlarını kontrol edin.
+- **v2/reports/task17-18-20-secure-import-runbook-20261119.md:L19** — [Tarihsel kaynak kaydı] - Yeni genel kanal taraması, otomatik yayıncı yazma işlemi, cron, playlist veya arşiv değişikliği yapmayın.
+- **v2/reports/task17-18-20-secure-import-runbook-20261119.md:L20** — [Tarihsel kaynak kaydı] - Ana İBO playlisti `MADSC55_TV_IBO_CALISANLAR_TEST.m3u8` değişmeden kalır.
+- **v2/reports/task17-18-av-resume-handoff-20261118.md:L10** — [Tarihsel kaynak kaydı] - 14 Kasım kapalı kurtarma kuyruğu: 20.148 satır; iki mevcut playlist ile **3.781 farklı SHA-256 URL kimliği** eşleşti. Önceki eylemler: CHECK_AV 689, RETRY 1.339, REVIEW 1.753.
+- **v2/reports/task17-18-av-resume-handoff-20261118.md:L23** — [Tarihsel kaynak kaydı] - `MADSC55_TV_IBO_CALISANLAR_TEST.m3u8` ana playlisti, YEDEKLER/ANA ARŞİV/TURK/YABANCI ayrımı ve 48 karantina kanalı.
+- **v2/reports/task17-18-av-resume-handoff-20261118.md:L24** — [Tarihsel kaynak kaydı] - Kanal taşıma ve 2.500'lük İBO Player test döngüsü bu AV kurtarma işinden ayrıdır.
+- **v2/reports/task17-18-av-resume-handoff-20261118.md:L28** — [Tarihsel kaynak kaydı] **#17 ve #18 açık.** Bu not bir canlı tarama sonucu değildir; geçmiş kanıtları koruyan, tekrar denemeyi önleyen operasyonel devirdir. Gerçek binlerce kanal taraması, şifreli checkpoint erişimi ve çalıştırılabilir GitHub Actions ortamında yapılmalıdır.
+- **v2/reports/task21-evidence-handoff-20261119.md:L4** — [Tarihsel kaynak kaydı] Bu belge mevcut kanıtların salt-okunur uzlaştırmasıdır; yeni kaynak taraması, AV testi, yayıncı kimliği onayı, üretim playlisti değişikliği veya görev kapanışı değildir. Kanonik görev durumu `v2/tasks/state.json` içinde **in_progress** kalır.
+- **v2/reports/task21-evidence-handoff-20261119.md:L17** — [Tarihsel kaynak kaydı] 4. Resmî yayıncı sahipliği, tam kaynak URL kimliği, güncel FFmpeg görüntü+ses kanıtı ve EPG kesin ID kanıtını ayrı alanlarda değerlendir. Ad eşleşmesi, HTTP başarı kodu veya ffprobe metadata tek başına kabul değildir.
+- **v2/reports/turkic-fourth-pass-review-20261117.md:L1** — [Tarihsel kaynak kaydı] Türkî YEDEKLER dördüncü tarama — 17 Kasım 2026
+- **v2/reports/turkic-fourth-pass-review-20261117.md:L3** — [Tarihsel kaynak kaydı] Kaynak playlist blob: `dda1881e8884a9ded54cb44e0d7cd924967b1df1`.
+- **v2/reports/turkic-fourth-pass-review-20261117.md:L4** — [Tarihsel kaynak kaydı] 18.912 toplam EXTINF, 18.074 YEDEKLER. İlk 1003 kayıt korumalı.
+- **v2/reports/turkic-fourth-pass-review-20261117.md:L8** — [Tarihsel kaynak kaydı] - 2409 Kanal 7 Türknet (teknik test)
+- **v2/reports/turkic-third-pass-review-20261117.json:$.note** — [Tarihsel kaynak kaydı] This is a read-only audit; no channel reordering has been applied. The playlist contains non-EXTINF comment lines that must be preserved by any safe reorder. No stream AV verification performed.
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[1]** — [Tarihsel kaynak kaydı] 24 KANAL
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[2]** — [Tarihsel kaynak kaydı] 24 KANAL (720P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[34]** — [Tarihsel kaynak kaydı] BATV EDUCATIONAL CHANNEL
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[35]** — [Tarihsel kaynak kaydı] BATV GOVERNMENT CHANNEL
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[36]** — [Tarihsel kaynak kaydı] BATV PUBLIC CHANNEL
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[40]** — [Tarihsel kaynak kaydı] BEST OF BATV CHANNEL
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[41]** — [Tarihsel kaynak kaydı] BI KANAL
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[42]** — [Tarihsel kaynak kaydı] BI KANAL
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[110]** — [Tarihsel kaynak kaydı] KANAL 12
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[111]** — [Tarihsel kaynak kaydı] KANAL 15
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[112]** — [Tarihsel kaynak kaydı] KANAL 19
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[113]** — [Tarihsel kaynak kaydı] KANAL 19
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[114]** — [Tarihsel kaynak kaydı] KANAL 19
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[115]** — [Tarihsel kaynak kaydı] KANAL 23
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[116]** — [Tarihsel kaynak kaydı] KANAL 23 FHD
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[117]** — [Tarihsel kaynak kaydı] KANAL 26
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[118]** — [Tarihsel kaynak kaydı] KANAL 3
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[119]** — [Tarihsel kaynak kaydı] KANAL 32  ISPARTA
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[120]** — [Tarihsel kaynak kaydı] KANAL 34
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[121]** — [Tarihsel kaynak kaydı] KANAL 34
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[122]** — [Tarihsel kaynak kaydı] KANAL 34
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[123]** — [Tarihsel kaynak kaydı] KANAL 3  AFYONKARAHİSAR
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[124]** — [Tarihsel kaynak kaydı] KANAL 53
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[125]** — [Tarihsel kaynak kaydı] KANAL 58
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[126]** — [Tarihsel kaynak kaydı] KANAL 5 Ⓢ Ⓖ
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[127]** — [Tarihsel kaynak kaydı] KANAL AVRUPA
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[128]** — [Tarihsel kaynak kaydı] KANAL D2 (1080I)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[129]** — [Tarihsel kaynak kaydı] KANAL FIRAT
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[130]** — [Tarihsel kaynak kaydı] KANAL FIRAT  ELAZIĞ
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[131]** — [Tarihsel kaynak kaydı] KANAL PLUS
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[132]** — [Tarihsel kaynak kaydı] KANAL PLUS
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[133]** — [Tarihsel kaynak kaydı] KANAL URFA
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[134]** — [Tarihsel kaynak kaydı] KANAL URFA
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[135]** — [Tarihsel kaynak kaydı] KANAL URFA  ŞANLIUFRA
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[136]** — [Tarihsel kaynak kaydı] KANAL V
+- **v2/reports/turkish-live-probe.json:$.limitations** — [Tarihsel kaynak kaydı] Manifest accessibility is not proof of decodable video, Turkish language, rights or IBO compatibility
+
+- **v2/reports/yedekler-missing-logos.json:$.policy** — [Tarihsel kaynak kaydı] Only verified original logos; never replace with guessed artwork
+- **v2/tasks/ANA_PLAYLIST_ARSIV_BUTUNLUK_20261121.md:L1** — [Tarihsel kaynak kaydı] Ana playlist ve arşiv bütünlüğü (21 Kasım 2026)
+- **v2/tasks/ANA_PLAYLIST_ARSIV_BUTUNLUK_20261121.md:L3** — [Tarihsel kaynak kaydı] Kanonik playlist: `MADSC55_TV_IBO_CALISANLAR_TEST.m3u8` (blob SHA `f3d39e4522d27912fccd6e67240a10fd16c4923b`). Doğrudan dosya içeriği üzerinden sayım:
+- **v2/tasks/ANA_PLAYLIST_ARSIV_BUTUNLUK_20261121.md:L5** — [Tarihsel kaynak kaydı] | Kategori | Kayıt |
+- **v2/tasks/ANA_PLAYLIST_ARSIV_BUTUNLUK_20261121.md:L7** — [Tarihsel kaynak kaydı] | YEDEKLER | 1792 |
+- **v2/tasks/ANA_PLAYLIST_ARSIV_BUTUNLUK_20261121.md:L8** — [Tarihsel kaynak kaydı] | ANA ARŞİV | 15574 |
+- **v2/tasks/ANA_PLAYLIST_ARSIV_BUTUNLUK_20261121.md:L9** — [Tarihsel kaynak kaydı] | TÜRK ARŞİVİ | 424 |
+- **v2/tasks/ANA_PLAYLIST_ARSIV_BUTUNLUK_20261121.md:L10** — [Tarihsel kaynak kaydı] | YABANCI ARŞİVİ | 284 |
+- **v2/tasks/ANA_PLAYLIST_ARSIV_BUTUNLUK_20261121.md:L11** — [Tarihsel kaynak kaydı] | Diğer 12 kategori | 838 |
+- **v2/tasks/ANA_PLAYLIST_ARSIV_BUTUNLUK_20261121.md:L12** — [Tarihsel kaynak kaydı] | **Toplam** | **18912** |
+- **v2/tasks/ANA_PLAYLIST_ARSIV_BUTUNLUK_20261121.md:L14** — [Tarihsel kaynak kaydı] - Arşiv toplamı **18074**, benzersiz tam yayın URL sayısı **18074**; arşiv içinde ve arşivler arasında URL çakışması **0**.
+- **v2/tasks/ANA_PLAYLIST_ARSIV_BUTUNLUK_20261121.md:L15** — [Tarihsel kaynak kaydı] - 18912 EXTINF kaydının ardından HTTP/HTTPS URL var; biçimsel eksik adres **0**.
+- **v2/tasks/ANA_PLAYLIST_ARSIV_BUTUNLUK_20261121.md:L16** — [Tarihsel kaynak kaydı] - İlk paket: 1792 + 424 + 284 = **2500**.
+- **v2/tasks/ANA_PLAYLIST_ARSIV_BUTUNLUK_20261121.md:L17** — [Tarihsel kaynak kaydı] - Boş `tvg-id` sayısı **17881**; boş olmayan kimliklerden **76** tanesi birden fazla farklı yayın URL'siyle ilişkilidir. Aynı kanalın farklı kalite/ayna akışları olabileceği için otomatik hata kabul edilmez.
+- **v2/tasks/ANA_PLAYLIST_ARSIV_BUTUNLUK_20261121.md:L18** — [Tarihsel kaynak kaydı] - Diğer 838 kategori kaydı, arşiv URL'lerini yeniden gösterir; ayrı arşiv kanalı sayılmamalıdır.
+- **v2/tasks/ANA_PLAYLIST_ARSIV_BUTUNLUK_20261121.md:L20** — [Tarihsel kaynak kaydı] Kabul
+- **v2/tasks/ANA_PLAYLIST_ARSIV_BUTUNLUK_20261121.md:L21** — [Tarihsel kaynak kaydı] **PASS:** Kanonik dosya toplamı, kategori dağılımı, dört arşivde URL ayrıklığı ve ilk paket sayısı.
+- **v2/tasks/ANA_PLAYLIST_ARSIV_BUTUNLUK_20261121.md:L25** — [Tarihsel kaynak kaydı] **KAPSAM DIŞI:** Canlı AV, Türkçe ses/altyazı, İBO cihaz testi.
+- **v2/tasks/KALAN_ISLER_12_ASAMALI_PLAN_20261123.md:L8** — [Tarihsel kaynak kaydı] 3. [ ] YEDEKLER, ANA ARŞİV, TÜRK, YABANCI ve diğer bütün kategorileri tarama kapsamına al
+- **v2/tasks/KALAN_ISLER_12_ASAMALI_PLAN_20261123.md:L9** — [Tarihsel kaynak kaydı] 4. [ ] Onaylı kaynaklardan yeni kanal keşfi, provenans, URL/kimlik deduplikasyonu
+- **v2/tasks/KALAN_ISLER_12_ASAMALI_PLAN_20261123.md:L14** — [Tarihsel kaynak kaydı] 9. [ ] 2.500'lük YEDEKLER döngüsü, ANA ARŞİV/TÜRK/YABANCI taşıma ve paketler
+- **v2/tasks/KALAN_ISLER_12_ASAMALI_PLAN_20261123.md:L15** — [Tarihsel kaynak kaydı] 10. [ ] Türkçe ses/altyazı, tarihsel 303 EPG ve 4.745 logo açığını güncel kanıtla yeniden say
+- **v2/tasks/KALAN_ISLER_12_ASAMALI_PLAN_20261123.md:L17** — [Tarihsel kaynak kaydı] 12. [ ] Tüm kategoriler, güvenlik, gerçek AV, İBO cihaz ve envanter nihai kabulü
+- **v2/tasks/KALAN_ISLER_12_ASAMALI_PLAN_20261123.md:L20** — [Tarihsel kaynak kaydı] - 685 kanal güvenlik kilidi, #497 HLS/FFmpeg alt bağlantı ağ izolasyonu; güvenli kabul olmadan canlı retry yok.
+- **v2/tasks/KALAN_ISLER_12_ASAMALI_PLAN_20261123.md:L23** — [Tarihsel kaynak kaydı] - Tarihsel 303 EPG, 4.745 logo ve gerçek yayıncı/dil/altyazı kanıtı eksikleri.
+- **v2/tasks/KALAN_ISLER_12_ASAMALI_PLAN_20261123.md:L25** — [Tarihsel kaynak kaydı] - Kanal bazında son tarama zamanı, HTTP/AV sonucu, hata nedeni, deneme geçmişi, kaynak/provenans; kesintiden devam.
+- **v2/tasks/KALAN_ISLER_12_ASAMALI_PLAN_20261123.md:L28** — [Tarihsel kaynak kaydı] - Tek ana playlist: `MADSC55_TV_IBO_CALISANLAR_TEST.m3u8`; yeni playlist açma.
+- **v2/tasks/KALAN_ISLER_12_ASAMALI_PLAN_20261123.md:L29** — [Tarihsel kaynak kaydı] - Kategorileri ve sıralamayı koru; doğrulanmamış kanal ekleme, belirsiz kanal silme; 48 tarihsel dışlanan kanalı geri getirme.
+- **v2/tasks/KAPANIS_SIRASI_20261121.md:L11** — [Tarihsel kaynak kaydı] 2. Tek ana playlistin sayim ve arsiv mutabakati: son kayit 18912 toplam; YEDEKLER 1792, ANA 15574, TURK 424, YABANCI 284, diger 838. Canli sayimla teyit et; 48 dislanan kanal geri gelmesin.
+- **v2/tasks/KAPANIS_SIRASI_20261121.md:L17** — [Tarihsel kaynak kaydı] 5. YEDEKLER 2500 paket is akisi, TURK/YABANCI arsiv tasimalari: mevcut 1792 sayisiyla mutabakat, yalniz dogrulanmis kimliklerle, IBO testi ayri.
+- **v2/tasks/KAPANIS_SIRASI_20261121.md:L25** — [Tarihsel kaynak kaydı] 9. IBO Player gercek cihaz kabul ve son CI/security #32-33; ancak kanitla tamamlandi isaretle.
+- **v2/tasks/KAPANIS_SIRASI_20261121.md:L33** — [Tarihsel kaynak kaydı] Main HEAD ve Actions'i incele, PR'lari siniflandir, playlisti salt-okunur say, yalniz kanitli fark icin duzeltme PR'i ac.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L7** — [Tarihsel kaynak kaydı] - Tek ana IBO playlisti: `MADSC55_TV_IBO_CALISANLAR_TEST.m3u8`; yeni test playlisti yok.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L8** — [Tarihsel kaynak kaydı] - 48 karantinaya alınmış kanal geri eklenmez; aynı URL mükerrer eklenmez.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L9** — [Tarihsel kaynak kaydı] - İlk 1.003 kanal koruması yeniden uygulanmaz.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L11** — [Tarihsel kaynak kaydı] - 18.912 kayıtlı envanter ve 18.074 başlangıç YEDEKLER sayısı tarihî referanstır; farklı snapshot sayıları birbirine karıştırılmaz.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L13** — [Tarihsel kaynak kaydı] - Kanal adı/ülkesi tek başına Türkçe yayın veya çalışan yayın kanıtı değildir.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L20** — [Tarihsel kaynak kaydı] - Playlist Safety Invariants #44836309550: SUCCESS (önceki main).
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L22** — [Tarihsel kaynak kaydı] - 101 offline PASS ve yerel FFmpeg/OCR testleri gerçek 18.074 kanalın test edildiğini göstermez.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L23** — [Tarihsel kaynak kaydı] - Dünya taraması #42216075104: 35.327 aday, 13.884 FFmpeg AV decode. Bu, 18.074 YEDEKLER'in tamamlanma kanıtı değildir.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L32** — [Tarihsel kaynak kaydı] 1 — #489 arşiv envanteri ve taşıma kabulü (PR #551)
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L34** — [Tarihsel kaynak kaydı] - 1.792 YEDEKLER snapshot'ının kaynak commit/dosya/raporunu sabitle; başlangıç 18.074 ile farkın muhasebesini yap.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L41** — [Tarihsel kaynak kaydı] - Bulunursa kaynak run, playlist hash, kayıt sayısı, sıra, EXTINF ve URL hash birebir eşleştir.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L42** — [Tarihsel kaynak kaydı] - #547 yalnız doğrulanmış raporu kullanmalı; fail-closed, preview/manifest only, playlist değişikliği yok.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L54** — [Tarihsel kaynak kaydı] - Yurt dışındaki Türkçe yayınlar ve adında Türkçe ibare olmayan Türk kanalları kaybolmamalı.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L57** — [Tarihsel kaynak kaydı] 5 — 18.074 YEDEKLER gerçek medya doğrulaması
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L62** — [Tarihsel kaynak kaydı] - Kabul: 18.074 kimliğin her biri için sonuç veya açık blocker, sayım mutabakatı ve gerçek AV kanıtı. Ana playlist değişikliği yok.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L86** — [Tarihsel kaynak kaydı] - 48 engelli kanal geri eklenmez; 1003 kuralı uygulanmaz.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L95** — [Tarihsel kaynak kaydı] - PR #551 Production Security Gate run `44838963882`: **SUCCESS**; job `Verify suspended publishers, no cron and immutable IBO`: SUCCESS; live-discovery-diagnostic SKIPPED (beklenen, tarama yok).
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L98** — [Tarihsel kaynak kaydı] - Eski fixture run `44828290696` içindeki 1.792 YEDEKLER / 15.574 ANA / 424 TURK / 284 YABANCI / 838 OTHER dağılımı, 18.074 başlangıç arşiv envanteriyle aynı snapshot değildir. Ayrı tutulacak.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L101** — [Tarihsel kaynak kaydı] - PR #552 dosya farkı ve notu incelendi: #497'nin orijinal Actions artifact'ı ile immutable channel-ID + URL SHA-256 manifesti bulunamamış.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L102** — [Tarihsel kaynak kaydı] - Aday #497 adapter CI run'ları `44799031940`, `44798131945`, `44837957693` ve ilgili denemelerde Actions artifact listesi boş döndü. Bunlar kod CI PASS kanıtıdır, özgün 1.792 kanal AV raporu değildir.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L104** — [Tarihsel kaynak kaydı] - 1.107 çalışan + 685 belirsiz sayıları özgün artifact'tan doğrulanamadı. Hiçbir kayıt işlenmedi/taşınmadı; yeni tarama başlatılmadı.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L109** — [Tarihsel kaynak kaydı] - Gerçek kaynak workflow: [#44640007709](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44640007709), workflow_dispatch, main commit `1e8bd6d46762366f151e1270cc767f598c8e63e8`; job `yedekler-av-audit` SUCCESS.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L110** — [Tarihsel kaynak kaydı] - Orijinal artifact: `yedekler-av-audit`, artifact ID `14587983768`; rapor dosyası `yedekler_av_audit.json`. Upload logundaki ZIP SHA-256: `d6fefd9dabc036302dcadf0e52fa66542c51d9032d9abf8aeb3e3b88233a9f73`; indirilen ZIP bu hash ile aynı. Rapor ham dosya SHA-256: `30de600eca7d8e3140f423bb3fc248dc2f57df6ff031b0bf97276a9a861dba2c`.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L111** — [Tarihsel kaynak kaydı] - Rapor schema 1, tarih `2026-11-20T00:20:09.490490+00:00`, kategori YEDEKLER, total 1.792; WORKING 1.107 / RECHECK_REQUIRED 685. 1.792/1.792 URL SHA-256 benzersiz, pozisyonlar 1–1.792 kesintisiz. 1.107 kaydın video=true, audio=true ve decoded_av_verified=true; 685 kayıt yeniden kontrol sınıfında. Politika: read-only; başarısızlar yeniden kontrol edilir; otomatik silme/işaretleme/sıralama yok.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L112** — [Tarihsel kaynak kaydı] - Orijinal raporun playlist SHA-256 değeri `eee260cce3926caff18238f9583958b40475e362ce7650fb7fac51a66a84ee1c`; kaynak commit'teki ana M3U dosyasıyla eşleşiyor. Denetim scripti `v2/audit_yedekler_av.py` ham playlist bayt SHA'sını ve her URL için SHA-256 üretip pozisyon/name ile raporluyor.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L114** — [Tarihsel kaynak kaydı] - Bu nedenle tam playlist SHA farklılığını görmezden gelerek doğrudan import yapılmayacak. PR #547 güncelleniyor: önce tarihî source commit + orijinal artifact sabit run/artifact/file SHA ile doğrulanacak; sonra 1.792 YEDEKLER bloğunun güncel main'de aynı sırayla byte-byte eşitliği aranacak; yalnız eşleşirse güncel playlist SHA'sına yeniden bağlanan preview/manifest üretilecek.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L115** — [Tarihsel kaynak kaydı] - PR #547'ye eklenen importer ve offline testler: sabit kaynak run `44640007709`, artifact `14587983768`, report hash, tarihî playlist hash; ordered block equality; değişmiş kayıt/sıra için fail-closed. Yalnız preview ve retry manifesti; yeni scan ve playlist yazımı yok. PR #547 hâlâ draft; yeni CI/preview kanıtı bekleniyor.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L122** — [Tarihsel kaynak kaydı] - **Aşama 2 özgün AV kanıtı:** [read-only run #44640007709](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44640007709) artifact **14587983768** ve tam `yedekler_av_audit.json` indirildi, ZIP ve dosya SHA-256 eşleşmeleri doğrulandı. Schema 1, 1.792 benzersiz URL kimliği ve 1–1.792 kesintisiz pozisyon; 1.107 video+audio decoded, 685 RECHECK_REQUIRED.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L124** — [Tarihsel kaynak kaydı] - #547 importer ve offline regresyonları main'e birleşti; main CI run [44842749390](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44842749390) SUCCESS. Ancak mevcut kayıtta özgün artifact'tan **gerçek preview+manifest üretiminin uçtan uca kanıtı henüz yok**; bu yüzden #497 üretim uygulaması tamamlandı sayılmaz, 685 kanala yeni test/taşıma yapılmadı.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L125** — [Tarihsel kaynak kaydı] - **Aşama 3 FFmpeg:** #543 birleşti; main CI [44842692873](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44842692873) SUCCESS. Bu kısa örnekte gerçek video+audio decode kabulüdür; 18.074 kanalın tümünün işlendiği veya İBO Player cihazda onaylandığı anlamına gelmez.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L133** — [Tarihsel kaynak kaydı] - PR #561 `0137e18a2df527afd3124b6bd01d953cae21112a` birleşti: YEDEKLER için manuel/salt-okunur tek tetik kanıt işleme workflow'u; PR CI #44843702938 SUCCESS. 1.107/685 tarihî raporuna dayanır, **canlı retry yapmaz**.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L136** — [Tarihsel kaynak kaydı] - Gerçek Türkçe konuşma/altyazı yayın örneği ve bağımsız gözlem yok. ASR/OCR/WebVTT yerel fixture'ları nihai Türk/yabancı kararı değildir; gerçek test/kanal taraması SON AŞAMA olarak bekler. Ana playlist/arşiv/EPG yazılmadı.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L138** — [Tarihsel kaynak kaydı] - PR #567 `7bbefc113b02e25e0d8da1709273c39e9bbb4f12` birleşti: yalnız 685 belirsiz kanalın manuel/kanıt-kilitli yeniden denemesi ve yeniden birleştirme kodu hazır; **hiçbir canlı retry çalıştırması başlatılmadı**. Post-merge main run #44843984931 SUCCESS; #561 run #44843901219 ve #571 run #44843949176 da SUCCESS.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L149** — [Tarihsel kaynak kaydı] - Ana playlist, arşivler, EPG, yayın URL'leri ve kategoriler değiştirilmedi. Yeni playlist yok; 48 karantina kanal geri eklenmedi; eski 1003 kuralı uygulanmadı.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L156** — [Tarihsel kaynak kaydı] 3. **Yapılacak kabul:** `v2/yedekler_worldwide_crosswalk.py` + negatif testleri CI'da çalıştır, gerçek `manifest.json` ve `crosswalk.json` artifact'ını doğrula, ilk 2.500 defteri `TEST=1.792, TURK=424, YABANCI=284` ve tüm kategoriler `18.912` ile kayıpsız tutarlı kalmalı. Kesin eşleşme sayılarını yalnız gerçek çıktıya bakarak kaydet. PR merge, CI PASS olmadan yok.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L165** — [Tarihsel kaynak kaydı] - 18.074 özgün URL'nin 18.074'ü ana listede, kategori uyuşmazlığı 0; 16.931 tarihsel dünya eşleşmesi, 1.143 yok; 1.904 doğrudan eski-run AV, 10.947 prior-run hash-only, 4.080 diğer belirsiz eşleşme.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L166** — [Tarihsel kaynak kaydı] - #497 1.107 WORKING ve 685 RECHECK_REQUIRED içinden hiçbiri otomatik yeniden sınıflandırılmadı. Sonraki adım: 685 belirsiz için eski AV, zaman damgası, güncel durum, URL kimliği, tekrar deneme sayısı ve manifest ile **salt-okunur / idempotent retry önizlemesi**. 20 eski AV kanıtlı belirsiz kanal ayrıca inceleme grubuna konacak.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L174** — [Tarihsel kaynak kaydı] - PR Production Security Gate `44846469069` SUCCESS. Çevrimdışı testler; tam 685 satır, mükerrer/eksik kimlik reddi, URL hash eşleşmesi, kaynak rapor/run/artifact bağları, zaman damgası, playlist snapshot ve no-overwrite davranışını doğruladı.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L175** — [Tarihsel kaynak kaydı] - Bu **plan kodu kabulüdür**; manuel `workflow_dispatch` henüz çalıştırılmadı ve gerçek retry plan artefaktı henüz oluşturulmadı. Canlı retry veya yeni kanal taraması yok. `live_retry_authorized=false`, `network_attempts=0`, playlist/arşiv yazımı kapalı.
+- **v2/tasks/state.json:$.statuses[0].reason** — [Tarihsel kaynak kaydı] Source Integration Batch #42216075104 completed successfully: 12/12 jobs and 13 artifacts including v2-grouped-av-evidence-42216075104 (artifact 13524765368). Prior worldwide baseline #42169373371 successful and not rerun. Source acceptance only; does not certify historical recovery, Sweden playback, language speech or IBO device.
+- **v2/tasks/state.json:$.statuses[4].reason** — [Tarihsel kaynak kaydı] ADMINISTRATIVE SCOPE CLOSURE ONLY, NOT STREAM REPAIR. 26 unpaired EXTINF reviewed; 6 no-public-stream placeholders, 19 missing URIs, 1 unavailable original. User waived legacy recovery for current system delivery; further historical stream search deferred to #34. No IBO playlist mutation or fabricated AV evidence.
+- **v2/tasks/state.json:$.statuses[5].reason** — [Tarihsel kaynak kaydı] ADMINISTRATIVE SCOPE CLOSURE ONLY, NOT 2643 RECOVERIES. Original 2643 count, 30 original hashes and separate 4955 baseline preserved. User waived legacy recovery for current system delivery; further historical stream search deferred to #34. No IBO playlist mutation or fabricated AV evidence.
+- **v2/tasks/state.json:$.statuses[6].reason** — [Tarihsel kaynak kaydı] GitHub Actions #42216075104 independently rechecked: all 12 source integration batch jobs succeeded, including all-source-adapter regressions and unified source search. #42250095447 discovery-tests, compile, protect and safety succeeded. Offline GitHub/Gist approval test and GitLab/Codeberg forge-source normalization, dedupe and provenance/approval tests exist. Read-only source discovery accepted; does not claim all sources accessible or AV/IBO verified.
+- **v2/tasks/state.json:$.statuses[8].reason** — [Tarihsel kaynak kaydı] Verified the approved official-page audit (27 checked, 26 fetched, TRT Spor HTTP 403), the eight exact alternate candidate hashes in sealed provenance, and four prior FFmpeg video+audio results for three channel identities. Accepted source review; current playback and blocked source outcomes remain individually open.
+- **v2/tasks/state.json:$.statuses[11].reason** — [Tarihsel kaynak kaydı] Verified real GitHub Actions job 127928618610: FINAL_WORLDWIDE_REPORT_GATE COMPLETE_AV_COVERAGE_EVIDENCE, 34209/34209 probed, 0 unprobed, 12968 VIDEO_AUDIO_DECODED, 9 sealed artifacts, 23 regression tests OK. v2/final_worldwide_report_gate.py validates every candidate against explicit known statuses and error categories, consistent video/audio/decoded flags, all status totals and encrypted manifest integrity; unknown outcomes fail closed. This closes classification of the sealed worldwide report, NOT recovery of 45 identities, 2643 live retests, or IBO device playback.
+- **v2/tasks/state.json:$.statuses[12].reason** — [Tarihsel kaynak kaydı] User-authorized Google Drive replacement acceptance: GitHub Actions run 43117212383 latest rerun completed successfully on 2026-11-12. Job 130915187450 authenticated via OIDC, verified independent Drive archive ID/version/size/SHA-256, and logged PASS: original AES-256-GCM restored 4955 historical and 107 orphan records with source provenance. Legacy independent S3 path is not claimed to have passed; no AWS/S3 credentials or restore were used. Main IBO playlist unchanged.
+- **v2/tasks/state.json:$.statuses[15].reason** — [Tarihsel kaynak kaydı] Compared original run 42043534038 artifact 13424301777 and real retry run 42989285004 artifact 13841516071. All 89 retry rows joined to the original by exact channel ID and URL SHA-256. Three previous AV identities (Cine1.tr, DMAX.tr, TLC.tr) remained in the retry report, and their decoded video and audio evidence is retained in the original sealed archive. DMAX had one new timeout and TLC had three timeouts and one authentication failure on candidate URLs. Retry produced zero fresh AV results. Grouped transient AV regression and #14 prerequisite passed.
+- **v2/tasks/state.json:$.statuses[22].reason** — [Tarihsel kaynak kaydı] Task #23 acceptance met: live Master #42874231734 completed with both jobs successful; grouped Master, Eight-Stage and Ordered Preflight checks on 0937fa0d succeeded. Protected IBO/device approval is a separate acceptance task, not claimed here.
+- **v2/tasks/state.json:$.statuses[23].reason** — [Tarihsel kaynak kaydı] Integrated #24 acceptance passed in Actions 43241168321 at 12c0dc6d with Stage 4 code pinned to 158f77ec. All six acceptance jobs passed: protected playlist, pinned request, Drive access, live discovery and FFmpeg AV with authenticated sealing, Drive publication, and independent Drive revision 4 download and AES-GCM restore. 46 sources, 7,769 candidates, 801 real video and audio results (800 TR/AZ), 7,819 restored archive records including 4,955 historical rows. Source and restore artifacts, ZIP hashes and the inner encrypted archive SHA-256 were independently matched. The main IBO blob is unchanged.
+- **v2/tasks/state.json:$.stage3_verified_historical_av_progress_20261121.next_single_action** — [Tarihsel kaynak kaydı] Merge manual read-only #497 reconciliation workflow once its current-main security gate passes; keep 685 uncertain queued, no new AV scan or playlist mutation
+- **v2/tasks/state.json:$.stage4_vault_handoff_20261121.next_priority** — [Tarihsel kaynak kaydı] Preserve existing historical source and preview; verify #6 actual private external vault backup and independently restored identity/content only with authorized key, then #497 idempotent 685 uncertain retry queue safety checks; postpone new live AV/IBO testing.
+- **v2/tasks/state.json:$.stage5_worldwide_crosswalk_handoff_20261121.next_action** — [Tarihsel kaynak kaydı] Stage 6: idempotent 685 uncertain report-only retry planning with source timestamps and URL hash identity; no real live retry or playlist mutation without controlled acceptance
+- **v2/tasks/state.json:$.discovery34_200_throttle_completion_20261121.next_action** — [Tarihsel kaynak kaydı] Keep original playlist untouched; finish independent authorized Turkish vault external restore and HLS/DASH safety before any final user-directed live scan/device acceptance.
+- **v2/tasks/state.json:$.github_cleanup_audit_20261121.next_action** — [Tarihsel kaynak kaydı] Continue #497 existing-report safe ingestion and acceptance; compare #365 function-level gaps, authenticate #618 logos; #8/#10 live AV and IBO last.
+- **v2/yedekler_av_recheck_20261125.md:L1** — [Tarihsel kaynak kaydı] Fresh YEDEKLER AV recheck
+- **v2/yedekler_batch/README.md:L1** — [Tarihsel kaynak kaydı] YEDEKLER 2.500'lü paket yönetimi
+- **v2/yedekler_batch/README.md:L2** — [Tarihsel kaynak kaydı] Bu araç **ana İBO playlistini değiştirmez**. Kaynak: `MADSC55_TV_IBO_CALISANLAR_TEST.m3u8` içindeki 18.074 YEDEKLER kaydı.
+- **v2/yedekler_batch/README.md:L4** — [Tarihsel kaynak kaydı] İlk kurulum (depo kökünden)
+- **v2/yedekler_batch/README.md:L5** — [Tarihsel kaynak kaydı] `python v2/yedekler_batch/arsiv_hazirla.py MADSC55_TV_IBO_CALISANLAR_TEST.m3u8`
+- **v2/yedekler_batch/README.md:L7** — [Tarihsel kaynak kaydı] Bu adım beklenen kayıt sayısı ve `state.json` içindeki SHA-256 eşleşirse **yerel** `YEDEKLER_ARCHIVE.m3u8` üretir; eşleşmezse güvenli biçimde durur. Dosya GitHub'a eklenmez.
+- **v2/yedekler_batch/README.md:L9** — [Tarihsel kaynak kaydı] Kullanım (v2/yedekler_batch dizininden)
+- **v2/yedekler_batch/README.md:L10** — [Tarihsel kaynak kaydı] - `python yonet.py status`
+- **v2/yedekler_batch/README.md:L11** — [Tarihsel kaynak kaydı] - `python yonet.py batch` — varsayılan **2.500**
+- **v2/yedekler_batch/README.md:L12** — [Tarihsel kaynak kaydı] - `python yonet.py batch --count 300` — esnek paket
+- **v2/yedekler_batch/README.md:L13** — [Tarihsel kaynak kaydı] - `python yonet.py assign --start 1 --end 100 --to TURK`
+- **v2/yedekler_batch/README.md:L14** — [Tarihsel kaynak kaydı] - `python yonet.py assign --start 101 --end 200 --to YABANCI`
+- **v2/yedekler_batch/README.md:L15** — [Tarihsel kaynak kaydı] - `python yonet.py assign --start 1 --end 100 --to ANA_ARSIV`
+- **v2/yedekler_batch/README.md:L16** — [Tarihsel kaynak kaydı] - `python yonet.py undo` — son atamayı geri al
+- **v2/yedekler_batch/state.json:$.history[0].action** — [Tarihsel kaynak kaydı] initial_batch
+- **v2/yedekler_batch/state.json:$.history[1].action** — [Tarihsel kaynak kaydı] assign
+- **v2/yedekler_batch/state.json:$.history[1].note** — [Tarihsel kaynak kaydı] Staged archive classification; main IBO playlist unchanged
+- **v2/yedekler_batch/state.json:$.history[2].action** — [Tarihsel kaynak kaydı] assign
+- **v2/yedekler_batch/state.json:$.history[3].action** — [Tarihsel kaynak kaydı] assign
+- **v2/yedekler_batch/state.json:$.history[4].action** — [Tarihsel kaynak kaydı] assign
+- **v2/yedekler_batch/state.json:$.history[4].note** — [Tarihsel kaynak kaydı] Explicit user authorization; internal YABANCI_ARSIV only
+- **v2/yedekler_batch/state.json:$.history[5].action** — [Tarihsel kaynak kaydı] assign
+- **v2/yedekler_batch/state.json:$.history[5].note** — [Tarihsel kaynak kaydı] User-approved internal YABANCI_ARSIV transfer; no new main category
+- **v2/yedekler_red_av_request.md:L1** — [Tarihsel kaynak kaydı] YEDEKLER AV test
+- **yedekler/logo-kaynaklari.md:L1** — [Tarihsel kaynak kaydı] MADSC55 TV V2 — Logo kaynakları
+- **yedekler/logo-kaynaklari.md:L3** — [Tarihsel kaynak kaydı] Bu dosya V2 playlistindeki logo adreslerinin envanteridir. Görsel dosyalarının yerel kopyası değildir. Playlist üzerindeki tvg-logo alanları değiştirilmemiştir.
+- **yedekler/logo-kaynaklari.md:L5** — [Tarihsel kaynak kaydı] Toplam benzersiz logo adresi: 194
+- **yedekler/logo-kaynaklari.md:L7** — [Tarihsel kaynak kaydı] 1. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L8** — [Tarihsel kaynak kaydı] 2. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L9** — [Tarihsel kaynak kaydı] 3. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L10** — [Tarihsel kaynak kaydı] 4. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L11** — [Tarihsel kaynak kaydı] 5. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L12** — [Tarihsel kaynak kaydı] 6. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L13** — [Tarihsel kaynak kaydı] 7. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L14** — [Tarihsel kaynak kaydı] 8. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L15** — [Tarihsel kaynak kaydı] 9. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L16** — [Tarihsel kaynak kaydı] 10. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L17** — [Tarihsel kaynak kaydı] 11. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L18** — [Tarihsel kaynak kaydı] 12. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L19** — [Tarihsel kaynak kaydı] 13. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L20** — [Tarihsel kaynak kaydı] 14. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L21** — [Tarihsel kaynak kaydı] 15. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L22** — [Tarihsel kaynak kaydı] 16. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L23** — [Tarihsel kaynak kaydı] 17. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L24** — [Tarihsel kaynak kaydı] 18. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L25** — [Tarihsel kaynak kaydı] 19. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L26** — [Tarihsel kaynak kaydı] 20. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L27** — [Tarihsel kaynak kaydı] 21. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L28** — [Tarihsel kaynak kaydı] 22. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L29** — [Tarihsel kaynak kaydı] 23. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L30** — [Tarihsel kaynak kaydı] 24. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L31** — [Tarihsel kaynak kaydı] 25. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L32** — [Tarihsel kaynak kaydı] 26. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L33** — [Tarihsel kaynak kaydı] 27. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L34** — [Tarihsel kaynak kaydı] 28. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L35** — [Tarihsel kaynak kaydı] 29. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L36** — [Tarihsel kaynak kaydı] 30. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L37** — [Tarihsel kaynak kaydı] 31. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L38** — [Tarihsel kaynak kaydı] 32. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L39** — [Tarihsel kaynak kaydı] 33. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L40** — [Tarihsel kaynak kaydı] 34. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L41** — [Tarihsel kaynak kaydı] 35. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L42** — [Tarihsel kaynak kaydı] 36. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L43** — [Tarihsel kaynak kaydı] 37. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L44** — [Tarihsel kaynak kaydı] 38. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L45** — [Tarihsel kaynak kaydı] 39. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L46** — [Tarihsel kaynak kaydı] 40. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L47** — [Tarihsel kaynak kaydı] 41. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L48** — [Tarihsel kaynak kaydı] 42. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L49** — [Tarihsel kaynak kaydı] 43. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L50** — [Tarihsel kaynak kaydı] 44. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L51** — [Tarihsel kaynak kaydı] 45. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L52** — [Tarihsel kaynak kaydı] 46. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L53** — [Tarihsel kaynak kaydı] 47. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L54** — [Tarihsel kaynak kaydı] 48. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L55** — [Tarihsel kaynak kaydı] 49. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L56** — [Tarihsel kaynak kaydı] 50. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L57** — [Tarihsel kaynak kaydı] 51. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L58** — [Tarihsel kaynak kaydı] 52. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L59** — [Tarihsel kaynak kaydı] 53. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L60** — [Tarihsel kaynak kaydı] 54. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L61** — [Tarihsel kaynak kaydı] 55. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L62** — [Tarihsel kaynak kaydı] 56. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L63** — [Tarihsel kaynak kaydı] 57. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L64** — [Tarihsel kaynak kaydı] 58. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L65** — [Tarihsel kaynak kaydı] 59. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L66** — [Tarihsel kaynak kaydı] 60. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L67** — [Tarihsel kaynak kaydı] 61. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L68** — [Tarihsel kaynak kaydı] 62. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L69** — [Tarihsel kaynak kaydı] 63. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L70** — [Tarihsel kaynak kaydı] 64. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L71** — [Tarihsel kaynak kaydı] 65. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L72** — [Tarihsel kaynak kaydı] 66. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L73** — [Tarihsel kaynak kaydı] 67. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L74** — [Tarihsel kaynak kaydı] 68. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L75** — [Tarihsel kaynak kaydı] 69. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L76** — [Tarihsel kaynak kaydı] 70. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L77** — [Tarihsel kaynak kaydı] 71. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L78** — [Tarihsel kaynak kaydı] 72. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L79** — [Tarihsel kaynak kaydı] 73. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L80** — [Tarihsel kaynak kaydı] 74. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L81** — [Tarihsel kaynak kaydı] 75. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L82** — [Tarihsel kaynak kaydı] 76. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L83** — [Tarihsel kaynak kaydı] 77. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L84** — [Tarihsel kaynak kaydı] 78. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L85** — [Tarihsel kaynak kaydı] 79. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L86** — [Tarihsel kaynak kaydı] 80. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L87** — [Tarihsel kaynak kaydı] 81. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L88** — [Tarihsel kaynak kaydı] 82. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L89** — [Tarihsel kaynak kaydı] 83. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L90** — [Tarihsel kaynak kaydı] 84. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L91** — [Tarihsel kaynak kaydı] 85. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L92** — [Tarihsel kaynak kaydı] 86. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L93** — [Tarihsel kaynak kaydı] 87. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L94** — [Tarihsel kaynak kaydı] 88. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L95** — [Tarihsel kaynak kaydı] 89. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L96** — [Tarihsel kaynak kaydı] 90. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L97** — [Tarihsel kaynak kaydı] 91. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L98** — [Tarihsel kaynak kaydı] 92. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L99** — [Tarihsel kaynak kaydı] 93. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L100** — [Tarihsel kaynak kaydı] 94. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L101** — [Tarihsel kaynak kaydı] 95. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L102** — [Tarihsel kaynak kaydı] 96. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L103** — [Tarihsel kaynak kaydı] 97. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L104** — [Tarihsel kaynak kaydı] 98. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L105** — [Tarihsel kaynak kaydı] 99. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L106** — [Tarihsel kaynak kaydı] 100. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L107** — [Tarihsel kaynak kaydı] 101. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L108** — [Tarihsel kaynak kaydı] 102. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L109** — [Tarihsel kaynak kaydı] 103. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L110** — [Tarihsel kaynak kaydı] 104. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L111** — [Tarihsel kaynak kaydı] 105. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L112** — [Tarihsel kaynak kaydı] 106. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L113** — [Tarihsel kaynak kaydı] 107. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L114** — [Tarihsel kaynak kaydı] 108. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L115** — [Tarihsel kaynak kaydı] 109. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L116** — [Tarihsel kaynak kaydı] 110. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L117** — [Tarihsel kaynak kaydı] 111. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L118** — [Tarihsel kaynak kaydı] 112. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L119** — [Tarihsel kaynak kaydı] 113. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L120** — [Tarihsel kaynak kaydı] 114. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L121** — [Tarihsel kaynak kaydı] 115. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L122** — [Tarihsel kaynak kaydı] 116. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L123** — [Tarihsel kaynak kaydı] 117. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L124** — [Tarihsel kaynak kaydı] 118. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L125** — [Tarihsel kaynak kaydı] 119. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L126** — [Tarihsel kaynak kaydı] 120. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L127** — [Tarihsel kaynak kaydı] 121. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L128** — [Tarihsel kaynak kaydı] 122. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L129** — [Tarihsel kaynak kaydı] 123. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L130** — [Tarihsel kaynak kaydı] 124. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L131** — [Tarihsel kaynak kaydı] 125. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L132** — [Tarihsel kaynak kaydı] 126. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L133** — [Tarihsel kaynak kaydı] 127. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L134** — [Tarihsel kaynak kaydı] 128. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L135** — [Tarihsel kaynak kaydı] 129. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L136** — [Tarihsel kaynak kaydı] 130. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L137** — [Tarihsel kaynak kaydı] 131. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L138** — [Tarihsel kaynak kaydı] 132. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L139** — [Tarihsel kaynak kaydı] 133. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L140** — [Tarihsel kaynak kaydı] 134. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L141** — [Tarihsel kaynak kaydı] 135. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L142** — [Tarihsel kaynak kaydı] 136. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L143** — [Tarihsel kaynak kaydı] 137. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L144** — [Tarihsel kaynak kaydı] 138. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L145** — [Tarihsel kaynak kaydı] 139. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L146** — [Tarihsel kaynak kaydı] 140. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L147** — [Tarihsel kaynak kaydı] 141. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L148** — [Tarihsel kaynak kaydı] 142. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L149** — [Tarihsel kaynak kaydı] 143. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L150** — [Tarihsel kaynak kaydı] 144. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L151** — [Tarihsel kaynak kaydı] 145. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L152** — [Tarihsel kaynak kaydı] 146. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L153** — [Tarihsel kaynak kaydı] 147. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L154** — [Tarihsel kaynak kaydı] 148. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L155** — [Tarihsel kaynak kaydı] 149. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L156** — [Tarihsel kaynak kaydı] 150. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L157** — [Tarihsel kaynak kaydı] 151. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L158** — [Tarihsel kaynak kaydı] 152. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L159** — [Tarihsel kaynak kaydı] 153. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L160** — [Tarihsel kaynak kaydı] 154. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L161** — [Tarihsel kaynak kaydı] 155. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L162** — [Tarihsel kaynak kaydı] 156. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L163** — [Tarihsel kaynak kaydı] 157. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L164** — [Tarihsel kaynak kaydı] 158. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L165** — [Tarihsel kaynak kaydı] 159. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L166** — [Tarihsel kaynak kaydı] 160. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L167** — [Tarihsel kaynak kaydı] 161. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L168** — [Tarihsel kaynak kaydı] 162. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L169** — [Tarihsel kaynak kaydı] 163. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L170** — [Tarihsel kaynak kaydı] 164. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L171** — [Tarihsel kaynak kaydı] 165. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L172** — [Tarihsel kaynak kaydı] 166. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L173** — [Tarihsel kaynak kaydı] 167. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L174** — [Tarihsel kaynak kaydı] 168. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L175** — [Tarihsel kaynak kaydı] 169. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L176** — [Tarihsel kaynak kaydı] 170. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L177** — [Tarihsel kaynak kaydı] 171. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L178** — [Tarihsel kaynak kaydı] 172. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L179** — [Tarihsel kaynak kaydı] 173. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L180** — [Tarihsel kaynak kaydı] 174. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L181** — [Tarihsel kaynak kaydı] 175. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L182** — [Tarihsel kaynak kaydı] 176. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L183** — [Tarihsel kaynak kaydı] 177. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L184** — [Tarihsel kaynak kaydı] 178. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L185** — [Tarihsel kaynak kaydı] 179. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L186** — [Tarihsel kaynak kaydı] 180. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L187** — [Tarihsel kaynak kaydı] 181. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L188** — [Tarihsel kaynak kaydı] 182. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L189** — [Tarihsel kaynak kaydı] 183. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L190** — [Tarihsel kaynak kaydı] 184. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L191** — [Tarihsel kaynak kaydı] 185. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L192** — [Tarihsel kaynak kaydı] 186. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L193** — [Tarihsel kaynak kaydı] 187. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L194** — [Tarihsel kaynak kaydı] 188. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L195** — [Tarihsel kaynak kaydı] 189. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L196** — [Tarihsel kaynak kaydı] 190. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L197** — [Tarihsel kaynak kaydı] 191. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L198** — [Tarihsel kaynak kaydı] 192. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L199** — [Tarihsel kaynak kaydı] 193. [URL: kaynak dosyada]
+- **yedekler/logo-kaynaklari.md:L200** — [Tarihsel kaynak kaydı] 194. [URL: kaynak dosyada]
+
+- **PR #767 @ cc021e46872a / v2/ibo_authorized_change.json:$.base_sha256** — [Açık PR, uygulanmadı] 2e3565a4db92dfdc84208bb9926f5af501bb534f5c68e13be6f2acb8d8e9af90
+- **PR #767 @ cc021e46872a / v2/ibo_authorized_change.json:$.result_sha256** — [Açık PR, uygulanmadı] 8fcc6c409c3b9433032be4f745e8fdcf5546daef1ff44f50ed33dc9dc987f879
+- **PR #767 @ cc021e46872a / v2/ibo_authorized_change.json:$.operation** — [Açık PR, uygulanmadı] reorder
+- **PR #767 @ cc021e46872a / v2/ibo_authorized_change.json:$.request** — [Açık PR, uygulanmadı] Owner request: second pass for missed Turkish and Turkic broadcast candidates; only stable reorder inside YABANCI ARŞİVİ.
+- **PR #767 @ cc021e46872a / v2/ibo_authorized_change.json:$.channels** — [Açık PR, uygulanmadı] Yetki manifestinde 9 kaynak kanal referansı; tek tek ham kanal konumları kaynakta, uygulanmaz.
+- **PR #757 @ eca1bc56609f / v2/ibo_authorized_change.json:$.base_sha256** — [Açık PR, uygulanmadı] cae52b3780c4c65c7727b6a240f33058187c0f39a62131f1adcb247882c1c642
+- **PR #757 @ eca1bc56609f / v2/ibo_authorized_change.json:$.result_sha256** — [Açık PR, uygulanmadı] 7a40de20bed5e7cbf3f8055a4e23b6c23ea709fd64cff7a9f9a97b4a2b1c503f
+- **PR #757 @ eca1bc56609f / v2/ibo_authorized_change.json:$.operation** — [Açık PR, uygulanmadı] reorder
+- **PR #757 @ eca1bc56609f / v2/ibo_authorized_change.json:$.request** — [Açık PR, uygulanmadı] Owner request 24 November 2026: Yabancı arşivde Türk kanallarını ilk başa taşı. Azeri Türk Türkmenistan yani Türkçe tüm kanalları yabancı arşivin başına taşı. Only reorder; no channel changes or removals.
+- **PR #757 @ eca1bc56609f / v2/ibo_authorized_change.json:$.channels** — [Açık PR, uygulanmadı] Yetki manifestinde 84 kaynak kanal referansı; tek tek ham kanal konumları kaynakta, uygulanmaz.
+- **PR #755 @ b7223fa181a0 / v2/ibo_authorized_change.json:$.base_sha256** — [Açık PR, uygulanmadı] cae52b3780c4c65c7727b6a240f33058187c0f39a62131f1adcb247882c1c642
+- **PR #755 @ b7223fa181a0 / v2/ibo_authorized_change.json:$.result_sha256** — [Açık PR, uygulanmadı] 95c49b86e68bd124b1698a910e69227e4fba6cef50df6175487eb75e63a8f859
+- **PR #755 @ b7223fa181a0 / v2/ibo_authorized_change.json:$.operation** — [Açık PR, uygulanmadı] reorder
+- **PR #755 @ b7223fa181a0 / v2/ibo_authorized_change.json:$.request** — [Açık PR, uygulanmadı] Owner request 24 November 2026: Yabancı arşivde Türk kanallarını ilk başa taşı. Azeri Türk Türkmenistan yani Türkçe tüm kanalları yabancı arşivin başına taşı. Preserve current main non-target categories and original PR 755 foreign ordering.
+- **PR #755 @ b7223fa181a0 / v2/ibo_authorized_change.json:$.channels** — [Açık PR, uygulanmadı] Yetki manifestinde 102 kaynak kanal referansı; tek tek ham kanal konumları kaynakta, uygulanmaz.
+- **PR #728 @ 42974e294608 / v2/ibo_authorized_change.json:$.base_sha256** — [Açık PR, uygulanmadı] 4cacb329bc48dcf4b4377a4c2eba6d9c7555ff707203a0c5aad2b00cb2ea9bd3
+- **PR #728 @ 42974e294608 / v2/ibo_authorized_change.json:$.result_sha256** — [Açık PR, uygulanmadı] d18dfd8d8e7684b0af99688e9edfd5d401f7d9171d4d35800dd8ce7e6f486383
+- **PR #728 @ 42974e294608 / v2/ibo_authorized_change.json:$.operation** — [Açık PR, uygulanmadı] reorder
+- **PR #728 @ 42974e294608 / v2/ibo_authorized_change.json:$.request** — [Açık PR, uygulanmadı] Kullanıcının ANA ARŞİV'deki Türkçe/Türkî yayın adaylarını kapsamlı araştırıp aynı kategorinin başına alma talimatı. 13.712 kayıt; Digitürk, TV+, D-Smart, Türksat Kablo program rehberleriyle 192 isim eşleşmesi incelendi. 18 ek aday: Film Screen HD birebir katalog URL eşleşmesi ve Türkçe uydu ses kaydı; BBC Earth, Da Vinci, Discovery, E!, Epic Drama, History, National Geographic/Wild ve Viasat Explore/History/Nature çok dilli Avrupa sürümü olasılığı, Türkçe dağıtım katalogları ile isim ve bölgesel kaynak eşleşmesi. Son 17 kayıt düşük/orta güvenli dil inceleme adaylarıdır, doğrulanmış Türkçe yayın olarak sunulmaz. Açıkça yabancı ülke sürümleri, ortak alakasız isimler ve tek ortak URL kullanan belirsiz kanallar dışarıda bırakılır. İlk 770 kayıt korunur, 18 aday eklenir, ilk 788 kayıt önceliklendirilir. Yeni kayıt ekleme, silme, kopyalama, kategori taşıma, canlı test veya yeni playlist yok; tüm 18.337 kayıt ve diğer kategoriler korunur.
+- **PR #728 @ 42974e294608 / v2/ibo_authorized_change.json:$.channels** — [Açık PR, uygulanmadı] Yetki manifestinde 788 kaynak kanal referansı; tek tek ham kanal konumları kaynakta, uygulanmaz.
+- **PR #721 @ 3482c2af7906 / v2/ibo_authorized_change.json:$.base_sha256** — [Açık PR, uygulanmadı] 9b23a6ca7aa26d208ddebcb73360e4f556105574c64030f8c2038ec169d2dd9b
+- **PR #721 @ 3482c2af7906 / v2/ibo_authorized_change.json:$.result_sha256** — [Açık PR, uygulanmadı] 3fc04f67eb8db0a8e3bae29d25c3cb8f3ad0dbbd96f4f1c900f36e865807cb2b
+- **PR #721 @ 3482c2af7906 / v2/ibo_authorized_change.json:$.operation** — [Açık PR, uygulanmadı] move
+- **PR #721 @ 3482c2af7906 / v2/ibo_authorized_change.json:$.request** — [Açık PR, uygulanmadı] Kullanıcının talimatı: ANA ARŞİV kategorisindeki güncel 1–75. sıraları (75 dahil) YEDEKLER kategorisine taşı. Diğer kayıtlar, URL ve metaveriler korunacak; kanal silme, kopyalama, yeni playlist ve canlı yayın testi yok.
+- **PR #721 @ 3482c2af7906 / v2/ibo_authorized_change.json:$.channels** — [Açık PR, uygulanmadı] Yetki manifestinde 75 kaynak kanal referansı; tek tek ham kanal konumları kaynakta, uygulanmaz.
+
+- **PR #669 @ a5fcf3a84bbe / DEVAM_NOTU.md:L1702** — [Açık PR, tarihsel plan] - **Öncelik:** Kanal arama -&gt; geçmiş/kalıcı kimlik ve URL kayıt kontrolü -&gt; gerçek yayın görüntü+ses testleri -&gt; Türkçe konuşma/Türkçe altyazı ve kaynak doğrulaması -&gt; çalışan/çalışmayan/Türk/yabancı/belirsiz sınıflandırması -&gt; sonuçların kanıt ve tarih ile kalıcı kaydı -&gt; tekrar keşif/yeniden test -&gt; güvenli mükerrer yönetimi.
+- **PR #669 @ a5fcf3a84bbe / DEVAM_NOTU.md:L1703** — [Açık PR, tarihsel plan] - Ana playlistin doğrulanan başlangıç envanteri: **18.337 kayıt**. Henüz bütün kanallar için canlı AV, Türkçe ses ve altyazı doğrulaması tamamlandığına dair kanıt yok. Kod/CI PASS canlı yayın kabulü değildir.
+- **PR #669 @ a5fcf3a84bbe / DEVAM_NOTU.md:L1706** — [Açık PR, tarihsel plan] - Silme/çıkarma öncesi kalıcı kayıt: kaynak/keşif zamanı, tüm URL varyantları, kanal adı ve kimliği, kategorisi, tvg-id/logo kanıtı, test tarihi, HTTP+gerçek decoded görüntü/ses, Türkçe konuşma/altyazı kanıtı, sonuç, geri yükleme kaydı ve neden. Kaldırılan kayıtlar kayıpsız geri getirilebilir olmalı; Git geçmişi ve ayrı manifest ile doğrulanmalı. Yeniden keşfedilen URL geçmişteki kimlikle ilişkilendirilmeli; başarısız kanal unutulmamalı, yeniden test edilmeli.
+- **PR #669 @ a5fcf3a84bbe / DEVAM_NOTU.md:L1707** — [Açık PR, tarihsel plan] - Arama sisteminin otomatik geçmiş kontrolü ve tekrar işleme engeli, gerçek AV, Türkçe ses/altyazı, güvenilir logo/EPG ve sonuç defterinin **uçtan uca doğrulanması** bekleniyor. Mevcut uygulamalar envanterlenip eksikleri tamamlanmadan canlı kanalların kalıcı çıkarılmasına geçilmeyecek.
+- **PR #669 @ a5fcf3a84bbe / DEVAM_NOTU.md:L1708** — [Açık PR, tarihsel plan] - PR #666: Offline CI ve Production Security Gate PASS sonrası main'e squash merge edildi (f4acbd46c4c882829b108b98b6a96d6099c4a6f7); yalnızca kod/iş akışı güncellendi, ana playlist değişmedi.
+- **PR #669 @ a5fcf3a84bbe / DEVAM_NOTU.md:L1709** — [Açık PR, tarihsel plan] - PR #667 test engelleri: Offline CI test_playlist_invariants.py eski 838+1792 sayısına sabit; Production Security Gate içindeki ibo_497_existing_artifact.py eski 1792 YEDEKLER varsayımında hata verdi. Güvenlik testleri bypass edilmeyecek, güncel envanter ve tarihsel fixture ayrımıyla düzeltilecek.
+- **PR #669 @ a5fcf3a84bbe / v2/tasks/state.json:$.channel_lifecycle_plan_20261123.decision** — [Açık PR, tarihsel plan] preserve_current_main_playlist_and_defer_deletion
+- **PR #664 @ bccb4937f2e3 / v2/tasks/KALAN_ISLER_2026-11-23.md:L6** — [Açık PR, tarihsel plan] - Tek kanonik playlist: `MADSC55_TV_IBO_CALISANLAR_TEST.m3u8`. Yeni playlist/test playlisti açılmayacak.
+- **PR #664 @ bccb4937f2e3 / v2/tasks/KALAN_ISLER_2026-11-23.md:L9** — [Açık PR, tarihsel plan] - 48 daha önce çıkarılmış kanal geri eklenmeyecek. Kategoriler, diğer arşivler ve kanal meta verileri izinsiz değiştirilmez.
+- **PR #664 @ bccb4937f2e3 / v2/tasks/KALAN_ISLER_2026-11-23.md:L10** — [Açık PR, tarihsel plan] - Gerçek yayın/İBO testleri son aşamada; 685 tarihsel belirsiz kanal için SECURITY HOLD izinsiz kaldırılmaz.
+- **PR #664 @ bccb4937f2e3 / v2/tasks/KALAN_ISLER_2026-11-23.md:L14** — [Açık PR, tarihsel plan] 1. Main kanonik playlist gerçek envanteri: toplam, YEDEKLER, ANA ARŞİV, diğer kategoriler ve sayaç etiketlerini uzlaştır. Son işlem kayıtlarındaki 18.337 toplam / 1.107 YEDEKLER / 15.703 ANA ARŞİV değerlerini main üzerinde doğrula; #657/#658 uygulama ve CI durumunu teyit et.
+- **PR #664 @ bccb4937f2e3 / v2/tasks/KALAN_ISLER_2026-11-23.md:L15** — [Açık PR, tarihsel plan] 2. Otomatik kanal keşfi: onaylı kaynaklar, güvenli aday alma, tekrarların ayıklanması ve uçtan uca çalışmanın kanıtı.
+- **PR #664 @ bccb4937f2e3 / v2/tasks/KALAN_ISLER_2026-11-23.md:L16** — [Açık PR, tarihsel plan] 3. HTTP sağlık taraması: uzun taramanın hatasız tamamlanması; 404/503/timeout için ayrı karar ve kanıt, tek başına ağ hatasını ölü kanal saymama.
+- **PR #664 @ bccb4937f2e3 / v2/tasks/KALAN_ISLER_2026-11-23.md:L18** — [Açık PR, tarihsel plan] 5. Kimlik/URL uzlaştırması: tarihsel 20.148 kuyruk, 3.766 eşleşme, 16.367 playlist dışı ve aradaki 15 kimlik farkını satır bazında açıklama; mükerrer URL önleme.
+- **PR #664 @ bccb4937f2e3 / v2/tasks/KALAN_ISLER_2026-11-23.md:L19** — [Açık PR, tarihsel plan] 6. EPG: 303 tarihsel eksik eşleşme ve kalan program/ID eşleştirmelerinin yeniden kanıtlanması.
+- **PR #664 @ bccb4937f2e3 / v2/tasks/KALAN_ISLER_2026-11-23.md:L20** — [Açık PR, tarihsel plan] 7. Logolar: güncel eksik sayısını yeniden say; yalnız resmî/doğrulanmış gerçek logolar, tahmini/rastgele logo yok.
+- **PR #664 @ bccb4937f2e3 / v2/tasks/KALAN_ISLER_2026-11-23.md:L22** — [Açık PR, tarihsel plan] 9. Otomatik karar zinciri: tarama → kanıt → karar → uygun TURK/YABANCI arşivine güvenli taşıma; taşınanların YEDEKLER'den düşmesi, ana liste bütünlüğü, yetkili PR ve CI kontrolü.
+- **PR #664 @ bccb4937f2e3 / v2/tasks/KALAN_ISLER_2026-11-23.md:L25** — [Açık PR, tarihsel plan] 12. Gerçek İBO Player cihaz testi ve nihai sistem kabulü: kanonik liste, kanal oynatma, kategori, paket/arşiv ve CI güvenlik sonuçlarını uçtan uca doğrula.
+- **PR #664 @ bccb4937f2e3 / v2/tasks/KALAN_ISLER_2026-11-23.md:L28** — [Açık PR, tarihsel plan] Aşama 1: envanter, kimlikler, HTTP, kaynaklar, EPG, logolar.
+- **PR #651 @ f0c8e198fb08 / v2/tasks/KALAN_TEKNIK_ISLER_20261123.md:L6** — [Açık PR, tarihsel plan] - Tek kanonik liste: `MADSC55_TV_IBO_CALISANLAR_TEST.m3u8`. Yeni playlist veya YEDEKLER_TEST oluşturma.
+- **PR #651 @ f0c8e198fb08 / v2/tasks/KALAN_TEKNIK_ISLER_20261123.md:L8** — [Açık PR, tarihsel plan] - 685 RECHECK_REQUIRED kanalın güvenlik kilidini kaldırma, belirsiz sonuçla silme.
+- **PR #651 @ f0c8e198fb08 / v2/tasks/KALAN_TEKNIK_ISLER_20261123.md:L9** — [Açık PR, tarihsel plan] - Daha önce çıkarılan 48 engelli kanalı geri getirme; eski ilk-1003 koruma kuralını yeniden uygulama.
+- **PR #651 @ f0c8e198fb08 / v2/tasks/KALAN_TEKNIK_ISLER_20261123.md:L10** — [Açık PR, tarihsel plan] - Eski taşımaları tekrar çalıştırma; aynı URL/SHA kimliğini ikinci kez ekleme.
+- **PR #651 @ f0c8e198fb08 / v2/tasks/KALAN_TEKNIK_ISLER_20261123.md:L16** — [Açık PR, tarihsel plan] 3. **Kaynak keşfi ve envanter (#3–#14,#34):** GitHub, Gist, GitLab, Codeberg, YouTube canlı TV, resmî yayıncı sayfaları, M3U/M3U8, Türkiye/Azerbaycan/dünya kaynakları; rate-limit, erişim engelleri, kaynak kimliği, hash/URL çapraz eşleştirmesi ve eski kayıtların güvenilirliği. 35.327 aday/13.884 tarihsel AV kanıtı yeni ve benzersiz kanal sayısı değildir. Doğrulanmamış kaynak eklenmez.
+- **PR #651 @ f0c8e198fb08 / v2/tasks/KALAN_TEKNIK_ISLER_20261123.md:L17** — [Açık PR, tarihsel plan] 4. **Kimlik, kurtarma ve kalite (#15–#21):** Eksik 6 yayıncı/kimlik kaydı; tarihsel kaynak kimliklerinin doğrulanması; kurtarma ve güvenli yeniden deneme kuyruğu; 303 tarihsel EPG açığı ve güncel XMLTV eşleşmeleri; gerçek çözünürlük, görüntü/ses, yayın devamlılığı, kanıt zaman damgası. Tarihsel rakamlar güncel yeniden sayılacak.
+- **PR #651 @ f0c8e198fb08 / v2/tasks/KALAN_TEKNIK_ISLER_20261123.md:L18** — [Açık PR, tarihsel plan] 5. **Türk/Yabancı sınıflandırması:** Türkçe kanal adı ve TR/TURK/TÜRK/Türkiye/Kıbrıs ipuçları tek başına yeterli değil. Türkiye, KKTC, Azerbaycan ve diğer Türkî kaynaklar; Türkçe adı olmayan yayınlar; ASR konuşma dili, OCR ekran yazısı, WebVTT/altyazı, ses+görüntü ve yayıncı kimliği ile kanıt dereceli karar. 20.000 kayda kadar toplu inceleme kodu ile gerçek kabulü ayır. Kesinleşmeyen kayıtları otomatik taşımama.
+- **PR #651 @ f0c8e198fb08 / v2/tasks/KALAN_TEKNIK_ISLER_20261123.md:L20** — [Açık PR, tarihsel plan] 7. **685 belirsiz kanal ve medya güvenliği:** 1.107 WORKING / 685 RECHECK_REQUIRED tarihsel raporunu güncel kanıtla karıştırma. Salt-okunur retry planı, DNS/IP pinleme, FFmpeg yerel dosya izolasyonu, HLS/DASH segment/anahtar kaynak güvenliği ve gerçek yayıncı örneği kabulü; kilit açma ancak tüm güvenlik şartları sağlandığında.
+- **PR #651 @ f0c8e198fb08 / v2/tasks/KALAN_TEKNIK_ISLER_20261123.md:L21** — [Açık PR, tarihsel plan] 8. **Logolar ve EPG:** Yalnız gerçek ve doğrulanmış yayıncı logoları; doğrulanmamış 6 logo eşleşmesi ve geçmişte bildirilen eksik logo sayıları yeniden kontrol edilecek. EPG için kesin XMLTV kanal/program eşleştirmeleri ve 303 tarihsel açığın güncel sonucu belgelenecek.
+- **PR #651 @ f0c8e198fb08 / v2/tasks/KALAN_TEKNIK_ISLER_20261123.md:L22** — [Açık PR, tarihsel plan] 9. **Yedekleme ve restore:** Stage 4 tarihsel Google Drive bağımsız restore PASS ile ayrı Türk özel Fernet kasasının eksik harici restore kabulünü birbirine karıştırma. Ana liste, kategori, URL hash, arşiv ve bağımsız yedekten geri dönüş zinciri izole ortamda kanıtlanacak.
+- **PR #651 @ f0c8e198fb08 / v2/tasks/KALAN_TEKNIK_ISLER_20261123.md:L24** — [Açık PR, tarihsel plan] 11. **Son kabul (#31–#33,#8,#10):** Güvenlik kapıları ve arşiv kabulü sonrası gerçek canlı AV taraması (tüm ilgili kategoriler, ANA/TÜRK/YABANCI arşivleri dahil), Türk/Yabancı son karar, İBO Player gerçek cihaz testi ve son teslim raporu.
+- **PR #651 @ f0c8e198fb08 / v2/tasks/KALAN_TEKNIK_ISLER_20261123.md:L28** — [Açık PR, tarihsel plan] B. HTTP taramasından bağımsız altyapı: Actions, güvenlik, keşif, kimlik, EPG/logo, arşiv/restore ve paket hazırlığını kanıtla.
+- **PR #651 @ f0c8e198fb08 / v2/tasks/KALAN_TEKNIK_ISLER_20261123.md:L29** — [Açık PR, tarihsel plan] C. En son yetkilendirilmiş canlı AV / dil / tüm kategoriler taraması, 685 retry ve İBO Player kabulü.
+- **PR #650 @ fe1420ca833e / DEVAM_NOTU.md:L1704** — [Açık PR, tarihsel plan] **Ana hedef:** Yalnızca 685 kilitli kanal veya 30 keşif adayı değil; tek kanonik `MADSC55_TV_IBO_CALISANLAR_TEST.m3u8` dosyasındaki **tüm mevcut kategoriler ve tüm kanallar**, ayrıca keşfedilen **tüm yeni adaylar** kapsam dahilinde olacak. `Autonomous Discovery Read Only` mevcut haliyle bu tam envanter taramasının yerine geçmez. Aşağıdaki maddeler **yapılacak işlerdir**, tamamlandı sayılmaz.
+- **PR #650 @ fe1420ca833e / DEVAM_NOTU.md:L1706** — [Açık PR, tarihsel plan] 1. **Envanter ve kapsam:** Güncel main playlist'ten kanal kimliklerini, URL'leri, kategorileri ve gerçek sayıları çıkar; YEDEKLER, ANA ARŞİV, TÜRK, YABANCI ve diğer kategorilerden hiçbirini atlama. Tarihsel 18.912 sayısını güncel gerçek sayı varsayma. Tek ana playlist, yeni playlist yok.
+- **PR #650 @ fe1420ca833e / DEVAM_NOTU.md:L1707** — [Açık PR, tarihsel plan] 2. **Paketli, devam edilebilir tam tarama:** Bütün mevcut kanalları paketler halinde HTTP/HLS ve güvenli ses-görüntü doğrulamasından geçir. Kaldığı yerden devam, tekrar deneme, hız sınırı ve test kanıtı saklama zorunlu. FFmpeg/HLS ağ izolasyonu kabul koşullarını ihlal etme.
+- **PR #650 @ fe1420ca833e / DEVAM_NOTU.md:L1709** — [Açık PR, tarihsel plan] 4. **685 güvenlik kilidi:** Manifest kimliklerini koru; kilitli kanalları otomatik silme veya korumayı erken kaldırma. Şüpheli sonuçları karantinada/yeniden test kuyruğunda tut.
+- **PR #650 @ fe1420ca833e / DEVAM_NOTU.md:L1711** — [Açık PR, tarihsel plan] 6. **Türk/Yabancı kanıtlı sınıflandırma:** İsim/ülke ipucu kesin dil kanıtı değildir. Türkçe ses, altyazı veya bağımsız doğrulanmış yayın kimliği ile mevcut TÜRK/YABANCI arşivlerine güvenli taşıma planı oluştur; belirsizleri yanlış taşıma.
+- **PR #650 @ fe1420ca833e / DEVAM_NOTU.md:L1714** — [Açık PR, tarihsel plan] **Mevcut durum:** PR #649 main'e merge edildi; bu yalnızca 685 doğrulama akışındaki bytes/string çökmesini düzeltti. Tam envanter taraması, bütün kategori sağlık işaretleme ve arşiv taşımaları **henüz yapılmadı**. Öncelik yukarıdaki 1→7 sırasıdır; tekrar tekrar dar kapsamlı discovery çalıştırmak hedefin tamamlandığı anlamına gelmez.
+- **PR #650 @ fe1420ca833e / v2/tasks/state.json:$.full_inventory_health_scan_plan_20261123.scope** — [Açık PR, tarihsel plan] All existing channels across all canonical playlist categories and all discovered candidates
+- **PR #650 @ fe1420ca833e / v2/tasks/state.json:$.full_inventory_health_scan_plan_20261123.work_order[2]** — [Açık PR, tarihsel plan] per_channel_working_dead_uncertain_evidence
+- **PR #650 @ fe1420ca833e / v2/tasks/state.json:$.full_inventory_health_scan_plan_20261123.work_order[6]** — [Açık PR, tarihsel plan] safe_reviewed_single_playlist_pr_and_ci
+- **PR #642 @ 4bc0d6614299 / DEVAM_NOTU.md:L1** — [Açık PR, tarihsel plan] SİSTEM HAZIR VE GÜNCEL - 18.337 KANAL AKTİF
+
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L12** — [Açık PR, tarihsel plan] 1. Tek ana playlist: MADSC55_TV_IBO_CALISANLAR_TEST.m3u8. Yeni test/yan playlist oluşturma.
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L13** — [Açık PR, tarihsel plan] 2. YEDEKLER dışındaki ana kategorileri ve kanal kimliklerini koru; 2.500'lük test döngüsü düzenini bozma.
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L14** — [Açık PR, tarihsel plan] 3. Türk/Yabancı arşivlerine taşınan kayıtlar YEDEKLER'den düşmeli; işlemler tekil kimlik ve sayım denetimli olmalı.
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L16** — [Açık PR, tarihsel plan] 5. Daha önce çıkarılmış 48 engelli kanal geri eklenmez; orijinal olmayan logo kullanılmaz.
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L22** — [Açık PR, tarihsel plan] | 01 | main playlist güncel envanter ve kategori sayımlarını doğrula | EXTINF ve kategori sayımı, önce/sonra fark raporu | BEKLİYOR |
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L23** — [Açık PR, tarihsel plan] | 02 | 685 kayıt için salt-okunur önizleme ve yetkili arşiv taşıma akışını tamamla | PR #654 testleri, workflow çıktısı, kimlik/özet kontrolü | BEKLİYOR |
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L25** — [Açık PR, tarihsel plan] | 04 | Tek playlist üzerinde PR tabanlı uçtan uca otomasyonu doğrula | İkinci çalıştırmada tekrar eklemeyen/idempotent test ve PR diff | BEKLİYOR |
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L27** — [Açık PR, tarihsel plan] | 06 | TÜRK/YABANCI ayrımı ve arşiv geçişlerini doğrula | Ses/altyazı/ülke kanıtı, kimlik ve kategori sayım testleri | BEKLİYOR |
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L28** — [Açık PR, tarihsel plan] | 07 | EPG eşleşme ve kapsama eksiklerini kapat | XMLTV ID eşleşme raporu | BEKLİYOR |
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L29** — [Açık PR, tarihsel plan] | 08 | Eksik gerçek kanal logolarını tamamla | Doğrulanmış kaynak URL, yanlış eşleşme yok | BEKLİYOR |
+- **PR #655 @ 2380ed950160 / v2/tasks/KALAN_ISLER_2026-11-23.md:L33** — [Açık PR, tarihsel plan] | 12 | Son aşamada canlı AV, kanal sürekliliği ve gerçek İBO Player testleri | Gerçek cihazda doğrulanmış test raporu | EN SON |
+
+- **PR #669 @ a5fcf3a84bbe / v2/tasks/state.json:$.channel_lifecycle_plan_20261123.baseline_entries** — [Açık PR, tarihsel plan] 18337
+- **PR #669 @ a5fcf3a84bbe / v2/tasks/state.json:$.channel_lifecycle_plan_20261123.pr666.merged** — [Açık PR, tarihsel plan] true
+- **PR #669 @ a5fcf3a84bbe / v2/tasks/state.json:$.channel_lifecycle_plan_20261123.pr666.ci** — [Açık PR, tarihsel plan] success
+- **PR #669 @ a5fcf3a84bbe / v2/tasks/state.json:$.channel_lifecycle_plan_20261123.pr666.security_gate** — [Açık PR, tarihsel plan] success
+- **PR #669 @ a5fcf3a84bbe / v2/tasks/state.json:$.channel_lifecycle_plan_20261123.pr667.merged** — [Açık PR, tarihsel plan] false
+- **PR #669 @ a5fcf3a84bbe / v2/tasks/state.json:$.channel_lifecycle_plan_20261123.pr667.ci** — [Açık PR, tarihsel plan] failure
+- **PR #669 @ a5fcf3a84bbe / v2/tasks/state.json:$.channel_lifecycle_plan_20261123.pr667.security_gate** — [Açık PR, tarihsel plan] failure
+- **PR #669 @ a5fcf3a84bbe / v2/tasks/state.json:$.channel_lifecycle_plan_20261123.pr667.proposed_duplicates** — [Açık PR, tarihsel plan] 806
+- **PR #669 @ a5fcf3a84bbe / v2/tasks/state.json:$.channel_lifecycle_plan_20261123.pr667.proposed_final** — [Açık PR, tarihsel plan] 17531
+- **PR #669 @ a5fcf3a84bbe / v2/tasks/state.json:$.channel_lifecycle_plan_20261123.pr667.epg_added** — [Açık PR, tarihsel plan] 0
+- **PR #669 @ a5fcf3a84bbe / v2/tasks/state.json:$.channel_lifecycle_plan_20261123.pr667.logos_added** — [Açık PR, tarihsel plan] 0
+- **PR #669 @ a5fcf3a84bbe / v2/tasks/state.json:$.channel_lifecycle_plan_20261123.priority[0]** — [Açık PR, tarihsel plan] immutable channel identity and discovery provenance
+- **PR #669 @ a5fcf3a84bbe / v2/tasks/state.json:$.channel_lifecycle_plan_20261123.priority[1]** — [Açık PR, tarihsel plan] URL history and repeat discovery reconciliation
+- **PR #669 @ a5fcf3a84bbe / v2/tasks/state.json:$.channel_lifecycle_plan_20261123.priority[2]** — [Açık PR, tarihsel plan] real decoded audio and video health checks
+- **PR #669 @ a5fcf3a84bbe / v2/tasks/state.json:$.channel_lifecycle_plan_20261123.priority[3]** — [Açık PR, tarihsel plan] Turkish spoken audio and subtitle evidence
+- **PR #669 @ a5fcf3a84bbe / v2/tasks/state.json:$.channel_lifecycle_plan_20261123.priority[4]** — [Açık PR, tarihsel plan] verified classification and audit ledger
+- **PR #669 @ a5fcf3a84bbe / v2/tasks/state.json:$.channel_lifecycle_plan_20261123.priority[5]** — [Açık PR, tarihsel plan] EPG and original logo provenance
+- **PR #669 @ a5fcf3a84bbe / v2/tasks/state.json:$.channel_lifecycle_plan_20261123.priority[6]** — [Açık PR, tarihsel plan] lossless recovery manifest and guarded deduplication
+- **PR #650 @ fe1420ca833e / v2/tasks/state.json:$.full_inventory_health_scan_plan_20261123.canonical_playlist** — [Açık PR, tarihsel plan] MADSC55_TV_IBO_CALISANLAR_TEST.m3u8
+- **PR #650 @ fe1420ca833e / v2/tasks/state.json:$.full_inventory_health_scan_plan_20261123.security_locked_channels** — [Açık PR, tarihsel plan] 685
+- **PR #650 @ fe1420ca833e / v2/tasks/state.json:$.full_inventory_health_scan_plan_20261123.do_not_create_new_playlist** — [Açık PR, tarihsel plan] true
+- **PR #650 @ fe1420ca833e / v2/tasks/state.json:$.full_inventory_health_scan_plan_20261123.do_not_modify_playlist_in_planning_pr** — [Açık PR, tarihsel plan] true
+- **v2/tasks/state.json:$.stage3_verified_historical_av_progress_20261121.purpose** — [Tarihsel kaynak kaydı, ek alan kontrolü] Record independently verified historical AV artifact and merged acceptance code; no new scan or playlist mutation.
+- **v2/tasks/state.json:$.stage4_capture_egress_review_20261121.stage4_unresolved_risk** — [Tarihsel kaynak kaydı, ek alan kontrolü] IP-literal input passes remote URL to FFmpeg with network protocols enabled. Nested HLS/playlist references can attempt secondary private/local requests; redirect=0 alone is insufficient.
+
+<!-- C-END -->
+
+## D) Açık Kalan GitHub Issue'ları ve Doğrulanmamış Maddeler
+
+### Açık kayıtların hızlı takip listesi
+
+- D01 — Issue #693: güncel ana URL'nin yeniden yüklendiğini ve cache/filtre olmadığını kontrol et.
+- D02 — Issue #693: görünmeyen tam kanal kimliklerini ve gerçek içe aktarma raporunu karşılaştır.
+- D03 — Issue #693: yalnız kanıtlı parser/kimlik sorunu varsa URL ve kategori sırası korunan hedefli PR.
+- D04 — Issue #693: gerçek kayıt sayısını görünür cihaz sayısına indirme; 101 fark ile 101 ortak URL grubunu eşitleme.
+- D05 — PR #641: eski 654 silme ve CI önerisi; ana playlist değişikliği içerir, otomatik merge yok.
+- D06 — PR #642: eski DEVAM_NOTU'nu tek satıra indirme önerisi; teknik kabul değil, tarihsel kayıt silinmez.
+- D07 — PR #650: tüm envanter/aday sağlık planı; bu indeks içinde kaynak kayıtları korunur.
+- D08 — PR #651: 15 ekran görüntüsündeki teknik kabul planı; ayrı kaynak kayıtları korunur.
+- D09 — PR #655: 12 maddelik ve dört aşamalı eski kabul planı; ayrı kaynak kayıtları korunur.
+- D10 — PR #664: 12 başlık ve iptal edilmiş arşiv taşıma kararı; ayrı kaynak kayıtları korunur.
+- D11 — PR #669: kayıpsız yaşam döngüsü ve dedupe erteleme planı; ayrı kaynak kayıtları korunur.
+- D12 — PR #760: geçmiş FFmpeg runtime/kanıt kapsamı düzeltmesi ve tetik etiketi; eski PR, yeni tarama tetiklenmez.
+- D13 — PR #721: eski 75 kayıt taşıma isteği; açık, uygulanmaz.
+- D14 — PR #728: eski 18 aday sıralama isteği; açık, uygulanmaz.
+- D15 — PR #755: eski 263 aday sıralama isteği; açık, uygulanmaz.
+- D16 — PR #757: eski 99 aday sıralama isteği; açık, uygulanmaz.
+- D17 — PR #767: eski 9 aday sıralama isteği; açık, uygulanmaz.
+- D18 — PR #768: eski 47 aday sıralama isteği; açık, uygulanmaz.
+
+Bu özetin altındaki özgün Issue/PR gövdeleri ve dosya kayıtları ayrı tutulur. Açık PR olması tek başına güncel iş veya birleştirme izni değildir.
+
+### Ayrıntılı kaynak kayıtları
+
+- **.github/workflows/issue-489-historical-audit.yml:L1** — [Tarihsel yapılandırma kaydı] name: Issue 489 historical inventory audit
+- **.github/workflows/issue-489-historical-audit.yml:L22** — [Tarihsel yapılandırma kaydı] name: issue-489-inventory-audit
+
+
+
+- **.github/workflows/v2-main-production-safety-gate.yml:L62** — [Tarihsel yapılandırma kaydı] - name: Issue 497 existing-audit adapter offline regression (no scan)
+- **.github/workflows/v2-main-production-safety-gate.yml:L402** — [Tarihsel yapılandırma kaydı] - name: Issue 497 targeted uncertain retry offline regressions (no live scan)
+
+- **DEVAM_NOTU.md:L19** — [Tarihsel kaynak kaydı] - Eski Issue #3, #4, #5, #6, #7, #8, #10 tarihsel kapsam arşivlenerek kapatılacak/kapatıldı; kapanış kanıtın tamamlandığını iddia etmez.
+- **DEVAM_NOTU.md:L45** — [Tarihsel kaynak kaydı] Kayit: acik issue #3,#4,#5,#6,#7,#8,#10,#497; #17-21/#34 ana gorev statuleri in_progress kalir.
+- **DEVAM_NOTU.md:L52** — [Tarihsel kaynak kaydı] - İndirilen MPEG-TS parçaları özel `0600` yerel dosyada birleştirilir; FFmpeg'e **yalnız yerel** `mpegts` giriş ve `-protocol_whitelist file` verilir; mevcut hedef dosyasının üzerine yazılmaz. Yakalama **dil, altyazı veya İBO cihaz kanıtı değildir**; çıktı `SAMPLE_CAPTURED_UNVERIFIED` olarak kalır. Bu PR'da gerçek ağ/kanal testi yapılmadı; testler sahte yanıtlarla çevrimdışı yapıldı.
+- **DEVAM_NOTU.md:L73** — [Tarihsel kaynak kaydı] - [GitHub issue #6](https://github.com/Madsc55/MADSC55-TV-V2/issues/6) daha önce `closed/completed` durumundaydı; kabul kanıtı olmadığı için **yeniden OPEN yapıldı** ve gerekçesi yoruma kaydedildi. Bundan sonra yap: yetkili Fernet kasasının mevcut harici depodaki gerçek dosyasını/Drive ID-revizyonunu doğrula, kaynak checksum makbuzunu ve ayrı anahtar erişimini güvenli sağlayıcı üzerinden al, yalnız ayrı geçici klasörde kriptografik restore+tam karar geçmişi eşitliği doğrula. Secret/URL/log sızdırma. Yoksa #6 gerçek kabulü açık tut.
+- **DEVAM_NOTU.md:L96** — [Tarihsel kaynak kaydı] - **Aşama 4 / PR #572 güvenlik incelemesi:** DNS-adı yakalama yolu pinned-public-IP indirme + yerel dosya FFmpeg yaklaşımına sahip; buna karşılık `v2/turkish_media_sample_capture.py` içindeki doğrudan genel-IP dalı hâlâ uzaktaki URL'yi FFmpeg'e `-i` olarak veriyor ve `http,https,tcp,tls,crypto` protokollerini kabul ediyor (PR head `e64cebca229fd14a9bea23f21c2b7e7a792ba46e` incelemesinde mevcut). Bir genel IP'den dönen HLS/playlist, ikincil yerel/özel segment veya key adreslerine yönlendirebileceğinden sadece `-max_redirect 0` güvenli egress sınırı sayılmaz. Bu olası SSRF/yan kaynak erişimi riski [PR #572 yorumunda](https://github.com/Madsc55/MADSC55-TV-V2/pull/572#issuecomment-7054170571) kayıt altına alındı. IP-literal yol da yerel dosya + güvenli indirme modeline alınmadan (veya fail-closed reddedilmeden), negatif regresyon testi geçmeden Stage 4 üretim kabulü verilmemeli.
+- **DEVAM_NOTU.md:L105** — [Tarihsel kaynak kaydı] - **#6 gerçek ortam restore HÂLÂ AÇIK:** [Mevcut özel Google Drive klasöründe]([URL: kaynak dosyada]) 5 eski kurtarma dosyası (2 `.enc` + 3 ZIP) görüldü; bunlar Türk/yetkili akış kasasının kendi doğrulanmış harici yedeği değildir. Yeni klasör/ayrı arşiv oluşturma. #6'nın gerçek kabulü ancak geçerli özel kasa yedeği, bağımsız şifreli bayt SHA-256, yetkili anahtar erişimi ve izole ortamda geri yüklenmiş kasa kimlik/içerik eşitliği ile kanıtlanır. Ham URL'ler/anahtarlar kamuya açık loga yazılmaz. GitHub [issue #6](https://github.com/Madsc55/MADSC55-TV-V2/issues/6) açık kalır. Ana 34-görev defterindeki `statuses[id=6]` tarihî başka bir görevdir; onun durumunu değiştirme.
+- **DEVAM_NOTU.md:L107** — [Tarihsel kaynak kaydı] - **#497 gerçek salt-okunur önizleme de tamamlandı:** [Run #44842556117](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44842556117), artefakt ID `14681083208`. `v2/tasks/state.json.stage3_issue497_historical_import_20261121` uyarınca manifest/preview doğrulandı, preview `SHA256=18ac8386964e2f336105bb83f8f1be0af008b6b9ea83f679a2fd1ca582097abe`, ana playlistle bayt olarak aynı, `channels_moved=0` ve `new_scan_started=false`. Yeniden importer/rapor taraması açma; sonraki #497 işi 685 belirsiz kanalın idempotent ve korumalı tekrar kuyruğunu mevcut kanıtla kabul etmek. Ağ hatası/403/timeout tek başına ölü kanal değildir.
+- **DEVAM_NOTU.md:L115** — [Tarihsel kaynak kaydı] - Bu beş dosya önceki aşamaların kurtarma artefaktlarıdır. Bunların `v2/turk_authorized_vault.py` özel Türk/yetkili kanal kasası ile aynı formatta olduğu veya bu kasanın gerçekten harici ortamda geri yüklendiği **doğrulanmadı**. Eski stage4/4955+107 restore kabulü #6'nın özel kasa kabulü değildir.
+- **DEVAM_NOTU.md:L144** — [Tarihsel kaynak kaydı] - **Açık kalan gerçek ortam işi:** kalıcı özel depolama hedefi, gizli anahtarların yönetimi, yetki sınırları, harici şifreli yedeğin gerçek ortamda oluşturulması ve geri yüklenmesi henüz doğrulanmadı. Bu doğrulama yapılmadan #6 tamamlandı olarak kapatılmamalı.
+- **DEVAM_NOTU.md:L163** — [Tarihsel kaynak kaydı] 19 Kasım 2026 — Güncel logo eksikleri, salt-okunur aday raporu (CI bekliyor)
+- **DEVAM_NOTU.md:L165** — [Tarihsel kaynak kaydı] - Güncel ana playlist blob `1b9ff7e01a0d045c400b1317d50cfca64101b0d4`: 2.914 kayıt, 489 logosuz kayıt (tamamı YEDEKLER). Aynı görüntülenen kanal adı için mevcut listede tek logo URL'si bulunan 21 logosuz satır (19 benzersiz ad) `v2/reports/logo-current-exact-name-review-20261119.json` içinde kayıt bazında belgelendi. Bu sadece REVIEW_REQUIRED_NOT_VERIFIED inceleme kuyruğudur; resmî logo görseli doğrulanmadı, hiçbir logo atanmadı. Tarihsel #356 ve #391 riskli PR'ları birleştirilmeden kapatıldı. Ana playlist, arşivler, yayın URL'leri ve güvenlik manifesti değiştirilmedi.
+- **DEVAM_NOTU.md:L167** — [Tarihsel kaynak kaydı] 19 Kasım 2026 — Logo audit benzersiz tvg-id kontrolü (CI bekliyor)
+- **DEVAM_NOTU.md:L171** — [Tarihsel kaynak kaydı] 19 Kasım 2026 — Tarihsel logo eşleşmesi ek güvenlik denetimi (CI bekliyor)
+- **DEVAM_NOTU.md:L182** — [Tarihsel kaynak kaydı] - Görev defterinde #15, #17–21 ve #28–34 açık. #21/#34 sağlayıcı kabulünü, #28–33 gerçek paketin bağımsız üretim geri yüklemesini ve cihaz kanıtlarını bekliyor. Gerçek medya, ASR/OCR ve İBO Player kanıtları son kanal testi aşamasını bekliyor. [Görev defteri](v2/tasks/state.json)
+- **DEVAM_NOTU.md:L208** — [Tarihsel kaynak kaydı] - 14 Kasım arşivinin ZIP hash’i ve şifreli checkpoint dosyası doğrulandı. Son deneme 300 tekrar içinde 28 yeni görüntü ve ses doğrulaması kaydetti. 20.148 kayıt açık kaldı. [Actions kanıtı](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43608247496/artifacts/14135417421)
+- **DEVAM_NOTU.md:L228** — [Tarihsel kaynak kaydı] 17 Kasım 2026 — Türkî YEDEKLER dördüncü taşıma (test bekliyor)
+- **DEVAM_NOTU.md:L315** — [Tarihsel kaynak kaydı] - Son gerçek koşu 43598617218 YouTube sonuçlarında 349 video kimliği buldu fakat LIVE_METADATA_VERIFIED 0 idi; raporda arama hatası 0 yazması, 349 video doğrulamasının başarılı olduğu anlamına gelmez. Tümü UNVERIFIED oldu.
+- **DEVAM_NOTU.md:L337** — [Tarihsel kaynak kaydı] **Son gerçek tarama:** https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43598617218 (Actions success ama rapor PARTIAL_DISCOVERY_EVIDENCE_ONLY; artifact 14114764986). 105 kaynak listesinden 103 başarılı. Zorunlu kaynak hatası 0; 2 isteğe bağlı kaynağın kimliği ve hataları: integrated-m3u-2b5507d6e11114287bcd / ValueError, integrated-m3u-888758216b11cb003dde / HTTPError. 28.845 aday: 28.844 checkpoint tekrar kullanıldı, 1 yeni AV kontrolü; 8.510 AV kanıtı (8.509 eski, yalnız 1 bu koşuda yeni). 20.335 doğrulanmamış/hatalı aday. Kurtarma: 12.871 RETRY, 2.624 CHECK_AV, 4.840 REVIEW. Şifreli envanter pending.enc olarak tutuldu; archive_restore_test_passed true; cihaz AV kabulü false; yeni 1.000/2.000 paket ihracı 0. Bu başarılı üretim veya tam kanal keşfi kabulü DEĞİLDİR.
+- **DEVAM_NOTU.md:L356** — [Tarihsel kaynak kaydı] - Bu kanıt çevrimdışı kod/CI kabulüdür; #28–#33 için gerçek cihaz kabulü, yeni yayın FFmpeg AV ve bağımsız harici geri yükleme açık kalır. Kanıt olmadan görev kapatılmadı. Ana İBO, YEDEKLER, YENİLER ve FAVORİLER değiştirilmedi; kapsamlı tarama başlatılmadı.
+- **DEVAM_NOTU.md:L413** — [Tarihsel kaynak kaydı] - `v2/tasks/state.json` doğrulandı (GitHub Contents API): 34 kayıt; 21 completed, 11 pending, 2 in_progress. Bu sayım yalnızca defter statüsüdür; idari kapanışlar gerçek yayın onarımı/AV kanıtı anlamına gelmez.
+- **DEVAM_NOTU.md:L416** — [Tarihsel kaynak kaydı] - #17, #18, #19, #20, #21 ve #28–#33 pending. #18/#19/#20 bazı kısmi ölçüm kanıtlarına sahip; bağımlı görevlerin nihai kabulü henüz tamamlanmadı.
+- **DEVAM_NOTU.md:L443** — [Tarihsel kaynak kaydı] - Merge sonrası yeni Actions kabulü henüz doğrulanmadı; #34 açık. Kapsamlı tarama yapılmadı; ana İBO, YEDEKLER, YENİLER ve FAVORİLER değiştirilmedi.
+- **DEVAM_NOTU.md:L482** — [Tarihsel kaynak kaydı] - Eski workflow run 41189283457'nin compile/protect/discovery-tests/safety işleri başarılı görüldü; bu eski run yeni commitlerin test kanıtı değildir. Yeni commitlerin Actions başarı sonucu doğrulanmadı.
+- **DEVAM_NOTU.md:L492** — [Tarihsel kaynak kaydı] - Son commitler için Actions sonucu doğrulanmadı. #60 kayıplarının gerçek adreslerle kurtarılması ve GitHub dışı kalıcı yedekleme hâlâ açık. Ağ taraması ve YEDEKLER aktarımı yapılmadı.
+- **DEVAM_NOTU.md:L533** — [Tarihsel kaynak kaydı] - v2/real_ibo_scan.py, yabancı arşivi zorunlu olarak okuyup URL'leri yeni adaylardan ayıklayacak şekilde güncellendi; commit 4c7fddeb. Bu kodun yeni Actions koşusu henüz doğrulanmadı.
+- **DEVAM_NOTU.md:L576** — [Tarihsel kaynak kaydı] - Asıl İBO raw URL'sine erişim hâlâ doğrulanmadı; bu değişiklik yalnızca V2 reposuna işlendi.
+- **DEVAM_NOTU.md:L609** — [Tarihsel kaynak kaydı] - HTTP probe run `40562872598` **success**: 101 normal adaydan 18 `HTTP_RESPONSIVE_MEDIA_HINT`, 1 `HTTP_RESPONSIVE_UNVERIFIED`, 82 `UNREACHABLE`; 11 header bağımlı aday ayrı tutuldu. HTTP medya işareti oynatım garantisi değildir.
+- **DEVAM_NOTU.md:L614** — [Tarihsel kaynak kaydı] - `40563554096` başarılı: bu çalışmada **19 HTTP medya işareti**, **11 kısa ffprobe doğrulaması**; 8 aday kısa çözümlemeden geçemedi. Bunlar kanal sayısı değil URL/akış denemeleridir; uzun süreli İBO oynatımı doğrulanmadı.
+- **DEVAM_NOTU.md:L641** — [Tarihsel kaynak kaydı] - Birleşik workflow keşif/kalite betiklerini derleme kontrolüne aldı. Gerçek çözünürlüğün **mevcut playlist yayınına karşı** ölçülmüş otomatik yükseltme kararı, görüntü fingerprint, yeni aday EPG/logo eşleştirme ve resmî site/YouTube adımlarının tek workflow'da birleştirilmesi hâlâ açık işlerdir. Test sonucu doğrulanmadan tamamlandı denmemeli.
+- **DEVAM_NOTU.md:L718** — [Tarihsel kaynak kaydı] - Son kod değişiklikleri: `73f9e1b` ses kanıtı ayrımı; `d2f0fb1` çevrimdışı güvenlik sözleşmesi; `a015741` bu sözleşmeyi birleşik workflow'un ilk kapısına bağladı. Bu commitlerin yeşil sonucu henüz doğrulanmadı.
+- **DEVAM_NOTU.md:L749** — [Tarihsel kaynak kaydı] - Son kurtarma raporunun `rediscovered_count` ve `still_unmatched` değerleri henüz okunup doğrulanmadı. Yeni başarı rakamı uydurma.
+- **DEVAM_NOTU.md:L815** — [Tarihsel kaynak kaydı] - `v2/config/sources.json`: Azerbaycan ulke/dil/akim, Turkce dil ve Avrupa/Asya bolgesel M3U listeleri eklendi. Kaynaklarin canli erisimi ve test sonucu henuz dogrulanmadi.
+- **DEVAM_NOTU.md:L830** — [Tarihsel kaynak kaydı] - Son kod commitleri: 7262458a, 6a6b685f, 332e854f, 0130133b, e42a076c, 1acecd9f, fad4442b. AZ/Turkce dil/Avrupa/Asya kaynaklari eklendi, GitHub sorgulari 20, repo limiti 240, source_ids izleme eklendi. Bunlarin yeni tam tarama sonucu henuz dogrulanmadi.
+- **DEVAM_NOTU.md:L868** — [Tarihsel kaynak kaydı] - Yeni commitin Actions sonuclari henüz dogrulanmadi; onceki yesil testler yeni commitin testi sayilamaz. Ana playlist/YEDEKLER/favoriler/kategoriler/EPG degistirilmedi.
+- **DEVAM_NOTU.md:L869** — [Tarihsel kaynak kaydı] - Acik kalan isler: son Actions run/job/log kontrolu, URL kalici guvenli arsiv ve restore testi, #60 eski URL kurtarma, GitLab/Codeberg, resmi site/YouTube ana kaynak entegrasyonu, 2000 V2 YEDEKLER manuel test akisi ve toplu kabul.
+- **DEVAM_NOTU.md:L875** — [Tarihsel kaynak kaydı] - Yeni commitler icin GitHub Actions gercek run sonucu henüz dogrulanmadi. Bu kayit testin yesil oldugu iddiasi degildir. V2 playlist, YEDEKLER, EPG, favoriler ve kategoriler degismedi.
+- **DEVAM_NOTU.md:L913** — [Tarihsel kaynak kaydı] - Kontrol private/public URL SHA256 kimlikleri, tekillik, aday sayisi, source_ids eslesmesini fail-closed denetler; stream URL loglamaz. Workflow degisikligi yeni bir Actions calismasini tetikleyebilir; henuz yeni run sonucu dogrulanmadi.
+- **DEVAM_NOTU.md:L914** — [Tarihsel kaynak kaydı] - Bu kontrol KALICI SIFRELI ARSIV, harici saklama veya restore testi DEGIL. Kalici, yetki kontrollu depolama ve restore kaniti hala bekliyor. Ana playlist, YEDEKLER, favoriler degismedi.
+- **DEVAM_NOTU.md:L933** — [Tarihsel kaynak kaydı] - Bu degisiklikler GitHub'da kaydedildi, fakat yeni tarama sonucu ve testlerin yesil oldugu henuz bagimsiz dogrulanmadi. GitLab/Codeberg taramasi, resmi site stream esleme, YouTube dogrudan IBO uyumlulugu, kalici sifreli URL arsivi, #60 kurtarma ve 2000 YEDEKLER testi acik. Ana playlist/YEDEKLER/favoriler degismedi.
+- **DEVAM_NOTU.md:L944** — [Tarihsel kaynak kaydı] - Dearbulut `PLAYLISTS.md` best/online/index listelerini belgeliyor; `best.m3u` discovery-only olarak `v2/config/sources.json` dosyasina eklendi, commit `7137b87fb24c8d3da282a817117e9786c409c23c`. Bu listedeki adaylarin video decode testi yeni run icin henuz dogrulanmadi.
+- **DEVAM_NOTU.md:L951** — [Tarihsel kaynak kaydı] - Yeni commitin Actions tarama/test sonucu henuz dogrulanmadi. Eklendi demek calisti demek degil. Ana IBO, YEDEKLER ve favoriler degismedi. Kalan kritik isler: yeni kaynak hatalarini denetle, GitLab/Codeberg belge aramasini tamamla, sifreli kalici arsiv ve restore, #60 URL kurtarma, 2000 test kanali.
+- **DEVAM_NOTU.md:L1010** — [Tarihsel kaynak kaydı] - Bu sadece kod degisikligidir: yeni Actions sonucu ve offline test calisma sonucu henuz dogrulanmadi. Gercek kaynak fetch, discover.py, playback veya kanal aramasi BASLATILMADI. Diger workflow tetikleyicilerinin denetimi ve kalici arsiv acik.
+- **DEVAM_NOTU.md:L1033** — [Tarihsel kaynak kaydı] 2026-10-31 GITHUB ISSUE SIRALI IS KUYRUGU
+- **DEVAM_NOTU.md:L1042** — [Tarihsel kaynak kaydı] Tum gorevler ACIK. Bir is kanitli bitmeden sonraki agir is baslatilmaz. GitHub issue olusturmak Actions testi baslatmaz; otomatik gece calismasi taahhudu yoktur. Ana IBO playlistine dokunma.
+- **DEVAM_NOTU.md:L1048** — [Tarihsel kaynak kaydı] - GitHub Issues #1-#8 hala uygulama backlog'udur: Actions bu issue'lari otomatik kodlayip kapatmaz. Diger adaptör, arsiv ve restore kodlari henuz tamamlanmadi.
+- **DEVAM_NOTU.md:L1055** — [Tarihsel kaynak kaydı] - Bu sadece offline hazirlik test otomasyonudur; Issues #1-#8 kod islerini kendi kendine tamamlamaz. GitHub Actions run PASS sonucu henuz dogrulanmadi.
+- **DEVAM_NOTU.md:L1085** — [Tarihsel kaynak kaydı] - `.github/workflows/v2-ordered-preflight.yml` discovery-tests aşamasına yeni test eklendi (`6f3aa30`); push sonrası Actions otomatik sıraya girer. Bu not yazılırken yeni run sonucu henüz doğrulanmadı.
+- **DEVAM_NOTU.md:L1100** — [Tarihsel kaynak kaydı] - Testler zaten sıralı `v2-ordered-preflight.yml` içindeki discovery-tests aşamasına bağlıdır. Yeni CI sonucu henüz bağımsız doğrulanmadı; başarılı olarak sunma.
+- **DEVAM_NOTU.md:L1135** — [Tarihsel kaynak kaydı] 2026-11-01 — CI gerçek çelişki düzeltmeleri (doğrulama bekliyor)
+- **DEVAM_NOTU.md:L1139** — [Tarihsel kaynak kaydı] - Eski run `41189283457` dört job SUCCESS idi fakat bu commitleri kapsamaz. Yeni main Actions sonuçları henüz doğrulanmadı; tamamlandı/yeşil iddiası yoktur.
+- **DEVAM_NOTU.md:L1173** — [Tarihsel kaynak kaydı] - Ana playlist/YEDEKLER değişmedi. Bu adım yalnızca sonraki taramalar çalıştığında envanter üretir; henüz yeni gerçek tarama veya Actions yeşil sonucu doğrulanmadı.
+- **DEVAM_NOTU.md:L1185** — [Tarihsel kaynak kaydı] - Bu kod değişikliği gelecek gerçek taramalarda etkili olur; yeni tarama ve Actions sonucu henüz doğrulanmadı. Ana playlist ve YEDEKLER değiştirilmedi.
+- **DEVAM_NOTU.md:L1190** — [Tarihsel kaynak kaydı] - `v2/config/sources.json` commit `8df9eb3`: IPTV-org Amerika, Afrika ve Okyanusya bölgesel listeleri dünya/diaspora keşfine eklendi; kaynak sayısı 32'den 35'e çıktı. Erişilebilirlik ve gerçek tarama çıktıları henüz doğrulanmadı.
+- **DEVAM_NOTU.md:L1197** — [Tarihsel kaynak kaydı] - GitHub Actions çalıştırma sonucu bu kayıtta henüz doğrulanmadı. Ana playlist, YEDEKLER ve favoriler değiştirilmedi.
+- **DEVAM_NOTU.md:L1209** — [Tarihsel kaynak kaydı] - Önceki rapor olmadan karşılaştırma yapılmaz; gerçek tarama ve CI sonucu henüz doğrulanmadı. Ana playlist ve YEDEKLER değiştirilmedi.
+- **DEVAM_NOTU.md:L1215** — [Tarihsel kaynak kaydı] - Bu değişiklikler yalnızca keşif raporunu etkiler; ana İBO playlisti, YEDEKLER ve favoriler değiştirilmedi. CI başarısı henüz doğrulanmadı.
+- **DEVAM_NOTU.md:L1224** — [Tarihsel kaynak kaydı] - Ana playlist ve YEDEKLER değiştirilmedi; Actions sonuçları henüz doğrulanmadı.
+- **DEVAM_NOTU.md:L1231** — [Tarihsel kaynak kaydı] - GitHub Actions çalışmasının sonucu henüz doğrulanmadı.
+- **DEVAM_NOTU.md:L1239** — [Tarihsel kaynak kaydı] - Yerel şifreleme testleri 3/3 geçti; GitHub CI sonucu ve gerçek kanal envanterinin harici kalıcı arşivi henüz doğrulanmadı. İBO paketleri ve gerçek video/ses testi tamamlandı olarak işaretlenmedi.
+- **DEVAM_NOTU.md:L1255** — [Tarihsel kaynak kaydı] - Gerçek tarama sonucu, video/ses raporu, #60 kurtarma ve 1000/2000'lik gerçek çıktı henüz doğrulanmadı. Ana playlist, YEDEKLER ve favoriler değiştirilmedi.
+- **DEVAM_NOTU.md:L1284** — [Tarihsel kaynak kaydı] - Bu sonuç canlı Codeberg API, tüm kaynakların FFmpeg girişine bağlanması, gerçek AV kanıtı veya nihai dünya taraması kabulü değildir. #34 açık kalır. Ana İBO, YEDEKLER, YENİLER, FAVORİLER değiştirilmedi.
+- **DEVAM_NOTU.md:L1326** — [Tarihsel kaynak kaydı] - Yeni offline testler altı terim kapsamını ve Codeberg 403 tanılamasını doğruladı. Bu Actions koşusu canlı sağlayıcı çağrısı değildir; Codeberg canlı API sonucu henüz alınmadı. #34 açık kaldı.
+- **DEVAM_NOTU.md:L1384** — [Tarihsel kaynak kaydı] - Son canlı sağlayıcı tanısı `43464785708`: GitHub token ile 6/6 başarılı ve 102 ham eşleşme; GitLab 6/6 geçerli boş sonuç; Codeberg ilk sorguda HTTP 429, kalan beş sorgu circuit breaker ile atlandı. Codeberg canlı kabulü açık kaldı.
+- **DEVAM_NOTU.md:L1385** — [Tarihsel kaynak kaydı] - Görev defteri 21 completed / 13 in_progress; #15, #17–#21, #28–#34 gerçek yayın, paket, bağımsız restore ve cihaz kanıtları bekliyor. Ana İBO/YEDEKLER/YENİLER/FAVORİLER değişmedi; yeni tarama ve playlist yazımı yok.
+- **DEVAM_NOTU.md:L1393** — [Tarihsel kaynak kaydı] - Bu yalnızca çevrimdışı EPG eşleştirme/yayınlama doğrulamasıdır; 303 EPG boşluğunun giderildiği, gerçek EPG kaynaklarının tamamının güncel olduğu veya #19 nihai kabulünün geçtiği anlamına gelmez. #19 açık kalır. Yeni kanal taraması yapılmadı; ana İBO, YEDEKLER, YENİLER ve FAVORİLER değiştirilmedi.
+- **DEVAM_NOTU.md:L1462** — [Tarihsel kaynak kaydı] - Yeni sürümde 16 batch × en çok 500 kanal (sonuncu 150) ffprobe + ffmpeg görüntü/ses çözümleme testinden geçirir; sonuçları `v2-legacy-7650-batch-*` artifact'larına kaydeder. **Henüz gerçek testlerin tamamlandığı veya 7.650 kanalın çalıştığı doğrulanmadı.** Paralel işlerin GitHub Actions süresi ve başarısızlıkları denetlenecek.
+- **DEVAM_NOTU.md:L1472** — [Tarihsel kaynak kaydı] - Kabul şartı: PR birleştirmesi, güncel main üzerinde yeni workflow_dispatch scan, gerçek log ve raporlarla başarı; ayrıca 16 batch artifact'ındaki AV sonuçlarının toplu denetimi. **AÇIK — yeni scan yeşil doğrulanmadan tamamlandı sayılmayacak.**
+- **DEVAM_NOTU.md:L1475** — [Tarihsel kaynak kaydı] 17 Kasım 2026 — PR #374 Stage 6 kırmızı test düzeltmesi (CI kabulü bekliyor)
+- **DEVAM_NOTU.md:L1478** — [Tarihsel kaynak kaydı] - Kabul durumu: düzeltme commit'i PR dalına yazıldı; bu commit için Actions koşusu/yeşil Stage 6 sonucu henüz doğrulanmadı. PR birleştirilmeyecek ve genel scan başlatılmayacak; CI kanıtı bekleniyor.
+- **DEVAM_NOTU.md:L1522** — [Tarihsel kaynak kaydı] - #19 tarihsel 303 EPG boşluğu bağımsız kanıt olmadan çözülmüş sayılmayacak. #17/#18/#20, #28–33 ve cihaz kabulü açık kalır. Ana İBO playlisti ve arşivler değiştirilmedi; genel kanal taraması başlatılmadı.
+- **DEVAM_NOTU.md:L1532** — [Tarihsel kaynak kaydı] - **Açık kalan:** Gerçek İBO Player cihazından model/uygulama sürümü, test zamanı, ana playlist SHA-256, kategori/EPG ekranları ve seçilmiş kanalların gerçekten görüntü/ses verdiğine ilişkin kanıtlar henüz toplanmadı. Bu nedenle cihaz kabulü ve Stage 6/7 üretim teslimi açık kalır.
+- **DEVAM_NOTU.md:L1553** — [Tarihsel kaynak kaydı] - İşlem delili: [v2/reports/issue497-original-artifact-audit-20261121.json](v2/reports/issue497-original-artifact-audit-20261121.json). `v2/tasks/state.json` içinde yalnız yeni devir/gözlem alanı eklendi; 34 görev statüsüne ve ana playlist/URL/kategorilere dokunulmadı.
+- **DEVAM_NOTU.md:L1638** — [Tarihsel kaynak kaydı] - **Önemli ayrım:** Plan kodu ve sentetik/çevrimdışı testleri kabul edildi. Tek tıklamalı `workflow_dispatch` henüz çalıştırılmadı; gerçek 685 satırlı plan artefaktı henüz üretilmiş değil. Canlı retry, yeni tarama, FFmpeg canlı oynatma, otomatik sınıflandırma, playlist veya arşiv yazımı yapılmadı. Her satır `PENDING_FINAL_TEST_AUTHORIZATION` durumunda.
+- **DEVAM_NOTU.md:L1659** — [Tarihsel kaynak kaydı] - ÖNEMLİ KAPSAM: Bu kabul yalnız 12 Kasım tarihsel Stage4 canlı keşif envanteri şifreli Drive arşividir. Ayrı Türk yetkili özel URL kasası (issue #6, turk_authorized_vault.py, Fernet ve ayrı karar geçmişi) için gerçek harici yedek/restore kabulü HALA AÇIK. Stage4 dosyası #6 kasasının yerine kullanılamaz.
+- **DEVAM_NOTU.md:L1673** — [Tarihsel kaynak kaydı] 21 Kasım 2026 — Açık PR ve issue temizliği, main mutabakatı
+- **DEVAM_NOTU.md:L1677** — [Tarihsel kaynak kaydı] - Açık tutulan PR'lar: #618 (6 logo resmi kaynak doğrulaması bekliyor), #372 (182 Türkçe aday inceleme raporu, kesin sınıflama değil), #365 (eski test/arşiv dalı, otomatik merge edilmez). Eski `plan/18074-kanal-akilli-test-arsiv-20261117` dalı main'e göre 233 ahead / 329 behind; güvenlik ve kod eşdeğerliği incelemesi gerekir.
+- **DEVAM_NOTU.md:L1687** — [Tarihsel kaynak kaydı] - PR #622 run `44921917164` güvenlik işi bu kayıt anında IN_PROGRESS; başarılı sonuç henüz doğrulanmadı. Bunlar tespit edilen tarihsel koşulardır, tüm repository Actions geçmişinin eksiksiz envanteri değildir.
+- **DEVAM_NOTU.md:L1693** — [Tarihsel kaynak kaydı] - Açık PR yalnız **#365** (eski dal, güvenli modül karşılaştırması gerekli) ve **#618** (6 logonun gerçek kimlik ve URL doğrulaması bekliyor). #365'in karşılaştırma farkındaki 44 `v2/*.py` dosya yolunun 10'u main'de mevcut, 34'ü yok; dosya yokluğu işlev yokluğu değildir. Her ikisi de doğrulamasız merge edilmez.
+- **DEVAM_NOTU.md:L1704** — [Tarihsel kaynak kaydı] - Açık PR'lar: **#365, #618**. Açık issue'lar: **#3, #4, #5, #6, #7, #8, #10, #497**. Bunlar kanıtsız kapatılmadı. Eski/çift PR temizliği önceki kayıtlar uyarınca tamamlanmıştı.
+- **DEVAM_NOTU.md:L1712** — [Tarihsel kaynak kaydı] - Açık issue sorgusu #497'yi artık döndürmüyor; önceki #497 kayıtları #624/#626 kanıtlarını içerir, fakat uçtan uca otomatik artefakt/karar defteri kabulü doğrulanmış sayılmaz. Açık issue sayısı 7. Tarihsel Actions başarısızlık envanteri henüz eksiksiz değil.
+- **archive/unverified_historical_ids.json:$.scope** — [Tarihsel kaynak kaydı] counts_and_encrypted_artifact_reference_only
+- **archive/unverified_historical_ids.json:$.unverified_historical_id_count** — [Tarihsel kaynak kaydı] 16367
+- **archive/unverified_historical_ids.json:$.note** — [Tarihsel kaynak kaydı] This manifest does not contain or verify individual identities and does not establish full Task 17 recovery acceptance.
+- **v2/DEVAM_NOTU_2026-10-29_LOGOLAR.md:L26** — [Tarihsel kaynak kaydı] - YouTube video/kanal sayfası URL'sini doğrudan oynatılabilir M3U akışı sanma; IBO Player ile uyumlu, izinli, kararlı canlı yayın adresi doğrulanmadan playlist'e ekleme.
+- **v2/DEVAM_NOTU_2026-10-29_LOGOLAR.md:L28** — [Tarihsel kaynak kaydı] - Kanal ve kategori sayısını koruyarak, yanlış taşımaları geri al; YEDEKLER'deki Türk kanallarını güvenilir kaynakla tespit et; belirsizleri raporla. Test yeşil ve gerçek playlist doğrulanmadan tamamlandı deme.
+
+- **v2/SCAN_61_ACTION_REPORT.md:L21** — [Tarihsel kaynak kaydı] 4. Yayıncı kimliği, haklar, EPG/logo doğruluğu ve uzun süreli stabilite doğrulanmadan bulunan URL'leri canlı IBO'ya taşımama.
+- **v2/WORK_PLAN.md:L34** — [Tarihsel kaynak kaydı] - Birleşik tarama run 40605265927 kontrol edildi: kısa decoder doğrulaması aşamasında çalışıyordu; tamamlandı sonucu henüz doğrulanmadı.
+- **v2/WORK_PLAN.md:L82** — [Tarihsel kaynak kaydı] **28 Ekim son kontrol:** 40665346855 batched playback **failure**; 40665323600 **success**; 40665377633 **in_progress**; 40665323555 birleşik **in_progress**; 40665873146 birleşik **pending**. Bunların sonuçlarını yeniden kontrol et, başarısız işin logunu inceleyip düzelt; başarı varsayma.
+- **v2/WORK_PLAN.md:L95** — [Tarihsel kaynak kaydı] - Run `40665873146` son kontrolde **pending**; run `40665323555` **in_progress**. Bunlar tamamlandı veya başarılı diye sunulamaz.
+- **v2/WORK_PLAN.md:L108** — [Tarihsel kaynak kaydı] - Son kontrol: birleşik run `40666379703` pending; `40665873146` pending; `40665323555` in_progress. Başarı teyidi yok.
+- **v2/WORK_PLAN.md:L123** — [Tarihsel kaynak kaydı] - Kalan: ortak kaynak snapshot, eksik kaynak tekrar taraması, tüm adaylara eksiksiz kapsam, tek nihai kanal bazlı approved/rejected/pending_review sınıflaması ve katı başarı koşulu.
+- **v2/WORK_PLAN.md:L131** — [Tarihsel kaynak kaydı] - **Öncelik 4:** `approved/rejected/pending_review` tek final rapor ve eksik iş varsa başarısız job; ara rapor yayınlamama.
+- **v2/logos/manifest.json:$[1587].reason** — [Tarihsel kaynak kaydı] URLError: &lt;urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certific
+- **v2/logos/manifest.json:$[1588].reason** — [Tarihsel kaynak kaydı] URLError: &lt;urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certific
+- **v2/reports/DEVIR_2026-11-01.md:L18** — [Tarihsel kaynak kaydı] - .github/workflows/v2-ordered-preflight.yml: derleme, playlist koruma, keşif regresyon ve güvenlik test zinciri; son CI yeşil durumu doğrulanmadı.
+
+- **v2/reports/drive_archive_structural_audit_20261121.json:$.status_scope_note** — [Tarihsel kaynak kaydı] Historical Stage 4 offsite Drive restore succeeded in 2026-11-12 Actions. Current 2026-11-21 review rechecked exact producer and Drive ciphertext and receipts, without decrypting again. Separate Turkish authorized vault issue #6 remains open.
+- **v2/reports/ffmpeg_av_gap_classification_20261121.md:L18** — [Tarihsel kaynak kaydı] - `PENDING_RETRY`: son kanıt belirsiz.
+- **v2/reports/issue497-original-artifact-audit-20261121.json:$.scope** — [Tarihsel kaynak kaydı] Historical 1,792 YEDEKLER AV audit only; not 18,074-channel complete scan
+- **v2/reports/issue497-original-artifact-audit-20261121.json:$.provenance.counts.RECHECK_REQUIRED** — [Tarihsel kaynak kaydı] 685
+- **v2/reports/issue497-original-artifact-audit-20261121.json:$.provenance.checks.exact_report_file_hash_verified** — [Tarihsel kaynak kaydı] true
+- **v2/reports/issue497-original-artifact-audit-20261121.json:$.provenance.checks.uncertain_none_decoded_verified** — [Tarihsel kaynak kaydı] true
+- **v2/reports/issue497-original-artifact-audit-20261121.json:$.provenance.importer_main_ci_conclusion** — [Tarihsel kaynak kaydı] success
+- **v2/reports/issue497-original-artifact-audit-20261121.json:$.provenance.actual_importer_preview_artifact_verified** — [Tarihsel kaynak kaydı] true
+- **v2/reports/issue497-original-artifact-audit-20261121.json:$.stage3_code.main_ci_conclusion** — [Tarihsel kaynak kaydı] success
+- **v2/reports/issue497-original-artifact-audit-20261121.json:$.network_retry_security_hold_20261121.scope** — [Tarihsel kaynak kaydı] 685 uncertain retry
+- **v2/reports/issue497-original-artifact-audit-20261121.json:$.network_retry_security_hold_20261121.no_live_retry_started_by_this_review** — [Tarihsel kaynak kaydı] true
+- **v2/reports/issue497-original-artifact-audit-20261121.json:$.network_retry_security_hold_20261121.historical_verified** — [Tarihsel kaynak kaydı] 1107
+- **v2/reports/issue497-original-artifact-audit-20261121.json:$.network_retry_security_hold_20261121.next_action** — [Tarihsel kaynak kaydı] Secure HLS/DASH nested-resource transport and a real broadcaster sample must pass before separately authorizing live retry.
+- **v2/reports/issue497-original-artifact-audit-20261121.json:$.network_retry_security_hold_20261121.production_security_gate_conclusion** — [Tarihsel kaynak kaydı] success
+- **v2/reports/issue497-original-artifact-audit-20261121.json:$.stage6_read_only_retry_plan.ci_conclusion** — [Tarihsel kaynak kaydı] success
+- **v2/reports/issue497-original-artifact-audit-20261121.json:$.stage6_read_only_retry_plan.playlist_write_allowed** — [Tarihsel kaynak kaydı] false
+- **v2/reports/issue497-original-artifact-audit-20261121.json:$.stage6_read_only_retry_plan.archive_write_allowed** — [Tarihsel kaynak kaydı] false
+
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L20** — [Tarihsel kaynak kaydı] verdict always remains unverified.
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L39** — [Tarihsel kaynak kaydı] - Keep `SAMPLE_CAPTURED_UNVERIFIED` separate from ASR/OCR, language approval
+- **v2/reports/stage4_historical_drive_restore_provenance_20261121.json:$.next_action** — [Tarihsel kaynak kaydı] Preserve Stage 4 historical acceptance; separately verify a real external backup and restore of the authorized Turkish vault under issue #6, then continue final live/device acceptance.
+- **v2/reports/task21-evidence-handoff-20261119.md:L23** — [Tarihsel kaynak kaydı] **Açık / kanıt bekliyor.** Özellikle sağlayıcı keşfi, YouTube canlı metadata, doğrudan HLS ve bağımsız yayıncı doğrulaması tamamlanmadı. Bu belge canlı tarama başlatmaz ve 103/103 sayısını küresel kaynak tamamlanması olarak sunmaz.
+
+- **v2/reports/turkish-only-fresh-scan.json:$.summary.note** — [Tarihsel kaynak kaydı] Country/language metadata is only candidate filtering. Turkish spoken language not verified without speech analysis. IBO playlist unchanged.
+- **v2/tasks/ANA_PLAYLIST_ARSIV_BUTUNLUK_20261121.md:L23** — [Tarihsel kaynak kaydı] **AÇIK / DOĞRULANMADI:** 112–486 ve diğer geçmiş taşıma emirlerinin her kanalının önce/sonra sıralı URL/hash manifestleri üzerinden kimlik eşleşmesi. Güncel playlist ve boş tvg-id alanları tek başına tarihsel doğruluğu kanıtlamaz.
+- **v2/tasks/ANA_PLAYLIST_ARSIV_BUTUNLUK_20261121.md:L27** — [Tarihsel kaynak kaydı] Bu denetim ana playlisti değiştirmez; yeni playlist oluşturmaz; kanal silmez veya taşımaz. Tarihsel kimlik doğrulanmadan kategori taşımalarını tekrar uygulamayın.
+- **v2/tasks/KALAN_ISLER_12_ASAMALI_PLAN_20261123.md:L5** — [Tarihsel kaynak kaydı] 12 aşama (tamamlanma kanıtı bekliyor)
+- **v2/tasks/KAPANIS_SIRASI_20261121.md:L3** — [Tarihsel kaynak kaydı] Bu belge tamamlanma iddiasi degildir. Kaynak: main DEVAM_NOTU.md, v2/tasks/state.json, acik PR ve issue sorgulari.
+- **v2/tasks/KAPANIS_SIRASI_20261121.md:L5** — [Tarihsel kaynak kaydı] 34 ana gorev: 22 completed, 12 in_progress: 17,18,19,20,21,28,29,30,31,32,33,34. Acik issue: 3,4,5,6,7,8,10,497. Acik PR'larin hepsi ayri eksik is degildir.
+- **v2/tasks/KAPANIS_SIRASI_20261121.md:L9** — [Tarihsel kaynak kaydı] 1. GitHub main HEAD, acik PR/issue ve Actions sonuclari: eski/mukerrerleri ayir, yalniz gercek eksikleri duzelt.
+- **v2/tasks/KAPANIS_SIRASI_20261121.md:L19** — [Tarihsel kaynak kaydı] 6. EPG ve logo: #19 303 tarihsel acik; #609 toplam 4745 logosuz, #618 alti aday dogrulama bekliyor. Rastgele logo yok.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L55** — [Tarihsel kaynak kaydı] - Kabul: kaynak, zaman damgası, örnek hash'i, yöntem ve güven düzeyi. Kanıt yetersizse inceleme bekliyor; otomatik Türk/Yabancı onayı yok.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L89** — [Tarihsel kaynak kaydı] Durum (bekliyor/çalışıyor/tamamlandı/bloke); değişen dosyalar; önce/sonra SHA; commit/PR; Actions run/job sonuçları; artifact ID/hash; kayıt sayıları; blocker; playlist/kategori değişikliği (evet/hayır); sonraki tek adım.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L99** — [Tarihsel kaynak kaydı] - **Aşama 1 durumu: test ve kanıt incelemesi başarılı; PR #551 hâlâ açık olduğu için PR kabul/merge kapanışı bekliyor.** Playlist değişikliği yok.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L105** — [Tarihsel kaynak kaydı] - **Aşama 2 durumu: BLOKE — doğru tarihî Actions run/artifact ve hash manifesti bulunmalı.** Sonraki adım yalnız bu özgün kaynağı araştırmak; bulunamazsa blocker açık kalır.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L127** — [Tarihsel kaynak kaydı] - İşlem delili: [v2/reports/issue497-original-artifact-audit-20261121.json](v2/reports/issue497-original-artifact-audit-20261121.json). `v2/tasks/state.json` içinde yalnız yeni devir/gözlem alanı eklendi; 34 görev statüsüne ve ana playlist/URL/kategorilere dokunulmadı.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L146** — [Tarihsel kaynak kaydı] - İndirilen finite MP4/Matroska/MPEG-TS dosyaları FFmpeg'e **yerel** dosya olarak ve yalnız `file` protokolü + sabit demuxer ile verilir. ffconcat/metin/manifest otomatik algılaması reddedilir. Çıktı özel geçici dizinde üretilir, mevcut hedefin üstüne yazılmaz. Sonuç yalnız `SAMPLE_CAPTURED_UNVERIFIED`; Türkçe konuşma, altyazı ve cihaz kanıtı değildir.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L184** — [Tarihsel kaynak kaydı] - #6 bağımsız restore açık kalır. Anahtar/şema doğrulanınca izole hedefte restore, ardından kanal kimliği ve URL SHA-256 karşılaştırması yapılır. Drive dosyası değiştirilmedi.
+- **v2/tasks/WORK_ORDER_2026-11-21.md:L191** — [Tarihsel kaynak kaydı] - Bu, tarihsel Stage4 envanterinin harici Drive restore PASS'idir. Ayrı Türk-yetkili URL kasası issue #6 için Fernet anahtarı, gerçek harici yedek ve bağımsız restore henüz kabul edilmedi; ayrıca tamamlanacak.
+- **v2/tasks/state.json:$.statuses[9].reason** — [Tarihsel kaynak kaydı] Verified all jobs success in source integration batch #42216075104, including 'Worldwide TR AZ exact IPTV API and EPG source metadata', 'Trusted IPTV org feed variant 217 missing ID source and AV recovery', and exact-identity TR/AZ probing. Closes feed/identity matching acceptance only; name-only leads and unverified AV remain unpromoted, historic #4/#15/#18 remain pending.
+- **v2/tasks/state.json:$.stage4_vault_handoff_20261121.note** — [Tarihsel kaynak kaydı] GitHub issue #6 is not equivalent to statuses[id=6] in the 34-task ledger; never update historic task statuses from this note.
+- **v2/tasks/state.json:$.stage5_worldwide_crosswalk_handoff_20261121.main_push_conclusion** — [Tarihsel kaynak kaydı] pending_verification
+- **v2/tasks/state.json:$.stage4_drive_archive_structural_audit_20261121.next_action** — [Tarihsel kaynak kaydı] Historical Stage 4 Drive restore accepted; complete the separate authorized Turkish vault issue #6 real external restore.
+- **v2/tasks/state.json:$.stage8_private_turkish_vault_restore_20261121.scope** — [Tarihsel kaynak kaydı] GitHub issue #6 authorized-Turkish Fernet vault (not ledger statuses[6]); no live restore or playlist write
+- **v2/tasks/state.json:$.stage9_ffmpeg_initial_egress_hardening_20261121.next_action** — [Tarihsel kaynak kaydı] Validate latest main CI. Keep real FFmpeg/HLS retry blocked until DNS/redirect/HLS-child egress isolation is accepted; keep separate issue #6 offsite-vault acceptance open.
+
+
+### Açık Issue ve PR kayıtları (güncel sorgu)
+
+- **PR [#768](https://github.com/Madsc55/MADSC55-TV-V2/pull/768) — AÇIK (snapshot)**: YABANCI ARŞİV: Türk ve Türkî kanalları en üste taşı
+- **PR #768:gövde L1** — YABANCI_ARSIV.m3u8 içindeki Türk/Türkî olduğu güçlü metadata ile belirlenen 47 kayıt, kendi göreli sıraları korunarak listenin en üstüne taşındı. Toplam 284 kayıt ve tüm URL/kayıtlar korunuyor; kategori adı değişmedi. TRT Greece, Kanal D Romania, ATV Hungary/Peru gibi yalnız isim benzerliği taşıyan yabancı kayıtlar Türk bloğuna alınmadı.
+- **PR [#767](https://github.com/Madsc55/MADSC55-TV-V2/pull/767) — AÇIK (snapshot)**: YABANCI ARŞİVİ: ikinci taramada bulunan 9 yayın adayını öne al
+- **PR #767:gövde L1** — Mevcut 291 adayın önüne 9 ek kayıt. 15.940 arşiv ve 18.330 toplam kayıt korunur. Diğer kategoriler byte-identical. Mevcut iç parça manifesti eşitlendi. Canlı dil/AV testi yapılmadı.
+- **PR [#760](https://github.com/Madsc55/MADSC55-TV-V2/pull/760) — AÇIK (snapshot)**: Fix failed YEDEKLER quality CI: FFmpeg runtime and scoped evidence
+- **PR #760:gövde L1** — Main run 45454793458 failed in all eight shards: the local synthetic media decoder reported no streams, then summary rejected a changed global playlist hash. Require system FFmpeg, add PR offline synthetic preflight, validate reconstructed historical SHA and exact ordered YEDEKLER record bytes before accepting unrelated group changes, and bind all shards to the actual checkout hash. No playlist writes, no URL changes, no security gate bypass. Merge only after required checks pass; squash commit must include [yedekler-quality-20261124] to restart the authorized read-only scan.
+- **PR [#757](https://github.com/Madsc55/MADSC55-TV-V2/pull/757) — AÇIK (snapshot)**: YABANCI ARŞİVİ — Türk dilleri yayınlarını öne al
+- **PR #757:gövde L1** — Mevcut Türkçe/Azerice/Türkmence öncelikli bloğu korur ve Kazakça, Özbekçe, Kırgızca, Tatarca ve diğer Türk dilleriyle ilişkili ek kayıtları ön tarafa taşır. 99 ek kayıt öne alındı. Sadece mevcut ana M3U8 içinde sıralama değişikliği; 18.330 toplam ve 15.940 YABANCI ARŞİVİ kaydı korunur. Kayıtlar isim ve kaynak metadatasına göre seçildi; canlı ses/görüntü testi yapılmadı.
+- **PR [#755](https://github.com/Madsc55/MADSC55-TV-V2/pull/755) — AÇIK (snapshot)**: YABANCI ARŞİVİ: Türk ve Türkî yayınları öne al
+- **PR #755:gövde L1** — Yalnız mevcut ana playlist içinde YABANCI ARŞİVİ sıralaması değiştirildi. 263 Türk/Türkî yayın adayı başa alındı; 15.940 arşiv kaydı ve 18.330 toplam kayıt korunuyor. Kayıt içerikleri, bağlantılar, kategori adları ve diğer kategoriler değişmedi. Yayın dili ve ses/görüntü canlı doğrulaması yapılmadı; sınıflandırma mevcut ad, kaynak ve kimlik bilgilerine dayanıyor.
+- **PR [#728](https://github.com/Madsc55/MADSC55-TV-V2/pull/728) — AÇIK (snapshot)**: ANA ARŞİV: platform kataloglarından 18 ek aday, ilk 788 kayıt
+- **PR #728:gövde L1** — 13.712 kayıt incelendi; 192 platform kanal adı eşleşmesinden 18 yayın adayı seçildi. Film Screen HD birebir URL eşleşmesi, kalan 17 kayıt çok dilli yayın adayıdır; canlı dil doğrulaması yapılmadı. İlk 770 öncelikli kayıt korunur; 18 ek aday başa alınır. Toplam 18.337 kayıt ve diğer kategoriler korunur. Offline CI ve Production Security Gate geçmeden birleştirilmez. PR #721 ile eşzamanlı birleştirmeyin.
+- **PR [#721](https://github.com/Madsc55/MADSC55-TV-V2/pull/721) — AÇIK (snapshot)**: ANA ARŞİV 1–75: 75 kanalı YEDEKLER'e taşı
+- **PR #721:gövde L1** — Kullanıcı talimatı: ANA ARŞİV ilk 75 kayıt YEDEKLER'e taşındı (mevcut YEDEKLER sonuna). ANA ARŞİV 13.712 → 13.637; YEDEKLER 592 → 667; toplam 18.337. Diğer kategoriler, yayın URL ve metaveriler korundu. Kanal silme, kopyalama veya canlı test yok. Offline CI ve Production Security Gate PASS sonrası merge.
+- **Issue [#693](https://github.com/Madsc55/MADSC55-TV-V2/issues/693) — AÇIK (snapshot)**: BUG: İBO Player kanal görünürlüğü 19/1107/15703 kaydın 18/1104/15606'sını gösteriyor
+- **Issue #693:gövde L1** — ## İBO Player görünür kanal sayısı ile kanonik M3U envanteri uyuşmuyor
+- **Issue #693:gövde L3** — Kullanıcının 23 Kasım 2026 gözlemi (İBO Player):
+- **Issue #693:gövde L4** — | Kategori | M3U başlık ve gerçek #EXTINF | İBO'da görünen | Fark |
+- **Issue #693:gövde L5** — |---|---:|---:|---:|
+- **Issue #693:gövde L6** — | 🌍 BELGESEL | 19 | 18 | 1 |
+- **Issue #693:gövde L7** — | 🗂️ YEDEKLER | 1107 | 1104 | 3 |
+- **Issue #693:gövde L8** — | ANA ARŞİV | 15703 | 15606 | 97 |
+- **Issue #693:gövde L10** — **Doğrulanan repo kanıtı (main):**
+- **Issue #693:gövde L11** — - `v2/playlists/parts/0007.m3u`: 19 M3U kanalı, 19 farklı HTTP(S) URL, 19 farklı görünen kanal adı.
+- **Issue #693:gövde L12** — - `v2/playlists/parts/0012.m3u`: 1107 M3U kanalı, 1107 farklı URL.
+- **Issue #693:gövde L13** — - `v2/playlists/parts/0013.m3u`–`0019.m3u`: toplam 15703 M3U kanalı, kendi kategorisi içinde 15703 farklı URL.
+- **Issue #693:gövde L14** — - Üç kategorinin kayıtlarında gerekli `#EXTINF`, `group-title`, yayın adresi satırı ve doğru çift tırnak yapısı mevcut. Kategori etiketleri dosya içindeki **kayıt** sayıları ile eşleşiyor.
+- **Issue #693:gövde L15** — - Tam liste 18337 kayıt tutuyor. İBO'nun görüntüleme/filtreleme/kesme/caching davranışı henüz doğrulanamadı.
+- **Issue #693:gövde L16** — - **101 farkın**, ayrı incelemedeki 101 ortak URL grubu ile aynı olguyu temsil ettiği kanıtlanmadı; bu ikisini birleştirmeyin.
+- **Issue #693:gövde L18** — ## Kalan iş
+- **Issue #693:gövde L19** — 1. İBO'da güncel ana URL'nin gerçekten yeniden yüklendiğini ve saklı/eski/filtreli görünüm olmadığını doğrulayın.
+- **Issue #693:gövde L20** — 2. İBO'da göstermediği tam kanal kimliklerini bulup GitHub'daki 19/1107/15703 kayıtlarla karşılaştırın; gerekirse iBO'nin gerçek içe aktarma raporunu inceleyin.
+- **Issue #693:gövde L21** — 3. Ancak kanıtlanmış parser/kimlik sorunu varsa **orijinal yayın URL'lerini ve kategori sırasını koruyarak** hedefli, testli bir PR hazırlayın.
+- **Issue #693:gövde L22** — 4. Görünürlük sorunu bulunmadan kategori sayılarını 18/1104/15606 olarak etiketlemeyin: bu, gerçek kayıt sayısını yanlış gösterip sorunu örter.
+- **Issue #693:gövde L24** — **Güvenlik:** Bu issue yalnızca takip/kanıt içindir. Ana playlist, kategori sırası, URL, kanal kayıtları ve ayrı test listeleri değişmeyecek.
+- **PR [#669](https://github.com/Madsc55/MADSC55-TV-V2/pull/669) — AÇIK (snapshot)**: Record no-loss channel lifecycle and defer playlist deletion
+- **PR #669:gövde L1** — Persist user-approved channel discovery -> provenance -> AV/Turkish language -> classification -> recovery -> guarded deduplication sequence in DEVAM_NOTU.md and v2/tasks/state.json. PR #667 must remain unmerged; preserve current 18,337 playlist entries. No playlist mutation.
+- **PR [#664](https://github.com/Madsc55/MADSC55-TV-V2/pull/664) — AÇIK (snapshot)**: docs: 23 Kasım güncel kalan işler ve iptal edilen arşiv taşıma kararı
+- **PR #664:gövde L1** — Proje sahibinin 23 Kasım son kararlarını ve 12 teknik kabul başlığını `v2/tasks/KALAN_ISLER_2026-11-23.md` dosyasında kaydeder. ANA ARŞİV'i YEDEKLER altına taşıma iptal edildi; alfabetik sıralama tekrar yapılmayacak. Tek playlist ve 685 SECURITY HOLD korunur. Yalnız belge değişikliği, playlist/workflow/state.json değişmez. Güvenlik/CI incelemesi sonrası birleştirilmelidir.
+- **PR [#655](https://github.com/Madsc55/MADSC55-TV-V2/pull/655) — AÇIK (snapshot)**: Kalan işler ve %100 teknik kabul takip planını kaydet
+- **PR #655:gövde L1** — 12 açık teknik kabul işi, sıralı dört aşama, tek ana playlist ve 685 SECURITY HOLD kuralları ile %75/%25 tahmini başlangıç durumu kayıt altına alındı. Sadece dokümantasyon değişikliği; playlist ve workflow davranışı değişmez.
+- **PR [#651](https://github.com/Madsc55/MADSC55-TV-V2/pull/651) — AÇIK (snapshot)**: docs: 15 ekran görüntüsündeki kalan teknik işleri kayıt altına al
+- **PR #651:gövde L1** — 15 ekran görüntüsündeki açık teknik kabul şartlarını ve HTTP Health Report #2 bekleyişini tek dosyada kaydeder. 34 görevin idari kapanışı ile gerçek teknik kabulü ayırır. Sadece yeni belge; ana playlist, 685 güvenlik kilidi ve state.json değişmez.
+- **PR [#650](https://github.com/Madsc55/MADSC55-TV-V2/pull/650) — AÇIK (snapshot)**: Record prioritized full inventory and discovery health scan plan
+- **PR #650:gövde L1** — Record owner-approved ordered work across all existing playlist categories and all discovered candidates in DEVAM_NOTU.md and v2/tasks/state.json. Planning only; no playlist, workflow, or security lock changes. Do not mark scan complete.
+- **PR [#642](https://github.com/Madsc55/MADSC55-TV-V2/pull/642) — AÇIK (snapshot)**: docs: DEVAM_NOTU tarihsel kapsamı arşivle ve sistem hazır durumunu yaz
+- **PR #642:gövde L1** — Proje sahibinin açık talimatıyla DEVAM_NOTU.md içindeki tarihsel bekleyen iş kayıtları kapsam dışı/arşivlenmiş kabul edilerek dosya yalnızca `SİSTEM HAZIR VE GÜNCEL - 18.337 KANAL AKTİF` satırına indirildi.
+- **PR #642:gövde L3** — Yalnızca DEVAM_NOTU.md değiştirildi; playlist, güvenlik kilitleri, workflow ve test dosyalarına dokunulmadı. Bu değişiklik teknik kabul kanıtı üretmez.
+- **PR [#641](https://github.com/Madsc55/MADSC55-TV-V2/pull/641) — AÇIK (snapshot)**: fix: post-404 inventory and historical security gate CI (supersedes #640)
+- **PR #641:gövde L1** — Includes PR #640 deletion-only playlist cleanup plus CI fixes. Offline inventory verifies 654 deletions and updated counts; historical #497 preview and retry artifacts are only generated for exact matching source inventory, preserving the 685 uncertain hold. Do not merge until both CI checks pass.
+
+- **PR #767 @ cc021e46872a / v2/playlists/parts/manifest.json:$** — [Açık PR, uygulanmadı] Kaynak parça manifesti okundu; ham kanal/parça envanteri görev değildir; eski PR snapshot'ı.
+- **PR #760 @ 3d59f47863cd / .github/workflows/ci.yml:L58** — [Açık PR, uygulanmadı] name: YEDEKLER quality offline preflight
+- **PR #760 @ 3d59f47863cd / .github/workflows/ci.yml:L59** — [Açık PR, uygulanmadı] if: github.event_name == 'pull_request'
+- **PR #760 @ 3d59f47863cd / .github/workflows/ci.yml:L72** — [Açık PR, uygulanmadı] - name: Verify changed quality scanner with synthetic local media
+- **PR #760 @ 3d59f47863cd / .github/workflows/ci.yml:L444** — [Açık PR, uygulanmadı] - name: Install system FFmpeg for local pipe decoding
+- **PR #760 @ 3d59f47863cd / .github/workflows/ci.yml:L448** — [Açık PR, uygulanmadı] ffmpeg -version
+- **PR #757 @ eca1bc56609f / v2/playlists/parts/manifest.json:$** — [Açık PR, uygulanmadı] Kaynak parça manifesti okundu; ham kanal/parça envanteri görev değildir; eski PR snapshot'ı.
+- **PR #755 @ b7223fa181a0 / v2/playlists/parts/manifest.json:$** — [Açık PR, uygulanmadı] Kaynak parça manifesti okundu; ham kanal/parça envanteri görev değildir; eski PR snapshot'ı.
+- **PR #728 @ 42974e294608 / v2/playlists/parts/manifest.json:$** — [Açık PR, uygulanmadı] Kaynak parça manifesti okundu; ham kanal/parça envanteri görev değildir; eski PR snapshot'ı.
+- **PR #721 @ 3482c2af7906 / v2/playlists/parts/manifest.json:$** — [Açık PR, uygulanmadı] Kaynak parça manifesti okundu; ham kanal/parça envanteri görev değildir; eski PR snapshot'ı.
+- **PR #641 @ dea1da290c5c / .github/workflows/v2-main-production-safety-gate.yml:L45** — [Açık PR, uygulanmadı] - name: Check whether historical #497 preview can be rebound
+- **PR #641 @ dea1da290c5c / .github/workflows/v2-main-production-safety-gate.yml:L56** — [Açık PR, uygulanmadı] if: steps.historical.outputs.exact == 'true'
+- **PR #641 @ dea1da290c5c / .github/workflows/v2-main-production-safety-gate.yml:L81** — [Açık PR, uygulanmadı] if: steps.historical.outputs.exact == 'true'
+- **PR #641 @ dea1da290c5c / .github/workflows/v2-main-production-safety-gate.yml:L89** — [Açık PR, uygulanmadı] if: steps.historical.outputs.exact == 'true'
+- **PR #641 @ dea1da290c5c / .github/workflows/v2-main-production-safety-gate.yml:L107** — [Açık PR, uygulanmadı] assert plan["initial_manifest_sha256"] == "b001bf48f07437e9ae67ed9f73b12ea9cfcab653523973435cf3b1cee3c31fcc"
+- **PR #641 @ dea1da290c5c / .github/workflows/v2-main-production-safety-gate.yml:L128** — [Açık PR, uygulanmadı] if: ${{ steps.historical.outputs.exact == 'true' && github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+- **PR #641 @ dea1da290c5c / .github/workflows/v2-main-production-safety-gate.yml:L140** — [Açık PR, uygulanmadı] if: steps.historical.outputs.exact == 'true'
+- **PR #641 @ dea1da290c5c / .github/workflows/v2-main-production-safety-gate.yml:L170** — [Açık PR, uygulanmadı] if: steps.historical.outputs.exact == 'true'
+- **PR #641 @ dea1da290c5c / .github/workflows/v2-main-production-safety-gate.yml:L231** — [Açık PR, uygulanmadı] if ! command -v ffmpeg &gt;/dev/null || ! command -v ffprobe &gt;/dev/null || ! tesseract --list-langs 2&gt;/dev/null | grep -qx tur; then
+- **PR #641 @ dea1da290c5c / .github/workflows/v2-main-production-safety-gate.yml:L233** — [Açık PR, uygulanmadı] sudo apt-get install -y --no-install-recommends ffmpeg tesseract-ocr tesseract-ocr-tur fonts-dejavu-core
+
+- **PR #651 @ f0c8e198fb08 / v2/tasks/KALAN_TEKNIK_ISLER_20261123.md:L30** — [Açık PR, tarihsel plan] D. Her maddeyi **kanıt bağlantısı + tarih + run/commit + kabul sonucu** olmadan DONE işaretleme. GitHub PR merge / issue kapatma ile teknik kabulü ayır.
+- **PR #651 @ f0c8e198fb08 / v2/tasks/KALAN_TEKNIK_ISLER_20261123.md:L33** — [Açık PR, tarihsel plan] Bu kayıt bir **iş planı**, tamamlama beyanı değildir. HTTP Health Report #2'nin son durumu henüz burada doğrulanmadı. Playlist ve `v2/tasks/state.json` bu not nedeniyle değiştirilmez.
+
+
+
+- **PR #669 @ a5fcf3a84bbe / v2/tasks/state.json:$.channel_lifecycle_plan_20261123.verification_pending** — [Açık PR, tarihsel plan] true
+- **v2/tasks/state.json:$.github_cleanup_audit_20261121.pr624_scope** — [Tarihsel kaynak kaydı, ek alan kontrolü] Removed hard-coded historical 18074 YEDEKLER count from snapshot and assignment read; added optional strict count and offline regression. Does not close issue 497.
+- **v2/tasks/state.json:$.github_cleanup_final_20261121.open_prs_pending_independent_logo_verification[0]** — [Tarihsel kaynak kaydı, ek alan kontrolü] 618
+- **v2/tasks/state.json:$.stage11_owner_archival_scope_closure_20261121.task17_manifest** — [Tarihsel kaynak kaydı, ek alan kontrolü] archive/unverified_historical_ids.json
+
+<!-- D-END -->
+
+### Dosya tarama fihristi ve kapsam denetimi
+
+Main snapshot'ta 2539 ağaç girdisi, 125 hedef uzantılı blob: 125/125 okunmuş ve SHA/bayt eşleşmesi kontrol edilmiş. 1 gerçek açık Issue (#693), 14 açık PR; ikinci sayfa boş. Açık PR'larda 20 değişen hedef uzantılı dosya okundu. #768'in hedef uzantıda dosyası yok; gövdesi kayıtlı. Ana dal dışında yalnız açık PR'ların değişen not/yapılandırma dosyaları kapsandı; kapalı PR'ların veya diğer dalların tüm Git tarihi bu taramaya dahil değil. Satır/alan düzeyi mekanik indeks ile yukarıdaki elle oluşturulan yönlendirme özeti ayrıdır; ham kanal durumları ve URL listeleri kaynakta tutulur, ayrı yapılacak iş sayılmaz.
+
+Her satırda snapshot/PR referansı, kaynak, okuma sonucu ve çıkarılan kayıt sayısı bulunur. Bu fihrist, dosya okunmadığı halde tamamlandı denmesini önler.
+
+- main `.github/workflows/alphabetize-yeni-turk.yml` — OK; 644/644 bayt, 3 yapılandırma/not satırı; blob `ff5b417cbe09d0dc4970b6a1ef90b9625dd6fd2d`.
+- main `.github/workflows/autonomous_discovery_readonly.yml` — OK; 4887/4887 bayt, 13 yapılandırma/not satırı; blob `ccc784333ed118e3b0d50ea18df8497627647a00`.
+- main `.github/workflows/backups-logo-audit.yml` — OK; 658/658 bayt, 3 yapılandırma/not satırı; blob `c1fbf8423b7fe72a7db3d69d86a03fdf5c2542ab`.
+- main `.github/workflows/build_playlist_from_parts.yml` — OK; 6126/6126 bayt, 13 yapılandırma/not satırı; blob `6d34d0acbe7ce0abf5ee0cda53e4f77ccb6193cc`.
+- main `.github/workflows/ci.yml` — OK; 37382/37382 bayt, 160 yapılandırma/not satırı; blob `a2e5badd24dea1320797df7696139033e68f5637`.
+- main `.github/workflows/full-turkish-backups-audit.yml` — OK; 649/649 bayt, 3 yapılandırma/not satırı; blob `32dd86bd5ff5695aa7c3a408d1d61bf90d59d7e8`.
+- main `.github/workflows/full_autonomous_pipeline.yml` — OK; 1233/1233 bayt, 10 yapılandırma/not satırı; blob `863399a9b322b10042707c57c2d51679ec70e775`.
+- main `.github/workflows/ibo-authorized-500.yml` — OK; 2485/2485 bayt, 5 yapılandırma/not satırı; blob `d097c99cfe703d66cfec04ae61846f0d6825f1aa`.
+- main `.github/workflows/ibo-real-scan.yml` — OK; 649/649 bayt, 3 yapılandırma/not satırı; blob `23fcc8ffd968e197f22b323a68b4cfb5e0728609`.
+- main `.github/workflows/ibo-single-playlist-transfer-offline.yml` — OK; 1214/1214 bayt, 3 yapılandırma/not satırı; blob `903ba6c3feab4a4f169eb822952eb22d34a107ef`.
+- main `.github/workflows/import-backup-candidates.yml` — OK; 647/647 bayt, 3 yapılandırma/not satırı; blob `7e22613257807f18724d28391ccdf1c660df083e`.
+- main `.github/workflows/issue-489-historical-audit.yml` — OK; 728/728 bayt, 4 yapılandırma/not satırı; blob `74a7be5ed22e4fc86de0c55b2007881ab01ec661`.
+- main `.github/workflows/move-turkish-backups.yml` — OK; 651/651 bayt, 3 yapılandırma/not satırı; blob `5511428247de8b362d8a4abae85f99053b9c401f`.
+- main `.github/workflows/repair-playlist-grouping.yml` — OK; 658/658 bayt, 3 yapılandırma/not satırı; blob `248a10135fe7f46bc67a2a7e23cd629c33589969`.
+- main `.github/workflows/run_move_685.yml` — OK; 2511/2511 bayt, 8 yapılandırma/not satırı; blob `1a063b634af06267595097915b875ac7c7161ac8`.
+- main `.github/workflows/run_pass1_cleanup.yml` — OK; 836/836 bayt, 6 yapılandırma/not satırı; blob `157fe44762f30c8c7e0589f92ef52b227ba3eb6f`.
+- main `.github/workflows/sort-backups-enrich-logos.yml` — OK; 660/660 bayt, 3 yapılandırma/not satırı; blob `90231bc6c36530fedf62129eaaa13b658d991ba3`.
+- main `.github/workflows/turkish-backup-identity-audit.yml` — OK; 652/652 bayt, 3 yapılandırma/not satırı; blob `45502b01d1580f6378dfc01fe44673c3d83781ea`.
+- main `.github/workflows/turkish-backups-fifth-audit.yml` — OK; 650/650 bayt, 3 yapılandırma/not satırı; blob `09279c6ca495f47c2928ffbebf170d6b04409021`.
+- main `.github/workflows/turkish-backups-fourth-audit.yml` — OK; 651/651 bayt, 3 yapılandırma/not satırı; blob `831af32f94d33e8726e021bf29b3b97c044f32b3`.
+- main `.github/workflows/turkish-backups-second-pass.yml` — OK; 650/650 bayt, 3 yapılandırma/not satırı; blob `53a28ee74213c72f87b797b09e80ef9ad52d6193`.
+- main `.github/workflows/turkish-backups-third-pass.yml` — OK; 649/649 bayt, 3 yapılandırma/not satırı; blob `e3db1e54e6f30bbe27b4925d6c23d57928339707`.
+- main `.github/workflows/turkish-category-audit.yml` — OK; 669/669 bayt, 3 yapılandırma/not satırı; blob `bbd769859588720a2b9e7fc5ce1c4456fa727987`.
+- main `.github/workflows/update_main_playlist.yml` — OK; 1242/1242 bayt, 9 yapılandırma/not satırı; blob `fe9e57fd70075f66c2184b9f7f539010d4cb0374`.
+- main `.github/workflows/v2-batched-playback.yml` — OK; 2036/2036 bayt, 14 yapılandırma/not satırı; blob `13c9144d96fa34f7bf4f9cf61f1fae1c169699d3`.
+- main `.github/workflows/v2-bruksel-logo-png.yml` — OK; 644/644 bayt, 3 yapılandırma/not satırı; blob `8474166bccacff350ed3385481106b2f2a736a66`.
+- main `.github/workflows/v2-epg.yml` — OK; 641/641 bayt, 3 yapılandırma/not satırı; blob `fdb8b0941bd7d9933b4b7bc5ea72b71dfe75e6d2`.
+- main `.github/workflows/v2-full-decoder.yml` — OK; 1699/1699 bayt, 12 yapılandırma/not satırı; blob `995bb04175c1b9e77a8a0762f133b95052a5a19a`.
+- main `.github/workflows/v2-github-source-discovery.yml` — OK; 912/912 bayt, 7 yapılandırma/not satırı; blob `760c787e405034cd78953e486c826447ade5340a`.
+- main `.github/workflows/v2-historical-recovery.yml` — OK; 4274/4274 bayt, 11 yapılandırma/not satırı; blob `b4198aead6fb8e4af42928c3ea3c131426537b93`.
+- main `.github/workflows/v2-ibo-parity.yml` — OK; 688/688 bayt, 7 yapılandırma/not satırı; blob `3b9d9141347e76ddfd5d4a8cede1b71cdd2b55a0`.
+- main `.github/workflows/v2-logo-backup.yml` — OK; 655/655 bayt, 3 yapılandırma/not satırı; blob `29a9ae1ed5b929336979a526d9c8aff01d88cb7a`.
+- main `.github/workflows/v2-main-production-safety-gate.yml` — OK; 28668/28668 bayt, 71 yapılandırma/not satırı; blob `78d1f0c844de96702d00608302a16f87fc7abb1f`.
+- main `.github/workflows/v2-official-sites.yml` — OK; 886/886 bayt, 8 yapılandırma/not satırı; blob `a3d4f6693cb00a5e1974440c722c735ee03b7924`.
+- main `.github/workflows/v2-offline-import-15.yml` — OK; 3116/3116 bayt, 8 yapılandırma/not satırı; blob `08bbd3bf98e24d519ba5deb2243ca4a3b61c6dab`.
+- main `.github/workflows/v2-offline-inventory.yml` — OK; 1672/1672 bayt, 10 yapılandırma/not satırı; blob `90f85adc1a4449bc8333ca30c6c80b643db9b6d9`.
+- main `.github/workflows/v2-one-shot-final-contract.yml` — OK; 1358/1358 bayt, 9 yapılandırma/not satırı; blob `6255eebb5805932005796fc19fbb7ee901b76969`.
+- main `.github/workflows/v2-ordered-preflight.yml` — OK; 2295/2295 bayt, 14 yapılandırma/not satırı; blob `ded74f90141c71872ae7f8f2a79b91fbef6b4c97`.
+- main `.github/workflows/v2-playlist-safety.yml` — OK; 769/769 bayt, 5 yapılandırma/not satırı; blob `99efc4f7f3d1d307ac2dd600e5884bd04216a677`.
+- main `.github/workflows/v2-postscan-triage.yml` — OK; 1900/1900 bayt, 9 yapılandırma/not satırı; blob `da233d29fb973f1a74e42e85bda3415b2c703dd5`.
+- main `.github/workflows/v2-promote-yedekler.yml` — OK; 653/653 bayt, 3 yapılandırma/not satırı; blob `32cfa1cf2adc26931a48640c6e7d0b3f49c024cd`.
+- main `.github/workflows/v2-public-source-audit.yml` — OK; 800/800 bayt, 7 yapılandırma/not satırı; blob `6674d1e007fab938c113536eecca29c421709f59`.
+- main `.github/workflows/v2-real-iptv-scan.yml` — OK; 10924/10924 bayt, 39 yapılandırma/not satırı; blob `7b789eeca086e2461dea6af079fcab1eb8443773`.
+- main `.github/workflows/v2-spoken-language-existing-snapshot.yml` — OK; 2186/2186 bayt, 9 yapılandırma/not satırı; blob `b77a57a4133340b203163ff836fe43efa4d98a7d`.
+- main `.github/workflows/v2-stage6-grouped-acceptance.yml` — OK; 2242/2242 bayt, 12 yapılandırma/not satırı; blob `6b124973674101e03ab87d9c329bf2054431dc1e`.
+- main `.github/workflows/v2-turkish-stream-catalog.yml` — OK; 750/750 bayt, 7 yapılandırma/not satırı; blob `f196937acb1a8deb92fd7ff59057368f1d9073fc`.
+- main `.github/workflows/v2-turkish-stream-decode.yml` — OK; 1023/1023 bayt, 9 yapılandırma/not satırı; blob `d4ccc7a1ff661c548b88730e1de83e6ca9d2d4ce`.
+- main `.github/workflows/v2-turkish-stream-probe.yml` — OK; 910/910 bayt, 8 yapılandırma/not satırı; blob `1fcb4678de45e7e5452ca81314bfdf22e16ce130`.
+- main `.github/workflows/v2-turkish-stream-review.yml` — OK; 15780/15780 bayt, 88 not/durum/yapılandırma kaydı; blob `2cad79e9c3de03ed24c2dc56255d40f3632748a1`.
+- main `.github/workflows/v2-turkish-tv-health.yml` — OK; 1527/1527 bayt, 10 not/durum/yapılandırma kaydı; blob `9552a92c01152c8ef591d804a876d80944dcd64a`.
+- main `.github/workflows/v2-world-discovery.yml` — OK; 744/744 bayt, 7 not/durum/yapılandırma kaydı; blob `bd2708e1ee1a08ff6c7b4f90209b00269324821f`.
+- main `.github/workflows/v2-yedekler-av-audit.yml` — OK; 3345/3345 bayt, 12 not/durum/yapılandırma kaydı; blob `47e2109347094eb49c7d856341b13f2c2323f2da`.
+- main `.github/workflows/v2-yedekler-logos.yml` — OK; 649/649 bayt, 3 not/durum/yapılandırma kaydı; blob `9e7d5036069da6e54d7b5bbc377f83fe77c20c23`.
+- main `.github/workflows/v2-yedekler-result-reconcile.yml` — OK; 2977/2977 bayt, 5 not/durum/yapılandırma kaydı; blob `ba8b260f801f128b452ebf3124c0ee226dd33aac`.
+- main `.github/workflows/v2-youtube-discovery.yml` — OK; 849/849 bayt, 8 not/durum/yapılandırma kaydı; blob `55d8d444add03daa5ca6dfb6125673c6a7fd2ab7`.
+- main `ANA_PLAYLIST_KORUMA_KURALI.md` — OK; 2977/2977 bayt, 22 not/durum/yapılandırma kaydı; blob `5b860c5ddc080332e3da3d2f39b498a582744003`.
+- main `DEVAM_NOTU.md` — OK; 283646/283646 bayt, 1242 not/durum/yapılandırma kaydı; blob `951aa53350b7cd88ebfc453781fd8e4da9286319`.
+- main `archive/historical_http_404_503_quarantine.json` — OK; 4692/4692 bayt, 1 not/durum/yapılandırma kaydı; blob `5036953cc53a84212e0281f5ea6df8fdecf29e6b`.
+- main `archive/unverified_historical_ids.json` — OK; 942/942 bayt, 3 not/durum/yapılandırma kaydı; blob `259b0389461dd0b6f1fa9552e0f3a79a99a240dd`.
+- main `reports/ANA_SISTEM_10_MADDE_FINAL_KABUL_20261127.md` — OK; 6356/6356 bayt, 36 not/durum/yapılandırma kaydı; blob `a0f0bada27f2c5afe0719d728679480e3cb47d62`.
+- main `reports/ANA_SISTEM_1_5_OFFLINE_KAPANIS_20261127.md` — OK; 5166/5166 bayt, 39 not/durum/yapılandırma kaydı; blob `6e65be150f40950b55c4e680f79d7fb65884dc4e`.
+- main `reports/YEDEKLER_KURTARMA_OZETI.md` — OK; 17744/17744 bayt, 31 not/durum/yapılandırma kaydı; blob `712f44fe19c0ac5555f706f87913a4e1fce32adf`.
+- main `v2/DEVAM_NOTU_2026-10-29_LOGOLAR.md` — OK; 2808/2808 bayt, 25 not/durum/yapılandırma kaydı; blob `cc9a95270f9f02d914bbb916af5a37e420c38c08`.
+- main `v2/MAIN_PRODUCTION_SAFETY_LOCK.md` — OK; 1281/1281 bayt, 18 not/durum/yapılandırma kaydı; blob `0c62d00539e87b6c7869857e6e25206a2a18b911`.
+- main `v2/OPERATIONS.md` — OK; 1935/1935 bayt, 16 not/durum kaydı; blob `e7259b862becd728b60d662cbf44f47009ce45d8`.
+- main `v2/README.md` — OK; 865/865 bayt, 8 not/durum kaydı; blob `a601b65f69bbb787a1014e2a7bb2e517508e7eaa`.
+- main `v2/SCAN_61_ACTION_REPORT.md` — OK; 2327/2327 bayt, 21 not/durum kaydı; blob `da8bbbfb37deff7cdbacf3b0abb0592bb147e838`.
+- main `v2/WORK_PLAN.md` — OK; 18992/18992 bayt, 113 not/durum kaydı; blob `bff93483c39110d5952e08396e77b57865fb30fa`.
+- main `v2/archives/test001_backup_metadata_report.json` — OK; 916/916 bayt, 0 not/durum kaydı; blob `aae5c667aff06bd3a9a7ad41fcf5ac3f6066ba7c`.
+- main `v2/archives/test001_quarantined_48.json` — OK; 7112/7112 bayt, 2 not/durum kaydı; blob `b4c4cf8290f5053eeab9e340e94a4ff981c79f25`.
+- main `v2/arsiv/eski_sistem_7650_test_kuyrugu_README.md` — OK; 973/973 bayt, 6 not/durum kaydı; blob `ff9cff9b197aee29cf2a6c4c6a56a516390c80dc`.
+- main `v2/arsiv/eski_sistem_aktarim_raporu_2026-11-16.json` — OK; 895/895 bayt, 2 not/durum kaydı; blob `80ba968fe582181134bbbdecadd2a8c1e1776f86`.
+- main `v2/config/sources.json` — OK; 5672/5672 bayt, 35 not/durum kaydı; blob `cabaa12e0467b89ea2094e28839b82aa99c38051`.
+- main `v2/docs/checkpoint-bounded-evidence-runbook.md` — OK; 2382/2382 bayt, 25 not/durum kaydı; blob `5bb609bf5447694cda62c4f4de69fc8209bc351a`.
+- main `v2/epg-report.json` — OK; 836/836 bayt, 5 not/durum kaydı; blob `0dd9f7e4fd66e43787ac39644b6e9dc685a4569a`.
+- main `v2/epg_sources.json` — OK; 355/355 bayt, 0 not/durum kaydı; blob `861513463e547f7508cc72114c873e6441b294c4`.
+- main `v2/ibo_authorized_change.json` — OK; 541/541 bayt, 1 not/durum kaydı; blob `c1ac2463cd76dfaa892bfea3af9687028a6773d3`.
+- main `v2/logos/manifest.json` — OK; 615351/615351 bayt, 61 not/durum kaydı (2129 kanal bazlı makine durum satırı kaynakta korunur); blob `b926b027558e1cf6dad03c8b2e44b94210ac99c7`.
+- main `v2/playlists/parts/manifest.json` — OK; 4195/4195 bayt, 0 not/durum kaydı; blob `af677c055714da785998083fa84b12ca70a32283`.
+- main `v2/reports/DEVIR_2026-11-01.md` — OK; 4772/4772 bayt, 53 not/durum kaydı; blob `c7dc638ec4b4dab5c38d0dfaaf06a8e557998055`.
+- main `v2/reports/IBO_REAL_BATCH_INTEGRITY_2026-11-13.md` — OK; 2714/2714 bayt, 29 not/durum kaydı; blob `75f003d31e2b66661b0f6dde1170b1a4ee86c8ac`.
+- main `v2/reports/README-discovery-34-live-probe.md` — OK; 810/810 bayt, 5 not/durum kaydı; blob `fa3941761353dc74832a898977fadcffd383771d`.
+- main `v2/reports/STAGE6_ACCEPTANCE_LEDGER_2026-11-12.md` — OK; 2135/2135 bayt, 22 not/durum kaydı; blob `a4e4ab9eca8a51f6f9c6d152330551cc1aa20ea1`.
+- main `v2/reports/STAGE_C_INDEPENDENT_ACCEPTANCE_PROTOCOL.md` — OK; 3069/3069 bayt, 21 not/durum kaydı; blob `44556fb5119e9b20403a235569826e483d2397c2`.
+- main `v2/reports/drive_archive_structural_audit_20261121.json` — OK; 1919/1919 bayt, 7 not/durum kaydı; blob `7ef31f3a7254d7615ed9caf641ed3fd5328d6c5c`.
+- main `v2/reports/ffmpeg_av_gap_classification_20261121.md` — OK; 1985/1985 bayt, 22 not/durum kaydı; blob `ef259ff212fafe707999e2550d8b4c3ffd744da7`.
+- main `v2/reports/green-vitrine-revert-20261125.json` — OK; 438/438 bayt, 0 not/durum kaydı; blob `01d9f199a3494762af89abe837e6123503e9bae9`.
+- main `v2/reports/ibo-500-batch-01-register.md` — OK; 1526/1526 bayt, 15 not/durum kaydı; blob `0c685e67c488c62209575ea0ad88fa445836f65d`.
+- main `v2/reports/ibo-923-out-1000-in-preparation-2026-11-16.md` — OK; 1561/1561 bayt, 12 not/durum kaydı; blob `6669b5b0a8038c6ae5471e31fb58d90b20a64476`.
+- main `v2/reports/issue497-original-artifact-audit-20261121.json` — OK; 4519/4519 bayt, 15 not/durum kaydı; blob `45ac075a306306726e52e66410981c7f78a6e9d6`.
+- main `v2/reports/logo-audit.json` — OK; 188907/188907 bayt, 0 not/durum kaydı; blob `de7de7633013af8ff38e4e9952e74717ce9c1022`.
+- main `v2/reports/logo-current-exact-name-review-20261119.json` — OK; 9289/9289 bayt, 1 not/durum kaydı; blob `33145d77741852f6985b07da37900bc4c31b6581`.
+- main `v2/reports/logo_inventory_20261121.md` — OK; 5862/5862 bayt, 110 not/durum kaydı; blob `dc89251a15c8de345927ebf7f7a75131c89bb704`.
+- main `v2/reports/package-artifact-independent-audit-20261119.md` — OK; 1981/1981 bayt, 11 not/durum kaydı; blob `98e2b3ac24d4855adfcf1e99293ce1c51661ed26`.
+- main `v2/reports/pr391-logo-reconciliation-20261119.md` — OK; 2217/2217 bayt, 18 not/durum kaydı; blob `fe4c0dfa5140280906914438f760255faa6cbad3`.
+- main `v2/reports/source-inventory-change-log.md` — OK; 293/293 bayt, 8 not/durum kaydı; blob `a8286f188e559c4e3d4cfe896f86b2796f998387`.
+- main `v2/reports/stage4-pinned-dns-capture-20261121.md` — OK; 3573/3573 bayt, 58 not/durum kaydı; blob `a0b2ab25586397414fdb25968beaa223a60d8a6d`.
+- main `v2/reports/stage4_historical_drive_restore_provenance_20261121.json` — OK; 2574/2574 bayt, 9 not/durum kaydı; blob `64aa6aaeea344718b5127f1c92e2cf0aa5cc6920`.
+- main `v2/reports/task15-historical-crosswalk-delta-20261118.json` — OK; 1597/1597 bayt, 5 not/durum kaydı; blob `e24712add238f44970c123049e8ac632a427b003`.
+- main `v2/reports/task15-historical-url-hash-recovery-20261118.json` — OK; 12192/12192 bayt, 3 not/durum kaydı; blob `3e781ba9628d353b0e280cc4290bec07fe4871d2`.
+- main `v2/reports/task17-18-20-already-attempted-exclusion-20261118.json` — OK; 5159/5159 bayt, 1 not/durum kaydı; blob `3e204621c37c5700636cfba2f0ab610ff7013578`.
+- main `v2/reports/task17-18-20-bounded-retry-20261118.json` — OK; 14083/14083 bayt, 4 not/durum kaydı; blob `542c9eb0671ab93914415ecc408b6876bb6bf052`.
+- main `v2/reports/task17-18-20-offline-operator-procedure-20261119.md` — OK; 2051/2051 bayt, 18 not/durum kaydı; blob `970f74ab71c35cb2a382502ee9c0dd9d2619bafe`.
+- main `v2/reports/task17-18-20-secure-import-runbook-20261119.md` — OK; 3482/3482 bayt, 21 not/durum kaydı; blob `ad4dba90a257bc0b238f3d026cf98b345e0ccb78`.
+- main `v2/reports/task17-18-av-resume-handoff-20261118.md` — OK; 2986/2986 bayt, 20 not/durum kaydı; blob `7d691a9defafac410f0716640e264c91f75c6bf6`.
+- main `v2/reports/task19-current-xmltv-20261119.json` — OK; 9527/9527 bayt, 11 not/durum kaydı; blob `4e784f3e9e198600bfb561b673be109fa5045b58`.
+- main `v2/reports/task21-evidence-handoff-20261119.md` — OK; 3049/3049 bayt, 19 not/durum kaydı; blob `c7a9049a08ed972e77c8e4f31d4aef452297c56a`.
+- main `v2/reports/turkic-fourth-pass-review-20261117.md` — OK; 1994/1994 bayt, 29 not/durum kaydı; blob `1290bd0fe2cd43bbdcd0af44e05e976916b7139a`.
+- main `v2/reports/turkic-third-pass-review-20261117.json` — OK; 1210/1210 bayt, 1 not/durum kaydı; blob `5453dcb582ea2512f06e84a50e9e5ff23df5a9c1`.
+- main `v2/reports/turkish-category-audit.json` — OK; 11243/11243 bayt, 277 not/durum kaydı; blob `9c2af20c9db989ad0b1c8e1589adcac162ea1f52`.
+- main `v2/reports/turkish-discovery.json` — OK; 18886/18886 bayt, 1 not/durum kaydı; blob `8f2a66378cca550f5cacdd83344665a8be5cd92e`.
+- main `v2/reports/turkish-live-probe.json` — OK; 16832/16832 bayt, 1 not/durum kaydı; blob `522188f6aeac2bbdf200fae5fc1e9f3e9ffe0592`.
+- main `v2/reports/turkish-only-fresh-scan.json` — OK; 73435/73435 bayt, 2 not/durum kaydı (275 ham kanal test durum satırı özgün raporda korunur); blob `0beb62f7d30c9ee8cd9211152bcb954ae820d399`.
+- main `v2/reports/turkish-sample-verification-20261119.json` — OK; 4773/4773 bayt, 1 not/durum kaydı; blob `04998992d40d4556e8b9baf50e85e5a53b3a02fd`.
+- main `v2/reports/yedekler-missing-logos.json` — OK; 3765/3765 bayt, 1 not/durum kaydı; blob `6eab121062c5901334245443bb4587d21e37dddc`.
+- main `v2/tasks/ANA_PLAYLIST_ARSIV_BUTUNLUK_20261121.md` — OK; 1624/1624 bayt, 19 not/durum kaydı; blob `7f602eea01585ba2d68db98c6c33b52b4863136f`.
+- main `v2/tasks/KALAN_ISLER_12_ASAMALI_PLAN_20261123.md` — OK; 2668/2668 bayt, 28 not/durum kaydı; blob `ac39635bfcca884eb65c24d5993cbd3cfe228231`.
+- main `v2/tasks/KAPANIS_SIRASI_20261121.md` — OK; 1938/1938 bayt, 17 not/durum kaydı; blob `3f0533d3d08d1c4a6c60dad0067c315ecde421ec`.
+- main `v2/tasks/WORK_ORDER_2026-11-21.md` — OK; 24930/24930 bayt, 148 not/durum kaydı; blob `590ca23c7a08c904561873945f512be381eece76`.
+- main `v2/tasks/state.json` — OK; 97492/97492 bayt, 250 not/durum kaydı; blob `756e8dc4dc33e8adade9c763856959c28ec4dbd7`.
+- main `v2/yedekler_av_recheck_20261125.md` — OK; 331/331 bayt, 2 not/durum kaydı; blob `e08f740e6bacd4be0455460b147968a6f5396364`.
+- main `v2/yedekler_batch/README.md` — OK; 1172/1172 bayt, 14 not/durum kaydı; blob `89fd9f5a84e0729ba5c27e17a2d5a7c12f467e9a`.
+- main `v2/yedekler_batch/state.json` — OK; 139198/139198 bayt, 9 not/durum kaydı; blob `51268ca27d40af24a9dda86fc45fb063e1060cb4`.
+- main `v2/yedekler_red_av_request.md` — OK; 372/372 bayt, 2 not/durum kaydı; blob `eacbcb2439b1f9d4d49f184e6db6ac2a5c8a984e`.
+- main `yedekler/logo-kaynaklari.md` — OK; 12504/12504 bayt, 197 not/durum kaydı; blob `bba56e011edb0707bb3889aeb905f38df634d362`.
+- PR #768: açık; gövde okundu; yorum sayısı 0.
+- PR #767: açık; gövde okundu; yorum sayısı 0.
+- PR #760: açık; gövde okundu; yorum sayısı 0.
+- PR #757: açık; gövde okundu; yorum sayısı 0.
+- PR #755: açık; gövde okundu; yorum sayısı 0.
+- PR #728: açık; gövde okundu; yorum sayısı 0.
+- PR #721: açık; gövde okundu; yorum sayısı 0.
+- Issue #693: açık; gövde okundu; yorum sayısı 0.
+- PR #669: açık; gövde okundu; yorum sayısı 0.
+- PR #664: açık; gövde okundu; yorum sayısı 0.
+- PR #655: açık; gövde okundu; yorum sayısı 0.
+- PR #651: açık; gövde okundu; yorum sayısı 0.
+- PR #650: açık; gövde okundu; yorum sayısı 0.
+- PR #642: açık; gövde okundu; yorum sayısı 0.
+- PR #641: açık; gövde okundu; yorum sayısı 0.
+- Açık kayıt sayfalama: ilk sayfa 15, ikinci sayfa 0; açık Issue 1, açık PR 14. Yorum sayısı sıfır olan kayıtta ayrı yorum içeriği yoktur.
+- PR #767 `v2/ibo_authorized_change.json` @ `cc021e46872aadb7d1d87f1b78dfb3a235a7fd3e` — OK; 556 karakter, 5 ayrı kaynak kaydı; blob `ca1c3520e9876d58f88d727831a2fd0cec085553`.
+- PR #767 `v2/playlists/parts/manifest.json` @ `cc021e46872aadb7d1d87f1b78dfb3a235a7fd3e` — OK; 4130 karakter, 1 ayrı kaynak kaydı; blob `d5ff5d7c624d165f73461f37c2846ea4bf9db727`.
+- PR #760 `.github/workflows/ci.yml` @ `3d59f47863cd512bb813948d4077ff8b8e8fdb21` — OK; 20342 karakter, 5 ayrı kaynak kaydı; blob `8ac8ad28ba9af0c9cfa92757c04efc0b6d148a2c`.
+- PR #757 `v2/ibo_authorized_change.json` @ `eca1bc56609f7b47d82ab34c51eac47dc7ff2124` — OK; 2432 karakter, 5 ayrı kaynak kaydı; blob `35e0d8c39b873b9a574f949ffd7e5adcbabcd7a0`.
+- PR #757 `v2/playlists/parts/manifest.json` @ `eca1bc56609f7b47d82ab34c51eac47dc7ff2124` — OK; 4130 karakter, 1 ayrı kaynak kaydı; blob `faae77d88012e43d5e72a2b5e92dbd7b6d8f94e5`.
+- PR #755 `v2/ibo_authorized_change.json` @ `b7223fa181a0de4f043824880a733ee9ecb63d4e` — OK; 2947 karakter, 5 ayrı kaynak kaydı; blob `685cce6e66fa713de6c6509ea127d58b96ac3d0d`.
+- PR #755 `v2/playlists/parts/manifest.json` @ `b7223fa181a0de4f043824880a733ee9ecb63d4e` — OK; 4130 karakter, 1 ayrı kaynak kaydı; blob `e9ef7f25579a4e737ee83a15f3a6d196391a0bb6`.
+- PR #728 `v2/ibo_authorized_change.json` @ `42974e29460833d9e08372a11ddcb4fb34e681d0` — OK; 17894 karakter, 5 ayrı kaynak kaydı; blob `661d46b3086f86bd702e8631d9a9f2d9c697f4f3`.
+- PR #728 `v2/playlists/parts/manifest.json` @ `42974e29460833d9e08372a11ddcb4fb34e681d0` — OK; 4068 karakter, 1 ayrı kaynak kaydı; blob `26d6cd78b3a7d0ab694538af04ce1a6a2feb3599`.
+- PR #721 `v2/ibo_authorized_change.json` @ `3482c2af7906ee942b61c24ef9d4d6e6f70efbf5` — OK; 1981 karakter, 5 ayrı kaynak kaydı; blob `8f67bae6e96507867939729b529df310e43ae687`.
+- PR #721 `v2/playlists/parts/manifest.json` @ `3482c2af7906ee942b61c24ef9d4d6e6f70efbf5` — OK; 4068 karakter, 1 ayrı kaynak kaydı; blob `efeb613496c55f5bc1a62818c569750886ec3600`.
+- PR #641 `.github/workflows/v2-main-production-safety-gate.yml` @ `dea1da290c5c04e62b85e9e4e50900063e8e0fe9` — OK; 18397 karakter, 10 ayrı kaynak kaydı; blob `5e0c415847131243b2423fa2e6e344c8e1c46cdd`.
+- PR #669 `DEVAM_NOTU.md` @ `a5fcf3a84bbe7c4f85d74ed94fb5cee576fde65c` — OK; 269075 karakter, 10 ayrı main'den farklı kaynak kaydı; blob `8296f4ea13145201b3a251c0095a4f6e9bd77df5`. Aynı path'te main ile birebir aynı metin zaten main kaynak indeksindedir.
+- PR #669 `v2/tasks/state.json` @ `a5fcf3a84bbe7c4f85d74ed94fb5cee576fde65c` — OK; 97693 karakter, 1 ayrı main'den farklı kaynak kaydı; blob `69dcfe1e14bd2a2a5585544ddee237c0b1b8fb9e`. Aynı path'te main ile birebir aynı metin zaten main kaynak indeksindedir.
+- PR #664 `v2/tasks/KALAN_ISLER_2026-11-23.md` @ `bccb4937f2e36db866011b5f028298d389bb20fe` — OK; 3857 karakter, 31 ayrı kaynak kaydı; blob `67dae61b21f45f6941e2bd4ebd6e0032e122a262`. 
+- PR #655 `v2/tasks/KALAN_ISLER_2026-11-23.md` @ `2380ed9501601abcd83f08b6b8b245e45c358b7c` — OK; 3366 karakter, 42 ayrı kaynak kaydı; blob `d36376e098fa7b66fa9c5d6b4fd45198625b5ce7`. İlk erişim hatası güncel ref ile tekrar okumada giderildi.
+- PR #651 `v2/tasks/KALAN_TEKNIK_ISLER_20261123.md` @ `f0c8e198fb0865f1800339cd4bcb909e93ddce57` — OK; 5454 karakter, 28 ayrı kaynak kaydı; blob `fca61a630dc319846a4b37c3b29a5182b337fd5f`. 
+- PR #650 `DEVAM_NOTU.md` @ `fe1420ca833eb1a52bdbb8890023d4cc45f24c59` — OK; 269156 karakter, 10 ayrı main'den farklı kaynak kaydı; blob `b7226463c3532cbec593c2e9bd795321848f2f23`. Aynı path'te main ile birebir aynı metin zaten main kaynak indeksindedir.
+- PR #650 `v2/tasks/state.json` @ `fe1420ca833eb1a52bdbb8890023d4cc45f24c59` — OK; 97260 karakter, 9 ayrı main'den farklı kaynak kaydı; blob `c9e20dd0de580caa172b070b13811269608d9bf4`. Aynı path'te main ile birebir aynı metin zaten main kaynak indeksindedir.
+- PR #642 `DEVAM_NOTU.md` @ `4bc0d6614299c3b2ad20eb5688eee6ab6e4dab9a` — OK; 44 karakter, 1 ayrı main'den farklı kaynak kaydı; blob `03f34df69e513a247dfe502b7c287a792b1da3d5`. Aynı path'te main ile birebir aynı metin zaten main kaynak indeksindedir.
+- PR #768: değişen .md/.txt/.json/.yml/.yaml dosyası yok; PR gövdesi D bölümünde kayıtlı.
+- Ek yapısal kontrol: main state.json ve PR #669/#650 plan nesneleri yeniden açıldı. Öncelik, kısıt, güvenlik, risk ve diğer henüz indekslenmemiş plan alanları ayrı kayıt olarak eklendi (70 alan). Ham sonuç durumları görevlerden ayrıldı.
+<!-- COVERAGE-END -->
