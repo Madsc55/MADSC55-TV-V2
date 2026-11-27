@@ -112,6 +112,11 @@ B33 / A17 için depodaki XMLTV dosyasının tamamı okundu. 164 rehber kimliğin
 - Yeni workflow dosyası ve cron kaldırıldı. Mevcut Offline CI içinde yalnız main dalında `[foreign-archive-deep]` etiketli push veya mevcut workflow_dispatch ile 20 paketlik denetim turu başlar. Salt okunur izinler korunur; sıradaki tur yeni yetkili tetikleme gerektirir, kendi kendine zamanlanmaz.
 - Sıralama motoru bağımsız doğrulanmış yayın kimliği ve tam rapor olmadan değişiklik üretmez. Otomatik main yazımı yok; yayınlama için ayrı SHA-bağlı onaylı PR ve CI gerekir. ASR/OCR/WebVTT gözlemleri ipucudur. Artifact 90 gün süreli, şifreli kalıcı arşiv kabulü değildir.
 
+### 27 Kasım — Yabancı canlı denetim tetikleyici düzeltmesi
+
+- 26 Kasım 32/32 canlı denetiminin mevcut `.github/workflows/ci.yml` dosyasında foreign canlı plan ve AV matrix işleri açık main push etiketi `[foreign-live-20261127]` ile çalışacak. Önceki `[foreign-archive-deep]` etiketi uyumlu kalır. İlk boş checkpoint turunda da plan artifact oluşturulur; başarısız restore sessizce geçilmez. Önceki checkpoint yalnız aynı workflow main push çalışmasından ve aynı playlist SHA değerinden alınır. Canlı decoder güvenlik fixture testleri ağ denetiminden önce zorunlu.
+- Ana playlist değişmez. Sıralama yalnız bağımsız doğrulanmış kanıt ve ayrı yetkili PR ile; sürekli kendi kendine tetikleme ve canlı kabul henüz doğrulanmadı.
+
 ## A) Kullanıcı Tarafından Kaydettirilmiş Özel Notlar ve İstekler
 
 ### Güncel uygulama kuralları ve ayrı kullanıcı kararları
