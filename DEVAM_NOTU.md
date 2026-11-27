@@ -1,3 +1,9 @@
+## 27 Kasım 2026 — 10 maddelik ana sistem offline final kabulü
+
+- #793 iki CI PASS ve MERGED (`2e853cc46b5e201dd9e7f7939dade4c686daad40`); 1–5 offline kabul tamamlandı.
+- 6–10 mevcut kalite, logo/EPG, 429, şifreli checkpoint ve kullanıcı onay/rollback kanıtları [final raporda](reports/ANA_SISTEM_10_MADDE_FINAL_KABUL_20261127.md) kayıtlı. Mevcut iki karar testi offline Makefile hedefinde açıkça çalıştırılır.
+- **10/10 TAMAMLANDI — ANA SİSTEM %100 TESLİM EDİLDİ** yalnız bu final PR iki CI SUCCESS ve merge doğrulamasından sonra, belirtilen offline kapsam için geçerlidir. Gerçek yayın, varlık ataması, harici üretim restore ve cihaz kabulü iddia edilmez. Ana playlist, eski 34 görev ve 685 güvenlik kilidi korunur; yeni canlı tarama yok.
+
 ## 25 Kasım 2026 — Final altyapı paketleri
 
 - PR [#784](https://github.com/Madsc55/MADSC55-TV-V2/pull/784) MERGED; Offline CI ve Production Security Gate PASS. GitLab/Codeberg 429 sınırlı backoff ve ölçülen kalite karar modülü.
