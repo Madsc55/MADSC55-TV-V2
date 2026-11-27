@@ -344,6 +344,16 @@ Tarama kapsamı: main ağacındaki tüm .md/.txt/.json/.yml/.yaml dosyaları, a�
 - **v2/reports/logo-current-exact-name-review-20261119.json:$.warning** — [Tarihsel kaynak kaydı] This is a review queue only. No image was verified as official and no playlist modifications are authorized by this report.
 - **v2/reports/package-artifact-independent-audit-20261119.md:L14** — [Tarihsel kaynak kaydı] Next acceptance gates: separately verified IBO device playback for the actual packages, independent production restore with matching evidence, and provenance/AV acceptance per policy. Preserve the protected main playlist and the excluded 48 entries; do not create new playlists or start a channel search until system completion.
 
+- **v2/reports/task15-historical-url-hash-recovery-20261118.json:$.scope_decision_20261119.decision** — [Tarihsel kaynak kaydı] User explicitly waived independent broadcaster ownership attribution for task #15; historical URL source/hash reconciliation is the acceptance criterion.
+- **v2/reports/task15-historical-url-hash-recovery-20261118.json:$.scope_decision_20261119.playback_status** — [Tarihsel kaynak kaydı] Not tested here; live AV/IBO Player checks remain deferred and must not be inferred from URL hash matches.
+- **v2/reports/task17-18-20-offline-operator-procedure-20261119.md:L28** — [Tarihsel kaynak kaydı] Kullanıcı açıkça başlatana kadar keşif yapılmaz. Daha sonra bulunan yeni kanallar kapsamlı ses, görüntü, dil, altyazı, logo, EPG, kaynak ve çalışma testlerinden geçtikten sonra uygun olanlar ANA ARŞİV'e alınır. Ana İBO playlistine otomatik ekleme yoktur. İBO Player 2.500'lük manuel test süreci ayrıdır.
+- **v2/reports/task17-18-20-secure-import-runbook-20261119.md:L17** — [Tarihsel kaynak kaydı] Yasaklar ve kapsam
+- **v2/reports/task17-18-av-resume-handoff-20261118.md:L5** — [Tarihsel kaynak kaydı] Korunan tamamlanmış kanıtlar
+- **v2/reports/task17-18-av-resume-handoff-20261118.md:L19** — [Tarihsel kaynak kaydı] 6. Tarama bitince tekrarların sıfırlandığını, önceki 300/33 sonuçlarının korunduğunu, kalan kuyruk ile tüm sayımların dengelendiğini doğrula. Güvenlik kapısı ve gerçek İBO Player cihaz kabulü olmadan #17–18'i kapatma.
+- **v2/reports/task21-evidence-handoff-20261119.md:L20** — [Tarihsel kaynak kaydı] 7. İBO Player'ın ayrı 2.500'lük test/arşiv döngüsüne ve korunan ana İBO, YEDEKLER, YENİLER, FAVORİLER, EPG dosyalarına dokunma.
+- **v2/reports/turkic-fourth-pass-review-20261117.md:L31** — [Tarihsel kaynak kaydı] - 18801 WEST AZERBAİJAN TV: İran Batı Azerbaycan bölgesine ait; kullanıcı Türkî dili dahil ettiyse dil doğrulamasıyla değerlendirilmeli.
+- **v2/reports/turkic-fourth-pass-review-20261117.md:L36** — [Tarihsel kaynak kaydı] Bu rapor yayınların ses/görüntü veya dili doğrulanmış demek değildir. Yeni reorder için orijinal EXTINF/URL çiftleri ve özel yorumlar eksiksiz korunmalı, ilk 1003 kayıt değişmemeli, 18.912/18.074 sayıları sabit kalmalı, tam SHA-256 yetki manifesti ve GitHub güvenlik testi geçmelidir. Bu PR salt inceleme raporudur.
+
 <!-- A-END -->
 
 ## B) Yarım Kalmış / Beklemeye Alınmış Teknik ve Kurtarma İşleri
@@ -1714,6 +1724,402 @@ Tarama kapsamı: main ağacındaki tüm .md/.txt/.json/.yml/.yaml dosyaları, a�
 - **v2/reports/source-inventory-change-log.md:L8** — [Tarihsel kaynak kaydı] - Test commit: 3df167a.
 - **v2/reports/source-inventory-change-log.md:L9** — [Tarihsel kaynak kaydı] - CI results not yet confirmed.
 
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L1** — [Tarihsel kaynak kaydı] MADSC55 TV V2 — Stage 4 safe DNS capture implementation
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L2** — [Tarihsel kaynak kaydı] Date: 2026-11-21
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L4** — [Tarihsel kaynak kaydı] Goal and hard limits
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L5** — [Tarihsel kaynak kaydı] Enable **opt-in** bounded media sampling from ordinary DNS-hostname sources
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L6** — [Tarihsel kaynak kaydı] without letting FFmpeg fetch arbitrary nested network URLs. This is a
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L10** — [Tarihsel kaynak kaydı] Files
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L11** — [Tarihsel kaynak kaydı] - `v2/turkish_safe_dns_capture.py`: strict URL parser; validate every DNS
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L12** — [Tarihsel kaynak kaydı] A/AAAA result; disallow private/link-local/multicast/reserved/IPv4-mapped
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L13** — [Tarihsel kaynak kaydı] addresses; use a vetted numeric IP for TCP; verify HTTPS certificate and
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L14** — [Tarihsel kaynak kaydı] SNI against the original hostname; reject redirects, invalid content,
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L15** — [Tarihsel kaynak kaydı] manifest bodies and oversized/timeout downloads.
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L16** — [Tarihsel kaynak kaydı] - `v2/turkish_media_sample_capture.py`: DNS hostnames use the new pinned
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L17** — [Tarihsel kaynak kaydı] downloader; FFmpeg reads only a temporary private local file with
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L18** — [Tarihsel kaynak kaydı] `-protocol_whitelist file` and an explicit demuxer
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L19** — [Tarihsel kaynak kaydı] (MP4/Matroska/MPEG-TS); no output file is overwritten; language/device
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L21** — [Tarihsel kaynak kaydı] - `v2/test_turkish_safe_dns_capture.py`: offline tests with fake resolver,
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L22** — [Tarihsel kaynak kaydı] fake HTTP response and mocked FFmpeg. No actual HTTP request.
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L23** — [Tarihsel kaynak kaydı] - `v2/test_turkish_media_sample_capture.py`: retains existing IP-literal
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L24** — [Tarihsel kaynak kaydı] safety regressions and adds DNS syntax acceptance without DNS resolution.
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L25** — [Tarihsel kaynak kaydı] - `.github/workflows/v2-main-production-safety-gate.yml`: tests included.
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L27** — [Tarihsel kaynak kaydı] Safeguards and acceptance
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L28** — [Tarihsel kaynak kaydı] - All answers for one DNS lookup must be globally routable **unicast**, not
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L29** — [Tarihsel kaynak kaydı] just `is_global`. A single private or multicast answer fails closed.
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L30** — [Tarihsel kaynak kaydı] - Connection goes to the pinned IP. No re-resolution on connect.
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L31** — [Tarihsel kaynak kaydı] - HTTPS uses the original hostname for TLS/SNI and certificate checking.
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L32** — [Tarihsel kaynak kaydı] - HTTP 30x is never followed. Credentials, ambiguous authority,
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L33** — [Tarihsel kaynak kaydı] backslashes, local-only hostnames, and URL fragments are rejected.
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L35** — [Tarihsel kaynak kaydı] containers are rejected before FFmpeg.
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L36** — [Tarihsel kaynak kaydı] - Download must respect byte budget and time limit.
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L37** — [Tarihsel kaynak kaydı] - Decoding uses a private local input with only the `file` protocol;
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L38** — [Tarihsel kaynak kaydı] the output is linked exclusively to a new filename (no clobber).
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L42** — [Tarihsel kaynak kaydı] Not yet completed
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L43** — [Tarihsel kaynak kaydı] 1. Adaptive HLS/DASH with separate segments or encryption is deliberately
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L44** — [Tarihsel kaynak kaydı] unsupported. It needs a per-resource validated egress proxy or a secure
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L45** — [Tarihsel kaynak kaydı] offline segment collector that checks **each** manifest, segment and key.
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L46** — [Tarihsel kaynak kaydı] 2. The pre-existing IP-literal FFmpeg transport is retained for compatibility,
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L47** — [Tarihsel kaynak kaydı] including its existing explicit protocol whitelist. That whitelist is **not
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L48** — [Tarihsel kaynak kaydı] an outbound firewall** and does not prove nested HLS segments are safe.
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L49** — [Tarihsel kaynak kaydı] It requires its own isolation/transport acceptance before declaring Stage
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L50** — [Tarihsel kaynak kaydı] 4 globally complete.
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L51** — [Tarihsel kaynak kaydı] 3. No real IPTV stream capture, ASR/OCR/WebVTT language classification,
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L53** — [Tarihsel kaynak kaydı] has been performed by this PR.
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L55** — [Tarihsel kaynak kaydı] Repository invariants
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L61** — [Tarihsel kaynak kaydı] CI evidence
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L62** — [Tarihsel kaynak kaydı] Production Security Gate will run the new offline regressions; use the
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L63** — [Tarihsel kaynak kaydı] exact GitHub Actions run linked from PR #572 as the final acceptance record.
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L64** — [Tarihsel kaynak kaydı] Passing offline tests will **not** be described as proof of a live stream.
+- **v2/reports/stage4_historical_drive_restore_provenance_20261121.json:$.scope** — [Tarihsel kaynak kaydı] HISTORICAL_STAGE4_INVENTORY_DRIVE_RESTORE_ONLY
+- **v2/reports/stage4_historical_drive_restore_provenance_20261121.json:$.source_run_conclusion** — [Tarihsel kaynak kaydı] success
+- **v2/reports/stage4_historical_drive_restore_provenance_20261121.json:$.independent_drive_restore_job_conclusion** — [Tarihsel kaynak kaydı] success
+- **v2/reports/stage4_historical_drive_restore_provenance_20261121.json:$.independent_offsite_restore_historical_evidence_verified** — [Tarihsel kaynak kaydı] true
+- **v2/reports/stage4_historical_drive_restore_provenance_20261121.json:$.separate_authorized_turkish_vault_issue6_external_restore_accepted** — [Tarihsel kaynak kaydı] false
+- **v2/reports/stage4_historical_drive_restore_provenance_20261121.json:$.limitations[0]** — [Tarihsel kaynak kaydı] Offline recheck validates pinned artifacts and CI receipts, not live cryptographic key access or a fresh decryption
+- **v2/reports/stage4_historical_drive_restore_provenance_20261121.json:$.limitations[1]** — [Tarihsel kaynak kaydı] The accepted Stage 4 inventory archive is not the separate Fernet authorized-Turkish URL vault (#6)
+- **v2/reports/task15-historical-crosswalk-delta-20261118.json:$.remaining_unmatched_count** — [Tarihsel kaynak kaydı] 6
+- **v2/reports/task15-historical-crosswalk-delta-20261118.json:$.broadcaster_identity_verified** — [Tarihsel kaynak kaydı] false
+- **v2/reports/task15-historical-crosswalk-delta-20261118.json:$.next_required_evidence** — [Tarihsel kaynak kaydı] Independent publisher attribution for historical stream endpoints remains open. The six addresses missing from the 6 November comparison have since been exactly matched.
+- **v2/reports/task15-historical-crosswalk-delta-20261118.json:$.follow_up.remaining_unmatched** — [Tarihsel kaynak kaydı] 0
+- **v2/reports/task15-historical-url-hash-recovery-20261118.json:$.task_status** — [Tarihsel kaynak kaydı] completed
+- **v2/reports/task17-18-20-already-attempted-exclusion-20261118.json:$.remaining_matched_hashes** — [Tarihsel kaynak kaydı] 3766
+- **v2/reports/task17-18-20-bounded-retry-20261118.json:$.tasks[0]** — [Tarihsel kaynak kaydı] 17
+- **v2/reports/task17-18-20-bounded-retry-20261118.json:$.tasks[1]** — [Tarihsel kaynak kaydı] 18
+- **v2/reports/task17-18-20-bounded-retry-20261118.json:$.tasks[2]** — [Tarihsel kaynak kaydı] 20
+- **v2/reports/task17-18-20-bounded-retry-20261118.json:$.latest_outcomes.AV_SAMPLE_VERIFIED** — [Tarihsel kaynak kaydı] 1
+- **v2/reports/task17-18-20-offline-operator-procedure-20261119.md:L5** — [Tarihsel kaynak kaydı] Ön koşullar
+- **v2/reports/task17-18-20-offline-operator-procedure-20261119.md:L7** — [Tarihsel kaynak kaydı] - `V2_ARCHIVE_PASSPHRASE` ortam değişkeni yalnızca güvenli ortamda bulunmalı; GitHub'a, terminal çıktısına veya PR'a yazılmamalı.
+- **v2/reports/task17-18-20-offline-operator-procedure-20261119.md:L8** — [Tarihsel kaynak kaydı] - `python -m pip install 'cryptography&gt;=42,&lt;47'` ile bağımlılığı kurun.
+- **v2/reports/task17-18-20-offline-operator-procedure-20261119.md:L9** — [Tarihsel kaynak kaydı] - Kaynağın ayrı bir kopyasını saklayın. Şifreli dosyayı Git'e commit etmeyin.
+- **v2/reports/task17-18-20-offline-operator-procedure-20261119.md:L11** — [Tarihsel kaynak kaydı] Çalıştırma (yalnızca mevcut 15 kimlik, ağ taraması yok)
+- **v2/reports/task17-18-20-offline-operator-procedure-20261119.md:L14** — [Tarihsel kaynak kaydı] mkdir -p /tmp/v2-existing-evidence
+- **v2/reports/task17-18-20-offline-operator-procedure-20261119.md:L17** — [Tarihsel kaynak kaydı] python v2/merge_bounded_retry_checkpoint.py \
+- **v2/reports/task17-18-20-offline-operator-procedure-20261119.md:L19** — [Tarihsel kaynak kaydı] --report v2/reports/task17-18-20-bounded-retry-20261118.json
+- **v2/reports/task17-18-20-offline-operator-procedure-20261119.md:L22** — [Tarihsel kaynak kaydı] Önce `dry_run: true`, `eligible_updates` ve `applied: 0` doğrulanır. Orijinal kanıtla tutarlılık sağlanırsa **ayrı, açık yetkiyle** aynı komuta `--apply` eklenir. Bu yalnızca şifreli kopyayı günceller; gerçek AV taraması yapmaz.
+- **v2/reports/task17-18-20-offline-operator-procedure-20261119.md:L24** — [Tarihsel kaynak kaydı] **Önemli:** 1 kısa ses/görüntü örneği, tam yayın kabulü değildir. 8 HTTP404 ve 6 HTTP503 sonuçları, canlı tekrar tarama yapılmadan sadece geçmiş kanıt olarak tutulur. Kalan #17–18–20 görevleri kapatılmaz.
+- **v2/reports/task17-18-20-secure-import-runbook-20261119.md:L1** — [Tarihsel kaynak kaydı] #17/#18/#20 — güvenli şifreli kontrol noktası aktarımı (19 Kasım 2026)
+- **v2/reports/task17-18-20-secure-import-runbook-20261119.md:L3** — [Tarihsel kaynak kaydı] Doğrulanmış durum
+- **v2/reports/task17-18-20-secure-import-runbook-20261119.md:L4** — [Tarihsel kaynak kaydı] - PR #442, var olan 15 HTTP/AV gözleminin çevrimdışı aktarım kodunu ekledi; bu, gerçek şifreli kontrol noktasına uygulanmış olduğu anlamına gelmez.
+- **v2/reports/task17-18-20-secure-import-runbook-20261119.md:L5** — [Tarihsel kaynak kaydı] - PR #448, yeni bir `v2-secure-bounded-checkpoint-import.yml` iş akışı ekledi. Production Security Gate koşusu [44502831052](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/44502831052) `MAIN_WORKFLOW_FILE_LOCK_FAIL` / `WORKFLOW_INVENTORY` ile başarısız oldu. PR #448 **birleştirilmeden kapatıldı**.
+- **v2/reports/task17-18-20-secure-import-runbook-20261119.md:L8** — [Tarihsel kaynak kaydı] Güvenli yürütme sırası (yetkili, kontrollü ortamda)
+- **v2/reports/task17-18-20-secure-import-runbook-20261119.md:L10** — [Tarihsel kaynak kaydı] 2. `V2_ARCHIVE_PASSPHRASE` değerini yalnızca güvenli çalışma ortamında secret olarak sağlayın; komut satırına, rapora, GitHub yorumuna veya loglara yazmayın. Şifreli dosyayı ve yedeğini hiçbir zaman repoya commit etmeyin.
+- **v2/reports/task17-18-20-secure-import-runbook-20261119.md:L12** — [Tarihsel kaynak kaydı] 4. Sadece dry-run ve kimlik doğrulama başarılıysa, kontrollü bir **çalışma kopyasında** aynı komutu `--apply` ile yürütün. Oluşan `.pre-bounded-retry.bak` dosyasını koruyun. Kodun şifreli yazma sonrası tekrar okuma kontrolü başarılı olmalıdır.
+- **v2/reports/task17-18-20-secure-import-runbook-20261119.md:L13** — [Tarihsel kaynak kaydı] 5. Aynı kopyada dry-run'ı yeniden çalıştırın: `eligible_updates == 0` olmalı (idempotence). Kayıt sayısı değişmemeli; güncel AV kanıtı eski HTTP denemeleriyle düşürülmemeli.
+- **v2/reports/task17-18-20-secure-import-runbook-20261119.md:L14** — [Tarihsel kaynak kaydı] 6. Güncellenen **yalnızca şifreli** kontrol noktasını bağımsız kalıcı arşive, erişim ve bütünlük doğrulamasıyla aktarın; ardından bağımsız geri yükleme/okuma kabulü yapın. 7 günlük geçici Actions artefaktı kalıcı kabul değildir.
+- **v2/reports/task17-18-20-secure-import-runbook-20261119.md:L15** — [Tarihsel kaynak kaydı] 7. Bu kanıtlar olmadan #17/#18/#20'yi tamamlandı işaretlemeyin. Production Security Gate başarıyla tamamlanmadan hiçbir değişikliği main'e birleştirmeyin.
+- **v2/reports/task17-18-20-secure-import-runbook-20261119.md:L18** — [Tarihsel kaynak kaydı] - Yeni GitHub Actions iş akışı oluşturmayın veya güvenlik envanter kilidini dolanmayın.
+- **v2/reports/task17-18-20-secure-import-runbook-20261119.md:L21** — [Tarihsel kaynak kaydı] - 15 gözlem: 1 AV **örnek** kanıtı, 6 HTTP 503, 8 HTTP 404; gerçek cihaz/İBO kabulü değildir.
+- **v2/reports/task17-18-20-secure-import-runbook-20261119.md:L22** — [Tarihsel kaynak kaydı] - Engel: onaylı yürütme ortamı, gerçek şifreli dosya ve secret, ardından kalıcı bağımsız restore kanıtı.
+- **v2/reports/task17-18-20-secure-import-runbook-20261119.md:L24** — [Tarihsel kaynak kaydı] Kabul kayıtları
+- **v2/reports/task17-18-20-secure-import-runbook-20261119.md:L25** — [Tarihsel kaynak kaydı] Her uygulamada güvenli ortamda şu alanlar kayıt altına alınmalı: kaynak artefakt kimliği ve doğrulanan SHA-256, işlenen kayıt sayısı, güncellenen kayıt sayısı, ikinci dry-run'ın sıfır güncelleme sonucu, şifreli çıktı SHA-256, bağımsız restore doğrulaması, Production Security Gate koşu bağlantısı. Gizli anahtarlar ve açık yayın adresleri rapora yazılmamalıdır.
+- **v2/reports/task17-18-av-resume-handoff-20261118.md:L1** — [Tarihsel kaynak kaydı] #17–18 gerçek AV doğrulaması — tekrar yapmadan devam
+- **v2/reports/task17-18-av-resume-handoff-20261118.md:L3** — [Tarihsel kaynak kaydı] Tarih: 2026-11-18. Kaynak: `v2/tasks/state.json` ve `v2/reports/task17-18-20-bounded-retry-20261118.json`.
+- **v2/reports/task17-18-av-resume-handoff-20261118.md:L7** — [Tarihsel kaynak kaydı] - GitHub Actions 43608247496: şifreli kontrol noktasından 28.545 eski gözlem kullanıldı; **300 yeni gerçek AV kontrolü** yapıldı; **33 başarısız yayın kurtarıldı**. Bu işlemler yeniden yapılmayacak.
+- **v2/reports/task17-18-av-resume-handoff-20261118.md:L8** — [Tarihsel kaynak kaydı] - Önceki 8.540 + 33 = **8.573** AV kanıtı; **20.272** AV kanıtı olmayan kayıt. Bunlar tarihsel kanıtlardır, anlık yayın garantisi değildir.
+- **v2/reports/task17-18-av-resume-handoff-20261118.md:L9** — [Tarihsel kaynak kaydı] - 2026-11-18 tarihli sınırlı inceleme: **15 farklı URL, 17 girişim**; **1** TRT Kurdî gerçek ses+görüntü örneği, **8** HTTP 404 inceleme, **6** HTTP 503 tekrar deneme. Bunlar da yeniden sayılmayacak.
+- **v2/reports/task17-18-av-resume-handoff-20261118.md:L12** — [Tarihsel kaynak kaydı] Yeni taramanın zorunlu sırası
+- **v2/reports/task17-18-av-resume-handoff-20261118.md:L14** — [Tarihsel kaynak kaydı] 1. Önce 43608247496 koşusunun **şifreli kontrol noktası** ve kurtarma artifact'ini indir; hash ve kayıt kimliklerini doğrula. Kontrol noktası yoksa eski denemeleri yeniden yaparak tamamlandı sayma.
+- **v2/reports/task17-18-av-resume-handoff-20261118.md:L15** — [Tarihsel kaynak kaydı] 2. 18 Kasım sınırlı incelemesindeki 15 kimliği ve tüm geçmiş doğrulanmış AV kayıtlarını SHA-256 üzerinden ayıkla; **yalnızca kanıtı eksik kalan** URL'leri yeni iş kuyruğuna al.
+- **v2/reports/task17-18-av-resume-handoff-20261118.md:L16** — [Tarihsel kaynak kaydı] 3. HTTP 404 için yayıncı endpoint incelemesi yap; kanıt olmadan URL değiştirme. HTTP 503 için kontrollü, sınırlı ve geri çekilmeli retry uygula. Kimlik doğrulamalı, geo-blocked, karantina ve özel URL'leri tarama.
+- **v2/reports/task17-18-av-resume-handoff-20261118.md:L17** — [Tarihsel kaynak kaydı] 4. İşleri küçük, kaldığı yerden devam edebilen gruplara ayır. Yeni denemeleri gerçek FFmpeg decoded video **ve** audio kanıtlarıyla ölç; HTTP 200 veya manifest tek başına PASS değildir.
+- **v2/reports/task17-18-av-resume-handoff-20261118.md:L18** — [Tarihsel kaynak kaydı] 5. Her yeni denemeyi URL SHA-256, deneme zamanı, kaynak run/artifact, audio/video decode sonucu, hata ve retry sayısıyla checkpoint'e ekle. Eski kayıtları yeni ölçüm diye sayma.
+- **v2/reports/task17-18-av-resume-handoff-20261118.md:L21** — [Tarihsel kaynak kaydı] Değiştirilmeyecekler
+- **v2/reports/task17-18-av-resume-handoff-20261118.md:L26** — [Tarihsel kaynak kaydı] Durum
+- **v2/reports/task17-18-av-resume-handoff-20261118.md:L30** — [Tarihsel kaynak kaydı] Kanıt: https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43608247496 ; https://github.com/Madsc55/MADSC55-TV-V2/blob/main/v2/reports/task17-18-20-bounded-retry-20261118.json
+- **v2/reports/task19-current-xmltv-20261119.json:$.publisher_schedule_witnesses.ATV.tr.next_start** — [Tarihsel kaynak kaydı] 19:00
+- **v2/reports/task19-current-xmltv-20261119.json:$.publisher_schedule_witnesses.ATV.tr.next_title** — [Tarihsel kaynak kaydı] atv Ana Haber
+- **v2/reports/task19-current-xmltv-20261119.json:$.publisher_schedule_witnesses.CNBC-E.tr.next_start** — [Tarihsel kaynak kaydı] 17:00
+- **v2/reports/task19-current-xmltv-20261119.json:$.publisher_schedule_witnesses.CNBC-E.tr.next_title** — [Tarihsel kaynak kaydı] Kapanış Seansı
+- **v2/reports/task19-current-xmltv-20261119.json:$.publisher_schedule_witnesses.DMAX.tr.next_start** — [Tarihsel kaynak kaydı] 18:35
+- **v2/reports/task19-current-xmltv-20261119.json:$.publisher_schedule_witnesses.DMAX.tr.next_title** — [Tarihsel kaynak kaydı] Depo Savaşları
+- **v2/reports/task19-current-xmltv-20261119.json:$.sources[0].status** — [Tarihsel kaynak kaydı] XMLTV_VALID
+- **v2/reports/task19-current-xmltv-20261119.json:$.sources[1].status** — [Tarihsel kaynak kaydı] XMLTV_VALID
+- **v2/reports/task19-current-xmltv-20261119.json:$.sources[2].status** — [Tarihsel kaynak kaydı] XMLTV_VALID
+- **v2/reports/task19-current-xmltv-20261119.json:$.sources[3].status** — [Tarihsel kaynak kaydı] XMLTV_VALID
+- **v2/reports/task19-current-xmltv-20261119.json:$.sources[4].status** — [Tarihsel kaynak kaydı] XMLTV_VALID
+- **v2/reports/task21-evidence-handoff-20261119.md:L1** — [Tarihsel kaynak kaydı] Görev #21 — kaynak keşfi kanıt devri (19 Kasım 2026)
+- **v2/reports/task21-evidence-handoff-20261119.md:L3** — [Tarihsel kaynak kaydı] Kapsam ve sınır
+- **v2/reports/task21-evidence-handoff-20261119.md:L6** — [Tarihsel kaynak kaydı] Doğrulanmış tarihsel temel
+- **v2/reports/task21-evidence-handoff-20261119.md:L7** — [Tarihsel kaynak kaydı] - [14 Kasım gerçek tarama](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43608247496): 103/103 uygun M3U kaynağı; 28.845 aday URL; 8.573 toplam AV gözlemi (8.540 önceki kimliği doğrulanmış checkpoint, 33 o koşudaki yeni FFmpeg çözümlemesi); 20.272 AV kanıtı eksik.
+- **v2/reports/task21-evidence-handoff-20261119.md:L8** — [Tarihsel kaynak kaydı] - GitLab keşfi: 10/12 sorgu; kalan sorgular sağlayıcı hız sınırı nedeniyle eksik.
+- **v2/reports/task21-evidence-handoff-20261119.md:L9** — [Tarihsel kaynak kaydı] - Codeberg keşfi: 1/12 sorgu; kalan sorgular sağlayıcı hız sınırı nedeniyle eksik.
+- **v2/reports/task21-evidence-handoff-20261119.md:L10** — [Tarihsel kaynak kaydı] - YouTube: 353/353 `SIGN_IN_REQUIRED`, 0 doğrulanmış LIVE; doğrudan YouTube/resmî HLS çözümü 0/120. Bunlar doğrulanmış yayın olarak eklenemez.
+- **v2/reports/task21-evidence-handoff-20261119.md:L11** — [Tarihsel kaynak kaydı] - [18 Kasım DEVAM_NOTU](../../DEVAM_NOTU.md): GitHub tanılamasında 6 geçerli sorgu/103 ham aday satırı, GitLab'da 6 geçerli boş yanıt ve Codeberg'de ilk sorguda üç 429 sonrası beş atlanan sorgu. Türkiye/Azerbaycan örneklerinden 178/14 kayıt okundu. TRT Haber resmî yayınındaki tek HLS segmentinde FFmpeg görüntü ve ses çözümlemesi kaydedildi. Bu tekil kanıt küresel kabul değildir.
+- **v2/reports/task21-evidence-handoff-20261119.md:L13** — [Tarihsel kaynak kaydı] Tamamlama kapıları (toplu işlem kontrol listesi)
+- **v2/reports/task21-evidence-handoff-20261119.md:L14** — [Tarihsel kaynak kaydı] 1. Mevcut #21 ve #34 kaynak/adaptör kodunu, PR ve Actions kanıtlarını karşılaştır; zaten birleşmiş korumaları yeniden yazma.
+- **v2/reports/task21-evidence-handoff-20261119.md:L15** — [Tarihsel kaynak kaydı] 2. GitHub/GitLab/Codeberg sorgularını hız sınırı, Retry-After, sağlayıcı devre kesicisi ve resume-plan tutarlılığı ile fail-closed tut; eksik sorguları tamamlanmış gibi sayma.
+- **v2/reports/task21-evidence-handoff-20261119.md:L16** — [Tarihsel kaynak kaydı] 3. YouTube `SIGN_IN_REQUIRED` durumlarını atlatmaya çalışma veya yayın doğrulaması gibi gösterme. Yalnız izinli/resmî açık canlı HLS ve yayıncı sayfası kanıtını değerlendir.
+- **v2/reports/task21-evidence-handoff-20261119.md:L18** — [Tarihsel kaynak kaydı] 5. Geçerli yeni kanıtlar için tekrarları kimlik/hash üzerinden ayıkla, başarısız/kanıtsızları karantinada tut, şifreli envanterin sırlarını veya yayın URL'lerini rapora yazma.
+- **v2/reports/task21-evidence-handoff-20261119.md:L19** — [Tarihsel kaynak kaydı] 6. Offline regresyon, Production Security Gate ve gerekiyorsa izinli canlı Actions koşusu sonuçlarını kaydet; bütün kabul kapıları geçmeden `completed` işaretleme veya yayın listesi üretme.
+- **v2/reports/task21-evidence-handoff-20261119.md:L22** — [Tarihsel kaynak kaydı] Mevcut karar
+- **v2/reports/turkic-fourth-pass-review-20261117.md:L6** — [Tarihsel kaynak kaydı] Blok dışında yeniden bulunan Türkiye / Azerbaycan kayıtları
+- **v2/reports/turkic-fourth-pass-review-20261117.md:L9** — [Tarihsel kaynak kaydı] - 2415 Karadeniz TV (teknik test)
+- **v2/reports/turkic-fourth-pass-review-20261117.md:L10** — [Tarihsel kaynak kaydı] - 2481 MEDYAHABER TV (yayın dili ayrıca doğrulanmalı)
+- **v2/reports/turkic-fourth-pass-review-20261117.md:L11** — [Tarihsel kaynak kaydı] - 2722–2725 PowerTurk Akustik, Slow, Taptaze, TV (teknik test)
+- **v2/reports/turkic-fourth-pass-review-20261117.md:L12** — [Tarihsel kaynak kaydı] - 2726–2727 TurkHaber TV (teknik test, iki kayıt)
+- **v2/reports/turkic-fourth-pass-review-20261117.md:L13** — [Tarihsel kaynak kaydı] - 3157 HABER GLOBAL YOUTUBE (URL: YouTube; yayın canlılığı ayrıca doğrulanmalı)
+- **v2/reports/turkic-fourth-pass-review-20261117.md:L14** — [Tarihsel kaynak kaydı] - 3196 A2 Dizi & Sinema (teknik test)
+- **v2/reports/turkic-fourth-pass-review-20261117.md:L15** — [Tarihsel kaynak kaydı] - 3209–3210 CNBC-e (teknik test)
+- **v2/reports/turkic-fourth-pass-review-20261117.md:L16** — [Tarihsel kaynak kaydı] - 3221 Haber 61 (teknik test)
+- **v2/reports/turkic-fourth-pass-review-20261117.md:L17** — [Tarihsel kaynak kaydı] - 3222 Haber Global (teknik test)
+- **v2/reports/turkic-fourth-pass-review-20261117.md:L18** — [Tarihsel kaynak kaydı] - 3236–3237 Power Dance ve Power Love (teknik test)
+- **v2/reports/turkic-fourth-pass-review-20261117.md:L19** — [Tarihsel kaynak kaydı] - 10438 PLAYERFILMAZERBAYCAN-TV (film yayını / VOD ayrımı gerekli)
+- **v2/reports/turkic-fourth-pass-review-20261117.md:L20** — [Tarihsel kaynak kaydı] - 10439 AZERI-RETRO FILMLER (film yayını / VOD ayrımı gerekli)
+- **v2/reports/turkic-fourth-pass-review-20261117.md:L21** — [Tarihsel kaynak kaydı] - 10514 A2 (576p) (kaynak kimliği belirsiz)
+- **v2/reports/turkic-fourth-pass-review-20261117.md:L22** — [Tarihsel kaynak kaydı] - 10906 CNBC-e (Youtube)
+- **v2/reports/turkic-fourth-pass-review-20261117.md:L24** — [Tarihsel kaynak kaydı] Yabancı / belirsiz benzer adlar
+- **v2/reports/turkic-fourth-pass-review-20261117.md:L26** — [Tarihsel kaynak kaydı] - 2449, 2476 THE YOUNG TURKS: İngilizce ABD siyasi yayını, Türkiye TV olarak otomatik seçilmez.
+- **v2/reports/turkic-fourth-pass-review-20261117.md:L27** — [Tarihsel kaynak kaydı] - 2520 TURKUZPLAY1: kimlik ve dil belirsiz.
+- **v2/reports/turkic-fourth-pass-review-20261117.md:L28** — [Tarihsel kaynak kaydı] - 2545 itasli.github.io/TURKTV: URL bir PNG görseline gidiyor, M3U canlı yayın olarak seçilmez.
+- **v2/reports/turkic-fourth-pass-review-20261117.md:L29** — [Tarihsel kaynak kaydı] - 3086, 3128 POWER TV: Hindistan/Kannada kaynakları, Türk Power TV sanılmamalı.
+- **v2/reports/turkic-fourth-pass-review-20261117.md:L30** — [Tarihsel kaynak kaydı] - 3824 POWER TV (INDIA): yabancı.
+- **v2/reports/turkic-fourth-pass-review-20261117.md:L32** — [Tarihsel kaynak kaydı] - 9063 RIK SAT CYPRUS ve 15533 ANT1 CYPRUS: Güney Kıbrıs yayınları, KKTC yayını değil.
+- **v2/reports/turkic-fourth-pass-review-20261117.md:L34** — [Tarihsel kaynak kaydı] Güvenlik
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[0]** — [Tarihsel kaynak kaydı] 24
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[3]** — [Tarihsel kaynak kaydı] 360° (1080P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[4]** — [Tarihsel kaynak kaydı] 360° (1080P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[5]** — [Tarihsel kaynak kaydı] 360° NEWS (1080P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[6]** — [Tarihsel kaynak kaydı] 360 RFTV (576P) [GEO-BLOCKED]
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[7]** — [Tarihsel kaynak kaydı] A2
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[8]** — [Tarihsel kaynak kaydı] A2 CNN
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[9]** — [Tarihsel kaynak kaydı] ACTUALIDAD 360
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[10]** — [Tarihsel kaynak kaydı] ACTUALIDAD 360
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[11]** — [Tarihsel kaynak kaydı] ACTUALIDAD 360 (1080P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[12]** — [Tarihsel kaynak kaydı] ADA TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[13]** — [Tarihsel kaynak kaydı] ADA TV (720P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[14]** — [Tarihsel kaynak kaydı] ADA TV (720P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[15]** — [Tarihsel kaynak kaydı] ADDICTATV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[16]** — [Tarihsel kaynak kaydı] ADDICTATV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[17]** — [Tarihsel kaynak kaydı] ADDICTATV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[18]** — [Tarihsel kaynak kaydı] AKSU TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[19]** — [Tarihsel kaynak kaydı] AKSU TV  KAHRAMANMARAŞ
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[20]** — [Tarihsel kaynak kaydı] ALANYA POSTA TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[21]** — [Tarihsel kaynak kaydı] AL IRAQIA SPORT (720P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[22]** — [Tarihsel kaynak kaydı] ALTERNATV (720P) [NOT 24/7]
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[23]** — [Tarihsel kaynak kaydı] ANADOLU NET TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[24]** — [Tarihsel kaynak kaydı] ANADOLU NET TV  KAYSERİ
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[25]** — [Tarihsel kaynak kaydı] ARADANA TV (576P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[26]** — [Tarihsel kaynak kaydı] ARAS TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[27]** — [Tarihsel kaynak kaydı] ARAS TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[28]** — [Tarihsel kaynak kaydı] ARAS TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[29]** — [Tarihsel kaynak kaydı] ARENA SPORT 1
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[30]** — [Tarihsel kaynak kaydı] ARENA SPORT 2
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[31]** — [Tarihsel kaynak kaydı] A SPORT
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[32]** — [Tarihsel kaynak kaydı] AS TV  BURSA
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[33]** — [Tarihsel kaynak kaydı] ATVSAT (1080P) [NOT 24/7]
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[37]** — [Tarihsel kaynak kaydı] BEGEN TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[38]** — [Tarihsel kaynak kaydı] BEIN IZ TV HD
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[39]** — [Tarihsel kaynak kaydı] BELEMTÜRK
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[43]** — [Tarihsel kaynak kaydı] BLOOMBERG HT  HABER
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[44]** — [Tarihsel kaynak kaydı] BRTV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[45]** — [Tarihsel kaynak kaydı] BRTV (INDONESIA) (720P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[46]** — [Tarihsel kaynak kaydı] BURSA LINE TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[47]** — [Tarihsel kaynak kaydı] CANAL+ 360 (576I)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[48]** — [Tarihsel kaynak kaydı] CATVE2 (720P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[49]** — [Tarihsel kaynak kaydı] CATVE MASTER TV (720P) [NOT 24/7]
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[50]** — [Tarihsel kaynak kaydı] CATV (1080P) [NOT 24/7]
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[51]** — [Tarihsel kaynak kaydı] CAY TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[52]** — [Tarihsel kaynak kaydı] CAY TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[53]** — [Tarihsel kaynak kaydı] CAY TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[54]** — [Tarihsel kaynak kaydı] CINE+
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[55]** — [Tarihsel kaynak kaydı] CINE 1
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[56]** — [Tarihsel kaynak kaydı] CINE 1
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[57]** — [Tarihsel kaynak kaydı] CNBC-E
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[58]** — [Tarihsel kaynak kaydı] CNBC-E
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[59]** — [Tarihsel kaynak kaydı] COMBATV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[60]** — [Tarihsel kaynak kaydı] COMBATV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[61]** — [Tarihsel kaynak kaydı] CONSTANZATV (1080P) [NOT 24/7]
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[62]** — [Tarihsel kaynak kaydı] CREALATV (1080P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[63]** — [Tarihsel kaynak kaydı] CRIME 360 (720P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[64]** — [Tarihsel kaynak kaydı] DAYSTAR TV (1080P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[65]** — [Tarihsel kaynak kaydı] DAYSTAR TV ESPANOL (1080P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[66]** — [Tarihsel kaynak kaydı] DAYSTAR TV WSLF-LD (720P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[67]** — [Tarihsel kaynak kaydı] DELLATV (720P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[68]** — [Tarihsel kaynak kaydı] DELTATV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[69]** — [Tarihsel kaynak kaydı] DERIN TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[70]** — [Tarihsel kaynak kaydı] DHA CANLI
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[71]** — [Tarihsel kaynak kaydı] DIYANET TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[72]** — [Tarihsel kaynak kaydı] DIYAR TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[73]** — [Tarihsel kaynak kaydı] DOST TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[74]** — [Tarihsel kaynak kaydı] DOST TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[75]** — [Tarihsel kaynak kaydı] D�ZG�N TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[76]** — [Tarihsel kaynak kaydı] EDESSA TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[77]** — [Tarihsel kaynak kaydı] EDIRNE TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[78]** — [Tarihsel kaynak kaydı] EKOL SPORTS
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[79]** — [Tarihsel kaynak kaydı] EKOL SPORTS
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[80]** — [Tarihsel kaynak kaydı] EKOL TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[81]** — [Tarihsel kaynak kaydı] EKOTURK
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[82]** — [Tarihsel kaynak kaydı] EL TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[83]** — [Tarihsel kaynak kaydı] EL TV (360P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[84]** — [Tarihsel kaynak kaydı] ERCİŞ TV  VAN
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[85]** — [Tarihsel kaynak kaydı] ERZURUM WEB TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[86]** — [Tarihsel kaynak kaydı] ESENLER SEHIR EKRANI
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[87]** — [Tarihsel kaynak kaydı] ES TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[88]** — [Tarihsel kaynak kaydı] ES TV  ESKİŞEHİR
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[89]** — [Tarihsel kaynak kaydı] ETV  KAYSERİ
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[90]** — [Tarihsel kaynak kaydı] ETV KAYSERI
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[91]** — [Tarihsel kaynak kaydı] FARMODATV (1080P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[92]** — [Tarihsel kaynak kaydı] FINANS TURK TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[93]** — [Tarihsel kaynak kaydı] GRP VERATV (576P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[94]** — [Tarihsel kaynak kaydı] GRT GAZİANTEP TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[95]** — [Tarihsel kaynak kaydı] GRT TV  GAZİANTEP
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[96]** — [Tarihsel kaynak kaydı] GURBET 24 TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[97]** — [Tarihsel kaynak kaydı] HABER 61
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[98]** — [Tarihsel kaynak kaydı] HABER 61 TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[99]** — [Tarihsel kaynak kaydı] HABER61 TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[100]** — [Tarihsel kaynak kaydı] Haber61 TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[101]** — [Tarihsel kaynak kaydı] HABER GLOBAL
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[102]** — [Tarihsel kaynak kaydı] HRT AKDENIZ
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[103]** — [Tarihsel kaynak kaydı] HTSPOR TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[104]** — [Tarihsel kaynak kaydı] HUNAT TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[105]** — [Tarihsel kaynak kaydı] HUNAT TV  KAYSERİ
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[106]** — [Tarihsel kaynak kaydı] ICEL TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[107]** — [Tarihsel kaynak kaydı] ICEL TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[108]** — [Tarihsel kaynak kaydı] ILKE TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[109]** — [Tarihsel kaynak kaydı] İZMİR TIME 35 TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[137]** — [Tarihsel kaynak kaydı] KARADENIZ TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[138]** — [Tarihsel kaynak kaydı] KARADENIZ TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[139]** — [Tarihsel kaynak kaydı] KAY TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[140]** — [Tarihsel kaynak kaydı] KAY TV  KAYSERİ
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[141]** — [Tarihsel kaynak kaydı] KENT TURK
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[142]** — [Tarihsel kaynak kaydı] KENT TÜRK TV  KAYSERİ
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[143]** — [Tarihsel kaynak kaydı] KIBRIS TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[144]** — [Tarihsel kaynak kaydı] KN MUSIC TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[145]** — [Tarihsel kaynak kaydı] KOCAELI TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[146]** — [Tarihsel kaynak kaydı] KOCAELI TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[147]** — [Tarihsel kaynak kaydı] KONYA OLAY TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[148]** — [Tarihsel kaynak kaydı] KONYA OLAY TV  KONYA
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[149]** — [Tarihsel kaynak kaydı] LA CASA DE PAPEL-TR S03 LA CASA DE PAPEL S03E01 1080P NF DUAL [TR-SPA] WEB-DL DDP5.1 H264 - TURG
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[150]** — [Tarihsel kaynak kaydı] LA CASA DE PAPEL-TR S03 LA CASA DE PAPEL S03E02 1080P NF DUAL [TR-SPA] WEB-DL DDP5.1 H264 - TURG
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[151]** — [Tarihsel kaynak kaydı] LA CASA DE PAPEL-TR S03 LA CASA DE PAPEL S03E03 1080P NF DUAL [TR-SPA] WEB-DL DDP5.1 H264 - TURG
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[152]** — [Tarihsel kaynak kaydı] LA CASA DE PAPEL-TR S03 LA CASA DE PAPEL S03E04 1080P NF DUAL [TR-SPA] WEB-DL DDP5.1 H264 - TURG
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[153]** — [Tarihsel kaynak kaydı] LA CASA DE PAPEL-TR S03 LA CASA DE PAPEL S03E05 1080P NF DUAL [TR-SPA] WEB-DL DDP5.1 H264 - TURG
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[154]** — [Tarihsel kaynak kaydı] LA CASA DE PAPEL-TR S03 LA CASA DE PAPEL S03E06 1080P NF DUAL [TR-SPA] WEB-DL DDP5.1 H264 - TURG
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[155]** — [Tarihsel kaynak kaydı] LA CASA DE PAPEL-TR S03 LA CASA DE PAPEL S03E07 1080P NF DUAL [TR-SPA] WEB-DL DDP5.1 H264 - TURG
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[156]** — [Tarihsel kaynak kaydı] LA CASA DE PAPEL-TR S03 LA CASA DE PAPEL S03E08 1080P NF DUAL [TR-SPA] WEB-DL DDP5.1 H264 - TURG
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[157]** — [Tarihsel kaynak kaydı] LALEGUL TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[158]** — [Tarihsel kaynak kaydı] LATACUNGATV (360P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[159]** — [Tarihsel kaynak kaydı] LATV (1080P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[160]** — [Tarihsel kaynak kaydı] LATV (1080P) [GEO-BLOCKED]
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[161]** — [Tarihsel kaynak kaydı] LIRATV (720P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[162]** — [Tarihsel kaynak kaydı] MAVIKARADENIZ TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[163]** — [Tarihsel kaynak kaydı] MED MUZIK
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[164]** — [Tarihsel kaynak kaydı] MEDYAHABER TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[165]** — [Tarihsel kaynak kaydı] MELTEM TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[166]** — [Tarihsel kaynak kaydı] MELTEM TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[167]** — [Tarihsel kaynak kaydı] MERCAN TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[168]** — [Tarihsel kaynak kaydı] MERCAN TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[169]** — [Tarihsel kaynak kaydı] MERCAN TV  ADIYAMAN
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[170]** — [Tarihsel kaynak kaydı] MINIKAGO
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[171]** — [Tarihsel kaynak kaydı] MR  ROBOT TR S01 MR.ROBOT.S01E01
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[172]** — [Tarihsel kaynak kaydı] MR  ROBOT TR S01 MR.ROBOT.S01E02
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[173]** — [Tarihsel kaynak kaydı] MR  ROBOT TR S01 MR.ROBOT.S01E03
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[174]** — [Tarihsel kaynak kaydı] MR  ROBOT TR S01 MR.ROBOT.S01E04
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[175]** — [Tarihsel kaynak kaydı] MR  ROBOT TR S01 MR.ROBOT.S01E05
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[176]** — [Tarihsel kaynak kaydı] MR  ROBOT TR S01 MR.ROBOT.S01E06
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[177]** — [Tarihsel kaynak kaydı] MR  ROBOT TR S01 MR.ROBOT.S01E07
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[178]** — [Tarihsel kaynak kaydı] MR  ROBOT TR S01 MR.ROBOT.S01E08
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[179]** — [Tarihsel kaynak kaydı] MR  ROBOT TR S01 MR.ROBOT.S01E09
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[180]** — [Tarihsel kaynak kaydı] MR  ROBOT TR S01 MR.ROBOT.S01E10
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[181]** — [Tarihsel kaynak kaydı] MR  ROBOT TR S02 MR.ROBOT.S02E01.TR
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[182]** — [Tarihsel kaynak kaydı] MR  ROBOT TR S02 MR.ROBOT.S02E02.TR
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[183]** — [Tarihsel kaynak kaydı] MR  ROBOT TR S02 MR.ROBOT.S02E03.TR
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[184]** — [Tarihsel kaynak kaydı] MR  ROBOT TR S02 MR.ROBOT.S02E04.TR
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[185]** — [Tarihsel kaynak kaydı] MR  ROBOT TR S02 MR.ROBOT.S02E05.TR
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[186]** — [Tarihsel kaynak kaydı] MR  ROBOT TR S02 MR.ROBOT.S02E06
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[187]** — [Tarihsel kaynak kaydı] MR  ROBOT TR S02 MR.ROBOT.S02E07.TR
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[188]** — [Tarihsel kaynak kaydı] MR  ROBOT TR S02 MR.ROBOT.S02E08.TR
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[189]** — [Tarihsel kaynak kaydı] MR  ROBOT TR S02 MR.ROBOT.S02E09.TR
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[190]** — [Tarihsel kaynak kaydı] MR  ROBOT TR S02 MR.ROBOT.S02E10.TR
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[191]** — [Tarihsel kaynak kaydı] MR  ROBOT TR S02 MR.ROBOT.S02E11.TR
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[192]** — [Tarihsel kaynak kaydı] MR  ROBOT TR S02 MR.ROBOT.S02E12.TR
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[193]** — [Tarihsel kaynak kaydı] MR  ROBOT TR S03 MR.ROBOT.S03E01.TR
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[194]** — [Tarihsel kaynak kaydı] MR  ROBOT TR S03 MR.ROBOT.S03E02.TR
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[195]** — [Tarihsel kaynak kaydı] MR  ROBOT TR S03 MR.ROBOT.S03E03.TR
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[196]** — [Tarihsel kaynak kaydı] MR  ROBOT TR S03 MR.ROBOT.S03E04.TR
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[197]** — [Tarihsel kaynak kaydı] MR  ROBOT TR S03 MR.ROBOT.S03E05.TR.
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[198]** — [Tarihsel kaynak kaydı] MR  ROBOT TR S03 MR.ROBOT.S03E06.TR
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[199]** — [Tarihsel kaynak kaydı] MR  ROBOT TR S03 MR.ROBOT.S03E07.TR
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[200]** — [Tarihsel kaynak kaydı] MR  ROBOT TR S03 MR.ROBOT.S03E08.TR
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[201]** — [Tarihsel kaynak kaydı] MR  ROBOT TR S03 MR.ROBOT.S03E09.TR
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[202]** — [Tarihsel kaynak kaydı] MR  ROBOT TR S03 MR.ROBOT.S03E10.TR
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[203]** — [Tarihsel kaynak kaydı] MR  ROBOT TR S04 MR ROBOT S04E02
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[204]** — [Tarihsel kaynak kaydı] MR  ROBOT TR S04 MR ROBOT S04E04
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[205]** — [Tarihsel kaynak kaydı] NICOYATV (720P) [NOT 24/7]
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[206]** — [Tarihsel kaynak kaydı] NR 1 TURK
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[207]** — [Tarihsel kaynak kaydı] NR1 TURK TV HD
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[208]** — [Tarihsel kaynak kaydı] OLAY TÜRK KAYSERİ TV  KAYSERİ
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[209]** — [Tarihsel kaynak kaydı] OLAYTURK TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[210]** — [Tarihsel kaynak kaydı] PIURATV (720P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[211]** — [Tarihsel kaynak kaydı] POWER DANCE
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[212]** — [Tarihsel kaynak kaydı] POWER HD
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[213]** — [Tarihsel kaynak kaydı] POWER LOVE
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[214]** — [Tarihsel kaynak kaydı] POWERTURK AKUSTIK
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[215]** — [Tarihsel kaynak kaydı] POWERTURK SLOW
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[216]** — [Tarihsel kaynak kaydı] POWERTURK TAPTAZE
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[217]** — [Tarihsel kaynak kaydı] POWERTURK TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[218]** — [Tarihsel kaynak kaydı] POWER TV (720P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[219]** — [Tarihsel kaynak kaydı] POWER TV AKUSTIK
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[220]** — [Tarihsel kaynak kaydı] POWER TV (INDIA) (576P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[221]** — [Tarihsel kaynak kaydı] PRIMA SPORT CZECHIA
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[222]** — [Tarihsel kaynak kaydı] PROFI 24 TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[223]** — [Tarihsel kaynak kaydı] RADIOITALIATV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[224]** — [Tarihsel kaynak kaydı] RBATV (720P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[225]** — [Tarihsel kaynak kaydı] RIZE TÜRK  EKSTRA
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[226]** — [Tarihsel kaynak kaydı] RIZE TURK HD
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[227]** — [Tarihsel kaynak kaydı] RSELVATV (720P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[228]** — [Tarihsel kaynak kaydı] RSELVATV (720P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[229]** — [Tarihsel kaynak kaydı] RTRTV (1080P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[230]** — [Tarihsel kaynak kaydı] RUHA TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[231]** — [Tarihsel kaynak kaydı] RUHA TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[232]** — [Tarihsel kaynak kaydı] SDM TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[233]** — [Tarihsel kaynak kaydı] SERCEM TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[234]** — [Tarihsel kaynak kaydı] SETANTA SPORTS 1 EURASIA (1080P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[235]** — [Tarihsel kaynak kaydı] SETANTA SPORTS 2 EURASIA (1080P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[236]** — [Tarihsel kaynak kaydı] SHOW MAX
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[237]** — [Tarihsel kaynak kaydı] SHOW MAX (DIZI & SINEMA)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[238]** — [Tarihsel kaynak kaydı] SICILIA 24 TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[239]** — [Tarihsel kaynak kaydı] SIENATV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[240]** — [Tarihsel kaynak kaydı] SONMEZ TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[241]** — [Tarihsel kaynak kaydı] SONMEZ TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[242]** — [Tarihsel kaynak kaydı] SPEKTRATV (720P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[243]** — [Tarihsel kaynak kaydı] SPERANTATV (1080P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[244]** — [Tarihsel kaynak kaydı] STAR-TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[245]** — [Tarihsel kaynak kaydı] STREAMFORCE 360 (1080P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[246]** — [Tarihsel kaynak kaydı] TAPAHTUMATV EVEO
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[247]** — [Tarihsel kaynak kaydı] TATLISES
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[248]** — [Tarihsel kaynak kaydı] TATV (720P) [NOT 24/7]
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[249]** — [Tarihsel kaynak kaydı] TBMM TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[250]** — [Tarihsel kaynak kaydı] THE YOUNG TURKS (1080P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[251]** — [Tarihsel kaynak kaydı] THE YOUNG TURKS (720P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[252]** — [Tarihsel kaynak kaydı] TH TURK HABER TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[253]** — [Tarihsel kaynak kaydı] TOKAT TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[254]** — [Tarihsel kaynak kaydı] TURKHABER TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[255]** — [Tarihsel kaynak kaydı] TURKHABER TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[256]** — [Tarihsel kaynak kaydı] TURKMENISTAN (406P) [NOT 24/7]
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[257]** — [Tarihsel kaynak kaydı] TURKMENISTAN SPORT (406P) [NOT 24/7]
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[258]** — [Tarihsel kaynak kaydı] TURKMEN OWAZY (406P) [NOT 24/7]
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[259]** — [Tarihsel kaynak kaydı] TV 1  KAYSERİ
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[260]** — [Tarihsel kaynak kaydı] TV 264  SAKARYA
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[261]** — [Tarihsel kaynak kaydı] TV 4
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[262]** — [Tarihsel kaynak kaydı] TV4
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[263]** — [Tarihsel kaynak kaydı] TV4
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[264]** — [Tarihsel kaynak kaydı] TV9 BHARATVARSH (720P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[265]** — [Tarihsel kaynak kaydı] TV9 BHARATVARSH (720P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[266]** — [Tarihsel kaynak kaydı] TV DEN
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[267]** — [Tarihsel kaynak kaydı] TV DEN
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[268]** — [Tarihsel kaynak kaydı] UATV (1080P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[269]** — [Tarihsel kaynak kaydı] UATV (1080P) [NOT 24/7]
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[270]** — [Tarihsel kaynak kaydı] URFA NATIK TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[271]** — [Tarihsel kaynak kaydı] URFANATİK TV  ŞANLIUFRA
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[272]** — [Tarihsel kaynak kaydı] VALUE 24 TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[273]** — [Tarihsel kaynak kaydı] VAN 65 TV
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[274]** — [Tarihsel kaynak kaydı] VIYANA TV HD
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[275]** — [Tarihsel kaynak kaydı] ZAROK TV
+- **v2/reports/turkish-category-audit.json:$.policy** — [Tarihsel kaynak kaydı] Conservative automated moves; ambiguous Turkish entries remain for review.
+- **v2/reports/turkish-discovery.json:$.pending_count** — [Tarihsel kaynak kaydı] 68
+
 <!-- B-END -->
 
 ## C) Kanal Testi, Taşıma ve Kategori Düzenleme İşleri
@@ -2675,6 +3081,77 @@ The last 30x er
 - **v2/reports/pr391-logo-reconciliation-20261119.md:L21** — [Tarihsel kaynak kaydı] - #391: açık ve bloklu; bu rapor işi tamamlandı anlamına gelmez.
 - **v2/reports/source-inventory-change-log.md:L10** — [Tarihsel kaynak kaydı] - Protected playlists were not edited.
 
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L7** — [Tarihsel kaynak kaydı] **developer security implementation**, not an actual 18,074-channel scan or
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L8** — [Tarihsel kaynak kaydı] evidence that any real channel is playing.
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L34** — [Tarihsel kaynak kaydı] - Nested HLS/M3U8/DASH playlists, ffconcat scripts, HTML/text and unrecognized
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L40** — [Tarihsel kaynak kaydı] and IBO Player device proof.
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L52** — [Tarihsel kaynak kaydı] 685-channel retry, 18,074 full scan, archive transfer or playlist write
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L56** — [Tarihsel kaynak kaydı] Exactly one main IBO playlist is preserved, with no new playlist, no
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L57** — [Tarihsel kaynak kaydı] re-adding 48 quarantined channels, no restoring the obsolete first-1,003
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L58** — [Tarihsel kaynak kaydı] protection rule, no URL duplication and no changes to the user's channel
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L59** — [Tarihsel kaynak kaydı] categories. Existing IBO 2,500-channel device test cycle remains separate.
+- **v2/reports/stage4_historical_drive_restore_provenance_20261121.json:$.limitations[2]** — [Tarihsel kaynak kaydı] Live broadcaster language and IBO Player device acceptance remain open
+- **v2/reports/task15-historical-crosswalk-delta-20261118.json:$.scope** — [Tarihsel kaynak kaydı] Hash-only audit; no broadcaster authentication, plaintext URLs, or playlist changes
+- **v2/reports/task17-18-20-offline-operator-procedure-20261119.md:L1** — [Tarihsel kaynak kaydı] #17–18–20: mevcut kanıtların çevrimdışı işlenmesi (kanal araması YOK)
+- **v2/reports/task17-18-20-offline-operator-procedure-20261119.md:L3** — [Tarihsel kaynak kaydı] Bu işlem yeni kanal, kaynak veya yayın aramaz. İBO ana listesi ve arşivler değiştirilmez.
+- **v2/reports/task17-18-20-offline-operator-procedure-20261119.md:L6** — [Tarihsel kaynak kaydı] - 14 Kasım gerçek taramasının **orijinal** `ibo-scan-progress.enc` dosyasını [43608247496](https://github.com/Madsc55/MADSC55-TV-V2/actions/runs/43608247496) çalışmasının `v2-real-scan-evidence` artifact'inden güvenilir çalışma ortamına alın.
+- **v2/reports/task17-18-20-offline-operator-procedure-20261119.md:L15** — [Tarihsel kaynak kaydı] cp /secure/source/ibo-scan-progress.enc /tmp/v2-existing-evidence/ibo-scan-progress.enc
+- **v2/reports/task17-18-20-offline-operator-procedure-20261119.md:L16** — [Tarihsel kaynak kaydı] chmod 600 /tmp/v2-existing-evidence/ibo-scan-progress.enc
+- **v2/reports/task17-18-20-offline-operator-procedure-20261119.md:L18** — [Tarihsel kaynak kaydı] --checkpoint /tmp/v2-existing-evidence/ibo-scan-progress.enc \
+- **v2/reports/task17-18-20-offline-operator-procedure-20261119.md:L26** — [Tarihsel kaynak kaydı] Kanal araması için gelecekteki kural
+- **v2/reports/task17-18-20-secure-import-runbook-20261119.md:L6** — [Tarihsel kaynak kaydı] - Mevcut `v2/merge_bounded_retry_checkpoint.py` çevrimdışı bir araçtır; varsayılanı salt-okunur dry-run'dır. Gerçek anahtar ve kimliği doğrulanmış `ibo-scan-progress.enc` olmadan kabul yapılamaz.
+- **v2/reports/task17-18-20-secure-import-runbook-20261119.md:L9** — [Tarihsel kaynak kaydı] 1. Gerçek `ibo-scan-progress.enc` dosyasını onaylı ve erişim denetimli kaynaktan alın. Kaynağın beklenen artefaktı, özgün ZIP SHA-256 değerini ve içteki şifreli dosyanın SHA-256 değerini ayrı ayrı doğrulayın; başka kayıtla ikame etmeyin.
+- **v2/reports/task17-18-20-secure-import-runbook-20261119.md:L11** — [Tarihsel kaynak kaydı] 3. `python3 v2/merge_bounded_retry_checkpoint.py --checkpoint /secure/path/ibo-scan-progress.enc --report v2/reports/task17-18-20-bounded-retry-20261118.json` komutuyla **önce dry-run** yapın. `existing_rows`, `eligible_updates`, hata ve eşleşme sonuçlarını kontrol edin.
+- **v2/reports/task17-18-20-secure-import-runbook-20261119.md:L19** — [Tarihsel kaynak kaydı] - Yeni genel kanal taraması, otomatik yayıncı yazma işlemi, cron, playlist veya arşiv değişikliği yapmayın.
+- **v2/reports/task17-18-20-secure-import-runbook-20261119.md:L20** — [Tarihsel kaynak kaydı] - Ana İBO playlisti `MADSC55_TV_IBO_CALISANLAR_TEST.m3u8` değişmeden kalır.
+- **v2/reports/task17-18-av-resume-handoff-20261118.md:L10** — [Tarihsel kaynak kaydı] - 14 Kasım kapalı kurtarma kuyruğu: 20.148 satır; iki mevcut playlist ile **3.781 farklı SHA-256 URL kimliği** eşleşti. Önceki eylemler: CHECK_AV 689, RETRY 1.339, REVIEW 1.753.
+- **v2/reports/task17-18-av-resume-handoff-20261118.md:L23** — [Tarihsel kaynak kaydı] - `MADSC55_TV_IBO_CALISANLAR_TEST.m3u8` ana playlisti, YEDEKLER/ANA ARŞİV/TURK/YABANCI ayrımı ve 48 karantina kanalı.
+- **v2/reports/task17-18-av-resume-handoff-20261118.md:L24** — [Tarihsel kaynak kaydı] - Kanal taşıma ve 2.500'lük İBO Player test döngüsü bu AV kurtarma işinden ayrıdır.
+- **v2/reports/task17-18-av-resume-handoff-20261118.md:L28** — [Tarihsel kaynak kaydı] **#17 ve #18 açık.** Bu not bir canlı tarama sonucu değildir; geçmiş kanıtları koruyan, tekrar denemeyi önleyen operasyonel devirdir. Gerçek binlerce kanal taraması, şifreli checkpoint erişimi ve çalıştırılabilir GitHub Actions ortamında yapılmalıdır.
+- **v2/reports/task21-evidence-handoff-20261119.md:L4** — [Tarihsel kaynak kaydı] Bu belge mevcut kanıtların salt-okunur uzlaştırmasıdır; yeni kaynak taraması, AV testi, yayıncı kimliği onayı, üretim playlisti değişikliği veya görev kapanışı değildir. Kanonik görev durumu `v2/tasks/state.json` içinde **in_progress** kalır.
+- **v2/reports/task21-evidence-handoff-20261119.md:L17** — [Tarihsel kaynak kaydı] 4. Resmî yayıncı sahipliği, tam kaynak URL kimliği, güncel FFmpeg görüntü+ses kanıtı ve EPG kesin ID kanıtını ayrı alanlarda değerlendir. Ad eşleşmesi, HTTP başarı kodu veya ffprobe metadata tek başına kabul değildir.
+- **v2/reports/turkic-fourth-pass-review-20261117.md:L1** — [Tarihsel kaynak kaydı] Türkî YEDEKLER dördüncü tarama — 17 Kasım 2026
+- **v2/reports/turkic-fourth-pass-review-20261117.md:L3** — [Tarihsel kaynak kaydı] Kaynak playlist blob: `dda1881e8884a9ded54cb44e0d7cd924967b1df1`.
+- **v2/reports/turkic-fourth-pass-review-20261117.md:L4** — [Tarihsel kaynak kaydı] 18.912 toplam EXTINF, 18.074 YEDEKLER. İlk 1003 kayıt korumalı.
+- **v2/reports/turkic-fourth-pass-review-20261117.md:L8** — [Tarihsel kaynak kaydı] - 2409 Kanal 7 Türknet (teknik test)
+- **v2/reports/turkic-third-pass-review-20261117.json:$.note** — [Tarihsel kaynak kaydı] This is a read-only audit; no channel reordering has been applied. The playlist contains non-EXTINF comment lines that must be preserved by any safe reorder. No stream AV verification performed.
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[1]** — [Tarihsel kaynak kaydı] 24 KANAL
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[2]** — [Tarihsel kaynak kaydı] 24 KANAL (720P)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[34]** — [Tarihsel kaynak kaydı] BATV EDUCATIONAL CHANNEL
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[35]** — [Tarihsel kaynak kaydı] BATV GOVERNMENT CHANNEL
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[36]** — [Tarihsel kaynak kaydı] BATV PUBLIC CHANNEL
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[40]** — [Tarihsel kaynak kaydı] BEST OF BATV CHANNEL
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[41]** — [Tarihsel kaynak kaydı] BI KANAL
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[42]** — [Tarihsel kaynak kaydı] BI KANAL
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[110]** — [Tarihsel kaynak kaydı] KANAL 12
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[111]** — [Tarihsel kaynak kaydı] KANAL 15
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[112]** — [Tarihsel kaynak kaydı] KANAL 19
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[113]** — [Tarihsel kaynak kaydı] KANAL 19
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[114]** — [Tarihsel kaynak kaydı] KANAL 19
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[115]** — [Tarihsel kaynak kaydı] KANAL 23
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[116]** — [Tarihsel kaynak kaydı] KANAL 23 FHD
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[117]** — [Tarihsel kaynak kaydı] KANAL 26
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[118]** — [Tarihsel kaynak kaydı] KANAL 3
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[119]** — [Tarihsel kaynak kaydı] KANAL 32  ISPARTA
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[120]** — [Tarihsel kaynak kaydı] KANAL 34
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[121]** — [Tarihsel kaynak kaydı] KANAL 34
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[122]** — [Tarihsel kaynak kaydı] KANAL 34
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[123]** — [Tarihsel kaynak kaydı] KANAL 3  AFYONKARAHİSAR
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[124]** — [Tarihsel kaynak kaydı] KANAL 53
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[125]** — [Tarihsel kaynak kaydı] KANAL 58
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[126]** — [Tarihsel kaynak kaydı] KANAL 5 Ⓢ Ⓖ
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[127]** — [Tarihsel kaynak kaydı] KANAL AVRUPA
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[128]** — [Tarihsel kaynak kaydı] KANAL D2 (1080I)
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[129]** — [Tarihsel kaynak kaydı] KANAL FIRAT
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[130]** — [Tarihsel kaynak kaydı] KANAL FIRAT  ELAZIĞ
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[131]** — [Tarihsel kaynak kaydı] KANAL PLUS
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[132]** — [Tarihsel kaynak kaydı] KANAL PLUS
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[133]** — [Tarihsel kaynak kaydı] KANAL URFA
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[134]** — [Tarihsel kaynak kaydı] KANAL URFA
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[135]** — [Tarihsel kaynak kaydı] KANAL URFA  ŞANLIUFRA
+- **v2/reports/turkish-category-audit.json:$.ambiguous_in_turkish_needs_review[136]** — [Tarihsel kaynak kaydı] KANAL V
+- **v2/reports/turkish-live-probe.json:$.limitations** — [Tarihsel kaynak kaydı] Manifest accessibility is not proof of decodable video, Turkish language, rights or IBO compatibility
+
 <!-- C-END -->
 
 ## D) Açık Kalan GitHub Issue'ları ve Doğrulanmamış Maddeler
@@ -2802,6 +3279,11 @@ The last 30x er
 - **v2/reports/issue497-original-artifact-audit-20261121.json:$.stage6_read_only_retry_plan.playlist_write_allowed** — [Tarihsel kaynak kaydı] false
 - **v2/reports/issue497-original-artifact-audit-20261121.json:$.stage6_read_only_retry_plan.archive_write_allowed** — [Tarihsel kaynak kaydı] false
 
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L20** — [Tarihsel kaynak kaydı] verdict always remains unverified.
+- **v2/reports/stage4-pinned-dns-capture-20261121.md:L39** — [Tarihsel kaynak kaydı] - Keep `SAMPLE_CAPTURED_UNVERIFIED` separate from ASR/OCR, language approval
+- **v2/reports/stage4_historical_drive_restore_provenance_20261121.json:$.next_action** — [Tarihsel kaynak kaydı] Preserve Stage 4 historical acceptance; separately verify a real external backup and restore of the authorized Turkish vault under issue #6, then continue final live/device acceptance.
+- **v2/reports/task21-evidence-handoff-20261119.md:L23** — [Tarihsel kaynak kaydı] **Açık / kanıt bekliyor.** Özellikle sağlayıcı keşfi, YouTube canlı metadata, doğrudan HLS ve bağımsız yayıncı doğrulaması tamamlanmadı. Bu belge canlı tarama başlatmaz ve 103/103 sayısını küresel kaynak tamamlanması olarak sunmaz.
+
 <!-- D-END -->
 
 ### Dosya tarama fihristi ve kapsam denetimi
@@ -2904,4 +3386,20 @@ Her satırda snapshot/PR referansı, kaynak, okuma sonucu ve çıkarılan kayıt
 - main `v2/reports/package-artifact-independent-audit-20261119.md` — OK; 1981/1981 bayt, 11 not/durum kaydı; blob `98e2b3ac24d4855adfcf1e99293ce1c51661ed26`.
 - main `v2/reports/pr391-logo-reconciliation-20261119.md` — OK; 2217/2217 bayt, 18 not/durum kaydı; blob `fe4c0dfa5140280906914438f760255faa6cbad3`.
 - main `v2/reports/source-inventory-change-log.md` — OK; 293/293 bayt, 8 not/durum kaydı; blob `a8286f188e559c4e3d4cfe896f86b2796f998387`.
+- main `v2/reports/stage4-pinned-dns-capture-20261121.md` — OK; 3573/3573 bayt, 58 not/durum kaydı; blob `a0b2ab25586397414fdb25968beaa223a60d8a6d`.
+- main `v2/reports/stage4_historical_drive_restore_provenance_20261121.json` — OK; 2574/2574 bayt, 9 not/durum kaydı; blob `64aa6aaeea344718b5127f1c92e2cf0aa5cc6920`.
+- main `v2/reports/task15-historical-crosswalk-delta-20261118.json` — OK; 1597/1597 bayt, 5 not/durum kaydı; blob `e24712add238f44970c123049e8ac632a427b003`.
+- main `v2/reports/task15-historical-url-hash-recovery-20261118.json` — OK; 12192/12192 bayt, 3 not/durum kaydı; blob `3e781ba9628d353b0e280cc4290bec07fe4871d2`.
+- main `v2/reports/task17-18-20-already-attempted-exclusion-20261118.json` — OK; 5159/5159 bayt, 1 not/durum kaydı; blob `3e204621c37c5700636cfba2f0ab610ff7013578`.
+- main `v2/reports/task17-18-20-bounded-retry-20261118.json` — OK; 14083/14083 bayt, 4 not/durum kaydı; blob `542c9eb0671ab93914415ecc408b6876bb6bf052`.
+- main `v2/reports/task17-18-20-offline-operator-procedure-20261119.md` — OK; 2051/2051 bayt, 18 not/durum kaydı; blob `970f74ab71c35cb2a382502ee9c0dd9d2619bafe`.
+- main `v2/reports/task17-18-20-secure-import-runbook-20261119.md` — OK; 3482/3482 bayt, 21 not/durum kaydı; blob `ad4dba90a257bc0b238f3d026cf98b345e0ccb78`.
+- main `v2/reports/task17-18-av-resume-handoff-20261118.md` — OK; 2986/2986 bayt, 20 not/durum kaydı; blob `7d691a9defafac410f0716640e264c91f75c6bf6`.
+- main `v2/reports/task19-current-xmltv-20261119.json` — OK; 9527/9527 bayt, 11 not/durum kaydı; blob `4e784f3e9e198600bfb561b673be109fa5045b58`.
+- main `v2/reports/task21-evidence-handoff-20261119.md` — OK; 3049/3049 bayt, 19 not/durum kaydı; blob `c7a9049a08ed972e77c8e4f31d4aef452297c56a`.
+- main `v2/reports/turkic-fourth-pass-review-20261117.md` — OK; 1994/1994 bayt, 29 not/durum kaydı; blob `1290bd0fe2cd43bbdcd0af44e05e976916b7139a`.
+- main `v2/reports/turkic-third-pass-review-20261117.json` — OK; 1210/1210 bayt, 1 not/durum kaydı; blob `5453dcb582ea2512f06e84a50e9e5ff23df5a9c1`.
+- main `v2/reports/turkish-category-audit.json` — OK; 11243/11243 bayt, 277 not/durum kaydı; blob `9c2af20c9db989ad0b1c8e1589adcac162ea1f52`.
+- main `v2/reports/turkish-discovery.json` — OK; 18886/18886 bayt, 1 not/durum kaydı; blob `8f2a66378cca550f5cacdd83344665a8be5cd92e`.
+- main `v2/reports/turkish-live-probe.json` — OK; 16832/16832 bayt, 1 not/durum kaydı; blob `522188f6aeac2bbdf200fae5fc1e9f3e9ffe0592`.
 <!-- COVERAGE-END -->
