@@ -28,12 +28,13 @@ def turkic_hint(record):
     return next((label for label,pattern in patterns if re.search(pattern,text)), "Belirsiz/diğer")
 
 def inventory(raw, scope="nonforeign"):
-    if scope not in ("nonforeign","yedekler"):
+    if scope not in ("nonforeign","yedekler","foreign"):
         raise ValueError("Unknown audit scope")
     rows=[]
     for pos, record in enumerate(split_records(raw)[1],1):
         group=category(record)
-        if "YABANCI ARŞİV" in group.upper():
+        is_foreign = bool(re.fullmatch(r"YABANCI ARŞİVİ(?: \(\d+\))?", group))
+        if (scope == "foreign") != is_foreign:
             continue
         if scope=="yedekler" and not re.fullmatch(r"(?:🗂️?\s*)?YEDEKLER(?: \(\d+\))?",group):
             continue
@@ -41,7 +42,7 @@ def inventory(raw, scope="nonforeign"):
         rows.append({"position":pos,"category":group,"record_sha256":sha(record),
                      "url_sha256":sha(urls[0]) if len(urls)==1 else None,
                      "url":urls[0].decode("utf-8") if len(urls)==1 else None,
-                     **({"turkic_metadata_hint":turkic_hint(record)} if scope=="yedekler" else {})})
+                     **({"turkic_metadata_hint":turkic_hint(record)} if scope in ("yedekler","foreign") else {})})
     if not rows:
         raise ValueError("Empty audit scope")
     return rows
@@ -87,7 +88,7 @@ def history_index(paths):
                     playable.add(row["url_sha256"])
     return playable
 
-def review(row,exe,history):
+def review(row,exe,history,language_probe=None):
     out={k:v for k,v in row.items() if k!="url"}
     historical=row["url_sha256"] in history
     rounds=[]
@@ -95,7 +96,7 @@ def review(row,exe,history):
         if i:
             time.sleep(RETRY_GAP)
         started=time.time()
-        evidence=(inspect(row["url"],exe,variant_index=i,timeout=STARTUP_TIMEOUT,seconds=60,profile=i)
+        evidence=(inspect(row["url"],exe,variant_index=i,timeout=STARTUP_TIMEOUT,seconds=60,profile=i,**({'language_probe':language_probe} if language_probe else {}))
                   if row["url"] is not None else
                   [{"status":"INVALID_URL","video":False,"audio":False,"startup_seconds":None}])
         startup=next((e["startup_seconds"] for e in evidence if e.get("startup_seconds") is not None),None)

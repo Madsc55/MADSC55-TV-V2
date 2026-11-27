@@ -102,6 +102,16 @@ B33 / A17 için depodaki XMLTV dosyasının tamamı okundu. 164 rehber kimliğin
 
 23 Kasım için toplam fark 101 kayıttır. Hangi yayınların cihazda görünmediğini belirlemek için oynatıcıdan kanal adları veya içe aktarma günlüğü gerekiyor. Güncel dosya için yeni cihaz sayımı bekleniyor.
 
+## 27 Kasım 2026 — YABANCI ARŞİVİ otomatik denetim (PR önerisi)
+
+- 15.940 kayıt, 25 kayıt/paket, 638 paket; tur başına en fazla 20 paket, dört paralel iş. 180 sn başlangıç, 60 sn AV, üç tur; yerel ASR/OCR/WebVTT ipuçları, kimlik onayı değildir.
+- Ana playlist salt okunur; checkpoint artifact 90 günlük saklama sınırına tabidir, mutlak kalıcılık değildir. Push ve saatlik schedule önerisi mevcut güvenlik kapısının cron yasağına tabidir; kapı değişmeden canlı kabul yok. Sıralama motoru bağımsız kimlik kanıtı gerektirir; otomatik yayınlama yok. CI ve gerçek çalışma henüz doğrulanmadı.
+
+### PR #800 düzeltmesi — izinli CI entegrasyonu
+
+- Yeni workflow dosyası ve cron kaldırıldı. Mevcut Offline CI içinde yalnız main dalında `[foreign-archive-deep]` etiketli push veya mevcut workflow_dispatch ile 20 paketlik denetim turu başlar. Salt okunur izinler korunur; sıradaki tur yeni yetkili tetikleme gerektirir, kendi kendine zamanlanmaz.
+- Sıralama motoru bağımsız doğrulanmış yayın kimliği ve tam rapor olmadan değişiklik üretmez. Otomatik main yazımı yok; yayınlama için ayrı SHA-bağlı onaylı PR ve CI gerekir. ASR/OCR/WebVTT gözlemleri ipucudur. Artifact 90 gün süreli, şifreli kalıcı arşiv kabulü değildir.
+
 ## A) Kullanıcı Tarafından Kaydettirilmiş Özel Notlar ve İstekler
 
 ### Güncel uygulama kuralları ve ayrı kullanıcı kararları

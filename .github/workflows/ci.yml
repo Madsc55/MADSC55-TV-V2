@@ -44,6 +44,8 @@ jobs:
       - name: Run full offline regression suite
         if: steps.move_scope.outputs.eligible != 'true'
         run: make run
+      - name: Verify foreign archive offline batch and checkpoint
+        run: PYTHONPATH=v2:. python -m unittest v2.test_foreign_archive_batch
       - name: Verify deep AV decision lock
         run: PYTHONPATH=v2 python -m unittest v2.test_nonforeign_deep_av
       - name: Verify system FFmpeg quality fixtures before merge
@@ -926,4 +928,100 @@ jobs:
           path: /tmp/fresh-summary.json
           if-no-files-found: error
           retention-days: 30
+
+  foreign-archive-plan:
+    if: github.ref == 'refs/heads/main' && ((github.event_name == 'push' && contains(github.event.head_commit.message, '[foreign-archive-deep]')) || github.event_name == 'workflow_dispatch')
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      actions: read
+    concurrency:
+      group: foreign-archive-plan-main
+      cancel-in-progress: false
+    outputs:
+      matrix: ${{ steps.plan.outputs.matrix }}
+      revision: ${{ steps.plan.outputs.revision }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Restore checkpoints from preceding trusted main runs
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p /tmp/foreign-state
+          revision=$(sha256sum MADSC55_TV_IBO_CALISANLAR_TEST.m3u8 | cut -d' ' -f1)
+          gh api --paginate "repos/$GITHUB_REPOSITORY/actions/artifacts?per_page=100" --jq '.artifacts[] | select(.expired == false and .workflow_run.head_branch == "main") | [.name,.id] | @tsv' > /tmp/foreign-artifacts.tsv
+          while IFS=$'\t' read -r name id; do
+            if [[ "$name" =~ ^foreign-${revision}-([0-9]+)-[0-9]+-[0-9]+$ ]]; then
+              n="${BASH_REMATCH[1]}"
+              [[ "$n" -lt 638 ]] || continue
+              [[ ! -f "/tmp/foreign-state/batch-$n.json" ]] || continue
+              gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/$id/zip" > /tmp/foreign-one.zip
+              unzip -p /tmp/foreign-one.zip "batch-$n.json" > "/tmp/foreign-state/batch-$n.json"
+            fi
+          done < /tmp/foreign-artifacts.tsv
+      - id: plan
+        run: |
+          echo "matrix=$(PYTHONPATH=v2:. python v2/foreign_archive_plan.py --root /tmp/foreign-state)" >> "$GITHUB_OUTPUT"
+          echo "revision=$(sha256sum MADSC55_TV_IBO_CALISANLAR_TEST.m3u8 | cut -d' ' -f1)" >> "$GITHUB_OUTPUT"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: foreign-plan-${{ github.run_id }}
+          path: /tmp/foreign-state/
+          retention-days: 90
+          if-no-files-found: ignore
+  foreign-archive-audit:
+    needs: foreign-archive-plan
+    if: needs.foreign-archive-plan.outputs.matrix != '[]'
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      actions: read
+    concurrency:
+      group: foreign-archive-batch-${{ matrix.batch }}
+      cancel-in-progress: false
+    timeout-minutes: 350
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        batch: ${{ fromJSON(needs.foreign-archive-plan.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg tesseract-ocr tesseract-ocr-tur
+          python -m pip install faster-whisper==1.1.1
+          python -c "from faster_whisper import WhisperModel; WhisperModel('tiny',device='cpu',compute_type='int8')"
+      - uses: actions/download-artifact@v4
+        continue-on-error: true
+        with:
+          name: foreign-plan-${{ github.run_id }}
+          path: /tmp/foreign-state
+      - name: Run bounded read-only batch
+        env:
+          BATCH: ${{ matrix.batch }}
+        run: |
+          mkdir -p /tmp/foreign-state
+          file="/tmp/foreign-state/batch-$BATCH.json"
+          args=()
+          if [[ -f "$file" ]]; then args=(--resume "$file"); fi
+          PYTHONPATH=v2:. python v2/foreign_archive_batch.py --batch "$BATCH" --output "$file" "${args[@]}"
+          test "$(sha256sum MADSC55_TV_IBO_CALISANLAR_TEST.m3u8 | cut -d' ' -f1)" = "${{ needs.foreign-archive-plan.outputs.revision }}"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: foreign-${{ needs.foreign-archive-plan.outputs.revision }}-${{ matrix.batch }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: /tmp/foreign-state/batch-${{ matrix.batch }}.json
+          retention-days: 90
+          if-no-files-found: error
 

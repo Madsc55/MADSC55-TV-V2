@@ -184,7 +184,7 @@ def quality(data,fmt,exe,seconds=20):
             "video":v,"audio":a,"video_seconds":vspan,"audio_seconds":aspan,
             "quality_flags":flags,"full_sample":full,"decoder_returncode":r.returncode}
 
-def inspect(url,exe,*,variant_index=0,timeout=8,seconds=20,profile=0):
+def inspect(url,exe,*,variant_index=0,timeout=8,seconds=20,profile=0,language_probe=None):
     attempts=[]
     calls=0
     budget=MAX_BYTES*(3 if seconds==60 else 1)
@@ -218,6 +218,8 @@ def inspect(url,exe,*,variant_index=0,timeout=8,seconds=20,profile=0):
             if observation is not None:
                 observation.observe(data,fmt,force=True)
             attempts.append(quality(data,fmt,exe,seconds))
+            if language_probe and attempts[-1].get('video'):
+                attempts[-1]['language_review']=language_probe(data,fmt)
             return
         lines,uris=parse_manifest(data)
         if any(x.startswith("#EXT-X-STREAM-INF:") for x in lines):
@@ -251,7 +253,11 @@ def inspect(url,exe,*,variant_index=0,timeout=8,seconds=20,profile=0):
                 attempts.append({"status":str(e),"video":False,"audio":False})
                 break
         if segments:
-            attempts.append(quality(init+b"".join(segments),"mov" if init else "mpegts",exe,seconds))
+            media=init+b"".join(segments)
+            fmt="mov" if init else "mpegts"
+            attempts.append(quality(media,fmt,exe,seconds))
+            if language_probe and attempts[-1].get("video"):
+                attempts[-1]["language_review"]=language_probe(media,fmt)
     try:
         data,final=get(url,limit=MAX_BYTES*(3 if seconds==60 else 1),root=True,on_chunk=direct_probe)
         visit(data,final)
