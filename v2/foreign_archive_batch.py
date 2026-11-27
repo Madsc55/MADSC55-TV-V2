@@ -48,6 +48,7 @@ def batch(raw, number, path, probe, resume=None, expected=EXPECTED):
 
 def main():
     p=argparse.ArgumentParser()
+    p.add_argument("--model-dir",type=Path,help="Verified local Whisper model directory")
     p.add_argument("--batch",type=int,required=True)
     p.add_argument("--output",type=Path,required=True)
     p.add_argument("--resume",type=Path)
@@ -60,7 +61,7 @@ def main():
     history=history_index(a.history)
     from faster_whisper import WhisperModel
     from foreign_language_sample import sample
-    model=WhisperModel("tiny",device="cpu",compute_type="int8",local_files_only=True)
+    model=WhisperModel(str(a.model_dir) if a.model_dir else "tiny",device="cpu",compute_type="int8",local_files_only=True)
     language_probe=lambda data,fmt:sample(data,fmt,exe,model)
     def probe(row):
         result=review(row,exe,history,language_probe)

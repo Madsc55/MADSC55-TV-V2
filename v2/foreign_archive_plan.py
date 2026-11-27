@@ -4,7 +4,7 @@ from pathlib import Path
 from foreign_archive_batch import EXPECTED,BATCH_SIZE,digest
 from yedekler_deep_review import PLAYLIST
 
-def next_group(root, revision):
+def pending_batches(root, revision):
     total=(EXPECTED+BATCH_SIZE-1)//BATCH_SIZE
     missing=[]
     for i in range(total):
@@ -16,10 +16,22 @@ def next_group(root, revision):
             if x.get("complete") is True and len(x.get("results",[]))==min(BATCH_SIZE,EXPECTED-i*BATCH_SIZE):
                 continue
         missing.append(i)
-    return missing[:20]
+    return missing
+
+def next_group(root, revision):
+    return pending_batches(root, revision)[:20]
 
 if __name__=="__main__":
     p=argparse.ArgumentParser()
     p.add_argument("--root",type=Path,required=True)
+    p.add_argument("--queue-output",type=Path)
     a=p.parse_args()
-    print(json.dumps(next_group(a.root,digest(PLAYLIST.read_bytes()))))
+    revision=digest(PLAYLIST.read_bytes())
+    pending=pending_batches(a.root,revision)
+    if a.queue_output:
+        from full_playlist_url_audit import write_json_atomic
+        write_json_atomic(a.queue_output, {
+            "playlist_sha256":revision,"records":EXPECTED,"batch_size":BATCH_SIZE,
+            "total_batches":(EXPECTED+BATCH_SIZE-1)//BATCH_SIZE,
+            "pending_batches":pending,"current_wave":pending[:20],"max_parallel":4})
+    print(json.dumps(pending[:20]))
