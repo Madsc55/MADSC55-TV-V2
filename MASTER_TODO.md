@@ -16,6 +16,12 @@ Tarama kapsamı: main ağacındaki tüm .md/.txt/.json/.yml/.yaml dosyaları, a�
 
 
 
+- **.github/workflows/v2-main-production-safety-gate.yml:L39** — [Tarihsel yapılandırma kaydı] - name: Detect reviewed owner move-only change (fail closed)
+- **.github/workflows/v2-main-production-safety-gate.yml:L84** — [Tarihsel yapılandırma kaydı] # owner moves/reorders/copies may change counts; verify actual parts
+- **.github/workflows/v2-main-production-safety-gate.yml:L134** — [Tarihsel yapılandırma kaydı] - name: Build #497 preview from exact historical artifact (no scan, no playlist write)
+- **.github/workflows/v2-main-production-safety-gate.yml:L415** — [Tarihsel yapılandırma kaydı] - name: Turkish channel triage offline regression (no playlist writes)
+- **.github/workflows/v2-real-iptv-scan.yml:L149** — [Tarihsel yapılandırma kaydı] # successful core scan must not imply source-ownership/EPG/device
+
 <!-- A-END -->
 
 ## B) Yarım Kalmış / Beklemeye Alınmış Teknik ve Kurtarma İşleri
@@ -220,6 +226,203 @@ Tarama kapsamı: main ağacındaki tüm .md/.txt/.json/.yml/.yaml dosyaları, a�
 - **.github/workflows/v2-ibo-parity.yml:L20** — [Tarihsel yapılandırma kaydı] if: always()
 - **.github/workflows/v2-logo-backup.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
 
+- **.github/workflows/v2-main-production-safety-gate.yml:L1** — [Tarihsel yapılandırma kaydı] name: V2 Main Production Security Gate
+- **.github/workflows/v2-main-production-safety-gate.yml:L9** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/v2-main-production-safety-gate.yml:L12** — [Tarihsel yapılandırma kaydı] description: 'Read-only #34 diagnostic provider (all or one)'
+- **.github/workflows/v2-main-production-safety-gate.yml:L37** — [Tarihsel yapılandırma kaydı] - name: Install pinned YAML parser
+- **.github/workflows/v2-main-production-safety-gate.yml:L48** — [Tarihsel yapılandırma kaydı] # Run the eligibility verifier from the trusted BASE revision;
+- **.github/workflows/v2-main-production-safety-gate.yml:L49** — [Tarihsel yapılandırma kaydı] # workflow/code modifications always receive the FULL test suite.
+- **.github/workflows/v2-main-production-safety-gate.yml:L60** — [Tarihsel yapılandırma kaydı] - name: Grouped safety regression tests
+- **.github/workflows/v2-main-production-safety-gate.yml:L63** — [Tarihsel yapılandırma kaydı] if: steps.move_scope.outputs.eligible != 'true'
+- **.github/workflows/v2-main-production-safety-gate.yml:L67** — [Tarihsel yapılandırma kaydı] - name: Identify exact authorized 685 migration
+- **.github/workflows/v2-main-production-safety-gate.yml:L82** — [Tarihsel yapılandırma kaydı] # Once canonical SHA-bound parts are initialized, historical #497
+- **.github/workflows/v2-main-production-safety-gate.yml:L83** — [Tarihsel yapılandırma kaydı] # 1,792-backup reconciliation is no longer applicable. Authorized
+- **.github/workflows/v2-main-production-safety-gate.yml:L85** — [Tarihsel yapılandırma kaydı] # and category placement rather than initial fixed inventory.
+- **.github/workflows/v2-main-production-safety-gate.yml:L135** — [Tarihsel yapılandırma kaydı] if: ${{ steps.migration685.outputs.applied != 'true' }}
+- **.github/workflows/v2-main-production-safety-gate.yml:L159** — [Tarihsel yapılandırma kaydı] - name: Upload immutable #497 historical reconciliation preview
+- **.github/workflows/v2-main-production-safety-gate.yml:L160** — [Tarihsel yapılandırma kaydı] if: ${{ steps.migration685.outputs.applied != 'true' }}
+- **.github/workflows/v2-main-production-safety-gate.yml:L163** — [Tarihsel yapılandırma kaydı] name: v2-497-existing-audit-preview
+- **.github/workflows/v2-main-production-safety-gate.yml:L167** — [Tarihsel yapılandırma kaydı] - name: Generate SHA-bound 685 uncertain retry plan (offline; no network probes)
+- **.github/workflows/v2-main-production-safety-gate.yml:L168** — [Tarihsel yapılandırma kaydı] if: ${{ steps.migration685.outputs.applied != 'true' }}
+- **.github/workflows/v2-main-production-safety-gate.yml:L207** — [Tarihsel yapılandırma kaydı] - name: Publish 685 retry plan artifact on main only (read-only)
+- **.github/workflows/v2-main-production-safety-gate.yml:L208** — [Tarihsel yapılandırma kaydı] if: ${{ steps.migration685.outputs.applied != 'true' && github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+- **.github/workflows/v2-main-production-safety-gate.yml:L211** — [Tarihsel yapılandırma kaydı] name: v2-497-685-readonly-retry-plan
+- **.github/workflows/v2-main-production-safety-gate.yml:L215** — [Tarihsel yapılandırma kaydı] - name: Stage 5 historical worldwide URL hash crosswalk offline regression
+- **.github/workflows/v2-main-production-safety-gate.yml:L216** — [Tarihsel yapılandırma kaydı] if: steps.move_scope.outputs.eligible != 'true'
+- **.github/workflows/v2-main-production-safety-gate.yml:L220** — [Tarihsel yapılandırma kaydı] - name: Check Stage 5 historical inventory applicability
+- **.github/workflows/v2-main-production-safety-gate.yml:L221** — [Tarihsel yapılandırma kaydı] if: steps.move_scope.outputs.eligible != 'true'
+- **.github/workflows/v2-main-production-safety-gate.yml:L232** — [Tarihsel yapılandırma kaydı] - name: Build Stage 5 historical crosswalk from exact old artifact (no scan)
+- **.github/workflows/v2-main-production-safety-gate.yml:L233** — [Tarihsel yapılandırma kaydı] if: steps.stage5_inventory.outputs.historical == 'true'
+- **.github/workflows/v2-main-production-safety-gate.yml:L265** — [Tarihsel yapılandırma kaydı] - name: Upload Stage 5 unchanged historical hash crosswalk evidence
+- **.github/workflows/v2-main-production-safety-gate.yml:L266** — [Tarihsel yapılandırma kaydı] if: steps.stage5_inventory.outputs.historical == 'true'
+- **.github/workflows/v2-main-production-safety-gate.yml:L269** — [Tarihsel yapılandırma kaydı] name: v2-stage5-historical-worldwide-crosswalk
+- **.github/workflows/v2-main-production-safety-gate.yml:L273** — [Tarihsel yapılandırma kaydı] - name: Fail closed on changes to production trigger/write policy
+- **.github/workflows/v2-main-production-safety-gate.yml:L277** — [Tarihsel yapılandırma kaydı] - name: Historical task ledger integrity
+- **.github/workflows/v2-main-production-safety-gate.yml:L278** — [Tarihsel yapılandırma kaydı] if: steps.move_scope.outputs.eligible != 'true'
+- **.github/workflows/v2-main-production-safety-gate.yml:L280** — [Tarihsel yapılandırma kaydı] - name: Stage 2 identity recovery metadata integration acceptance
+- **.github/workflows/v2-main-production-safety-gate.yml:L281** — [Tarihsel yapılandırma kaydı] if: steps.move_scope.outputs.eligible != 'true'
+- **.github/workflows/v2-main-production-safety-gate.yml:L289** — [Tarihsel yapılandırma kaydı] - name: Stage 6 offline package and archive acceptance regressions
+- **.github/workflows/v2-main-production-safety-gate.yml:L290** — [Tarihsel yapılandırma kaydı] if: steps.move_scope.outputs.eligible != 'true'
+- **.github/workflows/v2-main-production-safety-gate.yml:L320** — [Tarihsel yapılandırma kaydı] if: steps.move_scope.outputs.eligible != 'true'
+- **.github/workflows/v2-main-production-safety-gate.yml:L329** — [Tarihsel yapılandırma kaydı] - name: Ensure FFmpeg is available for real local decoded-media regression
+- **.github/workflows/v2-main-production-safety-gate.yml:L330** — [Tarihsel yapılandırma kaydı] if: steps.move_scope.outputs.eligible != 'true'
+- **.github/workflows/v2-main-production-safety-gate.yml:L334** — [Tarihsel yapılandırma kaydı] # Ubuntu package mirrors previously timed out after 4+ minutes.
+- **.github/workflows/v2-main-production-safety-gate.yml:L335** — [Tarihsel yapılandırma kaydı] # Supply the COMPLETE local decoder from an immutable, SHA256-pinned
+- **.github/workflows/v2-main-production-safety-gate.yml:L336** — [Tarihsel yapılandırma kaydı] # GitHub release; never fetch a live stream in this setup.
+- **.github/workflows/v2-main-production-safety-gate.yml:L364** — [Tarihsel yapılandırma kaydı] # The real Turkish-caption fixture requires these exact features.
+- **.github/workflows/v2-main-production-safety-gate.yml:L369** — [Tarihsel yapılandırma kaydı] # Unlike large FFmpeg packages, the system OCR executable is a
+- **.github/workflows/v2-main-production-safety-gate.yml:L370** — [Tarihsel yapılandırma kaydı] # small targeted package. Never refresh apt indexes or block on
+- **.github/workflows/v2-main-production-safety-gate.yml:L371** — [Tarihsel yapılandırma kaydı] # hundreds of video codec dependencies.
+- **.github/workflows/v2-main-production-safety-gate.yml:L403** — [Tarihsel yapılandırma kaydı] if: steps.move_scope.outputs.eligible != 'true'
+- **.github/workflows/v2-main-production-safety-gate.yml:L409** — [Tarihsel yapılandırma kaydı] - name: Stage 5 evidence-gated export and final acceptance regressions
+- **.github/workflows/v2-main-production-safety-gate.yml:L410** — [Tarihsel yapılandırma kaydı] if: steps.move_scope.outputs.eligible != 'true'
+- **.github/workflows/v2-main-production-safety-gate.yml:L416** — [Tarihsel yapılandırma kaydı] if: steps.move_scope.outputs.eligible != 'true'
+- **.github/workflows/v2-main-production-safety-gate.yml:L432** — [Tarihsel yapılandırma kaydı] - name: Task 34 FFmpeg decoded audio/video regression (offline fixtures only)
+- **.github/workflows/v2-main-production-safety-gate.yml:L433** — [Tarihsel yapılandırma kaydı] if: steps.move_scope.outputs.eligible != 'true'
+- **.github/workflows/v2-main-production-safety-gate.yml:L437** — [Tarihsel yapılandırma kaydı] - name: Discovery 34 offline adapter and integration acceptance
+- **.github/workflows/v2-main-production-safety-gate.yml:L438** — [Tarihsel yapılandırma kaydı] if: steps.move_scope.outputs.eligible != 'true'
+- **.github/workflows/v2-main-production-safety-gate.yml:L447** — [Tarihsel yapılandırma kaydı] # The checked-in inputs are intentionally incomplete; preserve the partial report,
+- **.github/workflows/v2-main-production-safety-gate.yml:L448** — [Tarihsel yapılandırma kaydı] # and assert the CLI fails closed rather than treating missing sources as success.
+- **.github/workflows/v2-main-production-safety-gate.yml:L456** — [Tarihsel yapılandırma kaydı] if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '#34 live probe'))
+- **.github/workflows/v2-main-production-safety-gate.yml:L467** — [Tarihsel yapılandırma kaydı] - name: Probe all six discovery terms on GitHub, GitLab and Codeberg
+- **.github/workflows/v2-main-production-safety-gate.yml:L471** — [Tarihsel yapılandırma kaydı] - name: Upload read-only provider diagnostic evidence
+- **.github/workflows/v2-main-production-safety-gate.yml:L472** — [Tarihsel yapılandırma kaydı] if: always()
+- **.github/workflows/v2-main-production-safety-gate.yml:L475** — [Tarihsel yapılandırma kaydı] name: v2-discovery-34-live-diagnostic
+- **.github/workflows/v2-official-sites.yml:L1** — [Tarihsel yapılandırma kaydı] name: V2 Official Turkish TV Site Discovery
+- **.github/workflows/v2-official-sites.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/v2-official-sites.yml:L15** — [Tarihsel yapılandırma kaydı] - name: Syntax validation
+- **.github/workflows/v2-official-sites.yml:L17** — [Tarihsel yapılandırma kaydı] - name: Discover broadcaster websites
+- **.github/workflows/v2-official-sites.yml:L21** — [Tarihsel yapılandırma kaydı] - name: Save review-only report
+- **.github/workflows/v2-official-sites.yml:L22** — [Tarihsel yapılandırma kaydı] if: always()
+- **.github/workflows/v2-official-sites.yml:L25** — [Tarihsel yapılandırma kaydı] name: official-tv-sites
+- **.github/workflows/v2-offline-import-15.yml:L1** — [Tarihsel yapılandırma kaydı] name: V2 Offline Import 15 Existing Observations
+- **.github/workflows/v2-offline-import-15.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/v2-offline-import-15.yml:L11** — [Tarihsel yapılandırma kaydı] if: github.ref == 'refs/heads/main'
+- **.github/workflows/v2-offline-import-15.yml:L23** — [Tarihsel yapılandırma kaydı] - name: Test the offline importer
+- **.github/workflows/v2-offline-import-15.yml:L28** — [Tarihsel yapılandırma kaydı] - name: Retrieve the exact encrypted source recorded in the report
+- **.github/workflows/v2-offline-import-15.yml:L43** — [Tarihsel yapılandırma kaydı] - name: Apply 15 observations and verify backup, readback and replay
+- **.github/workflows/v2-offline-import-15.yml:L63** — [Tarihsel yapılandırma kaydı] - name: Upload verified encrypted checkpoint and original backup
+- **.github/workflows/v2-offline-import-15.yml:L66** — [Tarihsel yapılandırma kaydı] name: v2-bounded-retry-15-merged-checkpoint
+- **.github/workflows/v2-offline-inventory.yml:L1** — [Tarihsel yapılandırma kaydı] name: V2 Offline Inventory Integrity
+- **.github/workflows/v2-offline-inventory.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/v2-offline-inventory.yml:L20** — [Tarihsel yapılandırma kaydı] - name: Install encryption dependency
+- **.github/workflows/v2-offline-inventory.yml:L22** — [Tarihsel yapılandırma kaydı] - name: Compile inventory modules
+- **.github/workflows/v2-offline-inventory.yml:L28** — [Tarihsel yapılandırma kaydı] - name: Test encrypted archive backup and recovery
+- **.github/workflows/v2-offline-inventory.yml:L30** — [Tarihsel yapılandırma kaydı] - name: Test offline encrypted inventory restoration
+- **.github/workflows/v2-offline-inventory.yml:L32** — [Tarihsel yapılandırma kaydı] - name: Test scanner behavior without network
+- **.github/workflows/v2-one-shot-final-contract.yml:L1** — [Tarihsel yapılandırma kaydı] name: MADSC TV — Tek Toplu Güvenlik ve Bitiş Kontrolü
+- **.github/workflows/v2-one-shot-final-contract.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/v2-one-shot-final-contract.yml:L11** — [Tarihsel yapılandırma kaydı] name: Tek toplu çevrimdışı kontrol
+- **.github/workflows/v2-one-shot-final-contract.yml:L19** — [Tarihsel yapılandırma kaydı] - name: Compile all modules
+- **.github/workflows/v2-one-shot-final-contract.yml:L25** — [Tarihsel yapılandırma kaydı] - name: Enforce unified read-only contracts
+- **.github/workflows/v2-one-shot-final-contract.yml:L27** — [Tarihsel yapılandırma kaydı] - name: Exercise language behavior with fixtures
+- **.github/workflows/v2-one-shot-final-contract.yml:L29** — [Tarihsel yapılandırma kaydı] - name: Check bounded speech sampler command
+- **.github/workflows/v2-one-shot-final-contract.yml:L31** — [Tarihsel yapılandırma kaydı] - name: Final one-shot safety verdict
+- **.github/workflows/v2-ordered-preflight.yml:L1** — [Tarihsel yapılandırma kaydı] name: V2 Sirali Hazirlik Testleri
+- **.github/workflows/v2-ordered-preflight.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/v2-ordered-preflight.yml:L17** — [Tarihsel yapılandırma kaydı] - name: Compile all V2 Python sources
+- **.github/workflows/v2-ordered-preflight.yml:L38** — [Tarihsel yapılandırma kaydı] - name: Required test_discovery_offline_regressions.py
+- **.github/workflows/v2-ordered-preflight.yml:L40** — [Tarihsel yapılandırma kaydı] - name: Required test_discovery_metadata.py
+- **.github/workflows/v2-ordered-preflight.yml:L42** — [Tarihsel yapılandırma kaydı] - name: Required test_source_provenance.py
+- **.github/workflows/v2-ordered-preflight.yml:L44** — [Tarihsel yapılandırma kaydı] - name: Required test_source_inventory_contract.py
+- **.github/workflows/v2-ordered-preflight.yml:L46** — [Tarihsel yapılandırma kaydı] - name: Required test_source_loss_audit.py
+- **.github/workflows/v2-ordered-preflight.yml:L48** — [Tarihsel yapılandırma kaydı] - name: Required test_archive_acceptance_gate.py
+- **.github/workflows/v2-ordered-preflight.yml:L50** — [Tarihsel yapılandırma kaydı] - name: Install authenticated archive dependency
+- **.github/workflows/v2-ordered-preflight.yml:L52** — [Tarihsel yapılandırma kaydı] - name: Required encrypted archive restore tests
+- **.github/workflows/v2-ordered-preflight.yml:L54** — [Tarihsel yapılandırma kaydı] - name: Required video/audio stream probe tests
+- **.github/workflows/v2-ordered-preflight.yml:L56** — [Tarihsel yapılandırma kaydı] - name: Required verified 1000/2000 batch tests
+- **.github/workflows/v2-playlist-safety.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/v2-playlist-safety.yml:L23** — [Tarihsel yapılandırma kaydı] - name: Compile tests
+- **.github/workflows/v2-postscan-triage.yml:L1** — [Tarihsel yapılandırma kaydı] name: V2 Postscan Triage — Reuse #60 Evidence
+- **.github/workflows/v2-postscan-triage.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/v2-postscan-triage.yml:L6** — [Tarihsel yapılandırma kaydı] description: "Successful unified scan run ID"
+- **.github/workflows/v2-postscan-triage.yml:L21** — [Tarihsel yapılandırma kaydı] - name: Download immutable completed scan report (no new network stream probing)
+- **.github/workflows/v2-postscan-triage.yml:L42** — [Tarihsel yapılandırma kaydı] - name: Publish hash-only triage (never raw stream URLs)
+- **.github/workflows/v2-postscan-triage.yml:L43** — [Tarihsel yapılandırma kaydı] if: always()
+- **.github/workflows/v2-postscan-triage.yml:L46** — [Tarihsel yapılandırma kaydı] name: postscan-triage
+- **.github/workflows/v2-promote-yedekler.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/v2-public-source-audit.yml:L1** — [Tarihsel yapılandırma kaydı] name: V2 Parolasiz Gercek Kaynak Denetimi
+- **.github/workflows/v2-public-source-audit.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/v2-public-source-audit.yml:L15** — [Tarihsel yapılandırma kaydı] - name: Install scanner import dependency
+- **.github/workflows/v2-public-source-audit.yml:L17** — [Tarihsel yapılandırma kaydı] - name: Fetch actual IPTV sources and count TR/AZ candidates
+- **.github/workflows/v2-public-source-audit.yml:L19** — [Tarihsel yapılandırma kaydı] - name: Preserve source audit evidence
+- **.github/workflows/v2-public-source-audit.yml:L20** — [Tarihsel yapılandırma kaydı] if: always()
+- **.github/workflows/v2-public-source-audit.yml:L23** — [Tarihsel yapılandırma kaydı] name: v2-public-real-network-source-audit
+- **.github/workflows/v2-real-iptv-scan.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/v2-real-iptv-scan.yml:L12** — [Tarihsel yapılandırma kaydı] name: Verify worldwide scan prerequisites
+- **.github/workflows/v2-real-iptv-scan.yml:L36** — [Tarihsel yapılandırma kaydı] - name: Install AV verification dependencies
+- **.github/workflows/v2-real-iptv-scan.yml:L41** — [Tarihsel yapılandırma kaydı] - name: Require encrypted archive key
+- **.github/workflows/v2-real-iptv-scan.yml:L47** — [Tarihsel yapılandırma kaydı] - name: Discover new GitHub M3U sources before AV scanning
+- **.github/workflows/v2-real-iptv-scan.yml:L51** — [Tarihsel yapılandırma kaydı] - name: Install YouTube discovery dependency
+- **.github/workflows/v2-real-iptv-scan.yml:L53** — [Tarihsel yapılandırma kaydı] - name: Discover worldwide repository metadata from GitHub GitLab Codeberg
+- **.github/workflows/v2-real-iptv-scan.yml:L56** — [Tarihsel yapılandırma kaydı] - name: Discover official broadcaster directory references
+- **.github/workflows/v2-real-iptv-scan.yml:L59** — [Tarihsel yapılandırma kaydı] - name: Discover YouTube Live candidates and verify live metadata
+- **.github/workflows/v2-real-iptv-scan.yml:L62** — [Tarihsel yapılandırma kaydı] - name: Discover parsed M3U files in GitLab and Codeberg repositories
+- **.github/workflows/v2-real-iptv-scan.yml:L65** — [Tarihsel yapılandırma kaydı] - name: Integrate six discovery adapters into unified candidate report
+- **.github/workflows/v2-real-iptv-scan.yml:L67** — [Tarihsel yapılandırma kaydı] - name: Resolve official and YouTube live pages to encrypted direct HLS candidates
+- **.github/workflows/v2-real-iptv-scan.yml:L79** — [Tarihsel yapılandırma kaydı] - name: Restore authenticated progress from the latest completed real scan
+- **.github/workflows/v2-real-iptv-scan.yml:L86** — [Tarihsel yapılandırma kaydı] # The import started from scan 43608247496, created 14 November.
+- **.github/workflows/v2-real-iptv-scan.yml:L87** — [Tarihsel yapılandırma kaydı] # Put its enriched copy just ahead of that scan in chronological order.
+- **.github/workflows/v2-real-iptv-scan.yml:L121** — [Tarihsel yapılandırma kaydı] # Work on a private copy. Later scans can contain a different URL set.
+- **.github/workflows/v2-real-iptv-scan.yml:L128** — [Tarihsel yapılandırma kaydı] - name: Real network discovery and AV probe including discovered sources
+- **.github/workflows/v2-real-iptv-scan.yml:L140** — [Tarihsel yapılandırma kaydı] - name: Require complete scan and worldwide adapter evidence
+- **.github/workflows/v2-real-iptv-scan.yml:L142** — [Tarihsel yapılandırma kaydı] - name: Export 1000 and 2000 real verified new URL batches
+- **.github/workflows/v2-real-iptv-scan.yml:L144** — [Tarihsel yapılandırma kaydı] - name: Audit remaining A-stage acceptance blockers separately from green scan
+- **.github/workflows/v2-real-iptv-scan.yml:L145** — [Tarihsel yapılandırma kaydı] if: always()
+- **.github/workflows/v2-real-iptv-scan.yml:L148** — [Tarihsel yapılandırma kaydı] # This never updates task statuses or any protected M3U. Even a
+- **.github/workflows/v2-real-iptv-scan.yml:L150** — [Tarihsel yapılandırma kaydı] # and worldwide discovery adapter acceptance.
+- **.github/workflows/v2-real-iptv-scan.yml:L162** — [Tarihsel yapılandırma kaydı] - name: Upload reports and encrypted inventory even on scan failure
+- **.github/workflows/v2-real-iptv-scan.yml:L163** — [Tarihsel yapılandırma kaydı] if: always()
+- **.github/workflows/v2-real-iptv-scan.yml:L166** — [Tarihsel yapılandırma kaydı] name: v2-real-scan-evidence
+- **.github/workflows/v2-real-iptv-scan.yml:L192** — [Tarihsel yapılandırma kaydı] name: Legacy AV batch ${{ matrix.batch }}
+- **.github/workflows/v2-real-iptv-scan.yml:L205** — [Tarihsel yapılandırma kaydı] - name: Install ffmpeg
+- **.github/workflows/v2-real-iptv-scan.yml:L214** — [Tarihsel yapılandırma kaydı] - name: Upload batch evidence and checkpoint
+- **.github/workflows/v2-real-iptv-scan.yml:L215** — [Tarihsel yapılandırma kaydı] if: always()
+- **.github/workflows/v2-real-iptv-scan.yml:L218** — [Tarihsel yapılandırma kaydı] name: v2-legacy-7650-batch-${{ matrix.batch }}
+- **.github/workflows/v2-spoken-language-existing-snapshot.yml:L1** — [Tarihsel yapılandırma kaydı] name: MADSC TV — Mevcut Tarama Üzerinden Toplu Ses İncelemesi
+- **.github/workflows/v2-spoken-language-existing-snapshot.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/v2-spoken-language-existing-snapshot.yml:L24** — [Tarihsel yapılandırma kaydı] - name: Download previously completed run evidence (not a new scan)
+- **.github/workflows/v2-spoken-language-existing-snapshot.yml:L35** — [Tarihsel yapılandırma kaydı] - name: Install bounded speech recognition
+- **.github/workflows/v2-spoken-language-existing-snapshot.yml:L41** — [Tarihsel yapılandırma kaydı] - name: Sample existing playable audio and generate review-only language hints
+- **.github/workflows/v2-spoken-language-existing-snapshot.yml:L43** — [Tarihsel yapılandırma kaydı] - name: Publish only anonymized read-only evidence
+- **.github/workflows/v2-spoken-language-existing-snapshot.yml:L44** — [Tarihsel yapılandırma kaydı] if: always()
+- **.github/workflows/v2-spoken-language-existing-snapshot.yml:L47** — [Tarihsel yapılandırma kaydı] name: existing-snapshot-spoken-language-evidence
+- **.github/workflows/v2-stage6-grouped-acceptance.yml:L1** — [Tarihsel yapılandırma kaydı] name: V2 Stage 6 Grouped Offline Acceptance
+- **.github/workflows/v2-stage6-grouped-acceptance.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/v2-stage6-grouped-acceptance.yml:L15** — [Tarihsel yapılandırma kaydı] - name: Install encrypted archive test dependency
+- **.github/workflows/v2-stage6-grouped-acceptance.yml:L17** — [Tarihsel yapılandırma kaydı] - name: Compile acceptance modules
+- **.github/workflows/v2-stage6-grouped-acceptance.yml:L21** — [Tarihsel yapılandırma kaydı] - name: Encrypted archive roundtrip regression
+- **.github/workflows/v2-stage6-grouped-acceptance.yml:L23** — [Tarihsel yapılandırma kaydı] - name: Inventory restoration regression
+- **.github/workflows/v2-stage6-grouped-acceptance.yml:L25** — [Tarihsel yapılandırma kaydı] - name: Offline discovery regression
+- **.github/workflows/v2-stage6-grouped-acceptance.yml:L27** — [Tarihsel yapılandırma kaydı] - name: Stage A encrypted checkpoint restart and evidence regression
+- **.github/workflows/v2-stage6-grouped-acceptance.yml:L31** — [Tarihsel yapılandırma kaydı] - name: Explain acceptance boundary
+- **.github/workflows/v2-stage6-grouped-acceptance.yml:L35** — [Tarihsel yapılandırma kaydı] - name: Stage 7 #34 discovery adapters offline acceptance
+- **.github/workflows/v2-stage6-grouped-acceptance.yml:L41** — [Tarihsel yapılandırma kaydı] - name: Stage 7 #34 live repository API contract (fail closed)
+- **.github/workflows/v2-turkish-stream-catalog.yml:L1** — [Tarihsel yapılandırma kaydı] name: V2 Turkish Stream Catalog Discovery
+- **.github/workflows/v2-turkish-stream-catalog.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/v2-turkish-stream-catalog.yml:L15** — [Tarihsel yapılandırma kaydı] - name: Validate source syntax
+- **.github/workflows/v2-turkish-stream-catalog.yml:L17** — [Tarihsel yapılandırma kaydı] - name: Discover unlisted Turkish stream URLs
+- **.github/workflows/v2-turkish-stream-catalog.yml:L19** — [Tarihsel yapılandırma kaydı] - name: Save review-only candidates
+- **.github/workflows/v2-turkish-stream-catalog.yml:L20** — [Tarihsel yapılandırma kaydı] if: always()
+- **.github/workflows/v2-turkish-stream-catalog.yml:L23** — [Tarihsel yapılandırma kaydı] name: turkish-stream-candidates
+- **.github/workflows/v2-turkish-stream-decode.yml:L1** — [Tarihsel yapılandırma kaydı] name: V2 Turkish Stream Short Decode
+- **.github/workflows/v2-turkish-stream-decode.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/v2-turkish-stream-decode.yml:L15** — [Tarihsel yapılandırma kaydı] - name: Install ffprobe
+- **.github/workflows/v2-turkish-stream-decode.yml:L17** — [Tarihsel yapılandırma kaydı] - name: Syntax validation
+- **.github/workflows/v2-turkish-stream-decode.yml:L19** — [Tarihsel yapılandırma kaydı] - name: Refresh candidates
+- **.github/workflows/v2-turkish-stream-decode.yml:L21** — [Tarihsel yapılandırma kaydı] - name: Check short media decode
+- **.github/workflows/v2-turkish-stream-decode.yml:L23** — [Tarihsel yapılandırma kaydı] - name: Upload verification reports
+- **.github/workflows/v2-turkish-stream-decode.yml:L24** — [Tarihsel yapılandırma kaydı] if: always()
+- **.github/workflows/v2-turkish-stream-decode.yml:L27** — [Tarihsel yapılandırma kaydı] name: turkish-stream-decode
+- **.github/workflows/v2-turkish-stream-probe.yml:L1** — [Tarihsel yapılandırma kaydı] name: V2 Turkish Stream Candidate Probe
+- **.github/workflows/v2-turkish-stream-probe.yml:L3** — [Tarihsel yapılandırma kaydı] workflow_dispatch:
+- **.github/workflows/v2-turkish-stream-probe.yml:L15** — [Tarihsel yapılandırma kaydı] - name: Validate scripts
+- **.github/workflows/v2-turkish-stream-probe.yml:L17** — [Tarihsel yapılandırma kaydı] - name: Refresh Turkish stream candidates
+- **.github/workflows/v2-turkish-stream-probe.yml:L19** — [Tarihsel yapılandırma kaydı] - name: Probe candidate HTTP endpoints
+- **.github/workflows/v2-turkish-stream-probe.yml:L21** — [Tarihsel yapılandırma kaydı] - name: Upload candidate reports
+- **.github/workflows/v2-turkish-stream-probe.yml:L22** — [Tarihsel yapılandırma kaydı] if: always()
+- **.github/workflows/v2-turkish-stream-probe.yml:L25** — [Tarihsel yapılandırma kaydı] name: turkish-stream-probe
+
 <!-- B-END -->
 
 ## C) Kanal Testi, Taşıma ve Kategori Düzenleme İşleri
@@ -354,6 +557,32 @@ Tarama kapsamı: main ağacındaki tüm .md/.txt/.json/.yml/.yaml dosyaları, a�
 - **.github/workflows/v2-logo-backup.yml:L1** — [Tarihsel yapılandırma kaydı] name: V2 Logo Backup (non-destructive) (production writer suspended)
 - **.github/workflows/v2-logo-backup.yml:L14** — [Tarihsel yapılandırma kaydı] - name: Verify protected IBO playlist without changing it
 
+- **.github/workflows/v2-main-production-safety-gate.yml:L26** — [Tarihsel yapılandırma kaydı] name: Verify suspended publishers, no cron and immutable IBO
+- **.github/workflows/v2-main-production-safety-gate.yml:L275** — [Tarihsel yapılandırma kaydı] - name: Preserve original IBO category and backup invariants
+- **.github/workflows/v2-main-production-safety-gate.yml:L319** — [Tarihsel yapılandırma kaydı] - name: Stage 2 and Stage 3 offline identity, EPG and recovery acceptance
+- **.github/workflows/v2-official-sites.yml:L19** — [Tarihsel yapılandırma kaydı] - name: Compare official sites with existing playlist
+- **.github/workflows/v2-offline-inventory.yml:L24** — [Tarihsel yapılandırma kaydı] - name: Compile protected playlist acceptance
+- **.github/workflows/v2-offline-inventory.yml:L26** — [Tarihsel yapılandırma kaydı] - name: Verify protected IBO playlist and archived backups
+- **.github/workflows/v2-offline-inventory.yml:L34** — [Tarihsel yapılandırma kaydı] - name: Test IBO packaging and final acceptance offline
+- **.github/workflows/v2-one-shot-final-contract.yml:L21** — [Tarihsel yapılandırma kaydı] - name: Protect IBO, favorites, categories and original backups
+- **.github/workflows/v2-ordered-preflight.yml:L19** — [Tarihsel yapılandırma kaydı] - name: Confirm playlist safety test compiles
+- **.github/workflows/v2-playlist-safety.yml:L1** — [Tarihsel yapılandırma kaydı] name: V2 Playlist Safety Invariants
+- **.github/workflows/v2-playlist-safety.yml:L18** — [Tarihsel yapılandırma kaydı] # Historical immutable playlist blobs are required by the invariant test.
+- **.github/workflows/v2-playlist-safety.yml:L25** — [Tarihsel yapılandırma kaydı] - name: Verify channel counts and original backups
+- **.github/workflows/v2-postscan-triage.yml:L34** — [Tarihsel yapılandırma kaydı] - name: Audit all scanned channels and prepare separated review queues
+- **.github/workflows/v2-postscan-triage.yml:L38** — [Tarihsel yapılandırma kaydı] - name: Cross-check identity candidates across sources and EPG identifiers
+- **.github/workflows/v2-promote-yedekler.yml:L1** — [Tarihsel yapılandırma kaydı] name: V2 One-Time YEDEKLER Promotion (production writer suspended)
+- **.github/workflows/v2-promote-yedekler.yml:L14** — [Tarihsel yapılandırma kaydı] - name: Verify protected IBO playlist without changing it
+- **.github/workflows/v2-real-iptv-scan.yml:L1** — [Tarihsel yapılandırma kaydı] name: V2 Gercek IPTV Tarama ve IBO Paketleri
+- **.github/workflows/v2-real-iptv-scan.yml:L69** — [Tarihsel yapılandırma kaydı] - name: Read-only live EPG source and schedule integrity audit
+- **.github/workflows/v2-real-iptv-scan.yml:L72** — [Tarihsel yapılandırma kaydı] # Advisory evidence only: this never modifies madsc-epg.xml.
+- **.github/workflows/v2-real-iptv-scan.yml:L74** — [Tarihsel yapılandırma kaydı] - name: Generate separate EPG candidate from actual XMLTV feeds for review
+- **.github/workflows/v2-real-iptv-scan.yml:L77** — [Tarihsel yapılandırma kaydı] # Save in v2/reports; the protected root EPG remains untouched.
+- **.github/workflows/v2-real-iptv-scan.yml:L138** — [Tarihsel yapılandırma kaydı] - name: Prepare encrypted 500-channel review backups (never publish to main IBO)
+- **.github/workflows/v2-real-iptv-scan.yml:L209** — [Tarihsel yapılandırma kaydı] - name: Test this 500-channel batch with video and audio decoding
+- **.github/workflows/v2-spoken-language-existing-snapshot.yml:L18** — [Tarihsel yapılandırma kaydı] - name: Protect original playlist and backups
+- **.github/workflows/v2-stage6-grouped-acceptance.yml:L19** — [Tarihsel yapılandırma kaydı] - name: Playlist and protected archive invariants
+
 <!-- C-END -->
 
 ## D) Açık Kalan GitHub Issue'ları ve Doğrulanmamış Maddeler
@@ -362,6 +591,9 @@ Tarama kapsamı: main ağacındaki tüm .md/.txt/.json/.yml/.yaml dosyaları, a�
 - **.github/workflows/issue-489-historical-audit.yml:L22** — [Tarihsel yapılandırma kaydı] name: issue-489-inventory-audit
 
 
+
+- **.github/workflows/v2-main-production-safety-gate.yml:L62** — [Tarihsel yapılandırma kaydı] - name: Issue 497 existing-audit adapter offline regression (no scan)
+- **.github/workflows/v2-main-production-safety-gate.yml:L402** — [Tarihsel yapılandırma kaydı] - name: Issue 497 targeted uncertain retry offline regressions (no live scan)
 
 <!-- D-END -->
 
@@ -401,4 +633,20 @@ Her satırda snapshot/PR referansı, kaynak, okuma sonucu ve çıkarılan kayıt
 - main `.github/workflows/v2-historical-recovery.yml` — OK; 4274/4274 bayt, 11 yapılandırma/not satırı; blob `b4198aead6fb8e4af42928c3ea3c131426537b93`.
 - main `.github/workflows/v2-ibo-parity.yml` — OK; 688/688 bayt, 7 yapılandırma/not satırı; blob `3b9d9141347e76ddfd5d4a8cede1b71cdd2b55a0`.
 - main `.github/workflows/v2-logo-backup.yml` — OK; 655/655 bayt, 3 yapılandırma/not satırı; blob `29a9ae1ed5b929336979a526d9c8aff01d88cb7a`.
+- main `.github/workflows/v2-main-production-safety-gate.yml` — OK; 28668/28668 bayt, 71 yapılandırma/not satırı; blob `78d1f0c844de96702d00608302a16f87fc7abb1f`.
+- main `.github/workflows/v2-official-sites.yml` — OK; 886/886 bayt, 8 yapılandırma/not satırı; blob `a3d4f6693cb00a5e1974440c722c735ee03b7924`.
+- main `.github/workflows/v2-offline-import-15.yml` — OK; 3116/3116 bayt, 8 yapılandırma/not satırı; blob `08bbd3bf98e24d519ba5deb2243ca4a3b61c6dab`.
+- main `.github/workflows/v2-offline-inventory.yml` — OK; 1672/1672 bayt, 10 yapılandırma/not satırı; blob `90f85adc1a4449bc8333ca30c6c80b643db9b6d9`.
+- main `.github/workflows/v2-one-shot-final-contract.yml` — OK; 1358/1358 bayt, 9 yapılandırma/not satırı; blob `6255eebb5805932005796fc19fbb7ee901b76969`.
+- main `.github/workflows/v2-ordered-preflight.yml` — OK; 2295/2295 bayt, 14 yapılandırma/not satırı; blob `ded74f90141c71872ae7f8f2a79b91fbef6b4c97`.
+- main `.github/workflows/v2-playlist-safety.yml` — OK; 769/769 bayt, 5 yapılandırma/not satırı; blob `99efc4f7f3d1d307ac2dd600e5884bd04216a677`.
+- main `.github/workflows/v2-postscan-triage.yml` — OK; 1900/1900 bayt, 9 yapılandırma/not satırı; blob `da233d29fb973f1a74e42e85bda3415b2c703dd5`.
+- main `.github/workflows/v2-promote-yedekler.yml` — OK; 653/653 bayt, 3 yapılandırma/not satırı; blob `32cfa1cf2adc26931a48640c6e7d0b3f49c024cd`.
+- main `.github/workflows/v2-public-source-audit.yml` — OK; 800/800 bayt, 7 yapılandırma/not satırı; blob `6674d1e007fab938c113536eecca29c421709f59`.
+- main `.github/workflows/v2-real-iptv-scan.yml` — OK; 10924/10924 bayt, 39 yapılandırma/not satırı; blob `7b789eeca086e2461dea6af079fcab1eb8443773`.
+- main `.github/workflows/v2-spoken-language-existing-snapshot.yml` — OK; 2186/2186 bayt, 9 yapılandırma/not satırı; blob `b77a57a4133340b203163ff836fe43efa4d98a7d`.
+- main `.github/workflows/v2-stage6-grouped-acceptance.yml` — OK; 2242/2242 bayt, 12 yapılandırma/not satırı; blob `6b124973674101e03ab87d9c329bf2054431dc1e`.
+- main `.github/workflows/v2-turkish-stream-catalog.yml` — OK; 750/750 bayt, 7 yapılandırma/not satırı; blob `f196937acb1a8deb92fd7ff59057368f1d9073fc`.
+- main `.github/workflows/v2-turkish-stream-decode.yml` — OK; 1023/1023 bayt, 9 yapılandırma/not satırı; blob `d4ccc7a1ff661c548b88730e1de83e6ca9d2d4ce`.
+- main `.github/workflows/v2-turkish-stream-probe.yml` — OK; 910/910 bayt, 8 yapılandırma/not satırı; blob `1fcb4678de45e7e5452ca81314bfdf22e16ce130`.
 <!-- COVERAGE-END -->
