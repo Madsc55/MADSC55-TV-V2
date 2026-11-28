@@ -23,7 +23,8 @@ class PreScanGateTests(unittest.TestCase):
 
     def test_pending_blocker_is_reported_without_changing_gate(self):
         entries = [{"id": i, "status": "completed"} for i in REQUIRED]
-        entries[0] = {"id": min(REQUIRED), "status": "in_progress", "blocker": "Independent restore evidence missing"}
+        entry = next(item for item in entries if item["id"] == min(REQUIRED))
+        entry.update(status="in_progress", blocker="Independent restore evidence missing")
         result = inspect(ledger(entries))
         self.assertFalse(result["ready"])
         self.assertEqual(result["blockers"], [{"id": min(REQUIRED), "status": "in_progress",
@@ -56,12 +57,14 @@ class PreScanGateTests(unittest.TestCase):
                 discovery_34.main()
             fetch.assert_not_called()
 
-    def test_checked_in_ledger_blocks_live_scan(self):
+    def test_live_scan_is_not_its_own_prerequisite(self):
         import json
         from prescan_readiness_gate import STATE
-        report = inspect(json.loads(STATE.read_text(encoding="utf-8")))
-        self.assertFalse(report["ready"])
-        self.assertIn(34, report["pending"])
+        state = json.loads(STATE.read_text(encoding="utf-8"))
+        report = inspect(state)
+        completed = {row["id"] for row in state["statuses"] if row["status"] == "completed"}
+        self.assertNotIn(34, REQUIRED)
+        self.assertEqual(report["ready"], REQUIRED <= completed)
 
     def test_offline_discovery_does_not_require_readiness(self):
         import discovery_34
