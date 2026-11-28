@@ -1157,3 +1157,36 @@ jobs:
         env:
           V2_ARCHIVE_PASSPHRASE: ${{ secrets.V2_ARCHIVE_PASSPHRASE }}
         run: PYTHONPATH=v2:. python v2/import_fresh_decisions.py verify --playlist "$RUNNER_TEMP/decision-playlist" --bundle "$RUNNER_TEMP/restored"
+
+  stage1-metadata-refresh:
+    name: Current XMLTV and independently verified metadata (read-only)
+    # Owner-reviewed main pushes only. Never interfere with the active foreign wave.
+    if: github.event_name == 'push' && github.repository == 'Madsc55/MADSC55-TV-V2' && github.ref == 'refs/heads/main' && github.actor == 'Madsc55' && contains(github.event.head_commit.message, '[stage1-metadata-refresh]')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify offline metadata acceptance rules
+        run: PYTHONPATH=v2:. python -m unittest -v v2.test_stage1_metadata_refresh v2.test_package2_evidence
+      - name: Install bounded raster image decoder
+        run: python -m pip install 'Pillow>=11.3,<13'
+      - name: Build fresh XMLTV and SHA-bound metadata proposals
+        run: |
+          set -euo pipefail
+          before=$(sha256sum MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)
+          PYTHONPATH=v2:. python v2/stage1_metadata_refresh.py --output "$RUNNER_TEMP/stage1-metadata"
+          test "$before" = "$(sha256sum MADSC55_TV_IBO_CALISANLAR_TEST.m3u8)"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: stage1-current-epg-and-verified-metadata
+          path: ${{ runner.temp }}/stage1-metadata/
+          if-no-files-found: warn
+          retention-days: 90
