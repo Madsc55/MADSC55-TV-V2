@@ -25,7 +25,8 @@ class MigrationTests(unittest.TestCase):
         self.assertEqual(report["from_groups"], {"🗂️ YEDEKLER": 685})
         self.assertEqual(result.count(b"#EXTINF"), 687)
         self.assertTrue(result.startswith(("#EXTM3U\n" + other).encode()))
-        self.assertIn((originals[0].replace("🗂️ YEDEKLER", "ANA ARŞİV") + archive).encode(), result)
+        expected = "".join(originals).replace("🗂️ YEDEKLER", "ANA ARŞİV")
+        self.assertEqual(result, ("#EXTM3U\n" + other + expected + archive).encode())
         self.assertNotIn('group-title="🗂️ YEDEKLER"'.encode(), result)
 
     def test_missing_identity_fails_closed(self):

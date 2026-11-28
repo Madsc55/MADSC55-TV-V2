@@ -38,7 +38,7 @@ class Stage3MetadataTests(unittest.TestCase):
         for payload in ('[]', 'null', '"unexpected"', '{\"streams\": null}', '{\"streams\": [null]}', '{\"streams\": {}}'):
             with self.subTest(payload=payload):
                 with patch('stream_probe.shutil.which', return_value='/usr/bin/ffprobe'), patch('stream_probe.subprocess.run', return_value=SimpleNamespace(returncode=0, stdout=payload)):
-                    self.assertEqual(probe('https://example.org/test.m3u8')['status'], 'INVALID_PROBE_RESULT')
+                    self.assertEqual(probe('https://93.184.216.34/test.m3u8')['status'], 'INVALID_PROBE_RESULT')
 
     def test_category_no_guess(self):
         self.assertEqual(category({"name": "News TV"}), "UNCATEGORIZED")
