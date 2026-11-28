@@ -1,0 +1,48 @@
+{
+  "schema": 1,
+  "scope": "authenticated decision import; permanent receipt index, not encrypted backup",
+  "merge_commit": "985676bbd79876385c531e14ea1851b0f778c633",
+  "pull_request": 803,
+  "run_id": 46060758978,
+  "security_run_id": 46060758906,
+  "import_job": 140714149381,
+  "independent_restore_job": 140714284970,
+  "artifact_id": 15228706985,
+  "artifact_name": "authenticated-decisions-20261127",
+  "artifact_zip_sha256": "ef54521aa1d55079eef9111c521a846113cf9d346ef461448b6defbdd41b8031",
+  "artifact_retention_days": 90,
+  "receipt": {
+    "checkpoint_rows": 28844,
+    "restored_rows": 28844,
+    "source_observations": 3952,
+    "source_unique_urls": 1588,
+    "matched_checkpoint_urls": 747,
+    "attached_observations_by_run": {
+      "45515390523": 748,
+      "45799091422": 746
+    },
+    "unmatched_observations_in_encrypted_ledger": 2458,
+    "unmatched_unique_urls": 841,
+    "prior_positive_rows_preserved": 8696,
+    "replay_insertions": 0,
+    "checkpoint_sha256": "984e01ffe5f6689f9fa81bb4e814f93d55e53defff5512e312ea1c55a1e94dde",
+    "observations_sha256": "9a96fd001327b6f21fd6db3e66647a6fe70f3348a1bc665fe0037770b152cd38",
+    "playlist_sha256": "265f368758e75c5b18bc1b936a9792fef36528ba486288ddb35e4e7e23775ecf",
+    "source_checkpoint_sha256": "7327c323864bbb991428bea609f3bf439968637a2d30a6215df50f2d242ecd32",
+    "report_sha256": {
+      "45515390523": "40ff3f514e4a41d806c37fa2b01175281a1077b365dd0c56711d72761cd7d17d",
+      "45799091422": "dbdbdc6d1d19d343bdb1b7693649c83537d8ba40e9a6da7ad13e8374102ad99d"
+    }
+  },
+  "verified_job_results": {
+    "import": "success",
+    "independent_restore": "success",
+    "offline_ci": "success",
+    "production_security_gate": "success"
+  },
+  "limits": [
+    "Artifact expires; permanent independent encrypted backup not established by this index.",
+    "Continuous discovery-engine use of updated ledger has not been demonstrated.",
+    "Receipt is historical and cannot certify later playlist revisions."
+  ]
+}
