@@ -1190,3 +1190,33 @@ jobs:
           path: ${{ runner.temp }}/stage1-metadata/
           if-no-files-found: warn
           retention-days: 90
+
+  stage2-unified-live:
+    name: Stage 2 bounded read-only production evidence
+    if: github.event_name == 'push' && github.repository == 'Madsc55/MADSC55-TV-V2' && github.ref == 'refs/heads/main' && github.actor == 'Madsc55' && contains(github.event.head_commit.message, '[stage2-unified-live]')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 65
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: PYTHONPATH=v2:. python -m unittest -v v2.test_stage2_unified_runner
+      - run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends ffmpeg tesseract-ocr tesseract-ocr-tur tesseract-ocr-eng yt-dlp
+          python -m pip install -r v2/requirements-foreign-asr.txt
+          mkdir -p "$RUNNER_TEMP/stage2-model"
+          python -c 'from huggingface_hub import snapshot_download; import os; snapshot_download("Systran/faster-whisper-tiny",local_dir=os.environ["RUNNER_TEMP"]+"/stage2-model",allow_patterns=["config.json","model.bin","tokenizer.json","vocabulary.txt"])'
+          (cd "$RUNNER_TEMP/stage2-model" && sha256sum --check "$GITHUB_WORKSPACE/v2/foreign_whisper_tiny.sha256")
+      - run: PYTHONPATH=v2:. python v2/stage2_unified_runner.py --model-dir "$RUNNER_TEMP/stage2-model" --output "$RUNNER_TEMP/stage2-evidence"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: stage2-unified-evidence
+          path: ${{ runner.temp }}/stage2-evidence/
+          retention-days: 90

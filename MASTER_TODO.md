@@ -4710,3 +4710,7 @@ Her satırda snapshot/PR referansı, kaynak, okuma sonucu ve çıkarılan kayıt
 - PR #768: değişen .md/.txt/.json/.yml/.yaml dosyası yok; PR gövdesi D bölümünde kayıtlı.
 - Ek yapısal kontrol: main state.json ve PR #669/#650 plan nesneleri yeniden açıldı. Öncelik, kısıt, güvenlik, risk ve diğer henüz indekslenmemiş plan alanları ayrı kayıt olarak eklendi (70 alan). Ham sonuç durumları görevlerden ayrıldı.
 <!-- COVERAGE-END -->
+
+
+## 28 Kasım 2026 — Aşama 2 birleşik koşucu
+B01/B03–B07/B10–B11/B19/B24–B30: mevcut modüller için salt okunur, SHA-bağlı birleşik koşucu ve JSON/Markdown kanıt raporu eklendi. B25 için YEDEKLER ve arşiv örnekleri kapsam dışı. Canlı kabul henüz yapılmadı; bağımsız kimlik ve kalite ölçümü eksikse seçim yok. Aşama 1 run 46143664019 SUCCESS: 2 mevcut EPG ID, 93 program, 0 yeni logo/ID; artifact 15262058240. Playlist değişikliği yok.
