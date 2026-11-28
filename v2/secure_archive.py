@@ -38,7 +38,9 @@ def decrypt(blob, passphrase):
     if type(blob) is not bytes:
         raise ValueError("Encrypted archive must be bytes")
     minimum = len(MAGIC) + 16 + 12 + 16
-    if len(blob) < minimum or len(blob) > MAX_INPUT + minimum or not blob.startswith(MAGIC):
+    if len(blob) > MAX_INPUT + minimum:
+        raise ValueError('Encrypted archive exceeds maximum size')
+    if len(blob) < minimum or not blob.startswith(MAGIC):
         raise ValueError('Invalid encrypted archive format')
     offset = len(MAGIC)
     salt = blob[offset:offset + 16]

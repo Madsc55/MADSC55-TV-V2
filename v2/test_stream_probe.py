@@ -2,12 +2,17 @@ import json
 import subprocess
 import unittest
 from unittest.mock import patch
-from stream_probe import probe
+from stream_probe import probe, verify_decoded_av
 
 class StreamProbeTests(unittest.TestCase):
     def test_malformed_url_types(self):
         for value in (None, 7, [], {}, "", "   "):
             self.assertEqual(probe(value)["status"], "INVALID_URL")
+
+    def test_malformed_host_is_rejected_by_both_probes(self):
+        url = 'https://[bad/live'
+        self.assertEqual(probe(url)['status'], 'INVALID_URL')
+        self.assertEqual(verify_decoded_av(url)['decode_status'], 'INVALID_URL')
 
     def test_invalid_url(self):
         self.assertEqual(probe('file:///etc/passwd')['status'], 'INVALID_URL')
@@ -19,22 +24,23 @@ class StreamProbeTests(unittest.TestCase):
         run.return_value = subprocess.CompletedProcess([], 0, json.dumps({'streams': [
             {'codec_type': 'video', 'codec_name': 'h264'},
             {'codec_type': 'audio', 'codec_name': 'aac'}]}), '')
-        result = probe('https://example.org/live.m3u8')
-        self.assertEqual(result['status'], 'AV_VERIFIED')
+        result = probe('https://93.184.216.34/live.m3u8')
+        self.assertEqual(result['status'], 'AV_STREAMS_PRESENT')
+        self.assertFalse(result['decoded_av_verified'])
         self.assertTrue(result['video'] and result['audio'])
-        self.assertNotIn('example.org', str(result))
+        self.assertNotIn('93.184.216.34', str(result))
 
     @patch('stream_probe.shutil.which', return_value='/usr/bin/ffprobe')
     @patch('stream_probe.subprocess.run')
     def test_video_only_not_verified(self, run, which):
         run.return_value = subprocess.CompletedProcess([], 0, json.dumps({'streams': [
             {'codec_type': 'video', 'codec_name': 'h264'}]}), '')
-        self.assertEqual(probe('https://example.org/live.m3u8')['status'], 'VIDEO_ONLY')
+        self.assertEqual(probe('https://93.184.216.34/live.m3u8')['status'], 'VIDEO_ONLY')
 
     @patch('stream_probe.shutil.which', return_value='/usr/bin/ffprobe')
     @patch('stream_probe.subprocess.run', side_effect=subprocess.TimeoutExpired('ffprobe', 5))
     def test_timeout(self, run, which):
-        self.assertEqual(probe('https://example.org/live.m3u8')['status'], 'TIMEOUT')
+        self.assertEqual(probe('https://93.184.216.34/live.m3u8')['status'], 'TIMEOUT')
 
 if __name__ == '__main__':
     unittest.main()

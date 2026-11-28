@@ -51,7 +51,6 @@ def _public_http_url(url):
 def probe(url, timeout=25, ffprobe='ffprobe'):
     if not isinstance(url, str) or not url.strip():
         return {'status': 'INVALID_URL', 'video': False, 'audio': False}
-    parsed = urlsplit(url.strip())
     if not _public_http_url(url):
         return {'status': 'INVALID_URL', 'video': False, 'audio': False}
     executable = shutil.which(ffprobe)
@@ -116,7 +115,6 @@ def probe(url, timeout=25, ffprobe='ffprobe'):
 
 def verify_decoded_av(url, timeout=25, ffmpeg='ffmpeg'):
     """Require at least one actually decoded frame from both video and audio."""
-    parsed = urlsplit(url)
     if not _public_http_url(url):
         return {'decoded_av_verified': False, 'decode_status': 'INVALID_URL'}
     executable = shutil.which(ffmpeg)
